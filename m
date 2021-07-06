@@ -2,137 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4557C07E96
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 14:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4134C07E96
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 14:39:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C3DA661376
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 14:37:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D15F61376
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 14:39:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232370AbhGFOkZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jul 2021 10:40:25 -0400
-Received: from mout.web.de ([217.72.192.78]:47987 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231754AbhGFOkW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jul 2021 10:40:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1625582261;
-        bh=Gnbw7pLknitflWZnSJFKIA9nh+RjjcWlojPM76MUsfU=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=EUTqQ9J+2P36d8+pDEOg6JP1nAAm05mLZSOQsU6EggycLG4Uy1UnP6Khn8hynjgvK
-         nWNtsr6feKe6d1gn9lNetckSJO6tmNqaU1Dme5ioqxVFiXY1RwVa6W/hqJmZhOauu8
-         ldpTukAlPHW/rgxYQmjWS31OqBuIy3Do9JW7GmaA=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([91.47.158.105]) by smtp.web.de
- (mrweb103 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 0LvSLn-1l225d3Gyp-010aym; Tue, 06 Jul 2021 16:25:10 +0200
-Subject: Re: Antw: [EXT] Re: bug in "git fsck"?
-To:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
-Cc:     git@vger.kernel.org
-References: <60DF1C22020000A100042225@gwsmtp.uni-regensburg.de>
- <xmqqczs0popg.fsf@gitster.g> <52847a99-db7c-9634-b3b1-fd9b1342bc32@web.de>
- <60E2B7FB020000A1000422A0@gwsmtp.uni-regensburg.de>
- <77655a4e-8c39-5ccc-71af-d2d8684bf208@web.de>
- <60E40275020000A1000422F7@gwsmtp.uni-regensburg.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <fcfd0401-df5b-15ec-29c4-74d2903274cd@web.de>
-Date:   Tue, 6 Jul 2021 16:25:10 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.11.0
+        id S232443AbhGFOme (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jul 2021 10:42:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33406 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232073AbhGFOmd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jul 2021 10:42:33 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEE32C08EC37
+        for <git@vger.kernel.org>; Tue,  6 Jul 2021 07:39:53 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id l24so28314582edr.11
+        for <git@vger.kernel.org>; Tue, 06 Jul 2021 07:39:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=OjmoS72f1J92VO9UnS3acXT3d7onYJidhm8VDyNKFs4=;
+        b=JE6p6bQOW3rUkf6Z0Q2Jcta+Sc/31lOEv27eRiB6uIjVPZYPWFIBVUmdfWHCFBPbcU
+         1e2JBvJdywYzMxqgo9XWMFRe2IBs/jcc6TSjlepcrGSke3sMQHUfxP/s20fH/A+P2rrn
+         /D825n+oCTD9cJzhL7uDxKyRE6zrMfGip7AXIe3/CBDTcp5jVdJoUTNkrtS4FSmZW7HS
+         +AffNQijw70WM5NUDqajkXb36g3XAoNIkQ4Hi1ozogTICM4oqGulTCdq43y84+nMSzhn
+         yzpem3rV3pbIKNZlXhXCHuQ09w6GZPXFrOGWBpwmYIB+N6G6KsYCC3oVxUX09h+fpEHK
+         aEDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=OjmoS72f1J92VO9UnS3acXT3d7onYJidhm8VDyNKFs4=;
+        b=N/AIl9Nn6qBsTt359GV8Ppxx7DcthFtb0f85L5HusRoUqFlofHzrnFamRTdsnuWZNQ
+         LWBcxHajjmqfrRrNszogJ5NrwDNebKnTqHwsM1yM2QjLoK4djjEB1EqYKoe9Gw6gRci9
+         Wn30b+WoZ9J3CD5EG7s6ntZhDY4mVzvWLW7h7BUEA0VurzRtprEVbP8XYRQ5ON+3Zh9U
+         DkW//J0NiL3ZdJQIyAXNwdhoq93URqPLQ4wCTYFIJZl8iRRhw2H6RP7EyBtit0ztPlcH
+         UcljDEae86h2/JppvDeWQH832otY37RL+EQaJrc6k//9eKccgLr0QTd/w3OLLfnXF6ku
+         VtLg==
+X-Gm-Message-State: AOAM530NA78/nbf4qv1JXwC9hBFnaXcyd82Ch842CAIaGooM+x4ujXPa
+        1VTYUSufQ40A6v3+Yy0vSyQ=
+X-Google-Smtp-Source: ABdhPJxTbJ6Sfu3rulREY1b5vCiJB3Vxo0s0SJehwEvbfoQsLMjrNA9QOSuVprGztRxEW+NK2Cd6RA==
+X-Received: by 2002:a05:6402:90b:: with SMTP id g11mr23767032edz.336.1625582392452;
+        Tue, 06 Jul 2021 07:39:52 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id d9sm1132614eje.34.2021.07.06.07.39.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Jul 2021 07:39:51 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Subject: Re: Applying a patch with a diff header in its commit message
+Date:   Tue, 06 Jul 2021 16:37:49 +0200
+References: <20210628183004.flxirucfv2celll3@yadavpratyush.com>
+ <60da5ed21ec8c_1f78f2082a@natae.notmuch>
+ <20210706081738.5th24lypiicnbckv@yadavpratyush.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <20210706081738.5th24lypiicnbckv@yadavpratyush.com>
+Message-ID: <87pmvv5ww8.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <60E40275020000A1000422F7@gwsmtp.uni-regensburg.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:BD51ELliNZM2kMYJLm9sEhF7053cRhiH8LlvISy86+TiLlssnqu
- umuWwBk0eW93YJ+lnLKEF/mRBQCCIW9A0t1vpPW/uOkaXsZbdAM8ZcxIso2CgZZwdl1mcsG
- MtTgHGAvlDg0zZgXUDmgvPS4wWchfCupyWgysiR8LYDpMha++W0NnsUz03vsJ6JWUvGxzq6
- DpI3qOIJXfY564g4iJBjw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:yVuNXCSJ4Ss=:kmG8No7OLgiem6Mk4n0zA1
- Yqkcg+GaAnoxF8nH8DNbN9PMMcOHQ7kD7zfpKD+lniDqzq08SOMeUlYkDEOkJJ4akyP+en40K
- yADKmZwuh/LXIkp28AFaaQj96d9GFKzsA9TBDblSG8mqZGggOb5OUTSqI5I6CQHcwoMhC0bqs
- V/wyiddjjVovjcIShqDMMFUogXh5IudE0IgdkCyX2doDuHE/kdnR5gNg3UT2JwIRQp3+R0x8G
- wK0R72wcby0nC7O8oBOUmtONeuLF1GcAoXL9bUA3hUOEvQ45xoMxYgPa1ZrVUuWTrd0zd19p8
- Y0N626k6nlCiB70PXcJNEMIz8ApuVfK8vnnPMN8EyZUEzZ5jw9Z5/+7uim33AZqmp54JZdIhc
- ghVzsV2E/yhpm3woRHUIXFpsBEIvZlM5DC/HWrLy0merAat+2dmWhkyx99x3V5z1rwCmumoBT
- 5GujRtHuNBKBCDQbkGZW1GHvkzNYFJFfdnE5sdCqihNLSrp9HwP/sfFDqE1VKfs8laZ+f0WPi
- azpiumUuBLEGy8wWoVd1wAA8ESd5EGuUKwseyzAIhIqudIqXKg4mZRMbgjl4kLcS89NLeBCxb
- Aw9wonKT99aB36yy8HKdXd+TydR/t5IsQH9nZDj7h8/zokAADjyuMNKTyS89tZJpqzhs4zliV
- Z2KDl/eR8jTAgt32lQMRDKuzil4ciBmLnzmnFOB6n64zwpu67dfwUm4HubE8LJBbEB/jrJv7q
- Y8paYtOR1breU3np1UMFWnlBJVvS/i1nKSNfloLrx+ZzRyfQwi7XG9J49eNBNihj3EBEfl0sd
- CWAEZYKYAtgZ+txy06Nlpw/LUA+nwJL0MQtu+CRmJiLIne3Puve0s7H3jxcQygWC+IMWT6Cxz
- s2nfYXPYev4iOKFazWE8aW8rhjnL6xjRoHE0tsHmZklWsh8DVcvWIVdxNz1qAZSonRFDPTHxh
- QuniB/mAj2CtlhcS/2jOT+9Ea/ymEfQAeNExi3Xo3r7SiYeyy2bhbybOJlPXh1CK2T4oM8VJx
- cJ4EnDGd17JiDd/aAsUeR3IJg9NrVyEDCuzJdu7r4bwQpsCeKnGA8AJB2Pnm2+nDJDH145K1/
- 77kl2rTVNQMlfGk3wNaYJudXRZpmj+9WOcv
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 06.07.21 um 09:12 schrieb Ulrich Windl:
->>>> Ren=C3=A9 Scharfe <l.s.r@web.de> schrieb am 05.07.2021 um 16:44 in Na=
-chricht
-> <77655a4e-8c39-5ccc-71af-d2d8684bf208@web.de>:
->> Am 05.07.21 um 09:42 schrieb Ulrich Windl:
->>>> You *can* overwrite them using "git branch --force foo" and then
->>>> "git branch -d foo" works.
->>>
->>> Would it be OK to force the branch to any commit (e.g.: "master"), rel=
-ying
+
+On Tue, Jul 06 2021, Pratyush Yadav wrote:
+
+> On 28/06/21 06:44PM, Felipe Contreras wrote:
+>> Pratyush Yadav wrote:
+>> > I have a patch at $DAYJOB that contains a diff header ("diff --git 
+>> > a/...") in its commit message, and unfortunately it is not indented. So 
+>> > naturally, git-am trips up and thinks it is the start of the main diff 
+>> > and tries to apply the diff starting there. It does not apply and the 
+>> > patch is rejected as being corrupt.
+>> > 
+>> > I know one option for me is to manually edit the patch and indent the 
+>> > diff header. But I would like to avoid that if possible. Is there any 
+>> > way to apply that patch as-is? Is it possible to tell git-am where to 
+>> > start looking for the diff?
+>> 
+>> git apply?
 >
->> on
->>> the fact that any reference (read: "master") to that commit will preve=
-nt
->> actual
->>> removal of the commit?
->>
->> Yes, any valid commit would do.  This turns dangling branches into
->> normal delete-able ones.  Other branches are unaffected.
+> Sure, that is an option. But then I would have to copy/paste the commit 
+> message and add the author information manually. Is there any way to do 
+> this automatically? What if I have 100 commits like this?
 >
-> OK, but either it does not work, or I did not understand what to do:
->
->> git branch --force bitmap-generic
-> fatal: Not a valid object name: 'bitmap-generic'.
->> git fsck
-> Checking object directories: 100% (256/256), done.
-> Checking objects: 100% (173/173), done.
-> notice: HEAD points to an unborn branch (bitmap-generic)
-> dangling blob 0458be7cf03f35be365c819afe0104ff3c178ca0
-> dangling blob 3000d29f0a652f3f7ed25572cac9969b90adeca5
-> dangling commit 90e8531086d3efaeefdf6c8d39b6782e49dd2a0d
-> dangling commit b598195f859106662bde746f391a7df9162231e9
-> dangling tree fb4866ab5cc2f0c34a63334b90550ef7199a2098
-> ...
+> This is a valid Git commit. It would be nice if the Git email tooling 
+> could handle it cleanly.
 
-First: Please make backups.
+I don't think there is, but it could be fixed.
 
-Here's what works for me.  First reproducing the error:
-
-   $ echo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa >.git/refs/heads/broken
-   $ git branch --delete --force broken
-   error: Couldn't look up commit object for 'refs/heads/broken'
-
-Now I have a broken branch that I cannot delete.  We should be on the
-same page now.
-
-   $ git branch
-     broken
-   * master
-
-So I'm on master, a valid branch.
-
-   $ git branch --force broken
-
-Now the broken branch is overwritten and points to the same commit as
-master.
-
-   $ git branch --delete broken
-   Deleted branch broken (was 83d267b).
-
-And now it's gone.
-
-Ren=C3=A9
+I had this happen to me the other day and ended up reading the relevant
+parsing code, I think if it were a bit smarter we could handle the
+common case, i.e. when we find "diff --git" or whatever it is keep
+looking and see if we find another one, or perhaps have a "looks like
+I'm at the diffstat" heuristic where we'll prefer the "diff --git" that
+follows a "---" line, if there' two of them (that's also going to be
+ambiguous, but both of them are less likely to happen to the same
+commit).
