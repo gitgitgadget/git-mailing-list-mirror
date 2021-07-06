@@ -2,96 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7845C07E96
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 22:04:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6484C07E96
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 22:14:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 976C361C3B
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 22:04:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B20BF61CB4
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 22:14:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229876AbhGFWHM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jul 2021 18:07:12 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53014 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229753AbhGFWHL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jul 2021 18:07:11 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9BF5B149CC2;
-        Tue,  6 Jul 2021 18:04:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=17AUkyqVWvYmtqWzKjY6RB1M2/fHhdY1X/aa+F
-        9zpGw=; b=WwN4BTSYtbTjv0soTfHrcAdTi2p3q1dDHN4OREcsBBbgqxAyC3guGE
-        aX6can2AcmNB3BE571R8dFQ7p0RMVkhCYxYuEUkHERo9zrFsJa2FTupMSQNjpPw5
-        Qwp3Np80m0GtdvwOPfB5qRGSFMLP6agNTDbfOfr7oAIX8FYW6RDRk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 924B0149CC0;
-        Tue,  6 Jul 2021 18:04:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0DB90149CBD;
-        Tue,  6 Jul 2021 18:04:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git for Windows 2.32.0(2)
-References: <20210706213745.4758-1-johannes.schindelin@gmx.de>
-Date:   Tue, 06 Jul 2021 15:04:28 -0700
-In-Reply-To: <20210706213745.4758-1-johannes.schindelin@gmx.de> (Johannes
-        Schindelin's message of "Tue, 6 Jul 2021 21:37:45 +0000")
-Message-ID: <xmqq7di3gkur.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 232844D0-DEA6-11EB-8CFD-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+        id S229811AbhGFWQv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jul 2021 18:16:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50960 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229753AbhGFWQu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jul 2021 18:16:50 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B334AC061574
+        for <git@vger.kernel.org>; Tue,  6 Jul 2021 15:14:10 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id s24so1075391oiw.2
+        for <git@vger.kernel.org>; Tue, 06 Jul 2021 15:14:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=qx7uZ9ZoBOsQvPcQaKhR0Iwxgahq9SUZpRr4S9t/sy0=;
+        b=W6SqPr3PwqpJwN87ScIvEp2Q1jWurPXbblUmQ1aQfmvSGOI8HVrx1MgYnpmALSjj1S
+         bLvbld87srGA7CYioukkkXo4GxPcf6vmLoNesHc6LS+/WcKTU6sPDOd7YXeSD42UTVIg
+         kXGOX9hVzBJZYmlNMzxmQ7O2FxmmJ53J6QCNZqHjs/35ge+8EXdxxm1JPIKxlEh+Vaah
+         ivEn3GOjKiLdeIRJR6OCms7Ykl5LrBv3/XkpCpNN0KA7sFhEeBTsJCCs7n6dlGkvPI2n
+         E2/Dn9/xWq9u6vmhthfq2Az887Y++8MYV3m4KeJGX3BXUIdbbkab7iHt5Ce/OQ8gJ6Tg
+         w9Xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=qx7uZ9ZoBOsQvPcQaKhR0Iwxgahq9SUZpRr4S9t/sy0=;
+        b=U+IXTc6e+P3ikYyugO5EF6nbXgJNR/Jwxa10bRfXJFA62wElANnzwpn7fB78ZcryZG
+         u6wYYRYjXi4wVXgEiJXLuthJPJrPD9VcX6j/NHq89NY/7ayaTaGJIo5VHnPpV9LLqFjT
+         1g7Mbo7blLK12d4bl+KgRYtjlvxQmlVGtoRGAKfNvnkyr44RY7M2TpGr8YVTIhjFhr1o
+         VTRggOVtLJhVP4uQV28yRmhbsl6V/vYuACxHA0Nb8H0bQ7s7K4MbCY0FFxnb+1oia4iY
+         eM5Pv3WtiDHPe3Z8FtNDhMCWPDlErisBEjOma/7Egta/kX2SrNbTtlic8GiE+33GYGmQ
+         nmBw==
+X-Gm-Message-State: AOAM532vkjnaRons02aANJH1jj5L6y6W2e1v7EsxWpOiUsY0hRCy2i1A
+        BYipn41oHLJN0uZ2kKjSMWw=
+X-Google-Smtp-Source: ABdhPJyn4lsYABvekuRgoKp+IWTk/48fHA1wDWRgxoi0HvaEySzKl71D0ediTJ37CW2PkGL65turvA==
+X-Received: by 2002:aca:350a:: with SMTP id c10mr2283870oia.60.1625609649974;
+        Tue, 06 Jul 2021 15:14:09 -0700 (PDT)
+Received: from localhost (fixed-187-189-163-231.totalplay.net. [187.189.163.231])
+        by smtp.gmail.com with ESMTPSA id k14sm3088993oon.5.2021.07.06.15.14.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Jul 2021 15:14:09 -0700 (PDT)
+Date:   Tue, 06 Jul 2021 17:14:08 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Felipe Contreras' <felipe.contreras@gmail.com>,
+        =?UTF-8?B?J8OGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uJw==?= 
+        <avarab@gmail.com>
+Cc:     git@vger.kernel.org, 'Alex Henrie' <alexhenrie24@gmail.com>,
+        'Richard Hansen' <rhansen@rhansen.org>,
+        'Junio C Hamano' <gitster@pobox.com>
+Message-ID: <60e4d5b03dbe8_1c4281208b1@natae.notmuch>
+In-Reply-To: <04df01d772ad$c9ac7430$5d055c90$@nexbridge.com>
+References: <20210705123209.1808663-1-felipe.contreras@gmail.com>
+ <20210705123209.1808663-2-felipe.contreras@gmail.com>
+ <87bl7f5ho1.fsf@evledraar.gmail.com>
+ <60e4bf9a6a628_1c4281208b@natae.notmuch>
+ <04de01d772a8$540c6690$fc2533b0$@nexbridge.com>
+ <60e4c71099ef_1c4281208ad@natae.notmuch>
+ <04df01d772ad$c9ac7430$5d055c90$@nexbridge.com>
+Subject: RE: [RFC PATCH 01/35] merge: improve fatal fast-forward message
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Randall S. Becker wrote:
+> On July 6, 2021 5:12 PM, Felipe Contreras wrote:
 
-> Dear Git users,
->
-> I hereby announce that Git for Windows 2.32.0(2) is available from:
->
->     https://gitforwindows.org/
->
-> Changes since Git for Windows v2.32.0 (June 7th 2021)
->
-> New Features
->
->   * The Windows Terminal profile is now identified by a GUID, for more
->     robust customization.
->   * Comes with GNU Privacy Guard v2.2.28.
->   * Comes with Git Credential Manager Core v2.0.475.64295.
->   * Access to remote HTTPS repositories that requires client
->     certificates can be enabled. This is now necessary because cURL no
->     longer sends client certificates by default.
->
-> Bug Fixes
->
->   * The built-in file system watcher could hang in some scenarios. This
->     was fixed.
->   * Remote HTTPS repositories could not be accessed from within
->     portable Git installed into a network share. This has been fixed.
->   * When scrolling in the pager (e.g. in the output of git log), lines
->     were duplicated by mistake. This was fixed.
->   * The git subtree command was completely broken in the previous
->     release, and was fixed.
->   * A bug was fixed where remote operations appeared to hang (but were
->     waiting for user feedback on a hidden Console).
->   * A bug was fixed where the experimental built-in file system watcher
->     had a problem with worktrees whose paths had non-ASCII characters.
+> >But this is not a `git merge`, this is a `git merge --ff-only`; they
+> >are different operations. There *never* is a need for `--abort` with
+> >`git merge --ff-only`.
+> 
+> Well, you know that and I know that, but having to explain this to
+> every new git user who will operationally use git merge --ff-only
+> within hours or days of their first clone is a different matter.
 
-Nice.
+New users don't do `git merge --ff-only`, they very likely don't do
+`git merge` either, nor do they do `git pull --ff-only`. This is obvious
+from the countless threads where users do `git pull` without knowing
+that they will create a true merge by mistake.
 
-Thanks.
+Even less likely is that they will know about `git merge --abort`, and even
+less that they will know both `git merge --ff-only` and
+`git merge --abort`.
+
+Even even less likely that they will mistakenly expect
+`git merge --ff-only` to be left inside a temporary stated to be
+resolved by `git merge --abort`.
+
+But as Junio said, *if* such a hypothetical user exists, we don't want
+to keep misleading them into thinking that a true merge was somehow
+aborted, because it wasn't.
+
+It's much better to simply let go the current error message.
+
+Cheers.
+
+-- 
+Felipe Contreras
