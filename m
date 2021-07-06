@@ -2,73 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22E25C07E96
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8421CC07E96
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:42:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E923B61C85
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:39:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6474E61C81
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:42:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229935AbhGFUmh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jul 2021 16:42:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58536 "EHLO
+        id S229919AbhGFUpR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jul 2021 16:45:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229807AbhGFUmg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jul 2021 16:42:36 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB860C061574
-        for <git@vger.kernel.org>; Tue,  6 Jul 2021 13:39:56 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id l17-20020a9d6a910000b029048a51f0bc3cso35161otq.13
-        for <git@vger.kernel.org>; Tue, 06 Jul 2021 13:39:56 -0700 (PDT)
+        with ESMTP id S229781AbhGFUpR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jul 2021 16:45:17 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99794C061574
+        for <git@vger.kernel.org>; Tue,  6 Jul 2021 13:42:38 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id d27-20020a05683018fbb02904ae64d1b56bso61497otf.9
+        for <git@vger.kernel.org>; Tue, 06 Jul 2021 13:42:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=ypGRnniyuhSj/+uIKtssk/wxVjW5jsQ3q9qnmYw6O58=;
-        b=ugmf8t/d+9JdyUJNRM4rucj9pNDMmec8byYMFUF6ajJqcePRAQHvWcSe6UCo40Mued
-         WRyz4+YekflVJf+a2D0JLrT+EjVHY6AAKj4vMg5tG/u8fuSGGmKoyqwVhLj5ZgpOOcoF
-         kBUqUvU5hIuIIMS6YurtYyppyMjn7VY7felJolr0VBaTO6VSscwY1GBR9gbSWB76ZOSd
-         nEMZ0h+Rxm2CBQGKkgzTKnWaNOh9Qqo/bPqxVgybRrE3NZV06HqjMeItK6pvMiYCGal+
-         JK9jS8dFtWUK8ImimLJcMEilPftTDVJZWO32F/oo15VVsD6/U44H7QHO7ZqdjXySNbVY
-         txlQ==
+        bh=pWHxmav575noY9x57bfQr/UTRsciHkEffiTj7/079WI=;
+        b=iIPL6X8C57gUol0REWr712dOzlbeCxzwGQBzI1iuOqhlgrXoYQYMbkV8HmKQzi7P4j
+         Vf6/IvvEN4rUywMidh1pv32BCL8LhXYGinkKBNY2svsdC96zPSfurHza6IHbsMHKs1le
+         v1LrYyUaBggxMnF+OshmAm6bTg7pJXGswEwuB/BvMe05bOhsIcqzNN9FnMVdBO0gsxyp
+         0K4YzX5w4k0PUbx98Hd/fpU4Iw+Km+Fd54nyDM1tK8yxQ+CvblcnNm3pqC/l5dO1NDdP
+         sPXWI7VyaHfJ9DTXEknaUxjL6t2goOQwjEgZB9kMMwdarNK/owDThBXyBcXT5yYw/ubS
+         ZLpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=ypGRnniyuhSj/+uIKtssk/wxVjW5jsQ3q9qnmYw6O58=;
-        b=ETo2sBwW9j6u5YUw51XYXHOic75L7tUprFJ00lLy5VS1jvkgDcB2hHLm+/04t472cV
-         MGVJRSfxaJlewcakgGh+wxRiOC+qgdAN7Ey9fQLK2/ENtxpz7Cd1MQURER0y1qPokxCc
-         gdsTFgVqGKBhDAg6dneDCqQczlbqG6WQ9BVY9Rv9ccZUETG4PHtpAg2mc9P9uTnP9pdX
-         oA8SsMrJ+X1V/S2jVBUDvCvg+GCj9RC+eLGUi8V5BlslVmU5S8SiByxsNdimlhPACgcl
-         4GXLRnmyFJOsXp+F+7YNHshJ84z0loIIpHP83bg8UM7ju+yPvtorP6BzUrzQRt2/pUTo
-         9p7Q==
-X-Gm-Message-State: AOAM532vLATRuTA1h3Y6RyxCN95TO0665R2IbN/45JSzio06YefECu9T
-        VM2xyHiH1o0RWIg63bSR0m0=
-X-Google-Smtp-Source: ABdhPJz57VQaM9vOPGiA8yhVWENK2g4LXYvGaW+VGkxZp1UwadOg5jO12tg4eizSUOc7AC5MJEwSnA==
-X-Received: by 2002:a05:6830:18d:: with SMTP id q13mr16330861ota.253.1625603996195;
-        Tue, 06 Jul 2021 13:39:56 -0700 (PDT)
+        bh=pWHxmav575noY9x57bfQr/UTRsciHkEffiTj7/079WI=;
+        b=Hg9FI4isr0z00cn+rBLHgVr19FuTXejwSD9ik0AK5aOwl9ccU3VFYPIn56NBbTTPvh
+         c0Ec+af7Iqra1c4iNjO0JBo6c326Gq6lRc/j2WBEvPV6xyC25DpwaNmNMHn+SO9keXUV
+         XG7gSzigYgU4iLvRg9X4ZlvIrZsCGda73VxUmfFTu+ePjdO/Zr/3Ue9/W4phKUoRBsSs
+         jeaw4BmU008hVBpOkiFonUzTZyUeNFDAJJmqfZXfqL0SFQ7FUmbFYqiMWyu33T/hq04f
+         3E7g9eczwXFOEPFwqrANSC6gMgzQPRLnDiqQOGdSPKXJgc4ocl+6ueItxEQCD8cA+QoM
+         +7og==
+X-Gm-Message-State: AOAM531gj1brw9vi9CLWy5iAMDGx2MyUGejVQczgmOS9hH3giEo3AQOq
+        rJHvJxhuZ58/Th7IDzeyOPo=
+X-Google-Smtp-Source: ABdhPJzm+u2g3xbdp+ktq0/qlLbx0RQrJB7+828luy87tayCQhFj7owsDpogEh8/UvTjNiGBHQO1+g==
+X-Received: by 2002:a9d:4901:: with SMTP id e1mr16902456otf.103.1625604157945;
+        Tue, 06 Jul 2021 13:42:37 -0700 (PDT)
 Received: from localhost (fixed-187-189-163-231.totalplay.net. [187.189.163.231])
-        by smtp.gmail.com with ESMTPSA id h24sm3585659otl.41.2021.07.06.13.39.55
+        by smtp.gmail.com with ESMTPSA id g66sm2740440oob.27.2021.07.06.13.42.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jul 2021 13:39:55 -0700 (PDT)
-Date:   Tue, 06 Jul 2021 15:39:54 -0500
+        Tue, 06 Jul 2021 13:42:37 -0700 (PDT)
+Date:   Tue, 06 Jul 2021 15:42:36 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
 Cc:     git@vger.kernel.org, Alex Henrie <alexhenrie24@gmail.com>,
         Richard Hansen <rhansen@rhansen.org>,
         Junio C Hamano <gitster@pobox.com>
-Message-ID: <60e4bf9a6a628_1c4281208b@natae.notmuch>
-In-Reply-To: <87bl7f5ho1.fsf@evledraar.gmail.com>
+Message-ID: <60e4c03c58a45_1c4281208cb@natae.notmuch>
+In-Reply-To: <878s2j5hk6.fsf@evledraar.gmail.com>
 References: <20210705123209.1808663-1-felipe.contreras@gmail.com>
- <20210705123209.1808663-2-felipe.contreras@gmail.com>
- <87bl7f5ho1.fsf@evledraar.gmail.com>
-Subject: Re: [RFC PATCH 01/35] merge: improve fatal fast-forward message
+ <20210705123209.1808663-6-felipe.contreras@gmail.com>
+ <878s2j5hk6.fsf@evledraar.gmail.com>
+Subject: Re: [RFC PATCH 05/35] fast-forward: add advice for novices
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -78,70 +77,39 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> =
-
 > On Mon, Jul 05 2021, Felipe Contreras wrote:
-> =
 
-> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> > ---
-> >  builtin/merge.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/builtin/merge.c b/builtin/merge.c
-> > index a8a843b1f5..05e631229d 100644
 > > --- a/builtin/merge.c
 > > +++ b/builtin/merge.c
-> > @@ -1620,7 +1620,7 @@ int cmd_merge(int argc, const char **argv, cons=
-t char *prefix)
+> > @@ -1625,8 +1625,10 @@ static int merge_common(int argc, const char *=
+*argv, const char *prefix,
+> >  		}
 > >  	}
 > >  =
 
-> >  	if (fast_forward =3D=3D FF_ONLY)
-> > -		die(_("Not possible to fast-forward, aborting."));
-> > +		die(_("unable to fast-forward"));
+> > -	if (fast_forward =3D=3D FF_ONLY)
+> > +	if (fast_forward =3D=3D FF_ONLY) {
+> > +		diverging_advice();
+> >  		die(_("unable to fast-forward"));
+> > +	}
+> >  =
+
+> >  	if (autostash)
+> >  		create_autostash(the_repository,
 > =
 
-> I read the existing message a bit more like "this makes no sense
-> anymore" (correct) and the latter more like "we encountered an
-> error".
+> ...ah, and re my comment on the earlier patch here's where we're adding=
 
-I mean, this is the documentation of --ff-only:
-
-  With `--ff-only`, resolve the merge as a fast-forward when possible.
-  When not possible, refuse to merge and exit with a non-zero status.
-
-So if you do `git merge --ff-only` you are telling git: "I want you to
-exit with an error when the fast-forward is not possible".
-
-If you do:
-
-  % git merge --ff-only
-  fatal: Not possible to fast-forward, aborting.
-
-That "aborting" part is redundant; we know `git merge` should abort if
-the fast-forward is not possible, we explicitely told git to do that.
-
-Moreover the "fatal: " prefix also indicates that git aborted.
-
-Then you have "Not possible to fast-forward", which if memory serves
-well should be in lowercase (altghough can't find that in the
-guidelines).
-
-"unable to fast-forward" is simply a more succinct way of saying
-"not possible to fast-forward". Sure, we are not explaining why,
-although I can't think of any other reason why we could not fast-forward.=
-
-
-> Perhaps something like:
+> advice.
 > =
 
->     "Can't merge X with Y, in --ff-only mode, would need to create a me=
-rge commit", tip_name
+> I'd think just squash that into this, or mention in the commit message
+> "a later commit will add an advice() before this, where this new wordin=
+g
+> will make more sense" or something...
 
-I don't think die() messages should be that big, how about?
-
-  branches diverged, can't fast-forward
+I don't think we lost any information in the previous patch. In fact
+with my suggestion we gained a little bit.
 
 -- =
 
