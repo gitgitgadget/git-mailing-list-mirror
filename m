@@ -2,88 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7B21C07E96
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:56:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5E6BC07E96
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:57:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B8C4B61CA2
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:56:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FFFC61C94
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:57:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229986AbhGFU64 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jul 2021 16:58:56 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55341 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229781AbhGFU6y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jul 2021 16:58:54 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3DFE714960F;
-        Tue,  6 Jul 2021 16:56:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aU4+I2S2nf1MYDZjIKxAEnhrJmap+9hzfvYlB4
-        6Klvw=; b=CaUVYNCVj63f0HC7/RD3SF2MOkRNYGJrSvcqjrWeF+uEnY5MRLbRiG
-        ZekVdyWaqKc8Wq3MP4GNfPQhQ7JLCBvgTedrQNJO3/42pQ2u3n6+ob/ja7kJ5z04
-        Uqn1/6amZHyLiDeGrAoRzSlbSrE5UJIUv4TMwggQD6MmKNspmGLCI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 36B7114960E;
-        Tue,  6 Jul 2021 16:56:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8A42014960B;
-        Tue,  6 Jul 2021 16:56:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     "'Felipe Contreras'" <felipe.contreras@gmail.com>,
-        =?utf-8?Q?'=C3=86v?= =?utf-8?Q?ar_Arnfj=C3=B6r=C3=B0_Bjarmason'?= 
-        <avarab@gmail.com>, <git@vger.kernel.org>,
-        "'Alex Henrie'" <alexhenrie24@gmail.com>,
-        "'Richard Hansen'" <rhansen@rhansen.org>
-Subject: Re: [RFC PATCH 01/35] merge: improve fatal fast-forward message
-References: <20210705123209.1808663-1-felipe.contreras@gmail.com>
-        <20210705123209.1808663-2-felipe.contreras@gmail.com>
-        <87bl7f5ho1.fsf@evledraar.gmail.com>
-        <60e4bf9a6a628_1c4281208b@natae.notmuch>
-        <04de01d772a8$540c6690$fc2533b0$@nexbridge.com>
-Date:   Tue, 06 Jul 2021 13:56:11 -0700
-In-Reply-To: <04de01d772a8$540c6690$fc2533b0$@nexbridge.com> (Randall
-        S. Becker's message of "Tue, 6 Jul 2021 16:48:46 -0400")
-Message-ID: <xmqq1r8bi2l0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229986AbhGFVAh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jul 2021 17:00:37 -0400
+Received: from wout3-smtp.messagingengine.com ([64.147.123.19]:41857 "EHLO
+        wout3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229781AbhGFVAg (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 6 Jul 2021 17:00:36 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id 684C432007F9;
+        Tue,  6 Jul 2021 16:57:57 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Tue, 06 Jul 2021 16:57:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=furrypaws.ca; h=
+        from:to:cc:subject:date:message-id:in-reply-to:references
+        :mime-version:content-transfer-encoding; s=fm3; bh=/DvXM314rg3oo
+        o+DmNH2JPLUT+ENNmo40PX/DZbCCus=; b=dd+6SaJPTCSZO3x4KHn2XUkdyKI3D
+        OAgr82NzPEtLVOODZOZpb6fukSAUnyji0jo2HEFzB5nQ9V2y4XurPygWSM+a3Kfz
+        BhPxnVdjSHeQEB1fUK0bymd6lGeFVBk0v8djVOOaQPUN1GpJVdI4CSSY9ZgGs9Iz
+        yK+w7WGM3HW5QrC564zG0Vddhk+Nz7Q74JbJxih4WHnP1ChCxIN8Rq/M+r43xlPW
+        UPwxyJQzpe5ynxc5AUN8FPFSepZMQs7Y1Qj/8OTbpI9AasRCgfvlhNOGRo9dCzPK
+        EgbLD5hgwYNZCa03h8EKuLQx7teBiE3PAItitzREGWT0y6Mj5dscN9uqA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:date:from
+        :in-reply-to:message-id:mime-version:references:subject:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; bh=/DvXM314rg3ooo+DmNH2JPLUT+ENNmo40PX/DZbCCus=; b=Vh/iaH1O
+        P2Z4HFQC3Vaxv8fETeOGX21qLLMHFWSpX1ftCQBIBV5eozkwEiVidnfDGiDW0imn
+        yyL1lxLFDjXDNHVtSHRmIFQxG1HjnFqZmCNobvnf68evF1tgGCbPHu35sgaGc4n8
+        udMQyKkcY6kC03ikrMuQydovjFeVAtVghsyhFdCWgvI2CJiJnjNtVuS6JqPmOfZQ
+        7EeCldPMQMoPqVD9+2VyJ+OINLJLTXIHgT82TPnpvtaula8BwQhj/ATd5LJvLq5R
+        P/iSe8Vf8aRiw+fFasNRYEJzKQeBjPsZstj/lm2vL9ve88UmkNae/yI7uVTyfZIX
+        GxufOvvyRkgMXw==
+X-ME-Sender: <xms:1MPkYKcfjWQ9n102QxhsD_T6g3seC8gEb7tJMVatpA_n6AsSZtyztg>
+    <xme:1MPkYEOgcOIu3ONDycNfVb2RGaopH1DKRE8xzZ18WqpOEsKDyCwY863WfltHfGM7T
+    VhL3MM_He9N9-jBtQ>
+X-ME-Received: <xmr:1MPkYLjGFGkJOyDc5vlLaS4ycgoyPHq8y2MYkTOHVALMAXEL8H-NxkbYB29WCFCaPmxkFI2cpJ49i1hSoW9T1m-fCGr62CUD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrtddtgdduudduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
+    dtredttdenucfhrhhomheptehnughrvgifuceuvghrrhihuceorghnughrvgifsehfuhhr
+    rhihphgrfihsrdgtrgeqnecuggftrfgrthhtvghrnhepgeelgfehtdeiveeuudegueeike
+    ejvedvlefgkeekleevkeejveegjeejteeugedtnecuvehluhhsthgvrhfuihiivgepuden
+    ucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsehfuhhrrhihphgrfihsrdgtrg
+X-ME-Proxy: <xmx:1MPkYH9Y5W5TV0MxmSJdzqa40ye9XGWkC7RQelf89v2cA83BdIN11g>
+    <xmx:1MPkYGuMgDjlSaDM9YpDkEk6qZIRlwPgGMmMY5aqZCflpPalhhSbZw>
+    <xmx:1MPkYOGHbkoM8a4wqF91ngQf8zVEPIuOOFAdhJ81UuasKTjvTaqUdQ>
+    <xmx:1cPkYKi8LUVu2yXHoYK9RLVabjy8bZX4S1Wpx6GCdQIuAxzkvb0l-g>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Jul 2021 16:57:56 -0400 (EDT)
+From:   Andrew Berry <andrew@furrypaws.ca>
+To:     git@vger.kernel.org
+Cc:     bagasdotme@gmail.com, gitster@pobox.com,
+        Andrew Berry <andrew@furrypaws.ca>
+Subject: [PATCH] docs: .gitignore parsing is to the top of the repo
+Date:   Tue,  6 Jul 2021 16:57:12 -0400
+Message-Id: <20210706205712.75270-1-andrew@furrypaws.ca>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210706205439.75015-1-andrew@furrypaws.ca>
+References: <20210706205439.75015-1-andrew@furrypaws.ca>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 98DCEF1E-DE9C-11EB-8ECB-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Randall S. Becker" <rsbecker@nexbridge.com> writes:
+The current documentation reads as if .gitignore files will be parsed in
+every parent directory, and not until they reach a repository boundary.
+This clarifies the current behaviour.
 
->>If you do:
->>
->>  % git merge --ff-only
->>  fatal: Not possible to fast-forward, aborting.
->>
->>That "aborting" part is redundant; we know `git merge` should abort
-> if the fast-forward is not possible, we explicitely told git to do
-> that.
->
-> `git merge` is a special operation where errors (conflicts, for one)
-> may leave the repository in a merge pending state where you
-> subsequently may have to use `git merge --abort` to reset the
-> situation or `git add` to continue. The `aborting` output makes it
-> clear that you do not have to do the `--abort` and *cannot* do the
-> `add` because there was an implicit `--abort` done resulting from the
-> failure. This is important information for the user.
+As well, this corrects 'toplevel' to 'top-level', matching usage for
+'top-level domain'.
 
-If so, adding ", aborting" to the end is misleading.  In this
-particular failure mode, the command pretends that the merge did not
-even start.
+Signed-off-by: Andrew Berry <andrew@furrypaws.ca>
+---
+ Documentation/gitignore.txt | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index 53e7d5c914..af8f231cc1 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -27,12 +27,11 @@ precedence, the last matching pattern decides the outcome):
+    them.
+ 
+  * Patterns read from a `.gitignore` file in the same directory
+-   as the path, or in any parent directory, with patterns in the
+-   higher level files (up to the toplevel of the work tree) being overridden
+-   by those in lower level files down to the directory containing the file.
+-   These patterns match relative to the location of the
+-   `.gitignore` file.  A project normally includes such
+-   `.gitignore` files in its repository, containing patterns for
++   as the path, or in any parent directory (up to the top-level of the work
++   tree), with patterns in the higher level files being overridden by those in
++   lower level files down to the directory containing the file. These patterns
++   match relative to the location of the `.gitignore` file.  A project normally
++   includes such `.gitignore` files in its repository, containing patterns for
+    files generated as part of the project build.
+ 
+  * Patterns read from `$GIT_DIR/info/exclude`.
+-- 
+2.31.1
 
