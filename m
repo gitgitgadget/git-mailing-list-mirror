@@ -2,112 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35592C07E96
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 19:39:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCFB7C07E96
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 19:42:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0DBF561A14
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 19:39:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9EF361A14
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 19:42:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229834AbhGFTmV convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 6 Jul 2021 15:42:21 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:65433 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229730AbhGFTmU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jul 2021 15:42:20 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 166JdW7s045737
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 6 Jul 2021 15:39:33 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Fabian Stelzer'" <fs@gigacodes.de>,
-        "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Fabian Stelzer via GitGitGadget'" <gitgitgadget@gmail.com>
-Cc:     <git@vger.kernel.org>
-References: <pull.1041.git.git.1625559593910.gitgitgadget@gmail.com> <xmqqzguzlc03.fsf@gitster.g> <fffd8c26-f3a7-b074-f4ba-e8552ca1d7cc@gigacodes.de>
-In-Reply-To: <fffd8c26-f3a7-b074-f4ba-e8552ca1d7cc@gigacodes.de>
-Subject: RE: [PATCH] Add commit & tag signing/verification via SSH keys using ssh-keygen
-Date:   Tue, 6 Jul 2021 15:39:27 -0400
-Message-ID: <04d901d7729e$a51a9160$ef4fb420$@nexbridge.com>
+        id S229811AbhGFTpE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jul 2021 15:45:04 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52562 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229730AbhGFTpE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jul 2021 15:45:04 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A57EB148F0E;
+        Tue,  6 Jul 2021 15:42:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ib7SXokBeWZA5CB1GGwYnJnH1FMflMVTbXNT6d
+        uWQLE=; b=O8RUrgHHq7zJYXFUdMLOAUqXQemd7R6sGTFmoe97klsPujRftvy0qH
+        a1UEaWN+rEv8KBRAcd/c28o2ahoHvoP4Ztyg0jkzyNAsvytnDl3tRkuvBFRRyHXD
+        Iu9NVikRQXnW7sah5b5QyAstAfi9jyeHWRpjjqW7zPqkixbySh42M=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9D464148F0D;
+        Tue,  6 Jul 2021 15:42:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0C3A1148F0C;
+        Tue,  6 Jul 2021 15:42:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Stephen Manz via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Stephen Manz <smanz@alum.mit.edu>
+Subject: Re: [PATCH] worktree: teach `add` to accept --reason <string> with
+ --lock
+References: <pull.992.git.1625550451038.gitgitgadget@gmail.com>
+        <CAPig+cSsPrQrP9xk8M8H339_NpYqKh1okeo1V-fAJ2zk3QeOjQ@mail.gmail.com>
+Date:   Tue, 06 Jul 2021 12:42:21 -0700
+In-Reply-To: <CAPig+cSsPrQrP9xk8M8H339_NpYqKh1okeo1V-fAJ2zk3QeOjQ@mail.gmail.com>
+        (Eric Sunshine's message of "Tue, 6 Jul 2021 02:19:43 -0400")
+Message-ID: <xmqq7di3jkki.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQGQchAJjmD2iUL5bDzddDRhqmGgNAK3GgPfAbfAA4mroN/7wA==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 48AA8010-DE92-11EB-A110-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On July 6, 2021 11:46 AM, Fabian Stelzer wrote:
->> "Fabian Stelzer via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->>> From: Fabian Stelzer <fs@gigacodes.de>
->>>
->>> set gpg.format = ssh and user.signingkey to a ssh public key string
->>> (like from an authorized_keys file) and commits/tags can be signed
->>> using the private key from your ssh-agent.
->>>
->>> Verification uses a allowed_signers_file (see ssh-keygen(1)) which
->>> defaults to .gitsigners but can be set via gpg.ssh.allowedsigners A
->>> possible gpg.ssh.revocationfile is also passed to ssh-keygen on
->>> verification.
->> There are probably style and coding-guideline nit people will pick in
->> the patch, but first of all I have to say that I am uncomfortably
->> excited to see this addition.
->>
->> One thing that is unclear is how the 'allowed-signers' is expected to
->> be maintained in the larger picture.  Who decides which keys (belong
->> to whom) are trustworthy?  Does a contributor has to agree with the
->> decision that certain keys are trustworthy made by somebody else in
->> the project and use the same 'allowed-signers' collection of keys to
->> effectively participate in the project?  How do revoking and rotating
->> keys work?
->>
->> It was a deliberate design decision to let PGP infrastructure that is
->> used to sign and verify signatures when we use PGP for signing without
->> tying any of these decisions to the tracked contents, as that would
->> reduce the attack surface for a malicious tree contents to affect the
->> signing and verification (in other words, "we punted"
->> ;-).  Even though I am not sure exactly what you meant by "defaults to
->> .gitsigners", I am assuming that you meant a file with the name at the
->> top-level of the working tree, which makes me worried, as it opens us
->> to the risk of reading from and blindly trusting whatever somebody
->> else placed in the tree contents immediately after we "git pull" (or
->> "git clone").
->>
->> Thanks for working on it.
->Glad to hear that :)
->I tried to keep the style with the existing code but the IDE sometimes has its own idea.
->
->I think there are two basic options for maintaining the allowed signers
->file:
->1. Every developer has their own stored outside of the repo and adds/revokes trust manually like with gpg.
->     A central repo would probably verify against a list managed by the tool (e.g. gitolite) 2. Store it in a .gitsigners file in the repo. This
->would only work if you only allow signed commits/pushes from this point onwards. But this way a shared understading of trusted users can
->be maintained easily.
->     Only already trusted committers can add new users or change their own keys. The signers file is basically a ssh_authorized_keys file
->with an additional principal identifier added at the front like:
->     fs@gigacodes.de ssh-rsa XXXKEYXXX Comment
->     a@b.com ssh-ed25519 XXXKEYXXX Comment
->
->Where are commits usually verified at the moment? On every devs checkout or only centrally on pushes?
->
->The signers file also supports SSH CA keys and wildcard identifiers. At the moment i look up the principal dynamically via the public key so
->it's just a text info of who's key is it at the moment.
->The SSH CA Stuff is probably a niche use case but could be cool in a corporate setting. Thats also what the revocation file is used for. The
->SSH CA can generate a KRL (like crl) which you put into it or you can specify explicit public keys in it to deny them.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Just musing here... If adding SSH CA, would not adding support for a self-signed SSL CA make sense? In such a situation, a self-signed certificate can be created at an organizational level, or even from an official root CA. Per-user self-signed certificates, or organizationally defined CAs and certificates, could be created that are more stable than SSH CAs. Then something like OpenSSL (via libcurl) could handle the signature and validation management. Signed content could propagate to Cloud-based git servers and retain their ability to be property verified. Although I can see a drawback here, which relates to expiring certificates - although the concept of an expired signed content is somewhat compelling. Imaging the use case where a company has an employee who signs a tag/commit. The employee departs/retires/terminated/etc., and with it the published certificate is also revoked - an extreme case perhaps, but if the code can no longer be trusted by virtue of the termination, maybe t
- his is semantically interesting. This could be a core git function with no additional dependencies.
+>>  --reason <string>::
+>> +       With `lock` or with `add --lock`, an explanation why the working tree is locked.
+>
+> I realize that you're mimicking the interface of `git worktree lock`
+> which accepts an optional `--reason`, but I'm wondering if the
+> user-experience might be improved by instead allowing `--lock` to
+> accept the reason as an optional argument. For instance:
+>
+>     git worktree add --lock='just because' ...
 
-Regards,
-Randall
+Thanks for thinking aloud, but I'd prefer the interface as posted,
+simply because there is one less thing for users to remember.  The
+justification to lock is given with the --reason=<why> argument no
+matter how you acquire the lock on a worktree.
 
+
+>> diff --git a/builtin/worktree.c b/builtin/worktree.c
+>> @@ -31,6 +31,7 @@ struct add_opts {
+>>         int checkout;
+>>         int keep_locked;
+>> +       const char *lock_reason;
+>>  };
+>
+> Whether or not we do go with the approach of allowing `--lock` to take
+> the reason as an optional argument, we don't really need two structure
+> members here. Instead, we can repurpose `keep_locked` as a `const char
+> *` which is NULL if `--lock` was not specified, otherwise non-NULL.
+
+Makes sense.
+
+> However, in this case, it should probably just be a simple `else if`:
+>
+>     if (!opts->keep_locked)
+>         write_file(sb.buf, "initializing");
+>     else if (opts->lock_reason)
+>         write_file(sb.buf, "%s", opts->lock_reason);
+>     else
+>         write_file(sb.buf, _("added with --lock"));
+
+Excellent.
+
+Thanks.
