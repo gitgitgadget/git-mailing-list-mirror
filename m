@@ -2,115 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5E6BC07E96
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A95AC07E96
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 21:03:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8FFFC61C94
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:57:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 197C861C94
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 21:03:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229986AbhGFVAh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jul 2021 17:00:37 -0400
-Received: from wout3-smtp.messagingengine.com ([64.147.123.19]:41857 "EHLO
-        wout3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229781AbhGFVAg (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 6 Jul 2021 17:00:36 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id 684C432007F9;
-        Tue,  6 Jul 2021 16:57:57 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Tue, 06 Jul 2021 16:57:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=furrypaws.ca; h=
-        from:to:cc:subject:date:message-id:in-reply-to:references
-        :mime-version:content-transfer-encoding; s=fm3; bh=/DvXM314rg3oo
-        o+DmNH2JPLUT+ENNmo40PX/DZbCCus=; b=dd+6SaJPTCSZO3x4KHn2XUkdyKI3D
-        OAgr82NzPEtLVOODZOZpb6fukSAUnyji0jo2HEFzB5nQ9V2y4XurPygWSM+a3Kfz
-        BhPxnVdjSHeQEB1fUK0bymd6lGeFVBk0v8djVOOaQPUN1GpJVdI4CSSY9ZgGs9Iz
-        yK+w7WGM3HW5QrC564zG0Vddhk+Nz7Q74JbJxih4WHnP1ChCxIN8Rq/M+r43xlPW
-        UPwxyJQzpe5ynxc5AUN8FPFSepZMQs7Y1Qj/8OTbpI9AasRCgfvlhNOGRo9dCzPK
-        EgbLD5hgwYNZCa03h8EKuLQx7teBiE3PAItitzREGWT0y6Mj5dscN9uqA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:date:from
-        :in-reply-to:message-id:mime-version:references:subject:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; bh=/DvXM314rg3ooo+DmNH2JPLUT+ENNmo40PX/DZbCCus=; b=Vh/iaH1O
-        P2Z4HFQC3Vaxv8fETeOGX21qLLMHFWSpX1ftCQBIBV5eozkwEiVidnfDGiDW0imn
-        yyL1lxLFDjXDNHVtSHRmIFQxG1HjnFqZmCNobvnf68evF1tgGCbPHu35sgaGc4n8
-        udMQyKkcY6kC03ikrMuQydovjFeVAtVghsyhFdCWgvI2CJiJnjNtVuS6JqPmOfZQ
-        7EeCldPMQMoPqVD9+2VyJ+OINLJLTXIHgT82TPnpvtaula8BwQhj/ATd5LJvLq5R
-        P/iSe8Vf8aRiw+fFasNRYEJzKQeBjPsZstj/lm2vL9ve88UmkNae/yI7uVTyfZIX
-        GxufOvvyRkgMXw==
-X-ME-Sender: <xms:1MPkYKcfjWQ9n102QxhsD_T6g3seC8gEb7tJMVatpA_n6AsSZtyztg>
-    <xme:1MPkYEOgcOIu3ONDycNfVb2RGaopH1DKRE8xzZ18WqpOEsKDyCwY863WfltHfGM7T
-    VhL3MM_He9N9-jBtQ>
-X-ME-Received: <xmr:1MPkYLjGFGkJOyDc5vlLaS4ycgoyPHq8y2MYkTOHVALMAXEL8H-NxkbYB29WCFCaPmxkFI2cpJ49i1hSoW9T1m-fCGr62CUD>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrtddtgdduudduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
-    dtredttdenucfhrhhomheptehnughrvgifuceuvghrrhihuceorghnughrvgifsehfuhhr
-    rhihphgrfihsrdgtrgeqnecuggftrfgrthhtvghrnhepgeelgfehtdeiveeuudegueeike
-    ejvedvlefgkeekleevkeejveegjeejteeugedtnecuvehluhhsthgvrhfuihiivgepuden
-    ucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsehfuhhrrhihphgrfihsrdgtrg
-X-ME-Proxy: <xmx:1MPkYH9Y5W5TV0MxmSJdzqa40ye9XGWkC7RQelf89v2cA83BdIN11g>
-    <xmx:1MPkYGuMgDjlSaDM9YpDkEk6qZIRlwPgGMmMY5aqZCflpPalhhSbZw>
-    <xmx:1MPkYOGHbkoM8a4wqF91ngQf8zVEPIuOOFAdhJ81UuasKTjvTaqUdQ>
-    <xmx:1cPkYKi8LUVu2yXHoYK9RLVabjy8bZX4S1Wpx6GCdQIuAxzkvb0l-g>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Jul 2021 16:57:56 -0400 (EDT)
-From:   Andrew Berry <andrew@furrypaws.ca>
+        id S230230AbhGFVGT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jul 2021 17:06:19 -0400
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:45827 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229998AbhGFVGS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jul 2021 17:06:18 -0400
+Received: by mail-ed1-f54.google.com with SMTP id t3so426749edt.12
+        for <git@vger.kernel.org>; Tue, 06 Jul 2021 14:03:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SS1oUp/5bql5xb8DbeMJpa6rGHmRoMMCwKrNyWFU6ww=;
+        b=eU79EGiYIz6nCobSwUz9uqPwAFz9oMP1a6dPckQAjbzcsgAKnIZX1mRxJwCjhyLoPi
+         lREQnf2XU0IihJuwxT58RaOuTCuqgLWVbRUeJJ1hlMd88i4spWq4C1oTJxgxms4t19tB
+         6hYMUGj12/t4Uj2iAeJvYUYb0oCke2NMkSwEOuj2seD79RsS2Ep6jr0YJhmjQGhe9TYU
+         n508HFhkyyy89QvKsMJUDmIKzVwLwTqiZmwIBGTTr4imrxTVaGBPQQkmanzAhTE4NjxJ
+         cdmbJ5Hnw1TuJKCwWPmEwork4ZydqH2hJLl74tiNJZQQHbfhikTv2GtiDJY0t2JkIKXD
+         AFMA==
+X-Gm-Message-State: AOAM532oWtbVFHbOvO/QJqsLgX4rP5XesVvJKPBKCoaPL6ztrPYO0t1q
+        fJUqOhelGhZjhKYiDdc7PCiw6C9RQgUNfA==
+X-Google-Smtp-Source: ABdhPJylnP8NmCQmEBUV9IE3a1aDKueEnr/HbqqTelPCzZD9NfCPEGzPa4KtiXKKHXVI0Znzoica6A==
+X-Received: by 2002:a05:6402:216:: with SMTP id t22mr25230570edv.70.1625605418737;
+        Tue, 06 Jul 2021 14:03:38 -0700 (PDT)
+Received: from localhost.localdomain (IGLD-83-130-17-216.inter.net.il. [83.130.17.216])
+        by smtp.gmail.com with ESMTPSA id t6sm7690284edd.3.2021.07.06.14.03.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Jul 2021 14:03:38 -0700 (PDT)
+From:   Avishay Matayev <me@avishay.dev>
 To:     git@vger.kernel.org
-Cc:     bagasdotme@gmail.com, gitster@pobox.com,
-        Andrew Berry <andrew@furrypaws.ca>
-Subject: [PATCH] docs: .gitignore parsing is to the top of the repo
-Date:   Tue,  6 Jul 2021 16:57:12 -0400
-Message-Id: <20210706205712.75270-1-andrew@furrypaws.ca>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210706205439.75015-1-andrew@furrypaws.ca>
-References: <20210706205439.75015-1-andrew@furrypaws.ca>
+Cc:     code@tpope.net, Avishay Matayev <me@avishay.dev>
+Subject: [PATCH 0/3] Override isatty with GIT_FORCE_TTY
+Date:   Wed,  7 Jul 2021 00:03:15 +0300
+Message-Id: <20210706210317.706313-1-me@avishay.dev>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The current documentation reads as if .gitignore files will be parsed in
-every parent directory, and not until they reach a repository boundary.
-This clarifies the current behaviour.
+This is the resulting patch series from the discussion in the mailing list[1]
+and the Fugitive github issue[2].
 
-As well, this corrects 'toplevel' to 'top-level', matching usage for
-'top-level domain'.
+The goal is to allow to override git decisiveness about not doing
+something when some fd is not a pty, which can hinder Fugitive.
 
-Signed-off-by: Andrew Berry <andrew@furrypaws.ca>
----
- Documentation/gitignore.txt | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+I didn't annotate the location of the commits as I wasn't sure what was
+the correct one.. As it is not specific to a single mechanisms, but
+rather it is something global, is it fine as it is or should I use
+something as `global, `tree:` or `tree-wide:`?
 
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 53e7d5c914..af8f231cc1 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -27,12 +27,11 @@ precedence, the last matching pattern decides the outcome):
-    them.
- 
-  * Patterns read from a `.gitignore` file in the same directory
--   as the path, or in any parent directory, with patterns in the
--   higher level files (up to the toplevel of the work tree) being overridden
--   by those in lower level files down to the directory containing the file.
--   These patterns match relative to the location of the
--   `.gitignore` file.  A project normally includes such
--   `.gitignore` files in its repository, containing patterns for
-+   as the path, or in any parent directory (up to the top-level of the work
-+   tree), with patterns in the higher level files being overridden by those in
-+   lower level files down to the directory containing the file. These patterns
-+   match relative to the location of the `.gitignore` file.  A project normally
-+   includes such `.gitignore` files in its repository, containing patterns for
-    files generated as part of the project build.
- 
-  * Patterns read from `$GIT_DIR/info/exclude`.
+I also didn't document this feature, or at least I wasn't sure where
+to document it (other than on these commits), I would compare it to the
+GIT_SMART_HTTP as it is something pretty niche and it isn't (and IMO
+shouldn't be) documented to the regular user.
+
+Thank you,
+Avishay
+
+1. https://lore.kernel.org/git/CAJ-0OswsrnAuCwU6U=S2i1qKkg=66U-8RHSGqD2kh9T_30Yw9w@mail.gmail.com/
+2. https://github.com/tpope/vim-fugitive/issues/1772
+
+Avishay Matayev (3):
+  Change isatty's parameter to a *_FILENO define
+  Allow isatty to be overriden with GIT_FORCE_TTY
+  Add tests for GIT_FORCE_TTY
+
+ builtin/am.c               |  2 +-
+ builtin/bisect--helper.c   |  4 ++--
+ builtin/blame.c            |  2 +-
+ builtin/bundle.c           |  2 +-
+ builtin/checkout.c         |  2 +-
+ builtin/commit-graph.c     |  4 ++--
+ builtin/commit.c           |  2 +-
+ builtin/fsck.c             |  2 +-
+ builtin/gc.c               |  2 +-
+ builtin/log.c              |  2 +-
+ builtin/merge.c            |  4 ++--
+ builtin/multi-pack-index.c |  2 +-
+ builtin/pack-objects.c     |  2 +-
+ builtin/pack-redundant.c   |  2 +-
+ builtin/prune-packed.c     |  2 +-
+ builtin/prune.c            |  2 +-
+ builtin/rebase.c           |  2 +-
+ builtin/repack.c           |  2 +-
+ builtin/send-pack.c        |  2 +-
+ builtin/shortlog.c         |  4 ++--
+ builtin/sparse-checkout.c  |  2 +-
+ builtin/unpack-objects.c   |  2 +-
+ cache.h                    |  3 +++
+ color.c                    |  2 +-
+ column.c                   |  2 +-
+ compat/mingw.c             |  6 +++---
+ compat/mingw.h             |  2 +-
+ compat/winansi.c           | 16 ++++++++--------
+ config.c                   |  5 +++++
+ date.c                     |  2 +-
+ editor.c                   |  2 +-
+ pager.c                    |  4 ++--
+ preload-index.c            |  2 +-
+ read-cache.c               |  2 +-
+ remote-curl.c              |  2 +-
+ sequencer.c                |  4 ++--
+ sideband.c                 |  2 +-
+ t/t9904-git-force-tty.sh   | 38 ++++++++++++++++++++++++++++++++++++++
+ transport.c                |  6 +++---
+ transport.h                |  2 +-
+ wt-status.c                |  2 +-
+ 41 files changed, 101 insertions(+), 55 deletions(-)
+ create mode 100755 t/t9904-git-force-tty.sh
+
 -- 
-2.31.1
+2.25.1
 
