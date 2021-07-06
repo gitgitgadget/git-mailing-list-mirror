@@ -2,110 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 898C5C07E9B
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 21:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD9A8C07E96
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 21:11:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E81C61CA8
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 21:03:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89C5961C9C
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 21:11:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230192AbhGFVGe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jul 2021 17:06:34 -0400
-Received: from mail-ej1-f52.google.com ([209.85.218.52]:44579 "EHLO
-        mail-ej1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229986AbhGFVGe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jul 2021 17:06:34 -0400
-Received: by mail-ej1-f52.google.com with SMTP id he13so17697383ejc.11
-        for <git@vger.kernel.org>; Tue, 06 Jul 2021 14:03:54 -0700 (PDT)
+        id S229925AbhGFVO0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jul 2021 17:14:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37398 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229781AbhGFVO0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jul 2021 17:14:26 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54DFFC061574
+        for <git@vger.kernel.org>; Tue,  6 Jul 2021 14:11:46 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id s17so938015oij.0
+        for <git@vger.kernel.org>; Tue, 06 Jul 2021 14:11:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=WAtRQL7opSgBUYTAFqj3HZyrpPpYe9oyKODR2Cfmjkg=;
+        b=fAhwgp+aJX8i1SZ6cRiZOo7FGcW2uX412LNTWSScanpocrjHT2JFJURvFv6eLUcdhZ
+         tpmuOcjbngFHvEd9EZho0+xmMo8rS6PvoA8Cr4zK4qpGV0ysbH8L7wjpLOGILoNNjzqI
+         Jnm1vF6EnSwziq2Z5UO71C5E3c2qBlhPoZYXFZjv12LAb9NppnwvZ8M1c3BMkke3sd7c
+         5ZshtKUBGAjDUXsJOIK8NyARy5jQlcJ9NS/jfzP+402AMCytOULuTAqzs4DNcaN/fXTO
+         Fo0dOw3bfKHFAmENRU+WrII9lr8eLdUMagNpdLKPfv9DqMEz+lY4sx5rEbP+k9bqM5LP
+         66Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=j9rq84VpBeMDfmMkPhWtb9adxd/k4RKngC1L4KY7+Ok=;
-        b=XjIC5+TJUu+81pi5bl+1vEt+g2VSOLNJbb7PIt9BcGuJL6GWKbKYD3CQSm41f77hdD
-         /McXbPnmrkF/fh3T/iU/fqfzx3JRVv4dbMgFJetm0H2YQJwN+J+hsaMEBiDhk2u7pZEr
-         M7wlDIHrKXfThvw/83PUIGylCIxzjyj7xBWL90VWCs63jic7McjfRRYgCYKXbISUkW6N
-         Hh1I78AoFSF7iWVgdMpidpUK1SxpHZEwfAyV8wCWkSkFdBnXWXtOFRznnEA5or1VySma
-         vya6Cf7NP22zlCn2icvyXaDvLzep04L9Hxi0Nw6cVltlhMztmBaPTywPnhP0la4Qv/tE
-         3f4g==
-X-Gm-Message-State: AOAM533BFNEe/EyXVBz0wDTGEpg1o54XrC4zdBtpNgHpB9tvsdsFUJ5U
-        TcfcOT8K2U9F4etTdC/iq5x0DIoRRf+WiA==
-X-Google-Smtp-Source: ABdhPJzfZPm2KLhnh6kaYmOSpgBzeaYxts67QyxLZUol1u4IRKrJo5OlBvyOllLmedWbkZyNHFXMZA==
-X-Received: by 2002:a17:907:3e89:: with SMTP id hs9mr11623773ejc.509.1625605432386;
-        Tue, 06 Jul 2021 14:03:52 -0700 (PDT)
-Received: from localhost.localdomain (IGLD-83-130-17-216.inter.net.il. [83.130.17.216])
-        by smtp.gmail.com with ESMTPSA id t6sm7690284edd.3.2021.07.06.14.03.51
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=WAtRQL7opSgBUYTAFqj3HZyrpPpYe9oyKODR2Cfmjkg=;
+        b=lpOfJ25pZz7NvD9/9I2YvlvrM7mUvUmd0onVnAobIhfUF0oa9wOUJ1g51UFqvoAS2u
+         ZrSoptqOdnU0lpmlrVtqm2L1xq7spkl4WkbOpWYlS4S8gdSbQ3voHZhhxyGR9r5k8tp0
+         8xIg2BFB6q5dgG168m3rkjXlm3oPg7Hk3qi4is8v7/gomzL92URkC9izaq3AFXQI6BXY
+         u8L2yBF+M0k7tRXYdgEDFj7boXQPH8S86RVXdLOE2RrofNE/6GQE22BYOXa/AUwdwLIF
+         QaOZ5sLJM2Fkb0G5T/NCb8CvedbBoxb/8e4BDEucJoPjITEicKq0F/9o7YbqfZDc75VM
+         nRDg==
+X-Gm-Message-State: AOAM533rIrvY7zMdh3IQez8TXrpZ2Tc8j6f/VUyeWwZMbZHTvhxAv/zp
+        0Z4TyUxIWTyd1gmIqJAeDgg=
+X-Google-Smtp-Source: ABdhPJxZ5BqtaoZ/j7SBtiyPmbQ9VpsoDtFxk4jx6g3grvu4OQLkFlMqp+J8p7ZzWR/gXw1uFllvMg==
+X-Received: by 2002:a05:6808:494:: with SMTP id z20mr2012327oid.135.1625605905630;
+        Tue, 06 Jul 2021 14:11:45 -0700 (PDT)
+Received: from localhost (fixed-187-189-163-231.totalplay.net. [187.189.163.231])
+        by smtp.gmail.com with ESMTPSA id q13sm3053325oov.6.2021.07.06.14.11.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jul 2021 14:03:52 -0700 (PDT)
-From:   Avishay Matayev <me@avishay.dev>
-To:     git@vger.kernel.org
-Cc:     code@tpope.net, Avishay Matayev <me@avishay.dev>
-Subject: [PATCH 3/3] Add tests for GIT_FORCE_TTY
-Date:   Wed,  7 Jul 2021 00:03:18 +0300
-Message-Id: <20210706210317.706313-4-me@avishay.dev>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210706210317.706313-1-me@avishay.dev>
-References: <20210706210317.706313-1-me@avishay.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Tue, 06 Jul 2021 14:11:45 -0700 (PDT)
+Date:   Tue, 06 Jul 2021 16:11:44 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Felipe Contreras' <felipe.contreras@gmail.com>,
+        =?UTF-8?B?J8OGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uJw==?= 
+        <avarab@gmail.com>
+Cc:     git@vger.kernel.org, 'Alex Henrie' <alexhenrie24@gmail.com>,
+        'Richard Hansen' <rhansen@rhansen.org>,
+        'Junio C Hamano' <gitster@pobox.com>
+Message-ID: <60e4c71099ef_1c4281208ad@natae.notmuch>
+In-Reply-To: <04de01d772a8$540c6690$fc2533b0$@nexbridge.com>
+References: <20210705123209.1808663-1-felipe.contreras@gmail.com>
+ <20210705123209.1808663-2-felipe.contreras@gmail.com>
+ <87bl7f5ho1.fsf@evledraar.gmail.com>
+ <60e4bf9a6a628_1c4281208b@natae.notmuch>
+ <04de01d772a8$540c6690$fc2533b0$@nexbridge.com>
+Subject: RE: [RFC PATCH 01/35] merge: improve fatal fast-forward message
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Avishay Matayev <me@avishay.dev>
----
- t/t9904-git-force-tty.sh | 38 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
- create mode 100755 t/t9904-git-force-tty.sh
+Randall S. Becker wrote:
+> On July 6, 2021 4:40 PM, Felipe Contreras wrote:
+> >Subject: Re: [RFC PATCH 01/35] merge: improve fatal fast-forward messa=
+ge
+> >
+> >=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >>
+> >> On Mon, Jul 05 2021, Felipe Contreras wrote:
+> >>
+> >> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> >> > ---
+> >> >  builtin/merge.c | 2 +-
+> >> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >> >
+> >> > diff --git a/builtin/merge.c b/builtin/merge.c index
+> >> > a8a843b1f5..05e631229d 100644
+> >> > --- a/builtin/merge.c
+> >> > +++ b/builtin/merge.c
+> >> > @@ -1620,7 +1620,7 @@ int cmd_merge(int argc, const char **argv, c=
+onst char *prefix)
+> >> >  	}
+> >> >
+> >> >  	if (fast_forward =3D=3D FF_ONLY)
+> >> > -		die(_("Not possible to fast-forward, aborting."));
+> >> > +		die(_("unable to fast-forward"));
+> >>
+> >> I read the existing message a bit more like "this makes no sense
+> >> anymore" (correct) and the latter more like "we encountered an error=
+".
+> >
+> >I mean, this is the documentation of --ff-only:
+> >
+> >  With `--ff-only`, resolve the merge as a fast-forward when possible.=
 
-diff --git a/t/t9904-git-force-tty.sh b/t/t9904-git-force-tty.sh
-new file mode 100755
-index 0000000000..c954e27c9a
---- /dev/null
-+++ b/t/t9904-git-force-tty.sh
-@@ -0,0 +1,38 @@
-+#!/bin/sh
-+
-+test_description='Test GIT_FORCE_TTY'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	echo test_data > test_file &&
-+	git add test_file &&
-+	git commit -m first
-+'
-+
-+test_expect_success 'no output without force' '
-+    GIT_FORCE_TTY=0 GIT_PAGER="cat - > log_data" git log > /dev/null &&
-+    test ! -f log_data
-+'
-+
-+test_expect_success 'output with force' '
-+    GIT_FORCE_TTY=1 GIT_PAGER="cat - > log_data2" git log > /dev/null &&
-+    test -f log_data2
-+'
-+
-+test_expect_success 'cant tell pager present in git reflog without force' '
-+    GIT_FORCE_TTY=false PAGER="touch pager2" git reflog > /dev/null &&
-+    test ! -f pager2
-+'
-+
-+test_expect_success 'pager present in git reflog' '
-+    GIT_FORCE_TTY=yes PAGER="touch pager" git reflog > /dev/null &&
-+    test -f pager
-+'
-+
-+test_expect_success 'pager not present in git reflog expire' '
-+    GIT_FORCE_TTY=true PAGER="touch pager3" git reflog expire > /dev/null &&
-+    test ! -f pager3
-+'
-+
-+test_done
--- 
-2.25.1
+> >  When not possible, refuse to merge and exit with a non-zero status.
+> >
+> >So if you do `git merge --ff-only` you are telling git: "I want you to=
+ exit with an error when the fast-forward is not possible".
+> >
+> >If you do:
+> >
+> >  % git merge --ff-only
+> >  fatal: Not possible to fast-forward, aborting.
+> >
+> >That "aborting" part is redundant; we know `git merge` should abort if=
+ the fast-forward is not possible, we explicitely told git to do that.
+> =
 
+> `git merge` is a special operation where errors (conflicts, for one)
+> may leave the repository in a merge pending state where you
+> subsequently may have to use `git merge --abort` to reset the
+> situation or `git add` to continue. The `aborting` output makes it
+> clear that you do not have to do the `--abort` and *cannot* do the
+> `add` because there was an implicit `--abort` done resulting from the
+> failure.
+
+But this is not a `git merge`, this is a `git merge --ff-only`; they are
+different operations. There *never* is a need for `--abort` with
+`git merge --ff-only`.
+
+Anyway, the error message is meant for `git fast-forward` which
+definitely doesn't need any `--abort`.
+
+Initially I created a new variable to have a different error message for
+`git merge --ff-only` and `git fast-forward`, precisely to avoid
+changing the current error message of `git merge --ff-only` and thus
+avoid any inertial comments like this one. But then I thought there was
+no need to complicate the series when both can be improved at once.
+Apparently that's not the case.
+
+I guess I'll add it back.
+
+Cheers.
+
+-- =
+
+Felipe Contreras=
