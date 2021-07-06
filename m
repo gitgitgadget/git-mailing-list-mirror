@@ -2,119 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AF5FC07E96
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:51:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA413C07E96
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:52:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 304B861C3B
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:51:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A882361CA0
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:52:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229894AbhGFUyT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jul 2021 16:54:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32914 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229781AbhGFUyS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jul 2021 16:54:18 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD009C061574
-        for <git@vger.kernel.org>; Tue,  6 Jul 2021 13:51:37 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id 75-20020a9d08510000b02904acfe6bcccaso71848oty.12
-        for <git@vger.kernel.org>; Tue, 06 Jul 2021 13:51:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=KP4QYtQGMWUIhe2JduJocV71BPUBhttzktnEMUeVdlc=;
-        b=XefeaQT2qqohbgZoSzYi8W8VN0WV64+tUbs3dUh/HepqUnKKmlok0b22vsfYqzMJm+
-         QfUrt5HETUcmSREI4PklE9Leb0Z5CnKzMR2PdKaFzNRBSUpAP2Mna2Hb+dTqgvIVH5OD
-         UHzAyF7V3wI8jwyc+gPXzhFdCgCcLeG33NnSejh0UXpmeb6IJdKEFWxdXRVlQLM6iBm5
-         U0LIRxAP3hnsUjZbRGSKmFA37EhwKU6+gY56kvDPlo7BX9vr3Uxk4DMeCG/sBSrq6WRX
-         2U7tfXzDVO4eGLESGjCREc8wBG3E6P6VjVkWRUzdRlcLynDIJ4bNE5GSAQvojARoPMs5
-         yPzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=KP4QYtQGMWUIhe2JduJocV71BPUBhttzktnEMUeVdlc=;
-        b=aS/L6luYxQNfuAiS6l5Ye9HxzSP5zGFYYZZk4VQm9diKVrY7mLY3yrCyg8c2z4Lofm
-         yPJe2qbSl6YnYOzJ4ySt0Uj+xnVV4pQtXb5Nsoiw3sRfDbZn7SIV3EaLr5Whfxt+Tmzc
-         mJcd4BMdP0g3/hicyHv0qfn4lHfxdl/jJHtG38OPB0yqthPmyltoUYf/j+mZEP6vWWH2
-         D4iMRVAYFX/LMDmn5ah88tvxy958KS88RxRSHgnTKxA/OzVgaqIUnpIf9qzs9a5m+xn4
-         o8S8NtTD/sGcxIeeGOBByeA2Lkb4QPfuS3REzRtbxcTkEmfh7zQZNM+QH0UVoFs9jzv7
-         PsfA==
-X-Gm-Message-State: AOAM533UYJZbyY7LrCp6SL4fs2iHDNSlOCi7ovgS/37W7ov6rYqTaT0G
-        hmf2MJkNru5ItEaGe5rDkt8=
-X-Google-Smtp-Source: ABdhPJyYSAc19KWwfap656z7mwwJAEMMz69dDJ8wq7f2CJXJlOtPOGwUErUk2w+ZwerMWaBWYpbBLA==
-X-Received: by 2002:a9d:2289:: with SMTP id y9mr3487215ota.211.1625604697275;
-        Tue, 06 Jul 2021 13:51:37 -0700 (PDT)
-Received: from localhost (fixed-187-189-163-231.totalplay.net. [187.189.163.231])
-        by smtp.gmail.com with ESMTPSA id 186sm3069965ooe.28.2021.07.06.13.51.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jul 2021 13:51:36 -0700 (PDT)
-Date:   Tue, 06 Jul 2021 15:51:35 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Alex Henrie <alexhenrie24@gmail.com>,
-        Richard Hansen <rhansen@rhansen.org>,
-        Junio C Hamano <gitster@pobox.com>
-Message-ID: <60e4c257a998d_1c42812085c@natae.notmuch>
-In-Reply-To: <8735sr5hfg.fsf@evledraar.gmail.com>
-References: <20210705123209.1808663-1-felipe.contreras@gmail.com>
- <20210705123209.1808663-12-felipe.contreras@gmail.com>
- <8735sr5hfg.fsf@evledraar.gmail.com>
-Subject: Re: [RFC PATCH 11/35] update: add --merge mode
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+        id S229956AbhGFUyy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jul 2021 16:54:54 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61366 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229781AbhGFUyx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jul 2021 16:54:53 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3FCA1C1D7F;
+        Tue,  6 Jul 2021 16:52:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=JpQ+afG8FpXS
+        04KZXs7wOthbKESgYLcj5PcUYCt++UI=; b=nT4NDejnjJHkH9iDI+7XaYIV7ZOA
+        qlWB5VT81tSeSOfqmvQiIZMujp3H/o7TMR+mVwEFXNsttZZFtYr9EjUVwpOAHTCO
+        rGSFdOhgdYDFS0EA0PNGVvef7IdRNPXkDRhhUgnlGPp7u1ilRZqK8iusDlie8KeV
+        /1lVda2zLfmudUY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 36B3BC1D7E;
+        Tue,  6 Jul 2021 16:52:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A37C7C1D7D;
+        Tue,  6 Jul 2021 16:52:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7Ru?= =?utf-8?B?Zw==?= Danh 
+        <congdanhqx@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v7 2/3] maintenance: `git maintenance run` learned
+ `--scheduler=<scheduler>`
+References: <20210612165043.165579-1-lenaic@lhuard.fr>
+        <20210702142556.99864-1-lenaic@lhuard.fr>
+        <20210702142556.99864-3-lenaic@lhuard.fr>
+        <87h7h75hzz.fsf@evledraar.gmail.com>
+Date:   Tue, 06 Jul 2021 13:52:12 -0700
+In-Reply-To: <87h7h75hzz.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 06 Jul 2021 21:56:38 +0200")
+Message-ID: <xmqq5yxni2rn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 0A79D674-DE9C-11EB-BC67-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Mon, Jul 05 2021, Felipe Contreras wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> > --- a/t/t5563-update.sh
-> > +++ b/t/t5563-update.sh
-> > @@ -42,4 +42,19 @@ test_expect_success 'non-fast-forward update' '
-> >  	)
-> >  '
-> >  =
+> On Fri, Jul 02 2021, L=C3=A9na=C3=AFc Huard wrote:
+>
+>> + *     =E2=94=8F=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=B3=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
+=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
+=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
+=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
+=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=93
+>> + *     =E2=94=83 Input =E2=94=83                     Output          =
+            =E2=94=83
+>> + *     =E2=94=83 *cmd  =E2=94=83 return code =E2=94=82       *cmd    =
+    =E2=94=82 *is_available =E2=94=83
+>> + *     =E2=94=A3=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
+=E2=94=81=E2=95=8B=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
+=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=BF=E2=94=
+=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
+=94=81=E2=94=81=E2=94=BF=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
+=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=AB
+>> + *     =E2=94=83 "foo" =E2=94=83    false    =E2=94=82 "foo" (unchang=
+ed) =E2=94=82  (unchanged)  =E2=94=83
+>> + *     =E2=94=97=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=BB=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
+=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=B7=E2=94=
+=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
+=94=81=E2=94=81=E2=94=B7=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
+=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
+=E2=94=81=E2=94=9B
+>
+> I wonder if we have developers for whom the non-ASCII here is an issue.
 
-> > +test_expect_success 'git update non-fast-forward with merge' '
-> > +	test_when_finished "rm -rf test" &&
-> > +	(
-> > +	git clone . test &&
-> > +	cd test &&
-> > +	git checkout -b other master^ &&
-> > +	>new &&
-> =
+I do have an issue myself ;-) but I can survive.  I do not know
+about others.
 
-> We usually indent the subshell...
+> This sort of code is much more pleseant to read and work with if you us=
+e
+> strbuf_split_buf(). This isn't performance sensitive, so a few more
+> allocations is fine.
 
-All right.
+Please do not encourage use of strbuf_split_buf().  It is a
+misdesigned API as it rarely is justifyable to have an array, each
+element of which can be independently tweaked by being strbuf.  We
+are not implementing a text editor after all ;-)
 
-> > +	git add new &&
-> > +	git commit -m new &&
-> =
+A helper function that takes a string and returns a strvec would be
+a good fit, though.
 
-> And if we can use test_commit, less verbose.
+>> +#ifdef __APPLE__
+>> +	return 1;
+>> +#else
+>> +	return 0;
+>> +#endif
+>> +}
+>
+> I see this is partially a pre-existing thing in the file, but we have a=
+n
+> __APPLE__ already in cache.h. Perhaps define a iLAUNCHCTL_AVAILABLE
+> there. See e.g. 62e5ee81a39 (read-cache.c: remove #ifdef NO_PTHREADS,
+> 2018-11-03).
 
-OK. Sure.
-
-FTR. These tests come from 2013, they don't fit my current style and I
-wanted to rewrite them completely since there's a lot of duplicated
-code. But I thought: what the hell, they work. Plus there's only so much
-time I'm willing to spend on an RFC v1 of this series (which probably
-won't be merged anyway).
-
-Cheers.
-
--- =
-
-Felipe Contreras=
+Excellent suggestion.
