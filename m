@@ -2,142 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA413C07E96
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:52:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B174C07E96
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:55:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A882361CA0
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:52:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4571E61C9A
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 20:55:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229956AbhGFUyy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jul 2021 16:54:54 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61366 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229781AbhGFUyx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jul 2021 16:54:53 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3FCA1C1D7F;
-        Tue,  6 Jul 2021 16:52:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=JpQ+afG8FpXS
-        04KZXs7wOthbKESgYLcj5PcUYCt++UI=; b=nT4NDejnjJHkH9iDI+7XaYIV7ZOA
-        qlWB5VT81tSeSOfqmvQiIZMujp3H/o7TMR+mVwEFXNsttZZFtYr9EjUVwpOAHTCO
-        rGSFdOhgdYDFS0EA0PNGVvef7IdRNPXkDRhhUgnlGPp7u1ilRZqK8iusDlie8KeV
-        /1lVda2zLfmudUY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 36B3BC1D7E;
-        Tue,  6 Jul 2021 16:52:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A37C7C1D7D;
-        Tue,  6 Jul 2021 16:52:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
-        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7Ru?= =?utf-8?B?Zw==?= Danh 
-        <congdanhqx@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v7 2/3] maintenance: `git maintenance run` learned
- `--scheduler=<scheduler>`
-References: <20210612165043.165579-1-lenaic@lhuard.fr>
-        <20210702142556.99864-1-lenaic@lhuard.fr>
-        <20210702142556.99864-3-lenaic@lhuard.fr>
-        <87h7h75hzz.fsf@evledraar.gmail.com>
-Date:   Tue, 06 Jul 2021 13:52:12 -0700
-In-Reply-To: <87h7h75hzz.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 06 Jul 2021 21:56:38 +0200")
-Message-ID: <xmqq5yxni2rn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229894AbhGFU55 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jul 2021 16:57:57 -0400
+Received: from wout3-smtp.messagingengine.com ([64.147.123.19]:53103 "EHLO
+        wout3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229781AbhGFU55 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 6 Jul 2021 16:57:57 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id 879BE32009BB;
+        Tue,  6 Jul 2021 16:55:13 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Tue, 06 Jul 2021 16:55:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=furrypaws.ca; h=
+        from:to:cc:subject:date:message-id:in-reply-to:references
+        :mime-version:content-transfer-encoding; s=fm3; bh=Mqfwb09508S6h
+        DeYzdyWqxVrdBXdN2WIQZLZ69UYrgM=; b=V0+FCWMk/pNlcRAPp1aRtc9Qochhl
+        f9vV/CCe9KdAyKXVibL7ECiWPeB/GI2BWL1TDU6WUpNcaKHebVBI/PCDLQp2Xcp5
+        xK0a9by3pE123/7gFYZEEWlsj584RH6NXm/LY7liyJOUDfj70uQKhVZqb55hkkSP
+        bt/shARLIl/ROJi+aLW1zq1LOsBP88Z98T0M6h8EEsBWDLD2ewNkTEmzPcMtrkqw
+        7tpBr9ydQUPEar+ZDlvCu7SJJr5Xu6s0eD37cbvMUCInzPi+MFgW0wPn+tOshb1z
+        hqw//NIs2Icu05n6BVKqt0hnik3VRAenI4sGDwt1INr0VQM/mrQJVTcrA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:date:from
+        :in-reply-to:message-id:mime-version:references:subject:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; bh=Mqfwb09508S6hDeYzdyWqxVrdBXdN2WIQZLZ69UYrgM=; b=ufSk/jM2
+        S2ipffmRabGIp680rqSoRiUQobYUNNtVTVkSO+ax7M1jh8u+vxW+f9YJQAXShrfW
+        +RGRGgIPPai6fRawv39oI6NDKeS3yaquNwEp9JD/qUJ6N1By1yfb+KJkm8iJBveD
+        Kdr8l3O5NXy+L5AEvtqZB09h7W1M2QuT72ij7/TJC1AOiyJnq+b1SixbayPlIPrW
+        /FQnVlMGy9hFp9W2R96j6j4O6eqjA5CYYwIMND6OGoYwPg7Nb0Ro12lE5xNy+b0U
+        9C/OeuXHvZZ93zQouGM7n2h7Pxc8XM8JozZJZX1ywKZAs6HNfZmUkm7aHBcvgvXt
+        FkImaalP5lIVMQ==
+X-ME-Sender: <xms:MMPkYC9wexhWKX5xX5AaCGxVnTdBXF9iLzEitr1nvPxGnxJDBhzO9Q>
+    <xme:MMPkYCsao8iYXHZ6klbLV3bAO4T5tnBPQRHego69Ut0NrEFEiRG65wyHobIisOaWn
+    lT73pF4ahmjl7ZU-Q>
+X-ME-Received: <xmr:MMPkYIAe-VfWkTVJFLXg7LSlnKX3ZqBlDVuQedZzRyE1DPY7ifwWCqwwRNjtf7qI6uBAyj5xJaQT1koI4XXnFYfCBW51ThP4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrtddtgdduudduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
+    dtredttdenucfhrhhomheptehnughrvgifuceuvghrrhihuceorghnughrvgifsehfuhhr
+    rhihphgrfihsrdgtrgeqnecuggftrfgrthhtvghrnhepgeelgfehtdeiveeuudegueeike
+    ejvedvlefgkeekleevkeejveegjeejteeugedtnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsehfuhhrrhihphgrfihsrdgtrg
+X-ME-Proxy: <xmx:MMPkYKdoXKllh49TbUrGbcqc-pkwcnfUr_L8qO57TGvT2x8XIauGoQ>
+    <xmx:MMPkYHNdlqrcU7uYMx0CO2AP0baNlpvaAxtkxTpIA4xw7HZItVlbqQ>
+    <xmx:MMPkYEm45RqEK8Y1B4QIReA4N6hpeuYNHUFMqeNuoY8tQx_QrkSBtg>
+    <xmx:McPkYDA_8U7JMlftmiKOPjLA3quOQdfRI92GjFc9oBP8bJdYcqXEUA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Jul 2021 16:55:12 -0400 (EDT)
+From:   Andrew Berry <andrew@furrypaws.ca>
+To:     git@vger.kernel.org
+Cc:     bagasdotme@gmail.com, gitster@pobox.com,
+        Andrew Berry <andrew@furrypaws.ca>
+Subject: [PATCH] docs: .gitignore parsing is to the top of the repo
+Date:   Tue,  6 Jul 2021 16:54:39 -0400
+Message-Id: <20210706205439.75015-1-andrew@furrypaws.ca>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <xmqqczrvl8kl.fsf@gitster.g>
+References: <xmqqczrvl8kl.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0A79D674-DE9C-11EB-BC67-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+The current documentation reads as if .gitignore files will be parsed in
+every parent directory, and not until they reach a repository boundary.
+This clarifies the current behaviour.
 
-> On Fri, Jul 02 2021, L=C3=A9na=C3=AFc Huard wrote:
->
->> + *     =E2=94=8F=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
-=E2=94=81=E2=94=B3=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
-=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
-=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
-=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
-=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
-=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
-=E2=94=81=E2=94=93
->> + *     =E2=94=83 Input =E2=94=83                     Output          =
-            =E2=94=83
->> + *     =E2=94=83 *cmd  =E2=94=83 return code =E2=94=82       *cmd    =
-    =E2=94=82 *is_available =E2=94=83
->> + *     =E2=94=A3=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
-=E2=94=81=E2=95=8B=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
-=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=BF=E2=94=
-=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
-=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
-=94=81=E2=94=81=E2=94=BF=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
-=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
-=E2=94=81=E2=94=AB
->> + *     =E2=94=83 "foo" =E2=94=83    false    =E2=94=82 "foo" (unchang=
-ed) =E2=94=82  (unchanged)  =E2=94=83
->> + *     =E2=94=97=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
-=E2=94=81=E2=94=BB=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
-=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=B7=E2=94=
-=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
-=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=
-=94=81=E2=94=81=E2=94=B7=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=
-=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=E2=94=81=
-=E2=94=81=E2=94=9B
->
-> I wonder if we have developers for whom the non-ASCII here is an issue.
+As well, this corrects 'toplevel' to 'top-level', matching usage for
+'top-level domain'.
 
-I do have an issue myself ;-) but I can survive.  I do not know
-about others.
+Signed-off-by: Andrew Berry <andrew@furrypaws.ca>
+---
+ Documentation/gitignore.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-> This sort of code is much more pleseant to read and work with if you us=
-e
-> strbuf_split_buf(). This isn't performance sensitive, so a few more
-> allocations is fine.
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index 53e7d5c914..534cda5747 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -27,10 +27,10 @@ precedence, the last matching pattern decides the outcome):
+    them.
+ 
+  * Patterns read from a `.gitignore` file in the same directory
+-   as the path, or in any parent directory, with patterns in the
+-   higher level files (up to the toplevel of the work tree) being overridden
+-   by those in lower level files down to the directory containing the file.
+-   These patterns match relative to the location of the
++   as the path, or in any parent directory in the same repository, with
++   patterns in the higher level files (up to the toplevel of the work tree)
++   being overridden by those in lower level files down to the directory
++   containing the file. These patterns match relative to the location of the
+    `.gitignore` file.  A project normally includes such
+    `.gitignore` files in its repository, containing patterns for
+    files generated as part of the project build.
+-- 
+2.31.1
 
-Please do not encourage use of strbuf_split_buf().  It is a
-misdesigned API as it rarely is justifyable to have an array, each
-element of which can be independently tweaked by being strbuf.  We
-are not implementing a text editor after all ;-)
-
-A helper function that takes a string and returns a strvec would be
-a good fit, though.
-
->> +#ifdef __APPLE__
->> +	return 1;
->> +#else
->> +	return 0;
->> +#endif
->> +}
->
-> I see this is partially a pre-existing thing in the file, but we have a=
-n
-> __APPLE__ already in cache.h. Perhaps define a iLAUNCHCTL_AVAILABLE
-> there. See e.g. 62e5ee81a39 (read-cache.c: remove #ifdef NO_PTHREADS,
-> 2018-11-03).
-
-Excellent suggestion.
