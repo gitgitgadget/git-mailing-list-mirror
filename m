@@ -2,101 +2,318 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C368C07E96
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 13:12:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2A77C07E9E
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 13:18:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F1C1D61C84
-	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 13:12:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA88461A19
+	for <git@archiver.kernel.org>; Tue,  6 Jul 2021 13:18:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231549AbhGFNPJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jul 2021 09:15:09 -0400
-Received: from mout.gmx.net ([212.227.15.18]:48297 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231839AbhGFNPH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jul 2021 09:15:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1625577134;
-        bh=6kSvE6so76lHYcBRHaWLv6Yfsarvnxv1yzpIDIiSFFE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=bBUk0e6mbCjKIwgStxgnCGeUHPs+dBUt+xm1FbhSKFEj+UK4l30kBGNS9m6LYf4Ts
-         L8u/XtrH+X9HqmqKq5/z0ZA2kFjOL+RucOEFwwN04QxCTndGUrXAuR0mYqFgfKhPx5
-         +cZCz1KZjC73VzpO2IC6foFHTYSISNgX0aHLXRDs=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.249.152] ([89.1.213.17]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M7sDg-1m5gYZ3SRm-0051KD; Tue, 06
- Jul 2021 15:12:13 +0200
-Date:   Tue, 6 Jul 2021 15:12:11 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        David Turner <David.Turner@twosigma.com>
-Subject: Re: [PATCH v3 00/34] Builtin FSMonitor Feature
-In-Reply-To: <874kd874qv.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2107061508510.8230@tvgsbejvaqbjf.bet>
-References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com> <pull.923.v3.git.1625150864.gitgitgadget@gmail.com> <87fswyc4dz.fsf@evledraar.gmail.com> <e1442a04-7c68-0a7a-6e95-304854adff39@jeffhostetler.com> <87czs1d6uy.fsf@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2107052259340.8230@tvgsbejvaqbjf.bet> <874kd874qv.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S231794AbhGFNVa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jul 2021 09:21:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43916 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231882AbhGFNV2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jul 2021 09:21:28 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BD5DC061762
+        for <git@vger.kernel.org>; Tue,  6 Jul 2021 06:18:48 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id a13so26015314wrf.10
+        for <git@vger.kernel.org>; Tue, 06 Jul 2021 06:18:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=DC5HzV3uMYVhInxzMQn8tvRBiQBqmaLDTcHCNp61uqI=;
+        b=HzFTVHoNxsbdl5Rm/zt749UERuN9nhWapzsxF83X2nb14Mt9CZtHSvY9sTl6ACjoUX
+         13JUTQiTOpwtDUn8xPRcWcL6uLs1sdjorHRXBZT9OS2rquk7Ev4TwUEtHHuVaVPed5XK
+         j7DdgmeG4lZ8H673fpGATWMlJYOIC/fTrDwXIZkQPR1vsidnuHQecmncIDvL4NIU/4kD
+         mPKW2EFkEJevRl4JPFqnsGZevn28cCozWhWIEeqxhZHJFQqODE+Fp5nCd6JktNJuwOw8
+         tYY3mbMO55UNDIuYlmET3WhRfHDECrc04JScEQomCVWYz+oeEzVFqbx13hkFCeaaNrMO
+         N+ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=DC5HzV3uMYVhInxzMQn8tvRBiQBqmaLDTcHCNp61uqI=;
+        b=UrXI9SqiN9J9zQc5xq7H4ytt1hh4TYf0PvV8SH0o3kTdW73uCvJpTAWJxyxL6gEPuA
+         /SnG457kwKLRSoh9U5gW7VqsVMgOAUu3M9G7EE4+dS8dqsIa4PoqnUEHseBMlGw2M1yi
+         sEK5/xPYajsEIZLELy178HhAUMa+g7rGlPhAzj8HYoG0w1Whup7q5zIIP/hcr75V4jxT
+         5kXpSKuQmdzIeFYWOuH/tQG2+kPQaLB186fMZzQOcGP5CuVpHy0IUlFNo7Mow9b4fEcb
+         zqxE536BwRxLNwGpRqzbpE/Rd5qgNIXDkBm5pmDXJ9csA12mbO28hRh3mg9PGNKyvPiV
+         UzBg==
+X-Gm-Message-State: AOAM533iLCq7mKb9xgnM59Jgnu73Mgx2RAhHB2d1H+kzVQ3BFMqWrX8T
+        yPsW9u8TCWT82fPHzOsN3r8=
+X-Google-Smtp-Source: ABdhPJz9gBG+0gwoDEfXEuDwUySH0XS5p9SjK8q5r32KwsOXTiZEhM+mQ5A5RUJJJNVaIWnifQCqBw==
+X-Received: by 2002:adf:e605:: with SMTP id p5mr22321339wrm.396.1625577527042;
+        Tue, 06 Jul 2021 06:18:47 -0700 (PDT)
+Received: from [192.168.1.201] (118.22.198.146.dyn.plus.net. [146.198.22.118])
+        by smtp.googlemail.com with ESMTPSA id b12sm12630796wrx.60.2021.07.06.06.18.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Jul 2021 06:18:46 -0700 (PDT)
+Subject: Re: [PATCH v7 0/3] maintenance: add support for systemd timers on
+ Linux
+To:     =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+References: <20210612165043.165579-1-lenaic@lhuard.fr>
+ <20210702142556.99864-1-lenaic@lhuard.fr>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <387ad277-a75c-92ca-b7af-163d10d3b4a4@gmail.com>
+Date:   Tue, 6 Jul 2021 14:18:44 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-564533832-1625577133=:8230"
-X-Provags-ID: V03:K1:XjpDA2fBm4geU0gpYsg8DZE4YHiNlfO05vpAas44uji7bVE3Bla
- PMWQpNfqBn+YnGkmeLwQrGhH/E+XtzrFDHKXih/N6seE4loVaq3ntNLmG3zpReCKgKMo1YT
- KxfqMKhf8LfINdvRZzSOxCnchj31wjvVn/GVYF/EBzWShION51i0ZPnSSuwgODLX0HNiNQy
- uqwiloMcS7kzmKMnVQhzw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0zsC2C0c8VM=:AV0g1x69oswRh6MUCpf1g5
- S2W1Cylm3w01Q1ux0FRVGX8bsNiT4y4330+Jh5Nz/nOfyV0efU93v0ST6SPb82qy8vKFYEmgU
- ibloxu3HKREF0e3n6bmlQUIEYQgvglfHUAK20NmyNlbDRIpqPDdI51R8d3ZoQIxH5JA4Q5vD5
- T1ZsQRmotWmFkSOJVwuGzwOtb9Fy4GqC5Tn5M6NC0ecSn9v6ehMnuv9LdoTEewET4yhHVKMYX
- qVI9hjzEoXkH4mZ8mDf5b+Iur2XTUVxd5TGWAURr06r0CTsa99u2X7vsRQANqyI11bXU81IlY
- 7u8Hjexa70cNb5Z9+A+gfEHBU0UK5wlMEToSf/SqV2wcGjQWUpWbqpaaRxuGmsxdBXFIPRQQ9
- 5VP/W76zFDCSnhKpr9jGfLGTzo50Bvn5Lfqrg3AWJ+eWWzhLBVaaOLvKPVY1vVtwQ7R1YizJT
- XJiDSQHGHfW9U+XbeYdQohWXfUXdeUVWj/zerOgdxt4Dw/dGdB9Sjm+zM6QQUGsZt3KIYWVDl
- EzNofxPL80NL0kBdsOnCj+IVfBltHk3ejQo1EkOLF9LeWAsc3dhisN+5woh9ap6nOm2HTFswT
- 4Q036XAb8246uVAqrWAMh2LUbYEEMbu1eo5oxR5m70g2L2IoBm0KBWhvvT3cBkF7H9AHWU385
- /nqMuGfhWCY700lnN6QeufZwoTnvTLHKigVrfb2ByIzyvopNk2b0p27yCwFV0XXqYYD+sUuqN
- dSix46L8o0USOHy6yzMWHQUi1K45MqjBVu/as3WA/pGHRjnrKfNudLBTQ76opYIIAoYSWeAXO
- gnvKmCfq2F3Ada6pzVhH5TCezgvbnXP5MO44fLy1BMPD+tNNmBUsDmHB8xmUoB4DS9faXIXXT
- pL8rRnQ7ZXntsGseMv8rf95H6LW1mGooc9rfnEFutipd+PZLsKyHbKoFd/xp2ubDbZJQqIooI
- XdDKeA5wxZOw43uiD138/0apUOtfd/6CTeZFyHmObgWwVWzPJoevpa5F8OFYcl95roa2/xfYZ
- q1Ufd6nlhZGG1gG6IfvgxtHBlktc01lfWMqc0qgj+g5WnSaw+xPb0n4yBGkSHUN58EZgjKlIt
- re19vqlOPdE9+tkLH2hWmTxs0eQEbdH5LfqL2te4B0i1sXI4F0lhiix6Q==
+In-Reply-To: <20210702142556.99864-1-lenaic@lhuard.fr>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi  Lénaïc
 
---8323328-564533832-1625577133=:8230
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On 02/07/2021 15:25, Lénaïc Huard wrote:
+> Hello,
+> 
+> Please find hereafter a new reroll of my patchset to add support for
+> systemd timers on Linux for the `git maintenance start` command.
+> 
+> The changes compared to the previous version address the remarks
+> raised during the previous review.
+> ... 
+> Diff-intervalle contre v6 :
+> -:  ---------- > 1:  899b11ed5b cache.h: Introduce a generic "xdg_config_home_for(…)" function
+> 1:  604627f347 ! 2:  f3e2f0256b maintenance: `git maintenance run` learned `--scheduler=<scheduler>`
+>      @@ Documentation/git-maintenance.txt: OPTIONS
+>        
+>       +--scheduler=auto|crontab|launchctl|schtasks::
+>       +	When combined with the `start` subcommand, specify the scheduler
+>      -+	to use to run the hourly, daily and weekly executions of
+>      ++	for running the hourly, daily and weekly executions of
+>       +	`git maintenance run`.
+>      -+	The possible values for `<scheduler>` depend on the system: `crontab`
+>      -+	is available on POSIX systems, `launchctl` is available on
+>      -+	MacOS and `schtasks` is available on Windows.
+>      -+	By default or when `auto` is specified, a suitable scheduler for
+>      -+	the system is used. On MacOS, `launchctl` is used. On Windows,
+>      -+	`schtasks` is used. On all other systems, `crontab` is used.
+>      ++	Possible values for `<scheduler>` are `auto`, `crontab` (POSIX),
+>      ++	`launchctl` (macOS), and `schtasks` (Windows).
+>      ++	When `auto` is specified, the appropriate platform-specific
+>      ++	scheduler is used. Default is `auto`.
+>       +
+>        
+>        TROUBLESHOOTING
+>      @@ builtin/gc.c: static const char *get_frequency(enum schedule_priority schedule)
+>        	}
+>        }
+>        
+>      ++/*
+>      ++ * get_schedule_cmd` reads the GIT_TEST_MAINT_SCHEDULER environment variable
+>      ++ * to mock the schedulers that `git maintenance start` rely on.
+>      ++ *
+>      ++ * For test purpose, GIT_TEST_MAINT_SCHEDULER can be set to a comma-separated
+>      ++ * list of colon-separated key/value pairs where each pair contains a scheduler
+>      ++ * and its corresponding mock.
+>      ++ *
+>      ++ * * If $GET_TEST_MAINT_SCHEDULER is not set, return false and leave the
+>      ++ *   arguments unmodified.
+>      ++ *
+>      ++ * * If $GET_TEST_MAINT_SCHEDULER is set, return true.
+>      ++ *   In this case, the *cmd value is read as input.
+>      ++ *
+>      ++ *   * if the input value *cmd is the key of one of the comma-separated list
+>      ++ *     item, then *is_available is set to true and *cmd is modified and becomes
+>      ++ *     the mock command.
+>      ++ *
+>      ++ *   * if the input value *cmd isn’t the key of any of the comma-separated list
+>      ++ *     item, then *is_available is set to false.
+>      ++ *
+>      ++ * Ex.:
+>      ++ *   GIT_TEST_MAINT_SCHEDULER not set
+>      ++ *     ┏━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+>      ++ *     ┃ Input ┃                     Output                      ┃
+>      ++ *     ┃ *cmd  ┃ return code │       *cmd        │ *is_available ┃
+>      ++ *     ┣━━━━━━━╋━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━┫
+>      ++ *     ┃ "foo" ┃    false    │ "foo" (unchanged) │  (unchanged)  ┃
+>      ++ *     ┗━━━━━━━┻━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━┛
+>      ++ *
+>      ++ *   GIT_TEST_MAINT_SCHEDULER set to “foo:./mock_foo.sh,bar:./mock_bar.sh”
+>      ++ *     ┏━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+>      ++ *     ┃ Input ┃                     Output                      ┃
+>      ++ *     ┃ *cmd  ┃ return code │       *cmd        │ *is_available ┃
+>      ++ *     ┣━━━━━━━╋━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━┫
+>      ++ *     ┃ "foo" ┃    true     │  "./mock.foo.sh"  │     true      ┃
+>      ++ *     ┃ "qux" ┃    true     │ "qux" (unchanged) │     false     ┃
+>      ++ *     ┗━━━━━━━┻━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━┛
+>      ++ */
+>       +static int get_schedule_cmd(const char **cmd, int *is_available)
+>       +{
+>       +	char *item;
+>      @@ builtin/gc.c: static int schtasks_schedule_task(const char *exec_path, enum sche
+>       +	int is_available;
+>       +	struct child_process child = CHILD_PROCESS_INIT;
+>       +
+>      -+	if (get_schedule_cmd(&cmd, &is_available) && !is_available)
+>      -+		return 0;
+>      ++	if (get_schedule_cmd(&cmd, &is_available))
+>      ++		return is_available;
 
-Hi =C3=86var,
+This fixes the bug that Eric found with the last version - excellent.
 
-On Tue, 6 Jul 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>       +
+>       +	strvec_split(&child.args, cmd);
+>       +	strvec_push(&child.args, "-l");
+>      @@ builtin/gc.c: static int crontab_update_schedule(int run_maintenance, int fd, co
+>       +	enum scheduler scheduler;
+>       +};
+>       +
+>      -+static void resolve_auto_scheduler(enum scheduler *scheduler)
+>      ++static enum scheduler resolve_scheduler(enum scheduler scheduler)
+>       +{
+>      -+	if (*scheduler != SCHEDULER_AUTO)
+>      -+		return;
+>      ++	if (scheduler != SCHEDULER_AUTO)
+>      ++		return scheduler;
+>       +
+>        #if defined(__APPLE__)
+>       -static const char platform_scheduler[] = "launchctl";
+>      -+	*scheduler = SCHEDULER_LAUNCHCTL;
+>      -+	return;
+>      ++	return SCHEDULER_LAUNCHCTL;
+>       +
+>        #elif defined(GIT_WINDOWS_NATIVE)
+>       -static const char platform_scheduler[] = "schtasks";
+>      -+	*scheduler = SCHEDULER_SCHTASKS;
+>      -+	return;
+>      ++	return SCHEDULER_SCHTASKS;
+>       +
+>        #else
+>       -static const char platform_scheduler[] = "crontab";
+>      -+	*scheduler = SCHEDULER_CRON;
+>      -+	return;
+>      ++	return SCHEDULER_CRON;
+>        #endif
+>       +}
 
-> I think we just disagree. I wouldn't call my opinion "unhelpful" any
-> more than yours.
+This is one of the changes that Eric suggested, I agree it improves the 
+code.
 
-You still misunderstand. This is not about any "opinion" of yours, it is
-about your delay tactics to make it deliberately difficult to finish this
-patch series, by raising the bar beyond what is reasonable for a single
-patch series.
+Thanks for your work on these patches, I've scanned the rest of the 
+range-diff and I'd be happy to see this version merged
 
-And you keep doing it. I would appreciate if you just stopped with all
-those tangents and long and many replies that do not seem designed to help
-the patch series stabilize, but do the opposite.
+Best Wishes
 
-Ciao,
-Johannes
+Phillip
 
---8323328-564533832-1625577133=:8230--
+>      @@ builtin/gc.c: static int crontab_update_schedule(int run_maintenance, int fd, co
+>       +	if (scheduler == SCHEDULER_INVALID)
+>       +		BUG("invalid scheduler");
+>       +	if (scheduler == SCHEDULER_AUTO)
+>      -+		BUG("resolve_auto_scheduler should have been called before");
+>      ++		BUG("resolve_scheduler should have been called before");
+>       +
+>       +	if (!scheduler_fn[scheduler].is_available())
+>       +		die(_("%s scheduler is not available"),
+>      @@ builtin/gc.c: static int crontab_update_schedule(int run_maintenance, int fd, co
+>       +	struct option options[] = {
+>       +		OPT_CALLBACK_F(
+>       +			0, "scheduler", &opts.scheduler, N_("scheduler"),
+>      -+			N_("scheduler to use to trigger git maintenance run"),
+>      ++			N_("scheduler to trigger git maintenance run"),
+>       +			PARSE_OPT_NONEG, maintenance_opt_scheduler),
+>       +		OPT_END()
+>       +	};
+>      @@ builtin/gc.c: static int crontab_update_schedule(int run_maintenance, int fd, co
+>       +	if (argc)
+>       +		usage_with_options(builtin_maintenance_start_usage, options);
+>       +
+>      -+	resolve_auto_scheduler(&opts.scheduler);
+>      ++	opts.scheduler = resolve_scheduler(opts.scheduler);
+>       +	validate_scheduler(opts.scheduler);
+>       +
+>        	if (maintenance_register())
+> 2:  29628b5a92 ! 3:  0ea5b2fc45 maintenance: add support for systemd timers on Linux
+>      @@ Documentation/git-maintenance.txt: OPTIONS
+>       ---scheduler=auto|crontab|launchctl|schtasks::
+>       +--scheduler=auto|crontab|systemd-timer|launchctl|schtasks::
+>        	When combined with the `start` subcommand, specify the scheduler
+>      - 	to use to run the hourly, daily and weekly executions of
+>      + 	for running the hourly, daily and weekly executions of
+>        	`git maintenance run`.
+>      - 	The possible values for `<scheduler>` depend on the system: `crontab`
+>      --	is available on POSIX systems, `launchctl` is available on
+>      --	MacOS and `schtasks` is available on Windows.
+>      -+	is available on POSIX systems, `systemd-timer` is available on Linux
+>      -+	systems, `launchctl` is available on MacOS and `schtasks` is available
+>      -+	on Windows.
+>      - 	By default or when `auto` is specified, a suitable scheduler for
+>      - 	the system is used. On MacOS, `launchctl` is used. On Windows,
+>      --	`schtasks` is used. On all other systems, `crontab` is used.
+>      -+	`schtasks` is used. On Linux, `systemd-timer` is used if user systemd
+>      -+	timers are available, otherwise, `crontab` is used. On all other systems,
+>      -+	`crontab` is used.
+>      +-	Possible values for `<scheduler>` are `auto`, `crontab` (POSIX),
+>      +-	`launchctl` (macOS), and `schtasks` (Windows).
+>      +-	When `auto` is specified, the appropriate platform-specific
+>      +-	scheduler is used. Default is `auto`.
+>      ++	Possible values for `<scheduler>` are `auto`, `crontab`
+>      ++	(POSIX), `systemd-timer` (Linux), `launchctl` (macOS), and
+>      ++	`schtasks` (Windows). When `auto` is specified, the
+>      ++	appropriate platform-specific scheduler is used; on Linux,
+>      ++	`systemd-timer` is used if available, otherwise
+>      ++	`crontab`. Default is `auto`.
+>        
+>        
+>        TROUBLESHOOTING
+>      @@ builtin/gc.c: static enum scheduler parse_scheduler(const char *value)
+>        	else if (!strcasecmp(value, "launchctl"))
+>        		return SCHEDULER_LAUNCHCTL;
+>        	else if (!strcasecmp(value, "schtasks"))
+>      -@@ builtin/gc.c: static void resolve_auto_scheduler(enum scheduler *scheduler)
+>      - 	*scheduler = SCHEDULER_SCHTASKS;
+>      - 	return;
+>      +@@ builtin/gc.c: static enum scheduler resolve_scheduler(enum scheduler scheduler)
+>      + #elif defined(GIT_WINDOWS_NATIVE)
+>      + 	return SCHEDULER_SCHTASKS;
+>        
+>       +#elif defined(__linux__)
+>       +	if (is_systemd_timer_available())
+>      -+		*scheduler = SCHEDULER_SYSTEMD;
+>      ++		return SCHEDULER_SYSTEMD;
+>       +	else if (is_crontab_available())
+>      -+		*scheduler = SCHEDULER_CRON;
+>      ++		return SCHEDULER_CRON;
+>       +	else
+>       +		die(_("neither systemd timers nor crontab are available"));
+>      -+	return;
+>       +
+>        #else
+>      - 	*scheduler = SCHEDULER_CRON;
+>      - 	return;
+>      + 	return SCHEDULER_CRON;
+>      + #endif
+>       
+>        ## t/t7900-maintenance.sh ##
+>       @@ t/t7900-maintenance.sh: test_xmllint () {
+> 
+
