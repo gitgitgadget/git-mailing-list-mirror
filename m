@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A437C07E9B
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 10:22:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6767C07E95
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 10:22:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 063C761C9D
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 10:22:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D13A61CA8
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 10:22:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231345AbhGGKYr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jul 2021 06:24:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41570 "EHLO
+        id S231364AbhGGKYs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jul 2021 06:24:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231336AbhGGKYk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jul 2021 06:24:40 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DDAAC061760
-        for <git@vger.kernel.org>; Wed,  7 Jul 2021 03:22:00 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id i2-20020a05600c3542b02902058529ea07so1314476wmq.3
-        for <git@vger.kernel.org>; Wed, 07 Jul 2021 03:22:00 -0700 (PDT)
+        with ESMTP id S231358AbhGGKYm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jul 2021 06:24:42 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB71DC061764
+        for <git@vger.kernel.org>; Wed,  7 Jul 2021 03:22:01 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id u5-20020a7bc0450000b02901480e40338bso2940605wmc.1
+        for <git@vger.kernel.org>; Wed, 07 Jul 2021 03:22:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3YY1WQBapUW606d/27H4hUlezUCd21kgu2L382vLeJw=;
-        b=sSG0LqzO+UX52cyoSdUmtWRyRcoF2g9hXjlu2sg9M3sUWoHbRTHlHKMoxJ/ErJcypD
-         hld9OGVrUL1Q8DkHZ8/pGDrMExXWe59gnCl4/2KWL7sLSoinhTDu/jB9t0Auq4teaLGr
-         lsxW1nJIdnNM+NxBvgV0sai6Af6Im8Z49QskNX8BCTYZcV1NH8QCzOF3KDnUaWWba3Nc
-         FkQP0FtuV9tBzKsYxO+JSJ8zkzWgd6lIDt8tNTnDx29w+KYgusaXCKheqWke+b9do9cB
-         eS7eQVmNFxWzpS+x0T5soyFHarQx+P4IJ8CgZX3F6gu3cD/MMMOLAomZhiVi6ADvZ624
-         x78g==
+        bh=S/GVjTk3aqpXNzO8A5EMSTIT1hswSeFxGqqYdlv0vKQ=;
+        b=FlLCbZi6usXceudnb87uIUBpb94+vwwWImHTDoqirbPBOKst5MyPABctnQJ02P2KWF
+         dwEU+oRoALflF4XaovWmWoROkiliwxIAjgChbdgGMzlgfPeOXj0KdV3W1lhDnpwOSUKk
+         M+NHzln4aL24nq2f8t3bpTzmolIaYqtsLIQz1kMS97M0CEdYLtzHUhEF05cfM7wWekfs
+         4E22Y0+qGkX+ygOCc7R15eh3Qr1mHIOG4xObYBWSMPmx6+vVhPEJa0Td1pTqq+LnubxG
+         dUJ49G40ajiQHQIlB1nuO+K69Dn4ov1q3ADLYtMPfo2Hn5V5u6qI5kJCdnoDtCPr8ZEM
+         LveQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3YY1WQBapUW606d/27H4hUlezUCd21kgu2L382vLeJw=;
-        b=lHX0rGAXRVkKrwyNyZVyivzM6pDhYIBM3YfhcoS7eSD5cDNX3vEqthd9jcNSnWjhfH
-         O7E9TqwdZs6Dl6BfUfaoMELT82bz3eKDljj52RKNhtPUcjymrXJrmFkyJpnIbcb3zFZX
-         5FwnSUcCoW8Ow5fzRX61tyEuz9LZDZB6wxVxvfnbU5wQWiLpfJWjuczBVKm0oCwOlZmP
-         HhqQ2wdwlD/fM2853D0q1b25qi8cEuC8oflZ6r4zMdfUTHoPub9J2IppHDDOJ7FVSt/I
-         fOs9TgQHDcTITjJDSXp17Jwveyy62d6pF/sfE7g/CW/fN3mEFp4jP0iz0tw6DTIUlBd5
-         +cIg==
-X-Gm-Message-State: AOAM530+SSM4O+3f09kx+jNLWWFuh0xOBvQx9Cp6g9HBukvJHFvORUYG
-        z6Kf34ZT1Z0LquS5KsWx1woa2V0AiuNIfA==
-X-Google-Smtp-Source: ABdhPJzDFsyhDH2P6Ou/BEkD4ZsCmmF2SYnUwAWh1mZ7roT+XqOt92qBpqK14QC2ZmY6y131zmtJPA==
-X-Received: by 2002:a05:600c:2cd2:: with SMTP id l18mr25373081wmc.142.1625653318804;
-        Wed, 07 Jul 2021 03:21:58 -0700 (PDT)
+        bh=S/GVjTk3aqpXNzO8A5EMSTIT1hswSeFxGqqYdlv0vKQ=;
+        b=ajQibfIbqpxkUpSEB2CDtnT39VTInBY63pK0+GIl4vZu2celBEUHARlkGeRB20ndme
+         IkAbeHneAASDsNfNqrxA2tOmpVA0bu7v75DxmHCg+CO4iAX2Smco4MEDPkcY8dE1n6EA
+         Rer2R4SRQ/nn/Xf3ORRtWscy8dnp+4lUqGteoeZwrU04J/WoPbNkvpaGvKOyzLTzdklY
+         2esAFF5R8jBrxd0rMKbU0Xa/PW6A05lOfTFOdhRqR0WpusDp3ogQaoPhhHxDbVcnUoBF
+         Pw6/9coyv0rAWdpkuX8uwerQ4j7B4Ya2t9/6W+yPvD6BXOLccDhkhpGNzmGEm/geCm/L
+         VRug==
+X-Gm-Message-State: AOAM532Tl3BLu8Tfuyei3iFgEjrCPl755vuxtf0YJ+hDR8/57Xlv+qdP
+        TLoFJiCf59opmlE3Ka5yKXVceYYghuK00g==
+X-Google-Smtp-Source: ABdhPJzFYOTp1CnHhNJBf3rKTVcUCM1Cb1Wx7b64TAIqfeBn7LqdYpEkbzZZ95VucCAxqaD3iIGDpA==
+X-Received: by 2002:a1c:38c7:: with SMTP id f190mr6056830wma.29.1625653320169;
+        Wed, 07 Jul 2021 03:22:00 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y8sm19701187wrr.76.2021.07.07.03.21.57
+        by smtp.gmail.com with ESMTPSA id y8sm19701187wrr.76.2021.07.07.03.21.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jul 2021 03:21:57 -0700 (PDT)
+        Wed, 07 Jul 2021 03:21:59 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 4/5] tests: replace remaining packetize() with "test-tool pkt-line"
-Date:   Wed,  7 Jul 2021 12:21:48 +0200
-Message-Id: <patch-4.5-ab23513b48b-20210707T101549Z-avarab@gmail.com>
+Subject: [PATCH 5/5] test-lib-functions.sh: remove unused [de]packetize() functions
+Date:   Wed,  7 Jul 2021 12:21:49 +0200
+Message-Id: <patch-5.5-2d22b83971a-20210707T101549Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.636.g43e71d69cff
 In-Reply-To: <cover-0.5-00000000000-20210707T101549Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20210707T101549Z-avarab@gmail.com>
@@ -75,107 +75,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the only remaining users of "packetize()" over to "test-tool
-pkt-line", for this we need a new "pack-raw-stdin" subcommand in the
-test-tool. The "pack" command takes input on stdin, but splits it by
-"\n", furthermore we'll format the output using C-strings, so the
-embedded "\0" being tested for here would cause the string to be
-truncated.
-
-So we need another mode that just calls packet_write() on the raw
-input we got on stdin.
+Remove the now-unused "packetize()" and "depacketize()" functions
+added in 4414a150025 (t/lib-git-daemon: add network-protocol helpers,
+2018-01-24). As discussed in the preceding commits we've now moved all
+their users over to "test-tool pkt-line".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/helper/test-pkt-line.c               | 13 +++++++++++++
- t/t5411/once-0010-report-status-v1.sh  |  4 ++--
- t/t5562-http-backend-content-length.sh |  3 ++-
- t/t5570-git-daemon.sh                  | 10 ++++++----
- 4 files changed, 23 insertions(+), 7 deletions(-)
+ t/test-lib-functions.sh | 42 -----------------------------------------
+ 1 file changed, 42 deletions(-)
 
-diff --git a/t/helper/test-pkt-line.c b/t/helper/test-pkt-line.c
-index 5e638f0b970..a2437fbe57d 100644
---- a/t/helper/test-pkt-line.c
-+++ b/t/helper/test-pkt-line.c
-@@ -26,6 +26,17 @@ static void pack(int argc, const char **argv)
- 	}
- }
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index f0448daa74b..13971aa4e34 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1453,48 +1453,6 @@ nongit () {
+ 	)
+ } 7>&2 2>&4
  
-+static void pack_raw_stdin(void)
-+{
-+
-+	struct strbuf sb = STRBUF_INIT;
-+	strbuf_read(&sb, 0, 0);
-+	if (strbuf_read(&sb, 0, 0) < 0)
-+		die_errno("failed to read from stdin");
-+	packet_write(1, sb.buf, sb.len);
-+	strbuf_release(&sb);
-+}
-+
- static void unpack(void)
- {
- 	struct packet_reader reader;
-@@ -110,6 +121,8 @@ int cmd__pkt_line(int argc, const char **argv)
- 
- 	if (!strcmp(argv[1], "pack"))
- 		pack(argc - 2, argv + 2);
-+	else if (!strcmp(argv[1], "pack-raw-stdin"))
-+		pack_raw_stdin();
- 	else if (!strcmp(argv[1], "unpack"))
- 		unpack();
- 	else if (!strcmp(argv[1], "unpack-sideband"))
-diff --git a/t/t5411/once-0010-report-status-v1.sh b/t/t5411/once-0010-report-status-v1.sh
-index cf33d993192..75d4233e49f 100644
---- a/t/t5411/once-0010-report-status-v1.sh
-+++ b/t/t5411/once-0010-report-status-v1.sh
-@@ -28,10 +28,10 @@ test_expect_success "proc-receive: report status v1" '
- 		if test -z "$GIT_DEFAULT_HASH" || test "$GIT_DEFAULT_HASH" = "sha1"
- 		then
- 			printf "%s %s refs/heads/main\0report-status\n" \
--				$A $B | packetize
-+				$A $B | test-tool pkt-line pack-raw-stdin
- 		else
- 			printf "%s %s refs/heads/main\0report-status object-format=$GIT_DEFAULT_HASH\n" \
--				$A $B | packetize
-+				$A $B | test-tool pkt-line pack-raw-stdin
- 		fi &&
- 		printf "%s %s refs/for/main/topic1\n" \
- 			$ZERO_OID $A | test-tool pkt-line pack &&
-diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
-index e6c8338b648..23a8a8d5c70 100755
---- a/t/t5562-http-backend-content-length.sh
-+++ b/t/t5562-http-backend-content-length.sh
-@@ -64,7 +64,8 @@ test_expect_success 'setup' '
- 	hash_next=$(git commit-tree -p HEAD -m next HEAD^{tree}) &&
- 	{
- 		printf "%s %s refs/heads/newbranch\\0report-status object-format=%s\\n" \
--			"$ZERO_OID" "$hash_next" "$(test_oid algo)" | packetize &&
-+			"$ZERO_OID" "$hash_next" "$(test_oid algo)" |
-+			test-tool pkt-line pack-raw-stdin &&
- 		printf 0000 &&
- 		echo "$hash_next" | git pack-objects --stdout
- 	} >push_body &&
-diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
-index 2dde0348816..b52afb0cdea 100755
---- a/t/t5570-git-daemon.sh
-+++ b/t/t5570-git-daemon.sh
-@@ -193,10 +193,12 @@ test_expect_success 'hostname cannot break out of directory' '
- '
- 
- test_expect_success FAKENC 'hostname interpolation works after LF-stripping' '
--	{
--		printf "git-upload-pack /interp.git\n\0host=localhost" | packetize
--		printf "0000"
--	} >input &&
-+	printf "git-upload-pack /interp.git\n\0host=localhost" >has-null &&
-+	test-tool pkt-line pack-raw-stdin >input <has-null &&
-+	test-tool pkt-line pack >>input <<-\EOF &&
-+	0000
-+	EOF
-+
- 	fake_nc "$GIT_DAEMON_HOST_PORT" <input >output &&
- 	test-tool pkt-line unpack <output >actual &&
- 
+-# convert function arguments or stdin (if not arguments given) to pktline
+-# representation. If multiple arguments are given, they are separated by
+-# whitespace and put in a single packet. Note that data containing NULs must be
+-# given on stdin, and that empty input becomes an empty packet, not a flush
+-# packet (for that you can just print 0000 yourself).
+-packetize () {
+-	if test $# -gt 0
+-	then
+-		packet="$*"
+-		printf '%04x%s' "$((4 + ${#packet}))" "$packet"
+-	else
+-		perl -e '
+-			my $packet = do { local $/; <STDIN> };
+-			printf "%04x%s", 4 + length($packet), $packet;
+-		'
+-	fi
+-}
+-
+-# Parse the input as a series of pktlines, writing the result to stdout.
+-# Sideband markers are removed automatically, and the output is routed to
+-# stderr if appropriate.
+-#
+-# NUL bytes are converted to "\\0" for ease of parsing with text tools.
+-depacketize () {
+-	perl -e '
+-		while (read(STDIN, $len, 4) == 4) {
+-			if ($len eq "0000") {
+-				print "FLUSH\n";
+-			} else {
+-				read(STDIN, $buf, hex($len) - 4);
+-				$buf =~ s/\0/\\0/g;
+-				if ($buf =~ s/^[\x2\x3]//) {
+-					print STDERR $buf;
+-				} else {
+-					$buf =~ s/^\x1//;
+-					print $buf;
+-				}
+-			}
+-		}
+-	'
+-}
+-
+ # Converts base-16 data into base-8. The output is given as a sequence of
+ # escaped octals, suitable for consumption by 'printf'.
+ hex2oct () {
 -- 
 2.32.0.636.g43e71d69cff
 
