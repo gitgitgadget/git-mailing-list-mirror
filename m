@@ -2,101 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A9A1C07E95
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 06:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB35CC07E95
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 08:20:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E52B61CA2
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 06:27:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B383D61CBD
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 08:20:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230263AbhGGG3u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jul 2021 02:29:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45364 "EHLO
+        id S230112AbhGGIWy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jul 2021 04:22:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230291AbhGGG3t (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jul 2021 02:29:49 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D51F7C061574
-        for <git@vger.kernel.org>; Tue,  6 Jul 2021 23:27:09 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id h1-20020a17090a3d01b0290172d33bb8bcso3075653pjc.0
-        for <git@vger.kernel.org>; Tue, 06 Jul 2021 23:27:09 -0700 (PDT)
+        with ESMTP id S229975AbhGGIWy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jul 2021 04:22:54 -0400
+Received: from mail-vs1-xe30.google.com (mail-vs1-xe30.google.com [IPv6:2607:f8b0:4864:20::e30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84145C061574
+        for <git@vger.kernel.org>; Wed,  7 Jul 2021 01:20:13 -0700 (PDT)
+Received: by mail-vs1-xe30.google.com with SMTP id u11so1136788vsl.7
+        for <git@vger.kernel.org>; Wed, 07 Jul 2021 01:20:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=kuNwCKBkBWcMU8yC7DvkJv3bIfYF/XXYCzTR0Fr5ykc=;
-        b=GH9DjKnR9V9iCinf+xdMpDtCOI8s//PJQHcgu+F/4rZUOemcYgwnYxzqGBjR1H5gea
-         Jsgu4w2QpLFN+6runcF8kf+JOyhJT0HXLH1+vozou1IMvyfMT0/ue0n4lO7t8n/JtCat
-         f5IpUpQ5rc1jzt3alRWZlzVI7lig4C+djzw3j4zr0ZhuTLpgEX3OlgiEBzGiw4wnkR30
-         DPl9ehaabplz4lBrudmV9cCnBkKPLgROVmc1ltmwo7YtsMp0h26DZOsp86fWtJsN1ngG
-         jrlvJwmGneFS4J7Kt9i1Vq8r0CksnoydbyPNEFlhWBWOse33rstMehlkO+NHXFeDM7GS
-         /iLg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=i0UZPa2r/JUI/Qf9k18jEuxegDLKTw/rxBdgJ66CZCI=;
+        b=Ak5WH8fTmAG7iWS8uc7Y0pBEs2wqzEmidSv13WIwDgY4BdLekfpqN9IHvyVsBZD2Os
+         xrB8XA6eMj2+nW+XHvM45A8LWQ77+H+I4t0Na1AjpBeaMdhlPSeGOQrcsYy/jlgY0z9w
+         xxgnTz6P5GbFfOjPIORENfDJP5EfvHPwf94LlRnDNjnPsZyuyru0BR/Wx5yMrNkqNMZZ
+         E1xbbZg7z7WP5Ds4f73h/mYv7IIimKJFmJJZZtbFQzu6kUuhgvbtAOUv6eXWZyphewcy
+         ieI4S7EMkCaVjz/U5O/LmjbNoEwSZL9zu/TWqBBFvF8wSzzAqeIdAjwkcfAERxpLnBgm
+         JkBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=kuNwCKBkBWcMU8yC7DvkJv3bIfYF/XXYCzTR0Fr5ykc=;
-        b=oSw0hrRs9IiaL/O1YKkCj3PFJRWDMgrLuctNmQSA2r/Oww9O0z2k3VOf/KBj39wiKP
-         V3fdTwG8aBkBECRDD5qr4cw80mEpEXDkFy55eWnFeJ7CpvXI0+rBTYmkfbu22v04RJ7X
-         npAIMMfFqHrBN3EbcnmKOfR0y2BkBWAaxRkPr9nyRpY6dj9HrppQM9zW+3kVNDXUqHDA
-         RPysUEPKp+Cqqt8WEDjLbZZRYo8DcYs0jGdDoQ4TzxzZtUAUaAXXvNWrVb/VgUzn6UL9
-         TjRoGheFwlR67TA0CB6gYFy7BBvGWZEt7wspbw897YH2AmY7GFjgePvnV6EpxBZncKts
-         1UPA==
-X-Gm-Message-State: AOAM531QGGUlWKifBPNCXKmmpIacFMoqvC7jWZY1boWODDNNtUybhjcX
-        vQDvwXNkXg5Aq0EkcSdrMhk=
-X-Google-Smtp-Source: ABdhPJx44Dashyyu29+kLj59h/ZDI0+hAEY3xkLMG0TmJoddID+maUqSx3GBT3bfUFO85uvheAS1Sg==
-X-Received: by 2002:a17:90a:43c3:: with SMTP id r61mr24397783pjg.1.1625639229248;
-        Tue, 06 Jul 2021 23:27:09 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-18.three.co.id. [180.214.233.18])
-        by smtp.gmail.com with ESMTPSA id u13sm18037907pfi.54.2021.07.06.23.27.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jul 2021 23:27:08 -0700 (PDT)
-Subject: Re: [PATCH] Add commit & tag signing/verification via SSH keys using
- ssh-keygen
-To:     Fabian Stelzer via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Fabian Stelzer <fs@gigacodes.de>
-References: <pull.1041.git.git.1625559593910.gitgitgadget@gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <92d8ae43-f146-e938-d793-b8b67d810130@gmail.com>
-Date:   Wed, 7 Jul 2021 13:26:52 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=i0UZPa2r/JUI/Qf9k18jEuxegDLKTw/rxBdgJ66CZCI=;
+        b=ElLG0Ip7y3hcraxNInJVGIaLVmDS9sh+VqixNtDXxV8XDKhAv48RfNtDfNVumL6BYy
+         qmZqEc2g786C7pK+a9aFeRLGLM2fd3eZgIeJ9dnWhD+EOipKbcB0e9A4fdPn+krKad7b
+         UdoOfKnl7IgtzCkxentfQi8LxevCJEy/ceLypVKTALcWpi1j3MC2rJdmqGO1i/36hV2c
+         jIgqsF+z4aF2aFdTaW+3az3eZbL8er9Ny/Dzn8E9ElFnpQLxLyoJLBSf8REyZrBqYHpd
+         Gm+hMGxM2r+Sdid/aNf/X1WyElR2rmaKDftM5Wn86WJ+riXyH8SyJLEJvHnhJpwSFLVf
+         VO9A==
+X-Gm-Message-State: AOAM532iTWc5du5qRiddhHrR8ceFn5D9TBkozF5AceAeiNh5w+bcLV0+
+        34MQPRF8aAoKlp+5h6l39A13zIOWIvUd2zpAygloyA==
+X-Google-Smtp-Source: ABdhPJxT+PY8d56d65KQxcLFGsuZFNiIBBsvzWVkRbKxDSqw1Q2y8+7PxuXnnVqduSqjS8UuBZ/Vzx3OrsLfcYV+mSY=
+X-Received: by 2002:a67:6992:: with SMTP id e140mr20175114vsc.2.1625646012313;
+ Wed, 07 Jul 2021 01:20:12 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <pull.1041.git.git.1625559593910.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <pull.1012.v3.git.git.1625518566.gitgitgadget@gmail.com>
+ <pull.1012.v4.git.git.1625597757.gitgitgadget@gmail.com> <ab147afb38d6e74e0e2fc1fbb83346e6ee32cdd5.1625597757.git.gitgitgadget@gmail.com>
+ <xmqqfswrjksb.fsf@gitster.g>
+In-Reply-To: <xmqqfswrjksb.fsf@gitster.g>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Wed, 7 Jul 2021 10:20:00 +0200
+Message-ID: <CAFQ2z_N+uMCG9ewv-P0GgZQ90m5i6Hk_HYEsRb_WuBvPMZKFFA@mail.gmail.com>
+Subject: Re: [PATCH v4 5/6] refs: explicitly return failure_errno from parse_loose_ref_contents
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/07/21 15.19, Fabian Stelzer via GitGitGadget wrote:
-> From: Fabian Stelzer <fs@gigacodes.de>
-> 
-> set gpg.format = ssh and user.signingkey to a ssh public key string (like from an
-> authorized_keys file) and commits/tags can be signed using the private
-> key from your ssh-agent.
-> 
-> Verification uses a allowed_signers_file (see ssh-keygen(1)) which
-> defaults to .gitsigners but can be set via gpg.ssh.allowedsigners
-> A possible gpg.ssh.revocationfile is also passed to ssh-keygen on
-> verification.
-> 
-> needs openssh>8.2p1
-> 
+On Tue, Jul 6, 2021 at 9:37 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Han-Wen Nienhuys <hanwen@google.com>
+> >
+> > The EINVAL error from parse_loose_ref_contents is used in files-backend
+> > to create a custom error message.
+> >
+> > Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+> > Reviewed-By: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>
+> I think a -By in the trailer is spelled with lowercase, i.e. "Reviewed-by=
+".
 
-Why did you choose to implement SSH-based signing as GPG interface? Why 
-not create similar one?
+.. All done.
 
-If at later times we need to implement other signing methods (besides 
-GPG and SSH), we can refactor gpg-interface into generic signing 
-interface (say `signing.h`) and let each signing methods implement from it.
+I also addressed your other fixup.
 
--- 
-An old man doll... just what I always wanted! - Clara
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
