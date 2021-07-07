@@ -7,101 +7,104 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75D9DC07E96
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 02:35:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59DF7C07E96
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 03:03:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E57361CA2
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 02:35:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 274E761CA3
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 03:03:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229931AbhGGCiS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jul 2021 22:38:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51046 "EHLO
+        id S229992AbhGGDGW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jul 2021 23:06:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229894AbhGGCiR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jul 2021 22:38:17 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A92ECC061574
-        for <git@vger.kernel.org>; Tue,  6 Jul 2021 19:35:37 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id r29so1656053oiw.13
-        for <git@vger.kernel.org>; Tue, 06 Jul 2021 19:35:37 -0700 (PDT)
+        with ESMTP id S229894AbhGGDGV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jul 2021 23:06:21 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C58C061574
+        for <git@vger.kernel.org>; Tue,  6 Jul 2021 20:03:42 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id p9so677631pjl.3
+        for <git@vger.kernel.org>; Tue, 06 Jul 2021 20:03:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-transfer-encoding;
-        bh=vb6Ljn1ajn67xPMVNvE95u1H/v+7MoroLHwOX3Lpkbs=;
-        b=lhF77lRFrxogluJ29/6F+P5EqXdVcL/xXK3bTf8Nbva2qfnucPBiencMrEByPofTUp
-         CBiIH5Ahz1jSDycwIWDSx6NA+vA+aOd4FEkAUo4heRQh1s9Ovt7F19c0FLY3lVZXueRR
-         wBSfe8TZC1VX+tR4DL+uQ8IFFQZLm922MhLvZl5a2jmi8FoWG4nEnqiqQX28ispLprZX
-         bMPC+VFE/lAqRC2gT2SKVotMelI/4sQGbiziZCVzFDeB/U5KEoXWd+lKfbdMdOIy8Fkv
-         3MIpSjM1lxOX5cIoHS6KxxRBAOMlbGFLSwBKhLWR8VBLjn1MrXkRCetPm5eI16qKwwI1
-         66nw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=WDvNwlxM+IcBzsAlHYY5Zsl7njsaN+RL3amkOcQUm6U=;
+        b=r4arOLQ6AuHXRcZ4NrX6YhrojmlqTCnD4sgv8dDnYLmrqQ7DS8HOmb2P4Jm0h9TV/I
+         8U9pM+gShRMyjfDIujQKq5WO4hRBtGuaUPIb5iWb2YZ32z6eOJ1ka19VA/+XsCmwpA+M
+         KI6kJw7Dk1B5oIchlSoMo0AjVHViJkeZTo6xzjzfaaV62HCRLJ/u2PdUdlJRklkhY77p
+         BhvJj19KMdoNEsBybvXsCLh76PJyLUjuXtXrD2PuPoYuAvQf3J7GvJBY3E2FtdcV08g8
+         JOFW49OS/ve4eHjOhD2DhdCOpHS7Jk5MODH/gmm66rhgZg2yrx0LzGww2FAC90Y4d2Uy
+         NztQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
-         :subject:mime-version:content-transfer-encoding;
-        bh=vb6Ljn1ajn67xPMVNvE95u1H/v+7MoroLHwOX3Lpkbs=;
-        b=kOPNyY3NKm//wxWSyzpr6o3/GYykyNaGP9Nfil9EwSqh9kyi2TGyebTpg27WvXfExm
-         +lu4KLjQcD/rmM6wsz98KKgkAm6M3f3lGnDenUBScsdG77UHABXVyisQiH77U7FB0MQe
-         NK1+36oJULEBD/WbGjj7eysdCZw+lpphYEHvDCFlIf3czt/ArkIczEuNVOkzEFkF6eYQ
-         sqH8v3c5fvQKKbLaWUxwrkMuQHf5MV/RIm9Nru/VAIA7mfhbaQQqSqeKBHm3w2K8izqb
-         OFr5cN6jhM8n5KV66LJ1cKO+vd0MsJQ61RCVM1NNIK947V4pW4nKPBX/kaAw7oU89jdc
-         AYjg==
-X-Gm-Message-State: AOAM532h/YLGDphjzE/vjBCtJ3reVfftQsWXpaOY6FjqiVnrFBZxjl72
-        GgYPfBhapKRHK7vOnfGyHb788DbJujM=
-X-Google-Smtp-Source: ABdhPJwg5S/OPKFCkyTgpFZwIJtUVScww2JGObWtacGpRNIjzLgyff5KZwLQrHvgKLsSIOnIPWRvNw==
-X-Received: by 2002:a05:6808:346:: with SMTP id j6mr3085249oie.142.1625625337012;
-        Tue, 06 Jul 2021 19:35:37 -0700 (PDT)
-Received: from localhost (fixed-187-189-163-231.totalplay.net. [187.189.163.231])
-        by smtp.gmail.com with ESMTPSA id x26sm2905738oov.8.2021.07.06.19.35.36
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=WDvNwlxM+IcBzsAlHYY5Zsl7njsaN+RL3amkOcQUm6U=;
+        b=WAg9SJoaLUOwY7NsHNdQfE478bMYdsJUlpH7tBfHVaIiTUWXtsq+19nAp6rIRYdah8
+         I9fyvILu533ROPB2PVSo+Mkxqrt7I30JRozHOj+/G8SIhpEx65M90lC+uI5e6weXrox6
+         uZ0CHo6ghnHo9HO2hwKJFQMsfPE2cfBwetwzXePc3yhKMdZfbtTRm2o89kuSqbmXlh78
+         /GghugEbIvvX47TAyPOR6kEv5V4IddJTpXAqq6EmAk/aCwDciU9NGtmCqanvj7exaItr
+         BdMhZ3t7WRewgaKf6AVD3UanNwxWpwXGp1o268dkf5Ba1f5PnzwJ2OHXZ6c/UfJFM0by
+         7rhw==
+X-Gm-Message-State: AOAM530jXZ9xWXvtXmRPqeJyrg5AjpK1kI5YiFY1x2qDDHtOgWhahHno
+        rlx1CjjTbLkmmE7NaJMHkQ0=
+X-Google-Smtp-Source: ABdhPJx5br+I1gyeWBREboq78WfTYY1HE4UIk7jmXGFlF9efY+NvCBBpoK8NkLGvCCa0FCcXsverug==
+X-Received: by 2002:a17:90b:194b:: with SMTP id nk11mr23440669pjb.85.1625627021708;
+        Tue, 06 Jul 2021 20:03:41 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:9039:443b:57cf:40b5:f8d1])
+        by smtp.gmail.com with ESMTPSA id s37sm7531368pfg.116.2021.07.06.20.03.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jul 2021 19:35:36 -0700 (PDT)
-Date:   Tue, 06 Jul 2021 21:35:35 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Message-ID: <60e512f78ad67_2fc0f520816@natae.notmuch>
-In-Reply-To: <xmqqim1mgbty.fsf@gitster.g>
-References: <xmqqim1mgbty.fsf@gitster.g>
-Subject: RE: What's cooking in git.git (Jul 2021, #01; Tue, 6)
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Tue, 06 Jul 2021 20:03:41 -0700 (PDT)
+Date:   Wed, 7 Jul 2021 10:03:39 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v5 1/3] test-lib-functions: introduce
+ test_stdout_line_count
+Message-ID: <YOUZi+Ueg5MIl6DF@danh.dev>
+References: <20210615172038.28917-1-congdanhqx@gmail.com>
+ <cover.1625362488.git.congdanhqx@gmail.com>
+ <ab542ae9aa35decd2bc55561c5ba8f5653fa07a2.1625362489.git.congdanhqx@gmail.com>
+ <CAPig+cRNw_RVx3CCXN-Usz0Jmi0iphDv2Vqg1cZFqa+QricuJw@mail.gmail.com>
+ <xmqqo8bfjley.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo8bfjley.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-
-> * fc/completion-updates (2021-06-07) 4 commits
->  - completion: bash: add correct suffix in variables
->  - completion: bash: fix for multiple dash commands
->  - completion: bash: fix for suboptions with value
->  - completion: bash: fix prefix detection in branch.*
+On 2021-07-06 12:24:05-0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
 > 
->  Command line completion updates.
+> > A minor think-out-loud: I wonder if there would be value in deriving
+> > the name of the output file from the command being run (perhaps by
+> > using `tr` to translate oddball characters to underscore or to fold
+> > them out). This might or might not help someone debugging a test
+> > failure since there would be less chance of "$trashdir/output" being
+> > repeatedly clobbered.
 > 
->  Expecting a reroll.
->  cf. <60be6f7fa4435_db80d208f2@natae.notmuch>
+> Probably not.
+> 
+> The iterations of output that are clobbered are all from the passing
+> call to test_stdout_count_lines helper we made previously.
 
-I guess I'll have to repeat the same thing over and over again.
+Yay, I also think it doesn't add much value. Since we're chaining
+command in a single test-case.
 
-As I already stated in my previous reply to your what's cooking for
-June 17 [1], and June 10 [2], I already rerolled these:
+I think most people with try to debug with "-i", which exits
+immediately.
 
-https://lore.kernel.org/git/20210608060010.1676208-1-felipe.contreras@gmail.com/
-
-It was sent hours later.
-
-2021-06-07 19:11     ` Felipe Contreras [this message]
-2021-06-08  6:00 ` [PATCH v3 " Felipe Contreras
-
-I've sent a v5 [3] identical to v4 [4] identical to v3 [5].
-
-[1] https://lore.kernel.org/git/60cb5f4632d62_127fb208bb@natae.notmuch/
-[2] https://lore.kernel.org/git/60c22863185f4_b25b1208e2@natae.notmuch/
-[3] https://lore.kernel.org/git/20210707023146.3132162-1-felipe.contreras@gmail.com/
-[4] https://lore.kernel.org/git/20210617143527.77329-1-felipe.contreras@gmail.com/
-[5] https://lore.kernel.org/git/20210608060010.1676208-1-felipe.contreras@gmail.com/
+The only place it would help is debugging test failures with GitHub
+Actions, where developers could download artifarts for test failures
+from GitHub Actions.
 
 -- 
-Felipe Contreras
+Danh
