@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EC5BC07E9C
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 10:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 061DEC07E95
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 10:22:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 796B461CA8
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 10:21:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC41561C9D
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 10:22:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231320AbhGGKYi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jul 2021 06:24:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41554 "EHLO
+        id S231332AbhGGKYp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jul 2021 06:24:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231285AbhGGKYh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jul 2021 06:24:37 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14540C06175F
-        for <git@vger.kernel.org>; Wed,  7 Jul 2021 03:21:57 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id n33so1487088wms.1
-        for <git@vger.kernel.org>; Wed, 07 Jul 2021 03:21:57 -0700 (PDT)
+        with ESMTP id S231285AbhGGKYj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jul 2021 06:24:39 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19F66C061574
+        for <git@vger.kernel.org>; Wed,  7 Jul 2021 03:21:58 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id u8so2412878wrq.8
+        for <git@vger.kernel.org>; Wed, 07 Jul 2021 03:21:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TkOEYabzD3h7VS0ExMAbyQuxQgU50HerE+NhEoacG1M=;
-        b=azMH/KYHOi+08lkqNLBe0LrGilvN4lA8Xc8KcciCPt2hxUkd+tLlxO5boKHmpmfnbY
-         tOxMKHpTKLr+NQZyj8xY4A8+S2PM5FUIA0uMDhJfnbIXByPaqbh9DoPjckqBH7E7/ON5
-         fF+vM/mO/UhLkDr6khbCV/+9qPltLh3FMab47HmDZZ/zB72votqqy0WkitUDK8yWN4YN
-         PenKwQB7XTYdIx5So2vARsaHeDaqVaW9IlavaNKxAOr88TNxh7SsnW5Yg+sTw5s8zT4V
-         2nv10VFkZf27HW/fTeSH/nGVW6vzl8flud1sK+PAa2fM6sNnxJygCHdOA95qvSAOjhqy
-         oJ/A==
+        bh=qUr/sWnNygNlAvP4NqEhdrfQfyD1jQt9Zw3BiPYvi6Y=;
+        b=seWpoLSArwp6W4wExzv8+iI6Kw0y2XrRqBN7iK1NbU7QgWcwQFanMautbfMy5gnj+M
+         srv6uwr29fRubNyH+iQygp+pACdwAN+8anGYVR1a8NsWYcEQzIlT0CZDMt2EUCfVqvc2
+         81EDhVeh3sB9c8zYouP6vyl2xyNEZrgNkdX4ntGtd9oFTg+A1XTxTJ3V6dlbAkuV9Wzy
+         QJq4AMSVU/W4pZz/2QcWyrnryvxxaeNcUM0V/KO6eGBQTTh887HSUIUfXUh+/4DMnO6X
+         yMvBavS34yOIuG6xH71+5XVznIl3d7C8i/9sfO6SsVaejNmS8duPlAA9XHSV2WrSQRWa
+         4R5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TkOEYabzD3h7VS0ExMAbyQuxQgU50HerE+NhEoacG1M=;
-        b=JryvW5516v/IsNicB6wJQs+zt39+bxkCiGDMOoARZEXTFfoZitcDAU/FuOBBZK7wl5
-         EdGp7LHKSdVjzkkfqVwI/A8GX4BrasVE90mvmeTJTnB2cRJUwOmDlwhfY68bFYWJr4nk
-         QoU56FtIOPPfbjqbe8bv7gNW2SHL6ueCEvzVPuY29nR8tERF286zKaV5aSbXwqlO7S1k
-         PWLfbzUzYquWWiNdVQm8ZtmTiBCXzBS8YIV/YdjPCh94TDOfbVW9qbjK/mPKyF25pBBe
-         KA4EZJy6+weaxNi27yraREkR/jPW6sYNA6Jsj7owHGkRBHczdg3kjowDxI5DgZOS0Jsr
-         8aYg==
-X-Gm-Message-State: AOAM533HRL/9lLB0xhXbC60mtADxLkMesMzkI1y7N+MtT3lk4aVfDf/X
-        W/JKw7UXIUmjihnQglQwO1aLyP1dJovYtA==
-X-Google-Smtp-Source: ABdhPJzZbV171Q7VmYUH8fRO7FKW1FeGfEZx8bYtirK9NIx60aOo96oE7r6g1rhri9B9DJ4GgSxBEA==
-X-Received: by 2002:a7b:c092:: with SMTP id r18mr26266309wmh.181.1625653315288;
-        Wed, 07 Jul 2021 03:21:55 -0700 (PDT)
+        bh=qUr/sWnNygNlAvP4NqEhdrfQfyD1jQt9Zw3BiPYvi6Y=;
+        b=lyN4mDAK+ebsdZiXV7fDeBmtWESu1zz2sKnvfV42UdapmRdpl7hjGhWeuPtdgt7ECZ
+         278G3Mjo77ODkArsqBVsT8omQfVMRZmOU/efDnGqHnvX4QC6VnQoMgD0zs9qsC/yCG9d
+         25XunNw1rTkf+gVQTIAm+WEbpMUfKq6Rn6//PD3ML+NWxad/6uom2oQFSV7+vFQdQBAC
+         XBy9UC7/jSt2Yy6USLb/Ruby3K8fzecDec5jqfNQYLAYe3RfnzWBQlaTIYD88iuLm+QT
+         0OCm9KvXgVondUjUgTQd5abR681SvfTNGWswRhPPD9+q98CYZkWCIZCUhBxDIMG7vW8M
+         hQJA==
+X-Gm-Message-State: AOAM530b4NaAuqISvfHXg12ZC4SToRQJloaYIlPguN+VwogElyaVpEZl
+        udeCku4hsuI69+upBA+L40663I+EKXESUg==
+X-Google-Smtp-Source: ABdhPJyfU+5MFYiloGA1XMB4aOrWj8fzOD8+QGwJNWE8gZMfgHjNLb44JWvK1PZpDWL5Gg0gxhWJuQ==
+X-Received: by 2002:a5d:508d:: with SMTP id a13mr20286317wrt.79.1625653316427;
+        Wed, 07 Jul 2021 03:21:56 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y8sm19701187wrr.76.2021.07.07.03.21.54
+        by smtp.gmail.com with ESMTPSA id y8sm19701187wrr.76.2021.07.07.03.21.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jul 2021 03:21:54 -0700 (PDT)
+        Wed, 07 Jul 2021 03:21:55 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/5] serve tests: add missing "extra delim" test
-Date:   Wed,  7 Jul 2021 12:21:45 +0200
-Message-Id: <patch-1.5-fcb53980597-20210707T101549Z-avarab@gmail.com>
+Subject: [PATCH 2/5] serve tests: use test_cmp in "protocol violations" test
+Date:   Wed,  7 Jul 2021 12:21:46 +0200
+Message-Id: <patch-2.5-c3544fb53cd-20210707T101549Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.636.g43e71d69cff
 In-Reply-To: <cover-0.5-00000000000-20210707T101549Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20210707T101549Z-avarab@gmail.com>
@@ -75,47 +75,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the object-info protocol v2 call was added in
-a2ba162cda2 (object-info: support for retrieving object info,
-2021-04-20) we didn't add a corresponding test here.
+Amend the protocol violations tests to check the full output, not just
+grep it. This changes code added in 4845b772458 (upload-pack: handle
+unexpected delim packets, 2020-03-27). The newly added test in the
+preceding commit already did the full test_cmp.
 
-We had tests for ls-refs and fetch already since
-4845b772458 (upload-pack: handle unexpected delim packets,
-2020-03-27), but the same behavior in object-info (which is clearly
-copied from the template of "ls-refs") did not have the corresponding
-tests.
+I have a related series to tweak the output from upload-pack et al, we
+really want to make sure we have this exact output, and not fewer or
+more lines etc.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t5704-protocol-violations.sh | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ t/t5704-protocol-violations.sh | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
 diff --git a/t/t5704-protocol-violations.sh b/t/t5704-protocol-violations.sh
-index 5c941949b98..95f68e1d4b7 100755
+index 95f68e1d4b7..038fffd3d03 100755
 --- a/t/t5704-protocol-violations.sh
 +++ b/t/t5704-protocol-violations.sh
-@@ -32,4 +32,21 @@ test_expect_success 'extra delim packet in v2 fetch args' '
- 	test_i18ngrep "expected flush after fetch arguments" err
- '
- 
-+test_expect_success 'extra delim packet in v2 object-info args' '
-+	# protocol expects 0000 flush after the 0001
-+	test-tool pkt-line pack >input <<-EOF &&
-+	command=object-info
-+	object-format=$(test_oid algo)
-+	0001
-+	0001
-+	EOF
-+
+@@ -14,9 +14,12 @@ test_expect_success 'extra delim packet in v2 ls-refs args' '
+ 		# protocol expects 0000 flush here
+ 		printf 0001
+ 	} >input &&
 +	cat >err.expect <<-\EOF &&
-+	fatal: object-info: expected flush after arguments
++	fatal: expected flush after ls-refs arguments
 +	EOF
-+	test_must_fail env GIT_PROTOCOL=version=2 \
+ 	test_must_fail env GIT_PROTOCOL=version=2 \
+-		git upload-pack . <input 2>err &&
+-	test_i18ngrep "expected flush after ls-refs arguments" err
 +		git upload-pack . <input 2>err.actual &&
 +	test_cmp err.expect err.actual
-+'
-+
- test_done
+ '
+ 
+ test_expect_success 'extra delim packet in v2 fetch args' '
+@@ -27,9 +30,12 @@ test_expect_success 'extra delim packet in v2 fetch args' '
+ 		# protocol expects 0000 flush here
+ 		printf 0001
+ 	} >input &&
++	cat >err.expect <<-\EOF &&
++	fatal: expected flush after fetch arguments
++	EOF
+ 	test_must_fail env GIT_PROTOCOL=version=2 \
+-		git upload-pack . <input 2>err &&
+-	test_i18ngrep "expected flush after fetch arguments" err
++		git upload-pack . <input 2>err.actual &&
++	test_cmp err.expect err.actual
+ '
+ 
+ test_expect_success 'extra delim packet in v2 object-info args' '
 -- 
 2.32.0.636.g43e71d69cff
 
