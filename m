@@ -7,20 +7,20 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D94DC07E95
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 23:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9382C07E9B
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 23:10:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E553C61C69
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 23:10:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A52CE61C59
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 23:10:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230516AbhGGXN2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jul 2021 19:13:28 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:54218 "EHLO dcvr.yhbt.net"
+        id S231181AbhGGXNa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jul 2021 19:13:30 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:54580 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230456AbhGGXNM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jul 2021 19:13:12 -0400
+        id S231137AbhGGXNT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jul 2021 19:13:19 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 815E81F8C8;
+        by dcvr.yhbt.net (Postfix) with ESMTP id A3FDE1F8C9;
         Wed,  7 Jul 2021 23:10:20 +0000 (UTC)
 From:   Eric Wong <e@80x24.org>
 To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
@@ -28,9 +28,9 @@ Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 2/5] avoid strlen via strbuf_addstr in link_alt_odb_entry
-Date:   Wed,  7 Jul 2021 23:10:16 +0000
-Message-Id: <20210707231019.14738-3-e@80x24.org>
+Subject: [PATCH v3 3/5] make object_directory.loose_objects_subdir_seen a bitmap
+Date:   Wed,  7 Jul 2021 23:10:17 +0000
+Message-Id: <20210707231019.14738-4-e@80x24.org>
 In-Reply-To: <20210629205305.7100-1-e@80x24.org>
 References: <20210629205305.7100-1-e@80x24.org>
 MIME-Version: 1.0
@@ -39,47 +39,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We can save a few milliseconds (across 100K odbs) by using
-strbuf_addbuf() instead of strbuf_addstr() by passing `entry' as
-a strbuf pointer rather than a "const char *".
+There's no point in using 8 bits per-directory when 1 bit
+will do.  This saves us 224 bytes per object directory, which
+ends up being 22MB when dealing with 100K alternates.
+
+v2: use bitsizeof() macro and better variable names
 
 Signed-off-by: Eric Wong <e@80x24.org>
 ---
- object-file.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ object-file.c  | 11 ++++++++---
+ object-store.h |  2 +-
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/object-file.c b/object-file.c
-index a13f49b192..2dd70ddf3a 100644
+index 2dd70ddf3a..91ded8c22a 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -567,18 +567,18 @@ static int alt_odb_usable(struct raw_object_store *o,
- static void read_info_alternates(struct repository *r,
- 				 const char *relative_base,
- 				 int depth);
--static int link_alt_odb_entry(struct repository *r, const char *entry,
-+static int link_alt_odb_entry(struct repository *r, const struct strbuf *entry,
- 	const char *relative_base, int depth, const char *normalized_objdir)
+@@ -2461,12 +2461,17 @@ struct oid_array *odb_loose_cache(struct object_directory *odb,
  {
- 	struct object_directory *ent;
- 	struct strbuf pathbuf = STRBUF_INIT;
- 	khiter_t pos;
+ 	int subdir_nr = oid->hash[0];
+ 	struct strbuf buf = STRBUF_INIT;
++	size_t word_bits = bitsizeof(odb->loose_objects_subdir_seen[0]);
++	size_t word_index = subdir_nr / word_bits;
++	size_t mask = 1 << (subdir_nr % word_bits);
++	uint32_t *bitmap;
  
--	if (!is_absolute_path(entry) && relative_base) {
-+	if (!is_absolute_path(entry->buf) && relative_base) {
- 		strbuf_realpath(&pathbuf, relative_base, 1);
- 		strbuf_addch(&pathbuf, '/');
- 	}
--	strbuf_addstr(&pathbuf, entry);
-+	strbuf_addbuf(&pathbuf, entry);
+ 	if (subdir_nr < 0 ||
+-	    subdir_nr >= ARRAY_SIZE(odb->loose_objects_subdir_seen))
++	    subdir_nr >= bitsizeof(odb->loose_objects_subdir_seen))
+ 		BUG("subdir_nr out of range");
  
- 	if (strbuf_normalize_path(&pathbuf) < 0 && relative_base) {
- 		error(_("unable to normalize alternate object path: %s"),
-@@ -669,7 +669,7 @@ static void link_alt_odb_entries(struct repository *r, const char *alt,
- 		alt = parse_alt_odb_entry(alt, sep, &entry);
- 		if (!entry.len)
- 			continue;
--		link_alt_odb_entry(r, entry.buf,
-+		link_alt_odb_entry(r, &entry,
- 				   relative_base, depth, objdirbuf.buf);
- 	}
- 	strbuf_release(&entry);
+-	if (odb->loose_objects_subdir_seen[subdir_nr])
++	bitmap = &odb->loose_objects_subdir_seen[word_index];
++	if (*bitmap & mask)
+ 		return &odb->loose_objects_cache[subdir_nr];
+ 
+ 	strbuf_addstr(&buf, odb->path);
+@@ -2474,7 +2479,7 @@ struct oid_array *odb_loose_cache(struct object_directory *odb,
+ 				    append_loose_object,
+ 				    NULL, NULL,
+ 				    &odb->loose_objects_cache[subdir_nr]);
+-	odb->loose_objects_subdir_seen[subdir_nr] = 1;
++	*bitmap |= mask;
+ 	strbuf_release(&buf);
+ 	return &odb->loose_objects_cache[subdir_nr];
+ }
+diff --git a/object-store.h b/object-store.h
+index 6077065d90..ab6d469970 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -22,7 +22,7 @@ struct object_directory {
+ 	 *
+ 	 * Be sure to call odb_load_loose_cache() before using.
+ 	 */
+-	char loose_objects_subdir_seen[256];
++	uint32_t loose_objects_subdir_seen[8]; /* 256 bits */
+ 	struct oid_array loose_objects_cache[256];
+ 
+ 	/*
