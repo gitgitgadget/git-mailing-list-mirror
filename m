@@ -2,109 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59DF7C07E96
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 03:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DEABC07E96
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 03:05:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 274E761CA3
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 03:03:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E95D361CB9
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 03:05:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229992AbhGGDGW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jul 2021 23:06:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57208 "EHLO
+        id S229998AbhGGDHo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jul 2021 23:07:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229894AbhGGDGV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jul 2021 23:06:21 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C58C061574
-        for <git@vger.kernel.org>; Tue,  6 Jul 2021 20:03:42 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id p9so677631pjl.3
-        for <git@vger.kernel.org>; Tue, 06 Jul 2021 20:03:42 -0700 (PDT)
+        with ESMTP id S229894AbhGGDHo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jul 2021 23:07:44 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0007DC061574
+        for <git@vger.kernel.org>; Tue,  6 Jul 2021 20:05:03 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id u11so1797182oiv.1
+        for <git@vger.kernel.org>; Tue, 06 Jul 2021 20:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=WDvNwlxM+IcBzsAlHYY5Zsl7njsaN+RL3amkOcQUm6U=;
-        b=r4arOLQ6AuHXRcZ4NrX6YhrojmlqTCnD4sgv8dDnYLmrqQ7DS8HOmb2P4Jm0h9TV/I
-         8U9pM+gShRMyjfDIujQKq5WO4hRBtGuaUPIb5iWb2YZ32z6eOJ1ka19VA/+XsCmwpA+M
-         KI6kJw7Dk1B5oIchlSoMo0AjVHViJkeZTo6xzjzfaaV62HCRLJ/u2PdUdlJRklkhY77p
-         BhvJj19KMdoNEsBybvXsCLh76PJyLUjuXtXrD2PuPoYuAvQf3J7GvJBY3E2FtdcV08g8
-         JOFW49OS/ve4eHjOhD2DhdCOpHS7Jk5MODH/gmm66rhgZg2yrx0LzGww2FAC90Y4d2Uy
-         NztQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sEMeG+riLh3JNCgZAuTO1nazbkUoL1kTiHz1z97/fTk=;
+        b=IVoXTgBbUc120ady9EQjrZaF20cfzMMNOkyPP4CstEbZOhe/22iRid272vZ3Lgk4lM
+         roN44iLZnP7OtUzhzOh4WQ2qXzIWJtNOW/QSETHzjLrQe+2Cwco3TUE8zu6RxGdKWrCV
+         YgJHfIghHrHqi0saIGX+JPxAa+MJyLg/VvOEMB5YV+GLhonb0PkLPsYM6d6J/vF4cB59
+         zg0a0WmIk9PpkJ/93sN0IwBhuR8AETUDTbSnyTSBM3dJlmNU3mJqR2a96h1P4ffGq6KR
+         FB2AfL1Cmgr6QjascA3x+2lKIZ5pSVpfAgIomMZIyiqVdANMmo3DTN1NJtQfQ8RftWGj
+         Ckxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=WDvNwlxM+IcBzsAlHYY5Zsl7njsaN+RL3amkOcQUm6U=;
-        b=WAg9SJoaLUOwY7NsHNdQfE478bMYdsJUlpH7tBfHVaIiTUWXtsq+19nAp6rIRYdah8
-         I9fyvILu533ROPB2PVSo+Mkxqrt7I30JRozHOj+/G8SIhpEx65M90lC+uI5e6weXrox6
-         uZ0CHo6ghnHo9HO2hwKJFQMsfPE2cfBwetwzXePc3yhKMdZfbtTRm2o89kuSqbmXlh78
-         /GghugEbIvvX47TAyPOR6kEv5V4IddJTpXAqq6EmAk/aCwDciU9NGtmCqanvj7exaItr
-         BdMhZ3t7WRewgaKf6AVD3UanNwxWpwXGp1o268dkf5Ba1f5PnzwJ2OHXZ6c/UfJFM0by
-         7rhw==
-X-Gm-Message-State: AOAM530jXZ9xWXvtXmRPqeJyrg5AjpK1kI5YiFY1x2qDDHtOgWhahHno
-        rlx1CjjTbLkmmE7NaJMHkQ0=
-X-Google-Smtp-Source: ABdhPJx5br+I1gyeWBREboq78WfTYY1HE4UIk7jmXGFlF9efY+NvCBBpoK8NkLGvCCa0FCcXsverug==
-X-Received: by 2002:a17:90b:194b:: with SMTP id nk11mr23440669pjb.85.1625627021708;
-        Tue, 06 Jul 2021 20:03:41 -0700 (PDT)
-Received: from localhost ([2402:800:63b8:9039:443b:57cf:40b5:f8d1])
-        by smtp.gmail.com with ESMTPSA id s37sm7531368pfg.116.2021.07.06.20.03.40
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sEMeG+riLh3JNCgZAuTO1nazbkUoL1kTiHz1z97/fTk=;
+        b=jQbm5hKTQPly3WMb9KGzwQoyD75fQnXpT3t5kXCtXrnVQuu/7H+V+fbkLtHaBv2edY
+         nKqtIG57WxYZ/bFcfnZ0kJ3lD2KF2hvtOoYdY0MZbaTSE4YSk5Di927koeMuNYLhRT/q
+         AZ6EI/edhjjm5Y4ihlhDGiGvfrzVFq402w9KnThADxlAYI7Lrm3bx/BU1Wq7QJBDVHmg
+         4mXDInfeWZmX4emswzJVckUBwi/y4NRNxvCtVlGplzkzXKWk3Rb6uvKRIN4YyGSsst+O
+         iCwiACt9TrKWHfGtwaMfjER/Y0TGXqeCUNjfTzHcDFt3MTUzo2vSkK7/QZWM+xERBu+3
+         lF1Q==
+X-Gm-Message-State: AOAM530fvqv6WPRdGiqA0YpjF/9zfEkXZtc53RDY2SD1Z8AdHyquXCo1
+        h+7g3ti3ywI2LCXHbRCQ3Otww5SxFdM=
+X-Google-Smtp-Source: ABdhPJxtv6XCP3bVkKu/Buh789AMQRY2TTTrwk+aqRLxQj4UhjD0w63dY7i0oAAmSCQn25ZIjqiK+Q==
+X-Received: by 2002:aca:3017:: with SMTP id w23mr1331857oiw.141.1625627103062;
+        Tue, 06 Jul 2021 20:05:03 -0700 (PDT)
+Received: from localhost (fixed-187-189-163-231.totalplay.net. [187.189.163.231])
+        by smtp.gmail.com with ESMTPSA id f12sm3353111ooh.38.2021.07.06.20.05.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jul 2021 20:03:41 -0700 (PDT)
-Date:   Wed, 7 Jul 2021 10:03:39 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
+        Tue, 06 Jul 2021 20:05:02 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v5 1/3] test-lib-functions: introduce
- test_stdout_line_count
-Message-ID: <YOUZi+Ueg5MIl6DF@danh.dev>
-References: <20210615172038.28917-1-congdanhqx@gmail.com>
- <cover.1625362488.git.congdanhqx@gmail.com>
- <ab542ae9aa35decd2bc55561c5ba8f5653fa07a2.1625362489.git.congdanhqx@gmail.com>
- <CAPig+cRNw_RVx3CCXN-Usz0Jmi0iphDv2Vqg1cZFqa+QricuJw@mail.gmail.com>
- <xmqqo8bfjley.fsf@gitster.g>
+Subject: [PATCH try2] rev-parse: make --quiet really be quiet
+Date:   Tue,  6 Jul 2021 22:04:58 -0500
+Message-Id: <20210707030458.3134502-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.32.0.36.g70aac2b1aa
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo8bfjley.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-07-06 12:24:05-0700, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> 
-> > A minor think-out-loud: I wonder if there would be value in deriving
-> > the name of the output file from the command being run (perhaps by
-> > using `tr` to translate oddball characters to underscore or to fold
-> > them out). This might or might not help someone debugging a test
-> > failure since there would be less chance of "$trashdir/output" being
-> > repeatedly clobbered.
-> 
-> Probably not.
-> 
-> The iterations of output that are clobbered are all from the passing
-> call to test_stdout_count_lines helper we made previously.
+Currently `git rev-parse --quiet --verify @{upstream}` throws an error,
+when it clearly shouldn't.
 
-Yay, I also think it doesn't add much value. Since we're chaining
-command in a single test-case.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ object-name.c               | 7 ++++---
+ t/t1503-rev-parse-verify.sh | 2 ++
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-I think most people with try to debug with "-i", which exits
-immediately.
-
-The only place it would help is debugging test failures with GitHub
-Actions, where developers could download artifarts for test failures
-from GitHub Actions.
-
+diff --git a/object-name.c b/object-name.c
+index 64202de60b..b45369baab 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -806,10 +806,11 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 	char *real_ref = NULL;
+ 	int refs_found = 0;
+ 	int at, reflog_len, nth_prior = 0;
++	int quiet = !!(flags & GET_OID_QUIETLY);
+ 
+ 	if (len == r->hash_algo->hexsz && !get_oid_hex(str, oid)) {
+ 		if (warn_ambiguous_refs && warn_on_object_refname_ambiguity) {
+-			refs_found = repo_dwim_ref(r, str, len, &tmp_oid, &real_ref, 0);
++			refs_found = repo_dwim_ref(r, str, len, &tmp_oid, &real_ref, quiet);
+ 			if (refs_found > 0) {
+ 				warning(warn_msg, len, str);
+ 				if (advice_object_name_warning)
+@@ -860,11 +861,11 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 
+ 	if (!len && reflog_len)
+ 		/* allow "@{...}" to mean the current branch reflog */
+-		refs_found = repo_dwim_ref(r, "HEAD", 4, oid, &real_ref, 0);
++		refs_found = repo_dwim_ref(r, "HEAD", 4, oid, &real_ref, quiet);
+ 	else if (reflog_len)
+ 		refs_found = repo_dwim_log(r, str, len, oid, &real_ref);
+ 	else
+-		refs_found = repo_dwim_ref(r, str, len, oid, &real_ref, 0);
++		refs_found = repo_dwim_ref(r, str, len, oid, &real_ref, quiet);
+ 
+ 	if (!refs_found)
+ 		return -1;
+diff --git a/t/t1503-rev-parse-verify.sh b/t/t1503-rev-parse-verify.sh
+index bf08102391..688c5abdc9 100755
+--- a/t/t1503-rev-parse-verify.sh
++++ b/t/t1503-rev-parse-verify.sh
+@@ -83,6 +83,8 @@ test_expect_success 'fails silently when using -q' '
+ 	test_must_fail git rev-parse --quiet --verify baz HEAD 2>error &&
+ 	test_must_be_empty error &&
+ 	test_must_fail git rev-parse -q --verify $HASH2 HEAD 2>error &&
++	test_must_be_empty error &&
++	test_must_fail git rev-parse -q --verify @{upstream} 2>error &&
+ 	test_must_be_empty error
+ '
+ 
 -- 
-Danh
+2.32.0.36.g70aac2b1aa
+
