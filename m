@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A7C9C07E9C
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 10:22:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A437C07E9B
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 10:22:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2DF4F6008E
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 10:22:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 063C761C9D
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 10:22:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231262AbhGGKYr (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231345AbhGGKYr (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 7 Jul 2021 06:24:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41564 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231321AbhGGKYk (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231336AbhGGKYk (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 7 Jul 2021 06:24:40 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79A6CC06175F
-        for <git@vger.kernel.org>; Wed,  7 Jul 2021 03:21:59 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id b14-20020a1c1b0e0000b02901fc3a62af78so3799428wmb.3
-        for <git@vger.kernel.org>; Wed, 07 Jul 2021 03:21:59 -0700 (PDT)
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DDAAC061760
+        for <git@vger.kernel.org>; Wed,  7 Jul 2021 03:22:00 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id i2-20020a05600c3542b02902058529ea07so1314476wmq.3
+        for <git@vger.kernel.org>; Wed, 07 Jul 2021 03:22:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=pACzyLj3kTjIRekZbkeovwqwOWB1miQ9TfGaho9IoUU=;
-        b=YXi2jnX3tme3zBLeZPUs7HWxSsrMyx0szM/ROdkzEwWjx/A/vs9PhbL5VU/qKDLNfX
-         aVlO1J9350nfRP8pGKZEy8w1f2HVfmE8olOfCod3AzAd0Xoz2Lr/poyaZRn6bSxcRk95
-         7nkSkQIkQ0GSI8n6kabwsCrQdfY1czUmUAyQSf8EkJdG4U4qjtrDNxl50A1ROiQZVXSZ
-         1PKYsX6q3QT4apwA7rJn3xzYxqHk5xNY/DZ8FkJYLSYCNPd3p6KAfYQXtcDx92BGarxM
-         chfnoUm/UjRbceKMqpozrcTrqVvmyBjc4IM50O0VGvstZR2y5KTl+pOOFQNaUn1AX97N
-         KfTA==
+        bh=3YY1WQBapUW606d/27H4hUlezUCd21kgu2L382vLeJw=;
+        b=sSG0LqzO+UX52cyoSdUmtWRyRcoF2g9hXjlu2sg9M3sUWoHbRTHlHKMoxJ/ErJcypD
+         hld9OGVrUL1Q8DkHZ8/pGDrMExXWe59gnCl4/2KWL7sLSoinhTDu/jB9t0Auq4teaLGr
+         lsxW1nJIdnNM+NxBvgV0sai6Af6Im8Z49QskNX8BCTYZcV1NH8QCzOF3KDnUaWWba3Nc
+         FkQP0FtuV9tBzKsYxO+JSJ8zkzWgd6lIDt8tNTnDx29w+KYgusaXCKheqWke+b9do9cB
+         eS7eQVmNFxWzpS+x0T5soyFHarQx+P4IJ8CgZX3F6gu3cD/MMMOLAomZhiVi6ADvZ624
+         x78g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=pACzyLj3kTjIRekZbkeovwqwOWB1miQ9TfGaho9IoUU=;
-        b=fREAXxGiT6qt/lb/l3Fhg1EFUse0o+K4FbMGj/PiQUO9vaU3zPpiSq5B5si89aBHgW
-         G/a4XxlrIiYunxWK+DI/ppNNHcBbl4HpqRJN4RDkdBM3UTtVU3umVl7pxZJ7aYssLMI5
-         PEjTCeagRItf8JpLdWgUqDYx+U3kTWG7+CcPYB+3Zu5KJLFbot4GCdBhC/1brm4fuJuQ
-         layUFvTGtVEVg7JHO/qdVSJO4rjY232uOV49LTWCSjs6wnN9t77tpVMrCXEfE+lPU/kg
-         6rdHmBiZ3eM8oAIrcFiFU1KGkEXjpmn4PieHjAMp1JmC2gaOFz/8cbZsM2e+xMOIhT0h
-         Fv6w==
-X-Gm-Message-State: AOAM533uJOwRrUyf6dDFrq/qV+k+mPC/DPurhbmFkJFR5LWMUQuHV7gW
-        XjBlQEYTJFKOB+ZSS8gtUtPdxn8i/Qpvpg==
-X-Google-Smtp-Source: ABdhPJxJV7xv3DjDfVcqYxG0H3qoklr9KIlosmEmDlowUC5VVkVQI4rs8hjbnfKEtj8AzOwuRJ+/wQ==
-X-Received: by 2002:a05:600c:14c6:: with SMTP id i6mr5909269wmh.169.1625653317681;
-        Wed, 07 Jul 2021 03:21:57 -0700 (PDT)
+        bh=3YY1WQBapUW606d/27H4hUlezUCd21kgu2L382vLeJw=;
+        b=lHX0rGAXRVkKrwyNyZVyivzM6pDhYIBM3YfhcoS7eSD5cDNX3vEqthd9jcNSnWjhfH
+         O7E9TqwdZs6Dl6BfUfaoMELT82bz3eKDljj52RKNhtPUcjymrXJrmFkyJpnIbcb3zFZX
+         5FwnSUcCoW8Ow5fzRX61tyEuz9LZDZB6wxVxvfnbU5wQWiLpfJWjuczBVKm0oCwOlZmP
+         HhqQ2wdwlD/fM2853D0q1b25qi8cEuC8oflZ6r4zMdfUTHoPub9J2IppHDDOJ7FVSt/I
+         fOs9TgQHDcTITjJDSXp17Jwveyy62d6pF/sfE7g/CW/fN3mEFp4jP0iz0tw6DTIUlBd5
+         +cIg==
+X-Gm-Message-State: AOAM530+SSM4O+3f09kx+jNLWWFuh0xOBvQx9Cp6g9HBukvJHFvORUYG
+        z6Kf34ZT1Z0LquS5KsWx1woa2V0AiuNIfA==
+X-Google-Smtp-Source: ABdhPJzDFsyhDH2P6Ou/BEkD4ZsCmmF2SYnUwAWh1mZ7roT+XqOt92qBpqK14QC2ZmY6y131zmtJPA==
+X-Received: by 2002:a05:600c:2cd2:: with SMTP id l18mr25373081wmc.142.1625653318804;
+        Wed, 07 Jul 2021 03:21:58 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y8sm19701187wrr.76.2021.07.07.03.21.56
+        by smtp.gmail.com with ESMTPSA id y8sm19701187wrr.76.2021.07.07.03.21.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jul 2021 03:21:56 -0700 (PDT)
+        Wed, 07 Jul 2021 03:21:57 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 3/5] tests: replace [de]packetize() shell+perl test-tool pkt-line
-Date:   Wed,  7 Jul 2021 12:21:47 +0200
-Message-Id: <patch-3.5-c1015fa6ab0-20210707T101549Z-avarab@gmail.com>
+Subject: [PATCH 4/5] tests: replace remaining packetize() with "test-tool pkt-line"
+Date:   Wed,  7 Jul 2021 12:21:48 +0200
+Message-Id: <patch-4.5-ab23513b48b-20210707T101549Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.636.g43e71d69cff
 In-Reply-To: <cover-0.5-00000000000-20210707T101549Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20210707T101549Z-avarab@gmail.com>
@@ -75,282 +75,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The shell+perl "[de]packetize()" helper functions were added in
-4414a150025 (t/lib-git-daemon: add network-protocol helpers,
-2018-01-24), and around the same time we added the "pkt-line" helper
-in 74e70029615 (test-pkt-line: introduce a packet-line test helper,
-2018-03-14).
+Move the only remaining users of "packetize()" over to "test-tool
+pkt-line", for this we need a new "pack-raw-stdin" subcommand in the
+test-tool. The "pack" command takes input on stdin, but splits it by
+"\n", furthermore we'll format the output using C-strings, so the
+embedded "\0" being tested for here would cause the string to be
+truncated.
 
-For some reason it seems we've mostly used the shell+perl version
-instead of the helper since then. There were discussions around
-88124ab2636 (test-lib-functions: make packetize() more efficient,
-2020-03-27) and cacae4329fa (test-lib-functions: simplify packetize()
-stdin code, 2020-03-29) to improve them and make them more efficient.
-
-Let's instead just use the test helper, I think this results in both
-more legible code, and for anyone who cares about efficiency it'll be
-faster.
-
-We can't convert all the users of packetize(), it has a feature the
-test-tool is missing. This'll be addressed in the subsequent commit.
+So we need another mode that just calls packet_write() on the raw
+input we got on stdin.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t5410-receive-pack-alternates.sh     | 42 ++++++++++++++++++--------
- t/t5411/once-0010-report-status-v1.sh  |  8 ++---
- t/t5500-fetch-pack.sh                  | 15 +++++----
- t/t5530-upload-pack-error.sh           | 24 ++++++++-------
- t/t5562-http-backend-content-length.sh | 13 ++++----
- t/t5570-git-daemon.sh                  | 12 +++++---
- t/t5704-protocol-violations.sh         | 30 +++++++++---------
- 7 files changed, 86 insertions(+), 58 deletions(-)
+ t/helper/test-pkt-line.c               | 13 +++++++++++++
+ t/t5411/once-0010-report-status-v1.sh  |  4 ++--
+ t/t5562-http-backend-content-length.sh |  3 ++-
+ t/t5570-git-daemon.sh                  | 10 ++++++----
+ 4 files changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/t/t5410-receive-pack-alternates.sh b/t/t5410-receive-pack-alternates.sh
-index 0b28e4e452f..d0053d95a44 100755
---- a/t/t5410-receive-pack-alternates.sh
-+++ b/t/t5410-receive-pack-alternates.sh
-@@ -16,10 +16,6 @@ test_expect_success 'setup' '
- 	test_commit private
- '
+diff --git a/t/helper/test-pkt-line.c b/t/helper/test-pkt-line.c
+index 5e638f0b970..a2437fbe57d 100644
+--- a/t/helper/test-pkt-line.c
++++ b/t/helper/test-pkt-line.c
+@@ -26,6 +26,17 @@ static void pack(int argc, const char **argv)
+ 	}
+ }
  
--extract_haves () {
--	depacketize | perl -lne '/^(\S+) \.have/ and print $1'
--}
--
- test_expect_success 'with core.alternateRefsCommand' '
- 	write_script fork/alternate-refs <<-\EOF &&
- 		git --git-dir="$1" for-each-ref \
-@@ -27,18 +23,40 @@ test_expect_success 'with core.alternateRefsCommand' '
- 			refs/heads/public/
- 	EOF
- 	test_config -C fork core.alternateRefsCommand ./alternate-refs &&
--	git rev-parse public/branch >expect &&
--	printf "0000" | git receive-pack fork >actual &&
--	extract_haves <actual >actual.haves &&
--	test_cmp expect actual.haves
++static void pack_raw_stdin(void)
++{
 +
-+	test-tool pkt-line pack >in <<-\EOF &&
-+	0000
-+	EOF
++	struct strbuf sb = STRBUF_INIT;
++	strbuf_read(&sb, 0, 0);
++	if (strbuf_read(&sb, 0, 0) < 0)
++		die_errno("failed to read from stdin");
++	packet_write(1, sb.buf, sb.len);
++	strbuf_release(&sb);
++}
 +
-+	cat >expect <<-EOF &&
-+	$(git rev-parse main) refs/heads/main
-+	$(git rev-parse base) refs/tags/base
-+	$(git rev-parse public) .have
-+	0000
-+	EOF
-+
-+	git receive-pack fork >out <in &&
-+	test-tool pkt-line unpack <out >actual &&
-+	test_cmp expect actual
- '
+ static void unpack(void)
+ {
+ 	struct packet_reader reader;
+@@ -110,6 +121,8 @@ int cmd__pkt_line(int argc, const char **argv)
  
- test_expect_success 'with core.alternateRefsPrefixes' '
- 	test_config -C fork core.alternateRefsPrefixes "refs/heads/private" &&
--	git rev-parse private/branch >expect &&
--	printf "0000" | git receive-pack fork >actual &&
--	extract_haves <actual >actual.haves &&
--	test_cmp expect actual.haves
-+
-+	test-tool pkt-line pack >in <<-\EOF &&
-+	0000
-+	EOF
-+
-+	cat >expect <<-EOF &&
-+	$(git rev-parse main) refs/heads/main
-+	$(git rev-parse base) refs/tags/base
-+	$(git rev-parse private) .have
-+	0000
-+	EOF
-+
-+	git receive-pack fork >out <in &&
-+	test-tool pkt-line unpack <out >actual &&
-+	test_cmp expect actual
- '
- 
- test_done
+ 	if (!strcmp(argv[1], "pack"))
+ 		pack(argc - 2, argv + 2);
++	else if (!strcmp(argv[1], "pack-raw-stdin"))
++		pack_raw_stdin();
+ 	else if (!strcmp(argv[1], "unpack"))
+ 		unpack();
+ 	else if (!strcmp(argv[1], "unpack-sideband"))
 diff --git a/t/t5411/once-0010-report-status-v1.sh b/t/t5411/once-0010-report-status-v1.sh
-index 1233a46eac5..cf33d993192 100644
+index cf33d993192..75d4233e49f 100644
 --- a/t/t5411/once-0010-report-status-v1.sh
 +++ b/t/t5411/once-0010-report-status-v1.sh
-@@ -34,13 +34,13 @@ test_expect_success "proc-receive: report status v1" '
- 				$A $B | packetize
+@@ -28,10 +28,10 @@ test_expect_success "proc-receive: report status v1" '
+ 		if test -z "$GIT_DEFAULT_HASH" || test "$GIT_DEFAULT_HASH" = "sha1"
+ 		then
+ 			printf "%s %s refs/heads/main\0report-status\n" \
+-				$A $B | packetize
++				$A $B | test-tool pkt-line pack-raw-stdin
+ 		else
+ 			printf "%s %s refs/heads/main\0report-status object-format=$GIT_DEFAULT_HASH\n" \
+-				$A $B | packetize
++				$A $B | test-tool pkt-line pack-raw-stdin
  		fi &&
  		printf "%s %s refs/for/main/topic1\n" \
--			$ZERO_OID $A | packetize &&
-+			$ZERO_OID $A | test-tool pkt-line pack &&
- 		printf "%s %s refs/heads/foo\n" \
--			$ZERO_OID $A | packetize &&
-+			$ZERO_OID $A | test-tool pkt-line pack &&
- 		printf "%s %s refs/for/next/topic\n" \
--			$ZERO_OID $A | packetize &&
-+			$ZERO_OID $A | test-tool pkt-line pack &&
- 		printf "%s %s refs/for/main/topic2\n" \
--			$ZERO_OID $A | packetize &&
-+			$ZERO_OID $A | test-tool pkt-line pack &&
- 		printf 0000 &&
- 		printf "" | git -C "$upstream" pack-objects --stdout
- 	} | git receive-pack "$upstream" --stateless-rpc \
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 8a5d3492c71..ff0b7dd89f9 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -872,14 +872,17 @@ test_expect_success 'shallow since with commit graph and already-seen commit' '
- 	git commit-graph write --reachable &&
- 	git config core.commitGraph true &&
- 
--	GIT_PROTOCOL=version=2 git upload-pack . <<-EOF >/dev/null
--	0012command=fetch
--	$(echo "object-format=$(test_oid algo)" | packetize)
--	00010013deepen-since 1
--	$(echo "want $(git rev-parse other)" | packetize)
--	$(echo "have $(git rev-parse main)" | packetize)
-+	test-tool pkt-line pack >in <<-EOF &&
-+	command=fetch
-+	object-format=$(test_oid algo)
-+	0001
-+	deepen-since 1
-+	want $(git rev-parse other)
-+	have $(git rev-parse main)
- 	0000
- 	EOF
-+
-+	GIT_PROTOCOL=version=2 git upload-pack . <in >/dev/null
- 	)
- '
- 
-diff --git a/t/t5530-upload-pack-error.sh b/t/t5530-upload-pack-error.sh
-index 7c1460eaa99..8ccaae10475 100755
---- a/t/t5530-upload-pack-error.sh
-+++ b/t/t5530-upload-pack-error.sh
-@@ -90,18 +90,20 @@ test_expect_success 'upload-pack fails due to error in pack-objects enumeration'
- 
- test_expect_success 'upload-pack tolerates EOF just after stateless client wants' '
- 	test_commit initial &&
--	head=$(git rev-parse HEAD) &&
--
--	{
--		packetize "want $head" &&
--		packetize "shallow $head" &&
--		packetize "deepen 1" &&
--		printf "0000"
--	} >request &&
- 
--	printf "0000" >expect &&
--
--	git upload-pack --stateless-rpc . <request >actual &&
-+	head=$(git rev-parse HEAD) &&
-+	test-tool pkt-line pack >request <<-EOF &&
-+	want $head
-+	shallow $head
-+	deepen 1
-+	0000
-+	EOF
-+
-+	cat >expect <<-\EOF &&
-+	0000
-+	EOF
-+	git upload-pack --stateless-rpc . <request >out &&
-+	test-tool pkt-line unpack <out >actual &&
- 	test_cmp expect actual
- '
- 
+ 			$ZERO_OID $A | test-tool pkt-line pack &&
 diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
-index e5d3d15ba8d..e6c8338b648 100755
+index e6c8338b648..23a8a8d5c70 100755
 --- a/t/t5562-http-backend-content-length.sh
 +++ b/t/t5562-http-backend-content-length.sh
-@@ -53,12 +53,13 @@ test_expect_success 'setup' '
- 	test_commit c1 &&
- 	hash_head=$(git rev-parse HEAD) &&
- 	hash_prev=$(git rev-parse HEAD~1) &&
--	{
--		packetize "want $hash_head" &&
--		printf 0000 &&
--		packetize "have $hash_prev" &&
--		packetize "done"
--	} >fetch_body &&
-+	test-tool pkt-line pack >fetch_body <<-EOF &&
-+	want $hash_head
-+	0000
-+	have $hash_prev
-+	done
-+	0000
-+	EOF
- 	test_copy_bytes 10 <fetch_body >fetch_body.trunc &&
+@@ -64,7 +64,8 @@ test_expect_success 'setup' '
  	hash_next=$(git commit-tree -p HEAD -m next HEAD^{tree}) &&
  	{
+ 		printf "%s %s refs/heads/newbranch\\0report-status object-format=%s\\n" \
+-			"$ZERO_OID" "$hash_next" "$(test_oid algo)" | packetize &&
++			"$ZERO_OID" "$hash_next" "$(test_oid algo)" |
++			test-tool pkt-line pack-raw-stdin &&
+ 		printf 0000 &&
+ 		echo "$hash_next" | git pack-objects --stdout
+ 	} >push_body &&
 diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
-index 82c31ab6cd8..2dde0348816 100755
+index 2dde0348816..b52afb0cdea 100755
 --- a/t/t5570-git-daemon.sh
 +++ b/t/t5570-git-daemon.sh
-@@ -198,12 +198,14 @@ test_expect_success FAKENC 'hostname interpolation works after LF-stripping' '
- 		printf "0000"
- 	} >input &&
- 	fake_nc "$GIT_DAEMON_HOST_PORT" <input >output &&
--	depacketize <output >output.raw &&
-+	test-tool pkt-line unpack <output >actual &&
-+
-+	cat >expect <<-EOF &&
-+	$(git rev-parse HEAD) HEAD
-+	$(git rev-parse refs/heads/main) refs/heads/main
+@@ -193,10 +193,12 @@ test_expect_success 'hostname cannot break out of directory' '
+ '
+ 
+ test_expect_success FAKENC 'hostname interpolation works after LF-stripping' '
+-	{
+-		printf "git-upload-pack /interp.git\n\0host=localhost" | packetize
+-		printf "0000"
+-	} >input &&
++	printf "git-upload-pack /interp.git\n\0host=localhost" >has-null &&
++	test-tool pkt-line pack-raw-stdin >input <has-null &&
++	test-tool pkt-line pack >>input <<-\EOF &&
 +	0000
 +	EOF
- 
--	# just pick out the value of main, which avoids any protocol
--	# particulars
--	perl -lne "print \$1 if m{^(\\S+) refs/heads/main}" <output.raw >actual &&
--	git -C "$repo" rev-parse main >expect &&
- 	test_cmp expect actual
- '
- 
-diff --git a/t/t5704-protocol-violations.sh b/t/t5704-protocol-violations.sh
-index 038fffd3d03..44e2c0d3ded 100755
---- a/t/t5704-protocol-violations.sh
-+++ b/t/t5704-protocol-violations.sh
-@@ -7,13 +7,14 @@ making sure that we do not segfault or otherwise behave badly.'
- . ./test-lib.sh
- 
- test_expect_success 'extra delim packet in v2 ls-refs args' '
--	{
--		packetize command=ls-refs &&
--		packetize "object-format=$(test_oid algo)" &&
--		printf 0001 &&
--		# protocol expects 0000 flush here
--		printf 0001
--	} >input &&
-+	# protocol expects 0000 flush after the 0001
-+	test-tool pkt-line pack >input <<-EOF &&
-+	command=ls-refs
-+	object-format=$(test_oid algo)
-+	0001
-+	0001
-+	EOF
 +
- 	cat >err.expect <<-\EOF &&
- 	fatal: expected flush after ls-refs arguments
- 	EOF
-@@ -23,13 +24,14 @@ test_expect_success 'extra delim packet in v2 ls-refs args' '
- '
+ 	fake_nc "$GIT_DAEMON_HOST_PORT" <input >output &&
+ 	test-tool pkt-line unpack <output >actual &&
  
- test_expect_success 'extra delim packet in v2 fetch args' '
--	{
--		packetize command=fetch &&
--		packetize "object-format=$(test_oid algo)" &&
--		printf 0001 &&
--		# protocol expects 0000 flush here
--		printf 0001
--	} >input &&
-+	# protocol expects 0000 flush after the 0001
-+	test-tool pkt-line pack >input <<-EOF &&
-+	command=fetch
-+	object-format=$(test_oid algo)
-+	0001
-+	0001
-+	EOF
-+
- 	cat >err.expect <<-\EOF &&
- 	fatal: expected flush after fetch arguments
- 	EOF
 -- 
 2.32.0.636.g43e71d69cff
 
