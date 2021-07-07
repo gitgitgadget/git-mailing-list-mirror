@@ -7,119 +7,122 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE5CAC07E96
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 01:54:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76CB9C07E96
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 02:14:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9102B61CB6
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 01:54:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C61261CB6
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 02:14:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229990AbhGGB4k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jul 2021 21:56:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42082 "EHLO
+        id S229919AbhGGCQw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jul 2021 22:16:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229949AbhGGB4j (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jul 2021 21:56:39 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FC56C061574
-        for <git@vger.kernel.org>; Tue,  6 Jul 2021 18:53:59 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id s17so1673568oij.0
-        for <git@vger.kernel.org>; Tue, 06 Jul 2021 18:53:59 -0700 (PDT)
+        with ESMTP id S229873AbhGGCQw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jul 2021 22:16:52 -0400
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA620C061574
+        for <git@vger.kernel.org>; Tue,  6 Jul 2021 19:14:11 -0700 (PDT)
+Received: by mail-pg1-x532.google.com with SMTP id s18so665042pgg.8
+        for <git@vger.kernel.org>; Tue, 06 Jul 2021 19:14:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=K8od09VLST9Bi72OYuVRPYdmsqckrewjiAN0pEdENEM=;
-        b=NEr7vHQpdjyuaBdOEp/qw04lXAnFN2LH3cFYWPTYtvigcLiN7x182Zr8km96OqHmRD
-         HQJcTLmVu3Cqnzk7MSnqRc5palPlIpq+Fy9dqAVnUQTpsXpVSCfWtJY7t2+hzl98PfNX
-         9ZpvWDYoaZOA6toJj5uY3WG+S+O1qXbtl7x1M1Nj0RX7Yg2IJYYsE+CWQ3lnyygJ8zrQ
-         Kb8FomyXaup82QWoHu+9anUHj+3aRnHsBPhta96DSU1ouxKjaIF89NNoC+3fG+gTr+em
-         EhMDJqqWEnrhShN+BAF+0u0RYhEeBk5TOV0v7MS5/dDfeq3IchpcLX+FiwP8g47O/CDz
-         lnOA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=7BxxW4Za7bmlwSSIcFqDMacXdxUgTKJyF7bCrIAqnFk=;
+        b=W88wkZMq8erZGwdEYGdf3HXp28niYbsFgIh8gSV7ouibuuQIP8TP2eqvtJkmEuEFDr
+         7zTkm94mCO9JcISnhTtX2FpyFb4FCK78jv5E1/dvl7btioH7IRLsSlXVkdM9OBdK3/rF
+         oXHFNnsie9iZ2uAJ1LAcjrMh17wmOUwKm4ao5jQkeai52cAwnb5+uUtETR5yARxp7Wfd
+         vAEWBw+B6tEb/Qt+DofVcxMKBAcYCChjw11JThS2wvhkbN+0ButS/MkTK9F8SaMIB3kK
+         XP8g3ssoawIDt90LziEJNZeeDjjPXB8lEl94AL4vrv0g0J8bnljNHjq4FjRG21nlk46L
+         a/7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=K8od09VLST9Bi72OYuVRPYdmsqckrewjiAN0pEdENEM=;
-        b=q0QQaJmCsS49DDQ0SReslRAmn3BYUPubhhOfFq8KSMZ0a+fxQMybV9bWHEcaQ1W+bh
-         wiDToAXrN0C/nVLnt8vm7hnbIVBcpm8NDGyPYQmh8uMl9p0R/zu4KPBvoRatiwwpdk6B
-         YSkhla1F5uYpXpHPvmQp4HK/L1joufok+qmD095BM05UDtX8P56WXOb5mNgsbdfNmR6d
-         alGCvvEQCMippUXxqCS7fMDNtcTVY77vcDzBHTOV/fKm56UTv+PqiWVlkh0OJ2hZYUKg
-         uD7V2Qf7p9l4qjdl5buOSGtSvvhu/qhfpjDGkgml7CFmIZZWFO7lAAUOUxhgIbKrhuFf
-         FQ/w==
-X-Gm-Message-State: AOAM531+uccepmkMBmS0PMUFgTHxYY0kcdh67tCFpjJXaGAODLtW3vu7
-        WXQFJoR00RZ59p6U1BHpHg0=
-X-Google-Smtp-Source: ABdhPJwZ+4Sc/EWAlxEMCJ8D0toFPF7xcGIRVoT8m4zZZEtMepbIKJLJwXaO5QNusC78j0DRt/tz1g==
-X-Received: by 2002:aca:b486:: with SMTP id d128mr3028600oif.99.1625622838830;
-        Tue, 06 Jul 2021 18:53:58 -0700 (PDT)
-Received: from localhost (fixed-187-189-163-231.totalplay.net. [187.189.163.231])
-        by smtp.gmail.com with ESMTPSA id f12sm3318677ooh.38.2021.07.06.18.53.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jul 2021 18:53:58 -0700 (PDT)
-Date:   Tue, 06 Jul 2021 20:53:57 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        David Turner <David.Turner@twosigma.com>
-Message-ID: <60e509353500e_2fc0f5208ef@natae.notmuch>
-In-Reply-To: <nycvar.QRO.7.76.6.2107052259340.8230@tvgsbejvaqbjf.bet>
-References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
- <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
- <87fswyc4dz.fsf@evledraar.gmail.com>
- <e1442a04-7c68-0a7a-6e95-304854adff39@jeffhostetler.com>
- <87czs1d6uy.fsf@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2107052259340.8230@tvgsbejvaqbjf.bet>
-Subject: Re: [PATCH v3 00/34] Builtin FSMonitor Feature
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=7BxxW4Za7bmlwSSIcFqDMacXdxUgTKJyF7bCrIAqnFk=;
+        b=m+XWSEvtthEsEhzsq6FsOQprz6WYRPK0AinRFEXxOZqGFymztmHSYHS4mJNPDj4yC7
+         SABGwAM6dOzk08gR974AuktiyGxsjwUGQzzvL7HuefclzVfUlyaqFgH1kshq6wVd+Ztn
+         0iej9dgGCaA8RNEFvjblYiTNvHYmHw9JjgjNHnI3CXeohf/4EvmvA1y4HRyAAwhz9lH2
+         hn1xwcbofOYMPBS5dxE1biAJd1d6chWxJUdBS6cx4ECcH5tqcb75l+2RLZxeXff2OVog
+         +FMKPajVUNrkEh+7/ucZqmIOn0SaDJGh8ThdLsdG6ALERuEvx0fL1R9ZjZxJajB8JmTi
+         k1jg==
+X-Gm-Message-State: AOAM532LMXE5K4l2Fj76HDSMk4oyS7gIma4nuIV/0RNdwsi0RWdrZyUq
+        lCCdXhEIPJX+0ykrAGKEDfkbT4xnXsCL8No2ZCGQxT38x6g=
+X-Google-Smtp-Source: ABdhPJylbZAuzWrW6XOj6Svn9IsX0wFIPv5cH0wEaeWOsDHv5HiZZ+xy04X69WRDMYZWLdyjvo4GUmaAATJimkfw7R0=
+X-Received: by 2002:aa7:820d:0:b029:2f1:d22d:f21d with SMTP id
+ k13-20020aa7820d0000b02902f1d22df21dmr23146471pfi.7.1625624051048; Tue, 06
+ Jul 2021 19:14:11 -0700 (PDT)
+MIME-Version: 1.0
+References: <CADrEZfE+LuDnhWkRHPMwHq7aGYcvDeqken8uZzPgHREtf0iqjA@mail.gmail.com>
+ <xmqqczrugahy.fsf@gitster.g> <CADrEZfGHAi=Lr6QMsJbXGy1Rs9VDzTVxQPNH4xHHj6ataEAvVA@mail.gmail.com>
+ <CADrEZfHJZT47nNZJ8v2T4vOJkMN7ccaai6DKdzFLF8Zoc42hWw@mail.gmail.com>
+In-Reply-To: <CADrEZfHJZT47nNZJ8v2T4vOJkMN7ccaai6DKdzFLF8Zoc42hWw@mail.gmail.com>
+From:   Aaron Hall <aaronchallmba@gmail.com>
+Date:   Tue, 6 Jul 2021 22:13:34 -0400
+Message-ID: <CADrEZfEVbtbovTbFM2BEuK_cWp4jcV3CZyrzasvsvFbuu1rmWg@mail.gmail.com>
+Subject: Re: Default ssh command
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin wrote:
+> When we use ssh to run the receive-pack over the wire while pushing,
+> we do not ask for pty, and because the "-e" option to set the escape
+> character is meaningful only when ssh runs with pty allocated, you
+> shouldn't have to do this, unless you force pty allocation by
+> e.g. passing "-t" yourself.
 
-> In Git, it is our tradition to develop incrementally, for better or
-> worse.
+Then I wonder why I'm getting a pseudoterminal.
 
-We develop incrementally, but the first version of a big feature has to
-have as many eyes on it as possible in order to track potential issues
-in the future.
+Note that I'm using git from git bash on Windows in a walled off
+corporate environment.
 
-It is very common to look back at an API and say "oh, if only wad
-thought of that back then". Therefore we should do our best to think
-about it now.
+The ssh manpage says:
 
-We want to avoid future aw-shucks.
+> If no pseudo-terminal has been allocated, the session is transparent
+> and can be used to reliably transfer binary data.  On most
+> systems, setting the escape character to ``none'' will also
+> make the session transparent even if a tty is used.
 
-> Jeff's effort
-> brought us to a point where we already have Windows and macOS support,
-> i.e. support for the most prevalent development platforms (see e.g.
-> https://insights.stackoverflow.com/survey/2020#technology-developers-primary-operating-systems).
-> We already established multiple obstacles for Linux support, therefore
-> demanding Linux support to be included Right Now would increase the patch
-> series even further, making it even less reviewable, being even less
-> incremental, hold up the current known-to-work-well state, force Jeff to
-> work on something he probably cannot work on right now, and therefore
-> delaying the entire effort even further.
+If we want the ssh to be binary transparent regardless
+(and I think we do) then that makes my suggestion,
+`ssh -e none`, still perhaps a good one?
 
-This is a red herring.
-
-You don't need to send the Linux support as part of the patch series,
-you can simply provide a branch for the people that want to give it a
-try.
-
-Even if it's not ready for wide use, even if it needs a specific version
-of Linux, even if it's a proof of concept, you can provide it.
-
-The real reason it's not provided is laziness (this is not an attack,
-laziness is good trait in a programmer, although not always).
-
-Cheers.
-
--- 
-Felipe Contreras
+On Tue, Jul 6, 2021 at 10:03 PM Aaron Hall <aaronchallmba@gmail.com> wrote:
+>
+> I'll reply on list.
+>
+> On Tue, Jul 6, 2021 at 9:58 PM Aaron Hall <aaronchallmba@gmail.com> wrote:
+> >
+> > My context is using git from git bash on Windows in a walled off environment.
+> >
+> > On Tue, Jul 6, 2021 at 9:48 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > >
+> > > Aaron Hall <aaronchallmba@gmail.com> writes:
+> > >
+> > > > I was trying to push some binary files (PNGs) over ssh and found some
+> > > > files inexplicably wouldn't successfully push.
+> > > >
+> > > > I set, in my .gitconfig file:
+> > > >
+> > > > [core]
+> > > >         sshCommand = ssh -e none
+> > > >
+> > > > And it works now for all files (that I can tell).
+> > > >
+> > > > From a close examination of the output where I noted escape codes
+> > > > showing up, I believe the problem to be ssh escape codes.
+> > > >
+> > > > `\n~.` for example closes the ssh client.
+> > > >
+> > > > Therefore I think the default ssh command should be `ssh -e none`
+> > > > instead of `ssh` for the benefit of users who won't recognize the
+> > > > problem, unless `git` is expected to make use of ssh escape codes.
+> > >
+> > > Curious.
+> > >
+> > > When we use ssh to run the receive-pack over the wire while pushing,
+> > > we do not ask for pty, and because the "-e" option to set the escape
+> > > character is meaningful only when ssh runs with pty allocated, you
+> > > shouldn't have to do this, unless you force pty allocation by
+> > > e.g. passing "-t" yourself.
