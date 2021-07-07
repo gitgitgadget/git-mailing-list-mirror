@@ -2,99 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5672C07E95
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 05:54:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A9A1C07E95
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 06:27:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA0AE61CB3
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 05:54:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E52B61CA2
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 06:27:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230297AbhGGF5F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jul 2021 01:57:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38158 "EHLO
+        id S230263AbhGGG3u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jul 2021 02:29:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230120AbhGGF5F (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jul 2021 01:57:05 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B824DC061574
-        for <git@vger.kernel.org>; Tue,  6 Jul 2021 22:54:24 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id o18so1095550pgu.10
-        for <git@vger.kernel.org>; Tue, 06 Jul 2021 22:54:24 -0700 (PDT)
+        with ESMTP id S230291AbhGGG3t (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jul 2021 02:29:49 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D51F7C061574
+        for <git@vger.kernel.org>; Tue,  6 Jul 2021 23:27:09 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id h1-20020a17090a3d01b0290172d33bb8bcso3075653pjc.0
+        for <git@vger.kernel.org>; Tue, 06 Jul 2021 23:27:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=2vpZFDxA4kUdl+Zsm7o/PfXxywnJXRNo+AHut7hhbe0=;
-        b=PK7h8giUu+YKgKlrg7+H953K/A8SDkE3LeLaGIE33weKjEtRrDRokgapyPO8rvv8vp
-         2OPBRK+uHg1w1Lk2ZkVyQW08W9okguiqjNeJFdcv3PoxGjccHv+QDfi57GzJUNXEHM7I
-         22m4llfNPrHmojMntZg0QgccXOed8QzM9m1QZf+j5Lqix0JKD90ZOX3L3VDFSCSkr0d8
-         1+C5WFe732OtB18ufceoKVioNltXDSWIT00Fh+om6MErXccrGdsYhAdTTc5zUJo1xXct
-         pBRnBVI77vZt0GmQZh5vbyLEmQaEs/sRu4Y4rSRrZ58DBvYyEEquD8xVAXe2m6cyBofQ
-         EBWQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=kuNwCKBkBWcMU8yC7DvkJv3bIfYF/XXYCzTR0Fr5ykc=;
+        b=GH9DjKnR9V9iCinf+xdMpDtCOI8s//PJQHcgu+F/4rZUOemcYgwnYxzqGBjR1H5gea
+         Jsgu4w2QpLFN+6runcF8kf+JOyhJT0HXLH1+vozou1IMvyfMT0/ue0n4lO7t8n/JtCat
+         f5IpUpQ5rc1jzt3alRWZlzVI7lig4C+djzw3j4zr0ZhuTLpgEX3OlgiEBzGiw4wnkR30
+         DPl9ehaabplz4lBrudmV9cCnBkKPLgROVmc1ltmwo7YtsMp0h26DZOsp86fWtJsN1ngG
+         jrlvJwmGneFS4J7Kt9i1Vq8r0CksnoydbyPNEFlhWBWOse33rstMehlkO+NHXFeDM7GS
+         /iLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=2vpZFDxA4kUdl+Zsm7o/PfXxywnJXRNo+AHut7hhbe0=;
-        b=ghUv8mdKfqK2xqBemm1eiCMDRNwr+MmG0yoAkuqdQwCK443WOB8RHQjqS2sK3C2/Dw
-         NplRvdEuJEy11MklJLkmiKstu+7qKafgLRSQLIYSytBDuuWCrrmJwL7o2EZvvKqBeLqe
-         TXDIdLRgIevCtlAZx4wu7sJB+uyjVDUB66htn68BC7hvnyBGF/ZFzHRur6GlHSTEtgR+
-         LG7YgSJNFkyg32YyGtzs4/r19D1iDDreG77J1dy3WOLJMsGxsPDBDllQsA+uuud+ldm7
-         YRMHTq15ra3NfxSH+TQbkxeLwATK/eWeAeXoHzHHgFpa/6ZCACxOxBqlcPcoNAI+NIeP
-         YM6w==
-X-Gm-Message-State: AOAM531i6MpR9LAwLcYDqynx1hYWd+Tl+8x0bqDhELLUyVNGi3jJ68TK
-        MIulNTID7fHpqO6HCXVKieI=
-X-Google-Smtp-Source: ABdhPJzN6l9c6jOg+2gLJrbnYxmYrg+gHMCatuBKL2YEhVK50HKcuVjm0Mf0OGGT+mgV+7cJZz1xhg==
-X-Received: by 2002:a63:3854:: with SMTP id h20mr16228648pgn.209.1625637264314;
-        Tue, 06 Jul 2021 22:54:24 -0700 (PDT)
-Received: from smtpclient.apple ([119.82.121.47])
-        by smtp.gmail.com with ESMTPSA id o34sm21777090pgm.6.2021.07.06.22.54.22
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Jul 2021 22:54:24 -0700 (PDT)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
-Subject: Re: What's cooking in git.git (Jul 2021, #01; Tue, 6)
-From:   Atharva Raykar <raykar.ath@gmail.com>
-In-Reply-To: <xmqqim1mgbty.fsf@gitster.g>
-Date:   Wed, 7 Jul 2021 11:24:21 +0530
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <D929FDCA-C4FD-4A25-B683-7F49E8C769B5@gmail.com>
-References: <xmqqim1mgbty.fsf@gitster.g>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3654.100.0.2.22)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=kuNwCKBkBWcMU8yC7DvkJv3bIfYF/XXYCzTR0Fr5ykc=;
+        b=oSw0hrRs9IiaL/O1YKkCj3PFJRWDMgrLuctNmQSA2r/Oww9O0z2k3VOf/KBj39wiKP
+         V3fdTwG8aBkBECRDD5qr4cw80mEpEXDkFy55eWnFeJ7CpvXI0+rBTYmkfbu22v04RJ7X
+         npAIMMfFqHrBN3EbcnmKOfR0y2BkBWAaxRkPr9nyRpY6dj9HrppQM9zW+3kVNDXUqHDA
+         RPysUEPKp+Cqqt8WEDjLbZZRYo8DcYs0jGdDoQ4TzxzZtUAUaAXXvNWrVb/VgUzn6UL9
+         TjRoGheFwlR67TA0CB6gYFy7BBvGWZEt7wspbw897YH2AmY7GFjgePvnV6EpxBZncKts
+         1UPA==
+X-Gm-Message-State: AOAM531QGGUlWKifBPNCXKmmpIacFMoqvC7jWZY1boWODDNNtUybhjcX
+        vQDvwXNkXg5Aq0EkcSdrMhk=
+X-Google-Smtp-Source: ABdhPJx44Dashyyu29+kLj59h/ZDI0+hAEY3xkLMG0TmJoddID+maUqSx3GBT3bfUFO85uvheAS1Sg==
+X-Received: by 2002:a17:90a:43c3:: with SMTP id r61mr24397783pjg.1.1625639229248;
+        Tue, 06 Jul 2021 23:27:09 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-18.three.co.id. [180.214.233.18])
+        by smtp.gmail.com with ESMTPSA id u13sm18037907pfi.54.2021.07.06.23.27.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Jul 2021 23:27:08 -0700 (PDT)
+Subject: Re: [PATCH] Add commit & tag signing/verification via SSH keys using
+ ssh-keygen
+To:     Fabian Stelzer via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Fabian Stelzer <fs@gigacodes.de>
+References: <pull.1041.git.git.1625559593910.gitgitgadget@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <92d8ae43-f146-e938-d793-b8b67d810130@gmail.com>
+Date:   Wed, 7 Jul 2021 13:26:52 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <pull.1041.git.git.1625559593910.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07-Jul-2021, at 06:49, Junio C Hamano <gitster@pobox.com> wrote:
->=20
->=20
-> * ar/submodule-add (2021-06-16) 3 commits
-> - submodule--helper: introduce add-config subcommand
-> - submodule--helper: introduce add-clone subcommand
-> - submodule--helper: refactor module_clone()
->=20
-> Rewrite of "git submodule" in C continues.
->=20
-> Waiting for reviews.
+On 06/07/21 15.19, Fabian Stelzer via GitGitGadget wrote:
+> From: Fabian Stelzer <fs@gigacodes.de>
+> 
+> set gpg.format = ssh and user.signingkey to a ssh public key string (like from an
+> authorized_keys file) and commits/tags can be signed using the private
+> key from your ssh-agent.
+> 
+> Verification uses a allowed_signers_file (see ssh-keygen(1)) which
+> defaults to .gitsigners but can be set via gpg.ssh.allowedsigners
+> A possible gpg.ssh.revocationfile is also passed to ssh-keygen on
+> verification.
+> 
+> needs openssh>8.2p1
+> 
 
-Just a small note, this series has been superseded by the [one] that
-I sent yesterday, so it would be preferable to get reviews on that
-series instead.
+Why did you choose to implement SSH-based signing as GPG interface? Why 
+not create similar one?
 
-[one] =
-https://lore.kernel.org/git/20210706181936.34087-1-raykar.ath@gmail.com/
+If at later times we need to implement other signing methods (besides 
+GPG and SSH), we can refactor gpg-interface into generic signing 
+interface (say `signing.h`) and let each signing methods implement from it.
 
----
-Atharva Raykar
-=E0=B2=85=E0=B2=A5=E0=B2=B0=E0=B3=8D=E0=B2=B5 =E0=B2=B0=E0=B2=BE=E0=B2=AF=E0=
-=B3=8D=E0=B2=95=E0=B2=B0=E0=B3=8D
-=E0=A4=85=E0=A4=A5=E0=A4=B0=E0=A5=8D=E0=A4=B5 =E0=A4=B0=E0=A4=BE=E0=A4=AF=E0=
-=A4=95=E0=A4=B0
-
+-- 
+An old man doll... just what I always wanted! - Clara
