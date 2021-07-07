@@ -8,66 +8,62 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEDAEC07E96
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 03:07:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F291C07E96
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 03:09:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8BDF761CAD
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 03:07:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA52461952
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 03:09:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230048AbhGGDJy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Jul 2021 23:09:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57988 "EHLO
+        id S230003AbhGGDM3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Jul 2021 23:12:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229992AbhGGDJx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jul 2021 23:09:53 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E5C5C061574
-        for <git@vger.kernel.org>; Tue,  6 Jul 2021 20:07:13 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id 59-20020a9d0ac10000b0290462f0ab0800so860925otq.11
-        for <git@vger.kernel.org>; Tue, 06 Jul 2021 20:07:13 -0700 (PDT)
+        with ESMTP id S229992AbhGGDM2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jul 2021 23:12:28 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 612F9C061574
+        for <git@vger.kernel.org>; Tue,  6 Jul 2021 20:09:48 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id l21so1798090oig.3
+        for <git@vger.kernel.org>; Tue, 06 Jul 2021 20:09:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=z0ohUL0aKJmvYIwCluIzTM4BxOpaEmmPUH5CDUg3ZE4=;
-        b=ayEkjY4PtrWZpvtAvxGytfp3MurDVusgIxOvqUmBMaFKtUUCwB7/xLVsGPKQt+JWC9
-         xwMf1BUmx3LqnGR1aj+RCZo65smDCp9WTRsN+tiZHN484T3w5vO6BK8vRA4osaGJBsfh
-         bTIPaBsy1bDMe8zOLtkrmMpmUXelEiH3Fz72rFwmOaHHa+HLcxusgTk7M8zkzLEotCxz
-         vVkwXH/bR8Cn8Y6qK9X57FMuCe2AKv37Ma+QmFdKymntHszYHhYpRBEBhY5BqyeGsaDu
-         aZCWpgRSW4jjZec/o0eYKJND025Pr5K8qYkfu+gcq0Xf/mRpgeufaYGXJohrR+EFbUcE
-         jpeg==
+        bh=ZyafR+DJnDEFJBQNIAz2A/jlR8f3VdyfPv9MLeQf2Vg=;
+        b=C0Sdyu+TXSmiV77XbwXDsqMbw8ITlHzNhG0WN2W2+dBoKtPKjQRKrk4/eOccTYFyGp
+         V+/DX3qYWW5H15Urw9p81VcT0M22Cw5sjtcBPGs8XE2G0QFHRyH6cDXWMFAKkP6rnx1p
+         B3BZO/to3WXr7TqgZN+GIaFdFD21V0vHKcUhBTStprQtC1C/u0slailoRSy/qZ1PNiLD
+         StN0qocRW2A21JHtF6gSM/MN0FZNZuLk+/FXTXfaZiBPSVCJW5x3ik6dv9KdP8hTApD6
+         gTBOOm6RGb7BxWXyHszs34epEto59wUMVynREIxYE2bK0H1MUjKpgKzhx0/KK0Ls4Dy1
+         be+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=z0ohUL0aKJmvYIwCluIzTM4BxOpaEmmPUH5CDUg3ZE4=;
-        b=bbCR9a7VlZTBlXgOOG+pjJwVouZKYm8CJI9v55kRmnYSm/P3/1ZgG//fzleycwyKrt
-         I8aLiXi5Cj54VCsqbYVqtim9xSozfER3rQKoEsa2QIZwEAcxbPc9rjrknZ1Ap1FNkudk
-         Y2TL8jCjy6WRcxlFug+yJrXxK/IqNQTFrvo+IFPe/E3QfR2E+L5OZa0mDGx0iHo/PjN8
-         CM9iLIYyWAXxm+urZYI383/jeJCouqIwHDwh3MH5z+2KDOu9SzqEHNAH3yOwktt6nq7j
-         WHNdf2ovHUdZOU2WZmKlpilorSlnwry9dJ7xosjNpYbpnOo8P+w55Hf58RFFqk8lyq4K
-         v3lw==
-X-Gm-Message-State: AOAM531j8cJCHZq/v0fAnneNt4HU8Go/BJ4My7lYgbQIL58bdghNRC17
-        yqDZWGUGtUrL9dTLStEAE1IviSLjxcE=
-X-Google-Smtp-Source: ABdhPJwADVKrT5ax+xuyBQS1/PocbCZYli/MjhrKYd7chiTXVBsN1zrAoZWfVqc8z2ctkVXZwS1DZg==
-X-Received: by 2002:a9d:24e8:: with SMTP id z95mr11747128ota.326.1625627232351;
-        Tue, 06 Jul 2021 20:07:12 -0700 (PDT)
+        bh=ZyafR+DJnDEFJBQNIAz2A/jlR8f3VdyfPv9MLeQf2Vg=;
+        b=FI1eGoCyQyV264Lp2EXULEr6yQJ9nQyyNWYHAdNhYAlmA68J8Mzs4NhPJDfDxib+ur
+         jNWur6BlT7MZqdszEQ84PDtxTiOPm4y8vj3hhooCTM/SpIbiT4lYq1CFVRjh6LkZqtgx
+         zauzB5WEuWq+3Lhw3QqLaZXAnk80M+rgDTPRTPQtDZ/o4REv/Q49xCDKDuNIyxetmWX8
+         ZdPNFlk94h05lDb98o/wAwCq2X3dFcAj6veruw7nlZ1Zoy32aYYY9eftVldInHxRTdRc
+         WES5qcweQd/yRns1zl4/iPMZ/pf3ZBcwiEVjdQvmcGE0kvdFx4SqTCMXFLGtmg3WHHEP
+         ZoOw==
+X-Gm-Message-State: AOAM532HDASoiOF6H2doMqdSKvj+OhojhFBzfCfu8i7R1HQVdAbLxGc4
+        uHIIpV6csv0f5fgC6ZM0wIYsjNtxnK4=
+X-Google-Smtp-Source: ABdhPJwvsLIveyCeHqGoSKVMMW0Xi435WBY5/SbxPhbB1yFAWJYHBe4twHhEyfTf4H0RxubEse4OqQ==
+X-Received: by 2002:a05:6808:56f:: with SMTP id j15mr3040043oig.162.1625627387444;
+        Tue, 06 Jul 2021 20:09:47 -0700 (PDT)
 Received: from localhost (fixed-187-189-163-231.totalplay.net. [187.189.163.231])
-        by smtp.gmail.com with ESMTPSA id b10sm3850676oiy.4.2021.07.06.20.07.11
+        by smtp.gmail.com with ESMTPSA id a19sm1911626oto.25.2021.07.06.20.09.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jul 2021 20:07:11 -0700 (PDT)
+        Tue, 06 Jul 2021 20:09:47 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>,
-        John Keeping <john@keeping.me.uk>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH v2 try2] test: fix for TEST_OUTPUT_DIRECTORY
-Date:   Tue,  6 Jul 2021 22:07:09 -0500
-Message-Id: <20210707030709.3134859-1-felipe.contreras@gmail.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH try2] pull: introduce --merge option
+Date:   Tue,  6 Jul 2021 22:09:43 -0500
+Message-Id: <20210707030943.3135270-1-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0.36.g70aac2b1aa
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -75,84 +71,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test_atexit unit test relies on the specific location of the
-generated files.
+Previously --no-rebase (which still works for backwards compatibility).
 
-When TEST_OUTPUT_DIRECTORY is unset, _run_sub_test_lib_test_common sets
-it to pwd, which is two levels under the pwd of the parent unit test,
-and the parent can find the generated files just fine.
+Now we can update the default warning, and the git-pull(1) man page to
+use --merge instead of the non-intuitive --no-rebase.
 
-But when TEST_OUTPUT_DIRECTORY is set, it's stored in GIT-BUILD-OPTIONS,
-and even though _run_sub_test_lib_test_common correctly overrides it,
-when the child script is run it sources GIT-BUILD-OPTIONS and
-TEST_OUTPUT_DIRECTORY is overridden.
-
-Effectively both the parent and child scripts output to the same
-directory.
-
-  make TEST_OUTPUT_DIRECTORY=/tmp/foobar GIT-BUILD-OPTIONS &&
-  make -C t t0000-basic.sh
-
-We could try to specify --root, as 6883047071 (t0000: set
-TEST_OUTPUT_DIRECTORY for sub-tests, 2013-12-28) suggested, but then the
-results of subtests would leak out because TEST_RESULTS_DIR would not
-be changed from the parent.
-
-Instead, let's revert part of 2d14e13c56 (test output: respect
-$TEST_OUTPUT_DIRECTORY, 2013-04-29) by removing TEST_OUTPUT_DIRECTORY
-from GIT-BUILD-OPTIONS.
-
-It's unclear how much value t/valgrind/analyze.sh provides today, but
-users of that script that use TEST_OUTPUT_DIRECTORY as well can simply
-call the script with that variable in the environment.
-
-It doesn't make much sense to break t0000-basic.sh for users of
-TEST_OUTPUT_DIRECTORY, just to provide a little convenience for the
-users of t/valgrind/analyze.sh.
-
-Presumably this was broken since 900721e15c (test-lib: introduce
-'test_atexit', 2019-03-13).
-
-Cc: John Keeping <john@keeping.me.uk>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
-Range-diff against v1:
-1:  04047359b9 < -:  ---------- test: fix for TEST_OUTPUT_DIRECTORY
--:  ---------- > 1:  681cbe84b4 test: fix for TEST_OUTPUT_DIRECTORY
+ Documentation/git-pull.txt   | 7 +++++--
+ builtin/pull.c               | 4 +++-
+ t/t7601-merge-pull-config.sh | 8 ++++----
+ 3 files changed, 12 insertions(+), 7 deletions(-)
 
- Makefile              | 3 ---
- t/valgrind/analyze.sh | 3 ---
- 2 files changed, 6 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index c3565fc0f8..2e25489569 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2790,9 +2790,6 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
- 	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
- 	@echo X=\'$(X)\' >>$@+
--ifdef TEST_OUTPUT_DIRECTORY
--	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
--endif
- ifdef GIT_TEST_OPTS
- 	@echo GIT_TEST_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_OPTS)))'\' >>$@+
- endif
-diff --git a/t/valgrind/analyze.sh b/t/valgrind/analyze.sh
-index 2ffc80f721..378d0a8daa 100755
---- a/t/valgrind/analyze.sh
-+++ b/t/valgrind/analyze.sh
-@@ -1,8 +1,5 @@
- #!/bin/sh
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index 5c3fb67c01..d23128fa72 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -131,8 +131,11 @@ It rewrites history, which does not bode well when you
+ published that history already.  Do *not* use this option
+ unless you have read linkgit:git-rebase[1] carefully.
  
--# Get TEST_OUTPUT_DIRECTORY from GIT-BUILD-OPTIONS if it's there...
--. "$(dirname "$0")/../../GIT-BUILD-OPTIONS"
--# ... otherwise set it to the default value.
- : ${TEST_OUTPUT_DIRECTORY=$(dirname "$0")/..}
+---no-rebase::
+-	Override earlier --rebase.
++-m::
++--merge::
++	Force a merge.
+++
++Previously this was --no-rebase, but that usage has been deprecated.
  
- output=
+ Options related to fetching
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/builtin/pull.c b/builtin/pull.c
+index b4ee05b39f..8f17b537cf 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -129,6 +129,8 @@ static struct option pull_options[] = {
+ 	  "(false|true|merges|preserve|interactive)",
+ 	  N_("incorporate changes by rebasing rather than merging"),
+ 	  PARSE_OPT_OPTARG, parse_opt_rebase),
++	OPT_SET_INT('m', "merge", &opt_rebase,
++		N_("incorporate changes by merging"), REBASE_FALSE),
+ 	OPT_PASSTHRU('n', NULL, &opt_diffstat, NULL,
+ 		N_("do not show a diffstat at the end of the merge"),
+ 		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
+@@ -936,7 +938,7 @@ static void show_advice_pull_non_ff(void)
+ 		 "  git config pull.ff only       # fast-forward only\n"
+ 		 "\n"
+ 		 "You can replace \"git config\" with \"git config --global\" to set a default\n"
+-		 "preference for all repositories. You can also pass --rebase, --no-rebase,\n"
++		 "preference for all repositories. You can also pass --rebase, --merge,\n"
+ 		 "or --ff-only on the command line to override the configured default per\n"
+ 		 "invocation.\n"));
+ }
+diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
+index 52e8ccc933..6d03e0b9fe 100755
+--- a/t/t7601-merge-pull-config.sh
++++ b/t/t7601-merge-pull-config.sh
+@@ -60,9 +60,9 @@ test_expect_success 'pull.rebase not set and --rebase given' '
+ 	test_i18ngrep ! "Pulling without specifying how to reconcile" err
+ '
+ 
+-test_expect_success 'pull.rebase not set and --no-rebase given' '
++test_expect_success 'pull.rebase not set and --merge given' '
+ 	git reset --hard c0 &&
+-	git pull --no-rebase . c1 2>err &&
++	git pull --merge . c1 2>err &&
+ 	test_i18ngrep ! "Pulling without specifying how to reconcile" err
+ '
+ 
+@@ -119,9 +119,9 @@ test_expect_success 'pull.rebase not set and --rebase given (not-fast-forward)'
+ 	test_i18ngrep ! "Pulling without specifying how to reconcile" err
+ '
+ 
+-test_expect_success 'pull.rebase not set and --no-rebase given (not-fast-forward)' '
++test_expect_success 'pull.rebase not set and --merge given (not-fast-forward)' '
+ 	git reset --hard c2 &&
+-	git pull --no-rebase . c1 2>err &&
++	git pull --merge . c1 2>err &&
+ 	test_i18ngrep ! "Pulling without specifying how to reconcile" err
+ '
+ 
 -- 
 2.32.0.36.g70aac2b1aa
 
