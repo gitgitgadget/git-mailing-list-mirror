@@ -2,24 +2,25 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9481C07E95
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 23:10:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38B68C07E9B
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 23:10:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8721E61C69
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 23:10:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F2BF61C6C
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 23:10:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230432AbhGGXNB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jul 2021 19:13:01 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:53980 "EHLO dcvr.yhbt.net"
+        id S230511AbhGGXNM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jul 2021 19:13:12 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:54098 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230117AbhGGXNA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jul 2021 19:13:00 -0400
+        id S230117AbhGGXND (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jul 2021 19:13:03 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 177181F8C6;
+        by dcvr.yhbt.net (Postfix) with ESMTP id 52BB31F8C7;
         Wed,  7 Jul 2021 23:10:20 +0000 (UTC)
 From:   Eric Wong <e@80x24.org>
 To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
@@ -27,102 +28,48 @@ Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 0/5] optimizations for many alternates
-Date:   Wed,  7 Jul 2021 23:10:14 +0000
-Message-Id: <20210707231019.14738-1-e@80x24.org>
+Subject: [PATCH v3 1/5] speed up alt_odb_usable() with many alternates
+Date:   Wed,  7 Jul 2021 23:10:15 +0000
+Message-Id: <20210707231019.14738-2-e@80x24.org>
 In-Reply-To: <20210629205305.7100-1-e@80x24.org>
 References: <20210629205305.7100-1-e@80x24.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Implemented suggestions from Ævar and René, noticed a few more
-things that's probably worth exploring at some point...
+With many alternates, the duplicate check in alt_odb_usable()
+wastes many cycles doing repeated fspathcmp() on every existing
+alternate.  Use a khash to speed up lookups by odb->path.
 
-TODO items unrelated to this series (probably for somebody else):
+Since the kh_put_* API uses the supplied key without
+duplicating it, we also take advantage of it to replace both
+xstrdup() and strbuf_release() in link_alt_odb_entry() with
+strbuf_detach() to avoid the allocation and copy.
 
-* try fspatheq and fspathhash in more places in hopes it can
-  reduce binary + icache size
+In a test repository with 50K alternates and each of those 50K
+alternates having one alternate each (for a total of 100K total
+alternates); this speeds up lookup of a non-existent blob from
+over 16 minutes to roughly 2.7 seconds on my busy workstation.
 
-* favor ${#var} (instead of "wc -c" as as suggested by Ævar)
-  to reduce fork+execve overhead in tests.  We already use ${#var}
-  in t/test-lib-functions.sh, and it works in shells I've tried
-  (dash, posh, ksh93, bash --posix)
+Note: all underlying git object directories were small and
+unpacked with only loose objects and no packs.  Having to load
+packs increases times significantly.
 
-* reduce internal redundancies (hash functions,
-  hash table and memory pool implementations, etc.)
+v3: Introduce and use fspatheq and fspathhash functions;
+    avoid unnecessary checks for allocation failures already
+    handled by our own *alloc wrappers.
 
-Eric Wong (5):
-  speed up alt_odb_usable() with many alternates
-  avoid strlen via strbuf_addstr in link_alt_odb_entry
-  make object_directory.loose_objects_subdir_seen a bitmap
-  oidcpy_with_padding: constify `src' arg
-  oidtree: a crit-bit tree for odb_loose_cache
+Signed-off-by: Eric Wong <e@80x24.org>
+---
+ dir.c          | 10 ++++++++++
+ dir.h          |  2 ++
+ object-file.c  | 33 +++++++++++++++++++++------------
+ object-store.h |  7 +++++++
+ object.c       |  2 ++
+ 5 files changed, 42 insertions(+), 12 deletions(-)
 
- Makefile                |   3 +
- cbtree.c                | 167 ++++++++++++++++++++++++++++++++++++++++
- cbtree.h                |  56 ++++++++++++++
- dir.c                   |  10 +++
- dir.h                   |   2 +
- hash.h                  |   2 +-
- object-file.c           |  75 ++++++++++--------
- object-name.c           |  28 +++----
- object-store.h          |  14 +++-
- object.c                |   2 +
- oidtree.c               | 104 +++++++++++++++++++++++++
- oidtree.h               |  22 ++++++
- t/helper/test-oidtree.c |  49 ++++++++++++
- t/helper/test-tool.c    |   1 +
- t/helper/test-tool.h    |   1 +
- t/t0069-oidtree.sh      |  49 ++++++++++++
- 16 files changed, 534 insertions(+), 51 deletions(-)
- create mode 100644 cbtree.c
- create mode 100644 cbtree.h
- create mode 100644 oidtree.c
- create mode 100644 oidtree.h
- create mode 100644 t/helper/test-oidtree.c
- create mode 100755 t/t0069-oidtree.sh
-
-Interdiff against v2:
-diff --git a/alloc.c b/alloc.c
-index ca1e178c5a..957a0af362 100644
---- a/alloc.c
-+++ b/alloc.c
-@@ -14,7 +14,6 @@
- #include "tree.h"
- #include "commit.h"
- #include "tag.h"
--#include "oidtree.h"
- #include "alloc.h"
- 
- #define BLOCKING 1024
-@@ -124,11 +123,6 @@ void *alloc_commit_node(struct repository *r)
- 	return c;
- }
- 
--void *alloc_from_state(struct alloc_state *alloc_state, size_t n)
--{
--	return alloc_node(alloc_state, n);
--}
--
- static void report(const char *name, unsigned int count, size_t size)
- {
- 	fprintf(stderr, "%10s: %8u (%"PRIuMAX" kB)\n",
-diff --git a/alloc.h b/alloc.h
-index 4032375aa1..371d388b55 100644
---- a/alloc.h
-+++ b/alloc.h
-@@ -13,7 +13,6 @@ void init_commit_node(struct commit *c);
- void *alloc_commit_node(struct repository *r);
- void *alloc_tag_node(struct repository *r);
- void *alloc_object_node(struct repository *r);
--void *alloc_from_state(struct alloc_state *, size_t n);
- void alloc_report(struct repository *r);
- 
- struct alloc_state *allocate_alloc_state(void);
 diff --git a/dir.c b/dir.c
 index ebe5ec046e..20b942d161 100644
 --- a/dir.c
@@ -164,325 +111,128 @@ index e3db9b9ec6..2af7bcd7e5 100644
  /*
   * The prefix part of pattern must not contains wildcards.
 diff --git a/object-file.c b/object-file.c
-index 6c397fb4f1..35f3e7e9bb 100644
+index f233b440b2..a13f49b192 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -539,14 +539,12 @@ static int alt_odb_usable(struct raw_object_store *o,
- 		o->odb_by_path = kh_init_odb_path_map();
- 		assert(!o->odb->next);
- 		p = kh_put_odb_path_map(o->odb_by_path, o->odb->path, &r);
--		if (r < 0) die_errno(_("kh_put_odb_path_map"));
- 		assert(r == 1); /* never used */
- 		kh_value(o->odb_by_path, p) = o->odb;
+@@ -517,9 +517,9 @@ const char *loose_object_path(struct repository *r, struct strbuf *buf,
+  */
+ static int alt_odb_usable(struct raw_object_store *o,
+ 			  struct strbuf *path,
+-			  const char *normalized_objdir)
++			  const char *normalized_objdir, khiter_t *pos)
+ {
+-	struct object_directory *odb;
++	int r;
+ 
+ 	/* Detect cases where alternate disappeared */
+ 	if (!is_directory(path->buf)) {
+@@ -533,14 +533,20 @@ static int alt_odb_usable(struct raw_object_store *o,
+ 	 * Prevent the common mistake of listing the same
+ 	 * thing twice, or object directory itself.
+ 	 */
+-	for (odb = o->odb; odb; odb = odb->next) {
+-		if (!fspathcmp(path->buf, odb->path))
+-			return 0;
++	if (!o->odb_by_path) {
++		khiter_t p;
++
++		o->odb_by_path = kh_init_odb_path_map();
++		assert(!o->odb->next);
++		p = kh_put_odb_path_map(o->odb_by_path, o->odb->path, &r);
++		assert(r == 1); /* never used */
++		kh_value(o->odb_by_path, p) = o->odb;
  	}
 -	if (!fspathcmp(path->buf, normalized_objdir))
 +	if (fspatheq(path->buf, normalized_objdir))
  		return 0;
- 	*pos = kh_put_odb_path_map(o->odb_by_path, path->buf, &r);
--	if (r < 0) die_errno(_("kh_put_odb_path_map"));
- 	/* r: 0 = exists, 1 = never used, 2 = deleted */
- 	return r == 0 ? 0 : 1;
- }
-@@ -2474,21 +2472,25 @@ struct oidtree *odb_loose_cache(struct object_directory *odb,
- 
- 	bitmap = &odb->loose_objects_subdir_seen[word_index];
- 	if (*bitmap & mask)
--		return &odb->loose_objects_cache;
 -
-+		return odb->loose_objects_cache;
-+	if (!odb->loose_objects_cache) {
-+		ALLOC_ARRAY(odb->loose_objects_cache, 1);
-+		oidtree_init(odb->loose_objects_cache);
-+	}
- 	strbuf_addstr(&buf, odb->path);
- 	for_each_file_in_obj_subdir(subdir_nr, &buf,
- 				    append_loose_object,
- 				    NULL, NULL,
--				    &odb->loose_objects_cache);
-+				    odb->loose_objects_cache);
- 	*bitmap |= mask;
- 	strbuf_release(&buf);
--	return &odb->loose_objects_cache;
-+	return odb->loose_objects_cache;
+-	return 1;
++	*pos = kh_put_odb_path_map(o->odb_by_path, path->buf, &r);
++	/* r: 0 = exists, 1 = never used, 2 = deleted */
++	return r == 0 ? 0 : 1;
  }
  
- void odb_clear_loose_cache(struct object_directory *odb)
+ /*
+@@ -566,6 +572,7 @@ static int link_alt_odb_entry(struct repository *r, const char *entry,
  {
--	oidtree_destroy(&odb->loose_objects_cache);
-+	oidtree_clear(odb->loose_objects_cache);
-+	FREE_AND_NULL(odb->loose_objects_cache);
- 	memset(&odb->loose_objects_subdir_seen, 0,
- 	       sizeof(odb->loose_objects_subdir_seen));
+ 	struct object_directory *ent;
+ 	struct strbuf pathbuf = STRBUF_INIT;
++	khiter_t pos;
+ 
+ 	if (!is_absolute_path(entry) && relative_base) {
+ 		strbuf_realpath(&pathbuf, relative_base, 1);
+@@ -587,23 +594,25 @@ static int link_alt_odb_entry(struct repository *r, const char *entry,
+ 	while (pathbuf.len && pathbuf.buf[pathbuf.len - 1] == '/')
+ 		strbuf_setlen(&pathbuf, pathbuf.len - 1);
+ 
+-	if (!alt_odb_usable(r->objects, &pathbuf, normalized_objdir)) {
++	if (!alt_odb_usable(r->objects, &pathbuf, normalized_objdir, &pos)) {
+ 		strbuf_release(&pathbuf);
+ 		return -1;
+ 	}
+ 
+ 	CALLOC_ARRAY(ent, 1);
+-	ent->path = xstrdup(pathbuf.buf);
++	/* pathbuf.buf is already in r->objects->odb_by_path */
++	ent->path = strbuf_detach(&pathbuf, NULL);
+ 
+ 	/* add the alternate entry */
+ 	*r->objects->odb_tail = ent;
+ 	r->objects->odb_tail = &(ent->next);
+ 	ent->next = NULL;
++	assert(r->objects->odb_by_path);
++	kh_value(r->objects->odb_by_path, pos) = ent;
+ 
+ 	/* recursively add alternates */
+-	read_info_alternates(r, pathbuf.buf, depth + 1);
++	read_info_alternates(r, ent->path, depth + 1);
+ 
+-	strbuf_release(&pathbuf);
+ 	return 0;
  }
+ 
 diff --git a/object-store.h b/object-store.h
-index b507108d18..e679acc4c3 100644
+index ec32c23dcb..6077065d90 100644
 --- a/object-store.h
 +++ b/object-store.h
-@@ -24,7 +24,7 @@ struct object_directory {
- 	 * Be sure to call odb_load_loose_cache() before using.
- 	 */
- 	uint32_t loose_objects_subdir_seen[8]; /* 256 bits */
--	struct oidtree loose_objects_cache;
-+	struct oidtree *loose_objects_cache;
+@@ -7,6 +7,8 @@
+ #include "oid-array.h"
+ #include "strbuf.h"
+ #include "thread-utils.h"
++#include "khash.h"
++#include "dir.h"
  
- 	/*
- 	 * Path to the alternative object store. If this is a relative path,
-@@ -33,18 +33,8 @@ struct object_directory {
+ struct object_directory {
+ 	struct object_directory *next;
+@@ -30,6 +32,9 @@ struct object_directory {
  	char *path;
  };
  
--static inline int odb_path_eq(const char *a, const char *b)
--{
--	return !fspathcmp(a, b);
--}
--
--static inline int odb_path_hash(const char *str)
--{
--	return ignore_case ? strihash(str) : __ac_X31_hash_string(str);
--}
--
- KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
--	struct object_directory *, 1, odb_path_hash, odb_path_eq);
++KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
 +	struct object_directory *, 1, fspathhash, fspatheq);
- 
++
  void prepare_alt_odb(struct repository *r);
  char *compute_alternate_path(const char *path, struct strbuf *err);
-diff --git a/oidtree.c b/oidtree.c
-index c1188d8f48..7eb0e9ba05 100644
---- a/oidtree.c
-+++ b/oidtree.c
-@@ -19,46 +19,55 @@ struct oidtree_iter_data {
- 	uint8_t last_byte;
- };
- 
--void oidtree_destroy(struct oidtree *ot)
-+void oidtree_init(struct oidtree *ot)
- {
--	if (ot->mempool) {
--		clear_alloc_state(ot->mempool);
--		FREE_AND_NULL(ot->mempool);
-+	cb_init(&ot->tree);
-+	mem_pool_init(&ot->mem_pool, 0);
-+}
+ typedef int alt_odb_fn(struct object_directory *, void *);
+@@ -116,6 +121,8 @@ struct raw_object_store {
+ 	 */
+ 	struct object_directory *odb;
+ 	struct object_directory **odb_tail;
++	kh_odb_path_map_t *odb_by_path;
 +
-+void oidtree_clear(struct oidtree *ot)
-+{
-+	if (ot) {
-+		mem_pool_discard(&ot->mem_pool, 0);
-+		oidtree_init(ot);
- 	}
--	oidtree_init(ot);
- }
- 
- void oidtree_insert(struct oidtree *ot, const struct object_id *oid)
- {
- 	struct oidtree_node *on;
- 
--	if (!ot->mempool)
--		ot->mempool = allocate_alloc_state();
- 	if (!oid->algo)
- 		BUG("oidtree_insert requires oid->algo");
- 
--	on = alloc_from_state(ot->mempool, sizeof(*on) + sizeof(*oid));
-+	on = mem_pool_alloc(&ot->mem_pool, sizeof(*on) + sizeof(*oid));
- 	oidcpy_with_padding((struct object_id *)on->n.k, oid);
+ 	int loaded_alternates;
  
  	/*
--	 * n.b. we shouldn't get duplicates, here, but we'll have
--	 * a small leak that won't be freed until oidtree_destroy
-+	 * n.b. Current callers won't get us duplicates, here.  If a
-+	 * future caller causes duplicates, there'll be a a small leak
-+	 * that won't be freed until oidtree_clear.  Currently it's not
-+	 * worth maintaining a free list
- 	 */
--	cb_insert(&ot->t, &on->n, sizeof(*oid));
-+	cb_insert(&ot->tree, &on->n, sizeof(*oid));
- }
- 
-+
- int oidtree_contains(struct oidtree *ot, const struct object_id *oid)
- {
--	struct object_id k = { 0 };
-+	struct object_id k;
- 	size_t klen = sizeof(k);
-+
- 	oidcpy_with_padding(&k, oid);
- 
--	if (oid->algo == GIT_HASH_UNKNOWN) {
--		k.algo = hash_algo_by_ptr(the_hash_algo);
-+	if (oid->algo == GIT_HASH_UNKNOWN)
- 		klen -= sizeof(oid->algo);
--	}
- 
--	return cb_lookup(&ot->t, (const uint8_t *)&k, klen) ? 1 : 0;
-+	/* cb_lookup relies on memcmp on the struct, so order matters: */
-+	klen += BUILD_ASSERT_OR_ZERO(offsetof(struct object_id, hash) <
-+				offsetof(struct object_id, algo));
-+
-+	return cb_lookup(&ot->tree, (const uint8_t *)&k, klen) ? 1 : 0;
- }
- 
- static enum cb_next iter(struct cb_node *n, void *arg)
-@@ -78,17 +87,18 @@ static enum cb_next iter(struct cb_node *n, void *arg)
- }
- 
- void oidtree_each(struct oidtree *ot, const struct object_id *oid,
--			size_t oidhexlen, oidtree_iter fn, void *arg)
-+			size_t oidhexsz, oidtree_iter fn, void *arg)
- {
--	size_t klen = oidhexlen / 2;
-+	size_t klen = oidhexsz / 2;
- 	struct oidtree_iter_data x = { 0 };
-+	assert(oidhexsz <= GIT_MAX_HEXSZ);
- 
- 	x.fn = fn;
- 	x.arg = arg;
- 	x.algo = oid->algo;
--	if (oidhexlen & 1) {
-+	if (oidhexsz & 1) {
- 		x.last_byte = oid->hash[klen];
- 		x.last_nibble_at = &klen;
+diff --git a/object.c b/object.c
+index 14188453c5..2b3c075a15 100644
+--- a/object.c
++++ b/object.c
+@@ -511,6 +511,8 @@ static void free_object_directories(struct raw_object_store *o)
+ 		free_object_directory(o->odb);
+ 		o->odb = next;
  	}
--	cb_each(&ot->t, (const uint8_t *)oid, klen, iter, &x);
-+	cb_each(&ot->tree, (const uint8_t *)oid, klen, iter, &x);
- }
-diff --git a/oidtree.h b/oidtree.h
-index 73399bb978..77898f510a 100644
---- a/oidtree.h
-+++ b/oidtree.h
-@@ -3,27 +3,20 @@
- 
- #include "cbtree.h"
- #include "hash.h"
-+#include "mem-pool.h"
- 
--struct alloc_state;
- struct oidtree {
--	struct cb_tree t;
--	struct alloc_state *mempool;
-+	struct cb_tree tree;
-+	struct mem_pool mem_pool;
- };
- 
--#define OIDTREE_INIT { .t = CBTREE_INIT, .mempool = NULL }
--
--static inline void oidtree_init(struct oidtree *ot)
--{
--	cb_init(&ot->t);
--	ot->mempool = NULL;
--}
--
--void oidtree_destroy(struct oidtree *);
-+void oidtree_init(struct oidtree *);
-+void oidtree_clear(struct oidtree *);
- void oidtree_insert(struct oidtree *, const struct object_id *);
- int oidtree_contains(struct oidtree *, const struct object_id *);
- 
--typedef enum cb_next (*oidtree_iter)(const struct object_id *, void *arg);
-+typedef enum cb_next (*oidtree_iter)(const struct object_id *, void *data);
- void oidtree_each(struct oidtree *, const struct object_id *,
--			size_t oidhexlen, oidtree_iter, void *arg);
-+			size_t oidhexsz, oidtree_iter, void *data);
- 
- #endif /* OIDTREE_H */
-diff --git a/t/helper/test-oidtree.c b/t/helper/test-oidtree.c
-index e0da13eea3..180ee28dd9 100644
---- a/t/helper/test-oidtree.c
-+++ b/t/helper/test-oidtree.c
-@@ -10,11 +10,12 @@ static enum cb_next print_oid(const struct object_id *oid, void *data)
- 
- int cmd__oidtree(int argc, const char **argv)
- {
--	struct oidtree ot = OIDTREE_INIT;
-+	struct oidtree ot;
- 	struct strbuf line = STRBUF_INIT;
- 	int nongit_ok;
- 	int algo = GIT_HASH_UNKNOWN;
- 
-+	oidtree_init(&ot);
- 	setup_git_directory_gently(&nongit_ok);
- 
- 	while (strbuf_getline(&line, stdin) != EOF) {
-@@ -34,14 +35,15 @@ int cmd__oidtree(int argc, const char **argv)
- 			char buf[GIT_MAX_HEXSZ + 1] = { '0' };
- 			memset(&oid, 0, sizeof(oid));
- 			memcpy(buf, arg, strlen(arg));
--			buf[hash_algos[algo].hexsz] = 0;
-+			buf[hash_algos[algo].hexsz] = '\0';
- 			get_oid_hex_any(buf, &oid);
- 			oid.algo = algo;
- 			oidtree_each(&ot, &oid, strlen(arg), print_oid, NULL);
--		} else if (!strcmp(line.buf, "destroy"))
--			oidtree_destroy(&ot);
--		else
-+		} else if (!strcmp(line.buf, "clear")) {
-+			oidtree_clear(&ot);
-+		} else {
- 			die("unknown command: %s", line.buf);
-+		}
- 	}
- 	return 0;
- }
-diff --git a/t/t0069-oidtree.sh b/t/t0069-oidtree.sh
-index 0594f57c81..bfb1397d7b 100755
---- a/t/t0069-oidtree.sh
-+++ b/t/t0069-oidtree.sh
-@@ -3,35 +3,32 @@
- test_description='basic tests for the oidtree implementation'
- . ./test-lib.sh
- 
-+maxhexsz=$(test_oid hexsz)
- echoid () {
- 	prefix="${1:+$1 }"
- 	shift
- 	while test $# -gt 0
- 	do
--		echo "$1"
-+		shortoid="$1"
- 		shift
--	done | awk -v prefix="$prefix" -v ZERO_OID=$ZERO_OID '{
--		printf("%s%s", prefix, $0);
--		need = length(ZERO_OID) - length($0);
--		for (i = 0; i < need; i++)
--			printf("0");
--		printf "\n";
--	}'
-+		difference=$(($maxhexsz - ${#shortoid}))
-+		printf "%s%s%0${difference}d\\n" "$prefix" "$shortoid" "0"
-+	done
++	kh_destroy_odb_path_map(o->odb_by_path);
++	o->odb_by_path = NULL;
  }
  
- test_expect_success 'oidtree insert and contains' '
--	cat >expect <<EOF &&
--0
--0
--0
--1
--1
--0
--EOF
-+	cat >expect <<-\EOF &&
-+		0
-+		0
-+		0
-+		1
-+		1
-+		0
-+	EOF
- 	{
- 		echoid insert 444 1 2 3 4 5 a b c d e &&
- 		echoid contains 44 441 440 444 4440 4444
--		echo destroy
-+		echo clear
- 	} | test-tool oidtree >actual &&
- 	test_cmp expect actual
- '
-@@ -44,7 +41,7 @@ test_expect_success 'oidtree each' '
- 		echo each 3211
- 		echo each 3210
- 		echo each 32100
--		echo destroy
-+		echo clear
- 	} | test-tool oidtree >actual &&
- 	test_cmp expect actual
- '
+ void raw_object_store_clear(struct raw_object_store *o)
