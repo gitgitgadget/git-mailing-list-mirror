@@ -2,109 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15D9EC07E95
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 17:08:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9154BC07E95
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 17:43:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E5F9661C88
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 17:08:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7757961CC8
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 17:43:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230146AbhGGRKr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jul 2021 13:10:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48110 "EHLO
+        id S231165AbhGGRpn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jul 2021 13:45:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230109AbhGGRKq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jul 2021 13:10:46 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CEBFC061574
-        for <git@vger.kernel.org>; Wed,  7 Jul 2021 10:08:05 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id x16so2750085pfa.13
-        for <git@vger.kernel.org>; Wed, 07 Jul 2021 10:08:05 -0700 (PDT)
+        with ESMTP id S230365AbhGGRpl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jul 2021 13:45:41 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6964FC061574
+        for <git@vger.kernel.org>; Wed,  7 Jul 2021 10:43:01 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id r29so4246314oiw.13
+        for <git@vger.kernel.org>; Wed, 07 Jul 2021 10:43:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=MVbzkUboe4vFrhlC0i2whO7Ga7hfKBRajsiiiO/oCHs=;
-        b=B5deYE4RsYsD6+7epave5Cf2ewC9EpHYbGfEnmVdjgT1j5MqJrNKbv/ydjHPx09hW2
-         Fe8RHJvZ+QWks0E+bsWqbofrw9zR3bVVVc3Zaw7a/mUJKTnWKAKB5A0t8fxbflyfPLz4
-         gw1y1fWBVvSnnQoCbinXVUXUFo4PXq6CU7fMgrotrPK+asQHhJXC9D++0G46gF4TjuW4
-         VMq6Oj46nbzPkni/5PDdqTEASMEHsyDVbw5RAK0Z3+HZzegatIBDjsp/lOOh+4lbYFV1
-         vVsw358IGaONSPCfuAASQmGLO/A/4u68sH7Zo7eTTwAN400KOBX1UlHbTzBDl4EqjhZA
-         Z4eg==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=RNplSe3nCbqFC5L2M2cOO4E5xAsrG6zBKqZpqoI+7b4=;
+        b=u++e/6iGQ5N6hMcKbXAGiIHL4mQRG6iap1yS/yZvA8waCjUEQEDnLsOapLfLYURBlX
+         92oqNVnBEv8YLGoN2aYmiVY5w8wnhrb1CVfxutyyJtFxmUTrDSFtoYXlAh3Ug8ZLqBMZ
+         h8fl73IejIHB4iF6aEVToYIoyFIEFQDxlq4phu/tV1b2xabXt1Igb3Vfju2bD2tBpo+A
+         7G/FpVEV2L+iyWUvIuF6zHv9R1DitkTk7A+/3Cmpu9xf5s8G3Ufs67uE/psQ8wPxctUU
+         ca/aWEqAiTvyt3QjRlMCcTu3rI9YeASdiw7I3R2J13LDIvxNpRK0k2X9MPXTFEhNquGx
+         XD3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=MVbzkUboe4vFrhlC0i2whO7Ga7hfKBRajsiiiO/oCHs=;
-        b=cPQalpsR3eejwdqdWE1b+IVK/+uBRAFJE6W0PlWHzuUHubzbHvT5uwJy4P+wi6Z9I+
-         zzrUFgGy7QLjW7YKvN7jj7rWEusNXOL79YkauabJFzVsF9SRODf+sigEHur2z0UeolH1
-         6ZGw9nDqePsIji1S+g+97xLGKok3aPgUFeEyt2sHs2QvpNi5jGz6A4EKT0MQXTsFZddU
-         QU5tQfjnlS1ELeVNVf5ZM3py2PY4DtiMbDXgz++GCmlQ0hZdxKkopJBuEafIfbIxrYuJ
-         ad4meRX+2Z5NEFXnbqamw19BGDeBLZyyeueYY/HYJ2Y64Q3vB6fZVsmzIOqg/C6oVMQX
-         s8hw==
-X-Gm-Message-State: AOAM530rau7QORlJ5yW+/Ay3KLxWDIVAJYwX7MtZ1kUz2P37CM+dx0Wi
-        mFcT71uXDnamTkyK2Nlu/SY=
-X-Google-Smtp-Source: ABdhPJxog1WEpSrk83cLiWkiSZTg4doC7bGejDMAabQeoHenETib+3Wz+YaQHSsY9RZ5pnNL8VLpmg==
-X-Received: by 2002:a62:3344:0:b029:28c:6f0f:cb90 with SMTP id z65-20020a6233440000b029028c6f0fcb90mr26229213pfz.58.1625677684688;
-        Wed, 07 Jul 2021 10:08:04 -0700 (PDT)
-Received: from localhost ([2402:800:63b8:9039:443b:57cf:40b5:f8d1])
-        by smtp.gmail.com with ESMTPSA id ck22sm18770749pjb.26.2021.07.07.10.08.03
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=RNplSe3nCbqFC5L2M2cOO4E5xAsrG6zBKqZpqoI+7b4=;
+        b=qjscp6bFG1aXZzlLQJvjrWiSt4vOGlEqzS5FbopIYWy9K4eE3yhsvhdNGOx+MW77NS
+         6F3e2//1Iolx6GzjG2X6mXNLsaQnla3+2dy9lN+Jvgf2H2ZTUqme8zPWO8HGd8KY5hoA
+         9f0+xhbc/TYzaID5J5Fpq3NdYBCH5C6i8F9NFbCBhlF3UV0qJCxiv16S6OsJljjIt4G0
+         ZI8/ljbzJnQNVbLiJ/MUvgsRWOJJiYFCIlA2RMO4lQXdRZmnjJ6VtF5XoAFAmT/i/cyH
+         0n2XiBBo0ii6gVM7RKc3YXNI0zhDcnrbRaqFNpS9qwiXPGx15396fQWRUbgajJ7AbxDm
+         sk+w==
+X-Gm-Message-State: AOAM532DjKmqxS8Qnv90i00Fhrjhv9rWGEwlTgPsCjqjz+rREkjlC6xA
+        KvBUi7JO6c9gT5N40BQyejo=
+X-Google-Smtp-Source: ABdhPJx5NPrOghRqvF3AmQ/G3OPdSTzp+nuoI+8CJJXFAsCg9VkNgwtR2F59P99xI2k1g5t4qfRlwg==
+X-Received: by 2002:aca:1b18:: with SMTP id b24mr153832oib.65.1625679780765;
+        Wed, 07 Jul 2021 10:43:00 -0700 (PDT)
+Received: from localhost (fixed-187-189-163-231.totalplay.net. [187.189.163.231])
+        by smtp.gmail.com with ESMTPSA id h96sm124708oth.25.2021.07.07.10.42.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jul 2021 10:08:03 -0700 (PDT)
-Date:   Thu, 8 Jul 2021 00:08:01 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Professor Bloodstone <prof.bloodstone@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git-am changes author if its short
-Message-ID: <YOXfcbxtE577xHLb@danh.dev>
-References: <CABHhMZHEL=0sU8JqwMb5Va7mjA4ZxM_WMaLMabbKS085RVbDzQ@mail.gmail.com>
- <YOXesxUQW9zRX4uV@danh.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YOXesxUQW9zRX4uV@danh.dev>
+        Wed, 07 Jul 2021 10:43:00 -0700 (PDT)
+Date:   Wed, 07 Jul 2021 12:42:58 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Hu Jialun <hujialun@comp.nus.edu.sg>, git@vger.kernel.org
+Cc:     gitster@pobox.com, Hu Jialun <hujialun@comp.nus.edu.sg>
+Message-ID: <60e5e7a2d2ddf_30143720855@natae.notmuch>
+In-Reply-To: <20210707162308.2438170-3-hujialun@comp.nus.edu.sg>
+References: <20210706022438.580374-1-hujialun@comp.nus.edu.sg>
+ <20210707162308.2438170-1-hujialun@comp.nus.edu.sg>
+ <20210707162308.2438170-3-hujialun@comp.nus.edu.sg>
+Subject: RE: [PATCH v2 2/2] commit: remove irrelavent prompt on
+ `--allow-empty-message`
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-07-08 00:04:51+0700, Đoàn Trần Công Danh <congdanhqx@gmail.com> wrote:
-> On 2021-07-07 18:46:53+0200, Professor Bloodstone <prof.bloodstone@gmail.com> wrote:
-> > When applying a patch using git am test.patch, if author consists of 1
-> > or 2 letters, then it is being replaced with author email instead.
-> > 
-> > For example take patch with such line:
-> > 
-> > From: AA <git@bloodstone.dev>
-> > 
-> > Upon applying such patch, the author is replaced with email:
-> > 
-> > Author: git@bloodstone.dev <git@bloodstone.dev>
-> > 
-> > I did try multiple different 1 or 2 letter names, they all seem to
-> > have the same issue. 3 letter names work fine. This was tested by 3
-> > people in our project, and happens in very different setups.
-> > 
-> > I'm having a hard time finding the exact cause of it. Tried searching
-> > for issues, but didn't find anything. Maybe someone has an idea what
-> > could it be caused by?
-> 
-> A patch for this problem has been merged [1]. Git 2.32.0 should have
-> this problem fixed.
+Hu Jialun wrote:
 
-Sorry, I have this email sent too fast. It's being queued for 2.33.0
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -918,7 +918,9 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>  		if (cleanup_mode == COMMIT_MSG_CLEANUP_ALL) {
+>  			status_printf_ln(s, GIT_COLOR_NORMAL, msg_enter_prompt);
+>  			status_printf_ln(s, GIT_COLOR_NORMAL, ignore_char_prompt, comment_line_char);
+> -			status_printf_ln(s, GIT_COLOR_NORMAL, empty_msg_abort_prompt);
+> +			if (!allow_empty_message) {
+> +				status_printf_ln(s, GIT_COLOR_NORMAL, empty_msg_abort_prompt);
+> +			}
 
-> 
-> 1: https://lore.kernel.org/git/xmqq4kf25lso.fsf@gitster.g/
-> 
-> -- 
-> Danh
+In git the style is to avoid braces if the content of the condition is a
+single line.
 
 -- 
-Danh
+Felipe Contreras
