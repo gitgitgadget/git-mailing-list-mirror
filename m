@@ -2,127 +2,207 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C998C07E95
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 18:54:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57CC8C07E95
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 19:07:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5120D61CBB
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 18:54:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 42E3361CC2
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 19:07:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230120AbhGGS5W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jul 2021 14:57:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44272 "EHLO
+        id S231192AbhGGTKe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jul 2021 15:10:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229829AbhGGS5V (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jul 2021 14:57:21 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 166FBC061574
-        for <git@vger.kernel.org>; Wed,  7 Jul 2021 11:54:40 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id j4-20020a4ac5440000b029025992521cf0so748276ooq.7
-        for <git@vger.kernel.org>; Wed, 07 Jul 2021 11:54:40 -0700 (PDT)
+        with ESMTP id S230441AbhGGTKd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jul 2021 15:10:33 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2198C061574
+        for <git@vger.kernel.org>; Wed,  7 Jul 2021 12:07:52 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id g8-20020a1c9d080000b02901f13dd1672aso3728007wme.0
+        for <git@vger.kernel.org>; Wed, 07 Jul 2021 12:07:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=LBQPmHR87VNJAibMQ9njsbi1wncXAyqtu1hEFeKe5UY=;
-        b=FmWijlHxNuNSt10PGtKUeAgugZsSGPSLKhWLGOjh0jkywObbd17U6NbkXCwNgrulGQ
-         CDsIegTXpSxyzILjSfJfUaWzN5sVEtWX21NhQIzniL1HDZIIfNSrKfhxzNqGsaSNvWDq
-         N7geUdQxGsuSWdR7oi+rrFR2Nvd2mLLW/6hFLwfoa7tCJ9AjsBR8ercO/Y44OtgEnL8E
-         kV5JThnGWYIbepmTNUXJNO6mZBsyd3yvzZb0NgNDHDCJgqsILnghiBrBmXvVGt3kKOj7
-         AZ6pt6TJ3/tvOBuDJuFOvZEacD4b8dEotACWmhle4b/WBRNzbuBTM5chmdQslPe8BRdu
-         HAiw==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=3U8V5B2uSD6BZSEQy6aBz7kQJhZle2T68Hk3c9vC3XA=;
+        b=Au+8oTARs+++LocGwK4VzA/jNbhvfitGnn1d5E2kpfsAcWHwAhyW++g3pFbGHUGv+v
+         1xEi5hFiXPubBUm4T8a+59wSC+TKb6misJpXFwFSAxofihFUUQFXhX/4K3bgTQRpo9R6
+         +aWr07F9E3z6GrsJvKHEgPoExVmHP3DeVpieUIssP6a0HrjUTFzm4LL6zyEo4S5Pd86s
+         3oAkq3ptz1O+XvvTHTQcg0pGqb2O923TCo8d/LMQtsMFrqP4JrdcrJX6rtR5ez+truBz
+         4qLfDXzuF9kaqQDKYhTPAhpZjP4902xlk7gHO+uYbKUOrVeXt0sa019gHqP4E0O6K+S6
+         xulg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=LBQPmHR87VNJAibMQ9njsbi1wncXAyqtu1hEFeKe5UY=;
-        b=NB1STMFmvTI30mF36bup+A1A4tczUGtqbnZOPfS+2+GBx/hzUN1/M2Aw+OHRJd2bpZ
-         x8S/iL33lroqlw6ZkAAJ6F6y36Mk2SE7NyOx9xjzKe5FZUAXz56TrXPO3Zio4cH8GUi6
-         +cViVmzuBB1MimnyrcWHeA1Ts9AwyatoImYdonVF1mHxMFvDevsn73aKjMQK3DXFCo6G
-         jKWbJ98ZKlnFbSr42a0Hqpi29wRMgGrQcJnP71i1zhfjDrcapbDv2wnFRtB52rP3ZYEj
-         zWa53rdRxhWDZIHQXdjqTxHawtK97ioLz0vQ1sJ2bfKdmIo0EPXku4k/tXxXAlVbcSBK
-         i5qw==
-X-Gm-Message-State: AOAM530V8I4noOxk++VR6DzxXgSxXLXQwMus5LZbMCQr/+GhN9pmfNuC
-        XUQJyZUJmJHt/DfsVRvsByc=
-X-Google-Smtp-Source: ABdhPJyCwedWkizdhj5OEznPIkskpiOUaR+7JaxkNhEj/9tX6FaxWZKdlxk/HK49dALAxd4ss7pGgw==
-X-Received: by 2002:a4a:d6cc:: with SMTP id j12mr6926150oot.0.1625684079454;
-        Wed, 07 Jul 2021 11:54:39 -0700 (PDT)
-Received: from localhost (fixed-187-189-163-231.totalplay.net. [187.189.163.231])
-        by smtp.gmail.com with ESMTPSA id i133sm4396625oia.2.2021.07.07.11.54.38
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=3U8V5B2uSD6BZSEQy6aBz7kQJhZle2T68Hk3c9vC3XA=;
+        b=MJ/+SCA9D/kwXXuYQUh3kQPjXvtrfVv5Mme58sIRz/6McLVXXKHVlgL535Z5SmEGBW
+         usOyE0Yf7SvmTnVj+ovQW+aVJ2sh0CJ/nzk1I4thsBCgJe2edNKiNKzeeUboS0+6lRkv
+         qPNKKq2rgHezzN76kBq2PGOcefqxDkbl8C9NKH4/rM5/ZI5V+Z/wMTuCUbVQImCHBZqa
+         bmCclFa/zlusi0p0RM2H5iRrUb9+rhr2dzkBDQVbK63j4A8QDLHAVj0qoSvzAYvPmmth
+         04C2SC12lDteWIgSFcJPrhzbJQ4isuasvSTWH9bl99uq6R28ABzW2qjINatWd3ij5N6L
+         eWtw==
+X-Gm-Message-State: AOAM531qSWtQnWfZ1GuZxZRSEkaSGdil41wfRgSZEh5/gGej0Kdbz3Hw
+        UQt+toIRyk47WqbwpPVdJ49oGcLVIRA=
+X-Google-Smtp-Source: ABdhPJw3B0vX1uVZWJb0Y3kwf7yYkbD7hCNDhUPETLew9P5r6aTLsBsHbCKKkUrcmBQVIYvusUx1ow==
+X-Received: by 2002:a05:600c:154d:: with SMTP id f13mr10971590wmg.139.1625684871355;
+        Wed, 07 Jul 2021 12:07:51 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w22sm7205299wmc.4.2021.07.07.12.07.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jul 2021 11:54:38 -0700 (PDT)
-Date:   Wed, 07 Jul 2021 13:54:37 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Martin <git@mfriebe.de>, Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Message-ID: <60e5f86d8f907_30143720844@natae.notmuch>
-In-Reply-To: <167b8fe6-0586-b980-dfb9-9fa3a29d48bb@mfriebe.de>
-References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
- <xmqqk0mcy6g2.fsf@gitster.g>
- <b667ca37-b3cb-fce2-a298-63c3b839089d@mfriebe.de>
- <xmqqpmw4uwh2.fsf@gitster.g>
- <7870a0ad-8fa1-9dbd-1978-1f44ec6970c5@mfriebe.de>
- <xmqqy2arrmba.fsf@gitster.g>
- <b80bf908-0c31-2b3a-6d6c-1a3fba5b2334@mfriebe.de>
- <xmqqh7hersgp.fsf@gitster.g>
- <167b8fe6-0586-b980-dfb9-9fa3a29d48bb@mfriebe.de>
-Subject: Re: PATCH: improve git switch documentation
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        Wed, 07 Jul 2021 12:07:50 -0700 (PDT)
+Message-Id: <pull.1012.v5.git.git.1625684869.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1012.v4.git.git.1625597757.gitgitgadget@gmail.com>
+References: <pull.1012.v4.git.git.1625597757.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 07 Jul 2021 19:07:43 +0000
+Subject: [PATCH v5 0/6] refs: cleanup errno sideband ref related functions
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwen@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Han-Wen Nienhuys <hanwenn@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin wrote:
-> Sergey made an excellent point:
-> > On 01/07/2021 13:27, Sergey Organov wrote:
-> >> For example:
-> >>
-> >> "branch": a chain of commits
-> >>
-> >> "branch tip": the most recent commit in a branch
-> >>
-> >> "branch name": specific type of symbolic reference pointing to a bra=
-nch tip
-> =
+v5
 
-> A lot of people think of the "chain of commits" when the word "branch" =
+ * address Ævar's comment; punt on clearing errno.
 
-> is used.
-> =
+Han-Wen Nienhuys (6):
+  refs: remove EINVAL errno output from specification of read_raw_ref_fn
+  refs/files-backend: stop setting errno from lock_ref_oid_basic
+  refs: make errno output explicit for read_raw_ref_fn
+  refs: add failure_errno to refs_read_raw_ref() signature
+  refs: explicitly return failure_errno from parse_loose_ref_contents
+  refs: make errno output explicit for refs_resolve_ref_unsafe
 
-> If we take the sentence from the current doc:
->  =C2=A0=C2=A0 --force-create
->  =C2=A0 =C2=A0 Similar to |--create| except that if |<new-branch>| alre=
-ady exists, =
+ refs.c                | 58 ++++++++++++++++++++++-----------
+ refs/debug.c          |  4 +--
+ refs/files-backend.c  | 74 ++++++++++++++++++++++---------------------
+ refs/packed-backend.c | 15 +++++----
+ refs/refs-internal.h  | 40 +++++++++++++++--------
+ 5 files changed, 115 insertions(+), 76 deletions(-)
 
-> it will be reset to |<start-point>|
-> and replace "branch" with "chain of commits"
->  =C2=A0 =C2=A0 Similar to |--create| except that if |<new-||"chain of c=
-ommits">| =
 
-> already exists, it will be reset to |<start-point>|
-> =
+base-commit: 670b81a890388c60b7032a4f5b879f2ece8c4558
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1012%2Fhanwen%2Feinval-sideband-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1012/hanwen/einval-sideband-v5
+Pull-Request: https://github.com/git/git/pull/1012
 
-> What would you expect to happen?
-> I would think the "chain of commits" is created at the new <start-point=
->
-> =
+Range-diff vs v4:
 
-> What we want to say is
->  =C2=A0=C2=A0=C2=A0 The "branch name" will point to a new "branch tip" =
-at <start-point>
+ 1:  d6a41c3c0cb = 1:  d6a41c3c0cb refs: remove EINVAL errno output from specification of read_raw_ref_fn
+ 2:  ff7ea6efcba ! 2:  95025080c16 refs/files-backend: stop setting errno from lock_ref_oid_basic
+     @@ Commit message
+          documented to use and/or preserve errno)
+      
+          Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+     -    Reviewed-By: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     +    Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+      
+       ## refs/files-backend.c ##
+      @@ refs/files-backend.c: static int create_reflock(const char *path, void *cb)
+ 3:  ff5696b0875 ! 3:  7feedb97201 refs: make errno output explicit for read_raw_ref_fn
+     @@ Commit message
+          relevant.
+      
+          Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+     -    Reviewed-By: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     +    Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+      
+       ## refs.c ##
+      @@ refs.c: int refs_read_raw_ref(struct ref_store *ref_store,
+ 4:  9c933706cb0 ! 4:  ef91f5cee13 refs: add failure_errno to refs_read_raw_ref() signature
+     @@ Commit message
+          This lets us use the explicit errno output parameter in refs_resolve_ref_unsafe.
+      
+          Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+     -    Reviewed-By: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     +    Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+      
+       ## refs.c ##
+      @@ refs.c: done:
+     @@ refs.c: done:
+      -int refs_read_raw_ref(struct ref_store *ref_store,
+      -		      const char *refname, struct object_id *oid,
+      -		      struct strbuf *referent, unsigned int *type)
+     +-{
+     +-	int result;
+     +-	int failure_errno;
+      +int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
+      +		      struct object_id *oid, struct strbuf *referent,
+      +		      unsigned int *type, int *failure_errno)
+     - {
+     --	int result;
+     --	int failure_errno;
+     -+	int ignore;
+     -+	if (failure_errno)
+     -+		*failure_errno = 0;
+     -+	else
+     -+		failure_errno = &ignore;
+     -+
+     ++{
+     ++	int unused_errno;
+     ++	if (!failure_errno)
+     ++		failure_errno = &unused_errno;
+     ++	*failure_errno = 0;
+       	if (!strcmp(refname, "FETCH_HEAD") || !strcmp(refname, "MERGE_HEAD")) {
+       		return refs_read_special_head(ref_store, refname, oid, referent,
+       					      type);
+ 5:  ab147afb38d ! 5:  6918c214d1b refs: explicitly return failure_errno from parse_loose_ref_contents
+     @@ Commit message
+          to create a custom error message.
+      
+          Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+     -    Reviewed-By: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     +    Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+      
+       ## refs.c ##
+      @@ refs.c: int for_each_fullref_in_prefixes(const char *namespace,
+     @@ refs.c: static int refs_read_special_head(struct ref_store *ref_store,
+       done:
+       	strbuf_release(&full_path);
+      @@ refs.c: int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
+     - 
+     + 	*failure_errno = 0;
+       	if (!strcmp(refname, "FETCH_HEAD") || !strcmp(refname, "MERGE_HEAD")) {
+       		return refs_read_special_head(ref_store, refname, oid, referent,
+      -					      type);
+     @@ refs/files-backend.c: stat_ref:
+      +	ret = parse_loose_ref_contents(buf, oid, referent, type, failure_errno);
+      +	errno = *failure_errno;
+       out:
+     -+	/* Collect all types of failures from errno. Many system calls in this
+     -+	 * function can fail with ENOTDIR/EISDIR, and we want to collect all of
+     -+	 * them.
+     ++	/*
+     ++	 * Many system calls in this function can fail with ENOTDIR/EISDIR, and
+     ++	 * we want to collect all of them, so simply copy the error out from
+     ++	 * errno.
+      +	 */
+       	*failure_errno = errno;
+       	strbuf_release(&sb_path);
+ 6:  0526a41b4b3 ! 6:  85a14bde904 refs: make errno output explicit for refs_resolve_ref_unsafe
+     @@ Commit message
+          that needs error information to make logic decisions, so update that caller
+      
+          Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+     -    Reviewed-By: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     +    Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+      
+       ## refs/files-backend.c ##
+      @@ refs/files-backend.c: static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
 
-Wouldn't this achieve everything we want?
-
-  The branch head will now point the new <head>
-
--- =
-
-Felipe Contreras=
+-- 
+gitgitgadget
