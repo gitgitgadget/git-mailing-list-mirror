@@ -2,97 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C6FEC07E9B
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 11:47:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EC73C07E95
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 13:20:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0D76661A2B
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 11:47:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31D3861C44
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 13:20:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231466AbhGGLty (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jul 2021 07:49:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60592 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231431AbhGGLtx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jul 2021 07:49:53 -0400
-Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9248DC061574
-        for <git@vger.kernel.org>; Wed,  7 Jul 2021 04:47:13 -0700 (PDT)
-Received: by mail-ua1-x92d.google.com with SMTP id s13so689312uao.1
-        for <git@vger.kernel.org>; Wed, 07 Jul 2021 04:47:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=3TS0xfc4JvIWe8bqFaDLRUwZsTDQ+4CqCoQ6FGfnG14=;
-        b=D2KD2s0X2x8v76XAwB51RC6m7chC5fp0iwqXz34VjQSdbiXvpPGcAvi/PIg/YZBLvF
-         VZZDwVi2vwYYIrSQsFnYsYcQnOa4C4cm7buI4+5bdyeqLJ3UmX8bA5wp4dr65NBQ6Fda
-         spzGkSEGiLEhKmzhAVIZUDwuszvYBEOhMoM+h/NSsD5e37a6OQMGSS+iDLl0I3zpT1fT
-         mwKaNFNDC8bhjPJxuVqRiBkbNGO2+uWuiovJYfbxD++/JmpgTzzKw+LeNoTEJC1WI1HB
-         5CKEMTDcKEqyQNvNENDOrVM3pW/6pTOi3/wD/d/S3GRbDee/8eZ5eoKyVhZWrPF+uyOV
-         Oi6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3TS0xfc4JvIWe8bqFaDLRUwZsTDQ+4CqCoQ6FGfnG14=;
-        b=b06awo32tHKpvwql3Jtid6ylBqsuqOGzYVoWew1e7VPIZPQd58uPu6JqHB70Kupa/e
-         i1ZmjHtfvyRmG67ug6e4zttUF/eCoVyH55d6C8vLNYxDDOhq48PzNzwxYQ7sDlBxviln
-         nwxHvE8yXDum1yQjilN6kc4KokcqGHVFCsd4MQtobwtIX4QHGW+8OX9YMc7qWm82QIQO
-         z7KjWu4QwRXGZ22ZvXyzSfiqZG5ZZ5oAJ3P4ZtoAQ2QHLQSmDvYmo7jWgHQU4YaTnHTb
-         JfSSzC1/L4unCWzFfNoacS/BmGtYZ+DtCO0P+lr0RP6YFoWmO4l7tL9RIyzVqmf0ZXEu
-         3SOQ==
-X-Gm-Message-State: AOAM5303v1+y+WiYi/guU7/SokpEvtGdPmHf69iBcBjcKZgObiRSchSB
-        x6RHN2TKAsyP5QbPtmYdKVF+6RHD+faO8wfc26EKSQ==
-X-Google-Smtp-Source: ABdhPJyaj2ytFpiOV/fxO8viq4xu4jMaO5vwKImGJFmj2puKI38hzMMIRyow+Da3M6fVTK3Q51BqXG9HNc1U+hzCkFY=
-X-Received: by 2002:ab0:76d0:: with SMTP id w16mr12584108uaq.15.1625658432582;
- Wed, 07 Jul 2021 04:47:12 -0700 (PDT)
+        id S231670AbhGGNXD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jul 2021 09:23:03 -0400
+Received: from mail02.x-net.at ([83.65.141.138]:39138 "EHLO mail02.x-net.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229757AbhGGNXD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jul 2021 09:23:03 -0400
+X-Greylist: delayed 396 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Jul 2021 09:23:02 EDT
+Received: from localhost (localhost [127.0.0.1])
+        by mail02.x-net.at (Postfix) with ESMTP id 6D8B2380438
+        for <git@vger.kernel.org>; Wed,  7 Jul 2021 15:13:45 +0200 (CEST)
+Received: from mail02.x-net.at ([127.0.0.1])
+        by localhost (mail02.x-net.at [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id uQS-2Fhwo7ET for <git@vger.kernel.org>;
+        Wed,  7 Jul 2021 15:13:45 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by mail02.x-net.at (Postfix) with ESMTP id 06E52380443
+        for <git@vger.kernel.org>; Wed,  7 Jul 2021 15:13:45 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at x-t.at
+Received: from mail02.x-net.at ([127.0.0.1])
+        by localhost (mail02.x-net.at [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id cKHKBX6NrFlg for <git@vger.kernel.org>;
+        Wed,  7 Jul 2021 15:13:44 +0200 (CEST)
+Received: from [127.0.0.1] (178.115.41.35.wireless.dyn.drei.com [178.115.41.35])
+        by mail02.x-net.at (Postfix) with ESMTPSA id BECE5380440
+        for <git@vger.kernel.org>; Wed,  7 Jul 2021 15:13:44 +0200 (CEST)
+Date:   Wed, 07 Jul 2021 15:13:46 +0200
+From:   Mel Dafert <mel@dafert.at>
+To:     git@vger.kernel.org
+Subject: Bug with branches/merges in submodules
+User-Agent: K-9 Mail for Android
+Message-ID: <E9E32A45-DA88-47CB-B7F9-F01F9BEC394C@dafert.at>
 MIME-Version: 1.0
-References: <cover-0.3-00000000000-20210707T103712Z-avarab@gmail.com> <patch-3.3-46c65a7ae12-20210707T103712Z-avarab@gmail.com>
-In-Reply-To: <patch-3.3-46c65a7ae12-20210707T103712Z-avarab@gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 7 Jul 2021 13:47:00 +0200
-Message-ID: <CAFQ2z_MWMokX8hXdOJfiL9Yn=F-QUWe5VHXFEF5DoSBBJu=dmw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] strbuf.[ch]: make strbuf_fread() take hint, not size
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed;
+ boundary=----EQBX7VL05V8N5OHRUJE550BOOAQRXM
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 7, 2021 at 12:39 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> Change the strbuf_fread() function to take a "size_t hint" instead of
-> a "size_t size", for consistency with e.g. strbuf_read(). We can then
+------EQBX7VL05V8N5OHRUJE550BOOAQRXM
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Making strbuf_fread and strbuf_read consistent is weird because they
-do different things. strbuf_read reads from fd until it's exhausted,
-while strbuf_fread reads up to the size specified. So the argument
-isn't really a hint.
+Hello,
+I ran into a bug where commits are omitted from `git submodule summary`
+and friends when the submodule contains merge commits=2E
+Originally using 2=2E30=2E2, I can also reproduce this with a fresh build =
+on the
+`next` branch (see attached bugreport)=2E
+I would assume that this is not intentional, however I cannot find any rel=
+evant
+information on this=2E
+Feel free to contact me for extra details=2E
+Best regards,
+Mel
+------EQBX7VL05V8N5OHRUJE550BOOAQRXM
+Content-Type: text/plain;
+ name=git-bugreport-2021-07-07-1419.txt
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename=git-bugreport-2021-07-07-1419.txt;
+ size=2209
 
-shouldn't you rename it to strbuf_fread_once, analogous to strbuf_read_once=
- ?
+VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
+IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
+LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
+cm9kdWNlIHlvdXIgaXNzdWUpClNldCB1cCBhIHN1Ym1vZHVsZSB0aGF0IGhhcyBicmFuY2hlcy9t
+ZXJnZSBjb21taXRzOgpgYGBiYXNoCiMgY3JlYXRlIHJlcG9zaXRvcnkgImNoaWxkIgpta2RpciBj
+aGlsZC1yZXBvCmNkIGNoaWxkLXJlcG8KZ2l0IGluaXQKdG91Y2ggaW5pdGlhbC50eHQKZ2l0IGFk
+ZCBpbml0aWFsLnR4dApnaXQgY29tbWl0IC1tICJpbml0aWFsIGNoaWxkIgpjZCAuLgojIGNyZWF0
+ZSByZXBvc2l0b3J5ICJwYXJlbnQiCm1rZGlyIHBhcmVudApjZCBwYXJlbnQKZ2l0IGluaXQKIyBh
+ZGQgc3VibW9kdWxlICJjaGlsZCIgdG8gcmVwb3NpdG9yeSAicGFyZW50IgpnaXQgc3VibW9kdWxl
+IGFkZCAuLi9jaGlsZC1yZXBvLyBjaGlsZApnaXQgY29tbWl0IC1hbSAiaW5pdGlhbCBwYXJlbnQi
+CmNkIGNoaWxkCiMgbWFrZSB0d28gY29tbWl0cyBpbiBzZXBhcmF0ZSBicmFuY2hlcyBpbiAiY2hp
+bGQiCmdpdCBzd2l0Y2ggLWMgInNlY29uZGFyeSIKdG91Y2ggczEudHh0CmdpdCBhZGQgczEudHh0
+CmdpdCBjb21taXQgLW0gInMxIgpnaXQgc3dpdGNoIG1hc3Rlcgp0b3VjaCBtMS50eHQKZ2l0IGFk
+ZCBtMS50eHQKZ2l0IGNvbW1pdCAtbSAibTEiCiMgbWVyZ2UgYnJhbmNoICJzZWNvbmRhcnkiIGlu
+dG8gIm1hc3RlciIgaW4gImNoaWxkIiAtIHRoaXMgY3JlYXRlcyBhIG1lcmdlIGNvbW1pdApnaXQg
+bWVyZ2Ugc2Vjb25kYXJ5IC0tbm8tZWRpdApjZCAuLgpgYGAKUnVuIGBnaXQgZGlmZiAtLXN1Ym1v
+ZHVsZT1sb2dgIGluc2lkZSB0aGUgInBhcmVudCIgcmVwb3NpdG9yeS4KCldoYXQgZGlkIHlvdSBl
+eHBlY3QgdG8gaGFwcGVuPyAoRXhwZWN0ZWQgYmVoYXZpb3IpCmBnaXQgZGlmZiAtLXN1Ym1vZHVs
+ZT1sb2dgIHNob3VsZCBzaG93IGFsbCB0aHJlZSBjb21taXRzIGFkZGVkIHRvIHRoZSAiY2hpbGQi
+CnN1Ym1vZHVsZToKYGBgClN1Ym1vZHVsZSBjaGlsZCBYWFhYWFhYLi5ZWVlZWVlZCj4gTWVyZ2Ug
+YnJhbmNoICdzZWNvbmRhcnknCj4gbTEKPiBzMQpgYGAKCldoYXQgaGFwcGVuZWQgaW5zdGVhZD8g
+KEFjdHVhbCBiZWhhdmlvcikKYGdpdCBkaWZmIC0tc3VibW9kdWxlPWxvZ2Agb25seSBzaG93cyBj
+b21taXRzIGZyb20gb25lIGFuY2VzdG9yIG9mIHRoZSBtZXJnZQpjb21taXQ6CmBgYApTdWJtb2R1
+bGUgY2hpbGQgWFhYWFhYWC4uWVlZWVlZWQo+IE1lcmdlIGJyYW5jaCAnc2Vjb25kYXJ5Jwo+IG0x
+CmBgYAoKV2hhdCdzIGRpZmZlcmVudCBiZXR3ZWVuIHdoYXQgeW91IGV4cGVjdGVkIGFuZCB3aGF0
+IGFjdHVhbGx5IGhhcHBlbmVkPwpBbGwgdGhlIGNvbW1pdHMgYWRkZWQgdG8gdGhlICJzZWNvbmRh
+cnkiIGJyYW5jaCBhcmUgbWlzc2luZyBpbgpgZ2l0IGRpZmYgLS1zdWJtb2R1bGU9bG9nYC4KCkFu
+eXRoaW5nIGVsc2UgeW91IHdhbnQgdG8gYWRkOgpUaGUgY29tbWl0IHJhbmdlIHNob3duIGJ5IGBn
+aXQgZGlmZiAtLXN1Ym1vZHVsZT1sb2dgIGlzIGNvcnJlY3Q6CmBjZCBjaGlsZDsgZ2l0IGxvZyBY
+WFhYWFhYLi5ZWVlZWVlZYCBzaG93cyB0aGUgY29ycmVjdCBsaXN0IG9mIGNvbW1pdHMuCgpUaGlz
+IGJ1ZyBhbHNvIGFmZmVjdHMgYGdpdCBzdWJtb2R1bGUgc3VtbWFyeWAsIGFuZCBgZ2l0IHNob3cg
+LS1zdWJtb2R1bGU9bG9nYAphZnRlciB0aGUgY2hhbmdlcyBoYXZlIGJlZW4gY29tbWl0dGVkLgoK
+CltTeXN0ZW0gSW5mb10KZ2l0IHZlcnNpb246CmdpdCB2ZXJzaW9uIDIuMzIuMC4yNjIuZzhjNTgy
+ZmNkNjQKY3B1OiB4ODZfNjQKYnVpbHQgZnJvbSBjb21taXQ6IDhjNTgyZmNkNjQzZDEyODAyZTBh
+NmQ3ZTMwNzg5MGFhNWI2YjI2ZTEKc2l6ZW9mLWxvbmc6IDgKc2l6ZW9mLXNpemVfdDogOApzaGVs
+bC1wYXRoOiAvYmluL3NoCnVuYW1lOiBMaW51eCA1LjExLjAtMjItZ2VuZXJpYyAjMjMtVWJ1bnR1
+IFNNUCBUaHUgSnVuIDE3IDAwOjM0OjIzIFVUQyAyMDIxIHg4Nl82NApjb21waWxlciBpbmZvOiBn
+bnVjOiAxMC4zCmxpYmMgaW5mbzogZ2xpYmM6IDIuMzMKJFNIRUxMICh0eXBpY2FsbHksIGludGVy
+YWN0aXZlIHNoZWxsKTogL2Jpbi9iYXNoCgoKW0VuYWJsZWQgSG9va3NdCg==
 
-bonus points for making the argument ordering consistent between
-strbuf_fread and strbuf_read
-
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+------EQBX7VL05V8N5OHRUJE550BOOAQRXM--
