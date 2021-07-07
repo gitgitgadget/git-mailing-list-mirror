@@ -7,185 +7,122 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB080C07E95
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 22:10:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98F16C07E95
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 22:26:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD48461CC0
-	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 22:10:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7B83161CBE
+	for <git@archiver.kernel.org>; Wed,  7 Jul 2021 22:26:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230388AbhGGWKn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Jul 2021 18:10:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58638 "EHLO
+        id S230351AbhGGW2x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Jul 2021 18:28:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229717AbhGGWKm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jul 2021 18:10:42 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88CFAC061574
-        for <git@vger.kernel.org>; Wed,  7 Jul 2021 15:08:01 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id p1so8255352lfr.12
-        for <git@vger.kernel.org>; Wed, 07 Jul 2021 15:08:01 -0700 (PDT)
+        with ESMTP id S229956AbhGGW2r (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jul 2021 18:28:47 -0400
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D840C061574
+        for <git@vger.kernel.org>; Wed,  7 Jul 2021 15:26:07 -0700 (PDT)
+Received: by mail-oi1-x22e.google.com with SMTP id b2so5329638oiy.6
+        for <git@vger.kernel.org>; Wed, 07 Jul 2021 15:26:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=T/gZj7+JSjjwOrHXNlKi+sjnuq3G2nRbR87zV5WYVOs=;
-        b=t79Wi1ORnNcexD4yUj7n0fEhGgWwh1tZksOaJH/qHs1+6xxSO3KhG9SRHBj4yoxJUr
-         itsgTAuopXfQCMTGn4TUJHr6QEkqRvbp2Q6GPBET2mQqPze7L9ZQo6NLWcZqINxxZaN7
-         sQVcOcrZtsx6Q1upXtci81dj09GDZI7Td7CiBOUmBZG84ReMxrMdzFQTfhnXYV3KQy78
-         x4W7r1KXa54qQWgecE8K7tnsRhnrVtLeTnPgyOEaBfD7ZF5RkjRJ+R+dkbmgQr4xkJww
-         T6eQgosmNPSj3yWetIfxcF46eVluGLBaRHEyL/jak4gqSI6z6e4wswfkg+LELvMDKXeu
-         /rDg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8mfdzF3broLTfp4rwHezuRBPLr6x3qRwYxPnys5H4ek=;
+        b=hN5h/P5llT4X8LvqZgHe8eHqBPRb+5TOgYy3errXyBWuPJMNfYLHfJKRgx1zZ23K2P
+         WrPElLsHTKkkh9bbj9XRyzBFpRZilZoUgU/Qp5i441z50SHIrcX87q+ipLb8XynlNdrK
+         fojBlTcJ8FNBjPF72DRoiZFcGOO2fRGecf2F5P7L+NdwHKq/7U8qQfsqNwoxmK82lDqY
+         GMIopvZQpjbSoq3FfIpbKxwMjeGiH23j3lDFsO5c8BSt6Sfq3p8M479GMu75+5HikBS+
+         H/3ENpEA7bkyKmZpcqp+cFPjVuUHE6Ku6Oh7lMaGsFk693FbQNmVQpGf6nCB3bdASJ6+
+         ZBFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=T/gZj7+JSjjwOrHXNlKi+sjnuq3G2nRbR87zV5WYVOs=;
-        b=WJBsrqW1wxbpCjFHgbkuPmljkq07pgWGynajMDAJDtr9k7tmqxCqHi8pvtkETUtH3G
-         qnlPcifRtmffeIcnAHgbg+bRrFSNk6bpizKDQMcGlOtZvf/92HHTrv1gnZrymQB04XJY
-         wVDxq0uENk/vjkQFh9CMK8RxuqxqnhMxjFSHyTQrL18lSp8OjyLjxskOhpqFl17g17WE
-         hBWxVMIDzjGzFkbDANCvEpDPWnN+1EBelsgSQ0CBTf2pkn7U1ZeaVIfpcPyJM4/uRXH+
-         sGz5MwjUvAKsHCznshbvjUZwGAyWwo9y9tXdPeLfQ4koPjIOQLCRtbtDvXIQv+nEdwF8
-         7+Jg==
-X-Gm-Message-State: AOAM530kRcjS0tvdGXba7m+yMSoH5Kc3UFwXFWRIArEBiLEMERF0+O5V
-        2ebgOUmNpUDZAVfNTBM8DSs6eqmNQYg=
-X-Google-Smtp-Source: ABdhPJxjI9YUIRqX5FhZqcFa50peKDewekUa9DaMBpVW/PwtT3s5fZb3w4jfsRPfYnuyTpTXRZ0pCg==
-X-Received: by 2002:ac2:4d51:: with SMTP id 17mr16317537lfp.618.1625695679434;
-        Wed, 07 Jul 2021 15:07:59 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id m6sm13164lfu.238.2021.07.07.15.07.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jul 2021 15:07:58 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Martin <git@mfriebe.de>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org
-Subject: Re: What actually is a branch?
-References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
-        <xmqqk0mcy6g2.fsf@gitster.g>
-        <b667ca37-b3cb-fce2-a298-63c3b839089d@mfriebe.de>
-        <xmqqpmw4uwh2.fsf@gitster.g>
-        <7870a0ad-8fa1-9dbd-1978-1f44ec6970c5@mfriebe.de>
-        <xmqqy2arrmba.fsf@gitster.g>
-        <b80bf908-0c31-2b3a-6d6c-1a3fba5b2334@mfriebe.de>
-        <87wnqaclz8.fsf@osv.gnss.ru> <60e5f3981de5f_301437208bc@natae.notmuch>
-        <87bl7d3l8r.fsf@osv.gnss.ru> <60e61bbd7a37d_3030aa2081a@natae.notmuch>
-Date:   Thu, 08 Jul 2021 01:07:57 +0300
-In-Reply-To: <60e61bbd7a37d_3030aa2081a@natae.notmuch> (Felipe Contreras's
-        message of "Wed, 07 Jul 2021 16:25:17 -0500")
-Message-ID: <877di13hhe.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8mfdzF3broLTfp4rwHezuRBPLr6x3qRwYxPnys5H4ek=;
+        b=nI83GlSLRqxnFvgepXnToklzCUZzkQzsmGJo6n/al2QCjxfMc0TNgrlq2uQJlcr8Ua
+         Mue2Sut3CT3qBRBV4muELjhVihShxoYMEKnbEOi+6rita7/hLW3OZxS+qTHHJUArTQHT
+         Fe+tDPzwtK4xREDYubZnAbIbiib2Jo0iPBQSIAdP+2jFjw61vi4vst89m9T2SDnTAvwG
+         Q9v7kuMDdem2fp2EcEHftf/PVBzYOuLDm9l82kcV06mQUPxjjawn3lIwZsbMESTgRmWH
+         IYBKxpwMf4N8dJDPm8etw5YscTrsmGIcz6o9XteSIZdoeQHxUSx5LTApnaWGK4Nonv7d
+         Y6Fg==
+X-Gm-Message-State: AOAM533YnRgqb5HA0bJ40W08utE4QtZJ1vnXjp2mHgrQRbuIw/lL/raL
+        uak2rQiKLwfuCPKOmw9PwxO7bj4TixXJIskhSME=
+X-Google-Smtp-Source: ABdhPJwNtLIqaFZxxV862dnCZC+UMGoCQ8y2wiLapOG5QWaAOvt9yE/oVV6ug30dJhWBOFFiY53/0dWuOev8NfageQQ=
+X-Received: by 2002:aca:d547:: with SMTP id m68mr10910572oig.31.1625696766472;
+ Wed, 07 Jul 2021 15:26:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.932.v6.git.1624931502.gitgitgadget@gmail.com>
+ <pull.932.v7.git.1624932293.gitgitgadget@gmail.com> <237ccf4e43dd461250b3e6d609a475c1d675ea86.1624932294.git.gitgitgadget@gmail.com>
+In-Reply-To: <237ccf4e43dd461250b3e6d609a475c1d675ea86.1624932294.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 7 Jul 2021 15:25:55 -0700
+Message-ID: <CABPp-BE_vGHv7GTESwQbbJ-YSSzkDjapKScEhgYq9QZkVVEg5w@mail.gmail.com>
+Subject: Re: [PATCH v7 09/16] unpack-trees: unpack sparse directory entries
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Mon, Jun 28, 2021 at 7:05 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> -       else
+> +
+> +       /*
+> +        * Check for a sparse-directory entry named "path/".
+> +        * Due to the input p->path not having a trailing
+> +        * slash, the negative 'pos' value overshoots the
+> +        * expected position by at least one, hence "-2" here.
 
-> Since this is not strictly related to the topic of `git switch` I
-> renamed the thread.
->
-> Sergey Organov wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->> > Sergey Organov wrote:
->
->> >> Overall, if we aim at clear documentation, we need to define our
->> >> documentation terms as precise as possible, and then use them
->> >> consistently.
->> >> 
->> >> For example:
->> >> 
->> >> "branch": a chain of commits
->> >> 
->> >> "branch tip": the most recent commit in a branch
->> >> 
->> >> "branch name": specific type of symbolic reference pointing to a
->> >> branch tip
->> >
->> > Completely agree on all three (although I would call it "branch head",
->> > not "branch tip").
->> 
->> I see why "branch head", as you later introduce "branch tail", but a
->> branch (of a plant) has no "head" (nor "tail"), right? BTW, how the base
->> of a plant branch is called in English, and how one finds "branch tail"
->> on a real tree anyway? I mean, there are probably a few of them, at
->> every fork. In Git it's even more vague, as a branch could logically
->> begin at any place, not necessarily at a fork point.
->
-> We don't necessarily need a 1-to-1 mapping with common English (although
-> that would be nice). Anoher option could be "base" and "tip".
->
->> OTOH, "head" and "tail" are obviously taken from CS "list" concept, and,
->> provided "chain" == "list", it does make sense.
->
-> I took it from Mercurial, where the tip of a branch is called "head",
-> and in fact a branch can have multiple heads.
->
->> And then we have 'HEAD' that points to the current branch tip anyway.
->
-> It actually points to a branch, or rather references a branch, since it
-> uses the branch name.
+You added the qualifier "at least" to this comment since v5.  I think
+it's slightly misleading because it sounds like -2 is the end of the
+special handling of the "at least" one overshoot.  Perhaps if you
+ended with... "hence '-2' instead of '-1' here, and we also need to
+check below if we overshot more than one".
 
-Yes, but it still points to the branch tip, indirectly, or even
-directly, when in "detached head" state, that, by the way, I'd vote to
-abandon, replacing it with more user-friendly "unnamed branch" or
-something like that.
+> +        */
+> +       pos = -pos - 2;
+> +
+> +       if (pos < 0 || pos >= o->src_index->cache_nr)
+>                 return NULL;
+> +
+> +       /*
+> +        * We might have multiple entries between 'pos' and
+> +        * the actual sparse-directory entry, so start walking
+> +        * back until finding it or passing where it would be.
 
->
->> Dunno, in fact I don't have any preference among "tip" and "head".
->
-> I don't either, but from different sources (non-git-specific) I've heard
-> "head" more often.
->
->> As for branch tail, I do have convention of marking start of a
->> long-standing branch with corresponding tag, where branch "foo" has
->> corresponding "foo-bp" tag marking its "branch point". Recently I
->> started to mark start of feature branch with yet another branch "foo-bp"
->> rather than tag, "foo" being set to track "foo-bp", that allows to
->> automate rebasing of "foo" against correct base.
->
-> So foo-bp is the upstream of foo, and you do basically:
->
->   git rebase foo@{upstream}
+It might be helpful to add a quick comment about the scenario where
+this comes up.  e.g.
 
-Yep, but essential feature to me is that I in fact use tools that simply
-run bare
+    This arises due to lexicographic sort ordering and sparse
+directory entries coming with a trailing slash, causing there to be
+multiple entries between "subdir" and "subdir/" (such as anything
+beginning with "subdir." or "subdir-").  We are trying to walk back
+from "subdir/" to "subdir" here.
 
-   git rebase
 
-and that "just works" (tm).
-
->
-> This is works if your base (or tail, or whatever) is static, but many
-> branches jump around, and that's where @{tail} comes in handy.
-
-Yeah, I see. When I need to make a branch jump around, I do need to
-manually move my references, but that's fortunately very rare use-case
-for me. Having direct support for that is still a win.
-
->
-> You can do this:
->
->   git rebase --onto foo@{upstream} foo@{tail}
->
-> This will always rebase the right commits (no need to look into the
-> reflog). So you can say that the branch is foo@{tail}..foo.
-
-I see where and when it's useful, but for a feature branch 99% of times
-I don't want to rebase it onto some true upstream. I rather want to just
-fiddle with the branch in place, and I prefer to setup things the way
-that ensures that bare "git rebase" does "the right thing".
-
-Probably that could be solved by a branch-local configuration that makes
-"git rebase" become "git rebase @{tail}" for the branch instead of "git
-rebase @{upstream}"
-
->
-> Another advantage of having this notion is that `git rebase`
-> automatically updates the tail (in this case to foo@{upstream}).
-
-Yep, looks useful. Is it all local to given repo, or else?
-
-Thanks,
--- 
-Sergey Organov
+> +        */
+> +       while (pos >= 0) {
+> +               ce = o->src_index->cache[pos];
+> +
+> +               if (strncmp(ce->name, p->path, p->pathlen))
+> +                       return NULL;
+> +
+> +               if (S_ISSPARSEDIR(ce->ce_mode) &&
+> +                   sparse_dir_matches_path(ce, info, p))
+> +                       return ce;
+> +
+> +               pos--;
+> +       }
+> +
+> +       return NULL;
+>  }
