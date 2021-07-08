@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA42AC07E96
-	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 17:33:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 455B5C07E96
+	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 18:05:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D6A5161879
-	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 17:33:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 20838616EB
+	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 18:05:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230086AbhGHRgM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Jul 2021 13:36:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34314 "EHLO
+        id S230120AbhGHSIE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Jul 2021 14:08:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230089AbhGHRgL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jul 2021 13:36:11 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D09C5C061762
-        for <git@vger.kernel.org>; Thu,  8 Jul 2021 10:33:29 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id h9so8751976oih.4
-        for <git@vger.kernel.org>; Thu, 08 Jul 2021 10:33:29 -0700 (PDT)
+        with ESMTP id S229469AbhGHSID (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jul 2021 14:08:03 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47996C061574
+        for <git@vger.kernel.org>; Thu,  8 Jul 2021 11:05:21 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id j65so2707914oih.5
+        for <git@vger.kernel.org>; Thu, 08 Jul 2021 11:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=flBnC1opOBench1ncp0BjLi/9Faw4iOjAvLQwoANKyY=;
-        b=q6/EW41196Rj9IbV82trcxeX5p4hWnjYZS05V1gcSvhZ9raxSdqMecSfBnqpzzD3NE
-         er3UVWSca25h1STeqerINEwK4C9z2A+csVlmHey1qtMUehvWokcA/B7Oy5GKuTv+Rzhe
-         JYmiqC2sFB0mYgvMDmPZWDyBaicCZ+aNy886u/io2QZUXNXRxVrxWcypKPgqwPOegHUt
-         7BXUMoqbRIiUNnSmxrevSWTd+CYDROHzBngPdYsY1YqIw4tnO9/Oa4ZvHaHbxgoF/uaT
-         gZic/c4Mo2t8xYfcnjjEd+wbDdBKTO6t1VB1iRtB67L2ikPJUSE6vu8VklyN3uSoC7ci
-         Roaw==
+        bh=cNUuK5hMdqEjUSM0i5eb+YCLzMw+qCiFV+B2PSU2O2M=;
+        b=hnHIKxsU4AXZaJXE9tuoStxQQl1p+0lVIChe1HiSwdybzz+XCKnagDoDpiAsUP24A9
+         MDhSjr+jmZhjYIuRPoTjv7YjwtR9t6UDUxmA/cA+Br/o6CFXi6LuohHOrs7r1ZFSyOR0
+         lOTnWMoEacZLfR6wFczBbyQH8a7Q5X7jtbYZd7Me63LcSlDk7lqCDIa2Z12idyDWAuG1
+         /3mUuNnSMy2BHxxXdj3MvyEkMEoZZfyKD5/PkFQV3JKekjBrRyXff0KT6/fnSe59tYDb
+         E6OO4uhuZhUqd5o31FjXY9pbYSm+Mit9AUBSxlxPV9xa5PFDvDDCycmMnB/4RU9GkNmL
+         YjiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=flBnC1opOBench1ncp0BjLi/9Faw4iOjAvLQwoANKyY=;
-        b=SpM/mF9FbpsVLXg7+S8q/8Y8J30xhdR4msqIMfIxeXpmuZapRiYFb18siyI1uptfJN
-         r5hWw7Sb7g6s5Zd/ZApeuLMB27SKJfWM9FkAkF0TmBR18Ty9vAxyYlu6L8blcy/3aGrS
-         T2zoQHQGrxp5A/uOv7kNNxIdKLJfduef1CIhzV/ObPI5V7nil2iFUMjOASHgb7gFQ3wg
-         oR/RPnet8XWUXn97ohZUiiMCHCDpvPwsJIslyB7/vtECiT3PZdUC/gWKG+sK9CwW2ahZ
-         iDPLpcmX9otTjK8ML+B2ixDT7FaOYx/yl0MSmDu/hsBVTlylMBdcWcl2ZCgT3wDtV5KV
-         nhpA==
-X-Gm-Message-State: AOAM5304WjydcJySZFcR08DqYAK1P7Z+e1BZ2IgTUjWT6JTFEQhIdMKy
-        yiV1qidCiGCmH7E05v5wN7ilj5/7F7w=
-X-Google-Smtp-Source: ABdhPJxA0mb2mNGSUkd9QjkfA458A9Km1P0xt36fz7q2/oAIDxGP9I21W3Zy/26xjoyha6hmln8X/Q==
-X-Received: by 2002:aca:59c3:: with SMTP id n186mr24984693oib.98.1625765609198;
-        Thu, 08 Jul 2021 10:33:29 -0700 (PDT)
+        bh=cNUuK5hMdqEjUSM0i5eb+YCLzMw+qCiFV+B2PSU2O2M=;
+        b=J6QAjyJVSZ+lV1hLycTpYH+BytF9+lc6RmMP96p12HwGc4jpBmTodREtidukFRrOLi
+         wv5l0PoMKdNwhvycSc1/ETmWTjgi4kq3OXXMBGJcJ2gICpOJlau66kz6KiqxZ5fManDD
+         xhDJcR6QuyIaAAyR6JHuWc2N5Z+xtw/MJ7AWIbQldySIWWjtSN77H2q7aoTK41WmtMKx
+         BS4O+1mgRzfl53P0JECSLO8vKq4NUmPybg0PQsrWzeMhXIyl9RpYCG72n778ixYOC1oD
+         e4fCGLDY/V0cnrESxio8bc4aORS1zsnPDjrI4e4fY3SsZL93WpkSWTwtvlFHARPK23Ob
+         Svzw==
+X-Gm-Message-State: AOAM530v+P7sU4l7RPHvcqq+IJ52oB6FasUApZlNVmhY76mx24B8/GLf
+        Kuq/uwTM5deFIjsAOxvBQJk=
+X-Google-Smtp-Source: ABdhPJxRp6oGSr2t/LuyrWkXqdvhHY4tKLYIWaNauPwMI9jrTdrN/ezsgTDipe58YOBeyiyQAocnMw==
+X-Received: by 2002:aca:4888:: with SMTP id v130mr1855151oia.161.1625767520645;
+        Thu, 08 Jul 2021 11:05:20 -0700 (PDT)
 Received: from localhost (fixed-187-189-163-231.totalplay.net. [187.189.163.231])
-        by smtp.gmail.com with ESMTPSA id 16sm598449otc.52.2021.07.08.10.33.28
+        by smtp.gmail.com with ESMTPSA id bb34sm504732oob.39.2021.07.08.11.05.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jul 2021 10:33:28 -0700 (PDT)
-Date:   Thu, 08 Jul 2021 12:33:27 -0500
+        Thu, 08 Jul 2021 11:05:20 -0700 (PDT)
+Date:   Thu, 08 Jul 2021 13:05:18 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Martin <git@mfriebe.de>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Message-ID: <60e736e72da68_30939020850@natae.notmuch>
-In-Reply-To: <4057b3ac-a77c-0d5f-d3f4-ad781754aae4@mfriebe.de>
+To:     Sergey Organov <sorganov@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Martin <git@mfriebe.de>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org
+Message-ID: <60e73e5ebd069_309390208a@natae.notmuch>
+In-Reply-To: <87im1l3vj2.fsf@osv.gnss.ru>
 References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
  <xmqqk0mcy6g2.fsf@gitster.g>
  <b667ca37-b3cb-fce2-a298-63c3b839089d@mfriebe.de>
@@ -75,9 +75,8 @@ References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
  <87bl7d3l8r.fsf@osv.gnss.ru>
  <60e61bbd7a37d_3030aa2081a@natae.notmuch>
  <877di13hhe.fsf@osv.gnss.ru>
- <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
- <60e67389a4adc_306ac1208fd@natae.notmuch>
- <4057b3ac-a77c-0d5f-d3f4-ad781754aae4@mfriebe.de>
+ <60e66d28c0cb3_306ac120813@natae.notmuch>
+ <87im1l3vj2.fsf@osv.gnss.ru>
 Subject: Re: What actually is a branch?
 Mime-Version: 1.0
 Content-Type: text/plain;
@@ -87,147 +86,146 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin wrote:
-> On 08/07/2021 05:39, Felipe Contreras wrote:
-> > 
-> > Yeap, the tails of branch_1 and branch_2 could be literally anywhere.
-> > 
-> > That information is not recoverable from the current data structures of
-> > git, thus the proposal to add a new one.
+Sergey Organov wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 > 
-> Ok, thanks for the all the explanation.
+> > Sergey Organov wrote:
+> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >> 
+> >> > Since this is not strictly related to the topic of `git switch` I
+> >> > renamed the thread.
+> >> >
+> >> > Sergey Organov wrote:
+> >> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >> >> > Sergey Organov wrote:
 > 
-> A word on the name "tail". IMHO really confusing. I get where it is 
-> coming from.
-> But a lot of people will know head and tail utilities from their shell. 
-> And "tail" is the one that shows lines on the end of the file to which 
-> new data is added. Which is "head" in git.
+> [...]
 > 
-> Also a tail is something that follows, but (except for rebase), the base 
-> point is fixed.
+> >> >> As for branch tail, I do have convention of marking start of a
+> >> >> long-standing branch with corresponding tag, where branch "foo" has
+> >> >> corresponding "foo-bp" tag marking its "branch point". Recently I
+> >> >> started to mark start of feature branch with yet another branch "foo-bp"
+> >> >> rather than tag, "foo" being set to track "foo-bp", that allows to
+> >> >> automate rebasing of "foo" against correct base.
+> >> >
+> >> > So foo-bp is the upstream of foo, and you do basically:
+> >> >
+> >> >   git rebase foo@{upstream}
+> >> 
+> >> Yep, but essential feature to me is that I in fact use tools that simply
+> >> run bare
+> >> 
+> >>    git rebase
+> >> 
+> >> and that "just works" (tm).
+> >
+> > I typed the revision explicitly, but `git rebase` would work just
+> > fine.
 > 
+> Sorry, I don't follow. Did you change semantic of `git rebase`? With
+> current mainstream Git, as far as I can tell,
 > 
-> I think (despite my earlier comment) "base" is a better word.
-> It also goes along with "git rebase" which acts on the "base".
+>   git rebase
 > 
+> essentially is:
 > 
-> However wording around that topic probably still needs to be very careful.
-> "base" must be clearly distinguished from "start". Because "start" might 
-> imply that only commits from here on forward are contained, but that 
-> contradicts --contains which reports root to head.
+>   git rebase --fork-point @{upstream}
 
-I'm not really proposing such feature at this point. I did it on 2013
-just to have a solution to this problem, but I didn't push for it back
-then.
+More explicitly, it's
 
-If I ever work on that feature again I will consider the name "base",
-sure, but the only reason I mentioned this @{tail} concept is to try to
-define in a more accurate way what a branch actually is.
+  git rebase --onto @{upstream} --fork-point @{upstream}
 
->  > Suppose branch_2 was created this way:
->  >
->  >   git switch --create branch_2 A
->  >
->  > Then commit B was created under branch_2. Then master was fast-forwarded
->  > to branch_2, so you have:
->  >
->  >                  A => B master
->  >                  ^    ^
->  >   tail/branch_2 -+    +- head/branch_2
->  >
->  > Both branches have A, but only branch_2 has A as tail.
+> How introduction of @{tail} changes this, exactly?
+
+Now --fork-point is not necessary:
+
+  git rebase --onto @{upstream} @{tail}
+
+> >> > This is works if your base (or tail, or whatever) is static, but many
+> >> > branches jump around, and that's where @{tail} comes in handy.
+> >> 
+> >> Yeah, I see. When I need to make a branch jump around, I do need to
+> >> manually move my references, but that's fortunately very rare use-case
+> >> for me. Having direct support for that is still a win.
+> >> 
+> >> >
+> >> > You can do this:
+> >> >
+> >> >   git rebase --onto foo@{upstream} foo@{tail}
+> >> >
+> >> > This will always rebase the right commits (no need to look into the
+> >> > reflog). So you can say that the branch is foo@{tail}..foo.
+> >> 
+> >> I see where and when it's useful, but for a feature branch 99% of times
+> >> I don't want to rebase it onto some true upstream. I rather want to just
+> >> fiddle with the branch in place, and I prefer to setup things the way
+> >> that ensures that bare "git rebase" does "the right thing".
+> >
+> > But that's precisely the point: when you do `git rebase` you don't have
+> > to type the base or --onto anymore. It's done automatically.
+> >
+> > Not just for your long-standing branches, but for *any* branch.
+> >
+> >> Probably that could be solved by a branch-local configuration that makes
+> >> "git rebase" become "git rebase @{tail}" for the branch instead of "git
+> >> rebase @{upstream}"
+> >
+> > No. @{upstream} is where you want to rebase *to*, @{tail} is where you
+> > want to rebase *from*.
 > 
+> My point is that for feature branch I rather want to rebase from @{tail}
+> to @{tail} 99% of times.
+
+Just make @{upstream} = @{tail}, then you get your desired result.
+
+> > When you do:
+> >
+> >   git rebase foo@{upstream}
+> >
+> > This is basically the same as:
+> >
+> >   git checkout foo@{upstream}^0
+> >   git cherry-pick --right-only foo@{upstream}...foo
 > 
-> So base (tail) is the shared commit "A" on which branch_2 was created. 
-> (rather than the first commit made in branch_2 which is "B")
+> Yes, but you probably meant foo@{upstream}..foo (2 dots, not 3) here.
+
+I think if you do foo@{upstream}..foo then that --right-only doesn't do
+the same thing.
+
+`--right-only foo@{upstream}...foo` will drop commits that already part of
+upstream. Another way you can find commits already part of upstream is
+with `git cherry foo@{upstream}`.
+
+> > git is smart enough to figure out what commits are already part of
+> > foo@{upstream}, and those are skipped, but at no point was any "base"
+> > calculated (at least not from `git rebase`).
+> >
+> > Most of the time `git rebase` works fine, because there aren't too many
+> > commits to figure out where they should go, but it's definitely not
+> > efficient, and there's many corner-cases (see a Linux kernel maintaner
+> > baffled by what the hell `git rebase` is doing [1]).
 > 
-> I can see how that is needed for "git rebase" so @{base} can be used for 
-> <upstream>.
+> Once again, how exactly the foo@{tail} fits in this picture?
 
-Yes and no. <upstream> is where branch is rebased *to*, not where it's
-rebased *from*:
+It sets <upstream> so no --fork-point is necessary.
 
-  git rebase --onto foo@{upstream} foo@{base} foo
-
-This command rebases all the commits foo@{base}..foo on top of
-foo@{upstream}.
-
-Another way to think of it is that you'll cherry-pick foo@{base}..foo on
-top of foo@{upstream}.
-
-> What happens if branch_2 is rebased?
-> Will the base be set to the commit onto which the branch was rebased?
+> >> > Another advantage of having this notion is that `git rebase`
+> >> > automatically updates the tail (in this case to foo@{upstream}).
+> >> 
+> >> Yep, looks useful. Is it all local to given repo, or else?
+> >
+> > I implented it as 'refs/tails' (as opposed to 'refs/heads'), so it's
+> > local to a given repo, but could easily be exported.
 > 
-> A => B => C => D => E master
->             \ => F => G  foo (base = B)
-> 
-> foo was created on B, then fast forwarded to C, then diverged.
-> 
-> 
->     git rebase --onto A  foo@{base}  foo
-> 
-> Now that foo diverges before B, having B as base for foo seems odd. 
-> (Also A will have C' as child, So the base really is A now)
+> Do I get it right that now `git switch br1; git rebase --onto br2` will
+> likely have different outcome in the repository where "br1" has been
+> created compared to any other repository, as "br1@{tail}" will only
+> exist in that exact repo?
 
-Yes, A is the new base.
+It very well could, if `--fork-point @{upstream}` finds a different base
+than `@{tail}`.
 
->     git rebase --onto E  foo@{base}  foo
-> 
-> In this case C is already contained in master, so it will be skipped.
-> If the base is moved, then foo@{base}..foo will no longer contain C. 
-> IMHO that is correct, because rebase skipped it.
-
-The new base is E.
-
-It's not complicated, the base is whatever --onto is.
-
-> Will there be a way to manually repoint the base?
-> 
-> A => B => C => D master
->        \ => E => F  foo
->                  \ => G => H  bar (base = F)
-> 
-> 
-> If I do
-> 
->    git rebase --onto master  bar@{base} bar
-> 
-> then the commits E and F will not be part of the rebase.
-> That is fine. I must handle them before.
-> 
-> But if I deleted foo (or for other reasons decide E and F should be 
-> handled if I rebase bar) can I make them to be included?
-> Something like
-> 
->    git base --repoint B  bar
-> 
-
-I did not code that, but it's something people probably would need at
-some point. I would do `git branch --set-base` though.
-
-
-Anyway, it seems I wasn't very clear, I'm not really proposing this
-feature. Although I think it's something that git is missing, it would
-be a pain in the ass to attempt to get it merged, I have much more
-important features I want to get done, and those don't have much chance
-of being merged either.
-
-The only reason I mentioned @{tail} (or @{base}) is to have a better
-mental model of what a branch is.
-
- 1. A branch is whatever is inside `branch@{base}..branch`
- 2. `branch` is the branch head (`branch@{head}`), but it's not the
-    branch itself
-
-For all intents and purposes on the git documentation the branch, the
-branch name, and the branch head are used interchangeably, but
-semantically speaking they are not the same thing.
-
-When you change the branch head you are effectively changing the branch.
-If @{base} existed, then changing the base would also change the branch
-(although that would be a much less dangerous operation).
-
-Does that make sense?
+Cheers.
 
 -- 
 Felipe Contreras
