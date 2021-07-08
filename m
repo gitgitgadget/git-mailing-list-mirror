@@ -2,147 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B08DBC07E96
-	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 18:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0C15C07E96
+	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 19:22:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8EA186162D
-	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 18:26:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F6F66162B
+	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 19:22:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229631AbhGHS3G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Jul 2021 14:29:06 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51416 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbhGHS3F (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jul 2021 14:29:05 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 92C2DD87CC;
-        Thu,  8 Jul 2021 14:26:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=GUr76UTRunrB
-        UAa497lw0wzI6488+Kzmjf1IbHmcv2k=; b=rHhBIT3iF1u8LDI0RWQGeWfHVeVj
-        uGUtsJCXeMZaAYg6As6Tk3L44JIi/P97jT8z5LyLlpHvEZLcAdiQdPPHbEJnLzvT
-        F2+G90pFE7zbXp9yKUTHhD+TWZQ/7gQ8ban84gwpsn9XVBFtmyqlMUlhj2Df2Luw
-        rj0vPFftRgTbnQY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 87E5BD87CB;
-        Thu,  8 Jul 2021 14:26:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A38BBD87CA;
-        Thu,  8 Jul 2021 14:26:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     Hu Jialun <hujialun@comp.nus.edu.sg>, git@vger.kernel.org,
-        felipe.contreras@gmail.com
-Subject: Re: [PATCH] commit: remove irrelavent prompt on
- `--allow-empty-message`
-References: <20210707162308.2438170-1-hujialun@comp.nus.edu.sg>
-        <20210708151911.2524122-1-hujialun@comp.nus.edu.sg>
-        <YOciZUlWnF5ur5ec@danh.dev>
-Date:   Thu, 08 Jul 2021 11:26:21 -0700
-In-Reply-To: <YOciZUlWnF5ur5ec@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcuG6p24g?=
- =?utf-8?B?Q8O0bmc=?= Danh"'s message of
-        "Thu, 8 Jul 2021 23:05:57 +0700")
-Message-ID: <xmqqfswobr1u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229650AbhGHTYl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Jul 2021 15:24:41 -0400
+Received: from smtprelay08.ispgateway.de ([134.119.228.108]:36423 "EHLO
+        smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229497AbhGHTYj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jul 2021 15:24:39 -0400
+Received: from [84.163.72.131] (helo=[192.168.2.202])
+        by smtprelay08.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <git@mfriebe.de>)
+        id 1m1ZaO-0001MH-43; Thu, 08 Jul 2021 21:21:24 +0200
+Subject: Re: What actually is a branch?
+To:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
+ <xmqqk0mcy6g2.fsf@gitster.g>
+ <b667ca37-b3cb-fce2-a298-63c3b839089d@mfriebe.de>
+ <xmqqpmw4uwh2.fsf@gitster.g>
+ <7870a0ad-8fa1-9dbd-1978-1f44ec6970c5@mfriebe.de>
+ <xmqqy2arrmba.fsf@gitster.g>
+ <b80bf908-0c31-2b3a-6d6c-1a3fba5b2334@mfriebe.de>
+ <87wnqaclz8.fsf@osv.gnss.ru> <60e5f3981de5f_301437208bc@natae.notmuch>
+ <87bl7d3l8r.fsf@osv.gnss.ru> <60e61bbd7a37d_3030aa2081a@natae.notmuch>
+ <877di13hhe.fsf@osv.gnss.ru>
+ <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
+ <60e67389a4adc_306ac1208fd@natae.notmuch>
+ <4057b3ac-a77c-0d5f-d3f4-ad781754aae4@mfriebe.de>
+ <60e736e72da68_30939020850@natae.notmuch>
+From:   Martin <git@mfriebe.de>
+Message-ID: <155308af-42ad-b044-fb37-676251a9b7e1@mfriebe.de>
+Date:   Thu, 8 Jul 2021 21:21:53 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FEB39896-E019-11EB-B0DF-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <60e736e72da68_30939020850@natae.notmuch>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWVAbWZyaWViZS5kZQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+On 08/07/2021 19:33, Felipe Contreras wrote:
+> The only reason I mentioned @{tail} (or @{base}) is to have a better
+> mental model of what a branch is.
+> 
+>   1. A branch is whatever is inside `branch@{base}..branch`
 
->> In other words, which of the following 3 is the most acceptable?
->>=20
->> 1. As Junio suggested, quoted above.
->
-> I think this approach is the most expensive one, _() needs to query
-> the gettext infrastructure, which is usually costly.
-> However, I think that cost doesn't matter much since we're about to
-> open an editor soon.
+For this part "branch" = some series of commits.
 
-See note below.
+Then this is what I would say is a common misunderstanding.
+
+Yet that may be the difference between what people want the branch to 
+be, and what it (afaik) technically is.
+
+People indeed tend to thing, I branched at X, so anything before is not 
+part of the branch.
+"--contains" says otherwise.
 
 
->> 2.
->> status_printf(s, GIT_COLOR_NORMAL, allow_empty_message ?
->>                                    _("...") :
->> 				   _("...."), comment_line_char);
->
-> install_branch_config() uses this style.
->
->>=20
->> 3.
->> const char *hint_foo =3D allow_empty_message ?
->>                        _("...") :
->> 		       _("....");
->
-> builtin/remote.c:show_local_info_item() writes:
->
-> 	const char *msg;
-> 	if (condition)
-> 		msg =3D _("some message");
-> 	else
-> 		msg =3D _("other message");
->
-> So, I guess it's fine either way. And people will need to see the
-> patch to see which one is better.
+Thinking of it.
 
-Yeah, #1 and #3 are better than the patch posted or #2 in that by
-extracting the large message body out-of-line from the code that do
-use the messages, they make it simpler to follow the logic that uses
-these messages.  That is
+If I look at a feature branch, then my feature starts where I created 
+the branch. I want my feature branch to represent this.
 
-	if (cleanup_mode =3D=3D CLEANUP_ALL)
-		status_printf(..., hint_cleanup_all);
-	else if (cleanup_mode =3D=3D COMMIT_MSG_CLEANUP_SCISSORS)
-		...;
-	else /* all the rest */
-		status_printf(..., hint_cleanup_space, comment_line_char);
+But if I look at my local master branch (or any tracking branch), I like 
+to believe that it contains the same as the remote branch.
+And well, if we just set the base for the local tracking branch to be 
+the same as the base for the remote branch that would be fine.
+But if (after diverging, due to changes pulled from remote) then, I run
+    git rebase @{base} @{remote}
+then rebase has to skip all the shared commits.
 
-would be far easier to follow than
+And since rebase also repoints the "base", my local branch then no 
+longer contains the same as the remote.
 
-	if (cleanup_mode =3D=3D CLEANUP_ALL)
-		status_printf(...,=20
-		condition=20
-		? large-large-message-1
-		: large-large-message-1-plus-note-about-empty-message);
-	else if (cleanup_mode =3D=3D COMMIT_MSG_CLEANUP_SCISSORS)
-		...;
-	else /* all the rest */
-		status_printf(...,
-		condition
-		? large-large-message-2
-		: large-large-message-2-plus-note-about-empty-message,
-		comment_line_char);
+So limiting the branch to branch@{base}..branch only works for feature 
+branches.
 
-as the overall structure is easier to follow without the minute
-detail of using slightly different messages depending on the
-allow-empty setting.
 
-By the way, if you want to avoid calling _() twice with the approach
-#1, you can do
+So yes, what is a branch? More exactly what does it contain.
+Two examples, that to me suggest two answers.
 
-	hint_cleanup_all =3D N_("<cleanup and note about empty message>");
- 	...
 
-	if (condition) {
-		hint_cleanup_all =3D N_("<cleanup without note>");
-		...
-	}
+Also if branch@{base}..branch  then there is a problem.
+- branch@{base} is then correctly not part of the branch
+- So immediately after "git switch -c branch" the branch is empty => ok
+But if so, then what is the branch head at that time?
+The Pointer would point the @{base}, but @base is outside the branch. So 
+the pointer of the branch points outside the branch?
 
-and use _(hint_cleanup_all) at the site that uses the message.
+
+
+>   2. `branch` is the branch head (`branch@{head}`), but it's not the
+>      branch itself
+Well technically "branch" is the "pointer" to the head.
+Assuming we want "head" to be a commit?
+Or do we want head, to be the "branch end" after the last commit? But 
+then still "branch is the pointer"
+
+The only problem is:
+branch is too often used for "the commits contained in the branch". That 
+is way to common to even try to stop it.
+
+Yet, if branch is used for the content, then we do not have a good term 
+for the pointer.
+
+
+
+
+> 
+> For all intents and purposes on the git documentation the branch, the
+> branch name, and the branch head are used interchangeably, but
+> semantically speaking they are not the same thing.
+
+I have not proof read all the docs for this....
+But I think that "branch name" and "branch head" should or could be used 
+in a clear single meaning fashion each...
+
+> 
+> When you change the branch head you are effectively changing the branch.
+Well if branch is the pointer, then you change the branch, and head is 
+being changed.
+If branch is the content, then you change the head, and yes the content 
+changes.
+
+
