@@ -2,194 +2,186 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF864C07E96
-	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 16:06:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5BB5C07E96
+	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 16:36:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 93F5161874
-	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 16:06:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C3C9E61874
+	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 16:36:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229554AbhGHQIn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Jul 2021 12:08:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42890 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbhGHQIn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jul 2021 12:08:43 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E15EAC061574
-        for <git@vger.kernel.org>; Thu,  8 Jul 2021 09:06:00 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id 37so6524715pgq.0
-        for <git@vger.kernel.org>; Thu, 08 Jul 2021 09:06:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=MJSu5euroakqlHWXT2HpbsDbIDx/XNHRffCCH54HFL8=;
-        b=pROJWO0yW9r8bgBpexJPVdoL4NdHSgLDcLO7E4YGvw3efvxflVIHLU5AehJMgMCCGO
-         EotI7Q62ARgZfN7wIDyoOPmmfwkgCcFr2QBET8iTVtvTSmw1fMvWlVWEGI2o7bDhzw72
-         q9UNjHwi8eZNgKuhAHlHNhRxyOnkyzmNiAdDg0LlwYoXWnGODPghVxlkIwUa2VT+97wW
-         VNFKN6Eoz4Zr811f9tHJpGPpQTiYgZmSmhTmgUMMPiikZ6ZxmFEgg2hFENvBC1nQbnWs
-         +qQSdqdlNINwodVz9/L7bM2uNk+il37jJW09cFRRDm2DGH7fBWq3WiDouLaZbPUQG5Kz
-         x8Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=MJSu5euroakqlHWXT2HpbsDbIDx/XNHRffCCH54HFL8=;
-        b=kDLTHzVrxC3jRD7qHmXjGcB+o2qW5hh3XuzPveTJFIC90oXpbp9yXRQKC9rBL7o4Hu
-         ijR6+yTT+/vWl03Q/ucfCzsd5FXDw3hxtCNI4hM/gyU6HR1uevLP4cfDhxu4x+j/Zqal
-         0sZ8mFRDrlZNFuKHm1AgxgjWmvnHke30oJKEjkjzN1J3nIHDmHsWLo8E13las6fv1gR2
-         dogzNUnXwQETt1GN6h/fByPsOuZdrT/CFNGHIHtjkF+VbGHAq0BR6vwbCXKtqCUlUeMb
-         g6IbTcGNSXR3yJQfNINRg7qiCEEAjkFwf4YULAhwrpmpCPI2PYgMyVtJfw4vq9iTHadU
-         og5Q==
-X-Gm-Message-State: AOAM531/L0aYTkA5+7CODa67qSincJVwb8LQbOSP9IlLbvCaulYDbv4Y
-        lu1P3CwFqCHCXhM/fvGk5Ds=
-X-Google-Smtp-Source: ABdhPJw2haMeDbFBVDy5xoEmP/q1F18TQLLnoqZduCU+KeD/pXSv3t9KuHy9wTRgKAIo0opTX8ryug==
-X-Received: by 2002:a62:e40c:0:b029:317:3367:c5db with SMTP id r12-20020a62e40c0000b02903173367c5dbmr32306002pfh.62.1625760360445;
-        Thu, 08 Jul 2021 09:06:00 -0700 (PDT)
-Received: from localhost ([2402:800:63b8:9039:443b:57cf:40b5:f8d1])
-        by smtp.gmail.com with ESMTPSA id f69sm3354445pfa.24.2021.07.08.09.05.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jul 2021 09:05:59 -0700 (PDT)
-Date:   Thu, 8 Jul 2021 23:05:57 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Hu Jialun <hujialun@comp.nus.edu.sg>
-Cc:     git@vger.kernel.org, gitster@pobox.com, felipe.contreras@gmail.com
-Subject: Re: [PATCH] commit: remove irrelavent prompt on
- `--allow-empty-message`
-Message-ID: <YOciZUlWnF5ur5ec@danh.dev>
-References: <20210707162308.2438170-1-hujialun@comp.nus.edu.sg>
- <20210708151911.2524122-1-hujialun@comp.nus.edu.sg>
+        id S229592AbhGHQjW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Jul 2021 12:39:22 -0400
+Received: from mout.web.de ([217.72.192.78]:40967 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229489AbhGHQjV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jul 2021 12:39:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1625762198;
+        bh=gWoKgBeaA9yzXAixisJgePlu/rFVxz2FKfOBOFTaphs=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=em697Mws5YoMRmPfcBBu6cCUvM3q9K8SQvxJCLByMh+DKJJqeCW/Nab4vzuA+uA2b
+         FpV2G5eemLQTgoump/lD7pVUciEXSOtTYUwJC4gWSgSb7l3I6V6Gg/b7nNQgYX5NY3
+         QKRuQvBszSpkATD1kEsI/nKBvaZjPgwsja1PfLJg=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([79.203.26.194]) by smtp.web.de
+ (mrweb103 [213.165.67.124]) with ESMTPSA (Nemesis) id
+ 0MPpIE-1m5OtQ0kYU-0052Pq; Thu, 08 Jul 2021 18:36:38 +0200
+Subject: Re: Antw: [EXT] Re: bug in "git fsck"?
+To:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
+Cc:     git@vger.kernel.org
+References: <60DF1C22020000A100042225@gwsmtp.uni-regensburg.de>
+ <xmqqczs0popg.fsf@gitster.g> <52847a99-db7c-9634-b3b1-fd9b1342bc32@web.de>
+ <60E2B7FB020000A1000422A0@gwsmtp.uni-regensburg.de>
+ <77655a4e-8c39-5ccc-71af-d2d8684bf208@web.de>
+ <60E40275020000A1000422F7@gwsmtp.uni-regensburg.de>
+ <fcfd0401-df5b-15ec-29c4-74d2903274cd@web.de>
+ <60E6B541020000A1000423C8@gwsmtp.uni-regensburg.de>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <f460e7e0-113e-f19f-fbaa-a22f567105dd@web.de>
+Date:   Thu, 8 Jul 2021 18:36:37 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
+In-Reply-To: <60E6B541020000A1000423C8@gwsmtp.uni-regensburg.de>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210708151911.2524122-1-hujialun@comp.nus.edu.sg>
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:K2xRbHNvWlenP5KDM/0Bt/oKPkauHL6lCWWuEDLlxxkLd3V2ngW
+ jE/s8mvgMP4HvyoPbrbUvBkh/fAXoAOhRCGJCJ50f0gyVCllzKa8PnrX3g/TvsAb2gleF/u
+ 5v3d+ztLab9pJ8FljAwObQtA0PmcGunqeXtMPjaOVVj6lETcm6lVUYz7zfZUpVL+TxXjD7j
+ V40X/EdAbHaiPcaKjL7iQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kFcskSblyOc=:VlRjae5uQyw/AZKJPxOQIl
+ kd+QrMVete/fWR+zp8QpicE96+8wlsUftaysVokMD+3WSNXbmcFyiA4rLVgcP7kkogicAvU3g
+ WQ8AGUXvrP1V3FH9dNCNmY8n/dtrxVOJyekPmKsXpOkZ3eCNDwOwzEbMufADIXe48K0cibsS7
+ H/Z3Dl4C5FWC4Ja09u6Ig4RRv2mIrMK7cgwq7c3rp+SGYF+qWj81I/AXHjT2V3iqTuadqz4aZ
+ ObZ0wca5uFE3/JYjdsz6NCUPz2o7xdv6q7SfP+vjq6nxYGvjMR1Vb/mezU7cAMmw/smIQ5cyf
+ Pk42ZusIAfYfop5rnHm0s4G8rJbofTlKcmBsV7T2tXydDiLFirGlg5t+GKv/DfhNNSsu86Orc
+ L0P8/+i+A2KAk4xLSNnIUDdxglErp7keIpPB5pmR5Js8qLyor5nmEMYn9+xsnWehgGtLThqG0
+ bF2nwybaqJQUFILt+lO2f2wmPAYjw2FUQuVefh/luRTakRXUpy8sRyb9gXxz2Goq4WXQ2vIVA
+ HXMVLxN8+wqXX2nKjI5AKims5piykeGkXh1retuKSi8pBUSRygQZpP+lqaD5n95slFiQZwDi8
+ dR+h1qxy05AqWfDwVCHheKOV/+pPEhWlv/6uhgr3FqY84wZmwcMJgHCeB7tO8VwhYgwtpRHW5
+ 0VT3bw8VC0iFFviH7NkfK8qVbslK56RBa6mextgtpGbWiZ4PVYAUSJLIV2BleaTj//9edFNvU
+ njUIBqo5OcJ9VrjB0rnEXh9hIaOZZ/MNf9S0RgrnTyGJcQYC0pryu5t5dfxV33wRHmmLrY5Wd
+ xmmeapCnfULCIpPzfYx9oaLnBlI+vSh8f676ZX1DH6A1c6kE0awnyp4AGI07Syvuv604fryZp
+ LTZ2PHbFurKv+QXxgDDB5z2hJ6QFUeRa4IELBV6iktpERWeFpQzJ5S/HC1WQn/zg+sYGTAWyV
+ iDSDA+0KkkEZkEnsic6aKxX3Fs8iBlEt5SHm7sqltk6LHmjHPi3oXqcMnvCr9Boid1hr/RIDh
+ Gbr6zsPejTg/6qcTv2RJbEdXyASV9X/O6FGz2WauOduv2bkNE9rxLW9yT2kOVsBVtA1aHhHSa
+ RHpybcGQNEBK2mF9FtSV25xI47NcAyrci/d
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-07-08 23:19:11+0800, Hu Jialun <hujialun@comp.nus.edu.sg> wrote:
-> Junio C Hamano wrote:
-> > char *hint_cleanup_all =
-> > _("Please enter the ... , and an empty message aborts the commit.\n");
-> > char *hint_cleanup_space =
-> > _("Please enter the ... if you want to.\n"
-> >       "An empty message aborts the commit.\n");
-> >
-> > if (allow_empty_message) {
-> >         hint_cleanup_all = _("...");
-> >         hint_cleanup_space = _("...");
-> > }
-> >
-> > ... the if/elseif cascade in which calls to status_printf() are made
-> > ... using these variables
-> 
-> Would it be better this way or just using the ternary operator in-line
-> instead? If the latter, should it still be separated into another
-> variable or just embedded in the status_printf call? Using the ternary
-> operator does require to separate checks of allow_empty_message, but
-> might as well save us an `if` construct to reassign the variable.
-> 
-> In other words, which of the following 3 is the most acceptable?
-> 
-> 1. As Junio suggested, quoted above.
+Am 08.07.21 um 10:20 schrieb Ulrich Windl:
+>>>> Ren=C3=A9 Scharfe <l.s.r@web.de> schrieb am 06.07.2021 um 16:25 in Na=
+chricht
+> <fcfd0401-df5b-15ec-29c4-74d2903274cd@web.de>:
+>> Am 06.07.21 um 09:12 schrieb Ulrich Windl:
+>>>>>> Ren=C3=A9 Scharfe <l.s.r@web.de> schrieb am 05.07.2021 um 16:44 in =
+Nachricht
+>>> <77655a4e-8c39-5ccc-71af-d2d8684bf208@web.de>:
+>>>> Am 05.07.21 um 09:42 schrieb Ulrich Windl:
+>>>>>> You *can* overwrite them using "git branch --force foo" and then
+>>>>>> "git branch -d foo" works.
+>>>>>
+>>>>> Would it be OK to force the branch to any commit (e.g.: "master"),
+> relying
+>>>
+>>>> on
+>>>>> the fact that any reference (read: "master") to that commit will pre=
+vent
+>>>> actual
+>>>>> removal of the commit?
+>>>>
+>>>> Yes, any valid commit would do.  This turns dangling branches into
+>>>> normal delete-able ones.  Other branches are unaffected.
+>>>
+>>> OK, but either it does not work, or I did not understand what to do:
+>>>
+>>>> git branch --force bitmap-generic
+>>> fatal: Not a valid object name: 'bitmap-generic'.
+>>>> git fsck
+>>> Checking object directories: 100% (256/256), done.
+>>> Checking objects: 100% (173/173), done.
+>>> notice: HEAD points to an unborn branch (bitmap-generic)
+>>> dangling blob 0458be7cf03f35be365c819afe0104ff3c178ca0
+>>> dangling blob 3000d29f0a652f3f7ed25572cac9969b90adeca5
+>>> dangling commit 90e8531086d3efaeefdf6c8d39b6782e49dd2a0d
+>>> dangling commit b598195f859106662bde746f391a7df9162231e9
+>>> dangling tree fb4866ab5cc2f0c34a63334b90550ef7199a2098
+>>> ...
+>>
+>> First: Please make backups.
+>>
+>> Here's what works for me.  First reproducing the error:
+>>
+>>    $ echo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa >.git/refs/heads/bro=
+ken
+>
+> Hi!
+>
+> Thanks for the hints. But first the problem is in the repository, not in=
+ the
+> workspace, so I don't have a ".git/refs/", but "refs/".
 
-I think this approach is the most expensive one, _() needs to query
-the gettext infrastructure, which is usually costly.
-However, I think that cost doesn't matter much since we're about to
-open an editor soon.
+So you have a bare repository (one without worktree, i.e. no checked out
+files)?
 
-> 2.
-> status_printf(s, GIT_COLOR_NORMAL, allow_empty_message ?
->                                    _("...") :
-> 				   _("...."), comment_line_char);
+> The other thing is that the only "refs" that is there is "master"; the o=
+ne
+> with the problem isn't there.
 
-install_branch_config() uses this style.
+You probably had your refs packed (in a file named "packed-refs").
 
-> 
-> 3.
-> const char *hint_foo = allow_empty_message ?
->                        _("...") :
-> 		       _("....");
+> So I tried:
+> % echo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa >refs/heads/bitmap-gener=
+ic
 
-builtin/remote.c:show_local_info_item() writes:
+I used that command to generate a broken branch.  You already had a
+broken branch, so you didn't need to repeat that reproduction step.
 
-	const char *msg;
-	if (condition)
-		msg = _("some message");
-	else
-		msg = _("other message");
+> Then "git branch" indicated that "bitmap-generic" would be the current
+> branch:
+> % cat HEAD
+> ref: refs/heads/bitmap-generic
 
-So, I guess it's fine either way. And people will need to see the
-patch to see which one is better.
+HEAD references the current branch.  So the broken branch was the
+current one for you?  I somehow assumed that you'd be on a healthy
+branch.  And I'm not fully sure how to use branches in a bare
+repository.
 
-> ......
-> status_printf(s, GIT_COLOR_NORMAL, hint_foo, comment_line_char);
-> 
-> --------------------------------------------------------------------
-> 
-> Felipe Contreras wrote:
-> > In git the style is to avoid braces if the content of the condition is a
-> > single line.
-> 
-> Đoàn Trần Công Danh wrote:
-> > In Git project, it's enforced to have -Wdeclaration-after-statement,
-> > IOW, move all declaration before statement.
-> 
-> Noted with thanks!
-> 
-> > After changing those texts, the tests should be updated, too.
-> > It's a customary service for the next developer, who needs to bisect
-> > this project to have all test-cases pass on each changes.
-> > 
-> > With this change, t7500.50 and t7502.37 runs into failures.
-> > Please fix them here, instead of next change.
-> 
-> I did change test cases accordingly in the second patch (excerpt below), and
-> both tests did pass afterwards. Was there something wrong with it?
+> Next I brute-force edited HEAD, repacing bitmap-generic with master.
 
-Yes, when apply both 2 patches, the test passed, however, the test
-doesn't pass with only 1/2 applied. Let's imagine in a near future,
-some developers need to bisect some problems with Git with automation
-scripts, and git-bisect stops at 1/2, since the tests report failure,
-"git bisect run" will mark this change as "bad commit", thus render
-git-bisect hard to use. We should make sure all tests pass on all
-commit.
+OK, but at least this moved you to a healthy branch.
 
-> And some perhaps rather noob questions below, as an (overly) curious
-> newcomer,
-> 
-> - Why is the "lego" style breakdown of translation strings unrecommended?
->   I suppose it might be in consideration of possibly different linguistic
->   sequences across languages but I'm not so sure.
+> Still, that would not work:
+> % git branch --delete --force bitmap-generic
+> error: Couldn't look up commit object for 'refs/heads/bitmap-generic'
 
-Let's imagine an artificial language which have 2 words "linos" and
-"linas" which is both translated to English as "lines", translators
-need full context to decide which word should be chosen. Things maybe
-complicated with language with gender, word-cases, etc...
+Expected; you hadn't done anything to that branch, yet.
 
-There're some problems reported on and off this list [1]
+> But the next command worked:
+> % git branch --force bitmap-generic
 
-> - What is the rationale behind prohibiting braces around single line
->   constructs? It seems somewhat error-prone since somebody else could
->   later be adding statements into the body without putting the curly
->   braces.
+This made the broken branch point to the same commit as the current
+branch, i.e. master.
 
-Documentation/CodingGuidelines said so ;)
-I don't think somebody adding random statements is a valid concern for
-brace, I think it's expected to analyse the code context before doing
-real-work on project. Furthermore, -Wmisleading-indentation is your
-friends.
+> Finally, this also worked:
+> % git branch --delete bitmap-generic
+> Deleted branch bitmap-generic (was 03aa7ca).
 
+Right; the previous command had unbroken the branch, so it had
+become deletable.
 
-1: https://lore.kernel.org/git/20210509215250.33215-1-alexhenrie24@gmail.com/
+> Most importantly "git fsck" did no longer complain.
+>
+> Thanks for the help! Do you want to provide an answer to stackexchange, =
+or may
+> I use your procedure to write an answer?
 
--- 
-Danh
+Feel free to use it.  I don't even have an account there.
+
+Ren=C3=A9
