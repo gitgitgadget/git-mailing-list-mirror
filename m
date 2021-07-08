@@ -2,80 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D17D9C07E96
-	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 15:17:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15475C07E96
+	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 15:19:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B3ACD61414
-	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 15:17:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EFEA56141E
+	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 15:19:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231933AbhGHPUh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Jul 2021 11:20:37 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63512 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231804AbhGHPUh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jul 2021 11:20:37 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A77BD6D91;
-        Thu,  8 Jul 2021 11:17:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4KssYD+erRLXAbpWUhJZW4KK2g4B8rHmJMEfor
-        6b1B0=; b=vItNSoTaqAnqLk0+N7Hf3tBPE8QK+V9uAkI34ygwth//xpqmXbRm3i
-        yVhgqGdRcJBApk0DlMYhZ/AgOI94eoWiQdS7LxxQ8KDc16nOgDosrlJ4sGKYwWmG
-        K7LB0SDDNQ6k3/w9hjOoTsR1m/MwfTjU/peVq9ORgl0LlIDatwzLk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 31DC0D6D90;
-        Thu,  8 Jul 2021 11:17:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S232023AbhGHPWX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Jul 2021 11:22:23 -0400
+Received: from 84-20.comp.nus.edu.sg ([137.132.84.20]:35306 "EHLO
+        mailgw1.comp.nus.edu.sg" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S231876AbhGHPWW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jul 2021 11:22:22 -0400
+Received: from localhost (avs2.comp.nus.edu.sg [192.168.49.6])
+        by mailgw1.comp.nus.edu.sg (Postfix) with ESMTP id D8FA9285902;
+        Thu,  8 Jul 2021 23:19:36 +0800 (+08)
+X-Virus-Scanned: amavisd-new at comp.nus.edu.sg
+Received: from mailgw1.comp.nus.edu.sg ([192.168.49.5])
+        by localhost (avs.comp.nus.edu.sg [192.168.49.6]) (amavisd-new, port 10024)
+        with ESMTP id NgCx-47mbPSH; Thu,  8 Jul 2021 23:19:24 +0800 (+08)
+Received: from mailauth1.comp.nus.edu.sg (mailauth1.comp.nus.edu.sg [192.168.49.3])
+        by mailgw1.comp.nus.edu.sg (Postfix) with ESMTP;
+        Thu,  8 Jul 2021 23:19:24 +0800 (+08)
+Received: from hujialun-ThinkPad-X240.nus.edu.sg (unknown [172.21.128.160])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ACA51D6D8F;
-        Thu,  8 Jul 2021 11:17:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Prathamesh Chavan <pc44800@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Rafael Silva <rafaeloliveira.cs@gmail.com>
-Subject: Re: [GSoC] [PATCH v2 2/4] submodule: prefix die messages with 'fatal'
-References: <20210706181936.34087-1-raykar.ath@gmail.com>
-        <20210708095533.26226-1-raykar.ath@gmail.com>
-        <20210708095533.26226-3-raykar.ath@gmail.com>
-Date:   Thu, 08 Jul 2021 08:17:54 -0700
-In-Reply-To: <20210708095533.26226-3-raykar.ath@gmail.com> (Atharva Raykar's
-        message of "Thu, 8 Jul 2021 15:25:31 +0530")
-Message-ID: <xmqqo8bcbzrx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        (Authenticated sender: hujialun)
+        by mailauth1.comp.nus.edu.sg (Postfix) with ESMTPSA id CF068600DC525;
+        Thu,  8 Jul 2021 23:19:23 +0800 (+08)
+From:   Hu Jialun <hujialun@comp.nus.edu.sg>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, congdanhqx@gmail.com, felipe.contreras@gmail.com
+Subject: Re: [PATCH] commit: remove irrelavent prompt on `--allow-empty-message`
+Date:   Thu,  8 Jul 2021 23:19:11 +0800
+Message-Id: <20210708151911.2524122-1-hujialun@comp.nus.edu.sg>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210707162308.2438170-1-hujialun@comp.nus.edu.sg>
+References: <20210707162308.2438170-1-hujialun@comp.nus.edu.sg>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AB39991E-DFFF-11EB-B319-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Atharva Raykar <raykar.ath@gmail.com> writes:
-
-> The standard `die()` function that is used in C code prefixes all the
-> messages passed to it with 'fatal: '. This does not happen with the
-> `die` used in 'git-submodule.sh'.
+Junio C Hamano wrote:
+> char *hint_cleanup_all =
+> _("Please enter the ... , and an empty message aborts the commit.\n");
+> char *hint_cleanup_space =
+> _("Please enter the ... if you want to.\n"
+>       "An empty message aborts the commit.\n");
 >
-> Let's prefix each of the shell die messages with 'fatal: ' so that when
-> they are converted to C code, the error messages stay the same as before
-> the conversion.
+> if (allow_empty_message) {
+>         hint_cleanup_all = _("...");
+>         hint_cleanup_space = _("...");
+> }
+>
+> ... the if/elseif cascade in which calls to status_printf() are made
+> ... using these variables
 
-Sounds good.  More importantly, the error messages from the
-resulting system would become more uniform---after all, the end
-users would not care if scripted part of the system is emitting the
-error messages, or the message comes from a built-in version.
+Would it be better this way or just using the ternary operator in-line
+instead? If the latter, should it still be separated into another
+variable or just embedded in the status_printf call? Using the ternary
+operator does require to separate checks of allow_empty_message, but
+might as well save us an `if` construct to reassign the variable.
+
+In other words, which of the following 3 is the most acceptable?
+
+1. As Junio suggested, quoted above.
+
+2.
+status_printf(s, GIT_COLOR_NORMAL, allow_empty_message ?
+                                   _("...") :
+				   _("...."), comment_line_char);
+
+3.
+const char *hint_foo = allow_empty_message ?
+                       _("...") :
+		       _("....");
+......
+status_printf(s, GIT_COLOR_NORMAL, hint_foo, comment_line_char);
+
+--------------------------------------------------------------------
+
+Felipe Contreras wrote:
+> In git the style is to avoid braces if the content of the condition is a
+> single line.
+
+Đoàn Trần Công Danh wrote:
+> In Git project, it's enforced to have -Wdeclaration-after-statement,
+> IOW, move all declaration before statement.
+
+Noted with thanks!
+
+> After changing those texts, the tests should be updated, too.
+> It's a customary service for the next developer, who needs to bisect
+> this project to have all test-cases pass on each changes.
+> 
+> With this change, t7500.50 and t7502.37 runs into failures.
+> Please fix them here, instead of next change.
+
+I did change test cases accordingly in the second patch (excerpt below), and
+both tests did pass afterwards. Was there something wrong with it?
+
+> diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
+> index 7d02f79c0d..812ca45043 100755
+> --- a/t/t7500-commit-template-squash-signoff.sh
+> +++ b/t/t7500-commit-template-squash-signoff.sh
+> @@ -497,8 +497,8 @@ test_expect_success 'invalid message options when using --fixup' '
+> 
+>  cat >expected-template <<EOF
+> 
+> -# Please enter the commit message for your changes. Lines starting
+> -# with '#' will be ignored, and an empty message aborts the commit.
+> +# Please enter the commit message for your changes.
+> +# Lines starting with '#' will be ignored.
+>  #
+>  # Author:    A U Thor <author@example.com>
+>  #
+> diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
+> index 38a532d81c..a5217872ca 100755
+> --- a/t/t7502-commit-porcelain.sh
+> +++ b/t/t7502-commit-porcelain.sh
+> @@ -608,8 +608,8 @@ test_expect_success 'cleanup commit messages (strip option,-F,-e)' '
+> 
+>  echo "sample
+> 
+> -# Please enter the commit message for your changes. Lines starting
+> -# with '#' will be ignored, and an empty message aborts the commit." >expect
+> +# Please enter the commit message for your changes.
+> +# Lines starting with '#' will be ignored." >expect
+> 
+>  test_expect_success 'cleanup commit messages (strip option,-F,-e): output' '
+>  	test_cmp expect actual
+
+--------------------------------------------------------------------
+
+And some perhaps rather noob questions below, as an (overly) curious
+newcomer,
+
+- Why is the "lego" style breakdown of translation strings unrecommended?
+  I suppose it might be in consideration of possibly different linguistic
+  sequences across languages but I'm not so sure.
+
+- What is the rationale behind prohibiting braces around single line
+  constructs? It seems somewhat error-prone since somebody else could
+  later be adding statements into the body without putting the curly
+  braces.
+
+- When replying to multiple comments in multiple emails (like in this very
+  email), would it be better to send multiple emails as replies to individual
+  comments or do it in one email? If the latter, which previous message should
+  the single reply be In-Reply-To?
+
+Thanks in advance,
+Hu Jialun
