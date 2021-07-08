@@ -4,182 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7A6DC07E99
-	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 15:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FE12C07E96
+	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 15:50:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A30826161F
-	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 15:50:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B68E61621
+	for <git@archiver.kernel.org>; Thu,  8 Jul 2021 15:50:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232230AbhGHPx2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Jul 2021 11:53:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39504 "EHLO
+        id S232174AbhGHPxi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Jul 2021 11:53:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232180AbhGHPx2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jul 2021 11:53:28 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17B87C06175F
+        with ESMTP id S232231AbhGHPx3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jul 2021 11:53:29 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DFB0C061760
         for <git@vger.kernel.org>; Thu,  8 Jul 2021 08:50:46 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id a5-20020a7bc1c50000b02901e3bbe0939bso4365692wmj.0
+Received: by mail-wr1-x431.google.com with SMTP id p8so8153076wrr.1
         for <git@vger.kernel.org>; Thu, 08 Jul 2021 08:50:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=GaryDIQzcg1XIuhjHDlDR7rj0ie2nYaglvsdzy/ivlM=;
-        b=FhB4fah9hc0Cw7Cp5twWWtZ6GlsLTdIS3XZTUkWhSv5Sft/hiuJ/aunbbMAqExnKL3
-         dZ8nvbGM2zJ6fyPbJWQ+33bbi74TJi8VLb7ho3arUNQza3Y7DjaiC4n2WT1cIdYG/lk4
-         F/ct3iK6MSyVdyKzYhfZN8tb3dMqcUg/jivVgARgObPXFpLC2QPddcneNLzUe5luNNgQ
-         Andic362bMuU0CpHG5CapYzwh2fdNRA5aNvD14ywz63CdOhgc42IFeMGeQ0Har4lb2im
-         hGoq3JX4GslUXbCKrOhqAylimGgOOX8OhtxcfUlyWCtxCuFf1I2VBSWfr4tBdNrYLRek
-         mqLg==
+        bh=i67g+3kM8fu0ZSxeCuCgoTqnwSExukN5fXsrjYMc2Vw=;
+        b=GJQze7mdBOLP+OpcHgnQI3Jfo9KGSeau9dI76Re9gGAC/v901enCOyLiueLocOEZCs
+         0+E4K/n4fvciJTnsDPXhsoncgwYlyuEV+E4JhnFD9u65T0+5LJ9qAZzPa2738ZMc7+OS
+         tavQDkUC44N77KB1d08FSrp6SpLkMcvDPcsppOsao+Qddk9iMHDEgn2YMtfk9BmzivQv
+         QmCB9wpYQ6HkTQefl4HCXfWjCSAhtNtQo3qooTLhwicOExrcGEF2LwdZEPTosZKLJmGU
+         KhwglaBk4VnNEYQGGjdGKYUFxnkbprHbeRUzGW9KjmSR9qBsZzAsgKgKG/yPGoI6Hias
+         EDYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=GaryDIQzcg1XIuhjHDlDR7rj0ie2nYaglvsdzy/ivlM=;
-        b=V5ryhc2Wytw6/hccfgnzCMwzN8xIQjdf1+ZbB22Zm8wD5hiD+jXgSO2/FTXDaYRfbs
-         3E2QMgldZ+LHOyT/6ac8Bs4uEXPK9Cohz+RC1eJ427xZVMPKEOn8Qy5695YvuSdiAY+x
-         XzhjePpIEFREz3VvI17hUztZ5NIznNJmLBCRhIZFT0mITaE/5p6fP3QZTvnmWt01xv2h
-         etWNmN0qOO7qTVJbjERj+yMIQVwBY3AjM3/YbBAj8Vlh1K9/4n7d5o5ShqD91pOWK3U3
-         VF04zzYiZjqXWq0W5NxTMI55v4RjNTyMTNKVlOlQNQNQkfVwzlxXrQ7Lak0bmXaa/aC/
-         6I8Q==
-X-Gm-Message-State: AOAM531eivLLZkwUGQOHMsfTJ0w6CYonka1xn2MZmk7iiLVwKw/dSmlJ
-        zn68t8SonJrlUvLdJ/tUej6bP1TbUc4=
-X-Google-Smtp-Source: ABdhPJyBZzjWbiPUtvW25nPfM9u63mkqqASTvTmSYiSppzLq9WuaLHJD1Q1ea2rPVgv1vIgwQ/4nig==
-X-Received: by 2002:a1c:e3d6:: with SMTP id a205mr15779871wmh.132.1625759444748;
-        Thu, 08 Jul 2021 08:50:44 -0700 (PDT)
+        bh=i67g+3kM8fu0ZSxeCuCgoTqnwSExukN5fXsrjYMc2Vw=;
+        b=q8alFQrAzWqsC7o9N4EaReQfL7ekEZnLAl01ZvOAAAMOJg90E6J114Nxuud9rZWOeZ
+         BU9JAPvLXoUauX+iD59U3E/Cn/XcEIUCiS1hPT3vzRtA/eQZuNM7gsjI0+Unl+3j5cUP
+         fax42bMfgVVNluVQwNryW8tH3w2CSX2F1UDpYzYOOqAk1XNl+YcUG9AJ26mbKpMQih0D
+         MMYJkX20JGecCua9f37U65sL4mlQhX5DYQ9FZfzv8k4ELmlGzEk2WowwvHqyW2NPpCPY
+         TUaIBwx4AP5YV1jCchp1ewpyLAlie7L6tq7FU4NU2a+jjGgM5FdTNd/LM6FDW1v3ulIT
+         plgQ==
+X-Gm-Message-State: AOAM530nhe7KCiQAgnKm7yrWeNyGa0A1KGJo+cS615rUQYcXWIEbWJOS
+        sSut8yEFOLF15fMBLHi/PzLQdclmdcY=
+X-Google-Smtp-Source: ABdhPJyj/ZVxs2uiqQWEu7BuWedyRU/x6IbkI5t0bVQsxa6b+n+EPJvt317cQdI1PHqi9uN5NDAORw==
+X-Received: by 2002:a5d:5088:: with SMTP id a8mr33116706wrt.153.1625759445228;
+        Thu, 08 Jul 2021 08:50:45 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d3sm2549386wrx.77.2021.07.08.08.50.44
+        by smtp.gmail.com with ESMTPSA id s3sm2635249wro.30.2021.07.08.08.50.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 08 Jul 2021 08:50:44 -0700 (PDT)
-Message-Id: <pull.992.v2.git.1625759443.gitgitgadget@gmail.com>
-In-Reply-To: <pull.992.git.1625550451038.gitgitgadget@gmail.com>
+Message-Id: <5459e5bb4212e47873d2862c4a96651c2f7d96b5.1625759443.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.992.v2.git.1625759443.gitgitgadget@gmail.com>
 References: <pull.992.git.1625550451038.gitgitgadget@gmail.com>
+        <pull.992.v2.git.1625759443.gitgitgadget@gmail.com>
 From:   "Stephen Manz via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 08 Jul 2021 15:50:40 +0000
-Subject: [PATCH v2 0/3] worktree: teach add to accept --reason with --lock
+Date:   Thu, 08 Jul 2021 15:50:41 +0000
+Subject: [PATCH v2 1/3] t2400: remove unneeded `git rev-parse` from '"add"
+ worktree with lock' test
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Stephen Manz <smanz@alum.mit.edu>,
         Stephen Manz <smanz@alum.mit.edu>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The default reason stored in the lock file, "added with --lock", is unlikely
-to be what the user would have given in a separate git worktree lock
-command. Allowing --reason to be specified along with --lock when adding a
-working tree gives the user control over the reason for locking without
-needing a second command.
+From: Stephen Manz <smanz@alum.mit.edu>
 
-Changes since v1:
+It must have come from a copy-paste of another test
 
- * Split changes into 3 commits. The first commit is removal of git
-   rev-parse in the test above the ones I'm adding. The second is wrapping
-   the "added with --lock" string with _() to mark it for translation. The
-   third commit is the main change.
- * Reworked the if-else-if-else to if-else if-else
- * Added test_when_finished ... command to unlock the working tree
- * Changed test_expect_failure to test_expect_success and embedded
-   test_must_fail and test_path_is_missing commands
+Signed-off-by: Stephen Manz <smanz@alum.mit.edu>
+---
+ t/t2400-worktree-add.sh | 1 -
+ 1 file changed, 1 deletion(-)
 
-Note: I don't see how to disambiguate --lock with no --reason from no --lock
-at all. I still think that the original keep_locked boolean is needed along
-with the new lock_reason char array. If I don't add lock_reason and change
-keep_locked to a char array, it will start as NULL. But it will remain NULL
-if --lock alone is given or if --lock isn't given at all.
-
-Stephen Manz (3):
-  t2400: remove unneeded `git rev-parse` from '"add" worktree with lock'
-    test
-  worktree: default lock string should be marked with `_()` for
-    translation
-  worktree: teach `add` to accept --reason <string> with --lock
-
- Documentation/git-worktree.txt |  4 ++--
- builtin/worktree.c             |  9 ++++++++-
- t/t2400-worktree-add.sh        | 14 +++++++++++++-
- 3 files changed, 23 insertions(+), 4 deletions(-)
-
-
-base-commit: 670b81a890388c60b7032a4f5b879f2ece8c4558
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-992%2FSRManz%2Flock_reason-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-992/SRManz/lock_reason-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/992
-
-Range-diff vs v1:
-
- -:  ----------- > 1:  5459e5bb421 t2400: remove unneeded `git rev-parse` from '"add" worktree with lock' test
- -:  ----------- > 2:  30196cc9369 worktree: default lock string should be marked with `_()` for translation
- 1:  233a580b212 ! 3:  4d17b31921a worktree: teach `add` to accept --reason <string> with --lock
-     @@ builtin/worktree.c: struct add_opts {
-       
-       static int show_only;
-      @@ builtin/worktree.c: static int add_worktree(const char *path, const char *refname,
-     - 	 * after the preparation is over.
-     - 	 */
-       	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
-     --	if (!opts->keep_locked)
-     -+	if (!opts->keep_locked) {
-     + 	if (!opts->keep_locked)
-       		write_file(sb.buf, "initializing");
-     --	else
-     --		write_file(sb.buf, "added with --lock");
-     -+	}
-     -+	else {
-     -+		if (opts->lock_reason)
-     -+			write_file(sb.buf, "%s", opts->lock_reason);
-     -+		else
-     -+			write_file(sb.buf, _("added with --lock"));
-     -+	}
-     ++	else if (opts->lock_reason)
-     ++		write_file(sb.buf, "%s", opts->lock_reason);
-     + 	else
-     + 		write_file(sb.buf, _("added with --lock"));
-       
-     - 	strbuf_addf(&sb_git, "%s/.git", path);
-     - 	if (safe_create_leading_directories_const(sb_git.buf))
-      @@ builtin/worktree.c: static int add(int ac, const char **av, const char *prefix)
-       		OPT_BOOL('d', "detach", &opts.detach, N_("detach HEAD at named commit")),
-       		OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new working tree")),
-     @@ builtin/worktree.c: static int add(int ac, const char **av, const char *prefix)
-       
-      
-       ## t/t2400-worktree-add.sh ##
-     -@@ t/t2400-worktree-add.sh: test_expect_success '"add" worktree' '
-     - '
-     - 
-     - test_expect_success '"add" worktree with lock' '
-     --	git rev-parse HEAD >expect &&
-     - 	git worktree add --detach --lock here-with-lock main &&
-     +@@ t/t2400-worktree-add.sh: test_expect_success '"add" worktree with lock' '
-       	test -f .git/worktrees/here-with-lock/locked
-       '
-       
-      +test_expect_success '"add" worktree with lock and reason' '
-      +	git worktree add --detach --lock --reason "why not" here-with-lock-reason main &&
-     ++	test_when_finished "git worktree unlock here-with-lock-reason || :" &&
-      +	test -f .git/worktrees/here-with-lock-reason/locked &&
-      +	echo why not >expect &&
-      +	test_cmp expect .git/worktrees/here-with-lock-reason/locked
-      +'
-      +
-     -+test_expect_failure '"add" worktree with reason but no lock' '
-     -+	git worktree add --detach --reason "why not" here-with-reason-only main &&
-     -+	test -f .git/worktrees/here-with-reason-only/locked
-     ++test_expect_success '"add" worktree with reason but no lock' '
-     ++	test_must_fail git worktree add --detach --reason "why not" here-with-reason-only main &&
-     ++	test_path_is_missing .git/worktrees/here-with-reason-only/locked
-      +'
-      +
-       test_expect_success '"add" worktree from a subdir' '
-
+diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+index 96dfca15542..874a61dbfa7 100755
+--- a/t/t2400-worktree-add.sh
++++ b/t/t2400-worktree-add.sh
+@@ -67,7 +67,6 @@ test_expect_success '"add" worktree' '
+ '
+ 
+ test_expect_success '"add" worktree with lock' '
+-	git rev-parse HEAD >expect &&
+ 	git worktree add --detach --lock here-with-lock main &&
+ 	test -f .git/worktrees/here-with-lock/locked
+ '
 -- 
 gitgitgadget
+
