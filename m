@@ -2,248 +2,592 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF766C07E99
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 14:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 185D5C07E99
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 14:41:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 97DC9613B7
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 14:29:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC7B9613BA
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 14:41:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231797AbhGIOcf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Jul 2021 10:32:35 -0400
-Received: from smtprelay07.ispgateway.de ([134.119.228.104]:18447 "EHLO
-        smtprelay07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229548AbhGIOcf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Jul 2021 10:32:35 -0400
-Received: from [84.163.73.96] (helo=[192.168.2.202])
-        by smtprelay07.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <git@mfriebe.de>)
-        id 1m1rUh-0003hS-Jl; Fri, 09 Jul 2021 16:28:43 +0200
-Subject: Re: PATCH: improve git switch documentation
-To:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
- <xmqqk0mcy6g2.fsf@gitster.g>
- <b667ca37-b3cb-fce2-a298-63c3b839089d@mfriebe.de>
- <xmqqpmw4uwh2.fsf@gitster.g>
- <7870a0ad-8fa1-9dbd-1978-1f44ec6970c5@mfriebe.de>
- <xmqqy2arrmba.fsf@gitster.g>
- <b80bf908-0c31-2b3a-6d6c-1a3fba5b2334@mfriebe.de>
- <87wnqaclz8.fsf@osv.gnss.ru> <60e5f3981de5f_301437208bc@natae.notmuch>
- <87bl7d3l8r.fsf@osv.gnss.ru> <60e61bbd7a37d_3030aa2081a@natae.notmuch>
- <877di13hhe.fsf@osv.gnss.ru>
- <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
- <60e67389a4adc_306ac1208fd@natae.notmuch>
- <4057b3ac-a77c-0d5f-d3f4-ad781754aae4@mfriebe.de>
- <60e736e72da68_30939020850@natae.notmuch>
- <155308af-42ad-b044-fb37-676251a9b7e1@mfriebe.de>
- <60e762243aab1_30a7b02089@natae.notmuch>
- <2b85a7eb-d0be-65e7-ecbb-1750abf53e53@mfriebe.de>
- <60e79c31aaa72_30b8a4208c1@natae.notmuch>
-From:   Martin <git@mfriebe.de>
-Message-ID: <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
-Date:   Fri, 9 Jul 2021 16:29:46 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S232201AbhGIOoe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Jul 2021 10:44:34 -0400
+Received: from mail-qk1-f176.google.com ([209.85.222.176]:45743 "EHLO
+        mail-qk1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229561AbhGIOoe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Jul 2021 10:44:34 -0400
+Received: by mail-qk1-f176.google.com with SMTP id i125so9471974qke.12
+        for <git@vger.kernel.org>; Fri, 09 Jul 2021 07:41:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=k+wJyvTVXX2liYsYuYIWQz4ULK3wObrQTEdmaJzsEHc=;
+        b=JabBrr19hxhWQ3flqWfHUX16uALQwakSYEdbX3AVRudqMNOw4ZGuPxqNH6BJaBY4BW
+         hDZOVXRGz8VyDYVABXs8OyBPAlovKH+OvPDHx9lb4X6ZiZMa69BnL11IOmlBhzohxW3V
+         CY6PO5AQVpq0klFwrh+O4P49H75bnAMKIxS+leB9E26N4v8VYrDcW6+SFZo7Kq5gLh7d
+         5edYo8FLkktNQB08LQIjdLZ4dVx8glQm4jBkiWg4p3VFTfAGW8btTVOXFzi3EoIH800N
+         BDiXi1amsgqjjnbXyUlhtTAOEtvRNypSEJxGUaZtiBGRJfADgP3/+gjKJezWkn2/ua6Q
+         DhDg==
+X-Gm-Message-State: AOAM5329P+imjpHzDBMgnNJzJTldrby5QEtwWnoDEQTn8JM1CCP0Neh9
+        zze9njaAbdCGl8niDbPgUiLRJmQsRyI=
+X-Google-Smtp-Source: ABdhPJw0HkteySupt0j3RzgVm5zbTnDxFYevO3LqvN8IdnRfX8c9CPlhh0/taJRruumk+0kqbhjGNQ==
+X-Received: by 2002:a37:7703:: with SMTP id s3mr39394135qkc.136.1625841710234;
+        Fri, 09 Jul 2021 07:41:50 -0700 (PDT)
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com. [209.85.219.54])
+        by smtp.gmail.com with ESMTPSA id s81sm2503498qka.82.2021.07.09.07.41.49
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Jul 2021 07:41:50 -0700 (PDT)
+Received: by mail-qv1-f54.google.com with SMTP id d2so4629959qvh.2
+        for <git@vger.kernel.org>; Fri, 09 Jul 2021 07:41:49 -0700 (PDT)
+X-Received: by 2002:a05:6214:250c:: with SMTP id gf12mr36276792qvb.7.1625841709296;
+ Fri, 09 Jul 2021 07:41:49 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <60e79c31aaa72_30b8a4208c1@natae.notmuch>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: bWVAbWZyaWViZS5kZQ==
+References: <20210706210317.706313-1-me@avishay.dev> <20210706210317.706313-2-me@avishay.dev>
+ <xmqqfswrgl3h.fsf@gitster.g>
+In-Reply-To: <xmqqfswrgl3h.fsf@gitster.g>
+From:   Avishay Matayev <me@avishay.dev>
+Date:   Fri, 9 Jul 2021 17:41:38 +0300
+X-Gmail-Original-Message-ID: <CAJ-0OszjD7w5pzcGU3vc0g+72e7mSp6e9tvk41vkiYuSaCeNxQ@mail.gmail.com>
+Message-ID: <CAJ-0OszjD7w5pzcGU3vc0g+72e7mSp6e9tvk41vkiYuSaCeNxQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] Change isatty's parameter to a *_FILENO define
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, code@tpope.net
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/07/2021 02:45, Felipe Contreras wrote:
-> I believe we have all the semantic tools needed to write something that
-> is understandable by most people regardless of their conception of what a
-> branch is.
-> 
+On Wed, 7 Jul 2021 at 00:59, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Avishay Matayev <me@avishay.dev> writes:
+>
+> > This isn't a functional change.
+>
+> This does not seem to make the code any easier to follow, though.
+> Is this amount of code churn really needed?
+>
+I don't think it makes the code worse either. There are already a few
+occurrences
+of this in the current code, I found this nicer and thought I should
+create a patch
+for consistency's sake. It is of course not mandatory so if you feel
+strongly about it
+I can remove it.
 
-So returning to the original topic.
-
-
-While writing this, I thought maybe there is a need for a
-"Guideline on writing documentation" ?
-
-
-
-On 01/07/2021 16:58, Junio C Hamano proposed a patch that had an 
-interesting point.
-The patch was for the docs of "git switch" and "git branch"
-
-1)
-
-      <start-point> versus <commit[-ish]>
-
-I am not sure that this will help much with the original issue, which is 
-my concern that a (new) user will be aware of why "switch -C" is a force 
-(i.e. what the dangers are).
-But it is an interesting point.
-
- From the synopsis of various commands (just a sample, I did not check all).
-   git switch (-c|-C) <new-branch> [<start-point>]
-   git branch <branchname> [<start-point>]
-   git checkout [--detach] <commit>
-   git checkout [[-b|-B|--orphan] <new_branch>] [<start_point>]
-   git reset [--soft | --mixed | --hard ] [<commit>]
-
-With the exception for "git reset" they all use <start-point> when it 
-comes to branches.
-
-The general question here is, should the synopsis say
-a) this parameter should be a "commit".
-And then the doc explains the commit will be used as startpoint
-b) this parameter should be a "start point"
-And then the doc explains the startpoint has to be given as commit.
-
-In terms of checkout, this is especially interesting.
-The 2nd form does create a new branch.
-But both forms check-out the commit.
-IMHO it is somewhat strange that you "check out a start-point to your 
-worktree".
-
-So probably <commit> (or even <commit-ish>) may indeed be the better option.
-This is however an issue that goes well beyond "git switch".
-
-This may also affect other words used in synopsises. So this is a 
-general rule that needs to be decided for all of the documentation.
-The issue is, that some commands take several commits.
-    git rebase [--onto <newbase>] [<upstream> [<branch>]]
-In that case some distinguishing is needed.
-
-There also is the option of "<base-commit[-ish]>".
-This tells the user that a commit-ish is needed. But distinguishes it 
-from other <commit> that may be given as argument.
-This may lead to rather long names (e.g. in rebase).
-Though in checkout, I would use only <commit[-ish]> in both variants, as 
-the main action is to check out that commit.
-
-
-2)
-
-      <branch> versus <branch-name>
-
-    git switch [--no-guess] <branch>
-    git switch (-c|-C) <new-branch> [<start-point>]
-    git branch <branchname> [<start-point>]
-    git checkout [[-b|-B|--orphan] <new_branch>] [<start_point>]
-    git rebase [--onto <newbase>] [<upstream> [<branch>]]
-
-First of all "git rebase" is simply wrong. I can give a commit for all 3 
-arguments. So the last one does not have to be a branch. (or <branch-name>)
-
-Then I think <branch-name> (or <branch-ish> /see other mail) should be 
-preferred over <branch>.
-
-As for "git switch -C"
-This should IMHO change to (the 2nd arg, actually depends on the point 
-"1" above)
-    git switch (-c|-C) <branch-name> [<base-commit>]
-
-I suggest to not call it "new-branch-name" because, it might be an 
-existing name.
-
-
-3)
-
-    newbbranch  versus new-branch  versus  new_branch
-
-That is something that just needs to be decided.
-"new_branch" is in git checkout.
-
-
-4)
-
-    Extend of explanation for why a command is classified as "force".
-
-This one is the one I still lobby for support.
-This is also on issue across all docs. (or most)
-
-Currently "git switch -C" is simply stated to be --force-create.
-
-- There is no mention what is "forced". All it says is:
->  if <new-branch> already exists, it will be reset to <start-point>.
-I guess this is the English verb reset. Because, if the user goes to 
-"git reset" then the user would not know what kind of reset.
-So the term "reset" is ambiguous, as it could be the verb, or the command.
-
-Of course the "git branch" doc has the same
-> Reset <branchname> to <startpoint>, even if <branchname> exists already. 
-
-
-There is also no word, that this does not include overwriting a dirty 
-work tree.
-
-   git switch --force -c unused-name origin/branch
-means "forcefully overwrite a dirty work tree"
-
-   git switch --force-create unused-name origin/branch
-fails on the dirty work tree.
-
-
-Btw similar on "git checkout"
-   git checkout -B unused-name origin/branch
-Only difference, -B has no misleading long option.
-
-
-But my point is less, the not applying danger.
-My point is what danger is there, so that this was made a force command?
-
-Look at
-   git checkout --force
-> --force
->     When switching branches, proceed even if the index or the working tree differs from HEAD. This is used to throw away local changes.
-
-   git switch --force
-> --force
->     An alias for --discard-changes.
-and then eventually
-> This is used to throw away local changes.
-
-So --force clearly says: You will loose local changes (if you have any).
-
-The same clarity is missing for "force create branch".
-
-Yes, sure any commits that where in the branch, may be hold by other 
-branches or the ref-log.
-But neither is guaranteed. A branch does not need to have a reflog.
-
-Even if we say a user must know about certain concepts (such as a 
-branchname is a reference, and non referenced objects may be lost), even 
-then the user is left to connect the dots themself.
-
-I think it should be included in the docs (git switch/checkout/branch 
-and reset)
-
-The current wording
-    Reset <branchname> to <startpoint>, even if
-    <branchname> exists already.
-
-should be amended
-Avoid "reset"
-    Create a new branch at <startpoint> with the name
-    <branchname>, even if <branchname> is already used.
-
-Add clarity
-    Create a new branch at <startpoint> with the name
-    <branchname>.
-    If <branchname> already existed, then the old branch
-    will be removed.
-
-If the user perceives "the old branch" as container for a "chain of 
-commits", then it is still up to the user to know, that any of those 
-commits can be part of other branches. And that "removing the branch", 
-may or may not include removing the commits.
-
-However, a user not yet knowing what exactly "removing a branch" means, 
-does at least have the word "remove" to make him wary that they should 
-look up more details.
-
-
+> >
+> > The next patch in this series will rename all isatty calls anyway so I
+> > figured it is a good time to change the same calls to consistently use
+> > STD[IN|OUT|ERR]_FILENO.
+> >
+> > Signed-off-by: Avishay Matayev <me@avishay.dev>
+> > ---
+> >  builtin/am.c               | 2 +-
+> >  builtin/bisect--helper.c   | 2 +-
+> >  builtin/blame.c            | 2 +-
+> >  builtin/checkout.c         | 2 +-
+> >  builtin/commit-graph.c     | 4 ++--
+> >  builtin/commit.c           | 2 +-
+> >  builtin/fsck.c             | 2 +-
+> >  builtin/gc.c               | 2 +-
+> >  builtin/log.c              | 2 +-
+> >  builtin/merge.c            | 4 ++--
+> >  builtin/multi-pack-index.c | 2 +-
+> >  builtin/pack-objects.c     | 2 +-
+> >  builtin/pack-redundant.c   | 2 +-
+> >  builtin/prune-packed.c     | 2 +-
+> >  builtin/prune.c            | 2 +-
+> >  builtin/rebase.c           | 2 +-
+> >  builtin/repack.c           | 2 +-
+> >  builtin/send-pack.c        | 2 +-
+> >  builtin/shortlog.c         | 4 ++--
+> >  builtin/sparse-checkout.c  | 2 +-
+> >  builtin/unpack-objects.c   | 2 +-
+> >  column.c                   | 2 +-
+> >  date.c                     | 2 +-
+> >  editor.c                   | 2 +-
+> >  pager.c                    | 4 ++--
+> >  preload-index.c            | 2 +-
+> >  read-cache.c               | 2 +-
+> >  remote-curl.c              | 2 +-
+> >  sequencer.c                | 4 ++--
+> >  sideband.c                 | 2 +-
+> >  transport.c                | 6 +++---
+> >  transport.h                | 2 +-
+> >  32 files changed, 39 insertions(+), 39 deletions(-)
+> >
+> > diff --git a/builtin/am.c b/builtin/am.c
+> > index 0b2d886c81..2230c3e94d 100644
+> > --- a/builtin/am.c
+> > +++ b/builtin/am.c
+> > @@ -2394,7 +2394,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+> >                *    intend to feed us a patch but wanted to continue
+> >                *    unattended.
+> >                */
+> > -             if (argc || (resume.mode == RESUME_FALSE && !isatty(0)))
+> > +             if (argc || (resume.mode == RESUME_FALSE && !isatty(STDIN_FILENO)))
+> >                       die(_("previous rebase directory %s still exists but mbox given."),
+> >                               state.dir);
+> >
+> > diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> > index 9d9540a0ab..5d42c75a46 100644
+> > --- a/builtin/bisect--helper.c
+> > +++ b/builtin/bisect--helper.c
+> > @@ -346,7 +346,7 @@ static int decide_next(const struct bisect_terms *terms,
+> >                * although this is less optimum.
+> >                */
+> >               warning(_("bisecting only with a %s commit"), terms->term_bad);
+> > -             if (!isatty(0))
+> > +             if (!isatty(STDIN_FILENO))
+> >                       return 0;
+> >               /*
+> >                * TRANSLATORS: Make sure to include [Y] and [n] in your
+> > diff --git a/builtin/blame.c b/builtin/blame.c
+> > index 641523ff9a..1b674b2f52 100644
+> > --- a/builtin/blame.c
+> > +++ b/builtin/blame.c
+> > @@ -945,7 +945,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+> >                       die(_("--progress can't be used with --incremental or porcelain formats"));
+> >               show_progress = 0;
+> >       } else if (show_progress < 0)
+> > -             show_progress = isatty(2);
+> > +             show_progress = isatty(STDERR_FILENO);
+> >
+> >       if (0 < abbrev && abbrev < hexsz)
+> >               /* one more abbrev length is needed for the boundary commit */
+> > diff --git a/builtin/checkout.c b/builtin/checkout.c
+> > index f4cd7747d3..e3bd31449b 100644
+> > --- a/builtin/checkout.c
+> > +++ b/builtin/checkout.c
+> > @@ -1607,7 +1607,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+> >               if (opts->quiet)
+> >                       opts->show_progress = 0;
+> >               else
+> > -                     opts->show_progress = isatty(2);
+> > +                     opts->show_progress = isatty(STDERR_FILENO);
+> >       }
+> >
+> >       if (opts->conflict_style) {
+> > diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+> > index cd86315221..461f1a2a65 100644
+> > --- a/builtin/commit-graph.c
+> > +++ b/builtin/commit-graph.c
+> > @@ -87,7 +87,7 @@ static int graph_verify(int argc, const char **argv)
+> >
+> >       trace2_cmd_mode("verify");
+> >
+> > -     opts.progress = isatty(2);
+> > +     opts.progress = isatty(STDERR_FILENO);
+> >       argc = parse_options(argc, argv, NULL,
+> >                            builtin_commit_graph_verify_options,
+> >                            builtin_commit_graph_verify_usage, 0);
+> > @@ -236,7 +236,7 @@ static int graph_write(int argc, const char **argv)
+> >               OPT_END(),
+> >       };
+> >
+> > -     opts.progress = isatty(2);
+> > +     opts.progress = isatty(STDERR_FILENO);
+> >       opts.enable_changed_paths = -1;
+> >       write_opts.size_multiple = 2;
+> >       write_opts.max_commits = 0;
+> > diff --git a/builtin/commit.c b/builtin/commit.c
+> > index 190d215d43..d364ce6a39 100644
+> > --- a/builtin/commit.c
+> > +++ b/builtin/commit.c
+> > @@ -754,7 +754,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+> >               strbuf_addbuf(&sb, &message);
+> >               hook_arg1 = "message";
+> >       } else if (logfile && !strcmp(logfile, "-")) {
+> > -             if (isatty(0))
+> > +             if (isatty(STDIN_FILENO))
+> >                       fprintf(stderr, _("(reading log message from standard input)\n"));
+> >               if (strbuf_read(&sb, 0, 0) < 0)
+> >                       die_errno(_("could not read log from standard input"));
+> > diff --git a/builtin/fsck.c b/builtin/fsck.c
+> > index b42b6fe21f..4e65c823e4 100644
+> > --- a/builtin/fsck.c
+> > +++ b/builtin/fsck.c
+> > @@ -790,7 +790,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+> >               fsck_obj_options.strict = 1;
+> >
+> >       if (show_progress == -1)
+> > -             show_progress = isatty(2);
+> > +             show_progress = isatty(STDERR_FILENO);
+> >       if (verbose)
+> >               show_progress = 0;
+> >
+> > diff --git a/builtin/gc.c b/builtin/gc.c
+> > index f05d2f0a1a..4566754427 100644
+> > --- a/builtin/gc.c
+> > +++ b/builtin/gc.c
+> > @@ -1425,7 +1425,7 @@ static int maintenance_run(int argc, const char **argv, const char *prefix)
+> >       };
+> >       memset(&opts, 0, sizeof(opts));
+> >
+> > -     opts.quiet = !isatty(2);
+> > +     opts.quiet = !isatty(STDERR_FILENO);
+> >
+> >       for (i = 0; i < TASK__COUNT; i++)
+> >               tasks[i].selected_order = -1;
+> > diff --git a/builtin/log.c b/builtin/log.c
+> > index 6102893fcc..5bb9f4194a 100644
+> > --- a/builtin/log.c
+> > +++ b/builtin/log.c
+> > @@ -69,7 +69,7 @@ struct line_opt_callback_data {
+> >
+> >  static int session_is_interactive(void)
+> >  {
+> > -     return isatty(1) || pager_in_use();
+> > +     return isatty(STDOUT_FILENO) || pager_in_use();
+> >  }
+> >
+> >  static int auto_decoration_style(void)
+> > diff --git a/builtin/merge.c b/builtin/merge.c
+> > index a8a843b1f5..88f53c03b5 100644
+> > --- a/builtin/merge.c
+> > +++ b/builtin/merge.c
+> > @@ -734,7 +734,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+> >                       o.subtree_shift = "";
+> >
+> >               o.show_rename_progress =
+> > -                     show_progress == -1 ? isatty(2) : show_progress;
+> > +                     show_progress == -1 ? isatty(STDERR_FILENO) : show_progress;
+> >
+> >               for (x = 0; x < xopts_nr; x++)
+> >                       if (parse_merge_opt(&o, xopts[x]))
+> > @@ -1073,7 +1073,7 @@ static int default_edit_option(void)
+> >       /* Use editor if stdin and stdout are the same and is a tty */
+> >       return (!fstat(0, &st_stdin) &&
+> >               !fstat(1, &st_stdout) &&
+> > -             isatty(0) && isatty(1) &&
+> > +             isatty(STDIN_FILENO) && isatty(STDOUT_FILENO) &&
+> >               st_stdin.st_dev == st_stdout.st_dev &&
+> >               st_stdin.st_ino == st_stdout.st_ino &&
+> >               st_stdin.st_mode == st_stdout.st_mode);
+> > diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+> > index 5d3ea445fd..8e329b8b22 100644
+> > --- a/builtin/multi-pack-index.c
+> > +++ b/builtin/multi-pack-index.c
+> > @@ -154,7 +154,7 @@ int cmd_multi_pack_index(int argc, const char **argv,
+> >
+> >       git_config(git_default_config, NULL);
+> >
+> > -     if (isatty(2))
+> > +     if (isatty(STDERR_FILENO))
+> >               opts.flags |= MIDX_PROGRESS;
+> >       argc = parse_options(argc, argv, prefix,
+> >                            builtin_multi_pack_index_options,
+> > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> > index de00adbb9e..74536fa5a4 100644
+> > --- a/builtin/pack-objects.c
+> > +++ b/builtin/pack-objects.c
+> > @@ -4016,7 +4016,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+> >       if (git_env_bool(GIT_TEST_WRITE_REV_INDEX, 0))
+> >               pack_idx_opts.flags |= WRITE_REV;
+> >
+> > -     progress = isatty(2);
+> > +     progress = isatty(STDERR_FILENO);
+> >       argc = parse_options(argc, argv, prefix, pack_objects_options,
+> >                            pack_usage, 0);
+> >
+> > diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+> > index 8bf5c0acad..acf1edba3a 100644
+> > --- a/builtin/pack-redundant.c
+> > +++ b/builtin/pack-redundant.c
+> > @@ -621,7 +621,7 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
+> >
+> >       /* ignore objects given on stdin */
+> >       llist_init(&ignore);
+> > -     if (!isatty(0)) {
+> > +     if (!isatty(STDIN_FILENO)) {
+> >               while (fgets(buf, sizeof(buf), stdin)) {
+> >                       oid = xmalloc(sizeof(*oid));
+> >                       if (get_oid_hex(buf, oid))
+> > diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
+> > index b7b9281a8c..5d476316a5 100644
+> > --- a/builtin/prune-packed.c
+> > +++ b/builtin/prune-packed.c
+> > @@ -9,7 +9,7 @@ static const char * const prune_packed_usage[] = {
+> >
+> >  int cmd_prune_packed(int argc, const char **argv, const char *prefix)
+> >  {
+> > -     int opts = isatty(2) ? PRUNE_PACKED_VERBOSE : 0;
+> > +     int opts = isatty(STDERR_FILENO) ? PRUNE_PACKED_VERBOSE : 0;
+> >       const struct option prune_packed_options[] = {
+> >               OPT_BIT('n', "dry-run", &opts, N_("dry run"),
+> >                       PRUNE_PACKED_DRY_RUN),
+> > diff --git a/builtin/prune.c b/builtin/prune.c
+> > index 02c6ab7cba..36b9fed1bf 100644
+> > --- a/builtin/prune.c
+> > +++ b/builtin/prune.c
+> > @@ -165,7 +165,7 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+> >       }
+> >
+> >       if (show_progress == -1)
+> > -             show_progress = isatty(2);
+> > +             show_progress = isatty(STDERR_FILENO);
+> >       if (exclude_promisor_objects) {
+> >               fetch_if_missing = 0;
+> >               revs.exclude_promisor_objects = 1;
+> > diff --git a/builtin/rebase.c b/builtin/rebase.c
+> > index 12f093121d..97e8c8cbf8 100644
+> > --- a/builtin/rebase.c
+> > +++ b/builtin/rebase.c
+> > @@ -1745,7 +1745,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+> >       if (options.root && !options.onto_name)
+> >               imply_merge(&options, "--root without --onto");
+> >
+> > -     if (isatty(2) && options.flags & REBASE_NO_QUIET)
+> > +     if (isatty(STDERR_FILENO) && options.flags & REBASE_NO_QUIET)
+> >               strbuf_addstr(&options.git_format_patch_opt, " --progress");
+> >
+> >       if (options.git_am_opts.nr || options.type == REBASE_APPLY) {
+> > diff --git a/builtin/repack.c b/builtin/repack.c
+> > index 5f9bc74adc..4eb21e8e98 100644
+> > --- a/builtin/repack.c
+> > +++ b/builtin/repack.c
+> > @@ -710,7 +710,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+> >                       }
+> >                       strbuf_release(&buf);
+> >               }
+> > -             if (!po_args.quiet && isatty(2))
+> > +             if (!po_args.quiet && isatty(STDERR_FILENO))
+> >                       opts |= PRUNE_PACKED_VERBOSE;
+> >               prune_packed_objects(opts);
+> >
+> > diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+> > index a7e01667b0..c168c03a26 100644
+> > --- a/builtin/send-pack.c
+> > +++ b/builtin/send-pack.c
+> > @@ -261,7 +261,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+> >       }
+> >
+> >       if (progress == -1)
+> > -             progress = !args.quiet && isatty(2);
+> > +             progress = !args.quiet && isatty(STDERR_FILENO);
+> >       args.progress = progress;
+> >
+> >       if (args.stateless_rpc) {
+> > diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+> > index 3e7ab1ca82..a3612e3f72 100644
+> > --- a/builtin/shortlog.c
+> > +++ b/builtin/shortlog.c
+> > @@ -406,10 +406,10 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
+> >       string_list_sort(&log.trailers);
+> >
+> >       /* assume HEAD if from a tty */
+> > -     if (!nongit && !rev.pending.nr && isatty(0))
+> > +     if (!nongit && !rev.pending.nr && isatty(STDIN_FILENO))
+> >               add_head_to_pending(&rev);
+> >       if (rev.pending.nr == 0) {
+> > -             if (isatty(0))
+> > +             if (isatty(STDIN_FILENO))
+> >                       fprintf(stderr, _("(reading log message from standard input)\n"));
+> >               read_from_stdin(&log);
+> >       }
+> > diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> > index a4bdd7c494..63e79c7520 100644
+> > --- a/builtin/sparse-checkout.c
+> > +++ b/builtin/sparse-checkout.c
+> > @@ -114,7 +114,7 @@ static int update_working_directory(struct pattern_list *pl)
+> >       r->index->sparse_checkout_patterns = pl;
+> >
+> >       memset(&o, 0, sizeof(o));
+> > -     o.verbose_update = isatty(2);
+> > +     o.verbose_update = isatty(STDERR_FILENO);
+> >       o.update = 1;
+> >       o.head_idx = -1;
+> >       o.src_index = r->index;
+> > diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+> > index 4a9466295b..1a86e2e606 100644
+> > --- a/builtin/unpack-objects.c
+> > +++ b/builtin/unpack-objects.c
+> > @@ -522,7 +522,7 @@ int cmd_unpack_objects(int argc, const char **argv, const char *prefix)
+> >
+> >       git_config(git_default_config, NULL);
+> >
+> > -     quiet = !isatty(2);
+> > +     quiet = !isatty(STDERR_FILENO);
+> >
+> >       for (i = 1 ; i < argc; i++) {
+> >               const char *arg = argv[i];
+> > diff --git a/column.c b/column.c
+> > index 1261e18a72..375869e848 100644
+> > --- a/column.c
+> > +++ b/column.c
+> > @@ -211,7 +211,7 @@ int finalize_colopts(unsigned int *colopts, int stdout_is_tty)
+> >  {
+> >       if ((*colopts & COL_ENABLE_MASK) == COL_AUTO) {
+> >               if (stdout_is_tty < 0)
+> > -                     stdout_is_tty = isatty(1);
+> > +                     stdout_is_tty = isatty(STDOUT_FILENO);
+> >               *colopts &= ~COL_ENABLE_MASK;
+> >               if (stdout_is_tty || pager_in_use())
+> >                       *colopts |= COL_ENABLED;
+> > diff --git a/date.c b/date.c
+> > index f9ea807b3a..6dd6c37c22 100644
+> > --- a/date.c
+> > +++ b/date.c
+> > @@ -969,7 +969,7 @@ void parse_date_format(const char *format, struct date_mode *mode)
+> >
+> >       /* "auto:foo" is "if tty/pager, then foo, otherwise normal" */
+> >       if (skip_prefix(format, "auto:", &p)) {
+> > -             if (isatty(1) || pager_in_use())
+> > +             if (isatty(STDOUT_FILENO) || pager_in_use())
+> >                       format = p;
+> >               else
+> >                       format = "default";
+> > diff --git a/editor.c b/editor.c
+> > index 6303ae0ab0..13521f05cf 100644
+> > --- a/editor.c
+> > +++ b/editor.c
+> > @@ -58,7 +58,7 @@ static int launch_specified_editor(const char *editor, const char *path,
+> >               const char *args[] = { editor, NULL, NULL };
+> >               struct child_process p = CHILD_PROCESS_INIT;
+> >               int ret, sig;
+> > -             int print_waiting_for_editor = advice_waiting_for_editor && isatty(2);
+> > +             int print_waiting_for_editor = advice_waiting_for_editor && isatty(STDERR_FILENO);
+> >
+> >               if (print_waiting_for_editor) {
+> >                       /*
+> > diff --git a/pager.c b/pager.c
+> > index 3d37dd7ada..3c4664ebed 100644
+> > --- a/pager.c
+> > +++ b/pager.c
+> > @@ -101,7 +101,7 @@ void prepare_pager_args(struct child_process *pager_process, const char *pager)
+> >
+> >  void setup_pager(void)
+> >  {
+> > -     const char *pager = git_pager(isatty(1));
+> > +     const char *pager = git_pager(isatty(STDOUT_FILENO));
+> >
+> >       if (!pager)
+> >               return;
+> > @@ -128,7 +128,7 @@ void setup_pager(void)
+> >
+> >       /* original process continues, but writes to the pipe */
+> >       dup2(pager_process.in, 1);
+> > -     if (isatty(2))
+> > +     if (isatty(STDERR_FILENO))
+> >               dup2(pager_process.in, 2);
+> >       close(pager_process.in);
+> >
+> > diff --git a/preload-index.c b/preload-index.c
+> > index e5529a5863..28707d9bee 100644
+> > --- a/preload-index.c
+> > +++ b/preload-index.c
+> > @@ -121,7 +121,7 @@ void preload_index(struct index_state *index,
+> >       memset(&data, 0, sizeof(data));
+> >
+> >       memset(&pd, 0, sizeof(pd));
+> > -     if (refresh_flags & REFRESH_PROGRESS && isatty(2)) {
+> > +     if (refresh_flags & REFRESH_PROGRESS && isatty(STDERR_FILENO)) {
+> >               pd.progress = start_delayed_progress(_("Refreshing index"), index->cache_nr);
+> >               pthread_mutex_init(&pd.mutex, NULL);
+> >       }
+> > diff --git a/read-cache.c b/read-cache.c
+> > index 77961a3885..a8063fefe6 100644
+> > --- a/read-cache.c
+> > +++ b/read-cache.c
+> > @@ -1568,7 +1568,7 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+> >       int t2_sum_lstat = 0;
+> >       int t2_sum_scan = 0;
+> >
+> > -     if (flags & REFRESH_PROGRESS && isatty(2))
+> > +     if (flags & REFRESH_PROGRESS && isatty(STDERR_FILENO))
+> >               progress = start_delayed_progress(_("Refresh index"),
+> >                                                 istate->cache_nr);
+> >
+> > diff --git a/remote-curl.c b/remote-curl.c
+> > index 9d432c299a..843a287680 100644
+> > --- a/remote-curl.c
+> > +++ b/remote-curl.c
+> > @@ -1483,7 +1483,7 @@ int cmd_main(int argc, const char **argv)
+> >       }
+> >
+> >       options.verbosity = 1;
+> > -     options.progress = !!isatty(2);
+> > +     options.progress = !!isatty(STDERR_FILENO);
+> >       options.thin = 1;
+> >       string_list_init(&options.deepen_not, 1);
+> >       string_list_init(&options.push_options, 1);
+> > diff --git a/sequencer.c b/sequencer.c
+> > index 0bec01cf38..d1311eecc1 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -2040,7 +2040,7 @@ static int should_edit(struct replay_opts *opts) {
+> >                * commits; continue_single_pick() handles the conflicted
+> >                * commits itself instead of calling this function.
+> >                */
+> > -             return (opts->action == REPLAY_REVERT && isatty(0)) ? 1 : 0;
+> > +             return (opts->action == REPLAY_REVERT && isatty(STDIN_FILENO)) ? 1 : 0;
+> >       return opts->edit;
+> >  }
+> >
+> > @@ -4589,7 +4589,7 @@ static int continue_single_pick(struct repository *r, struct replay_opts *opts)
+> >        * we want to edit if the user asked for it, or if they didn't specify
+> >        * and stdin is a tty.
+> >        */
+> > -     if (!opts->edit || (opts->edit < 0 && !isatty(0)))
+> > +     if (!opts->edit || (opts->edit < 0 && !isatty(STDIN_FILENO)))
+> >               /*
+> >                * Include --cleanup=strip as well because we don't want the
+> >                * "# Conflicts:" messages.
+> > diff --git a/sideband.c b/sideband.c
+> > index 6f9e026732..a5dcb971f5 100644
+> > --- a/sideband.c
+> > +++ b/sideband.c
+> > @@ -126,7 +126,7 @@ int demultiplex_sideband(const char *me, int status,
+> >       int band;
+> >
+> >       if (!suffix) {
+> > -             if (isatty(2) && !is_terminal_dumb())
+> > +             if (isatty(STDERR_FILENO) && !is_terminal_dumb())
+> >                       suffix = ANSI_SUFFIX;
+> >               else
+> >                       suffix = DUMB_SUFFIX;
+> > diff --git a/transport.c b/transport.c
+> > index 50f5830eb6..ab8f297afa 100644
+> > --- a/transport.c
+> > +++ b/transport.c
+> > @@ -1051,7 +1051,7 @@ struct transport *transport_get(struct remote *remote, const char *url)
+> >       const char *helper;
+> >       struct transport *ret = xcalloc(1, sizeof(*ret));
+> >
+> > -     ret->progress = isatty(2);
+> > +     ret->progress = isatty(STDERR_FILENO);
+> >       string_list_init(&ret->pack_lockfiles, 1);
+> >
+> >       if (!remote)
+> > @@ -1168,12 +1168,12 @@ void transport_set_verbosity(struct transport *transport, int verbosity,
+> >        *   . Report progress, if force_progress is 1 (ie. --progress).
+> >        *   . Don't report progress, if force_progress is 0 (ie. --no-progress).
+> >        *   . Don't report progress, if verbosity < 0 (ie. -q/--quiet ).
+> > -      *   . Report progress if isatty(2) is 1.
+> > +      *   . Report progress if isatty(STDERR_FILENO) is 1.
+> >        **/
+> >       if (force_progress >= 0)
+> >               transport->progress = !!force_progress;
+> >       else
+> > -             transport->progress = verbosity >= 0 && isatty(2);
+> > +             transport->progress = verbosity >= 0 && isatty(STDERR_FILENO);
+> >  }
+> >
+> >  static void die_with_unpushed_submodules(struct string_list *needs_pushing)
+> > diff --git a/transport.h b/transport.h
+> > index 1cbab11373..4630d42755 100644
+> > --- a/transport.h
+> > +++ b/transport.h
+> > @@ -110,7 +110,7 @@ struct transport {
+> >       signed verbose : 3;
+> >       /**
+> >        * Transports should not set this directly, and should use this
+> > -      * value without having to check isatty(2), -q/--quiet
+> > +      * value without having to check isatty(STDERR_FILENO), -q/--quiet
+> >        * (transport->verbose < 0), etc. - checking has already been done
+> >        * in transport_set_verbosity().
+> >        **/
