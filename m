@@ -8,59 +8,58 @@ X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23AFEC07E96
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 00:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0EA0C07E96
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 01:04:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EBF5F61468
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 00:58:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C327861477
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 01:04:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230089AbhGIBBe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Jul 2021 21:01:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48038 "EHLO
+        id S230209AbhGIBGt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Jul 2021 21:06:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229843AbhGIBBe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jul 2021 21:01:34 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1340C061574
-        for <git@vger.kernel.org>; Thu,  8 Jul 2021 17:58:51 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id w74so10149623oiw.8
-        for <git@vger.kernel.org>; Thu, 08 Jul 2021 17:58:51 -0700 (PDT)
+        with ESMTP id S229843AbhGIBGt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jul 2021 21:06:49 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7701C061574
+        for <git@vger.kernel.org>; Thu,  8 Jul 2021 18:04:05 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id f12-20020a056830204cb029048bcf4c6bd9so7749764otp.8
+        for <git@vger.kernel.org>; Thu, 08 Jul 2021 18:04:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=5vmqmkAUSoOSZhUuyxFJShPZCULZ92xm2q6Pj2ITMWM=;
-        b=WUwMWZ59Gkgs+Ng0mKIpfk5OyC0WW4VdtHS5zknIjleomu8+n6CYF3Fm5YjTRFBfQf
-         0t8ENzDZdILPTR3irQD3vRm+u3cuKB/v9215dG2S1q7I8tn+yjCSRyKEd1THnAXI6urG
-         4yqJl80ZvcBsPT3i4fDRKZ6C0fpXGsUp8lgKDcZ3sFKGMd22MvfuYxRPsQpr441sJflO
-         7UHSt9lMTLwTq8BTyAVCBMhEPpb2dPd4F0Hceq+XEi/BBoeXR8uejZLP2wGyfXpvOf13
-         yopYrGyG8X85YyYtxdjs/G51LC2T5gih92Z7C5J9Fi3Awpu5jkczlWzz0inpY4wFh2S3
-         JAHA==
+        bh=Uc12zShIMOxzXSsUDQTUF/+FFphYZw058UdU/7hHsbA=;
+        b=qEoB21novw5RO5LwqJUM68pifUJWIDrrASFO3w1IzmvxbvSu8GOWjkaInTmHWA5QU7
+         numEbnjiswIDdSJohLftGQy2E5ClHBrO+2rAZNQx+NL2mvfV+ceL6be3ryp23ehx4opK
+         6xHDf66DQbvMYbw4KGp1hM/MaTy0BfDPSJ2O2vgaR2LklT122UARujgZXAOGJc/Ql4AN
+         RzIQnE4R0Y/EZb7OnIOcmJn4Ym6Mmz7ZhTCd+IUGuz6ypYu4YOUKD6G29/+Jl3x73Ndm
+         pIVJUSfShhDvo6HOTJSxwAd9R080u+SgCr1CFZn8QflvKNLVK5UbRxOKUMXH4YrNHGnv
+         zFew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=5vmqmkAUSoOSZhUuyxFJShPZCULZ92xm2q6Pj2ITMWM=;
-        b=dbR0XulYc/+Xldgz0fwEbCrZSns0o0W58veLtFpbj/jrRBQfYRMXEtN73JoRWV0Fp8
-         YJDtArncpgXFqSpibvlCTU9zHkowmr/qMgeirYE7J54rGIGtu7ibcKcDiuZ4LFewgVm2
-         LTM3AYUiG13lnyXzmdG9EJtX9uTbLygwpPxWqZZYnaKd/tzxtR+fHMYyU60H7CRhipfM
-         jdTvazOiKl7O8AxRh8/pUc1VH+rvrgdhvH7fBQir1u8+W37ZqsnLiCZn/tw9tb4ZE0an
-         WoO6V5PmATmUw4OvMB7wklYuNX7aCZdIz5/XIbcErr5EzSeazwt56a6OzrhE7EV4un9n
-         UgCg==
-X-Gm-Message-State: AOAM5315vlvwlCmgnCc+T5bVnUUe7oQU8ndA0g1HsBrd4IOOjg3NvqyI
-        eG5jhlxqHpKNvd1meZEtrewzIaBmETb9K9WgldA=
-X-Google-Smtp-Source: ABdhPJyQue+EPYQXujReRYFaCZaG1vye0gEDSiwZVbgC6XcUgTgABn4HN+djvxavtoag1/gj8nGgCGcXFM05F1UwtWs=
-X-Received: by 2002:aca:acc5:: with SMTP id v188mr5779183oie.167.1625792330939;
- Thu, 08 Jul 2021 17:58:50 -0700 (PDT)
+        bh=Uc12zShIMOxzXSsUDQTUF/+FFphYZw058UdU/7hHsbA=;
+        b=nhmgHfw67K7WZiFXb7E+mQX5M3Ey6b9UFPHcVtB7gULVWOoTT7/p4lmg2I8sUIgulH
+         Jr3HKkpZV3JYiWqtXybChCgEuSObQKvuO4SgA6Lv1Fj6QKzDELCDIcouDk+qbUBmPogY
+         odpBC6k8go9UsQ0vR1M4qqHmhUfFlh5yGYHhTuANbXNh+btiIxNmMU7HaM/a4wIGjsnB
+         ucXBH3+d0gPbszKsg9RVfDJsmD8EkG8+FR3TbN4srIrz4/t0LUbO/lEJ35MijyDoSvgy
+         N4s78j4KVJoVNNoq2cLmboxaLRVG3aIohnyVcFIwVE5qpt8K89Y9C10ppHdy8crFTvpg
+         q+gg==
+X-Gm-Message-State: AOAM530Ifp3Cvq8DFhkf4KPPwd1DZGNBg8Dlr68IxofKm+bhr39aKCkh
+        80HkCi8ccSQhDEkY9buXAMS+2At4mWHRIMsY9j0=
+X-Google-Smtp-Source: ABdhPJwaMvzdF0EpBq2YJshKcSKL7pP/uos/YfJV8YzvR6Y7VM1dUyS3QvuCUMm22xnvq4Ce8r2U1BqT5NcIm94ASFo=
+X-Received: by 2002:a9d:6d03:: with SMTP id o3mr23208243otp.316.1625792645100;
+ Thu, 08 Jul 2021 18:04:05 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.932.v6.git.1624931502.gitgitgadget@gmail.com>
- <pull.932.v7.git.1624932293.gitgitgadget@gmail.com> <9f31c691af6780f0ea48bdcb5ff6d56b628f1a81.1624932294.git.gitgitgadget@gmail.com>
- <CABPp-BEcELkxaVT1nPca7VL=OcWaMQ4XYsbjNBuw6xbUw9x42w@mail.gmail.com>
-In-Reply-To: <CABPp-BEcELkxaVT1nPca7VL=OcWaMQ4XYsbjNBuw6xbUw9x42w@mail.gmail.com>
+ <pull.932.v7.git.1624932293.gitgitgadget@gmail.com> <717a3f49f97753149d5c435a83b3f1773dd4b1bb.1624932294.git.gitgitgadget@gmail.com>
+In-Reply-To: <717a3f49f97753149d5c435a83b3f1773dd4b1bb.1624932294.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 8 Jul 2021 17:58:39 -0700
-Message-ID: <CABPp-BHwTAKwFiWQ0-2P=_g+7HLK5FfOAz-uujRjLou1fXT3zw@mail.gmail.com>
-Subject: Re: [PATCH v7 10/16] unpack-trees: handle dir/file conflict of sparse entries
+Date:   Thu, 8 Jul 2021 18:03:54 -0700
+Message-ID: <CABPp-BE=qw9pO89hggUFbu=eovfL=7Os5BY8DZNd5Z=qU==wFg@mail.gmail.com>
+Subject: Re: [PATCH v7 15/16] wt-status: expand added sparse directory entries
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -75,164 +74,167 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 7, 2021 at 4:19 PM Elijah Newren <newren@gmail.com> wrote:
+On Mon, Jun 28, 2021 at 7:05 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> On Mon, Jun 28, 2021 at 7:05 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
-> > From: Derrick Stolee <dstolee@microsoft.com>
-> >
-> > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> > ---
-> >  t/t1092-sparse-checkout-compatibility.sh | 25 ++++++++++++++++++++++--
-> >  unpack-trees.c                           |  5 ++++-
-> >  2 files changed, 27 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> > index 3f61e5686b5..4e6446e7545 100755
-> > --- a/t/t1092-sparse-checkout-compatibility.sh
-> > +++ b/t/t1092-sparse-checkout-compatibility.sh
-> > @@ -95,6 +95,19 @@ test_expect_success 'setup' '
-> >                 git add . &&
-> >                 git commit -m "rename deep/deeper1/... to folder1/..." &&
-> >
-> > +               git checkout -b df-conflict base &&
-> > +               rm -rf folder1 &&
-> > +               echo content >folder1 &&
-> > +               git add . &&
-> > +               git commit -m df &&
-> > +
-> > +               git checkout -b fd-conflict base &&
-> > +               rm a &&
-> > +               mkdir a &&
-> > +               echo content >a/a &&
-> > +               git add . &&
-> > +               git commit -m fd &&
-> > +
-> >                 git checkout -b deepest base &&
-> >                 echo "updated deepest" >deep/deeper1/deepest/a &&
-> >                 git commit -a -m "update deepest" &&
-> > @@ -325,7 +338,11 @@ test_expect_success 'diff --staged' '
-> >  test_expect_success 'diff with renames and conflicts' '
-> >         init_repos &&
-> >
-> > -       for branch in rename-out-to-out rename-out-to-in rename-in-to-out
-> > +       for branch in rename-out-to-out \
-> > +                     rename-out-to-in \
-> > +                     rename-in-to-out \
-> > +                     df-conflict \
-> > +                     fd-conflict
-> >         do
-> >                 test_all_match git checkout rename-base &&
-> >                 test_all_match git checkout $branch -- .&&
-> > @@ -338,7 +355,11 @@ test_expect_success 'diff with renames and conflicts' '
-> >  test_expect_success 'diff with directory/file conflicts' '
-> >         init_repos &&
-> >
-> > -       for branch in rename-out-to-out rename-out-to-in rename-in-to-out
-> > +       for branch in rename-out-to-out \
-> > +                     rename-out-to-in \
-> > +                     rename-in-to-out \
-> > +                     df-conflict \
-> > +                     fd-conflict
-> >         do
-> >                 git -C full-checkout reset --hard &&
-> >                 test_sparse_match git reset --hard &&
+> From: Derrick Stolee <dstolee@microsoft.com>
 >
-> Tests look good...
+> It is difficult, but possible, to get into a state where we intend to
+> add a directory that is outside of the sparse-checkout definition. Add a
+> test to t1092-sparse-checkout-compatibility.sh that demonstrates this
+> using a combination of 'git reset --mixed' and 'git checkout --orphan'.
 >
-> > diff --git a/unpack-trees.c b/unpack-trees.c
-> > index d141dffbd94..e63b2dcacbc 100644
-> > --- a/unpack-trees.c
-> > +++ b/unpack-trees.c
-> > @@ -2617,7 +2617,10 @@ int twoway_merge(const struct cache_entry * const *src,
-> >                          same(current, oldtree) && !same(current, newtree)) {
-> >                         /* 20 or 21 */
-> >                         return merged_entry(newtree, current, o);
-> > -               } else
-> > +               } else if (current && !oldtree && newtree &&
-> > +                          S_ISSPARSEDIR(current->ce_mode) != S_ISSPARSEDIR(newtree->ce_mode))
-> > +                       return merged_entry(newtree, current, o);
-> > +               else
-> >                         return reject_merge(current, o);
-> >         }
-> >         else if (newtree) {
+> This test failed before because the output of 'git status
+> --porcelain=v2' would not match on the lines for folder1/:
+>
+> * The sparse-checkout repo (with a full index) would output each path
+>   name that is intended to be added.
+>
+> * The sparse-index repo would only output that "folder1/" is staged for
+>   addition.
+>
+> The status should report the full list of files to be added, and so this
+> sparse-directory entry should be expanded to a full list when reaching
+> it inside the wt_status_collect_changes_initial() method. Use
+> read_tree_at() to assist.
+>
+> Somehow, this loop over the cache entries was not guarded by
+> ensure_full_index() as intended.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  t/t1092-sparse-checkout-compatibility.sh | 33 +++++++++++++++
+>  wt-status.c                              | 51 ++++++++++++++++++++++++
+>  2 files changed, 84 insertions(+)
+>
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index fed0440bafe..df217a2d10b 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -545,4 +545,37 @@ test_expect_success 'sparse-index is not expanded' '
+>         test_region ! index ensure_full_index trace2.txt
+>  '
+>
+> +test_expect_success 'reset mixed and checkout orphan' '
+> +       init_repos &&
+> +
+> +       test_all_match git checkout rename-out-to-in &&
+> +
+> +       # Sparse checkouts do not agree with full checkouts about
+> +       # how to report a directory/file conflict during a reset.
+> +       # This command would fail with test_all_match because the
+> +       # full checkout reports "T folder1/0/1" while a sparse
+> +       # checkout reports "D folder1/0/1". This matches because
+> +       # the sparse checkouts skip "adding" the other side of
+> +       # the conflict.
 
-t1092 still passes if you replace the
-    return merged_entry(newtree, current, o);
-line with
-    die("This line is never hit.");
+The same issue I highlighted last time is still present.  If you
+insert an "exit 1" right here, then run
+    ./t1092-sparse-checkout-compatibility.sh --ver --imm -x
+until it stops, then
+    cd t/trash directory.t1092-sparse-checkout-compatibility/sparse-checkout
+    git ls-files -t | grep folder  # Note the files that are sparse
+    git reset --mixed HEAD~1
+    git ls-files -t | grep folder  # Note the files that are sparse --
+there are some that aren't that should be
+    git sparse-checkout reapply
+    git ls-files -t | grep folder  # Note the files that are sparse
 
-Is it possible that you thought you needed this block but further
-refactoring removed the need?  Or that it is only needed by the later
-ds/commit-and-checkout-with-sparse-index topic (which I haven't yet
-reviewed, because I was reviewing this topic first)?  It seems this
-code change should either be dropped, or moved out to the relevant
-series that uses it.
+Granted, this is a bug with sparse-checkout without sparse-index, so
+not something new to your series.  But since you are using comparisons
+between regular sparse-checkouts and sparse-index to verify
+correctness, this seems problematic to me.
 
-> This seems wrong to me but I'm having a hard time nailing down a
-> testcase to prove it.  The logic looks to me like "if the old tree as
-> nothing in the index at the given path, and the newtree has something,
-> and the index had something staged, but the newtree and staged index
-> entry disagree on the type of the object, do some weird merged_entry()
-> logic on both types of trees that tends to just take the newer I
-> thought but who knows what functions like verify_uptodate(entry) do
-> when entry is a sparse directory...".
+> +       test_sparse_match git reset --mixed HEAD~1 &&
+> +       test_sparse_match test-tool read-cache --table --expand &&
+> +       test_sparse_match git status --porcelain=v2 &&
+> +
+> +       # At this point, sparse-checkouts behave differently
+> +       # from the full-checkout.
+> +       test_sparse_match git checkout --orphan new-branch &&
+> +       test_sparse_match test-tool read-cache --table --expand &&
+> +       test_sparse_match git status --porcelain=v2
+> +'
+> +
+> +test_expect_success 'add everything with deep new file' '
+> +       init_repos &&
+> +
+> +       run_on_sparse git sparse-checkout set deep/deeper1/deepest &&
+> +
+> +       run_on_all touch deep/deeper1/x &&
+> +       test_all_match git add . &&
+> +       test_all_match git status --porcelain=v2
+> +'
+> +
+>  test_done
+> diff --git a/wt-status.c b/wt-status.c
+> index 96db3e74962..0317baef87e 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -657,6 +657,36 @@ static void wt_status_collect_changes_index(struct wt_status *s)
+>         clear_pathspec(&rev.prune_data);
+>  }
 >
-> So, I'm not so sure about this.  Could you explain this a bit more?
->
-> However, I did find a testcase that aborts with a fatal error...though
-> I can't tell if it's even triggering the above logic; I think it isn't
-> because I have an "ignoreme" on both sides of the history.  Here's the
-> testcase:
->
-> # Make a little test repo
-> git init dumb
-> cd dumb
->
-> # Setup old commit
-> touch tracked
-> echo foo >ignoreme
-> git add .
-> git commit -m "Initial"
-> git branch orig
->
-> # Setup new commit
-> git rm ignoreme
-> mkdir ignoreme
-> touch ignoreme/file
-> git add ignoreme/file
-> git commit -m "whatever"
->
-> # Switch to old commit
-> git checkout orig
->
-> # Make index != new (and index != old)
-> git rm ignoreme
-> mkdir ignoreme
-> echo user-data >ignoreme/file
-> git add ignoreme/file
->
-> # Sparsify
-> GIT_TEST_SPARSE_INDEX=0 # GIT_TEST_SPARSE_INDEX is documented as a boolean;
->                         # but the traditional boolean value is ignored and it
->                         # really only cares about set/unset.  Confusing.
-> git sparse-checkout init --cone --sparse-index
-> git sparse-checkout set tracked
->
-> # Check status and dirs/paths in index
-> git status --porcelain
-> test-tool read-cache --table
-> test-tool read-cache --table --expand
->
-> # Run a command that aborts with a fatal error
-> git checkout -m master
-
-It turns out that this testcase I provided still triggers the same
-fatal error if you omit the --sparse-index flag, so it's not a
-sparse-index-specific bug.
-
-So, perhaps it shouldn't hold up this series, but given that a lot of
-your correctness verification in t1092 relies on comparisons between
-sparse checkouts and sparse indexes, it might be worth trying to get
-to the root of this.
+> +static int add_file_to_list(const struct object_id *oid,
+> +                           struct strbuf *base, const char *path,
+> +                           unsigned int mode, void *context)
+> +{
+> +       struct string_list_item *it;
+> +       struct wt_status_change_data *d;
+> +       struct wt_status *s = context;
+> +       struct strbuf full_name = STRBUF_INIT;
+> +
+> +       if (S_ISDIR(mode))
+> +               return READ_TREE_RECURSIVE;
+> +
+> +       strbuf_add(&full_name, base->buf, base->len);
+> +       strbuf_addstr(&full_name, path);
+> +       it = string_list_insert(&s->change, full_name.buf);
+> +       d = it->util;
+> +       if (!d) {
+> +               CALLOC_ARRAY(d, 1);
+> +               it->util = d;
+> +       }
+> +
+> +       d->index_status = DIFF_STATUS_ADDED;
+> +       /* Leave {mode,oid}_head zero for adds. */
+> +       d->mode_index = mode;
+> +       oidcpy(&d->oid_index, oid);
+> +       s->committable = 1;
+> +       strbuf_release(&full_name);
+> +       return 0;
+> +}
+> +
+>  static void wt_status_collect_changes_initial(struct wt_status *s)
+>  {
+>         struct index_state *istate = s->repo->index;
+> @@ -671,6 +701,27 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
+>                         continue;
+>                 if (ce_intent_to_add(ce))
+>                         continue;
+> +               if (S_ISSPARSEDIR(ce->ce_mode)) {
+> +                       /*
+> +                        * This is a sparse directory entry, so we want to collect all
+> +                        * of the added files within the tree. This requires recursively
+> +                        * expanding the trees to find the elements that are new in this
+> +                        * tree and marking them with DIFF_STATUS_ADDED.
+> +                        */
+> +                       struct strbuf base = STRBUF_INIT;
+> +                       struct pathspec ps = { 0 };
+> +                       struct tree *tree = lookup_tree(istate->repo, &ce->oid);
+> +
+> +                       ps.recursive = 1;
+> +                       ps.has_wildcard = 1;
+> +                       ps.max_depth = -1;
+> +
+> +                       strbuf_add(&base, ce->name, ce->ce_namelen);
+> +                       read_tree_at(istate->repo, tree, &base, &ps,
+> +                                    add_file_to_list, s);
+> +                       continue;
+> +               }
+> +
+>                 it = string_list_insert(&s->change, ce->name);
+>                 d = it->util;
+>                 if (!d) {
+> --
+> gitgitgadget
