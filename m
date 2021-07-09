@@ -2,86 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC6A1C07E99
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 06:11:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD689C07E99
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 06:20:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 949A361279
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 06:11:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AD6B5613FC
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 06:20:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229979AbhGIGO3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Jul 2021 02:14:29 -0400
-Received: from mail-ej1-f53.google.com ([209.85.218.53]:44743 "EHLO
-        mail-ej1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbhGIGO3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Jul 2021 02:14:29 -0400
-Received: by mail-ej1-f53.google.com with SMTP id he13so14062517ejc.11
-        for <git@vger.kernel.org>; Thu, 08 Jul 2021 23:11:46 -0700 (PDT)
+        id S229954AbhGIGWp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Jul 2021 02:22:45 -0400
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:40634 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229494AbhGIGWp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Jul 2021 02:22:45 -0400
+Received: by mail-ed1-f49.google.com with SMTP id t3so12108470edc.7
+        for <git@vger.kernel.org>; Thu, 08 Jul 2021 23:20:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=JnTLimjomCIlKIXC9lmFZjZgN6hoQy0h6Dk47YTE8CQ=;
-        b=jRegAuKCCz+MLSao4bQGwYVhnGnBDObNjxpwD9Deh1aB4p+DlErHfvotzMy2G+cER4
-         Zj0SW644pZ00t4SMQQ6tcXnylS9l15TNPkIVW0QNJDNo4Aq55rkYVq5OhDH1VI9y4FS6
-         S9+/i8jb6L8tpthWO9H+YJT8GK7NvAX1+8zIwe5DYEfBFgGVJO6qpQX/rrfwCKWcjAYM
-         oQ1mkE1BYS7l31HlMa+G7esOJmayUEHtrrXSwbjzF0H/0WLX68jB+W5axK172zz0OQ3P
-         lcKHBGXsa2Qis+rjVE2gCYO3ragrw553lJjSAo8HrkXMABpH2GlZEmhztobnaYQ/sp9E
-         HfPw==
-X-Gm-Message-State: AOAM530mqcJ1zvYnwxisoOrG1OKPbsQgEcibcCTV52cCPhBhG/FOb4SO
-        cQ8N6B0qVEM6vYFu7oa0TvtYMm7FXLEOGuBoE88=
-X-Google-Smtp-Source: ABdhPJw0zUHfreAL02UuSawXawMhDBGLB1V5qrmq+cmFXYNZxuhu5r7vV+QJjiSdb+3rKJmkY8KjQpIi71nNgQga1+g=
-X-Received: by 2002:a17:906:f9c5:: with SMTP id lj5mr14211609ejb.482.1625811105511;
- Thu, 08 Jul 2021 23:11:45 -0700 (PDT)
+        bh=sf4AAZJGHkYGGkh8mmRNq8T1R5wO7lgJjiECJk/AL84=;
+        b=f1sisYoh0RZTqkEY7r6/HW8NCroHSjVarv31hwGo+UyonZxp6gZABR/s7VlsvXJ2xl
+         15/Xkw55TmzEczMfzstdH/YLJ2WBLSnjOIP4XpmJoBc0UyrbMYW+mz/kttSTu1KPSEFK
+         N5JHbh1mfzb2eLDeDwLx0RW2WqaLkm0ybUAYHKg4Tit3SXSqn+4sdJPBBZbe0hcBYnR+
+         tWgZNMMSZ6v62A4QOq9fvDa9BwbpBZDeHx5RfoGrVqCFlIKKi0x3eW5iw8BvcsIg7JPE
+         vp/qp1dWItmIOlKu6pnEWHiAljgsrVouuZHRFEDDZurBM/ZVAce71lcpqSENkJtc2GfP
+         sz4A==
+X-Gm-Message-State: AOAM533ilzQ5Fk6ZceLf5dTjBE1HOZpayFHHDIpmEft20EejlaKCtIOn
+        eHbs5kxqkQvJG+JeLG8wFszPmA5v+hD+dBJaDHs=
+X-Google-Smtp-Source: ABdhPJyBYdT8ZotATtGtbf48YqtL36IGMWkdNeo1aEKeHfSzffjIX5/Dg1/P79DcagU2wPmrWeBUc1Y5KhmHGsNYKJY=
+X-Received: by 2002:a05:6402:151:: with SMTP id s17mr43316263edu.233.1625811600871;
+ Thu, 08 Jul 2021 23:20:00 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.992.git.1625550451038.gitgitgadget@gmail.com>
- <CAPig+cSsPrQrP9xk8M8H339_NpYqKh1okeo1V-fAJ2zk3QeOjQ@mail.gmail.com> <xmqq7di3jkki.fsf@gitster.g>
-In-Reply-To: <xmqq7di3jkki.fsf@gitster.g>
+ <pull.992.v2.git.1625759443.gitgitgadget@gmail.com> <30196cc93697cd4a6a6881dcbb1073d19e96d8a0.1625759443.git.gitgitgadget@gmail.com>
+In-Reply-To: <30196cc93697cd4a6a6881dcbb1073d19e96d8a0.1625759443.git.gitgitgadget@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 9 Jul 2021 02:11:34 -0400
-Message-ID: <CAPig+cQbBPGN+Dcvmy+ZAZeKLpffRrN4-2PNjRHzDHj56axcJg@mail.gmail.com>
-Subject: Re: [PATCH] worktree: teach `add` to accept --reason <string> with --lock
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stephen Manz via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Stephen Manz <smanz@alum.mit.edu>
+Date:   Fri, 9 Jul 2021 02:19:50 -0400
+Message-ID: <CAPig+cRiEYcz8-F0FzQRetF9UoN1Di099JVgCz0920kQ3a+BwQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] worktree: default lock string should be marked
+ with `_()` for translation
+To:     Stephen Manz via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Stephen Manz <smanz@alum.mit.edu>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 6, 2021 at 3:42 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> >>  --reason <string>::
-> >> +       With `lock` or with `add --lock`, an explanation why the working tree is locked.
-> >
-> > I realize that you're mimicking the interface of `git worktree lock`
-> > which accepts an optional `--reason`, but I'm wondering if the
-> > user-experience might be improved by instead allowing `--lock` to
-> > accept the reason as an optional argument. For instance:
-> >
-> >     git worktree add --lock='just because' ...
->
-> Thanks for thinking aloud, but I'd prefer the interface as posted,
-> simply because there is one less thing for users to remember.  The
-> justification to lock is given with the --reason=<why> argument no
-> matter how you acquire the lock on a worktree.
+On Thu, Jul 8, 2021 at 11:50 AM Stephen Manz via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> @@ -305,7 +305,7 @@ static int add_worktree(const char *path, const char *refname,
+>         if (!opts->keep_locked)
+>                 write_file(sb.buf, "initializing");
+>         else
+> -               write_file(sb.buf, "added with --lock");
+> +               write_file(sb.buf, _("added with --lock"));
 
-My one bit of pushback is that, although the meaning of `--reason` is
-plenty clear in the context of `git worktree lock`, it may become
-ambiguous in the context of `git worktree add` if worktrees ever grow
-additional attributes/features which are also accompanied by
-"reasons". That possibility suggests that this particular
-reason-giving option of `git worktree add` ought to be named
-`--lock-reason`, but `git worktree add --lock --lock-reason=<reason>`
-feels clunky and redundant, which is why I was wondering if `git
-worktree --lock[=<reason>]` would be a better (and more convenient)
-UI.
+Makes perfect sense, though the "initializing" string in the `then`
+arm probably deserves the same treatment:
 
-I'm questioning the UI choice now so we can avoid backpedalling later
-on, if it ever comes to that, but perhaps my concern is unfounded.
-(Indeed, I haven't been able to come up with cases which would make
-`--reason` ambiguous.)
+    write_file(sb.buf, _("initializing"));
