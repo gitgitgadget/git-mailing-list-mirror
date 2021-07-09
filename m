@@ -2,101 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17E55C07E99
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 19:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2F26C07E99
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 20:17:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EB44B600D3
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 19:56:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A7F68613AB
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 20:17:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229546AbhGIT70 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Jul 2021 15:59:26 -0400
-Received: from mail-qk1-f177.google.com ([209.85.222.177]:42975 "EHLO
-        mail-qk1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbhGIT7Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Jul 2021 15:59:25 -0400
-Received: by mail-qk1-f177.google.com with SMTP id e14so10634631qkl.9
-        for <git@vger.kernel.org>; Fri, 09 Jul 2021 12:56:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=D6kJRzKMrJ9yL5DGGxcawZh1sBY6PSm+9ruh3mRgyx8=;
-        b=FqgN4fDDGmUyCnNGxUGPlXlyDIWq09wtaJXVsu2tqTKWSKQcudDV72ZSjOadPVdoPz
-         c/PZnC6tmj4bp7a24szAiu5SoyoLXAulNZjBQ29Lz2CVzdjOG4ytc85dGwGRcK81Av/K
-         00mD2Ysym9WmFuoLaT6yEWLaTDLAuqRuMVIYhquAuOrdN7BHKxl/5A83MGJkpnqSqxZ/
-         6rFgZrKk2zX0nbHegSTqyJoO1xTIHEkm8EO1+UBmLdrHYL9g5MCRnMVCh5WWiiuO55NL
-         103hr18gEJ9iSl2qt8FP5W3FOtsXwiczKCKjuA9AuB8B9V3upM48JUF/Sc9424SMMIsv
-         S2ng==
-X-Gm-Message-State: AOAM531DD0BwzGJP1GLZNGGuCnkabE36v1r2f8vCSxdLgZIT3crMd7BN
-        3qtrvP0FaLYIWYOObun7jo5N21HN4oKEuQ==
-X-Google-Smtp-Source: ABdhPJx0nPrD52Vx/kwYiSfGWYpA/9YsMwD6HK2tBDO9B/NKOrMtr4txekmR98KE3uj1JIiDy8SedQ==
-X-Received: by 2002:a37:644f:: with SMTP id y76mr16338362qkb.194.1625860601133;
-        Fri, 09 Jul 2021 12:56:41 -0700 (PDT)
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com. [209.85.222.169])
-        by smtp.gmail.com with ESMTPSA id i9sm2186958qtp.50.2021.07.09.12.56.40
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jul 2021 12:56:40 -0700 (PDT)
-Received: by mail-qk1-f169.google.com with SMTP id s4so10610741qkm.13
-        for <git@vger.kernel.org>; Fri, 09 Jul 2021 12:56:40 -0700 (PDT)
-X-Received: by 2002:a37:8bc7:: with SMTP id n190mr39054127qkd.113.1625860600426;
- Fri, 09 Jul 2021 12:56:40 -0700 (PDT)
+        id S230180AbhGIUUA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Jul 2021 16:20:00 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59866 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229506AbhGIUUA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Jul 2021 16:20:00 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 28C1CE32DF;
+        Fri,  9 Jul 2021 16:17:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=GUHKWccZ4SaO
+        QLSDIbw9vLTdObMqD61AQ1cQgE8efE8=; b=tbhnNIB0kfE7/s9LQ30OH0ypPXqR
+        ZRAx6Q8Th4cvJW0u0PAEnKG89CWoVU9d0Ha4WdQMmrZ43EZyHV2KGuTIb7RUxi3r
+        jR5JvYDbW5daO8RWt74fAt0WW1WT2OuqCivg6wkHkMXHEYr/OH4lhGHhI9PFDiQ8
+        ZDru+M9c6H8hg7U=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F42EE32DE;
+        Fri,  9 Jul 2021 16:17:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 85144E32DC;
+        Fri,  9 Jul 2021 16:17:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v4 2/5] revision.h: refactor "disable_stdin" and
+ "read_from_stdin"
+References: <cover-0.4-00000000000-20210621T150651Z-avarab@gmail.com>
+        <cover-0.5-00000000000-20210709T105850Z-avarab@gmail.com>
+        <patch-2.5-630feb06650-20210709T105851Z-avarab@gmail.com>
+Date:   Fri, 09 Jul 2021 13:17:14 -0700
+In-Reply-To: <patch-2.5-630feb06650-20210709T105851Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 9 Jul
+ 2021 13:06:13 +0200")
+Message-ID: <xmqqv95j5jjp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20210706210317.706313-1-me@avishay.dev> <20210706210317.706313-3-me@avishay.dev>
- <xmqqbl7fgkvu.fsf@gitster.g> <CAJ-0Osy2RLiZmi9m=W=rpK6Bh5uXk-psO-BTb18a8COrsQANUw@mail.gmail.com>
- <xmqqo8bb769a.fsf@gitster.g> <CAJ-0Osx4A0NaY9f5Z-6_H2rfW-XwyDmW_7+OxKFt7WJaWOixSQ@mail.gmail.com>
- <xmqqfswn72jj.fsf@gitster.g>
-In-Reply-To: <xmqqfswn72jj.fsf@gitster.g>
-From:   Avishay Matayev <me@avishay.dev>
-Date:   Fri, 9 Jul 2021 22:56:28 +0300
-X-Gmail-Original-Message-ID: <CAJ-0OsxSXrgQE-Kn-DdbPTVZJ2V9+yiRug5mSyNQ096O+3fYww@mail.gmail.com>
-Message-ID: <CAJ-0OsxSXrgQE-Kn-DdbPTVZJ2V9+yiRug5mSyNQ096O+3fYww@mail.gmail.com>
-Subject: Re: [PATCH 2/3] Allow isatty to be overriden with GIT_FORCE_TTY
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, code@tpope.net
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A7217F56-E0F2-11EB-9CDA-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 9 Jul 2021 at 21:41, Junio C Hamano <gitster@pobox.com> wrote:
->
-> If we want to force output to always go through the pager, we should
-> call it "force pager", not "force tty".  If we want to always show
-> progress bar no matter where the output goes, we should call it
-> "force progress", not "force tty".  These should be controllable
-> independenty, even though it is OK to have catch all "force
-> everything" for convenience.
->
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-But using "force pager" or "force progress" is exactly the same as
-acknowledging that git uses tty for the output, as you'd have to know
-that the pager wouldn't open because there is no tty. The original
-implementation should've been to implement just the "force pager"
-logic but we've realised there are more places where git acts in a
-different way because of tty and I don't really see a reason those
-should be controlled individually, it will just create too many variables
-when the reason for their existence is the same, the absence of a tty.
+> +	/*
+> +	 * Did we read from stdin due to stdin_handling =3D=3D
+> +	 * REV_INFO_STDIN_CONSUME_ON_OPTION and seeing the --stdin
+> +	 * option?
+>  	 */
+> -	int read_from_stdin;
+> +	int consumed_stdin:1;
 
-> There is no inherent reason why the output has to be passed through
-> the pager when it goes to tty.  It merely is how we happen to have
-> designed the heuristics.  We don't want to carve it in stone and
-> expose it on end-users with a poorly chosen name.  Also, we do not
-> want to tie multiple features unnecessarily.
+Will make this into "unsigned int" while queuing, as 1-bit signed
+bitfield would not make much sense.
 
-I mean, git is pretty CLI centered, it isn't a library, so I'd say there is a
-pretty strong core reason for this design (at least that's how I see git).
-Unfortunately, when we want to use git in its not really CLI-like way, it acts
-unexpectedly.
-
-Moreover, I really don't think this feature is intended for the
-regular git user,
-it will mostly help Fugitive or other programs that are built upon git's core,
-and those are most likely have to be familiar with git's implementation in
-one way or another.
-
-Avishay
