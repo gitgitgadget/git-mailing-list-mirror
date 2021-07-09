@@ -7,123 +7,139 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10853C07E96
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 01:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5DF0C07E96
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 01:33:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED0C361468
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 01:26:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A3D06613B2
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 01:33:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229953AbhGIB2n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Jul 2021 21:28:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53960 "EHLO
+        id S229953AbhGIBgS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Jul 2021 21:36:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229631AbhGIB2n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jul 2021 21:28:43 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71039C061574
-        for <git@vger.kernel.org>; Thu,  8 Jul 2021 18:26:00 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso7778245otu.10
-        for <git@vger.kernel.org>; Thu, 08 Jul 2021 18:26:00 -0700 (PDT)
+        with ESMTP id S229631AbhGIBgS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jul 2021 21:36:18 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70DFCC061574
+        for <git@vger.kernel.org>; Thu,  8 Jul 2021 18:33:35 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id r135so12105626ybc.0
+        for <git@vger.kernel.org>; Thu, 08 Jul 2021 18:33:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qvbddtiQHm1KbcLrgxzagExBjmXzDlD7kT8yE3nfdX8=;
-        b=o1K52XuKsg8qjiLd/uwqM8Ty1+iN9oUr+iUkFEVZMNaIb0+jSBWVKsr/WCnJxVTczQ
-         ELwt7SI/+v6Wu6iKkn83FR5HTpwI62CK0oUoAGxUgnuuYoHzJguxuby5C3jJLAYnzYqB
-         zoQ7USjnYDn4yRsyI+8B7zmo7/7TE3J2TiMDvQLUsTHiVakZjWyWOrwKgtZI4Wi+W/gc
-         n+gxitrtmsRLHJRdVjDx/fXk8NZxk6oixxq0jblKwv5JCOV2EEKV2gOUA91BwuJZ4CJI
-         aF+vYyG7KQ96T6ybo7uXxm9M6uqyAHhc71rWpbfALbG3GV/6x/gOG6eCLzTT1E9cOHl4
-         kKkg==
+         :content-transfer-encoding;
+        bh=KweNPCa11+DwvRI62HmJnBIWCufFpd31LE3zwTMLsTY=;
+        b=sb2N3xIA/osu3YeCZt55HHoM+jCa7i9VpbDN/KupYTQqUIxl+xqd+9zSaF9CvI4jZO
+         eFEPE1LGV1PGjYpBY5y89WsI3mdu+Dd5ibS5cO1BtJsIXsg/fiyvSl5gNvhTT37ENG07
+         joyh0kImrWF2lbAV19ee+/zz4EBOUh14RfTrkdcI4+2M7twr8KOgU2NducGpzLmR7V6s
+         IAZTxqJ6ahrN8PZ0UbeXfrD5l0tYkYn6r/GtFtY41PVth1J6y3p7cMautzum8AdlXbc4
+         JU4tGj8eOHeLfyeQvxORH8olZuY9+oiTHziO3XNKQJsIa6g/PbkLPpbIp8NtChtWi2td
+         EXRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qvbddtiQHm1KbcLrgxzagExBjmXzDlD7kT8yE3nfdX8=;
-        b=ArXILqJ/jn35zVKOqWCq0qg3zO85m/oeHmMTmVAyuVg3bwXt47Sf0OezvtMIw5Y5l/
-         mvs5FcR5FZqonBURwSrLtR5pfCh8CEOCOMSQc7TSUHNjrpMJETlUDczdjfdTbt/mPK8M
-         meTUv50lFGDt+qM4e7KiJpi+gngr9zeSzIW+FmUVUZY39iKf1B0ivIPuEg3eE9hjJrjg
-         uSjr26NmgXs3R//QDbAVxGHgfe+b76CnW0L16QZWqRrIlgDi6GI3bmmo9OX0DYIO+fey
-         K08c3Jg19UxXBlqGuHFoP5F+HtZRX0EvK8Yt4Ofom1v7WUHdXlM+8D95XuiVDBMac4/a
-         HCLQ==
-X-Gm-Message-State: AOAM532iJ4SitLC2WMTaT3hnG+UPUb2dkoX9fUK+ew8+LPBWnqoyd9Lr
-        XqCIHxuU7ku7XFaOzKJddTULjwtSV9PSxIPMOEw=
-X-Google-Smtp-Source: ABdhPJzY0F6kpHR8HRTJYlul5147B/w28uEC15pEYrci0zvB1tuDgZX8z4gQZLILdnM2pqRCkKq0FMKJhHQiu/GGs6U=
-X-Received: by 2002:a9d:7c92:: with SMTP id q18mr26356595otn.345.1625793959462;
- Thu, 08 Jul 2021 18:25:59 -0700 (PDT)
+         :message-id:subject:to:content-transfer-encoding;
+        bh=KweNPCa11+DwvRI62HmJnBIWCufFpd31LE3zwTMLsTY=;
+        b=tsqew4xmWBIxM2YNiYpYh/Q4SyJFkA1UNeZv6/hC2C5sB0wkouNkrxeForW7D4arpa
+         Ibb7useEMZGgj6S6qz7vaRu2NMtcXIZrJeWqVV3A7JInEwE9UPWd3K8geFUXb7wrL7dU
+         XvIFUg7OQn43F8TgpWUZOHnH6w3zpPqCHoF+jjE8k+bMRhZxRs0brKQ3BrSZOkahFIgn
+         qlRgp/BcK8KmDcHN2pNHrABmr2dOmR13x7MPA5cftFsId8S0bKuDnNXe5qKJD5tPZiVm
+         /f+KSgk2QkoCSw7tQZ48RLScSYvnJLH8hZqY0yOvCxNN5Y0m+Gsv/dzXXV1zQGPjPBan
+         8OsA==
+X-Gm-Message-State: AOAM531ilmazC00b5UvygAFzDo/W9gaUMppm5gSq8u61isFpaAJ5uIT3
+        a6W1RcTjIOUTsTNuxEC1FMokGj/PP3zvscJDB1M=
+X-Google-Smtp-Source: ABdhPJyHBdD+KpiomxeME3/ShS/xAmcw9SZt9LBL4fgoYhfGse2MMszrLzwUmQGuKsr2RTMFMFhWiudBjLV6geLDG0A=
+X-Received: by 2002:a25:be0f:: with SMTP id h15mr43731306ybk.520.1625794414663;
+ Thu, 08 Jul 2021 18:33:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqq8s2ga19f.fsf@gitster.g>
-In-Reply-To: <xmqq8s2ga19f.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 8 Jul 2021 18:25:48 -0700
-Message-ID: <CABPp-BFZmY4jwXLHMgikvgXP7RtPhS=abGyVACsKn+BXWyCybg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2021, #02; Thu, 8)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <20210708150316.10855-1-worldhello.net@gmail.com> <YOcvaFL7+6qcIOUa@camp.crustytoothpaste.net>
+In-Reply-To: <YOcvaFL7+6qcIOUa@camp.crustytoothpaste.net>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Fri, 9 Jul 2021 09:33:23 +0800
+Message-ID: <CANYiYbGYzbMoU_2wb4duppASoYUjGLsJsr692Xe3GaVBOXUsBA@mail.gmail.com>
+Subject: Re: [PATCH] revision: allow pseudo options after --end-of-options
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 8, 2021 at 3:33 PM Junio C Hamano <gitster@pobox.com> wrote:
+brian m. carlson <sandals@crustytoothpaste.net> =E4=BA=8E2021=E5=B9=B47=E6=
+=9C=889=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8A=E5=8D=881:02=E5=86=99=E9=81=93=
+=EF=BC=9A
 >
-> * en/ort-perf-batch-14 (2021-07-01) 7 commits
->  - merge-ort: restart merge with cached renames to reduce process entry cost
->  - merge-ort: avoid recursing into directories when we don't need to
->  - merge-ort: defer recursing into directories when merge base is matched
->  - merge-ort: add a handle_deferred_entries() helper function
->  - merge-ort: add data structures for allowable trivial directory resolves
->  - merge-ort: add some more explanations in collect_merge_info_callback()
->  - merge-ort: resolve paths early when we have sufficient information
+> On 2021-07-08 at 15:03:16, Jiang Xin wrote:
+> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> >
+> > Options and revisions can be seperated by the option "--end-of-options"
+> > by introducing commit 19e8789b23 (revision: allow --end-of-options to
+> > end option parsing, 2019-08-06).  The following command will show
+> > revisions which have changes on file "bar" on a branch named "--foo":
+> >
+> >     git rev-list --oneline --end-of-options --foo -- bar
+> >
+> > If we want to see revisions between two revisions (rev1 and rev2), we
+> > can use the following command:
+> >
+> >     git rev-list --oneline --end-of-options rev1..rev2 --
+> >
+> > We know that "rev1..rev2" is a shorthand for "rev2 --not rev1", but
+> > we can not use the longer expression with option "--not" after the
+> > "--end-of-options" option.  This is because the parser will not consume
+> > revision pseudo options after seeing "--end-of-option".
+> >
+> > Allow parsing revision pseudo options after "--end-of-options", the
+> > following command is valid:
+> >
+> >     git rev-list --oneline --end-of-options rev2 --not rev2 --
 >
->  Further optimization on "merge -sort" backend.
->
->  Reviews?
+> I don't think we want to do this.  The goal of --end-of-options is to
+> prevent parsing all future items as options, so if someone specifies a
+> revision starting with a dash, we don't end up with it being interpreted
+> as an option.
 
-Go ahead and mark this as expecting a re-roll.  While no reviews have
-come in yet, I was writing up a blog post about it and discovered one
-small issue I'd like to correct.
+New test case in t6000 covered this case. Branch "--output=3Dyikes"
+which starts with a dash is used as revision after the option
+"--end-of-options", and it won't be interpreted as an option.
 
-> * ds/commit-and-checkout-with-sparse-index (2021-06-28) 5 commits
->  - checkout: stop expanding sparse indexes
->  - sparse-index: recompute cache-tree
->  - commit: integrate with sparse-index
->  - p2000: compress repo names
->  - p2000: add 'git checkout -' test and decrease depth
->  (this branch uses ds/status-with-sparse-index.)
->
->  "git checkout" and "git commit" learn to work without unnecessarily
->  expanding sparse indexes.
->
->  Comments?
+    test_expect_success 'parse pseudo option "--not" after "--end-of-option=
+s"' '
+        cat >expect <<-EOF &&
+        > three
+        EOF
+        git log --pretty=3D"%m %s" --end-of-options \
+                HEAD --not --output=3Dyikes -- \
+                two/three >actual &&
+        test_cmp expect actual
+    '
 
-Will review soon, now that I've finished reviewing the latest round of
-the dependent series.
+But for the original implementation, because pseudo revision options
+(--branches, --tags, --not, ..., etc) can not be used after the
+"--end-of-options" option, we have to put "--end-of-options" at the
+end of revisions, such as:
 
-> * ds/status-with-sparse-index (2021-06-28) 16 commits
->  - fsmonitor: integrate with sparse index
->  - wt-status: expand added sparse directory entries
->  - status: use sparse-index throughout
->  - status: skip sparse-checkout percentage with sparse-index
->  - diff-lib: handle index diffs with sparse dirs
->  - dir.c: accept a directory as part of cone-mode patterns
->  - unpack-trees: handle dir/file conflict of sparse entries
->  - unpack-trees: unpack sparse directory entries
->  - unpack-trees: rename unpack_nondirectories()
->  - unpack-trees: compare sparse directories correctly
->  - unpack-trees: preserve cache_bottom
->  - t1092: add tests for status/add and sparse files
->  - t1092: expand repository data shape
->  - t1092: replace incorrect 'echo' with 'cat'
->  - sparse-index: include EXTENDED flag when expanding
->  - sparse-index: skip indexes with unmerged entries
->  (this branch is used by ds/commit-and-checkout-with-sparse-index.)
->
->  "git status" codepath learned to work with sparsely populated index
->  without hydrating it fully.
->
->  Will merge to 'next'?
+    git log --pretty=3D"%m %s" rev1 --not rev2 rev3 rev4 \
+            --end-of-options -- path/file
 
-Not quite yet.  The series is starting to look really good, but I did
-find some issues in my review here:
-https://lore.kernel.org/git/CABPp-BF2BLQm6864m+esquJ7og3fWHvTZeX_R-y4pnx9ApZ6XA@mail.gmail.com/
+We can see from the above command, the option "--end-of-options" is
+immediately followed by a dashdash. That is very strange.  DashDash is
+designed to separate pathspecs from args, and "--end-of-options" is
+designed to separate revisions from options. But because of the pseudo
+revision options, "--end-of-options" is meaningless for commands
+calling "setup_revisions()".
+
+Yes, "--end-of-options" must be used if there is a revision which
+starts with dash, such as branch "--output=3Dyikes" in t6000. That's
+even stranger, for we have to write  command in the middle of
+revisions like this:
+
+    git log --pretty=3D"%m %s" rev1 --not rev2 rev3 \
+            --end-of-options --output=3Dyikes -- path/file
+
+I know "rev1..rev2" and "rev2 ^rev1", but I prefer to use "rev1 --not
+rev2 rev3" instead of "rev1 ^rev2 ^rev3".
