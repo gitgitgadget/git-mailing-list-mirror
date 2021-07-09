@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-16.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC235C07E99
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 10:16:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6051C07E9B
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 10:16:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C88C2613D1
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 10:16:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C82A3613D6
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 10:16:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232119AbhGIKTg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Jul 2021 06:19:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59158 "EHLO
+        id S232126AbhGIKTh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Jul 2021 06:19:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232040AbhGIKTc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Jul 2021 06:19:32 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2910EC0613E5
-        for <git@vger.kernel.org>; Fri,  9 Jul 2021 03:16:48 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id k4so5141787wrc.8
-        for <git@vger.kernel.org>; Fri, 09 Jul 2021 03:16:48 -0700 (PDT)
+        with ESMTP id S232117AbhGIKTd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Jul 2021 06:19:33 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5128DC0613DD
+        for <git@vger.kernel.org>; Fri,  9 Jul 2021 03:16:49 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id f17so11435497wrt.6
+        for <git@vger.kernel.org>; Fri, 09 Jul 2021 03:16:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6E+7j7uMGkUkVH9Qm7opifl74sbuP3XQCR7dknmh8pM=;
-        b=RtTAnn1E6LVNkPlARHW8qLRn0crMCd4JOrkwLsJDBys5YFKwl2k6hIUcc7ZAMqy4AP
-         EoUgr1UHUDG1GdFipQr6nWeB/i0AmOKr2HL2TnEx4EH2brYoidAL8z0A1MWiH8EDYtJR
-         FfHgr2NAwPS0tl73acPPeFGU348GIm+Wt4dwJQ+v0GyrNefzEG5V9T4Pgsefwiah17PK
-         2D4Ff7/qIm/LvbDYhRsghvaJqPt00E40FT1rL2YPGD4XzK1KIzIfi3W0hXTBoXr1UHi4
-         UnUGAnAGo93TlSHfTKUTCA7sRDtD6CBc816SDtBMNpjb6QisK6dJJ76U2lsjmraqXFZb
-         gxVg==
+        bh=QGppb+d/VHu5BUNN3vzbVgb9BGZUMWwxkQxzX6seH7c=;
+        b=WP/2P2TosoFGREIO3e4r5vpegvQgdnp66J8PAYKtdiSTE6JVgAYNnnFmw9VufyBol0
+         enZKZg2GHrle7bsmfY+G0fGyuD3/WD3yoqlKT8YAJFkLoqfYdY7RhpJ7Uny9JlJDLbDA
+         G2zFNrvbnQms0S5oDskwybmise1iZ3YPFCPn5EsSROHTFOF4YC2wI3uxDKoSqz87RgwV
+         Y22Y00L6quY0qOXLknbJ2TdK0Hzkl4BJoyXSkIkBfTzElYIoEStc6kHqwZqNNGEVCs25
+         vbw8lD+DTwGKkstpKjpTvsNi+71HLEZTwn4pPFARHVLVP1ISGrbUoRolqh8KudMuRrRl
+         22hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6E+7j7uMGkUkVH9Qm7opifl74sbuP3XQCR7dknmh8pM=;
-        b=S8cvZmybH2T+Uppvwuka6Dn02WW20v1phfLKgCVUC/jJr1qz6aNQt6DyuRnhorfRDT
-         By2M4NVLclhIBlbLukqymeXCxdGZZd2fXA8x2d9DOWBMUxQwVpYf2CoVttj2Vp7xd73Y
-         PNtCeFB6RWCbDhMZ3fUgGCEEAUsBkQ8WFWKYOhDX7wfcrQUNoW6aAK9U8x7s1cg/sKJj
-         FDSA+f1gQZ2XlqjDyTa9q8Xj2rJUSr1fc3zNCXIJ6LYZYJ/BR7ul+SEUjyyVV7APJv/+
-         bL6C4Vdx5eRl4o+LJoYui0giA/BAgXGrdcp+Q9w0jycWDB32ZBwhOLROiApv/nO8JLEL
-         ZPpg==
-X-Gm-Message-State: AOAM533DV7M8BzUbQXgCUixkXfNRiN1ZxMrFcVcoanfw71eXu4Aieat5
-        xXQ+aQKOslFqkHE9ub/WoL+AG0b8BxFnmA==
-X-Google-Smtp-Source: ABdhPJwx+REPBDxGMXxcs2S5serdGtA73/fbTZ/H1+9RJOsmb4gh9TxCVwVu5kVJo3UjNcAE5ZR+CQ==
-X-Received: by 2002:a5d:4492:: with SMTP id j18mr39780544wrq.151.1625825806533;
-        Fri, 09 Jul 2021 03:16:46 -0700 (PDT)
+        bh=QGppb+d/VHu5BUNN3vzbVgb9BGZUMWwxkQxzX6seH7c=;
+        b=Ds2+R/6wiN4/T2G52Y4Ci5p4RaI9VbjgQP6Z0emg7gQrdIJtxGfST4eDJDztFBC/Rj
+         /X+WjvFud6Gg2f44m96fdGQ/m3CohbM8CFARfi70NZ5i81rqSlibYVdkSi3aAQzEOm8o
+         qfhiRivtpuw3VssbyDKECpPivhjLaGcHAg5zAEW53+E2qk7AGirCqXf3Z/zgtdxodXoP
+         HnzU+1ITpTR7JCLfc68HoWy2YYYUkhnvnQ+JJJQGilRLcwPNwbBE2HKy0ijS3iR2GXFW
+         +qmwZefA/swghEFqVt8tnIvDbURpr8lq49fMk7z5UtdVZOw5A0tkltyHmZKM6E+j9FxA
+         /VIQ==
+X-Gm-Message-State: AOAM533rWxhKlL61ZunzcgnjEsImBEtIWyQ/+LZyJOTiKr32jxfeaE7x
+        MGgI2AW5HrcN3MTa5WS/BHkUY2Fr+Edkqw==
+X-Google-Smtp-Source: ABdhPJzxGByRO+LREcd7/1YVdtsSzOtCZGcG9JCEilra+BWWYSEtZs3gQ6ZzwEfCmS4GUeb1E1Frcg==
+X-Received: by 2002:a05:6000:231:: with SMTP id l17mr23756904wrz.40.1625825807690;
+        Fri, 09 Jul 2021 03:16:47 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f5sm4878498wrg.67.2021.07.09.03.16.45
+        by smtp.gmail.com with ESMTPSA id f5sm4878498wrg.67.2021.07.09.03.16.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jul 2021 03:16:45 -0700 (PDT)
+        Fri, 09 Jul 2021 03:16:46 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 1/2] pack-objects tests: cover blindspots in stdin handling
-Date:   Fri,  9 Jul 2021 12:13:47 +0200
-Message-Id: <patch-1.2-8a4d4b820e7-20210709T101015Z-avarab@gmail.com>
+Subject: [PATCH v2 2/2] pack-objects: fix segfault in --stdin-packs option
+Date:   Fri,  9 Jul 2021 12:13:48 +0200
+Message-Id: <patch-2.2-c7315f2b378-20210709T101015Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.636.g43e71d69cff
 In-Reply-To: <cover-0.2-00000000000-20210709T101014Z-avarab@gmail.com>
 References: <cover-0.2-00000000000-20210621T145819Z-avarab@gmail.com> <cover-0.2-00000000000-20210709T101014Z-avarab@gmail.com>
@@ -76,115 +76,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Cover blindspots in the testing of stdin handling, including the
-"!len" condition added in b5d97e6b0a0 (pack-objects: run rev-list
-equivalent internally., 2006-09-04). The codepath taken with --revs
-and read_object_list_from_stdin() acts differently in some of these
-common cases, let's test for those.
+Fix a segfault in the --stdin-packs option added in
+339bce27f4f (builtin/pack-objects.c: add '--stdin-packs' option,
+2021-02-22).
 
-The "--stdin --revs" test being added here stresses the combination of
---stdin-packs and the revision.c --stdin argument, some of this was
-covered in a test added in 339bce27f4f (builtin/pack-objects.c: add
-'--stdin-packs' option, 2021-02-22), but let's make sure that
-GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=true keeps erroring out about
---stdin, and it isn't picked up by the revision.c API's handling of
-that option.
+The read_packs_list_from_stdin() function didn't check that the lines
+it was reading were valid packs, and thus when doing the QSORT() with
+pack_mtime_cmp() we'd have a NULL "util" field. The "util" field is
+used to associate the names of included/excluded packs with the
+packed_git structs they correspond to.
+
+The logic error was in assuming that we could iterate all packs and
+annotate the excluded and included packs we got, as opposed to
+checking the lines we got on stdin. There was a check for excluded
+packs, but included packs were simply assumed to be valid.
+
+As noted in the test we'll not report the first bad line, but whatever
+line sorted first according to the string-list.c API. In this case I
+think that's fine. There was further discussion of alternate
+approaches in [1].
+
+Even though we're being lazy let's assert the line we do expect to get
+in the test, since whoever changes this code in the future might miss
+this case, and would want to update the test and comments.
+
+1. http://lore.kernel.org/git/YND3h2l10PlnSNGJ@nand.local
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t5300-pack-object.sh | 85 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 85 insertions(+)
+ builtin/pack-objects.c | 23 ++++++++++++++++++++---
+ t/t5300-pack-object.sh | 19 +++++++++++++++++++
+ 2 files changed, 39 insertions(+), 3 deletions(-)
 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index de00adbb9e0..df49f656b96 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3311,9 +3311,26 @@ static void read_packs_list_from_stdin(void)
+ 	}
+ 
+ 	/*
+-	 * First handle all of the excluded packs, marking them as kept in-core
+-	 * so that later calls to add_object_entry() discards any objects that
+-	 * are also found in excluded packs.
++	 * Arguments we got on stdin may not even be packs. First
++	 * check that to avoid segfaulting later on in
++	 * e.g. pack_mtime_cmp(), excluded packs are handled below.
++	 *
++	 * Since we first parsed our STDIN and then sorted the input
++	 * lines the pack we error on will be whatever line happens to
++	 * sort first. This is lazy, it's enough that we report one
++	 * bad case here, we don't need to report the first/last one,
++	 * or all of them.
++	 */
++	for_each_string_list_item(item, &include_packs) {
++		struct packed_git *p = item->util;
++		if (!p)
++			die(_("could not find pack '%s'"), item->string);
++	}
++
++	/*
++	 * Then, handle all of the excluded packs, marking them as
++	 * kept in-core so that later calls to add_object_entry()
++	 * discards any objects that are also found in excluded packs.
+ 	 */
+ 	for_each_string_list_item(item, &exclude_packs) {
+ 		struct packed_git *p = item->util;
 diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 5c5e53f0be9..65e991e3706 100755
+index 65e991e3706..e13a8842075 100755
 --- a/t/t5300-pack-object.sh
 +++ b/t/t5300-pack-object.sh
-@@ -34,6 +34,91 @@ test_expect_success 'setup' '
- 	} >expect
+@@ -119,6 +119,25 @@ test_expect_success 'pack-object <stdin parsing: [|--revs] with --stdin' '
+ 	test_cmp err.expect err.actual
  '
  
-+test_expect_success 'setup pack-object <stdin' '
-+	git init pack-object-stdin &&
-+	test_commit -C pack-object-stdin one &&
-+	test_commit -C pack-object-stdin two
-+
-+'
-+
-+test_expect_success 'pack-object <stdin parsing: basic [|--revs]' '
++test_expect_success 'pack-object <stdin parsing: --stdin-packs handles garbage' '
 +	cat >in <<-EOF &&
 +	$(git -C pack-object-stdin rev-parse one)
-+	EOF
-+
-+	git -C pack-object-stdin pack-objects basic-stdin <in &&
-+	idx=$(echo pack-object-stdin/basic-stdin-*.idx) &&
-+	git show-index <"$idx" >actual &&
-+	test_line_count = 1 actual &&
-+
-+	git -C pack-object-stdin pack-objects --revs basic-stdin-revs <in &&
-+	idx=$(echo pack-object-stdin/basic-stdin-revs-*.idx) &&
-+	git show-index <"$idx" >actual &&
-+	test_line_count = 3 actual
-+'
-+
-+test_expect_success 'pack-object <stdin parsing: [|--revs] bad line' '
-+	cat >in <<-EOF &&
-+	$(git -C pack-object-stdin rev-parse one)
-+	garbage
 +	$(git -C pack-object-stdin rev-parse two)
 +	EOF
 +
-+	sed "s/^> //g" >err.expect <<-EOF &&
-+	fatal: expected object ID, got garbage:
-+	>  garbage
-+
-+	EOF
-+	test_must_fail git -C pack-object-stdin pack-objects bad-line-stdin <in 2>err.actual &&
-+	test_cmp err.expect err.actual &&
-+
++	# That we get "two" and not "one" has to do with OID
++	# ordering. It happens to be the same here under SHA-1 and
++	# SHA-256. See commentary in pack-objects.c
 +	cat >err.expect <<-EOF &&
-+	fatal: bad revision '"'"'garbage'"'"'
++	fatal: could not find pack '"'"'$(git -C pack-object-stdin rev-parse two)'"'"'
 +	EOF
-+	test_must_fail git -C pack-object-stdin pack-objects --revs bad-line-stdin-revs <in 2>err.actual &&
-+	test_cmp err.expect err.actual
-+'
-+
-+test_expect_success 'pack-object <stdin parsing: [|--revs] empty line' '
-+	cat >in <<-EOF &&
-+	$(git -C pack-object-stdin rev-parse one)
-+
-+	$(git -C pack-object-stdin rev-parse two)
-+	EOF
-+
-+	sed -e "s/^> //g" -e "s/Z$//g" >err.expect <<-EOF &&
-+	fatal: expected object ID, got garbage:
-+	>  Z
-+
-+	EOF
-+	test_must_fail git -C pack-object-stdin pack-objects empty-line-stdin <in 2>err.actual &&
-+	test_cmp err.expect err.actual &&
-+
-+	git -C pack-object-stdin pack-objects --revs empty-line-stdin-revs <in &&
-+	idx=$(echo pack-object-stdin/empty-line-stdin-revs-*.idx) &&
-+	git show-index <"$idx" >actual &&
-+	test_line_count = 3 actual
-+'
-+
-+test_expect_success 'pack-object <stdin parsing: [|--revs] with --stdin' '
-+	cat >in <<-EOF &&
-+	$(git -C pack-object-stdin rev-parse one)
-+	$(git -C pack-object-stdin rev-parse two)
-+	EOF
-+
-+	# There is the "--stdin-packs is incompatible with --revs"
-+	# test below, but we should make sure that the revision.c
-+	# --stdin is not picked up
-+	cat >err.expect <<-EOF &&
-+	fatal: disallowed abbreviated or ambiguous option '"'"'stdin'"'"'
-+	EOF
-+	test_must_fail git -C pack-object-stdin pack-objects stdin-with-stdin-option --stdin <in 2>err.actual &&
-+	test_cmp err.expect err.actual &&
-+
-+	test_must_fail git -C pack-object-stdin pack-objects --stdin --revs stdin-with-stdin-option-revs 2>err.actual <in &&
++	test_must_fail git \
++		-C pack-object-stdin \
++		pack-objects stdin-with-stdin-option --stdin-packs \
++		<in 2>err.actual &&
 +	test_cmp err.expect err.actual
 +'
 +
