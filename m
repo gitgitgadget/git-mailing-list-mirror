@@ -2,194 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF023C07E99
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 21:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B98EC07E99
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 21:26:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C3D63613B7
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 21:18:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DDAD3613B7
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 21:26:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229750AbhGIVVS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Jul 2021 17:21:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39726 "EHLO
+        id S230441AbhGIV24 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Jul 2021 17:28:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbhGIVVS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Jul 2021 17:21:18 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D8FCC0613DD
-        for <git@vger.kernel.org>; Fri,  9 Jul 2021 14:18:34 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id h18so2959815qkl.10
-        for <git@vger.kernel.org>; Fri, 09 Jul 2021 14:18:34 -0700 (PDT)
+        with ESMTP id S229506AbhGIV2z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Jul 2021 17:28:55 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC0A9C0613DD
+        for <git@vger.kernel.org>; Fri,  9 Jul 2021 14:26:11 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id 59-20020a9d0ac10000b0290462f0ab0800so10860524otq.11
+        for <git@vger.kernel.org>; Fri, 09 Jul 2021 14:26:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:cc:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=7sNQGEYP+QWv71h9aSF10niPMo3bLlsyBm0aEoHkej4=;
-        b=LkzFYpgnMiMg36lMp/WGkrx3NU54CHfa84MhwWLBeb1DMqgmqPWJjjDVvlWB+mviqE
-         ZAgXTRIT9Xm2RxnPaO1O57gkDKNHG2dYEQP1pK+9ocmwzcpplMvDhsCmYaFGDqUd4GgK
-         JX0feTgX3KPXoJdOVL82PiDsROp21zSZAcv2XEWL/ciyf2gfi+MkAhrkvWi8zKFkVhg1
-         kRCx7hl/uUrLj/hDESIeP+ntXPzEaWf03asY2a/QrpqeXaWBNRPsIv3IFh2TqC1l9JFX
-         uu1QhHFIr3vBAXb1GQ5CIewkzztsDAw42ptv1G5iOUkHswGN58VpcENvLStg2v9qkAfD
-         OfNg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BpViHiksy0LP3GJCQBTJMoVmWA4xAfwC9bimt2NAifQ=;
+        b=BxRIfgHBgS2fSTXeaPteN/ET20rroCocI4KJFolGZVhXeZxi+KM5YLULKdEfUzKyHh
+         Q55+qReHKo7XRJy3qrV9q4PGkVzCBS8+Zu34FvmVYGx+NDG+G725Zba6GHEh4MMPMo7g
+         f5Oxe+nIqntXJGEyFco6f+Q3YAJv075wsevOeAuO2NJ+3eH3neAAGUgeFdnxaeLynrkS
+         jj+IFT42Zx+uiSM3jkmFMbhAN52kScveZ20mYnZ9NtK9DldeSbKu2c2CYeODCmCa1GGj
+         DLm7lO6OknTatOVUNuFGxptHa37erRqlB5YHdaAOd4m0KkXRFFJJBs0yEBs5dVDgfXM4
+         pILg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:cc:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=7sNQGEYP+QWv71h9aSF10niPMo3bLlsyBm0aEoHkej4=;
-        b=AxfN+pQZN0h/Q7gT7bzPph+C5Tj6n8q4QZTn66ub0Z3yy4qhbovRjb0dWrZtf2oIN+
-         TmaSloUVCwvnjf45EjmNnzwjt946GaOuH2wq23SmgF5pV5auHSmO81zrUMmdhzZxhK37
-         tzdZ8Ja4gwQFI54lD2+RKgZG9vvtprURlFApoGmvSvCvJr38T7zgzKqk1aNKp4drzzwa
-         Iiin/Xb3nvcvwnMsE3EAhN/viWc7I7r0PxnJn7ERdkHyIK1ad8bvkNA/K33vXMsyDFsG
-         UH9MAelVlqNCyJpofAoKkf/uKfJzj4EyfkR6ur4yKPxJ4awGRu27dbBJbW5hFshkcoBi
-         wrsg==
-X-Gm-Message-State: AOAM533HjMzXxIU+oljXM9Ax+EdnenIfT5Gtb63P9XuMVzIZhNpVVBCT
-        7JvrH3zrt+ctaLK+281vXOw=
-X-Google-Smtp-Source: ABdhPJwwl0vYHFU2U8sCf/5tLSd1Q/X+y8R+sqViE2CZIoyAnjOOq3+DQCZW1Qm1+cy5Mp48IqZyaA==
-X-Received: by 2002:a37:6c04:: with SMTP id h4mr41470472qkc.182.1625865513244;
-        Fri, 09 Jul 2021 14:18:33 -0700 (PDT)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id y24sm3236710qkj.4.2021.07.09.14.18.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jul 2021 14:18:32 -0700 (PDT)
-Subject: Re: Bug with branches/merges in submodules
-To:     Mel Dafert <mel@dafert.at>, git@vger.kernel.org
-References: <E9E32A45-DA88-47CB-B7F9-F01F9BEC394C@dafert.at>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Ping Yin <pkufranky@gmail.com>
-Message-ID: <b519a79a-5e35-bb40-71d3-0fb3c65320d7@gmail.com>
-Date:   Fri, 9 Jul 2021 17:18:31 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.11.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BpViHiksy0LP3GJCQBTJMoVmWA4xAfwC9bimt2NAifQ=;
+        b=JuztZRfDPNXYVb2uKDyA3qmEvbk1H1hxgQlLfg9xyP40or0wT3cl+J5d71EAf9XXE5
+         1z4uoTp7Oa2GG/Cb3rOC4UnKBZeVUeGG7UkyUckYRQM2YB5Kzk+9jIhx7DBwa/Ng7LLU
+         BP8DvuZcgSAKK6eIj8qvpKjzc4bE926KJ+a0C+CUPM6Iab9rqE065QgkH3LxdLg1QqMQ
+         pmmj9goRmYh7+fkEfMjTkHy1pjKC0XTw/FMUNkpUfaZf273H7pFRzQ1v9FVe8bBMV4bT
+         /4DQTkhxgW4bSyy2x4kktG0fSqO+eGIsBRBUBOlguvTmpalxZCbREMGujmc1P+sO3Km+
+         CGJw==
+X-Gm-Message-State: AOAM532seSZkQYawyUPIbatdRODcBblgfLxP+AjHMg6H4lzH6rOD5Lm4
+        uRdozZN8l0sjgYlBjRrGUWyUoeReHeilMSZArvw=
+X-Google-Smtp-Source: ABdhPJzVXyQwDkLlvGgTC55cvwBsekUDvpEhjnZqQCIQ/PcQHEWQ163UkYCWbUBprzWkSN9UzZhVKBb72/yKWgTRcks=
+X-Received: by 2002:a9d:73c1:: with SMTP id m1mr27072992otk.162.1625865971103;
+ Fri, 09 Jul 2021 14:26:11 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <E9E32A45-DA88-47CB-B7F9-F01F9BEC394C@dafert.at>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+References: <pull.973.git.1624932786.gitgitgadget@gmail.com>
+In-Reply-To: <pull.973.git.1624932786.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 9 Jul 2021 14:26:00 -0700
+Message-ID: <CABPp-BF_i1QRCXaeKzqoc6Q2=3un-wku7aKUEdBbXfeVfTG8xg@mail.gmail.com>
+Subject: Re: [PATCH 0/5] Sparse index: integrate with commit and checkout
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Mel!
+On Mon, Jun 28, 2021 at 7:13 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> This series extends our integration of sparse-index to 'git commit' and 'git
+> checkout'.
+>
+> This is based on ds/status-with-sparse-index (v7) and v2.32.0. The hard work
+> was already done in that topic, so these changes are simple.
+>
+> Recall that we have delayed our integration with 'git add' until we can work
+> out the concerns about how to deal with pathspecs outside of the
+> sparse-checkout definition. Those concerns might have some overlap with how
+> 'git commit' takes a pathspec, but this seems like a rare enough case to
+> handle here and we can be more careful with the behavior change in the next
+> series which will integrate with git add.
+>
+> In addition to the tests that already exist in t1092, I have integrated
+> these changes in microsoft/git and tested them against the Scalar functional
+> tests, which go through quite a few complicated scenarios, verifying that
+> things work the same across the full index and sparse-index cases.
+>
+> Thanks, -Stolee
+>
+> Derrick Stolee (5):
+>   p2000: add 'git checkout -' test and decrease depth
+>   p2000: compress repo names
+>   commit: integrate with sparse-index
+>   sparse-index: recompute cache-tree
+>   checkout: stop expanding sparse indexes
+>
+>  builtin/checkout.c                       |  8 ++--
+>  builtin/commit.c                         |  3 ++
+>  cache-tree.c                             |  2 -
+>  sparse-index.c                           |  2 +
+>  t/perf/p2000-sparse-operations.sh        | 47 ++++++++++++--------
+>  t/t1092-sparse-checkout-compatibility.sh | 55 ++++++++++++++++++++++--
+>  6 files changed, 89 insertions(+), 28 deletions(-)
+>
+>
+> base-commit: 1d744848ee6b58ccaf3a30f20abe9797ed5d2ce7
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-973%2Fderrickstolee%2Fsparse-index%2Fcommit-and-checkout-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-973/derrickstolee/sparse-index/commit-and-checkout-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/973
 
-Thanks for writing in! Responses inline below.
+I've read over these patches and didn't find any problems in them in
+my reading; however, since it builds upon ds/status-with-sparse-index
+(v7)...
 
-Le 2021-07-07 à 09:13, Mel Dafert a écrit :
-> Hello,
-> I ran into a bug where commits are omitted from `git submodule summary`
-> and friends when the submodule contains merge commits.
-> Originally using 2.30.2, I can also reproduce this with a fresh build on the
-> `next` branch (see attached bugreport).
-> I would assume that this is not intentional, however I cannot find any relevant
-> information on this.
+I decided to retry some of my ideas and testing on Patch 10/16 of v7,
+over at https://lore.kernel.org/git/CABPp-BHwTAKwFiWQ0-2P=_g+7HLK5FfOAz-uujRjLou1fXT3zw@mail.gmail.com/
 
-You are right that the doc seems to be quiet about that [1], [2].
+It turns out that the block you added there is now triggered by t1092
+after this series, and the testcase won't pass without that block.  It
+might be clearer to move that code fragment, or perhaps the whole
+patch, into this series...though the code fragment as is has
+introduced a bug.  If you take t1092 test 12 ("diff with
+directory/file conflicts") and modify it so that before the
 
+    git checkout df-conflict
 
-> Feel free to contact me for extra details.
-> Best regards,
-> Mel
-> 
+invocation from sparse-index, you first run:
 
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
-> 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> Set up a submodule that has branches/merge commits:
-> ```bash
-> # create repository "child"
-> mkdir child-repo
-> cd child-repo
-> git init
-> touch initial.txt
-> git add initial.txt
-> git commit -m "initial child"
-> cd ..
-> # create repository "parent"
-> mkdir parent
-> cd parent
-> git init
-> # add submodule "child" to repository "parent"
-> git submodule add ../child-repo/ child
-> git commit -am "initial parent"
-> cd child
-> # make two commits in separate branches in "child"
-> git switch -c "secondary"
-> touch s1.txt
-> git add s1.txt
-> git commit -m "s1"
-> git switch master
-> touch m1.txt
-> git add m1.txt
-> git commit -m "m1"
-> # merge branch "secondary" into "master" in "child" - this creates a merge commit
-> git merge secondary --no-edit
-> cd ..
-> ```
-> Run `git diff --submodule=log` inside the "parent" repository.
-> 
-> What did you expect to happen? (Expected behavior)
-> `git diff --submodule=log` should show all three commits added to the "child"
-> submodule:
-> ```
-> Submodule child XXXXXXX..YYYYYYY
->> Merge branch 'secondary'
->> m1
->> s1
-> ```
-> 
-> What happened instead? (Actual behavior)
-> `git diff --submodule=log` only shows commits from one ancestor of the merge
-> commit:
-> ```
-> Submodule child XXXXXXX..YYYYYYY
->> Merge branch 'secondary'
->> m1
-> ```
-> 
-> What's different between what you expected and what actually happened?
-> All the commits added to the "secondary" branch are missing in
-> `git diff --submodule=log`.
-> 
-> Anything else you want to add:
-> The commit range shown by `git diff --submodule=log` is correct:
-> `cd child; git log XXXXXXX..YYYYYYY` shows the correct list of commits.
-> 
-> This bug also affects `git submodule summary`, and `git show --submodule=log`
-> after the changes have been committed.
+    $ git sparse-checkout disable
+    $ echo more stuff >>folder1/edited-content
+    $ git add -u
+    $ git diff HEAD   # note the changes
+    $ git sparse-checkout init --cone --sparse-index
+    $ git diff HEAD   # note the changes are still there
+    $ git checkout df-conflict  # no error??  What about the
+conflicting changes?
+    $ git diff HEAD
 
-Thanks for the reproducer. The behaviour for 'git log/show/diff' is due this line [3]
-and the behaviour for 'git submodule summary' to these lines [4] [5].
+then the last command will show that the staged changes from before
+the commit have simply been discarded.  In short, this makes the
+series behave like --force was passed with sparse directory entries,
+when --force wasn't passed.
 
-For 'git diff' and friends, it goes back to the addition of the '--submodule=log'
-option in 752c0c2492 (Add the --submodule option to the diff option family, 2009-10-19).
-(authored CC'ed). The use of '--first-parent' was discussed on the list
-when this was implemented [6]. I did not read the whole thing.
-
-For 'git submodule summary', it goes back to the addition of the subcommand
-in 1cb639e6b0 (git-submodule summary: show commit summary, 2008-03-11). (author also CC'ed).
-The justification of the use of '--first-parent' was not really discussed
-as far as I could tell [7].
-
-
-I personnally think it would be a good addition to be able to choose
-if yes or no '--first-parent' should be used.
-
-Cheers,
-
-Philippe.
-
-
-[1] https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-summary--cached--files-n--summary-limitltngtcommit--ltpathgt82308203
-[2] https://git-scm.com/docs/git-diff#Documentation/git-diff.txt---submoduleltformatgt
-[3] https://github.com/git/git/blob/d486ca60a51c9cb1fe068803c3f540724e95e83a/submodule.c#L453
-[4] https://github.com/git/git/blob/d486ca60a51c9cb1fe068803c3f540724e95e83a/builtin/submodule--helper.c#L1020-L1021
-[5] https://github.com/git/git/blob/d486ca60a51c9cb1fe068803c3f540724e95e83a/builtin/submodule--helper.c#L1117-L1118
-[6] https://lore.kernel.org/git/67a884457aeaead275612be10902a80726b2a7db.1254668669u.git.johannes.schindelin@gmx.de/t/#u
-[7] https://lore.kernel.org/git/?q=f%3Ayin+s%3A%280+submodule+summary+NOT%3ARe+%29+
+So we've still got some directory/file conflict issues.
