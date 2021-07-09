@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-16.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62DE6C07E9B
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 11:06:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D5EEC07E99
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 11:06:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4213161249
-	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 11:06:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6ECF613D6
+	for <git@archiver.kernel.org>; Fri,  9 Jul 2021 11:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230222AbhGILJJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Jul 2021 07:09:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42106 "EHLO
+        id S230367AbhGILJN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Jul 2021 07:09:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230180AbhGILJH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Jul 2021 07:09:07 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38E66C0613DD
-        for <git@vger.kernel.org>; Fri,  9 Jul 2021 04:06:23 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id v5so11638550wrt.3
-        for <git@vger.kernel.org>; Fri, 09 Jul 2021 04:06:23 -0700 (PDT)
+        with ESMTP id S230180AbhGILJJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Jul 2021 07:09:09 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F664C0613DD
+        for <git@vger.kernel.org>; Fri,  9 Jul 2021 04:06:25 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id g16so1720184wrw.5
+        for <git@vger.kernel.org>; Fri, 09 Jul 2021 04:06:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EY77LNxSBLgxi9S5FrLjsJr++ryDedrMnTamY1nOacU=;
-        b=V4D0BtjCeToM/NHgq3t/MjiML1kZ4v68rOQXJo96lGptXpE5Hgwijzt/oHEWn7+8Mk
-         HgvMYwGG+iJga06uE+CryV+6hMJwuQVxFC9SBtDHYsm6t1pABh4L+Y8eOd3ZAOd2Kzam
-         a4wX3czmaccIY/V30WQ5N1IACx/s5cmMiqShDqwnGRQvQMTnB46RsxXhPeZ4aP5qNiHH
-         9sEf+BC4wNd9ke/tysIoiBpd3i5S9Rv0kA1XOIgtpDPdLV9ZkbS63CxfqNKZe6+RIceu
-         2QrekmQ2VfUBN5C9Kfwh8+te2etOZtXb30oJe1/J9Ge2r5upWAcuc4DfOpFzbMG2Leyp
-         VYqw==
+        bh=OVP+he5IQw5W/Xm+I1uQ6X/4pF3ZsGTO5va8vdSRmiE=;
+        b=RHpayUNu6HJBDPFWMFPKSR5R+z5CWiKuHIO/TeGiMexpRhZ3sQjySbcyikmKi9M80F
+         qtW6nF0hviHPoEB0ptb2Z4YSYVXV9E2g5xG6jeI/xEDKQyer9E80rC0cdj7V3jqHAaQX
+         sp2+oH5SZ4AIz9SCKCCirwvbm7U9u+YqL5lNpv7KmAGTQuxDEMWAto6ppBNK+7GWDmpD
+         o7ARzH746PwZ7c/hOy46tUHRZEpz2GfmpGjzoYpDF2/jtnpQF8H5VwCcicQ36uipYmV7
+         mvHdsEZbtqC9GXp4a+6bmKjNDWXzlb0JMpXnT8aw1okyRpfA/dv62zFTitdtHv7MweJV
+         ke6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EY77LNxSBLgxi9S5FrLjsJr++ryDedrMnTamY1nOacU=;
-        b=hvoUTNURTuyyIojWV8u4NCKy5WwABX7DXrwRdSe9BDT48Nxzg0Ns1cqRXVHCcxyu73
-         bUcsEtC/+zLaRBdhq7p+IDn0/nexkt8zDXpkDcNQybnlE0FeeOFY0Va31IweoCMtff3D
-         hlR86HBqXRx44DXqvmfp0lsSqZgFG9MjsZqGec4J/CO1I1/rid3MYkdUv5J/uPn3zax+
-         PK+IAzlhqL8RLgnXpXgFgG4TN/1uDcYKsY08p2Of9rdV6r06ubLu9W6d5BrljTX8ho+p
-         xqkzOvXZjEPiTUdwP+w1qovatvjPgErFzDn/QibaZVdpB+T39E8YWZ/7eGSSBp+OFIWi
-         ToPQ==
-X-Gm-Message-State: AOAM5336mYja3sIpdZWe4BMEi9DBiT9i9qEmoF3Ng3QvFvXQ+NYpJq/I
-        fpt8kWrponcW+vI2lhvDkTXIR15W9HqiFA==
-X-Google-Smtp-Source: ABdhPJy006DvfrXtbx8Yn9Yl/LvLfavSUGT7u2f4LcyJ5hUXdDDbg7KPm7xHATA+FPzF8CglTnpXgw==
-X-Received: by 2002:adf:f90d:: with SMTP id b13mr30955073wrr.336.1625828781540;
-        Fri, 09 Jul 2021 04:06:21 -0700 (PDT)
+        bh=OVP+he5IQw5W/Xm+I1uQ6X/4pF3ZsGTO5va8vdSRmiE=;
+        b=Nh2HVddtX5NqL50/gr7KI69aK+gIjldLEJwzmeYjNzuEu4yfW8YXzjPbvPWRwoRSCX
+         4S1i03OtBf4fuUqvQLU1J8LoqL2Nhji7/kt4TEf02ynk2PFpQLE0ns+uNAoJoIDJNMMB
+         4I+UD+FZEv9cbHgiYZh07jYc6bl2xWtPZ1B3cdRf1i7baW5yM5eE4V2JWrWQVuzyFF9v
+         joTq29sPeIlZGz9Tw3xPs4Fbj0U4hIHyL3ihrlAkeFaN/o7kymM4McgPDFJoXJiHQk/+
+         vuLZOW8+vGd4jhDeA7U8TWgfr3+UVefq1RlwWOlNg9jCfBq1ZV+dOrtX6xS/LOkAd48N
+         XYog==
+X-Gm-Message-State: AOAM530jKX6Gxof5Lapcd/ZFVzzZjWWRxQUkFlPiiKdo5LtSwFYLh6uT
+        IYD85witblPRRdPNDenmJ7mP2PYw9bOQng==
+X-Google-Smtp-Source: ABdhPJyo7rDJfSpgmnNpmcZcVYwAGStTn2lNZgE7UwFVec6aTT+TD7R7AsroXNq6IxNKK6vzOd/OcQ==
+X-Received: by 2002:adf:ea08:: with SMTP id q8mr39969321wrm.297.1625828783381;
+        Fri, 09 Jul 2021 04:06:23 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id a4sm4978167wru.55.2021.07.09.04.06.20
+        by smtp.gmail.com with ESMTPSA id a4sm4978167wru.55.2021.07.09.04.06.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jul 2021 04:06:20 -0700 (PDT)
+        Fri, 09 Jul 2021 04:06:22 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 2/5] revision.h: refactor "disable_stdin" and "read_from_stdin"
-Date:   Fri,  9 Jul 2021 13:06:13 +0200
-Message-Id: <patch-2.5-630feb06650-20210709T105851Z-avarab@gmail.com>
+Subject: [PATCH v4 4/5] pack-objects.c: do stdin parsing via revision.c's API
+Date:   Fri,  9 Jul 2021 13:06:15 +0200
+Message-Id: <patch-4.5-ebffeb5891f-20210709T105851Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.636.g43e71d69cff
 In-Reply-To: <cover-0.5-00000000000-20210709T105850Z-avarab@gmail.com>
 References: <cover-0.4-00000000000-20210621T150651Z-avarab@gmail.com> <cover-0.5-00000000000-20210709T105850Z-avarab@gmail.com>
@@ -79,194 +79,138 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the two "disable_stdin" and "read_from_stdin" flags to an enum,
-in preparation for a subsequent commit adding more flags.
+Use the new "handle_stdin_line" API in revision.c to parse stdin in
+pack-objects.c, instead of using custom pack-objects.c-specific code
+to do so.
 
-The interaction between these is more subtle than they might appear at
-first sight, as noted in a12cbe23ef7. "read_stdin" is not the inverse
-of "disable_stdin", rather we read stdin if we see the "--stdin"
-option.
+This means that we can remove the "if (len && line[len - 1] == '\n')"
+check, it's now redundant to using strbuf_getline(), and we get to
+skip the whole "warn_on_object_refname_ambiguity" dance. The
+read_revisions_from_stdin() function in revision.c we're now using
+does it for us.
 
-The "read" is intended to understood as "I've read it already", not
-"you should read it". Let's avoid this confusion by using "consume"
-and "consumed" instead, i.e. a word whose present and past tense isn't
-the same.
+The pack-objects.c code being refactored away here was first added in
+Linus's c323ac7d9c5 (git-pack-objects: create a packed object
+representation., 2005-06-25).
 
-See 8b3dce56508 (Teach --stdin option to "log" family, 2009-11-03)
-where we added the "disable_stdin" flag, and a12cbe23ef7 (rev-list:
-make empty --stdin not an error, 2018-08-22) for the addition of the
-"read_from_stdin" flag.
+Later on rev-list started doing similar parsing in 42cabc341c4 (Teach
+rev-list an option to read revs from the standard input., 2006-09-05).
+That code was promoted to a more general API in 1fc561d169a (Move
+read_revisions_from_stdin from builtin-rev-list.c to revision.c,
+2008-07-05).
+
+Since then the API in revision.c has received improvements that have
+been missed here. E.g. the arbitrary limit of 1000 bytes was removed
+in 63d564b3002 (read_revision_from_stdin(): use strbuf, 2009-11-20),
+and it moved to a more simpler strbuf API in 6e8d46f9d4b (revision:
+read --stdin with strbuf_getline(), 2015-10-28).
+
+For now we've just made setup_revisions() loop over stdin for us, but
+the callback we define makes no use of REV_INFO_STDIN_LINE_PROCESS. We
+still need to call handle_revision_arg() ourselves because we'd like
+to call it with different flags.
+
+This very light use of the API will be further refined in a subsequent
+commit, for now we're just doing the bare minimum to move this
+existing code over to the new callback pattern without any functional
+changes, and making it as friendly to "git show -w" and "the
+--color-moved-ws=allow-indentation-change" mode as possible.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/am.c        |  4 ++--
- builtin/blame.c     |  2 +-
- builtin/diff-tree.c |  2 +-
- builtin/rev-list.c  |  2 +-
- revision.c          | 13 ++++++++-----
- revision.h          | 23 ++++++++++++++++++++---
- sequencer.c         |  4 ++--
- 7 files changed, 35 insertions(+), 15 deletions(-)
+ builtin/pack-objects.c | 63 ++++++++++++++++++++----------------------
+ 1 file changed, 30 insertions(+), 33 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 0b2d886c81b..3a6c8455b47 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1355,7 +1355,7 @@ static void write_commit_patch(const struct am_state *state, struct commit *comm
- 	repo_init_revisions(the_repository, &rev_info, NULL);
- 	rev_info.diff = 1;
- 	rev_info.abbrev = 0;
--	rev_info.disable_stdin = 1;
-+	rev_info.stdin_handling = REV_INFO_STDIN_IGNORE;
- 	rev_info.show_root_diff = 1;
- 	rev_info.diffopt.output_format = DIFF_FORMAT_PATCH;
- 	rev_info.no_commit_id = 1;
-@@ -1390,7 +1390,7 @@ static void write_index_patch(const struct am_state *state)
- 	fp = xfopen(am_path(state, "patch"), "w");
- 	repo_init_revisions(the_repository, &rev_info, NULL);
- 	rev_info.diff = 1;
--	rev_info.disable_stdin = 1;
-+	rev_info.stdin_handling = REV_INFO_STDIN_IGNORE;
- 	rev_info.no_commit_id = 1;
- 	rev_info.diffopt.output_format = DIFF_FORMAT_PATCH;
- 	rev_info.diffopt.use_color = 0;
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 641523ff9af..c9f66c58c46 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1061,7 +1061,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 		argv[argc - 1] = "--";
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 3639d0379ed..595adc89c12 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3762,15 +3762,40 @@ static void mark_bitmap_preferred_tips(void)
  	}
+ }
  
--	revs.disable_stdin = 1;
-+	revs.stdin_handling = REV_INFO_STDIN_IGNORE;
- 	setup_revisions(argc, argv, &revs, NULL);
- 	if (!revs.pending.nr && is_bare_repository()) {
- 		struct commit *head_commit;
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index f33d30d57bf..fc548ebe166 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -122,7 +122,7 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
- 		die(_("index file corrupt"));
- 	opt->abbrev = 0;
- 	opt->diff = 1;
--	opt->disable_stdin = 1;
-+	opt->stdin_handling = REV_INFO_STDIN_IGNORE;
- 	memset(&s_r_opt, 0, sizeof(s_r_opt));
- 	s_r_opt.tweak = diff_tree_tweak_rev;
++static enum rev_info_stdin_line get_object_list_handle_stdin_line(
++	struct rev_info *revs, struct strbuf *line_sb, void *stdin_line_priv)
++{
++	int *flags = stdin_line_priv;
++	char *line = line_sb->buf;
++
++	if (*line == '-') {
++		if (!strcmp(line, "--not")) {
++			*flags ^= UNINTERESTING;
++			write_bitmap_index = 0;
++			return REV_INFO_STDIN_LINE_CONTINUE;
++		}
++		if (starts_with(line, "--shallow ")) {
++			struct object_id oid;
++			if (get_oid_hex(line + 10, &oid))
++				die("not an object name '%s'", line + 10);
++			register_shallow(the_repository, &oid);
++			use_bitmap_index = 0;
++			return REV_INFO_STDIN_LINE_CONTINUE;
++		}
++		die(_("not a rev '%s'"), line);
++	}
++	if (handle_revision_arg(line, revs, *flags, REVARG_CANNOT_BE_FILENAME))
++			die(_("bad revision '%s'"), line);
++	return REV_INFO_STDIN_LINE_CONTINUE;
++}
++
+ static void get_object_list(int ac, const char **av)
+ {
+ 	struct rev_info revs;
+ 	struct setup_revision_opt s_r_opt = {
+ 		.allow_exclude_promisor_objects = 1,
+ 	};
+-	char line[1000];
+ 	int flags = 0;
+-	int save_warning;
  
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 7677b1af5a4..524632ba328 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -651,7 +651,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 	if ((!revs.commits && reflog_walk_empty(revs.reflog_info) &&
- 	     (!(revs.tag_objects || revs.tree_objects || revs.blob_objects) &&
- 	      !revs.pending.nr) &&
--	     !revs.rev_input_given && !revs.read_from_stdin) ||
-+	     !revs.rev_input_given && !revs.consumed_stdin) ||
- 	    revs.diff)
- 		usage(rev_list_usage);
+ 	repo_init_revisions(the_repository, &revs, NULL);
+ 	save_commit_buffer = 0;
+@@ -3778,39 +3803,11 @@ static void get_object_list(int ac, const char **av)
+ 	/* make sure shallows are read */
+ 	is_repository_shallow(the_repository);
  
-diff --git a/revision.c b/revision.c
-index cddd0542a65..f30b9d40af4 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2742,14 +2742,17 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 			}
++	revs.stdin_handling = REV_INFO_STDIN_ALWAYS_READ;
++	revs.handle_stdin_line = get_object_list_handle_stdin_line;
++	revs.stdin_line_priv = &flags;
+ 	setup_revisions(ac, av, &revs, &s_r_opt);
  
- 			if (!strcmp(arg, "--stdin")) {
--				if (revs->disable_stdin) {
-+				switch (revs->stdin_handling) {
-+				case REV_INFO_STDIN_IGNORE:
- 					argv[left++] = arg;
- 					continue;
-+				case REV_INFO_STDIN_CONSUME_ON_OPTION:
-+					if (revs->consumed_stdin)
-+						die("--stdin given twice?");
-+					read_revisions_from_stdin(revs, &prune_data);
-+					revs->consumed_stdin = 1;
-+					continue;
- 				}
--				if (revs->read_from_stdin++)
--					die("--stdin given twice?");
--				read_revisions_from_stdin(revs, &prune_data);
+-	save_warning = warn_on_object_refname_ambiguity;
+-	warn_on_object_refname_ambiguity = 0;
+-
+-	while (fgets(line, sizeof(line), stdin) != NULL) {
+-		int len = strlen(line);
+-		if (len && line[len - 1] == '\n')
+-			line[--len] = 0;
+-		if (!len)
+-			break;
+-		if (*line == '-') {
+-			if (!strcmp(line, "--not")) {
+-				flags ^= UNINTERESTING;
+-				write_bitmap_index = 0;
 -				continue;
- 			}
+-			}
+-			if (starts_with(line, "--shallow ")) {
+-				struct object_id oid;
+-				if (get_oid_hex(line + 10, &oid))
+-					die("not an object name '%s'", line + 10);
+-				register_shallow(the_repository, &oid);
+-				use_bitmap_index = 0;
+-				continue;
+-			}
+-			die(_("not a rev '%s'"), line);
+-		}
+-		if (handle_revision_arg(line, &revs, flags, REVARG_CANNOT_BE_FILENAME))
+-			die(_("bad revision '%s'"), line);
+-	}
+-
+-	warn_on_object_refname_ambiguity = save_warning;
+-
+ 	if (use_bitmap_index && !get_object_list_from_bitmap(&revs))
+ 		return;
  
- 			if (!strcmp(arg, "--end-of-options")) {
-diff --git a/revision.h b/revision.h
-index 5c5510d4220..a942b1250ad 100644
---- a/revision.h
-+++ b/revision.h
-@@ -86,6 +86,11 @@ struct rev_cmdline_info {
- struct oidset;
- struct topo_walk_info;
- 
-+enum rev_info_stdin {
-+	REV_INFO_STDIN_CONSUME_ON_OPTION,
-+	REV_INFO_STDIN_IGNORE,
-+};
-+
- struct rev_info {
- 	/* Starting list */
- 	struct commit_list *commits;
-@@ -114,9 +119,22 @@ struct rev_info {
- 	int rev_input_given;
- 
- 	/*
--	 * Whether we read from stdin due to the --stdin option.
-+	 * How should we handle seeing --stdin?
-+	 *
-+	 * Defaults to REV_INFO_STDIN_CONSUME_ON_OPTION where we'll
-+	 * attempt to read it if we see the --stdin option.
-+	 *
-+	 * Can be set to REV_INFO_STDIN_IGNORE to ignore the --stdin
-+	 * option.
-+	 */
-+	enum rev_info_stdin stdin_handling;
-+
-+	/*
-+	 * Did we read from stdin due to stdin_handling ==
-+	 * REV_INFO_STDIN_CONSUME_ON_OPTION and seeing the --stdin
-+	 * option?
- 	 */
--	int read_from_stdin;
-+	int consumed_stdin:1;
- 
- 	/* topo-sort */
- 	enum rev_sort_order sort_order;
-@@ -216,7 +234,6 @@ struct rev_info {
- 			date_mode_explicit:1,
- 			preserve_subject:1,
- 			encode_email_headers:1;
--	unsigned int	disable_stdin:1;
- 	/* --show-linear-break */
- 	unsigned int	track_linear:1,
- 			track_first_time:1,
-diff --git a/sequencer.c b/sequencer.c
-index 0bec01cf38e..4e73bd79d69 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3377,7 +3377,7 @@ static int make_patch(struct repository *r,
- 	log_tree_opt.abbrev = 0;
- 	log_tree_opt.diff = 1;
- 	log_tree_opt.diffopt.output_format = DIFF_FORMAT_PATCH;
--	log_tree_opt.disable_stdin = 1;
-+	log_tree_opt.stdin_handling = REV_INFO_STDIN_IGNORE;
- 	log_tree_opt.no_commit_id = 1;
- 	log_tree_opt.diffopt.file = fopen(buf.buf, "w");
- 	log_tree_opt.diffopt.use_color = GIT_COLOR_NEVER;
-@@ -4513,7 +4513,7 @@ static int pick_commits(struct repository *r,
- 			log_tree_opt.diff = 1;
- 			log_tree_opt.diffopt.output_format =
- 				DIFF_FORMAT_DIFFSTAT;
--			log_tree_opt.disable_stdin = 1;
-+			log_tree_opt.stdin_handling = REV_INFO_STDIN_IGNORE;
- 
- 			if (read_oneliner(&buf, rebase_path_orig_head(), 0) &&
- 			    !get_oid(buf.buf, &orig) &&
 -- 
 2.32.0.636.g43e71d69cff
 
