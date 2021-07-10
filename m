@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-16.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5621EC11F6F
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 13:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7341DC07E9E
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 13:37:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 128BE613BE
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 13:37:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36322613B9
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 13:37:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231727AbhGJNkj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 09:40:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56530 "EHLO
+        id S232330AbhGJNkg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 09:40:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232343AbhGJNkd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jul 2021 09:40:33 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEAA4C06178A
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 06:37:46 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id d12so15872712wre.13
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 06:37:46 -0700 (PDT)
+        with ESMTP id S231481AbhGJNk2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 09:40:28 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61275C0613DD
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 06:37:43 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id o22so8073770wms.0
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 06:37:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=96if8fanmUd+XYMGydTnLu0UhpqNW1O/ECyN0bL+AgA=;
-        b=dD4x4szmSumxSDWKM3U7nWPVfLBGt3vD/A5bKGCjI8LQyDSor9Vs9EA7eaRW+J/HdU
-         QOY9IQxg7SXeNRxDdKcbxQV1WhR1KVLgSPlmGMvK2VwbRmkvD2jFfPzG8nKi919flOmi
-         tBhoOLyg/Vb7/GI4mCRwMSslT3T+7DoCxE2dNEl+UlJQcaBjXCITuwLhMjgmVqEBWfZi
-         dU5zz+Vl1ezRYFFxCbsXXBr1j/zMzU/50X76uQsSl8UZ5L+/Xw8G1uaMVpwm9/P3dEyw
-         ncPJCOWN6NqijLmpPtHktA2Vco5H6ZtAKfD7TygVwCH28R86N6Ll2bIThD1/zgdTI3rE
-         klsA==
+        bh=0LsBWol6+Hg8fOUR73ix2I7C0wS0aT2ZWxxwIiWuxig=;
+        b=e9vi1gRpGgkojfmfBFelwGz4O961MMAInBXjm1ZvV92tvwWW9oxv7qFuVd2LGuK+tN
+         hfL+QN/6hfT/IthJlN6ggUdmDEQumwDwmdWsHQjz+vYZHOzkx/GqIU3abWawdOA2Wodu
+         DivbXUu6LIpHLLI6soOWYN9c8jkslX0kOpPucNTrfZh939wU75wDCpKR0IaQV99/UThu
+         nZ40fJfYKAL6HDo3xKenV20UtIe3ZfuvlMglxN3AjpiuqiDL+8kTa/6QK8m4pqDtOYnj
+         DkZcuUIVSMJDwbMYGD8zuGSqiBAp/eBf+TZGmmRNFAWyhTa8aQN6JXGmrWK5XWsjm+1G
+         VL7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=96if8fanmUd+XYMGydTnLu0UhpqNW1O/ECyN0bL+AgA=;
-        b=lWfN0FFw+dCSoE8gxKYb5h0LSei09HJ2jhhPqXHJ8TJGYeFF7p2Wve/hqHID6yVrlx
-         t992bS+np1KVgH1ymcgyADhBr8fbSeAOuV7mwC00FX5dTBAmeS3HZGEQflAL9UFHfRVo
-         2ROHErGkHusNE7XC9N9yXmwL1MqjlsdQyebugg/N7mRQqf3mLURCiTziMJnQhtTwBhhE
-         kGywUUSWnbrz9sZ+H5GbAKvEzroolDuoIuGYKvQu3G9PNh9rVHhrCvNhBvMUoQW7wMlH
-         5cDbpll2FoVttLw84P/VHe/uc1R+pxAGJqmqx+Xe/RuPKQb0B10TVZrx37bxURnLN9Rk
-         C68A==
-X-Gm-Message-State: AOAM532JFOR5MfDC2zawWymY3ODe+03CiNxkbi2U37PXb5goO2TFE8uL
-        zqhxdw4Hxc3jfCJOF1wnMil6a9v/kgk6dg==
-X-Google-Smtp-Source: ABdhPJxHINJgg++leZEvcouXOs7sLRhF2G5+zK+ekdp7UasPFEFS6fhpBiSPEVk/l3AnusOQ9buACw==
-X-Received: by 2002:a5d:6dd2:: with SMTP id d18mr48529890wrz.94.1625924265100;
-        Sat, 10 Jul 2021 06:37:45 -0700 (PDT)
+        bh=0LsBWol6+Hg8fOUR73ix2I7C0wS0aT2ZWxxwIiWuxig=;
+        b=VqRaWmtL1/qPvpsiw/Xz7a82giOuI6uchmrhAEX8A7swD4zDCQigtQ3OcbddgKmvLz
+         c/kel0pZF9C9/Y7c90nawRiB2xJjlgBh2uYhDCO1DtpvGMuog0UxPD7xhv5CZ0ZD0HK5
+         I6A/4Cvjhzj/cMA7Ziypva94zAgwa1ijMcf4vm15iXLT/jLiofc28btW+Dk7cdLOGhrp
+         c8oKymmRtXtJAI8KajpDxlFmYm23ez6FK/owsOgPl7xlE80n5pRedf3Bzzy0ccquF6UA
+         PcD8vDX89Pc5/wIWqkZkjQgsxVnRtnjwSAl77gjunIsbzxx1Ekkvn1xLX3ryPih1tvgk
+         1uhw==
+X-Gm-Message-State: AOAM5315qR4+EC45sH9RrbNTySoeqJCsffA5dXs4K5SBWb+Uk/5jjEbz
+        Qh1U5TEyBkjMCzBMlnjX+n4yvAlMSJKBzg==
+X-Google-Smtp-Source: ABdhPJwdqF+a4/DzzuK6OcRRtx2UYlbWXr/dapbBoRnyEew8BMobbtK+dzc4OZpvKy71ZB9HN0kRtA==
+X-Received: by 2002:a7b:c949:: with SMTP id i9mr28472988wml.168.1625924261801;
+        Sat, 10 Jul 2021 06:37:41 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j17sm17612787wmq.9.2021.07.10.06.37.44
+        by smtp.gmail.com with ESMTPSA id j17sm17612787wmq.9.2021.07.10.06.37.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jul 2021 06:37:44 -0700 (PDT)
+        Sat, 10 Jul 2021 06:37:41 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Andrei Rybak <rybak.a.v@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 19/21] object-store.h: move read_loose_object() below 'struct object_info'
-Date:   Sat, 10 Jul 2021 15:37:22 +0200
-Message-Id: <patch-19.21-ad920362594-20210710T133203Z-avarab@gmail.com>
+Subject: [PATCH v5 15/21] object-file.c: guard against future bugs in loose_object_info()
+Date:   Sat, 10 Jul 2021 15:37:18 +0200
+Message-Id: <patch-15.21-13d4141a21b-20210710T133203Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.636.g43e71d69cff
 In-Reply-To: <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
 References: <cover-00.21-00000000000-20210624T191754Z-avarab@gmail.com> <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
@@ -78,62 +78,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the declaration of read_loose_object() below "struct
-object_info". In the next commit we'll add a "struct object_info *"
-parameter to it, moving it will avoid a forward declaration of the
-struct.
+An earlier version of the preceding commit had a subtle bug where our
+"type_scratch" (later assigned to "oi->typep") would be uninitialized
+and used in the "!allow_unknown" case, at which point it would contain
+a nonsensical value if we'd failed to call parse_loose_header().
+
+The preceding commit introduced "parsed_header" variable to check for
+this case, but I think we can do better, let's carry a "oi_header"
+variable initially set to NULL, and only set it to "oi" once we're
+past parse_loose_header().
+
+This is functionally the same thing, but hopefully makes it even more
+obvious in the future that we must not access the "typep" and
+"sizep" (or "type_name") unless parse_loose_header() succeeds, but
+that accessing other fields set earlier (such as the "disk_sizep" set
+earlier) is OK.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- object-store.h | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ object-file.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/object-store.h b/object-store.h
-index 94ff03072c1..72d668b1674 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -234,20 +234,6 @@ int pretend_object_file(void *, unsigned long, enum object_type,
+diff --git a/object-file.c b/object-file.c
+index 31263335af9..d41f444e6cc 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1393,7 +1393,7 @@ static int loose_object_info(struct repository *r,
+ 	struct strbuf hdrbuf = STRBUF_INIT;
+ 	unsigned long size_scratch;
+ 	enum object_type type_scratch;
+-	int parsed_header = 0;
++	struct object_info *oi_header = NULL;
+ 	int allow_unknown = flags & OBJECT_INFO_ALLOW_UNKNOWN_TYPE;
  
- int force_object_loose(const struct object_id *oid, time_t mtime);
+ 	if (oi->delta_base_oid)
+@@ -1441,18 +1441,20 @@ static int loose_object_info(struct repository *r,
+ 		if (!parse_loose_header(hdrbuf.len ? hdrbuf.buf : hdr, oi))
+ 			/*
+ 			 * oi->{sizep,typep} are meaningless unless
+-			 * parse_loose_header() returns >= 0.
++			 * parse_loose_header() returns >= 0. Let's
++			 * access them as "oi_header" (just an alias
++			 * for "oi") below to make that intent clear.
+ 			 */
+-			parsed_header = 1;
++			oi_header = oi;
+ 		else
+ 			status = error(_("unable to parse %s header"), oid_to_hex(oid));
+ 	}
+-	if (!allow_unknown && parsed_header && *oi->typep < 0)
++	if (!allow_unknown && oi_header && *oi_header->typep < 0)
+ 		die(_("invalid object type"));
  
--/*
-- * Open the loose object at path, check its hash, and return the contents,
-- * type, and size. If the object is a blob, then "contents" may return NULL,
-- * to allow streaming of large blobs.
-- *
-- * Returns 0 on success, negative on error (details may be written to stderr).
-- */
--int read_loose_object(const char *path,
--		      const struct object_id *expected_oid,
--		      enum object_type *type,
--		      unsigned long *size,
--		      void **contents,
--		      unsigned int oi_flags);
--
- /* Retry packed storage after checking packed and loose storage */
- #define HAS_OBJECT_RECHECK_PACKED 1
- 
-@@ -388,6 +374,20 @@ int oid_object_info_extended(struct repository *r,
- 			     const struct object_id *,
- 			     struct object_info *, unsigned flags);
- 
-+/*
-+ * Open the loose object at path, check its hash, and return the contents,
-+ * type, and size. If the object is a blob, then "contents" may return NULL,
-+ * to allow streaming of large blobs.
-+ *
-+ * Returns 0 on success, negative on error (details may be written to stderr).
-+ */
-+int read_loose_object(const char *path,
-+		      const struct object_id *expected_oid,
-+		      enum object_type *type,
-+		      unsigned long *size,
-+		      void **contents,
-+		      unsigned int oi_flags);
-+
- /*
-  * Iterate over the files in the loose-object parts of the object
-  * directory "path", triggering the following callbacks:
+-	if (parsed_header && oi->contentp) {
++	if (oi_header && oi->contentp) {
+ 		*oi->contentp = unpack_loose_rest(&stream, hdr,
+-						  *oi->sizep, oid);
++						  *oi_header->sizep, oid);
+ 		if (!*oi->contentp) {
+ 			git_inflate_end(&stream);
+ 			status = -1;
 -- 
 2.32.0.636.g43e71d69cff
 
