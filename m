@@ -2,133 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14D2BC07E95
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 08:32:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41867C07E95
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 08:47:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E4D2A61351
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 08:32:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 095EF613C2
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 08:47:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231873AbhGJIfX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 04:35:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46650 "EHLO
+        id S232024AbhGJIuV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 04:50:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230007AbhGJIfW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jul 2021 04:35:22 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1A38C0613DD
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 01:32:37 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id h2so17700308edt.3
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 01:32:37 -0700 (PDT)
+        with ESMTP id S231873AbhGJIuV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 04:50:21 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B05ECC0613DD
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 01:47:36 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id g16so5758539wrw.5
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 01:47:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=9bJlGy1Q4DE8hLw4KpaxSOGCe5PvQZnE0LJVm+hbY5A=;
-        b=p2dKw3Inf00iUix0v7U7ZhaRFxUux2bAuTzq9wNeHcRXw+LtAsPHpr2C88BLC2UhPj
-         kU2NllPu9kW5iJIPbHWYCCe5sh69dTF+1oebTib6+izMdzqqBJNqqOtrcGbkmZdyAilO
-         W/+9Xlk8cxbzAzdT6oTzPOqKaqdiZIPkAEBWgnEehTqX4/MMG9MarLvucJgkZ/oc5tdz
-         nxxFlgP8vczkl2y1y8/bftkhZRIdQ7czZ0qvxd5zayU1CJYnzK0jw5XwumK/703v/oL1
-         ks1lDSbBNKDpFu7JMVEXexRDwyphHnT61laYmxBe0tWzRnIJNVgBJy5oafZf+lAeOADg
-         91xw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+YaH6U5nfzxdoXK40Eh1YRvetu03IAIzIg1hu0rUk1Y=;
+        b=jL9JgybpTjc3OFYP2gev6TmeeUIRz/mcXpkaak8O+xOfAqlr4aYuuVazR8XeJ6C8gr
+         3gzE2JZ1k/MMZXNdKUIC4UXKou9yJUEh71NfStTd7cYEAsY8TY1VSOTSZJBco8Cd/1UE
+         8jU2aIVOiUydsUuOcAhzxdGG9t53vnVZFwzBqi7kR9Bd4kEVfeVnsZmXZoicbKzjMWwy
+         83nUiq6k1qeaesgZggpbN7WYsE26nBCBNCxDNNSjAsyiX29QnnYMscpKnXarqdcW/Ese
+         Jxo3w6Hz0gELpP/yY8nnQha6h/lB0TXdZY3yNQm7cvvo+bhZDkNy+pvPdimj8GOdTqbC
+         v/XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=9bJlGy1Q4DE8hLw4KpaxSOGCe5PvQZnE0LJVm+hbY5A=;
-        b=oj4T0egAZazbjvlppODFhPM6vysdDwmgkx+oxuS1GUN7Q9lxtPnamUh0uvOaYZkqvK
-         wZVuPlWIcWrpqRQISWLrprj1enFV3s6+VT/FLAcLY/JtY+1vyF9DYNt2afkxUzRLTX/c
-         ksyHK1vD3c7yv1C/jPG3RMaWjRon+bof+0eN1qdKqghJ8EdKEvoVN5ktOOCj/FidyqMR
-         zYCiiuacj5ayfanVsv2m6KYxcMQH4J2ceNO7nFIsXc5ozilHRn2s4JcGoM5oS/U9eDiO
-         oAPKle6T1ZDk0XZHu4ADI5OU0WmitdoYC7pjVYqXzGo2whdvEn6dtOLO6XHkrlMDNJVl
-         oi4g==
-X-Gm-Message-State: AOAM532cR+nEYxE4udnzc4QBgM5hb9KDqtkcyt2wK54G5oOOzhJnOB5t
-        PpYU/UvZdHjiJekQgQHMPR4=
-X-Google-Smtp-Source: ABdhPJwLZBNVsu5O+Ikh1rmThGvKWWoxUpOFKpF4NgX89py6hgooShwmyw4GT8wt8v7JL+PLOA+C8g==
-X-Received: by 2002:a50:c111:: with SMTP id l17mr38754770edf.56.1625905956210;
-        Sat, 10 Jul 2021 01:32:36 -0700 (PDT)
-Received: from evledraar ([109.36.149.59])
-        by smtp.gmail.com with ESMTPSA id d9sm3395660eje.34.2021.07.10.01.32.35
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+YaH6U5nfzxdoXK40Eh1YRvetu03IAIzIg1hu0rUk1Y=;
+        b=YwbQsD9k8dUsXh0nlaGElUX6rpLf0ZJRcmlkZHif3t+pAJgujJQcXFxgdtt9hceXEo
+         opovwv3KPOeO0yzqtbd/dMiL8tFVQGSv1L6cCJTavIk1O6p6JF3Zf7tFSRHoOZkWz7ji
+         em+ETrhxSwdrkwr0NEtlp7+vE7B3zD6ZZ8DHnnyotkMgPP0qll+s6wlAAFWlYnfLBTpb
+         DSM0gAZt2NtkwocPgkI2AIQZVtYWL+HOJTaPZ1kssD0ZA+jVUGrOvX8d9zVa3OgB/VDW
+         U8KTGi6HyieP686ccZZUAZ67KpT7ko26DXN8YHwPFehouO5e9yj+smDVsEnOK8nbqxkI
+         Zjrw==
+X-Gm-Message-State: AOAM532svOASHt2wKDXUU+hnXu1aJDfl7FqGSPRqmRxM9EgsFxMoY495
+        +eK/2XWX5FJ9JtJpyO0HskEXdWvZtsmNQA==
+X-Google-Smtp-Source: ABdhPJyo6Bfi3HDjdXDf/QiGLwj7LrJP4ZwPioTfoBw4D8War4LXSzIjUu73z/eZa/jWbGfss5SPaw==
+X-Received: by 2002:adf:ea8c:: with SMTP id s12mr6319824wrm.404.1625906854955;
+        Sat, 10 Jul 2021 01:47:34 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id x8sm165769wrt.93.2021.07.10.01.47.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jul 2021 01:32:35 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     grizlyk <grizlyk1@yandex.ru>
-Cc:     git@vger.kernel.org
-Subject: Re: Pro Git book: concerning data lost due to ".gitignore"
-Date:   Sat, 10 Jul 2021 10:23:25 +0200
-References: <3957861622848346@myt5-a5512e99e394.qloud-c.yandex.net>
- <87a6o459bh.fsf@evledraar.gmail.com>
- <4458411625892760@myt6-ab88f6e23eb0.qloud-c.yandex.net>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <4458411625892760@myt6-ab88f6e23eb0.qloud-c.yandex.net>
-Message-ID: <87zguu4li5.fsf@evledraar.gmail.com>
+        Sat, 10 Jul 2021 01:47:34 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/6] add missing __attribute__((format))
+Date:   Sat, 10 Jul 2021 10:47:26 +0200
+Message-Id: <cover-0.6-00000000000-20210710T084445Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.636.g43e71d69cff
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Adds missing add missing __attribute__((format)) in various places,
+which improves compile-time checking.
 
-On Sat, Jul 10 2021, grizlyk wrote:
+Ævar Arnfjörð Bjarmason (6):
+  *.c static functions: don't forward-declare __attribute__
+  sequencer.c: move static function to avoid forward decl
+  *.c static functions: add missing __attribute__((format))
+  *.h: add a few missing  __attribute__((format))
+  bugreport.c: tweak cmd_bugreport() to use __attribute__((printf))
+  git-compat-util.h: add __attribute__((printf)) to git_*printf*
 
-> hi
->
->> On Sat, Jun 05 2021
->> It's way too common of a pattern to e.g. have a *.o file made from a
->> corresponding *.[ch] file(s) in the same directory.
->
-> The patterns were common for old times (before VCSes was involved). To
-> deal with temporary files (like .o), generic OS tools like "make
-> remove_compiled" can help to clean directory before stage. To keep
-> derivative persistent files (like the same .o) separated directory can
-> be used.
+ add-patch.c                                   |  1 +
+ advice.h                                      |  1 +
+ builtin/am.c                                  |  1 +
+ builtin/bisect--helper.c                      |  2 +
+ builtin/bugreport.c                           | 11 ++++-
+ builtin/index-pack.c                          |  4 +-
+ builtin/receive-pack.c                        |  5 +--
+ cache.h                                       |  1 +
+ commit-graph.c                                |  1 +
+ compat/mingw.c                                |  1 +
+ compat/win32/syslog.h                         |  1 +
+ compat/winansi.c                              |  1 +
+ .../osxkeychain/git-credential-osxkeychain.c  |  1 +
+ .../wincred/git-credential-wincred.c          |  1 +
+ gettext.c                                     |  1 +
+ git-compat-util.h                             |  2 +
+ imap-send.c                                   |  3 ++
+ mailmap.c                                     |  1 +
+ merge-ort.c                                   |  1 +
+ merge-recursive.c                             |  1 +
+ midx.c                                        |  1 +
+ quote.h                                       |  1 +
+ ref-filter.c                                  |  1 +
+ sequencer.c                                   | 43 +++++++++----------
+ server-info.c                                 |  1 +
+ strbuf.h                                      |  2 +
+ t/helper/test-advise.c                        |  2 +-
+ worktree.c                                    |  1 +
+ 28 files changed, 62 insertions(+), 31 deletions(-)
 
-It's still a very common pattern, e.g. the project whose ML you're
-posting to uses it, anecdotally most free software C or C-like projects
-I look at / work on use it.
+-- 
+2.32.0.636.g43e71d69cff
 
-In any case, git as a project can't say "you should fix your code". This
-VCS has to deal with the real world, people do use this pattern in the
-wild, and we can't willy-nilly eat their data.
-
-It's not a good approach to advocate a change in git behavior to say
-"people should do X, not Y, to avoid this problem", when a cursory look
-at real-world use reveals that "X" is in wide use, and unless you did
-"Y" a proposed change in behavior would be detrimental to your use of
-git.
-
-What is more productive is to either find out how we can support both
-without harming the other, or make new behavior opt-in, hence the
-thread(s) I linked to about "precious" etc.
-
->> git already does a good job of supporting it. 
->
-> Sure, the light message: "There are ignored files (%u<number of
-> files>) not placed into repo.\n\t(use git status --ignored to view)";
-> will improve the activity. Otherwise some files somethimes will not be
-> placed into repo unexpectedly for user.
->
->> You'd e.g. compile all your 
->> assets outside of the repo via your build system, and just not have
->> anything in .gitignore.
->
-> Do you suggest to copy desired src files into separated repo directory
-> (the repo directory placed under VCS control) by generic OS tools
-> (i.e. by cp command) and stage the separated directory?
-
-I'm not really being serious here, as should be clear from the linked
-threads I think the current behavior has sucky edge cases and does eat
-people's data in some cases, that's bad, the problem is finding a way to
-change it that doesn't cause badness for other use-cases.
-
-I am saying that if your proposed "Y" solution is effectively "other
-people should mostly/entirely rewrite their build systems to deal with a
-new default I'm proposing", then in this case you'd also approximately
-what you wou want if we keep the current behavior and you rewrite your
-build system(s), no?
-
-Anyway, maybe I misunderstood some of what you're saying...
