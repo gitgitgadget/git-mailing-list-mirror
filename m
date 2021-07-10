@@ -2,111 +2,221 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A677C07E9B
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 20:43:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5157FC07E95
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 20:49:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6522361356
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 20:43:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B2EE6124B
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 20:49:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231124AbhGJUpn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 16:45:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36442 "EHLO
+        id S229704AbhGJUw1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 16:52:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbhGJUpn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jul 2021 16:45:43 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CACD0C0613DD
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 13:42:57 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id b18so13527784qkc.5
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 13:42:57 -0700 (PDT)
+        with ESMTP id S229515AbhGJUw1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 16:52:27 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C04BC0613DD
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 13:49:42 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id c145so2212393oib.2
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 13:49:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=N/E2sMSDXQBGbsQ+b4f4BiiIH+9wc+OWxYgA9MOuHow=;
-        b=IHcMLH2VgabsbAAPUwHtD/0Nvwcp7Z6uWotd1pzxbdTbiI7uZ0p4ttHeqdFPQypYCA
-         OrjiwnyCnFKU8mG6IgYDCVeLV7hli1OpzNABLO5G4dGjauZR9LjCdqqF9Q36PfhQSa19
-         aErmlZWcxW2DN7aZ3N5P7h+wtLwKOZgDyeiLCm9AztInVfJUjKOQE0qb6iNclrEjww6Q
-         fmOT2ipeKO8+abfhh6P7TitO3T6Qks1YlknpLqtoiPQNrxeCDFAK7jF8eQFjRiMEpcGj
-         aviM/OnfxAimQQXss4WX0S5pp3hjUsRKA22258YmCARTnhOWyfk4e/crmipWGKigB2oT
-         uyGQ==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=RfWUYkvBdd43Br1oEZwK3zhFMvPGDe6zYrP5sWVPCSI=;
+        b=Cwv2nw7n5Wfta4S7/rb/BhmOm/zKYYKO3ZfJ5ZVEBG0KqTcMOYINQrAPs/wmaWI2D/
+         qAoR0hIMTs9Dxw9zkhf3aVZHW4mihj0NiX6mZSqBDVwTffMuO25AGVLKY+sxQXt+qYGa
+         gsAzCC6MfTa4cOm8FAKaVJeAAJzg62wMdYJLCDbNeEGzujca0Llf5uWYPRjc4RAK0T52
+         jHYE0Q5upXtqL6bS9c5pHY7ZK0VLR0VGOVATng5dgizO2aBeVXOUZOUxgf9UvBARRDTj
+         i7CwM+3aTqZ8n/w3O24IweOdhzO5ER2vARKJYL7DZNg+6sjwXs96ZxE2xzVyd2C94/Mr
+         wiKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=N/E2sMSDXQBGbsQ+b4f4BiiIH+9wc+OWxYgA9MOuHow=;
-        b=X/NxHARpxapogePL8lF5EWnTjqVcSMmMyqLvyaiIDyzNbfDZqtJS8f5Ad4AzsgkLYt
-         nEUpAaczOz0kpIy9GpLtq9awvIsHS9Y5BV332N3lE/8HdEILJkGsayZQEsft3f7BGOaC
-         l7a+vvAPAiAWqg7SY9vi52emORtPsr0wmbPo+rNq2+V4pOuMVSHzgdjp50JpRR89BK2R
-         TOghvt5oh76tzmE5P2HOTxtxg9RVEKXuk6Kl+lwSJVSSky4sRoj3FwW7m1r6ISg17sKK
-         oVaBFgwH0E4NlHC6bpsXcXO3xzpwfVLuDIWe1xNnw6c7sX4Eg5lqa2EbeYOu3UsR4sAh
-         cgyw==
-X-Gm-Message-State: AOAM530QwWDzxpoJMU5ALEuF9QJDkKDFlIAGn6jpEz6sA+wsBNtJYnc3
-        HH2kn+DIc+P6XntxLs1WHO8ruz+hxu8SHKLJ
-X-Google-Smtp-Source: ABdhPJyT8k+Lk3tmCHcX1avzLRzW2X11LoHV4hlMLS1Ciiyv/LXHf9IQEmwlwTsoWGe5MDa0utUTow==
-X-Received: by 2002:a05:620a:1479:: with SMTP id j25mr20663586qkl.339.1625949776728;
-        Sat, 10 Jul 2021 13:42:56 -0700 (PDT)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id z17sm3710357qts.24.2021.07.10.13.42.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 10 Jul 2021 13:42:56 -0700 (PDT)
-Subject: Re: unit tests / cirrus ci fails
-To:     Fabian Stelzer <fs@gigacodes.de>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org
-References: <a7aca5f5-3a5e-b13c-ccae-3e515c774420@gigacodes.de>
- <YOhmAGig//yfABWv@danh.dev>
- <db030e49-edb0-8f4b-0e51-a89b2a4a47a8@gigacodes.de>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <dba84da7-f6ec-37b3-4322-378af9249d54@gmail.com>
-Date:   Sat, 10 Jul 2021 16:42:55 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <db030e49-edb0-8f4b-0e51-a89b2a4a47a8@gigacodes.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=RfWUYkvBdd43Br1oEZwK3zhFMvPGDe6zYrP5sWVPCSI=;
+        b=aZRKg63Kj5Ad+H310isUV+lqu5TQMHdMjjaGEs4ydTqT6QpicrYI0rxjxmXpG4Xy4I
+         /g7Fgni+zz5mD4ifDg3RiC5nvlZZ/RLrs8Umd0NmdrIx32y8wPULyWH5o7vr7hH3pztt
+         6pqIJpiFr+U19SxXk3lu/GN1NY99JDBIWsnFO2UMUzC2Jssh4tnqvCrFA5vtIhhwwCZL
+         oeCvUX18dwN8kdZf0cQYoWa8OIaCJ0DJyV+Xh3q8i/2HSqdOFGAq3pXobsVLgWrAgL1d
+         X/iswc3tf9PzbNGkfz7Zw1q84HdwekT2vdJIpl9wJHays0Dzm4zWtdkGrc0KOeHCSWrH
+         qVpw==
+X-Gm-Message-State: AOAM5305vxYwN4gy8ZtC6U5IzeU8DLKkNSAxUDQaNgdSoqRGVxzDn3si
+        FxWfU+RsCGBhCnzDyq0cx/8=
+X-Google-Smtp-Source: ABdhPJzBpltlS+PMIJBWcyih4/u84roeT62AE+oSxx7I9eGl/pyBmM7ZHiaHJ44Ov5GAZPudoXc6fA==
+X-Received: by 2002:aca:1802:: with SMTP id h2mr4572791oih.146.1625950181182;
+        Sat, 10 Jul 2021 13:49:41 -0700 (PDT)
+Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
+        by smtp.gmail.com with ESMTPSA id m1sm1960068otl.0.2021.07.10.13.49.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Jul 2021 13:49:40 -0700 (PDT)
+Date:   Sat, 10 Jul 2021 15:49:39 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Martin <git@mfriebe.de>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Message-ID: <60ea07e3495e8_7ef2081d@natae.notmuch>
+In-Reply-To: <6f43b36b-abe1-41f2-6138-e820c974b1bd@mfriebe.de>
+References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
+ <7870a0ad-8fa1-9dbd-1978-1f44ec6970c5@mfriebe.de>
+ <xmqqy2arrmba.fsf@gitster.g>
+ <b80bf908-0c31-2b3a-6d6c-1a3fba5b2334@mfriebe.de>
+ <87wnqaclz8.fsf@osv.gnss.ru>
+ <60e5f3981de5f_301437208bc@natae.notmuch>
+ <87bl7d3l8r.fsf@osv.gnss.ru>
+ <60e61bbd7a37d_3030aa2081a@natae.notmuch>
+ <877di13hhe.fsf@osv.gnss.ru>
+ <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
+ <60e67389a4adc_306ac1208fd@natae.notmuch>
+ <4057b3ac-a77c-0d5f-d3f4-ad781754aae4@mfriebe.de>
+ <60e736e72da68_30939020850@natae.notmuch>
+ <155308af-42ad-b044-fb37-676251a9b7e1@mfriebe.de>
+ <60e762243aab1_30a7b02089@natae.notmuch>
+ <2b85a7eb-d0be-65e7-ecbb-1750abf53e53@mfriebe.de>
+ <60e79c31aaa72_30b8a4208c1@natae.notmuch>
+ <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
+ <60e874e1c6845_215320861@natae.notmuch>
+ <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
+ <60e88a4b8592f_16bcb2082b@natae.notmuch>
+ <ad58bd54-a9dd-59a9-4fce-f90be469cd60@mfriebe.de>
+ <60e9f8d462bd9_7ef20898@natae.notmuch>
+ <6f43b36b-abe1-41f2-6138-e820c974b1bd@mfriebe.de>
+Subject: Re: PATCH: improve git switch documentation
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Fabian,
-
-Le 2021-07-09 à 12:04, Fabian Stelzer a écrit :
-
-> The new tests themselves are failing now and i have no idea why on freebsd :/
-> Are there detailed logs publicly available from the CI runs?
-
-the logs should be accessible on the "Checks" tab of your PR
-  if you are logged into GitHub. But I don't think there is more
-to see than what's shown there.
-
-> Or is my only option to set up a freebsd 12 vm to try to replicate this?
-> Does the ci simply run "make test" or is there another mechanism involved?
+Martin wrote:
+> On 10/07/2021 21:45, Felipe Contreras wrote:
+> > Martin wrote:
+> > No. You can add all the explanation you want after "Resets the branch to
+> > <head>.", but most of that explanation would be redundant, because as we
+> > already agreed, there's no way to reset the head of a branch without
+> > changing the branch.
 > 
+> By that logic a lot of explanations are redundant, because on some 
+> lever, if every user thinks far enough lots of things can be concluded.
 
-I managed to log into the Cirrus-CI FreeBSD VM using tunshell [1].
-I found out about it at [2]. Here's the commit in my fork [3]
+Yes. And that's what a good writer aims for: to minimize the number of
+words needed for the vast majority of readers to understand the point.
 
-0. Create a Cirrus-CI account and give it access to your fork of Git
-1. Create the tunshell session at [1]
-2. Run the local script on your local host
-3. Copy the remote script in '.cirrus.yml' in you branch
-    (ex. as the first step of the "test_script:" section), commit and push to GitHub
-4. wait for the build to start on Cirrus and the tunshell client on your machine
-    should connect you to the VM.
-5. Go to /tmp/cirrus-ci-build in the VM to find the git.git checkout
+The more work you as a writer put into a sentence, the less work
+hundreds or thousands of readers have to do while reading that sentence.
 
-Caveat: your public IP will be viewable in the Cirrus log.
+Rendundancy is only good when you are trying to reach a certain
+word count for a university essay.
 
-[1] https://tunshell.com/go
-[3] https://github.com/phil-blain/git/commit/b47d803ee1ba83100702cb80c93e18c74d787dce
-[2] https://github.com/cirruslabs/cirrus-ci-docs/issues/432
+>  From the docs (and similar on git checkout)
+> > --force
+> > 
+> >     An alias for --discard-changes.
+> > --discard-changes
+> > 
+> >     Proceed even if the index or the working tree differs from HEAD.
+> > Both the index and working tree are restored to match the switching 
+> > target. If --recurse-submodules is specified, submodule content is 
+> > also restored to match the switching target. This is used to throw
+> > away local changes.
+
+There's no adjective I can use for the official git documentation that
+isn't crass, so let's just say that I find it extremelly lacking.
+
+That paragraph above is a great example: it's a) hard to read, b)
+unecessarily verbose, c) is wrongly ordered, d) redundant, and e) not
+even correct.
+
+> If the working tree is made to match the target, then it can not retain 
+> local changes. That can be concluded.
+> Yet, it is explicitly mentioned.
+> 
+> Does it really hurt to mention it?
+
+Yes it does.
+
+Time is the most precious resource we all have. We should not waste the
+most precious resource of our readers.
+
+  Throw away local changes.
+
+That does a much better job.
+
+If you want to be more explicit, you can add a bit more information:
+
+  Throw away local changes either in the staging area or the working
+  tree.
+
+Why does the user have to know what HEAD is? And why does it matter that
+the staging area is held in a file called "index"?
+
+The current explanation is just bad.
+
+
+But as I said, if you want to replicate the current style of the
+documentation, go ahead, but it would be pretty much a bloated version
+of "resets the branch to <head>".
+
+> But anyway.
+> I brought forward my idea. I explained my reasoning.
+> If it (this part) is downvoted/rejected then that it how it is.
+
+It's not a matter of consensus. There are proposals where literally
+everyone is in favor, and yet they are never merged.
+
+There's only one person you need to convince.
+
+So, what I suggest you to do is take into consideration all we have
+discussed and send another patch, because that's ultimately all that
+matters. Moreover, it usually happens to me that while I write the patch
+is when finally the previously-discussed ideas start to click.
+
+> >>>> So, I still ask:
+> >>>> - If "--force" to overwrite the work tree can clearly state that change
+> >>>> to files will be "thrown away".
+> >>>> - Then why can "force" re-using an existing branch name not do the same?
+> >>>
+> >>> Because we would be forcing two things now.
+> >>
+> >> Which 2 things?
+> >>
+> >> The worktree overwriting is *not* forced by -C
+> >>
+> >>     git switch -C b1 b2
+> >>     git checkout -B b1 b2
+> >>
+> >> both give an error if the worktree has changed files.
+> >>
+> >> This is only about what happens to the branch.
+> >>
+> >> I.e we force the branchname to point to our new branch.
+> >> And that means the branchname no longe points to the old branch, and the
+> >> old branch therefore is removed.
+> > 
+> > It seems your proposal is to make `git switch -c --force b1 b2` be the same as
+> > `git switch -C b1 b2`, but that would also make it the same as
+> > `git switch -C --force b1 b2`. Therefore it would be forcing two things.
+> > 
+> > Or is your proposal something else?
+> > 
+> 
+> No. I definitely want to keep those 2 apart from each other.
+> 
+> For each force-needing action, you should have to specify it's own force 
+> flag.
+
+OK, but I don't see the concrete proposal. What would be the flag that
+makes -c "forceful"?
+
+Cheers.
+
+-- 
+Felipe Contreras
