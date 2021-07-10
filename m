@@ -2,75 +2,37 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04F2FC07E95
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 20:00:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3AC7C07E95
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 20:07:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CEFAC61353
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 20:00:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F62F6128B
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 20:07:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230057AbhGJUDS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 16:03:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55428 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbhGJUDQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jul 2021 16:03:16 -0400
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF7CDC0613DD
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 13:00:29 -0700 (PDT)
-Received: by mail-oi1-x231.google.com with SMTP id s23so2684621oij.0
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 13:00:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=uLH7BwAZb5XaRK0UPliJ5jwdFR55nRzw95XDN25efV8=;
-        b=SI58J2w7eS+7WwfAggwNjYw3t04H5NoPHacaTjUIuh7cYSxLAUVB7Rwk0AYxi3TJt7
-         2f0CUj7LoigPVBV8ZnTmbj35kAOK5syFde5zwH8fVyX2wt2jn3BB0MXTcnSFo8E0sv4F
-         XxmiG/SPLKamj/CAmYmuJsbcSmcu6MtoWejP+EqjeJ8uz3RkWkcE0rRJEkmo3aO24NtJ
-         9/WD9uUs1xeTJ6ZUQcVNvsaWLtQOEvFTXgTLu3jWfYWgtsUZh6MwpdvP9Aeooj+XicjR
-         FtaxvWEaqkeJNNAbCkOE+3SnxvDfROhuCGTl+ATsNMk0xTi8/4wMnJuw13HUtluCUWiG
-         kd1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=uLH7BwAZb5XaRK0UPliJ5jwdFR55nRzw95XDN25efV8=;
-        b=Q5XnSVP044rGXl/u+1e/bqxlv3Ki5jSRZArrr8sfI0hQsLyCoV7yB/2sy8wRlPq0IW
-         Tin4hY5T9aiX4rhd53djLTupkDKgR4FAW0kDd8cbX9lnv1+6Au5TT3yR7NZHto4k7N/E
-         QhhSUZ2QQ5g1GzfQEzYxGwMUgF89UnjzEEyaUo/w9fvqFB+2OgGMcpBmbvPhIVals/sw
-         /UgGcv8xBzULMpPTj5qGzyEkMBRz0J712jDFmMn28ydm8a3GrzB/xZ9XPULGlKAqdOom
-         DLjnSH0IGr0mbA+2zD1vZJ3lNudf6VsjMxfR0wagQMH20NAkfaHU5eCfI+Jbvbh5cP1I
-         YICg==
-X-Gm-Message-State: AOAM532KBU+RyBvG+lIxYdjUCvLFZY8iWWpfTAVcm3v95kOMy4VLNNKW
-        DehgCza28ukgDskXyQu8QDI=
-X-Google-Smtp-Source: ABdhPJyiSysLa838FqXGloDbhovV1ijcCH8bsr4i8ekP6SRC8K2vYDOCJz/bVRrue/j+m9n8fTd0Nw==
-X-Received: by 2002:a05:6808:2081:: with SMTP id s1mr2183105oiw.161.1625947229419;
-        Sat, 10 Jul 2021 13:00:29 -0700 (PDT)
-Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id o1sm2065817oik.19.2021.07.10.13.00.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jul 2021 13:00:28 -0700 (PDT)
-Date:   Sat, 10 Jul 2021 15:00:27 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Martin <git@mfriebe.de>, Sergey Organov <sorganov@gmail.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Message-ID: <60e9fc5b83c2a_7ef20880@natae.notmuch>
-In-Reply-To: <1bd36aa2-ac90-f7d4-9d48-1aa39159b263@mfriebe.de>
+        id S229714AbhGJUKc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 16:10:32 -0400
+Received: from smtprelay01.ispgateway.de ([80.67.31.28]:17913 "EHLO
+        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229515AbhGJUKc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 16:10:32 -0400
+Received: from [84.163.65.41] (helo=[192.168.2.202])
+        by smtprelay01.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <git@mfriebe.de>)
+        id 1m2JGT-0004VK-PR; Sat, 10 Jul 2021 22:07:53 +0200
+Subject: Re: PATCH: improve git switch documentation
+To:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
- <xmqqpmw4uwh2.fsf@gitster.g>
  <7870a0ad-8fa1-9dbd-1978-1f44ec6970c5@mfriebe.de>
  <xmqqy2arrmba.fsf@gitster.g>
  <b80bf908-0c31-2b3a-6d6c-1a3fba5b2334@mfriebe.de>
- <87wnqaclz8.fsf@osv.gnss.ru>
- <60e5f3981de5f_301437208bc@natae.notmuch>
- <87bl7d3l8r.fsf@osv.gnss.ru>
- <60e61bbd7a37d_3030aa2081a@natae.notmuch>
+ <87wnqaclz8.fsf@osv.gnss.ru> <60e5f3981de5f_301437208bc@natae.notmuch>
+ <87bl7d3l8r.fsf@osv.gnss.ru> <60e61bbd7a37d_3030aa2081a@natae.notmuch>
  <877di13hhe.fsf@osv.gnss.ru>
  <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
  <60e67389a4adc_306ac1208fd@natae.notmuch>
@@ -83,33 +45,112 @@ References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
  <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
  <60e874e1c6845_215320861@natae.notmuch>
  <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
- <87im1ieaba.fsf@osv.gnss.ru>
- <1bd36aa2-ac90-f7d4-9d48-1aa39159b263@mfriebe.de>
-Subject: Re: PATCH: improve git switch documentation
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+ <60e88a4b8592f_16bcb2082b@natae.notmuch>
+ <ad58bd54-a9dd-59a9-4fce-f90be469cd60@mfriebe.de>
+ <60e9f8d462bd9_7ef20898@natae.notmuch>
+From:   Martin <git@mfriebe.de>
+Message-ID: <6f43b36b-abe1-41f2-6138-e820c974b1bd@mfriebe.de>
+Date:   Sat, 10 Jul 2021 22:07:41 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <60e9f8d462bd9_7ef20898@natae.notmuch>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWVAbWZyaWViZS5kZQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin wrote:
-> There is even discussion to add "-c" for  "copy branch + switch" to git 
-> switch.
-> Which I have no personal objection. Only find it regrettable that it 
-> means an incompatible change to -c. (Never mind that git switch is still 
-> "experimental". It has been so for a long time, for many people out 
-> there long enough to forget the "experimental")
+On 10/07/2021 21:45, Felipe Contreras wrote:
+> Martin wrote:
+> No. You can add all the explanation you want after "Resets the branch to
+> <head>.", but most of that explanation would be redundant, because as we
+> already agreed, there's no way to reset the head of a branch without
+> changing the branch.
 
-This is relative.
+By that logic a lot of explanations are redundant, because on some 
+lever, if every user thinks far enough lots of things can be concluded.
 
-`git switch` has existed for 1.9 years. I've been using git for about 15
-years, so that's 13% of the time (although I've been using it even less
-time than that). I understand that for more recent users this might seem
-like a long time, but it isn't.
+ From the docs (and similar on git checkout)
+> --force
+> 
+>     An alias for --discard-changes.
+> --discard-changes
+> 
+>     Proceed even if the index or the working tree differs from HEAD.
+> Both the index and working tree are restored to match the switching 
+> target. If --recurse-submodules is specified, submodule content is 
+> also restored to match the switching target. This is used to throw
+> away local changes.
 
-Git UI development is dead slow.
+If the working tree is made to match the target, then it can not retain 
+local changes. That can be concluded.
+Yet, it is explicitly mentioned.
 
--- 
-Felipe Contreras
+Does it really hurt to mention it?
+People overlook details that to others are blaring obvious.
+I agree, we can not mention every potential possibility. But as a 
+general rule, if data could be lost, then a mention (an explicit 
+mention) should be made.
+
+Yes, commits may be hold by the reflog. Except the reflog is optional. 
+And more to the point, the reflog is unknown to plenty of people (never 
+mind if they should know it, they do not) So the possibility of loss is 
+rather real.
+
+But anyway.
+I brought forward my idea. I explained my reasoning.
+If it (this part) is downvoted/rejected then that it how it is.
+
+
+There still is the idea to replace the word "branch" by "branch name" in 
+some parts of the git switch documentation.
+
+
+
+>>>> So, I still ask:
+>>>> - If "--force" to overwrite the work tree can clearly state that change
+>>>> to files will be "thrown away".
+>>>> - Then why can "force" re-using an existing branch name not do the same?
+>>>
+>>> Because we would be forcing two things now.
+>>
+>> Which 2 things?
+>>
+>> The worktree overwriting is *not* forced by -C
+>>
+>>     git switch -C b1 b2
+>>     git checkout -B b1 b2
+>>
+>> both give an error if the worktree has changed files.
+>>
+>> This is only about what happens to the branch.
+>>
+>> I.e we force the branchname to point to our new branch.
+>> And that means the branchname no longe points to the old branch, and the
+>> old branch therefore is removed.
+> 
+> It seems your proposal is to make `git switch -c --force b1 b2` be the same as
+> `git switch -C b1 b2`, but that would also make it the same as
+> `git switch -C --force b1 b2`. Therefore it would be forcing two things.
+> 
+> Or is your proposal something else?
+> 
+
+No. I definitely want to keep those 2 apart from each other.
+
+For each force-needing action, you should have to specify it's own force 
+flag.
+
+I do not want to change the behaviour on that part.
+
+I only compared the
+- doc of "-f" for worktree overwrites
+with the
+- doc -C for branch overwrites.
+
+And I found that the former makes explicit mention of what can be lost, 
+the latter leaves it to be concluded.
+
