@@ -2,191 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCEB1C07E95
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 20:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A677C07E9B
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 20:43:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA91A6128D
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 20:12:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6522361356
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 20:43:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229924AbhGJUPl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 16:15:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58180 "EHLO
+        id S231124AbhGJUpn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 16:45:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbhGJUPk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jul 2021 16:15:40 -0400
-Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91E17C0613DD
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 13:12:54 -0700 (PDT)
-Received: by mail-oo1-xc29.google.com with SMTP id w17-20020a4aca110000b029025dba2185a4so618685ooq.11
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 13:12:54 -0700 (PDT)
+        with ESMTP id S229515AbhGJUpn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 16:45:43 -0400
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CACD0C0613DD
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 13:42:57 -0700 (PDT)
+Received: by mail-qk1-x729.google.com with SMTP id b18so13527784qkc.5
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 13:42:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=xLsDR+eon1JDvdYLq8WgUQhkp2iqbR0BBfuZRFT5+aE=;
-        b=BQXAAL5CHwTog3W6JZnKlK4t1nWoJOaBnSDguQwUzpZecIfiWFBecL1qEdjogGpq64
-         WVfFS2NI0Xd7XN2xkdgAHRvnDiIojVdUAL/XYko6ma6048L1LpDetBYCx2bJBS3O0G7p
-         tu9xXni+sZRbV6t909+0/Bey/dKlD41o+xJ1Ryx1A+rAAZOqnu1F5vv3l2PAiIgmA/Iy
-         efdBEXKgGJU5Z8kqwBGY1l/s9wCzkomHE1R1diLWbET/1xGAZiQIdQZKnYjx2Szi2mZ5
-         q+oYoGUo9hqd4EIsNd02tZNoE04cSNoA307ChvkllX6Q6PmpeVY/H4tBSmaU+LCed2Ov
-         bnBg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=N/E2sMSDXQBGbsQ+b4f4BiiIH+9wc+OWxYgA9MOuHow=;
+        b=IHcMLH2VgabsbAAPUwHtD/0Nvwcp7Z6uWotd1pzxbdTbiI7uZ0p4ttHeqdFPQypYCA
+         OrjiwnyCnFKU8mG6IgYDCVeLV7hli1OpzNABLO5G4dGjauZR9LjCdqqF9Q36PfhQSa19
+         aErmlZWcxW2DN7aZ3N5P7h+wtLwKOZgDyeiLCm9AztInVfJUjKOQE0qb6iNclrEjww6Q
+         fmOT2ipeKO8+abfhh6P7TitO3T6Qks1YlknpLqtoiPQNrxeCDFAK7jF8eQFjRiMEpcGj
+         aviM/OnfxAimQQXss4WX0S5pp3hjUsRKA22258YmCARTnhOWyfk4e/crmipWGKigB2oT
+         uyGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=xLsDR+eon1JDvdYLq8WgUQhkp2iqbR0BBfuZRFT5+aE=;
-        b=reXbu+4/kvjfF0aQrKUimNu/Co/8YE7sfAtKfq1w3OiAUpeaex0dmIJu7c/rsQyl8a
-         hRNmi4X9iSM8h0HOA3E810ClI9+ken/qk9SVeTJaAsGSg5yoe7Wq1YbrYKxmuPlsbFAX
-         2qImK+wWF1tJfjT490+HBCfuuQR6WGMe2+/e53SgE+Yd9ceUznpt3S85/qeg7yanwiGy
-         PUJcxhD+206QCPZlT8ceiKKbjT5bpwtcOV4y5v9oL30bbYJor3NpMSeqLqY7azkILVkM
-         k4ZPtdvqwkxz4OFrkIx5XzOWDuiGYFzaWgtQMLSGCEsdgUTglSZJAiHPUYO9m0CgThwv
-         SXlQ==
-X-Gm-Message-State: AOAM532xKncUd51/vs/hkTrNsGSEkgyX5aJA7frULEgnVSInK/HF/KDh
-        GiAvDtCQlT3F1f741zxRqsQ=
-X-Google-Smtp-Source: ABdhPJwZrzaxDlhYryEO9URU4mqQlYmhXvurlMKwNSSTpS4R04hQTu+Cm9EiqRu7Bpq3/ngrgmWMZQ==
-X-Received: by 2002:a4a:e8cd:: with SMTP id h13mr26712909ooe.26.1625947973837;
-        Sat, 10 Jul 2021 13:12:53 -0700 (PDT)
-Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id t10sm1703329oor.48.2021.07.10.13.12.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jul 2021 13:12:53 -0700 (PDT)
-Date:   Sat, 10 Jul 2021 15:12:52 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Sergey Organov <sorganov@gmail.com>, Martin <git@mfriebe.de>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Message-ID: <60e9ff4430c57_7ef20815@natae.notmuch>
-In-Reply-To: <87a6mudt9b.fsf@osv.gnss.ru>
-References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
- <xmqqy2arrmba.fsf@gitster.g>
- <b80bf908-0c31-2b3a-6d6c-1a3fba5b2334@mfriebe.de>
- <87wnqaclz8.fsf@osv.gnss.ru>
- <60e5f3981de5f_301437208bc@natae.notmuch>
- <87bl7d3l8r.fsf@osv.gnss.ru>
- <60e61bbd7a37d_3030aa2081a@natae.notmuch>
- <877di13hhe.fsf@osv.gnss.ru>
- <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
- <60e67389a4adc_306ac1208fd@natae.notmuch>
- <4057b3ac-a77c-0d5f-d3f4-ad781754aae4@mfriebe.de>
- <60e736e72da68_30939020850@natae.notmuch>
- <155308af-42ad-b044-fb37-676251a9b7e1@mfriebe.de>
- <60e762243aab1_30a7b02089@natae.notmuch>
- <2b85a7eb-d0be-65e7-ecbb-1750abf53e53@mfriebe.de>
- <60e79c31aaa72_30b8a4208c1@natae.notmuch>
- <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
- <60e874e1c6845_215320861@natae.notmuch>
- <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
- <87im1ieaba.fsf@osv.gnss.ru>
- <1bd36aa2-ac90-f7d4-9d48-1aa39159b263@mfriebe.de>
- <87a6mudt9b.fsf@osv.gnss.ru>
-Subject: Re: PATCH: improve git switch documentation
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=N/E2sMSDXQBGbsQ+b4f4BiiIH+9wc+OWxYgA9MOuHow=;
+        b=X/NxHARpxapogePL8lF5EWnTjqVcSMmMyqLvyaiIDyzNbfDZqtJS8f5Ad4AzsgkLYt
+         nEUpAaczOz0kpIy9GpLtq9awvIsHS9Y5BV332N3lE/8HdEILJkGsayZQEsft3f7BGOaC
+         l7a+vvAPAiAWqg7SY9vi52emORtPsr0wmbPo+rNq2+V4pOuMVSHzgdjp50JpRR89BK2R
+         TOghvt5oh76tzmE5P2HOTxtxg9RVEKXuk6Kl+lwSJVSSky4sRoj3FwW7m1r6ISg17sKK
+         oVaBFgwH0E4NlHC6bpsXcXO3xzpwfVLuDIWe1xNnw6c7sX4Eg5lqa2EbeYOu3UsR4sAh
+         cgyw==
+X-Gm-Message-State: AOAM530QwWDzxpoJMU5ALEuF9QJDkKDFlIAGn6jpEz6sA+wsBNtJYnc3
+        HH2kn+DIc+P6XntxLs1WHO8ruz+hxu8SHKLJ
+X-Google-Smtp-Source: ABdhPJyT8k+Lk3tmCHcX1avzLRzW2X11LoHV4hlMLS1Ciiyv/LXHf9IQEmwlwTsoWGe5MDa0utUTow==
+X-Received: by 2002:a05:620a:1479:: with SMTP id j25mr20663586qkl.339.1625949776728;
+        Sat, 10 Jul 2021 13:42:56 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id z17sm3710357qts.24.2021.07.10.13.42.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 10 Jul 2021 13:42:56 -0700 (PDT)
+Subject: Re: unit tests / cirrus ci fails
+To:     Fabian Stelzer <fs@gigacodes.de>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org
+References: <a7aca5f5-3a5e-b13c-ccae-3e515c774420@gigacodes.de>
+ <YOhmAGig//yfABWv@danh.dev>
+ <db030e49-edb0-8f4b-0e51-a89b2a4a47a8@gigacodes.de>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <dba84da7-f6ec-37b3-4322-378af9249d54@gmail.com>
+Date:   Sat, 10 Jul 2021 16:42:55 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <db030e49-edb0-8f4b-0e51-a89b2a4a47a8@gigacodes.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov wrote:
-> Martin <git@mfriebe.de> writes:
+Hi Fabian,
+
+Le 2021-07-09 à 12:04, Fabian Stelzer a écrit :
+
+> The new tests themselves are failing now and i have no idea why on freebsd :/
+> Are there detailed logs publicly available from the CI runs?
+
+the logs should be accessible on the "Checks" tab of your PR
+  if you are logged into GitHub. But I don't think there is more
+to see than what's shown there.
+
+> Or is my only option to set up a freebsd 12 vm to try to replicate this?
+> Does the ci simply run "make test" or is there another mechanism involved?
 > 
-> > On 10/07/2021 12:24, Sergey Organov wrote:
-> >> Martin <git@mfriebe.de> writes:
-> >>> Actually, "new" or "create" would make sense in "git branch". But in
-> >>> git switch, they actually raise the question "create what?" / "new
-> >>> what?".
-> >> I believe that's because "git switch" tries to do too much. "git switch"
-> >> should rather switch between existing branches, and do nothing else. As
-> >> I said once in this discussion already: trouble writing good
-> >> documentation is often indication of some flaws in the design.
-> >> Creating (a branch) is fundamentally different operation than switching
-> >> to (a branch), and that's why the former doesn't fit into "git switch".
-> >> 
-> >
-> > Right, yes. But creating a branch is often followed by switching to it.
-> 
-> Yep, but here the creation is the primary operation, not switching, so
-> putting this into "git switch" looks like design flaw. These 2 actions
-> are fine to co-exist in "git branch" = "whatever you want to do to
-> branches", but not in "git switch" == "wherever you want to switch".
 
-I don't see the logic in here.
+I managed to log into the Cirrus-CI FreeBSD VM using tunshell [1].
+I found out about it at [2]. Here's the commit in my fork [3]
 
-  git branch topic # here 'branch' is the verb
-  git switch topic # here 'switch' is the verb
+0. Create a Cirrus-CI account and give it access to your fork of Git
+1. Create the tunshell session at [1]
+2. Run the local script on your local host
+3. Copy the remote script in '.cirrus.yml' in you branch
+    (ex. as the first step of the "test_script:" section), commit and push to GitHub
+4. wait for the build to start on Cirrus and the tunshell client on your machine
+    should connect you to the VM.
+5. Go to /tmp/cirrus-ci-build in the VM to find the git.git checkout
 
-Now, if you want to do both at the same time the logical options are:
+Caveat: your public IP will be viewable in the Cirrus log.
 
-  git branch --switch topic # here '--switch' is an adverb
-  git switch --new topic # here '--new' is an adverb
-
-The former reads like gibberish to me: "git, branch off in a 'switch'
-way".
-
-The latter makes perfect sense: "git, switch to a branch in a 'new' way".
-
-> Logically, there could be something like "git new" that does create a
-> branch and then switches there by default, or something like that, say:
-> 
->    git new feature3 --at origin/rc-2 --track
-
-Here the the verb is clear, but not the direct object, a "new" what?
-Couldn't it be a tag? Or a commit? Or a remote? Or a worktree? Or a
-bisect? Or a submodule?
-
-It's too ambigous.
-
-> And while we are at it, do you guys notice how 2 concepts are mixed in
-> Git commands? I mean, the interface seems to mix object-oriented and
-> action-oriented commands, most of commands being action-oriented with
-> only a few unfortunate exceptions.
-> 
-> Let me try a short survey:
-> 
-> 1. In
-> 
->   git branch ...
-> 
-> is "branch" a noun or a verb?
-
-Both.
-
-> 2. In
-> 
->   git merge ...
-> 
-> is "merge" a noun or a verb?
-
-Verb.
-
-> To me, while the latter is obvious, it's verb and specifies the action
-> to be performed, the former looks more like "whatever you want to do
-> with branches", and thus the "branch" is a noun there and the command
-> thus is object-oriented.
-
-I agree, and I did have indeed noticed the inconsistency. But there's
-another category of commands that receive subcommands, like:
-
-  git remote $subcommand
-  git worktree $subcommand
-  git bisect $subcommand
-
-In my opinion `git branch` fits more these subcommand commands, and it
-was a mistake to make the subcommands options, it should be:
-
-  git branch list
-  git branch new
-  git branch set-upstream
-  git branch move
-  ...
-
-Now the verb is crystal-clear.
-
--- 
-Felipe Contreras
+[1] https://tunshell.com/go
+[3] https://github.com/phil-blain/git/commit/b47d803ee1ba83100702cb80c93e18c74d787dce
+[2] https://github.com/cirruslabs/cirrus-ci-docs/issues/432
