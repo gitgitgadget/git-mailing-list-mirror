@@ -3,28 +3,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DB83C07E9B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 490EEC07E95
 	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 22:13:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3AD8C61353
+	by mail.kernel.org (Postfix) with ESMTP id 2486161248
 	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 22:13:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230317AbhGJWQa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 18:16:30 -0400
-Received: from smtprelay05.ispgateway.de ([80.67.18.28]:11864 "EHLO
-        smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229614AbhGJWQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S229934AbhGJWQ3 (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 10 Jul 2021 18:16:29 -0400
+Received: from smtprelay06.ispgateway.de ([80.67.31.104]:13968 "EHLO
+        smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229515AbhGJWQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 18:16:28 -0400
 Received: from [84.163.65.41] (helo=[192.168.2.202])
-        by smtprelay05.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        by smtprelay06.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
         (Exim 4.94.2)
         (envelope-from <git@mfriebe.de>)
-        id 1m2LDH-00071w-VC; Sun, 11 Jul 2021 00:12:43 +0200
-Subject: Naming the --forec option [[Re: PATCH: improve git switch
- documentation]]
+        id 1m2LDJ-0003ki-IL; Sun, 11 Jul 2021 00:12:45 +0200
+Subject: Re: PATCH: improve git switch documentation
 To:     Felipe Contreras <felipe.contreras@gmail.com>,
         Sergey Organov <sorganov@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
@@ -49,8 +48,8 @@ References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
  <6f43b36b-abe1-41f2-6138-e820c974b1bd@mfriebe.de>
  <60ea07e3495e8_7ef2081d@natae.notmuch>
 From:   Martin <git@mfriebe.de>
-Message-ID: <43b8d0bb-67f3-11dd-ec31-e102ce8e3b31@mfriebe.de>
-Date:   Sun, 11 Jul 2021 00:13:40 +0200
+Message-ID: <30e4c874-6b87-b03d-fa33-fde5b7e50b2a@mfriebe.de>
+Date:   Sun, 11 Jul 2021 00:13:38 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
@@ -65,62 +64,82 @@ X-Mailing-List: git@vger.kernel.org
 
 On 10/07/2021 22:49, Felipe Contreras wrote:
 > Martin wrote:
->> For each force-needing action, you should have to specify it's own force 
->> flag. >
- > OK, but I don't see the concrete proposal. What would be the
- > flag that
- > makes -c "forceful"?
- >
+>>   From the docs (and similar on git checkout)
+>>> --force
+>>>
+>>>      An alias for --discard-changes.
+>>> --discard-changes
+>>>
+>>>      Proceed even if the index or the working tree differs from HEAD.
+>>> Both the index and working tree are restored to match the switching
+>>> target. If --recurse-submodules is specified, submodule content is
+>>> also restored to match the switching target. This is used to throw
+>>> away local changes.
+....
 
-Well that starts yet another topic.
+>> If the working tree is made to match the target, then it can not retain
+>> local changes. That can be concluded.
+>> Yet, it is explicitly mentioned.
+>>
+>> Does it really hurt to mention it?
+> 
+> Yes it does.
+> 
+> Time is the most precious resource we all have. We should not waste the
+> most precious resource of our readers.
+> 
+>    Throw away local changes.
+> 
+> That does a much better job.
+> 
+> If you want to be more explicit, you can add a bit more information:
+> 
+>    Throw away local changes either in the staging area or the working
+>    tree.
+> 
+> Why does the user have to know what HEAD is? And why does it matter that
+> the staging area is held in a file called "index"?
+> 
+> The current explanation is just bad.
 
-At the moment, it is
-    --force-create which is absorbing the flag into the option.
+Time is precious, but to really save on it, you have to invest some of it.
 
-And by (apparent) convention it also is the uppercasing of the option
-    -C
-same as the uppercasing of the -B in checkout.
+About the HEAD/index stuff => that was not at all related to the point I 
+was making.
+But I agree that bit can be shortened
 
-I am not really sure if the uppercasing is the best idea.
-If your suggestion "core.advanced " were to come, I would vote that 
-uppercase single letter force options should be restricted to advanced.
+The thing that I was pointing out, is the last sentence only.
+ >    This is used to throw away local changes.
 
+But even that can be reduced to your proposal
+ >    Throw away local changes.
 
-If -n is introduced, we can think about what to do about -N.
-Should the  --force-*  style be kept?
-    --force-new
-    -N
-
-Or the (unfortunate? / see below ) "--discard-changes" style:
-    --discard-existing-branch -n <branchname>
-
-I am against using --reset instead of --force-new.
-At least I can say, if I use "-N", I want a *new* branch. I don't care 
-about any old branch under that name.
-
-Also "--reset" does not have the same alerting properties to me, as 
-"force" or "discard" have.
-This may be my English, but to me "reset" does not have the same 
-alerting property.
-
-
-
-
-The general problem is, if there is more than one force-needing action, 
-then which one does -f  act on?
-
-Any force-needing action, that only applies with another option (such as 
--N) can have a --force-*. So the plain -f is not used for it.
-
-But, what if more than one force-needing event can happen (not just 
-switch, but any command), even without any extra options? (May not yet 
-be the case / not checked).
-
-git switch has attempted to solve that.
-The result IMHO is a disaster.
-"-f" / "--force" is made an alias in favour for
-    --discard-changes
-What changes?
+It still supports my point. It does state explicitly that data is (or 
+can be) thrown away.
 
 
+Now, if that can be stated on this option, then all I ask is to add a 
+similar statement (as short as possible) to "-C".
+It should indicate that *commit* may be *dropped".
+Find a better word for dropped: lost, unreachable, removed.....
+
+Currently only the branch is mentioned.
+Currently nothing does explicitly say that *commits* can be affected.
+
+At the end of the current or rewritten "-C" doc, add:
+ >     This can drop commits
+
+4 words. All that is needed.
+
+
+
+> There's only one person you need to convince.
+> 
+> So, what I suggest you to do is take into consideration all we have
+> discussed and send another patch, because that's ultimately all that
+> matters. Moreover, it usually happens to me that while I write the patch
+> is when finally the previously-discussed ideas start to click.
+
+Well, I will see to make some time and put something together.
+Might be a bit before I get to it, but that gives some time to think about.
 
