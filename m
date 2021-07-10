@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC372C07E95
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 10:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B78DCC07E95
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 10:24:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A734D613C3
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 10:08:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 894E6613D2
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 10:24:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232448AbhGJKK7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 06:10:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39240 "EHLO
+        id S232433AbhGJK07 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 06:26:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232135AbhGJKK7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jul 2021 06:10:59 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 546A5C0613DD
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 03:08:13 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id t30so12585625ljo.5
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 03:08:13 -0700 (PDT)
+        with ESMTP id S230443AbhGJK06 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 06:26:58 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF614C0613DD
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 03:24:12 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id q4so12619720ljp.13
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 03:24:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HHgRLiinkvTYTfoXYdpk0KBsOudCsS5MqQiCjljobxE=;
-        b=Ee/AurAXBJ8iZRnoXGj6SyXB3btWEz2ZO2l8+FQvz4dLZihJ7j2d2MSy/uLcJT93yF
-         JCYryKYLQcJR/AcCfRzKj6nLWKwzZ1XYbV2Ngq0LLxpOfOkGos9ituR94Sl+E8qN0h+u
-         yGZ0i4Q1lAycqeojtvnU8KvHPf14jFlTNK5vrvxnfIro5bCyrLpNNqyaVKRGv6XBPfjG
-         yzXTO1XXaymrxB3uf9msTTgW9wi8SWayt9HCuK0zzL0poQfTGs5d4vHnAOkny7MTtgxh
-         2zMWKy4nZN5NDMUF0q5mXI6z9dIWK42df/SGkDw2np/obVcYQu31tZIzCeqWg1LImlQg
-         ZOfw==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=w12F9oPY8qpQ89e9g0N8p6Hr8DuUgBhWkdAazuNn5HM=;
+        b=YkO6LySK6yFlOt7yzOFF4c+LYkgMlV6HPF6TBZEv9xEqlxX2jnzFNRTAupLHMDA1VD
+         aSwLBcBMfEC5lWA8lw6csiwk0XYGzbU7yJ0sndmm0YBdS+M7WwAo3RBnJhhaJAom07UI
+         QVhzaP/Q2/T6LCYmZWV9vj1YPwx55mm9njytK5EiKcaNErfirxgDXIBPCR0NvFTUvHLh
+         KRTfERfQGQJ4ZY97Vr9bU5WOeHMdavIshBhIh6tFGQ9UU7gE/317IhbVf/iFLTJkP+ZF
+         Iy6x6cOUpFIPbtMOmuVS9952cUliJ9QeIKiUp8mNk5ekAnRIYg3xSgYBOmTIwWJAckMQ
+         pYgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=HHgRLiinkvTYTfoXYdpk0KBsOudCsS5MqQiCjljobxE=;
-        b=PYLZUwpVQ9TC2Z1ImCMePbzieS8AFI/KTNZ2pViNJdW1Jt9FzxvRqqrH9coBaJ7gH6
-         AjIdk2h7SGNtBo5x62nKayqB/8bQ+00taXwi94EZoiwtVrTcQ1ed2JYZVvzHkdHI81Qh
-         OKu1K/QCNioFLY7x6V33k02071GWgLdMC4kL6aJQJa3Y6YLySkeHaJCglIJjrzAUeMEo
-         KxGEE40OUQLn8gB4SQINKumnkAkb0b462QVIB9maBDl12gv1MDCn1+3qpmRM3o3AA6qW
-         VI0SpTSRwrvrd906A5jg1KrXLpcl3zmgUDHa1Fbjtyjs+88Q2d+MFZw4A5JnNUl5UpI1
-         J7VA==
-X-Gm-Message-State: AOAM531LJs3utVJUZUZiAgeOBfsefEfPD1IwEmGhXhXjwDAi5ptQGS/d
-        MhsN8u6ZiaNP74FfawQkD3/W5RIhqgs=
-X-Google-Smtp-Source: ABdhPJx0W5DA5bssBQ/2wwYN0cA2eSoDxYGEn0BQ7yBoaGXf2S2rrppOhcYxXl9vacIdT99gRRrbdA==
-X-Received: by 2002:a2e:9cc7:: with SMTP id g7mr16427675ljj.217.1625911691271;
-        Sat, 10 Jul 2021 03:08:11 -0700 (PDT)
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=w12F9oPY8qpQ89e9g0N8p6Hr8DuUgBhWkdAazuNn5HM=;
+        b=m3oZveXERy2HytkERAq9ztKlousMesE2AejnR4LlO8KB24RQr/OIEmHDV1aObgyrt2
+         0x27M/KhUPVATk3fyMqJO+qEpKeRm0oNHw3EryzHHWMsFHJgUr+JhXuo9VOyx5+d1Txy
+         zjxonESK10WkSFbtvDCf+m2ICS0rzXmgIjkRtuKSn5tChTIrpmEirvJwawZGy1BUav52
+         TYts6w9N+eG7hHvfKFVmpSM4jdoWH0HvpJXhogGVds8NHI30p4usi5lJeNSy+pOj9YSO
+         KP/iCZPvwAwu5gr6ncIOnjwzYyHGrfPIaRlqAKJ3A5ZVzSyjL0RAA3XB9X0i9tIfLdT8
+         4Ykg==
+X-Gm-Message-State: AOAM5302c1kLTeBY57hWa39OTelg44zmYik14xSDpCbc277HvEt6ldtf
+        p9hmhwEYBKIwCMIe6XQDca+58puc7Co=
+X-Google-Smtp-Source: ABdhPJzweBSbZYoYXbfKF0N+KCmHeq8SPrJ4gd7zq7lYyuYRwaB5DmqPwaGN0eTGjFx3MXdR5+eEBQ==
+X-Received: by 2002:a2e:4a1a:: with SMTP id x26mr17216952lja.178.1625912650900;
+        Sat, 10 Jul 2021 03:24:10 -0700 (PDT)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id h2sm674740lfk.97.2021.07.10.03.08.10
+        by smtp.gmail.com with ESMTPSA id d14sm680412lfq.31.2021.07.10.03.24.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jul 2021 03:08:10 -0700 (PDT)
+        Sat, 10 Jul 2021 03:24:10 -0700 (PDT)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Martin <git@mfriebe.de>
 Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
         Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: switch requires --detach [[Re: What actually is a branch]]
+Subject: Re: PATCH: improve git switch documentation
 References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
         <xmqqpmw4uwh2.fsf@gitster.g>
         <7870a0ad-8fa1-9dbd-1978-1f44ec6970c5@mfriebe.de>
@@ -76,50 +76,56 @@ References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
         <60e762243aab1_30a7b02089@natae.notmuch>
         <2b85a7eb-d0be-65e7-ecbb-1750abf53e53@mfriebe.de>
         <60e79c31aaa72_30b8a4208c1@natae.notmuch>
-        <084a355e-95cd-5c84-2fa5-a901da3e0e49@mfriebe.de>
-        <60e8666c8707f_2153208c0@natae.notmuch>
-        <57f316cb-850d-706a-592b-4376f240e032@mfriebe.de>
-Date:   Sat, 10 Jul 2021 13:08:09 +0300
-In-Reply-To: <57f316cb-850d-706a-592b-4376f240e032@mfriebe.de> (Martin's
-        message of "Fri, 9 Jul 2021 17:23:23 +0200")
-Message-ID: <87h7h2mqgm.fsf@osv.gnss.ru>
+        <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
+        <60e874e1c6845_215320861@natae.notmuch>
+        <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
+Date:   Sat, 10 Jul 2021 13:24:09 +0300
+In-Reply-To: <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de> (Martin's
+        message of "Fri, 9 Jul 2021 18:51:12 +0200")
+Message-ID: <87im1ieaba.fsf@osv.gnss.ru>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Martin <git@mfriebe.de> writes:
 
-> On 09/07/2021 17:08, Felipe Contreras wrote:
->> and the fact that
->> `git switch` expects branches is one of the things that bothers me about
->> it.
+> On 09/07/2021 18:10, Felipe Contreras wrote:
+>> Martin wrote:
+>>> As for "git switch -C"
+>>> This should IMHO change to (the 2nd arg, actually depends on the point
+>>> "1" above)
+>>>      git switch (-c|-C) <branch-name> [<base-commit>]
+>>>
+>>> I suggest to not call it "new-branch-name" because, it might be an
+>>> existing name.
+>> I think the name is all wrong. As Ævar pointed out --new (-n) is much
+>> better. Also it doesn't make much sense to use "create" or "new" for
+>> something that already exists.
 >
-> Ah, good point.
+> The n versus c issue is IMHO separate. Maybe tiny overlaps.
 >
-> I would word it differently though.
-> "git switch forces the use of --detach if switching to a non branch"
+> I see it mostly in the light of -c should be for "copy".
 >
-> Bit of a twist.
-> It's a nice safety for beginners. I remember when I started, I kept
-> ending up detached. And I had no idea what to do next.
+> On "git checkout" it is "-b" for branch. That works, if you perceive
+> "branch" as a verb. "The action of branching creates a new branch".
+>
+> If needs must, that would work as "git switch -b" to.
+>
+> Actually, "new" or "create" would make sense in "git branch". But in
+> git switch, they actually raise the question "create what?" / "new
+> what?".
 
-I think it's more because of too technical and thus confusing name for
-it rather than the state itself. In fact this could be described as
-"being on unnamed branch", as if HEAD points to a branch with empty
-name, and is not detached in any sense.
+I believe that's because "git switch" tries to do too much. "git switch"
+should rather switch between existing branches, and do nothing else. As
+I said once in this discussion already: trouble writing good
+documentation is often indication of some flaws in the design.
 
-It's nice that once you are on unnamed branch, nothing actually changes,
-so no any mental shift is needed to get out of this "state". BTW,
-unnamed branch could probably even start to have entries in the reflog.
-
-Overall, I think Git needs to move into direction of getting rid of
-"detached head" in favor of "unnamed branch" at least at the UI level.
-
-Getting back to "git switch", if the above sounds reasonable, "--detach"
-is a bad choice for the option name in the first place.
+Creating (a branch) is fundamentally different operation than switching
+to (a branch), and that's why the former doesn't fit into "git switch".
 
 Thanks,
 -- 
