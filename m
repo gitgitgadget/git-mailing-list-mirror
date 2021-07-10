@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-16.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE236C07E9B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C30D7C07E95
 	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 13:37:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2645613C3
+	by mail.kernel.org (Postfix) with ESMTP id A13D4613BE
 	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 13:37:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231816AbhGJNkX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 09:40:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56436 "EHLO
+        id S231631AbhGJNkW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 09:40:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231490AbhGJNkV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jul 2021 09:40:21 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4950C0613E8
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 06:37:35 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id p8so16523119wrr.1
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 06:37:35 -0700 (PDT)
+        with ESMTP id S231438AbhGJNkS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 09:40:18 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A43BC0613DD
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 06:37:33 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id g16so6586315wrw.5
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 06:37:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=RW1SRHaWkbKF75XBFUeFetQ7HmluAjjHrZWZ3oFnjbM=;
-        b=pLfE0rktRJGfB3owWoRLn5/UIBeyeSWJl0jxMS4nYFlRFgKcXiXKZhavlUhWG+/2CD
-         fgzea+YwrWkSKmV8HyYFGN28KCiToVbKN2E5OKwdIfVfeaFVq8/V7JdA/EO1PfGmPrOb
-         2XS9LOf4DZQwCIXJPS+nuIE+8JUx6SXTcG+7fDUYfrkU1b0bNIiFsROJFv+FoS+lWlJ/
-         bWWGhaWgIljoocINmdSbke4OK+Sicx7uQMLw6HIHBv+UT87odAGexnQAfoH8p+3tXq8J
-         omspgMnwGu7ZXy+khVEhKzrVU4wRILxf6iDX/itf647htXl+yjIjxIaqSnhQQWZWwpiH
-         eRng==
+        bh=OgnxKgzRElTXk1BTXxILsnwfavRXDyy4w7BU4Z0hWws=;
+        b=U3DUCqc8pg9UsMVN4DdC2aqnspk+c0oLHM4efVtpcSA4mrRzZNtA+Rjs+Np5cxMttF
+         DBYm/sonRrWAcbwOxEaFLmv3lIV/65W+n6IS0iZ56TiTbCLOG4ZXMamS5IsFJBXq5o/O
+         0tJdMyt2y59wTv2uygT45FFutcXOFECsGRjGadOr7bk3Tdyo3Z2xuOjryruigUW2K6LH
+         vTEqBBxdN7oIkFzRYwGFs3tf2KiiWGLaN3YA9EweHTh3jt8rjJaovylYur/TfYKn8R8t
+         rlctZ17ePZOrHfDtSJTlILf5iAINUK+1Vbkox2QTeHxCmkx0EEU1lAXMdUCv/cSMsBGf
+         x0Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=RW1SRHaWkbKF75XBFUeFetQ7HmluAjjHrZWZ3oFnjbM=;
-        b=pG+IIiX8jp8wzuDQXU45SlvgvP9eH3tl06vlbw3SXtgONkBC88Clz94G4Ce+iCgcHd
-         Yd1iJ9rDN7dcJVCcmK3Gu/COkf4+NTI+YwOfnte2dslOV5NTkIm4QnrrBbcF/L9h49RV
-         d3vub9FTsrbqATtHOEIswu7yUs3UxN6jiiwoZ8AVW/5UIOPrbWO5kHSHZ8UTTAFNxhtr
-         4s8AsdnE7vuRY6SWp70CpUlzDxM3I9ZTTKfL2ZQK12y+GAa2dkisbF6LGMrEGGYwRiKG
-         xCFuLYK8RQgqxi0wKOBYBABmLKfK4MXMmsX0FJq1eDpMBj22GlBQMrLX1S+xF3AEuDHz
-         nb4g==
-X-Gm-Message-State: AOAM5336pVWDXgPur2Y/R6ApZ8GpJ2tK2QkdZR7rtW1GhmxDMuyXGo/d
-        pG7pw9ZI+lDPeCtA7kr3eYJBsMRA//Ewhg==
-X-Google-Smtp-Source: ABdhPJx4qkj18hsqCeskkwe8fZn8RmefQ3laSJXtcD88WivLFYCJz4GSrOvyGOhUMHsQcJ9SKN0kUw==
-X-Received: by 2002:a5d:4b47:: with SMTP id w7mr48891094wrs.389.1625924254067;
-        Sat, 10 Jul 2021 06:37:34 -0700 (PDT)
+        bh=OgnxKgzRElTXk1BTXxILsnwfavRXDyy4w7BU4Z0hWws=;
+        b=kT5yoLa/tVmSjydgTxRXngqrCl8OwZ4mwnnjKEZLU5VKweyV2s6lM6PsCgRjV2y4dl
+         QG0rZl0y5zxgTEbRxlSnYljs8GkrbtI25qM3p5PMk8BGAWA+4/o41gdgjTP7NPmhBv88
+         ZhcK5GAYODcfD/b0L5iVuwgRaNuxHrNIoNuINm5V4u0iyTMaKOx4oORXgwS7rFrsrS/e
+         iYs0TwlYIjyqLcCwDY9d3MwUAH9C8rfTcyk77snyFOvVcGaJSo0rL3yRxvdn8BzIX0Se
+         t5IbQGoeHcKu0jJ14EQ9UyKQe9p+kHb1bDzDCnpgyTWYAsAA3rRMWBDiCfa5nKbEr036
+         NHeQ==
+X-Gm-Message-State: AOAM531U0eXmrayAfK1Z4Ktdaafh9hSiuvk5TrtKgj5eWmKUw+w/a8Gy
+        rPY0bQotSKsR7lVQiA8pt2Vosg5ymm8QBw==
+X-Google-Smtp-Source: ABdhPJxQyzi9hidaZ6p/3KMHbZrOE9Sf197/ugRqLxVE0vU2VqGyfqXmyI6z0buvM036ZJLcGDwfQw==
+X-Received: by 2002:a5d:6b91:: with SMTP id n17mr19893650wrx.385.1625924251516;
+        Sat, 10 Jul 2021 06:37:31 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j17sm17612787wmq.9.2021.07.10.06.37.33
+        by smtp.gmail.com with ESMTPSA id j17sm17612787wmq.9.2021.07.10.06.37.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jul 2021 06:37:33 -0700 (PDT)
+        Sat, 10 Jul 2021 06:37:30 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Andrei Rybak <rybak.a.v@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 05/21] rev-list tests: test for behavior with invalid object types
-Date:   Sat, 10 Jul 2021 15:37:08 +0200
-Message-Id: <patch-05.21-f8d0b630d0a-20210710T133203Z-avarab@gmail.com>
+Subject: [PATCH v5 02/21] fsck tests: add test for fsck-ing an unknown type
+Date:   Sat, 10 Jul 2021 15:37:05 +0200
+Message-Id: <patch-02.21-634f991d7c6-20210710T133203Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.636.g43e71d69cff
 In-Reply-To: <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
 References: <cover-00.21-00000000000-20210624T191754Z-avarab@gmail.com> <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
@@ -78,33 +78,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a blindspot in the tests for the "rev-list --disk-usage" feature
-added in 16950f8384a (rev-list: add --disk-usage option for
-calculating disk usage, 2021-02-09) to test for what happens when it's
-asked to calculate the disk usage of invalid object types.
+Fix a blindspot in the fsck tests by checking what we do when we
+encounter an unknown "garbage" type produced with hash-object's
+--literally option.
+
+This behavior needs to be improved, which'll be done in subsequent
+patches, but for now let's test for the current behavior.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t6115-rev-list-du.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ t/t1450-fsck.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/t/t6115-rev-list-du.sh b/t/t6115-rev-list-du.sh
-index b4aef32b713..edb2ed55846 100755
---- a/t/t6115-rev-list-du.sh
-+++ b/t/t6115-rev-list-du.sh
-@@ -48,4 +48,15 @@ check_du HEAD
- check_du --objects HEAD
- check_du --objects HEAD^..HEAD
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 7becab5ba1e..f10d6f7b7e8 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -863,4 +863,16 @@ test_expect_success 'detect corrupt index file in fsck' '
+ 	test_i18ngrep "bad index file" errors
+ '
  
-+test_expect_success 'setup garbage repository' '
-+	git clone --bare . garbage.git &&
-+	garbage_oid=$(git -C garbage.git hash-object -t garbage -w --stdin --literally <one.t) &&
-+	git -C garbage.git rev-list --objects --all --disk-usage &&
-+
-+	# Manually create a ref because "update-ref", "tag" etc. have
-+	# no corresponding --literally option.
-+	echo $garbage_oid >garbage.git/refs/tags/garbage-tag &&
-+	test_must_fail git -C garbage.git rev-list --objects --all --disk-usage
++test_expect_success 'fsck hard errors on an invalid object type' '
++	git init --bare garbage-type &&
++	empty_blob=$(git -C garbage-type hash-object --stdin -w -t blob </dev/null) &&
++	garbage_blob=$(git -C garbage-type hash-object --stdin -w -t garbage --literally </dev/null) &&
++	cat >err.expect <<-\EOF &&
++	fatal: invalid object type
++	EOF
++	test_must_fail git -C garbage-type fsck >out.actual 2>err.actual &&
++	test_cmp err.expect err.actual &&
++	test_must_be_empty out.actual
 +'
 +
  test_done
