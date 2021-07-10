@@ -2,129 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18493C07E95
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 07:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14D2BC07E95
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 08:32:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E2CFF613C3
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 07:52:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E4D2A61351
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 08:32:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230056AbhGJHzH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 03:55:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37920 "EHLO
+        id S231873AbhGJIfX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 04:35:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229978AbhGJHzH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jul 2021 03:55:07 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8909C0613DD
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 00:52:22 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id p4-20020a17090a9304b029016f3020d867so7372347pjo.3
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 00:52:22 -0700 (PDT)
+        with ESMTP id S230007AbhGJIfW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 04:35:22 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1A38C0613DD
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 01:32:37 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id h2so17700308edt.3
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 01:32:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=RnoEGXO37QECwPsQxPo3lrMVfqGUgY9PMRXaxTQWb3s=;
-        b=laS/yozsVOgVrF3VCRjq9vDooxbqquEf50EHyhIlKtSsParP+/+v4s3Ku/QRdonMY4
-         HiSoQogCAHouewrhn+pekn0x4w7KkZiuqs9mXpkhGF5ITc2i1+c2m+CqmmSTPb39MusR
-         72eRr1IkzOBJP3r/9LOnx0cBWGF7dGpA1vTDimppGfHNdVSr9lAbYU2A9+azQzLjxr2e
-         Ovhf6c9Bvlr0hLssp36qVAMR2HYVXLw/mBvGKwEswhWvnHmNvfavmd79r28LMkgeKnAy
-         MIsvMvVffTiQTjwjaEf1Ws60QXNM7iQyl9ZFhTLSWzT0P43zc7XAlueqKNunoMqd1dRe
-         NQag==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=9bJlGy1Q4DE8hLw4KpaxSOGCe5PvQZnE0LJVm+hbY5A=;
+        b=p2dKw3Inf00iUix0v7U7ZhaRFxUux2bAuTzq9wNeHcRXw+LtAsPHpr2C88BLC2UhPj
+         kU2NllPu9kW5iJIPbHWYCCe5sh69dTF+1oebTib6+izMdzqqBJNqqOtrcGbkmZdyAilO
+         W/+9Xlk8cxbzAzdT6oTzPOqKaqdiZIPkAEBWgnEehTqX4/MMG9MarLvucJgkZ/oc5tdz
+         nxxFlgP8vczkl2y1y8/bftkhZRIdQ7czZ0qvxd5zayU1CJYnzK0jw5XwumK/703v/oL1
+         ks1lDSbBNKDpFu7JMVEXexRDwyphHnT61laYmxBe0tWzRnIJNVgBJy5oafZf+lAeOADg
+         91xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=RnoEGXO37QECwPsQxPo3lrMVfqGUgY9PMRXaxTQWb3s=;
-        b=IhXXaerUinp+9WUkFlljBZnkMfNjoNeaw4daVdpjWmlMC/+2fSPXzB/RHLfChzLYIA
-         Z9NMFVqalzdCFKsak7fN1qLatdQ7HeEAd/oVJyDdzCXkkAdwR3yYX/+NEoyzN0a/4YTY
-         g+lmZlQljyedIF9NOY7KA2rqyNrD24GUKTbwyJshykCRBCd6uJJltOHK9a0fEuSEKxw0
-         aiSF+EwdSjEMM09RJYxGXylRihwGoNCbQNu4HyQupKUKyejJh8MGXkEz7j39mInXgka4
-         3xGvDWytNU8DDZiR7t8j5H4GIAZUpeezl5jBX5Co+JAqHEM7qqQU04+tsjGpmWLV6U+4
-         2IOw==
-X-Gm-Message-State: AOAM531slljWmxQcEHHOSyz3W1fvI36H4OlO9ZjlAMgjPD8JRcuAucyV
-        f7e+QwPmtNm3Je4iat4XTrc=
-X-Google-Smtp-Source: ABdhPJyL9Czz8kQ6m0tU++ZepLBRSFevKCTshnEZkoQ8bZ8JNA+ta/Tuw3ucQI9098st93byKWWECA==
-X-Received: by 2002:a17:90a:a112:: with SMTP id s18mr3241169pjp.191.1625903542423;
-        Sat, 10 Jul 2021 00:52:22 -0700 (PDT)
-Received: from smtpclient.apple ([119.82.121.47])
-        by smtp.gmail.com with ESMTPSA id t6sm14628125pjo.4.2021.07.10.00.52.19
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 10 Jul 2021 00:52:22 -0700 (PDT)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
-Subject: Re: [GSoC] [PATCH v2 2/4] submodule: prefix die messages with 'fatal'
-From:   Atharva Raykar <raykar.ath@gmail.com>
-In-Reply-To: <YOhirWqj7ajsqlYw@danh.dev>
-Date:   Sat, 10 Jul 2021 13:22:16 +0530
-Cc:     Git List <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Prathamesh Chavan <pc44800@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <598E78EB-48B1-4C2E-BD89-90EF003A15F6@gmail.com>
-References: <20210706181936.34087-1-raykar.ath@gmail.com>
- <20210708095533.26226-1-raykar.ath@gmail.com>
- <20210708095533.26226-3-raykar.ath@gmail.com> <YOhirWqj7ajsqlYw@danh.dev>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-X-Mailer: Apple Mail (2.3654.100.0.2.22)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=9bJlGy1Q4DE8hLw4KpaxSOGCe5PvQZnE0LJVm+hbY5A=;
+        b=oj4T0egAZazbjvlppODFhPM6vysdDwmgkx+oxuS1GUN7Q9lxtPnamUh0uvOaYZkqvK
+         wZVuPlWIcWrpqRQISWLrprj1enFV3s6+VT/FLAcLY/JtY+1vyF9DYNt2afkxUzRLTX/c
+         ksyHK1vD3c7yv1C/jPG3RMaWjRon+bof+0eN1qdKqghJ8EdKEvoVN5ktOOCj/FidyqMR
+         zYCiiuacj5ayfanVsv2m6KYxcMQH4J2ceNO7nFIsXc5ozilHRn2s4JcGoM5oS/U9eDiO
+         oAPKle6T1ZDk0XZHu4ADI5OU0WmitdoYC7pjVYqXzGo2whdvEn6dtOLO6XHkrlMDNJVl
+         oi4g==
+X-Gm-Message-State: AOAM532cR+nEYxE4udnzc4QBgM5hb9KDqtkcyt2wK54G5oOOzhJnOB5t
+        PpYU/UvZdHjiJekQgQHMPR4=
+X-Google-Smtp-Source: ABdhPJwLZBNVsu5O+Ikh1rmThGvKWWoxUpOFKpF4NgX89py6hgooShwmyw4GT8wt8v7JL+PLOA+C8g==
+X-Received: by 2002:a50:c111:: with SMTP id l17mr38754770edf.56.1625905956210;
+        Sat, 10 Jul 2021 01:32:36 -0700 (PDT)
+Received: from evledraar ([109.36.149.59])
+        by smtp.gmail.com with ESMTPSA id d9sm3395660eje.34.2021.07.10.01.32.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Jul 2021 01:32:35 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     grizlyk <grizlyk1@yandex.ru>
+Cc:     git@vger.kernel.org
+Subject: Re: Pro Git book: concerning data lost due to ".gitignore"
+Date:   Sat, 10 Jul 2021 10:23:25 +0200
+References: <3957861622848346@myt5-a5512e99e394.qloud-c.yandex.net>
+ <87a6o459bh.fsf@evledraar.gmail.com>
+ <4458411625892760@myt6-ab88f6e23eb0.qloud-c.yandex.net>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <4458411625892760@myt6-ab88f6e23eb0.qloud-c.yandex.net>
+Message-ID: <87zguu4li5.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+On Sat, Jul 10 2021, grizlyk wrote:
 
-> On 09-Jul-2021, at 20:22, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh =
-<congdanhqx@gmail.com> wrote:
->=20
-> On 2021-07-08 15:25:31+0530, Atharva Raykar <raykar.ath@gmail.com> =
-wrote:
->> The standard `die()` function that is used in C code prefixes all the
->> messages passed to it with 'fatal: '. This does not happen with the
->> `die` used in 'git-submodule.sh'.
->>=20
->> Let's prefix each of the shell die messages with 'fatal: ' so that =
-when
->> they are converted to C code, the error messages stay the same as =
-before
->> the conversion.
->=20
-> That sounds good.
->=20
->> --- a/git-submodule.sh
->> +++ b/git-submodule.sh
->> @@ -147,7 +147,7 @@ cmd_add()
->>=20
->> 	if ! git submodule--helper config --check-writeable >/dev/null =
-2>&1
->> 	then
->> -		 die "$(eval_gettext "please make sure that the =
-.gitmodules file is in the working tree")"
->> +		 die "$(eval_gettext "fatal: please make sure that the =
-.gitmodules file is in the working tree")"
->=20
-> Except that, "fatal: " isn't subjected to translation. And this will
-> create new translatable item for translator. Perhaps:
->=20
-> -		 die "$(eval_gettext "please make sure that the =
-.gitmodules file is in the working tree")"
-> +		 die "fatal: $(eval_gettext "please make sure that the =
-.gitmodules file is in the working tree")"
+> hi
+>
+>> On Sat, Jun 05 2021
+>> It's way too common of a pattern to e.g. have a *.o file made from a
+>> corresponding *.[ch] file(s) in the same directory.
+>
+> The patterns were common for old times (before VCSes was involved). To
+> deal with temporary files (like .o), generic OS tools like "make
+> remove_compiled" can help to clean directory before stage. To keep
+> derivative persistent files (like the same .o) separated directory can
+> be used.
 
-Okay, I have made the change. I was wondering if there any specific
-reason as to why 'fatal' should not be translated? Is it because
-an intermediate change like this should not create more work for
-translators?=20
+It's still a very common pattern, e.g. the project whose ML you're
+posting to uses it, anecdotally most free software C or C-like projects
+I look at / work on use it.
 
+In any case, git as a project can't say "you should fix your code". This
+VCS has to deal with the real world, people do use this pattern in the
+wild, and we can't willy-nilly eat their data.
 
+It's not a good approach to advocate a change in git behavior to say
+"people should do X, not Y, to avoid this problem", when a cursory look
+at real-world use reveals that "X" is in wide use, and unless you did
+"Y" a proposed change in behavior would be detrimental to your use of
+git.
+
+What is more productive is to either find out how we can support both
+without harming the other, or make new behavior opt-in, hence the
+thread(s) I linked to about "precious" etc.
+
+>> git already does a good job of supporting it. 
+>
+> Sure, the light message: "There are ignored files (%u<number of
+> files>) not placed into repo.\n\t(use git status --ignored to view)";
+> will improve the activity. Otherwise some files somethimes will not be
+> placed into repo unexpectedly for user.
+>
+>> You'd e.g. compile all your 
+>> assets outside of the repo via your build system, and just not have
+>> anything in .gitignore.
+>
+> Do you suggest to copy desired src files into separated repo directory
+> (the repo directory placed under VCS control) by generic OS tools
+> (i.e. by cp command) and stage the separated directory?
+
+I'm not really being serious here, as should be clear from the linked
+threads I think the current behavior has sucky edge cases and does eat
+people's data in some cases, that's bad, the problem is finding a way to
+change it that doesn't cause badness for other use-cases.
+
+I am saying that if your proposed "Y" solution is effectively "other
+people should mostly/entirely rewrite their build systems to deal with a
+new default I'm proposing", then in this case you'd also approximately
+what you wou want if we keep the current behavior and you rewrite your
+build system(s), no?
+
+Anyway, maybe I misunderstood some of what you're saying...
