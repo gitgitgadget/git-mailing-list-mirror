@@ -8,233 +8,210 @@ X-Spam-Status: No, score=-16.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50480C07E95
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62B20C07E9C
 	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 23:49:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 22B9E61360
+	by mail.kernel.org (Postfix) with ESMTP id 381106135D
 	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 23:49:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229771AbhGJXtT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 19:49:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47730 "EHLO
+        id S230168AbhGJXtW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 19:49:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229703AbhGJXtS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jul 2021 19:49:18 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E763AC0613DD
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 16:46:31 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so14007962otl.3
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 16:46:31 -0700 (PDT)
+        with ESMTP id S229703AbhGJXtU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 19:49:20 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62EAAC0613DD
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 16:46:33 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id i5-20020a9d68c50000b02904b41fa91c97so9599996oto.5
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 16:46:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qk8aEfSOmUY9mcrSgAVuYOzj+mF2fmhE6S4qbeLgtiU=;
-        b=sihMwfFYxrZJhbisE71cBRHFzAoSElVa9OFzBIUYbqvYR3AK/HfQmn6cz8c1BS7ibB
-         8UnL85vNnCNX1BSHqbinkNL4eyRLaPUyUps/YMNF0z4sSFEBjvwR27+rN0YBfr3lG1TA
-         00MfnIcpW9Faz+lh5AarESa9+WzJwyNrjN0sTn1nJwNpVj+f6xl9n1/r/5ma7+6zgP2/
-         3om29d0Ah1Bsqyh//8rHUcJ9WlwaTZ2R2nM+AL5cONcoJ+GG9BPSDPFzgk9ZIEqNMRb3
-         VFGWbSfDgRVVHd5IoQ9lw6ZhaN+xhJzzWsn3VKWbPfarSgt/VQd+JwIddWfde/8bdg2k
-         Y9gw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=XT987KeG3ZewqKdYcMBOO115kZOllmopUSW55LcoWE4=;
+        b=pCX6bMg8edufO8zVOg057CaZvQ/MR5BAOhmoKllgS4TfR81joD0KBaNanIW7qT7hG8
+         EY3EFpPPI61KS/zkZRCd4gnvFoRvHSQeFx/asFUO2J3xHFUMxaVEAgINYIr/OZFCqKt7
+         eH0Q2+Onrrl6+dHBDMWsxKwbY/GFNmnFsi4Pfn1j1OXiJM9jsWTrjYOOSnqhcLIAnZlu
+         poUjyuGRsaJh4S7+GsB+vA1muCXKauIMu51Xc5buY9RAqSfU26S8oHdqjivr5K/gmi9s
+         B5Fqlfz2757U0UgI8IIsjDKoaysL1ZQSWfBeNCRRCxRFczgqzvTpXUHds6q0gpm2Lvol
+         fRPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qk8aEfSOmUY9mcrSgAVuYOzj+mF2fmhE6S4qbeLgtiU=;
-        b=p+Kz3uo4Z49ckVkIQ4IDt10R3cx4ux0IYHlNf3lVHriC1x4AopXsk/C6lk0j6Y3HIK
-         +7tIL/pTS8BsxO+jjEK5DCaaAbRySVUt9DlZPua3yKYySYNVxHyDHvyY2hoLgZfOG4e9
-         Zt6OcvwJUvWM5hnIXrVSJ+YV12l1ac441pAr4Yfkq/djprm8sZ+MyvtD9R0dF6LjXbE5
-         npqDrfCrMhq8zQOLNWhiF4dh/0fLRlcwRi2T31m0loLxcNym8vcodL5nQWc2Wecmgfcb
-         sMGjiNuIBaKy50eYlCTtjXYWBpHrkViK0XzO0UHURYNTokJWR6qyXoIk3ybuy1csI12H
-         XHPg==
-X-Gm-Message-State: AOAM530VVBzdSFl3bGAprdxuBrL54giKVro0jkYAZoytMvJCRHqOr5Jt
-        B9FJ2QIFX2mYf836l1+JxrIxaA8EoFQ=
-X-Google-Smtp-Source: ABdhPJyWl0RkiyUNRaxvsXFLWdTxWBrnZ+VyxuXKho50B6T9T3VpJrtahvlBNnifwmU8oCkSNYE/qQ==
-X-Received: by 2002:a9d:7008:: with SMTP id k8mr6681243otj.61.1625960790923;
-        Sat, 10 Jul 2021 16:46:30 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=XT987KeG3ZewqKdYcMBOO115kZOllmopUSW55LcoWE4=;
+        b=LWfmaU1qtrGfHPCv4z7zM3y84qstxHF9iqsz5Dg+lWH06RtJ9dgOKV3ChAphDWc7bQ
+         1B35lgynqtoDIObj3wCuXLugM5DuE4qwEPOYdqFkxxXqWXDhk1CJT16jjDiW/Ms65sTQ
+         gH5K6sSCXX9ezI3Tzl52u9ArztM2v1FnPflcGf3E4bE9ZVtOvIJgi+0rqHGUY0dsHzLp
+         Ylt4U2Y/IxFpg6nWUvcSBv5TjYZhnLglHORfX6opWEzwqWO8Jrl2mI1Foj4th7nmMaje
+         aCgnw+m0iX+5OzQoaPIbD9C58gxuk9kBIo4ETuw0fWjLAJXjzJZAiR4nGZaseUgT0Z4I
+         i0Iw==
+X-Gm-Message-State: AOAM530hVdT78hEcQoAKxGve+7SlLdpqc1tupC/fGLzpQRVDQF5EIFNG
+        JDXhV/s//pykYEX1HzRiuVU2ujyYnjM=
+X-Google-Smtp-Source: ABdhPJx4KH2ZNyhZbBWUyP9q+LCTMiUIAXNklAKK056O+Y2iCbPuEbChiTgSDRjX8Mc5jmE9Qthx0g==
+X-Received: by 2002:a05:6830:1c69:: with SMTP id s9mr13516069otg.185.1625960792554;
+        Sat, 10 Jul 2021 16:46:32 -0700 (PDT)
 Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id y61sm2049722ota.31.2021.07.10.16.46.29
+        by smtp.gmail.com with ESMTPSA id w190sm323710oif.17.2021.07.10.16.46.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jul 2021 16:46:30 -0700 (PDT)
+        Sat, 10 Jul 2021 16:46:32 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Luke Shumaker <lukeshu@lukeshu.com>,
         Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 0/2] extra: new concept of extra components
-Date:   Sat, 10 Jul 2021 18:46:27 -0500
-Message-Id: <20210710234629.17197-1-felipe.contreras@gmail.com>
+Subject: [PATCH v2 1/2] completion: graduate out of contrib
+Date:   Sat, 10 Jul 2021 18:46:28 -0500
+Message-Id: <20210710234629.17197-2-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0.36.g70aac2b1aa
+In-Reply-To: <20210710234629.17197-1-felipe.contreras@gmail.com>
+References: <20210710234629.17197-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series introduces the concept of extra components. These are
-components which are not yet part of the core but are good enough for
-distributions to ship, and in fact, they already do.
+These have been stable and widely used for quite a long time, they even
+have tests outside of the contrib area, and most distributions ship
+them, so they can be considered part of the core already.
 
-This benefits everyone:
+We should be consistent and either we move the tests to contrib, or we
+move the completions out of contrib.
 
- 1. Distribution packagers that just want to do `make install`
- 2. People who download git's source code and just want to do
-    `make install`
- 3. Developers who have no idea what's production-level quality in
-    contrib/ and just want to do `make install`.
+Let's move them out of contrib and provide an installation target
+install-extra.
 
-For now they'll have to do `make install install-extra`. But if the
-result is deemed correct, we might choose to add "install-extra" to the
-"install" target.
+By default bash-completion installs the completions to
+$(pkgdatadir)/completions, which is
+$(prefix)/share/bash-completion/completions. And since most distributions do
+not change this, it is obviously the right default that distributions
+can override with bashcompdir.
 
-The measuring stick I'm using to gauge if a component in contrib belongs
-in extra is simple: are we already running tests for them with
-'make test'? If the answer is "yes, we do run tests", then the answer is
-"yes, it belongs in contrib".
+By default zsh looks for completions in
+$(prefix)/share/zsh/site-functions.
 
-We might want to move more components from contrib to extra once their
-tests are being run reliably.
-
-And we might move some components from the core which aren't really part
-of the core to extra, like gitk, git-gui, git-p4, and git-svn.
-
-For now only contrib/completion and contrib/workdir are graduated to the
-new area.
-
-Since v1 I removed extra/Makefile in favor having the targets in the
-top-level Makfile as Ævar suggested.
-
-Felipe Contreras (2):
-  completion: graduate out of contrib
-  git-new-workdir: graduate out of contrib
-
- Makefile                                          | 13 +++++++++++++
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ Makefile                                          | 10 ++++++++++
  {contrib => extra}/completion/git-completion.bash |  0
  {contrib => extra}/completion/git-completion.zsh  |  0
  {contrib => extra}/completion/git-prompt.sh       |  0
- {contrib => extra}/workdir/.gitattributes         |  0
- {contrib => extra}/workdir/git-new-workdir        |  0
- t/t1021-rerere-in-workdir.sh                      |  6 +++---
- t/t3000-ls-files-others.sh                        |  2 +-
  t/t9902-completion.sh                             |  8 ++++----
  t/t9903-bash-prompt.sh                            |  2 +-
- 10 files changed, 22 insertions(+), 9 deletions(-)
+ 6 files changed, 15 insertions(+), 5 deletions(-)
  rename {contrib => extra}/completion/git-completion.bash (100%)
  rename {contrib => extra}/completion/git-completion.zsh (100%)
  rename {contrib => extra}/completion/git-prompt.sh (100%)
- rename {contrib => extra}/workdir/.gitattributes (100%)
- rename {contrib => extra}/workdir/git-new-workdir (100%)
 
-Range-diff against v1:
-1:  3a2c2402af ! 1:  3f44bc3253 completion: graduate out of contrib
-    @@ Commit message
-         Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-     
-      ## Makefile ##
-    +@@ Makefile: sharedir = $(prefix)/share
-    + gitwebdir = $(sharedir)/gitweb
-    + perllibdir = $(sharedir)/perl5
-    + localedir = $(sharedir)/locale
-    ++bashcompdir = $(sharedir)/bash-completion/completions
-    + template_dir = share/git-core/templates
-    + htmldir = $(prefix)/share/doc/git-doc
-    + ETC_GITCONFIG = $(sysconfdir)/gitconfig
-    +@@ Makefile: bindir_relative_SQ = $(subst ','\'',$(bindir_relative))
-    + mandir_SQ = $(subst ','\'',$(mandir))
-    + mandir_relative_SQ = $(subst ','\'',$(mandir_relative))
-    + infodir_relative_SQ = $(subst ','\'',$(infodir_relative))
-    ++sharedir_SQ = $(subst ','\'',$(sharedir))
-    + perllibdir_SQ = $(subst ','\'',$(perllibdir))
-    + localedir_SQ = $(subst ','\'',$(localedir))
-    + localedir_relative_SQ = $(subst ','\'',$(localedir_relative))
-    +@@ Makefile: htmldir_relative_SQ = $(subst ','\'',$(htmldir_relative))
-    + prefix_SQ = $(subst ','\'',$(prefix))
-    + perllibdir_relative_SQ = $(subst ','\'',$(perllibdir_relative))
-    + gitwebdir_SQ = $(subst ','\'',$(gitwebdir))
-    ++bashcompdir_SQ = $(subst ','\'',$(bashcompdir))
-    + 
-    + SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
-    + TEST_SHELL_PATH_SQ = $(subst ','\'',$(TEST_SHELL_PATH))
-     @@ Makefile: quick-install-man:
-      quick-install-html:
-      	$(MAKE) -C Documentation quick-install-html
-      
-    -+install-extra:
-    -+	$(MAKE) -C extra install
-    ++install-extra: install-completion
-    ++
-    ++install-completion:
-    ++	$(INSTALL) -D -m 644 extra/completion/git-completion.bash '$(DESTDIR_SQ)$(bashcompdir_SQ)'/git
-    ++	$(INSTALL) -D -m 644 extra/completion/git-prompt.sh '$(DESTDIR_SQ)$(sharedir_SQ)'/git-core/git-prompt.sh
-    ++	$(INSTALL) -D -m 644 extra/completion/git-completion.zsh '$(DESTDIR_SQ)$(sharedir_SQ)'/zsh/site-functions/_git
-     +
-      
-      
-      ### Maintainer's dist rules
-     
-    - ## extra/Makefile (new) ##
-    -@@
-    -+bashcompdir = $(sharedir)/bash-completion/completions
-    -+
-    -+DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
-    -+sharedir_SQ = $(subst ','\'',$(sharedir))
-    -+bashcompdir_SQ = $(subst ','\'',$(bashcompdir))
-    -+gitexec_instdir_SQ = $(subst ','\'',$(gitexec_instdir))
-    -+
-    -+INSTALL ?= install
-    -+
-    -+all:
-    -+
-    -+install: install-completion
-    -+
-    -+install-completion:
-    -+	$(INSTALL) -D -m 644 completion/git-completion.bash '$(DESTDIR_SQ)$(bashcompdir_SQ)'/git
-    -+	$(INSTALL) -D -m 644 completion/git-prompt.sh '$(DESTDIR_SQ)$(sharedir_SQ)'/git-core/git-prompt.sh
-    -+	$(INSTALL) -D -m 644 completion/git-completion.zsh '$(DESTDIR_SQ)$(sharedir_SQ)'/zsh/site-functions/_git
-    -
-      ## contrib/completion/git-completion.bash => extra/completion/git-completion.bash ##
-     
-      ## contrib/completion/git-completion.zsh => extra/completion/git-completion.zsh ##
-2:  81836329cd ! 2:  af9b24eeb1 git-new-workdir: graduate out of contrib
-    @@ Commit message
-     
-         Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-     
-    - ## extra/Makefile ##
-    -@@ extra/Makefile: INSTALL ?= install
-    + ## Makefile ##
-    +@@ Makefile: quick-install-man:
-    + quick-install-html:
-    + 	$(MAKE) -C Documentation quick-install-html
-      
-    - all:
-    - 
-    --install: install-completion
-    -+install: install-completion install-workdir
-    +-install-extra: install-completion
-    ++install-extra: install-completion install-workdir
-      
-      install-completion:
-    - 	$(INSTALL) -D -m 644 completion/git-completion.bash '$(DESTDIR_SQ)$(bashcompdir_SQ)'/git
-    - 	$(INSTALL) -D -m 644 completion/git-prompt.sh '$(DESTDIR_SQ)$(sharedir_SQ)'/git-core/git-prompt.sh
-    - 	$(INSTALL) -D -m 644 completion/git-completion.zsh '$(DESTDIR_SQ)$(sharedir_SQ)'/zsh/site-functions/_git
-    -+
-    + 	$(INSTALL) -D -m 644 extra/completion/git-completion.bash '$(DESTDIR_SQ)$(bashcompdir_SQ)'/git
-    + 	$(INSTALL) -D -m 644 extra/completion/git-prompt.sh '$(DESTDIR_SQ)$(sharedir_SQ)'/git-core/git-prompt.sh
-    + 	$(INSTALL) -D -m 644 extra/completion/git-completion.zsh '$(DESTDIR_SQ)$(sharedir_SQ)'/zsh/site-functions/_git
-    + 
-     +install-workdir:
-    -+	$(INSTALL) -D workdir/git-new-workdir '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'/git-new-workdir
-    ++	$(INSTALL) -D extra/workdir/git-new-workdir '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'/git-new-workdir
-    ++
-    + 
-    + 
-    + ### Maintainer's dist rules
-     
-      ## contrib/workdir/.gitattributes => extra/workdir/.gitattributes ##
-     
+diff --git a/Makefile b/Makefile
+index 502e0c9a81..0a13e5f077 100644
+--- a/Makefile
++++ b/Makefile
+@@ -532,6 +532,7 @@ sharedir = $(prefix)/share
+ gitwebdir = $(sharedir)/gitweb
+ perllibdir = $(sharedir)/perl5
+ localedir = $(sharedir)/locale
++bashcompdir = $(sharedir)/bash-completion/completions
+ template_dir = share/git-core/templates
+ htmldir = $(prefix)/share/doc/git-doc
+ ETC_GITCONFIG = $(sysconfdir)/gitconfig
+@@ -2015,6 +2016,7 @@ bindir_relative_SQ = $(subst ','\'',$(bindir_relative))
+ mandir_SQ = $(subst ','\'',$(mandir))
+ mandir_relative_SQ = $(subst ','\'',$(mandir_relative))
+ infodir_relative_SQ = $(subst ','\'',$(infodir_relative))
++sharedir_SQ = $(subst ','\'',$(sharedir))
+ perllibdir_SQ = $(subst ','\'',$(perllibdir))
+ localedir_SQ = $(subst ','\'',$(localedir))
+ localedir_relative_SQ = $(subst ','\'',$(localedir_relative))
+@@ -2025,6 +2027,7 @@ htmldir_relative_SQ = $(subst ','\'',$(htmldir_relative))
+ prefix_SQ = $(subst ','\'',$(prefix))
+ perllibdir_relative_SQ = $(subst ','\'',$(perllibdir_relative))
+ gitwebdir_SQ = $(subst ','\'',$(gitwebdir))
++bashcompdir_SQ = $(subst ','\'',$(bashcompdir))
+ 
+ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
+ TEST_SHELL_PATH_SQ = $(subst ','\'',$(TEST_SHELL_PATH))
+@@ -3112,6 +3115,13 @@ quick-install-man:
+ quick-install-html:
+ 	$(MAKE) -C Documentation quick-install-html
+ 
++install-extra: install-completion
++
++install-completion:
++	$(INSTALL) -D -m 644 extra/completion/git-completion.bash '$(DESTDIR_SQ)$(bashcompdir_SQ)'/git
++	$(INSTALL) -D -m 644 extra/completion/git-prompt.sh '$(DESTDIR_SQ)$(sharedir_SQ)'/git-core/git-prompt.sh
++	$(INSTALL) -D -m 644 extra/completion/git-completion.zsh '$(DESTDIR_SQ)$(sharedir_SQ)'/zsh/site-functions/_git
++
+ 
+ 
+ ### Maintainer's dist rules
+diff --git a/contrib/completion/git-completion.bash b/extra/completion/git-completion.bash
+similarity index 100%
+rename from contrib/completion/git-completion.bash
+rename to extra/completion/git-completion.bash
+diff --git a/contrib/completion/git-completion.zsh b/extra/completion/git-completion.zsh
+similarity index 100%
+rename from contrib/completion/git-completion.zsh
+rename to extra/completion/git-completion.zsh
+diff --git a/contrib/completion/git-prompt.sh b/extra/completion/git-prompt.sh
+similarity index 100%
+rename from contrib/completion/git-prompt.sh
+rename to extra/completion/git-prompt.sh
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index cb057ef161..32601b755d 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -36,7 +36,7 @@ complete ()
+ GIT_TESTING_ALL_COMMAND_LIST='add checkout check-attr rebase ls-files'
+ GIT_TESTING_PORCELAIN_COMMAND_LIST='add checkout rebase'
+ 
+-. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash"
++. "$GIT_BUILD_DIR/extra/completion/git-completion.bash"
+ 
+ # We don't need this function to actually join words or do anything special.
+ # Also, it's cleaner to avoid touching bash's internal completion variables.
+@@ -2383,14 +2383,14 @@ test_expect_success 'git clone --config= - value' '
+ test_expect_success 'sourcing the completion script clears cached commands' '
+ 	__git_compute_all_commands &&
+ 	verbose test -n "$__git_all_commands" &&
+-	. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
++	. "$GIT_BUILD_DIR/extra/completion/git-completion.bash" &&
+ 	verbose test -z "$__git_all_commands"
+ '
+ 
+ test_expect_success 'sourcing the completion script clears cached merge strategies' '
+ 	__git_compute_merge_strategies &&
+ 	verbose test -n "$__git_merge_strategies" &&
+-	. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
++	. "$GIT_BUILD_DIR/extra/completion/git-completion.bash" &&
+ 	verbose test -z "$__git_merge_strategies"
+ '
+ 
+@@ -2399,7 +2399,7 @@ test_expect_success 'sourcing the completion script clears cached --options' '
+ 	verbose test -n "$__gitcomp_builtin_checkout" &&
+ 	__gitcomp_builtin notes_edit &&
+ 	verbose test -n "$__gitcomp_builtin_notes_edit" &&
+-	. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
++	. "$GIT_BUILD_DIR/extra/completion/git-completion.bash" &&
+ 	verbose test -z "$__gitcomp_builtin_checkout" &&
+ 	verbose test -z "$__gitcomp_builtin_notes_edit"
+ '
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index bbd513bab0..784e523fd4 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -10,7 +10,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./lib-bash.sh
+ 
+-. "$GIT_BUILD_DIR/contrib/completion/git-prompt.sh"
++. "$GIT_BUILD_DIR/extra/completion/git-prompt.sh"
+ 
+ actual="$TRASH_DIRECTORY/actual"
+ c_red='\\[\\e[31m\\]'
 -- 
 2.32.0.36.g70aac2b1aa
 
