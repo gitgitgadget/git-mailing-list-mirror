@@ -2,77 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A60EC07E95
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 04:59:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDEDDC07E95
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 07:12:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2628061361
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 04:59:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA5FC6128B
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 07:12:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231144AbhGJFCF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 01:02:05 -0400
-Received: from forward104j.mail.yandex.net ([5.45.198.247]:56818 "EHLO
-        forward104j.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229567AbhGJFCF (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 10 Jul 2021 01:02:05 -0400
-X-Greylist: delayed 393 seconds by postgrey-1.27 at vger.kernel.org; Sat, 10 Jul 2021 01:02:05 EDT
-Received: from myt6-d81e73bdf7a6.qloud-c.yandex.net (myt6-d81e73bdf7a6.qloud-c.yandex.net [IPv6:2a02:6b8:c12:422d:0:640:d81e:73bd])
-        by forward104j.mail.yandex.net (Yandex) with ESMTP id 7EC614A1840;
-        Sat, 10 Jul 2021 07:52:41 +0300 (MSK)
-Received: from mail.yandex.ru (mail.yandex.ru [93.181.207.110])
-        by myt6-d81e73bdf7a6.qloud-c.yandex.net (mxback/Yandex) with HTTP id WqF1Pa0I78c1-qfImGvbD;
-        Sat, 10 Jul 2021 07:52:41 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1625892761;
-        bh=VWNd1K8d3bhPkxgLacOvosS87mhMTm7m2r330cvvZvo=;
-        h=Message-Id:Cc:Subject:In-Reply-To:Date:References:To:From;
-        b=MGFBxIORT2NIipUJAT9tc/CI4PNteZXpulOl/1l3mMp0rVWZRHoDka1ciMbGVB3v6
-         WsWKCe5MmRAsy/JNqFT7OwRdvChl0vowxhhpAe9SimpbSWny3EYCoG6wZRDNU7aRFg
-         L0YyWJzAQBTcGhU9AdDsO/qDqA5Y+X7Sos0b6JlQ=
-Authentication-Results: myt6-d81e73bdf7a6.qloud-c.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by myt6-ab88f6e23eb0.qloud-c.yandex.net with HTTP;
-        Sat, 10 Jul 2021 07:52:40 +0300
-From:   grizlyk <grizlyk1@yandex.ru>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-In-Reply-To: <87a6o459bh.fsf@evledraar.gmail.com>
-References: <3957861622848346@myt5-a5512e99e394.qloud-c.yandex.net> <87a6o459bh.fsf@evledraar.gmail.com>
-Subject: Re: Pro Git book: concerning data lost due to ".gitignore"
+        id S231164AbhGJHOx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 03:14:53 -0400
+Received: from mail-ej1-f52.google.com ([209.85.218.52]:33431 "EHLO
+        mail-ej1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229881AbhGJHOw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 03:14:52 -0400
+Received: by mail-ej1-f52.google.com with SMTP id bu12so20837456ejb.0
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 00:12:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KWZu/r09lR7pLvaSsPIdSVmvSG3H/lVjsV/rne+1dIo=;
+        b=JyTEyhkrQIxNhHzDy8DbeKUTUoulmG43i0Xx0+k+v3x0StHjqZT77rAQWGyj3xezYj
+         Bj5JmYAL4g3C9RM+0aE+K0bUsAJRU8DeV2RrM1CQoZUiW6vTPpXCDW/pXFxHtttD069Y
+         ne9d1nntl5qb/Uzroi3FeKuWWm4TOgTxc7T0frFPEJuhG1DJpbDL0W9iDpwKgXBm9vcu
+         eEkfx9OzJl73+ydVRDVQ0CjmxvDDVoiWBOyYdAnOo/X75wWpj310SSYEXV6jV4C0lDyK
+         kLY13lHhzR1nMTZbZ8Eu/T+GHiWUorXGDK+6lFbg0/XfPslv/QfQMlWChlAeaSRJ8D00
+         UFhQ==
+X-Gm-Message-State: AOAM533sRoMD8OFO3g8FfQ/pyFSKyerG5r6XYroFwk902tdwabi2Wy+n
+        735l773dB0uxx8Bj1qf5KNk/5zz6cMcf4WNmJW0=
+X-Google-Smtp-Source: ABdhPJznFdah1LvTgaZPRXr2bQiYORev1OcxUFyqf3yXUd2J/ZVGxf/pK2bT4vroae7LIKN4j1fHgeHQpS8DQDYeKHs=
+X-Received: by 2002:a17:906:4a0a:: with SMTP id w10mr303377eju.371.1625901125123;
+ Sat, 10 Jul 2021 00:12:05 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date:   Sat, 10 Jul 2021 07:52:40 +0300
-Message-Id: <4458411625892760@myt6-ab88f6e23eb0.qloud-c.yandex.net>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
+References: <pull.992.git.1625550451038.gitgitgadget@gmail.com>
+ <CAPig+cSsPrQrP9xk8M8H339_NpYqKh1okeo1V-fAJ2zk3QeOjQ@mail.gmail.com>
+ <xmqq7di3jkki.fsf@gitster.g> <CAPig+cQbBPGN+Dcvmy+ZAZeKLpffRrN4-2PNjRHzDHj56axcJg@mail.gmail.com>
+ <xmqqczrr8qax.fsf@gitster.g>
+In-Reply-To: <xmqqczrr8qax.fsf@gitster.g>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 10 Jul 2021 03:11:54 -0400
+Message-ID: <CAPig+cQEn0k8YEYWPep0yxn5N6xdtTE9hc1Po-DGCHu09UFzHA@mail.gmail.com>
+Subject: Re: [PATCH] worktree: teach `add` to accept --reason <string> with --lock
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stephen Manz via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Stephen Manz <smanz@alum.mit.edu>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-hi
+On Fri, Jul 9, 2021 at 11:23 AM Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > "reasons". That possibility suggests that this particular
+> > reason-giving option of `git worktree add` ought to be named
+> > `--lock-reason`, but `git worktree add --lock --lock-reason=<reason>`
+> > feels clunky and redundant, which is why I was wondering if `git
+> > worktree --lock[=<reason>]` would be a better (and more convenient)
+> > UI.
+>
+> Sure, but
+>
+>     $ git worktree add --lock --reason=why-do-i-want-to-lock \
+>                 --frotz --reason=why-do-i-want-to-frotz
+>
+> would work just fine, no?
 
-> On Sat, Jun 05 2021
-> It's way too common of a pattern to e.g. have a *.o file made from a
-> corresponding *.[ch] file(s) in the same directory.
-
-The patterns were common for old times (before VCSes was involved). To deal with temporary files (like .o), generic OS tools like "make remove_compiled" can help to clean directory before stage. To keep derivative persistent files (like the same .o) separated directory can be used.
-
-> git already does a good job of supporting it. 
-
-Sure, the light message: "There are ignored files (%u<number of files>) not placed into repo.\n\t(use git status --ignored to view)"; will improve the activity. Otherwise some files somethimes will not be placed into repo unexpectedly for user. 
-
-> You'd e.g. compile all your 
-> assets outside of the repo via your build system, and just not have
-> anything in .gitignore.
-
-Do you suggest to copy desired src files into separated repo directory (the repo directory placed under VCS control) by generic OS tools (i.e. by cp command) and stage the separated directory? 
-
-If yes; for the first it is copies of all src files; for the second we could lost some src files due to the possible wrong copy patterns (the same reasons as by wrong .gitignore patterns). 
-So, to explicitly create output files into separated directory and to implicitly include all files in src directory into repo is only reliable way to keep commits without data lost (the way will sometimes include extra output files into repo). 
-
-to explicitly create output files into separated directory is responsibility of translators and makefiles. 
-
-Best regards,
-Maksim.
+Yes, taking the stance that option order is significant would be workable.
