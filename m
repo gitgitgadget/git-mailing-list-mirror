@@ -2,62 +2,30 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9C96C07E95
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 10:37:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32154C07E95
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 11:06:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A6522613D0
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 10:37:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EF3BE613BF
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 11:06:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232645AbhGJKkO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 06:40:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45682 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232523AbhGJKkO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jul 2021 06:40:14 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1031FC0613DD
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 03:37:29 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id y4so10134470pgl.10
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 03:37:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=1jicSBHmX2VZKrZ3KUtO4xgFVs+sKCAnwlW5knsDq+c=;
-        b=dTWGFiXHbm06FlyNkgiWTkWx1UpZZmRsG3KIk9hMbjxupSJaXsOVQeTroUJg96Zb4I
-         5ax/ihQtv3ONzU1ae7KVCYKxaD7vizVeoxSYfNSmeIfbn1pFS+U6nBRFyumgNFTo6o9j
-         AVyCLsPz1BqbFlogdafogkmbm81IuiCkJXHgqtJbBbEQvYViQSgFyQM6k3gdXe1NQaKb
-         LmTcgmw6dQJlXQlXesnebCtPy9+c0jFLW/k8u5rWJWTGwTE3CgAtGEnsuRXiA4LxRdEt
-         uOPjE8enPDZ/ot+HgfaFXhV75erbewrRJceI/h0eidhrpxaHszyVSmM7jBb7jnOQJttP
-         /vug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=1jicSBHmX2VZKrZ3KUtO4xgFVs+sKCAnwlW5knsDq+c=;
-        b=SMSya4eCte7Akcfzg+18lDVVpplTOkuceVEWGnhtgXD7eQP8WI+P+YU+zHB1ODtklG
-         aP+NdkZr3zEKsqXlQeVOxKXzr5dZAFsIcNexupN9YrYskTRuenVElz2qXPfwS7yoFI+E
-         CvVRDxmlcmk172LsoZjLfubBIOAMB2E6V/jNnTMhQGNpcI900N6imm2hSBpeKx+xSXgp
-         RczgUNanDSANtQhcsHBCMeKtrxDeXPhOWmPcIe7JpmUUVfz2kHxJGRAiB30a927tgBlW
-         FlCJS0HZmjNcp0G2y+dqGspekrJYB/9oZ6TnVF9Rp9FwbMkpQOZfOVaA2U/GV4bka4tf
-         uZLw==
-X-Gm-Message-State: AOAM533nzXi+IBlbkPzmzhstE1gfIlDuaTJ0zMt8uWkrJknObiWzp4gd
-        Vt8dwLaR6bdFSPeBBZ3t7a9yXIMpdOI=
-X-Google-Smtp-Source: ABdhPJwHyHN3i5dqxpklljo5ykW0UJyKXNkiyCYEfbUoZL/2RTxF57P1L8GJf2ROQ9l/6F78hH1tpg==
-X-Received: by 2002:aa7:8b4c:0:b029:314:5619:d317 with SMTP id i12-20020aa78b4c0000b02903145619d317mr42523866pfd.60.1625913448227;
-        Sat, 10 Jul 2021 03:37:28 -0700 (PDT)
-Received: from [192.168.43.80] (subs02-180-214-232-75.three.co.id. [180.214.232.75])
-        by smtp.gmail.com with ESMTPSA id u7sm10921294pgl.30.2021.07.10.03.37.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 10 Jul 2021 03:37:27 -0700 (PDT)
+        id S232618AbhGJLIp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 07:08:45 -0400
+Received: from smtprelay08.ispgateway.de ([134.119.228.110]:27113 "EHLO
+        smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230512AbhGJLIo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 07:08:44 -0400
+Received: from [84.163.65.41] (helo=[192.168.2.202])
+        by smtprelay08.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <git@mfriebe.de>)
+        id 1m2AnS-0004zH-JI; Sat, 10 Jul 2021 13:05:22 +0200
 Subject: Re: PATCH: improve git switch documentation
-To:     Sergey Organov <sorganov@gmail.com>, Martin <git@mfriebe.de>
+To:     Sergey Organov <sorganov@gmail.com>
 Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
         Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
@@ -80,21 +48,27 @@ References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
  <60e874e1c6845_215320861@natae.notmuch>
  <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
  <87im1ieaba.fsf@osv.gnss.ru>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <3dbe1f6f-1e9d-3bcc-a7b1-4d9cde56bcde@gmail.com>
-Date:   Sat, 10 Jul 2021 17:37:24 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+From:   Martin <git@mfriebe.de>
+Message-ID: <1bd36aa2-ac90-f7d4-9d48-1aa39159b263@mfriebe.de>
+Date:   Sat, 10 Jul 2021 13:05:54 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
 In-Reply-To: <87im1ieaba.fsf@osv.gnss.ru>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWVAbWZyaWViZS5kZQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/07/21 17.24, Sergey Organov wrote:
+On 10/07/2021 12:24, Sergey Organov wrote:
+> Martin <git@mfriebe.de> writes:
+>> Actually, "new" or "create" would make sense in "git branch". But in
+>> git switch, they actually raise the question "create what?" / "new
+>> what?".
+> 
 > I believe that's because "git switch" tries to do too much. "git switch"
 > should rather switch between existing branches, and do nothing else. As
 > I said once in this discussion already: trouble writing good
@@ -104,8 +78,34 @@ On 10/07/21 17.24, Sergey Organov wrote:
 > to (a branch), and that's why the former doesn't fit into "git switch".
 > 
 
-So I prefer your suggestion. Also make `git switch` also switches tags 
-or random commits (like `git checkout <tag>` and `git checkout <commit>`).
+Right, yes. But creating a branch is often followed by switching to it.
 
--- 
-An old man doll... just what I always wanted! - Clara
+So this is A shortcuts, that I actually think to be fine.
+It does add value, as it does speed up a common operation.
+
+Of course you could have
+    git create-switch
+or
+    git branch-switch
+
+I am not sure, that is really an improvement.
+
+
+
+There is even discussion to add "-c" for  "copy branch + switch" to git 
+switch.
+Which I have no personal objection. Only find it regrettable that it 
+means an incompatible change to -c. (Never mind that git switch is still 
+"experimental". It has been so for a long time, for many people out 
+there long enough to forget the "experimental")
+
+And there is even discussion to add "-m" move/rename, to git switch.
+Only that for the latter, most people would not even perceive a rename 
+as doing a switch/checkout (technically the branchname in HEAD is 
+updated, I guess).
+So technically
+    git branch -m newname
+should change the branchname, but NOT update HEAD (detach)?
+(Not sure what it does / not tested)
+If git branch actually updates HEAD in that case, then "git switch -m" 
+would be an identical copy, adding no value, therefore not required.
