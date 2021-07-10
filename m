@@ -7,62 +7,64 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 432C0C07E95
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 19:18:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A47C7C07E95
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 19:45:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2539F61356
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 19:18:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7725D61241
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 19:45:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230317AbhGJTVb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 15:21:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46038 "EHLO
+        id S229704AbhGJTsM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 15:48:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbhGJTVa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jul 2021 15:21:30 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 739A1C0613DD
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 12:18:45 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id j10-20020a05683015cab02904b568e08dccso7229097otr.4
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 12:18:45 -0700 (PDT)
+        with ESMTP id S229515AbhGJTsM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 15:48:12 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 260AFC0613DD
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 12:45:27 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id f12-20020a056830204cb029048bcf4c6bd9so13457416otp.8
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 12:45:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=OhphQYiXQqfLBNZ1PStpcv2hCsafdXEqVBtBRRnYR1U=;
-        b=XIxvPObgMKuha6gR0tEXPjXM0hF2le5TMdZ2o5JzszlOFFdM5wcemf6FJdFB9J+9S1
-         sks32F8Liz/RQyx4gWUG7FdAHCCmvVmAUWDk7p+AzbgSEMaJoDZ7PhJT/vjhrtq8t4Gk
-         F4sxp+MVrWtQkxaBNAWhvuiknG/5tdAMkYF+7PHKY5h1U3GBQU1TDP5rBMfH8CQooWdN
-         Al4mJtZzLMVbM3bcM8Cmo509Ahn3HSCKKN6tmb2wPG05kaYWgvmtLRHdy8VSoNyurZZO
-         d3kv73pPgUf4DlkX4fVF14WmdvRUtCRhc1Arhsfucff3cz82rORD+on/D8eoDS5dJui0
-         +cvA==
+        bh=iMT3qDdK0sPT0sfB43tgofRQNqJmHhAqrZ6SSViOFu0=;
+        b=ZjYrVqUgGbK9qqTlab6rL8NKv90wT8PXzcm+jXT72LQ1fMZPFvQr5PLdy/T2dBVgZX
+         tNAPSssCJBskmJHZ4US9V1cLtyPT3AtE8neAzl7oDNOoWoFIxWYOZ9iDH+A7dpQsLBmn
+         1K10uyFSepBY0kDi9zvuIWT27v373pwErHs5cMpUqe/1lJH2O/5N6g41ptODDbOBL2LF
+         oet2cerDg2c+YHwoYcXRaQI0shxpP+QOtT67hiGWEe6vZZ0MI1BiGvZ4EXM33QOr+e4V
+         wFISyQ5pC79MKTOmzv6h0msFQDSksqhcquk9SiAuFw3bk0u++H6VJ3CAd94khd22O9z3
+         jGlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=OhphQYiXQqfLBNZ1PStpcv2hCsafdXEqVBtBRRnYR1U=;
-        b=oDrYXGSme3kus+kEuhXPBXbRT49+0xL341RgAclOocZUpmexYTNlLaDgkmv4Svbaz+
-         Eh3UMMskO7NhnMBI6zRkRPEaT+zg6KLqSw9riqx1fvr2lu1HTtyEJdx+Es9yRpJ3XIvb
-         JMd2vJc1lJAtHO7YXuEvYBvYfkbKhOgUT9TdVw/1o2R4Emfi4Qlcw6blBAitnFdlVIQD
-         zzud3V3Rpk5xql5GDP/7Q4nwe2b6x04tjFMFEGWGsGWDJdeTUqJF0ru6tzg7JMLtkm4k
-         25R1pUgkz9YnJzHMi82Lquzo5NlPuQzKaM0xBPJrcuu6AnrPnTiAR4Joui4MafmRE/Oi
-         wDzQ==
-X-Gm-Message-State: AOAM533wXd0aimItilxytXzJ6eMZooc7MnzIICvKZ2Y2KXynYLZ7DjXP
-        GHxoZHBz1S8jrOMa/oxUgQ0=
-X-Google-Smtp-Source: ABdhPJxx5SY2x/VVHFnCVYEQhH5ivJj3YeqW4e7WnL5toEdMs7GpxkQIk+/XyiZgxwQnghBEUummKw==
-X-Received: by 2002:a05:6830:1d8c:: with SMTP id y12mr3056886oti.75.1625944724615;
-        Sat, 10 Jul 2021 12:18:44 -0700 (PDT)
+        bh=iMT3qDdK0sPT0sfB43tgofRQNqJmHhAqrZ6SSViOFu0=;
+        b=p+R4sZMti8715N2rZFfVTd81NJHYGRLH3bozdBGxfzX1ZgzEUQKznmYrlvJ2IffHWi
+         5ywcsTGY8hlFW2rwTJk2XaWvGYeU9+h9ZHCLmgvtu60PMFuPG9KgSYvAFUakdYsZHSq3
+         eV2D4il1UlLBAVU2z8hzSDP8y0w6zXwlaauAWRAus5Ahi7XskaeeqrTy8sx+5vT5rdc1
+         KBl40aKHBjxP/fgrXgCmg2+xgTEIx3OJVn5/NsyIqacKu+TTp3ZGIto05MnEjMyNjyp+
+         +tvT1pZFjBHudFVKT1+JS1QUyYpFmAc6HVJokLbNvl6/O/mXi1Qa7wDqMElL2h5L7qcR
+         PhpA==
+X-Gm-Message-State: AOAM533O8/BtgN5HxoOtJHOGJXC7OPnLodR6dTJgsoP7PrEDHO13BlET
+        5S2pci3PF6vxU1Sqyl6VADU=
+X-Google-Smtp-Source: ABdhPJxc/i2P9bwhxuGozOYHdpC/YyLc+J9VAq3RtYUhpHcve2lwZzXTvXDeY3sQJbudp3i0rey5AA==
+X-Received: by 2002:a05:6830:2309:: with SMTP id u9mr24810069ote.327.1625946326358;
+        Sat, 10 Jul 2021 12:45:26 -0700 (PDT)
 Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id o20sm1675264ook.40.2021.07.10.12.18.43
+        by smtp.gmail.com with ESMTPSA id c63sm1595829otb.55.2021.07.10.12.45.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jul 2021 12:18:43 -0700 (PDT)
-Date:   Sat, 10 Jul 2021 14:18:32 -0500
+        Sat, 10 Jul 2021 12:45:25 -0700 (PDT)
+Date:   Sat, 10 Jul 2021 14:45:24 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Sergey Organov <sorganov@gmail.com>, Martin <git@mfriebe.de>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Message-ID: <60e9f28885c5a_7ef2081e@natae.notmuch>
-In-Reply-To: <87h7h2mqgm.fsf@osv.gnss.ru>
+To:     Martin <git@mfriebe.de>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Message-ID: <60e9f8d462bd9_7ef20898@natae.notmuch>
+In-Reply-To: <ad58bd54-a9dd-59a9-4fce-f90be469cd60@mfriebe.de>
 References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
+ <b667ca37-b3cb-fce2-a298-63c3b839089d@mfriebe.de>
  <xmqqpmw4uwh2.fsf@gitster.g>
  <7870a0ad-8fa1-9dbd-1978-1f44ec6970c5@mfriebe.de>
  <xmqqy2arrmba.fsf@gitster.g>
@@ -80,11 +82,12 @@ References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
  <60e762243aab1_30a7b02089@natae.notmuch>
  <2b85a7eb-d0be-65e7-ecbb-1750abf53e53@mfriebe.de>
  <60e79c31aaa72_30b8a4208c1@natae.notmuch>
- <084a355e-95cd-5c84-2fa5-a901da3e0e49@mfriebe.de>
- <60e8666c8707f_2153208c0@natae.notmuch>
- <57f316cb-850d-706a-592b-4376f240e032@mfriebe.de>
- <87h7h2mqgm.fsf@osv.gnss.ru>
-Subject: Re: switch requires --detach [[Re: What actually is a branch]]
+ <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
+ <60e874e1c6845_215320861@natae.notmuch>
+ <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
+ <60e88a4b8592f_16bcb2082b@natae.notmuch>
+ <ad58bd54-a9dd-59a9-4fce-f90be469cd60@mfriebe.de>
+Subject: Re: PATCH: improve git switch documentation
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -93,42 +96,126 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov wrote:
-> Martin <git@mfriebe.de> writes:
+Martin wrote:
+> On 09/07/2021 19:41, Felipe Contreras wrote:
+> > Martin wrote:
+> >> Well, that is the question as what the action is perceived.
+> >> I think the example is wrong, rather than the command.
+> >>
+> >> -c / -C /-n / -N always *c*reate an *n*ew branch. (create and new really
+> >> are the same thing here)
+> >>
+> >> But if the branch name Foo, is already used?
+> >> Well, it will still be a *new* branch being *created*.
+> >> To do that it has to remove the name from the old branch. (effectively
+> >> removing the old branch).
+> > 
+> > But it's not removing the name, it's merely changing the head.
+> > 
+> > I don't particularly mind having -C or -N, I just would not use them
+> > because I like to be explicit. I don't use --new for something that
+> > already exists.
 > 
-> > On 09/07/2021 17:08, Felipe Contreras wrote:
-> >> and the fact that
-> >> `git switch` expects branches is one of the things that bothers me about
-> >> it.
-> >
-> > Ah, good point.
-> >
-> > I would word it differently though.
-> > "git switch forces the use of --detach if switching to a non branch"
-> >
-> > Bit of a twist.
-> > It's a nice safety for beginners. I remember when I started, I kept
-> > ending up detached. And I had no idea what to do next.
+> But that comes down to the "what is a branch" discussion.
 > 
-> I think it's more because of too technical and thus confusing name for
-> it rather than the state itself. In fact this could be described as
-> "being on unnamed branch", as if HEAD points to a branch with empty
-> name, and is not detached in any sense.
+> It is not creating a new branchname. But it is creating a new branch. 
+> And then the branchname refers to that new branch.
 > 
-> It's nice that once you are on unnamed branch, nothing actually changes,
-> so no any mental shift is needed to get out of this "state". BTW,
-> unnamed branch could probably even start to have entries in the reflog.
-> 
-> Overall, I think Git needs to move into direction of getting rid of
-> "detached head" in favor of "unnamed branch" at least at the UI level.
+> It changes head, base, and the entire content. That effectively makes it 
+> new.
 
-I agree. But UI changes in git are pretty much impossible (although not
-100%).
+Yes, it is a new branch, but the name doesn't change.
 
-> Getting back to "git switch", if the above sounds reasonable, "--detach"
-> is a bad choice for the option name in the first place.
+> If you have a 10 year old car that you nicknamed "speedy", and I come 
+> along and I replace every part (every screw, every whatever...) with a 
+> brand new part, would you still call the result a 10 year old car (even 
+> if (or just because) you still use the nickname) ?
 
-True. Maybe --unamed.
+Yeah but you are entering into metaphysics of identity, see the Ship of
+Theseus [1]. By that same logic why are you still called Martin if every
+cell in your body wasn't there when you were originally born?
+
+These thought experiments are interesting, but philosphers have discused
+about this for thousands of years and the conclussion is still
+undecided, so I don't think we'll come to a conclussion here.
+
+Moreover, I don't even think it's relevant. We agree that the branch is
+a different branch, we agree that the name doesn't change, and we agree
+that the user doesn't want the name to change. We don't need to enter
+into a philosophical discussion to see if the name *should* change.
+
+> Using "reset", it's similar. Except that human language is slopy.
+> If I play WOW, and I reset the game. Actually that is already wrong. I 
+> do not reset the game. It is still the same code, the same images.... I 
+> do reset my session or status. And after that, I will be in a new 
+> session, or have a new status.
+
+Words mean whatever humans using those words intend them to mean. If
+most people use the word "reset" in a certin way, that's what the word
+means. Even if you have a good ontological reason why reset shouldn't be
+used like that, it's used like that.
+
+> - "creating" the branch is "setting (up) the branch"
+> - "re-setting" is doing doing this (creation) again.
+
+Resetting is not necesarilly creating again, it can mean setting up
+again.
+
+> >> Nope it does not go away.
+> >>
+> >> All this has done, is that it no longer is a "force" command.
+> >> So the last bit of warning has just gone.
+> >>
+> >> And it still needs to be documented inside the "git switch" doc, rather
+> >> than forwarding the user do yet another doc.
+> > 
+> > Yes, but as I said: the documentation writes itself.
+> > 
+> >    -n <branch>, --new <branch>
+> > 
+> >      Creates a new branch.
+> > 
+> >    --reset <branch>
+> > 
+> >      Resets the branch to <head>.
+> 
+> And that still leaves it to the user to connect the dots, and come to 
+> the conclusion that the old branch is no longer holding his valued commits.
+
+No. You can add all the explanation you want after "Resets the branch to
+<head>.", but most of that explanation would be redundant, because as we
+already agreed, there's no way to reset the head of a branch without
+changing the branch.
+
+> >> So, I still ask:
+> >> - If "--force" to overwrite the work tree can clearly state that change
+> >> to files will be "thrown away".
+> >> - Then why can "force" re-using an existing branch name not do the same?
+> > 
+> > Because we would be forcing two things now. 
+> 
+> Which 2 things?
+> 
+> The worktree overwriting is *not* forced by -C
+> 
+>    git switch -C b1 b2
+>    git checkout -B b1 b2
+> 
+> both give an error if the worktree has changed files.
+> 
+> This is only about what happens to the branch.
+> 
+> I.e we force the branchname to point to our new branch.
+> And that means the branchname no longe points to the old branch, and the 
+> old branch therefore is removed.
+
+It seems your proposal is to make `git switch -c --force b1 b2` be the same as
+`git switch -C b1 b2`, but that would also make it the same as
+`git switch -C --force b1 b2`. Therefore it would be forcing two things.
+
+Or is your proposal something else?
+
+[1] https://en.wikipedia.org/wiki/Ship_of_Theseus
 
 -- 
 Felipe Contreras
