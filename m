@@ -7,64 +7,62 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A47C7C07E95
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 19:45:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40BFAC07E95
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 19:52:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7725D61241
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 19:45:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2835B6135E
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 19:52:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229704AbhGJTsM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 15:48:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51950 "EHLO
+        id S231880AbhGJTyo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 15:54:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbhGJTsM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jul 2021 15:48:12 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 260AFC0613DD
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 12:45:27 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id f12-20020a056830204cb029048bcf4c6bd9so13457416otp.8
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 12:45:27 -0700 (PDT)
+        with ESMTP id S231314AbhGJTyo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 15:54:44 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92FCAC0613DD
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 12:51:58 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id i5-20020a9d68c50000b02904b41fa91c97so9093263oto.5
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 12:51:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=iMT3qDdK0sPT0sfB43tgofRQNqJmHhAqrZ6SSViOFu0=;
-        b=ZjYrVqUgGbK9qqTlab6rL8NKv90wT8PXzcm+jXT72LQ1fMZPFvQr5PLdy/T2dBVgZX
-         tNAPSssCJBskmJHZ4US9V1cLtyPT3AtE8neAzl7oDNOoWoFIxWYOZ9iDH+A7dpQsLBmn
-         1K10uyFSepBY0kDi9zvuIWT27v373pwErHs5cMpUqe/1lJH2O/5N6g41ptODDbOBL2LF
-         oet2cerDg2c+YHwoYcXRaQI0shxpP+QOtT67hiGWEe6vZZ0MI1BiGvZ4EXM33QOr+e4V
-         wFISyQ5pC79MKTOmzv6h0msFQDSksqhcquk9SiAuFw3bk0u++H6VJ3CAd94khd22O9z3
-         jGlw==
+        bh=Y1bm5FoAz004gCAK3zoZcAdYgowXFmfMGOa+00taCUY=;
+        b=LMXyUK14nIEVV8njegBVn90GBIChShRTAE59IDFGtbfWy9H1YoOxEXCJM/6WEnzW3B
+         iHgXBb/ZaI2+mwdLhUeht+ePO2X06zW4j+PsWMZkQVZt37JxXPNAuOTiBwqwCQ0E5P8h
+         usxVqtVpjxYf7I5f/BjW+/cmrJA61rnRArEyLUF4+ub+j6gozCvZdFDCK/QdRypFviNR
+         sEu25giksN25q0zQoOH8HWSDZPrlUsX4+BcP5/imKHQwGSd58CFqPEdnqyVgbvVeZpiu
+         cFNrsefJCKJQ4EoeC5yL219BvD3nvfPjszSEnHz1+s2vdc14MRp151qVuklPe3LVrhgk
+         8QuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=iMT3qDdK0sPT0sfB43tgofRQNqJmHhAqrZ6SSViOFu0=;
-        b=p+R4sZMti8715N2rZFfVTd81NJHYGRLH3bozdBGxfzX1ZgzEUQKznmYrlvJ2IffHWi
-         5ywcsTGY8hlFW2rwTJk2XaWvGYeU9+h9ZHCLmgvtu60PMFuPG9KgSYvAFUakdYsZHSq3
-         eV2D4il1UlLBAVU2z8hzSDP8y0w6zXwlaauAWRAus5Ahi7XskaeeqrTy8sx+5vT5rdc1
-         KBl40aKHBjxP/fgrXgCmg2+xgTEIx3OJVn5/NsyIqacKu+TTp3ZGIto05MnEjMyNjyp+
-         +tvT1pZFjBHudFVKT1+JS1QUyYpFmAc6HVJokLbNvl6/O/mXi1Qa7wDqMElL2h5L7qcR
-         PhpA==
-X-Gm-Message-State: AOAM533O8/BtgN5HxoOtJHOGJXC7OPnLodR6dTJgsoP7PrEDHO13BlET
-        5S2pci3PF6vxU1Sqyl6VADU=
-X-Google-Smtp-Source: ABdhPJxc/i2P9bwhxuGozOYHdpC/YyLc+J9VAq3RtYUhpHcve2lwZzXTvXDeY3sQJbudp3i0rey5AA==
-X-Received: by 2002:a05:6830:2309:: with SMTP id u9mr24810069ote.327.1625946326358;
-        Sat, 10 Jul 2021 12:45:26 -0700 (PDT)
+        bh=Y1bm5FoAz004gCAK3zoZcAdYgowXFmfMGOa+00taCUY=;
+        b=gWn5FjEpUMzCeQeAuRXYd69C8lcyC+V1ZEl4CAxvLHtiuOfVv4OuQZmSNC9O0p1Uhr
+         Tl6883Ylg8mkTPcNj9ge7i1uL9MpBA1uiDIX4NThae/R1TokCZIMgaRt3aoxwRZl8/wB
+         Lq9Lsyviigz5fbnG9yJi1BadRQzAABMyQKwSy8Ua02IvH6rbe0qar+Ijq4jx2/ty3icR
+         grTUnTUggC3VK9qU//kl02vDcl6GmxkHaf7UVQ7TIKU4yyGc1MpJwJw4NdH9/YdkIM94
+         UoNvSSazyKDOoo84NWrREs10xLfgLIs1QbAU0+Nr/56ZweMd4mJywQSTmqodHcyrI2Nj
+         7GDQ==
+X-Gm-Message-State: AOAM533DboDZV3N85LdvcXgE0s1N84Pxbco5KSX7OLwHMsO8bfD+KTZM
+        gZwXEHHJBMDuUTju/FceZcY=
+X-Google-Smtp-Source: ABdhPJxh6yQkq+Cadli8fUxpamWdNFOV+n5eF2KCixyCMEWcp0dNcbQigpydWeBfBEQS/uG/gHsNuA==
+X-Received: by 2002:a9d:2d82:: with SMTP id g2mr35148310otb.30.1625946718039;
+        Sat, 10 Jul 2021 12:51:58 -0700 (PDT)
 Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id c63sm1595829otb.55.2021.07.10.12.45.25
+        by smtp.gmail.com with ESMTPSA id g1sm1997891otq.22.2021.07.10.12.51.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jul 2021 12:45:25 -0700 (PDT)
-Date:   Sat, 10 Jul 2021 14:45:24 -0500
+        Sat, 10 Jul 2021 12:51:57 -0700 (PDT)
+Date:   Sat, 10 Jul 2021 14:51:45 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Martin <git@mfriebe.de>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Message-ID: <60e9f8d462bd9_7ef20898@natae.notmuch>
-In-Reply-To: <ad58bd54-a9dd-59a9-4fce-f90be469cd60@mfriebe.de>
+To:     Sergey Organov <sorganov@gmail.com>, Martin <git@mfriebe.de>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Message-ID: <60e9fa5132e14_7ef20849@natae.notmuch>
+In-Reply-To: <87im1ieaba.fsf@osv.gnss.ru>
 References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
- <b667ca37-b3cb-fce2-a298-63c3b839089d@mfriebe.de>
  <xmqqpmw4uwh2.fsf@gitster.g>
  <7870a0ad-8fa1-9dbd-1978-1f44ec6970c5@mfriebe.de>
  <xmqqy2arrmba.fsf@gitster.g>
@@ -85,137 +83,80 @@ References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
  <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
  <60e874e1c6845_215320861@natae.notmuch>
  <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
- <60e88a4b8592f_16bcb2082b@natae.notmuch>
- <ad58bd54-a9dd-59a9-4fce-f90be469cd60@mfriebe.de>
+ <87im1ieaba.fsf@osv.gnss.ru>
 Subject: Re: PATCH: improve git switch documentation
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin wrote:
-> On 09/07/2021 19:41, Felipe Contreras wrote:
-> > Martin wrote:
-> >> Well, that is the question as what the action is perceived.
-> >> I think the example is wrong, rather than the command.
-> >>
-> >> -c / -C /-n / -N always *c*reate an *n*ew branch. (create and new really
-> >> are the same thing here)
-> >>
-> >> But if the branch name Foo, is already used?
-> >> Well, it will still be a *new* branch being *created*.
-> >> To do that it has to remove the name from the old branch. (effectively
-> >> removing the old branch).
-> > 
-> > But it's not removing the name, it's merely changing the head.
-> > 
-> > I don't particularly mind having -C or -N, I just would not use them
-> > because I like to be explicit. I don't use --new for something that
-> > already exists.
-> 
-> But that comes down to the "what is a branch" discussion.
-> 
-> It is not creating a new branchname. But it is creating a new branch. 
-> And then the branchname refers to that new branch.
-> 
-> It changes head, base, and the entire content. That effectively makes it 
-> new.
+Sergey Organov wrote:
+> Martin <git@mfriebe.de> writes:
+> =
 
-Yes, it is a new branch, but the name doesn't change.
+> > On 09/07/2021 18:10, Felipe Contreras wrote:
+> >> Martin wrote:
+> >>> As for "git switch -C"
+> >>> This should IMHO change to (the 2nd arg, actually depends on the po=
+int
+> >>> "1" above)
+> >>>      git switch (-c|-C) <branch-name> [<base-commit>]
+> >>>
+> >>> I suggest to not call it "new-branch-name" because, it might be an
+> >>> existing name.
+> >> I think the name is all wrong. As =C3=86var pointed out --new (-n) i=
+s much
+> >> better. Also it doesn't make much sense to use "create" or "new" for=
 
-> If you have a 10 year old car that you nicknamed "speedy", and I come 
-> along and I replace every part (every screw, every whatever...) with a 
-> brand new part, would you still call the result a 10 year old car (even 
-> if (or just because) you still use the nickname) ?
+> >> something that already exists.
+> >
+> > The n versus c issue is IMHO separate. Maybe tiny overlaps.
+> >
+> > I see it mostly in the light of -c should be for "copy".
+> >
+> > On "git checkout" it is "-b" for branch. That works, if you perceive
+> > "branch" as a verb. "The action of branching creates a new branch".
+> >
+> > If needs must, that would work as "git switch -b" to.
+> >
+> > Actually, "new" or "create" would make sense in "git branch". But in
+> > git switch, they actually raise the question "create what?" / "new
+> > what?".
+> =
 
-Yeah but you are entering into metaphysics of identity, see the Ship of
-Theseus [1]. By that same logic why are you still called Martin if every
-cell in your body wasn't there when you were originally born?
+> I believe that's because "git switch" tries to do too much. "git switch=
+"
+> should rather switch between existing branches, and do nothing else.
 
-These thought experiments are interesting, but philosphers have discused
-about this for thousands of years and the conclussion is still
-undecided, so I don't think we'll come to a conclussion here.
+I don't know if it's trying to do too much. I know `git checkout` is
+trying to do too much, and I've been trying to use `git switch` instead
+for a while. I often create branches and switch to them using
+`git switch -c` (which I think should be `git switch -n`).
 
-Moreover, I don't even think it's relevant. We agree that the branch is
-a different branch, we agree that the name doesn't change, and we agree
-that the user doesn't want the name to change. We don't need to enter
-into a philosophical discussion to see if the name *should* change.
+In my mind it's "switch to a new branch".
 
-> Using "reset", it's similar. Except that human language is slopy.
-> If I play WOW, and I reset the game. Actually that is already wrong. I 
-> do not reset the game. It is still the same code, the same images.... I 
-> do reset my session or status. And after that, I will be in a new 
-> session, or have a new status.
+So, how would I do this operation (create a new branch and switch to
+it), without using `git checkout` or `git switch -c`?
 
-Words mean whatever humans using those words intend them to mean. If
-most people use the word "reset" in a certin way, that's what the word
-means. Even if you have a good ontological reason why reset shouldn't be
-used like that, it's used like that.
+> As I said once in this discussion already: trouble writing good
+> documentation is often indication of some flaws in the design.
 
-> - "creating" the branch is "setting (up) the branch"
-> - "re-setting" is doing doing this (creation) again.
+Completely agree. But I believe the difficulty is in the semantics of
+what a branch means in git, not anything to do with `git switch` per se.
 
-Resetting is not necesarilly creating again, it can mean setting up
-again.
+> Creating (a branch) is fundamentally different operation than switching=
 
-> >> Nope it does not go away.
-> >>
-> >> All this has done, is that it no longer is a "force" command.
-> >> So the last bit of warning has just gone.
-> >>
-> >> And it still needs to be documented inside the "git switch" doc, rather
-> >> than forwarding the user do yet another doc.
-> > 
-> > Yes, but as I said: the documentation writes itself.
-> > 
-> >    -n <branch>, --new <branch>
-> > 
-> >      Creates a new branch.
-> > 
-> >    --reset <branch>
-> > 
-> >      Resets the branch to <head>.
-> 
-> And that still leaves it to the user to connect the dots, and come to 
-> the conclusion that the old branch is no longer holding his valued commits.
+> to (a branch), and that's why the former doesn't fit into "git switch".=
 
-No. You can add all the explanation you want after "Resets the branch to
-<head>.", but most of that explanation would be redundant, because as we
-already agreed, there's no way to reset the head of a branch without
-changing the branch.
 
-> >> So, I still ask:
-> >> - If "--force" to overwrite the work tree can clearly state that change
-> >> to files will be "thrown away".
-> >> - Then why can "force" re-using an existing branch name not do the same?
-> > 
-> > Because we would be forcing two things now. 
-> 
-> Which 2 things?
-> 
-> The worktree overwriting is *not* forced by -C
-> 
->    git switch -C b1 b2
->    git checkout -B b1 b2
-> 
-> both give an error if the worktree has changed files.
-> 
-> This is only about what happens to the branch.
-> 
-> I.e we force the branchname to point to our new branch.
-> And that means the branchname no longe points to the old branch, and the 
-> old branch therefore is removed.
+Not in my mind. Instead of switching to an existing branch, I'm switching=
 
-It seems your proposal is to make `git switch -c --force b1 b2` be the same as
-`git switch -C b1 b2`, but that would also make it the same as
-`git switch -C --force b1 b2`. Therefore it would be forcing two things.
+to a new branch, which is easily understood by
+`git switch --new branch`.
 
-Or is your proposal something else?
+-- =
 
-[1] https://en.wikipedia.org/wiki/Ship_of_Theseus
-
--- 
-Felipe Contreras
+Felipe Contreras=
