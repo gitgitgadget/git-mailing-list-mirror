@@ -6,46 +6,45 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDEDDC07E95
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 07:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B634C07E95
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 07:15:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA5FC6128B
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 07:12:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F6B5613C3
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 07:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231164AbhGJHOx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 03:14:53 -0400
-Received: from mail-ej1-f52.google.com ([209.85.218.52]:33431 "EHLO
+        id S231195AbhGJHSl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 03:18:41 -0400
+Received: from mail-ej1-f52.google.com ([209.85.218.52]:40522 "EHLO
         mail-ej1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229881AbhGJHOw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jul 2021 03:14:52 -0400
-Received: by mail-ej1-f52.google.com with SMTP id bu12so20837456ejb.0
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 00:12:05 -0700 (PDT)
+        with ESMTP id S229754AbhGJHSl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 03:18:41 -0400
+Received: by mail-ej1-f52.google.com with SMTP id o5so20801026ejy.7
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 00:15:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=KWZu/r09lR7pLvaSsPIdSVmvSG3H/lVjsV/rne+1dIo=;
-        b=JyTEyhkrQIxNhHzDy8DbeKUTUoulmG43i0Xx0+k+v3x0StHjqZT77rAQWGyj3xezYj
-         Bj5JmYAL4g3C9RM+0aE+K0bUsAJRU8DeV2RrM1CQoZUiW6vTPpXCDW/pXFxHtttD069Y
-         ne9d1nntl5qb/Uzroi3FeKuWWm4TOgTxc7T0frFPEJuhG1DJpbDL0W9iDpwKgXBm9vcu
-         eEkfx9OzJl73+ydVRDVQ0CjmxvDDVoiWBOyYdAnOo/X75wWpj310SSYEXV6jV4C0lDyK
-         kLY13lHhzR1nMTZbZ8Eu/T+GHiWUorXGDK+6lFbg0/XfPslv/QfQMlWChlAeaSRJ8D00
-         UFhQ==
-X-Gm-Message-State: AOAM533sRoMD8OFO3g8FfQ/pyFSKyerG5r6XYroFwk902tdwabi2Wy+n
-        735l773dB0uxx8Bj1qf5KNk/5zz6cMcf4WNmJW0=
-X-Google-Smtp-Source: ABdhPJznFdah1LvTgaZPRXr2bQiYORev1OcxUFyqf3yXUd2J/ZVGxf/pK2bT4vroae7LIKN4j1fHgeHQpS8DQDYeKHs=
-X-Received: by 2002:a17:906:4a0a:: with SMTP id w10mr303377eju.371.1625901125123;
- Sat, 10 Jul 2021 00:12:05 -0700 (PDT)
+        bh=d6wPpIhG/OqIXFxJhD1iX1r+0nFQRZmBdFJyCQjlWaY=;
+        b=UBIPNqWOUp7+VkHOdkGWRzX2v+ESkxKpYC7QeT1MDrLAyjN2ffumIUQvOfP7srQU8D
+         8ENWaqf9y/vqQnzvZwEN+iQyQo+kXPi9j828ZWceP+xOdffhSSfuN4GRSYzxw3eoD4CN
+         hgoo8oKYJo/nYz+vMJ0QrMltstiilZPweu3JVad709NW48gqT4qx++njCG8Jjhbaj/jV
+         1jQXnSwESgZg3Mnb/WpPmb+RdotaWlgiLbzeZoZuNYxp0d7XdXejtr9U4qveDs/bLJQ5
+         CpFJm+DnUM81wTRYC4kejqVKg1rmUMCABo0hbT2Bj7H0qqMeMgqKFP69R/zsJqs+f0+d
+         B4VA==
+X-Gm-Message-State: AOAM5301S9ComjqQ+HEuqhynkJAa+TTmV+UNTXUCU2SN62K51SnDaxD/
+        CNVO3Rx4lxZut0FEHKLjk1N2FQOADc3chStBOu8=
+X-Google-Smtp-Source: ABdhPJzojCz5DID4raKppGX607p6lupllKlngHnoYIhHVp/gRROzgLQ5MCpmvG86kncS5sRWJY30pSJDwXOb8VNKAtE=
+X-Received: by 2002:a17:906:f9c5:: with SMTP id lj5mr20841984ejb.482.1625901355324;
+ Sat, 10 Jul 2021 00:15:55 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.992.git.1625550451038.gitgitgadget@gmail.com>
- <CAPig+cSsPrQrP9xk8M8H339_NpYqKh1okeo1V-fAJ2zk3QeOjQ@mail.gmail.com>
- <xmqq7di3jkki.fsf@gitster.g> <CAPig+cQbBPGN+Dcvmy+ZAZeKLpffRrN4-2PNjRHzDHj56axcJg@mail.gmail.com>
- <xmqqczrr8qax.fsf@gitster.g>
-In-Reply-To: <xmqqczrr8qax.fsf@gitster.g>
+ <pull.992.v2.git.1625759443.gitgitgadget@gmail.com> <YOf+tANuox4LRD7d@flurp.local>
+ <xmqqv95j79ut.fsf@gitster.g>
+In-Reply-To: <xmqqv95j79ut.fsf@gitster.g>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 10 Jul 2021 03:11:54 -0400
-Message-ID: <CAPig+cQEn0k8YEYWPep0yxn5N6xdtTE9hc1Po-DGCHu09UFzHA@mail.gmail.com>
-Subject: Re: [PATCH] worktree: teach `add` to accept --reason <string> with --lock
+Date:   Sat, 10 Jul 2021 03:15:44 -0400
+Message-ID: <CAPig+cQyOgQb1zHA49kOT4+2SmTxUjZpfQ-f1ZxV1AwigCz01A@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] worktree: teach add to accept --reason with --lock
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Stephen Manz via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
@@ -55,20 +54,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 9, 2021 at 11:23 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Jul 9, 2021 at 12:03 PM Junio C Hamano <gitster@pobox.com> wrote:
 > Eric Sunshine <sunshine@sunshineco.com> writes:
-> > "reasons". That possibility suggests that this particular
-> > reason-giving option of `git worktree add` ought to be named
-> > `--lock-reason`, but `git worktree add --lock --lock-reason=<reason>`
-> > feels clunky and redundant, which is why I was wondering if `git
-> > worktree --lock[=<reason>]` would be a better (and more convenient)
-> > UI.
+> > The reason I suggested re-purposing `add_opts.keep_locked` is to avoid
+> > polluting that structure with members having overlapping meaning, thus
+> > reducing the confusion-factor for clients of that structure (assuming
+> > that a tri-state `keep_locked` is indeed less confusing). That doesn't
+> > preclude adding a new variable or two local to the `add()` function to
+> > facilitate keeping `add_opts` pure. For instance, it might be as
+> > simple as the below patch.
 >
-> Sure, but
->
->     $ git worktree add --lock --reason=why-do-i-want-to-lock \
->                 --frotz --reason=why-do-i-want-to-frotz
->
-> would work just fine, no?
+> True.  It is less trivial to construct the command line option
+> parser so that --reason=<why> and --lock can be given in any order
+> (e.g. they no longer can be a simple OPT_BOOL and OPT_STRING that
+> can be given independently but needs some postprocessing like your
+> patch did), but it is not rocket science and keeping add_opts struct
+> leaner will reduce the risk of runtime confusion, I would think, but
+> at the same time, the room for runtime confusion would probably be
+> minor to begin with---so I am fine, if the coder cannot cleanly
+> write the option parser to do so, with the code as posted.
 
-Yes, taking the stance that option order is significant would be workable.
+Although the leaner approach seems "simpler" and more obvious to me,
+it is subjective, and I can see how other people might find a
+tri-state add_opts::keep_locked confusing. So, I'm fine with it either
+way and don't consider it a blocker at all.
