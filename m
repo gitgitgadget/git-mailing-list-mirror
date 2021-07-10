@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-16.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7613CC11F66
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 13:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D03E8C11F6D
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 13:37:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D12A613B9
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 13:37:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E8AC613BE
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 13:37:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232503AbhGJNkk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 09:40:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56538 "EHLO
+        id S232467AbhGJNkj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 09:40:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232413AbhGJNkd (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232363AbhGJNkd (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 10 Jul 2021 09:40:33 -0400
 Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8812FC0613DD
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 06:37:47 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id l18-20020a1ced120000b029014c1adff1edso10861725wmh.4
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 06:37:47 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02C83C061788
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 06:37:46 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id k32so4813658wms.4
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 06:37:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Sw4TNfVARROgBMNypcWydDFz9GLH3Cvnn+oUPRUVvQM=;
-        b=j6JL8TrNbJlUJkahfvPNA1wVwx/PqNfVjcHF+UwJ5cCbT3amuReAnAIxBDK5qzwZjZ
-         UiJlUY11MX5TRrfQJXH0nIMzneTq4lO20DZfeUHyXUD+GjYcyNcIfj5aA5gKx1v6z4lh
-         RsE9xXmMeiUykhRQG+1xUgtCrfqnBOjdRqEI8hcW+BV9nqDLNK9IawK+uGy4AE9n2lQS
-         SE9VhwG5fsTGkupGAkv0Eh8Ce9pMTyb0VTgCzuwI4rDmEwfG1IjpWxtGAOwzGWyUrGQv
-         /l07TyFcwKC83SR52YR9B05b5371WihcACvzbDNOqwtYyym0Igh9LRqsI6ATiDJ52ihJ
-         Ruxw==
+        bh=dOlj0VIhYc2eslc6e65RLV/1lb9wBeTcaTVfptaSi10=;
+        b=SJlyNbbfGcCl5Ahp+8xXg6ZNOjtb5lv7LaGbFzmyf+6wUNViYrkixNRDyIauud4Kv0
+         0DBprThzpVWMm89UIhdIpQKuLNftcsYIyzVnMyUqu9kqqvAARyN6ExC2nKYXxPZbLpSB
+         8nGkWKp09faz9OHr7GrPL3mp47Janu3ULFbu/tQZYGiT4nCk0e0Lcgj3Qc/2pEwley1f
+         ffiADU208aFnfcD+jSfXKOWdlb+NCEgyJ90amfdFg9hsqSh4aQ1TaSaDasapbPsMKU0F
+         xJ9u21poUJY8Ukm03KRL8wOlv/OEOV+4uafaaxxspnHkOkfJ9i44HXJllMfLukGwBX9A
+         Budw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Sw4TNfVARROgBMNypcWydDFz9GLH3Cvnn+oUPRUVvQM=;
-        b=jGBkF0b/Dy0q5arl/CQsf2BkNPa/d6alecYVam+1tVws6d9H0csVxBfI8M5u0e9zVT
-         iCtHubgKQm1c41I4G4BJEkOQayrSUP12d9Z3PEk0i/DlSOMbqHWv7YuY58AA7goVnfIq
-         ui3p0xNpvh6uZZqz53+uobXXRYsJliSKRMxe2YNR4STlFH+v7Zd63TWdzWrV+KqrtfeO
-         hx4qKKC40HfTEgyM8rMrRlXaJNu7pugiZDgxU+xQ9gAXzbOtEBhK8ZVypAzd9pVKG0YV
-         IojKRN1duLNKgR43OA35jtXCDXYNgFvk7YM+1esVPUC60Zei+iSllnhbb255Sl8P+7Qh
-         yhUA==
-X-Gm-Message-State: AOAM533fanrG9z5A1VoXYL3VSHKu3qSuUjkxnDOcxmn5UsmA2qiItzHa
-        mJJs5ttRyAGYsFXO8OPKa5lhYqNQ5oNF+A==
-X-Google-Smtp-Source: ABdhPJxOopYAKsIkxOv3AtrIC2saVTvgtYCe6V+bVQonm1uLdHUJ15yyhFZ0byKANaucGeCu/E0M/g==
-X-Received: by 2002:a7b:c193:: with SMTP id y19mr4625735wmi.86.1625924265918;
-        Sat, 10 Jul 2021 06:37:45 -0700 (PDT)
+        bh=dOlj0VIhYc2eslc6e65RLV/1lb9wBeTcaTVfptaSi10=;
+        b=WBYQKnHjFynBoK976pVnpB/sA/F/1L4zsEmiC830RRtJVfEVPGAOFChUBCuxK0Eul6
+         Lu/RgtzHt3/akWbdnuE69G7Mg0br+AdZm09QvWQjeTVDn600Y+RKJ1wZwXYATYJQlOhc
+         K78iErb/jswDEuAJqjuspcf6qwMN6Oo9EC9GJA75ivjbfv5T9SNfjAcaMqzmjBPwybYB
+         zUU237idZvAYmcT9DqFaM9R4pV/66BP1RBboY/tO/4CxmRY7wpS0q6fQHVRLC8Hz5ZBF
+         NYCYs6uJbTNOVEllm5a4yixWJ/M3HIHdow4/vbh8/U0B6MbseitRUddZuYn/awfnGvg5
+         285g==
+X-Gm-Message-State: AOAM531rttKzlk2WSfT/GLtlcCEfAXEN+T4cFtH+9TlUY2Sbj0U9faYS
+        xoBtrf/bTrJjtj3P7MU9WAMiLjAXYjl6jw==
+X-Google-Smtp-Source: ABdhPJwTwRmxL/s39NT5m3tDyGwt02pKIDDIY1TTQEO6MZazn/tLncyBKx8bC3rdEysaov7iQhk2TA==
+X-Received: by 2002:a1c:3505:: with SMTP id c5mr4482342wma.53.1625924264188;
+        Sat, 10 Jul 2021 06:37:44 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j17sm17612787wmq.9.2021.07.10.06.37.45
+        by smtp.gmail.com with ESMTPSA id j17sm17612787wmq.9.2021.07.10.06.37.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jul 2021 06:37:45 -0700 (PDT)
+        Sat, 10 Jul 2021 06:37:43 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Andrei Rybak <rybak.a.v@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 20/21] fsck: report invalid types recorded in objects
-Date:   Sat, 10 Jul 2021 15:37:23 +0200
-Message-Id: <patch-20.21-02a148af5cf-20210710T133203Z-avarab@gmail.com>
+Subject: [PATCH v5 18/21] fsck: don't hard die on invalid object types
+Date:   Sat, 10 Jul 2021 15:37:21 +0200
+Message-Id: <patch-18.21-3c04065b0b0-20210710T133203Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.636.g43e71d69cff
 In-Reply-To: <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
 References: <cover-00.21-00000000000-20210624T191754Z-avarab@gmail.com> <cover-00.21-00000000000-20210710T133203Z-avarab@gmail.com>
@@ -78,180 +78,140 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Continue the work in the preceding commit and improve the error on:
+Change the error fsck emits on invalid object types, such as:
 
     $ git hash-object --stdin -w -t garbage --literally </dev/null
+    <OID>
+
+From the very ungraceful error of:
+
+    $ git fsck
+    fatal: invalid object type
+    $
+
+To:
+
     $ git fsck
     error: hash mismatch for <OID_PATH> (expected <OID>)
     error: <OID>: object corrupt or missing: <OID_PATH>
-    [ other fsck output ]
+    [ the rest of the fsck output here, i.e. it didn't hard die ]
 
-To instead emit:
+We'll still exit with non-zero, but now we'll finish the rest of the
+traversal. The tests that's being added here asserts that we'll still
+complain about other fsck issues (e.g. an unrelated dangling blob).
 
-    $ git fsck
-    error: <OID>: object is of unknown type 'garbage': <OID_PATH>
-    [ other fsck output ]
+To do this we need to pass down the "OBJECT_INFO_ALLOW_UNKNOWN_TYPE"
+flag from read_loose_object() through to parse_loose_header(). Since
+the read_loose_object() function is only used in builtin/fsck.c we can
+simply change it. See f6371f92104 (sha1_file: add read_loose_object()
+function, 2017-01-13) for the introduction of read_loose_object().
 
-The complaint about a "hash mismatch" was simply an emergent property
-of how we'd fall though from read_loose_object() into fsck_loose()
-when we didn't get the data we expected. Now we'll correctly note that
-the object type is invalid.
+Why are we complaining about a "hash mismatch" for an object of a type
+we don't know about? We shouldn't. This is the bare minimal change
+needed to not make fsck hard die on a repository that's been corrupted
+in this manner. In subsequent commits we'll teach fsck to recognize
+this particular type of corruption and emit a better error message.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/fsck.c  | 22 ++++++++++++++++++----
- object-file.c   | 13 +++++--------
- object-store.h  |  4 ++--
- t/t1450-fsck.sh | 24 +++++++++++++++++++++---
- 4 files changed, 46 insertions(+), 17 deletions(-)
+ builtin/fsck.c  |  3 ++-
+ object-file.c   | 11 ++++++++---
+ object-store.h  |  3 ++-
+ t/t1450-fsck.sh | 14 +++++++-------
+ 4 files changed, 19 insertions(+), 12 deletions(-)
 
 diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 082dadd5629..07af0434db6 100644
+index b42b6fe21f7..082dadd5629 100644
 --- a/builtin/fsck.c
 +++ b/builtin/fsck.c
-@@ -600,12 +600,26 @@ static int fsck_loose(const struct object_id *oid, const char *path, void *data)
- 	unsigned long size;
+@@ -601,7 +601,8 @@ static int fsck_loose(const struct object_id *oid, const char *path, void *data)
  	void *contents;
  	int eaten;
--
--	if (read_loose_object(path, oid, &type, &size, &contents,
--			      OBJECT_INFO_ALLOW_UNKNOWN_TYPE) < 0) {
--		errors_found |= ERROR_OBJECT;
-+	struct strbuf sb = STRBUF_INIT;
-+	unsigned int oi_flags = OBJECT_INFO_ALLOW_UNKNOWN_TYPE;
-+	struct object_info oi;
-+	int found = 0;
-+	oi.type_name = &sb;
-+	oi.sizep = &size;
-+	oi.typep = &type;
-+
-+	if (read_loose_object(path, oid, &contents, &oi, oi_flags) < 0) {
-+		found |= ERROR_OBJECT;
+ 
+-	if (read_loose_object(path, oid, &type, &size, &contents) < 0) {
++	if (read_loose_object(path, oid, &type, &size, &contents,
++			      OBJECT_INFO_ALLOW_UNKNOWN_TYPE) < 0) {
+ 		errors_found |= ERROR_OBJECT;
  		error(_("%s: object corrupt or missing: %s"),
  		      oid_to_hex(oid), path);
-+	}
-+	if (type < 0) {
-+		found |= ERROR_OBJECT;
-+		error(_("%s: object is of unknown type '%s': %s"),
-+		      oid_to_hex(oid), sb.buf, path);
-+	}
-+	if (found) {
-+		errors_found |= ERROR_OBJECT;
- 		return 0; /* keep checking other objects */
- 	}
- 
 diff --git a/object-file.c b/object-file.c
-index 8fb55fc6f58..e550ea0c7cf 100644
+index 1866115a1c5..8fb55fc6f58 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -2534,9 +2534,8 @@ static int check_stream_oid(git_zstream *stream,
- 
- int read_loose_object(const char *path,
+@@ -2536,7 +2536,8 @@ int read_loose_object(const char *path,
  		      const struct object_id *expected_oid,
--		      enum object_type *type,
--		      unsigned long *size,
- 		      void **contents,
-+		      struct object_info *oi,
- 		      unsigned int oi_flags)
+ 		      enum object_type *type,
+ 		      unsigned long *size,
+-		      void **contents)
++		      void **contents,
++		      unsigned int oi_flags)
  {
  	int ret = -1;
-@@ -2544,10 +2543,9 @@ int read_loose_object(const char *path,
- 	unsigned long mapsize;
+ 	void *map = NULL;
+@@ -2544,6 +2545,7 @@ int read_loose_object(const char *path,
  	git_zstream stream;
  	char hdr[MAX_HEADER_LEN];
--	struct object_info oi = OBJECT_INFO_INIT;
- 	int allow_unknown = oi_flags & OBJECT_INFO_ALLOW_UNKNOWN_TYPE;
--	oi.typep = type;
--	oi.sizep = size;
-+	enum object_type *type = oi->typep;
-+	unsigned long *size = oi->sizep;
+ 	struct object_info oi = OBJECT_INFO_INIT;
++	int allow_unknown = oi_flags & OBJECT_INFO_ALLOW_UNKNOWN_TYPE;
+ 	oi.typep = type;
+ 	oi.sizep = size;
  
- 	*contents = NULL;
- 
-@@ -2563,7 +2561,7 @@ int read_loose_object(const char *path,
- 		goto out;
- 	}
- 
--	if (parse_loose_header(hdr, &oi) < 0) {
-+	if (parse_loose_header(hdr, oi) < 0) {
- 		error(_("unable to parse header of %s"), path);
+@@ -2566,8 +2568,11 @@ int read_loose_object(const char *path,
  		git_inflate_end(&stream);
  		goto out;
-@@ -2585,8 +2583,7 @@ int read_loose_object(const char *path,
- 			goto out;
- 		}
- 		if (check_object_signature(the_repository, expected_oid,
--					   *contents, *size,
--					   type_name(*type))) {
-+					   *contents, *size, oi->type_name->buf)) {
- 			error(_("hash mismatch for %s (expected %s)"), path,
- 			      oid_to_hex(expected_oid));
- 			free(*contents);
+ 	}
+-	if (*type < 0)
+-		die(_("invalid object type"));
++	if (!allow_unknown && *type < 0) {
++		error(_("header for %s declares an unknown type"), path);
++		git_inflate_end(&stream);
++		goto out;
++	}
+ 
+ 	if (*type == OBJ_BLOB && *size > big_file_threshold) {
+ 		if (check_stream_oid(&stream, hdr, *size, path, expected_oid) < 0)
 diff --git a/object-store.h b/object-store.h
-index 72d668b1674..96a5970f314 100644
+index 1151ce8e820..94ff03072c1 100644
 --- a/object-store.h
 +++ b/object-store.h
-@@ -376,6 +376,7 @@ int oid_object_info_extended(struct repository *r,
- 
- /*
-  * Open the loose object at path, check its hash, and return the contents,
-+ * use the "oi" argument to assert things about the object, or e.g. populate its
-  * type, and size. If the object is a blob, then "contents" may return NULL,
-  * to allow streaming of large blobs.
-  *
-@@ -383,9 +384,8 @@ int oid_object_info_extended(struct repository *r,
-  */
- int read_loose_object(const char *path,
+@@ -245,7 +245,8 @@ int read_loose_object(const char *path,
  		      const struct object_id *expected_oid,
--		      enum object_type *type,
--		      unsigned long *size,
- 		      void **contents,
-+		      struct object_info *oi,
- 		      unsigned int oi_flags);
+ 		      enum object_type *type,
+ 		      unsigned long *size,
+-		      void **contents);
++		      void **contents,
++		      unsigned int oi_flags);
  
- /*
+ /* Retry packed storage after checking packed and loose storage */
+ #define HAS_OBJECT_RECHECK_PACKED 1
 diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index d8303db9709..da2658155c7 100755
+index f10d6f7b7e8..d8303db9709 100755
 --- a/t/t1450-fsck.sh
 +++ b/t/t1450-fsck.sh
-@@ -66,6 +66,25 @@ test_expect_success 'object with hash mismatch' '
- 	)
+@@ -863,16 +863,16 @@ test_expect_success 'detect corrupt index file in fsck' '
+ 	test_i18ngrep "bad index file" errors
  '
  
-+test_expect_success 'object with hash and type mismatch' '
-+	git init --bare hash-type-mismatch &&
-+	(
-+		cd hash-type-mismatch &&
-+		oid=$(echo blob | git hash-object -w --stdin -t garbage --literally) &&
-+		old=$(test_oid_to_path "$oid") &&
-+		new=$(dirname $old)/$(test_oid ff_2) &&
-+		oid="$(dirname $new)$(basename $new)" &&
-+		mv objects/$old objects/$new &&
-+		git update-index --add --cacheinfo 100644 $oid foo &&
-+		tree=$(git write-tree) &&
-+		cmt=$(echo bogus | git commit-tree $tree) &&
-+		git update-ref refs/heads/bogus $cmt &&
-+		test_must_fail git fsck 2>out &&
-+		grep "^error: hash mismatch for " out &&
-+		grep "^error: $oid: object is of unknown type '"'"'garbage'"'"'" out
-+	)
-+'
-+
- test_expect_success 'branch pointing to non-commit' '
- 	git rev-parse HEAD^{tree} >.git/refs/heads/invalid &&
- 	test_when_finished "git update-ref -d refs/heads/invalid" &&
-@@ -869,9 +888,8 @@ test_expect_success 'fsck error and recovery on invalid object type' '
+-test_expect_success 'fsck hard errors on an invalid object type' '
++test_expect_success 'fsck error and recovery on invalid object type' '
+ 	git init --bare garbage-type &&
+ 	empty_blob=$(git -C garbage-type hash-object --stdin -w -t blob </dev/null) &&
  	garbage_blob=$(git -C garbage-type hash-object --stdin -w -t garbage --literally </dev/null) &&
- 	test_must_fail git -C garbage-type fsck >out 2>err &&
- 	grep -e "^error" -e "^fatal" err >errors &&
--	test_line_count = 2 errors &&
--	grep "error: hash mismatch for" err &&
--	grep "$garbage_blob: object corrupt or missing:" err &&
-+	test_line_count = 1 errors &&
-+	grep "$garbage_blob: object is of unknown type '"'"'garbage'"'"':" err &&
- 	grep "dangling blob $empty_blob" out
+-	cat >err.expect <<-\EOF &&
+-	fatal: invalid object type
+-	EOF
+-	test_must_fail git -C garbage-type fsck >out.actual 2>err.actual &&
+-	test_cmp err.expect err.actual &&
+-	test_must_be_empty out.actual
++	test_must_fail git -C garbage-type fsck >out 2>err &&
++	grep -e "^error" -e "^fatal" err >errors &&
++	test_line_count = 2 errors &&
++	grep "error: hash mismatch for" err &&
++	grep "$garbage_blob: object corrupt or missing:" err &&
++	grep "dangling blob $empty_blob" out
  '
  
+ test_done
 -- 
 2.32.0.636.g43e71d69cff
 
