@@ -2,143 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D9E4C07E95
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 21:55:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DB83C07E9B
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 22:13:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CDA26128D
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 21:55:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3AD8C61353
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 22:13:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229640AbhGJV5n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 17:57:43 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39150 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229515AbhGJV5n (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 10 Jul 2021 17:57:43 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 207A86044E;
-        Sat, 10 Jul 2021 21:54:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1625954067;
-        bh=Co2ANaJG8Dni+k0EfciGPRwCR+Z2GI2wS2FGKhZL5Do=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=sZe1XmHKSewViRLgqChKX0R/wqe8o/4gqtEALPKTWfXrLMe0wb7rnc5MNJA4tEMyT
-         WXCH12gOqnkSg3/oUEgq0tXpSo10i+pVCsj+j0iUSTRt3ExDHrspYySbxvKFuB3JHu
-         p9vCJteDR8EeZfgX3rvMj0tX6OzPGKLepppt0SjTncZkZypu5D4tnI2JoygXZnFukV
-         wQ4wgNZfvhTqttcI1C3yoCcC8Ur9W5imnZ4hElO1Czpmz10sHOMYiPJBBTYkp4YaIu
-         yq+cr6ASQ11ERmKBRjSQq07IoWijV1qNDvM1AWul41+CQQIFIuY+ikc7tg3rkeJqxH
-         GU2SThnAIokyyHZ25r8KoiEPk82NwBjr5X4oWSVfLIj0QtPijVi+GDxvBgvTTsD4X5
-         jpjkacxEpkDHRNIyhb6yff7pu/ckjhB3KQh+PiSreT8p90YdLsvStcCs9YnZ6uT4FT
-         Vr2cP22fRDt400bOi1kRW7UwDV9QGyM7JMyRer6wvuN1QER4N8k
-Date:   Sat, 10 Jul 2021 21:54:16 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH] revision: allow pseudo options after --end-of-options
-Message-ID: <YOoXCJV2ssef/KsN@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-References: <20210708150316.10855-1-worldhello.net@gmail.com>
- <YOcvaFL7+6qcIOUa@camp.crustytoothpaste.net>
- <CANYiYbGYzbMoU_2wb4duppASoYUjGLsJsr692Xe3GaVBOXUsBA@mail.gmail.com>
+        id S230317AbhGJWQa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 18:16:30 -0400
+Received: from smtprelay05.ispgateway.de ([80.67.18.28]:11864 "EHLO
+        smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229614AbhGJWQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 18:16:29 -0400
+Received: from [84.163.65.41] (helo=[192.168.2.202])
+        by smtprelay05.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <git@mfriebe.de>)
+        id 1m2LDH-00071w-VC; Sun, 11 Jul 2021 00:12:43 +0200
+Subject: Naming the --forec option [[Re: PATCH: improve git switch
+ documentation]]
+To:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
+ <87wnqaclz8.fsf@osv.gnss.ru> <60e5f3981de5f_301437208bc@natae.notmuch>
+ <87bl7d3l8r.fsf@osv.gnss.ru> <60e61bbd7a37d_3030aa2081a@natae.notmuch>
+ <877di13hhe.fsf@osv.gnss.ru>
+ <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
+ <60e67389a4adc_306ac1208fd@natae.notmuch>
+ <4057b3ac-a77c-0d5f-d3f4-ad781754aae4@mfriebe.de>
+ <60e736e72da68_30939020850@natae.notmuch>
+ <155308af-42ad-b044-fb37-676251a9b7e1@mfriebe.de>
+ <60e762243aab1_30a7b02089@natae.notmuch>
+ <2b85a7eb-d0be-65e7-ecbb-1750abf53e53@mfriebe.de>
+ <60e79c31aaa72_30b8a4208c1@natae.notmuch>
+ <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
+ <60e874e1c6845_215320861@natae.notmuch>
+ <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
+ <60e88a4b8592f_16bcb2082b@natae.notmuch>
+ <ad58bd54-a9dd-59a9-4fce-f90be469cd60@mfriebe.de>
+ <60e9f8d462bd9_7ef20898@natae.notmuch>
+ <6f43b36b-abe1-41f2-6138-e820c974b1bd@mfriebe.de>
+ <60ea07e3495e8_7ef2081d@natae.notmuch>
+From:   Martin <git@mfriebe.de>
+Message-ID: <43b8d0bb-67f3-11dd-ec31-e102ce8e3b31@mfriebe.de>
+Date:   Sun, 11 Jul 2021 00:13:40 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="xOzyhRrDkcHzmFDF"
-Content-Disposition: inline
-In-Reply-To: <CANYiYbGYzbMoU_2wb4duppASoYUjGLsJsr692Xe3GaVBOXUsBA@mail.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+In-Reply-To: <60ea07e3495e8_7ef2081d@natae.notmuch>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWVAbWZyaWViZS5kZQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 10/07/2021 22:49, Felipe Contreras wrote:
+> Martin wrote:
+>> For each force-needing action, you should have to specify it's own force 
+>> flag. >
+ > OK, but I don't see the concrete proposal. What would be the
+ > flag that
+ > makes -c "forceful"?
+ >
 
---xOzyhRrDkcHzmFDF
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Well that starts yet another topic.
 
-On 2021-07-09 at 01:33:23, Jiang Xin wrote:
-> New test case in t6000 covered this case. Branch "--output=3Dyikes"
-> which starts with a dash is used as revision after the option
-> "--end-of-options", and it won't be interpreted as an option.
->=20
->     test_expect_success 'parse pseudo option "--not" after "--end-of-opti=
-ons"' '
->         cat >expect <<-EOF &&
->         > three
->         EOF
->         git log --pretty=3D"%m %s" --end-of-options \
->                 HEAD --not --output=3Dyikes -- \
->                 two/three >actual &&
->         test_cmp expect actual
->     '
->=20
-> But for the original implementation, because pseudo revision options
-> (--branches, --tags, --not, ..., etc) can not be used after the
-> "--end-of-options" option, we have to put "--end-of-options" at the
-> end of revisions, such as:
->=20
->     git log --pretty=3D"%m %s" rev1 --not rev2 rev3 rev4 \
->             --end-of-options -- path/file
+At the moment, it is
+    --force-create which is absorbing the flag into the option.
 
-Or you could just use the other syntax and not have the problem.  Or you
-could write this:
+And by (apparent) convention it also is the uppercasing of the option
+    -C
+same as the uppercasing of the -B in checkout.
 
-  git log --pretty=3D"%m %s" refs/heads/rev1 --not --end-of-options rev2 re=
-v3 rev4 \
-          -- path/file
+I am not really sure if the uppercasing is the best idea.
+If your suggestion "core.advanced " were to come, I would vote that 
+uppercase single letter force options should be restricted to advanced.
 
-Unless there's a functional problem we're trying to solve, I'd much
-rather we didn't make --end-of-options means
---end-of-some-options-but-not-others.  That makes it hard to reason
-about, and if someone does have a need for disabling all options, then
-we have to add another option.  It's also incompatible with the previous
-behavior, so whereas "--not" used to be a revision, now it's an option.
 
-It's unfortunate that we're not using -- here instead of
---end-of-options because the former is the standard syntax, but that's
-what we have now since that's already used elsewhere.
+If -n is introduced, we can think about what to do about -N.
+Should the  --force-*  style be kept?
+    --force-new
+    -N
 
-> Yes, "--end-of-options" must be used if there is a revision which
-> starts with dash, such as branch "--output=3Dyikes" in t6000. That's
-> even stranger, for we have to write  command in the middle of
-> revisions like this:
->=20
->     git log --pretty=3D"%m %s" rev1 --not rev2 rev3 \
->             --end-of-options --output=3Dyikes -- path/file
->=20
-> I know "rev1..rev2" and "rev2 ^rev1", but I prefer to use "rev1 --not
-> rev2 rev3" instead of "rev1 ^rev2 ^rev3".
+Or the (unfortunate? / see below ) "--discard-changes" style:
+    --discard-existing-branch -n <branchname>
 
-I don't think a personal preference is a good reason to change this.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+I am against using --reset instead of --force-new.
+At least I can say, if I use "-N", I want a *new* branch. I don't care 
+about any old branch under that name.
 
---xOzyhRrDkcHzmFDF
-Content-Type: application/pgp-signature; name="signature.asc"
+Also "--reset" does not have the same alerting properties to me, as 
+"force" or "discard" have.
+This may be my English, but to me "reset" does not have the same 
+alerting property.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYOoXCAAKCRB8DEliiIei
-gdEjAQDiVB57clWRdMSi8I+Ph5cQMLw6e/xu4uQhwzTLMQsDdgD+LdfSWuG/SpxT
-MFVBJk8CEodjenvBrwjgdh/gJgDEWw8=
-=y9gt
------END PGP SIGNATURE-----
 
---xOzyhRrDkcHzmFDF--
+
+The general problem is, if there is more than one force-needing action, 
+then which one does -f  act on?
+
+Any force-needing action, that only applies with another option (such as 
+-N) can have a --force-*. So the plain -f is not used for it.
+
+But, what if more than one force-needing event can happen (not just 
+switch, but any command), even without any extra options? (May not yet 
+be the case / not checked).
+
+git switch has attempted to solve that.
+The result IMHO is a disaster.
+"-f" / "--force" is made an alias in favour for
+    --discard-changes
+What changes?
+
+
+
