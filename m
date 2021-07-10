@@ -2,34 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 490EEC07E95
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 22:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C885C07E95
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 23:18:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2486161248
-	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 22:13:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0720461221
+	for <git@archiver.kernel.org>; Sat, 10 Jul 2021 23:18:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229934AbhGJWQ3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 18:16:29 -0400
-Received: from smtprelay06.ispgateway.de ([80.67.31.104]:13968 "EHLO
-        smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbhGJWQ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jul 2021 18:16:28 -0400
-Received: from [84.163.65.41] (helo=[192.168.2.202])
-        by smtprelay06.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <git@mfriebe.de>)
-        id 1m2LDJ-0003ki-IL; Sun, 11 Jul 2021 00:12:45 +0200
-Subject: Re: PATCH: improve git switch documentation
-To:     Felipe Contreras <felipe.contreras@gmail.com>,
+        id S229640AbhGJXVe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 19:21:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41772 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229515AbhGJXVe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 19:21:34 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE3B1C0613DD
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 16:18:48 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id o17-20020a9d76510000b02903eabfc221a9so14011100otl.0
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 16:18:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=F1YOz4zmatJUvHwOZAL3q8V6T8VQHEhZOut2FGCVmDc=;
+        b=pl5Rtuegk/uM9zNRwKAXb+9A/Ppqs7HL8I6OnaNFib/1l5h+ArLadHEFC00Zq8yZhe
+         jKmHzWSzPo+UyzupFIvyVALdPe/ubdcZr5UYKWIL2qlBDklU5FPwLHIvZ46e0TNlmRYK
+         smBriUBSBpix4bdjO+Brqbt2q3wUVKSwHodwN/xKoE3URLnHhXrASyNK+zyDgAjp26Bj
+         q4wKLKHA0lHLXXOFBGOtm/TfqkWztEXM5YATsO5B3xpu4gENEgDn14xnBIYJp4J+3Mik
+         b14dYJMWZtgZLBA48l5i99I7jz4uV1ZniwlPrWH0cLegR2/BgIwKlZBDM1a6ZRBrTm+S
+         HGtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=F1YOz4zmatJUvHwOZAL3q8V6T8VQHEhZOut2FGCVmDc=;
+        b=AuLJyZtdeq9RDolOOo5Su2u5jYNTy/LAumHs3v3V5U6gcbkFImZscd2bUWgol697hI
+         ZTIyvsb5735mpTTaf8celi0M14SYGsb7ozDMnfSCbe6ybwfwYehfRPfr7rb40+UYb1lp
+         +Ej7dVZwVDwarr40YMYrBMupSG8IqPRzPsi1dgktw3M6Y2sXmM0VaxJLDlqcIOBB9QpM
+         3ZxT1/2P7umG2QEPXATXW1jKQ72yJWjHefHBHCzg60sxUafnAyvFL80VgyF4xVP5NQvu
+         8pKkSE/J0A5v/A/DMusYfsBoOeM8ceiFSWaE5fIx/ju4wRs2zRMPLuwVEGhrpLk0uNBN
+         NpCg==
+X-Gm-Message-State: AOAM5337WSSNfrGmvmgAD59k4luc7gpJnzUgNoLUAZxfpaHQr6pFo04e
+        r40ZmgJ5/+AfezKlUsWh4zq2hdmQ74E=
+X-Google-Smtp-Source: ABdhPJxlZmAN2OI4IonSLzHr52U1c1TST+I0nixJsldk1kC4bQHSP+zOB6z0juX3JtRhUWzmersUUQ==
+X-Received: by 2002:a9d:77cb:: with SMTP id w11mr8306437otl.117.1625959127875;
+        Sat, 10 Jul 2021 16:18:47 -0700 (PDT)
+Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
+        by smtp.gmail.com with ESMTPSA id d3sm2195103oia.36.2021.07.10.16.18.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Jul 2021 16:18:47 -0700 (PDT)
+Date:   Sat, 10 Jul 2021 18:18:46 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Martin <git@mfriebe.de>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
         Sergey Organov <sorganov@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Message-ID: <60ea2ad64878_2a692084e@natae.notmuch>
+In-Reply-To: <43b8d0bb-67f3-11dd-ec31-e102ce8e3b31@mfriebe.de>
 References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
- <87wnqaclz8.fsf@osv.gnss.ru> <60e5f3981de5f_301437208bc@natae.notmuch>
- <87bl7d3l8r.fsf@osv.gnss.ru> <60e61bbd7a37d_3030aa2081a@natae.notmuch>
+ <87wnqaclz8.fsf@osv.gnss.ru>
+ <60e5f3981de5f_301437208bc@natae.notmuch>
+ <87bl7d3l8r.fsf@osv.gnss.ru>
+ <60e61bbd7a37d_3030aa2081a@natae.notmuch>
  <877di13hhe.fsf@osv.gnss.ru>
  <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
  <60e67389a4adc_306ac1208fd@natae.notmuch>
@@ -47,99 +85,114 @@ References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
  <60e9f8d462bd9_7ef20898@natae.notmuch>
  <6f43b36b-abe1-41f2-6138-e820c974b1bd@mfriebe.de>
  <60ea07e3495e8_7ef2081d@natae.notmuch>
-From:   Martin <git@mfriebe.de>
-Message-ID: <30e4c874-6b87-b03d-fa33-fde5b7e50b2a@mfriebe.de>
-Date:   Sun, 11 Jul 2021 00:13:38 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <60ea07e3495e8_7ef2081d@natae.notmuch>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
+ <43b8d0bb-67f3-11dd-ec31-e102ce8e3b31@mfriebe.de>
+Subject: RE: Naming the --forec option [[Re: PATCH: improve git switch
+ documentation]]
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Df-Sender: bWVAbWZyaWViZS5kZQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/07/2021 22:49, Felipe Contreras wrote:
-> Martin wrote:
->>   From the docs (and similar on git checkout)
->>> --force
->>>
->>>      An alias for --discard-changes.
->>> --discard-changes
->>>
->>>      Proceed even if the index or the working tree differs from HEAD.
->>> Both the index and working tree are restored to match the switching
->>> target. If --recurse-submodules is specified, submodule content is
->>> also restored to match the switching target. This is used to throw
->>> away local changes.
-....
-
->> If the working tree is made to match the target, then it can not retain
->> local changes. That can be concluded.
->> Yet, it is explicitly mentioned.
->>
->> Does it really hurt to mention it?
+Martin wrote:
+> On 10/07/2021 22:49, Felipe Contreras wrote:
+> > Martin wrote:
+> >> For each force-needing action, you should have to specify it's own force 
+> >> flag. >
+>  > OK, but I don't see the concrete proposal. What would be the
+>  > flag that
+>  > makes -c "forceful"?
+>  >
 > 
-> Yes it does.
+> Well that starts yet another topic.
 > 
-> Time is the most precious resource we all have. We should not waste the
-> most precious resource of our readers.
+> At the moment, it is
+>     --force-create which is absorbing the flag into the option.
 > 
->    Throw away local changes.
+> And by (apparent) convention it also is the uppercasing of the option
+>     -C
+> same as the uppercasing of the -B in checkout.
 > 
-> That does a much better job.
+> I am not really sure if the uppercasing is the best idea.
+
+Me neither, and it's not something I generally use.
+
+> If your suggestion "core.advanced " were to come, I would vote that 
+> uppercase single letter force options should be restricted to advanced.
+
+I would not count on it. I suggested core.mode back in 2013 [1], so...
+
+> If -n is introduced, we can think about what to do about -N.
+> Should the  --force-*  style be kept?
+>     --force-new
+>     -N
 > 
-> If you want to be more explicit, you can add a bit more information:
+> Or the (unfortunate? / see below ) "--discard-changes" style:
+>     --discard-existing-branch -n <branchname>
 > 
->    Throw away local changes either in the staging area or the working
->    tree.
+> I am against using --reset instead of --force-new.
+
+That's OK, and in fact I can see how '--reset --new' is clunky, I'm just
+saying it is a possibility. But the main point is that something like
+`git switch --reset` is missing, although `git switch --move` would
+probably do the trick.
+
+> At least I can say, if I use "-N", I want a *new* branch. I don't care 
+> about any old branch under that name.
+
+Right, I would as well, but in fact I would expect the same from -n
+(although I can see how a newbie might not).
+
+> Also "--reset" does not have the same alerting properties to me, as 
+> "force" or "discard" have.
+> This may be my English, but to me "reset" does not have the same 
+> alerting property.
+
+OK, maybe it's a language issue. I'm not a native English speaker, my
+mother tongue is Spanish, but I'm pretty sure my understanding of
+"reset" is what most people understand: set again.
+
+Using Merriam Webster [2]:
+
+  1: to set again or anew
+  2: to change the reading of often to zero
+
+And there's plenty of corroboration; reorder: order again (whatever
+order you had is lost), reassign: assign again (whatever assignment you
+had is gone), replay: play again (whatever you were playing is gone),
+and so on.
+
+> The general problem is, if there is more than one force-needing action, 
+> then which one does -f  act on?
 > 
-> Why does the user have to know what HEAD is? And why does it matter that
-> the staging area is held in a file called "index"?
+> Any force-needing action, that only applies with another option (such as 
+> -N) can have a --force-*. So the plain -f is not used for it.
 > 
-> The current explanation is just bad.
-
-Time is precious, but to really save on it, you have to invest some of it.
-
-About the HEAD/index stuff => that was not at all related to the point I 
-was making.
-But I agree that bit can be shortened
-
-The thing that I was pointing out, is the last sentence only.
- >    This is used to throw away local changes.
-
-But even that can be reduced to your proposal
- >    Throw away local changes.
-
-It still supports my point. It does state explicitly that data is (or 
-can be) thrown away.
-
-
-Now, if that can be stated on this option, then all I ask is to add a 
-similar statement (as short as possible) to "-C".
-It should indicate that *commit* may be *dropped".
-Find a better word for dropped: lost, unreachable, removed.....
-
-Currently only the branch is mentioned.
-Currently nothing does explicitly say that *commits* can be affected.
-
-At the end of the current or rewritten "-C" doc, add:
- >     This can drop commits
-
-4 words. All that is needed.
-
-
-
-> There's only one person you need to convince.
+> But, what if more than one force-needing event can happen (not just 
+> switch, but any command), even without any extra options? (May not yet 
+> be the case / not checked).
 > 
-> So, what I suggest you to do is take into consideration all we have
-> discussed and send another patch, because that's ultimately all that
-> matters. Moreover, it usually happens to me that while I write the patch
-> is when finally the previously-discussed ideas start to click.
+> git switch has attempted to solve that.
+> The result IMHO is a disaster.
+> "-f" / "--force" is made an alias in favour for
+>     --discard-changes
+> What changes?
 
-Well, I will see to make some time and put something together.
-Might be a bit before I get to it, but that gives some time to think about.
+I see.
 
+So *if* --force was not an alias for --discard-changes, then this would
+make sense:
+
+  git switch --new --force topic
+
+It would _force_ the creation of a _new_ branch called "topic".
+
+Is this close to what you are thinking?
+
+[1] https://lore.kernel.org/git/1379426871-6823-1-git-send-email-felipe.contreras@gmail.com/
+[2] https://www.merriam-webster.com/dictionary/reset
+
+-- 
+Felipe Contreras
