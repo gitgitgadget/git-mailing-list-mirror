@@ -6,30 +6,28 @@ X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 158ADC07E96
-	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 10:05:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42C5DC07E96
+	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 10:24:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA89661242
-	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 10:05:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BFF161156
+	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 10:24:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231965AbhGKKHy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Jul 2021 06:07:54 -0400
-Received: from smtprelay01.ispgateway.de ([80.67.18.43]:32282 "EHLO
-        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229800AbhGKKHx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Jul 2021 06:07:53 -0400
+        id S232141AbhGKK1B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Jul 2021 06:27:01 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.31.32]:49016 "EHLO
+        smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232106AbhGKK1B (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Jul 2021 06:27:01 -0400
 Received: from [87.152.144.190] (helo=[192.168.2.202])
-        by smtprelay01.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        by smtprelay04.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
         (Exim 4.94.2)
         (envelope-from <git@mfriebe.de>)
-        id 1m2WKo-0007FH-Sl; Sun, 11 Jul 2021 12:05:14 +0200
+        id 1m2Wby-0001dp-0D; Sun, 11 Jul 2021 12:22:58 +0200
 Subject: Re: PATCH: improve git switch documentation
-To:     Sergey Organov <sorganov@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
- <87wnqaclz8.fsf@osv.gnss.ru> <60e5f3981de5f_301437208bc@natae.notmuch>
- <87bl7d3l8r.fsf@osv.gnss.ru> <60e61bbd7a37d_3030aa2081a@natae.notmuch>
  <877di13hhe.fsf@osv.gnss.ru>
  <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
  <60e67389a4adc_306ac1208fd@natae.notmuch>
@@ -42,17 +40,22 @@ References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
  <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
  <60e874e1c6845_215320861@natae.notmuch>
  <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
- <87im1ieaba.fsf@osv.gnss.ru>
- <1bd36aa2-ac90-f7d4-9d48-1aa39159b263@mfriebe.de>
- <87a6mudt9b.fsf@osv.gnss.ru> <60e9ff4430c57_7ef20815@natae.notmuch>
- <874kd1gr0q.fsf@osv.gnss.ru>
+ <60e88a4b8592f_16bcb2082b@natae.notmuch>
+ <ad58bd54-a9dd-59a9-4fce-f90be469cd60@mfriebe.de>
+ <60e9f8d462bd9_7ef20898@natae.notmuch>
+ <6f43b36b-abe1-41f2-6138-e820c974b1bd@mfriebe.de>
+ <60ea07e3495e8_7ef2081d@natae.notmuch>
+ <30e4c874-6b87-b03d-fa33-fde5b7e50b2a@mfriebe.de>
+ <878s2dgu4d.fsf@osv.gnss.ru>
+ <0d7190ae-e64e-d1fa-2367-29f302c2ff7e@mfriebe.de>
+ <87sg0lfayd.fsf@osv.gnss.ru>
 From:   Martin <git@mfriebe.de>
-Message-ID: <6ffd7f1c-97be-a57c-b738-31deae26e8fc@mfriebe.de>
-Date:   Sun, 11 Jul 2021 12:05:02 +0200
+Message-ID: <4cb46126-c816-065f-9052-8ef392c7778b@mfriebe.de>
+Date:   Sun, 11 Jul 2021 12:24:10 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <874kd1gr0q.fsf@osv.gnss.ru>
+In-Reply-To: <87sg0lfayd.fsf@osv.gnss.ru>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
@@ -61,103 +64,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/07/2021 11:04, Sergey Organov wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On 11/07/2021 11:37, Sergey Organov wrote:
+> Martin <git@mfriebe.de> writes:
+> I did suggest a wording in that post:
 > 
->>
->> I don't see the logic in here.
->>
->>    git branch topic # here 'branch' is the verb
+> "Allows to reuse <branch-name>. Commits from the former branch may
+> become unreferenced."
 > 
-> Not to me. I assumed the "branch" is always a noun in "git branch", and
-> the actual meaning of this command is:
-
-Well, it is easy to see it as a noun. But for "branching" creation of a 
-branch, it can be seen as verb.
-
-Yet in
-    git branch --list
-it definitely is a noun.
-
-But then how would/should those work?
-The action/verb is "list" or "show"
-
-    git show branches
-    git show tags
-    git show ...
-
-That completely tears apart related topics.
-
-Or is it enough if the subcommand is a verb?
-     git branch create
-     git branch list
-That be ok for me.
-
-
->>> is "branch" a noun or a verb?
->>
->> Both.
+> Another one could be:
 > 
-> No, it's rather noun plus lacking subcommand, sometimes making it look
-> like verb :)
-
-As is
-     git stash
-for
-     git stash push
-
-And I should guess lots of people like the short form....
-
-
-
-
-> I.e., I'm in favor of universal:
-> 
->     git <command> ...
-> 
-> syntax to Git commands where <command> specifies an action. [Why things
-> tend to drift to Lisp all the time, I wonder?]
+> "Allows to reuse <branch-name>. Commits from the former branch could be
+> lost."
 > 
 
-Because humans are more about the "things".
-The way we interact is more ofter derived from the object, than the 
-object being purposefully made for an interaction?
+"lost" is perfect for me.
 
+"could be" is a good replacement for "may". It much stronger points to 
+"this may or may not be"
 
->  From that POV, for the commands you mentioned, "git bisect" is probably
-> fine, whereas "git worktree", and "git remote" should better be split to
-> operations on them, e.g.:
-> 
->     git new remote
->     git new worktree
-> 
+"could be"  should definitely be used.
 
-That also makes documentation harder. People who want a worktree, want 
-the documentation for it in one place.
-
-So a manpage for "git new" is not desirable. It would have to be split 
-into the manpages for the objects. But that is not good either, or is it?
-
-
-> Once that is regularized, we may as well consider allowing for inverse
-> order of the first 2 arguments, by making
-> 
->    git new remote
->    git remote new
-> 
-> the synonyms.
-
-Having even more ways to do one and the same thing....
-
-
-Btw, missing from the discussion:
-
-    git log
-
-"log" can be a verb, but not in the above.
-
-Because "to log" is to write something into a log.
-But "git log" is to show (i.e. read) the log.
-
-
-
+Afaik many tech docs try to avoid "may", "can", "must not"....
