@@ -2,191 +2,317 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A724C07E96
-	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 16:51:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9742BC07E96
+	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 16:59:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 08CF86101E
-	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 16:51:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6BD14610CD
+	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 16:59:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230104AbhGKQyE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Jul 2021 12:54:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45460 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229934AbhGKQyD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Jul 2021 12:54:03 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCB00C0613DD
-        for <git@vger.kernel.org>; Sun, 11 Jul 2021 09:51:16 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id h19so8069348ljl.4
-        for <git@vger.kernel.org>; Sun, 11 Jul 2021 09:51:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=WKU5vdsZAXyOHvqrBBMoPdF1WSx59R14aqaHxNjVwMY=;
-        b=f8apQJeaFqY7Wk+B1ozA9bN6BCHZEjyANB59ixz361uAS1BU5ZEJlHbOpfQaHQ4T7k
-         gygZ4ptE1p3xIZkhOdanvDErz0roD/XSGpMkZyLZlwooMUGWeyubO7XHfLXV47gL5+SR
-         BBdF2ZeTi02/h283hSZxVBjUPUCvRT9WZhV94izo5B+YVI8TuNYlUV5fFOtT3NfbLGqc
-         TXsUuGI/pnSmahdmkYFMrTpSrQX/EESyxhOlxruYpUfUWTln1bdmG6YpcyfLxzd8T4ZO
-         TgL5CSizZwdK8tevIeXE6A7VuV4HZn2OT8BOv+Sh0FeY0HCVjttv45U1o271MnHK5yW8
-         TBDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:message-id
-         :user-agent:mime-version;
-        bh=WKU5vdsZAXyOHvqrBBMoPdF1WSx59R14aqaHxNjVwMY=;
-        b=ggtcPoB3ckX7Ap1jKQhPkAcUJukMdwZcyOhH2iWykZOvM4e7cHwbB196DJZDdc4Y+K
-         33bQ/UYAuVQqSIjgrNJ/+uhCwh2rKZTacM1NFcSp4nIJtihk0N6Y9rigi6ekdqYXiwiC
-         R7Ep7zoEaP/qEnTnm+ybFMMqjpWuQTpDlT46k297GlcaK6NA3uM6DE81ltvH2qQG8Gly
-         O0vyJggiifp7I8u/rbLEsF4iau7AQyk9BfzcROOo68nmiwKb/3HANKXKNt7+jEVdyNgP
-         JLWi3jTyOA6yTBJY0pSAozc3hCcabAOQ5kLIovxyrMjR1BsxwTjaaSVrSLrxF7wRbtCJ
-         8b5w==
-X-Gm-Message-State: AOAM53373SZDQ71+kKtpOZYjqzTXaa+0yH4AvNtAJFtp/LD7bWIJsseY
-        TfR6rfFMvoqRuNNVrRblrfifGSJuWqU=
-X-Google-Smtp-Source: ABdhPJzHuupB8tnCQ1aCasKi4iEjWlctggW0+59ql40eXheqNz6SGJ8xVzibd0uB6wZ+nvwJ0yomtA==
-X-Received: by 2002:a2e:a785:: with SMTP id c5mr38782693ljf.490.1626022274451;
-        Sun, 11 Jul 2021 09:51:14 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id q21sm1063834lfp.260.2021.07.11.09.51.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Jul 2021 09:51:13 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Martin <git@mfriebe.de>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: PATCH: improve git switch documentation
-References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
-        <877di13hhe.fsf@osv.gnss.ru>
-        <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
-        <60e67389a4adc_306ac1208fd@natae.notmuch>
-        <4057b3ac-a77c-0d5f-d3f4-ad781754aae4@mfriebe.de>
-        <60e736e72da68_30939020850@natae.notmuch>
-        <155308af-42ad-b044-fb37-676251a9b7e1@mfriebe.de>
-        <60e762243aab1_30a7b02089@natae.notmuch>
-        <2b85a7eb-d0be-65e7-ecbb-1750abf53e53@mfriebe.de>
-        <60e79c31aaa72_30b8a4208c1@natae.notmuch>
-        <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
-        <60e874e1c6845_215320861@natae.notmuch>
-        <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
-        <87im1ieaba.fsf@osv.gnss.ru>
-        <1bd36aa2-ac90-f7d4-9d48-1aa39159b263@mfriebe.de>
-        <87a6mudt9b.fsf@osv.gnss.ru> <60e9ff4430c57_7ef20815@natae.notmuch>
-        <874kd1gr0q.fsf@osv.gnss.ru>
-        <6ffd7f1c-97be-a57c-b738-31deae26e8fc@mfriebe.de>
-        <871r85f39n.fsf@osv.gnss.ru>
-        <33af677c-8fec-5b49-0e00-878918c4ea1d@mfriebe.de>
-Date:   Sun, 11 Jul 2021 19:51:12 +0300
-Message-ID: <87bl78eqv3.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S232430AbhGKRCl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Jul 2021 13:02:41 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39310 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229801AbhGKRCl (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 11 Jul 2021 13:02:41 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AD86A6042E;
+        Sun, 11 Jul 2021 16:59:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1626022763;
+        bh=bRGvoSHRjO4zbo+zniN3S9kHrmNiolyc8kUahdOJ5fA=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=HCTMLLmFN7jQhHjEGJq7ZCkYUTcTPKPwSAGgr399b04MZcDxI9sxCgvsIWklErR3N
+         RJxuuakA6ke5BwaSTzRPvrkgl4RUP8MlS92i+DW5mbqBFmkTBZ/YtNDwfwJEPXPIRV
+         iX9F7g6t38fInsGH6+I+eO7uA7yrngUu7uGDjI+mcsYSWu4L5z42EMuiUM4OhTsljC
+         KQaQImow/UVy1mthizCOveiDNnx0K16rPRzNWrpGK5r0Kp45EA2GKX05fZbrbMI+Aq
+         2JzEIQkf9nfDDZqhXFHRk75dvOx8iMP2i6XHBJ9KTurTrbi0d18uO+5FnV7/8Dnzx6
+         EzTWy4oLnO07Pnnl6PE6TSFXuSuSj7/gfS3QT5VXvFpaZyW14q+1ooIB7ZGuCQBuhv
+         qLMPQKeJ/jEtjYw1DW5T0uGOxvEtvjD0iK081upOCbHq3s1CA29W3Om2KxEjgK2WDE
+         w2Lu0xehUrhKuH7GfOlcMjXn9CdmmicP/g/9Yp2wyp9orHqSZYw
+Date:   Sun, 11 Jul 2021 16:59:18 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Rose Kunkel <rose@rosekunkel.me>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v2] submodule: mark submodules with update=none as
+ inactive
+Message-ID: <YOsjZldLHR/htyx9@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Philippe Blain <levraiphilippeblain@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Rose Kunkel <rose@rosekunkel.me>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <YMvgRjwyrwyLz4SC@camp.crustytoothpaste.net>
+ <20210701225117.909892-1-sandals@crustytoothpaste.net>
+ <bf1893ee-6973-d8b2-659e-bb239a0a9ae2@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="wQa3Zb+NopIk0Htb"
+Content-Disposition: inline
+In-Reply-To: <bf1893ee-6973-d8b2-659e-bb239a0a9ae2@gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin <git@mfriebe.de> writes:
 
-> On 11/07/2021 14:23, Sergey Organov wrote:
->> Martin <git@mfriebe.de> writes:
+--wQa3Zb+NopIk0Htb
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[...]
+On 2021-07-09 at 20:26:35, Philippe Blain wrote:
+> Hi brian,
+>=20
+> [re-cc'ing Emily and Jonathan who Junio cc'ed in <xmqqeed2sdwc.fsf@gitste=
+r.g>
+> but seemed to have been dropped when you sent v1 and v2 of the patch]
+>=20
+> Le 2021-07-01 =C3=A0 18:51, brian m. carlson a =C3=A9crit=C2=A0:
+> > When the user recursively clones a repository with submodules
+>=20
+> Here I would add:
+>=20
+> ", or runs 'git submodule update --init' after a
+> non-recursive clone of such a repository, "
+>=20
+> > and one or
+> > more of those submodules is marked with the submodule.<name>.update=3Dn=
+one
+> > configuration, the submodule
+>=20
+> "those submodules" would be clearer, I think.
 
->> Anyway, it's more the consistency that matters, not particular
->> convention. Git problem is that is has no convention at all. "Just do
->> what feels right today" seems to be the motto.
->
-> Well human languages are not as rigid as computer languages.
->
->> Finally, the problem for this particular discussion is that if we decide
->> that it's rather:
->>    git <object> <command>
->> that is the way to go, that I'm pretty fine with as well, we should
->> simply *obsolete "git switch" right away*, rather than spending time
->> improving its now almost useless documentation.
->
-> Actually then we would end up with
->
->    git branch switch
->    git tag switch   // detach
->    git commit switch   // detach
+Sure, I can make that change.
 
-Why? You don't switch tags or commits. You switch only branches, so it'd
-be:
+> > will end up being active.  This is a
+> > problem because we will have skipped cloning or checking out the
+> > submodule, and as a result, other commands, such as git reset or git
+> > checkout, will fail if they are invoked with --recurse-submodules (or
+> > when submodule.recurse is true).
+> >=20
+> > This is obviously not the behavior the user wanted, so let's fix this by
+> > specifically setting the submodule as inactive in this case when we're
+> > initializing the repository.  That will make us properly ignore the
+> > submodule when performing recursive operations.
+> >=20
+> > We only do this when initializing a submodule,
+>=20
+> Here for even more clarity I would add:
+>=20
+> i.e. 'git submodule init' or 'git submodule update --init',
 
-    git branch switch <dest>
+Okay.
 
-where <dest> is any commit'ish.
+> > since git submodule
+> > update can update the submodule with various options despite the setting
+> > of "none" and we want those options to override it as they currently do.
+> >=20
+> > Reported-by: Rose Kunkel <rose@rosekunkel.me>
+> > Helped-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> > ---
+> >   builtin/submodule--helper.c |  6 ++++++
+> >   t/t5601-clone.sh            | 24 ++++++++++++++++++++++++
+> >   2 files changed, 30 insertions(+)
+>=20
+> As I said in my review of v1, I think this would warrant a mention in the=
+ doc.
+>=20
+> In general, I think 'git-submodule(1)' could be more precise about which =
+submodules
+> are touched by which subcommands. Since the topic that introduced the 'ac=
+tive' concept
+> was merged in a93dcb0a56 (Merge branch 'bw/submodule-is-active', 2017-03-=
+30), these subcommand
+> recurse only in active submodules:
+>=20
+> - init (with a big caveat, see below)
+> - sync
+> - update
+>=20
+> The doc makes no mention of that for sync and update. sync says it synchr=
+onizes 'all'
+> submodules, and update says it updates 'registered' submodules ('register=
+ed' in not
+> defined formally anywhere either). And 'active' is mentioned in the descr=
+iption of
+> 'init', but not defined. It would be good to explicitely say "see the 'Ac=
+tive submodules'
+> section in gitsubmodules(7) for a definition of 'active'", or something l=
+ike that.
+>=20
+> I'm not saying we need to fix that necessarily in this patch, I'm just no=
+ting
+> what my reading of the code and of the doc reveals.
 
->
-> Well it could be
->    git worktree switch
-> (ignoring the effect on the index / and bringing "worktree" into a
-> single worktree setup)
 
-Yep, it could be, and it could be even both doing similar things.
 
->
-> The problem is, that IMHO forcing either verb or noun, ends up with
-> grouping commands in ways that create unnecessary dividers between
-> related actions. (Continued, next paragraph)
+> I did more testing with this patch applied and I fear it is not
+> completely sufficient. There are 2 main problems, I think.
+> The first is that the following still triggers the bug:
+>=20
+>     git clone server client
+>     git -C client submodule update --init
+>     git -C client submodule init       # should be no-op, but isn't
+>     git -C client reset --hard --recurse-submodules
+>=20
+> That's because:
+>=20
+> 1) 'git submodule init' operates on *all* submodules if 'submodule.active=
+' is unset
+>     and not <path> is given.
+>     (see submodule--helper.c::module_init), or the doc [1].
+> 2) 'git submodule init' sets 'submodule.$name.active' to true for the sub=
+modules
+>     on which it operates, unless already covered by 'submodule.active'
+>     (see submodule--helper.c::init_submodule)
+> 3) the code we're adding to set 'active' to false if 'update=3Dnone' is o=
+nly executed
+>    if 'submodule.c.update' is not yet in the config, so it gets skipped i=
+f we
+>    repeat 'git submodule init'. (I think this behaviour is sound).
+>=20
+> So that's unfortunate, and is also kind of contradictory to what the doc =
+says
+> for 'git submodule init':
+> "This command does not alter existing information in .git/config.".
+> And just to be clear, the behaviour I describe above is already existing,=
+ the current
+> patch just makes it more obvious.
 
-The problem is that there are multiple ways of grouping, and selecting
-the right one is not an easy decision. Having carefully though-of
-guidelines would help.
+Right, I noticed that.
 
-Grouping by action first is more universal than grouping by object
-first, but not always more "natural", as you've correctly noticed.
+> I think we could manage to change that behaviour a bit
+> in order to have 'submodule init' not modify the config for submodules wh=
+ich are already marked inactive,
+> *unless* they are explitely matched by the pathspec on the command line.
+> So we would have:
+>=20
+>     git clone server client; cd client
+>     git submodule init      # initial call sets 'submodule.c.active=3Dfal=
+se'
+>     git submodule init      # does not touch c, it's already marked inact=
+ive
+>     git submodule init c    # OK, we really want to mark it as active
 
->
->> 
->>>>   From that POV, for the commands you mentioned, "git bisect" is probably
->>>> fine, whereas "git worktree", and "git remote" should better be split to
->>>> operations on them, e.g.:
->>>>      git new remote
->>>>      git new worktree
->>>>
->
-> This is what I mean with dividers.
->
-> There may be some relation between "new branch", "new tag"
->
-> But I can see none between "new branch" and "new remote" and "new
-> worktree". None at all. Yet I can see relations between different
-> things
-> you can do with a worktree.
+We could also add an option, --all, to make it work on all submodules.
+That's because previously "git submodule init" did work on all the
+submodules in the repository in question, but it doesn't now because of
+our change.
 
-The only true relation in this model is that if you want to create
-*something* new, you use "git new". Simple like hell.
+> So it's all a little bit complicated! But I think that with my suggestion=
+ above,
+> i.e. that 'git submodule init', in the absence of 'submodule.active', wou=
+ld
+> only switch inactive submodules to active if they are explicitely listed,=
+ then
+> we could get a saner behaviour, at the expense of having to explicitely i=
+nit
+> 'update=3Dnone' submodules on the command line if we really want to '--ch=
+eckout' :
+>     git clone server client
+>     git -C client submodule update --init        # first call: set c to i=
+nactive
+>     git -C client submodule update --init        # no-op
+>     git -C client submodule update --checkout    # does not clone c (curr=
+ently quiet)
+>     git -C client submodule update --checkout c  # does not clone c, but =
+warns (current behaviour)
+>     git -C client submodule init c               # sets c to active
+>     git -C client submodule update --checkout    # clones c
+>=20
+> where the last two command could be a single
+> 'git submodule update --init --checkout c' and ideally the
+> 4th command should also warn the user that they now have to explicitely '=
+init'
+> c if they want to check it out, which could simply mean tweaking the alre=
+ady
+> existing message in next_submodule_warn_missing to also check if
+> the current submodule has 'update=3Dnone' and then display the warning
+> (instead of just showing it if the submodule was listed on the command
+> line, which is the current behaviour). Additionnaly, the warning should
+> say "Maybe you want to use 'update --init %s'?", i.e. specify the path.
+>=20
+>=20
+> What do you think of my suggestions ? I can help push this forward
+> by contributing patches if we agree that we should go forward with
+> this slight behaviour change in 'git submodule init' ...
 
->
-> I also think that, switching to a commit or branch are to closely
-> related, and should not be divided.
+With the modification of adding --all to init so users can get a
+behavior a little more similar to the previous, yes, that sounds good.
+It would be great if you'd be willing to send a few patches.
 
-Strictly speaking, there is no need to switch to something that is not
-a branch. But we'd need the notion of "unnamed branch" to achieve this
-simplicity while not loosing useful functionality, and even gaining
-some, see below.
+> > diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+> > index c0688467e7..efe6b13be0 100755
+> > --- a/t/t5601-clone.sh
+> > +++ b/t/t5601-clone.sh
+> > @@ -752,6 +752,30 @@ test_expect_success 'batch missing blob request do=
+es not inadvertently try to fe
+> >   	git clone --filter=3Dblob:limit=3D0 "file://$(pwd)/server" client
+> >   '
+> > +test_expect_success 'clone with submodule with update=3Dnone is not ac=
+tive' '
+> > +	rm -rf server client &&
+> > +
+> > +	test_create_repo server &&
+> > +	echo a >server/a &&
+> > +	echo b >server/b &&
+> > +	git -C server add a b &&
+> > +	git -C server commit -m x &&
+> > +
+> > +	echo aa >server/a &&
+> > +	echo bb >server/b &&
+> > +	git -C server submodule add --name c "$(pwd)/repo_for_submodule" c &&
+> > +	git -C server config -f .gitmodules submodule.c.update none &&
+> > +	git -C server add a b c .gitmodules &&
+> > +	git -C server commit -m x &&
+> > +
+> > +	git clone --recurse-submodules server client &&
+> > +	git -C client config submodule.c.active >actual &&
+> > +	echo false >expected &&
+> > +	test_cmp actual expected &&
+> > +	# This would fail if the submodule were active, since it is not check=
+ed out.
+> > +	git -C client reset --recurse-submodules --hard
+> > +'
+>=20
+> I think we might want to also test the non-recursive clone case as well,
+> i.e. 'git clone' and then 'git submodule update --init', as well as
+> subsequent calls to 'git submodule init' in light of my analysis above.
+>=20
+> Also, the only place in the test suite that I could find where
+> 'update=3Dnone' is tested is in t7406.35-38 in t7406-submodule-update.sh
+> so maybe it would make more sense to put the test(s) there ?
 
-> (There were even suggestions that switching to a commit, is an unnamed
-> branch)
+Sure, I can do that.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-Yep. We just switch our current *branch*, so another *branch* becomes
-current. If we specify a commit or a tag as the target, the unnamed
-branch should be reset to point there, and only then we should switch
-our current to this new unnamed branch. That's it. No need for
-complications of "detached HEAD", that even sounds awfully and makes me
-scared every time I see it.
+--wQa3Zb+NopIk0Htb
+Content-Type: application/pgp-signature; name="signature.asc"
 
-In fact this "unnamed branch" could have a non-empty name, say "AUTO",
-and its own entry in the reflog. That'd give even more functionality
-than is currently available with this chilling "detached HEAD". We should
-better bury this Nearly Headless Nick finally.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
-Thanks,
--- 
-Sergey Organov
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYOsjZQAKCRB8DEliiIei
+gXeGAP9Qoko+nGsX0hmbsSHcN5oGhh2gibcjTgf/5vM5D3ceiAEAmCenGk8ZHhKi
+7cIvm2xPG1Ohc2oSfH/IEMgtDivxhgQ=
+=JuOU
+-----END PGP SIGNATURE-----
+
+--wQa3Zb+NopIk0Htb--
