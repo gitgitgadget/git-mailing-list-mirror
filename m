@@ -2,92 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85D17C07E96
-	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 11:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4A0DC07E96
+	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 11:48:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52C8661209
-	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 11:18:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 93954611F2
+	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 11:48:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232278AbhGKLVk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Jul 2021 07:21:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56794 "EHLO
+        id S232679AbhGKLvX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Jul 2021 07:51:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229688AbhGKLVi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Jul 2021 07:21:38 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8469C0613DD
-        for <git@vger.kernel.org>; Sun, 11 Jul 2021 04:18:50 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id 22-20020a17090a0c16b0290164a5354ad0so10967439pjs.2
-        for <git@vger.kernel.org>; Sun, 11 Jul 2021 04:18:50 -0700 (PDT)
+        with ESMTP id S229688AbhGKLvX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Jul 2021 07:51:23 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D941C0613DD
+        for <git@vger.kernel.org>; Sun, 11 Jul 2021 04:48:35 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id i20so27376517ejw.4
+        for <git@vger.kernel.org>; Sun, 11 Jul 2021 04:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :cc:to;
-        bh=ZGaCnEV6c+5PVDoWK/2QFU1gUxxidVUF9yT/UpkWkuU=;
-        b=k+tbIjDAB8ckn0syts/YeTVj7Q8OgpFLCEc8FNIF8lvUQDukY0s8ZfG+si8twZYzPi
-         UOj0L4DJwR8Ls46BOfbxWIBMMTK8mZz7yG+LAdubK4uHo7V+9o6373dNVzPwkg4V3Az2
-         hTtBWaUDYj3eBIMI6JNcs6240k2hKAPtYS17p7GdhtyqYGFwhQH+9nLvLTOXDfKX7mVU
-         w/xgKZ2mklEeUB53P0hf++xtD9I7Ar4mRswHAA4ClEjUgS4VwKoh4+H0Hj996WJvCg2U
-         o1fcogRViEphW92VwFJ8ejT3Igo0wkBqttj9aflVxBBoKdhPxwV9f+2oG/cneeYdBghX
-         K2FQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=qFGDQkNV7xYlkZEzwRtEW7tTZiI7wEQqjlmi10cJmqE=;
+        b=W0ZY6djttKc2FwZ1qjL9zeumBIj0TLvDHtw/gJaB5WRcUtruLQ+qg1Grl4Muo5R/5t
+         L1H7q/LjMEtQjlOGLtfZiv3NCV0L2Mob8O4dsbgM0X7AsiZ5KHwdfB8bk+7lGazOeitk
+         JLTOZ5NW+dP2hKpUEZunuNVOuGRzK8iCB4NqGV16tZVT9CCogfVt70+V/qa1DRnoJj6g
+         YawmtuV+vkS82fO7rkh+TomOI53NPCaZFd7p8kfJ4dFkI3kC+XtUL/Inj0g/WZ7mqQCk
+         3V4iSgb4OUMKGTFYYO2QTN23Aa9U05KoXLo1RRv+q31J5aYIhpoQfYScKPrh9+TjI9md
+         s7tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:cc:to;
-        bh=ZGaCnEV6c+5PVDoWK/2QFU1gUxxidVUF9yT/UpkWkuU=;
-        b=qYd/vV+eOAfDLrWplJ11qtFZF+VZ+UnTaBdzsPJrZJjP9tmU3AvsjCOjzdMPxSsCdt
-         ljMGgXnC7Gvgi0BsWMRbg3OlCMDUxfDEFSCWpG7WbKn2o4oHMy/6KST3AI5IjiWnRB5o
-         zvdbfHQ8AWzx1oM5x2ajKB8cuTCqUdnHkneUwKZSPuGnl0TKPHLJNSL1yQr/o6+ZNWMo
-         id7A3+UjDIWNbw3Dotvjgud6ojz30o6P3Zo6MTVA4yss0DjG61Wzaa090FkDb7UVZLfX
-         0hgTKQZBKGF2iiAxQZxDwOcWkvCyJUc+0Sz1jBOc2vxb+/9Ft/GnxoLkivWS06Gx1oHT
-         h4nA==
-X-Gm-Message-State: AOAM531bK0rtZnx3fLqJ9uxCZK5wNlKXhxUw8YkKuF/xPw0t/bQr9R+I
-        x5Su/rTrWQVvSUpNIQcOiVg5Qb/duxAoCw==
-X-Google-Smtp-Source: ABdhPJxXIj7mL3c0s1MAinj9kSTeSmx4ZOkiUtx8WCUCsbjq96tmixAD1VJjLPmm9GcigrfgtEPv6Q==
-X-Received: by 2002:a17:90a:7345:: with SMTP id j5mr8787752pjs.64.1626002324628;
-        Sun, 11 Jul 2021 04:18:44 -0700 (PDT)
-Received: from smtpclient.apple ([119.82.121.47])
-        by smtp.gmail.com with ESMTPSA id x6sm14518552pgq.67.2021.07.11.04.18.42
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 11 Jul 2021 04:18:44 -0700 (PDT)
-From:   Atharva Raykar <raykar.ath@gmail.com>
-Content-Type: text/plain;
-        charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
-Subject: =?utf-8?Q?=5BGSoC=5D_My_Git_Dev_Blog_=E2=80=93_Week_8?=
-Message-Id: <CD6968A1-179D-4B77-91C1-4EECB1B69951@gmail.com>
-Date:   Sun, 11 Jul 2021 16:48:41 +0530
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Git List <git@vger.kernel.org>
-X-Mailer: Apple Mail (2.3654.100.0.2.22)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=qFGDQkNV7xYlkZEzwRtEW7tTZiI7wEQqjlmi10cJmqE=;
+        b=U9xJ0gmbnf7QmFDYwbZyP/RetO+M8Fd2C4tc6UUqzTkyRSwOOhfR0GPWGby0gSu0aP
+         ABM/ReoCZg06971Osu++DOgfbSGH5uDxbwRHJWUZ7UM5p78Rwwq6A81JjkUSCfsKeYM9
+         brl+MgCEIJmBPMcHuAvhKFboQkoLuxvymsPBownQmGA1bPJjxyOvq7sJSMWS/by8tiv1
+         2857MnE8KAM4Stgsb2Qn9aDm4RoQVAv3/4iDk1T5qaujJG2pReTmagtt2/gdWd5tJ9S4
+         HDfg4TBIMHeTCtcD72YE1lgmloTagNPpBnx19OldT2esIM1CrCBsPeuhRe3Lo1P8/l/z
+         7+Yg==
+X-Gm-Message-State: AOAM532CSyJYtg316MTKEAsVWzrcx+OeEQUxO+GyNu47CiM2NlnkQ6De
+        iwkhic5HrbUs3jmazY0vyHgjqAqrYPiB9g==
+X-Google-Smtp-Source: ABdhPJxtQjZ5Y+DOenkJlvcOxDwNNZx9kQD04KYNxqkEXkk8sVOTJwKKS3UY3MaMrb7dMEZg5+TBLw==
+X-Received: by 2002:a17:906:c34b:: with SMTP id ci11mr22067200ejb.223.1626004113828;
+        Sun, 11 Jul 2021 04:48:33 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id u26sm4878826ejx.8.2021.07.11.04.48.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Jul 2021 04:48:33 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v5 2/6] refs/files-backend: stop setting errno from
+ lock_ref_oid_basic
+Date:   Sun, 11 Jul 2021 13:38:48 +0200
+References: <pull.1012.v4.git.git.1625597757.gitgitgadget@gmail.com>
+ <pull.1012.v5.git.git.1625684869.gitgitgadget@gmail.com>
+ <95025080c16f535599826ed4f013845d712b0e8d.1625684869.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <95025080c16f535599826ed4f013845d712b0e8d.1625684869.git.gitgitgadget@gmail.com>
+Message-ID: <87lf6d3wbz.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here's my weekly update:
-https://atharvaraykar.me/gitnotes/week8
 
-I am currently blocked by trying to pass a super-prefix parameter
-to another command, when calling it from within C.
+On Wed, Jul 07 2021, Han-Wen Nienhuys via GitGitGadget wrote:
 
-If you are interested in helping with that, this will take you to
-right to it:
-https://atharvaraykar.me/gitnotes/week8#path-pains
+>  /*
+>   * Locks a ref returning the lock on success and NULL on failure.
+> - * On failure errno is set to something meaningful.
+>   */
+>  static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+>  					   const char *refname,
+> @@ -922,7 +921,6 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+>  {
+>  	struct strbuf ref_file = STRBUF_INIT;
+>  	struct ref_lock *lock;
+> -	int last_errno = 0;
+>  	int mustexist = (old_oid && !is_null_oid(old_oid));
+>  	int resolve_flags = RESOLVE_REF_NO_RECURSE;
+>  	int resolved;
+> @@ -949,7 +947,6 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+>  		 * to remain.
+>  		 */
+>  		if (remove_empty_directories(&ref_file)) {
+> -			last_errno = errno;
+>  			if (!refs_verify_refname_available(
+>  					    &refs->base,
+>  					    refname, extras, skip, err))
+> @@ -962,10 +959,13 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+>  						     &lock->old_oid, type);
+>  	}
+>  	if (!resolved) {
+> -		last_errno = errno;
+> +		int last_errno = errno;
+>  		if (last_errno != ENOTDIR ||
+> -		    !refs_verify_refname_available(&refs->base, refname,
+> -						   extras, skip, err))
+> +		    /* in case of D/F conflict, try to generate a better error
+> +		     * message. If that fails, fall back to strerror(ENOTDIR).
+> +		     */
+> +		    !refs_verify_refname_available(&refs->base, refname, extras,
+> +						   skip, err))
+>  			strbuf_addf(err, "unable to resolve reference '%s': %s",
+>  				    refname, strerror(last_errno));
 
-Have a nice day.
+I don't think it's some dealbreaker and we can move on, but just FWIW I
+think what I mentioned ending in your
+https://lore.kernel.org/git/CAFQ2z_NpyJQLuM70MhJ8K1h2v3QXFuAZRjN=SvSsjnukNRJ8pw@mail.gmail.com/
+is still outstanding.
 
----
-Atharva Raykar
-=E0=B2=85=E0=B2=A5=E0=B2=B0=E0=B3=8D=E0=B2=B5 =E0=B2=B0=E0=B2=BE=E0=B2=AF=E0=
-=B3=8D=E0=B2=95=E0=B2=B0=E0=B3=8D
-=E0=A4=85=E0=A4=A5=E0=A4=B0=E0=A5=8D=E0=A4=B5 =E0=A4=B0=E0=A4=BE=E0=A4=AF=E0=
-=A4=95=E0=A4=B0
+I.e. you added the comment, which is just says what the error emitting
+looks like, that's all well & good.
 
+But what I was pointing out that it didn't make sense to do any
+"last_errno" here at all anymore. You pointed to 5b2d8d6f218
+(lock_ref_sha1_basic(): improve diagnostics for ref D/F conflicts,
+2015-05-11), we started setting "last_errno" there, but that was *not*
+to avoid clobbering between the !resolved and the
+strbuf_add(strerror(last_errno)) here, but rather to carry the
+"last_errno" forward to the end of this lock_ref_oid_basic(), because
+other things (after this hunk) might reset/clear errno.
+
+Anyway, as noted there it doesn't actually matter, just reviewing &
+looking if there's any loose ends, and for future source spelunking for
+anyone reading this thread.
+
+I.e. something like what I mentioned in
+https://lore.kernel.org/git/87k0mae0ga.fsf@evledraar.gmail.com/ could be
+squashed in, or better yet (probably) this:
+
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 83ddfb3b627..f0ce0aac857 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -958,17 +958,15 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+ 						     refname, resolve_flags,
+ 						     &lock->old_oid, type);
+ 	}
+-	if (!resolved) {
+-		int last_errno = errno;
+-		if (last_errno != ENOTDIR ||
+-		    /* in case of D/F conflict, try to generate a better error
+-		     * message. If that fails, fall back to strerror(ENOTDIR).
+-		     */
+-		    !refs_verify_refname_available(&refs->base, refname, extras,
+-						   skip, err))
+-			strbuf_addf(err, "unable to resolve reference '%s': %s",
+-				    refname, strerror(last_errno));
+-
++	if (!resolved &&
++	    (errno != ENOTDIR ||
++	     /* in case of D/F conflict, try to generate a better error
++	      * message. If that fails, fall back to strerror(ENOTDIR).
++	      */
++	     !refs_verify_refname_available(&refs->base, refname, extras,
++					    skip, err))) {
++		strbuf_addf(err, "unable to resolve reference '%s': %s",
++			    refname, strerror(errno));
+ 		goto error_return;
+ 	}
+ 
