@@ -2,186 +2,194 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2414EC07E95
-	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 00:28:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D17CC07E95
+	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 00:39:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F363661220
-	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 00:28:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F70661241
+	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 00:39:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231139AbhGKAbl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 20:31:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57300 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229714AbhGKAbl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jul 2021 20:31:41 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F29A6C0613DD
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 17:28:54 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id 59-20020a9d0ac10000b0290462f0ab0800so14061724otq.11
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 17:28:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=bVuOaLzlsEciU3iSSv0Ebj1lprhf2FSPQqQmLw+yPd8=;
-        b=XXId7m9vY80D20ulG8k8Qe8noUP8jhIrNBgFBFtag3j6FeKKuiQJUpmkWTyDqDeyPZ
-         iDgQFGErAhMEDEoo1fF4W2JxbCp2owt3IHARAbJ+ZuhQeK6PgGaJWE9e/MapHjjps6wJ
-         33wKFCGDdyaDn39RtH4YDm30gIoeuXNkFmQONrSHolWZIBAma9OvW62E85hZA4BRENso
-         FtQHagz+pzQ1Dw44rFAPQqNvgO683S57m/doIMPMNB3txzp3AeW92D0HajtwtmVr1EU4
-         dq1Suqil1IKWUHgkpJut8LNPDxA+zetzBxmHnbHgYL79Zl04w1J/RbiicrYU6BU6j+jW
-         9J0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=bVuOaLzlsEciU3iSSv0Ebj1lprhf2FSPQqQmLw+yPd8=;
-        b=GzNkCWgT+qQNdN76vdyNLbCfq7u05YEwkKsgj7Dk1IL7Ns4iRDxnkExA4JV2HGUftC
-         5bT+hJKx8UNRhn+32Z8seCIU0juNUl1yr5I0RilPyZQZBrb+Yszt33dUrranKwzQoROv
-         alr8MHFq/KleJDWqgyDdD8VDeo/vDQmGZ05L4WGuYdarwT4mmW4C144SuO1laqzOB7UK
-         dx/zMU6TWEsmAC1X9WU9DYgDupGxwtazHKU+fzuHHgLuI9M1w/Ya6MhB7ubRPyOgkdfW
-         vE6jrcppQhi1VzeYg9jcIyGeH320NCvL0rsFPI7Xzp0PT9uGgva7V/eA0sAVOYI9rv8V
-         +IQQ==
-X-Gm-Message-State: AOAM533k31oS0RBHcbBUSUuD9Tah8hwYMhpRYG7u+HmNAhVE+LuJ/QbT
-        UCvXdLgLNMMAWzErY+7vmxkg9nXkzN4OgOgFG6BRjSaPcF80xw==
-X-Google-Smtp-Source: ABdhPJxzdX0QcFukOAKegGM+t7IZegYpZe2g6x39QEzWX/X1+SHQvwbRf/mLuoCCZf22mDyTn81Jx86/u7boSilzLnU=
-X-Received: by 2002:a9d:6d03:: with SMTP id o3mr31521648otp.316.1625963334147;
- Sat, 10 Jul 2021 17:28:54 -0700 (PDT)
+        id S231330AbhGKAm2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 20:42:28 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.31.31]:37630 "EHLO
+        smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230168AbhGKAm2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jul 2021 20:42:28 -0400
+Received: from [84.163.65.41] (helo=[192.168.2.202])
+        by smtprelay04.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <git@mfriebe.de>)
+        id 1m2NUI-0000YK-R8; Sun, 11 Jul 2021 02:38:26 +0200
+Subject: Re: Naming the --forec option [[Re: PATCH: improve git switch
+ documentation]]
+To:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
+ <87bl7d3l8r.fsf@osv.gnss.ru> <60e61bbd7a37d_3030aa2081a@natae.notmuch>
+ <877di13hhe.fsf@osv.gnss.ru>
+ <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
+ <60e67389a4adc_306ac1208fd@natae.notmuch>
+ <4057b3ac-a77c-0d5f-d3f4-ad781754aae4@mfriebe.de>
+ <60e736e72da68_30939020850@natae.notmuch>
+ <155308af-42ad-b044-fb37-676251a9b7e1@mfriebe.de>
+ <60e762243aab1_30a7b02089@natae.notmuch>
+ <2b85a7eb-d0be-65e7-ecbb-1750abf53e53@mfriebe.de>
+ <60e79c31aaa72_30b8a4208c1@natae.notmuch>
+ <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
+ <60e874e1c6845_215320861@natae.notmuch>
+ <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
+ <60e88a4b8592f_16bcb2082b@natae.notmuch>
+ <ad58bd54-a9dd-59a9-4fce-f90be469cd60@mfriebe.de>
+ <60e9f8d462bd9_7ef20898@natae.notmuch>
+ <6f43b36b-abe1-41f2-6138-e820c974b1bd@mfriebe.de>
+ <60ea07e3495e8_7ef2081d@natae.notmuch>
+ <43b8d0bb-67f3-11dd-ec31-e102ce8e3b31@mfriebe.de>
+ <60ea2ad64878_2a692084e@natae.notmuch>
+From:   Martin <git@mfriebe.de>
+Message-ID: <e9c2b9cd-edfb-cbed-9638-382a6b0da59b@mfriebe.de>
+Date:   Sun, 11 Jul 2021 02:39:38 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 10 Jul 2021 17:28:43 -0700
-Message-ID: <CABPp-BFzp3TCWiF1QAVSfywDLYrz=GOQszVM-sw5p0rSB8RWvw@mail.gmail.com>
-Subject: [RFC] Bump {diff,merge}.renameLimit ?
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <60ea2ad64878_2a692084e@natae.notmuch>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWVAbWZyaWViZS5kZQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[CC'ing folks I've seen comment on these limits.]
+On 11/07/2021 01:18, Felipe Contreras wrote:
 
-Hi everyone,
+> That's OK, and in fact I can see how '--reset --new' is clunky, I'm just
+> saying it is a possibility. But the main point is that something like
+> `git switch --reset` is missing, although `git switch --move` would
+> probably do the trick.
 
-I'm considering bumping {diff,merge}.renameLimit, which control the
-quadratic portion of rename/copy detection.  Should they be bumped?
-If so, moderately higher, or much higher?
+How would "git switch --reset" be different from "git switch -N" ?
 
-I lean towards a moderate bump for diff.renameLimit, and preferably
-more than just a moderate bump for merge.renameLimit.  I have
-calculations for what "moderate" translates to, based on a number of
-assumptions.  But there's several reasons to break with past
-guideposts for how these limits were picked.  See below for various
-arguments in each of the directions.
+"--move" is problematic.
+- it reminds me of moving the commits. I.e. rebase.
+- it actually stands for "rename" (in git branch -m).
 
-So...thoughts?
-
-Thanks,
-Elijah
+The apparent idea:  "move the branch under a new name"
+But the branch (base..head) itself stays where it is.
+"rename" would be so much more intuitive to me.
 
 
-==> Arguments for bumping MUCH higher:
 
-* Linus said the real reason for the renameLimit was excessive memory
-  usage (not perf)[1].  But Junio dropped the memory requirements to
-  linear in commit 6d24ad971c81 (Optimize rename detection for a huge
-  diff, 2008-01-29)
+>> At least I can say, if I use "-N", I want a *new* branch. I don't care
+>> about any old branch under that name.
+> 
+> Right, I would as well, but in fact I would expect the same from -n
+> (although I can see how a newbie might not).
+> 
+That's why we have to keep in mind that -N is really --force-new.
 
-* Linus oft recommends setting diff.renameLimit=0 [2,3,4,5,6,7,8,9,10,11]
-  (which maps to 32767 [12]).
+     A non-force option should not lead to data loss.
 
-* My colleagues happily raised merge.renameLimit beyond 32767 when the
-  artificial cap was removed.  10 minute waits were annoying, but much
-  less so than having to manually cherry-pick commits (especially given
-  the risk of getting it wrong).[13]
+Or if something can be lost, then "force" needs to be used.
+If the branch-name already points to a branch then of that branch, you 
+stand to loose:
+- the branch boundaries (base..head)
+- in some cases, (some of) the commits hold by it.
 
-
-==> Arguments for bumping MODERATELY higher:
-
-* We have bumped the limits twice before (in 2008 and 2011), both times
-  stating performance as the limiting factor.  Processors are faster
-  today than then.[14,15]
-
-* Peff's computations for performance in the last two bumps used "the
-  average size of a file in the linux-2.6 repository"[16], for which I
-  assume average==mean, but the file selected was actually ~2x larger
-  than the mean file size according to my calculations[17].
-
-* I think the median file size is a better predictor of rename
-  performance than mean file size, and median file size is ~2.5x smaller
-  than the mean[18].
+So by convention a simple "-n" is protecting me from that.
+IMHO that should be expected.
 
 
-==> Arguments for not bumping either limit:
+>> Also "--reset" does not have the same alerting properties to me, as
+>> "force" or "discard" have.
+>> This may be my English, but to me "reset" does not have the same
+>> alerting property.
+> 
+> OK, maybe it's a language issue. I'm not a native English speaker, my
+> mother tongue is Spanish, but I'm pretty sure my understanding of
+> "reset" is what most people understand: set again.
 
-* The feedback about the limit is better today than when we last changed
-  the limits, and folks can configure a higher limit relatively easily.
-  Many already have.
+I am German. And yes "set again" (sometimes "restart", but that does not 
+matter here)
 
-* This issue won't come up nearly as much any more once we switch the
-  default merge backend to ort, due to my performance work[19] (many
-  renames can be outright skipped without affecting merge quality, and
-  many others can be detected in linear time -- the cherry-picks that
-  used to require merge.renameLimit=48941 and took 10 minutes can now
-  complete in less than a second with the default merge.renameLimit of
-  1000.)
+If a branch is set, as base and head. Then "reset" means to set those 
+two again.
 
-* It'd take too long to read all the footnotes in this email, so screw
-  it.  :-)
+      "set again" => They will still be there.
+      (changed indeed, but there)
+
+The commits hold by that branch, are not "set again".
+They may become unreachable.
+
+The word "reset" gives no indication on knock on effects.
+However, I prefer if those effects are made clear.
+
+ > meriam webster
+Quite some of the examples are "put back into working order"
+(broken leg / circuit breaker => reset does not loose anything)
+
+Others are restart (at zero) "reset an odometer".
+To me personally the emphasis is the "start again", the loss of the 
+previous value is a side effect.
+
+Maybe others will take see "loss" part as more prominent.
+The question then is, how many might not be that wary of the potential loss?
 
 
-==> Footnotes:
+> 
+> So *if* --force was not an alias for --discard-changes, then this would
+> make sense:
+> 
+>    git switch --new --force topic
+> 
+> It would _force_ the creation of a _new_ branch called "topic".
+> 
+> Is this close to what you are thinking?
 
-[1] https://lore.kernel.org/git/AANLkTimKp+Z==QXJg2Bagot+Df4REeANuxwVi7bpPCXr@mail.gmail.com/
+No, again no. I said "I want them to be separate force flags"
 
-[2] https://lore.kernel.org/git/alpine.LFD.0.999.0710161030430.6887@woody.linux-foundation.org/
- 2007-10-16
-[3] https://lore.kernel.org/git/alpine.LFD.2.00.0811032021210.3419@nehalem.linux-foundation.org/
- 2008-11-03
-[4] https://lore.kernel.org/git/AANLkTimKp+Z==QXJg2Bagot+Df4REeANuxwVi7bpPCXr@mail.gmail.com/
- 2011-02-18
-[5] https://lore.kernel.org/lkml/alpine.LFD.0.999.0710111944120.6887@woody.linux-foundation.org/
- 2007-10-11
-[6] https://lore.kernel.org/lkml/alpine.LFD.1.10.0808052157400.15995@nehalem.linux-foundation.org/
- 2008-08-05
-[7] https://lore.kernel.org/lkml/alpine.LFD.2.01.0909160813400.4950@localhost.localdomain/
-  2009-09-16
-[8] https://lore.kernel.org/lkml/CA+55aFw1GVvszqoC_f0RAvG5t1xj0CSYLhLU=y0gQ+_54Gsomw@mail.gmail.com/
- 2011-10-25
-[9] https://lore.kernel.org/lkml/CA+55aFyWefZ1jJLMJKXhy0Qif-iBmjG6n-evcbvkbWS5mDrs0g@mail.gmail.com/
- 2015-02-16
-[10] https://lore.kernel.org/lkml/CA+55aFxODGv7-AvnqFmxrXBcS2w0XzHuZ7UuRi3EMQz4-oeLJA@mail.gmail.com/
- 2018-04-11
-[11] https://lore.kernel.org/lkml/CAHk-=wg=CTtNrxPeFzkDw053dY3urchiyxevHnUXHhTGbK=9OQ@mail.gmail.com/
- 2020-06-03
+As long as we have the unspecific "--force" this must be limited to 
+event *not* triggered by added options.
 
-[12] 89973554b52c (diffcore-rename: make diff-tree -l0 mean -l<large>,
-     2017-11-29)
+That is
+    git switch foo
 
-[13] https://lore.kernel.org/git/20171110173956.25105-3-newren@gmail.com/
+is not forceful, therefore not allowed to destroy data.
+Hence it can not overwrite local changes.
+So --force applies to that.
 
-[14] 50705915eae8 (bump rename limit defaults, 2008-04-30)
-[15] 92c57e5c1d29 (bump rename limit defaults (again), 2011-02-19)
+Now if you were currently detached, and made new commits while detached, 
+then
+    git switch foo
+would loose those commits.
+Hypothetical, that could require force.
 
-[16] https://lore.kernel.org/git/20080211113516.GB6344@coredump.intra.peff.net/
+And like the first example it is part of the default behaviour. No 
+options are given.
 
-[17] Calculated and compared as follows (num files, mean size, size Peff used):
-  $ git ls-tree -rl v2.6.25 | wc -l
-  23810
-  $ git ls-tree -rl v2.6.25 | awk '{sum += $4} END{print sum/23810}'
-  11150.3
-  $ git show v2.6.25:arch/m68k/Kconfig | wc -c
-  20977
+But then using the same --force to force something else would be bad.
+So then we need --force-discard-local-changed and 
+--force-unlink-detached-commit
 
-[18] Calculated as 4198 as follows (note: 11905 = 23810/2):
-  $ git ls-tree -rl v2.6.25 | sort -n -k 4 | head -n 11905 | tail -n 1
-  100644 blob 29510dc515109ad5dd8a16b5936f1f6086ae417c    4198
-Documentation/lguest/lguest.txt
 
-[19] See "Overall Results" from https://github.com/gitgitgadget/git/pull/990
+git -n newbranch commit
+is not default behaviour. It is triggered by the -n option.
+If this endangers any data (other than what is covered by default 
+cases), then this always needs its own force.
+And it has --force-new
+
+
+It is possible, but I dislike it very much to define that
+--force affects the next option that follows.
+
+So that, thin is -N
+  git switch --force --new
+
+But those are not
+  git switch --new --force
+  git switch --force - --new   // the single dash separates the force
+
+I do not like that idea...
