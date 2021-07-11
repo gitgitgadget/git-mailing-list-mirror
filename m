@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-13.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65350C07E95
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9581FC07E9B
 	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 00:47:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 482CA61186
+	by mail.kernel.org (Postfix) with ESMTP id 7C4EC61186
 	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 00:47:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230168AbhGKAt2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Jul 2021 20:49:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32988 "EHLO
+        id S230498AbhGKAtd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Jul 2021 20:49:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229640AbhGKAt2 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230408AbhGKAt2 (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 10 Jul 2021 20:49:28 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36E7EC0613E5
-        for <git@vger.kernel.org>; Sat, 10 Jul 2021 17:46:42 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id k31-20020a05600c1c9fb029021727d66d33so7292657wms.0
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1230FC0613E5
+        for <git@vger.kernel.org>; Sat, 10 Jul 2021 17:46:43 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id b14-20020a1c1b0e0000b02901fc3a62af78so11573652wmb.3
         for <git@vger.kernel.org>; Sat, 10 Jul 2021 17:46:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=U4Sq35LhX5XIhPRbsyO8VH0d0uvwzL/zHhLjsn9IFus=;
-        b=tUMlo2KM3F3XRm51EYfFBIFu5gL+jmr1blfohgCfzY6yIm+o5B7crXVKNKyTJWIvcA
-         2ZrqsgIz7ZZEC5ujYeh1vmCMFXAFwulLRindnhgPt0AqWBsekdXxU2lc7Z85ZtVkA0L6
-         bBvBIVjBHy1Ly/3dIQmBaDVWHxq0gedVshHeoLTUUjJEumob0YOXh1QbXroi/eIuWs0T
-         /bQWHyGHrLc/MPxhwD2a4qkEk/aB35GjOQzcSG9oCsbVfFwRMxppHyaW2M5LwY28RFZN
-         RqyPWnfTwR285RMTpuE8DWazbqF64BPzAZd7BUEQ+N0vVGzUBaqp59I3JvFgbSd9CyWx
-         osyg==
+        bh=oFJqnwULCVukTlrrWyfeZvm14/BArFR/3W8qUDIQFHg=;
+        b=VasLHMdklBoKydGAtLnyLfNLQFJ7vHc/tp4s8WvRvk1/cPoFxIqZQy2GIwcjY8KWgd
+         +b7HxKyvsvFSmfTu9/gYNyg/IXnsgyGzQwqg7KOM1XLoocX4xIjxezqvREnqVeKQmF2U
+         FVEgyiyaHfVc7pVRoaGeiK60wIyFeAvTrZkj0ZXvtKKUJbhP8E8WJsejCANxQsb0ppDA
+         soYnKa8dKibbr1fXdXZg2SHycnQ4cI0oIx/GCDyjJj9xy+vc/J06vLK42Kpr8ReaTrrs
+         sO/ryffNRXbuVdLcGp8Dits6QZMmlO6xOXPTphgP7g+WXTpdqJLBI9XSy6nDheDUxYRU
+         02Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=U4Sq35LhX5XIhPRbsyO8VH0d0uvwzL/zHhLjsn9IFus=;
-        b=U2sA4OmuQCcpN5N1uyp5knj3USDbaL22Mxz5yhELT5uYZga31YfOsphVKb7kFL/Yqs
-         7WmVxiBtXXSb6ZwBSLFQAjft+eOHcio7u20RfM3vYrOV3Kbq/cPK7W141P6Omh5/6iIY
-         jXgArKGqohHb91cNDH+/N1VPNGXwdBx7yh2EuAIgWoTp9ifJ0P3Em3WwHe/ua3LAKzmM
-         ZjPH1bF1akrrEjb8U5IqT68BO4UXhHGwW0xur0FT6FmLjZbSHDo/jyPN1GmcCm4ZZEdt
-         4wp1j1VAcFCLQlHuc8QwchpHNotC8Fsb6vvcYZXK64Ev2flHJ0At33/TQ8RVLzXCYtHh
-         M7Rg==
-X-Gm-Message-State: AOAM5309Vdy7k/CQGrm9YpKIwZxvT5S0p0HfzMisXt/C7Utf7Wc+SkjY
-        dc+JBmJSqGm9fvnorbb5SOHJyt4d9vw=
-X-Google-Smtp-Source: ABdhPJzZAPjTA1k3QpD88cSXykdVyoXBV5EN88/GFCNnn4/nLd5Bk2Rf0O2usYQsA6ur3nAVltUrRw==
-X-Received: by 2002:a05:600c:154d:: with SMTP id f13mr30599455wmg.139.1625964400668;
-        Sat, 10 Jul 2021 17:46:40 -0700 (PDT)
+        bh=oFJqnwULCVukTlrrWyfeZvm14/BArFR/3W8qUDIQFHg=;
+        b=RO8Z3n0wcT5s1jJHOnmSJslCPBpe/RQ9JWjSKHQ4tjS5yrNgsHwjSKQUBbqP3jyrl+
+         Q40abM2MntZBy8Sn7tLJFxZCBwDsm6eWXXGGuUnxGIiQFg0OP8jl6sMUzQiYFuRagjtI
+         p+98zwUr/M0iY4x7zB8xUuqfd0HFXSHbQOXNL0y9v6Ig0pEnAg3PhqsiBUX4BF24By8s
+         UOxvY7dkLGmN40ZcEv07rLXgMQ4DXF1or5KqKZ+8iu9CV+hTrnSi6SyDEzJR8umu4mEB
+         SllF9wJIhFzPHPCQ2eStajTaBqcGP0LUiXlrNWDIkDOAs5RLwxg00V/i5wKvNZ7Hzrfb
+         x48Q==
+X-Gm-Message-State: AOAM533zkYtZQrhCB4BpCE73C9hgPhgp1lx1JsWFyYipTzWuBCL8QMv+
+        T0XIsPjLIoLhiIxoX/MdZUJAQHWnrtQ=
+X-Google-Smtp-Source: ABdhPJwSS0NLBlF6tM+cDLYhskqsUtW6Jl2z1es59nz0q9d/6evSXeSO+eFrommndNxtm4NW4PkcCw==
+X-Received: by 2002:a1c:7411:: with SMTP id p17mr6759616wmc.116.1625964401638;
+        Sat, 10 Jul 2021 17:46:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c10sm8568923wmb.40.2021.07.10.17.46.40
+        by smtp.gmail.com with ESMTPSA id p9sm8562859wmm.17.2021.07.10.17.46.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jul 2021 17:46:40 -0700 (PDT)
-Message-Id: <7dc448df6ec6edb41464a4115017064cf41b2d83.1625964399.git.gitgitgadget@gmail.com>
+        Sat, 10 Jul 2021 17:46:41 -0700 (PDT)
+Message-Id: <44a5d5efaa637d01ec3266b34f31d46acce5ef24.1625964399.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1044.git.git.1625964399.gitgitgadget@gmail.com>
 References: <pull.1044.git.git.1625964399.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 11 Jul 2021 00:46:36 +0000
-Subject: [PATCH 1/3] doc: clarify documentation for rename/copy limits
+Date:   Sun, 11 Jul 2021 00:46:38 +0000
+Subject: [PATCH 3/3] diff: correct warning message when renameLimit exceeded
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,94 +74,32 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-A few places in the docs implied that rename/copy detection is always
-quadratic or that all (unpaired) files were involved in the quadratic
-portion of rename/copy detection.  The following two commits each
-introduced an exception to this:
-
-    9027f53cb505 (Do linear-time/space rename logic for exact renames,
-                  2007-10-25)
-    bd24aa2f97a0 (diffcore-rename: guide inexact rename detection based
-                  on basenames, 2021-02-14)
-
-(As a side note, for copy detection, the basename guided inexact rename
-detection is turned off and the exact renames will only result in
-sources (without the dests) being removed from the set of files used in
-quadratic detection.  So, for copy detection, the documentation was
-closer to correct.)
-
-Avoid implying that all files involved in rename/copy detection are
-subject to the full quadratic algorithm.  While at it, also note the
-default values for all these settings.
+The warning when quadratic rename detection was skipped referred to
+"inexact rename detection".  For years, the only linear portion of
+rename detection was looking for exact renames, so "inexact rename
+detection" was an accurate way to refer to the quadratic portion of
+rename detection.  However, that changed with commit bd24aa2f97a0
+(diffcore-rename: guide inexact rename detection based on basenames,
+2021-02-14), so now the correct way to refer to quadratic rename
+detection is "quadratic rename detection".  Fix the warning accordingly.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/config/diff.txt  |  7 ++++---
- Documentation/config/merge.txt | 10 ++++++----
- Documentation/diff-options.txt | 11 ++++++-----
- 3 files changed, 16 insertions(+), 12 deletions(-)
+ diff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
-index 2d3331f55c2..31b96e8294f 100644
---- a/Documentation/config/diff.txt
-+++ b/Documentation/config/diff.txt
-@@ -118,9 +118,10 @@ diff.orderFile::
- 	relative to the top of the working tree.
+diff --git a/diff.c b/diff.c
+index 52c791574b7..343f391edf8 100644
+--- a/diff.c
++++ b/diff.c
+@@ -6284,7 +6284,7 @@ static int is_summary_empty(const struct diff_queue_struct *q)
+ }
  
- diff.renameLimit::
--	The number of files to consider when performing the copy/rename
--	detection; equivalent to the 'git diff' option `-l`. This setting
--	has no effect if rename detection is turned off.
-+	The number of files to consider in the quadratic portion of
-+	copy/rename detection; equivalent to the 'git diff' option
-+	`-l`.  If not set, the default value is 400.  This setting has
-+	no effect if rename detection is turned off.
+ static const char rename_limit_warning[] =
+-N_("inexact rename detection was skipped due to too many files.");
++N_("quadratic rename detection was skipped due to too many files.");
  
- diff.renames::
- 	Whether and how Git detects renames.  If set to "false",
-diff --git a/Documentation/config/merge.txt b/Documentation/config/merge.txt
-index cb2ed589075..d030b936d1f 100644
---- a/Documentation/config/merge.txt
-+++ b/Documentation/config/merge.txt
-@@ -33,10 +33,12 @@ merge.verifySignatures::
- include::fmt-merge-msg.txt[]
- 
- merge.renameLimit::
--	The number of files to consider when performing rename detection
--	during a merge; if not specified, defaults to the value of
--	diff.renameLimit. This setting has no effect if rename detection
--	is turned off.
-+	The number of files to consider in the quadratic portion of
-+	rename detection during a merge.  If not specified, defaults
-+	to the value of diff.renameLimit.  If neither
-+	merge.renameLimit nor diff.renameLimit are specified, defaults
-+	to 1000.  This setting has no effect if rename detection is
-+	turned off.
- 
- merge.renames::
- 	Whether Git detects renames.  If set to "false", rename detection
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 32e6dee5ac3..b5682b83956 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -588,11 +588,12 @@ When used together with `-B`, omit also the preimage in the deletion part
- of a delete/create pair.
- 
- -l<num>::
--	The `-M` and `-C` options require O(n^2) processing time where n
--	is the number of potential rename/copy targets.  This
--	option prevents rename/copy detection from running if
--	the number of rename/copy targets exceeds the specified
--	number.
-+	The `-M` and `-C` options can require O(n^2) processing time
-+	where n is the number of potential rename/copy targets.  This
-+	option prevents the quadratic portion of rename/copy detection
-+	from running if the number of rename/copy targets exceeds the
-+	specified number.  Defaults to diff.renameLimit, or if that is
-+	also unspecified, to 400.
- 
- ifndef::git-format-patch[]
- --diff-filter=[(A|C|D|M|R|T|U|X|B)...[*]]::
+ static const char degrade_cc_to_c_warning[] =
+ N_("only found copies from modified paths due to too many files.");
 -- 
 gitgitgadget
-
