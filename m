@@ -4,137 +4,206 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFE3CC07E99
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 23:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC87EC07E99
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 23:36:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F1D560C3D
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 23:24:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0591606A5
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 23:36:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232868AbhGLX1P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 19:27:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38030 "EHLO
+        id S232979AbhGLXjr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 19:39:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230361AbhGLX1O (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 19:27:14 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4C32C0613DD
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 16:24:24 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id t25so7728901oiw.13
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 16:24:24 -0700 (PDT)
+        with ESMTP id S230132AbhGLXjr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 19:39:47 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64B16C0613DD
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 16:36:57 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id h9so26594394oih.4
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 16:36:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eZWjyvDgrO6lrdRob8NGW9BB1mQByA3HwdeoWfQ8AsY=;
-        b=H9v6O99w9uRN/dlFvwmHBegCKzvh5EAc8vzqcg4c+aTMmZeBO4omfg9MClFgbptKDb
-         W63p7FTwdx8Zfdipz313LBdOqb+1CRvjzyMV7/1seAevZokdWeLfM9/Lzt0CnIuP6Tzb
-         pLU32KI5YmyeJulM186Wxk0i0+p7ELkypXm4tw0wBeYHIqWc6Hf3wrKppG8exl3+uN9G
-         QmyQoitxe+KzwB7lDHxcivgFUMULr7l8Z2tc4spZC2mHOSlDNBxDvjebF+jZhOv+OQmB
-         VdX7sjT8w0pAjKfHzdya7sXk/z/dLDWUPH0hBStl3RSI4jIV6Qb9HDTfZhJIOgKZwjEA
-         +G6Q==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=6Ow97pWGBXm+f/E6Xlw9A5ISAxw/C1taGdxuYcz8Mn4=;
+        b=H4hvQrXdJ+jfjK8EtutbY7ygFWrUOLFkS7Vc/YdJLZp4vlnabsofDqWnsHmfH0FPnK
+         x/0OZ3gLc5KNnUF1f2KxBAV5KQkJoEhbT//ikn/+bohp6UFJiljqt7oYtUnJ1GuThsEg
+         7gQdGaNbCoxYdLqDIq9La1+FwC/ZI2vS4tCndwyuSdj0nTK+oDCQRPpmmUawhvt+GjXw
+         bRrAmt/tNaPqRqbhylZa12A2eMhslQM59WLZVFJ3SrYIJgbs3UG2c9kkpwhbKds1lxp2
+         I86cwo43U6zgOB2ILv6eHi8NMXrzbp7IEOxNH+tEYA0gAdvHlybaUI+wK4IcqMFSibwG
+         AmpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eZWjyvDgrO6lrdRob8NGW9BB1mQByA3HwdeoWfQ8AsY=;
-        b=O4m9Kb4IuMN4BGY+wfuxR/u91n7tcw1nY+O5m0pxZsA9kFtSFvrNyFVEKqD6mFas7H
-         wWiMRbGPsMXRBTrF12vqhVlVMY9+u+Fkvj8NAzF1jFD0WmGHZo1JRbms7p4oezqre8VZ
-         g1qjGmU1FxdFnDkh/kZCyMp7HsMNJBNAjCOj5iTmDFnlm6o2tGXaXZ4wht8f0dSK4BpT
-         AeWH+PUhD1VvcJrnFUsUASOlp9gRAtcf5MKbzj5CTdMHB6Vy8bFEOIqZ+QHWkHa4vC83
-         K8USi8wUwQMp7h/bvLnK/5cli67+uP6dAJ4e4V+Dd6wFOr7CHfEcnF+vI/seyZbHxa1O
-         Il2g==
-X-Gm-Message-State: AOAM531hL5NieeFz1me8rBN6myP8sAO19idasre5SnLOvjibZX+of4ve
-        VQ5lFGGF3JowHSWjNwxHhT9EYdES1PSL1+ROJu66hE8ECBM=
-X-Google-Smtp-Source: ABdhPJwYl5s24eCrVR6KYFR1Tj5+7q0ljuFP0QWrnImoGK/1suMZJSPHYHE5qgm4+q+h6xWd69GUmvJUeqmmuVtW0M4=
-X-Received: by 2002:aca:f0a:: with SMTP id 10mr12545322oip.39.1626132264115;
- Mon, 12 Jul 2021 16:24:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210711012604.947321-1-alexhenrie24@gmail.com>
- <00e246b1-c712-e6a5-5c27-89127d796098@gmail.com> <xmqqpmvn5ukj.fsf@gitster.g>
- <CABPp-BERS0iiiVhSsSs6dkqzBVTQgwJUjjKaZQEzRDGRUdObcQ@mail.gmail.com>
- <CAMMLpeRX3iMwT9NJ+ULHgAhS3A=nAybgDYFHomkY3sif-H+F4g@mail.gmail.com>
- <CAMMLpeSBgURtX+MKbABKdmFuuoTA-Dw3h8uONwNeiP5aqcnfpA@mail.gmail.com>
- <xmqq8s2b489p.fsf@gitster.g> <CABPp-BH+LPbfdgixvSEGpLxwCHHSK99PFmE3q04jPZjLaqr5Xg@mail.gmail.com>
- <xmqqbl772l4m.fsf@gitster.g>
-In-Reply-To: <xmqqbl772l4m.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 12 Jul 2021 16:24:12 -0700
-Message-ID: <CABPp-BHV4bkyKswbg0gBH8uJG7knH4fBC=fitRJK4_LCP50Tog@mail.gmail.com>
-Subject: Re: [PATCH] pull: abort if --ff-only is given and fast-forwarding is impossible
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Alex Henrie <alexhenrie24@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=6Ow97pWGBXm+f/E6Xlw9A5ISAxw/C1taGdxuYcz8Mn4=;
+        b=if9MNooDgRFFFverQbLkr8PZYKHQY98T5ceAdUibE0uE4sdOkDK2BzCjNWHcHHxT3J
+         /JwRY0yD/PcwcsJPxxfeq7KcBEgii77UwA+/cwhD2Oq+zeJVauL35OD8jQ+tIxLkmqQM
+         /AaNaDjAYWyvCSAy0j4lb32Z+J0zrnypOABGPqEZvKXSzMb/ix/rutgOSuf+HXpYOMpQ
+         gKr0JsTBlbyjeVqeMVbIRQ0ajVwJmT2N4SSqAYWSkXRRVkO327iKdZ1Am5yVMHB0Yved
+         e85LB2YgzmsqDjj6CPg1Yog67wj4QhxSq1ONVLywSISdB+ld0jepeN+LqeKAtKhYOlyW
+         h5Fw==
+X-Gm-Message-State: AOAM533kfJbDvqb+HMcmtkbtM4RBQbNU1Yuorn6tT3NWTihi5tAAPDn4
+        rZu3iKsLfOFSxWQHn1C0W00=
+X-Google-Smtp-Source: ABdhPJxuEIekZaBXtZSCxLDAnHQ9YaCwccTbZVAyNHGccAUDyqYSD+SIJzYmlxGlUUrkyTQvOGfuew==
+X-Received: by 2002:aca:d1a:: with SMTP id 26mr5418335oin.69.1626133016786;
+        Mon, 12 Jul 2021 16:36:56 -0700 (PDT)
+Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
+        by smtp.gmail.com with ESMTPSA id n9sm1670737otn.54.2021.07.12.16.36.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jul 2021 16:36:56 -0700 (PDT)
+Date:   Mon, 12 Jul 2021 18:36:54 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Sergey Organov <sorganov@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Martin <git@mfriebe.de>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org
+Message-ID: <60ecd216bd177_a7177208bc@natae.notmuch>
+In-Reply-To: <87czrnf8bj.fsf@osv.gnss.ru>
+References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
+ <87bl7d3l8r.fsf@osv.gnss.ru>
+ <60e61bbd7a37d_3030aa2081a@natae.notmuch>
+ <877di13hhe.fsf@osv.gnss.ru>
+ <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
+ <60e67389a4adc_306ac1208fd@natae.notmuch>
+ <4057b3ac-a77c-0d5f-d3f4-ad781754aae4@mfriebe.de>
+ <60e736e72da68_30939020850@natae.notmuch>
+ <155308af-42ad-b044-fb37-676251a9b7e1@mfriebe.de>
+ <60e762243aab1_30a7b02089@natae.notmuch>
+ <2b85a7eb-d0be-65e7-ecbb-1750abf53e53@mfriebe.de>
+ <60e79c31aaa72_30b8a4208c1@natae.notmuch>
+ <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
+ <60e874e1c6845_215320861@natae.notmuch>
+ <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
+ <87im1ieaba.fsf@osv.gnss.ru>
+ <1bd36aa2-ac90-f7d4-9d48-1aa39159b263@mfriebe.de>
+ <87a6mudt9b.fsf@osv.gnss.ru>
+ <60e9ff4430c57_7ef20815@natae.notmuch>
+ <874kd1gr0q.fsf@osv.gnss.ru>
+ <60ec6cd622c4c_a4525208a0@natae.notmuch>
+ <87czrnf8bj.fsf@osv.gnss.ru>
+Subject: Re: PATCH: improve git switch documentation
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 12, 2021 at 4:00 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> >> When we cannot fast-forward (i.e. we have our own development that
-> >> is not in the tip of their history),
-> >>
-> >>  --ff-only would cause the operation fail
-> >>  --ff would become no-op (as it merely allows fast-forwarding)
-> >>  --no-ff would become no-op (as it merely forbids fast-forwarding)
-> >>
-> >> and the latter two case, we'd either merge or rebase (with possibly
-> >> specified mode like --preserve-merges).  I thought the current
-> >> documentation is already fairly clear on this point?
+Sergey Organov wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> > Sergey Organov wrote:
+> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> >> > I don't see the logic in here.
+> >> >
+> >> >   git branch topic # here 'branch' is the verb
+> >> 
+> >> Not to me. I assumed the "branch" is always a noun in "git branch", and
+> >> the actual meaning of this command is:
+> >> 
+> >>    git branch [create|new] topic
+> >> 
+> >> I.e., creation just being the default action taken on the branch.
 > >
-> > git pull's --no-ff is documented to "create a merge commit in all
-> > cases", and thus as worded, seems incompatible with rebasing to me.
->
-> It smells like a "too literally to be useful" interpretation of a
-> pice of documentation that has no relevance to "pull --rebase" to
-> me, though.  It comes from merge-options.txt and would not be
-> relevant to "git pull --rebase" to begin with.
+> > The question is not what you assumed, the question is can other people
+> > assume otherwise?
+> 
+> Sure they can, and that's part of the problem. I described how *I* see
+> it, as I try to interpret things as coherently as possible, and I don't
+> like to interpret "branch" in "git branch" as either noun or verb
+> depending on options when universal interpretation as noun is
+> sufficient.
+> 
+> > "branch" can be a verb, that's a fact.
+> 
+> Yep, who argues?
+> 
+> My argument is that specifically in "git branch" it could be universally
+> interpreted as noun, but can't universally be interpreted as verb, so
+> /for me/ it's noun there.
 
-"git pull --rebase" isn't a very interesting case -- it's missing
---no-ff, and has an explicit flag declaring user intent making both
-pull.ff and pull.rebase irrelevant.  It doesn't really help us handle
-the tougher cases at all.
+Yeah, but universal interpretation is not part of human language.
+Context is always relevant.
 
-Let me back up and see if I can explain a bit better.
+Sometimes it can be a verb.
 
-1. In general, we allow command line options to countermand either
-configuration options or other conflicting command line options, e.g.
---no-gpg-sign can countermand --gpg-sign=$KEY or commit.gpgSign
-setting.
+> >> > I agree, and I did have indeed noticed the inconsistency. But there's
+> >> > another category of commands that receive subcommands, like:
+> >> >
+> >> >   git remote $subcommand
+> >> >   git worktree $subcommand
+> >> >   git bisect $subcommand
+> >> >
+> >> > In my opinion `git branch` fits more these subcommand commands, and it
+> >> > was a mistake to make the subcommands options, it should be:
+> >> >
+> >> >   git branch list
+> >> >   git branch new
+> >> >   git branch set-upstream
+> >> >   git branch move
+> >> >   ...
+> >> >
+> >> > Now the verb is crystal-clear.
+> >> 
+> >> Yes, lacking (assumed) subcommands is yet another dimension of
+> >> inconsistencies.
+> >> 
+> >> I mean what I'm after is inconsistency of the first argument to "git".
+> >> It's being the verb more often is where we currently are, at least when
+> >> considering "primary" commands that "git help" outputs. 
+> >> 
+> >> I mean, consider:
+> >> 
+> >>    git branch new nice-feature
+> >> 
+> >> vs
+> >> 
+> >>    git new branch nice-feature
+> >> 
+> >> It should have been the latter, when in fact it's currently the
+> >> [reduced] former.
+> >
+> > I disagree. I prefer the former.
+> 
+>      git create branch "nice-feature"
+> 
+> Almost plain human language. Isn't it nice?
 
-2. Starting with simple conflicts, git-pull has two sets of them of
-the above form:
-  * --rebase, --no-rebase, pull.rebase
-  * --no-ff, --ff-only, --ff, pull.ff
+But I'm not talking to a human. If I wast talking to a human I would say
+"create a branch called X", and "with git" would be implied.
 
-3. git-pull *also* has conflicting options across these types.
-  * --rebase[={true,merges,preserve,interactive}] and --ff-only
-  * possibly also --no-ff with any of those rebase flags
-  * the underlying pull.rebase and pull.ff which are meant to mirror
-these flags thus also can conflict
+But there's no "create" binary on my system. Why would there be? I've
+been using Linux systems for more than 20 years, I know that if I want
+to do something with vim, I have to start the command with 'vim'.
 
-4. The way we handle conflicting options in git is typically:
-  * The last command line option countermands any earlier ones on the
-command line
-  * Command line options countermand anything in config
-  * We do not assume any ordering in config, so if two configuration
-options conflict, it's either an error or we document which one
-overrides the other (e.g. diff.renames=false overrides
-diff.renameLimit)
+> > Even standardizing `git branch` would be an almost-impossible task, even
+> > if we manage to convince others. `git new branch` even more
+> > impossible.
+> 
+> Quite an opposite. In fact it's easier to add new ways of doing things
+> that, provided they prove being useful, eventually obsolete and replace
+> old ways. "git switch" and "git restore" are recent examples of that.
 
-So my proposal is just to do 4 above, noting that:
-  * pull.rebase set to anything other than "false" conflicts with
-pull.ff set to anything other than "true" (and similarly for the
-equivalent command line options)
-  * If both pull.rebase and pull.ff are set (in conflicting fashion)
-and no countermanding command line flags are set, I recommend throwing
-an error; it's not clear that having one override the other would
-match user intent.
+That's what *should* be the case, but this discussion proves that even
+experimental commands (which are clearly demarcated as experimental) are
+hard to change.
+
+Moreover, keep in mind that the person who managed to introduce both
+`git switch` and `git resotre` already left the project. That should
+give you a pretty good idea of how much faith he has on these commands
+eventually being useful.
+
+Sure, at this point in time introducing `git branch new` might be
+impossible, however, `git branch --new` isn't. And if we agree on what
+should have been the case for `git branch`, then what should be the case
+for `git switch` is more attainable.
+
+Cheers.
+
+-- 
+Felipe Contreras
