@@ -2,227 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MSGID_FROM_MTA_HEADER,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FCA7C11F66
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 22:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72BABC07E99
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 22:42:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5720161245
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 22:32:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 546ED60240
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 22:42:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231948AbhGLWey (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 18:34:54 -0400
-Received: from mail-co1nam11on2102.outbound.protection.outlook.com ([40.107.220.102]:11552
-        "EHLO NAM11-CO1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S231904AbhGLWew (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 18:34:52 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=l66D+UHOdezxQkQ5QEQ593ZhvA9VPKuLMZi5t/z97c7A+CC7aRUmj/GaJau6f9/3wZQgJDKQnvQvtZLNr5zjWnC5x2GIFEp4ifCXzxp2iSA2IK+7ZulBrBg4SdQCPEKnfJmBpkslBUpzziqq44NlD9/iy46UFUlnqqwdyJEI4rOKMFeZ/QFNuw1bDBX1QDJhme0cKLVHUDGs4KjdbV1+e5fV/b8sIz16HC4YKoZTXbjFclGQVRJfpOg32FmhsOdCtRIna//SGs6wUNfjK+QHjh2q1UGUt0kuNh/Odjt6HeNzqEt8+IfPIKmGsSbzTCFs06MvfdhrAabYUrik6Njmcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=W8mVHlO5529JNiymc9Y8GaBnH4H7nAMjhf5qnxYcWyM=;
- b=cFcNupt9iJ6WbY+W62yMaIaOAdfmLbhdygL9s407KL6J52W9Nd4Fx7Z7aWIM0H3QU/PpS4m9XA+9IDNxxnxDHWR1GZrXTns233axQcc3vvYGvc+ushxovW2nCucSEsYhsJSDQ6oQ0mMVctyRQGg7IjZUPsLtfpCYENIVPt+8foOKtDIEkVpHJPSzyfqHS+H0Fy1ETAjl1XY+CAIE/wT7pq0inBDv0qPv5iVF7CZqTB+FVzBLeWMFeKu4eA2SyEFvXSiTnXr71sqvR7PxJoEcC07MErK88DUnMTQGT1ZHHnIrSUmbgr/qSqhZ/kZMENSnrtbZewXjpfInpveUq5hejg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nexbridge.ca; dmarc=pass action=none header.from=nexbridge.ca;
- dkim=pass header.d=nexbridge.ca; arc=none
+        id S231289AbhGLWp2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 18:45:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57018 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229931AbhGLWp2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 18:45:28 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5270C0613DD
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 15:42:37 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 141so10285495ljj.2
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 15:42:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=nexbridge.onmicrosoft.com; s=selector2-nexbridge-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=W8mVHlO5529JNiymc9Y8GaBnH4H7nAMjhf5qnxYcWyM=;
- b=SQvfeUnsuWL+1U02j8BRyt/R/XQROSfyWsVISvlZR/ttY0KzZH5M5XMMIf8NpFieoCziy7ATZVungarbw/KPAXqW/hxdfXzx6SxXCCPS8x6LfbOEW88W03R2JX1z5aSidOZmi2XQ279xtpOnHs2G7J2QjfyzPo0oqdkwVec9H6U=
-Authentication-Results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=none action=none
- header.from=nexbridge.ca;
-Received: from DM8PR17MB4934.namprd17.prod.outlook.com (2603:10b6:8:3b::24) by
- DM8PR17MB4936.namprd17.prod.outlook.com (2603:10b6:8:37::20) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4287.27; Mon, 12 Jul 2021 22:32:01 +0000
-Received: from DM8PR17MB4934.namprd17.prod.outlook.com
- ([fe80::7c5c:6e02:71c6:915b]) by DM8PR17MB4934.namprd17.prod.outlook.com
- ([fe80::7c5c:6e02:71c6:915b%7]) with mapi id 15.20.4287.033; Mon, 12 Jul 2021
- 22:32:01 +0000
-From:   randall.becker@nexbridge.ca
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=OXmTgnmYuE4kCosly1x62GMUZbSjOwOhz9IDTw6f4mo=;
+        b=JGz7v/7J9WMdHNsU9svHdnBgJTngMo1gxca4gYiqtzsMvOKrVvi08dwKqx+F6cHLii
+         10COctmJupjwJi+IEIGTwta0bj/P4rrQhdkMD8KCsQSBJst7j5cgr06CajyoRhIPJDZc
+         yuKnGBI+751c6WWRVblPEtyDEDJBNpq5P1HfIgExtQEejzemw+T2Sov+9kXHLZhOJ41e
+         2C90asplDRuEpUfJwfl6onwarqlMqw4hpQPXTObNYINpc9TDbaWkqFrlhLGP3DPJd5i8
+         B/DbH72jyd/wd2/fTzqWwWVFuZKQx0a+2bZIvn18+bR482hQ7rV09u/MBJSfrNEJ+52K
+         Blsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=OXmTgnmYuE4kCosly1x62GMUZbSjOwOhz9IDTw6f4mo=;
+        b=MPo/qGyS0BNGw6a0gKMAWfzQxI/U3QdwQuYbe87L2ymKlPGdBAogybkVSg7gFs0vgJ
+         5PK15j9nFKXylE0xjGlPqKz3mjBotxL9xEkZ8zEUI6lnfvco33ZF5MVaWlbIc+DjZ86k
+         nm8q+PH1G8TZbw88a1AoG259mdsJ4wcn9xjBhhGkcmSfGFQ1F1payu44dLYUm5qwT9Kc
+         gxGVYJLzJlcvr08zoD/RpSkkBEaAMHpJ3qTuFOkGizhqAjMbC8iCNBqPtL49C0npbyp5
+         TJwj35BhxbLh+oO1o7UGCuwwn0jKEtzSp2tRHNCGovN0zU5weYVzxs6efahu1QwK9SDD
+         E3zA==
+X-Gm-Message-State: AOAM530u2bgHTjqXLQOH4Yvw3u2ru62yedTn0JCKdh75HpSQOH5vtClc
+        yi6T/Im/qsLT7zHzXWsRB4jPi21QlRY=
+X-Google-Smtp-Source: ABdhPJx8D4AdLltArwcDC4mf8r9u53k8O4aVRNGu1GTf1hET/uJxeUIv+YjWVbFf2G1Ze45fdUNcbQ==
+X-Received: by 2002:a2e:b8c9:: with SMTP id s9mr1263689ljp.147.1626129756004;
+        Mon, 12 Jul 2021 15:42:36 -0700 (PDT)
+Received: from localhost.localdomain (213-65-66-12-no600.tbcn.telia.com. [213.65.66.12])
+        by smtp.gmail.com with ESMTPSA id i13sm1306108lfj.248.2021.07.12.15.42.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jul 2021 15:42:35 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: [Patch 3/3] t1305: add tests for includeIf:worktree.
-Date:   Mon, 12 Jul 2021 18:31:39 -0400
-Message-Id: <20210712223139.24409-4-randall.becker@nexbridge.ca>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210712223139.24409-1-randall.becker@nexbridge.ca>
-References: <20210712223139.24409-1-randall.becker@nexbridge.ca>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: CY5PR03CA0023.namprd03.prod.outlook.com
- (2603:10b6:930:8::38) To DM8PR17MB4934.namprd17.prod.outlook.com
- (2603:10b6:8:3b::24)
+Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH v1] load_ref_decorations(): fix decoration with tags
+Date:   Tue, 13 Jul 2021 00:41:52 +0200
+Message-Id: <20210712224152.2698500-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.32.0.100.g73bb85aa45
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from localhost.localdomain (173.33.197.34) by CY5PR03CA0023.namprd03.prod.outlook.com (2603:10b6:930:8::38) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4308.19 via Frontend Transport; Mon, 12 Jul 2021 22:32:00 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 54722264-e7a6-4c29-fd9e-08d94584dde2
-X-MS-TrafficTypeDiagnostic: DM8PR17MB4936:
-X-Microsoft-Antispam-PRVS: <DM8PR17MB4936371166FE4FF74D763984F4159@DM8PR17MB4936.namprd17.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:449;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: IRYyP8V2+W2j7NagjwDy0X8WkXvA3EpEBMn8mITsSa2J9/38pVacQDHIVFh5gJpxjCwVJvxyhm+coSG6Bim4oWVlk1qkfwaLnwqaCOcjimWSpFIem5W1kxp6vm/+eIW0QdN40HsBeYxXG70g0C/UQ8FyszaYMBZdwpecb5R5pD1x+W5OC/5Tal556VrnI9NdWUJTZ+WaFCDgcJkcSh1GhaUYC+NVxs8xYOeXQpWwIpoY/n3v8+3D76wokCtqcklQlwOFxWUs3JXlJgMA1BOTaTGFCAcJDLdgPB7v/V0fMRzvwyxe+TDXL3v4oeAo3Dq+FV7C7S8EXLdfGNFMl7Wih3zPAB3dKtGG7WYQHiLKQaOCVR88s3tahAZrT4oCQeelUWzbg4kAhteNW4C8335MThOO/j163gr7HogBEM3U5l/1Mu4FddvXaeVQy1gsWHjFLvsGLI6/mcgnlcpdXGdj6Px8B7A3iVve4gjvcfmTUIjMfBTOZEUQXC7DxrvvqUvbmYUkc5h9++PuqcsOxySVOBsCVftvRjncyEKezH0wwkyn2uhkPSydkP4gj3evQiKQNiLnno5na9i/CT8Dwy222myk7zdaY4bzJ2cC6GtM4y90GvqILZ8SLgPR+4XlkUj/N9wlMnhY8S5nmVFepdchsrqiosQd0dgLD8dhoTEN63wCDmCmKYw+3rFnCMfxST3+GhYSZ43ARqXs9IU/KtQDAQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM8PR17MB4934.namprd17.prod.outlook.com;PTR:;CAT:NONE;SFS:(346002)(136003)(376002)(396003)(366004)(39830400003)(9686003)(66946007)(2906002)(83380400001)(2616005)(86362001)(36756003)(186003)(5660300002)(52116002)(316002)(956004)(8676002)(38100700002)(6512007)(38350700002)(8936002)(6506007)(66556008)(6916009)(1076003)(4326008)(478600001)(26005)(6666004)(66476007)(6486002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?EDn/OlN6WR4OM4WdSLRbQkb5RNTgNTjuTW2Z/3TBxl5j3DDa0bevDF00nIpn?=
- =?us-ascii?Q?wINbwZvy7YuBqSCfddjGlmMFOuoqkMQmsAxakMW2UtCuD8WrO+ofTzX1Zsaj?=
- =?us-ascii?Q?JMqjhhI/jfzh13NpEX5vhXdSnLqxpdiESeXe5zmlosxCmNKXfIt9M9rofc6R?=
- =?us-ascii?Q?U04fK+E7ffcseOq2be6tdO0fO0YQTGiCDManX8rmCRGp/b7b7G6cnd5s3V3R?=
- =?us-ascii?Q?vygcwlTU5i3DtIbbxcgeuPEvLVFz08PxvlVg2WX2OY9sYkPrlctN0EevDqW3?=
- =?us-ascii?Q?Tm39VR2xPK7bKlIAhvU+mKGInor6KApz4XFiyRqJcZCKx3lW+PCL49RgwT7N?=
- =?us-ascii?Q?tFzz3lXpi1wtWRaRfWKyn5+NF2Oc6tg6b296QGjww3yV+ufMzk/A9mFqBy3P?=
- =?us-ascii?Q?XTQwCjLoJ31j4tMFgH23pE7AthlqQ+++woRYK0jD7clN9G7tf1dDnzM1XM8l?=
- =?us-ascii?Q?/H7lyU/rtF3dMbnXVuRFLNhyU8g4zGesBlgtwGOcGq9njtAtUPtU41qPKlr8?=
- =?us-ascii?Q?/AbrWZNQ3rqNUs6XumtVT9cZ2bLFEsxEMna1nvHJpa+4dHr8FZzW9tV0SeKi?=
- =?us-ascii?Q?a/f+VW7yN52FN3Iba+RW23e9K3koWOoMgsX2AFfZStjgNNVUnx9noaOvUXCj?=
- =?us-ascii?Q?z3ZQ2I0OgolGA8EJXyDjC0i+w8Cxq0y/vyfHkhq/N2b5q1DLnUCHfVSpvmlw?=
- =?us-ascii?Q?QVDpNWcUcMhLtIaoRAXdit/rnWXruyWjYf5Woqlfad6r7E87kZSAyQ1rkldx?=
- =?us-ascii?Q?Z6N5ZHLVtZqvixPiR1/CsvHlO95OnTdHMH75IGacga8+tNdz6m1BCbvZtG8r?=
- =?us-ascii?Q?gdgRzEJQqTxwzMQgonALZEg2xLc8Tj0ayc3botXs3EUcG89utEZdpKVC4vKm?=
- =?us-ascii?Q?dGdTxmQo6pSnpphSLg9hNg02Pldj3TttaSmbngb2X9RS0PKC35Q6Kajx3ob7?=
- =?us-ascii?Q?JxeoWPqrWO8IGfayF8b9gENiBY9+pI/aVb308K6ByxIhEyQDA1JHaxrivklG?=
- =?us-ascii?Q?l2KTb9nbsCk2pyXwJJmSBxxkMBHumvT+hB6cEZdFGVvEIxf0vUxzHF8hGaWX?=
- =?us-ascii?Q?DktVOPBCPRf+vO74Ozm7Xt9rMaqWWyIfIVcfj7KbxOeu0wi6dAPdLB83yYA0?=
- =?us-ascii?Q?L+x3wXVKNvCL/wA8L7pMUJBwgGgrrZAHBLuGFHp9N1dh7N48DsGnL7YDbapu?=
- =?us-ascii?Q?w78oKIjQhxNGPtT/lYUIgMzsOj38+BNPkmGY5VIp0INBGhy2vvw0ztOFIv+w?=
- =?us-ascii?Q?iYluBFwjWkml94MXsG71sYBG/5dcoTc/FRf3iBNxsEta17t3qPlV9Ei5DHrp?=
- =?us-ascii?Q?CpCqAlwdhy/a7q7Rp3rqdCny?=
-X-OriginatorOrg: nexbridge.ca
-X-MS-Exchange-CrossTenant-Network-Message-Id: 54722264-e7a6-4c29-fd9e-08d94584dde2
-X-MS-Exchange-CrossTenant-AuthSource: DM8PR17MB4934.namprd17.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jul 2021 22:32:01.2297
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: d6eda728-7424-4770-8f6a-462632ca4c1d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZAfJCmXGz+l/NEZdgmSpu9QawmKRqvjOAQ3mxXGvHp+IuMdUNoe5wRTR6J6hzIN8We8i4Y76YkCpGToGxwVSMFzuWT/1xkhMX4AG6cFxS70=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR17MB4936
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
+Commit 88473c8bae ("load_ref_decorations(): avoid parsing non-tag
+objects", 2021-06-22) introduced a shortcut to `add_ref_decoration()`:
+Rather than calling `parse_object()` directly, call `oid_object_info()`
+and then either return early or go on to call `lookup_object_by_type()`
+using the type just discovered. As detailed in the commit message, this
+provides a significant time saving.
 
-The tests are a subset of those for gitdir:, taking into account that
-the worktree: form does not support the trailing / at this time in
-pattern matches. Some resets of the .git/config file are done to restrict
-the set of includeIf paths being evaluated that conflict with prior
-subtests.
+Unfortunately, it also changes the behavior. As an example, on git.git,
 
-Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+  git log --oneline --decorate origin/master | grep '(.*tag:.*)'
+
+returns zero hits after 88473c8bae. Before it, we have around 800 hits.
+What happens is, all annotated tags are lost from the decoration.
+
+Let's do a partial revert of 88473c8bae: Keep doing that early
+`oid_object_info()`, but after that, go on with the full
+`parse_object()`. This restores the pre-88473c8bae behavior. We clearly
+have lacking test coverage here, so make sure to add a test. Without
+this fix to log-tree.c, the git-log invocation in this new test does
+pick up the lightweight tags involved, but misses out on the annotated
+tag.
+
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- t/t1305-config-include.sh | 81 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 81 insertions(+)
+ Cc-ing Peff, the author of 88473c8bae, and Taylor, who made a comment
+ regarding the peeling of tags [1], which might be related.
 
-diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-index ccbb116c01..fe1ad106c3 100755
---- a/t/t1305-config-include.sh
-+++ b/t/t1305-config-include.sh
-@@ -309,6 +309,69 @@ test_expect_success SYMLINKS 'conditional include, gitdir matching symlink, icas
- 	)
+ I'm genuinely unconvinced that my proposed fix is the best possible one.
+ Or maybe trying a more surgical fix around annotated tags misses a
+ whole bunch of *other* special cases and we really should go for the
+ full `parse_object()` to cover all possibilities.
+
+ In my brief testing (time git log -1 --decorate on git.git), the time
+ savings from 88473c8bae seem to be gone. So maybe this should be a full
+ revert, rather than a partial one. (Plus the test.) Let's hope that
+ won't be necessary.
+
+ Also, I'm not sure whether the test really needs to worry about the
+ order of the decorations suddenly changing -- maybe it's supposed to be
+ stable.
+
+ [1] https://lore.kernel.org/git/YNKgkGkPiMgNubNE@nand.local/
+
+ log-tree.c     |  6 ++----
+ t/t4202-log.sh | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+), 4 deletions(-)
+
+diff --git a/log-tree.c b/log-tree.c
+index 4f69ed176d..0b638d2e3c 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -134,7 +134,6 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
+ 			      int flags, void *cb_data)
+ {
+ 	struct object *obj;
+-	enum object_type objtype;
+ 	enum decoration_type deco_type = DECORATION_NONE;
+ 	struct decoration_filter *filter = (struct decoration_filter *)cb_data;
+ 
+@@ -156,10 +155,9 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
+ 		return 0;
+ 	}
+ 
+-	objtype = oid_object_info(the_repository, oid, NULL);
+-	if (objtype < 0)
++	if (oid_object_info(the_repository, oid, NULL) < 0)
+ 		return 0;
+-	obj = lookup_object_by_type(the_repository, oid, objtype);
++	obj = parse_object(the_repository, oid);
+ 
+ 	if (starts_with(refname, "refs/heads/"))
+ 		deco_type = DECORATION_REF_LOCAL;
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 350cfa3593..3aa5451913 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -1905,6 +1905,20 @@ test_expect_success '--exclude-promisor-objects does not BUG-crash' '
+ 	test_must_fail git log --exclude-promisor-objects source-a
  '
  
-+test_expect_success 'conditional worktree include, unanchored' '
-+	(
-+		cd foo &&
-+		# Must add a commit for worktree add
-+		git commit --allow-empty --allow-empty-message &&
-+		sed -i "/includeIf/,\$d" .git/config &&
-+		git worktree add ../foo.wt &&
-+		echo "[includeIf \"worktree:foo.wt\"]path=bar" >>.git/config &&
-+		echo "[test]one=1" >.git/bar &&
-+		cd ../foo.wt &&
-+		echo 1 >expect &&
-+		git config test.one >actual &&
-+		test_cmp expect actual
-+	)
++test_expect_success 'log --decorate includes, e.g., all kinds of tags' '
++	git log --oneline --decorate >log &&
++	test_line_count = 2 log &&
++	grep "^1ac6c77 (tag: one) one$" log &&
++	grep HEAD log | sed -e "s/^.*(\(.*\)).*$/\1/" -e "s/, /\n/g" |
++		sort >actual &&
++	cat >expect <<-\EOF &&
++		HEAD -> source-b
++		tag: source-tag
++		tag: three
++	EOF
++	test_cmp expect actual
 +'
 +
-+test_expect_success 'conditional worktree include, $HOME expansion' '
-+	(
-+		cd foo &&
-+		echo "[includeIf \"worktree:~/foo.wt\"]path=bar2" >>.git/config &&
-+		echo "[test]two=2" >.git/bar2 &&
-+		cd ../foo.wt &&
-+		echo 2 >expect &&
-+		git config test.two >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'conditional worktree include, full pattern' '
-+	(
-+		cd foo &&
-+		echo "[includeIf \"worktree:**/foo.wt\"]path=bar3" >>.git/config &&
-+		echo "[test]three=3" >.git/bar3 &&
-+		cd ../foo.wt &&
-+		echo 3 >expect &&
-+		git config test.three >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'conditional worktree include, relative path' '
-+	echo "[includeIf \"worktree:./foo.wt\"]path=bar4" >>.gitconfig &&
-+	echo "[test]four=4" >bar4 &&
-+	(
-+		cd foo.wt &&
-+		echo 4 >expect &&
-+		git config test.four >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'conditional worktree include, both unanchored, icase' '
-+	(
-+		cd foo &&
-+		echo "[includeIf \"worktree/i:FOO.WT\"]path=bar5" >>.git/config &&
-+		echo "[test]five=5" >.git/bar5 &&
-+		cd ../foo.wt &&
-+		echo 5 >expect &&
-+		git config test.five >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_expect_success 'conditional include, onbranch' '
- 	echo "[includeIf \"onbranch:foo-branch\"]path=bar9" >>.git/config &&
- 	echo "[test]nine=9" >.git/bar9 &&
-@@ -348,6 +411,24 @@ test_expect_success 'conditional include, onbranch, implicit /** for /' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'conditional worktree include, onbranch' '
-+	(
-+		cd foo &&
-+		sed -i "/includeIf/,\$d" .git/config &&
-+		echo "[includeIf \"onbranch:foo.wt2\"]path=bar12" >>.git/config &&
-+		echo "[test]twelve=12" >.git/bar12
-+	) &&
-+	(
-+		cd foo.wt &&
-+		git checkout -b main &&
-+		test_must_fail git config test.twelve &&
-+		git checkout -b foo.wt2 &&
-+		echo 12 >expect &&
-+		git config test.twelve >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_expect_success 'include cycles are detected' '
- 	git init --bare cycle &&
- 	git -C cycle config include.path cycle &&
+ test_expect_success 'log --end-of-options' '
+        git update-ref refs/heads/--source HEAD &&
+        git log --end-of-options --source >actual &&
 -- 
-2.32.0
+2.32.0.402.g57bb445576
 
