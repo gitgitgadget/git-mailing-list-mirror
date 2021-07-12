@@ -2,129 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02D83C07E99
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:54:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4491FC07E99
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:54:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D7B5361206
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:54:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2CE6F61154
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:54:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235653AbhGLR5J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 13:57:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46634 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232912AbhGLR5I (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 13:57:08 -0400
-Received: (qmail 19419 invoked by uid 109); 12 Jul 2021 17:54:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 12 Jul 2021 17:54:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8115 invoked by uid 111); 12 Jul 2021 17:54:19 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 12 Jul 2021 13:54:19 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 12 Jul 2021 13:54:18 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH] revision: allow pseudo options after --end-of-options
-Message-ID: <YOyByjmGu1oDXK4X@coredump.intra.peff.net>
-References: <20210708150316.10855-1-worldhello.net@gmail.com>
- <YOcvaFL7+6qcIOUa@camp.crustytoothpaste.net>
- <CANYiYbGYzbMoU_2wb4duppASoYUjGLsJsr692Xe3GaVBOXUsBA@mail.gmail.com>
- <YOoXCJV2ssef/KsN@camp.crustytoothpaste.net>
+        id S235723AbhGLR50 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 13:57:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47770 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232912AbhGLR5Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 13:57:25 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A097C0613DD
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 10:54:37 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id l7so25874767wrv.7
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 10:54:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=0WQvthQKA6MJXu5gf5Tsd3IDqSdoweahUmDvbo3WIZQ=;
+        b=Ype8cVdTHEXwqmXFMNdNEien1rQKh1LIY+XdUElya1WuUKnvFnMLn0rEBNMCJkAMTx
+         WRjX/UefE6oUI75PjCJXQfswFiuAeyNGwsGCFSjPe45bVclmkPWiM8C/yLdCwwk9gcyY
+         JEhPSExm4t2VK3LW7TnUFZCJ8Z1SB/qJfZZZOgsPz/IcxQ9wfIUfLUiF4cGPPw4oDXpU
+         5bgSWUeS+dCrR90EIV52Jpt39bPNTveXpuAPg9tOve4P47Zmqh69TpTn8tqPQjwiJqRJ
+         CGk5yF8wFY9icnPuEEX3N5bgqgvqDnqHBvlwJIhfnjtMxtXKtc1P5gcvOCtlYWjrjLV9
+         2kRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=0WQvthQKA6MJXu5gf5Tsd3IDqSdoweahUmDvbo3WIZQ=;
+        b=FRQfuVkUZ2jAhzThtIbhVJOcHUtwKFFKucngnK27qg2KIE00pipThqDKx1T+jPtqiv
+         Gep72vYbfchTAV3uvr6D10XifWYI+huAF9Zu2kilqLrMiPaJzm0kkSzazUsssW6Bip5f
+         yVq2G6U5gzWPXbMk9yu8EnvZwJ+pndRNgLiGzXxzeaVufn6uRJub9fYv7KDektwta7y1
+         WxvHX1wIpJLxjQgeEZbyBlTX83UsPHuz9s8q1fqTEbMKKS/NVZzY8FOayOSms6iivO4E
+         xV0XZLPjVS26dXpBf2hY9c1vduO20f0ApPy5TARNYZkrwiMBQCa47VwQztTnomtuUhvr
+         cIjQ==
+X-Gm-Message-State: AOAM531tIERIUeLYlYTrREOHILnto9NVXokUuNvjz9FtvKchYc0PUMxg
+        4xX7lAIQTXbm0cJW6vA4LOk=
+X-Google-Smtp-Source: ABdhPJxxznfdWOIFfN9TbO23uTUTukbP1Y+GVbyI73tjivY9Wd4GLL+gOfHUQ+FGLPXjPIL+wX3mhA==
+X-Received: by 2002:adf:b307:: with SMTP id j7mr196429wrd.243.1626112475733;
+        Mon, 12 Jul 2021 10:54:35 -0700 (PDT)
+Received: from [192.168.1.201] (136.2.7.51.dyn.plus.net. [51.7.2.136])
+        by smtp.googlemail.com with ESMTPSA id y23sm13523359wmi.28.2021.07.12.10.54.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Jul 2021 10:54:35 -0700 (PDT)
+Subject: Re: [PATCH] pull: abort if --ff-only is given and fast-forwarding is
+ impossible
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
+        avarab@gmail.com, felipe.contreras@gmail.com, newren@gmail.com
+References: <20210711012604.947321-1-alexhenrie24@gmail.com>
+ <00e246b1-c712-e6a5-5c27-89127d796098@gmail.com> <xmqqpmvn5ukj.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <e63d65f4-048e-464b-439c-4f8f48e72216@gmail.com>
+Date:   Mon, 12 Jul 2021 18:54:34 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YOoXCJV2ssef/KsN@camp.crustytoothpaste.net>
+In-Reply-To: <xmqqpmvn5ukj.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 10, 2021 at 09:54:16PM +0000, brian m. carlson wrote:
-
-> > But for the original implementation, because pseudo revision options
-> > (--branches, --tags, --not, ..., etc) can not be used after the
-> > "--end-of-options" option, we have to put "--end-of-options" at the
-> > end of revisions, such as:
-> > 
-> >     git log --pretty="%m %s" rev1 --not rev2 rev3 rev4 \
-> >             --end-of-options -- path/file
+On 12/07/2021 18:08, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
-> Or you could just use the other syntax and not have the problem.  Or you
-> could write this:
+>> Thanks for revising this patch, I like this approach much better. I do
+>> however have some concerns about the interaction of pull.ff with the
+>> rebase config and command line options. I'd naively expect the
+>> following behavior (where rebase can fast-forward if possible)
+>>
+>>    pull.ff  pull.rebase  commandline  action
+>>     only     not false                rebase
+>>     only     not false   --no-rebase  fast-forward only
+>>      *       not false    --ff-only   fast-forward only
+>>     only     not false    --ff        merge --ff
+>>     only     not false    --no-ff     merge --no-ff
+>>     only       false                  fast-forward only
+>>     only       false      --rebase    rebase
+>>     only       false      --ff        merge --ff
+>>     only       false      --no-ff     merge --no-ff
 > 
->   git log --pretty="%m %s" refs/heads/rev1 --not --end-of-options rev2 rev3 rev4 \
->           -- path/file
+> Do you mean by "not false" something other than "true"?
+
+I mean pull.rebase is set to true/interactive/merges/preserve
+
+>  Are you
+> trying to capture what should happen when these configuration
+> options are unspecified as well (and your "not false" is "either set
+> to true or unspecified")?  I ask because the first row does not make
+> any sense to me.  It seems to say
 > 
-> Unless there's a functional problem we're trying to solve, I'd much
-> rather we didn't make --end-of-options means
-> --end-of-some-options-but-not-others.  That makes it hard to reason
-> about, and if someone does have a need for disabling all options, then
-> we have to add another option.  It's also incompatible with the previous
-> behavior, so whereas "--not" used to be a revision, now it's an option.
+>      "If pull.ff is set to 'only', pull.rebase is not set to 'false',
+>      and the command line does not say anything, we will rebase".
 
-I agree that if we can avoid making exceptions, it makes the whole thing
-conceptually much cleaner (both for users to understand, but also for us
-to avoid accidentally introducing a security problem).
+Yes because if pull.rebase is not false then the user wants to rebase.
 
-I don't think fully-qualifying refs is a complete solution, though. The
-common use case for --end-of-options is that you're passing along names
-from somewhere else, and you don't know how to qualify them. E.g., in:
-
-  git rev-list --end-of-options "$rev" --
-
-you need to behave differently if you got "1234abcd" versus "foo" versus
-"refs/heads/foo".
-
-For --not, I do think using "^" is a complete solution. It's a little
-more work for the caller to prepend to each argument, but there's no
-policy logic they have to implement.
-
-Looking over the other pseudo-opts, I could see some where treating them
-as a rev is reasonable (e.g., "--all"), but many where it is not at all
-(e.g., "--no-walk"; why is this even in handle_revision_pseudo_opt?).
-Even if you're just passing along untrusted revision specifiers, they
-act in roughly the same way as a single specifier. The big thing we'd
-lose is that you could never refer to a branch named "--not" or "--all".
-
-So my gut feeling is _not_ to support them, but I can see arguments in
-both directions and I don't feel that strongly about it.
-
-> > Yes, "--end-of-options" must be used if there is a revision which
-> > starts with dash, such as branch "--output=yikes" in t6000. That's
-> > even stranger, for we have to write  command in the middle of
-> > revisions like this:
-> > 
-> >     git log --pretty="%m %s" rev1 --not rev2 rev3 \
-> >             --end-of-options --output=yikes -- path/file
-> > 
-> > I know "rev1..rev2" and "rev2 ^rev1", but I prefer to use "rev1 --not
-> > rev2 rev3" instead of "rev1 ^rev2 ^rev3".
+> I do agree with you that the command line options
 > 
-> I don't think a personal preference is a good reason to change this.
+>      --ff-only
+>      --ff (aka "allow ff")
+>      --no-ff
+> 
+> should override pull.ff and
+> 
+>      --rebase
+>      --no-rebase (aka "merge")
+> 
+> should override pull.rebase configuration settings and also override
+> pull.ff set to 'only' (i.e. the user explicitly wants intregration
+> of the two histories and at that point "I usually just follow along"
+> which is "pull.ff=only" no longer applies).
 
-I do think it rises slightly above personal preference. It's potentially
-making things much easier for the caller if they can ferry along:
+I'd assumed --no-rebase just meant "merge respecting pull.ff instead of 
+rebasing" rather than "merge ignoring pull.ff instead of rebasing"
 
-  tip=$1; shift
-  git rev-list --end-of-options "$1" --not "$@"
+Best Wishes
 
-instead of:
-
-  tip=$1; shift
-  # whoops, whitespace splitting is wrong here! Real programming
-  # languages make this easier, of course.
-  git rev-list --end-of-options "$1" $(for i in "$@"; do echo "^$i"; done)
-
-Though in my experience it is usually a static "--not --all" or "--not
---branches --tags" or similar in such a function. I don't think I've
-ever seen a case quite like the code above in practice.
-
--Peff
+Phillip
