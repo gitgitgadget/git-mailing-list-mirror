@@ -7,129 +7,146 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44356C07E99
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 15:23:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 161F9C07E99
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 16:04:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 297BF61008
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 15:23:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E76E461178
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 16:04:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235496AbhGLP0T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 11:26:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40646 "EHLO
+        id S231824AbhGLQHm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 12:07:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235481AbhGLP0T (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 11:26:19 -0400
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9703DC0613DD
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 08:23:29 -0700 (PDT)
-Received: by mail-oi1-x236.google.com with SMTP id t25so6049401oiw.13
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 08:23:29 -0700 (PDT)
+        with ESMTP id S231174AbhGLQHm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 12:07:42 -0400
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B027AC0613DD
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 09:04:52 -0700 (PDT)
+Received: by mail-oo1-xc2e.google.com with SMTP id 68-20020a4a00470000b0290258a7ff4058so4629562ooh.10
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 09:04:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=JeF6Cjy70hGsz/LmofxgXM8n3eRwOjDPkQ6TFfsI0bA=;
-        b=qZ9cCoTs4+H//MSEYyyBhiC5ucFcH+jV31IAaKie57v+iAK1mtofIBY3eIfwziivhe
-         dDQWjdCs+m+7h+Ooohc2ksUqvgZ/w7wfr5D/JkR1cyzqNi6JcdqSg8jIhdknPmeLbNWL
-         UnSWpweOD0GOF14XxsAB0gJ1Z+iiznPH25U61EDBm8x2PyCeqM9UKhrK5WYOeoOFShGR
-         zWLuD5DvDInYfLsQRUHjXmNwn/G5C7IQo3ocUMTNW4LK7smDUgNvUWJ2S4btP1FdTLKl
-         CtSd/t5iXGWEfxC213FX23Jr9ynBbcD58qXCZN4ElFaRKSj7aNVkq/cYggWWW4IBndZZ
-         Hqkw==
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-transfer-encoding;
+        bh=Drz1M8iu27zKX20yEYoJVqJ2/qFVa2AGOo6mSIKEPOc=;
+        b=HAzQcd3pNwqGKb5cgVUoj50+g8XwHW2a9q8Hw64gNGYuFtl/Ju4GMFoPj9ANPXBygq
+         z2xDeW9+L+FTDIPWfQsunesIaJIn7Lnr0FGQPVRg4+UPFOwVDx6EJ8xS5WT/uDIjLNCn
+         sEdHJhH5Gqu1Fh93fvG36MbS+/5n589V4eYNjBJSGieaI67h9y4TSMq1SoTywVlJxPvH
+         htHAKm7Q49PKnGrR0r3e1VHOo2T/8oD2PkKqD1gMHt0ywNnQAz723KnfHZneAoHZi0wj
+         hWTnRj5mmp7v07mcqNUQCGL4F1rmU8ugYJyNikuIV7PqUycEuVeQnNVcbV7LuncdS+q8
+         y5VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JeF6Cjy70hGsz/LmofxgXM8n3eRwOjDPkQ6TFfsI0bA=;
-        b=IJsww5Ab0j4USqVnGNtGikz/22sYDc/vx6kOOhVjMtLdQ9lZNmXf6wTPJM5zzn/ko/
-         gj/QhW26CB2A7Y7dmvlSs8Cbx/HlXBsrWdwvBuLD/b7dN/CnfHLdYbNehUYaow5U6hS2
-         oUJHa6z1EDfepN7ipUBSijo8lYiV2B55JmwIz3i2EJINOqY3okRgNhPKStT4VUyY2XYe
-         nC5UhRw8gxUc/j/Dsy+tyXo2xecwRKbMHYfZQj8lvH3Y2lenr6d9SwfvfiEDwzoytElS
-         BCfDFdzEfIZj415dJLckZJgB6I5UnRrWnmJEPRHwbvQi5RxPUxt10qe46LKcqz6kTGEg
-         rNrw==
-X-Gm-Message-State: AOAM530Ax/P0Ec/p8Zfxjv/MXYgtOJF8ZQx6gXHV9Fb7z+hBebTAzxnE
-        bOEU1hi3yXLj6JX6joqftL+V2QLqFS5swgeW7a8=
-X-Google-Smtp-Source: ABdhPJxRm+J10s/0zDg2vrmlg13c7mhAktcGmYWzQgt7XP6M+BkisfsdmDrU+ZNOltQp2OKX7AnPp6aZL+c2K4foRYA=
-X-Received: by 2002:aca:f0a:: with SMTP id 10mr11062202oip.39.1626103408941;
- Mon, 12 Jul 2021 08:23:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <CABPp-BFzp3TCWiF1QAVSfywDLYrz=GOQszVM-sw5p0rSB8RWvw@mail.gmail.com>
- <87a6ms4wgw.fsf@evledraar.gmail.com>
-In-Reply-To: <87a6ms4wgw.fsf@evledraar.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 12 Jul 2021 08:23:18 -0700
-Message-ID: <CABPp-BGE+8spsq9HZ6KNwWk_hYy5pj5vjJ8NQQuQiUN7qz7GCA@mail.gmail.com>
-Subject: Re: [RFC] Bump {diff,merge}.renameLimit ?
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
+         :subject:mime-version:content-transfer-encoding;
+        bh=Drz1M8iu27zKX20yEYoJVqJ2/qFVa2AGOo6mSIKEPOc=;
+        b=s3lMWVidDNhWg8qdQYtEXX3aVJuvqYmBgSzjRDX9fz2qA64KiuP3kLyR4XHbuVu4Xf
+         7csbyS5fdKRaSlOywATwocThOkUTMh6qpZaNuF3f7IFbMxehu+6Ye/DYkWOld3xqvaXC
+         nE798JxsUHPIHaa6NeTt6opyQ7mvsluha6cMLJjbb0OP+PPLKvcJBVrDtspj23ZgS+43
+         i3sVraTwqkyENM1l/rU2+6Cxh0FeiSw6kvsURuE+imMle/KY1BDA8Fh//aeYnFE2VhKr
+         mVjXtxl7dPhZyq017VWiE4MScfLATuv05V/tXOtJU79lg4YOjWGNhukG9DFYYJmH+vqp
+         53ww==
+X-Gm-Message-State: AOAM532eXc5k9ZYQKaTpPd0CMuyUxqijRnMtzp3Sl6E2fEqx/pUUstpk
+        eZEdlvZ8Al2kNe82KVJ/8OA=
+X-Google-Smtp-Source: ABdhPJyIiQ5/zWqfY6QosMzol/ynApefs/BrV/iz7QziA/VtHIM/DYp+JwzmTxEmlpnXwsB77h1jXQ==
+X-Received: by 2002:a4a:9644:: with SMTP id r4mr38730722ooi.52.1626105892048;
+        Mon, 12 Jul 2021 09:04:52 -0700 (PDT)
+Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
+        by smtp.gmail.com with ESMTPSA id f12sm2660910ooh.38.2021.07.12.09.04.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jul 2021 09:04:51 -0700 (PDT)
+Date:   Mon, 12 Jul 2021 11:04:50 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>,
+        Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
+        avarab@gmail.com, gitster@pobox.com, felipe.contreras@gmail.com,
+        newren@gmail.com
+Message-ID: <60ec682262994_a452520837@natae.notmuch>
+In-Reply-To: <00e246b1-c712-e6a5-5c27-89127d796098@gmail.com>
+References: <20210711012604.947321-1-alexhenrie24@gmail.com>
+ <00e246b1-c712-e6a5-5c27-89127d796098@gmail.com>
+Subject: Re: [PATCH] pull: abort if --ff-only is given and fast-forwarding is
+ impossible
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi =C3=86var,
+Phillip Wood wrote:
+> On 11/07/2021 02:26, Alex Henrie wrote:
+> > The warning about pulling without specifying how to reconcile divergent
+> > branches says that after setting pull.rebase to true, --ff-only can
+> > still be passed on the command line to require a fast-forward. Make that
+> > actually work.
+> 
+> Thanks for revising this patch, I like this approach much better. I do 
+> however have some concerns about the interaction of pull.ff with the 
+> rebase config and command line options. I'd naively expect the following 
+> behavior (where rebase can fast-forward if possible)
+> 
+>    pull.ff  pull.rebase  commandline  action
+>     only     not false                rebase
 
-Thanks for reading and commenting.  You certainly brought a new angle
-to the question...
+Agreed. (pull.ff applies only for --merge)
 
-On Sun, Jul 11, 2021 at 10:00 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Sat, Jul 10 2021, Elijah Newren wrote:
->
-> > I'm considering bumping {diff,merge}.renameLimit, which control the
-> > quadratic portion of rename/copy detection.  Should they be bumped?
-> > If so, moderately higher, or much higher?
-> >
-> > I lean towards a moderate bump for diff.renameLimit, and preferably
-> > more than just a moderate bump for merge.renameLimit.  I have
-> > calculations for what "moderate" translates to, based on a number of
-> > assumptions.  But there's several reasons to break with past
-> > guideposts for how these limits were picked.  See below for various
-> > arguments in each of the directions.
-> >
-> > So...thoughts?
->
-> I think the most relevant is something you didn't state: That when this
-> limit was introduced (well, diff.*, not merge.*) there was no progress
-> output in git.
+>     only     not false   --no-rebase  fast-forward only
 
-I am convinced that good progress output is very important.  I've
-submitted multiple patches for progress output specifically for rename
-detection[1]
+Agreed. (--no-rebase is --merge, and pull.ff applies)
 
-However, I am not convinced that the lack of progress output in git
-when this limit was introduced is the most relevant thing.  If it
-were, then the lively thread when Peff posted his past series to both
-introduce the progress output for rename detection and simultaneously
-bump the limits probably would have spurred comments about not needing
-both[2].
+>      *       not false    --ff-only   fast-forward only
 
-> We should err entirely on producing consistent and predictable results,
-> and not change how git works when we it hits some arbitrary limit. To
-> the extent that this is needed it's sufficient to opt-in to it, i.e. we
-> do/should show a progress bar, advice() etc. showing why we're doing
-> this much work, so those users can adjust the limit (or not).
+Disagree. (--ff-only is for --merge)
 
-So I've read and re-read your response multiple times, but I am still
-not sure what you're advocating for.  I think you're either advocating
-for rename detection to be turned off by default, or for a new
-"unlimited" mode to be introduced and be the default (maybe even
-redefining what the value of "0" means in order to implement this),
-but I can't tell which.  Could you clarify?
+We would need to change the documentation and the advice warning for
+this to be correct.
+
+>     only     not false    --ff        merge --ff
+
+Disagree.
+
+This is a rebase, --ff should be ignored.
+
+Junio already proposed --ff and other options to imply a merge [1], but
+I already explained why that is problematic [2].
+
+>     only     not false    --no-ff     merge --no-ff
+
+Disagree. (ditto)
+
+>     only       false                  fast-forward only
+>     only       false      --rebase    rebase
+>     only       false      --ff        merge --ff
+>     only       false      --no-ff     merge --no-ff
+
+Agreed.
+
+> I don't think enforcing fast-forward only for rebases makes sense unless 
+> it is given on the command line.
+
+But why? This is inconsistent.
+
+Everywhere else in git the configuration is another way of specifying
+the command line. This would be the first instance where it would not be
+the case.
+
+> If the user gives `--rebase` `--ff-only` on the command line then we
+> should either error out or take the last one in which case `pull
+> --rebase --ff-only` would fast-forward only but `pull --ff-only
+> --rebase` would rebase.
+
+Following the same logic `pull --ff-only --merge` would ignore the
+previous --ff-only, wouldn't it?
 
 
-[1] In particular:
-   d6861d0258df (progress: fix progress meters when dealing with lots
-of work, 2017-11-13)
-   9268cf4a2ef6 (sequencer: show rename progress during cherry picks,
-2017-11-13)
-   81c4bf02964e (diffcore-rename: reduce jumpiness in progress
-counters, 2020-12-11)
+This is a pretty significant semantic change and nowhere in this patch
+it's explained who this is supposed to help, or what is the motivtion
+behind it.
 
-[2] See https://lore.kernel.org/git/20110219101936.GB20577@sigill.intra.pef=
-f.net/
+[1] https://lore.kernel.org/git/xmqqmtyf8hfm.fsf@gitster.c.googlers.com/
+[2] https://lore.kernel.org/git/5fd8aa6a52e81_190cd7208c8@natae.notmuch/
+
+-- 
+Felipe Contreras
