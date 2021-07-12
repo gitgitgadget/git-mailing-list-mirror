@@ -4,68 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA68FC11F66
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D273C07E9A
 	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 11:47:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8952161108
+	by mail.kernel.org (Postfix) with ESMTP id 4B7CE610E6
 	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 11:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231373AbhGLLt5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 07:49:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47534 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230207AbhGLLtw (ORCPT <rfc822;git@vger.kernel.org>);
+        id S229746AbhGLLtw (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 12 Jul 2021 07:49:52 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6DA3C0613DD
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 04:47:03 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id l18-20020a1ced120000b029014c1adff1edso14231384wmh.4
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 04:47:03 -0700 (PDT)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47518 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229594AbhGLLtv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 07:49:51 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 334A5C0613DD
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 04:47:02 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id d12so24560458wre.13
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 04:47:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=/+pHTUCgsn/eJhBt7TH6g2FT5CeygqVH9py2mRcVtgU=;
-        b=s8lbXqKgk2lpWjeDmZ+m+5sRqq/nDpFZL5bZUH8dM7XrtOTtTIHvXwrhfmO1ubXqIW
-         Bw/eiobMrFuuJL6rPAzCtxRCEapV43nlXvKn2aFgHieXMe9kUCf05oougYE98l809RIx
-         tiiSMliIgHxzdBm2o6MRPpsLL5I5PXG3KwQi3oAu8hHHWwU6tQBkkX263Jzg4ixFmuvk
-         2NzJ679Y1aVMupWn/9usYFUuNJD+ixC4o8/tBNUVUm7OeLpXq+qwSep5DTw6qtJY88WY
-         JXjB7BBcANCs9mF6cv7U3yX7XRUzeYQjf6qEMB4PQTJ8RiH1a7NmfyNDUmWFqJxlXudj
-         RyLQ==
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=dXlOroawfuW/BZZASofCOvmzKXiEy/M0hEFDoOPgjyI=;
+        b=D5fbQbQGXMmdQih+fAL7i3O4u/0VdnvPtc+vrv4FJOzjMkjpSAqgoFvVVsVg9VlbTd
+         xfeOIiGfNDl3NpZzSp7OKf/RD9BB2F7+i0KAx8T3lRaQsJrKQvC6Wb9Ni8wGQVMFTdS0
+         OgimobIfhvg/1RyXCGgxhA1jmxFrTpzfzaQhcDxo0e7WS/L5EZKYRZ141TXku0IslOvm
+         Jhq248esesNGOxKVxtxCEgaNwVMB/Z7DuhdLDQ+Zs0VJU5Q1BW1P2QXYwhQeF71/K/Bl
+         j/5nSP6wzwfXd8ShrsxZjeqgKoqKnXmnmk1alcxcFozG6H4QhQrkowFeWUuFGw7ZDBgd
+         Ro+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/+pHTUCgsn/eJhBt7TH6g2FT5CeygqVH9py2mRcVtgU=;
-        b=Mnkq2rWvX/vwHAQutJMmYEDApceHxwJHgOO2bRCj2DsziKqzHnwuTX3EMjK8MBqDMK
-         Xp2MAjRlMlX4YiIEQxiSp5Ny8uT3nzcGVNGgMN+bunSn6+FtPaEMAMejysSWhOAC3hRX
-         +yHWEH4sV2kOCfTkjxwSq5BkruyGcN+vLRqvrP9Nkdn9RZ8O6hsh13SaQt1/RMxJFm6e
-         n5EVNYdSLYz3Mt+uDMm5vRHS+udM04zYYgOFw3/TD/mJ0NGxwo63dTRfUHdaLMXZgu2A
-         kLZOx/9E3qcGQjnVAI85scURUEbLYpANJwlyDDeSGFK2fIqrLiytQtr3IJ4mq614aE5n
-         4eQg==
-X-Gm-Message-State: AOAM5303BCI4BBKwaVEnfCTxUIOkACBOgzcz+QQuv4Nq4ej5T/llw6mF
-        k53aX0sz5LzFykRbJ000byUcE3ljdH0=
-X-Google-Smtp-Source: ABdhPJzKrST1MCnxzHoo06hkCxk1J1eUbCgAHlr/IW0+E6sIkewu/pr2d3gcv6XRMIBRS5ZCHeS9kQ==
-X-Received: by 2002:a1c:a903:: with SMTP id s3mr14054827wme.58.1626090422514;
-        Mon, 12 Jul 2021 04:47:02 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=dXlOroawfuW/BZZASofCOvmzKXiEy/M0hEFDoOPgjyI=;
+        b=gRLyU1z+DZ8QmahO0po2VhepxjOrZ8hNjrcDHPboZ6CufWcP8kX8+/GCB340yiyUtW
+         g9OR69CHsu0C6rRX/h907FkEnCmulX3qt2u0Vj6zNRpNSfRgt+LaHKKVkXqFFa1ccfC9
+         v0/IKCeGLwcKXfzkQVmozdZfpZNiZWe7/5F1Aqq2GYkpYx9Y1N7IAqf4wAGg3bJrgRPu
+         0nPYSwW72iQamwnoXsV7MQ3QpSyrDzpzhy8RvX7O+tCF3AJdb3aKhVjMX1eXr2C06co+
+         vIUOlyXf72a+t1ewcXSg0/VSRMistsqR9UU9y2gw+qlc5JU1j1JJqHJIm1gQI6fecqF8
+         N4tA==
+X-Gm-Message-State: AOAM533j+qTT2iJKKYQwZQGAvbIjtserVOawKS0++z7bnHkZkWFX1cl3
+        LGKNXpox2MNER4VuOMMcYjrqdobKYDE=
+X-Google-Smtp-Source: ABdhPJzIHIKFZOff4gCYSv/bzRhi+hJ/6+2i16lSE++lBkoO6wLlNIVAa4kXmxJkoluakQM98Eherg==
+X-Received: by 2002:a05:6000:1c4:: with SMTP id t4mr13232841wrx.181.1626090420829;
+        Mon, 12 Jul 2021 04:47:00 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p5sm14528891wrd.25.2021.07.12.04.47.02
+        by smtp.gmail.com with ESMTPSA id x18sm13678487wrw.19.2021.07.12.04.47.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jul 2021 04:47:02 -0700 (PDT)
-Message-Id: <0dacc60bbcc9ae4376f58c967f43bd0c2396fd7e.1626090419.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.993.git.1626090419.gitgitgadget@gmail.com>
-References: <pull.993.git.1626090419.gitgitgadget@gmail.com>
+        Mon, 12 Jul 2021 04:47:00 -0700 (PDT)
+Message-Id: <pull.993.git.1626090419.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 12 Jul 2021 11:46:43 +0000
-Subject: [PATCH 03/19] [GSOC] ref-filter: add obj-type check in grab contents
-Fcc:    Sent
+Date:   Mon, 12 Jul 2021 11:46:40 +0000
+Subject: [PATCH 00/19] [GSOC] cat-file: reuse ref-filter logic
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Christian Couder <christian.couder@gmail.com>,
@@ -74,100 +72,68 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        ZheNing Hu <adlternative@gmail.com>,
         ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+This patch series make cat-file reuse ref-filter logic.
 
-Only tag and commit objects use `grab_sub_body_contents()` to grab
-object contents in the current codebase.  We want to teach the
-function to also handle blobs and trees to get their raw data,
-without parsing a blob (whose contents looks like a commit or a tag)
-incorrectly as a commit or a tag.
+Change from last version:
 
-Skip the block of code that is specific to handling commits and tags
-early when the given object is of a wrong type to help later
-addition to handle other types of objects in this function.
+ 1. Declare buf_size in if (atom_type == ATOM_RAW) block.
+ 2. Modify the code style of the test.
+ 3. Delete "use_textconv" and "use_filter" flag. Instead, add member
+    cat_file_cmdmode to struct ref_array_item.
+ 4. Add function reject_atom() to enhance the readability of the code.
+ 5. Create p1006-cat-file.sh for performance regression testing.
+ 6. Use a "fast path" to output object data to reduce the performance
+    degradation of cat-file --batch with the suggest of Ævar Arnfjörð
+    Bjarmason.
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Hariom Verma <hariom18599@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
- ref-filter.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ZheNing Hu (19):
+  cat-file: handle trivial --batch format with --batch-all-objects
+  cat-file: merge two block into one
+  [GSOC] ref-filter: add obj-type check in grab contents
+  [GSOC] ref-filter: add %(raw) atom
+  [GSOC] ref-filter: --format=%(raw) re-support --perl
+  [GSOC] ref-filter: use non-const ref_format in *_atom_parser()
+  [GSOC] ref-filter: add %(rest) atom
+  [GSOC] ref-filter: pass get_object() return value to their callers
+  [GSOC] ref-filter: introduce free_ref_array_item_value() function
+  [GSOC] ref-filter: introduce reject_atom()
+  [GSOC] ref-filter: modify the error message and value in get_object
+  [GSOC] cat-file: add has_object_file() check
+  [GSOC] cat-file: change batch_objects parameter name
+  [GSOC] cat-file: reuse ref-filter logic
+  [GSOC] cat-file: reuse err buf in batch_object_write()
+  [GSOC] cat-file: re-implement --textconv, --filters options
+  [GSOC] ref-filter: remove grab_oid() function
+  [GSOC] cat-file: create p1006-cat-file.sh
+  [GSOC] cat-file: use fast path when using default_format
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 4db0e40ff4c..5cee6512fba 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1356,11 +1356,12 @@ static void append_lines(struct strbuf *out, const char *buf, unsigned long size
- }
- 
- /* See grab_values */
--static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
-+static void grab_sub_body_contents(struct atom_value *val, int deref, struct expand_data *data)
- {
- 	int i;
- 	const char *subpos = NULL, *bodypos = NULL, *sigpos = NULL;
- 	size_t sublen = 0, bodylen = 0, nonsiglen = 0, siglen = 0;
-+	void *buf = data->content;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
- 		struct used_atom *atom = &used_atom[i];
-@@ -1371,10 +1372,13 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
- 			continue;
- 		if (deref)
- 			name++;
--		if (strcmp(name, "body") &&
--		    !starts_with(name, "subject") &&
--		    !starts_with(name, "trailers") &&
--		    !starts_with(name, "contents"))
-+
-+		if ((data->type != OBJ_TAG &&
-+		     data->type != OBJ_COMMIT) ||
-+		    (strcmp(name, "body") &&
-+		     !starts_with(name, "subject") &&
-+		     !starts_with(name, "trailers") &&
-+		     !starts_with(name, "contents")))
- 			continue;
- 		if (!subpos)
- 			find_subpos(buf,
-@@ -1438,17 +1442,19 @@ static void fill_missing_values(struct atom_value *val)
-  * pointed at by the ref itself; otherwise it is the object the
-  * ref (which is a tag) refers to.
-  */
--static void grab_values(struct atom_value *val, int deref, struct object *obj, void *buf)
-+static void grab_values(struct atom_value *val, int deref, struct object *obj, struct expand_data *data)
- {
-+	void *buf = data->content;
-+
- 	switch (obj->type) {
- 	case OBJ_TAG:
- 		grab_tag_values(val, deref, obj);
--		grab_sub_body_contents(val, deref, buf);
-+		grab_sub_body_contents(val, deref, data);
- 		grab_person("tagger", val, deref, buf);
- 		break;
- 	case OBJ_COMMIT:
- 		grab_commit_values(val, deref, obj);
--		grab_sub_body_contents(val, deref, buf);
-+		grab_sub_body_contents(val, deref, data);
- 		grab_person("author", val, deref, buf);
- 		grab_person("committer", val, deref, buf);
- 		break;
-@@ -1678,7 +1684,7 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
- 			return strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
- 					       oid_to_hex(&oi->oid), ref->refname);
- 		}
--		grab_values(ref->value, deref, *obj, oi->content);
-+		grab_values(ref->value, deref, *obj, oi);
- 	}
- 
- 	grab_common_values(ref->value, deref, oi);
+ Documentation/git-cat-file.txt     |   6 +
+ Documentation/git-for-each-ref.txt |   9 +
+ builtin/cat-file.c                 | 308 +++++++++----------------
+ builtin/tag.c                      |   2 +-
+ quote.c                            |  17 ++
+ quote.h                            |   1 +
+ ref-filter.c                       | 346 +++++++++++++++++++++--------
+ ref-filter.h                       |  13 +-
+ t/perf/p1006-cat-file.sh           |  28 +++
+ t/t1006-cat-file.sh                | 273 +++++++++++++++++++++++
+ t/t3203-branch-output.sh           |   4 +
+ t/t6300-for-each-ref.sh            | 235 ++++++++++++++++++++
+ t/t6301-for-each-ref-errors.sh     |   2 +-
+ t/t7004-tag.sh                     |   4 +
+ t/t7030-verify-tag.sh              |   4 +
+ 15 files changed, 955 insertions(+), 297 deletions(-)
+ create mode 100755 t/perf/p1006-cat-file.sh
+
+
+base-commit: d486ca60a51c9cb1fe068803c3f540724e95e83a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-993%2Fadlternative%2Fcat-file-batch-refactor-2-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-993/adlternative/cat-file-batch-refactor-2-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/993
 -- 
 gitgitgadget
-
