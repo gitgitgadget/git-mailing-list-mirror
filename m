@@ -4,98 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABC0CC07E99
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 18:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58CC2C07E99
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 18:20:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 92BA961221
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 18:14:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3503660230
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 18:20:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235760AbhGLSQ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 14:16:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52292 "EHLO
+        id S234382AbhGLSWx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 14:22:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230477AbhGLSQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 14:16:57 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76A77C0613DD
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 11:14:09 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id w15-20020a056830144fb02904af2a0d96f3so19792858otp.6
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 11:14:09 -0700 (PDT)
+        with ESMTP id S230477AbhGLSWw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 14:22:52 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67CA8C0613DD
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 11:20:02 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id w127so25546790oig.12
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 11:20:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=D05+uPneYbGt/y4LvwM57B4Oz9J8X2l3nCy3APxyFzY=;
-        b=YXNG1qTT92uTGoTCD6A4xzhK5INSG2nofzwap3rJkngCR+r1i2HxRS55TcMGGy/f0Q
-         uTCeZGCz32XU/bs73mmqkgxqnu297Vv+D92FeCJ1TImPdbr1wPnIkEarD0vTNQOaxAwr
-         6SuEBXLIKJljybWP1CPkAyn3luwjRpUusVH9WrrR1Kp++8qPSYmU+CbZw68mPPWDAp8b
-         E+ksJHiBFHKWb4VeDY0FAdBT4nhiqTKvgNJxdqe2s9RY+4VlN/FAqfjv4biITmVWJboJ
-         /hjJxmHrd55CP6585Rf1adb7sXNTuCq7P5B8LE7SMZVDj7+YiQPMkKJ0sR0d0e+1zrnj
-         Riyw==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=MBJkglGdrVliiSwjb/f+3kdjBvdzrqneE1TdJkVmcOY=;
+        b=kSe4QrVPvxVRfRT8tTYyGHAxxATzMy1we/WlgGcqLyf/qgRU7mzwgTzG82ijFkDI9B
+         vxfo7HwiNQmRBZxFp0SWo0hv+C60+m4JYHcdHi0QFTF6o8nCe9HT6tRJoIqBOhE3MWlG
+         RH0jMycFCxHKAn8Nn5N2J3/UBKI33KAWxBawnAr9vvo8bntn7J3eOqOehfHHQT08QkMa
+         hkvPYXpvkILGQuhL65h4TRcLg0++sP/njc3XmALdfcVWEfO4DITRd3RVO5BFyJsA3934
+         kYcwq3FE0VCNsbg8ivhXSCm5MQch4W1uIeOduoVG8nCnef/RziXfnZsltxWpKuumvtdg
+         TI3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=D05+uPneYbGt/y4LvwM57B4Oz9J8X2l3nCy3APxyFzY=;
-        b=AK7fpomGFJn3WmQBR5nAGy9j2DG7PcXboJPJkDpxohCjO7NnXfbGAjXAyF6uoY+HLF
-         nVCzlZ2Tngf/7JCw0xw9+EmeDx9F349quShZeo9K4glb8z9bHn52N4LEYLNxyyypt/1z
-         jOTo5kqOYPCv/hKoJceei39iHrG3Z4fkhAHxdwiLvCVvOX91Eii0a1s5KjMPxrkvzJ1p
-         SWkaZK7Fdy4JlP/GrvuldpNDnGH+hKjGxRQsBW8O6c4WZNJ2SIQMu0d6wSiXD0mjL/uD
-         FfGzNoi/S/nUZXJPsuv7w+mML3lblKEck6CDjWC4uKWSuSpsU0gef2j3iF6Nmbhs6R5K
-         I+9w==
-X-Gm-Message-State: AOAM533LmWaOkPEqZFG41AV/FkadLd+Fx/eAuakZDxSO1TlaDyJKW8m3
-        FEfU/BaOAyXQTNc1CDkKWQ685+lqaJbRnsLkIbI=
-X-Google-Smtp-Source: ABdhPJwgAjMmAPLzFpU4SgpkgyOgRpEon91f2BGx2CWkvmFlKdY6JYm6iOtd+HxNtMg9ON2STWGXs2sf0E6PJYIfekY=
-X-Received: by 2002:a9d:6d03:: with SMTP id o3mr240323otp.316.1626113648831;
- Mon, 12 Jul 2021 11:14:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1044.git.git.1625964399.gitgitgadget@gmail.com>
- <44a5d5efaa637d01ec3266b34f31d46acce5ef24.1625964399.git.gitgitgadget@gmail.com>
- <9707b299-3846-6388-36ba-e8d93a28e2ac@gmail.com>
-In-Reply-To: <9707b299-3846-6388-36ba-e8d93a28e2ac@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 12 Jul 2021 11:13:57 -0700
-Message-ID: <CABPp-BHF3Os7fOeaF_EQOo+Bs7f1DXbYr26WmAQrPjv63nq1Pg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] diff: correct warning message when renameLimit exceeded
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=MBJkglGdrVliiSwjb/f+3kdjBvdzrqneE1TdJkVmcOY=;
+        b=BoccuNuc81NJHTABwt5mOIQUxDF3KEEy+adcLibgEcQGO6Qr0EgH+51Uwp+GYNCe5N
+         n224lhtldRuUBySjwB2YGvDs49qJQjbcQhgmxaXvsuOC3Y+mYHMKgR8kL+a3B0QCRy5N
+         tTZoA6V88fcCibngV/vFMi3GVRj9KV3ntqAmTK+I6tzYXe7WAfsNuCfA78b1HUku+eu6
+         V0VTGunXQ5rwmz6Oqt0K4A5EBWf6nZYYIr4HHmvN7FyCUzXIA9ZCoN9JSmO6PdhObERY
+         2BCvgdwhfEEovamQQdQM3CMXZWeGJP1Tlh/EuRDsR9tudOOpaFH0876+v4s5vGpdBhjk
+         AMaQ==
+X-Gm-Message-State: AOAM5306NFUG0gYGYEVGC+LB8evFXVe69J1mKVZGnQE/sRZC0Xb4prvO
+        MrpPjP5K7WHHpbwEgeow+/8=
+X-Google-Smtp-Source: ABdhPJymGEbx2m2Eb23q5KLZw1RT77oCPYQAp3ir5gxmBl+ifKHTuHtEari0iVsEGjvAMg1D0g64xA==
+X-Received: by 2002:a54:4109:: with SMTP id l9mr73421oic.3.1626114001681;
+        Mon, 12 Jul 2021 11:20:01 -0700 (PDT)
+Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
+        by smtp.gmail.com with ESMTPSA id q23sm3288418oij.41.2021.07.12.11.20.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jul 2021 11:20:01 -0700 (PDT)
+Date:   Mon, 12 Jul 2021 13:20:00 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Message-ID: <60ec87d03f7c5_a231f20826@natae.notmuch>
+In-Reply-To: <CABPp-BERS0iiiVhSsSs6dkqzBVTQgwJUjjKaZQEzRDGRUdObcQ@mail.gmail.com>
+References: <20210711012604.947321-1-alexhenrie24@gmail.com>
+ <00e246b1-c712-e6a5-5c27-89127d796098@gmail.com>
+ <xmqqpmvn5ukj.fsf@gitster.g>
+ <CABPp-BERS0iiiVhSsSs6dkqzBVTQgwJUjjKaZQEzRDGRUdObcQ@mail.gmail.com>
+Subject: Re: [PATCH] pull: abort if --ff-only is given and fast-forwarding is
+ impossible
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 12, 2021 at 8:09 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 7/10/2021 8:46 PM, Elijah Newren via GitGitGadget wrote:
-> > From: Elijah Newren <newren@gmail.com>
+Elijah Newren wrote:
+> On Mon, Jul 12, 2021 at 10:08 AM Junio C Hamano <gitster@pobox.com> wrote:
 > >
-> > The warning when quadratic rename detection was skipped referred to
-> > "inexact rename detection".  For years, the only linear portion of
-> > rename detection was looking for exact renames, so "inexact rename
-> > detection" was an accurate way to refer to the quadratic portion of
-> > rename detection.  However, that changed with commit bd24aa2f97a0
-> > (diffcore-rename: guide inexact rename detection based on basenames,
-> > 2021-02-14), so now the correct way to refer to quadratic rename
-> > detection is "quadratic rename detection".  Fix the warning accordingly.
->
-> Now that I read this more specific reason for using "quadratic", my
-> earlier comments on patch 1 are slightly less helpful. Specifically,
-> I was recommending to continue using "inexact renames" but that is
-> not 100% true anymore.
->
-> I still think this "quadratic rename detection" is perhaps hard to
-> parse as a non-expert. This subtlety of some "easy" inexact renames
-> definitely makes the definition harder.
->
-> Since the steps that find inexact renames without the quadratic
-> algorithm are heuristics, perhaps this portion could instead be
-> called "exhaustive rename detection" or even "expensive rename
-> detection"? It perhaps implies more directly that the limit exists
-> as a way to prevent an expensive operation.
+> > Phillip Wood <phillip.wood123@gmail.com> writes:
+> >
+> > > Thanks for revising this patch, I like this approach much better. I do
+> > > however have some concerns about the interaction of pull.ff with the
+> > > rebase config and command line options. I'd naively expect the
+> > > following behavior (where rebase can fast-forward if possible)
+> > >
+> > >   pull.ff  pull.rebase  commandline  action
+> > >    only     not false                rebase
+> > >    only     not false   --no-rebase  fast-forward only
+> > >     *       not false    --ff-only   fast-forward only
+> > >    only     not false    --ff        merge --ff
+> > >    only     not false    --no-ff     merge --no-ff
+> > >    only       false                  fast-forward only
+> > >    only       false      --rebase    rebase
+> > >    only       false      --ff        merge --ff
+> > >    only       false      --no-ff     merge --no-ff
+> >
+> > Do you mean by "not false" something other than "true"?  Are you
+> > trying to capture what should happen when these configuration
+> > options are unspecified as well (and your "not false" is "either set
+> > to true or unspecified")?  I ask because the first row does not make
+> > any sense to me.  It seems to say
+> >
+> >     "If pull.ff is set to 'only', pull.rebase is not set to 'false',
+> >     and the command line does not say anything, we will rebase".
+> 
+> I think Phillip is trying to answer what to do when pull.ff and
+> pull.rebase conflict.  If I read his "not false" means "is set to
+> something other than false", then I agree with his table, but I think
+> he missed covering some cases.
+> 
+> I think his table says that pull.rebase=false cannot conflict with
+> pull.ff settings, but any other value for pull.rebase can.  That makes
+> sense to me.
+> 
+> I'd similarly say that pull.ff=true cannot conflict with any
+> pull.rebase settings...but that both pull.ff=only AND pull.ff=false
+> conflict with pull.rebase={true,merges}.
+> 
+> My opinion would be:
+>   * conflicting command line flags results in the last one winning.
+>   * --no-rebase makes pull.ff determine the action.
+>   * --ff makes pull.rebase determine the action.
+>   * any other command line flag (-r|--rebase|--no-ff|--ff-only)
+> overrides both pull.ff and pull.rebase
+>   * If no command line option is given, and pull.ff and pull.rebase
+> conflict, then error out.
+> 
+> I believe my recommendation above is consistent with every entry in
+> Phillip's table except the first line (where I suggest erroring out
+> instead).
 
-The name "exhaustive rename detection" seems reasonable to me.  I'll
-resubmit using that term and see what folks think.
+No:
+
+  git -c pull.ff=only -c pull.rebase=true pull --ff
+
+In Phillip's table that does a merge, in your rules that's a rebase.
+
+
+Moreover, since when does git do something different depending if the
+action was configured or specified in the command line? They are
+supposed to be two ways of doing th same thing:
+
+  git -c pull.ff=only -c pull.rebase=true pull
+  git -c pull.ff=only pull --rebase
+
+Why would those do different things?
+
+The documentation is pretty clear:
+
+  See `pull.rebase`, `branch.<name>.rebase` and `branch.autoSetupRebase` in
+  linkgit:git-config[1] if you want to make `git pull` always use
+  `--rebase` instead of merging.
+
+If you start adding exceptions on top of exceptions the documentation
+will become a mess.
+
+-- 
+Felipe Contreras
