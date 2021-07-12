@@ -2,113 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCBE3C07E99
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 20:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A06F2C07E99
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 20:51:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BCC03611C1
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 20:41:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 84BB161002
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 20:51:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232890AbhGLUoE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 16:44:04 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51761 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231795AbhGLUoE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 16:44:04 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E1E32CCE05;
-        Mon, 12 Jul 2021 16:41:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=n3NbBQdBvfyj
-        FNo3l/LhoMXvM74dUgrEdXfjyRUT4xA=; b=srXPKHZqd6tHt0U+JoljzqSM3iUn
-        obiHfbHqtIh4nLjjgEULuBHb07Kq8D22rursLtsqZvAJORsOpz7A0ynt51X5YxgB
-        UfswIS7L2PdUXRcO5OOJDLno5RHTZfvEnBpPgvkSRsQQvxS856fyD9LVtM04mWJx
-        tyqWQspegjG5hQQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D876DCCE04;
-        Mon, 12 Jul 2021 16:41:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 56982CCE02;
-        Mon, 12 Jul 2021 16:41:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/5] tests: migrate to "test-tool pkt-line"
-References: <cover-0.5-00000000000-20210707T101549Z-avarab@gmail.com>
-        <cover-0.5-00000000000-20210712T164208Z-avarab@gmail.com>
-Date:   Mon, 12 Jul 2021 13:41:13 -0700
-In-Reply-To: <cover-0.5-00000000000-20210712T164208Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 12 Jul
- 2021 18:44:15 +0200")
-Message-ID: <xmqqpmvn2rkm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233898AbhGLUyT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 16:54:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60394 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229910AbhGLUyS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 16:54:18 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C22C6C0613DD
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 13:51:29 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id f93-20020a9d03e60000b02904b1f1d7c5f4so19462733otf.9
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 13:51:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KX0xddX+lT73zq2sy63hiBZQI4x0vX7u7jnJvoNhl8o=;
+        b=pCqCUO3L4UHIeSdiVX5PFl1KyyeUgfSRfJ7sD2PO5KJyXyzhWTjE5lEZrsk9zIXXAe
+         4mx+V+pcz0YhmRJ5e641qXodvN7eOhif3EZyG/MesnhWnTfbkUg518c8bsnO0W85B9vi
+         vujjXU3EukS8dmR1W+YbxcGGotW4Ih5yowdHWXqcXGXNFLzaYJ6or8Oy+Ji8/fURberI
+         lCbdXici8RZwhXhQ2y+iBaDoEbrd52z5sxS+RwxNGNRiblDd3dbuS1CsV+htVZ6ZtAM7
+         3cMYfPh4/GTt+SRicnrWWYJLiU/8bpy6yKrtPISFBKgi0oMbIyMLfCx/BA98oUzsgO3N
+         nwGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KX0xddX+lT73zq2sy63hiBZQI4x0vX7u7jnJvoNhl8o=;
+        b=J486kPCCqac6T0oHuZe8WeyKkBomZA1Kohff++oFXt3UPhkVc3rRPK5FJ+qC1c9yRD
+         QfCfzR+1gQBlSUOUcxEkTR5IfNsSY6ycQRufoGhqAQBHxJX/Nmttqvgjx2iVyed7YCpE
+         1U4I2UrHbZFGCUk6a8GZoklzJ6vQWaYNPyK65vDd8RYdwSfDaKkdyif3jinzO8T1iYl8
+         /zRejv9WQ971m/3LK6Wc7+SKxbQQ4iVBKkdY4yCc74R93XBdH15JeyBRtDKZlGtOfyY9
+         wCsScg2TpnuFRigRW1900/olPv60HdIKZCaU1wpeT5jAJ8vMoJWoOkrHPqdFtISjEn7h
+         pEWg==
+X-Gm-Message-State: AOAM533PvPqUMbwiyKEPsAXygy4+owiKkVveSsgzpJirilFA1yfGJ8HG
+        OeJKTrvEf98al19hOAoiP2iPua5pYM7Op/kG+XI=
+X-Google-Smtp-Source: ABdhPJyxMmyR+6Ns68joKkKOubuX8Wtl9FwLdqVwGldDWh8JpXtLY2vY6ghhFK+JHUkCNKCcKvCZH8xANspIC1890+U=
+X-Received: by 2002:a9d:6d03:: with SMTP id o3mr676229otp.316.1626123089129;
+ Mon, 12 Jul 2021 13:51:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7FF80420-E351-11EB-98C5-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20210711012604.947321-1-alexhenrie24@gmail.com>
+ <00e246b1-c712-e6a5-5c27-89127d796098@gmail.com> <xmqqpmvn5ukj.fsf@gitster.g>
+ <CABPp-BERS0iiiVhSsSs6dkqzBVTQgwJUjjKaZQEzRDGRUdObcQ@mail.gmail.com>
+ <CAMMLpeRX3iMwT9NJ+ULHgAhS3A=nAybgDYFHomkY3sif-H+F4g@mail.gmail.com>
+ <CAMMLpeSBgURtX+MKbABKdmFuuoTA-Dw3h8uONwNeiP5aqcnfpA@mail.gmail.com> <xmqq8s2b489p.fsf@gitster.g>
+In-Reply-To: <xmqq8s2b489p.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 12 Jul 2021 13:51:18 -0700
+Message-ID: <CABPp-BH+LPbfdgixvSEGpLxwCHHSK99PFmE3q04jPZjLaqr5Xg@mail.gmail.com>
+Subject: Re: [PATCH] pull: abort if --ff-only is given and fast-forwarding is impossible
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On Mon, Jul 12, 2021 at 12:55 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Alex Henrie <alexhenrie24@gmail.com> writes:
+>
+> > Sorry, I misspoke. I was thinking of the case where fast-forwarding is
+> > impossible.
+>
+> When we cannot fast-forward (i.e. we have our own development that
+> is not in the tip of their history),
+>
+>  --ff-only would cause the operation fail
+>  --ff would become no-op (as it merely allows fast-forwarding)
+>  --no-ff would become no-op (as it merely forbids fast-forwarding)
+>
+> and the latter two case, we'd either merge or rebase (with possibly
+> specified mode like --preserve-merges).  I thought the current
+> documentation is already fairly clear on this point?
 
-> This series is marked for "will merge to next" already, but not there
-> yet. A trivial v2 whitespace fix in case Junio's in time to pick it
-> up.
->
-> See v1 at https://lore.kernel.org/git/cover-0.5-00000000000-20210707T10=
-1549Z-avarab@gmail.com/
->
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (5):
->   serve tests: add missing "extra delim" test
->   serve tests: use test_cmp in "protocol violations" test
->   tests: replace [de]packetize() shell+perl test-tool pkt-line
->   tests: replace remaining packetize() with "test-tool pkt-line"
->   test-lib-functions.sh: remove unused [de]packetize() functions
->
->  t/helper/test-pkt-line.c               | 12 +++++
->  t/t5410-receive-pack-alternates.sh     | 42 +++++++++++++-----
->  t/t5411/once-0010-report-status-v1.sh  | 12 ++---
->  t/t5500-fetch-pack.sh                  | 15 ++++---
->  t/t5530-upload-pack-error.sh           | 24 +++++-----
->  t/t5562-http-backend-content-length.sh | 16 ++++---
->  t/t5570-git-daemon.sh                  | 22 ++++++----
->  t/t5704-protocol-violations.sh         | 61 ++++++++++++++++++--------
->  t/test-lib-functions.sh                | 42 ------------------
->  9 files changed, 135 insertions(+), 111 deletions(-)
->
-> Range-diff against v1:
-> 1:  fcb53980597 =3D 1:  67aa8141153 serve tests: add missing "extra del=
-im" test
-> 2:  c3544fb53cd =3D 2:  64dfd14865c serve tests: use test_cmp in "proto=
-col violations" test
-> 3:  c1015fa6ab0 =3D 3:  c33f344ab20 tests: replace [de]packetize() shel=
-l+perl test-tool pkt-line
-> 4:  ab23513b48b ! 4:  a44e1790f2a tests: replace remaining packetize() =
-with "test-tool pkt-line"
->     @@ t/helper/test-pkt-line.c: static void pack(int argc, const char =
-**argv)
->      =20
->      +static void pack_raw_stdin(void)
->      +{
->     -+
->      +	struct strbuf sb =3D STRBUF_INIT;
->      +	strbuf_read(&sb, 0, 0);
->      +	if (strbuf_read(&sb, 0, 0) < 0)
-> 5:  2d22b83971a =3D 5:  cc91d15ef70 test-lib-functions.sh: remove unuse=
-d [de]packetize() functions
+git pull's --no-ff is documented to "create a merge commit in all
+cases", and thus as worded, seems incompatible with rebasing to me.
+Treating --no-ff as a no-op when we cannot fast-forward (i.e. allowing
+rebasing to happen) could be seen as a backwards incompatible change
+at this point.
 
-Well, if you care that much, I'd prefer to also see an blank line
-between the end of decl and the first statement.
+Having --ff be compatible with rebasing works because the end result
+will be the same as described in the existing documentation.
 
-;-)
+> > If fast-forwarding is possible, --ff-only already effectively
+> > implies --no-rebase, and we might want to make that explicit in
+> > the documentation.
+>
+> When we fast-forward (i.e. their history is descendant from ours,
+> and the user did not give --no-ff), it does not matter if it is done
+> using the merge backend, the rebase backend, or by the "git pull"
+> wrapper. The end user does not care.  The end result is that the tip
+> of the branch now points at the tip of the history we pulled from
+> the other side and that is all what matters.
+>
+> So, from that point of view, I do not think we want to say rebase or
+> merge or anything else for such a case in the documentation.
+
+All three of --ff, --no-ff, and --ff-only come from
+Documentation/merge-options.txt and are shared between git-merge and
+git-pull.  The description of each of those items mentions "merges" or
+"merging" at least once in every sentence.
