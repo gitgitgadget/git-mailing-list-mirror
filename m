@@ -2,81 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AA39C07E99
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D781C07E99
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 18:13:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4879B611C1
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:58:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30E4A6120A
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 18:13:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233555AbhGLSBk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 14:01:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46744 "EHLO cloud.peff.net"
+        id S234411AbhGLSQp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 14:16:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46762 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229907AbhGLSBj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 14:01:39 -0400
-Received: (qmail 19541 invoked by uid 109); 12 Jul 2021 17:58:51 -0000
+        id S230477AbhGLSQo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 14:16:44 -0400
+Received: (qmail 19779 invoked by uid 109); 12 Jul 2021 18:13:55 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 12 Jul 2021 17:58:51 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 12 Jul 2021 18:13:55 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8373 invoked by uid 111); 12 Jul 2021 17:58:51 -0000
+Received: (qmail 8450 invoked by uid 111); 12 Jul 2021 18:13:55 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 12 Jul 2021 13:58:51 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 12 Jul 2021 14:13:55 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 12 Jul 2021 13:58:50 -0400
+Date:   Mon, 12 Jul 2021 14:13:54 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/3] strbuf.h API users: don't hardcode 8192, use
- STRBUF_HINT_SIZE
-Message-ID: <YOyC2gJ4PWCTepKn@coredump.intra.peff.net>
-References: <cover-0.3-00000000000-20210707T103712Z-avarab@gmail.com>
- <patch-2.3-a920a9971e8-20210707T103712Z-avarab@gmail.com>
- <xmqqo8bdda2j.fsf@gitster.g>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2] rev-list: add option for --pretty=format without
+ header
+Message-ID: <YOyGYs+uDr7tYxON@coredump.intra.peff.net>
+References: <20210706224321.14371-1-sandals@crustytoothpaste.net>
+ <20210711215510.191626-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqo8bdda2j.fsf@gitster.g>
+In-Reply-To: <20210711215510.191626-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 07, 2021 at 03:37:56PM -0700, Junio C Hamano wrote:
+On Sun, Jul 11, 2021 at 09:55:10PM +0000, brian m. carlson wrote:
 
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+> In general, we encourage users to use plumbing commands, like git
+> rev-list, over porcelain commands, like git log, when scripting.
+> However, git rev-list has one glaring problem that prevents it from
+> being used in certain cases: when --pretty is used with a custom format,
+> it always prints out a line containing "commit" and the object ID.  This
+> makes it unsuitable for many scripting needs, and forces users to use
+> git log instead.
 > 
-> > Change a couple of users of strbuf_init() that pass a hint of 8192 to
-> > pass STRBUF_HINT_SIZE instead.
-> >
-> > Both of these hardcoded occurrences pre-date the use of the strbuf
-> > API. See 5242bcbb638 (Use strbuf API in cache-tree.c, 2007-09-06) and
-> > af6eb82262e (Use strbuf API in apply, blame, commit-tree and diff,
-> > 2007-09-06).
-> >
-> > In both cases the exact choice of 8192 is rather arbitrary, e.g. for
-> > commit buffers I think 1024 or 2048 would probably be a better
-> > default (this commit message is getting this commit close to the
-> > former, but I daresay it's already way above the average for git
-> > commits).
+> While we can't change this behavior for backwards compatibility, we can
+> add an option to suppress this behavior, so let's do so, and call it
+> "--no-commit-header".  Additionally, add the corresponding positive
+> option to switch it back on.
 > 
-> Yes, they are arbitrary within the context of these callers.
-> 
-> I do not think using STRBUF_HINT_SIZE macro in them is the right
-> thing to do at all, as there is no reason to think that the best
-> value for the write chunk sizes in these codepath has any linkage to
-> the best value for the read chunk sizes used by strbuf_read() at
-> all.  When benchmarking reveals that the best default size for
-> strbuf_read() is 16k, you'd update STRBUF_HINT_SIZE to 16k, but how
-> do you tell that it also happens to be the best write buffer size
-> for the cache-tree writeout codepath (answer: you don't)?
+> Note that this option doesn't affect the built-in formats, only custom
+> formats.  This is exactly the same behavior as users already have from
+> git log and is what most users will be used to.
 
-Being cc'd on this series, I feel compelled to respond with some review.
-But I'm in such agreement with what you said here (and downthread, and
-also in your response to patch 1) that I can only add a lame "me too". :)
+Thanks for working on this. It has bugged me for at least a decade. :)
+
+I do wish this had been made the default when we introduced
+--pretty=format, but I agree we can't just change it now. This could be
+something to keep in mind for future deprecation (or a large breaking
+version). People would have to start saying --commit-header now to
+future-proof themselves if they really want the current behavior. I'm OK
+to leave any plans / warnings like that for future work.
+
+The patch looks correct to me. I did have one small nit:
+
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index 5bf2a85f69..23388f36c3 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -1064,6 +1064,14 @@ ifdef::git-rev-list[]
+>  --header::
+>  	Print the contents of the commit in raw-format; each record is
+>  	separated with a NUL character.
+> +
+> +--no-commit-header::
+> +	Suppress the header line containing "commit" and the object ID printed before
+> +	the specified format.  This has no effect on the built-in formats; only custom
+> +	formats are affected.
+
+It wasn't immediately obvious to me what "custom formats" meant here. I
+don't think we use that term elsewhere, nor do we seem to have a
+succinct phrase for the concept. Maybe something like:
+
+  only custom formats (i.e., `--pretty=format:`) are affected.
+
+helps without making it too clunky?
 
 -Peff
