@@ -5,59 +5,58 @@ X-Spam-Level:
 X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DA42C07E99
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 13:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CE1FC07E99
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 14:46:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 39F7A6101D
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 13:56:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A32B61175
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 14:46:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229725AbhGLN7U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 09:59:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48964 "EHLO
+        id S235194AbhGLOtY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 10:49:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234776AbhGLN7R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 09:59:17 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 071A1C0613DD
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 06:56:29 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id w8-20020a0568304108b02904b3da3d49e5so14906670ott.1
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 06:56:29 -0700 (PDT)
+        with ESMTP id S230363AbhGLOtX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 10:49:23 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ED9BC0613DD
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 07:46:34 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id p12-20020a05683019ccb02904b7e9d93563so7029337otp.13
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 07:46:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=nkBt+KA+sFauV7ust+O08mSlLYtVbRyHy9SuOwHr3Vw=;
-        b=T3TS0R4UQb9KmpCaKnpudl2AGS1lSsWuu43z9rsjh3lD72zCwDUmZiXdCuV3y1r0ZO
-         EQ7j60CyWlXTv5MjuGbSRFewW/gHT0CH6zhWxHKbkSyynwPwXlvTmCWMFWkpGBvNmOrT
-         ABO7nWNWTR3lGmAfEVm6gQI+Wpi7iDW9/6GDDjUmwmN74FonOq2mu8/TmObEPV8vCe/F
-         k4aTYmWBwFuo5fZ8ju+MWeK8uxNJ4WAZZRVO0lZoTg+Sxx8iTMQGi8zXsWDdFgTykAN0
-         sp0t7FGJOEr8dL/bKYSJqAkKKazeaiDl2Lt6tT6ZI6HOSLW3VnCVg7I76F4AcsBKHmHZ
-         VX+A==
+        bh=NWo5LXrZDGbZPIAiyiVsO6TigYhEAlM2Q+i0pJ0xISA=;
+        b=kDuQ/iKlVrcVfeioEDrjkkxTkZU/BU2fUKi4dRKrRKa3HlCPSOI59JBYWduo7rVKHr
+         /sxH9TsE0HG+M/y1Wt3xlWoe2a1GCZTGNFlLoHzq+q6rI3E8hrJD/oWPjfRHJEFEoOvM
+         stpb8opolk2fNSajV2C3NAMi+6tPOAEoHXJ1K+Dxtg+Jx0iKC59XGp1vzAprFFWx+1U7
+         pLpApP5MU/goGj7TjL2RJFK3ilkqK0UhPfcIowGLW1VPbcAWQ4PQkqVkoM8JKHWS5N01
+         j195e+XU1SQRIUntpbQuvq9r+eDtH+QEaxDVsSVew7ziv+yR21F2dJl/SpikY8IrCoko
+         yUUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=nkBt+KA+sFauV7ust+O08mSlLYtVbRyHy9SuOwHr3Vw=;
-        b=pszEjBndeuIoOLcGNG75BA3X6+e+sfUOO4qgMet5r69eN85IfmrpaoJ2euxpXqinIH
-         C8VB85i/ctH1SWnVEgc4groC+kKli6OR30+yLFfA3JBdJpi0gvH7WyI6UEh52KOmLGk0
-         GM6qWg72oscmdqC3Deu07Ie/eeB4CpPCL4PubnuBkGgX/qHAH396UyvbNKp2NGlhC/Mt
-         IAD0rkt39b+/wJ+uokUMo9l4kRo9+B/hkM+om8v2qBbBRHCAh2Tx88NjUC1A2zY0eu5W
-         CCtIotvmfUkcqNt1jEDNcXaGvpjEx3D+GS5GfzE3tmhjMUWkn3LyXDVLaL9PynPrx/VI
-         sm6w==
-X-Gm-Message-State: AOAM530tFT4bN1buudv2oo36whPW8LQ3cK40MQQvz2IoDiOcC8W6pHkb
-        e0urQGPj8cAdTJr+ODjXkBA=
-X-Google-Smtp-Source: ABdhPJx0TInp4KCovbknChcdJajwJaaWndl+qHNGu3AOGptVIVuvBLo+abv/OmVtxrRj5KSdmUkx/w==
-X-Received: by 2002:a05:6830:2385:: with SMTP id l5mr581027ots.227.1626098188329;
-        Mon, 12 Jul 2021 06:56:28 -0700 (PDT)
+        bh=NWo5LXrZDGbZPIAiyiVsO6TigYhEAlM2Q+i0pJ0xISA=;
+        b=ihhJdEKEM5MTHLh7Vk7NlhQaa9jDVX1SSRTuUYuMOYU+Fv2Z35rxxtQ+CyX8T8SpCZ
+         RRKyU0+QDwnltPboIS2I1n//Ngtbf7RJlYAJ7lA9xUYaMZHRJN3oarHJcNnDgGaO/Tte
+         Qz+dNmR20K5KWdHJ+sl5GtL4rIeDfUqr+0M5OFXUHIMgTxi3M7Xlmvgoh+X/4cW5yASc
+         Xop0ayJW9R4s2FvgSk01PO0bFIGcgQpTbJREucpE1CuHhreWqaRjNcYo9se/GTjj2wTS
+         DnYOSCuebRTvuaFrc71uI0h5udRT13wvJjFTa6/6FU77Srwo5njn9SarCde3D8lzvctp
+         59Hw==
+X-Gm-Message-State: AOAM532KmN1RHkhtAtAocZRUPiQKS85hJ9fGWBJKp4iZjVsbq8WUKhCy
+        IpU/9wR8btGfF/MabwsHbbs=
+X-Google-Smtp-Source: ABdhPJyu1Ou8qjSmbvbuFnkagusNMn45JperuznAY64lugmoPODILdd9QMcJzVxicmGyq+jN6ryw4w==
+X-Received: by 2002:a9d:6b03:: with SMTP id g3mr4126413otp.187.1626101193691;
+        Mon, 12 Jul 2021 07:46:33 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:91f8:61a:4701:b6c? ([2600:1700:e72:80a0:91f8:61a:4701:b6c])
-        by smtp.gmail.com with ESMTPSA id g1sm3157591otq.22.2021.07.12.06.56.27
+        by smtp.gmail.com with ESMTPSA id i18sm109664oik.3.2021.07.12.07.46.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jul 2021 06:56:27 -0700 (PDT)
-Subject: Re: [PATCH v7 15/16] wt-status: expand added sparse directory entries
+        Mon, 12 Jul 2021 07:46:33 -0700 (PDT)
+Subject: Re: [PATCH v7 00/16] Sparse-index: integrate with status
 To:     Elijah Newren <newren@gmail.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
@@ -65,19 +64,18 @@ Cc:     Git Mailing List <git@vger.kernel.org>,
         Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
         Jeff Hostetler <git@jeffhostetler.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Derrick Stolee <derrickstolee@github.com>
 References: <pull.932.v6.git.1624931502.gitgitgadget@gmail.com>
  <pull.932.v7.git.1624932293.gitgitgadget@gmail.com>
- <717a3f49f97753149d5c435a83b3f1773dd4b1bb.1624932294.git.gitgitgadget@gmail.com>
- <CABPp-BE=qw9pO89hggUFbu=eovfL=7Os5BY8DZNd5Z=qU==wFg@mail.gmail.com>
+ <CABPp-BHqoJjF9f6NKZ8jjQdj1bgUNgrwek5jcnGTRk2m-m8dBg@mail.gmail.com>
+ <CABPp-BF2BLQm6864m+esquJ7og3fWHvTZeX_R-y4pnx9ApZ6XA@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <3cf96b5f-3a8d-c00c-5d9e-c7095c058059@gmail.com>
-Date:   Mon, 12 Jul 2021 09:56:25 -0400
+Message-ID: <6cdb4ba8-fe85-2a65-8e6c-74d3b5c3ef96@gmail.com>
+Date:   Mon, 12 Jul 2021 10:46:30 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BE=qw9pO89hggUFbu=eovfL=7Os5BY8DZNd5Z=qU==wFg@mail.gmail.com>
+In-Reply-To: <CABPp-BF2BLQm6864m+esquJ7og3fWHvTZeX_R-y4pnx9ApZ6XA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -85,44 +83,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/8/2021 9:03 PM, Elijah Newren wrote:
-> On Mon, Jun 28, 2021 at 7:05 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-...
->> +test_expect_success 'reset mixed and checkout orphan' '
->> +       init_repos &&
->> +
->> +       test_all_match git checkout rename-out-to-in &&
->> +
->> +       # Sparse checkouts do not agree with full checkouts about
->> +       # how to report a directory/file conflict during a reset.
->> +       # This command would fail with test_all_match because the
->> +       # full checkout reports "T folder1/0/1" while a sparse
->> +       # checkout reports "D folder1/0/1". This matches because
->> +       # the sparse checkouts skip "adding" the other side of
->> +       # the conflict.
+On 7/8/2021 9:16 PM, Elijah Newren wrote:
+> On Wed, Jun 30, 2021 at 7:32 AM Elijah Newren <newren@gmail.com> wrote:
+>>
+>> On Mon, Jun 28, 2021 at 7:04 PM Derrick Stolee via GitGitGadget
+>> <gitgitgadget@gmail.com> wrote:
+>>>
+>>> This is the first "payoff" series in the sparse-index work. It makes 'git
+>>> status' very fast when a sparse-index is enabled on a repository with
+>>> cone-mode sparse-checkout (and a small populated set).
+>>>
+> ...
+>>> Because the range-diff is a big difficult to read this time, I'll break the
+>>> changes down on a patch-by-patch basis.
 > 
-> The same issue I highlighted last time is still present.  If you
-> insert an "exit 1" right here, then run
->     ./t1092-sparse-checkout-compatibility.sh --ver --imm -x
-> until it stops, then
->     cd t/trash directory.t1092-sparse-checkout-compatibility/sparse-checkout
->     git ls-files -t | grep folder  # Note the files that are sparse
->     git reset --mixed HEAD~1
->     git ls-files -t | grep folder  # Note the files that are sparse --
-> there are some that aren't that should be
->     git sparse-checkout reapply
->     git ls-files -t | grep folder  # Note the files that are sparse
+> Thanks for doing this; it was helpful.
 > 
-> Granted, this is a bug with sparse-checkout without sparse-index, so
-> not something new to your series.  But since you are using comparisons
-> between regular sparse-checkouts and sparse-index to verify
-> correctness, this seems problematic to me.
+>> This is SUPER exciting.  I've only read the cover letter, but it
+>> strongly suggests you've not only handled all my feedback in previous
+>> rounds, but got things pretty solidly nailed away.  I'll try to make
+>> some time to go over it all soon.
+> 
+> You have indeed addressed nearly all my feedback in previous rounds,
+> and I found few problems with all the new code in this round.
+> Overall, this round is looking really good, though there are a couple
+> things I called out in comments on individual patches that I'll
+> summarize here:
 
-I'll add it to the pile, but I want to continue having this series
-focus on making the sparse-index work quickly without a change in
-behavior from a normal index. Changing the behavior of the sparse-
-checkout feature should be a separate series.
+This summary is nice. I will try to do a similar thing myself
+in the future.
+
+> Patch 9: a few minor suggestions for improving comments
+
+Done.
+
+> Patch 10: the new code is never triggered and probably should either
+> be dropped or made part of a later series if the later series needs
+> it.  Also, although it doesn't necessarily need to hold up this
+> series, I found a bug affecting sparse-checkouts with or without
+> sparse-index while trying to understand this patch.
+
+I checked and this patch is not necessary until the next series,
+so I will move it to that one.
+
+> Patch 12: the code was slightly confusing to me, but I found that
+> there seems to be an invariant it is based upon.  Adding an assert
+> with a comment or just a comment about this invariant might help make
+> the code more readable.
+
+The assert() plus a better comment makes this patch cleaner.
+
+> Patch 15: since the new tests in t1092 are written to compare
+> sparse-checkout and sparse-index, it seems we should investigate a bug
+> where the testsuite commands we invoke are giving incorrect behavior
+> in both sparse-checkout and sparse-index.
+
+I have made a note in an internal tracker to follow-up on this
+along with some other behavior things that currently exist in
+sparse-checkout as they should be pursued in a separate series.
+
+I'm not ignoring your comments, but I would like to keep these
+patches that change the underlying data structure from being
+conflated with behavior changes. The fact that I am discovering
+(and documenting in tests) the changes is only highlighting that
+they already exist.
 
 Thanks,
 -Stolee
