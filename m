@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46C9BC07E99
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA68FC11F66
 	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 11:47:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 246EF610E6
+	by mail.kernel.org (Postfix) with ESMTP id 8952161108
 	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 11:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230197AbhGLLtv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 07:49:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47526 "EHLO
+        id S231373AbhGLLt5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 07:49:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229910AbhGLLtv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 07:49:51 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7EC2C0613E8
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 04:47:02 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id v5so25205052wrt.3
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 04:47:02 -0700 (PDT)
+        with ESMTP id S230207AbhGLLtw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 07:49:52 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6DA3C0613DD
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 04:47:03 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id l18-20020a1ced120000b029014c1adff1edso14231384wmh.4
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 04:47:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=gcJvRQAqHD2kOOqwmBikpeCsu0xCI+Gpwxqt7a1E8WM=;
-        b=T33QOOK4igKSOKsbBnUkhnJCCKkEIlSJStH5Uvm4nv4ATUaKDotJnTnJYT/rhUv7uU
-         pdLCBs6EoiNgdevp71vRevwmtBLEpnZRldbDzk8OiMwsjrecYSeo9trA7w2w+bWMWSlV
-         qQPtP3c7SVDteNBYy5pmjPXvijkz0mjfbHmmRn9xuCMHsHM6Fe9OSBrnzTx+1/BhzAUk
-         RkEZnMeQtooBDbnYtQH9AxMD8WZgqidNWgrMRUbmlssBzzBL/TgsHwNygaaDWvy9n3Vt
-         9QGqqUPTpsSOZTXhPbrcl5uFm8SskWzOINU8m/ZjKY8v/+UtR+Chbl60f2PZnwZVj399
-         ux6Q==
+        bh=/+pHTUCgsn/eJhBt7TH6g2FT5CeygqVH9py2mRcVtgU=;
+        b=s8lbXqKgk2lpWjeDmZ+m+5sRqq/nDpFZL5bZUH8dM7XrtOTtTIHvXwrhfmO1ubXqIW
+         Bw/eiobMrFuuJL6rPAzCtxRCEapV43nlXvKn2aFgHieXMe9kUCf05oougYE98l809RIx
+         tiiSMliIgHxzdBm2o6MRPpsLL5I5PXG3KwQi3oAu8hHHWwU6tQBkkX263Jzg4ixFmuvk
+         2NzJ679Y1aVMupWn/9usYFUuNJD+ixC4o8/tBNUVUm7OeLpXq+qwSep5DTw6qtJY88WY
+         JXjB7BBcANCs9mF6cv7U3yX7XRUzeYQjf6qEMB4PQTJ8RiH1a7NmfyNDUmWFqJxlXudj
+         RyLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gcJvRQAqHD2kOOqwmBikpeCsu0xCI+Gpwxqt7a1E8WM=;
-        b=EmtM9Zg1sCpKg/IsGnMxZ4iHMSYrHFjdCRyeAtHetfxe7wWEl7y4qhpMi1pUvvuwum
-         /A56/pahEe9LGt7z25MskHROTnL64ST3EH8ReuXRzqu+PXiQI8907ee4v0Nu3K0+KwSH
-         xFy0iafr/RMGDIyXUcihbZ3nbQwRdbaC4Dx7HGzucWqDgXgw7VDqDbrJT3GIqWkGV2eq
-         oSeUddnwYUFiiUJlknmx68TgCZhxQcNtxGpsNlgPFYF91xnI5zSaQg6ycwW9ibrBuP46
-         HcPfZwnqvME6vlrXGiIqMBDHwWybhClECdPRaKZPuTN7wESWssm36ZdxV7CRQTZxoflJ
-         3hMA==
-X-Gm-Message-State: AOAM5332A8ZVc4rqQurtbjzJf2rzypgJoJwPA6IQswURkL7N43J6lxim
-        f6S439ehYcJqIZFo9q8yh0vfMS6EZxI=
-X-Google-Smtp-Source: ABdhPJzZGaXxm8pdJ5Q3gk2c3s8rq3d0AXHr52Yy7flf8/4iGCjeyb3SVdcKoQzSd8Pzp/ozjzWXiw==
-X-Received: by 2002:a5d:6b8e:: with SMTP id n14mr11376051wrx.96.1626090421472;
-        Mon, 12 Jul 2021 04:47:01 -0700 (PDT)
+        bh=/+pHTUCgsn/eJhBt7TH6g2FT5CeygqVH9py2mRcVtgU=;
+        b=Mnkq2rWvX/vwHAQutJMmYEDApceHxwJHgOO2bRCj2DsziKqzHnwuTX3EMjK8MBqDMK
+         Xp2MAjRlMlX4YiIEQxiSp5Ny8uT3nzcGVNGgMN+bunSn6+FtPaEMAMejysSWhOAC3hRX
+         +yHWEH4sV2kOCfTkjxwSq5BkruyGcN+vLRqvrP9Nkdn9RZ8O6hsh13SaQt1/RMxJFm6e
+         n5EVNYdSLYz3Mt+uDMm5vRHS+udM04zYYgOFw3/TD/mJ0NGxwo63dTRfUHdaLMXZgu2A
+         kLZOx/9E3qcGQjnVAI85scURUEbLYpANJwlyDDeSGFK2fIqrLiytQtr3IJ4mq614aE5n
+         4eQg==
+X-Gm-Message-State: AOAM5303BCI4BBKwaVEnfCTxUIOkACBOgzcz+QQuv4Nq4ej5T/llw6mF
+        k53aX0sz5LzFykRbJ000byUcE3ljdH0=
+X-Google-Smtp-Source: ABdhPJzKrST1MCnxzHoo06hkCxk1J1eUbCgAHlr/IW0+E6sIkewu/pr2d3gcv6XRMIBRS5ZCHeS9kQ==
+X-Received: by 2002:a1c:a903:: with SMTP id s3mr14054827wme.58.1626090422514;
+        Mon, 12 Jul 2021 04:47:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m6sm17034258wrw.9.2021.07.12.04.47.01
+        by smtp.gmail.com with ESMTPSA id p5sm14528891wrd.25.2021.07.12.04.47.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jul 2021 04:47:01 -0700 (PDT)
-Message-Id: <9aef8882bd1e5e9bdd401d92449190f462310e40.1626090419.git.gitgitgadget@gmail.com>
+        Mon, 12 Jul 2021 04:47:02 -0700 (PDT)
+Message-Id: <0dacc60bbcc9ae4376f58c967f43bd0c2396fd7e.1626090419.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.993.git.1626090419.gitgitgadget@gmail.com>
 References: <pull.993.git.1626090419.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 12 Jul 2021 11:46:41 +0000
-Subject: [PATCH 01/19] cat-file: handle trivial --batch format with
- --batch-all-objects
+Date:   Mon, 12 Jul 2021 11:46:43 +0000
+Subject: [PATCH 03/19] [GSOC] ref-filter: add obj-type check in grab contents
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,105 +82,92 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-The --batch code to print an object assumes we found out the type of
-the object from calling oid_object_info_extended(). This is true for
-the default format, but even in a custom format, we manually modify
-the object_info struct to ask for the type.
+Only tag and commit objects use `grab_sub_body_contents()` to grab
+object contents in the current codebase.  We want to teach the
+function to also handle blobs and trees to get their raw data,
+without parsing a blob (whose contents looks like a commit or a tag)
+incorrectly as a commit or a tag.
 
-This assumption was broken by 845de33a5b (cat-file: avoid noop calls
-to sha1_object_info_extended, 2016-05-18). That commit skips the call
-to oid_object_info_extended() entirely when --batch-all-objects is in
-use, and the custom format does not include any placeholders that
-require calling it.
+Skip the block of code that is specific to handling commits and tags
+early when the given object is of a wrong type to help later
+addition to handle other types of objects in this function.
 
-Or when the custom format only include placeholders like %(objectname) or
-%(rest), oid_object_info_extended() will not get the type of the object.
-
-This results in an error when we try to confirm that the type didn't
-change:
-
-$ git cat-file --batch=batman --batch-all-objects
-batman
-fatal: object 000023961a0c02d6e21dc51ea3484ff71abf1c74 changed type!?
-
-and also has other subtle effects (e.g., we'd fail to stream a blob,
-since we don't realize it's a blob in the first place).
-
-We can fix this by flipping the order of the setup. The check for "do
-we need to get the object info" must come _after_ we've decided
-whether we need to look up the type.
-
-Helped-by: Jeff King <peff@peff.net>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Hariom Verma <hariom18599@gmail.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-Acked-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/cat-file.c  | 13 +++++++------
- t/t1006-cat-file.sh | 22 ++++++++++++++++++++++
- 2 files changed, 29 insertions(+), 6 deletions(-)
+ ref-filter.c | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 5ebf13359e8..02461bb5ea6 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -512,12 +512,6 @@ static int batch_objects(struct batch_options *opt)
- 	if (opt->cmdmode)
- 		data.split_on_whitespace = 1;
+diff --git a/ref-filter.c b/ref-filter.c
+index 4db0e40ff4c..5cee6512fba 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1356,11 +1356,12 @@ static void append_lines(struct strbuf *out, const char *buf, unsigned long size
+ }
  
--	if (opt->all_objects) {
--		struct object_info empty = OBJECT_INFO_INIT;
--		if (!memcmp(&data.info, &empty, sizeof(empty)))
--			data.skip_object_info = 1;
--	}
--
- 	/*
- 	 * If we are printing out the object, then always fill in the type,
- 	 * since we will want to decide whether or not to stream.
-@@ -525,6 +519,13 @@ static int batch_objects(struct batch_options *opt)
- 	if (opt->print_contents)
- 		data.info.typep = &data.type;
+ /* See grab_values */
+-static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
++static void grab_sub_body_contents(struct atom_value *val, int deref, struct expand_data *data)
+ {
+ 	int i;
+ 	const char *subpos = NULL, *bodypos = NULL, *sigpos = NULL;
+ 	size_t sublen = 0, bodylen = 0, nonsiglen = 0, siglen = 0;
++	void *buf = data->content;
  
-+	if (opt->all_objects) {
-+		struct object_info empty = OBJECT_INFO_INIT;
+ 	for (i = 0; i < used_atom_cnt; i++) {
+ 		struct used_atom *atom = &used_atom[i];
+@@ -1371,10 +1372,13 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
+ 			continue;
+ 		if (deref)
+ 			name++;
+-		if (strcmp(name, "body") &&
+-		    !starts_with(name, "subject") &&
+-		    !starts_with(name, "trailers") &&
+-		    !starts_with(name, "contents"))
 +
-+		if (!memcmp(&data.info, &empty, sizeof(empty)))
-+			data.skip_object_info = 1;
-+	}
++		if ((data->type != OBJ_TAG &&
++		     data->type != OBJ_COMMIT) ||
++		    (strcmp(name, "body") &&
++		     !starts_with(name, "subject") &&
++		     !starts_with(name, "trailers") &&
++		     !starts_with(name, "contents")))
+ 			continue;
+ 		if (!subpos)
+ 			find_subpos(buf,
+@@ -1438,17 +1442,19 @@ static void fill_missing_values(struct atom_value *val)
+  * pointed at by the ref itself; otherwise it is the object the
+  * ref (which is a tag) refers to.
+  */
+-static void grab_values(struct atom_value *val, int deref, struct object *obj, void *buf)
++static void grab_values(struct atom_value *val, int deref, struct object *obj, struct expand_data *data)
+ {
++	void *buf = data->content;
 +
- 	if (opt->all_objects) {
- 		struct object_cb_data cb;
+ 	switch (obj->type) {
+ 	case OBJ_TAG:
+ 		grab_tag_values(val, deref, obj);
+-		grab_sub_body_contents(val, deref, buf);
++		grab_sub_body_contents(val, deref, data);
+ 		grab_person("tagger", val, deref, buf);
+ 		break;
+ 	case OBJ_COMMIT:
+ 		grab_commit_values(val, deref, obj);
+-		grab_sub_body_contents(val, deref, buf);
++		grab_sub_body_contents(val, deref, data);
+ 		grab_person("author", val, deref, buf);
+ 		grab_person("committer", val, deref, buf);
+ 		break;
+@@ -1678,7 +1684,7 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
+ 			return strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
+ 					       oid_to_hex(&oi->oid), ref->refname);
+ 		}
+-		grab_values(ref->value, deref, *obj, oi->content);
++		grab_values(ref->value, deref, *obj, oi);
+ 	}
  
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 5d2dc99b74a..18b3779ccb6 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -586,4 +586,26 @@ test_expect_success 'cat-file --unordered works' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'set up object list for --batch-all-objects tests' '
-+	git -C all-two cat-file --batch-all-objects --batch-check="%(objectname)" >objects
-+'
-+
-+test_expect_success 'cat-file --batch="%(objectname)" with --batch-all-objects will work' '
-+	git -C all-two cat-file --batch="%(objectname)" <objects >expect &&
-+	git -C all-two cat-file --batch-all-objects --batch="%(objectname)" >actual &&
-+	cmp expect actual
-+'
-+
-+test_expect_success 'cat-file --batch="%(rest)" with --batch-all-objects will work' '
-+	git -C all-two cat-file --batch="%(rest)" <objects >expect &&
-+	git -C all-two cat-file --batch-all-objects --batch="%(rest)" >actual &&
-+	cmp expect actual
-+'
-+
-+test_expect_success 'cat-file --batch="batman" with --batch-all-objects will work' '
-+	git -C all-two cat-file --batch="batman" <objects >expect &&
-+	git -C all-two cat-file --batch-all-objects --batch="batman" >actual &&
-+	cmp expect actual
-+'
-+
- test_done
+ 	grab_common_values(ref->value, deref, oi);
 -- 
 gitgitgadget
 
