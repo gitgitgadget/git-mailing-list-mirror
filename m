@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 584FEC07E99
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:56:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 736CAC07E9C
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:56:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 425F961154
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:56:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5FA03611C1
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:56:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235865AbhGLR67 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 13:58:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48104 "EHLO
+        id S235841AbhGLR7A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 13:59:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235817AbhGLR6x (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235771AbhGLR6x (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 12 Jul 2021 13:58:53 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7335C0613E9
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 10:56:04 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id r11so21535546wro.9
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 10:56:04 -0700 (PDT)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B94FC0613E5
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 10:56:05 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id r11so21535582wro.9
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 10:56:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=O0bk0uMoOfzc+R3V+w3r7b7PaKiQoEFR2JUhLyX6ccg=;
-        b=uEDf/4iETF/IUh/+8bjYd9pXMdTRe1gLO73uh8Gkr1z3eB6md6Yol9x9q/ErZMoLff
-         h0OGu32B/IPLd4EYyGKbayjlABy4HnOYBI6noeJa2PTkubfIGpshYMw2Xieu3dUHksFx
-         GttuaFqMdyxEPeD3y0hYj3Bue9z6StLIy191hmbVNOXfXrSt08MJiWJZCd8bI1DDZ0zh
-         2xPbYnzYQrQq2NWCOqttybgiGL7HvO7khWvtR8sBoyvpqIzSeuR7q2QfV7Dvp9jn2pdf
-         PgSDxWPkt92q2q0qUCTsKDPC3H0uM5JSGKoMz/okC37ZdEKSttWuKdIxCumxOaY+QfMP
-         Ux6g==
+        bh=/UNBWPl4t+GAChOB0nnPFbEBS+JT3xS246iyyM1PiPc=;
+        b=eC0F/VZYOno0LO4GCcfVz7p0+ShlSmWNpAKj/nX31/KRXDXu4yGfw1w+/iRAVvXNZk
+         FZp3deJeZh5W3hxNWW14X+zTRDtoLzcBx2vkgFP4iBEIo+uTsIUlOtWxA/dtOirjuVh1
+         jhh9ocqWGL/BzRAVWmN4GqzdMH5/USQuI+Cj9O6ntC5Uk6sEtJfzRZQL2CjWVETQv1KY
+         pegbnXcHH/iExjahf52tCs8DXaRYj070aPJdszabe/xkb3ptQh9EOxvIaQ0TLdsuj6p9
+         w0XDUc0gI0a/jwEr35y6n59SYgYCcO6VHFsU2q+r1tl9j1i1te8TsqmWOVcsqsbEVQnW
+         XeKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=O0bk0uMoOfzc+R3V+w3r7b7PaKiQoEFR2JUhLyX6ccg=;
-        b=O/wQGXdjZVSIAlzKkUHZzAnfVf/ZJfA9GR0d+6WiRkWNJnEfcP423UY3uFkd8o1Em2
-         qwMFxkt+UTFH2cnhJhA8VgR6JR6iWjx0PEABkFKympHYKvdj1z91MLEtlp9DlbFJhqh+
-         RsWfPgHkZYHmyYEClIkOkWyiTQjj8aBgTX0hS8eyxanFDDJnz5L7ffHiwXL7MvBqe6pb
-         ybRDaE6GrUhNM0lDXURHDNzti2rEv1ON1vXsdrez+o0V0fbGhRIULr9kcWp3Es+rIIpD
-         IdbxqaUekK4qsWhRs7vTzdEz2TS+xNcz+1pEaS/FWkPu8x5RXGh1q2JymY+NIMBcHEL5
-         QzeA==
-X-Gm-Message-State: AOAM533PZFjHqB8G2OKklASOrHPFC6GaWI5bzW9EAQZeQARxOGBdircL
-        ecpNb1NqTb79l5qK8fUbxde1NMHlQnA=
-X-Google-Smtp-Source: ABdhPJwxUQMvRlszSad4cKEd3WGGGCbYu0raHs3hJ5q5do6vKz751hapNbOH3OwxSsi1LyqyXiu2Mw==
-X-Received: by 2002:adf:9d8d:: with SMTP id p13mr246690wre.300.1626112563323;
+        bh=/UNBWPl4t+GAChOB0nnPFbEBS+JT3xS246iyyM1PiPc=;
+        b=dQKLNRBReQI4kRP9/5MC2aBFBzc1fj1XJYZue/aQE2rz2tp6UbfHUAumVLRj0N+gz4
+         aRgU7Tx5R1DRH5ZHPWyBtP9ZhtEywfaHFTbO4T7voF6ofLScH7BmYVhjl+c5oFgRkZC6
+         dorDRCZyPc6DrHEawBC6HXeZ9a+VoWnxx19pI31dQGs/wCWH+vQ+eURlZT/Y0Yi7blFp
+         XW0L4wGFnw4G0Io1KnkLH7cx8PUEKSk9MjjqadlEMkHFR8c8XeuEEenPwALeZwuzodRK
+         GTyVYqwzd6CNZA7e8Zp/ACbBAZ+908w3sSVMdoFGN1kjepYe7C/oHzH7HWxK8WRUrBmJ
+         EAMg==
+X-Gm-Message-State: AOAM533u39ErTkmNc9iK6EgCSBaFN7j4IIJezS//UCJqnU0bj5fyyOAv
+        obH9axvVQck4mh5XRFCr/kh9FAywPhc=
+X-Google-Smtp-Source: ABdhPJzHgzNqPQAMqDYu/ZfYqVPamHTb0AsqLLDZd/eoCT+ue4xQs3Sg5X3KTQ2s16UjGfgetBIXDw==
+X-Received: by 2002:a05:6000:1a87:: with SMTP id f7mr252739wry.172.1626112563852;
         Mon, 12 Jul 2021 10:56:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l24sm121207wmi.30.2021.07.12.10.56.02
+        by smtp.gmail.com with ESMTPSA id d18sm378656wmp.46.2021.07.12.10.56.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 12 Jul 2021 10:56:03 -0700 (PDT)
-Message-Id: <d67ad048b08aa168495fa89e007d905a79c1c5db.1626112556.git.gitgitgadget@gmail.com>
+Message-Id: <c0b0b58584c3abbd2a3ed29e5e7fb3df29b7db25.1626112556.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.932.v8.git.1626112556.gitgitgadget@gmail.com>
 References: <pull.932.v7.git.1624932293.gitgitgadget@gmail.com>
         <pull.932.v8.git.1626112556.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 12 Jul 2021 17:55:49 +0000
-Subject: [PATCH v8 08/15] unpack-trees: rename unpack_nondirectories()
+Date:   Mon, 12 Jul 2021 17:55:50 +0000
+Subject: [PATCH v8 09/15] unpack-trees: unpack sparse directory entries
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,55 +80,208 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-In the next change, we will use this method to unpack a sparse directory
-entry, so change the name to unpack_single_entry() so these entries
-apply. The new name reflects that we will not recurse into trees in
-order to resolve the conflicts.
+During unpack_callback(), index entries are compared against tree
+entries. These are matched according to names and types. One goal is to
+decide if we should recurse into subtrees or simply operate on one index
+entry.
+
+In the case of a sparse-directory entry, we do not want to recurse into
+that subtree and instead simply compare the trees. In some cases, we
+might want to perform a merge operation on the entry, such as during
+'git checkout <commit>' which wants to replace a sparse tree entry with
+the tree for that path at the target commit. We extend the logic within
+unpack_single_entry() to create a sparse-directory entry in this case,
+and then that is sent to call_unpack_fn().
+
+There are some subtleties in this process. For instance, we need to
+update find_cache_entry() to allow finding a sparse-directory entry that
+exactly matches a given path. Use the new helper method
+sparse_dir_matches_path() for this. We also need to ignore conflict
+markers in the case that the entries correspond to directories and we
+already have a sparse directory entry.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- unpack-trees.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ unpack-trees.c | 107 +++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 99 insertions(+), 8 deletions(-)
 
 diff --git a/unpack-trees.c b/unpack-trees.c
-index b113cc750f2..d26386ce8b2 100644
+index d26386ce8b2..62ccd5a0ff6 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -804,7 +804,7 @@ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
- 		BUG("We need cache-tree to do this optimization");
- 
- 	/*
--	 * Do what unpack_callback() and unpack_nondirectories() normally
-+	 * Do what unpack_callback() and unpack_single_entry() normally
- 	 * do. But we walk all paths in an iterative loop instead.
- 	 *
- 	 * D/F conflicts and higher stage entries are not a concern
-@@ -1075,11 +1075,11 @@ static struct cache_entry *create_ce_entry(const struct traverse_info *info,
-  * without actually calling it. If you change the logic here you may need to
-  * check and change there as well.
-  */
--static int unpack_nondirectories(int n, unsigned long mask,
--				 unsigned long dirmask,
--				 struct cache_entry **src,
--				 const struct name_entry *names,
--				 const struct traverse_info *info)
-+static int unpack_single_entry(int n, unsigned long mask,
-+			       unsigned long dirmask,
-+			       struct cache_entry **src,
-+			       const struct name_entry *names,
-+			       const struct traverse_info *info)
+@@ -1052,13 +1052,15 @@ static struct cache_entry *create_ce_entry(const struct traverse_info *info,
+ 	const struct name_entry *n,
+ 	int stage,
+ 	struct index_state *istate,
+-	int is_transient)
++	int is_transient,
++	int is_sparse_directory)
  {
- 	int i;
+ 	size_t len = traverse_path_len(info, tree_entry_len(n));
++	size_t alloc_len = is_sparse_directory ? len + 1 : len;
+ 	struct cache_entry *ce =
+ 		is_transient ?
+-		make_empty_transient_cache_entry(len, NULL) :
+-		make_empty_cache_entry(istate, len);
++		make_empty_transient_cache_entry(alloc_len, NULL) :
++		make_empty_cache_entry(istate, alloc_len);
+ 
+ 	ce->ce_mode = create_ce_mode(n->mode);
+ 	ce->ce_flags = create_ce_flags(stage);
+@@ -1067,6 +1069,13 @@ static struct cache_entry *create_ce_entry(const struct traverse_info *info,
+ 	/* len+1 because the cache_entry allocates space for NUL */
+ 	make_traverse_path(ce->name, len + 1, info, n->path, n->pathlen);
+ 
++	if (is_sparse_directory) {
++		ce->name[len] = '/';
++		ce->name[len + 1] = '\0';
++		ce->ce_namelen++;
++		ce->ce_flags |= CE_SKIP_WORKTREE;
++	}
++
+ 	return ce;
+ }
+ 
+@@ -1085,10 +1094,17 @@ static int unpack_single_entry(int n, unsigned long mask,
  	struct unpack_trees_options *o = info->data;
-@@ -1322,7 +1322,7 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
- 		}
+ 	unsigned long conflicts = info->df_conflicts | dirmask;
+ 
+-	/* Do we have *only* directories? Nothing to do */
+ 	if (mask == dirmask && !src[0])
+ 		return 0;
+ 
++	/*
++	 * When we have a sparse directory entry for src[0],
++	 * then this isn't necessarily a directory-file conflict.
++	 */
++	if (mask == dirmask && src[0] &&
++	    S_ISSPARSEDIR(src[0]->ce_mode))
++		conflicts = 0;
++
+ 	/*
+ 	 * Ok, we've filled in up to any potential index entry in src[0],
+ 	 * now do the rest.
+@@ -1118,7 +1134,9 @@ static int unpack_single_entry(int n, unsigned long mask,
+ 		 * not stored in the index.  otherwise construct the
+ 		 * cache entry from the index aware logic.
+ 		 */
+-		src[i + o->merge] = create_ce_entry(info, names + i, stage, &o->result, o->merge);
++		src[i + o->merge] = create_ce_entry(info, names + i, stage,
++						    &o->result, o->merge,
++						    bit & dirmask);
  	}
  
--	if (unpack_nondirectories(n, mask, dirmask, src, names, info) < 0)
-+	if (unpack_single_entry(n, mask, dirmask, src, names, info) < 0)
- 		return -1;
+ 	if (o->merge) {
+@@ -1222,16 +1240,71 @@ static int find_cache_pos(struct traverse_info *info,
+ 	return -1;
+ }
  
- 	if (o->merge && src[0]) {
++/*
++ * Given a sparse directory entry 'ce', compare ce->name to
++ * info->name + '/' + p->path + '/' if info->name is non-empty.
++ * Compare ce->name to p->path + '/' otherwise. Note that
++ * ce->name must end in a trailing '/' because it is a sparse
++ * directory entry.
++ */
++static int sparse_dir_matches_path(const struct cache_entry *ce,
++				   struct traverse_info *info,
++				   const struct name_entry *p)
++{
++	assert(S_ISSPARSEDIR(ce->ce_mode));
++	assert(ce->name[ce->ce_namelen - 1] == '/');
++
++	if (info->namelen)
++		return ce->ce_namelen == info->namelen + p->pathlen + 2 &&
++		       ce->name[info->namelen] == '/' &&
++		       !strncmp(ce->name, info->name, info->namelen) &&
++		       !strncmp(ce->name + info->namelen + 1, p->path, p->pathlen);
++	return ce->ce_namelen == p->pathlen + 1 &&
++	       !strncmp(ce->name, p->path, p->pathlen);
++}
++
+ static struct cache_entry *find_cache_entry(struct traverse_info *info,
+ 					    const struct name_entry *p)
+ {
++	struct cache_entry *ce;
+ 	int pos = find_cache_pos(info, p->path, p->pathlen);
+ 	struct unpack_trees_options *o = info->data;
+ 
+ 	if (0 <= pos)
+ 		return o->src_index->cache[pos];
+-	else
++
++	/*
++	 * Check for a sparse-directory entry named "path/".
++	 * Due to the input p->path not having a trailing
++	 * slash, the negative 'pos' value overshoots the
++	 * expected position, hence "-2" instead of "-1".
++	 */
++	pos = -pos - 2;
++
++	if (pos < 0 || pos >= o->src_index->cache_nr)
+ 		return NULL;
++
++	/*
++	 * Due to lexicographic sorting and sparse directory
++	 * entried ending with a trailing slash, our path as a
++	 * sparse directory (e.g "subdir/") and	our path as a
++	 * file (e.g. "subdir") might be separated by other
++	 * paths (e.g. "subdir-").
++	 */
++	while (pos >= 0) {
++		ce = o->src_index->cache[pos];
++
++		if (strncmp(ce->name, p->path, p->pathlen))
++			return NULL;
++
++		if (S_ISSPARSEDIR(ce->ce_mode) &&
++		    sparse_dir_matches_path(ce, info, p))
++			return ce;
++
++		pos--;
++	}
++
++	return NULL;
+ }
+ 
+ static void debug_path(struct traverse_info *info)
+@@ -1266,6 +1339,21 @@ static void debug_unpack_callback(int n,
+ 		debug_name_entry(i, names + i);
+ }
+ 
++/*
++ * Returns true if and only if the given cache_entry is a
++ * sparse-directory entry that matches the given name_entry
++ * from the tree walk at the given traverse_info.
++ */
++static int is_sparse_directory_entry(struct cache_entry *ce,
++				     struct name_entry *name,
++				     struct traverse_info *info)
++{
++	if (!ce || !name || !S_ISSPARSEDIR(ce->ce_mode))
++		return 0;
++
++	return sparse_dir_matches_path(ce, info, name);
++}
++
+ /*
+  * Note that traverse_by_cache_tree() duplicates some logic in this function
+  * without actually calling it. If you change the logic here you may need to
+@@ -1352,9 +1440,12 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
+ 			}
+ 		}
+ 
+-		if (traverse_trees_recursive(n, dirmask, mask & ~dirmask,
+-					     names, info) < 0)
++		if (!is_sparse_directory_entry(src[0], names, info) &&
++		    traverse_trees_recursive(n, dirmask, mask & ~dirmask,
++						    names, info) < 0) {
+ 			return -1;
++		}
++
+ 		return mask;
+ 	}
+ 
 -- 
 gitgitgadget
 
