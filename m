@@ -2,134 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4491FC07E99
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:54:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D582C07E99
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:55:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2CE6F61154
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:54:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5C85D61221
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:55:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235723AbhGLR50 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 13:57:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47770 "EHLO
+        id S235760AbhGLR6G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 13:58:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232912AbhGLR5Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 13:57:25 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A097C0613DD
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 10:54:37 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id l7so25874767wrv.7
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 10:54:37 -0700 (PDT)
+        with ESMTP id S233621AbhGLR6F (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 13:58:05 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44264C0613DD
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 10:55:16 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id w15-20020a056830144fb02904af2a0d96f3so19733963otp.6
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 10:55:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=0WQvthQKA6MJXu5gf5Tsd3IDqSdoweahUmDvbo3WIZQ=;
-        b=Ype8cVdTHEXwqmXFMNdNEien1rQKh1LIY+XdUElya1WuUKnvFnMLn0rEBNMCJkAMTx
-         WRjX/UefE6oUI75PjCJXQfswFiuAeyNGwsGCFSjPe45bVclmkPWiM8C/yLdCwwk9gcyY
-         JEhPSExm4t2VK3LW7TnUFZCJ8Z1SB/qJfZZZOgsPz/IcxQ9wfIUfLUiF4cGPPw4oDXpU
-         5bgSWUeS+dCrR90EIV52Jpt39bPNTveXpuAPg9tOve4P47Zmqh69TpTn8tqPQjwiJqRJ
-         CGk5yF8wFY9icnPuEEX3N5bgqgvqDnqHBvlwJIhfnjtMxtXKtc1P5gcvOCtlYWjrjLV9
-         2kRw==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=4E7FAdGVlTroxu1sP0Lpy8O0CveGia5bECpWOoeHN88=;
+        b=sYKgdN7RJKA2m3pdkEjYYbilzqFU+Xn504edOIeE9waGFBzk5WsoaYstIZXV8PYZZ/
+         aR5GhGt2x8mILqndkKsx15S/oEmAr5qD8DPZHGSmwrXK6EuF+Gro5X1RWhf10QT2qKuZ
+         ndHwJEEVPKpaYL0ILoa7694S2skO8NdvYH48jjTFv9X8gEfduFk4z8LRPl9yMwVq9jUq
+         +mEQmPQaHl0BcSxPGU6441p5oV7U2/3X7g/i1rE25IUcbcSMDAYHdBxUllrZMOjDnUMH
+         dkKYMw6zY/d8aq1p2okQgISSY3ALhyUN/Dbs7INadgqTefZWYtItDTs6RmJz5f1/hiM8
+         F/Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=0WQvthQKA6MJXu5gf5Tsd3IDqSdoweahUmDvbo3WIZQ=;
-        b=FRQfuVkUZ2jAhzThtIbhVJOcHUtwKFFKucngnK27qg2KIE00pipThqDKx1T+jPtqiv
-         Gep72vYbfchTAV3uvr6D10XifWYI+huAF9Zu2kilqLrMiPaJzm0kkSzazUsssW6Bip5f
-         yVq2G6U5gzWPXbMk9yu8EnvZwJ+pndRNgLiGzXxzeaVufn6uRJub9fYv7KDektwta7y1
-         WxvHX1wIpJLxjQgeEZbyBlTX83UsPHuz9s8q1fqTEbMKKS/NVZzY8FOayOSms6iivO4E
-         xV0XZLPjVS26dXpBf2hY9c1vduO20f0ApPy5TARNYZkrwiMBQCa47VwQztTnomtuUhvr
-         cIjQ==
-X-Gm-Message-State: AOAM531tIERIUeLYlYTrREOHILnto9NVXokUuNvjz9FtvKchYc0PUMxg
-        4xX7lAIQTXbm0cJW6vA4LOk=
-X-Google-Smtp-Source: ABdhPJxxznfdWOIFfN9TbO23uTUTukbP1Y+GVbyI73tjivY9Wd4GLL+gOfHUQ+FGLPXjPIL+wX3mhA==
-X-Received: by 2002:adf:b307:: with SMTP id j7mr196429wrd.243.1626112475733;
-        Mon, 12 Jul 2021 10:54:35 -0700 (PDT)
-Received: from [192.168.1.201] (136.2.7.51.dyn.plus.net. [51.7.2.136])
-        by smtp.googlemail.com with ESMTPSA id y23sm13523359wmi.28.2021.07.12.10.54.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jul 2021 10:54:35 -0700 (PDT)
-Subject: Re: [PATCH] pull: abort if --ff-only is given and fast-forwarding is
- impossible
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
-        avarab@gmail.com, felipe.contreras@gmail.com, newren@gmail.com
-References: <20210711012604.947321-1-alexhenrie24@gmail.com>
- <00e246b1-c712-e6a5-5c27-89127d796098@gmail.com> <xmqqpmvn5ukj.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <e63d65f4-048e-464b-439c-4f8f48e72216@gmail.com>
-Date:   Mon, 12 Jul 2021 18:54:34 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqpmvn5ukj.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=4E7FAdGVlTroxu1sP0Lpy8O0CveGia5bECpWOoeHN88=;
+        b=lMSRUwGeoTQISjsoFw/MafOPOrN+56tTx1aza929pWXrEc8F+jc6oTFn0Djjemp8Hz
+         J7FeR5cAo2N7VC55bLWZgA2KWVIRJDCKOwxbHkBLmLg+oHpQMlVii6bJ76QRf2Ac/8kN
+         iR/l9MKEuBckgMDyTgdaQrwfgjzdfG0JZmOtut1KQK4lJuLCrsBODZGdiXHAUchOvNoT
+         wfY9Txzz6Pc7+opP/qc0BNdINcl7h0Nwfl6Q6HNB80ApsHVdctjwyq7qchtFeVfnjcyL
+         KPjNNzeqNw82qPg2n3BuZ3Z2jT9XKXYrHH/RatfQNUKUJakUceAfY0GYiJdEnu2TLvfV
+         Rzrw==
+X-Gm-Message-State: AOAM531FQr8I92yJCJxdbXKTrZjZ1M4Gk1qwHyYZJvlitX35vhAM1OII
+        dPTzMaeCZgGNVkmYGoUNn7E=
+X-Google-Smtp-Source: ABdhPJxHTScVsJKMJw8bodjehgP3mIGik13QTMQ+7JurO+i/e23h4uBClanPNa1FxL5sabzGONDg5Q==
+X-Received: by 2002:a9d:630f:: with SMTP id q15mr163706otk.155.1626112515711;
+        Mon, 12 Jul 2021 10:55:15 -0700 (PDT)
+Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
+        by smtp.gmail.com with ESMTPSA id t207sm787567oif.27.2021.07.12.10.55.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jul 2021 10:55:15 -0700 (PDT)
+Date:   Mon, 12 Jul 2021 12:55:14 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Luke Shumaker <lukeshu@lukeshu.com>,
+        Junio C Hamano <gitster@pobox.com>
+Message-ID: <60ec8202213a1_a231f20891@natae.notmuch>
+In-Reply-To: <c530dedb-8cad-2a73-5b56-a32173046382@gmail.com>
+References: <20210710234629.17197-1-felipe.contreras@gmail.com>
+ <c530dedb-8cad-2a73-5b56-a32173046382@gmail.com>
+Subject: Re: [PATCH v2 0/2] extra: new concept of extra components
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/07/2021 18:08, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> Thanks for revising this patch, I like this approach much better. I do
->> however have some concerns about the interaction of pull.ff with the
->> rebase config and command line options. I'd naively expect the
->> following behavior (where rebase can fast-forward if possible)
->>
->>    pull.ff  pull.rebase  commandline  action
->>     only     not false                rebase
->>     only     not false   --no-rebase  fast-forward only
->>      *       not false    --ff-only   fast-forward only
->>     only     not false    --ff        merge --ff
->>     only     not false    --no-ff     merge --no-ff
->>     only       false                  fast-forward only
->>     only       false      --rebase    rebase
->>     only       false      --ff        merge --ff
->>     only       false      --no-ff     merge --no-ff
-> 
-> Do you mean by "not false" something other than "true"?
+Philippe Blain wrote:
+> Le 2021-07-10 =C3=A0 19:46, Felipe Contreras a =C3=A9crit=C2=A0:
 
-I mean pull.rebase is set to true/interactive/merges/preserve
+> > We might want to move more components from contrib to extra once thei=
+r
+> > tests are being run reliably.
+> > =
 
->  Are you
-> trying to capture what should happen when these configuration
-> options are unspecified as well (and your "not false" is "either set
-> to true or unspecified")?  I ask because the first row does not make
-> any sense to me.  It seems to say
-> 
->      "If pull.ff is set to 'only', pull.rebase is not set to 'false',
->      and the command line does not say anything, we will rebase".
+> > And we might move some components from the core which aren't really p=
+art
+> > of the core to extra, like gitk, git-gui, git-p4, and git-svn.
+> > =
 
-Yes because if pull.rebase is not false then the user wants to rebase.
+> > For now only contrib/completion and contrib/workdir are graduated to =
+the
+> > new area.
+> =
 
-> I do agree with you that the command line options
-> 
->      --ff-only
->      --ff (aka "allow ff")
->      --no-ff
-> 
-> should override pull.ff and
-> 
->      --rebase
->      --no-rebase (aka "merge")
-> 
-> should override pull.rebase configuration settings and also override
-> pull.ff set to 'only' (i.e. the user explicitly wants intregration
-> of the two histories and at that point "I usually just follow along"
-> which is "pull.ff=only" no longer applies).
+> ... when I read this I went "what is this workdir thing, it must date f=
+rom before
+> 'git worktree' was added". And combing through the history, it does. Th=
+e latest
+> commit to the script is e32afab7b0 (git-new-workdir: don't fail if the =
+target
+> directory is empty, 2014-11-26), which describes as v2.3.0-rc0~60^2. An=
+d
+> 'git worktree' was shipped in Git 2.5, 2015-07-27.
+> =
 
-I'd assumed --no-rebase just meant "merge respecting pull.ff instead of 
-rebasing" rather than "merge ignoring pull.ff instead of rebasing"
+> Looking at the tests, I see two uses of 'git-new-workdir':
+> $ git grep  -p 'new-workdir'
+> t1021-rerere-in-workdir.sh=3D28=3Dtest_expect_success SYMLINKS 'rerere =
+in workdir' '
+> t1021-rerere-in-workdir.sh:30:56:       "$SHELL_PATH" "$TEST_DIRECTORY/=
+../contrib/workdir/git-new-workdir" . work &&
+> t1021-rerere-in-workdir.sh:41:50:# For the purpose of helping contrib/w=
+orkdir/git-new-workdir users, we do not
+> t1021-rerere-in-workdir.sh=3D44=3Dtest_expect_failure SYMLINKS 'rerere =
+in workdir (relative)' '
+> t1021-rerere-in-workdir.sh:46:56:       "$SHELL_PATH" "$TEST_DIRECTORY/=
+../contrib/workdir/git-new-workdir" . krow &&
+> t3000-ls-files-others.sh=3D75=3Dtest_expect_success SYMLINKS 'ls-files =
+--others with symlinked submodule' '
+> t3000-ls-files-others.sh:87:57:         "$SHELL_PATH" "$TEST_DIRECTORY/=
+../contrib/workdir/git-new-workdir" ../sub sub &&
+> =
 
-Best Wishes
+> So they are not really testing this script per se, more like testing re=
+rere and ls-files
+> in a worktree created by 'git-new-workdir'. I do not think this enough =
+justification
+> to include 'git new-workdir' in 'extra/', since 'git worktree add' does=
+ the same thing
+> and is a builtin command. Even if its "BUGS" section in the doc says it=
+'s "in general [...]
+> still experimental", an experimental builtin is better than a 'contrib'=
+ script, no ?
 
-Phillip
+I agree.
+
+However, that points out to another problem: the tests should not be usin=
+g `git new-workdir`.
+
+I'm fine with dropping the last patch from the series.
+
+-- =
+
+Felipe Contreras=
