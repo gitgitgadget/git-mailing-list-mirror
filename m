@@ -5,64 +5,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76860C07E99
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1284DC07E9C
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:56:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6355D611C1
+	by mail.kernel.org (Postfix) with ESMTP id EA056611C1
 	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 17:56:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235812AbhGLR6y (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S235827AbhGLR6y (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 12 Jul 2021 13:58:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48104 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235801AbhGLR6v (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 13:58:51 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D15AEC0613DD
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 10:56:02 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id w13so11969402wmc.3
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 10:56:02 -0700 (PDT)
+        with ESMTP id S235772AbhGLR6x (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 13:58:53 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 570DEC0613DD
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 10:56:04 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id g16so16901624wrw.5
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 10:56:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=TF6o2tbbkpnAZzSCB71Xp9b8sR9m4FQKmWDgSsgnvdk=;
-        b=WDbHDurPjMRt+CnfLgfPx+bp/JnVbp65GhxryifOMR0mpOBg7Yinm0SxzBkfoTW6IJ
-         9vr2UbE1YnEYwQe/qD3OlxHWiMCpbFL8LBPUJmPhxZutSNSthdC7PU/2XBL28pZbZG5Z
-         IacK4fsOhT2OXmisj26bS/keBYLpiDg8SrJvFmjxKmQROdLk0UVaovd+CyrSVXK/K5zX
-         iE7W90bqStsYd/eooyo7ETYgcG8V0QdXjZczXnDPe6Yzx4upKAQHh1C2JDhbumIFyMEN
-         OsA4CR6WiSaqNcaxQf6mSok69gh9II9UZpDHmlon/SQLNd9FqvMAnVPwVAZ/j/L+lTQ8
-         R5gg==
+        bh=HDhgtJZsDGyJtVd/z+kWysbOePZ/rRg7q4HZzXdKryk=;
+        b=HdXsyucZHjP+cr7nmR/NXldpO1+GWP+nXJpaNzV216WAIj0A1S2fegcH8yx16SwdL5
+         WGD9k84c4Y5yBc7UDf0tKzgZiKiVGVJos4Ju9zemA3CPTBKWlwVOwcR597CLvY7cmQSI
+         WnuUVQufVc7nZHGl5cYolzVQxfiEXxBh1Xa6a+U9cclFaafX94Hlhpmz6aEfinjlWqgO
+         h9TqZgf4K2QwgTEF84r+T4VOOg9u6iYX+L5zDDbFQTvo8Au6Y4JN+Z5GJh1ad0i87La8
+         qRiIeJ2OfQGfTfXvd0LPQ6ptkNoIyPtr3BYMXwRSfWlm7/ZFndeZSLfeY2hBOX2ZoY0M
+         b7og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TF6o2tbbkpnAZzSCB71Xp9b8sR9m4FQKmWDgSsgnvdk=;
-        b=FLxv8Ctbw1k5+faHraiEozAw4KJKoLk2Etu25cWKK6nc6bvfkDSSdbei5W5ccRYWkP
-         Wbxay+n8cPCDpJB009OR9p+Vcnxn4A4OMT7PB42hLW365f8NYQ0ycWqBsL396TmPfw/0
-         1gY0rjDYbT6aXSkKL6CIWHYJa6yyEB8YhHwactBqed0MesxCEu7g0kXE6vdbQjz568Px
-         X7Ln8ptBcLfFm/dxWdJwWsPkTtOoLU+xDTjlH0Vi5jPdjZkeuJhXIm9ghARnBRq/Ikxt
-         4l2WFrOsTpMebydICWdc3U8wSaBUNAXzNmGVWJb4ZIK+Gdfmkpuk5h/bxqgiTMJihu9A
-         cprw==
-X-Gm-Message-State: AOAM532M0OByVpioceieIs4xXD2IL1F7u1kAEjl4QN58Pkn2rAoEpAw0
-        LsVwZPR1Yv2xEcqSoq3VltrXmjH3HnI=
-X-Google-Smtp-Source: ABdhPJxv6NqacRTcPH9HZak6H9/3n3hL8uMj+/N/AjIyNcKBURCQ+Bxg768+aGQBiZaJ/5rNCpY3UQ==
-X-Received: by 2002:a05:600c:1911:: with SMTP id j17mr447805wmq.172.1626112561464;
-        Mon, 12 Jul 2021 10:56:01 -0700 (PDT)
+        bh=HDhgtJZsDGyJtVd/z+kWysbOePZ/rRg7q4HZzXdKryk=;
+        b=ix9R0nVss65BZrlrScrwu3J0bYO6iMClZa8nxFcenY0qjWkafNmL42Z5hdPhgSb1Io
+         bH6+hv8NRxOS7DoQPjpNRObr8MlLaHKh51y1hyFK0cSf/f06UxgPn4MWQBAQkWpL3Hdz
+         5BMHgPESrXp4d44VqbY0ww9cZ/Q2dN3/lUFrwxmhs674tUIkHFqW0Mt62uIbYW2KyO5c
+         Fiidh6q4CM8Qe/xrnTbk578Aatryy3UAvfcgeYuf6GFRy1KzTguVUqBdXpBkHEqpPx10
+         t/aJVzt/DQhaV7SQhzF6Jfs4DVbYVOOUTIF08/ExCZf3hOYj25BqVsowxpPZUbc4xVLl
+         e7cA==
+X-Gm-Message-State: AOAM533QLhJqZZZdSuim92IobaMUD/W2WpvVcxb1RjHrv+DhiaR28AV7
+        oiErhqC4EefboOQLaAVW+UzSW3BqeSk=
+X-Google-Smtp-Source: ABdhPJxHC6lqZyaq4KhkaBFSOoBOhZxQQ5VPKBqvEK96QfDmEWr3XiDYsSIJgwJOgtDAwVzV7y1LrQ==
+X-Received: by 2002:adf:f90d:: with SMTP id b13mr241064wrr.336.1626112562737;
+        Mon, 12 Jul 2021 10:56:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y3sm13882007wrh.16.2021.07.12.10.56.00
+        by smtp.gmail.com with ESMTPSA id d9sm373606wrx.76.2021.07.12.10.56.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jul 2021 10:56:01 -0700 (PDT)
-Message-Id: <95ddd3abe4e5c85e4c911ba6c2d4bd86099085b4.1626112556.git.gitgitgadget@gmail.com>
+        Mon, 12 Jul 2021 10:56:02 -0700 (PDT)
+Message-Id: <988ddce4d45d994488ca074039a9b8a8ed2ca285.1626112556.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.932.v8.git.1626112556.gitgitgadget@gmail.com>
 References: <pull.932.v7.git.1624932293.gitgitgadget@gmail.com>
         <pull.932.v8.git.1626112556.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 12 Jul 2021 17:55:46 +0000
-Subject: [PATCH v8 05/15] t1092: add tests for status/add and sparse files
+Date:   Mon, 12 Jul 2021 17:55:48 +0000
+Subject: [PATCH v8 07/15] unpack-trees: compare sparse directories correctly
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,78 +80,67 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Before moving to update 'git status' and 'git add' to work with sparse
-indexes, add an explicit test that ensures the sparse-index works the
-same as a normal sparse-checkout when the worktree contains directories
-and files outside of the sparse cone.
+As we further integrate the sparse-index into unpack-trees, we need to
+ensure that we compare sparse directory entries correctly with other
+entries. This affects searching for an exact path as well as sorting
+index entries.
 
-Specifically, 'folder1/a' is a file in our test repo, but 'folder1' is
-not in the sparse cone. When 'folder1/a' is modified, the file is not
-shown as modified and adding it will fail. This is new behavior as of
-a20f704 (add: warn when asked to update SKIP_WORKTREE entries,
-2021-04-08). Before that change, these adds would be silently ignored.
+Sparse directory entries contain the trailing directory separator. This
+is important for the sorting, in particular. Thus, within
+do_compare_entry() we stop using S_IFREG in all cases, since sparse
+directories should use S_IFDIR to indicate that the comparison should
+treat the entry name as a dirctory.
 
-Untracked files are fine: adding new files both with 'git add .' and
-'git add folder1/' works just as in a full checkout. This may not be
-entirely desirable, but we are not intending to change behavior at the
-moment, only document it. A future change could alter the behavior to
-be more sensible, and this test could be modified to satisfy the new
-expected behavior.
+Within compare_entry(), it first calls do_compare_entry() to check the
+leading portion of the name. When the input path is a directory name, we
+could match exactly already. Thus, we should return 0 if we have an
+exact string match on a sparse directory entry. The final check is a
+length comparison between the strings.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 38 ++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ unpack-trees.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 0e71a623619..2269f44e033 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -254,6 +254,44 @@ test_expect_success 'add, commit, checkout' '
- 	test_all_match git checkout -
- '
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 87c1ed204c8..b113cc750f2 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -983,6 +983,7 @@ static int do_compare_entry(const struct cache_entry *ce,
+ 	int pathlen, ce_len;
+ 	const char *ce_name;
+ 	int cmp;
++	unsigned ce_mode;
  
-+test_expect_success 'status/add: outside sparse cone' '
-+	init_repos &&
-+
-+	# adding a "missing" file outside the cone should fail
-+	test_sparse_match test_must_fail git add folder1/a &&
-+
-+	# folder1 is at HEAD, but outside the sparse cone
-+	run_on_sparse mkdir folder1 &&
-+	cp initial-repo/folder1/a sparse-checkout/folder1/a &&
-+	cp initial-repo/folder1/a sparse-index/folder1/a &&
-+
-+	test_sparse_match git status &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>$1
-+	EOF
-+	run_on_sparse ../edit-contents folder1/a &&
-+	run_on_all ../edit-contents folder1/new &&
-+
-+	test_sparse_match git status --porcelain=v2 &&
-+
-+	# This "git add folder1/a" fails with a warning
-+	# in the sparse repos, differing from the full
-+	# repo. This is intentional.
-+	test_sparse_match test_must_fail git add folder1/a &&
-+	test_sparse_match test_must_fail git add --refresh folder1/a &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	test_all_match git add . &&
-+	test_all_match git status --porcelain=v2 &&
-+	test_all_match git commit -m folder1/new &&
-+
-+	run_on_all ../edit-contents folder1/newer &&
-+	test_all_match git add folder1/ &&
-+	test_all_match git status --porcelain=v2 &&
-+	test_all_match git commit -m folder1/newer
-+'
-+
- test_expect_success 'checkout and reset --hard' '
- 	init_repos &&
+ 	/*
+ 	 * If we have not precomputed the traverse path, it is quicker
+@@ -1005,7 +1006,8 @@ static int do_compare_entry(const struct cache_entry *ce,
+ 	ce_len -= pathlen;
+ 	ce_name = ce->name + pathlen;
  
+-	return df_name_compare(ce_name, ce_len, S_IFREG, name, namelen, mode);
++	ce_mode = S_ISSPARSEDIR(ce->ce_mode) ? S_IFDIR : S_IFREG;
++	return df_name_compare(ce_name, ce_len, ce_mode, name, namelen, mode);
+ }
+ 
+ static int compare_entry(const struct cache_entry *ce, const struct traverse_info *info, const struct name_entry *n)
+@@ -1014,6 +1016,16 @@ static int compare_entry(const struct cache_entry *ce, const struct traverse_inf
+ 	if (cmp)
+ 		return cmp;
+ 
++	/*
++	 * At this point, we know that we have a prefix match. If ce
++	 * is a sparse directory, then allow an exact match. This only
++	 * works when the input name is a directory, since ce->name
++	 * ends in a directory separator.
++	 */
++	if (S_ISSPARSEDIR(ce->ce_mode) &&
++	    ce->ce_namelen == traverse_path_len(info, tree_entry_len(n)) + 1)
++		return 0;
++
+ 	/*
+ 	 * Even if the beginning compared identically, the ce should
+ 	 * compare as bigger than a directory leading up to it!
 -- 
 gitgitgadget
 
