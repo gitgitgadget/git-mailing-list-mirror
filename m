@@ -2,116 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BB0CC07E96
-	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 23:50:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 143AFC07E99
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 04:42:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E4A1860FE6
-	for <git@archiver.kernel.org>; Sun, 11 Jul 2021 23:50:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6ABA60D07
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 04:42:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231318AbhGKXxh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Jul 2021 19:53:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51752 "EHLO
+        id S230008AbhGLEp1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 00:45:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229660AbhGKXxg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Jul 2021 19:53:36 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81D92C0613DD
-        for <git@vger.kernel.org>; Sun, 11 Jul 2021 16:50:48 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id bu12so30655507ejb.0
-        for <git@vger.kernel.org>; Sun, 11 Jul 2021 16:50:48 -0700 (PDT)
+        with ESMTP id S229379AbhGLEp1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 00:45:27 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB9C6C0613DD
+        for <git@vger.kernel.org>; Sun, 11 Jul 2021 21:42:38 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id m83so7562412pfd.0
+        for <git@vger.kernel.org>; Sun, 11 Jul 2021 21:42:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=OpNtP2YpDm1dvGCJqIe3bJWXS3O0G+zmFAMyOlwzbVY=;
-        b=nK+iBTJ+5m3CREfcwkDmDQCAajT722yBvJrtwkGMZKWEEEUU0MEkNZfrtjrwUmagJZ
-         opXfrJfdifoqIxFJvQZF2fwP97a7gck/nVGtWFHPU8rjkoIdsdBpZfhd9YvjBQV/EZUM
-         j7Zdw9bzX3PGjyE/Ea+3N4cQvQWNcp5b2E42bdoo+yw+nlj+RK6mP5OHH+yfhrYHkDPM
-         e1XDQv0l4fitRGrMiIHuoMKgVjL9IQ6iWe55aRtFlrzmTvNBtw65mvlg0IHOxUUC569p
-         HtlrSmRpm8E7xbNXH66wK3QFObzgZIq2oY+4x+/DkSvlVlNfA3ayybUHZFnN3gIvKlge
-         tmBw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=IkuPuQqL7VYseGffegfIiIYyrXNYAbLLunu4a8qSXyE=;
+        b=O0+m7FId7RB7dmhVtAUIl0PT6kVxu1/qV3sgrYXcYqo+ipeE5/y7p+s7lKeH9Jl+RC
+         UYHmgfp3LEBDqkJb4ASPUTdo5770M708lQgGRMvGgr5vqGnvoGl8058AvnSehQR5I6QO
+         oMXcPwUg05nbgts3Ah0fmlxp1QqZywJxuUrI4h6m5+LiG+3XCKtf+pkBWhhvHhT75Ikz
+         7eOJLEQQmzMJ1IQTjuDGV9HUbfrpjR5kZuq3SDTyshexGqTyoRqXPMJiCNQxfoxUMO1q
+         UuB2HMeydbi1NmxVRy4ap2O+uHA1wEw37dxP+3X5im8bYvJfzQZ6PDPi8YriQOKBvI3i
+         XadQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=OpNtP2YpDm1dvGCJqIe3bJWXS3O0G+zmFAMyOlwzbVY=;
-        b=WsSdFc7nJlJGM+kXhTQTAIZhnN/n+SDKOsbLLkMAF9v1uQqOy6Cs9J9Ssf4UgTeUhh
-         o4J0Dep4jErqXkDt6M6qzeEuLmHlxHB/Sw2REXsXDoRj5bfSosRp59jr9fuSOaH2ZDs8
-         29CYOSZHdEtj9NHCgaA49DdMVGW+vmzDqjYJsfcCM1DPEsMubq1tvbjBo2N3rWaMGpED
-         R1nSQblfEsyorMUF9Iu8fXfimslsb2GCOLF5TcAG6ZZ6UQjD/ejiX1i7CI8LeRzEHzLc
-         pqWytpb6Na9jp7zxbMvSfOw3qAH+8cgn3QKjRZnnrFM7s8tIBXBKp03jyUNqcs9tZ6m9
-         Pvcw==
-X-Gm-Message-State: AOAM530MaqIqSmc22TGuvSDBiq/QEO/LIaMuOzA8mf+mb9EOqHLtaCV8
-        jamRrw6xZmv5UGBjaNWuypc=
-X-Google-Smtp-Source: ABdhPJw5txLECidlnwRSJOIJ9VGjk+wORoHUVyBQJc+HcSXBS2pW1kjQOupgRTbotOPY198Q6UkXVg==
-X-Received: by 2002:a17:906:7fcd:: with SMTP id r13mr22314252ejs.547.1626047446948;
-        Sun, 11 Jul 2021 16:50:46 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id ce21sm3115067ejc.25.2021.07.11.16.50.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Jul 2021 16:50:46 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Sun Chao via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Sun Chao <16657101987@163.com>
-Subject: Re: [PATCH] packfile: enhance the mtime of packfile by idx file
-Date:   Mon, 12 Jul 2021 01:44:15 +0200
-References: <pull.1043.git.git.1625943685565.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <pull.1043.git.git.1625943685565.gitgitgadget@gmail.com>
-Message-ID: <874kd04dgo.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=IkuPuQqL7VYseGffegfIiIYyrXNYAbLLunu4a8qSXyE=;
+        b=qQuTe786x6mqNh1qhcIv4ec0IHYZqNT0Vk4loWQjcQ918Dm2HqXAWD4kvpS8Vpr4vb
+         cqx8KdUokJUiPZUc/6T2h5LdRcNgWnieJfYWwE/RtlLpqb4JDQ2L5uCmGnb91rjDD8Jd
+         bZLRFk349biuZZgRzRaSQPpFD4PkFb6eDcybNl0yFl2slZFU/0ro0/gQhqXmjJz8Nl2P
+         oZHJpEN4IlFzHt9YcNoJ3lCgkhERUW04IL2tEvJZc2EpKcg5xmAlaJtAI3qFpz478N/m
+         3FyJe8gyCsG6OanQ1wymaXa3+TDltZKQ2CU3CZktCxZQMm3X31d/yqf7j/J3cB6agELN
+         SjQA==
+X-Gm-Message-State: AOAM5331GMnaMe73CO/P1v+VNfA2FIDD2cDYjivtL19iCV8a4RgvQVan
+        0S8gtm83b2aNsfyh2Jtw1mU=
+X-Google-Smtp-Source: ABdhPJysjN3/nv8hFATMOZ/kRL0XW0yIu6pwUnPr3/bN13fJBGws97F+hnyBBlzlAtzXBK7LwlqyLQ==
+X-Received: by 2002:a05:6a00:99b:b029:312:d3c7:3637 with SMTP id u27-20020a056a00099bb0290312d3c73637mr51406359pfg.22.1626064958345;
+        Sun, 11 Jul 2021 21:42:38 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-20.three.co.id. [180.214.232.20])
+        by smtp.gmail.com with ESMTPSA id a16sm2646885pfo.66.2021.07.11.21.42.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 11 Jul 2021 21:42:37 -0700 (PDT)
+Subject: Re: [PATCH] test: pull: add test for disabling pull.ff=only
+To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20210711170703.651081-1-felipe.contreras@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <ef5ca2bf-3a7a-aa9e-40a2-6b1fe04e323e@gmail.com>
+Date:   Mon, 12 Jul 2021 11:42:34 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20210711170703.651081-1-felipe.contreras@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 12/07/21 00.07, Felipe Contreras wrote:
+> The advice clearly says it should be possible to override pull.ff=only
+> with --rebase:
+> 
+>    You can also pass --rebase, --no-rebase, or --ff-only on the command
+>    line to override the configured default per invocation.
+> 
+> Since the intended behavior of `git pull` is very easily forgotten let's
+> add a test to make sure it isn't.
+> 
 
-On Sat, Jul 10 2021, Sun Chao via GitGitGadget wrote:
+Is pull.ff=only only do fast-forward merge when pulling?
 
-> From: Sun Chao <16657101987@163.com>
->
-> Commit 33d4221c79 (write_sha1_file: freshen existing objects,
-> 2014-10-15) avoid writing existing objects by freshen their
-> mtime (especially the packfiles contains them) in order to
-> aid the correct caching, and some process like find_lru_pack
-> can make good decision. However, this is unfriendly to
-> incremental backup jobs or services rely on file system
-> cache when there are large '.pack' files exists.
->
-> For example, after packed all objects, use 'write-tree' to
-> create same commit with the same tree and same environments
-> such like GIT_COMMITTER_DATE and GIT_AUTHOR_DATE, we can
-> notice the '.pack' file's mtime changed, but '.idx' file not.
->
-> So if we update the mtime of packfile by updating the '.idx'
-> file instead of '.pack' file, when we check the mtime
-> of packfile, get it from '.idx' file instead. Large git
-> repository may contains large '.pack' files, but '.idx'
-> files are smaller enough, this can avoid file system cache
-> reload the large files again and speed up git commands.
->
-> Signed-off-by: Sun Chao <16657101987@163.com>
+> +test_expect_success 'pull allows non-fast-forward with "only" in pull.ff if --rebase' '
+> +	git reset --hard c1 &&
+> +	test_config pull.ff only &&
+> +	git pull --rebase . c3
+> +'
+> +
 
-Does this have the unstated trade-off that in a mixed-version
-environment (say two git versions coordinating writes to an NFS share)
-where one is old and thinks *.pack needs updating, and the other is new
-and thinks *.idx is what should be checked, that until both are upgraded
-we're effectively back to pre-33d4221c79.
+Better say 'pull allows non-fast-forward (using --rebase) regardless of 
+pull.ff=only config'
 
-I don't think it's a dealbreaker, just wondering if I've got that right
-& if it is's a trade-off you thought about, maybe we should check the
-mtime of both. The stat() is cheap, it's the re-sync that matters for
-you.
-
-But just to run with that thought, wouldn't it be even more helpful to
-you to have say a config setting to create a *.bump file next to the
-*.{idx,pack}.
-
-Then you'd have an empty file (the *.idx is smaller, but still not
-empty), and as a patch it seems relatively simple, i.e. some core.* or
-gc.* or pack.* setting changing what we touch/stat().
+-- 
+An old man doll... just what I always wanted! - Clara
