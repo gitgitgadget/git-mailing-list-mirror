@@ -2,84 +2,198 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92075C07E99
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 18:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76CC3C07E99
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 18:46:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74A5761164
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 18:25:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5DB10611F1
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 18:46:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234916AbhGLS17 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 14:27:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54770 "EHLO
+        id S236032AbhGLStF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 14:49:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230477AbhGLS16 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 14:27:58 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5454AC0613DD
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 11:25:09 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id y42so45174083lfa.3
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 11:25:09 -0700 (PDT)
+        with ESMTP id S236024AbhGLStB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 14:49:01 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCBB8C0613DD
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 11:46:12 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id 59-20020a9d0ac10000b0290462f0ab0800so19852858otq.11
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 11:46:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7UO4Y7+K/Oz7t1o5Bggn7/yjANmXs0fgmjZLirHVlAc=;
-        b=jzM+l/IL4fsCCurjSqNDJwd5Q16Mdts3ZWKt+GHpwPlBnm/Atp1RJ4hxuergboCjAc
-         Y9ZdjQKSBbTflLW/l6Fuu1Nmyuoi31O9w2WEd7XQV0vDPHyhykkiojWBCuszIpBb7gJV
-         +OIth2VS2ciIpMGj83y17VeHbCx+XVL17O9N/kgwr82E0pbMVz0pzCwkeSDbzrrImOYN
-         6jYcVy0uVcE9V1R+NeabUR7+yPlL0OdNHpZwrAbPHUGSoCy6NqJpkdEQPqvq5HudDN1S
-         ya8WSx7LIvezqjz0L7KOxVK4mPMofY2CHo1jvWHlYvjFOscYDIyAcPKKJqYPgwYnmHAR
-         KoSQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=dilQo0DL92/KL4Wbbo3XHjkVHsBsAsleQpKO9TdkyD4=;
+        b=Mfed6F8317imF+CrPNrXu877y1st66SjaQtZIA6SitP9DWzKD1OddYOvSFTDfXqZc3
+         Bj43XxTR1C1HaE8K0ZEx6Q8J+eSeKxPOfpEiYMVTYEjU3MOk4J27YW/e32anq3Tid+m+
+         XumqjDrnZ3gLsTwk2H04bxVRjWkV4ZxnoAKwyG/5RK/F5709sRRQLrqIciTPbY5l4dEx
+         4IfTM3il/c4BefBTYRBk7arriLhkJEsyAuuNWH1p6gLqtj0lFJOlFosG5fX0qAlYSNPo
+         h5u11670UcPR6yexwIsAJuO4gHqxU0Zzf3cNfijfd/210EsAhBYq2bqWRi8RANwejjQ/
+         hM4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7UO4Y7+K/Oz7t1o5Bggn7/yjANmXs0fgmjZLirHVlAc=;
-        b=Vd+l9v6AuPYf5UJHgCLzBmm00kk9iZH3DJn2qCHqED/Xb8aBus1OlS/7aBMbf3j3i9
-         NKSywi7mN1PJRbkbZHfb5W7MgFgZHMybOyStKR3S6lVvEoDdSZ42vn5twKbx9R1ciqf/
-         qCaVcU2ek4pOM8XS5AxVUcvkALLzl+KgeOjYfPqmfZzhTYojp7KlCtOdHpq4tYs1rHPH
-         vIAbJ6O6taSum9Yw528Fd+LwstJTcGR21X5odU2XJyKl1x6JAf1mT1WHT36flVf6tLLt
-         tIupn41/XmH9D7q4vnix8ngOs+DrwHNl8oPh8CiQ2ZZqIjBkwl65zsg54AxBIeDnsVVy
-         uQzg==
-X-Gm-Message-State: AOAM531NBhquHK3nkqnPS9Z91c1rsGkfkM54o0EyFHg8gVAlT1a9yL50
-        55CG7KGpnUNnCqChaJhb5TvkoktQRPCZXq3o5aI=
-X-Google-Smtp-Source: ABdhPJwRDqkVWZt9kDK0dNLK65zco2/7Ki9OHVrTLmusPUQ8TMnwBUGdTLAL4pdu88+//ipSp+d11n+6jqE4PRCFl8c=
-X-Received: by 2002:a05:6512:1381:: with SMTP id p1mr56489lfa.367.1626114307641;
- Mon, 12 Jul 2021 11:25:07 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=dilQo0DL92/KL4Wbbo3XHjkVHsBsAsleQpKO9TdkyD4=;
+        b=DGYAThvQPz/yjfIytwiLZ+6zF7iGwG1G5MVhqAZel7cZHdSEXJJWIdjZmUEFa7zqnR
+         tB8TPwK0OiF41UMSyTjAPFsgLZI0xzh0mW7KI1D1yJj/6YIqL/4ju5UYaEZAdeN9/jz0
+         QAWeTnp76qZrx479/6mhG7+eN+IGkEYJSCIQcOXQxsoO/BKWVkaxXq8CMDEZaB5ai0Vb
+         xjgzOH7BhtXiUpHf3iTw58Nc/bvdjIgXWEqlNsAD9g+xJFB3g7wZJM6nvqlvmLOujwMj
+         Ey3f0wq3Q3j6aMzvh4HhDHFKiOLogG3twrisSsvMFpw7VKnvg9TcgPyCRqdzrbV/Lqym
+         UtmQ==
+X-Gm-Message-State: AOAM5307yc7/FOERwhZ9yimDZqisTBe4EtroaQXK7nWYBS8KrL2j1NG5
+        HH6dQBtbFOKcUAxFtCB1YKY=
+X-Google-Smtp-Source: ABdhPJz0w0sj9mGXiAifyLTPZgo6rC/f51vHSbnkuQQYvXGQI2w2zmwybq+GQv2UEdvTsy6IOUhTOA==
+X-Received: by 2002:a05:6830:2097:: with SMTP id y23mr326188otq.363.1626115571995;
+        Mon, 12 Jul 2021 11:46:11 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:91f8:61a:4701:b6c? ([2600:1700:e72:80a0:91f8:61a:4701:b6c])
+        by smtp.gmail.com with ESMTPSA id k14sm2675520oon.5.2021.07.12.11.46.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Jul 2021 11:46:11 -0700 (PDT)
+Subject: Re: [PATCH 0/5] Sparse index: integrate with commit and checkout
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.973.git.1624932786.gitgitgadget@gmail.com>
+ <CABPp-BF_i1QRCXaeKzqoc6Q2=3un-wku7aKUEdBbXfeVfTG8xg@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <b362c428-eec9-39e3-55a0-0738431e1d98@gmail.com>
+Date:   Mon, 12 Jul 2021 14:46:10 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <20210711012604.947321-1-alexhenrie24@gmail.com>
- <00e246b1-c712-e6a5-5c27-89127d796098@gmail.com> <xmqqpmvn5ukj.fsf@gitster.g>
- <CABPp-BERS0iiiVhSsSs6dkqzBVTQgwJUjjKaZQEzRDGRUdObcQ@mail.gmail.com> <CAMMLpeRX3iMwT9NJ+ULHgAhS3A=nAybgDYFHomkY3sif-H+F4g@mail.gmail.com>
-In-Reply-To: <CAMMLpeRX3iMwT9NJ+ULHgAhS3A=nAybgDYFHomkY3sif-H+F4g@mail.gmail.com>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Mon, 12 Jul 2021 12:24:56 -0600
-Message-ID: <CAMMLpeSBgURtX+MKbABKdmFuuoTA-Dw3h8uONwNeiP5aqcnfpA@mail.gmail.com>
-Subject: Re: [PATCH] pull: abort if --ff-only is given and fast-forwarding is impossible
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CABPp-BF_i1QRCXaeKzqoc6Q2=3un-wku7aKUEdBbXfeVfTG8xg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 12, 2021 at 12:20 PM Alex Henrie <alexhenrie24@gmail.com> wrote:
->
-> And it's not really necessary to make
-> --ff-only imply --no-rebase because we're going to make `git pull`
-> handle --ff-only itself without invoking `git merge`.
+On 7/9/2021 5:26 PM, Elijah Newren wrote:
+> On Mon, Jun 28, 2021 at 7:13 PM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+...
+> I've read over these patches and didn't find any problems in them in
+> my reading; however, since it builds upon ds/status-with-sparse-index
+> (v7)...
+> 
+> I decided to retry some of my ideas and testing on Patch 10/16 of v7,
+> over at https://lore.kernel.org/git/CABPp-BHwTAKwFiWQ0-2P=_g+7HLK5FfOAz-uujRjLou1fXT3zw@mail.gmail.com/
+> 
+> It turns out that the block you added there is now triggered by t1092
+> after this series, and the testcase won't pass without that block.  It
+> might be clearer to move that code fragment, or perhaps the whole
+> patch, into this series...though the code fragment as is has
+> introduced a bug.  If you take t1092 test 12 ("diff with
+> directory/file conflicts") and modify it so that before the
+> 
+>     git checkout df-conflict
+> 
+> invocation from sparse-index, you first run:
+> 
+>     $ git sparse-checkout disable
+>     $ echo more stuff >>folder1/edited-content
+>     $ git add -u
+>     $ git diff HEAD   # note the changes
+>     $ git sparse-checkout init --cone --sparse-index
+>     $ git diff HEAD   # note the changes are still there
+>     $ git checkout df-conflict  # no error??  What about the
+> conflicting changes?
+>     $ git diff HEAD
+> 
+> then the last command will show that the staged changes from before
+> the commit have simply been discarded.  In short, this makes the
+> series behave like --force was passed with sparse directory entries,
+> when --force wasn't passed.
+> 
+> So we've still got some directory/file conflict issues.
 
-Sorry, I misspoke. I was thinking of the case where fast-forwarding is
-impossible. If fast-forwarding is possible, --ff-only already
-effectively implies --no-rebase, and we might want to make that
-explicit in the documentation.
+You are absolutely right that this seems strange. In fact, there
+is a behavior change during 'git checkout' for sparse-checkouts
+in general, but also my sparse-index change creates an additional
+change in this case.
 
--Alex
+Here is a test that demonstrates the issue:
+
+test_expect_success 'staged directory/file conflict' '
+	init_repos &&
+
+	test_sparse_match git sparse-checkout disable &&
+	write_script edit-contents <<-\EOF &&
+	echo text >>folder1/edited-content
+	EOF
+	run_on_all ../edit-contents &&
+
+	test_all_match git add folder1/edited-content &&
+	test_all_match git diff HEAD &&
+	git -C sparse-checkout sparse-checkout init --cone --no-sparse-index &&
+	git -C sparse-index sparse-checkout init --cone --sparse-index &&
+	test_all_match git diff HEAD &&
+
+	# Sparse-checkouts handle this conflict differently than
+	# full checkouts, as they consider the file "folder1" to
+	# be deleted in favor of the staged file
+	# "folder1/edited-content".
+	test_sparse_match git checkout df-conflict &&
+	test_sparse_match git diff HEAD
+'
+
+The sparse-index case drops all staged changes during the
+'git checkout df-conflict' command, so the test fails on
+that line.
+
+That final diff looks like this in the sparse-checkout
+repo (no sparse index):
+
+diff --git a/folder1 b/folder1
+deleted file mode 100644
+index d95f3ad..0000000
+--- a/folder1
++++ /dev/null
+@@ -1 +0,0 @@
+-content
+diff --git a/folder1/edited-content b/folder1/edited-content
+new file mode 100644
+index 0000000..8e27be7
+--- /dev/null
++++ b/folder1/edited-content
+@@ -0,0 +1 @@
++text
+
+This is a strange case in that we have a staged tree that is
+outside of the sparse-checkout cone. When running the 'git
+checkout df-conflict' command, the twoway_merge() method
+receives the following values:
+
+ current: "folder1/" (tree OID)
+ oldtree: "" (NULL OID)
+ newtree: "folder1" (blob OID)
+
+Is this value for 'oldtree' correct? It seems strange to me,
+so I'll look further into it.
+
+Clearly, the resolution that was presented in the previous
+patch was incorrect so I will try to understand this
+situation better.
+
+Further, I expect it to be simpler to modify the behavior
+here to match the full checkout case than to make the
+sparse-index case match the normal sparse-checkout case.
+The "natural" thing would be to keep the staged "folder1/"
+directory, but that would present as adding all contained
+content, not just the single staged entry.
+
+Thanks,
+-Stolee
