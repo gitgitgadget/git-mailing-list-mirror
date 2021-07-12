@@ -2,95 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38ED4C07E99
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 13:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F1CBC07E99
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 13:52:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 216BD6108B
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 13:51:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 208DD61003
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 13:52:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234005AbhGLNy0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 09:54:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47858 "EHLO
+        id S233949AbhGLNzf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 09:55:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231536AbhGLNy0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 09:54:26 -0400
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 273A9C0613DD
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 06:51:38 -0700 (PDT)
-Received: by mail-il1-x12d.google.com with SMTP id m3so12861159ilj.8
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 06:51:38 -0700 (PDT)
+        with ESMTP id S230518AbhGLNzf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 09:55:35 -0400
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFE59C0613DD
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 06:52:45 -0700 (PDT)
+Received: by mail-qv1-xf32.google.com with SMTP id o9so2317663qvu.5
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 06:52:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=e/fAeAjeV7ThSBnqRbVcW9Wb0IpH/QSnM98C3L0C/Cw=;
-        b=LbWK4fJlLlMi22YeyShjU0P2CqpfCetJSXjCv6RwVoyqlRv1jzcHun/twGqmc5HjqO
-         HaJnwEdDj7eOP7Zi8lZ1wGGOI2gIwPxeOXlNWdcPBosfVfPSTYpQkShGPiWMJbNRvpjO
-         46AWE9ZPSpau87Qr5j1LskvJYQ6LMCk87Z+JflGr2bEMxlJFfRJpWm3LiijFz7TKZjyT
-         7Aac+JqV4XheSbYBwK5r8YDN49sx7uQ4wdxGR/Sl0jNnlD+ndBFnEacCHo1IHLB9R6wh
-         hz1jRbgK+ynxreZpzmd6wyRwX+Eg4Ca5LJnAy+oxeTxQXwyz4MlAYmRQqjYVhkvsWnTK
-         XweQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Fa+JgJq5Hc90jK7ihISSTZ1ycEIWnqoadSwRNmFg568=;
+        b=V/D2vIN8q8TxJwMYnybBdblfP1/0paoIkVH8xQpODvOyR1hiel8zxlNPqgVSJ1HvIs
+         ppedT/1h+K3fQ/I4u3EreENQx8I6cqf6AO5S+A3kC6BCjxNVqnVFMx7UsGur19KPqu6Z
+         AETxxEsJ1gBr/fRhB8wIJa25ZQzkbTyaVMHwaiOGRoZRdl9wX8jWTlZgVMNP2HVHIALQ
+         f/Elv0boezqbl5uz7taTxBAq0FbYFBo+0TlIwoMO80rbQC908X0XCd12fSJMofmcNpy+
+         MCe+VPnTqBUGHzHx1fnpx/uiGj7Q3o8SqGumzu5vHT95pOaSQ1QF79AhPugbX3lAAcbT
+         K62Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=e/fAeAjeV7ThSBnqRbVcW9Wb0IpH/QSnM98C3L0C/Cw=;
-        b=tooxfogXOB7AAWyfA7RNKtE3AHYqRJJcwxz6QSYcNDwc2Ro/9DnYi2NXwnfaayEzhM
-         HTWRmJl20g4a3H2M8Uk8cfqSuEu0IFE4eiDFqhj8RuyOMpXWFx7tuXqWlkFrjTtUJB7K
-         iuVyxhcuAxB5Y5N1qnI4ffPEjaun1HsHMM4J4m4yNvtRUEisJpJgK/ew4piNgSJlEWom
-         kqKG27/FYZJbWF29/frb3c3HUxo5wU+RUe5LY4TPKR5zVx0JQeG3Rw0wBiE2x49pOiwf
-         OHTR0p5HgQpXPXOYEu8r1NMf8HnDSBWvz8sI572ut4d4BJ8txURyNgqT01MWEa/LLDbN
-         v6yQ==
-X-Gm-Message-State: AOAM533RYn8NwkEQhYdAPy4wF3r3Ptorb6bwQscZl8TSISDrN5ckq2Gc
-        nyeqTC037ABrVxtGk3+8opzVJDmOhmBagafaRt8=
-X-Google-Smtp-Source: ABdhPJxYQQ4mNw77mE0sj2Cw2EKw5SbPG5TrB7FBa2evsGi9tXoSM1poBTQvcrvuqxRnCgy/VEVu59v+NTXga9RgUrA=
-X-Received: by 2002:a92:dd02:: with SMTP id n2mr3094923ilm.259.1626097897696;
- Mon, 12 Jul 2021 06:51:37 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Fa+JgJq5Hc90jK7ihISSTZ1ycEIWnqoadSwRNmFg568=;
+        b=pPx+US3/ZwW8HJdbkiIxR2Knm7tZRQ0Wy9oi/4I8BgQnPKc5QTz6vUE4tvHn04yGHb
+         3Q/CCdlbxrTsZkJhA501EBDic5MJfBXHUDqhwUF4LXAT4taKVgghxD0nvaEPEte84Hyb
+         hFpSWsQ79pivmvpd6e+qQf69mTS9r+VDk98Pm/zQ/a2FaY09tZ2JifoU7QAb6wqo0Tzi
+         OSMpWvmNBTplWHJLpYEFLFZfqa2d/95gaEZaHTHt8bIjWVFehHLE7OlswI0i4RTiiS+4
+         izShr611lQ6CoVz/TWojnbprpBLioQR+7XT+qQ0x7A3KLWJ+x2kHY48i/TiLP+oNpqrl
+         v4mQ==
+X-Gm-Message-State: AOAM530+B52UA4gMC1U2nks7QjX5smSz5eiQJFid6RABsIWU9rZUqFE9
+        56ZyTZ8cmAM2FYCMxCkThIM=
+X-Google-Smtp-Source: ABdhPJxZ0fb61veUW6zU2JaFGTwNIbjuRHFe/5T4rYhRmLaKG94Q3O2USIOXqRZdE2zsd4Jt9wcqtA==
+X-Received: by 2002:a05:6214:6a1:: with SMTP id s1mr14706580qvz.54.1626097965019;
+        Mon, 12 Jul 2021 06:52:45 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:91f8:61a:4701:b6c? ([2600:1700:e72:80a0:91f8:61a:4701:b6c])
+        by smtp.gmail.com with ESMTPSA id f36sm5604903qtb.40.2021.07.12.06.52.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Jul 2021 06:52:44 -0700 (PDT)
+Subject: Re: [PATCH v7 12/16] diff-lib: handle index diffs with sparse dirs
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.932.v6.git.1624931502.gitgitgadget@gmail.com>
+ <pull.932.v7.git.1624932293.gitgitgadget@gmail.com>
+ <f83aa08ff6b0fd18d6f9f3ce5ee993523a7f1759.1624932294.git.gitgitgadget@gmail.com>
+ <CABPp-BFaWxuBTgztpmso9zCOz3AC62HQuAi5XVAEwsfevYv8gw@mail.gmail.com>
+ <CABPp-BHnjB5H4cJ_mx=3PNVss0Z+d-aEE5Hw4AcuLTC0PC+3qg@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <bfc422fd-7040-fed4-3284-8ea66b33bcd1@gmail.com>
+Date:   Mon, 12 Jul 2021 09:52:41 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <pull.993.git.1626090419.gitgitgadget@gmail.com>
- <70e83e4ba3cc8a55bb8d90cb2c581cd04ac116d4.1626090419.git.gitgitgadget@gmail.com>
- <CAP8UFD0vHw8cK90RbOUcrAcxNKiHVTMX0VEiK8+MNyHH0CNm4A@mail.gmail.com> <CAP8UFD1NfCXDVwaVWKvTWofFHbLee=JRzr4sQBecMMaqi0eWBw@mail.gmail.com>
-In-Reply-To: <CAP8UFD1NfCXDVwaVWKvTWofFHbLee=JRzr4sQBecMMaqi0eWBw@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Mon, 12 Jul 2021 21:51:47 +0800
-Message-ID: <CAOLTT8QzBQOJahy2_MX_ShwErfxgwfGByfsjdZBy2C=qStCswA@mail.gmail.com>
-Subject: Re: [PATCH 14/19] [GSOC] cat-file: reuse ref-filter logic
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CABPp-BHnjB5H4cJ_mx=3PNVss0Z+d-aEE5Hw4AcuLTC0PC+3qg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B47=E6=9C=
-=8812=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=889:26=E5=86=99=E9=81=93=
-=EF=BC=9A
->
-> >
-> > I wonder if the above function and some of the tests below could be
-> > introduced in a preparatory patch before this one. It could help check
-> > that reusing ref-filter doesn't change the behavior with some atoms
-> > that were previously supported or rejected. Of course if some atoms
-> > are now failing or are now supported, then it's ok to add new tests
-> > for these atoms in this patch.
->
-> For example maybe some of the tests could be introduced earlier when
-> the reject_atom() function is introduced.
+On 7/8/2021 7:51 PM, Elijah Newren wrote:
+> On Thu, Jul 8, 2021 at 4:10 PM Elijah Newren <newren@gmail.com> wrote:
+>>
+>> On Mon, Jun 28, 2021 at 7:05 PM Derrick Stolee via GitGitGadget
+...
+>>> +       /*
+>>> +        * If both are sparse directory entries, then expand the
+>>> +        * modifications to the file level.
+>>> +        */
+>>> +       if (old_entry && new_entry &&
+>>> +           S_ISSPARSEDIR(old_entry->ce_mode) &&
+>>> +           S_ISSPARSEDIR(new_entry->ce_mode)) {
+>>> +               diff_tree_oid(&old_entry->oid, &new_entry->oid, new_entry->name, &revs->diffopt);
+>>> +               return 0;
+>>> +       }
+>>> +
+>>>         if (get_stat_data(istate, new_entry, &oid, &mode, cached, match_missing,
+>>>                           &dirty_submodule, &revs->diffopt) < 0) {
+>>>                 if (report_missing)
+>>
+>> Love the simpler patch.
+>>
+>> I'm curious about the case where S_ISSPARSEDIR(old_entry->ce_mode) !=
+>> S_ISSPARSEDIR(new_entry->ce_mode), though; how is that handled?
+> 
+> Digging a little deeper, it appears that we could add this just before
+> your new if-block:
+> 
+>     assert(S_ISSPARSEDIR(old_entry->ce_mode) ==
+>            S_ISSPARSEDIR(new_entry->ce_mode));
+> 
+> And the code still functions, while that also removes some of the
+> surprise factor.  I'm guessing that the difference between "folder1"
+> and "folder1/" cause us to never try to directly compare a file to a
+> directory...but if that's accurate, a comment of some effect might
+> help make this code be a little clearer and make readers less likely
+> to wonder why you need to check that both old and new are sparse
+> directories.
 
-Yeah, move it to "[GSOC] ref-filter: add %(rest) atom"  is better.
+I was surprised that this worked, because my patch conditioned on
+old_entry and new_entry being non-NULL. But of course show_modified()
+requires them to be non-NULL. That can be further simplified.
 
-Thanks.
---
-ZheNing Hu
+Adding the assert helps demonstrate this expectation, but also I will
+expand upon the comment.
+
+Thanks,
+-Stolee
