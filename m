@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 859E3C07E9C
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 11:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86332C07E99
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 11:47:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6436660C3F
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 11:47:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 730C060C3F
+	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 11:47:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233265AbhGLLuO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 07:50:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47564 "EHLO
+        id S233221AbhGLLuP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 07:50:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232274AbhGLLuA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 07:50:00 -0400
+        with ESMTP id S232683AbhGLLuB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 07:50:01 -0400
 Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F51BC0613E5
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 04:47:10 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id l18-20020a1ced120000b029014c1adff1edso14231608wmh.4
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 04:47:10 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73A19C0613DD
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 04:47:12 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id j34so11193909wms.5
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 04:47:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=JdMB+nC1v2FmjNWGvDZwXup1hlHUCHNCdjCOeatBTFA=;
-        b=YoYXAjSLlaq2rYL2h8gDjeF+Q5Qr/i0OvE6Be1FXvkRIoOa1jbkpKMvL40O3jhBrDQ
-         xhbdGRZzVfMlMZfAR0l89Tn5dNrSxTh3boayafgMib1CVWCnbW4RliXIkF/OFFcpj5hl
-         6m+t2VgGJG8aRGQdIOzSHbPKUUvGU28ugQOda+i4Iz/z2l8ogF4DUhMudHGMcamojN5D
-         buBBD9eVckJpGIZX1Eau0YUijPh8Y3KQ6qSUUkNWelcHO0TId6hBWDms0nW+g+kQLdiP
-         BGIjg+4pA7fxh31bkz6/o4sNZXlN2l+ktcemf1+avu/xnJ/cty+ctHopkECX/BVwrXLY
-         cH7A==
+        bh=9N06sBMGSwslqzktoVL9OhM7KzXq4rCuo4jo7obxQWo=;
+        b=ePZ922AJEWNWQyfkc3pf+bVIma+DxiTmINgCI/zWOTf4nEX8qTY1XpvBNVbqc4KjYO
+         UprOhcUZdoSlfB4PMAFz5GB0d7XsMEQdwvDlNJEsPdLSGpZclHZ8ZS4TfAog7bmKfPUc
+         pitZouTr0QKRkBcYGalzR54o7ZTbu9TQEP5RRM8BhhZ1BXImuGGhp0Vkj4axTigjOSAc
+         +f6FB3FtT0Kb7DNJwWfsdqeErMmffiKM0CvnvRdDhRORBfFF7jBsguD0KB85EVnn7vQF
+         cP5EvAfzGJjGL1nS0+Zx6gK3t/GAR2wgLI9y+ZefvL7FOSzR/BEXmdKa4GmAVHuRLxuQ
+         pADg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=JdMB+nC1v2FmjNWGvDZwXup1hlHUCHNCdjCOeatBTFA=;
-        b=eOUDtx1ZPOFI9JIBL646IfRyvSpoouTVsgWvxL6Ht4lK4t9kcpHJkXWnVhUMm2QVZy
-         CvK3OU+IUcIDNmbbD+5PuIFuGJWVCDsDwjfgpuccxWQJqn2F53TEK1zMR0qikfBAvZJA
-         wejJjf+TequBxfx4O4tXy6J67FfQWkWRGSSSSAmuX0hWhJGzuQI26AFP9VUjNux8wDTH
-         E26RmgyopZBBK5qdOEG+ZInQO8SaxmRORiAq7rbefI72LxY9+01cNuxUZ6LMLDz+/iY9
-         eAS3yKeWm9eZZEIW3Jo0amL6Uvveehclaqahx5K2ffcCEQFtrE8qT9ymB+82OjkGr4vE
-         +ewA==
-X-Gm-Message-State: AOAM531SRLF2Rw3ZivryGU4r0njqkFgLFReY7iKQCiY3WO+RWgIO7sY2
-        GM3pJdnjzKWhLn8ytfQtc/7xUhBv0rs=
-X-Google-Smtp-Source: ABdhPJwgtnolQ01W9KSfVeKTXcI+K7eAyH5U1s7K9AhydCzJgKm7WyNvQrkm5G5zRhm4iWNQW1YYzg==
-X-Received: by 2002:a05:600c:224a:: with SMTP id a10mr14330891wmm.7.1626090428893;
-        Mon, 12 Jul 2021 04:47:08 -0700 (PDT)
+        bh=9N06sBMGSwslqzktoVL9OhM7KzXq4rCuo4jo7obxQWo=;
+        b=b6H8EJAakQV1zWKtDVd0p1bC2h/7oUW2NrImP/XtA6TytirSsryo5rxV7iw4XJn5Ph
+         GXRJEum80c3PUzNzPBSo9Os+i4JKLK6r3D3NuXySXx2cPqKSWFvx4AGvVuts8nP9tPSA
+         ByVuSc4vEr38/ZiAQppPK7Nxo8jGCbs+MtcbTPjtzusWNefXD9pQCSK+D56gpK8qj2Xq
+         gmLu16wznOR1X2NJkhs6qrGIp9n7xEoIQyzdf0Lh3RVpbYuy9gdV09IcW+8dZRzcmKQd
+         P0qrNCLKG6p3TpWdqcRJxDH4GCKHqvTfSNFpO3EDY5RO5GM3NDI1DJxSDGsgPrA2keKn
+         oO5w==
+X-Gm-Message-State: AOAM531RH1ZPvxUFNc8+y7/ObLPD7NO4YuBf5BfIftu0gp63Ex4gGj/F
+        w8Mn3PyR/vQ5TG4tKYICQUy3OvC+u+A=
+X-Google-Smtp-Source: ABdhPJwfsvCvLVqO15yHC5HmDSqOoUKtORn0lfCf0XrtSLgVSi7+TpyDBaykKPfacOTicZn/18IIvA==
+X-Received: by 2002:a7b:c7cb:: with SMTP id z11mr7000913wmk.102.1626090431110;
+        Mon, 12 Jul 2021 04:47:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t9sm14019363wmq.14.2021.07.12.04.47.08
+        by smtp.gmail.com with ESMTPSA id x18sm13678921wrw.19.2021.07.12.04.47.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jul 2021 04:47:08 -0700 (PDT)
-Message-Id: <70e83e4ba3cc8a55bb8d90cb2c581cd04ac116d4.1626090419.git.gitgitgadget@gmail.com>
+        Mon, 12 Jul 2021 04:47:10 -0700 (PDT)
+Message-Id: <2edca9dc46538d85bc32a206e71c3336e384df41.1626090419.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.993.git.1626090419.gitgitgadget@gmail.com>
 References: <pull.993.git.1626090419.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 12 Jul 2021 11:46:54 +0000
-Subject: [PATCH 14/19] [GSOC] cat-file: reuse ref-filter logic
+Date:   Mon, 12 Jul 2021 11:46:58 +0000
+Subject: [PATCH 18/19] [GSOC] cat-file: create p1006-cat-file.sh
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,684 +82,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-In order to let cat-file use ref-filter logic, let's do the
-following:
+Create p1006-cat-file.sh to provide performance testing for
+`git cat-file --batch` and `git cat-file --batch-check`. This
+will help us compare the performance changes after we let
+cat-file reuse the ref-filter logic.
 
-1. Change the type of member `format` in struct `batch_options`
-to `ref_format`, we will pass it to ref-filter later.
-2. Let `batch_objects()` add atoms to format, and use
-`verify_ref_format()` to check atoms.
-3. Use `format_ref_array_item()` in `batch_object_write()` to
-get the formatted data corresponding to the object. If the
-return value of `format_ref_array_item()` is equals to zero,
-use `batch_write()` to print object data; else if the return
-value is less than zero, use `die()` to print the error message
-and exit; else if return value is greater than zero, only print
-the error message, but don't exit.
-4. Use free_ref_array_item_value() to free ref_array_item's
-value.
-
-Most of the atoms in `for-each-ref --format` are now supported,
-such as `%(tree)`, `%(parent)`, `%(author)`, `%(tagger)`, `%(if)`,
-`%(then)`, `%(else)`, `%(end)`. But these atoms will be rejected:
-`%(refname)`, `%(symref)`, `%(upstream)`, `%(push)`, `%(worktreepath)`,
-`%(flag)`, `%(HEAD)`, because these atoms are unique to those objects
-that pointed to by a ref, "for-each-ref"'s family can naturally use
-these atoms, but not all objects are pointed to be a ref, so "cat-file"
-will not be able to use them.
-
-The performance for `git cat-file --batch-all-objects
---batch-check` on the Git repository itself with performance
-testing tool `hyperfine` changes from 669.4 ms ±  31.1 ms to
-1.134 s ±  0.063 s.
-
-The performance for `git cat-file --batch-all-objects --batch
->/dev/null` on the Git repository itself with performance testing
-tool `time` change from "27.37s user 0.29s system 98% cpu 28.089
-total" to "33.69s user 1.54s system 87% cpu 40.258 total".
-
+Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Hariom Verma <hariom18599@gmail.com>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- Documentation/git-cat-file.txt |   6 +
- builtin/cat-file.c             | 242 ++++++-------------------------
- t/t1006-cat-file.sh            | 251 +++++++++++++++++++++++++++++++++
- 3 files changed, 304 insertions(+), 195 deletions(-)
+ t/perf/p1006-cat-file.sh | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+ create mode 100755 t/perf/p1006-cat-file.sh
 
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index 4eb0421b3fd..ef8ab952b2f 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -226,6 +226,12 @@ newline. The available atoms are:
- 	after that first run of whitespace (i.e., the "rest" of the
- 	line) are output in place of the `%(rest)` atom.
- 
-+Note that most of the atoms in `for-each-ref --format` are now supported,
-+such as `%(tree)`, `%(parent)`, `%(author)`, `%(tagger)`, `%(if)`,
-+`%(then)`, `%(else)`, `%(end)`. But these atoms will be rejected:
-+`%(refname)`, `%(symref)`, `%(upstream)`, `%(push)`, `%(worktreepath)`,
-+`%(flag)`, `%(HEAD)`. See linkgit:git-for-each-ref[1].
+diff --git a/t/perf/p1006-cat-file.sh b/t/perf/p1006-cat-file.sh
+new file mode 100755
+index 00000000000..b84ac31f9cc
+--- /dev/null
++++ b/t/perf/p1006-cat-file.sh
+@@ -0,0 +1,28 @@
++#!/bin/sh
 +
- If no format is specified, the default format is `%(objectname)
- %(objecttype) %(objectsize)`.
- 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 41d407638d5..5b163551fc6 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -16,6 +16,7 @@
- #include "packfile.h"
- #include "object-store.h"
- #include "promisor-remote.h"
-+#include "ref-filter.h"
- 
- struct batch_options {
- 	int enabled;
-@@ -25,7 +26,7 @@ struct batch_options {
- 	int all_objects;
- 	int unordered;
- 	int cmdmode; /* may be 'w' or 'c' for --filters or --textconv */
--	const char *format;
-+	struct ref_format format;
- };
- 
- static const char *force_path;
-@@ -195,99 +196,10 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 
- struct expand_data {
- 	struct object_id oid;
--	enum object_type type;
--	unsigned long size;
--	off_t disk_size;
- 	const char *rest;
--	struct object_id delta_base_oid;
--
--	/*
--	 * If mark_query is true, we do not expand anything, but rather
--	 * just mark the object_info with items we wish to query.
--	 */
--	int mark_query;
--
--	/*
--	 * Whether to split the input on whitespace before feeding it to
--	 * get_sha1; this is decided during the mark_query phase based on
--	 * whether we have a %(rest) token in our format.
--	 */
- 	int split_on_whitespace;
--
--	/*
--	 * After a mark_query run, this object_info is set up to be
--	 * passed to oid_object_info_extended. It will point to the data
--	 * elements above, so you can retrieve the response from there.
--	 */
--	struct object_info info;
--
--	/*
--	 * This flag will be true if the requested batch format and options
--	 * don't require us to call oid_object_info, which can then be
--	 * optimized out.
--	 */
--	unsigned skip_object_info : 1;
- };
- 
--static int is_atom(const char *atom, const char *s, int slen)
--{
--	int alen = strlen(atom);
--	return alen == slen && !memcmp(atom, s, alen);
--}
--
--static void expand_atom(struct strbuf *sb, const char *atom, int len,
--			void *vdata)
--{
--	struct expand_data *data = vdata;
--
--	if (is_atom("objectname", atom, len)) {
--		if (!data->mark_query)
--			strbuf_addstr(sb, oid_to_hex(&data->oid));
--	} else if (is_atom("objecttype", atom, len)) {
--		if (data->mark_query)
--			data->info.typep = &data->type;
--		else
--			strbuf_addstr(sb, type_name(data->type));
--	} else if (is_atom("objectsize", atom, len)) {
--		if (data->mark_query)
--			data->info.sizep = &data->size;
--		else
--			strbuf_addf(sb, "%"PRIuMAX , (uintmax_t)data->size);
--	} else if (is_atom("objectsize:disk", atom, len)) {
--		if (data->mark_query)
--			data->info.disk_sizep = &data->disk_size;
--		else
--			strbuf_addf(sb, "%"PRIuMAX, (uintmax_t)data->disk_size);
--	} else if (is_atom("rest", atom, len)) {
--		if (data->mark_query)
--			data->split_on_whitespace = 1;
--		else if (data->rest)
--			strbuf_addstr(sb, data->rest);
--	} else if (is_atom("deltabase", atom, len)) {
--		if (data->mark_query)
--			data->info.delta_base_oid = &data->delta_base_oid;
--		else
--			strbuf_addstr(sb,
--				      oid_to_hex(&data->delta_base_oid));
--	} else
--		die("unknown format element: %.*s", len, atom);
--}
--
--static size_t expand_format(struct strbuf *sb, const char *start, void *data)
--{
--	const char *end;
--
--	if (*start != '(')
--		return 0;
--	end = strchr(start + 1, ')');
--	if (!end)
--		die("format element '%s' does not end in ')'", start);
--
--	expand_atom(sb, start + 1, end - start - 1, data);
--
--	return end - start + 1;
--}
--
- static void batch_write(struct batch_options *opt, const void *data, int len)
- {
- 	if (opt->buffer_output) {
-@@ -297,87 +209,34 @@ static void batch_write(struct batch_options *opt, const void *data, int len)
- 		write_or_die(1, data, len);
- }
- 
--static void print_object_or_die(struct batch_options *opt, struct expand_data *data)
--{
--	const struct object_id *oid = &data->oid;
--
--	assert(data->info.typep);
--
--	if (data->type == OBJ_BLOB) {
--		if (opt->buffer_output)
--			fflush(stdout);
--		if (opt->cmdmode) {
--			char *contents;
--			unsigned long size;
--
--			if (!data->rest)
--				die("missing path for '%s'", oid_to_hex(oid));
--
--			if (opt->cmdmode == 'w') {
--				if (filter_object(data->rest, 0100644, oid,
--						  &contents, &size))
--					die("could not convert '%s' %s",
--					    oid_to_hex(oid), data->rest);
--			} else if (opt->cmdmode == 'c') {
--				enum object_type type;
--				if (!textconv_object(the_repository,
--						     data->rest, 0100644, oid,
--						     1, &contents, &size))
--					contents = read_object_file(oid,
--								    &type,
--								    &size);
--				if (!contents)
--					die("could not convert '%s' %s",
--					    oid_to_hex(oid), data->rest);
--			} else
--				BUG("invalid cmdmode: %c", opt->cmdmode);
--			batch_write(opt, contents, size);
--			free(contents);
--		} else {
--			stream_blob(oid);
--		}
--	}
--	else {
--		enum object_type type;
--		unsigned long size;
--		void *contents;
--
--		contents = read_object_file(oid, &type, &size);
--		if (!contents)
--			die("object %s disappeared", oid_to_hex(oid));
--		if (type != data->type)
--			die("object %s changed type!?", oid_to_hex(oid));
--		if (data->info.sizep && size != data->size)
--			die("object %s changed size!?", oid_to_hex(oid));
--
--		batch_write(opt, contents, size);
--		free(contents);
--	}
--}
- 
- static void batch_object_write(const char *obj_name,
- 			       struct strbuf *scratch,
- 			       struct batch_options *opt,
- 			       struct expand_data *data)
- {
--	if (!data->skip_object_info &&
--	    oid_object_info_extended(the_repository, &data->oid, &data->info,
--				     OBJECT_INFO_LOOKUP_REPLACE) < 0) {
--		printf("%s missing\n",
--		       obj_name ? obj_name : oid_to_hex(&data->oid));
--		fflush(stdout);
--		return;
--	}
-+	int ret;
-+	struct strbuf err = STRBUF_INIT;
-+	struct ref_array_item item = { data->oid, data->rest };
- 
- 	strbuf_reset(scratch);
--	strbuf_expand(scratch, opt->format, expand_format, data);
--	strbuf_addch(scratch, '\n');
--	batch_write(opt, scratch->buf, scratch->len);
- 
--	if (opt->print_contents) {
--		print_object_or_die(opt, data);
--		batch_write(opt, "\n", 1);
-+	ret = format_ref_array_item(&item, &opt->format, scratch, &err);
-+	if (ret < 0)
-+		die("%s\n", err.buf);
-+	if (ret) {
-+		/* ret > 0 means when the object corresponding to oid
-+		 * cannot be found in format_ref_array_item(), we only print
-+		 * the error message.
-+		 */
-+		printf("%s\n", err.buf);
-+		fflush(stdout);
-+	} else {
-+		strbuf_addch(scratch, '\n');
-+		batch_write(opt, scratch->buf, scratch->len);
- 	}
-+	free_ref_array_item_value(&item);
-+	strbuf_release(&err);
- }
- 
- static void batch_one_object(const char *obj_name,
-@@ -495,43 +354,37 @@ static int batch_unordered_packed(const struct object_id *oid,
- 	return batch_unordered_object(oid, data);
- }
- 
--static int batch_objects(struct batch_options *batch)
-+static const char * const cat_file_usage[] = {
-+	N_("git cat-file (-t [--allow-unknown-type] | -s [--allow-unknown-type] | -e | -p | <type> | --textconv | --filters) [--path=<path>] <object>"),
-+	N_("git cat-file (--batch[=<format>] | --batch-check[=<format>]) [--follow-symlinks] [--textconv | --filters]"),
-+	NULL
-+};
++test_description='Basic sort performance tests'
++. ./perf-lib.sh
 +
-+static int batch_objects(struct batch_options *batch, const struct option *options)
- {
- 	struct strbuf input = STRBUF_INIT;
- 	struct strbuf output = STRBUF_INIT;
-+	struct strbuf format = STRBUF_INIT;
- 	struct expand_data data;
- 	int save_warning;
- 	int retval = 0;
- 
--	if (!batch->format)
--		batch->format = "%(objectname) %(objecttype) %(objectsize)";
--
--	/*
--	 * Expand once with our special mark_query flag, which will prime the
--	 * object_info to be handed to oid_object_info_extended for each
--	 * object.
--	 */
- 	memset(&data, 0, sizeof(data));
--	data.mark_query = 1;
--	strbuf_expand(&output, batch->format, expand_format, &data);
--	data.mark_query = 0;
--	strbuf_release(&output);
--	if (batch->cmdmode)
--		data.split_on_whitespace = 1;
--
--	/*
--	 * If we are printing out the object, then always fill in the type,
--	 * since we will want to decide whether or not to stream.
--	 */
-+	if (batch->format.format)
-+		strbuf_addstr(&format, batch->format.format);
-+	else
-+		strbuf_addstr(&format, "%(objectname) %(objecttype) %(objectsize)");
- 	if (batch->print_contents)
--		data.info.typep = &data.type;
-+		strbuf_addstr(&format, "\n%(raw)");
-+	batch->format.format = format.buf;
-+	if (verify_ref_format(&batch->format))
-+		usage_with_options(cat_file_usage, options);
++test_perf_default_repo
 +
-+	if (batch->cmdmode || batch->format.use_rest)
-+		data.split_on_whitespace = 1;
- 
- 	if (batch->all_objects) {
- 		struct object_cb_data cb;
--		struct object_info empty = OBJECT_INFO_INIT;
--
--		if (!memcmp(&data.info, &empty, sizeof(empty)))
--			data.skip_object_info = 1;
- 
- 		if (has_promisor_remote())
- 			warning("This repository uses promisor remotes. Some objects may not be loaded.");
-@@ -561,6 +414,7 @@ static int batch_objects(struct batch_options *batch)
- 			oid_array_clear(&sa);
- 		}
- 
-+		strbuf_release(&format);
- 		strbuf_release(&output);
- 		return 0;
- 	}
-@@ -593,18 +447,13 @@ static int batch_objects(struct batch_options *batch)
- 		batch_one_object(input.buf, &output, batch, &data);
- 	}
- 
-+	strbuf_release(&format);
- 	strbuf_release(&input);
- 	strbuf_release(&output);
- 	warn_on_object_refname_ambiguity = save_warning;
- 	return retval;
- }
- 
--static const char * const cat_file_usage[] = {
--	N_("git cat-file (-t [--allow-unknown-type] | -s [--allow-unknown-type] | -e | -p | <type> | --textconv | --filters) [--path=<path>] <object>"),
--	N_("git cat-file (--batch[=<format>] | --batch-check[=<format>]) [--follow-symlinks] [--textconv | --filters]"),
--	NULL
--};
--
- static int git_cat_file_config(const char *var, const char *value, void *cb)
- {
- 	if (userdiff_config(var, value) < 0)
-@@ -627,7 +476,7 @@ static int batch_option_callback(const struct option *opt,
- 
- 	bo->enabled = 1;
- 	bo->print_contents = !strcmp(opt->long_name, "batch");
--	bo->format = arg;
-+	bo->format.format = arg;
- 
- 	return 0;
- }
-@@ -636,7 +485,9 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- {
- 	int opt = 0;
- 	const char *exp_type = NULL, *obj_name = NULL;
--	struct batch_options batch = {0};
-+	struct batch_options batch = {
-+		.format = REF_FORMAT_INIT
-+	};
- 	int unknown_type = 0;
- 
- 	const struct option options[] = {
-@@ -675,6 +526,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 	git_config(git_cat_file_config, NULL);
- 
- 	batch.buffer_output = -1;
-+	batch.format.cat_file_mode = 1;
- 	argc = parse_options(argc, argv, prefix, options, cat_file_usage, 0);
- 
- 	if (opt) {
-@@ -718,7 +570,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 		batch.buffer_output = batch.all_objects;
- 
- 	if (batch.enabled)
--		return batch_objects(&batch);
-+		return batch_objects(&batch, options);
- 
- 	if (unknown_type && opt != 't' && opt != 's')
- 		die("git cat-file --allow-unknown-type: use with -s or -t");
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 18b3779ccb6..7452404f24a 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -607,5 +607,256 @@ test_expect_success 'cat-file --batch="batman" with --batch-all-objects will wor
- 	git -C all-two cat-file --batch-all-objects --batch="batman" >actual &&
- 	cmp expect actual
- '
-+. "$TEST_DIRECTORY"/lib-gpg.sh
-+. "$TEST_DIRECTORY"/lib-terminal.sh
-+
-+test_expect_success 'cat-file --batch|--batch-check setup' '
-+	echo 1>blob1 &&
-+	printf "a\0b\0\c" >blob2 &&
-+	git add blob1 blob2 &&
-+	git commit -m "Commit Message" &&
-+	git branch -M main &&
-+	git tag -a -m "v0.0.0" testtag &&
-+	git update-ref refs/myblobs/blob1 HEAD:blob1 &&
-+	git update-ref refs/myblobs/blob2 HEAD:blob2 &&
-+	git update-ref refs/mytrees/tree1 HEAD^{tree}
++test_expect_success 'setup' '
++	git rev-list --all >rla
 +'
 +
-+batch_test_atom() {
-+	if test "$3" = "fail"
-+	then
-+		test_expect_${4:-success} $PREREQ "basic atom: $1 $2 must fail" "
-+			test_must_fail git cat-file --batch-check='$2' >bad <<-EOF
-+			$1
-+			EOF
-+		"
-+	else
-+		test_expect_${4:-success} $PREREQ "basic atom: $1 $2" "
-+			git for-each-ref --format='$2' $1 >expected &&
-+			git cat-file --batch-check='$2' >actual <<-EOF &&
-+			$1
-+			EOF
-+			sanitize_pgp <actual >actual.clean &&
-+			cmp expected actual.clean
-+		"
-+	fi
-+}
-+
-+batch_test_atom refs/heads/main '%(refname)' fail
-+batch_test_atom refs/heads/main '%(refname:)' fail
-+batch_test_atom refs/heads/main '%(refname:short)' fail
-+batch_test_atom refs/heads/main '%(refname:lstrip=1)' fail
-+batch_test_atom refs/heads/main '%(refname:lstrip=2)' fail
-+batch_test_atom refs/heads/main '%(refname:lstrip=-1)' fail
-+batch_test_atom refs/heads/main '%(refname:lstrip=-2)' fail
-+batch_test_atom refs/heads/main '%(refname:rstrip=1)' fail
-+batch_test_atom refs/heads/main '%(refname:rstrip=2)' fail
-+batch_test_atom refs/heads/main '%(refname:rstrip=-1)' fail
-+batch_test_atom refs/heads/main '%(refname:rstrip=-2)' fail
-+batch_test_atom refs/heads/main '%(refname:strip=1)' fail
-+batch_test_atom refs/heads/main '%(refname:strip=2)' fail
-+batch_test_atom refs/heads/main '%(refname:strip=-1)' fail
-+batch_test_atom refs/heads/main '%(refname:strip=-2)' fail
-+batch_test_atom refs/heads/main '%(upstream)' fail
-+batch_test_atom refs/heads/main '%(upstream:short)' fail
-+batch_test_atom refs/heads/main '%(upstream:lstrip=2)' fail
-+batch_test_atom refs/heads/main '%(upstream:lstrip=-2)' fail
-+batch_test_atom refs/heads/main '%(upstream:rstrip=2)' fail
-+batch_test_atom refs/heads/main '%(upstream:rstrip=-2)' fail
-+batch_test_atom refs/heads/main '%(upstream:strip=2)' fail
-+batch_test_atom refs/heads/main '%(upstream:strip=-2)' fail
-+batch_test_atom refs/heads/main '%(push)' fail
-+batch_test_atom refs/heads/main '%(push:short)' fail
-+batch_test_atom refs/heads/main '%(push:lstrip=1)' fail
-+batch_test_atom refs/heads/main '%(push:lstrip=-1)' fail
-+batch_test_atom refs/heads/main '%(push:rstrip=1)' fail
-+batch_test_atom refs/heads/main '%(push:rstrip=-1)' fail
-+batch_test_atom refs/heads/main '%(push:strip=1)' fail
-+batch_test_atom refs/heads/main '%(push:strip=-1)' fail
-+batch_test_atom refs/heads/main '%(objecttype)'
-+batch_test_atom refs/heads/main '%(objectsize)'
-+batch_test_atom refs/heads/main '%(objectsize:disk)'
-+batch_test_atom refs/heads/main '%(deltabase)'
-+batch_test_atom refs/heads/main '%(objectname)'
-+batch_test_atom refs/heads/main '%(objectname:short)'
-+batch_test_atom refs/heads/main '%(objectname:short=1)'
-+batch_test_atom refs/heads/main '%(objectname:short=10)'
-+batch_test_atom refs/heads/main '%(tree)'
-+batch_test_atom refs/heads/main '%(tree:short)'
-+batch_test_atom refs/heads/main '%(tree:short=1)'
-+batch_test_atom refs/heads/main '%(tree:short=10)'
-+batch_test_atom refs/heads/main '%(parent)'
-+batch_test_atom refs/heads/main '%(parent:short)'
-+batch_test_atom refs/heads/main '%(parent:short=1)'
-+batch_test_atom refs/heads/main '%(parent:short=10)'
-+batch_test_atom refs/heads/main '%(numparent)'
-+batch_test_atom refs/heads/main '%(object)'
-+batch_test_atom refs/heads/main '%(type)'
-+batch_test_atom refs/heads/main '%(raw)'
-+batch_test_atom refs/heads/main '%(*objectname)'
-+batch_test_atom refs/heads/main '%(*objecttype)'
-+batch_test_atom refs/heads/main '%(author)'
-+batch_test_atom refs/heads/main '%(authorname)'
-+batch_test_atom refs/heads/main '%(authoremail)'
-+batch_test_atom refs/heads/main '%(authoremail:trim)'
-+batch_test_atom refs/heads/main '%(authoremail:localpart)'
-+batch_test_atom refs/heads/main '%(authordate)'
-+batch_test_atom refs/heads/main '%(committer)'
-+batch_test_atom refs/heads/main '%(committername)'
-+batch_test_atom refs/heads/main '%(committeremail)'
-+batch_test_atom refs/heads/main '%(committeremail:trim)'
-+batch_test_atom refs/heads/main '%(committeremail:localpart)'
-+batch_test_atom refs/heads/main '%(committerdate)'
-+batch_test_atom refs/heads/main '%(tag)'
-+batch_test_atom refs/heads/main '%(tagger)'
-+batch_test_atom refs/heads/main '%(taggername)'
-+batch_test_atom refs/heads/main '%(taggeremail)'
-+batch_test_atom refs/heads/main '%(taggeremail:trim)'
-+batch_test_atom refs/heads/main '%(taggeremail:localpart)'
-+batch_test_atom refs/heads/main '%(taggerdate)'
-+batch_test_atom refs/heads/main '%(creator)'
-+batch_test_atom refs/heads/main '%(creatordate)'
-+batch_test_atom refs/heads/main '%(subject)'
-+batch_test_atom refs/heads/main '%(subject:sanitize)'
-+batch_test_atom refs/heads/main '%(contents:subject)'
-+batch_test_atom refs/heads/main '%(body)'
-+batch_test_atom refs/heads/main '%(contents:body)'
-+batch_test_atom refs/heads/main '%(contents:signature)'
-+batch_test_atom refs/heads/main '%(contents)'
-+batch_test_atom refs/heads/main '%(HEAD)' fail
-+batch_test_atom refs/heads/main '%(upstream:track)' fail
-+batch_test_atom refs/heads/main '%(upstream:trackshort)' fail
-+batch_test_atom refs/heads/main '%(upstream:track,nobracket)' fail
-+batch_test_atom refs/heads/main '%(upstream:nobracket,track)' fail
-+batch_test_atom refs/heads/main '%(push:track)' fail
-+batch_test_atom refs/heads/main '%(push:trackshort)' fail
-+batch_test_atom refs/heads/main '%(worktreepath)' fail
-+batch_test_atom refs/heads/main '%(symref)' fail
-+batch_test_atom refs/heads/main '%(flag)' fail
-+
-+batch_test_atom refs/tags/testtag '%(refname)' fail
-+batch_test_atom refs/tags/testtag '%(refname:short)' fail
-+batch_test_atom refs/tags/testtag '%(upstream)' fail
-+batch_test_atom refs/tags/testtag '%(push)' fail
-+batch_test_atom refs/tags/testtag '%(objecttype)'
-+batch_test_atom refs/tags/testtag '%(objectsize)'
-+batch_test_atom refs/tags/testtag '%(objectsize:disk)'
-+batch_test_atom refs/tags/testtag '%(*objectsize:disk)'
-+batch_test_atom refs/tags/testtag '%(deltabase)'
-+batch_test_atom refs/tags/testtag '%(*deltabase)'
-+batch_test_atom refs/tags/testtag '%(objectname)'
-+batch_test_atom refs/tags/testtag '%(objectname:short)'
-+batch_test_atom refs/tags/testtag '%(tree)'
-+batch_test_atom refs/tags/testtag '%(tree:short)'
-+batch_test_atom refs/tags/testtag '%(tree:short=1)'
-+batch_test_atom refs/tags/testtag '%(tree:short=10)'
-+batch_test_atom refs/tags/testtag '%(parent)'
-+batch_test_atom refs/tags/testtag '%(parent:short)'
-+batch_test_atom refs/tags/testtag '%(parent:short=1)'
-+batch_test_atom refs/tags/testtag '%(parent:short=10)'
-+batch_test_atom refs/tags/testtag '%(numparent)'
-+batch_test_atom refs/tags/testtag '%(object)'
-+batch_test_atom refs/tags/testtag '%(type)'
-+batch_test_atom refs/tags/testtag '%(*objectname)'
-+batch_test_atom refs/tags/testtag '%(*objecttype)'
-+batch_test_atom refs/tags/testtag '%(author)'
-+batch_test_atom refs/tags/testtag '%(authorname)'
-+batch_test_atom refs/tags/testtag '%(authoremail)'
-+batch_test_atom refs/tags/testtag '%(authoremail:trim)'
-+batch_test_atom refs/tags/testtag '%(authoremail:localpart)'
-+batch_test_atom refs/tags/testtag '%(authordate)'
-+batch_test_atom refs/tags/testtag '%(committer)'
-+batch_test_atom refs/tags/testtag '%(committername)'
-+batch_test_atom refs/tags/testtag '%(committeremail)'
-+batch_test_atom refs/tags/testtag '%(committeremail:trim)'
-+batch_test_atom refs/tags/testtag '%(committeremail:localpart)'
-+batch_test_atom refs/tags/testtag '%(committerdate)'
-+batch_test_atom refs/tags/testtag '%(tag)'
-+batch_test_atom refs/tags/testtag '%(tagger)'
-+batch_test_atom refs/tags/testtag '%(taggername)'
-+batch_test_atom refs/tags/testtag '%(taggeremail)'
-+batch_test_atom refs/tags/testtag '%(taggeremail:trim)'
-+batch_test_atom refs/tags/testtag '%(taggeremail:localpart)'
-+batch_test_atom refs/tags/testtag '%(taggerdate)'
-+batch_test_atom refs/tags/testtag '%(creator)'
-+batch_test_atom refs/tags/testtag '%(creatordate)'
-+batch_test_atom refs/tags/testtag '%(subject)'
-+batch_test_atom refs/tags/testtag '%(subject:sanitize)'
-+batch_test_atom refs/tags/testtag '%(contents:subject)'
-+batch_test_atom refs/tags/testtag '%(body)'
-+batch_test_atom refs/tags/testtag '%(contents:body)'
-+batch_test_atom refs/tags/testtag '%(contents:signature)'
-+batch_test_atom refs/tags/testtag '%(contents)'
-+batch_test_atom refs/tags/testtag '%(HEAD)' fail
-+
-+batch_test_atom refs/myblobs/blob1 '%(refname)' fail
-+batch_test_atom refs/myblobs/blob1 '%(upstream)' fail
-+batch_test_atom refs/myblobs/blob1 '%(push)' fail
-+batch_test_atom refs/myblobs/blob1 '%(HEAD)' fail
-+
-+batch_test_atom refs/myblobs/blob1 '%(objectname)'
-+batch_test_atom refs/myblobs/blob1 '%(objecttype)'
-+batch_test_atom refs/myblobs/blob1 '%(objectsize)'
-+batch_test_atom refs/myblobs/blob1 '%(objectsize:disk)'
-+batch_test_atom refs/myblobs/blob1 '%(deltabase)'
-+
-+batch_test_atom refs/myblobs/blob1 '%(contents)'
-+batch_test_atom refs/myblobs/blob2 '%(contents)'
-+
-+batch_test_atom refs/myblobs/blob1 '%(raw)'
-+batch_test_atom refs/myblobs/blob2 '%(raw)'
-+batch_test_atom refs/mytrees/tree1 '%(raw)'
-+
-+batch_test_atom refs/myblobs/blob1 '%(raw:size)'
-+batch_test_atom refs/myblobs/blob2 '%(raw:size)'
-+batch_test_atom refs/mytrees/tree1 '%(raw:size)'
-+
-+batch_test_atom refs/myblobs/blob1 '%(if:equals=blob)%(objecttype)%(then)commit%(else)not commit%(end)'
-+batch_test_atom refs/myblobs/blob2 '%(if:equals=blob)%(objecttype)%(then)commit%(else)not commit%(end)'
-+batch_test_atom refs/mytrees/tree1 '%(if:equals=tree)%(objecttype)%(then)tree%(else)not tree%(end)'
-+
-+batch_test_atom refs/heads/main '%(align:60) objectname is %(objectname)%(end)|%(objectname)'
-+batch_test_atom refs/heads/main '%(align:left,60) objectname is %(objectname)%(end)|%(objectname)'
-+batch_test_atom refs/heads/main '%(align:middle,60) objectname is %(objectname)%(end)|%(objectname)'
-+batch_test_atom refs/heads/main '%(align:60,right) objectname is %(objectname)%(end)|%(objectname)'
-+
-+batch_test_atom refs/heads/main 'VALID'
-+batch_test_atom refs/heads/main '%(INVALID)' fail
-+batch_test_atom refs/heads/main '%(authordate:INVALID)' fail
-+
-+test_expect_success '%(rest) works with both a branch and a tag' '
-+	cat >expected <<-EOF &&
-+	123 commit 123
-+	456 tag 456
-+	EOF
-+	git cat-file --batch-check="%(rest) %(objecttype) %(rest)" >actual <<-EOF &&
-+	refs/heads/main 123
-+	refs/tags/testtag 456
-+	EOF
-+	test_cmp expected actual
++test_perf 'cat-file --batch-check' '
++	git cat-file --batch-check <rla
 +'
 +
-+batch_test_atom refs/heads/main '%(objectname) %(objecttype) %(objectsize)
-+%(raw)'
-+batch_test_atom refs/tags/testtag '%(objectname) %(objecttype) %(objectsize)
-+%(raw)'
-+batch_test_atom refs/myblobs/blob1 '%(objectname) %(objecttype) %(objectsize)
-+%(raw)'
-+batch_test_atom refs/myblobs/blob2 '%(objectname) %(objecttype) %(objectsize)
-+%(raw)'
-+
-+
-+test_expect_success 'cat-file --batch equals to --batch-check with atoms' '
-+	git cat-file --batch-check="%(objectname) %(objecttype) %(objectsize)
-+%(raw)" >expected <<-EOF &&
-+	refs/heads/main
-+	refs/tags/testtag
-+	EOF
-+	git cat-file --batch >actual <<-EOF &&
-+	refs/heads/main
-+	refs/tags/testtag
-+	EOF
-+	cmp expected actual
++test_perf 'cat-file --batch-check with atoms' '
++	git cat-file --batch-check="%(objectname) %(objecttype)" <rla
 +'
- 
- test_done
++
++test_perf 'cat-file --batch' '
++	git cat-file --batch <rla
++'
++
++test_perf 'cat-file --batch with atoms' '
++	git cat-file --batch="%(objectname) %(objecttype)" <rla
++'
++
++test_done
 -- 
 gitgitgadget
 
