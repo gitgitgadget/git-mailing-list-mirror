@@ -2,117 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A36F7C07E95
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 17:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13992C07E95
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 17:36:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 824326117A
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 17:34:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EBD2A6117A
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 17:36:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229697AbhGMRhT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 13:37:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59110 "EHLO
+        id S233603AbhGMRjZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 13:39:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbhGMRhT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 13:37:19 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B682C0613DD
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 10:34:29 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id w13so17294193qtc.0
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 10:34:29 -0700 (PDT)
+        with ESMTP id S232455AbhGMRjZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 13:39:25 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5E39C0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 10:36:34 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id q16so15282180oiw.6
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 10:36:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=TkcgF0k4xbLz3aWCRnOEidT8RA8V28wC51Orcel6L3Y=;
-        b=bhuvI2XnUpe4ZTr3iI6aa66/UGfGAzrh3CN6SWZzjXqBurYTjuV45Ip/Azdq/bMKfq
-         yWjFPbCzkXipdoJDyMNz3OFN3wuUUhelOefRdOoQWbi8+ToS4BMkz7ugd6EuOIwUVtjH
-         slbriZMVQ8VhdGj/pF0FNyvWQCc3xL2cCgW9FNQOHJwBjsb3NgR6lBwVH5ALNkEwEcAq
-         vTMEWkE/rF4X+jMFkkkI/tzI7/rmV2E/2Ducx61yf9jh7FcuAfMxrslb+JdJSWRvJzgV
-         tLwKrcTYeR1v1Sqi/B9s15PaE9kJKwRD7sQdzzJ17SqgVqdkEXRmCTcq29hJwqCC419j
-         wt8Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=wOBUTzDU34OeqzyPEKf4eSACqjnaNmkkXMg8JtzRBIY=;
+        b=Ok2OjjSG6Ot+iZr+xXAS9wKWlVx1ezJQpMlEnWFzMu+BDy3eaQ2Ycz9ihsLBqCuEoF
+         9y/bZyS+q3qoOMlja4vXAH9gzG+ukx8QfEo9h9LtDka9luMpzgCN2c00SgMQhzWdaeGQ
+         fJFZt5oh7h2Kn4PjBn2sXccdfYnbeluE9g8aaRVPNe6Qf8cCrWLuWl50Aw9fVT9ttFY6
+         82Fw8dqFt75fV/0039BlY6Scu8mCV8ptuAjvi4MTEsv3pkVZCwqp9jXdQuz+qSWA3aJe
+         Ci0K/5IKj/kn8aK6ZpKvEUWaD8zGDzy43ipH03ff3U/SJuExDbTgucZfeLOeW0txr9CB
+         w+hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=TkcgF0k4xbLz3aWCRnOEidT8RA8V28wC51Orcel6L3Y=;
-        b=scYARAta1yTKtnF2k2vfADSh8QQ1vzURvni5nVH3NFHBTE6E8D3Wmvfb8hwhSWp4pO
-         T+l1owgjvc1WCH3DmdjkyyVLs4TkvjQBrDfwig54ojbBdweR6Juk6niQemoMCvc3JJcO
-         3k2fPggWogNWvT9DzBmwAyMd1rH53sve819RL9kuT1qVfQZdq8QsZ0+TRGMrIHCQrPTv
-         aPl/yKNX5htDfxNXMQ854kiWFTLUVkw+CiJj3gs/N1xOjPcVwu5I1hISokagofSR4QZ8
-         mk+ndKVJiSRTBPPtl3TxYI/A7t8/kXTq1BfwpVEDpfNY3GRA1kp8VNnjBBGmhxdKgM4q
-         ClIw==
-X-Gm-Message-State: AOAM532uP/MdGXhEdx9dSvTWEp3zTcQRh6O+MzYaSud6Uo+o9ahDUFix
-        erBcPEzoJCV9lWypgOSFhzc=
-X-Google-Smtp-Source: ABdhPJxVSoNtUhZHt69BwuS7yW7nZSUFROny7c4ynZKYUOVKQgeZEFZQT+/VCFmwMsCINZ4RLysPmQ==
-X-Received: by 2002:a05:622a:1701:: with SMTP id h1mr5046157qtk.218.1626197667752;
-        Tue, 13 Jul 2021 10:34:27 -0700 (PDT)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id t8sm2812622qtq.28.2021.07.13.10.34.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jul 2021 10:34:27 -0700 (PDT)
-Subject: Re: [PATCH] ci: run `make sparse` as a GitHub workflow
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.994.git.1626177086682.gitgitgadget@gmail.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <f305f586-c3ac-a2ef-8769-5468a4c3e539@gmail.com>
-Date:   Tue, 13 Jul 2021 13:34:26 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.11.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=wOBUTzDU34OeqzyPEKf4eSACqjnaNmkkXMg8JtzRBIY=;
+        b=ZJvCNXVjzB5jaWWPAB7b8POO28+JjYkRRyacPwotCURk/X++2fFa62stVpe0OmVfK2
+         cT7TvBzq4C98hOysU7tI8xGBB8acSpPSBzcMp4/Gwowddp38eGqBmYaVaCBkxkEn6mZ+
+         mIkuZjf2ZtBoy7xiKRih7eU6PrElcADBkUaX0gedyTUgifOpn1FUYbSUe/m5lyiULn9a
+         u9hhZqXZqxW/5rHkU3AxAANo26lIPyRqDM4ZgPWU6/eTl57lsSLp/i91DMV36vaoSJu5
+         h2GSaNzBWGIUROtMr8+73Bb378GMWsy47gL64S8tzKtyZ0ueR6RdS1/6fVsZE1S6B+g+
+         cArA==
+X-Gm-Message-State: AOAM533MWtk051DtwfzULG+KwghX5f8PCxFA5dDOBLPsiKZzKMOxfrKq
+        U/2mZGs1Ln8CVyJxIx+0zIK3B7wNgDwsfOgP500=
+X-Google-Smtp-Source: ABdhPJyD/24j/bOEvx1oB1hmD1AeuerYm3dqEM4iwSmN3SMRkIw0tUE9pzMPvnXWiyIGnMB9oR/jZpUGpcTOu+qt9fE=
+X-Received: by 2002:aca:acc5:: with SMTP id v188mr360086oie.167.1626197794122;
+ Tue, 13 Jul 2021 10:36:34 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <pull.994.git.1626177086682.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
+ <pull.923.v3.git.1625150864.gitgitgadget@gmail.com> <f1ef9656fc3adf079c8e40a74baeb5356bcf1586.1625150864.git.gitgitgadget@gmail.com>
+ <87h7hdbpgb.fsf@evledraar.gmail.com> <c6793033-9bd4-e108-4a53-56c1dbd24a60@jeffhostetler.com>
+In-Reply-To: <c6793033-9bd4-e108-4a53-56c1dbd24a60@jeffhostetler.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 13 Jul 2021 10:36:23 -0700
+Message-ID: <CABPp-BF+GiAZVxeC+MAr6pSssRpSi2pNwHLrxUp9HvrOhUBieg@mail.gmail.com>
+Subject: Re: [PATCH v3 24/34] t/perf/p7519: speed up test using "test-tool touch"
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+On Tue, Jul 13, 2021 at 10:10 AM Jeff Hostetler <git@jeffhostetler.com> wro=
+te:
+>
+> On 7/1/21 7:09 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >
+> > Did you try to replace this with some variant of:
+> >
+> >      test_seq 1 10000 | xargs touch
+> >
+> > Which (depending on your xargs version) would invoke "touch" commands
+> > with however many argv items it thinks you can handle.
+>
+> a quick test on my Windows machine shows that
+>
+>         test_seq 1 10000 | xargs touch
+>
+> takes 3.1 seconds.
+>
+> just a simple
+>
+>         test_seq 1 10000 >/dev/null
+>
+> take 0.2 seconds.
+>
+> using my test-tool helper cuts that time in half.
 
-Le 2021-07-13 à 07:51, Johannes Schindelin via GitGitGadget a écrit :
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> Occasionally we receive reviews after patches were integrated, where
-> `sparse` identified problems such as file-local variables or functions
-> being declared as global.
-> 
-> By running `sparse` 
+Yeah, test_seq is pretty bad; it's just a loop in shell.  Is there a
+'seq' on windows, and does using it instead of test_seq make things
+faster with =C3=86var's suggested command?
 
-maybe here, we could add a link to https://sparse.docs.kernel.org/en/latest/,
-so interested readers who do not know about "sparse" can go and learn
-about it ?
+I'd really like to modify test_seq to use seq when it's available and
+fall back to the looping-in-shell when we need to for various
+platforms.
 
-> as part of our Continuous Integration, we can catch
-> such things much earlier. Even better: developers who activated GitHub
-> Actions on their forks can catch such issues before even sending their
-> patches to the Git mailing list.
-> 
-> This addresses https://github.com/gitgitgadget/git/issues/345
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-
-> +    - name: Download the `sparse` package
-> +      uses: git-for-windows/get-azure-pipelines-artifact@v0
-> +      with:
-> +        repository: git/git
-> +        definitionId: 10
-> +        artifact: sparse-20.04
-> +    - name: Install the `sparse` package
-> +      run: sudo dpkg -i sparse-20.04/sparse_*.deb
-
-Out of curiosity, why is this necessary (as opposed to using
-the Ubuntu package, i.e. 'sudo apt-get -q -y sparse') ?
-
-Thanks,
-Philippe.
+Maybe it'd even make sense to write a 'test-tool seq' and make
+test_seq use that just so we can rip out that super lame shell
+looping.
