@@ -8,66 +8,66 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92631C11F67
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:05:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 814B0C07E95
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:05:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 778A76120A
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:05:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5FCE1611AC
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:05:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234542AbhGMIIS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 04:08:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40590 "EHLO
+        id S234585AbhGMIIT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 04:08:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234395AbhGMIIR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 04:08:17 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C0B5C0613E9
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:05:26 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id k4so22934923wrc.8
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:05:26 -0700 (PDT)
+        with ESMTP id S234357AbhGMIIS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 04:08:18 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA934C0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:05:27 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id j34so12995722wms.5
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:05:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vDsl933Jm9Zx/ol66XKvn46x7ZjfxPczHkYhPiCA8Fo=;
-        b=FvnvvB8yIwjOxJjsYUiFXGooa6QsU7IyXitFHwl+aHTxor0dvEeuMUfWAYIEYI5FVT
-         JKXGVHQUQzyBvHgdf/1GbFcVUvepcyJK8a56gK0jn4ML6b7ITGDq1bVeI4TfcdrkTV6f
-         EWDK2lAPyxzzLBq6lpTfVT5NmrnFr3kWs3b3ZGrSStHKh0BmFb/e9o6hFLUL/snJFPYW
-         FR0FZ6YmDz/48d5DQ3WOnopo1nKi0hFrC202pmydbThFDOW2c8GU9gZKRj9RKER6tcVN
-         C+DEJBS9TukV31gwf+AdYXYUc2H8S4UCS6FGcwJ1dmiKDJPc7Wm89VKMy9hvUF0sUvgS
-         KJbw==
+        bh=wSzJiaRys8MEwLx29CBT9JFknXxR9FkUdPnPxaAzaWA=;
+        b=g5JawM1T6T3+loRQtmT1oiGwSehnBfKf+E/5kMbTjXociK3d3z+GHmTr81UZNbu6qt
+         hDbTpCAmnsV0ModirunyvKoaELy3TAvSJ/WWoY5ic1QyDy/an/zwXb4SjiWstu4TFuti
+         t140QRr5GJnXRKWDL5vsLfBdJRU+PABrO14plTmnsXh5ex7N4NReR68aA6OBGhcbW7At
+         uF1PBuXJFFddN1rQ+BOJ/FBBE1osZeddK9c3xpa+Vuc/6vyh6U17mpjDEvFyvypeM41E
+         fDvvG3l7DDRPGnjFXxt6WrYvwcqL/DgalNeL4chIgRvmLX6eocN+1cKryAKVEzxdvXlv
+         IehA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vDsl933Jm9Zx/ol66XKvn46x7ZjfxPczHkYhPiCA8Fo=;
-        b=b+IY88JX77WPGjOtjJ+1A8e2RMbZcaq+vYnKNwNNHMhWLlZeZ0OiUPev4GG0Hkr8y0
-         aay9YR90a0T+L04fcfneGTN4npT9ildpVMelM2RqwCDJKZPx9Aq0xhU+xH70IFvMOWyf
-         CXL+eSpdPk98gYe714o13ZNHnf+dvLVjYlppR5Hx4l+a0xUnQPL8CkoW6ZAPxLXhu0Uv
-         2e88GfTU2Jr7luKYROsJ8L+BYGt31Ni2lJDqbzPdosRdQUifUVD33z+zZJGvWEUXRmbb
-         aLOJpw/G/5MhpdIzSooJ9pQg47+Y4Obd0UNsDlOB4XJme0ohNfBFdTsW8rd71ZdnRncp
-         zRRA==
-X-Gm-Message-State: AOAM530ja92rGHDJ2RJAMmDlsFyDDZd1u80hMDS3fI+XZ7DZ1wTCPqOc
-        WxcBkFOk69ZjMCqW15DKbrXkpEA5Y6kXJA==
-X-Google-Smtp-Source: ABdhPJxpbfu1GgeA9Qvy9lLA+dI3qn5enhy+EHCbLMq0O46ernxnCYAFlIcnWaq/2ws2bXZMiv8CtA==
-X-Received: by 2002:a05:6000:18c:: with SMTP id p12mr4143408wrx.98.1626163524072;
-        Tue, 13 Jul 2021 01:05:24 -0700 (PDT)
+        bh=wSzJiaRys8MEwLx29CBT9JFknXxR9FkUdPnPxaAzaWA=;
+        b=YduOxMEOTDdlouBY2SeDJ24TwmPBox980Ns1tmR54TknL9xIqv2FrwpB14FxNRwasc
+         GtKe0tgpUcy6hCsVni6UNMCZgbSAzxPQnAh6RQfIZVd4Nk9+YI9QVmqiH5WReFkpYMsb
+         wQD24JIfr9ce6ZLTfP8/mXJHXtueKEz9e8l3AouppxnJyw+9pO79soHWuW4+XcgHVuFh
+         t9JSEd3G7GA1FmaBJNoFidsXEnTasYU33/YtSkPVoeESnf9qDqn6fwh+PYq6aVjrNLYO
+         5HOA5ccNx+BCnNnc8rOGJZvkl36Iyk9ShfsMQaCLzcTcSJ6hQIeUunTGBNoRnW1whPeu
+         eZTA==
+X-Gm-Message-State: AOAM531lQc3ExSoqyq1ObnXECDBNc0eAp/V0jFXBy0shmmTBb+Lcy47s
+        2iDYdMbNQE0t8EOv0t1H2hEVWK89CeDm/Q==
+X-Google-Smtp-Source: ABdhPJwMK4eShVAHNhxGPgKvXb5vlvZx3SHketk+ydMmX1ax4WzhBjXKQUCdCPqAnV6TNGbXnFk2Zg==
+X-Received: by 2002:a1c:416:: with SMTP id 22mr1545389wme.59.1626163526249;
+        Tue, 13 Jul 2021 01:05:26 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z11sm17156772wru.65.2021.07.13.01.05.23
+        by smtp.gmail.com with ESMTPSA id z11sm17156772wru.65.2021.07.13.01.05.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jul 2021 01:05:23 -0700 (PDT)
+        Tue, 13 Jul 2021 01:05:25 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 0/6] add missing __attribute__((format))
-Date:   Tue, 13 Jul 2021 10:05:15 +0200
-Message-Id: <cover-0.6-0000000000-20210713T080411Z-avarab@gmail.com>
+Subject: [PATCH v2 3/6] *.c static functions: add missing __attribute__((format))
+Date:   Tue, 13 Jul 2021 10:05:18 +0200
+Message-Id: <patch-3.6-e2e039f481-20210713T080411Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0-dev
-In-Reply-To: <cover-0.6-00000000000-20210710T084445Z-avarab@gmail.com>
-References: <cover-0.6-00000000000-20210710T084445Z-avarab@gmail.com>
+In-Reply-To: <cover-0.6-0000000000-20210713T080411Z-avarab@gmail.com>
+References: <cover-0.6-00000000000-20210710T084445Z-avarab@gmail.com> <cover-0.6-0000000000-20210713T080411Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,170 +75,253 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adds missing add missing __attribute__((format)) in various places,
-which improves compile-time checking.
+Add missing __attribute__((format)) function attributes to various
+"static" functions that take printf arguments.
 
-v2: Let's drop the whole bending over backwards to do mostly/entirely
-useless strftime() checking. That's gone, I added a patch at the end
-with a comment for strbuf_addftime() to say why it's not there, and
-also split up the advise_if_enabled() change into its own commit.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ add-patch.c                                                 | 1 +
+ builtin/am.c                                                | 1 +
+ builtin/bisect--helper.c                                    | 2 ++
+ commit-graph.c                                              | 1 +
+ contrib/credential/osxkeychain/git-credential-osxkeychain.c | 1 +
+ contrib/credential/wincred/git-credential-wincred.c         | 1 +
+ gettext.c                                                   | 1 +
+ imap-send.c                                                 | 3 +++
+ mailmap.c                                                   | 1 +
+ merge-ort.c                                                 | 1 +
+ merge-recursive.c                                           | 1 +
+ midx.c                                                      | 1 +
+ ref-filter.c                                                | 1 +
+ sequencer.c                                                 | 2 ++
+ server-info.c                                               | 1 +
+ worktree.c                                                  | 1 +
+ 16 files changed, 20 insertions(+)
 
-I also removed the other cases of adding attribute checking to
-compat/*. I can't easily test those, and I don't know if there's
-potential bad interactions with git-compat-util.h.
-
-Ævar Arnfjörð Bjarmason (6):
-  *.c static functions: don't forward-declare __attribute__
-  sequencer.c: move static function to avoid forward decl
-  *.c static functions: add missing __attribute__((format))
-  *.h: add a few missing  __attribute__((format))
-  advice.h: add missing __attribute__((format)) & fix usage
-  strbuf.h: add a comment about "missing" strftime() checking
-
- add-patch.c                                   |  1 +
- advice.h                                      |  1 +
- builtin/am.c                                  |  1 +
- builtin/bisect--helper.c                      |  2 +
- builtin/index-pack.c                          |  4 +-
- builtin/receive-pack.c                        |  5 +--
- cache.h                                       |  1 +
- commit-graph.c                                |  1 +
- .../osxkeychain/git-credential-osxkeychain.c  |  1 +
- .../wincred/git-credential-wincred.c          |  1 +
- gettext.c                                     |  1 +
- imap-send.c                                   |  3 ++
- mailmap.c                                     |  1 +
- merge-ort.c                                   |  1 +
- merge-recursive.c                             |  1 +
- midx.c                                        |  1 +
- quote.h                                       |  1 +
- ref-filter.c                                  |  1 +
- sequencer.c                                   | 43 +++++++++----------
- server-info.c                                 |  1 +
- strbuf.h                                      |  7 +++
- t/helper/test-advise.c                        |  2 +-
- worktree.c                                    |  1 +
- 23 files changed, 53 insertions(+), 29 deletions(-)
-
-Range-diff against v1:
-1:  a855bfceb2 = 1:  a855bfceb2 *.c static functions: don't forward-declare __attribute__
-2:  9c1492b006 = 2:  9c1492b006 sequencer.c: move static function to avoid forward decl
-3:  bc3fee3b7a ! 3:  e2e039f481 *.c static functions: add missing __attribute__((format))
-    @@ commit-graph.c: int write_commit_graph(struct object_directory *odb,
-      {
-      	va_list ap;
-     
-    - ## compat/mingw.c ##
-    -@@ compat/mingw.c: static int read_yes_no_answer(void)
-    - 	return -1;
-    - }
-    - 
-    -+__attribute__((format (printf, 1, 2)))
-    - static int ask_yes_no_if_possible(const char *format, ...)
-    - {
-    - 	char question[4096];
-    -
-    - ## compat/winansi.c ##
-    -@@ compat/winansi.c: static void winansi_exit(void)
-    - 	CloseHandle(hthread);
-    - }
-    - 
-    -+__attribute__((format (printf, 1, 2)))
-    - static void die_lasterr(const char *fmt, ...)
-    - {
-    - 	va_list params;
-    -
-      ## contrib/credential/osxkeychain/git-credential-osxkeychain.c ##
-     @@ contrib/credential/osxkeychain/git-credential-osxkeychain.c: static char *username;
-      static char *password;
-4:  3bf8637c16 ! 4:  fd70d512b4 *.h: add a few missing  __attribute__((format))
-    @@ Metadata
-      ## Commit message ##
-         *.h: add a few missing  __attribute__((format))
-     
-    -    Add missing format attributes to those function that were missing
-    -    them.
-    -
-    -    In the case of advice_enabled() this revealed a trivial issue
-    -    introduced in b3b18d16213 (advice: revamp advise API, 2020-03-02). We
-    -    treated the argv[1] as a format string, but did not intend to do
-    -    so. Let's use "%s" and pass argv[1] as an argument instead.
-    -
-    -    For strbuf_addftime() let's add a strftime() format checker. Our
-    -    function understands the non-portable %z and %Z, see
-    -    c3fbf81a853 (strbuf: let strbuf_addftime handle %z and %Z itself,
-    -    2017-06-15).
-    -
-    -    That might be an issue in theory, but in practice we have existing
-    -    codepath that supplies a fixed string to strbuf_addftime(). We're
-    -    unlikely to run into the "%z" and "%Z" case at all, since it's used by
-    -    date.c and passed via e.g. "git log --date=<format>".
-    -
-    -    In fact, we had no in-tree user of strbuf_addftime() with an inline
-    -    fixed format string at all. A subsequent commit will tweak an existing
-    -    one to use the format checking.
-    +    Add missing format attributes to API functions that take printf
-    +    arguments.
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    - ## advice.h ##
-    -@@ advice.h: int advice_enabled(enum advice_type type);
-    - /**
-    -  * Checks the visibility of the advice before printing.
-    -  */
-    -+__attribute__((format (printf, 2, 3)))
-    - void advise_if_enabled(enum advice_type type, const char *advice, ...);
-    - 
-    - int error_resolve_conflict(const char *me);
-    -
-      ## cache.h ##
-     @@ cache.h: enum get_oid_result {
-      };
-    @@ cache.h: enum get_oid_result {
-      int repo_get_oid_commit(struct repository *r, const char *str, struct object_id *oid);
-      int repo_get_oid_committish(struct repository *r, const char *str, struct object_id *oid);
-     
-    - ## compat/win32/syslog.h ##
-    -@@
-    - #define LOG_DAEMON  (3<<3)
-    - 
-    - void openlog(const char *ident, int logopt, int facility);
-    -+__attribute__((format (printf, 2, 3)))
-    - void syslog(int priority, const char *fmt, ...);
-    - 
-    - #endif /* SYSLOG_H */
-    -
-      ## quote.h ##
-     @@ quote.h: struct strbuf;
-      
-    @@ strbuf.h: static inline void strbuf_insertstr(struct strbuf *sb, size_t pos,
-      void strbuf_insertf(struct strbuf *sb, size_t pos, const char *fmt, ...);
-      
-      /**
-    -@@ strbuf.h: void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
-    -  * `suppress_tz_name`, when set, expands %Z internally to the empty
-    -  * string rather than passing it to `strftime`.
-    -  */
-    -+__attribute__((format (strftime, 2, 0)))
-    - void strbuf_addftime(struct strbuf *sb, const char *fmt,
-    - 		    const struct tm *tm, int tz_offset,
-    - 		    int suppress_tz_name);
-    -
-    - ## t/helper/test-advise.c ##
-    -@@ t/helper/test-advise.c: int cmd__advise_if_enabled(int argc, const char **argv)
-    - 	 * selected here and in t0018 where this command is being
-    - 	 * executed.
-    - 	 */
-    --	advise_if_enabled(ADVICE_NESTED_TAG, argv[1]);
-    -+	advise_if_enabled(ADVICE_NESTED_TAG, "%s", argv[1]);
-    - 
-    - 	return 0;
-    - }
-5:  daca344a16 < -:  ---------- bugreport.c: tweak cmd_bugreport() to use __attribute__((printf))
-6:  365c5cf50b < -:  ---------- git-compat-util.h: add __attribute__((printf)) to git_*printf*
--:  ---------- > 5:  a001e851d2 advice.h: add missing __attribute__((format)) & fix usage
--:  ---------- > 6:  fe66e06754 strbuf.h: add a comment about "missing" strftime() checking
+diff --git a/add-patch.c b/add-patch.c
+index 2fad92ca37..8c41cdfe39 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -280,6 +280,7 @@ static void add_p_state_clear(struct add_p_state *s)
+ 	clear_add_i_state(&s->s);
+ }
+ 
++__attribute__((format (printf, 2, 3)))
+ static void err(struct add_p_state *s, const char *fmt, ...)
+ {
+ 	va_list args;
+diff --git a/builtin/am.c b/builtin/am.c
+index 0b2d886c81..0c2ad96b70 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -210,6 +210,7 @@ static void write_state_bool(const struct am_state *state,
+  * If state->quiet is false, calls fprintf(fp, fmt, ...), and appends a newline
+  * at the end.
+  */
++__attribute__((format (printf, 3, 4)))
+ static void say(const struct am_state *state, FILE *fp, const char *fmt, ...)
+ {
+ 	va_list ap;
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 9d9540a0ab..f184eaeac6 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -117,6 +117,7 @@ static int write_in_file(const char *path, const char *mode, const char *format,
+ 	return fclose(fp);
+ }
+ 
++__attribute__((format (printf, 2, 3)))
+ static int write_to_file(const char *path, const char *format, ...)
+ {
+ 	int res;
+@@ -129,6 +130,7 @@ static int write_to_file(const char *path, const char *format, ...)
+ 	return res;
+ }
+ 
++__attribute__((format (printf, 2, 3)))
+ static int append_to_file(const char *path, const char *format, ...)
+ {
+ 	int res;
+diff --git a/commit-graph.c b/commit-graph.c
+index 2bcb4e0f89..9179a3a647 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -2408,6 +2408,7 @@ int write_commit_graph(struct object_directory *odb,
+ #define VERIFY_COMMIT_GRAPH_ERROR_HASH 2
+ static int verify_commit_graph_error;
+ 
++__attribute__((format (printf, 1, 2)))
+ static void graph_report(const char *fmt, ...)
+ {
+ 	va_list ap;
+diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+index bcd3f575a3..0b44a9b7cc 100644
+--- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
++++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+@@ -10,6 +10,7 @@ static char *username;
+ static char *password;
+ static UInt16 port;
+ 
++__attribute__((format (printf, 1, 2)))
+ static void die(const char *err, ...)
+ {
+ 	char msg[4096];
+diff --git a/contrib/credential/wincred/git-credential-wincred.c b/contrib/credential/wincred/git-credential-wincred.c
+index 5bdad41de1..5091048f9c 100644
+--- a/contrib/credential/wincred/git-credential-wincred.c
++++ b/contrib/credential/wincred/git-credential-wincred.c
+@@ -11,6 +11,7 @@
+ 
+ #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
+ 
++__attribute__((format (printf, 1, 2)))
+ static void die(const char *err, ...)
+ {
+ 	char msg[4096];
+diff --git a/gettext.c b/gettext.c
+index af2413b47e..bb5ba1fe7c 100644
+--- a/gettext.c
++++ b/gettext.c
+@@ -66,6 +66,7 @@ const char *get_preferred_languages(void)
+ }
+ 
+ #ifndef NO_GETTEXT
++__attribute__((format (printf, 1, 2)))
+ static int test_vsnprintf(const char *fmt, ...)
+ {
+ 	char buf[26];
+diff --git a/imap-send.c b/imap-send.c
+index bb085d66d1..ce5a0461a4 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -451,6 +451,7 @@ static int buffer_gets(struct imap_buffer *b, char **s)
+ 	/* not reached */
+ }
+ 
++__attribute__((format (printf, 1, 2)))
+ static void imap_info(const char *msg, ...)
+ {
+ 	va_list va;
+@@ -463,6 +464,7 @@ static void imap_info(const char *msg, ...)
+ 	}
+ }
+ 
++__attribute__((format (printf, 1, 2)))
+ static void imap_warn(const char *msg, ...)
+ {
+ 	va_list va;
+@@ -504,6 +506,7 @@ static char *next_arg(char **s)
+ 	return ret;
+ }
+ 
++__attribute__((format (printf, 3, 4)))
+ static int nfsnprintf(char *buf, int blen, const char *fmt, ...)
+ {
+ 	int ret;
+diff --git a/mailmap.c b/mailmap.c
+index d1f7c0d272..462b395634 100644
+--- a/mailmap.c
++++ b/mailmap.c
+@@ -8,6 +8,7 @@
+ #define debug_mm(...) fprintf(stderr, __VA_ARGS__)
+ #define debug_str(X) ((X) ? (X) : "(none)")
+ #else
++__attribute__((format (printf, 1, 2)))
+ static inline void debug_mm(const char *format, ...) {}
+ static inline const char *debug_str(const char *s) { return s; }
+ #endif
+diff --git a/merge-ort.c b/merge-ort.c
+index b954f7184a..955d1d0502 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -529,6 +529,7 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
+ 	renames->callback_data_nr = renames->callback_data_alloc = 0;
+ }
+ 
++__attribute__((format (printf, 2, 3)))
+ static int err(struct merge_options *opt, const char *err, ...)
+ {
+ 	va_list params;
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 4327e0cfa3..5d54990af9 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -167,6 +167,7 @@ static void flush_output(struct merge_options *opt)
+ 	}
+ }
+ 
++__attribute__((format (printf, 2, 3)))
+ static int err(struct merge_options *opt, const char *err, ...)
+ {
+ 	va_list params;
+diff --git a/midx.c b/midx.c
+index 21d6a05e88..0956849e2a 100644
+--- a/midx.c
++++ b/midx.c
+@@ -1162,6 +1162,7 @@ void clear_midx_file(struct repository *r)
+ 
+ static int verify_midx_error;
+ 
++__attribute__((format (printf, 1, 2)))
+ static void midx_report(const char *fmt, ...)
+ {
+ 	va_list ap;
+diff --git a/ref-filter.c b/ref-filter.c
+index 4db0e40ff4..f45d3a1b26 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -213,6 +213,7 @@ static int used_atom_cnt, need_tagged, need_symref;
+  * Expand string, append it to strbuf *sb, then return error code ret.
+  * Allow to save few lines of code.
+  */
++__attribute__((format (printf, 3, 4)))
+ static int strbuf_addf_ret(struct strbuf *sb, int ret, const char *fmt, ...)
+ {
+ 	va_list ap;
+diff --git a/sequencer.c b/sequencer.c
+index c316d8374a..7f07cd00f3 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3521,6 +3521,7 @@ static int do_exec(struct repository *r, const char *command_line)
+ 	return status;
+ }
+ 
++__attribute__((format (printf, 2, 3)))
+ static int safe_append(const char *filename, const char *fmt, ...)
+ {
+ 	va_list ap;
+@@ -3598,6 +3599,7 @@ static int do_label(struct repository *r, const char *name, int len)
+ 	return ret;
+ }
+ 
++__attribute__((format (printf, 3, 4)))
+ static const char *reflog_message(struct replay_opts *opts,
+ 	const char *sub_action, const char *fmt, ...)
+ {
+diff --git a/server-info.c b/server-info.c
+index de0aa4498c..7701d7c20a 100644
+--- a/server-info.c
++++ b/server-info.c
+@@ -27,6 +27,7 @@ static int uic_is_stale(const struct update_info_ctx *uic)
+ 	return uic->old_fp == NULL;
+ }
+ 
++__attribute__((format (printf, 2, 3)))
+ static int uic_printf(struct update_info_ctx *uic, const char *fmt, ...)
+ {
+ 	va_list ap;
+diff --git a/worktree.c b/worktree.c
+index 237517baee..092a4f92ad 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -265,6 +265,7 @@ const char *worktree_prune_reason(struct worktree *wt, timestamp_t expire)
+ }
+ 
+ /* convenient wrapper to deal with NULL strbuf */
++__attribute__((format (printf, 2, 3)))
+ static void strbuf_addf_gently(struct strbuf *buf, const char *fmt, ...)
+ {
+ 	va_list params;
 -- 
 2.32.0-dev
 
