@@ -2,124 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 624AFC07E95
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 11:20:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55556C07E95
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 11:51:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 414E561183
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 11:20:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 389F661008
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 11:51:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235671AbhGMLXL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 07:23:11 -0400
-Received: from smtprelay05.ispgateway.de ([80.67.31.94]:27246 "EHLO
-        smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235552AbhGMLXK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 07:23:10 -0400
-Received: from [84.163.66.71] (helo=[192.168.2.202])
-        by smtprelay05.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <git@mfriebe.de>)
-        id 1m3GRU-0004Eh-Ef; Tue, 13 Jul 2021 13:19:12 +0200
-Subject: Re: PATCH: improve git switch documentation
-To:     Sergey Organov <sorganov@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
- <87bl7d3l8r.fsf@osv.gnss.ru> <60e61bbd7a37d_3030aa2081a@natae.notmuch>
- <877di13hhe.fsf@osv.gnss.ru>
- <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
- <60e67389a4adc_306ac1208fd@natae.notmuch>
- <4057b3ac-a77c-0d5f-d3f4-ad781754aae4@mfriebe.de>
- <60e736e72da68_30939020850@natae.notmuch>
- <155308af-42ad-b044-fb37-676251a9b7e1@mfriebe.de>
- <60e762243aab1_30a7b02089@natae.notmuch>
- <2b85a7eb-d0be-65e7-ecbb-1750abf53e53@mfriebe.de>
- <60e79c31aaa72_30b8a4208c1@natae.notmuch>
- <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
- <60e874e1c6845_215320861@natae.notmuch>
- <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
- <87im1ieaba.fsf@osv.gnss.ru>
- <1bd36aa2-ac90-f7d4-9d48-1aa39159b263@mfriebe.de>
- <87a6mudt9b.fsf@osv.gnss.ru> <60e9ff4430c57_7ef20815@natae.notmuch>
- <874kd1gr0q.fsf@osv.gnss.ru> <60ec6cd622c4c_a4525208a0@natae.notmuch>
- <87czrnf8bj.fsf@osv.gnss.ru>
-From:   Martin <git@mfriebe.de>
-Message-ID: <3c32c82c-5121-285a-036f-08e6daa320eb@mfriebe.de>
-Date:   Tue, 13 Jul 2021 13:20:15 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S235960AbhGMLyU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 07:54:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36374 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235891AbhGMLyT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 07:54:19 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88856C0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 04:51:29 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id f17so30098563wrt.6
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 04:51:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=lGuF0HpN2bwTdT++Ycdzu865KJTc/5O/a45lLjBPClE=;
+        b=O8T4Bllrj/qsqyf+dlg7wcJGbJl3cDIlqwz+rymRsqadteybbgZodEUKy0ngVADavJ
+         LXsna8gQ4p2CcD7PZHTdzcVQ9Prc1XlKApUSeiJ1EbH70KlptEm61wdI0zNcnReRGNVL
+         2EtnuNNqdH2vutJOk6aVIQ0qDChIJHVSkKiHtGQbsUbePTcT3VizsYIAaIKfojWfEnb3
+         9+xON32AX3dY53fEsy+3ht4xv9ULDECLPSu7e0UkpU58NeO56vBu2oyHQQJRLi0bCA4g
+         x8kMQDToutgRvf6tdUXAoQGAf5FrVl2WMrH6w7wfyqskE2xEppRRsC/IUv1umJuPt3xK
+         9n0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=lGuF0HpN2bwTdT++Ycdzu865KJTc/5O/a45lLjBPClE=;
+        b=l4E5JTr77ss5ng/kCfPrIbQ3FQ+0EoJCn8tHfOKtMWg0mtM+J5YnqCmON9Ev3rxeJC
+         m519EvEnY4AFsTOAJiBM2pnMwHS/5hwUcaDUxrsBRQ9ZHdAFASs8PdzeypZ/2fi/E2Bq
+         gEy80mx8aoKK1a2mcVY9Nc0Xfbi/HhQlbyBTu8PTLPx8dRpxXl2NjIVn0fsDhAcsyB4x
+         b0gvN2avON13WUAYq5CkPDtAGZQ+YD7nW4LdjV73D9eytNK/brG6B6t91/PrEfkDBuBi
+         dmBwei1eR+DBea4JgCFoy3affUt6O2kvsGe6x82SdhoErReTQ2WgovTUflt0ym6E8ad8
+         ZpwQ==
+X-Gm-Message-State: AOAM5302WoCQDTz7m7oz8wfTB46Q1DLCTv7qv4e2WZ1kvwNRwv6g19JF
+        +gbYbbiFdUUuw70D4vymglZ0HGsDvPg=
+X-Google-Smtp-Source: ABdhPJxlqFQ5fdmwIW1wjIe6UmxEmw2u688frGnkGxnlX7m9o9Hb8z8Wt+xATx9HDUFqGj/vuTvDOQ==
+X-Received: by 2002:a5d:4449:: with SMTP id x9mr5159781wrr.52.1626177088152;
+        Tue, 13 Jul 2021 04:51:28 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y6sm3085851wma.48.2021.07.13.04.51.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jul 2021 04:51:27 -0700 (PDT)
+Message-Id: <pull.994.git.1626177086682.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 13 Jul 2021 11:51:26 +0000
+Subject: [PATCH] ci: run `make sparse` as a GitHub workflow
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <87czrnf8bj.fsf@osv.gnss.ru>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: bWVAbWZyaWViZS5kZQ==
+To:     git@vger.kernel.org
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng?= Danh 
+        <congdanhqx@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/07/2021 00:58, Sergey Organov wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->> I disagree. I prefer the former.
-> 
->       git create branch "nice-feature"
-> 
-> Almost plain human language. Isn't it nice? I mean I fail to see why
-> you prefer the former, but I don't care that much either.
-> 
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-But human language is not always the best to express something to a 
-computer (sometimes not even to a human). Human language for starters is 
-often very ambiguous. (Not in this particular example, but in general).
+Occasionally we receive reviews after patches were integrated, where
+`sparse` identified problems such as file-local variables or functions
+being declared as global.
 
-So even if it looks like human language, its not (not a "duck" either;) ).
-It still needs each token (each word is a token) to be documented.
+By running `sparse` as part of our Continuous Integration, we can catch
+such things much earlier. Even better: developers who activated GitHub
+Actions on their forks can catch such issues before even sending their
+patches to the Git mailing list.
 
-The "create" vs "new" is a good example.
-- "creating" still happens when you add commits into the branch (human 
-language "branch"). Because that's what the branch wants to be, a series 
-of commits. You keep creating it, until its done, then you merge it.
-- "new" of course is not a verb...
+This addresses https://github.com/gitgitgadget/git/issues/345
 
-    git prepare branch
-would probably be more accurate.
-But I am sure it has flaws too.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    ci: run make sparse as a GitHub workflow
+    
+    One of the earliest open source static analyzers is called "sparse", and
+    occasionally Ramsay Jones sends out mails on the Git mailing list that
+    some function or other should be declared static because sparse found
+    out that it is only used within the same file.
+    
+    Let's add a GitHub workflow running "make sparse".
+    
+    Example run: https://github.com/gitgitgadget/git/actions/runs/1026303823
 
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-994%2Fdscho%2Fci-enable-sparse-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-994/dscho/ci-enable-sparse-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/994
 
-> No, I don't think it's an option, as unfortunately for your preferences,
-> 
->          git branch new
-> 
-> looks impossible to introduce in a backward compatible manner, nor there
-> is significant need to, as
-> 
->          git branch
-> 
-> already does the job, even if by introducing syntax irregularity.
+ .github/workflows/run-sparse.yml | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+ create mode 100644 .github/workflows/run-sparse.yml
 
-It is not that it already does the job ("git stash push" and "git stash" 
-both do the job)
+diff --git a/.github/workflows/run-sparse.yml b/.github/workflows/run-sparse.yml
+new file mode 100644
+index 00000000000..25f6a6efb40
+--- /dev/null
++++ b/.github/workflows/run-sparse.yml
+@@ -0,0 +1,22 @@
++name: Run `sparse`
++
++on: [push, pull_request]
++
++jobs:
++  sparse:
++    runs-on: ubuntu-20.04
++    steps:
++    - name: Download the `sparse` package
++      uses: git-for-windows/get-azure-pipelines-artifact@v0
++      with:
++        repository: git/git
++        definitionId: 10
++        artifact: sparse-20.04
++    - name: Install the `sparse` package
++      run: sudo dpkg -i sparse-20.04/sparse_*.deb
++    - name: Install a couple of dependencies
++      run: |
++        sudo apt-get install -q -y libssl-dev libcurl4-openssl-dev libexpat-dev gettext zlib1g-dev
++    - uses: actions/checkout@v2
++    - name: make sparse
++      run: make sparse
+\ No newline at end of file
 
-But in
-    git branch new
-"new" would be the name of a branch. :(
-
-But at some point, it was indicated that this is about finding 
-guidelines for future additions.
-So not all old commands need to be "fixed".
-
-Not that they are broken. They are fine. We do not need to break them by 
-adding a rule like that.
-
-And
-    git noun verb <opts>
-    git verb <opts>
-works as guideline for new additions.
-
-Of course you want to add
-    git verb noun
-which I personally to not favour.
-
+base-commit: ebf3c04b262aa27fbb97f8a0156c2347fecafafb
+-- 
+gitgitgadget
