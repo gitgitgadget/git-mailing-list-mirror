@@ -2,134 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-15.6 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C270C07E95
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 16:55:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49B88C07E95
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 17:06:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 263B26101E
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 16:55:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3077F6128D
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 17:06:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229666AbhGMQ6R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 12:58:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50182 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbhGMQ6Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 12:58:16 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31458C0613DD
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 09:55:25 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id x16so10531383plg.3
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 09:55:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=rCNIRkSlVHe6fqJE9Q3yFgldbDZSq7TmxDakvkdKE0Q=;
-        b=XaDSuzulwb7epQgjA4rlQrE8XTQ7wo6MdOrQjgiXkwKacosotxEpVC4LUQ5htGmJEt
-         90hxAntLy+1X/SSkQxOnyhMy/JvsZ3GNcwVujUFIVBsyOVK4lVBKfjGAgT9Bh8uJ4lIz
-         dRhATbSmbIrN6RNUvHDixkZFQxbparx/UD+qUChQMa1V+K5hleRJv/EBydbkBDR96CDS
-         uC2sC+iqj39dWrdXdNiMH8KPyxQX3mTvCL3UH5zfg8O1+BeaUPYtyQAuLGn9uFuKKfNe
-         ltb9g4XHVgkLpfwPVVFYL4s+Sp+lk+Y/19/OH91gmDSuj9Shoj81AQhLJjZq6NSuc1UL
-         m6SQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rCNIRkSlVHe6fqJE9Q3yFgldbDZSq7TmxDakvkdKE0Q=;
-        b=lDjURz1PYBSYJzxFa4jLAF55rCqS97SAcX7Jxw37nh2XAohJZiTy82xGwynFod87xn
-         YmdHctFVlAVctzEEytUwXu8/9NBJqLetI/UVCqGU4RE4mHfcFXvxmhinY2GperEsgifC
-         +7HqNNGDPxnBGiw+8pTLE9c4a1F7VXThWNdNWZjDPfeQAxYjw+PPQECiDOoIu00ofmUV
-         O7aLukUt+XZOB+QYwVwAN7YJVVI5YV2oGnzBx+A3T1976LwCVJyzvz8PiorR33ROpJZO
-         UMufkrdqMkm+nwvNuxDTp2daZBFmzGZdJZ6Cez4VoVCCEdeAqNuQC1EF8jDDhSFDKYI6
-         wmbw==
-X-Gm-Message-State: AOAM5309lvSHYFpS9U807SlLPj3a0xZO+g8/Wv0RZXOvXNIrJPqjqQCo
-        +QFUqUYQ+JotP5WxjHawBsU=
-X-Google-Smtp-Source: ABdhPJwgakydkzCaq8ToVWPvr6e5SlDSSk3ay4TlqbT3bIz5l8L6GG5O1zVq0VZRXl5d8+txh20lBQ==
-X-Received: by 2002:a17:902:aa49:b029:10d:22fa:13d4 with SMTP id c9-20020a170902aa49b029010d22fa13d4mr4128868plr.78.1626195324687;
-        Tue, 13 Jul 2021 09:55:24 -0700 (PDT)
-Received: from localhost ([2402:800:63b8:f6f9:3a91:18b:7264:dbcb])
-        by smtp.gmail.com with ESMTPSA id gd20sm2829808pjb.33.2021.07.13.09.55.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jul 2021 09:55:24 -0700 (PDT)
-Date:   Tue, 13 Jul 2021 23:55:22 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci: run `make sparse` as a GitHub workflow
-Message-ID: <YO3FelB47QrZwSa6@danh.dev>
-References: <pull.994.git.1626177086682.gitgitgadget@gmail.com>
+        id S233282AbhGMRJN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 13:09:13 -0400
+Received: from siwi.pair.com ([209.68.5.199]:61842 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229454AbhGMRJN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 13:09:13 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id EAD4A3F47F9;
+        Tue, 13 Jul 2021 13:06:22 -0400 (EDT)
+Received: from AZHCI-MGMT.azhci.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id AB6B93F40B7;
+        Tue, 13 Jul 2021 13:06:22 -0400 (EDT)
+Subject: Re: [PATCH v3 24/34] t/perf/p7519: speed up test using "test-tool
+ touch"
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
+ <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
+ <f1ef9656fc3adf079c8e40a74baeb5356bcf1586.1625150864.git.gitgitgadget@gmail.com>
+ <87h7hdbpgb.fsf@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <c6793033-9bd4-e108-4a53-56c1dbd24a60@jeffhostetler.com>
+Date:   Tue, 13 Jul 2021 13:06:21 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.994.git.1626177086682.gitgitgadget@gmail.com>
+In-Reply-To: <87h7hdbpgb.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-07-13 11:51:26+0000, Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com> wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+
+On 7/1/21 7:09 PM, Ævar Arnfjörð Bjarmason wrote:
 > 
-> Occasionally we receive reviews after patches were integrated, where
-> `sparse` identified problems such as file-local variables or functions
-> being declared as global.
+> On Thu, Jul 01 2021, Jeff Hostetler via GitGitGadget wrote:
 > 
-> By running `sparse` as part of our Continuous Integration, we can catch
-> such things much earlier. Even better: developers who activated GitHub
-> Actions on their forks can catch such issues before even sending their
-> patches to the Git mailing list.
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>
+>> Change p7519 to use a single "test-tool touch" command to update
+>> the mtime on a series of (thousands) files instead of invoking
+>> thousands of commands to update a single file.
+>>
+>> This is primarily for Windows where process creation is so
+>> very slow and reduces the test run time by minutes.
+>>
+>> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+>> ---
+>>   t/perf/p7519-fsmonitor.sh | 14 ++++++--------
+>>   1 file changed, 6 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
+>> index 5eb5044a103..f74e6014a0a 100755
+>> --- a/t/perf/p7519-fsmonitor.sh
+>> +++ b/t/perf/p7519-fsmonitor.sh
+>> @@ -119,10 +119,11 @@ test_expect_success "one time repo setup" '
+>>   	fi &&
+>>   
+>>   	mkdir 1_file 10_files 100_files 1000_files 10000_files &&
+>> -	for i in $(test_seq 1 10); do touch 10_files/$i; done &&
+>> -	for i in $(test_seq 1 100); do touch 100_files/$i; done &&
+>> -	for i in $(test_seq 1 1000); do touch 1000_files/$i; done &&
+>> -	for i in $(test_seq 1 10000); do touch 10000_files/$i; done &&
+>> +	test-tool touch sequence --pattern="10_files/%d" --start=1 --count=10 &&
+>> +	test-tool touch sequence --pattern="100_files/%d" --start=1 --count=100 &&
+>> +	test-tool touch sequence --pattern="1000_files/%d" --start=1 --count=1000 &&
+>> +	test-tool touch sequence --pattern="10000_files/%d" --start=1 --count=10000 &&
+>> +
+>>   	git add 1_file 10_files 100_files 1000_files 10000_files &&
+>>   	git commit -qm "Add files" &&
+>>   
+>> @@ -200,15 +201,12 @@ test_fsmonitor_suite() {
+>>   	# Update the mtimes on upto 100k files to make status think
+>>   	# that they are dirty.  For simplicity, omit any files with
+>>   	# LFs (i.e. anything that ls-files thinks it needs to dquote).
+>> -	# Then fully backslash-quote the paths to capture any
+>> -	# whitespace so that they pass thru xargs properly.
+>>   	#
+>>   	test_perf_w_drop_caches "status (dirty) ($DESC)" '
+>>   		git ls-files | \
+>>   			head -100000 | \
+>>   			grep -v \" | \
+>> -			sed '\''s/\(.\)/\\\1/g'\'' | \
+>> -			xargs test-tool chmtime -300 &&
+>> +			test-tool touch stdin &&
+>>   		git status
+>>   	'
 > 
-> This addresses https://github.com/gitgitgadget/git/issues/345
+> Did you try to replace this with some variant of:
 > 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>      test_seq 1 10000 | xargs touch
+> 
+> Which (depending on your xargs version) would invoke "touch" commands
+> with however many argv items it thinks you can handle.
+> 
 
-Thanks for doing this change.
+a quick test on my Windows machine shows that
 
-Some minor nits below.
+	test_seq 1 10000 | xargs touch
 
-> diff --git a/.github/workflows/run-sparse.yml b/.github/workflows/run-sparse.yml
-> new file mode 100644
-> index 00000000000..25f6a6efb40
-> --- /dev/null
-> +++ b/.github/workflows/run-sparse.yml
-> @@ -0,0 +1,22 @@
-> +name: Run `sparse`
+takes 3.1 seconds.
 
-Markdown doesn't work with Workflow's name.
-Please remove those backticks.
+just a simple
 
-> +on: [push, pull_request]
-> +
-> +jobs:
-> +  sparse:
-> +    runs-on: ubuntu-20.04
-> +    steps:
-> +    - name: Download the `sparse` package
-> +      uses: git-for-windows/get-azure-pipelines-artifact@v0
-> +      with:
-> +        repository: git/git
-> +        definitionId: 10
-> +        artifact: sparse-20.04
-> +    - name: Install the `sparse` package
-> +      run: sudo dpkg -i sparse-20.04/sparse_*.deb
-> +    - name: Install a couple of dependencies
-> +      run: |
-> +        sudo apt-get install -q -y libssl-dev libcurl4-openssl-dev libexpat-dev gettext zlib1g-dev
-> +    - uses: actions/checkout@v2
-> +    - name: make sparse
-> +      run: make sparse
-> \ No newline at end of file
+	test_seq 1 10000 >/dev/null
 
-The last step's name and run is the same. We can just drop name, it'll
-use run as name. Anyway, remember the newline
+take 0.2 seconds.
 
-Otherwise, look good to me.
+using my test-tool helper cuts that time in half.
 
--- 
-Danh
+Jeff
