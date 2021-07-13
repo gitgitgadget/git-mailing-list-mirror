@@ -2,114 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BDBFC07E95
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 07:04:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79D39C07E95
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 07:40:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0837C611C0
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 07:04:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 625E361040
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 07:40:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233793AbhGMHHi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 03:07:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55002 "EHLO
+        id S234413AbhGMHni (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 03:43:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232908AbhGMHHi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 03:07:38 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17D0EC0613DD
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 00:04:48 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id a14so10614208pls.4
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 00:04:48 -0700 (PDT)
+        with ESMTP id S234408AbhGMHnh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 03:43:37 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0546FC0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 00:40:47 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id q4so28520073ljp.13
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 00:40:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=sdFqK6VzS9VE9PjFJA3l+HasczQlREE7phouGVuG8wM=;
-        b=umSS/IYn6hHjF2vUZasz0KXepni/YHRY040+S6Rk1QOacogWTayE7frL6GJYtVDDkn
-         kQGe2riN1+Uefu68GVZOLUMyDarMO2kItTkRjlav13VseJTHyaWJdwn4HqnozodXfYwa
-         qf+rB32nBFbqsGIvixFYHArBPOyYvn1YqtSfMY0pk/qMvr4QLU+3YIIJc3xitishb025
-         tRqgEinObsY8zmLniD5lBcI8m5u5boB2H0w7jsYot370sxAMkqpAFD7tHwKx3pN/DMwt
-         WqLcEPG3vF7dUbZCY3FW7axMFH0na97efdgXdgDIPGy3BYTlh13L1slHs6BIBE33GxW6
-         TgPQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=EOGUw7XlBMi/9UCK5fQy/PQ+Y/ydwk6YeikV+qLSDI0=;
+        b=KQvHrgclvftVnvc3UL5iDMLR3Ng37t56EGHVmRorfImXZe/nCFNK919klq4s2kybV7
+         E1DxXMj2z2Vaf+iOR9m6g+wZ9mLiLAhWFZi1a0yDDv5jQVkqgBxLEE6WaClAy3MuU+ZB
+         3YoxDOzXEhRUIz2QcGFo0zNi1fFZtt7+e87/cN8nauntdEuFRvvNssOEX54N2EO0udjU
+         BW9hDEwtrcm8phoUnK+0NBnK6zoKDBdac3LmxEvrnrX1GWVhNV8Gg8IFFBUjKb3rRT5S
+         gu8U6YSWBf3MV+9fT9Uz4dSdmBvwsTTwuEN7ci8cwh4N4TvuxA0O0X9TTu7lHrkeZJyT
+         Kgcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=sdFqK6VzS9VE9PjFJA3l+HasczQlREE7phouGVuG8wM=;
-        b=AZZTXPUC9d9207ZmJW5wYwNER44W/2JcFKU1cbbQGPAxR8EQeULst86mrFDrbYZMyo
-         bCvqprAFD33fJKYm67655CslFdiOExW8YXnAtFS0ewwb2wQOBU1wKzR4W1PO1jj9k/Gw
-         cUapEc5ooO/Lf+CNQzXH06Yh2pAbUqzAHtYgjZkR19to/cFHyMAJF9R6if5ElukcFbWS
-         hba4ook1Jt6epJb8klfAdVS5YOSUFxy6yQ2F2Qh/KI1ah+XEMyGaDm1iRQSntL428S0Q
-         +STd/TeYwZQwQH/iqUyoUB7LcGhmtQ3BiruVLO9/O9hrGlFjivKEQA4+EbpmeKWmqdpu
-         Z6Ug==
-X-Gm-Message-State: AOAM531s3+bm2d00QdU7D9PHnKPXxaDJzAmCaR8ZbTf0tafgXdjEI2rv
-        NRrcaFed3LKKYgmM/LKNKow=
-X-Google-Smtp-Source: ABdhPJwRXucUvjsH22KPDD/9v9dC7SrhxJpDD4bD6yHsZNO7Y2l4ALuGRdR3xP6ilhakCbYiFv5S7Q==
-X-Received: by 2002:a17:90b:1d84:: with SMTP id pf4mr2951057pjb.166.1626159887495;
-        Tue, 13 Jul 2021 00:04:47 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-85.three.co.id. [180.214.233.85])
-        by smtp.gmail.com with ESMTPSA id 133sm19258543pfx.39.2021.07.13.00.04.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jul 2021 00:04:46 -0700 (PDT)
-Subject: Re: [PATCH v7 2/3] maintenance: `git maintenance run` learned
- `--scheduler=<scheduler>`
-To:     Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
-        Git List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBE?= =?UTF-8?Q?anh?= 
-        <congdanhqx@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20210612165043.165579-1-lenaic@lhuard.fr>
- <20210702142556.99864-1-lenaic@lhuard.fr>
- <20210702142556.99864-3-lenaic@lhuard.fr>
- <87h7h75hzz.fsf@evledraar.gmail.com> <xmqq5yxni2rn.fsf@gitster.g>
- <YOzbO1/mfL8hKhBT@coredump.intra.peff.net>
- <CAPig+cT-x4_YuxmmoFw62jFqKRFJrS_UkyNOkdQz9-Gwec3QCQ@mail.gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <80ad532f-bcbe-2af2-27e3-0f503209b300@gmail.com>
-Date:   Tue, 13 Jul 2021 14:04:41 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=EOGUw7XlBMi/9UCK5fQy/PQ+Y/ydwk6YeikV+qLSDI0=;
+        b=hsd05xHUHVwQrG54DDiF+1wV3oR+Xf5Z5cV4mnBvrZ9H0nEs45t8trom+UeEc/utby
+         G3F/5mtw0RL8Lk96MH+zAA76hnt59jTcsMA9/burJBdAGz7aXlWs8ydkjJBe91uxxL5t
+         GFMvCFmHiHL+wiR3dR3q7qZXMSVaSxbB4nO3omBDVKc2Y4JsIrG3i5N0ero+MsnAVEEl
+         Cz1pLZXR8n9IZJWQ7ssOfKtWE71hXu+fX9I7ksJTdd9s7zo99bKqKijWGfgFeBw4B1Qu
+         gZVM6Z0Klh2KzwJAQSmkLd9SU4jam1CN53RgOeLye07C9crajYX/l2OFh0/rt0B7AwZx
+         1aoQ==
+X-Gm-Message-State: AOAM532AdgfoutGZZukkTj1A05PwBDU8bcODm5RBr3kkGYzgN8w2YqYR
+        MDze58mDEKW2yeStpSZni58A2SyhKtU=
+X-Google-Smtp-Source: ABdhPJzSF8Z+g0EtUtjsH+a/b9+BB5dhAAFVr5g0+1AKs0IDtgcSYBcjuey4+kMnudpGTKpyzVxc8g==
+X-Received: by 2002:a2e:8750:: with SMTP id q16mr2995604ljj.92.1626162044954;
+        Tue, 13 Jul 2021 00:40:44 -0700 (PDT)
+Received: from localhost.localdomain (213-65-66-12-no600.tbcn.telia.com. [213.65.66.12])
+        by smtp.gmail.com with ESMTPSA id a13sm416850lfl.206.2021.07.13.00.40.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jul 2021 00:40:44 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH v2] load_ref_decorations(): fix decoration with tags
+Date:   Tue, 13 Jul 2021 09:40:18 +0200
+Message-Id: <20210713074018.232372-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.32.0.402.g57bb445576
+In-Reply-To: <YOzY+qNFM2GsgKMO@coredump.intra.peff.net>
+References: <YOzY+qNFM2GsgKMO@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cT-x4_YuxmmoFw62jFqKRFJrS_UkyNOkdQz9-Gwec3QCQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/07/21 09.22, Eric Sunshine wrote:
-> Since Lénaïc is a relative newcomer to the project, can we, as
-> reviewers, be clear that we don't expect him to perform the task of
-> generalizing strvec_split() just to get this series -- which is
-> already at v7 -- landed? I gave the previous round a pretty thorough
-> going-over and -- aside from one minor test-time bug -- didn't find
-> any show-stoppers which should prevent it from landing. While it may
-> be the case that the series has a superficial wart here and there
-> (such as #ifdef's in function bodies, and non-ASCII fancy comment
-> boxes), the review comments on the latest round have pretty much all
-> been subjective; I haven't seen any outright actionable observations.
-> Extra polishing based upon the subjective review comments can always
-> be done later atop Lénaïc's series (if someone -- not necessarily
-> Lénaïc -- wants to do so) without asking him for endless re-rolls.
-> 
+Commit 88473c8bae ("load_ref_decorations(): avoid parsing non-tag
+objects", 2021-06-22) introduced a shortcut to `add_ref_decoration()`:
+Rather than calling `parse_object()`, we go for `oid_object_info()` and
+then `lookup_object_by_type()` using the type just discovered. As
+detailed in the commit message, this provides a significant time saving.
 
-In such situation when there is endless re-roll of patch series due to 
-subjective reviews, we can ask for final call from the maintainer, right?
+Unfortunately, it also changes the behavior: We lose all annotated tags
+from the decoration.
 
+The reason this happens is in the loop where we try to peel the tags, we
+won't necessarily have parsed that first object. If we haven't, its
+`tag` will be NULL, so nothing will be displayed, and its `tagged` will
+also be NULL, so we won't peel any further.
+
+Make sure to parse the tag object at the top of the peeling loop. This
+effectively restores the pre-88473c8bae parsing -- but only of tags,
+allowing us to keep most of the possible speedup from 88473c8bae. Jeff
+King reports:
+
+  On my big ~220k ref test case (where it's mostly non-tags), the
+  timings [using "git log -1 --decorate"] are:
+
+    - before either patch: 2.945s
+    - with my broken patch: 0.707s
+    - with [this patch]: 0.788s
+
+Note how this commit could have been done as an optimization before
+88473c8bae: When our peeling hits a non-tag, we won't parse that tagged
+object only to immediately end the loop.
+
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ On Tue, 13 Jul 2021 at 02:06, Jeff King <peff@peff.net> wrote:
+ >
+ > Your fix is _almost_ there.
+
+ It's very kind of you to put it like that. I've picked up your
+ suggestions and have tried to summarize my understanding of the issue
+ and the fix in the commit message.
+
+ > That's the minimum needed to unbreak things. I think we could do even
+ > better, though. There is no need for us to parse a commit object pointed
+ > to by a tag here. We should only be parsing tags we see (whether at the
+ > top-level or recursively).
+
+ Maybe you wrote this before circling back and actually writing that
+ "even better" thing? Because it seems to me like that's what you did.
+ Maybe I'm still missing something.
+
+ Thank you for your insightful and helpful comments.
+
+ log-tree.c     | 4 ++--
+ t/t4202-log.sh | 9 +++++++++
+ 2 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/log-tree.c b/log-tree.c
+index 4f69ed176d..6dc4412268 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -174,11 +174,11 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
+ 
+ 	add_name_decoration(deco_type, refname, obj);
+ 	while (obj->type == OBJ_TAG) {
++		if (!obj->parsed)
++			parse_object(the_repository, &obj->oid);
+ 		obj = ((struct tag *)obj)->tagged;
+ 		if (!obj)
+ 			break;
+-		if (!obj->parsed)
+-			parse_object(the_repository, &obj->oid);
+ 		add_name_decoration(DECORATION_REF_TAG, refname, obj);
+ 	}
+ 	return 0;
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 350cfa3593..536b1eef42 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -1905,6 +1905,15 @@ test_expect_success '--exclude-promisor-objects does not BUG-crash' '
+ 	test_must_fail git log --exclude-promisor-objects source-a
+ '
+ 
++test_expect_success 'log --decorate includes lightweight and annotated tags' '
++	cat >expect <<-\EOF &&
++	three HEAD -> source-b, tag: three, tag: source-tag
++	one tag: one
++	EOF
++	git log --format="%s %D" >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'log --end-of-options' '
+        git update-ref refs/heads/--source HEAD &&
+        git log --end-of-options --source >actual &&
 -- 
-An old man doll... just what I always wanted! - Clara
+2.32.0.402.g57bb445576
+
