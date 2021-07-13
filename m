@@ -2,107 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E06B5C07E9A
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 00:10:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D001FC07E9A
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 00:15:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AEF2B6115B
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 00:10:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A563D611CB
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 00:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233606AbhGMAN0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 20:13:26 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39540 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230099AbhGMANZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 12 Jul 2021 20:13:25 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E5D006044E;
-        Tue, 13 Jul 2021 00:10:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1626135036;
-        bh=sPUwMKZOer6PkycXijnLUo62WTNYX1Qm55wGHVBzj1w=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=B0TRPPF/P9cuhenMHgZhjbcjtM/XtNinRdx7zTBGa20CO8vv33kfQE9YiptZVluN/
-         ccVy+gNLNIvqs8GO4eifT1q6fwR0rwn/7LeVC1LTCWpm9P9b+DVgUsOaCnhuXc48pz
-         FPXXQ4UAT/HWuWAE3EhrC+v10Z5z9/nJ+5mk1ldXUPeRcMDcjDEGZU/eSn+ICDz8+9
-         BLEktIObrz4QQSe8iNRqe3Wd9YCYNT+oHtVg51+T16HcKQm5iZHWp19mJ2+hX5IAPN
-         0kj1G2GbdACvHyi6gG4oDJcjn6+eN1OXIngm8fgh2Xv10cDd/+9rXXzktRV4vOITgb
-         rBNoO4CIoeMlsBSaPZg8+uvCJhPIwItgUnv0bTlVQKsDEzzIo2tSS9ruDEDqKRsDfq
-         evhtWwu8vn/S1xY9d4p9lOajFPwYWgmgfmLbsSQR5B3FEgGZkOCOTaVYXXAHJArrhQ
-         mhB3oYGQ6L/TaMoPzUwcxLHPlCSX+1JNghuzYA3TPeGjBQS6wtn
-Date:   Tue, 13 Jul 2021 00:10:29 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] rev-list: add option for --pretty=format without
- header
-Message-ID: <YOzZ9Zzv+NJu7Wo8@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-References: <20210706224321.14371-1-sandals@crustytoothpaste.net>
- <20210711215510.191626-1-sandals@crustytoothpaste.net>
- <CAP8UFD2BVba_vsXaTPkXgYDGg28xApoyDrrT2fdTddvM1_3CiA@mail.gmail.com>
+        id S233479AbhGMASq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 20:18:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47292 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230099AbhGMASp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 20:18:45 -0400
+Received: (qmail 25476 invoked by uid 109); 13 Jul 2021 00:15:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 13 Jul 2021 00:15:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3821 invoked by uid 111); 13 Jul 2021 00:15:57 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 12 Jul 2021 20:15:57 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 12 Jul 2021 20:15:55 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v7 2/3] maintenance: `git maintenance run` learned
+ `--scheduler=<scheduler>`
+Message-ID: <YOzbO1/mfL8hKhBT@coredump.intra.peff.net>
+References: <20210612165043.165579-1-lenaic@lhuard.fr>
+ <20210702142556.99864-1-lenaic@lhuard.fr>
+ <20210702142556.99864-3-lenaic@lhuard.fr>
+ <87h7h75hzz.fsf@evledraar.gmail.com>
+ <xmqq5yxni2rn.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="pxkkNHJEzz6ckKS5"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAP8UFD2BVba_vsXaTPkXgYDGg28xApoyDrrT2fdTddvM1_3CiA@mail.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq5yxni2rn.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Jul 06, 2021 at 01:52:12PM -0700, Junio C Hamano wrote:
 
---pxkkNHJEzz6ckKS5
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > This sort of code is much more pleseant to read and work with if you use
+> > strbuf_split_buf(). This isn't performance sensitive, so a few more
+> > allocations is fine.
+> 
+> Please do not encourage use of strbuf_split_buf().  It is a
+> misdesigned API as it rarely is justifyable to have an array, each
+> element of which can be independently tweaked by being strbuf.  We
+> are not implementing a text editor after all ;-)
 
-On 2021-07-12 at 07:30:33, Christian Couder wrote:
-> Usually we use "option" instead of "argument" for the flags starting
-> with "-" or "--" before the required parameter. For example:
->=20
-> $ git rev-list -h
-> usage: git rev-list [OPTION] <commit-id>... [ -- paths... ]
-> ...
->=20
-> (Yeah, I agree that [OPTION] is not very consistent with what other
-> commands show, which is usually "[<options>]".)
+Very much agreed on avoiding strbuf_split_buf(). My usual go-to is
+string_list_split(), which I think would work here for splitting on ":".
 
-I can do that rename.
+> A helper function that takes a string and returns a strvec would be
+> a good fit, though.
 
-> test_pretty() accepts options like --no-commit-header, but it's only
-> used without any option. So I wonder if you forgot to add a few tests
-> with some options.
+I was going to second that, but I see we already have one. :) Dscho
+introduced it in c5aa6db64f (argv_array: offer to split a string by
+whitespace, 2018-04-25), and then it later became strvec_split().
 
-I originally intended to add some, but decided to remove them because
-the --abbrev tests fit better elsewhere.  I'll remove the options.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+And indeed, Lénaïc's patches use it elsewhere. I think it doesn't work
+in this instance because it can't take an arbitrary delimiter. But I
+wouldn't at all mind seeing it grow that feature (and I suspect it could
+even share some code with string_list_split(), but didn't look).
 
---pxkkNHJEzz6ckKS5
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYOzZ9AAKCRB8DEliiIei
-gdHwAQDnNZDiLCN9U61/5hZeCg6eaGS7Vppivu3pNymWNtMC9wEA6Chla+7n+Bat
-313kCJX7pzoG6OXYbj7+bplOGNkPIQA=
-=alXh
------END PGP SIGNATURE-----
-
---pxkkNHJEzz6ckKS5--
+-Peff
