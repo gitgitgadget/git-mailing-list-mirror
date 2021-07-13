@@ -2,265 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7555C07E95
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 19:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B460DC07E95
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 19:34:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B8DD61353
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 19:33:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 94D0B61353
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 19:34:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229478AbhGMTgJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 15:36:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57524 "EHLO
+        id S234752AbhGMTg4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 15:36:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234615AbhGMTgG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 15:36:06 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8F3AC0613EE
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 12:33:10 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id l4-20020a05600c4f04b0290220f8455631so3122112wmq.1
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 12:33:10 -0700 (PDT)
+        with ESMTP id S234411AbhGMTgz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 15:36:55 -0400
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F228BC0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 12:34:03 -0700 (PDT)
+Received: by mail-qv1-xf33.google.com with SMTP id w2so8604979qvh.13
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 12:34:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=D/PkCpEbGyhmPUstaGyLqY15IvUcrT8iiGfUOWLjl1M=;
-        b=ug0+WvNBywwwpEMU8t2Rcb54lmh9k+pUdp3WE2CrypLx52uDzuDnM5v0SM+L7CezMa
-         rJP1YcKAysOJejwvolhlyRerw1JFp15rZ19dp+dUAp2/XVKqM2BaQ0Z9QioABgkmORnc
-         psQOEmh8Uhhqcf8tnNwL7yDKFkselbAwebT8GS5lhShFyNOOlu+XNDAaaJagnZq4dU0K
-         pVHjdnBi144W4TlBn711jRcwTnantZTu8xi3S5RrEwBeTaHh47uFB1JqHCQhcYcDZ18j
-         Gz0SXZIN1DxzW/yUHsl+nUCgGeoeZClX6R9yaUgPhNBvQF8yi2N5BoQjUhzJorGM7sTx
-         ttBg==
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=CXeFMFJSm0JooFVxu3dKf3oLxfvzcw1tznMZDCpPkdo=;
+        b=SK7IO/tzaMjZOgOFfSRc3SzJ0/Dxps0z0rT1m/zrocTrA6lwWC0VFM483NXcufMbEk
+         BOFTSMGUZaF+3K5ycaisPQw3sU3yqvbRrahiyy7y5WNeJ9uS9qrxNJxjaJ6aCox/HfL4
+         +4ojuWsGB+v/xG4q45sPaKAOxvnvzWTKy5JQEWCD9ZSbXC03wzBOnDSPuqa3glBmAdk5
+         D5SzCkH6kYMDlp8LW/Fx6I3/LvrHqY1hs/mww7Ch2/U1LeSzW4rBn2U6H7mGC4l5SSYJ
+         JJWV0KtJQYZjF5AJK4MpoJyJ7tn3sNM+vi5uDTO7AGXbhIliMFWQp5n5XcOKaXfx0XfB
+         08BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=D/PkCpEbGyhmPUstaGyLqY15IvUcrT8iiGfUOWLjl1M=;
-        b=SLdZZ42pfCEh8lyHg7xNRt2YCxkJ/iiJ4eG+8dJ99yi/szzjciseyc4iT8Gra99QUq
-         eh8YQ0Plumbqu/U5vQONETHewHXStw4CK1ot/t9Y57G2FE5Yg4cTLdbPPLddp2XUzcy/
-         l1HVqoSA6MbutaFS7esogbQeBvqIVueaJ0q4MqOfhsRApfPqxkFBP+OHBAqR4gfgyuW2
-         qNqKkvQAO0SuU9J4LEU5bas4jA50ukoKDq5aLTBKVienawfU4yn/DNdEN+uGsTyKWNVi
-         qs0ybRvAoNf+/m3ei4eGDVWmb7nb+N8yHwRHb5lz8LL/T+LGw1nxuKl/DblAs3p+e5Jc
-         aNTw==
-X-Gm-Message-State: AOAM532jjrKEhVq1l0HwiS908AyjyfXBBrmjm1KDti5cR/2yhCU0O1IS
-        y/W6zA4kvFZJx3+F4P6w/M3HxCqIWm8=
-X-Google-Smtp-Source: ABdhPJwb2alg6QRwmlMOldJYp2QWIYwKIxA4Lei8n5ClcGvLYm50V7H32XWx2YplHMtinvjjQk5/SQ==
-X-Received: by 2002:a05:600c:22d2:: with SMTP id 18mr6842146wmg.63.1626204789436;
-        Tue, 13 Jul 2021 12:33:09 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j6sm10764452wrm.97.2021.07.13.12.33.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jul 2021 12:33:09 -0700 (PDT)
-Message-Id: <3409a6cd631deb361d3ecb94491c0c297c52fb53.1626204784.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.988.v2.git.1626204784.gitgitgadget@gmail.com>
-References: <pull.988.git.1625111177.gitgitgadget@gmail.com>
-        <pull.988.v2.git.1626204784.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 13 Jul 2021 19:33:02 +0000
-Subject: [PATCH v2 6/7] merge-ort: avoid recursing into directories when we
- don't need to
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=CXeFMFJSm0JooFVxu3dKf3oLxfvzcw1tznMZDCpPkdo=;
+        b=ABH3izJg3bDkHzP6IS8qNCbjTwoEe5y2MEbXF8ZSPNEag6K4CS1H4tJ95fGF4AuOLx
+         2DnjfuWaVRFNOvhLXIbq0Pqjssx4ksucUgtp7+npNGrYMr1c9Qxs0RKSEEuqsrUfS4MJ
+         GUWV3veNCYPm4mw/1puSorN+nVV3S/M3jy2197WSzWoGQOPikR/W9wfBikV0m0HtmKTr
+         0AkVU60yoLOtE/i7U9JIkEVvKN40gdmsCCeKJRoRkMoySKwnVvkApX6XKjY2auXD938u
+         tY3mQ022xHlFiVIQ5d7nT9I7UnGBR6UZJv+wKKGmsFXdeQYSvb9qBApliwaDpm7AiEwn
+         oA1w==
+X-Gm-Message-State: AOAM530SdPdoStSn3+9GJ33COqZBQySrQc+YNtMtD8zZAWQ1Kyr4tLrl
+        Sa+4hvp1C0MSAI0S8f9OjUxcJ2xzDlpgjw==
+X-Google-Smtp-Source: ABdhPJzyl4d+vqN0YyvMM5/cDKn1p/SsZ7KQgz9zzxQycXsWbLkKjStrnMLqvbzJrI1LCnMmQn03wQ==
+X-Received: by 2002:a0c:d805:: with SMTP id h5mr6425618qvj.53.1626204842922;
+        Tue, 13 Jul 2021 12:34:02 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id u4sm8843910qkb.99.2021.07.13.12.34.02
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Jul 2021 12:34:02 -0700 (PDT)
+To:     Git mailing list <git@vger.kernel.org>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Confusing interaction between 'rebase -i' and 'commit.verbose' when
+ squashing commits
+Message-ID: <9515534e-705a-ad1c-a1ac-704b2d565f37@gmail.com>
+Date:   Tue, 13 Jul 2021 15:34:01 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Hi,
 
-This combines the work of the last several patches, and implements the
-conditions when we don't need to recurse into directories.  It's perhaps
-easiest to see the logic by separating the fact that a directory might
-have both rename sources and rename destinations:
+I encountered a situation when I did an interactive rebase and
+changed two 'picks' to 'squash', without re-ordering anything.
+I have 'commit.verbose' set in my config.
 
-  * rename sources: only files present in the merge base can serve as
-    rename sources, and only when one side deletes that file.  When the
-    tree on one side matches the merge base, that means every file
-    within the subtree matches the merge base.  This means that the
-    skip-irrelevant-rename-detection optimization from before kicks in
-    and we don't need any of these files as rename sources.
+When I then saved the todo list to start the rebase, it opened my
+editor to edit the message for the squashed commit. The message shown
+in the editor is as expected (the messages from the three commits are shown),
+but the diff below the scissors line, due to commit.verbose,
+corresponds to the squashed changes only from the
+*first two commits* (the 'pick' and the first 'squash'); the changes
+from the second 'squash' are missing.
 
-  * rename destinations: the tree that does not match the merge base
-    might have newly added and hence unmatched destination files.
-    This is what usually prevents us from doing trivial directory
-    resolutions in the merge machinery.  However, the fact that we have
-    deferred recursing into this directory until the end means we know
-    whether there are any unmatched relevant potential rename sources
-    elsewhere in this merge.  If there are no unmatched such relevant
-    sources anywhere, then there is no need to look for unmatched
-    potential rename destinations to match them with.
+Running 'git diff --cached'
+in a second shell shows that those changes (the ones from the second 'squash')
+are correctly staged. HEAD points to a commit that has the changes from
+the 'pick' and the first 'squash', and as commit message the message I'm
+seeing in my editor.
 
-This informs our algorithm:
-  * Search through relevant_sources; if we have entries, they better all
-    be reflected in cached_pairs or cached_irrelevant, otherwise they
-    represent an unmatched potential rename source (causing the
-    optimization to be disallowed).
-  * For any relevant_source represented in cached_pairs, we do need to
-    to make sure to get the destination for each source, meaning we need
-    to recurse into any ancestor directories of those destinations.
-  * Once we've recursed into all the rename destinations for any
-    relevant_sources in cached_pairs, we can then do the trivial
-    directory resolution for the remaining directories.
+This is rather confusing.
 
-For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-performance work; instrument with trace2_region_* calls", 2020-10-28),
-this change improves the performance as follows:
+I do not have a quick reproducer unfortunately and I'm in a bit of a rush,
+but I thought I'd just send this in case anyone notices quickly why this
+happens just by reading the code (I would think somewhere in 'sequencer.c').
 
-                            Before                  After
-    no-renames:        5.235 s ±  0.042 s   205.1  ms ±  3.8  ms
-    mega-renames:      9.419 s ±  0.107 s     1.564 s ±  0.010 s
-    just-one-mega:   480.1  ms ±  3.9  ms   479.5  ms ±  3.9  ms
+Cheers,
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-ort.c | 101 ++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 98 insertions(+), 3 deletions(-)
-
-diff --git a/merge-ort.c b/merge-ort.c
-index bf0712d18a0..c9cf7a158c8 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -1223,6 +1223,18 @@ static int collect_merge_info_callback(int n,
- 	return mask;
- }
- 
-+static void resolve_trivial_directory_merge(struct conflict_info *ci, int side)
-+{
-+	VERIFY_CI(ci);
-+	assert((side == 1 && ci->match_mask == 5) ||
-+	       (side == 2 && ci->match_mask == 3));
-+	oidcpy(&ci->merged.result.oid, &ci->stages[side].oid);
-+	ci->merged.result.mode = ci->stages[side].mode;
-+	ci->merged.is_null = is_null_oid(&ci->stages[side].oid);
-+	ci->match_mask = 0;
-+	ci->merged.clean = 1; /* (ci->filemask == 0); */
-+}
-+
- static int handle_deferred_entries(struct merge_options *opt,
- 				   struct traverse_info *info)
- {
-@@ -1232,9 +1244,71 @@ static int handle_deferred_entries(struct merge_options *opt,
- 	int side, ret = 0;
- 
- 	for (side = MERGE_SIDE1; side <= MERGE_SIDE2; side++) {
--		renames->trivial_merges_okay[side] = 0;
--		strintmap_for_each_entry(&renames->possible_trivial_merges[side],
--					 &iter, entry) {
-+		unsigned optimization_okay = 1;
-+		struct strintmap copy;
-+
-+		/* Loop over the set of paths we need to know rename info for */
-+		strset_for_each_entry(&renames->relevant_sources[side],
-+				      &iter, entry) {
-+			char *rename_target, *dir, *dir_marker;
-+			struct strmap_entry *e;
-+
-+			/*
-+			 * if we don't know delete/rename info for this path,
-+			 * then we need to recurse into all trees to get all
-+			 * adds to make sure we have it.
-+			 */
-+			if (strset_contains(&renames->cached_irrelevant[side],
-+					    entry->key))
-+				continue;
-+			e = strmap_get_entry(&renames->cached_pairs[side],
-+					     entry->key);
-+			if (!e) {
-+				optimization_okay = 0;
-+				break;
-+			}
-+
-+			/* If this is a delete, we have enough info already */
-+			rename_target = e->value;
-+			if (!rename_target)
-+				continue;
-+
-+			/* If we already walked the rename target, we're good */
-+			if (strmap_contains(&opt->priv->paths, rename_target))
-+				continue;
-+
-+			/*
-+			 * Otherwise, we need to get a list of directories that
-+			 * will need to be recursed into to get this
-+			 * rename_target.
-+			 */
-+			dir = xstrdup(rename_target);
-+			while ((dir_marker = strrchr(dir, '/'))) {
-+				*dir_marker = '\0';
-+				if (strset_contains(&renames->target_dirs[side],
-+						    dir))
-+					break;
-+				strset_add(&renames->target_dirs[side], dir);
-+			}
-+			free(dir);
-+		}
-+		renames->trivial_merges_okay[side] = optimization_okay;
-+		/*
-+		 * We need to recurse into any directories in
-+		 * possible_trivial_merges[side] found in target_dirs[side].
-+		 * But when we recurse, we may need to queue up some of the
-+		 * subdirectories for possible_trivial_merges[side].  Since
-+		 * we can't safely iterate through a hashmap while also adding
-+		 * entries, move the entries into 'copy', iterate over 'copy',
-+		 * and then we'll also iterate anything added into
-+		 * possible_trivial_merges[side] once this loop is done.
-+		 */
-+		copy = renames->possible_trivial_merges[side];
-+		strintmap_init_with_options(&renames->possible_trivial_merges[side],
-+					    0,
-+					    NULL,
-+					    0);
-+		strintmap_for_each_entry(&copy, &iter, entry) {
- 			const char *path = entry->key;
- 			unsigned dir_rename_mask = (intptr_t)entry->value;
- 			struct conflict_info *ci;
-@@ -1247,6 +1321,13 @@ static int handle_deferred_entries(struct merge_options *opt,
- 			VERIFY_CI(ci);
- 			dirmask = ci->dirmask;
- 
-+			if (optimization_okay &&
-+			    !strset_contains(&renames->target_dirs[side],
-+					     path)) {
-+				resolve_trivial_directory_merge(ci, side);
-+				continue;
-+			}
-+
- 			info->name = path;
- 			info->namelen = strlen(path);
- 			info->pathlen = info->namelen + 1;
-@@ -1282,6 +1363,20 @@ static int handle_deferred_entries(struct merge_options *opt,
- 			if (ret < 0)
- 				return ret;
- 		}
-+		strintmap_clear(&copy);
-+		strintmap_for_each_entry(&renames->possible_trivial_merges[side],
-+					 &iter, entry) {
-+			const char *path = entry->key;
-+			struct conflict_info *ci;
-+
-+			ci = strmap_get(&opt->priv->paths, path);
-+			VERIFY_CI(ci);
-+
-+			assert(renames->trivial_merges_okay[side] &&
-+			       !strset_contains(&renames->target_dirs[side],
-+						path));
-+			resolve_trivial_directory_merge(ci, side);
-+		}
- 	}
- 	return ret;
- }
--- 
-gitgitgadget
-
+Philippe.
