@@ -2,94 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26CF7C07E95
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A391BC07E95
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:18:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0875A61003
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:14:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D007611AB
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:18:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234508AbhGMIQw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 04:16:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42524 "EHLO
+        id S234396AbhGMIVE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 04:21:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234157AbhGMIQv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 04:16:51 -0400
-Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com [IPv6:2607:f8b0:4864:20::a31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39B4BC0613DD
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:14:01 -0700 (PDT)
-Received: by mail-vk1-xa31.google.com with SMTP id t5so349197vkm.12
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:14:01 -0700 (PDT)
+        with ESMTP id S234157AbhGMIVD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 04:21:03 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C45AFC0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:18:13 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id p4-20020a17090a9304b029016f3020d867so1612457pjo.3
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:18:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=7kKjw/kO1JGEGyuifo3yzb4sxCAx+t4Z38/XA3Pbcig=;
-        b=hlk1adOgjOBRPHzEJjZ7wveEItYHPeHgff2D7enhXqL+H2hVegTTSR+w9dzw74MZUm
-         t2p5yJQ8Xf8S1wLQf4hcRriEzQOK2ryg03pr9C8Zc79ASUAYgAwm2FrICusY+LSczM3t
-         9rLICrhoBwx9jWDIR+5nWuTgXsI7oLMay5qjhvxff8K3LWguHWumQathU3YBISX3hlJ0
-         eoSsrvTP1o9N7TjtpRHPvUe91qS+DV76mL4aigWqNUnA6tChcdkM8rMBQ/KV+BakQd0G
-         Oo6cTFm8IVj5g7IArWPkFcipLgZmoujqE/GFls82dCxlL1/+zM8ZS8LrsNob5pjrjGPh
-         RwhA==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=OJFtno5/DKrjyP0P1DvAG5B4OL0MIc6XaNYWi9EDX2o=;
+        b=XnqdqEQRWZ5zVC5MsLZGkEAFUPU3l3lZGdwHug+vnAuXx/3pntMW8AxDKzkUej5fuf
+         4YVtrLhby/+GdFSIM96o720srrRERbHrCPWeHPJX8mbB6sE6aF3iW3dIMt0X1ldFPFge
+         XiXyma4xRvNVhXQVTpFydFtklJi6K0+XZTuPYgdEljs3ib9bZkU+RvTcprxSZoHvPbzA
+         6g8uBYjoLNQUx0dw6ToflB6F5iyzS6e+igN23huHXNkStKfrCsmSfc5GS6q34r3eIuYf
+         YMWVzu3m+PmSBB5IhkF6bwEFx+S7ZhY7oI2Ihh+eBmCE9QEG9AmQPi+8ajQGYdXtTsBs
+         wEaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7kKjw/kO1JGEGyuifo3yzb4sxCAx+t4Z38/XA3Pbcig=;
-        b=HJS8jNV9ZDw+RFYBh+k0WiMrtq83+3/+4M3sbWWzvv9QKFwLh95W2wNixYqyl98/52
-         yQayW/OCx0DlJg2pq8Uq09mlFvmCey+FQcao9vuKGYJTX7N4L6EvhcsP+JBFhspeuP5E
-         XtQrBflg+Bt/w0zNw5HWr2+w4eAUr3VxtYiI6wtVWjp7v5ykB8tk+cROLeue1L2zpPLX
-         komttMyu+CqxvVwL6vnXLKGH/t/UBmuHLD0JCA/6ozBMqk7Ynyf7x32XFSxaNCjEaH1j
-         U5untEdv+kcJq/Uqb29GrU0ZqIIjnVpyiNqr/dPZ2FvPxP1NlbTYyROVovX7Ph0pJAzW
-         xOGQ==
-X-Gm-Message-State: AOAM533Uc6mNvm92B7pkE7nXTcSfzjaKjIgNEVcWof+X084CG0Vd0bMk
-        lBOZYAaeUJcbpz1LD0e1+w1OFtLyjRXDJjM4URnB8g==
-X-Google-Smtp-Source: ABdhPJzgfpBC/bsBkj2eukKv3JruqF3eFB6QrFtlFSHcquKP4vLNWKDFcgzwIU2Ayk28jsvwfGo/cy6YCqNyBu+4NZA=
-X-Received: by 2002:a1f:a685:: with SMTP id p127mr3707960vke.1.1626164040146;
- Tue, 13 Jul 2021 01:14:00 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=OJFtno5/DKrjyP0P1DvAG5B4OL0MIc6XaNYWi9EDX2o=;
+        b=hUMeEBfsuQUkXZO55KSvToDJBxI2zJ93Y26gDgBItRzRQwO3HCoUk25IpsGAw5TwLA
+         zxNxyeUM2EAXxe2In45KnT7xpehfWGvFvqvRJlTtq6h1BgWd798Rdt5au3N4jDZIW35W
+         IBLuvM/m27Twn1dr8uCi0JIc/3ujTPC8nvwjK+5dhyPHv4Vch/5KR9ptEcTFWVy9OppK
+         cGn7jGXdf9O+Q2rCyABCaVdtOzqxJNOOLLQcpjJv1KoL9jx51tEe0h9PVxVICnRsA0jq
+         0l0r5zvZ03o3gojRhqErEixNtyPAUZ4CoCpqsx375eNBeXWEpjwKgtE/r5ce3e+G7e5d
+         Znbw==
+X-Gm-Message-State: AOAM531nXQGTi8EV/JOvX9qTmkn0/I58C+SbzgpnOVoVqkpNE6LRmtv9
+        cDyAUGgjilml/uigD2venG4=
+X-Google-Smtp-Source: ABdhPJwq28XPViAPKh8KVfhPH/mcgwW6fZcnt9Iom5POLnZx9wSOWLju5lQO+MVqb+9JLWbOoXr1Mw==
+X-Received: by 2002:a17:90a:6be1:: with SMTP id w88mr3223343pjj.121.1626164293341;
+        Tue, 13 Jul 2021 01:18:13 -0700 (PDT)
+Received: from [192.168.127.232] ([106.195.46.193])
+        by smtp.gmail.com with ESMTPSA id h8sm166365pfi.47.2021.07.13.01.18.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Jul 2021 01:18:13 -0700 (PDT)
+Subject: =?UTF-8?Q?Re=3a_=5bGSoC=5d_My_Git_Dev_Blog_=e2=80=93_Week_8?=
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>
+References: <CD6968A1-179D-4B77-91C1-4EECB1B69951@gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <f5b12a75-bdaf-fe5c-ffc2-7b4c8cdfddd6@gmail.com>
+Date:   Tue, 13 Jul 2021 13:48:08 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-References: <pull.1012.v5.git.git.1625684869.gitgitgadget@gmail.com>
- <cover-00.17-00000000000-20210711T162803Z-avarab@gmail.com> <patch-15.17-446b50280be-20210711T162803Z-avarab@gmail.com>
-In-Reply-To: <patch-15.17-446b50280be-20210711T162803Z-avarab@gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 13 Jul 2021 10:13:49 +0200
-Message-ID: <CAFQ2z_MNEb=tb+iVjE3n33Lq8tfKNKnaMOvxm6z0cwXChbuSQA@mail.gmail.com>
-Subject: Re: [PATCH v6? 15/17] refs API: make resolve_ref_unsafe() not set errno
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CD6968A1-179D-4B77-91C1-4EECB1B69951@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 11, 2021 at 6:30 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> +       refs =3D get_main_ref_store(the_repository);
-> +       head =3D refs_resolve_ref_unsafe_with_errno(refs, "HEAD", 0, NULL=
-, NULL,
-> +                                                 &resolve_errno);
-> +       if (!head) {
-> +               errno =3D resolve_errno;
+Hi Atharva,
 
-This adds another place where we'd use global errno to communicate.
-Isn't there a die() function that takes an errno value explicitly?
+On 11/07/21 4:48 pm, Atharva Raykar wrote:
+> Here's my weekly update:
+> https://atharvaraykar.me/gitnotes/week8
+> 
+> I am currently blocked by trying to pass a super-prefix parameter
+> to another command, when calling it from within C.
+>
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+ From the blog:
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+> When queried by the get_super_prefix() function, the answer is (null).
+> This boggles my mind to no end (see update). The implementation is basically
+> the same getenv() call?
 
-Registergericht und -nummer: Hamburg, HRB 86891
+Good to see that you were able to identify the reason yourself.
 
-Sitz der Gesellschaft: Hamburg
+> I am not sure how to tell Git that the environment variable has in fact
+> been modified, and that it needs to be reinitialized. Maybe I am going
+> about this whole thing wrong?
 
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+I get the same feeling too. I took a brief look at how the issue could be
+fixed and it seems to me that you exploring to set super-prefix might not
+lead us to the solution. Alternatively, you could explore how other sub-commands
+handle recursing into submodules. To me it looks like they handle it by spawning
+a sub-process is likely the easiest approach for achieving recursion. That would
+solve the super-prefix problem as you have observed.
+
+Unfortunately, there's not yet proper support for handling recursion of submodules
+which calls for working with the data of multiple Git repositories in the same
+Git process. There was an effort[1] few years ago to make working with
+other Git repositories simpler without having to spawn a sub-process. The state
+of the effort is unclear to me. As far as I know, it has been stalled. I hope
+others could provide more details about it.
+
+So, you could try the approach of spawning of sub-process for now. In case there's
+a better approach than spawning sub-process others might be able to point during
+review. In the meanwhile, I'll try to take a better look later and see if I could
+find anything.
+
+[1]: https://public-inbox.org/git/20180205235508.216277-1-sbeller@google.com/
+
+-- 
+Sivaraam
