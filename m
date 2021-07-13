@@ -2,158 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C010BC07E95
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 22:41:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85866C07E95
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 23:06:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A2D8B6127C
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 22:41:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 63D336135A
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 23:06:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236727AbhGMWoh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 18:44:37 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65131 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236696AbhGMWog (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 18:44:36 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D5925C79D2;
-        Tue, 13 Jul 2021 18:41:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=f4zq8U/lkudXmmc6SNK8D1ZePgmmJqauO2aeDn
-        OYEoc=; b=Z11UfqJwG/0vPJoNqIfw+TX/UhENbg/zYnBn7XiZVLPrSndxh29M0n
-        JM3Xq+PHVONDNXxAs1NgxYNBE6c6lwQJI7PfeulA98ENviOjUiMIsr5dIuVZGZPZ
-        UAFdZgNB04inUI3gHIbsYuP2ffcKp1bvfkToFlQG/1dK34JjLX89g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CD822C79D1;
-        Tue, 13 Jul 2021 18:41:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5DE13C79D0;
-        Tue, 13 Jul 2021 18:41:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci: run `make sparse` as a GitHub workflow
-References: <pull.994.git.1626177086682.gitgitgadget@gmail.com>
-Date:   Tue, 13 Jul 2021 15:41:44 -0700
-In-Reply-To: <pull.994.git.1626177086682.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Tue, 13 Jul 2021 11:51:26
-        +0000")
-Message-ID: <xmqqbl7525w7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S236668AbhGMXJW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 19:09:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49454 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235417AbhGMXJV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 19:09:21 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6EAEC0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 16:06:29 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id l1so417415edr.11
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 16:06:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=5qEw27dStp6Zii7KRV+huBDN32KhB2CV/M9pXi/4P4w=;
+        b=dVtMptW6u1PJKaaU3q+kWR09il+qCgpEYhUmBvzlQfl62tTbXhHUmBDA9HnRg3XfB4
+         O7OFKx3OSAzveKUt4lxfjIrIn2ZSvRXhOeQR+BuzCDclNVTQK4/3p7C7WTtH0TTg7GQY
+         fQEa7WuC+7YLcMD34PqZE9iHXCHTg8u6Ko/mulmXukL+v95UJ391GRnUdxIWFniOdhse
+         HAIfcI8oh23Otsv/L1+N18/Vs6+ugXJ9B18w0Q2P6q+p+DSqpFJRizRs1JmPWHzvRWqw
+         Z0O+HsXYTsW6G6mZZdqPMftDwMrQgp6X76v4ffO7ovRrfXRCgMh8qmhlNbFVY0AaKbWp
+         JVdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=5qEw27dStp6Zii7KRV+huBDN32KhB2CV/M9pXi/4P4w=;
+        b=Z4wlagEZtQKR1URa1CeBy8np19aLEFuwoO4kZyCdZnG8AjXHMhqSRxVylNF1Y+cWdZ
+         ghPiodlNd8n87/EeQqB5rnZtplQ3FuIwWSl6k3rr1uEYKxmQ9h6iCTu5k2iHn9rs7gNQ
+         sBuabcjUR/mNF2gIbPoSmLEO3Cr7HyoCkglf5ugzz9gbiOcFWhR0woMIF09MvH7EFGm/
+         DLB5iyfqDs+eQ8SVw1V4MNhtjw0H60vb1KKL1tDZW+FXBU+U/J+jYFaYV8udIG5BBceV
+         dgQz6mMRUf54OjKTZEGJBVztb0U7czcUmwraVIaA82W/9qwP3Nj7kc+ZcQX7hc+Nw5oZ
+         W4EQ==
+X-Gm-Message-State: AOAM531/GdR8NeojHcKaOlTTlF5lj7cXY7ReFBzSBJRKhPHAXX4DIDxS
+        bRDCAHqBlRar3Wl2YujZaOk=
+X-Google-Smtp-Source: ABdhPJyb87LE3kVVomntvtxJyQ8AXzfkiuV/mzydruF8oxB0zBNgDq5m/zNGAilfLFAw/jmquUmiQw==
+X-Received: by 2002:a05:6402:22bb:: with SMTP id cx27mr8850352edb.96.1626217588333;
+        Tue, 13 Jul 2021 16:06:28 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id i14sm80609eja.91.2021.07.13.16.06.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jul 2021 16:06:27 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/6] add missing __attribute__((format))
+Date:   Wed, 14 Jul 2021 01:05:47 +0200
+References: <cover-0.6-00000000000-20210710T084445Z-avarab@gmail.com>
+ <cover-0.6-0000000000-20210713T080411Z-avarab@gmail.com>
+ <xmqqfswh26gs.fsf@gitster.g>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <xmqqfswh26gs.fsf@gitster.g>
+Message-ID: <87eec13jbb.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8068AE16-E42B-11EB-B375-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Tue, Jul 13 2021, Junio C Hamano wrote:
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+> [...]
+>>     - ## advice.h ##
+>>     -@@ advice.h: int advice_enabled(enum advice_type type);
+>>     - /**
+>>     -  * Checks the visibility of the advice before printing.
+>>     -  */
+>>     -+__attribute__((format (printf, 2, 3)))
+>>     - void advise_if_enabled(enum advice_type type, const char *advice, =
+...);
 >
-> Occasionally we receive reviews after patches were integrated, where
-> `sparse` identified problems such as file-local variables or functions
-> being declared as global.
-
-I really appreciate addition of this task, as I often notice sparse
-errors _after_ queuing and refreshing the incoming patches for the
-day and soon after starting to run the day's test cycle.
-
-> By running `sparse` as part of our Continuous Integration, we can catch
-> such things much earlier. Even better: developers who activated GitHub
-> Actions on their forks can catch such issues before even sending their
-> patches to the Git mailing list.
+> This has become a separate one, because...?
 >
-> This addresses https://github.com/gitgitgadget/git/issues/345
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->     ci: run make sparse as a GitHub workflow
->     
->     One of the earliest open source static analyzers is called "sparse", and
->     occasionally Ramsay Jones sends out mails on the Git mailing list that
->     some function or other should be declared static because sparse found
->     out that it is only used within the same file.
->     
->     Let's add a GitHub workflow running "make sparse".
->     
->     Example run: https://github.com/gitgitgadget/git/actions/runs/1026303823
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-994%2Fdscho%2Fci-enable-sparse-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-994/dscho/ci-enable-sparse-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/994
->
->  .github/workflows/run-sparse.yml | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
->  create mode 100644 .github/workflows/run-sparse.yml
+> OK, the addition to advise_if_enabled() reveals an existing iffy
+> caller, so you chose to fix it and to annotate the function at the
+> same time in a single commit at step [5/6].  Makes sense.
 
-We choose to do this as a separate new workflow not as part of the
-main one because this is more like check-whitespace where there is
-no room for tests over the matrix of compilers and platforms play
-any useful role?  Unlike check-whitespace one that has
-
-    on:
-      pull_request:
-        types: [opened, synchronize]
-
-but just like the primary one, this is triggered
-
-    on: [push, pull_request]
-
-and before the patches even hit the list via GGG, which would be
-ideal.
-
-As has already been pointed out downthread, use of separate and
-different ways to install the sparse itself and its dependencies
-looks strange, so it would be appropriate to either explain why they
-have to be that way in the proposed log message or to install them
-in the same way in the YAML file.
-
-Also, "\ No newline at end of file" would be a good thing to fix
-while we are at it.
-
-> diff --git a/.github/workflows/run-sparse.yml b/.github/workflows/run-sparse.yml
-> new file mode 100644
-> index 00000000000..25f6a6efb40
-> --- /dev/null
-> +++ b/.github/workflows/run-sparse.yml
-> @@ -0,0 +1,22 @@
-> +name: Run `sparse`
-> +
-> +on: [push, pull_request]
-> +
-> +jobs:
-> +  sparse:
-> +    runs-on: ubuntu-20.04
-> +    steps:
-> +    - name: Download the `sparse` package
-> +      uses: git-for-windows/get-azure-pipelines-artifact@v0
-> +      with:
-> +        repository: git/git
-> +        definitionId: 10
-> +        artifact: sparse-20.04
-> +    - name: Install the `sparse` package
-> +      run: sudo dpkg -i sparse-20.04/sparse_*.deb
-> +    - name: Install a couple of dependencies
-> +      run: |
-> +        sudo apt-get install -q -y libssl-dev libcurl4-openssl-dev libexpat-dev gettext zlib1g-dev
-> +    - uses: actions/checkout@v2
-> +    - name: make sparse
-> +      run: make sparse
-> \ No newline at end of file
->
-> base-commit: ebf3c04b262aa27fbb97f8a0156c2347fecafafb
+Right, it's the only case that revealed an in-codebase warning, so I
+thought it made sense to split that up from the mechanical addition of
+__attribute__ elsewhere.
