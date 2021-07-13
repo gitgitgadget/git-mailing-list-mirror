@@ -2,179 +2,197 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E600C07E95
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:57:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 537E2C07E95
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 10:43:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5901A600EF
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:57:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 33B4661249
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 10:43:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234603AbhGMJAs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 05:00:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52708 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234121AbhGMJAr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 05:00:47 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9C9CC0613DD
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:57:57 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id t186so14679096ybf.2
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:57:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GKAiCN4t6xRhm+lj3NNVzBfCHmUj14Djvu4b4pkOuNE=;
-        b=pbri4LqJqwHWAtQtsRuFXE+qktD13d3W0wme5mbJMsRZWQPr4HMI6PudCx4qk8Z7Eb
-         uN461WYVKZaZmI2IdbQo1RwCCj08Xlg/88yzAuMCxFQ+oJfZuxAE5d0/WfXGoVAAI3ne
-         1dmr8WV5StnOEY9tQUG+m6yXd3+iSKm/rOfRDwdOT0Qz5AkuYFL88lj4febdFWTMNfp0
-         lhGS/BZPDKVOW1swpGBp2Y+5umjTAk6qQ3SYVvHKyjF4kZtuinOtzx7otKlt5rJAmo7R
-         pcFA4XwOy/2GJZ/zY2UygzKQnTz5Mu/Qi01Q2pDSxDg+z41ILw81CfUO/tihm7vaAUTT
-         2CPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GKAiCN4t6xRhm+lj3NNVzBfCHmUj14Djvu4b4pkOuNE=;
-        b=r18px7ZzeoyeuBozXKFphVpLZSaSlYPxBVB2vjJ0OfTbIvTF4VxDJbHNn37yxlqB8T
-         65djKNr8leOUaf4+4cEo1xHB29xxML3nR5zAqxN1MPK4KfiLXJZAa5V0eq5+o2HzbWRX
-         iiMZ37cTpVttj/1UnVuSW+goB8d9JR+FWIZ5xlCGBLMxGltMNxLunva2/IqpNTbFU3jX
-         g1le44C8BP3R89WAoimvu73a1WNvQb7DdrU9ciDhr53J4PkUgYHmnea8B0IJUa2bvs9A
-         Y5eB2C/nbCimyYTz03BZlu56VGVuqMzgo6GyZsS3cMGIhSXjLD/Xq5Yt9bOMKbr7UN72
-         UWSA==
-X-Gm-Message-State: AOAM532PMR3w1Pjr85Q9oCxKD17EIsT22AQ4qiXdWNlJ9irb/NSwhp1L
-        RrN2I140UjZ3iuwDX8EacKc4fa2gZVpke9pdoaA=
-X-Google-Smtp-Source: ABdhPJw2P3+dpEYP4fufdkP4GUKDCurYHAvbdsKgapfUs/CrR092uItWKkypeUUxBtE8re1wu+lMBCCvQATisH2FRV8=
-X-Received: by 2002:a25:1455:: with SMTP id 82mr4410440ybu.403.1626166677155;
- Tue, 13 Jul 2021 01:57:57 -0700 (PDT)
+        id S235574AbhGMKpw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 06:45:52 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.29.7]:13703 "EHLO
+        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235423AbhGMKpw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 06:45:52 -0400
+Received: from [84.163.66.71] (helo=[192.168.2.202])
+        by smtprelay03.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <git@mfriebe.de>)
+        id 1m3Fsh-00070G-6F; Tue, 13 Jul 2021 12:43:15 +0200
+Subject: Re: PATCH: improve git switch documentation
+To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
+ <2b85a7eb-d0be-65e7-ecbb-1750abf53e53@mfriebe.de>
+ <60e79c31aaa72_30b8a4208c1@natae.notmuch>
+ <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
+ <60e874e1c6845_215320861@natae.notmuch>
+ <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
+ <60e88a4b8592f_16bcb2082b@natae.notmuch>
+ <ad58bd54-a9dd-59a9-4fce-f90be469cd60@mfriebe.de>
+ <60e9f8d462bd9_7ef20898@natae.notmuch>
+ <6f43b36b-abe1-41f2-6138-e820c974b1bd@mfriebe.de>
+ <60ea07e3495e8_7ef2081d@natae.notmuch>
+ <30e4c874-6b87-b03d-fa33-fde5b7e50b2a@mfriebe.de>
+ <60ea2eb562f26_2a69208e8@natae.notmuch>
+ <1e18c4ed-6975-5041-4b4f-75c4d3d21860@mfriebe.de>
+ <60ec6d91deced_a452520825@natae.notmuch>
+ <54644739-2138-8086-1696-d3c52960216c@mfriebe.de>
+ <60ec74c513b2b_a45252081b@natae.notmuch>
+ <0d7bd249-2aba-236a-9f93-3a5b30182d15@mfriebe.de>
+ <60ec93155663f_a231f208fb@natae.notmuch>
+ <3a84e4c9-4e48-1cbe-4fe6-150ff56c8508@mfriebe.de>
+ <60ecbe577a086_a6b702082@natae.notmuch>
+From:   Martin <git@mfriebe.de>
+Message-ID: <d3678ef6-1bcd-2666-87dc-751aef2ca1a7@mfriebe.de>
+Date:   Tue, 13 Jul 2021 12:42:56 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <20210708150316.10855-1-worldhello.net@gmail.com>
- <YOcvaFL7+6qcIOUa@camp.crustytoothpaste.net> <CANYiYbGYzbMoU_2wb4duppASoYUjGLsJsr692Xe3GaVBOXUsBA@mail.gmail.com>
- <YOoXCJV2ssef/KsN@camp.crustytoothpaste.net> <YOyByjmGu1oDXK4X@coredump.intra.peff.net>
-In-Reply-To: <YOyByjmGu1oDXK4X@coredump.intra.peff.net>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Tue, 13 Jul 2021 16:57:46 +0800
-Message-ID: <CANYiYbF3dcOzZ5gqbYkstxv+WRxZwnoxoNP28A6px44YD98k1Q@mail.gmail.com>
-Subject: Re: [PATCH] revision: allow pseudo options after --end-of-options
-To:     Jeff King <peff@peff.net>,
-        Patrick Steinhardt <psteinhardt@gitlab.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <60ecbe577a086_a6b702082@natae.notmuch>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWVAbWZyaWViZS5kZQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> =E4=BA=8E2021=E5=B9=B47=E6=9C=8813=E6=97=A5=E5=91=
-=A8=E4=BA=8C =E4=B8=8A=E5=8D=881:54=E5=86=99=E9=81=93=EF=BC=9A
-> On Sat, Jul 10, 2021 at 09:54:16PM +0000, brian m. carlson wrote:
-> > > I know "rev1..rev2" and "rev2 ^rev1", but I prefer to use "rev1 --not
-> > > rev2 rev3" instead of "rev1 ^rev2 ^rev3".
-> >
-> > I don't think a personal preference is a good reason to change this.
->
-> I do think it rises slightly above personal preference. It's potentially
-> making things much easier for the caller if they can ferry along:
->
->   tip=3D$1; shift
->   git rev-list --end-of-options "$1" --not "$@"
->
-> instead of:
->
->   tip=3D$1; shift
->   # whoops, whitespace splitting is wrong here! Real programming
->   # languages make this easier, of course.
->   git rev-list --end-of-options "$1" $(for i in "$@"; do echo "^$i"; done=
-)
->
-> Though in my experience it is usually a static "--not --all" or "--not
-> --branches --tags" or similar in such a function. I don't think I've
-> ever seen a case quite like the code above in practice.
+On 13/07/2021 00:12, Felipe Contreras wrote:
+> Martin wrote:
+> A user that does:
+> 
+>    git switch -n <branch>
+> 
+> Would naturally expect a new branch to be created.
+> 
+> If that command creates a new branch safely, why would the user do:
+> 
+>    git switch -N <branch>
+> 
+> What do you think the user expects to happen without reading the
+> documenation?
 
-Last week, I made a study on how gitlab wrap and execute a git
-command. I saw the following code [1]:
+Well, first of all what would he think it does if he reads the doc? And 
+if that doc looses no (explicit) word on the possible loss?
 
-    if c.supportsEndOfOptions() {
-        commandArgs =3D append(commandArgs, "--end-of-options")
-    }
-    if len(postSepArgs) > 0 {
-        commandArgs =3D append(commandArgs, "--")
-    }
+First of all (not sure, if I mentioned that before), I have seen *many* 
+case like that:
+The user wants to create a new branch on master "my-feature".
+    git switch -c my-feature
+Then he realizes that he had not been on master, but on some other 
+branch. "-c" now gives an error.
+So the  user reads the documentation.
+Up to this point, everything is exactly as it should be.
+Now what the user reads is that "-C" works if the branch already exists. 
+At this point, without being prompted those user will not think of any 
+content of the branch (they haven't even added some).
+"-C" does in that case what they want.
 
-I was surprised to see the options "--end-of-options" and "--" used
-next to each other, and the DashDash option ("--") is not mandatory. I
-want to make some changes on it, but when I try to construct a git
-command like this:
+Of course now, that they had no need to think about any commits, an no 
+warning that would have prompted that, they believe "-C" to be save.
+Next time they will have commit. And they are gone.
 
-    git.SubCmd{
-        Name: "log",
-        Flags: []git.Option{
-            git.Flag{
-                    Name: "--stat"
-            },
-            git.ValueFlag{
-                    Name: "--pretty",
-                    Value: "%m %s",
-            },
-            git.Flag{
-                    Name: "--no-decorate",
-            },
-        },
-        Args: []string {
-            "topic1",
-            "--not",
-            "main",
-            "release",
-        },
-        PostSepArgs: []string {
-            "src/hello.c",
-            "doc",
-        },
-    }
+And as for the reflog, look at "checkout -B", "switch -C", "branch -f", 
+or "reset".
+In the context of re-creating/ressetting a branch, neither of them 
+mention how to get it back. (and reflog is something most people learn a 
+lot later)
 
-The generated git command will be:
+As I said, the first part I have seen many times. The 2nd part, 
+obviously only a subset. But that is rather down to people being lucky, 
+than to people actually understanding that the commits will disappear.
 
-    git log --stat --pretty=3D"%m %s" --no-decorate \
-        topic1 --not main release \
-        --end-of-options \
-        -- \
-        src/hello.c doc
+Now, of course I cannot predict how many people would remember a warning 
+it the docs.
+But I can tell, if I read a doc, and it says "you may loose...", I will 
+pay attention.
 
-It works. But if I move the "--end-of-options" before the revisions like th=
-is:
 
-    git log --stat --pretty=3D"%m %s" --no-decorate \
-        --end-of-options \
-       topic1 --not main release \
-        -- \
-        src/hello.c doc
 
-The generated command failed to execute with error: unknown revision "--not=
-".
 
-It's reasonable for gitlab to construct git commands using mainly three fie=
-lds:
-1. Flags: for options like "--option", or "--key value".
-2. Args: for args like revisions.
-3. PostSepArgs: for pathspecs.
+> 
+> And what do you think they'll expect to happen given this documentation:
+> 
+>    Create a new branch like '--new', but if the branch already exists
+>    it's replaced.
+> 
+> Forget about what they could misunderstand. Nobody does anything without
+> a reason, so what would be the reason why a user does `git switch -N`
+> instead of `git switch -n`?
+> 
 
-And if the command supports these options, it's better to add
-"--end-of-options" between 1 and 2, and add "--" between 2 and 3.
+You and I will make the connection between "something happens to the 
+branch" and "something happens to the commits".
+A lot of people with less experience, who a busy looking through lots of 
+stuff to solve their problem, they will not make that connection in that 
+particular moment.
+Heck, I've seen highly educated people missing far more obvious things 
+like that.
 
-If we can handle revision pseudo opts as pseudo revisions instead of
-options as in this patch, the only disadvantage is that we cannot
-handle branches whose names conflict with well-known options such as
-"--not" and "--all". But users can input full branch names, such as
-"refs/heads/--not", "refs/heads/--all".
 
-Maybe I should keep this patch as a local enhancement for git.
+> To me this is another instance of "do not drink scorching hot coffee".
+> Sure, some users might benefit from reading this, but how many? And how
+> many would be annoyed by the obvious unnecessary warning?
 
-1. https://gitlab.com/gitlab-org/gitaly/-/blob/v14.0.5/internal/git/command=
-_description.go#L320-326
+Well, at least in the U.S, you apparently have to tell your customers 
+that the coffee you sell is hot. (If you recall, there was a "famous" 
+court case).
+I have always thought, that coffee should be hot (except iced coffee).
+You also have to warn people not to put their pets into the microwave. 
+Again to me: bleeding obvious.
+
+
+
+> 
+> Moreover, most users don't even read the documentation. Some might even
+> be doing `git switch -h`, and others using zsh completion description.
+> So we can't just rely on them reading this line.
+
+Well, so we can't warn the rest? Why do we have docs at all?
+
+
+> 
+> If you are really worried about the user losing information, why don't
+> we add a true warning:
+> 
+>    hint: The previous state of the '%s' branch might have been lost.
+>    hint: The id was '%s'.
+>    hint:
+>    hint: If you didn't intend to do this, you can restore the previous
+>    hint: state with:
+>    hint:
+>    hint:  git reset --hard @{1}
+>    hint:
+>    hint: Disable this message with "git config advice.switchForceNew false"
+> 
+> That way the user doesn't need to read the documentation.
+
+Well yes, printing a recovery note, may be another helpful addition.
+
+But as you said, a single way of pushing info, will not reach everyone. 
+People putting the command in a script, may not read this.
+Btw, a better warning would be similar to the one you get, if you leave 
+behind a detached commit.
+IIRC, print the sha1, and how to create a branch on that sha1.
+
+
+
+Of course there is a different alternative, but IMHO it is overdone.
+    git switch -C branch
+will only force the current "head value" (I.e. the sha1 used a pointer).
+So if you have no commits on that branch, or if they are part of another 
+branch, then this will work.
+
+If you stand to "loose" commits, you would have to do:
+    git switch -D -C branch
+
+(the D is just an example / other letters/words may be better)
+   -D  drop commits
+
+
+But even, then until that is implemented, a temporary fix by changing 
+the docs would still be appropriate.
