@@ -2,111 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BA88C07E96
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 07:52:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47F46C07E95
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:00:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 553DB61288
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 07:52:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C51061249
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:00:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234157AbhGMHzL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 03:55:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47562 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233762AbhGMHzL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 03:55:11 -0400
-Received: (qmail 32343 invoked by uid 109); 13 Jul 2021 07:52:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 13 Jul 2021 07:52:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7388 invoked by uid 111); 13 Jul 2021 07:52:23 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 13 Jul 2021 03:52:23 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 13 Jul 2021 03:52:21 -0400
-From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2] load_ref_decorations(): fix decoration with tags
-Message-ID: <YO1GNWjMol8JV8MR@coredump.intra.peff.net>
-References: <YOzY+qNFM2GsgKMO@coredump.intra.peff.net>
- <20210713074018.232372-1-martin.agren@gmail.com>
+        id S234498AbhGMIDY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 04:03:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39452 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234479AbhGMIDY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 04:03:24 -0400
+Received: from mail-vk1-xa2c.google.com (mail-vk1-xa2c.google.com [IPv6:2607:f8b0:4864:20::a2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64FF2C0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:00:34 -0700 (PDT)
+Received: by mail-vk1-xa2c.google.com with SMTP id az15so879441vkb.9
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:00:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=x5RaCjn3+CsJvCgBBZM8xgmajlDGH3fB0EtUHoCxn1g=;
+        b=ELxvv4ckhob04xL15SrgqoIgXVw96aPoalZeh9OjNG6meNO3boeuUarWC15i5ATkF/
+         PPqUZy4C+vvqmrThBIlf78WJp2I8ohacAG8B1dVRIgNq/Q66PEfqbsjjw/HOpJYSnRsR
+         fOZkjkGNpQ7EQoC5ErHoOX4//JcDANm+3BNjSSKtTYqcbUuXKVBLObWg55LfPd3Hk2mZ
+         jCbnhlYFUk/XsOShyg0qLKZN4hGD9F+CpUFkNi+j6dKvUmZQcNE24NyaPc4IpTqrd3B+
+         O1kuT9r2oHMeOyzVHZGu4QcsyzrE6f9OAKRe0iJVVpq14UmAn003o8j3ICu9dXGqncC5
+         nHcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=x5RaCjn3+CsJvCgBBZM8xgmajlDGH3fB0EtUHoCxn1g=;
+        b=AzIkj69UYQzhS47dTARjTEcFt2FF7Ko/45kHdUK0KrgVn8VC8FH/9pPMnAwkA6WYDc
+         +t+WiSP6kO408zJZq1R5UpFvVuF93e58hiC2cPnqvk2/f7AAqu4w9y0vMjvudkGkSp8e
+         acwAcFOjfZQtB03rEm29ctmIhWpN2kcot4saJlQZJKKgRGWQOYx3UUExWbDJslLDvCqj
+         a8W8zslP+AQy44xdnCype/ZsRou6ZuvbXMprYuGLxrGShp3xMMzWKa6YZyeuIg417SQs
+         uaAQjuvI1ijUDxU0AS7McgN+wcq6BkgBOYyh88BqKCDz8Tros+gBXldjVWK6+va6ulhb
+         2JAw==
+X-Gm-Message-State: AOAM531tLeKbAEe2sdMKu9+z71mb6fGe96Gz3j9by9FonTRAJHpDfQjb
+        GcViQA6npKyz7dAx/mZuPnJlfZUWAzd1y7Z13KlZMw==
+X-Google-Smtp-Source: ABdhPJyKHWZu28AsvRkrgpmZjtpoq0+pQDRsFh9VejFxevvLlsEep5vsy8PVIFEs8Bqc7SXhww2jDlS2jwRc6wo/hD8=
+X-Received: by 2002:a1f:9d13:: with SMTP id g19mr3738767vke.15.1626163231171;
+ Tue, 13 Jul 2021 01:00:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210713074018.232372-1-martin.agren@gmail.com>
+References: <pull.1012.v4.git.git.1625597757.gitgitgadget@gmail.com>
+ <pull.1012.v5.git.git.1625684869.gitgitgadget@gmail.com> <95025080c16f535599826ed4f013845d712b0e8d.1625684869.git.gitgitgadget@gmail.com>
+ <87lf6d3wbz.fsf@evledraar.gmail.com>
+In-Reply-To: <87lf6d3wbz.fsf@evledraar.gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Tue, 13 Jul 2021 10:00:19 +0200
+Message-ID: <CAFQ2z_OftKcmR3ZgogAjiSGEBNmB7Akb01HLy9Abc0xSR5oSHQ@mail.gmail.com>
+Subject: Re: [PATCH v5 2/6] refs/files-backend: stop setting errno from lock_ref_oid_basic
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[+cc Junio; this patch looks good to me, and should go on top of
-	    jk/log-decorate-optim, which is in 'next' and has a pretty
-	    ugly regression]
+On Sun, Jul 11, 2021 at 1:48 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+>
+> On Wed, Jul 07 2021, Han-Wen Nienhuys via GitGitGadget wrote:
+>
+> >  /*
+> >   * Locks a ref returning the lock on success and NULL on failure.
+> > - * On failure errno is set to something meaningful.
+> >   */
+> >  static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *ref=
+s,
+> >                                          const char *refname,
+> > @@ -922,7 +921,6 @@ static struct ref_lock *lock_ref_oid_basic(struct f=
+iles_ref_store *refs,
+> >  {
+> >       struct strbuf ref_file =3D STRBUF_INIT;
+> >       struct ref_lock *lock;
+> > -     int last_errno =3D 0;
+> >       int mustexist =3D (old_oid && !is_null_oid(old_oid));
+> >       int resolve_flags =3D RESOLVE_REF_NO_RECURSE;
+> >       int resolved;
+> > @@ -949,7 +947,6 @@ static struct ref_lock *lock_ref_oid_basic(struct f=
+iles_ref_store *refs,
+> >                * to remain.
+> >                */
+> >               if (remove_empty_directories(&ref_file)) {
+> > -                     last_errno =3D errno;
+> >                       if (!refs_verify_refname_available(
+> >                                           &refs->base,
+> >                                           refname, extras, skip, err))
+> > @@ -962,10 +959,13 @@ static struct ref_lock *lock_ref_oid_basic(struct=
+ files_ref_store *refs,
+> >                                                    &lock->old_oid, type=
+);
+> >       }
+> >       if (!resolved) {
+> > -             last_errno =3D errno;
+> > +             int last_errno =3D errno;
+> >               if (last_errno !=3D ENOTDIR ||
+> > -                 !refs_verify_refname_available(&refs->base, refname,
+> > -                                                extras, skip, err))
+> > +                 /* in case of D/F conflict, try to generate a better =
+error
+> > +                  * message. If that fails, fall back to strerror(ENOT=
+DIR).
+> > +                  */
+> > +                 !refs_verify_refname_available(&refs->base, refname, =
+extras,
+> > +                                                skip, err))
+> >                       strbuf_addf(err, "unable to resolve reference '%s=
+': %s",
+> >                                   refname, strerror(last_errno));
+>
+> I don't think it's some dealbreaker and we can move on, but just FWIW I
+> think what I mentioned ending in your
+> https://lore.kernel.org/git/CAFQ2z_NpyJQLuM70MhJ8K1h2v3QXFuAZRjN=3DSvSsjn=
+ukNRJ8pw@mail.gmail.com/
+> is still outstanding.
+>
+> I.e. you added the comment, which is just says what the error emitting
+> looks like, that's all well & good.
+>
+> But what I was pointing out that it didn't make sense to do any
+> "last_errno" here at all anymore. You pointed to 5b2d8d6f218
+> (lock_ref_sha1_basic(): improve diagnostics for ref D/F conflicts,
+> 2015-05-11), we started setting "last_errno" there, but that was *not*
+> to avoid clobbering between the !resolved and the
+> strbuf_add(strerror(last_errno)) here, but rather to carry the
+> "last_errno" forward to the end of this lock_ref_oid_basic(), because
+> other things (after this hunk) might reset/clear errno.
 
-On Tue, Jul 13, 2021 at 09:40:18AM +0200, Martin Ågren wrote:
+I disagree. In your suggested change
 
-> Commit 88473c8bae ("load_ref_decorations(): avoid parsing non-tag
-> objects", 2021-06-22) introduced a shortcut to `add_ref_decoration()`:
-> Rather than calling `parse_object()`, we go for `oid_object_info()` and
-> then `lookup_object_by_type()` using the type just discovered. As
-> detailed in the commit message, this provides a significant time saving.
-> 
-> Unfortunately, it also changes the behavior: We lose all annotated tags
-> from the decoration.
-> 
-> The reason this happens is in the loop where we try to peel the tags, we
-> won't necessarily have parsed that first object. If we haven't, its
-> `tag` will be NULL, so nothing will be displayed, and its `tagged` will
-> also be NULL, so we won't peel any further.
+> +       if (!resolved &&
+> +           (errno !=3D ENOTDIR ||
+> +            /* in case of D/F conflict, try to generate a better error
+> +             * message. If that fails, fall back to strerror(ENOTDIR).
+> +             */
+> +            !refs_verify_refname_available(&refs->base, refname, extras,
+> +                                           skip, err))) {
+> +               strbuf_addf(err, "unable to resolve reference '%s': %s",
+> +                           refname, strerror(errno));
+>                 goto error_return;
 
-Thanks, nicely explained.
+the refs_verify_refname_available() call happens only if
+errno=3D=3DENOTDIR. The call might clobber the ENOTDIR errno and then
+fail. Then we'd be printing the last errno that
+refs_verify_refname_available() saw, which may be different from
+ENOTDIR.
 
-> Note how this commit could have been done as an optimization before
-> 88473c8bae: When our peeling hits a non-tag, we won't parse that tagged
-> object only to immediately end the loop.
+Other than that, for clarity's sake, it's always better to avoid the
+use of global errno if we can.
 
-Yep, thanks for mentioning this, as it's somewhat subtle.
-
->  On Tue, 13 Jul 2021 at 02:06, Jeff King <peff@peff.net> wrote:
->  >
->  > Your fix is _almost_ there.
-> 
->  It's very kind of you to put it like that. I've picked up your
->  suggestions and have tried to summarize my understanding of the issue
->  and the fix in the commit message.
-
-When I wrote that, I thought the fix would just be:
-
-  if (obj_type == OBJ_TAG)
-	parse_object(...);
-
-which really would put it only one line off of your fix. :)
-
->  > That's the minimum needed to unbreak things. I think we could do even
->  > better, though. There is no need for us to parse a commit object pointed
->  > to by a tag here. We should only be parsing tags we see (whether at the
->  > top-level or recursively).
-> 
->  Maybe you wrote this before circling back and actually writing that
->  "even better" thing? Because it seems to me like that's what you did.
->  Maybe I'm still missing something.
-
-Nope, I'm just dumb. I wrote what I sent in the other email (rather than
-just adding the "if" as above) because it only involved having a single
-parse_object() call in the function. To my credit, I did realize about
-an hour after sending the other email that I had in fact done the
-"better thing" quite accidentally. But I really like how you explained
-it in the commit message here, which I had not quite thought through.
-
->  log-tree.c     | 4 ++--
->  t/t4202-log.sh | 9 +++++++++
-
-Patch looks good. Thanks for noticing the problem and cleaning up my
-mess.
-
--Peff
+--
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
