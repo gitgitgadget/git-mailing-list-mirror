@@ -2,206 +2,201 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-20.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B510EC07E95
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 22:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E10DCC07E95
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 22:23:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 95BE36101B
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 22:22:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C2033610A7
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 22:23:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236588AbhGMWZC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 18:25:02 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48348 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235536AbhGMWZC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 18:25:02 -0400
-Received: (qmail 13241 invoked by uid 109); 13 Jul 2021 22:22:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 13 Jul 2021 22:22:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15115 invoked by uid 111); 13 Jul 2021 22:22:11 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 13 Jul 2021 18:22:11 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 13 Jul 2021 18:22:10 -0400
-From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2] load_ref_decorations(): fix decoration with tags
-Message-ID: <YO4SEp/B4826sc+j@coredump.intra.peff.net>
-References: <YOzY+qNFM2GsgKMO@coredump.intra.peff.net>
- <20210713074018.232372-1-martin.agren@gmail.com>
- <YO1GNWjMol8JV8MR@coredump.intra.peff.net>
- <xmqqpmvl29ry.fsf@gitster.g>
- <YO4FObgRvpt1nVr0@coredump.intra.peff.net>
- <xmqqlf6928qv.fsf@gitster.g>
- <CAN0heSqCFVqC9Ncn5r3b4dKOE80byDt_XRM3pnswixX4jFcLFA@mail.gmail.com>
+        id S235727AbhGMW0d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 18:26:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40030 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234665AbhGMW0d (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 18:26:33 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDF1AC0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 15:23:41 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id h4so22779293pgp.5
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 15:23:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=CMKWmgnwnY/3esvhzuPFJMIUTDpJI91i67PgHGkwmc4=;
+        b=hQjyjqOeN0jsQVWNC5+zgUtGWaJcxR6PTv7kr2wRK4OkfGnszrmvIV+Fn8A3ecXVxE
+         fbED+jr9ATq4LRYnXr7WCujwKP6JfneI1R5pesnaTB6lMnFJIMK41ntkKJUjXbSzWzex
+         4ko+NhdY+6cuPWM7NAexJ32UnKSo2CGQHmUgKRluLUIScKx37vKH3c1MYWZkbfAvDJ3Y
+         uh+EjWOq+6Vwanhhd64O0ZXwG/qMC9JF8PN6mTIJ3Ew75usQK95isMUlmoBkJCFqH2hY
+         E/urxHditVoZWUtbuBlGGxm09bYge3e6F/WhW0HYiOU63VJt0MC8qzSI0/4r6Afu/Tpd
+         OWYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=CMKWmgnwnY/3esvhzuPFJMIUTDpJI91i67PgHGkwmc4=;
+        b=mn6Y1OmKvT31l/kh3VzB6pkFscj5y8bfNdyZXDAqEwD50rXMx+X6WOzT9KOyBWxE2w
+         sr+XjAL3i2VaknLPxjHY67il6KAN4voi8ETCh5U5Tb6JBjAO49o4Wf+9snbJGNixpxPl
+         USX/K2gHz0LLVvgmbNoLbzxLR6rQLF6xyds21vunNW8vTTwrPkvFv2CDqrmKjZudavXB
+         02hQiNMjyruwTVt71za1xbIjHwtX/K/R1nZI/EGOxxNKyghkdVLG1JT7BrLJKllyVNA2
+         RqqorFVuHgxopJ5V3D2O1bkwefrQ5ZMuI2bH9iByxj4xyTtLb4em7ZLYCorHcMABDbqW
+         UrHg==
+X-Gm-Message-State: AOAM532A4ZFXNVJiCjiIiGNVRjGX0zcfcBt6M9GdiZlGUPpUxjEVGiS9
+        p0hHm4w5OAYjr8DKFKoMiQuDwQ==
+X-Google-Smtp-Source: ABdhPJw5fhymaeCcHS/4QHLyS/Q9Z9d7lrS0Ynlxue64BwgJBzXnjszuC9NbfNgQKo9uNG9Qtdec3w==
+X-Received: by 2002:a63:110c:: with SMTP id g12mr6213535pgl.139.1626215021269;
+        Tue, 13 Jul 2021 15:23:41 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:df8b:593d:91b7:a693])
+        by smtp.gmail.com with ESMTPSA id p38sm165465pfh.151.2021.07.13.15.23.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jul 2021 15:23:40 -0700 (PDT)
+Date:   Tue, 13 Jul 2021 15:23:34 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/3] send-pack: fix push.negotiate with remote helper
+Message-ID: <YO4SZs40xzHEb6W7@google.com>
+References: <cover.1624486920.git.jonathantanmy@google.com>
+ <042612733181ef348a67edc736637c7cd13c7a6d.1624486920.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSqCFVqC9Ncn5r3b4dKOE80byDt_XRM3pnswixX4jFcLFA@mail.gmail.com>
+In-Reply-To: <042612733181ef348a67edc736637c7cd13c7a6d.1624486920.git.jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 13, 2021 at 11:52:53PM +0200, Martin Ågren wrote:
-
-> > >> Puzzled.
-> > >
-> > > ...and the answer is that we don't need to parse it. The tag object
-> > > mentions the type of what it points to, and we use lookup_commit(), etc,
-> > > to create the object pointed to by its "tagged" field.
-> >
-> > Ahh, parse_object() on the outer tag, when instantiating the in-core
-> > obj, allocated an in-core object and that instance is already given
-> > a type from the tag object and .taggeed member points at that
-> > object, so it is not an "unknown" object (tag.c::parse_tag_buffer()).
-> >
-> > Totally forgot about that one; thanks.
+On Wed, Jun 23, 2021 at 03:30:51PM -0700, Jonathan Tan wrote:
 > 
-> Do you have any suggestions for how this could be explained better? I
-> waffled on whether to add that paragraph to the commit message and when
-> I finally did, it seems it got a little bit too succinct.
+> Commit 477673d6f3 ("send-pack: support push negotiation", 2021-05-05)
+> introduced the push.negotiate config variable and included a test. The
+> test only covered pushing without a remote helper, so the fact that
+> pushing with a remote helper doesn't work went unnoticed.
 > 
-> I'm about to check out for today. Maybe in the morning I can think of
-> some clarification.
+> This is ultimately caused by the "url" field not being set in the args
+> struct. This field being unset probably went unnoticed because besides
+> push negotiation, this field is only used to generate a "pushee" line in
+> a push cert (and if not given, no such line is generated). Therefore,
+> set this field.
+> 
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  builtin/send-pack.c   |  1 +
+>  t/t5516-fetch-push.sh | 49 +++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 50 insertions(+)
+> 
+> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+> index a7e01667b0..729dea1d25 100644
+> --- a/builtin/send-pack.c
+> +++ b/builtin/send-pack.c
+> @@ -230,6 +230,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+>  	args.atomic = atomic;
+>  	args.stateless_rpc = stateless_rpc;
+>  	args.push_options = push_options.nr ? &push_options : NULL;
+> +	args.url = dest;
+Sure, the fix itself is small and inoffensive. And the rest of the patch
+is regression testing.
+>  
+>  	if (from_stdin) {
+>  		if (args.stateless_rpc) {
+> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+> index 0916f76302..5ce32e531a 100755
+> --- a/t/t5516-fetch-push.sh
+> +++ b/t/t5516-fetch-push.sh
+> @@ -1768,4 +1768,53 @@ test_expect_success 'denyCurrentBranch and worktrees' '
+>  	test_must_fail git -C cloned push --delete origin new-wt
+>  '
+>  
+> +. "$TEST_DIRECTORY"/lib-httpd.sh
+> +start_httpd
 
-My attempt is below. Most of the new explanation is near the end, but I
-tweaked a few other things.
+Ah, so fetch-push test wasn't doing any HTTP testing whatsoever. Does
+that mean there is a better place for these to go? Or does it mean that
+fetch-push test was under-testing?
 
-Your original said:
+> +
+> +test_expect_success 'http push with negotiation' '
+> +	SERVER="$HTTPD_DOCUMENT_ROOT_PATH/server" &&
+> +	URI="$HTTPD_URL/smart/server" &&
+> +
+> +	rm -rf client &&
+> +	git init client &&
+> +	test_commit -C client first_commit &&
+> +	test_commit -C client second_commit &&
+> +
+> +	# Without negotiation
+> +	test_create_repo "$SERVER" &&
+> +	test_config -C "$SERVER" http.receivepack true &&
+> +	git -C client push "$URI" first_commit:refs/remotes/origin/first_commit &&
+Pushing a branch with just the first commit...
+> +	git -C "$SERVER" config receive.hideRefs refs/remotes/origin/first_commit &&
+transfer.hideRefs (referenced by receive.hideRefs) says this ref will be
+omitted from advertisement, so we are forcing either an inefficient push
+or a negotiation to occur, by having the server initially claim not to
+know about it. But it's only omitted from the *initial* advertisement,
+so it will be advertised in later rounds of negotiation, right?
+> +	GIT_TRACE2_EVENT="$(pwd)/event" git -C client -c protocol.version=2 \
+> +		push "$URI" refs/heads/main:refs/remotes/origin/main &&
+And then from 'main' we push first_commit and second_commit?
+> +	grep_wrote 6 event && # 2 commits, 2 trees, 2 blobs
+Nice, I like the comment - this helps.
+> +
+> +	# Same commands, but with negotiation
+> +	rm event &&
+> +	rm -rf "$SERVER" &&
+Ok, clean up the trace and the server so we can start over, but we don't
+need to recreate the client commits because the server doesn't know
+about them anyway. Fine.
+> +	test_create_repo "$SERVER" &&
+> +	test_config -C "$SERVER" http.receivepack true &&
+> +	git -C client push "$URI" first_commit:refs/remotes/origin/first_commit &&
+> +	git -C "$SERVER" config receive.hideRefs refs/remotes/origin/first_commit &&
+> +	GIT_TRACE2_EVENT="$(pwd)/event" git -C client -c protocol.version=2 -c push.negotiate=1 \
+> +		push "$URI" refs/heads/main:refs/remotes/origin/main &&
+And then here's the same set of commands with push negotiation, ok.
+> +	grep_wrote 3 event # 1 commit, 1 tree, 1 blob
 
-  The reason this happens is in the loop where we try to peel the tags,
-  we won't necessarily have parsed that first object. If we haven't, its
-  `tag` will be NULL, so nothing will be displayed, and its `tagged`
-  will also be NULL, so we won't peel any further.
+Is there any reason the event counts would change or be
+non-deterministic outside of negotiation? Or, in other words, is this
+potentially flaky?
 
-and my earlier explanations were not thinking of the "tag" field at all,
-which made me worried there was another subtle bug in not parsing the
-tag earlier. But I don't think so. We don't look at the "tag" field for
-setting the annotation; it always comes from the refname. So the
-paragraph above should not mention "tag" at all.
+> +'
+> +
+> +test_expect_success 'http push with negotiation proceeds anyway even if negotiation fails' '
+> +	rm event &&
+> +	rm -rf "$SERVER" &&
+> +	test_create_repo "$SERVER" &&
+> +	test_config -C "$SERVER" http.receivepack true &&
+> +	git -C client push "$URI" first_commit:refs/remotes/origin/first_commit &&
+Hmm, this relies on 'client' being in the same state the above test left
+it. Probably better to recreate it or at least leave a loud warning
+about it in a comment above this test definition...
 
-I also beefed up the test a bit. All this talk of parsing made me want
-to make sure we were covering tags-of-tags correctly (which I think we
-are both before and after the patch). After adding that, the expected
-decoration output was getting quite cluttered. So I tweaked the test to
-make a new commit, give the tags sensible names, and just look at that
-one commit.
+> +	git -C "$SERVER" config receive.hideRefs refs/remotes/origin/first_commit &&
+> +	GIT_TEST_PROTOCOL_VERSION=0 GIT_TRACE2_EVENT="$(pwd)/event" git -C client -c push.negotiate=1 \
+> +		push "$URI" refs/heads/main:refs/remotes/origin/main 2>err &&
 
-Here it is.
+And we're pushing with protocol v0 so no negotiation can occur here,
+right?
 
--- >8 --
-From: Martin Ågren <martin.agren@gmail.com>
-Subject: load_ref_decorations(): fix decoration with tags
+> +	grep_wrote 6 event && # 2 commits, 2 trees, 2 blobs
+> +	test_i18ngrep "push negotiation failed" err
+> +'
+> +
+> +# DO NOT add non-httpd-specific tests here, because the last part of this
+> +# test script is only executed when httpd is available and enabled.
+> +
+>  test_done
+> -- 
+> 2.32.0.288.g62a8d224e6-goog
+> 
 
-Commit 88473c8bae ("load_ref_decorations(): avoid parsing non-tag
-objects", 2021-06-22) introduced a shortcut to `add_ref_decoration()`:
-Rather than calling `parse_object()`, we go for `oid_object_info()` and
-then `lookup_object_by_type()` using the type just discovered. As
-detailed in the commit message, this provides a significant time saving.
+Thanks for answering novice questions :)
 
-Unfortunately, it also changes the behavior: We lose all annotated tags
-from the decoration.
-
-The reason this happens is in the loop where we try to peel the tags, we
-won't necessarily have parsed that first object. If we haven't, its
-`tagged` field will be NULL, so we won't actually add a decoration for
-the pointed-to object.
-
-Make sure to parse the tag object at the top of the peeling loop. This
-effectively restores the pre-88473c8bae parsing -- but only of tags,
-allowing us to keep most of the possible speedup from 88473c8bae. Jeff
-King reports:
-
-  On my big ~220k ref test case (where it's mostly non-tags), the
-  timings [using "git log -1 --decorate"] are:
-
-    - before either patch: 2.945s
-    - with my broken patch: 0.707s
-    - with [this patch]: 0.788s
-
-The simplest way to do this is to just conditionally parse before the
-loop:
-
-  if (obj->type == OBJ_TAG)
-          parse_object(&obj->oid);
-
-But we can observe that our tag-peeling loop needs to peel already, to
-examine recursive tags-of-tags. So instead of introducing a new call to
-parse_object(), we can simply move the parsing higher in the loop:
-instead of parsing the new object before we loop, parse each tag object
-before we look at its "tagged" field.
-
-This has another beneficial side effect: if a tag points at a commit (or
-other non-tag type), we do not bother to parse the commit at all now.
-And we know it is a commit without calling oid_object_info(), because
-parsing the surrounding tag object will have created the correct in-core
-object based on the "type" field of the tag.
-
-Our test coverage for --decorate was obviously not good, since we missed
-this quite-basic regression. The new tests covers an annotated tag
-(showing the fix), but also that we correctly show annotations for
-lightweight tags and double-annotated tag-of-tags.
-
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- log-tree.c     |  4 ++--
- t/t4202-log.sh | 14 ++++++++++++++
- 2 files changed, 16 insertions(+), 2 deletions(-)
-
-diff --git a/log-tree.c b/log-tree.c
-index 4f69ed176d..6dc4412268 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -174,11 +174,11 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
- 
- 	add_name_decoration(deco_type, refname, obj);
- 	while (obj->type == OBJ_TAG) {
-+		if (!obj->parsed)
-+			parse_object(the_repository, &obj->oid);
- 		obj = ((struct tag *)obj)->tagged;
- 		if (!obj)
- 			break;
--		if (!obj->parsed)
--			parse_object(the_repository, &obj->oid);
- 		add_name_decoration(DECORATION_REF_TAG, refname, obj);
- 	}
- 	return 0;
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 350cfa3593..fe8f5e2067 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1905,6 +1905,20 @@ test_expect_success '--exclude-promisor-objects does not BUG-crash' '
- 	test_must_fail git log --exclude-promisor-objects source-a
- '
- 
-+test_expect_success 'log --decorate includes all levels of tag annotated tags' '
-+	git checkout -b branch &&
-+	git commit --allow-empty -m "new commit" &&
-+	git tag lightweight HEAD &&
-+	git tag -m annotated annotated HEAD &&
-+	git tag -m double-0 double-0 HEAD &&
-+	git tag -m double-1 double-1 double-0 &&
-+	cat >expect <<-\EOF &&
-+	HEAD -> branch, tag: lightweight, tag: double-1, tag: double-0, tag: annotated
-+	EOF
-+	git log -1 --format="%D" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'log --end-of-options' '
-        git update-ref refs/heads/--source HEAD &&
-        git log --end-of-options --source >actual &&
--- 
-2.32.0.663.g932e3f012f
-
+ - Emily
