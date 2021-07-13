@@ -2,208 +2,185 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC87EC07E99
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 23:36:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D71FC07E9A
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 00:06:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A0591606A5
-	for <git@archiver.kernel.org>; Mon, 12 Jul 2021 23:36:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7AE136115A
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 00:06:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232979AbhGLXjr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Jul 2021 19:39:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40798 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230132AbhGLXjr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 19:39:47 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64B16C0613DD
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 16:36:57 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id h9so26594394oih.4
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 16:36:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=6Ow97pWGBXm+f/E6Xlw9A5ISAxw/C1taGdxuYcz8Mn4=;
-        b=H4hvQrXdJ+jfjK8EtutbY7ygFWrUOLFkS7Vc/YdJLZp4vlnabsofDqWnsHmfH0FPnK
-         x/0OZ3gLc5KNnUF1f2KxBAV5KQkJoEhbT//ikn/+bohp6UFJiljqt7oYtUnJ1GuThsEg
-         7gQdGaNbCoxYdLqDIq9La1+FwC/ZI2vS4tCndwyuSdj0nTK+oDCQRPpmmUawhvt+GjXw
-         bRrAmt/tNaPqRqbhylZa12A2eMhslQM59WLZVFJ3SrYIJgbs3UG2c9kkpwhbKds1lxp2
-         I86cwo43U6zgOB2ILv6eHi8NMXrzbp7IEOxNH+tEYA0gAdvHlybaUI+wK4IcqMFSibwG
-         AmpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=6Ow97pWGBXm+f/E6Xlw9A5ISAxw/C1taGdxuYcz8Mn4=;
-        b=if9MNooDgRFFFverQbLkr8PZYKHQY98T5ceAdUibE0uE4sdOkDK2BzCjNWHcHHxT3J
-         /JwRY0yD/PcwcsJPxxfeq7KcBEgii77UwA+/cwhD2Oq+zeJVauL35OD8jQ+tIxLkmqQM
-         /AaNaDjAYWyvCSAy0j4lb32Z+J0zrnypOABGPqEZvKXSzMb/ix/rutgOSuf+HXpYOMpQ
-         gKr0JsTBlbyjeVqeMVbIRQ0ajVwJmT2N4SSqAYWSkXRRVkO327iKdZ1Am5yVMHB0Yved
-         e85LB2YgzmsqDjj6CPg1Yog67wj4QhxSq1ONVLywSISdB+ld0jepeN+LqeKAtKhYOlyW
-         h5Fw==
-X-Gm-Message-State: AOAM533kfJbDvqb+HMcmtkbtM4RBQbNU1Yuorn6tT3NWTihi5tAAPDn4
-        rZu3iKsLfOFSxWQHn1C0W00=
-X-Google-Smtp-Source: ABdhPJxuEIekZaBXtZSCxLDAnHQ9YaCwccTbZVAyNHGccAUDyqYSD+SIJzYmlxGlUUrkyTQvOGfuew==
-X-Received: by 2002:aca:d1a:: with SMTP id 26mr5418335oin.69.1626133016786;
-        Mon, 12 Jul 2021 16:36:56 -0700 (PDT)
-Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id n9sm1670737otn.54.2021.07.12.16.36.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jul 2021 16:36:56 -0700 (PDT)
-Date:   Mon, 12 Jul 2021 18:36:54 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Sergey Organov <sorganov@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Martin <git@mfriebe.de>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org
-Message-ID: <60ecd216bd177_a7177208bc@natae.notmuch>
-In-Reply-To: <87czrnf8bj.fsf@osv.gnss.ru>
-References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
- <87bl7d3l8r.fsf@osv.gnss.ru>
- <60e61bbd7a37d_3030aa2081a@natae.notmuch>
- <877di13hhe.fsf@osv.gnss.ru>
- <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
- <60e67389a4adc_306ac1208fd@natae.notmuch>
- <4057b3ac-a77c-0d5f-d3f4-ad781754aae4@mfriebe.de>
- <60e736e72da68_30939020850@natae.notmuch>
- <155308af-42ad-b044-fb37-676251a9b7e1@mfriebe.de>
- <60e762243aab1_30a7b02089@natae.notmuch>
- <2b85a7eb-d0be-65e7-ecbb-1750abf53e53@mfriebe.de>
- <60e79c31aaa72_30b8a4208c1@natae.notmuch>
- <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
- <60e874e1c6845_215320861@natae.notmuch>
- <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
- <87im1ieaba.fsf@osv.gnss.ru>
- <1bd36aa2-ac90-f7d4-9d48-1aa39159b263@mfriebe.de>
- <87a6mudt9b.fsf@osv.gnss.ru>
- <60e9ff4430c57_7ef20815@natae.notmuch>
- <874kd1gr0q.fsf@osv.gnss.ru>
- <60ec6cd622c4c_a4525208a0@natae.notmuch>
- <87czrnf8bj.fsf@osv.gnss.ru>
-Subject: Re: PATCH: improve git switch documentation
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S233479AbhGMAJJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 20:09:09 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47274 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230099AbhGMAJJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 20:09:09 -0400
+Received: (qmail 25314 invoked by uid 109); 13 Jul 2021 00:06:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 13 Jul 2021 00:06:19 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3667 invoked by uid 111); 13 Jul 2021 00:06:20 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 12 Jul 2021 20:06:20 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 12 Jul 2021 20:06:18 -0400
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v1] load_ref_decorations(): fix decoration with tags
+Message-ID: <YOzY+qNFM2GsgKMO@coredump.intra.peff.net>
+References: <20210712224152.2698500-1-martin.agren@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210712224152.2698500-1-martin.agren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> > Sergey Organov wrote:
-> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Tue, Jul 13, 2021 at 12:41:52AM +0200, Martin Ågren wrote:
 
-> >> > I don't see the logic in here.
-> >> >
-> >> >   git branch topic # here 'branch' is the verb
-> >> 
-> >> Not to me. I assumed the "branch" is always a noun in "git branch", and
-> >> the actual meaning of this command is:
-> >> 
-> >>    git branch [create|new] topic
-> >> 
-> >> I.e., creation just being the default action taken on the branch.
-> >
-> > The question is not what you assumed, the question is can other people
-> > assume otherwise?
+> Commit 88473c8bae ("load_ref_decorations(): avoid parsing non-tag
+> objects", 2021-06-22) introduced a shortcut to `add_ref_decoration()`:
+> Rather than calling `parse_object()` directly, call `oid_object_info()`
+> and then either return early or go on to call `lookup_object_by_type()`
+> using the type just discovered. As detailed in the commit message, this
+> provides a significant time saving.
 > 
-> Sure they can, and that's part of the problem. I described how *I* see
-> it, as I try to interpret things as coherently as possible, and I don't
-> like to interpret "branch" in "git branch" as either noun or verb
-> depending on options when universal interpretation as noun is
-> sufficient.
+> Unfortunately, it also changes the behavior. As an example, on git.git,
 > 
-> > "branch" can be a verb, that's a fact.
+>   git log --oneline --decorate origin/master | grep '(.*tag:.*)'
 > 
-> Yep, who argues?
-> 
-> My argument is that specifically in "git branch" it could be universally
-> interpreted as noun, but can't universally be interpreted as verb, so
-> /for me/ it's noun there.
+> returns zero hits after 88473c8bae. Before it, we have around 800 hits.
+> What happens is, all annotated tags are lost from the decoration.
 
-Yeah, but universal interpretation is not part of human language.
-Context is always relevant.
+Eek. Thanks for catching this.
 
-Sometimes it can be a verb.
+I wondered how I could have missed this, but it does work if somebody
+else happens to have parsed it. For example:
 
-> >> > I agree, and I did have indeed noticed the inconsistency. But there's
-> >> > another category of commands that receive subcommands, like:
-> >> >
-> >> >   git remote $subcommand
-> >> >   git worktree $subcommand
-> >> >   git bisect $subcommand
-> >> >
-> >> > In my opinion `git branch` fits more these subcommand commands, and it
-> >> > was a mistake to make the subcommands options, it should be:
-> >> >
-> >> >   git branch list
-> >> >   git branch new
-> >> >   git branch set-upstream
-> >> >   git branch move
-> >> >   ...
-> >> >
-> >> > Now the verb is crystal-clear.
-> >> 
-> >> Yes, lacking (assumed) subcommands is yet another dimension of
-> >> inconsistencies.
-> >> 
-> >> I mean what I'm after is inconsistency of the first argument to "git".
-> >> It's being the verb more often is where we currently are, at least when
-> >> considering "primary" commands that "git help" outputs. 
-> >> 
-> >> I mean, consider:
-> >> 
-> >>    git branch new nice-feature
-> >> 
-> >> vs
-> >> 
-> >>    git new branch nice-feature
-> >> 
-> >> It should have been the latter, when in fact it's currently the
-> >> [reduced] former.
-> >
-> > I disagree. I prefer the former.
-> 
->      git create branch "nice-feature"
-> 
-> Almost plain human language. Isn't it nice?
+  $ git log -1 --oneline --decorate v5.11
+  f40ddce88593 (tag: v5.11) Linux 5.11
 
-But I'm not talking to a human. If I wast talking to a human I would say
-"create a branch called X", and "with git" would be implied.
+works because we'll already have parsed it as a traversal tip.
 
-But there's no "create" binary on my system. Why would there be? I've
-been using Linux systems for more than 20 years, I know that if I want
-to do something with vim, I have to start the command with 'vim'.
+> Let's do a partial revert of 88473c8bae: Keep doing that early
+> `oid_object_info()`, but after that, go on with the full
+> `parse_object()`. This restores the pre-88473c8bae behavior.
 
-> > Even standardizing `git branch` would be an almost-impossible task, even
-> > if we manage to convince others. `git new branch` even more
-> > impossible.
-> 
-> Quite an opposite. In fact it's easier to add new ways of doing things
-> that, provided they prove being useful, eventually obsolete and replace
-> old ways. "git switch" and "git restore" are recent examples of that.
+Your fix is _almost_ there. There's not much point in doing
+oid_object_info() if we're just going to parse unconditionally. But we
+would want to parse only tags.
 
-That's what *should* be the case, but this discussion proves that even
-experimental commands (which are clearly demarcated as experimental) are
-hard to change.
+And we even do parse tags recursively in the peeling loop. The trouble
+is that we do so after realizing we need to recurse. We just need to
+bump it up in the loop, like:
 
-Moreover, keep in mind that the person who managed to introduce both
-`git switch` and `git resotre` already left the project. That should
-give you a pretty good idea of how much faith he has on these commands
-eventually being useful.
+diff --git a/log-tree.c b/log-tree.c
+index 4f69ed176d..6dc4412268 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -174,11 +174,11 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
+ 
+ 	add_name_decoration(deco_type, refname, obj);
+ 	while (obj->type == OBJ_TAG) {
++		if (!obj->parsed)
++			parse_object(the_repository, &obj->oid);
+ 		obj = ((struct tag *)obj)->tagged;
+ 		if (!obj)
+ 			break;
+-		if (!obj->parsed)
+-			parse_object(the_repository, &obj->oid);
+ 		add_name_decoration(DECORATION_REF_TAG, refname, obj);
+ 	}
+ 	return 0;
 
-Sure, at this point in time introducing `git branch new` might be
-impossible, however, `git branch --new` isn't. And if we agree on what
-should have been the case for `git branch`, then what should be the case
-for `git switch` is more attainable.
+That's the minimum needed to unbreak things. I think we could do even
+better, though. There is no need for us to parse a commit object pointed
+to by a tag here. We should only be parsing tags we see (whether at the
+top-level or recursively).
 
-Cheers.
+Do you want to incorporate the fix above, or would you prefer me to pick
+it up from here?
 
--- 
-Felipe Contreras
+> We clearly
+> have lacking test coverage here, so make sure to add a test. Without
+> this fix to log-tree.c, the git-log invocation in this new test does
+> pick up the lightweight tags involved, but misses out on the annotated
+> tag.
+
+Yeah, definitely.
+
+>  In my brief testing (time git log -1 --decorate on git.git), the time
+>  savings from 88473c8bae seem to be gone. So maybe this should be a full
+>  revert, rather than a partial one. (Plus the test.) Let's hope that
+>  won't be necessary.
+
+Right. After your patch, the oid_object_info() is pointless, because
+we're still parsing everything (the "< 0" error check would only trigger
+in a corrupted repo). And it adds some overhead, so it may even be
+slightly slower than the original code. :)
+
+The timings I get for "git log -1 --decorate" on git.git are:
+
+  -  before either patch: 27.5ms
+  - with my broken patch:  5.9ms
+  - with the patch above: 11.3ms
+
+which makes sense. I have a bunch of branches, and now we don't parse
+them. We do still have to parse tags. On linux.git, where it's almost
+entirely tags, most of the advantage dries up (but it would probably be
+helped a bit by the further suggestion I gave above to avoid parsing
+tagged commits).
+
+On my big ~220k ref test case (where it's mostly non-tags), the timings
+are:
+
+  -  before either patch: 2.945s
+  - with my broken patch: 0.707s
+  - with the patch above: 0.788s
+
+so the savings are retained.
+
+>  Also, I'm not sure whether the test really needs to worry about the
+>  order of the decorations suddenly changing -- maybe it's supposed to be
+>  stable.
+
+I think it's probably OK to count on it being stable. We iterate the
+refs in a stable order to insert them, and then store the result as a
+linked list. If that strategy ever changed, I think we'd end up doing a
+manual sort on them to get a stable order anyway.
+
+> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+> index 350cfa3593..3aa5451913 100755
+> --- a/t/t4202-log.sh
+> +++ b/t/t4202-log.sh
+> @@ -1905,6 +1905,20 @@ test_expect_success '--exclude-promisor-objects does not BUG-crash' '
+>  	test_must_fail git log --exclude-promisor-objects source-a
+>  '
+>  
+> +test_expect_success 'log --decorate includes, e.g., all kinds of tags' '
+> +	git log --oneline --decorate >log &&
+> +	test_line_count = 2 log &&
+> +	grep "^1ac6c77 (tag: one) one$" log &&
+
+This presumably breaks when the tests are run in sha256 mode. Coupled
+with the ordering simplification, maybe:
+
+        cat >expect <<-\EOF &&
+        three HEAD -> source-b, tag: three, tag: source-tag
+        one tag: one
+        EOF
+        git log --format="%s %D" >actual &&
+        test_cmp expect actual
+
+(or maybe %d is more readable in the output; it doesn't matter much if
+we're matching it verbatim).
+
+Thanks again for noticing this.
+
+-Peff
