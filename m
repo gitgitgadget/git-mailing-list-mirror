@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 814B0C07E95
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5919CC07E96
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:05:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5FCE1611AC
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:05:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C9F061249
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:05:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234585AbhGMIIT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 04:08:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40600 "EHLO
+        id S234603AbhGMIIW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 04:08:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234357AbhGMIIS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 04:08:18 -0400
+        with ESMTP id S234558AbhGMIIT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 04:08:19 -0400
 Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA934C0613DD
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:05:27 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id j34so12995722wms.5
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:05:27 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7BDBC0613E9
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:05:28 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id g12so5170739wme.2
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:05:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wSzJiaRys8MEwLx29CBT9JFknXxR9FkUdPnPxaAzaWA=;
-        b=g5JawM1T6T3+loRQtmT1oiGwSehnBfKf+E/5kMbTjXociK3d3z+GHmTr81UZNbu6qt
-         hDbTpCAmnsV0ModirunyvKoaELy3TAvSJ/WWoY5ic1QyDy/an/zwXb4SjiWstu4TFuti
-         t140QRr5GJnXRKWDL5vsLfBdJRU+PABrO14plTmnsXh5ex7N4NReR68aA6OBGhcbW7At
-         uF1PBuXJFFddN1rQ+BOJ/FBBE1osZeddK9c3xpa+Vuc/6vyh6U17mpjDEvFyvypeM41E
-         fDvvG3l7DDRPGnjFXxt6WrYvwcqL/DgalNeL4chIgRvmLX6eocN+1cKryAKVEzxdvXlv
-         IehA==
+        bh=CxAEuR7M5B4588j/R/sVirSlZDKIe8EG1UKtiXlMS+U=;
+        b=Ti2kkYguBPJ7X56iPy6jktgAAe5Uaw0hJ9OdEOb/5gQLjIOYWjkTNpWnn4AHpsaroN
+         I1CEN6bTQx1Td7tA55dcQi67DmdvZ72iHbLYsWEEcY3T8/w+BJPXiw1q1zd8WhtNwYAN
+         31YAx4MhYaRHAOvBF2NoHHK7hkGYVYIaaOHbSylcq8aiPAXTTtSXh1i3OslfwAWOm48O
+         8ycIzaTgcfMq3c9zVSajFHcPjPAcfyJnluIRsOkUlQS2rISoiINq91o+E7W7k6F2XxQP
+         gw5q7KBcjHKA7md3i55W4a4GoixHtnsRNjgHwziIoja3nc/GXLGCxtuUvX2Pd5irLfkl
+         CvPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wSzJiaRys8MEwLx29CBT9JFknXxR9FkUdPnPxaAzaWA=;
-        b=YduOxMEOTDdlouBY2SeDJ24TwmPBox980Ns1tmR54TknL9xIqv2FrwpB14FxNRwasc
-         GtKe0tgpUcy6hCsVni6UNMCZgbSAzxPQnAh6RQfIZVd4Nk9+YI9QVmqiH5WReFkpYMsb
-         wQD24JIfr9ce6ZLTfP8/mXJHXtueKEz9e8l3AouppxnJyw+9pO79soHWuW4+XcgHVuFh
-         t9JSEd3G7GA1FmaBJNoFidsXEnTasYU33/YtSkPVoeESnf9qDqn6fwh+PYq6aVjrNLYO
-         5HOA5ccNx+BCnNnc8rOGJZvkl36Iyk9ShfsMQaCLzcTcSJ6hQIeUunTGBNoRnW1whPeu
-         eZTA==
-X-Gm-Message-State: AOAM531lQc3ExSoqyq1ObnXECDBNc0eAp/V0jFXBy0shmmTBb+Lcy47s
-        2iDYdMbNQE0t8EOv0t1H2hEVWK89CeDm/Q==
-X-Google-Smtp-Source: ABdhPJwMK4eShVAHNhxGPgKvXb5vlvZx3SHketk+ydMmX1ax4WzhBjXKQUCdCPqAnV6TNGbXnFk2Zg==
-X-Received: by 2002:a1c:416:: with SMTP id 22mr1545389wme.59.1626163526249;
-        Tue, 13 Jul 2021 01:05:26 -0700 (PDT)
+        bh=CxAEuR7M5B4588j/R/sVirSlZDKIe8EG1UKtiXlMS+U=;
+        b=M43tiznQjd4CoJdFdXmc3J0bFEs3NO/7qg19NSED8msumiBDyq/yCIu4prZ0t7sRYk
+         2Pu/dP8B5VJsA9owigkmeXt1X6JcfTZdGjboxBdQ3afng8W9PJ+roI7OG3auel8geaHV
+         m6dEogz8QfTYFcBLSJVM9lQBgXZYNWaRwrzLWTpeqCARYnNMLpDprSK+wHIyJJQ4/t7+
+         0AtsltrRbzZdV0YE7H375W4XzvSA71bbexg6WVeSxocqfHvzgdoVPIz//RnobI+ED6MS
+         fv6Ke1trVSb25tQh2lk0Z/1Bjd0GanEmp3QmU7AA1ebPo8ejf9bD9gFIIw4YmZ6ntTe1
+         HDEg==
+X-Gm-Message-State: AOAM532KKouSEbR5EYwJACR2HbJlneA3aSy6SxI1aoSR+qudrYZ20H//
+        S7K8NA+GB/MBUp8TaHqy0t2llcjV6qK9CQ==
+X-Google-Smtp-Source: ABdhPJycrDqlqvYN2OLnR0RH2iNOThlG2Uj/4z9C30XNWzbhnaKfj4JG9x8wGddbKzYDc1BFNPKTxw==
+X-Received: by 2002:a7b:c1c2:: with SMTP id a2mr3472285wmj.15.1626163527110;
+        Tue, 13 Jul 2021 01:05:27 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z11sm17156772wru.65.2021.07.13.01.05.25
+        by smtp.gmail.com with ESMTPSA id z11sm17156772wru.65.2021.07.13.01.05.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jul 2021 01:05:25 -0700 (PDT)
+        Tue, 13 Jul 2021 01:05:26 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 3/6] *.c static functions: add missing __attribute__((format))
-Date:   Tue, 13 Jul 2021 10:05:18 +0200
-Message-Id: <patch-3.6-e2e039f481-20210713T080411Z-avarab@gmail.com>
+Subject: [PATCH v2 4/6] *.h: add a few missing  __attribute__((format))
+Date:   Tue, 13 Jul 2021 10:05:19 +0200
+Message-Id: <patch-4.6-fd70d512b4-20210713T080411Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0-dev
 In-Reply-To: <cover-0.6-0000000000-20210713T080411Z-avarab@gmail.com>
 References: <cover-0.6-00000000000-20210710T084445Z-avarab@gmail.com> <cover-0.6-0000000000-20210713T080411Z-avarab@gmail.com>
@@ -75,253 +75,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add missing __attribute__((format)) function attributes to various
-"static" functions that take printf arguments.
+Add missing format attributes to API functions that take printf
+arguments.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- add-patch.c                                                 | 1 +
- builtin/am.c                                                | 1 +
- builtin/bisect--helper.c                                    | 2 ++
- commit-graph.c                                              | 1 +
- contrib/credential/osxkeychain/git-credential-osxkeychain.c | 1 +
- contrib/credential/wincred/git-credential-wincred.c         | 1 +
- gettext.c                                                   | 1 +
- imap-send.c                                                 | 3 +++
- mailmap.c                                                   | 1 +
- merge-ort.c                                                 | 1 +
- merge-recursive.c                                           | 1 +
- midx.c                                                      | 1 +
- ref-filter.c                                                | 1 +
- sequencer.c                                                 | 2 ++
- server-info.c                                               | 1 +
- worktree.c                                                  | 1 +
- 16 files changed, 20 insertions(+)
+ cache.h  | 1 +
+ quote.h  | 1 +
+ strbuf.h | 1 +
+ 3 files changed, 3 insertions(+)
 
-diff --git a/add-patch.c b/add-patch.c
-index 2fad92ca37..8c41cdfe39 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -280,6 +280,7 @@ static void add_p_state_clear(struct add_p_state *s)
- 	clear_add_i_state(&s->s);
- }
+diff --git a/cache.h b/cache.h
+index ba04ff8bd3..f9aed2d45c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1385,6 +1385,7 @@ enum get_oid_result {
+ };
  
+ int repo_get_oid(struct repository *r, const char *str, struct object_id *oid);
 +__attribute__((format (printf, 2, 3)))
- static void err(struct add_p_state *s, const char *fmt, ...)
- {
- 	va_list args;
-diff --git a/builtin/am.c b/builtin/am.c
-index 0b2d886c81..0c2ad96b70 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -210,6 +210,7 @@ static void write_state_bool(const struct am_state *state,
-  * If state->quiet is false, calls fprintf(fp, fmt, ...), and appends a newline
-  * at the end.
-  */
-+__attribute__((format (printf, 3, 4)))
- static void say(const struct am_state *state, FILE *fp, const char *fmt, ...)
- {
- 	va_list ap;
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 9d9540a0ab..f184eaeac6 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -117,6 +117,7 @@ static int write_in_file(const char *path, const char *mode, const char *format,
- 	return fclose(fp);
- }
+ int get_oidf(struct object_id *oid, const char *fmt, ...);
+ int repo_get_oid_commit(struct repository *r, const char *str, struct object_id *oid);
+ int repo_get_oid_committish(struct repository *r, const char *str, struct object_id *oid);
+diff --git a/quote.h b/quote.h
+index 768cc6338e..049d8dd0b3 100644
+--- a/quote.h
++++ b/quote.h
+@@ -31,6 +31,7 @@ struct strbuf;
  
+ void sq_quote_buf(struct strbuf *, const char *src);
+ void sq_quote_argv(struct strbuf *, const char **argv);
 +__attribute__((format (printf, 2, 3)))
- static int write_to_file(const char *path, const char *format, ...)
- {
- 	int res;
-@@ -129,6 +130,7 @@ static int write_to_file(const char *path, const char *format, ...)
- 	return res;
- }
+ void sq_quotef(struct strbuf *, const char *fmt, ...);
  
-+__attribute__((format (printf, 2, 3)))
- static int append_to_file(const char *path, const char *format, ...)
- {
- 	int res;
-diff --git a/commit-graph.c b/commit-graph.c
-index 2bcb4e0f89..9179a3a647 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -2408,6 +2408,7 @@ int write_commit_graph(struct object_directory *odb,
- #define VERIFY_COMMIT_GRAPH_ERROR_HASH 2
- static int verify_commit_graph_error;
- 
-+__attribute__((format (printf, 1, 2)))
- static void graph_report(const char *fmt, ...)
- {
- 	va_list ap;
-diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-index bcd3f575a3..0b44a9b7cc 100644
---- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-+++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-@@ -10,6 +10,7 @@ static char *username;
- static char *password;
- static UInt16 port;
- 
-+__attribute__((format (printf, 1, 2)))
- static void die(const char *err, ...)
- {
- 	char msg[4096];
-diff --git a/contrib/credential/wincred/git-credential-wincred.c b/contrib/credential/wincred/git-credential-wincred.c
-index 5bdad41de1..5091048f9c 100644
---- a/contrib/credential/wincred/git-credential-wincred.c
-+++ b/contrib/credential/wincred/git-credential-wincred.c
-@@ -11,6 +11,7 @@
- 
- #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
- 
-+__attribute__((format (printf, 1, 2)))
- static void die(const char *err, ...)
- {
- 	char msg[4096];
-diff --git a/gettext.c b/gettext.c
-index af2413b47e..bb5ba1fe7c 100644
---- a/gettext.c
-+++ b/gettext.c
-@@ -66,6 +66,7 @@ const char *get_preferred_languages(void)
- }
- 
- #ifndef NO_GETTEXT
-+__attribute__((format (printf, 1, 2)))
- static int test_vsnprintf(const char *fmt, ...)
- {
- 	char buf[26];
-diff --git a/imap-send.c b/imap-send.c
-index bb085d66d1..ce5a0461a4 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -451,6 +451,7 @@ static int buffer_gets(struct imap_buffer *b, char **s)
- 	/* not reached */
- }
- 
-+__attribute__((format (printf, 1, 2)))
- static void imap_info(const char *msg, ...)
- {
- 	va_list va;
-@@ -463,6 +464,7 @@ static void imap_info(const char *msg, ...)
- 	}
- }
- 
-+__attribute__((format (printf, 1, 2)))
- static void imap_warn(const char *msg, ...)
- {
- 	va_list va;
-@@ -504,6 +506,7 @@ static char *next_arg(char **s)
- 	return ret;
- }
+ /*
+diff --git a/strbuf.h b/strbuf.h
+index 223ee2094a..f1e9821a54 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -263,6 +263,7 @@ static inline void strbuf_insertstr(struct strbuf *sb, size_t pos,
+ void strbuf_vinsertf(struct strbuf *sb, size_t pos, const char *fmt,
+ 		     va_list ap);
  
 +__attribute__((format (printf, 3, 4)))
- static int nfsnprintf(char *buf, int blen, const char *fmt, ...)
- {
- 	int ret;
-diff --git a/mailmap.c b/mailmap.c
-index d1f7c0d272..462b395634 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -8,6 +8,7 @@
- #define debug_mm(...) fprintf(stderr, __VA_ARGS__)
- #define debug_str(X) ((X) ? (X) : "(none)")
- #else
-+__attribute__((format (printf, 1, 2)))
- static inline void debug_mm(const char *format, ...) {}
- static inline const char *debug_str(const char *s) { return s; }
- #endif
-diff --git a/merge-ort.c b/merge-ort.c
-index b954f7184a..955d1d0502 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -529,6 +529,7 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
- 	renames->callback_data_nr = renames->callback_data_alloc = 0;
- }
+ void strbuf_insertf(struct strbuf *sb, size_t pos, const char *fmt, ...);
  
-+__attribute__((format (printf, 2, 3)))
- static int err(struct merge_options *opt, const char *err, ...)
- {
- 	va_list params;
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 4327e0cfa3..5d54990af9 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -167,6 +167,7 @@ static void flush_output(struct merge_options *opt)
- 	}
- }
- 
-+__attribute__((format (printf, 2, 3)))
- static int err(struct merge_options *opt, const char *err, ...)
- {
- 	va_list params;
-diff --git a/midx.c b/midx.c
-index 21d6a05e88..0956849e2a 100644
---- a/midx.c
-+++ b/midx.c
-@@ -1162,6 +1162,7 @@ void clear_midx_file(struct repository *r)
- 
- static int verify_midx_error;
- 
-+__attribute__((format (printf, 1, 2)))
- static void midx_report(const char *fmt, ...)
- {
- 	va_list ap;
-diff --git a/ref-filter.c b/ref-filter.c
-index 4db0e40ff4..f45d3a1b26 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -213,6 +213,7 @@ static int used_atom_cnt, need_tagged, need_symref;
-  * Expand string, append it to strbuf *sb, then return error code ret.
-  * Allow to save few lines of code.
-  */
-+__attribute__((format (printf, 3, 4)))
- static int strbuf_addf_ret(struct strbuf *sb, int ret, const char *fmt, ...)
- {
- 	va_list ap;
-diff --git a/sequencer.c b/sequencer.c
-index c316d8374a..7f07cd00f3 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3521,6 +3521,7 @@ static int do_exec(struct repository *r, const char *command_line)
- 	return status;
- }
- 
-+__attribute__((format (printf, 2, 3)))
- static int safe_append(const char *filename, const char *fmt, ...)
- {
- 	va_list ap;
-@@ -3598,6 +3599,7 @@ static int do_label(struct repository *r, const char *name, int len)
- 	return ret;
- }
- 
-+__attribute__((format (printf, 3, 4)))
- static const char *reflog_message(struct replay_opts *opts,
- 	const char *sub_action, const char *fmt, ...)
- {
-diff --git a/server-info.c b/server-info.c
-index de0aa4498c..7701d7c20a 100644
---- a/server-info.c
-+++ b/server-info.c
-@@ -27,6 +27,7 @@ static int uic_is_stale(const struct update_info_ctx *uic)
- 	return uic->old_fp == NULL;
- }
- 
-+__attribute__((format (printf, 2, 3)))
- static int uic_printf(struct update_info_ctx *uic, const char *fmt, ...)
- {
- 	va_list ap;
-diff --git a/worktree.c b/worktree.c
-index 237517baee..092a4f92ad 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -265,6 +265,7 @@ const char *worktree_prune_reason(struct worktree *wt, timestamp_t expire)
- }
- 
- /* convenient wrapper to deal with NULL strbuf */
-+__attribute__((format (printf, 2, 3)))
- static void strbuf_addf_gently(struct strbuf *buf, const char *fmt, ...)
- {
- 	va_list params;
+ /**
 -- 
 2.32.0-dev
 
