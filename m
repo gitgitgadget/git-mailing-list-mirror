@@ -4,229 +4,214 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7492BC11F67
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 19:33:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAFF9C07E95
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 19:33:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 565A0610CB
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 19:33:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A16ED610CB
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 19:33:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234586AbhGMTgA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 15:36:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57506 "EHLO
+        id S234622AbhGMTgC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 15:36:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234172AbhGMTf7 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234540AbhGMTf7 (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 13 Jul 2021 15:35:59 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA41AC0613DD
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 12:33:08 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id u8-20020a7bcb080000b02901e44e9caa2aso3109509wmj.4
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 12:33:08 -0700 (PDT)
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 290AEC0613E9
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 12:33:09 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id i94so132428wri.4
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 12:33:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=hZP7uk+qJCuimmRS7dbpfjEso1nqC0L0Y8F4jEarQEs=;
-        b=eJUDWGE6onMZ5D0oNMJrAqCEjXXtGHEMXzwmVz8lHm1rtBke+n/uR86QfuJgihBXKj
-         c7O6YIM5l5Yg7yB1uSfp1jY1vRA3Pfds825WZn7PFQ1pRU+NsJMIEM8ThyIk3TNlthnl
-         aApMQf7pH/Z1bdYaRCOOecLX9toNQlqj/0SQpWzMiRi6JNtFmli/KK7z5hs/yX/wQiqi
-         LieZdjPesqTy8/ruT8QKATnKKeiap1dt/2l2MN2v9bA831weVQCd4X2fU9UbivlxhiS6
-         9SGzkFVotShlrnPH2BJOg/4olxP7x+Pe7IotEa4N0RDCNIsJM1QlIA/xqvyyq/XfXL7C
-         FGcQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=pR0h5LFWhviNFphByFwqYkm2jiu1RUK/t+Oni4vKV4Y=;
+        b=ImFjiAzr1PDlvc5xRtUW2xWww1BQM+tMaCjHJCHSy7K3NFzg6d0Al+ozeHbiSSyKn+
+         eJlAUcU2YLFw+z7eu5jVQ3DRp8EyTMAzMqs5+SB0DvlaBXuhfLy8Z8a8dMpB5LcjKy6b
+         JZZfblfBlusw1HsNRCM4jOWGwQSMLRDG7VesYA61A5mX+v60oHYQWFO2O3e5q3BFJjAy
+         TYKHz0FethCBwp01wsOOSfw1Cc1AnTgN6geQcWG8CFyonlF0p+bGo01cP7eFwI2gYf+G
+         2+sDe/2yeUq7BXYmWDqJOouOOLhT6zWrV/gsPPC/jvdroCAgl1AmPJPQcVnIFyb9N0me
+         i0sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=hZP7uk+qJCuimmRS7dbpfjEso1nqC0L0Y8F4jEarQEs=;
-        b=I6KK5736fjeY6D1PofquzkDGWi1sXfBjGVPboZwb7x/XKWMD6J1Fn0IkgtRDHPsj+N
-         St2XKauHihSPvY8WUJVlLk/pWCcBFVjIoVjC6qZT6h8vgVg3FypS6YqDWxO3pAef0MuJ
-         94ihnktH8wxGZ/FQYttPUvonMXlMHAApsHhZAL8a6FDYQaxm7BNIiPJFhh7CkfMGUz8v
-         4A8ajSJJ5mk92NfEEr2GWS2+ZA8ViJK4BotxrP9LMlyL5tFxYk1vTqduUHXB3y7qd8d1
-         VduEpkvaFjdT337VII1AV5mRo7HLBNr12XMpIfvPXXaaypiji7S5usSapDoSPKejTrIB
-         sLnA==
-X-Gm-Message-State: AOAM531ipwV0WXdZj415FoLXDVXLCGZnNlfbMp5Sj4xbEZTEWEkyFF0G
-        OqMRqFvLP7T9H3CP/YUIVLpGZOR4VDs=
-X-Google-Smtp-Source: ABdhPJywZz1S3iAt1B/7gRYfyNccDS9X46YXSdG04pG7gLrCfC3QpnH5tG3QBukTpbaeNb7YwH4G3w==
-X-Received: by 2002:a1c:1f09:: with SMTP id f9mr1061924wmf.110.1626204785864;
-        Tue, 13 Jul 2021 12:33:05 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=pR0h5LFWhviNFphByFwqYkm2jiu1RUK/t+Oni4vKV4Y=;
+        b=NDbAzEahR/cp3Stw5174GGltXbylVwsh83e/AXh5ULn1VLJhBGhrevSrWlv7KomFB6
+         vnxvvVXWdyxvJHkdjN577vsCx5kJFmekH7yj2Zj02fkKRMzUrAtRIqcxbH1QcKOYMqBn
+         df2/yrXhFMoFCnE0DB0ggcqfaAyr/a0u7FlMJvoCQJKG4EL/4mwb7FmjjoE2GA/iEqkc
+         W/K5WklAxcB53ariJKnSdIPRgCV0X+srJe/84Zi9JJ2RFjV5MCW7SgOPvwx3BJwQRvWT
+         OmcB47NVj9QdfuHU7ltkH0SGV40BYcvS3oFVr/O/3qMHx4p8u7zqO6q9NQPS8y0A4mq4
+         j07g==
+X-Gm-Message-State: AOAM532rTj8HWXndPucpFriSoEh8mQlRn75zkLhA1Ra4uGBrLwJFuijU
+        q/kDpZSfzfMPaYIffOFrMcuMOjkSU50=
+X-Google-Smtp-Source: ABdhPJxaK32kkL/4Vh2e3D/noPnb03PBU2UIEVwUxXQ3UZd9fZ6ZrCUfNEsSy/yAns+ab0i2qsqJrA==
+X-Received: by 2002:adf:ef03:: with SMTP id e3mr3922717wro.316.1626204787676;
+        Tue, 13 Jul 2021 12:33:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p18sm3173683wmg.46.2021.07.13.12.33.04
+        by smtp.gmail.com with ESMTPSA id s6sm9738518wrt.45.2021.07.13.12.33.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jul 2021 12:33:05 -0700 (PDT)
-Message-Id: <pull.988.v2.git.1626204784.gitgitgadget@gmail.com>
-In-Reply-To: <pull.988.git.1625111177.gitgitgadget@gmail.com>
+        Tue, 13 Jul 2021 12:33:07 -0700 (PDT)
+Message-Id: <f7ac01055d9d2e9e2dfdfd780ff7f10fbfd05d5b.1626204784.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.988.v2.git.1626204784.gitgitgadget@gmail.com>
 References: <pull.988.git.1625111177.gitgitgadget@gmail.com>
+        <pull.988.v2.git.1626204784.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 13 Jul 2021 19:32:56 +0000
-Subject: [PATCH v2 0/7] Optimization batch 14: trivial directory resolution
-MIME-Version: 1.0
+Date:   Tue, 13 Jul 2021 19:32:59 +0000
+Subject: [PATCH v2 3/7] merge-ort: add data structures for allowable trivial
+ directory resolves
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[This is mostly unchanged since v1; I'm primarily resending since it's been
-two weeks and I want to bump it so folks have a chance to notice and review
-it. But there was one change, noted below.]
+From: Elijah Newren <newren@gmail.com>
 
-This series depends textually on ort-perf-batch-12, but is semantically
-independent. (It is both semantically and textually independent of
-ort-perf-batch-13.)
+As noted a few commits ago, we can resolve individual files early if all
+three sides of the merge have a file at the path and two of the three
+sides match.  We would really like to do the same thing with
+directories, because being able to do a trivial directory resolve means
+we don't have to recurse into the directory, potentially saving us a
+huge amount of time in both collect_merge_info() and process_entries().
+Unfortunately, resolving directories early would mean missing any
+renames whose source or destination is underneath that directory.
 
-Most of my previous series dramatically accelerated cases with lots of
-renames, while providing comparatively minor benefits for cases with few or
-no renames. This series is the opposite; it provides huge benefits when
-there are few or no renames, and comparatively smaller (though still quite
-decent) benefits for cases with many uncached renames.
+If we somehow knew there weren't any renames under the directory in
+question, then we could resolve it early.  Sadly, it is impossible to
+determine whether there are renames under the directory in question
+without recursing into it, and this has traditionally kept us from ever
+implementing such an optimization.
 
-Changes since v1:
+In commit f89b4f2bee ("merge-ort: skip rename detection entirely if
+possible", 2021-03-11), we added an additional reason that rename
+detection could be skipped entirely -- namely, if no *relevant* sources
+were present.  Without completing collect_merge_info_callback(), we do
+not yet know if there are no relevant sources.  However, we do know that
+if the current directory on one side matches the merge base, then every
+source file within that directory will not be RELEVANT_CONTENT, and a
+few simple checks can often let us rule out RELEVANT_LOCATION as well.
+This suggests we can just defer recursing into such directories until
+the end of collect_merge_info.
 
- * Minor tweak to the final patch to correct implicit assumption that rename
-   detection running implies all renames were found (rename limits could
-   have been exceeded and prevented finding renames)
+Since the deferred directories are known to not add any relevant sources
+due to the above properties, then if there are no relevant sources after
+we've traversed all paths other than the deferred ones, then we know
+there are not any relevant sources.  Under those conditions, rename
+detection is unnecessary, and that means we can resolve the deferred
+directories without recursing into them.
 
-=== Basic Optimization idea ===
+Note that the logic for skipping rename detection was also modified
+further in commit 76e253793c ("merge-ort, diffcore-rename: employ cached
+renames when possible", 2021-01-30); in particular rename detection can
+be skipped if we already have cached renames for each relevant source.
+We can take advantage of this information as well with our deferral of
+recursing into directories where one side matches the merge base.
 
-unpack_trees has had a concept of trivial merges for individual files (see
-Documentation/technical/trivial-merge.txt). The same idea can be applied in
-merge-ort. It'd be really nice to extend that idea to trees as well, as it
-could provide a huge performance boost; sadly however, applying it in
-general would wreck both regular rename detection (the unmatched side can
-have new files that serve as potential destinations in rename detection) and
-directory rename detection (the unmatched side could have a new directory
-that was moved into it).
+Add some data structures that we will use to do these deferrals, with
+some lengthy comments explaining their purpose.
 
-If we somehow knew rename detection wasn't needed, we could do trivial
-directory resolution. In the past, this wasn't possible. However...
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-ort.c | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
 
-With recent optimizations we have created a possibility to do trivial
-directory resolutions in some cases. These came from the addition of the
-"skipping irrelevant renames" optimizations (from ort-perf-batch-9 and
-ort-perf-batch-10), and in particular noting that we added an ability to
-entirely skip rename detection in commit f89b4f2bee ("merge-ort: skip rename
-detection entirely if possible", 2021-03-11) when there are no relevant
-sources. We can detect if there are no relevant sources without recursing
-into the directories in question.
-
-As a cherry on top, the caching of renames (from ort-perf-batch-11) allows
-us to cover additional cases.
-
-This series is all about adding all the special checks needed to safely
-perform trival directory resolutions.
-
-=== Results ===
-
-For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-performance work; instrument with trace2_region_* calls", 2020-10-28), the
-changes in just this series improves the performance as follows:
-
-                     Before Series           After Series
-no-renames:        5.235 s ±  0.042 s   204.2  ms ±  3.0  ms
-mega-renames:      9.419 s ±  0.107 s     1.076 s ±  0.015 s
-just-one-mega:   480.1  ms ±  3.9  ms   364.1  ms ±  7.0  ms
-
-
-As a reminder, before any merge-ort/diffcore-rename performance work, the
-performance results we started with (for merge-recursive as of git-2.30.0)
-were:
-
-no-renames-am:      6.940 s ±  0.485 s
-no-renames:        18.912 s ±  0.174 s
-mega-renames:    5964.031 s ± 10.459 s
-just-one-mega:    149.583 s ±  0.751 s
-
-
-Elijah Newren (7):
-  merge-ort: resolve paths early when we have sufficient information
-  merge-ort: add some more explanations in collect_merge_info_callback()
-  merge-ort: add data structures for allowable trivial directory
-    resolves
-  merge-ort: add a handle_deferred_entries() helper function
-  merge-ort: defer recursing into directories when merge base is matched
-  merge-ort: avoid recursing into directories when we don't need to
-  merge-ort: restart merge with cached renames to reduce process entry
-    cost
-
- merge-ort.c                         | 408 +++++++++++++++++++++++++++-
- t/t6423-merge-rename-directories.sh |   2 +-
- 2 files changed, 398 insertions(+), 12 deletions(-)
-
-
-base-commit: 2eeee12b02e441ac05054a5a5ecbcea6964a1e6b
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-988%2Fnewren%2Fort-perf-batch-14-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-988/newren/ort-perf-batch-14-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/988
-
-Range-diff vs v1:
-
- 1:  5dca982c0b = 1:  5dca982c0b merge-ort: resolve paths early when we have sufficient information
- 2:  8aea371390 = 2:  8aea371390 merge-ort: add some more explanations in collect_merge_info_callback()
- 3:  f7ac01055d = 3:  f7ac01055d merge-ort: add data structures for allowable trivial directory resolves
- 4:  7e28323b62 = 4:  7e28323b62 merge-ort: add a handle_deferred_entries() helper function
- 5:  317553eadb = 5:  317553eadb merge-ort: defer recursing into directories when merge base is matched
- 6:  3409a6cd63 = 6:  3409a6cd63 merge-ort: avoid recursing into directories when we don't need to
- 7:  76bc73262c ! 7:  7133f0efa5 merge-ort: restart merge with cached renames to reduce process entry cost
-     @@ merge-ort.c: static void detect_regular_renames(struct merge_options *opt,
-       	}
-       
-       	partial_clear_dir_rename_count(&renames->dir_rename_count[side_index]);
-     +@@ merge-ort.c: static void detect_regular_renames(struct merge_options *opt,
-     + 	trace2_region_leave("diff", "diffcore_rename", opt->repo);
-     + 	resolve_diffpair_statuses(&diff_queued_diff);
-     + 
-     ++	if (diff_opts.needed_rename_limit > 0)
-     ++		renames->redo_after_renames = 0;
-     + 	if (diff_opts.needed_rename_limit > renames->needed_limit)
-     + 		renames->needed_limit = diff_opts.needed_rename_limit;
-     + 
-      @@ merge-ort.c: static void detect_regular_renames(struct merge_options *opt,
-       	diff_queued_diff.nr = 0;
-       	diff_queued_diff.queue = NULL;
-       	diff_flush(&diff_opts);
-      +
-     -+	if (renames->redo_after_renames) {
-     -+		int i;
-     -+		struct diff_filepair *p;
-     -+
-     -+		renames->redo_after_renames = 2;
-     -+		for (i = 0; i < renames->pairs[side_index].nr; ++i) {
-     -+			p = renames->pairs[side_index].queue[i];
-     -+			possibly_cache_new_pair(renames, p, side_index, NULL);
-     -+		}
-     -+	}
-      +	return 1;
-       }
-       
-     @@ merge-ort.c: static int detect_and_process_renames(struct merge_options *opt,
-      +	detection_run |= detect_regular_renames(opt, MERGE_SIDE1);
-      +	detection_run |= detect_regular_renames(opt, MERGE_SIDE2);
-      +	if (renames->redo_after_renames && detection_run) {
-     ++		int i, side;
-     ++		struct diff_filepair *p;
-     ++
-     ++		/* Cache the renames, we found */
-     ++		for (side = MERGE_SIDE1; side <= MERGE_SIDE2; side++) {
-     ++			for (i = 0; i < renames->pairs[side].nr; ++i) {
-     ++				p = renames->pairs[side].queue[i];
-     ++				possibly_cache_new_pair(renames, p, side, NULL);
-     ++			}
-     ++		}
-     ++
-     ++		/* Restart the merge with the cached renames */
-     ++		renames->redo_after_renames = 2;
-      +		trace2_region_leave("merge", "regular renames", opt->repo);
-      +		goto cleanup;
-      +	}
-
+diff --git a/merge-ort.c b/merge-ort.c
+index 843fa693145..3d3f00b3b45 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -119,6 +119,51 @@ struct rename_info {
+ 	 */
+ 	struct strintmap relevant_sources[3];
+ 
++	/*
++	 * possible_trivial_merges: directories we defer recursing into
++	 *
++	 * possible_trivial_merges is a map of directory names to
++	 * dir_rename_mask.  When we detect that a directory is unchanged on
++	 * one side, we can sometimes resolve the directory without recursing
++	 * into it.  Renames are the only things that can prevent such an
++	 * optimization.  However, for rename sources:
++	 *   - If no parent directory needed directory rename detection, then
++	 *     no path under such a directory can be a relevant_source.
++	 * and for rename destinations:
++	 *   - If no cached rename has a target path under the directory AND
++	 *   - If there are no unpaired relevant_sources elsewhere in the
++	 *     repository
++	 * then we don't need any path under this directory for a rename
++	 * destination.  The only way to know the last item above is to defer
++	 * handling such directories until the end of collect_merge_info(),
++	 * in handle_deferred_entries().
++	 *
++	 * For each we store dir_rename_mask, since that's the only bit of
++	 * information we need, other than the path, to resume the recursive
++	 * traversal.
++	 */
++	struct strintmap possible_trivial_merges[3];
++
++	/*
++	 * trivial_merges_okay: if trivial directory merges are okay
++	 *
++	 * See possible_trivial_merges above.  The "no unpaired
++	 * relevant_sources elsewhere in the repository" is a single boolean
++	 * per merge side, which we store here.  Note that while 0 means no,
++	 * 1 only means "maybe" rather than "yes"; we optimistically set it
++	 * to 1 initially and only clear when we determine it is unsafe to
++	 * do trivial directory merges.
++	 */
++	unsigned trivial_merges_okay[3];
++
++	/*
++	 * target_dirs: ancestor directories of rename targets
++	 *
++	 * target_dirs contains all directory names that are an ancestor of
++	 * any rename destination.
++	 */
++	struct strset target_dirs[3];
++
+ 	/*
+ 	 * dir_rename_mask:
+ 	 *   0: optimization removing unmodified potential rename source okay
+@@ -490,6 +535,9 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
+ 		strintmap_func(&renames->dirs_removed[i]);
+ 		strmap_func(&renames->dir_renames[i], 0);
+ 		strintmap_func(&renames->relevant_sources[i]);
++		strintmap_func(&renames->possible_trivial_merges[i]);
++		strset_func(&renames->target_dirs[i]);
++		renames->trivial_merges_okay[i] = 1; /* 1 == maybe */
+ 		if (!reinitialize)
+ 			assert(renames->cached_pairs_valid_side == 0);
+ 		if (i != renames->cached_pairs_valid_side) {
+@@ -4045,12 +4093,17 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
+ 		strintmap_init_with_options(&renames->relevant_sources[i],
+ 					    -1 /* explicitly invalid */,
+ 					    NULL, 0);
++		strintmap_init_with_options(&renames->possible_trivial_merges[i],
++					    0, NULL, 0);
++		strset_init_with_options(&renames->target_dirs[i],
++					 NULL, 1);
+ 		strmap_init_with_options(&renames->cached_pairs[i],
+ 					 NULL, 1);
+ 		strset_init_with_options(&renames->cached_irrelevant[i],
+ 					 NULL, 1);
+ 		strset_init_with_options(&renames->cached_target_names[i],
+ 					 NULL, 0);
++		renames->trivial_merges_okay[i] = 1; /* 1 == maybe */
+ 	}
+ 
+ 	/*
 -- 
 gitgitgadget
+
