@@ -2,167 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-20.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F8C3C07E95
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 22:29:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BA1AC07E95
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 22:31:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E14B160720
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 22:29:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 796BF61284
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 22:31:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235973AbhGMWcP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 18:32:15 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63806 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234957AbhGMWcP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 18:32:15 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 615C0C7943;
-        Tue, 13 Jul 2021 18:29:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=+eb5gNfpejju
-        4EVlzDF82aQOkYg61TlCDpSBpc/uiPk=; b=TfA9LqTHTSZC3rmBUldlYeSos9B7
-        WmE6LdteU/2GMXjbQC+V3Q6NMixEJHfvDA25ta1S5UUW0zx4QAl2aY1g2uOBxiyn
-        Oefba4rUIAOrOs8MJjPHXQSH/rA5/016ZHn0FPD/ywEAcoryMImLe6SeU5TtyqrI
-        H+pUL+l1R8CC43M=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 59D39C7942;
-        Tue, 13 Jul 2021 18:29:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D6A4BC7941;
-        Tue, 13 Jul 2021 18:29:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/6] add missing __attribute__((format))
-References: <cover-0.6-00000000000-20210710T084445Z-avarab@gmail.com>
-        <cover-0.6-0000000000-20210713T080411Z-avarab@gmail.com>
-Date:   Tue, 13 Jul 2021 15:29:23 -0700
-In-Reply-To: <cover-0.6-0000000000-20210713T080411Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 13 Jul
- 2021 10:05:15 +0200")
-Message-ID: <xmqqfswh26gs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S236329AbhGMWd4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 18:33:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41670 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234957AbhGMWdy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 18:33:54 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C900C0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 15:31:03 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id n11so16391pjo.1
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 15:31:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=8X7w7E801N/9TCySKeEs3r1B8O/5WGaCIZk5V485FjM=;
+        b=vijGkHxKs4/b96D1TMo5ymxo2o+i9Mvc+e+tDhtommeQBo0h6jia4otsUNKyEhwOgV
+         eStYw6JjHykyhE100JSoxnJDVJkWy2ZiKmHO1eU6l/HRTu2NUYToodo7ykVzDnUIwPFZ
+         i3CE4lj5OvREyzbVimpuxpiYkwXQT9hPboMfdHetC1eDSZdj7fDqSAhsOvvSYtc1qQFN
+         PADRMQ4fWsOInkh4jo3EAHW1mnpl4erPLueT7BGLhH1XZCsUdjZXChJDuPwY0j72lyWa
+         /MfZ+zMd+dHGSn5OenaP16OdbrVKw+mF2biua79S/LJHBPydK0tSg1h47cWcRsKa84GO
+         XH3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8X7w7E801N/9TCySKeEs3r1B8O/5WGaCIZk5V485FjM=;
+        b=JcnUCC2Mkc+oLeXXYW0rBzZ5Q7yOB1i7BwCVTnNyO5cKNzFajkvM66QybtX87LItG/
+         3vpzelFrygKkJNh7X6s3ZFVUf/fy1vLHMNd0m7/AGGCOGsLZE90mr5K/wy89+J0Dztr9
+         +ac3/NBfJe8FHpFJGm/Kl+npV2NBIVio+2t2yBpM/UHM6cyWEF5oqUs0I+mFBpcYUQBV
+         oIfuPupzUHtwczYoQnMPFCVp1cue/h+b4/QGo6ijNAsKrNC65RfqSHOACwQWCAlpZ/vB
+         0zrH6I49643Q6cqV9MMKnuIA4pwsM02HQydSkd6GUYIXV2zOzeGScu2t+Ao+yO8i5YdF
+         35ww==
+X-Gm-Message-State: AOAM531QN/OH8hEWMAQqBTF1UWpz16F8B6j9HoCwLjfq730PNMOt9L00
+        Wv+GjqUifRNjQf7HZIGF1icngQ==
+X-Google-Smtp-Source: ABdhPJyDptmXoE1i92aeasMWzg0BpYtz4UTKm2rRDHU0orQNWWnH3wUhsErqBJEIUw3lHCcTjdyQwA==
+X-Received: by 2002:a17:90a:6391:: with SMTP id f17mr467738pjj.27.1626215462567;
+        Tue, 13 Jul 2021 15:31:02 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:df8b:593d:91b7:a693])
+        by smtp.gmail.com with ESMTPSA id l6sm126082pgh.34.2021.07.13.15.31.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jul 2021 15:31:01 -0700 (PDT)
+Date:   Tue, 13 Jul 2021 15:30:56 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/3] send-pack: fix push nego. when remote has refs
+Message-ID: <YO4UIGQPugvHcYrw@google.com>
+References: <cover.1624486920.git.jonathantanmy@google.com>
+ <175da5f02b319bb637700e4f6665ee346674e1b0.1624486920.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C66FC518-E429-11EB-B93D-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <175da5f02b319bb637700e4f6665ee346674e1b0.1624486920.git.jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On Wed, Jun 23, 2021 at 03:30:52PM -0700, Jonathan Tan wrote:
+> 
+> Commit 477673d6f3 ("send-pack: support push negotiation", 2021-05-05)
+> did not test the case in which a remote advertises at least one ref. In
+> such a case, "remote_refs" in get_commons_through_negotiation() in
+> send-pack.c would also contain those refs with a zero ref->new_oid (in
+> addition to the refs being pushed with a nonzero ref->new_oid). Passing
+> them as negotiation tips to "git fetch" causes an error, so filter them
+> out.
 
-> v2: Let's drop the whole bending over backwards to do mostly/entirely
-> useless strftime() checking. That's gone, I added a patch at the end
-> with a comment for strbuf_addftime() to say why it's not there, and
-> also split up the advise_if_enabled() change into its own commit.
+So here we are filtering those redundant refs on the client side?
 
-OK.
+> 
+> (The exact error that would happen in "git fetch" in this case is a
+> segmentation fault, which is unwanted. This will be fixed in the
+> subsequent commit.)
+> 
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  send-pack.c           | 6 ++++--
+>  t/t5516-fetch-push.sh | 5 +++++
+>  2 files changed, 9 insertions(+), 2 deletions(-)
+> 
+> diff --git a/send-pack.c b/send-pack.c
+> index 9cb9f71650..85945becf0 100644
+> --- a/send-pack.c
+> +++ b/send-pack.c
+> @@ -425,8 +425,10 @@ static void get_commons_through_negotiation(const char *url,
+>  	child.no_stdin = 1;
+>  	child.out = -1;
+>  	strvec_pushl(&child.args, "fetch", "--negotiate-only", NULL);
+> -	for (ref = remote_refs; ref; ref = ref->next)
+> -		strvec_pushf(&child.args, "--negotiation-tip=%s", oid_to_hex(&ref->new_oid));
+> +	for (ref = remote_refs; ref; ref = ref->next) {
+> +		if (!is_null_oid(&ref->new_oid))
+> +			strvec_pushf(&child.args, "--negotiation-tip=%s", oid_to_hex(&ref->new_oid));
+> +	}
+>  	strvec_push(&child.args, url);
+>  
+>  	if (start_command(&child))
+> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+> index 5ce32e531a..e383ba662f 100755
+> --- a/t/t5516-fetch-push.sh
+> +++ b/t/t5516-fetch-push.sh
+> @@ -201,6 +201,7 @@ test_expect_success 'push with negotiation' '
+>  	# Without negotiation
+>  	mk_empty testrepo &&
+>  	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
+> +	test_commit -C testrepo unrelated_commit &&
+>  	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
+>  	echo now pushing without negotiation &&
+>  	GIT_TRACE2_EVENT="$(pwd)/event" git -c protocol.version=2 push testrepo refs/heads/main:refs/remotes/origin/main &&
+> @@ -210,6 +211,7 @@ test_expect_success 'push with negotiation' '
+>  	rm event &&
+>  	mk_empty testrepo &&
+>  	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
+> +	test_commit -C testrepo unrelated_commit &&
 
-> I also removed the other cases of adding attribute checking to
-> compat/*. I can't easily test those, and I don't know if there's
-> potential bad interactions with git-compat-util.h.
+So now we are asking 'testrepo' to initially advertise that it also has
+unrelated_commit, which we don't care about, and expect to work fine
+anyway. Ok.
 
-Sensible.
+>  	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
+>  	GIT_TRACE2_EVENT="$(pwd)/event" git -c protocol.version=2 -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main &&
+>  	grep_wrote 2 event # 1 commit, 1 tree
+> @@ -219,6 +221,7 @@ test_expect_success 'push with negotiation proceeds anyway even if negotiation f
+>  	rm event &&
+>  	mk_empty testrepo &&
+>  	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
+> +	test_commit -C testrepo unrelated_commit &&
+>  	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
+>  	GIT_TEST_PROTOCOL_VERSION=0 GIT_TRACE2_EVENT="$(pwd)/event" \
+>  		git -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main 2>err &&
+> @@ -1783,6 +1786,7 @@ test_expect_success 'http push with negotiation' '
+>  	# Without negotiation
+>  	test_create_repo "$SERVER" &&
+>  	test_config -C "$SERVER" http.receivepack true &&
+> +	test_commit -C "$SERVER" unrelated_commit &&
+>  	git -C client push "$URI" first_commit:refs/remotes/origin/first_commit &&
+>  	git -C "$SERVER" config receive.hideRefs refs/remotes/origin/first_commit &&
+>  	GIT_TRACE2_EVENT="$(pwd)/event" git -C client -c protocol.version=2 \
+> @@ -1794,6 +1798,7 @@ test_expect_success 'http push with negotiation' '
+>  	rm -rf "$SERVER" &&
+>  	test_create_repo "$SERVER" &&
+>  	test_config -C "$SERVER" http.receivepack true &&
+> +	test_commit -C "$SERVER" unrelated_commit &&
+>  	git -C client push "$URI" first_commit:refs/remotes/origin/first_commit &&
+>  	git -C "$SERVER" config receive.hideRefs refs/remotes/origin/first_commit &&
+>  	GIT_TRACE2_EVENT="$(pwd)/event" git -C client -c protocol.version=2 -c push.negotiate=1 \
+> -- 
+> 2.32.0.288.g62a8d224e6-goog
 
-> 3:  bc3fee3b7a ! 3:  e2e039f481 *.c static functions: add missing __att=
-ribute__((format))
->     @@ commit-graph.c: int write_commit_graph(struct object_directory *=
-odb,
->       {
->       	va_list ap;
->     =20
->     - ## compat/mingw.c ##
->     -@@ compat/mingw.c: static int read_yes_no_answer(void)
->     - 	return -1;
->     - }
->     -=20
->     -+__attribute__((format (printf, 1, 2)))
->     - static int ask_yes_no_if_possible(const char *format, ...)
->     - {
->     - 	char question[4096];
->     -
->     - ## compat/winansi.c ##
->     -@@ compat/winansi.c: static void winansi_exit(void)
->     - 	CloseHandle(hthread);
->     - }
->     -=20
->     -+__attribute__((format (printf, 1, 2)))
->     - static void die_lasterr(const char *fmt, ...)
->     - {
->     - 	va_list params;
->     -
->       ## contrib/credential/osxkeychain/git-credential-osxkeychain.c ##
 
-These refrain from touching some compat stuff, OK.
-
-> 4:  3bf8637c16 ! 4:  fd70d512b4 *.h: add a few missing  __attribute__((=
-format))
->     @@ Metadata
->       ## Commit message ##
->          *.h: add a few missing  __attribute__((format))
->     =20
->     -    Add missing format attributes to those function that were miss=
-ing
->     -    them.
->     -
->     -    In the case of advice_enabled() this revealed a trivial issue
->     -    introduced in b3b18d16213 (advice: revamp advise API, 2020-03-=
-02). We
->     -    treated the argv[1] as a format string, but did not intend to =
-do
->     -    so. Let's use "%s" and pass argv[1] as an argument instead.
->     -
->     -    For strbuf_addftime() let's add a strftime() format checker. O=
-ur
->     -    function understands the non-portable %z and %Z, see
->     -    c3fbf81a853 (strbuf: let strbuf_addftime handle %z and %Z itse=
-lf,
->     -    2017-06-15).
->     -
->     -    That might be an issue in theory, but in practice we have exis=
-ting
->     -    codepath that supplies a fixed string to strbuf_addftime(). We=
-'re
->     -    unlikely to run into the "%z" and "%Z" case at all, since it's=
- used by
->     -    date.c and passed via e.g. "git log --date=3D<format>".
->     -
->     -    In fact, we had no in-tree user of strbuf_addftime() with an i=
-nline
->     -    fixed format string at all. A subsequent commit will tweak an =
-existing
->     -    one to use the format checking.
->     +    Add missing format attributes to API functions that take print=
-f
->     +    arguments.
->     =20
->          Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@=
-gmail.com>
-
-OK.  strftime() is gone.
-
->     - ## advice.h ##
->     -@@ advice.h: int advice_enabled(enum advice_type type);
->     - /**
->     -  * Checks the visibility of the advice before printing.
->     -  */
->     -+__attribute__((format (printf, 2, 3)))
->     - void advise_if_enabled(enum advice_type type, const char *advice,=
- ...);
-
-This has become a separate one, because...?
-
-OK, the addition to advise_if_enabled() reveals an existing iffy
-caller, so you chose to fix it and to annotate the function at the
-same time in a single commit at step [5/6].  Makes sense.
+Seems reasonable enough to me.
+Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
