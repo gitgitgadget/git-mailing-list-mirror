@@ -2,168 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BA1AC07E95
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 22:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F0F4C11F66
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 22:31:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 796BF61284
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 22:31:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 574D461284
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 22:31:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236329AbhGMWd4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 18:33:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41670 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234957AbhGMWdy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 18:33:54 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C900C0613DD
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 15:31:03 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id n11so16391pjo.1
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 15:31:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=8X7w7E801N/9TCySKeEs3r1B8O/5WGaCIZk5V485FjM=;
-        b=vijGkHxKs4/b96D1TMo5ymxo2o+i9Mvc+e+tDhtommeQBo0h6jia4otsUNKyEhwOgV
-         eStYw6JjHykyhE100JSoxnJDVJkWy2ZiKmHO1eU6l/HRTu2NUYToodo7ykVzDnUIwPFZ
-         i3CE4lj5OvREyzbVimpuxpiYkwXQT9hPboMfdHetC1eDSZdj7fDqSAhsOvvSYtc1qQFN
-         PADRMQ4fWsOInkh4jo3EAHW1mnpl4erPLueT7BGLhH1XZCsUdjZXChJDuPwY0j72lyWa
-         /MfZ+zMd+dHGSn5OenaP16OdbrVKw+mF2biua79S/LJHBPydK0tSg1h47cWcRsKa84GO
-         XH3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=8X7w7E801N/9TCySKeEs3r1B8O/5WGaCIZk5V485FjM=;
-        b=JcnUCC2Mkc+oLeXXYW0rBzZ5Q7yOB1i7BwCVTnNyO5cKNzFajkvM66QybtX87LItG/
-         3vpzelFrygKkJNh7X6s3ZFVUf/fy1vLHMNd0m7/AGGCOGsLZE90mr5K/wy89+J0Dztr9
-         +ac3/NBfJe8FHpFJGm/Kl+npV2NBIVio+2t2yBpM/UHM6cyWEF5oqUs0I+mFBpcYUQBV
-         oIfuPupzUHtwczYoQnMPFCVp1cue/h+b4/QGo6ijNAsKrNC65RfqSHOACwQWCAlpZ/vB
-         0zrH6I49643Q6cqV9MMKnuIA4pwsM02HQydSkd6GUYIXV2zOzeGScu2t+Ao+yO8i5YdF
-         35ww==
-X-Gm-Message-State: AOAM531QN/OH8hEWMAQqBTF1UWpz16F8B6j9HoCwLjfq730PNMOt9L00
-        Wv+GjqUifRNjQf7HZIGF1icngQ==
-X-Google-Smtp-Source: ABdhPJyDptmXoE1i92aeasMWzg0BpYtz4UTKm2rRDHU0orQNWWnH3wUhsErqBJEIUw3lHCcTjdyQwA==
-X-Received: by 2002:a17:90a:6391:: with SMTP id f17mr467738pjj.27.1626215462567;
-        Tue, 13 Jul 2021 15:31:02 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:df8b:593d:91b7:a693])
-        by smtp.gmail.com with ESMTPSA id l6sm126082pgh.34.2021.07.13.15.31.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jul 2021 15:31:01 -0700 (PDT)
-Date:   Tue, 13 Jul 2021 15:30:56 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/3] send-pack: fix push nego. when remote has refs
-Message-ID: <YO4UIGQPugvHcYrw@google.com>
-References: <cover.1624486920.git.jonathantanmy@google.com>
- <175da5f02b319bb637700e4f6665ee346674e1b0.1624486920.git.jonathantanmy@google.com>
+        id S236656AbhGMWeT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 18:34:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48388 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234665AbhGMWeS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 18:34:18 -0400
+Received: (qmail 13419 invoked by uid 109); 13 Jul 2021 22:31:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 13 Jul 2021 22:31:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15249 invoked by uid 111); 13 Jul 2021 22:31:28 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 13 Jul 2021 18:31:28 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 13 Jul 2021 18:31:26 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jason Hatton <jhatton@globalfinishing.com>
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: [PATCH] doc/rev-list-options: fix duplicate word typo
+Message-ID: <YO4UPsFWp/nivr6A@coredump.intra.peff.net>
+References: <CY4PR16MB1655C5F8225B32A2029EADE2AF039@CY4PR16MB1655.namprd16.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <175da5f02b319bb637700e4f6665ee346674e1b0.1624486920.git.jonathantanmy@google.com>
+In-Reply-To: <CY4PR16MB1655C5F8225B32A2029EADE2AF039@CY4PR16MB1655.namprd16.prod.outlook.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 23, 2021 at 03:30:52PM -0700, Jonathan Tan wrote:
+On Mon, Jun 28, 2021 at 10:21:26PM +0000, Jason Hatton wrote:
+
+> I believe I found a documentation typo.
 > 
-> Commit 477673d6f3 ("send-pack: support push negotiation", 2021-05-05)
-> did not test the case in which a remote advertises at least one ref. In
-> such a case, "remote_refs" in get_commons_through_negotiation() in
-> send-pack.c would also contain those refs with a zero ref->new_oid (in
-> addition to the refs being pushed with a nonzero ref->new_oid). Passing
-> them as negotiation tips to "git fetch" causes an error, so filter them
-> out.
-
-So here we are filtering those redundant refs on the client side?
-
+> Documentation/rev-list-options.txt
 > 
-> (The exact error that would happen in "git fetch" in this case is a
-> segmentation fault, which is unwanted. This will be fixed in the
-> subsequent commit.)
+> 898: The form '--filter=sparse:oid=<blob-ish>' uses a sparse-checkout
+> 899: specification contained in the blob (or blob-expression) '<blob-ish>'
+> 900: to omit blobs that would **not be not** required for a sparse checkout on
+> 901: the requested refs.
 > 
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  send-pack.c           | 6 ++++--
->  t/t5516-fetch-push.sh | 5 +++++
->  2 files changed, 9 insertions(+), 2 deletions(-)
-> 
-> diff --git a/send-pack.c b/send-pack.c
-> index 9cb9f71650..85945becf0 100644
-> --- a/send-pack.c
-> +++ b/send-pack.c
-> @@ -425,8 +425,10 @@ static void get_commons_through_negotiation(const char *url,
->  	child.no_stdin = 1;
->  	child.out = -1;
->  	strvec_pushl(&child.args, "fetch", "--negotiate-only", NULL);
-> -	for (ref = remote_refs; ref; ref = ref->next)
-> -		strvec_pushf(&child.args, "--negotiation-tip=%s", oid_to_hex(&ref->new_oid));
-> +	for (ref = remote_refs; ref; ref = ref->next) {
-> +		if (!is_null_oid(&ref->new_oid))
-> +			strvec_pushf(&child.args, "--negotiation-tip=%s", oid_to_hex(&ref->new_oid));
-> +	}
->  	strvec_push(&child.args, url);
->  
->  	if (start_command(&child))
-> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> index 5ce32e531a..e383ba662f 100755
-> --- a/t/t5516-fetch-push.sh
-> +++ b/t/t5516-fetch-push.sh
-> @@ -201,6 +201,7 @@ test_expect_success 'push with negotiation' '
->  	# Without negotiation
->  	mk_empty testrepo &&
->  	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
-> +	test_commit -C testrepo unrelated_commit &&
->  	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
->  	echo now pushing without negotiation &&
->  	GIT_TRACE2_EVENT="$(pwd)/event" git -c protocol.version=2 push testrepo refs/heads/main:refs/remotes/origin/main &&
-> @@ -210,6 +211,7 @@ test_expect_success 'push with negotiation' '
->  	rm event &&
->  	mk_empty testrepo &&
->  	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
-> +	test_commit -C testrepo unrelated_commit &&
+> I emphasized the "not be not" on line 900. I hope this is the correct place
+> to report this.
 
-So now we are asking 'testrepo' to initially advertise that it also has
-unrelated_commit, which we don't care about, and expect to work fine
-anyway. Ok.
+Yep, it definitely looks like a typo. Thanks for reporting it!
 
->  	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
->  	GIT_TRACE2_EVENT="$(pwd)/event" git -c protocol.version=2 -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main &&
->  	grep_wrote 2 event # 1 commit, 1 tree
-> @@ -219,6 +221,7 @@ test_expect_success 'push with negotiation proceeds anyway even if negotiation f
->  	rm event &&
->  	mk_empty testrepo &&
->  	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
-> +	test_commit -C testrepo unrelated_commit &&
->  	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
->  	GIT_TEST_PROTOCOL_VERSION=0 GIT_TRACE2_EVENT="$(pwd)/event" \
->  		git -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main 2>err &&
-> @@ -1783,6 +1786,7 @@ test_expect_success 'http push with negotiation' '
->  	# Without negotiation
->  	test_create_repo "$SERVER" &&
->  	test_config -C "$SERVER" http.receivepack true &&
-> +	test_commit -C "$SERVER" unrelated_commit &&
->  	git -C client push "$URI" first_commit:refs/remotes/origin/first_commit &&
->  	git -C "$SERVER" config receive.hideRefs refs/remotes/origin/first_commit &&
->  	GIT_TRACE2_EVENT="$(pwd)/event" git -C client -c protocol.version=2 \
-> @@ -1794,6 +1798,7 @@ test_expect_success 'http push with negotiation' '
->  	rm -rf "$SERVER" &&
->  	test_create_repo "$SERVER" &&
->  	test_config -C "$SERVER" http.receivepack true &&
-> +	test_commit -C "$SERVER" unrelated_commit &&
->  	git -C client push "$URI" first_commit:refs/remotes/origin/first_commit &&
->  	git -C "$SERVER" config receive.hideRefs refs/remotes/origin/first_commit &&
->  	GIT_TRACE2_EVENT="$(pwd)/event" git -C client -c protocol.version=2 -c push.negotiate=1 \
-> -- 
-> 2.32.0.288.g62a8d224e6-goog
+-- >8 --
+Subject: [PATCH] doc/rev-list-options: fix duplicate word typo
 
+Reported-by: Jason Hatton <jhatton@globalfinishing.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/rev-list-options.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Seems reasonable enough to me.
-Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 5bf2a85f69..5200f18d2c 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -897,7 +897,7 @@ which are not of the requested type.
+ +
+ The form '--filter=sparse:oid=<blob-ish>' uses a sparse-checkout
+ specification contained in the blob (or blob-expression) '<blob-ish>'
+-to omit blobs that would not be not required for a sparse checkout on
++to omit blobs that would not be required for a sparse checkout on
+ the requested refs.
+ +
+ The form '--filter=tree:<depth>' omits all blobs and trees whose depth
+-- 
+2.32.0.663.g932e3f012f
+
