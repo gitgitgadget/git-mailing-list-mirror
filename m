@@ -2,63 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AEEBC07E95
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26CF7C07E95
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:14:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D483611AB
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:08:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0875A61003
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:14:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234496AbhGMILr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 04:11:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41406 "EHLO
+        id S234508AbhGMIQw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 04:16:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234157AbhGMILr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 04:11:47 -0400
-Received: from mail-vs1-xe32.google.com (mail-vs1-xe32.google.com [IPv6:2607:f8b0:4864:20::e32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 859C5C0613DD
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:08:57 -0700 (PDT)
-Received: by mail-vs1-xe32.google.com with SMTP id j8so11839312vsd.0
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:08:57 -0700 (PDT)
+        with ESMTP id S234157AbhGMIQv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 04:16:51 -0400
+Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com [IPv6:2607:f8b0:4864:20::a31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39B4BC0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:14:01 -0700 (PDT)
+Received: by mail-vk1-xa31.google.com with SMTP id t5so349197vkm.12
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:14:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=yVsj54yUBK3Bp7IxSRG1Q2u5KMX88erQoWc1hODxHZY=;
-        b=WJbaG5aM6ZTUGUu4F29sCdpMUHNi3V/IaLtcxAr5qyaOAaqXa3tYuxxAXWFkyUUGJx
-         MQzcTKEQtylnP44vTVR1V0KCWQvKMeM2BvFnH3bSnaVweJjntCPr3RQUJo2KDYK0w0lW
-         QFjNqiMNkHzlkHdmCh4W+8nirqSh+vP28g6Lca5A/iltJLBo6Eo1T3zmbbbta5R2cJSF
-         HevyG0jPU8pdCWTZKHGQpkDzoQ6dpyerH1SAavl/fpX24mntSsheKf+JJW487Dwhys1c
-         efunUkGm9xVY7Ix6N1kSXroy9SZD2pH8FOODYaKwiJnM8Janh+lmrZzr4tCkne23brtC
-         icdA==
+        bh=7kKjw/kO1JGEGyuifo3yzb4sxCAx+t4Z38/XA3Pbcig=;
+        b=hlk1adOgjOBRPHzEJjZ7wveEItYHPeHgff2D7enhXqL+H2hVegTTSR+w9dzw74MZUm
+         t2p5yJQ8Xf8S1wLQf4hcRriEzQOK2ryg03pr9C8Zc79ASUAYgAwm2FrICusY+LSczM3t
+         9rLICrhoBwx9jWDIR+5nWuTgXsI7oLMay5qjhvxff8K3LWguHWumQathU3YBISX3hlJ0
+         eoSsrvTP1o9N7TjtpRHPvUe91qS+DV76mL4aigWqNUnA6tChcdkM8rMBQ/KV+BakQd0G
+         Oo6cTFm8IVj5g7IArWPkFcipLgZmoujqE/GFls82dCxlL1/+zM8ZS8LrsNob5pjrjGPh
+         RwhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=yVsj54yUBK3Bp7IxSRG1Q2u5KMX88erQoWc1hODxHZY=;
-        b=LYp+Jldhw/1RMorY0h0HROWlbg3YyuH59UK5PMdRyP6kXjijnquMO8waK4/jwVUtZI
-         Rh8mPndPYofXdTBj1iBV00izXpfQt7GRpgvGYpdPPH/2mrEtwiWduWY2S8YVHi0jKDF2
-         xqdhRxFPTYk5ESWSrif23PnTF1NJT2GQD2WCD0Ib8IIjbxuM8BHun8qq3GOzU1SsqhcB
-         OR5oQ3ES2SQqWxZtjep4d1zWAliKZejjsks/Nx6Gj530c6HELNyIhPyUWgFxgxBp0EUw
-         XlveS2Qtm13GObwbRuhcs0T/zEi/lHjYI56aLByirYPqozGhQgksGFxiS7amphbK663E
-         t0Cg==
-X-Gm-Message-State: AOAM532JQCY8w+yR21vndpKu8uhjqRmtMCeUURkNwmN9eD3nAqiCAano
-        p8TCE8LOsAZ/A3Rxxlic/LYNrHkwPQJ9v+9DcYUA+xPssjs=
-X-Google-Smtp-Source: ABdhPJx2Niw/FkvwqpA82BvtviZA+vbhplgegbsW1NILBNVGpn5XBHtQXKoYlFK2VCR9CCS6JTfrfCkmNF6IKrYtzvo=
-X-Received: by 2002:a67:69c5:: with SMTP id e188mr4789810vsc.2.1626163736448;
- Tue, 13 Jul 2021 01:08:56 -0700 (PDT)
+        bh=7kKjw/kO1JGEGyuifo3yzb4sxCAx+t4Z38/XA3Pbcig=;
+        b=HJS8jNV9ZDw+RFYBh+k0WiMrtq83+3/+4M3sbWWzvv9QKFwLh95W2wNixYqyl98/52
+         yQayW/OCx0DlJg2pq8Uq09mlFvmCey+FQcao9vuKGYJTX7N4L6EvhcsP+JBFhspeuP5E
+         XtQrBflg+Bt/w0zNw5HWr2+w4eAUr3VxtYiI6wtVWjp7v5ykB8tk+cROLeue1L2zpPLX
+         komttMyu+CqxvVwL6vnXLKGH/t/UBmuHLD0JCA/6ozBMqk7Ynyf7x32XFSxaNCjEaH1j
+         U5untEdv+kcJq/Uqb29GrU0ZqIIjnVpyiNqr/dPZ2FvPxP1NlbTYyROVovX7Ph0pJAzW
+         xOGQ==
+X-Gm-Message-State: AOAM533Uc6mNvm92B7pkE7nXTcSfzjaKjIgNEVcWof+X084CG0Vd0bMk
+        lBOZYAaeUJcbpz1LD0e1+w1OFtLyjRXDJjM4URnB8g==
+X-Google-Smtp-Source: ABdhPJzgfpBC/bsBkj2eukKv3JruqF3eFB6QrFtlFSHcquKP4vLNWKDFcgzwIU2Ayk28jsvwfGo/cy6YCqNyBu+4NZA=
+X-Received: by 2002:a1f:a685:: with SMTP id p127mr3707960vke.1.1626164040146;
+ Tue, 13 Jul 2021 01:14:00 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1012.v5.git.git.1625684869.gitgitgadget@gmail.com>
- <cover-00.17-00000000000-20210711T162803Z-avarab@gmail.com> <patch-08.17-ff38a3f1936-20210711T162803Z-avarab@gmail.com>
-In-Reply-To: <patch-08.17-ff38a3f1936-20210711T162803Z-avarab@gmail.com>
+ <cover-00.17-00000000000-20210711T162803Z-avarab@gmail.com> <patch-15.17-446b50280be-20210711T162803Z-avarab@gmail.com>
+In-Reply-To: <patch-15.17-446b50280be-20210711T162803Z-avarab@gmail.com>
 From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 13 Jul 2021 10:08:45 +0200
-Message-ID: <CAFQ2z_PNLBCwZhfgk-9GBsBqoM_LSdeYR0ALSJhgF-h1uokWQw@mail.gmail.com>
-Subject: Re: [PATCH v6? 08/17] refs file-backend.c: stop setting "EBUSY" in verify_lock()
+Date:   Tue, 13 Jul 2021 10:13:49 +0200
+Message-ID: <CAFQ2z_MNEb=tb+iVjE3n33Lq8tfKNKnaMOvxm6z0cwXChbuSQA@mail.gmail.com>
+Subject: Re: [PATCH v6? 15/17] refs API: make resolve_ref_unsafe() not set errno
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
@@ -71,34 +71,15 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Jul 11, 2021 at 6:30 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
->
-> This EBUSY was set in 835e3c992fd (refs.c: verify_lock should set
-> errno to something meaningful, 2014-06-20) to fix a bug in code that
-> was later refactored in cd94f765720 (fetch.c: change s_update_ref to
-> use a ref transaction, 2014-04-28) to not use errno at all, the two
-> were a part of the same series.
->
-> So this was only ever needed for an intra-series bugfix, and we kept
-> it around for no reason. Removing it makes subsequent commits where we
-> refactor code surrounding verify_lock() (which may use errno) easier
-> to reason about.
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index a4e9344ac8b..abed0572fea 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -880,9 +880,7 @@ static int verify_lock(struct ref_store *ref_store, s=
-truct ref_lock *lock,
->                                mustexist ? RESOLVE_REF_READING : 0,
->                                &lock->old_oid, NULL)) {
->                 if (old_oid) {
-> -                       int save_errno =3D errno;
->                         strbuf_addf(err, "can't verify ref '%s'", lock->r=
-ef_name);
-> -                       errno =3D save_errno;
+> +       refs =3D get_main_ref_store(the_repository);
+> +       head =3D refs_resolve_ref_unsafe_with_errno(refs, "HEAD", 0, NULL=
+, NULL,
+> +                                                 &resolve_errno);
+> +       if (!head) {
+> +               errno =3D resolve_errno;
 
-your message talks about EBUSY, and that change looks good, but how
-does it relate to this change?
-
+This adds another place where we'd use global errno to communicate.
+Isn't there a die() function that takes an errno value explicitly?
 
 --=20
 Han-Wen Nienhuys - Google Munich
