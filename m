@@ -2,93 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3F58C07E9A
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 02:22:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29C21C07E9A
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 03:37:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7E160611F1
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 02:22:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9C40610D1
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 03:37:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230105AbhGMCZZ convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 12 Jul 2021 22:25:25 -0400
-Received: from mail-ej1-f42.google.com ([209.85.218.42]:43812 "EHLO
+        id S230037AbhGMDk1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Jul 2021 23:40:27 -0400
+Received: from mail-ej1-f42.google.com ([209.85.218.42]:39468 "EHLO
         mail-ej1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229521AbhGMCZY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jul 2021 22:25:24 -0400
-Received: by mail-ej1-f42.google.com with SMTP id v20so38517349eji.10
-        for <git@vger.kernel.org>; Mon, 12 Jul 2021 19:22:33 -0700 (PDT)
+        with ESMTP id S229571AbhGMDk1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jul 2021 23:40:27 -0400
+Received: by mail-ej1-f42.google.com with SMTP id ga14so23841221ejc.6
+        for <git@vger.kernel.org>; Mon, 12 Jul 2021 20:37:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=4826MJDXNiglg8mNARzTDolDbX4648o+WCwvfORvFcA=;
-        b=Ko4oEa8psXRA3U8HfVqEDPAQ86IqYHHliQk19EWQm1zsluwQpZ6YyRl70yUp6Tswtw
-         W6HhCsSZchRJwJx65PSeqm8wJZ2hRLXH2Kv3xPpsa99rgjPMA1A8j+NSurLPyV8MfWMq
-         HD/Q2MZuQdjPaHaxzvlwXOoa2HQxzDQlNKeTjrdn273NFnNGUjBxMS3qCyEul/WNEbHS
-         mBQaBr1yCcyAedDnlmjnTUIBn+CPCrmd0uW3ld/UBlrPgKdHtDk8vK9l7TxMKId8areW
-         ar5hCGIr0G2/0DbnB9RKevacWViMMSW0X/lktQP9k9Rkh/u3FayLdZdyUvA6kX0zOQyT
-         uOYw==
-X-Gm-Message-State: AOAM530NZWhJ3AkeBXsjNHRQRz2+WWM40kyfJCupzGnvZ0WeBzv5dq/7
-        oPswhNCoYq9sqJeWBtOEO89rU55Xcl4Q996YGww=
-X-Google-Smtp-Source: ABdhPJyW5rFOshH0bc9PqlBqa2XaHwD8bc9gvoLRvexxQemXTxwGsTfYMuFKSPYhT6fOKaiZE4Yo/YunDSUw/mmzG2w=
-X-Received: by 2002:a17:907:33cc:: with SMTP id zk12mr1581682ejb.168.1626142953127;
- Mon, 12 Jul 2021 19:22:33 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=W3tn2f3XCg/BhB5rGqbb1tJ+wVboJaA0ru9ZQ5KNRM0=;
+        b=tfuPDI2S66yKAaOj3KXBxwlagTHazdpjns1DQM0400qctviRGCe+U96igmv95f7Mt8
+         qzN7GJDgD03/WybxiIkXQ9NurwRZKYnAnohrwNfWULfqrFjPuk+lHTCUJNpc+snBjjWW
+         6ANkwZzFCYi1w40cdWcPy4ZnBdbl3e1PkKnVijDaglsBOeKXzKIcHh+a6cLlpbTII39r
+         LSG4aOP+xuScpX0ge4iLFeaKKGliCllS54MGiYCQ6b75Kix8VvoLgQZmtiqwwUkXAHLx
+         Zb8GkpNtwOdsaP1cSJrDppzXqJJZllesZMJ/byuBE9c7P+f90If6F6ovXz/vYgPisw0C
+         3AGg==
+X-Gm-Message-State: AOAM532Xf/MKJNN5P6HDB4d0UXk1WwRHKsEN0scgooSy4xfdGylmH2wt
+        dEDQzg4b8rIx9NqK7Rfs9dh6MwxV5WDb0WtThXo=
+X-Google-Smtp-Source: ABdhPJz5zmXTTEzzAkFzsJrLHrTTFvE2OeAH1qrMgiGZlvwirM+gDoLLWK3B/0BSWb9x+uSqmixx139JtCbVM0+jHaM=
+X-Received: by 2002:a17:906:48cd:: with SMTP id d13mr2838143ejt.311.1626147456008;
+ Mon, 12 Jul 2021 20:37:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210612165043.165579-1-lenaic@lhuard.fr> <20210702142556.99864-1-lenaic@lhuard.fr>
- <20210702142556.99864-3-lenaic@lhuard.fr> <87h7h75hzz.fsf@evledraar.gmail.com>
- <xmqq5yxni2rn.fsf@gitster.g> <YOzbO1/mfL8hKhBT@coredump.intra.peff.net>
-In-Reply-To: <YOzbO1/mfL8hKhBT@coredump.intra.peff.net>
+References: <pull.992.v2.git.1625759443.gitgitgadget@gmail.com>
+ <pull.992.v3.git.1625963240.gitgitgadget@gmail.com> <9a414a3078bb481ba19449065d47e6e27322cef2.1625963240.git.gitgitgadget@gmail.com>
+In-Reply-To: <9a414a3078bb481ba19449065d47e6e27322cef2.1625963240.git.gitgitgadget@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 12 Jul 2021 22:22:22 -0400
-Message-ID: <CAPig+cT-x4_YuxmmoFw62jFqKRFJrS_UkyNOkdQz9-Gwec3QCQ@mail.gmail.com>
-Subject: Re: [PATCH v7 2/3] maintenance: `git maintenance run` learned `--scheduler=<scheduler>`
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
-        Git List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Mon, 12 Jul 2021 23:37:25 -0400
+Message-ID: <CAPig+cQVSUg1aqry_hMydJ=Uo=-VhOog6TUTpG=0on0LUcw8Dg@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] worktree: teach `add` to accept --reason <string>
+ with --lock
+To:     Stephen Manz via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Stephen Manz <smanz@alum.mit.edu>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 12, 2021 at 8:16 PM Jeff King <peff@peff.net> wrote:
-> On Tue, Jul 06, 2021 at 01:52:12PM -0700, Junio C Hamano wrote:
-> > A helper function that takes a string and returns a strvec would be
-> > a good fit, though.
+On Sat, Jul 10, 2021 at 8:27 PM Stephen Manz via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> The default reason stored in the lock file, "added with --lock",
+> is unlikely to be what the user would have given in a separate
+> `git worktree lock` command. Allowing `--reason` to be specified
+> along with `--lock` when adding a working tree gives the user control
+> over the reason for locking without needing a second command.
 >
-> I was going to second that, but I see we already have one. :) Dscho
-> introduced it in c5aa6db64f (argv_array: offer to split a string by
-> whitespace, 2018-04-25), and then it later became strvec_split().
->
-> And indeed, Lénaïc's patches use it elsewhere. I think it doesn't work
-> in this instance because it can't take an arbitrary delimiter. But I
-> wouldn't at all mind seeing it grow that feature (and I suspect it could
-> even share some code with string_list_split(), but didn't look).
+> Signed-off-by: Stephen Manz <smanz@alum.mit.edu>
+> ---
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> @@ -302,10 +302,10 @@ static int add_worktree(const char *path, const char *refname,
+>         strbuf_addf(&sb, "%s/locked", sb_repo.buf);
+> -       if (!opts->keep_locked)
+> -               write_file(sb.buf, _("initializing"));
+> +       if (opts->keep_locked)
+> +               write_file(sb.buf, "%s", opts->keep_locked);
+>         else
+> -               write_file(sb.buf, _("added with --lock"));
+> +               write_file(sb.buf, _("initializing"));
 
-Since Lénaïc is a relative newcomer to the project, can we, as
-reviewers, be clear that we don't expect him to perform the task of
-generalizing strvec_split() just to get this series -- which is
-already at v7 -- landed? I gave the previous round a pretty thorough
-going-over and -- aside from one minor test-time bug -- didn't find
-any show-stoppers which should prevent it from landing. While it may
-be the case that the series has a superficial wart here and there
-(such as #ifdef's in function bodies, and non-ASCII fancy comment
-boxes), the review comments on the latest round have pretty much all
-been subjective; I haven't seen any outright actionable observations.
-Extra polishing based upon the subjective review comments can always
-be done later atop Lénaïc's series (if someone -- not necessarily
-Lénaïc -- wants to do so) without asking him for endless re-rolls.
+Changing the condition around to handle the positive case first makes
+the diff noisier, but the resulting code is a bit easier to reason
+about. Okay.
+
+> @@ -500,6 +504,13 @@ static int add(int ac, const char **av, const char *prefix)
+> +       if (lock_reason && !keep_locked)
+> +               die(_("--reason requires --lock"));
+> +       if (lock_reason)
+> +               opts.keep_locked = lock_reason;
+> +       else if (keep_locked)
+> +               opts.keep_locked = _("added with --lock");
+
+The benefit of relocating the "added with --lock" literal from
+add_worktree() to add() wasn't immediately obvious, aside from making
+the `if` statement in add_worktree() a bit less complex. But I managed
+to convince myself that the relocation makes sense since add() knows
+about the `--lock` option, whereas add_worktree() is merely a consumer
+of `add_opts` without specific knowledge of how the fields in that
+structure get set. Okay.
+
+> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+> @@ -72,6 +72,19 @@ test_expect_success '"add" worktree with lock' '
+> +test_expect_success '"add" worktree with lock and reason' '
+> +       git worktree add --detach --lock --reason "why not" here-with-lock-reason main &&
+> +       test_when_finished "git worktree unlock here-with-lock-reason || :" &&
+> +       test -f .git/worktrees/here-with-lock-reason/locked &&
+> +       echo why not >expect &&
+> +       test_cmp expect .git/worktrees/here-with-lock-reason/locked
+> +'
+
+Two very minor comments:
+
+First, considering that test_cmp() will fail anyhow if the `locked`
+file is missing, the `test -f` is redundant.
+
+Second, the lack of quotes around "why not" in the `echo ... >expect`
+statement gives me a moment's pause since it relies upon the fact that
+`echo` will insert exactly one space between the "why" and "not"
+arguments (which happens to match the single space in the
+double-quoted argument to `--reason`). For clarity and that extra bit
+of robustness, I'd probably have used a single double-quoted string
+argument with `echo`.
+
+Anyhow, those are extremely minor comments, probably not worth a
+re-roll but perhaps something to keep in mind if you do re-roll for
+some other more important reason.
