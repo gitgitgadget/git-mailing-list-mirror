@@ -8,136 +8,115 @@ X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55556C07E95
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 11:51:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71A3EC07E96
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 12:01:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 389F661008
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 11:51:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CB0A611CB
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 12:01:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235960AbhGMLyU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 07:54:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36374 "EHLO
+        id S236105AbhGMMEK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 08:04:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235891AbhGMLyT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 07:54:19 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88856C0613DD
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 04:51:29 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id f17so30098563wrt.6
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 04:51:29 -0700 (PDT)
+        with ESMTP id S236094AbhGMMEJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 08:04:09 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71020C0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 05:01:19 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id f17so30134626wrt.6
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 05:01:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:from:date:subject:fcc:content-transfer-encoding
          :mime-version:to:cc;
-        bh=lGuF0HpN2bwTdT++Ycdzu865KJTc/5O/a45lLjBPClE=;
-        b=O8T4Bllrj/qsqyf+dlg7wcJGbJl3cDIlqwz+rymRsqadteybbgZodEUKy0ngVADavJ
-         LXsna8gQ4p2CcD7PZHTdzcVQ9Prc1XlKApUSeiJ1EbH70KlptEm61wdI0zNcnReRGNVL
-         2EtnuNNqdH2vutJOk6aVIQ0qDChIJHVSkKiHtGQbsUbePTcT3VizsYIAaIKfojWfEnb3
-         9+xON32AX3dY53fEsy+3ht4xv9ULDECLPSu7e0UkpU58NeO56vBu2oyHQQJRLi0bCA4g
-         x8kMQDToutgRvf6tdUXAoQGAf5FrVl2WMrH6w7wfyqskE2xEppRRsC/IUv1umJuPt3xK
-         9n0Q==
+        bh=IdoovwX3N7CwhT5RHzJXKYJUu2gcGrEbWoUvC4K9R4A=;
+        b=aiO1c2BxnWiCqOFwABwF9IVITtdWtEh5KDGR3WsuwxLZ6XBQ9KbNS7IWyz2RQpIjgl
+         M/IaBEcvj+N44Ei0rejamb6iagtZRFaYCkWhJviD94f1ciNaHu8X3YSRaJ2s80ubGwL+
+         8rG2Ukx0hi6YOiFfGTY5aeubf10qohnkVD2OxFX4t0YOKRYpbipHXIhKENfJr+PvJh23
+         Rxbz7oLNpyaFxy3TBv9i60Kr3c0zhz7l4Dgfh3f1VpjtbNncOa/lIh+MaeN6hchcR6+Q
+         ICWdAswGrfFKFrOOY2twjswpSVUzpDmFRE8ujD9xTscgmyP8FpTEBJkZrhC1KrYOyNDi
+         2J2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lGuF0HpN2bwTdT++Ycdzu865KJTc/5O/a45lLjBPClE=;
-        b=l4E5JTr77ss5ng/kCfPrIbQ3FQ+0EoJCn8tHfOKtMWg0mtM+J5YnqCmON9Ev3rxeJC
-         m519EvEnY4AFsTOAJiBM2pnMwHS/5hwUcaDUxrsBRQ9ZHdAFASs8PdzeypZ/2fi/E2Bq
-         gEy80mx8aoKK1a2mcVY9Nc0Xfbi/HhQlbyBTu8PTLPx8dRpxXl2NjIVn0fsDhAcsyB4x
-         b0gvN2avON13WUAYq5CkPDtAGZQ+YD7nW4LdjV73D9eytNK/brG6B6t91/PrEfkDBuBi
-         dmBwei1eR+DBea4JgCFoy3affUt6O2kvsGe6x82SdhoErReTQ2WgovTUflt0ym6E8ad8
-         ZpwQ==
-X-Gm-Message-State: AOAM5302WoCQDTz7m7oz8wfTB46Q1DLCTv7qv4e2WZ1kvwNRwv6g19JF
-        +gbYbbiFdUUuw70D4vymglZ0HGsDvPg=
-X-Google-Smtp-Source: ABdhPJxlqFQ5fdmwIW1wjIe6UmxEmw2u688frGnkGxnlX7m9o9Hb8z8Wt+xATx9HDUFqGj/vuTvDOQ==
-X-Received: by 2002:a5d:4449:: with SMTP id x9mr5159781wrr.52.1626177088152;
-        Tue, 13 Jul 2021 04:51:28 -0700 (PDT)
+        bh=IdoovwX3N7CwhT5RHzJXKYJUu2gcGrEbWoUvC4K9R4A=;
+        b=XBaURyqk93K6alB/nVa0PQsXGviTQcbFuAZ97KvWYIotv0imwM9NxzEx9onS13EBYx
+         V0HiMXPWgtbVfEv9DBTQD8Dlv3Oc4ZxL1ESy+DaQZp0HWS0XyC7HMzD64cUofi2KBkEA
+         pCxgVwGsKHMCFvQO8vb4lJ7VVwQwJu2dCVhPNW80io51d6ajqKguODIN3yuP0RLJFVGi
+         c5BjNlx/Ue+rJg7N+5ZHKkqYKRGRSijosZQhlpHH9Xw8AYxGtulEcZ6LpitYY5uIq2IF
+         p72bnpz3TjbGmBJFewOvhgkcNDmicN1CA82gpiXkhWqQomzHs/MmJp7mltqQG8ZdtWgb
+         lKaA==
+X-Gm-Message-State: AOAM5305jxkLpU/ylIjwDXLQPuhF6OtzkKre1vHjWY8yir9IAW2e4vDC
+        AXVjxMUFfHx1yvtFBuu9wiHuYRjij5Y=
+X-Google-Smtp-Source: ABdhPJwWxRB5cxFoGJAR/htbIMJ9S5OpDpdfSnNTnZqb3hLaFG52s/qM9IZEKRRC/MxWeuB5cQdKZw==
+X-Received: by 2002:a5d:4a4c:: with SMTP id v12mr5105325wrs.256.1626177678118;
+        Tue, 13 Jul 2021 05:01:18 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y6sm3085851wma.48.2021.07.13.04.51.27
+        by smtp.gmail.com with ESMTPSA id r17sm2194567wmq.13.2021.07.13.05.01.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jul 2021 04:51:27 -0700 (PDT)
-Message-Id: <pull.994.git.1626177086682.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 13 Jul 2021 11:51:26 +0000
-Subject: [PATCH] ci: run `make sparse` as a GitHub workflow
+        Tue, 13 Jul 2021 05:01:17 -0700 (PDT)
+Message-Id: <pull.1045.git.git.1626177676801.gitgitgadget@gmail.com>
+From:   "Jordi Mas via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 13 Jul 2021 12:01:16 +0000
+Subject: [PATCH] l10n: allows to translate diff messages
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng?= Danh 
-        <congdanhqx@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Jordi Mas <jmas@softcatala.org>, Jordi Mas <jmas@softcatala.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Jordi Mas <jmas@softcatala.org>
 
-Occasionally we receive reviews after patches were integrated, where
-`sparse` identified problems such as file-local variables or functions
-being declared as global.
+Allows to translate the diff messages shown when the
+user commits, indicating the number of insertions,
+deletions and files changed.
 
-By running `sparse` as part of our Continuous Integration, we can catch
-such things much earlier. Even better: developers who activated GitHub
-Actions on their forks can catch such issues before even sending their
-patches to the Git mailing list.
-
-This addresses https://github.com/gitgitgadget/git/issues/345
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Jordi Mas <jmas@softcatala.org>
 ---
-    ci: run make sparse as a GitHub workflow
-    
-    One of the earliest open source static analyzers is called "sparse", and
-    occasionally Ramsay Jones sends out mails on the Git mailing list that
-    some function or other should be declared static because sparse found
-    out that it is only used within the same file.
-    
-    Let's add a GitHub workflow running "make sparse".
-    
-    Example run: https://github.com/gitgitgadget/git/actions/runs/1026303823
+    Allow to translate diff message
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-994%2Fdscho%2Fci-enable-sparse-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-994/dscho/ci-enable-sparse-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/994
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1045%2Fjordimas%2Flocalize-msg-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1045/jordimas/localize-msg-v1
+Pull-Request: https://github.com/git/git/pull/1045
 
- .github/workflows/run-sparse.yml | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
- create mode 100644 .github/workflows/run-sparse.yml
+ diff.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/.github/workflows/run-sparse.yml b/.github/workflows/run-sparse.yml
-new file mode 100644
-index 00000000000..25f6a6efb40
---- /dev/null
-+++ b/.github/workflows/run-sparse.yml
-@@ -0,0 +1,22 @@
-+name: Run `sparse`
-+
-+on: [push, pull_request]
-+
-+jobs:
-+  sparse:
-+    runs-on: ubuntu-20.04
-+    steps:
-+    - name: Download the `sparse` package
-+      uses: git-for-windows/get-azure-pipelines-artifact@v0
-+      with:
-+        repository: git/git
-+        definitionId: 10
-+        artifact: sparse-20.04
-+    - name: Install the `sparse` package
-+      run: sudo dpkg -i sparse-20.04/sparse_*.deb
-+    - name: Install a couple of dependencies
-+      run: |
-+        sudo apt-get install -q -y libssl-dev libcurl4-openssl-dev libexpat-dev gettext zlib1g-dev
-+    - uses: actions/checkout@v2
-+    - name: make sparse
-+      run: make sparse
-\ No newline at end of file
+diff --git a/diff.c b/diff.c
+index 52c791574b..29db9ce079 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2593,7 +2593,7 @@ static void print_stat_summary_inserts_deletes(struct diff_options *options,
+ 	}
+ 
+ 	strbuf_addf(&sb,
+-		    (files == 1) ? " %d file changed" : " %d files changed",
++		    Q_(" %d file changed", " %d files changed", files),
+ 		    files);
+ 
+ 	/*
+@@ -2606,13 +2606,13 @@ static void print_stat_summary_inserts_deletes(struct diff_options *options,
+ 	 */
+ 	if (insertions || deletions == 0) {
+ 		strbuf_addf(&sb,
+-			    (insertions == 1) ? ", %d insertion(+)" : ", %d insertions(+)",
++			    Q_(", %d insertion(+)", ", %d insertions(+)", insertions),
+ 			    insertions);
+ 	}
+ 
+ 	if (deletions || insertions == 0) {
+ 		strbuf_addf(&sb,
+-			    (deletions == 1) ? ", %d deletion(-)" : ", %d deletions(-)",
++			    Q_(", %d deletion(-)", ", %d deletions(-)", deletions),
+ 			    deletions);
+ 	}
+ 	strbuf_addch(&sb, '\n');
 
-base-commit: ebf3c04b262aa27fbb97f8a0156c2347fecafafb
+base-commit: d486ca60a51c9cb1fe068803c3f540724e95e83a
 -- 
 gitgitgadget
