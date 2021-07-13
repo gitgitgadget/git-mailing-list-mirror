@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5919CC07E96
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:05:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42CFAC11F67
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:05:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C9F061249
-	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:05:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 28187606A5
+	for <git@archiver.kernel.org>; Tue, 13 Jul 2021 08:05:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234603AbhGMIIW (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S234617AbhGMIIW (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 13 Jul 2021 04:08:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40602 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234558AbhGMIIT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 04:08:19 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7BDBC0613E9
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:05:28 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id g12so5170739wme.2
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:05:28 -0700 (PDT)
+        with ESMTP id S234357AbhGMIIU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 04:08:20 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EF50C0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:05:29 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id m2so18218403wrq.2
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 01:05:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=CxAEuR7M5B4588j/R/sVirSlZDKIe8EG1UKtiXlMS+U=;
-        b=Ti2kkYguBPJ7X56iPy6jktgAAe5Uaw0hJ9OdEOb/5gQLjIOYWjkTNpWnn4AHpsaroN
-         I1CEN6bTQx1Td7tA55dcQi67DmdvZ72iHbLYsWEEcY3T8/w+BJPXiw1q1zd8WhtNwYAN
-         31YAx4MhYaRHAOvBF2NoHHK7hkGYVYIaaOHbSylcq8aiPAXTTtSXh1i3OslfwAWOm48O
-         8ycIzaTgcfMq3c9zVSajFHcPjPAcfyJnluIRsOkUlQS2rISoiINq91o+E7W7k6F2XxQP
-         gw5q7KBcjHKA7md3i55W4a4GoixHtnsRNjgHwziIoja3nc/GXLGCxtuUvX2Pd5irLfkl
-         CvPQ==
+        bh=rpuU+hkjgrosuGrPdHtiXP1P3pJ99yiJMY5kQ9aVvUs=;
+        b=egUDd4DTj0FP/YEXuic+xaaianUfo27LZbpeEMi6cRUggbXR4984xHoOfMDeQyVFhx
+         A5vZa++2PD6yEdhYzqsyx7y+e6xu+wKS5Mpd5qBU3zlbFKD9FDyUgEk+RKeB+HQs24Ur
+         8PIr4iFMNPJ3RnSjdyw9c32y8nuTlERY01yPM+wce1UdkE/I3mW/ylSC2c2LexydsVh8
+         rGTmCJroN/gcwDIwt7bJrg/y3V34hr8/iPOBYTLW2HSFtEGVFX4EKuIws7/WYurJWkXq
+         YuIozvc8zdYx+TVbY08W35GUdZwQh6FTok01mLyGZruVb+Ocit2oh1qyu3fhCzMSmyd2
+         pmZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CxAEuR7M5B4588j/R/sVirSlZDKIe8EG1UKtiXlMS+U=;
-        b=M43tiznQjd4CoJdFdXmc3J0bFEs3NO/7qg19NSED8msumiBDyq/yCIu4prZ0t7sRYk
-         2Pu/dP8B5VJsA9owigkmeXt1X6JcfTZdGjboxBdQ3afng8W9PJ+roI7OG3auel8geaHV
-         m6dEogz8QfTYFcBLSJVM9lQBgXZYNWaRwrzLWTpeqCARYnNMLpDprSK+wHIyJJQ4/t7+
-         0AtsltrRbzZdV0YE7H375W4XzvSA71bbexg6WVeSxocqfHvzgdoVPIz//RnobI+ED6MS
-         fv6Ke1trVSb25tQh2lk0Z/1Bjd0GanEmp3QmU7AA1ebPo8ejf9bD9gFIIw4YmZ6ntTe1
-         HDEg==
-X-Gm-Message-State: AOAM532KKouSEbR5EYwJACR2HbJlneA3aSy6SxI1aoSR+qudrYZ20H//
-        S7K8NA+GB/MBUp8TaHqy0t2llcjV6qK9CQ==
-X-Google-Smtp-Source: ABdhPJycrDqlqvYN2OLnR0RH2iNOThlG2Uj/4z9C30XNWzbhnaKfj4JG9x8wGddbKzYDc1BFNPKTxw==
-X-Received: by 2002:a7b:c1c2:: with SMTP id a2mr3472285wmj.15.1626163527110;
+        bh=rpuU+hkjgrosuGrPdHtiXP1P3pJ99yiJMY5kQ9aVvUs=;
+        b=O29ffvaI1QtAGKnzXypNcuDQ3zgzuJRmD4tNxNCP7zkovhHgPZZChhRjBWu/sANfSO
+         IGgV1v0yAfptSVrVkw5BAGg0j1R8Pah43vZa0VlRGSZupzVohiPZ3UbD6+4/LP8ne4gK
+         925uh30Cke6BQSVtKUbl0a04ELCq44rl1B5hrxJ2Ui1WZYqrUNAvnclAIu8MlO4Cx1hq
+         Jx/edz3aEDj0uCpSBysP13OaBKVI2wPpuTM+gUkf4X2ckJ1DiIFfaZulojvWDlxZMXyQ
+         x0HJlFmFbvNEo6FkovKSjH4KckLceB9g+FYF6xdWUNs2ROpbjid5nUBgbPRJH6XZPllE
+         sw3w==
+X-Gm-Message-State: AOAM533yEACTZ/JA3B1ujVd8hdJeCwdpJ8c9NpM6/eT5kYc0IEfiosMX
+        +1IwojR5CKfuqH0QOF4u3YeF3fPrLUrmGg==
+X-Google-Smtp-Source: ABdhPJzS7q80EpR9kITASMes3uqS1T0ZkZtTv4mTa3ZLBM3WJ3bCNcZJMzoQD2Q3Qz0SIVErPjln1Q==
+X-Received: by 2002:a05:6000:1841:: with SMTP id c1mr3825722wri.423.1626163527870;
         Tue, 13 Jul 2021 01:05:27 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z11sm17156772wru.65.2021.07.13.01.05.26
+        by smtp.gmail.com with ESMTPSA id z11sm17156772wru.65.2021.07.13.01.05.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jul 2021 01:05:26 -0700 (PDT)
+        Tue, 13 Jul 2021 01:05:27 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 4/6] *.h: add a few missing  __attribute__((format))
-Date:   Tue, 13 Jul 2021 10:05:19 +0200
-Message-Id: <patch-4.6-fd70d512b4-20210713T080411Z-avarab@gmail.com>
+Subject: [PATCH v2 5/6] advice.h: add missing __attribute__((format)) & fix usage
+Date:   Tue, 13 Jul 2021 10:05:20 +0200
+Message-Id: <patch-5.6-a001e851d2-20210713T080411Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0-dev
 In-Reply-To: <cover-0.6-0000000000-20210713T080411Z-avarab@gmail.com>
 References: <cover-0.6-00000000000-20210710T084445Z-avarab@gmail.com> <cover-0.6-0000000000-20210713T080411Z-avarab@gmail.com>
@@ -75,52 +75,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add missing format attributes to API functions that take printf
-arguments.
+Add the missing __attribute__((format)) checking to
+advise_if_enabled(). This revealed a trivial issue introduced in
+b3b18d16213 (advice: revamp advise API, 2020-03-02). We treated the
+argv[1] as a format string, but did not intend to do so. Let's use
+"%s" and pass argv[1] as an argument instead.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- cache.h  | 1 +
- quote.h  | 1 +
- strbuf.h | 1 +
- 3 files changed, 3 insertions(+)
+ advice.h               | 1 +
+ t/helper/test-advise.c | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index ba04ff8bd3..f9aed2d45c 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1385,6 +1385,7 @@ enum get_oid_result {
- };
- 
- int repo_get_oid(struct repository *r, const char *str, struct object_id *oid);
-+__attribute__((format (printf, 2, 3)))
- int get_oidf(struct object_id *oid, const char *fmt, ...);
- int repo_get_oid_commit(struct repository *r, const char *str, struct object_id *oid);
- int repo_get_oid_committish(struct repository *r, const char *str, struct object_id *oid);
-diff --git a/quote.h b/quote.h
-index 768cc6338e..049d8dd0b3 100644
---- a/quote.h
-+++ b/quote.h
-@@ -31,6 +31,7 @@ struct strbuf;
- 
- void sq_quote_buf(struct strbuf *, const char *src);
- void sq_quote_argv(struct strbuf *, const char **argv);
-+__attribute__((format (printf, 2, 3)))
- void sq_quotef(struct strbuf *, const char *fmt, ...);
- 
- /*
-diff --git a/strbuf.h b/strbuf.h
-index 223ee2094a..f1e9821a54 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -263,6 +263,7 @@ static inline void strbuf_insertstr(struct strbuf *sb, size_t pos,
- void strbuf_vinsertf(struct strbuf *sb, size_t pos, const char *fmt,
- 		     va_list ap);
- 
-+__attribute__((format (printf, 3, 4)))
- void strbuf_insertf(struct strbuf *sb, size_t pos, const char *fmt, ...);
- 
+diff --git a/advice.h b/advice.h
+index bd26c385d0..9f8ffc7354 100644
+--- a/advice.h
++++ b/advice.h
+@@ -90,6 +90,7 @@ int advice_enabled(enum advice_type type);
  /**
+  * Checks the visibility of the advice before printing.
+  */
++__attribute__((format (printf, 2, 3)))
+ void advise_if_enabled(enum advice_type type, const char *advice, ...);
+ 
+ int error_resolve_conflict(const char *me);
+diff --git a/t/helper/test-advise.c b/t/helper/test-advise.c
+index a7043df1d3..cb881139f7 100644
+--- a/t/helper/test-advise.c
++++ b/t/helper/test-advise.c
+@@ -16,7 +16,7 @@ int cmd__advise_if_enabled(int argc, const char **argv)
+ 	 * selected here and in t0018 where this command is being
+ 	 * executed.
+ 	 */
+-	advise_if_enabled(ADVICE_NESTED_TAG, argv[1]);
++	advise_if_enabled(ADVICE_NESTED_TAG, "%s", argv[1]);
+ 
+ 	return 0;
+ }
 -- 
 2.32.0-dev
 
