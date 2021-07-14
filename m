@@ -2,115 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9ED1C12002
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 22:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F41BDC12002
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 22:26:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8EC51613C9
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 22:25:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D69D4613CA
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 22:26:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237043AbhGNW2M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 18:28:12 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65256 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237055AbhGNW2J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 18:28:09 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 09A97C83E2;
-        Wed, 14 Jul 2021 18:25:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nJo+W+QZdmD7UVy9AtVOBl9DgleQif4kdx6C9f
-        zRh5k=; b=MpWEJjoTVpWWFAqRrZ3MlCrhlfw9CxlqcvwdqVvJE+9kkYi2dKuRLl
-        nfSJ13jIiOJShFKE9P5T+nUZZyG3Zh9BQwQhXGfGe6aL8/zkJsp+8uKSvH/G+mlp
-        ZzS9SonsMsAEEhjRgd/9i+BAKGP1WW9uQCbisXqOORX3B5khcUNZo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0021BC83E1;
-        Wed, 14 Jul 2021 18:25:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7BB56C83DF;
-        Wed, 14 Jul 2021 18:25:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, "Chris. Webster" <chris@webstech.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] ci(check-whitespace): restrict to the intended commits
-References: <pull.995.git.1626300577.gitgitgadget@gmail.com>
-        <b63a5bbc63ba17449a91913ab28c268db5fa3650.1626300577.git.gitgitgadget@gmail.com>
-Date:   Wed, 14 Jul 2021 15:25:15 -0700
-In-Reply-To: <b63a5bbc63ba17449a91913ab28c268db5fa3650.1626300577.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Wed, 14 Jul 2021
-        22:09:37 +0000")
-Message-ID: <xmqqwnpsttx0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233625AbhGNW3E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 18:29:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60514 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230438AbhGNW3B (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 18:29:01 -0400
+Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ACD6C06175F
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 15:26:08 -0700 (PDT)
+Received: by mail-il1-x12d.google.com with SMTP id h3so3140849ilc.9
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 15:26:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=HjKp1MLaeHkUpN9OIHP0YzhQdsQLSWdfGT3xD8w2eVQ=;
+        b=Wpya8ODW2tDxa8lO3wOmS8drg2nYJ5fx1IGGlTSmz7Psxz/jv2sxyjKBYbYz1XgtY3
+         vL0zPSHRhfn07rtFHo1u3f7MA00YElLAB064fMAqAEiLueowZZk6b+VsFs7xnriPnLpJ
+         0Eqys39/j7RcHBeM9k/pDF3OwZPbtBqI9ce/6COXoBIA3hHPVctEtukozGw4tZ3JZz7W
+         D2ImmyGn0LnMEOjjPniWv6YCCg0WiyLQqH9G8iTMXLOxjBxIy7Zz3AVidvmLh6foMzE9
+         vlFYDyyHA48Z/szIHVOCbEEjoobxAJat+d95sv6xfKrhrjJwmZAFQzwcbEB8AS9HdgB/
+         Ki6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=HjKp1MLaeHkUpN9OIHP0YzhQdsQLSWdfGT3xD8w2eVQ=;
+        b=NRoNhGpk76NEFTKuQUoZS0CnPS/8zx1xHWjGVYERSg+Nq+zaipMN8Xc2NUGygS/QMZ
+         eYadvuz5H/NG/oyjWIQEz/uwZ7EoebHX+DbaAa1X7N1W+wR7MZKKq0ThnQ3e9nZk8L4A
+         bdj6AqYW5BPLfwH7xMQs9pEjaqOW5H/BzsIEPvm8eBT4w8yUBpvEbKFYaUE9VBVcEa9W
+         Sr2GXGtUYtWvb9OzQ65692DoSOW262YmVXfSmsxAwborkqR89iozapwHfp4BWL7qRS2f
+         /kxVJjcNW/8bsd1fhLCd7ol571Oy24a4jde8C8MyeNOQtp6BUA5+ZO16d+TmVP+keMA6
+         eizg==
+X-Gm-Message-State: AOAM531P1bZgrag2nxsXhidoPw5dq+rr0YXyZrKFd7C1yTh9iOd0A5lh
+        TJBuhDt7AuGLSExKcnsrh0oKmA==
+X-Google-Smtp-Source: ABdhPJyWnKnp6WzTFztddWLeUzdoPHUDRhwxHwioMbYm7CvomUE/HgvR3ckM35cMoEY2ZIcDSdWIww==
+X-Received: by 2002:a05:6e02:60c:: with SMTP id t12mr81126ils.121.1626301567175;
+        Wed, 14 Jul 2021 15:26:07 -0700 (PDT)
+Received: from localhost ([2600:1700:d843:8f:3f15:e25d:cd63:d019])
+        by smtp.gmail.com with ESMTPSA id h24sm319011ioj.32.2021.07.14.15.26.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jul 2021 15:26:06 -0700 (PDT)
+Date:   Wed, 14 Jul 2021 18:26:06 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        German Lashevich <german.lashevich@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 1/3] doc/git-config: explain --file instead of referring
+ to GIT_CONFIG
+Message-ID: <YO9kfhr3u/Xx1FQc@nand.local>
+References: <YO9YyTZdU4WadYGg@coredump.intra.peff.net>
+ <YO9ZGTX9f1fOpTkh@coredump.intra.peff.net>
+ <YO9jLvGlIVj3aI/m@nand.local>
+ <YO9j6hrJFFTSEd6j@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5D67977A-E4F2-11EB-9CB4-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YO9j6hrJFFTSEd6j@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
-
-> Unfortunately, this means that we no longer can rely on a shallow clone:
-> There is no way of knowing just how many commits the upstream branch
-> advanced after the commit from which the PR branch branched off. So
-> let's just go with a full clone instead, and be safe rather than sorry
-> (if we have "too shallow" a situation, a commit range `@{u}..` may very
-> well include a shallow commit itself, and the output of `git show
-> --check <shallow>` is _not_ pretty).
-
-Makes sense.
-
-As long as you have pull-request base, I suspect that you could
-shallow clone the base and incrementally fetch the rest to update,
-perhaps?  But I do not know if it is worth doing so for a small
-project like ours.
-
-Thanks.
-
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  .github/workflows/check-whitespace.yml | 10 ++--------
->  1 file changed, 2 insertions(+), 8 deletions(-)
+On Wed, Jul 14, 2021 at 06:23:38PM -0400, Jeff King wrote:
+> On Wed, Jul 14, 2021 at 06:20:30PM -0400, Taylor Blau wrote:
+> > Perhaps `.git/config` is clear enough; I definitely don't feel strongly
+> > about it.
 >
-> diff --git a/.github/workflows/check-whitespace.yml b/.github/workflows/check-whitespace.yml
-> index c53614d6033..8c4358d805c 100644
-> --- a/.github/workflows/check-whitespace.yml
-> +++ b/.github/workflows/check-whitespace.yml
-> @@ -12,15 +12,9 @@ jobs:
->    check-whitespace:
->      runs-on: ubuntu-latest
->      steps:
-> -    - name: Set commit count
-> -      shell: bash
-> -      run: echo "COMMIT_DEPTH=$((1+$COMMITS))" >>$GITHUB_ENV
-> -      env:
-> -        COMMITS: ${{ github.event.pull_request.commits }}
-> -
->      - uses: actions/checkout@v2
->        with:
-> -        fetch-depth: ${{ env.COMMIT_DEPTH }}
-> +        fetch-depth: 0
->  
->      - name: git log --check
->        id: check_out
-> @@ -47,7 +41,7 @@ jobs:
->              echo "${dash} ${etc}"
->              ;;
->            esac
-> -        done <<< $(git log --check --pretty=format:"---% h% s" -${{github.event.pull_request.commits}})
-> +        done <<< $(git log --check --pretty=format:"---% h% s" ${{github.event.pull_request.base.sha}}..)
->  
->          if test -n "${log}"
->          then
+> Yes, I noticed that, too. This is copied verbatim from the other
+> options, so if we were to do that, it should be done on top across the
+> whole file.
+
+I'm dubious that s,.git/config,$GIT_DIR/config,g would be an improvement
+in clarity if done across the whole file, and I'd rather be consistent
+than not. So I think that it's fine as is.
+
+Thanks,
+Taylor
