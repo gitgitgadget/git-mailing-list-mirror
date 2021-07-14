@@ -2,96 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B12F6C07E9A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 17:30:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82AC4C07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 17:31:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 947D5610D1
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 17:30:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 599B0613BE
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 17:31:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237980AbhGNRdp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 13:33:45 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:30084 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230141AbhGNRdp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 13:33:45 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 16EHUntZ072838
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 14 Jul 2021 13:30:50 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>
-References: <20210712223139.24409-1-randall.becker@nexbridge.ca>        <20210712223139.24409-3-randall.becker@nexbridge.ca>    <xmqqr1g1zow4.fsf@gitster.g>    <006b01d778b6$b74b8600$25e29200$@nexbridge.com> <xmqqczrkyg77.fsf@gitster.g>
-In-Reply-To: <xmqqczrkyg77.fsf@gitster.g>
-Subject: RE: [Patch 2/3] Documentation/config.txt: add worktree includeIf conditionals.
-Date:   Wed, 14 Jul 2021 13:30:44 -0400
-Message-ID: <001101d778d5$fd6c7670$f8456350$@nexbridge.com>
-MIME-Version: 1.0
+        id S239092AbhGNReR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 13:34:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46940 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229790AbhGNReR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 13:34:17 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7446CC06175F
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 10:31:25 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id s23so3194951oij.0
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 10:31:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=ZyvAKL6g7qnflVplqimzCxO7M0BhBB9bjJfUzLsKqdE=;
+        b=WDMvY6uxXTOuYj11v98Re+mcjdCThT9OaDHCsDXbK/R7/4WVnuLsxbzGvrP+WaUbGt
+         eytr+7LJvoR/Z7yC80LZSPDoX0MES6uW0LzUjA8BYT0XnuEKlpYkXZI9gEDwSQYlknh9
+         5EmvyCdJbwOlVTwTjEG0o+iGDnZ9CLDV9/4Q9RtbBNWOz/HDFJ2F8D4JebKMvdAEnqfc
+         g0Z5Efl1+juJJe7NMwu4BaelcEtHPH0OemDdq8cAScTj8yRwxUzLYca2YetUc0Pn9X8W
+         R6NFZLw9M4mlg4qY0ZzdvE0cB5qtaCKiI3JesxPtMrKyjEG/+sCHu3jqHlciKIPePAja
+         mFjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=ZyvAKL6g7qnflVplqimzCxO7M0BhBB9bjJfUzLsKqdE=;
+        b=PQscZH0iFxo5dZAdCrFFxSjJC0MloaHCGG6k/ksoN+wTkQXr9wLSnGb5OpexETIGIZ
+         h51m7z9i3nWDE2u1Qsot0PWZQGoCGxr1s9zXJEpmTcbsrAChJLoMmEs6S5oU3pgmJNs+
+         XF5ZSTNbyyKDvWC6iW5B6EdX9SJOUb2KG/RFrwt2RMMzXp9fCk8YZtzuiJ7615vziqMC
+         Q6gM92uUbvtkbW4GuzBbEITGLgICazSz26U53Nq0cAIIrgQMZLs7bgSv4KqoFz9LQ2c7
+         O2X97rWjfOlpyVOcwIC49m7PGmUWTIfeQsq3guj9InYameEfto8fuX9kRlk9rH7H0rDu
+         fdTg==
+X-Gm-Message-State: AOAM533oTc1DNTE5Cymyc0ifmUtXCGVq0IMM9d0Z+4iOwXPPDooxLzyj
+        nQ3KKEjfCMi6iFPPHDHUlvY=
+X-Google-Smtp-Source: ABdhPJz69MjZCZEPXrIuzhDjVIdsAa6mjAreWi30ot4NG53lLb0OGkSu57Ix7IYow/pjvvlPJx3TvQ==
+X-Received: by 2002:aca:3285:: with SMTP id y127mr8263280oiy.115.1626283884852;
+        Wed, 14 Jul 2021 10:31:24 -0700 (PDT)
+Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
+        by smtp.gmail.com with ESMTPSA id v26sm525858oof.30.2021.07.14.10.31.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jul 2021 10:31:24 -0700 (PDT)
+Date:   Wed, 14 Jul 2021 12:31:22 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Elijah Newren <newren@gmail.com>,
+        Son Luong Ngoc <sluongng@gmail.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>, git <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Message-ID: <60ef1f6a83b61_9460a208cc@natae.notmuch>
+In-Reply-To: <CABPp-BEqnTuDgC0Bb+feFj=vBB48wdb60thO+Pq3N0jL74jH8Q@mail.gmail.com>
+References: <20210711012604.947321-1-alexhenrie24@gmail.com>
+ <CAL3xRKdOyVWvcLXK7zoXtFPiHBjgL24zi5hhg+3yjowwSUPgmg@mail.gmail.com>
+ <CABPp-BEqnTuDgC0Bb+feFj=vBB48wdb60thO+Pq3N0jL74jH8Q@mail.gmail.com>
+Subject: Re: [PATCH] pull: abort if --ff-only is given and fast-forwarding is
+ impossible
+Mime-Version: 1.0
 Content-Type: text/plain;
-        charset="us-ascii"
+ charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQF2HyHHSxX17r/iTwhwCI4yh2NyqQFrZIJJAS8qKBsA0h6pwwJj6elwq9bna6A=
-Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On July 14, 2021 1:10 PM, Junio C Hamano
->"Randall S. Becker" <rsbecker@nexbridge.com> writes:
->
->>>Assuming that I guessed correctly, is this a deliberate design
->>>decision not to "automatically add ** after a pattern that ends with a
->>>slash", and if so why?  I would have thought that "in the worktrees
->>>that I create inside /var/tmp/, please enable these configuration
->>>variables" would be a fairly natural thing to ask, and I do not
->>>immediately see a reason why we want to apply different syntax rules
->>>between "gitdir" and "worktree".
->
->> The reason for this comes down to what is in *the_repository.
->
->Sorry, but I still do not understand.
->
->> Essentially, the_repository->gitdir always has a /path/to/.git
->> directory with full qualification.
->
->Yes.
->
->> the_repository->worktree does not have /.git added  for obvious
->>reasons, so the /path/to is bare of the trailing /.
->
->It may be the case, but /path/to/.git does not have trailing slash, either, so I do not see the relevance.
->
->When you say [includeIf "gitdir:/path/"], the "behave as if ** is added after the slash at the end" rule kicks in, and the pattern
-"/path/**" is
->used to see if it matches "/path/to/.git" and it does, right?  When you say [includeIf "worktree:/path/"], wouldn't the resulting
-"/path/**"
->match "/path/to"?
+Elijah Newren wrote:
+> On Wed, Jul 14, 2021 at 1:37 AM Son Luong Ngoc <sluongng@gmail.com> wrote:
+> > I am out of the loop in this thread but I have been seeing strange behaviors
+> > with pull.rebase=true in the 'next' branch and also in the 'master'
+> > branch in recent days.
+> 
+> I'm not surprised it happens with recent versions, but I'd expect this
+> to have happened with older versions too.  Is this not reproducible
+> with git-2.32.0 or older git versions?
 
-I think I over-complicated the first test case and got myself into a mess. Will fix that.
+I already provided an accurate target [1].
 
->By the way, I think [PATCH 1/3] should turn the body of
->include_by_gitdir() to a common helper function that
->
-> - accepts a path to a directory and a pattern
-> - turns it into a relpath
-> - prepares the pattern with prepare_include_condition_pattern()
-> - do the match include_by_gitdir() does.
->
->and make include_by_gitdir() a very thin wrapper that passes
->opts->git_dir to that common helper.  Then you do not have to copy
->the entire function to create your new include_by_worktree(); it can be another very thin wrapper that passes
-the_repository->worktree
->instead of opts->git_dir to the common helper, as there is no other difference in these two functions.
+> >   > git version
+> >   git version 2.32.0.432.gabb21c7263
+> >   > git config -l | grep pull
+> >   pull.rebase=true
+> >   pull.ff=false
+> 
+> So, you have conflicting configuration options set.  pull.ff=false
+> maps to --no-ff which is documented to create a merge.
+> pull.rebase=true maps to --rebase which says to run a rebase.
+> 
+> You probably want to drop one of these.
 
-That sounds like a plan. Will go for it in V2.
+`pull.ff` will be honored by `git pull --merge`.
 
--Randall
+[1] https://lore.kernel.org/git/60eeff69293fb_10e52087a@natae.notmuch/
 
+-- 
+Felipe Contreras
