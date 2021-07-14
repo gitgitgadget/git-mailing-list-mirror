@@ -2,116 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCE3AC07E95
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:19:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74C07C07E95
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:23:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B16D36128C
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:19:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FA506136E
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:23:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237123AbhGNAWO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 20:22:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37532 "EHLO
+        id S237123AbhGNAZw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 20:25:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236981AbhGNAWO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 20:22:14 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3651C0613DD
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:19:22 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id w17-20020a4aca110000b029025dba2185a4so162066ooq.11
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:19:22 -0700 (PDT)
+        with ESMTP id S237022AbhGNAZv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 20:25:51 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A7C8C0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:23:00 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id l26so616217eda.10
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:22:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KLe8mUBJXMoMC+wsW/x1VLb93kVMgduwA35ZZ8Qt3p8=;
-        b=aqgEtz7ulIxX/yBduEVK64jCI//2tJ6gS4WtEkg4PkzUBHN8GPYLQe4Hwu/bZ7717M
-         EtRU02u+ZvRlKihltTu3544/17EtAUiGOnMLwzZ3jNx9S16ws/1ZVyBPgYuuuOeIuJQ/
-         JzvjRuqKtTUFvE7s4KkYyadykM9NblE8VNdoTf46VGCKA1vV0H8+wisMLIiz/1a/P8mo
-         UHqI4RAXMuJ83N1tgOT8oxkFuHwXqiPu0XI+OFfE6wvJ1jHtVaiMDekjsD0OfEagcTBH
-         F4s7Ot/Q0gY7Q7aiNVjUJY9GG8ci9eNqyiHnveG8nNtVifklobgM6bOD0iQO3JYjME7G
-         e03w==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=1kbsCOmaIoQJpmyXuN+nZAO8fc4vwToPrNeoqRJ2+j4=;
+        b=pdv1jSHQbtWSi+hlG7zjWtfIKlaFvGFTWsIg6Y2PH3L70AWNf7cTxFKdYE96RxJDo1
+         5kDLY5YEVGtHhtKPb3/mCAS/K18u2Ymy/m0tYjICjwgyMW289JMSrI6io39iwXafSr1o
+         5ByMJjQRRtR905GI4iIo5Ny0VMn1UbKh1MjjHLqDqQZ8K/i+KCSepvNXd6rFRP+e3Jpv
+         aRkhQUbV8d+X8mRa6IkabY1T0SpCkoZyq9IM/JMjJZxRuBIkQAFYlm0PPyboBNJPqsKP
+         P75qdc9pkdgeSsq0xrlPphsCEJIN6vgYzwEMj13SXe8k2upLQ2OYZvBXoNddv64X1tiK
+         70ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KLe8mUBJXMoMC+wsW/x1VLb93kVMgduwA35ZZ8Qt3p8=;
-        b=CPiJgZJmevprzbZ+YbYY4zLR2VDFeR46RoAQQx6b0A9gu6dL552RIIsaf6mkQX6dRd
-         eKuLCPAx+KqesRTemK+HRO1k05KvlxeeXBMoAEu0jsJG+a7UTBSW++5B6V3veIIRY4k/
-         HbyoKThYb6uF1IfuTbtWVZAucTNdfSUVlWhsSq7C3s7cYuVw2fqmNmwmplErWpSxRmxR
-         FlNi3P5X3Dh/cwfro5AgZYhrN1Jw0GiWEA1R9DNikpGrh7MaEDemEMPtB77Sk/FlQDas
-         YwdksGgEHKC2oxkguKTWE917cGMqZXFe9AhKXrmmQMxcbWnifZMUgHP2cRWg/GlMH8px
-         qkOQ==
-X-Gm-Message-State: AOAM530dVLtzQlRoSPC9DEnL3b26wwdITLxoqYOJ7r36QLtFyzSucpZ7
-        bCj1IE6zLFOnFcEnX1atTAH1LKMfqII+L1Pc98w=
-X-Google-Smtp-Source: ABdhPJwvxaD6BQKtZ3Fp7fyyQxUmz3230dA5tI5UrltaCVf+r2z4g6Brtsxv3XVDU9G+lznN3ikDaVIOr9KwzgFupJQ=
-X-Received: by 2002:a4a:1b82:: with SMTP id 124mr5686006oop.32.1626221962290;
- Tue, 13 Jul 2021 17:19:22 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=1kbsCOmaIoQJpmyXuN+nZAO8fc4vwToPrNeoqRJ2+j4=;
+        b=U/qnbi+Mlh9qMpGZDLnILiTs+3Wk2VC0rpHH80IX6FbOfGFYTweKwGRLNtFMVjfjwD
+         gZkGh0rt3NTHRiJidhEWB6l3C8S7J0Ky0Xh7DmujT8LGCaANQsfEU5lDstxcg6hKjQJK
+         /ECNVfx1bja1y+r6WUfWT2DH1f1/stCTvZEPaSs+F3aQZRgZJa3hgHmovaB9szGS7Dvg
+         DjlCfIuK4etvYgyiVObA8fp3a4PXD39IPyOJAepEqinnIRxR+sw8UJeVL0z5VBwHvqtT
+         jgB3Gh9Uy0DM2Ba+r6cxAgDWuXhsDuK121U3n479LEBqsSlFhPiV4OK5rv8ii7YLMsKZ
+         ZdMg==
+X-Gm-Message-State: AOAM530ETi+qZbMQxl9eVlik8OLxErbVIBJt3PeC3nUMrGIC6hVAkRiS
+        qP2FQXhvIHzCoFlskSPMPZg=
+X-Google-Smtp-Source: ABdhPJxCcu9AwXJF6acXBDVynLuNZOJiwRNUPHeGILcjFTgDzfEob5Jg0e6x5RXcbHWCM1P1+17ecQ==
+X-Received: by 2002:a05:6402:10d7:: with SMTP id p23mr9500725edu.74.1626222178616;
+        Tue, 13 Jul 2021 17:22:58 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id ec38sm222217edb.15.2021.07.13.17.22.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jul 2021 17:22:57 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jordi Mas via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jordi Mas <jmas@softcatala.org>
+Subject: Re: [PATCH] l10n: allows to translate diff messages
+Date:   Wed, 14 Jul 2021 02:18:42 +0200
+References: <pull.1045.git.git.1626177676801.gitgitgadget@gmail.com>
+ <xmqq4kcx24j7.fsf@gitster.g>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <xmqq4kcx24j7.fsf@gitster.g>
+Message-ID: <87zgup217d.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.988.git.1625111177.gitgitgadget@gmail.com>
- <pull.988.v2.git.1626204784.gitgitgadget@gmail.com> <8aea3713902b7d006f527ccd76faf6f944529bdb.1626204784.git.gitgitgadget@gmail.com>
- <7f4fc9f6-9b46-6e39-1a66-b72e0c583f21@gmail.com>
-In-Reply-To: <7f4fc9f6-9b46-6e39-1a66-b72e0c583f21@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 13 Jul 2021 17:19:11 -0700
-Message-ID: <CABPp-BFBgCHAq=zWVoPPsDx04agDunAb3vVSgfJs4B2xVpasLg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/7] merge-ort: add some more explanations in collect_merge_info_callback()
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 13, 2021 at 4:34 PM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
->
-> On 14/07/21 02.32, Elijah Newren via GitGitGadget wrote:
-> > @@ -1018,8 +1018,8 @@ static int collect_merge_info_callback(int n,
-> >       if (side1_matches_mbase && side2_matches_mbase) {
-> >               /* mbase, side1, & side2 all match; use mbase as resolution */
-> >               setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
-> > -                             names, names+0, mbase_null, 0,
-> > -                             filemask, dirmask, 1);
-> > +                             names, names+0, mbase_null, 0 /* df_conflict */,
-> > +                             filemask, dirmask, 1 /* resolved */);
-> >               return mask;
-> >       }
-> >
->
->
-> Is df_conflict stands for directory-file conflict?
 
-Yes, eventually propagating up to conflict_info->df_conflict, defined as:
+On Tue, Jul 13 2021, Junio C Hamano wrote:
 
-    /* Whether this path is/was involved in a directory/file conflict */
-    unsigned df_conflict:1;
-
-> >       /*
-> > -      * Record information about the path so we can resolve later in
-> > -      * process_entries.
-> > +      * None of the special cases above matched, so we have a
-> > +      * provisional conflict.  (Rename detection might allow us to
-> > +      * unconflict some more cases, but that comes later so all we can
-> > +      * do now is record the different non-null file hashes.)
-> >        */
-> >       setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
-> >                       names, NULL, 0, df_conflict, filemask, dirmask, 0);
-> >
+> "Jordi Mas via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> So when none of special cases matched, we assumed there's conflict
-> (although provisional), right?
+>> Subject: Re: [PATCH] l10n: allows to translate diff messages
+>
+> "allow to translate" would be the right phrasing, but it is too
+> vague to say "diff messages".  You are only marking 3 messages for
+> translation when there are probably a handful more.  
+>
+> You need to explain which ones, not just vague "diff messages".
+>
+> I think you are focusing on the words on the "git diff --stat" and
+> "git diff --shortstat" summary line, so
+>
+>     i18n: mark "git diff --[short]stat" summary for translation
+>
+> perhaps?  And remember, i18n is the act of making the code capable
+> of being translated, while l10n is the act of actually translating
+> what i18n prepared into a particular language.  Here, i18n is more
+> appropriate.
 
-Yes, the "provisional" adjective in particular is there because we
-revisit each case in process_entries(), and resolve those that can be
-via content merges, renormalization, etc.  The content merges need to
-wait until after rename detection allows us to pair up different
-files.  If the different file versions are still not resolved after
-process_entries() then it becomes an actual conflict rather than just
-a provisional conflict.
+What i18n v.s. l10n means is quite the side-discussion, I have not heard
+it used like this before, but rather as e.g. defined at :
+https://www.w3.org/International/questions/qa-i18n
+
+I.e. in git.git's case that all our gettext-ization would fall under
+i18n, but l10n are generally a step beyond that, e.g. if "git status"
+output entries were sorted by locale, fsck and other progress.c users
+used localized numeric formatting etc.
+
+IOW I agree that i18n is more appropriate here, I just hadn't heard
+i18n/l10n used in the way that you describe.
