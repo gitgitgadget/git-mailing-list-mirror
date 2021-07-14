@@ -2,125 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDC5DC11F68
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:15:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCE3AC07E95
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:19:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B9B9A61380
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:15:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B16D36128C
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:19:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237175AbhGNASp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 20:18:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36708 "EHLO
+        id S237123AbhGNAWO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 20:22:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237162AbhGNASn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 20:18:43 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C574C0613EE
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:15:52 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id f17so902836wrt.6
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:15:51 -0700 (PDT)
+        with ESMTP id S236981AbhGNAWO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 20:22:14 -0400
+Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3651C0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:19:22 -0700 (PDT)
+Received: by mail-oo1-xc32.google.com with SMTP id w17-20020a4aca110000b029025dba2185a4so162066ooq.11
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:19:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=CxAEuR7M5B4588j/R/sVirSlZDKIe8EG1UKtiXlMS+U=;
-        b=MIxanvnXyaPBXl0U5gm1o6J6zXzUZr+zFCFgrvQe8flBmyoL8puHwBmD0Da9MFpXWB
-         ogaflnLGU4pgMSfeTVtgxYMMNbNG38KSLCn2Qtq3SDS6OQirPKwzV9hrgi8Gz1CzFN8v
-         xq94HB8MYcLmauVOr9EhOAMF1wyW62tMz5fkXiL2xe3c2IFWch72e0aDHrumKPcNVi6z
-         HRJ4ckHUemFuTIAoJpsMxUBi9s8ckr29V9xwUH8e1joUXi6x1dPt60HuKu2SkS3W+zt/
-         U1L8aav5Zb9ZebZumrDkCGCKoGF23blbkCEu8DC4EPFRVZy2nZdxUd49Edx0MLxoTC0h
-         r8mQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KLe8mUBJXMoMC+wsW/x1VLb93kVMgduwA35ZZ8Qt3p8=;
+        b=aqgEtz7ulIxX/yBduEVK64jCI//2tJ6gS4WtEkg4PkzUBHN8GPYLQe4Hwu/bZ7717M
+         EtRU02u+ZvRlKihltTu3544/17EtAUiGOnMLwzZ3jNx9S16ws/1ZVyBPgYuuuOeIuJQ/
+         JzvjRuqKtTUFvE7s4KkYyadykM9NblE8VNdoTf46VGCKA1vV0H8+wisMLIiz/1a/P8mo
+         UHqI4RAXMuJ83N1tgOT8oxkFuHwXqiPu0XI+OFfE6wvJ1jHtVaiMDekjsD0OfEagcTBH
+         F4s7Ot/Q0gY7Q7aiNVjUJY9GG8ci9eNqyiHnveG8nNtVifklobgM6bOD0iQO3JYjME7G
+         e03w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=CxAEuR7M5B4588j/R/sVirSlZDKIe8EG1UKtiXlMS+U=;
-        b=j7C6kkzM9VaykG05xBrfDC5d2I2DrHbxQyMJXiGWusVmQoq5ggd+NPVnrl/K19F3FF
-         9paoVea679M+EnaHA5zy0Hkaj4a0/autL1+KQln2zxrFC8lwnsv1QGwYTgi+6xZuWBBB
-         K+yvbq28PsRD6kXte42LCjnyEeL6+ZpTdsEUGiLzMR6MZZlC98ncUrYmwqyXw1ng1hmv
-         fYVhaGvZfXIn0EfoPqKYNHX5GnifFBIzID2Q9LVNzMYZc9TSJuJJNE2BZ0/jC83p2Pdk
-         wtSMvC8K1NS/L0eDJ4fNlaS4IzYVhAvpFyufkdKlaFlT/Y+Q4K7pYaGtvm03V1eUq0zJ
-         VC4Q==
-X-Gm-Message-State: AOAM530aSWEGt7frXXKBKszXbgEhTtOK9ex4gcPaMhr4NyMed5qp+l8K
-        LNLpHSwMxUpyAVMbMQsuKzsn4RLqGnxJfPiU
-X-Google-Smtp-Source: ABdhPJwDEPq6H0BA4270QoDvv0jpDFAcuiara2YK3AboRHYejwPokb5XaEc46/ba/q5bAo3JHKt0Pg==
-X-Received: by 2002:adf:c409:: with SMTP id v9mr9182482wrf.102.1626221750521;
-        Tue, 13 Jul 2021 17:15:50 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y197sm2876518wmc.7.2021.07.13.17.15.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jul 2021 17:15:49 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 4/5] *.h: add a few missing  __attribute__((format))
-Date:   Wed, 14 Jul 2021 02:15:43 +0200
-Message-Id: <patch-4.5-fd70d512b4-20210714T001433Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.32.0-dev
-In-Reply-To: <cover-0.5-0000000000-20210714T001433Z-avarab@gmail.com>
-References: <cover-0.6-0000000000-20210713T080411Z-avarab@gmail.com> <cover-0.5-0000000000-20210714T001433Z-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KLe8mUBJXMoMC+wsW/x1VLb93kVMgduwA35ZZ8Qt3p8=;
+        b=CPiJgZJmevprzbZ+YbYY4zLR2VDFeR46RoAQQx6b0A9gu6dL552RIIsaf6mkQX6dRd
+         eKuLCPAx+KqesRTemK+HRO1k05KvlxeeXBMoAEu0jsJG+a7UTBSW++5B6V3veIIRY4k/
+         HbyoKThYb6uF1IfuTbtWVZAucTNdfSUVlWhsSq7C3s7cYuVw2fqmNmwmplErWpSxRmxR
+         FlNi3P5X3Dh/cwfro5AgZYhrN1Jw0GiWEA1R9DNikpGrh7MaEDemEMPtB77Sk/FlQDas
+         YwdksGgEHKC2oxkguKTWE917cGMqZXFe9AhKXrmmQMxcbWnifZMUgHP2cRWg/GlMH8px
+         qkOQ==
+X-Gm-Message-State: AOAM530dVLtzQlRoSPC9DEnL3b26wwdITLxoqYOJ7r36QLtFyzSucpZ7
+        bCj1IE6zLFOnFcEnX1atTAH1LKMfqII+L1Pc98w=
+X-Google-Smtp-Source: ABdhPJwvxaD6BQKtZ3Fp7fyyQxUmz3230dA5tI5UrltaCVf+r2z4g6Brtsxv3XVDU9G+lznN3ikDaVIOr9KwzgFupJQ=
+X-Received: by 2002:a4a:1b82:: with SMTP id 124mr5686006oop.32.1626221962290;
+ Tue, 13 Jul 2021 17:19:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.988.git.1625111177.gitgitgadget@gmail.com>
+ <pull.988.v2.git.1626204784.gitgitgadget@gmail.com> <8aea3713902b7d006f527ccd76faf6f944529bdb.1626204784.git.gitgitgadget@gmail.com>
+ <7f4fc9f6-9b46-6e39-1a66-b72e0c583f21@gmail.com>
+In-Reply-To: <7f4fc9f6-9b46-6e39-1a66-b72e0c583f21@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 13 Jul 2021 17:19:11 -0700
+Message-ID: <CABPp-BFBgCHAq=zWVoPPsDx04agDunAb3vVSgfJs4B2xVpasLg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/7] merge-ort: add some more explanations in collect_merge_info_callback()
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add missing format attributes to API functions that take printf
-arguments.
+On Tue, Jul 13, 2021 at 4:34 PM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+>
+> On 14/07/21 02.32, Elijah Newren via GitGitGadget wrote:
+> > @@ -1018,8 +1018,8 @@ static int collect_merge_info_callback(int n,
+> >       if (side1_matches_mbase && side2_matches_mbase) {
+> >               /* mbase, side1, & side2 all match; use mbase as resolution */
+> >               setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
+> > -                             names, names+0, mbase_null, 0,
+> > -                             filemask, dirmask, 1);
+> > +                             names, names+0, mbase_null, 0 /* df_conflict */,
+> > +                             filemask, dirmask, 1 /* resolved */);
+> >               return mask;
+> >       }
+> >
+>
+>
+> Is df_conflict stands for directory-file conflict?
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- cache.h  | 1 +
- quote.h  | 1 +
- strbuf.h | 1 +
- 3 files changed, 3 insertions(+)
+Yes, eventually propagating up to conflict_info->df_conflict, defined as:
 
-diff --git a/cache.h b/cache.h
-index ba04ff8bd3..f9aed2d45c 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1385,6 +1385,7 @@ enum get_oid_result {
- };
- 
- int repo_get_oid(struct repository *r, const char *str, struct object_id *oid);
-+__attribute__((format (printf, 2, 3)))
- int get_oidf(struct object_id *oid, const char *fmt, ...);
- int repo_get_oid_commit(struct repository *r, const char *str, struct object_id *oid);
- int repo_get_oid_committish(struct repository *r, const char *str, struct object_id *oid);
-diff --git a/quote.h b/quote.h
-index 768cc6338e..049d8dd0b3 100644
---- a/quote.h
-+++ b/quote.h
-@@ -31,6 +31,7 @@ struct strbuf;
- 
- void sq_quote_buf(struct strbuf *, const char *src);
- void sq_quote_argv(struct strbuf *, const char **argv);
-+__attribute__((format (printf, 2, 3)))
- void sq_quotef(struct strbuf *, const char *fmt, ...);
- 
- /*
-diff --git a/strbuf.h b/strbuf.h
-index 223ee2094a..f1e9821a54 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -263,6 +263,7 @@ static inline void strbuf_insertstr(struct strbuf *sb, size_t pos,
- void strbuf_vinsertf(struct strbuf *sb, size_t pos, const char *fmt,
- 		     va_list ap);
- 
-+__attribute__((format (printf, 3, 4)))
- void strbuf_insertf(struct strbuf *sb, size_t pos, const char *fmt, ...);
- 
- /**
--- 
-2.32.0-dev
+    /* Whether this path is/was involved in a directory/file conflict */
+    unsigned df_conflict:1;
 
+> >       /*
+> > -      * Record information about the path so we can resolve later in
+> > -      * process_entries.
+> > +      * None of the special cases above matched, so we have a
+> > +      * provisional conflict.  (Rename detection might allow us to
+> > +      * unconflict some more cases, but that comes later so all we can
+> > +      * do now is record the different non-null file hashes.)
+> >        */
+> >       setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
+> >                       names, NULL, 0, df_conflict, filemask, dirmask, 0);
+> >
+>
+> So when none of special cases matched, we assumed there's conflict
+> (although provisional), right?
+
+Yes, the "provisional" adjective in particular is there because we
+revisit each case in process_entries(), and resolve those that can be
+via content merges, renormalization, etc.  The content merges need to
+wait until after rename detection allows us to pair up different
+files.  If the different file versions are still not resolved after
+process_entries() then it becomes an actual conflict rather than just
+a provisional conflict.
