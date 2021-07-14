@@ -2,68 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED311C11F68
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 13:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2513C07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 13:13:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D819C613B9
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 13:13:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E8A86128B
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 13:13:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239484AbhGNNPv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 09:15:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43564 "EHLO
+        id S239499AbhGNNPx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 09:15:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239418AbhGNNPr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 09:15:47 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 187B0C061762
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 06:12:53 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id b14-20020a1c1b0e0000b02901fc3a62af78so3872503wmb.3
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 06:12:53 -0700 (PDT)
+        with ESMTP id S239428AbhGNNPs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 09:15:48 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63188C0613E3
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 06:12:54 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id y21-20020a7bc1950000b02902161fccabf1so3883082wmi.2
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 06:12:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ety81XM5lUpz7BNNk0XX/4/Cau8dRM1r2U9XdOAMldo=;
-        b=K3qHvab85FD0Aik7ha3TGD+tkEfvHEFISeLY8WSVdsU3GWpNROfmtD94koys7QxWRE
-         Ub88ail4iqxtvNDRQ7MTa533KyeXF8DAj9ri3UR5ciZId9O6sirSLUv4AkBf54wj8A7s
-         qBcyB6cxPc6F38FEhQsDN++0VmO0WNaRms46uqCSYttoM6nvPa/kU2Xq7fPkJyE6uwPb
-         y/9/SXjL5rJCEgk9ugYZDf+AANep2tQV3EIxmHiNO5LIhOpvykIWmzijvRjkPfj0EWRl
-         rEYFpnnTmyIwx7P4YHIXcnlynk8L95Va6xruWuRW0Ggjz4q0eCPFXGrYIunhwe5wYQ/i
-         IP+Q==
+        bh=spsw3CzVcVRJ4GYh3elNeWxty9blR0xLmNfhBzkk9Mg=;
+        b=mooNAoXlJ0aXEDJdHxZhSmdmRu3573wq0Xe96+vpYnnzzXcfKoauWM5gamT8hH8dkO
+         1Qu/zvg6XcGaSCM76OsW6fTn4caQOJ0xofgQwgnAQnGw+gzUGV8tffCzo6qOCBvuaZGA
+         2H9ou/6sQpSu7PR3hOfclQdCmKIKEcK3m/WrniP5fljLKA1tdj3A1HWUfteveZFyRonF
+         +rPcOXAB34tO6zZsB5J3F6tKhntLx19LcSNg+iozfDNCJBrARM1fXtd2//n4+00krMwb
+         k4Q+HuWI8XQUO6RLXE21aPxjBPS0UxQCQdLfbgp+JoKDahvxgss+uR+KuccBNcbsnVD8
+         pH+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ety81XM5lUpz7BNNk0XX/4/Cau8dRM1r2U9XdOAMldo=;
-        b=MMgKknvx8XyBwkp+AhTqnSdAwJLbXa7kTG4LLRPRqAl2YIdZyOM0cJv6//27H/E/I2
-         30rBa0B6MqpbUo83rCIqLXEQPkoV59RBsANszcBm/ZdjTdAb6ecIYAMooKQR/+LT4tg2
-         XdDCy67nmEYqitQl3BInJj75S7zE+7/cCJfVRHsV4n/wfVCHlZqm+6aleA/iPyOuHlhb
-         p7kN0ZCmAzJKXQEsLnIkgP8sjt61gf2/xJW6wfFFpqHwFAd6MxpXi2lbmcR4nE3XZj0d
-         jMJLZM0o/1JXwyPg+teDEUCO2eRVuN7TrwlEynntKxOv6D0zI9H83/jkH9JNn1W5B9T7
-         MGIA==
-X-Gm-Message-State: AOAM531Ruh7rGWV3tqK9K9lwAgevKypICn4lIzTnbgwvjWPVANjQRBwH
-        gOqC0pHnnzjqWCTTa9pblnLesnoI37E=
-X-Google-Smtp-Source: ABdhPJwe2/KSLVqYT7wbXXZhDmgxnpvbDvQ4dLW4QYfKT1kLKC8SFg400ojv3rkchNlP3dcpjrakAQ==
-X-Received: by 2002:a7b:cb13:: with SMTP id u19mr10945948wmj.122.1626268371664;
-        Wed, 14 Jul 2021 06:12:51 -0700 (PDT)
+        bh=spsw3CzVcVRJ4GYh3elNeWxty9blR0xLmNfhBzkk9Mg=;
+        b=f+MfGW2Dd58RtU/KJOyaV0nLQu0M+0mOCo1NhQ0Yy1TPsHGGvXga34QXdkGn02J+V2
+         bKOsmaB2OKtOfosOav4nDmzpNLYgVhDUbqE6VWyxO6PbP95/Uop5JukKQVXAqFHQqAPX
+         jXTGGVJ9t17qmOwKOLQC8p7gRyQRQyaUcIRK8siVeLWxonhC5jAFzkbn+Ys/LBqh/WRB
+         S5klw4rHyhswyEQdjAFGZGqhI3o4VO/jukMi7KzOoehfAQKq1t/VYBdq79gShh6IMzrV
+         Bg0w8seFcLzUu33kIN6AAW72G3ks9EV6nKsQFeSyXVuisYvTqDXwuVOvFOGn9t1YcuYQ
+         Rexw==
+X-Gm-Message-State: AOAM530xXSOrZWU8/PhMMqz/6usy04spYe0wUjXdI6vpdvfxyXfLlKLh
+        l7yLcQcECX2sfuL1oZi8voQ+OWpFcQo=
+X-Google-Smtp-Source: ABdhPJxi28c1ArPPgPLXDl+mGxZ0RBEauz09TAbZhKOgr35WeEeU7KV3xG5IwBhbXWkQ2tCZb8AXfA==
+X-Received: by 2002:a05:600c:4fcf:: with SMTP id o15mr2328724wmq.116.1626268372972;
+        Wed, 14 Jul 2021 06:12:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f12sm5013440wmg.16.2021.07.14.06.12.51
+        by smtp.gmail.com with ESMTPSA id p9sm2497016wrx.59.2021.07.14.06.12.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 06:12:51 -0700 (PDT)
-Message-Id: <b051c0847a53eed206493a296ef5c24718c7eb51.1626268360.git.gitgitgadget@gmail.com>
+        Wed, 14 Jul 2021 06:12:52 -0700 (PDT)
+Message-Id: <7f782e3fe5061e90e7130d463accfc1f0f59a020.1626268360.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.932.v9.git.1626268360.gitgitgadget@gmail.com>
 References: <pull.932.v8.git.1626112556.gitgitgadget@gmail.com>
         <pull.932.v9.git.1626268360.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 14 Jul 2021 13:12:34 +0000
-Subject: [PATCH v9 10/16] dir.c: accept a directory as part of cone-mode
- patterns
+Date:   Wed, 14 Jul 2021 13:12:36 +0000
+Subject: [PATCH v9 12/16] status: skip sparse-checkout percentage with
+ sparse-index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,77 +81,92 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When we have sparse directory entries in the index, we want to compare
-that directory against sparse-checkout patterns. Those pattern matching
-algorithms are built expecting a file path, not a directory path. This
-is especially important in the "cone mode" patterns which will match
-files that exist within the "parent directories" as well as the
-recursive directory matches.
+'git status' began reporting a percentage of populated paths when
+sparse-checkout is enabled in 051df3cf (wt-status: show sparse
+checkout status as well, 2020-07-18). This percentage is incorrect when
+the index has sparse directories. It would also be expensive to
+calculate as we would need to parse trees to count the total number of
+possible paths.
 
-If path_matches_pattern_list() is given a directory, we can add a fake
-filename ("-") to the directory and get the same results as before,
-assuming we are in cone mode. Since sparse index requires cone mode
-patterns, this is an acceptable assumption.
+Avoid the expensive computation by simplifying the output to only report
+that a sparse checkout exists, without the percentage.
+
+This change is the reason we use 'git status --porcelain=v2' in
+t1092-sparse-checkout-compatibility.sh. We don't want to ensure that
+this message is equal across both modes, but instead just the important
+information about staged, modified, and untracked files are compared.
 
 Reviewed-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- dir.c | 24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ t/t1092-sparse-checkout-compatibility.sh |  8 ++++++++
+ wt-status.c                              | 14 +++++++++++---
+ wt-status.h                              |  1 +
+ 3 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index ebe5ec046e0..0c5264b3b20 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1376,7 +1376,7 @@ enum pattern_match_result path_matches_pattern_list(
- 	struct path_pattern *pattern;
- 	struct strbuf parent_pathname = STRBUF_INIT;
- 	int result = NOT_MATCHED;
--	const char *slash_pos;
-+	size_t slash_pos;
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 2269f44e033..375b0d35565 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -218,6 +218,14 @@ test_expect_success 'status with options' '
+ 	test_all_match git status --porcelain=v2 -uno
+ '
  
- 	if (!pl->use_cone_patterns) {
- 		pattern = last_matching_pattern_from_list(pathname, pathlen, basename,
-@@ -1397,21 +1397,35 @@ enum pattern_match_result path_matches_pattern_list(
- 	strbuf_addch(&parent_pathname, '/');
- 	strbuf_add(&parent_pathname, pathname, pathlen);
++test_expect_success 'status reports sparse-checkout' '
++	init_repos &&
++	git -C sparse-checkout status >full &&
++	git -C sparse-index status >sparse &&
++	test_i18ngrep "You are in a sparse checkout with " full &&
++	test_i18ngrep "You are in a sparse checkout." sparse
++'
++
+ test_expect_success 'add, commit, checkout' '
+ 	init_repos &&
  
-+	/*
-+	 * Directory entries are matched if and only if a file
-+	 * contained immediately within them is matched. For the
-+	 * case of a directory entry, modify the path to create
-+	 * a fake filename within this directory, allowing us to
-+	 * use the file-base matching logic in an equivalent way.
-+	 */
-+	if (parent_pathname.len > 0 &&
-+	    parent_pathname.buf[parent_pathname.len - 1] == '/') {
-+		slash_pos = parent_pathname.len - 1;
-+		strbuf_add(&parent_pathname, "-", 1);
-+	} else {
-+		const char *slash_ptr = strrchr(parent_pathname.buf, '/');
-+		slash_pos = slash_ptr ? slash_ptr - parent_pathname.buf : 0;
+diff --git a/wt-status.c b/wt-status.c
+index 42b67357169..96db3e74962 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1493,9 +1493,12 @@ static void show_sparse_checkout_in_use(struct wt_status *s,
+ 	if (s->state.sparse_checkout_percentage == SPARSE_CHECKOUT_DISABLED)
+ 		return;
+ 
+-	status_printf_ln(s, color,
+-			 _("You are in a sparse checkout with %d%% of tracked files present."),
+-			 s->state.sparse_checkout_percentage);
++	if (s->state.sparse_checkout_percentage == SPARSE_CHECKOUT_SPARSE_INDEX)
++		status_printf_ln(s, color, _("You are in a sparse checkout."));
++	else
++		status_printf_ln(s, color,
++				_("You are in a sparse checkout with %d%% of tracked files present."),
++				s->state.sparse_checkout_percentage);
+ 	wt_longstatus_print_trailer(s);
+ }
+ 
+@@ -1653,6 +1656,11 @@ static void wt_status_check_sparse_checkout(struct repository *r,
+ 		return;
+ 	}
+ 
++	if (r->index->sparse_index) {
++		state->sparse_checkout_percentage = SPARSE_CHECKOUT_SPARSE_INDEX;
++		return;
 +	}
 +
- 	if (hashmap_contains_path(&pl->recursive_hashmap,
- 				  &parent_pathname)) {
- 		result = MATCHED_RECURSIVE;
- 		goto done;
- 	}
+ 	for (i = 0; i < r->index->cache_nr; i++) {
+ 		struct cache_entry *ce = r->index->cache[i];
+ 		if (ce_skip_worktree(ce))
+diff --git a/wt-status.h b/wt-status.h
+index 0d32799b28e..ab9cc9d8f03 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -78,6 +78,7 @@ enum wt_status_format {
+ };
  
--	slash_pos = strrchr(parent_pathname.buf, '/');
--
--	if (slash_pos == parent_pathname.buf) {
-+	if (!slash_pos) {
- 		/* include every file in root */
- 		result = MATCHED;
- 		goto done;
- 	}
+ #define SPARSE_CHECKOUT_DISABLED -1
++#define SPARSE_CHECKOUT_SPARSE_INDEX -2
  
--	strbuf_setlen(&parent_pathname, slash_pos - parent_pathname.buf);
-+	strbuf_setlen(&parent_pathname, slash_pos);
- 
- 	if (hashmap_contains_path(&pl->parent_hashmap, &parent_pathname)) {
- 		result = MATCHED;
+ struct wt_status_state {
+ 	int merge_in_progress;
 -- 
 gitgitgadget
 
