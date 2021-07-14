@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E333C07E9A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 11:43:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EF84C07E9C
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 11:43:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 516726101D
+	by mail.kernel.org (Postfix) with ESMTP id 05E9D613B6
 	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 11:43:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239236AbhGNLqe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 07:46:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51488 "EHLO
+        id S239246AbhGNLqf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 07:46:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239209AbhGNLqe (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S239092AbhGNLqe (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 14 Jul 2021 07:46:34 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF0CCC061762
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 04:43:41 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id f9so2801327wrq.11
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 04:43:41 -0700 (PDT)
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9390C06175F
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 04:43:42 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id g12so1390421wme.2
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 04:43:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=m3YSesJakRbHpJeAmtRZl+AOZNUzPX46hV6FjAXVIrY=;
-        b=IIqyDw3lwaTTX4OryPKybN7n0hfRl3PIatUTSkqPwC2KlNA6Zjoe+xDQi75OXCz5kc
-         tioNyC4uOIJTTrdPmOYxQUebqgoILHy1IebxybBeyRl+RQOvPzNEjf/gjsbie0/XHU4N
-         I5uhO9EjuM0Rm77Hacfg8UROmQy4qgD//9mlL6PvFVlWndamSnyI+tUM9eFMgDS0wIcA
-         1m1vWtutN8Sq1slfxiE+K8jCwBf/7/ffSwq4ZnJAocFpP87kXZjYvI8vzj0/C+wHwArY
-         CxIYuyMvIM2Ivus6INDIluPYNM5OoTExVX2o0g03ZXQsHZca2403NVmjVucjcVbZG/9f
-         +qQA==
+        bh=sc2xgR4NAVG++AYv+xW8OLDr3oGrKjU8CkZsZ2y/Z/Q=;
+        b=lXADObE4GTseEeKTqGghyP1i55vY6ve39WGxA/chNQnfpeO9iQ5vnlz+9Nw0jCyI8s
+         4t77quLImEtkFfvyX/cGJ8vpBqyOpAtn1rHFQ7I9z9qTz0ckX14JCE9v+VYmA5xhOB1M
+         NhPOezqmQG3ZibEOyCT8xlooXFjWL5BnviL4V8M0UPlWU+nWaYjRRl+s5vaxxnvDQl0h
+         99NMn+6jVIz9JWVuu/ci/w+f5+cbvwvk0HKirqHJmKrVnMAEtc0PDndNsvQ9iyHoiUhL
+         DfOrX8Hnxk6Nv96mndXUJktA1hcDDw/3jY+6wy3+mi020/9wopaTGdHHPY9Fnd0EcBCF
+         1sJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=m3YSesJakRbHpJeAmtRZl+AOZNUzPX46hV6FjAXVIrY=;
-        b=NQwPKXEFQTYXhiygupXSlJDUpoWbGMIESHoUjSaNoimMPjMfw1gOmnJQYuSV0RoSPt
-         73gBo75YI1XpmEcHFb1ZfG4QeS5sENkC7JjoDBMjMp/zvPDvRJ74u3TrT+jnjkYrBHHu
-         Se64OSyGfQaNJzyEzcUgCUVODTHLWb0hWGR9Q0ez3+SxEE89ClKkL2Ap7BukQOT2dPZn
-         sgc9sTzRDK2+dsvkju8PkSElcKFUYfBoH4tg8JI+SEtlG7/aEdSRttDMNLFgscl5aPHy
-         cnmNmQYdNY/gQKFlSwNXJ9bO347VmkviSkXjwQDAapsL9/gnBAr3AcULFzSijti8hZEw
-         YR5A==
-X-Gm-Message-State: AOAM532s3xS/UOyNv7KBx37ZTaDMo5ssbo/iD1yrFjsDvD+WAMOTs4Am
-        nhqE44WyST7MO7G1LiWLbHyJIkEre4f3pL9A
-X-Google-Smtp-Source: ABdhPJyC/iXDNJt85adS3fw/b7H3AulUbTd2nhn+ZIM6/Mm0Q7VQP85hUqsVXoNiKDwZkrHLLKXlCQ==
-X-Received: by 2002:a5d:64ac:: with SMTP id m12mr12018820wrp.89.1626263020211;
-        Wed, 14 Jul 2021 04:43:40 -0700 (PDT)
+        bh=sc2xgR4NAVG++AYv+xW8OLDr3oGrKjU8CkZsZ2y/Z/Q=;
+        b=RRGKapsdlqgEJXje3tqAqL0y0I4dxYjj0gSkG/HnkNGohvbIozhOn0glgSWjw3qVz6
+         tkXO89WVOopwXY0ow8ZsgmDafzMYLAEdwfnIr8T81LcVXx2gq0NutC4rgB3OpYZdG0Na
+         ac+uC4JKsrgyeclxlo1B7CwuZEwBzpXPboqgnX600/Soox7sBhZVyNrLxMrG0UohuQOH
+         1MqeqYO7ZymHkWvtjQcTrynwxvyYaLHFw0fHCq8NZCXPStBdsgdkNATS1KSxCrkveWQD
+         5yDCKxmy9WGS694OF2TulvVVBDbilk8O9FO2qM/hPEhUgwSPuDGrlavenguXiFhjd+T8
+         QQ3Q==
+X-Gm-Message-State: AOAM530gclf2fYiZI/ZDz+y7JVsqjhaz7Kj3fq3qrw8zoZFALbZcMlWe
+        Rn1cOvjuGpqxJQHSYeEJ2a2d+JikXR2Fnkj5
+X-Google-Smtp-Source: ABdhPJwwO9B7F2GULao1LWNUfNfpuqup8tvmxUnqt6ri0JJv+fEPxxp6X5Ka1iIRGzhK7ONGpKGFFg==
+X-Received: by 2002:a7b:c452:: with SMTP id l18mr3534825wmi.164.1626263021057;
+        Wed, 14 Jul 2021 04:43:41 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id a8sm2373626wrt.61.2021.07.14.04.43.39
+        by smtp.gmail.com with ESMTPSA id a8sm2373626wrt.61.2021.07.14.04.43.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 04:43:39 -0700 (PDT)
+        Wed, 14 Jul 2021 04:43:40 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v7 3/6] refs: make errno output explicit for read_raw_ref_fn
-Date:   Wed, 14 Jul 2021 13:43:31 +0200
-Message-Id: <patch-3.6-913e72e9ff-20210714T114301Z-avarab@gmail.com>
+Subject: [PATCH v7 4/6] refs: add failure_errno to refs_read_raw_ref() signature
+Date:   Wed, 14 Jul 2021 13:43:32 +0200
+Message-Id: <patch-4.6-dd191768f6-20210714T114301Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.851.g0fc62a9785
 In-Reply-To: <cover-0.6-0000000000-20210714T114301Z-avarab@gmail.com>
 References: <cover-00.17-00000000000-20210711T162803Z-avarab@gmail.com> <cover-0.6-0000000000-20210714T114301Z-avarab@gmail.com>
@@ -80,237 +80,253 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This makes it explicit how alternative ref backends should report errors in
-read_raw_ref_fn.
+This lets us use the explicit errno output parameter in refs_resolve_ref_unsafe.
 
-read_raw_ref_fn needs to supply a credible errno for a number of cases. These
-are primarily:
+Some of our callers explicitly do not care about the errno, rather
+than understanding NULL let's have them declare that they don't care
+by passing in an "ignore_errno". There's only three of them, and using
+that pattern will make it more obvious that they want to throw away
+data, let's also add a comment to one of the callers about why we'd
+like to ignore the errno.
 
-1) The files backend calls read_raw_ref from lock_raw_ref, and uses the
-resulting error codes to create/remove directories as needed.
+Let's not extend that to refs_resolve_ref_unsafe() itself for now, it
+has a large set of legacy callers, so we're faking up the old "errno"
+behavior for it. We can convert those callers to
+refs_resolve_ref_unsafe_with_errno() later.
 
-2) ENOENT should be translated in a zero OID, optionally with REF_ISBROKEN set,
-returning the last successfully resolved symref. This is necessary so
-read_raw_ref("HEAD") on an empty repo returns refs/heads/main (or the default branch
-du-jour), and we know on which branch to create the first commit.
+We are leaving out out the refs_read_special_head() in
+refs_read_raw_ref() for now, as noted in the next commit moving it to
+"failure_errno" will require some special consideration.
 
-Make this information flow explicit by adding a failure_errno to the signature
-of read_raw_ref. All errnos from the files backend are still propagated
-unchanged, even though inspection suggests only ENOTDIR, EISDIR and ENOENT are
-relevant.
+We're intentionally mis-indenting the argument list of the new
+refs_resolve_ref_unsafe_with_errno(), it will be non-static in a
+subsequent commit, doing it this way makes that diff smaller.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- refs.c                |  2 +-
- refs/debug.c          |  4 ++--
- refs/files-backend.c  | 29 +++++++++++++++--------------
- refs/packed-backend.c |  8 ++++----
- refs/refs-internal.h  | 20 ++++++++++++--------
- 5 files changed, 34 insertions(+), 29 deletions(-)
+ refs.c                | 61 ++++++++++++++++++++++++++++++-------------
+ refs/files-backend.c  | 10 ++++---
+ refs/packed-backend.c |  7 ++---
+ refs/refs-internal.h  |  6 ++---
+ 4 files changed, 56 insertions(+), 28 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 8c9490235e..7b3f05a66f 100644
+index 7b3f05a66f..406e27213b 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1681,7 +1681,7 @@ int refs_read_raw_ref(struct ref_store *ref_store,
+@@ -1671,30 +1671,33 @@ static int refs_read_special_head(struct ref_store *ref_store,
+ 	return result;
+ }
+ 
+-int refs_read_raw_ref(struct ref_store *ref_store,
+-		      const char *refname, struct object_id *oid,
+-		      struct strbuf *referent, unsigned int *type)
++int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
++		      struct object_id *oid, struct strbuf *referent,
++		      unsigned int *type, int *failure_errno)
+ {
++	assert(failure_errno);
+ 	if (!strcmp(refname, "FETCH_HEAD") || !strcmp(refname, "MERGE_HEAD")) {
+ 		return refs_read_special_head(ref_store, refname, oid, referent,
+ 					      type);
  	}
  
  	return ref_store->be->read_raw_ref(ref_store, refname, oid, referent,
--					   type);
-+					   type, &errno);
+-					   type, &errno);
++					   type, failure_errno);
  }
  
- /* This function needs to return a meaningful errno on failure */
-diff --git a/refs/debug.c b/refs/debug.c
-index 7db4abccc3..f12413a9bc 100644
---- a/refs/debug.c
-+++ b/refs/debug.c
-@@ -238,7 +238,7 @@ debug_ref_iterator_begin(struct ref_store *ref_store, const char *prefix,
- 
- static int debug_read_raw_ref(struct ref_store *ref_store, const char *refname,
- 			      struct object_id *oid, struct strbuf *referent,
--			      unsigned int *type)
-+			      unsigned int *type, int *failure_errno)
+-/* This function needs to return a meaningful errno on failure */
+-const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+-				    const char *refname,
+-				    int resolve_flags,
+-				    struct object_id *oid, int *flags)
++static const char *refs_resolve_ref_unsafe_with_errno(struct ref_store *refs,
++					       const char *refname,
++					       int resolve_flags,
++					       struct object_id *oid,
++					       int *flags, int *failure_errno)
  {
- 	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
- 	int res = 0;
-@@ -246,7 +246,7 @@ static int debug_read_raw_ref(struct ref_store *ref_store, const char *refname,
- 	oidcpy(oid, null_oid());
- 	errno = 0;
- 	res = drefs->refs->be->read_raw_ref(drefs->refs, refname, oid, referent,
--					    type);
-+					    type, failure_errno);
+ 	static struct strbuf sb_refname = STRBUF_INIT;
+ 	struct object_id unused_oid;
+ 	int unused_flags;
+ 	int symref_count;
  
- 	if (res == 0) {
- 		trace_printf_key(&trace_refs, "read_raw_ref: %s: %s (=> %s) type %x: %d\n",
++	assert(failure_errno);
++
+ 	if (!oid)
+ 		oid = &unused_oid;
+ 	if (!flags)
+@@ -1705,7 +1708,7 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+ 		if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
+ 		    !refname_is_safe(refname)) {
+-			errno = EINVAL;
++			*failure_errno = EINVAL;
+ 			return NULL;
+ 		}
+ 
+@@ -1723,8 +1726,8 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 	for (symref_count = 0; symref_count < SYMREF_MAXDEPTH; symref_count++) {
+ 		unsigned int read_flags = 0;
+ 
+-		if (refs_read_raw_ref(refs, refname,
+-				      oid, &sb_refname, &read_flags)) {
++		if (refs_read_raw_ref(refs, refname, oid, &sb_refname,
++				      &read_flags, failure_errno)) {
+ 			*flags |= read_flags;
+ 
+ 			/* In reading mode, refs must eventually resolve */
+@@ -1736,9 +1739,9 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 			 * may show errors besides ENOENT if there are
+ 			 * similarly-named refs.
+ 			 */
+-			if (errno != ENOENT &&
+-			    errno != EISDIR &&
+-			    errno != ENOTDIR)
++			if (*failure_errno != ENOENT &&
++			    *failure_errno != EISDIR &&
++			    *failure_errno != ENOTDIR)
+ 				return NULL;
+ 
+ 			oidclr(oid);
+@@ -1765,7 +1768,7 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 		if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+ 			if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
+ 			    !refname_is_safe(refname)) {
+-				errno = EINVAL;
++				*failure_errno = EINVAL;
+ 				return NULL;
+ 			}
+ 
+@@ -1773,10 +1776,24 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 		}
+ 	}
+ 
+-	errno = ELOOP;
++	*failure_errno = ELOOP;
+ 	return NULL;
+ }
+ 
++const char *refs_resolve_ref_unsafe(struct ref_store *refs, const char *refname,
++				    int resolve_flags, struct object_id *oid,
++				    int *flags)
++{
++	int failure_errno = 0;
++	const char *refn;
++	refn = refs_resolve_ref_unsafe_with_errno(refs, refname, resolve_flags,
++						  oid, flags, &failure_errno);
++	if (!refn)
++		/* For unmigrated legacy callers */
++		errno = failure_errno;
++	return refn;
++}
++
+ /* backend functions */
+ int refs_init_db(struct strbuf *err)
+ {
+@@ -2227,6 +2244,13 @@ int refs_verify_refname_available(struct ref_store *refs,
+ 
+ 	strbuf_grow(&dirname, strlen(refname) + 1);
+ 	for (slash = strchr(refname, '/'); slash; slash = strchr(slash + 1, '/')) {
++		/*
++		 * Just saying "Is a directory" when we e.g. can't
++		 * lock some multi-level ref isn't very informative,
++		 * the user won't be told *what* is a directory, so
++		 * let's not use strerror() below.
++		 */
++		int ignore_errno;
+ 		/* Expand dirname to the new prefix, not including the trailing slash: */
+ 		strbuf_add(&dirname, refname + dirname.len, slash - refname - dirname.len);
+ 
+@@ -2238,7 +2262,8 @@ int refs_verify_refname_available(struct ref_store *refs,
+ 		if (skip && string_list_has_string(skip, dirname.buf))
+ 			continue;
+ 
+-		if (!refs_read_raw_ref(refs, dirname.buf, &oid, &referent, &type)) {
++		if (!refs_read_raw_ref(refs, dirname.buf, &oid, &referent,
++				       &type, &ignore_errno)) {
+ 			strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
+ 				    dirname.buf, refname);
+ 			goto cleanup;
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 45f198c3fc..c4b5b70c53 100644
+index c4b5b70c53..3eef442c24 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -341,9 +341,9 @@ static struct ref_cache *get_loose_ref_cache(struct files_ref_store *refs)
- 	return refs->loose;
- }
+@@ -381,10 +381,11 @@ static int files_read_raw_ref(struct ref_store *ref_store, const char *refname,
+ 		goto out;
  
--static int files_read_raw_ref(struct ref_store *ref_store,
--			      const char *refname, struct object_id *oid,
--			      struct strbuf *referent, unsigned int *type)
-+static int files_read_raw_ref(struct ref_store *ref_store, const char *refname,
-+			      struct object_id *oid, struct strbuf *referent,
-+			      unsigned int *type, int *failure_errno)
- {
- 	struct files_ref_store *refs =
- 		files_downcast(ref_store, REF_STORE_READ, "read_raw_ref");
-@@ -354,7 +354,6 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 	struct stat st;
- 	int fd;
- 	int ret = -1;
--	int save_errno;
- 	int remaining_retries = 3;
- 
- 	*type = 0;
-@@ -459,10 +458,9 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 	ret = parse_loose_ref_contents(buf, oid, referent, type);
- 
- out:
--	save_errno = errno;
-+	*failure_errno = errno;
- 	strbuf_release(&sb_path);
- 	strbuf_release(&sb_contents);
--	errno = save_errno;
- 	return ret;
- }
- 
-@@ -541,6 +539,7 @@ static int lock_raw_ref(struct files_ref_store *refs,
- 	struct strbuf ref_file = STRBUF_INIT;
- 	int attempts_remaining = 3;
- 	int ret = TRANSACTION_GENERIC_ERROR;
-+	int failure_errno;
- 
- 	assert(err);
- 	files_assert_main_repository(refs, "lock_raw_ref");
-@@ -611,7 +610,9 @@ static int lock_raw_ref(struct files_ref_store *refs,
- 	if (hold_lock_file_for_update_timeout(
- 			    &lock->lk, ref_file.buf, LOCK_NO_DEREF,
- 			    get_files_ref_lock_timeout_ms()) < 0) {
--		if (errno == ENOENT && --attempts_remaining > 0) {
-+		int myerr = errno;
-+		errno = 0;
-+		if (myerr == ENOENT && --attempts_remaining > 0) {
- 			/*
- 			 * Maybe somebody just deleted one of the
- 			 * directories leading to ref_file.  Try
-@@ -619,7 +620,7 @@ static int lock_raw_ref(struct files_ref_store *refs,
- 			 */
- 			goto retry;
- 		} else {
--			unable_to_lock_message(ref_file.buf, errno, err);
-+			unable_to_lock_message(ref_file.buf, myerr, err);
- 			goto error_return;
+ 	if (lstat(path, &st) < 0) {
++		int ignore_errno;
+ 		if (errno != ENOENT)
+ 			goto out;
+-		if (refs_read_raw_ref(refs->packed_ref_store, refname,
+-				      oid, referent, type)) {
++		if (refs_read_raw_ref(refs->packed_ref_store, refname, oid,
++				      referent, type, &ignore_errno)) {
+ 			errno = ENOENT;
+ 			goto out;
  		}
- 	}
-@@ -629,9 +630,9 @@ static int lock_raw_ref(struct files_ref_store *refs,
- 	 * fear that its value will change.
- 	 */
+@@ -418,13 +419,14 @@ static int files_read_raw_ref(struct ref_store *ref_store, const char *refname,
  
--	if (files_read_raw_ref(&refs->base, refname,
--			       &lock->old_oid, referent, type)) {
--		if (errno == ENOENT) {
-+	if (files_read_raw_ref(&refs->base, refname, &lock->old_oid, referent,
-+			       type, &failure_errno)) {
-+		if (failure_errno == ENOENT) {
- 			if (mustexist) {
- 				/* Garden variety missing reference. */
- 				strbuf_addf(err, "unable to resolve reference '%s'",
-@@ -655,7 +656,7 @@ static int lock_raw_ref(struct files_ref_store *refs,
- 				 *   reference named "refs/foo/bar/baz".
- 				 */
- 			}
--		} else if (errno == EISDIR) {
-+		} else if (failure_errno == EISDIR) {
- 			/*
- 			 * There is a directory in the way. It might have
- 			 * contained references that have been deleted. If
-@@ -693,13 +694,13 @@ static int lock_raw_ref(struct files_ref_store *refs,
- 					goto error_return;
- 				}
- 			}
--		} else if (errno == EINVAL && (*type & REF_ISBROKEN)) {
-+		} else if (failure_errno == EINVAL && (*type & REF_ISBROKEN)) {
- 			strbuf_addf(err, "unable to resolve reference '%s': "
- 				    "reference broken", refname);
- 			goto error_return;
- 		} else {
- 			strbuf_addf(err, "unable to resolve reference '%s': %s",
--				    refname, strerror(errno));
-+				    refname, strerror(failure_errno));
- 			goto error_return;
+ 	/* Is it a directory? */
+ 	if (S_ISDIR(st.st_mode)) {
++		int ignore_errno;
+ 		/*
+ 		 * Even though there is a directory where the loose
+ 		 * ref is supposed to be, there could still be a
+ 		 * packed ref:
+ 		 */
+-		if (refs_read_raw_ref(refs->packed_ref_store, refname,
+-				      oid, referent, type)) {
++		if (refs_read_raw_ref(refs->packed_ref_store, refname, oid,
++				      referent, type, &ignore_errno)) {
+ 			errno = EISDIR;
+ 			goto out;
  		}
- 
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index dfecdbc1db..a457f18e93 100644
+index a457f18e93..928e5d2a99 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -724,9 +724,9 @@ static struct snapshot *get_snapshot(struct packed_ref_store *refs)
- 	return refs->snapshot;
- }
+@@ -1347,6 +1347,7 @@ int is_packed_transaction_needed(struct ref_store *ref_store,
+ 	ret = 0;
+ 	for (i = 0; i < transaction->nr; i++) {
+ 		struct ref_update *update = transaction->updates[i];
++		int failure_errno;
+ 		unsigned int type;
+ 		struct object_id oid;
  
--static int packed_read_raw_ref(struct ref_store *ref_store,
--			       const char *refname, struct object_id *oid,
--			       struct strbuf *referent, unsigned int *type)
-+static int packed_read_raw_ref(struct ref_store *ref_store, const char *refname,
-+			       struct object_id *oid, struct strbuf *referent,
-+			       unsigned int *type, int *failure_errno)
- {
- 	struct packed_ref_store *refs =
- 		packed_downcast(ref_store, REF_STORE_READ, "read_raw_ref");
-@@ -739,7 +739,7 @@ static int packed_read_raw_ref(struct ref_store *ref_store,
+@@ -1357,9 +1358,9 @@ int is_packed_transaction_needed(struct ref_store *ref_store,
+ 			 */
+ 			continue;
  
- 	if (!rec) {
- 		/* refname is not a packed reference. */
--		errno = ENOENT;
-+		*failure_errno = ENOENT;
- 		return -1;
- 	}
- 
+-		if (!refs_read_raw_ref(ref_store, update->refname,
+-				       &oid, &referent, &type) ||
+-		    errno != ENOENT) {
++		if (!refs_read_raw_ref(ref_store, update->refname, &oid,
++				       &referent, &type, &failure_errno) ||
++		    failure_errno != ENOENT) {
+ 			/*
+ 			 * We have to actually delete that reference
+ 			 * -> this transaction is needed.
 diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index f4445e3290..79dfb3af48 100644
+index 79dfb3af48..54f57c6a2d 100644
 --- a/refs/refs-internal.h
 +++ b/refs/refs-internal.h
-@@ -617,11 +617,15 @@ typedef int reflog_expire_fn(struct ref_store *ref_store,
-  * properly-formatted or even safe reference name. NEITHER INPUT NOR
-  * OUTPUT REFERENCE NAMES ARE VALIDATED WITHIN THIS FUNCTION.
-  *
-- * Return 0 on success. If the ref doesn't exist, set errno to ENOENT
-- * and return -1. If the ref exists but is neither a symbolic ref nor
-- * an object ID, it is broken; set REF_ISBROKEN in type, and return -1
-- * (errno should not be ENOENT) If there is another error reading the
-- * ref, set errno appropriately and return -1.
-+ * Return 0 on success, or -1 on failure. If the ref exists but is neither a
-+ * symbolic ref nor an object ID, it is broken. In this case set REF_ISBROKEN in
-+ * type, and return -1 (failure_errno should not be ENOENT)
-+ *
-+ * failure_errno provides errno codes that are interpreted beyond error
-+ * reporting. The following error codes have special meaning:
-+ *    * ENOENT: the ref doesn't exist
-+ *    * EISDIR: ref name is a directory
-+ *    * ENOTDIR: ref prefix is not a directory
-  *
-  * Backend-specific flags might be set in type as well, regardless of
-  * outcome.
-@@ -635,9 +639,9 @@ typedef int reflog_expire_fn(struct ref_store *ref_store,
-  * - in all other cases, referent will be untouched, and therefore
-  *   refname will still be valid and unchanged.
-  */
--typedef int read_raw_ref_fn(struct ref_store *ref_store,
--			    const char *refname, struct object_id *oid,
--			    struct strbuf *referent, unsigned int *type);
-+typedef int read_raw_ref_fn(struct ref_store *ref_store, const char *refname,
-+			    struct object_id *oid, struct strbuf *referent,
-+			    unsigned int *type, int *failure_errno);
+@@ -149,9 +149,9 @@ struct ref_update {
+ 	const char refname[FLEX_ARRAY];
+ };
  
- struct ref_storage_be {
- 	struct ref_storage_be *next;
+-int refs_read_raw_ref(struct ref_store *ref_store,
+-		      const char *refname, struct object_id *oid,
+-		      struct strbuf *referent, unsigned int *type);
++int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
++		      struct object_id *oid, struct strbuf *referent,
++		      unsigned int *type, int *failure_errno);
+ 
+ /*
+  * Write an error to `err` and return a nonzero value iff the same
 -- 
 2.32.0.851.g0fc62a9785
 
