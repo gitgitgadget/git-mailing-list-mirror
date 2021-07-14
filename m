@@ -2,95 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB301C12002
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 21:38:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F39BC12002
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 21:40:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B16E06101D
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 21:38:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0300D61042
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 21:40:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231142AbhGNVlV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 17:41:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50076 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229657AbhGNVlU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 17:41:20 -0400
-Received: (qmail 422 invoked by uid 109); 14 Jul 2021 21:38:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Jul 2021 21:38:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28511 invoked by uid 111); 14 Jul 2021 21:38:28 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Jul 2021 17:38:28 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 14 Jul 2021 17:38:27 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     German Lashevich <german.lashevich@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH 3/3] doc/git-config: simplify "override" advice for FILES
- section
-Message-ID: <YO9ZU4nO7YOASAHn@coredump.intra.peff.net>
-References: <YO9YyTZdU4WadYGg@coredump.intra.peff.net>
+        id S230229AbhGNVnU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 17:43:20 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61923 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229535AbhGNVnS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 17:43:18 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 805A0D21D5;
+        Wed, 14 Jul 2021 17:40:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UAgaxrRDhESyzlP68eSWGP069Kfa0Wx/fNDZmE
+        fOFj0=; b=MOboHDuNPpfPkJkKZKsVuerSfyPmaJ7S4/E/fPbcF/hUl1YsRl45ep
+        uznc/M5s6AOqAZqrxs35Vj96wNjb0o0ZH0qyurWzayd9dPwy/BgmeBF9eV/bKMvw
+        t/XCvFtzbSHlncM3IpUFMblD1xdbiNz9Yypb3QAWm+E1k9Ns4V0NU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 78E04D21D3;
+        Wed, 14 Jul 2021 17:40:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 078CAD21D2;
+        Wed, 14 Jul 2021 17:40:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Taylor Blau <ttaylorr@github.com>,
+        Sun Chao <16657101987@163.com>,
+        Sun Chao via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2] packfile: freshen the mtime of packfile by
+ configuration
+References: <pull.1043.git.git.1625943685565.gitgitgadget@gmail.com>
+        <pull.1043.v2.git.git.1626226114067.gitgitgadget@gmail.com>
+        <87wnpt1wwc.fsf@evledraar.gmail.com> <YO5RZ0Wix/K5q53Z@nand.local>
+        <ACE7ECBE-0D7A-4FB8-B4F9-F9E32BE2234C@163.com>
+        <YO8XrOChAtxhpuxS@nand.local> <877dhs20x3.fsf@evledraar.gmail.com>
+        <YO87ax2JpLndc5Ly@nand.local>
+Date:   Wed, 14 Jul 2021 14:40:24 -0700
+In-Reply-To: <YO87ax2JpLndc5Ly@nand.local> (Taylor Blau's message of "Wed, 14
+        Jul 2021 15:30:51 -0400")
+Message-ID: <xmqq5yxcvak7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YO9YyTZdU4WadYGg@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 19292FF2-E4EC-11EB-A578-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-At the end of the FILES section, we indicate that you can override the
-regular lookup rules with --global, etc. But:
+Taylor Blau <me@ttaylorr.com> writes:
 
-  - we're missing the --local option
+> But if that isn't possible, then I find introducing a new file to
+> redefine the pack's mtime just to accommodate a backup system that
+> doesn't know better to be a poor justification for adding this
+> complexity. Especially since we agree that rsync-ing live Git
+> repositories is a bad idea in the first place ;).
+>
+> If it were me, I would probably stop here and avoid pursuing this
+> further.
 
-  - we point to GIT_CONFIG instead of --file, but the latter has much
-    better documentation
-
-  - we're vague about how the overrides work; the actual option
-    descriptions are much better here
-
-So let's just mention the names and point people back to the OPTIONS
-section. We could perhaps even delete this paragraph entirely, but the
-presence of the names may give people reading FILES a clue about where
-to look for more information.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-config.txt | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 30186812a8..e30edf99c6 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -71,6 +71,7 @@ codes are:
- 
- On success, the command returns the exit code 0.
- 
-+[[OPTIONS]]
- OPTIONS
- -------
- 
-@@ -331,11 +332,9 @@ All writing options will per default write to the repository specific
- configuration file. Note that this also affects options like `--replace-all`
- and `--unset`. *'git config' will only ever change one file at a time*.
- 
--You can override these rules either by command-line options or by environment
--variables. The `--global`, `--system` and `--worktree` options will limit
--the file used to the global, system-wide or per-worktree file respectively.
--The `GIT_CONFIG` environment variable has a similar effect, but you
--can specify any filename you want.
-+You can override these rules using the `--global`, `--system`,
-+`--local`, `--worktree`, and `--file` command-line options; see
-+<<OPTIONS>> above.
- 
- 
- ENVIRONMENT
--- 
-2.32.0.689.gbb74d99cdd
+;-).
