@@ -5,130 +5,122 @@ X-Spam-Level:
 X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CC4FC11F6A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6740CC07E95
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:15:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 86F2C61369
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:12:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 51451600D4
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:15:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237168AbhGNAOu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 20:14:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35816 "EHLO
+        id S237123AbhGNASl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 20:18:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237175AbhGNAOr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 20:14:47 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B715C0613DD
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:11:56 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id a13so863806wrf.10
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:11:56 -0700 (PDT)
+        with ESMTP id S236981AbhGNASk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 20:18:40 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C7CCC0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:15:49 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id g8-20020a1c9d080000b02901f13dd1672aso2545119wme.0
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:15:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=t7gj+DZei8E9e0VwSCpLsMuOWMal2dpeeC+ggO3micU=;
-        b=IbUXl64aSPABpwAgIeUE4mxHRTPqtUWzE6l/+xK2+MVOji3op2n+ZjFA4APEltgSwn
-         +bDWxd795VSel2WapyiebwF5LNzJPNLE45I4n4mv6lCt+4pjyk533WzSo8+tcPx0V4yw
-         CKHYTwSWaxYqAp67aTGGwgX7A7aMPy8ROHiPpR2AUjjx3hTBrfRYVf/wHpvvDCSAsuAO
-         UDhMMhXJOjoWflmjrHASf3dW2jbfALvBVZz/bTQPgr4ZUykncAGKNqepDspFtay8o6aV
-         z2l35o58/8xtuOsuwNUsg2bnY1SXAp7dw0Jl0iNnUJR/xuki+YNIEgehcClZGEqdgBXI
-         UJqA==
+        bh=zdDdcSIlBaVjBIYUujz1lNo/acIEwaq+qx742FsBxbY=;
+        b=vSE0QeTZb8dj2OLBarelPVkLQFy+JTn/sVYdfrQg2CojZfri5249zgFZHeTRXH0Z9+
+         1oi2JYS5BowAo9aAsnqrk4tEjJ33pnA2I4GdfLXXYwtp7VHpYGzWMxnNa/B5jkvVuhpY
+         LMBoSqz0Yldt3xr9T+dkR7NdbLGhysLru3Q3IHu9bod3tYoag/R8JP+idI5mG6m47Tac
+         t4cac8scJL3KfkZTwb3Bu4niIf0pd+Dzlzj7X7UQPMp3KfWgu+n0mqAXCATbuV1Dt6SO
+         KZk1FpT0EzwYwZv//L91vu+2Tcm6kqCam34wXyDXesiJEnycEIQPPfb5kr79/3AvFwUk
+         tUDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=t7gj+DZei8E9e0VwSCpLsMuOWMal2dpeeC+ggO3micU=;
-        b=We41VkwWcV+xYxYT+2CrOa41jgX0bGJTsXRpi9PRO66O9q8YU4EIW/5YDzPHSnXrUE
-         x/A2RzEnW2Zta4fL2gHnKmRMux96vJGZezu2guMEHykatAH4d+3F0jTMvys5QtcdqYvq
-         z3kuucFy+PzJIEFeAN7MQxt8DVyrt5iJztu5mRpj+i52by/ysRIDVV2nMXnnnbRbBYpR
-         xnIK5pRj7Ut6s+je2MzoXd/k8fkSrGbKLzR1pHVDo+2UuWhAcMvpiFs8ZV7MYY3/x9BG
-         EEQ7rNkbZk6FyTJlnPsf091ZF6kS60XUYCDu2F9771dE52LrR2q3Dd+fe8RqUaA7fUIu
-         GaUg==
-X-Gm-Message-State: AOAM5323HzxFO/iVueVi/pWOpEpjEY4mTlUSYVisAJbN4NltQ9vaqM+c
-        hIgbNW7ZxrCL4iUFE10GkznJk8NVu2YQ7yps
-X-Google-Smtp-Source: ABdhPJwipcrZ9hyvLJbEduJAWaQrixebqSeTlJQHOIOpBLx9MW7V3FEzbZdP0r11TeRTJdGvPvi22g==
-X-Received: by 2002:adf:de84:: with SMTP id w4mr9142873wrl.104.1626221515032;
-        Tue, 13 Jul 2021 17:11:55 -0700 (PDT)
+        bh=zdDdcSIlBaVjBIYUujz1lNo/acIEwaq+qx742FsBxbY=;
+        b=cW9EvH0D7DxkVHiapa1rGS1Md4+NNrnT7oFxuUyYqILb1D0wci0OdFgZlkSnkiohhJ
+         E/RX+kjYcwyxrVUMLUraAEL5EdAPC2emPBq6nMUbAx0rlBHlPWeuu8wz9kqj3V20Iv93
+         eM9t7cEuHYee1DRHQEUV1ARVSW2Rmz90+cBnX1p9iGOsnEYP8cHcxSyvwUCswMaTX4hg
+         g7Qe58blOzbTZUMMWSHRE6KDdrqx1GXzjlZjxedJsH0Le7XgX3JNT/yMlgcRVnmoKXCd
+         uOVkwcsCNcaL+CVK+fbccyvymGczVSkluIq05SJNCfSuNbvKtbogcp/Hr+P79kYBTWqX
+         x6ZQ==
+X-Gm-Message-State: AOAM5329mUhqwdIQhY8PmBLgUn5/vp54TXESg/5CFz6LUgnp6f2Zhz3X
+        GFkWmHFqnPtvvGJyrvcUhDKvq2UvXjd2okT/
+X-Google-Smtp-Source: ABdhPJy6++lMXR2o5ArMkU4lS/E7y2T0j0rjzQOUleYTUoC50cMhIabs9vaFN4+UGtzv+/pQJduClw==
+X-Received: by 2002:a1c:1bd0:: with SMTP id b199mr7798392wmb.108.1626221747454;
+        Tue, 13 Jul 2021 17:15:47 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id x1sm442382wmc.31.2021.07.13.17.11.54
+        by smtp.gmail.com with ESMTPSA id y197sm2876518wmc.7.2021.07.13.17.15.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jul 2021 17:11:54 -0700 (PDT)
+        Tue, 13 Jul 2021 17:15:47 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Andrzej Hunt <andrzej@ahunt.org>,
-        =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 4/4] SANITIZE tests: fix leak in mailmap.c
-Date:   Wed, 14 Jul 2021 02:11:49 +0200
-Message-Id: <patch-4.4-b8062a09f9-20210714T001007Z-avarab@gmail.com>
+Subject: [PATCH v3 0/5] add missing __attribute__((format))
+Date:   Wed, 14 Jul 2021 02:15:39 +0200
+Message-Id: <cover-0.5-0000000000-20210714T001433Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0-dev
-In-Reply-To: <cover-0.4-0000000000-20210714T001007Z-avarab@gmail.com>
-References: <87czsv2idy.fsf@evledraar.gmail.com> <cover-0.4-0000000000-20210714T001007Z-avarab@gmail.com>
+In-Reply-To: <cover-0.6-0000000000-20210713T080411Z-avarab@gmail.com>
+References: <cover-0.6-0000000000-20210713T080411Z-avarab@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Get closer to being able to run t4203-mailmap.sh by fixing a couple of
-memory leak in mailmap.c.
+Adds missing add missing __attribute__((format)) in various places,
+which improves compile-time checking.
 
-In the free_mailmap_entry() code added in 0925ce4d49 (Add map_user()
-and clear_mailmap() to mailmap, 2009-02-08) the intent was clearly to
-clear the "me" structure, but while we freed parts of the
-mailmap_entry structure, we didn't free the structure itself. The same
-goes for the "mailmap_info" structure.
----
- mailmap.c          | 2 ++
- t/t4203-mailmap.sh | 6 ++++++
- 2 files changed, 8 insertions(+)
+v3: Dropped the 6th patch per feedback from Jeff King. Yes, we can do
+without that strftime() comment in strbuf.c.
 
-diff --git a/mailmap.c b/mailmap.c
-index d1f7c0d272..e1c8736093 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -36,6 +36,7 @@ static void free_mailmap_info(void *p, const char *s)
- 		 s, debug_str(mi->name), debug_str(mi->email));
- 	free(mi->name);
- 	free(mi->email);
-+	free(mi);
- }
- 
- static void free_mailmap_entry(void *p, const char *s)
-@@ -51,6 +52,7 @@ static void free_mailmap_entry(void *p, const char *s)
- 
- 	me->namemap.strdup_strings = 1;
- 	string_list_clear_func(&me->namemap, free_mailmap_info);
-+	free(me);
- }
- 
- /*
-diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-index 0b2d21ec55..c7de4299cf 100755
---- a/t/t4203-mailmap.sh
-+++ b/t/t4203-mailmap.sh
-@@ -79,6 +79,12 @@ test_expect_success 'check-mailmap bogus contact --stdin' '
- 	test_must_fail git check-mailmap --stdin bogus </dev/null
- '
- 
-+if test_have_prereq SANITIZE_LEAK
-+then
-+	skip_all='skipping the rest of mailmap tests under SANITIZE_LEAK'
-+	test_done
-+fi
-+
- test_expect_success 'No mailmap' '
- 	cat >expect <<-EOF &&
- 	$GIT_AUTHOR_NAME (1):
+v2 at: https://lore.kernel.org/git/cover-0.6-0000000000-20210713T080411Z-avarab@gmail.com/
+
+Ævar Arnfjörð Bjarmason (5):
+  *.c static functions: don't forward-declare __attribute__
+  sequencer.c: move static function to avoid forward decl
+  *.c static functions: add missing __attribute__((format))
+  *.h: add a few missing  __attribute__((format))
+  advice.h: add missing __attribute__((format)) & fix usage
+
+ add-patch.c                                   |  1 +
+ advice.h                                      |  1 +
+ builtin/am.c                                  |  1 +
+ builtin/bisect--helper.c                      |  2 +
+ builtin/index-pack.c                          |  4 +-
+ builtin/receive-pack.c                        |  5 +--
+ cache.h                                       |  1 +
+ commit-graph.c                                |  1 +
+ .../osxkeychain/git-credential-osxkeychain.c  |  1 +
+ .../wincred/git-credential-wincred.c          |  1 +
+ gettext.c                                     |  1 +
+ imap-send.c                                   |  3 ++
+ mailmap.c                                     |  1 +
+ merge-ort.c                                   |  1 +
+ merge-recursive.c                             |  1 +
+ midx.c                                        |  1 +
+ quote.h                                       |  1 +
+ ref-filter.c                                  |  1 +
+ sequencer.c                                   | 43 +++++++++----------
+ server-info.c                                 |  1 +
+ strbuf.h                                      |  1 +
+ t/helper/test-advise.c                        |  2 +-
+ worktree.c                                    |  1 +
+ 23 files changed, 47 insertions(+), 29 deletions(-)
+
+Range-diff against v2:
+1:  a855bfceb2 = 1:  a855bfceb2 *.c static functions: don't forward-declare __attribute__
+2:  9c1492b006 = 2:  9c1492b006 sequencer.c: move static function to avoid forward decl
+3:  e2e039f481 = 3:  e2e039f481 *.c static functions: add missing __attribute__((format))
+4:  fd70d512b4 = 4:  fd70d512b4 *.h: add a few missing  __attribute__((format))
+5:  a001e851d2 = 5:  a001e851d2 advice.h: add missing __attribute__((format)) & fix usage
+6:  fe66e06754 < -:  ---------- strbuf.h: add a comment about "missing" strftime() checking
 -- 
 2.32.0-dev
 
