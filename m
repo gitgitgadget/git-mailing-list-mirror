@@ -2,200 +2,426 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F304C07E9A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 18:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D1B3C07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 18:42:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7235461260
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 18:41:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1895C613C5
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 18:42:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240040AbhGNSoT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 14:44:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34868 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229603AbhGNSoS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 14:44:18 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBD3FC06175F
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 11:41:25 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id c17so4841620ejk.13
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 11:41:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=gi/Oc97r/njtVQoLGMEs2VCVD+9TjS1PriJkhNEsrvY=;
-        b=hEuNKTvVhjs8/6DU6AWY3cu35oBxINTHyQX1pBeNEpyYnuvL7BmOYVCJfN6UQD6BUj
-         cWWJot3qebnxWfpWlqxKgEiX7RMD9U2uwMbwBV3tbvfz5i43dVpK3V/VAey70zsLxwv2
-         i6JwSdgPFLmKEOiukRNWmgRsKF6PRiFRaMR711Rn+qfhATQ0c27Fw/GYvLanp0+/5Df8
-         ps6rWfXM+Vt/Sz5yZAjsrJ50x7EK0JQZFNDo9aN7GPUW9pJ9JL6EBcfUDp/RDLVgkTLd
-         dUPpU4pwmyrgOHPKzsrV2Nl13IUAoWeIXYyP61prP43PKyLWnYQ/4Uu5qrwPc8HwADYH
-         qVfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=gi/Oc97r/njtVQoLGMEs2VCVD+9TjS1PriJkhNEsrvY=;
-        b=fXntIXw7FVqouwhWAWo2vMgOijJ+TAbytic3euRzwr/nAQ6PzVJXx0Gjmbm8hzVqFn
-         vvap/YN8N9diet/3ZpKcgywxQi7D8rQrNRUsKjksl7IE7vzDQI54rMU3OJ304XXyGfuU
-         YDhnVxPQF0EZ5skBCRfhCp2slX0JEdzBZedGM/stAjGrcF4CB2vt6ZggJCn2MGfpillG
-         kTfHPRrRYS7TZ8waUcR3+m/D4Lw8oi86Zl0tLncfUJBZI/9AQaGGk5YvA4NK9fNcY1aJ
-         vjJohSBexhCLc/z2Ioib/UevLPlnJOWLIDQfhTrRekMFVsQydomptGQu7mbraHzl5jj7
-         /0UQ==
-X-Gm-Message-State: AOAM531nCewgvIYbVkYRpA7PLcN0IJ80H0GfZMt8g3i8EyZs29b8uEys
-        Md+HkbmxrnHb/IFL7r7Ms+0=
-X-Google-Smtp-Source: ABdhPJxybAGiC5/533Usb1jmN21uDTyyonJsq+66YgmMqa3FLVdHLJ5L1QFS5uK3ICkpg+wNypuIzA==
-X-Received: by 2002:a17:906:2bdb:: with SMTP id n27mr13900758ejg.312.1626288084236;
-        Wed, 14 Jul 2021 11:41:24 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id j24sm1380700edv.48.2021.07.14.11.41.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 11:41:23 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <ttaylorr@github.com>
-Cc:     Sun Chao <16657101987@163.com>, Taylor Blau <me@ttaylorr.com>,
-        Sun Chao via GitGitGadget <gitgitgadget@gmail.com>,
+        id S240049AbhGNSpa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 14:45:30 -0400
+Received: from mx.kolabnow.com ([95.128.36.40]:63964 "EHLO mx.kolabnow.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S239999AbhGNSpa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 14:45:30 -0400
+Received: from localhost (unknown [127.0.0.1])
+        by ext-mx-out001.mykolab.com (Postfix) with ESMTP id 1D646F9D;
+        Wed, 14 Jul 2021 20:42:36 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
+        content-transfer-encoding:content-language:content-type
+        :content-type:in-reply-to:mime-version:date:date:message-id:from
+        :from:references:subject:subject:received:received:received; s=
+        dkim20160331; t=1626288154; x=1628102555; bh=E0KQRJ49Z4ylADNRdo8
+        gKk6w3pQqpGDDq+7kVoL6mOc=; b=h5F+lw1t9Xn0iZLZsyEFmeATF5QV20ztFGM
+        xi5sT6P2ACFsZK9uXr5zZoJp96HqC4sUEAgi8XtzNuF9qQVeGGB28Ox36wO1NLA0
+        kaq25d5iJbRPCmyGaNaY2BbVuGJvlodZNg7qNUl4Yg1EjBs1gpgIiulYeDLwkfl+
+        P7nmzlV4VNbYVSby1dNajmXfLHK4vuQV/lo907JOobjOfbTilxi5UvaabDC3mUV2
+        LI/pFQdlX6C00/A1aVp7deGgc5SwuIS9ip6u19KSVkf3e4z/MfgPTyYZugK6XSdd
+        C/KpIcT8m5Hkb1ugv2XG1bgR4GrkKqpX82uWn78ZAnmIdFSpnsrwIDsfciR0a8rt
+        jTupEhka2mIzZR/iyj+nzR8HNEyv6NzThd2WMwbY2GHDUct2azbg2GzUIemBrt1h
+        iD9U9K7damWOjZsSL9T8hsIaorVd+qJzy9wnBBOubQcxZS3Gzr01G1YNMWYdeeUN
+        DnS9enDJZKQp12grhvNQQEpOpc0aqpNcmorNL5FSnu3j1/PtCW3TOplh/OqY5F2R
+        xL0pwzY+ywwnNxL6FBQ+Foou28rBdEBsiPO6JPtldG8SBVnUMEFOFOrzONPXW+yi
+        6S/BsTZJzNMhm9IX0CZh26qhDZJH3pZ0k4Y5d/1h3OM9lsA08Y2QUjteRrD1kT5/
+        reLviHBg=
+X-Virus-Scanned: amavisd-new at mykolab.com
+Received: from mx.kolabnow.com ([127.0.0.1])
+        by localhost (ext-mx-out001.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id VOYK6bYbJzOY; Wed, 14 Jul 2021 20:42:34 +0200 (CEST)
+Received: from int-mx003.mykolab.com (unknown [10.9.13.3])
+        by ext-mx-out001.mykolab.com (Postfix) with ESMTPS id 6BBBAE7F;
+        Wed, 14 Jul 2021 20:42:34 +0200 (CEST)
+Received: from ext-subm002.mykolab.com (unknown [10.9.6.2])
+        by int-mx003.mykolab.com (Postfix) with ESMTPS id 16F5C3367;
+        Wed, 14 Jul 2021 20:42:29 +0200 (CEST)
+Subject: Re: [PATCH v2 1/4] tests: add a test mode for SANITIZE=leak, run it
+ in CI
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH v2] packfile: freshen the mtime of packfile by
- configuration
-Date:   Wed, 14 Jul 2021 20:19:15 +0200
-References: <pull.1043.git.git.1625943685565.gitgitgadget@gmail.com>
- <pull.1043.v2.git.git.1626226114067.gitgitgadget@gmail.com>
- <87wnpt1wwc.fsf@evledraar.gmail.com> <YO5RZ0Wix/K5q53Z@nand.local>
- <ACE7ECBE-0D7A-4FB8-B4F9-F9E32BE2234C@163.com>
- <YO8XrOChAtxhpuxS@nand.local>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <YO8XrOChAtxhpuxS@nand.local>
-Message-ID: <877dhs20x3.fsf@evledraar.gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <cover-0.4-0000000000-20210714T001007Z-avarab@gmail.com>
+ <cover-0.4-0000000000-20210714T172251Z-avarab@gmail.com>
+ <patch-1.4-0795436a24-20210714T172251Z-avarab@gmail.com>
+From:   Andrzej Hunt <andrzej@ahunt.org>
+Message-ID: <eebb4f74-b5e3-6c11-3b84-fcee1b876992@ahunt.org>
+Date:   Wed, 14 Jul 2021 20:42:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <patch-1.4-0795436a24-20210714T172251Z-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Jul 14 2021, Taylor Blau wrote:
 
-> On Thu, Jul 15, 2021 at 12:46:47AM +0800, Sun Chao wrote:
->> > Stepping back, I'm not sure I understand why freshening a pack is so
->> > slow for you. freshen_file() just calls utime(2), and any sync back to
->> > the disk shouldn't need to update the pack itself, just a couple of
->> > fields in its inode. Maybe you could help explain further.
->> >
->> > [ ... ]
->>
->> The reason why we want to avoid freshen the mtime of ".pack" file is to
->> improve the reading speed of Git Servers.
->>
->> We have some large repositories in our Git Severs (some are bigger than 10GB),
->> and we created '.keep' files for large ".pack" files, we want the big files
->> unchanged to speed up git upload-pack, because in our mind the file system
->> cache will reduce the disk IO if a file does not changed.
->>
->> However we find the mtime of ".pack" files changes over time which makes the
->> file system always reload the big files, that takes a lot of IO time and result
->> in lower speed of git upload-pack and even further the disk IOPS is exhausted.
->
-> That's surprising behavior to me. Are you saying that calling utime(2)
-> causes the *page* cache to be invalidated and that most reads are
-> cache-misses lowering overall IOPS?
->
-> If so, then I am quite surprised ;). The only state that should be
-> dirtied by calling utime(2) is the inode itself, so the blocks referred
-> to by the inode corresponding to a pack should be left in-tact.
->
-> If you're on Linux, you can try observing the behavior of evicting
-> inodes, blocks, or both from the disk cache by changing "2" in the
-> following:
->
->     hyperfine 'git pack-objects --all --stdout --delta-base-offset >/dev/null'
->       --prepare='sync; echo 2 | sudo tee /proc/sys/vm/drop_caches'
->
-> where "1" drops the page cache, "2" drops the inodes, and "3" evicts
-> both.
->
-> I wonder if you could share the results of running the above varying
-> the value of "1", "2", and "3", as well as swapping the `--prepare` for
-> `--warmup=3` to warm your caches (and give us an idea of what your
-> expected performance is probably like).
+On 14/07/2021 19:23, Ævar Arnfjörð Bjarmason wrote:
+> While git can be compiled with SANITIZE=leak there has been no
+> corresponding GIT_TEST_* mode for it, i.e. memory leaks have been
+> fixed as one-offs without structured regression testing.
+> 
+> This change add such a mode, we now have new
+> linux-{clang,gcc}-sanitize-leak CI targets, these targets run the same
+> tests as linux-{clang,gcc}, except that almost all of them are
+> skipped.
+> 
+> There is a whitelist of some tests that are OK in test-lib.sh, and
+> individual tests can be opted-in by setting
+> GIT_TEST_SANITIZE_LEAK=true before sourcing test-lib.sh. Within those
+> individual test can be skipped with the "!SANITIZE_LEAK"
+> prerequisite. See the updated t/README for more details.
+> 
+> I'm using the GIT_TEST_SANITIZE_LEAK=true and !SANITIZE_LEAK pattern
+> in a couple of tests whose memory leaks I'll fix in subsequent
+> commits.
+> 
+> I'm not being aggressive about opting in tests, it's not all tests
+> that currently pass under SANITIZE=leak, just a small number of
+> known-good tests. We can add more later as we fix leaks and grow more
+> confident in this test mode.
+> 
+> See the recent discussion at [1] about the lack of this sort of test
+> mode, and 0e5bba53af (add UNLEAK annotation for reducing leak false
+> positives, 2017-09-08) for the initial addition of SANITIZE=leak.
+> 
+> See also 09595ab381 (Merge branch 'jk/leak-checkers', 2017-09-19),
+> 7782066f67 (Merge branch 'jk/apache-lsan', 2019-05-19) and the recent
+> 936e58851a (Merge branch 'ah/plugleaks', 2021-05-07) for some of the
+> past history of "one-off" SANITIZE=leak (and more) fixes.
+> 
+> When calling maybe_skip_all_sanitize_leak matching against
+> "$TEST_NAME" instead of "$this_test" as other "match_pattern_list()"
+> users do is intentional. I'd like to match things like "t13*config*"
+> in subsequent commits. This part of the API isn't public, so we can
+> freely change it in the future.
+> 
+> 1. https://lore.kernel.org/git/87czsv2idy.fsf@evledraar.gmail.com/
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>   .github/workflows/main.yml |  6 ++++
+>   Makefile                   |  5 ++++
+>   ci/install-dependencies.sh |  4 +--
+>   ci/lib.sh                  | 18 ++++++++----
+>   ci/run-build-and-tests.sh  |  4 +--
+>   t/README                   | 16 ++++++++++
+>   t/t5701-git-serve.sh       |  2 +-
+>   t/test-lib.sh              | 60 ++++++++++++++++++++++++++++++++++++++
+>   8 files changed, 105 insertions(+), 10 deletions(-)
+> 
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index 73856bafc9..752fe187f9 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -297,6 +297,12 @@ jobs:
+>             - jobname: linux-gcc-default
+>               cc: gcc
+>               pool: ubuntu-latest
+> +          - jobname: linux-clang-sanitize-leak
+> +            cc: clang
+> +            pool: ubuntu-latest
+> +          - jobname: linux-gcc-sanitize-leak
+> +            cc: gcc
+> +            pool: ubuntu-latest
 
-I think you may be right narrowly, but wrong in this context :)
+Is there any advantage to running leak checking with both gcc and clang? 
+My understanding is that you end up using the same sanitiser 
+implementation under the hood - I can't remember if using a different 
+compiler actually helps find different leaks though.
 
-I.e. my understanding of this problem is that they have some incremental
-backup job, e.g. rsync without --checksum (not that doing that would
-help, chicken & egg issue)..
+My other question is: if we are adding a new job - should it really be 
+just a leak checking job? Leak checking is just a subset of ASAN 
+(Address Sanitizer). And as discussed at [1] it's possible to run ASAN 
+and UBSAN (Undefined Behaviour Sanitizer) in the same build. I feel like 
+it's much more useful to first add a combined ASAN+UBSAN job, followed 
+by enabling leak-checking as part of ASAN in those jobs for known 
+leak-free tests - as opposed to only adding leak checking. We currently 
+disable Leak checking for ASAN here [2], but that could be made 
+conditional on the test ID (i.e. check an allowlist to enable leak 
+checking for some tests)?
 
-So by changing the mtime you cause the file to be re-synced.
+I think it's worth focusing on ASAN+UBSAN first because they tend to 
+find more impactful issues (e.g. buffer overflows, and other real bugs) 
+- whereas leaks... are ugly, but leaks in git don't actually have much 
+user impact?
 
-Yes Linux (or hopefully any modern OS) isn't so dumb as to evict your FS
-cache because of such a metadata change, but that's besides the point.
+[1] 
+https://lore.kernel.org/git/YMI%2Fg1sHxJgb8%2FYD@coredump.intra.peff.net/
 
-If you have a backup job like that your FS cache will get evicted or be
-subject to churn anyway, because you'll shortly be having to deal with
-the "rsync" job that's noticed the changed mtime competing for caching
-resources with "real" traffic.
+[2] https://git.kernel.org/pub/scm/git/git.git/tree/t/test-lib.sh#n44
 
-Sun: Does that summarize the problem you're having?
+>       env:
+>         CC: ${{matrix.vector.cc}}
+>         jobname: ${{matrix.vector.jobname}}
+> diff --git a/Makefile b/Makefile
+> index 502e0c9a81..d4cad5136f 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1216,6 +1216,9 @@ PTHREAD_CFLAGS =
+>   SPARSE_FLAGS ?=
+>   SP_EXTRA_FLAGS = -Wno-universal-initializer
+>   
+> +# For informing GIT-BUILD-OPTIONS of the SANITIZE=leak target
+> +SANITIZE_LEAK =
+> +
+>   # For the 'coccicheck' target; setting SPATCH_BATCH_SIZE higher will
+>   # usually result in less CPU usage at the cost of higher peak memory.
+>   # Setting it to 0 will feed all files in a single spatch invocation.
+> @@ -1260,6 +1263,7 @@ BASIC_CFLAGS += -DSHA1DC_FORCE_ALIGNED_ACCESS
+>   endif
+>   ifneq ($(filter leak,$(SANITIZERS)),)
+>   BASIC_CFLAGS += -DSUPPRESS_ANNOTATED_LEAKS
+> +SANITIZE_LEAK = YesCompiledWithIt >   endif
+>   ifneq ($(filter address,$(SANITIZERS)),)
+>   NO_REGEX = NeededForASAN
+> @@ -2793,6 +2797,7 @@ GIT-BUILD-OPTIONS: FORCE
+>   	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
+>   	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
+>   	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
+> +	@echo SANITIZE_LEAK=\''$(subst ','\'',$(subst ','\'',$(SANITIZE_LEAK)))'\' >>$@+
+>   	@echo X=\'$(X)\' >>$@+
+>   ifdef TEST_OUTPUT_DIRECTORY
+>   	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
+> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> index 67852d0d37..8ac72d7246 100755
+> --- a/ci/install-dependencies.sh
+> +++ b/ci/install-dependencies.sh
+> @@ -12,13 +12,13 @@ UBUNTU_COMMON_PKGS="make libssl-dev libcurl4-openssl-dev libexpat-dev
+>    libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl"
+>   
+>   case "$jobname" in
+> -linux-clang|linux-gcc)
+> +linux-clang|linux-gcc|linux-clang-sanitize-leak|linux-gcc-sanitize-leak)
 
-<large digression ahead>
+How about `linux-clang*|linux-gcc*)` here and below?
 
-Sun, also: Note that in general doing backups of live git repositories
-with rsync is a bad idea, and will lead to corruption.
+>   	sudo apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
+>   	sudo apt-get -q update
+>   	sudo apt-get -q -y install language-pack-is libsvn-perl apache2 \
+>   		$UBUNTU_COMMON_PKGS
+>   	case "$jobname" in
+> -	linux-gcc)
+> +	linux-gcc|linux-gcc-sanitize-leak)
+>   		sudo apt-get -q -y install gcc-8
+>   		;;
+>   	esac
+> diff --git a/ci/lib.sh b/ci/lib.sh
+> index 476c3f369f..bb02b5abf4 100755
+> --- a/ci/lib.sh
+> +++ b/ci/lib.sh
+> @@ -183,14 +183,16 @@ export GIT_TEST_CLONE_2GB=true
+>   export SKIP_DASHED_BUILT_INS=YesPlease
+>   
+>   case "$jobname" in
+> -linux-clang|linux-gcc)
+> -	if [ "$jobname" = linux-gcc ]
+> -	then
+> +linux-clang|linux-gcc|linux-clang-sanitize-leak|linux-gcc-sanitize-leak)
+> +	case "$jobname" in
+> +	linux-gcc|linux-gcc-sanitize-leak)
+>   		export CC=gcc-8
+>   		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/python3"
+> -	else
+> +		;;
+> +	*)
+>   		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/python2"
+> -	fi
+> +		;;
+> +	esac
+>   
+>   	export GIT_TEST_HTTPD=true
+>   
+> @@ -233,4 +235,10 @@ linux-musl)
+>   	;;
+>   esac
+>   
+> +case "$jobname" in
+> +linux-clang-sanitize-leak|linux-gcc-sanitize-leak)
+> +	export SANITIZE=leak
+> +	;;
+> +esac
+> +
 
-The most common cause of such corruption is that a tool like "rsync"
-will iterate recursively through say "objects" followed by "refs".
+Have you considered doing this in the yaml job configuration instead? 
+It's possible to set env-vars in yaml, although it will require some 
+careful tweaking - here's an example where I'm setting different values 
+for SANITIZE depending on job (you'd probably just have to set it to 
+empty for the non leak-checking jobs):
 
-So by the time it gets to the latter (or is doing a deep iteration
-within those dirs) git's state has changed in such a way as to yield an
-rsync backup in a state that the repository was never in.
+https://github.com/ahunt/git/blob/master/.github/workflows/ahunt-sync-next2.yml#L51-L69
 
-(As an aside, I've often wondered what it is about git exactly makes
-people who'd never think of doing the same thing with the FS part of an
-RDMBS's data store think that implementing such an ad-hoc backup
-solution for git would be a good idea, but I digress. Perhaps we need
-more scarier looking BerkeleyDB-looking names in the .git directory :)
+That does make the yaml more complex, but I think it's worth it to 
+reduce the amount of special-casing elsewhere (and is also worth it if 
+we ever add other sanitisers)?
 
-Even if you do FS snapshots of live git repositories you're likely to
-get corruption, search this mailing list for references to fsync(),
-e.g. [1].
-
-In short, git's historically (and still) been sloppy about rsync, and
-relied on non-standard behavior such as "if I do N updates for N=1..100,
-and fsync just "100", then I can assume 1..99 are fsynced (spoiler: you
-can't assume that).
-
-Our use of fsync is still broken in that sense today, git is not a safe
-place to store your data in the POSIXLY pedantic sense (and no, I don't
-just mean that core.fsyncObjectFiles is `false` by default, it only
-covers a small part of this, e.g. we don't fsync dir entries even with
-that).
-
-On a real live filesystem this is usually not an issue, because if
-you're not dealing with yanked power cords (and even then, journals
-might save you), then even if you fsync a file but don't fsync the dir
-entry it's in, the FS is usually forgiving about such cases.
-
-I.e. if someone does a concurrent request for the could-be-outdated dir
-entry they'll service the up-to-date one, even without that having been
-fsync'd, because the VFS layer isn't going to the synced disk, it's
-checking it's current state and servicing your request from that.
-
-But at least some FS snapshot implementations have a habit of exposing
-the most pedantic interpretation possible of FS semantics, and one that
-you wouldn't ever get on a live FS. I.e. you might be hooking into the
-equivalent of the order in which things are written to disk, and end up
-with a state that would never have been exposed to a running program
-(there would be a 1=1 correspondence if we fsync'd properly, which we
-don't).
-
-The best way to get backups of git repositories you know are correct are
-is to use git's own transport mechanisms, i.e. fetch/pull the data, or
-create bundles from it. This would be the case even if we fixed all our
-fsync issues, because doing so wouldn't help you in the case of a
-bit-flip, but an "index-pack" on the other end will spot such issues.
-
-1. https://lore.kernel.org/git/20200917112830.26606-2-avarab@gmail.com/
+>   MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
+> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+> index 3ce81ffee9..5fe047b5c6 100755
+> --- a/ci/run-build-and-tests.sh
+> +++ b/ci/run-build-and-tests.sh
+> @@ -12,7 +12,7 @@ esac
+>   
+>   make
+>   case "$jobname" in
+> -linux-gcc)
+> +linux-gcc|linux-gcc-sanitize-leak)
+>   	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>   	make test
+>   	export GIT_TEST_SPLIT_INDEX=yes
+> @@ -29,7 +29,7 @@ linux-gcc)
+>   	export GIT_TEST_CHECKOUT_WORKERS=2
+>   	make test
+>   	;;
+> -linux-clang)
+> +linux-clang|linux-clang-sanitize-leak)
+>   	export GIT_TEST_DEFAULT_HASH=sha1
+>   	make test
+>   	export GIT_TEST_DEFAULT_HASH=sha256
+> diff --git a/t/README b/t/README
+> index 1a2072b2c8..303d0be817 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -448,6 +448,22 @@ GIT_TEST_CHECKOUT_WORKERS=<n> overrides the 'checkout.workers' setting
+>   to <n> and 'checkout.thresholdForParallelism' to 0, forcing the
+>   execution of the parallel-checkout code.
+>   
+> +GIT_TEST_SANITIZE_LEAK=<boolean> will force the tests to run when git
+> +is compiled with SANITIZE=leak (we pick it up via
+> +../GIT-BUILD-OPTIONS).
+> +
+> +By default all tests are skipped when compiled with SANITIZE=leak, and
+> +individual test scripts opt themselves in to leak testing by setting
+> +GIT_TEST_SANITIZE_LEAK=true before sourcing test-lib.sh. Within those
+> +tests use the SANITIZE_LEAK prerequisite to skip individiual tests
+> +(i.e. test_expect_success !SANITIZE_LEAK [...]).
+> +
+> +So the GIT_TEST_SANITIZE_LEAK setting is different in behavior from
+> +both other GIT_TEST_*=[true|false] settings, but more useful given how
+> +SANITIZE=leak works & the state of the test suite. Manually setting
+> +GIT_TEST_SANITIZE_LEAK=true is only useful during development when
+> +finding and fixing memory leaks.
+> +
+>   Naming Tests
+>   ------------
+>   
+> diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
+> index 930721f053..d58efb0aa9 100755
+> --- a/t/t5701-git-serve.sh
+> +++ b/t/t5701-git-serve.sh
+> @@ -243,7 +243,7 @@ test_expect_success 'unexpected lines are not allowed in fetch request' '
+>   
+>   # Test the basics of object-info
+>   #
+> -test_expect_success 'basics of object-info' '
+> +test_expect_success !SANITIZE_LEAK 'basics of object-info' '
+>   	test-tool pkt-line pack >in <<-EOF &&
+>   	command=object-info
+>   	object-format=$(test_oid algo)
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 7036f83b33..9201510e16 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1353,6 +1353,40 @@ then
+>   	exit 1
+>   fi
+>   
+> +# SANITIZE=leak test mode
+> +sanitize_leak_true=
+> +add_sanitize_leak_true () {
+> +	sanitize_leak_true="$sanitize_leak_true$1 "
+> +}
+> +
+> +sanitize_leak_false=
+> +add_sanitize_leak_false () {
+> +	sanitize_leak_false="$sanitize_leak_false$1 "
+> +}
+> +
+> +sanitize_leak_opt_in_msg="opt-in with GIT_TEST_SANITIZE_LEAK=true"
+> +maybe_skip_all_sanitize_leak () {
+> +	# Whitelist patterns
+> +	add_sanitize_leak_true 't000*'
+> +	add_sanitize_leak_true 't001*'
+> +	add_sanitize_leak_true 't006*'
+> +
+> +	# Blacklist patterns (overrides whitelist)
+> +	add_sanitize_leak_false 't000[469]*'
+> +	add_sanitize_leak_false 't001[2459]*'
+> +	add_sanitize_leak_false 't006[0248]*'
+> +
+> +	if match_pattern_list "$1" "$sanitize_leak_false"
+> +	then
+> +		skip_all="test $this_test on SANITIZE=leak blacklist, $sanitize_leak_opt_in_msg"
+> +		test_done
+> +	elif match_pattern_list "$1" "$sanitize_leak_true"
+> +	then
+> +		return 0
+> +	fi
+> +	return 1
+> +}
+> +
+>   # Are we running this test at all?
+>   remove_trash=
+>   this_test=${0##*/}
+> @@ -1364,6 +1398,31 @@ then
+>   	test_done
+>   fi
+>   
+> +# Aggressively skip non-whitelisted tests when compiled with
+> +# SANITIZE=leak
+> +if test -n "$SANITIZE_LEAK"
+> +then
+> +	if test -z "$GIT_TEST_SANITIZE_LEAK" &&
+> +		maybe_skip_all_sanitize_leak "$TEST_NAME"
+> +	then
+> +		say_color info >&3 "test $this_test on SANITIZE=leak whitelist"
+> +		GIT_TEST_SANITIZE_LEAK=true
+> +	fi
+> +
+> +	# We need to see it in "git env--helper" (via
+> +	# test_bool_env)
+> +	export GIT_TEST_SANITIZE_LEAK
+> +
+> +	if ! test_bool_env GIT_TEST_SANITIZE_LEAK false
+> +	then
+> +		skip_all="skip all tests in $this_test under SANITIZE=leak, $sanitize_leak_opt_in_msg"
+> +		test_done
+> +	fi
+> +elif test_bool_env GIT_TEST_SANITIZE_LEAK false
+> +then
+> +	error "GIT_TEST_SANITIZE_LEAK=true has no effect except when compiled with SANITIZE=leak"
+> +fi
+> +
+>   # Last-minute variable setup
+>   HOME="$TRASH_DIRECTORY"
+>   GNUPGHOME="$HOME/gnupg-home-not-used"
+> @@ -1516,6 +1575,7 @@ test -z "$NO_PYTHON" && test_set_prereq PYTHON
+>   test -n "$USE_LIBPCRE2" && test_set_prereq PCRE
+>   test -n "$USE_LIBPCRE2" && test_set_prereq LIBPCRE2
+>   test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
+> +test -n "$SANITIZE_LEAK" && test_set_prereq SANITIZE_LEAK
+>   
+>   if test -z "$GIT_TEST_CHECK_CACHE_TREE"
+>   then
+> 
