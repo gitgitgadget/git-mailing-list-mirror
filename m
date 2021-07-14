@@ -2,199 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8F6AC07E9A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 07:47:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 360F4C07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 08:13:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA39F60FDB
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 07:47:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17D46613AF
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 08:13:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238317AbhGNHuX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 03:50:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53066 "EHLO
+        id S238389AbhGNIQl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 04:16:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238139AbhGNHuW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 03:50:22 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FDFDC06175F
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 00:47:31 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id hd33so1814218ejc.9
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 00:47:31 -0700 (PDT)
+        with ESMTP id S229940AbhGNIQk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 04:16:40 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBC65C06175F
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 01:13:49 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id 37so1660600pgq.0
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 01:13:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=F0x+ffdUuXuyjbbS4oOqNfcAfLwW7sqRFeqHBWGQeO8=;
-        b=uBDKZe3FYwgGVwuKeh0i2yGpKYl6RzPlw4rmnqf5+EdZjGMnHrEqPzn6uHQ9P+c8TB
-         mQ1KzWwauGLxhuh9lY2iDe3Y3IJg74nZfkwoSjYTGsjJ1MlaMRMva2u4dDKd4DIl3nNN
-         3oy2wxMP57lX/pEZQQ7bJL5WeuYZLZDzUa3kushLSg0BGcfKYsY2YuEGW1UgbebjOjI5
-         vD+rRfP4EkOdsdPWswYi/uFZ3d89wLx1KhSRMRoSPsJ1wyWdFzIFpKmmG9PYOKbflAhL
-         TOA5rCK8M5R0Aw+ZV4jJJaZqkr4hErrfGNw4KVhwrKejF7ZFP93S0V73GWGWr7Tmp/t1
-         mZVQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=BTBNq3aKysblLIsAmjRySL2QKJwB6Z/h+4wSELY/bUQ=;
+        b=qBhrB9t/fUxMuYlYl/DTxu3Se2hbnsAI6+/15I4PlnkMSEIwpPWqASFEJosgH2Kfyz
+         fc6IDo0qYGfV/a/v6QOMo1l0jmNu+k+ZD1FhhxoYFH4NhVa6b7L7heKhFRLf0q80KJyi
+         +UoK3gtrZggCaFZG76E1/uz9XxoIfw9ffa8l5hMABwiGxNeCIMey2wjJiYxOqtYdLQ25
+         SjhPUjbIt1dhTsukT+vvURrK2vMVxUZlV2vVm1a88e/jRDiikxZhFlk06kMw22DDZqov
+         9mLQ9xOvoYiIryQRDEnAqbt/roH2u90rfBiQ8n482QADhjGHkHLdebJvXvCPGMIKQBqb
+         frDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=F0x+ffdUuXuyjbbS4oOqNfcAfLwW7sqRFeqHBWGQeO8=;
-        b=BkaLkYEbUD0mlQAX9Fz8rcT9znheZ4fRjfeDjrmjAkFyeUyTOUxrz/Ja2MrOyUa6d6
-         QWARR0Ghwe+QpBg/X1pR7Aa9wTJWDvRQR1DD0PTnavGLGx63JpCGtzAuTOT7hFwoXuql
-         galeek2e25aqWYI7ijbOEEk59zCF6NT0Nud1vHWpNpU4KeIF7kg3TMODEZDKg5aCHKwt
-         DwJqg5BpxIxxcIjgeiY6yhOtj+lyJz5k2uvUvGi7B5fkFXizUHm9atJWJ3sJQm8ARXnT
-         oszZ7xmRqavqPrYEvbF9aXIPO4mtqGVifxAYW2OX+6rJY6oG6nMEuUMOtUg02dd4Ia5R
-         DDeQ==
-X-Gm-Message-State: AOAM530Q6dgqNMD2Ar4uehSoswTp4ZUFluVYByfUSt3cfManWkGxAaIS
-        S/BXk0P9pQy/zfj2KoRLnCsjUiTvfwLB2+yc
-X-Google-Smtp-Source: ABdhPJy7uCimUit3lW8dfqEvMrwcSPFT7+1I63r+1+3qNMWokU5XSBRiSosau3DmdFi0atGLSuGLcQ==
-X-Received: by 2002:a17:906:1fd2:: with SMTP id e18mr10843728ejt.313.1626248849738;
-        Wed, 14 Jul 2021 00:47:29 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id w21sm562697edc.95.2021.07.14.00.47.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 00:47:29 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 2/4] doc: clarify documentation for rename/copy limits
-Date:   Wed, 14 Jul 2021 09:37:58 +0200
-References: <pull.1044.git.git.1625964399.gitgitgadget@gmail.com>
- <pull.1044.v2.git.git.1626225153.gitgitgadget@gmail.com>
- <4046993a9a2af79029c1ce94d20616831e94d786.1626225154.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <4046993a9a2af79029c1ce94d20616831e94d786.1626225154.git.gitgitgadget@gmail.com>
-Message-ID: <87tukx1gmi.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=BTBNq3aKysblLIsAmjRySL2QKJwB6Z/h+4wSELY/bUQ=;
+        b=sO5YP874oVQnwPzkAuHWllt1gU64KHhq11X9CWFAQYvrZqveehDTnQpfg4G8LvtHUI
+         4pqhgzm3cOCCW2W1jmvWwnxUlQEzjEYGwPcsDrJ3ljabNYfGbILEcgVKAVXgSMxYMwuj
+         +mucIvwNq7N7mDjOm+SrRf1sshv7NN94fs+ulf3kkO+4HVACUwguIIntfRQNIhvLDOmG
+         lZv0Utk9Q0t0fYzhaUN5i358bmwGEyX5jnsfKSNQ7SXQOTstH/kjsOKqo0kZBL7dzHfH
+         uKeZUdAJvPs1L2bUvSk2KPE3foYRu2YxjN7K414C7xnpXNUOsrDwiTDvVQsep+SrCDLv
+         XQgw==
+X-Gm-Message-State: AOAM533tzSxGjNKUCUS61hcd9zjLJ/ADi9tbUx74IBZQKpCnsC6s1RCY
+        B/NiKiAqCt9NLSzJd8yp0WNR/+0mf7phvArq/Ao=
+X-Google-Smtp-Source: ABdhPJxyOTVvz/q7TCTfT8ZfUJezxWix28D6OdQ3/Rl6IZjmQb5A7B5G0Tf/m7Sx5sTxoQhIJXno4KK4ipwa+8vUnCM=
+X-Received: by 2002:a62:830a:0:b029:32b:43a4:10b0 with SMTP id
+ h10-20020a62830a0000b029032b43a410b0mr8879167pfe.38.1626250429477; Wed, 14
+ Jul 2021 01:13:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <YOzY+qNFM2GsgKMO@coredump.intra.peff.net> <20210713074018.232372-1-martin.agren@gmail.com>
+ <YO1GNWjMol8JV8MR@coredump.intra.peff.net> <xmqqpmvl29ry.fsf@gitster.g>
+ <YO4FObgRvpt1nVr0@coredump.intra.peff.net> <xmqqlf6928qv.fsf@gitster.g>
+ <CAN0heSqCFVqC9Ncn5r3b4dKOE80byDt_XRM3pnswixX4jFcLFA@mail.gmail.com> <YO4SEp/B4826sc+j@coredump.intra.peff.net>
+In-Reply-To: <YO4SEp/B4826sc+j@coredump.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 14 Jul 2021 10:13:38 +0200
+Message-ID: <CAN0heSp1eJmeMTq-ECMUVh=hBPRTEkQeU0-3YXvtaDdZtU1sSA@mail.gmail.com>
+Subject: Re: [PATCH v2] load_ref_decorations(): fix decoration with tags
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Jul 14 2021, Elijah Newren via GitGitGadget wrote:
-
-> From: Elijah Newren <newren@gmail.com>
+On Wed, 14 Jul 2021 at 00:22, Jeff King <peff@peff.net> wrote:
 >
-> A few places in the docs implied that rename/copy detection is always
-> quadratic or that all (unpaired) files were involved in the quadratic
-> portion of rename/copy detection.  The following two commits each
-> introduced an exception to this:
+> On Tue, Jul 13, 2021 at 11:52:53PM +0200, Martin =C3=85gren wrote:
 >
->     9027f53cb505 (Do linear-time/space rename logic for exact renames,
->                   2007-10-25)
->     bd24aa2f97a0 (diffcore-rename: guide inexact rename detection based
->                   on basenames, 2021-02-14)
+> > > Totally forgot about that one; thanks.
+> >
+> > Do you have any suggestions for how this could be explained better? I
+> > waffled on whether to add that paragraph to the commit message and when
+> > I finally did, it seems it got a little bit too succinct.
+> >
+> > I'm about to check out for today. Maybe in the morning I can think of
+> > some clarification.
 >
-> (As a side note, for copy detection, the basename guided inexact rename
-> detection is turned off and the exact renames will only result in
-> sources (without the dests) being removed from the set of files used in
-> quadratic detection.  So, for copy detection, the documentation was
-> closer to correct.)
+> My attempt is below. Most of the new explanation is near the end, but I
+> tweaked a few other things.
 >
-> Avoid implying that all files involved in rename/copy detection are
-> subject to the full quadratic algorithm.  While at it, also note the
-> default values for all these settings.
+> Your original said:
 >
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  Documentation/config/diff.txt  |  7 ++++---
->  Documentation/config/merge.txt | 10 ++++++----
->  Documentation/diff-options.txt |  9 +++++----
->  3 files changed, 15 insertions(+), 11 deletions(-)
+>   The reason this happens is in the loop where we try to peel the tags,
+>   we won't necessarily have parsed that first object. If we haven't, its
+>   `tag` will be NULL, so nothing will be displayed, and its `tagged`
+>   will also be NULL, so we won't peel any further.
 >
-> diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
-> index 2d3331f55c2..e26a63d0d42 100644
-> --- a/Documentation/config/diff.txt
-> +++ b/Documentation/config/diff.txt
-> @@ -118,9 +118,10 @@ diff.orderFile::
->  	relative to the top of the working tree.
->  
->  diff.renameLimit::
-> -	The number of files to consider when performing the copy/rename
-> -	detection; equivalent to the 'git diff' option `-l`. This setting
-> -	has no effect if rename detection is turned off.
-> +	The number of files to consider in the exhaustive portion of
-> +	copy/rename detection; equivalent to the 'git diff' option
-> +	`-l`.  If not set, the default value is 400.  This setting has
-> +	no effect if rename detection is turned off.
+> and my earlier explanations were not thinking of the "tag" field at all,
+> which made me worried there was another subtle bug in not parsing the
+> tag earlier. But I don't think so. We don't look at the "tag" field for
+> setting the annotation; it always comes from the refname. So the
+> paragraph above should not mention "tag" at all.
 
-For both this...
+Thanks for correcting that. The parsed-ness of "obj" affects whether the
+decoration is shown at all. I originally concluded that when the
+decorations are eventually displayed, it was something like "if ->tag is
+non-NULL, display it". But that's obviously not the case. It's more like
+"->tagged is NULL, so I have no idea where to place this decoration".
 
->  diff.renames::
->  	Whether and how Git detects renames.  If set to "false",
-> diff --git a/Documentation/config/merge.txt b/Documentation/config/merge.txt
-> index 6b66c83eabe..aca0c92dbe6 100644
-> --- a/Documentation/config/merge.txt
-> +++ b/Documentation/config/merge.txt
-> @@ -33,10 +33,12 @@ merge.verifySignatures::
->  include::fmt-merge-msg.txt[]
->  
->  merge.renameLimit::
-> -	The number of files to consider when performing rename detection
-> -	during a merge; if not specified, defaults to the value of
-> -	diff.renameLimit. This setting has no effect if rename detection
-> -	is turned off.
-> +	The number of files to consider in the exhaustive portion of
-> +	rename detection during a merge.  If not specified, defaults
-> +	to the value of diff.renameLimit.  If neither
-> +	merge.renameLimit nor diff.renameLimit are specified, defaults
-> +	to 1000.  This setting has no effect if rename detection is
-> +	turned off.
+> I also beefed up the test a bit. All this talk of parsing made me want
+> to make sure we were covering tags-of-tags correctly (which I think we
+> are both before and after the patch). After adding that, the expected
+> decoration output was getting quite cluttered. So I tweaked the test to
+> make a new commit, give the tags sensible names, and just look at that
+> one commit.
 
-...and this we should really have some wording to the effect of:
+> From: Martin =C3=85gren <martin.agren@gmail.com>
 
-    ..., defaults to XYZ. The exact (or even approximate) default of XYZ
-    should not be relied upon, and may be changed (or these limits even
-    removed) in future versions of git.
+At this point, I think it's fair to say that you've done most of the
+authoring here. I wouldn't be at all offended if you took the credit for
+this patch. It's your code diff, it's your test, and now it's even your
+*updated* test, plus half the commit message. :)
 
-I.e. let's distinguish a "this is how it works now, FYI" from a forward
-promise that it's going to work like that forever.
+Here's that added half of the message:
 
-Which also leads me to:
+> The simplest way to do this is to just conditionally parse before the
+> loop:
+>
+>   if (obj->type =3D=3D OBJ_TAG)
+>           parse_object(&obj->oid);
+>
+> But we can observe that our tag-peeling loop needs to peel already, to
+> examine recursive tags-of-tags. So instead of introducing a new call to
+> parse_object(), we can simply move the parsing higher in the loop:
+> instead of parsing the new object before we loop, parse each tag object
+> before we look at its "tagged" field.
+>
+> This has another beneficial side effect: if a tag points at a commit (or
+> other non-tag type), we do not bother to parse the commit at all now.
+> And we know it is a commit without calling oid_object_info(), because
+> parsing the surrounding tag object will have created the correct in-core
+> object based on the "type" field of the tag.
+>
+> Our test coverage for --decorate was obviously not good, since we missed
+> this quite-basic regression. The new tests covers an annotated tag
+> (showing the fix), but also that we correctly show annotations for
+> lightweight tags and double-annotated tag-of-tags.
 
->  merge.renames::
->  	Whether Git detects renames.  If set to "false", rename detection
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index 32e6dee5ac3..11e08c3fd36 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -588,11 +588,12 @@ When used together with `-B`, omit also the preimage in the deletion part
->  of a delete/create pair.
->  
->  -l<num>::
-> -	The `-M` and `-C` options require O(n^2) processing time where n
-> -	is the number of potential rename/copy targets.  This
-> -	option prevents rename/copy detection from running if
-> +	The `-M` and `-C` options have an exhaustive portion that
-> +	requires O(n^2) processing time where n is the number of
-> +	potential rename/copy targets.  This option prevents the
-> +	exhaustive portion of rename/copy detection from running if
->  	the number of rename/copy targets exceeds the specified
-> -	number.
-> +	number.  Defaults to diff.renameLimit.
+Very well described.
 
-This mention of O(n^2). This is not an issue with your patch/series, nd
-this is an improvement.
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
+> Signed-off-by: Jeff King <peff@peff.net>
 
-But as a side-comment: Do we explain somewhere how exactly this
-{diff,merge}.renmeLimit=N works for values of N? It's probably fine to
-continue to handwave it away, but is there anything that say tells a
-user what happens if they have 400 files in their repository in a "x"
-directory and "git mv x y"? Will it work, but if they add a 401th file
-it won't for diffs?
+If you take authorship of this, I think this could be something like
 
-I *think* given a skimming of previous discussions that it's "no",
-i.e. that this just kicks in for these expensive cases, and e.g. for
-such a case of moving the same tree OID from "x" to "y" we'd
-short-circuit things, but maybe I'm just making things up at this point.
+Reported-by: Martin =C3=85gren <martin.agren@gmail.com>
+Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+Reviewed-by: Martin =C3=85gren <martin.agren@gmail.com>
 
-Feel free to ignore me here, I guess this amounts to a request that it
-would be great if we could point to some docs about how this works. It's
-probably too much detail for Documentation/config/{merge,diff}.txt, so
-maybe a section in either of git-{diff,merge}.txt ?
+Martin
