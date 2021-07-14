@@ -2,91 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F41BDC12002
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 22:26:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D9A5C12002
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 22:27:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D69D4613CA
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 22:26:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 53164613C9
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 22:27:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233625AbhGNW3E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 18:29:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60514 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230438AbhGNW3B (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 18:29:01 -0400
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ACD6C06175F
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 15:26:08 -0700 (PDT)
-Received: by mail-il1-x12d.google.com with SMTP id h3so3140849ilc.9
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 15:26:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=HjKp1MLaeHkUpN9OIHP0YzhQdsQLSWdfGT3xD8w2eVQ=;
-        b=Wpya8ODW2tDxa8lO3wOmS8drg2nYJ5fx1IGGlTSmz7Psxz/jv2sxyjKBYbYz1XgtY3
-         vL0zPSHRhfn07rtFHo1u3f7MA00YElLAB064fMAqAEiLueowZZk6b+VsFs7xnriPnLpJ
-         0Eqys39/j7RcHBeM9k/pDF3OwZPbtBqI9ce/6COXoBIA3hHPVctEtukozGw4tZ3JZz7W
-         D2ImmyGn0LnMEOjjPniWv6YCCg0WiyLQqH9G8iTMXLOxjBxIy7Zz3AVidvmLh6foMzE9
-         vlFYDyyHA48Z/szIHVOCbEEjoobxAJat+d95sv6xfKrhrjJwmZAFQzwcbEB8AS9HdgB/
-         Ki6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=HjKp1MLaeHkUpN9OIHP0YzhQdsQLSWdfGT3xD8w2eVQ=;
-        b=NRoNhGpk76NEFTKuQUoZS0CnPS/8zx1xHWjGVYERSg+Nq+zaipMN8Xc2NUGygS/QMZ
-         eYadvuz5H/NG/oyjWIQEz/uwZ7EoebHX+DbaAa1X7N1W+wR7MZKKq0ThnQ3e9nZk8L4A
-         bdj6AqYW5BPLfwH7xMQs9pEjaqOW5H/BzsIEPvm8eBT4w8yUBpvEbKFYaUE9VBVcEa9W
-         Sr2GXGtUYtWvb9OzQ65692DoSOW262YmVXfSmsxAwborkqR89iozapwHfp4BWL7qRS2f
-         /kxVJjcNW/8bsd1fhLCd7ol571Oy24a4jde8C8MyeNOQtp6BUA5+ZO16d+TmVP+keMA6
-         eizg==
-X-Gm-Message-State: AOAM531P1bZgrag2nxsXhidoPw5dq+rr0YXyZrKFd7C1yTh9iOd0A5lh
-        TJBuhDt7AuGLSExKcnsrh0oKmA==
-X-Google-Smtp-Source: ABdhPJyWnKnp6WzTFztddWLeUzdoPHUDRhwxHwioMbYm7CvomUE/HgvR3ckM35cMoEY2ZIcDSdWIww==
-X-Received: by 2002:a05:6e02:60c:: with SMTP id t12mr81126ils.121.1626301567175;
-        Wed, 14 Jul 2021 15:26:07 -0700 (PDT)
-Received: from localhost ([2600:1700:d843:8f:3f15:e25d:cd63:d019])
-        by smtp.gmail.com with ESMTPSA id h24sm319011ioj.32.2021.07.14.15.26.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 15:26:06 -0700 (PDT)
-Date:   Wed, 14 Jul 2021 18:26:06 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        German Lashevich <german.lashevich@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] doc/git-config: explain --file instead of referring
- to GIT_CONFIG
-Message-ID: <YO9kfhr3u/Xx1FQc@nand.local>
-References: <YO9YyTZdU4WadYGg@coredump.intra.peff.net>
- <YO9ZGTX9f1fOpTkh@coredump.intra.peff.net>
- <YO9jLvGlIVj3aI/m@nand.local>
- <YO9j6hrJFFTSEd6j@coredump.intra.peff.net>
+        id S230242AbhGNWa2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 18:30:28 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57488 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229983AbhGNWa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 18:30:28 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 92D16D268A;
+        Wed, 14 Jul 2021 18:27:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=FIdI9RaSlTLJU1gWH4TWGxRQaJmGTeHryXSCuK
+        K1QEI=; b=HWSCWWEc9dClS7x/AxktPEAbWcV6Xl3O3+2YJER4ospTTkFvKkgyfe
+        8DOw9JDuMSRzpnOBU7Dih5q09lxYIuFB1ada1TmtF2iuYYM9OmmSmdCe1IQbiodv
+        Hh9YcV3MpMFGxECvcJkTTq1yiA9f5ZveBd1frMWBtSm9LIDs7FKhw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8AA2FD2689;
+        Wed, 14 Jul 2021 18:27:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BEC07D2688;
+        Wed, 14 Jul 2021 18:27:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Subject: Re: [PATCH] ci: run `make sparse` as a GitHub workflow
+References: <pull.994.git.1626177086682.gitgitgadget@gmail.com>
+        <xmqqbl7525w7.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2107141124530.76@tvgsbejvaqbjf.bet>
+        <xmqq35sgzy0d.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2107142252060.59@tvgsbejvaqbjf.bet>
+        <xmqqa6movcly.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2107142350570.59@tvgsbejvaqbjf.bet>
+Date:   Wed, 14 Jul 2021 15:27:34 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2107142350570.59@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Thu, 15 Jul 2021 00:03:52 +0200 (CEST)")
+Message-ID: <xmqqsg0gttt5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YO9j6hrJFFTSEd6j@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: AFD317A0-E4F2-11EB-9E1C-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 14, 2021 at 06:23:38PM -0400, Jeff King wrote:
-> On Wed, Jul 14, 2021 at 06:20:30PM -0400, Taylor Blau wrote:
-> > Perhaps `.git/config` is clear enough; I definitely don't feel strongly
-> > about it.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+>> It wasn't quite obvious why we justify spending 370 minutes one more
+>> time only to rerun 30-second job, though.
 >
-> Yes, I noticed that, too. This is copied verbatim from the other
-> options, so if we were to do that, it should be done on top across the
-> whole file.
+> True.
+>
+> And this is not a new problem. Every time anything happens in those
+> `osx-gcc` or `osx-clang` jobs (e.g. that transient problem with the broken
+> pipes in t5516 [*1*], that's a fun one), a full re-run is necessary, or
+> else the commit and/or PR will remain marked as broken.
+>
+> In other words, while it is totally appropriate for me to explain this to
+> you in this here thread because it came up as a tangent, it would be
+> inappropriate to stick that explanation into this patch's commit message.
+> We do not make a habit of adding tangents that came up during patch
+> reviews into commit messages, and I do not intend to start such a habit
+> here, either.
 
-I'm dubious that s,.git/config,$GIT_DIR/config,g would be an improvement
-in clarity if done across the whole file, and I'd rather be consistent
-than not. So I think that it's fine as is.
+I do not agree; a brief mention "even though piling more and more on
+the primary workflow would make it even less convenient to re-run,
+it is already so bad that another one would not hurt too much more"
+would be a clue good enough to motivate others to do something about
+it if they feel like it.
 
-Thanks,
-Taylor
