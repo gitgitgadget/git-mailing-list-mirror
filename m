@@ -2,155 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDF76C1B08C
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 19:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D665C12002
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 20:00:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A60AF6109E
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 19:59:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2616D610D1
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 20:00:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235386AbhGNUCl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 16:02:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51960 "EHLO
+        id S240970AbhGNUDS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 16:03:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243695AbhGNUBR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 16:01:17 -0400
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37CE5C0613E0
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:52:28 -0700 (PDT)
-Received: by mail-il1-x12b.google.com with SMTP id w1so2758935ilg.10
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:52:28 -0700 (PDT)
+        with ESMTP id S240569AbhGNUBx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 16:01:53 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59FC1C021988
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:53:26 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id dt7so5182678ejc.12
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=yEOmlHVAh/dR1u4oLtYRu4YR6z+zE+VChpVsz7YeIVs=;
-        b=DVlG9vqYDls0hzj4wvPFlVEIY/5kWZSp+Lmsug172I7NOt58lbrupiY38wPh71ol1X
-         cpTGjr8p47IP7MrTHhNAcrxRDCjUwURDmKExVrlJoUCkR55x7gjCsT5LGQ+bbGr61pUC
-         kKDkAPg75tsVuiRYnFznr1uIjtZaKnO3bjZAtPSFa4mzah9KBWs3z6ce7bE90934x9Sx
-         ylJipskvdk7b3ftf4VSMHZqCJzNLvuJotoK+ouCWu0ifVkQduLIRcNa/njfpdE4DEopS
-         lgoRSgpYH+linHpy44wsN1E85H8o49NZkC/YSMuD8R7+csSr+tE79cbeDhJtAGGUqmYW
-         pU6Q==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=h/YJ/nZHofbZGIVPkF43Ls7KHbov+FWwaWvIQjr24d4=;
+        b=gdl15WUdCzYLahQS+QgpL7C3qUFm/Mz0TWliNn3mRUb96B+opDmtL6M4y1eQIjViyX
+         elBAw/KMhTYldRntJVvKanPyrXSH0uHrTUDT9tE3F9m70HECXACSjcY0e9UiwQUGDC1u
+         hT7u6v/X5wFBtbMbocB8fRdkaTGZbYdeUp63YjD8qbu3Pkqb/ANrjmNH6VCUqMnPjrgr
+         lftyEgssKGwpXjr7vp1HozYN1LLLKYB655vrXD5XdcwOqmVjA5kBiJUw65VgVKFfUDNV
+         S8AaZ55QAhMLk4fYwlSjBscB1E8usSLjwBwHvyjA/xsHbSnqMXphLVBTpeTmSpjRAnBe
+         ljqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=yEOmlHVAh/dR1u4oLtYRu4YR6z+zE+VChpVsz7YeIVs=;
-        b=scXefYp9r4RGQb12F9S7jYtUcKqyWwLuo4GbW8QI4fuesMLKhoXN34GUo3hfRvG39u
-         dnWrR2prFJeYMXS7E1UyzMVPQEubakt9x/LP6GC6t6GyNZjAyNwgfsThyBvirpSRCpmU
-         b9nkTyMi34oNMrJAA0/lKhdnHCzXQHr0NaG2zAnLKdYaqy+BafaTr6srN1wEwJMJP9KS
-         S/RnWDrh0IZxI06NJQrFxnHiq3qRmd8wqUmxHfMoPhPzffzx5vmkdpt5nORqQZTrfHKD
-         kpgiM25cXPnSGIofiUEqtwy2CslAd2+WaOJXmYf9htT92ZGg8wM314B4tQ0ihHWn+tPZ
-         p+pw==
-X-Gm-Message-State: AOAM532GT4UozIK1gmv5Y2W4iPwKmYcdiw3RHOsPIDb9+ImMCNg/anCy
-        Hg+sQupIezq+xDyXFrImrhWxtA==
-X-Google-Smtp-Source: ABdhPJz4MF9oslhWu6Ftr0Mg64ykcqhHxV8euOWJsOCRf3/AmZ8y6FppPF3cdsSYVt6ZUFVXKji//Q==
-X-Received: by 2002:a92:a00e:: with SMTP id e14mr7769725ili.126.1626292347665;
-        Wed, 14 Jul 2021 12:52:27 -0700 (PDT)
-Received: from localhost ([2600:1700:d843:8f:3f15:e25d:cd63:d019])
-        by smtp.gmail.com with ESMTPSA id l4sm1653115ilh.41.2021.07.14.12.52.27
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=h/YJ/nZHofbZGIVPkF43Ls7KHbov+FWwaWvIQjr24d4=;
+        b=SL/I9Amv71nd2x4HzyHgPTMcK9VP25eVhMs1JxakZQPkt3L0/o3tWb36MYLs5Le/D8
+         As1kIvX3QUoll51Su+MRostDYAMMW/Px4pRdkm5s9qvyre7kECtPgcZ6e6Du6n5E7V/J
+         tCgAyhfckbd7UcYaTa14hCr1zPEXq5+sG36idIrCtAyENEyJAO+FKg73P7yX3wk0XXuz
+         FsFQXoXwJPwgHWbIQ3uTyjHWLtyRAf3OGnASAMabiAX8NyurSgpGPl5EjhkJ/HWLgwvO
+         5MA5hcrtNsLnUNKjKArIOLL6WbI9rTDcm7HPX/yPHRxhQy3CyoCPQKvzE0JTxTXf/xYM
+         kZLA==
+X-Gm-Message-State: AOAM5300CjDh8673gIyg19UTjyQW2ir0QUyv/4w0EhtTWWtSkzWdfFxb
+        2jn57GupnMynIKqykOOd76U=
+X-Google-Smtp-Source: ABdhPJxN+9H9btYj/yEfkqZzC7CY4wksVxj2Un/L44ESQBz4VidzBGMf+BE5sONwP8JVrGQv0ghOyA==
+X-Received: by 2002:a17:906:1c43:: with SMTP id l3mr14111648ejg.291.1626292404806;
+        Wed, 14 Jul 2021 12:53:24 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id i10sm1433671edf.12.2021.07.14.12.53.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 12:52:27 -0700 (PDT)
-Date:   Wed, 14 Jul 2021 15:52:26 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        Wed, 14 Jul 2021 12:53:24 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Martin Fick <mfick@codeaurora.org>
 Cc:     Taylor Blau <ttaylorr@github.com>, Sun Chao <16657101987@163.com>,
+        Taylor Blau <me@ttaylorr.com>,
         Sun Chao via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Subject: Re: [PATCH v2] packfile: freshen the mtime of packfile by
  configuration
-Message-ID: <YO9AeudYPmWRnRNb@nand.local>
+Date:   Wed, 14 Jul 2021 21:41:42 +0200
 References: <pull.1043.git.git.1625943685565.gitgitgadget@gmail.com>
- <pull.1043.v2.git.git.1626226114067.gitgitgadget@gmail.com>
- <87wnpt1wwc.fsf@evledraar.gmail.com>
- <YO5RZ0Wix/K5q53Z@nand.local>
- <ACE7ECBE-0D7A-4FB8-B4F9-F9E32BE2234C@163.com>
- <YO8XrOChAtxhpuxS@nand.local>
- <877dhs20x3.fsf@evledraar.gmail.com>
- <YO87ax2JpLndc5Ly@nand.local>
- <87y2a8zntw.fsf@evledraar.gmail.com>
+ <YO8XrOChAtxhpuxS@nand.local> <877dhs20x3.fsf@evledraar.gmail.com>
+ <12435060.NHVMl2pYiE@mfick-lnx>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <12435060.NHVMl2pYiE@mfick-lnx>
+Message-ID: <87v95czn7q.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87y2a8zntw.fsf@evledraar.gmail.com>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 14, 2021 at 09:32:26PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> > But if that isn't possible, then I find introducing a new file to
-> > redefine the pack's mtime just to accommodate a backup system that
-> > doesn't know better to be a poor justification for adding this
-> > complexity. Especially since we agree that rsync-ing live Git
-> > repositories is a bad idea in the first place ;).
-> >
-> > If it were me, I would probably stop here and avoid pursuing this
-> > further. But an OK middle ground might be core.freshenPackfiles=<bool>
-> > to indicate whether or not packs can be freshened, or the objects
-> > contained within them should just be rewritten loose.
-> >
-> > Sun could then set this configuration to "false", implying:
-> >
-> >   - That they would have more random loose objects, leading to some
-> >     redundant work by their backup system.
-> >   - But they wouldn't have to resync their huge packfiles.
-> >
-> > ...and we wouldn't have to introduce any new formats/file types to do
-> > it. To me, that seems like a net-positive outcome.
+
+On Wed, Jul 14 2021, Martin Fick wrote:
+
+> On Wednesday, July 14, 2021 8:19:15 PM MDT =C3=86var Arnfj=C3=B6r=C3=B0 B=
+jarmason wrote:
+>> The best way to get backups of git repositories you know are correct are
+>> is to use git's own transport mechanisms, i.e. fetch/pull the data, or
+>> create bundles from it.=20
 >
-> This approach is getting quite close to my core.checkCollisions patch,
-> to the point of perhaps being indistinguishable in practice:
-> https://lore.kernel.org/git/20181028225023.26427-5-avarab@gmail.com/
+> I don't think this is a fair recommendation since unfortunately, this can=
+not=20
+> be used to create a full backup. This can be used to back up the version=
+=20
+> controlled data, but not the repositories meta-data, i.e. configs, reflog=
+s,=20
+> alternate setups...
 
-Hmm, I'm not sure if I understand. That collision check is only done
-during index-pack, and reading builtin/index-pack.c:check_collision(),
-it looks like we only do it for large blobs anyway.
+*nod*
 
-> I.e. if you're happy to re-write out duplicate objects then you're going
-> to be ignoring the collision check and don't need to do it. It's not the
-> same in that you might skip writing objects you know are reachable, and
-> with the collisions check off and not-so-thin packs you will/might get
-> more redundancy than you asked for.
+FWIW at an ex-job I helped systems administrators who'd produced such a
+broken backup-via-rsync create a hybrid version as an interim
+solution. I.e. it would sync the objects via git transport, and do an
+rsync on a whitelist (or blacklist), so pickup config, but exclude
+objects.
 
-We may be talking about different things, but if users are concerned
-about SHA-1 collisions, then they should still be able to build with
-DC_SHA1=YesPlease to catch shattered-style collisions.
+"Hybrid" because it was in a state of needing to deal with manual
+tweaking of config.
 
-Anyway, I think we may be a little in the weeds for what we are trying
-to accomplish here. I'm thinking something along the lines of the
-following (sans documentation and tests, of course ;)).
+But usually someone who's needing to thoroughly solve this backup
+problem will inevitably end up with wanting to drive everything that's
+not in the object or refstore from some external system, i.e. have
+config be generated from puppet, a database etc., ditto for alternates
+etc.
 
---- >8 ---
+But even if you can't get to that point (or don't want to) I'd say aim
+for the hybrid system.
 
-diff --git a/object-file.c b/object-file.c
-index f233b440b2..87c9238365 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1971,9 +1971,22 @@ static int freshen_loose_object(const struct object_id *oid)
- 	return check_and_freshen(oid, 1);
- }
+This isn't some purely theoretical concern b.t.w., the system using
+rsync like this was producing repos that wouldn't fsck all the time, and
+it wasn't such a busy site.
 
-+static int can_freshen_packs = -1;
-+static int get_can_freshen_packs(void)
-+{
-+	 if (can_freshen_packs < 0) {
-+		if (git_config_get_bool("core.freshenpackfiles",
-+					&can_freshen_packs))
-+			can_freshen_packs = 1;
-+	 }
-+	 return can_freshen_packs;
-+}
-+
- static int freshen_packed_object(const struct object_id *oid)
- {
- 	struct pack_entry e;
-+	if (!get_can_freshen_packs())
-+		return 0;
- 	if (!find_pack_entry(the_repository, oid, &e))
- 		return 0;
- 	if (e.p->freshened)
+I suspect (but haven't tried) that for someone who can't easily change
+their backup solution they'd get most of the benefits of git-native
+transport by having their "rsync" sync refs, then objects, not the other
+way around. Glob order dictates that most backup systems will do
+objects, then refs (which will of course, at that point, refer to
+nonexisting objects).
+
+It's still not safe, you'll still be subject to races, but probably a
+lot better in practice.
