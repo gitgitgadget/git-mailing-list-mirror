@@ -8,142 +8,113 @@ X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 007BBC07E9A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 09:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46ABEC07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 10:09:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF61B613AB
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 09:13:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 22EAB6044F
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 10:09:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238365AbhGNJPw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 05:15:52 -0400
-Received: from mout.gmx.net ([212.227.15.18]:60311 "EHLO mout.gmx.net"
+        id S238976AbhGNKMT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 06:12:19 -0400
+Received: from mout.gmx.net ([212.227.15.19]:39605 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238123AbhGNJPv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 05:15:51 -0400
+        id S238359AbhGNKMT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 06:12:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1626253974;
-        bh=xl08Oc4Y20bujV5kLl6myg4mOI9J9dKsN3ufIgg1tjc=;
+        s=badeba3b8450; t=1626257360;
+        bh=OAZF3uCjx+FggsLcPvz5VP7Eu7Wy01IOpLy1gV7WJvw=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=iR6XhDlakpi+lTVhVEGMYsE+hKf1WFi9tPl/WKlBVM24Nw/TNImUkvRPYHUZZ5ZsN
-         zbNC4EIrfqy96hzmDF/ffDPhZxubq/OkRyOIDbbVvAtnoXiGXh7RCW6V0bLzJFQlpF
-         cVM/Hms0xyRQIggn9ohtwlG9x1xVWjfo1EYTJ+7Q=
+        b=L9rKQBhR2i29d195JHRdCVUEKKTB/0ncLGCCyPkZd7KN5G31WZ/bQsOw/lA8Dqfvg
+         DwaRcAzw41q4YlYZ/tcbPYvq6eZByeYu3rehYcCYwvEbWp/Ud82V++MwwY2KyFEE6q
+         Ar9ObVUMovns5ZIiTbEFgXtKh8fvf1NhhV4AxVRY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.23.219.153] ([89.1.215.141]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MBm1e-1lrSPK13TY-00C9YT; Wed, 14
- Jul 2021 11:12:54 +0200
-Date:   Wed, 14 Jul 2021 11:12:52 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbRfv-1lSM8X1zEv-00br4M; Wed, 14
+ Jul 2021 12:09:20 +0200
+Date:   Wed, 14 Jul 2021 12:09:18 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
-        <congdanhqx@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>
+        git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
+        <congdanhqx@gmail.com>
 Subject: Re: [PATCH] ci: run `make sparse` as a GitHub workflow
-In-Reply-To: <YO3FelB47QrZwSa6@danh.dev>
-Message-ID: <nycvar.QRO.7.76.6.2107141109420.76@tvgsbejvaqbjf.bet>
-References: <pull.994.git.1626177086682.gitgitgadget@gmail.com> <YO3FelB47QrZwSa6@danh.dev>
+In-Reply-To: <xmqqbl7525w7.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2107141124530.76@tvgsbejvaqbjf.bet>
+References: <pull.994.git.1626177086682.gitgitgadget@gmail.com> <xmqqbl7525w7.fsf@gitster.g>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-727180886-1626253974=:76"
-X-Provags-ID: V03:K1:K1eZtE2bqiWBaQWqcA3Myt09yze3bSpxoHizwvsqbIE+OdN7RE7
- b7t4SD6wWHivXWZXop7435IewlAuS/tPDrxhCspuNuC5mLu87PPHXCHr7a873AlaZnFhWYL
- JnDzW17RQ6rkChTY+SS9AXRPczZDMID2kIlBzAcUocE//dSqb7l6uWeOYCLvNaOWnp3Qng3
- n+/ixmL18QAYYC6ct/CXg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:5wQSDGaMzsY=:We8JFafFgyIOJHh8e3I0KU
- po5me7iW08mcvJIBSJDvGBUNPieWwljraxM1hKQQChu5u320uLMHFhyNd7y5l7SpjcJM5gkqW
- gz93v2KXA4vMlYn9a3ZiKaWMTh+2fOeFYxMrwyVNSW41e/ao3f/4qHUzzWUfPTbw9+YGMxACz
- 8lTV13bHiVSNRVwtwvvsGNByQsp9Lt+ytMG7k4UsIpUBkTF0hh+Pg8oLHJ1sQYxc86RMxhU2W
- 968C0wSvYgNKMeBs05/16HHrjnKowmLkHsMyJO69hqGHpPiAKqSOhCuktBqB3XZ/elltr74Kd
- UrX0CeD+e90sg//TwBNs6z74dzgMqKyvTBmy0JuzRHkPwXRSkV4Qtb9beaIl4ZpUHD/eKh4sS
- gth+RzqoRjLmwaJzxtEGtr8hUWtjur3EY8AZ9kuMMxYfHZQh98loKfcEwaPuAXeLoXEsibafT
- XiXdRd0MsxxvvU1DBj8EZHTkQu5ug/67+GN/r5brqACagkLEeGI56ev0tBOvW0SQc+Nh/rZ8g
- v1GyHECj1BudzldoGM2+8ME1WbyrqFkp8ZL14I7koF9olgr5EX508dCxWu1TwkkmfTx2GWAXG
- 99C2xch92zg4o8ZKtwbfOqbjc1SK+3Z9gY+JkmDEc3wKDXKGEUWBBoMil9CYPYdqpuXZAMMnD
- FvP2xMhlXR0Ed6bw5iQk2Aj1deQucK77dVv96FdjlPRUKojvIYsCzXewt5HKylstA+zrDgEjd
- 4RZxjv/dWLlFogI6vq/GIUpQ5AgeSsv/oOvJt2mtPFALesq9p6rbtDm1aW6p2cVuYefIc2a/a
- b3FclCxub2AOM3hfDp/gcYPCo4UIDwaU8t0eQPHZ/dlwPixI6/TkQcMx2PjU/Q5q7B1K/SyZ4
- 8QPUB+tEawQXUww55kIYQJhLXBhTiXd9N4ThJO+qwZGKLHZcdH8AVmhoCE8dxSpFrqTsZ89i3
- Vm3EOiiBR7bHW+WMsMZHr+k6HzJmscCDn+RuY0Xs/UDiS10J4oetXd1M8mIfi8S98l2Ejqj4Q
- ptbIpFuM4PShK4fvUx8ng76fK19XvOCWtaMlfcG7Sv33voW+SBc3IcUXd3MoZsSg9p72q16oK
- VHRFDmx5fidmgHd6D2eRuEjVCj2MrO5BnZuzw/2mhuLWwjLVp+3ENSO9Q==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:pR6BS4EEIKTODv5bBvZb8POAwcWtH2Yt2dotK534i3XOPeOBYrw
+ k0myONR+FX7HWYAJj1jeDe5QhQ86cUauWp7YNXb4dvaw7/vgCt3jQfSrfCmT8BLY1RyvbEP
+ WTgekBnA7O2025L5uqIuf53HUZk6ZGbjv/vzHcesymqrYf06sAXA4WFqrzdJTLCeLIqcMQo
+ qb6YkOnaiiVr5X4CSu1ow==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:AWRmIs8SZsU=:aprlzQURHYtZkHYv/P6G0I
+ /Fg4k5hPiQ6nQaXXgTwt+D4D+SoNeEJle3dfWLdKQISDfiWZmA6cStcGvoU+wcZGwl2PbHnDj
+ l6c8cQjkvEqSVrDByaDCDbEV/8trgQYspFElKGU7M3dI2D1yLU6w6i2bFPUTd0V596YBo/uiV
+ e72dzeCM9Amy3BonW07dK7nKqkmSG+b9jbT35AqGc5RrNU09ht3342DlmgoujnkBoqKD1IFyS
+ PgeZyUvU2cGHEaFxZWp1q3ObYxrQKBLiKioFl1Yy4rSR8CHxc0u3QRf8jHy6Yc6BHcdAOE7yX
+ M051UWJicchpAaAd3S21ZjCPXrb1HrBSQGEYfHF7ryGhqgYfHhQrAvW8G9Mb43C9u78BhXhQV
+ ERJFCpA4VaRiy0ce0arKfwz5ts3fL7VBVXnoLHouGNiRFWWRTqxzhXmWBtLpi93bU+zcDwtA2
+ zNwzdiyygXa1vuZHKfJ6wwQlwN6HrHPSUfIFMa1f0X7UwVG4x4TioZhrpbYRjrD3pxdiWMd2k
+ ok7lFe5aZ2P+jjAtBbThkIstut/E6o6xAG5yaVwmCEm5CefzCHGV2f0d5YNhrq+igh39Rjob+
+ EcsUuviVp58l27hsOFQHJLSKnglgnQibs3kM4807ZRRF2t0yTcWBIyeqjxqu0QEYwTqkupLRX
+ yrIjJDMTrJlCbZUafwxczOKV2vI6qYjhFBKkAA3N7ocFjMuQUPhj3ysdMtRoSKDJh6V0U9BEc
+ Fg7kzcQD9Hrwp1zUPC4Ix06IRFQVJDotuP0mVFtdDq5uuLbcV9iVmkA/H48uyBdfdhIwyzy+a
+ XMwawL4FdSRbboyxtXB0TsG2nXzKAqQQeJkUG6sHmR1UCY4GhLHkK9SJAz2Ta3jjk0LskteEx
+ metqqJolHkd/aF8NpfAl9dvsNFdDII6/qiIw/caEiDJNmMta2bWyscAzZ8WUWGk1dxbV4zPUA
+ sn+D6tYhgFHe7HeQHpCEinfdr9kvqYb5VXPUAyfVkt1a4Pj2PCxZm0ZX52mu8uOuLqfv1/FXW
+ PcTor+ol2/rQIRrA6ABgQ5Yqenjgpr11M6DI/RHPOUkasTOY3UyMWBFAPr5QATZnTv09OEcmE
+ Tn3Uqo16UBbm/FNqknLorzrqGdVUxoj+y0ld3JFpyDd4HTqIt/dbBll6g==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-727180886-1626253974=:76
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Tue, 13 Jul 2021, Junio C Hamano wrote:
 
-Hi Danh,
-
-On Tue, 13 Jul 2021, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
-
-> On 2021-07-13 11:51:26+0000, Johannes Schindelin via GitGitGadget <gitgi=
-tgadget@gmail.com> wrote:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
 > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > [...]
-> > diff --git a/.github/workflows/run-sparse.yml b/.github/workflows/run-=
-sparse.yml
-> > new file mode 100644
-> > index 00000000000..25f6a6efb40
-> > --- /dev/null
-> > +++ b/.github/workflows/run-sparse.yml
-> > @@ -0,0 +1,22 @@
-> > +name: Run `sparse`
+> >  .github/workflows/run-sparse.yml | 22 ++++++++++++++++++++++
+> >  1 file changed, 22 insertions(+)
+> >  create mode 100644 .github/workflows/run-sparse.yml
 >
-> Markdown doesn't work with Workflow's name.
-> Please remove those backticks.
+> We choose to do this as a separate new workflow not as part of the
+> main one because this is more like check-whitespace where there is
+> no room for tests over the matrix of compilers and platforms play
+> any useful role?
 
-The backticks are here not to render this as Markdown, but to make it
-easier to parse what is said. "Run sparse" is technically an English
-sentence, and a grammatically incorrect and confusing one. By enclosing
-the word "sparse" in backticks, I make sure that the reader will
-understand that this refers to a programming term.
+Ubuntu's `sparse` package was historically not up to date, not enough at
+least to support Git's `make sparse`. Hence I created an Azure Pipeline to
+build an up to date package, and since v1 used the GitHub Action
+`get-azure-pipelines-artifact`. As a consequence, I thought, that this was
+inappropriate for `main.yml` because we still try to _somewhat_ keep that
+in sync with `.travis.yml`.
 
-FWIW I use backticks on this here mailing list all the time. And I am
-fairly certain that no reader renders my mails as Markdown before reading
-them.
+However, I realized that there are already too many differences (all the
+Windows builds for example, which our Travis CI definition did not follow
+suite, even after Travis CI got support for Windows agents).
 
-> > +on: [push, pull_request]
-> > +
-> > +jobs:
-> > +  sparse:
-> > +    runs-on: ubuntu-20.04
-> > +    steps:
-> > +    - name: Download the `sparse` package
-> > +      uses: git-for-windows/get-azure-pipelines-artifact@v0
-> > +      with:
-> > +        repository: git/git
-> > +        definitionId: 10
-> > +        artifact: sparse-20.04
-> > +    - name: Install the `sparse` package
-> > +      run: sudo dpkg -i sparse-20.04/sparse_*.deb
-> > +    - name: Install a couple of dependencies
-> > +      run: |
-> > +        sudo apt-get install -q -y libssl-dev libcurl4-openssl-dev li=
-bexpat-dev gettext zlib1g-dev
-> > +    - uses: actions/checkout@v2
-> > +    - name: make sparse
-> > +      run: make sparse
-> > \ No newline at end of file
->
-> The last step's name and run is the same. We can just drop name, it'll
-> use run as name.
+So I folded it into the regular GitHub workflow.
 
-Good point.
+There is one really big downside to that, though: currently, there is no
+way to re-run only failed jobs in GitHub workflows (this is in contrast to
+Azure Pipelines). You can only re-run _all_ jobs.
 
-> Anyway, remember the newline
+Which means that the likelihood of a run to fail increases with the number
+of jobs in said run (even innocuous problems such as transient failures to
+download an Ubuntu package), and it also makes it much more painful to
+re-run the entire thing because you may well end up wasting a grand total
+of ~370 minutes even if only a 30-second-job would need to be re-run.
 
-Right. I edited this in VS Code, which does not care for that trailing
-newline, and ran it through GitHub Actions, which also does not care for
-that trailing newline, and the `check-whitespace` job also did not point
-out any issue, therefore I missed this.
+Having said that, I think you're right and the upside of keeping things
+together may outweigh that downside.
 
-Thanks,
+Ciao,
 Dscho
-
---8323328-727180886-1626253974=:76--
