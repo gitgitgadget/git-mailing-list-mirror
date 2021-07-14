@@ -2,136 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3807AC12002
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 20:20:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54A9DC12002
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 20:23:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1FDCA61370
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 20:20:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 303BF61260
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 20:23:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237138AbhGNUXn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 16:23:43 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51797 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236032AbhGNUXl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 16:23:41 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 087A7D183E;
-        Wed, 14 Jul 2021 16:20:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=eDU7Y/8E7yFkKCPoBPL40metPHZl+DnMQJ1XQl
-        qZhHg=; b=P1YfqVAsa4KIbFeORcVDxT870ooSnOccocXA+vqRkWzZXxxeJqyhKt
-        2pEoCWJ2yhDguOWhmS45vEaNiH8sheZDFy18Yl2v4o7MSStQyYacCP8peQZj5XAy
-        t939plox0znFbMfhhkzdwfyk1w8bJ/d1NwDgvEdRRKiAL3CkRsy2Q=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F357BD183D;
-        Wed, 14 Jul 2021 16:20:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7B4D4D183B;
-        Wed, 14 Jul 2021 16:20:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Fabian Stelzer via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Hans Jerry Illikainen <hji@dyntopia.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        id S234346AbhGNU0j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 16:26:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59172 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231907AbhGNU0j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 16:26:39 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA544C06175F
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 13:23:46 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id h9so3738798oih.4
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 13:23:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=X7/Qxu47AWN8a4ax8CJsjkQMOOxYHFVzC2iiylqzbjw=;
+        b=N1NXD/f+i3C6sbFtcI2nwDgjmS2lJjsPmQlKw8NabHxyiiz1RoKXS+5EVvFInURRzd
+         AZPO9p8RCs+u/xmN/6ao+hoe6cv0zzHgY21WCvdIqb6BOZPCl17i+gVKAMZzsvTrqay1
+         b1mRJ4RCMYifw23+jC/IfadoYbJslP4BMa2rf5cRNB/OC5oLebxW6WKO1Irfx8z7n1PY
+         ACpIIOTcUnmKxIpsCMJg+fjyOlLuyGJui51L72/mN2kH1/Z0YLUtvoOCnMpN3NzP6zkB
+         S9y5E4GELTC8a7f4BhWkxP2++p2InvakOcOkKPn6KdP9q+6TnDfHcYruvT+08LjjhMDX
+         q1Zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=X7/Qxu47AWN8a4ax8CJsjkQMOOxYHFVzC2iiylqzbjw=;
+        b=Pr1i7FMpz/nAhoSZVPmgO+1ARoYsEcbHvuE0MdnB++JfkmVsX6DnNsDUF3MfmLY/Jl
+         RoKgIwtTzNL1T2/qmgUQctVY1idrS+weYZdNgm/NXlJtGqpmd45nclQE+Fm0tjCDTh5z
+         WnnMIH83JLI2M4CVuX6VE0EEtVLDLNOZKWyR2W4R0G9Oh8AdF2gzaSFukNsLtIVseJhT
+         ZhpbZDJxb084wrchew7AIkr7l08pybPWvRmlxtCJI0g3ZUAvpsTpF1eh5SkO24FnVbKZ
+         l7U6+GV/3m/NFGBMJYggreg2USGvxkntPVNTorjSBQ7uMVQdCExpJTDIolLlNd7tNShZ
+         EV7w==
+X-Gm-Message-State: AOAM530UMC1FjjUVW6rbXG6XmUdBA/BuLxMWYpUo7ed7BRmV/Y4rqxcD
+        Zyy9kLM5exOJRF2fG3sCxHYIy+wXxiG6fA==
+X-Google-Smtp-Source: ABdhPJzENlah/xyWZM3D3AWHJzHFwcyqhxrOhuAjA5FNEVB3S+r29kmxRGPQmRi+BhOHjxAu7JzK4g==
+X-Received: by 2002:aca:eb4e:: with SMTP id j75mr4219079oih.43.1626294226066;
+        Wed, 14 Jul 2021 13:23:46 -0700 (PDT)
+Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
+        by smtp.gmail.com with ESMTPSA id x30sm666826ote.44.2021.07.14.13.23.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jul 2021 13:23:45 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Luke Shumaker <lukeshu@lukeshu.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 3/9] ssh signing: retrieve a default key from ssh-agent
-References: <pull.1041.v2.git.git.1626092359713.gitgitgadget@gmail.com>
-        <pull.1041.v3.git.git.1626264613.gitgitgadget@gmail.com>
-        <b84b2812470ea45a85d624ec339f35bb0107493d.1626264613.git.gitgitgadget@gmail.com>
-Date:   Wed, 14 Jul 2021 13:20:47 -0700
-In-Reply-To: <b84b2812470ea45a85d624ec339f35bb0107493d.1626264613.git.gitgitgadget@gmail.com>
-        (Fabian Stelzer via GitGitGadget's message of "Wed, 14 Jul 2021
-        12:10:07 +0000")
-Message-ID: <xmqqr1g0ve8w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Subject: [PATCH v3 0/1] extra: new concept of extra components
+Date:   Wed, 14 Jul 2021 15:23:43 -0500
+Message-Id: <20210714202344.614468-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.32.0.38.g1d70fa854e
+In-Reply-To: <20210710234629.17197-1-felipe.contreras@gmail.com>
+References: <20210710234629.17197-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FA217174-E4E0-11EB-B159-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Fabian Stelzer via GitGitGadget" <gitgitgadget@gmail.com> writes:
+This patch series introduces the concept of extra components. These are
+components which are not yet part of the core but are good enough for
+distributions to ship, and in fact, they already do.
 
-> From: Fabian Stelzer <fs@gigacodes.de>
->
-> calls ssh-add -L and uses the first key
+This benefits everyone:
 
-Documentation/SubmittingPatches::[[describe-changes]].
+ 1. Distribution packagers that just want to do `make install`
+ 2. People who download git's source code and just want to do
+    `make install`
+ 3. Developers who have no idea what's production-level quality in
+    contrib/ and just want to do `make install`.
 
-> Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
-> ---
->  gpg-interface.c | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->
-> diff --git a/gpg-interface.c b/gpg-interface.c
-> index 3c9a48c8e7e..c956ed87475 100644
-> --- a/gpg-interface.c
-> +++ b/gpg-interface.c
-> @@ -467,6 +467,23 @@ int git_gpg_config(const char *var, const char *value, void *cb)
->  	return 0;
->  }
->  
-> +/* Returns the first public key from an ssh-agent to use for signing */
-> +static char *get_default_ssh_signing_key(void) {
+For now they'll have to do `make install install-extra`. But if the
+result is deemed correct, we might choose to add "install-extra" to the
+"install" target.
 
-Style.  Open and close braces around a function sit on their own
-lines by themselves.
+The measuring stick I'm using to gauge if a component in contrib belongs
+in extra is simple: are we already running tests for them with
+'make test'? If the answer is "yes, we do run tests", then the answer is
+"yes, it belongs in contrib".
 
-> +	struct child_process ssh_add = CHILD_PROCESS_INIT;
-> +	int ret = -1;
-> +	struct strbuf key_stdout = STRBUF_INIT;
-> +	struct strbuf **keys;
+We might want to move more components from contrib to extra once their
+tests are being run reliably.
 
-Whose releasing the resource held by "keys" when we return?
+And we might move some components from the core which aren't really part
+of the core to extra, like gitk, git-gui, git-p4, and git-svn.
 
-> +	strvec_pushl(&ssh_add.args, "ssh-add", "-L", NULL);
-> +	ret = pipe_command(&ssh_add, NULL, 0, &key_stdout, 0, NULL, 0);
+For now only part of contrib/completion is graduated to the new area.
 
-I often load about half a dozen keys to my ssh-agent so "ssh-add -L"
-will give me multi-line output.  I know you wrote "the first public
-key" above, but that does not mean users who needs to have multiple
-keys can be limited to use only the first key for signing.  There
-should be a way to say "I may have many keys for other reasons, but
-for signing I want to use this key, not the other ones".
+Since v2 I removed workdir from the list of graduates as Philippe Blain
+suggested.
 
-> +	if (!ret) {
-> +		keys = strbuf_split_max(&key_stdout, '\n', 2);
+Felipe Contreras (1):
+  completion: graduate out of contrib
 
-Let's not use strbuf_split_*() that is a horribly wrong interface.
-You do not want a set of elastic buffer after splitting.  You only
-are peeking the first line, no?  You are leaking keys[] array and
-probably keys[1], too.
+ Makefile                                          | 10 ++++++++++
+ {contrib => extra}/completion/git-completion.bash |  0
+ {contrib => extra}/completion/git-completion.zsh  |  0
+ {contrib => extra}/completion/git-prompt.sh       |  0
+ t/t9902-completion.sh                             |  8 ++++----
+ t/t9903-bash-prompt.sh                            |  2 +-
+ 6 files changed, 15 insertions(+), 5 deletions(-)
+ rename {contrib => extra}/completion/git-completion.bash (100%)
+ rename {contrib => extra}/completion/git-completion.zsh (100%)
+ rename {contrib => extra}/completion/git-prompt.sh (100%)
 
-	eol = strchrnul(key_stdout.buf, '\n');
-	strbuf_setlen(&key_stdout, eol - key_stdout.buf);
+Range-diff against v2:
+1:  3f44bc3253 = 1:  3f44bc3253 completion: graduate out of contrib
+2:  af9b24eeb1 < -:  ---------- git-new-workdir: graduate out of contrib
+-- 
+2.32.0.38.g1d70fa854e
 
-or something along that line, perhaps?
-
-> +		if (keys[0])
-> +			return strbuf_detach(keys[0], NULL);
-> +	}
-> +
-> +	return "";
-> +}
->  const char *get_signing_key(void)
-
-Missing blank line after the function body.
-
->  {
->  	if (configured_signing_key)
