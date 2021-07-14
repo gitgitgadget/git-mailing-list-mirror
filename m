@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFE65C07E9A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 08:51:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6694C07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 09:09:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A1CF6127C
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 08:51:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C7BE161374
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 09:09:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238522AbhGNIyZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 04:54:25 -0400
-Received: from mout.gmx.net ([212.227.17.20]:40615 "EHLO mout.gmx.net"
+        id S238147AbhGNJMb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 05:12:31 -0400
+Received: from mout.gmx.net ([212.227.15.15]:48957 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238432AbhGNIyY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 04:54:24 -0400
+        id S238123AbhGNJMa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 05:12:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1626252691;
-        bh=tqLw2EHhJWimiHKl0s34fpnCTA5g6I0MVu4zrA3EgrU=;
+        s=badeba3b8450; t=1626253774;
+        bh=pN++tDtxEnXDD8yz7WveEc7SAxi9urTkOb/yyz+hiOM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=dg8pm6LhdEZ5JnczMc+tHL/3I6PZxzUfkfZhzxAlvz4nnYIRggWi7Ik7J7sBEGUqN
-         xknbfJbQ4j33GlJWRY0N9HFFcUexH0QaRDDXtT5/qZ/NT/vOYiaVOuFQtzfT2C7gAl
-         YpbW1GksUe0F2XNebuHTPDXmYtTWY6ioE72RQx5g=
+        b=Vd6AKtsdx/yGSWsiyr6kiXaI8YRtZzPAT3/cGb4LqiPik/ZY8AdcCS3DSjXFkmmeS
+         xa2Ct1oFB9pocxGgafYhJX/2D1AVnkD8DhHEie8XSkwci1ppkxm1MqHkzwCYvw4oWW
+         Om4UPWEBjeB5vSpNHY6EzgQ3AiLvqbYjS8wwxsjE=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.219.153] ([89.1.215.141]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MuDbx-1l9hbr3EVh-00uWhr; Wed, 14
- Jul 2021 10:51:30 +0200
-Date:   Wed, 14 Jul 2021 10:51:29 +0200 (CEST)
+Received: from [172.23.219.153] ([89.1.215.141]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N7i8O-1l7lOO0ex8-014kAM; Wed, 14
+ Jul 2021 11:09:34 +0200
+Date:   Wed, 14 Jul 2021 11:09:32 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Philip Oakley <philipoakley@iee.email>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>,
-        Dennis Ameling via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Dennis Ameling <dennis@dennisameling.com>
-Subject: Re: [PATCH 5/6] ci(vs-build): build with NO_GETTEXT
-In-Reply-To: <32d1ae55-669a-c71f-95f9-345fcd42eb87@iee.email>
-Message-ID: <nycvar.QRO.7.76.6.2107141049420.76@tvgsbejvaqbjf.bet>
-References: <pull.878.git.1624461857.gitgitgadget@gmail.com> <a5084795ab039f6e7b9ab97cced3d7567e709327.1624461857.git.gitgitgadget@gmail.com> <87bl7i8ou8.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.2107131403040.76@tvgsbejvaqbjf.bet>
- <32d1ae55-669a-c71f-95f9-345fcd42eb87@iee.email>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
+        <congdanhqx@gmail.com>
+Subject: Re: [PATCH] ci: run `make sparse` as a GitHub workflow
+In-Reply-To: <f305f586-c3ac-a2ef-8769-5468a4c3e539@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2107141052350.76@tvgsbejvaqbjf.bet>
+References: <pull.994.git.1626177086682.gitgitgadget@gmail.com> <f305f586-c3ac-a2ef-8769-5468a4c3e539@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-652047188-1626252690=:76"
-X-Provags-ID: V03:K1:VAO0oiFjdllGj1OEjbmi6RhQ+cJ5WO1kHpWSrtO5mS3Ni/SHDSM
- OfqUcnJg4f62+w8/P86dQ1yHoSO8w2ejYaJL/HbzIZqgkrgzuWAFo/2FK5HmaXB4ngIHecv
- tN+1fYWbkATzuQc+syjxqN4RH22GrJBqyrdiycmKNrNEIA8b4TQoletRWm5c+urLL5i+sNr
- DzAar6CrQaZTcL08kqgHg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:VXM6WVF3VwI=:/4Yr+pLVyqMRAdoU5GIgyk
- P+gVMV8iGozCT/U1vBAygVF1tuA5iZPqr11f4rXitfYmUTLTgmyRI+QpJIgimJmetLXNR5Gs1
- ao1mlS29OxNpUF/jDqnJ+LRXwkuPuxh+WPrSYKdOb63O5H4xWjb60p+FVhi1IL8TFN7dDs/hR
- mq+bSfFvLkXaRufwM2w36OvhCSCIwLaFBH1eFsRuWiJidMpHbJlZE6ezrgz2UIDJqyLGm6FJJ
- DnEDeKdzqN7RngRjfNoSjXQV+MZSVJQcsQXX/PuYSom4PuYxqZ49gv/1vDsC5uInfeQQjimBw
- ZBFEUAUnqrxDH6qrAyGvQoG4I8MgfaWUUj5aKduWY2RCUE47ZyRf3mDx/OlYdNlHSsMnC8gGZ
- ulpu00jQa4dj6jcRrJyynUfxUwOcq25vvqgyilWtRHR8a9T8DAd8YWzvLf7aNW7QSPbxU7b1H
- M4Mk4HRUCc4scSKZa/DAr6Qwt4gzScmCsuaGAkxNea9ZSiySGDVQEDQ9C8I0++ESiYBB/9sm+
- vqEZI7ghtCNYFSov4Whq+rAntLrWxEf1gNKNqG1Yn8xohlbvfEizJR9Xt9SYrj6RoUEpiwCM3
- oQABvAIttNeyiwTuBnANNjNT+B1V8vSVYc9z6AogtOzLXrq2WvURMS9qfsgHx7ydAzaGCeAsQ
- AdoKD33w9GFWpoadaLsbpK1xwvNJOJJetrnta/AeygkL+P3B70+kvS96gnMhgY1tbK3PqTn5C
- GTGnjX8+CSNYoGQDeY9tOLbLd6jMTVzh4HuJpqScxiXQM7V42tI4Sg1QIAxUzELPtvkAtmMIa
- AUL9rnVyi8wvVSf8cT3a1rKZm1EXm3/tLRNTfERAfWE1tPb+3vjXg1iw16EFkTfDlmup9GIAC
- rxcxieECLiR1fU8cCXMJlPMRdJEKrDY5Jo2yOcpY9tQvbc24MwyGLgcmKRKbggmDLSQNGrM11
- r7lRLJzVceOurmE6/p8Y6MhgUkRBzbs7Lsag/9WoC6bnEGKgB2hN6/dGcCYyKbak2vf5MIMMF
- BJ1wTke2zgc6RvHsQwbZ95hKIli4suyMQynrhgc1ytyVfa/P5uxWJb4WkDTbXtnCvQP0Hj2hH
- YJHxUzWYopGJpdXfuZGzpp2MMiii1mOOatDQ5iJVyrb1oIqdiEbZQha+g==
+Content-Type: multipart/mixed; boundary="8323328-897848339-1626253774=:76"
+X-Provags-ID: V03:K1:2GBxvYgyFJT6FhWl2FTO/yL1OtDw1+lg7PWGX2LyCth5TDLgv1C
+ KGnICKxdahoqENP2ZRtfVWZmJLCV+yyOjZ1nZRHGSCCvser8bGnCNaqFKXXl1hpAoPZVmkj
+ 1/wHvN1xt8amvd/WsOMh67/G7IAI2nWuNtKL4GaZ5r+emYsOj1I/DANByYJ7IAb/AguIjeN
+ fVIEGYb5hDzY5/fwMtG1Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:0weCnn5qUcY=:CzVRX+lZN1Z06BZ7DX14O0
+ vw8AJy/PMAZoA2shx2HC48Df5pjYQ/+GRhgVOFsAb/59QXtGmMGz0Gdzizie9Wy5t0CEe+Flx
+ 4/TgLAKuXxfPXlAeVkvJ6EmTPBooUtjq+fTuAhW4a2U4eYlE4BUJi61CgdUEGdckDOnrZF0BJ
+ /KCMRoUpDBdic5A9PzF/cMNUlKPeSrQXuR7oNPdWQFsOotK+yVloUbepTUx9hqkxklZKy2GYz
+ mVvzLJxXCu/sxgMw7EGs0b4SMvh/9JW9xQdZfxWR6KSmPtngxxfXOD8LCtePl8O3zsiII4gG8
+ G4vHLpXe9Pv/2ZUssc6EB+RCMow1Wb1qeLfTuejWXS+c+zvgcSR8sJXt/2M28Y7WctvbEeP/r
+ YKG3goEJJg+UCiYvl0wbkbGylGYKWgHASMeXHmTOdcWk2O5btcBvNA0dVRuYffsXNfIcf7tyb
+ AN/pVZf68Q93CyD7kY0j60Ay9xheeEbRRjjdk8X6hEQIIGXeMfcWU9w3k3EnIcRCxYfRmeUW7
+ 6imXcmq6cf48znN3ZctF5l9RtNOFQAQYY0VW4h3BUd/ckMrAvE9wVaGruIh/QvyMhhLKbeOQj
+ Kz4eywRpPA2uGCX7u1f2BIP78HgKw+t1O4It36uRl3um4i/6qfqLfeekbAYw17HLf/5iJJv8B
+ XNhOkq3U6e/O+620uxMPgA8b8uGDKJ0EEiXdLcfABYkfw5gtpbWKkieFNpDgknNoIy+Ifuy3E
+ L1cev8ZMFOMadSYEssgbiqDNaXDwBdApbvH2UpIW8XaOc0sy54Gqi/+kGOjSdrnn2CtOH1qNq
+ VG6zIjviH/+JpGYC50tMXpDsGM0wiyqJgNpX5qzQIcgWPY7x5fV+MkTZsg/5+Po3UiS1kcAgn
+ FVLy6HxJrg+X+orKw4tIWSfcmh8Ii1QUqZ9oRYge9cNxKySMGpaxjShwWQKGZguueKlwG0fPl
+ Tu2GgXBnUhuy/XoTXRnVNzowRg0S3d/iFh1vVYLr7e14KdoQ7FcId4GbQSu072NNAnjjlvuq3
+ 9Eja/SC0FsNIDcJdxkMrvXC962I15lv4xuRVgHh6IRNQilbAu1YyLHcDQpHbqfYYECYTBLDp2
+ syKaAmw3L1tKhzc0EUsqrLnuN0hYKEvnG6lI/ieSKY89P+jkFQPJvLrQw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -75,55 +74,73 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-652047188-1626252690=:76
+--8323328-897848339-1626253774=:76
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Philip,
+Hi Philippe,
 
-On Tue, 13 Jul 2021, Philip Oakley wrote:
+On Tue, 13 Jul 2021, Philippe Blain wrote:
 
-> On 13/07/2021 13:19, Johannes Schindelin wrote:
+> Le 2021-07-13 =C3=A0 07:51, Johannes Schindelin via GitGitGadget a =C3=
+=A9crit=C2=A0:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > On Sun, 4 Jul 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> > Occasionally we receive reviews after patches were integrated, where
+> > `sparse` identified problems such as file-local variables or functions
+> > being declared as global.
 > >
-> >> On Wed, Jun 23 2021, Dennis Ameling via GitGitGadget wrote:
-> >>
-> >>> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> >>> index 0f7516c9ef..3b40c677ab 100644
-> >>> --- a/.github/workflows/main.yml
-> >>> +++ b/.github/workflows/main.yml
-> >>> @@ -159,7 +159,7 @@ jobs:
-> >>>        shell: bash
-> >>>        run: |
-> >>>          cmake `pwd`/contrib/buildsystems/ -DCMAKE_PREFIX_PATH=3D`pw=
-d`/compat/vcbuild/vcpkg/installed/x64-windows \
-> >>> -        -DMSGFMT_EXE=3DC:/git-sdk-64-minimal/mingw64/bin/msgfmt.exe=
- -DPERL_TESTS=3DOFF -DPYTHON_TESTS=3DOFF -DCURL_NO_CURL_CMAKE=3DON
-> >>> +        -DNO_GETTEXT=3DYesPlease -DPERL_TESTS=3DOFF -DPYTHON_TESTS=
-=3DOFF -DCURL_NO_CURL_CMAKE=3DON
-> >>>      - name: MSBuild
-> >>>        run: msbuild git.sln -property:Configuration=3DRelease -prope=
-rty:Platform=3Dx64 -maxCpuCount:4 -property:PlatformToolset=3Dv142
-> >>>      - name: bundle artifact tar
-> >> To a first approximation isn't the point of CI to test a diversity of
-> >> setups?
-> > No, the point of CI is to find breakages.
+> > By running `sparse`
 >
-> This problem (vcpkg/VS/CI build breakage for the tar artifact) has also
-> just come up for me on
-> https://github.com/git-for-windows/git/pull/3306#issuecomment-879093798
-> "[RFC] making Git for Windows start buildins in modern Visual Studio
-> #3306" which is a similar build situation.
->
-> Hopefully we can chose a suitable solution regarding what, if any, extra
-> checks this part of the CI build ought to do with the (unused in this
-> build) `.mo` files.
+> maybe here, we could add a link to https://sparse.docs.kernel.org/en/lat=
+est/,
+> so interested readers who do not know about "sparse" can go and learn
+> about it ?
 
-You will be happy to hear that the fix was in v2 of this patch series (you
-responded to v1).
+Good point.
+
+> > as part of our Continuous Integration, we can catch
+> > such things much earlier. Even better: developers who activated GitHub
+> > Actions on their forks can catch such issues before even sending their
+> > patches to the Git mailing list.
+> >
+> > This addresses https://github.com/gitgitgadget/git/issues/345
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> > +    - name: Download the `sparse` package
+> > +      uses: git-for-windows/get-azure-pipelines-artifact@v0
+> > +      with:
+> > +        repository: git/git
+> > +        definitionId: 10
+> > +        artifact: sparse-20.04
+> > +    - name: Install the `sparse` package
+> > +      run: sudo dpkg -i sparse-20.04/sparse_*.deb
+>
+> Out of curiosity, why is this necessary (as opposed to using
+> the Ubuntu package, i.e. 'sudo apt-get -q -y sparse') ?
+
+This is actually a historical curiosity: years ago, I created an Azure
+Pipeline that builds the `sparse` Debian package for the specific purpose
+of using it in our CI builds (if you care to look at the issue 345 I
+linked above, you will see how long ago that idea was in the making). Now,
+the historical curiosity is that back then, there was no current `sparse`
+package available for Ubuntu, and Ramsay mentioned that a newer version
+would be required to run `make sparse`.
+
+And when I implemented this patch yesterday, I did not even question this,
+I was just happy that I had come up with the GitHub Action
+`get-azure-pipelines-artifact` (to help with the `vcpkg` part of our CI
+builds).
+
+I was already writing a detailed paragraph in the commit message to
+explain all that when it occurred to me that two years might make a big
+difference and an up to date `sparse` might be available. And lo and
+behold, this is the case!
+
+Therefore, v2 will no longer jump through that hoop.
 
 Ciao,
 Dscho
 
---8323328-652047188-1626252690=:76--
+--8323328-897848339-1626253774=:76--
