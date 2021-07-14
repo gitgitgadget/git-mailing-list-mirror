@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D43FFC07E96
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CC4FC11F6A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:12:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BDA716136E
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:11:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86F2C61369
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 00:12:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237174AbhGNAOq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Jul 2021 20:14:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35808 "EHLO
+        id S237168AbhGNAOu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Jul 2021 20:14:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236998AbhGNAOp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jul 2021 20:14:45 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25E71C0613DD
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:11:55 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id t5so850812wrw.12
-        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:11:55 -0700 (PDT)
+        with ESMTP id S237175AbhGNAOr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jul 2021 20:14:47 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B715C0613DD
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:11:56 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id a13so863806wrf.10
+        for <git@vger.kernel.org>; Tue, 13 Jul 2021 17:11:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mtFbigT7lfXpGdB207Iw6imejJCXIm2nyRDW0W2CtMc=;
-        b=Rpaa1s6+37A8PPel6L6SFLuliF4ov2GFh8slcc4AUS5UJQ4PHQk0tTQLgM1t/FRFfb
-         l/qBxGVPUYykTHX1hxiSBdgNHDb1PJbyzmcxybOjZJ2MZcqoLSU0mZ1rJ7zTwty69Sf3
-         aOt1iSf0UAyruO/kjtHgzUKF+i0xuaRr0mVqYhoOshlgi6G4aRxpJ+Ovp2btGu20/OSk
-         pwdr3axVU7U2JCCbpUWsA1ehjqoCliEezSA6KtIx5knrPXdY90bwBlwGi8Gfgqt4nKY0
-         wokyFomc11kQUBPcc9ZfqCNYhP/3G7cvWsggJ7GDYyVLr00QLGJ1I6UJKbui3vWWitBG
-         V0pg==
+        bh=t7gj+DZei8E9e0VwSCpLsMuOWMal2dpeeC+ggO3micU=;
+        b=IbUXl64aSPABpwAgIeUE4mxHRTPqtUWzE6l/+xK2+MVOji3op2n+ZjFA4APEltgSwn
+         +bDWxd795VSel2WapyiebwF5LNzJPNLE45I4n4mv6lCt+4pjyk533WzSo8+tcPx0V4yw
+         CKHYTwSWaxYqAp67aTGGwgX7A7aMPy8ROHiPpR2AUjjx3hTBrfRYVf/wHpvvDCSAsuAO
+         UDhMMhXJOjoWflmjrHASf3dW2jbfALvBVZz/bTQPgr4ZUykncAGKNqepDspFtay8o6aV
+         z2l35o58/8xtuOsuwNUsg2bnY1SXAp7dw0Jl0iNnUJR/xuki+YNIEgehcClZGEqdgBXI
+         UJqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mtFbigT7lfXpGdB207Iw6imejJCXIm2nyRDW0W2CtMc=;
-        b=XWMifFCPvYD2Efh8N4F/fJjac1ZsURgl4WY41vVfI5fQ7bp/FzBy8PP4oziIKWEDOk
-         EjSeDGc3i3nVXpOqu/HGaWzgDm3dbwYigFLGVR+HHRNibr+rectNwJ+4VD4aLPnDBaor
-         o+DSAsf5hG8CT90uaENVCU/Kyph8HqxMadE5MLm89RpsqApCbvYpPlb8J8CS8azsy+Uk
-         K5kl6anBJ2QvJzekqh5Na0ZslL9M6u4zTxTS5IWD+mGeZStdbgFQ3U9+qKtXpRpYaf//
-         QNCHzQFcRu5aGH4EPKO5akgIc9ov5pJ9V7IJY0xps82BGwGeL8NUYJamVMz84qZo5LPo
-         tj/w==
-X-Gm-Message-State: AOAM533KfJgQdz+Th5c879CBQhWk7ZUlklIHvTvbHTxXIphTito+XjKV
-        T/toRFnJodMKwLdNm7VQ+5yEOsgDY2omrGyO
-X-Google-Smtp-Source: ABdhPJzXRPizPEqeoiD4rYI7PjEZq3TUpjGDzvQThPLJMbhLIRD3j34zl0NcsZBfcRsgtr74VTbFwg==
-X-Received: by 2002:a5d:6992:: with SMTP id g18mr9265583wru.118.1626221513559;
-        Tue, 13 Jul 2021 17:11:53 -0700 (PDT)
+        bh=t7gj+DZei8E9e0VwSCpLsMuOWMal2dpeeC+ggO3micU=;
+        b=We41VkwWcV+xYxYT+2CrOa41jgX0bGJTsXRpi9PRO66O9q8YU4EIW/5YDzPHSnXrUE
+         x/A2RzEnW2Zta4fL2gHnKmRMux96vJGZezu2guMEHykatAH4d+3F0jTMvys5QtcdqYvq
+         z3kuucFy+PzJIEFeAN7MQxt8DVyrt5iJztu5mRpj+i52by/ysRIDVV2nMXnnnbRbBYpR
+         xnIK5pRj7Ut6s+je2MzoXd/k8fkSrGbKLzR1pHVDo+2UuWhAcMvpiFs8ZV7MYY3/x9BG
+         EEQ7rNkbZk6FyTJlnPsf091ZF6kS60XUYCDu2F9771dE52LrR2q3Dd+fe8RqUaA7fUIu
+         GaUg==
+X-Gm-Message-State: AOAM5323HzxFO/iVueVi/pWOpEpjEY4mTlUSYVisAJbN4NltQ9vaqM+c
+        hIgbNW7ZxrCL4iUFE10GkznJk8NVu2YQ7yps
+X-Google-Smtp-Source: ABdhPJwipcrZ9hyvLJbEduJAWaQrixebqSeTlJQHOIOpBLx9MW7V3FEzbZdP0r11TeRTJdGvPvi22g==
+X-Received: by 2002:adf:de84:: with SMTP id w4mr9142873wrl.104.1626221515032;
+        Tue, 13 Jul 2021 17:11:55 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id x1sm442382wmc.31.2021.07.13.17.11.52
+        by smtp.gmail.com with ESMTPSA id x1sm442382wmc.31.2021.07.13.17.11.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jul 2021 17:11:53 -0700 (PDT)
+        Tue, 13 Jul 2021 17:11:54 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -67,150 +67,68 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/4] SANITIZE tests: fix memory leaks in t13*config*, add to whitelist
-Date:   Wed, 14 Jul 2021 02:11:47 +0200
-Message-Id: <patch-2.4-f3a5f26366-20210714T001007Z-avarab@gmail.com>
+Subject: [PATCH 4/4] SANITIZE tests: fix leak in mailmap.c
+Date:   Wed, 14 Jul 2021 02:11:49 +0200
+Message-Id: <patch-4.4-b8062a09f9-20210714T001007Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0-dev
 In-Reply-To: <cover-0.4-0000000000-20210714T001007Z-avarab@gmail.com>
 References: <87czsv2idy.fsf@evledraar.gmail.com> <cover-0.4-0000000000-20210714T001007Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a couple of trivial memory leaks introduced in 3efd0bedc6 (config:
-add conditional include, 2017-03-01) and my own 867ad08a26 (hooks:
-allow customizing where the hook directory is, 2016-05-04).
+Get closer to being able to run t4203-mailmap.sh by fixing a couple of
+memory leak in mailmap.c.
 
-In the latter case the "fix" is UNLEAK() on the global variable. This
-allows us to run all t13*config* tests under SANITIZE=leak.
-
-With this change we can now run almost the whole set of config.c
-tests (t13*config) under SANITIZE=leak, so let's do so, with a few
-exceptions:
-
- * The test added in ce81b1da23 (config: add new way to pass config
-   via `--config-env`, 2021-01-12), it fails in GitHub CI, but passes
-   for me locally. Let's just skip it for now.
-
- * Ditto the split_cmdline and "aliases of builtins" tests, the former
-   required splitting up an existing test, there an issue with the test
-   that would have also been revealed by skipping it.
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+In the free_mailmap_entry() code added in 0925ce4d49 (Add map_user()
+and clear_mailmap() to mailmap, 2009-02-08) the intent was clearly to
+clear the "me" structure, but while we freed parts of the
+mailmap_entry structure, we didn't free the structure itself. The same
+goes for the "mailmap_info" structure.
 ---
- config.c          | 17 ++++++++++++-----
- t/t1300-config.sh | 16 ++++++++++------
- t/test-lib.sh     |  1 +
- 3 files changed, 23 insertions(+), 11 deletions(-)
+ mailmap.c          | 2 ++
+ t/t4203-mailmap.sh | 6 ++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/config.c b/config.c
-index f9c400ad30..38e132c0e2 100644
---- a/config.c
-+++ b/config.c
-@@ -138,8 +138,10 @@ static int handle_path_include(const char *path, struct config_include_data *inc
- 		return config_error_nonbool("include.path");
+diff --git a/mailmap.c b/mailmap.c
+index d1f7c0d272..e1c8736093 100644
+--- a/mailmap.c
++++ b/mailmap.c
+@@ -36,6 +36,7 @@ static void free_mailmap_info(void *p, const char *s)
+ 		 s, debug_str(mi->name), debug_str(mi->email));
+ 	free(mi->name);
+ 	free(mi->email);
++	free(mi);
+ }
  
- 	expanded = expand_user_path(path, 0);
--	if (!expanded)
--		return error(_("could not expand include path '%s'"), path);
-+	if (!expanded) {
-+		ret = error(_("could not expand include path '%s'"), path);
-+		goto cleanup;
-+	}
- 	path = expanded;
+ static void free_mailmap_entry(void *p, const char *s)
+@@ -51,6 +52,7 @@ static void free_mailmap_entry(void *p, const char *s)
  
- 	/*
-@@ -149,8 +151,10 @@ static int handle_path_include(const char *path, struct config_include_data *inc
- 	if (!is_absolute_path(path)) {
- 		char *slash;
+ 	me->namemap.strdup_strings = 1;
+ 	string_list_clear_func(&me->namemap, free_mailmap_info);
++	free(me);
+ }
  
--		if (!cf || !cf->path)
--			return error(_("relative config includes must come from files"));
-+		if (!cf || !cf->path) {
-+			ret = error(_("relative config includes must come from files"));
-+			goto cleanup;
-+		}
- 
- 		slash = find_last_dir_sep(cf->path);
- 		if (slash)
-@@ -168,6 +172,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
- 		ret = git_config_from_file(git_config_include, path, inc);
- 		inc->depth--;
- 	}
-+cleanup:
- 	strbuf_release(&buf);
- 	free(expanded);
- 	return ret;
-@@ -1331,8 +1336,10 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
- 	if (!strcmp(var, "core.attributesfile"))
- 		return git_config_pathname(&git_attributes_file, var, value);
- 
--	if (!strcmp(var, "core.hookspath"))
-+	if (!strcmp(var, "core.hookspath")) {
-+		UNLEAK(git_hooks_path);
- 		return git_config_pathname(&git_hooks_path, var, value);
-+	}
- 
- 	if (!strcmp(var, "core.bare")) {
- 		is_bare_repository_cfg = git_config_bool(var, value);
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 9ff46f3b04..93ad0f4887 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -1050,12 +1050,16 @@ test_expect_success SYMLINKS 'symlink to nonexistent configuration' '
- 	test_must_fail git config --file=linktolinktonada --list
+ /*
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index 0b2d21ec55..c7de4299cf 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -79,6 +79,12 @@ test_expect_success 'check-mailmap bogus contact --stdin' '
+ 	test_must_fail git check-mailmap --stdin bogus </dev/null
  '
  
--test_expect_success 'check split_cmdline return' "
--	git config alias.split-cmdline-fix 'echo \"' &&
--	test_must_fail git split-cmdline-fix &&
-+test_expect_success 'setup check split_cmdline return' "
- 	echo foo > foo &&
- 	git add foo &&
--	git commit -m 'initial commit' &&
-+	git commit -m 'initial commit'
-+"
++if test_have_prereq SANITIZE_LEAK
++then
++	skip_all='skipping the rest of mailmap tests under SANITIZE_LEAK'
++	test_done
++fi
 +
-+test_expect_success !SANITIZE_LEAK 'check split_cmdline return' "
-+	git config alias.split-cmdline-fix 'echo \"' &&
-+	test_must_fail git split-cmdline-fix &&
-+
- 	git config branch.main.mergeoptions 'echo \"' &&
- 	test_must_fail git merge main
- "
-@@ -1101,7 +1105,7 @@ test_expect_success 'key sanity-checking' '
- 	git config foo."ba =z".bar false
- '
- 
--test_expect_success 'git -c works with aliases of builtins' '
-+test_expect_success !SANITIZE_LEAK 'git -c works with aliases of builtins' '
- 	git config alias.checkconfig "-c foo.check=bar config foo.check" &&
- 	echo bar >expect &&
- 	git checkconfig >actual &&
-@@ -1397,7 +1401,7 @@ test_expect_success 'git --config-env with missing value' '
- 	grep "invalid config format: config" error
- '
- 
--test_expect_success 'git --config-env fails with invalid parameters' '
-+test_expect_success !SANITIZE_LEAK 'git --config-env fails with invalid parameters' '
- 	test_must_fail git --config-env=foo.flag config --bool foo.flag 2>error &&
- 	test_i18ngrep "invalid config format: foo.flag" error &&
- 	test_must_fail git --config-env=foo.flag= config --bool foo.flag 2>error &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 9201510e16..98e20950c3 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1370,6 +1370,7 @@ maybe_skip_all_sanitize_leak () {
- 	add_sanitize_leak_true 't000*'
- 	add_sanitize_leak_true 't001*'
- 	add_sanitize_leak_true 't006*'
-+	add_sanitize_leak_true 't13*config*'
- 
- 	# Blacklist patterns (overrides whitelist)
- 	add_sanitize_leak_false 't000[469]*'
+ test_expect_success 'No mailmap' '
+ 	cat >expect <<-EOF &&
+ 	$GIT_AUTHOR_NAME (1):
 -- 
 2.32.0-dev
 
