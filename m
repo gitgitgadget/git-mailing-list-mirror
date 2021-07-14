@@ -2,92 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_50,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC852C07E9A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 10:35:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84B8EC07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 11:07:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A36DC610A7
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 10:35:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B41960200
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 11:07:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239084AbhGNKiJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 06:38:09 -0400
-Received: from gateway5.unifiedlayer.com ([74.220.208.104]:44323 "EHLO
-        gateway5.unifiedlayer.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237788AbhGNKiI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 06:38:08 -0400
-X-Greylist: delayed 1279 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Jul 2021 06:38:08 EDT
-Received: from cm1.websitewelcome.com (unknown [192.185.0.102])
-        by gateway5.unifiedlayer.com (Postfix) with ESMTP id 67B02200C7C9C
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 05:13:56 -0500 (CDT)
-Received: from caprica.seoboxes.com ([129.121.177.193])
-        by cmsmtp with ESMTP
-        id 3btsmKSnblNqD3btsmwQpz; Wed, 14 Jul 2021 05:13:56 -0500
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=wizztraffic.com; s=default; h=MIME-Version:Content-Type:Subject:To:From:
-        Message-ID:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=GgTriFiMqdUzimAw853EAs/E/hiZk2UINw9u5IlUtw8=; b=Jwayqoa1yuDwp4AQ1HnrAIxZzi
-        1JLmx2D821oxWVrwsq4YKJOXGJEOfDJhaq22jCs1i3FfvnWTirefH0Yi1e375L7n1ivgSFs7uvuKB
-        yDIOuUNqMF47gjIKalonbv3aoU+gNVaEg17NM/rK6l/8IBjJNzHKAXVb3uqhA+jKqLXeQPSerkZqf
-        1d+F5yvDTxRZBmoVBW2mzlPT1pk4Q2B7EYvg/xJsheJZ6WErJU1RFR3wmOA1XGRZEg0KpIUk8HotL
-        IYdJq4ARQqQhAJ60JJKBKo7+fMtZBGFVtxXQLgmEsdKu6eGorYWL/yLYdjnNweuzt5tCaMCcT6ZV7
-        MrHpR3sA==;
-Received: from [::1] (port=53260 helo=caprica.seoboxes.com)
-        by caprica.seoboxes.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.93)
-        (envelope-from <james@wizztraffic.com>)
-        id 1m3btr-002a82-EC; Wed, 14 Jul 2021 05:13:55 -0500
-Received: from 49.37.158.85 ([49.37.158.85]) by caprica.seoboxes.com (Horde
- Framework) with HTTPS; Wed, 14 Jul 2021 05:13:55 -0500
-Date:   Wed, 14 Jul 2021 05:13:55 -0500
-Message-ID: <20210714051355.Horde.f9sOdkVcvLfubnUw6YN7TLy@caprica.seoboxes.com>
-From:   james@wizztraffic.com
-To:     git@vger.kernel.org, majordomo@vger.kernel.org,
-        michael@physprac.com, will@willdeacon.co.uk
-Subject: Article Order on your site
-User-Agent: Horde Application Framework 5
-Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
+        id S231178AbhGNLK2 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 14 Jul 2021 07:10:28 -0400
+Received: from mail02.x-net.at ([83.65.141.138]:50262 "EHLO mail02.x-net.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230339AbhGNLK1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 07:10:27 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by mail02.x-net.at (Postfix) with ESMTP id 7286638057B;
+        Wed, 14 Jul 2021 13:07:34 +0200 (CEST)
+Received: from mail02.x-net.at ([127.0.0.1])
+        by localhost (mail02.x-net.at [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 2MpmK5cUCf3K; Wed, 14 Jul 2021 13:07:33 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by mail02.x-net.at (Postfix) with ESMTP id E028D380579;
+        Wed, 14 Jul 2021 13:07:33 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at x-t.at
+Received: from mail02.x-net.at ([127.0.0.1])
+        by localhost (mail02.x-net.at [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id hupoNcummilC; Wed, 14 Jul 2021 13:07:33 +0200 (CEST)
+Received: from [127.0.0.1] (178.165.190.225.wireless.dyn.drei.com [178.165.190.225])
+        by mail02.x-net.at (Postfix) with ESMTPSA id 92BBF3804E0;
+        Wed, 14 Jul 2021 13:07:33 +0200 (CEST)
+Date:   Wed, 14 Jul 2021 13:07:37 +0200
+From:   Mel Dafert <mel@dafert.at>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>, git@vger.kernel.org
+CC:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Ping Yin <pkufranky@gmail.com>
+Subject: Re: Bug with branches/merges in submodules
+User-Agent: K-9 Mail for Android
+In-Reply-To: <b519a79a-5e35-bb40-71d3-0fb3c65320d7@gmail.com>
+References: <E9E32A45-DA88-47CB-B7F9-F01F9BEC394C@dafert.at> <b519a79a-5e35-bb40-71d3-0fb3c65320d7@gmail.com>
+Message-ID: <6502FFC0-E19B-41FA-B152-885B339360F0@dafert.at>
 MIME-Version: 1.0
-Content-Disposition: inline
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - caprica.seoboxes.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - wizztraffic.com
-X-BWhitelist: no
-X-Source-IP: ::1
-X-Source-L: No
-X-Exim-ID: 1m3btr-002a82-EC
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (caprica.seoboxes.com) [::1]:53260
-X-Source-Auth: james@wizztraffic.com
-X-Email-Count: 4
-X-Source-Cap: d2l6enRyYWZmaWM7Y2FzaW5vb247Y2FwcmljYS5zZW9ib3hlcy5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Hello,
+Hello Philippe,
+Thank you for your reply, and the points to the mailing list.
 
-Sorry to chase, I was wondering if you had a chance to go through my  
-previous email.
+>Thanks for the reproducer. The behaviour for 'git log/show/diff' is due this line
+>and the behaviour for 'git submodule summary' to these lines.
+>
+>For 'git diff' and friends, it goes back to the addition of the '--submodule=log'
+>option in 752c0c2492 (Add the --submodule option to the diff option family, 2009-10-19).
+>(authored CC'ed). The use of '--first-parent' was discussed on the list
+>when this was implemented. I did not read the whole thing.
+>
+>For 'git submodule summary', it goes back to the addition of the subcommand
+>in 1cb639e6b0 (git-submodule summary: show commit summary, 2008-03-11). (author also CC'ed).
+>The justification of the use of '--first-parent' was not really discussed
+>as far as I could tell.
+>
+>
+>I personnally think it would be a good addition to be able to choose
+>if yes or no '--first-parent' should be used
 
-We are interested to post ad content on your site git.wiki.kernel.org.  
-We will provide relevant quality content that includes sports betting.  
-If it possible on your site we will pay you for this kind of service.  
-How much you charge for the guest article?
+The discussion you found [1] also suggested that as a future option.
 
-We hopefully look forward to hearing back from you."
+In the original implementation, the first mention is [2], where the length of the
+message is discussed - I (and later discussions) assume that this just
+happened to be the preference of the author.
 
+I would thus like to correct myself, and refile this as a feature request - it would
+be very helpful to me to have this as an option, possibly even with one that can be set in the config, similar to
+'diff.submodule=log'.
 
+I would be open to implementing this - I might need some mentoring, however, as
+this would be my first time contributing (and reading the git codebase).
 
+Regards,
+Mel
+
+[1] https://lore.kernel.org/git/67a884457aeaead275612be10902a80726b2a7db.1254668669u.git.johannes.schindelin@gmx.de/t/#u
+[2] https://lore.kernel.org/git/46dff0320803061750x70d059a2yaf1e5751e9c62150@mail.gmail.com/
