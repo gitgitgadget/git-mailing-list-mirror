@@ -2,125 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38F4BC07E9A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 17:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76C12C07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 17:10:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 11B50613AF
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 17:04:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54F5460698
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 17:10:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236134AbhGNRG5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 13:06:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40424 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229729AbhGNRG5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 13:06:57 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3699EC06175F
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 10:04:05 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id h6so3010021iok.6
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 10:04:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=nMKCUcnMm5C0L3BCqmlPYhJdhLeND7bzpl3Ab9WD7nE=;
-        b=ARUTbSADQPK791sYKYTfZE2fmSUrMq80AV2wnjAJ1KNiJ7STbu6iUulaZOvGBU/N6M
-         3EsV69AvI7chgMNum4ydLHq/+Ne1de4Dd6lNAcf4Emt9As8vh6cvYwv3yHQWrxZfR7f/
-         E3ni8JoSQj2yIrQzCySuObeO3HR3497uFq8HzdbrgflDZsXi4buYOrcUA8oZsvSpbnwy
-         /5cwTYKeKHzABjM3BXmaM2JuNyYz6VyX5lg1NgEl/KQdxzA6r8rTBaoGZhGYZpVUFzt6
-         dNeQowgoh4UGktuS/ivhxE5ruhhYq+VvtMZhXtzFdOE8SkpW60uvLVpQYLfTxXEoTr5q
-         iASA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nMKCUcnMm5C0L3BCqmlPYhJdhLeND7bzpl3Ab9WD7nE=;
-        b=hzjWM1BVOBw2j+SaMMIKuDxQ//Qk4PFGZIJ+PKf8t3kiquUbhiO6sNoSlfTbfXDUeN
-         QLwe60zbPcuMWahNY5kNI7S+y0WnRJ3AnO20CFZYjrV2PylpM+yUzL9QkVpDI7eaIeE3
-         tCCRLlMDCtCN1ZFFt8fGu/TQ/U6OhMseQ0XlmHq+qoshyLhCyuQbdOP6p9YNOohxTVTN
-         6yYaATLwfjg6TgGbUqQaYEfoyWSJlbAAAJ+7KHDbxwe3Ev02ka8eEzar40crRHWs+sZ0
-         UKQltcZHnHsEQO46cVn5Kkzrcj+jnx9rKu32qSZ7vhfFivALEjbbAhd7wGDojpetXbKG
-         n4bw==
-X-Gm-Message-State: AOAM533WJld0Ke+uVLqBQqY7/SyBIZPiZLK2Q9tkhwfuhM9EAWaIeyLa
-        uxha3+bkk47HMYb+Gt4p7S1v/Q==
-X-Google-Smtp-Source: ABdhPJxFAx7GxYYdWl+XVQmTukuj8aBfVFGV3HjgDuslbNDlFFrGt+9SpBmY2ucEqf+V7ZIVMwFGTg==
-X-Received: by 2002:a05:6638:22f:: with SMTP id f15mr9612658jaq.141.1626282244402;
-        Wed, 14 Jul 2021 10:04:04 -0700 (PDT)
-Received: from localhost ([2600:1700:d843:8f:3f15:e25d:cd63:d019])
-        by smtp.gmail.com with ESMTPSA id m26sm1514605ioo.23.2021.07.14.10.04.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 10:04:03 -0700 (PDT)
-From:   Taylor Blau <ttaylorr@github.com>
-X-Google-Original-From: Taylor Blau <me@ttaylorr.com>
-Date:   Wed, 14 Jul 2021 13:04:03 -0400
-To:     Sun Chao <16657101987@163.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Sun Chao via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2] packfile: freshen the mtime of packfile by
- configuration
-Message-ID: <YO8XrOChAtxhpuxS@nand.local>
-References: <pull.1043.git.git.1625943685565.gitgitgadget@gmail.com>
- <pull.1043.v2.git.git.1626226114067.gitgitgadget@gmail.com>
- <87wnpt1wwc.fsf@evledraar.gmail.com>
- <YO5RZ0Wix/K5q53Z@nand.local>
- <ACE7ECBE-0D7A-4FB8-B4F9-F9E32BE2234C@163.com>
+        id S237892AbhGNRNO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 13:13:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54980 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237208AbhGNRNO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 13:13:14 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E37F6CFFCA;
+        Wed, 14 Jul 2021 13:10:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bIOJStI6RkSdSuS6HCeEfD2QzxcCkmgKAazbtw
+        h45+U=; b=dkpoKesu7pKN4F7PZHtcwREk2X5/A3wl8dqDoe7twY7ROxq0dJtrJC
+        ie8UDV9EKOSmjzkgC+BJD8Wjyqb3tSLD49c7v4XEkRz4ls5UuT4jQO+dEr0R46rH
+        qHqPMKxSjaYXNHzMTLY2CfPgVGR4sFSF+eOADV2Ed21Pd8JNYXwoM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DBD18CFFC8;
+        Wed, 14 Jul 2021 13:10:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4EE4ECFFC7;
+        Wed, 14 Jul 2021 13:10:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [Patch 2/3] Documentation/config.txt: add worktree includeIf
+ conditionals.
+References: <20210712223139.24409-1-randall.becker@nexbridge.ca>
+        <20210712223139.24409-3-randall.becker@nexbridge.ca>
+        <xmqqr1g1zow4.fsf@gitster.g>
+        <006b01d778b6$b74b8600$25e29200$@nexbridge.com>
+Date:   Wed, 14 Jul 2021 10:10:20 -0700
+In-Reply-To: <006b01d778b6$b74b8600$25e29200$@nexbridge.com> (Randall
+        S. Becker's message of "Wed, 14 Jul 2021 09:46:52 -0400")
+Message-ID: <xmqqczrkyg77.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ACE7ECBE-0D7A-4FB8-B4F9-F9E32BE2234C@163.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5EFF5824-E4C6-11EB-8D0D-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 15, 2021 at 12:46:47AM +0800, Sun Chao wrote:
-> > Stepping back, I'm not sure I understand why freshening a pack is so
-> > slow for you. freshen_file() just calls utime(2), and any sync back to
-> > the disk shouldn't need to update the pack itself, just a couple of
-> > fields in its inode. Maybe you could help explain further.
-> >
-> > [ ... ]
->
-> The reason why we want to avoid freshen the mtime of ".pack" file is to
-> improve the reading speed of Git Servers.
->
-> We have some large repositories in our Git Severs (some are bigger than 10GB),
-> and we created '.keep' files for large ".pack" files, we want the big files
-> unchanged to speed up git upload-pack, because in our mind the file system
-> cache will reduce the disk IO if a file does not changed.
->
-> However we find the mtime of ".pack" files changes over time which makes the
-> file system always reload the big files, that takes a lot of IO time and result
-> in lower speed of git upload-pack and even further the disk IOPS is exhausted.
+"Randall S. Becker" <rsbecker@nexbridge.com> writes:
 
-That's surprising behavior to me. Are you saying that calling utime(2)
-causes the *page* cache to be invalidated and that most reads are
-cache-misses lowering overall IOPS?
+>>Assuming that I guessed correctly, is this a deliberate design
+>>decision not to "automatically add ** after a pattern that ends
+>>with a slash", and if so why?  I would have thought that "in the
+>>worktrees that I create inside /var/tmp/, please enable these
+>>configuration variables" would be a fairly natural thing to ask,
+>>and I do not immediately see a reason why we want to apply
+>>different syntax rules between "gitdir" and "worktree".
 
-If so, then I am quite surprised ;). The only state that should be
-dirtied by calling utime(2) is the inode itself, so the blocks referred
-to by the inode corresponding to a pack should be left in-tact.
+> The reason for this comes down to what is in
+>*the_repository.
 
-If you're on Linux, you can try observing the behavior of evicting
-inodes, blocks, or both from the disk cache by changing "2" in the
-following:
+Sorry, but I still do not understand.
 
-    hyperfine 'git pack-objects --all --stdout --delta-base-offset >/dev/null'
-      --prepare='sync; echo 2 | sudo tee /proc/sys/vm/drop_caches'
+> Essentially, the_repository->gitdir always has a /path/to/.git
+> directory with full qualification.
 
-where "1" drops the page cache, "2" drops the inodes, and "3" evicts
-both.
+Yes.
 
-I wonder if you could share the results of running the above varying
-the value of "1", "2", and "3", as well as swapping the `--prepare` for
-`--warmup=3` to warm your caches (and give us an idea of what your
-expected performance is probably like).
+> the_repository->worktree does not have /.git added
+> for obvious reasons, so the /path/to is bare of the trailing
+>/.
 
-Thanks,
-Taylor
+It may be the case, but /path/to/.git does not have trailing slash,
+either, so I do not see the relevance.
+
+When you say [includeIf "gitdir:/path/"], the "behave as if ** is
+added after the slash at the end" rule kicks in, and the pattern
+"/path/**" is used to see if it matches "/path/to/.git" and it does,
+right?  When you say [includeIf "worktree:/path/"], wouldn't the
+resulting "/path/**" match "/path/to"?
+
+By the way, I think [PATCH 1/3] should turn the body of
+include_by_gitdir() to a common helper function that
+
+ - accepts a path to a directory and a pattern
+ - turns it into a relpath
+ - prepares the pattern with prepare_include_condition_pattern()
+ - do the match include_by_gitdir() does.
+
+and make include_by_gitdir() a very thin wrapper that passes
+opts->git_dir to that common helper.  Then you do not have to copy
+the entire function to create your new include_by_worktree(); it can
+be another very thin wrapper that passes the_repository->worktree
+instead of opts->git_dir to the common helper, as there is no other
+difference in these two functions.
+
+Thanks.
