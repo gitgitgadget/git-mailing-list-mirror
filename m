@@ -2,344 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49CBDC07E9A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 18:19:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E41D5C07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 18:27:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 258D8613AF
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 18:19:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD925613C3
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 18:27:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239974AbhGNSWe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 14:22:34 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56424 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230264AbhGNSWd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 14:22:33 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C2C8F14BCE0;
-        Wed, 14 Jul 2021 14:19:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=trJr2GwHiCjZcahm5rtbPVe1s7E4OMDR65wQ3X
-        TtZ6k=; b=yTn4iUyIkLFA8U16qQPZYl3tUBdWCj7wgmUho16vgYrjvm2p+hMql2
-        UjMwPxItp9IgD/C3hEIFPrFx114q8PWq368saFsZ3rn8Sqsyi70MV8e5Mh4841vi
-        O8y9HDbqvfNDWsU+8OFWrres1goLau5sGjw6IZ9J40dHDT/psqh4g=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B9D3314BCDF;
-        Wed, 14 Jul 2021 14:19:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2FF5A14BCDE;
-        Wed, 14 Jul 2021 14:19:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Fabian Stelzer via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Hans Jerry Illikainen <hji@dyntopia.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 1/9] Add commit, tag & push signing via SSH keys
-References: <pull.1041.v2.git.git.1626092359713.gitgitgadget@gmail.com>
-        <pull.1041.v3.git.git.1626264613.gitgitgadget@gmail.com>
-        <390a8f816cda0574cabe49e9f88ae1803142fb51.1626264613.git.gitgitgadget@gmail.com>
-Date:   Wed, 14 Jul 2021 11:19:37 -0700
-In-Reply-To: <390a8f816cda0574cabe49e9f88ae1803142fb51.1626264613.git.gitgitgadget@gmail.com>
-        (Fabian Stelzer via GitGitGadget's message of "Wed, 14 Jul 2021
-        12:10:05 +0000")
-Message-ID: <xmqqlf68wyfa.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S240047AbhGNS3x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 14:29:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59802 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229603AbhGNS3w (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 14:29:52 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77B0BC06175F
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 11:27:00 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id q18-20020a1ce9120000b02901f259f3a250so2044100wmc.2
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 11:27:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding:content-disposition;
+        bh=r6tbT+fX9tBtIcBYm28EOpk3c5gXGtYUWFAo74WOvCk=;
+        b=M7DFrpBsf7hVEJ4ot2QhQthU5kyL/Bue5aSYWEjewuTrhb8mcdEOt4+tIVrqCfd5Vj
+         4VdoFBLShwYsoalM8nCR6PwGCcsv4jRcTkJnlTmX32ikRRh0mjhj+tuPYqTlLAt+Q/oF
+         P3wAdWKiaMfi25JUVJCcY8nxL3v3xlwIE6SfSnnfMDjWlvnrDGMwRxTvER8V1rGNmA66
+         9GUvRvRdf85QZty80odkgWDkfNSJBfkbOiygH19I45fy4aQMHZibLlm1Ekf4WIbgaePR
+         8/96u7y1aZKuUDB8wB73564vM9z3Szmro0v/Uznj+Fr6i5g42rnrLtRzkOd5qOoLgjCb
+         +7sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding
+         :content-disposition;
+        bh=r6tbT+fX9tBtIcBYm28EOpk3c5gXGtYUWFAo74WOvCk=;
+        b=T7Uu0UZddVaLNtr+Ca4CdxaItv5Cv7csx52ZtLC2ZgY811PPtCAQfN5PcbienELTY9
+         gzH3TfQzkNO993/a9ZVwddGOSdylB5+ZE/fsp9FGGQuSsiZ+dFuSApRfdTiR3SW17iuJ
+         DuHDBin/EkK0K9VFXRxZGG/ER91KNTW+HGykpthBjW47nCtw0ATh4AmSkjhDvmHxwctN
+         RKtV0acRkX8qawo58bOHOo2aC2hz89Eo3iT/LZpjoHIEhRgNZWpjZHoYRizA6L43QcuT
+         kDSdkLDhofUJNeWhnk/ArtG0AHtS9hLf0V3/wUQjv4nzBUQ/fcbzNtIkFTLVhA9IcIYN
+         BFNQ==
+X-Gm-Message-State: AOAM53217/+Cd17NHdBeajZCHqeGSTbI9RdDUqaC6MIPGI5vEZAlK2jH
+        LI3bmT8v9EhiqC3Hw21WZY8=
+X-Google-Smtp-Source: ABdhPJxKvxFexOGI4dAK1Bi39W1SDQifRswxUw/Lp5tUSS45C73btzLKUoZop6ytyjNaLreNmIwpWg==
+X-Received: by 2002:a05:600c:2298:: with SMTP id 24mr5740752wmf.36.1626287219159;
+        Wed, 14 Jul 2021 11:26:59 -0700 (PDT)
+Received: from gec-zebradil-lenovo ([2a02:908:1347:ac20:1a08:8f6a:8172:9625])
+        by smtp.gmail.com with ESMTPSA id w22sm6382308wmc.4.2021.07.14.11.26.58
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 14 Jul 2021 11:26:58 -0700 (PDT)
+Date:   Wed, 14 Jul 2021 20:26:57 +0200
+From:   German Lashevich <german.lashevich@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     "=?utf-8?Q?git=40vger.kernel.org?=" <git@vger.kernel.org>
+Message-ID: <9A517A17-6BC6-4239-9CD5-F80C839C24F0@getmailspring.com>
+In-Reply-To: <YO8ordiN18sNP6tA@coredump.intra.peff.net>
+References: <YO8ordiN18sNP6tA@coredump.intra.peff.net>
+Subject: Re: Bug report: GIT_CONFIG and user.email/name
+X-Mailer: Mailspring
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0D48E8C4-E4D0-11EB-A595-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Fabian Stelzer via GitGitGadget" <gitgitgadget@gmail.com> writes:
+GIT_CONFIG is confusing, GIT_CONFIG_GLOBAL is what I need.
 
-> From: Fabian Stelzer <fs@gigacodes.de>
-> Subject: [PATCH v3 1/9] Add commit, tag & push signing via SSH keys
+Thanks a lot! 
 
-If you chose "ssh signing:" as the common prefix for the series, use
-it consistently with this step, too.
+On Jul 14 2021, at 8:10 pm, Jeff King <peff@peff.net> wrote:
 
-> Openssh v8.2p1 added some new options to ssh-keygen for signature
-> creation and verification. These allow us to use ssh keys for git
-> signatures easily.
->
-> Start with adding the new signature format, new config options and
-> rename some fields for consistency.
-
-OK.
-
-> This feature makes git signing much more accessible to the average user.
-> Usually they have a SSH Key for pushing code already. Using it
-> for signing commits allows us to verify not only the transport but the
-> pushed code as well.
-
-Drop this paragraph or at least tone it down.  It may hold true only
-around your immediate circle but it is far from clear and obvious.
-I'd expect more people push over https:// than ssh://.
-
-We do not really require a new feature to make much more accessible
-for wide average user---making it just a bit more accessible to
-folks in your immediate circle is perfectly fine, as long as you are
-not harming other people ;-)
-
-> In our corporate environemnt we use PIV x509 Certs on Yubikeys for email
-> signing/encryption and ssh keys which i think is quite common
-
-Upcase "I".
-
-> (at least for the email part). This way we can establish the correct
-> trust for the SSH Keys without setting up a separate GPG Infrastructure
-> (which is still quite painful for users) or implementing x509 signing
-> support for git (which lacks good forwarding mechanisms).
-> Using ssh agent forwarding makes this feature easily usable in todays
-> development environments where code is often checked out in remote VMs / containers.
-> In such a setup the keyring & revocationKeyring can be centrally
-> generated from the x509 CA information and distributed to the users.
-
-All of the above promises a wonderful new world, but what is left
-unclear is with this step alone how much of the new world we already
-gain.  When you ask others to read and understand your code, please
-give them a bit more hint to guide them what to expect and where you
-are taking them next. 
-
-> diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
-> index 0f66818e0f8..1d7b64fa021 100644
-> --- a/fmt-merge-msg.c
-> +++ b/fmt-merge-msg.c
-> @@ -527,10 +527,10 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
->  			len = payload.len;
->  			if (check_signature(payload.buf, payload.len, sig.buf,
->  					 sig.len, &sigc) &&
-> -				!sigc.gpg_output)
-> +				!sigc.output)
->  				strbuf_addstr(&sig, "gpg verification failed.\n");
->  			else
-> -				strbuf_addstr(&sig, sigc.gpg_output);
-> +				strbuf_addstr(&sig, sigc.output);
-
-These are "rename some fields for consistency" the proposed log
-message promised.  Makes sense, as you are taking the sigc structure
-away from pgp/gpg dependency.
-
-> diff --git a/gpg-interface.c b/gpg-interface.c
-> index 127aecfc2b0..3c9a48c8e7e 100644
-> --- a/gpg-interface.c
-> +++ b/gpg-interface.c
-> @@ -8,6 +8,7 @@
->  #include "tempfile.h"
->  
->  static char *configured_signing_key;
-> +const char *ssh_allowed_signers, *ssh_revocation_file;
-
-Very likely these want to be file-scope statics?
-
->  static enum signature_trust_level configured_min_trust_level = TRUST_UNDEFINED;
->  
->  struct gpg_format {
-> @@ -35,6 +36,14 @@ static const char *x509_sigs[] = {
->  	NULL
->  };
->  
-> +static const char *ssh_verify_args[] = {
-> +	NULL
-> +};
-
-A blank line is missing from here.
-
-> +static const char *ssh_sigs[] = {
-> +	"-----BEGIN SSH SIGNATURE-----",
-> +	NULL
-> +};
-> +
->  static struct gpg_format gpg_format[] = {
->  	{ .name = "openpgp", .program = "gpg",
->  	  .verify_args = openpgp_verify_args,
-> @@ -44,6 +53,9 @@ static struct gpg_format gpg_format[] = {
->  	  .verify_args = x509_verify_args,
->  	  .sigs = x509_sigs
->  	},
-> +	{ .name = "ssh", .program = "ssh-keygen",
-> +	  .verify_args = ssh_verify_args,
-> +	  .sigs = ssh_sigs },
->  };
->  
->  static struct gpg_format *use_format = &gpg_format[0];
-> @@ -72,7 +84,7 @@ static struct gpg_format *get_format_by_sig(const char *sig)
->  void signature_check_clear(struct signature_check *sigc)
->  {
->  	FREE_AND_NULL(sigc->payload);
-> -	FREE_AND_NULL(sigc->gpg_output);
-> +	FREE_AND_NULL(sigc->output);
->  	FREE_AND_NULL(sigc->gpg_status);
->  	FREE_AND_NULL(sigc->signer);
->  	FREE_AND_NULL(sigc->key);
-> @@ -257,16 +269,15 @@ error:
->  	FREE_AND_NULL(sigc->key);
->  }
->  
-> -static int verify_signed_buffer(const char *payload, size_t payload_size,
-> -				const char *signature, size_t signature_size,
-> -				struct strbuf *gpg_output,
-> -				struct strbuf *gpg_status)
-> +static int verify_gpg_signature(struct signature_check *sigc, struct gpg_format *fmt,
-> +	const char *payload, size_t payload_size,
-> +	const char *signature, size_t signature_size)
->  {
-
-What is this hunk about?  The more generic name "verify-signed-buffer"
-is rescinded and gets replaced by a more GPG/PGP specific helper?
-
-You'd need to help readers a bit more by explaining in the proposed
-log message that you shifted the boundary of responsibility between
-check_signature() and verify_signed_buffer()---it used to be that
-the latter inspected the signed payload to see if it a valid GPG/PGP
-signature before doing GPG specific validation, but you want to make
-the former responsible for calling get_format_by_sig(), so that you
-can dispatch a totally new backend that sits next to this GPG
-specific one.
-
->  	struct child_process gpg = CHILD_PROCESS_INIT;
-> -	struct gpg_format *fmt;
->  	struct tempfile *temp;
->  	int ret;
-> -	struct strbuf buf = STRBUF_INIT;
-> +	struct strbuf gpg_out = STRBUF_INIT;
-> +	struct strbuf gpg_err = STRBUF_INIT;
->  
->  	temp = mks_tempfile_t(".git_vtag_tmpXXXXXX");
->  	if (!temp)
-> @@ -279,29 +290,28 @@ static int verify_signed_buffer(const char *payload, size_t payload_size,
->  		return -1;
->  	}
->  
-> -	fmt = get_format_by_sig(signature);
-> -	if (!fmt)
-> -		BUG("bad signature '%s'", signature);
-> -
->  	strvec_push(&gpg.args, fmt->program);
->  	strvec_pushv(&gpg.args, fmt->verify_args);
->  	strvec_pushl(&gpg.args,
-> -		     "--status-fd=1",
-> -		     "--verify", temp->filename.buf, "-",
-> -		     NULL);
-> -
-> -	if (!gpg_status)
-> -		gpg_status = &buf;
-> +			"--status-fd=1",
-> +			"--verify", temp->filename.buf, "-",
-> +			NULL);
-
-What is going on around here?  Ahh, an unnecessary indentation
-change is fooling the diff and made the patch unreadable.  Sigh...
-
->  	sigchain_push(SIGPIPE, SIG_IGN);
-> -	ret = pipe_command(&gpg, payload, payload_size,
-> -			   gpg_status, 0, gpg_output, 0);
-> +	ret = pipe_command(&gpg, payload, payload_size, &gpg_out, 0,
-> +				&gpg_err, 0);
-
-What is this change about?  Is it another unnecessary indentation
-change?  Please make sure you keep distraction to your readers to
-the minimum.
-
-> @@ -309,35 +319,36 @@ static int verify_signed_buffer(const char *payload, size_t payload_size,
->  int check_signature(const char *payload, size_t plen, const char *signature,
->  	size_t slen, struct signature_check *sigc)
->  {
-> -	struct strbuf gpg_output = STRBUF_INIT;
-> -	struct strbuf gpg_status = STRBUF_INIT;
-> +	struct gpg_format *fmt;
->  	int status;
->  
->  	sigc->result = 'N';
->  	sigc->trust_level = -1;
->  
-> -	status = verify_signed_buffer(payload, plen, signature, slen,
-> -				      &gpg_output, &gpg_status);
-> -	if (status && !gpg_output.len)
-> -		goto out;
-> -	sigc->payload = xmemdupz(payload, plen);
-> -	sigc->gpg_output = strbuf_detach(&gpg_output, NULL);
-> -	sigc->gpg_status = strbuf_detach(&gpg_status, NULL);
-> -	parse_gpg_output(sigc);
-> +	fmt = get_format_by_sig(signature);
-> +	if (!fmt) {
-> +		error(_("bad/incompatible signature '%s'"), signature);
-> +		return -1;
-> +	}
-> +
-> +	if (!strcmp(fmt->name, "ssh")) {
-> +		status = verify_ssh_signature(sigc, fmt, payload, plen, signature, slen);
-> +	} else {
-> +		status = verify_gpg_signature(sigc, fmt, payload, plen, signature, slen);
-> +	}
-
-OK, so get_format_by_sig() now is used to dispatch to the right
-backend.  Which sort of makes sense, but ...
-
- * "ssh" is the newcomer; it has no right to come before the
-   battle-tested existing one.
-
- * If we are dispatching via "fmt" variable, we should add
-   fmt->verify() method to each of these formats, so that we don't
-   have to switch based on the name.
-
-IOW, this part should just be
-
-	fmt = get_format_by_sig(signature);
-	if (!fmt)
-		return error(_("...bad signature..."));
-	fmt->verify_signature(sigc, fmt, payload, plen, signature, slen);
-
-> +	if (status && !sigc->output)
-> +		return !!status;
-> +
->  	status |= sigc->result != 'G';
->  	status |= sigc->trust_level < configured_min_trust_level;
-
-By the way, there is no verify_ssh_signature() function defined at
-this step [1/9], so this won't compile from the source at all.
-Please make sure that each step builds and passes tests.
-
-If I were doing this patch, I probably would NOT do anything related
-to "ssh" in this step.  Probably just doing
-
- - rename gpg_* variables to generic names in codepaths that _will_
-   become generic in future steps (like "check_signature()"
-   function);
-
- - introduce verify_signature member to the fmt struct;
-
- - hoist get_format_by_sig()'s callsite to check_signature() from
-   its callee.
-
-would be sufficient amount of work for the first step.  Call that a
-preliminary refactoring and clean-up.
-
-And then in the second and subsequent steps, you may start adding
-additional code to support ssh signing, including the new instance
-of fmt that has verify_ssh_signature() as its verify_signature
-method, etc.
-
-Introducing ssh_allowed_signers and ssh_revocation_file at this step
-is way premature.  Nobody uses them in this step, the code that uses
-them is already referenced but missing (hence the code does not
-build), so they are only there to frustrate readers wondering what
-they are for and how they will be used.
-
-Thanks.
+> On Wed, Jul 14, 2021 at 07:10:27PM +0200, German Lashevich wrote:
+> 
+>> I've faced an issue while trying to use a non-default .gitconfig file
+>> via specifying
+>> GIT_CONFIG environment variable.
+>> 
+>> What did you do before the bug happened? (Steps to reproduce your issue)
+>> 
+>> ```
+>> # use custom .gitconfig via GIT_CONFIG envvar:
+>> mkdir -p /tmp/git-test/repo
+>> cat <<EOT > /tmp/git-test/.gitconfig
+>> [user]
+>>     name = John Doe
+>>     email = john@doe.me
+>> EOT
+>> cd /tmp/git-test/repo
+>> git init
+>> export GIT_CONFIG=/tmp/git-test/.gitconfig
+>> echo Hi > readme.txt
+>> git add readme.txt
+>> git commit -m 'Initial commit'
+>> ```
+> 
+> The GIT_CONFIG variable doesn't work that way. It is not a general
+> mechanism used by all of Git, but rather a specific feature of the
+> git-config program (and even there it is a historical wart; you should
+> use "git config --file" instead).
+> 
+> One of these variables is probably more helpful:
+> 
+>  $ man git | sed -n '/GLOBAL/,/^$/p'
+>  GIT_CONFIG_GLOBAL, GIT_CONFIG_SYSTEM
+>    Take the configuration from the given files instead from global or
+>    system-level configuration files. If GIT_CONFIG_SYSTEM is set, the
+>    system config file defined at build time (usually /etc/gitconfig)
+>    will not be read. Likewise, if GIT_CONFIG_GLOBAL is set, neither
+>    $HOME/.gitconfig nor $XDG_CONFIG_HOME/git/config will be read. Can
+>    be set to /dev/null to skip reading configuration files of the
+>    respective level.
+> 
+> Note that they're new in v2.32.0.
+> 
+> -Peff
+> 
