@@ -2,96 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E384EC12002
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 23:01:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98F1CC12002
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 23:15:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA4B5613C9
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 23:01:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 81E496136E
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 23:15:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237394AbhGNXEm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 19:04:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40378 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231537AbhGNXEl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 19:04:41 -0400
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A65BAC06175F
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 16:01:49 -0700 (PDT)
-Received: by mail-il1-x132.google.com with SMTP id a7so3235029iln.6
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 16:01:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=shE1uTdLRfhStPIjLju2TWasi7Pak8NTMSRzHxIRm0A=;
-        b=UxYiAgZ/hL/DU44L25hlwd8S4trbEGCYecpCqbTB/qAoiVapGN6AkTV5Lmmo95/fNo
-         Up6IkLK/Oghy4rXUWTBK04NgYwI1mk136tfazwxAb/ejEz9f4ftMuL1gKq1Uk15TEdjZ
-         gx2rr/lnE2SMbt9oaqcgtzrxK+UCn7ZVb6uk78gHEA0m48llBTDkHVcFBqinsM1RFjiS
-         9/wITVIWWGPqd/y0O3GMSceZ9Ee/SjAzqmMJeXnVt0yxVDAGS8xx1vtSWf+ciZePF0hf
-         2XaG4H4p8ssjvPSO5wzG+FOxoQb3TOtGIpeabOynJaY4vUzwAvF53aBUI13lqeHd2Za5
-         TDtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=shE1uTdLRfhStPIjLju2TWasi7Pak8NTMSRzHxIRm0A=;
-        b=QS7pM8+jJaWyAXTAQQMQkANH5D7dZFNsOlRjHjkECz15dJuh+mAyEhqwNk8PUzieJq
-         wRt/l7w9eMlI0woNPHqUqkYrczKxmXymRed5qYMXE00apVMmGB0bIxhnrjU4mOmsKMLB
-         K5SodX9RXo0NxDwI19FltYVqyMZq9LTm5b5lAmM+75tQ4u0gFQ3fYZlif/Xi0+t9lWX6
-         Jl4Xw+JVUCG0eEJVYBrccEuai4czXvm6gpZfIVOJQbZLEDb46vSmivPYSbe5ngFRkhal
-         xsR46LVCiyHgumrE5dBChLkhD7GulUsNSWmsOIF1i9njXqs+/MVVo8M+ewMqYjnA+cwi
-         3gvg==
-X-Gm-Message-State: AOAM532qU97ML3OdE+RI7+Vt6J/HwjWMbuLJFa1jdPeV0wk/FrM39dPD
-        H/WEXoV4ygsGTOkPitmjPNFVNg==
-X-Google-Smtp-Source: ABdhPJzPyt/s70/5RclTnvXtlMW5qawXQlpphx2XM+lv3ADL0/srkJO+ftCrLidx6ZBVYa8UrqFLNA==
-X-Received: by 2002:a05:6e02:1a8b:: with SMTP id k11mr178534ilv.136.1626303709078;
-        Wed, 14 Jul 2021 16:01:49 -0700 (PDT)
-Received: from localhost ([2600:1700:d843:8f:3f15:e25d:cd63:d019])
-        by smtp.gmail.com with ESMTPSA id t24sm2067059ioh.24.2021.07.14.16.01.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 16:01:48 -0700 (PDT)
-Date:   Wed, 14 Jul 2021 19:01:48 -0400
-From:   Taylor Blau <me@ttaylorr.com>
+        id S236445AbhGNXSQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 19:18:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50250 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229928AbhGNXSP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 19:18:15 -0400
+Received: (qmail 2010 invoked by uid 109); 14 Jul 2021 23:15:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Jul 2021 23:15:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29756 invoked by uid 111); 14 Jul 2021 23:15:23 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Jul 2021 19:15:23 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 14 Jul 2021 19:15:22 -0400
+From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
-        gitster@pobox.com, jonathantanmy@google.com
-Subject: Re: [PATCH v2 06/24] midx: make a number of functions non-static
-Message-ID: <YO9s3NM8CYtbbo82@nand.local>
-References: <cover.1617991824.git.me@ttaylorr.com>
- <cover.1624314293.git.me@ttaylorr.com>
- <b3a12424d78e80553741f5c7a0672490a59b6f7d.1624314293.git.me@ttaylorr.com>
- <878s2yzv65.fsf@evledraar.gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] refs file backend: remove dead "errno == EISDIR" code
+Message-ID: <YO9wCqetxHii+TvK@coredump.intra.peff.net>
+References: <patch-1.1-de0838fe99-20210714T111351Z-avarab@gmail.com>
+ <YO8PBBJZ2Q+5ZqFs@coredump.intra.peff.net>
+ <871r801yp6.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <878s2yzv65.fsf@evledraar.gmail.com>
+In-Reply-To: <871r801yp6.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 25, 2021 at 01:42:06AM +0200, Ævar Arnfjörð Bjarmason wrote:
->
-> On Mon, Jun 21 2021, Taylor Blau wrote:
->
-> > These functions will be called from outside of midx.c in a subsequent
-> > patch.
->
-> So "a number" is "two" and "a subsequent patch" appears to be 13/24. I
-> think this would be clearer just squashed into whatever needs it, or at
-> least if it comes right before the new use in the series.
+On Wed, Jul 14, 2021 at 09:07:41PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-Good suggestion, thanks. This was probably written at a time when the
-number of functions I needed was larger (or perhaps when this and
-patches 10-12 were all jumbled together).
+> > Isn't that pseudo-code missing a conditional that's there in the real
+> > code? In refs_resolve_ref_unsafe(), I see:
+> >
+> >        if (refs_read_raw_ref(refs, refname,
+> >                              oid, &sb_refname, &read_flags)) {
+> >                *flags |= read_flags;
+> >
+> >                /* In reading mode, refs must eventually resolve */
+> >                if (resolve_flags & RESOLVE_REF_READING)
+> >                        return NULL;
+> >
+> >                /*
+> >                 * Otherwise a missing ref is OK. But the files backend
+> >                 * may show errors besides ENOENT if there are
+> >                 * similarly-named refs.
+> >                 */
+> >                if (errno != ENOENT &&
+> >                    errno != EISDIR &&
+> >                    errno != ENOTDIR)
+> >                        return NULL;
+> >
+> > So if RESOLVE_REF_READING is set, we can return NULL immediately, with
+> > errno set to EISDIR. Which contradicts this:
+> 
+> I opted (perhaps unwisely) to elide that since as you note above we
+> don't take that path in relation to the removed code. I.e. I'm
+> describing the relevant codepath we take nowadays given the code & its
+> callers.
 
-In any case, I dropped this patch and squashed its contents into 13/24
-where it is used.
+It's not clear to me that we don't take that path, though. The call in
+files_reflog_expire() looks like it violates the assertion in your
+commit message (that we would never return NULL with errno as EISDIR).
 
-Thanks,
-Taylor
+So I'm not entirely sure that the code is in fact dead (though I
+couldn't find an easy way to trigger it from the command line). I do
+think it probably can't do anything useful, and it is probably still OK
+to delete. But in my mind that is quite a different argument.
+
+Maybe that is splitting hairs, but I definitely try to err on the side
+of caution and over-analysis when touching tricky code (and the
+ref-backend code is in my experience one of the trickiest spots for
+corner cases, races, etc).
+
+> > So when is RESOLVE_REF_READING set? The resolve_flags parameter is
+> > passed in by the caller. In lock_ref_oid_basic(), it comes from this:
+> >
+> >     int mustexist = (old_oid && !is_null_oid(old_oid));
+> >     [...]
+> >     if (mustexist)
+> >             resolve_flags |= RESOLVE_REF_READING;
+> >
+> > So do any callers pass in old_oid? Surprisingly few. It used to be
+> > called from other locking functions, but these days it looks like it is
+> > only files_reflog_expire().
+> 
+> In general (and not being too familiar with this area) and per:
+> 
+>     7521cc4611 (refs.c: make delete_ref use a transaction, 2014-04-30)
+>     92b1551b1d (refs: resolve symbolic refs first, 2016-04-25)
+>     029cdb4ab2 (refs.c: make prune_ref use a transaction to delete the ref, 2014-04-30)
+> 
+> And:
+> 
+>     https://lore.kernel.org/git/20140902205841.GA18279@google.com/    
+> 
+> I wonder if these remaining cases can be migrated over to lock_raw_ref()
+> or the transaction API, as many other similar callers have been already.
+> 
+> But that's a bigger change, I won't be doing that now, just wondering if
+> these are some #leftoverbits or if there's a good reason they were left.
+
+Quite possibly. It's been a while since I've looked this deep at the ref
+code. It is weird that only one remaining caller passes old_oid. If even
+that one could be converted, the whole lock_ref_oid_basic() could be
+simplified a bit.
+
+I agree that's a bigger change, so it might make sense to do smaller
+cleanups in the interim.
+
+> > So...I think it's fine? But the argument in your commit message seems to
+> > have missed this case entirely.
+> 
+> Perhaps more succinctly: If we have a directory in the way, it's going
+> to be impossible for the "old_oid" condition to be satisfied in any case
+> in the file backend.
+> 
+> Even if we still had a caller that did "care" about that what could they
+> hope to get from an "old_oid=<some-OID>" for a lock on "foo/bar" where
+> "foo" is an empty directory?
+> 
+> Except of course for the case where it's not a directory but packed, but
+> as you noted that's handled in another case.
+
+Yeah, I think that's reasonably compelling. It's possible there are some
+races unaccounted for here (like somebody else creating and deleting
+shared-prefix loose refs at the same time), but it may be OK to just
+accept those. The code is "we saw a failure, see if deleting stale
+directories helps". And if the worst case is that this doesn't kick in
+an obscure race (where we'd probably end up failing the whole operation
+anyway), that's OK.
+
+-Peff
