@@ -2,55 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A606C07E9A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 11:43:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 113C4C11F66
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 11:43:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6FB6F6101D
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 11:43:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEE4A6101D
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 11:43:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238984AbhGNLqc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 07:46:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51470 "EHLO
+        id S239192AbhGNLqd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 07:46:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230405AbhGNLqb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 07:46:31 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 614CCC06175F
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 04:43:39 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id m2so2863929wrq.2
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 04:43:39 -0700 (PDT)
+        with ESMTP id S230405AbhGNLqc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 07:46:32 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3901BC061760
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 04:43:40 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id b14-20020a1c1b0e0000b02901fc3a62af78so3699989wmb.3
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 04:43:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dd0SVYrYHAOEGBYFOy2wga7NYo2agZUaHBkEWajZIx4=;
-        b=oqWZ/dQFxReOJTbrw0xw5fXd4maYkYEOoU8+64ZTK0Evv0VunrOjS/pL+kbNE3LeFc
-         gJOkYyekEEfIPBJgNTKnnlfwzoOHjtA2dud6vsCnpsuUVAD4Y52JadrGNaIgsWQWvsXt
-         cx+i90jyuwyEtmKi20ASPJ5E3ebAloK/e8Qyw78S8DcUSs00AmLyNbBAf9obY1w5v94i
-         hS9gBEj0AQtC4a32iDHNIgodN884AR6ZhPcRCusgrvN3I1tlnYmpjUDNooW20lrxbnjv
-         vHNxDishMg2iHu3XbSpMn6TkHeZBfWUy2aahiImeONzuIVWWcwAqY6pDKu28oWwPpwg5
-         8BgA==
+        bh=4YckRV94lI+Ux8z9gYZhCTewo4+hmIcQEr+Iu6x6VZE=;
+        b=fgGO3S2PxnhnTnScfCnIHd8vOitXHHDRFQxbypxENr2U5rgKzn76ErOPrYsh3QOLZB
+         PJjhT7zBOZh7GifmsSJ5r9nPRiORVqNfg+y8w6Q406hMOD3rb3FVGCTwGFLd9I7zYR6p
+         1C+CK1IxoFTUclwoKIWzOCvSH0HsbfM8cM/gaaIt5//J4v9Odb/cS1VsepsAFIeTB6cu
+         B+oFz2WLislrR+AsQjYypIMfb2jwn+NqE6KywPLqlVErOgu2hLxcJnjD7e5Omk9CtL/X
+         nGNMDA20n/OLFzkPDVPafvEQ29v7wUS0EpI1IHHP0UqYUEwkoUodCdm/FZtqwkp2mvj0
+         q2NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dd0SVYrYHAOEGBYFOy2wga7NYo2agZUaHBkEWajZIx4=;
-        b=WM+GZGl1ZWG2Y8S+VkL/vzYNrCmH9YzJa/OvUHEWN6qT5Fv75ydpqSugnnt0TZ819l
-         LZmFLjJpBrfH2ifD0lj45fayKkNX3n9FvsziLLmqYJWWfbUOgWW/UxC5q5gLfIxSvM6o
-         q8hrI46WjetkRm1CsHido/wbRwVrTYDxP8xrW6HaAbjiPoHCoY471yTzlpPtthZ5Q6gZ
-         tG7+nNdUlDHAqjBi8kcosLRRGBFpx583Dj7fhOkBZ6ZWmOQXrqc260Bb7MGiHqMm6htn
-         a43vJfW2v8f95qcAzq22c3j+7e/zEkr8W1CJOpRRdONp0CA5OqtxTwassCGI+RiA2HWa
-         9lmw==
-X-Gm-Message-State: AOAM530jmplEaGyjxOmxodx3ptP8NdXHYJ8wOUhqw/mlXpDNPtRlLd3D
-        3kyF68as4SAdBYWEdGKZ1TX0WaZiNModokUU
-X-Google-Smtp-Source: ABdhPJwibgaAiowtDBoxcxhHa9Eh5e+59JfXJvjQxDy4i6UYS2xwHpQuyc0Gy1h6Tr9mxPQIUK1oxg==
-X-Received: by 2002:a05:6000:136a:: with SMTP id q10mr12468964wrz.25.1626263017721;
-        Wed, 14 Jul 2021 04:43:37 -0700 (PDT)
+        bh=4YckRV94lI+Ux8z9gYZhCTewo4+hmIcQEr+Iu6x6VZE=;
+        b=Ncotz0k4EkevQmE/CPAWCJ6VDo5HmbBZUMSW4FunpNReAu0c/KiBCXcpH8r5YvEedy
+         9SUrWBmNRbqfTwNJkhmwhhTGMxhbDjUdaj0W2BmmGDbsyZtxi8znjWSY1FDW/BGWRKCU
+         kwpcuE4D36/Jusc5pp5TbyWf/dmQtGK3vLVxIQMcuKQtVkggWWTysZn0vyRSh5syL/Tp
+         i8Rs53GGbNKqAHS11bmK47bwakQqE/B1nPkBLOyWWZ3GIIs02HnobhT+pEVOpSYckKv1
+         WehlXTE0roxyPYveNIO3BY5yuf2BtlNFdkifaNXSqY6JVaJGIPzIswJ3CEbrrshGCMw9
+         5eSg==
+X-Gm-Message-State: AOAM532sUTknIivvz9g8VWxL9tH78l76McSzvScufa4RBhI3EjtcI5Mx
+        5Ldb6yBx/ZRt7XFKBKYrSL22SM4gyLakWN07
+X-Google-Smtp-Source: ABdhPJylf7ggIJApl54jZiegizRlxsvZ0+0VE7e0HCuKPAYheliP2Q9EIt3sUX5x9EZ2zE7MNP2Uew==
+X-Received: by 2002:a05:600c:220c:: with SMTP id z12mr10772352wml.116.1626263018509;
+        Wed, 14 Jul 2021 04:43:38 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id a8sm2373626wrt.61.2021.07.14.04.43.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -64,12 +65,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v7 0/6] refs: cleanup errno sideband ref related functions
-Date:   Wed, 14 Jul 2021 13:43:28 +0200
-Message-Id: <cover-0.6-0000000000-20210714T114301Z-avarab@gmail.com>
+Subject: [PATCH v7 1/6] refs: remove EINVAL errno output from specification of read_raw_ref_fn
+Date:   Wed, 14 Jul 2021 13:43:29 +0200
+Message-Id: <patch-1.6-4beba4443a-20210714T114301Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.851.g0fc62a9785
-In-Reply-To: <cover-00.17-00000000000-20210711T162803Z-avarab@gmail.com>
-References: <cover-00.17-00000000000-20210711T162803Z-avarab@gmail.com>
+In-Reply-To: <cover-0.6-0000000000-20210714T114301Z-avarab@gmail.com>
+References: <cover-00.17-00000000000-20210711T162803Z-avarab@gmail.com> <cover-0.6-0000000000-20210714T114301Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,144 +78,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Per the discussion & feedback on the "v6?" at [1] this is a version of
-Han-Wen's patches which:
+From: Han-Wen Nienhuys <hanwen@google.com>
 
- A. Goes on top of my just-submitted one-patch
-    https://lore.kernel.org/git/patch-1.1-de0838fe99-20210714T111351Z-avarab@gmail.com
-    being able to remove that code in lock_ref_oid_basic() makes
-    things simpler, the BUG() I added to that branch in my "v6?" is
-    gone.
+This commit does not change code; it documents the fact that an alternate ref
+backend does not need to return EINVAL from read_raw_ref_fn to function
+properly.
 
-    That change simplifies this series quite a bit, more than one
-    patch in this one dealt with that now-removed codepath.
+This is correct, because refs_read_raw_ref is only called from;
 
- B. Rebases this on top of that
+* resolve_ref_unsafe(), which does not care for the EINVAL errno result.
 
- C. I ejected my long series of RFC-esque patches at the end.
+* refs_verify_refname_available(), which does not inspect errno.
 
-    Per [2] it looks like Han-Wen is happy to have some version of my
-    re-roll picked up, but I hardly think it's fair that I inflate
-    other people's serieses with a bunch of fixes on top, I cause
-    myself enough trouble with that as it is :)
+* files-backend.c, where errno is overwritten on failure.
 
-    The value of those patches of mine on top is to assert that the
-    changes in this series are correct.
+* packed-backend.c (is_packed_transaction_needed), which calls it for the
+  packed ref backend, which never emits EINVAL.
 
-    But I think to just get this in it's enough that that work exists
-    and that we did the full errno conversion and could demonstrate
-    that there weren't bugs as a result of it.
+A grep for EINVAL */*c reveals that no code checks errno against EINVAL after
+reading references. In addition, the refs.h file does not mention errno at all.
 
-    For now in 04/06 here we leave the "For unmigrated legacy callers"
-    assignment of "errno" in refs_resolve_ref_unsafe().
+A grep over resolve_ref_unsafe() turned up the following callers that inspect
+errno:
 
-    I'll just submit that cleanup series on top of this once this
-    lands.
+* sequencer.c::print_commit_summary, which uses it for die_errno
 
-1. http://lore.kernel.org/git/cover-00.17-00000000000-20210711T162803Z-avarab@gmail.com
-2. http://lore.kernel.org/git/CAFQ2z_P=9Suh0kO6E44hUOyNFOAKcmcUg_x6AQFP9jhHrBA6RQ@mail.gmail.com
+* lock_ref_oid_basic(), which only treats EISDIR and ENOTDIR specially.
 
-Han-Wen Nienhuys (6):
-  refs: remove EINVAL errno output from specification of read_raw_ref_fn
-  refs/files-backend: stop setting errno from lock_ref_oid_basic
-  refs: make errno output explicit for read_raw_ref_fn
-  refs: add failure_errno to refs_read_raw_ref() signature
-  refs: explicitly return failure_errno from parse_loose_ref_contents
-  refs: make errno output explicit for refs_resolve_ref_unsafe
+The files ref backend does use EINVAL. The files backend does not call into
+the generic API (refs_read_raw), but into the files-specific function
+(files_read_raw_ref), which we are not changing in this commit.
 
- refs.c                | 69 ++++++++++++++++++++----------
- refs.h                | 11 +++++
- refs/debug.c          |  4 +-
- refs/files-backend.c  | 98 +++++++++++++++++++++++--------------------
- refs/packed-backend.c | 15 +++----
- refs/refs-internal.h  | 32 ++++++++------
- 6 files changed, 141 insertions(+), 88 deletions(-)
+As the errno sideband is unintuitive and error-prone, remove EINVAL
+value, as a step towards getting rid of the errno sideband altogether.
 
-Range-diff against v6:
- 1:  57517368c3 =  1:  4beba4443a refs: remove EINVAL errno output from specification of read_raw_ref_fn
- 2:  61cf761147 !  2:  fd8e356185 refs/files-backend: stop setting errno from lock_ref_oid_basic
-    @@ refs/files-backend.c: static struct ref_lock *lock_ref_oid_basic(struct files_re
-      	int resolve_flags = RESOLVE_REF_NO_RECURSE;
-      	int resolved;
-     @@ refs/files-backend.c: static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
-    - 		 * to remain.
-    - 		 */
-    - 		if (remove_empty_directories(&ref_file)) {
-    --			last_errno = errno;
-    - 			if (!refs_verify_refname_available(
-    - 					    &refs->base,
-    - 					    refname, extras, skip, err))
-    -@@ refs/files-backend.c: static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
-    - 						     refname, resolve_flags,
-    - 						     &lock->old_oid, type);
-    - 	}
-    + 	resolved = !!refs_resolve_ref_unsafe(&refs->base,
-    + 					     refname, resolve_flags,
-    + 					     &lock->old_oid, type);
-     -	if (!resolved) {
-     -		last_errno = errno;
-     -		if (last_errno != ENOTDIR ||
-    @@ refs/files-backend.c: static struct ref_lock *lock_ref_oid_basic(struct files_re
-     -						   extras, skip, err))
-     -			strbuf_addf(err, "unable to resolve reference '%s': %s",
-     -				    refname, strerror(last_errno));
-    --
-     +	if (!resolved &&
-     +	    (errno != ENOTDIR ||
-     +	     /* in case of D/F conflict, try to generate a better error
-    @@ refs/files-backend.c: static struct ref_lock *lock_ref_oid_basic(struct files_re
-     +					    skip, err))) {
-     +		strbuf_addf(err, "unable to resolve reference '%s': %s",
-     +			    refname, strerror(errno));
-    + 
-      		goto error_return;
-      	}
-    - 
-     @@ refs/files-backend.c: static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
-      	if (is_null_oid(&lock->old_oid) &&
-      	    refs_verify_refname_available(refs->packed_ref_store, refname,
- 3:  a4e5f2d02f =  3:  913e72e9ff refs: make errno output explicit for read_raw_ref_fn
- 4:  270cda29c3 =  4:  dd191768f6 refs: add failure_errno to refs_read_raw_ref() signature
- 5:  f5197cdc0b =  5:  77c53dc0d9 refs: explicitly return failure_errno from parse_loose_ref_contents
- 6:  96689e523f !  6:  5d4b1b4ddf refs: make errno output explicit for refs_resolve_ref_unsafe
-    @@ refs/files-backend.c: static struct ref_lock *lock_ref_oid_basic(struct files_re
-     -	resolved = !!refs_resolve_ref_unsafe(&refs->base,
-     -					     refname, resolve_flags,
-     -					     &lock->old_oid, type);
-    --	if (!resolved && errno == EISDIR) {
-     +	resolved = !!refs_resolve_ref_unsafe_with_errno(&refs->base, refname,
-     +							resolve_flags,
-     +							&lock->old_oid, type,
-     +							&resolve_errno);
-    -+	if (!resolved && resolve_errno == EISDIR) {
-    - 		/*
-    - 		 * we are trying to lock foo but we used to
-    - 		 * have foo/bar which now does not exist;
-    -@@ refs/files-backend.c: static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
-    - 						     &lock->old_oid, type);
-    - 	}
-      	if (!resolved &&
-     -	    (errno != ENOTDIR ||
-     +	    (resolve_errno != ENOTDIR ||
-    @@ refs/files-backend.c: static struct ref_lock *lock_ref_oid_basic(struct files_re
-      					    skip, err))) {
-      		strbuf_addf(err, "unable to resolve reference '%s': %s",
-     -			    refname, strerror(errno));
-    +-
-     +			    refname, strerror(resolve_errno));
-      		goto error_return;
-      	}
- 7:  10a40c9244 <  -:  ---------- refs: make errno ignoring explicit in lock_ref_oid_basic()
- 8:  ff38a3f193 <  -:  ---------- refs file-backend.c: stop setting "EBUSY" in verify_lock()
- 9:  cdec272f06 <  -:  ---------- refs file-backend.c: deal with errno directly in verify_lock()
-10:  bd0639945a <  -:  ---------- refs API: remove refs_read_ref_full() wrapper
-11:  a359d1533b <  -:  ---------- refs API: make resolve_gitlink_ref() not set errno
-12:  07d550015a <  -:  ---------- refs API: make refs_resolve_ref_unsafe() static
-13:  73b7049151 <  -:  ---------- refs API: make refs_resolve_refdup() not set errno
-14:  1e9de48d85 <  -:  ---------- refs API: make refs_ref_exists() not set errno
-15:  446b50280b <  -:  ---------- refs API: make resolve_ref_unsafe() not set errno
-16:  37c5b88d7d <  -:  ---------- refs API: make expand_ref() and repo_dwim_log() not set errno
-17:  f914df0bb2 <  -:  ---------- refs API: don't leak "errno" in run_transaction_hook()
+Spotted by Ævar Arnfjörð Bjarmason <avarab@gmail.com>.
+
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ refs/refs-internal.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 467f4b3c93..f4445e3290 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -619,9 +619,9 @@ typedef int reflog_expire_fn(struct ref_store *ref_store,
+  *
+  * Return 0 on success. If the ref doesn't exist, set errno to ENOENT
+  * and return -1. If the ref exists but is neither a symbolic ref nor
+- * an object ID, it is broken; set REF_ISBROKEN in type, set errno to
+- * EINVAL, and return -1. If there is another error reading the ref,
+- * set errno appropriately and return -1.
++ * an object ID, it is broken; set REF_ISBROKEN in type, and return -1
++ * (errno should not be ENOENT) If there is another error reading the
++ * ref, set errno appropriately and return -1.
+  *
+  * Backend-specific flags might be set in type as well, regardless of
+  * outcome.
 -- 
 2.32.0.851.g0fc62a9785
 
