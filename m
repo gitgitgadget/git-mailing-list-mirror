@@ -2,135 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED0DEC11F66
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 13:13:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C51DFC07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 13:47:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D6FCA613B6
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 13:13:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A96AC61374
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 13:47:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239461AbhGNNP4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 09:15:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43566 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239460AbhGNNPt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 09:15:49 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0A05C06175F
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 06:12:56 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id y21-20020a7bc1950000b02902161fccabf1so3883161wmi.2
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 06:12:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=vMqcQEsJtqS7Yf+9IeXEy15Q6JfOB98l/zbk33z2MBY=;
-        b=IMqMGE2aOHtSly1SS9fTr4fsPz64qf8CrZoTWg1cAuCFEG60UOX0EcdEjF1aUjGlYb
-         cTEbeXBdLGIUsNjX6W1kmt35kjYibd+Btm8z2JsHumOgqnQw+Zts/xtUUFtiRoqoHOHr
-         4Y4DgIvmYdqxFFMDxmaJpyY9y+Byg8RX6GaRz3sNDxbeREGJqTMBnUU2BkmRt/muigZI
-         3yGFCqOf03Y9jS0QKne741wW4ZGZkLbs9lXQdfsRgAbKRNNgPW9kEO0yl8tveVhCrzNY
-         4Rua7Cxmavib23vhkEM8IOrvG8pKUwiYFQgqEA8KuZVSGdX2Njy/IDgEeiCkyhng6wI7
-         3LgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=vMqcQEsJtqS7Yf+9IeXEy15Q6JfOB98l/zbk33z2MBY=;
-        b=E/EG7WNL0OV5YyRyiGoRPgNF5ctCk2aC73DxLxtWVf9yi4EOyHb2KeZguyGhlpQSMB
-         VefI0N0hwFbH7BrK9kpk7vQwAxfog5/DjwPsVnWxiSTK7Mcbzt2ztPwKxFx1F+8wyeAQ
-         lmBWnxNQd3du9OPTU7qTRDqnv0r0KemDJKGhM0N2QjOAGk/Scfx3jgJEh+bA+77ZIFR1
-         DAHM6E+dTWG6fuSTF/CvJnyVZLjNXGYVHMDO6AjYYaiFClXBtkZtZHFGqUkRmLwqx+GH
-         LFAiRZatmr1vmnIKkuzp/X7yeTc0M5BpbPNRtImKpo77y7GaRFaC0EVVoIbUrXmmPF4l
-         ccLw==
-X-Gm-Message-State: AOAM530rBlYW/zRqBOzHAB3LtMbgXpluM8xtFzu1RUibIPFgvAZPMsHv
-        YIkXbUMZXOSBScG3n6JNGZw+fIpeKoA=
-X-Google-Smtp-Source: ABdhPJySo3IoTzRhSuIauQ7zWSl0ck/qKEgeF98gsGAtuV2p/wRK0BkZ5i37RY3MZfjt9iOVi0JPEg==
-X-Received: by 2002:a1c:1d8e:: with SMTP id d136mr11112872wmd.52.1626268375482;
-        Wed, 14 Jul 2021 06:12:55 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d8sm2556103wrv.20.2021.07.14.06.12.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 06:12:55 -0700 (PDT)
-Message-Id: <45861118991c20b0aa415b4fb1205a3a2738cbe3.1626268360.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.932.v9.git.1626268360.gitgitgadget@gmail.com>
-References: <pull.932.v8.git.1626112556.gitgitgadget@gmail.com>
-        <pull.932.v9.git.1626268360.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 14 Jul 2021 13:12:40 +0000
-Subject: [PATCH v9 16/16] t1092: document bad sparse-checkout behavior
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S232212AbhGNNty (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 09:49:54 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:24440 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231543AbhGNNtx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 09:49:53 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 16EDkwwO058663
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 14 Jul 2021 09:46:59 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     <git@vger.kernel.org>
+References: <20210712223139.24409-1-randall.becker@nexbridge.ca>        <20210712223139.24409-3-randall.becker@nexbridge.ca> <xmqqr1g1zow4.fsf@gitster.g>
+In-Reply-To: <xmqqr1g1zow4.fsf@gitster.g>
+Subject: RE: [Patch 2/3] Documentation/config.txt: add worktree includeIf conditionals.
+Date:   Wed, 14 Jul 2021 09:46:52 -0400
+Message-ID: <006b01d778b6$b74b8600$25e29200$@nexbridge.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, newren@gmail.com,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <stolee@gmail.com>, git@jeffhostetler.com,
-        johannes.schindelin@gmx.de, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain;
+        charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQF2HyHHSxX17r/iTwhwCI4yh2NyqQFrZIJJAS8qKBur8FmPoA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On July 13, 2021 9:05 PM. Junio C Hamano wrote:
+>randall.becker@nexbridge.ca writes:
+>
+>> From: "Randall S. Becker" <rsbecker@nexbridge.com>
+>>
+>> Documentation of the worktree and worktree/i conditionals is add based
+>> on gitdir rules except that the trailing / form of the path is not supported.
+>>
+>> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+>> ---
+>>  Documentation/config.txt | 11 ++++++++++-
+>>  1 file changed, 10 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt index
+>> bf82766a6a..7e951937ae 100644
+>> --- a/Documentation/config.txt
+>> +++ b/Documentation/config.txt
+>> @@ -143,7 +143,16 @@ refer to linkgit:gitignore[5] for details. For convenience:
+>>
+>>  `gitdir/i`::
+>>  	This is the same as `gitdir` except that matching is done
+>> -	case-insensitively (e.g. on case-insensitive file systems)
+>> +	case-insensitively (e.g. on case-insensitive file systems).
+>> +
+>> +`worktree`::
+>> +	This is similar to `gitdir` except that matching is done with
+>> +	the path of a worktree instead of the main repository. Unlike
+>> +	`gitdir`, the trailing / form of the worktree path is not supported.
+>
+>It is not immediately obvious what "the trailing / form" means.
+>
+>Does it refer to the 4th item in the 4-bullet list in the description just above the patch context (I am trying to make a guess
+here)?
+>
+>The problem I perceive in this description is that there is no phrase "trailing" in the vicinity of what readers have read so far;
+readers who
+>are not exactly familiar with the system may need a bit more assurance that they guessed correctly.
+>
+>    Unlike `gitdir`, `**` will not be automatically added to a
+>    pattern that ends with `/`
+>
+>would be easier to give that assurance, albeit more verbosely.
+>
+>Assuming that I guessed correctly, is this a deliberate design decision not to "automatically add ** after a pattern that ends with
+a slash",
+>and if so why?  I would have thought that "in the worktrees that I create inside /var/tmp/, please enable these configuration
+variables"
+>would be a fairly natural thing to ask, and I do not immediately see a reason why we want to apply different syntax rules between
+"gitdir"
+>and "worktree".
 
-There are several situations where a repository with sparse-checkout
-enabled will act differently than a normal repository, and in ways that
-are not intentional. The test t1092-sparse-checkout-compatibility.sh
-documents some of these deviations, but a casual reader might think
-these are intentional behavior changes.
+The reason for this comes down to what is in *the_repository. Essentially, the_repository->gitdir always has a /path/to/.git
+directory with full qualification. the_repository->worktree does not have /.git added for obvious reasons, so the /path/to is bare
+of the trailing /. This causes a trailing pattern /to/path/** match to fail. I could copy the value into a working buffer but that
+seemed a bit clunky. So using the available information, the syntax rules need to be different between the two, unless the value of
+worktree is augmented. I was unsure which way the team wanted to go on this.
 
-Add comments on these tests that make it clear that these behaviors
-should be updated. Using 'NEEDSWORK' helps contributors find that these
-are potential areas for improvement.
-
-Helped-by: Elijah Newren <newren@gmail.com>
-Reviewed-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- t/t1092-sparse-checkout-compatibility.sh | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 2394c36d881..cabbd42e339 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -392,8 +392,8 @@ test_expect_failure 'blame with pathspec outside sparse definition' '
- 	test_all_match git blame deep/deeper2/deepest/a
- '
- 
--# TODO: reset currently does not behave as expected when in a
--# sparse-checkout.
-+# NEEDSWORK: a sparse-checkout behaves differently from a full checkout
-+# in this scenario, but it shouldn't.
- test_expect_failure 'checkout and reset (mixed)' '
- 	init_repos &&
- 
-@@ -403,8 +403,8 @@ test_expect_failure 'checkout and reset (mixed)' '
- 	test_all_match git reset update-folder2
- '
- 
--# Ensure that sparse-index behaves identically to
--# sparse-checkout with a full index.
-+# NEEDSWORK: a sparse-checkout behaves differently from a full checkout
-+# in this scenario, but it shouldn't.
- test_expect_success 'checkout and reset (mixed) [sparse]' '
- 	init_repos &&
- 
-@@ -524,6 +524,8 @@ test_expect_success 'sparse-index is not expanded' '
- 	test_region ! index ensure_full_index trace2.txt
- '
- 
-+# NEEDSWORK: a sparse-checkout behaves differently from a full checkout
-+# in this scenario, but it shouldn't.
- test_expect_success 'reset mixed and checkout orphan' '
- 	init_repos &&
- 
--- 
-gitgitgadget
