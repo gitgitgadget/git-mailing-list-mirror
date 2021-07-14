@@ -2,161 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AEDEC07E9A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 17:10:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0D45C07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 17:17:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 41D4A60FED
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 17:10:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AFC62613B9
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 17:17:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238035AbhGNRNY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 13:13:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41906 "EHLO
+        id S229631AbhGNRUY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 13:20:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237893AbhGNRNX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 13:13:23 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93DB1C061760
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 10:10:30 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id o30-20020a05600c511eb029022e0571d1a0so1896345wms.5
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 10:10:30 -0700 (PDT)
+        with ESMTP id S229719AbhGNRUY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 13:20:24 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 868D3C06175F
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 10:17:32 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id 75-20020a9d08510000b02904acfe6bcccaso3216591oty.12
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 10:17:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:message-id:subject:mime-version
-         :content-transfer-encoding:content-disposition;
-        bh=qpCVq0mLvkH9OYc3Ms7+fnlLoMDTVxMft0m9fqzdsKQ=;
-        b=lsc5u2V6slPJMFh+zn/osspBWZg+OD6ziicSVyfduHRm5hsfYi+ppx8xHSXQyvFn0y
-         8N3wiMtca2XDyz/nRg+gUo++JkoFzsmIy3CivOWbzqJvOQtyH5ZN2Wz1CZD7qaqeWx/R
-         NUEcWZ/lOynLP+Vtx43cnKL0kIMGreW6yf7ra9g03NFAU7QZ5CT9e06I0k2d3ZBB91Mr
-         y/N6UlytE/vPv/rL1Ly6Bglm43lIKvogEX5OFhgzfp1ykJfVX+2AN3q/eyJJrhvIy3LX
-         0NSwDksDxRwCREnVPPg21qMJ06XLZnkN2XnxhDM0xxidoxpV4UDpbXuzXcD7Ap+TMxGy
-         LAag==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mFBDgg9qg1tiCJF4Cz4bZq6tcrbI44s+Jr3g5ygWptU=;
+        b=bkdTfStOT6wnM7Wj1EbISWRfdU7gSfrd7Tpogjtq7eEZyKe8yQI/5Jl0CAxpw3HHVp
+         iCYFS4eAJDQSTobjBD5hDQlbiubsIWkZxecdOCg55b1SwdosAx1X8zRW1LifZvTIkTvy
+         KSKPcysYudyszyKwKsMRhWXjtleTdVejEAqMiKguVH4B2H3PW0e1qpMNBgf4g/iRpzQW
+         yDmmJc9sU0weHcBm1LabssqMuN13Ll2LTPYJCAvQcCzTS4x5SH65bnMSrYD4YbBzrYWy
+         6mhLR+vgsTidBoMSf3a81EU7J9zSfjfsCqtjjEKseOQ8A1s2pxSTwGuwhZxeerTPm/rW
+         s7MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:message-id:subject:mime-version
-         :content-transfer-encoding:content-disposition;
-        bh=qpCVq0mLvkH9OYc3Ms7+fnlLoMDTVxMft0m9fqzdsKQ=;
-        b=dZYz1oTfwqPpx6M/9lGLpdKK4qh2EUvgp+JV35NOpc8kKFQS9jPNhdCOYjflORlo7t
-         QqcB90RbnGpBdcrlaP0ARDIQOfRmireivUuk3ScUFPdtKvRmcjyQ/AgernjYhYbjBS63
-         o5zgT/9m/UZkI2SSdpCkALE59aQKpylRUfc8zcdf/YCsENmddpfbOvAxjf1D7FE7DTrH
-         2nEDHI6DL/Zqm1XhwxkuoUAUYMarACIflwQpXaOqjw4B/SijiQoiEVpeObDwixCy9Jpm
-         reUOhFGdB50kkDW61zwAA88zqnc2rYeXFEhrulEkOSxY9UvsERESSCF1WKvqqHPTru6h
-         LjoA==
-X-Gm-Message-State: AOAM5316xtN/y2409LsACCkAXK1iI6iDl8PtWpUvUMZcFgTnDj5Dl8ep
-        dr4+4vLUAJDf/KDEIaz+BsY2wBSPgXnsDw==
-X-Google-Smtp-Source: ABdhPJxLj0XLuXsnF/0BNnCRSLEK/pbwrtXJM9nuKVpYUQl1528T5FLbEKoZRAP5UYLbGvnNjMDomg==
-X-Received: by 2002:a7b:cc8d:: with SMTP id p13mr5155841wma.145.1626282628989;
-        Wed, 14 Jul 2021 10:10:28 -0700 (PDT)
-Received: from gec-zebradil-lenovo ([2a02:908:1347:ac20:1a08:8f6a:8172:9625])
-        by smtp.gmail.com with ESMTPSA id d18sm2543989wmp.46.2021.07.14.10.10.28
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Jul 2021 10:10:28 -0700 (PDT)
-Date:   Wed, 14 Jul 2021 19:10:27 +0200
-From:   German Lashevich <german.lashevich@gmail.com>
-To:     "=?utf-8?Q?git=40vger.kernel.org?=" <git@vger.kernel.org>
-Message-ID: <1C6C1E49-5EC1-420D-A72A-8C50BD1931A2@getmailspring.com>
-Subject: Bug report: GIT_CONFIG and user.email/name
-X-Mailer: Mailspring
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mFBDgg9qg1tiCJF4Cz4bZq6tcrbI44s+Jr3g5ygWptU=;
+        b=gv8wV27AGLeONAV2eZQykf8araa6IuDVhDiipVjIvG492vm8idGQrvhDT/NlLpgKcT
+         09xwfjJmCH2r4He6u4fKgKpkyKhPB4p5BCKrxkik2h/YXd8sI4GKQMCdOp2VL+Xu4res
+         LRbWliUMM31AHVHIxA9Q7dywVhY+tVsg6/oGSpXVHEk3KJC0UqrPFyf47E6YaEx+gsmn
+         bUd7bsTZJWuNcFHMqlmlGcMiXk2FgwXMr/rKnT/cNH9F1A4W/dO10fHHeO8F1qS7KzqF
+         wSTNMl+cj8fbonLoI0yNiy9Y2oUL5di5MqIgJsQ7MODbJpvepD9StsmoCTj4gqvUgs3u
+         bHCg==
+X-Gm-Message-State: AOAM5301hyY7oWYQT0I0ioL/FQEq/T25eeQo8XRRWIHgQEtRfrMLCL1m
+        TWjf4TucyLsnbC3N7XZ2V8NVuepx+zAp+hlg0h8=
+X-Google-Smtp-Source: ABdhPJygshzqY0GCzfHjZodf0Y6NqVuiUSwekZ2/j29kF/2dkLKlGY2x1d4e4GZkFGX4mp53fPXe8gFRQfE6Grq2QlI=
+X-Received: by 2002:a05:6830:1d73:: with SMTP id l19mr1814928oti.316.1626283051933;
+ Wed, 14 Jul 2021 10:17:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+References: <pull.1044.git.git.1625964399.gitgitgadget@gmail.com>
+ <pull.1044.v2.git.git.1626225153.gitgitgadget@gmail.com> <6f5767607cd2ed9d7d9f45e6dc60b07b29d70236.1626225154.git.gitgitgadget@gmail.com>
+ <YO8Ut9b+6D/wR6uf@coredump.intra.peff.net>
+In-Reply-To: <YO8Ut9b+6D/wR6uf@coredump.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 14 Jul 2021 10:17:21 -0700
+Message-ID: <CABPp-BFu4-SJrGbeSQTum_JOq4PHAGwGPPLQA+sHZMP4wvqA1w@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] doc: document the special handling of -l0
+To:     Jeff King <peff@peff.net>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Wed, Jul 14, 2021 at 9:45 AM Jeff King <peff@peff.net> wrote:
+>
+> On Wed, Jul 14, 2021 at 01:12:32AM +0000, Elijah Newren via GitGitGadget wrote:
+>
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > As noted in commit 89973554b52c (diffcore-rename: make diff-tree -l0
+> > mean -l<large>, 2017-11-29), -l0 has had a magical special "large"
+> > historical value associated with it.  Document this value, particularly
+> > since it is not large enough for some uses -- see commit 9f7e4bfa3b6d
+> > (diff: remove silent clamp of renameLimit, 2017-11-13).
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
+> >  Documentation/diff-options.txt | 3 +++
+> >  1 file changed, 3 insertions(+)
+> >
+> > diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> > index 11e08c3fd36..ba40ac66cc9 100644
+> > --- a/Documentation/diff-options.txt
+> > +++ b/Documentation/diff-options.txt
+> > @@ -594,6 +594,9 @@ of a delete/create pair.
+> >       exhaustive portion of rename/copy detection from running if
+> >       the number of rename/copy targets exceeds the specified
+> >       number.  Defaults to diff.renameLimit.
+> > ++
+> > +Note that for backward compatibility reasons, a value of 0 is treated
+> > +the same as if a large value was passed (currently, 32767).
+>
+> Given the confusion around what "32767" even means to users, I wonder if
+> we could just say: a value of 0 removes any artificial limits (but Git
+> still has some internal limits which real-world cases are not likely to
+> hit).
 
-I've faced an issue while trying to use a non-default .gitconfig file
-via specifying
-GIT_CONFIG environment variable.
+32767 is not an internal limit; and as such, it is absolutely an
+artificial limit.  I had to use 48941 just a few years ago, and that
+value (and others larger than 32767) are fully supported.
 
+> Removing limits is after all the point of "0". I'm also not sure if it
+> is simply for backwards compatibility. We commonly let "0" or "-1" mean
+> "no limit" for convenience. It seems like something we'd want to
+> support.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+Making 0 mean unlimited could be done, and I think it'd be a one-line
+change, but that's not what commit 89973554b52c (diffcore-rename: make
+diff-tree -l0 mean -l<large>, 2017-11-29) tried to do.
 
-```
-# use custom .gitconfig via GIT_CONFIG envvar:
-mkdir -p /tmp/git-test/repo
-cat <<EOT > /tmp/git-test/.gitconfig
-[user]
-    name = John Doe
-    email = john@doe.me
-EOT
-cd /tmp/git-test/repo
-git init
-export GIT_CONFIG=/tmp/git-test/.gitconfig
-echo Hi > readme.txt
-git add readme.txt
-git commit -m 'Initial commit'
-```
-
-
-What did you expect to happen? (Expected behavior)
-Git creates a new commit.
-
-
-What happened instead? (Actual behavior)
-Error occurred:
-
-```
-Author identity unknown
-
-*** Please tell me who you are.
-
-Run
-
-  git config --global user.email "you@example.com"
-  git config --global user.name "Your Name"
-
-to set your account's default identity.
-Omit --global to set the identity only in this repository.
-
-fatal: unable to auto-detect email address (got 'john@computer.(none)')
-```
-
-
-What's different between what you expected and what actually happened?
-For some reason `git commit` doesn't use configuration options specified
-in the
-custom `.gitconfig` file.
-
-
-Anything else you want to add:
-`git config` shows correct values:
-
-```
-sh-5.1$ pwd
-/tmp/git-test/repo
-sh-5.1$ echo $GIT_CONFIG
-/tmp/git-test/.gitconfig
-sh-5.1$ cat $GIT_CONFIG
-[user]
-    name = John Doe
-    email = john@doe.me
-sh-5.1$ git config user.name
-John Doe
-sh-5.1$ git config user.email
-john@doe.me
-```
-
-The same happens with git version 2.32.0.432.gabb21c7263
-
-
-[System Info]
-git version:
-git version 2.32.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.12.15-arch1-1 #1 SMP PREEMPT Wed, 07 Jul 2021 23:35:29
-+0000 x86_64
-compiler info: gnuc: 11.1
-libc info: glibc: 2.33
-$SHELL (typically, interactive shell): /bin/zsh
+I'm not opposed to such a change in the meaning of "0", but I am
+opposed to documenting this value as unlimited unless we make it so.
