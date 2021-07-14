@@ -2,103 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C51DFC07E9A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 13:47:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43008C07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 14:58:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A96AC61374
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 13:47:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2DCEC600D4
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 14:58:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232212AbhGNNty (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 09:49:54 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:24440 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231543AbhGNNtx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 09:49:53 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 16EDkwwO058663
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 14 Jul 2021 09:46:59 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>
-References: <20210712223139.24409-1-randall.becker@nexbridge.ca>        <20210712223139.24409-3-randall.becker@nexbridge.ca> <xmqqr1g1zow4.fsf@gitster.g>
-In-Reply-To: <xmqqr1g1zow4.fsf@gitster.g>
-Subject: RE: [Patch 2/3] Documentation/config.txt: add worktree includeIf conditionals.
-Date:   Wed, 14 Jul 2021 09:46:52 -0400
-Message-ID: <006b01d778b6$b74b8600$25e29200$@nexbridge.com>
+        id S239576AbhGNPBS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 11:01:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39324 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239571AbhGNPBR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 11:01:17 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBB28C06175F
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 07:58:25 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id k27so3493629edk.9
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 07:58:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=/2LMp9Ai8EbcWXstIdpb2ze1OU6pnYu4ke86ClZk9Dc=;
+        b=fUeRtIWjAx/C2VixQ6BfJojC5femvBvhBRN5sZ+c5sRgXkxnMlG9mi7NBkZI2MlADU
+         p4+fBVCSrAQkGDhGx2oBiLk8q1oU8k2K4xniabSaDHvkp9tiTQcIJbg727DtuAzIQXqA
+         jSFk6iyPnehWi9HyhZKfBLRG+6b3daDQJ1/ubWr98Ju5PT/kXdDzf0nx28cbSyvNnZHS
+         EK8t2qFO7XEgKthuDaElDeEWyXCtFJ8gFYS1AZ/BiQkdygQFRhhobjsVABLQ9p/c3a6w
+         218WUqmsRgMFXWbgCGwZst0BznmQ4KPOzjHbOdO2YLajYY50AwaaBRhLQdlBlkzyPWcG
+         Ps0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=/2LMp9Ai8EbcWXstIdpb2ze1OU6pnYu4ke86ClZk9Dc=;
+        b=OfcQfRk1h/ReWjyiCk3l6TGhhK6CtqRirZxYOVM0lypDVWMk505qZX2gZBiikIP4NQ
+         6FwKgeoqlul3TTZRLUY/d6vPMf575j7EjwdWh9fGrXh32p6TOU+fAZb5c9foI6K82unA
+         MP9ZPzEO0XAtAT3KjL/BaZ+1fAo2n1iy7ixXApHRAlD2I4d8brVab4y/bIimbF5HrVA8
+         nyfY//aGKxWOoZX7fisYdkss9AFdCmbUoSVW5lHj/64NDVOKTEmY5/jMPugdB8xcp3kB
+         y+aRsxpMkWhN7JMXr8bVdx9DV3Ml39/WTh//6vHFnjrelNL9AY3c+jaYZNgGr7sO7fL1
+         9wow==
+X-Gm-Message-State: AOAM531/YOOx/0GSTzWUXq8lAAvLZw4W8NDtdSPUBh+fZ5gfnBYBPC2z
+        +0y2jW7Yq2jgWQhZn0pNX1w=
+X-Google-Smtp-Source: ABdhPJzb7hssewT/GVimqC44p5CAjdQbg01nbyyLINVZ56fCbSCyQrME7p6ut4YmitEY/2XmVblPdw==
+X-Received: by 2002:a05:6402:138c:: with SMTP id b12mr14491865edv.268.1626274704274;
+        Wed, 14 Jul 2021 07:58:24 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id ba25sm1122876edb.1.2021.07.14.07.58.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jul 2021 07:58:23 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2021, #03; Tue, 13)
+Date:   Wed, 14 Jul 2021 16:32:30 +0200
+References: <xmqqmtqpzosf.fsf@gitster.g>
+ <2c7f188a-6ebe-b116-8299-86ca3732d79a@gmail.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <2c7f188a-6ebe-b116-8299-86ca3732d79a@gmail.com>
+Message-ID: <87czrl0wob.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQF2HyHHSxX17r/iTwhwCI4yh2NyqQFrZIJJAS8qKBur8FmPoA==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On July 13, 2021 9:05 PM. Junio C Hamano wrote:
->randall.becker@nexbridge.ca writes:
->
->> From: "Randall S. Becker" <rsbecker@nexbridge.com>
->>
->> Documentation of the worktree and worktree/i conditionals is add based
->> on gitdir rules except that the trailing / form of the path is not supported.
->>
->> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
->> ---
->>  Documentation/config.txt | 11 ++++++++++-
->>  1 file changed, 10 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/config.txt b/Documentation/config.txt index
->> bf82766a6a..7e951937ae 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -143,7 +143,16 @@ refer to linkgit:gitignore[5] for details. For convenience:
->>
->>  `gitdir/i`::
->>  	This is the same as `gitdir` except that matching is done
->> -	case-insensitively (e.g. on case-insensitive file systems)
->> +	case-insensitively (e.g. on case-insensitive file systems).
->> +
->> +`worktree`::
->> +	This is similar to `gitdir` except that matching is done with
->> +	the path of a worktree instead of the main repository. Unlike
->> +	`gitdir`, the trailing / form of the worktree path is not supported.
->
->It is not immediately obvious what "the trailing / form" means.
->
->Does it refer to the 4th item in the 4-bullet list in the description just above the patch context (I am trying to make a guess
-here)?
->
->The problem I perceive in this description is that there is no phrase "trailing" in the vicinity of what readers have read so far;
-readers who
->are not exactly familiar with the system may need a bit more assurance that they guessed correctly.
->
->    Unlike `gitdir`, `**` will not be automatically added to a
->    pattern that ends with `/`
->
->would be easier to give that assurance, albeit more verbosely.
->
->Assuming that I guessed correctly, is this a deliberate design decision not to "automatically add ** after a pattern that ends with
-a slash",
->and if so why?  I would have thought that "in the worktrees that I create inside /var/tmp/, please enable these configuration
-variables"
->would be a fairly natural thing to ask, and I do not immediately see a reason why we want to apply different syntax rules between
-"gitdir"
->and "worktree".
 
-The reason for this comes down to what is in *the_repository. Essentially, the_repository->gitdir always has a /path/to/.git
-directory with full qualification. the_repository->worktree does not have /.git added for obvious reasons, so the /path/to is bare
-of the trailing /. This causes a trailing pattern /to/path/** match to fail. I could copy the value into a working buffer but that
-seemed a bit clunky. So using the available information, the syntax rules need to be different between the two, unless the value of
-worktree is augmented. I was unsure which way the team wanted to go on this.
+On Wed, Jul 14 2021, Derrick Stolee wrote:
 
+> On 7/13/2021 9:07 PM, Junio C Hamano wrote:
+> [...]
+>> * ds/gender-neutral-doc-guidelines (2021-06-16) 2 commits
+>>  - SQUASH??? replace neutering tips with that of =C3=86ver
+>>  - CodingGuidelines: recommend singular they
+>>  (this branch uses ds/gender-neutral-doc.)
+>>=20
+>>  Attempt to give a guideline for gender neutral documentation.
+>>=20
+>>  Comments?
+>
+> I've said before and will repeat here that the draft in your
+> SQUASH??? commit looks like a good compromise to me. It can
+> replace the other commit in this branch.
+
+Just doing that would leave the commit message that says "change X",
+when we're now changing X, Y and Z. I.e.  With the squash it changes
+from narrowly focusing on the pronoun question into a start of a general
+prose and style guide for our documentation.
+
+Whatever anyone thinks about the proposed end-result I'd say that's a
+bit too much work to dump in Junio's lap.
+
+I also had a question for you here >2 weeks ago:
+https://lore.kernel.org/git/87o8bog7li.fsf@evledraar.gmail.com/
