@@ -2,164 +2,224 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_LOCAL_DIGITS,FROM_LOCAL_HEX,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D73AC07E9A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 16:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAA86C07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 16:49:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 38E2E613C2
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 16:47:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 94B1861279
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 16:49:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236757AbhGNQtv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 12:49:51 -0400
-Received: from m12-16.163.com ([220.181.12.16]:47435 "EHLO m12-16.163.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229595AbhGNQtq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 12:49:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=Mime-Version:Subject:From:Date:Message-Id; bh=lNK0P
-        nHXmXhpeBrCuBw/K1ttA3nJ4lMfu6xNy73dn2M=; b=e16CTanV9Jatz+6b9gcfc
-        rPiBibYPRYbksKLLd/y6P7uo2eOeoaHU2Q2ripLRS7GteofcfyRJ1eAWJTT3gI00
-        fQDzX6+z6Ds0i91HMHdHKNkk6aguifmI/1DomCVxNDZk9V4cWG1Aok6rr3CABsuX
-        8WhDSUd7/JkhVFt16KQv28=
-Received: from smtpclient.apple (unknown [60.176.228.14])
-        by smtp12 (Coremail) with SMTP id EMCowADX3Fj3FO9gO_yA2Q--.36499S3;
-        Thu, 15 Jul 2021 00:46:47 +0800 (CST)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
-Subject: Re: [PATCH v2] packfile: freshen the mtime of packfile by
- configuration
-From:   Sun Chao <16657101987@163.com>
-In-Reply-To: <YO5RZ0Wix/K5q53Z@nand.local>
-Date:   Thu, 15 Jul 2021 00:46:47 +0800
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Sun Chao via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <ACE7ECBE-0D7A-4FB8-B4F9-F9E32BE2234C@163.com>
-References: <pull.1043.git.git.1625943685565.gitgitgadget@gmail.com>
- <pull.1043.v2.git.git.1626226114067.gitgitgadget@gmail.com>
- <87wnpt1wwc.fsf@evledraar.gmail.com> <YO5RZ0Wix/K5q53Z@nand.local>
-To:     Taylor Blau <me@ttaylorr.com>
-X-Mailer: Apple Mail (2.3654.100.0.2.22)
-X-CM-TRANSID: EMCowADX3Fj3FO9gO_yA2Q--.36499S3
-X-Coremail-Antispam: 1Uf129KBjvJXoWxWry5KF4rZF1DZF47JF17GFg_yoWrXr1rpF
-        ZIg3WkGw1ktFWfAr1xCan2qFWFyan3Jrs8XryYgFyUuwn8GryS9rs3K3yY9a4DCrn5Aw4Y
-        vFWxKr95ZF4DZrJanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07j-a93UUUUU=
-X-Originating-IP: [60.176.228.14]
-X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/1tbiQwbPglc7UtstlAAAsU
+        id S236545AbhGNQwb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 12:52:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37176 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229611AbhGNQwa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 12:52:30 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14AC7C06175F
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 09:49:38 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id u15so3005267oiw.3
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 09:49:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GQpbdXdmqjW5htUiM3euUuvoRst2VyUAfyx26KU2g/4=;
+        b=BLP8eL33ZY5dFySkxYrdgUbuhTXtGhm/YvTFZSNRziaWNpZu/5pmp8ywZAIEbkOYpe
+         k/B/BONC5UKZoC6fuowM4FfaV5BC57qn4CxoQH5TzRd+huQ0lRsObBZ/nyiENt6kdArL
+         524UDZVlbT4pUY2/4E+7ZjUle/K+Tx7dS3EATE98w4Fu3BelYVBCu5B4ppYRLq2RZA/F
+         uPNtjZK7mex1AYEK3O7oC66GAauFk70vTtOWqVp5C4pkFG72uFKBpR/GC7vEX4bPaJQ2
+         k1dk/LhJzOWTieqTTPr0eIHTXp6R5biL3zuFdv1giiuFCcW5T0Av/4Ea2kugds0tYCcE
+         JW+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GQpbdXdmqjW5htUiM3euUuvoRst2VyUAfyx26KU2g/4=;
+        b=t4XDzpthJDFFrqWyDdbWIM/FEjXKAcUbe0NxE4Hj2rgE2YmJTUZ1hrKAzjvjbJr4kl
+         kyM5Whls5AtFaW05TwH4oWAqjFKQ8NR5beaRZdU7l7IhWvPp39BJ1xz43MGiy/PVPEi/
+         nZJKOCCqEc5bCgrDZKNJGHjrK7Q3jND9voK3zbev6ElBdGgxcdWRvNwTveQQfrIHNUa0
+         /VjkuDNftsn/k4qVzQlw1YEzdfibvdyOhiO7bGweqvQqEs+6P/QPBPqLEyzXVUIDa1n1
+         MBbvROvSpq84gWDkGU4l+1tVdJdWa2QRvTqrDDnqBTdPebX6DmAY7LuYJesLeDKhNqZh
+         aXnw==
+X-Gm-Message-State: AOAM533T28dn1llaJNM4nBqUk251aJxFywPSqFl5aVFUcvsP8d91VIO1
+        eRLDTc3sy6gkkfUieiCBdH3CbgMVTp6X+w==
+X-Google-Smtp-Source: ABdhPJxo6Kr9k7tDeh2hcXaQQR6pQB4Bh0CjJ5DBK5589szRTypnvMYGSbpAXWLVyvLijh+qexGunw==
+X-Received: by 2002:a05:6808:1488:: with SMTP id e8mr8179231oiw.179.1626281377116;
+        Wed, 14 Jul 2021 09:49:37 -0700 (PDT)
+Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
+        by smtp.gmail.com with ESMTPSA id v3sm516698ood.16.2021.07.14.09.49.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jul 2021 09:49:36 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Mathias Kunter <mathiaskunter@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] push: make default consistent
+Date:   Wed, 14 Jul 2021 11:49:00 -0500
+Message-Id: <20210714164900.606330-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.32.0.38.g1d70fa854e
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The default action "simple" doesn't make sense. It's supposed to be the
+same as "current", except with an extra safety in case the name of the
+upstream branch doesn't match the name of the current branch (and we are
+pushing to the same remote). But if there's no upstream configured
+there's no need for any check.
 
+If this works:
 
-> 2021=E5=B9=B47=E6=9C=8814=E6=97=A5 10:52=EF=BC=8CTaylor Blau =
-<me@ttaylorr.com> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> On Wed, Jul 14, 2021 at 03:39:18AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
->> Hrm, per my v1 feedback (and I'm not sure if my suggestion is even =
-good
->> here, there's others more familiar with this area than I am), I was
->> thinking of something like a *.bump file written via:
->>=20
->>    core.packUseBumpFiles=3Dbool
->>=20
->> Or something like that, anyway, the edge case in allowing the user to
->> pick arbitrary suffixes is that we'd get in-the-wild user arbitrary
->> configuration squatting on a relatively sensitive part of the object
->> store.
->>=20
->> E.g. we recently added *.rev files to go with
->> *.{pack,idx,bitmap,keep,promisor} (and I'm probably forgetting some
->> suffix). What if before that a user had set:
->>=20
->>    core.packMtimeSuffix=3Drev
->=20
-> I think making the suffix configurable is probably a mistake. It seems
-> like an unnecessary detail to expose, but it also forces us to think
-> about cases like these where the configured suffix is already used for
-> some other purpose.
+  git clone $central .
+  ...
+  git push
 
-Thanks, I agree with you and will fix it, such like the *.keep file, we
-do not use the suffix configuration to create keep files.
+Then this should too:
 
->=20
-> I don't think that a new ".bump" file is a bad idea, but it does seem
-> like we have a lot of files that represent a relatively little amount =
-of
-> the state that a pack can be in. The ".promisor" and ".keep" files =
-both
-> come to mind here. Some thoughts in this direction:
->=20
->  - Combining *all* of the pack-related files (including the index,
->    reverse-index, bitmap, and so on) into a single "pack-meta" file
->    seems like a mistake for caching reasons.
->=20
->  - But a meta file that contains just the small state (like promisor
->    information and whether or not the pack is "kept") seems like it
->    could be OK. On the other hand, being able to tweak the kept state
->    by touching or deleting a file is convenient (and having to rewrite
->    a meta file containing other information is much less so).
+  git clone $central .
+  git checkout -b fix-1
+  ...
+  git push
 
-Yes, read and rewrite a meta file also means we need do lock/unlock, =
-which
-may cause inconvenient operations.
+Cloning automatically sets up an upstream branch for "master", and
+therefore it passes the safety check, but that is much more dangerous
+than pushing any other branch.
 
->=20
-> But a ".bump" file does seem like an awkward way to not rely on the
-> mtime of the pack itself. And I do think it runs into compatibility
-> issues like =C3=86var mentioned. Any version of Git that includes a
-> hypothetical .bump file (or something like it) needs to also update =
-the
-> pack's mtime, too, so that old versions of Git can understand it. (Of
-> course, that could be configurable, but that seems far too obscure to
-> me).
+Why do we barf with "fix-1", but not "master"?
 
-Here we will have a configuration and default is backward compatiblity,
-and if user decide to use the '.bump' file, which means he can not use
-the old versions of Git, like the Repository Format Version, it is =
-limited.
+Instead of behaving like "current" if the current branch doesn't have an
+upstream configured, `git push` fails like "upstream", so it's a
+Frankensteinian action.
 
->=20
-> Stepping back, I'm not sure I understand why freshening a pack is so
-> slow for you. freshen_file() just calls utime(2), and any sync back to
-> the disk shouldn't need to update the pack itself, just a couple of
-> fields in its inode. Maybe you could help explain further.
->=20
-> In any case, I couldn't find a spot in your patch that updates the
-> packed_git's 'mtime' field, which is used to (a) sort packs in the
-> linked list of packs, and (b) for determining the least-recently used
-> pack if it has individual windows mmapped.
+If the upstream branch isn't configured, "simple" should not abort, just
+like "current".
 
-The reason why we want to avoid freshen the mtime of ".pack" file is to
-improve the reading speed of Git Servers.
+Reported-by: Mathias Kunter <mathiaskunter@gmail.com>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
 
-We have some large repositories in our Git Severs (some are bigger than =
-10GB),
-and we created '.keep' files for large ".pack" files, we want the big =
-files
-unchanged to speed up git upload-pack, because in our mind the file =
-system
-cache will reduce the disk IO if a file does not changed.
+Now that my push reorganization patches have landed on master, it's
+clear why the current behavior doesn't really match the behavior of
+"current".
 
-However we find the mtime of ".pack" files changes over time which makes =
-the
-file system always reload the big files, that takes a lot of IO time and =
-result
-in lower speed of git upload-pack and even further the disk IOPS is =
-exhausted.
+As was discussed previously:
+https://lore.kernel.org/git/60b15cd2c4136_2183bc20893@natae.notmuch/
 
->=20
-> Thanks,
-> Taylor
->=20
+ Documentation/config/push.txt |  5 +++--
+ Documentation/git-push.txt    |  6 +++---
+ builtin/push.c                | 17 ++++++++++++-----
+ t/t5528-push-default.sh       |  2 +-
+ 4 files changed, 19 insertions(+), 11 deletions(-)
 
+diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
+index 632033638c..d267d05e7a 100644
+--- a/Documentation/config/push.txt
++++ b/Documentation/config/push.txt
+@@ -27,8 +27,9 @@ push.default::
+ * `simple` - pushes the current branch with the same name on the remote.
+ +
+ If you are working on a centralized workflow (pushing to the same repository you
+-pull from, which is typically `origin`), then you need to configure an upstream
+-branch with the same name.
++pull from, which is typically `origin`), and you have configured an upstream
++branch, then the name must be the same as the current branch, otherwise this
++action will fail as a precaution.
+ +
+ This mode is the default since Git 2.0, and is the safest option suited for
+ beginners.
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index a953c7c387..58352bbf88 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -39,9 +39,9 @@ what to push (See linkgit:git-config[1] for the meaning of `push.default`).
+ 
+ When neither the command-line nor the configuration specify what to
+ push, the default behavior is used, which corresponds to the `simple`
+-value for `push.default`: the current branch is pushed to the
+-corresponding upstream branch, but as a safety measure, the push is
+-aborted if the upstream branch does not have the same name as the
++value for `push.default`: the current branch is pushed to a remote
++branch with the same name, but as a safety measure the push is aborted
++if there's a configured upstream branch with a different name than the
+ local one.
+ 
+ 
+diff --git a/builtin/push.c b/builtin/push.c
+index e8b10a9b7e..6062edb6f6 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -185,9 +185,11 @@ static const char message_detached_head_die[] =
+ 	   "\n"
+ 	   "    git push %s HEAD:<name-of-remote-branch>\n");
+ 
+-static const char *get_upstream_ref(struct branch *branch, const char *remote_name)
++static const char *get_upstream_ref(struct branch *branch, const char *remote_name, int fatal)
+ {
+-	if (!branch->merge_nr || !branch->merge || !branch->remote_name)
++	if (!branch->merge_nr || !branch->merge || !branch->remote_name) {
++		if (!fatal)
++			return NULL;
+ 		die(_("The current branch %s has no upstream branch.\n"
+ 		    "To push the current branch and set the remote as upstream, use\n"
+ 		    "\n"
+@@ -195,6 +197,7 @@ static const char *get_upstream_ref(struct branch *branch, const char *remote_na
+ 		    branch->name,
+ 		    remote_name,
+ 		    branch->name);
++	}
+ 	if (branch->merge_nr != 1)
+ 		die(_("The current branch %s has multiple upstream branches, "
+ 		    "refusing to push."), branch->name);
+@@ -231,12 +234,16 @@ static void setup_default_push_refspecs(struct remote *remote)
+ 	switch (push_default) {
+ 	default:
+ 	case PUSH_DEFAULT_UNSPECIFIED:
+-	case PUSH_DEFAULT_SIMPLE:
++	case PUSH_DEFAULT_SIMPLE: {
++		const char *upstream;
++
+ 		if (!same_remote)
+ 			break;
+-		if (strcmp(branch->refname, get_upstream_ref(branch, remote->name)))
++		upstream = get_upstream_ref(branch, remote->name, 0);
++		if (upstream && strcmp(branch->refname, upstream))
+ 			die_push_simple(branch, remote);
+ 		break;
++	}
+ 
+ 	case PUSH_DEFAULT_UPSTREAM:
+ 		if (!same_remote)
+@@ -244,7 +251,7 @@ static void setup_default_push_refspecs(struct remote *remote)
+ 			      "your current branch '%s', without telling me what to push\n"
+ 			      "to update which remote branch."),
+ 			    remote->name, branch->name);
+-		dst = get_upstream_ref(branch, remote->name);
++		dst = get_upstream_ref(branch, remote->name, 1);
+ 		break;
+ 
+ 	case PUSH_DEFAULT_CURRENT:
+diff --git a/t/t5528-push-default.sh b/t/t5528-push-default.sh
+index f280e00eb7..ba38256ef4 100755
+--- a/t/t5528-push-default.sh
++++ b/t/t5528-push-default.sh
+@@ -126,7 +126,7 @@ test_expect_success 'push from/to new branch with current creates remote branch'
+ test_expect_success 'push to existing branch, with no upstream configured' '
+ 	test_config branch.main.remote repo1 &&
+ 	git checkout main &&
+-	test_push_failure simple &&
++	test_push_success simple main &&
+ 	test_push_failure upstream
+ '
+ 
+-- 
+2.32.0.38.g1d70fa854e
 
