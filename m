@@ -2,146 +2,232 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C718C07E9A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 18:47:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 899D9C07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 18:57:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4396A61260
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 18:47:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 682826100B
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 18:57:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232464AbhGNSt4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 14:49:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36122 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229603AbhGNStz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 14:49:55 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0E3FC06175F
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 11:47:02 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id dj21so4602363edb.0
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 11:47:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=4lSsCYJX5rpRB8rM3lfWfRlZS3JfTjzvCk++Rw2vD8k=;
-        b=KUdR6YfOWAg8hCy11pnO/x1qW+2Jug7rhuZ9HxVJRDMGiPY2MKThEpF4UK8vXdBEdG
-         woSAE6l0MlTVQIyfIpRv5n++C+BSws+xOo49Jo1/sf66sYv8GtyeaWk/dmVB2J/i6Fc1
-         tkmKJaaSml/UINpQu2F01rXTYbD54YboFmV6yHSU3X409BcjiFL5wzn689hYa7F/oxZP
-         m1F2vp9++FFybl/wNcBwij6cphENqRFcLokC9JgaHckwigLYmU6f3bc5sT+Z16KJNMXH
-         D2U07NruQY43kDsLTzJnC9+727fYn7xUUr38VGW+g1+I3kDTyFAaHlqY2v1yGsNsxmg7
-         ZB/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=4lSsCYJX5rpRB8rM3lfWfRlZS3JfTjzvCk++Rw2vD8k=;
-        b=uPGUziBiDUbVZfi2YZV/qQPXfWYaLC0X7HNTI808XyTjyrXmxhgBsU2UHK90DGwerw
-         Q0z5EzyY6bQ0FMy9imzouXTBnK52pdzHA+i0NPjo9PZ5YI7X77rYUvaRJ0qESgz5aPor
-         4jFfZO/dWdT7xm/VB0HwHtvkcpgJT+iF6dVHNDe+Ck74Ck9KzcG/zSeMRnzGoMh1vp3D
-         SzfFGWTbXg3ktJjhVcv+34yo7dLwHUh5qtTMH8Y5rvkpJZYiJfN1lk6X7a6thnsjm3Ns
-         vaaLBu7332QYW26Ug8pt5/VkF578AaRUwCLLv0uRMXNvqeambKdyOepk9jul27XlB+Ea
-         js0g==
-X-Gm-Message-State: AOAM531YDgxc3Q6QHQHwGyJF3V/MI4L8du9EctYweRWuXr48uZaj9yMH
-        txBCQbguqcxF48Ggxy4eUwg=
-X-Google-Smtp-Source: ABdhPJwZ1J+jgVEFBRdYmRJIzEOFGNdmWgBGBByiAoMUBsl7IJeaOMEfw4fTOtPiA4Gk7B/y3Gez8A==
-X-Received: by 2002:aa7:d991:: with SMTP id u17mr15552942eds.240.1626288421169;
-        Wed, 14 Jul 2021 11:47:01 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id n11sm1084357ejg.43.2021.07.14.11.47.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 11:47:00 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
-        gitster@pobox.com, jonathantanmy@google.com
-Subject: Re: [PATCH v2 02/24] pack-bitmap-write.c: gracefully fail to write
- non-closed bitmaps
-Date:   Wed, 14 Jul 2021 20:44:27 +0200
-References: <cover.1617991824.git.me@ttaylorr.com>
- <cover.1624314293.git.me@ttaylorr.com>
- <3e637d9ec83435540ad32b8325b0dce87f61bae0.1624314293.git.me@ttaylorr.com>
- <87eecqzvld.fsf@evledraar.gmail.com> <YO8fpVZhoCiEiurR@nand.local>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <YO8fpVZhoCiEiurR@nand.local>
-Message-ID: <874kcw20nq.fsf@evledraar.gmail.com>
+        id S240041AbhGNTAo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 15:00:44 -0400
+Received: from mx.kolabnow.com ([95.128.36.41]:56956 "EHLO mx.kolabnow.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229735AbhGNTAo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 15:00:44 -0400
+Received: from localhost (unknown [127.0.0.1])
+        by ext-mx-out002.mykolab.com (Postfix) with ESMTP id 22450E4A;
+        Wed, 14 Jul 2021 20:57:50 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
+        content-transfer-encoding:content-language:content-type
+        :content-type:in-reply-to:mime-version:date:date:message-id:from
+        :from:references:subject:subject:received:received:received; s=
+        dkim20160331; t=1626289069; x=1628103470; bh=rvErS8iRILyrWpF6ep0
+        rFxvvkvFJ93b7hydcfK54JaU=; b=QNhj5PdcdZDelacy8ET3ZvhRUkhEbFMSK6J
+        zC537ZXvEN72g66oOI3IL55y+6PqtrSlYkKkTJRfbmMuHrNJUs56QuOY+y0DKZKb
+        7nzMBXr9etJ1exTCvxapy522sj91rP7nRnvEMlZQxieDFZlxSgMA2hpqhNe7y98a
+        pCt4LUOmk1grpsHsYp4QS/0UUx7rGDbTNm1V6kGjM1028UjSchLKCm7stB1PaQCZ
+        wZjzE4nUW1HCqrJOAdjIg04d/TT9e0XCJri8fozBMnF5Bzz0SFKX5UOcT3dN7eqt
+        ZDWBj4NTuQlYcvG3LeVVYBFE2OOemwbqO6nXyFVBX2Lub23nQESKWiYEFCWLwICp
+        eYWbAHfN97jPyikYBKSXw/4UQr7LRia9ll4tWiIbZkHDKyyREGOIumyglJ5v1ll9
+        b5R6r8w7MPcJPW30V1+m3u23S065uN0EsGwAhwXNv6ZmVuSTG/lVxkwHYbwKurTS
+        8u2tjS2Hnhs3xs7aBF3iqLzrt6Ddx62L+6VmydDVJuYReMzCGSoUsF2pXWHmd4mL
+        T2dEH8Erfk9ZPcIOcHNmYcFdiEu4yOqOTjycqp+AiYLLBBtijbjXvLbn1XlubCc0
+        aQeUCYICO1pSEElnE6CDSxpJQPfv41zq09v4TWjlQANZiNMPSngd5FzO1ZIm5WtF
+        MD20xbjg=
+X-Virus-Scanned: amavisd-new at mykolab.com
+Received: from mx.kolabnow.com ([127.0.0.1])
+        by localhost (ext-mx-out002.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id wVU4ld8zhPPI; Wed, 14 Jul 2021 20:57:49 +0200 (CEST)
+Received: from int-mx002.mykolab.com (unknown [10.9.13.2])
+        by ext-mx-out002.mykolab.com (Postfix) with ESMTPS id E7E8DBCD;
+        Wed, 14 Jul 2021 20:57:47 +0200 (CEST)
+Received: from ext-subm003.mykolab.com (unknown [10.9.6.3])
+        by int-mx002.mykolab.com (Postfix) with ESMTPS id A750443FA;
+        Wed, 14 Jul 2021 20:57:40 +0200 (CEST)
+Subject: Re: [PATCH v2 2/4] SANITIZE tests: fix memory leaks in t13*config*,
+ add to whitelist
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <cover-0.4-0000000000-20210714T001007Z-avarab@gmail.com>
+ <cover-0.4-0000000000-20210714T172251Z-avarab@gmail.com>
+ <patch-2.4-867e8e9a6c-20210714T172251Z-avarab@gmail.com>
+From:   Andrzej Hunt <andrzej@ahunt.org>
+Message-ID: <871ea493-e108-e748-0234-f929690ad2fd@ahunt.org>
+Date:   Wed, 14 Jul 2021 20:57:37 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <patch-2.4-867e8e9a6c-20210714T172251Z-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Jul 14 2021, Taylor Blau wrote:
 
-> On Fri, Jun 25, 2021 at 01:23:40AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->>
->> On Mon, Jun 21 2021, Taylor Blau wrote:
->>
->> > -static uint32_t find_object_pos(const struct object_id *oid)
->> > +static uint32_t find_object_pos(const struct object_id *oid, int *fou=
-nd)
->> >  {
->> >  	struct object_entry *entry =3D packlist_find(writer.to_pack, oid);
->> >
->> >  	if (!entry) {
->> > -		die("Failed to write bitmap index. Packfile doesn't have full closu=
-re "
->> > +		if (found)
->> > +			*found =3D 0;
->> > +		warning("Failed to write bitmap index. Packfile doesn't have full c=
-losure "
->> >  			"(object %s is missing)", oid_to_hex(oid));
->> > +		return 0;
->> >  	}
->> >
->> > +	if (found)
->> > +		*found =3D 1;
->> >  	return oe_in_pack_pos(writer.to_pack, entry);
->> >  }
->>
->> So, a function that returns an unsigned 32 bit int won't (presumably)
->> have enough space for an "is bad", but before it died so it didn't
->> matter.
->>
->> Now it warns, so it needs a "is bad", so we add another "int" to pass
->> that information around.
->
-> Right. You could imagine using the most-significant bit to indicate
-> "bad" (which in this case is "I couldn't find this object that I'm
-> supposed to be able to reach"), but of course it cuts our maximum number
-> of objects in a bitmap in half.
->
->> So if we're already paying for that extra space (which, on some
->> platforms would already be a 64 bit int, and on some so would the
->> uint32_t, it's just "at least 32 bits").
->>
->> Wouldn't it be more idiomatic to just have find_object_pos() return
->> int64_t now, if it's -1 it's an error, otherwise the "pos" is cast to
->> uint32_t:
->
-> I'm not sure. It does save the extra argument, which is arguably more
-> convenient for callers, but the cost for doing so is a cast from a
-> signed integer type to an unsigned one (and a narrower destination type,
-> at that).
->
-> That seems easier to get wrong to me than passing a pointer to a pure
-> "int" and keeping the return type a uint32_t. So, I'm probably more
-> content to leave it as-is rather than change it.
->
-> I don't feel too strongly about it, though, so if you do I'd be happy to
-> hear more.
+On 14/07/2021 19:23, Ævar Arnfjörð Bjarmason wrote:
+> Fix a couple of trivial memory leaks introduced in 3efd0bedc6 (config:
+> add conditional include, 2017-03-01) and my own 867ad08a26 (hooks:
+> allow customizing where the hook directory is, 2016-05-04).
+> 
+> In the latter case the "fix" is UNLEAK() on the global variable. This
+> allows us to run all t13*config* tests under SANITIZE=leak.
+> 
+> With this change we can now run almost the whole set of config.c
+> tests (t13*config) under SANITIZE=leak, so let's do so, with a few
+> exceptions:
+> 
+>   * The test added in ce81b1da23 (config: add new way to pass config
+>     via `--config-env`, 2021-01-12), it fails in GitHub CI, but passes
+>     for me locally. Let's just skip it for now.
+> 
+>   * Ditto the split_cmdline and "aliases of builtins" tests, the former
+>     required splitting up an existing test, there an issue with the test
+>     that would have also been revealed by skipping it.
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>   config.c          | 17 ++++++++++++-----
+>   t/t1300-config.sh | 16 ++++++++++------
+>   t/test-lib.sh     |  1 +
+>   3 files changed, 23 insertions(+), 11 deletions(-)
+> 
+> diff --git a/config.c b/config.c
+> index f9c400ad30..38e132c0e2 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -138,8 +138,10 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+>   		return config_error_nonbool("include.path");
+>   
+>   	expanded = expand_user_path(path, 0);
+> -	if (!expanded)
+> -		return error(_("could not expand include path '%s'"), path);
+> +	if (!expanded) {
+> +		ret = error(_("could not expand include path '%s'"), path);
+> +		goto cleanup;
+> +	}
+>   	path = expanded;
+>   
+>   	/*
+> @@ -149,8 +151,10 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+>   	if (!is_absolute_path(path)) {
+>   		char *slash;
+>   
+> -		if (!cf || !cf->path)
+> -			return error(_("relative config includes must come from files"));
+> +		if (!cf || !cf->path) {
+> +			ret = error(_("relative config includes must come from files"));
+> +			goto cleanup;
+> +		}
+>   
+>   		slash = find_last_dir_sep(cf->path);
+>   		if (slash)
+> @@ -168,6 +172,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
+>   		ret = git_config_from_file(git_config_include, path, inc);
+>   		inc->depth--;
+>   	}
+> +cleanup:
+>   	strbuf_release(&buf);
+>   	free(expanded);
+>   	return ret;
+> @@ -1331,8 +1336,10 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
+>   	if (!strcmp(var, "core.attributesfile"))
+>   		return git_config_pathname(&git_attributes_file, var, value);
+>   
+> -	if (!strcmp(var, "core.hookspath"))
+> +	if (!strcmp(var, "core.hookspath")) {
+> +		UNLEAK(git_hooks_path);
+>   		return git_config_pathname(&git_hooks_path, var, value);
+> +	}
 
-I don't really care, it just looked a bit weird at first, and I wondered
-why it couldn't return -1.
+Why is the UNLEAK necessary here? We generally want to limit use of 
+UNLEAK to cmd_* functions or direct helpers. git_default_core_config() 
+seems generic enough that it could be called from anywhere, and using 
+UNLEAK here means we're potentially masking a real leak?
 
-Aside from this case do you mean that such a cast would be too expensive
-in general, or fears abou going past the 32 bits? I assumed that there
-would be checks here for that already (and if not, we'd have wrap-around
-now...).
+IIUC the leak here happens because:
+- git_hooks_path is a global variable - hence it's unlikely we'd ever
+   bother cleaning it up.
+- git_default_core_config() gets called a first time with
+   core.hookspath, and we end up allocating new memory into
+   git_hooks_path.
+- git_default_core_config() gets called again with core.hookspath,
+   and we overwrite git_hooks_path with a new string which leaks
+   the string that git_hooks_path used to point to.
+
+So I think the real fix is to free(git_hooks_path) instead of an UNLEAK? 
+(Looking at the surrounding code, it looks like the same pattern of leak 
+might be repeated for other similar globals - is it worth auditing those 
+while we're here?)
+
+>   
+>   	if (!strcmp(var, "core.bare")) {
+>   		is_bare_repository_cfg = git_config_bool(var, value);
+> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+> index 9ff46f3b04..93ad0f4887 100755
+> --- a/t/t1300-config.sh
+> +++ b/t/t1300-config.sh
+> @@ -1050,12 +1050,16 @@ test_expect_success SYMLINKS 'symlink to nonexistent configuration' '
+>   	test_must_fail git config --file=linktolinktonada --list
+>   '
+>   
+> -test_expect_success 'check split_cmdline return' "
+> -	git config alias.split-cmdline-fix 'echo \"' &&
+> -	test_must_fail git split-cmdline-fix &&
+> +test_expect_success 'setup check split_cmdline return' "
+>   	echo foo > foo &&
+>   	git add foo &&
+> -	git commit -m 'initial commit' &&
+> +	git commit -m 'initial commit'
+> +"
+> +
+> +test_expect_success !SANITIZE_LEAK 'check split_cmdline return' "
+> +	git config alias.split-cmdline-fix 'echo \"' &&
+> +	test_must_fail git split-cmdline-fix &&
+> +
+>   	git config branch.main.mergeoptions 'echo \"' &&
+>   	test_must_fail git merge main
+>   "
+> @@ -1101,7 +1105,7 @@ test_expect_success 'key sanity-checking' '
+>   	git config foo."ba =z".bar false
+>   '
+>   
+> -test_expect_success 'git -c works with aliases of builtins' '
+> +test_expect_success !SANITIZE_LEAK 'git -c works with aliases of builtins' '
+>   	git config alias.checkconfig "-c foo.check=bar config foo.check" &&
+>   	echo bar >expect &&
+>   	git checkconfig >actual &&
+> @@ -1397,7 +1401,7 @@ test_expect_success 'git --config-env with missing value' '
+>   	grep "invalid config format: config" error
+>   '
+>   
+> -test_expect_success 'git --config-env fails with invalid parameters' '
+> +test_expect_success !SANITIZE_LEAK 'git --config-env fails with invalid parameters' '
+>   	test_must_fail git --config-env=foo.flag config --bool foo.flag 2>error &&
+>   	test_i18ngrep "invalid config format: foo.flag" error &&
+>   	test_must_fail git --config-env=foo.flag= config --bool foo.flag 2>error &&
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 9201510e16..98e20950c3 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1370,6 +1370,7 @@ maybe_skip_all_sanitize_leak () {
+>   	add_sanitize_leak_true 't000*'
+>   	add_sanitize_leak_true 't001*'
+>   	add_sanitize_leak_true 't006*'
+> +	add_sanitize_leak_true 't13*config*'
+>   
+>   	# Blacklist patterns (overrides whitelist)
+>   	add_sanitize_leak_false 't000[469]*'
+> 
