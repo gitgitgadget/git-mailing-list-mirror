@@ -2,118 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E126C07E9A
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 16:21:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F2BCC07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 16:23:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A0A761378
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 16:21:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 51DAE613B2
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 16:23:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229595AbhGNQYS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 12:24:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49452 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229554AbhGNQYR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 12:24:17 -0400
-Received: (qmail 28515 invoked by uid 109); 14 Jul 2021 16:21:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Jul 2021 16:21:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25580 invoked by uid 111); 14 Jul 2021 16:21:25 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Jul 2021 12:21:25 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 14 Jul 2021 12:21:24 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] refs file backend: remove dead "errno == EISDIR" code
-Message-ID: <YO8PBBJZ2Q+5ZqFs@coredump.intra.peff.net>
-References: <patch-1.1-de0838fe99-20210714T111351Z-avarab@gmail.com>
+        id S230427AbhGNQZy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 12:25:54 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62337 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229554AbhGNQZx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 12:25:53 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4305E12E70C;
+        Wed, 14 Jul 2021 12:23:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=E7Wx4dd5JGQx
+        xkOTAnOSnMV7+8sDtzuGqxCkPZvDh0I=; b=iUQ87EJlh28kdzYpwS8ogC8XKfT4
+        laPM1aWhRaEXuZphawzshvOwWNgfN9klRO75Mlhl+ZBVp0+v4BCi7xNabx6bTG8y
+        FSX/ioZXyyXMplwhOuxErQGutjbMmQ6LVt+wC+v1eBs38IIcvXqj+5dK1PnyQclM
+        uQmK882QaGzcg3k=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3C9D712E70B;
+        Wed, 14 Jul 2021 12:23:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id ABE3C12E707;
+        Wed, 14 Jul 2021 12:22:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 3/5] tests: replace [de]packetize() shell+perl
+ test-tool pkt-line
+References: <cover-0.5-00000000000-20210712T164208Z-avarab@gmail.com>
+        <cover-0.5-0000000000-20210714T005115Z-avarab@gmail.com>
+        <patch-3.5-92bfd8a87b-20210714T005115Z-avarab@gmail.com>
+        <YO5iOqWx46UxdhKX@nand.local>
+Date:   Wed, 14 Jul 2021 09:22:57 -0700
+In-Reply-To: <YO5iOqWx46UxdhKX@nand.local> (Taylor Blau's message of "Wed, 14
+        Jul 2021 00:04:10 -0400")
+Message-ID: <xmqqpmvkyie6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-1.1-de0838fe99-20210714T111351Z-avarab@gmail.com>
+X-Pobox-Relay-ID: C0AA10FC-E4BF-11EB-9F86-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 14, 2021 at 01:17:14PM +0200, Ævar Arnfjörð Bjarmason wrote:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> Since a1c1d8170d (refs_resolve_ref_unsafe: handle d/f conflicts for
-> writes, 2017-10-06) we don't, because our our callstack will look
-> something like:
-> 
->     files_copy_or_rename_ref() -> lock_ref_oid_basic() -> refs_resolve_ref_unsafe()
-> 
-> And then the refs_resolve_ref_unsafe() call here will in turn (in the
-> code added in a1c1d8170d) do the equivalent of this (via a call to
-> refs_read_raw_ref()):
-> 
-> 	/* Via refs_read_raw_ref() */
-> 	fd = open(path, O_RDONLY);
-> 	if (fd < 0)
-> 		/* get errno == EISDIR */
-> 	/* later, in refs_resolve_ref_unsafe() */
-> 	if ([...] && errno != EISDIR)
-> 		return NULL;
-> 	[...]
-> 	/* returns the refs/heads/foo to the caller, even though it's a directory */
-> 	return refname;
+> On Wed, Jul 14, 2021 at 02:54:03AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
+>> -extract_haves () {
+>> -	depacketize | perl -lne '/^(\S+) \.have/ and print $1'
+>> -}
+>> -
+>>  test_expect_success 'with core.alternateRefsCommand' '
+>>  	write_script fork/alternate-refs <<-\EOF &&
+>>  		git --git-dir=3D"$1" for-each-ref \
+>> @@ -27,18 +23,40 @@ test_expect_success 'with core.alternateRefsComman=
+d' '
+>>  			refs/heads/public/
+>>  	EOF
+>>  	test_config -C fork core.alternateRefsCommand ./alternate-refs &&
+>> -	git rev-parse public/branch >expect &&
+>> -	printf "0000" | git receive-pack fork >actual &&
+>> -	extract_haves <actual >actual.haves &&
+>> -	test_cmp expect actual.haves
+>> +
+>> +	test-tool pkt-line pack >in <<-\EOF &&
+>> +	0000
+>> +	EOF
+>> +
+>> +	cat >expect <<-EOF &&
+>> +	$(git rev-parse main) refs/heads/main
+>> +	$(git rev-parse base) refs/tags/base
+>> +	$(git rev-parse public) .have
+>> +	0000
+>> +	EOF
+>> +
+>> +	git receive-pack fork >out <in &&
+>> +	test-tool pkt-line unpack <out >actual &&
+>
+> I don't think extracting the haves themselves (and stripping ".have"
+> from the output) adds much verbosity at all. Wouldn't it be:
+>
+>   test-tool pkt-line unpack <out >actual &&
+>   perl -lne '/^(\S+) \.have/ and print $1' <actual >actual.haves
+>
+> (in fact, it might be quite nice to leave extract_haves as-is changing
+> depacketize for 'test-tool pkt-line unpack').
 
-Isn't that pseudo-code missing a conditional that's there in the real
-code? In refs_resolve_ref_unsafe(), I see:
+I tend to agree with you ane Peff, after reading the resulting tests
+myself.
 
-       if (refs_read_raw_ref(refs, refname,
-                             oid, &sb_refname, &read_flags)) {
-               *flags |= read_flags;
+Specifically I have problem with this line of reasoning:
 
-               /* In reading mode, refs must eventually resolve */
-               if (resolve_flags & RESOLVE_REF_READING)
-                       return NULL;
+    The conversion away from extract_haves() in ... isn't strictly
+    required for this migration, but in this case it's easy enough
+    to test_cmp the whole output, so let's just do that.
 
-               /*
-                * Otherwise a missing ref is OK. But the files backend
-                * may show errors besides ENOENT if there are
-                * similarly-named refs.
-                */
-               if (errno != ENOENT &&
-                   errno != EISDIR &&
-                   errno != ENOTDIR)
-                       return NULL;
+as if using test_cmp to compare the whole output is always a better
+way to test, which is far from cut-and-dried clear and obvious.  The
+default ought to be to keep the original behaviour, unless you can
+clearly convince others that either (1) the new way is better, or
+(2) keeping the old way is too hard and the cost for doing so
+outweighs the benefit.
 
-So if RESOLVE_REF_READING is set, we can return NULL immediately, with
-errno set to EISDIR. Which contradicts this:
+While there certainly is some value in end-to-end tests, they
+inevitably become brittle.  We prefer focused tests that verify
+things we _care_ about, while keeping the expected vector unaffected
+by future changes in details that do not matter in what is being
+tested.  If we are interested in ".have"s, we shouldn't be affected
+by irrelevant details like what other branches and tags appear in
+the output and in what order, for example.
 
-> I.e. even though we got an "errno == EISDIR" we won't take this
-> branch, since in cases of EISDIR "resolved" is always
-> non-NULL. I.e. we pretend at this point as though everything's OK and
-> there is no "foo" directory.
+Of course, if there is a solid reason why we would care not just
+".have" but other details, it is perfectly justifiable thing to do
+to update the tests, but we'd want to see (1) such an unrelated
+change done in a separate step and (2) with its own justification.
 
-So when is RESOLVE_REF_READING set? The resolve_flags parameter is
-passed in by the caller. In lock_ref_oid_basic(), it comes from this:
-
-    int mustexist = (old_oid && !is_null_oid(old_oid));
-    [...]
-    if (mustexist)
-            resolve_flags |= RESOLVE_REF_READING;
-
-So do any callers pass in old_oid? Surprisingly few. It used to be
-called from other locking functions, but these days it looks like it is
-only files_reflog_expire().
-
-I'm not sure if this case is important or not. If we're expecting the
-ref to exist, then an in-the-way directory is going to mean failure
-either way. It could still exist within the packed-refs file, but then
-refs_read_raw_ref() would not return failure.
-
-So...I think it's fine? But the argument in your commit message seems to
-have missed this case entirely.
-
--Peff
+So...
