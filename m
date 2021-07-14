@@ -2,132 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EC0CC12002
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 19:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDF76C1B08C
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 19:59:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5561D611C0
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 19:59:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A60AF6109E
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 19:59:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240427AbhGNUCj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 16:02:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51912 "EHLO
+        id S235386AbhGNUCl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 16:02:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243602AbhGNUBM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 16:01:12 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 023D9C04FAE6
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:51:31 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id w188so3591148oif.10
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:51:30 -0700 (PDT)
+        with ESMTP id S243695AbhGNUBR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 16:01:17 -0400
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37CE5C0613E0
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:52:28 -0700 (PDT)
+Received: by mail-il1-x12b.google.com with SMTP id w1so2758935ilg.10
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:52:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=KfCZAZ6ZQ+Z06wWHdQIIiBmiBr4YXZFcXg2T6+4moOc=;
-        b=uw3f3118ye1N7iMjVp+fjXykgLT0wetPg9cA7KLvLx20u8WkxpDWUURCNFw8amE5qI
-         u6mkr1qNxf0RksICNcAsrMRYYq5u72l/pT5mvOkEI0QwLDXDDbtBHSjNt3B881/QDllx
-         yCljJDPrPWOw+cKAAkU3x3KQtv2sUr/dVHObIJAF9X1ZDSIW4XNWSF/7DwjTV9qO1jjM
-         cInKHOwD9TB1v4CrXra7p+WGwIXmpTDBT5emTIOtmwAxxEYPnMPNjBemLAlX88e4m/kN
-         cQRuUFGGGk5Y0W2TMA+49eSjS9mi1DInh3y7lrxZ6cUJJwU/Fh668nUn+aCX+wGqdmQ8
-         Jtpw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=yEOmlHVAh/dR1u4oLtYRu4YR6z+zE+VChpVsz7YeIVs=;
+        b=DVlG9vqYDls0hzj4wvPFlVEIY/5kWZSp+Lmsug172I7NOt58lbrupiY38wPh71ol1X
+         cpTGjr8p47IP7MrTHhNAcrxRDCjUwURDmKExVrlJoUCkR55x7gjCsT5LGQ+bbGr61pUC
+         kKDkAPg75tsVuiRYnFznr1uIjtZaKnO3bjZAtPSFa4mzah9KBWs3z6ce7bE90934x9Sx
+         ylJipskvdk7b3ftf4VSMHZqCJzNLvuJotoK+ouCWu0ifVkQduLIRcNa/njfpdE4DEopS
+         lgoRSgpYH+linHpy44wsN1E85H8o49NZkC/YSMuD8R7+csSr+tE79cbeDhJtAGGUqmYW
+         pU6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=KfCZAZ6ZQ+Z06wWHdQIIiBmiBr4YXZFcXg2T6+4moOc=;
-        b=YpW2yWiNLLoX+GFxaxg4u1eQLmGKvs0iV4ZkagJLVjfAbYVEUbUPNovnw+bRH38IpE
-         MlGIPjN+ODhcBGdsdLd8X/yy7+jvGd5bTlVAEh7xixybCSWrh9u86CDbxikoa3yWS3OW
-         ufXEQkcgnCW94bIji+tMeUGjCEwIYohXN7QHYjha/+oGK5+c8jwmkmirBW+ujAHjLx85
-         NuMMYWTTMnEKNZy1OjYX6RCGN+831jyFR/tn0Dya08EXZONUNv7ZRfsUwlLSP/pYZgzN
-         1heZ7dOyGRRtVtSvsnH11YSqNWOkzfL4PAxEJITKxYkKRilcqFeiErtuUdpQsgSUP2wH
-         183w==
-X-Gm-Message-State: AOAM532sOWGBV7oayA55vpEp29yOxPy8/pN0qNpJW7CirtUFGJ5Vj3A8
-        NyCEkPxxOU+xM6kNh40hxxI=
-X-Google-Smtp-Source: ABdhPJyegRfjPxNhf5uVB3rSjKCjp6nE5tfy88KAQehYcpwXqg7nOyAFij5jxaoezx+hD6lLbkF7Ew==
-X-Received: by 2002:a54:4d8f:: with SMTP id y15mr4301446oix.32.1626292290387;
-        Wed, 14 Jul 2021 12:51:30 -0700 (PDT)
-Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id m21sm597565oov.43.2021.07.14.12.51.29
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=yEOmlHVAh/dR1u4oLtYRu4YR6z+zE+VChpVsz7YeIVs=;
+        b=scXefYp9r4RGQb12F9S7jYtUcKqyWwLuo4GbW8QI4fuesMLKhoXN34GUo3hfRvG39u
+         dnWrR2prFJeYMXS7E1UyzMVPQEubakt9x/LP6GC6t6GyNZjAyNwgfsThyBvirpSRCpmU
+         b9nkTyMi34oNMrJAA0/lKhdnHCzXQHr0NaG2zAnLKdYaqy+BafaTr6srN1wEwJMJP9KS
+         S/RnWDrh0IZxI06NJQrFxnHiq3qRmd8wqUmxHfMoPhPzffzx5vmkdpt5nORqQZTrfHKD
+         kpgiM25cXPnSGIofiUEqtwy2CslAd2+WaOJXmYf9htT92ZGg8wM314B4tQ0ihHWn+tPZ
+         p+pw==
+X-Gm-Message-State: AOAM532GT4UozIK1gmv5Y2W4iPwKmYcdiw3RHOsPIDb9+ImMCNg/anCy
+        Hg+sQupIezq+xDyXFrImrhWxtA==
+X-Google-Smtp-Source: ABdhPJz4MF9oslhWu6Ftr0Mg64ykcqhHxV8euOWJsOCRf3/AmZ8y6FppPF3cdsSYVt6ZUFVXKji//Q==
+X-Received: by 2002:a92:a00e:: with SMTP id e14mr7769725ili.126.1626292347665;
+        Wed, 14 Jul 2021 12:52:27 -0700 (PDT)
+Received: from localhost ([2600:1700:d843:8f:3f15:e25d:cd63:d019])
+        by smtp.gmail.com with ESMTPSA id l4sm1653115ilh.41.2021.07.14.12.52.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 12:51:29 -0700 (PDT)
-Date:   Wed, 14 Jul 2021 14:51:28 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Sergey Organov <sorganov@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Martin <git@mfriebe.de>, Junio C Hamano <gitster@pobox.com>,
+        Wed, 14 Jul 2021 12:52:27 -0700 (PDT)
+Date:   Wed, 14 Jul 2021 15:52:26 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Taylor Blau <ttaylorr@github.com>, Sun Chao <16657101987@163.com>,
+        Sun Chao via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Message-ID: <60ef404076d18_9578a2089a@natae.notmuch>
-In-Reply-To: <874kcwemhn.fsf@osv.gnss.ru>
-References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
- <87bl7d3l8r.fsf@osv.gnss.ru>
- <60e61bbd7a37d_3030aa2081a@natae.notmuch>
- <877di13hhe.fsf@osv.gnss.ru>
- <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
- <60e67389a4adc_306ac1208fd@natae.notmuch>
- <4057b3ac-a77c-0d5f-d3f4-ad781754aae4@mfriebe.de>
- <60e736e72da68_30939020850@natae.notmuch>
- <155308af-42ad-b044-fb37-676251a9b7e1@mfriebe.de>
- <60e762243aab1_30a7b02089@natae.notmuch>
- <2b85a7eb-d0be-65e7-ecbb-1750abf53e53@mfriebe.de>
- <60e79c31aaa72_30b8a4208c1@natae.notmuch>
- <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
- <60e874e1c6845_215320861@natae.notmuch>
- <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
- <87im1ieaba.fsf@osv.gnss.ru>
- <60e9fa5132e14_7ef20849@natae.notmuch>
- <87im1hfa8r.fsf@osv.gnss.ru>
- <60ec715c8338_a452520896@natae.notmuch>
- <87y2aalbvq.fsf@osv.gnss.ru>
- <60edbaefa0208_ab6dd2081f@natae.notmuch>
- <874kcwemhn.fsf@osv.gnss.ru>
-Subject: Re: PATCH: improve git switch documentation
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v2] packfile: freshen the mtime of packfile by
+ configuration
+Message-ID: <YO9AeudYPmWRnRNb@nand.local>
+References: <pull.1043.git.git.1625943685565.gitgitgadget@gmail.com>
+ <pull.1043.v2.git.git.1626226114067.gitgitgadget@gmail.com>
+ <87wnpt1wwc.fsf@evledraar.gmail.com>
+ <YO5RZ0Wix/K5q53Z@nand.local>
+ <ACE7ECBE-0D7A-4FB8-B4F9-F9E32BE2234C@163.com>
+ <YO8XrOChAtxhpuxS@nand.local>
+ <877dhs20x3.fsf@evledraar.gmail.com>
+ <YO87ax2JpLndc5Ly@nand.local>
+ <87y2a8zntw.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87y2a8zntw.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> > Sergey Organov wrote:
-> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> >> > Compound operations soon become basic operations in the mind of an
-> >> > expert.
-> >> >
-> >> > Lifting your feet, and then landing your feet might be basic operations
-> >> > when you are 1 yo, but soon enough they become "walking".
-> >> 
-> >> [caveat: please don't take the rest of this post too seriously]
-> >> 
-> >> Yeah, using another name for a compound is yet another option indeed.
-> >> "git cretching"?
-> >> 
-> >> > Similarly checking out a commit and then cherry-picking a sequence of
-> >> > commits while resolving conflicts becomes "rebasing".
-> >> 
-> >> This is very questionable example. Please don't let me even start on
-> >> this.
+On Wed, Jul 14, 2021 at 09:32:26PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> > But if that isn't possible, then I find introducing a new file to
+> > redefine the pack's mtime just to accommodate a backup system that
+> > doesn't know better to be a poor justification for adding this
+> > complexity. Especially since we agree that rsync-ing live Git
+> > repositories is a bad idea in the first place ;).
 > >
-> > You don't need to validate the concept, but chunking is an established
-> > concept in cognitive pshychology [1]. It's how humans learn (and
-> > possibly machines too).
-> 
-> The urdge to dive into the muddy waters of psychology to support your
-> example, where pure logic should probably have sufficed, makes the
-> example only even more suspect.
+> > If it were me, I would probably stop here and avoid pursuing this
+> > further. But an OK middle ground might be core.freshenPackfiles=<bool>
+> > to indicate whether or not packs can be freshened, or the objects
+> > contained within them should just be rewritten loose.
+> >
+> > Sun could then set this configuration to "false", implying:
+> >
+> >   - That they would have more random loose objects, leading to some
+> >     redundant work by their backup system.
+> >   - But they wouldn't have to resync their huge packfiles.
+> >
+> > ...and we wouldn't have to introduce any new formats/file types to do
+> > it. To me, that seems like a net-positive outcome.
+>
+> This approach is getting quite close to my core.checkCollisions patch,
+> to the point of perhaps being indistinguishable in practice:
+> https://lore.kernel.org/git/20181028225023.26427-5-avarab@gmail.com/
 
-Suspect to you, maybe, not to anyone who works in the teaching industry,
-where this concept is well understood and accepted.
+Hmm, I'm not sure if I understand. That collision check is only done
+during index-pack, and reading builtin/index-pack.c:check_collision(),
+it looks like we only do it for large blobs anyway.
 
-Cheers.
+> I.e. if you're happy to re-write out duplicate objects then you're going
+> to be ignoring the collision check and don't need to do it. It's not the
+> same in that you might skip writing objects you know are reachable, and
+> with the collisions check off and not-so-thin packs you will/might get
+> more redundancy than you asked for.
 
--- 
-Felipe Contreras
+We may be talking about different things, but if users are concerned
+about SHA-1 collisions, then they should still be able to build with
+DC_SHA1=YesPlease to catch shattered-style collisions.
+
+Anyway, I think we may be a little in the weeds for what we are trying
+to accomplish here. I'm thinking something along the lines of the
+following (sans documentation and tests, of course ;)).
+
+--- >8 ---
+
+diff --git a/object-file.c b/object-file.c
+index f233b440b2..87c9238365 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1971,9 +1971,22 @@ static int freshen_loose_object(const struct object_id *oid)
+ 	return check_and_freshen(oid, 1);
+ }
+
++static int can_freshen_packs = -1;
++static int get_can_freshen_packs(void)
++{
++	 if (can_freshen_packs < 0) {
++		if (git_config_get_bool("core.freshenpackfiles",
++					&can_freshen_packs))
++			can_freshen_packs = 1;
++	 }
++	 return can_freshen_packs;
++}
++
+ static int freshen_packed_object(const struct object_id *oid)
+ {
+ 	struct pack_entry e;
++	if (!get_can_freshen_packs())
++		return 0;
+ 	if (!find_pack_entry(the_repository, oid, &e))
+ 		return 0;
+ 	if (e.p->freshened)
