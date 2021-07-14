@@ -2,109 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2158C07E9C
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 08:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77E7EC07E9A
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 08:37:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BAED06136E
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 08:35:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 49154613AF
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 08:37:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238579AbhGNIib (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 04:38:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35992 "EHLO
+        id S238609AbhGNIkd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 04:40:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238503AbhGNIib (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 04:38:31 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1507C06175F
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 01:35:38 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id bu12so2135088ejb.0
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 01:35:38 -0700 (PDT)
+        with ESMTP id S238540AbhGNIkd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 04:40:33 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24A9BC06175F
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 01:37:41 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id dp20so212598ejc.7
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 01:37:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=gK/Bcs3fwJhVFOC7OE8ZPnbUiB8MXKAH0AXeAfezzf8=;
-        b=nMF8GPRsVGI+ZIk42TprHvbW8JRSkGTDBqMf/VLDcs3dUN/dERk2YFoYnJL3NCdAGL
-         gYNaDwYsHAyg9QUhuUpITp+FAVnBjEeVPDW0ucViFbvEgbWGdDgmxD/e3WXQaUo9yfXd
-         FGrH2ZOb+dwdkvvc0EAxGYa6E+oF2IkD/6YvMETo+VdYqOrZXUcv8nQJzWnQTPZXTIi5
-         E+TvSOajPe9XgvGdZy9Gh2L6aj3gbTYqGHPcykIVOzwXuNZLLHASDr7R47RPn9prBndA
-         l40ZTigNblDRPq5H3qF/dJye2ymw9rRxYRnHoqM3Pza7iZJ2vRp5ZSk5b58dfo0KffjL
-         tPBw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qL3oJiB6sGAp1cN1HTafP6XVdKWiQZZxauamB3S412M=;
+        b=OLld5AyaH4x8YjY2SyZWmSkoLkkmAaBv2PR5IvD7Hw94oUnkq+RWXp+ghhO4pItiqz
+         +RuepgteqFBg9E3Y8DkQqluajPqG7yG6bTL4kvFi2+e3RP9kKO5IBimDOHgPQMOTdIw1
+         3HXthPD0vqgih3nfvr0fWGwumnpRvH6PIwjQFH/XZkk4mErtwzg+mBnJkEXJHSQLDCk/
+         xJkgVVzsVugCQZZ6AuSW/o38e2GWCI8nAe/whojzno8OlyCFB58WhjS5QTSLi3nK+4dK
+         d4bUaC2gD4noucrbwl4TUUKYomwgc+OC/wJuo18S8AIekwM3Uox8Ybr0mq0Llf3ReGFk
+         7G5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=gK/Bcs3fwJhVFOC7OE8ZPnbUiB8MXKAH0AXeAfezzf8=;
-        b=iBawaT2wkfV2E7M7KouOJpJ+jUK8YtGdGrOwOSNBQBTVjT0lGnkk1Uk3o2clthFCXU
-         PFXEtOdUFMRAfJmOt4jHayR40DTLTM2EgqvxYlqjhAIuDuNxpAhW0ebSWTtf+6fy+N2Z
-         rPKtDv053IIeNcKRfGwHT4rusRawvQSZNeN5q35k7BWviXQe0CFvfvd/Kp24EIEvFAZw
-         ZBJFhn+uhqAJlBBaEufbSopN1IiAdn3hAK4Y/m1Wj7CZaVH+AjrLRwY1JNyzrb9tg6IL
-         QmphD/f8o2rWIEu3hANw49JFvwDZSNTv2WO123hGzI9tpjp8ZR8wVsROLHvHHX3YK3Fs
-         nwCg==
-X-Gm-Message-State: AOAM533bhwGPiC9PCoaWSH3hlTOw4bLzbmnedI4kLkeYqZXC4s1zwDPm
-        KII2u6jpYh3CHOHGfumJlL42TEoZG/bI+FSj
-X-Google-Smtp-Source: ABdhPJw1t3Z+qGLykhGQfVGQiuQyZvmj9xNXBJ9SSgLYhDVBKUVcL2KdcJLEEbyB/YOwbSFeg9AECg==
-X-Received: by 2002:a17:906:1703:: with SMTP id c3mr11054276eje.64.1626251737237;
-        Wed, 14 Jul 2021 01:35:37 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id c28sm488154ejc.102.2021.07.14.01.35.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 01:35:36 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v6? 15/17] refs API: make resolve_ref_unsafe() not set
- errno
-Date:   Wed, 14 Jul 2021 10:32:38 +0200
-References: <pull.1012.v5.git.git.1625684869.gitgitgadget@gmail.com>
- <cover-00.17-00000000000-20210711T162803Z-avarab@gmail.com>
- <patch-15.17-446b50280be-20210711T162803Z-avarab@gmail.com>
- <CAFQ2z_MNEb=tb+iVjE3n33Lq8tfKNKnaMOvxm6z0cwXChbuSQA@mail.gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <CAFQ2z_MNEb=tb+iVjE3n33Lq8tfKNKnaMOvxm6z0cwXChbuSQA@mail.gmail.com>
-Message-ID: <87o8b51eea.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qL3oJiB6sGAp1cN1HTafP6XVdKWiQZZxauamB3S412M=;
+        b=S43Jku8t3+kpDl7wq1/U5INp9oTEW+eE7PkM9MGdW/RpR9KIGily3YcgkGJ1EIDzBb
+         BQ4uUpB9mbB6VeQqrU+kbMLEFKWkCAqD7/AZOr7YKTYM87be4jqakP00rVaiStbM/ikU
+         axQOY5nxkdOPHJvhbWYmdkpkR01qEHtCvVEbHgxPSOM3zaZ79rzBJrGUACPCb5jS9l4C
+         +JnLS+8aBv8c4dSdGnjL8GJEeehMlrJpzZ2r8AR1+hf5fB+CeQDRvgY32Xqej7Phc3oM
+         UvYvVzpVEsTAiRUgLd5F39LjEq1/pcrWT3jarpTRkEBI9heX9a7hwOX4Fa6fHcpc7fPz
+         ff/w==
+X-Gm-Message-State: AOAM530BKraUjd5OF88UcCID2UZJKDF6odtV95i6kw6+p6SwksA0zocU
+        wsRIt/e4MPQXH88QAjyLIwsqhQj3LXLSLDNzlNc=
+X-Google-Smtp-Source: ABdhPJxVbVhVSJ+tBD9gZEF1x14Vi5zuouZTN5lNTL8/pGKRientnTxRYYaTzwQ5UzJ5xtqumlCvGkKElzG25TzpN9s=
+X-Received: by 2002:a17:907:990f:: with SMTP id ka15mr11163226ejc.132.1626251859748;
+ Wed, 14 Jul 2021 01:37:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20210711012604.947321-1-alexhenrie24@gmail.com>
+In-Reply-To: <20210711012604.947321-1-alexhenrie24@gmail.com>
+From:   Son Luong Ngoc <sluongng@gmail.com>
+Date:   Wed, 14 Jul 2021 10:37:28 +0200
+Message-ID: <CAL3xRKdOyVWvcLXK7zoXtFPiHBjgL24zi5hhg+3yjowwSUPgmg@mail.gmail.com>
+Subject: Re: [PATCH] pull: abort if --ff-only is given and fast-forwarding is impossible
+To:     Alex Henrie <alexhenrie24@gmail.com>
+Cc:     git <git@vger.kernel.org>, phillip.wood123@gmail.com,
+        avarab@gmail.com, Junio C Hamano <gitster@pobox.com>,
+        felipe.contreras@gmail.com, Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi folks,
 
-On Tue, Jul 13 2021, Han-Wen Nienhuys wrote:
+I am out of the loop in this thread but I have been seeing strange behaviors
+with pull.rebase=true in the 'next' branch and also in the 'master'
+branch in recent days.
 
-> On Sun, Jul 11, 2021 at 6:30 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->> +       refs =3D get_main_ref_store(the_repository);
->> +       head =3D refs_resolve_ref_unsafe_with_errno(refs, "HEAD", 0, NUL=
-L, NULL,
->> +                                                 &resolve_errno);
->> +       if (!head) {
->> +               errno =3D resolve_errno;
->
-> This adds another place where we'd use global errno to communicate.
-> Isn't there a die() function that takes an errno value explicitly?
+  > git version
+  git version 2.32.0.432.gabb21c7263
+  > git config -l | grep pull
+  pull.rebase=true
+  pull.ff=false
 
-No, not that I know of. I suppose we could refactor fmt_with_err() in
-usage.c to somehow be exposed and add e.g. a:
+But a git pull would still run fast-forward.
+Some of our users (including myself) rely on disabling fast-forward to emit the
+per-file change log summary after each git-pull
 
-    die_saved_errno(&saved_errno, "msg %s", ....);
+  Updating 245f278cb729..5e8d960db7b3
+  Fast-forward
+   some/file/dir.ext         | 44 ++++++++++++++++++++++++++++++++++++++++++++
+   another/file/dir.ext     |  6 +++---
+  2 files changed, 47 insertions(+), 3 deletions(-)
 
-But I really don't see the point.
+In a big, fast moving monorepo, this summary is a lot of noise and
+switching to pull.rebase=true
+used to be the way to turn it off. If the change is intended for next
+version release, is there a
+workaround for this?
 
-The trouble with using errno is generally introducing undesired action
-at a distance, here we're setting it immediately before calling
-die_errno(), so there's not much action or distance we should/could be
-worried about.
-
-E.g. xmkstemp() in wrapper.c uses this pattern, i.e.:
-
-    errno =3D saved_errno;
-    die_errno(...)
+Cheers,
+Son Luong
