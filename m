@@ -7,146 +7,127 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C994C47E48
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 19:44:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EC0CC12002
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 19:59:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EB179613D2
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 19:44:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5561D611C0
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 19:59:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237579AbhGNTrI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 15:47:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48266 "EHLO
+        id S240427AbhGNUCj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 16:02:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234156AbhGNTqR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 15:46:17 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BAE7C0613E9
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:40:08 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id x17so4663081edd.12
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:40:08 -0700 (PDT)
+        with ESMTP id S243602AbhGNUBM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 16:01:12 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 023D9C04FAE6
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:51:31 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id w188so3591148oif.10
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:51:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=RaFX0tFkQogY542EMTcNJHMix5aBURAyvK0LWD31b1o=;
-        b=J3Xt1GjlAMW1sw6tKqPHRaK7EikxZ1xUeF5u6XHmdD6uhgtgwRE37gkMaRWqrHkKk4
-         pqXrNndOaCGoB7rGWq49CqlV8K0mWMS8mUn6Iw0Tw2PJhIT3bgViCHE9IsI87BtWJRxl
-         J1NhKJoJn9f+yF0cKqMDVLZryNfJUpEcrnLwwE1Xegroh0eX2evL5ABrzA94eYrQjF6d
-         OsqKMUJ+tUkcY67QnzRLiWMaCk65hFTQCwWFnqNtXWPeS1s2jvQrROsiQ1Pe/JfW3ndB
-         LElMdTdUPJNsdEV2qqVLFF5dFIr4963uaTmurNzC8bhuXZ+1YfHO81+pSQQlGt4v2Pwl
-         e27g==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=KfCZAZ6ZQ+Z06wWHdQIIiBmiBr4YXZFcXg2T6+4moOc=;
+        b=uw3f3118ye1N7iMjVp+fjXykgLT0wetPg9cA7KLvLx20u8WkxpDWUURCNFw8amE5qI
+         u6mkr1qNxf0RksICNcAsrMRYYq5u72l/pT5mvOkEI0QwLDXDDbtBHSjNt3B881/QDllx
+         yCljJDPrPWOw+cKAAkU3x3KQtv2sUr/dVHObIJAF9X1ZDSIW4XNWSF/7DwjTV9qO1jjM
+         cInKHOwD9TB1v4CrXra7p+WGwIXmpTDBT5emTIOtmwAxxEYPnMPNjBemLAlX88e4m/kN
+         cQRuUFGGGk5Y0W2TMA+49eSjS9mi1DInh3y7lrxZ6cUJJwU/Fh668nUn+aCX+wGqdmQ8
+         Jtpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=RaFX0tFkQogY542EMTcNJHMix5aBURAyvK0LWD31b1o=;
-        b=BTvU9RwjrtNscQ3w44aZa11WW0df4AZIeBk0ZJNom2ayeP1Eu7auUUIYxY7KLHT7LJ
-         Ha7/6bP2+0/i0tKzS5g9gjWIP9QcYtqzBPR7RE97ao7QhuUez9HIX3kihBKmD7zuoEaf
-         w35HdIa/0sv8+aOWV+eNXcbAOl4VLfDClx/vic3V50+Gf35n7P5oaCIOVqWxabR+piWF
-         P9BNPwXEeD/+B2VAcqGpyKMcX7rKnEwHB8uCCl+j1adhaF0sj9briEg55mpgl/o1dM1e
-         ldShfTXGFV3Sx/L/U/Qvng/q62nFbUCfFCQpTY9bPnpZf74MuPX/KvyZ9//sH6AahOG/
-         UGPA==
-X-Gm-Message-State: AOAM533Y3dUZklVavWG0S0l992IJzzXIys1xHDgTeXfsvvlLZGeJcAdv
-        HSMyXYXyDPa5UXAV3aHHDOc=
-X-Google-Smtp-Source: ABdhPJxMTsO6JdxJ0fKT/xD7TwxcL9KRjJzQepGR84iblrGRt0viOGIzERalR98O2RJz1A1IDw0SAw==
-X-Received: by 2002:a05:6402:42d2:: with SMTP id i18mr15928000edc.168.1626291606830;
-        Wed, 14 Jul 2021 12:40:06 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id b12sm1441471edu.30.2021.07.14.12.40.06
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=KfCZAZ6ZQ+Z06wWHdQIIiBmiBr4YXZFcXg2T6+4moOc=;
+        b=YpW2yWiNLLoX+GFxaxg4u1eQLmGKvs0iV4ZkagJLVjfAbYVEUbUPNovnw+bRH38IpE
+         MlGIPjN+ODhcBGdsdLd8X/yy7+jvGd5bTlVAEh7xixybCSWrh9u86CDbxikoa3yWS3OW
+         ufXEQkcgnCW94bIji+tMeUGjCEwIYohXN7QHYjha/+oGK5+c8jwmkmirBW+ujAHjLx85
+         NuMMYWTTMnEKNZy1OjYX6RCGN+831jyFR/tn0Dya08EXZONUNv7ZRfsUwlLSP/pYZgzN
+         1heZ7dOyGRRtVtSvsnH11YSqNWOkzfL4PAxEJITKxYkKRilcqFeiErtuUdpQsgSUP2wH
+         183w==
+X-Gm-Message-State: AOAM532sOWGBV7oayA55vpEp29yOxPy8/pN0qNpJW7CirtUFGJ5Vj3A8
+        NyCEkPxxOU+xM6kNh40hxxI=
+X-Google-Smtp-Source: ABdhPJyegRfjPxNhf5uVB3rSjKCjp6nE5tfy88KAQehYcpwXqg7nOyAFij5jxaoezx+hD6lLbkF7Ew==
+X-Received: by 2002:a54:4d8f:: with SMTP id y15mr4301446oix.32.1626292290387;
+        Wed, 14 Jul 2021 12:51:30 -0700 (PDT)
+Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
+        by smtp.gmail.com with ESMTPSA id m21sm597565oov.43.2021.07.14.12.51.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 12:40:06 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Taylor Blau <ttaylorr@github.com>, Sun Chao <16657101987@163.com>,
-        Sun Chao via GitGitGadget <gitgitgadget@gmail.com>,
+        Wed, 14 Jul 2021 12:51:29 -0700 (PDT)
+Date:   Wed, 14 Jul 2021 14:51:28 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Sergey Organov <sorganov@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Martin <git@mfriebe.de>, Junio C Hamano <gitster@pobox.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH v2] packfile: freshen the mtime of packfile by
- configuration
-Date:   Wed, 14 Jul 2021 21:32:26 +0200
-References: <pull.1043.git.git.1625943685565.gitgitgadget@gmail.com>
-        <pull.1043.v2.git.git.1626226114067.gitgitgadget@gmail.com>
-        <87wnpt1wwc.fsf@evledraar.gmail.com> <YO5RZ0Wix/K5q53Z@nand.local>
-        <ACE7ECBE-0D7A-4FB8-B4F9-F9E32BE2234C@163.com>
-        <YO8XrOChAtxhpuxS@nand.local> <877dhs20x3.fsf@evledraar.gmail.com>
-        <YO87ax2JpLndc5Ly@nand.local>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <YO87ax2JpLndc5Ly@nand.local>
-Message-ID: <87y2a8zntw.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <60ef404076d18_9578a2089a@natae.notmuch>
+In-Reply-To: <874kcwemhn.fsf@osv.gnss.ru>
+References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
+ <87bl7d3l8r.fsf@osv.gnss.ru>
+ <60e61bbd7a37d_3030aa2081a@natae.notmuch>
+ <877di13hhe.fsf@osv.gnss.ru>
+ <c740a4f0-011f-762e-4f49-f85d1b3abc99@mfriebe.de>
+ <60e67389a4adc_306ac1208fd@natae.notmuch>
+ <4057b3ac-a77c-0d5f-d3f4-ad781754aae4@mfriebe.de>
+ <60e736e72da68_30939020850@natae.notmuch>
+ <155308af-42ad-b044-fb37-676251a9b7e1@mfriebe.de>
+ <60e762243aab1_30a7b02089@natae.notmuch>
+ <2b85a7eb-d0be-65e7-ecbb-1750abf53e53@mfriebe.de>
+ <60e79c31aaa72_30b8a4208c1@natae.notmuch>
+ <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
+ <60e874e1c6845_215320861@natae.notmuch>
+ <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
+ <87im1ieaba.fsf@osv.gnss.ru>
+ <60e9fa5132e14_7ef20849@natae.notmuch>
+ <87im1hfa8r.fsf@osv.gnss.ru>
+ <60ec715c8338_a452520896@natae.notmuch>
+ <87y2aalbvq.fsf@osv.gnss.ru>
+ <60edbaefa0208_ab6dd2081f@natae.notmuch>
+ <874kcwemhn.fsf@osv.gnss.ru>
+Subject: Re: PATCH: improve git switch documentation
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Sergey Organov wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> > Sergey Organov wrote:
+> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-On Wed, Jul 14 2021, Taylor Blau wrote:
+> >> > Compound operations soon become basic operations in the mind of an
+> >> > expert.
+> >> >
+> >> > Lifting your feet, and then landing your feet might be basic operations
+> >> > when you are 1 yo, but soon enough they become "walking".
+> >> 
+> >> [caveat: please don't take the rest of this post too seriously]
+> >> 
+> >> Yeah, using another name for a compound is yet another option indeed.
+> >> "git cretching"?
+> >> 
+> >> > Similarly checking out a commit and then cherry-picking a sequence of
+> >> > commits while resolving conflicts becomes "rebasing".
+> >> 
+> >> This is very questionable example. Please don't let me even start on
+> >> this.
+> >
+> > You don't need to validate the concept, but chunking is an established
+> > concept in cognitive pshychology [1]. It's how humans learn (and
+> > possibly machines too).
+> 
+> The urdge to dive into the muddy waters of psychology to support your
+> example, where pure logic should probably have sufficed, makes the
+> example only even more suspect.
 
-> On Wed, Jul 14, 2021 at 08:19:15PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> >> The reason why we want to avoid freshen the mtime of ".pack" file is =
-to
->> >> improve the reading speed of Git Servers.
->> >
->> > That's surprising behavior to me. Are you saying that calling utime(2)
->> > causes the *page* cache to be invalidated and that most reads are
->> > cache-misses lowering overall IOPS?
->>
->> I think you may be right narrowly, but wrong in this context :)
->>
->> I.e. my understanding of this problem is that they have some incremental
->> backup job, e.g. rsync without --checksum (not that doing that would
->> help, chicken & egg issue)..
->
-> Ah, thanks for explaining. That's helpful, and changes my thinking.
->
-> Ideally, Sun would be able to use --checksum (if they are using rsync)
-> or some equivalent (if they are not). In other words, this seems like a
-> problem that Git shouldn't be bending over backwards for.
+Suspect to you, maybe, not to anyone who works in the teaching industry,
+where this concept is well understood and accepted.
 
-Even with my strong opinions about rsync being bad for this use-case, in
-practice it does work for a lot of people, e.g. with nightly jobs
-etc. Not everyone's repository is insanely busy, where I've mainly seen
-this sort of corruption.
+Cheers.
 
-In that case making people use --checksum is borderline inhumane :)
-
-> But if that isn't possible, then I find introducing a new file to
-> redefine the pack's mtime just to accommodate a backup system that
-> doesn't know better to be a poor justification for adding this
-> complexity. Especially since we agree that rsync-ing live Git
-> repositories is a bad idea in the first place ;).
->
-> If it were me, I would probably stop here and avoid pursuing this
-> further. But an OK middle ground might be core.freshenPackfiles=3D<bool>
-> to indicate whether or not packs can be freshened, or the objects
-> contained within them should just be rewritten loose.
->
-> Sun could then set this configuration to "false", implying:
->
->   - That they would have more random loose objects, leading to some
->     redundant work by their backup system.
->   - But they wouldn't have to resync their huge packfiles.
->
-> ...and we wouldn't have to introduce any new formats/file types to do
-> it. To me, that seems like a net-positive outcome.
-
-This approach is getting quite close to my core.checkCollisions patch,
-to the point of perhaps being indistinguishable in practice:
-https://lore.kernel.org/git/20181028225023.26427-5-avarab@gmail.com/
-
-I.e. if you're happy to re-write out duplicate objects then you're going
-to be ignoring the collision check and don't need to do it. It's not the
-same in that you might skip writing objects you know are reachable, and
-with the collisions check off and not-so-thin packs you will/might get
-more redundancy than you asked for.
-
-But in practice with modern clients mostly/entirely sending you just the
-things you need in the common case it might be close enough.
-
-I mean it addresses the expiry race that a unreachable-becomes-reachable
-again race would be "solved" by just re-writing that data, hrm, but
-there's probably aspects of that race I'm not considering.
-
-Anyway, in the sense that for a lot of systems syncing file additions is
-a lot cheaper than rewrites it might get you what you want...
+-- 
+Felipe Contreras
