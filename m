@@ -2,217 +2,268 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91B6EC12002
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 19:25:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB13DC12002
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 19:29:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 77CF3613C5
-	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 19:25:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1C69613C9
+	for <git@archiver.kernel.org>; Wed, 14 Jul 2021 19:29:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232921AbhGNT2G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 15:28:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44902 "EHLO
+        id S229561AbhGNTcO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 15:32:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230209AbhGNT2G (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 15:28:06 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79D15C06175F
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:25:14 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id k25-20020a635a590000b02902288bbae35bso2496481pgm.0
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:25:14 -0700 (PDT)
+        with ESMTP id S229498AbhGNTcO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 15:32:14 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45A62C06175F
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:29:22 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id nd37so5136336ejc.3
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 12:29:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=DUtsKCJZ4ZYpQZpzlLKnlkVDM/1r0XOD5imFcN/BMlg=;
-        b=iLX+mAVcZjUo/zjdexNPOVJjZBLx6/GvYeoItSMRCPNwTF7kE74GEe6LK82SVMwlMq
-         uo+Txjvh8wX/sqqQgdMyjhSV43h2yo9y+BYlx++qAXRelcywKVehmSHo9nv2GtRBqu/Y
-         qOUhtWQK3G4FKjbS/jVRV/l+v0E9077389W91vipCNQToXvGI/yr6laCL7gJV13kT8KX
-         ZRQxuOKMpiwpQaiPJiiqevWmcEv5M+LIWaQksT2QpBGiZOgb37p3WxDwp6JQ3Il+HicT
-         z0/to/hDvQrQi/o/CKwlpySl4NEade+W2IwdF4t0igrhsBKPa8yqkyZJiiIIr1ABjrgb
-         jkyw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=/uX3dIaCD38na07Dq+WAZjVm9u4GrY/EdLmvlfzSGI4=;
+        b=iYRagjxzESjaxu7aIXtdQwuyTGXRHSwyZCkF6w8DvaO404Sil8xJnkE7iB1NosCpR3
+         /R6sNscWnaGd/pghc7hmq1NL9wjIbxnecjJLCDFc5ojEidGVtp9gTvAdrrMnB+UTXHjA
+         Fy5Etwz6S+AoO8up8pLz5QaqibsDOj7zSACFRb1D8gPjChpoo8zCzaBZcKLDx89DlyDc
+         xauG+Ijg1z/zT7ThH51nERHVviyWe3e/HHCZxrBMEYRW7JxbqsGU8hc9UqNxcM8B5j4f
+         VKqnO8GV0WKSGAN5kCgTS+jtLWboEKuKiTtBUyV0Si5jVB2DOmeOEabGVcpH0fK3Shbb
+         YTJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=DUtsKCJZ4ZYpQZpzlLKnlkVDM/1r0XOD5imFcN/BMlg=;
-        b=baZgqHT8C8fWVZGAeOt9sESuY4zlKLpQ3jqgu5O9VxT+aDiFj36Z1TmxMMbVe9bRKQ
-         pI0TH3U6bE5X6Yu7oxpwPjiBg6Lib3Rb2oZ05OUerDLqtLtP7L5mtylytLglzZ8StA8j
-         8/9r62rMV/ADicw74DLAq1DoNfe9PHeZ2Q2h4m+QdwFH01hnlHFmQKvJC7+Fa6CRpERo
-         Vt0lFtKK1AcEx2UOCZE7lWK8u98ISj5IHP4N9qOwaWaEELewmGfoZMW39jdWJmBu1kgt
-         IIyZpzB17zMikuX923W4NIxkpStYEwUZgyAOnu5PoK25t5S24Rc0yL3snFyTtUMFS1IT
-         TMJg==
-X-Gm-Message-State: AOAM531Vyym3dBQ0pInSe+4Bzc3tvbyNBuXD+bPOXLt0eiBq5iuV/OF6
-        uethC/PHuIwBerW1k6rCI3DOwHdIeXQBepjt2t+G
-X-Google-Smtp-Source: ABdhPJwVFfPftJvIbdIUaEztn1vWPUygap6OQFMO0bfFss4RhbCFogj8rEZE/5dmq+sTPQqGFOFw9RFRPIY+ANr12rMp
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a62:1a4b:0:b029:328:da0b:d83b with
- SMTP id a72-20020a621a4b0000b0290328da0bd83bmr11591474pfa.59.1626290713994;
- Wed, 14 Jul 2021 12:25:13 -0700 (PDT)
-Date:   Wed, 14 Jul 2021 12:25:09 -0700
-In-Reply-To: <YO4SZs40xzHEb6W7@google.com>
-Message-Id: <20210714192509.4082107-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <YO4SZs40xzHEb6W7@google.com>
-X-Mailer: git-send-email 2.32.0.93.g670b81a890-goog
-Subject: Re: [PATCH 1/3] send-pack: fix push.negotiate with remote helper
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     emilyshaffer@google.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=/uX3dIaCD38na07Dq+WAZjVm9u4GrY/EdLmvlfzSGI4=;
+        b=ZO+8bFaMLNzlKcHdnifRoPn9FnErR9VseZE7HXYPXhAgP9ARPqr4FsQ7zPVSTAOmUM
+         mbf4vIVZqHiEQQQgh3+XLRa0zJvHYQyTEtqDnm3ANzCpl7nrw1c495XFayrdW1XugmwL
+         HmiYg8Xpug/xsFko5XnOuM/Htdo6c9ev7I4ZNLW5j0+FPxvXd/LlbGaZ/eP3YACvuqcg
+         RWGMXUcQgvUwt6B4XDS8n56y2lJESetyHQJBQjpG0CgO0HcmMWHY/mR9KTcTbTMhhFyv
+         u0VBKaR3ysq6KcxaOVqwjNlrQMGj5MHRshLn3R0ZsBb1NRGG8116oX3U+wcAvV7uPTTO
+         KQvA==
+X-Gm-Message-State: AOAM530ZFVzq1UnLnAKibeJgVN+WS58GIHHnJhwhzENJbcDgMDZHh+iK
+        8k8J+dR4Yogha8IO2k9fsSw=
+X-Google-Smtp-Source: ABdhPJyhzRObNgOlyIQjfSzN8QiaQCJUJHyP41xoliuUpyNpBWpOdPKJ+UMUuzV94HiNUXuwY3cm0w==
+X-Received: by 2002:a17:906:6c8f:: with SMTP id s15mr14229061ejr.498.1626290960719;
+        Wed, 14 Jul 2021 12:29:20 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id eg5sm1459658edb.38.2021.07.14.12.29.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jul 2021 12:29:20 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] refs file backend: remove dead "errno == EISDIR" code
+Date:   Wed, 14 Jul 2021 21:07:41 +0200
+References: <patch-1.1-de0838fe99-20210714T111351Z-avarab@gmail.com>
+ <YO8PBBJZ2Q+5ZqFs@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <YO8PBBJZ2Q+5ZqFs@coredump.intra.peff.net>
+Message-ID: <871r801yp6.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> >  
-> >  	if (from_stdin) {
-> >  		if (args.stateless_rpc) {
-> > diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> > index 0916f76302..5ce32e531a 100755
-> > --- a/t/t5516-fetch-push.sh
-> > +++ b/t/t5516-fetch-push.sh
-> > @@ -1768,4 +1768,53 @@ test_expect_success 'denyCurrentBranch and worktrees' '
-> >  	test_must_fail git -C cloned push --delete origin new-wt
-> >  '
-> >  
-> > +. "$TEST_DIRECTORY"/lib-httpd.sh
-> > +start_httpd
-> 
-> Ah, so fetch-push test wasn't doing any HTTP testing whatsoever. Does
-> that mean there is a better place for these to go? Or does it mean that
-> fetch-push test was under-testing?
 
-These are closely related to the non-HTTP push negotiation tests that I
-previously added to this file, so I don't think there is a better place.
-As for whether this test is under-testing, I also don't think so - most
-fetch/push processes would be the same regardless of protocol (but not
-push negotiation, apparently).
+On Wed, Jul 14 2021, Jeff King wrote:
 
-> 
-> > +
-> > +test_expect_success 'http push with negotiation' '
-> > +	SERVER="$HTTPD_DOCUMENT_ROOT_PATH/server" &&
-> > +	URI="$HTTPD_URL/smart/server" &&
-> > +
-> > +	rm -rf client &&
-> > +	git init client &&
-> > +	test_commit -C client first_commit &&
-> > +	test_commit -C client second_commit &&
-> > +
-> > +	# Without negotiation
-> > +	test_create_repo "$SERVER" &&
-> > +	test_config -C "$SERVER" http.receivepack true &&
-> > +	git -C client push "$URI" first_commit:refs/remotes/origin/first_commit &&
-> Pushing a branch with just the first commit...
-> > +	git -C "$SERVER" config receive.hideRefs refs/remotes/origin/first_commit &&
-> transfer.hideRefs (referenced by receive.hideRefs) says this ref will be
-> omitted from advertisement, so we are forcing either an inefficient push
-> or a negotiation to occur, by having the server initially claim not to
-> know about it. 
+> On Wed, Jul 14, 2021 at 01:17:14PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>
+>> Since a1c1d8170d (refs_resolve_ref_unsafe: handle d/f conflicts for
+>> writes, 2017-10-06) we don't, because our our callstack will look
+>> something like:
+>>=20
+>>     files_copy_or_rename_ref() -> lock_ref_oid_basic() -> refs_resolve_r=
+ef_unsafe()
+>>=20
+>> And then the refs_resolve_ref_unsafe() call here will in turn (in the
+>> code added in a1c1d8170d) do the equivalent of this (via a call to
+>> refs_read_raw_ref()):
+>>=20
+>> 	/* Via refs_read_raw_ref() */
+>> 	fd =3D open(path, O_RDONLY);
+>> 	if (fd < 0)
+>> 		/* get errno =3D=3D EISDIR */
+>> 	/* later, in refs_resolve_ref_unsafe() */
+>> 	if ([...] && errno !=3D EISDIR)
+>> 		return NULL;
+>> 	[...]
+>> 	/* returns the refs/heads/foo to the caller, even though it's a directo=
+ry */
+>> 	return refname;
+>
+> Isn't that pseudo-code missing a conditional that's there in the real
+> code? In refs_resolve_ref_unsafe(), I see:
+>
+>        if (refs_read_raw_ref(refs, refname,
+>                              oid, &sb_refname, &read_flags)) {
+>                *flags |=3D read_flags;
+>
+>                /* In reading mode, refs must eventually resolve */
+>                if (resolve_flags & RESOLVE_REF_READING)
+>                        return NULL;
+>
+>                /*
+>                 * Otherwise a missing ref is OK. But the files backend
+>                 * may show errors besides ENOENT if there are
+>                 * similarly-named refs.
+>                 */
+>                if (errno !=3D ENOENT &&
+>                    errno !=3D EISDIR &&
+>                    errno !=3D ENOTDIR)
+>                        return NULL;
+>
+> So if RESOLVE_REF_READING is set, we can return NULL immediately, with
+> errno set to EISDIR. Which contradicts this:
 
-Currently, the client attempts the negotiation before the push ref
-advertisement, so the ref advertisement does not influence whether the
-negotiation happens or not. 
+I opted (perhaps unwisely) to elide that since as you note above we
+don't take that path in relation to the removed code. I.e. I'm
+describing the relevant codepath we take nowadays given the code & its
+callers.
 
-(One might ask, should the negotiation happen after the push ref
-advertisement then? This is an interesting idea, because the push ref
-advertisement could have information that shows us that negotiation is
-unnecessary, but I think that eventually it's best if we suppress the
-push ref advertisement.)
+But will reword etc., thanks.
 
-> But it's only omitted from the *initial* advertisement,
-> so it will be advertised in later rounds of negotiation, right?
+>> I.e. even though we got an "errno =3D=3D EISDIR" we won't take this
+>> branch, since in cases of EISDIR "resolved" is always
+>> non-NULL. I.e. we pretend at this point as though everything's OK and
+>> there is no "foo" directory.
+>
+> So when is RESOLVE_REF_READING set? The resolve_flags parameter is
+> passed in by the caller. In lock_ref_oid_basic(), it comes from this:
+>
+>     int mustexist =3D (old_oid && !is_null_oid(old_oid));
+>     [...]
+>     if (mustexist)
+>             resolve_flags |=3D RESOLVE_REF_READING;
+>
+> So do any callers pass in old_oid? Surprisingly few. It used to be
+> called from other locking functions, but these days it looks like it is
+> only files_reflog_expire().
 
-There is no ref advertisement in any round of negotiation (there is no
-ls-refs call). It will be acknowledged if the client queries for it,
-though. (In any case, this config is not meant to affect the negotiation
-part at all, because the negotiation part is using the "fetch" protocol
-and the "receive" in "receive.hideRefs" means that it only affects the
-"push" protocol.)
+In general (and not being too familiar with this area) and per:
 
-> > +	GIT_TRACE2_EVENT="$(pwd)/event" git -C client -c protocol.version=2 \
-> > +		push "$URI" refs/heads/main:refs/remotes/origin/main &&
-> And then from 'main' we push first_commit and second_commit?
+    7521cc4611 (refs.c: make delete_ref use a transaction, 2014-04-30)
+    92b1551b1d (refs: resolve symbolic refs first, 2016-04-25)
+    029cdb4ab2 (refs.c: make prune_ref use a transaction to delete the ref,=
+ 2014-04-30)
 
-Depending on the result of negotiation. Here, we push both commits (as
-you can see from the next line you quoted below).
+And:
 
-> > +	grep_wrote 6 event && # 2 commits, 2 trees, 2 blobs
-> Nice, I like the comment - this helps.
+    https://lore.kernel.org/git/20140902205841.GA18279@google.com/=20=20=20=
+=20
 
-Thanks.
+I wonder if these remaining cases can be migrated over to lock_raw_ref()
+or the transaction API, as many other similar callers have been already.
 
-> > +
-> > +	# Same commands, but with negotiation
-> > +	rm event &&
-> > +	rm -rf "$SERVER" &&
-> Ok, clean up the trace and the server so we can start over, but we don't
-> need to recreate the client commits because the server doesn't know
-> about them anyway. Fine.
-> > +	test_create_repo "$SERVER" &&
-> > +	test_config -C "$SERVER" http.receivepack true &&
-> > +	git -C client push "$URI" first_commit:refs/remotes/origin/first_commit &&
-> > +	git -C "$SERVER" config receive.hideRefs refs/remotes/origin/first_commit &&
-> > +	GIT_TRACE2_EVENT="$(pwd)/event" git -C client -c protocol.version=2 -c push.negotiate=1 \
-> > +		push "$URI" refs/heads/main:refs/remotes/origin/main &&
-> And then here's the same set of commands with push negotiation, ok.
-> > +	grep_wrote 3 event # 1 commit, 1 tree, 1 blob
-> 
-> Is there any reason the event counts would change or be
-> non-deterministic outside of negotiation? Or, in other words, is this
-> potentially flaky?
+But that's a bigger change, I won't be doing that now, just wondering if
+these are some #leftoverbits or if there's a good reason they were left.
 
-In general, no - the information that the server conveys to the client
-in the ref advertisement (which commits it has) is quite well-defined,
-so it can be precisely computed which objects the server has and hasn't.
-One potential point of flakiness is if we change the client to push
-extra objects (say, if the client decided to store one packfile per
-commit and all its trees and blobs, and then push the entire packfile
-whenever it needs to push that commit), but I don't think that we're
-heading in that direction.
+> I'm not sure if this case is important or not. If we're expecting the
+> ref to exist, then an in-the-way directory is going to mean failure
+> either way. It could still exist within the packed-refs file, but then
+> refs_read_raw_ref() would not return failure.
+>
+> So...I think it's fine? But the argument in your commit message seems to
+> have missed this case entirely.
 
-> 
-> > +'
-> > +
-> > +test_expect_success 'http push with negotiation proceeds anyway even if negotiation fails' '
-> > +	rm event &&
-> > +	rm -rf "$SERVER" &&
-> > +	test_create_repo "$SERVER" &&
-> > +	test_config -C "$SERVER" http.receivepack true &&
-> > +	git -C client push "$URI" first_commit:refs/remotes/origin/first_commit &&
-> Hmm, this relies on 'client' being in the same state the above test left
-> it. Probably better to recreate it or at least leave a loud warning
-> about it in a comment above this test definition...
+Perhaps more succinctly: If we have a directory in the way, it's going
+to be impossible for the "old_oid" condition to be satisfied in any case
+in the file backend.
 
-I ended up recreating it.
+Even if we still had a caller that did "care" about that what could they
+hope to get from an "old_oid=3D<some-OID>" for a lock on "foo/bar" where
+"foo" is an empty directory?
 
-> 
-> > +	git -C "$SERVER" config receive.hideRefs refs/remotes/origin/first_commit &&
-> > +	GIT_TEST_PROTOCOL_VERSION=0 GIT_TRACE2_EVENT="$(pwd)/event" git -C client -c push.negotiate=1 \
-> > +		push "$URI" refs/heads/main:refs/remotes/origin/main 2>err &&
-> 
-> And we're pushing with protocol v0 so no negotiation can occur here,
-> right?
+Except of course for the case where it's not a directory but packed, but
+as you noted that's handled in another case.
 
-Yes, but this is worth adding a comment for, so I added it.
-> 
-> > +	grep_wrote 6 event && # 2 commits, 2 trees, 2 blobs
-> > +	test_i18ngrep "push negotiation failed" err
-> > +'
-> > +
-> > +# DO NOT add non-httpd-specific tests here, because the last part of this
-> > +# test script is only executed when httpd is available and enabled.
-> > +
-> >  test_done
-> > -- 
-> > 2.32.0.288.g62a8d224e6-goog
-> > 
-> 
-> Thanks for answering novice questions :)
+Perhaps it's informative that the below diff-on-top also passes all
+tests, i.e. that we have largely the same
+"refs_read_raw_ref(refs->packed_ref_store" copy/pasted in
+files_read_raw_ref() in two adjacent places, we're just changing what
+errno we pass upwards.
 
-Thanks for taking a look.
+It thoroughly tramples on Han-Wen's series, and it's easier to deal with
+(if at all) once his lands, just thought it might be interesting:
+
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 7e4963fd07..4a97cd48d9 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -356,6 +356,8 @@ static int files_read_raw_ref(struct ref_store *ref_sto=
+re,
+ 	int ret =3D -1;
+ 	int save_errno;
+ 	int remaining_retries =3D 3;
++	int lstat_bad_or_not_file =3D 0;
++	int lstat_errno =3D 0;
+=20
+ 	*type =3D 0;
+ 	strbuf_reset(&sb_path);
+@@ -382,11 +384,28 @@ static int files_read_raw_ref(struct ref_store *ref_s=
+tore,
+ 		goto out;
+=20
+ 	if (lstat(path, &st) < 0) {
+-		if (errno !=3D ENOENT)
++		lstat_bad_or_not_file =3D 1;
++		lstat_errno =3D errno;
++	} else if (S_ISDIR(st.st_mode)) {
++		/*
++		 * Maybe it's an empty directory, maybe it's not, in
++		 * either case this ref does not exist in the files
++		 * backend (but may be packet), later code will handle
++		 * the "create and maybe remove_empty_directories()"
++		 * case if needed, or die otherwise.
++		 */
++		lstat_bad_or_not_file =3D 1;
++	}
++
++	if (lstat_bad_or_not_file) {
++		if (lstat_errno && lstat_errno !=3D ENOENT)
+ 			goto out;
+ 		if (refs_read_raw_ref(refs->packed_ref_store, refname,
+ 				      oid, referent, type)) {
+-			errno =3D ENOENT;
++			if (lstat_errno)
++				errno =3D ENOENT;
++			else
++				errno =3D EISDIR;
+ 			goto out;
+ 		}
+ 		ret =3D 0;
+@@ -417,22 +436,6 @@ static int files_read_raw_ref(struct ref_store *ref_st=
+ore,
+ 		 */
+ 	}
+=20
+-	/* Is it a directory? */
+-	if (S_ISDIR(st.st_mode)) {
+-		/*
+-		 * Even though there is a directory where the loose
+-		 * ref is supposed to be, there could still be a
+-		 * packed ref:
+-		 */
+-		if (refs_read_raw_ref(refs->packed_ref_store, refname,
+-				      oid, referent, type)) {
+-			errno =3D EISDIR;
+-			goto out;
+-		}
+-		ret =3D 0;
+-		goto out;
+-	}
+-
+ 	/*
+ 	 * Anything else, just open it and try to use it as
+ 	 * a ref
