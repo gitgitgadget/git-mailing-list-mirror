@@ -2,139 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDBB5C636C8
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64DE8C5CFC2
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:33:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B749461167
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:32:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A696613D7
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:33:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235772AbhGORf2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jul 2021 13:35:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39240 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235533AbhGORfZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jul 2021 13:35:25 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FB1EC06175F
-        for <git@vger.kernel.org>; Thu, 15 Jul 2021 10:32:32 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id c197so7510094oib.11
-        for <git@vger.kernel.org>; Thu, 15 Jul 2021 10:32:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JPQmTrU8Do4jtaozk6UMdk3feLF4Sj2Hy1zVEomIoTE=;
-        b=iJlWBPY5XFlZxZ1a3H8Jtizb7jQ+M9BPk/sOgpE5IihgXHsuXKEsUNPiFOiJfObW9G
-         RTPnrY1/IhH7zpTaC5WzvxUFB5qtoKmnDAuvSdXEavYotj1fGscx19YDyxsTnuFMseNQ
-         wlTLcJoe7uugrVKYnx5TEK9IDDZNsNdwmzKyRJcvoVN0pdHvXVWn+C4c3P6uxIJ6GcFV
-         MtQPZsKoTbFT9fu9AzBZEzok7vTkgzU2VV2S9+b24m5ltKjYCZzMNxb/YKmF8zO4193+
-         BAWg0bJQjIo/IJnqE/ppTBTHRCZQ4NyEgnsuR8l8ktbLXrZPPDMjDeKVJwna3L7ad6wZ
-         pJLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JPQmTrU8Do4jtaozk6UMdk3feLF4Sj2Hy1zVEomIoTE=;
-        b=TFCSQ5bf5DU+N3GYcXFj4tfNO/DCV3WPTLvHKL/8PcwueT50gRkbbwdKG0aErla3pf
-         5jmA3ChJMgaro9Hqai50XfUPcGMQ3jDPBZQ+eUAT4DOWE7C8rLJ5LL+jp8UUOlqo9sP8
-         fsr5OQfYfqm4jvr+IAp+EHtdoVbyJEYKmiaovolNmdQ0ral5oNBvYdeeu84NdIiGRwq+
-         5ERQYwBbSDyA3p+5t4nrg9dHVe9vvK5Wz6M6ClCUJt4OQcVX21bqwVSv0wnaTbIIqwFh
-         EqqKqC/aN68tJx1Eygmt0yTixssDdiiOvMtG+YKxQ4HjTCHaRTy54lqUCnD7u4VSl/2i
-         pqYA==
-X-Gm-Message-State: AOAM533EjbaT0mc9HkAHyzEo6QTstwMAQ//7L51Xcuq6FT/299EtOxHM
-        wdqzgwSRzUNDuY7Cq7XsFyp+5YnKhXgjn10WLG0=
-X-Google-Smtp-Source: ABdhPJwWw/YsTPzBVFPUMMV/GCZONPH0KIMhpM9jKFnbrXYCinb2Vi01L1XHLlCqa6i1qVnQTyAx+STgYGQ/1oGXO+I=
-X-Received: by 2002:aca:acc5:: with SMTP id v188mr8782247oie.167.1626370351493;
- Thu, 15 Jul 2021 10:32:31 -0700 (PDT)
+        id S230438AbhGORgN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jul 2021 13:36:13 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50358 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229682AbhGORgM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jul 2021 13:36:12 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E78ADB5AD;
+        Thu, 15 Jul 2021 13:33:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LXSTgvVRK2BelJtgtEjhCMqUDhLRSg25omJi/i
+        4h9A0=; b=GSzXOJkk4KNaIVSfWe64gUrGsCDpYep4vLOZV16O2eePGs164XsU7A
+        nVDULxRQdddXw4Y/NP4//22ijA+gVSJYp9NeetES0FyFrCaIsLbI4Jo8tyUPdbNV
+        JOPdjlKn64jaQJUbZXQT/ZOYOKphM0tUZtzZqDfg0xXSyH2jCzuvI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 95210DB5AC;
+        Thu, 15 Jul 2021 13:33:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 185EEDB5AB;
+        Thu, 15 Jul 2021 13:33:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Alex Henrie <alexhenrie24@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 3/5] pull: handle conflicting rebase/merge options via
+ last option wins
+References: <pull.1047.git.git.1626316849.gitgitgadget@gmail.com>
+        <3c07ce978caa832b08c6bef1c48c061e41a6fd0b.1626316849.git.gitgitgadget@gmail.com>
+Date:   Thu, 15 Jul 2021 10:33:17 -0700
+In-Reply-To: <3c07ce978caa832b08c6bef1c48c061e41a6fd0b.1626316849.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Thu, 15 Jul 2021
+        02:40:47 +0000")
+Message-ID: <xmqq7dhrtrc2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.988.git.1625111177.gitgitgadget@gmail.com>
- <pull.988.v2.git.1626204784.gitgitgadget@gmail.com> <7133f0efa520b3d0cadb059151daa12484fdb003.1626204784.git.gitgitgadget@gmail.com>
- <d91ed8a0-b37b-7dfa-10bf-e068f30e9691@gmail.com> <CABPp-BF+gR8WtpWt_DVDoWe16R4B65h-59zGOZ5j4vUJKp_Nuw@mail.gmail.com>
- <9260bd3d-2325-fde7-bfa2-081700f6a731@gmail.com>
-In-Reply-To: <9260bd3d-2325-fde7-bfa2-081700f6a731@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 15 Jul 2021 10:32:20 -0700
-Message-ID: <CABPp-BEHC8dbGmMq9M-Jn899c+cVN4AhOD8Bio52WupEywEa2g@mail.gmail.com>
-Subject: Re: [PATCH v2 7/7] merge-ort: restart merge with cached renames to
- reduce process entry cost
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: BE094E20-E592-11EB-BA2C-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 15, 2021 at 10:19 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 7/15/2021 12:53 PM, Elijah Newren wrote:
-> > On Thu, Jul 15, 2021 at 8:10 AM Derrick Stolee <stolee@gmail.com> wrote:
-> >>
-> >> On 7/13/2021 3:33 PM, Elijah Newren via GitGitGadget wrote:
-> >>> From: Elijah Newren <newren@gmail.com>
-> ...
-> >>> +              * The exact number isn't critical, since the code will
-> >>> +              * work even if we get the factor wrong -- it just might be
-> >>> +              * slightly slower if we're a bit off.  For now, just error
-> >>> +              * on the side of a bigger fudge.  For the linux kernel
-> >>
-> >> super-nit: s/linux/Linux/
-> >
-> > Yeah, I tend to refer to projects by the name of their repository
-> > instead of their proper name.  (I do it with git too.)  Bad habit.
-> > Will fix.  That is, I will fix this instance.  Not sure I can fix the
-> > habit.
->
-> If you had written it as torvalds/linux, then I wouldn't have batted
-> an eye, because that is clearly a repo name (at least, clear to me).
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Yeah, the thing is I use the repo name even in cases where it's not
-ambiguous whether the project or the repo is meant.  For example, I
-would often write something like "I'm part of the git project."
-Christian has been trying to fix my capitalization.  Folks in another
-project tried to "fix" my capitalization too.  Perhaps by demanding
-five letters of all caps, they were able to get one out of me[1].  I
-suspect, though, that if they had just a single repo instead of having
-hundreds of repositories, they might not have even gotten that one
-letter of capitalization from me.  ;-)
+> diff --git a/Documentation/config/pull.txt b/Documentation/config/pull.txt
+> index 54048306095..e70ed99e408 100644
+> --- a/Documentation/config/pull.txt
+> +++ b/Documentation/config/pull.txt
+> @@ -7,12 +7,13 @@ pull.ff::
+>  	line). When set to `only`, only such fast-forward merges are
+>  	allowed (equivalent to giving the `--ff-only` option from the
+>  	command line). This setting overrides `merge.ff` when pulling.
+> +	Incompatible with pull.rebase.
 
-[1] https://blogs.gnome.org/newren/2006/04/22/enlightening-mankind-about-the-correct-spelling-of-gnome/
+This update may mean well, but I sense that the description needs to
+be tightened up a bit more.  Unless you mean to say that I am not
+allowed to say "[pull] rebase=no" when I set "[pull] ff", that is.
 
-> >>> +              * testcases I was looking at with massive renames, the
-> >>> +              * ratio came in around 50 to 250, which clearly would
-> >>> +              * trigger this optimization and provided some *very* nice
-> >>> +              * speedups.
-> >>
-> >> This bit of your testing might be more appropriate for your commit
-> >> message. This discussion of a test made at a certain point in time
-> >> is more likely to go stale than the description of how this factor
-> >> does not change correctness, only performance.
-> >
-> > The commit message does include discussion on how this factor only
-> > changes performance, not correctness.  I left this comment in the code
-> > because I figured it looked weird and magic and deserved an
-> > explanation without resorting to git-log or git-blame.  Granted, I
-> > wrote this comment and the commit message at much different times (I
-> > wrote the comment first, then the commit message many months later)
-> > and thus summarized a bit differently.  But I thought I had the same
-> > relevant content in both places.
-> >
-> > Are there pieces you feel are missing from the commit message?  Should
-> > I trim this comment down in the code and just let people look for the
-> > commit message for more details?
->
-> I meant to say "these kinds of details are better for the commit
-> message instead of comments" and not say "your commit message
-> doesn't have enough."
->
-> I don't feel strongly about this being present in the comment or
-> not, but it seems like something that could be dropped from the
-> comment without loss of information.
+Or do you mean pull.ff=only is incompatible with any setting of
+pull.rebase?
 
-Ah, makes sense.  I'll trim it down.
+Or do you mean pull.ff=only is incompatible with any setting of
+pull.rebase other than false?
+
+Or do you mean any setting of pull.ff is imcompatible with any
+setting of pull.rebase other than false?
+
+(You do not have to answer---the above questions just demonstrate
+that the description is unnecessarily loose).
+
+>  pull.rebase::
+>  	When true, rebase branches on top of the fetched branch, instead
+>  	of merging the default branch from the default remote when "git
+>  	pull" is run. See "branch.<name>.rebase" for setting this on a
+> -	per-branch basis.
+> +	per-branch basis.  Incompatible with pull.ff.
+
+Likewise.
+
+I think it technically is OK to say "only ff update is allowed" or
+"ff update is allowed when able" while saying pull.rebase=yes.  
+
+ - For those who say ff=only, the actual value of pull.rebase would
+   not matter (i.e. the integration immediately finishes by updating
+   to what was obtained from the upstream because there is no new
+   development on our own on top of theirs to either replay or
+   merge).
+
+ - For those who merely allow ff, an update may fast-forward even
+   when pull.rebase is set to true (or any non-false value), while
+   we'll replay our own development on top of theirs when their
+   history is not descendent of ours.
+
+So I do not see need to declare these combinations "incompatible".
+But perhaps I am missing some subtle cases?
+
+> diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+> index 5c3fb67c014..03e8694e146 100644
+> --- a/Documentation/git-pull.txt
+> +++ b/Documentation/git-pull.txt
+> @@ -121,6 +121,9 @@ When false, merge the current branch into the upstream branch.
+>  +
+>  When `interactive`, enable the interactive mode of rebase.
+>  +
+> +Note that these flags are incompatible with --no-ff and --ff-only; if
+> +such incompatible flags are given, the last one will take precedence.
+> ++
+
+I am not sure about these, either.  Again, --ff-only (whether it is
+combined with --rebase or --rebase=no) would mean that the operation
+would fail when we have our own development on top of their history,
+and we repoint the tip of our history to theirs when we do not.
+
+We see "--no-ff" is explained to "always create an unnecessary extra
+merge", bit I am not sure it is the right mental model to apply when
+the user prefers rebasing.  The merge workflow is to treat our
+history as the primary and merging theirs in, so when theirs is a
+descendant (i.e. we have no new development of our own), some people
+may want to mark "we were there before we updated from them" with an
+extra merge.  Without --no-ff, the resulting history would be quite
+different in the merge workflow if you have or do not have your own
+development.  But the rebase workflow is to treat their history as
+the primary and replay our own development on top of theirs, and the
+shape of the resulting history would be the same whether you have
+your own development on top of theirs.  We start from their tip and
+then replay our own development on top (which could be an empty
+set), and there is nothing "--no-ff" would need to do differently to
+keep the resulting history similar to cases where we do have
+something of our own.  IOW, "--no-ff" becoming a no-op in a "rebase"
+workflow is a natural consequence, and there is no strong reason to
+say it is incompatible.
