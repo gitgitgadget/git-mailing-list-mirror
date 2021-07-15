@@ -6,37 +6,37 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B64CC636C9
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 19:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EB0EC636C8
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 20:18:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6C8EF61167
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 19:59:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19954613C4
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 20:18:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345037AbhGOUCi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jul 2021 16:02:38 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54434 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344133AbhGOUBj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jul 2021 16:01:39 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A110F138035;
-        Thu, 15 Jul 2021 15:58:43 -0400 (EDT)
+        id S1343622AbhGOUUx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jul 2021 16:20:53 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57085 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242655AbhGOUU3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jul 2021 16:20:29 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9965013C113;
+        Thu, 15 Jul 2021 16:17:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Vv4D9inLCwoaBNMX5GoM1IaRz/fQ9igtzKHfLn
-        m3pKY=; b=Cb3PEIZxmleMIvG5EsBzDHNtOZXVRAJCzqDEe/Puc/QN2H6obZ/glM
-        P2OJ18sq5DcuNT96Sjougz3qQgRla9OyEzY2FqHTcX1gO0UNatYLfipZQXOJR6Mu
-        yYVEVF+dEPX35yLdR2gFoCHcEZbezAu5I0wU7LnLdAlt/G5brFViQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 994B0138034;
-        Thu, 15 Jul 2021 15:58:43 -0400 (EDT)
+        :content-type; s=sasl; bh=qZfB75EKmDrs83JLcBuE10tKHWNe0iu7D7IxJi
+        VPwBc=; b=q9lXw7AuimyeU5kauWf6Tf3tfhWIiOIqwXALZMhFutn1ur25ccoDDx
+        fGGbn/fJV2b8Xq7OMAPyGqHss/y8C95lELHQtNwjx7mP7sL+A20bjAmDC85btxKd
+        JWvUI5/ehhHcs16VHKRAEq77+vHKKUApX76mhJWNvaR98DzZQdK14=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 92E5E13C112;
+        Thu, 15 Jul 2021 16:17:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.3.135])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DDCB113802C;
-        Thu, 15 Jul 2021 15:58:40 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D8B1713C107;
+        Thu, 15 Jul 2021 16:17:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Elijah Newren <newren@gmail.com>
@@ -51,64 +51,49 @@ References: <pull.1047.git.git.1626316849.gitgitgadget@gmail.com>
         <3c07ce978caa832b08c6bef1c48c061e41a6fd0b.1626316849.git.gitgitgadget@gmail.com>
         <xmqq7dhrtrc2.fsf@gitster.g>
         <CABPp-BExWMSFr7CQskjKVhr5fiWCnxoaN_RaJ2Yir+36aiyBjQ@mail.gmail.com>
-Date:   Thu, 15 Jul 2021 12:58:39 -0700
+Date:   Thu, 15 Jul 2021 13:17:27 -0700
 In-Reply-To: <CABPp-BExWMSFr7CQskjKVhr5fiWCnxoaN_RaJ2Yir+36aiyBjQ@mail.gmail.com>
         (Elijah Newren's message of "Thu, 15 Jul 2021 12:04:38 -0700")
-Message-ID: <xmqqpmvjs61c.fsf@gitster.g>
+Message-ID: <xmqqlf67s560.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0D3BBE88-E5A7-11EB-A100-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: AD8F8E3A-E5A9-11EB-B55B-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Elijah Newren <newren@gmail.com> writes:
 
-> Let me ask two questions:
+> But first let me check if I understand you correctly:  I think you're
+> suggesting that
+>   * if --ff-only is given along with any --rebase[=*] flags, then we
+> silently ignore the --rebase[=*] flags.
+>   * if --no-ff is given along with any --rebase flag other than
+> --rebase=false, then we silently ignore --no-ff.
 >
-> 1. When is it beneficial for users to set both pull.ff and pull.rebase?
-> 2. Is it harmful to users for us to allow both to be set when we will
-> just ignore one?
->
-> I believe the answer to (1) is "never", and the answer to (2) is "yes".
+> Let me ask the same two questions as for the config:  Does it benefit
+> the users to allow them to specify both flags?  Does it hurt some
+> users, especially if undocumented that one of the flags will be
+> ignored?
 
-I agree (1) never gives you anything, even though it does not hurt,
-and (2) is "meh".
+I see downsides if you make them "incompatible" and cause the
+combination to error out, but otherwise no.  I can imagine those who
+regularly use pull.rebase=yes in the configuration to say --ff-only
+for a single-shot, for example.  We can view it as either (1)
+command line --ff-only overriding configured pull.rebase, or (2)
+ff-only made the choice of pull.rebase irrelevant---the end result
+is the same (as long as you do not say "no, that's incompatible" and
+error out).
 
-> For the second question in particular, I can think of two example cases:
->
-> 2a) Users start with pull.ff=only, perhaps suggested by someone else
-> and left in their config for a long time.  When users hit a case that
-> can't fast-forward and they either ask for help or find a post on
-> stack overflow that suggests setting pull.rebase=true, they do so and
-> then get no warning that the setting they just added is being ignored.
+> I thought this was the biggest hole in my proposal: there is both a
+> git merge --no-ff and a git rebase --no-ff, and they avoid
+> fast-forwards in different ways with different results.
 
-Well, overriding "only fast-forward is allowed" with "instead of
-merge, you can rebase" is a nonsense suggestion in the first place,
-no?  Why does Git suddenly become responsible for such a misguided
-suggestion?
-
-> 2b) Perhaps users start with pull.rebase=true (suggested by a
-> colleague and forgot about it as they are more of a tester than a
-> developer and thus usually only see fast-forwards).  Then at some
-> point they need to function as an integrator, and they read the docs
-> and determine that pull.ff=false should do what they want to create
-> merge commits.
-
-Again, "I want to pee in the snow" is not what you need to act as an
-integrator.  I do not see how relevant this example is, either.  You
-are just reacting to a wrong suggestion.
-
-> But then they get shocked that they've rebased public
-> commits (and perhaps also pushed them out) when they wanted merges.
-> Our docs have pretty clearly stated that pull.ff=false and --no-ff
-> create merges.
-
-That is something we need to and can fix.  The "pee in the snow
-commit can be created by passing --no-ff" was written back when the
-designed audiences of "pull" were primarily those who merge (think
-of "pull --rebase" as afterthought).  IOW, to the minds of those who
-originally wrote --no-ff feature (and its doc), "pull --rebase" was
-not in the picture.
-
+When you say "git rebase --no-ff upstream", you are telling the
+machinery that even if your current work is direct descendant of the
+upstream, you want your commits freshly rebuilt.  But in the context
+of "pull", you being descendant of the other side is called "already
+up to date", not even "fast forward" (the ancestry relationship
+between you and the other side is the other way around).  Does the
+"rebase --no-ff" even kick in in the context of "pull --no-ff"?
