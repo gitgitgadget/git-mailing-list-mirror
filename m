@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0D98C636C9
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 23:26:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 727C6C636C8
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 23:26:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A1345613E0
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 23:26:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C717613DA
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 23:26:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232397AbhGOX3V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jul 2021 19:29:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36794 "EHLO
+        id S232499AbhGOX30 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jul 2021 19:29:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232234AbhGOX3O (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jul 2021 19:29:14 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23611C061765
-        for <git@vger.kernel.org>; Thu, 15 Jul 2021 16:26:20 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id l16-20020a25cc100000b0290558245b7eabso9978935ybf.10
-        for <git@vger.kernel.org>; Thu, 15 Jul 2021 16:26:20 -0700 (PDT)
+        with ESMTP id S232220AbhGOX3L (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jul 2021 19:29:11 -0400
+Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2A37C061764
+        for <git@vger.kernel.org>; Thu, 15 Jul 2021 16:26:17 -0700 (PDT)
+Received: by mail-qt1-x84a.google.com with SMTP id v17-20020a05622a1451b02902533c8b7139so5204755qtx.3
+        for <git@vger.kernel.org>; Thu, 15 Jul 2021 16:26:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=7qD2dtDQL5PfOC9r3c8WSXtT4kn85mpZVZ6BF1ffvyg=;
-        b=cnIfQSDoU4ghmsPrzjKQWCWiqaMLRgvl0656ssWomyQTJhHyLGSiVvfE8slzYEJusP
-         eSs83BZdaZaQTC3dS2EiRev8JOPR0AeX3JNLdSr6REiDN0ezKP8tkwUjKnt8mkaX+lmH
-         zLLLIJigqSf4EbgI+mSzdlUGmpAvW677MiROf8J84BJ6cLJ9Jjo+nqMno7jER58eBJUx
-         /dOYm+Z/JMljswJkGG1U9Z+3VlVQuFBygQ3XmcmobbR+yfWFSOaWIOq7BHZXLobMmNVI
-         Kwte54mYFi7iS7vQrQmG1zaahLxplg9xMhdXweRKerklVwCHE2e39hPIuVJEqGcg9jeX
-         ZBog==
+        bh=P8rrmc24odBA/EU2X/mV0SLuWz46mUvnzj5DrSY/x7g=;
+        b=q6Q1qmu/5zz81xeYCTdL3sjfISZUEEb00eizp1hn5zjey+5knMUEa9vZ82dIlIMD7q
+         IFNV96zXvmgnWHJiRqcAbZDCaH4xY99Ru9w3pyXe18akPp8dbvj0okepJ8mScp9Gxf78
+         vx1mpme4sA2H8rJ+rFIMxFbPQgeFOOx3F84D7edFsiFCjS7cDU2qYr1JALKVAuMAwUJb
+         sf0VP146j9CGoSjTBORXAc3phfNXgS+Bjdo+KbDinQ5LkTXWl0HXMBj7DNyEqJo4AcDJ
+         lRiFJPkK9drK8/WDTv4bQm1/YVYLVjjN5IyGNCKLX2hpj9Z13/ILXvOl1SrW3/ar2rb2
+         KwTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=7qD2dtDQL5PfOC9r3c8WSXtT4kn85mpZVZ6BF1ffvyg=;
-        b=I+2K3fL4To4M7mJ7h8YAEEXOY3YOWnz4lydv5in9h+XOnyXQzZi5Goi4CGhO5bx2LO
-         3exNo6CX7VX4EmRzfCizJ0nGrEgJiuMtQFoAb4v0VYz8sFyEePeyS3xp9K9tHrUjLwsD
-         +4gqwKpMHeOj8CwPPjLCdEnAWl3R+ACUCsK3crpjUR6cMyxybm9O3N9LK4YRdxAbSH4o
-         LAwUlr2GfI4Yco04IffKpp1gq2xtasuC3KdttoG/lSNJtO9tyGC/7+JGYSGSaaaNa7wJ
-         QPRue7g6YN90ocG2UrAsPYi0UVXcyJowZL4FErfYB/VG86CvxPgBKihhaBfECLZaTZ2k
-         HoQQ==
-X-Gm-Message-State: AOAM530rqIFJaXC6gFO5RfnvCqQxzkiayHH0yMNqM3j9rJFi9VcyVzN1
-        DmHrRuJqeR0sP3WbjZlRapjkpJb6coEkJeRsGPy5OnxF08iqbZXtefSl0jHwzjq0nAnNJaeoE8x
-        B5PlyEiZohxgW/IqN0I/BF5oSsv4bOwdoVAgfmTszp67dWEAYxESLcw0hvPterlidx69kZArAVw
+        bh=P8rrmc24odBA/EU2X/mV0SLuWz46mUvnzj5DrSY/x7g=;
+        b=C4gid6UIu+LWP0i7AM91/By4PspO/Ia5/A11pXLsLQRUEiIlwwlFANFfeFEAZ7GENT
+         fB+8mCyw93mmwRkXnc1N9ujmdipSxw6zI5o0Ouhw7jr0jrzsZXHvtMAd3/9qBRYuNq7e
+         2TrVYo+FnWVhtOjSRvIf7NeQjMKRZH2cxSFdlybDGxJtWZlMCEv5rA+ljvpZ/PXYicTJ
+         m7kEDLdnW1npSmc58+LU7zEKt0BgDG20gBXeSt5fFFK9K/YgRzFlcFckTmiU2q6fnBlr
+         hIrrjcj5ef+EU6pzIQl/6KxnGs2pc4iP2GBx8J9VC6ZNEkIVmSQxWEk5ZCTq80mvNsXG
+         Z9ng==
+X-Gm-Message-State: AOAM531h1nhNafVa6I9hY++5ynYK5t5mLMtCXA+oGqNL2Qn+G/tO7A3V
+        MXncn6h8EGKRFxZcmkoWZleC0a5jwwBUyQGCB3+UwYAQf3dwdMGymz/9f0zkD5+KoRFsXoYz+dV
+        azwkJkr5b3xqwNpjpc3dj2wqfQfPFAhBwimzaF5uR5jxZ7XdGyQv/2aORdne8mirFQSgmTI6lIQ
         ==
-X-Google-Smtp-Source: ABdhPJxWDm9WvlfJDf5O4LiULa3mDSWCrJqrOA3khGQTe0fRRfPOFr0nPn1bQiXHrlfZ4ApVLpcW4qI4EvkrF9ULDm8=
+X-Google-Smtp-Source: ABdhPJycaGcDxH7YMJC8tUQdsyfoQ+JEVKigsYZCYp9xOO4//A8v5xiSILS4a1eeY3R9zhMLO0nqGzCoFERzWEPeErY=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:200:c795:6596:6e89:ce2])
- (user=emilyshaffer job=sendgmr) by 2002:a25:2484:: with SMTP id
- k126mr9345976ybk.344.1626391579300; Thu, 15 Jul 2021 16:26:19 -0700 (PDT)
-Date:   Thu, 15 Jul 2021 16:25:59 -0700
+ (user=emilyshaffer job=sendgmr) by 2002:a05:6214:4102:: with SMTP id
+ kc2mr6939571qvb.44.1626391576845; Thu, 15 Jul 2021 16:26:16 -0700 (PDT)
+Date:   Thu, 15 Jul 2021 16:25:58 -0700
 In-Reply-To: <20210715232603.3415111-1-emilyshaffer@google.com>
-Message-Id: <20210715232603.3415111-6-emilyshaffer@google.com>
+Message-Id: <20210715232603.3415111-5-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20210715232603.3415111-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.32.0.402.g57bb445576-goog
-Subject: [PATCH 5/9] hook: allow running non-native hooks
+Subject: [PATCH 4/9] hook: treat hookdir hook specially
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -70,154 +70,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As the hook architecture and 'git hook run' become more featureful, we
-may find wrappers wanting to use the hook architecture to run their own
-hooks, thereby getting nice things like parallelism and idiomatic Git
-configuration for free. Enable this by letting 'git hook run' bypass the
-known_hooks() check.
-
-We do still want to keep known_hooks() around, though - by die()ing when
-an internal Git call asks for run_hooks("my-new-hook"), we can remind
-Git developers to update Documentation/githooks.txt with their new hook,
-which in turn helps Git users discover this new hook.
+Soon, we will allow users to specify hooks using the config. These
+config-specified hooks may require different child_process options than
+hook executables in the gitdir. So, let's differentiate between hooks
+coming from the gitdir and hooks coming from the config.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- builtin/hook.c |  4 ++--
- hook.c         | 32 ++++++++++++++++++++++++++++----
- hook.h         | 16 +++++++++++++++-
- 3 files changed, 45 insertions(+), 7 deletions(-)
+ hook.c | 3 ++-
+ hook.h | 2 ++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/hook.c b/builtin/hook.c
-index 8340c8c9a8..b08f9c9c4f 100644
---- a/builtin/hook.c
-+++ b/builtin/hook.c
-@@ -39,7 +39,7 @@ static int list(int argc, const char **argv, const char *prefix)
- 
- 	hookname = argv[0];
- 
--	head = hook_list(hookname);
-+	head = hook_list(hookname, 1);
- 
- 	if (list_empty(head)) {
- 		printf(_("no commands configured for hook '%s'\n"),
-@@ -103,7 +103,7 @@ static int run(int argc, const char **argv, const char *prefix)
- 	 * run_found_hooks() instead...
- 	 */
- 	hook_name = argv[0];
--	hooks = hook_list(hook_name);
-+	hooks = hook_list(hook_name, 1);
- 	if (list_empty(hooks)) {
- 		/* ... act like run_hooks() under --ignore-missing */
- 		if (ignore_missing)
 diff --git a/hook.c b/hook.c
-index 3a588cb055..e1cf035022 100644
+index 19138a8290..3a588cb055 100644
 --- a/hook.c
 +++ b/hook.c
-@@ -52,12 +52,21 @@ static int known_hook(const char *name)
- 
- const char *find_hook(const char *name)
- {
--	static struct strbuf path = STRBUF_INIT;
-+	const char *hook_path;
- 
- 	if (!known_hook(name))
- 		die(_("the hook '%s' is not known to git, should be in hook-list.h via githooks(5)"),
- 		    name);
- 
-+	hook_path = find_hook_gently(name);
-+
-+	return hook_path;
-+}
-+
-+const char *find_hook_gently(const char *name)
-+{
-+	static struct strbuf path = STRBUF_INIT;
-+
- 	strbuf_reset(&path);
- 	strbuf_git_path(&path, "hooks/%s", name);
- 	if (access(path.buf, X_OK) < 0) {
-@@ -101,10 +110,16 @@ int hook_exists(const char *name)
- 	return !!find_hook(name);
- }
- 
--struct list_head* hook_list(const char* hookname)
-+struct hook_config_cb
-+{
-+	struct strbuf *hook_key;
-+	struct list_head *list;
-+};
-+
-+struct list_head* hook_list(const char* hookname, int allow_unknown)
- {
- 	struct list_head *hook_head = xmalloc(sizeof(struct list_head));
--	const char *hook_path = find_hook(hookname);
-+	const char *hook_path;
- 
- 
- 	INIT_LIST_HEAD(hook_head);
-@@ -112,6 +127,11 @@ struct list_head* hook_list(const char* hookname)
- 	if (!hookname)
- 		return NULL;
- 
-+	if (allow_unknown)
-+		hook_path = find_hook_gently(hookname);
-+	else
-+		hook_path = find_hook(hookname);
-+
- 	/* Add the hook from the hookdir */
- 	if (hook_path) {
+@@ -117,6 +117,7 @@ struct list_head* hook_list(const char* hookname)
  		struct hook *to_add = xmalloc(sizeof(*to_add));
-@@ -291,7 +311,11 @@ int run_hooks(const char *hook_name, struct run_hooks_opt *options)
- 	if (options->path_to_stdin && options->feed_pipe)
- 		BUG("choose only one method to populate stdin");
+ 		to_add->hook_path = hook_path;
+ 		to_add->feed_pipe_cb_data = NULL;
++		to_add->from_hookdir = 1;
+ 		list_add_tail(&to_add->list, hook_head);
+ 	}
  
--	hooks = hook_list(hook_name);
-+	/*
-+	 * 'git hooks run <hookname>' uses run_found_hooks, so we don't need to
-+	 * allow unknown hooknames here.
-+	 */
-+	hooks = hook_list(hook_name, 0);
+@@ -200,7 +201,7 @@ static int pick_next_hook(struct child_process *cp,
+ 	cp->dir = hook_cb->options->dir;
  
- 	/*
- 	 * If you need to act on a missing hook, use run_found_hooks()
+ 	/* add command */
+-	if (hook_cb->options->absolute_path)
++	if (run_me->from_hookdir && hook_cb->options->absolute_path)
+ 		strvec_push(&cp->args, absolute_path(run_me->hook_path));
+ 	else
+ 		strvec_push(&cp->args, run_me->hook_path);
 diff --git a/hook.h b/hook.h
-index 60389cd8cd..2559232880 100644
+index 586ddf40bb..60389cd8cd 100644
 --- a/hook.h
 +++ b/hook.h
-@@ -9,8 +9,16 @@
-  * Returns the path to the hook file, or NULL if the hook is missing
-  * or disabled. Note that this points to static storage that will be
-  * overwritten by further calls to find_hook and run_hook_*.
-+ *
-+ * If the hook is not a native hook (e.g. present in Documentation/githooks.txt)
-+ * find_hook() will die(). find_hook_gently() does not consult the native hook
-+ * list and will check for any hook name in the hooks directory regardless of
-+ * whether it is known. find_hook() should be used by internal calls to hooks,
-+ * and find_hook_gently() should only be used when the hookname was provided by
-+ * the user, such as by 'git hook run my-wrapper-hook'.
-  */
- const char *find_hook(const char *name);
-+const char *find_hook_gently(const char *name);
+@@ -22,6 +22,8 @@ struct hook {
+ 	/* The path to the hook */
+ 	const char *hook_path;
  
- /*
-  * A boolean version of find_hook()
-@@ -34,8 +42,14 @@ struct hook {
- /*
-  * Provides a linked list of 'struct hook' detailing commands which should run
-  * in response to the 'hookname' event, in execution order.
-+ *
-+ * If allow_unknown is unset, hooks will be checked against the hook list
-+ * generated from Documentation/githooks.txt. Otherwise, any hook name will be
-+ * allowed. allow_unknown should only be set when the hook name is provided by
-+ * the user; internal calls to hook_list should make sure the hook they are
-+ * invoking is present in Documentation/githooks.txt.
-  */
--struct list_head* hook_list(const char *hookname);
-+struct list_head* hook_list(const char *hookname, int allow_unknown);
- 
- /* Provides the number of threads to use for parallel hook execution. */
- int configured_hook_jobs(void);
++	unsigned from_hookdir : 1;
++
+ 	/*
+ 	 * Use this to keep state for your feed_pipe_fn if you are using
+ 	 * run_hooks_opt.feed_pipe. Otherwise, do not touch it.
 -- 
 2.32.0.402.g57bb445576-goog
 
