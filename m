@@ -2,136 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	FROM_LOCAL_DIGITS,FROM_LOCAL_HEX,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4C9BC636C9
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:19:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5C21C636C8
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:19:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A8AED613C7
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:19:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 84782608FC
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:19:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234011AbhGORWN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jul 2021 13:22:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35854 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229786AbhGORWM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jul 2021 13:22:12 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F64BC06175F
-        for <git@vger.kernel.org>; Thu, 15 Jul 2021 10:19:19 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id 7-20020a9d0d070000b0290439abcef697so6971953oti.2
-        for <git@vger.kernel.org>; Thu, 15 Jul 2021 10:19:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ktbUrJCBlm/xyc7Nwa/oL2/Ymk/nTO5NBb1ZS15+O74=;
-        b=UR7/p+5H7oE8HNPdquNTQyKgnMJYwK5uUdvmGSE4FKJV5HN+F578+AOF+XkNgd1Gw2
-         X4XSfmEKBo4naIzJCJC6Duzhx0eNS4f3RYybvIF54ZxXg//uexjPnxhg4eke6+WNKOie
-         nTz/olLhx2UsiaQgWoY6jUiBfdEHIfPkLn1339k5Ho0dl3zf7EUG3TNvWtb9nkCj5PZ1
-         E/i/5j4bIP5wQqoM3iIeqsif4kM4+BZY8gXcNFHcz9lsoI/2Sbq4LLOFljfDbU/bf97W
-         voRhnVPAwjdaIwby7UJHm86suiN9CR1diIXmFCXSI1y4sabfqOdwxyBPaERHRCt/u1ef
-         gbXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ktbUrJCBlm/xyc7Nwa/oL2/Ymk/nTO5NBb1ZS15+O74=;
-        b=PACkUPCPfKwEbYUpJDOW84D0J1hPMzSzthF28803FpEkOZaehO+eKWtl9fvzI4jlKd
-         QVc1xrYZi/CMuBT2U15W+AYlLJNcC+TVAfi3X+h95Dp3zOj7cX5eGyMfuHxloKeXSSWC
-         39VxNg4S9BrYzjanIkRqilIN9Wm6Hafo552qp+8mBMGrSfPpCKfgLodAzon3pim2QhD/
-         28trHB5sWYPIoJLjUZxNYjI4rjgok0lPubhx2JlWN5l6Yo2wUWdtFD3E5T35wzTRjBG4
-         /Te9KlGDvsmcv0jzABs2XhKhgfMg7idd7Q9zM41KHEkvKitYHvYXxzUyL9REJ3FPgbCf
-         Jh3Q==
-X-Gm-Message-State: AOAM531dUJI4Icz9NlQ2Yv2Sh4hj/Oiy4K/LfPqtHsmQKqBoZmRUvtOn
-        8rrRyV+IJPw7C1vabkPgUNc=
-X-Google-Smtp-Source: ABdhPJwj4evlpsC4Mb51g20kAP37KHSK+Ffx/qavn7rajfdk/4OC0u0y6OhE08MDtJ2jLy68jbuUNg==
-X-Received: by 2002:a05:6830:3493:: with SMTP id c19mr1529705otu.300.1626369558740;
-        Thu, 15 Jul 2021 10:19:18 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:b51d:31f1:a0d6:7fc2? ([2600:1700:e72:80a0:b51d:31f1:a0d6:7fc2])
-        by smtp.gmail.com with ESMTPSA id w64sm1234776otb.45.2021.07.15.10.19.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Jul 2021 10:19:18 -0700 (PDT)
-Subject: Re: [PATCH v2 7/7] merge-ort: restart merge with cached renames to
- reduce process entry cost
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <pull.988.git.1625111177.gitgitgadget@gmail.com>
- <pull.988.v2.git.1626204784.gitgitgadget@gmail.com>
- <7133f0efa520b3d0cadb059151daa12484fdb003.1626204784.git.gitgitgadget@gmail.com>
- <d91ed8a0-b37b-7dfa-10bf-e068f30e9691@gmail.com>
- <CABPp-BF+gR8WtpWt_DVDoWe16R4B65h-59zGOZ5j4vUJKp_Nuw@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <9260bd3d-2325-fde7-bfa2-081700f6a731@gmail.com>
-Date:   Thu, 15 Jul 2021 13:19:16 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <CABPp-BF+gR8WtpWt_DVDoWe16R4B65h-59zGOZ5j4vUJKp_Nuw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S234100AbhGORW3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jul 2021 13:22:29 -0400
+Received: from m12-13.163.com ([220.181.12.13]:40634 "EHLO m12-13.163.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229786AbhGORW3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jul 2021 13:22:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=Mime-Version:Subject:From:Date:Message-Id; bh=krCcW
+        wS7bv3g7BE92vHUsRCEi99BzFgYMZ/C3unjMRY=; b=GKxHUw3TyYu4ePyn1puJz
+        KASIZTQRqclt0PQ3K56tyCmLIBJE35Xsclz7qymQa2Su/VFbyREzZwH5VWL458O4
+        1/2AD+YKDSetTJ0ylWbjTe5+0L0agoaP/3jxJJStbfJcNXxnqvJzFbN8+UO5QEJr
+        da6UWzT1exAiRncTH9SYTo=
+Received: from smtpclient.apple (unknown [60.176.228.14])
+        by smtp9 (Coremail) with SMTP id DcCowADHybWaYvBg10bWLA--.35399S3;
+        Fri, 16 Jul 2021 00:30:19 +0800 (CST)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
+Subject: Re: [PATCH v2] packfile: freshen the mtime of packfile by
+ configuration
+From:   Sun Chao <16657101987@163.com>
+In-Reply-To: <YO8XrOChAtxhpuxS@nand.local>
+Date:   Fri, 16 Jul 2021 00:30:18 +0800
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Sun Chao via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <ACFA1FCF-3F24-470D-A3AE-DBAA269E9E2C@163.com>
+References: <pull.1043.git.git.1625943685565.gitgitgadget@gmail.com>
+ <pull.1043.v2.git.git.1626226114067.gitgitgadget@gmail.com>
+ <87wnpt1wwc.fsf@evledraar.gmail.com> <YO5RZ0Wix/K5q53Z@nand.local>
+ <ACE7ECBE-0D7A-4FB8-B4F9-F9E32BE2234C@163.com> <YO8XrOChAtxhpuxS@nand.local>
+To:     Taylor Blau <ttaylorr@github.com>
+X-Mailer: Apple Mail (2.3654.100.0.2.22)
+X-CM-TRANSID: DcCowADHybWaYvBg10bWLA--.35399S3
+X-Coremail-Antispam: 1Uf129KBjvJXoWxJFy3XFWkJry8Cry8XFy5Jwb_yoW5uF45pF
+        WfKry8tr1kZF4Syw1Iy3ykWrWFvas7G3W5XFy5trWjvwn8W34Sqrs8Jw4Y9FWUGr9YkayY
+        qayrWFykXr15WaDanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jV7KxUUUUU=
+X-Originating-IP: [60.176.228.14]
+X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/1tbiQw-Qglc7Uua0qQAAsb
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/15/2021 12:53 PM, Elijah Newren wrote:
-> On Thu, Jul 15, 2021 at 8:10 AM Derrick Stolee <stolee@gmail.com> wrote:
->>
->> On 7/13/2021 3:33 PM, Elijah Newren via GitGitGadget wrote:
->>> From: Elijah Newren <newren@gmail.com>
-...
->>> +              * The exact number isn't critical, since the code will
->>> +              * work even if we get the factor wrong -- it just might be
->>> +              * slightly slower if we're a bit off.  For now, just error
->>> +              * on the side of a bigger fudge.  For the linux kernel
->>
->> super-nit: s/linux/Linux/
-> 
-> Yeah, I tend to refer to projects by the name of their repository
-> instead of their proper name.  (I do it with git too.)  Bad habit.
-> Will fix.  That is, I will fix this instance.  Not sure I can fix the
-> habit.
 
-If you had written it as torvalds/linux, then I wouldn't have batted
-an eye, because that is clearly a repo name (at least, clear to me).
 
->>> +              * testcases I was looking at with massive renames, the
->>> +              * ratio came in around 50 to 250, which clearly would
->>> +              * trigger this optimization and provided some *very* nice
->>> +              * speedups.
->>
->> This bit of your testing might be more appropriate for your commit
->> message. This discussion of a test made at a certain point in time
->> is more likely to go stale than the description of how this factor
->> does not change correctness, only performance.
-> 
-> The commit message does include discussion on how this factor only
-> changes performance, not correctness.  I left this comment in the code
-> because I figured it looked weird and magic and deserved an
-> explanation without resorting to git-log or git-blame.  Granted, I
-> wrote this comment and the commit message at much different times (I
-> wrote the comment first, then the commit message many months later)
-> and thus summarized a bit differently.  But I thought I had the same
-> relevant content in both places.
-> 
-> Are there pieces you feel are missing from the commit message?  Should
-> I trim this comment down in the code and just let people look for the
-> commit message for more details?
+> 2021=E5=B9=B47=E6=9C=8815=E6=97=A5 01:04=EF=BC=8CTaylor Blau =
+<ttaylorr@github.com> =E5=86=99=E9=81=93=EF=BC=9A
+>=20
+> [...]
+>>=20
+>> However we find the mtime of ".pack" files changes over time which =
+makes the
+>> file system always reload the big files, that takes a lot of IO time =
+and result
+>> in lower speed of git upload-pack and even further the disk IOPS is =
+exhausted.
+>=20
+> That's surprising behavior to me. Are you saying that calling utime(2)
+> causes the *page* cache to be invalidated and that most reads are
+> cache-misses lowering overall IOPS?
+>=20
+> If so, then I am quite surprised ;). The only state that should be
+> dirtied by calling utime(2) is the inode itself, so the blocks =
+referred
+> to by the inode corresponding to a pack should be left in-tact.
+>=20
+> If you're on Linux, you can try observing the behavior of evicting
+> inodes, blocks, or both from the disk cache by changing "2" in the
+> following:
+>=20
+>    hyperfine 'git pack-objects --all --stdout --delta-base-offset =
+>/dev/null'
+>      --prepare=3D'sync; echo 2 | sudo tee /proc/sys/vm/drop_caches'
+>=20
+> where "1" drops the page cache, "2" drops the inodes, and "3" evicts
+> both.
+>=20
+> I wonder if you could share the results of running the above varying
+> the value of "1", "2", and "3", as well as swapping the `--prepare` =
+for
+> `--warmup=3D3` to warm your caches (and give us an idea of what your
+> expected performance is probably like).
+>=20
+> Thanks,
+> Taylor
 
-I meant to say "these kinds of details are better for the commit
-message instead of comments" and not say "your commit message
-doesn't have enough."
+I'm sorry to reply so late, I work long hours during the day, and the =
+company
+network can not send external mail, so I can only go home late at night =
+to reply to you.
 
-I don't feel strongly about this being present in the comment or
-not, but it seems like something that could be dropped from the
-comment without loss of information.
+Thanks for your reply again, My explaination for 'why the mtime is so =
+important' lost some
+informations and it is not clear enough, I will tell the details here:
 
-Thanks,
--Stolee
+Servers:
+- We maintain a number of servers, each mounting some NFS disks that =
+hold our git
+  repositories, some of them are so large (cannot reduce the size now), =
+they are > 10GB
+- There are too many objects and large files in the git history which =
+result in some
+  large '.pack' files in the '.git/objects/pack' directires
+- We created the '.keep' files for each large '.pack' file, wish the =
+disk cache can reduce
+  the NFS IOPS and just load contents from caches.
+
+Clients:
+- There are too many CI systems are keep downloading the git =
+repositories in a very
+  high frequency, e.g. we find different CI systems make 600 download =
+requests in a short
+  period of time by 'git fetch'.
+- Some developers are doing 'git push' at the same time, create Pull =
+Requests after that
+  (which trigger the CI then), so git servers will do some update tasks =
+which may cause the
+  mtime of '.pack' file freshend.
+
+So, in this case there will be many 'git-upload-pack' processes running =
+on the git servers,
+they all need to load the big '.pack' files. The 'git-upload-pack' will =
+be faster if the
+disk cache is warmed up and the NFS server will be not so busy.
+
+However we find the IOPS of the NFS server always be exhausted and the =
+'git-upload-pack' will
+runs for a very long time. We noticed the mtime of '.pack' changes over =
+time, one of my
+colleagues who is familiar with the file system tell me it's the mtime =
+who invalidate the
+disk caches.
+
+So we want the caches to be valid for a long time which can speed up the =
+'git-upload-pack'
+processes.
+
+I don't known if the `/proc/sys/vm/drop_caches` can help or not, but =
+thanks for your tips,
+I will try to check them and see if there are some differences.=
+
