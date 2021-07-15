@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F41A9C47E48
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 15:40:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A98D8C47E4D
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 15:40:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D638B613E0
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 15:40:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91A6461396
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 15:40:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239367AbhGOPnh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jul 2021 11:43:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41006 "EHLO
+        id S239415AbhGOPnj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jul 2021 11:43:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239183AbhGOPnc (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S239191AbhGOPnc (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 15 Jul 2021 11:43:32 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAA8DC061764
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50614C061766
         for <git@vger.kernel.org>; Thu, 15 Jul 2021 08:40:38 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id u8-20020a7bcb080000b02901e44e9caa2aso3929120wmj.4
+Received: by mail-wr1-x430.google.com with SMTP id t5so8347078wrw.12
         for <git@vger.kernel.org>; Thu, 15 Jul 2021 08:40:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=2wAhzEz1dqFEFD7ZYTaOKtiC0HQ3bg2FSnbAhq07rRM=;
-        b=AFDrZaezJhEldE+ZuVxT/XEERZo8RX5DzU5u2vVO6qtxcmBsXPXNUejseR8b7Jr5VZ
-         kNQAhr9XA3ow7cAK8kftbsc0/bfmz5NIf5c/HxUlZRfGqvR2yuoUmELxcTu6kTQjR+or
-         uUTjNhJ3KrjHYiuTkJ+QGEmOt0TNxEklf0IxSwTxIF5iNp1JXPelGowrq/95mh8RdUVB
-         9MdjCo1p+myw4fUg1mSr6r8Y+LrKi2aRmJQvkxCBQYxXVlE5nJe0z9beuPOrEFfr/o3K
-         3mBDsh6fZxDnwPzxKWS33I81oZYOBp4baIR3FPF8buGB9na2cnjDGpvUyqWHklm4hphI
-         D1fg==
+        bh=qAwXHcrowoAV1ZvkfF6sVHaTDEdBOu0rUNJ1Ia1vdCk=;
+        b=exgEU1v3Lm82T2w4+e1YjUmHDTOUxFPxuEK6G2lmveTeryrKDvbrRRhxJZFf6QFtAJ
+         uk+i52lVvuAhZXA5Cn7jGZ+wS6A1+FXfM+j/rM3XHw6/BCgNhaWf33WAMgQOiu4RHCAo
+         +5Z/0+ksmNgMcYHDcRtUCzh/f3VGg8bNF2x1n6kEMnS69WCV0kLeuS1LeVn1fzlYZ9fs
+         Hu9jUKiHcnTl9sgXM1x6GsJvk17L48nSCMbjCUl4RiRVAT9+2PY4JFhFxM3G66fPjZVB
+         xdoR+4vb+m/O+MBqnnDBWSiUIisbp9iBkuM9bVeycszq7x+NCzw2ELTX7XAc6sj2Dvb3
+         6Fzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2wAhzEz1dqFEFD7ZYTaOKtiC0HQ3bg2FSnbAhq07rRM=;
-        b=RaxFDw3XX7try/Z8ExXM18SM9umthaTawGPBZe6NVAn1OhorFfpC0bJt515xOSQEi2
-         Bs5BEAcURFHE71Ejqw4I+Rv7vQdQObVQ29F61o1Fl+3AY2LuqN8/CLGiZU2AEkwQfpgB
-         uwTCejHTJ9RKLSc9PWvTPqxBUxoiUzxU1uWSXw6Pl5V+ErUqzYV/BEb1J4vIJ4mJjl7E
-         AMCw30dB+Cu107YYrgb6Zr8hE3utHN9gEnhY0Fzw+QAL1HCrvmI0DJ3SClZhRlwuiM5W
-         bJintQ16nfcEEeziMUlfMSJfeIIHYonk96lFEIN1lJDv0Wa5XTYhJPLc/foxBvwIb3ns
-         R/yw==
-X-Gm-Message-State: AOAM533y+1qJvFtnY3UKTyjPsfrGfD6H1R/7XaKuoP7Q81eZvQ7ZH9Al
-        n1YIYtNpOkSN1+HnqA8gM1YNtVutScI=
-X-Google-Smtp-Source: ABdhPJxrB4muB7Ad75UR/FUoOKLLx9gUktL5bgwfUCFqoAaFzmqpxhAI8eAehl01XF9gduXNPYvYgw==
-X-Received: by 2002:a05:600c:4c96:: with SMTP id g22mr11018447wmp.70.1626363637543;
-        Thu, 15 Jul 2021 08:40:37 -0700 (PDT)
+        bh=qAwXHcrowoAV1ZvkfF6sVHaTDEdBOu0rUNJ1Ia1vdCk=;
+        b=tpX+d2+VcAXNqMyZraedhqQ28U4pTh+ayxZS8BfsZsaNL7WRSwqrlSmYK++rEZFYx2
+         9h9OsFZW5BlUn6j8bg71ncGZYSaUsVEn51gMVoB2qp2D+dG3tnSvf2AlpEsvgzlFKCsT
+         wI4ezgRSY+0bYzD/9/VbdmIibbF0LSVdARy1c7XWqDpqk1vrHjWHKdIm8/eZng4l42i8
+         vpnqLn6tRWeT88HaDnHAc6m74B0bVQPSRHqMKOk063Dm/Zd35yhpN1XZAiiqg77wrVqA
+         Z5aNqVfrlD0itG15tCSjl9esLNtQgP4dsxbecvV055FpzGdofFQpvMKDv3HRmysSmXh8
+         9UCw==
+X-Gm-Message-State: AOAM532ez6DT9hiCybSAt3fZMCYmPYXc7DtjLowT6N8fMPPOdiPwhgkz
+        ZI/vmLw+fmsvQfM2XF/X6+7jHbkHL4Y=
+X-Google-Smtp-Source: ABdhPJyK4wVW2N7svnSpeqp9JLkNq8hwUVTbrGjIgKQ5Y+4z6cjlRzlDIPUf/xdqOK+5ODTm+WTa2A==
+X-Received: by 2002:adf:f60a:: with SMTP id t10mr6213920wrp.127.1626363636987;
+        Thu, 15 Jul 2021 08:40:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a10sm6688328wrm.12.2021.07.15.08.40.37
+        by smtp.gmail.com with ESMTPSA id f11sm387615wmb.14.2021.07.15.08.40.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jul 2021 08:40:37 -0700 (PDT)
-Message-Id: <ed556e5f31e6398d1733cf9639c454b04978ab3a.1626363626.git.gitgitgadget@gmail.com>
+        Thu, 15 Jul 2021 08:40:36 -0700 (PDT)
+Message-Id: <fd3901dfee6bc4046a83011ab74ad6292dfe3e85.1626363626.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.993.v2.git.1626363626.gitgitgadget@gmail.com>
 References: <pull.993.git.1626090419.gitgitgadget@gmail.com>
         <pull.993.v2.git.1626363626.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 15 Jul 2021 15:40:23 +0000
-Subject: [PATCH v2 15/17] [GSOC] cat-file: re-implement --textconv, --filters
- options
+Date:   Thu, 15 Jul 2021 15:40:22 +0000
+Subject: [PATCH v2 14/17] [GSOC] cat-file: reuse err buf in
+ batch_object_write()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,130 +85,127 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-After cat-file reuses the ref-filter logic, we re-implement the
-functions of --textconv and --filters options.
-
-Add members `cat_file_cmdmode` to struct `ref_array_item`,
-so that struct `batch_option` member `cmdmode` will be passed
-to ref-filter, and then ref-filter will take use of it to filter
-the content of the object in get_object().
-
-Use `actual_oi` to record the real expand_data: it may point to the
-original `oi` or the `act_oi` processed by `textconv_object()` or
-`convert_to_working_tree()`. `grab_values()` will grab the contents
-of `actual_oi` and `grab_common_values()` to grab the contents of origin
-`oi`, this ensures that `%(objectsize)` still uses the size of the
-unfiltered data.
+Reuse the `err` buffer in batch_object_write(), as the
+buffer `scratch` does. This will reduce the overhead
+of multiple allocations of memory of the err buffer.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Hariom Verma <hariom18599@gmail.com>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- builtin/cat-file.c |  2 +-
- ref-filter.c       | 35 +++++++++++++++++++++++++++++++++--
- ref-filter.h       |  1 +
- 3 files changed, 35 insertions(+), 3 deletions(-)
+ builtin/cat-file.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index dc604a9879d..3a6153e778f 100644
+index 5b163551fc6..dc604a9879d 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -217,7 +217,7 @@ static void batch_object_write(const char *obj_name,
+@@ -212,35 +212,36 @@ static void batch_write(struct batch_options *opt, const void *data, int len)
+ 
+ static void batch_object_write(const char *obj_name,
+ 			       struct strbuf *scratch,
++			       struct strbuf *err,
+ 			       struct batch_options *opt,
  			       struct expand_data *data)
  {
  	int ret;
--	struct ref_array_item item = { data->oid, data->rest };
-+	struct ref_array_item item = { data->oid, data->rest, opt->cmdmode };
+-	struct strbuf err = STRBUF_INIT;
+ 	struct ref_array_item item = { data->oid, data->rest };
  
  	strbuf_reset(scratch);
- 	strbuf_reset(err);
-diff --git a/ref-filter.c b/ref-filter.c
-index b4f41fec871..91e26c9aba3 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1,3 +1,4 @@
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "cache.h"
- #include "parse-options.h"
-@@ -1755,6 +1756,9 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
- {
- 	/* parse_object_buffer() will set eaten to 0 if free() will be needed */
- 	int eaten = 1;
-+	struct expand_data *actual_oi = oi;
-+	struct expand_data act_oi = {0};
-+
- 	if (oi->info.contentp) {
- 		/* We need to know that to use parse_object_buffer properly */
- 		oi->info.sizep = &oi->size;
-@@ -1768,19 +1772,45 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
- 		BUG("Object size is less than zero.");
++	strbuf_reset(err);
  
- 	if (oi->info.contentp) {
--		*obj = parse_object_buffer(the_repository, &oi->oid, oi->type, oi->size, oi->content, &eaten);
-+		if ((ref->cat_file_cmdmode == 'c' || ref->cat_file_cmdmode == 'w') && !ref->rest)
-+			return strbuf_addf_ret(err, -1, _("missing path for '%s'"),
-+					       oid_to_hex(&act_oi.oid));
-+		if (oi->type == OBJ_BLOB) {
-+			if (ref->cat_file_cmdmode == 'c') {
-+				act_oi = *oi;
-+				if (textconv_object(the_repository,
-+						    ref->rest, 0100644, &act_oi.oid,
-+						    1, (char **)(&act_oi.content), &act_oi.size))
-+					actual_oi = &act_oi;
-+			} else if (ref->cat_file_cmdmode == 'w') {
-+				struct strbuf strbuf = STRBUF_INIT;
-+				struct checkout_metadata meta;
-+				act_oi = *oi;
-+
-+				init_checkout_metadata(&meta, NULL, NULL, &act_oi.oid);
-+				if (!convert_to_working_tree(&the_index, ref->rest, act_oi.content, act_oi.size, &strbuf, &meta))
-+					die("could not convert '%s' %s",
-+					    oid_to_hex(&oi->oid), ref->rest);
-+				act_oi.size = strbuf.len;
-+				act_oi.content = strbuf_detach(&strbuf, NULL);
-+				actual_oi = &act_oi;
-+			}
-+		}
-+		*obj = parse_object_buffer(the_repository, &actual_oi->oid, actual_oi->type, actual_oi->size, actual_oi->content, &eaten);
- 		if (!*obj) {
- 			if (!eaten)
- 				free(oi->content);
- 			return strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
- 					       oid_to_hex(&oi->oid), ref->refname);
- 		}
--		grab_values(ref->value, deref, *obj, oi);
-+		grab_values(ref->value, deref, *obj, actual_oi);
+-	ret = format_ref_array_item(&item, &opt->format, scratch, &err);
++	ret = format_ref_array_item(&item, &opt->format, scratch, err);
+ 	if (ret < 0)
+-		die("%s\n", err.buf);
++		die("%s\n", err->buf);
+ 	if (ret) {
+ 		/* ret > 0 means when the object corresponding to oid
+ 		 * cannot be found in format_ref_array_item(), we only print
+ 		 * the error message.
+ 		 */
+-		printf("%s\n", err.buf);
++		printf("%s\n", err->buf);
+ 		fflush(stdout);
+ 	} else {
+ 		strbuf_addch(scratch, '\n');
+ 		batch_write(opt, scratch->buf, scratch->len);
+ 	}
+ 	free_ref_array_item_value(&item);
+-	strbuf_release(&err);
+ }
+ 
+ static void batch_one_object(const char *obj_name,
+ 			     struct strbuf *scratch,
++			     struct strbuf *err,
+ 			     struct batch_options *opt,
+ 			     struct expand_data *data)
+ {
+@@ -294,7 +295,7 @@ static void batch_one_object(const char *obj_name,
+ 		return;
  	}
  
- 	grab_common_values(ref->value, deref, oi);
- 	if (!eaten)
- 		free(oi->content);
-+	if (actual_oi != oi)
-+		free(actual_oi->content);
+-	batch_object_write(obj_name, scratch, opt, data);
++	batch_object_write(obj_name, scratch, err, opt, data);
+ }
+ 
+ struct object_cb_data {
+@@ -302,13 +303,14 @@ struct object_cb_data {
+ 	struct expand_data *expand;
+ 	struct oidset *seen;
+ 	struct strbuf *scratch;
++	struct strbuf *err;
+ };
+ 
+ static int batch_object_cb(const struct object_id *oid, void *vdata)
+ {
+ 	struct object_cb_data *data = vdata;
+ 	oidcpy(&data->expand->oid, oid);
+-	batch_object_write(NULL, data->scratch, data->opt, data->expand);
++	batch_object_write(NULL, data->scratch, data->err, data->opt, data->expand);
  	return 0;
  }
  
-@@ -2189,6 +2219,7 @@ static struct ref_array_item *new_ref_array_item(const char *refname,
- 	FLEX_ALLOC_STR(ref, refname, refname);
- 	oidcpy(&ref->objectname, oid);
- 	ref->rest = NULL;
-+	ref->cat_file_cmdmode = 0;
+@@ -364,6 +366,7 @@ static int batch_objects(struct batch_options *batch, const struct option *optio
+ {
+ 	struct strbuf input = STRBUF_INIT;
+ 	struct strbuf output = STRBUF_INIT;
++	struct strbuf err = STRBUF_INIT;
+ 	struct strbuf format = STRBUF_INIT;
+ 	struct expand_data data;
+ 	int save_warning;
+@@ -392,6 +395,7 @@ static int batch_objects(struct batch_options *batch, const struct option *optio
+ 		cb.opt = batch;
+ 		cb.expand = &data;
+ 		cb.scratch = &output;
++		cb.err = &err;
  
- 	return ref;
+ 		if (batch->unordered) {
+ 			struct oidset seen = OIDSET_INIT;
+@@ -416,6 +420,7 @@ static int batch_objects(struct batch_options *batch, const struct option *optio
+ 
+ 		strbuf_release(&format);
+ 		strbuf_release(&output);
++		strbuf_release(&err);
+ 		return 0;
+ 	}
+ 
+@@ -444,12 +449,13 @@ static int batch_objects(struct batch_options *batch, const struct option *optio
+ 			data.rest = p;
+ 		}
+ 
+-		batch_one_object(input.buf, &output, batch, &data);
++		batch_one_object(input.buf, &output, &err, batch, &data);
+ 	}
+ 
+ 	strbuf_release(&format);
+ 	strbuf_release(&input);
+ 	strbuf_release(&output);
++	strbuf_release(&err);
+ 	warn_on_object_refname_ambiguity = save_warning;
+ 	return retval;
  }
-diff --git a/ref-filter.h b/ref-filter.h
-index 053980a6a42..a93d5e4dd61 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -39,6 +39,7 @@ struct ref_sorting {
- struct ref_array_item {
- 	struct object_id objectname;
- 	const char *rest;
-+	int cat_file_cmdmode;
- 	int flag;
- 	unsigned int kind;
- 	const char *symref;
 -- 
 gitgitgadget
 
