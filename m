@@ -2,92 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8376C636C8
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 21:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E96F3C636C9
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 21:14:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE00C61374
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 21:12:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD5DA61374
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 21:14:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230083AbhGOVPI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jul 2021 17:15:08 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59641 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229928AbhGOVPI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jul 2021 17:15:08 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 79BD213C69E;
-        Thu, 15 Jul 2021 17:12:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UL8lYKm5LbnMCauSRSoCchyI9wUM1z10wLWylV
-        jDdGk=; b=lCjJJmvrrovzskYAOyj4WpB658kxkxMuccZDnB7AzyxpBB1VW/Q0ln
-        /kI5WgIJE4wv2YjRzGK5JXPmQheP/kqGUtx1U3Ds+UUqNABDBAKECblyJAkXzcoU
-        MxEsLTmXxK5exzsBq4p5Qwo3QS2LUUc1qE1E6A+MaK6nvgtQbuhAI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7275113C69A;
-        Thu, 15 Jul 2021 17:12:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9178213C699;
-        Thu, 15 Jul 2021 17:12:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Son Luong Ngoc <sluongng@gmail.com>
-Subject: Re: [PATCH 3/5] pull: handle conflicting rebase/merge options via
- last option wins
-References: <pull.1047.git.git.1626316849.gitgitgadget@gmail.com>
-        <3c07ce978caa832b08c6bef1c48c061e41a6fd0b.1626316849.git.gitgitgadget@gmail.com>
-        <xmqq7dhrtrc2.fsf@gitster.g>
-        <CABPp-BExWMSFr7CQskjKVhr5fiWCnxoaN_RaJ2Yir+36aiyBjQ@mail.gmail.com>
-        <xmqqpmvjs61c.fsf@gitster.g>
-        <CABPp-BE8Qiu8Sdk8FD+UcAtZnToXFOv+Y+8Rwf3DyiZP6Te-SQ@mail.gmail.com>
-Date:   Thu, 15 Jul 2021 14:12:09 -0700
-In-Reply-To: <CABPp-BE8Qiu8Sdk8FD+UcAtZnToXFOv+Y+8Rwf3DyiZP6Te-SQ@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 15 Jul 2021 13:40:04 -0700")
-Message-ID: <xmqqh7gvs2mu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229611AbhGOVRr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jul 2021 17:17:47 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51320 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229498AbhGOVRq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jul 2021 17:17:46 -0400
+Received: (qmail 12701 invoked by uid 109); 15 Jul 2021 21:14:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 Jul 2021 21:14:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4932 invoked by uid 111); 15 Jul 2021 21:14:53 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 Jul 2021 17:14:53 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 15 Jul 2021 17:14:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     Andrzej Hunt <andrzej@ahunt.org>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 1/4] tests: add a test mode for SANITIZE=leak, run it
+ in CI
+Message-ID: <YPClS0fj2HOJE5nH@coredump.intra.peff.net>
+References: <cover-0.4-0000000000-20210714T001007Z-avarab@gmail.com>
+ <cover-0.4-0000000000-20210714T172251Z-avarab@gmail.com>
+ <patch-1.4-0795436a24-20210714T172251Z-avarab@gmail.com>
+ <eebb4f74-b5e3-6c11-3b84-fcee1b876992@ahunt.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 52351DA4-E5B1-11EB-9E9D-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <eebb4f74-b5e3-6c11-3b84-fcee1b876992@ahunt.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Wed, Jul 14, 2021 at 08:42:27PM +0200, Andrzej Hunt wrote:
 
-> On Thu, Jul 15, 2021 at 12:58 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Elijah Newren <newren@gmail.com> writes:
->>
->> > Let me ask two questions:
->> >
->> > 1. When is it beneficial for users to set both pull.ff and pull.rebase?
->> > 2. Is it harmful to users for us to allow both to be set when we will
->> > just ignore one?
->> >
->> > I believe the answer to (1) is "never", and the answer to (2) is "yes".
->>
->> I agree (1) never gives you anything, even though it does not hurt,
->> and (2) is "meh".
->
-> Okay, let's drop this series then.
+> My other question is: if we are adding a new job - should it really be just
+> a leak checking job? Leak checking is just a subset of ASAN (Address
+> Sanitizer). And as discussed at [1] it's possible to run ASAN and UBSAN
+> (Undefined Behaviour Sanitizer) in the same build. I feel like it's much
+> more useful to first add a combined ASAN+UBSAN job, followed by enabling
+> leak-checking as part of ASAN in those jobs for known leak-free tests - as
+> opposed to only adding leak checking. We currently disable Leak checking for
+> ASAN here [2], but that could be made conditional on the test ID (i.e. check
+> an allowlist to enable leak checking for some tests)?
 
-Not so fast.  I did have problem with some combinations you hinted
-(vaguely---so it is more like "combinations I thought you hinted"),
-but making sure various combinations of options and configuration
-variables work sensibly is a worthy goal to have, I would think.
+I do think it's worth having an ASan+UBSan job. In the CI we use for our
+custom fork of Git at GitHub, we run it for every pull request (and I do
+bring upstream any applicable fixes). It's kind of expensive compared to
+a regular "make test", but probably not nearly as bad as just running
+the regular test suite on Windows.
 
+And it's true that ASan can do leak-checking, too. In the long run, when
+we are leak-free, I think it may make sense to combine the jobs. But in
+the interim state where we can run the whole suite with ASan/UBSan, but
+not with LSan, I think it's simpler to just keep them separate. That
+lets us just entirely skip tests or scripts in the leak-checking run. I
+haven't measured, but I also expect that LSan is not much more expensive
+than a regular run, so combining the two isn't that big a win).
 
+So I do like your suggestion, but I think it just be orthogonal further
+to leak-checking.
 
+-Peff
