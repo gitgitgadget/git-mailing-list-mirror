@@ -2,159 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BF1FC12002
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 01:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44850C12002
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 02:32:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6DFA7613C0
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 01:53:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 245A861396
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 02:32:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233778AbhGOB4F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 21:56:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49938 "EHLO
+        id S232080AbhGOCf0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 22:35:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231863AbhGOB4D (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 21:56:03 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A40DC06175F
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 18:53:10 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id k16so4545039ios.10
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 18:53:10 -0700 (PDT)
+        with ESMTP id S230256AbhGOCf0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 22:35:26 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D85A5C06175F
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 19:32:33 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id v5so5640448wrt.3
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 19:32:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ypANk8DF3TBXINz0IM5wV7X7vAn5z4xlUp+ete2jbrU=;
-        b=L8m4R4Kv4gnv9HGPm4yuJdpXESnrUEslhuEI+Mx3oBCE6hlj4PRKyAJBxvY4DVZXxv
-         gd12dkLFWm2KYiSMxFLpi/DmYZFCoxN2jLpmVdoCGAFR/zOAWsI3IVem9oa1jOMBW9xQ
-         jUME98xKISAfebjUp0kr3323fmmZHKtSw3aNlq8eb1xtu/xlk8eWNM6418t/tjYglYmi
-         8rIvc8N855AQos7u42Gohc24Ujf6LgbmJtY5HQbG9c9zmLh6H24IaykcLsnne6rFBjQN
-         bL3I8F0PrJaSsYt7VjAufJH7aNT1Nl+zwb9eG8vIQk+EZskk0lcKXaPWv47ljasA1UJz
-         daqw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=UvACiXf7UqgbQLNEQIflzfUdEG54lLyale/jBvH475Y=;
+        b=qwUy/FPL8Fyx2TO7BN6M6FMSI/vuP4HoxeXOj8RlxIsAggPzlKhRGZNwuL/1hcLRNp
+         YKKqhnSK3/jcF/4BiUmbljP7+V6d6Tw0z1YV+lWTxY68xX9eA+4K3r0LSmdsxXwHG/ad
+         knEj/IfciXsBKHDIy4fXDQ00jL5tsHlDKm/rMpOhlHHSNENWYskIpC5qNtD2fuvkYZh4
+         uSl2o8JGjGVXWsCVoLFBp0eeM6YayP/U8AWaGUWUWefLHO5esT9fgyOcyoydLNTqIwjb
+         YSFsfVug2r7TGL7OZ8z83AYgXYJ93tys5+fy+OsD8A/L/jVkzEv9T2qa8Q3YeOAyK2yu
+         Fyqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ypANk8DF3TBXINz0IM5wV7X7vAn5z4xlUp+ete2jbrU=;
-        b=aXmzAZ2ummbmbzfggsyLTtuWKrseNKse9AG4bLLq6Wl8KFBtL49catv6JoiQQoGa7W
-         4uk0kMLLFPXy7hQEjblaGL/h+XTA/U1F87AQUrL4U6JdZYidNzfnbAs0h5XX8QoW8qOf
-         idjXzsXIymcFJDe+4oWg9yh3GW5Pc1naEmdKwHvX5vcvtFOZnlxOBZ32yDCf+QDWRtAz
-         ztkvUa/x76/Mye8WO4h0NsI6X/7KmQkKgOFJtpG2AeCLoH6Uog9eMGQOpHaTEpOwdcv/
-         pGmDZVNnh4a94z62D6pOJ5yyQIHxOK1GXV5wG6JvhF0UbW8RiiQNGJnZsvIVWmtu+KHK
-         OjKA==
-X-Gm-Message-State: AOAM531HgYvFybjevNYI2pwloO2jaJoxsHN3NtxLVFM9ApzJOcaqzF2X
-        sXv9oqV8VMFniWw92Zai3S5EUiPWqQe0rZP3jdo=
-X-Google-Smtp-Source: ABdhPJxLP1ASlNKxXO9zHqSrcWNAN3KY17+Hrl/BupCO3b++EjX2mCRi2BsGtN9750VdtaCEOWVhMpC+HqYd/lAxBCU=
-X-Received: by 2002:a5e:df08:: with SMTP id f8mr951158ioq.172.1626313989728;
- Wed, 14 Jul 2021 18:53:09 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=UvACiXf7UqgbQLNEQIflzfUdEG54lLyale/jBvH475Y=;
+        b=bIPDKaywYsEuPYj0ZXiXFZX3QTrDg9VsQdJHpFbHIwVDvCKvYT3PS89KXKiCVsNuDD
+         2NihAZozagob4EYNgCXawt6E0mW8i2daMxGB0/E3Ij9X2amWKfUzYjokkUmu/gZ+Djpc
+         6HdmBCvFnhlB/YfxwHlaShNB3vd5H4Y4Widju3dqQIgk27KDS/uAYt4PvUXXlMqL/BKl
+         IaWq8s6CrvZB4k2sK21aI+11fNGVihcaN+8D0xafWsZw5aWR4w8y96ML5r5P24Zmyn9o
+         6Pcn3HmEuU6pFWRj9tLdj2rVSW2XrtneuiSSnkO23WBIq6I60WZQ64nJDHkrnLPHTJWF
+         +Ukg==
+X-Gm-Message-State: AOAM531v8jAZTnvFHrx8Ycq/Drdna7JC0OzL3V8XQu4Beu0ihC/f0rdn
+        7rF2OdVJueII+lKhIYfTBpE8Qyff96U=
+X-Google-Smtp-Source: ABdhPJzRKY8dSOZqsNDjQTVJcLY8RKFfkgfWh1RttSi8PqwNQ5FshCO/wHgpSDOXHTCHDIOMgWVl2Q==
+X-Received: by 2002:a5d:4c52:: with SMTP id n18mr1720828wrt.295.1626316352460;
+        Wed, 14 Jul 2021 19:32:32 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o11sm3324131wmq.1.2021.07.14.19.32.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jul 2021 19:32:31 -0700 (PDT)
+Message-Id: <pull.992.v4.git.1626316350.gitgitgadget@gmail.com>
+In-Reply-To: <pull.992.v3.git.1625963240.gitgitgadget@gmail.com>
+References: <pull.992.v3.git.1625963240.gitgitgadget@gmail.com>
+From:   "Stephen Manz via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 15 Jul 2021 02:32:27 +0000
+Subject: [PATCH v4 0/3] worktree: teach add to accept --reason with --lock
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.993.git.1626090419.gitgitgadget@gmail.com>
- <70e83e4ba3cc8a55bb8d90cb2c581cd04ac116d4.1626090419.git.gitgitgadget@gmail.com>
- <CAP8UFD0vHw8cK90RbOUcrAcxNKiHVTMX0VEiK8+MNyHH0CNm4A@mail.gmail.com>
- <xmqqtukz2rp4.fsf@gitster.g> <CAOLTT8RR4+tUuT2yc2PDL9NwCburW8bM_Sht6nhKJ_fYV8fGsQ@mail.gmail.com>
-In-Reply-To: <CAOLTT8RR4+tUuT2yc2PDL9NwCburW8bM_Sht6nhKJ_fYV8fGsQ@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Thu, 15 Jul 2021 09:53:23 +0800
-Message-ID: <CAOLTT8Sa984Eo18QMBeGnMCX3_7sr+9qUYoAR4FS3UF6+CDtGw@mail.gmail.com>
-Subject: Re: [PATCH 14/19] [GSOC] cat-file: reuse ref-filter logic
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Hariom Verma <hariom18599@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Stephen Manz <smanz@alum.mit.edu>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ZheNing Hu <adlternative@gmail.com> =E4=BA=8E2021=E5=B9=B47=E6=9C=8815=E6=
-=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8A=E5=8D=8812:24=E5=86=99=E9=81=93=EF=BC=9A
->
-> Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B47=E6=9C=8813=E6=
-=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8A=E5=8D=884:38=E5=86=99=E9=81=93=EF=BC=9A
->
-> >
-> > Christian Couder <christian.couder@gmail.com> writes:
-> >
-> > More importantly, why is such a fast-path even needed?  Isn't it a
-> > sign that the ref-filter implementation is eating more cycles than
-> > it should for given set of placeholders?  Do we know where the extra
-> > cycles goes?
-> >
-> > I find it somewhat alarming if we are talking about "fast-path"
-> > workaround before understanding why we are seeing slowdown in the
-> > first place.
->
-> There is no complete conclusion yet, but I try to use time and hyperfine =
-test
-> for these commits (t/perf/* is not accurate enough):
->
-> -------------------------------------------------------------------------=
----------------------------------------------------
-> |                        subject                                  |
-> --batch-check (using hyperfine) |   --batch(using time) |
-> -------------------------------------------------------------------------=
----------------------------------------------------
-> |[GSOC] cat-file: use fast path when using default_format         |
->         700ms                |          25.450s      |
-> -------------------------------------------------------------------------=
----------------------------------------------------
-> |[GSOC] cat-file: re-implement --textconv, --filters options      |
->         790ms                |          29.933s      |
-> -------------------------------------------------------------------------=
----------------------------------------------------
-> |[GSOC] cat-file: reuse err buf in batch_object_write()           |
->         770ms                |          29.153s      |
-> -------------------------------------------------------------------------=
----------------------------------------------------
-> |[GSOC] cat-file: reuse ref-filter logic                          |
->         780ms                |          29.412s      |
-> -------------------------------------------------------------------------=
----------------------------------------------------
-> |The third batch (upstream/master)                                |
->         640ms                |          26.025s      |
-> -------------------------------------------------------------------------=
----------------------------------------------------
->
-> I think we their cost is indeed from "[GSOC] cat-file: reuse ref-filter l=
-ogic".
-> But what causes the loss of performance needs further analysis.
->
+The default reason stored in the lock file, "added with --lock", is unlikely
+to be what the user would have given in a separate git worktree lock
+command. Allowing --reason to be specified along with --lock when adding a
+working tree gives the user control over the reason for locking without
+needing a second command.
 
-Now I think:
-There are three main reasons why the performance of cat-file --batch
-deteriorates after refactor.
+Changes since v3:
 
-1. Too many copies are used in ref-filter and we cannot avoid these copies
-easily because ref-filter needs these copied data to implement atoms %(if),
-%(else), %(end)... and the --sort option. The original cat-file
---batch only needs
-to output the data to the final string. Its copy times are relatively small=
-.
+ * Updated test to define a shell variable, lock_reason, set to "why not".
+   Expand the variable to use with --reason and to echo to file, expected.
+   This avoids the spacing comment made by Eric Sunshine.
 
-2. More complex data structure and parsing process are used in ref-filter.
-This is why it can provide more and more useful atoms. Therefore, I think t=
-he
-performance degradation that occurs here is normal.
+Changes since v2:
 
-3. As =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason mentioned, oid_object_info_ext=
-end() was used
-twice in get_object() before. oid_object_info_extend() is the hot
-path, we should
-try to avoid calling it, So in last version of  "[GSOC] cat-file:
-re-implement --textconv,
---filters options", I make the unified processing of --textconv and
---filter avoid calling
-oid_object_info_extend() twice.
+ * Updated first of the 3 commits to include a step in the test to unlock
+   the worktree when test completes and modified commit message accordingly.
+ * Updated second commit to wrap "initializing" string with _() to mark it
+   for translation, as requested. I had originally opted not to mark it,
+   since, when --lock is not given, file locked gets removed after the
+   working tree is populated. Thus, it's not really user-facing. Modified
+   the commit message accordingly.
+ * Updated the third commit to have no new lock_reason member of struct
+   add_opts and changed type of member keep_locked from int to const char *,
+   as suggested.
 
-Thanks.
---
-ZheNing Hu
+The file, .git/worktrees/name-of-worktree/locked, is created even if --lock
+isn't given, although only temporarily. In this instance, "initializing" is
+written to the file, but the file is removed at the end of the add-worktree
+operation. My goal was to maintain this behavior and is the reason my
+post-parsing code doesn't quite match the suggested patch.
+
+Changes since v1:
+
+ * Split changes into 3 commits. The first commit is removal of git
+   rev-parse in the test above the ones I'm adding. The second is wrapping
+   the "added with --lock" string with _() to mark it for translation. The
+   third commit is the main change.
+ * Reworked the if-else-if-else to if-else if-else
+ * Added test_when_finished ... command to unlock the working tree
+ * Changed test_expect_failure to test_expect_success and embedded
+   test_must_fail and test_path_is_missing commands
+
+Note: I don't see how to disambiguate --lock with no --reason from no --lock
+at all. I still think that the original keep_locked boolean is needed along
+with the new lock_reason char array. If I don't add lock_reason and change
+keep_locked to a char array, it will start as NULL. But it will remain NULL
+if --lock alone is given or if --lock isn't given at all.
+
+cc: Eric Sunshine sunshine@sunshineco.com
+
+Stephen Manz (3):
+  t2400: clean up '"add" worktree with lock' test
+  worktree: mark lock strings with `_()` for translation
+  worktree: teach `add` to accept --reason <string> with --lock
+
+ Documentation/git-worktree.txt |  4 ++--
+ builtin/worktree.c             | 21 ++++++++++++++++-----
+ t/t2400-worktree-add.sh        | 16 +++++++++++++++-
+ 3 files changed, 33 insertions(+), 8 deletions(-)
+
+
+base-commit: d486ca60a51c9cb1fe068803c3f540724e95e83a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-992%2FSRManz%2Flock_reason-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-992/SRManz/lock_reason-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/992
+
+Range-diff vs v3:
+
+ 1:  5618933279d = 1:  5618933279d t2400: clean up '"add" worktree with lock' test
+ 2:  ceb7a58b004 = 2:  ceb7a58b004 worktree: mark lock strings with `_()` for translation
+ 3:  9a414a3078b ! 3:  4b6bb50d3d6 worktree: teach `add` to accept --reason <string> with --lock
+     @@ t/t2400-worktree-add.sh: test_expect_success '"add" worktree with lock' '
+       '
+       
+      +test_expect_success '"add" worktree with lock and reason' '
+     -+	git worktree add --detach --lock --reason "why not" here-with-lock-reason main &&
+     ++	lock_reason="why not" &&
+     ++	git worktree add --detach --lock --reason "$lock_reason" here-with-lock-reason main &&
+      +	test_when_finished "git worktree unlock here-with-lock-reason || :" &&
+      +	test -f .git/worktrees/here-with-lock-reason/locked &&
+     -+	echo why not >expect &&
+     ++	echo "$lock_reason" >expect &&
+      +	test_cmp expect .git/worktrees/here-with-lock-reason/locked
+      +'
+      +
+
+-- 
+gitgitgadget
