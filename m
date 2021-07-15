@@ -4,200 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0006C12002
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 02:32:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C3D8C12002
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 02:40:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9691B613CA
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 02:32:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E868961377
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 02:40:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236483AbhGOCfa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 22:35:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58604 "EHLO
+        id S230507AbhGOCnq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 22:43:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232435AbhGOCf2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 22:35:28 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A9A1C061762
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 19:32:36 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id m2so5666365wrq.2
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 19:32:35 -0700 (PDT)
+        with ESMTP id S230256AbhGOCnp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 22:43:45 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55B2EC06175F
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 19:40:52 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id m2so5683298wrq.2
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 19:40:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=fHMUVvRL4P4XuScojtpjWOg0oCdfMZEVV7HmcvsxqVw=;
-        b=uCNs9kPRreGhdQCxoR0LVk0GwLzpeRyTmR0PRDaiwYsUonzK9e0KSyvF/WZcrO+ftG
-         +U0rset5Pah7EYesFWHPclm8cEp5y0BMOd6dhoMfEYCesvgZ4kd0HI6rG05Af2fcVdDS
-         ++VLdqvxbRbwzDC4RSMLmTlyTyJrguFeVnQoLgemLu4Kyr7zvXSrWrduIoKGnwO4ep+D
-         NzYn7AGPPTOOKXywPJPlLgaIh7D80+RDySwj5pfDIExX4tD4fk/5I8ezLsXadExBaPHY
-         hyCpS8SEIqwTRqpWs+lHcOHIqjGOxuoNSbwU4m382v5GXLRnL93+7ZzpxKJB2er7etD/
-         dp9g==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=mtufaugh7m+/p9cvqVM0o/7MiWtP8oR0QK5W3YwVa60=;
+        b=FeRtGeSk0FQ2gFd7k6AVGREWjpsOnNoemuSdBkJ++HqoA/PgEy8kjb0n5W23Xq1nmK
+         +FJHRNM7JS1aR7FB2pzhPG2YGsNFs/LE09FVRqsdANjKbsWvPLc+iBY4F0/4+S00z54c
+         5H56MHwCFfl64XPCYEWP71eKMV3FHRme/YXUbVXtTEYYdlzVZfLuhEO6oQ9CIQ0Rz+3j
+         ecfeTJ+YOwEcOfbM4Azr5w+1kZLmVo6ckAsAc8ZyRCTmi42MjhM+JlITe2wXYbYKqVgl
+         +i11hM9YkCmyoefjIFRKag22ChtFpwY9yPvHD6005FjwvZcgetBcJZPpX/4k/a3SqXIX
+         +dfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fHMUVvRL4P4XuScojtpjWOg0oCdfMZEVV7HmcvsxqVw=;
-        b=b6to3zJWoaP8sHJFNvFf+tjz//aDDNGXB+kRS39hdQ/ozOnDhFTD1SjODjuFaZia3p
-         hD5OoLfoJxJEjS4xznyKErIpgjTWoUDSr5SrtDlv3vd59hrk7EBoBNXJF5eiPJz4VA6s
-         8j0cHQ+Izoy/VBl/d6AYeTFLC7ANFypOMxGcallmLFpSAA3ciKavLjhaNtOknx7bpLmk
-         yDhfCyXvypl4/IV2RoGJOqMsiYA1shOFzO51DFznokY0OqM6HrsX2f88UtSsGGEJ3uID
-         GOFxyJY3EiT1UBYw5pJjh3BCpBbnuEPMBpbQPtOnxaqQfZuSJbQl0qyK/mWYwEpR1Tij
-         +22g==
-X-Gm-Message-State: AOAM532PzgSkNiEMnmS+0D+HPot+E/emTvwrvJW/xOzXHx9yB0XXGmFh
-        OkBg1BD3/Eay8lZJfDqrDjji6ZaPtw0=
-X-Google-Smtp-Source: ABdhPJx19vRy0n5TqCAg+IyxPqgHXl6YbrOM5trhWYjvwvgjTzoGjpIU4HQy7tz6JwPD7klySSp/VQ==
-X-Received: by 2002:adf:ce8d:: with SMTP id r13mr1771922wrn.304.1626316354559;
-        Wed, 14 Jul 2021 19:32:34 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=mtufaugh7m+/p9cvqVM0o/7MiWtP8oR0QK5W3YwVa60=;
+        b=Sav96wOkQrcIeqjvd75jvuNcPmInu4mg/A6GykprGM0plLBIKUlBvWzv7jveK1d6kb
+         WE/PCt8UZQDfR4pDiAzG37FK4ZFRUJirEPwCGawS03hi/davlIm9oFDHgC7G+xf39Oyd
+         fRbAXtmnlQSR6LkLu/wSnw5WRYbge6IPmqaSsKuR1EBBGluEyTRDZHl8R8HNouqFW+Y0
+         ijJYfyGe617yU0d7n2MVDOxiOVD/Fnw4R2LGXUxiUSbN/NalVdy8NDJRiOm7RC1sRFRD
+         wGKrerCedxru0BJiEdg7G9KAlxGh+R2+waLsFt0Sfx/AtfyJVdY8aJYEHF0frWvYkP4u
+         6kTw==
+X-Gm-Message-State: AOAM532joIxckKIO4GkGrGctRadYtyUf+nGZlkfE3jVij3gs3NvzsA8x
+        zfjPN66eGyhyfPvTko1jkPwDCxx2IGI=
+X-Google-Smtp-Source: ABdhPJydJwFxqUMVYqaz8HZFTmriT0nnr/65gCLd+jK/0hamoV4oGPBoR+edICP0oCs+IhryXFSV7g==
+X-Received: by 2002:adf:fe0d:: with SMTP id n13mr1737412wrr.73.1626316850825;
+        Wed, 14 Jul 2021 19:40:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j6sm4289552wrm.97.2021.07.14.19.32.34
+        by smtp.gmail.com with ESMTPSA id u12sm4724663wrt.50.2021.07.14.19.40.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 19:32:34 -0700 (PDT)
-Message-Id: <4b6bb50d3d66ce8b033c475fbb9d3bda672e2612.1626316350.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.992.v4.git.1626316350.gitgitgadget@gmail.com>
-References: <pull.992.v3.git.1625963240.gitgitgadget@gmail.com>
-        <pull.992.v4.git.1626316350.gitgitgadget@gmail.com>
-From:   "Stephen Manz via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 15 Jul 2021 02:32:30 +0000
-Subject: [PATCH v4 3/3] worktree: teach `add` to accept --reason <string> with
- --lock
+        Wed, 14 Jul 2021 19:40:50 -0700 (PDT)
+Message-Id: <pull.1047.git.git.1626316849.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 15 Jul 2021 02:40:44 +0000
+Subject: [PATCH 0/5] Handle conflicting pull options
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Stephen Manz <smanz@alum.mit.edu>,
-        Stephen Manz <smanz@alum.mit.edu>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Stephen Manz <smanz@alum.mit.edu>
+We've recently discussed how to handle conflicting configuration and command
+line options in git pull, including at least a few different
+proposals[1][2][3] to handle different subsets of the possibilities. We also
+have a user report from someone who had conflicting configuration and got
+surprised when one of the options overruled the other -- with no warning
+from the command or the documentation that such would happen. Here's my
+attempt to impose clear and simple rules, which can be seen in the commit
+message of the third patch.
 
-The default reason stored in the lock file, "added with --lock",
-is unlikely to be what the user would have given in a separate
-`git worktree lock` command. Allowing `--reason` to be specified
-along with `--lock` when adding a working tree gives the user control
-over the reason for locking without needing a second command.
+(The first two patches are just preparatory changes to make patch 3 easier
+to read.)
 
-Signed-off-by: Stephen Manz <smanz@alum.mit.edu>
----
- Documentation/git-worktree.txt |  4 ++--
- builtin/worktree.c             | 21 ++++++++++++++++-----
- t/t2400-worktree-add.sh        | 14 ++++++++++++++
- 3 files changed, 32 insertions(+), 7 deletions(-)
+Since the handling of conflicting options was holding up two of Alex's
+patches[4][5], I also include those two patches at the end of my series,
+though I've made quite a few changes and additions to the latter of those.
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 66e67e6cbfa..8a7cbdd19c1 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -9,7 +9,7 @@ git-worktree - Manage multiple working trees
- SYNOPSIS
- --------
- [verse]
--'git worktree add' [-f] [--detach] [--checkout] [--lock] [-b <new-branch>] <path> [<commit-ish>]
-+'git worktree add' [-f] [--detach] [--checkout] [--lock [--reason <string>]] [-b <new-branch>] <path> [<commit-ish>]
- 'git worktree list' [--porcelain]
- 'git worktree lock' [--reason <string>] <worktree>
- 'git worktree move' <worktree> <new-path>
-@@ -242,7 +242,7 @@ With `list`, annotate missing working trees as prunable if they are
- older than `<time>`.
- 
- --reason <string>::
--	With `lock`, an explanation why the working tree is locked.
-+	With `lock` or with `add --lock`, an explanation why the working tree is locked.
- 
- <worktree>::
- 	Working trees can be identified by path, either relative or
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 4829b9507ff..0d0a80da61f 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -30,7 +30,7 @@ struct add_opts {
- 	int detach;
- 	int quiet;
- 	int checkout;
--	int keep_locked;
-+	const char *keep_locked;
- };
- 
- static int show_only;
-@@ -302,10 +302,10 @@ static int add_worktree(const char *path, const char *refname,
- 	 * after the preparation is over.
- 	 */
- 	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
--	if (!opts->keep_locked)
--		write_file(sb.buf, _("initializing"));
-+	if (opts->keep_locked)
-+		write_file(sb.buf, "%s", opts->keep_locked);
- 	else
--		write_file(sb.buf, _("added with --lock"));
-+		write_file(sb.buf, _("initializing"));
- 
- 	strbuf_addf(&sb_git, "%s/.git", path);
- 	if (safe_create_leading_directories_const(sb_git.buf))
-@@ -475,6 +475,8 @@ static int add(int ac, const char **av, const char *prefix)
- 	const char *branch;
- 	const char *new_branch = NULL;
- 	const char *opt_track = NULL;
-+	const char *lock_reason = NULL;
-+	int keep_locked = 0;
- 	struct option options[] = {
- 		OPT__FORCE(&opts.force,
- 			   N_("checkout <branch> even if already checked out in other worktree"),
-@@ -485,7 +487,9 @@ static int add(int ac, const char **av, const char *prefix)
- 			   N_("create or reset a branch")),
- 		OPT_BOOL('d', "detach", &opts.detach, N_("detach HEAD at named commit")),
- 		OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new working tree")),
--		OPT_BOOL(0, "lock", &opts.keep_locked, N_("keep the new working tree locked")),
-+		OPT_BOOL(0, "lock", &keep_locked, N_("keep the new working tree locked")),
-+		OPT_STRING(0, "reason", &lock_reason, N_("string"),
-+			   N_("reason for locking")),
- 		OPT__QUIET(&opts.quiet, N_("suppress progress reporting")),
- 		OPT_PASSTHRU(0, "track", &opt_track, NULL,
- 			     N_("set up tracking mode (see git-branch(1))"),
-@@ -500,6 +504,13 @@ static int add(int ac, const char **av, const char *prefix)
- 	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
- 	if (!!opts.detach + !!new_branch + !!new_branch_force > 1)
- 		die(_("-b, -B, and --detach are mutually exclusive"));
-+	if (lock_reason && !keep_locked)
-+		die(_("--reason requires --lock"));
-+	if (lock_reason)
-+		opts.keep_locked = lock_reason;
-+	else if (keep_locked)
-+		opts.keep_locked = _("added with --lock");
-+
- 	if (ac < 1 || ac > 2)
- 		usage_with_options(worktree_usage, options);
- 
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 93d3795cab9..37ad79470fb 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -72,6 +72,20 @@ test_expect_success '"add" worktree with lock' '
- 	test -f .git/worktrees/here-with-lock/locked
- '
- 
-+test_expect_success '"add" worktree with lock and reason' '
-+	lock_reason="why not" &&
-+	git worktree add --detach --lock --reason "$lock_reason" here-with-lock-reason main &&
-+	test_when_finished "git worktree unlock here-with-lock-reason || :" &&
-+	test -f .git/worktrees/here-with-lock-reason/locked &&
-+	echo "$lock_reason" >expect &&
-+	test_cmp expect .git/worktrees/here-with-lock-reason/locked
-+'
-+
-+test_expect_success '"add" worktree with reason but no lock' '
-+	test_must_fail git worktree add --detach --reason "why not" here-with-reason-only main &&
-+	test_path_is_missing .git/worktrees/here-with-reason-only/locked
-+'
-+
- test_expect_success '"add" worktree from a subdir' '
- 	(
- 		mkdir sub &&
+Possible areas of concern:
+
+ * Documentation/git-pull.txt includes merge-options.txt. While git-rebase
+   supports many of those "merge" options, I suspect there are others that
+   it does not support. We are probably silently ignoring those unsupported
+   options whenever one of those is specified at the same time a rebase is
+   requested; we should instead likely error out and report the
+   incompatibility. I have not yet addressed that, as I was focused on the
+   main rebase vs. merge incompatibility and default warning/error
+   associated with it.
+
+[1]
+https://lore.kernel.org/git/00e246b1-c712-e6a5-5c27-89127d796098@gmail.com/
+[2] https://lore.kernel.org/git/xmqq8s2b489p.fsf@gitster.g/ [3]
+https://lore.kernel.org/git/CABPp-BERS0iiiVhSsSs6dkqzBVTQgwJUjjKaZQEzRDGRUdObcQ@mail.gmail.com/
+[4]
+https://lore.kernel.org/git/20210711012604.947321-1-alexhenrie24@gmail.com/
+[5]
+https://lore.kernel.org/git/20210627000855.530985-1-alexhenrie24@gmail.com/
+
+Alex Henrie (1):
+  pull: abort if --ff-only is given and fast-forwarding is impossible
+
+Elijah Newren (4):
+  pull: move definitions of parse_config_rebase and parse_opt_rebase
+  pull: convert OPT_PASSTHRU for fast-forward options to OPT_CALLBACK
+  pull: handle conflicting rebase/merge options via last option wins
+  pull: abort by default when fast-forwarding is not possible
+
+ Documentation/config/pull.txt |   3 +-
+ Documentation/git-pull.txt    |  19 +++--
+ advice.c                      |   5 ++
+ advice.h                      |   1 +
+ builtin/merge.c               |   2 +-
+ builtin/pull.c                | 144 ++++++++++++++++++++--------------
+ t/t4013-diff-various.sh       |   2 +-
+ t/t5520-pull.sh               |  20 ++---
+ t/t5521-pull-options.sh       |   4 +-
+ t/t5524-pull-msg.sh           |   4 +-
+ t/t5553-set-upstream.sh       |  14 ++--
+ t/t5604-clone-reference.sh    |   4 +-
+ t/t6402-merge-rename.sh       |  18 ++---
+ t/t6409-merge-subtree.sh      |   6 +-
+ t/t6417-merge-ours-theirs.sh  |  10 +--
+ t/t7601-merge-pull-config.sh  |  97 ++++++++++++++++++++++-
+ t/t7603-merge-reduce-heads.sh |   2 +-
+ 17 files changed, 242 insertions(+), 113 deletions(-)
+
+
+base-commit: 75ae10bc75336db031ee58d13c5037b929235912
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1047%2Fnewren%2Fhandle-conflicting-pull-options-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1047/newren/handle-conflicting-pull-options-v1
+Pull-Request: https://github.com/git/git/pull/1047
 -- 
 gitgitgadget
