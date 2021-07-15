@@ -2,112 +2,179 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 025EEC5CFC2
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:37:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82053C5CFC2
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:44:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8DAC61370
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:37:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F5F0613C4
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:44:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231359AbhGORkj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jul 2021 13:40:39 -0400
-Received: from mx.kolabnow.com ([95.128.36.40]:55680 "EHLO mx.kolabnow.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231143AbhGORkj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jul 2021 13:40:39 -0400
-Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out003.mykolab.com (Postfix) with ESMTP id C590D4188B;
-        Thu, 15 Jul 2021 19:37:44 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
-        content-transfer-encoding:content-language:content-type
-        :content-type:in-reply-to:mime-version:date:date:message-id:from
-        :from:references:subject:subject:received:received:received; s=
-        dkim20160331; t=1626370664; x=1628185065; bh=UJeETh7EbXaYysb2Vws
-        b+jdSLsT17XBzKervIrWN4do=; b=X7Nsw9PyncU519tMYOzhQ6Chs9N1aPAczNn
-        S/qHgU8y18OoeQVpkKPMuyYedqBU0NHp4X03eH4Gn3gh/+zvbJFtIrdFICyLuZ5y
-        8KjWJInMbxsjjBVcI7hMq63/PBiyPZP4vtb1rqaPQkXkZ8wklq96gSuEJ6YxZ0J5
-        GMZdLAN8KztG2BJuCSvsTGYlBuw2URnoIcdOGeHYGNb0RMXKYwpK4pa9ErNTJt+N
-        h1NRgm5dphwBegXKsZ0CFqf/TLzgundIzWUrkqRAdV1YchtKHs1CDPp1568xFDkE
-        OyYu8nmSZzPFgH2rPhfxbM7SrQYPOXST6gKR4UBJjcUIEJE8tqx6ZflSh20K2Vdw
-        QaERPVsseq4/ZvWesum7/zuBH1GCOLVO6AVdByoaObrcfOXyhLArIyV8ZYGYQR51
-        KjdExJem9TCXJiJMp0xCDBFbVuVJJwoBpQj5AxvVwkyjWvwvfwQd3k+rz9eom+c7
-        xmUq6eViQjBfXu/WKJObTR2O3O7E4CO9xm0jOZsbGbck7F9kXBscV0fC5ZmMxKH5
-        saIP1dz1wIEaBEw4fHYm6DBj9EbVQvPIhyCGJP2J7r8Xu6Y0diq017ZmNwKQHEB7
-        x3uHP2mfV8dwY6LGPTn4e47LkHU89DSa+Zn4QKd/Fw2W3DLR14ix234cyyrAdlZa
-        dQ/akekc=
-X-Virus-Scanned: amavisd-new at mykolab.com
-Received: from mx.kolabnow.com ([127.0.0.1])
-        by localhost (ext-mx-out003.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 6wZgwin_zGkC; Thu, 15 Jul 2021 19:37:44 +0200 (CEST)
-Received: from int-mx001.mykolab.com (unknown [10.9.13.1])
-        by ext-mx-out003.mykolab.com (Postfix) with ESMTPS id DD3E6403E6;
-        Thu, 15 Jul 2021 19:37:42 +0200 (CEST)
-Received: from ext-subm002.mykolab.com (unknown [10.9.6.2])
-        by int-mx001.mykolab.com (Postfix) with ESMTPS id C004B1B2A;
-        Thu, 15 Jul 2021 19:37:37 +0200 (CEST)
-Subject: Re: [PATCH v2 0/4] add a test mode for SANITIZE=leak, run it in CI
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <cover-0.4-0000000000-20210714T001007Z-avarab@gmail.com>
- <cover-0.4-0000000000-20210714T172251Z-avarab@gmail.com>
-From:   Andrzej Hunt <andrzej@ahunt.org>
-Message-ID: <35b37777-a79b-6dce-eb45-f7cd9d569ddb@ahunt.org>
-Date:   Thu, 15 Jul 2021 19:37:35 +0200
-MIME-Version: 1.0
-In-Reply-To: <cover-0.4-0000000000-20210714T172251Z-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        id S231941AbhGORrc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jul 2021 13:47:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42118 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230291AbhGORrb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jul 2021 13:47:31 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4328FC06175F
+        for <git@vger.kernel.org>; Thu, 15 Jul 2021 10:44:38 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id a18-20020a056a000c92b02903282ac9a232so4856757pfv.6
+        for <git@vger.kernel.org>; Thu, 15 Jul 2021 10:44:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=lmg7QpqhuqMm2UWK2qaVaj01nbON/Qw9sNHc2ytwyYo=;
+        b=OjsSkj5lSopLdrP631+XWsgE1K4yPmWTqdl2xPqJHGyloeGaryKqDPe8xaBQLxd2zG
+         bsk5v5wc/c2O57Mws8bjlO0GkHFTYV9nYVWE6CxHOxA6N/jxUakd5WvdkUq2JwV5prrJ
+         NL3VKHv2HzWEsBhUo7SOWptjVuxO2un8e9pFFyyJpTTMNg5NlkSlvPY2rl49NRYW6cmv
+         KWhbTbO/sNHjfi3QdKoFeAnXOSq8ZrzQoV59TqI63Ux5uP2OamN8V75p3cGCpqWh2Pdl
+         hrr5bZp+LDCqFreEPDUBGDWQkSBIw8lBy1DR+ukcwWoIDa6X6xnZWqn50FY3Lc+y4+O7
+         IKyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=lmg7QpqhuqMm2UWK2qaVaj01nbON/Qw9sNHc2ytwyYo=;
+        b=Rb60+MrVjoPTsrkam5gKFrD+VnukyzOhE2m24xicGa7w7+Nv5TwWXN7bBsm8PAhN66
+         19cF9eyzVI3hZFbXzheZ6s4iEMrpIIx69gR11gjJQkJK7sB601ogNb0L4yl13pXoQKFg
+         FCUjpcPtkec6G0jSfBewJ6XhFpaflJAxK/QRHXcgfsE74ugI0yIX9+6+72xAgbZAmPmh
+         4SZhpA4DTj1qIkjja+2m2TN9wD5jKQNm1pki/GJhDMEF52C2p2mlGZRghUiuaGuzjRxb
+         iRIONXPdlbPCnvMq+L1HYLPmyC2glT7k/eZZB9q7cVqILYV8KzIenhRYX27lkeHAaZQk
+         jVfA==
+X-Gm-Message-State: AOAM5301AN7a1uJer+tfUCq7ipk+fFIJbN6rjUeG4TEs7WbEW3rqWHTP
+        x87BitAwGJkh4Q6xPmW9x6/zcXI9sPbSX90zVPfAVIcuMvsDwU36YM7M9Yr3eq5Yicd/4bEorPf
+        AWFaXySU+8MSke9dlG8LxHcNeulwFDLFq+Q5YbgKoXwgqNh05usNxYEN9PKHYNtkxhcvjrsurCz
+        NB
+X-Google-Smtp-Source: ABdhPJwx24EPxnrBAHWYUEwWSQOTOTfrrFKTr17ywcTfLeg9KH40EUpwvKXWq7QHMr12ibxvwRY/htM0DwxLYLT0OPQ6
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90b:4b08:: with SMTP id
+ lx8mr5539955pjb.66.1626371077605; Thu, 15 Jul 2021 10:44:37 -0700 (PDT)
+Date:   Thu, 15 Jul 2021 10:44:29 -0700
+In-Reply-To: <cover.1624486920.git.jonathantanmy@google.com>
+Message-Id: <cover.1626370766.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <cover.1624486920.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.32.0.402.g57bb445576-goog
+Subject: [PATCH v2 0/3] Push negotiation fixes
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, avarab@gmail.com,
+        emilyshaffer@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 14/07/2021 19:23, Ævar Arnfjörð Bjarmason wrote:
-> As a follow-up to my recent thread asking if we had some test mode or
-> CI to test for memory leak regression (we don't), add such a test
-> mode, and run it in CI.
-> 
-> Currently the two new CI targets take ~2-3 minutes to run in GitHub
-> CI, whereas the normal test targets take 20-30 minutes. The tests run
-> slower, but we have a small whitelist of test scripts that are OK.
-> 
-> v2:
-> 
->   * Fixes issues spotted by Đoàn Trần Công Danh and Eric Sunshine,
->     thanks both!
-> 
->   * I got rid of the change to t0500, I saw it being flaky in GitHub
->     CI, and looks like there'll be other concurrent edits to that file,
->     so leaving it be.
-> 
-> v1: http://lore.kernel.org/git/cover-0.4-0000000000-20210714T001007Z-avarab@gmail.com
+Thanks, Emily and =C3=86var for your reviews. There are no changes to C cod=
+e
+in this version of the patch set, but the tests have been updated
+following both your comments.
 
-> 
-> Ævar Arnfjörð Bjarmason (4):
->    tests: add a test mode for SANITIZE=leak, run it in CI
->    SANITIZE tests: fix memory leaks in t13*config*, add to whitelist
->    SANITIZE tests: fix memory leaks in t5701*, add to whitelist
->    SANITIZE tests: fix leak in mailmap.c
-> 
+I have ended up splitting up the HTTP tests away from t5516 into its own
+file. I had to use the number 5549 because it was the next available
+one. There is one Bash function that is duplicated - I don't foresee
+many such functions being duplicated, but if that happens, I guess we
+can always created a helper script somewhere else.
 
-The leak fixes look good to me, modulo the UNLEAK as already commented 
-on in patch 2/4 - thank you!
+Jonathan Tan (3):
+  send-pack: fix push.negotiate with remote helper
+  send-pack: fix push nego. when remote has refs
+  fetch: die on invalid --negotiation-tip hash
 
-I don't feel qualified to review the test and CI related scripting, 
-hopefully someone else will be able to look at those changes :).
+ builtin/fetch.c            |  4 ++-
+ builtin/send-pack.c        |  1 +
+ send-pack.c                |  6 ++--
+ t/t5510-fetch.sh           | 13 +++++++
+ t/t5516-fetch-push.sh      |  4 ++-
+ t/t5549-fetch-push-http.sh | 72 ++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 96 insertions(+), 4 deletions(-)
+ create mode 100755 t/t5549-fetch-push-http.sh
 
-ATB,
+Range-diff against v1:
+1:  eb0dce9f49 < -:  ---------- send-pack: fix push.negotiate with remote h=
+elper
+-:  ---------- > 1:  af40bee611 send-pack: fix push.negotiate with remote h=
+elper
+2:  3bf6921d96 ! 2:  c841693303 send-pack: fix push nego. when remote has r=
+efs
+    @@ t/t5516-fetch-push.sh: test_expect_success 'push with negotiation pr=
+oceeds anywa
+      	git -C testrepo config receive.hideRefs refs/remotes/origin/first_co=
+mmit &&
+      	GIT_TEST_PROTOCOL_VERSION=3D0 GIT_TRACE2_EVENT=3D"$(pwd)/event" \
+      		git -c push.negotiate=3D1 push testrepo refs/heads/main:refs/remote=
+s/origin/main 2>err &&
+    -@@ t/t5516-fetch-push.sh: test_expect_success 'http push with negotiat=
+ion' '
+    - 	# Without negotiation
+    - 	test_create_repo "$SERVER" &&
+    - 	test_config -C "$SERVER" http.receivepack true &&
+    -+	test_commit -C "$SERVER" unrelated_commit &&
+    - 	git -C client push "$URI" first_commit:refs/remotes/origin/first_com=
+mit &&
+    - 	git -C "$SERVER" config receive.hideRefs refs/remotes/origin/first_c=
+ommit &&
+    - 	GIT_TRACE2_EVENT=3D"$(pwd)/event" git -C client -c protocol.version=
+=3D2 \
+    -@@ t/t5516-fetch-push.sh: test_expect_success 'http push with negotiat=
+ion' '
+    - 	rm -rf "$SERVER" &&
+    - 	test_create_repo "$SERVER" &&
+    +@@ t/t5516-fetch-push.sh: test_expect_success 'denyCurrentBranch and w=
+orktrees' '
+    + 	git -C cloned push origin HEAD:new-wt &&
+    + 	test_must_fail git -C cloned push --delete origin new-wt
+    + '
+    +-
+    + test_done
+    +
+    + ## t/t5549-fetch-push-http.sh ##
+    +@@ t/t5549-fetch-push-http.sh: setup_client_and_server () {
+    + 	git init "$SERVER" &&
+    + 	test_when_finished 'rm -rf "$SERVER"' &&
+      	test_config -C "$SERVER" http.receivepack true &&
+     +	test_commit -C "$SERVER" unrelated_commit &&
+      	git -C client push "$URI" first_commit:refs/remotes/origin/first_com=
+mit &&
+    - 	git -C "$SERVER" config receive.hideRefs refs/remotes/origin/first_c=
+ommit &&
+    - 	GIT_TRACE2_EVENT=3D"$(pwd)/event" git -C client -c protocol.version=
+=3D2 -c push.negotiate=3D1 \
+    + 	git -C "$SERVER" config receive.hideRefs refs/remotes/origin/first_c=
+ommit
+    + }
+3:  1453a1b4e5 ! 3:  476da85859 fetch: die on invalid --negotiation-tip has=
+h
+    @@ builtin/fetch.c: static void add_negotiation_tips(struct git_transpo=
+rt_options *
+     -				die("%s is not a valid object", s);
+     +				die(_("%s is not a valid object"), s);
+     +			if (!has_object(the_repository, &oid, 0))
+    -+				die(_("%s is not a valid object"), s);
+    ++				die(_("the object %s does not exist"), s);
+      			oid_array_append(oids, &oid);
+      			continue;
+      		}
+    @@ t/t5510-fetch.sh: test_expect_success '--negotiation-tip understands=
+ abbreviated
+     +		--negotiation-tip=3Dalpha_1 \
+     +		--negotiation-tip=3D$(test_oid zero) \
+     +		origin alpha_s beta_s 2>err &&
+    -+	test_i18ngrep "is not a valid object" err
+    ++	cat >fatal-expect <<-EOF &&
+    ++	fatal: the object $(test_oid zero) does not exist
+    ++EOF
+    ++	grep fatal: err >fatal-actual &&
+    ++	test_cmp fatal-expect fatal-actual
+     +'
+     +
+      . "$TEST_DIRECTORY"/lib-httpd.sh
+--=20
+2.32.0.93.g670b81a890-goog
 
-Andrzej
-
-[...snip...]
