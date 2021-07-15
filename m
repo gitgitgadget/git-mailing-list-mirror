@@ -2,55 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE7D2C5CFC2
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:37:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 025EEC5CFC2
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:37:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 99A21611AB
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:37:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D8DAC61370
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230296AbhGORkG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jul 2021 13:40:06 -0400
-Received: from mx.kolabnow.com ([95.128.36.40]:40626 "EHLO mx.kolabnow.com"
+        id S231359AbhGORkj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jul 2021 13:40:39 -0400
+Received: from mx.kolabnow.com ([95.128.36.40]:55680 "EHLO mx.kolabnow.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229506AbhGORkF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jul 2021 13:40:05 -0400
+        id S231143AbhGORkj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jul 2021 13:40:39 -0400
 Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out001.mykolab.com (Postfix) with ESMTP id 168DCDC8;
-        Thu, 15 Jul 2021 19:37:10 +0200 (CEST)
+        by ext-mx-out003.mykolab.com (Postfix) with ESMTP id C590D4188B;
+        Thu, 15 Jul 2021 19:37:44 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
         content-transfer-encoding:content-language:content-type
         :content-type:in-reply-to:mime-version:date:date:message-id:from
         :from:references:subject:subject:received:received:received; s=
-        dkim20160331; t=1626370629; x=1628185030; bh=u5cAwgi6/l57wiUrwr3
-        FAi59h8D9ijb7bGiBMLqxXVY=; b=PA9lOMjbWj+ojJFxOc7DcsUJJl5QIIQQ7f7
-        7Le9bGvW1r6qo84Ic7za9yeN0HiYhLmfw45st0lEDgHnD0+C6Azv0pLuvQeOQPW8
-        W1V2ULCnOz13KM7h5ZdNcrgYFTnh9yrBC6wkd6bkbEKsW7Zte/EUrS65YbjLeF+B
-        vSvSUivFTaIgsap13LrKqesA6xycISYv7EbKQBGURFqvJ2O+xIzUc9cpfPlkFhe3
-        nis6i1rt4pFxKb7rS6OxtnV4NmVRx63woYFAfxh+iQaa5Jcb1/K5xDyJ5mBh30zm
-        ij8Dc9ePq4xyRUWEa8B9BiYVBpZSfDQpb/D2fGl3YyF1a/1t9lzQlIA3z/x54cSm
-        4m6FugmKnNQl6lbwh3a4Ski9tYBhP5RmzGF267ZsjVAenTk88BJxGBpj+iYRSRQy
-        7VwqQUh84gy1T5YATDoFaQwrsK3R4+rBDuEe8+VafVyEBcCbzDV8z5xS2DFzW8lt
-        hY3ZGLv6GYZnD8jQDwB6noxFc+ubfEgMvhFhp/il/iq4GBEAsxbT8ohsPedu4FOm
-        D8jFTTLb8bgPibW/Ufbxc1UYaKgmpSRub9FmFxrzSOqf5ifJBZGi69Y+cGYCuuXa
-        ayRvii/9NN+PLPLDPt1WWWUgqVIurf7SDqRLbXnHqnvCoU7c/HxkduBwBrcUQjhO
-        LB0aW6J8=
+        dkim20160331; t=1626370664; x=1628185065; bh=UJeETh7EbXaYysb2Vws
+        b+jdSLsT17XBzKervIrWN4do=; b=X7Nsw9PyncU519tMYOzhQ6Chs9N1aPAczNn
+        S/qHgU8y18OoeQVpkKPMuyYedqBU0NHp4X03eH4Gn3gh/+zvbJFtIrdFICyLuZ5y
+        8KjWJInMbxsjjBVcI7hMq63/PBiyPZP4vtb1rqaPQkXkZ8wklq96gSuEJ6YxZ0J5
+        GMZdLAN8KztG2BJuCSvsTGYlBuw2URnoIcdOGeHYGNb0RMXKYwpK4pa9ErNTJt+N
+        h1NRgm5dphwBegXKsZ0CFqf/TLzgundIzWUrkqRAdV1YchtKHs1CDPp1568xFDkE
+        OyYu8nmSZzPFgH2rPhfxbM7SrQYPOXST6gKR4UBJjcUIEJE8tqx6ZflSh20K2Vdw
+        QaERPVsseq4/ZvWesum7/zuBH1GCOLVO6AVdByoaObrcfOXyhLArIyV8ZYGYQR51
+        KjdExJem9TCXJiJMp0xCDBFbVuVJJwoBpQj5AxvVwkyjWvwvfwQd3k+rz9eom+c7
+        xmUq6eViQjBfXu/WKJObTR2O3O7E4CO9xm0jOZsbGbck7F9kXBscV0fC5ZmMxKH5
+        saIP1dz1wIEaBEw4fHYm6DBj9EbVQvPIhyCGJP2J7r8Xu6Y0diq017ZmNwKQHEB7
+        x3uHP2mfV8dwY6LGPTn4e47LkHU89DSa+Zn4QKd/Fw2W3DLR14ix234cyyrAdlZa
+        dQ/akekc=
 X-Virus-Scanned: amavisd-new at mykolab.com
 Received: from mx.kolabnow.com ([127.0.0.1])
-        by localhost (ext-mx-out001.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id RJvPvv6D73qh; Thu, 15 Jul 2021 19:37:09 +0200 (CEST)
-Received: from int-mx003.mykolab.com (unknown [10.9.13.3])
-        by ext-mx-out001.mykolab.com (Postfix) with ESMTPS id 4401468F;
-        Thu, 15 Jul 2021 19:37:09 +0200 (CEST)
+        by localhost (ext-mx-out003.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id 6wZgwin_zGkC; Thu, 15 Jul 2021 19:37:44 +0200 (CEST)
+Received: from int-mx001.mykolab.com (unknown [10.9.13.1])
+        by ext-mx-out003.mykolab.com (Postfix) with ESMTPS id DD3E6403E6;
+        Thu, 15 Jul 2021 19:37:42 +0200 (CEST)
 Received: from ext-subm002.mykolab.com (unknown [10.9.6.2])
-        by int-mx003.mykolab.com (Postfix) with ESMTPS id 3425B43D9;
-        Thu, 15 Jul 2021 19:37:05 +0200 (CEST)
-Subject: Re: [PATCH v2 3/4] SANITIZE tests: fix memory leaks in t5701*, add to
- whitelist
+        by int-mx001.mykolab.com (Postfix) with ESMTPS id C004B1B2A;
+        Thu, 15 Jul 2021 19:37:37 +0200 (CEST)
+Subject: Re: [PATCH v2 0/4] add a test mode for SANITIZE=leak, run it in CI
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
@@ -62,12 +60,11 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
 References: <cover-0.4-0000000000-20210714T001007Z-avarab@gmail.com>
  <cover-0.4-0000000000-20210714T172251Z-avarab@gmail.com>
- <patch-3.4-b7fb5d5a56-20210714T172251Z-avarab@gmail.com>
 From:   Andrzej Hunt <andrzej@ahunt.org>
-Message-ID: <c6c7cfea-8292-2034-f9d6-de350e6e2692@ahunt.org>
-Date:   Thu, 15 Jul 2021 19:37:02 +0200
+Message-ID: <35b37777-a79b-6dce-eb45-f7cd9d569ddb@ahunt.org>
+Date:   Thu, 15 Jul 2021 19:37:35 +0200
 MIME-Version: 1.0
-In-Reply-To: <patch-3.4-b7fb5d5a56-20210714T172251Z-avarab@gmail.com>
+In-Reply-To: <cover-0.4-0000000000-20210714T172251Z-avarab@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -75,43 +72,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
 On 14/07/2021 19:23, Ævar Arnfjörð Bjarmason wrote:
-> Fix a memory leak in a2ba162cda (object-info: support for retrieving
-> object info, 2021-04-20) which appears to have been based on a
-> misunderstanding of how the pkt-line.c API works, there is no need to
-> strdup() input to, it's just a printf()-like format function.
+> As a follow-up to my recent thread asking if we had some test mode or
+> CI to test for memory leak regression (we don't), add such a test
+> mode, and run it in CI.
 > 
-> This fixes a potentially large memory leak, since the number of OID
-> lines the "object-info" call can be arbitrarily large (or a small one
-> if the request is small).
+> Currently the two new CI targets take ~2-3 minutes to run in GitHub
+> CI, whereas the normal test targets take 20-30 minutes. The tests run
+> slower, but we have a small whitelist of test scripts that are OK.
 > 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->   protocol-caps.c      | 5 +++--
->   t/t5701-git-serve.sh | 1 +
->   2 files changed, 4 insertions(+), 2 deletions(-)
+> v2:
 > 
-> diff --git a/protocol-caps.c b/protocol-caps.c
-> index 13a9e63a04..901b6795e4 100644
-> --- a/protocol-caps.c
-> +++ b/protocol-caps.c
-> @@ -69,9 +69,10 @@ static void send_info(struct repository *r, struct packet_writer *writer,
->   			}
->   		}
->   
-> -		packet_writer_write(writer, "%s",
-> -				    strbuf_detach(&send_buffer, NULL));
-> +		packet_writer_write(writer, "%s", send_buffer.buf);
-> +		strbuf_reset(&send_buffer);
->   	}
-> +	strbuf_release(&send_buffer);
->   }
+>   * Fixes issues spotted by Đoàn Trần Công Danh and Eric Sunshine,
+>     thanks both!
+> 
+>   * I got rid of the change to t0500, I saw it being flaky in GitHub
+>     CI, and looks like there'll be other concurrent edits to that file,
+>     so leaving it be.
+> 
+> v1: http://lore.kernel.org/git/cover-0.4-0000000000-20210714T001007Z-avarab@gmail.com
 
-Good catch! strbuf's seem to be a common source of leak, where either 
-the release is forgotten or detach is used incorrectly - and I'm tempted 
-to try and implement some automated checks to catch those (I wonder if 
-coccicheck is powerful enough for this?).
+> 
+> Ævar Arnfjörð Bjarmason (4):
+>    tests: add a test mode for SANITIZE=leak, run it in CI
+>    SANITIZE tests: fix memory leaks in t13*config*, add to whitelist
+>    SANITIZE tests: fix memory leaks in t5701*, add to whitelist
+>    SANITIZE tests: fix leak in mailmap.c
+> 
 
->   ...
+The leak fixes look good to me, modulo the UNLEAK as already commented 
+on in patch 2/4 - thank you!
+
+I don't feel qualified to review the test and CI related scripting, 
+hopefully someone else will be able to look at those changes :).
+
+ATB,
+
+Andrzej
+
+[...snip...]
