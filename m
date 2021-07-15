@@ -2,92 +2,202 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C285C07E96
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 16:29:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61415C07E96
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 16:29:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8787613F0
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 16:29:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 484EA613D3
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 16:29:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231313AbhGOQcJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jul 2021 12:32:09 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63499 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229899AbhGOQcI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jul 2021 12:32:08 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EC93B136453;
-        Thu, 15 Jul 2021 12:29:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8Wg77fIzgXPEV2jB5TCga7J/cgsNzn9qyHhMUA
-        TvaWA=; b=bdaJ5RAa+lEWZWl3R8mY5z1YCNvWGNc3lWXArOHB3iQ5L9HqsU0Gjq
-        +D2jy3E5d6KsjWcIqJ2CDIV1wQRNQMKosewZhpvfXED4ELc6cWYEueDLkUUXtml3
-        jJDyptrDiaS6BM6qMJj00aI6N0orgP4EdG4JkEN86YAIos0pmnmOw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E417A136451;
-        Thu, 15 Jul 2021 12:29:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 67FCC136450;
-        Thu, 15 Jul 2021 12:29:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     Fabian Stelzer via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Hans Jerry Illikainen <hji@dyntopia.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 2/9] ssh signing: add documentation
-References: <pull.1041.v2.git.git.1626092359713.gitgitgadget@gmail.com>
-        <pull.1041.v3.git.git.1626264613.gitgitgadget@gmail.com>
-        <2f8452f6570b1811682863441020a6e43fc556c7.1626264613.git.gitgitgadget@gmail.com>
-        <xmqq35sgwtga.fsf@gitster.g>
-        <cf9aaa48-ea49-e3c2-9909-486d9a3f7aac@gigacodes.de>
-Date:   Thu, 15 Jul 2021 09:29:10 -0700
-In-Reply-To: <cf9aaa48-ea49-e3c2-9909-486d9a3f7aac@gigacodes.de> (Fabian
-        Stelzer's message of "Thu, 15 Jul 2021 10:48:29 +0200")
-Message-ID: <xmqqfswftuax.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231411AbhGOQcM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jul 2021 12:32:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52094 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229899AbhGOQcK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jul 2021 12:32:10 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71EA7C06175F
+        for <git@vger.kernel.org>; Thu, 15 Jul 2021 09:29:16 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id ec55so9007899edb.1
+        for <git@vger.kernel.org>; Thu, 15 Jul 2021 09:29:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=CP+Hzyk0Io+iLL4PXS8y419iBQZQJI/XhkP9WhHm8IY=;
+        b=B8tJgP38Esx2aUQ0gtE4nSvtvzCPM6W81wo6lnI9dUUuD9UsVF6h9jia0GLXdopHEG
+         VCnEbk3b7Cy//FBVHArdaO+BD2hcKFq3rTKdMh8Y2yegln2wPcll5JJJHLH8j4q9yKUO
+         xpK7T74HZJrhqMeGRWckxAWreNLmOg6vyNESeQXFyB/ZKyDJjed6xrNOw7eGGS+7WKv9
+         SwODHTg62vO3PLBJd2ATuZi+SAvytlcUxZeZzQyXW6KrwfPlCgMmfkBh5EtdM7NYHKGW
+         APH4O904jZ23OmMWJkmfcxFDvfMqetVbUDCwJquc2tVi+bsRvthwiTt0BM23r3nBM1FR
+         4ITg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=CP+Hzyk0Io+iLL4PXS8y419iBQZQJI/XhkP9WhHm8IY=;
+        b=Bj/+D45iBu56tNNXy6l1YO3v3/VgMpR1hAMV+enjo26yc/VniiSunSnH8KDZyniUch
+         UZ9aAzPH31HM6BXx82Esdk4w0CQi6jbs0Q+q6LIC9ShPjQv0GbVGf4cGUSVdUQrADWz5
+         Z7QjN5r98WYIazvKtEiVkeXoCIwruq3Rcns6/8FHh6p7upghTtSLpdqZlNazFBqBOYRY
+         +FvyaGRVYDssEWVT0NqMjjiiaoR1gXXnpBsqex1vJD6CwjgpZEDfL2yuyjdePQEDsEGW
+         Z26LvJ8Vg8fMHtuU5TgijjCHXwPy9IS7+12mEDUfTtkax9Puqv4PUOThnrMrMoMsVKup
+         k+Xw==
+X-Gm-Message-State: AOAM530FEHnxFk5eXL/f2T4dp3v2VjQpylUoNLjeI5fK0R0H+JE+kHWM
+        kN48ZP7u24cOjSQZvdc372Mo4ZKUqGN94hGX
+X-Google-Smtp-Source: ABdhPJxw7lnCleX1eIvw5flUL7M0ycj8ovOZ/d7nIFEbRZIdRCV0vkD26D26Hs9rWWdtYYHUjnLRsA==
+X-Received: by 2002:a05:6402:c9:: with SMTP id i9mr8313195edu.48.1626366554708;
+        Thu, 15 Jul 2021 09:29:14 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id t15sm2008477ejf.119.2021.07.15.09.29.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Jul 2021 09:29:14 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Brandon Williams <bwilliamseng@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Ryan Zoeller <rtzoeller@rtzoeller.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH] parse-options: don't complete option aliases by default
+Date:   Thu, 15 Jul 2021 18:16:26 +0200
+References: <pull.996.git.1626353925051.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <pull.996.git.1626353925051.gitgitgadget@gmail.com>
+Message-ID: <8735sfzgkg.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C9D5D66E-E589-11EB-BD95-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fabian Stelzer <fs@gigacodes.de> writes:
 
->>> +gpg.ssh.keyring::
->>> ...
-> maybe keeeping the name "allowedSignersFile" like its called in the
-> ssh manpage will make this clearer without needing a lot of extra
-> explanation?
+On Thu, Jul 15 2021, Philippe Blain via GitGitGadget wrote:
 
-Yup, that sounds like an excellent way to present this to our users.
+> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>
+> Since 'OPT_ALIAS' was created in 5c387428f1 (parse-options: don't emit
+> "ambiguous option" for aliases, 2019-04-29), 'git clone
+> --git-completion-helper', which is used by the Bash completion script to
+> list options accepted by clone (via '__gitcomp_builtin'), lists both
+> '--recurse-submodules' and its alias '--recursive', which was not the
+> case before since '--recursive' had the PARSE_OPT_HIDDEN flag set, and
+> options with this flag are skipped by 'parse-options.c::show_gitcomp',
+> which implements 'git <cmd> --git-completion-helper'.
+>
+> At the point where 'show_gitcomp' is called in 'parse_options_step',
+> 'preprocess_options' was already called in 'parse_options', so any
+> aliases are now copies of the original options with a modified help text
+> indicating they are aliases.
+>
+> Helpfully, since 64cc539fd2 (parse-options: don't leak alias help
+> messages, 2021-03-21) these copies have the PARSE_OPT_FROM_ALIAS flag
+> set, so check that flag early in 'show_gitcomp' and do not print them,
+> unless the user explicitely requested that *all* completion be shown (by
+> setting 'GIT_COMPLETION_SHOW_ALL'). After all, if we want to encourage
+> the use of '--recurse-submodules' over '--recursive', we'd better just
+> suggest the former.
+>
+> The only other options alias is 'log' and friends' '--mailmap', which is
+> an alias for '--use-mailmap', but the Bash completion helpers for these
+> commands do not use '__gitcomp_builtin', and thus are unnaffected by
+> this change.
+>
+> Test the new behaviour in t9902-completion.sh. As a side effect, this
+> also tests the correct behaviour of GIT_COMPLETION_SHOW_ALL, which was
+> not tested before. Note that since '__gitcomp_builtin' caches the
+> options it shows, we need to re-source the completion script to clear
+> that cache for the second test.
+>
+> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> ---
+>     parse-options: don't complete option aliases by default
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-996%2Fphil-blain%2Fclone-recurse-completion-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-996/phil-blain/clone-recurse-completion-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/996
+>
+>  parse-options.c       |  2 +-
+>  t/t9902-completion.sh | 13 +++++++++++++
+>  2 files changed, 14 insertions(+), 1 deletion(-)
+>
+> diff --git a/parse-options.c b/parse-options.c
+> index e6f56768ca5..2abff136a17 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -585,7 +585,7 @@ static int show_gitcomp(const struct option *opts, int show_all)
+>  		if (!opts->long_name)
+>  			continue;
+>  		if (!show_all &&
+> -			(opts->flags & (PARSE_OPT_HIDDEN | PARSE_OPT_NOCOMPLETE)))
+> +			(opts->flags & (PARSE_OPT_HIDDEN | PARSE_OPT_NOCOMPLETE | PARSE_OPT_FROM_ALIAS)))
+>  			continue;
+>  
+>  		switch (opts->type) {
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index cb057ef1613..11573936d58 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -2404,6 +2404,19 @@ test_expect_success 'sourcing the completion script clears cached --options' '
+>  	verbose test -z "$__gitcomp_builtin_notes_edit"
+>  '
+>  
+> +test_expect_success 'option aliases are not shown by default' '
+> +	test_completion "git clone --recurs" "--recurse-submodules "
+> +'
 
-> SSH has nothing compared to the gpg trust levels. Your key is either
-> in the allowed signers file or it is not. However even if it is not in
-> the file then the signature might still be "Good" but has no matching 
-> principal to it. To be able to differentiate the two "Good" cases i
-> used the existing gpg trust levels. This way if you set
-> gpg.mintrustlevel = fully then the signatures with no matching key in
-> the allowed signers file will fail to verify. Otherwise they will
-> verify but show a message that no principal matched with this key.
+I'm a bit biased here since I like --recursive better, but let's not
+drag that whole argument up again. I don't find the argument in
+bb62e0a99fc (clone: teach --recurse-submodules to optionally take a
+pathspec, 2017-03-17) convincing enough to have moved such a prominent
+use-case to a longer option name.
 
-Sounds sensible.  Our task is to make sure that readers (not me, who
-have already been spoon-fed the answer by you just now) would reach
-the above understanding by just reading what we put in the
-documentation.
+But, water under the bridge. Aside from that:
 
-Thanks.
+For me a Google search for "git clone --recursive" is ~40k results, but
+"git clone --recurse-submodules". The former links to various
+discussions/docs/stackoverflow answers, often --recurse-submodules isn't
+mentioned at all or as an aside.
+
+I think it's unfortunate that we:
+
+ 1. Conflate whether something shows up in completion v.s. the
+    help. Given its prominence and that "git clone -h" is ~50 lines why
+    not note --recursive there.
+
+ 2. Don't have the completion aware of these aliases, i.e. "git clone
+    --rec<TAB>" before your chance offers a completion of both, that sucks,
+    we should fully complete the non-alias instead.
+
+ 3. Making it PARSE_OPT_HIDDEN "solves" #2 at the cost of hiding it in
+    "git help -h", and now this won't work, but did before:
+
+        git clone --recursi<TAB>
+
+    I.e. even if we didn't want to do #2 *and* wanted to hide it in the
+    usage output surely completing an unmbigous prefix is better, even
+    if it's a hidden option?
+
+Per-se none of this is a blocker or "we must fix this first" for this
+particular change, we have this in many existing cases.
+
+I daresay there's no other alias that's in as wide a use in the wild, so
+we should think about this one particularly carefully though.
+
+It's not fully clear from your commit message which of 1-3 you're aiming
+for, I think it's more of the "discourage its use". 
+
+Sure, fair enough, but PARSE_OPT_HIDDEN is not a 1=1 mapping to that,
+and can often lead to more user confusion.
+
+E.g. the user has used --recursive for years, but can't even find it in
+-h (I also think it's a mistake to have entirely removed it from the
+docs, even if one agrees with its "deprecation" I'd say we should keep
+some "used to be called --recursive" note there).
+
