@@ -2,55 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MSGID_FROM_MTA_HEADER,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MSGID_FROM_MTA_HEADER,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2314CC07E96
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 08:07:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B596C1B08C
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 08:13:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E90F961362
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 08:07:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2389D610D1
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 08:13:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231430AbhGOIKA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jul 2021 04:10:00 -0400
-Received: from mail-eopbgr60050.outbound.protection.outlook.com ([40.107.6.50]:19430
-        "EHLO EUR04-DB3-obe.outbound.protection.outlook.com"
+        id S239079AbhGOIQM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jul 2021 04:16:12 -0400
+Received: from mail-db8eur05on2084.outbound.protection.outlook.com ([40.107.20.84]:4289
+        "EHLO EUR05-DB8-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S229810AbhGOIJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jul 2021 04:09:59 -0400
+        id S234408AbhGOIQK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jul 2021 04:16:10 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mKYgmVMrDoaRVPgaAS4EZWy+PqVyFB/O/Lmm4X6EZsg2opHGQU15+ZWXnsPUIoKeud+jZvY2YVMNSJogJ4lPh8Rrt3mzdnkuZxLa3AwxOXYBsl0gXBKGkjbl0wb+EtsM+wU7kHiXyTPOO3vYAPGhdexe/Xtgtz6IqjwLo2uFEIcF7fXRUy0Ix1c6LrLPzwVIbVJGkzHxpI2CCnm8u/m+Nf1zQCTSs3wrkKyLEwn6jLKLJPCtLWiVuGS2i1WLl/W5pFZozyPeI3WsaA61wE8ypS3ot1NxgFbJZ1BIkUooskIBkcQahT4zqFh1x3BjsBPmBD66rdGf403D6XvdZ5LtEg==
+ b=ccGd9TBn2Z+nV8SEC8bHRigQW9c3ga/osVykunnCnosY/FEf5pNJ9FVqA66nr+S+s749zIzy/ajRlAkYONwno4mz+G92SDUfao+V/VfJiBeZpr5jR2Vsekz92TgqNqnhHnirXk4iB0ta+C8+nF6WxbPNdHDW+AUZePUYP12FXFdIbqTszbGXKjKZM8AHR6PR7s9sqQvAT+wapGYNSDgESP1Aw62N2514kYgxyzLCBek0XOrl/QzHy21djyhSdujn+CLcDqcr0Rc73bDbX4bxfGhtQU+yQ33w8+wzDXbPFs/mPGIo4P5vEqAzvz9JXG4bVZijBJYozy/kzy4nR83H0w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=51tsQLUeZ1+7xVJ0P4mwoYyGJCahDjvkj6tAo498tR4=;
- b=gvCqlnpq3wqrRrY3ZOFv0RxctWwHxX5wSLv2bPubunpwksXlQ20qwr35vZ7RPY0cMEk1Y/Xdax0XJtsmr+3HVXEmE4ZhVJQre/D2KnNZx7byVnOBTdGulD17TETIwcSKkEQWOl4hdz9cOfxffJmOjiGzEtfgMjS2gx2Fdb/T125OXZxwmpSavVFDa8a0xu9BBqYEkrCzCMOZvqjUBmr6cVPqkmP3XpGVL10V6nPNISv4FBNNSjI+QTlML/T9OUNoJAIErl23MaRVTxDtOCKz62xC8kfTze963IOtacma6J33yCFZpT11UgksQHih/skKybriJkwOB1Zw09QX0PnrSA==
+ bh=ErSS/s7/wkNddGzbzfYQNbwR9jMW0ovxYbD9jgUtks8=;
+ b=H+CaE5irz6NH74ZkIhNyoFZYFQ2gyd0DTR7nC4P9PzkoD0SfF4cVlwQMftkOxHUoq7kwLQQ9qL3usIpfKZgfjJJjCQgmYwh94PSErpY0yclbGqGwyZDTlgWFl8UEGUqePz2Q2Lfe3GwuyKr/GHw2ZZkF7eAYwOt0lXMvzG/aNrYSwCO6nXOUqMAEXMq/cEYvaHiwIwSLqE/S4hmjurLEzJuWEb2YxYku/xSS4ZM+eeYqOaKGdois/QkKTeUcRIPOjUeZ18AEhxrB9mEerIbZnnr3m8sYtIvfnFIgZ44tcBooQQp0PHnjyK9UGgK4klm+Ry3cM9MF4HRkLRlmtYQMqg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
  dkim=pass header.d=gigacodes.de; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=campointnet.onmicrosoft.com; s=selector2-campointnet-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=51tsQLUeZ1+7xVJ0P4mwoYyGJCahDjvkj6tAo498tR4=;
- b=ox/QlZPDoo+e8Q57f/OSdpPn44KKhx0lfpmW9uHtZSlzdBFJta97048y7EdvavcAXVhjJ8WFhz9pgiiE7IroIpFd/eOTrGtJz+54LKjGssOCiwWMASPR5lCcmC2dh6Xz4STzn/TsdGSEtQ5+TXfYFRX26L9QyodOsEqnpCuC0Ts=
+ bh=ErSS/s7/wkNddGzbzfYQNbwR9jMW0ovxYbD9jgUtks8=;
+ b=tlKwwVhoO0aW7AcX2k7AuiFy85sPZVuvJRGIPyuEjEmp+mUhZ7f1Mk6K0BBVCXzAG46q0XHAGHdYv8P6FXDJpG1H1hiEP2VAlczYVnpG9GqYOJiiEeIYY+sENygcQybkkO4awcIzrADERVzx4yGZTGg/qUz+GM5T9aMEA24HHHY=
 Authentication-Results: gmail.com; dkim=none (message not signed)
  header.d=none;gmail.com; dmarc=none action=none header.from=gigacodes.de;
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PA4PR10MB4591.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:10c::11) with
+ by PR3PR10MB3850.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:4f::21) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4331.21; Thu, 15 Jul
- 2021 08:07:04 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4308.25; Thu, 15 Jul
+ 2021 08:13:14 +0000
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::d8f3:d5f9:226:e9aa]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::d8f3:d5f9:226:e9aa%4]) with mapi id 15.20.4308.027; Thu, 15 Jul 2021
- 08:07:04 +0000
+ 08:13:14 +0000
 Subject: Re: [PATCH v3 3/9] ssh signing: retrieve a default key from ssh-agent
-To:     Han-Wen Nienhuys <hanwen@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Fabian Stelzer via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
+To:     Junio C Hamano <gitster@pobox.com>,
+        Fabian Stelzer via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         "Randall S. Becker" <rsbecker@nexbridge.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
@@ -61,94 +60,155 @@ References: <pull.1041.v2.git.git.1626092359713.gitgitgadget@gmail.com>
  <pull.1041.v3.git.git.1626264613.gitgitgadget@gmail.com>
  <b84b2812470ea45a85d624ec339f35bb0107493d.1626264613.git.gitgitgadget@gmail.com>
  <xmqqr1g0ve8w.fsf@gitster.g>
- <CAFQ2z_POEE3F_WPAPy4YRRnZONvsg=MOPmti2YT0me+M7eLFvA@mail.gmail.com>
 From:   Fabian Stelzer <fs@gigacodes.de>
-Message-ID: <ddaf5adf-9219-f462-70ee-ce53ac5d3cf9@gigacodes.de>
-Date:   Thu, 15 Jul 2021 10:06:59 +0200
+Message-ID: <b8cad34e-8969-25f5-1b29-30c60cd27e7b@gigacodes.de>
+Date:   Thu, 15 Jul 2021 10:13:13 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
-In-Reply-To: <CAFQ2z_POEE3F_WPAPy4YRRnZONvsg=MOPmti2YT0me+M7eLFvA@mail.gmail.com>
+In-Reply-To: <xmqqr1g0ve8w.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-ClientProxiedBy: FR0P281CA0065.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:49::18) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-ClientProxiedBy: PR0P264CA0121.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:100:1a::13) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  (2603:10a6:102:12e::15)
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from [IPv6:2003:ea:5820:600:5dc9:1fd2:e8fb:a1c8] (2003:ea:5820:600:5dc9:1fd2:e8fb:a1c8) by FR0P281CA0065.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10:49::18) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4352.8 via Frontend Transport; Thu, 15 Jul 2021 08:07:04 +0000
+Received: from [IPv6:2003:ea:5820:600:5dc9:1fd2:e8fb:a1c8] (2003:ea:5820:600:5dc9:1fd2:e8fb:a1c8) by PR0P264CA0121.FRAP264.PROD.OUTLOOK.COM (2603:10a6:100:1a::13) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4331.21 via Frontend Transport; Thu, 15 Jul 2021 08:13:14 +0000
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: dbce65a6-7c44-4c4a-07e9-08d947678852
-X-MS-TrafficTypeDiagnostic: PA4PR10MB4591:
-X-Microsoft-Antispam-PRVS: <PA4PR10MB4591FA6967B59F861B1C45F3B6129@PA4PR10MB4591.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:8273;
+X-MS-Office365-Filtering-Correlation-Id: 2e09f224-e608-405e-df46-08d9476864d8
+X-MS-TrafficTypeDiagnostic: PR3PR10MB3850:
+X-Microsoft-Antispam-PRVS: <PR3PR10MB3850328D3B5C363E0CC77C60B6129@PR3PR10MB3850.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:2201;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: P0iX7aGkv1XgFwlmP3FukpsnuPl/HZiv5T9l2vnH4XcV6IkMVz5sA56++pRiUs6Q6dL6ONWPisaD6b+E3hnX6tUGJzOKbUugmEYRkO1c22cgp5J53vnFPXtc13YZ1DXH+zTU+oeucrcXPmbyNJ991hxYwdAnjkupBEoOMVterYP41nRvYUL4aXOzh79PCiNSkY2XjvfmUvoWPs7ub7dvsBptIm+dBNwSTx2SPWMyz8BXsOSurjXYhQNkoOPPGsvf+ZWLFQTFmFLhwi3++Tj+LmksJY5h91HhR3xNaYunGeRcixfaG1WjJU5itu5uQb6Saq0upWQo0c9rdfoBnCRk2gZ4VZAKZFanbVTrjaw80abFvEt0uJFrhMn1gNo92hXla6zcBFZ3ybEDW89K6YA8g6mEMJLXJVG5QyBZkpefZTRMml474194TKXiYxCemsK9f1kg/8bH6T1h2b63cei9ap+8qkpABClWehxa/rLcNOCuqJuOmt84KIAFqopspn/pcFUjs28X/KUJvkHk1Y3CfMP9KErp33tI6aYB95XirbNtu7GH8QIpS+2Bw7o7GJuuLLCgg/VwuMjJ0Acy1xZiFl5l2tAKBv6VgCp4pmY/27sYjpFeavFIkF3tkgw40bAoU8j+AtVIGBHtzPBIauFuzJwvs+4jGYm6sKF4JdJzw0whaDi4ml9N2mWdhZin+2Bte9nyiBzdL5T3WistLuJzBnjUn0pWOA1s5xe92MSiVU4=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(346002)(376002)(366004)(39830400003)(396003)(136003)(31696002)(53546011)(52116002)(54906003)(86362001)(186003)(83380400001)(38100700002)(66556008)(66476007)(6666004)(4744005)(66946007)(316002)(2906002)(478600001)(5660300002)(31686004)(8676002)(8936002)(6486002)(7416002)(110136005)(4326008)(2616005)(36756003)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: kB0/ssuGUpK7Rq3nQti3IniHkQr6xw92gwRFgE9YOhPRsQ8YzZ3WWjFeUWH7WxA1pad3Ouj1sTJKunBtNnEP5zSs+H70oA5spY7JQ4xpApHWC2+XvJpfrNDpwk04FnVenDbJuzUQafgVjAcv3UCWyr+8QIapw9qwx2c58uy/zOtVGkJUcf5PEA7eKpI+pX3XbiaNW7dXKjgtUxnRslU4JU7VMDrgFy4KZGWJ4cXrN3bs+W3/dy/NOUuMn5ZyiITJt3XC931G1VUm6fewYpw7T19IZ8MhxCUvheSFxtuxMPXSntDwetaKdXjYp/a7w1u0783p4bafTtWulxEttBBCbes8WP/fsjQfsnTwgCf+98rbVoE4nrSC2EQe4GMRzA16hSsw6AaSSzM38Io4KoQAC9ZwLIV6FGFULIuGHLefYMK+Rp9gBM8iBkH4HBAw/iiYaIGf+T5fV3oOPKueD1vxAWT/ViKxGsDHxeValdyZJDZOT44ZV8rNmHCZMTENa/x//VnVlbFcmnZr2ipkiOU2YEceYwEG3X7Tt5M6owF9DfI0lPnpyeYU/CJG5VS8x0UkoDTyBDEJLOqWXVMaO5HDQk02ne6FJfpzxLraL2V0e6hD6xgLr/R+rvQ8tN3vu30iRgtPOMCioOwZMCupDnubT9CZGfyPpkxUtzPzyF5IsmHCA82LdftdjYfnJ4Z9eGIzi/lodf/+BB5cVwiHmq4b35BhFdBHCiR1u0ZBNldDBw+s0geo2WzI2cGVa3PMQ58+xaTfHDDh7ZlZichIWfrplTKmajqKNdE1PGu2zrJ2dUSRUtWkSwSZbMUTceK67Jn/uKdpNjqR6jnaXakhjRkVqw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(396003)(39830400003)(376002)(366004)(136003)(346002)(5660300002)(6486002)(8936002)(38100700002)(7416002)(2616005)(31686004)(54906003)(66574015)(110136005)(86362001)(15974865002)(4326008)(66946007)(66556008)(316002)(66476007)(186003)(8676002)(36756003)(31696002)(2906002)(478600001)(53546011)(52116002)(83380400001)(45980500001)(43740500002);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VTkwcjFxc3Z5emtiRGd0S0twSWlGQit6R0tXQmw0YWxCU05GdGZ4YWI0dklv?=
- =?utf-8?B?NysvRjVrNjBMTFhRNVZLaDRlOWl6N3lFY3RiZDFNMWlvUEpndEVLU0hmcmVP?=
- =?utf-8?B?Z0U2YWhEeXllMlZRVjA3NTV0enJ2bEdpUWJiM1RjZjN6VXhzZ1UrY2Z0bmxE?=
- =?utf-8?B?WVpTeDlZSDd2Mlg1b0FZTHZxbG9IR1VTY3BoWjdNYWZubmZtVTVaUHl4Zzkr?=
- =?utf-8?B?dFdQZWZoTGh3a1lKbWhtcmNka0RBR0o5WmpScy91RnJyT2VMQXh2aDVhb1F0?=
- =?utf-8?B?SXFIcG9lK3JqaTBoK05NcEdiTWQ5bU1iMjJNbzlnOWNrMTNnVkRLUDZkSXVM?=
- =?utf-8?B?Q1N3QitIczJmQTBzSEYrdWNhK3NWTE42RzNraE5DNm1NN0ljaXJmMGs3cFVh?=
- =?utf-8?B?dXM2OWc0d2puRi9relVuVC9zUkhtTFdkbktVQmlNeTdkSVY1TWFKbVJSWGxF?=
- =?utf-8?B?ZjhoSUZxNkpGWURTUWFpdnZ0SC9EbFg2R3dTQ1BFMmdIUG9UVGdMcWRISFZp?=
- =?utf-8?B?V2ZIS1A3TkJCZWYvNGIzNzBzZ2JZbm9ETjN6dFh1eG5vSWttOGNwdWZPRmpL?=
- =?utf-8?B?amtJV1BQbTc3Q3IyMFpPK3lGcUsrbk1lOFhMZVBtOXlVK1VIVGh4Y3F2MGYv?=
- =?utf-8?B?dngzc2tXVFRQZE9CV0szdXpVQS9lVWlZdEJIQ0ZiWStFaG5sR0ltMkRLUVRh?=
- =?utf-8?B?L1Z6NWQrNy9GV2tQRUlHMkhJSVo4dlVNTThtNjZyOFlNemFkUCtONEZDWDJJ?=
- =?utf-8?B?OTA2eWMzT2JXNmRNWXJlejI5RUtQRU0wUnRpL25scW1UaWNBb1VmTE5XajlV?=
- =?utf-8?B?M3Q1Q20vSXlFVHRCWDdEbnFUVUROUEpsZlRjSUs5UVo4dmYrQitjZUt6ZHAx?=
- =?utf-8?B?QUhSUGlKdVdhc3FMWjViVk9scU9hakovLzlJTjI3c0xqUGg3amJwTVNvVGdJ?=
- =?utf-8?B?LzdXZ0FkSXpzSDJPRWEvTnpCVVNOUEE2ZnpWVWtSaTJnRmdROER5S3pxU3hY?=
- =?utf-8?B?cjFwRlFOYjl0QzFPR1FDVFU1U0h4R0pyQVJTdTVIWFFVZkF6ekVUNm1Za2ox?=
- =?utf-8?B?U1VtL2pFaUlaUUFlL1dGQkxPa0p6UktEZjhOU2l1bSs1dlpDc1RXU2ZBRXlW?=
- =?utf-8?B?UnUwUWU3N04rSjhnL21ydmljc3l4YUcreXJ6NWovTERMUm5Gbitnd3RCazls?=
- =?utf-8?B?ODA0QjBPNzRkRFpOY1lZMXpmRk1TZ2hsNm1iOHgwTVNPQWc2NmF5OUxEOU4w?=
- =?utf-8?B?VWVFQS9oQUhRSUdJZG84N01MRG9OU1VlaHRKTkUwZFFRTS8rODAvaUZNZTNw?=
- =?utf-8?B?K09EbU1tSUlESkdKL0dDMGszZDd3K0tnUGFHbmF3YVhmekNnckRPbEV4S2Jt?=
- =?utf-8?B?TjAyV3JNV1FEbWljSDE3VDBGYnBNNTZKTXdtUWtCVUd3UWNDUDJWKzRTNW42?=
- =?utf-8?B?bmhvdXlUcjkyZlRQY3d6MXVHZEhlMUFQRFI2SVI0QytUMklXeUhZL2tIa2la?=
- =?utf-8?B?UHQ1Y0wvZjFQQjJ0eGhKRkxQUFdmenIxZ2JBQXo3WnFaa2RLN2ptWkNjTTQ4?=
- =?utf-8?B?N1c2NXZySHZvVmp4VHo0SWF4R2szWGNRL0tQUFJqemJxckM2M1hMMUJvY1Zr?=
- =?utf-8?B?aVdyb0kvSllNYTRreUI0VHVSUFk2ak5LelFNWDYxTzNNNnpXTk5vK0pxcTRX?=
- =?utf-8?B?WEltRVBQNXZ1cWwxZTdTVXhrbndJM0hybStIOXFRMEhFdnNCZm8rTEMwdEpu?=
- =?utf-8?B?QnhNWWdZRXdMSmduWGd0Mk9NRTBRdkNOTENKc1hOQUU4SXpnaFhDZ1BlTDFq?=
- =?utf-8?B?VlZTbWF3QmlURVkzeUk0SFFZUzluUXJnK2tEUWRQd3hlbHhZRWhJQVV3bVBW?=
- =?utf-8?Q?27U/ZbdvmIK4e?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SFVIeDNtU3pCVGZBbllDSmdYZUpud00rY1JXSFRhR0xIVVZOcVNMOFZCckVo?=
+ =?utf-8?B?SmE1UWpQM2ZqSHpaNkZyeXdRc2xIQllUTVpHNm5tVythRlBpV3BPZ3phWjVI?=
+ =?utf-8?B?R1lsRTE2SW52cHBrNGJxM05QcEFNMkRMajBIZGZpYlg3U1RXdjV6RFR5UTZz?=
+ =?utf-8?B?dFA2VHUrcURmUHgrN2YvZng2b3Fha1JXdzBiN2xrV1ZUd0JVRmdRRU53cDVY?=
+ =?utf-8?B?Vm1Fem5jbGIxRCtxTGNRMTE3WWdoeEIzU0g1UUFWc2FlWk9ndkFkK3NpbmlD?=
+ =?utf-8?B?aXc0enlZcEt0T1dHTEtQSnpPbEE1MkdhbTEzVVdLSnFWUkZQS0hyZEV2d0l6?=
+ =?utf-8?B?ZGlEb1AySXNNQmM1bndDUy9MUndreDkycU03N0s3MUdwbExIbklqREtRN2VU?=
+ =?utf-8?B?ZFZxbGlIV29aMDY5WnptR1lMdVBmNU5LaCtEcnlBWlVEb1BEODU4Q1MyY2p3?=
+ =?utf-8?B?WHJxUldPcVBScGJPSnNjV2tHUHhoTTN4bFFSalFUSlJWL09iVEg2RzQveXhk?=
+ =?utf-8?B?ZFFJemsvSk91OGpvUVFrRFZWTVE0b0JKWjhXRHFLcWlzNGlCcTZoOEFlL29N?=
+ =?utf-8?B?a3FMQXhOT3owNmNyYi9uL0ljcThsVGp4YUk0SlM3NDV3SDVMa1ZMaE9xZDZY?=
+ =?utf-8?B?MDdyOWxLQzVyVWoxVEJKdmxhSGtaNVB6SnVyZDNEenA1NFAvbHRwczkxZWdI?=
+ =?utf-8?B?QXJQQVREKzl3RzB5dVRWSEQ3OVBBNVJPZml5U01mOEEyS0p1Zy9pUHBoK3pW?=
+ =?utf-8?B?bmorRU9BbmVxdXlnQnZSdlZBZUp0aVdncVdlYnpPb1ZPQnhTSXRVZVNkQmlS?=
+ =?utf-8?B?QkxtYnh0K3hQTDdRSVZScVViaWZqdlFXRzdDYTIxOE1kUXA0dnFlNUJsNnJr?=
+ =?utf-8?B?dVFjMUxDQzRGTlN0Z2phMmhSOTgwOFpSb1lpM1JaWkR1WFkxNmhpRDBVTHh6?=
+ =?utf-8?B?L3VRWVRYYUpNQ0ttOUFDaTZ3RzhKbWcvTWVWVjFhc3plSFdIR1ByMExpSFRO?=
+ =?utf-8?B?WmhuZUw4c1kxMk5LdkNhOWRZWkFETjlqNGZ5a0wrRDlzME0xdWNuNzF4ZE1J?=
+ =?utf-8?B?NzE2dE1sVW5FSSt5VFQ2VSsvTzlpa2tSa0xOZ3VqaVR4N0s0cDdNYlY4ZFQw?=
+ =?utf-8?B?elBoTzZCTGlzUlNyc282RUVMa204TENlci9JWFdpZUJremt2Q0NhT01nY2ll?=
+ =?utf-8?B?d3RaU0M0aGVQMVFNRmRnVHlYUktWK25HZGdJSmNhRkFVRXFGVkc2RG9SYzJi?=
+ =?utf-8?B?WWRiaEtvZm9QZnYxdEx2cWk3R3AvSUpOL2xyblhubUQ1MG45N09ESGVNa2VY?=
+ =?utf-8?B?bVlMYStyb2I4bDNMaXFMbmRoZ08rZDFOZVFPVjhOc3NiVlZDUmVZK1o5akhH?=
+ =?utf-8?B?U0F4bDVnOVB0d21uck1tWGRrb0JQZFJXUjE0Q2NyT0hJeE1XckJMVVYvQjBV?=
+ =?utf-8?B?OUV6Y1dsRXNJV3RJMlZvUUx3TkhLMHlhQW5MQnIvL3F6UTltY2wzcGtVWUJw?=
+ =?utf-8?B?YnRucmNPTjhKcm83Y3M2YlhLNXRJTjdESFF3UkwzZTBpWHFCdXhTRUFlOFMx?=
+ =?utf-8?B?a0cyeUJQaFUxY2FIeCs5cFNCRnJ5M3NqY0dYbDF4ZWhqaFRHbHdWUi9OLy9V?=
+ =?utf-8?B?enozWWVJMHc2U2NNWE9neWpRN09kVUNDRU5EaERNN3VZanZEamJ5OTNUWW81?=
+ =?utf-8?B?U29HY0xHbzIrT0dHZnR2SFF4VXM4VTZKRVFadTVyNVNydnM2d0RiU3NYTkl0?=
+ =?utf-8?B?dkFNNXYyTHducHlDS2FLNHdObzM4Tzd1ZDRBOUhBSXJXRkltc09oNWw3SFMz?=
+ =?utf-8?B?ZVNtblZFK0huYmtOcGdVZDZGa2RGV3ZlWWNGRlo2Q0V6MWNXYnd2RVdFVVlT?=
+ =?utf-8?Q?KXGzzSAco4eCX?=
 X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: dbce65a6-7c44-4c4a-07e9-08d947678852
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2e09f224-e608-405e-df46-08d9476864d8
 X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jul 2021 08:07:04.5380
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jul 2021 08:13:14.4697
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zFgZ4/ebWPvAiJACe/K64GWy7+DajfkPMhxF2O7Vy9R3+LU6S1LxhnLum49aWp9B2FXmG2zAxVi99MpQ7B3M/ewdA7CSobxzrRUGieLFU3M=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR10MB4591
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2oPghfQzvx+a/sTm6IReT6KM1uDToW+2Mjy8cJhwVKPzEa4kv2vYefJMU+lbx8ywz6JamOlNUCCU9N4G7YonPJj8cV4eir4CF+3M5bi1F2I=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB3850
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 14.07.21 22:20, Junio C Hamano wrote:
 
-On 15.07.21 09:49, Han-Wen Nienhuys wrote:
-> On Wed, Jul 14, 2021 at 10:20 PM Junio C Hamano <gitster@pobox.com> wrote:
->>> calls ssh-add -L and uses the first key
->>> +/* Returns the first public key from an ssh-agent to use for signing */
->>> +static char *get_default_ssh_signing_key(void) {
->> Style.  Open and close braces around a function sit on their own
->> lines by themselves.
-> I recommend using clang-format (there is a config file checked into
-> the tree) which handles most formatting conventions automatically.
-Thanks a lot.
-This should really be in the in the CodingGuidelines and the 
-MyFirstContribution docs.
+> "Fabian Stelzer via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> From: Fabian Stelzer <fs@gigacodes.de>
+>>
+>> calls ssh-add -L and uses the first key
+> Documentation/SubmittingPatches::[[describe-changes]].
+>
+>> Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
+>> ---
+>>   gpg-interface.c | 17 +++++++++++++++++
+>>   1 file changed, 17 insertions(+)
+>>
+>> diff --git a/gpg-interface.c b/gpg-interface.c
+>> index 3c9a48c8e7e..c956ed87475 100644
+>> --- a/gpg-interface.c
+>> +++ b/gpg-interface.c
+>> @@ -467,6 +467,23 @@ int git_gpg_config(const char *var, const char *value, void *cb)
+>>   	return 0;
+>>   }
+>>   
+>> +/* Returns the first public key from an ssh-agent to use for signing */
+>> +static char *get_default_ssh_signing_key(void) {
+> Style.  Open and close braces around a function sit on their own
+> lines by themselves.
+>> +	struct child_process ssh_add = CHILD_PROCESS_INIT;
+>> +	int ret = -1;
+>> +	struct strbuf key_stdout = STRBUF_INIT;
+>> +	struct strbuf **keys;
+> Whose releasing the resource held by "keys" when we return?
+>
+>> +	strvec_pushl(&ssh_add.args, "ssh-add", "-L", NULL);
+>> +	ret = pipe_command(&ssh_add, NULL, 0, &key_stdout, 0, NULL, 0);
+> I often load about half a dozen keys to my ssh-agent so "ssh-add -L"
+> will give me multi-line output.  I know you wrote "the first public
+> key" above, but that does not mean users who needs to have multiple
+> keys can be limited to use only the first key for signing.  There
+> should be a way to say "I may have many keys for other reasons, but
+> for signing I want to use this key, not the other ones".
+I will make the commit message clearer. This function only provides a 
+default key in case no key is configured in user.signingkey.
+If you set user.signingkey to a public key the correct private key from 
+your agent will be used for signing.
+>
+>> +	if (!ret) {
+>> +		keys = strbuf_split_max(&key_stdout, '\n', 2);
+> Let's not use strbuf_split_*() that is a horribly wrong interface.
+> You do not want a set of elastic buffer after splitting.  You only
+> are peeking the first line, no?  You are leaking keys[] array and
+> probably keys[1], too.
+>
+> 	eol = strchrnul(key_stdout.buf, '\n');
+> 	strbuf_setlen(&key_stdout, eol - key_stdout.buf);
+>
+> or something along that line, perhaps?
+I have changed it to what you suggested. I'm always a bit hesitant to 
+use arithmetic with string pointers.
+I know its simple and efficient, but IMHO can be hard to read.
+>
+>> +		if (keys[0])
+>> +			return strbuf_detach(keys[0], NULL);
+>> +	}
+>> +
+>> +	return "";
+>> +}
+>>   const char *get_signing_key(void)
+> Missing blank line after the function body.
+>
+>>   {
+>>   	if (configured_signing_key)
 
-Especially the clang-format-diff line from its help
-"git diff -U0 --no-color --relative HEAD^ | clang-format-diff -p1 -i"
-is incredibly useful. Otherwise people will reformat all the things ^^
+-- 
+GIGACODES GmbH | Dr. Hermann-Neubauer-Ring 32 | D-63500 Seligenstadt
+www.gigacodes.de | fs@gigacodes.de
+Phone +49 6182 8955-114 | Fax +49 6182 8955-299 |
+HRB 40711 AG Offenbach a. Main
+Geschäftsführer: Fabian Stelzer | Umsatzsteuer-ID DE219379936
+
