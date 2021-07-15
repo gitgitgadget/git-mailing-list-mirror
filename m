@@ -7,260 +7,236 @@ X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDF13C636C9
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 19:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C197BC636C8
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 19:18:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A097860FF4
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 19:08:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC226613D4
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 19:18:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243585AbhGOTLl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jul 2021 15:11:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60518 "EHLO
+        id S243516AbhGOTVL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jul 2021 15:21:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243608AbhGOTJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jul 2021 15:09:58 -0400
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E794C0613EF
-        for <git@vger.kernel.org>; Thu, 15 Jul 2021 11:59:34 -0700 (PDT)
-Received: by mail-oo1-xc35.google.com with SMTP id e203-20020a4a55d40000b029025f4693434bso1790957oob.3
-        for <git@vger.kernel.org>; Thu, 15 Jul 2021 11:59:34 -0700 (PDT)
+        with ESMTP id S243821AbhGOTU1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jul 2021 15:20:27 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A7A3C05BD33
+        for <git@vger.kernel.org>; Thu, 15 Jul 2021 12:04:51 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id w8-20020a0568304108b02904b3da3d49e5so7322412ott.1
+        for <git@vger.kernel.org>; Thu, 15 Jul 2021 12:04:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=xjAaIAgXF+0ODPyX5Wjxz6uThUWYeDSMiFyHtHIYe/M=;
-        b=UaxTTZcEBuRpLANzfYnND139PlDoEEJfVXe5NhS7bqzcGyzCUfQ0VtYozjqIRy37EW
-         r3OrVYtDeGqQwzsjgDwh31vxyhDZvIH2cY+sR7+nlOF5pK11DYTIAKMwJF1QLq0kNSOK
-         sel86J9UVPYj6ODpsk2gsrq1jp6W1k4XXeD/YA3RsTFmdXjrv03F2bx0wwtE9kF9jji8
-         y3mzFAZVnMNrywf7+A2bvaycaUhFv8ectx1WOWjt/jax5LYEejcXpaO1hxA3pUrCDqRI
-         kCj12DUrJOz9/HVnZhh8bA09zfaFhNarqn92TjkBAtYQWbFQiux5j91bjABfViUxo3vA
-         eeeg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mIXZPnUrxj8C09sdU/kQWy861BxHFP1HVFJ436NxdWs=;
+        b=uZZR3PNVvzgixchBTZXXsu4mXwj5y4dtSiVQkLX+0MkAxKEx5Q2TvJ4hPL6ThQus3U
+         S4pHCts6EllOPQcT7ZAha4BekbJ9uVuafM4I1ynRjZ56brqsr6LvC78aGmS9XgaCymjV
+         wOmYFamVwPDpZ54TfNX3mTkwnj5HUua17+TKTRAspoRemqycOvilMpXwG3akDXN4RCQP
+         1C+MuT8fyOGByICpQbTTmaI7jLnvTxK8cboP8MAFAegGXQNMVNsisKZkgPGDrqmrr17D
+         yx6P49mClrUUgcWr2vhh0yuzlsKONemxVc3MRbUru2GZRRK+hapZH6Uve062I68VA0th
+         XhOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=xjAaIAgXF+0ODPyX5Wjxz6uThUWYeDSMiFyHtHIYe/M=;
-        b=Yue63zlU4N6M6BD1gp4bOVXorbdkzMXTiIGVZzQX4+MixZQ4Scilnw2AHIPoGAis+P
-         EbZleqR4Q8+8LrjFqIp5hht3kXM5MzelzyHV68eGFxVDGxC3AlAAU7cnPax22no77h+y
-         5jXHZORUi8LKPY434OL2KUB2RM94CsCoUgj8+LHgCaRyBG8xdiwg5PUi4nGFMAUJQ7/S
-         UzehgY1P0oP5L8jjEz3pHeEj/Ly3zYD4SVtW2K80j1VGGwl4rN/foFsUJydZk4RoUeNT
-         eH+DYK/fg79h6+ozdVLh9rz2YFTOVg1hOI1nNRm2DWyT1fwiOpLUB4DcBzm9Y2e64n/2
-         BQzw==
-X-Gm-Message-State: AOAM5331HLrpW2JzBMMSMYEaH/5o9lxnnfb+G0cyBnD17WbMRzaPjizE
-        uzRU/Rg7cgscX+URYKEBw7Q=
-X-Google-Smtp-Source: ABdhPJwXwkbE91w9tvc/anH9dgwTv0pj5NjmWtCR03WK/TILzRVPAWU8obO70LCSRgCnCkz8Kds7rQ==
-X-Received: by 2002:a4a:55cd:: with SMTP id e196mr4575095oob.2.1626375573928;
-        Thu, 15 Jul 2021 11:59:33 -0700 (PDT)
-Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id 61sm1207303oth.17.2021.07.15.11.59.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jul 2021 11:59:33 -0700 (PDT)
-Date:   Thu, 15 Jul 2021 13:59:31 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Luke Shumaker <lukeshu@lukeshu.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <60f0859399369_519c2083c@natae.notmuch>
-In-Reply-To: <87bl74zdtb.fsf@evledraar.gmail.com>
-References: <20210710234629.17197-1-felipe.contreras@gmail.com>
- <20210714202344.614468-1-felipe.contreras@gmail.com>
- <20210714202344.614468-2-felipe.contreras@gmail.com>
- <87bl74zdtb.fsf@evledraar.gmail.com>
-Subject: Re: [PATCH v3 1/1] completion: graduate out of contrib
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mIXZPnUrxj8C09sdU/kQWy861BxHFP1HVFJ436NxdWs=;
+        b=qJd0Lb36xMYWFsOCJb3ADIha6TQJEky/URLIqxvrn3SfvdqK2L2GFtG98Mkyp6QgC3
+         +DyBmINzWIvrd81RwNxrRWkoH43o1HfBR1ONs4l8Bj+YbI/2umdBlhMMG0Rk29GhwZyz
+         K8zFWyARgD/ITjvXJE0vTVlfK0rMuxwt9zTGOnGGJxFNKLn4/g7NlUAdapy52NZgU0bq
+         1ILziWVocpDm7dZVZplbxaQO76d4Vwy9eaJTu/jEWDzHdejIY/+6IhhTr5TnL335+SSi
+         hcmoVdlUKPJWYLMwZldtwzrcY+fCIaysV+62x45apEdO5mEcv/UJzgktPWpQ5WREeDIO
+         p3Xw==
+X-Gm-Message-State: AOAM5323JlAYtRlKNCuUizQbpwoZISCTSzqwLh60dFSyreIBx+L4Pnzs
+        KGgTV5smZQD13Yn0RMSk2C5GB3zmL4XUtRDj2N0=
+X-Google-Smtp-Source: ABdhPJyfRYVVBV0QKYl2cvmZPnP0ISz5f95JWblkkvWhzlNZ9ehvwx0tpgt8yXvEfUtZbNOU6ibcwL/E7kdT2Kha2V4=
+X-Received: by 2002:a9d:5a8:: with SMTP id 37mr5006790otd.345.1626375889795;
+ Thu, 15 Jul 2021 12:04:49 -0700 (PDT)
+MIME-Version: 1.0
+References: <pull.1047.git.git.1626316849.gitgitgadget@gmail.com>
+ <3c07ce978caa832b08c6bef1c48c061e41a6fd0b.1626316849.git.gitgitgadget@gmail.com>
+ <xmqq7dhrtrc2.fsf@gitster.g>
+In-Reply-To: <xmqq7dhrtrc2.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 15 Jul 2021 12:04:38 -0700
+Message-ID: <CABPp-BExWMSFr7CQskjKVhr5fiWCnxoaN_RaJ2Yir+36aiyBjQ@mail.gmail.com>
+Subject: Re: [PATCH 3/5] pull: handle conflicting rebase/merge options via
+ last option wins
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Son Luong Ngoc <sluongng@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Wed, Jul 14 2021, Felipe Contreras wrote:
+On Thu, Jul 15, 2021 at 10:33 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > diff --git a/Documentation/config/pull.txt b/Documentation/config/pull.txt
+> > index 54048306095..e70ed99e408 100644
+> > --- a/Documentation/config/pull.txt
+> > +++ b/Documentation/config/pull.txt
+> > @@ -7,12 +7,13 @@ pull.ff::
+> >       line). When set to `only`, only such fast-forward merges are
+> >       allowed (equivalent to giving the `--ff-only` option from the
+> >       command line). This setting overrides `merge.ff` when pulling.
+> > +     Incompatible with pull.rebase.
+>
+> This update may mean well, but I sense that the description needs to
+> be tightened up a bit more.  Unless you mean to say that I am not
+> allowed to say "[pull] rebase=no" when I set "[pull] ff", that is.
+>
+> Or do you mean pull.ff=only is incompatible with any setting of
+> pull.rebase?
+>
+> Or do you mean pull.ff=only is incompatible with any setting of
+> pull.rebase other than false?
+>
+> Or do you mean any setting of pull.ff is imcompatible with any
+> setting of pull.rebase other than false?
+>
+> (You do not have to answer---the above questions just demonstrate
+> that the description is unnecessarily loose).
 
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -532,6 +532,7 @@ sharedir =3D $(prefix)/share
-> >  gitwebdir =3D $(sharedir)/gitweb
-> >  perllibdir =3D $(sharedir)/perl5
-> >  localedir =3D $(sharedir)/locale
-> > +bashcompdir =3D $(sharedir)/bash-completion/completions
-> >  template_dir =3D share/git-core/templates
-> >  htmldir =3D $(prefix)/share/doc/git-doc
-> >  ETC_GITCONFIG =3D $(sysconfdir)/gitconfig
-> > @@ -2015,6 +2016,7 @@ bindir_relative_SQ =3D $(subst ','\'',$(bindir_=
-relative))
-> >  mandir_SQ =3D $(subst ','\'',$(mandir))
-> >  mandir_relative_SQ =3D $(subst ','\'',$(mandir_relative))
-> >  infodir_relative_SQ =3D $(subst ','\'',$(infodir_relative))
-> > +sharedir_SQ =3D $(subst ','\'',$(sharedir))
-> >  perllibdir_SQ =3D $(subst ','\'',$(perllibdir))
-> >  localedir_SQ =3D $(subst ','\'',$(localedir))
-> >  localedir_relative_SQ =3D $(subst ','\'',$(localedir_relative))
-> > @@ -2025,6 +2027,7 @@ htmldir_relative_SQ =3D $(subst ','\'',$(htmldi=
-r_relative))
-> >  prefix_SQ =3D $(subst ','\'',$(prefix))
-> >  perllibdir_relative_SQ =3D $(subst ','\'',$(perllibdir_relative))
-> >  gitwebdir_SQ =3D $(subst ','\'',$(gitwebdir))
-> > +bashcompdir_SQ =3D $(subst ','\'',$(bashcompdir))
-> >  =
+Fair enough.
 
-> >  SHELL_PATH_SQ =3D $(subst ','\'',$(SHELL_PATH))
-> >  TEST_SHELL_PATH_SQ =3D $(subst ','\'',$(TEST_SHELL_PATH))
-> > @@ -3112,6 +3115,13 @@ quick-install-man:
-> >  quick-install-html:
-> >  	$(MAKE) -C Documentation quick-install-html
-> >  =
+> >  pull.rebase::
+> >       When true, rebase branches on top of the fetched branch, instead
+> >       of merging the default branch from the default remote when "git
+> >       pull" is run. See "branch.<name>.rebase" for setting this on a
+> > -     per-branch basis.
+> > +     per-branch basis.  Incompatible with pull.ff.
+>
+> Likewise.
+>
+> I think it technically is OK to say "only ff update is allowed" or
+> "ff update is allowed when able" while saying pull.rebase=yes.
+>
+>  - For those who say ff=only, the actual value of pull.rebase would
+>    not matter (i.e. the integration immediately finishes by updating
+>    to what was obtained from the upstream because there is no new
+>    development on our own on top of theirs to either replay or
+>    merge).
+>
+>  - For those who merely allow ff, an update may fast-forward even
+>    when pull.rebase is set to true (or any non-false value), while
+>    we'll replay our own development on top of theirs when their
+>    history is not descendent of ours.
+>
+> So I do not see need to declare these combinations "incompatible".
+> But perhaps I am missing some subtle cases?
 
-> > +install-extra: install-completion
-> > +
-> > +install-completion:
-> > +	$(INSTALL) -D -m 644 extra/completion/git-completion.bash '$(DESTDI=
-R_SQ)$(bashcompdir_SQ)'/git
-> > +	$(INSTALL) -D -m 644 extra/completion/git-prompt.sh '$(DESTDIR_SQ)$=
-(sharedir_SQ)'/git-core/git-prompt.sh
-> > +	$(INSTALL) -D -m 644 extra/completion/git-completion.zsh '$(DESTDIR=
-_SQ)$(sharedir_SQ)'/zsh/site-functions/_git
-> > +
-> These are missing a .PHONY target (like the other install-* targets).
+Let me ask two questions:
 
-All right.
+1. When is it beneficial for users to set both pull.ff and pull.rebase?
+2. Is it harmful to users for us to allow both to be set when we will
+just ignore one?
 
-> The bash-completion target corresponds to what I've got in Debian's git=
+I believe the answer to (1) is "never", and the answer to (2) is "yes".
 
-> package, but not the prompt:
->     =
+For the second question in particular, I can think of two example cases:
 
->     $ dpkg -L git|grep -e completion -e prompt
->     /etc/bash_completion.d
->     /etc/bash_completion.d/git-prompt
->     /usr/lib/git-core/git-sh-prompt
->     /usr/share/bash-completion
->     /usr/share/bash-completion/completions
->     /usr/share/bash-completion/completions/git
->     /usr/share/bash-completion/completions/gitk
-> =
+2a) Users start with pull.ff=only, perhaps suggested by someone else
+and left in their config for a long time.  When users hit a case that
+can't fast-forward and they either ask for help or find a post on
+stack overflow that suggests setting pull.rebase=true, they do so and
+then get no warning that the setting they just added is being ignored.
 
-> I've got no idea what we should pick by default though, maybe what you
-> have is more standard.
+2b) Perhaps users start with pull.rebase=true (suggested by a
+colleague and forgot about it as they are more of a tester than a
+developer and thus usually only see fast-forwards).  Then at some
+point they need to function as an integrator, and they read the docs
+and determine that pull.ff=false should do what they want to create
+merge commits.  But then they get shocked that they've rebased public
+commits (and perhaps also pushed them out) when they wanted merges.
+Our docs have pretty clearly stated that pull.ff=false and --no-ff
+create merges.
 
-git-prompt.sh is not really part of the completion stuff, so I don't
-think the location Debian chose is correct. At some point in time they
-were together, so perhaps that why they chose the same location.
+Additionally, pull.rebase=interactive seems like a case that interacts
+poorly with pull.ff.  It may be that if you disagree that pull.rebase
+and pull.ff are more generally incompatible, then we may still need to
+micro-document individual incompatibilities.  (And does that list grow
+and get confusing?)
 
-Generally scripts and other shared data belongs in /usr/share.
+> > diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+> > index 5c3fb67c014..03e8694e146 100644
+> > --- a/Documentation/git-pull.txt
+> > +++ b/Documentation/git-pull.txt
+> > @@ -121,6 +121,9 @@ When false, merge the current branch into the upstream branch.
+> >  +
+> >  When `interactive`, enable the interactive mode of rebase.
+> >  +
+> > +Note that these flags are incompatible with --no-ff and --ff-only; if
+> > +such incompatible flags are given, the last one will take precedence.
+> > ++
+>
+> I am not sure about these, either.  Again, --ff-only (whether it is
+> combined with --rebase or --rebase=no) would mean that the operation
+> would fail when we have our own development on top of their history,
+> and we repoint the tip of our history to theirs when we do not.
+>
+> We see "--no-ff" is explained to "always create an unnecessary extra
+> merge", bit I am not sure it is the right mental model to apply when
+> the user prefers rebasing.  The merge workflow is to treat our
+> history as the primary and merging theirs in, so when theirs is a
+> descendant (i.e. we have no new development of our own), some people
+> may want to mark "we were there before we updated from them" with an
+> extra merge.  Without --no-ff, the resulting history would be quite
+> different in the merge workflow if you have or do not have your own
+> development.  But the rebase workflow is to treat their history as
+> the primary and replay our own development on top of theirs, and the
+> shape of the resulting history would be the same whether you have
+> your own development on top of theirs.  We start from their tip and
+> then replay our own development on top (which could be an empty
+> set), and there is nothing "--no-ff" would need to do differently to
+> keep the resulting history similar to cases where we do have
+> something of our own.  IOW, "--no-ff" becoming a no-op in a "rebase"
+> workflow is a natural consequence, and there is no strong reason to
+> say it is incompatible.
 
-> Also why /git and /_git for bash and zsh (looks good) but /git-prompt
-> instead of /git-prompt.sh?
+I think you're overlooking a variety of ways this could harm the user.
 
-Probably because it was split from 'git'.
+But first let me check if I understand you correctly:  I think you're
+suggesting that
+  * if --ff-only is given along with any --rebase[=*] flags, then we
+silently ignore the --rebase[=*] flags.
+  * if --no-ff is given along with any --rebase flag other than
+--rebase=false, then we silently ignore --no-ff.
 
-> >  ### Maintainer's dist rules
-> > diff --git a/contrib/completion/git-completion.bash b/extra/completio=
-n/git-completion.bash
-> > similarity index 100%
-> > rename from contrib/completion/git-completion.bash
-> > rename to extra/completion/git-completion.bash
-> > diff --git a/contrib/completion/git-completion.zsh b/extra/completion=
-/git-completion.zsh
-> > similarity index 100%
-> > rename from contrib/completion/git-completion.zsh
-> > rename to extra/completion/git-completion.zsh
-> > diff --git a/contrib/completion/git-prompt.sh b/extra/completion/git-=
-prompt.sh
-> > similarity index 100%
-> > rename from contrib/completion/git-prompt.sh
-> > rename to extra/completion/git-prompt.sh
-> > diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> > index cb057ef161..32601b755d 100755
-> > --- a/t/t9902-completion.sh
-> > +++ b/t/t9902-completion.sh
-> > @@ -36,7 +36,7 @@ complete ()
-> >  GIT_TESTING_ALL_COMMAND_LIST=3D'add checkout check-attr rebase ls-fi=
-les'
-> >  GIT_TESTING_PORCELAIN_COMMAND_LIST=3D'add checkout rebase'
-> >  =
+Let me ask the same two questions as for the config:  Does it benefit
+the users to allow them to specify both flags?  Does it hurt some
+users, especially if undocumented that one of the flags will be
+ignored?
 
-> > -. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash"
-> > +. "$GIT_BUILD_DIR/extra/completion/git-completion.bash"
-> >  =
+I think the same usecases from the config settings apply, though the
+fact that both flags are present simultaneously on the command line at
+least makes it less problematic in the case of --ff-only (users will
+more quickly discover why their --rebase=<whatever> flag was ignored).
+But there's an additional reason why treating --no-ff as a no-op is
+harmful when --rebase is present:
 
-> >  # We don't need this function to actually join words or do anything =
-special.
-> >  # Also, it's cleaner to avoid touching bash's internal completion va=
-riables.
-> > @@ -2383,14 +2383,14 @@ test_expect_success 'git clone --config=3D - =
-value' '
-> >  test_expect_success 'sourcing the completion script clears cached co=
-mmands' '
-> >  	__git_compute_all_commands &&
-> >  	verbose test -n "$__git_all_commands" &&
-> > -	. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
-> > +	. "$GIT_BUILD_DIR/extra/completion/git-completion.bash" &&
-> >  	verbose test -z "$__git_all_commands"
-> >  '
-> >  =
+git rebase has a --no-ff flag (a synonym for --force-rebase).  Some
+users may intend for git pull --rebase --no-ff to run `git fetch
+origin && git rebase --no-ff FETCH_HEAD`.  The fact that --no-ff will
+be ignored and sometimes results in a fast-forward when the user
+explicitly requested no fast forward seems buggy.
 
-> >  test_expect_success 'sourcing the completion script clears cached me=
-rge strategies' '
-> >  	__git_compute_merge_strategies &&
-> >  	verbose test -n "$__git_merge_strategies" &&
-> > -	. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
-> > +	. "$GIT_BUILD_DIR/extra/completion/git-completion.bash" &&
-> >  	verbose test -z "$__git_merge_strategies"
-> >  '
-> >  =
+I thought this was the biggest hole in my proposal: there is both a
+git merge --no-ff and a git rebase --no-ff, and they avoid
+fast-forwards in different ways with different results.  It _might_ be
+beneficial to allow both to be triggered directly from the pull
+command.  However, allowing both has some backward compatibility
+problems because (1) --no-ff is documented as making a merge, and (2)
+people could have pull.rebase=true set and forget about it and then
+get surprised when they add --no-ff to the command line and get a
+rebase --no-ff (or even a plain rebase without --no-ff) rather than
+the documented merge --no-ff.  I think the split config/parameters of
+git pull make it really hard for us to determine whether users intend
+to get a merge --no-ff or rebase --no-ff.
 
-> > @@ -2399,7 +2399,7 @@ test_expect_success 'sourcing the completion sc=
-ript clears cached --options' '
-> >  	verbose test -n "$__gitcomp_builtin_checkout" &&
-> >  	__gitcomp_builtin notes_edit &&
-> >  	verbose test -n "$__gitcomp_builtin_notes_edit" &&
-> > -	. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
-> > +	. "$GIT_BUILD_DIR/extra/completion/git-completion.bash" &&
-> >  	verbose test -z "$__gitcomp_builtin_checkout" &&
-> >  	verbose test -z "$__gitcomp_builtin_notes_edit"
-> >  '
-> >
-> > diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-> > index bbd513bab0..784e523fd4 100755
-> > --- a/t/t9903-bash-prompt.sh
-> > +++ b/t/t9903-bash-prompt.sh
-> > @@ -10,7 +10,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> >  =
-
-> >  . ./lib-bash.sh
-> >  =
-
-> > -. "$GIT_BUILD_DIR/contrib/completion/git-prompt.sh"
-> > +. "$GIT_BUILD_DIR/extra/completion/git-prompt.sh"
-> >  =
-
-> >  actual=3D"$TRASH_DIRECTORY/actual"
-> >  c_red=3D'\\[\\e[31m\\]'
-> =
-
-> It's more of a "for bonus points", but a nic way to round-trip this
-> would be to make this work with GIT_TEST_INSTALLED.
-> =
-
-> I.e. source these relative to GIT_EXEC_PATH, not $GIT_BUILD_DIR, I thin=
-k
-> that just sourcing them as e.g.:
-> =
-
->     . git-completion.bash
-> =
-
-> But the GIT_TEST_INSTALLED case is tricker, maybe we'd need to add a
-> "git --share-path" :(
-
-Yes, we would need --share-path, and perhaps GIT_SHARE_PATH, and so on.
-
-Might make sense for a future patch.
-
--- =
-
-Felipe Contreras=
+I think silently ignoring and not even documenting these pitfalls is
+problematic.  We should at least document them.
