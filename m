@@ -2,122 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26FC0C636C8
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7234C636C8
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 18:02:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03572613C7
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 17:46:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C174261360
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 18:02:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235390AbhGORtc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jul 2021 13:49:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42612 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232764AbhGORtc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jul 2021 13:49:32 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEE2AC06175F
-        for <git@vger.kernel.org>; Thu, 15 Jul 2021 10:46:37 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id l26so7590841oic.7
-        for <git@vger.kernel.org>; Thu, 15 Jul 2021 10:46:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=CQsj2FjHoiW/u9WKjx5w2gE9YfKyIPg2kVGR+ddJ/B4=;
-        b=QiD1N4XxZIjFU4N4ZiFZMH6FxBLkT4xNOne8uqFJmTNUxSI7phJ6adcAYgzo5tuK12
-         GBWpKJhxEvbOB4tyvYdxQNYp9hr/Lznqqfh73SV5Z7drvbQjip9TB40nDrpvozFBno+f
-         bUHWpVKTvTIXttBGT2DfzwDUuPj3ZHmYSB/isqD7sm63cvpf6ywi3t+KqrxuTAKn1GH0
-         x++zSPpBQY7kxXpnqmNrWndmj4ATuF4WH+sBE7Wfm/TqsM5A8NK5jqlRcyFFll6xizi7
-         R3L1tzH0r+RTHYwlfFk98mFLzhk3GNnDblNvs9Q0uOPbeTnlOR/kZ9pz4MesxzIKh74c
-         Elhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=CQsj2FjHoiW/u9WKjx5w2gE9YfKyIPg2kVGR+ddJ/B4=;
-        b=WdHRuTQ6QgtDcQBgr+44W5N/wgTd1kWddANDlO+lck3f++XdwM+ktUrKJa0ypLZQl7
-         mD+tkGrm+xGMLmk6IHe6ndEGATjWIpek1s0B2ZBNgm4NMQJwCM+XbRI7dmZs40J4GKck
-         z2xlmBSdRpgo56aQxaOdZ++r71HRxR7Ge7vOqifTjSSpVwYbOqIR+jwQ1xCoXF3jBQl4
-         zuAv5FvGdpjS2KjFE1VvpIDIzrZ3dK2Jy5fr/iX3SJCeYb827wvoszn1l2cnPSm1zBAl
-         Jkgm0yUWDCFmP3MRTWKfLXbg9THp8j6aB/DYqj0b9mAv6RbtK2bdYZcWB6V68pKULPdf
-         r3Ew==
-X-Gm-Message-State: AOAM530RMoWNoTpwxxK1L2v8mO6+2gipNa1quuRrvqtLMdqGnnaXsqlf
-        OMgAE18mSKql3jfaQfG3AC3dONDK9kmgvw==
-X-Google-Smtp-Source: ABdhPJwhEGL8Wf/fNqs5Q7SPlNkhzZTZgeA4KtNDEPDD/XEut2XxAGYfbcO90yvZhWM+r7jQhJTijw==
-X-Received: by 2002:aca:7589:: with SMTP id q131mr8515268oic.76.1626371197129;
-        Thu, 15 Jul 2021 10:46:37 -0700 (PDT)
-Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id g1sm1237251otk.21.2021.07.15.10.46.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jul 2021 10:46:36 -0700 (PDT)
-Date:   Thu, 15 Jul 2021 12:46:35 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Alex Henrie <alexhenrie24@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Son Luong Ngoc <sluongng@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Message-ID: <60f0747b149eb_4b682084c@natae.notmuch>
-In-Reply-To: <xmqq7dhrtrc2.fsf@gitster.g>
-References: <pull.1047.git.git.1626316849.gitgitgadget@gmail.com>
- <3c07ce978caa832b08c6bef1c48c061e41a6fd0b.1626316849.git.gitgitgadget@gmail.com>
- <xmqq7dhrtrc2.fsf@gitster.g>
-Subject: Re: [PATCH 3/5] pull: handle conflicting rebase/merge options via
- last option wins
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S237171AbhGOSFS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jul 2021 14:05:18 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63955 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236800AbhGOSFS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jul 2021 14:05:18 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 83CF013B0C1;
+        Thu, 15 Jul 2021 14:02:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vrsEqr3WwiwAafSH8QCN0UOASapa+sRsOgsNKw
+        g23QI=; b=gJ8QWhUo12dGfhv3yeeh0zAmy8LxrMWduUGh7G4Yq8qOs2ggrHZh7X
+        8qWJdOdObPs1DlVyE9PdEWy2XMpr8CP4CoJx7hiS4WR2era4RaGt0f+7I7rfwd2W
+        WlVWZ5kvKbZPSuhL/ZJ2ojAhj5cdnK0sLY7InhWA1PDn0rrbXdqIY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7C7E713B0C0;
+        Thu, 15 Jul 2021 14:02:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EF46213B0BF;
+        Thu, 15 Jul 2021 14:02:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>, Derrick Stolee <stolee@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] CodingGuidelines: recommend gender-neutral description
+References: <xmqqmtqpzosf.fsf@gitster.g>
+        <2c7f188a-6ebe-b116-8299-86ca3732d79a@gmail.com>
+        <87czrl0wob.fsf@evledraar.gmail.com> <xmqqk0lrtuh4.fsf_-_@gitster.g>
+        <CAPig+cT24=jy65C1cQ4WarakJHKm4F8_78nDm=jWOnHxfhtcRw@mail.gmail.com>
+        <YPBmv7x3zUbuQ2uy@nand.local>
+Date:   Thu, 15 Jul 2021 11:02:20 -0700
+In-Reply-To: <YPBmv7x3zUbuQ2uy@nand.local> (Taylor Blau's message of "Thu, 15
+        Jul 2021 12:47:59 -0400")
+Message-ID: <xmqq35sftpzn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: CD77ABAA-E596-11EB-AD1B-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> > --- a/Documentation/config/pull.txt
-> > +++ b/Documentation/config/pull.txt
+> On Thu, Jul 15, 2021 at 12:35:30PM -0400, Eric Sunshine wrote:
+>> On Thu, Jul 15, 2021 at 12:25 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> > Technical writing seeks to convey information with minimal
+>> > friction. One way that a reader can experience friction is if they
+>> > encounter a description of "a user" that is later simplified using a
+>> > gendered pronoun. If the reader does not consider that pronoun to
+>> > apply to them, then they can experience cognitive dissonance that
+>> > removes focus from the information.
+>> >
+>> > Give some basic tips to guide us avoid unnecessary of gendered
+>> > description.
+>>
+>> Some words seem to be missing from this sentence.
+>
+> I assume that it's supposed to read "guide us [to] avoid unnecessary
+> [uses] of gendered description".
 
-> >  pull.rebase::
-> >  	When true, rebase branches on top of the fetched branch, instead
-> >  	of merging the default branch from the default remote when "git
-> >  	pull" is run. See "branch.<name>.rebase" for setting this on a
-> > -	per-branch basis.
-> > +	per-branch basis.  Incompatible with pull.ff.
-> 
-> Likewise.
-> 
-> I think it technically is OK to say "only ff update is allowed" or
-> "ff update is allowed when able" while saying pull.rebase=yes.  
-> 
->  - For those who say ff=only, the actual value of pull.rebase would
->    not matter (i.e. the integration immediately finishes by updating
->    to what was obtained from the upstream because there is no new
->    development on our own on top of theirs to either replay or
->    merge).
-> 
->  - For those who merely allow ff, an update may fast-forward even
->    when pull.rebase is set to true (or any non-false value), while
->    we'll replay our own development on top of theirs when their
->    history is not descendent of ours.
-> 
-> So I do not see need to declare these combinations "incompatible".
-> But perhaps I am missing some subtle cases?
+Thanks.  Last-minute edit always screwes me up.
 
-Doing such a thing would be wrong. As I already explained multiple
-times, pull.rebase can be overriden by the command line. When doing
---merge we want to honor pull.ff, when we don't we want to ignore it.
+>> > +    Note that this sounds ungrammatical and unnatural to those who
+>> > +    learned English as a second language in some parts of the world.
+>>
+>> It also sounds ungrammatical and unnatural to this native English speaker.
+>
+> Apologies if this suggestion has been made earlier in the thread, but
+> this article
+>
+>     https://apastyle.apa.org/style-grammar-guidelines/grammar/singular-they
+>
+> document from the APA's style guide helps convince me that this is
+> grammatical.
 
-Since both Elijah and Junio have muted me, and they keep making these
-mistakes, can anybody else forward this point to them?
-
-Cheers.
-
--- 
-Felipe Contreras
+Yes, the language is living and drifting---and that is why it
+matters when and where you learned ;-)
