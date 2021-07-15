@@ -8,65 +8,66 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DB66C07E96
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 15:40:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94AFDC1B08C
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 15:40:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19828613DB
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 15:40:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7EA5961374
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 15:40:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239426AbhGOPnk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Jul 2021 11:43:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40984 "EHLO
+        id S239465AbhGOPnm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Jul 2021 11:43:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239179AbhGOPnc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jul 2021 11:43:32 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DB6EC06175F
-        for <git@vger.kernel.org>; Thu, 15 Jul 2021 08:40:39 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id a5-20020a7bc1c50000b02901e3bbe0939bso3965855wmj.0
-        for <git@vger.kernel.org>; Thu, 15 Jul 2021 08:40:39 -0700 (PDT)
+        with ESMTP id S239286AbhGOPnd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jul 2021 11:43:33 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 216A7C061768
+        for <git@vger.kernel.org>; Thu, 15 Jul 2021 08:40:40 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id g16so8375688wrw.5
+        for <git@vger.kernel.org>; Thu, 15 Jul 2021 08:40:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=4Ib0SWYpLaPximun7MUajcXT3GjLWT38oNkCGu16y08=;
-        b=kkXc34dA2A4B4rvRIldrPJLWemUemgJzWlgV1nehTuA0MKeT8nyQ/FEUpcZ1lD/ho4
-         7UTkbsZW5+hsXPQD9INj8+s1GgVsyiiQhmuJ6vKvpkHfUsl43Z7w8S69/wsIliuf5eob
-         9Px9dwAXb4NQXh96o2ETRHFv/1CoJ+KROeLZz69PUJ7tqXjG5hQl7VQjvbCOHiDNZIDi
-         BEo1HbMh2MiljCMVmxIsgZSuiXeD528SBP3cW+qwk/Y8FdOcmOHVFXhYNndezdB2+b0v
-         sRGOiiIR4o+RAOTQMGj46AOXkWccvepTYfApleDUz5aFRjvuetP6xzb3UibvwgYXhNI7
-         kVxA==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=IzJopMreD03mb0H5DzVSKa/vpC4rGACWQqE7utDtPrg=;
+        b=nmmqPKfT6h8bOyszT0nDHGHoU78EbZGvJbaprQveR1BLqkJFCMPjwPHP8Gc8WlwwgZ
+         laWBctZKGlgcux8tPce5+mc0QUZEizXdkotoalZPWG0EZqx+YB+7n2pUNW4KDlu3dhUG
+         rZWLXBjEPHFiZ3T004ujq8QzHw77MZL1+UaSeibnHeygzW3/jQeaDfdz5MZ2E0NnT2zk
+         PEE2RAIFyKMrY5zA32MqB7E6e0d4tMXYNi+1BQnZx7KwMRgRIqFvwxFgXZWNAPDpuB9p
+         WpxTpjRoyeHvZ3eZcFf4WkdF0d5D+Edm7YQwNe3LBFMSrAsxgFTl/aSDPna44rF4wSCx
+         0+qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4Ib0SWYpLaPximun7MUajcXT3GjLWT38oNkCGu16y08=;
-        b=jMMay2hIpgB+5jqcurOQ6B8Alirf8QmnxlStK7AKjxhrhsMcTg5Opx8yw2NQd/Wvnh
-         PxilGfaj18Kp42kgUBAatGwqIbliRWniDzFhu9wyqllEM7XNlqqlKAmj7agdX9ifeI8x
-         BFmAXdlfitHiEblV2Sejd3WdPtu4S/0DaKYNiD4EknWSLx5qDvm0v/UPjyJNtCxPlvSO
-         AlNyH/BgwoZFwc4P13/pAdh/XET0DhGgnUU+UmNUR0BVx9C8WOGmfdMmjj8KHKkJPmr4
-         oyec76NVJ1pbNiGDdQM3hHrghvItUZLiBOkygZwG5S/i96GO9SgaGveih4yJMO7EytNV
-         CI+g==
-X-Gm-Message-State: AOAM533MTqpObPwPZ/BvPZ9fICZw9wKBLq+EcbaHesnc+rzA9F+x8Ggt
-        wfJ81uKBZ9AQXpkL24UuPoOThPQiXG4=
-X-Google-Smtp-Source: ABdhPJw9OHMl4+mKCyXabEotdiYgO1DY3qQvWNR2G+ic+NwJJDk4WM1lNzahht/7yuTgbNWvOfOvWw==
-X-Received: by 2002:a7b:c30f:: with SMTP id k15mr11347905wmj.128.1626363638144;
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=IzJopMreD03mb0H5DzVSKa/vpC4rGACWQqE7utDtPrg=;
+        b=UAwC/3ercuLl6GXldoCuQYKmtHOcdN/qcPihFNSoINBOWGFOF07TzUcjNGhnvxLHDm
+         8qSLGEmeYommKrrId778I6Nh2zLE2KeLBiLuoUl37PbCbcaDAX8bmhiaoSzKO1wr+BKZ
+         XVI/GXzMSjFajA3jSyq5HCTOM/Xka8Hu+N/gaVvFUebwjsy6yMpdJlkh6xSOJKha40d/
+         bWrisySXzrziCK2CAP0GW3hSEry0Y3TL9W+IxBH5f24nhmc71ePRUTxy0KGBtIbaLNcU
+         4iJg+EdG9Veg/DiiR4DCWOeDU8nJhhYRx/ujBUUXBZ8We4XRB2Zk1MmHffLZFLPxzxGA
+         bFbQ==
+X-Gm-Message-State: AOAM531Xg7Xs8dLNKykNwJVVgeKfXGrdCzIzpngg3qZbh0VLeIoaoWFg
+        dj/UCOr6/DXweb5SOva6Idf1u1bWmeI=
+X-Google-Smtp-Source: ABdhPJwrnWaG2dlOaXoPs46zPnrVdRg0Ksn6ewr3r1ovbynbuYvr79SXjZCFelZk0zsv2dVym3zgbQ==
+X-Received: by 2002:adf:f74f:: with SMTP id z15mr6485222wrp.54.1626363638748;
         Thu, 15 Jul 2021 08:40:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g3sm6953548wru.95.2021.07.15.08.40.37
+        by smtp.gmail.com with ESMTPSA id z25sm5530128wmf.9.2021.07.15.08.40.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jul 2021 08:40:37 -0700 (PDT)
-Message-Id: <96ef6431a2b64bbf15a9fbe7755dc3e882db072e.1626363626.git.gitgitgadget@gmail.com>
+        Thu, 15 Jul 2021 08:40:38 -0700 (PDT)
+Message-Id: <5903d02324f3275b3aa442bb3ca2602564c543dc.1626363626.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.993.v2.git.1626363626.gitgitgadget@gmail.com>
 References: <pull.993.git.1626090419.gitgitgadget@gmail.com>
         <pull.993.v2.git.1626363626.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 15 Jul 2021 15:40:24 +0000
-Subject: [PATCH v2 16/17] [GSOC] ref-filter: remove grab_oid() function
-Fcc:    Sent
+Date:   Thu, 15 Jul 2021 15:40:25 +0000
+Subject: [PATCH v2 17/17] [GSOC] cat-file: use fast path when using
+ default_format
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Christian Couder <christian.couder@gmail.com>,
@@ -84,79 +85,161 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-Because "atom_type == ATOM_OBJECTNAME" implies the condition
-of `starts_with(name, "objectname")`, "atom_type == ATOM_TREE"
-implies the condition of `starts_with(name, "tree")`, so the
-check for `starts_with(name, field)` in grab_oid() is redundant.
+Add the member `default_format` to struct `batch_options`,
+when we are using the default format on `git cat-file --batch`,
+or `git cat-file --batch-check`, `default_format` will be set,
+if we don't use `--textconv` or `--filter`, then we will not call
+verify_ref_format(), has_object_file() and format_ref_array_item().
+Instead, we get the object data directly through
+oid_object_info_extended() and then output the data directly.
 
-So Remove the grab_oid() from ref-filter, to reduce repeated check.
+By using this fast path, we can reduce some of the extra overhead
+when `cat-file --batch` using ref-filter. The running time of
+`git cat-file --batch-check` will be similar to before, and the
+running time of `git cat-file --batch` will be 9.1% less than before.
 
+Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Hariom Verma <hariom18599@gmail.com>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- ref-filter.c | 26 +++++++++-----------------
- 1 file changed, 9 insertions(+), 17 deletions(-)
+ builtin/cat-file.c | 79 +++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 57 insertions(+), 22 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 91e26c9aba3..1c7287f1061 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1077,16 +1077,6 @@ static const char *do_grab_oid(const char *field, const struct object_id *oid,
- 	}
- }
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 3a6153e778f..8edc19f2d5a 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -26,6 +26,7 @@ struct batch_options {
+ 	int all_objects;
+ 	int unordered;
+ 	int cmdmode; /* may be 'w' or 'c' for --filters or --textconv */
++	int default_format;
+ 	struct ref_format format;
+ };
  
--static int grab_oid(const char *name, const char *field, const struct object_id *oid,
--		    struct atom_value *v, struct used_atom *atom)
--{
--	if (starts_with(name, field)) {
--		v->s = xstrdup(do_grab_oid(field, oid, atom));
--		return 1;
--	}
--	return 0;
--}
--
- /* See grab_values */
- static void grab_common_values(struct atom_value *val, int deref, struct expand_data *oi)
+@@ -196,6 +197,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 
+ struct expand_data {
+ 	struct object_id oid;
++	struct object_info info;
+ 	const char *rest;
+ 	int split_on_whitespace;
+ };
+@@ -216,27 +218,58 @@ static void batch_object_write(const char *obj_name,
+ 			       struct batch_options *opt,
+ 			       struct expand_data *data)
  {
-@@ -1112,8 +1102,9 @@ static void grab_common_values(struct atom_value *val, int deref, struct expand_
- 			}
- 		} else if (atom_type == ATOM_DELTABASE)
- 			v->s = xstrdup(oid_to_hex(&oi->delta_base_oid));
--		else if (atom_type == ATOM_OBJECTNAME && deref)
--			grab_oid(name, "objectname", &oi->oid, v, &used_atom[i]);
-+		else if (atom_type == ATOM_OBJECTNAME && deref) {
-+			v->s = xstrdup(do_grab_oid("objectname", &oi->oid, &used_atom[i]));
+-	int ret;
+-	struct ref_array_item item = { data->oid, data->rest, opt->cmdmode };
+-
+-	strbuf_reset(scratch);
+-	strbuf_reset(err);
+-
+-	ret = format_ref_array_item(&item, &opt->format, scratch, err);
+-	if (ret < 0)
+-		die("%s\n", err->buf);
+-	if (ret) {
+-		/* ret > 0 means when the object corresponding to oid
+-		 * cannot be found in format_ref_array_item(), we only print
+-		 * the error message.
+-		 */
+-		printf("%s\n", err->buf);
++	if (opt->default_format && !opt->cmdmode) {
++		struct strbuf type_name = STRBUF_INIT;
++		unsigned long size;
++		void *content;
++
++		if (opt->print_contents)
++			data->info.contentp = &content;
++
++		data->info.type_name = &type_name;
++		data->info.sizep = &size;
++
++		if (oid_object_info_extended(the_repository, &data->oid, &data->info,
++					     OBJECT_INFO_LOOKUP_REPLACE) < 0) {
++			printf("%s missing\n",
++			       obj_name ? obj_name : oid_to_hex(&data->oid));
++			fflush(stdout);
++			return;
 +		}
++
++		fprintf(stdout, "%s %s %"PRIuMAX"\n", oid_to_hex(&data->oid),
++			data->info.type_name->buf,
++			(uintmax_t)*data->info.sizep);
+ 		fflush(stdout);
++		strbuf_release(&type_name);
++		if (opt->print_contents) {
++			batch_write(opt, content, *data->info.sizep);
++			batch_write(opt, "\n", 1);
++			free(content);
++		}
+ 	} else {
+-		strbuf_addch(scratch, '\n');
+-		batch_write(opt, scratch->buf, scratch->len);
++		int ret;
++		struct ref_array_item item = { data->oid, data->rest, opt->cmdmode };
++
++		strbuf_reset(scratch);
++		strbuf_reset(err);
++
++		ret = format_ref_array_item(&item, &opt->format, scratch, err);
++		if (ret < 0)
++			die("%s\n", err->buf);
++		if (ret) {
++			/* ret > 0 means when the object corresponding to oid
++			 * cannot be found in format_ref_array_item(), we only print
++			 * the error message.
++			 */
++			printf("%s\n", err->buf);
++			fflush(stdout);
++		} else {
++			strbuf_addch(scratch, '\n');
++			batch_write(opt, scratch->buf, scratch->len);
++		}
++		free_ref_array_item_value(&item);
  	}
+-	free_ref_array_item_value(&item);
  }
  
-@@ -1154,9 +1145,10 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
- 			continue;
- 		if (deref)
- 			name++;
--		if (atom_type == ATOM_TREE &&
--		    grab_oid(name, "tree", get_commit_tree_oid(commit), v, &used_atom[i]))
-+		if (atom_type == ATOM_TREE) {
-+			v->s = xstrdup(do_grab_oid("tree", get_commit_tree_oid(commit), &used_atom[i]));
- 			continue;
-+		}
- 		if (atom_type == ATOM_NUMPARENT) {
- 			v->value = commit_list_count(commit->parents);
- 			v->s = xstrfmt("%lu", (unsigned long)v->value);
-@@ -1959,9 +1951,9 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 				v->s = xstrdup(buf + 1);
- 			}
- 			continue;
--		} else if (!deref && atom_type == ATOM_OBJECTNAME &&
--			   grab_oid(name, "objectname", &ref->objectname, v, atom)) {
--				continue;
-+		} else if (!deref && atom_type == ATOM_OBJECTNAME) {
-+			   v->s = xstrdup(do_grab_oid("objectname", &ref->objectname, atom));
-+			   continue;
- 		} else if (atom_type == ATOM_HEAD) {
- 			if (atom->u.head && !strcmp(ref->refname, atom->u.head))
- 				v->s = xstrdup("*");
+ static void batch_one_object(const char *obj_name,
+@@ -288,7 +321,7 @@ static void batch_one_object(const char *obj_name,
+ 		return;
+ 	}
+ 
+-	if (!has_object_file(&data->oid)) {
++	if ((!opt->default_format || opt->cmdmode) && !has_object_file(&data->oid)) {
+ 		printf("%s missing\n",
+ 		       obj_name ? obj_name : oid_to_hex(&data->oid));
+ 		fflush(stdout);
+@@ -380,7 +413,7 @@ static int batch_objects(struct batch_options *batch, const struct option *optio
+ 	if (batch->print_contents)
+ 		strbuf_addstr(&format, "\n%(raw)");
+ 	batch->format.format = format.buf;
+-	if (verify_ref_format(&batch->format))
++	if ((!batch->default_format || batch->cmdmode) && verify_ref_format(&batch->format))
+ 		usage_with_options(cat_file_usage, options);
+ 
+ 	if (batch->cmdmode || batch->format.use_rest)
+@@ -483,7 +516,8 @@ static int batch_option_callback(const struct option *opt,
+ 	bo->enabled = 1;
+ 	bo->print_contents = !strcmp(opt->long_name, "batch");
+ 	bo->format.format = arg;
+-
++	if (arg)
++		bo->default_format = 0;
+ 	return 0;
+ }
+ 
+@@ -492,7 +526,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ 	int opt = 0;
+ 	const char *exp_type = NULL, *obj_name = NULL;
+ 	struct batch_options batch = {
+-		.format = REF_FORMAT_INIT
++		.format = REF_FORMAT_INIT,
++		.default_format = 1
+ 	};
+ 	int unknown_type = 0;
+ 
 -- 
 gitgitgadget
-
