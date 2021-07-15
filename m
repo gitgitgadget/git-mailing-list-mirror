@@ -2,267 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C6C1C12002
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 00:45:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BF1FC12002
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 01:53:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EABB0613CF
-	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 00:45:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6DFA7613C0
+	for <git@archiver.kernel.org>; Thu, 15 Jul 2021 01:53:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231255AbhGOAsZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Jul 2021 20:48:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34978 "EHLO
+        id S233778AbhGOB4F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Jul 2021 21:56:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229666AbhGOAsX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jul 2021 20:48:23 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0316C06175F
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 17:45:29 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id b14-20020a1c1b0e0000b02901fc3a62af78so4958524wmb.3
-        for <git@vger.kernel.org>; Wed, 14 Jul 2021 17:45:29 -0700 (PDT)
+        with ESMTP id S231863AbhGOB4D (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jul 2021 21:56:03 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A40DC06175F
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 18:53:10 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id k16so4545039ios.10
+        for <git@vger.kernel.org>; Wed, 14 Jul 2021 18:53:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=4G93HvUbypxL40PZTxO9azNfHX/zr6GJiPxepeTZg2A=;
-        b=K3fAIzlS1dTaHdh1N/0lp+Gom6yQYTH1TJWi1iZoZCiCMN9xEmg5/WNn/qKya+czJ4
-         ECpiWrA70qByP4807dX3XRwxqzQqVzrEpDyl9d/seDXEYhCxbAZvTh1a0RyK8ZIdHqfz
-         vpYgOGKtMe89YUDtU+6KRHrLBQnZyNfEBfW1jC+esHZTyGUQubngvMBQzcgwk9zUiMZC
-         E8zKFg5S2doVGsigd9nsDYbrx6HQXWR/Sjeg0gxCTirsiCHtRQ+I37dNHHmo+3NAofAK
-         xzjMNO2w5ZhJzMN2aCnXfd79N4X0cnHpf63ualChetq+3rbTWcnRRZhJj2g8ZGI9grbz
-         WEqw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ypANk8DF3TBXINz0IM5wV7X7vAn5z4xlUp+ete2jbrU=;
+        b=L8m4R4Kv4gnv9HGPm4yuJdpXESnrUEslhuEI+Mx3oBCE6hlj4PRKyAJBxvY4DVZXxv
+         gd12dkLFWm2KYiSMxFLpi/DmYZFCoxN2jLpmVdoCGAFR/zOAWsI3IVem9oa1jOMBW9xQ
+         jUME98xKISAfebjUp0kr3323fmmZHKtSw3aNlq8eb1xtu/xlk8eWNM6418t/tjYglYmi
+         8rIvc8N855AQos7u42Gohc24Ujf6LgbmJtY5HQbG9c9zmLh6H24IaykcLsnne6rFBjQN
+         bL3I8F0PrJaSsYt7VjAufJH7aNT1Nl+zwb9eG8vIQk+EZskk0lcKXaPWv47ljasA1UJz
+         daqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4G93HvUbypxL40PZTxO9azNfHX/zr6GJiPxepeTZg2A=;
-        b=evpl9PwVNd5dDTVw43ZYpeyZSfPk4KuHkoKiM1t1c3o3TaCjdYZ7whFzJdCxtG5iEO
-         zKz7ntpPCQG/9UhqOFpWOBlcZxNIWESSyFAUdXCItABHpwPwQE57uIpB0UzEA+8yscgU
-         eJuIiHNrNe9Z64n41QH3mr747Ebwh7BEDXz2XTWsrWU6mYC/am7dyW49jwChKxeIoR55
-         dfOTA5bBMr9+6/ndBFDwv3anepN5tT8a2qdrST6izGqGoNeIqwZ41ZY9QMS+24hUHIfv
-         nancVVZcBCDb6AylbbhaSvt+TXy/1cVLWrgOrhqDfsNZgjcvO/ITOrtE0iKpiAc75EY6
-         zeeQ==
-X-Gm-Message-State: AOAM531SE5CwaIAa3e329MwmSGnGBOirvav4BN4bemtsnKQoega+rWfS
-        Wi2vihmMDCEiNrDyGIK0gW8UHQCO9JU=
-X-Google-Smtp-Source: ABdhPJwDYpNndWfUPT/aynjqJzrvA20bXpSDm3vhVpd/nztmt1x/dibsAeuym+dsPa8/MLgXVDHxoA==
-X-Received: by 2002:a05:600c:1c07:: with SMTP id j7mr3627028wms.165.1626309928242;
-        Wed, 14 Jul 2021 17:45:28 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x17sm4371713wru.6.2021.07.14.17.45.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 17:45:27 -0700 (PDT)
-Message-Id: <b41278b6680f8b1f59e73c4eab24595a33f2f3c5.1626309924.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1044.v3.git.git.1626309924.gitgitgadget@gmail.com>
-References: <pull.1044.v2.git.git.1626225153.gitgitgadget@gmail.com>
-        <pull.1044.v3.git.git.1626309924.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 15 Jul 2021 00:45:24 +0000
-Subject: [PATCH v3 4/4] Bump rename limit defaults (yet again)
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ypANk8DF3TBXINz0IM5wV7X7vAn5z4xlUp+ete2jbrU=;
+        b=aXmzAZ2ummbmbzfggsyLTtuWKrseNKse9AG4bLLq6Wl8KFBtL49catv6JoiQQoGa7W
+         4uk0kMLLFPXy7hQEjblaGL/h+XTA/U1F87AQUrL4U6JdZYidNzfnbAs0h5XX8QoW8qOf
+         idjXzsXIymcFJDe+4oWg9yh3GW5Pc1naEmdKwHvX5vcvtFOZnlxOBZ32yDCf+QDWRtAz
+         ztkvUa/x76/Mye8WO4h0NsI6X/7KmQkKgOFJtpG2AeCLoH6Uog9eMGQOpHaTEpOwdcv/
+         pGmDZVNnh4a94z62D6pOJ5yyQIHxOK1GXV5wG6JvhF0UbW8RiiQNGJnZsvIVWmtu+KHK
+         OjKA==
+X-Gm-Message-State: AOAM531HgYvFybjevNYI2pwloO2jaJoxsHN3NtxLVFM9ApzJOcaqzF2X
+        sXv9oqV8VMFniWw92Zai3S5EUiPWqQe0rZP3jdo=
+X-Google-Smtp-Source: ABdhPJxLP1ASlNKxXO9zHqSrcWNAN3KY17+Hrl/BupCO3b++EjX2mCRi2BsGtN9750VdtaCEOWVhMpC+HqYd/lAxBCU=
+X-Received: by 2002:a5e:df08:: with SMTP id f8mr951158ioq.172.1626313989728;
+ Wed, 14 Jul 2021 18:53:09 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+References: <pull.993.git.1626090419.gitgitgadget@gmail.com>
+ <70e83e4ba3cc8a55bb8d90cb2c581cd04ac116d4.1626090419.git.gitgitgadget@gmail.com>
+ <CAP8UFD0vHw8cK90RbOUcrAcxNKiHVTMX0VEiK8+MNyHH0CNm4A@mail.gmail.com>
+ <xmqqtukz2rp4.fsf@gitster.g> <CAOLTT8RR4+tUuT2yc2PDL9NwCburW8bM_Sht6nhKJ_fYV8fGsQ@mail.gmail.com>
+In-Reply-To: <CAOLTT8RR4+tUuT2yc2PDL9NwCburW8bM_Sht6nhKJ_fYV8fGsQ@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Thu, 15 Jul 2021 09:53:23 +0800
+Message-ID: <CAOLTT8Sa984Eo18QMBeGnMCX3_7sr+9qUYoAR4FS3UF6+CDtGw@mail.gmail.com>
+Subject: Re: [PATCH 14/19] [GSOC] cat-file: reuse ref-filter logic
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Hariom Verma <hariom18599@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+ZheNing Hu <adlternative@gmail.com> =E4=BA=8E2021=E5=B9=B47=E6=9C=8815=E6=
+=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8A=E5=8D=8812:24=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B47=E6=9C=8813=E6=
+=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8A=E5=8D=884:38=E5=86=99=E9=81=93=EF=BC=9A
+>
+> >
+> > Christian Couder <christian.couder@gmail.com> writes:
+> >
+> > More importantly, why is such a fast-path even needed?  Isn't it a
+> > sign that the ref-filter implementation is eating more cycles than
+> > it should for given set of placeholders?  Do we know where the extra
+> > cycles goes?
+> >
+> > I find it somewhat alarming if we are talking about "fast-path"
+> > workaround before understanding why we are seeing slowdown in the
+> > first place.
+>
+> There is no complete conclusion yet, but I try to use time and hyperfine =
+test
+> for these commits (t/perf/* is not accurate enough):
+>
+> -------------------------------------------------------------------------=
+---------------------------------------------------
+> |                        subject                                  |
+> --batch-check (using hyperfine) |   --batch(using time) |
+> -------------------------------------------------------------------------=
+---------------------------------------------------
+> |[GSOC] cat-file: use fast path when using default_format         |
+>         700ms                |          25.450s      |
+> -------------------------------------------------------------------------=
+---------------------------------------------------
+> |[GSOC] cat-file: re-implement --textconv, --filters options      |
+>         790ms                |          29.933s      |
+> -------------------------------------------------------------------------=
+---------------------------------------------------
+> |[GSOC] cat-file: reuse err buf in batch_object_write()           |
+>         770ms                |          29.153s      |
+> -------------------------------------------------------------------------=
+---------------------------------------------------
+> |[GSOC] cat-file: reuse ref-filter logic                          |
+>         780ms                |          29.412s      |
+> -------------------------------------------------------------------------=
+---------------------------------------------------
+> |The third batch (upstream/master)                                |
+>         640ms                |          26.025s      |
+> -------------------------------------------------------------------------=
+---------------------------------------------------
+>
+> I think we their cost is indeed from "[GSOC] cat-file: reuse ref-filter l=
+ogic".
+> But what causes the loss of performance needs further analysis.
+>
 
-These were last bumped in commit 92c57e5c1d29 (bump rename limit
-defaults (again), 2011-02-19), and were bumped both because processors
-had gotten faster, and because people were getting ugly merges that
-caused problems and reporting it to the mailing list (suggesting that
-folks were willing to spend more time waiting).
+Now I think:
+There are three main reasons why the performance of cat-file --batch
+deteriorates after refactor.
 
-Since that time:
-  * Linus has continued recommending kernel folks to set
-    diff.renameLimit=0 (maps to 32767, currently)
-  * Folks with repositories with lots of renames were happy to set
-    merge.renameLimit above 32767, once the code supported that, to
-    get correct cherry-picks
-  * Processors have gotten faster
-  * It has been discovered that the timing methodology used last time
-    probably used too large example files.
+1. Too many copies are used in ref-filter and we cannot avoid these copies
+easily because ref-filter needs these copied data to implement atoms %(if),
+%(else), %(end)... and the --sort option. The original cat-file
+--batch only needs
+to output the data to the final string. Its copy times are relatively small=
+.
 
-The last point is probably worth explaining a bit more:
+2. More complex data structure and parsing process are used in ref-filter.
+This is why it can provide more and more useful atoms. Therefore, I think t=
+he
+performance degradation that occurs here is normal.
 
-  * The "average" file size used appears to have been average blob size
-    in the linux kernel history at the time (probably v2.6.25 or
-    something close to it).
-  * Since bigger files are modified more frequently, such a computation
-    weights towards larger files.
-  * Larger files may be more likely to be modified over time, but are
-    not more likely to be renamed -- the mean and median blob size
-    within a tree are a bit higher than the mean and median of blob
-    sizes in the history leading up to that version for the linux
-    kernel.
-  * The mean blob size in v2.6.25 was half the average blob size in
-    history leading to that point
-  * The median blob size in v2.6.25 was about 40% of the mean blob size
-    in v2.6.25.
-  * Since the mean blob size is more than double the median blob size,
-    any file as big as the mean will not be compared to any files of
-    median size or less (because they'd be more than 50% dissimilar).
-  * Since it is the number of files compared that provides the O(n^2)
-    behavior, median-sized files should matter more than mean-sized
-    ones.
+3. As =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason mentioned, oid_object_info_ext=
+end() was used
+twice in get_object() before. oid_object_info_extend() is the hot
+path, we should
+try to avoid calling it, So in last version of  "[GSOC] cat-file:
+re-implement --textconv,
+--filters options", I make the unified processing of --textconv and
+--filter avoid calling
+oid_object_info_extend() twice.
 
-The combined effect of the above is that the file size used in past
-calculations was likely about 5x too large.  Combine that with a CPU
-performance improvement of ~30%, and we can increase the limits by
-a factor of sqrt(5/(1-.3)) = 2.67, while keeping the original stated
-time limits.
-
-Keeping the same approximate time limit probably makes sense for
-diff.renameLimit (there is no progress feedback in e.g. git log -p),
-but the experience above suggests merge.renameLimit could be extended
-significantly.  In fact, it probably would make sense to have an
-unlimited default setting for merge.renameLimit, but that would
-likely need to be coupled with changes to how progress is displayed.
-(See https://lore.kernel.org/git/YOx+Ok%2FEYvLqRMzJ@coredump.intra.peff.net/
-for details in that area.)  For now, let's just bump the approximate
-time limit from 10s to 1m.
-
-(Note: We do not want to use actual time limits, because getting results
-that depend on how loaded your system is that day feels bad, and because
-we don't discover that we won't get all the renames until after we've
-put in a lot of work rather than just upfront telling the user there are
-too many files involved.)
-
-Using the original time limit of 2s for diff.renameLimit, and bumping
-merge.renameLimit from 10s to 60s, I found the following timings using
-the simple script at the end of this commit message (on an AWS c5.xlarge
-which reports as "Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz"):
-
-      N   Timing
-   1300    1.995s
-   7100   59.973s
-
-So let's round down to nice even numbers and bump the limits from
-400->1000, and from 1000->7000.
-
-Here is the measure_rename_perf script (adapted from
-https://lore.kernel.org/git/20080211113516.GB6344@coredump.intra.peff.net/
-in particular to avoid triggering the linear handling from
-basename-guided rename detection):
-
-    #!/bin/bash
-
-    n=$1; shift
-
-    rm -rf repo
-    mkdir repo && cd repo
-    git init -q -b main
-
-    mkdata() {
-      mkdir $1
-      for i in `seq 1 $2`; do
-        (sed "s/^/$i /" <../sample
-         echo tag: $1
-        ) >$1/$i
-      done
-    }
-
-    mkdata initial $n
-    git add .
-    git commit -q -m initial
-
-    mkdata new $n
-    git add .
-    cd new
-    for i in *; do git mv $i $i.renamed; done
-    cd ..
-    git rm -q -rf initial
-    git commit -q -m new
-
-    time git diff-tree -M -l0 --summary HEAD^ HEAD
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/config/diff.txt  | 2 +-
- Documentation/config/merge.txt | 2 +-
- diff.c                         | 2 +-
- merge-ort.c                    | 2 +-
- merge-recursive.c              | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
-index d1b5cfa3542..32f84838ac1 100644
---- a/Documentation/config/diff.txt
-+++ b/Documentation/config/diff.txt
-@@ -120,7 +120,7 @@ diff.orderFile::
- diff.renameLimit::
- 	The number of files to consider in the exhaustive portion of
- 	copy/rename detection; equivalent to the 'git diff' option
--	`-l`.  If not set, the default value is currently 400.  This
-+	`-l`.  If not set, the default value is currently 1000.  This
- 	setting has no effect if rename detection is turned off.
- 
- diff.renames::
-diff --git a/Documentation/config/merge.txt b/Documentation/config/merge.txt
-index 7cd6d7883b6..e27cc639447 100644
---- a/Documentation/config/merge.txt
-+++ b/Documentation/config/merge.txt
-@@ -37,7 +37,7 @@ merge.renameLimit::
- 	rename detection during a merge.  If not specified, defaults
- 	to the value of diff.renameLimit.  If neither
- 	merge.renameLimit nor diff.renameLimit are specified,
--	currently defaults to 1000.  This setting has no effect if
-+	currently defaults to 7000.  This setting has no effect if
- 	rename detection is turned off.
- 
- merge.renames::
-diff --git a/diff.c b/diff.c
-index 2454e34cf6d..0244a371d32 100644
---- a/diff.c
-+++ b/diff.c
-@@ -35,7 +35,7 @@
- 
- static int diff_detect_rename_default;
- static int diff_indent_heuristic = 1;
--static int diff_rename_limit_default = 400;
-+static int diff_rename_limit_default = 1000;
- static int diff_suppress_blank_empty;
- static int diff_use_color_default = -1;
- static int diff_color_moved_default;
-diff --git a/merge-ort.c b/merge-ort.c
-index b954f7184a5..8a84375e940 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -2558,7 +2558,7 @@ static void detect_regular_renames(struct merge_options *opt,
- 	diff_opts.detect_rename = DIFF_DETECT_RENAME;
- 	diff_opts.rename_limit = opt->rename_limit;
- 	if (opt->rename_limit <= 0)
--		diff_opts.rename_limit = 1000;
-+		diff_opts.rename_limit = 7000;
- 	diff_opts.rename_score = opt->rename_score;
- 	diff_opts.show_rename_progress = opt->show_rename_progress;
- 	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 4327e0cfa33..f19f8cc37bd 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1879,7 +1879,7 @@ static struct diff_queue_struct *get_diffpairs(struct merge_options *opt,
- 	 */
- 	if (opts.detect_rename > DIFF_DETECT_RENAME)
- 		opts.detect_rename = DIFF_DETECT_RENAME;
--	opts.rename_limit = (opt->rename_limit >= 0) ? opt->rename_limit : 1000;
-+	opts.rename_limit = (opt->rename_limit >= 0) ? opt->rename_limit : 7000;
- 	opts.rename_score = opt->rename_score;
- 	opts.show_rename_progress = opt->show_rename_progress;
- 	opts.output_format = DIFF_FORMAT_NO_OUTPUT;
--- 
-gitgitgadget
+Thanks.
+--
+ZheNing Hu
