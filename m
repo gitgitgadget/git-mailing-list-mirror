@@ -2,270 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EC24C12002
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 08:10:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B349FC07E95
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 08:21:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A155613ED
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 08:10:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 96181613E8
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 08:21:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236777AbhGPINi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jul 2021 04:13:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40144 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236794AbhGPINh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jul 2021 04:13:37 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D51D8C061760
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 01:10:41 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id t3so11813529edc.7
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 01:10:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=oo2tBnxyYZh+i3tPIYJPNKrEImRG+A9X6HWksleFiHU=;
-        b=g4tN88CVgAZbOn8H9zeFHo7InlPHghTf6/qasHH7pjLwmEJGQ4ay5XSm7tBygaWO7C
-         Bjsmz8+BlE/xUHkpoPZDwrQxDBqZzP5/dl7VbuDhFFAeuN2NjAx/MfUio03kiCu7pYyB
-         kOoinjpXVARiy4qgVpHA6fKebaAoLQxNBYzdNmh3c9ROWgWpCWbgNIDQH4RER6QtqVDq
-         6g/sl8ns8ASl2MvFLb+YOAGNET6MpiYBeawyb3RUum6bOoy6oi/+TuGD5JW/vL3zIWlV
-         7QCEYbnbQehnYqal5AGbCX9/8zb9t1NLVup7189VyUNsPCz+rfrJ/UDgWo4ElApnihY1
-         ZUnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=oo2tBnxyYZh+i3tPIYJPNKrEImRG+A9X6HWksleFiHU=;
-        b=uSob5pFz4SUzYQ/C+rZNxavSwR8PUOm3aXZ0hwoyakTUCEuP0SRJ7QQiI+vwbWMSzk
-         if8uZey/d8p8I+QirGQ8cg8bQVmP1wcXnYnxc25U1hFHVTUPdiq2DCVqxRzZMfM8UWCy
-         iUmZb7eRtTSbuo2cfcN/3NzrcBuJV6L35WiUAk4Y2AP1jgiuRVGJHgepAoB6eT4D2Zxi
-         AG6XD6ufVJ3Q5KJhIp1Znpz2BjRCVE97fKYazGLVm16vmjRsJXlzpj+JclhIx8hlLZii
-         vMhaFtsHswgAijK7qTyAlI0U8gIt4AbKCGslcuAaq3bERdZIlX/Eaj//aauxqgq8TvNm
-         d0lg==
-X-Gm-Message-State: AOAM531xqnXqWhZUI1Q8rmgvSK7AFNOGvnwGgevzqZAbDhbtXHj8ZaZ7
-        krXwy/ur5LCiX36vh6ThbTfCnPhil64=
-X-Google-Smtp-Source: ABdhPJx0nI3M6G80B1XEkbtSntHZlq6+Z0uQ8GtFaWASbMb4r9XfoiIE5kGwJhP1tAMjaL2Usmz/pg==
-X-Received: by 2002:a50:fe8d:: with SMTP id d13mr13059977edt.14.1626423040172;
-        Fri, 16 Jul 2021 01:10:40 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id j24sm3384473edv.48.2021.07.16.01.10.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jul 2021 01:10:39 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Andrzej Hunt <andrzej@ahunt.org>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?utf-8?B?xJBvw6Bu?= =?utf-8?B?IFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 2/4] SANITIZE tests: fix memory leaks in t13*config*,
- add to whitelist
-Date:   Fri, 16 Jul 2021 09:46:33 +0200
-References: <cover-0.4-0000000000-20210714T001007Z-avarab@gmail.com>
- <cover-0.4-0000000000-20210714T172251Z-avarab@gmail.com>
- <patch-2.4-867e8e9a6c-20210714T172251Z-avarab@gmail.com>
- <871ea493-e108-e748-0234-f929690ad2fd@ahunt.org>
- <YPCrvOce5qRWk6Rq@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <YPCrvOce5qRWk6Rq@coredump.intra.peff.net>
-Message-ID: <87wnpqy8zd.fsf@evledraar.gmail.com>
+        id S237315AbhGPIYa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jul 2021 04:24:30 -0400
+Received: from fallback18.mail.ru ([185.5.136.250]:59962 "EHLO
+        fallback18.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236794AbhGPIY1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jul 2021 04:24:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail3;
+        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Message-ID:To:Subject:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=L36/AtGzFdtTpE/3lk2FCCIW16uymjOun8oG/6T54w8=;
+        t=1626423693;x=1627029093; 
+        b=m1jSY1YjQ3As2u1Ew1HEmSocum6bskk8yRL3q/uxpACAYpP5xRes0LP/eYd9sIuEQnnkqn91LqUcp5r2xMGePLLj47HwUHRhBE6fGNkl9fgxLR2uDQmCy3//zx9HksKgiU92q+/XIZ+hYXn20Ul0DaFTpQvy8nZJ1NC19qGfnNY=;
+Received: from [10.161.76.76] (port=44164 helo=smtp17.mail.ru)
+        by fallback18.m.smailru.net with esmtp (envelope-from <alexshevchenko@mail.ru>)
+        id 1m4J6B-0001ms-EQ
+        for git@vger.kernel.org; Fri, 16 Jul 2021 11:21:31 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail3;
+        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Message-ID:To:Subject:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=L36/AtGzFdtTpE/3lk2FCCIW16uymjOun8oG/6T54w8=;
+        t=1626423691;x=1627029091; 
+        b=O59U63OxYX5xAw5z3ESo5IylQMppgcx0fE952hBstQAKFs5bOQlHoZEIvFmmJa3MCMrlLzVwGWUGF3rWE0Yra0EP1XO0GYG8v7tOSWa0DhlLT+wyYizAtDm4KxHOC1e1CTJfh0HykJU6UmocnwFyNrj/rZ8RVZXM/Hzq/QvLE8M=;
+Received: by smtp17.mail.ru with esmtpa (envelope-from <alexshevchenko@mail.ru>)
+        id 1m4J69-0003zZ-Dl
+        for git@vger.kernel.org; Fri, 16 Jul 2021 11:21:29 +0300
+From:   Aleksandr Shevchenko <AlexShevchenko@mail.ru>
+Subject: Typo in english github-git-cheat-sheet.pdf
+To:     git <git@vger.kernel.org>
+Message-ID: <f098c3d0-beca-c78d-9852-b222111e8873@mail.ru>
+Date:   Fri, 16 Jul 2021 12:21:09 +0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: ru
+Content-Transfer-Encoding: 7bit
+X-7564579A: EEAE043A70213CC8
+X-77F55803: 4F1203BC0FB41BD941C43E597735A9C36A98DBA789EBB6AEFB5A483DCE5E7579182A05F53808504072C417BB5E645FE47E8296FD08621A4B4A66375196E8EF87B9AE37EA9B74D335
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7C2204D4F9A221771EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006375D54B99ECAFA2F678638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D850E8733101D570BD35F677CA3EAB0A3F6F9789CCF6C18C3F8528715B7D10C86878DA827A17800CE7678748765F3C1EF79FA2833FD35BB23D9E625A9149C048EE9ECD01F8117BC8BEA471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F446042972877693876707352033AC447995A7AD182CC0D3CB04F14752D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EEC24E1E72F37C03A06E0066C2D8992A164AD6D5ED66289B52698AB9A7B718F8C46E0066C2D8992A16725E5C173C3A84C3CAFEF312542AECBE76E601842F6C81A1F004C906525384307823802FF610243DF43C7A68FF6260569E8FC8737B5C2249EC8D19AE6D49635B68655334FD4449CB9ECD01F8117BC8BEAAAE862A0553A39223F8577A6DFFEA7C5E1C53F199C2BB95B5C8C57E37DE458BEDA766A37F9254B7
+X-C1DE0DAB: C20DE7B7AB408E4181F030C43753B8186998911F362727C414F749A5E30D975CAA8DC07915BC95B7F45B0BF928EB195775E05338F9F2F1E19C2B6934AE262D3EE7EAB7254005DCEDA59F2C00BD1B740C1E0A4E2319210D9B64D260DF9561598F01A9E91200F654B0FEFB8A20A2F5DA258E8E86DC7131B365E7726E8460B7C23C
+X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D34EE19B6E2433CA093CDC47E889A4AAF879B14AA9502D2F2122B7DF34EC1A4971989E6F4BA069919B31D7E09C32AA3244CCCB81A844DDDDB0CF8427C4B17DEB296250262A5EE9971B03EB3F6AD6EA9203E
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXjCmWGQOK4Xds27oM4OepMc
+X-Mailru-Sender: 3FA3AE788D48094582E9A32A12AEE4BDF51732D3D91658F0F2911B9F0E6A689D83C73DEF7C7733F9CB2DA6C705B9E9F4C77752E0C033A69E825B612E255FBE835287A56200E873EE3453F38A29522196
+X-Mras: Ok
+X-7564579A: B8F34718100C35BD
+X-77F55803: 6242723A09DB00B4DE24245422D83CE6F6EF26CB7A2DAAF2F40F2CDA6349448C049FFFDB7839CE9EF4F4DA9190548748EC3FEA22D38B99AEE503E5D5FE2015973EEC4E2C41C772B9
+X-7FA49CB5: 0D63561A33F958A552D3F0BC3B1125317E7E20FA1D2D69DCDF351FE7DA300297CACD7DF95DA8FC8BD5E8D9A59859A8B64071617579528AACCC7F00164DA146DAFE8445B8C89999728AA50765F790063754202C433EBC1B4E389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC8C0F9454058DFE53CF6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947CA6C7FFFE744CA7FBC0837EA9F3D197644AD6D5ED66289B52698AB9A7B718F8C442539A7722CA490CD5E8D9A59859A8B62CFFCC7B69C47339089D37D7C0E48F6C5571747095F342E88FB05168BE4CE3AF
+X-C1DE0DAB: C20DE7B7AB408E4181F030C43753B8186998911F362727C414F749A5E30D975CAA8DC07915BC95B7D7CD5EEA8341B6D7882DEA77E8E283E39C2B6934AE262D3EE7EAB7254005DCEDA59F2C00BD1B740C699F904B3F4130E343918A1A30D5E7FCCB5012B2E24CD356
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojk34dk3RWCsYHpvby+gQKug==
+X-Mailru-MI: 800
+X-Mailru-Sender: A5480F10D64C9005B3CA2E2FD44993EC9FCC76CD6A05EBE28BBDA9FCC07100AF42A3910910EDF928A4B5C846784BBEC63DDE9B364B0DF289BDF38CFCC23DC39DCA9B01087240937DAE208404248635DF
+X-Mras: Ok
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+https://training.github.com/downloads/github-git-cheat-sheet.pdf
 
-On Thu, Jul 15 2021, Jeff King wrote:
+The .gitgnore file
+-->
+The .gitignore file
 
-> On Wed, Jul 14, 2021 at 08:57:37PM +0200, Andrzej Hunt wrote:
->
->> > @@ -1331,8 +1336,10 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
->> >   	if (!strcmp(var, "core.attributesfile"))
->> >   		return git_config_pathname(&git_attributes_file, var, value);
->> > -	if (!strcmp(var, "core.hookspath"))
->> > +	if (!strcmp(var, "core.hookspath")) {
->> > +		UNLEAK(git_hooks_path);
->> >   		return git_config_pathname(&git_hooks_path, var, value);
->> > +	}
->> 
->> Why is the UNLEAK necessary here? We generally want to limit use of UNLEAK
->> to cmd_* functions or direct helpers. git_default_core_config() seems
->> generic enough that it could be called from anywhere, and using UNLEAK here
->> means we're potentially masking a real leak?
->> 
->> IIUC the leak here happens because:
->> - git_hooks_path is a global variable - hence it's unlikely we'd ever
->>   bother cleaning it up.
->> - git_default_core_config() gets called a first time with
->>   core.hookspath, and we end up allocating new memory into
->>   git_hooks_path.
->> - git_default_core_config() gets called again with core.hookspath,
->>   and we overwrite git_hooks_path with a new string which leaks
->>   the string that git_hooks_path used to point to.
->> 
->> So I think the real fix is to free(git_hooks_path) instead of an UNLEAK?
->> (Looking at the surrounding code, it looks like the same pattern of leak
->> might be repeated for other similar globals - is it worth auditing those
->> while we're here?)
->
-> This is a common leak pattern in Git. We do something like:
->
->   static const char *foo = "default";
->   ...
->   int config_cb(const char *var, const char *value, void *)
->   {
->           if (!strcmp(var, "core.foo"))
-> 	          foo = xstrdup(value);
->   }
->
-> So we leak if the variable appears twice. But we can't just call
-> "free(foo)" here. In the first call, it's pointing to a string literal!
->
-> In the case of git_hooks_path, it defaults to NULL, so this works out
-> OK. But it's setting up a trap for somebody later on, who assigns it a
-> default value (and the compiler won't help; it's a "const char *", so
-> the assignment is fine, and the free() would already be casting away the
-> constness).
->
-> I see a few possible solutions:
->
->   - instead of strdup'ing long-lived config values, strintern() them.
->     This is really leaking them, but in a way that we hold on to the old
->     values. This is actually more or less what UNLEAK() is doing under
->     the hood (saving a reference to the old buffer, even the variable is
->     overwritten).
->
->   - find a way to tell when a string comes from the heap versus a
->     literal. I don't think you can do this portably without keeping your
->     own separate flag. We could abstract away some of the pain with a
->     struct like:
->
->        struct def_string {
->                /* might point to heap memory; const because you must
->                 * check flag before modifying */
->                const char *value;
->                int from_heap;
->        }
->
->        /* regular static initialization is OK if you don't want a default */
->        #define DEF_STRING_INIT(str) { .value = str }
->
->        static void def_string_set(struct def_string *ds, const char *value)
->        {
->                if (ds->from_heap)
->                        free(ds->value);
->                ds->value = xstrdup(value);
->                ds->from_heap = 1;
->        }
->
->     The annoying thing is all of the users need to refer to
->     git_hook_path.value instead of just git_hook_path. If you don't mind
->     a little macro hackery, we could get around that by declaring pairs
->     of variables. Like:
->
->       #define DEF_STRING_DECLARE(name, value) \
->       const char *name = value; \
->       int name##_from_heap
->
->       #define DEF_STRING_SET(name, value) do { \
->               if (name##_from_heap) \
->                       free(name); \
->               name = xstrdup(value); \
->               name##_from_heap = 1; \
->       } while(0)
->
-> I can't say I _love_ any of that, but I think it would work (and
-> probably we'd adapt our helpers like git_config_pathname() to take a
-> def_string. Or I guess just have a def_string_free() which can be called
-> before writing into them).
->
-> But maybe there's a better solution I'm missing.
 
-Instead of: "int from_heap" in your "def_string" I think we should just
-use "struct string_list_item". I.e. you want a void* here. Why?
-
-<Digression>
-
-I have an unsent series for handling some more common cases in the
-string-list API. I started writing it due to a very related problem,
-i.e. that we conflate "string init dup/nodup" with "do we want to
-free?".
-
-We (ab)use the "strdup_strings" in a few places to free that sort of
-thing at the end if we have heap-allocated strings, but ones we did not
-strdup ourselves, e.g. this in merge-ort.c (not picking on Elijah (CC'd)
-here, it's common in lots of places, and this one was pretty much lifted
-from merge-recursive).
-
-        opti->paths_to_free.strdup_strings = 1;
-        string_list_clear(&opti->paths_to_free, 0);
-        opti->paths_to_free.strdup_strings = 0;
-
-So I improved the string-list and strmap free functions so you can
-instead do:
-
-    string_list_clear_strings((&opti->paths_to_free, 0);
-
-And that along with some other changes allows you to clear (or not) any
-combination of the string, util, or have a callback function of your own
-run (but be ensured to run all of those before we get to any of the
-other freeing).
-
-</Digression>
-
-You must be thinking what any of this has to do with heap strings in C,
-well one common case you've not discussed is that we sometimes do the
-equivalent of, with string-list.h or not (somewhat pseudocode);
-
-	void add_to_list(struct string_list *list, char *on_heap_now_we_own_it)
-	{
-		char *ptr = on_heap_now_we_own_it;
-		char *mydup = xstrdup("foo");
-
-	        ptr++; /* skip first byte */
-		string_list_append(list, ptr);
-		string_list_append(list, mydup);
-	}
-
-And:
-
-        struct string_list list = STRING_LIST_INIT_NODUP;
-        /* other stuff here, we get strings from somewhere etc. */
-        add_to_list(list, some_string);
-
-So now you're left with needing to free both at the end, but we since we
-did ptr++ there we can't free() that (we'd need to free(ptr - 1), but
-how to keep track of that?).
-
-Well, tying this back to my clear() improvements for string-list.h I
-thought a really neat solution to this was:
-
-    string_list_append(list, ptr)->util = on_heap_now_we_own_it;
-    string_list_append(list, mydup)->util = mydup;
-
-I.e. by convention we store the pointer we need to free (if any) in the
-"util" field.
-
-And then if you get a string not from the heap you just leave the "util"
-as NULL, and at the end you just free() all your "util" fields, and it
-just so happens that some of them are the same as the "string" field.
-
-We're not in the habit of passing loose "string_list_item" around now,
-but I don't see why we wouldn't (possibly with a change to extract that
-bit out, so we could use it in other places).
-
-The neat thing about doing this is also that you're not left with every
-API boundary needing to deal with your new "def_string", a lot of them
-use string_list already, and hardly need to change anything, to the
-extent that we do need to change anything having a "void *util" is a lot
-more generally usable. You end up getting memory management for free as
-you gain a feature to pass arbitrary data along with your items.
+-- 
+Best regards,
+Aleksandr Shevchenko
