@@ -2,69 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90C9CC07E95
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 09:10:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3686BC07E95
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 09:17:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 733836128D
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 09:10:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19CDF613E9
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 09:17:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231720AbhGPJNP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jul 2021 05:13:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54916 "EHLO
+        id S231720AbhGPJUM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jul 2021 05:20:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229833AbhGPJNO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jul 2021 05:13:14 -0400
+        with ESMTP id S231131AbhGPJUL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jul 2021 05:20:11 -0400
 Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09868C06175F
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 02:10:20 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id hd33so14077945ejc.9
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 02:10:19 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A00BC06175F
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 02:17:16 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id dp20so12217029ejc.7
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 02:17:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=UtA3A5QSxaz2RX6pICls7wHjPfVAiQgI54BtNugjB3U=;
-        b=ToB70Br8rZ9bIiS85x2XDoDcpnnIO3r+I04nS0jA1ZsPPe7iKVuHYcwj7JfQ5YcgLN
-         yLKtnyxqNsJLS7vJtxzDmaUN2zwiCCmAdPa+P++/2go8Xl8lZl9bBg2NHfAkO2S7wFJs
-         BGz++En2SyO+ytTy+qU5se0v4+lfsTXwYPav3/uvCt+l1XCxVarbtzD20D7Aj+bl+DZp
-         1CuQobWLJyGSmmZRi/YFRgnrFaoN/zS6WSMgqgGLU11R8vEJ0FFSfuxwhNF1W016MXwi
-         Dg45p7hIZij22w14TCvreXIgfIH3khsPkz5vtlOiGscsJicemUJYsAzq6GzGLkuieNyq
-         52iA==
+        bh=Uax2dx2rKC9T5cGG29fAQ4SAJ1EuQkNzXAMX7ZCjUJ4=;
+        b=NvVoy8OUzwl0yW9Pu/znKnJaHOqdlRZhtIoq1C20nnOkq8roE0NUPVy9wn4mVKKKkX
+         BjTvPEi2aC6jTcUkSKIazHGyYyf5654lAPcEkfz3skDDCBPvy8bIQtrAZkId1ggPD7IA
+         fPTnfzXezfHaFevm25oFylw0h2eQBVJOv8YYIT7SPUeHIB25fLjHuumI2ojoKFVPNwrN
+         gTqlcKQSFFYw/uObXC/M/IW5anXyb284ewLlIG5aHddaYt4Xsphieyvf2nn5c4NWm2Tp
+         WtzUpA7y2pJxx1IiMTaxM7lC34lnEMZWlBRaJHQzjBWEPITKZ3aZEdxmKVwww9aqC8CY
+         biqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=UtA3A5QSxaz2RX6pICls7wHjPfVAiQgI54BtNugjB3U=;
-        b=JmJh9hzHRmDcRnqovYIBBJ9WODdW05n7jw/m7tb6kibo8or4z93RAoQs7w4FUZtblH
-         q4T1RiO+pVPlHSvyOQG7aNo+j/aFm2FAr4mfpWmZkQXKlFOiUEHQAE5/L8PUpM83RtcL
-         R3/2OKTMm1oxq6J2atOyln5p1AS0TZDgl3W2xuS4PLX7wQ+IGrQ5fti7B67/zOscnsEa
-         SqozRmPfEBkdqO3Ie941Slu1Wc3HctyL099jgfNkbiaWRvKu4UW5vloc6UjA0ZGOFeiv
-         gN1kSGddtkCdTCv1SpqMXvVXiI8MK+mxTkY8V1qfE9Cg2uPwa/WMzlIcHCdMKXeu0vB0
-         9nJw==
-X-Gm-Message-State: AOAM532nCGDzeiEZmsoKK+sBZQf4zh1Pwp2WGA5362bj4x0UGmralDFE
-        zpDsrojRZW1/VrDK8ecxyis=
-X-Google-Smtp-Source: ABdhPJyLvLw5Sd9fc0GeWgqrnOHn1TFtjKeiodW7WypRRQcObFNOyofOJYcDbbgpXb8hblT+sAauFQ==
-X-Received: by 2002:a17:907:762d:: with SMTP id jy13mr10531109ejc.211.1626426618548;
-        Fri, 16 Jul 2021 02:10:18 -0700 (PDT)
+        bh=Uax2dx2rKC9T5cGG29fAQ4SAJ1EuQkNzXAMX7ZCjUJ4=;
+        b=ucem6kRIAC4WyoNhIa+OMx+800i1lMNNnb5nfWJGfmVw1QrFQfNTheOxq/3kpQALCB
+         ScdVWtGVRtV98MY33w1HdN2BD+2svJQH4HftKj9saA0rTxk2gF6mQ2GGjKcuTPcWW0c6
+         9ApREi+vnemT7oo8RMIP7A/jGtyHBQ2SIO/MntGT3FIec5+yxD78c3FxmrysVYP3W4y0
+         3yj32f5bEtzNBU7uCHttDQaPomyInWoXRVueVgXgt+s3MrZd8fxeM1Hm8961tbPJ6Vva
+         O9DBx9n+aRBhXWCftE8Huz/H/gLzk0B4ZxHe5EGBkCIflqklGLvEctkPYvP7OZy6X5zO
+         l4zQ==
+X-Gm-Message-State: AOAM532eKSgMuEwxvT78PVg5cMu87tKZqzYiyqYysCeIJJP5yohGHiL2
+        eufpr7BhLkt9W2vSuSAon3M=
+X-Google-Smtp-Source: ABdhPJxCf+h2kp1iVpSMtyc/9AvVAhmZ/F/ENzfJcMfgwgt70sWJHB8eKZCrH86vDXjlhM6jfZs2Kw==
+X-Received: by 2002:a17:906:838f:: with SMTP id p15mr10881871ejx.300.1626427034657;
+        Fri, 16 Jul 2021 02:17:14 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id n2sm3485473edi.32.2021.07.16.02.10.17
+        by smtp.gmail.com with ESMTPSA id t15sm2671009ejf.119.2021.07.16.02.17.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jul 2021 02:10:17 -0700 (PDT)
+        Fri, 16 Jul 2021 02:17:14 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Emily Shaffer <emilyshaffer@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 6/9] hook: include hooks from the config
-Date:   Fri, 16 Jul 2021 11:01:24 +0200
+Subject: Re: [PATCH 8/9] hook: teach 'hookcmd' config to alias hook scripts
+Date:   Fri, 16 Jul 2021 11:13:42 +0200
 References: <20210715232603.3415111-1-emilyshaffer@google.com>
- <20210715232603.3415111-7-emilyshaffer@google.com>
+ <20210715232603.3415111-9-emilyshaffer@google.com>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <20210715232603.3415111-7-emilyshaffer@google.com>
-Message-ID: <87im1ay67y.fsf@evledraar.gmail.com>
+In-reply-to: <20210715232603.3415111-9-emilyshaffer@google.com>
+Message-ID: <87fswey5wd.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -74,105 +74,67 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Jul 15 2021, Emily Shaffer wrote:
 
-> +static struct hook * find_hook_by_command(struct list_head *head, const char *command)
-
-nit: "*find[...]" not "* find[...]", also let's wrap the long line.
-
-> +{
-> +	struct list_head *pos = NULL, *tmp = NULL;
-> +	struct hook *found = NULL;
-> +
-> +	list_for_each_safe(pos, tmp, head) {
-> +		struct hook *it = list_entry(pos, struct hook, list);
-> +		if (!strcmp(it->command, command)) {
-> +		    list_del(pos);
-> +		    found = it;
-> +		    break;
-
-Indented with spaces.
-
-Also is there some subtlety in the list macro here or can we just
-"s/break/return it/" and skip the break/return pattern?
-
-> +static struct hook * append_or_move_hook(struct list_head *head, const char *command)
-
-Same whitespace nits.
-
-> +	if (!to_add) {
-> +		/* adding a new hook, not moving an old one */
-> +		to_add = xmalloc(sizeof(*to_add));
-> +		to_add->command = command;
-> +		to_add->feed_pipe_cb_data = NULL;
-> +		/* This gets overwritten in hook_list() for hookdir hooks. */
-> +		to_add->from_hookdir = 0;
-
-I commented on init verbosity elsewhere, i.e. we could do some things
-via macros, but in this case just having an "init" helper make sense,
-but we have at least two places copying the same init of all fields,
-should just be hook_init_hook() or whatever it'll be called. Maybe with
-a second "from hookdir" param?
-
-> +	if (!strcmp(key, hook_key)) {
-> +		const char *command = value;
-> +		struct strbuf hookcmd_name = STRBUF_INIT;
-> +
-> +
-
-Nit: 3x\n, not 2x\n
-
-> +		if (!command) {
-> +			strbuf_release(&hookcmd_name);
-
-You don't need to strbuf_release() things that you haven't done anything
-except init'd, but also...
-
-> +			BUG("git_config_get_value overwrote a string it shouldn't have");
-
-...even if that were the case and it called malloc() memory diligence
-when we're calling BUG() is probably going overboard, and I say that as
-someone who'll tend to go overboard with it :)
-
-> +		}
-> +
-> +		/* TODO: implement skipping hooks */
-> +
-> +		/* TODO: immplement hook aliases */
-> +
-> +		/*
-> +		 * TODO: implement an option-getting callback, e.g.
-> +		 *   get configs by pattern hookcmd.$value.*
-> +		 *   for each key+value, do_callback(key, value, cb_data)
-> +		 */
-
-I think we should drop the TODO and just let the commit message /
-comments speak to what we actually implement, and subsequent patches can
-add more features.
-
-> -
-> +	struct strbuf hook_key = STRBUF_INIT;
-> +	struct hook_config_cb cb_data = { &hook_key, hook_head };
-
-Let's use designated initializers.
-
+> To enable fine-grained options which apply to a single hook executable,
+> and to make it easier for a single executable to be run on multiple hook
+> events, teach "hookcmd.<alias>.config". These can be configured as
+> follows:
+> [...]
+> diff --git a/Documentation/config/hook.txt b/Documentation/config/hook.txt
+> index a97b980cca..5b35170664 100644
+> --- a/Documentation/config/hook.txt
+> +++ b/Documentation/config/hook.txt
+> @@ -3,6 +3,11 @@ hook.<command>.command::
+>  	executable on your device, a oneliner for your shell, or the name of a
+>  	hookcmd. See linkgit:git-hook[1].
 >  
->  	INIT_LIST_HEAD(hook_head);
->  
->  	if (!hookname)
->  		return NULL;
->  
-> +	/* Add the hooks from the config, e.g. hook.pre-commit.command */
-> +	strbuf_addf(&hook_key, "hook.%s.command", hookname);
-> +	git_config(hook_config_lookup, &cb_data);
+> +hookcmd.<name>.command::
+> +	A command to execute during a hook for which <name> has been specified
+> +	as a command. This can be an executable on your device or a oneliner for
+> +	your shell. See linkgit:git-hook[1].
 > +
+> [...]
+> +Global config
+> +----
+> +  [hook "post-commit"]
+> +    command = "linter"
+> +    command = "~/typocheck.sh"
 > +
+> +  [hookcmd "linter"]
+> +    command = "/bin/linter --c"
+> +----
+> +
+> +Local config
+> +----
+> +  [hook "prepare-commit-msg"]
+> +    command = "linter"
+> +  [hook "post-commit"]
+> +    command = "python ~/run-test-suite.py"
+> +----
+> +
+> +With these configs, you'd then run post-commit hooks in this order:
+> +
+> +  /bin/linter --c
+> +  ~/typocheck.sh
+> +  python ~/run-test-suite.py
+> +  .git/hooks/post-commit (if present)
+> +
+> +and prepare-commit-msg hooks in this order:
+> +
+> +  /bin/linter --c
+> +  .git/hooks/prepare-commit-msg (if present)
+>  
 
-Another 3x\n
+I still have outstanding feedback on the fundamental design
+here. I.e. why is this not:
 
-> +	/* to enable oneliners, let config-specified hooks run in shell */
-> +	cp->use_shell = !run_me->from_hookdir;
+    hook.<name>.event = post-commit
+    hook.<name>.command = <path>
 
-I've lost track at this point, but doesn't that mean we're going to use
-a shell when we run our own do-not-need-a-shell hooks ourselves?
+See:
 
-Isn't isatty() more appropriate here, or actually even interactively why
-is the shell needed (maybe this is answered elswhere...).
+https://lore.kernel.org/git/87mtv8fww3.fsf@evledraar.gmail.com/
+
+As noted there I don't see why not, and more complexity results from the
+design choice of doing it the way you're proposing. I.e. we can't
+discover hooks based on config prefixes, and we end up sticking full FS
+paths in config keys.
