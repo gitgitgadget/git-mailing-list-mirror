@@ -2,131 +2,401 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BE42C07E95
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 15:25:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 191E6C07E95
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 15:41:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A78B613F1
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 15:25:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED43F613F5
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 15:41:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240765AbhGPP2n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jul 2021 11:28:43 -0400
-Received: from mout.gmx.net ([212.227.15.19]:51081 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237326AbhGPP2m (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jul 2021 11:28:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1626449140;
-        bh=lTnEqbLGJ8wZIM08xh6/kiOyph9Kv0ngp0EJ36mQm0k=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=OmxtA3M6ta4aaPLCPHroMo43Ev68IwLVZu0zadLmjd6jPidsi0i1ao4BO1TbBNPbd
-         K/KPITj1h4WXJ5qQrG1sWS8tWjjdEyQdjIoNbQX0DDpniqrCI6EKpdLWbCY3ATwyTn
-         4ynPP70oHL7iq/TC/mvTgiRbHErdzHiVZ5au8a9s=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.111.2] ([89.1.214.95]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MeU4s-1lWApU0fvI-00aTUs; Fri, 16
- Jul 2021 17:25:40 +0200
-Date:   Fri, 16 Jul 2021 17:25:38 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
-        <congdanhqx@gmail.com>
-Subject: Re: [PATCH] ci: run `make sparse` as a GitHub workflow
-In-Reply-To: <xmqqsg0gttt5.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2107161714290.59@tvgsbejvaqbjf.bet>
-References: <pull.994.git.1626177086682.gitgitgadget@gmail.com> <xmqqbl7525w7.fsf@gitster.g> <nycvar.QRO.7.76.6.2107141124530.76@tvgsbejvaqbjf.bet> <xmqq35sgzy0d.fsf@gitster.g> <nycvar.QRO.7.76.6.2107142252060.59@tvgsbejvaqbjf.bet> <xmqqa6movcly.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2107142350570.59@tvgsbejvaqbjf.bet> <xmqqsg0gttt5.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S240361AbhGPPoe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jul 2021 11:44:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58952 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233204AbhGPPod (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jul 2021 11:44:33 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 780B9C06175F
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 08:41:37 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id i94so12590520wri.4
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 08:41:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=kTjdLTR00MRqpxvhHR54aBL3fgay/IFGbNagLbL40fg=;
+        b=f4e5V4adC6+oBg8BacHWKLyDPZJYOH/cw7+xT7fgBRLR6QHwgcpp56rFvlyQZjmMdY
+         O/1Rk561PM8m5GEObBzZRr1K1PbBtsY0lgTRPUwZ8SlLsF3zEHgrhVrCCgG5iliZcIxl
+         sI8e1Lykn1+sNWc8C6gJoLxMAg77IF5Qw89W9Cp7TH23S3TvxKQwAWHLKgagqvyPdZhX
+         D93efWXguY/InEht20uS0B7MFUKKGvjM1j7GofmAgqZRNoKEW7nhL7HO6d+D+GH5+I72
+         KPas9H+mcDupVkSAwRHWzU+RYcMSg+xpAnS/uAa3qjeFr9Xb8kMZ9i4s/P3hOGkMAsc2
+         oMZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=kTjdLTR00MRqpxvhHR54aBL3fgay/IFGbNagLbL40fg=;
+        b=etk0Q9vYFka855teyVb1X+Bno72LqL4y0p0JESeh9BvbO2tBbYcxzoXjab5mqUdbid
+         K/kYpN9oKtQfz2Wfo78iGDi+h1ptSLUHWIp/922HEYZkjCUVgVF6LoT1z2qfNfhD9k9X
+         VWZlmajPfppAOBRMeIoFp2KrLa4ZxcnhhW/86QpZcXfdTnyN6XhnMfVVAS92uRa+foKG
+         zXncbxMKrim1bBBP7ip4w/FkUXB9GkQmL0qSPj3fgTb17PPMmRnT5pC7Bhe3hVjDDAre
+         /Q0LmEwbPfYKI78XyPVunop3cdEvaQjmx8ftarPpsKhZ93nnTDwvO3r3aABcKM5Q5kdX
+         2igQ==
+X-Gm-Message-State: AOAM531kPuwYhcnMoIWnkDxT21RS0bindq0ro0qWahlhXA2zjXWeLnZQ
+        f43bP43uXCgd+gcXaUdedSGqt2vL7D6wng==
+X-Google-Smtp-Source: ABdhPJwIqEkvOxQayce2kWu/JW5KFztbDm2B+PaIuNRqefkycfLUDLOKrwsGtnrhExANHwa1sXlC+A==
+X-Received: by 2002:a5d:48c6:: with SMTP id p6mr13241341wrs.45.1626450095635;
+        Fri, 16 Jul 2021 08:41:35 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id u16sm12443643wrw.36.2021.07.16.08.41.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Jul 2021 08:41:34 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v4] test-lib-functions: use test-tool for [de]packetize()
+Date:   Fri, 16 Jul 2021 17:41:33 +0200
+Message-Id: <patch-1.1-546974eed59-20210716T153909Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.874.gfa1990a4f10
+In-Reply-To: <cover-0.5-0000000000-20210714T005115Z-avarab@gmail.com>
+References: <cover-0.5-0000000000-20210714T005115Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:JtrEsw2QGw4qgItnAfxa2wWLaaGAt4tGdYCTPlS4407vvIoe/Rl
- EDX8zYr6SQigZbjARlx6jwBWVzd0ZkOtuM2Tfo5PaqJPI9M8ipuGiyRsdp3eSnmAbNoqp4C
- ZECf61kXl+gTpNWuMx7ua90HWRBnG02ZH1ha6DJFlRE5xApO56NOp9I3DV+lDgy6T8+yiLl
- gMYDCFLXLY0MHkzKhLdCQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:pIj2IEGQReo=:UdgIYHUJIeuvylhepwogRe
- I2wXYo0tmO4UJ9uh/uv9Que5bq5Yq679gzZATda+la/iBWn/JqVZeeyH7e9lzWb+0jYjprDrh
- wfBO0CResebf5T76XhLjMtb1RZbd+FtT0KQQfGuY6F3fxb4Fi2+yBAKkKyYBrz/gqrWdi/8nL
- gSrQrlwpxj059s4k8xWPNvi5U+HcjqXXA09UGEn1gwsY6gArv0WYoy9rJJMrRE4GTHpV71rlh
- RhOaxqd94p7/kK52yMT0JkbY38+TLqiqa8BxH1ZX7HUBPFGSN+zL+dTPUVoP6XKPWi/gg45ES
- M5lUmnmhj+m8EpX/5iTm+Nwp0inzZBjl0SUVm5+xPDw4Y/PadIFgx5DHVwP5/UUkxyoxg5LcG
- wASOYNzpeNtFbm1aDWBrYwW1oW/hP+C9AF+tEU6tK3VuzL4jmArUBH0AFuSczb3clkkb2XM9L
- gIjA2JJB6d/Fghm1RlLQz+1IW7CV0LpIQxOTuhktAtK6vApOjgc8wrBFbkyoBU2TFqj/EOInB
- DFDuJXmsFPqBsEI66sIY/PvAM+pnXEjtllLt6DWurB2wVaafWF1VfWystnuwjf/ppK6rY+Lye
- A/Dx4zhFh7cfFnUvx9vC4Jk3Wmq0MP/gGfhyT9l4lX+doknPegKYeVF+z1xEcancFugKaKWuG
- N4tSiCkInef9/LYB7ZN8TMUAc5Yo2wuKwOh4rgqtPMMV9me4Z2EwN+vCjl2nNTWOcoLTbl5Yo
- TIhR6/f6vNzM9GMQn2Y89xUbE9m+hSJXrClR8mCPej71rV0SaecdZPVXmPeFLQGtqzfDgYdj4
- 26oIidyi427bzst+4SLDZ6VK7m86NdThcSdHGU58/FtAGhYyTd9CnU2DeMMRr4HRoS5Aw5Ze3
- m7GgTWJSryrcVeYhRjfsKTxAppCEYSX5PqRTndAlL/R464aBXHmOs/73I5Y1DqZTMYPScto8C
- mfissqgDY6BPGbu2L2AwzlSKyHkCBTUT02VX2BUbq680F3GunIeyVFAUulql9jpuFuQ8U81vs
- nfknep8MSYRUQ5c4hlOsM3jDjs+c3Zd+PkW0N18iq+0m9Yjw+ebTLBaaSOMNywhIWYN1vheNk
- Wu1wGDX18kYPVAuXnBBqmWfnr6KOB1jwV6YNhEd0jXj51la/mWDmXHoPg==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+The shell+perl "[de]packetize()" helper functions were added in
+4414a150025 (t/lib-git-daemon: add network-protocol helpers,
+2018-01-24), and around the same time we added the "pkt-line" helper
+in 74e70029615 (test-pkt-line: introduce a packet-line test helper,
+2018-03-14).
 
-On Wed, 14 Jul 2021, Junio C Hamano wrote:
+For some reason it seems we've mostly used the shell+perl version
+instead of the helper since then. There were discussions around
+88124ab2636 (test-lib-functions: make packetize() more efficient,
+2020-03-27) and cacae4329fa (test-lib-functions: simplify packetize()
+stdin code, 2020-03-29) to improve them and make them more efficient.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> >> It wasn't quite obvious why we justify spending 370 minutes one more
-> >> time only to rerun 30-second job, though.
-> >
-> > True.
-> >
-> > And this is not a new problem. Every time anything happens in those
-> > `osx-gcc` or `osx-clang` jobs (e.g. that transient problem with the br=
-oken
-> > pipes in t5516 [*1*], that's a fun one), a full re-run is necessary, o=
-r
-> > else the commit and/or PR will remain marked as broken.
-> >
-> > In other words, while it is totally appropriate for me to explain this=
- to
-> > you in this here thread because it came up as a tangent, it would be
-> > inappropriate to stick that explanation into this patch's commit messa=
-ge.
-> > We do not make a habit of adding tangents that came up during patch
-> > reviews into commit messages, and I do not intend to start such a habi=
-t
-> > here, either.
->
-> I do not agree; a brief mention "even though piling more and more on
-> the primary workflow would make it even less convenient to re-run,
-> it is already so bad that another one would not hurt too much more"
-> would be a clue good enough to motivate others to do something about
-> it if they feel like it.
+There was one good reason to do so, we needed an equivalent of
+"test-tool pkt-line pack", but that command wasn't capable of handling
+input with "\n" (a feature) or "\0" (just because it happens to be
+printf-based under the hood).
 
-By that rationale recent additions to `.github/workflows/`, which have a
-much much much much bigger impact on the runtime (such as the change that
-lets `linux-clang` run the test suite with SHA-1 and then again with
-SHA-256, almost doubling its runtime), should have added that apology to
-the commit message.
+Let's add a "pkt-line-raw" helper for that, and expose is at a
+packetize_raw() to go with the existing packetize() on the shell
+level, this gives us the smallest amount of change to the tests
+themselves.
 
-But that did not happen.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
-Besides, for all we know the problem might go away at any stage because
-pretty much all other main CI systems have a way to re-run only failed
-jobs. GitHub Actions will probably get it at some stage, too, I vaguely
-remember seeing it on some public roadmap somewhere.
+I ejected changing/adding test code for this v4. This keeps the
+compatibility wrappers and just narrowly changes the things that need
+a packetize_raw() to use that new helper.
 
-So I really do not appreciate this pushing for including an explanation in
-the commit message for something that is only relevant (if at all)
-in the context of an utter tangent (don't we have many of those over
-here!) during the review of the patch. It's just some curiosity that will
-eventually be an exclusively historical curiosity, of no interest except
-to a few CI nerds. The issue has everything to do with a currently
-missing feature in GitHub Actions, and it has nothing to do at all with
-what the patch is about, which is: to add a `sparse` job to our CI runs.
+I left the simpler packetize() case as a "printf", it could also use
+the test tool, but in case someone cares about process overhead on say
+Windows this entire change should be strictly better than the status
+quo.
 
-Ciao,
-Dscho
+Range-diff against v3:
+1:  67aa8141153 < -:  ----------- serve tests: add missing "extra delim" test
+2:  64dfd14865c < -:  ----------- serve tests: use test_cmp in "protocol violations" test
+3:  92bfd8a87b8 < -:  ----------- tests: replace [de]packetize() shell+perl test-tool pkt-line
+4:  9842c85d1f3 ! 1:  546974eed59 tests: replace remaining packetize() with "test-tool pkt-line"
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    tests: replace remaining packetize() with "test-tool pkt-line"
+    +    test-lib-functions: use test-tool for [de]packetize()
+     
+    -    Move the only remaining users of "packetize()" over to "test-tool
+    -    pkt-line", for this we need a new "pack-raw-stdin" subcommand in the
+    -    test-tool. The "pack" command takes input on stdin, but splits it by
+    -    "\n", furthermore we'll format the output using C-strings, so the
+    -    embedded "\0" being tested for here would cause the string to be
+    -    truncated.
+    +    The shell+perl "[de]packetize()" helper functions were added in
+    +    4414a150025 (t/lib-git-daemon: add network-protocol helpers,
+    +    2018-01-24), and around the same time we added the "pkt-line" helper
+    +    in 74e70029615 (test-pkt-line: introduce a packet-line test helper,
+    +    2018-03-14).
+     
+    -    So we need another mode that just calls packet_write() on the raw
+    -    input we got on stdin.
+    +    For some reason it seems we've mostly used the shell+perl version
+    +    instead of the helper since then. There were discussions around
+    +    88124ab2636 (test-lib-functions: make packetize() more efficient,
+    +    2020-03-27) and cacae4329fa (test-lib-functions: simplify packetize()
+    +    stdin code, 2020-03-29) to improve them and make them more efficient.
+    +
+    +    There was one good reason to do so, we needed an equivalent of
+    +    "test-tool pkt-line pack", but that command wasn't capable of handling
+    +    input with "\n" (a feature) or "\0" (just because it happens to be
+    +    printf-based under the hood).
+    +
+    +    Let's add a "pkt-line-raw" helper for that, and expose is at a
+    +    packetize_raw() to go with the existing packetize() on the shell
+    +    level, this gives us the smallest amount of change to the tests
+    +    themselves.
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    @@ t/t5411/once-0010-report-status-v1.sh: test_expect_success "proc-receive: report
+      		then
+      			printf "%s %s refs/heads/main\0report-status\n" \
+     -				$A $B | packetize
+    -+				$A $B | test-tool pkt-line pack-raw-stdin
+    ++				$A $B | packetize_raw
+      		else
+      			printf "%s %s refs/heads/main\0report-status object-format=$GIT_DEFAULT_HASH\n" \
+     -				$A $B | packetize
+    -+				$A $B | test-tool pkt-line pack-raw-stdin
+    ++				$A $B | packetize_raw
+      		fi &&
+    - 		test-tool pkt-line pack <<-EOF &&
+    - 		$ZERO_OID $A refs/for/main/topic1
+    + 		printf "%s %s refs/for/main/topic1\n" \
+    + 			$ZERO_OID $A | packetize &&
+     
+      ## t/t5562-http-backend-content-length.sh ##
+     @@ t/t5562-http-backend-content-length.sh: test_expect_success 'setup' '
+    @@ t/t5562-http-backend-content-length.sh: test_expect_success 'setup' '
+      	{
+      		printf "%s %s refs/heads/newbranch\\0report-status object-format=%s\\n" \
+     -			"$ZERO_OID" "$hash_next" "$(test_oid algo)" | packetize &&
+    -+			"$ZERO_OID" "$hash_next" "$(test_oid algo)" |
+    -+			test-tool pkt-line pack-raw-stdin &&
+    ++			"$ZERO_OID" "$hash_next" "$(test_oid algo)" | packetize_raw
+      		printf 0000 &&
+      		echo "$hash_next" | git pack-objects --stdout
+      	} >push_body &&
+    @@ t/t5570-git-daemon.sh: test_expect_success 'hostname cannot break out of directo
+      test_expect_success FAKENC 'hostname interpolation works after LF-stripping' '
+      	{
+     -		printf "git-upload-pack /interp.git\n\0host=localhost" | packetize
+    --		printf "0000"
+    -+		printf "git-upload-pack /interp.git\n\0host=localhost" |
+    -+		test-tool pkt-line pack-raw-stdin &&
+    -+		test-tool pkt-line pack <<-\EOF
+    -+		0000
+    -+		EOF
+    ++		printf "git-upload-pack /interp.git\n\0host=localhost" | packetize_raw
+    + 		printf "0000"
+      	} >input &&
+    -+
+      	fake_nc "$GIT_DAEMON_HOST_PORT" <input >output &&
+    - 	test-tool pkt-line unpack <output >actual &&
+    +
+    + ## t/test-lib-functions.sh ##
+    +@@ t/test-lib-functions.sh: nongit () {
+    + 	)
+    + } 7>&2 2>&4
+    + 
+    +-# convert function arguments or stdin (if not arguments given) to pktline
+    +-# representation. If multiple arguments are given, they are separated by
+    +-# whitespace and put in a single packet. Note that data containing NULs must be
+    +-# given on stdin, and that empty input becomes an empty packet, not a flush
+    +-# packet (for that you can just print 0000 yourself).
+    ++# These functions are historical wrappers around "test-tool pkt-line"
+    ++# for older tests. Use "test-tool pkt-line" itself in new tests.
+    + packetize () {
+    + 	if test $# -gt 0
+    + 	then
+    + 		packet="$*"
+    + 		printf '%04x%s' "$((4 + ${#packet}))" "$packet"
+    + 	else
+    +-		perl -e '
+    +-			my $packet = do { local $/; <STDIN> };
+    +-			printf "%04x%s", 4 + length($packet), $packet;
+    +-		'
+    ++		test-tool pkt-line pack
+    + 	fi
+    + }
+    + 
+    +-# Parse the input as a series of pktlines, writing the result to stdout.
+    +-# Sideband markers are removed automatically, and the output is routed to
+    +-# stderr if appropriate.
+    +-#
+    +-# NUL bytes are converted to "\\0" for ease of parsing with text tools.
+    ++packetize_raw () {
+    ++	test-tool pkt-line pack-raw-stdin
+    ++}
+    ++
+    + depacketize () {
+    +-	perl -e '
+    +-		while (read(STDIN, $len, 4) == 4) {
+    +-			if ($len eq "0000") {
+    +-				print "FLUSH\n";
+    +-			} else {
+    +-				read(STDIN, $buf, hex($len) - 4);
+    +-				$buf =~ s/\0/\\0/g;
+    +-				if ($buf =~ s/^[\x2\x3]//) {
+    +-					print STDERR $buf;
+    +-				} else {
+    +-					$buf =~ s/^\x1//;
+    +-					print $buf;
+    +-				}
+    +-			}
+    +-		}
+    +-	'
+    ++	test-tool pkt-line unpack
+    + }
+      
+    + # Converts base-16 data into base-8. The output is given as a sequence of
+5:  7ca83c5a551 < -:  ----------- test-lib-functions.sh: remove unused [de]packetize() functions
+
+ t/helper/test-pkt-line.c               | 12 ++++++++
+ t/t5411/once-0010-report-status-v1.sh  |  4 +--
+ t/t5562-http-backend-content-length.sh |  2 +-
+ t/t5570-git-daemon.sh                  |  2 +-
+ t/test-lib-functions.sh                | 38 ++++++--------------------
+ 5 files changed, 24 insertions(+), 34 deletions(-)
+
+diff --git a/t/helper/test-pkt-line.c b/t/helper/test-pkt-line.c
+index 5e638f0b970..c5e052e5378 100644
+--- a/t/helper/test-pkt-line.c
++++ b/t/helper/test-pkt-line.c
+@@ -26,6 +26,16 @@ static void pack(int argc, const char **argv)
+ 	}
+ }
+ 
++static void pack_raw_stdin(void)
++{
++	struct strbuf sb = STRBUF_INIT;
++
++	if (strbuf_read(&sb, 0, 0) < 0)
++		die_errno("failed to read from stdin");
++	packet_write(1, sb.buf, sb.len);
++	strbuf_release(&sb);
++}
++
+ static void unpack(void)
+ {
+ 	struct packet_reader reader;
+@@ -110,6 +120,8 @@ int cmd__pkt_line(int argc, const char **argv)
+ 
+ 	if (!strcmp(argv[1], "pack"))
+ 		pack(argc - 2, argv + 2);
++	else if (!strcmp(argv[1], "pack-raw-stdin"))
++		pack_raw_stdin();
+ 	else if (!strcmp(argv[1], "unpack"))
+ 		unpack();
+ 	else if (!strcmp(argv[1], "unpack-sideband"))
+diff --git a/t/t5411/once-0010-report-status-v1.sh b/t/t5411/once-0010-report-status-v1.sh
+index 1233a46eac5..297b10925d5 100644
+--- a/t/t5411/once-0010-report-status-v1.sh
++++ b/t/t5411/once-0010-report-status-v1.sh
+@@ -28,10 +28,10 @@ test_expect_success "proc-receive: report status v1" '
+ 		if test -z "$GIT_DEFAULT_HASH" || test "$GIT_DEFAULT_HASH" = "sha1"
+ 		then
+ 			printf "%s %s refs/heads/main\0report-status\n" \
+-				$A $B | packetize
++				$A $B | packetize_raw
+ 		else
+ 			printf "%s %s refs/heads/main\0report-status object-format=$GIT_DEFAULT_HASH\n" \
+-				$A $B | packetize
++				$A $B | packetize_raw
+ 		fi &&
+ 		printf "%s %s refs/for/main/topic1\n" \
+ 			$ZERO_OID $A | packetize &&
+diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
+index e5d3d15ba8d..05a58069b0c 100755
+--- a/t/t5562-http-backend-content-length.sh
++++ b/t/t5562-http-backend-content-length.sh
+@@ -63,7 +63,7 @@ test_expect_success 'setup' '
+ 	hash_next=$(git commit-tree -p HEAD -m next HEAD^{tree}) &&
+ 	{
+ 		printf "%s %s refs/heads/newbranch\\0report-status object-format=%s\\n" \
+-			"$ZERO_OID" "$hash_next" "$(test_oid algo)" | packetize &&
++			"$ZERO_OID" "$hash_next" "$(test_oid algo)" | packetize_raw
+ 		printf 0000 &&
+ 		echo "$hash_next" | git pack-objects --stdout
+ 	} >push_body &&
+diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
+index 82c31ab6cd8..b87ca06a585 100755
+--- a/t/t5570-git-daemon.sh
++++ b/t/t5570-git-daemon.sh
+@@ -194,7 +194,7 @@ test_expect_success 'hostname cannot break out of directory' '
+ 
+ test_expect_success FAKENC 'hostname interpolation works after LF-stripping' '
+ 	{
+-		printf "git-upload-pack /interp.git\n\0host=localhost" | packetize
++		printf "git-upload-pack /interp.git\n\0host=localhost" | packetize_raw
+ 		printf "0000"
+ 	} >input &&
+ 	fake_nc "$GIT_DAEMON_HOST_PORT" <input >output &&
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index b2810478a21..e5b80e0f88e 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1453,46 +1453,24 @@ nongit () {
+ 	)
+ } 7>&2 2>&4
+ 
+-# convert function arguments or stdin (if not arguments given) to pktline
+-# representation. If multiple arguments are given, they are separated by
+-# whitespace and put in a single packet. Note that data containing NULs must be
+-# given on stdin, and that empty input becomes an empty packet, not a flush
+-# packet (for that you can just print 0000 yourself).
++# These functions are historical wrappers around "test-tool pkt-line"
++# for older tests. Use "test-tool pkt-line" itself in new tests.
+ packetize () {
+ 	if test $# -gt 0
+ 	then
+ 		packet="$*"
+ 		printf '%04x%s' "$((4 + ${#packet}))" "$packet"
+ 	else
+-		perl -e '
+-			my $packet = do { local $/; <STDIN> };
+-			printf "%04x%s", 4 + length($packet), $packet;
+-		'
++		test-tool pkt-line pack
+ 	fi
+ }
+ 
+-# Parse the input as a series of pktlines, writing the result to stdout.
+-# Sideband markers are removed automatically, and the output is routed to
+-# stderr if appropriate.
+-#
+-# NUL bytes are converted to "\\0" for ease of parsing with text tools.
++packetize_raw () {
++	test-tool pkt-line pack-raw-stdin
++}
++
+ depacketize () {
+-	perl -e '
+-		while (read(STDIN, $len, 4) == 4) {
+-			if ($len eq "0000") {
+-				print "FLUSH\n";
+-			} else {
+-				read(STDIN, $buf, hex($len) - 4);
+-				$buf =~ s/\0/\\0/g;
+-				if ($buf =~ s/^[\x2\x3]//) {
+-					print STDERR $buf;
+-				} else {
+-					$buf =~ s/^\x1//;
+-					print $buf;
+-				}
+-			}
+-		}
+-	'
++	test-tool pkt-line unpack
+ }
+ 
+ # Converts base-16 data into base-8. The output is given as a sequence of
+-- 
+2.32.0.874.gfa1990a4f10
+
