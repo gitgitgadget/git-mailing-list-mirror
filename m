@@ -2,126 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6D0FC12002
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 18:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67443C12002
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 18:40:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8862E613F1
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 18:31:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 425F5613F8
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 18:40:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231899AbhGPSed (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jul 2021 14:34:33 -0400
-Received: from smtprelay07.ispgateway.de ([134.119.228.104]:13942 "EHLO
-        smtprelay07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229611AbhGPSeb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jul 2021 14:34:31 -0400
-Received: from [84.163.66.66] (helo=[192.168.2.202])
-        by smtprelay07.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <git@mfriebe.de>)
-        id 1m4Sb5-0001BX-A4; Fri, 16 Jul 2021 20:30:03 +0200
-Subject: Re: PATCH: improve git switch documentation
-To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
- <65362688-b65b-661c-20c1-94d7dc2118c7@mfriebe.de>
- <60e874e1c6845_215320861@natae.notmuch>
- <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
- <60e88a4b8592f_16bcb2082b@natae.notmuch>
- <ad58bd54-a9dd-59a9-4fce-f90be469cd60@mfriebe.de>
- <60e9f8d462bd9_7ef20898@natae.notmuch>
- <6f43b36b-abe1-41f2-6138-e820c974b1bd@mfriebe.de>
- <60ea07e3495e8_7ef2081d@natae.notmuch>
- <30e4c874-6b87-b03d-fa33-fde5b7e50b2a@mfriebe.de>
- <60ea2eb562f26_2a69208e8@natae.notmuch>
- <1e18c4ed-6975-5041-4b4f-75c4d3d21860@mfriebe.de>
- <60ec6d91deced_a452520825@natae.notmuch>
- <54644739-2138-8086-1696-d3c52960216c@mfriebe.de>
- <60ec74c513b2b_a45252081b@natae.notmuch>
- <0d7bd249-2aba-236a-9f93-3a5b30182d15@mfriebe.de>
- <60ec93155663f_a231f208fb@natae.notmuch>
- <3a84e4c9-4e48-1cbe-4fe6-150ff56c8508@mfriebe.de>
- <60ecbe577a086_a6b702082@natae.notmuch>
- <d3678ef6-1bcd-2666-87dc-751aef2ca1a7@mfriebe.de>
- <60edb8ff814cf_ab6dd208d9@natae.notmuch>
-From:   Martin <git@mfriebe.de>
-Message-ID: <02f1f12a-0ff3-ef46-fce3-e222b2867309@mfriebe.de>
-Date:   Fri, 16 Jul 2021 20:31:33 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S229462AbhGPSm7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jul 2021 14:42:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42788 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230018AbhGPSm6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jul 2021 14:42:58 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9F33C06175F
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 11:40:02 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so10863870otl.3
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 11:40:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jOTCPnevGqY7PRJsLX3pDK0LbpiQMDVRzL4Vl2mn2i0=;
+        b=dfJfIx1SmWnWUHJ+/ar+JLO7E5KmJ9VW6C27G+fCxtHtUoyFIpeDoMEM59nHlCi59z
+         WSPww2j4dqJaSOy14KJU94ud2HqLQ0MrteAtrejqMx65dpeXH5jAuXMpY6miI90/DKS0
+         1Moy7ydwo33+dFgsffhoqUWpREm7fW8l6F7iSDXxeg00CVje5Xg7fbuLqpSE7tbnsJTd
+         34MDJJlEz9d2gTQ9C2MsL5H4N2jQ/jgpV9VYoGM6eNsOwM7r9WtJ9ARZP8di+ZS0KIDx
+         yCJonvcq4eb45IsOOkSoWTcc1gm1/DNZslCWeSQiGwBZjANmgCxqKfXyfiWUw6edGIzk
+         Tz1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jOTCPnevGqY7PRJsLX3pDK0LbpiQMDVRzL4Vl2mn2i0=;
+        b=TBN9hFDgXsnK5YWnjU1kOZb2wysbZoPVVkb2AyceRtFyrALQSNn/OFdMwbAsqjYJwy
+         trWhJm805Fgq/uFGjjFI1ST06dPnj0/Y3j9uMWshnUTYygT4Qpq/kpOtxdEU9u2nm2VU
+         kDmPPjYOlpKCrMNMASqJl+v1w4uBLoNj1GMSW3a7KZfZBrepPFg0MqTcvu5Ws2xycts8
+         wFGVz1leLHsHcRFroUvYlYGRsBoUrx11x0Jgppa1USzXcEaTDpzbJSbimEMeTZrGLlTw
+         36BqUDztJXMlrysAvsFsaPoDDaGr8KVztWm/FHkQD7cETcLyo9/Z78zZxTSfGkvhdKGj
+         RmbQ==
+X-Gm-Message-State: AOAM533UVhsmoO0ikkMaQxV4q5eLqwoBOeJS1k+aCwDP9Jy2VwCNpTvO
+        kDfY4KXwFjQnG1Hd4Fk46LnpKG8Kj3d+3X7eULM=
+X-Google-Smtp-Source: ABdhPJyQm2PcN3DcVYPJhvAhmepgtCCsvEuYrI468nR/8UDaHpAGicDJHgv4KxtXXlKPzjwR9/4+M3My4Fc/nVoV+0Y=
+X-Received: by 2002:a9d:5a8:: with SMTP id 37mr9327019otd.345.1626460801993;
+ Fri, 16 Jul 2021 11:40:01 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <60edb8ff814cf_ab6dd208d9@natae.notmuch>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: bWVAbWZyaWViZS5kZQ==
+References: <pull.1047.git.git.1626316849.gitgitgadget@gmail.com>
+ <3c07ce978caa832b08c6bef1c48c061e41a6fd0b.1626316849.git.gitgitgadget@gmail.com>
+ <xmqq7dhrtrc2.fsf@gitster.g> <CABPp-BExWMSFr7CQskjKVhr5fiWCnxoaN_RaJ2Yir+36aiyBjQ@mail.gmail.com>
+ <xmqqpmvjs61c.fsf@gitster.g> <CABPp-BE8Qiu8Sdk8FD+UcAtZnToXFOv+Y+8Rwf3DyiZP6Te-SQ@mail.gmail.com>
+ <xmqqh7gvs2mu.fsf@gitster.g>
+In-Reply-To: <xmqqh7gvs2mu.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 16 Jul 2021 11:39:50 -0700
+Message-ID: <CABPp-BEHNpfm6mJBDZ30wCEraT03p+2-gGZyZcnUV34trAzAzw@mail.gmail.com>
+Subject: Re: [PATCH 3/5] pull: handle conflicting rebase/merge options via
+ last option wins
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Son Luong Ngoc <sluongng@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/07/2021 18:02, Felipe Contreras wrote:
-> Martin wrote
->> You and I will make the connection between "something happens to the
->> branch" and "something happens to the commits".
->> A lot of people with less experience, who a busy looking through lots of
->> stuff to solve their problem, they will not make that connection in that
->> particular moment.
->> Heck, I've seen highly educated people missing far more obvious things
->> like that.
-> 
-> Once again I'm not talking about what they could miss, I'm talking about
-> what they are thinking the command will do.
+On Thu, Jul 15, 2021 at 2:12 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > On Thu, Jul 15, 2021 at 12:58 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >>
+> >> Elijah Newren <newren@gmail.com> writes:
+> >>
+> >> > Let me ask two questions:
+> >> >
+> >> > 1. When is it beneficial for users to set both pull.ff and pull.rebase?
+> >> > 2. Is it harmful to users for us to allow both to be set when we will
+> >> > just ignore one?
+> >> >
+> >> > I believe the answer to (1) is "never", and the answer to (2) is "yes".
+> >>
+> >> I agree (1) never gives you anything, even though it does not hurt,
+> >> and (2) is "meh".
+> >
+> > Okay, let's drop this series then.
+>
+> Not so fast.  I did have problem with some combinations you hinted
+> (vaguely---so it is more like "combinations I thought you hinted"),
+> but making sure various combinations of options and configuration
+> variables work sensibly is a worthy goal to have, I would think.
 
+It may be a worthy goal, but I cannot implement correct behavior if I
+cannot determine what correct behavior is.
 
-Well they think it creates a new branch with the given name. And that is 
-*all* they think.
+You've only specified how to handle a subset of the valid combinations
+in each of your emails, and from those individually or even
+collectively I cannot deduce rules for handling the others.  Reading
+the dozen+ recent messages in the various recent threads, I think I've
+figured out your opinion in all but two cases, but I have no idea your
+intent on those two (I would have thought --rebase override there too,
+but you excluded that), and I'm rather uncertain I've correctly
+understood you for the other ones (I really hope gmail doesn't
+whitespace damage the following table):
 
-We can argue as much as we want, that from that thought all else should 
-follow, in reality that does not apply.
+   pull.ff  pull.rebase  commandline            action
+     *          *        --ff-only --rebase     fast-forward only[1]
+     *          *        --rebase --no-ff       rebase[1]
+     *          *        --rebase --ff          rebase[1]
+     *          *        --ff-only --no-rebase  fast-forward only
+     *          *        --no-rebase --no-ff    merge --no-ff
+     *          *        --no-rebase --ff       merge --ff
 
-Or rather it applies only if someone really ask the question. But no one 
-asks it.
+    <unset>     *        --no-rebase            merge --ff
+    only        *        --no-rebase            merge --ff[2]
+    false       *        --no-rebase            merge --no-ff
+    true        *        --no-rebase            merge --ff
 
-And that leaves as with the point how much of the so called obvious is 
-not being thought about. My answer: Quite a lot, and an important lot too.
+    <unset>     *        --rebase               rebase
+    only        *        --rebase               rebase[2]
+    false       *        --rebase               ?[2]
+    true        *        --rebase               ?[2]
 
-If people would always consider the consequences of their actions, this 
-world would have a lot less trouble.
+     *          *        --ff-only              fast-forward only[1]
 
-But that again gets to the point of what is not thought of. People to 
-not think of consequence.
+     *       <unset>     --no-ff                merge --no-ff
+     *        false      --no-ff                merge --no-ff
+     *       !false      --no-ff                rebase (ignore --no-ff)[2][3]
 
-If people a told the consequences some will still ignore it, but some 
-will take it into account.
+     *       <unset>     --ff                   merge --ff
+     *        false      --ff                   merge --ff
+     *       !false      --ff                   rebase (ignore --ff)[2][3]
 
+[1] https://lore.kernel.org/git/xmqq7dhrtrc2.fsf@gitster.g/
+    https://lore.kernel.org/git/c62933fb-96b2-99f5-7169-372f486f6e39@aixigo.com/
+[2] https://lore.kernel.org/git/xmqqpmvn5ukj.fsf@gitster.g/
+[3] https://lore.kernel.org/git/xmqq8s2b489p.fsf@gitster.g/
 
-> 
-> Yes, and that's stupid. There's plenty of unnecessary warnings.
-
-Yes and that is why we do not need to add
-"a solarflare may damage your pc while you perform this action"
-(As was previously brought up)
-
-
-> 
-> The fact that you have to do it in USA doesn't mean you should.
-
-Well, yes. But the point is, there are people who miss out for more 
-obvious things.
-And "loosing commits" as results of an action on "branches" is not that 
-obvious. Not if you are new.
-
-I understand that it is as bleeding obvious to you (and me) as "hot coffee".
-But neither of us is a new user. Not even the average (I guess)
-
-> 
-> Our objective is not to reach everyone.
-> 
-
-"everyone that uses git" (and wants to be reached)
-
-And that should be an objective.
-
-
+It appears you, Phillip, and I all had different opinions about
+correct behavior and in a few cases though the documentation clearly
+implied what we thought.  So, I'd have to say the documentation is
+rather unclear as well.  However, even if the above table is filled
+out, it may be complicated enough that I'm at a bit of a loss about
+how to update the documentation to explain it short of including the
+table in the documentation.
