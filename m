@@ -2,69 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87274C07E95
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 08:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D936C07E95
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 08:59:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 68A4F61357
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 08:57:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F011060D07
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 08:59:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238546AbhGPJAB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jul 2021 05:00:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51656 "EHLO
+        id S238830AbhGPJCs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jul 2021 05:02:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237433AbhGPJAA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jul 2021 05:00:00 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8031C06175F
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 01:57:04 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id qb4so14012229ejc.11
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 01:57:04 -0700 (PDT)
+        with ESMTP id S237916AbhGPJCs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jul 2021 05:02:48 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EB7EC06175F
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 01:59:52 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id k27so11983962edk.9
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 01:59:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=GYJQ+XD4kiZdK9s9cNP5vVSWkP7OubBWvL28vnTxwbs=;
-        b=Yj+Eng1ZuocuM1jZyE2ir9IY+yGMc+e5WwNIiKSdiEZjXjYKvYCwzfrxN+14ZRwoD9
-         B33quC9l5RGNr7E+N5aIxALTTjH0Ot1KRSql7+jbDxe2b/d/bjCVDXGXcWCp6jHYeaFG
-         ppp8VAC3qu5z4B4CyVGZZVv/G+UuUS+Dsbabz7ujVsTqxTqYflhwn9EKu/4iyVlFEhLC
-         KK1C+pYYI6tf4Qv6KTOFNpbymNUMAD3Q0ka5rto1HNEbqE+JzHj8Aoo+ZfMt6j1ibpd0
-         BjY0i9EXmPeUnAcbLNU4yrqsmnLx4pE1ksY5fYr2BA/Jzh7HNu4c+U/nSoXdvJCNmU2v
-         kmJA==
+        bh=SHBVCICo0x0mF8AIMo7ORxqRPRUjJs7vbFZ/iKfhs1E=;
+        b=UVl4LaPvVyqSdxlRYKLmiONxPa31fh5kvdew0bEbX/JlcSeO83Ldu6lgzltMFIBX58
+         3BnJJrSRUSLhgqioxcFakZM4gwUrT/FKA3juBvgAHoF65X6hb4mEyxnLXDepe9C2bplg
+         KbGuV250rnKPs+7SIpHqh8N/GJJhIF9bo/rD98iuDAyGKLeHWllluqpsOhyJAuxtZBBd
+         1zgeRZLll6qC985QOGPgCeKrDpkicKkq/ImGpjjxT3AiHtYQTwmcDyJNEG6InXNlJfAS
+         hBSCHWQ61aKlFN7hCQ2SlVNLrcRhbSnI4GlCvV6c1MUYzDXd2goyxuBhILTR5tMnBCGb
+         WoLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=GYJQ+XD4kiZdK9s9cNP5vVSWkP7OubBWvL28vnTxwbs=;
-        b=VOecbVW73F53az8oTVLEQQTatXogg6gTiuNggRrgUiC+SoBVIUoAHrhoRYlELMM9zR
-         HGRKv2RRqPzH3AxIEtYCr7SzhiBn/bcrtrFXDPfwR89+5g5o+0p8o84U1ikIzvtQQE1Q
-         9FzrA0T9tIPHyBLqYL+tkQv5lMknqH8LHWlpUG5Wh6C8ILg83JFcJ8FiViZ2/GGmpwVl
-         oBKtU1VKzeUbtCenosQg8ngN9CKVTejfiIGVXigUyCGI8W7lhwXzSse4S60Yb3krGP5q
-         srGY6tK5cXN6DWCMqfBGXKQrAex3KRfYD5NwCpcXY+796QOPrW4SL+EDjcLQwZU4iKAU
-         i/Dw==
-X-Gm-Message-State: AOAM531GZQOPAdM9rIlZCPoYbXrrx6vQfYqI59LMJoWXgbU54b7KLe3K
-        79YqrN+1L7x3qPFTrWa1Rtw=
-X-Google-Smtp-Source: ABdhPJxmxjtxyxfg0vsAyb1Xdn8H5ZpoyNcXzFFHi1ACroVTdE40AT1T+GVwUXyPBvsXpcb4bk0ZlQ==
-X-Received: by 2002:a17:907:3f9e:: with SMTP id hr30mr10628293ejc.361.1626425823257;
-        Fri, 16 Jul 2021 01:57:03 -0700 (PDT)
+        bh=SHBVCICo0x0mF8AIMo7ORxqRPRUjJs7vbFZ/iKfhs1E=;
+        b=eS6Mz10w15A6OGu/oXGqd29/fhKzgbc0h/iKG7Djchy4V1TgnMEXlPmvG/LQBqGIJ3
+         kvzYvOWyjLZ1/p8Vlr7kHFtRdkpIzvGNgibKWP1ZdHNDGI+hvv2DYixzIhjkaDxz1kDQ
+         BUiCChDxs6pfPZWp6o7K61tHsr+4q3QjyW5L+VqYPoxMbDwlt3HimLYl6LoaIKxYB/mb
+         AItGFwLXRF5jt/6oavJxrokMFE+FjcZkR4TYr8rvpCapTWBAvErTMVBFCOwT7afhrQ4v
+         +tsNeUF8oFIDYmu4WWQCPalH5LHfCxugy2/A1FQEDwk+UMoFSVx9HbQ9ZYCssbXu+ahX
+         iZHA==
+X-Gm-Message-State: AOAM533lnHq77SmPG+wAb0hLhfVyaUl3mtHZcMXnR+JSgGA7kcOgnbWW
+        8wCmvsUkxNQrplRcp+PJRRQ=
+X-Google-Smtp-Source: ABdhPJwEuHWb4J/zjSzvvyreoIf3PhXgzlJBgJieYuIGvzcR/Ggf4NbDw71NR+NQNe02C7NzTe2eSA==
+X-Received: by 2002:aa7:d8c6:: with SMTP id k6mr13252987eds.374.1626425990575;
+        Fri, 16 Jul 2021 01:59:50 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id y17sm2682249ejd.16.2021.07.16.01.57.02
+        by smtp.gmail.com with ESMTPSA id n3sm3475031edd.53.2021.07.16.01.59.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jul 2021 01:57:02 -0700 (PDT)
+        Fri, 16 Jul 2021 01:59:50 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Emily Shaffer <emilyshaffer@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/9] hook: introduce "git hook list"
-Date:   Fri, 16 Jul 2021 10:52:27 +0200
+Subject: Re: [PATCH 4/9] hook: treat hookdir hook specially
+Date:   Fri, 16 Jul 2021 10:58:34 +0200
 References: <20210715232603.3415111-1-emilyshaffer@google.com>
- <20210715232603.3415111-4-emilyshaffer@google.com>
+ <20210715232603.3415111-5-emilyshaffer@google.com>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <20210715232603.3415111-4-emilyshaffer@google.com>
-Message-ID: <87o8b2y6u1.fsf@evledraar.gmail.com>
+In-reply-to: <20210715232603.3415111-5-emilyshaffer@google.com>
+Message-ID: <87lf66y6pd.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -74,71 +75,58 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Jul 15 2021, Emily Shaffer wrote:
 
->  static const char * const builtin_hook_usage[] = {
->  	N_("git hook <command> [...]"),
-> +	N_("git hook list <hookname>"),
->  	N_("git hook run [<args>] <hook-name> [-- <hook-args>]"),
->  	NULL
-
-Uses <hook-name> already, let's use that too. I can't remember if it's
-something I changed myself, or if your original version used both and I
-picked one for consistency, or...
-
-Anyway, I can re-roll the base topic or whatever, but let's have the end
-result use one or the other.
-
-> +	if (argc < 1) {
-> +		usage_msg_opt(_("You must specify a hook event name to list."),
-> +			      builtin_hook_usage, list_options);
-> +	}
-
-{} braces not needed.
-
-
-> +	if (!strcmp(argv[0], "list"))
-> +		return list(argc, argv, prefix);
->  	if (!strcmp(argv[0], "run"))
-
-This should be "else if" now.
-
-(Doesn't matter for code execution, just IMO readability, but I'll leave
-that to you ... :)
-
->  		return run(argc, argv, prefix);
->  	else
+> Soon, we will allow users to specify hooks using the config. These
+> config-specified hooks may require different child_process options than
+> hook executables in the gitdir. So, let's differentiate between hooks
+> coming from the gitdir and hooks coming from the config.
+>
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> ---
+>  hook.c | 3 ++-
+>  hook.h | 2 ++
+>  2 files changed, 4 insertions(+), 1 deletion(-)
+>
 > diff --git a/hook.c b/hook.c
-> index 935751fa6c..19138a8290 100644
+> index 19138a8290..3a588cb055 100644
 > --- a/hook.c
 > +++ b/hook.c
-> @@ -104,22 +104,20 @@ int hook_exists(const char *name)
->  struct list_head* hook_list(const char* hookname)
->  {
->  	struct list_head *hook_head = xmalloc(sizeof(struct list_head));
-> +	const char *hook_path = find_hook(hookname);
+> @@ -117,6 +117,7 @@ struct list_head* hook_list(const char* hookname)
+>  		struct hook *to_add = xmalloc(sizeof(*to_add));
+>  		to_add->hook_path = hook_path;
+>  		to_add->feed_pipe_cb_data = NULL;
+> +		to_add->from_hookdir = 1;
+>  		list_add_tail(&to_add->list, hook_head);
+>  	}
+>  
+> @@ -200,7 +201,7 @@ static int pick_next_hook(struct child_process *cp,
+>  	cp->dir = hook_cb->options->dir;
+>  
+>  	/* add command */
+> -	if (hook_cb->options->absolute_path)
+> +	if (run_me->from_hookdir && hook_cb->options->absolute_path)
+>  		strvec_push(&cp->args, absolute_path(run_me->hook_path));
+>  	else
+>  		strvec_push(&cp->args, run_me->hook_path);
+> diff --git a/hook.h b/hook.h
+> index 586ddf40bb..60389cd8cd 100644
+> --- a/hook.h
+> +++ b/hook.h
+> @@ -22,6 +22,8 @@ struct hook {
+>  	/* The path to the hook */
+>  	const char *hook_path;
+>  
+> +	unsigned from_hookdir : 1;
 > +
->  
->  	INIT_LIST_HEAD(hook_head);
->  
->  	if (!hookname)
->  		return NULL;
->  
-> -	if (have_git_dir()) {
-> -		const char *hook_path = find_hook(hookname);
-> -
-> -		/* Add the hook from the hookdir */
-> -		if (hook_path) {
-> -			struct hook *to_add = xmalloc(sizeof(*to_add));
-> -			to_add->hook_path = hook_path;
-> -			to_add->feed_pipe_cb_data = NULL;
-> -			list_add_tail(&to_add->list, hook_head);
-> -		}
-> +	/* Add the hook from the hookdir */
-> +	if (hook_path) {
-> +		struct hook *to_add = xmalloc(sizeof(*to_add));
-> +		to_add->hook_path = hook_path;
-> +		to_add->feed_pipe_cb_data = NULL;
-> +		list_add_tail(&to_add->list, hook_head);
+>  	/*
+>  	 * Use this to keep state for your feed_pipe_fn if you are using
+>  	 * run_hooks_opt.feed_pipe. Otherwise, do not touch it.
 
-Maybe we should have a INIT for "struct hook" too? This also needlessly
-leaves behind an un-free'd hook struct in a way that it wouldn't if we
-just had this on the stack, no?
+The "from_hookdir" looks like it isn't used until 6/9, and maybe the
+absolute_path change too? In any case this seems like a carried-forward
+rebase of
+https://lore.kernel.org/git/20210311021037.3001235-5-emilyshaffer@google.com/
+or some version thereof.
+
+At this point I tihnk it would be way better to squash this and other
+such changes that basically add a field to a struct that isn't used yet
+into whatever commit use/need them.
