@@ -2,77 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B349FC07E95
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 08:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86B85C07E95
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 08:34:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 96181613E8
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 08:21:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 65A2E6109E
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 08:34:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237315AbhGPIYa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jul 2021 04:24:30 -0400
-Received: from fallback18.mail.ru ([185.5.136.250]:59962 "EHLO
-        fallback18.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236794AbhGPIY1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jul 2021 04:24:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail3;
-        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Message-ID:To:Subject:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=L36/AtGzFdtTpE/3lk2FCCIW16uymjOun8oG/6T54w8=;
-        t=1626423693;x=1627029093; 
-        b=m1jSY1YjQ3As2u1Ew1HEmSocum6bskk8yRL3q/uxpACAYpP5xRes0LP/eYd9sIuEQnnkqn91LqUcp5r2xMGePLLj47HwUHRhBE6fGNkl9fgxLR2uDQmCy3//zx9HksKgiU92q+/XIZ+hYXn20Ul0DaFTpQvy8nZJ1NC19qGfnNY=;
-Received: from [10.161.76.76] (port=44164 helo=smtp17.mail.ru)
-        by fallback18.m.smailru.net with esmtp (envelope-from <alexshevchenko@mail.ru>)
-        id 1m4J6B-0001ms-EQ
-        for git@vger.kernel.org; Fri, 16 Jul 2021 11:21:31 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail3;
-        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Message-ID:To:Subject:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=L36/AtGzFdtTpE/3lk2FCCIW16uymjOun8oG/6T54w8=;
-        t=1626423691;x=1627029091; 
-        b=O59U63OxYX5xAw5z3ESo5IylQMppgcx0fE952hBstQAKFs5bOQlHoZEIvFmmJa3MCMrlLzVwGWUGF3rWE0Yra0EP1XO0GYG8v7tOSWa0DhlLT+wyYizAtDm4KxHOC1e1CTJfh0HykJU6UmocnwFyNrj/rZ8RVZXM/Hzq/QvLE8M=;
-Received: by smtp17.mail.ru with esmtpa (envelope-from <alexshevchenko@mail.ru>)
-        id 1m4J69-0003zZ-Dl
-        for git@vger.kernel.org; Fri, 16 Jul 2021 11:21:29 +0300
-From:   Aleksandr Shevchenko <AlexShevchenko@mail.ru>
-Subject: Typo in english github-git-cheat-sheet.pdf
-To:     git <git@vger.kernel.org>
-Message-ID: <f098c3d0-beca-c78d-9852-b222111e8873@mail.ru>
-Date:   Fri, 16 Jul 2021 12:21:09 +0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S237916AbhGPIhj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jul 2021 04:37:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45906 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237069AbhGPIhi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jul 2021 04:37:38 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 390ABC06175F
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 01:34:43 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id hd33so13939963ejc.9
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 01:34:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=k8BMw0UfYCeckHf+bud17PtT0Ou0Ngd5CfOf66m+ykk=;
+        b=CqZ3npublDo81itJysnLi2EUCc3UJeqxPxpsKdZ5VLcvCxVIZF9fnARmFK+LweNu73
+         ZRnL/NqZ+SrypCntrbfoHDmGhoqOmP9VHkQzE9zWVjKKmBEfU+jXqtFNt+XQqPL8eozm
+         rJF0UqycfzbVATsoVooMzi8UI9MJXR+gTAWppsxQ1uaMlbq20+M6J/zeixNAoacT51BM
+         0WXKSPPoL1H5rptVr5AwW13+v+mZa7TAbDO5A2UEyczi2qXsfjaGbh3CZ+cxqnNzjfuJ
+         ZdhypZ/24BnHk3JyjCa9wdDHzvo21TwkvcLwAhogitSsn7Efqm6UqHM5jWT2ittVGiJb
+         HWWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=k8BMw0UfYCeckHf+bud17PtT0Ou0Ngd5CfOf66m+ykk=;
+        b=n8lW4vMfF5urZLPOIeJm9PqdzyoBDEe8pNF1fyadSc5A3Lkd1iDapvh9gCbQxWIAOk
+         vg2mPkuanFwDa3G+CQvdMdly1yEeOBzEye4OJaLNZWCm/FBclUN/1eO/FM5ic8eZDRe5
+         8v3KgP28u6kx+04VSSWLdDVgBoT4aUWxxfypufaQNPrsytoZVmn7/zkYQcUsxpm75kvc
+         yZU/XBbwvY6lSC9oFWBpln2gtt49KNtzLMZGhHWp5yusxk7DCtFms6xniV8q2W03cPCx
+         yLhRXz1tcwIQHAdfIr1SHUpOJ4qtm8oB8Ou+/UOy51xomhcy+1KogLJqCCAcX9wHcRKP
+         GJQw==
+X-Gm-Message-State: AOAM531k6wtXU6iEvZ2FOHfUy0lR2UzqGZiBdY8+Wx6NzuuZtex8vNa8
+        6NM9qgq1mvtVTHym+84W9YGgtNDIwJs=
+X-Google-Smtp-Source: ABdhPJxVtMFppeUXYGcYBInzD7hdp4cPUWmhpRu9s+FEF3RL2JfBbHgHuygC1AdvsT9rJ52cU20KsQ==
+X-Received: by 2002:a17:907:62a7:: with SMTP id nd39mr10631553ejc.502.1626424480274;
+        Fri, 16 Jul 2021 01:34:40 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id w2sm3396807edx.58.2021.07.16.01.34.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Jul 2021 01:34:39 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 7/9] hook: allow out-of-repo 'git hook' invocations
+Date:   Fri, 16 Jul 2021 10:33:25 +0200
+References: <20210715232603.3415111-1-emilyshaffer@google.com>
+ <20210715232603.3415111-8-emilyshaffer@google.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <20210715232603.3415111-8-emilyshaffer@google.com>
+Message-ID: <87tukuy7vc.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: ru
-Content-Transfer-Encoding: 7bit
-X-7564579A: EEAE043A70213CC8
-X-77F55803: 4F1203BC0FB41BD941C43E597735A9C36A98DBA789EBB6AEFB5A483DCE5E7579182A05F53808504072C417BB5E645FE47E8296FD08621A4B4A66375196E8EF87B9AE37EA9B74D335
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7C2204D4F9A221771EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006375D54B99ECAFA2F678638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D850E8733101D570BD35F677CA3EAB0A3F6F9789CCF6C18C3F8528715B7D10C86878DA827A17800CE7678748765F3C1EF79FA2833FD35BB23D9E625A9149C048EE9ECD01F8117BC8BEA471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F446042972877693876707352033AC447995A7AD182CC0D3CB04F14752D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EEC24E1E72F37C03A06E0066C2D8992A164AD6D5ED66289B52698AB9A7B718F8C46E0066C2D8992A16725E5C173C3A84C3CAFEF312542AECBE76E601842F6C81A1F004C906525384307823802FF610243DF43C7A68FF6260569E8FC8737B5C2249EC8D19AE6D49635B68655334FD4449CB9ECD01F8117BC8BEAAAE862A0553A39223F8577A6DFFEA7C5E1C53F199C2BB95B5C8C57E37DE458BEDA766A37F9254B7
-X-C1DE0DAB: C20DE7B7AB408E4181F030C43753B8186998911F362727C414F749A5E30D975CAA8DC07915BC95B7F45B0BF928EB195775E05338F9F2F1E19C2B6934AE262D3EE7EAB7254005DCEDA59F2C00BD1B740C1E0A4E2319210D9B64D260DF9561598F01A9E91200F654B0FEFB8A20A2F5DA258E8E86DC7131B365E7726E8460B7C23C
-X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D34EE19B6E2433CA093CDC47E889A4AAF879B14AA9502D2F2122B7DF34EC1A4971989E6F4BA069919B31D7E09C32AA3244CCCB81A844DDDDB0CF8427C4B17DEB296250262A5EE9971B03EB3F6AD6EA9203E
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXjCmWGQOK4Xds27oM4OepMc
-X-Mailru-Sender: 3FA3AE788D48094582E9A32A12AEE4BDF51732D3D91658F0F2911B9F0E6A689D83C73DEF7C7733F9CB2DA6C705B9E9F4C77752E0C033A69E825B612E255FBE835287A56200E873EE3453F38A29522196
-X-Mras: Ok
-X-7564579A: B8F34718100C35BD
-X-77F55803: 6242723A09DB00B4DE24245422D83CE6F6EF26CB7A2DAAF2F40F2CDA6349448C049FFFDB7839CE9EF4F4DA9190548748EC3FEA22D38B99AEE503E5D5FE2015973EEC4E2C41C772B9
-X-7FA49CB5: 0D63561A33F958A552D3F0BC3B1125317E7E20FA1D2D69DCDF351FE7DA300297CACD7DF95DA8FC8BD5E8D9A59859A8B64071617579528AACCC7F00164DA146DAFE8445B8C89999728AA50765F790063754202C433EBC1B4E389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC8C0F9454058DFE53CF6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947CA6C7FFFE744CA7FBC0837EA9F3D197644AD6D5ED66289B52698AB9A7B718F8C442539A7722CA490CD5E8D9A59859A8B62CFFCC7B69C47339089D37D7C0E48F6C5571747095F342E88FB05168BE4CE3AF
-X-C1DE0DAB: C20DE7B7AB408E4181F030C43753B8186998911F362727C414F749A5E30D975CAA8DC07915BC95B7D7CD5EEA8341B6D7882DEA77E8E283E39C2B6934AE262D3EE7EAB7254005DCEDA59F2C00BD1B740C699F904B3F4130E343918A1A30D5E7FCCB5012B2E24CD356
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojk34dk3RWCsYHpvby+gQKug==
-X-Mailru-MI: 800
-X-Mailru-Sender: A5480F10D64C9005B3CA2E2FD44993EC9FCC76CD6A05EBE28BBDA9FCC07100AF42A3910910EDF928A4B5C846784BBEC63DDE9B364B0DF289BDF38CFCC23DC39DCA9B01087240937DAE208404248635DF
-X-Mras: Ok
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-https://training.github.com/downloads/github-git-cheat-sheet.pdf
 
-The .gitgnore file
--->
-The .gitignore file
+On Thu, Jul 15 2021, Emily Shaffer wrote:
 
+> Since hooks can now be supplied via the config, and a config can be
+> present without a gitdir via the global and system configs, we can start
+> to allow 'git hook run' to occur without a gitdir. This enables us to do
+> things like run sendemail-validate hooks when running 'git send-email'
+> from a nongit directory.
+>
+> It still doesn't make sense to look for hooks in the hookdir in nongit
+> repos, though, as there is no hookdir.
 
--- 
-Best regards,
-Aleksandr Shevchenko
+Hrm, I haven't tested but re the discussion we had about
+RUN_SETUP_GENTLY on my re-rolled base topic is this really just a
+regression in my changes there?
+
+I.e. I assumed we could do RUN_SETUP for the bug-for-bug compatibility
+step, but send-email runs out of repo hooks and we just didn't have
+tests for it, or am I missing something?
