@@ -2,154 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F502C07E95
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 15:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68DF7C12002
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 16:39:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 18EDC61164
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 15:55:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4780C613D4
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 16:39:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241034AbhGPP6b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jul 2021 11:58:31 -0400
-Received: from mout.gmx.net ([212.227.15.15]:40469 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236246AbhGPP6a (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jul 2021 11:58:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1626450930;
-        bh=CMkBTZ9JH1Q0IcK31/z6HAx36nQKxqbIsciycI5LlKk=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=k6J61BQk/muLPuQaUI7yGl9y+bU8YB73vhO0eMBnwtPKFS0ljOTe+kSUhpe0fbblQ
-         u20C+q0fT2lBJtPpYyELlmn4vWZJHtW3A2FJ/LmDoNWOhIwHFD08WNUSAuZFtkFemz
-         aCRSuOpc8d/CUCeCi3G12YnH1fgpF3I/laU8EhCQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.111.2] ([89.1.214.95]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mo6qv-1lKKeQ3tSl-00paTk; Fri, 16
- Jul 2021 17:55:30 +0200
-Date:   Fri, 16 Jul 2021 17:55:28 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v3 19/34] fsmonitor-fs-listen-win32: implement FSMonitor
- backend on Windows
-In-Reply-To: <87mtqq2i3r.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2107161754180.59@tvgsbejvaqbjf.bet>
-References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com> <pull.923.v3.git.1625150864.gitgitgadget@gmail.com> <5bba5eb3d1bd172f09fdf6eb2e9b8ac4dd7f940f.1625150864.git.gitgitgadget@gmail.com> <87k0m9bpmv.fsf@evledraar.gmail.com>
- <b19f3f2a-049f-acf2-f59e-de705dc54307@jeffhostetler.com> <87mtqq2i3r.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1411310482-1626450929=:59"
-X-Provags-ID: V03:K1:zqxE9p8QSvJbHNI6plGURVxIhq9x9g7apkewACWOVhZXOscefMA
- wBlvj/vJSbYAD88rngnnlW3nWQTuYr1mkNalWl5FaZUEqEgZeUYtKNeE5OF3X8GUHzA3StG
- FGl0XVrXFbujNWKYdGXgRhqW/o7WmOAAad2JYGfxXMGxMfzfPJx+VaavDliU4RuKeTbqkh0
- 3TgHb7Vh/wx1X92Fk0ecQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:q7EONUT7xcM=:CnWlNY2HcJ5gmJ3nSYItLm
- 2ptBHR1bwJJKXbJe1CIiIYb6xy1y97KYwQlb61s3EYS38hhlJWI/Y0Lro3j+24MIwQdOOVj2z
- hpcUGyqQeJcurL/OfNNDKStojQ1vocG6Wf/F4GklkF5oHno+qPUdS170UfAD5AGryYoxolTBY
- fI10NbF3/6ooL8dsaV+KnADPtaOrtAEXskHijhurPQR7SiaT1PklJSafyww+Ad+x42HGy0h23
- q6D3LClTM79vTOaFn5+22F6/97h+a6JH6ECJ0aFS1RXGxfj3W+kfqG71NyzmGWCQ+GLUtbO/K
- v10vVk+3d89U4t04FyqOarAR72KSWmSFSHIQ3+E64T1R2hYfA/fjtZozIYM4ycQL4ykn63XC1
- QBkmmQb/Li9vXaiWJi49KJr9VXseXy6POlqJXa/YimNcCORhW+RedVxWtyhhCBze7wAmW1+ZS
- Z2UMhU3vWCI+A1GUIX0v3b2JHS4DVzJ3l2ySHpeNCJIcpxSnIRdKBoAd4XuxOwfqUgT29u2cs
- 4nAlDYvsrKkQ3HgYVubgAji/uKl0qs4PbLj5OkhinOJkYOxp4Kr4DrFylozL8y3YFqqpYjOHR
- nwKJ1HOsW6X/CmpRgElp5k6gf+A2JwumsVbXtQvN0xK09amxw1PTiJNreKEGMiWbee3JpRRNm
- 6jcp+cQ6oy6Q27Msrl24hNOeoCye5OfR4VNB3KirWjioeO+3bDPNWjTLFD56/7CFBtt51zUoE
- X0kbaP8y9x7aGjlMHhbAzzU7Aia5u4/h83rLWZ04g7/T7amaa6uobH5mSiOgjTjYbR6gjjiMl
- Qp9Z1gx6Efcy7A5+g0YWOLYb3ZynIBq21yDT5/YHBl1XelIy/QLThoU/1M/Nhscih2Dzz4LT/
- Jid6NJsHZt9WF0QHnK1RDafJS8KvIsWXnmldRjavEjsDz+TtGAs5qHdZn2mU9/MX4GpwfheJ/
- 2pu4g6djSTAkT3U8q1fMyYXZY7Bdo2iCzN2JhD9cZqylDAdO7W5et9k6Pf8VHtt5BAqD6kq1K
- CBdGV38XdXZ+8WU3WS2sHyCYzdObVT+429mC2+JfJbyg3zfeBbLDkfCobeGkYH38JKze65n/l
- sME3Zd5xeZdm6PozLGQe3yMf+hQXxdLwy4KDJCwRw/I2SH+uVC49JjZzA==
+        id S230163AbhGPQmI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jul 2021 12:42:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43622 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229462AbhGPQmH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jul 2021 12:42:07 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CFCFC06175F
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 09:39:11 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id 42-20020a9d012d0000b02904b98d90c82cso10448266otu.5
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 09:39:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-transfer-encoding;
+        bh=rsTnUEjBxqickECGT3n/A6lTQj+U+LHXo9b4PjXlamY=;
+        b=NDH6RaLn6VnNfXIcZV3FGH7pzUIAygnkGwMmSOOcQcPnP8GMXd2q9bvCVlHpkRgG+/
+         4g+S+bGaaSzIFGmFi24sonaBkom4iLdPEUmjVnM1MiSQFcvDwnvrA63famrDV/rG8kCS
+         y3NK+p0BAaz5DQ4PXb7XysCYJKOMV8J7NfXy91emociBxHOcvyYY0GXFe9W/fUdaAlcY
+         J3ZFh+Z6v825cRpqo+X04F5j4+8FLGbbc4pPvdZ2tE5MFf722XU6D5H6Uo17j8lWFLmS
+         pFUCbbH4LmakUq/NFmMoKIZHkd5AWFu/Nu4PSXA3VMjEDrrhfzBGiByxCl7I7G5YNMN/
+         g2Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
+         :subject:mime-version:content-transfer-encoding;
+        bh=rsTnUEjBxqickECGT3n/A6lTQj+U+LHXo9b4PjXlamY=;
+        b=WlGoCEQEIv5pqvJSZmqbIfowCUww+T+OphWquUFBmAXCAN8yZZoDUyZSpFfyjSzdQK
+         czK3nF9zcJmZqfSjXa9kisLCCsveojnGwvt1rMmkbsR/xpt8jQ1+zwNGaljdSPKQ9Z16
+         4YsiCjhYIXrudKEPFGDq1UpkZ5wWEmGXCW5rmvi/S/XOUoPyzt+Vf5CcX2k2mujeTZS3
+         qJdyqCvQiw5jRgAqUzvTslHsNEUi0ku+itSDp82/KUsAoiS268iL6I2YE6gDNebWnCYr
+         863OSXKBBHCNgsNzFuhKK47Y4xhEa3u4JyFNKpTedL5NBf//wE8/ZryoECyeyAEWv71V
+         Pvwg==
+X-Gm-Message-State: AOAM531Hu3sfMK1y/gY58iC4k43c1Qj6uzeApFB7qWXNpebAV0xb209G
+        vS7Gr2FaTvCBml6/yrmR7DZIdy0EpBBpLw==
+X-Google-Smtp-Source: ABdhPJyHH7u6cWyVLQYcpcF/2O1InZ7k5yXt3i3F5ZeUPwOsD5QYcZdrNekZHjFJ+WY5n1YbQwrQiA==
+X-Received: by 2002:a9d:651a:: with SMTP id i26mr8903747otl.148.1626453550720;
+        Fri, 16 Jul 2021 09:39:10 -0700 (PDT)
+Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
+        by smtp.gmail.com with ESMTPSA id 48sm1981754otf.13.2021.07.16.09.39.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Jul 2021 09:39:10 -0700 (PDT)
+Date:   Fri, 16 Jul 2021 11:39:08 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Matthias Baumgarten <matthias.baumgarten@aixigo.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <60f1b62c7531c_ade9208d8@natae.notmuch>
+In-Reply-To: <c62933fb-96b2-99f5-7169-372f486f6e39@aixigo.com>
+References: <c62933fb-96b2-99f5-7169-372f486f6e39@aixigo.com>
+Subject: RE: pull.rebase config vs. --ff-only on command line
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hello Matthias,
 
---8323328-1411310482-1626450929=:59
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Matthias Baumgarten wrote:
+> this is my first time contacting you guys and girls so I hope this mail 
+> achieves the expected standard. I've discovered the following behaviour 
+> of git:
+> 
+> If pull.rebase is configured to true and git pull --ff-only is executed 
+> it seems like the config wins, i.e. issuing "Successfully rebased and 
+> updated refs/heads/...", which is not what I would expect. I always 
+> believed that command line options would overwrite configured options.
+> 
+> Is my assumption that command line options always win wrong or is this a 
+> bug?
 
-Hi =C3=86var,
+Yes, your assumption is correct, but the equivalent of that combination
+is:
 
-On Tue, 13 Jul 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+  git pull --rebase --ff-only
 
->
-> On Tue, Jul 13 2021, Jeff Hostetler wrote:
->
-> > On 7/1/21 7:02 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >> On Thu, Jul 01 2021, Jeff Hostetler via GitGitGadget wrote:
-> >>
-> >>> From: Jeff Hostetler <jeffhost@microsoft.com>
-> >>>
-> >>> Teach the win32 backend to register a watch on the working tree
-> >>> root directory (recursively).  Also watch the <gitdir> if it is
-> >>> not inside the working tree.  And to collect path change notificatio=
-ns
-> >>> into batches and publish.
-> >>>
-> >>> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> >>> ---
-> >>>   compat/fsmonitor/fsmonitor-fs-listen-win32.c | 530 +++++++++++++++=
-++++
-> >> <bikeshed mode> Spying on the early history of this (looking for the
-> >> Linux backend) I saw that at some point we had just
-> >> compat/fsmonitor/linux.c, and presumably some of
-> >> compat/fsmonitor/{windows,win32,macos,darwin}.c.
-> >> At some point those filenames became much much longer.
-> >>
-> >
-> > Once upon a time having "foo/bar/win32.c" and "abc/def/win32.c"
-> > would cause confusion in the debugger (I've long since forgotten
-> > which).  Breaking at win32.c:30 was no longer unique.
-> >
-> > Also, if the Makefile sends all .o's to the root directory or a
-> > unified OBJS directory rather than to the subdir containing the .c,
-> > then we have another issue during linking...
-> >
-> > So, having been burned too many times, I prefer to make source
-> > filenames unique when possible.
->
-> A much shorter name like compat/fsmonitor/fsmon-win32.c would achieve
-> that goal.
->
-> >> I've noticed you tend to prefer really long file and function names,
-> >> e.g. your borrowed daemonize() became
-> >> spawn_background_fsmonitor_daemon(), I think aiming for shorter
-> >> filenames & function names helps, e.g. these long names widen diffsta=
-ts,
-> >> and many people who hack on the code stick religiously to 80 characte=
-r
-> >> width terminals.
-> >>
-> >
-> > I prefer self-documenting code.
->
-> Sure, I'm not saying daemonize() is an ideal name, just suggesting that
-> you can both get uniqueness & self-documentation and not need to split
-> to multiple lines in some common cases to stay within the "We try to
-> keep to at most 80 characters per line" in CodingGuidelines in this
-> series.
+But --ff-only is only meant for the merge mode of `git pull`
+(git pull --merge), not the rebase mode, so it's ignored. You can see
+that from the documentation [1]:
 
-While you are entitled to have your taste, I have to point out that Jeff
-is just as entitled to their taste, and I don't think that you can claim
-that yours is better.
+  With --ff-only, resolve the merge as a fast-forward when possible.
+  When not possible, refuse to merge and exit with a non-zero status.
 
-So I wonder what the intended outcome of this review is? To make the patch
-better? Or to pit taste against taste?
+Note the *merge* part.
 
-Ciao,
-Johannes
+[1] https://git-scm.com/docs/git-pull
 
---8323328-1411310482-1626450929=:59--
+-- 
+Felipe Contreras
