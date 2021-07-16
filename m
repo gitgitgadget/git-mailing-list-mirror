@@ -2,166 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27595C07E95
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 12:38:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D3E0C636CE
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 13:59:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 029EE61374
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 12:38:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A03561407
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 13:59:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233906AbhGPMk5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jul 2021 08:40:57 -0400
-Received: from mail.z3ntu.xyz ([128.199.32.197]:32812 "EHLO mail.z3ntu.xyz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232620AbhGPMkx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jul 2021 08:40:53 -0400
-Received: from [127.0.0.1] (144.178.202.138.static.ef-service.nl [144.178.202.138])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 64C23CA821;
-        Fri, 16 Jul 2021 12:37:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1626439075; bh=D0i6d65GR1L+ORanK5o9lQn/fNOIP6T6wTlhLwNOkq8=;
-        h=Date:From:To:Subject:In-Reply-To:References;
-        b=KK29Dp9iAF7+b4sTrcQOHSwVP943Ho7DHSPX3pp7YrSZObJqtKbgmdDTsy69y+YTt
-         r3Y5evtq3uIBcRZmz3gy+4KHaq82KmRwVqoLoMkCDomVhxeyHuEQN3spXM1wYrfm+w
-         boICWHBicyuDQ7dZOjG+VTUCxp7yOZ2RVhnE41pw=
-Date:   Fri, 16 Jul 2021 14:37:48 +0200
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Phillip Wood <phillip.wood123@gmail.com>,
-        Luca Weiss via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/2] merge: make sure to terminate message with newline
-User-Agent: K-9 Mail for Android
-In-Reply-To: <8678772b-dd5d-9188-8b63-98d05cedb323@gmail.com>
-References: <pull.1048.git.git.1626421416.gitgitgadget@gmail.com> <31371c25743e1001b4fac89e80e7206ff477ac8a.1626421416.git.gitgitgadget@gmail.com> <8678772b-dd5d-9188-8b63-98d05cedb323@gmail.com>
-Message-ID: <AB048897-F70A-4388-B2A6-56BFEA40B303@z3ntu.xyz>
+        id S240351AbhGPOC3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jul 2021 10:02:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35538 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240313AbhGPOCU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jul 2021 10:02:20 -0400
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BB86C061766
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 06:59:25 -0700 (PDT)
+Received: by mail-il1-x130.google.com with SMTP id z1so8393916ils.0
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 06:59:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=jOdNJxtOiDcIZVn41+tzQLmC0eb54UMSJYR0WxlOfXQ=;
+        b=GunqIbILG2OxgiGN2iMJle8tdZea/6rZppGoDl4zrruueD+BEBxBCw4F21UJPKnI/h
+         k6DCWcimVwHL3rAo5DZ0zbBpxqI2vGqPux0pC4Xgrwwert+vwS0lahBwRuqTXTxCFpo2
+         2j3nMjIFF18FAVN+Bx1qd5ft7rWFIhqLFX4CCJrqizlnmOOloCYHbPtYpdRekGEkGNaa
+         /JWVo2s/HVa30Lcj4xcxhZ/cg6jfEqA0jZNyPa6LviWmnH+LC//UFIJW6/bwJVUpBfqm
+         zSz8VNV+xwiorHIiOhW73kTqpOZS3EtxNTvwm44gKTb/B/xxOtlL2tA+3669LS+G1aiv
+         Y4cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=jOdNJxtOiDcIZVn41+tzQLmC0eb54UMSJYR0WxlOfXQ=;
+        b=oGtUJQEaEtFHcnzhQHA2+XrJUJbl91BilIraleJ+CyiYHtOhBQLeSjoKSkfjuPVcX3
+         mrEkYsNaw1U2Z8BiTfTUKSH3SfGCG6nRl8NATeZGbH94x7CEeYuGL59eWOqgZyPA3v4f
+         xkHKh1yvZmdmHQHGaxXBQyomI9c1lOngnWD5ePYQ2OxuFlmf2vZYCOnO0XT0QUyDcrg3
+         VVBq6CIoB4NWOl24o8IlzIhT7KQtgsMaEaYaFA6TK1Hujk15UlwNGRFoAiV5v7oybD4N
+         cq2mTL6T9+P6/7loxJooB73PJ9Y6LINQ/ekezqaWCu0LYby5REStGAxRc3NO3UocZ9ZX
+         /tzg==
+X-Gm-Message-State: AOAM5311GjyBoCA41R87vdmF98adEbTrGzj8Yq6K2RveUfuIOpfRQ9zz
+        DWyLeFh9P8pWWlgMCDWJwwA=
+X-Google-Smtp-Source: ABdhPJyRNTYju29xBPWldlIS5d7I/ES69/91Lz4XRW/6V99KNtVTNygCxPR+VmeGUb+uZEzHX/bTog==
+X-Received: by 2002:a92:c150:: with SMTP id b16mr6475696ilh.54.1626443963368;
+        Fri, 16 Jul 2021 06:59:23 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:65b0:b974:e7b0:818c? ([2600:1700:e72:80a0:65b0:b974:e7b0:818c])
+        by smtp.gmail.com with ESMTPSA id k21sm5251882ios.0.2021.07.16.06.59.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Jul 2021 06:59:22 -0700 (PDT)
+Subject: Re: [PATCH 0/5] Sparse index: integrate with commit and checkout
+From:   Derrick Stolee <stolee@gmail.com>
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.973.git.1624932786.gitgitgadget@gmail.com>
+ <CABPp-BF_i1QRCXaeKzqoc6Q2=3un-wku7aKUEdBbXfeVfTG8xg@mail.gmail.com>
+ <b362c428-eec9-39e3-55a0-0738431e1d98@gmail.com>
+Message-ID: <c127ceed-10fd-9ad0-e858-db79bec0cf8d@gmail.com>
+Date:   Fri, 16 Jul 2021 09:59:21 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Autocrypt: addr=luca@z3ntu.xyz; keydata=
- mQINBFgc0/QBEACzBE9TBfe+O2TARphhmhVgMd2zo3lkvjWdohb9mg9+NvUq7swQR2l8davgwaTN
- VwDUA9jdzfjp4GShf0VFnqqFGouEc3OMeuHFdtjG4RoYGW+XvEoAcTWgY6glANmMZMi33D+2wnQQ
- Qziie3LMTQ7Tlpk8at8Ck4ShmmGTmek9LNFq1eHs3IHK5eH0fDA/rYvPxFMmwbHRDjdwtXjZlXBC
- nxEXK8CJkNG58G+RbtPU0I8Iu02TDOkr9x6KwLT1lJmq03wCkuQEXrDAzo6kkeAMhzWBtBtxTB1M
- byOZqNlbzEtxOTK9iA74U6POyN//876ESQ87LicFS4mgoyHL0Vt7ro9CSH7Imzv96Ae8HDZqIcBy
- Bn9YMBswjy4JOsC9JP/oDhr71y40nnrVvgx4ZesJM0PL9J1JYQWJQ22GoinnDwSB11Re51OYsK+l
- xEqph38N+AjcNYm+l85O/l+BkkULC+0kHWG6wQCv67KyeYCJJhNqJucXj2gXXaKyv2ltWPwHgK6w
- OAtN9QbimcYV2PUgfx6hl5r7buwc3tefp9ccmtoLq74mgrKiLurHqa4pKCa1uqfhBEN5/Os5tMrX
- IGa2sRvKHK0Pn7iyJQyuclyOp4r9W+QUw2DENm4n6ovkl7rfriL6ibBgVLcnexdG/8LZRaWFV96G
- YY3VCcRlz8SCwQARAQABtBtMdWNhIFdlaXNzIDxsdWNhQHozbnR1Lnh5ej6JAlQEEwEIAD4CGy8F
- CwkIBwIGFQgJCgsCBBYCAwECHgECF4AWIQS9BNokyXG41YeyuNf69pz2zS0CzQUCX5CaYAUJCVT5
- 7AAKCRD69pz2zS0Cze7SD/0Xnvid+b9qeqAoXZeAqju1sXlv1BU8dNvA7AlDOQejNOAOO64DB8Ye
- r6AWu5Wcizo0KHEGPKmgJaAcjUac9MqFdLfhImsnUKEC6cjVeIJE5fynkNibtucQQFWO6nQMMF/3
- DmmfFOVeY70dhUzprvR8iYHyehh2yytQ7X7y83DSC89GpWq5hHJX41M3M0g006mPSNQvd79XXXVe
- RM7CUg6Ny3f3nThD7oa6SjLPF3hvYnhg1QTZk2zF3P0IeK+GiXI6RrogNBrCSKr2u3jW1QwiFJu1
- RI8TFgYdxMFyckUDpLZbsgEOsss07ffROQm7i+tVVlUQH7RM9TWVxA7jCMkFYtiE4V0WrTowcuk+
- 28g/L/SKC+wrhAV/s98+CghS7u7A/xhamXGMdcW2ZQEUkvTBJULe6343bM1RkiYDKbfra1p8/rww
- TH5G3mtoCf8in7VlfNEcjf00oBHHtoz3xZtIRRf7QaW7XOz9vQaMV0YcmGhZzFd/tbWI9R74gwqD
- Zf9Qtt5P4ptKBYH7yKqvl1wuncTDrIcltMgSfeP9Z6yt+EkMz08XvZwC6OboozEmM+zd7jbCcjom
- o3XNYUDvgBPZq+nWzOGFH8KdPHnLHbso2DZf5StxKdYXH8WWyJkQqLW+BYCiGxTLfjyFofEUoTdY
- 2bEWznuNRPmsKWeqEkzxyA==
+In-Reply-To: <b362c428-eec9-39e3-55a0-0738431e1d98@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+On 7/12/2021 2:46 PM, Derrick Stolee wrote:
+> On 7/9/2021 5:26 PM, Elijah Newren wrote:
+>> On Mon, Jun 28, 2021 at 7:13 PM Derrick Stolee via GitGitGadget
+>> <gitgitgadget@gmail.com> wrote:
+>>>
+...
+> This is a strange case in that we have a staged tree that is
+> outside of the sparse-checkout cone. When running the 'git
+> checkout df-conflict' command, the twoway_merge() method
+> receives the following values:
+> 
+>  current: "folder1/" (tree OID)
+>  oldtree: "" (NULL OID)
+>  newtree: "folder1" (blob OID)
+> 
+> Is this value for 'oldtree' correct? It seems strange to me,
+> so I'll look further into it.
 
-So the behavior that I have observed is the following:
+This is correct. This 'oldtree' entry is actually the o->df_conflict
+placeholder and is set to NULL inside the method.
 
-I've added a usleep for ~10 seconds instead of the line I added and
-=2Egit/MERGE_MSG was not terminated with a newline=2E
-This didn't change when using --log
-It was properly handled with --signoff and the trailer was added
-correctly=2E
+> Further, I expect it to be simpler to modify the behavior
+> here to match the full checkout case than to make the
+> sparse-index case match the normal sparse-checkout case.
+> The "natural" thing would be to keep the staged "folder1/"
+> directory, but that would present as adding all contained
+> content, not just the single staged entry.
+Taking a closer look at the full checkout case, I discovered that the
+'git checkout df-conflict' command succeeds in the full checkout case if I
+apply it directly to the 'master' branch. In that situation, it completely
+removes the staged change to folder1/edited-content! This seems like
+incorrect behavior, and has nothing to do with the sparse-checkout feature.
 
-I have a simple reproducer here:
+It just happens that a sparse-checkout will have a _different_ kind of
+incorrect behavior!
 
-mkdir /tmp/test
-cd /tmp/test
-git init
-echo 'dest=3D"$1=2Etmp"; git interpret-trailers --trailer "Foo: Bar" < "$1=
-" > "${dest}"; mv "${dest}" "$1"' > =2Egit/hooks/commit-msg
-chmod +x =2Egit/hooks/commit-msg
-git commit --allow-empty -m "Initial commit"
-sleep 1
-git switch -c foobar
-git commit --allow-empty -m "Foo1"
-sleep 1
-git commit --allow-empty -m "Foo2"
-git switch master
-git merge --no-ff --no-edit foobar
-# look at merge commit message now
+However, when adding the test on top of the ds/status-with-sparse-index
+branch, the full checkout case matches the sparse-checkout! I bisected
+this to the additions of files adjacent to folder1/ (folder1. folder1-,
+etc) in e669ffb (t1092: expand repository data shape, 2021-07-14). If I
+switch the test to conflict on folder2, then I get the strange behavior
+that I was noticing on 'master'.
 
-With my patch(es) this works properly=2E
+Some very subtle things are going on here, and they don't necessarily
+involve the sparse index. Adding the sparse index to the mix creates a
+third incorrect behavior to this already-broken case.
 
-If you have any other ideas on how to fix this, I am open for
-suggestions :)
+If we agree that the correct thing to do here is to reject the merge and
+fail the command, then I can start working on making that change in
+isolation (because _none_ of the existing behaviors are correct).
 
-Otherwise I'll try to add more detail to the individual commit
-messages (I deliberately kept the "unnecessary" detail out of the actual
-commit messages before)=2E
+That leaves a question as to whether we should hold up this series for
+that reason, or if I should pursue a fix to this kind of conflict as a
+forward fix on top of it. What do you think, Elijah and Junio?
 
-Regards
-Luca
-
-p=2Es=2E sorry for replying off-list, and if this is wrongly bottom/top po=
-sted, email client troubles ;)
-
-On July 16, 2021 12:23:06 PM GMT+02:00, Phillip Wood <phillip=2Ewood123@gm=
-ail=2Ecom> wrote:
->
->Hi Luca
->
->Thanks for your patches=2E It would be very helpful to have the=20
->explanation from the cover letter in the commit messages for both=20
->commits to explain why this change is being made, otherwise that=20
->information will not appear in the history=2E
->
->The cover letter says this happened when using '--no-edit', but unless=20
->I've missed something 'git merge --no-edit' creates its message using=20
->fmt_merge_msg() which calls strbuf_complete_line() just before it=20
->returns=2E append_signoff() and 'merge -m' always terminate the message=
-=20
->with a newline=2E The only path I found that does not ensure the message=
-=20
->ends with a newline before calling the prepare-commit-msg hook is when=20
->using '-F' and I suspect that may have been a deliberate decision but it=
-=20
->could be an oversight=2E In any case we would want to make sure that 'git=
-=20
->commit -F' and 'git merge -F' to behave the same which I think they do=20
->at the moment=2E
->
->Best Wishes
->
->Phillip
->
->On 16/07/2021 08:43, Luca Weiss via GitGitGadget wrote:
->> From: Luca Weiss <luca@z3ntu=2Exyz>
->>=20
->> Signed-off-by: Luca Weiss <luca@z3ntu=2Exyz>
->> ---
->>   builtin/merge=2Ec | 1 +
->>   1 file changed, 1 insertion(+)
->>=20
->> diff --git a/builtin/merge=2Ec b/builtin/merge=2Ec
->> index a8a843b1f54=2E=2E646bb49367f 100644
->> --- a/builtin/merge=2Ec
->> +++ b/builtin/merge=2Ec
->> @@ -867,6 +867,7 @@ static void prepare_to_commit(struct commit_list *r=
-emoteheads)
->>   	}
->>   	if (signoff)
->>   		append_signoff(&msg, ignore_non_trailer(msg=2Ebuf, msg=2Elen), 0);
->> +	strbuf_complete_line(&msg);
->>   	write_merge_heads(remoteheads);
->>   	write_file_buf(git_path_merge_msg(the_repository), msg=2Ebuf, msg=2E=
-len);
->>   	if (run_commit_hook(0 < option_edit, get_index_file(), "prepare-comm=
-it-msg",
->>=20
->
+Thanks,
+-Stolee
