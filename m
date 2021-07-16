@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB5A3C12002
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 14:13:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02EE1C07E95
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 14:13:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 92B3E613E8
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 14:13:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E0D61613EB
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 14:13:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240470AbhGPOQW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jul 2021 10:16:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38758 "EHLO
+        id S240198AbhGPOQX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jul 2021 10:16:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240428AbhGPOQS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jul 2021 10:16:18 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 305FAC06175F
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 07:13:22 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id u1so12324950wrs.1
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 07:13:22 -0700 (PDT)
+        with ESMTP id S240443AbhGPOQT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jul 2021 10:16:19 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33F24C061762
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 07:13:23 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id f8-20020a1c1f080000b029022d4c6cfc37so6984101wmf.5
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 07:13:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3o5d+dcP1XSl9ZdYR/rF9iU6xQoZcztCXTEGCd2oFiA=;
-        b=lDQoSj/vf+WZy+ijBq5uBcBJ1oc8ykPecQoJDuO4vS/f3A9VLvuSnZneKB49sNIWgf
-         6OZOmDEnU7yb57hiPOv7WXXUy35vzXT+5W7bWHEnsNoOdr9njNftKpu7alVwub4MqK/X
-         +ZBY8szeutU4dnggKd0RMrF6pfwDtyeT//r9JA8PQ27IRDQFLtbbTmdd5iyO8NxgrD+/
-         9EFRHAUCyM4er7RayffdI4/ecUUbOpcuP6cuFoPaFXApkMZe7028qxtlrMDYxZoFs9Om
-         U7xZbD2/aYXTT95Gsrn+Y3M9TYA2jLwzfVaCV/swm8q1tmrAgU8PGLFUiEqukrJn89Zp
-         fu2A==
+        bh=Eshe/9n5XyR/ztvffNnilQjb6AsPQ34i3bNCQVmfiR0=;
+        b=qOzc6GXYsBluEaUFiZ3tGcJSkApEXkcodaVo48sgO3z3pGMTKPedXncVcjuXRI8Z/Q
+         viR5hRUeIg43G/areT5VtA+Sw8XTCJfxIQn5gmczUbH/yuGyX/rtcttD+4AU4ZIWhcbu
+         4OTkNJDyADR62gORQ1QWnEsSEifvp3mki83vboUWYrV/f2zxiRK53weM8za5FX/L/kpi
+         EDmzlHgn36VPdWc3WAiR25HSlEv65SepmE7J0eUSM5BBAP9XsHqfNr24w2B5IoE9WLdU
+         N9lG2nt51o1eGg25Kegv5uP16h1cusRyzIcbzNrE+4o5J7RuN16IWlKW6aqBFgPFTugP
+         rY0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3o5d+dcP1XSl9ZdYR/rF9iU6xQoZcztCXTEGCd2oFiA=;
-        b=GEw+M++GoQvzrmFUz4JXkKb1zi8FpCS3JjxFZ6BivOPiutqJTtZWsyap4e8K9UGGpV
-         lZvRyT14lz3XlS8cyWWWbAg28yLer0VvpNO/KE7KSxI0dlDhmrdJBWWb/qKdTQYCS4yd
-         vTULeh6wp6jScLqm7mZZCMsMLVL8b/SDjKoLp8iqXNK7MtqQu28YIUu6SHaRXcQzIEdU
-         l9YBOvL8zPBLd3xflWB7ExP0Aedl+kjIvPr7TqBP33sEmJ1YGG7ntGYLZSqic86nVkzs
-         rHmTw96WlcNNuyVknB9sI4wHec0N7DdK5QdcW578FX5ust7VCSHV/6XrUEJv+pdlhsf9
-         TW6Q==
-X-Gm-Message-State: AOAM5307gL616sre9v1pwOMZ/SBgfNZm3yTvLbrkD6AGAs58xDEoR6o2
-        pyPKovWaZ0f5vPkIj3CitmNBW+mH7NAhqQ==
-X-Google-Smtp-Source: ABdhPJyqgdUoBZZm02XmeR+M4LcWy4qC3IMTDLJ8QnO+GRvBrRAj+MCoBviGbGSvvN7gMhLMhAR8wg==
-X-Received: by 2002:a5d:4fc6:: with SMTP id h6mr12782410wrw.112.1626444800596;
-        Fri, 16 Jul 2021 07:13:20 -0700 (PDT)
+        bh=Eshe/9n5XyR/ztvffNnilQjb6AsPQ34i3bNCQVmfiR0=;
+        b=X5FrvY+WcTS1yaxlnFNC183lZsgBxq/1kxdOHYinC03tDmmjuM89jgzUmsoODJx8OF
+         1OOSXtMbNxior4zpI9pj2HdHXPqbrAQgeA42/yfmU5bpE+cy9/FFyHrVNJM8U6XqXcsx
+         3v0q8vgroZ+m/mG8bCURZSUt8WSWKzny6Eor1b7OxTVuRzE7TZOdwvj6DhL7xWZu7TR8
+         SzppqBo1DXhpRmJH23U7XrkeekjXziNB5kDgvN47VCM+snF06bUcBWZPyoanbnVPmJna
+         W7oHPl4pMB+mxJuzUBlbfDI5KNJ01MKML3+6itCNnsHUxbCj0yIybDQQlLR/l60nQNxl
+         KVdQ==
+X-Gm-Message-State: AOAM531suU4uN7/wuxZ92KmsQhBjYnH/ah6FoOgbBknSofOYy6J8XMOh
+        Am5Ste5P4Qx6PmPJjENgJYSxynyJPBUCGg==
+X-Google-Smtp-Source: ABdhPJy1rL9fjYrLpOVNjMqpzYLkqPQ9By/e8ZmAsqAqVZ+xwEZg6k0XmXge5e+iYY62hYtnfiSdiQ==
+X-Received: by 2002:a05:600c:3799:: with SMTP id o25mr16879582wmr.63.1626444801532;
+        Fri, 16 Jul 2021 07:13:21 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id a9sm10101363wrv.37.2021.07.16.07.13.19
+        by smtp.gmail.com with ESMTPSA id a9sm10101363wrv.37.2021.07.16.07.13.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 16 Jul 2021 07:13:20 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Michael Haggerty <mhagger@alum.mit.edu>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 05/11] refs/debug: re-indent argument list for "prepare"
-Date:   Fri, 16 Jul 2021 16:13:01 +0200
-Message-Id: <patch-05.11-95101c322b7-20210716T140631Z-avarab@gmail.com>
+Subject: [PATCH v2 06/11] refs API: pass the "lock OID" to reflog "prepare"
+Date:   Fri, 16 Jul 2021 16:13:02 +0200
+Message-Id: <patch-06.11-e93465f4137-20210716T140631Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.874.gfa1990a4f10
 In-Reply-To: <cover-00.11-00000000000-20210716T140631Z-avarab@gmail.com>
 References: <patch-1.1-de0838fe99-20210714T111351Z-avarab@gmail.com> <cover-00.11-00000000000-20210716T140631Z-avarab@gmail.com>
@@ -77,30 +77,106 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Re-indent this argument list that's been mis-indented since it was
-added in 34c319970d1 (refs/debug: trace into reflog expiry too,
-2021-04-23). This makes a subsequent change smaller.
+Don't pass the object ID we pass into reflog_expire() back to the
+caller, but rather our locked OID.
+
+As the assert shows these two were the same thing in practice as we'd
+exit earlier in this function if we couldn't lock the desired OID, but
+as part of removing the passing of the OID to other functions further
+on I'm splitting up these concerns.
+
+As we'll see in a subsequent commit we don't actually want to assert
+that we locked a given OID, we want this API to do the locking and
+tell us what the OID is, but for now let's just setup the scaffolding
+for that.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- refs/debug.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/reflog.c     | 4 ++--
+ refs.h               | 4 ++--
+ refs/debug.c         | 8 +++++---
+ refs/files-backend.c | 2 +-
+ 4 files changed, 10 insertions(+), 8 deletions(-)
 
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 09541d1c804..9f9e6bceb03 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -351,7 +351,7 @@ static int is_head(const char *refname)
+ }
+ 
+ static void reflog_expiry_prepare(const char *refname,
+-				  const struct object_id *oid,
++				  struct object_id *locked_oid,
+ 				  void *cb_data)
+ {
+ 	struct expire_reflog_policy_cb *cb = cb_data;
+@@ -361,7 +361,7 @@ static void reflog_expiry_prepare(const char *refname,
+ 		cb->unreachable_expire_kind = UE_HEAD;
+ 	} else {
+ 		cb->tip_commit = lookup_commit_reference_gently(the_repository,
+-								oid, 1);
++								locked_oid, 1);
+ 		if (!cb->tip_commit)
+ 			cb->unreachable_expire_kind = UE_ALWAYS;
+ 		else
+diff --git a/refs.h b/refs.h
+index 48970dfc7e0..c009707438d 100644
+--- a/refs.h
++++ b/refs.h
+@@ -796,7 +796,7 @@ enum expire_reflog_flags {
+  * expiration policy that is desired.
+  *
+  * reflog_expiry_prepare_fn -- Called once after the reference is
+- *     locked.
++ *     locked. Called with the OID of the locked reference.
+  *
+  * reflog_expiry_should_prune_fn -- Called once for each entry in the
+  *     existing reflog. It should return true iff that entry should be
+@@ -806,7 +806,7 @@ enum expire_reflog_flags {
+  *     unlocked again.
+  */
+ typedef void reflog_expiry_prepare_fn(const char *refname,
+-				      const struct object_id *oid,
++				      struct object_id *lock_oid,
+ 				      void *cb_data);
+ typedef int reflog_expiry_should_prune_fn(struct object_id *ooid,
+ 					  struct object_id *noid,
 diff --git a/refs/debug.c b/refs/debug.c
-index 7db4abccc34..449ac3e6cc8 100644
+index 449ac3e6cc8..18fd9bca595 100644
 --- a/refs/debug.c
 +++ b/refs/debug.c
-@@ -364,8 +364,8 @@ struct debug_reflog_expiry_should_prune {
+@@ -364,12 +364,14 @@ struct debug_reflog_expiry_should_prune {
  };
  
  static void debug_reflog_expiry_prepare(const char *refname,
--				    const struct object_id *oid,
--				    void *cb_data)
-+					const struct object_id *oid,
-+					void *cb_data)
+-					const struct object_id *oid,
++					struct object_id *locked_oid,
+ 					void *cb_data)
  {
  	struct debug_reflog_expiry_should_prune *prune = cb_data;
- 	trace_printf_key(&trace_refs, "reflog_expire_prepare: %s\n", refname);
+-	trace_printf_key(&trace_refs, "reflog_expire_prepare: %s\n", refname);
+-	prune->prepare(refname, oid, prune->cb_data);
++	trace_printf_key(&trace_refs, "reflog_expire_prepare: %s locket at %s\n",
++			 refname,
++			 oid_to_hex(locked_oid));
++	prune->prepare(refname, locked_oid, prune->cb_data);
+ }
+ 
+ static int debug_reflog_expiry_should_prune_fn(struct object_id *ooid,
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index af332fa8fe4..ec9c70d79cc 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3098,7 +3098,7 @@ static int files_reflog_expire(struct ref_store *ref_store,
+ 		}
+ 	}
+ 
+-	(*prepare_fn)(refname, oid, cb.policy_cb);
++	(*prepare_fn)(refname, &lock->old_oid, cb.policy_cb);
+ 	refs_for_each_reflog_ent(ref_store, refname, expire_reflog_ent, &cb);
+ 	(*cleanup_fn)(cb.policy_cb);
+ 
 -- 
 2.32.0.873.gb6f2f696497
 
