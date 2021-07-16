@@ -4,98 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.5 required=3.0 tests=BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94042C07E95
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 07:43:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7ED8C12002
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 07:43:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C187613DF
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 07:43:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AE03D613ED
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 07:43:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236314AbhGPHqf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jul 2021 03:46:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33824 "EHLO
+        id S236404AbhGPHqg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jul 2021 03:46:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231966AbhGPHqe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jul 2021 03:46:34 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67185C06175F
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 00:43:39 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id l6so5243831wmq.0
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 00:43:39 -0700 (PDT)
+        with ESMTP id S231966AbhGPHqf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jul 2021 03:46:35 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13A57C061760
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 00:43:40 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id d2so11043005wrn.0
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 00:43:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=V5bQMnNYeWGsV/Vzvd0tJVj8+QH8FLBJPfCqovULDHc=;
-        b=AV8AeB3LkcBkMCy8l2mTjFh/TdMI+EFny5wwyuEazUwTgAxvo68hBympyT6mBUzE+j
-         0uLYuaeiryaW7mJZdVVI1rADrwedclvp3dgsb1Rozjaq1J642MBCHSlS9fJ1HBwWy+8W
-         8GZp2VCZxfsKgpK36zmD7wxWoWOfX5SaLjnYIl89xxCtBc8VFQgfp4RpZ+kKPi3yLph7
-         B1PnNwlCGXqrfg1JtztkQSQnsO/xR/SuBkZQAEfF/J/y1s3PRma4qaLgd6JeNtz+DVos
-         6+ZcmEKTM9IiV42XjshV7FNHlo5iec9tQmL9LKk3quHZXksGM8pGIKV8q5fv9u7tfglR
-         1hVQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=t2SzA1w0E0tHOBVr1fgOoa/rjdqAluQWikPdvDIa52I=;
+        b=cX5QxM6aFDX0NvfJVrR2QxtgARfmX9wdK/RRo0TnBPuRkbc/6npnGmBA6tPFV6VDCj
+         CtBJH7m9YgAceZQY/Fc5n8No7DrzaNYUw9la6W2I50J9G2J+0uK3hL9zRT7kjwH6zzZu
+         mTZmdbisuuWMoNVnWbL87XM3wJu1zjYCfr1cV6Z64TMgGADusKzkGRE++KMGndb9hbLF
+         bKl67sUqykeDkKFFFc6GoWJM0rJ8K9H3t3dIR3tr0CnfhX56ySjlCU9e5TXpCr93lTnB
+         CcFCo4f/bai0KxPoQCQmXg8U5XCF7HkcEvOJwDJ4cBtS/9Ad/3cybMjMsGZIN5rzu6SO
+         hlWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=V5bQMnNYeWGsV/Vzvd0tJVj8+QH8FLBJPfCqovULDHc=;
-        b=BanZnzmkfyy9SzbOT8rnfNBJL3lWjYczad1r+Ebh5/wJaTQIBany+X6ht6OHevlMnx
-         wow+tcoxA8xWKxglE642+lBytkm2w/VQ/R3g9V73qGaCyZdatmRdQFbY5jDuZ1/Mv248
-         LHb0rS0lhfoYyvt8eiyGoZL/dVZhqrdW6Gqy5MpofeVc20iTKpVNIcXNxeROvwJCnZPT
-         GorlOSHYKAJs1PwzPcWjKDmUl0tRI/bavGNohjJfZOdp18qPbVxY6NDNwz4GmiT9cR8Z
-         HsRsSYDyw4BaH4BNkB5UTmoPSX+3KYw15E4Ukv0xph64ViCqOcnmL/zC5H+AHMPYfoc3
-         R4ew==
-X-Gm-Message-State: AOAM531nTUwb2uEHyldgacE5zx6U1zPppcedlLPVyXSP+mAR6+ChPDYq
-        8HrLjcQZSN3L0Se2FtCceZPbQsAyNv4=
-X-Google-Smtp-Source: ABdhPJy6YXBQGdU/0jzho8Q1Gk/yxiYwBYJepzsieamBTWLL0fHjvRoPdWaSRUgPIfgjevt6qBjPtg==
-X-Received: by 2002:a05:600c:2dd0:: with SMTP id e16mr9079624wmh.85.1626421418096;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=t2SzA1w0E0tHOBVr1fgOoa/rjdqAluQWikPdvDIa52I=;
+        b=S8PpIN7i4eiP3W6z41nWKDQtwHV2dxfFp0ksS2pCNZDU7n8amjcUFYBKNmljGIyiRV
+         tIb1jGhVek7+vp4lcZpRX5/YHrzFSmm6MiCVSJbGjmoy9IFPZAjD5IrPTbGK/p2x4kuJ
+         eS/5HhEaIAm/LiUAewQf8PIHV4AUiWE1X314iIBlQ/+74n45rye4kYB7897eDRT+b3mc
+         n+9wRYZHzjPrpJXL2jV7W7Tapvhq2ppNuGhqSBZEQFgA90xOm/4Ss2ndPUAtBGp9DJ4t
+         3mmHacsmtyVgBXL57c5PfexFBaMgX5Z2NxZhqOgX/aQrT2AFUyZYwghAY0/6QYuNDKv7
+         066g==
+X-Gm-Message-State: AOAM5334R8+Gjfel/NvGUJE+ah00I15Aar8q7GupKezDHVqoFAK3iXdw
+        LsLmM7Cf0kKSnZVPK/01aWqymaMRcAE=
+X-Google-Smtp-Source: ABdhPJwfHps8L7TTQ91afwoL+mYsJk6QhWfnkCtzI+nIsVD61yFaY+6bUg0i7kaDO90mbvW6Cmfskw==
+X-Received: by 2002:a5d:6982:: with SMTP id g2mr10359791wru.119.1626421418717;
         Fri, 16 Jul 2021 00:43:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p12sm6503924wma.19.2021.07.16.00.43.37
+        by smtp.gmail.com with ESMTPSA id p9sm8750904wrx.59.2021.07.16.00.43.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jul 2021 00:43:37 -0700 (PDT)
-Message-Id: <pull.1048.git.git.1626421416.gitgitgadget@gmail.com>
+        Fri, 16 Jul 2021 00:43:38 -0700 (PDT)
+Message-Id: <c17ff7ac483ad3990680a3bb1b67898564eb9379.1626421416.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1048.git.git.1626421416.gitgitgadget@gmail.com>
+References: <pull.1048.git.git.1626421416.gitgitgadget@gmail.com>
 From:   "Luca Weiss via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 16 Jul 2021 07:43:34 +0000
-Subject: [PATCH 0/2] Normalize newlines in merge & interpret-trailer
+Date:   Fri, 16 Jul 2021 07:43:35 +0000
+Subject: [PATCH 1/2] trailer: handle input without trailing newline
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     Luca Weiss <luca@z3ntu.xyz>, Luca Weiss <luca@z3ntu.xyz>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These two patches fix a problem where the trailer would be appended to the
-commit message without an empty line, so parsing the trailers again
-afterwards would fail.
+From: Luca Weiss <luca@z3ntu.xyz>
 
-In practice either one of the patches fixes the exact behavior I see but in
-both cases it makes sense to normalize the newlines.
+Add a corresponding test case for this as well
 
-The exact use case where this issue was found is a "git merge --no-edit"
-with a commit-msg hook that adds a trailer immediately afterwards. The input
-the commit-msg script gets is not terminated by a newline (which is fixed by
-the second commit) while the first one makes interpret-trailer capable of
-handling such input without a final newline.
-
-Luca Weiss (2):
-  trailer: handle input without trailing newline
-  merge: make sure to terminate message with newline
-
- builtin/merge.c               | 1 +
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
  t/t7513-interpret-trailers.sh | 7 +++++++
  trailer.c                     | 3 +++
- 3 files changed, 11 insertions(+)
+ 2 files changed, 10 insertions(+)
 
-
-base-commit: 75ae10bc75336db031ee58d13c5037b929235912
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1048%2Fz3ntu%2Fmaster-newline-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1048/z3ntu/master-newline-v1
-Pull-Request: https://github.com/git/git/pull/1048
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index 04885d0a5e5..ff5f1724ad0 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -17,6 +17,7 @@ test_expect_success 'setup' '
+ 
+ 		body
+ 	EOF
++	printf "subject\n\nbody" > basic_message_no_eol &&
+ 	cat >complex_message_body <<-\EOF &&
+ 		my subject
+ 
+@@ -676,6 +677,12 @@ test_expect_success 'with message that has an old style conflict block' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'with message without trailing newline twice' '
++	git interpret-trailers --trailer "Cc: Peff" basic_message_no_eol > intermediary &&
++	git interpret-trailers --trailer "Cc: Peff" intermediary > actual &&
++	test_cmp intermediary actual
++'
++
+ test_expect_success 'with commit complex message and trailer args' '
+ 	cat complex_message_body >expected &&
+ 	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
+diff --git a/trailer.c b/trailer.c
+index 7c7cb61a945..f53cf7d07d4 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -765,6 +765,9 @@ static void read_input_file(struct strbuf *sb, const char *file)
+ 		if (strbuf_read(sb, fileno(stdin), 0) < 0)
+ 			die_errno(_("could not read from stdin"));
+ 	}
++
++	/* Make sure the input ends with a newline */
++	strbuf_complete_line(sb);
+ }
+ 
+ static const char *next_line(const char *str)
 -- 
 gitgitgadget
+
