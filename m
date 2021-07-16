@@ -2,126 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 165E5C12002
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 21:10:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F82AC12002
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 21:14:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E03A660230
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 21:10:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B57C60230
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 21:14:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234174AbhGPVM5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jul 2021 17:12:57 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52378 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230084AbhGPVM4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jul 2021 17:12:56 -0400
-Received: (qmail 22030 invoked by uid 109); 16 Jul 2021 21:10:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 16 Jul 2021 21:10:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14532 invoked by uid 111); 16 Jul 2021 21:10:01 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 16 Jul 2021 17:10:01 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 16 Jul 2021 17:10:00 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     phillip.wood@dunelm.org.uk, Luca Weiss <luca@z3ntu.xyz>,
-        Luca Weiss via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH 2/2] merge: make sure to terminate message with newline
-Message-ID: <YPH1qKMPOqhCzp4Y@coredump.intra.peff.net>
-References: <pull.1048.git.git.1626421416.gitgitgadget@gmail.com>
- <31371c25743e1001b4fac89e80e7206ff477ac8a.1626421416.git.gitgitgadget@gmail.com>
- <8678772b-dd5d-9188-8b63-98d05cedb323@gmail.com>
- <AB048897-F70A-4388-B2A6-56BFEA40B303@z3ntu.xyz>
- <16229b1d-e4a6-7a8d-8ea0-ae7c3f13075d@gmail.com>
- <YPHe/W7+Oh63NpB0@coredump.intra.peff.net>
- <xmqq8s26q9ot.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq8s26q9ot.fsf@gitster.g>
+        id S234364AbhGPVRJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jul 2021 17:17:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49732 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230084AbhGPVRI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jul 2021 17:17:08 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 798CDC06175F
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 14:14:12 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id c197so12441705oib.11
+        for <git@vger.kernel.org>; Fri, 16 Jul 2021 14:14:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=bwYp734sLrdd/ABvC5j0u8q2IKxPK47H7+Ftd2Ah8Pg=;
+        b=PogBIqbJITO3WXo2JmwTqf2I7U47LoERmaRe0tZjMFeoptMHv5qu1FVIOtaoJDe/XO
+         JKY16VJfDNUqB6Mc3KB8VTMMqblE/fcjOYpOnEhPQsDfGpztUPriFyAtQNFsI+Suo1ZC
+         6ReMVhz2es24EN9w7NP/5oPsH9JmWmV1p02GVwb98Sg1kRH8wbPiAhkxEH5SheuU68O9
+         dslzuEcLD//DIwYYmwqoEiE7dafDjs8UgPGifnLxHqR7LIywXn+t96ASD/xp3zk8e1Uy
+         T3yY7YCSbAoQ1oejQVzJLo3P1P1uI3uH8MoRrCZ8McUn+rTKflIBt/BiDvFVI3wx5X/+
+         avKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=bwYp734sLrdd/ABvC5j0u8q2IKxPK47H7+Ftd2Ah8Pg=;
+        b=r6dFuUiyCCz/+bRbS8OYW6CXd5nfv54c64cM5GHsOS9bLglAtbYgTqLZtpyLuOlDuS
+         mY3fe2XSqMDRX4y6nnb/Rlwl8BT4OPbSKBES6txbC4jyV+fK3JDKw1yYCGihG1IC/ZNs
+         oEdszIA1Y0MpGHxZsegD8K3XJfrWGHLWjCtbQ1tf1LgkZRTEjJuq762xfv6EgRA3GJbM
+         uEjyr4esC4ILJicxrdSfd5NsQaOnziu182lCmagS6jZa4k78Y5DtNr/kshXS3zspgyJw
+         LuukYXvUqQDzB8dkC5nzIrgsMUXZeQIXEVTWvAEAawu2bhyWuYHenqCXY2uVgC62oiAQ
+         zn1w==
+X-Gm-Message-State: AOAM531mLHtMkFgy1FDc8doTv5jUt0DxCT3O+zqVDHTo2EWvODNVA/4k
+        yEqxk3ml3GGrEHXDVIKdglk=
+X-Google-Smtp-Source: ABdhPJwSg7AYavs/YksVv/4Mpiz8j+uE9qxhTN6kDfgowhpKCaKbBGCp3g3FH6jo6fBI8CZGsMPMQA==
+X-Received: by 2002:aca:3204:: with SMTP id y4mr9414812oiy.112.1626470051932;
+        Fri, 16 Jul 2021 14:14:11 -0700 (PDT)
+Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
+        by smtp.gmail.com with ESMTPSA id 59sm2145455otp.68.2021.07.16.14.14.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Jul 2021 14:14:11 -0700 (PDT)
+Date:   Fri, 16 Jul 2021 16:14:10 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Message-ID: <60f1f6a22dc08_14cb20856@natae.notmuch>
+In-Reply-To: <xmqqr1fyqbre.fsf@gitster.g>
+References: <xmqqmtqpzosf.fsf@gitster.g>
+ <2c7f188a-6ebe-b116-8299-86ca3732d79a@gmail.com>
+ <87czrl0wob.fsf@evledraar.gmail.com>
+ <xmqqk0lrtuh4.fsf_-_@gitster.g>
+ <xmqqv95aqeyh.fsf_-_@gitster.g>
+ <87pmvivz8j.fsf@evledraar.gmail.com>
+ <xmqqr1fyqbre.fsf@gitster.g>
+Subject: Re: [PATCH v2] CodingGuidelines: recommend gender-neutral description
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 16, 2021 at 01:34:58PM -0700, Junio C Hamano wrote:
+Junio C Hamano wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> =
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I think we still end up calling cleanup_message() on the result before
-> > using it as the final message, and that will fix any missing newline.
-> > But we feed the intermediate state before then to the hooks (which is
-> > exactly where one might expect to use interpret-trailers).
-> >
-> > I'm not sure if we should be doing a preemptive call to
-> > cleanup_message() before feeding the hooks (we'd still need to do the
-> > final one, to clean up whatever the hooks return to us). I guess
-> > probably not, because I think that would remove comments, as well. So
-> > adding in just the missing newline is probably better.
-> 
-> To be quite honest, I think this patch is a half-way solution and I
-> am not sure if it is better than either of the two "purist"
-> extremes:
-> 
->  * If the hooks want to see messages with as little loss of
->    information from the original as possible, we should give them
->    without clean-up (which you pointed out above) *and* without this
->    patch.
-> 
->  * If the hooks want to see messages as canonicalized as people
->    would see in normal "git log" output, we should be passing the
->    full clean-up to lose even comments and in such a case there is
->    no need for this "always terminate" patch (we'd instead do far
->    more).
-> 
-> Between the two approaches, both are purists' view, I'd prefer the
-> former, but from that stance, the conclusion would become that there
-> is no need to do anything, which may be a bit unsatisfactory.
+> > I'd be happy to re-arrange this, if I could only get the submitter of=
 
-Yes, I agree with all of that (including the "as little loss of
-information as possible" preference).
+> > the series to respond to my E-Mails...
+> =
 
-> > Since it will usually be added back in by cleanup_message() anyway, I
-> > think it's OK to just add it preemptively. The exception would be if the
-> > user asked for no cleanup at all. So making it conditional on
-> > cleanup_mode would work, whether -F or not.
-> >
-> > I suppose that does mean people turning off cleanup mode would get a
-> > message without a newline from fmt_merge_msg(), though, which is perhaps
-> > unexpected.
-> >
-> > So maybe just keeping the newline there, as you suggest, is the best
-> > way.
-> 
-> Hmph.
-> 
-> If the user tells us "refrain from touching my message as much as
-> possible" and feeds us a proposed log message that ends with an
-> incomplete line, I would think they expect us not to turn it into a
-> complete line, and I would think doing this change only when cleanup
-> is in effect would make sense.  This is especially true for users
-> who do not let any hooks to interfere.  They used to get their
-> incomplete lines intact, now their incomplete lines will
-> unconditionally get completed.  I am not sure if I would want to
-> defend this change from their complaints.
+> I'll do this only once to add missing but intended recipient to the
+> to: line; you are both adults, don't assume malice but instead good
+> intentions and talk to each other.
 
-Right, what I was suggesting was:
+That's ironic, given that you don't talk to me, which is BTW against the
+code of conduct:
 
-  if (cleanup_mode != COMMIT_MSG_CLEANUP_NONE)
-	strbuf_complete(&msg);
+ * Being respectful of differing opinions, viewpoints, and experiences
 
-which would cover that case. But Phillip mentioned that our own
-fmt_merge_msg() does not include a newline. So it would not be the user
-feeding us an incomplete line, but rather Git feeding it. And that was
-what I suggested should be corrected (which I suppose would be in
-addition to correcting lines from the user).
+You clearly do not respect my differing opinions.
 
-However, I see a call to strbuf_complete_line() at the end of
-fmt_merge_msg(), so I am puzzled about what he meant.
+It's not about being adults, it's about being *tolerant* about other
+people's opinions (I still insist "respect" is the wrong term).
 
--Peff
+Cheers.
+
+-- =
+
+Felipe Contreras=
