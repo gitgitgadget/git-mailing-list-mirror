@@ -2,154 +2,175 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67443C12002
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 18:40:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D2FAC12002
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 18:41:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 425F5613F8
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 18:40:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E195613F6
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 18:41:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229462AbhGPSm7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jul 2021 14:42:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42788 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230018AbhGPSm6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jul 2021 14:42:58 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9F33C06175F
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 11:40:02 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so10863870otl.3
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 11:40:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jOTCPnevGqY7PRJsLX3pDK0LbpiQMDVRzL4Vl2mn2i0=;
-        b=dfJfIx1SmWnWUHJ+/ar+JLO7E5KmJ9VW6C27G+fCxtHtUoyFIpeDoMEM59nHlCi59z
-         WSPww2j4dqJaSOy14KJU94ud2HqLQ0MrteAtrejqMx65dpeXH5jAuXMpY6miI90/DKS0
-         1Moy7ydwo33+dFgsffhoqUWpREm7fW8l6F7iSDXxeg00CVje5Xg7fbuLqpSE7tbnsJTd
-         34MDJJlEz9d2gTQ9C2MsL5H4N2jQ/jgpV9VYoGM6eNsOwM7r9WtJ9ARZP8di+ZS0KIDx
-         yCJonvcq4eb45IsOOkSoWTcc1gm1/DNZslCWeSQiGwBZjANmgCxqKfXyfiWUw6edGIzk
-         Tz1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jOTCPnevGqY7PRJsLX3pDK0LbpiQMDVRzL4Vl2mn2i0=;
-        b=TBN9hFDgXsnK5YWnjU1kOZb2wysbZoPVVkb2AyceRtFyrALQSNn/OFdMwbAsqjYJwy
-         trWhJm805Fgq/uFGjjFI1ST06dPnj0/Y3j9uMWshnUTYygT4Qpq/kpOtxdEU9u2nm2VU
-         kDmPPjYOlpKCrMNMASqJl+v1w4uBLoNj1GMSW3a7KZfZBrepPFg0MqTcvu5Ws2xycts8
-         wFGVz1leLHsHcRFroUvYlYGRsBoUrx11x0Jgppa1USzXcEaTDpzbJSbimEMeTZrGLlTw
-         36BqUDztJXMlrysAvsFsaPoDDaGr8KVztWm/FHkQD7cETcLyo9/Z78zZxTSfGkvhdKGj
-         RmbQ==
-X-Gm-Message-State: AOAM533UVhsmoO0ikkMaQxV4q5eLqwoBOeJS1k+aCwDP9Jy2VwCNpTvO
-        kDfY4KXwFjQnG1Hd4Fk46LnpKG8Kj3d+3X7eULM=
-X-Google-Smtp-Source: ABdhPJyQm2PcN3DcVYPJhvAhmepgtCCsvEuYrI468nR/8UDaHpAGicDJHgv4KxtXXlKPzjwR9/4+M3My4Fc/nVoV+0Y=
-X-Received: by 2002:a9d:5a8:: with SMTP id 37mr9327019otd.345.1626460801993;
- Fri, 16 Jul 2021 11:40:01 -0700 (PDT)
+        id S231673AbhGPSoL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jul 2021 14:44:11 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62103 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229611AbhGPSoK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jul 2021 14:44:10 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BB8C2148600;
+        Fri, 16 Jul 2021 14:41:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Q76jKwELiZFIFHd2xvW1hNFBh+YkzSCjHg71m3
+        eb5hM=; b=agqhngEMLJQNlK1Jc+sGaVu8wfirlfNxUPGfpJD4B3VS4qH//AE4Kr
+        FhKEq5gYWoUFvBoSfkm2x09qanb33iqjZpVmyvne9Lc16Ui7GrWioa+YRnYwjB2q
+        JPz2uppOwmI/58oAViUyzYXWNlbdx8ZCYQXV+rqvnjJ49DdsNIEno=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B57A41485FF;
+        Fri, 16 Jul 2021 14:41:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 056E81485FD;
+        Fri, 16 Jul 2021 14:41:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [PATCH v2] CodingGuidelines: recommend gender-neutral description
+References: <xmqqmtqpzosf.fsf@gitster.g>
+        <2c7f188a-6ebe-b116-8299-86ca3732d79a@gmail.com>
+        <87czrl0wob.fsf@evledraar.gmail.com> <xmqqk0lrtuh4.fsf_-_@gitster.g>
+Date:   Fri, 16 Jul 2021 11:41:10 -0700
+In-Reply-To: <xmqqk0lrtuh4.fsf_-_@gitster.g> (Junio C. Hamano's message of
+        "Thu, 15 Jul 2021 09:25:27 -0700")
+Message-ID: <xmqqv95aqeyh.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1047.git.git.1626316849.gitgitgadget@gmail.com>
- <3c07ce978caa832b08c6bef1c48c061e41a6fd0b.1626316849.git.gitgitgadget@gmail.com>
- <xmqq7dhrtrc2.fsf@gitster.g> <CABPp-BExWMSFr7CQskjKVhr5fiWCnxoaN_RaJ2Yir+36aiyBjQ@mail.gmail.com>
- <xmqqpmvjs61c.fsf@gitster.g> <CABPp-BE8Qiu8Sdk8FD+UcAtZnToXFOv+Y+8Rwf3DyiZP6Te-SQ@mail.gmail.com>
- <xmqqh7gvs2mu.fsf@gitster.g>
-In-Reply-To: <xmqqh7gvs2mu.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 16 Jul 2021 11:39:50 -0700
-Message-ID: <CABPp-BEHNpfm6mJBDZ30wCEraT03p+2-gGZyZcnUV34trAzAzw@mail.gmail.com>
-Subject: Re: [PATCH 3/5] pull: handle conflicting rebase/merge options via
- last option wins
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Son Luong Ngoc <sluongng@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 64B1899A-E665-11EB-9A4F-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 15, 2021 at 2:12 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > On Thu, Jul 15, 2021 at 12:58 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >>
-> >> Elijah Newren <newren@gmail.com> writes:
-> >>
-> >> > Let me ask two questions:
-> >> >
-> >> > 1. When is it beneficial for users to set both pull.ff and pull.rebase?
-> >> > 2. Is it harmful to users for us to allow both to be set when we will
-> >> > just ignore one?
-> >> >
-> >> > I believe the answer to (1) is "never", and the answer to (2) is "yes".
-> >>
-> >> I agree (1) never gives you anything, even though it does not hurt,
-> >> and (2) is "meh".
-> >
-> > Okay, let's drop this series then.
->
-> Not so fast.  I did have problem with some combinations you hinted
-> (vaguely---so it is more like "combinations I thought you hinted"),
-> but making sure various combinations of options and configuration
-> variables work sensibly is a worthy goal to have, I would think.
+Technical writing seeks to convey information with minimal
+friction. One way that a reader can experience friction is if they
+encounter a description of "a user" that is later simplified using a
+gendered pronoun. If the reader does not consider that pronoun to
+apply to them, then they can experience cognitive dissonance that
+removes focus from the information.
 
-It may be a worthy goal, but I cannot implement correct behavior if I
-cannot determine what correct behavior is.
+Give some basic tips to guide us avoid unnecessary uses of gendered
+description.
 
-You've only specified how to handle a subset of the valid combinations
-in each of your emails, and from those individually or even
-collectively I cannot deduce rules for handling the others.  Reading
-the dozen+ recent messages in the various recent threads, I think I've
-figured out your opinion in all but two cases, but I have no idea your
-intent on those two (I would have thought --rebase override there too,
-but you excluded that), and I'm rather uncertain I've correctly
-understood you for the other ones (I really hope gmail doesn't
-whitespace damage the following table):
+Using a gendered pronoun is appropriate when referring to a specific
+person.
 
-   pull.ff  pull.rebase  commandline            action
-     *          *        --ff-only --rebase     fast-forward only[1]
-     *          *        --rebase --no-ff       rebase[1]
-     *          *        --rebase --ff          rebase[1]
-     *          *        --ff-only --no-rebase  fast-forward only
-     *          *        --no-rebase --no-ff    merge --no-ff
-     *          *        --no-rebase --ff       merge --ff
+There are acceptable existing uses of gendered pronouns within the
+Git codebase, such as:
 
-    <unset>     *        --no-rebase            merge --ff
-    only        *        --no-rebase            merge --ff[2]
-    false       *        --no-rebase            merge --no-ff
-    true        *        --no-rebase            merge --ff
+* References to real people (e.g. Linus Torvalds, "the Git maintainer").
+  Do not misgender real people. If there is any doubt to the gender of a
+  person, then avoid using pronouns.
 
-    <unset>     *        --rebase               rebase
-    only        *        --rebase               rebase[2]
-    false       *        --rebase               ?[2]
-    true        *        --rebase               ?[2]
+* References to fictional people with clear genders (e.g. Alice and
+  Bob).
 
-     *          *        --ff-only              fast-forward only[1]
+* Sample text used in test cases (e.g t3702, t6432).
 
-     *       <unset>     --no-ff                merge --no-ff
-     *        false      --no-ff                merge --no-ff
-     *       !false      --no-ff                rebase (ignore --no-ff)[2][3]
+* The official text of the GPL license contains uses of "he or she",
+  but using singular "they" (or modifying the text in some other
+  way) is not within the scope of the Git project.
 
-     *       <unset>     --ff                   merge --ff
-     *        false      --ff                   merge --ff
-     *       !false      --ff                   rebase (ignore --ff)[2][3]
+* Literal email messages in Documentation/howto/ should not be edited
+  for grammatical concerns such as this, unless we update the entire
+  document to fit the standard documentation format. If such an effort is
+  taken on, then the authorship would change and no longer refer to the
+  exact mail message.
 
-[1] https://lore.kernel.org/git/xmqq7dhrtrc2.fsf@gitster.g/
-    https://lore.kernel.org/git/c62933fb-96b2-99f5-7169-372f486f6e39@aixigo.com/
-[2] https://lore.kernel.org/git/xmqqpmvn5ukj.fsf@gitster.g/
-[3] https://lore.kernel.org/git/xmqq8s2b489p.fsf@gitster.g/
+* External projects consumed in contrib/ should not deviate solely for
+  style reasons. Recommended edits should be contributed to those
+  projects directly.
 
-It appears you, Phillip, and I all had different opinions about
-correct behavior and in a few cases though the documentation clearly
-implied what we thought.  So, I'd have to say the documentation is
-rather unclear as well.  However, even if the above table is filled
-out, it may be complicated enough that I'm at a bit of a loss about
-how to update the documentation to explain it short of including the
-table in the documentation.
+Other cases within the Git project were cleaned up by the previous
+changes.
+
+Co-authored-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ The only change relative to the previous one is that this
+ explicitly calls out that some are taught that 'they' is only used
+ for third-person plural.  As we already say that some foreigners
+ find it ungrammatical and unnatural to use 'they', I actually do
+ not think it is necessary, but I'd prefer not to leave easy loose
+ end hanging untied, so let's close this round and let others polish
+ on top if they wanted to after the dust settls.
+
+ Documentation/CodingGuidelines | 45 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 45465bc0c9..b1f199b1fe 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -541,6 +541,51 @@ Writing Documentation:
+  documentation, please see the documentation-related advice in the
+  Documentation/SubmittingPatches file).
+ 
++ In order to ensure the documentation is inclusive, avoid assuming
++ that an unspecified example person is male or female, and think
++ twice before using "he", "him", "she", or "her".  Here are some
++ tips to avoid use of gendered pronouns:
++
++  - Prefer succinctness and matter-of-factly describing functionality
++    in the abstract.  E.g.
++
++     --short:: Emit output in the short-format.
++
++    and avoid something like these overly verbose alternatives:
++
++     --short:: Use this to emit output in the short-format.
++     --short:: You can use this to get output in the short-format.
++     --short:: A user who prefers shorter output could....
++     --short:: Should a person and/or program want shorter output, he
++               she/they/it can...
++
++    This practice often eliminates the need to involve human actors in
++    your description, but it is a good practice regardless of the
++    avoidance of gendered pronouns.
++
++  - When it becomes awkward to stick to this style, prefer "you" when
++    addressing the the hypothetical user, and possibly "we" when
++    discussing how the program might react to the user.  E.g.
++
++      You can use this option instead of --xyz, but we might remove
++      support for it in future versions.
++
++    while keeping in mind that you can probably be less verbose, e.g.
++
++      Use this instead of --xyz. This option might be removed in future
++      versions.
++
++  - If you still need to refer to an example person that is
++    third-person singular, you may resort to "singular they" to avoid
++    "he/she/him/her", e.g.
++
++      A contributor asks their upstream to pull from them.
++
++    Note that this sounds ungrammatical and unnatural to those who
++    learned that "they" is only used for third-person plural, e.g.
++    those who learn English as a second language in some parts of the
++    world.
++
+  Every user-visible change should be reflected in the documentation.
+  The same general rule as for code applies -- imitate the existing
+  conventions.
+-- 
+2.32.0-454-g0dabea483d
+
