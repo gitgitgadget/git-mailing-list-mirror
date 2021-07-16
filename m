@@ -2,401 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 191E6C07E95
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 15:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B44B4C12002
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 15:45:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED43F613F5
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 15:41:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9AA7E613F3
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 15:45:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240361AbhGPPoe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jul 2021 11:44:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58952 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233204AbhGPPod (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jul 2021 11:44:33 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 780B9C06175F
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 08:41:37 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id i94so12590520wri.4
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 08:41:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kTjdLTR00MRqpxvhHR54aBL3fgay/IFGbNagLbL40fg=;
-        b=f4e5V4adC6+oBg8BacHWKLyDPZJYOH/cw7+xT7fgBRLR6QHwgcpp56rFvlyQZjmMdY
-         O/1Rk561PM8m5GEObBzZRr1K1PbBtsY0lgTRPUwZ8SlLsF3zEHgrhVrCCgG5iliZcIxl
-         sI8e1Lykn1+sNWc8C6gJoLxMAg77IF5Qw89W9Cp7TH23S3TvxKQwAWHLKgagqvyPdZhX
-         D93efWXguY/InEht20uS0B7MFUKKGvjM1j7GofmAgqZRNoKEW7nhL7HO6d+D+GH5+I72
-         KPas9H+mcDupVkSAwRHWzU+RYcMSg+xpAnS/uAa3qjeFr9Xb8kMZ9i4s/P3hOGkMAsc2
-         oMZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kTjdLTR00MRqpxvhHR54aBL3fgay/IFGbNagLbL40fg=;
-        b=etk0Q9vYFka855teyVb1X+Bno72LqL4y0p0JESeh9BvbO2tBbYcxzoXjab5mqUdbid
-         K/kYpN9oKtQfz2Wfo78iGDi+h1ptSLUHWIp/922HEYZkjCUVgVF6LoT1z2qfNfhD9k9X
-         VWZlmajPfppAOBRMeIoFp2KrLa4ZxcnhhW/86QpZcXfdTnyN6XhnMfVVAS92uRa+foKG
-         zXncbxMKrim1bBBP7ip4w/FkUXB9GkQmL0qSPj3fgTb17PPMmRnT5pC7Bhe3hVjDDAre
-         /Q0LmEwbPfYKI78XyPVunop3cdEvaQjmx8ftarPpsKhZ93nnTDwvO3r3aABcKM5Q5kdX
-         2igQ==
-X-Gm-Message-State: AOAM531kPuwYhcnMoIWnkDxT21RS0bindq0ro0qWahlhXA2zjXWeLnZQ
-        f43bP43uXCgd+gcXaUdedSGqt2vL7D6wng==
-X-Google-Smtp-Source: ABdhPJwIqEkvOxQayce2kWu/JW5KFztbDm2B+PaIuNRqefkycfLUDLOKrwsGtnrhExANHwa1sXlC+A==
-X-Received: by 2002:a5d:48c6:: with SMTP id p6mr13241341wrs.45.1626450095635;
-        Fri, 16 Jul 2021 08:41:35 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u16sm12443643wrw.36.2021.07.16.08.41.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jul 2021 08:41:34 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        id S240888AbhGPPsp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jul 2021 11:48:45 -0400
+Received: from mout.gmx.net ([212.227.15.18]:44579 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233204AbhGPPsk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jul 2021 11:48:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1626450339;
+        bh=bmPCvSumGcB0TSpsHMEAnD9N3hFoFPp6eCasjuNgUhg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=h3dXvdDxON/rbG9IbQW0UJAX/nYh8GwTtlVI/NseePG2ggw37Dc64qji2gZUemmIK
+         hBw4apGjeE5qGHG3Xp3WReLFp73e/pgsVTiBOOsoHbCrNBRSL+7S32HGvXzQUg8xDy
+         VrfK3zdV07mX8c0S+lLp2G6RgqNA34H8fYljtAFk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.111.2] ([89.1.214.95]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N33Il-1l7jri30Gb-013QKi; Fri, 16
+ Jul 2021 17:45:39 +0200
+Date:   Fri, 16 Jul 2021 17:45:37 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4] test-lib-functions: use test-tool for [de]packetize()
-Date:   Fri, 16 Jul 2021 17:41:33 +0200
-Message-Id: <patch-1.1-546974eed59-20210716T153909Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.32.0.874.gfa1990a4f10
-In-Reply-To: <cover-0.5-0000000000-20210714T005115Z-avarab@gmail.com>
-References: <cover-0.5-0000000000-20210714T005115Z-avarab@gmail.com>
+cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v3 02/34] fsmonitor--daemon: man page
+In-Reply-To: <87v95e2j71.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2107161732150.59@tvgsbejvaqbjf.bet>
+References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com> <pull.923.v3.git.1625150864.gitgitgadget@gmail.com> <5db2c0390a657d5790cf24404201505c4ec3a829.1625150864.git.gitgitgadget@gmail.com> <877di9d5uz.fsf@evledraar.gmail.com>
+ <533d47fc-ea37-1e6a-b6f4-ac4fdd24555e@jeffhostetler.com> <87v95e2j71.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; BOUNDARY="8323328-704036014-1626449861=:59"
+Content-ID: <nycvar.QRO.7.76.6.2107161738090.59@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:JEkSbPmBh7qc59+t63SaZ52krvLV3Qg0+QbRYqLkOM6bSvLFfh+
+ tjgKZuOMmeqiqY1pUudjwzHNwcgZvPdrcQqVnmXl72HfBUB+YhCK/i62VOiMR28sH8FYbNM
+ FwrHHuS3Kl2eBlns970EtzE9Xfm1qgtQwUyMPHU+MkFVarFnzNucUZPRtr4kXlag1cwQ7mI
+ g54X1KSl6ml9z+1kZwh0A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:fE9L32K3gRg=:vY9Mz4uvHaisjlW0mJ30e2
+ WlICs0UvTSAZnburfRAkYoZfYWOWZFM0cWllPxYQnB/3oeaAHwlDfaEo5qCIltien925gE9Cx
+ J82gdOxNzat5Pcq34GqMWuf+IUJYLYud+YVlKV7sTXTWvEN1U/TgYieXBE2P5filP8oZdwQ9g
+ ZvTqOFSa4xIOw3Dy84U4myJmkHcYrp7K0UZltu1RTyi2py9sRMHzMQnFdXsVRgxY8FV/LZ2jb
+ GVZzOZZ3BxCTuUteS/7VvLuylLWdDe0Psw3St3cxazoy9Bk++yf5dimJ0LbH9hUCg5OWmjUV/
+ aANnGthIUKuqk5SBl7uxTGn5cz2XUcAnreJybK1MwuZvrOeEid/qNDjDJ38NXCaT8bRz0eMs6
+ r9dfW+3dcg77NX9lL/1wOBPmrz/6GJy+Kdx+dL3lDNTa6g0HrHTxJxO3lEVzifeXqNr+PP+ZK
+ LbMDRMUot6qcKyhd0lyyb9NWUDSG2dK6Z7IRINuNz3V7jaB22SUTdTMpnbZYmsIiphTEQlTps
+ /3rT8D/owQVZnAfT+mBIeHxX5geGkxBisbVc3n5/T37wOdlU2rKWYbJY4y6vuoqABy4qN4B3u
+ 6/SEisFntijP8bj0T8F79t+pYfAMHj+HkG5mzg6UCudi+vZWMNYsQzUoePczyWtk14Aa5ZsuF
+ hieoGEITifxF2mKc0Wr7gxPXi+G1GuwGowoaRcGZX20CGHWMs5jQZazeBRlgF/zrXDHLBMyas
+ +xt2kMh5/QhCBRms8wQke61I9oJ4pQnkDlPsN2SNCyqwaWCC97AGuoPUKT2vCcRfEHAy8x54f
+ 3PYKtBGpKHCpgGtX6YWp6LxuaeqQSNuvLDvr6hk5phnO0qQ2p68O0vZ/Eczy2HuxW8ciEM5tS
+ bTHb8JVXQBpptR9S8XGg2DqWUnd0tzRkrFjDbpf1HpwSt+TGc/urJGIHoV0bRxOJ0iWIVt0IU
+ 9hfP3ZT/GLOdOdUc+K3daNiPCd/NqmAeUZIkYWEHXnmT3+MQBDscPJpgH710UlUNHcxg2ohaq
+ qM6FmK5K8anZZYN9iWie/bYUUcYsqgdYh0O/XlKMqoqx2uByNpEri+OR8DU95U2Vp1X/89rOT
+ xrraVt26FspxauBARKAD6GNn9auKDeEViYPqnJAk26f5ZQ+y2/6YiMlPA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The shell+perl "[de]packetize()" helper functions were added in
-4414a150025 (t/lib-git-daemon: add network-protocol helpers,
-2018-01-24), and around the same time we added the "pkt-line" helper
-in 74e70029615 (test-pkt-line: introduce a packet-line test helper,
-2018-03-14).
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-For some reason it seems we've mostly used the shell+perl version
-instead of the helper since then. There were discussions around
-88124ab2636 (test-lib-functions: make packetize() more efficient,
-2020-03-27) and cacae4329fa (test-lib-functions: simplify packetize()
-stdin code, 2020-03-29) to improve them and make them more efficient.
+--8323328-704036014-1626449861=:59
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-ID: <nycvar.QRO.7.76.6.2107161738091.59@tvgsbejvaqbjf.bet>
 
-There was one good reason to do so, we needed an equivalent of
-"test-tool pkt-line pack", but that command wasn't capable of handling
-input with "\n" (a feature) or "\0" (just because it happens to be
-printf-based under the hood).
+Hi =C3=86var,
 
-Let's add a "pkt-line-raw" helper for that, and expose is at a
-packetize_raw() to go with the existing packetize() on the shell
-level, this gives us the smallest amount of change to the tests
-themselves.
+On Tue, 13 Jul 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+> [snip =C3=86var's suggestion to populate the manual page incrementally,
+> interspersed with the commits that finalize implementing the respective
+> functionality]
+>
+> I suggested this because I think it's much easier to read patches that
+> are larger because they incrementally update docs or tests along with
+> code, than smaller ones that are e.g. "add docs" followed by
+> incrementally modifying the code.
 
-I ejected changing/adding test code for this v4. This keeps the
-compatibility wrappers and just narrowly changes the things that need
-a packetize_raw() to use that new helper.
+My experience is the exact opposite of yours: shorter patches are easier
+to read.
 
-I left the simpler packetize() case as a "printf", it could also use
-the test tool, but in case someone cares about process overhead on say
-Windows this entire change should be strictly better than the status
-quo.
+> That's because you can consider those atomically.
 
-Range-diff against v3:
-1:  67aa8141153 < -:  ----------- serve tests: add missing "extra delim" test
-2:  64dfd14865c < -:  ----------- serve tests: use test_cmp in "protocol violations" test
-3:  92bfd8a87b8 < -:  ----------- tests: replace [de]packetize() shell+perl test-tool pkt-line
-4:  9842c85d1f3 ! 1:  546974eed59 tests: replace remaining packetize() with "test-tool pkt-line"
-    @@ Metadata
-     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## Commit message ##
-    -    tests: replace remaining packetize() with "test-tool pkt-line"
-    +    test-lib-functions: use test-tool for [de]packetize()
-     
-    -    Move the only remaining users of "packetize()" over to "test-tool
-    -    pkt-line", for this we need a new "pack-raw-stdin" subcommand in the
-    -    test-tool. The "pack" command takes input on stdin, but splits it by
-    -    "\n", furthermore we'll format the output using C-strings, so the
-    -    embedded "\0" being tested for here would cause the string to be
-    -    truncated.
-    +    The shell+perl "[de]packetize()" helper functions were added in
-    +    4414a150025 (t/lib-git-daemon: add network-protocol helpers,
-    +    2018-01-24), and around the same time we added the "pkt-line" helper
-    +    in 74e70029615 (test-pkt-line: introduce a packet-line test helper,
-    +    2018-03-14).
-     
-    -    So we need another mode that just calls packet_write() on the raw
-    -    input we got on stdin.
-    +    For some reason it seems we've mostly used the shell+perl version
-    +    instead of the helper since then. There were discussions around
-    +    88124ab2636 (test-lib-functions: make packetize() more efficient,
-    +    2020-03-27) and cacae4329fa (test-lib-functions: simplify packetize()
-    +    stdin code, 2020-03-29) to improve them and make them more efficient.
-    +
-    +    There was one good reason to do so, we needed an equivalent of
-    +    "test-tool pkt-line pack", but that command wasn't capable of handling
-    +    input with "\n" (a feature) or "\0" (just because it happens to be
-    +    printf-based under the hood).
-    +
-    +    Let's add a "pkt-line-raw" helper for that, and expose is at a
-    +    packetize_raw() to go with the existing packetize() on the shell
-    +    level, this gives us the smallest amount of change to the tests
-    +    themselves.
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    @@ t/t5411/once-0010-report-status-v1.sh: test_expect_success "proc-receive: report
-      		then
-      			printf "%s %s refs/heads/main\0report-status\n" \
-     -				$A $B | packetize
-    -+				$A $B | test-tool pkt-line pack-raw-stdin
-    ++				$A $B | packetize_raw
-      		else
-      			printf "%s %s refs/heads/main\0report-status object-format=$GIT_DEFAULT_HASH\n" \
-     -				$A $B | packetize
-    -+				$A $B | test-tool pkt-line pack-raw-stdin
-    ++				$A $B | packetize_raw
-      		fi &&
-    - 		test-tool pkt-line pack <<-EOF &&
-    - 		$ZERO_OID $A refs/for/main/topic1
-    + 		printf "%s %s refs/for/main/topic1\n" \
-    + 			$ZERO_OID $A | packetize &&
-     
-      ## t/t5562-http-backend-content-length.sh ##
-     @@ t/t5562-http-backend-content-length.sh: test_expect_success 'setup' '
-    @@ t/t5562-http-backend-content-length.sh: test_expect_success 'setup' '
-      	{
-      		printf "%s %s refs/heads/newbranch\\0report-status object-format=%s\\n" \
-     -			"$ZERO_OID" "$hash_next" "$(test_oid algo)" | packetize &&
-    -+			"$ZERO_OID" "$hash_next" "$(test_oid algo)" |
-    -+			test-tool pkt-line pack-raw-stdin &&
-    ++			"$ZERO_OID" "$hash_next" "$(test_oid algo)" | packetize_raw
-      		printf 0000 &&
-      		echo "$hash_next" | git pack-objects --stdout
-      	} >push_body &&
-    @@ t/t5570-git-daemon.sh: test_expect_success 'hostname cannot break out of directo
-      test_expect_success FAKENC 'hostname interpolation works after LF-stripping' '
-      	{
-     -		printf "git-upload-pack /interp.git\n\0host=localhost" | packetize
-    --		printf "0000"
-    -+		printf "git-upload-pack /interp.git\n\0host=localhost" |
-    -+		test-tool pkt-line pack-raw-stdin &&
-    -+		test-tool pkt-line pack <<-\EOF
-    -+		0000
-    -+		EOF
-    ++		printf "git-upload-pack /interp.git\n\0host=localhost" | packetize_raw
-    + 		printf "0000"
-      	} >input &&
-    -+
-      	fake_nc "$GIT_DAEMON_HOST_PORT" <input >output &&
-    - 	test-tool pkt-line unpack <output >actual &&
-    +
-    + ## t/test-lib-functions.sh ##
-    +@@ t/test-lib-functions.sh: nongit () {
-    + 	)
-    + } 7>&2 2>&4
-    + 
-    +-# convert function arguments or stdin (if not arguments given) to pktline
-    +-# representation. If multiple arguments are given, they are separated by
-    +-# whitespace and put in a single packet. Note that data containing NULs must be
-    +-# given on stdin, and that empty input becomes an empty packet, not a flush
-    +-# packet (for that you can just print 0000 yourself).
-    ++# These functions are historical wrappers around "test-tool pkt-line"
-    ++# for older tests. Use "test-tool pkt-line" itself in new tests.
-    + packetize () {
-    + 	if test $# -gt 0
-    + 	then
-    + 		packet="$*"
-    + 		printf '%04x%s' "$((4 + ${#packet}))" "$packet"
-    + 	else
-    +-		perl -e '
-    +-			my $packet = do { local $/; <STDIN> };
-    +-			printf "%04x%s", 4 + length($packet), $packet;
-    +-		'
-    ++		test-tool pkt-line pack
-    + 	fi
-    + }
-    + 
-    +-# Parse the input as a series of pktlines, writing the result to stdout.
-    +-# Sideband markers are removed automatically, and the output is routed to
-    +-# stderr if appropriate.
-    +-#
-    +-# NUL bytes are converted to "\\0" for ease of parsing with text tools.
-    ++packetize_raw () {
-    ++	test-tool pkt-line pack-raw-stdin
-    ++}
-    ++
-    + depacketize () {
-    +-	perl -e '
-    +-		while (read(STDIN, $len, 4) == 4) {
-    +-			if ($len eq "0000") {
-    +-				print "FLUSH\n";
-    +-			} else {
-    +-				read(STDIN, $buf, hex($len) - 4);
-    +-				$buf =~ s/\0/\\0/g;
-    +-				if ($buf =~ s/^[\x2\x3]//) {
-    +-					print STDERR $buf;
-    +-				} else {
-    +-					$buf =~ s/^\x1//;
-    +-					print $buf;
-    +-				}
-    +-			}
-    +-		}
-    +-	'
-    ++	test-tool pkt-line unpack
-    + }
-      
-    + # Converts base-16 data into base-8. The output is given as a sequence of
-5:  7ca83c5a551 < -:  ----------- test-lib-functions.sh: remove unused [de]packetize() functions
+No, in a patch series you cannot consider any patch completely atomically.
+Just like you don't consider any paragraph in any well-written book out of
+context.
 
- t/helper/test-pkt-line.c               | 12 ++++++++
- t/t5411/once-0010-report-status-v1.sh  |  4 +--
- t/t5562-http-backend-content-length.sh |  2 +-
- t/t5570-git-daemon.sh                  |  2 +-
- t/test-lib-functions.sh                | 38 ++++++--------------------
- 5 files changed, 24 insertions(+), 34 deletions(-)
+> If earlier doc changes refer to later code changes you're left jumping
+> back & forth and wondering if the code you're reading that doesn't match
+> the docs yet is a bug, or if it's solved in some later change you're now
+> needing to mentally keep track of.
 
-diff --git a/t/helper/test-pkt-line.c b/t/helper/test-pkt-line.c
-index 5e638f0b970..c5e052e5378 100644
---- a/t/helper/test-pkt-line.c
-+++ b/t/helper/test-pkt-line.c
-@@ -26,6 +26,16 @@ static void pack(int argc, const char **argv)
- 	}
- }
- 
-+static void pack_raw_stdin(void)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	if (strbuf_read(&sb, 0, 0) < 0)
-+		die_errno("failed to read from stdin");
-+	packet_write(1, sb.buf, sb.len);
-+	strbuf_release(&sb);
-+}
-+
- static void unpack(void)
- {
- 	struct packet_reader reader;
-@@ -110,6 +120,8 @@ int cmd__pkt_line(int argc, const char **argv)
- 
- 	if (!strcmp(argv[1], "pack"))
- 		pack(argc - 2, argv + 2);
-+	else if (!strcmp(argv[1], "pack-raw-stdin"))
-+		pack_raw_stdin();
- 	else if (!strcmp(argv[1], "unpack"))
- 		unpack();
- 	else if (!strcmp(argv[1], "unpack-sideband"))
-diff --git a/t/t5411/once-0010-report-status-v1.sh b/t/t5411/once-0010-report-status-v1.sh
-index 1233a46eac5..297b10925d5 100644
---- a/t/t5411/once-0010-report-status-v1.sh
-+++ b/t/t5411/once-0010-report-status-v1.sh
-@@ -28,10 +28,10 @@ test_expect_success "proc-receive: report status v1" '
- 		if test -z "$GIT_DEFAULT_HASH" || test "$GIT_DEFAULT_HASH" = "sha1"
- 		then
- 			printf "%s %s refs/heads/main\0report-status\n" \
--				$A $B | packetize
-+				$A $B | packetize_raw
- 		else
- 			printf "%s %s refs/heads/main\0report-status object-format=$GIT_DEFAULT_HASH\n" \
--				$A $B | packetize
-+				$A $B | packetize_raw
- 		fi &&
- 		printf "%s %s refs/for/main/topic1\n" \
- 			$ZERO_OID $A | packetize &&
-diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
-index e5d3d15ba8d..05a58069b0c 100755
---- a/t/t5562-http-backend-content-length.sh
-+++ b/t/t5562-http-backend-content-length.sh
-@@ -63,7 +63,7 @@ test_expect_success 'setup' '
- 	hash_next=$(git commit-tree -p HEAD -m next HEAD^{tree}) &&
- 	{
- 		printf "%s %s refs/heads/newbranch\\0report-status object-format=%s\\n" \
--			"$ZERO_OID" "$hash_next" "$(test_oid algo)" | packetize &&
-+			"$ZERO_OID" "$hash_next" "$(test_oid algo)" | packetize_raw
- 		printf 0000 &&
- 		echo "$hash_next" | git pack-objects --stdout
- 	} >push_body &&
-diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
-index 82c31ab6cd8..b87ca06a585 100755
---- a/t/t5570-git-daemon.sh
-+++ b/t/t5570-git-daemon.sh
-@@ -194,7 +194,7 @@ test_expect_success 'hostname cannot break out of directory' '
- 
- test_expect_success FAKENC 'hostname interpolation works after LF-stripping' '
- 	{
--		printf "git-upload-pack /interp.git\n\0host=localhost" | packetize
-+		printf "git-upload-pack /interp.git\n\0host=localhost" | packetize_raw
- 		printf "0000"
- 	} >input &&
- 	fake_nc "$GIT_DAEMON_HOST_PORT" <input >output &&
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index b2810478a21..e5b80e0f88e 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1453,46 +1453,24 @@ nongit () {
- 	)
- } 7>&2 2>&4
- 
--# convert function arguments or stdin (if not arguments given) to pktline
--# representation. If multiple arguments are given, they are separated by
--# whitespace and put in a single packet. Note that data containing NULs must be
--# given on stdin, and that empty input becomes an empty packet, not a flush
--# packet (for that you can just print 0000 yourself).
-+# These functions are historical wrappers around "test-tool pkt-line"
-+# for older tests. Use "test-tool pkt-line" itself in new tests.
- packetize () {
- 	if test $# -gt 0
- 	then
- 		packet="$*"
- 		printf '%04x%s' "$((4 + ${#packet}))" "$packet"
- 	else
--		perl -e '
--			my $packet = do { local $/; <STDIN> };
--			printf "%04x%s", 4 + length($packet), $packet;
--		'
-+		test-tool pkt-line pack
- 	fi
- }
- 
--# Parse the input as a series of pktlines, writing the result to stdout.
--# Sideband markers are removed automatically, and the output is routed to
--# stderr if appropriate.
--#
--# NUL bytes are converted to "\\0" for ease of parsing with text tools.
-+packetize_raw () {
-+	test-tool pkt-line pack-raw-stdin
-+}
-+
- depacketize () {
--	perl -e '
--		while (read(STDIN, $len, 4) == 4) {
--			if ($len eq "0000") {
--				print "FLUSH\n";
--			} else {
--				read(STDIN, $buf, hex($len) - 4);
--				$buf =~ s/\0/\\0/g;
--				if ($buf =~ s/^[\x2\x3]//) {
--					print STDERR $buf;
--				} else {
--					$buf =~ s/^\x1//;
--					print $buf;
--				}
--			}
--		}
--	'
-+	test-tool pkt-line unpack
- }
- 
- # Converts base-16 data into base-8. The output is given as a sequence of
--- 
-2.32.0.874.gfa1990a4f10
+You only keep jumping back and forth when reviewing _patches_. We try to
+do code review on this mailing list, which means that you have the code
+locally and review it in the correct context. When you do that, a design
+document is quite helpful. And the proposed manual page serves as such a
+design document.
 
+> Which is not some theoretical concern b.t.w., but exactly what I found
+> myself doing when reading this series, hence the suggestion.
+
+Part of the problem here seems to be that this patch series saw many
+reviewer suggestions that forced it to increase in length. That was
+probably not very helpful, after all.
+
+The first iteration had 23 patches. Reviews forced it to grow to 28
+patches in the second iteration. And that was still not enough, therefore
+the third iteration consisted of 34 patches. And if you had had your way,
+requiring Jeff to include a Linux backend in the same patch series, it
+would have to increase in size again, and not just by a little.
+
+This all sounds like we're truly falling into the trap of ignoring the
+rule that the perfect is the enemy of the good.
+
+I really would like to come back to a focused review that truly improves
+the patches at hand, and avoids conflating the review of the actual patch
+series with matters of personal taste (which is a recipe for
+disagreement). After all, we are interested in getting this feature out to
+users who need to work with very large worktrees, right? At least that's
+my goal here.
+
+Ciao,
+Johannes
+
+--8323328-704036014-1626449861=:59--
