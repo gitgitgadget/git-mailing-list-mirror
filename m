@@ -2,132 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FE9FC12002
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 19:39:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21297C12002
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 19:50:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4DB4B613EB
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 19:39:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA754613F2
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 19:50:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232841AbhGPTl7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jul 2021 15:41:59 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40088 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232792AbhGPTl6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 16 Jul 2021 15:41:58 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S231335AbhGPTxL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jul 2021 15:53:11 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55531 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229611AbhGPTxK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jul 2021 15:53:10 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C70B0D1E7F;
+        Fri, 16 Jul 2021 15:50:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=wrRuGQlqQG6A
+        weJWEWl2Q+yNZEZw2+Ao75M3ZGRePqo=; b=KzWbjWaFre/2qbbL+cWrS0IwUa2r
+        1/ihBvNGgNMmAudxTD2hOAWJSUyEj1WAWRHpUF00E542aJNkpMSz8W4iqPKBt4cF
+        7W2wlk0qdly2yr4jogJcdyi9ylzh+3YIvGn3Hgx6eZKolJwp9ZA/TPX6OFj0QFH0
+        bkOvmjkR8yKhaCU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BF6CAD1E7E;
+        Fri, 16 Jul 2021 15:50:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2CA6060769;
-        Fri, 16 Jul 2021 19:39:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1626464343;
-        bh=2csvRIdyHaCf7Bgy2lUuAk4Pjdy0b+wPd5UUy6cRAHQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=wfl5gZUoGVTjMdsbEqlu69yQo3mmZXSkomPCV1vTMIPnFVMchlf3ss25nwukfI8I+
-         MTW68kAwRh3hN6f7+3XmAU7oCFvQFLbgZuiM/s3J2qcQyYwzXKdXd7TLOaTijQC73h
-         hW8IR6jYLrSx2szFXUfteTuzFSiDoQZ8toC2dxwdqGuygqSoAVVy4MasAVY4WZnBH3
-         MtwZpmx9R3E8FaTCKuZugQdVKyZw8b2fpMW4VWPeupcka0cwNaLM+PbLUQg9SgX3B+
-         RVONfY/ldxGm+Pcz9GhxVutgminNwPxSbTESKbxWTv2/nr7IKXSZCvEiLf0UG9rdC/
-         X2//bFuK3bfk7VvZGCPxpJH3dnrGy6srcUtQTrsiCFvfbPeTs603ojSoHlXqVGdnE/
-         lDHq+1+G+aqFHTSHvDV1NSAUtyZZcbj8wVfvrE2vgCbZlx8hlDeGdH3pYHfN3MHLZ5
-         U4jMm5JUYVjGbV5ViQ07Lz8jv8BQq3Mz+cZNv6WZcEvrM5rSNd4
-Date:   Fri, 16 Jul 2021 19:38:58 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Rostislav Krasny <rosti.bsd@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Incorrect and inconsistent End-Of-Line characters in .gitmodules
- after "git submodule set-branch --branch <branch_name>"
-Message-ID: <YPHgUuxqmKFkbEku@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Rostislav Krasny <rosti.bsd@gmail.com>, git@vger.kernel.org
-References: <CANt7McFAu5gAFcgd+dejQjDQDxfcnyhz=BxSAejXGMMtGQzO_w@mail.gmail.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3EBE3D1E7D;
+        Fri, 16 Jul 2021 15:50:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2] CodingGuidelines: recommend gender-neutral description
+References: <xmqqmtqpzosf.fsf@gitster.g>
+        <2c7f188a-6ebe-b116-8299-86ca3732d79a@gmail.com>
+        <87czrl0wob.fsf@evledraar.gmail.com> <xmqqk0lrtuh4.fsf_-_@gitster.g>
+        <xmqqv95aqeyh.fsf_-_@gitster.g> <87pmvivz8j.fsf@evledraar.gmail.com>
+Date:   Fri, 16 Jul 2021 12:50:13 -0700
+In-Reply-To: <87pmvivz8j.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Fri, 16 Jul 2021 21:11:36 +0200")
+Message-ID: <xmqqr1fyqbre.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="8kw8sJSbQ1wtH5lX"
-Content-Disposition: inline
-In-Reply-To: <CANt7McFAu5gAFcgd+dejQjDQDxfcnyhz=BxSAejXGMMtGQzO_w@mail.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 09A93ACA-E66F-11EB-9743-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
---8kw8sJSbQ1wtH5lX
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I'd be happy to re-arrange this, if I could only get the submitter of
+> the series to respond to my E-Mails...
 
-On 2021-07-15 at 21:55:07, Rostislav Krasny wrote:
-> Hello,
->=20
-> Originally this bug was reported in the Git for Windows project and
-> contains two screenshots:
-> https://github.com/git-for-windows/git/issues/3321
-> Johannes Schindelin (dscho) is convinced that this is not a
-> Windows-specific issue. Following is a brief description of this bug
-> as I've faced it:
->=20
-> After running the "git submodule set-branch --branch master -- ms1"
-> I've noticed that the .gitmodules file is encoded with both DOS and
-> UNIX End-of-Line characters simultaneously: all original lines use DOS
-> EOL characters but the added "branch =3D master" line uses UNIX EOL.
-
-What behavior are you expecting to see here?  Are you expecting Git to
-write carriage returns when the file already uses carriage returns?
-What about when the file already contains mixed endings?
-
-Are you committing CRLF line endings into the repository, or are they
-just created by core.autocrlf=3Dtrue (or some .gitattributes setting)?
-
-Does this cause a functional problem with Git (or maybe another tool),
-or is it just aesthetically displeasing?
-
-> Comments of Johannes Schindelin (dscho) in the GitHub bug report:
->=20
-> > I don't believe that Git considers its config files free game regarding=
- line endings.
-> > Therefore, I think that having DOS line endings in there is already a v=
-iolation of Git's
-> > assumptions. In any case, this is not a Windows-specific issue, even if=
- DOS line
-> > endings are much more prevalent on Windows than on other platforms. Ple=
-ase take
-> > it to the Git mailing list (send plain-text messages, HTML messages are=
- dropped
-> > silently).
-
-It appears the config parsing code handles CRLF when reading by just
-turning it into a LF, so without changing the code, it wouldn't be
-possible to distinguish between the different line endings.  I don't
-know that I agree with Dscho that CRLF line endings are right out, but I
-also don't see always using LF line endings to be a problem.
-
-Since I don't use Windows and don't see this problem, and I'm not really
-partial to CRLF line endings anyway, I'm not especially interested in
-making any changes here, but I'm also not opposed to seeing a patch here
-if someone would like to send one to do something different.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---8kw8sJSbQ1wtH5lX
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYPHgUgAKCRB8DEliiIei
-ga9tAP9tTzD3r6nK9GHHgEeD5BchCHpVkO+hlzOiX/MPRcyd4QEAguuEygGmVGUP
-r8UVEUriQn15MMJE2amvacII/MuhRgs=
-=ttMP
------END PGP SIGNATURE-----
-
---8kw8sJSbQ1wtH5lX--
+I'll do this only once to add missing but intended recipient to the
+to: line; you are both adults, don't assume malice but instead good
+intentions and talk to each other.
