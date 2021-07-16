@@ -2,105 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68DF7C12002
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 16:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F151DC07E95
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 16:42:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4780C613D4
-	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 16:39:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15931613D4
+	for <git@archiver.kernel.org>; Fri, 16 Jul 2021 16:42:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230163AbhGPQmI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Jul 2021 12:42:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43622 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbhGPQmH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jul 2021 12:42:07 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CFCFC06175F
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 09:39:11 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id 42-20020a9d012d0000b02904b98d90c82cso10448266otu.5
-        for <git@vger.kernel.org>; Fri, 16 Jul 2021 09:39:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-transfer-encoding;
-        bh=rsTnUEjBxqickECGT3n/A6lTQj+U+LHXo9b4PjXlamY=;
-        b=NDH6RaLn6VnNfXIcZV3FGH7pzUIAygnkGwMmSOOcQcPnP8GMXd2q9bvCVlHpkRgG+/
-         4g+S+bGaaSzIFGmFi24sonaBkom4iLdPEUmjVnM1MiSQFcvDwnvrA63famrDV/rG8kCS
-         y3NK+p0BAaz5DQ4PXb7XysCYJKOMV8J7NfXy91emociBxHOcvyYY0GXFe9W/fUdaAlcY
-         J3ZFh+Z6v825cRpqo+X04F5j4+8FLGbbc4pPvdZ2tE5MFf722XU6D5H6Uo17j8lWFLmS
-         pFUCbbH4LmakUq/NFmMoKIZHkd5AWFu/Nu4PSXA3VMjEDrrhfzBGiByxCl7I7G5YNMN/
-         g2Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
-         :subject:mime-version:content-transfer-encoding;
-        bh=rsTnUEjBxqickECGT3n/A6lTQj+U+LHXo9b4PjXlamY=;
-        b=WlGoCEQEIv5pqvJSZmqbIfowCUww+T+OphWquUFBmAXCAN8yZZoDUyZSpFfyjSzdQK
-         czK3nF9zcJmZqfSjXa9kisLCCsveojnGwvt1rMmkbsR/xpt8jQ1+zwNGaljdSPKQ9Z16
-         4YsiCjhYIXrudKEPFGDq1UpkZ5wWEmGXCW5rmvi/S/XOUoPyzt+Vf5CcX2k2mujeTZS3
-         qJdyqCvQiw5jRgAqUzvTslHsNEUi0ku+itSDp82/KUsAoiS268iL6I2YE6gDNebWnCYr
-         863OSXKBBHCNgsNzFuhKK47Y4xhEa3u4JyFNKpTedL5NBf//wE8/ZryoECyeyAEWv71V
-         Pvwg==
-X-Gm-Message-State: AOAM531Hu3sfMK1y/gY58iC4k43c1Qj6uzeApFB7qWXNpebAV0xb209G
-        vS7Gr2FaTvCBml6/yrmR7DZIdy0EpBBpLw==
-X-Google-Smtp-Source: ABdhPJyHH7u6cWyVLQYcpcF/2O1InZ7k5yXt3i3F5ZeUPwOsD5QYcZdrNekZHjFJ+WY5n1YbQwrQiA==
-X-Received: by 2002:a9d:651a:: with SMTP id i26mr8903747otl.148.1626453550720;
-        Fri, 16 Jul 2021 09:39:10 -0700 (PDT)
-Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id 48sm1981754otf.13.2021.07.16.09.39.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jul 2021 09:39:10 -0700 (PDT)
-Date:   Fri, 16 Jul 2021 11:39:08 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Matthias Baumgarten <matthias.baumgarten@aixigo.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <60f1b62c7531c_ade9208d8@natae.notmuch>
-In-Reply-To: <c62933fb-96b2-99f5-7169-372f486f6e39@aixigo.com>
-References: <c62933fb-96b2-99f5-7169-372f486f6e39@aixigo.com>
-Subject: RE: pull.rebase config vs. --ff-only on command line
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S229756AbhGPQpi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Jul 2021 12:45:38 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65118 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229498AbhGPQpi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jul 2021 12:45:38 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 28705DEC25;
+        Fri, 16 Jul 2021 12:42:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=d0iYlimKTt4Q+Mxvl1WnlDjGUd/Ul3gAQipg+T
+        Tv+4I=; b=NLuU8GC4K73D46SpbznRefnlAqleLaLD4KTiiR5031ggHpAn2pbwJg
+        Eqyiwr7yzheS0sAaU67oR6EOL51WBkku5r54HLgpBaB4m4fC+WRo4cOO4eokWrOT
+        EMOF5WCYeHEvr0QOE1Tpo+5RMT3wyKR7Hn20jWyF7xLmHvqTYHCRA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C734DEC24;
+        Fri, 16 Jul 2021 12:42:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9507DDEC23;
+        Fri, 16 Jul 2021 12:42:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Subject: Re: [PATCH] ci: run `make sparse` as a GitHub workflow
+References: <pull.994.git.1626177086682.gitgitgadget@gmail.com>
+        <xmqqbl7525w7.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2107141124530.76@tvgsbejvaqbjf.bet>
+        <xmqq35sgzy0d.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2107142252060.59@tvgsbejvaqbjf.bet>
+        <xmqqa6movcly.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2107142350570.59@tvgsbejvaqbjf.bet>
+        <xmqqsg0gttt5.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2107161714290.59@tvgsbejvaqbjf.bet>
+Date:   Fri, 16 Jul 2021 09:42:40 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2107161714290.59@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Fri, 16 Jul 2021 17:25:38 +0200 (CEST)")
+Message-ID: <xmqq4kcurz0f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: D68F581E-E654-11EB-9973-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Matthias,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Matthias Baumgarten wrote:
-> this is my first time contacting you guys and girls so I hope this mail 
-> achieves the expected standard. I've discovered the following behaviour 
-> of git:
-> 
-> If pull.rebase is configured to true and git pull --ff-only is executed 
-> it seems like the config wins, i.e. issuing "Successfully rebased and 
-> updated refs/heads/...", which is not what I would expect. I always 
-> believed that command line options would overwrite configured options.
-> 
-> Is my assumption that command line options always win wrong or is this a 
-> bug?
+> Besides, for all we know the problem might go away at any stage because
+> pretty much all other main CI systems have a way to re-run only failed
+> jobs.
 
-Yes, your assumption is correct, but the equivalent of that combination
-is:
+Yes, that is something I find plausible.  That's one more reason why
+we currently feel it is OK to roll it into the primary job.
 
-  git pull --rebase --ff-only
+Now we've left a handful of messages on the list, I think we are
+safe against anybody who will soon complain that we are piling more
+and more on top of the primary job---instead of pointing at the log
+message of the change that did so, we can point at this discussion
+thread to make them understand why we decided that it is OK.
 
-But --ff-only is only meant for the merge mode of `git pull`
-(git pull --merge), not the rebase mode, so it's ignored. You can see
-that from the documentation [1]:
 
-  With --ff-only, resolve the merge as a fast-forward when possible.
-  When not possible, refuse to merge and exit with a non-zero status.
-
-Note the *merge* part.
-
-[1] https://git-scm.com/docs/git-pull
-
--- 
-Felipe Contreras
