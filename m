@@ -2,161 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 763C9C636CB
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 15:42:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA4BDC636CA
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:03:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CF946115C
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 15:42:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B04C8610F9
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:03:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235452AbhGQPpA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 11:45:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36966 "EHLO
+        id S232895AbhGQRGo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 13:06:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235411AbhGQPo4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 11:44:56 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF25BC0613DE
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 08:41:56 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id f9so15601234wrq.11
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 08:41:56 -0700 (PDT)
+        with ESMTP id S231767AbhGQRGo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 13:06:44 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30BA7C06175F
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 10:03:47 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id a80so716371qkg.11
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 10:03:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=7bvgnX1UOwK2YlUbgGPz6WdTxUzk++lvjU1X/6Tqioc=;
-        b=Z8uAs249tzRejZgWmm2a7xCiPxVkqZoOcnhwNyMa5daLtfQnzqrYkBvIV9884WsZeJ
-         uojEBC6WtjpYgxUHmuVKBXPZ9zBLYUL3P+xxsVYSzYb0Y8zaA4c4dr04bueOyXKBeAFa
-         rU1gkllrwf9NT1NLOHJQnZaNmjrq18qiwYS+kv1zt7B3mZMKBlqsp78/CMUTdmBgJKgV
-         /BmAPkco/4bKnrOJMnxUit12/NUpUvoFI/lLzHHBQJ2QApiPcYLyTdxO8UZHxmdsIogk
-         sSNoK4/qQW1DIZBfnM2CjDXh30sW4egWfRVsJqG2eokIFzqjTlQ/nRIX42Lg7MO00AOs
-         wP8g==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=dRRMeOIOmKuImUZjC6XEF8vj6iqVHA0oHTXEGy/WDOY=;
+        b=lS/T4ChQi4xNf6FELdKou0810K8wueXgd3+O+SHUg3AC6SukTphoa5OsNQ6s9VrDjd
+         B//z9nirY6VWJ7BhDvCr1vtAV9knpLrNFQOaRg5wdu8UfaW25zqi0mWX4Ctnr06PZrCg
+         ZHq6zMleaIghFJnyQ/BpwKLAIdk1H/3MUzMh9dRfhLAGnXUDLMrTLwBW1rVRjCzaKfuG
+         tXAzrLUq6JXAMZmM/CpG1dCiOM6x4Qvy+45uIFJT9VikH6R54F4CwkdD9bttxrpa1Eo2
+         4KfjDxZN8QLbtVoGF/OB8dCvpzg2GX5XUbkcanP3druJ1CbYwtcEAVuZzlAdOSIJpt3h
+         lWGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7bvgnX1UOwK2YlUbgGPz6WdTxUzk++lvjU1X/6Tqioc=;
-        b=i03Q+CVceECLlFIzUKjZakTgvzown0NDeuAE+x7BaBtuFBcuXRUGWk3mZMQhkaww8v
-         ry0Z/4ZvUJhGfRIT06e60WY8X1nCb4TQ/m2Zym54LSl+6hBQfxfBIoju7q1Nt2aFNiy7
-         oNRahNV6tbFaIQwTw1O886ubCIrjicklHnT39lFHi4UrIzfJJE5KvxYpXG36yAofKhJa
-         hccawVmpud/Jp6xQyP2wlJ5sChCne2ZT7FsbUU3/57DL3vEzNaF8pLKVx1sMqEesUF6s
-         RgrHAUFdFHQQjDiDF50+wrg/u+QGPO5CcI2O/G0nchaOCUBPJhMjQLirBWXHn9BclaEF
-         ZU7w==
-X-Gm-Message-State: AOAM530xI660DdAOfF2D+J9Kk4XJDJBJNPSyrd7vhWk8VTb60kwZAm5o
-        rxudAwZ0dniyax5xr4SHpaJKlpbijMY=
-X-Google-Smtp-Source: ABdhPJwf0H9h78n1cNxoxzr3CU3kR2Wi7bzN0MxyAYrWcWF9VrLE9hhCD60juUDkWT4tKeHGkOUI+w==
-X-Received: by 2002:adf:90e2:: with SMTP id i89mr20103163wri.338.1626536515352;
-        Sat, 17 Jul 2021 08:41:55 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p4sm14211606wrt.23.2021.07.17.08.41.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Jul 2021 08:41:55 -0700 (PDT)
-Message-Id: <3d8df24677269ddc379e0bfe5a6acc7f1dfd4fee.1626536508.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1049.git.git.1626536507.gitgitgadget@gmail.com>
-References: <pull.1049.git.git.1626536507.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 17 Jul 2021 15:41:47 +0000
-Subject: [PATCH 9/9] pull: fix handling of multiple heads
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=dRRMeOIOmKuImUZjC6XEF8vj6iqVHA0oHTXEGy/WDOY=;
+        b=dxkQbZQIFSqb/a8BeWr0e48MgCFtcCY6wT3eLUzpd7OdR+gkNT0rj9Cb2dzxcGReUp
+         +xkkDk5nVvdpal1xv+Gkw+DLr11qVmuhAGGPI/rk4Z+HxEPNmMLdGbwYYIProA4Mi0gD
+         MICcsIfjG/3ayBcr1cSEjHhKcXkbt24wTbUvgesGfl6ToAoyq7uzlS6Z0pmMDA8jEEfP
+         W3b4RTqHgYfXAKB3cu/Tewyut82ep6BJ6Pn8AreUSZO1s+6gaRLW1gOYHV67ozVwDw2Q
+         PDDb2rCJX5CL0JKMIrWmID19PaLuRgyQn5YAYrz5VpFjUGAJGUostuEKV56318WWb9vO
+         f4QA==
+X-Gm-Message-State: AOAM530ZrdgzkxdevdqY9I5nICCVtSFLSoB9cZjbA+liqxOEe86OWdX1
+        NYyvGSxATdg2fKeb0GuF5u0=
+X-Google-Smtp-Source: ABdhPJzcXKd8lvdq1yrrV1jAlG4V0dykcbq4Vipmlg2jPWDpLVqX1Sg9lV73PK+iJ63zN0HnvN2uiQ==
+X-Received: by 2002:a37:9606:: with SMTP id y6mr15985357qkd.13.1626541426382;
+        Sat, 17 Jul 2021 10:03:46 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id j20sm4450961qtq.14.2021.07.17.10.03.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 17 Jul 2021 10:03:45 -0700 (PDT)
+Subject: Re: Regression in 'git pull --rebase --autostash' since v2.32.0
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Denton Liu <liu.denton@gmail.com>
+References: <a0071549-73f6-9636-9279-3f01143a05de@gmail.com>
+Message-ID: <109545c7-7245-6146-d39a-2a44ac450db3@gmail.com>
+Date:   Sat, 17 Jul 2021 13:03:44 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Alex Henrie <alexhenrie24@gmail.com>,
-        Son Luong Ngoc <sluongng@gmail.com>,
-        Matthias Baumgarten <matthias.baumgarten@aixigo.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+In-Reply-To: <a0071549-73f6-9636-9279-3f01143a05de@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Le 2021-07-17 à 11:29, Philippe Blain a écrit :
+> Hi Felipe,
+> 
+> Your recent clean-up of 'git pull --autostash' seems to unfortunately have made things
+> worse if the pull brings new files that conflict with existing untracked files,
+> which makes the pull abort,
+> and there are tracked files with modifications (so --autostash comes into play).
+> 
+> Before your change, 'git pull --no-rebase --autostash' did *not* apply the autostash
+> after the pull failed, thus loosing modifications to tracked files (and it did not save the
+> stash entry !). 'git pull --rebase --autostash' correctly applied the autostash, but ended with
+> a strange "error: could not detach HEAD".
+> 
+> After your change, both 'git pull --no-rebase --autostash' and 'git pull --rebase --autostash'
+> have the same buggy behaviour: they do not apply the autostash and do not save it in the stash list.
 
-With multiple heads, we should not allow rebasing or fast-forwarding.
-Also, it seems wrong to have our can_ff computation return true, so fix
-that while we are at it too (we won't actually use the can_ff flag due
-to setting opt_ff to "--no-ff", but it's confusing to leave it as
-computed to be true).
+The change below seem to fix both cases:
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- builtin/pull.c               | 20 ++++++++++++++++----
- t/t7601-merge-pull-config.sh |  4 ++--
- 2 files changed, 18 insertions(+), 6 deletions(-)
+diff --git a/builtin/merge.c b/builtin/merge.c
+index a8a843b1f5..b2ad70c50a 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1560,6 +1560,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+  					  &head_commit->object.oid,
+  					  &commit->object.oid,
+  					  overwrite_ignore)) {
++			apply_autostash(git_path_merge_autostash(the_repository));
+  			ret = 1;
+  			goto done;
+  		}
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 3a61b92f328..beaf6ee0653 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -913,12 +913,18 @@ static int run_rebase(const struct object_id *newbase,
- 	return ret;
- }
- 
--static int get_can_ff(struct object_id *orig_head, struct object_id *orig_merge_head)
-+static int get_can_ff(struct object_id *orig_head,
-+		      struct oid_array *merge_heads)
- {
- 	int ret;
- 	struct commit_list *list = NULL;
- 	struct commit *merge_head, *head;
-+	struct object_id *orig_merge_head;
- 
-+	if (merge_heads->nr > 1)
-+		return 0;
-+
-+	orig_merge_head = &merge_heads->oid[0];
- 	head = lookup_commit_reference(the_repository, orig_head);
- 	commit_list_insert(head, &list);
- 	merge_head = lookup_commit_reference(the_repository, orig_merge_head);
-@@ -1046,10 +1052,16 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 			die(_("Cannot merge multiple branches into empty head."));
- 		return pull_into_void(merge_heads.oid, &curr_head);
- 	}
--	if (opt_rebase && merge_heads.nr > 1)
--		die(_("Cannot rebase onto multiple branches."));
-+	if (merge_heads.nr > 1) {
-+		if (opt_rebase)
-+			die(_("Cannot rebase onto multiple branches."));
-+		if (opt_ff && !strcmp(opt_ff, "--ff-only"))
-+			die(_("Cannot fast-forward to multiple branches."));
-+		if (!opt_ff)
-+			opt_ff = "--no-ff";
-+	}
- 
--	can_ff = get_can_ff(&orig_head, &merge_heads.oid[0]);
-+	can_ff = get_can_ff(&orig_head, &merge_heads);
- 
- 	/* ff-only takes precedence over rebase */
- 	if (opt_ff && !strcmp(opt_ff, "--ff-only")) {
-diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
-index 673b92afbab..29105b5b1ed 100755
---- a/t/t7601-merge-pull-config.sh
-+++ b/t/t7601-merge-pull-config.sh
-@@ -297,7 +297,7 @@ test_expect_success 'pull.rebase=true takes precedence over --ff' '
- 
- # End of precedence rules
- 
--test_expect_failure 'Multiple heads does not warn about fast forwarding' '
-+test_expect_success 'Multiple heads does not warn about fast forwarding' '
- 	git reset --hard c1 &&
- 	git pull . c2 c3 2>err &&
- 	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-@@ -307,7 +307,7 @@ test_expect_success 'Cannot fast-forward with multiple heads' '
- 	git reset --hard c0 &&
- 	test_must_fail git -c pull.ff=only pull . c1 c2 c3 2>err &&
- 	test_i18ngrep ! "Pulling without specifying how to reconcile" err &&
--	test_i18ngrep "Not possible to fast-forward, aborting" err
-+	test_i18ngrep "Cannot fast-forward to multiple branches" err
- '
- 
- test_expect_success 'Cannot rebase with multiple heads' '
--- 
-gitgitgadget
+
+*But* from a quick audit of 'cmd_merge', there are still two code paths that
+call 'create_autostash' but then fail to apply it before calling 'goto done':
+
+1. the branch 'if (automerge_was_ok)' (line 1693)
+2. the branch 'if (!best_strategy)' (line 1704)
+
+
+Cheers,
+Philippe.
