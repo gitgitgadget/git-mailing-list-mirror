@@ -2,149 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1A30C636CA
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 15:37:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3304C636C9
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 15:41:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 985B361156
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 15:37:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D57C66115C
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 15:41:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234907AbhGQPkS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 11:40:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35906 "EHLO
+        id S235171AbhGQPos (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 11:44:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234616AbhGQPkP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 11:40:15 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30DDFC06175F
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 08:37:19 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id w127so14780015oig.12
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 08:37:19 -0700 (PDT)
+        with ESMTP id S234930AbhGQPor (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 11:44:47 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A75A1C061762
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 08:41:50 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id t5so15599195wrw.12
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 08:41:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AM6ARNVvmd4mL1q2Swe4QJD5qYALiWRj6SeFuGZ0Sq4=;
-        b=tCHybB5qQ6yjHiz1Z71Iu+eBLkWsb4fiU1WPU0aeajctqoxAnJnoBA22cdNE4qUdAz
-         0Oux1rN8wH/rZQKxclcMhKPDiSRmss5l93mFmJLXgBejyHAYTfTihCpjzm9VOPg5HU0f
-         Tdb6gRi8zcGwN6SOGINeYkNIWhfpzIlV1y/TDxkN3m8B1ummFNARLaqSJ2Evngf5dNEm
-         aFE41vt662Z7EvUJHArIvcAezGuMxfA1wy8zO7tzjCiWvVy8dVPVBMOCkA246S6lOmwF
-         t/Qv+5YVPptraloCN6DIVOB1B/TGoPz34GzWzsk7v28QVoluABev2Olss/OpQGIfrW0F
-         hXfA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=y9kJFOH/NzBX3fULqq7NH8gbIZLl7VtKSRx6Yz6I9cI=;
+        b=o0xaGdDBJq/dogt/Y6TOAxBO3YiXPowlPedeDLaYPmnsMgwZqCdzy6HXIhdhoNPaS3
+         hM7i33TrshJS8NWDfw4Az4zwMMq9gvpSOgLUZ4/GKfosM//rbCnO7HGtwLFtvNPgCp5c
+         SFwCVnsaHxJuu1Zq0WeyQrQtCxBgWefalYSiUW5+ZhDhuqGISxVXuafnIRsB/AS85X+0
+         0SN2m7l/2rGsd9fhpsI0fOBD7iqOAAeWodFnQPr2eY700l2Arq9A+CO5ehzwyj2Dpk+K
+         ybckVJNnvKu5TT5HD5LHoHqqYrjSl/VMNqtzjOWflJvbN7ydu0TlUrjJL4PCO71zNCu1
+         KSVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AM6ARNVvmd4mL1q2Swe4QJD5qYALiWRj6SeFuGZ0Sq4=;
-        b=DCM9zP72pgxuLzqioKdWHGzvvzQ/ZRt+HBckY81BBljbgGHdLLYPCJsKdtypljBEBz
-         aHTh30EFOBWdX7DAbjIHUTqAFPQHzlEW73xpwLa806ua0XxQqYFRpOBGtvag1ZrOUO1v
-         waikD9bvt+Bg8Y6V5MWTMYzpo+Tg8NPXVh4V7vyy7qGncZ+o85kKMZZHWI+JnhpuueMa
-         NziI86U3eioa01DEduItU9/a7Ul+OX99lH7xiHX/IF1zfzzxKc7WfZCglFx2pqrLGMyR
-         tb7NV+n2NKvRDWe1BOrrtjFHhFvG1K9ICIYKRiBq2uNrrzUZEniXtb9o4ajwhgasvPt0
-         RtiA==
-X-Gm-Message-State: AOAM532l+0DvITP02JlxoNlQYeb+SyC8dYexcyZSAErmLu0Au85+Aj9D
-        7NO2N0TTN8/Gwaa3/jJpSwQI/S80H2xw/HzkItk=
-X-Google-Smtp-Source: ABdhPJxjbWqaz8Vak0Jod35WZCUlJDobaOrSnoVXs65Xn6wRw85GwOOQyCDalTVTv7xe3OoMQVn2uqESfIRO6BM11BY=
-X-Received: by 2002:aca:acc5:: with SMTP id v188mr16056884oie.167.1626536238583;
- Sat, 17 Jul 2021 08:37:18 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=y9kJFOH/NzBX3fULqq7NH8gbIZLl7VtKSRx6Yz6I9cI=;
+        b=ZFaZ3fxiUm6BucrQHZvETlKimfgrU3V2XMNhYZK5gJntCsQaKzw9daXF26pVe1ekPC
+         zNBTSJJExr9AjQ6q0SBQXufoddBRel2DPHnQJJ3Gd8Z1fo/iQXim31uW6FwcoI1SYfkG
+         /KzOFnR79fsESdWss+TcHay2QDpEDUxmJu8gcYL8Qy2M6KkW2/ADbvV4a3053Gx/WHOC
+         Abh4Zqfnn7SDULGZnxryn3URiNQck5zV7KqFZYuayQgr/H0+7bXoPn4PSAc3VirB0IDX
+         jl1aOakFSGGah+/EwmBWUobR2POvk8tDPJ9gS6SP4kruWUjcexvIu7INfGmCwHJkhoab
+         /K4g==
+X-Gm-Message-State: AOAM533N1k85X0kvmsQSYOadfPOVzQUfwX7dsoYiwxgWefcwMsDDuAuu
+        ZTVp6bHlDQKp3fK5zVw1U5eA55N16bg=
+X-Google-Smtp-Source: ABdhPJxh6tzuzJWQt0DqYxO+LC6UyYc+RIeEUSpbWWfN1A9mZ1tHkWSvH7CrPI99x0BkJWNoZz+3jA==
+X-Received: by 2002:a5d:5403:: with SMTP id g3mr19026476wrv.403.1626536509351;
+        Sat, 17 Jul 2021 08:41:49 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c12sm15733549wrr.90.2021.07.17.08.41.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 17 Jul 2021 08:41:48 -0700 (PDT)
+Message-Id: <pull.1049.git.git.1626536507.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 17 Jul 2021 15:41:38 +0000
+Subject: [PATCH 0/9] Handle pull option precedence
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.973.git.1624932786.gitgitgadget@gmail.com>
- <CABPp-BF_i1QRCXaeKzqoc6Q2=3un-wku7aKUEdBbXfeVfTG8xg@mail.gmail.com>
- <b362c428-eec9-39e3-55a0-0738431e1d98@gmail.com> <c127ceed-10fd-9ad0-e858-db79bec0cf8d@gmail.com>
-In-Reply-To: <c127ceed-10fd-9ad0-e858-db79bec0cf8d@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 17 Jul 2021 08:37:07 -0700
-Message-ID: <CABPp-BGCnV-xHH-+S58pqFFhPbPj_0Rt=_QUf_ShAbTCyW9deA@mail.gmail.com>
-Subject: Re: [PATCH 0/5] Sparse index: integrate with commit and checkout
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Matthias Baumgarten <matthias.baumgarten@aixigo.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 16, 2021 at 6:59 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 7/12/2021 2:46 PM, Derrick Stolee wrote:
-> > On 7/9/2021 5:26 PM, Elijah Newren wrote:
-> >> On Mon, Jun 28, 2021 at 7:13 PM Derrick Stolee via GitGitGadget
-> >> <gitgitgadget@gmail.com> wrote:
-> >>>
-> ...
-> > Further, I expect it to be simpler to modify the behavior
-> > here to match the full checkout case than to make the
-> > sparse-index case match the normal sparse-checkout case.
-> > The "natural" thing would be to keep the staged "folder1/"
-> > directory, but that would present as adding all contained
-> > content, not just the single staged entry.
-> Taking a closer look at the full checkout case, I discovered that the
-> 'git checkout df-conflict' command succeeds in the full checkout case if I
-> apply it directly to the 'master' branch. In that situation, it completely
-> removes the staged change to folder1/edited-content! This seems like
-> incorrect behavior, and has nothing to do with the sparse-checkout feature.
+Based on a recent list of rules for flag/option precedence for git-pull[1]
+from Junio (particularly focusing on rebase vs. merge vs. fast-forward),
+here's an attempt to implement and document it. Given multiple recent
+surprises from users about some of these behaviors[2][3] and a coworker just
+yesterday expressing some puzzlement with git-pull and rebase vs. merge, it
+seems like a good time to address some of these issues.
 
-I was not able to reproduce.  Do you have other modifications to git,
-or is there some other special setup required to trigger the bug that
-I am missing in reading the paragraph above?  Here's what I see:
+Since the handling of conflicting options was holding up two of Alex's
+patches[4][5], and his patches fix some of the tests, I also include those
+two patches in my series, with a few small changes to the first (so I've
+kept him as author) and more substantial changes to the second (so I've
+given him an Initial-patch-by attribution).
 
-<Add an "exit 1 &&" right after "init_repos &&" in the 'diff with
-directory/file conflicts' test, run until first failure, then:
+Quick overview:
 
-$ cd trash directory.t1092-sparse-checkout-compatibility/full-checkout
-$ git reset --hard
-$ git checkout rename-in-to-out
-$ echo more stuff >>folder1/edited-content
-$ git add -u
-$ git checkout df-conflict
-error: Your local changes to the following files would be overwritten
-by checkout:
-folder1/edited-content
-Please commit your changes or stash them before you switch branches.
-Aborting
+ * Patches 1-2: new testcases (see the commit messages for the rules)
+ * Patch 3: Alex's recent patch (abort if --ff-only but can't do so)
+ * Patches 4-6: fix the precedence parts Alex didn't cover
+ * Patch 7: Alex's other patch, abort if rebase vs. merge not specified
+ * Patch 8: Compatibility of git-pull with merge-options.txt (think
+   rebasing)
+ * Patch 9: Fix multiple heads handling too
 
-This looks like the expected behavior to me, and is what I'd also
-expect from the sparse-checkout and sparse-index cases.
+[1] https://lore.kernel.org/git/xmqqwnpqot4m.fsf@gitster.g/ [2]
+https://lore.kernel.org/git/CAL3xRKdOyVWvcLXK7zoXtFPiHBjgL24zi5hhg+3yjowwSUPgmg@mail.gmail.com/
+[3]
+https://lore.kernel.org/git/c62933fb-96b2-99f5-7169-372f486f6e39@aixigo.com/
+[4]
+https://lore.kernel.org/git/20210711012604.947321-1-alexhenrie24@gmail.com/
+[5]
+https://lore.kernel.org/git/20210627000855.530985-1-alexhenrie24@gmail.com/
 
-> It just happens that a sparse-checkout will have a _different_ kind of
-> incorrect behavior!
->
-> However, when adding the test on top of the ds/status-with-sparse-index
-> branch, the full checkout case matches the sparse-checkout! I bisected
-> this to the additions of files adjacent to folder1/ (folder1. folder1-,
-> etc) in e669ffb (t1092: expand repository data shape, 2021-07-14). If I
-> switch the test to conflict on folder2, then I get the strange behavior
-> that I was noticing on 'master'.
->
-> Some very subtle things are going on here, and they don't necessarily
-> involve the sparse index. Adding the sparse index to the mix creates a
-> third incorrect behavior to this already-broken case.
->
-> If we agree that the correct thing to do here is to reject the merge and
-> fail the command, then I can start working on making that change in
-> isolation (because _none_ of the existing behaviors are correct).
+Alex Henrie (1):
+  pull: abort if --ff-only is given and fast-forwarding is impossible
 
-Yes, rejecting the merge is the correct behavior.  This is implied by
-the existing documentation for both the --merge and --force options to
-checkout.
+Elijah Newren (8):
+  t7601: add relative precedence tests for merge and rebase
+    flags/options
+  t7601: add tests of interactions with multiple merge heads and config
+  pull: since --ff-only overrides, handle it first
+  pull: ensure --rebase overrides ability to ff
+  pull: make --rebase and --no-rebase override pull.ff=only
+  pull: abort by default when fast-forwarding is not possible
+  pull: update docs & code for option compatibility with rebasing
+  pull: fix handling of multiple heads
 
-> That leaves a question as to whether we should hold up this series for
-> that reason, or if I should pursue a fix to this kind of conflict as a
-> forward fix on top of it. What do you think, Elijah and Junio?
+ Documentation/git-pull.txt      |  22 ++--
+ Documentation/merge-options.txt |  25 ++++
+ advice.c                        |   5 +
+ advice.h                        |   1 +
+ builtin/merge.c                 |   2 +-
+ builtin/pull.c                  |  55 ++++++---
+ t/t4013-diff-various.sh         |   2 +-
+ t/t5520-pull.sh                 |  26 ++--
+ t/t5521-pull-options.sh         |   4 +-
+ t/t5524-pull-msg.sh             |   4 +-
+ t/t5553-set-upstream.sh         |  14 +--
+ t/t5604-clone-reference.sh      |   4 +-
+ t/t6402-merge-rename.sh         |  18 +--
+ t/t6409-merge-subtree.sh        |   6 +-
+ t/t6417-merge-ours-theirs.sh    |  10 +-
+ t/t7601-merge-pull-config.sh    | 212 +++++++++++++++++++++++++++++---
+ t/t7603-merge-reduce-heads.sh   |   2 +-
+ 17 files changed, 321 insertions(+), 91 deletions(-)
 
-I only dug in and found the sparse-checkout/sparse-index bugs because
-the D/F changes you made to twoway_merge() looked clearly wrong to me
-and I was trying to find a case that would demonstrate it and make it
-easier for you to fix up.  I still think the patch is wrong and that
-it adds a bug.  If you can drop that patch, and still get correct
-behavior in your tests, then I think we can ignore other bugs in this
-area, but I'm not happy with that particular patch.  If you need that
-patch, then it needs to be corrected, which probably means figuring
-out all these bugs.
+
+base-commit: 75ae10bc75336db031ee58d13c5037b929235912
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1049%2Fnewren%2Fhandle-pull-option-precedence-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1049/newren/handle-pull-option-precedence-v1
+Pull-Request: https://github.com/git/git/pull/1049
+-- 
+gitgitgadget
