@@ -7,70 +7,73 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7571C636CA
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 21:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A17BC636C9
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 21:44:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7633F610A5
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 21:41:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7598060E09
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 21:44:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234424AbhGQVog (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 17:44:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59150 "EHLO
+        id S234105AbhGQVrs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 17:47:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231542AbhGQVog (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 17:44:36 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02F24C061762
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 14:41:38 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id h2so17774147edt.3
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 14:41:37 -0700 (PDT)
+        with ESMTP id S231542AbhGQVrr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 17:47:47 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2731C061762
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 14:44:49 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id dp20so19066681ejc.7
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 14:44:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=yvqhlLkZpX90E2k8OBA33nL5yllhvtz7qcjbv0rJsy8=;
-        b=qxX0bXoffYYgT3936ellIMNy+JPaxhuSgmDgGLjlQrSBwnJ7eTA3CSCuSzNf+uSFeE
-         7UXJjfvV+3XAusnYP7JmorlgHRpRQ0bx0sIEy14CYwsyJw/pzj81mygsFHq914Lrk0rP
-         2NuXIs3FvBh37XYi1dySBLPgIg9wQeJit59zsgf4ze85GfsN4M0ADdWTS9S5YpTgBLyF
-         oxpW6/HpPcaR87vLdRG1mZiGEdbOXfFeAc4dkIJwIBRyE5Jbnn9CnFejq9Pm+k7RV7np
-         NDxZBSd0ZU+DAe86ferTEgcyUXV2XchjieOMyEgYFOvffYhgfKBJYGfglFiccFEWKAKa
-         YI5w==
+        bh=Kth3wGT/28pKydxrWpVHcfs7M8QY6Wv0irJzVzKKfrU=;
+        b=VceXkh0OG9la6WCdiw5NyUfR8q0RWveahktP+fiGY72l1Bs+9ixQXw8tMQx9idfDxs
+         UqOYUWdtDOHPttKDkt03r6wBsshs/cf6VXp19Xyl+ZsYBbSfXAA3d/rFJlrKPnVTDXpP
+         emcm7vZFfi6LPx5OJMvCyjP9p7ue1XF0F1zHzt/SeHBC1ojLANzTuFcjKLhfoaRCxJe3
+         rnzw2fQ0T9BZz3Vo2Gq9Gw9zF/vLDKPvxj45KBJNinB3cfZyPUqgeS4asB6zF5tAQNbL
+         gzVQ/e5dPiyBeeIhfONuwZhbNtpoZ+msQ6fTC3lugyROSzdkibSNoHA0p+vUKHfaO4Xv
+         JTDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=yvqhlLkZpX90E2k8OBA33nL5yllhvtz7qcjbv0rJsy8=;
-        b=QIbmc6nc5rkQI7DoG1zM8zi2EAolMhSl4S0jpD1gGnXJqNE9M2gLo/V5rlvETL39vI
-         uPezTVJaZzUxuBOgkiEtl4ttt1bz7RWYbFZcEvxnyJ9Xc57cqXy6zraMRIu0L7eAvG96
-         qaKwbqHyhqoHbpg2686gAyPjr/3lkr0FUyv0KpUhpLXjsMnEXBY4ycIkw9GPaik4AjYc
-         diM7FBrkxLkUZuaxWe7+wJ+lGX4S2QhrkK6a1g5xt5M7o3fdWOt8DNU7nLp5e0hvjf51
-         WjF+oBaH2QX7RclVDD7PBxqXObI0FgWknkA30vJcBHa9Y8vDksRMUB5UzXBBL6uoE21x
-         jl1g==
-X-Gm-Message-State: AOAM533mlggunE9QigLLJuUAhIXmEZSw71Add/A20+YS/d/xsPxerEiv
-        pl2IyMQV1L8Bug4EQUf0/ZM=
-X-Google-Smtp-Source: ABdhPJzeZJ/HhbiLSr7wsHa3CGvwqlrOTm4XMH3nUNatgHMtzyW4Vo0iQWufdoCRhtBShh2hBXVxzw==
-X-Received: by 2002:a05:6402:198:: with SMTP id r24mr24435631edv.93.1626558095724;
-        Sat, 17 Jul 2021 14:41:35 -0700 (PDT)
+        bh=Kth3wGT/28pKydxrWpVHcfs7M8QY6Wv0irJzVzKKfrU=;
+        b=CuFi5bPVsaDW7fDl2XhZnaqQOnJQet4rLs7PB75Eyo9aoCewpKw/+kejnhxJC1yuNw
+         shRXwva873tk7GW9HeMqIjBK6/ZKbo+ZVcePq2ZDLbfHHqM+E+BfVoq1Y5pbFC8tBTLc
+         5qm+HHSGLTDZQoqgjdQtsOU6djOzxMvHEUC9BPvVVYdq+B7SlHJyK/g+Sb96xl+jnIzR
+         J3Xsnr3EIYACGxQQ1mPZN3SAlc9TjnMAZUR2RkswUQJfpUKoMA/8RPTumiXcDxhgLU4Q
+         T1N6fq1Y6Mt+7fb5VOn7JyOYcDcBpwC+Uz+GZL0clyK1i42Elxod6Jk7onx8XuomSEWD
+         wA3Q==
+X-Gm-Message-State: AOAM533vHRTbb2TpxvNq4p2XJzERc0h8Xfms2S0bNbA/4fgzKVGBuhOs
+        Kc53z+DQKHj2uob46tTOdZU=
+X-Google-Smtp-Source: ABdhPJyYNIRlNyeziV/Oag/P6zK8G5D5+EwZ9I0MjSRSiKQ9qhIcKMDtbe67hnoH5uI6ljQH2HAlMQ==
+X-Received: by 2002:a17:906:69cc:: with SMTP id g12mr19360502ejs.550.1626558288174;
+        Sat, 17 Jul 2021 14:44:48 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id c17sm5397243edv.6.2021.07.17.14.41.35
+        by smtp.gmail.com with ESMTPSA id h17sm4230057ejl.37.2021.07.17.14.44.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Jul 2021 14:41:35 -0700 (PDT)
+        Sat, 17 Jul 2021 14:44:47 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] refs file backend: remove dead "errno == EISDIR" code
-Date:   Sat, 17 Jul 2021 23:36:59 +0200
-References: <patch-1.1-de0838fe99-20210714T111351Z-avarab@gmail.com>
- <YO8PBBJZ2Q+5ZqFs@coredump.intra.peff.net>
- <871r801yp6.fsf@evledraar.gmail.com>
- <YO9wCqetxHii+TvK@coredump.intra.peff.net>
- <875yxczbd6.fsf@evledraar.gmail.com>
- <YO/EpxU0NG+HVSlx@coredump.intra.peff.net> <xmqqk0lppw49.fsf@gitster.g>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v3 11/34] fsmonitor-fs-listen-win32: stub in backend for
+ Windows
+Date:   Sat, 17 Jul 2021 23:43:00 +0200
+References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
+ <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
+ <5a9bda7220356ebf0689bb6aaa9068520dc6e33b.1625150864.git.gitgitgadget@gmail.com>
+ <87v95tbqgh.fsf@evledraar.gmail.com>
+ <nycvar.QRO.7.76.6.2107161747010.59@tvgsbejvaqbjf.bet>
+ <87y2a6w61l.fsf@evledraar.gmail.com> <xmqqa6mlplo7.fsf@gitster.g>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <xmqqk0lppw49.fsf@gitster.g>
-Message-ID: <87mtqkwrc6.fsf@evledraar.gmail.com>
+In-reply-to: <xmqqa6mlplo7.fsf@gitster.g>
+Message-ID: <87k0lowr6u.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -81,60 +84,64 @@ X-Mailing-List: git@vger.kernel.org
 
 On Fri, Jul 16 2021, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
->> On Thu, Jul 15, 2021 at 02:02:40AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 B=
-jarmason wrote:
+>>>> > +ifdef FSMONITOR_DAEMON_BACKEND
+>>>> > +	COMPAT_CFLAGS +=3D -DHAVE_FSMONITOR_DAEMON_BACKEND
+>>>> > +	COMPAT_OBJS +=3D compat/fsmonitor/fsmonitor-fs-listen-$(FSMONITOR_=
+DAEMON_BACKEND).o
+>>>> > +endif
+>>>> > +
+>>>> >  ifeq ($(TCLTK_PATH),)
+>>>> >  NO_TCLTK =3D NoThanks
+>>>> >  endif
+>>>> ...
+>>>>
+>>>> Why put this in an ifdef?
+>>>
+>>> Why not? What benefit does this question bring to improving this patch
+>>> series?
 >>
->>> > Maybe that is splitting hairs, but I definitely try to err on the side
->>> > of caution and over-analysis when touching tricky code (and the
->>> > ref-backend code is in my experience one of the trickiest spots for
->>> > corner cases, races, etc).
->>>=20
->>> I'd entirely forgotten about this, but I had a patch to remove that
->>> "oid" call entirely, as it's really an unrelated bug/undesired behavior
->>>=20
->>> You also looked at it at the time & Michael Haggerty reviewed it:
->>> https://lore.kernel.org/git/20190315155959.12390-9-avarab@gmail.com/
->>>=20
->>> The state of that patch was that I needed to get to some minor issues
->>> with it (commit message rewording, cleaning up some related callers),
->>> but the fundamental approach seemed good.
->>>=20
->>> I then split it off from the v4 of that series to get the non-tricky
->>> changes in:
->>> https://lore.kernel.org/git/20190328161434.19200-1-avarab@gmail.com/
->>>=20
->>> I then just never got to picking it up again, I'll probably re-roll it &
->>> make it a part of this series, then we can remove this whole OID !=3D N=
-ULL
->>> case and will be sure nothing fishy's going on.
+>> I think that when adding code to the Makefile it makes sense to follow
+>> the prevailing pattern, unless there's a good reason to do otherwise,
+>> e.g. on my build:
+>>=20=09
+>> 	$ grep "''" GIT-BUILD-OPTIONS=20
+>> 	NO_CURL=3D''
+>> 	NO_EXPAT=3D''
+>> 	NO_PERL=3D''
+>> 	NO_PTHREADS=3D''
+>> 	NO_PYTHON=3D''
+>> 	NO_UNIX_SOCKETS=3D''
+>> 	X=3D''
 >>
->> Yeah, that sounds like a good path forward. I do think the patch under
->> discussion here is probably the right thing to do. But it becomes all
->> the more obvious if lock_ref_oid_basic() ends up dropping that parameter
->> entirely.
+>> Why does the FSMONITOR_DAEMON_BACKEND option require a nonexistent line
+>> as opposed to an empty one?
 >
-> OK, so what's the final verdict on this step?  It is unfortunate
-> that when =C3=86var took over a topic from Han-Wen, this patch has been
-> inserted as the very first step before the patches in the series, so
-> until we know we are happy with it, it takes several other patches
-> hostage.
+> I do not quite get the question.
+>
+> #!/bin/sh
+> cat >make.file <<\EOF
+> all::
+> ifeq ($(FSMONITOR_DAEMON_BACKEND),)
+> 	echo it is empty
+> endif
+> ifdef FSMONITOR_DAEMON_BACKEND
+> 	echo it is undefined
+> endif
+> EOF
+>
+> echo "unset???"
+> make -f make.file
+>
+> echo "set to empty???"
+> make -f make.file FSMONITOR_DAEMON_BACKEND=3D
+>
+> These two make invocations will give us the same result, showing
+> that "is it set to empty" and "is it unset" are the same.
 
-I'm just interested in the end result landing sooner than later, so if
-you think this re-imagining of it hinders more than helps I'm happy to
-discard it and just take the last version Han-Wen submitted, i.e. the
-v5:
-https://lore.kernel.org/git/pull.1012.v5.git.git.1625684869.gitgitgadget@gm=
-ail.com/
+Indeed, which is why I'm pointing out that wrapping it in an ifdef is
+pointless, which is why we don't do it for the other ones.
 
-I can then re-roll whatever I've come up here that I still find useful
-on that after it lands.
-
-I just thought that given the complexity of the ref code tying any loose
-ends up before those changes would help, but maybe not.
-
-Anyway, you/Han-Wen let me know. I'm happy to re-roll what I have
-outstanding here based on feedback, but also just to discard it for now
-and go with his version. I'll hold on any re-rolls in that area pending
-feedback on what you two would like to do.
+We do have a bunch of ifdef'd things there for perf etc., I'm not sure
+if it matters or not for those.
