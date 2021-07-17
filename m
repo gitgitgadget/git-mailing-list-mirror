@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA3B9C636CA
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 15:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00A98C636C9
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 15:42:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C57426115C
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 15:41:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC8666115C
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 15:42:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235356AbhGQPoz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 11:44:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36974 "EHLO
+        id S235065AbhGQPo4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 11:44:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234930AbhGQPou (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 11:44:50 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 040CCC061764
+        with ESMTP id S235272AbhGQPov (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 11:44:51 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32923C061762
         for <git@vger.kernel.org>; Sat, 17 Jul 2021 08:41:54 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id k4so15595159wrc.8
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 08:41:53 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id n4so7592401wms.1
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 08:41:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Oz+gR5ZaJqyzXvto4nobi5lD/J9jrUp0NPZJ8hG60bE=;
-        b=j8hBqoO41ljM/h2DIrSVqBv/Ori/716a7KTa1Ct5CkXGEU+FKWnqmQxEuoeVLk1QJe
-         L1m7nKlXpAUbRNObZ3ylm5Q0ckcFlXfN0EJ47rkjU++k/dbJ1/PYuzKre4eVoCGpodOu
-         VB1S7ullSvOpFm29vX/i0m0sM2CAihOadXIT+xIrcROehnuXCLYpPf2QDyliGshoSrrk
-         sfCy1qgHbypEEYILhDsA/cR92zsVr5biU4kv101EEon81S4DHvJ48S2cHFwVB8ObaE1D
-         tTHo7InV9zRQ2FnmvSrNu5Xe8CWIcK0+xXU9TIg3e/96VqcY731ABPvhs6q1S6Q/FFMC
-         Q0XQ==
+        bh=6nmzd1WY5d008MKBiZdP3xj2FvDspd9va7AIkNv7CdQ=;
+        b=sF8BMJeExnLLLD5dTomTyIrYsFrnyDbsvKNwsuOn3fQWfvfyLae5pJbindXKrJcSg5
+         x7NIlpQ8Fcyy0LRxZphkHP4G+PY5hDfui8qqnNNPB2gzrXq1js0McXk/XGwQlKtpIQ9K
+         8NHAmkSOWQDNjll1jBOX8CKqoCwXMjehQV7vlVQNRpLmXFAZejtLIsV3kIj+/+jP0gxx
+         HdLYQAmvoGig7AZms4oNOY7ULKC+0pQqRyK/kqcelscFVAKyxhFG3H3TRopinBs+cbpO
+         wWzkYBD55eWtq5G26fJFVpCAPO/lHaCVsbnCRwc+8kv6/hyxu+/3aFX6I/ktt2EOSNbE
+         OenA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Oz+gR5ZaJqyzXvto4nobi5lD/J9jrUp0NPZJ8hG60bE=;
-        b=UnJdfRww5ktFtSX6x5XWiHR4dbeSqjrNGEDnbKs9LSMfo5QBjj3YCgDMrfU3oBiweC
-         dZ2wqvvOqRJtlKzqvOsvkUgPfFrDyNQ2J8ImmVzqKrAzSqb+XOMgd3cpWGphote+1gFS
-         exOUC5NCsFVJm7BPnC3kVPuZMoiQ32Gzuxs17mJlB9ZP8VQ8FVpUA4Tf5WO8UWylEy+v
-         fWyftflkd5dOUmJwrnCYsTQ4fZuZ//9K5A7gowe8fACLVLuO6XKEHgM/LIwOdAB1iwfd
-         RD9nDXiUIRSqRiAq0HDqvfOvrAuVkSr90jZlaWxWpvlPmi8HG7xQYrCiqhSXwPvRwTvt
-         pERQ==
-X-Gm-Message-State: AOAM532GirVES2Jh2+lAJFP540LPJXpQkgBfCDFnRN1sPMWUVJyej6nS
-        KQxlpfizZa1UrXhAaTOSv4yyVVunTcI=
-X-Google-Smtp-Source: ABdhPJzBc7MoVtjlB5MqSXURJqP9se5ixcI5Truyv/157bYNRQZSfeAkCvcja9D+G+pxb4RaDmedOA==
-X-Received: by 2002:adf:f60a:: with SMTP id t10mr18894684wrp.127.1626536512041;
+        bh=6nmzd1WY5d008MKBiZdP3xj2FvDspd9va7AIkNv7CdQ=;
+        b=mmp+L+KuwWBDDm0kaCUtc6jVL/MkaOjpMrjlZXfUgA7bnRq7VIOatRfFBTD7M4ZunN
+         YkOm9FB2/cyQ2YOkrJkvNI/i+1uMbZ2MEsfIoVG9kQWYgEmXTxFG6BZ4vUIKTupTqjR1
+         Ry2si/QwFtZLDYyBvTY8yVMgecM06m7jEFtpktgAiM9QnAyCcAnfPwl+l5JywZTN1F8+
+         cPKB/65iqllwOOf2/tiq7DzvhNdG7fXIKVaqDr9nz062ajxAwwX/ownMx+QKtgnl5ab+
+         rHY1FjCE9p0zGWORIU9jm/igXA0RlvHiFFvxRToiS8oBhhizlxp7m427lExis3djy0kp
+         CLKg==
+X-Gm-Message-State: AOAM532im/RiY7cN3CBP1Q9T055P12V5K6N702VtO4T4uQ/Ch4WJCxFc
+        Umkysbqj/g/HZvJDpwchQBqyNnBco/E=
+X-Google-Smtp-Source: ABdhPJw33BD0z9jJF8HAu7FybAVlGt0yZtxEvqCqcbSplae+72ZI1iUjIO6pIw8zs9IMzAyyQGcdwA==
+X-Received: by 2002:a05:600c:3786:: with SMTP id o6mr22976781wmr.155.1626536512806;
         Sat, 17 Jul 2021 08:41:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j16sm13475662wrw.62.2021.07.17.08.41.51
+        by smtp.gmail.com with ESMTPSA id u2sm10934450wmc.42.2021.07.17.08.41.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Jul 2021 08:41:51 -0700 (PDT)
-Message-Id: <de4b460b09d3a3b6848f9f9eaa5520b31a3b453a.1626536508.git.gitgitgadget@gmail.com>
+        Sat, 17 Jul 2021 08:41:52 -0700 (PDT)
+Message-Id: <3d9ff69198e5a604b124bf861df4d6ecf6eb661e.1626536508.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1049.git.git.1626536507.gitgitgadget@gmail.com>
 References: <pull.1049.git.git.1626536507.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 17 Jul 2021 15:41:42 +0000
-Subject: [PATCH 4/9] pull: since --ff-only overrides, handle it first
+Date:   Sat, 17 Jul 2021 15:41:43 +0000
+Subject: [PATCH 5/9] pull: ensure --rebase overrides ability to ff
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,50 +80,64 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-There are both merge and rebase branches in the logic, and previously
-both had to handle fast-forwarding.  Merge handled that implicitly
-(because git merge handles it directly), while in rebase it was
-explicit.  Given that the --ff-only flag is meant to override any
---rebase or --no-rebase, make the code reflect that by handling
---ff-only before the merge-vs-rebase logic.
-
-No functional changes, just making it easier to verify that the codeflow
-matches our precedence rules.
+Now that the handling of fast-forward-only in combination with rebases
+has been moved before the merge-vs-rebase logic, we have an unnecessary
+special fast-forward case left within the rebase logic.  Actually, more
+than unnecessary, it's actually a violation of the rules.  As per
+https://lore.kernel.org/git/xmqqwnpqot4m.fsf@gitster.g/, --rebase is
+supposed to override all ff flags other than an explicit --ff-only.
+Ensure that it does so by removing the fast-forward special case that
+exists within the rebase logic.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/pull.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ builtin/pull.c  | 8 +-------
+ t/t5520-pull.sh | 6 +++---
+ 2 files changed, 4 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/pull.c b/builtin/pull.c
-index d9796604825..5c9cbea37c9 100644
+index 5c9cbea37c9..5ba376a7487 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -1046,15 +1046,16 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+@@ -1070,13 +1070,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 		    submodule_touches_in_range(the_repository, &upstream, &curr_head))
+ 			die(_("cannot rebase with locally recorded submodule modifications"));
  
- 	can_ff = get_can_ff(&orig_head, &merge_heads.oid[0]);
- 
--	if (!can_ff) {
--		if (opt_ff) {
--			if (!strcmp(opt_ff, "--ff-only"))
--				die_ff_impossible();
+-		if (can_ff) {
+-			/* we can fast-forward this without invoking rebase */
+-			opt_ff = "--ff-only";
+-			ret = run_merge();
 -		} else {
--			if (rebase_unspecified && opt_verbosity >= 0)
--				show_advice_pull_non_ff();
+-			ret = run_rebase(&newbase, &upstream);
 -		}
-+	/* ff-only takes precedence over rebase */
-+	if (opt_ff && !strcmp(opt_ff, "--ff-only")) {
-+		if (!can_ff)
-+			die_ff_impossible();
-+		else
-+			return run_merge();
- 	}
-+	/* If no action specified and we can't fast forward, then warn. */
-+	if (!opt_ff && rebase_unspecified && !can_ff)
-+		show_advice_pull_non_ff();
++		ret = run_rebase(&newbase, &upstream);
  
- 	if (opt_rebase) {
- 		int ret = 0;
+ 		if (!ret && (recurse_submodules == RECURSE_SUBMODULES_ON ||
+ 			     recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND))
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index e2c0c510222..4b50488141f 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -295,7 +295,7 @@ test_expect_success '--rebase (merge) fast forward' '
+ 	# The above only validates the result.  Did we actually bypass rebase?
+ 	git reflog -1 >reflog.actual &&
+ 	sed "s/^[0-9a-f][0-9a-f]*/OBJID/" reflog.actual >reflog.fuzzy &&
+-	echo "OBJID HEAD@{0}: pull --rebase . ff: Fast-forward" >reflog.expected &&
++	echo "OBJID HEAD@{0}: pull --rebase . ff (finish): returning to refs/heads/to-rebase" >reflog.expected &&
+ 	test_cmp reflog.expected reflog.fuzzy
+ '
+ 
+@@ -307,8 +307,8 @@ test_expect_success '--rebase (am) fast forward' '
+ 
+ 	# The above only validates the result.  Did we actually bypass rebase?
+ 	git reflog -1 >reflog.actual &&
+-	sed "s/^[0-9a-f][0-9a-f]*/OBJID/" reflog.actual >reflog.fuzzy &&
+-	echo "OBJID HEAD@{0}: pull --rebase . ff: Fast-forward" >reflog.expected &&
++	sed -e "s/^[0-9a-f][0-9a-f]*/OBJID/" -e "s/[0-9a-f][0-9a-f]*$/OBJID/" reflog.actual >reflog.fuzzy &&
++	echo "OBJID HEAD@{0}: rebase finished: refs/heads/to-rebase onto OBJID" >reflog.expected &&
+ 	test_cmp reflog.expected reflog.fuzzy
+ '
+ 
 -- 
 gitgitgadget
 
