@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8D9DC636C9
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 18:14:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 766A0C636CA
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 18:22:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B07B861154
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 18:14:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 409E061154
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 18:22:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234887AbhGQSRz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 14:17:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42460 "EHLO
+        id S234634AbhGQSZh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 14:25:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234042AbhGQSRy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 14:17:54 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 220C3C061762
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 11:14:55 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id s2-20020a0568301e02b02904ce2c1a843eso2921027otr.13
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 11:14:55 -0700 (PDT)
+        with ESMTP id S233429AbhGQSZg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 14:25:36 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3284DC061762
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 11:22:40 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so13475709otl.3
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 11:22:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=B6CL7VhgdtOcbai+lr9rBeBcJ0cjJf03vZz7iU12sgc=;
-        b=XhYtcZA4hIRZJ5v1cEmebp/bASZcm/Wigl4EVWVBmRBqa/CJuinxDodtjJQT23Vfta
-         lHGPSnJtAcmpb/BvuW1zJo1DqjEG35DLqUaurt//KGmgPWUug8jyOGwSBoNcbIABZ33Z
-         TeYoQyThIdHI3zV2LI6E9oZfWCfEv/yDIZxlnMYibd7ffe8N/siENmKGHumrP9oYFpek
-         MD3o1XopdljiOXxHL12bZVxLw26sUF412GDSaoyFXJTrJYKuQsUe+A18LVDGm9xqdVoR
-         URKr2NtlJTjtA7d7LPK3rBF0C84g396FmBE7zxLWOwTSHMqhTpPlBbFar/zDrz5vjIWx
-         1j9w==
+        bh=ol6EWq+evwTOndn3pEDtI7FxUOcNaVaur9mPSpr8i2U=;
+        b=TD0imX6IzFgSbRiNSwr4hKMizEfNSAlRfxmiZYh6cOJnBhHA1ipj9HkVCHEHlAtduM
+         aYRhTioKqc5dblnfM3yNKaQRMpu+pICG0+Q12mpWC/rh/vVqyLOJ/OK9VTBsw0InMIl7
+         donFJ4GZnV4sZP8B9XAX58JeuupoKI1C4VjkQy94z3OH2hyJjXrWFEFFIomJddRNwPa8
+         2sclD5Xx+zLIm2dKXXtSBqm5fg7CJElE8HF0WfuWm8lVwVBFTgJiEkcKnYiJsNUTzJw8
+         LsO8cIE6EO/f9lkQGTVtH3D7avSad/nGIOdenbj+v71ocM5JvlCi8A1BqViDLYc09S+e
+         sssg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=B6CL7VhgdtOcbai+lr9rBeBcJ0cjJf03vZz7iU12sgc=;
-        b=DxeZQbJ5WYCH4mCiubKEDT8kJrqV3b+Y8mDVG170yWeHdHQV7yeWHAlvy2nSMCLBve
-         84Q2dSd1OyU4tSd/aDGXsrJ+Jb+ArslLegyI/8PeqfOneu9+20s1hDpdJOalJLGEH+7p
-         pb5/MwJsHpMIyCjh82IqzKD2yO4msskB7yogMVaSniYhCnywEAF38ITd9UCLN+5G4m/W
-         0T3R4MilGFYw5jXuwOqSOi7cntj3UG9Eszv4u2h4x3MMeMH1KGWSWUt24CGyc2O43cZk
-         97ru5dHzRxEiLdxvOi4MLgzgty2Q55FXTO4mgCvDpTZmZ4pjuiJtsrw4bFF+76UxzCpc
-         1eIQ==
-X-Gm-Message-State: AOAM533TjrNG4gvemfyu0WmP/KsUKe2Hwb6lTUHa+4SkeLRvQ996eYUj
-        6pMjYpIsYr7UtUE7ZFgmF+M=
-X-Google-Smtp-Source: ABdhPJypPFMOblJAAczDbU6lt3eg3H8s2IyJDAaVYyZFlfwc1BYTLgtc5skHJjyPhE4ivedNq9VZMw==
-X-Received: by 2002:a05:6830:114f:: with SMTP id x15mr12833132otq.356.1626545693357;
-        Sat, 17 Jul 2021 11:14:53 -0700 (PDT)
+        bh=ol6EWq+evwTOndn3pEDtI7FxUOcNaVaur9mPSpr8i2U=;
+        b=F5v5uYcKo3Y7uMKtuyKUEqKyqWk7yuSrQnWT4p1kcSdDrM1HAgyOwbcl2EbcMyLEyy
+         onOTHOxaI5TdxnuvGHdw/kW6q3JDd5XUZ/OicZx2jK3dn1QBVe38YS/VpVueJyAFA4pQ
+         rhNkQlIXNw3upDVvUQZx3w7Z/Te02S3K0zOsD3OMlBqvS7QdOIUZiNK2MVW8TuI3vM4q
+         37xSbzu6qbzsBdjCFZd0NaOTIyX5k/K9aDqJFerZhZgq0rKV8b6/FcQAlPw0q0zOJBhW
+         nEJMzaWMbs9rloOk+7D3/TX/KKpoc3g0YLoiXeqzKb5sDFucn1ep70GUKcpkoFTcA+wB
+         NyzA==
+X-Gm-Message-State: AOAM533GViVSok8IlCHQQcDDDXqvN7VRCwKa/dc10A669MGbMDMypPey
+        h/4EvvCkenbcul4Fd7hFltg=
+X-Google-Smtp-Source: ABdhPJytuaJU9+phZFRqDtzyG0ylgirkemgzHlxtKj63dCAzzPSi/AmBc92zakhHvVFEJGtYP+Qhvw==
+X-Received: by 2002:a9d:dc1:: with SMTP id 59mr12689795ots.246.1626546159430;
+        Sat, 17 Jul 2021 11:22:39 -0700 (PDT)
 Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id m129sm2884193oif.15.2021.07.17.11.14.52
+        by smtp.gmail.com with ESMTPSA id x73sm2454292oif.44.2021.07.17.11.22.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Jul 2021 11:14:52 -0700 (PDT)
-Date:   Sat, 17 Jul 2021 13:14:50 -0500
+        Sat, 17 Jul 2021 11:22:38 -0700 (PDT)
+Date:   Sat, 17 Jul 2021 13:22:37 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Alex Henrie via GitGitGadget <gitgitgadget@gmail.com>,
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Cc:     Alex Henrie <alexhenrie24@gmail.com>,
         Son Luong Ngoc <sluongng@gmail.com>,
@@ -65,13 +65,12 @@ Cc:     Alex Henrie <alexhenrie24@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Elijah Newren <newren@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>
-Message-ID: <60f31e1a928f2_25f2208cb@natae.notmuch>
-In-Reply-To: <ae54afd8b0118aa1e2b90503aee75a8fddecae1a.1626536508.git.gitgitgadget@gmail.com>
+        Elijah Newren <newren@gmail.com>
+Message-ID: <60f31fedbbd67_25f2208d@natae.notmuch>
+In-Reply-To: <de4b460b09d3a3b6848f9f9eaa5520b31a3b453a.1626536508.git.gitgitgadget@gmail.com>
 References: <pull.1049.git.git.1626536507.gitgitgadget@gmail.com>
- <ae54afd8b0118aa1e2b90503aee75a8fddecae1a.1626536508.git.gitgitgadget@gmail.com>
-Subject: RE: [PATCH 3/9] pull: abort if --ff-only is given and fast-forwarding
- is impossible
+ <de4b460b09d3a3b6848f9f9eaa5520b31a3b453a.1626536508.git.gitgitgadget@gmail.com>
+Subject: RE: [PATCH 4/9] pull: since --ff-only overrides, handle it first
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -80,27 +79,21 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie via GitGitGadget wrote:
-> From: Alex Henrie <alexhenrie24@gmail.com>
+Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
 > 
-> The warning about pulling without specifying how to reconcile divergent
-> branches says that after setting pull.rebase to true, --ff-only can
-> still be passed on the command line to require a fast-forward. Make that
-> actually work.
+> There are both merge and rebase branches in the logic, and previously
+> both had to handle fast-forwarding.  Merge handled that implicitly
+> (because git merge handles it directly), while in rebase it was
+> explicit.  Given that the --ff-only flag is meant to override any
+> --rebase or --no-rebase, make the code reflect that by handling
+> --ff-only before the merge-vs-rebase logic.
+> 
+> No functional changes, just making it easier to verify that the codeflow
+> matches our precedence rules.
 
-Once again, this behavior is not explained in the documentation.
-
-And this breaks existing behavior.
-
-A person currently can configure `pull.ff=only` to tell git that by
-default she wants `git pull` to fail if the merge is not a fast-forward,
-but she can override that default behavior with `git pull --rebase`.
-
-Now that fails as well.
-
-So even though the warning has been saying that users need to specify if
-to merge or rebase, and the user has specified a rebase, it now fails,
-so it's a step backwards.
+But it does have a functional changes. Now you are calling run_merge()
+without update_submodules().
 
 -- 
 Felipe Contreras
