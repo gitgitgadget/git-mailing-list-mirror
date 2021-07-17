@@ -7,70 +7,71 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9489C636CA
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:57:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5154C636CA
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 18:03:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C0DD36115C
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:57:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C41B6115C
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 18:03:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233441AbhGQSAc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 14:00:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38614 "EHLO
+        id S234272AbhGQSGA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 14:06:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232935AbhGQSAc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 14:00:32 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A15FC061762
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 10:57:35 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id f12-20020a056830204cb029048bcf4c6bd9so13386637otp.8
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 10:57:35 -0700 (PDT)
+        with ESMTP id S231253AbhGQSF7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 14:05:59 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14FCCC061762
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 11:03:03 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id f93-20020a9d03e60000b02904b1f1d7c5f4so13403055otf.9
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 11:03:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=ZtbGGQs5yUj6xoU+BSgdzp0cvVpWofWJb6OxCtCOb3c=;
-        b=AZyi7lG/CiodaLOvDfv8mU2D2roWXhYOWm5DZlSb713M73kNt5hWy/tyvR+/IfXLRQ
-         uVWD9BY+5esk5IH2lFFYc8q7gSyAetH5XDSp7vY+iLupuXWBIZ75OUDeH9o4P1wSyEeP
-         RObegBbxTLw8U0B8+TEtVzuCglitIVyEzkjV4jY5CZ1+ssPWiij+bH4lFSlvR9Lm21Ug
-         lkycFiv9EgC7+XfZvHGXmZNN8zRWyFz6Menc8+EoeoVQ4td6SkAHWIZKTMAa7PwZARTx
-         LYscQ/9D+GeCUogz/jP/5kTQ9TKIG8M75OFIiIJk+5DONMizZJq/9iLOCWxvQtS7YAtM
-         7LBg==
+        bh=wECuIHxbhxBtjzZQVi4w8rIj99+6tiGCBK6dljGJ2nE=;
+        b=UlHgaD6ZZK9xn967ujbcmdrQPtDSm0jcx2jcgNzbz7HWVVYCjLIZA2S7gGXPh5g3EJ
+         1L59QZv/X/KLKoK9dGWNggFI7tDz/4YTnFbGUTdP69RUOGIVPwnOaQsWNgRI1VaXxpr8
+         drE+/K7Xm5ErOpAljEs9U5BFI6ugmn6Z2OaGj4p/JvxJKAoh6+SvvQpYwYvE3biYZOMd
+         qDyUWeIQtszeJLdRa70QCQ8zj2713WQk7p3c3oeS49OyGrgQy831/WAh8fvV82XE6bUq
+         GcqQ6JX+sybPFlSIsUE8yV6NDUY8q/psm426eMZZqouwGLRjSI9OZdXqqRTeYZx7V/f2
+         wyCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=ZtbGGQs5yUj6xoU+BSgdzp0cvVpWofWJb6OxCtCOb3c=;
-        b=aCONTDKGxVtRhzDqW5Ib6M20jyfm6qr5L5lLPCbu0a88zCNGm+5s6J6ySMWnm9UN1F
-         a/KdpP7t/hQwsGK3aJmeanywb9MzQ+ylxpvP/0XW5El9MjqeTDgy5gIzlmvVEM+eJTTo
-         UIDMRShgRtgjg5Klsx6vwkMjFPsWB9cyNRn/S6Lkqq5QzFL5qa7IQkRIMtkhQUxXbncf
-         v4yGRqzQIIx4FMMU7zDWueF6FcS9J3OT4x3L5ewOT3pBbZBkPhnYjvDrBDJWO9Kmejc/
-         1rp5kFsR9P4dR2U2ufQnYhpI86tS6CBxvEobRasf5DrOZUAa9AmarUCJE/z0I4Z3wK/G
-         osSQ==
-X-Gm-Message-State: AOAM530q1W9oo/37s8tkNE5/ZijPBbyobfb4m/wPlp4cdfnF0/b0QJLl
-        6X6zHzrxJe20QwJF+ilS3Gw=
-X-Google-Smtp-Source: ABdhPJyYB70Jst2A7svvAT9YLDWSJjGV7IhO3elnJbPjujZPAmF6KhsgyXdvBUEtKKdSw78lx8NmWw==
-X-Received: by 2002:a05:6830:40b6:: with SMTP id x54mr8649443ott.290.1626544654706;
-        Sat, 17 Jul 2021 10:57:34 -0700 (PDT)
+        bh=wECuIHxbhxBtjzZQVi4w8rIj99+6tiGCBK6dljGJ2nE=;
+        b=Fr06WSvO48UAcpQknvCNYCM9BTB7+huemf/bgDZKPa/aX632T6uSkkk+QooP/IDx8w
+         XYbFO9uaDsedAAB1/hQV1ZRWtQ51CHd58JT7LznZU1+xb00/P9ZBepi//syv4PbpVhrl
+         ksFucGrBN/xdFqAupTbFYmHYv4uf181XAvPH9k5UFKhzO/KSHVWMbkMnxb94ZLZ1lNI9
+         aRAbI/RGy8qZ5+Z0U5V74NCl1DIBhXn/V2yFrg0v2hj5q8AVWffbW7CCXCkiH3LK22Yx
+         EKanM5AcUZdQ4gB5YObK2bTfqWarlhMPEp4KILUer0YKVvweqtR9XmQZRXdn0C6BFcXD
+         mDdw==
+X-Gm-Message-State: AOAM533BnZwU/VgoJEOJ/v0bvyokpzYknGU/SBCIKidLKMZABdYVVIU0
+        hxegGVLEF1pvlesigtbSRzQ=
+X-Google-Smtp-Source: ABdhPJwUPEU8ZGzZmdvZJi7UIYblUivD7x+PyrwXbc96OTCI6v4VEyu+8rgjtVmVsCEXb09v+PCufw==
+X-Received: by 2002:a9d:1444:: with SMTP id h62mr13084534oth.166.1626544982469;
+        Sat, 17 Jul 2021 11:03:02 -0700 (PDT)
 Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id t10sm2718196otd.73.2021.07.17.10.57.33
+        by smtp.gmail.com with ESMTPSA id q13sm2624521oov.6.2021.07.17.11.03.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Jul 2021 10:57:34 -0700 (PDT)
-Date:   Sat, 17 Jul 2021 12:57:33 -0500
+        Sat, 17 Jul 2021 11:03:02 -0700 (PDT)
+Date:   Sat, 17 Jul 2021 13:03:00 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Matthias Baumgarten <matthias.baumgarten@aixigo.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Matthias Baumgarten <matthias.baumgarten@aixigo.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Son Luong Ngoc <sluongng@gmail.com>
-Message-ID: <60f31a0ddf7c_25f2208a5@natae.notmuch>
-In-Reply-To: <c54fa084-75f4-b775-8ac2-6df3c7a36571@aixigo.com>
-References: <60f1daa896f69_330208b1@natae.notmuch>
- <c54fa084-75f4-b775-8ac2-6df3c7a36571@aixigo.com>
-Subject: Re: When are you going to stop ignoring pull.mode?
+        Elijah Newren <newren@gmail.com>
+Message-ID: <60f31b54b0429_25f2208b9@natae.notmuch>
+In-Reply-To: <6cb771297f5f7d5bb0c6734bcb3fe6d3b8bb4c88.1626536508.git.gitgitgadget@gmail.com>
+References: <pull.1049.git.git.1626536507.gitgitgadget@gmail.com>
+ <6cb771297f5f7d5bb0c6734bcb3fe6d3b8bb4c88.1626536508.git.gitgitgadget@gmail.com>
+Subject: RE: [PATCH 1/9] t7601: add relative precedence tests for merge and
+ rebase flags/options
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -79,65 +80,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthias Baumgarten wrote:
-> On 7/16/21 9:14 PM, Felipe Contreras wrote:
-> > Elijah Newren wrote:
-> >> It may be a worthy goal, but I cannot implement correct behavior if I
-> >> cannot determine what correct behavior is.
-> >>
-> >> You've only specified how to handle a subset of the valid combinations
-> >> in each of your emails, and from those individually or even
-> >> collectively I cannot deduce rules for handling the others.  Reading
-> >> the dozen+ recent messages in the various recent threads, I think I've
-> >> figured out your opinion in all but two cases, but I have no idea your
-> >> intent on those two (I would have thought --rebase override there too,
-> >> but you excluded that), and I'm rather uncertain I've correctly
-> >> understood you for the other ones (I really hope gmail doesn't
-> >> whitespace damage the following table):
-> >>
-> >>     pull.ff  pull.rebase  commandline            action
-> >>       *          *        --ff-only --rebase     fast-forward only[1]
-> >>       *          *        --rebase --no-ff       rebase[1]
-> >>       *          *        --rebase --ff          rebase[1]
-> >>       *          *        --ff-only --no-rebase  fast-forward only
-> >>       *          *        --no-rebase --no-ff    merge --no-ff
-> >>       *          *        --no-rebase --ff       merge --ff
-> >>
-> >>      <unset>     *        --no-rebase            merge --ff
-> >>      only        *        --no-rebase            merge --ff[2]
-> >>      false       *        --no-rebase            merge --no-ff
-> >>      true        *        --no-rebase            merge --ff
-> >>
-> >>      <unset>     *        --rebase               rebase
-> >>      only        *        --rebase               rebase[2]
-> >>      false       *        --rebase               ?[2]
-> >>      true        *        --rebase               ?[2]
-> >>
-> >>       *          *        --ff-only              fast-forward only[1]
-> >>
-> >>       *       <unset>     --no-ff                merge --no-ff
-> >>       *        false      --no-ff                merge --no-ff
-> >>       *       !false      --no-ff                rebase (ignore --no-ff)[2][3]
-> >>
-> >>       *       <unset>     --ff                   merge --ff
-> >>       *        false      --ff                   merge --ff
-> >>       *       !false      --ff                   rebase (ignore --ff)[2][3]
+Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
 > 
-> What about
-> 
->           *       !false      --ff-only              ???
-> 
-> I think these are conflicting options, see [ ] (the ref without a 
-> number). This feels like saying oh, I want to rebase, but I want to 
-> fast-forward. What should happen with my local changes then? Could one 
-> argue that this should lead to the local changes being rebased on top of 
-> the remote?
+> The interaction of rebase and merge flags and options was not well
+> tested.  Add several tests to check for correct behavior from the
+> following rules:
+>     * --ff-only takes precedence over --[no-]rebase
+>       * Corollary: pull.ff=only overrides pull.rebase
+>     * --rebase[=!false] takes precedence over --no-ff and --ff
+>       * Corollary: pull.rebase=!false overrides pull.ff=!only
+>     * command line flags take precedence over config, except:
+>       * --no-rebase heeds pull.ff=!only
+>       * pull.rebase=!false takes precedence over --no-ff and --ff
 
-According to the above it would be a fast-forward only, because:
+This is wrong, --ff-only is meant only for merge, not rebase.
 
-      *          *        --ff-only              fast-forward only
+You are testing for behavior that 1) has not been agreed to, and 2) is
+not documented.
 
-So the pull would abort f you have local changes.
+This is what the current documentation says about all the --*ff*
+options:
+
+  --ff::
+  --no-ff::
+  --ff-only::
+    Specifies how a merge is handled when the merged-in history is
+    already a descendant of the current history.  `--ff` is the
+    default unless merging an annotated (and possibly signed) tag
+    that is not stored in its natural place in the `refs/tags/`
+    hierarchy, in which case `--no-ff` is assumed.
+  +
+  With `--ff`, when possible resolve the merge as a fast-forward (only
+  update the branch pointer to match the merged branch; do not create a
+  merge commit).  When not possible (when the merged-in history is not a
+  descendant of the current history), create a merge commit.
+  +
+  With `--no-ff`, create a merge commit in all cases, even when the merge
+  could instead be resolved as a fast-forward.
+  +
+  With `--ff-only`, resolve the merge as a fast-forward when possible.
+  When not possible, refuse to merge and exit with a non-zero status.
 
 -- 
 Felipe Contreras
