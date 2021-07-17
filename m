@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FCF7C636CA
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 15:41:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B469C636CB
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 15:41:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1F09A61159
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 15:41:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 649A061179
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 15:41:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235220AbhGQPov (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 11:44:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36954 "EHLO
+        id S235346AbhGQPox (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 11:44:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234952AbhGQPot (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 11:44:49 -0400
+        with ESMTP id S235250AbhGQPou (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 11:44:50 -0400
 Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AEAFC061764
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 08:41:51 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id f9so15601052wrq.11
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 08:41:51 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B788DC06175F
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 08:41:52 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id a13so15591544wrf.10
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 08:41:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Bu1IrFBWIYKDh8eiAos2GhYRtXhHrFLYtKO7mu5ln8g=;
-        b=S5E/Zu4cWi5zUdKESzAQeCSmU2zMjJ2Wo55IOHAgcwOVZkobb1yW9w0hL5QP2CazJx
-         Ljjy2MUH4MH/fWtff7AaSOfaDI/O6f/WavLDbmlN9cCoUWC26rTvdwW4zdhxgwaE8nEs
-         JMuOD493lyH4dVAerPuWjBaV5GCCIs8Pv9i11UWiUCctN35JZN92BviLUUS9b2xdkaLC
-         RqUCpptiApj4wjUYoFKQerd8IxSsH3mkGpXEspRKCtMNFEA1s+4YuT8Runj9IMykCoSM
-         0hO43OcVj1Ie2vsY8oGZKfsUqVHAGLS/xlpsCcKpm52tvQN4RRO8lXpzICB0t/oTUT9o
-         qrqQ==
+        bh=JGp7s4pCml5nfXimznQtdu5QRUOVTkZhzOC/BjyS3Ug=;
+        b=eP2VIWCuLGfDkG9hSoYh56dav3guc1l3HI0tIbbzuDUD3iJlTcBzdzZjYRFhPs235K
+         Ya+jTpQYpvypH7LlKRhgCGdMX8dNahKke/FVeMY+kucnftqRU/xaK2ZP/18W7YdYtApz
+         C5Oq1GJXr46mH/jH462rW9Q9dNn+tVrpA7vskhQ39MGS6Y8KvjnGo0sOJFOXRltFS/iU
+         nJFjkgG5x2iFRsK1GcW/5Wb8ZVzqJYSiqvoFsux8YN2aa3n++onPtcQ30aZ93BY4lxT/
+         kXYAv7UhWtaDN7XQDBhv63H1E/jFVm8ArE8T3Zg6KjfMrYDahhNUET2eTYe526/PhXBp
+         MYxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Bu1IrFBWIYKDh8eiAos2GhYRtXhHrFLYtKO7mu5ln8g=;
-        b=Am9VWvWdT2NQxAL87BMtt7xglnnJSIeTRhA7xNSalsoZ+r6eRU9Xnx1lNw9zxYLn3V
-         q/6/bweVmH7jrDQMWcEWfM4+9RueW8SNYuXP/XYoPL5p6Sq3wOT7IYFBLrPkiDYPAFJs
-         +RI+Q19rSpX5+d/Zb90ygz9zlcmtrTPAguhTCEyvM0NE1NcPhUoQEq2HB2oCO73DKKYR
-         YpRgGkQxwkeHF8V87J3/UE20yoIS4mjXaR9pdA2E+KO6tmpynvvfmbS0AfyexxGhu7LS
-         ix81zKEN8HPbdAyIJAiJ5yRNin2ud/OMzys9MbsFWa8LLbKDF7uWtKo0fKW0WJwTdCG9
-         PTEQ==
-X-Gm-Message-State: AOAM533x5yUfUfUBMvjHNu6OuAjuHMI17O2E25rg6dJdk+uIdxhDFEuc
-        55t5cuwfx2S3SbItFKM7OTqUj1+EOEY=
-X-Google-Smtp-Source: ABdhPJxAXM6/458aRwv27m1Nc+NxEhSEsnHrqa8rxVZKH3YdDVcBD2MJ5llfYlXUgi5ja23TFg3KJw==
-X-Received: by 2002:adf:eed0:: with SMTP id a16mr18753246wrp.324.1626536509994;
-        Sat, 17 Jul 2021 08:41:49 -0700 (PDT)
+        bh=JGp7s4pCml5nfXimznQtdu5QRUOVTkZhzOC/BjyS3Ug=;
+        b=uB97l+tJPOQ3kR1iVY4iOyTtn7xzf9M0gHoEPcgF5yhP03B1Idz2zv3lMRJPV5Mcw5
+         4li9mB/YOSsYBRClsmlW1lTnuXO1E6mlZzD1cKgZne5ZylLxiWtXkwIi+t9cg0ri/oDM
+         PwC4TG8RklH0MEAgG5Pmwuhwae2JVlHUsJeWOFkSb1RS/FjmOGlPRyFl8nX1iJ0Ph7CV
+         sg+FgyCcubILllYabQHQ086osoiXOVOfIEr3p63hr3IrrVOfJzIGbYyibW6j3kY9cVxH
+         pxep+KQfWeiYoPGZh4v3kZm17sCpMl6TT7RoXZsICtJ4kKq/9hPiyQUI0MYerjd5Gi+X
+         IJLw==
+X-Gm-Message-State: AOAM5316D7Vft52Lp9K8zAPWpyULo8/1KYw1R1camzowiRh/g4oMGHpr
+        sKSEl9ro9uy1ul3QKhcQEY7+uxXgnB0=
+X-Google-Smtp-Source: ABdhPJx0GYbrTF3Dbdmdn/+oU5Qsg2uXrb2w7jzqkjsmh0CyaCuRtiaiKOxumclHppzip5qk06oL5g==
+X-Received: by 2002:adf:ce83:: with SMTP id r3mr19635830wrn.204.1626536511377;
+        Sat, 17 Jul 2021 08:41:51 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b12sm14195719wro.1.2021.07.17.08.41.49
+        by smtp.gmail.com with ESMTPSA id g15sm11088254wmh.44.2021.07.17.08.41.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Jul 2021 08:41:49 -0700 (PDT)
-Message-Id: <6cb771297f5f7d5bb0c6734bcb3fe6d3b8bb4c88.1626536508.git.gitgitgadget@gmail.com>
+        Sat, 17 Jul 2021 08:41:51 -0700 (PDT)
+Message-Id: <ae54afd8b0118aa1e2b90503aee75a8fddecae1a.1626536508.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1049.git.git.1626536507.gitgitgadget@gmail.com>
 References: <pull.1049.git.git.1626536507.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 17 Jul 2021 15:41:39 +0000
-Subject: [PATCH 1/9] t7601: add relative precedence tests for merge and rebase
- flags/options
+From:   "Alex Henrie via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 17 Jul 2021 15:41:41 +0000
+Subject: [PATCH 3/9] pull: abort if --ff-only is given and fast-forwarding is
+ impossible
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,198 +74,137 @@ Cc:     Alex Henrie <alexhenrie24@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+        Alex Henrie <alexhenrie24@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+From: Alex Henrie <alexhenrie24@gmail.com>
 
-The interaction of rebase and merge flags and options was not well
-tested.  Add several tests to check for correct behavior from the
-following rules:
-    * --ff-only takes precedence over --[no-]rebase
-      * Corollary: pull.ff=only overrides pull.rebase
-    * --rebase[=!false] takes precedence over --no-ff and --ff
-      * Corollary: pull.rebase=!false overrides pull.ff=!only
-    * command line flags take precedence over config, except:
-      * --no-rebase heeds pull.ff=!only
-      * pull.rebase=!false takes precedence over --no-ff and --ff
+The warning about pulling without specifying how to reconcile divergent
+branches says that after setting pull.rebase to true, --ff-only can
+still be passed on the command line to require a fast-forward. Make that
+actually work.
 
-For more details behind these rules and a larger table of individual
-cases, refer to https://lore.kernel.org/git/xmqqwnpqot4m.fsf@gitster.g/
-and the links found therein.
-
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+[en: updated tests; note 3 fixes and 1 new failure]
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t7601-merge-pull-config.sh | 154 +++++++++++++++++++++++++++++++++++
- 1 file changed, 154 insertions(+)
+ advice.c                     |  5 +++++
+ advice.h                     |  1 +
+ builtin/merge.c              |  2 +-
+ builtin/pull.c               | 11 ++++++++---
+ t/t7601-merge-pull-config.sh | 10 +++++-----
+ 5 files changed, 20 insertions(+), 9 deletions(-)
 
+diff --git a/advice.c b/advice.c
+index 0b9c89c48ab..337e8f342bc 100644
+--- a/advice.c
++++ b/advice.c
+@@ -286,6 +286,11 @@ void NORETURN die_conclude_merge(void)
+ 	die(_("Exiting because of unfinished merge."));
+ }
+ 
++void NORETURN die_ff_impossible(void)
++{
++	die(_("Not possible to fast-forward, aborting."));
++}
++
+ void advise_on_updating_sparse_paths(struct string_list *pathspec_list)
+ {
+ 	struct string_list_item *item;
+diff --git a/advice.h b/advice.h
+index bd26c385d00..16240438387 100644
+--- a/advice.h
++++ b/advice.h
+@@ -95,6 +95,7 @@ void advise_if_enabled(enum advice_type type, const char *advice, ...);
+ int error_resolve_conflict(const char *me);
+ void NORETURN die_resolve_conflict(const char *me);
+ void NORETURN die_conclude_merge(void);
++void NORETURN die_ff_impossible(void);
+ void advise_on_updating_sparse_paths(struct string_list *pathspec_list);
+ void detach_advice(const char *new_name);
+ 
+diff --git a/builtin/merge.c b/builtin/merge.c
+index a8a843b1f54..aa920ac524f 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1620,7 +1620,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (fast_forward == FF_ONLY)
+-		die(_("Not possible to fast-forward, aborting."));
++		die_ff_impossible();
+ 
+ 	if (autostash)
+ 		create_autostash(the_repository,
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 3e13f810843..d9796604825 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -1046,9 +1046,14 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 
+ 	can_ff = get_can_ff(&orig_head, &merge_heads.oid[0]);
+ 
+-	if (rebase_unspecified && !opt_ff && !can_ff) {
+-		if (opt_verbosity >= 0)
+-			show_advice_pull_non_ff();
++	if (!can_ff) {
++		if (opt_ff) {
++			if (!strcmp(opt_ff, "--ff-only"))
++				die_ff_impossible();
++		} else {
++			if (rebase_unspecified && opt_verbosity >= 0)
++				show_advice_pull_non_ff();
++		}
+ 	}
+ 
+ 	if (opt_rebase) {
 diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
-index 52e8ccc933a..b24c98cc1b6 100755
+index 40d8fb95113..23a1fbc17b3 100755
 --- a/t/t7601-merge-pull-config.sh
 +++ b/t/t7601-merge-pull-config.sh
-@@ -143,6 +143,160 @@ test_expect_success 'pull.rebase not set and --ff-only given (not-fast-forward)'
- 	test_i18ngrep ! "Pulling without specifying how to reconcile" err
+@@ -197,11 +197,11 @@ test_attempts_fast_forward() {
+ # Rule 1: --ff-only takes precedence over --[no-]rebase
+ # (Corollary: pull.ff=only overrides pull.rebase)
+ #
+-test_expect_failure '--ff-only takes precedence over --rebase' '
++test_expect_success '--ff-only takes precedence over --rebase' '
+ 	test_attempts_fast_forward pull --rebase --ff-only
  '
  
-+test_does_rebase() {
-+	git reset --hard c2 &&
-+	git "$@" . c1 &&
-+	# Check that we actually did a rebase
-+	git rev-list --count HEAD >actual &&
-+	git rev-list --merges --count HEAD >>actual &&
-+	test_write_lines 3 0 >expect &&
-+	test_cmp expect actual &&
-+	rm actual expect
-+}
-+
-+test_does_merge_noff() {
-+	git reset --hard c0 &&
-+	git "$@" . c1 &&
-+	# Check that we actually did a merge
-+	git rev-list --count HEAD >actual &&
-+	git rev-list --merges --count HEAD >>actual &&
-+	test_write_lines 3 1 >expect &&
-+	test_cmp expect actual &&
-+	rm actual expect
-+}
-+
-+test_does_merge_ff() {
-+	git reset --hard c0 &&
-+	git "$@" . c1 &&
-+	# Check that we actually did a merge
-+	git rev-list --count HEAD >actual &&
-+	git rev-list --merges --count HEAD >>actual &&
-+	test_write_lines 2 0 >expect &&
-+	test_cmp expect actual &&
-+	rm actual expect
-+}
-+
-+test_does_need_full_merge() {
-+	git reset --hard c2 &&
-+	git "$@" . c1 &&
-+	# Check that we actually did a merge
-+	git rev-list --count HEAD >actual &&
-+	git rev-list --merges --count HEAD >>actual &&
-+	test_write_lines 4 1 >expect &&
-+	test_cmp expect actual &&
-+	rm actual expect
-+}
-+
-+test_attempts_fast_forward() {
-+	git reset --hard c2 &&
-+	test_must_fail git "$@" . c1 2>err &&
-+	test_i18ngrep "Not possible to fast-forward, aborting" err
-+}
-+
-+#
-+# Rule 1: --ff-only takes precedence over --[no-]rebase
-+# (Corollary: pull.ff=only overrides pull.rebase)
-+#
-+test_expect_failure '--ff-only takes precedence over --rebase' '
-+	test_attempts_fast_forward pull --rebase --ff-only
-+'
-+
-+test_expect_failure '--ff-only takes precedence over --rebase even if first' '
-+	test_attempts_fast_forward pull --ff-only --rebase
-+'
-+
-+test_expect_success '--ff-only takes precedence over --no-rebase' '
-+	test_attempts_fast_forward pull --ff-only --no-rebase
-+'
-+
-+test_expect_failure 'pull.ff=only overrides pull.rebase=true' '
-+	test_attempts_fast_forward -c pull.ff=only -c pull.rebase=true pull
-+'
-+
-+test_expect_success 'pull.ff=only overrides pull.rebase=false' '
-+	test_attempts_fast_forward -c pull.ff=only -c pull.rebase=false pull
-+'
-+
-+# Rule 2: --rebase=[!false] takes precedence over --no-ff and --ff
-+# (Corollary: pull.rebase=!false overrides pull.ff=!only)
-+test_expect_success '--rebase takes precedence over --no-ff' '
-+	test_does_rebase pull --rebase --no-ff
-+'
-+
-+test_expect_success '--rebase takes precedence over --ff' '
-+	test_does_rebase pull --rebase --ff
-+'
-+
-+test_expect_success 'pull.rebase=true takes precedence over pull.ff=false' '
-+	test_does_rebase -c pull.rebase=true -c pull.ff=false pull
-+'
-+
-+test_expect_success 'pull.rebase=true takes precedence over pull.ff=true' '
-+	test_does_rebase -c pull.rebase=true -c pull.ff=true pull
-+'
-+
-+# Rule 3: command line flags take precedence over config
-+test_expect_failure '--ff-only takes precedence over pull.rebase=true' '
-+	test_attempts_fast_forward -c pull.rebase=true pull --ff-only
-+'
-+
-+test_expect_success '--ff-only takes precedence over pull.rebase=false' '
-+	test_attempts_fast_forward -c pull.rebase=false pull --ff-only
-+'
-+
-+test_expect_failure '--no-rebase overrides pull.ff=only' '
-+	test_does_need_full_merge -c pull.ff=only pull --no-rebase
-+'
-+
-+test_expect_success '--rebase takes precedence over pull.ff=only' '
-+	test_does_rebase -c pull.ff=only pull --rebase
-+'
-+
-+test_expect_success '--rebase takes precedence over pull.ff=true' '
-+	test_does_rebase -c pull.ff=true pull --rebase
-+'
-+
-+test_expect_success '--rebase takes precedence over pull.ff=false' '
-+	test_does_rebase -c pull.ff=false pull --rebase
-+'
-+
-+test_expect_success '--rebase takes precedence over pull.ff unset' '
-+	test_does_rebase pull --rebase
-+'
-+
-+# Rule 4: --no-rebase heeds pull.ff=!only or explict --ff or --no-ff
-+
-+test_expect_success '--no-rebase works with --no-ff' '
-+	test_does_merge_noff pull --no-rebase --no-ff
-+'
-+
-+test_expect_success '--no-rebase works with --ff' '
-+	test_does_merge_ff pull --no-rebase --ff
-+'
-+
-+test_expect_success '--no-rebase does ff if pull.ff unset' '
-+	test_does_merge_ff pull --no-rebase
-+'
-+
-+test_expect_success '--no-rebase heeds pull.ff=true' '
-+	test_does_merge_ff -c pull.ff=true pull --no-rebase
-+'
-+
-+test_expect_success '--no-rebase heeds pull.ff=false' '
-+	test_does_merge_noff -c pull.ff=false pull --no-rebase
-+'
-+
-+# Rule 5: pull.rebase=!false takes precedence over --no-ff and --ff
-+test_expect_success 'pull.rebase=true takes precedence over --no-ff' '
-+	test_does_rebase -c pull.rebase=true pull --no-ff
-+'
-+
-+test_expect_success 'pull.rebase=true takes precedence over --ff' '
-+	test_does_rebase -c pull.rebase=true pull --ff
-+'
-+
-+# End of precedence rules
-+
- test_expect_success 'merge c1 with c2' '
- 	git reset --hard c1 &&
- 	test -f c0.c &&
+-test_expect_failure '--ff-only takes precedence over --rebase even if first' '
++test_expect_success '--ff-only takes precedence over --rebase even if first' '
+ 	test_attempts_fast_forward pull --ff-only --rebase
+ '
+ 
+@@ -209,7 +209,7 @@ test_expect_success '--ff-only takes precedence over --no-rebase' '
+ 	test_attempts_fast_forward pull --ff-only --no-rebase
+ '
+ 
+-test_expect_failure 'pull.ff=only overrides pull.rebase=true' '
++test_expect_success 'pull.ff=only overrides pull.rebase=true' '
+ 	test_attempts_fast_forward -c pull.ff=only -c pull.rebase=true pull
+ '
+ 
+@@ -236,7 +236,7 @@ test_expect_success 'pull.rebase=true takes precedence over pull.ff=true' '
+ '
+ 
+ # Rule 3: command line flags take precedence over config
+-test_expect_failure '--ff-only takes precedence over pull.rebase=true' '
++test_expect_success '--ff-only takes precedence over pull.rebase=true' '
+ 	test_attempts_fast_forward -c pull.rebase=true pull --ff-only
+ '
+ 
+@@ -248,7 +248,7 @@ test_expect_failure '--no-rebase overrides pull.ff=only' '
+ 	test_does_need_full_merge -c pull.ff=only pull --no-rebase
+ '
+ 
+-test_expect_success '--rebase takes precedence over pull.ff=only' '
++test_expect_failure '--rebase takes precedence over pull.ff=only' '
+ 	test_does_rebase -c pull.ff=only pull --rebase
+ '
+ 
 -- 
 gitgitgadget
 
