@@ -2,199 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7808C636C9
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 10:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 570E9C636C9
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 10:22:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8945E613D8
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 10:07:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36F9A613D4
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 10:22:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233233AbhGQKKd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 06:10:33 -0400
-Received: from smtprelay05.ispgateway.de ([80.67.31.100]:10358 "EHLO
-        smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229674AbhGQKKb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 06:10:31 -0400
-Received: from [84.163.64.100] (helo=[192.168.2.202])
-        by smtprelay05.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <git@mfriebe.de>)
-        id 1m4hD6-0004rD-S2; Sat, 17 Jul 2021 12:06:16 +0200
-Subject: Re: PATCH: improve git switch documentation
-To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
- <6f43b36b-abe1-41f2-6138-e820c974b1bd@mfriebe.de>
- <60ea07e3495e8_7ef2081d@natae.notmuch>
- <30e4c874-6b87-b03d-fa33-fde5b7e50b2a@mfriebe.de>
- <60ea2eb562f26_2a69208e8@natae.notmuch>
- <1e18c4ed-6975-5041-4b4f-75c4d3d21860@mfriebe.de>
- <60ec6d91deced_a452520825@natae.notmuch>
- <54644739-2138-8086-1696-d3c52960216c@mfriebe.de>
- <60ec74c513b2b_a45252081b@natae.notmuch>
- <0d7bd249-2aba-236a-9f93-3a5b30182d15@mfriebe.de>
- <60ec93155663f_a231f208fb@natae.notmuch>
- <3a84e4c9-4e48-1cbe-4fe6-150ff56c8508@mfriebe.de>
- <60ecbe577a086_a6b702082@natae.notmuch>
- <d3678ef6-1bcd-2666-87dc-751aef2ca1a7@mfriebe.de>
- <60edb8ff814cf_ab6dd208d9@natae.notmuch>
- <02f1f12a-0ff3-ef46-fce3-e222b2867309@mfriebe.de>
- <60f1d650e2667_330208e@natae.notmuch>
- <1997ca3b-117a-e19a-0dee-7342a2f1a0e7@mfriebe.de>
- <60f1f4c3dd8b1_14cb208c1@natae.notmuch>
- <fedbfe1f-9e6d-f46f-ca41-e176a30e938c@mfriebe.de>
- <60f22aaa6a4f1_1f602081b@natae.notmuch>
-From:   Martin <git@mfriebe.de>
-Message-ID: <e57f1d19-d574-5ba5-efc1-abb8ab2a8c01@mfriebe.de>
-Date:   Sat, 17 Jul 2021 12:07:32 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S233905AbhGQKZe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 06:25:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52122 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229471AbhGQKZd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 06:25:33 -0400
+Received: from mail.aixigo.de (mail.aixigo.de [IPv6:2001:67c:13b0:ffff::60])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 40B49C06175F
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 03:22:37 -0700 (PDT)
+Received: from mailhost.ac.aixigo.de (mailhost.ac.aixigo.de [172.19.96.11])
+        by mail.aixigo.de (OpenSMTPD) with ESMTPS id c9fca00a (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
+        Sat, 17 Jul 2021 12:22:35 +0200 (CEST)
+Received: from vmdpcl078.ac.aixigo.de ([172.19.100.218])
+        by mailhost.ac.aixigo.de (8.15.2/8.15.2/Debian-14~deb10u1) with ESMTPS id 16HAMXAa2456770
+        (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT);
+        Sat, 17 Jul 2021 12:22:34 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aixigo.com;
+        s=default; t=1626517354;
+        bh=fKbcoqveRva4cr6gRYHn+5VuZz7ll+lGmZyWuwsEA0w=;
+        h=To:Cc:References:From:Subject:Date:In-Reply-To:From;
+        b=sa/Ln0SlAyHpZjTB3wIsz4L9conJf+KisOO1OppTyrf6NhVpUT2uCMqWjspw2XSJY
+         ylihGcw1CqmVufIQm8Phx9sbn0SBj/Q0BvwtUCg35yC+iOuAUnkGZAFfAqRYMGisl3
+         abTypkgZNAAdlYkGXMYzAYrZl7ZjBdN+6EZXqCb8=
+To:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Son Luong Ngoc <sluongng@gmail.com>
+References: <60f1daa896f69_330208b1@natae.notmuch>
+From:   Matthias Baumgarten <matthias.baumgarten@aixigo.com>
+Subject: Re: When are you going to stop ignoring pull.mode?
+Message-ID: <c54fa084-75f4-b775-8ac2-6df3c7a36571@aixigo.com>
+Date:   Sat, 17 Jul 2021 12:22:28 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-In-Reply-To: <60f22aaa6a4f1_1f602081b@natae.notmuch>
+In-Reply-To: <60f1daa896f69_330208b1@natae.notmuch>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: bWVAbWZyaWViZS5kZQ==
+Content-Language: de-DE
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: clamav-milter 0.103.2 at srvvm01.ac.aixigo.de
+X-Virus-Status: Clean
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17/07/2021 02:56, Felipe Contreras wrote:
-> Martin wrote:
-> It is the Socratic method. If I tell you "the user will think X" you are
-> not going to believe me. Therefore I'm asking you what the user will
-> think.
-> 
->> But no one is taking them by the hand. No one is asking all those
->> questions to them.
->> So they (new users) will not always make that conclusion.
-> 
-> What conclusion would they reach?
-
-You realize that your question makes no sense?
-
-If the user does not enter the state of concluding, then they will not 
-reach a conclusion at all.
-
-If you want to challenge my statement, that the user does not start 
-concluding, then you could ask me: Why?
-To which I have to admit, I do not know, I did not ask those who didn't.
-And frankly it does not matter. Lets assume we knew "why". Then to 
-remedy that cause, some change would be needed. So most likely the doc 
-would need to be changed to have some trigger added, to overcome that 
-reason. In the end, that means more info in the doc. Same as what is 
-already proposed.
-
-
->>> What do they think it will happen?
+On 7/16/21 9:14 PM, Felipe Contreras wrote:
+> Elijah Newren wrote:
+>> It may be a worthy goal, but I cannot implement correct behavior if I
+>> cannot determine what correct behavior is.
 >>
->> They do not think about it at all.
-> 
-> This doesn't make any sense. They used -C instead of -c for a reason.
-For the 4th or 5th time (not going to count the exact number of times I 
-have answered the exact same question)
+>> You've only specified how to handle a subset of the valid combinations
+>> in each of your emails, and from those individually or even
+>> collectively I cannot deduce rules for handling the others.  Reading
+>> the dozen+ recent messages in the various recent threads, I think I've
+>> figured out your opinion in all but two cases, but I have no idea your
+>> intent on those two (I would have thought --rebase override there too,
+>> but you excluded that), and I'm rather uncertain I've correctly
+>> understood you for the other ones (I really hope gmail doesn't
+>> whitespace damage the following table):
+>>
+>>     pull.ff  pull.rebase  commandline            action
+>>       *          *        --ff-only --rebase     fast-forward only[1]
+>>       *          *        --rebase --no-ff       rebase[1]
+>>       *          *        --rebase --ff          rebase[1]
+>>       *          *        --ff-only --no-rebase  fast-forward only
+>>       *          *        --no-rebase --no-ff    merge --no-ff
+>>       *          *        --no-rebase --ff       merge --ff
+>>
+>>      <unset>     *        --no-rebase            merge --ff
+>>      only        *        --no-rebase            merge --ff[2]
+>>      false       *        --no-rebase            merge --no-ff
+>>      true        *        --no-rebase            merge --ff
+>>
+>>      <unset>     *        --rebase               rebase
+>>      only        *        --rebase               rebase[2]
+>>      false       *        --rebase               ?[2]
+>>      true        *        --rebase               ?[2]
+>>
+>>       *          *        --ff-only              fast-forward only[1]
+>>
+>>       *       <unset>     --no-ff                merge --no-ff
+>>       *        false      --no-ff                merge --no-ff
+>>       *       !false      --no-ff                rebase (ignore --no-ff)[2][3]
+>>
+>>       *       <unset>     --ff                   merge --ff
+>>       *        false      --ff                   merge --ff
+>>       *       !false      --ff                   rebase (ignore --ff)[2][3]
 
-The reason is the branchname was used, and the wanted to use it again. 
-The doc says they can use it again. So that is all they want at that moment.
+What about
 
-Why is there an extra option for doing this, good question but to them 
-at that point in time: not relevant. The doc of the option does not say, 
-that there may be any consequences, so that is good enough at that moment.
+          *       !false      --ff-only              ???
 
-If you want, you can call them ignorant. But in their defence they may 
-not even know that. They have whatever other issues to solve at that 
-time. They are happy to have found that option, and they really need to 
-return to whatever other stuff they were doing. So they trust the docs, 
-and the docs have no explicit warning.
-
-Frankly all the above, is a very common pattern that lots of people show 
-at some time or another. Whatever the problem, people go for whatever 
-*appears* to be the easy fix. No thought on what will happen after that. 
-In German their is a saying "Nach mir die Sinnflut".
-
+I think these are conflicting options, see [ ] (the ref without a 
+number). This feels like saying oh, I want to rebase, but I want to 
+fast-forward. What should happen with my local changes then? Could one 
+argue that this should lead to the local changes being rebased on top of 
+the remote?
 
 >>
->> Because they did not correctly understand what the net protected the from.
+>> [1] https://lore.kernel.org/git/xmqq7dhrtrc2.fsf@gitster.g/
+>>      https://lore.kernel.org/git/c62933fb-96b2-99f5-7169-372f486f6e39@aixigo.com/
+>> [2] https://lore.kernel.org/git/xmqqpmvn5ukj.fsf@gitster.g/
+>> [3] https://lore.kernel.org/git/xmqq8s2b489p.fsf@gitster.g/
+>>
+>> It appears you, Phillip, and I all had different opinions about
+>> correct behavior and in a few cases though the documentation clearly
+>> implied what we thought.  So, I'd have to say the documentation is
+>> rather unclear as well.  However, even if the above table is filled
+>> out, it may be complicated enough that I'm at a bit of a loss about
+>> how to update the documentation to explain it short of including the
+>> table in the documentation.
 > 
-> Users should not be executing commands they don't understand. If a user
-> doesn't understand what `git delete-this-branch` does, then he shouldn't
-> run it.
+> Yeah, now you are starting to see the problem.
 > 
-How can they check they understand it?
-
-See also the example of the person that makes *two* the conclusions. How 
-can they tell there is nothing further that they need to conclude?
-
-
-> If the documentation says a command overwrites a branch, and the user
-> runs the command anyway,
-So is that an admission that people may not always come to the conclusion?
-I.e., what I said: They do not think about that part at all.
-
- > and the branch is overwritten, git did what the
-> user told it to do, and what happened is the responsibility of the user.
-
-Well, that is a matter of philosophical debate.
-
-It does not say "commits may be affected".
-I think or hope, that we can agree the effect on commits is something, 
-that is to be concluded. The discrepancy we have is, whether it will be 
-concluded by all users ("all" is to mean a high percentage leaving no 
-significant rest).
-
-If we agree on that "conclusion" statement, then the discrepancy we have 
-can be further deducted on whether there is such an "significant rest" 
-amount of users.
-
-I believe there is. You do afaik not believe this.
-
-But if there is (or "if there were") such an significant amount of 
-users, then it would be a valuable addition to add text, that add the 
-result of that conclusion.
-
-
-So then all the "what would they think..." question do not really 
-matter. It does not matter what they think, if it is not what they are 
-expected to think. If there is a significant amount of people who for 
-any reason whatsoever do not think this, then I believe the 
-documentation should respect the fact, that those people exist (and more 
-than just as an exception).
-
-
-
-
-
->>> Let me try yet another analogy.
->>>
->>> If an alarm clock has two buttons "snooze" and "off".
->> How exactly is that connected?
->> This is a random story. Not an analogy.
+> How many more failed attempts do you need to go through before accepting
+> that the approach you thought was feasible is in fact not feasible?
 > 
-> The fact that you don't see the analogy doesn't mean it isn't one.
+> The solution is simple and self-documenting:
 > 
-> Did the user click "off" for a reason?
-
-"Off" is not called "force snooze". Off does not require to conclude 
-info, as "-C" does.
-
-Lets say, there is a "change timezone" and a "force change timezone" 
-button, and the first one would reject to work, if an alarm is active, 
-the 2nd would work even if an alarm exists.
-Then that would be an analogy. Because then the user has to figure out, 
-that changing the timezone would change the displayed hour, and as a 
-consequence clear the alarm.
-
-In your example, where is the conclusion the user has to make?
-
-
-
->>> Mistook it for what? What did they expect it was going to happen?
->> I have answered that in great detail, at least 3 times in this mail thread.
+>    pull.mode={fast-forward,merge,rebase}
 > 
-> I'm sorry, but no, "they'll think nothing and they'll do it for no
-> reason" is not an answer.
-Well, that is not what I wrote.
-
-
+-- 
+aixigo AG
+Karl-Friedrich-Str. 68, 52072 Aachen, Germany
+phone: +49 (0)241 559709-390, fax: +49 (0)241 559709-99
+email: matthias.baumgarten@aixigo.com
+web: https://www.aixigo.com
+District Court Aachen – HRB 8057
+Board: Christian Friedrich, Tobias Haustein
+Chairman of the Supervisory Board: Dr. Roland Schlager
