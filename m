@@ -2,157 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,
-	CHARSET_FARAWAY_HEADER,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01274C636CA
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:05:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F8F2C636CA
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:47:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC3F561159
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:05:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15CA96115C
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:47:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232592AbhGQRIf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 13:08:35 -0400
-Received: from mout.web.de ([212.227.17.12]:51169 "EHLO mout.web.de"
+        id S233429AbhGQRuT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 13:50:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52854 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231767AbhGQRIf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 13:08:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1626541536;
-        bh=KkQ9iRfFCHbBHWOTs+lVIqsYxV+LEKJwCmk3pkra9Zk=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=EDvITcNZQFj675PqBEbjzekXgpTtOLN+75A6UH7iMfrtp/g0M8/xoa/M2P3scCyic
-         1WVelj4c22/iyHTo/0ubTp9eVHsoI6n8gVFtVfqlCuqydF46MIx/51Sfe03mTjtUnT
-         aMdCnwP3Rq4B4cFadgIYCu5F2xfppNwRDGdzdkLg=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MGgJM-1lr6dW2d6o-00Dssy; Sat, 17
- Jul 2021 19:05:36 +0200
-Date:   Sat, 17 Jul 2021 19:05:36 +0200
-From:   Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>
-To:     Rostislav Krasny <rosti.bsd@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Incorrect and inconsistent End-Of-Line characters in .gitmodules
- after "git submodule set-branch --branch <branch_name>"
-Message-ID: <20210717170536.x2n443dtejk76wfp@tb-raspi4>
-References: <CANt7McFAu5gAFcgd+dejQjDQDxfcnyhz=BxSAejXGMMtGQzO_w@mail.gmail.com>
+        id S231253AbhGQRuS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 13:50:18 -0400
+Received: (qmail 24420 invoked by uid 109); 17 Jul 2021 17:47:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 17 Jul 2021 17:47:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19748 invoked by uid 111); 17 Jul 2021 17:47:21 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 17 Jul 2021 13:47:21 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 17 Jul 2021 13:47:20 -0400
+From:   Jeff King <peff@peff.net>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>, Luca Weiss <luca@z3ntu.xyz>,
+        Luca Weiss via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH 2/2] merge: make sure to terminate message with newline
+Message-ID: <YPMXqLESKApq2uPI@coredump.intra.peff.net>
+References: <pull.1048.git.git.1626421416.gitgitgadget@gmail.com>
+ <31371c25743e1001b4fac89e80e7206ff477ac8a.1626421416.git.gitgitgadget@gmail.com>
+ <8678772b-dd5d-9188-8b63-98d05cedb323@gmail.com>
+ <AB048897-F70A-4388-B2A6-56BFEA40B303@z3ntu.xyz>
+ <16229b1d-e4a6-7a8d-8ea0-ae7c3f13075d@gmail.com>
+ <YPHe/W7+Oh63NpB0@coredump.intra.peff.net>
+ <xmqq8s26q9ot.fsf@gitster.g>
+ <YPH1qKMPOqhCzp4Y@coredump.intra.peff.net>
+ <693954a7-af64-67c5-41b9-b648a9fe3ef2@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CANt7McFAu5gAFcgd+dejQjDQDxfcnyhz=BxSAejXGMMtGQzO_w@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:q3v8/M5M1tWme6zzm7rumg/xhQ89TDGWLpPQyCh+yPKteDXyDRG
- deTvnpCDagTN/RRZkyHkAlnAE9ULFYUbfNEblNiXMJQiRV5x/+f+wvl37LZm9WCtstBeRGV
- kvJHG5+YmqKyto2qU7pIR2jHoDjI+YkHEkVs/bPLOT+dLiD/k+O3TP+S1zM83VtOiDjSRoQ
- vVJpTAr23foHyJsqpIQEA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ki+sJeNpFTY=:wi9GLvFMtgPaaRW8FVdm5z
- TGF4bMqixRJs2124dNGFHd69jisfZTCHWDsdDMA9GiwiVC8/z61eTJv02x+iG+5AOYvlWk+go
- NVFFP1IWXI/yF7TxnwtDfE9czyy9rSSMR4MfSzn5EZoLe08y4KS7rHN8MNiSc/x3KQEbfNW0+
- dYdCThZUugKweJVv/4HYkq57ETXmTX+QqTxWMm+wmMdoibH2K4e92GJPDkeaBWhOO5RYJbqIT
- 6KoP6jGQiVHcxHoX7BtTf+I8VRpUKUgWhFfZFxiRM+PNfkd7amAhMT8AdYF8eLOtbxN1fWOAG
- pmNB956Vx31RUV5Af6MY8NzyIlq0g6clfEceWTHEb7Mk2fJU9QBpHDw8gTJi/OFOBlOhBtlWL
- 3uHG6R1NVtcdjNlhQwg3N4AwZLvOVXmcwRsQcsxDnLaFdGhbx+K3UcAk6VHLGJPSDFNp5Vd/A
- 6HleF3LRSg2YEtAKjy73RgdjxQqR0lPnVLxeVLqyXB0RTPrJsEn1X31YWFanJe/26m7YwZ2y3
- Q9WhnCe6ORj+R44BVSKVkG39Sxs4LpV/67AfnEEunx/mW6ic7Fn6ztBsxp2uyVVq3HGO5fU8I
- NiS9mitiHyRZ2JV5wxngayuNxxKB5JTM5IyPZHqAb0JWA2o8oozwQYqg4zy1CpJNhEMRnk1Bs
- PIFxL+AQRt+x21WzERhpajM561Euiaz4ZpAleryAlwApndbVwvrHQjncP4pE+9ZxnzRNXj16/
- 2K/hlA/7crJfW/5VBDJamfiVnlYVMqiwys5pp38BapyZc6JDblYAQENN/VduyOgfJa8lhs/O9
- RZxv49uPUfcZVbl74j+Fr/bzF7chtELVk2q4MlpJPnLjGCtkmlcLT6N64s2907OvWG7pCCbKB
- T2wdtlGAugR6U4enLfpffz4/MMIV4HaQn1ablWmD9isRk38kXpD2q+ZhHb1vxl5Qg2SCTIUtJ
- 4tMofK+ZjzMdREkHRdjieE+JeZOFYKF8ulX4fkJjSDe6+vWQU+D5II0da8axHh+cUaEfwVEAe
- DRCEgRSztl2dD7rzjx8hXbTZ5JGGEGV3XbgpGgAyEuvGDiTwHq0bD1XfCnpN7SwJcvbOkK0gr
- bcf18kOh04Yne7MGTyI2Vn54yBlnRHCW0sF
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <693954a7-af64-67c5-41b9-b648a9fe3ef2@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 16, 2021 at 12:55:07AM +0300, Rostislav Krasny wrote:
-> Hello,
->
-> Originally this bug was reported in the Git for Windows project and
-> contains two screenshots:
-> https://github.com/git-for-windows/git/issues/3321
-> Johannes Schindelin (dscho) is convinced that this is not a
-> Windows-specific issue. Following is a brief description of this bug
-> as I've faced it:
->
-> After running the "git submodule set-branch --branch master -- ms1"
-> I've noticed that the .gitmodules file is encoded with both DOS and
-> UNIX End-of-Line characters simultaneously: all original lines use DOS
-> EOL characters but the added "branch =3D master" line uses UNIX EOL.
+On Sat, Jul 17, 2021 at 02:40:55PM +0100, Phillip Wood wrote:
 
-First of all: Thanks for posting this here.
+> > which would cover that case. But Phillip mentioned that our own
+> > fmt_merge_msg() does not include a newline.
+> 
+> I mentioned that we remove the newline that is added by fmt_merge_msg(), not
+> that there is no newline added by fmt_merge_msg() - maybe I wasn't clear
+> enough. In builtin/merge.c:prepare_merge_message() we do
+> 
+> 	fmt_merge_msg(merge_names, merge_msg, &opts);
+> 	if (merge_msg->len)
+> 		strbuf_setlen(merge_msg, merge_msg->len - 1);
 
-Then there are some questions, at least from my side.
-How did you get there ?
-In which shell did you enter the command ?
+Of maybe I didn't read carefully enough. :)
 
-Could you run
-od -c .gitmodules
-and post the results here ?
+Either way, thanks for clarifying. Doing something like:
 
-Or is it possible to set up a dummy repo, which does show the problem,
-somewhere ?
+  cat >.git/hooks/commit-msg <<\EOF
+  #!/bin/sh
+  xxd "$1"
+  EOF
+  chmod +x .git/hooks/commit-msg
 
-What we appreciate is a fully reproducable receipt, so that anybody can
-reproduce the problem.
+  git merge --no-edit ...
 
-I have the slight suspicion that the CR as part of CRLF had sneaked in
-somewhere via the command line. But that is already a speculation.
+shows off the problem; the hook sees that intermediate state.
 
-And I don't know, if there is a problem at all, or is it just cosmetics ?
+Likewise if we do:
 
-Anyway, a full set of commands would be good to have.
+  git merge -m "foo" ...
 
+which similarly suppresses the editor. There are actually two
+interesting cases here:
 
->
-> Found on the following environment:
->
-> $ git --version --build-options
-> git version 2.32.0.windows.2
-> cpu: x86_64
-> built from commit: 3d45ac813c4adf97fe3733c1f763ab6617d5add5
-> sizeof-long: 4
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> feature: fsmonitor--daemon
->
-> $ cmd.exe /c ver
->
-> Microsoft Windows [Version 10.0.19042.1083]
->
-> $ cat /etc/install-options.txt
->
-> Editor Option: VIM
-> Custom Editor Path:
-> Default Branch Option:
-> Path Option: Cmd
-> SSH Option: OpenSSH
-> Tortoise Option: false
-> CURL Option: OpenSSL
-> CRLF Option: CRLFAlways
-> Bash Terminal Option: MinTTY
-> Git Pull Behavior Option: Merge
-> Use Credential Manager: Core
-> Performance Tweaks FSCache: Enabled
-> Enable Symlinks: Enabled
-> Enable Pseudo Console Support: Disabled
-> Enable FSMonitor: Disabled
->
-> Comments of Johannes Schindelin (dscho) in the GitHub bug report:
->
-> > I don't believe that Git considers its config files free game regardin=
-g line endings.
-> > Therefore, I think that having DOS line endings in there is already a =
-violation of Git's
-> > assumptions. In any case, this is not a Windows-specific issue, even i=
-f DOS line
-> > endings are much more prevalent on Windows than on other platforms. Pl=
-ease take
-> > it to the Git mailing list (send plain-text messages, HTML messages ar=
-e dropped
-> > silently).
+  - if merge.log is not set, then we'd see "foo" with no newline
+
+  - if it is set, we'll get a newline after "foo", but with no newline
+    after the log data
+
+Likewise for:
+
+  printf foo >no-newline
+  git merge -F no-newline ...
+
+So I think we'd probably want to see a 3-patch series:
+
+  1. Make interpret-trailers handle input missing the final newline.
+     This isn't strictly necessary after patches 2 and 3, but it makes
+     sense to be more robust with unexpected input.
+
+  2. Drop the newline-stripping from prepare_merge_message(). The
+     examples above show some ways we could cover this in the tests.
+     This will help --no-edit case, but also using merge.log with "-m"
+     or "-F".
+
+  3. Teach prepare_to_commit() to add the extra newline before letting
+     hooks see the message. This should probably be done only when
+     cleanup_mode != COMMIT_MSG_CLEANUP_NONE.
+
+Luca, do you want to try revising your series in that direction?
+
+-Peff
