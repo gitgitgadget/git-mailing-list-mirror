@@ -2,220 +2,188 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URI_HEX,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32CAAC636CA
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 12:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6496DC636CA
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 13:41:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1126D6124B
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 12:45:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 39D75613D0
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 13:41:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233568AbhGQMsd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 08:48:33 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:40538 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230112AbhGQMsc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 08:48:32 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 4FC6B1F5AE;
-        Sat, 17 Jul 2021 12:45:35 +0000 (UTC)
-Date:   Sat, 17 Jul 2021 12:45:35 +0000
-From:   Eric Wong <e@80x24.org>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3 19/34] fsmonitor-fs-listen-win32: implement FSMonitor
- backend on Windows
-Message-ID: <20210717124535.GB16801@dcvr>
-References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
- <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
- <5bba5eb3d1bd172f09fdf6eb2e9b8ac4dd7f940f.1625150864.git.gitgitgadget@gmail.com>
- <87k0m9bpmv.fsf@evledraar.gmail.com>
- <b19f3f2a-049f-acf2-f59e-de705dc54307@jeffhostetler.com>
- <87mtqq2i3r.fsf@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2107161754180.59@tvgsbejvaqbjf.bet>
- <874kcuxkz8.fsf@evledraar.gmail.com>
+        id S233841AbhGQNnz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 09:43:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38616 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232974AbhGQNnz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 09:43:55 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B4E7C06175F
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 06:40:58 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id m2so15419085wrq.2
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 06:40:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=deKeaLHB1L42zie3VlFtGeCSeGXb6LG3rBFTeDJS0ik=;
+        b=mzdCcZTPdFPDeCPDwgu7tI49AmgEn9gLOgyr15DBEZ0cANpU+hG7TOiI0zMQmsA6PS
+         bbx4cW5kKyBF8twHhTQLIy94jdzfly8H622rR7JN0ajzDDTSnqveIsSznsSWnoeNsBuI
+         97sFErCxCP3EWNIwZl2ZD8sl6pNi0gjp69WPnra62SB5hpEhpIzDdFx4RehsHbSQz89+
+         QGMRqwkyYv1bS+JoTiHlTd9GuHLkV/hSm1Va/X6nRfKFwUnb4WYH0mpR3M7C7ef7neWs
+         xNh4XVoI0UKWGHXdhH1dYnDH0gLqYrfHhfG1aLI8ec+hjGwhjQeedaPp8XmNXSjhR8Ps
+         TlKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=deKeaLHB1L42zie3VlFtGeCSeGXb6LG3rBFTeDJS0ik=;
+        b=Lt31uSYkc4uzwGj66p/xmqTqTf6QVJT5/6VGofZVMtvb424IkuyzmHg/kjP0JI1M5r
+         ij5uuQTjHwN5j51F153WqJWr66YH8xVlDzhTtTyD38bOTUbfusB6M+7AhDuLS+dQ25FY
+         A5ykFJgtQ/sRosgYHoIYOLVXuS+uKpyBI4srEO5oA0ak5UV6/RbWqd/vtDn2h1gOHnZG
+         hagX+52KB98PWH3vGPOpNWgQ/IyetkZRhkTd2SvKBlK1RyZ3V0dFm6JOuT6wVmGYVEAV
+         dmKj9NxDun1F+5kAM/8T3Rsf7vMsDUcy0scj5kowtQypndGJoJhlo1fHHhd/hyEkI75J
+         Vk7Q==
+X-Gm-Message-State: AOAM531yX+rgI74m2eo9jqCDb9I/mYZX5X+9hsBf5BLyia/y+sxSotkq
+        JKDQ5+TQlC2YN8MAr7Xw2is=
+X-Google-Smtp-Source: ABdhPJxG9HSJZqgugRu6JluXX42iJuLVwDLZwlOAeZd46G0gcs5CsmeocrvJx6FYqeWMHp8FTqLmew==
+X-Received: by 2002:a5d:4ac6:: with SMTP id y6mr18715983wrs.347.1626529257131;
+        Sat, 17 Jul 2021 06:40:57 -0700 (PDT)
+Received: from [192.168.1.240] (141.2.7.51.dyn.plus.net. [51.7.2.141])
+        by smtp.gmail.com with ESMTPSA id d15sm13692882wri.39.2021.07.17.06.40.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 17 Jul 2021 06:40:56 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/2] merge: make sure to terminate message with newline
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     phillip.wood@dunelm.org.uk, Luca Weiss <luca@z3ntu.xyz>,
+        Luca Weiss via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
+References: <pull.1048.git.git.1626421416.gitgitgadget@gmail.com>
+ <31371c25743e1001b4fac89e80e7206ff477ac8a.1626421416.git.gitgitgadget@gmail.com>
+ <8678772b-dd5d-9188-8b63-98d05cedb323@gmail.com>
+ <AB048897-F70A-4388-B2A6-56BFEA40B303@z3ntu.xyz>
+ <16229b1d-e4a6-7a8d-8ea0-ae7c3f13075d@gmail.com>
+ <YPHe/W7+Oh63NpB0@coredump.intra.peff.net> <xmqq8s26q9ot.fsf@gitster.g>
+ <YPH1qKMPOqhCzp4Y@coredump.intra.peff.net>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <693954a7-af64-67c5-41b9-b648a9fe3ef2@gmail.com>
+Date:   Sat, 17 Jul 2021 14:40:55 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <874kcuxkz8.fsf@evledraar.gmail.com>
+In-Reply-To: <YPH1qKMPOqhCzp4Y@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> On Fri, Jul 16 2021, Johannes Schindelin wrote:
-> > Hi Ævar,
-> >
-> > On Tue, 13 Jul 2021, Ævar Arnfjörð Bjarmason wrote:
-> >
-> >>
-> >> On Tue, Jul 13 2021, Jeff Hostetler wrote:
-> >>
-> >> > On 7/1/21 7:02 PM, Ævar Arnfjörð Bjarmason wrote:
-> >> >> On Thu, Jul 01 2021, Jeff Hostetler via GitGitGadget wrote:
-> >> >>
-> >> >>> From: Jeff Hostetler <jeffhost@microsoft.com>
-> >> >>>
-> >> >>> Teach the win32 backend to register a watch on the working tree
-> >> >>> root directory (recursively).  Also watch the <gitdir> if it is
-> >> >>> not inside the working tree.  And to collect path change notifications
-> >> >>> into batches and publish.
-> >> >>>
-> >> >>> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> >> >>> ---
-> >> >>>   compat/fsmonitor/fsmonitor-fs-listen-win32.c | 530 +++++++++++++++++++
-> >> >> <bikeshed mode> Spying on the early history of this (looking for the
-> >> >> Linux backend) I saw that at some point we had just
-> >> >> compat/fsmonitor/linux.c, and presumably some of
-> >> >> compat/fsmonitor/{windows,win32,macos,darwin}.c.
-> >> >> At some point those filenames became much much longer.
-> >> >>
-> >> >
-> >> > Once upon a time having "foo/bar/win32.c" and "abc/def/win32.c"
-> >> > would cause confusion in the debugger (I've long since forgotten
-> >> > which).  Breaking at win32.c:30 was no longer unique.
-> >> >
-> >> > Also, if the Makefile sends all .o's to the root directory or a
-> >> > unified OBJS directory rather than to the subdir containing the .c,
-> >> > then we have another issue during linking...
-> >> >
-> >> > So, having been burned too many times, I prefer to make source
-> >> > filenames unique when possible.
-> >>
-> >> A much shorter name like compat/fsmonitor/fsmon-win32.c would achieve
-> >> that goal.
-> >>
-> >> >> I've noticed you tend to prefer really long file and function names,
-> >> >> e.g. your borrowed daemonize() became
-> >> >> spawn_background_fsmonitor_daemon(), I think aiming for shorter
-> >> >> filenames & function names helps, e.g. these long names widen diffstats,
-> >> >> and many people who hack on the code stick religiously to 80 character
-> >> >> width terminals.
-
-At least "daemon"/"daemonize" already implies "background"; so
-even if we have the extra function, "spawn_fsmon_daemon()" would
-be enough info.
-
-> >> >>
-> >> >
-> >> > I prefer self-documenting code.
-> >>
-> >> Sure, I'm not saying daemonize() is an ideal name, just suggesting that
-> >> you can both get uniqueness & self-documentation and not need to split
-> >> to multiple lines in some common cases to stay within the "We try to
-> >> keep to at most 80 characters per line" in CodingGuidelines in this
-> >> series.
-> >
-> > While you are entitled to have your taste, I have to point out that Jeff
-> > is just as entitled to their taste, and I don't think that you can claim
-> > that yours is better.
-> >
-> > So I wonder what the intended outcome of this review is? To make the patch
-> > better? Or to pit taste against taste?
+On 16/07/2021 22:10, Jeff King wrote:
+> On Fri, Jul 16, 2021 at 01:34:58PM -0700, Junio C Hamano wrote:
 > 
-> Neither, to address a misunderstanding.
+>> Jeff King <peff@peff.net> writes:
+>>
+>>> I think we still end up calling cleanup_message() on the result before
+>>> using it as the final message, and that will fix any missing newline.
+>>> But we feed the intermediate state before then to the hooks (which is
+>>> exactly where one might expect to use interpret-trailers).
+>>>
+>>> I'm not sure if we should be doing a preemptive call to
+>>> cleanup_message() before feeding the hooks (we'd still need to do the
+>>> final one, to clean up whatever the hooks return to us). I guess
+>>> probably not, because I think that would remove comments, as well. So
+>>> adding in just the missing newline is probably better.
+>>
+>> To be quite honest, I think this patch is a half-way solution and I
+>> am not sure if it is better than either of the two "purist"
+>> extremes:
+>>
+>>   * If the hooks want to see messages with as little loss of
+>>     information from the original as possible, we should give them
+>>     without clean-up (which you pointed out above) *and* without this
+>>     patch.
+>>
+>>   * If the hooks want to see messages as canonicalized as people
+>>     would see in normal "git log" output, we should be passing the
+>>     full clean-up to lose even comments and in such a case there is
+>>     no need for this "always terminate" patch (we'd instead do far
+>>     more).
+>>
+>> Between the two approaches, both are purists' view, I'd prefer the
+>> former, but from that stance, the conclusion would become that there
+>> is no need to do anything, which may be a bit unsatisfactory.
 > 
-> Sure, if a reviewer points out "maybe change X to Y" and the reply is "I
-> like X better than Y", fair enough.
+> Yes, I agree with all of that (including the "as little loss of
+> information as possible" preference).
 > 
-> My reading of Jeff H.'s upthread was that he'd misunderstood my
-> suggesting of that Y for a Z.
+>>> Since it will usually be added back in by cleanup_message() anyway, I
+>>> think it's OK to just add it preemptively. The exception would be if the
+>>> user asked for no cleanup at all. So making it conditional on
+>>> cleanup_mode would work, whether -F or not.
+>>>
+>>> I suppose that does mean people turning off cleanup mode would get a
+>>> message without a newline from fmt_merge_msg(), though, which is perhaps
+>>> unexpected.
+>>>
+>>> So maybe just keeping the newline there, as you suggest, is the best
+>>> way.
+>>
+>> Hmph.
+>>
+>> If the user tells us "refrain from touching my message as much as
+>> possible" and feeds us a proposed log message that ends with an
+>> incomplete line, I would think they expect us not to turn it into a
+>> complete line, and I would think doing this change only when cleanup
+>> is in effect would make sense.  This is especially true for users
+>> who do not let any hooks to interfere.  They used to get their
+>> incomplete lines intact, now their incomplete lines will
+>> unconditionally get completed.  I am not sure if I would want to
+>> defend this change from their complaints.
 > 
-> I.e. that shortening a name like fsmonitor-fs-listen-win32.c (X)
-> necessarily had to mean that we'd have a win32.c (Z), negatively
-> impacting some debugging workflows, as opposed to just a
-> shorter-but-unique name like fsmon-win32.c (Y).
-
-Short-as-possible-while-being-meaningful is a pretty important
-usability thing git.  There's a good reason git supports OID
-prefix abbreviations, after all.
-
-Not my area of expertise, but AFAIK git's rename detection is
-affected by basename; and I've encountered debugger confusion
-with non-unique basenames while debugging other codebases.
-
-My brain works like a naive "strcmp"/"memcmp": long common
-prefixes slows down my ability to differentiate filenames.
-
-Having lots of common terms/prefixes on the screen works like
-camoflage to me and slows down my ability to process things.
-I suppose my eyes and cognitive abilities are below average;
-and even worse due to the pandemic numbing my brain.
-
-> Ditto for daemonize() (X/Z) and spawn_background_fsmonitor_daemon() (X).
-
-(what I said above)
-
-> I'm certain that with this reply we're thoroughly into the "respectfully
-> disagree" territory as opposed to having a misunderstanding.
+> Right, what I was suggesting was:
 > 
-> I also take and agree your implied point that there's no point in having
-> a yes/no/yes/no/yes argument on-list, and I did not mean to engage in
-> such a thing, only to clear up the misunderstanding, if any.
+>    if (cleanup_mode != COMMIT_MSG_CLEANUP_NONE)
+> 	strbuf_complete(&msg);
 > 
-> I'll only say that I don't think that something like long variable/file
-> etc. names is *just* a matter of taste, seeing as we have a fairly
-> strict "keep to at most 80 characters per line" as the 2nd item in the C
-> coding style (after "use tabs, not spaces").
+> which would cover that case. But Phillip mentioned that our own
+> fmt_merge_msg() does not include a newline.
+
+I mentioned that we remove the newline that is added by fmt_merge_msg(), 
+not that there is no newline added by fmt_merge_msg() - maybe I wasn't 
+clear enough. In builtin/merge.c:prepare_merge_message() we do
+
+	fmt_merge_msg(merge_names, merge_msg, &opts);
+	if (merge_msg->len)
+		strbuf_setlen(merge_msg, merge_msg->len - 1);
+
+This has been the case since the beginning of the builtin merge[1]. I 
+assume it was trying to emulate the result of a command substitution in 
+the shell version.
+
+Best Wishes
+
+Phillip
+
+[1] See 
+https://lore.kernel.org16229b1d-e4a6-7a8d-8ea0-ae7c3f13075d@gmail.com/ 
+for more details of my archaeology on this.
+
+> So it would not be the user
+> feeding us an incomplete line, but rather Git feeding it. And that was
+> what I suggested should be corrected (which I suppose would be in
+> addition to correcting lines from the user).
 > 
-> That matter of taste for one developer objectively makes it harder to
-> stay within the bounds of the coding style for furute maintenance.
+> However, I see a call to strbuf_complete_line() at the end of
+> fmt_merge_msg(), so I am puzzled about what he meant.
+
+
+
 > 
-> We do have active contributors that I understand actually use terminals
-> of that size to work on this project (CC'd, but maybe I misrecall that
-> for one/both). I'm not one of those people, but I do find that
-> maintaining code with needlessly long identifiers in this codebase is
-> painful.
-
-Thanks for Cc-ing me.
-
-Yes, I'm one of those developers.  Accessibility matters to me:
-my eyesight certainly isn't getting better with age (nor do I
-expect anyone elses').  I need giant fonts to reduce eye and
-neck strain.
-
-Fwiw, newspaper publishers figured out line width
-decades/centuries ago and wrap lines despite having large sheets
-to work on.
-
-
-I mostly work over mosh or ssh to reduce noise and heat locally.
-There's no bandwidth for VNC or similar, and graphical stuff
-tends to be unstable UI-wise anyways so I stick to the terminal.
-
-Taste does have much to do with it: I favor stable, reliable
-tools (e.g. POSIX, Perl5, git) that works well on both old and
-new hardware.  I avoid mainstream "desktop" software since they
-tend to have unstable UIs which break users' workflows while
-requiring more powerful HW.
-
-Complex graphics drivers tend to get unreliable, too, especially
-when one is stuck with old HW that gets limited support from
-vendors.  It's also difficult to fix complex drivers as a
-hobbyist given the one-off HW/vendor-specific knowledge
-required.
-
-So we shouldn't expect a developer with old HW can have more
-than a standard text terminal.  This is an accessibility problem
-for developers lacking in finances.
-
-This is also a problem for developers wishing to backdoors+bugs
-found in modern systems (IntelME, AMD-PSP, endless stream of CPU
-bugs).
-
-
-Back to health-related accessibility; I've also had joint
-problems for many years so shorter identifiers helps reduce
-typing I need to do.  I mostly had that under control
-pre-pandemic, but it's been a huge struggle to find adequate
-replacements for activities I used to rely on to manage the
-pain.
+> -Peff
+> 
