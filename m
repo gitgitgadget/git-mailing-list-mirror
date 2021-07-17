@@ -6,32 +6,26 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8AB0C636CA
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 07:02:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7808C636C9
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 10:07:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6EEE061103
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 07:02:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8945E613D8
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 10:07:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231603AbhGQHFc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 03:05:32 -0400
-Received: from smtprelay01.ispgateway.de ([80.67.18.13]:62821 "EHLO
-        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230419AbhGQHFb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 03:05:31 -0400
+        id S233233AbhGQKKd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 06:10:33 -0400
+Received: from smtprelay05.ispgateway.de ([80.67.31.100]:10358 "EHLO
+        smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229674AbhGQKKb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 06:10:31 -0400
 Received: from [84.163.64.100] (helo=[192.168.2.202])
-        by smtprelay01.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        by smtprelay05.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
         (Exim 4.94.2)
         (envelope-from <git@mfriebe.de>)
-        id 1m4eLa-0006hl-TS
-        for git@vger.kernel.org; Sat, 17 Jul 2021 09:02:50 +0200
-From:   Martin <git@mfriebe.de>
+        id 1m4hD6-0004rD-S2; Sat, 17 Jul 2021 12:06:16 +0200
 Subject: Re: PATCH: improve git switch documentation
-To:     git@vger.kernel.org
+To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
 References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
- <dbfa96f0-558e-ccaf-6e34-6d95c43848b5@mfriebe.de>
- <60e88a4b8592f_16bcb2082b@natae.notmuch>
- <ad58bd54-a9dd-59a9-4fce-f90be469cd60@mfriebe.de>
- <60e9f8d462bd9_7ef20898@natae.notmuch>
  <6f43b36b-abe1-41f2-6138-e820c974b1bd@mfriebe.de>
  <60ea07e3495e8_7ef2081d@natae.notmuch>
  <30e4c874-6b87-b03d-fa33-fde5b7e50b2a@mfriebe.de>
@@ -48,12 +42,17 @@ References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
  <60edb8ff814cf_ab6dd208d9@natae.notmuch>
  <02f1f12a-0ff3-ef46-fce3-e222b2867309@mfriebe.de>
  <60f1d650e2667_330208e@natae.notmuch>
-Message-ID: <db554ab1-11b3-d7e9-6b64-799bc79cb622@mfriebe.de>
-Date:   Sat, 17 Jul 2021 09:02:32 +0200
+ <1997ca3b-117a-e19a-0dee-7342a2f1a0e7@mfriebe.de>
+ <60f1f4c3dd8b1_14cb208c1@natae.notmuch>
+ <fedbfe1f-9e6d-f46f-ca41-e176a30e938c@mfriebe.de>
+ <60f22aaa6a4f1_1f602081b@natae.notmuch>
+From:   Martin <git@mfriebe.de>
+Message-ID: <e57f1d19-d574-5ba5-efc1-abb8ab2a8c01@mfriebe.de>
+Date:   Sat, 17 Jul 2021 12:07:32 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <60f1d650e2667_330208e@natae.notmuch>
+In-Reply-To: <60f22aaa6a4f1_1f602081b@natae.notmuch>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
@@ -62,103 +61,140 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16/07/2021 20:56, Felipe Contreras wrote:
+On 17/07/2021 02:56, Felipe Contreras wrote:
 > Martin wrote:
->> On 13/07/2021 18:02, Felipe Contreras wrote:
->>> Martin wrote
->>>> You and I will make the connection between "something happens to the
->>>> branch" and "something happens to the commits".
->>>> A lot of people with less experience, who a busy looking through lots of
->>>> stuff to solve their problem, they will not make that connection in that
->>>> particular moment.
->>>> Heck, I've seen highly educated people missing far more obvious things
->>>> like that.
->>>
->>> Once again I'm not talking about what they could miss, I'm talking about
->>> what they are thinking the command will do.
+> It is the Socratic method. If I tell you "the user will think X" you are
+> not going to believe me. Therefore I'm asking you what the user will
+> think.
+> 
+>> But no one is taking them by the hand. No one is asking all those
+>> questions to them.
+>> So they (new users) will not always make that conclusion.
+> 
+> What conclusion would they reach?
+
+You realize that your question makes no sense?
+
+If the user does not enter the state of concluding, then they will not 
+reach a conclusion at all.
+
+If you want to challenge my statement, that the user does not start 
+concluding, then you could ask me: Why?
+To which I have to admit, I do not know, I did not ask those who didn't.
+And frankly it does not matter. Lets assume we knew "why". Then to 
+remedy that cause, some change would be needed. So most likely the doc 
+would need to be changed to have some trigger added, to overcome that 
+reason. In the end, that means more info in the doc. Same as what is 
+already proposed.
+
+
+>>> What do they think it will happen?
 >>
->> Well they think it creates a new branch with the given name. And that is
->> *all* they think.
+>> They do not think about it at all.
 > 
-> No. You are avoiding the question.
+> This doesn't make any sense. They used -C instead of -c for a reason.
+For the 4th or 5th time (not going to count the exact number of times I 
+have answered the exact same question)
 
-I did not avoid it. I answered it, as I understood it. Seems your 
-question was not very clear.
+The reason is the branchname was used, and the wanted to use it again. 
+The doc says they can use it again. So that is all they want at that moment.
 
+Why is there an extra option for doing this, good question but to them 
+at that point in time: not relevant. The doc of the option does not say, 
+that there may be any consequences, so that is good enough at that moment.
+
+If you want, you can call them ignorant. But in their defence they may 
+not even know that. They have whatever other issues to solve at that 
+time. They are happy to have found that option, and they really need to 
+return to whatever other stuff they were doing. So they trust the docs, 
+and the docs have no explicit warning.
+
+Frankly all the above, is a very common pattern that lots of people show 
+at some time or another. Whatever the problem, people go for whatever 
+*appears* to be the easy fix. No thought on what will happen after that. 
+In German their is a saying "Nach mir die Sinnflut".
+
+
+>>
+>> Because they did not correctly understand what the net protected the from.
 > 
-> -c creates a new branch. Obviously -C creates a new branch too.
+> Users should not be executing commands they don't understand. If a user
+> doesn't understand what `git delete-this-branch` does, then he shouldn't
+> run it.
 > 
-> Once again, *why* would they pick -C over -c? What do they think it will
-> do differently?
+How can they check they understand it?
+
+See also the example of the person that makes *two* the conclusions. How 
+can they tell there is nothing further that they need to conclude?
+
+
+> If the documentation says a command overwrites a branch, and the user
+> runs the command anyway,
+So is that an admission that people may not always come to the conclusion?
+I.e., what I said: They do not think about that part at all.
+
+ > and the branch is overwritten, git did what the
+> user told it to do, and what happened is the responsibility of the user.
+
+Well, that is a matter of philosophical debate.
+
+It does not say "commits may be affected".
+I think or hope, that we can agree the effect on commits is something, 
+that is to be concluded. The discrepancy we have is, whether it will be 
+concluded by all users ("all" is to mean a high percentage leaving no 
+significant rest).
+
+If we agree on that "conclusion" statement, then the discrepancy we have 
+can be further deducted on whether there is such an "significant rest" 
+amount of users.
+
+I believe there is. You do afaik not believe this.
+
+But if there is (or "if there were") such an significant amount of 
+users, then it would be a valuable addition to add text, that add the 
+result of that conclusion.
+
+
+So then all the "what would they think..." question do not really 
+matter. It does not matter what they think, if it is not what they are 
+expected to think. If there is a significant amount of people who for 
+any reason whatsoever do not think this, then I believe the 
+documentation should respect the fact, that those people exist (and more 
+than just as an exception).
+
+
+
+
+
+>>> Let me try yet another analogy.
+>>>
+>>> If an alarm clock has two buttons "snooze" and "off".
+>> How exactly is that connected?
+>> This is a random story. Not an analogy.
 > 
-
-They think: it makes go away that error message. They can use that 
-branchname.
-
-What they do not think is: If I take away the old branch name, what 
-happens to the commits in it?
-
-I know, you firmly believe everyone must surely make that conclusion.
-But that fails several times..
-1) It assumes everyone has enough knowledge to make that conclusion.
-While I agree: "they should", I acknowledge they might not.
-But, ok. lets say: "there fault". And we don't give a sh*t if others get 
-into problem, because they did not read lots of pages and memorized 
-every detail...e
-
-2) It assumes the can.
-I.e. they have the experience and skill to make the connection. Ok, 
-probably 99% can do.
-
-3) It assumes they do (the attempt to make a connection)
-And this is my point. Many people will not attempt to think ahead.
-
-
-People at that moment think about the branch, and the branch only. Many 
-will not an all think about commits.
-
-And why would they. In git there are plenty of situations where you can 
-delete a branch, without loosing anything else (i.e. without loosing 
-commits), because there is an upstream or another local branch.
-Until they day that you pick a branch where there is no safety net.
-
-
-
+> The fact that you don't see the analogy doesn't mean it isn't one.
 > 
-> Bothering 99.99% of users with a useless warning just because one (who
-> is not the sharpest pencil in the box) might make a mistake is just not
-> wise.
+> Did the user click "off" for a reason?
+
+"Off" is not called "force snooze". Off does not require to conclude 
+info, as "-C" does.
+
+Lets say, there is a "change timezone" and a "force change timezone" 
+button, and the first one would reject to work, if an alarm is active, 
+the 2nd would work even if an alarm exists.
+Then that would be an analogy. Because then the user has to figure out, 
+that changing the timezone would change the displayed hour, and as a 
+consequence clear the alarm.
+
+In your example, where is the conclusion the user has to make?
+
+
+
+>>> Mistook it for what? What did they expect it was going to happen?
+>> I have answered that in great detail, at least 3 times in this mail thread.
 > 
-Well, I see you did a survey over a representative group of randomly 
-picked people?
+> I'm sorry, but no, "they'll think nothing and they'll do it for no
+> reason" is not an answer.
+Well, that is not what I wrote.
 
-Well, yes I cannot tell you any final number. But from what I observed 
-from those people that I know, there a quite a few how mistook that 
-documentation.
-Many (almost most) of those where lucky, in that they had yet only done 
-it, when indeed it was safe. But upon question they were surprised that 
-it could have gone another way.
-
-Yes that is not representative. But even if I say that in real live the 
-quota of such misunderstanding is at only 10% of what I saw, that would 
-be a considerable total.
-
-
-> 
-> That being said, we don't have to agree. And we don't have to
-> continuously discuss forever. At some point you need to send a new
-> version of your patch, and I think that point is long past due.
-
-Yes but part of this has been educative.
-
-(and some of it a bit of fun too)
-
-And I said I will.
-But right now, I have things in my live, that prevent me from doing so 
-immediately.
-They should prevent me from spending time on those mails too, but I 
-can't always withstand - so some shortened nights ahead.
-
-I will look at sending a patch, when I have good time to do so without 
-being in any rush.
 
