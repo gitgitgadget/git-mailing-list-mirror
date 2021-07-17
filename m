@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1C05C636C9
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:53:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9489C636CA
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:57:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8DA076113D
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:53:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C0DD36115C
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:57:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233751AbhGQR4S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 13:56:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37686 "EHLO
+        id S233441AbhGQSAc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 14:00:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231253AbhGQR4R (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 13:56:17 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 203DDC061762
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 10:53:21 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id u11so15129365oiv.1
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 10:53:21 -0700 (PDT)
+        with ESMTP id S232935AbhGQSAc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 14:00:32 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A15FC061762
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 10:57:35 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id f12-20020a056830204cb029048bcf4c6bd9so13386637otp.8
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 10:57:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=7F7y+r1oSOVst2gX3wpf42j3mqf4U64GiPAnuOye7oQ=;
-        b=b1vt7XyUvtPS4RSul1pE9/drhpkxEM9mN8HGapi3+9eCWDKZ7iZoCwNfEEqPtBy28z
-         6WLlWnOtoHKTTHEqug3dgfxXTV+WGWHQh6k/wqJ891qk+IrJxLI2djz1b8uSTVMR3AaR
-         +pwLk0D9pgtROeM3zk1/5wvwjoUpc+maAIjyLDgxkR7dPtxgX/6qTYxE1Md6c9aRDHek
-         Pb1x5akgx/eNJqnu90T+m/M6kzftWNMiHbDotial5O60WwE2whetbu+Q4HLWsuONDoRe
-         d9t/mmYgDTzcfNnFa6Q7rQSYH3gu1y5LrrHie16Oc6PqX3BMl5cbIDq9YDi0XCrjbicj
-         jTaA==
+        bh=ZtbGGQs5yUj6xoU+BSgdzp0cvVpWofWJb6OxCtCOb3c=;
+        b=AZyi7lG/CiodaLOvDfv8mU2D2roWXhYOWm5DZlSb713M73kNt5hWy/tyvR+/IfXLRQ
+         uVWD9BY+5esk5IH2lFFYc8q7gSyAetH5XDSp7vY+iLupuXWBIZ75OUDeH9o4P1wSyEeP
+         RObegBbxTLw8U0B8+TEtVzuCglitIVyEzkjV4jY5CZ1+ssPWiij+bH4lFSlvR9Lm21Ug
+         lkycFiv9EgC7+XfZvHGXmZNN8zRWyFz6Menc8+EoeoVQ4td6SkAHWIZKTMAa7PwZARTx
+         LYscQ/9D+GeCUogz/jP/5kTQ9TKIG8M75OFIiIJk+5DONMizZJq/9iLOCWxvQtS7YAtM
+         7LBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=7F7y+r1oSOVst2gX3wpf42j3mqf4U64GiPAnuOye7oQ=;
-        b=aYUuUY62PSXVlmV9AIDMPyaWCz9G/5vDdUIdRBksP6lBMisUz6IYcYHVMtDwhxzIGi
-         5kS0gZx8mrxx9ELMkM0wEVjJK+XxPrq8gSPwG+9npIcZitkMv5rDmasjkzfLPSBrYV7X
-         jP8irTHVUITZ7Bo3VpLeRiWpDyCcp19pu+CtxDeZUOdZPCv+opDP7kG4mhWAoOcIdOwa
-         24V4RYLEl4OCFwyui53Ni92MGCMNqsO82bcdgzLOUrKqBxnQsfloGIt9dEJcbsX2hnCL
-         LnvfjyhmDlD0RICMMdZs36rXhB16FS/Gv4CrtNaM7tzeEYtkuPZPQq1tApcrq9PPDxGM
-         ZDIQ==
-X-Gm-Message-State: AOAM532WxIxjJ2x3ytyHSGJ15Jfy8ojIyHjHHr/Rtr/MlXkBCRJHbWVg
-        Hp4EPe/Y+BgL41JaMDTTo4A=
-X-Google-Smtp-Source: ABdhPJwY1vAvxhFtvehERTLUhVCF21To8WL0BpJ01orr3Dq8aXz2dNUsao/aG7Sy6mMhy4raZ2pJxg==
-X-Received: by 2002:aca:5b82:: with SMTP id p124mr7609750oib.73.1626544400533;
-        Sat, 17 Jul 2021 10:53:20 -0700 (PDT)
+        bh=ZtbGGQs5yUj6xoU+BSgdzp0cvVpWofWJb6OxCtCOb3c=;
+        b=aCONTDKGxVtRhzDqW5Ib6M20jyfm6qr5L5lLPCbu0a88zCNGm+5s6J6ySMWnm9UN1F
+         a/KdpP7t/hQwsGK3aJmeanywb9MzQ+ylxpvP/0XW5El9MjqeTDgy5gIzlmvVEM+eJTTo
+         UIDMRShgRtgjg5Klsx6vwkMjFPsWB9cyNRn/S6Lkqq5QzFL5qa7IQkRIMtkhQUxXbncf
+         v4yGRqzQIIx4FMMU7zDWueF6FcS9J3OT4x3L5ewOT3pBbZBkPhnYjvDrBDJWO9Kmejc/
+         1rp5kFsR9P4dR2U2ufQnYhpI86tS6CBxvEobRasf5DrOZUAa9AmarUCJE/z0I4Z3wK/G
+         osSQ==
+X-Gm-Message-State: AOAM530q1W9oo/37s8tkNE5/ZijPBbyobfb4m/wPlp4cdfnF0/b0QJLl
+        6X6zHzrxJe20QwJF+ilS3Gw=
+X-Google-Smtp-Source: ABdhPJyYB70Jst2A7svvAT9YLDWSJjGV7IhO3elnJbPjujZPAmF6KhsgyXdvBUEtKKdSw78lx8NmWw==
+X-Received: by 2002:a05:6830:40b6:: with SMTP id x54mr8649443ott.290.1626544654706;
+        Sat, 17 Jul 2021 10:57:34 -0700 (PDT)
 Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id n14sm2724809ota.57.2021.07.17.10.53.19
+        by smtp.gmail.com with ESMTPSA id t10sm2718196otd.73.2021.07.17.10.57.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Jul 2021 10:53:20 -0700 (PDT)
-Date:   Sat, 17 Jul 2021 12:53:18 -0500
+        Sat, 17 Jul 2021 10:57:34 -0700 (PDT)
+Date:   Sat, 17 Jul 2021 12:57:33 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>,
+To:     Matthias Baumgarten <matthias.baumgarten@aixigo.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         Elijah Newren <newren@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
@@ -65,12 +65,11 @@ Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Alex Henrie <alexhenrie24@gmail.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
-        Son Luong Ngoc <sluongng@gmail.com>,
-        Matthias Baumgarten <matthias.baumgarten@aixigo.com>
-Message-ID: <60f3190eaba81_25f220843@natae.notmuch>
-In-Reply-To: <c015e599-0178-cc3d-11be-175dc917f2b9@gmail.com>
+        Son Luong Ngoc <sluongng@gmail.com>
+Message-ID: <60f31a0ddf7c_25f2208a5@natae.notmuch>
+In-Reply-To: <c54fa084-75f4-b775-8ac2-6df3c7a36571@aixigo.com>
 References: <60f1daa896f69_330208b1@natae.notmuch>
- <c015e599-0178-cc3d-11be-175dc917f2b9@gmail.com>
+ <c54fa084-75f4-b775-8ac2-6df3c7a36571@aixigo.com>
 Subject: Re: When are you going to stop ignoring pull.mode?
 Mime-Version: 1.0
 Content-Type: text/plain;
@@ -80,22 +79,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya wrote:
-> On 17/07/21 02.14, Felipe Contreras wrote:
-> > The solution is simple and self-documenting:
-> > 
-> >    pull.mode={fast-forward,merge,rebase}
-> > 
+Matthias Baumgarten wrote:
+> On 7/16/21 9:14 PM, Felipe Contreras wrote:
+> > Elijah Newren wrote:
+> >> It may be a worthy goal, but I cannot implement correct behavior if I
+> >> cannot determine what correct behavior is.
+> >>
+> >> You've only specified how to handle a subset of the valid combinations
+> >> in each of your emails, and from those individually or even
+> >> collectively I cannot deduce rules for handling the others.  Reading
+> >> the dozen+ recent messages in the various recent threads, I think I've
+> >> figured out your opinion in all but two cases, but I have no idea your
+> >> intent on those two (I would have thought --rebase override there too,
+> >> but you excluded that), and I'm rather uncertain I've correctly
+> >> understood you for the other ones (I really hope gmail doesn't
+> >> whitespace damage the following table):
+> >>
+> >>     pull.ff  pull.rebase  commandline            action
+> >>       *          *        --ff-only --rebase     fast-forward only[1]
+> >>       *          *        --rebase --no-ff       rebase[1]
+> >>       *          *        --rebase --ff          rebase[1]
+> >>       *          *        --ff-only --no-rebase  fast-forward only
+> >>       *          *        --no-rebase --no-ff    merge --no-ff
+> >>       *          *        --no-rebase --ff       merge --ff
+> >>
+> >>      <unset>     *        --no-rebase            merge --ff
+> >>      only        *        --no-rebase            merge --ff[2]
+> >>      false       *        --no-rebase            merge --no-ff
+> >>      true        *        --no-rebase            merge --ff
+> >>
+> >>      <unset>     *        --rebase               rebase
+> >>      only        *        --rebase               rebase[2]
+> >>      false       *        --rebase               ?[2]
+> >>      true        *        --rebase               ?[2]
+> >>
+> >>       *          *        --ff-only              fast-forward only[1]
+> >>
+> >>       *       <unset>     --no-ff                merge --no-ff
+> >>       *        false      --no-ff                merge --no-ff
+> >>       *       !false      --no-ff                rebase (ignore --no-ff)[2][3]
+> >>
+> >>       *       <unset>     --ff                   merge --ff
+> >>       *        false      --ff                   merge --ff
+> >>       *       !false      --ff                   rebase (ignore --ff)[2][3]
 > 
-> But how about config transition from pull.{ff,rebase} to pull.mode?
+> What about
+> 
+>           *       !false      --ff-only              ???
+> 
+> I think these are conflicting options, see [ ] (the ref without a 
+> number). This feels like saying oh, I want to rebase, but I want to 
+> fast-forward. What should happen with my local changes then? Could one 
+> argue that this should lead to the local changes being rebased on top of 
+> the remote?
 
-I have already discussed how the transition would look like, and it's
-pretty straightforward [1].
+According to the above it would be a fast-forward only, because:
 
-Additionally I already implemented the patch that does the mapping [2].
+      *          *        --ff-only              fast-forward only
 
-[1] https://lore.kernel.org/git/5fd8b1d5d4d7c_190cd7208b@natae.notmuch/
-[2] https://lore.kernel.org/git/20210705123209.1808663-27-felipe.contreras@gmail.com/
+So the pull would abort f you have local changes.
 
 -- 
 Felipe Contreras
