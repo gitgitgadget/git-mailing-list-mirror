@@ -2,118 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,
+	CHARSET_FARAWAY_HEADER,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA4BDC636CA
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01274C636CA
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:05:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B04C8610F9
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:03:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC3F561159
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:05:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232895AbhGQRGo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 13:06:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55102 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231767AbhGQRGo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 13:06:44 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30BA7C06175F
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 10:03:47 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id a80so716371qkg.11
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 10:03:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=dRRMeOIOmKuImUZjC6XEF8vj6iqVHA0oHTXEGy/WDOY=;
-        b=lS/T4ChQi4xNf6FELdKou0810K8wueXgd3+O+SHUg3AC6SukTphoa5OsNQ6s9VrDjd
-         B//z9nirY6VWJ7BhDvCr1vtAV9knpLrNFQOaRg5wdu8UfaW25zqi0mWX4Ctnr06PZrCg
-         ZHq6zMleaIghFJnyQ/BpwKLAIdk1H/3MUzMh9dRfhLAGnXUDLMrTLwBW1rVRjCzaKfuG
-         tXAzrLUq6JXAMZmM/CpG1dCiOM6x4Qvy+45uIFJT9VikH6R54F4CwkdD9bttxrpa1Eo2
-         4KfjDxZN8QLbtVoGF/OB8dCvpzg2GX5XUbkcanP3druJ1CbYwtcEAVuZzlAdOSIJpt3h
-         lWGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=dRRMeOIOmKuImUZjC6XEF8vj6iqVHA0oHTXEGy/WDOY=;
-        b=dxkQbZQIFSqb/a8BeWr0e48MgCFtcCY6wT3eLUzpd7OdR+gkNT0rj9Cb2dzxcGReUp
-         +xkkDk5nVvdpal1xv+Gkw+DLr11qVmuhAGGPI/rk4Z+HxEPNmMLdGbwYYIProA4Mi0gD
-         MICcsIfjG/3ayBcr1cSEjHhKcXkbt24wTbUvgesGfl6ToAoyq7uzlS6Z0pmMDA8jEEfP
-         W3b4RTqHgYfXAKB3cu/Tewyut82ep6BJ6Pn8AreUSZO1s+6gaRLW1gOYHV67ozVwDw2Q
-         PDDb2rCJX5CL0JKMIrWmID19PaLuRgyQn5YAYrz5VpFjUGAJGUostuEKV56318WWb9vO
-         f4QA==
-X-Gm-Message-State: AOAM530ZrdgzkxdevdqY9I5nICCVtSFLSoB9cZjbA+liqxOEe86OWdX1
-        NYyvGSxATdg2fKeb0GuF5u0=
-X-Google-Smtp-Source: ABdhPJzcXKd8lvdq1yrrV1jAlG4V0dykcbq4Vipmlg2jPWDpLVqX1Sg9lV73PK+iJ63zN0HnvN2uiQ==
-X-Received: by 2002:a37:9606:: with SMTP id y6mr15985357qkd.13.1626541426382;
-        Sat, 17 Jul 2021 10:03:46 -0700 (PDT)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id j20sm4450961qtq.14.2021.07.17.10.03.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 17 Jul 2021 10:03:45 -0700 (PDT)
-Subject: Re: Regression in 'git pull --rebase --autostash' since v2.32.0
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Denton Liu <liu.denton@gmail.com>
-References: <a0071549-73f6-9636-9279-3f01143a05de@gmail.com>
-Message-ID: <109545c7-7245-6146-d39a-2a44ac450db3@gmail.com>
-Date:   Sat, 17 Jul 2021 13:03:44 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.11.0
+        id S232592AbhGQRIf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 13:08:35 -0400
+Received: from mout.web.de ([212.227.17.12]:51169 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231767AbhGQRIf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 13:08:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1626541536;
+        bh=KkQ9iRfFCHbBHWOTs+lVIqsYxV+LEKJwCmk3pkra9Zk=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=EDvITcNZQFj675PqBEbjzekXgpTtOLN+75A6UH7iMfrtp/g0M8/xoa/M2P3scCyic
+         1WVelj4c22/iyHTo/0ubTp9eVHsoI6n8gVFtVfqlCuqydF46MIx/51Sfe03mTjtUnT
+         aMdCnwP3Rq4B4cFadgIYCu5F2xfppNwRDGdzdkLg=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MGgJM-1lr6dW2d6o-00Dssy; Sat, 17
+ Jul 2021 19:05:36 +0200
+Date:   Sat, 17 Jul 2021 19:05:36 +0200
+From:   Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>
+To:     Rostislav Krasny <rosti.bsd@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Incorrect and inconsistent End-Of-Line characters in .gitmodules
+ after "git submodule set-branch --branch <branch_name>"
+Message-ID: <20210717170536.x2n443dtejk76wfp@tb-raspi4>
+References: <CANt7McFAu5gAFcgd+dejQjDQDxfcnyhz=BxSAejXGMMtGQzO_w@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <a0071549-73f6-9636-9279-3f01143a05de@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANt7McFAu5gAFcgd+dejQjDQDxfcnyhz=BxSAejXGMMtGQzO_w@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:q3v8/M5M1tWme6zzm7rumg/xhQ89TDGWLpPQyCh+yPKteDXyDRG
+ deTvnpCDagTN/RRZkyHkAlnAE9ULFYUbfNEblNiXMJQiRV5x/+f+wvl37LZm9WCtstBeRGV
+ kvJHG5+YmqKyto2qU7pIR2jHoDjI+YkHEkVs/bPLOT+dLiD/k+O3TP+S1zM83VtOiDjSRoQ
+ vVJpTAr23foHyJsqpIQEA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ki+sJeNpFTY=:wi9GLvFMtgPaaRW8FVdm5z
+ TGF4bMqixRJs2124dNGFHd69jisfZTCHWDsdDMA9GiwiVC8/z61eTJv02x+iG+5AOYvlWk+go
+ NVFFP1IWXI/yF7TxnwtDfE9czyy9rSSMR4MfSzn5EZoLe08y4KS7rHN8MNiSc/x3KQEbfNW0+
+ dYdCThZUugKweJVv/4HYkq57ETXmTX+QqTxWMm+wmMdoibH2K4e92GJPDkeaBWhOO5RYJbqIT
+ 6KoP6jGQiVHcxHoX7BtTf+I8VRpUKUgWhFfZFxiRM+PNfkd7amAhMT8AdYF8eLOtbxN1fWOAG
+ pmNB956Vx31RUV5Af6MY8NzyIlq0g6clfEceWTHEb7Mk2fJU9QBpHDw8gTJi/OFOBlOhBtlWL
+ 3uHG6R1NVtcdjNlhQwg3N4AwZLvOVXmcwRsQcsxDnLaFdGhbx+K3UcAk6VHLGJPSDFNp5Vd/A
+ 6HleF3LRSg2YEtAKjy73RgdjxQqR0lPnVLxeVLqyXB0RTPrJsEn1X31YWFanJe/26m7YwZ2y3
+ Q9WhnCe6ORj+R44BVSKVkG39Sxs4LpV/67AfnEEunx/mW6ic7Fn6ztBsxp2uyVVq3HGO5fU8I
+ NiS9mitiHyRZ2JV5wxngayuNxxKB5JTM5IyPZHqAb0JWA2o8oozwQYqg4zy1CpJNhEMRnk1Bs
+ PIFxL+AQRt+x21WzERhpajM561Euiaz4ZpAleryAlwApndbVwvrHQjncP4pE+9ZxnzRNXj16/
+ 2K/hlA/7crJfW/5VBDJamfiVnlYVMqiwys5pp38BapyZc6JDblYAQENN/VduyOgfJa8lhs/O9
+ RZxv49uPUfcZVbl74j+Fr/bzF7chtELVk2q4MlpJPnLjGCtkmlcLT6N64s2907OvWG7pCCbKB
+ T2wdtlGAugR6U4enLfpffz4/MMIV4HaQn1ablWmD9isRk38kXpD2q+ZhHb1vxl5Qg2SCTIUtJ
+ 4tMofK+ZjzMdREkHRdjieE+JeZOFYKF8ulX4fkJjSDe6+vWQU+D5II0da8axHh+cUaEfwVEAe
+ DRCEgRSztl2dD7rzjx8hXbTZ5JGGEGV3XbgpGgAyEuvGDiTwHq0bD1XfCnpN7SwJcvbOkK0gr
+ bcf18kOh04Yne7MGTyI2Vn54yBlnRHCW0sF
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le 2021-07-17 à 11:29, Philippe Blain a écrit :
-> Hi Felipe,
-> 
-> Your recent clean-up of 'git pull --autostash' seems to unfortunately have made things
-> worse if the pull brings new files that conflict with existing untracked files,
-> which makes the pull abort,
-> and there are tracked files with modifications (so --autostash comes into play).
-> 
-> Before your change, 'git pull --no-rebase --autostash' did *not* apply the autostash
-> after the pull failed, thus loosing modifications to tracked files (and it did not save the
-> stash entry !). 'git pull --rebase --autostash' correctly applied the autostash, but ended with
-> a strange "error: could not detach HEAD".
-> 
-> After your change, both 'git pull --no-rebase --autostash' and 'git pull --rebase --autostash'
-> have the same buggy behaviour: they do not apply the autostash and do not save it in the stash list.
+On Fri, Jul 16, 2021 at 12:55:07AM +0300, Rostislav Krasny wrote:
+> Hello,
+>
+> Originally this bug was reported in the Git for Windows project and
+> contains two screenshots:
+> https://github.com/git-for-windows/git/issues/3321
+> Johannes Schindelin (dscho) is convinced that this is not a
+> Windows-specific issue. Following is a brief description of this bug
+> as I've faced it:
+>
+> After running the "git submodule set-branch --branch master -- ms1"
+> I've noticed that the .gitmodules file is encoded with both DOS and
+> UNIX End-of-Line characters simultaneously: all original lines use DOS
+> EOL characters but the added "branch =3D master" line uses UNIX EOL.
 
-The change below seem to fix both cases:
+First of all: Thanks for posting this here.
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index a8a843b1f5..b2ad70c50a 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1560,6 +1560,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
-  					  &head_commit->object.oid,
-  					  &commit->object.oid,
-  					  overwrite_ignore)) {
-+			apply_autostash(git_path_merge_autostash(the_repository));
-  			ret = 1;
-  			goto done;
-  		}
+Then there are some questions, at least from my side.
+How did you get there ?
+In which shell did you enter the command ?
+
+Could you run
+od -c .gitmodules
+and post the results here ?
+
+Or is it possible to set up a dummy repo, which does show the problem,
+somewhere ?
+
+What we appreciate is a fully reproducable receipt, so that anybody can
+reproduce the problem.
+
+I have the slight suspicion that the CR as part of CRLF had sneaked in
+somewhere via the command line. But that is already a speculation.
+
+And I don't know, if there is a problem at all, or is it just cosmetics ?
+
+Anyway, a full set of commands would be good to have.
 
 
-*But* from a quick audit of 'cmd_merge', there are still two code paths that
-call 'create_autostash' but then fail to apply it before calling 'goto done':
-
-1. the branch 'if (automerge_was_ok)' (line 1693)
-2. the branch 'if (!best_strategy)' (line 1704)
-
-
-Cheers,
-Philippe.
+>
+> Found on the following environment:
+>
+> $ git --version --build-options
+> git version 2.32.0.windows.2
+> cpu: x86_64
+> built from commit: 3d45ac813c4adf97fe3733c1f763ab6617d5add5
+> sizeof-long: 4
+> sizeof-size_t: 8
+> shell-path: /bin/sh
+> feature: fsmonitor--daemon
+>
+> $ cmd.exe /c ver
+>
+> Microsoft Windows [Version 10.0.19042.1083]
+>
+> $ cat /etc/install-options.txt
+>
+> Editor Option: VIM
+> Custom Editor Path:
+> Default Branch Option:
+> Path Option: Cmd
+> SSH Option: OpenSSH
+> Tortoise Option: false
+> CURL Option: OpenSSL
+> CRLF Option: CRLFAlways
+> Bash Terminal Option: MinTTY
+> Git Pull Behavior Option: Merge
+> Use Credential Manager: Core
+> Performance Tweaks FSCache: Enabled
+> Enable Symlinks: Enabled
+> Enable Pseudo Console Support: Disabled
+> Enable FSMonitor: Disabled
+>
+> Comments of Johannes Schindelin (dscho) in the GitHub bug report:
+>
+> > I don't believe that Git considers its config files free game regardin=
+g line endings.
+> > Therefore, I think that having DOS line endings in there is already a =
+violation of Git's
+> > assumptions. In any case, this is not a Windows-specific issue, even i=
+f DOS line
+> > endings are much more prevalent on Windows than on other platforms. Pl=
+ease take
+> > it to the Git mailing list (send plain-text messages, HTML messages ar=
+e dropped
+> > silently).
