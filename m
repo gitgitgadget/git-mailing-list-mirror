@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A2C1C636C9
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 18:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03BE4C636CA
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 18:31:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 067A361156
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 18:28:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC2B06115C
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 18:31:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234840AbhGQSbo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 14:31:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45640 "EHLO
+        id S234889AbhGQSeP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 14:34:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233429AbhGQSbn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 14:31:43 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E15BAC061762
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 11:28:46 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id w188so15127561oif.10
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 11:28:46 -0700 (PDT)
+        with ESMTP id S235411AbhGQSeO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 14:34:14 -0400
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33849C061762
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 11:31:17 -0700 (PDT)
+Received: by mail-oo1-xc2e.google.com with SMTP id e203-20020a4a55d40000b029025f4693434bso3313586oob.3
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 11:31:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=6fA+F4YG9UM/IKFTRuo2eIQrca5iHnNzLOtbayAM6jU=;
-        b=uVDjAx6nJJ7mn76b1rJ/izO9WUD7fDsbB0bMO59MqRrlaP7jktWT4BpT8G/UQX83HX
-         vB5Pyn9bqUZgaY2eN4THsTf/z8w2uWaIN0k5NBmw2EHuWD3nLxHMSiLNHwaw25Z8mW5a
-         UkU/5rGaCqhJGVI0V3aTr44mUKUan0rqoGoQfzuecZ/szOXdX9RDI0KRAgUdzAv6K5xc
-         gx3OzK2jwWuDooX2I4HOqiwfQj80qb54RV1c8jejNnoZdA0qulIJjeKIG5wffurF3ayA
-         neZPo+EjDlbvpjg7agGB3VNuYIHa1NyipomqBgH0JEB0L+tNqUnSEzevg27aE0S1y7Lg
-         x/Sw==
+        bh=X/McIfze1p/YdYP4y3I9bPqx7hRw0EyMOo4elEYIwYI=;
+        b=q8eSXFVa3W2F9mmeE+/rbHolLOBKsu+aVA8YhD5wq6IrMdKn+3zOc1UZFYaBoZf9XL
+         nNlTD2Ep8XiNli3K4/C8CFVJ5c/B5ZUqSnhzHPSy+dtnfryniZOPbwY6+2QxAuR1LpBn
+         fMCO4RXF0zqv0+aAny/58WTuHnCfy8+tWOeUXqUu4yVKS2tVd9jHH4aL8yWFbFLUw1Rr
+         xZkCeMen5R0vZndAvOxvROoXbto95zKaGlg2avjiMt0OD7oWn2mONW11OlqklppVn8gN
+         qUJ5CPfrsg9jceAK6wwJMoA44ksbDbXTbqrm3lOrLF5eBinHSH1L34HL793d7c8slzlF
+         G6Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=6fA+F4YG9UM/IKFTRuo2eIQrca5iHnNzLOtbayAM6jU=;
-        b=YEYiQA6SZIKn9UICrH4I8woNHHtyNd2BgDn1Be/jV32BBer4Q193ka2g/tpotVsXCw
-         MtjioW8hzxnsk2KD9JDCVt6RtJ0qG5LPZBS363+hYOGVMM6yT1scD3ury57omOCxMa9m
-         HE+LvAahoiONS5eiKF1HbDlobUnm7t7lnu5/mhrOb8+f1/CEBbzoIkf2itX3ZiV75+9h
-         Q6PtcaG4k8lfGOb/9kd/nWmr7952OruGh5tE0cJ59OsyffrNNNYMwkdpvq6Er6KtyGfC
-         tnH3/UFRRtB6rnr8foiXfZiOD6nDxwGysYiTjCDlpX3anultJnWUelUhMQBQQ6qMEK6H
-         ZDGA==
-X-Gm-Message-State: AOAM532cLVzECCFY1TuMF4ZcrYoTGm9peYVER0ivbOQ5lPzdYVutaSjp
-        wFaPwPaSwuI+9bYqjWxNiEc=
-X-Google-Smtp-Source: ABdhPJzODe1/cpBwhvf+cZEiPCMK49ldf3e+21sDYLfJGyZEq3MT9z1wxmYTCsvp5RHgz2NRyQXI2A==
-X-Received: by 2002:a05:6808:b27:: with SMTP id t7mr16743933oij.117.1626546526225;
-        Sat, 17 Jul 2021 11:28:46 -0700 (PDT)
+        bh=X/McIfze1p/YdYP4y3I9bPqx7hRw0EyMOo4elEYIwYI=;
+        b=l1WnyEs90xJIN6s8zCfK/31X9h+FAXXFaZ3nBfUMKG5KoQWX1slXxUSaPGsqnIhaIB
+         tc6v2GqN757nBq/+UPXxvD3aEF7fG8Gq0XyWssyvCA6s4ZlT42rRCkymuzpikE25FtsD
+         SNgZwxzcICt6ziqZG/UdvfXrMYy22jMxM3JXQRfCyJSqkPJq6HsClQTQR9JPImtJPEox
+         R5lekrpeiI2xheJmXEGejgc6N0De13TWsIGVgF3Jte0XcuCjxGC+wMhImK1qQz7+R8e1
+         OGjxoppWftJ+MI8PLWF1TJinR1R48qBIsPuUsuBanS0F75k380SZw4gnP9WoWs67eVgo
+         +S9Q==
+X-Gm-Message-State: AOAM533cDBTRaEJJiqqjOWN0TDGR7mYGXOvAU5NgsfyCZHAEBu2R5EIT
+        OycqoJDxXTBqRkljdgGf7dw=
+X-Google-Smtp-Source: ABdhPJw7LD0W8zBH43V56MFVF9veXwUbnns+aDKCNKogLB6FMQjbDsuOW/kzuRB9afkqTVMKzsK1MA==
+X-Received: by 2002:a4a:db42:: with SMTP id 2mr12175623oot.47.1626546676522;
+        Sat, 17 Jul 2021 11:31:16 -0700 (PDT)
 Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id q186sm2919502oif.40.2021.07.17.11.28.45
+        by smtp.gmail.com with ESMTPSA id y19sm2859941oia.22.2021.07.17.11.31.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Jul 2021 11:28:45 -0700 (PDT)
-Date:   Sat, 17 Jul 2021 13:28:44 -0500
+        Sat, 17 Jul 2021 11:31:15 -0700 (PDT)
+Date:   Sat, 17 Jul 2021 13:31:14 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -66,12 +66,12 @@ Cc:     Alex Henrie <alexhenrie24@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Message-ID: <60f3215c9f3ce_25f22081c@natae.notmuch>
-In-Reply-To: <b379fea097d65a28f1791f7f2f9432b6689a977f.1626536508.git.gitgitgadget@gmail.com>
+Message-ID: <60f321f2cae74_25f2208b5@natae.notmuch>
+In-Reply-To: <dca0455898a838b46546a29ee79f0a8b112fbff5.1626536508.git.gitgitgadget@gmail.com>
 References: <pull.1049.git.git.1626536507.gitgitgadget@gmail.com>
- <b379fea097d65a28f1791f7f2f9432b6689a977f.1626536508.git.gitgitgadget@gmail.com>
-Subject: RE: [PATCH 6/9] pull: make --rebase and --no-rebase override
- pull.ff=only
+ <dca0455898a838b46546a29ee79f0a8b112fbff5.1626536508.git.gitgitgadget@gmail.com>
+Subject: RE: [PATCH 7/9] pull: abort by default when fast-forwarding is not
+ possible
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -83,16 +83,15 @@ X-Mailing-List: git@vger.kernel.org
 Elijah Newren via GitGitGadget wrote:
 > From: Elijah Newren <newren@gmail.com>
 > 
-> Fix the last few precedence tests failing in t7601 by now implementing
-> the logic to have --[no-]rebase override a pull.ff=only config setting.
+> We have for some time shown a long warning when the user does not
+> specify how to reconcile divergent branches with git pull.  Make it an
+> error now.
 
-This is a semantic change that breaks current behavior.
+Once again. We have not warned the users of this upcoming change a
+*single* day. We have not told them how to turn the new behavior, and
+how to keep the old behavior.
 
-Now this does something different:
-
-  git -c pull.ff=only pull --merge
-
-*And* the new behavior is not documented anywhere.
+If you want to guarantee user complaints, this is the way to do it.
 
 -- 
 Felipe Contreras
