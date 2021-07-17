@@ -2,179 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5DE3C636C9
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 21:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 011BEC636CA
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 22:42:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9199E610CB
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 21:59:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C384D6101A
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 22:42:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231528AbhGQWCi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 18:02:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34812 "EHLO
+        id S230238AbhGQWpg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 18:45:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230210AbhGQWCY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 18:02:24 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89428C061762
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 14:59:27 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id o17-20020a9d76510000b02903eabfc221a9so13880131otl.0
-        for <git@vger.kernel.org>; Sat, 17 Jul 2021 14:59:27 -0700 (PDT)
+        with ESMTP id S230098AbhGQWpf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 18:45:35 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1943C061762
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 15:42:38 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id d9so15084373ioo.2
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 15:42:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=2P9HNpRcYa9xFB2zy0Mu7B4TG+QIzrGXFCDdR/iZUds=;
-        b=B6Ii+/wtkI1MyFO3wLCgq7b3Fy4FgPe4w8rapj4KL/XGs6fo0w4zm3x0miQXw4pYfJ
-         LZlfmmGIqpYw3kXnKN2qUVCEiTw2ndy7wEQex3rf2iXzxZBhmuapTwJb8lVO0ylO/WRW
-         kaFdFo8GL65DNi0/Irl6AZHry8q2/SswRhmolMvOWByk3cHUK8AmNnJbsELCKiYpqr/Z
-         kcvaqJqbs5SOegF8tAiz8mg3nX7gS18ncK83Oi8tQRZ5xIsdTWPKwHI0N3gruyW9pqpl
-         FQP42k+2S9eE0vY7jfycYY3cs50emv44N9rt7Kw0NIAN+5I6V8kSXwlUUlsUK7flZ83Q
-         dwqg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=J+xxxfMO3osy1EygUraFVYN6Rbrt5wqonwkIHgYMP0s=;
+        b=eXOOnIQqxwh9TxZrfduIG31zStZBh2RrOH1332GaLTXvHLGoe9psIQ4tUZzWiJrmk7
+         8poK1CV689amgvlreS+6xoOkbWGmQINgyIwfMaYZjSOJgZAykOrdVbRRC/nhPKooROkj
+         VB2XFHkFZdIA0cIFA9RadFYEqbEqCqmHwRq5iu46tkOqMgvMz/OlLA4H6Pt/Jyqiuhal
+         S5F84nT4Y3/vykM2Wv4k1GdCPFY4q/UA8e6I7SnEPr54Sn4zQOnicc9oBD3J3E9g1Gx6
+         Ty/ZZIdNFPQ65cYukg5u/qYOf2ohhe0UOrh5PANbp28PwHV3XSwc8viHXdhGOVJSgx8k
+         lWUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=2P9HNpRcYa9xFB2zy0Mu7B4TG+QIzrGXFCDdR/iZUds=;
-        b=FXLWF/S6Pd45GLp4TM4bEbkiA2rTv678WPdt2nFOCynbbBAFO+pcuhMdMjEE6XzFX1
-         /haI61g+LlZrBWZtZWwOFqj2ePEJNl9rW3SH6XOKqpmdqB/mkx9V1KLj4mYnUABiDNnn
-         9y1iBeiSz7S7rsDDakTRb+avO5a6ezcAdhPz6b1DEPc84h9PCBhRX8rE1rCvMmg8bNO0
-         bT76XlQzKZA6NEo4e/62IBxeFls5pDwCNnpcOhC2cFSQz68L41N9LAploVH2+4hv8CJr
-         aduAYmVj+UBT4ZB1tKge01Au1ta+0twIaAHacbWJbXcoWuagQtQq3xKSuSuMXE6JnWUh
-         tT+Q==
-X-Gm-Message-State: AOAM532ddhNy3PeCZHfUlqecG3OAuJgLxAoSDLAQ82xC297il9pwLN+K
-        A+B8ebyYjL2B797SiT74DCk=
-X-Google-Smtp-Source: ABdhPJwiS1hImrift6HFqzG7KODJ/PRy42JpzIYpyIOzCH5jIlBkBmOUkU+QQTZINvPHMy4Jtqco2Q==
-X-Received: by 2002:a9d:2d82:: with SMTP id g2mr13936868otb.30.1626559166750;
-        Sat, 17 Jul 2021 14:59:26 -0700 (PDT)
-Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id o19sm2709529oov.36.2021.07.17.14.59.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Jul 2021 14:59:26 -0700 (PDT)
-Date:   Sat, 17 Jul 2021 16:59:24 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Matthias Baumgarten <matthias.baumgarten@aixigo.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Son Luong Ngoc <sluongng@gmail.com>
-Message-ID: <60f352bce4d53_554620882@natae.notmuch>
-In-Reply-To: <xmqqwnpooctj.fsf@gitster.g>
-References: <60f1daa896f69_330208b1@natae.notmuch>
- <c54fa084-75f4-b775-8ac2-6df3c7a36571@aixigo.com>
- <xmqqwnpooctj.fsf@gitster.g>
-Subject: Re: When are you going to stop ignoring pull.mode?
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=J+xxxfMO3osy1EygUraFVYN6Rbrt5wqonwkIHgYMP0s=;
+        b=YZAzmUQi8ypV5p7JseZ6KMhL6wqhIYSAM9fW4PI3QlW1nnRD56DE3MjbHtkop3No7h
+         vwBW0eoBIufzfFxoW0vS5HMWhLsM7iszY/D/W8LUoKf+5aQ4nRZYtGY5urI4ASbs5dD9
+         CZDaA9c2VkFFzW0vDnL5IEE3rixRgZNncwBBNHOqJCOe+kU5+uEjFj3wlPh9Y8QXAKfe
+         yvXj7OzUVALPUFezZ01GTWj7Z647PJ8l4o/dPq5ugkZR12Z/lgBmTEuBLj14BHQfUBEz
+         xh0esBU4vJHXkDERplsNhpL6PKo1R0QwzULblAediYsV75cLkxh1BajNk5x634NOzHGj
+         QCFg==
+X-Gm-Message-State: AOAM532vVOeoSkG2bptTMmS2bY6iq2HvA31OYRQWyMchP+kAXPzh7ctq
+        hxxoXhNlw0bNd9KKW1ge6NqfQxuxPg0kYRfEtho=
+X-Google-Smtp-Source: ABdhPJxEbbPp57w8xAxOtQBYQFpE0At3sQrC+Z/KZvdSawOLuhCroiP7/05e9Dk4EcXjQRi9spYC7j0i4RbWPNdTHWk=
+X-Received: by 2002:a02:c8d0:: with SMTP id q16mr14937665jao.110.1626561758040;
+ Sat, 17 Jul 2021 15:42:38 -0700 (PDT)
+MIME-Version: 1.0
+References: <CANt7McFAu5gAFcgd+dejQjDQDxfcnyhz=BxSAejXGMMtGQzO_w@mail.gmail.com>
+ <20210717170536.x2n443dtejk76wfp@tb-raspi4>
+In-Reply-To: <20210717170536.x2n443dtejk76wfp@tb-raspi4>
+From:   Rostislav Krasny <rosti.bsd@gmail.com>
+Date:   Sun, 18 Jul 2021 01:42:26 +0300
+Message-ID: <CANt7McECMjz_=EnB5NxeY9sHSzjNLXtkrqPhyLArBXJswM4xQQ@mail.gmail.com>
+Subject: Re: Incorrect and inconsistent End-Of-Line characters in .gitmodules
+ after "git submodule set-branch --branch <branch_name>"
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Matthias Baumgarten <matthias.baumgarten@aixigo.com> writes:
-> 
-> >>>     pull.ff  pull.rebase  commandline            action
-> >>> ...
-> >>>       *          *        --ff-only              fast-forward only[1]
-> >>> ...
-> > What about
+On Sat, Jul 17, 2021 at 8:05 PM Torsten B=C3=B6gershausen <tboegi@web.de> w=
+rote:
+>
+> On Fri, Jul 16, 2021 at 12:55:07AM +0300, Rostislav Krasny wrote:
+> > Hello,
 > >
-> >          *       !false      --ff-only              ???
-> 
-> This is covered by an earlier entry ("*" stands for "any value"), I
-> think; it should fast-forward or fail.  The reasoning goes like
-> this:
-> 
-> The user configures pull.rebase to some kind of rebase; it could be
-> just true (the traditional flattening rebase), or the one that
-> preserves the shape of the history, or even the interactive one.
-> With the configuration, what the user declares is: 
-> 
->     I may have my own development on top of the result of my last
->     integration with the upstream I did when I ran "git pull" the
->     last time, and when the upstream has more commits, the way I
->     want my local work to integrate with their work is to replay my
->     work on top of theirs (as opposed to "merging their work into my
->     history").
-> 
-> But by passing "--ff-only" from the command line, the user tells us
-> this:
-> 
->     This time only, I want fast-forward update and nothing else.  I
->     do not remember doing any of my own development on top of their
->     history, and I expect that this update from the upstream would
->     fast-forward.  If that is not the case, please error out, as I
->     need to inspect the situation further and I do not want to see
->     conflicts in unexpected commits I thought I did not have.
+> > Originally this bug was reported in the Git for Windows project and
+> > contains two screenshots:
+> > https://github.com/git-for-windows/git/issues/3321
+> > Johannes Schindelin (dscho) is convinced that this is not a
+> > Windows-specific issue. Following is a brief description of this bug
+> > as I've faced it:
+> >
+> > After running the "git submodule set-branch --branch master -- ms1"
+> > I've noticed that the .gitmodules file is encoded with both DOS and
+> > UNIX End-of-Line characters simultaneously: all original lines use DOS
+> > EOL characters but the added "branch =3D master" line uses UNIX EOL.
+>
+> First of all: Thanks for posting this here.
+>
+> Then there are some questions, at least from my side.
+> How did you get there ?
 
-No, this is what you think the user would be telling us, but that's not
-what the user is *actually* telling us right now.
+I just tried to use submodules and wanted to change the default state
+of the submodules (from detached HEAD into some branch) after cloning
+their parent repository together with the submodules. Take a look at
+my question to Brian in this thread.
 
-  git -c pull.ff=only pull --rebase
+> In which shell did you enter the command ?
 
-What the user is actually telling us right now is that while he normally
-would expect a fast-forward, in this case he would like a rebase.
+Git Bash inside MINTTY of Git for Windows
 
-Today this is the equivalent of:
+$ bash --version
+GNU bash, version 4.4.23(1)-release (x86_64-pc-msys)
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.htm=
+l>
 
-  git -c pull.rebase=true pull --ff-only
+This is free software; you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
 
-If you change this interpretation, it would break the symmetry between
-configurations and command line arguments.
+> Could you run
+> od -c .gitmodules
+> and post the results here ?
 
-> So the "action" would be
-> 
->  - If their history is a descendant of ours, that means that on top
->    of their history previously observed by us, we haven't added any
->    development of our own.  We just move to the tip of their history
->    and we are done.
-> 
->    This is not so surprising anyway.  If we are doing any kind of
->    rebasing, what happens is to start from the tip of their history
->    and then commits from our own development are replayed on top of
->    that.  When their history is a descendant of ours, we end up
->    doing just fast-forward, as there is nothing to replay on top.
+Sure:
+$ od -c .gitmodules
+0000000   [   s   u   b   m   o   d   u   l   e       "   m   s   1   "
+0000020   ]  \r  \n  \t   p   a   t   h       =3D       m   s   1  \r  \n
+0000040  \t   u   r   l       =3D       .   .   /   m   s   1  \r  \n  \t
+0000060   b   r   a   n   c   h       =3D       m   a   s   t   e   r  \n
+0000100   [   s   u   b   m   o   d   u   l   e       "   m   s   2   "
+0000120   ]  \r  \n  \t   p   a   t   h       =3D       m   s   2  \r  \n
+0000140  \t   u   r   l       =3D       .   .   /   m   s   2  \r  \n
+0000157
 
-But --ff-only is not for rebases, the documentation is very clear:
+> Or is it possible to set up a dummy repo, which does show the problem,
+> somewhere ?
+>
+> What we appreciate is a fully reproducable receipt, so that anybody can
+> reproduce the problem.
 
-	Specifies how a merge is handled when the merged-in history is
-	already a descendant of the current history.  `--ff` is the
-	default unless merging an annotated (and possibly signed) tag
-	that is not stored in its natural place in the `refs/tags/`
-	hierarchy, in which case `--no-ff` is assumed.
+Try to do the following steps on Windows:
+1. Download https://github.com/git-for-windows/git/files/6835344/git-tryout=
+s.tar.gz
+2. Extract the tarball and go into the git-tryouts/local-parent directory
+3. Run the "git clone --recurse-submodules ../parent/ ." command
+4. Run the "git submodule set-branch --branch master -- ms1" command
 
-  With `--ff-only`, resolve the merge as a fast-forward when possible.
-  When not possible, refuse to merge and exit with a non-zero status.
+Now you can check the content of the .gitmodules file for the EOL issue.
 
->  - Otherwise, because the user expects the command to fail if their
->    history is not a descendant of ours, we fail.
-> 
-> And "fast-forward only" in Elijah's table is a concise way to say
-> that.
+Optional steps:
 
-Yes, but it's taking us in the wrong direction by ignoring how the users
-actually use --ff-only today, what the documentation actually says,
-breaking the symmetry of configurations and arguments, and making
-everything less intuitive.
+5. try to commit the new version of the .gitmodules file and push this
+commit back by "git push" command
+6. Delete everything in the git-tryouts/local-parent directory, for
+example by the "rm -rf .git* *" command
+7. Do step number 3 again
 
+There is yet another inconsistency. Right after the commit or commit
+plus push are done the .gitmodules file still has the EOL issue but
+then after deleting everything and cloning the whole repository again
+a different version of .gitmodules is created (because of
+core.autocrlf=3Dtrue). This inconsistency seems to be general and can
+happen with any textual file on Windows.
 
-On the other hand if --ff-only was mapped to pull.mode=fast-forward
-instead, everything is clear:
+>
+> I have the slight suspicion that the CR as part of CRLF had sneaked in
+> somewhere via the command line. But that is already a speculation.
+>
+> And I don't know, if there is a problem at all, or is it just cosmetics ?
 
-  git -c pull.mode=fast-forward pull --rebase
-  git -c pull.mode=rebase pull --ff-only
-
-I don't even need to explain what these do.
-
--- 
-Felipe Contreras
+As I already answered to Brian I don't know, at least in the vi editor
+it looks broken because of all
+those '^M' symbols.
