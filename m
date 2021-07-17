@@ -2,114 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F8F2C636CA
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:47:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1C05C636C9
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:53:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 15CA96115C
-	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:47:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8DA076113D
+	for <git@archiver.kernel.org>; Sat, 17 Jul 2021 17:53:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233429AbhGQRuT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Jul 2021 13:50:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52854 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231253AbhGQRuS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jul 2021 13:50:18 -0400
-Received: (qmail 24420 invoked by uid 109); 17 Jul 2021 17:47:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 17 Jul 2021 17:47:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19748 invoked by uid 111); 17 Jul 2021 17:47:21 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 17 Jul 2021 13:47:21 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sat, 17 Jul 2021 13:47:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Junio C Hamano <gitster@pobox.com>, Luca Weiss <luca@z3ntu.xyz>,
-        Luca Weiss via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH 2/2] merge: make sure to terminate message with newline
-Message-ID: <YPMXqLESKApq2uPI@coredump.intra.peff.net>
-References: <pull.1048.git.git.1626421416.gitgitgadget@gmail.com>
- <31371c25743e1001b4fac89e80e7206ff477ac8a.1626421416.git.gitgitgadget@gmail.com>
- <8678772b-dd5d-9188-8b63-98d05cedb323@gmail.com>
- <AB048897-F70A-4388-B2A6-56BFEA40B303@z3ntu.xyz>
- <16229b1d-e4a6-7a8d-8ea0-ae7c3f13075d@gmail.com>
- <YPHe/W7+Oh63NpB0@coredump.intra.peff.net>
- <xmqq8s26q9ot.fsf@gitster.g>
- <YPH1qKMPOqhCzp4Y@coredump.intra.peff.net>
- <693954a7-af64-67c5-41b9-b648a9fe3ef2@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <693954a7-af64-67c5-41b9-b648a9fe3ef2@gmail.com>
+        id S233751AbhGQR4S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Jul 2021 13:56:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37686 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231253AbhGQR4R (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jul 2021 13:56:17 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 203DDC061762
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 10:53:21 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id u11so15129365oiv.1
+        for <git@vger.kernel.org>; Sat, 17 Jul 2021 10:53:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=7F7y+r1oSOVst2gX3wpf42j3mqf4U64GiPAnuOye7oQ=;
+        b=b1vt7XyUvtPS4RSul1pE9/drhpkxEM9mN8HGapi3+9eCWDKZ7iZoCwNfEEqPtBy28z
+         6WLlWnOtoHKTTHEqug3dgfxXTV+WGWHQh6k/wqJ891qk+IrJxLI2djz1b8uSTVMR3AaR
+         +pwLk0D9pgtROeM3zk1/5wvwjoUpc+maAIjyLDgxkR7dPtxgX/6qTYxE1Md6c9aRDHek
+         Pb1x5akgx/eNJqnu90T+m/M6kzftWNMiHbDotial5O60WwE2whetbu+Q4HLWsuONDoRe
+         d9t/mmYgDTzcfNnFa6Q7rQSYH3gu1y5LrrHie16Oc6PqX3BMl5cbIDq9YDi0XCrjbicj
+         jTaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=7F7y+r1oSOVst2gX3wpf42j3mqf4U64GiPAnuOye7oQ=;
+        b=aYUuUY62PSXVlmV9AIDMPyaWCz9G/5vDdUIdRBksP6lBMisUz6IYcYHVMtDwhxzIGi
+         5kS0gZx8mrxx9ELMkM0wEVjJK+XxPrq8gSPwG+9npIcZitkMv5rDmasjkzfLPSBrYV7X
+         jP8irTHVUITZ7Bo3VpLeRiWpDyCcp19pu+CtxDeZUOdZPCv+opDP7kG4mhWAoOcIdOwa
+         24V4RYLEl4OCFwyui53Ni92MGCMNqsO82bcdgzLOUrKqBxnQsfloGIt9dEJcbsX2hnCL
+         LnvfjyhmDlD0RICMMdZs36rXhB16FS/Gv4CrtNaM7tzeEYtkuPZPQq1tApcrq9PPDxGM
+         ZDIQ==
+X-Gm-Message-State: AOAM532WxIxjJ2x3ytyHSGJ15Jfy8ojIyHjHHr/Rtr/MlXkBCRJHbWVg
+        Hp4EPe/Y+BgL41JaMDTTo4A=
+X-Google-Smtp-Source: ABdhPJwY1vAvxhFtvehERTLUhVCF21To8WL0BpJ01orr3Dq8aXz2dNUsao/aG7Sy6mMhy4raZ2pJxg==
+X-Received: by 2002:aca:5b82:: with SMTP id p124mr7609750oib.73.1626544400533;
+        Sat, 17 Jul 2021 10:53:20 -0700 (PDT)
+Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
+        by smtp.gmail.com with ESMTPSA id n14sm2724809ota.57.2021.07.17.10.53.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 17 Jul 2021 10:53:20 -0700 (PDT)
+Date:   Sat, 17 Jul 2021 12:53:18 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Matthias Baumgarten <matthias.baumgarten@aixigo.com>
+Message-ID: <60f3190eaba81_25f220843@natae.notmuch>
+In-Reply-To: <c015e599-0178-cc3d-11be-175dc917f2b9@gmail.com>
+References: <60f1daa896f69_330208b1@natae.notmuch>
+ <c015e599-0178-cc3d-11be-175dc917f2b9@gmail.com>
+Subject: Re: When are you going to stop ignoring pull.mode?
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 17, 2021 at 02:40:55PM +0100, Phillip Wood wrote:
-
-> > which would cover that case. But Phillip mentioned that our own
-> > fmt_merge_msg() does not include a newline.
+Bagas Sanjaya wrote:
+> On 17/07/21 02.14, Felipe Contreras wrote:
+> > The solution is simple and self-documenting:
+> > 
+> >    pull.mode={fast-forward,merge,rebase}
+> > 
 > 
-> I mentioned that we remove the newline that is added by fmt_merge_msg(), not
-> that there is no newline added by fmt_merge_msg() - maybe I wasn't clear
-> enough. In builtin/merge.c:prepare_merge_message() we do
-> 
-> 	fmt_merge_msg(merge_names, merge_msg, &opts);
-> 	if (merge_msg->len)
-> 		strbuf_setlen(merge_msg, merge_msg->len - 1);
+> But how about config transition from pull.{ff,rebase} to pull.mode?
 
-Of maybe I didn't read carefully enough. :)
+I have already discussed how the transition would look like, and it's
+pretty straightforward [1].
 
-Either way, thanks for clarifying. Doing something like:
+Additionally I already implemented the patch that does the mapping [2].
 
-  cat >.git/hooks/commit-msg <<\EOF
-  #!/bin/sh
-  xxd "$1"
-  EOF
-  chmod +x .git/hooks/commit-msg
+[1] https://lore.kernel.org/git/5fd8b1d5d4d7c_190cd7208b@natae.notmuch/
+[2] https://lore.kernel.org/git/20210705123209.1808663-27-felipe.contreras@gmail.com/
 
-  git merge --no-edit ...
-
-shows off the problem; the hook sees that intermediate state.
-
-Likewise if we do:
-
-  git merge -m "foo" ...
-
-which similarly suppresses the editor. There are actually two
-interesting cases here:
-
-  - if merge.log is not set, then we'd see "foo" with no newline
-
-  - if it is set, we'll get a newline after "foo", but with no newline
-    after the log data
-
-Likewise for:
-
-  printf foo >no-newline
-  git merge -F no-newline ...
-
-So I think we'd probably want to see a 3-patch series:
-
-  1. Make interpret-trailers handle input missing the final newline.
-     This isn't strictly necessary after patches 2 and 3, but it makes
-     sense to be more robust with unexpected input.
-
-  2. Drop the newline-stripping from prepare_merge_message(). The
-     examples above show some ways we could cover this in the tests.
-     This will help --no-edit case, but also using merge.log with "-m"
-     or "-F".
-
-  3. Teach prepare_to_commit() to add the extra newline before letting
-     hooks see the message. This should probably be done only when
-     cleanup_mode != COMMIT_MSG_CLEANUP_NONE.
-
-Luca, do you want to try revising your series in that direction?
-
--Peff
+-- 
+Felipe Contreras
