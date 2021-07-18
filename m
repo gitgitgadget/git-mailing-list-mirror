@@ -2,138 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.5 required=3.0 tests=BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0636AC636CB
-	for <git@archiver.kernel.org>; Sun, 18 Jul 2021 07:58:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65D27C636CA
+	for <git@archiver.kernel.org>; Sun, 18 Jul 2021 08:08:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC56461179
-	for <git@archiver.kernel.org>; Sun, 18 Jul 2021 07:58:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C455610CB
+	for <git@archiver.kernel.org>; Sun, 18 Jul 2021 08:08:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231317AbhGRIBU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 18 Jul 2021 04:01:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50764 "EHLO
+        id S230267AbhGRILK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 18 Jul 2021 04:11:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230502AbhGRIBR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Jul 2021 04:01:17 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 849E3C061762
-        for <git@vger.kernel.org>; Sun, 18 Jul 2021 00:58:18 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id l7so17483892wrv.7
-        for <git@vger.kernel.org>; Sun, 18 Jul 2021 00:58:18 -0700 (PDT)
+        with ESMTP id S229578AbhGRILJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Jul 2021 04:11:09 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF67EC061762
+        for <git@vger.kernel.org>; Sun, 18 Jul 2021 01:08:10 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id t2so18662674edd.13
+        for <git@vger.kernel.org>; Sun, 18 Jul 2021 01:08:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=HcInMiKy6QIwPB9pu0S7hvC/P2xtfp/7oo4vUwvPHxI=;
-        b=SSocmmtRS5DVlVaAoSIxE9KTD56ZFG74J3MXkhmVoy1n1ELWvCdeeXdzYziJYu0J9O
-         7T9M4gpJs0SXmIjTluiAH3X8Abn1tAAYGZFu0GVlRN3dqbQ4wWKkkFFAOdYro7OgQ+fr
-         AG8lpNUiKtkw6c7XTalhszMSEdM8InqXjUoKMjCnUfYgrOG88vsaQIzP9SZ2Yx9PVbHF
-         jqvWVzHr4yQHxOdupWGAflXJ+tRywuOQpD2wfj7yBIL1D/7Z6CwGBvvwr/J/KXeOOyFx
-         CL2nIXhRo6rqsKspJ7se7CoPwG8Ag0/k2kB0ZjI9DuuiMOj0Y/rgFxMcFgGmxJRwp6gt
-         1wHg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=acjbVErNi/sQmWOjrum9ux2U0Y24/CfDg9qvAJhS5S0=;
+        b=j3O6E/8fDEYs6BPw3W0R70qu5tfbrIEgBllxiDNF6LhfgV8jaZFkSr8BwkviLkpfJ9
+         /ATvHHQubIo91oSwMxs4uFkKbzbAKAxR0bOTuOAzmQM+78qY5kNOVvzrQXnZUA2lPv1k
+         HH5N0dFwMsJNR39FNIotUWtlOyGbcr59NJISOQMjzxFLbjYjN19ITJt6cC/9aimrIr+p
+         yhtOm9p8PqM3biekEOwDDNZoahPQRZf4yHSLRzSsgbnUkaeserVZ313e8enLKsBBUCHh
+         uPL3YG8f1px1MC0Aawws86zPtULGidK5xlpz8lqXgm9UUHTh+vq+ZK2B4VgQS+NclRwn
+         WEkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=HcInMiKy6QIwPB9pu0S7hvC/P2xtfp/7oo4vUwvPHxI=;
-        b=crmA2SFUFOEEqisT5YruklN6Daf4+mjm8FXspjcxeM0FZsIggoXo/YDBcAeBYZPnho
-         9v4yFysDsfCf+jYSvanCA9FUpIDJYDeLmzefQB8q7Hu+hpOfi2aIlrBQtLKhyqlfcGOG
-         1q911yN8PXTEucme/7f1++CoBD6SE60UiK9SAUuoCFQFH1203XcuL+c8AxE1r69QrjPJ
-         X1Hg1V+qi7YMB5tFMELWWO1eVdpsJqrWs9w4MbUEfB804x9/xWRY0ue53NOYGFAqXQEJ
-         poQRWG84sPrETYoMbpCvRvNrS+6RikOTApCQ1TDW505gx3BlmNcRx3mXRCYbLCy2pYhn
-         9wpw==
-X-Gm-Message-State: AOAM530zjLujuy5kSgDNG9+8AfD5fwk8RF0G/PTYpNsTnDjsAuxuHVYG
-        72O2HDiA5kZfmCbTOh68Da9jp0W7FeyuBA==
-X-Google-Smtp-Source: ABdhPJzfNHKhO5uOB3hRQRnMuc3f4YezMHR+Utc1W5poROK/CFtZf3/zR0B+iENc1ibMaxMGRXnsYQ==
-X-Received: by 2002:a05:6000:156c:: with SMTP id 12mr22940117wrz.400.1626595097000;
-        Sun, 18 Jul 2021 00:58:17 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id w3sm15904685wrt.55.2021.07.18.00.58.16
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=acjbVErNi/sQmWOjrum9ux2U0Y24/CfDg9qvAJhS5S0=;
+        b=sTPqbqFAIuAdWItWzT+RAeBBtZJkSE48NN12r+6+zcqQ9kZR8Hm+XthgQwZhQY2cEW
+         VsorzpsetxXN9K/61MLq+wGd7EdryuSyaZH+aH6v/tEnsF99W7LiC3+TIri7N3Wpu3g8
+         u2UlLoxBc7NzpjszzZ04xDMHs3YvjWrortrhW4q9CeVYo/Et38Us1zIV8L3yKMqfq44I
+         bgytRVrDgqz4PR4RkkXToO6wiWjXTJyFJUhtfxuTFsVjKjbIKh6+lwklmgkL3ZhSZn0N
+         CY/EWB0d62Ti6F6KTNhY/p1Rth/UA/4sTqCFe45ZvQGe8FStP/FaUohoVOcebuk1t6oc
+         Af3A==
+X-Gm-Message-State: AOAM531KIRg2to/DFGCRJVevcfq+PHmapgo6Rbf2KdGW3Iu8AKP1LJn9
+        pi6ILGdP/jW17CXWvIBXl9s=
+X-Google-Smtp-Source: ABdhPJw/B7kxqCyts+xHN6aKM2Sa8xQR0IbK/ZW9yXTqpx9X1sLxR9bezVxwTktREe75FLSEYNRMrA==
+X-Received: by 2002:aa7:cd96:: with SMTP id x22mr27607298edv.102.1626595688453;
+        Sun, 18 Jul 2021 01:08:08 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id n2sm6098811edi.32.2021.07.18.01.08.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Jul 2021 00:58:16 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 5/5] commit-graph: show usage on "commit-graph [write|verify] garbage"
-Date:   Sun, 18 Jul 2021 09:58:09 +0200
-Message-Id: <patch-5.5-57ffd5812d6-20210718T074936Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.32.0.873.g94a0c75983d
-In-Reply-To: <cover-0.5-00000000000-20210718T074936Z-avarab@gmail.com>
-References: <cover-0.5-00000000000-20210718T074936Z-avarab@gmail.com>
+        Sun, 18 Jul 2021 01:08:07 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Alex Henrie <alexhenrie24@gmail.com>
+Cc:     Fabian Stelzer <fabian.stelzer@campoint.net>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: progress test failure on fedora34
+Date:   Sun, 18 Jul 2021 10:05:44 +0200
+References: <49498ed0-cfd5-2305-cee7-5c5939a19bcf@campoint.net>
+ <87a6mo29dp.fsf@evledraar.gmail.com>
+ <CAMMLpeQ5Lh8xfqTZoM74f616wE7ZhqWArL1WgGiMtiJSfrYcYg@mail.gmail.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <CAMMLpeQ5Lh8xfqTZoM74f616wE7ZhqWArL1WgGiMtiJSfrYcYg@mail.gmail.com>
+Message-ID: <87h7gsvybx.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the parse_options() invocation in the commit-graph code to make
-sense. We're calling it twice, once for common options parsing, and
-then for the sub-commands.
 
-But we never checked if we had something leftover in argc in "write"
-or "verify", as a result we'd silently accept garbage in these
-subcommands. Let's not do that.
+On Wed, Jul 14 2021, Alex Henrie wrote:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/commit-graph.c  | 10 ++++++++--
- t/t5318-commit-graph.sh |  4 +++-
- 2 files changed, 11 insertions(+), 3 deletions(-)
+> On Wed, Jul 14, 2021 at 9:39 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>>
+>>
+>> On Wed, Jul 14 2021, Fabian Stelzer wrote:
+>>
+>> > Hi,
+>> > The test t0500-progress-display.sh in current master fails on latest
+>> > fedora34.
+>> > The break was introduced with:
+>> >
+>> > 83ae1edff7ee0b7674bd556955d2cf1706bddb21
+>> > ab/fix-columns-to-80-during-tests (2021-06-29) 1 commit
+>> >
+>> > Kind regards,
+>> > Fabian
+>>
+>> I have not been able to reproduce this, it seems the below E-Mail was
+>> word-wrapped by your mailer, which is especially bad here since getting
+>> to the bottom of this requires looking at the whitespace.
+>>
+>> Is there a way you could tar that up and send it (to me personally is
+>> fine, or some pastebin or whatever).
+>>
+>> I am able to reproduce something that looks like this if I
+>> s/COLUMNS=3D80/COLUMNS=3D79/g in the test-lib, but given that we set it =
+to
+>> 80, and that the progress.c code just ends up with an
+>> atoi(getenv("COLUMNS")), and we do our own wrapping (with no other fancy
+>> logic) in progress.c, I'm not seeing right now how this could happen...
+>
+> This test also fails for me when using QTerminal or Konsole, but it
+> passes on XTerm and LXTerminal.
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 16d2c517e72..bb3e767db33 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -104,7 +104,10 @@ static int graph_verify(int argc, const char **argv)
- 	opts.progress = isatty(2);
- 	argc = parse_options(argc, argv, NULL,
- 			     options,
--			     builtin_commit_graph_verify_usage, 0);
-+			     builtin_commit_graph_verify_usage,
-+			     PARSE_OPT_KEEP_UNKNOWN);
-+	if (argc)
-+		usage_with_options(builtin_commit_graph_verify_usage, options);
- 
- 	if (!opts.obj_dir)
- 		opts.obj_dir = get_object_directory();
-@@ -261,7 +264,10 @@ static int graph_write(int argc, const char **argv)
- 
- 	argc = parse_options(argc, argv, NULL,
- 			     options,
--			     builtin_commit_graph_write_usage, 0);
-+			     builtin_commit_graph_write_usage,
-+			     PARSE_OPT_KEEP_UNKNOWN);
-+	if (argc)
-+		usage_with_options(builtin_commit_graph_write_usage, options);
- 
- 	if (opts.reachable + opts.stdin_packs + opts.stdin_commits > 1)
- 		die(_("use at most one of --reachable, --stdin-commits, or --stdin-packs"));
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 5fccce95724..5cf07a6dded 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -7,7 +7,9 @@ GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0
- 
- test_expect_success 'usage' '
- 	test_expect_code 129 git commit-graph -h 2>err &&
--	! grep error: err
-+	! grep error: err &&
-+	test_expect_code 129 git commit-graph write blah &&
-+	test_expect_code 129 git commit-graph write verify
- '
- 
- test_expect_success 'setup full repo' '
--- 
-2.32.0.873.g94a0c75983d
+I tried this on Debian 11 with QTerminal 0.16.1 and can't reproduce it,
+resized the window etc., always get COLUMNS=3D80 if I add some printf
+debugging.
 
+Do you mind testing with an ad-hoc patch like this on top? It will fail
+right away, but should say COLUMNS =3D 80 in the output.
+
+The only thing I can think of right now is that some terminals are doing
+some evil trickery to LD_PRELOAD or whatever and intercept getenv() for
+COLUMNS and the like, but that's an entirely unfounded hunch.
+
+diff --git a/progress.c b/progress.c
+index 680c6a8bf9..dca254b515 100644
+--- a/progress.c
++++ b/progress.c
+@@ -144,6 +144,7 @@ static void display(struct progress *progress, uint64_t=
+ n, const char *done)
+                        size_t progress_line_len =3D progress->title_len +
+                                                counters_sb->len + 2;
+                        int cols =3D term_columns();
++                       fprintf(stderr, "cols =3D %d\n", cols);
+=20
+                        if (progress->split) {
+                                fprintf(stderr, "  %s%*s", counters_sb->buf,
