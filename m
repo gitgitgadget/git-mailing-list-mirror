@@ -2,216 +2,211 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,
-	CHARSET_FARAWAY_HEADER,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6440C636C8
-	for <git@archiver.kernel.org>; Sun, 18 Jul 2021 05:32:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69C80C636CA
+	for <git@archiver.kernel.org>; Sun, 18 Jul 2021 07:58:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 996DA610CB
-	for <git@archiver.kernel.org>; Sun, 18 Jul 2021 05:32:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 32DC761179
+	for <git@archiver.kernel.org>; Sun, 18 Jul 2021 07:58:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229889AbhGRFfk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 18 Jul 2021 01:35:40 -0400
-Received: from mout.web.de ([212.227.17.12]:34461 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229578AbhGRFfj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Jul 2021 01:35:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1626586361;
-        bh=aIRj3Dy9Pin6flSFVefgysYhjfXe/DITMGCZhXcMm0c=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=NTv+iRhvNMcmZ0cTs3SCQNFORvRRH2WvorPgMClH+tFBMSiIxJWjT+llRTWrdbRGZ
-         1pRCu2R2O0C7i4t5pyDV5L8+OWxUyWLq7nvvnOlQPybAEIoeDXpBbyR76h1oO6xkG3
-         xdN3RZlMeqeEfJmfmmldSy3U3/vwRl7CSMrryFXo=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MaJro-1lpeO83ED2-00Jt0F; Sun, 18
- Jul 2021 07:32:40 +0200
-Date:   Sun, 18 Jul 2021 07:32:40 +0200
-From:   Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>
-To:     Rostislav Krasny <rosti.bsd@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Incorrect and inconsistent End-Of-Line characters in .gitmodules
- after "git submodule set-branch --branch <branch_name>"
-Message-ID: <20210718053240.bjtzggfgu7g54afn@tb-raspi4>
-References: <CANt7McFAu5gAFcgd+dejQjDQDxfcnyhz=BxSAejXGMMtGQzO_w@mail.gmail.com>
- <20210717170536.x2n443dtejk76wfp@tb-raspi4>
- <CANt7McECMjz_=EnB5NxeY9sHSzjNLXtkrqPhyLArBXJswM4xQQ@mail.gmail.com>
+        id S230307AbhGRIBO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 18 Jul 2021 04:01:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50744 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229842AbhGRIBN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Jul 2021 04:01:13 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01A9BC061762
+        for <git@vger.kernel.org>; Sun, 18 Jul 2021 00:58:14 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id g12so8365135wme.2
+        for <git@vger.kernel.org>; Sun, 18 Jul 2021 00:58:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=slImhE+pD/fRrIpYitx4DXOtsizwqNn46KGxhRbtbLE=;
+        b=PaAwFdg6cIGuid/vBfjIXCY8LnNQ8VzQafcyslXMdgak9A8ZjbGouh/X5Ikh5hq4i6
+         eBJglQsIwLblUF2PYOuDpHk1eRB4A/vjvBbxR3uSMxXL06htELyqlKd02hc9BAQgeBAl
+         rGvQfeis7GDUjiWaOuTZdpqVUVKsLuUEhvCee2jD+5LXYc6XkMqJ+37k43a/25t+8kEa
+         7O8IM/9LtndvKpSFlucpc+MvH3iHqEkzaFU+tqQ7XSLHtJqfBNjOKxv1qLsEyz0uPRt7
+         7EOi7frzD844AMC5NAwpeGcMg3bz7rDdKP2NNeE15z0QeAP4nXxg1A6EpDT1XnyfsYvp
+         mVVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=slImhE+pD/fRrIpYitx4DXOtsizwqNn46KGxhRbtbLE=;
+        b=JrxmXaXJbfePXP+ZWG5gwYxROTd1zUOwoM5k+47iGeuImbK9CpSEN7kDYvTwKQrnRk
+         w+wIRz78v6q4FOsASxRywTS4bPuRJ++0Dg6LvMsMRG72LuuVX4DpQ6/YrgMAWFXPvLUO
+         YOGHKFfFuefWpxvL8UOpD+ezYmNLVcxxIvwkp2t3Oo5pXcoaxML+SLzyr+OT80SvAt8A
+         IOFN5JJmuXyYeu1R7H6T6ed0RWqhnuAZ3a7J7Chnzdzp/tkHWxLTm0uU+PgG7SGHwf3M
+         bsLoQYy5gX821LYh3QuYDrWjoqFfq0hj4fswum5FiX588WhqSuI8QfogTwSKXH//M+CM
+         9NDw==
+X-Gm-Message-State: AOAM533mCHcmYirGeBRfcKx+hUrUp+skQhq0bWB+mStj2J0VZ5RvieIn
+        RDXD7xlZjbxWvn72Iq2808RJsgafEP8=
+X-Google-Smtp-Source: ABdhPJyt5kkkwv7msIpn2kSX521jl2Qp+98oJm9CBEndA1MnUfb5KSz7CYT7mOugRlb8CYyP1OgMNQ==
+X-Received: by 2002:a05:600c:2a4b:: with SMTP id x11mr20296308wme.22.1626595093127;
+        Sun, 18 Jul 2021 00:58:13 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id w3sm15904685wrt.55.2021.07.18.00.58.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Jul 2021 00:58:12 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/5] commit-graph: usage fixes
+Date:   Sun, 18 Jul 2021 09:58:04 +0200
+Message-Id: <cover-0.5-00000000000-20210718T074936Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.873.g94a0c75983d
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CANt7McECMjz_=EnB5NxeY9sHSzjNLXtkrqPhyLArBXJswM4xQQ@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:5sNB0COYmJVC7DBBwHjQGGkPATV0LrhNLpXmnMwxv6MReinAksa
- 5aSgn4Qw149u9WwdT04CYki6qDYCegqWtv0ddyrSaqvW7MtOXBTL+wvQWDCrrsiDYJjNPo4
- 5ETt1bmL5nijhtNM6L0p2BA37oFbWOpOKoQAJAuBT8fgI0Mj+iWQSXKwSn9a1hBnRzMLBGE
- MMUHaHqYqp1+iVTV7AllA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:dE2I1HVxc2Y=:qMMiFfv+WYEH0EmmryztOi
- bByrpSC/d1zTggrdurhph5TyyyQpDxDV9Wa1zSrT50m7nxjOEnFgosQd4A6T2kUkrdCrmRANI
- +c0H3QiiIVX57UdHKY2QQ2eXq41pe3HVVaYZASErxUA7o5pfKJOPKU64q1ZHWG6uyPCTMNsWe
- W+nLmNyxjqwMgjKy+uGZpLPbNZGqPGaoz7zytej3bGU7whWVqCeS1z6oVNyUlv77eAEpjJ6l1
- 6D4Ng/V5surAVww8nFY8v+21ISENxeAHOFu64PAqxrAikC0mpm6I+RQtdb7ZQdR3criC6ugZB
- w1vvkPQN3XSI5WNkf5JWdrBd0ySt84E2lMOebNu4a6rv0GX7uvJAKssMKO+23MwhHU75cgcDN
- cx/wexPKfddwJ8/IlE/CwgVIb92+CsPP+5Q8mgl2PfoTYOn2sL8ZeoNvm1YkjyzN0aqsyYBco
- PrXKQrJX/BQl3Gz/C0v80UOgZ63TeXagnI0YPSClsg889UUF4mCuEOYER+FGEdfKeA21FljNc
- bT5oBa+bxSrszF6vyGlMN1JzxnJP9MYTswtqgjPtIEKfX+USCMkj7/q/s8v7ogW7iiiK7oCJs
- zCpO1J9J5B057IYQFBNKRkD1GfOmKQraEhXBKeR+oEJ2xcpSVM2JKiYwTL+wiZor99I3uubpj
- FuE11YN/NJgto/UdziZTrWYkKwfxnE8mzZimWQjzxtIupZVw2yZTBL0P4U5ZRA2noMIk4JmiB
- kzSWK4EwrrQt7YEIL6T0x+BIfbNynD7a5ZxiNaGEikIB2PUmqS6UCHK1CqCaLlgEqMSmGR/uc
- U8oZikVkd5d3aItP4TyDRQ6VLhuK6oDMcMZ/YN15yNbK83MEsqLlbZRa+tz6zjbYXIrcFk/oj
- JbQwdeWlyM9er3f7GHNN5KKWUSb5dKdFo3j/67bYBwK6YCOR87T9OKvuBRMifFkFbggZqbqbh
- n3to3GbuaRLOlSVLWBM80nx4az7bI+PP9YShdMzTjLkOwDzwCeeQ0FcLxhMOAqU2CgR42JqMX
- P2sswL0umTFYQnpckUoyllJrAmdyXBIbhzXOpvqnVivIH25yD48pIEOWS6LJ3T/D1VvBzDQws
- vkc663uLl+X4uwwtSVTyUAxHhl6dLf3xAIW
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 18, 2021 at 01:42:26AM +0300, Rostislav Krasny wrote:
-> On Sat, Jul 17, 2021 at 8:05 PM Torsten B??gershausen <tboegi@web.de> wr=
-ote:
-> >
-> > On Fri, Jul 16, 2021 at 12:55:07AM +0300, Rostislav Krasny wrote:
-> > > Hello,
-> > >
-> > > Originally this bug was reported in the Git for Windows project and
-> > > contains two screenshots:
-> > > https://github.com/git-for-windows/git/issues/3321
-> > > Johannes Schindelin (dscho) is convinced that this is not a
-> > > Windows-specific issue. Following is a brief description of this bug
-> > > as I've faced it:
-> > >
-> > > After running the "git submodule set-branch --branch master -- ms1"
-> > > I've noticed that the .gitmodules file is encoded with both DOS and
-> > > UNIX End-of-Line characters simultaneously: all original lines use D=
-OS
-> > > EOL characters but the added "branch =3D master" line uses UNIX EOL.
-> >
-> > First of all: Thanks for posting this here.
-> >
-> > Then there are some questions, at least from my side.
-> > How did you get there ?
->
-> I just tried to use submodules and wanted to change the default state
-> of the submodules (from detached HEAD into some branch) after cloning
-> their parent repository together with the submodules. Take a look at
-> my question to Brian in this thread.
->
-> > In which shell did you enter the command ?
->
-> Git Bash inside MINTTY of Git for Windows
->
-> $ bash --version
-> GNU bash, version 4.4.23(1)-release (x86_64-pc-msys)
-> Copyright (C) 2016 Free Software Foundation, Inc.
-> License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.=
-html>
->
-> This is free software; you are free to change and redistribute it.
-> There is NO WARRANTY, to the extent permitted by law.
->
-> > Could you run
-> > od -c .gitmodules
-> > and post the results here ?
->
-> Sure:
-> $ od -c .gitmodules
-> 0000000   [   s   u   b   m   o   d   u   l   e       "   m   s   1   "
-> 0000020   ]  \r  \n  \t   p   a   t   h       =3D       m   s   1  \r  \=
-n
-> 0000040  \t   u   r   l       =3D       .   .   /   m   s   1  \r  \n  \=
-t
-> 0000060   b   r   a   n   c   h       =3D       m   a   s   t   e   r  \=
-n
-> 0000100   [   s   u   b   m   o   d   u   l   e       "   m   s   2   "
-> 0000120   ]  \r  \n  \t   p   a   t   h       =3D       m   s   2  \r  \=
-n
-> 0000140  \t   u   r   l       =3D       .   .   /   m   s   2  \r  \n
-> 0000157
->
-> > Or is it possible to set up a dummy repo, which does show the problem,
-> > somewhere ?
-> >
-> > What we appreciate is a fully reproducable receipt, so that anybody ca=
-n
-> > reproduce the problem.
->
-> Try to do the following steps on Windows:
-> 1. Download https://github.com/git-for-windows/git/files/6835344/git-try=
-outs.tar.gz
-> 2. Extract the tarball and go into the git-tryouts/local-parent director=
-y
-> 3. Run the "git clone --recurse-submodules ../parent/ ." command
-> 4. Run the "git submodule set-branch --branch master -- ms1" command
->
-> Now you can check the content of the .gitmodules file for the EOL issue.
+This set of trivial fixes to commit-graph usage was submitted
+originally back in February as
+https://lore.kernel.org/git/20210215184118.11306-1-avarab@gmail.com/
 
-Thanks for the reproducing receipe.
-I didn't manage to get there, but this was not on a Windows box.
-I still suspect that this has nothing to do with core.autocrlf.
-since it never produces "mixed" line endings.
-(both CRLF and LF in the same file).
-Is anybody else able to reproduce it ?
+I omitted the In-Reply-To in the header because this was deep in an
+unrelated thread.
 
-user@mac:/tmp/2021-07-18-git-submodules-CRLF/git-tryouts/local-parent> les=
-s .gitmodules
-user@mac:/tmp/2021-07-18-git-submodules-CRLF/git-tryouts/local-parent> od =
--c  .gitmodules
-0000000    [   s   u   b   m   o   d   u   l   e       "   m   s   1   "
-0000020    ]  \n  \t   p   a   t   h       =3D       m   s   1  \n  \t   u
-0000040    r   l       =3D       .   .   /   m   s   1  \n   [   s   u   b
-0000060    m   o   d   u   l   e       "   m   s   2   "   ]  \n  \t   p
-0000100    a   t   h       =3D       m   s   2  \n  \t   u   r   l       =
-=3D
-0000120        .   .   /   m   s   2  \n
-0000130
-user@mac:/tmp/2021-07-18-git-submodules-CRLF/git-tryouts/local-parent> git=
- config core.autocrlf true
-user@mac:/tmp/2021-07-18-git-submodules-CRLF/git-tryouts/local-parent> git=
- submodule set-branch --branch master -- ms1
-user@mac:/tmp/2021-07-18-git-submodules-CRLF/git-tryouts/local-parent> od =
--c  .gitmodules
-0000000    [   s   u   b   m   o   d   u   l   e       "   m   s   1   "
-0000020    ]  \n  \t   p   a   t   h       =3D       m   s   1  \n  \t   u
-0000040    r   l       =3D       .   .   /   m   s   1  \n  \t   b   r   a
-0000060    n   c   h       =3D       m   a   s   t   e   r  \n   [   s   u
-0000100    b   m   o   d   u   l   e       "   m   s   2   "   ]  \n  \t
-0000120    p   a   t   h       =3D       m   s   2  \n  \t   u   r   l
-0000140    =3D       .   .   /   m   s   2  \n
-0000151
-user@mac:/tmp/2021-07-18-git-submodules-CRLF/git-tryouts/local-parent>
+In the meantime Taylor's similar changes to the midx code landed (the
+original v1 was a "hey, here's how you can do this with
+parse_options()" on my part to him).
 
+I did some changes based on feedback on the v1, but didn't pick up all
+the suggestions, it was mostly subjective, so let's see what people
+think this time around.
 
+Ævar Arnfjörð Bjarmason (5):
+  commit-graph: define common usage with a macro
+  commit-graph: remove redundant handling of -h
+  commit-graph: use parse_options_concat()
+  commit-graph: early exit to "usage" on !argc
+  commit-graph: show usage on "commit-graph [write|verify] garbage"
 
+ builtin/commit-graph.c  | 95 +++++++++++++++++++++++------------------
+ t/t5318-commit-graph.sh |  7 +++
+ 2 files changed, 60 insertions(+), 42 deletions(-)
 
->
-> Optional steps:
->
-> 5. try to commit the new version of the .gitmodules file and push this
-> commit back by "git push" command
-> 6. Delete everything in the git-tryouts/local-parent directory, for
-> example by the "rm -rf .git* *" command
-> 7. Do step number 3 again
->
-> There is yet another inconsistency. Right after the commit or commit
-> plus push are done the .gitmodules file still has the EOL issue but
-> then after deleting everything and cloning the whole repository again
-> a different version of .gitmodules is created (because of
-> core.autocrlf=3Dtrue). This inconsistency seems to be general and can
-> happen with any textual file on Windows.
->
-> >
-> > I have the slight suspicion that the CR as part of CRLF had sneaked in
-> > somewhere via the command line. But that is already a speculation.
-> >
-> > And I don't know, if there is a problem at all, or is it just cosmetic=
-s ?
->
-> As I already answered to Brian I don't know, at least in the vi editor
-> it looks broken because of all
-> those '^M' symbols.
+Range-diff against v1:
+1:  742648756a5 ! 1:  0b0bb04ecf5 commit-graph: define common usage with a macro
+    @@ Commit message
+         information, see e.g. 809e0327f5 (builtin/commit-graph.c: introduce
+         '--max-new-filters=<n>', 2020-09-18).
+     
+    +    See b25b727494f (builtin/multi-pack-index.c: define common usage with
+    +    a macro, 2021-03-30) for another use of this pattern (but on-list this
+    +    one came first).
+    +
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## builtin/commit-graph.c ##
+2:  497b6cbc9a5 = 2:  6f386fc32c8 commit-graph: remove redundant handling of -h
+3:  fd1deaa3c99 ! 3:  2e7d9b0b8e4 commit-graph: use parse_options_concat()
+    @@ builtin/commit-graph.c: static struct opts_commit_graph {
+      					 const char *obj_dir)
+      {
+     @@ builtin/commit-graph.c: static int graph_verify(int argc, const char **argv)
+    - 	int fd;
+    - 	struct stat st;
+      	int flags = 0;
+    --
+    -+	struct option *options = NULL;
+    + 
+      	static struct option builtin_commit_graph_verify_options[] = {
+     -		OPT_STRING(0, "object-dir", &opts.obj_dir,
+     -			   N_("dir"),
+    @@ builtin/commit-graph.c: static int graph_verify(int argc, const char **argv)
+     -		OPT_BOOL(0, "progress", &opts.progress, N_("force progress reporting")),
+      		OPT_END(),
+      	};
+    -+	options = parse_options_dup(builtin_commit_graph_verify_options);
+    ++	struct option *options = parse_options_dup(builtin_commit_graph_verify_options);
+     +	options = add_common_options(options);
+      
+      	trace2_cmd_mode("verify");
+    @@ builtin/commit-graph.c: static int graph_verify(int argc, const char **argv)
+      
+      	if (!opts.obj_dir)
+     @@ builtin/commit-graph.c: static int graph_write(int argc, const char **argv)
+    - 	int result = 0;
+    - 	enum commit_graph_write_flags flags = 0;
+      	struct progress *progress = NULL;
+    --
+    -+	struct option *options = NULL;
+    + 
+      	static struct option builtin_commit_graph_write_options[] = {
+     -		OPT_STRING(0, "object-dir", &opts.obj_dir,
+     -			N_("dir"),
+    @@ builtin/commit-graph.c: static int graph_write(int argc, const char **argv)
+      			0, write_option_max_new_filters),
+      		OPT_END(),
+      	};
+    -+	options = parse_options_dup(builtin_commit_graph_write_options);
+    ++	struct option *options = parse_options_dup(builtin_commit_graph_write_options);
+     +	options = add_common_options(options);
+      
+      	opts.progress = isatty(2);
+4:  3d4a1fb6680 ! 4:  d776424e8c8 commit-graph: refactor dispatch loop for style
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    commit-graph: refactor dispatch loop for style
+    +    commit-graph: early exit to "usage" on !argc
+     
+    -    I think it's more readable to have one if/elsif/else chain here than
+    -    the code this replaces.
+    +    Rather than guarding all of the !argc with an additional "if" arm
+    +    let's do an early goto to "usage". This also makes it clear that
+    +    "save_commit_buffer" is not needed in this case.
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## builtin/commit-graph.c ##
+     @@ builtin/commit-graph.c: int cmd_commit_graph(int argc, const char **argv, const char *prefix)
+    + 			     builtin_commit_graph_options,
+    + 			     builtin_commit_graph_usage,
+    + 			     PARSE_OPT_STOP_AT_NON_OPTION);
+    ++	if (!argc)
+    ++		goto usage;
+      
+      	save_commit_buffer = 0;
+      
+    @@ builtin/commit-graph.c: int cmd_commit_graph(int argc, const char **argv, const
+     -		if (!strcmp(argv[0], "write"))
+     -			return graph_write(argc, argv);
+     -	}
+    --
+    --	usage_with_options(builtin_commit_graph_usage,
+    --			   builtin_commit_graph_options);
+    -+	if (argc && !strcmp(argv[0], "verify"))
+    ++	if (!strcmp(argv[0], "verify"))
+     +		return graph_verify(argc, argv);
+     +	else if (argc && !strcmp(argv[0], "write"))
+     +		return graph_write(argc, argv);
+    -+	else
+    -+		usage_with_options(builtin_commit_graph_usage,
+    -+				   builtin_commit_graph_options);
+    + 
+    ++usage:
+    + 	usage_with_options(builtin_commit_graph_usage,
+    + 			   builtin_commit_graph_options);
+      }
+5:  e8481a0932a = 5:  57ffd5812d6 commit-graph: show usage on "commit-graph [write|verify] garbage"
+-- 
+2.32.0.873.g94a0c75983d
+
