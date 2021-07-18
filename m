@@ -2,121 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F5E2C636CA
-	for <git@archiver.kernel.org>; Sun, 18 Jul 2021 14:12:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93455C636C8
+	for <git@archiver.kernel.org>; Sun, 18 Jul 2021 17:40:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2459561182
-	for <git@archiver.kernel.org>; Sun, 18 Jul 2021 14:12:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 65A6E61179
+	for <git@archiver.kernel.org>; Sun, 18 Jul 2021 17:40:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232895AbhGROPb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 18 Jul 2021 10:15:31 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:55015 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230486AbhGROPa (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 18 Jul 2021 10:15:30 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.nyi.internal (Postfix) with ESMTP id 28B425C0048;
-        Sun, 18 Jul 2021 10:12:30 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Sun, 18 Jul 2021 10:12:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=furrypaws.ca; h=
-        from:to:cc:subject:date:message-id:in-reply-to:references
-        :mime-version:content-type; s=fm3; bh=wHJq+wv1tENk/H/Puoiyf67e0f
-        IYMbt6riAfB6+3lgQ=; b=tzk9MjYGCozq0CPU5zAMlaGaNMxCnNWFGF9y1ogBjC
-        Z6WAllJZNlkKhwJnYIDpTi0S9JBgIJVL35EWADnB9AGCRZ3oReQZpIDkwHEygJ4p
-        XeRDASeAUMZlgBGT66ZdkJ/TpG7hL/5dbgaIWklAleJVxHDHk9+NnnnfGMdAbcs6
-        Q/9fq+2TrZiKX29X84iGOM2XcrszF/YPGynfEa5Y2qI2hwtinpBP1MxRhrNneyyz
-        rbslp8ORKcgqwdhBgI4DpUqCynw2YZC5sWeJvhvF4jtRG6+Ei8TNkzjr1YXf/y3a
-        arcpdNXO+Uw8oSLCN9yd8rQgkdky6qZOCtQ1NWRzHK2g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=wHJq+w
-        v1tENk/H/Puoiyf67e0fIYMbt6riAfB6+3lgQ=; b=HWstUV2jiQn5Jnkhx8Bzok
-        eZP7Lv1FE1zXXCor5RKprsW4a99dEAOhudOp9k6I9R9p9zAh1kCpb5zCokZ2L/pc
-        E2mV2xcGc78JeWo3bOfYoVG3P9bCCu+R16NvahbrvUBOegggOp+qyBp08uAp/4lT
-        LaZpzFxWhLOMY4t465f/zCaJK7RpSaD3eNNKk/a1e7ejjX9jFTHkO1KivjBt0Scz
-        NMwvzjuaLTnFkoGNfVuplTmZv88sJV/cE4Ju6pMt7BDZKVM0LntTFLT3XZ0wHFzg
-        wXc+crpPq+5pe09zqAK8a4qn8O0PbTSUWJvSFKT9Alh3IIKk7ofSdcr/c1AjrBJA
-        ==
-X-ME-Sender: <xms:zTb0YA-7L5UC7qHR3L-2s3iEwYJPMrwGGaUVpXKC5oMcRWFpP0IELA>
-    <xme:zTb0YIs7LCOxmHJoZIP4C2rASLhoN3gSZVfr9daanDE2WTOigPClniGh58pvPsno5
-    LHzZGFia0DtYlrhlQ>
-X-ME-Received: <xmr:zTb0YGCU2BxPzWgxUClNEXQw5QC1ZASxDIEdqieQ-Cia4r1Kl8GKsojfmzMym5HH0X36IKcmZGuFUGmBqHvArWB3oj_X3xnu0FqMCGnu>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdekgdeikecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffoffkjghfgggtsehttdhmtd
-    ertddtnecuhfhrohhmpedftehnughrvgifuceuvghrrhihfdcuoegrnhgurhgvfiesfhhu
-    rhhrhihprgifshdrtggrqeenucggtffrrghtthgvrhhnpeffueeiuedtvdehheevfffhtd
-    evhffgheeggeefvdevhefhiedugeejgfffteefveenucevlhhushhtvghrufhiiigvpedt
-    necurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesfhhurhhrhihprgifshdrtg
-    gr
-X-ME-Proxy: <xmx:zTb0YAfZ6CoscBK86M8GXnJTefSZSetL6f8QO7w14NuD-i-zdzL_oQ>
-    <xmx:zTb0YFN22NiRaOkWv8c-mVXC5jjSBKXjxhKapHp_wo424-B-vfOMUA>
-    <xmx:zTb0YKmP410ZiHXbgDm79r8E7Z-dxJMOZiN2M2aYS_39Syj2UOGuCg>
-    <xmx:zjb0YI2rBmJyabcEzWV_b4IRZBHmiAbyYE2VyQgux83nMXXXCHotAw>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 18 Jul 2021 10:12:29 -0400 (EDT)
-From:   "Andrew Berry" <andrew@furrypaws.ca>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     git@vger.kernel.org, bagasdotme@gmail.com
-Subject: Re: [PATCH] docs: .gitignore parsing is to the top of the repo
-Date:   Sun, 18 Jul 2021 10:12:28 -0400
-X-Mailer: MailMate (1.13.2r5673)
-Message-ID: <52880F2B-FAD4-4E36-8662-A798B91B5C94@furrypaws.ca>
-In-Reply-To: <xmqqk0m3gl6a.fsf@gitster.g>
-References: <20210706205439.75015-1-andrew@furrypaws.ca>
- <20210706205712.75270-1-andrew@furrypaws.ca> <xmqqk0m3gl6a.fsf@gitster.g>
+        id S230273AbhGRRnC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 18 Jul 2021 13:43:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36266 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230255AbhGRRnC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Jul 2021 13:43:02 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 456AFC061762
+        for <git@vger.kernel.org>; Sun, 18 Jul 2021 10:40:04 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id y4so14067954pfi.9
+        for <git@vger.kernel.org>; Sun, 18 Jul 2021 10:40:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=5GLpcpeJY0m/Pjy+jlcmbLKMlBqAaRXhAKJMghGQEDs=;
+        b=kfh5W9khKntEJnrlQMUeR1QFKXfDHHRG4DTi4g44ylKUb1EgS9HerHH0f33Kmnmn7g
+         X34EsTmpykMrrCQfWCYKscOHpsjpm5ox+BII1puoDnEM9PGbkbxUP87uPCctazoOQZ0E
+         RitGZ226cTNDrunLcBTw4JwAOPtNUOzIcYCbe5YqoBN8vSLjG55UbRJ4eh8ooohUcLpc
+         npgxz8H62vl8QT09PZtrtRZfrCwq2agyeSNxf1pckE9D2ik2yvPSPRHxbHmsN8hEp0mQ
+         lIxctdyLKAmYC43E0yw45nfvmTLWBy20sV75HLuPesmCut/FIq+0ms76x1b1CuRsw126
+         9ksA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=5GLpcpeJY0m/Pjy+jlcmbLKMlBqAaRXhAKJMghGQEDs=;
+        b=rH5jxICmrzKJ3WJmHpI/XoRcOdtjNwNchHOuAdPW0B1EWlUieUbKKzNF10Q+vUrcNB
+         mqDdHYWPRZsG9bZJ7RSOSa6erjxOvHwKeH23XP/jtvkks7qPX9cvEFsDEfH7ULqmu4bu
+         zha1Mt/+ApX7OVQj3MAAPm7moavm7h1M2Zygdjy/WkROEuvl8ISdF3BJql1TPKJCp0FF
+         lkYLJLDoxJy3vhHL4FyjsVDgpXcMlxSHmY+jdGnY1Eish+3nEgHlH+tEQLFcH5hpN/vw
+         G/wVuSffqtndAY679VhaKkY0WAaqfRwxuxVDse9MLZ0xBFbvBYXJfS+tp0/OiwfvTlxe
+         Nuxw==
+X-Gm-Message-State: AOAM5320rqXATZode6kov+zCVbqrL39sQ0ot7BjgaeBu5iiXsXmYh4jl
+        dm/5YZEryzvb70gdhk5cV7Q=
+X-Google-Smtp-Source: ABdhPJwxS05QgDgqzuxifjRrv9UqGY9vHsHLjXU84A8GwMJuvzuski/4af+73JdEcTVB4DMoy9KWwQ==
+X-Received: by 2002:aa7:90c9:0:b029:307:49ca:dedd with SMTP id k9-20020aa790c90000b029030749cadeddmr22080250pfk.9.1626630003848;
+        Sun, 18 Jul 2021 10:40:03 -0700 (PDT)
+Received: from [192.168.193.232] ([106.195.40.25])
+        by smtp.gmail.com with ESMTPSA id w22sm16625475pfu.50.2021.07.18.10.40.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 18 Jul 2021 10:40:03 -0700 (PDT)
+Subject: =?UTF-8?Q?Re=3a_=5bGSoC=5d_My_Git_Dev_Blog_=e2=80=93_Week_8?=
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>
+References: <CD6968A1-179D-4B77-91C1-4EECB1B69951@gmail.com>
+ <f5b12a75-bdaf-fe5c-ffc2-7b4c8cdfddd6@gmail.com>
+ <D3F13902-A7DD-4186-8444-45FD9260CBC8@gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <623770cb-d692-f61f-180a-33145caea97a@gmail.com>
+Date:   Sun, 18 Jul 2021 23:09:59 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed
+In-Reply-To: <D3F13902-A7DD-4186-8444-45FD9260CBC8@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6 Jul 2021, at 17:57, Junio C Hamano wrote:
+Hi Atharva,
 
-> If you do "toplevel" -> "top-level" while at it, perhaps we would
-> want to correct "work tree" -> "working tree".
+On 13/07/21 2:16 pm, Atharva Raykar wrote:
+> 
+> I was seeing if it was possible to at least save another spawn for calling
+> init when '--init' is provided for an update. The current implementation
+> does not spawn a separate process for this, so I was hoping I don't add
+> more overhead in the conversion, but it's looking hard to avoid at the
+> moment.
+> 
 
-Rather than think of this as a one-off fix, I thought to look to see how 
-many instances of each are currently used.
+I'm having some difficulties understanding this. I tried to take a look
+at the existing code[2][3] in 'git-submodule.sh', I could only see that
+if '--init' is passed to update, it calls the 'cmd_update' shell function
+which in turn does invoke 'git submodule--helper init'. OTOH, if '--recursive'
+is passed 'cmd_update' itself is called recursively called after setting
+the 'prefix' and 'wt_prefix' shell variables.
 
-toplevel: 246
-top-level: 119
-work tree: 538
-working tree: 2610
+So, I'm not sure how you mean to say that a sub-process was not spawned
+when '--init' is passed. Could you clarify this a little?
 
-Since many of these instances are in translated strings, and that the 
-text is understandable with any of the variants, I don't think it's 
-worth changing. "Our standard is no standard" etc.
+>> [1]: https://public-inbox.org/git/20180205235508.216277-1-sbeller@google.com/
+>>
 
-That leaves bringing the note about the work tree earlier in the 
-sentence. Here's a hopefully easier to read word-diff. Look good?
+[2]: https://github.com/git/git/blob/abb21c7263616f01c5e950861a29279ab21cb02f/git-submodule.sh#L530-L533
 
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 53e7d5c914..b4c8b9c0de 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -27,12 +27,11 @@ precedence, the last matching pattern decides the 
-outcome):
-    them.
+[3]: https://github.com/git/git/blob/abb21c7263616f01c5e950861a29279ab21cb02f/git-submodule.sh#L651-L673
 
-  * Patterns read from a `.gitignore` file in the same directory
-    as the path, or in any parent [-directory, with patterns in the-]
-[-   higher level files-]{+directory+} (up to the toplevel of the work
-    [-tree)-]{+tree), with patterns in the higher level files+} being 
-overridden by those in
-    lower level files down to the directory containing the file. These 
-patterns
-    match relative to the location of the `.gitignore` file.  A project 
-normally
-    includes such `.gitignore` files in its repository, containing 
-patterns for
-    files generated as part of the project build.
-
-  * Patterns read from `$GIT_DIR/info/exclude`.
+-- 
+Sivaraam
