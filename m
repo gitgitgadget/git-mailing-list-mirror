@@ -7,54 +7,51 @@ X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A38DC07E9B
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 14:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68A3FC07E95
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 14:26:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 339B96113C
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 14:14:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4BC47610D0
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 14:26:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239565AbhGSNdp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jul 2021 09:33:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48738 "EHLO
+        id S239434AbhGSNp6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jul 2021 09:45:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239523AbhGSNdo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jul 2021 09:33:44 -0400
+        with ESMTP id S232022AbhGSNp6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jul 2021 09:45:58 -0400
 Received: from mail.aixigo.de (mail.aixigo.de [IPv6:2001:67c:13b0:ffff::60])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 94705C061574
-        for <git@vger.kernel.org>; Mon, 19 Jul 2021 06:39:31 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 70954C061574
+        for <git@vger.kernel.org>; Mon, 19 Jul 2021 06:52:46 -0700 (PDT)
 Received: from mailhost.ac.aixigo.de (mailhost.ac.aixigo.de [172.19.96.11])
-        by mail.aixigo.de (OpenSMTPD) with ESMTPS id 6cda04ef (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-        Mon, 19 Jul 2021 16:14:20 +0200 (CEST)
+        by mail.aixigo.de (OpenSMTPD) with ESMTPS id b709562b (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
+        Mon, 19 Jul 2021 16:26:35 +0200 (CEST)
 Received: from vmdpcl078.ac.aixigo.de ([172.19.100.218])
-        by mailhost.ac.aixigo.de (8.15.2/8.15.2/Debian-14~deb10u1) with ESMTPS id 16JEEJb32770431
+        by mailhost.ac.aixigo.de (8.15.2/8.15.2/Debian-14~deb10u1) with ESMTPS id 16JEQYmd2771825
         (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT);
-        Mon, 19 Jul 2021 16:14:19 +0200
+        Mon, 19 Jul 2021 16:26:35 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aixigo.com;
-        s=default; t=1626704059;
-        bh=FnPedr2xbsN4rn1bssyRms/TZfjFwzAk7nr8K4Qkv18=;
+        s=default; t=1626704795;
+        bh=WaKm0Bb2YI0RhT8RCFsaEPkHNYO2UP57g9cKoww5O8g=;
         h=To:Cc:References:From:Subject:Date:In-Reply-To:From;
-        b=a+DgaCPsSukqCotxAee5NZVVpUypfLK05UfXOE4/H4qHAnx8MD3c4aek56+xyVVmk
-         J+LM5j/kFxc80Gcf1aagS3NAOGiF8OI8qY/WzWk5TfMvkMvPzxRvP9wJY10Gga3N6H
-         Aqf8aRvoRIPMz54FgxIa/Cf3/K8/sPf4yxj0vzOw=
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Son Luong Ngoc <sluongng@gmail.com>
-References: <60f1daa896f69_330208b1@natae.notmuch>
- <c54fa084-75f4-b775-8ac2-6df3c7a36571@aixigo.com>
- <xmqqwnpooctj.fsf@gitster.g>
+        b=M8pL/7Sb7ibbQXofjSihpU4ulaIYcX5mzummKlc2JYTpdcfTWJKUWw9/RU3QzY3R+
+         vTFx19iuTudjFWP9CxIr8TO2kIKw35cnyghpwEBH0c7nbn0G9NceS+0f7vZYYpLzjA
+         fZ+zsd65H2EhggQmcNyEoj24DyApxvsHJfu+wPFY=
+To:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+References: <c62933fb-96b2-99f5-7169-372f486f6e39@aixigo.com>
+ <CABPp-BEHZcfZNL+PG1vmqXGf4Qs3eoULb4NDDgbmOB30HzJu_Q@mail.gmail.com>
+ <60f1b7853b8a2_ade9208c1@natae.notmuch>
+ <00b50aa6-9b61-9f80-1d8d-2db3ed5e7638@aixigo.com>
+ <60f1c9378d5a1_3302085c@natae.notmuch>
 From:   Matthias Baumgarten <matthias.baumgarten@aixigo.com>
-Subject: Re: When are you going to stop ignoring pull.mode?
-Message-ID: <948ef19f-5588-62e9-6fc7-aa6d82f21a1b@aixigo.com>
-Date:   Mon, 19 Jul 2021 16:14:14 +0200
+Subject: Re: pull.rebase config vs. --ff-only on command line
+Message-ID: <fa757764-db25-849d-d8d5-e28908059f6b@aixigo.com>
+Date:   Mon, 19 Jul 2021 16:26:29 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.12.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqwnpooctj.fsf@gitster.g>
+In-Reply-To: <60f1c9378d5a1_3302085c@natae.notmuch>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: de-DE
 Content-Transfer-Encoding: 8bit
@@ -64,89 +61,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/17/21 11:22 PM, Junio C Hamano wrote:
-> Matthias Baumgarten <matthias.baumgarten@aixigo.com> writes:
-> 
->>>>      pull.ff  pull.rebase  commandline            action
->>>> ...
->>>>        *          *        --ff-only              fast-forward only[1]
->>>> ...
->> What about
+
+
+On 7/16/21 8:00 PM, Felipe Contreras wrote:
+> Matthias Baumgarten wrote:
+>> On 7/16/21 6:44 PM, Felipe Contreras wrote:
+>>> Elijah Newren wrote:
+>>>> On Fri, Jul 16, 2021 at 7:52 AM Matthias Baumgarten
+>>>> <matthias.baumgarten@aixigo.com> wrote:
+>>>>> this is my first time contacting you guys and girls so I hope this mail
+>>>>> achieves the expected standard. I've discovered the following behaviour
+>>>>> of git:
+>>>>>
+>>>>> If pull.rebase is configured to true and git pull --ff-only is executed
+>>>>> it seems like the config wins, i.e. issuing "Successfully rebased and
+>>>>> updated refs/heads/...", which is not what I would expect. I always
+>>>>> believed that command line options would overwrite configured options.
+>>>>>
+>>>>> Is my assumption that command line options always win wrong or is this a
+>>>>> bug?
+>>>>
+>>>> It's a bug.
+>>>
+>>> No it isn't.
+>>>
+>>> Elijah is elevating to fact his opinion of what --ff-only should be
+>>> changed to.
+>>>
+>>> But it has not been changed. Today --ff-only is meant only for the merge
+>>> mode of `git pull`, and like other merge-only options (e.g. --ff,
+>>> --no-ff, and --squash) it's ignored in the rebase mode.
 >>
->>           *       !false      --ff-only              ???
+>> Shouldn't every explicitly given merge option (like --ff-only) overwrite
+>> any configured option that would not even result in a merge, i.e.
+>> forcing a merge and thus forcing ff-only?
 > 
-> This is covered by an earlier entry ("*" stands for "any value"), I
-> think; it should fast-forward or fail.  The reasoning goes like
-> this:
-Ah, I just misunderstood *, nevermind!
+> Perhaps. Other developers have suggested that before.
 > 
-> The user configures pull.rebase to some kind of rebase; it could be
-> just true (the traditional flattening rebase), or the one that
-> preserves the shape of the history, or even the interactive one.
-> With the configuration, what the user declares is:
+> The problem is that everyone wants to make --ff-only the default, and
+> then we start to get into a tricky situation, because what should these
+> do:
 > 
->      I may have my own development on top of the result of my last
->      integration with the upstream I did when I ran "git pull" the
->      last time, and when the upstream has more commits, the way I
->      want my local work to integrate with their work is to replay my
->      work on top of theirs (as opposed to "merging their work into my
->      history").
-> 
-> But by passing "--ff-only" from the command line, the user tells us
-> this:
-> 
->      This time only, I want fast-forward update and nothing else.  I
->      do not remember doing any of my own development on top of their
->      history, and I expect that this update from the upstream would
->      fast-forward.  If that is not the case, please error out, as I
->      need to inspect the situation further and I do not want to see
->      conflicts in unexpected commits I thought I did not have.
-> 
-> So the "action" would be
-> 
->   - If their history is a descendant of ours, that means that on top
->     of their history previously observed by us, we haven't added any
->     development of our own.  We just move to the tip of their history
->     and we are done.
-> 
->     This is not so surprising anyway.  If we are doing any kind of
->     rebasing, what happens is to start from the tip of their history
->     and then commits from our own development are replayed on top of
->     that.  When their history is a descendant of ours, we end up
->     doing just fast-forward, as there is nothing to replay on top.
-> 
->   - Otherwise, because the user expects the command to fail if their
->     history is not a descendant of ours, we fail.
-> 
-> And "fast-forward only" in Elijah's table is a concise way to say
-> that.
+>    git -c pull.ff=only pull
+>    git -c pull.ff=only pull --merge
+>    git -c pull.ff=only pull --rebase
 
-Agree.
+If my assumption were true, and every explicit (cli given) option would 
+overwrite implicitly given ones (i.e. configured options), wouldn't
+
+  * git -c pull.ff=only pull, do a fast-forward (or merge)
+  * git -c pull.ff=only pull --merge, force a merge commit
+  * git -c pull.ff=only pull --rebase, force rebase
+
 > 
-> I concentrated on "if the configuration is set to do some kind of
-> rebase" case, as that was your question, but the above reasoning
-> applies equally to the case where pull.rebase is not specified or
-> set to false, i.e. the user tells us to merge.
+> One of these will always fail, when it shouldn'tWould this even apply under the above assumption?
+> 
+> I proposed a solution for that, but is has been ignored.
+I'm sorry!
 > 
 
-Perfectly valid reasoning.
 
-Initially I came from the situation where I (as maintainer of a 
-repository) proposed to do a `git pull --ff-only <remote-git-url> 
-<branch-name>` for the others to integrate the newest changes safely 
-(i.e. failing if they had errouneously worked on that branch, which it 
-is not intended for). I thought I could reach that safety with the 
-`--ff-only` part, but it seems one of the devs had pull.rebase set for 
-him locally and thus managed to bypass my "safety". Mr. Elijah Newren 
-called this a bug, see [1].
-
-Another way for the others to integrate my changes would be to propose a 
-`git reset --hard ...` but that seems very... hard. It would overwrite 
-all local changes (only recoverable by the reflog then, and you would 
-even need to know that you had local changes in the first place).
-
-[1] 
-https://lore.kernel.org/git/CABPp-BEHZcfZNL+PG1vmqXGf4Qs3eoULb4NDDgbmOB30HzJu_Q@mail.gmail.com/
 
 -- 
 aixigo AG
