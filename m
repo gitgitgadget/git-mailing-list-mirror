@@ -2,112 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC17DC07E9D
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:37:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 857D1C07E9D
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:37:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E7B3613E3
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:37:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 718AA61242
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:37:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351725AbhGSQ44 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jul 2021 12:56:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39942 "EHLO
+        id S1352205AbhGSQ5A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jul 2021 12:57:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357359AbhGSQvh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jul 2021 12:51:37 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57F2EC07456D
-        for <git@vger.kernel.org>; Mon, 19 Jul 2021 09:55:13 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id h9so21520022oih.4
-        for <git@vger.kernel.org>; Mon, 19 Jul 2021 10:15:02 -0700 (PDT)
+        with ESMTP id S1357800AbhGSQwT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jul 2021 12:52:19 -0400
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C310CC0613B8
+        for <git@vger.kernel.org>; Mon, 19 Jul 2021 09:59:21 -0700 (PDT)
+Received: by mail-il1-x134.google.com with SMTP id z1so16722424ils.0
+        for <git@vger.kernel.org>; Mon, 19 Jul 2021 10:18:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=EMaXXJEpmFhT1y9n8pc70cUpr9SHENwgt31r4z4iKoo=;
-        b=BskPhh7pd5SlS0MJTQ9j3lXlo9YhIqhIjEdclZjSYUiDf1WWa0wvthLgxlySYRrwmG
-         xp1OgUuu5gR1VYE9IfxUmzwjTcyu9Lf51FX63L3f5i4nf9lqIAovxcXq8dQGFJaZVQLb
-         bqjDaPS3imKb40B/74u18jyZwIqkBpg0zp+hkm0ygjG5I4sCWRPyI7K2sPYRheEkNIZG
-         9ugycUdL52Z/p6Gi3QDiYIOZ2DdVybCaC/tGnUq3c2Ckrov+qZfrRNurYBhlg7RWv5DM
-         6pupxAjQ//aQrPe9bH0Vd3QJtjgge+AyczyqIKZfY4BIEFTRhSlSDq2mR/UkAQSPw9z6
-         Qpmw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :content-transfer-encoding;
+        bh=47/VZZONHAS5hgtnH1RTJV3+FXftlMBkSrHPOGSjMR4=;
+        b=uKdkZDN+ykONa9UtzbzjV+HPjVxtE1zdUnNY6mFXYyhsCezKyqWN9UWBqOOTei47p7
+         i7V8arFg1S4UN/ZbedYUB2xwz/Za1FdUjEbWH9skkU+5UEmTafPotNQImHRKX2TfOwTW
+         Du1skgIyYVW8TyKGAHsBKzLWhJzwF2KiSPjwiNQLAr5AXDuGP4L4UUDnDNn3zbVuQDmV
+         g8PPDcSjZN1MmsSwEzHX027JD5nBqZwjScwiIFq7ST9roEFJdVNYq/FoQpmBdDNkcrF0
+         Pkk/O5GRQykWhJr56c+J8CnpN8NCJ3bX7Dn0i5BqN+kSuP8IleZVCF3ae033oDuuvzPZ
+         2EnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=EMaXXJEpmFhT1y9n8pc70cUpr9SHENwgt31r4z4iKoo=;
-        b=qMYk2aeWWFI4C286kBcOloGkPdr5XYtIrAY95oY2pvOYdHsTmTipHq+pnhyAMmsITE
-         NWb+fQ1tpwEG+Qawxt5jvJnA6fkjRPIIuGD/2XIlj+nvFeasDnAsbmUZy22vZsch1a9m
-         n5fpCAg5Y/JUSPvXlS4kz+PjFW2eSpKtm6mhw8/tO7+x/hntSi+0wPC3wcClPlWd0yvu
-         TgYE95lL7tI2r4KXqLoE23Eo04iMEeX7yFqbuF9W8M6h5PiY5HzJwZ/yFgzDJwyF78jo
-         Qr1vuUKP5VD1kxgoSNawjUusLwRonYjYZuueiOYWWvZU1vpMngnsCdY9rgryUpaouhTO
-         97yA==
-X-Gm-Message-State: AOAM533Qey3yT8smJkYfX1zmfPiV1I2IzF2v/4gifAaUqNgotKIoJcWO
-        mDG0LvV+T8JkPjFMUpSQtRY=
-X-Google-Smtp-Source: ABdhPJzv0P4Kf65oSLKVCkpx94e8CUGaltUW9iOus5CTNekpvrHF7HoDbaptz8Ov6eXZSpyNBLm+9g==
-X-Received: by 2002:aca:d11:: with SMTP id 17mr22114869oin.19.1626714901929;
-        Mon, 19 Jul 2021 10:15:01 -0700 (PDT)
-Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id s7sm1524852ool.14.2021.07.19.10.15.01
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding;
+        bh=47/VZZONHAS5hgtnH1RTJV3+FXftlMBkSrHPOGSjMR4=;
+        b=Eb/ZcnOoZ59iZcYO2jjWv2E6C+akYIjxRkFkDp6wOlYimF6HWGhTgcZGGHf8w+SA3+
+         Pmu2nR0GYi5FNGYG7JYBi5FiVQ8CogJcXaefALhv7p9zh71cOCVXidbCu8iEppy2RfZm
+         hpR6Y4z3Idf98uYUM3PGqIlV6+PiGd/tDDQWD0YSsG8b+5209l8oLWeYYdFKYuJ11H5I
+         eldvQrHR8kZIE5KVihWKcBXaJ5qU6GaIEI0c60qCeAK831ICI+UJU3RwgWkfIrwWKr93
+         H0JCJkCv9lo63ttWfIpuMg44+Y5U6Ibu79825IEateR5DT5kZn7K25iMCcLM/r7zTJAx
+         Gn8A==
+X-Gm-Message-State: AOAM530ur5gxaMcgjabpRwWzPExJu9lXzrCBHMEQsw5ZXWEJanMkzAqb
+        PNYrv0365QNwj/zUhTQoe4YtQzSPIC+IMemB
+X-Google-Smtp-Source: ABdhPJwFy5ZP8sDmO743foB2OjniIea0SiU0zZzyVA03LwIkoJdZxDd9CNe1q0oBqPa8iACmxY7ueg==
+X-Received: by 2002:a92:d210:: with SMTP id y16mr18414555ily.295.1626715131112;
+        Mon, 19 Jul 2021 10:18:51 -0700 (PDT)
+Received: from localhost ([2600:1700:d843:8f:a0a0:3329:4f28:d1a3])
+        by smtp.gmail.com with ESMTPSA id o13sm10012413ilq.58.2021.07.19.10.18.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jul 2021 10:15:01 -0700 (PDT)
-Date:   Mon, 19 Jul 2021 12:15:00 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Matthias Baumgarten <matthias.baumgarten@aixigo.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Son Luong Ngoc <sluongng@gmail.com>
-Message-ID: <60f5b3143fd26_13f2e220892@natae.notmuch>
-In-Reply-To: <948ef19f-5588-62e9-6fc7-aa6d82f21a1b@aixigo.com>
-References: <60f1daa896f69_330208b1@natae.notmuch>
- <c54fa084-75f4-b775-8ac2-6df3c7a36571@aixigo.com>
- <xmqqwnpooctj.fsf@gitster.g>
- <948ef19f-5588-62e9-6fc7-aa6d82f21a1b@aixigo.com>
-Subject: Re: When are you going to stop ignoring pull.mode?
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Mon, 19 Jul 2021 10:18:50 -0700 (PDT)
+Date:   Mon, 19 Jul 2021 13:18:49 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com
+Subject: [PATCH] multi-pack-index: fix potential segfault without sub-command
+Message-ID: <8c0bb3e0dc121bd68f7014000fbb60b28750a0fe.1626715096.git.me@ttaylorr.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthias Baumgarten wrote:
-> On 7/17/21 11:22 PM, Junio C Hamano wrote:
+Since cd57bc41bb (builtin/multi-pack-index.c: display usage on
+unrecognized command, 2021-03-30) we have used a "usage" label to avoid
+having two separate callers of usage_with_options (one when no arguments
+are given, and another for unrecognized sub-commands).
 
-> > I concentrated on "if the configuration is set to do some kind of
-> > rebase" case, as that was your question, but the above reasoning
-> > applies equally to the case where pull.rebase is not specified or
-> > set to false, i.e. the user tells us to merge.
-> > 
-> 
-> Perfectly valid reasoning.
-> 
-> Initially I came from the situation where I (as maintainer of a 
-> repository) proposed to do a `git pull --ff-only <remote-git-url> 
-> <branch-name>` for the others to integrate the newest changes safely 
-> (i.e. failing if they had errouneously worked on that branch, which it 
-> is not intended for). I thought I could reach that safety with the 
-> `--ff-only` part, but it seems one of the devs had pull.rebase set for 
-> him locally and thus managed to bypass my "safety". Mr. Elijah Newren 
-> called this a bug, see [1].
+But the first caller has been broken since cd57bc41bb, since it will
+happily jump to usage without arguments, and then pass argv[0] to the
+"unrecognized subcommand" error.
 
-It's not a bug. It could be made a bug if the semantics of --ff-only
-were changed to something that overrides pull.rebase, but that something
-doesn't exist yet:
+Many compilers will save us from a segfault here, but the end result is
+ugly, since it mentions an unrecognized subcommand when we didn't even
+pass one, and (on GCC) includes "(null)" in its output.
 
-  pull.mode=fast-forward
+Move the "usage" label down past the error about unrecognized
+subcommands so that it is only triggered when it should be. While we're
+at it, bulk up our test coverage in this area, too.
 
-Right now it can't be done.
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+Noticed this while I was reading code in a similar area while reviewing
+one of Ævar's series.
 
--- 
-Felipe Contreras
+ builtin/multi-pack-index.c  | 2 +-
+ t/t5319-multi-pack-index.sh | 5 +++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index 5d3ea445fd..8ff0dee2ec 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -176,8 +176,8 @@ int cmd_multi_pack_index(int argc, const char **argv,
+ 	else if (!strcmp(argv[0], "expire"))
+ 		return cmd_multi_pack_index_expire(argc, argv);
+ 	else {
+-usage:
+ 		error(_("unrecognized subcommand: %s"), argv[0]);
++usage:
+ 		usage_with_options(builtin_multi_pack_index_usage,
+ 				   builtin_multi_pack_index_options);
+ 	}
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 5641d158df..dab7123b3a 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -824,4 +824,9 @@ test_expect_success 'load reverse index when missing .idx, .pack' '
+ 	)
+ '
+
++test_expect_success 'usage shown without sub-command' '
++	test_expect_code 129 git multi-pack-index 2>err &&
++	! test_i18ngrep "unrecognized subcommand" err
++'
++
+ test_done
+--
+2.31.1.163.ga65ce7f831
