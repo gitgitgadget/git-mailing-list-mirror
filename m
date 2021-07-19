@@ -7,116 +7,176 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9E46C07E9B
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26B74C07E9D
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:49:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 92DFA6113A
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:37:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0073660720
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:49:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352577AbhGSQ5C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jul 2021 12:57:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39940 "EHLO
+        id S1350601AbhGSRIx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jul 2021 13:08:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357791AbhGSQwT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jul 2021 12:52:19 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FCECC0613BD
-        for <git@vger.kernel.org>; Mon, 19 Jul 2021 09:59:28 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id v6so31493144lfp.6
-        for <git@vger.kernel.org>; Mon, 19 Jul 2021 10:18:57 -0700 (PDT)
+        with ESMTP id S1376722AbhGSRFw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jul 2021 13:05:52 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D9CDC0610D4
+        for <git@vger.kernel.org>; Mon, 19 Jul 2021 10:25:39 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id a17-20020a9d3e110000b02904ce97efee36so7227579otd.7
+        for <git@vger.kernel.org>; Mon, 19 Jul 2021 10:43:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=fADUF3XBzHOdM11aWIIDAfcvjleivP+opuL9K8mBlr4=;
-        b=IsG/kZ3Sjl7u6FOAlvl4POJEPEdrDwdZLsZnur27W4keGujqsjBaFiOMB4eYU8IsOs
-         3PDImeIUgOV8veLUYDllUAwcdY08Y7WMF/pPsjCLkGhKOX0DM+TdwaoviaJp1qvf+5gV
-         w+XIvrzZuOZRiDcxGt1YMYtHtL1UQ4rPCZb5ZMX25prZtWlvQa+Mx2ZvPPuqm5x2VVs4
-         bIVNZyBQ74ee2Q8coajNrclOkw9AqC+rlMjRQsDkyUGys/AHnkWLrhr2t2Ozd1+cwcoe
-         a9NF40OkKHhtx+vpV2VDs7SCrGSdNgZ5c6i6majToAM9S3u0m+0YS+Uxd1iu8aVXHEg3
-         cimg==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=VJ7yliNo8ogzCmyYJkcApQ0HPUNEJup7Q3nifWk/OPA=;
+        b=oJGonPXJPLoZMZlKMbETCPZcJyz8ETsRXzJgw9ibrWjJjDRZuD+ROkwAb2JSxi5qQD
+         akcZ3k7ji00I+ml1LY8COkXfF292Gla0JKbLJGyD1S/WJdJc4U2JF5AZAzRI2zvQTVVh
+         siw7wblXqUKDtU/2yFbqwY35gdkYLQJdtVbVwpVoLKstLK61RWxOy6swOUfXC9gr72nO
+         frVVSyW7uAHkEot1ruFox9UEjBU5g2MJhRf9Zt5IDiUV+voB/zntwGHKIlThc+ggCfUT
+         RjiR9Xt3yaVEPEsVPj+FIrH2Jn4YTRBb2vinE8IiMg7wfH/AE6c98c4nR2ZlskEff4/7
+         oBnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fADUF3XBzHOdM11aWIIDAfcvjleivP+opuL9K8mBlr4=;
-        b=rxqX38UYHTPIlzxljuq5iul7018F7MptP+8FKb1doqDZjdhzEj9VOSPyUbOf2HbgcV
-         MTCybhomdrXKwT97JEpSTZkYD08hgmecm38/9kf0jSMVAiJkASI4nFgAnpilyUOBUxDz
-         VUIioodk4zZQHixs+BKl6YQ9Mh0HtPgyf6PG3SZzyzBeIewqcDSpU3e0ALJXMSsLXNUI
-         zJvWKBo1w0TwMHC2CFHy9zV81GbMtlCWf3YY4uSBGlSzqmHO0egYptqFebqcsV7VVpQo
-         55fXWP4+MP291zT1uRimvpvEubY5hsYWZOLvHiqHD4dy5slPa2l4TIA21FfTkkAASHDx
-         Bgtg==
-X-Gm-Message-State: AOAM532JD0utlAkwuo0cM3CuUj05P0os//nLX2JDX9rmi+0++Ir7zAfV
-        wSXr7+EJDkQhr+Ooi+Vjms7aEMgAwqch6Wn5Mmk=
-X-Google-Smtp-Source: ABdhPJyy9Wrk+/kZAMO9q5uiTIxNHEOhyiXMTP3qWKZt3p6OqZR0iDlDHqClTnaG7at0OrLW3eE/rDTKhneNX5lWyBw=
-X-Received: by 2002:a19:c795:: with SMTP id x143mr4548544lff.42.1626715135959;
- Mon, 19 Jul 2021 10:18:55 -0700 (PDT)
-MIME-Version: 1.0
-References: <49498ed0-cfd5-2305-cee7-5c5939a19bcf@campoint.net>
- <87a6mo29dp.fsf@evledraar.gmail.com> <CAMMLpeQ5Lh8xfqTZoM74f616wE7ZhqWArL1WgGiMtiJSfrYcYg@mail.gmail.com>
- <87h7gsvybx.fsf@evledraar.gmail.com>
-In-Reply-To: <87h7gsvybx.fsf@evledraar.gmail.com>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Mon, 19 Jul 2021 11:18:44 -0600
-Message-ID: <CAMMLpeRhHn5ndPYzihm0rCidjNQM8c7b+Ta-JSZ=jidbEr=VRg@mail.gmail.com>
-Subject: Re: progress test failure on fedora34
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Fabian Stelzer <fabian.stelzer@campoint.net>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=VJ7yliNo8ogzCmyYJkcApQ0HPUNEJup7Q3nifWk/OPA=;
+        b=GCO3AJsfmUw+uZZrjsNqyGjQHeuNiYb2jdi4YzYJqdTVxaI9j/6BCBjuYroNGiU5/h
+         8yYZHcWSCRBsK4IJd1mMLrXfCsimsr2vrX2bac2jKrWqHKUV5cSpZrbBMW9KMkW2JJJP
+         KNBClYW96DmGO3HOztbuC6wmXbhddRTlj8Y6jMCZ4TbYnSNaqV+2PNXxz+yDb4fTtfLh
+         jS3fN5ykA88vinrEgP8fzTOvwjzjedayFRsRw7c/LT2A7NS8ycu96NLI7okheILCUqym
+         s56p8/EVIapYrobl33sx1XRtRqmE480lpYKMeLUJ86o9p/DNrcv/KoHQV/+yRKiabZ+X
+         pEFQ==
+X-Gm-Message-State: AOAM533TzEpoPmw97whLMxUUE9jDRHk8JPkZ/7jhmeIJBp23q9bgVNBF
+        UULBiWqaD5m2rbCTwmJGlTs=
+X-Google-Smtp-Source: ABdhPJxH14ggzXENk6f9gX3EmwpoL4inmbmUVm4MYX/KNNPE9Zb1S8kh18SewZVB7RcAmC070KNnUw==
+X-Received: by 2002:a9d:6b03:: with SMTP id g3mr19070414otp.187.1626716587400;
+        Mon, 19 Jul 2021 10:43:07 -0700 (PDT)
+Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
+        by smtp.gmail.com with ESMTPSA id x20sm3745902otq.62.2021.07.19.10.43.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Jul 2021 10:43:06 -0700 (PDT)
+Date:   Mon, 19 Jul 2021 12:43:05 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Matthias Baumgarten <matthias.baumgarten@aixigo.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <60f5b9a9e29d8_13f2e22084b@natae.notmuch>
+In-Reply-To: <fa757764-db25-849d-d8d5-e28908059f6b@aixigo.com>
+References: <c62933fb-96b2-99f5-7169-372f486f6e39@aixigo.com>
+ <CABPp-BEHZcfZNL+PG1vmqXGf4Qs3eoULb4NDDgbmOB30HzJu_Q@mail.gmail.com>
+ <60f1b7853b8a2_ade9208c1@natae.notmuch>
+ <00b50aa6-9b61-9f80-1d8d-2db3ed5e7638@aixigo.com>
+ <60f1c9378d5a1_3302085c@natae.notmuch>
+ <fa757764-db25-849d-d8d5-e28908059f6b@aixigo.com>
+Subject: Re: pull.rebase config vs. --ff-only on command line
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 18, 2021 at 2:08 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Wed, Jul 14 2021, Alex Henrie wrote:
->
-> > On Wed, Jul 14, 2021 at 9:39 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> > <avarab@gmail.com> wrote:
+Matthias Baumgarten wrote:
+> On 7/16/21 8:00 PM, Felipe Contreras wrote:
+> > Matthias Baumgarten wrote:
+> >> On 7/16/21 6:44 PM, Felipe Contreras wrote:
+> >>> Elijah Newren wrote:
+> >>>> On Fri, Jul 16, 2021 at 7:52 AM Matthias Baumgarten
+> >>>> <matthias.baumgarten@aixigo.com> wrote:
+> >>>>> this is my first time contacting you guys and girls so I hope this mail
+> >>>>> achieves the expected standard. I've discovered the following behaviour
+> >>>>> of git:
+> >>>>>
+> >>>>> If pull.rebase is configured to true and git pull --ff-only is executed
+> >>>>> it seems like the config wins, i.e. issuing "Successfully rebased and
+> >>>>> updated refs/heads/...", which is not what I would expect. I always
+> >>>>> believed that command line options would overwrite configured options.
+> >>>>>
+> >>>>> Is my assumption that command line options always win wrong or is this a
+> >>>>> bug?
+> >>>>
+> >>>> It's a bug.
+> >>>
+> >>> No it isn't.
+> >>>
+> >>> Elijah is elevating to fact his opinion of what --ff-only should be
+> >>> changed to.
+> >>>
+> >>> But it has not been changed. Today --ff-only is meant only for the merge
+> >>> mode of `git pull`, and like other merge-only options (e.g. --ff,
+> >>> --no-ff, and --squash) it's ignored in the rebase mode.
 > >>
-> >> On Wed, Jul 14 2021, Fabian Stelzer wrote:
-> >>
-> >> > Hi,
-> >> > The test t0500-progress-display.sh in current master fails on latest
-> >> > fedora34.
-> >> > The break was introduced with:
-> >> >
-> >> > 83ae1edff7ee0b7674bd556955d2cf1706bddb21
-> >> > ab/fix-columns-to-80-during-tests (2021-06-29) 1 commit
-> >> >
-> >> > Kind regards,
-> >> > Fabian
-> >>
-> >> I have not been able to reproduce this, it seems the below E-Mail was
-> >> word-wrapped by your mailer, which is especially bad here since gettin=
-g
-> >> to the bottom of this requires looking at the whitespace.
-> >>
-> >> Is there a way you could tar that up and send it (to me personally is
-> >> fine, or some pastebin or whatever).
-> >>
-> >> I am able to reproduce something that looks like this if I
-> >> s/COLUMNS=3D80/COLUMNS=3D79/g in the test-lib, but given that we set i=
-t to
-> >> 80, and that the progress.c code just ends up with an
-> >> atoi(getenv("COLUMNS")), and we do our own wrapping (with no other fan=
-cy
-> >> logic) in progress.c, I'm not seeing right now how this could happen..=
-.
-> >
-> > This test also fails for me when using QTerminal or Konsole, but it
-> > passes on XTerm and LXTerminal.
->
-> I tried this on Debian 11 with QTerminal 0.16.1 and can't reproduce it,
-> resized the window etc., always get COLUMNS=3D80 if I add some printf
-> debugging.
+> >> Shouldn't every explicitly given merge option (like --ff-only) overwrite
+> >> any configured option that would not even result in a merge, i.e.
+> >> forcing a merge and thus forcing ff-only?
+> > 
+> > Perhaps. Other developers have suggested that before.
+> > 
+> > The problem is that everyone wants to make --ff-only the default, and
+> > then we start to get into a tricky situation, because what should these
+> > do:
+> > 
+> >    git -c pull.ff=only pull
+> >    git -c pull.ff=only pull --merge
+> >    git -c pull.ff=only pull --rebase
+> 
+> If my assumption were true, and every explicit (cli given) option would 
+> overwrite implicitly given ones (i.e. configured options), wouldn't
+> 
+>   * git -c pull.ff=only pull, do a fast-forward (or merge)
+>   * git -c pull.ff=only pull --merge, force a merge commit
+>   * git -c pull.ff=only pull --rebase, force rebase
 
-Actually, it looks like the difference was that I didn't resize the
-XTerm or LXTerminal windows. The tests pass on all four if the
-terminal emulator window is exactly 80 columns wide, and they fail on
-all four if the window is any wider or narrower.
+The documentation says --ff-only is meant for merges, therefore these
+three should be valid and do the same:
 
--Alex
+  git pull --ff-only # --merge is the default
+  git pull --merge --ff-only
+  git pull --ff-only --merge
+
+In order for your assumption above to be correct, the semantics of
+--ff-only have to be changed (along with the documentation), but people
+are *already* relying on the current semantics:
+
+  [pull]
+    ff = only
+    rebase = true
+
+I made a poll on reddit [1], and 19% (so far) said they do use both
+configurations, and they know what `git pull --no-rebase` would do.
+
+In other words: they would expect `git pull` to do a rebase, but
+`git pull --merge` to do a fast-forward merge.
+
+Changing the semantics of --ff-only would break behavior they rely on,
+unless we break symmetry from --ff-only and pull.ff=only which would be
+very hard to explain the documentation.
+
+
+However, if --ff-only wasn't mapped to pull.ff=only, but
+pull.mode=fast-forward, then we can have both: the configurations people
+rely on today wouldn't be broken, and your expectation that
+`git pull --ff-only` overrides pull.mode=rebase would be met.
+
+It's the perfect solution.
+
+> > One of these will always fail, when it shouldn't
+> Would this even apply under the above assumption?
+
+[I think you meant to paste this]
+
+Under your assumption it wouldn't fail, but other behavior users rely on
+today would be broken.
+
+> > I proposed a solution for that, but is has been ignored.
+> I'm sorry!
+
+It's not me the one that suffers (I don't even use `git pull`), it's the
+users that have been negatively affected for more than ten years.
+
+[1] https://www.reddit.com/r/git/comments/omcngl/do_you_use_both_pullff_and_pullrebase/
+
+-- 
+Felipe Contreras
