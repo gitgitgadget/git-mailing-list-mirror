@@ -2,168 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C0ADC07E9D
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 13:33:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7A17C07E95
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 14:05:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 309E960200
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 13:33:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B7D16610D2
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 14:05:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238659AbhGSMw4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jul 2021 08:52:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38686 "EHLO
+        id S240926AbhGSNZK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jul 2021 09:25:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238617AbhGSMwu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jul 2021 08:52:50 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF5CCC0613DD
-        for <git@vger.kernel.org>; Mon, 19 Jul 2021 05:55:09 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id c12so4047395wrt.3
-        for <git@vger.kernel.org>; Mon, 19 Jul 2021 06:33:27 -0700 (PDT)
+        with ESMTP id S237189AbhGSNZJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jul 2021 09:25:09 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F381C061574
+        for <git@vger.kernel.org>; Mon, 19 Jul 2021 06:30:13 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id u11so20834420oiv.1
+        for <git@vger.kernel.org>; Mon, 19 Jul 2021 07:05:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=/QAS9hnOSCruAnMJO67LhuiuXgP/Xzg2aTOWl4lMTCg=;
-        b=cP8FxMeu2LiQAf64UTDDtZY1YXx8fFyhsMjJZJS6FFiXe8poGbInMCXPngf5s3cP45
-         I6iYmPQnv2N4ydY74XnXYg7AGmwnnfQvyfsb/32Mlst1UZ/Ffq8DWUy4MSPfmuu/VDRz
-         2hXS/eyzsLEGm2MfXy/IJlCMQ+KPHy5orl6v0mVyZFP/6cOb+G9u9OpBj8Sa4jTZkwQw
-         N+BjOHMp4xszVGXY42wm8wxZyRB7NbRFbRA9u5FICKTeyfcVaM4loUVZ102P6SArPM4F
-         klqXpzMdE97JgEpGY5miNkmWa1HV7Br0g2n5wyeE7LMXUq7Fah0YoBPynZZ847WUaRHR
-         8wlQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=SoYUTjcogOwLcL+D8v/8ybpbGCsnukrw6D6DbzdkNLI=;
+        b=iGD9HY7D3GFTno9JcYJVqi47+NglEQQK/bE5DES3JGM9L+yV1rvvfbKSMisksx3d+k
+         67QD8VCsW/DhC9yBJSbBXGKmpPMlfE0D84d8HTU9kjZ27RKqCRVHzsTwBdd6DQ6FAOWG
+         VsmQ71v7CkSEAs0in/zeo0JLru8hHZzoPeX6YyBCc50pVlEpxCGQYzZ9FNinv05idVrl
+         qiDezSEF1Bl+OA7mjfCTeMZEJdjvqC8xI2JRzTwU2d6stIWJWhMt9awoMMyrCPDqRCsW
+         GGy0ch/8B5R5vlwcqlSJNAWrwrbpuZqhNFlvEuRAtZ+JyGBgIGWQeIOY3R/2hne8y1a+
+         X9Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/QAS9hnOSCruAnMJO67LhuiuXgP/Xzg2aTOWl4lMTCg=;
-        b=n+tjISJK44zzMEwRus9k81fD92iS5hwE437IVWRImKYRgHJxaWdvyuadwNqpUDkuxL
-         0txFdZJFGY3FWb6rE7WcCcB5lbHyMCIMI8vb/Z0Tza4A+8IXtdmMTtoC8xM2kJOGGfC7
-         xKF8wW7x3BW7pRVSok9xz0vAr8MTjwJ6qF8p6IWeOf1d7zbbB0RYvGHFbbnp6HxjmEPe
-         QOAtblT3NKP7Yf+SX+5dqyg6kcowslaC2cEzsMiuHlEqNpRUtA54wSFpXFvDy9YlsHFO
-         7hij6sVkx63Rg0/b1B9AteR7H+NmNQ1/IrS7wJ+/UH33bc3YlsqNh72m/tFEzktv/lku
-         UPrg==
-X-Gm-Message-State: AOAM533RzsbveWr3zo0m5OxUG69xmnbNbLEYJoFb6m2cA1ICZYpP8UJJ
-        muiOX4mlMa0eEHXvmtS+V70D0ZvlRYE=
-X-Google-Smtp-Source: ABdhPJyTNXhwQod9uiDReLYiV4etS3PbS8pRIqqZ/NlhOVgCgUkBW1jnMVeZJx9l1wJiWduIdFsTHQ==
-X-Received: by 2002:adf:f592:: with SMTP id f18mr29254959wro.179.1626701605720;
-        Mon, 19 Jul 2021 06:33:25 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e11sm25122653wrt.0.2021.07.19.06.33.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jul 2021 06:33:25 -0700 (PDT)
-Message-Id: <13f6c229bd1459dcb0c8ab59c1ef22fb3430be72.1626701596.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1041.v4.git.git.1626701596.gitgitgadget@gmail.com>
-References: <pull.1041.v3.git.git.1626264613.gitgitgadget@gmail.com>
-        <pull.1041.v4.git.git.1626701596.gitgitgadget@gmail.com>
-From:   "Fabian Stelzer via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Jul 2021 13:33:16 +0000
-Subject: [PATCH v4 9/9] ssh signing: add documentation
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=SoYUTjcogOwLcL+D8v/8ybpbGCsnukrw6D6DbzdkNLI=;
+        b=SIdrdZ1uvEGT9KOQ2EHKDctdLO8mSJJgkfWkVJVqQlBQ862p+tsClnTP9OCU8VYoue
+         J03kxRZ5g1CN/EPdZfA2AqNRcMlEYhUYYf8iu21Z/SEAYqoMvUS9nOGQLV3Nzk/pn5Ip
+         39DD8L6bidHnn9BY9gRrEeLCV0ASznHT8eGzrA/YoL4Og6XoSEMugVBgNuANqorPVL4N
+         9Vhklb05tzCZB0ixNJovjbEp3WvNe7o/mQuDjfOM2HMVvOAaMYvCi/fmnmMSbutnvEPS
+         QVwpQHk+Rg5/VmVy7yX1amNRe3eD9KnDZCyYPcNYBCgadYHZ4qpMZoE+/lFr1QylFOz4
+         Cl7A==
+X-Gm-Message-State: AOAM533r+0vGtfv4g6ud6K6Wx2vk0Tka9OoghPyBQnEKjhyD9m6y6dcs
+        79lxar7aexM5KXFPDdm7N6g=
+X-Google-Smtp-Source: ABdhPJwBoomc5GV9yCFMwCuJoKGa0FGbrHoMZ1yGeWNPiztksAMY/y85mHv9uVUFvI9inQko90zlkA==
+X-Received: by 2002:a05:6808:2d2:: with SMTP id a18mr22322513oid.106.1626703547840;
+        Mon, 19 Jul 2021 07:05:47 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:517d:c5fa:4375:5b79? ([2600:1700:e72:80a0:517d:c5fa:4375:5b79])
+        by smtp.gmail.com with ESMTPSA id v4sm3176195otk.75.2021.07.19.07.05.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Jul 2021 07:05:46 -0700 (PDT)
+Subject: Re: [PATCH 0/5] Sparse index: integrate with commit and checkout
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.973.git.1624932786.gitgitgadget@gmail.com>
+ <CABPp-BF_i1QRCXaeKzqoc6Q2=3un-wku7aKUEdBbXfeVfTG8xg@mail.gmail.com>
+ <b362c428-eec9-39e3-55a0-0738431e1d98@gmail.com>
+ <c127ceed-10fd-9ad0-e858-db79bec0cf8d@gmail.com>
+ <CABPp-BGCnV-xHH-+S58pqFFhPbPj_0Rt=_QUf_ShAbTCyW9deA@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <91b81577-3ff8-3845-75d1-c47e8a42406e@gmail.com>
+Date:   Mon, 19 Jul 2021 10:05:44 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Hans Jerry Illikainen <hji@dyntopia.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Gwyneth Morgan <gwymor@tilde.club>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        Fabian Stelzer <fs@gigacodes.de>
+In-Reply-To: <CABPp-BGCnV-xHH-+S58pqFFhPbPj_0Rt=_QUf_ShAbTCyW9deA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Fabian Stelzer <fs@gigacodes.de>
+On 7/17/2021 11:37 AM, Elijah Newren wrote:
+> On Fri, Jul 16, 2021 at 6:59 AM Derrick Stolee <stolee@gmail.com> wrote:
+>>
+>> On 7/12/2021 2:46 PM, Derrick Stolee wrote:
+>>> On 7/9/2021 5:26 PM, Elijah Newren wrote:
+>>>> On Mon, Jun 28, 2021 at 7:13 PM Derrick Stolee via GitGitGadget
+>>>> <gitgitgadget@gmail.com> wrote:
+>>>>>
+>> ...
+>>> Further, I expect it to be simpler to modify the behavior
+>>> here to match the full checkout case than to make the
+>>> sparse-index case match the normal sparse-checkout case.
+>>> The "natural" thing would be to keep the staged "folder1/"
+>>> directory, but that would present as adding all contained
+>>> content, not just the single staged entry.
+>> Taking a closer look at the full checkout case, I discovered that the
+>> 'git checkout df-conflict' command succeeds in the full checkout case if I
+>> apply it directly to the 'master' branch. In that situation, it completely
+>> removes the staged change to folder1/edited-content! This seems like
+>> incorrect behavior, and has nothing to do with the sparse-checkout feature.
+> 
+> I was not able to reproduce.  Do you have other modifications to git,
+> or is there some other special setup required to trigger the bug that
+> I am missing in reading the paragraph above?  Here's what I see:
+> 
+> <Add an "exit 1 &&" right after "init_repos &&" in the 'diff with
+> directory/file conflicts' test, run until first failure, then:
+> 
+> $ cd trash directory.t1092-sparse-checkout-compatibility/full-checkout
+> $ git reset --hard
+> $ git checkout rename-in-to-out
+> $ echo more stuff >>folder1/edited-content
+> $ git add -u
+> $ git checkout df-conflict
+> error: Your local changes to the following files would be overwritten
+> by checkout:
+> folder1/edited-content
+> Please commit your changes or stash them before you switch branches.
+> Aborting
+> 
+> This looks like the expected behavior to me, and is what I'd also
+> expect from the sparse-checkout and sparse-index cases.
 
-Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
----
- Documentation/config/gpg.txt  | 39 +++++++++++++++++++++++++++++++++--
- Documentation/config/user.txt |  6 ++++++
- 2 files changed, 43 insertions(+), 2 deletions(-)
+It is fragile to the data shape in my test, so I'll be sure to
+include one in the next series version that demonstrates the change.
 
-diff --git a/Documentation/config/gpg.txt b/Documentation/config/gpg.txt
-index d94025cb368..dc790512e86 100644
---- a/Documentation/config/gpg.txt
-+++ b/Documentation/config/gpg.txt
-@@ -11,13 +11,13 @@ gpg.program::
- 
- gpg.format::
- 	Specifies which key format to use when signing with `--gpg-sign`.
--	Default is "openpgp" and another possible value is "x509".
-+	Default is "openpgp". Other possible values are "x509", "ssh".
- 
- gpg.<format>.program::
- 	Use this to customize the program used for the signing format you
- 	chose. (see `gpg.program` and `gpg.format`) `gpg.program` can still
- 	be used as a legacy synonym for `gpg.openpgp.program`. The default
--	value for `gpg.x509.program` is "gpgsm".
-+	value for `gpg.x509.program` is "gpgsm" and `gpg.ssh.program` is "ssh-keygen".
- 
- gpg.minTrustLevel::
- 	Specifies a minimum trust level for signature verification.  If
-@@ -33,3 +33,38 @@ gpg.minTrustLevel::
- * `marginal`
- * `fully`
- * `ultimate`
-+
-+gpg.ssh.allowedSignersFile::
-+	A file containing ssh public keys which you are willing to trust.
-+	The file consists of one or more lines of principals followed by an ssh
-+	public key.
-+	e.g.: user1@example.com,user2@example.com ssh-rsa AAAAX1...
-+	See ssh-keygen(1) "ALLOWED SIGNERS" for details.
-+	The principal is only used to identify the key and is available when
-+	verifying a signature.
-++
-+SSH has no concept of trust levels like gpg does. To be able to differentiate
-+between valid signatures and trusted signatures the trust level of a signature
-+verification is set to `fully` when the public key is present in the allowedSignersFile.
-+Therefore to only mark fully trusted keys as verified set gpg.minTrustLevel to `fully`.
-+Otherwise valid but untrusted signatures will still verify but show no principal
-+name of the signer.
-++
-+This file can be set to a location outside of the repository and every developer
-+maintains their own trust store. A central repository server could generate this
-+file automatically from ssh keys with push access to verify the code against.
-+In a corporate setting this file is probably generated at a global location
-+from automation that already handles developer ssh keys.
-++
-+A repository that only allows signed commits can store the file
-+in the repository itself using a path relative to the top-level of the working tree.
-+This way only committers with an already valid key can add or change keys in the keyring.
-++
-+Using a SSH CA key with the cert-authority option
-+(see ssh-keygen(1) "CERTIFICATES") is also valid.
-+
-+gpg.ssh.revocationFile::
-+	Either a SSH KRL or a list of revoked public keys (without the principal prefix).
-+	See ssh-keygen(1) for details.
-+	If a public key is found in this file then it will always be treated
-+	as having trust level "never" and signatures will show as invalid.
-diff --git a/Documentation/config/user.txt b/Documentation/config/user.txt
-index 59aec7c3aed..b3c2f2c541e 100644
---- a/Documentation/config/user.txt
-+++ b/Documentation/config/user.txt
-@@ -36,3 +36,9 @@ user.signingKey::
- 	commit, you can override the default selection with this variable.
- 	This option is passed unchanged to gpg's --local-user parameter,
- 	so you may specify a key using any method that gpg supports.
-+	If gpg.format is set to "ssh" this can contain the literal ssh public
-+	key (e.g.: "ssh-rsa XXXXXX identifier") or a file which contains it and
-+	corresponds to the private key used for signing. The private key
-+	needs to be available via ssh-agent. Alternatively it can be set to
-+	a file containing a private key directly. If not set git will call
-+	"ssh-add -L" and try to use the first key available.
--- 
-gitgitgadget
+>> It just happens that a sparse-checkout will have a _different_ kind of
+>> incorrect behavior!
+>>
+>> However, when adding the test on top of the ds/status-with-sparse-index
+>> branch, the full checkout case matches the sparse-checkout! I bisected
+>> this to the additions of files adjacent to folder1/ (folder1. folder1-,
+>> etc) in e669ffb (t1092: expand repository data shape, 2021-07-14). If I
+>> switch the test to conflict on folder2, then I get the strange behavior
+>> that I was noticing on 'master'.
+>>
+>> Some very subtle things are going on here, and they don't necessarily
+>> involve the sparse index. Adding the sparse index to the mix creates a
+>> third incorrect behavior to this already-broken case.
+>>
+>> If we agree that the correct thing to do here is to reject the merge and
+>> fail the command, then I can start working on making that change in
+>> isolation (because _none_ of the existing behaviors are correct).
+> 
+> Yes, rejecting the merge is the correct behavior.  This is implied by
+> the existing documentation for both the --merge and --force options to
+> checkout.
+> 
+>> That leaves a question as to whether we should hold up this series for
+>> that reason, or if I should pursue a fix to this kind of conflict as a
+>> forward fix on top of it. What do you think, Elijah and Junio?
+> 
+> I only dug in and found the sparse-checkout/sparse-index bugs because
+> the D/F changes you made to twoway_merge() looked clearly wrong to me
+> and I was trying to find a case that would demonstrate it and make it
+> easier for you to fix up.  I still think the patch is wrong and that
+> it adds a bug.  If you can drop that patch, and still get correct
+> behavior in your tests, then I think we can ignore other bugs in this
+> area, but I'm not happy with that particular patch.  If you need that
+> patch, then it needs to be corrected, which probably means figuring
+> out all these bugs.
+
+That's a good point. I reverted the patch and re-ran the test and
+found that actually the patch is necessary in order to match the
+_incorrect_ behavior. Without the patch, the sparse-index case
+(correctly) refuses to complete the checkout.
+
+I'll replace this patch with a test change that demonstrates these
+subtleties and marks them as NEEDSWORK.
+
+Thanks,
+-Stolee
+
