@@ -2,126 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 857D1C07E9D
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:37:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9E46C07E9B
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:37:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 718AA61242
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:37:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 92DFA6113A
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352205AbhGSQ5A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jul 2021 12:57:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39510 "EHLO
+        id S1352577AbhGSQ5C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jul 2021 12:57:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357800AbhGSQwT (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1357791AbhGSQwT (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 19 Jul 2021 12:52:19 -0400
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C310CC0613B8
-        for <git@vger.kernel.org>; Mon, 19 Jul 2021 09:59:21 -0700 (PDT)
-Received: by mail-il1-x134.google.com with SMTP id z1so16722424ils.0
-        for <git@vger.kernel.org>; Mon, 19 Jul 2021 10:18:51 -0700 (PDT)
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FCECC0613BD
+        for <git@vger.kernel.org>; Mon, 19 Jul 2021 09:59:28 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id v6so31493144lfp.6
+        for <git@vger.kernel.org>; Mon, 19 Jul 2021 10:18:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :content-transfer-encoding;
-        bh=47/VZZONHAS5hgtnH1RTJV3+FXftlMBkSrHPOGSjMR4=;
-        b=uKdkZDN+ykONa9UtzbzjV+HPjVxtE1zdUnNY6mFXYyhsCezKyqWN9UWBqOOTei47p7
-         i7V8arFg1S4UN/ZbedYUB2xwz/Za1FdUjEbWH9skkU+5UEmTafPotNQImHRKX2TfOwTW
-         Du1skgIyYVW8TyKGAHsBKzLWhJzwF2KiSPjwiNQLAr5AXDuGP4L4UUDnDNn3zbVuQDmV
-         g8PPDcSjZN1MmsSwEzHX027JD5nBqZwjScwiIFq7ST9roEFJdVNYq/FoQpmBdDNkcrF0
-         Pkk/O5GRQykWhJr56c+J8CnpN8NCJ3bX7Dn0i5BqN+kSuP8IleZVCF3ae033oDuuvzPZ
-         2EnQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=fADUF3XBzHOdM11aWIIDAfcvjleivP+opuL9K8mBlr4=;
+        b=IsG/kZ3Sjl7u6FOAlvl4POJEPEdrDwdZLsZnur27W4keGujqsjBaFiOMB4eYU8IsOs
+         3PDImeIUgOV8veLUYDllUAwcdY08Y7WMF/pPsjCLkGhKOX0DM+TdwaoviaJp1qvf+5gV
+         w+XIvrzZuOZRiDcxGt1YMYtHtL1UQ4rPCZb5ZMX25prZtWlvQa+Mx2ZvPPuqm5x2VVs4
+         bIVNZyBQ74ee2Q8coajNrclOkw9AqC+rlMjRQsDkyUGys/AHnkWLrhr2t2Ozd1+cwcoe
+         a9NF40OkKHhtx+vpV2VDs7SCrGSdNgZ5c6i6majToAM9S3u0m+0YS+Uxd1iu8aVXHEg3
+         cimg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:content-transfer-encoding;
-        bh=47/VZZONHAS5hgtnH1RTJV3+FXftlMBkSrHPOGSjMR4=;
-        b=Eb/ZcnOoZ59iZcYO2jjWv2E6C+akYIjxRkFkDp6wOlYimF6HWGhTgcZGGHf8w+SA3+
-         Pmu2nR0GYi5FNGYG7JYBi5FiVQ8CogJcXaefALhv7p9zh71cOCVXidbCu8iEppy2RfZm
-         hpR6Y4z3Idf98uYUM3PGqIlV6+PiGd/tDDQWD0YSsG8b+5209l8oLWeYYdFKYuJ11H5I
-         eldvQrHR8kZIE5KVihWKcBXaJ5qU6GaIEI0c60qCeAK831ICI+UJU3RwgWkfIrwWKr93
-         H0JCJkCv9lo63ttWfIpuMg44+Y5U6Ibu79825IEateR5DT5kZn7K25iMCcLM/r7zTJAx
-         Gn8A==
-X-Gm-Message-State: AOAM530ur5gxaMcgjabpRwWzPExJu9lXzrCBHMEQsw5ZXWEJanMkzAqb
-        PNYrv0365QNwj/zUhTQoe4YtQzSPIC+IMemB
-X-Google-Smtp-Source: ABdhPJwFy5ZP8sDmO743foB2OjniIea0SiU0zZzyVA03LwIkoJdZxDd9CNe1q0oBqPa8iACmxY7ueg==
-X-Received: by 2002:a92:d210:: with SMTP id y16mr18414555ily.295.1626715131112;
-        Mon, 19 Jul 2021 10:18:51 -0700 (PDT)
-Received: from localhost ([2600:1700:d843:8f:a0a0:3329:4f28:d1a3])
-        by smtp.gmail.com with ESMTPSA id o13sm10012413ilq.58.2021.07.19.10.18.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jul 2021 10:18:50 -0700 (PDT)
-Date:   Mon, 19 Jul 2021 13:18:49 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com
-Subject: [PATCH] multi-pack-index: fix potential segfault without sub-command
-Message-ID: <8c0bb3e0dc121bd68f7014000fbb60b28750a0fe.1626715096.git.me@ttaylorr.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=fADUF3XBzHOdM11aWIIDAfcvjleivP+opuL9K8mBlr4=;
+        b=rxqX38UYHTPIlzxljuq5iul7018F7MptP+8FKb1doqDZjdhzEj9VOSPyUbOf2HbgcV
+         MTCybhomdrXKwT97JEpSTZkYD08hgmecm38/9kf0jSMVAiJkASI4nFgAnpilyUOBUxDz
+         VUIioodk4zZQHixs+BKl6YQ9Mh0HtPgyf6PG3SZzyzBeIewqcDSpU3e0ALJXMSsLXNUI
+         zJvWKBo1w0TwMHC2CFHy9zV81GbMtlCWf3YY4uSBGlSzqmHO0egYptqFebqcsV7VVpQo
+         55fXWP4+MP291zT1uRimvpvEubY5hsYWZOLvHiqHD4dy5slPa2l4TIA21FfTkkAASHDx
+         Bgtg==
+X-Gm-Message-State: AOAM532JD0utlAkwuo0cM3CuUj05P0os//nLX2JDX9rmi+0++Ir7zAfV
+        wSXr7+EJDkQhr+Ooi+Vjms7aEMgAwqch6Wn5Mmk=
+X-Google-Smtp-Source: ABdhPJyy9Wrk+/kZAMO9q5uiTIxNHEOhyiXMTP3qWKZt3p6OqZR0iDlDHqClTnaG7at0OrLW3eE/rDTKhneNX5lWyBw=
+X-Received: by 2002:a19:c795:: with SMTP id x143mr4548544lff.42.1626715135959;
+ Mon, 19 Jul 2021 10:18:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+References: <49498ed0-cfd5-2305-cee7-5c5939a19bcf@campoint.net>
+ <87a6mo29dp.fsf@evledraar.gmail.com> <CAMMLpeQ5Lh8xfqTZoM74f616wE7ZhqWArL1WgGiMtiJSfrYcYg@mail.gmail.com>
+ <87h7gsvybx.fsf@evledraar.gmail.com>
+In-Reply-To: <87h7gsvybx.fsf@evledraar.gmail.com>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Mon, 19 Jul 2021 11:18:44 -0600
+Message-ID: <CAMMLpeRhHn5ndPYzihm0rCidjNQM8c7b+Ta-JSZ=jidbEr=VRg@mail.gmail.com>
+Subject: Re: progress test failure on fedora34
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Fabian Stelzer <fabian.stelzer@campoint.net>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since cd57bc41bb (builtin/multi-pack-index.c: display usage on
-unrecognized command, 2021-03-30) we have used a "usage" label to avoid
-having two separate callers of usage_with_options (one when no arguments
-are given, and another for unrecognized sub-commands).
+On Sun, Jul 18, 2021 at 2:08 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> On Wed, Jul 14 2021, Alex Henrie wrote:
+>
+> > On Wed, Jul 14, 2021 at 9:39 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> > <avarab@gmail.com> wrote:
+> >>
+> >> On Wed, Jul 14 2021, Fabian Stelzer wrote:
+> >>
+> >> > Hi,
+> >> > The test t0500-progress-display.sh in current master fails on latest
+> >> > fedora34.
+> >> > The break was introduced with:
+> >> >
+> >> > 83ae1edff7ee0b7674bd556955d2cf1706bddb21
+> >> > ab/fix-columns-to-80-during-tests (2021-06-29) 1 commit
+> >> >
+> >> > Kind regards,
+> >> > Fabian
+> >>
+> >> I have not been able to reproduce this, it seems the below E-Mail was
+> >> word-wrapped by your mailer, which is especially bad here since gettin=
+g
+> >> to the bottom of this requires looking at the whitespace.
+> >>
+> >> Is there a way you could tar that up and send it (to me personally is
+> >> fine, or some pastebin or whatever).
+> >>
+> >> I am able to reproduce something that looks like this if I
+> >> s/COLUMNS=3D80/COLUMNS=3D79/g in the test-lib, but given that we set i=
+t to
+> >> 80, and that the progress.c code just ends up with an
+> >> atoi(getenv("COLUMNS")), and we do our own wrapping (with no other fan=
+cy
+> >> logic) in progress.c, I'm not seeing right now how this could happen..=
+.
+> >
+> > This test also fails for me when using QTerminal or Konsole, but it
+> > passes on XTerm and LXTerminal.
+>
+> I tried this on Debian 11 with QTerminal 0.16.1 and can't reproduce it,
+> resized the window etc., always get COLUMNS=3D80 if I add some printf
+> debugging.
 
-But the first caller has been broken since cd57bc41bb, since it will
-happily jump to usage without arguments, and then pass argv[0] to the
-"unrecognized subcommand" error.
+Actually, it looks like the difference was that I didn't resize the
+XTerm or LXTerminal windows. The tests pass on all four if the
+terminal emulator window is exactly 80 columns wide, and they fail on
+all four if the window is any wider or narrower.
 
-Many compilers will save us from a segfault here, but the end result is
-ugly, since it mentions an unrecognized subcommand when we didn't even
-pass one, and (on GCC) includes "(null)" in its output.
-
-Move the "usage" label down past the error about unrecognized
-subcommands so that it is only triggered when it should be. While we're
-at it, bulk up our test coverage in this area, too.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
-Noticed this while I was reading code in a similar area while reviewing
-one of Ævar's series.
-
- builtin/multi-pack-index.c  | 2 +-
- t/t5319-multi-pack-index.sh | 5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 5d3ea445fd..8ff0dee2ec 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -176,8 +176,8 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 	else if (!strcmp(argv[0], "expire"))
- 		return cmd_multi_pack_index_expire(argc, argv);
- 	else {
--usage:
- 		error(_("unrecognized subcommand: %s"), argv[0]);
-+usage:
- 		usage_with_options(builtin_multi_pack_index_usage,
- 				   builtin_multi_pack_index_options);
- 	}
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 5641d158df..dab7123b3a 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -824,4 +824,9 @@ test_expect_success 'load reverse index when missing .idx, .pack' '
- 	)
- '
-
-+test_expect_success 'usage shown without sub-command' '
-+	test_expect_code 129 git multi-pack-index 2>err &&
-+	! test_i18ngrep "unrecognized subcommand" err
-+'
-+
- test_done
---
-2.31.1.163.ga65ce7f831
+-Alex
