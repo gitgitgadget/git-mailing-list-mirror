@@ -2,107 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0C94C6379D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8FA5C64980
 	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 23:11:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6FF36115B
+	by mail.kernel.org (Postfix) with ESMTP id CDB9661166
 	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 23:11:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376672AbhGSW0B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jul 2021 18:26:01 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53937 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359278AbhGSVnF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jul 2021 17:43:05 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2684AE05BE;
-        Mon, 19 Jul 2021 18:23:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=J3Qjg6Vi+fj2B3xfApRQ9p8SHqNowfDIlzxJt6
-        tdluM=; b=ydyQMtJiCcdY/AnXWSnhmlrXUCkCY+nZWA6rBDHojoVEw94uoB3CbK
-        A7TWFmO+gOfVsuoUsqjhAonV0QT1i/cilmNWnKO/jWl16T5sQwpt5TLn0Ma9TvJf
-        OfErROBpqTxGzDuog0u9lN3gr1BG/TCGTCSy+XgV2k6dzk1JqQwQU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1EB62E05BD;
-        Mon, 19 Jul 2021 18:23:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1441811AbhGSW0b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jul 2021 18:26:31 -0400
+Received: from siwi.pair.com ([209.68.5.199]:43742 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1391830AbhGSWE4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jul 2021 18:04:56 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 392A13F413A;
+        Mon, 19 Jul 2021 18:35:34 -0400 (EDT)
+Received: from SME-RED-HCI8.sme.test.net (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 991B2E05BC;
-        Mon, 19 Jul 2021 18:23:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Andy Zhang <zhgdrx@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: why "git rebase" searching the duplicate patches in <upstream
- branch> rather than in <new base branch>?
-References: <CAJcwCMPU9EhRkqeei_LnYyTJRZUQgHCvomrBbW0Qn+Jp1yhQfQ@mail.gmail.com>
-        <CAJcwCMPHFNHi5i=xRg=GAJL5HiUfKu_KUPwYwELofLLtOAK1bg@mail.gmail.com>
-Date:   Mon, 19 Jul 2021 15:23:18 -0700
-In-Reply-To: <CAJcwCMPHFNHi5i=xRg=GAJL5HiUfKu_KUPwYwELofLLtOAK1bg@mail.gmail.com>
-        (Andy Zhang's message of "Tue, 20 Jul 2021 01:45:01 +0800")
-Message-ID: <xmqqmtqij63t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id D57293F4104;
+        Mon, 19 Jul 2021 18:35:33 -0400 (EDT)
+Subject: Re: [PATCH v3 19/34] fsmonitor-fs-listen-win32: implement FSMonitor
+ backend on Windows
+To:     Eric Wong <e@80x24.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
+ <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
+ <5bba5eb3d1bd172f09fdf6eb2e9b8ac4dd7f940f.1625150864.git.gitgitgadget@gmail.com>
+ <87k0m9bpmv.fsf@evledraar.gmail.com>
+ <b19f3f2a-049f-acf2-f59e-de705dc54307@jeffhostetler.com>
+ <87mtqq2i3r.fsf@evledraar.gmail.com>
+ <nycvar.QRO.7.76.6.2107161754180.59@tvgsbejvaqbjf.bet>
+ <874kcuxkz8.fsf@evledraar.gmail.com> <20210717124535.GB16801@dcvr>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <d2936252-50d7-7b3f-4707-7c07b17a09f3@jeffhostetler.com>
+Date:   Mon, 19 Jul 2021 18:35:33 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EB3584A4-E8DF-11EB-9693-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <20210717124535.GB16801@dcvr>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andy Zhang <zhgdrx@gmail.com> writes:
-
-> why "git rebase" searching the duplicate patches in <upstream
-> branch> rather than in <new base branch>?
->
-> hi, all:
->
->  I am reading the help of "git rebase", it says:
->     "If the upstream branch already contains a change you have made
-> (e.g., because you mailed a patch which was applied upstream), then
-> that commit will be skipped. "
->
->  But, because we are applying commits to <new base branch> rather than
-> to <upstream branch>, I really don't understand why we are searching
-> the duplicate patches in <upstream branch> rather than in <new base
-> branch>?
-
-It is either a design bug or a documentation bug, or both ;-)
-
-I do think it makes sense to skip commits from the branch we are
-rebasing that have equivalent commits in the upstream, as it is
-expected that upstream might have already applied/cherry-picked some
-of the changes you are rebasing, and you do not want to use the same
-change twice.
-
-When we are transplanting a series of commits from an old base to
-totally unrelated base using the --onto option, e.g. when replaying
-the contents of 'topic' relative to 'next' down to 'master' in your
-topology, however,
-
-> Old tree is:
->
-> o---o---o---o---o  master
->     \
->      o---o---o---o---o  next
->                       \
->                        o---o---o  topic
-
-it is not necessarily obvious where to stop digging back at.  In the
-above picture where 'master' and 'next' have ancestry relationship,
-we could try to see if the three commits on 'topic' branch being
-replayed match any of the commits in next..master range, but when
-using the --onto option, there does not have to be any relationship
-between the <upstream> and <new base> (they do not have to share a
-root commit).  So from that point of view, it probably makes sense
-to default to --no-reapply-cherry-picks when --onto is used, while
-defaulting --reapply-cherry-picks when --onto is not used.
 
 
+On 7/17/21 8:45 AM, Eric Wong wrote:
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+>> On Fri, Jul 16 2021, Johannes Schindelin wrote:
+>>> Hi Ævar,
+>>>
+>>> On Tue, 13 Jul 2021, Ævar Arnfjörð Bjarmason wrote:
+>>>
+>>>>
+>>>> On Tue, Jul 13 2021, Jeff Hostetler wrote:
+>>>>
+>>>>> On 7/1/21 7:02 PM, Ævar Arnfjörð Bjarmason wrote:
+>>>>>> On Thu, Jul 01 2021, Jeff Hostetler via GitGitGadget wrote:
+>>>>>>
+>>>>>>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>>>>>>
+...
+
+Eric, welcome to the conversation and thanks for sharing your concerns.
+
+
+For my upcoming V4 I've shortened the filenames of the various backends,
+renamed the -macos one to -darwin, and shortened the names of the
+fsm-listener API, and the names of those static functions associated
+with starting the daemon in the background.
+
+I think this covers all of the issues raised across several
+patches in the series.
+
+Jeff
