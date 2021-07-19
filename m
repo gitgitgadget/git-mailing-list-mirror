@@ -2,170 +2,292 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8D45C12002
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 03:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7FD6C12002
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 06:55:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B36DF6115B
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 03:48:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0A0C61182
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 06:55:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234492AbhGSDvF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 18 Jul 2021 23:51:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56088 "EHLO
+        id S234541AbhGSG6N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jul 2021 02:58:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234467AbhGSDvE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Jul 2021 23:51:04 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97528C061762
-        for <git@vger.kernel.org>; Sun, 18 Jul 2021 20:48:04 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id a17-20020a9d3e110000b02904ce97efee36so5119064otd.7
-        for <git@vger.kernel.org>; Sun, 18 Jul 2021 20:48:04 -0700 (PDT)
+        with ESMTP id S233048AbhGSG6M (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jul 2021 02:58:12 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5546EC061762
+        for <git@vger.kernel.org>; Sun, 18 Jul 2021 23:55:13 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id d9so18738887ioo.2
+        for <git@vger.kernel.org>; Sun, 18 Jul 2021 23:55:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IUlqObrP1aqww9Xe9K0v0yqjDfvJ3M1ot37ehYictY0=;
-        b=EDGpw2LWXjW02etNDNpmrrlIX51x5l0h2SoReXzUekR0QH2kr6ZGkSPptP736sTZOu
-         Vkwspqz2X1MDsmk/JQQoQL/Tmz8OOPrVWABCJxs8pGcEziJbGDIEXVj9LSfzVfKIpngB
-         ZmPbe6a4wWHRDNytvWG2NC1rjf876FdLWfkniy46bMcM0hl9bBY+jm2HaY1YAXE5Aer3
-         QqGSeanH6zfKjnROVQhJQSWFOMb0oNr7VGNTbGz9cW4zTUHJspP/3b+dlQ2q9VcnmxE6
-         XEN0olGVHOBoZ+g/7nc0FPnjMYIW7v20yOdqnQODdT1TbgMXSr6Pd2twFEurKVkAR5Zl
-         Q47w==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=bTrbU4qhsIclu4qHRn6Srm57oJ3vDUjd2Hic2lcZNm4=;
+        b=IE0AkdyU1uspiC6J9gqu/127rNGBfYeK7fS9IffdglFtuZU4QYMhON863J/JnHN9IN
+         mGv1JrbvFUQxVT5CzZUz3dmrvPs/5ckfcj0afwVOuhDlFh1gdLoA7QAa2kD0/x6Y2kTW
+         FIyU0aJ9HOOdA7V0VTniDAbDHi1rEcQD4ApgoY1l0pMORV55PpJMJuHnc0RBKp2PKPJe
+         +bnpc4zUd/Bw0GvWUTGUaD8OpiMbFXjorj/65zW4pAjpNw7Za5nmvjXTaXm41KdoAM8F
+         ZczrfBs4gukDlSIzzRLYiVza5FKaQ9pej4UvIhrf0Kk8Y3ECIpf+LR5kU482xJ1s3euO
+         Og2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IUlqObrP1aqww9Xe9K0v0yqjDfvJ3M1ot37ehYictY0=;
-        b=p/TduXXL8Qkot//MaT/5A7YR5kZ02MwcjPU6Yq1xExOefMxNNTL+MX90HQ0n7a9mEo
-         gVZzQmCx+23FYp0O76pmp7kY2/gm5+H8wJi4wx2fKgaPQOSLKgSk597qrYV94RkzhjgZ
-         cedldDO6IosAKpol+cnIxRhM8v/lyN8szkPN9oW1KzpM9opVL2fHfmZdbVwaA9e5YTGu
-         g3wABEcqL1/l2YTn/T4YrbOKBvgCFkT1YHiUM5WqGfmqx2CtqE29e5AnkYWRT76S0FUd
-         avKqw/Knma5ldBtPgUYde1PE8SCr0CXbkpCnFi5whw2yhZjUjBJjy/la6QWCkDHE4d1c
-         UrFw==
-X-Gm-Message-State: AOAM533cjOtoy+psIy+97lAYUjuWN8EEyCf2s02WPtLr1sm/hABGtxFT
-        IAvooQl4sayiXHb+GTnQNmkiGekqt3HW6w==
-X-Google-Smtp-Source: ABdhPJzxvvVlY1N/hg4rp5PWPMn53u6lh3mMJ5xriq8mcER6tNBItoARA5CXI1kzJfSeWE+wfO+pyw==
-X-Received: by 2002:a9d:4f02:: with SMTP id d2mr10230034otl.254.1626666483770;
-        Sun, 18 Jul 2021 20:48:03 -0700 (PDT)
-Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id y5sm230423ott.72.2021.07.18.20.48.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Jul 2021 20:48:03 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Mathias Kunter <mathiaskunter@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 2/2] push: make default consistent
-Date:   Sun, 18 Jul 2021 22:47:58 -0500
-Message-Id: <20210719034758.1288766-3-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.32.0.40.gb9b36f9b52
-In-Reply-To: <20210719034758.1288766-1-felipe.contreras@gmail.com>
-References: <20210714164900.606330-1-felipe.contreras@gmail.com>
- <20210719034758.1288766-1-felipe.contreras@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=bTrbU4qhsIclu4qHRn6Srm57oJ3vDUjd2Hic2lcZNm4=;
+        b=O0P8YOmMcNq9TmvqDO08cTvMbKh0pZ2hzMSUoHxf0iO8WeG1GEF3BQIQ6L8UD/O82D
+         nFYcM1s7jwsjZJyW3rNNCWDEPc6Mx474PAjTxUTxrwB4CGWyKw8qwYsZeyqNvLP+Oe4+
+         Uyycnjh8ktLgX21DRH7WLCPdNybX8Ef9Du8Eu0G96ExsW+0x5lx6kSFoOCPMgyJLxR5g
+         PjCwKnsupNKVvJDq+bO3k1HWTUA7bYHb1+w1cG15A1i/Sl/B4rh/k6MOCH31ohn4mVW2
+         WyzGk3HUt8CIYcAjQQu/9gR0FM9oClgYgeBvhf4QYQ9iYs3JWvVNLTAGxIIQy3NSmM45
+         HWVw==
+X-Gm-Message-State: AOAM532NV5K9YSNt0i0LBvtjbieQcpaD/xAYhd45osm09PB0YNW4kwwp
+        8f3MuzVmeLOWZ+FIaVFJslXrEObvkRCNp0vbw/Dau+FdjHuz0e7F
+X-Google-Smtp-Source: ABdhPJyvE+HW6XZ3cnHA8n8pb8gqqiyIQzbfNWc+lVloKfDZ4aHrIMWAnXUnipr1y0/8LcXKU1TiKdI9K1EiksYyALU=
+X-Received: by 2002:a6b:1642:: with SMTP id 63mr8063882iow.68.1626677711176;
+ Sun, 18 Jul 2021 23:55:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Mon, 19 Jul 2021 14:55:20 +0800
+Message-ID: <CAOLTT8QLrG+R3sOHpMsAiveOT1wTKR-_Nw8Ro6iXL1_MTMZ6eA@mail.gmail.com>
+Subject: [GSoC] Git Blog 9
+To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Hariom verma <hariom18599@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The default action "simple" doesn't make sense. It's supposed to be the
-same as "current", except with an extra safety in case the name of the
-upstream branch doesn't match the name of the current branch (and we are
-pushing to the same remote). But if there's no upstream configured
-there's no need for any check.
+My ninth week blog finished:
+The web version is here:
+https://adlternative.github.io/GSOC-Git-Blog-9/
 
-Instead of behaving like "current" if the current branch doesn't have an
-upstream configured, `git push` fails like "upstream", so it's a
-Frankensteinian action.
+## Week9 BUG REPORT
 
-If the upstream branch isn't configured, "simple" should not abort, just
-like "current".
+### BUG REPORT 1
 
-Reported-by: Mathias Kunter <mathiaskunter@gmail.com>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/config/push.txt |  5 +++--
- Documentation/git-push.txt    |  6 +++---
- builtin/push.c                | 12 +++---------
- t/t5528-push-default.sh       |  2 +-
- 4 files changed, 10 insertions(+), 15 deletions(-)
+* What did you do before the bug happened? (Steps to reproduce your issue)
 
-diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
-index 632033638c..d267d05e7a 100644
---- a/Documentation/config/push.txt
-+++ b/Documentation/config/push.txt
-@@ -27,8 +27,9 @@ push.default::
- * `simple` - pushes the current branch with the same name on the remote.
- +
- If you are working on a centralized workflow (pushing to the same repository you
--pull from, which is typically `origin`), then you need to configure an upstream
--branch with the same name.
-+pull from, which is typically `origin`), and you have configured an upstream
-+branch, then the name must be the same as the current branch, otherwise this
-+action will fail as a precaution.
- +
- This mode is the default since Git 2.0, and is the safest option suited for
- beginners.
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index a953c7c387..58352bbf88 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -39,9 +39,9 @@ what to push (See linkgit:git-config[1] for the meaning of `push.default`).
- 
- When neither the command-line nor the configuration specify what to
- push, the default behavior is used, which corresponds to the `simple`
--value for `push.default`: the current branch is pushed to the
--corresponding upstream branch, but as a safety measure, the push is
--aborted if the upstream branch does not have the same name as the
-+value for `push.default`: the current branch is pushed to a remote
-+branch with the same name, but as a safety measure the push is aborted
-+if there's a configured upstream branch with a different name than the
- local one.
- 
- 
-diff --git a/builtin/push.c b/builtin/push.c
-index 3ee7d6ada1..64134531de 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -229,16 +229,10 @@ static void setup_default_push_refspecs(struct remote *remote)
- 		if (!same_remote)
- 			break;
- 		dst = get_upstream_ref(branch);
--		if (!dst)
--			die(_("The current branch %s has no upstream branch.\n"
--			    "To push the current branch and set the remote as upstream, use\n"
--			    "\n"
--			    "    git push --set-upstream %s %s\n"),
--			    branch->name,
--			    remote->name,
--			    branch->name);
--		if (strcmp(branch->refname, dst))
-+		if (dst && strcmp(branch->refname, dst))
- 			die_push_simple(branch, remote);
-+		if (!dst)
-+			dst = branch->refname;
- 		break;
- 
- 	case PUSH_DEFAULT_UPSTREAM:
-diff --git a/t/t5528-push-default.sh b/t/t5528-push-default.sh
-index f280e00eb7..ba38256ef4 100755
---- a/t/t5528-push-default.sh
-+++ b/t/t5528-push-default.sh
-@@ -126,7 +126,7 @@ test_expect_success 'push from/to new branch with current creates remote branch'
- test_expect_success 'push to existing branch, with no upstream configured' '
- 	test_config branch.main.remote repo1 &&
- 	git checkout main &&
--	test_push_failure simple &&
-+	test_push_success simple main &&
- 	test_push_failure upstream
- '
- 
--- 
-2.32.0.40.gb9b36f9b52
+Because someone told me that `git cherry-pick` can't gave useful
+prompt information like `git rebase -i` does:
 
+```
+You can amend the commit now, with
+
+git commit --amend
+
+Once you are satisfied with your changes, run
+
+git rebase --continue
+```
+
+I found that I can take use of "GIT_CHERRY_PICK_HELP" environment variable,
+
+```
+$ GIT_CHERRY_PICK_HELP="git cherry-pick --continue" ggg cherry-pick v1
+```
+
+which will output prompt information "git cherry-pick --continue", good!
+
+* What did you expect to happen? (Expected behavior)
+
+I could use `git cherry-pick --abort` to exit cherry-pick normally.
+
+* What happened instead? (Actual behavior)
+
+Then I couldn't use `git cherry-pick --abort` to exit cherry-pick normally.
+
+* Anything else you want to add:
+
+See the print_advice() in sequencer.c, `CHERRY_PICK_HEAD` will be removed
+if we use the env "GIT_CHERRY_PICK_HELP". It is used by `git rebase
+-i` and somewhere else.
+
+Here may have two solutions:
+1. Prevent users from using the environment variable "GIT_CHERRY_PICK_HELP".
+2. check if we are truly cherry-pick.
+
+```c
+diff --git a/sequencer.c b/sequencer.c
+index 0bec01cf38..c01b0b9e9c 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -409,8 +409,9 @@ static void print_advice(struct repository *r, int
+show_hint,
+* (typically rebase --interactive) wants to take care
+* of the commit itself so remove CHERRY_PICK_HEAD
+*/
+- refs_delete_ref(get_main_ref_store(r), "", "CHERRY_PICK_HEAD",
+- NULL, 0);
++ if (opts->action != REPLAY_PICK)
++ refs_delete_ref(get_main_ref_store(r), "", "CHERRY_PICK_HEAD",
++ NULL, 0);
+return;
+}
+```
+
+* [System Info]
+
+```
+git version:
+git version 2.32.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.12.15-arch1-1 #1 SMP PREEMPT Wed, 07 Jul 2021 23:35:29
++0000 x86_64
+compiler info: gnuc: 11.1
+libc info: glibc: 2.33
+$SHELL (typically, interactive shell): /bin/zsh
+```
+
+* [Enabled Hooks]
+
+None.
+
+### BUG REPORT 2
+
+* What did you do before the bug happened? (Steps to reproduce your issue)
+
+Normally execute the test under git/t.
+
+* What did you expect to happen? (Expected behavior)
+
+Pass the test t/t0500-progress-display.sh.
+
+* What happened instead? (Actual behavior)
+
+```zsh
+$ sh t0500-progress-display.sh -d -i -v
+...
+expecting success of 0500.3 'progress display breaks long lines #1':
+sed -e "s/Z$//" >expect <<\EOF &&
+Working hard.......2.........3.........4.........5.........6: 0%
+(100/100000)<CR>
+Working hard.......2.........3.........4.........5.........6: 1%
+(1000/100000)<CR>
+Working hard.......2.........3.........4.........5.........6: Z
+10% (10000/100000)<CR>
+100% (100000/100000)<CR>
+100% (100000/100000), done.
+EOF
+
+cat >in <<-\EOF &&
+progress 100
+progress 1000
+progress 10000
+progress 100000
+EOF
+test-tool progress --total=100000 \
+"Working hard.......2.........3.........4.........5.........6" \
+<in 2>stderr &&
+
+show_cr <stderr >out &&
+test_cmp expect out
+
+--- expect 2021-07-19 06:09:39.800189433 +0000
++++ out 2021-07-19 06:09:39.803522767 +0000
+@@ -1,6 +1,5 @@
+Working hard.......2.........3.........4.........5.........6: 0%
+(100/100000)<CR>
+Working hard.......2.........3.........4.........5.........6: 1%
+(1000/100000)<CR>
+-Working hard.......2.........3.........4.........5.........6:
+- 10% (10000/100000)<CR>
+- 100% (100000/100000)<CR>
+- 100% (100000/100000), done.
++Working hard.......2.........3.........4.........5.........6: 10%
+(10000/100000)<CR>
++Working hard.......2.........3.........4.........5.........6: 100%
+(100000/100000)<CR>
++Working hard.......2.........3.........4.........5.........6: 100%
+(100000/100000), done.
+not ok 3 - progress display breaks long lines #1
+#
+# sed -e "s/Z$//" >expect <<\EOF &&
+# Working hard.......2.........3.........4.........5.........6: 0%
+(100/100000)<CR>
+# Working hard.......2.........3.........4.........5.........6: 1%
+(1000/100000)<CR>
+# Working hard.......2.........3.........4.........5.........6: Z
+# 10% (10000/100000)<CR>
+# 100% (100000/100000)<CR>
+# 100% (100000/100000), done.
+# EOF
+#
+# cat >in <<-\EOF &&
+# progress 100
+# progress 1000
+# progress 10000
+# progress 100000
+# EOF
+# test-tool progress --total=100000 \
+# "Working hard.......2.........3.........4.........5.........6" \
+# <in 2>stderr &&
+#
+# show_cr <stderr >out &&
+# test_cmp expect out
+#
+```
+
+* What's different between what you expected and what actually happened?
+
+It seems that the progress display is not working normally.
+
+* Anything else you want to add:
+
+I am thinking:
+1. Is this bug caused by my own patches?
+So I switched to other branches, including upstream/master, see the bug too.
+2. Is this bug caused by zsh?
+So I switched to bash, and saw the bug too.
+3. Does this bug only appear on my Arch-Linux?
+So I asked my classmates (who use arch linux too) to download git/git
+from github and perform the test, see the bug too.
+4. Does Ubuntu also have this bug?
+No. In the case of using Ubuntu's docker and Centos's virtual machine,
+after cloning git/git from github, they actually passed the test!!!
+
+So what's wrong with Arch-Linux?
+
+* [System Info]
+
+```
+git version:
+git version 2.32.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.12.15-arch1-1 #1 SMP PREEMPT Wed, 07 Jul 2021 23:35:29
++0000 x86_64
+compiler info: gnuc: 11.1
+libc info: glibc: 2.33
+$SHELL (typically, interactive shell): /bin/zsh
+```
+
+* [Enabled Hooks]
+
+None.
+
+
+### project progress
+
+I am still thinking about how to improve the performance of `git
+cat-file --batch`.
+This cannot be solved quickly, keep patient.
+
+My mentors told me to split my main patch series into a few smaller
+patch series, but how?
+In other words, there is a certain correlation between these patches,
+If they are really split into
+multiple patches, how can I send them to the mailing list without repeating?
+
+I just received half of the GSoC bonus, and felt a burden of responsibility...
