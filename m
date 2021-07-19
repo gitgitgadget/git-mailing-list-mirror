@@ -7,113 +7,99 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E7C6C07E9B
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1EB2C07E95
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:52:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E556B61164
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:51:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8ABB06113C
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 17:52:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350460AbhGSRI6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jul 2021 13:08:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43092 "EHLO
+        id S1353187AbhGSRLo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jul 2021 13:11:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376938AbhGSRGV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jul 2021 13:06:21 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25809C08EC8A
-        for <git@vger.kernel.org>; Mon, 19 Jul 2021 10:27:55 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id dp20so28165269ejc.7
-        for <git@vger.kernel.org>; Mon, 19 Jul 2021 10:45:13 -0700 (PDT)
+        with ESMTP id S245166AbhGSRKc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jul 2021 13:10:32 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05F36C061768
+        for <git@vger.kernel.org>; Mon, 19 Jul 2021 10:34:24 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id p67so21648909oig.2
+        for <git@vger.kernel.org>; Mon, 19 Jul 2021 10:51:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=sfA9qZvhLNQrxyT+rvafGiYsoZ2t+JeJRAenggMeUlQ=;
-        b=XJ0+FDLlRrrNIyV1xQhkdVN02NboEUtq/XnkCzVbspUs/grqwNx1p/1H6FimXPT+jX
-         kGgSemlIzlFIcyeYgVCYsH+TkWWmRkMIQKivfcpwb6UYp6QUa5eiGoli17MYrZl94VSd
-         Za9QujXvL/UKBhIC84Ig4yFy6a6b0uJpoUsxvvFojmtlHTUG/+Tei9cqgL4m+6+lvBLP
-         OmvIP02l6XdZYkI1hG3tDqwmOTtVBha6r97l0zvGH4Wo5GDCSSTwUa9dCrSBVCcUYHA1
-         yqZ7F3fug3DJCPevCP5tBhoz6YhYQpS8jtY3ZMrbk7VCVcPj3/Bks3e4R9CxGbOBj3Sb
-         06NA==
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-transfer-encoding;
+        bh=8ZYEXUZD/Njcb2hmIShImYXofOfpmgld6VFTbaXRQi4=;
+        b=sxi6DSzMIdozi6yMrPiHxKjnnKuMcOuVL2fEHMHmaPqHm0pfDNsgzCaQJKOCSV0M7L
+         dS4z+RwBlfx2UdT9l0SWhxa7WL1FEIh/23bLiG5eSym4qUh5+t+coFBlENpNSkWv683/
+         25Lt+1D2e5DCBtKQAbIu6hoITAiSmfU81j1Lwqk/nBTG2KgpZLHdaDaGfGaTtxN4Y+WB
+         H/CJdaQFPbAWQCnFzYtPGKN1QkwYZSiWnZZWmULQqa/bFv3n6ZhQNb9UR0YLb7eIwF88
+         MyRJ0qjAigZL31HgA5wp/5w76JmUELcMTl8CI3QGNlAc12JwMb5CtJ1m259sH9gRKMwc
+         e3oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=sfA9qZvhLNQrxyT+rvafGiYsoZ2t+JeJRAenggMeUlQ=;
-        b=QYkk1SwPa5IXPK6a9XYeV6PjHEHE2pwBHts9qC+y2Rz3cIDJPxn2CrB7UIY0riqMgd
-         SGHZLrJjapkMz8Eb8IpsODwsQrHvytSRVrx2FkC9TxWQvlyWZUOkBjPaNzXQgD3dyDpK
-         tHzL3h2sp0a9Uq/k3XVYqKjVrr8Vih/YvpxsB4u14xhUvKx4w0T0ThxV7IuGHBJXfjBI
-         O3mNm57t5BNu0m8NfsoeJOcxfeeuaFlR/IahTcbsKmm72ldrb21xiguyFdsgAzLNgqkn
-         ulq8sJmAfu9zF1fwnwXNs2eb4Iv3VY03nmI1RF+qCIXldkTZj7mLfhvN0TbimsyxjvE9
-         NINA==
-X-Gm-Message-State: AOAM532RiikTUMaoG/yNRIsUyxvIPadICE05SM/OlBieMz2VHqWJuV8O
-        3fNww4I5ZmdFxk5zjk/tAXTOQHWHu3r2CiapRSEbgnSQ
-X-Google-Smtp-Source: ABdhPJwfVqYNvBJymFIRSzPZkhKMKMAh1mnuKaAXhQtAAmaNHbXe2UVjnhWDmaSshecfBM+QdcYUMQQw6Ysh2Qyr+yo=
-X-Received: by 2002:a17:906:6047:: with SMTP id p7mr27904762ejj.206.1626716711832;
- Mon, 19 Jul 2021 10:45:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAJcwCMPU9EhRkqeei_LnYyTJRZUQgHCvomrBbW0Qn+Jp1yhQfQ@mail.gmail.com>
-In-Reply-To: <CAJcwCMPU9EhRkqeei_LnYyTJRZUQgHCvomrBbW0Qn+Jp1yhQfQ@mail.gmail.com>
-From:   Andy Zhang <zhgdrx@gmail.com>
-Date:   Tue, 20 Jul 2021 01:45:01 +0800
-Message-ID: <CAJcwCMPHFNHi5i=xRg=GAJL5HiUfKu_KUPwYwELofLLtOAK1bg@mail.gmail.com>
-Subject: why "git rebase" searching the duplicate patches in <upstream branch>
- rather than in <new base branch>?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
+         :subject:mime-version:content-transfer-encoding;
+        bh=8ZYEXUZD/Njcb2hmIShImYXofOfpmgld6VFTbaXRQi4=;
+        b=sF5DQw8ERFuPQbyoCsQr0A+7A2Uz4TWu4OgCyY4BKQqQg9xObHKbY4GvPSOYTV7xzr
+         6hIZ8Q2fuhIsS8UqIPoDUj5DHP1CEUoAd9xbiFv99RpfWGc2LnpQB7wQ5Ia5NkVB/Nqh
+         Q/AmeFUrZJDAlK0359cFu/YzIIYXKKAMs0l+8+wl4O92AtZpDsllf5PapUXobtc1hzRq
+         WxF0Shwipvt38GASWVjPumWAQPptCOCQ95rMPVJrCy+jtYNWk4M25nqstkbYP07VjZ9k
+         lvtUOueqbdzTXMk78WPsBaT/cmtVB+TTnrTAqXlDDDiQiMs5YctIJjymeBro85zss0wP
+         fG6Q==
+X-Gm-Message-State: AOAM532Pfz1pIOpIVXGDh4YRLJxh+vxBVR6KWREDxnsF2cSUHwFihGMq
+        hRgKENZf18vmUfTizVAGAFicEXcVSsv9ow==
+X-Google-Smtp-Source: ABdhPJwO5SjklFtnPtWJMcmo25uLs1S3JYKunwO8582qcyQtDIX+um5SirfbKAEEIlocg5xV6SrtFQ==
+X-Received: by 2002:aca:e107:: with SMTP id y7mr23046760oig.11.1626717071807;
+        Mon, 19 Jul 2021 10:51:11 -0700 (PDT)
+Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
+        by smtp.gmail.com with ESMTPSA id n23sm2912880ooq.48.2021.07.19.10.51.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Jul 2021 10:51:11 -0700 (PDT)
+Date:   Mon, 19 Jul 2021 12:51:10 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Martin <git@mfriebe.de>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org
+Message-ID: <60f5bb8e15329_13f2e220855@natae.notmuch>
+In-Reply-To: <1cb8774e-2489-e8aa-12ce-8d7e34b700ff@mfriebe.de>
+References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
+ <30e4c874-6b87-b03d-fa33-fde5b7e50b2a@mfriebe.de>
+ <60ea2eb562f26_2a69208e8@natae.notmuch>
+ <1e18c4ed-6975-5041-4b4f-75c4d3d21860@mfriebe.de>
+ <60ec6d91deced_a452520825@natae.notmuch>
+ <54644739-2138-8086-1696-d3c52960216c@mfriebe.de>
+ <60ec74c513b2b_a45252081b@natae.notmuch>
+ <0d7bd249-2aba-236a-9f93-3a5b30182d15@mfriebe.de>
+ <60ec93155663f_a231f208fb@natae.notmuch>
+ <3a84e4c9-4e48-1cbe-4fe6-150ff56c8508@mfriebe.de>
+ <60ecbe577a086_a6b702082@natae.notmuch>
+ <d3678ef6-1bcd-2666-87dc-751aef2ca1a7@mfriebe.de>
+ <60edb8ff814cf_ab6dd208d9@natae.notmuch>
+ <02f1f12a-0ff3-ef46-fce3-e222b2867309@mfriebe.de>
+ <60f1d650e2667_330208e@natae.notmuch>
+ <1997ca3b-117a-e19a-0dee-7342a2f1a0e7@mfriebe.de>
+ <60f1f4c3dd8b1_14cb208c1@natae.notmuch>
+ <fedbfe1f-9e6d-f46f-ca41-e176a30e938c@mfriebe.de>
+ <60f22aaa6a4f1_1f602081b@natae.notmuch>
+ <e57f1d19-d574-5ba5-efc1-abb8ab2a8c01@mfriebe.de>
+ <60f33f8a7c39b_507220823@natae.notmuch>
+ <1cb8774e-2489-e8aa-12ce-8d7e34b700ff@mfriebe.de>
+Subject: Re: PATCH: improve git switch documentation
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-why "git rebase" searching the duplicate patches in <upstream branch>
-rather than in <new base branch>?
+I already told you I don't think this extended discussion is of interest
+to the mailing list, and that's why I removed it from the receipients.
 
-hi, all:
+I'd be more than happy to continue the discussion privately, but please
+don't add the mailing list again. I won't reply here.
 
- I am reading the help of "git rebase", it says:
-    "If the upstream branch already contains a change you have made
-(e.g., because you mailed a patch which was applied upstream), then
-that commit will be skipped. "
+Cheers.
 
- But, because we are applying commits to <new base branch> rather than
-to <upstream branch>, I really don't understand why we are searching
-the duplicate patches in <upstream branch> rather than in <new base
-branch>?
-
- In the following example, the git command is as:
-   git rebase --onto master next topic
-
- I think it should be reasonable to search the duplicate patches in
-<new base branch>(i.e, master) instead of <next branch>.
-
- If possible, an improvement may be an option for enabling searching
-in <new base branch> as well?
-
-  Thank you in advance for any enlightenment you can provide!
-
-
-Jintao Zhu
-
-//----
-example:
-
-Old tree is:
-
-o---o---o---o---o  master
-    \
-     o---o---o---o---o  next
-                      \
-                       o---o---o  topic
-
-
-We want our tree to look like this:
-o---o---o---o---o  master
-   |            \
-   |             o'--o'--o'  topic
-    \
-     o---o---o---o---o  next
-
-We can get this using the following command:
-
-  git rebase --onto master next topic
-
-//----
+-- 
+Felipe Contreras
