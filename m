@@ -2,143 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 750A3C63793
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6DACC6379F
 	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 23:11:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 67D5E61186
+	by mail.kernel.org (Postfix) with ESMTP id AB1516113E
 	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 23:11:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354597AbhGSWWI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jul 2021 18:22:08 -0400
-Received: from siwi.pair.com ([209.68.5.199]:34369 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1358313AbhGSUQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jul 2021 16:16:26 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 1755D3F40F4;
-        Mon, 19 Jul 2021 16:56:46 -0400 (EDT)
-Received: from AZHCI-MGMT.azhci.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id A8E833F40B7;
-        Mon, 19 Jul 2021 16:56:45 -0400 (EDT)
-Subject: Re: [PATCH v3 08/34] fsmonitor--daemon: add a built-in fsmonitor
- daemon
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
- <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
- <f88db92d4259d1c29827e97e957daf6eda39c551.1625150864.git.gitgitgadget@gmail.com>
- <871r8hd5ew.fsf@evledraar.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <91cd5dfa-d325-7eb3-e948-c075269781a5@jeffhostetler.com>
-Date:   Mon, 19 Jul 2021 16:56:44 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        id S1376626AbhGSWZm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jul 2021 18:25:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42064 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1388722AbhGSVB3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jul 2021 17:01:29 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83199C061574
+        for <git@vger.kernel.org>; Mon, 19 Jul 2021 14:31:48 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id w22so13561290ioc.6
+        for <git@vger.kernel.org>; Mon, 19 Jul 2021 14:31:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=zesPGVGUsMxwHSqgCLmhao8jCFIKe0UHXeTU3/TC/8g=;
+        b=s9IvS7e8XyrN1c2UPs+j7O4zYVtJl5CgO2qqF34ijK3FfnSG6kFeL5adYz9xs66ETy
+         xwj3Kx/TlP+jZRzzaNtvOCpw2A4Hqi5KQ2en4K70FBn5bpd1Q6ba8i3KO4sdnuaG2vDK
+         83Rw0OkRud6dE5qmFQO7MfwKAmoF+jl/FENqLT7BjKPtU7AxgcTjEk1skowY8oOk8PJO
+         ohJKjSja8Y2DbjQXloMX+Z26w/PQPVv4ubNKy7rDEz+IQ94NE9MidVm+XpMBfGNcf8Kp
+         z8mfT+3iWoboqXURm9++/rINPgbj8pxCagdiBQpFzvFm0vpXWPMqqOxvJZoUZDBBi3mM
+         LO5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=zesPGVGUsMxwHSqgCLmhao8jCFIKe0UHXeTU3/TC/8g=;
+        b=Uj/NPHmfp/y/P/KFPqAAt4d2wRbljxFWihYq/H99Mb+rTkLaCOSgNbBBa6xuYTL+TE
+         slcJK4V3FxevJryxKPC/ff0gcVQmKwLMOmMD7Xv2hv5g+SMI6FZrjKOhZG/KO6hbXFz0
+         +SOcyeWRgO6vKe1puI4hlQ4kT0ZP38ScNWn7lQRo04ca7qfM4w2z+zJPEEmg5aDFkvEn
+         15s3HNKE80Ue5jvA43s7j2k3WO9/ADvomleJRXhqmIz74u0Jk0zKO9okABfLgzqjuBn4
+         ioMaidW5V+VuPMJUXG0L5OH17cG59rqLlxz3VN1i0Lz+d8PSrz3oGnakn6IJasa8sMMk
+         YAeA==
+X-Gm-Message-State: AOAM5304cfOKaK3u1GiyERQDe8sXpbVOVDCOcSdINds+PXfUi5X90Dpw
+        CH5M5DHw6KHLE92hpQhLovdVaw==
+X-Google-Smtp-Source: ABdhPJyB2Aw2H92l7X/RdKdSulKyMShd1LtumfUBK6Y9sDZn6Amdoolaa4e1xxTONizvxl9Zv29a6w==
+X-Received: by 2002:a6b:6016:: with SMTP id r22mr20923332iog.12.1626730307847;
+        Mon, 19 Jul 2021 14:31:47 -0700 (PDT)
+Received: from localhost ([2600:1700:d843:8f:a0a0:3329:4f28:d1a3])
+        by smtp.gmail.com with ESMTPSA id h8sm721416iov.1.2021.07.19.14.31.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Jul 2021 14:31:47 -0700 (PDT)
+Date:   Mon, 19 Jul 2021 17:31:45 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 2/2] pack-objects: fix segfault in --stdin-packs option
+Message-ID: <YPXvQXOcdKdCzcFb@nand.local>
+References: <cover-0.2-00000000000-20210621T145819Z-avarab@gmail.com>
+ <cover-0.2-00000000000-20210709T101014Z-avarab@gmail.com>
+ <patch-2.2-c7315f2b378-20210709T101015Z-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <871r8hd5ew.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-2.2-c7315f2b378-20210709T101015Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Jul 09, 2021 at 12:13:48PM +0200, Ævar Arnfjörð Bjarmason wrote:
+
+Thanks for the update, and sorry that it took me so long to get to. I
+see that this still hasn't quite made its way to 'next', so I'll just
+add one comment.
+
+> +test_expect_success 'pack-object <stdin parsing: --stdin-packs handles garbage' '
+> +	cat >in <<-EOF &&
+> +	$(git -C pack-object-stdin rev-parse one)
+> +	$(git -C pack-object-stdin rev-parse two)
+> +	EOF
+
+I see that you left my suggestion to inline this here-doc with the
+actual 'pack-objects' invocation below alone, which is fine. I think
+that it does help the readability, too, since it separates the input
+from the command its being fed to.
+
+> +	# That we get "two" and not "one" has to do with OID
+> +	# ordering. It happens to be the same here under SHA-1 and
+> +	# SHA-256. See commentary in pack-objects.c
+> +	cat >err.expect <<-EOF &&
+> +	fatal: could not find pack '"'"'$(git -C pack-object-stdin rev-parse two)'"'"'
+> +	EOF
+
+On the other hand, crafting this err.expect with one of the object's
+full OID still sits funny with me. I appreciate you checking that this
+is the correct object to test with in SHA-1 and SHA-256 mode, but isn't
+the point that we shouldn't be relying on which object comes out?
+
+I think that dropping this down to just something like:
+
+    grep 'could not find' err.actual
+
+would be an improvement since it avoids the finicky shell quoting,
+hardens this test in the event of a future change in hashing algorithm,
+and brings the test more in line with the spirit of the patch itself
+(which is to report some of its input, not necessarily the first one
+given).
 
 
-On 7/1/21 6:36 PM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Thu, Jul 01 2021, Jeff Hostetler via GitGitGadget wrote:
-> 
-> A general comment on this series (including previous patches). We've
-> usually tried to bend over backwards in git's codebase not to have big
-> ifdef blocks, so we compile most code the same everywhere. We waste a
-> bit of object code, but that's fine.
-> 
-> See 9c897c5c2ad (pack-objects: remove #ifdef NO_PTHREADS, 2018-11-03)
-> for a good exmaple of bad code being turned to good.
-> 
-> E.g. in this case:
-> 
->> +#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
->> +
->> +int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
->> +{
->> +	const char *subcmd;
->> +
->> +	struct option options[] = {
->> +		OPT_END()
->> +	};
->> +
->> +	if (argc < 2)
->> +		usage_with_options(builtin_fsmonitor__daemon_usage, options);
->> +
->> +	if (argc == 2 && !strcmp(argv[1], "-h"))
->> +		usage_with_options(builtin_fsmonitor__daemon_usage, options);
->> +
->> +	git_config(git_default_config, NULL);
->> +
->> +	subcmd = argv[1];
->> +	argv--;
->> +	argc++;
->> +
->> +	argc = parse_options(argc, argv, prefix, options,
->> +			     builtin_fsmonitor__daemon_usage, 0);
->> +
->> +	die(_("Unhandled subcommand '%s'"), subcmd);
->> +}
->> +
->> +#else
->> +int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
->> +{
->> +	struct option options[] = {
->> +		OPT_END()
->> +	};
->> +
->> +	if (argc == 2 && !strcmp(argv[1], "-h"))
->> +		usage_with_options(builtin_fsmonitor__daemon_usage, options);
->> +
->> +	die(_("fsmonitor--daemon not supported on this platform"));
->> +}
->> +#endif
-> 
-> This whole thing could really just be a
-> -DHAVE_FSMONITOR_DAEMON_BACKEND=1 or -DHAVE_FSMONITOR_DAEMON_BACKEND=0
-> somewhere (depending), and then somewhere in the middle of the first
-> function:
-> 
-> 	if (!HAVE_FSMONITOR_DAEMON_BACKEND)
-> 	    	die(_("fsmonitor--daemon not supported on this platform"));
-> 
-
-This whole file will be filled up with ~1500 lines of static functions
-that only make sense when the daemon is supported and that make calls
-to platform-specific backends.
-
-I suppose we could stub in an empty backend (something like that in
-11/34 and 12/34) and hack in all stuff in the makefile to link to it
-in the unsupported case, but that seems like a lot of effort just to
-avoid an ifdef here.
-
-I mean, the intent of the #else block is quite clear and we're not
-fooling the reader with a large source file of code that will never
-be used on their platform.
-
-We could consider splitting this source file into a supported and
-unsupported version and have the makefile select the right .c file.
-We'd have to move the usage and stuff to a shared header and etc.
-That would eliminate the ifdef, but it would break the convention of
-the source filename matching the command name.
-
-I'm not sure it's worth the bother TBH.
-
-Jeff
+Thanks,
+Taylor
