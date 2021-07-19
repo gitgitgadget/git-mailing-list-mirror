@@ -7,110 +7,154 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81FEBC63799
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D130C6379A
 	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 23:11:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 759EC6113E
+	by mail.kernel.org (Postfix) with ESMTP id 935D96113E
 	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 23:11:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359469AbhGSWWm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jul 2021 18:22:42 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59255 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1387618AbhGSU0A (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jul 2021 16:26:00 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2B1A8149BA2;
-        Mon, 19 Jul 2021 17:06:25 -0400 (EDT)
+        id S1376499AbhGSWYt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jul 2021 18:24:49 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53598 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1388255AbhGSUrk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jul 2021 16:47:40 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A4691134C13;
+        Mon, 19 Jul 2021 17:28:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0L2jaR5RerWJX92y8IKnR2XqXe/9mottYFKksS
-        LyxKw=; b=pY7wZrs8qQO3Ls7kSDNKUgIxOOJxyzSR81GJlv9Ql31j6qFj95i733
-        bCLUUz2AwEHC8uhpq4h0IQkAPje4b1SsyXab2x0TnFsPQ/JfjD0gQO9I6x/yXX19
-        kbS5oACh5wLRbGQWKuHY16pZ3yGsnni9nXkdM0z3K9v4r8P2elGXw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 24A1B149BA1;
-        Mon, 19 Jul 2021 17:06:25 -0400 (EDT)
+        :content-type; s=sasl; bh=7CYd1/+9AZbhOrmM81/f1YeWtYjs6Nr7xb/Rj/
+        vhZWk=; b=saaw9xU57sn52nSiP223ImFTbqQlVsrfd8idydH7l3L+4dmfb0SWI3
+        8kwlwjfuNkzB5hXnTyb0zNBcpC6X9cq5uq3as3vUw1BwgrP7ntB/LoYRSPlpo/qi
+        zEQgE6GPW4idiGcdgx+++r9Ng9qHEXCO22TunVQ9QWo6ZBi6LjtpQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9C982134C12;
+        Mon, 19 Jul 2021 17:28:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.3.135])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4E056149BA0;
-        Mon, 19 Jul 2021 17:06:21 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EA471134C0D;
+        Mon, 19 Jul 2021 17:28:10 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git@vger.kernel.org, iankaz@google.com,
         sandals@crustytoothpaste.net, avarab@gmail.com,
         emilyshaffer@google.com
-Subject: Re: [RFC PATCH v2 0/2] MVP implementation of remote-suggested hooks
+Subject: Re: [RFC PATCH v2 2/2] hook: remote-suggested hooks
 References: <cover.1623881977.git.jonathantanmy@google.com>
         <cover.1626453569.git.jonathantanmy@google.com>
-Date:   Mon, 19 Jul 2021 14:06:19 -0700
-In-Reply-To: <cover.1626453569.git.jonathantanmy@google.com> (Jonathan Tan's
-        message of "Fri, 16 Jul 2021 10:57:39 -0700")
-Message-ID: <xmqq8s22ko8k.fsf@gitster.g>
+        <1ec1c958eb2b8aa2581280d050836dd0e7f6edef.1626453569.git.jonathantanmy@google.com>
+Date:   Mon, 19 Jul 2021 14:28:09 -0700
+In-Reply-To: <1ec1c958eb2b8aa2581280d050836dd0e7f6edef.1626453569.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Fri, 16 Jul 2021 10:57:41 -0700")
+Message-ID: <xmqqzguij8nq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 2B146154-E8D5-11EB-8216-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 37AF9598-E8D8-11EB-82F8-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jonathan Tan <jonathantanmy@google.com> writes:
 
-> Here's an updated version of the remote-suggested hooks RFC, hopefully
-> addressing some of the concerns people have brought up (e.g.
-> auto-updating without letting the user verify, or prompting about hooks
-> by default). It consists of two main parts:
+> Teach the "git hook install all|<hook-name>" command, that can install
+> one or all remote-suggested hooks.
 >
->  - Non-interactive prompts during certain Git commands about the
->    existence of hooks. These prompts are turned *off* by default.
+> If a configuration option hook.promptRemoteSuggested is set, inform the
+> user of the aforementioned command:
 >
->  - New "git hook" subcommands that can install these hooks (so that the
->    aforementioned Git prompts or out-of-band installation instructions
->    can tell users to install these hooks in a platform-independent way).
->    These subcommands work whether or not prompts are enabled.
+>  - when cloning, and refs/remotes/origin/suggested-hooks is present in
+>    the newly cloned repo
+>  - when fetching, and refs/remotes/origin/suggested-hooks is updated
+>  - when committing, there is a remote-suggested commit-msg hook, and
+>    there is currently no commit-msg hook configured
 >
-> You can see how they work in patch 2's t1361.
+> NEEDSWORK: Write a more detailed commit message once the design is
+> finalized.
 
-I really wanted to try this out, but which commit was this based on?
+OK.  Let's take this more as WIP.
 
-> In doing this, I have tried to scope down the overall effort as much as
-> possible (to avoid security risks as much as possible, among other
-> things), concentrating on situations that server-side hooks cannot
-> handle. I think the main thing is that server-side hooks can check and
-> prompt upon push, but they cannot catch problems that the client could
-> have noticed upon commit; if the end user pushes a commit chain and only
-> notices problems then, the user would have to redo the commits (possibly
-> through an interactive rebase on the spot). Catching problems upon
-> commit would prevent this problem, only necessitating amending the
-> commit.
->
-> In the Gerrit use case, Gerrit requires a specific "Change-Id" trailer
-> in the commit message, but I can foresee the same issue in projects that
-> require their commit messages to fit a certain template or projects that
-> want lints to be run but their builds, for some reason, don't run
-> arbitrary code (or they have no builds at all).
->
-> To that end, I have added a prompt for the "commit-msg" hook if the
-> remote has suggested one, but there are none currently installed.
-> (Similar prompts could be added for other commit-related hooks.) The
-> other prompts are upon clone and upon fetch (if the hooks have been
-> updated).
->
-> Jonathan Tan (2):
->   hook: move list of hooks
->   hook: remote-suggested hooks
->
->  builtin/bugreport.c               |  38 +-----
->  builtin/clone.c                   |  12 ++
->  builtin/fetch.c                   |  17 +++
->  builtin/hook.c                    |  17 ++-
->  hook.c                            | 185 +++++++++++++++++++++++++++++-
->  hook.h                            |   6 +
->  t/t1361-remote-suggested-hooks.sh | 105 +++++++++++++++++
->  7 files changed, 340 insertions(+), 40 deletions(-)
->  create mode 100755 t/t1361-remote-suggested-hooks.sh
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 2a2a03bf76..c2c8596aa9 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -1393,6 +1393,18 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  			   branch_top.buf, reflog_msg.buf, transport,
+>  			   !is_local);
+>  
+> +	if (hook_should_prompt_suggestions()) {
+> +		for (ref = mapped_refs; ref; ref = ref->next) {
+> +			if (ref->peer_ref &&
+> +			    !strcmp(ref->peer_ref->name,
+> +				    "refs/remotes/origin/suggested-hooks")) {
+> +				fprintf(stderr, _("The remote has suggested hooks in refs/remotes/origin/suggested-hooks.\n"
+> +						  "Run `git hook install all` to install them.\n"));
+> +				break;
+> +			}
+> +		}
+
+Hmph, do we really need to iterate over these mapped refs array?  It
+seems to me that it would be vastly simpler to check if that single
+ref exists after "clone" finishes depositing all the refs we are
+supposed to create.
+
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 769af53ca4..e86c312473 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -28,6 +28,7 @@
+>  #include "promisor-remote.h"
+>  #include "commit-graph.h"
+>  #include "shallow.h"
+> +#include "hook.h"
+>  
+>  #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
+>  
+> @@ -1313,6 +1314,22 @@ static int consume_refs(struct transport *transport, struct ref *ref_map)
+>  				 ref_map);
+>  	transport_unlock_pack(transport);
+>  	trace2_region_leave("fetch", "consume_refs", the_repository);
+> +
+> +	if (hook_should_prompt_suggestions()) {
+> +		struct ref *ref;
+> +
+> +		for (ref = ref_map; ref; ref = ref->next) {
+> +			if (ref->peer_ref &&
+> +			    !strcmp(ref->peer_ref->name,
+> +				    "refs/remotes/origin/suggested-hooks") &&
+> +			    oidcmp(&ref->old_oid, &ref->peer_ref->old_oid)) {
+> +				fprintf(stderr, _("The remote has updated its suggested hooks.\n"));
+> +				fprintf(stderr, _("Run 'git hook install all' to update.\n"));
+> +				break;
+
+Again we _could_ do "remember if we had it and at where, and then
+compare after we fetch", but this _might_ be simpler.
+
+I however do not know if it makes sense to have a separate loop just
+for this.  This should be done as a part of store_updated_refs(),
+no?
+
+On top of this patch, if we wanted to add yet another "this ref is
+special and pay attention to it when it got updated", it makes a lot
+more sense not to add yet another loop that is a copy of this one in
+consume_refs(), but roll the handling of that new ref into a loop
+that already exists.  And for the purpose of such an update, I do
+not see why that "loop that already exists" should not be the one
+that goes over ref_map in store_updated_refs().  For the same
+reason, "the remote-tracking ref 'origin/suggested-hooks' is special"
+can and should go to an existing loop in store_updated_refs(), no?
+
+How does this interact with the "--dry-run" option, by the way?
+What if ref_map proposes to update this suggested-hooks ref, but
+"--atomic" fetch feature finds that some other branches do not
+fast-forward and we end up not updating the suggested-hooks ref,
+either?
+
+So, unlike my earlier guess, it _might_ turn out that "remember the
+state before the fetch, see if the fetch actually updated and then
+report" could be simpler to design and implement.  I dunno.
