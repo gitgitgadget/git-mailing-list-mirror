@@ -2,105 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 879CEC07E9B
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 15:44:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAD62C6377A
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 16:22:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6B83361363
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 15:44:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE17961409
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 16:22:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239333AbhGSPDg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jul 2021 11:03:36 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55864 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345353AbhGSPBw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jul 2021 11:01:52 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5E39CDD15F;
-        Mon, 19 Jul 2021 11:42:30 -0400 (EDT)
+        id S1344141AbhGSPlL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jul 2021 11:41:11 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58002 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1349783AbhGSPgP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jul 2021 11:36:15 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 476CA132364;
+        Mon, 19 Jul 2021 12:16:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=1w2wZTXxIxMx
-        3vq9DTOCRIp6Xvmt7ZrQu83iuXaOKkg=; b=SLGiWpsYhUL6hz20CY5HF13kQonj
-        I8ExTUxo0Ui9kk6VxMteS7rBehScX6qavXVAYZvODq+yrCqyKt2AJmSKqIxPM0Gx
-        Fq2g8t+zXwtgSKMpcCTlxZhG1PS2yiPVOVN6g75ACZmZze8OwqCWSc858bSHC8C8
-        Se9RrLd/BIhQWVY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 55336DD15E;
-        Mon, 19 Jul 2021 11:42:30 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=vw17XI2mp25v
+        xuYLF8stSkZW2kyAImRFOkQPg0WsXVE=; b=jbwE3s0PXaddJNomaVlUqISM2WDs
+        Gsih1caMukYwsuP6++QWXLeBNjwN95IhXBXVY2tBof6GEG9JKOz4ZpN/O7+868eb
+        sIW8nA1xwvEOcnVYF2LnuVnNoJzke+eC+jxH9rwXclKrjoXOELhSXZq76mfRsLmR
+        tmN4Mwt2dVYsjk4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4053D132363;
+        Mon, 19 Jul 2021 12:16:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.3.135])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CCF79DD15B;
-        Mon, 19 Jul 2021 11:42:29 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 85037132362;
+        Mon, 19 Jul 2021 12:16:51 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwen@google.com>,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] refs file backend: remove dead "errno == EISDIR" code
+Subject: Re: [PATCH v2 02/11] refs/files: remove unused REF_DELETING in
+ lock_ref_oid_basic()
 References: <patch-1.1-de0838fe99-20210714T111351Z-avarab@gmail.com>
-        <YO8PBBJZ2Q+5ZqFs@coredump.intra.peff.net>
-        <871r801yp6.fsf@evledraar.gmail.com>
-        <YO9wCqetxHii+TvK@coredump.intra.peff.net>
-        <875yxczbd6.fsf@evledraar.gmail.com>
-        <YO/EpxU0NG+HVSlx@coredump.intra.peff.net>
-        <xmqqk0lppw49.fsf@gitster.g>
-        <YPJBY8LjiwYRyDOu@coredump.intra.peff.net>
-Date:   Mon, 19 Jul 2021 08:42:29 -0700
-In-Reply-To: <YPJBY8LjiwYRyDOu@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 16 Jul 2021 22:33:07 -0400")
-Message-ID: <xmqqo8aynwd6.fsf@gitster.g>
+        <cover-00.11-00000000000-20210716T140631Z-avarab@gmail.com>
+        <patch-02.11-033c0cec33d-20210716T140631Z-avarab@gmail.com>
+Date:   Mon, 19 Jul 2021 09:16:49 -0700
+In-Reply-To: <patch-02.11-033c0cec33d-20210716T140631Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 16 Jul
+ 2021 16:12:58
+        +0200")
+Message-ID: <xmqqk0lmnury.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: ED041634-E8A7-11EB-927A-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: B9E31188-E8AC-11EB-A13A-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> On Fri, Jul 16, 2021 at 06:28:06PM -0700, Junio C Hamano wrote:
+> The lock_ref_oid_basic() function has gradually been replaced by use
+> of the file transaction API, there are only 4 remaining callers of
+> it.
+
+Peff mentioned "file, not ref?", and I wonder about the same thing.
+
+Inside the implementation of ref transaction (e.g. the codepath that
+calls lock_ref_for_update() from files_transaction_prepare()), we do
+end up calling the lockfile API and you could (but I'd prefer not to
+see you do so) call it "file transaction API", but I think you meant
+that most callers no longer perform low-level "acquire lock, update
+and release" and instead use the ref transaction.
+
+> None of those callers pass REF_DELETING, the last such caller went
+> away in 8df4e511387 (struct ref_update: move "have_old" into "flags",
+> 2015-02-17). This is the start of even more removal of unused code in
+> and around this function.
+
+While I agree that no existing calls to lock_ref_oid_basic() pass
+REF_DELETING to it (hence this patch is a benign no-op), inside
+ref_transaction_commit(), 8df4e511387 still used REF_DELETING, I
+think, like so:
+
+	/* Acquire all locks while verifying old values */
+	for (i =3D 0; i < n; i++) {
+		struct ref_update *update =3D updates[i];
+		unsigned int flags =3D update->flags;
+
+		if (is_null_sha1(update->new_sha1))
+			flags |=3D REF_DELETING;
+		update->lock =3D lock_ref_sha1_basic(
+				update->refname,
+				((update->flags & REF_HAVE_OLD) ?
+				 update->old_sha1 : NULL),
+				NULL,
+				flags,
+				&update->type);
+
+
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
->> >> I then just never got to picking it up again, I'll probably re-roll=
- it &
->> >> make it a part of this series, then we can remove this whole OID !=3D=
- NULL
->> >> case and will be sure nothing fishy's going on.
->> >
->> > Yeah, that sounds like a good path forward. I do think the patch und=
-er
->> > discussion here is probably the right thing to do. But it becomes al=
-l
->> > the more obvious if lock_ref_oid_basic() ends up dropping that param=
-eter
->> > entirely.
->>=20
->> OK, so what's the final verdict on this step?  It is unfortunate
->> that when =C3=86var took over a topic from Han-Wen, this patch has bee=
-n
->> inserted as the very first step before the patches in the series, so
->> until we know we are happy with it, it takes several other patches
->> hostage.
+> ---
+>  refs/files-backend.c | 2 --
+>  1 file changed, 2 deletions(-)
 >
-> I just read through v2. Modulo a few small nits (mostly typos, but a fe=
-w
-> commit message suggestions), it looks good to me. I agree it's a lot to
-> stick in front of another set of patches, but I think in this case we
-> can proceed quickly enough to make it worth doing in the order =C3=86va=
-r
-> suggests.
-
-I did not check the v2 thouroughly myself, but read it enough to
-convince me that it would be good preliminary clean-up steps to come
-before the main series (modulo typoes and nits, as you pointed out).
-
-Thanks.
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 677b7e4cdd2..326f0224218 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -934,8 +934,6 @@ static struct ref_lock *lock_ref_oid_basic(struct f=
+iles_ref_store *refs,
+> =20
+>  	if (mustexist)
+>  		resolve_flags |=3D RESOLVE_REF_READING;
+> -	if (flags & REF_DELETING)
+> -		resolve_flags |=3D RESOLVE_REF_ALLOW_BAD_NAME;
+> =20
+>  	files_ref_path(refs, &ref_file, refname);
+>  	resolved =3D !!refs_resolve_ref_unsafe(&refs->base,
