@@ -2,83 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 286ACC12002
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 09:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A8DEC12002
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 09:01:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10D5A6100C
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 09:00:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 035B9611C2
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 09:01:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235385AbhGSIT6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jul 2021 04:19:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53396 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235739AbhGSIT4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jul 2021 04:19:56 -0400
-Received: (qmail 30624 invoked by uid 109); 19 Jul 2021 08:33:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 19 Jul 2021 08:33:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10969 invoked by uid 111); 19 Jul 2021 08:33:55 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 19 Jul 2021 04:33:55 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 19 Jul 2021 04:33:54 -0400
-From:   Jeff King <peff@peff.net>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2021, #03; Tue, 13)
-Message-ID: <YPU48uSCxXbsjvGW@coredump.intra.peff.net>
-References: <xmqqmtqpzosf.fsf@gitster.g>
- <YPUrSB8+zEur+ZBt@ncase>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YPUrSB8+zEur+ZBt@ncase>
+        id S235528AbhGSIUd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jul 2021 04:20:33 -0400
+Received: from mail-pf1-f178.google.com ([209.85.210.178]:38565 "EHLO
+        mail-pf1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235800AbhGSIU1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jul 2021 04:20:27 -0400
+Received: by mail-pf1-f178.google.com with SMTP id i14so3852885pfd.5
+        for <git@vger.kernel.org>; Mon, 19 Jul 2021 02:01:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=Ie4EMs6jz6Zy6DsridMx27i9hn8f72rLMKI1BmFAlYw=;
+        b=NPJWu4HX0xdMaXPuWeG0WCKXV22oYoCQKXQgW21Xn2l6n+Lc6TyA8s/NGKEn2TiYlJ
+         b2tESeHSomhme6BUukmMhg56lB2MhElm2lq3GCghNWFuG/kV8rKorwPQxOGZDaSyioAL
+         chY0ZVBWgycFB7450a2R86MwbsNpWTNcB4imzUgHE2b+QqlE+tEWHVOEZtgcTB31ig+2
+         1QaznajRt52JD2QjhwQXc2lLPrXddHtF+gj4q1OJVVrsGPsXi2XIM4ILbZT3Us044QjQ
+         X3633P3diZODaxaH/JqSDwHEBPbqH5Dn4PGW2yDpYn/2EG2dZIVnhSIfFGQq2hN60CrM
+         2ZxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=Ie4EMs6jz6Zy6DsridMx27i9hn8f72rLMKI1BmFAlYw=;
+        b=B6Q43S2AGErQwwiCF0Z0AcJiCcvka5Tjg785BhgsU1kbSW7v4grWM8uu1fbggC+s+v
+         bbXhqaXb+vy2+Mcf0ZwU6WyAJsvfjLwkEyRmSnwT0XY3IjXTdKUyUjtRZj2VkpH2euX0
+         GdGtBMRNDgAwOFkEYnAPTI2JC8LtXYlXKNFgSywoDzI85CWN2mbYCejatsyzh7PmUtki
+         dVOD3wYorFnK8CzFFJ2nSxA/vT2JjnyXscKWtoJFHRTY4o2ZMowZgVdPaM0LGgDCE56I
+         3ONGjUNqpwd+N0WEjU+5FCYEFt+rMrBc8YCWa0fq+tJSbVgQxWVlBWpR/Hw4NNYq44eA
+         0o5A==
+X-Gm-Message-State: AOAM531fu8d1lNVwN80c12sRyUkb20ERYrXgIfuiZPl6VLTYTnxwyw1B
+        ZS/I42389gwiWJDn7CJF47YSYIEfr2bfrg==
+X-Google-Smtp-Source: ABdhPJy6iBRwzVkcMDL0PiQYH0WeIwEyhA1P45YzxVZMnPuopSp+PqdL8rBs/3aRKn8dstw7v8Lv0w==
+X-Received: by 2002:a63:3107:: with SMTP id x7mr15954081pgx.303.1626684813067;
+        Mon, 19 Jul 2021 01:53:33 -0700 (PDT)
+Received: from smtpclient.apple ([119.82.121.47])
+        by smtp.gmail.com with ESMTPSA id n12sm19444897pgr.2.2021.07.19.01.53.31
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 19 Jul 2021 01:53:32 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
+Subject: Re: My Git Dev Blog - Week 9
+From:   Atharva Raykar <raykar.ath@gmail.com>
+In-Reply-To: <fcb14e9b-c76d-9a54-fccb-d66e7de04f7a@gmail.com>
+Date:   Mon, 19 Jul 2021 14:23:29 +0530
+Cc:     Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E8CA36A6-2FC0-4A76-9461-D5F4CA205AB8@gmail.com>
+References: <ED260A04-153A-46D5-8A84-CF517085DEC9@gmail.com>
+ <fcb14e9b-c76d-9a54-fccb-d66e7de04f7a@gmail.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+X-Mailer: Apple Mail (2.3654.100.0.2.22)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 19, 2021 at 09:35:36AM +0200, Patrick Steinhardt wrote:
+On 19-Jul-2021, at 06:21, Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+>=20
+> On 18/07/21 18.59, Atharva Raykar wrote:
+>> Here's my latest blog post:
+>> https://atharvaraykar.me/gitnotes/week9
+>=20
+> You wrote:
+>> Interact more with the community by asking questions in your patch =
+cover letters and replies to reviews.
+>=20
+> Did you mean something like [RFC PATCH]?
 
-> On Tue, Jul 13, 2021 at 06:07:12PM -0700, Junio C Hamano wrote:
-> [snip]
-> > * ps/perf-with-separate-output-directory (2021-07-02) 1 commit
-> >  - perf: fix when running with TEST_OUTPUT_DIRECTORY
-> > 
-> >  Test update.
-> > 
-> >  What's the status of this one?
-> 
-> From my point of view this is ready, but it's still missing reviews so
-> far. The lack of interest seems to indicate that nobody has hit the
-> issue so far, and I wonder why that is. Am I the only one who sets
-> TEST_OUTPUT_DIRECTORY to a tmpfs directory in his config.mak to speed up
-> tests?
+That would be one part of it, but I meant it in a more general sense, =
+ie,
+it is better to be detailed and specific about design decisions in a =
+patch
+that one may not be sure of, and mention it up front.
 
-I had marked it to look at, but just hadn't gotten around to it. I just
-gave it a review (but the upshot is that it looks fine to me).
+That, and asking questions to reviewers to clarify what they mean, and =
+their
+motivations behind it, if one is not sure of those.
 
-I don't set TEST_OUTPUT_DIRECTORY myself; instead I do:
+> --=20
+> An old man doll... just what I always wanted! - Clara
 
-  GIT_TEST_OPTS = --root=/path/to/tmpfs
-
-TBH, I had never really considered using TEST_OUTPUT_DIRECTORY for this
-(--root predates it, and was written explicitly for the tmpfs case). But
-I also think --root is more convenient:
-
-  - "make test" will run in the tmpfs for speed, but "./t1234-foo.sh -i"
-    will run locally, which makes it easy to "cd" in to inspect the
-    result
-
-  - likewise, I find accessing the results in t/test-results/*.out a
-    little more convenient
-
-But all of that is preference. I don't think you're wrong to use
-TEST_OUTPUT_DIRECTORY this way, but the above points might be
-interesting to you.
-
--Peff
