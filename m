@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AFC5C636C9
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 13:33:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C0ADC07E9D
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 13:33:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7647260C41
-	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 13:33:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 309E960200
+	for <git@archiver.kernel.org>; Mon, 19 Jul 2021 13:33:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238647AbhGSMwz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Jul 2021 08:52:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38678 "EHLO
+        id S238659AbhGSMw4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Jul 2021 08:52:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238601AbhGSMwr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jul 2021 08:52:47 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35BC2C0613DC
+        with ESMTP id S238617AbhGSMwu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jul 2021 08:52:50 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF5CCC0613DD
         for <git@vger.kernel.org>; Mon, 19 Jul 2021 05:55:09 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id l6so10396719wmq.0
-        for <git@vger.kernel.org>; Mon, 19 Jul 2021 06:33:26 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id c12so4047395wrt.3
+        for <git@vger.kernel.org>; Mon, 19 Jul 2021 06:33:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=q8Lm8j+TrHCn9qNr1KefHUTJfsSHrABeJYx/C/WjU1s=;
-        b=lLT761pMv9+IVUCaInBkRlpwXaS05TE3y2htgjc4E5arW8LhGJI/UA7dfsIBFzG1qq
-         sSzLTgZnbcnjpEXApVT848QG1YMFxkHIZJbbN15JGD+MiLftfTnMaasDhoBCzceYeZyi
-         xqX88Y7dFbi8haVFD6elcSqUQfFCQmL5Toresit7H3gHHh13Z9at1IXzeOLdFgNIHziS
-         Pp5BJ1D3gnqsgrRTpQtc8Z2ngWcA6fwV82pTuuQNVHHgxuQvytpnLqSoBjoxQjh/gndk
-         7mon96QVLb8oIH988Bj50SocN/MfBhyke4W+A7A8kbuKoTZzOhZLEFer8WVcRXARJl8B
-         oXSw==
+        bh=/QAS9hnOSCruAnMJO67LhuiuXgP/Xzg2aTOWl4lMTCg=;
+        b=cP8FxMeu2LiQAf64UTDDtZY1YXx8fFyhsMjJZJS6FFiXe8poGbInMCXPngf5s3cP45
+         I6iYmPQnv2N4ydY74XnXYg7AGmwnnfQvyfsb/32Mlst1UZ/Ffq8DWUy4MSPfmuu/VDRz
+         2hXS/eyzsLEGm2MfXy/IJlCMQ+KPHy5orl6v0mVyZFP/6cOb+G9u9OpBj8Sa4jTZkwQw
+         N+BjOHMp4xszVGXY42wm8wxZyRB7NbRFbRA9u5FICKTeyfcVaM4loUVZ102P6SArPM4F
+         klqXpzMdE97JgEpGY5miNkmWa1HV7Br0g2n5wyeE7LMXUq7Fah0YoBPynZZ847WUaRHR
+         8wlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=q8Lm8j+TrHCn9qNr1KefHUTJfsSHrABeJYx/C/WjU1s=;
-        b=C0jUqM5okDWeNffOvMSPuuVupr5Ld/AMQPVrwPIDlNF7zRDqhJdr5V3WSuJO1mHpS/
-         B9+64KSCoW7ML/Hpri+86Ym2HRwYZ60f3t49D2mBTNXdusyrls5HhnQwnbDJ88DkXFLo
-         juHT9DUMdSxa2ykGjEyufV35Rfxb6NonUakBakf1jgXDHvSvHyQTfvEa6LRu8bz2xLUR
-         wmnBiLNqm52Qhh9ej7F5tW+C7t6JMSRpihrYUTvaXKIxInv/nWeNU12uHMl+tiW4OtGK
-         i3NqpbLkRICIVK3456eQ90Vppe8D9Z8+2XCWfkoT2dlwqj5t8iTXbqnDwQfvJPJseYWi
-         c43Q==
-X-Gm-Message-State: AOAM530PV/iNnARPNoztxbVW/xODSsXLyaBtwbtr7M/8ExhzF7Z31AWQ
-        SzOqyHPiNWFkVrmGrXcUYx/fb7N40/o=
-X-Google-Smtp-Source: ABdhPJyIdm4h/v107Ycl3/JKTVhj9CxQYMiGnMV6UTMJ+dFWcRSl3MHK/z+laPh83VRsTX35jBXD9A==
-X-Received: by 2002:a05:600c:4c94:: with SMTP id g20mr25598457wmp.40.1626701604997;
-        Mon, 19 Jul 2021 06:33:24 -0700 (PDT)
+        bh=/QAS9hnOSCruAnMJO67LhuiuXgP/Xzg2aTOWl4lMTCg=;
+        b=n+tjISJK44zzMEwRus9k81fD92iS5hwE437IVWRImKYRgHJxaWdvyuadwNqpUDkuxL
+         0txFdZJFGY3FWb6rE7WcCcB5lbHyMCIMI8vb/Z0Tza4A+8IXtdmMTtoC8xM2kJOGGfC7
+         xKF8wW7x3BW7pRVSok9xz0vAr8MTjwJ6qF8p6IWeOf1d7zbbB0RYvGHFbbnp6HxjmEPe
+         QOAtblT3NKP7Yf+SX+5dqyg6kcowslaC2cEzsMiuHlEqNpRUtA54wSFpXFvDy9YlsHFO
+         7hij6sVkx63Rg0/b1B9AteR7H+NmNQ1/IrS7wJ+/UH33bc3YlsqNh72m/tFEzktv/lku
+         UPrg==
+X-Gm-Message-State: AOAM533RzsbveWr3zo0m5OxUG69xmnbNbLEYJoFb6m2cA1ICZYpP8UJJ
+        muiOX4mlMa0eEHXvmtS+V70D0ZvlRYE=
+X-Google-Smtp-Source: ABdhPJyTNXhwQod9uiDReLYiV4etS3PbS8pRIqqZ/NlhOVgCgUkBW1jnMVeZJx9l1wJiWduIdFsTHQ==
+X-Received: by 2002:adf:f592:: with SMTP id f18mr29254959wro.179.1626701605720;
+        Mon, 19 Jul 2021 06:33:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p7sm15372249wmq.5.2021.07.19.06.33.24
+        by smtp.gmail.com with ESMTPSA id e11sm25122653wrt.0.2021.07.19.06.33.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jul 2021 06:33:24 -0700 (PDT)
-Message-Id: <275dd8a1013cc27559f0ac40a4fcda3b6f5a6d1a.1626701596.git.gitgitgadget@gmail.com>
+        Mon, 19 Jul 2021 06:33:25 -0700 (PDT)
+Message-Id: <13f6c229bd1459dcb0c8ab59c1ef22fb3430be72.1626701596.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v4.git.git.1626701596.gitgitgadget@gmail.com>
 References: <pull.1041.v3.git.git.1626264613.gitgitgadget@gmail.com>
         <pull.1041.v4.git.git.1626701596.gitgitgadget@gmail.com>
 From:   "Fabian Stelzer via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Jul 2021 13:33:15 +0000
-Subject: [PATCH v4 8/9] ssh signing: add more tests for logs, tags & push
- certs
+Date:   Mon, 19 Jul 2021 13:33:16 +0000
+Subject: [PATCH v4 9/9] ssh signing: add documentation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -89,346 +88,82 @@ From: Fabian Stelzer <fs@gigacodes.de>
 
 Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
 ---
- t/t4202-log.sh                   |  23 +++++
- t/t5534-push-signed.sh           | 101 +++++++++++++++++++
- t/t7031-verify-tag-signed-ssh.sh | 161 +++++++++++++++++++++++++++++++
- 3 files changed, 285 insertions(+)
- create mode 100755 t/t7031-verify-tag-signed-ssh.sh
+ Documentation/config/gpg.txt  | 39 +++++++++++++++++++++++++++++++++--
+ Documentation/config/user.txt |  6 ++++++
+ 2 files changed, 43 insertions(+), 2 deletions(-)
 
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 39e746fbcbe..afd7f2516ee 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1616,6 +1616,16 @@ test_expect_success GPGSM 'setup signed branch x509' '
- 	git commit -S -m signed_commit
- '
+diff --git a/Documentation/config/gpg.txt b/Documentation/config/gpg.txt
+index d94025cb368..dc790512e86 100644
+--- a/Documentation/config/gpg.txt
++++ b/Documentation/config/gpg.txt
+@@ -11,13 +11,13 @@ gpg.program::
  
-+test_expect_success GPGSSH 'setup sshkey signed branch' '
-+	test_config gpg.format ssh &&
-+	test_config user.signingkey "${SIGNING_KEY_PRIMARY}" &&
-+	test_when_finished "git reset --hard && git checkout main" &&
-+	git checkout -b signed-ssh main &&
-+	echo foo >foo &&
-+	git add foo &&
-+	git commit -S -m signed_commit
-+'
-+
- test_expect_success GPGSM 'log x509 fingerprint' '
- 	echo "F8BF62E0693D0694816377099909C779FA23FD65 | " >expect &&
- 	git log -n1 --format="%GF | %GP" signed-x509 >actual &&
-@@ -1628,6 +1638,13 @@ test_expect_success GPGSM 'log OpenPGP fingerprint' '
- 	test_cmp expect actual
- '
+ gpg.format::
+ 	Specifies which key format to use when signing with `--gpg-sign`.
+-	Default is "openpgp" and another possible value is "x509".
++	Default is "openpgp". Other possible values are "x509", "ssh".
  
-+test_expect_success GPGSSH 'log ssh key fingerprint' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	ssh-keygen -lf  "${SIGNING_KEY_PRIMARY}" | awk "{print \$2\" | \"}" >expect &&
-+	git log -n1 --format="%GF | %GP" signed-ssh >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success GPG 'log --graph --show-signature' '
- 	git log --graph --show-signature -n1 signed >actual &&
- 	grep "^| gpg: Signature made" actual &&
-@@ -1640,6 +1657,12 @@ test_expect_success GPGSM 'log --graph --show-signature x509' '
- 	grep "^| gpgsm: Good signature" actual
- '
+ gpg.<format>.program::
+ 	Use this to customize the program used for the signing format you
+ 	chose. (see `gpg.program` and `gpg.format`) `gpg.program` can still
+ 	be used as a legacy synonym for `gpg.openpgp.program`. The default
+-	value for `gpg.x509.program` is "gpgsm".
++	value for `gpg.x509.program` is "gpgsm" and `gpg.ssh.program` is "ssh-keygen".
  
-+test_expect_success GPGSSH 'log --graph --show-signature ssh' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	git log --graph --show-signature -n1 signed-ssh >actual &&
-+	grep "${GOOD_SIGNATURE_TRUSTED}" actual
-+'
+ gpg.minTrustLevel::
+ 	Specifies a minimum trust level for signature verification.  If
+@@ -33,3 +33,38 @@ gpg.minTrustLevel::
+ * `marginal`
+ * `fully`
+ * `ultimate`
 +
- test_expect_success GPG 'log --graph --show-signature for merged tag' '
- 	test_when_finished "git reset --hard && git checkout main" &&
- 	git checkout -b plain main &&
-diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
-index bba768f5ded..d590249b995 100755
---- a/t/t5534-push-signed.sh
-+++ b/t/t5534-push-signed.sh
-@@ -137,6 +137,53 @@ test_expect_success GPG 'signed push sends push certificate' '
- 	test_cmp expect dst/push-cert-status
- '
- 
-+test_expect_success GPGSSH 'ssh signed push sends push certificate' '
-+	prepare_dst &&
-+	mkdir -p dst/.git/hooks &&
-+	git -C dst config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	git -C dst config receive.certnonceseed sekrit &&
-+	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	# discard the update list
-+	cat >/dev/null
-+	# record the push certificate
-+	if test -n "${GIT_PUSH_CERT-}"
-+	then
-+		git cat-file blob $GIT_PUSH_CERT >../push-cert
-+	fi &&
++gpg.ssh.allowedSignersFile::
++	A file containing ssh public keys which you are willing to trust.
++	The file consists of one or more lines of principals followed by an ssh
++	public key.
++	e.g.: user1@example.com,user2@example.com ssh-rsa AAAAX1...
++	See ssh-keygen(1) "ALLOWED SIGNERS" for details.
++	The principal is only used to identify the key and is available when
++	verifying a signature.
+++
++SSH has no concept of trust levels like gpg does. To be able to differentiate
++between valid signatures and trusted signatures the trust level of a signature
++verification is set to `fully` when the public key is present in the allowedSignersFile.
++Therefore to only mark fully trusted keys as verified set gpg.minTrustLevel to `fully`.
++Otherwise valid but untrusted signatures will still verify but show no principal
++name of the signer.
+++
++This file can be set to a location outside of the repository and every developer
++maintains their own trust store. A central repository server could generate this
++file automatically from ssh keys with push access to verify the code against.
++In a corporate setting this file is probably generated at a global location
++from automation that already handles developer ssh keys.
+++
++A repository that only allows signed commits can store the file
++in the repository itself using a path relative to the top-level of the working tree.
++This way only committers with an already valid key can add or change keys in the keyring.
+++
++Using a SSH CA key with the cert-authority option
++(see ssh-keygen(1) "CERTIFICATES") is also valid.
 +
-+	cat >../push-cert-status <<E_O_F
-+	SIGNER=${GIT_PUSH_CERT_SIGNER-nobody}
-+	KEY=${GIT_PUSH_CERT_KEY-nokey}
-+	STATUS=${GIT_PUSH_CERT_STATUS-nostatus}
-+	NONCE_STATUS=${GIT_PUSH_CERT_NONCE_STATUS-nononcestatus}
-+	NONCE=${GIT_PUSH_CERT_NONCE-nononce}
-+	E_O_F
-+
-+	EOF
-+
-+	test_config gpg.format ssh &&
-+	test_config user.signingkey "${SIGNING_KEY_PRIMARY}" &&
-+	FINGERPRINT=$(ssh-keygen -lf "${SIGNING_KEY_PRIMARY}" | awk "{print \$2;}") &&
-+	git push --signed dst noop ff +noff &&
-+
-+	(
-+		cat <<-\EOF &&
-+		SIGNER=principal with number 1
-+		KEY=FINGERPRINT
-+		STATUS=G
-+		NONCE_STATUS=OK
-+		EOF
-+		sed -n -e "s/^nonce /NONCE=/p" -e "/^$/q" dst/push-cert
-+	) | sed -e "s|FINGERPRINT|$FINGERPRINT|" >expect &&
-+
-+	noop=$(git rev-parse noop) &&
-+	ff=$(git rev-parse ff) &&
-+	noff=$(git rev-parse noff) &&
-+	grep "$noop $ff refs/heads/ff" dst/push-cert &&
-+	grep "$noop $noff refs/heads/noff" dst/push-cert &&
-+	test_cmp expect dst/push-cert-status
-+'
-+
- test_expect_success GPG 'inconsistent push options in signed push not allowed' '
- 	# First, invoke receive-pack with dummy input to obtain its preamble.
- 	prepare_dst &&
-@@ -276,6 +323,60 @@ test_expect_success GPGSM 'fail without key and heed user.signingkey x509' '
- 	test_cmp expect dst/push-cert-status
- '
- 
-+test_expect_success GPGSSH 'fail without key and heed user.signingkey ssh' '
-+	test_config gpg.format ssh &&
-+	prepare_dst &&
-+	mkdir -p dst/.git/hooks &&
-+	git -C dst config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	git -C dst config receive.certnonceseed sekrit &&
-+	write_script dst/.git/hooks/post-receive <<-\EOF &&
-+	# discard the update list
-+	cat >/dev/null
-+	# record the push certificate
-+	if test -n "${GIT_PUSH_CERT-}"
-+	then
-+		git cat-file blob $GIT_PUSH_CERT >../push-cert
-+	fi &&
-+
-+	cat >../push-cert-status <<E_O_F
-+	SIGNER=${GIT_PUSH_CERT_SIGNER-nobody}
-+	KEY=${GIT_PUSH_CERT_KEY-nokey}
-+	STATUS=${GIT_PUSH_CERT_STATUS-nostatus}
-+	NONCE_STATUS=${GIT_PUSH_CERT_NONCE_STATUS-nononcestatus}
-+	NONCE=${GIT_PUSH_CERT_NONCE-nononce}
-+	E_O_F
-+
-+	EOF
-+
-+	test_config user.email hasnokey@nowhere.com &&
-+	test_config gpg.format ssh &&
-+	test_config user.signingkey "" &&
-+	(
-+		sane_unset GIT_COMMITTER_EMAIL &&
-+		test_must_fail git push --signed dst noop ff +noff
-+	) &&
-+	test_config user.signingkey "${SIGNING_KEY_PRIMARY}" &&
-+	FINGERPRINT=$(ssh-keygen -lf "${SIGNING_KEY_PRIMARY}" | awk "{print \$2;}") &&
-+	git push --signed dst noop ff +noff &&
-+
-+	(
-+		cat <<-\EOF &&
-+		SIGNER=principal with number 1
-+		KEY=FINGERPRINT
-+		STATUS=G
-+		NONCE_STATUS=OK
-+		EOF
-+		sed -n -e "s/^nonce /NONCE=/p" -e "/^$/q" dst/push-cert
-+	) | sed -e "s|FINGERPRINT|$FINGERPRINT|" >expect &&
-+
-+	noop=$(git rev-parse noop) &&
-+	ff=$(git rev-parse ff) &&
-+	noff=$(git rev-parse noff) &&
-+	grep "$noop $ff refs/heads/ff" dst/push-cert &&
-+	grep "$noop $noff refs/heads/noff" dst/push-cert &&
-+	test_cmp expect dst/push-cert-status
-+'
-+
- test_expect_success GPG 'failed atomic push does not execute GPG' '
- 	prepare_dst &&
- 	git -C dst config receive.certnonceseed sekrit &&
-diff --git a/t/t7031-verify-tag-signed-ssh.sh b/t/t7031-verify-tag-signed-ssh.sh
-new file mode 100755
-index 00000000000..05bf520a332
---- /dev/null
-+++ b/t/t7031-verify-tag-signed-ssh.sh
-@@ -0,0 +1,161 @@
-+#!/bin/sh
-+
-+test_description='signed tag tests'
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY/lib-gpg.sh"
-+
-+test_expect_success GPGSSH 'create signed tags ssh' '
-+	test_when_finished "test_unconfig commit.gpgsign" &&
-+	test_config gpg.format ssh &&
-+	test_config user.signingkey "${SIGNING_KEY_PRIMARY}" &&
-+
-+	echo 1 >file && git add file &&
-+	test_tick && git commit -m initial &&
-+	git tag -s -m initial initial &&
-+	git branch side &&
-+
-+	echo 2 >file && test_tick && git commit -a -m second &&
-+	git tag -s -m second second &&
-+
-+	git checkout side &&
-+	echo 3 >elif && git add elif &&
-+	test_tick && git commit -m "third on side" &&
-+
-+	git checkout main &&
-+	test_tick && git merge -S side &&
-+	git tag -s -m merge merge &&
-+
-+	echo 4 >file && test_tick && git commit -a -S -m "fourth unsigned" &&
-+	git tag -a -m fourth-unsigned fourth-unsigned &&
-+
-+	test_tick && git commit --amend -S -m "fourth signed" &&
-+	git tag -s -m fourth fourth-signed &&
-+
-+	echo 5 >file && test_tick && git commit -a -m "fifth" &&
-+	git tag fifth-unsigned &&
-+
-+	git config commit.gpgsign true &&
-+	echo 6 >file && test_tick && git commit -a -m "sixth" &&
-+	git tag -a -m sixth sixth-unsigned &&
-+
-+	test_tick && git rebase -f HEAD^^ && git tag -s -m 6th sixth-signed HEAD^ &&
-+	git tag -m seventh -s seventh-signed &&
-+
-+	echo 8 >file && test_tick && git commit -a -m eighth &&
-+	git tag -u"${SIGNING_KEY_UNTRUSTED}" -m eighth eighth-signed-alt
-+'
-+
-+test_expect_success GPGSSH 'verify and show ssh signatures' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	(
-+		for tag in initial second merge fourth-signed sixth-signed seventh-signed
-+		do
-+			git verify-tag $tag 2>actual &&
-+			grep "${GOOD_SIGNATURE_TRUSTED}" actual &&
-+			! grep "${BAD_SIGNATURE}" actual &&
-+			echo $tag OK || exit 1
-+		done
-+	) &&
-+	(
-+		for tag in fourth-unsigned fifth-unsigned sixth-unsigned
-+		do
-+			test_must_fail git verify-tag $tag 2>actual &&
-+			! grep "${GOOD_SIGNATURE_TRUSTED}" actual &&
-+			! grep "${BAD_SIGNATURE}" actual &&
-+			echo $tag OK || exit 1
-+		done
-+	) &&
-+	(
-+		for tag in eighth-signed-alt
-+		do
-+			git verify-tag $tag 2>actual &&
-+			grep "${GOOD_SIGNATURE_UNTRUSTED}" actual &&
-+			! grep "${BAD_SIGNATURE}" actual &&
-+			grep "${KEY_NOT_TRUSTED}" actual &&
-+			echo $tag OK || exit 1
-+		done
-+	)
-+'
-+
-+test_expect_success GPGSSH 'detect fudged ssh signature' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	git cat-file tag seventh-signed >raw &&
-+	sed -e "/^tag / s/seventh/7th forged/" raw >forged1 &&
-+	git hash-object -w -t tag forged1 >forged1.tag &&
-+	test_must_fail git verify-tag $(cat forged1.tag) 2>actual1 &&
-+	grep "${BAD_SIGNATURE}" actual1 &&
-+	! grep "${GOOD_SIGNATURE_TRUSTED}" actual1 &&
-+	! grep "${GOOD_SIGNATURE_UNTRUSTED}" actual1
-+'
-+
-+test_expect_success GPGSSH 'verify ssh signatures with --raw' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	(
-+		for tag in initial second merge fourth-signed sixth-signed seventh-signed
-+		do
-+			git verify-tag --raw $tag 2>actual &&
-+			grep "${GOOD_SIGNATURE_TRUSTED}" actual &&
-+			! grep "${BAD_SIGNATURE}" actual &&
-+			echo $tag OK || exit 1
-+		done
-+	) &&
-+	(
-+		for tag in fourth-unsigned fifth-unsigned sixth-unsigned
-+		do
-+			test_must_fail git verify-tag --raw $tag 2>actual &&
-+			! grep "${GOOD_SIGNATURE_TRUSTED}" actual &&
-+			! grep "${BAD_SIGNATURE}" actual &&
-+			echo $tag OK || exit 1
-+		done
-+	) &&
-+	(
-+		for tag in eighth-signed-alt
-+		do
-+			git verify-tag --raw $tag 2>actual &&
-+			grep "${GOOD_SIGNATURE_UNTRUSTED}" actual &&
-+			! grep "${BAD_SIGNATURE}" actual &&
-+			echo $tag OK || exit 1
-+		done
-+	)
-+'
-+
-+test_expect_success GPGSSH 'verify signatures with --raw ssh' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	git verify-tag --raw sixth-signed 2>actual &&
-+	grep "${GOOD_SIGNATURE_TRUSTED}" actual &&
-+	! grep "${BAD_SIGNATURE}" actual &&
-+	echo sixth-signed OK
-+'
-+
-+test_expect_success GPGSSH 'verify multiple tags ssh' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	tags="seventh-signed sixth-signed" &&
-+	for i in $tags
-+	do
-+		git verify-tag -v --raw $i || return 1
-+	done >expect.stdout 2>expect.stderr.1 &&
-+	grep "^${GOOD_SIGNATURE_TRUSTED}" <expect.stderr.1 >expect.stderr &&
-+	git verify-tag -v --raw $tags >actual.stdout 2>actual.stderr.1 &&
-+	grep "^${GOOD_SIGNATURE_TRUSTED}" <actual.stderr.1 >actual.stderr &&
-+	test_cmp expect.stdout actual.stdout &&
-+	test_cmp expect.stderr actual.stderr
-+'
-+
-+test_expect_success GPGSSH 'verifying tag with --format - ssh' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	cat >expect <<-\EOF &&
-+	tagname : fourth-signed
-+	EOF
-+	git verify-tag --format="tagname : %(tag)" "fourth-signed" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success GPGSSH 'verifying a forged tag with --format should fail silently - ssh' '
-+	test_must_fail git verify-tag --format="tagname : %(tag)" $(cat forged1.tag) >actual-forged &&
-+	test_must_be_empty actual-forged
-+'
-+
-+test_done
++gpg.ssh.revocationFile::
++	Either a SSH KRL or a list of revoked public keys (without the principal prefix).
++	See ssh-keygen(1) for details.
++	If a public key is found in this file then it will always be treated
++	as having trust level "never" and signatures will show as invalid.
+diff --git a/Documentation/config/user.txt b/Documentation/config/user.txt
+index 59aec7c3aed..b3c2f2c541e 100644
+--- a/Documentation/config/user.txt
++++ b/Documentation/config/user.txt
+@@ -36,3 +36,9 @@ user.signingKey::
+ 	commit, you can override the default selection with this variable.
+ 	This option is passed unchanged to gpg's --local-user parameter,
+ 	so you may specify a key using any method that gpg supports.
++	If gpg.format is set to "ssh" this can contain the literal ssh public
++	key (e.g.: "ssh-rsa XXXXXX identifier") or a file which contains it and
++	corresponds to the private key used for signing. The private key
++	needs to be available via ssh-agent. Alternatively it can be set to
++	a file containing a private key directly. If not set git will call
++	"ssh-add -L" and try to use the first key available.
 -- 
 gitgitgadget
-
