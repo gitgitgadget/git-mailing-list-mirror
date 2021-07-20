@@ -2,291 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFB1BC07E95
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:13:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89B6FC07E95
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:16:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8AC060FED
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:13:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6793B610FB
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:16:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234766AbhGTQcs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 12:32:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51226 "EHLO
+        id S231255AbhGTQft (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 12:35:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232509AbhGTQaf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jul 2021 12:30:35 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2294C061766
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:11:09 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id h9so25275357oih.4
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:11:09 -0700 (PDT)
+        with ESMTP id S229657AbhGTQfe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jul 2021 12:35:34 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB2D5C061574
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:16:12 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id w22so16662118ioc.6
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:16:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hDVH+DHJVWjirRPkXSd++shjuE1SLQpGeGPaBIHAr3k=;
-        b=UtielEWRMFYfrpbHj3cQdzsS+n9wEyxBDoXPo5zdJ/YccUfjsi8fDe7vBo11tYX9TP
-         VyMk3rzcvXMcsjYdf1ToG7WUhypwRQEs8YAYA/B32Td2OYgvc43tCNOFcse5E7o6/uCJ
-         LcNO1VRpY4WouEXkQoprYqJpBynRU75sfQgL1DU2fTOgvzN3OFNsFFp0x4pT/xZUprzh
-         uBP4REbyP2YxAzj1+bpQi+5mvGCWWOfV4n9fxHuWnjInXJ9qzSMcxWdSLDgzBj5+eskz
-         fsB4IMj6SZ5dxGRUcVR5Op4P7XZFeF7xmlIE0eGJl3es8fCQrF8tqfcj+5Se5nKAcjht
-         NIGg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=5pMSJE6wRSAcJG59YCAUbr4EHVJaSEEvhi232dusbGM=;
+        b=MwrSHqlmUUPST3MdZOLpWLm7Qz4H8/Yx2p8u3Opro1A9OfGKCsESbgd+gAyC6STuzB
+         VhS0TVcsEgWWtX3KiVkhRzVX45dUmg4jIE0rjDDIOxk7qi1MQry/LrWVTbvQUGhMHI90
+         BpIzmhy6I2kvqqCiP5whA9s8JDd8Y3+vvsuEksmmB8C79vxUtlyvWtDFAkLjJ+1e26DI
+         Gcv08pJMCLWmPYoUV/6pMocYhPuHiQjkG28485Ur6VGT6npaouS555Ji6ibTJ1ZavkB6
+         7KgWTutqZsB69gsqik4QAIo8z/5ZpWWysHjwWeZ/JPdeu+NlJ7byDy51qdu+4TGs1N7i
+         xCTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hDVH+DHJVWjirRPkXSd++shjuE1SLQpGeGPaBIHAr3k=;
-        b=NJzKRXYl7iCXadOP8RTNmZRZmtSrsYhWWPPZ/TLFz9M4hGCrZvpPWlhdMxgkI7G+bW
-         r3VelneonIoLtm37X/hc80kWwdNllzxtFdV/7QrHFW2KFPC1Yhb2Gkvc5G5Ef1vJSP4u
-         gBgPYquCsabpnCyChs8idw+bkV8yXCFTL2k90FuJdzZTRwIdjx4JLI0Kez5QA6P7UUgY
-         gie186xSrJtoOV0h1OXFMp/lZDWVbUophTQcAq8fiZ6K+xGESKEo1s1DsaLYO+ncPNo6
-         hiOpi9BwcTwZyNckEp5TzkdtY5PyDLKEqhlYT9Um2ESVuVriLDKGoh0Ts9zdRif2rGCS
-         LCjA==
-X-Gm-Message-State: AOAM530dYKS2yvPTTAI2txMHBG9RAP5tcSFaneTu6DUca8IByNKBPjeA
-        QNtLYQWeHFD4Qe9H8oAg+ThYgL3pWl6Ez8tAvD4=
-X-Google-Smtp-Source: ABdhPJyXWZjPQqnyCT4czC0i/LsdgBM5qs4KqWcBxea7cxpXUe4VaWS7Af/aNJnEqg7qJMA53YvlWDUHCzGyWLKd3Jc=
-X-Received: by 2002:aca:acc5:: with SMTP id v188mr25608514oie.167.1626801069172;
- Tue, 20 Jul 2021 10:11:09 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=5pMSJE6wRSAcJG59YCAUbr4EHVJaSEEvhi232dusbGM=;
+        b=JTnENXBo3ECfI36DVk1Mjv6z/HUUxnDWrG1Q6YE5XsGcez1KLKw8UUGZLmuIIbWrfe
+         GJlII8zqxsOKKXygwgyiRW93rqUj92y6aUtEtH7r0MfNYQNwd07ZDSU9DsjgN8CEpjnL
+         EqNB7b0Zlp2Yzg6tKiYsGIm/92+eaQ1oRsXHyM4NV5VYqWEgbRw0OmUqCJTrgd+fjtxM
+         B6MIjcLCw4p4A0PjGG9ir3iS0BCbRy99ox2U1G4N/NULouuyHj7xzTFYkQJHL6/kJYgt
+         RQg62MTeiD8fgGFgnIhGSyMeA0ZVcls8x+RIBcw6ABcxScLOSdC2XhGBUYcNs2TNMrG9
+         ilQA==
+X-Gm-Message-State: AOAM530wFESh0hc2vQHAw48yfaIxERHzx0qR4q4Cxs+nUaxCDMhUjgte
+        +o3M1Hzv7iY68aKV+g2whxAwCQ==
+X-Google-Smtp-Source: ABdhPJw6X9+TwMNA7Ts68qFs1iu0zXGes1zUSXxoaSr/PC56DOR8OC/fbhM0tFSxIanQ7gwxjLJRtA==
+X-Received: by 2002:a5e:d707:: with SMTP id v7mr8914618iom.46.1626801372059;
+        Tue, 20 Jul 2021 10:16:12 -0700 (PDT)
+Received: from localhost ([2600:1700:d843:8f:9f71:89c7:e095:b8eb])
+        by smtp.gmail.com with ESMTPSA id h13sm10830825ila.44.2021.07.20.10.16.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Jul 2021 10:16:11 -0700 (PDT)
+Date:   Tue, 20 Jul 2021 13:16:11 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH 2/2] bundle tests: use test_cmp instead of grep
+Message-ID: <YPcE24InpY4evFyE@nand.local>
+References: <cover-0.2-00000000000-20210720T115052Z-avarab@gmail.com>
+ <patch-2.2-062f34abf1a-20210720T115052Z-avarab@gmail.com>
 MIME-Version: 1.0
-References: <pull.1049.git.git.1626536507.gitgitgadget@gmail.com>
- <6cb771297f5f7d5bb0c6734bcb3fe6d3b8bb4c88.1626536508.git.gitgitgadget@gmail.com>
- <xmqq35samac9.fsf@gitster.g>
-In-Reply-To: <xmqq35samac9.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 20 Jul 2021 10:10:58 -0700
-Message-ID: <CABPp-BFMHhxgaLnA+gLHJENVfzVv6j2Ax4G6y+XsrU3wBJq6rQ@mail.gmail.com>
-Subject: Re: [PATCH 1/9] t7601: add relative precedence tests for merge and
- rebase flags/options
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Son Luong Ngoc <sluongng@gmail.com>,
-        Matthias Baumgarten <matthias.baumgarten@aixigo.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-2.2-062f34abf1a-20210720T115052Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 19, 2021 at 11:23 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > +test_does_rebase() {
->
-> Style: missing SP before ().
+On Tue, Jul 20, 2021 at 01:52:09PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> So let's use test_cmp instead, and also in the other nearby tests
+> where it's easy.
 
-Will fix.
+I took a look at this patch carefully to make sure that this
+transformation also improved the readability, too.
 
-...
-> > +test_does_merge_noff() {
-> > +     git reset --hard c0 &&
-> > +     git "$@" . c1 &&
-> > +     # Check that we actually did a merge
-> > +     git rev-list --count HEAD >actual &&
-> > +     git rev-list --merges --count HEAD >>actual &&
-> > +     test_write_lines 3 1 >expect &&
-> > +     test_cmp expect actual &&
-> > +     rm actual expect
-> > +}
-> > +
-> > +test_does_merge_ff() {
-> > +     git reset --hard c0 &&
-> > +     git "$@" . c1 &&
-> > +     # Check that we actually did a merge
-> > +     git rev-list --count HEAD >actual &&
-> > +     git rev-list --merges --count HEAD >>actual &&
-> > +     test_write_lines 2 0 >expect &&
-> > +     test_cmp expect actual &&
-> > +     rm actual expect
-> > +}
-> > +
-> > +test_does_need_full_merge() {
-> > +     git reset --hard c2 &&
-> > +     git "$@" . c1 &&
-> > +     # Check that we actually did a merge
-> > +     git rev-list --count HEAD >actual &&
-> > +     git rev-list --merges --count HEAD >>actual &&
-> > +     test_write_lines 4 1 >expect &&
-> > +     test_cmp expect actual &&
-> > +     rm actual expect
-> > +}
-> > +
-> > +test_attempts_fast_forward() {
-> > +     git reset --hard c2 &&
-> > +     test_must_fail git "$@" . c1 2>err &&
-> > +     test_i18ngrep "Not possible to fast-forward, aborting" err
-> > +}
->
-> The same reasoning says these test_does_X helpers make sense.  I am
-> not sure about the name does_need_full_merge though---what does it
-> want to ensure is not very clear to me.  Is it named that way because
-> you found "test_does_merge" (when contrasted to "test_does_merge_ff")
-> sounds too weak?
+Looking around, I think that this was a good improvement in readability,
+but also hardened the tests (for the reasons that you mentioned). One
+tiny note below.
 
-I should probably rename the functions for clarity; I'm testing the
-matrix of ff/noff possibilities:
+>  test_expect_success 'empty bundle file is rejected' '
+> @@ -67,11 +83,33 @@ test_expect_success 'ridiculously long subject in boundary' '
+>  	printf "%01200d\n" 0 | git commit -F - &&
+>  	test_commit fifth &&
+>  	git bundle create long-subject-bundle.bdl HEAD^..HEAD &&
+> -	git bundle list-heads long-subject-bundle.bdl >heads &&
+> -	test -s heads &&
+> +	cat >expect <<-EOF &&
+> +	$(git rev-parse main) HEAD
+> +	EOF
+> +	git bundle list-heads long-subject-bundle.bdl >actual &&
+> +	test_cmp expect actual &&
 
-# Prefers merge over fast-forward; rename from test_does_merge
-test_does_merge_when_ff_possible ()
+This is quite readable, but the assertion below gets much more
+complicated as a result of the change.
 
-# Prefers fast-forward over merge; rename from test_does_merge_ff
-test_does_fast_forward ()
+>  	git fetch long-subject-bundle.bdl &&
+> -	sed -n "/^-/{p;q;}" long-subject-bundle.bdl >boundary &&
+> -	grep "^-$OID_REGEX " boundary
+> +
+> +	cat >expect.common <<-EOF &&
+> +	-$(git log --pretty=format:"%H %s" -1 HEAD^)
+> +	$(git rev-parse HEAD) HEAD
+> +	EOF
+> +	if test_have_prereq SHA1
+> +	then
+> +		cp expect.common expect
+> +	else
+> +		echo @object-format=sha256 >expect
+> +		cat expect.common >>expect
+> +	fi &&
 
-# Attempts fast forward and bails since it is impossible
-test_attempts_fast_forward ()
+Here we're setting up expect, but I think flipping the order might make
+things a little easier to follow. Maybe something like this:
 
-# Does a merge when a fast forward is not possible
-test_falls_back_to_full_merge ()
+    rm expect &&
+    if ! test_have_prereq SHA1
+    then
+      echo "@object-format=sha256" >expect
+    fi &&
+    cat >>expect <<-EOF &&
+    -$(git log --pretty=format:"%H %s" -1 HEAD^)
+    $(git rev-parse HEAD) HEAD
+    EOF &&
 
+Or, if you wanted to go further, you could do something like:
 
-In particular, `test_does_need_full_merge` would become
-`test_falls_back_to_full_merge`
+    cat >expect <<-EOF
+    $(test_have_prereq SHA1 || echo "@object-format=sha256")
+    -$(git log --pretty=format:"%H %s" -1 HEAD^)
+    $(git rev-parse HEAD) HEAD
+    EOF
 
+which is arguably a little tighter (although I find the
+echo-in-a-heredoc thing to be kind of ugly).
 
-> > +#
-> > +# Rule 1: --ff-only takes precedence over --[no-]rebase
-> > +# (Corollary: pull.ff=only overrides pull.rebase)
-> > +#
-> > +test_expect_failure '--ff-only takes precedence over --rebase' '
-> > +     test_attempts_fast_forward pull --rebase --ff-only
-> > +'
-> > +
-> > +test_expect_failure '--ff-only takes precedence over --rebase even if first' '
-> > +     test_attempts_fast_forward pull --ff-only --rebase
-> > +'
-> > +
-> > +test_expect_success '--ff-only takes precedence over --no-rebase' '
-> > +     test_attempts_fast_forward pull --ff-only --no-rebase
-> > +'
-> > +
-> > +test_expect_failure 'pull.ff=only overrides pull.rebase=true' '
-> > +     test_attempts_fast_forward -c pull.ff=only -c pull.rebase=true pull
-> > +'
-> > +
-> > +test_expect_success 'pull.ff=only overrides pull.rebase=false' '
-> > +     test_attempts_fast_forward -c pull.ff=only -c pull.rebase=false pull
-> > +'
->
-> OK.  These all ensure that when the history does not fast-forward,
-> the command will fail when --ff-only tells us to allow only
-> fast-forward.  I am not sure "takes precedence" is a meaningful
-> label, though.  It is more like "ff-only means ff-only and fails
-> when the upstream history is not a descendant, no matter how the
-> possible integration is set to be performed".
+> +	if test_have_prereq SHA1
+> +	then
+> +		head -n 3 long-subject-bundle.bdl >bundle-header
+> +	else
+> +		head -n 4 long-subject-bundle.bdl >bundle-header
+> +	fi &&
+> +	grep -v "^#" bundle-header >actual &&
 
-So, I think you're saying you view fast-forwards as a subset of valid
-rebases (and fast-forwards are also a subset of valid rmerges), and
-thus you view --ff-only --rebase as an instruction to only proceed if
-both command line flags can be satisfied.
+Here I would suggest getting rid of the bundle-header intermediary and
+instead writing:
 
-That makes sense, but I don't know how to put that into a test
-description that isn't ridiculously long.  I tried replacing "takes
-precedence over" with just "overrides" but you might not like that
-either.  If you've got better wording for the comments before each
-group and the test descriptions, I'm all ears.  Otherwise I'll just
-take my best stab at it.
+    if test_have_prereq SHA1
+    then
+      head -n 3 long-subject-bundle.bdl
+    else
+      head -n 4 long-subject-bundle.bdl
+    fi | grep -v "^#" >actual
 
-> > +# Rule 2: --rebase=[!false] takes precedence over --no-ff and --ff
-> > +# (Corollary: pull.rebase=!false overrides pull.ff=!only)
-> > +test_expect_success '--rebase takes precedence over --no-ff' '
-> > +     test_does_rebase pull --rebase --no-ff
-> > +'
-> > +
-> > +test_expect_success '--rebase takes precedence over --ff' '
-> > +     test_does_rebase pull --rebase --ff
-> > +'
-> > +
-> > +test_expect_success 'pull.rebase=true takes precedence over pull.ff=false' '
-> > +     test_does_rebase -c pull.rebase=true -c pull.ff=false pull
-> > +'
-> > +
-> > +test_expect_success 'pull.rebase=true takes precedence over pull.ff=true' '
-> > +     test_does_rebase -c pull.rebase=true -c pull.ff=true pull
-> > +'
->
-> Sounds sensible.  Again, I do not view this as precedence, though.
-> "--ff" is merely "if there is nothing else needs to be done, it is
-> OK to fast-forward to their history", so with --rebase, it either
-> (1) gets ignored when we have something to be done, i.e. our own
-> development to replay on top of their history, or (2) becomes a
-> no-op as there truly isn't any development of our own.
->
-> And "--no-ff" is more or less a meaningless thing to say ("I do not
-> want to just fast-forward when I do not have anything meaningful to
-> add, I want an empty merge commit to mark where I was") in the
-> context of "--rebase".  Erroring out only when their histroy is
-> descendant of ours and "--no-ff" and "--rebase=<set>" are given
-> explicitly from the command line might make sense, but I do not
-> think of a sensible corrective action the end-user wants to do after
-> seeing such an error (after all, there was nothing to rebase on top
-> of their history), so I think ignoring is a more acceptable outcome
-> when we have nothing to replay.
->
-> Do we ensure that "pull --rebase --ff" fast-forwards when the
-> history truly fast-forwards?  test_does_rebase only and always
-> checks what happens when pulling c1 into c2 and nothing else, so I
-> do not think the above are testing that case.
->
-> IOW, I think "test_does_merge_ff pull --rebase --ff" wants to be
-> there somewhere?
+and then having your
 
-Sounds good; I added "--rebase --ff fast-forwards when possible" test.
+> +	test_cmp expect actual
 
-...
-> > +test_expect_success '--rebase takes precedence over pull.ff=true' '
-> > +     test_does_rebase -c pull.ff=true pull --rebase
-> > +'
-> > +
-> > +test_expect_success '--rebase takes precedence over pull.ff=false' '
-> > +     test_does_rebase -c pull.ff=false pull --rebase
-> > +'
-> > +
-> > +test_expect_success '--rebase takes precedence over pull.ff unset' '
-> > +     test_does_rebase pull --rebase
-> > +'
->
-> These three are correct but again I do not see them as precedence
-> matter.
->
-...
->
-> > +test_expect_success 'pull.rebase=true takes precedence over --ff' '
-> > +     test_does_rebase -c pull.rebase=true pull --ff
-> > +'
->
-> Again, I am not sure if this is "precedence" issue.  "ff" merely
-> means "fast-forwarding is allowed, when we do not have anything to
-> add to their history", and we do have our own work in the test
-> scenario test_does_rebase presents us, so rebasing would be quite
-> sensible.  Similarly
->
->     test_does_need_full_merge -c pull.rebase=false pull --ff
->
-> would be true, right?
+below.
 
-Yep, I added that test since you thought to ask to make sure it's covered.
-
-> > +# End of precedence rules
-> > +
-> >  test_expect_success 'merge c1 with c2' '
-> >       git reset --hard c1 &&
-> >       test -f c0.c &&
->
-> The series of new tests makes me wonder if there is a good way to
-> ensure we covered full matrix, but I didn't see any that smelled
-> wrong.
-
-Fair question.  I covered all the ones in
-https://lore.kernel.org/git/xmqqwnpqot4m.fsf@gitster.g/, except that
-when '*' was given, I might have just picked a representative example
-rather than all possible options.  I also just used --rebase as a
-proxy for any --rebase=* option other than --rebase=false.  Of course,
-that table may have been incomplete but it at least covered the ones I
-could think of.
+Thanks,
+Taylor
