@@ -2,98 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_LOCAL_DIGITS,FROM_LOCAL_HEX,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BADDCC07E95
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 15:47:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 599FFC07E9B
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 16:08:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A07B3610FB
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 15:47:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 408956100C
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 16:08:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240053AbhGTPG5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 11:06:57 -0400
-Received: from siwi.pair.com ([209.68.5.199]:26607 "EHLO siwi.pair.com"
+        id S234595AbhGTP2N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 11:28:13 -0400
+Received: from m12-12.163.com ([220.181.12.12]:53439 "EHLO m12-12.163.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242551AbhGTPDg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jul 2021 11:03:36 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 669363F40F4;
-        Tue, 20 Jul 2021 11:44:01 -0400 (EDT)
-Received: from AZHCI-MGMT.azhci.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 4A1673F40F1;
-        Tue, 20 Jul 2021 11:44:01 -0400 (EDT)
-Subject: Re: What's cooking in git.git (Jul 2021, #04; Mon, 19)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq4kcqko6g.fsf@gitster.g>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <57342460-e85d-17c2-f882-373d03f63cd1@jeffhostetler.com>
-Date:   Tue, 20 Jul 2021 11:43:59 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
-MIME-Version: 1.0
-In-Reply-To: <xmqq4kcqko6g.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S239148AbhGTPPX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jul 2021 11:15:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=Mime-Version:Subject:From:Date:Message-Id; bh=uMHp1
+        D5cXnnwXbHD9Lc8ZFCb3BIZxksHPAaQ/68dM+U=; b=JlyJ3Lw4abbwPIZ8d8Vin
+        dsT8sz8U+Ci6JA73GFFBxwdFIgy9BmEfllRrGj4eg8Y5ji1SI2SD2YEXgUkYi+2B
+        z3MbBE8yDpcI/JOmbETi2wuRYSGd+a6vdyk7pC5bsSsHQT0KnJiVxyXCZH8GwKcC
+        +JRB5/XNuffNEiK4RnEDRA=
+Received: from smtpclient.apple (unknown [115.198.205.80])
+        by smtp8 (Coremail) with SMTP id DMCowAAHtlKd5vZgqnFVPw--.29783S3;
+        Tue, 20 Jul 2021 23:07:10 +0800 (CST)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
+Subject: Re: [PATCH v3] packfile: freshen the mtime of packfile by
+ configuration
+From:   Sun Chao <16657101987@163.com>
+In-Reply-To: <xmqqlf61j19i.fsf@gitster.g>
+Date:   Tue, 20 Jul 2021 23:07:09 +0800
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Sun Chao via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Martin Fick <mfick@codeaurora.org>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Jeff King <peff@peff.net>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <60EFBDBF-8A9F-4004-82C1-C7C1E9D1778E@163.com>
+References: <pull.1043.v2.git.git.1626226114067.gitgitgadget@gmail.com>
+ <pull.1043.v3.git.git.1626724399377.gitgitgadget@gmail.com>
+ <YPXluqywHs3u4Qr+@nand.local> <xmqqlf61j19i.fsf@gitster.g>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3654.100.0.2.22)
+X-CM-TRANSID: DMCowAAHtlKd5vZgqnFVPw--.29783S3
+X-Coremail-Antispam: 1Uf129KBjvdXoWrZw1DGr18GFyUuFyrtr1kXwb_yoWfGFg_WF
+        Z2vasrXrs0gFykJr4qkr47KFWkJF48G348J34jgrs8t34kZFs8GFn0g3s09F12ka109Fya
+        vrZIq3ySv3yUWjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU0-6pDUUUUU==
+X-Originating-IP: [115.198.205.80]
+X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/1tbiDx7VglUMY3IRrwAAsw
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
 
-On 7/19/21 5:07 PM, Junio C Hamano wrote:
-> 
-> * jh/builtin-fsmonitor (2021-07-12) 35 commits
->   - BANDAID: sparse fixes
->   - t7527: test FS event reporing on MacOS WRT case and Unicode
->   - fsmonitor: handle shortname for .git
->   - t7527: test status with untracked-cache and fsmonitor--daemon
->   - fsmonitor: force update index after large responses
->   - fsmonitor: enhance existing comments
->   - fsmonitor--daemon: use a cookie file to sync with file system
->   - fsmonitor--daemon: periodically truncate list of modified files
->   - t7527: create test for fsmonitor--daemon
->   - t/perf/p7519: add fsmonitor--daemon test cases
->   - t/perf: avoid copying builtin fsmonitor files into test repo
->   - t/perf/p7519: speed up test using "test-tool touch"
->   - t/helper/test-touch: add helper to touch a series of files
->   - fsmonitor--daemon: implement handle_client callback
->   - fsmonitor-fs-listen-macos: implement FSEvent listener on MacOS
->   - fsmonitor-fs-listen-macos: add macos header files for FSEvent
->   - fsmonitor-fs-listen-win32: implement FSMonitor backend on Windows
->   - fsmonitor--daemon: create token-based changed path cache
->   - fsmonitor--daemon: define token-ids
->   - fsmonitor--daemon: add pathname classification
->   - fsmonitor: do not try to operate on bare repos
->   - fsmonitor--daemon: implement 'start' command
->   - fsmonitor--daemon: implement 'run' command
->   - fsmonitor-fs-listen-macos: stub in backend for MacOS
->   - fsmonitor-fs-listen-win32: stub in backend for Windows
->   - t/helper/fsmonitor-client: create IPC client to talk to FSMonitor Daemon
->   - fsmonitor--daemon: implement 'stop' and 'status' commands
->   - fsmonitor--daemon: add a built-in fsmonitor daemon
->   - fsmonitor: use IPC to query the builtin FSMonitor daemon
->   - fsmonitor: config settings are repository-specific
->   - help: include fsmonitor--daemon feature flag in version info
->   - fsmonitor-ipc: create client routines for git-fsmonitor--daemon
->   - fsmonitor--daemon: update fsmonitor documentation
->   - fsmonitor--daemon: man page
->   - simple-ipc: preparations for supporting binary messages.
-> 
->   An attempt to write and ship with a watchman equivalent tailored
->   for our use.
-> 
->   So, where are we with this topic?
-
-I'm responding to comments on my V3 version and from dogfooders
-of our downstream experimental releases.  Hoping to submit a V4
-next week.
-
-Jeff
-
+> 2021=E5=B9=B47=E6=9C=8820=E6=97=A5 08:07=EF=BC=8CJunio C Hamano =
+<gitster@pobox.com> =E5=86=99=E9=81=93=EF=BC=9A
+>=20
+> Taylor Blau <me@ttaylorr.com> writes:
+>=20
+>> Hmm. I'm still quite unconvinced that we should be taking this =
+direction
+>> without better motivation. We talked about your assumption that NFS
+>> seems to be invalidating the block cache when updating the inodes =
+that
+>> point at those blocks, but I don't recall seeing further evidence.
+>=20
+> Me neither.  Not touching the pack and not updating the "most
+> recently used" time of individual objects smells like a recipe
+> for repository corruption.
+>=20
+>> My opinion is that it is not, and that the bizarre caching behavior =
+you
+>> are seeing is out of Git's control.
+>=20
+Thanks Junio, I will try to get a more detial reports of the NFS caches =
+and
+share it if it is valuable. Not touching the mtime of packfiles really =
+has
+potencial problems just as Taylor said.=
 
