@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DB2BC07E95
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78C89C07E9B
 	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 20:42:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46EE460FF3
+	by mail.kernel.org (Postfix) with ESMTP id 64BAB60FEA
 	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 20:42:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234365AbhGTUBP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 16:01:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36362 "EHLO
+        id S234508AbhGTUBa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 16:01:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233013AbhGTTeg (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232473AbhGTTeg (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 20 Jul 2021 15:34:36 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2DE0C0613E4
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 13:14:47 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id d2so27369940wrn.0
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 13:14:47 -0700 (PDT)
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69E77C0613E0
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 13:14:45 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id o30-20020a05600c511eb029022e0571d1a0so241528wms.5
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 13:14:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=V5tQXeDD5Ip25tVwsuX5B5DgwU8YJNO0LVj8v6MyCLw=;
-        b=QK8poySLxDwdZRdy/2iVWDWsF96i7hW1CrSrKdF/tAMk+hbOhZWmeSqTq9t9Roqkr/
-         F/BHhdFZg/GJ7aL0Krtckjrq1QCYH+2pLd+NceAJs0++DId3kZ1M+xrui1tXEq+I8eQO
-         3tEXj7tVYC90irhdiiI+IBCW8vhYaKXOxvqzCcEtLFkCT9kEcuI3KYIa7ffffQOmqv9p
-         VaNDSGYBU8YfkAbOD4o4wW6bPG35E7HfjUv8WheKzUBDxBKZkIXiZEQpcUySRBi+6NHK
-         rSpJMEwI7Hsnac23boqVClwPvviMANwOqMz41Lysw5Z9Opv6u56hYPR+lGyL8+JdHnHo
-         nhSg==
+        bh=RvvnRwo1YQanCRaIT8C+DPSrYl16RvceDnNq1bSckRM=;
+        b=F53EutLrNah01quYiYNnT61j9H6Cx5FJ+pmx2GDwZmoRsBfoRIUMgasVA0HAYu1gf2
+         AnxCok12NpWb6esClgEKLYnbRaf0zbZI+CbziaVsB1uaDJg/QB0PxvdxWVk808DHOhOh
+         PjbF+GGkS4gQm/OStkjDCHSmkFc39p/XJMg4JjPfg4c3iQnrsoE0Mcr2XyL0uAisJ/E2
+         M52V852VzSb4VURVsfFuL3G6tk34rDRbv1Z8UwrSiih+oLZkpjkeiBgJXaV4I0EqZcCo
+         yQacKpnruwH8zHKmIbZmlf+e8w54/5kU/prQd7KDzuHMkjhfkUInf2a8OPPNBC/BbYyI
+         EDHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=V5tQXeDD5Ip25tVwsuX5B5DgwU8YJNO0LVj8v6MyCLw=;
-        b=SHxF4lUo3XYutF/ypSk+yVEflUa20KbRAANpkYHN8seNa6GCvQ1zhlK7LFofCkgxbk
-         zdcMeixvDHe3LEYMQiQR/lAtExBwL05DKv5iZesVVk0+skG5b0MXni9LmasFI+Z/COat
-         3Z65I9goeUxCmzTTg2pgv/xvI9EQdJX8BGBLz5GCgx6JWooRxTRXG3EESkc4BPS2QfYa
-         HbbAh+M1RXXCw2uKS1gLYtJIzH38ELCUvfS2XZujG8Zcce9Ro/pKibgSeW7M0tQneLj0
-         5g7A5Ar97FFHmwKJdS6mgIWGasSOnkcq/PpOQOjFLmruIMhFjk5tyy/HMz0rTiPDpl++
-         cRaw==
-X-Gm-Message-State: AOAM532W1IfOG2wzATpNQ6ArjG80lIMnRfaVw3dbo5lBcBxprqoIIK7C
-        OWfdObT0z892t2uudZ1q43hWoSbmbt4=
-X-Google-Smtp-Source: ABdhPJxstizRdWRiA696OoVsfMpYlpmHj8zXwKZJ+QZ6hnDPVQFdOwOEyCiWEXzr+6bM37NJJvOdjg==
-X-Received: by 2002:adf:e805:: with SMTP id o5mr5665784wrm.321.1626812086382;
-        Tue, 20 Jul 2021 13:14:46 -0700 (PDT)
+        bh=RvvnRwo1YQanCRaIT8C+DPSrYl16RvceDnNq1bSckRM=;
+        b=Y/yl5g/7yTz9US81LWoJ1VJ4cXtlBpNT3pDNGsNZ42bs+CsGO0rcMx0D/8IxzusJzX
+         SkAOONuHOQ6zGcX28umpRXfMkQ8zkyPrJinPV2XH78hw+YaIksmd81Rrmu2urDicP44u
+         rc0Rcjfc11z4l+Xkl3wZyWh5e+hW76grpEDnZJPQWFBr0hp3d7PD5nsL4ii+tXhBTG/n
+         aWlt3L/J+umckTjTD+BjBGERF7JxRzm4UQgYVKevGjUuAvyPaF/PQZzhPhCQxbdZjo4b
+         7KAm2WD7YSPktpJA5mUVS6Iw3KfCWAREJz0pIulMPnG/FWD1Hur4WV6qHfRqdUdllZpN
+         rCDQ==
+X-Gm-Message-State: AOAM530ApisiTDWg3V1zvt0df7sf2aJ8OA3UR4jyyLT22mAotIgBeRJI
+        DXO3yFDHx/6rgnwwCHNtmdssni4hoGc=
+X-Google-Smtp-Source: ABdhPJyGqPtA5oJLcVCw7Bsvc99aVJ/rYg44ThYMGz2QbQaavJWoVZpqSX0zd1XRp9u8wS+N1E0Uow==
+X-Received: by 2002:a05:600c:3510:: with SMTP id h16mr784921wmq.65.1626812083983;
+        Tue, 20 Jul 2021 13:14:43 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e6sm28823090wrg.18.2021.07.20.13.14.45
+        by smtp.gmail.com with ESMTPSA id h15sm23831061wrq.88.2021.07.20.13.14.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 13:14:46 -0700 (PDT)
-Message-Id: <71e301501c88399711a1bf8515d1747e92cfbb9b.1626812081.git.gitgitgadget@gmail.com>
+        Tue, 20 Jul 2021 13:14:43 -0700 (PDT)
+Message-Id: <cd94f820052c948e522f947a05797ebaf1907121.1626812081.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.973.v2.git.1626812081.gitgitgadget@gmail.com>
 References: <pull.973.git.1624932786.gitgitgadget@gmail.com>
         <pull.973.v2.git.1626812081.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 20 Jul 2021 20:14:41 +0000
-Subject: [PATCH v2 7/7] unpack-trees: resolve sparse-directory/file conflicts
+Date:   Tue, 20 Jul 2021 20:14:37 +0000
+Subject: [PATCH v2 3/7] commit: integrate with sparse-index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,152 +77,147 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When running unpack_trees() with a sparse index, we attempt to operate
-on the index without expanding the sparse directory entries. Thus, we
-operate by manipulating entire directories and passing them to the
-unpack function. In the case of the 'git checkout' command, this is the
-twoway_merge() function.
+Update 'git commit' to allow using the sparse-index in memory without
+expanding to a full one. The only place that had an ensure_full_index()
+call was in cache_tree_update(). The recursive algorithm for
+update_one() was already updated in 2de37c536 (cache-tree: integrate
+with sparse directory entries, 2021-03-03) to handle sparse directory
+entries in the index.
 
-There are several cases in twoway_merge() that handle different
-situations. One new one to add is the case of a directory/file conflict
-where the directory is sparse. Before the sparse index, such a conflict
-would appear as a list of file additions and deletions. Now,
-twoway_merge() initializes 'current', 'oldtree', and 'newtree' from
-src[0], src[1], and src[2], then sets 'oldtree' to NULL because it is
-equal to the df_conflict_entry. The way to determine that we have a
-directory/file conflict is to test that 'current' and 'newtree' disagree
-on being sparse directory entries.
+Most of this change involves testing different command-line options that
+allow specifying which on-disk changes should be included in the commit.
+This includes no options (only take currently-staged changes), -a (take
+all tracked changes), and --include (take a list of specific changes).
+To simplify testing that these options do not expand the index, update
+the test that previously verified that 'git status' does not expand the
+index with a helper method, ensure_not_expanded().
 
-When we are in this case, we want to resolve the situation by calling
-merged_entry(). This allows replacing the 'current' entry with the
-'newtree' entry. This is important for cases where we want to run 'git
-checkout' across the conflict and have the new HEAD represent the new
-file type at that path. The first NEEDSWORK comment dropped in t1092
-demonstrates this necessary behavior.
+This allows 'git commit' to operate much faster when the sparse-checkout
+cone is much smaller than the full list of files at HEAD.
 
-However, we still are in a confusing state when 'current' corresponds to
-a staged change within a sparse directory that is not present at HEAD.
-This should be atypical, because it requires adding a change outside of
-the sparse-checkout cone, but it is possible. Since we are unable to
-determine that this is a staged change within twoway_merge(), we cannot
-add a case to reject the merge at this point. I believe this is due to
-the use of df_conflict_entry in the place of 'oldtree' instead of using
-the valud at HEAD, which would provide some perspective to this
-decision. Any change that would allow this differentiation for staged
-entries would need to involve information further up in unpack_trees().
+Here are the relevant lines from p2000-sparse-operations.sh:
 
-That work should be done, sometime, because we are further confusing the
-behavior of a directory/file conflict when staging a change in the
-directory. The two cases 'checkout behaves oddly with df-conflict-?' in
-t1092 demonstrate that even without a sparse-checkout, Git is not
-consistent in its behavior. Neither of the two options seems correct,
-either. This change makes the sparse-index behave differently than the
-typcial sparse-checkout case, but it does match the full checkout
-behavior in the df-conflict-2 case.
+Test                                      HEAD~1           HEAD
+----------------------------------------------------------------------------------
+2000.14: git commit -a -m A (full-v3)     0.35(0.26+0.06)  0.36(0.28+0.07) +2.9%
+2000.15: git commit -a -m A (full-v4)     0.32(0.26+0.05)  0.34(0.28+0.06) +6.3%
+2000.16: git commit -a -m A (sparse-v3)   0.63(0.59+0.06)  0.04(0.05+0.05) -93.7%
+2000.17: git commit -a -m A (sparse-v4)   0.64(0.59+0.08)  0.04(0.04+0.04) -93.8%
+
+It is important to compare the full-index case to the sparse-index case,
+so the improvement for index version v4 is actually an 88% improvement in
+this synthetic example.
+
+In a real repository with over two million files at HEAD and 60,000
+files in the sparse-checkout definition, the time for 'git commit -a'
+went from 2.61 seconds to 134ms. I compared this to the result if the
+index only contained the paths in the sparse-checkout definition and
+found the theoretical optimum to be 120ms, so the out-of-cone paths only
+add a 12% overhead.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 24 ++++++++++++------------
- unpack-trees.c                           | 11 +++++++++++
- 2 files changed, 23 insertions(+), 12 deletions(-)
+ builtin/commit.c                         |  3 ++
+ cache-tree.c                             |  2 -
+ t/t1092-sparse-checkout-compatibility.sh | 47 ++++++++++++++++++++++--
+ 3 files changed, 46 insertions(+), 6 deletions(-)
 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 12f51db158a..0bc64892505 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1682,6 +1682,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	if (argc == 2 && !strcmp(argv[1], "-h"))
+ 		usage_with_options(builtin_commit_usage, builtin_commit_options);
+ 
++	prepare_repo_settings(the_repository);
++	the_repository->settings.command_requires_full_index = 0;
++
+ 	status_init_config(&s, git_commit_config);
+ 	s.commit_template = 1;
+ 	status_format = STATUS_FORMAT_NONE; /* Ignore status.short */
+diff --git a/cache-tree.c b/cache-tree.c
+index 45e58666afc..577b18d8811 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -461,8 +461,6 @@ int cache_tree_update(struct index_state *istate, int flags)
+ 	if (i)
+ 		return i;
+ 
+-	ensure_full_index(istate);
+-
+ 	if (!istate->cache_tree)
+ 		istate->cache_tree = cache_tree();
+ 
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 79b4a8ce199..91e30d6ec22 100755
+index cabbd42e339..d3e34d0acac 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -396,14 +396,14 @@ test_expect_success 'diff with renames and conflicts' '
- 	done
+@@ -262,6 +262,34 @@ test_expect_success 'add, commit, checkout' '
+ 	test_all_match git checkout -
  '
  
--# NEEDSWORK: the sparse-index fails to move HEAD across a directory/file
--# conflict such as when checking out df-conflict-1 and df-conflict2.
- test_expect_success 'diff with directory/file conflicts' '
++test_expect_success 'commit including unstaged changes' '
++	init_repos &&
++
++	write_script edit-file <<-\EOF &&
++	echo $1 >$2
++	EOF
++
++	run_on_all ../edit-file 1 a &&
++	run_on_all ../edit-file 1 deep/a &&
++
++	test_all_match git commit -m "-a" -a &&
++	test_all_match git status --porcelain=v2 &&
++
++	run_on_all ../edit-file 2 a &&
++	run_on_all ../edit-file 2 deep/a &&
++
++	test_all_match git commit -m "--include" --include deep/a &&
++	test_all_match git status --porcelain=v2 &&
++	test_all_match git commit -m "--include" --include a &&
++	test_all_match git status --porcelain=v2 &&
++
++	run_on_all ../edit-file 3 a &&
++	run_on_all ../edit-file 3 deep/a &&
++
++	test_all_match git commit -m "--amend" -a --amend &&
++	test_all_match git status --porcelain=v2
++'
++
+ test_expect_success 'status/add: outside sparse cone' '
  	init_repos &&
  
- 	for branch in rename-out-to-out \
- 		      rename-out-to-in \
- 		      rename-in-to-out \
-+		      df-conflict-1 \
-+		      df-conflict-2 \
- 		      fd-conflict
- 	do
- 		git -C full-checkout reset --hard &&
-@@ -667,10 +667,7 @@ test_expect_success 'checkout behaves oddly with df-conflict-1' '
- 	git -C sparse-checkout checkout df-conflict-1 \
- 		1>sparse-checkout-out \
- 		2>sparse-checkout-err &&
+@@ -514,14 +542,25 @@ test_expect_success 'sparse-index is expanded and converted back' '
+ 	test_region index ensure_full_index trace2.txt
+ '
+ 
+-test_expect_success 'sparse-index is not expanded' '
+-	init_repos &&
 -
--	# NEEDSWORK: the sparse-index case refuses to change HEAD here,
--	# but for the wrong reason.
--	test_must_fail git -C sparse-index checkout df-conflict-1 \
-+	git -C sparse-index checkout df-conflict-1 \
- 		1>sparse-index-out \
- 		2>sparse-index-err &&
- 
-@@ -684,7 +681,11 @@ test_expect_success 'checkout behaves oddly with df-conflict-1' '
- 	test_cmp expect full-checkout-out &&
- 	test_cmp expect sparse-checkout-out &&
- 
-+	# The sparse-index reports no output
-+	test_must_be_empty sparse-index-out &&
++ensure_not_expanded () {
+ 	rm -f trace2.txt &&
+ 	echo >>sparse-index/untracked.txt &&
+ 	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
+-		git -C sparse-index status &&
++		git -C sparse-index "$@" &&
+ 	test_region ! index ensure_full_index trace2.txt
++}
 +
- 	# stderr: Switched to branch df-conflict-1
-+	test_cmp full-checkout-err sparse-checkout-err &&
- 	test_cmp full-checkout-err sparse-checkout-err
++test_expect_success 'sparse-index is not expanded' '
++	init_repos &&
++
++	ensure_not_expanded status &&
++	ensure_not_expanded commit --allow-empty -m empty &&
++	echo >>sparse-index/a &&
++	ensure_not_expanded commit -a -m a &&
++	echo >>sparse-index/a &&
++	ensure_not_expanded commit --include a -m a &&
++	echo >>sparse-index/deep/deeper1/a &&
++	ensure_not_expanded commit --include deep/deeper1/a -m deeper
  '
  
-@@ -719,17 +720,15 @@ test_expect_success 'checkout behaves oddly with df-conflict-2' '
- 	git -C sparse-checkout checkout df-conflict-2 \
- 		1>sparse-checkout-out \
- 		2>sparse-checkout-err &&
--
--	# NEEDSWORK: the sparse-index case refuses to change HEAD
--	# here, but for the wrong reason.
--	test_must_fail git -C sparse-index checkout df-conflict-2 \
-+	git -C sparse-index checkout df-conflict-2 \
- 		1>sparse-index-out \
- 		2>sparse-index-err &&
- 
- 	# The full checkout deviates from the df-conflict-1 case here!
- 	# It drops the change to folder1/larger-content and leaves the
--	# folder1 path as-is on disk.
-+	# folder1 path as-is on disk. The sparse-index behaves the same.
- 	test_must_be_empty full-checkout-out &&
-+	test_must_be_empty sparse-index-out &&
- 
- 	# In the sparse-checkout case, the checkout deletes the folder1
- 	# file and adds the folder1/larger-content file, leaving all other
-@@ -741,7 +740,8 @@ test_expect_success 'checkout behaves oddly with df-conflict-2' '
- 	test_cmp expect sparse-checkout-out &&
- 
- 	# Switched to branch df-conflict-1
--	test_cmp full-checkout-err sparse-checkout-err
-+	test_cmp full-checkout-err sparse-checkout-err &&
-+	test_cmp full-checkout-err sparse-index-err
- '
- 
- test_done
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 0a5135ab397..309c1352f5d 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -2619,6 +2619,17 @@ int twoway_merge(const struct cache_entry * const *src,
- 			 same(current, oldtree) && !same(current, newtree)) {
- 			/* 20 or 21 */
- 			return merged_entry(newtree, current, o);
-+		} else if (current && !oldtree && newtree &&
-+			   S_ISSPARSEDIR(current->ce_mode) != S_ISSPARSEDIR(newtree->ce_mode) &&
-+			   ce_stage(current) == 0) {
-+			/*
-+			 * This case is a directory/file conflict across the sparse-index
-+			 * boundary. When we are changing from one path to another via
-+			 * 'git checkout', then we want to replace one entry with another
-+			 * via merged_entry(). If there are staged changes, then we should
-+			 * reject the merge instead.
-+			 */
-+			return merged_entry(newtree, current, o);
- 		} else
- 			return reject_merge(current, o);
- 	}
+ # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
 -- 
 gitgitgadget
+
