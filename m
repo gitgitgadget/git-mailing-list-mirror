@@ -2,89 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27474C07E95
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 15:47:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BADDCC07E95
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 15:47:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9831610CC
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 15:47:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A07B3610FB
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 15:47:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240612AbhGTPGZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 11:06:25 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58807 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241902AbhGTO47 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jul 2021 10:56:59 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9A12613881D;
-        Tue, 20 Jul 2021 11:36:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xUexY4ENvrJueGMxLYmdPY2pVui5ZB5Iz1LTp+
-        LSrPs=; b=gRkeIWAgy7TJhAuILsMf2GyyaExenjlUs3vahZ9OnnkkUPZx1SMpC7
-        ZizuN9Tk8BzAJfckA1PMv/RP5cTkDbYKsntj/keUTwtejfmVa04ID35JWgXpiLP3
-        soWqz25sjqamxoip3gINqbff4FK0T6WJOLeKPIqijr8+QFKXGPubk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 929AE13881B;
-        Tue, 20 Jul 2021 11:36:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S240053AbhGTPG5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 11:06:57 -0400
+Received: from siwi.pair.com ([209.68.5.199]:26607 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S242551AbhGTPDg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jul 2021 11:03:36 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 669363F40F4;
+        Tue, 20 Jul 2021 11:44:01 -0400 (EDT)
+Received: from AZHCI-MGMT.azhci.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DC8D913881A;
-        Tue, 20 Jul 2021 11:36:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Andy Zhang <zhgdrx@gmail.com>, git@vger.kernel.org
-Subject: Re: why "git rebase" searching the duplicate patches in <upstream
- branch> rather than in <new base branch>?
-References: <CAJcwCMPU9EhRkqeei_LnYyTJRZUQgHCvomrBbW0Qn+Jp1yhQfQ@mail.gmail.com>
-        <CAJcwCMPHFNHi5i=xRg=GAJL5HiUfKu_KUPwYwELofLLtOAK1bg@mail.gmail.com>
-        <xmqqmtqij63t.fsf@gitster.g> <87a6mhgxv4.fsf@osv.gnss.ru>
-Date:   Tue, 20 Jul 2021 08:36:33 -0700
-In-Reply-To: <87a6mhgxv4.fsf@osv.gnss.ru> (Sergey Organov's message of "Tue,
-        20 Jul 2021 12:04:15 +0300")
-Message-ID: <xmqqczrdhu9q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id 4A1673F40F1;
+        Tue, 20 Jul 2021 11:44:01 -0400 (EDT)
+Subject: Re: What's cooking in git.git (Jul 2021, #04; Mon, 19)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqq4kcqko6g.fsf@gitster.g>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <57342460-e85d-17c2-f882-373d03f63cd1@jeffhostetler.com>
+Date:   Tue, 20 Jul 2021 11:43:59 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4476D316-E970-11EB-B536-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+In-Reply-To: <xmqq4kcqko6g.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
 
-> Similar problem should exist for explicitly specified <upstream> that
-> might happen to have little in common with the current <branch>, right?
 
-I do not think so.  Plain-vanilla rebase is to carry forward our
-changes on top of updated upstream, which means that there is
+On 7/19/21 5:07 PM, Junio C Hamano wrote:
+> 
+> * jh/builtin-fsmonitor (2021-07-12) 35 commits
+>   - BANDAID: sparse fixes
+>   - t7527: test FS event reporing on MacOS WRT case and Unicode
+>   - fsmonitor: handle shortname for .git
+>   - t7527: test status with untracked-cache and fsmonitor--daemon
+>   - fsmonitor: force update index after large responses
+>   - fsmonitor: enhance existing comments
+>   - fsmonitor--daemon: use a cookie file to sync with file system
+>   - fsmonitor--daemon: periodically truncate list of modified files
+>   - t7527: create test for fsmonitor--daemon
+>   - t/perf/p7519: add fsmonitor--daemon test cases
+>   - t/perf: avoid copying builtin fsmonitor files into test repo
+>   - t/perf/p7519: speed up test using "test-tool touch"
+>   - t/helper/test-touch: add helper to touch a series of files
+>   - fsmonitor--daemon: implement handle_client callback
+>   - fsmonitor-fs-listen-macos: implement FSEvent listener on MacOS
+>   - fsmonitor-fs-listen-macos: add macos header files for FSEvent
+>   - fsmonitor-fs-listen-win32: implement FSMonitor backend on Windows
+>   - fsmonitor--daemon: create token-based changed path cache
+>   - fsmonitor--daemon: define token-ids
+>   - fsmonitor--daemon: add pathname classification
+>   - fsmonitor: do not try to operate on bare repos
+>   - fsmonitor--daemon: implement 'start' command
+>   - fsmonitor--daemon: implement 'run' command
+>   - fsmonitor-fs-listen-macos: stub in backend for MacOS
+>   - fsmonitor-fs-listen-win32: stub in backend for Windows
+>   - t/helper/fsmonitor-client: create IPC client to talk to FSMonitor Daemon
+>   - fsmonitor--daemon: implement 'stop' and 'status' commands
+>   - fsmonitor--daemon: add a built-in fsmonitor daemon
+>   - fsmonitor: use IPC to query the builtin FSMonitor daemon
+>   - fsmonitor: config settings are repository-specific
+>   - help: include fsmonitor--daemon feature flag in version info
+>   - fsmonitor-ipc: create client routines for git-fsmonitor--daemon
+>   - fsmonitor--daemon: update fsmonitor documentation
+>   - fsmonitor--daemon: man page
+>   - simple-ipc: preparations for supporting binary messages.
+> 
+>   An attempt to write and ship with a watchman equivalent tailored
+>   for our use.
+> 
+>   So, where are we with this topic?
 
-            x--x--x (side)
-           /
-   ---o---o---o---o---o---o (upstream)
-          ^
-       (old upstream)
+I'm responding to comments on my V3 version and from dogfooders
+of our downstream experimental releases.  Hoping to submit a V4
+next week.
 
-inherently ancestry relationship between the old upstream and the
-current upstream when rebasing 'side' to 'upstream'.
+Jeff
 
-> I don't actually like this.
 
-You do not have to ;-) because I was not suggesting to change any
-existing behaviour.  It was merely me thinking aloud, how I might
-do the feature if I were designing it from scratch now.
-
-> Overall, it seems that we should take the <newbase> rather than
-> <upstream> (that is still <upstream> when --onto is not specified), and
-> apply the skipping logic from there, to whatever depth the merge-base
-> will give us. If it's already implemented this way, then only the manual
-> page needs to be fixed.
-
-Sounds sensible.  I didn't check what the actual code does ;-)
