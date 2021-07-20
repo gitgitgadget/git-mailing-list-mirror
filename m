@@ -2,170 +2,189 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70261C07E95
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 06:32:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 524D0C636C8
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 06:32:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5275C60FF4
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 06:32:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E4BB610FB
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 06:32:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238060AbhGTFvh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 01:51:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47166 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230505AbhGTFvf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jul 2021 01:51:35 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BBFCC061574
-        for <git@vger.kernel.org>; Mon, 19 Jul 2021 23:32:12 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id hr1so32734611ejc.1
-        for <git@vger.kernel.org>; Mon, 19 Jul 2021 23:32:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=GxiOuycDpcAmvkrEQ7QXmcAPcGZ13AKHKmyiBPGo0ic=;
-        b=tDXydXunNEraR7bzmx9brHkGEMniLnCydLU4/g5OXroEUIIMLpvlfLsThIrpZjWK7+
-         EWiivxciq1ktvgtS9+SzCaETZsLgq+Hmd55AOVWc5jMpBTTWyEYKpK3NhZwOrBZbW/q+
-         8F+1bSGmuqLuZRir4E2lzttwwuXXdBP3iR5LczwJUigqGKqScmm2mE0WNdROQlJ13PGA
-         fWRrXEloKzfEFL1mgdxEV+Fh56LR/oxMnoxeo8dYY99JS5Wj1MbKZ4mnoMxQ7ne9Xsae
-         7X646DoMYG/CrptIXsFSw6xBb2Lt3GOfUI/5t7VaGGsRA40Z9E7zRrp57CDPbaQ44lJB
-         lVYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=GxiOuycDpcAmvkrEQ7QXmcAPcGZ13AKHKmyiBPGo0ic=;
-        b=rjFIDhkO/u27GJnGmR1BoiBLpMk7S8jXRWmnY2K2o2MSJUV74UniQUyVUTU7UPe7NX
-         QiKi3KZcK00e5wRd87GQ3bza5EhEs/8XIgdVCUG64hiWuv7jtiSLYhd2xPb3lnlRI0AH
-         YAF/gLsQe973scNESnYNDWXFwRGVJhE5oPH38meq6ZXq8qOyqqBghcWFMPNrs8niCj62
-         lnVHIEm4+rr60ZWLlSmikInhbjuOqCOZRP/82aE3IgkC4lFROUt+Fbo2a+BWQ77DSy6L
-         hGBOegkbSlbOKKDtaJXys+lMjkWd0B7aGvFVGvFNuflid/z+lOnnWWs5qQcldWBu2Mix
-         3yWA==
-X-Gm-Message-State: AOAM533N/wsKHoZtyK4UsCUJxGYmwMSays4e1tQEbI0VOd2TSZ4Gxps9
-        Hx+aS2MQdHLi5Y+iwSPUvcg=
-X-Google-Smtp-Source: ABdhPJw60l3C/mM7rSBqBXs5Gmb6IMb1H6tW+78rm2fWl3EbXrDHz9ncheGmoR5Rtma6qIAuECBTTw==
-X-Received: by 2002:a17:906:eda7:: with SMTP id sa7mr31280406ejb.135.1626762730749;
-        Mon, 19 Jul 2021 23:32:10 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id qp12sm6749017ejb.90.2021.07.19.23.32.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jul 2021 23:32:10 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Son Luong Ngoc <sluongng@gmail.com>
-Cc:     Martin Fick <mfick@codeaurora.org>,
-        Taylor Blau <ttaylorr@github.com>,
-        Sun Chao <16657101987@163.com>, Taylor Blau <me@ttaylorr.com>,
-        Sun Chao via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH v2] packfile: freshen the mtime of packfile by
- configuration
-Date:   Tue, 20 Jul 2021 08:29:17 +0200
-References: <pull.1043.git.git.1625943685565.gitgitgadget@gmail.com>
- <YO8XrOChAtxhpuxS@nand.local> <877dhs20x3.fsf@evledraar.gmail.com>
- <12435060.NHVMl2pYiE@mfick-lnx> <87v95czn7q.fsf@evledraar.gmail.com>
- <CAL3xRKee3YmOrV_-4Tu6FmJyRnS2y-tdiAmXp5TjzL_WxQNrtw@mail.gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <CAL3xRKee3YmOrV_-4Tu6FmJyRnS2y-tdiAmXp5TjzL_WxQNrtw@mail.gmail.com>
-Message-ID: <878s21wl4z.fsf@evledraar.gmail.com>
+        id S236186AbhGTFv4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 01:51:56 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:56263 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S242070AbhGTFvv (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 20 Jul 2021 01:51:51 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 06F115C0101;
+        Tue, 20 Jul 2021 02:32:30 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 20 Jul 2021 02:32:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm1; bh=VC6n4DDgg07nJiU+YOqijBbpjxh
+        AgAF4/dz25xrO8xE=; b=oat7RJrDG2YL3maVAGe53E2w8XPmdFpxq0+WaW2zKjU
+        Tm42gBlLyOOCW2kj8GUV0zrNk9E4JWJ6S+GVaExvuK45wbnSuHYznTvaCNUEafQI
+        yUV1Ev2hXueDfAwnKyZVG9WVSTOtK90BxbrJqSoBJDqmC/Y06FoafTU/07Ho/hTw
+        aJdq/2k7zezVu25gM4B6FjsHcC04OP1HrgPF+fLwap9AlQot+3cDTsgrSWySa2ho
+        pAuDA2cyhNM0/j0Nwj4Gv0oPrciXZJLUiZoFdBKvT0mP5Ct9rGNebtlF7k9LfhcL
+        RHIz9UkAZ6uUI7h1p/278HRalzrWNKhKyNo9W5sl3hA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=VC6n4D
+        Dgg07nJiU+YOqijBbpjxhAgAF4/dz25xrO8xE=; b=e7hxuqbgFnY4FZQ8LgbSlY
+        ikZQx/P8579ha4FidFKdjrXu88kFYtdI9WMFqzH0BDwZJgfdhTODVUhkyRkapzED
+        gJZt2zDRgJ6EuPxPWaGbC6hl1vO3UOAXsvF09FENBzlt5nk8XQLhy8d6urzbXf5+
+        9LAoOW7GvocStinj7sikxzoIInqZjTFAgCWnV1mSassAobwhSVAp+/zJKt8hYANt
+        t1jrs3wiofpUjpNwSbjmZIjg0dm8utFqmrwGSgEb9kpPwMqXnm7aO9EYoSXFWuXy
+        /T31SZAMhscEKMroGfWlBb5Q5vrOzWFyP9ap6LjXjzausDsgHHrGAuRsbHc4t1eg
+        ==
+X-ME-Sender: <xms:_W32YM1O2praQBK50SpVdoZA8MJ72qh74bS7l7HYWhBbpcdO_9c8hw>
+    <xme:_W32YHHXscQK80h9x15-PACizykDRwzy1AL32qqWWeQIhIjb9qw6uySxFmYEX4HAb
+    XQDGMSlNDPppTtyMg>
+X-ME-Received: <xmr:_W32YE6Z1BgjdtPiUEpD1SbROpZmfgb-8ph2r7zlr3c2WBv-w3fUCHdJPsSiT9TBQMx27IpALLv_sYXsHI0ocU_qSu7_>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrfedugddutdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpefggffgfeeigefhuedtgeefjeffkefghedvfedtfeelkeeileevkeeguefgkeffieen
+    ucffohhmrghinhepmhgrkhdrihhnnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:_W32YF3GDNEkgIojNiCoTf_O7jOznrpwWd2-PGu9AF2HDTple_Abnw>
+    <xmx:_W32YPHHpzwAjuZxr3BO7LXn-9BhwhgKCCQ8fGpTCzNY4798WJ_RQQ>
+    <xmx:_W32YO9DJWKxAtu4rANmjB2IbOU-yS7a-FKZ_PZLEQPEqxIe26PQaw>
+    <xmx:_m32YESCb1hTYsypowdpfk169b-poAX-B1qb2VJBpdsel02ROIbD2w>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 Jul 2021 02:32:28 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id a3563063 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 20 Jul 2021 06:32:28 +0000 (UTC)
+Date:   Tue, 20 Jul 2021 08:32:26 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] t0000: fix test if run with TEST_OUTPUT_DIRECTORY
+Message-ID: <44006e7b0bdda50dc51153cc2efb6ae954d4eecb.1626762728.git.ps@pks.im>
+References: <60f5d923848d3_145c71208cc@natae.notmuch>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="cx5feGvLsbDIlbMg"
+Content-Disposition: inline
+In-Reply-To: <60f5d923848d3_145c71208cc@natae.notmuch>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Jul 15 2021, Son Luong Ngoc wrote:
+--cx5feGvLsbDIlbMg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Hi folks,
->
-> On Wed, Jul 14, 2021 at 10:03 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->>
->> *nod*
->>
->> FWIW at an ex-job I helped systems administrators who'd produced such a
->> broken backup-via-rsync create a hybrid version as an interim
->> solution. I.e. it would sync the objects via git transport, and do an
->> rsync on a whitelist (or blacklist), so pickup config, but exclude
->> objects.
->>
->> "Hybrid" because it was in a state of needing to deal with manual
->> tweaking of config.
->>
->> But usually someone who's needing to thoroughly solve this backup
->> problem will inevitably end up with wanting to drive everything that's
->> not in the object or refstore from some external system, i.e. have
->> config be generated from puppet, a database etc., ditto for alternates
->> etc.
->>
->> But even if you can't get to that point (or don't want to) I'd say aim
->> for the hybrid system.
->
-> FWIW, we are running our repo on top of a some-what flickery DRBD setup a=
-nd
-> we decided to use both
->
->   git clone --upload-pack 'git -c transfer.hiderefs=3D"!refs"
-> upload-pack' --mirror`
->
-> and
->
->   `tar`
->
-> to create 2 separate snapshots for backup in parallel (full backup,
-> not incremental).
->
-> In case of recovery (manual), we first rely on the git snapshot and if
-> there is any
-> missing objects/refs, we will try to get it from the tarball.
+Testcases in t0000 are quite special given that they many of them run
+nested testcases to verify that testing functionality itself works as
+expected. These nested testcases are realized by writing a new ad-hoc
+test script which again sources test-lib.sh, where the new script is
+created in a nested subdirectory located beneath the current trash
+directory. We then execute the new test script with the nested
+subdirectory as current working directory and explicitly re-export
+TEST_OUTPUT_DIRECTORY to point to that directory.
 
-That sounds good, and similar to what I described with that "hybrid"
-setup.
+While this works as expected in the general case, it falls apart when
+the developer has TEST_OUTPUT_DIRECTORY explicitly defined either via
+the environment or via config.mak. In that case, test-lib.sh will
+clobber the value that we've just carefully set up to instead contain
+what the developer has defined. As a result, the TEST_OUTPUT_DIRECTORY
+continues to point at the root output directory, not at the nested one.
 
->>
->> This isn't some purely theoretical concern b.t.w., the system using
->> rsync like this was producing repos that wouldn't fsck all the time, and
->> it wasn't such a busy site.
->>
->> I suspect (but haven't tried) that for someone who can't easily change
->> their backup solution they'd get most of the benefits of git-native
->> transport by having their "rsync" sync refs, then objects, not the other
->> way around. Glob order dictates that most backup systems will do
->> objects, then refs (which will of course, at that point, refer to
->> nonexisting objects).
->>
->> It's still not safe, you'll still be subject to races, but probably a
->> lot better in practice.
->
-> I would love to get some guidance in official documentation on what is th=
-e best
-> practice around handling git data on the server side.
->
-> Is git-clone + git-bundle the go-to solution?
-> Should tar/rsync not be used completely or is there a trade-off?
+This issue causes breakage in the 'test_atexit is run' test case: the
+nested test case writes files into "../../", which is assumed to be the
+parent's trash directory. But because TEST_OUTPUT_DIRECTORY already
+points to to the root output directory, we instead end up writing those
+files outside of the output directory. The parent test case will then
+try to check whether those files still exist in its own trash directory,
+which thus must fail now.
 
-I should have tempered some of those comments, it's perfectly fine in
-general to use tar+rsync for "backing up" git repositories in certain
-contexts. E.g. when I switch laptops or whatever it's what I do to grab
-data.
+Fix the issue by adding a new TEST_OUTPUT_DIRECTORY_OVERRIDE variable.
+If set, then we'll always override the TEST_OUTPUT_DIRECTORY with its
+value after sourcing GIT-BUILD-OPTIONS.
 
-The problem is when the data isn't at rest, i.e. in the context of an
-active server.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ t/t0000-basic.sh | 7 +++++--
+ t/test-lib.sh    | 9 +++++++++
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-There you start moving towards a scale where it goes from "sure, it's
-fine" to "this is such a bad idea that nobody should pursue it".
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 2c6e34b947..09d2202748 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -89,8 +89,11 @@ _run_sub_test_lib_test_common () {
+ 		EOF
+ 		cat >>"$name.sh" &&
+ 		export TEST_DIRECTORY &&
+-		TEST_OUTPUT_DIRECTORY=3D$(pwd) &&
+-		export TEST_OUTPUT_DIRECTORY &&
++		# The child test re-sources GIT-BUILD-OPTIONS and may thus
++		# override the test output directory. We thus pass it as an
++		# explicit override to the child.
++		TEST_OUTPUT_DIRECTORY_OVERRIDE=3D$(pwd) &&
++		export TEST_OUTPUT_DIRECTORY_OVERRIDE &&
+ 		sane_unset GIT_TEST_FAIL_PREREQS &&
+ 		if test -z "$neg"
+ 		then
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 9e26860544..da13190970 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -57,6 +57,15 @@ fi
+ . "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
+ export PERL_PATH SHELL_PATH
+=20
++# In t0000, we need to override test directories of nested testcases. In c=
+ase
++# the developer has TEST_OUTPUT_DIRECTORY part of his build options, then =
+we'd
++# reset this value to instead contain what the developer has specified. We=
+ thus
++# have this knob to allow overriding the directory.
++if test -n "${TEST_OUTPUT_DIRECTORY_OVERRIDE}"
++then
++	TEST_OUTPUT_DIRECTORY=3D"${TEST_OUTPUT_DIRECTORY_OVERRIDE}"
++fi
++
+ # Disallow the use of abbreviated options in the test suite by default
+ if test -z "${GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS}"
+ then
+--=20
+2.32.0
 
-If you're running a setup where you're starting to submit patches to
-git.git you're probably at the far end of that spectrum.
 
-Whether it's clone, push, fetch, bundle etc. doesn't really matter, the
-important part is that you're using git's pack transport mechanism to
-ferry updates around, which gives you guarantees rsync+tar can't,
-particularly in the face of concurrently updated data.
+--cx5feGvLsbDIlbMg
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmD2bfoACgkQVbJhu7ck
+PpSlfxAAlGMThKKqJvSXylExTUxyRAeJdvHdeCFUc2+78vnmqpCicIWhkUHzb1la
+7umeVdFNWICTcY3dalfuCUDBs/BUBGAT3zTEoN6exofxvgovx4Ej4TPd1RC8b39p
+Jf2V86sez1FE62Bc3o5qD6nzQPuF4sFggEy9Z3mbWhWWCGsjlpiLHHXvYIRcxTG4
+GCfNZcKOyJIWtXSpWB/TRWtNfXJdPXGSgQr2ZlCT9QUDiEZiqkvYOqyLiUCc8weE
+mr51fPXe1VbaWaw9s8cvsaeJSmbXw1JwDEvdM8tA82tA8Zqn+RxWjY0SEHh9UpLJ
+UEV5V9C/tjfmsAGqkagSl9lfMvgp36p17FcrZ79/V34q30Y6ZzB6Cah30cUppIpL
+XScCV04zUM7QFugcdVO/9h2tFrrXZu5F4jSKRjIxBozPBIFgCUQ84nynII0rfKbe
+e0gz7u5dRcdyy3SiWcauDszaJaZAbjBIX4UAor4BdN1eIvkD+Z4lbIreOAM+yILB
+Hw4jXtIYoaYH8k2PqqPb8c0itfjtvrxDj0NT9bITGJjspREb8AuI2+jEpK2tqw0o
+Mavu3XL8qOpERDPLpm89lE8Gz48zH4EtHpm+l5HvpAdQgLC8Fe6TKmMyIIeyo2E4
+NCpBx2qJ2MVgEjTeSXXoG5M1ldtV/RuT9oEAjK0OHoPzQOzEkFg=
+=ARLu
+-----END PGP SIGNATURE-----
+
+--cx5feGvLsbDIlbMg--
