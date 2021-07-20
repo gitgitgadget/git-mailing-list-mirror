@@ -2,91 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_LOCAL_DIGITS,FROM_LOCAL_HEX,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 599FFC07E9B
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 16:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90646C07E9B
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 16:26:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 408956100C
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 16:08:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76A7461004
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 16:26:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234595AbhGTP2N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 11:28:13 -0400
-Received: from m12-12.163.com ([220.181.12.12]:53439 "EHLO m12-12.163.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239148AbhGTPPX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jul 2021 11:15:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=Mime-Version:Subject:From:Date:Message-Id; bh=uMHp1
-        D5cXnnwXbHD9Lc8ZFCb3BIZxksHPAaQ/68dM+U=; b=JlyJ3Lw4abbwPIZ8d8Vin
-        dsT8sz8U+Ci6JA73GFFBxwdFIgy9BmEfllRrGj4eg8Y5ji1SI2SD2YEXgUkYi+2B
-        z3MbBE8yDpcI/JOmbETi2wuRYSGd+a6vdyk7pC5bsSsHQT0KnJiVxyXCZH8GwKcC
-        +JRB5/XNuffNEiK4RnEDRA=
-Received: from smtpclient.apple (unknown [115.198.205.80])
-        by smtp8 (Coremail) with SMTP id DMCowAAHtlKd5vZgqnFVPw--.29783S3;
-        Tue, 20 Jul 2021 23:07:10 +0800 (CST)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
-Subject: Re: [PATCH v3] packfile: freshen the mtime of packfile by
- configuration
-From:   Sun Chao <16657101987@163.com>
-In-Reply-To: <xmqqlf61j19i.fsf@gitster.g>
-Date:   Tue, 20 Jul 2021 23:07:09 +0800
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Sun Chao via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Martin Fick <mfick@codeaurora.org>,
-        Son Luong Ngoc <sluongng@gmail.com>,
-        Jeff King <peff@peff.net>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <60EFBDBF-8A9F-4004-82C1-C7C1E9D1778E@163.com>
-References: <pull.1043.v2.git.git.1626226114067.gitgitgadget@gmail.com>
- <pull.1043.v3.git.git.1626724399377.gitgitgadget@gmail.com>
- <YPXluqywHs3u4Qr+@nand.local> <xmqqlf61j19i.fsf@gitster.g>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3654.100.0.2.22)
-X-CM-TRANSID: DMCowAAHtlKd5vZgqnFVPw--.29783S3
-X-Coremail-Antispam: 1Uf129KBjvdXoWrZw1DGr18GFyUuFyrtr1kXwb_yoWfGFg_WF
-        Z2vasrXrs0gFykJr4qkr47KFWkJF48G348J34jgrs8t34kZFs8GFn0g3s09F12ka109Fya
-        vrZIq3ySv3yUWjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU0-6pDUUUUU==
-X-Originating-IP: [115.198.205.80]
-X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/1tbiDx7VglUMY3IRrwAAsw
+        id S230037AbhGTPps (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 11:45:48 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62706 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237252AbhGTPkm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jul 2021 11:40:42 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7CE5D13C3EA;
+        Tue, 20 Jul 2021 12:21:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=e3I8nnGN2aCGLpkNNEGNHqLBADgCZ9ydOyzTD4
+        /prpI=; b=fD8eb+xt+3jiJbJjkiouR4dS7BmgNThwJNLhZl7soD2rD2jTXwVkN2
+        PPs54gmtA4TBUr/jTqUWMgcufzkue8v7mbqBRzZDp551VjNOWU27bzxdWcru0Hrp
+        7S/QIE/qfpaLTlkZcImcAn4uJwTz8jJCoDlwwwPZobhE2SMQxBE7w=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 76ECC13C3E9;
+        Tue, 20 Jul 2021 12:21:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BD10E13C3E5;
+        Tue, 20 Jul 2021 12:21:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] t0000: fix test if run with TEST_OUTPUT_DIRECTORY
+References: <60f5d923848d3_145c71208cc@natae.notmuch>
+        <44006e7b0bdda50dc51153cc2efb6ae954d4eecb.1626762728.git.ps@pks.im>
+        <YPZ3JmWKLrUldK4R@coredump.intra.peff.net>
+Date:   Tue, 20 Jul 2021 09:21:10 -0700
+In-Reply-To: <YPZ3JmWKLrUldK4R@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 20 Jul 2021 03:11:34 -0400")
+Message-ID: <xmqq7dhlhs7d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8000BA7C-E976-11EB-96B9-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
+> On Tue, Jul 20, 2021 at 08:32:26AM +0200, Patrick Steinhardt wrote:
+>
+>> Fix the issue by adding a new TEST_OUTPUT_DIRECTORY_OVERRIDE variable.
+>> If set, then we'll always override the TEST_OUTPUT_DIRECTORY with its
+>> value after sourcing GIT-BUILD-OPTIONS.
+>
+> Thanks, I like this approach much better than removing
+> TEST_OUTPUT_DIRECTORY entirely (and I confirmed that it fixes the
+> problem).
 
-> 2021=E5=B9=B47=E6=9C=8820=E6=97=A5 08:07=EF=BC=8CJunio C Hamano =
-<gitster@pobox.com> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> Taylor Blau <me@ttaylorr.com> writes:
->=20
->> Hmm. I'm still quite unconvinced that we should be taking this =
-direction
->> without better motivation. We talked about your assumption that NFS
->> seems to be invalidating the block cache when updating the inodes =
-that
->> point at those blocks, but I don't recall seeing further evidence.
->=20
-> Me neither.  Not touching the pack and not updating the "most
-> recently used" time of individual objects smells like a recipe
-> for repository corruption.
->=20
->> My opinion is that it is not, and that the bizarre caching behavior =
-you
->> are seeing is out of Git's control.
->=20
-Thanks Junio, I will try to get a more detial reports of the NFS caches =
-and
-share it if it is valuable. Not touching the mtime of packfiles really =
-has
-potencial problems just as Taylor said.=
+Yup, and it combines with your subtests-skip fix rather nicely to
+solve both problems.  Thanks for working well together.
 
+> I do wish we had a more generic way of overriding stuff in
+> GIT-BUILD-OPTIONS, rather than introducing manual _OVERRIDE variables
+> for each. But there's not an easy solution here (see the earlier thread
+> for some discussion), so this seems like a good immediate step to take.
+>
+> One small note on the commit message:
+>
+>> While this works as expected in the general case, it falls apart when
+>> the developer has TEST_OUTPUT_DIRECTORY explicitly defined either via
+>> the environment or via config.mak.
+>
+> The mention of the environment confused me for a moment, since:
+>
+>   TEST_OUTPUT_DIRECTORY=/tmp/foo ./t0000-basic.sh
+>
+> is already OK. But you probably meant that:
+>
+>   TEST_OUTPUT_DIRECTORY=/tmp/foo make test
+>
+> would fail, since "make" would pick up the variable and then write it
+> into GIT-BUILD-OPTIONS (just as it would if you put it in config.mak, or
+> on the command-line of make).
+>
+> I don't think it's sufficiently confusing to rewrite the commit message,
+> but just something I noted while reading it.
+
+I'll just insert "and runs 'make test'" after "via config.mak" while
+queuing.
+
+Again, thanks, both.
