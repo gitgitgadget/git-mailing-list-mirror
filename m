@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC567C07E95
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 10:40:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 315C1C07E95
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 10:40:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C2B4C61107
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 10:40:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1BF036108B
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 10:40:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236268AbhGTKAF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 06:00:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46092 "EHLO
+        id S237119AbhGTKAJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 06:00:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236465AbhGTJ4O (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236462AbhGTJ4O (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 20 Jul 2021 05:56:14 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1999C0613DD
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 532B7C0613EF
         for <git@vger.kernel.org>; Tue, 20 Jul 2021 03:36:41 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id u5-20020a7bc0450000b02901480e40338bso1304187wmc.1
+Received: by mail-wr1-x42e.google.com with SMTP id l7so25438741wrv.7
         for <git@vger.kernel.org>; Tue, 20 Jul 2021 03:36:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Nunq3FkTqdTpNuMe+/uq7V+j0dRIWt2R3G2vbK6JIQQ=;
-        b=t7Y/HbtqCLF/A9Hean4DFu8siLoB2UX/itioZPFiIpM3ZMRc0oHzD/oc9ExTrro97g
-         lrAYBPuCeWRTSIx/P/uVmZ+/jgRP1Y2VREgHcuexmlmrP8UDTFyMi7qDw0u+Q3JS40s7
-         zKAaBd+huhLEyRzKcHTSZMJpENv8iHeToDb8aMYM919sxwr0krONtdlb5vOHUJDnHn1L
-         7B7f0VK6+E6KWVVpjvf6gRLIkkyf4nYrpROcqGp/ws5NDBcrNo1DYyrmlr7GhSk7dHIk
-         De9omrMiSjDN0KvGxddB3IPGPMrld2L8beKoFobIcrBuCRGhQS8NwLhWfRxAeE8PMVYh
-         LGTA==
+        bh=RoQDZcAdoGUDb6H+X9AUIqAxsZArFcVOc4P0K4BHhpg=;
+        b=PFzCzA4ZnkvCy5apeXBJRhSgAQs95G79vovNutdvgDWBXOyoYGAZNIZ5y60bqgli0A
+         8VNoNcTri5QkwbO2t9lEwFAJxkf6mT0GU7r7qnmCfXYbMEn5mu6hT1LL2iK3+0LyTrsG
+         gxL6E/0mOIm8iArqeJT7mRuT3K3iQXly0bdzpcCPFhDMvcs1M+Ym9Hsb0fI2DYFK+nz0
+         LJ/hLWvaNVYUAGGvjgefG2CO5Q9Zp8oF6Lwi0gSi1+xxdHaw3VL4qCA9OViMrgrQA/w/
+         lRpOMY3okFRMTYRjLdAjMSeiY42/UQjtkczw+B6jy8y4VLbT3CDSyDgCqi/vFbp7UHRq
+         nNYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Nunq3FkTqdTpNuMe+/uq7V+j0dRIWt2R3G2vbK6JIQQ=;
-        b=N8V9MqFNqP6c+Ub8iLnh7/oekJX96Vmo9u5EvrlB9s55Hy/LjG9ZYt7c1zHk996J0d
-         Ye6fZr7NRTw9UJU2fkqFc3UWbFG/Be7m2P9rWNUX4rt50/IE1bO/JVdtO9xQhAgrcnta
-         8v2qE/MWuldS4E79qV7wtQPsuqVVZVC2ljHKLCFDiJvwxD6ku/Y3cCVMxKCn8UFXjYFi
-         zeijOliyIAdR4te6xulP29ybo9tYXYvMZ3N3Ftsv6l2rjAuLcvXIGRrzWuTob6eZHHhz
-         0fK82YvLDa97tmqyfK7TyPSxXeEmxg8LZbiGtd0+WoZvI+GyWWymdgEp45To5ePMnjov
-         wYeA==
-X-Gm-Message-State: AOAM533Q6lJlz3kC4lyagU1V9km62qyXOLcTocgBVIsAHa8sKHnrl7oA
-        VOrBI+OdGCMqKVXDzFbfu1nvakZ8gn8=
-X-Google-Smtp-Source: ABdhPJwdBE/47AMbvL+4UTNwQd4oQ5yeY6jZtNIUkmmt7aH7nyq2s1e3sj/OoUIOyrVaWbbVZzCRsA==
-X-Received: by 2002:a05:600c:3783:: with SMTP id o3mr31772451wmr.23.1626777400623;
+        bh=RoQDZcAdoGUDb6H+X9AUIqAxsZArFcVOc4P0K4BHhpg=;
+        b=OGQZKX00D4P+AGjTF0L6Ho2Rhh2giiIpqHnp19VEQ1jMQDWuHsVUA7FYscutmH17Ee
+         j3WLdBxIGrQUTFEw0IOSWlj0Mn4hlhmZDL5cPa5d5E5HRD9zUiGZJgrqkphXQS/OEDX0
+         4EnvWBOO2PhdCP6AmsJ0+WkXJz/WaM8ppGfGdWWjeRLf1tMDSVTFEUGZh8GDVGY1uatr
+         rPmRph12dVkvI+INdaMeBNGeVxP28wKBDZbZaiXQm3JJP3FOZ9xeA+UPdkLwCeZf8az+
+         UGDMlE1d9H1JrWYQSJCHUszsxjRqxPwUtQJPx0SrYxMxOFHKYGc0ds2Sc923CkY1NrEb
+         sbpA==
+X-Gm-Message-State: AOAM531nhX8g4CBZPW6yMRLw6qwe/RorSt37WczDQlZgAz/PU8Y8A9xA
+        lfAsDBvRqKlpkdLSvb91C682UQ1NbqQ=
+X-Google-Smtp-Source: ABdhPJxup/QRYTBm/nWs5764/9866HcdzaptuKO/49bT+/MqI2rM/hnbpKIQGscWuqABf9Hhom4vRA==
+X-Received: by 2002:adf:ec4b:: with SMTP id w11mr35276003wrn.420.1626777400036;
         Tue, 20 Jul 2021 03:36:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j4sm9445820wrt.24.2021.07.20.03.36.40
+        by smtp.gmail.com with ESMTPSA id r16sm2044885wmg.11.2021.07.20.03.36.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 03:36:40 -0700 (PDT)
-Message-Id: <9d0a042eae17e449d6fd5a4cb7df31a8a02d972c.1626777394.git.gitgitgadget@gmail.com>
+        Tue, 20 Jul 2021 03:36:39 -0700 (PDT)
+Message-Id: <ef8ce0e6ebceb715e75c567a3caf5a64052b5312.1626777394.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.981.v2.git.1626777393.gitgitgadget@gmail.com>
 References: <pull.981.git.1623675888.gitgitgadget@gmail.com>
         <pull.981.v2.git.1626777393.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 20 Jul 2021 10:36:30 +0000
-Subject: [PATCH v2 09/12] diff --color-moved: stop clearing potential moved
- blocks
+Date:   Tue, 20 Jul 2021 10:36:29 +0000
+Subject: [PATCH v2 08/12] diff --color-moved: shrink potential moved blocks as
+ we go
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,59 +79,86 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-moved_block_clear() was introduced in 74d156f4a1 ("diff
---color-moved-ws: fix double free crash", 2018-10-04) to free the
-memory that was allocated when initializing a potential moved
-block. However since 21536d077f ("diff --color-moved-ws: modify
-allow-indentation-change", 2018-11-23) initializing a potential moved
-block no longer allocates any memory. Up until the last commit we were
-relying on moved_block_clear() to set the `match` pointer to NULL when
-a block stopped matching, but since that commit we do not clear a
-moved block that does not match so it does not make sense to clear
-them elsewhere.
+Rather than setting `match` to NULL and then looping over the list of
+potential matched blocks for a second time to remove blocks with no
+matches just filter out the blocks with no matches as we go.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- diff.c | 11 -----------
- 1 file changed, 11 deletions(-)
+ diff.c | 42 ++++++------------------------------------
+ 1 file changed, 6 insertions(+), 36 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 068473c0be3..4b5776a5a0a 100644
+index b03f79b626c..068473c0be3 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -807,11 +807,6 @@ struct moved_block {
- 	int wsd; /* The whitespace delta of this block */
- };
+@@ -997,12 +997,12 @@ static void add_lines_to_move_detection(struct diff_options *o,
+ static void pmb_advance_or_null(struct diff_options *o,
+ 				struct emitted_diff_symbol *l,
+ 				struct moved_block *pmb,
+-				int pmb_nr)
++				int *pmb_nr)
+ {
+-	int i;
++	int i, j;
+ 	unsigned flags = o->color_moved_ws_handling & XDF_WHITESPACE_FLAGS;
  
--static void moved_block_clear(struct moved_block *b)
--{
--	memset(b, 0, sizeof(*b));
+-	for (i = 0; i < pmb_nr; i++) {
++	for (i = 0, j = 0; i < *pmb_nr; i++) {
+ 		int match;
+ 		struct moved_entry *prev = pmb[i].match;
+ 		struct moved_entry *cur = (prev && prev->next_line) ?
+@@ -1017,37 +1017,9 @@ static void pmb_advance_or_null(struct diff_options *o,
+ 				xdiff_compare_lines(cur->es->line, cur->es->len,
+ 						    l->line, l->len, flags);
+ 		if (match)
+-			pmb[i].match = cur;
+-		else
+-			moved_block_clear(&pmb[i]);
++			pmb[j++].match = cur;
+ 	}
 -}
 -
- #define INDENT_BLANKLINE INT_MIN
- 
- static void fill_es_indent_data(struct emitted_diff_symbol *es)
-@@ -1093,11 +1088,7 @@ static void mark_color_as_moved(struct diff_options *o,
- 		}
- 
- 		if (pmb_nr && (!match || l->s != moved_symbol)) {
--			int i;
+-static int shrink_potential_moved_blocks(struct moved_block *pmb,
+-					 int pmb_nr)
+-{
+-	int lp, rp;
 -
- 			adjust_last_block(o, n, block_length);
--			for(i = 0; i < pmb_nr; i++)
--				moved_block_clear(&pmb[i]);
- 			pmb_nr = 0;
- 			block_length = 0;
- 			flipped_block = 0;
-@@ -1155,8 +1146,6 @@ static void mark_color_as_moved(struct diff_options *o,
- 	}
- 	adjust_last_block(o, n, block_length);
- 
--	for(n = 0; n < pmb_nr; n++)
--		moved_block_clear(&pmb[n]);
- 	free(pmb);
+-	/* Shrink the set of potential block to the remaining running */
+-	for (lp = 0, rp = pmb_nr - 1; lp <= rp;) {
+-		while (lp < pmb_nr && pmb[lp].match)
+-			lp++;
+-		/* lp points at the first NULL now */
+-
+-		while (rp > -1 && !pmb[rp].match)
+-			rp--;
+-		/* rp points at the last non-NULL */
+-
+-		if (lp < pmb_nr && rp > -1 && lp < rp) {
+-			pmb[lp] = pmb[rp];
+-			memset(&pmb[rp], 0, sizeof(pmb[rp]));
+-			rp--;
+-			lp++;
+-		}
+-	}
+-
+-	/* Remember the number of running sets */
+-	return rp + 1;
++	*pmb_nr = j;
  }
  
+ /*
+@@ -1140,9 +1112,7 @@ static void mark_color_as_moved(struct diff_options *o,
+ 			continue;
+ 		}
+ 
+-		pmb_advance_or_null(o, l, pmb, pmb_nr);
+-
+-		pmb_nr = shrink_potential_moved_blocks(pmb, pmb_nr);
++		pmb_advance_or_null(o, l, pmb, &pmb_nr);
+ 
+ 		if (pmb_nr == 0) {
+ 			/*
 -- 
 gitgitgadget
 
