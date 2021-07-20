@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC09EC07E95
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 11:42:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6A99C07E95
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 11:42:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A617C6113C
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 11:42:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACE5961029
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 11:42:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237017AbhGTLBO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 07:01:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60736 "EHLO
+        id S235368AbhGTLBy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 07:01:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236545AbhGTK7a (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jul 2021 06:59:30 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F0C9C061768
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 04:40:07 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id f9so25630720wrq.11
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 04:40:07 -0700 (PDT)
+        with ESMTP id S236401AbhGTK7l (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jul 2021 06:59:41 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55136C0613DD
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 04:40:09 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id l17-20020a05600c1d11b029021f84fcaf75so1305763wms.1
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 04:40:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FFtkIu6h9h/31fzI/EXMc0altkrixdwUaXJuhNdbORs=;
-        b=IC/Xw1fC9zJRK9UsRs0ye+kjSF07kvv+mLTG8+j7VldEOJa0RXN5VQFMdDJ5baErkf
-         W3Ncowh2H5S6vfjqpZYEXDIwS9h1o0GBJ7kUyVvwTE0dlHXn8rnhB9Dm9EvSoHFUpOUB
-         TZydcd4fiGkg1eWs0nG+PpJ2Q9WPmMj+z/IjJELfpxBdA+NhxLJoWYi0qd+e5rl5lJ2g
-         Ir5otUivQJElhW1sqvEAE4DVtHdAiXwHyH5X6C7MGEb1W/Z5kuhv60SStm65hz4Y0OQS
-         tSeasnMj1Eo1GRp58w4ANoIkdoQVlyTd8PL5sNLDz4uXnc6mycCGW9gkVQ5l8uMe6p/m
-         DGdg==
+        bh=waP9c37Y2qR6tqt2P4b7cAqOtDg1FvYNwdRKPb1sN2I=;
+        b=AOSzgBPvC0AkcztyJoAIcBeNKn4f0RqjN4A1MN+f3on1LZs6GFFrhz6SWyCTLOlqj0
+         c46JL245hLnCzXwwN7OYzWXUG8bSfxLETO5u9vKH9jz0tHJMTC841oZWFmO60cgUiWT2
+         xM9EztY/kel/7UeKJkV0dQMmtotOnuVbXsTswyohiEMaM5uxiTeWOuOU2Q5s9EyuxSy/
+         j7awZYXhA6DDiq6/LrdmoaTBEy2h0AwK/zZo0A0ZOxpLqDu3D45Khwjjfz4v1YfOxBAB
+         JkcslluU5gTnDKbu1VsU6ELugUXZoOAtmmnxUiVQyr+ej8aGIhr5x+9msJ3wt8zierv7
+         F7Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FFtkIu6h9h/31fzI/EXMc0altkrixdwUaXJuhNdbORs=;
-        b=Q+BEfIYv9edzF2MqlKfrm02J75lS6+1ce13NwmKT5vaRpvdecAhaaZH/G3jFxxAUY8
-         +ntL+M+maF3W3WX8n5p8GNlTmLKPPwpb+vNtCe81lis0fpAnekuVqQ2ZbNVlo+HqEifx
-         Lc0OAR4JpO78OaIq0rFabA3EDrKn7FPFBYduaZbe8rnCnT1jdHcx1HPR82fR9YWqYbh7
-         hEVjjqJF6PBW0Am0RCQjxqmcrCDX7X+5UsiUt/bJ8xJe3UqoXtduP3DYJzPK8gAgyUvu
-         ragfKJzVih92XDXEKHa5N0RWz6BJwMGxIrUNGEnBjg1VhXlcpUQoCspeYqsB+WjtJHYo
-         +v+w==
-X-Gm-Message-State: AOAM530MjVXKAFlJAZG2ZCS/uVWSBod4mbdLDx/K5pZRObsk27rrZJHh
-        gMhYZMdbD7VKs+Rp0wNdT/sW4Hu+5VnH9A==
-X-Google-Smtp-Source: ABdhPJyBu+s80qR1eAf1ydU8zL+I/cnoPRRP/OBAsYa9Yk9/ZhGeFSQuuu8vyz1PIrhK73xnqB9nig==
-X-Received: by 2002:a5d:4a85:: with SMTP id o5mr34956668wrq.410.1626781205933;
-        Tue, 20 Jul 2021 04:40:05 -0700 (PDT)
+        bh=waP9c37Y2qR6tqt2P4b7cAqOtDg1FvYNwdRKPb1sN2I=;
+        b=FXm+R29TMymcgJXwf6zfPicRqhobhRQeJTWCjWaWLTF9B9le9A6+P8CDNCMdI2qxXB
+         HN7weOAyQ44BFLxEQCsihP5UzLpCkX449Aowd1wWGfE4NI2Ul90EhkPiQKGxlwXjqAbC
+         Y4u2LkxpKemhyBY5C/HgCVkNa/P7zHt747yY64gtHLk/CVuEC3D1vbyS91+dLSenhtvY
+         ln8HCK/na13o8whGluDxRjjy72ttGBvVbweysmsG7DG7ofFhZqytXB9kbuM8EMw7krrg
+         Ywf2x4Wn+H9ZWFc3NypvEU7jP5hR/Am0tbl4mG8eeExcBszqB+EpjWeqiyemuUN872Pz
+         ImwA==
+X-Gm-Message-State: AOAM533Deif+1mP7qQYcMkalPbkjnIrtzczOLAAVdRUX9GnMPrU/mE5X
+        GFEfeFLR3pQMJS68ndV27NjgTNItUlF28w==
+X-Google-Smtp-Source: ABdhPJwqmKej4wjTk+KpINY/8ViFmu6m2BKIqzGqNY1MKSy4hZrzItBe4cPbhV8q1YlE6k+rv98+Jg==
+X-Received: by 2002:a05:600c:1d04:: with SMTP id l4mr23844311wms.130.1626781207697;
+        Tue, 20 Jul 2021 04:40:07 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y66sm19683595wmy.39.2021.07.20.04.40.05
+        by smtp.gmail.com with ESMTPSA id y66sm19683595wmy.39.2021.07.20.04.40.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 04:40:05 -0700 (PDT)
+        Tue, 20 Jul 2021 04:40:06 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Andrei Rybak <rybak.a.v@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 4/6] multi-pack-index: refactor "goto usage" pattern
-Date:   Tue, 20 Jul 2021 13:39:43 +0200
-Message-Id: <patch-4.6-6e9bd877866-20210720T113707Z-avarab@gmail.com>
+Subject: [PATCH v3 6/6] commit-graph: show usage on "commit-graph [write|verify] garbage"
+Date:   Tue, 20 Jul 2021 13:39:45 +0200
+Message-Id: <patch-6.6-5c1694e071e-20210720T113707Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.874.ge7a9d58bfcf
 In-Reply-To: <cover-0.6-00000000000-20210720T113707Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20210718T074936Z-avarab@gmail.com> <cover-0.6-00000000000-20210720T113707Z-avarab@gmail.com>
@@ -78,57 +78,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor the "goto usage" pattern added in
-cd57bc41bbc (builtin/multi-pack-index.c: display usage on unrecognized
-command, 2021-03-30) to maintain the same brevity, but doesn't run
-afoul of the recommendation in CodingGuidelines about braces:
+Change the parse_options() invocation in the commit-graph code to make
+sense. We're calling it twice, once for common options parsing, and
+then for the sub-commands.
 
-    When there are multiple arms to a conditional and some of them
-    require braces, enclose even a single line block in braces for
-    consistency[...]
-
-Let's also change "argv == 0" to juts "!argv", per:
-
-    Do not explicitly compare an integral value with constant 0 or
-    '\0', or a pointer value with constant NULL[...]
-
-I'm changing this because in a subsequent commit I'll make
-builtin/commit-graph.c use the same pattern, having the two similarly
-structured commands match aids readability.
+But we never checked if we had something leftover in argc in "write"
+or "verify", as a result we'd silently accept garbage in these
+subcommands. Let's not do that.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/multi-pack-index.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ builtin/commit-graph.c  | 10 ++++++++--
+ t/t5318-commit-graph.sh |  5 +++++
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 5d3ea445fdb..2952388a8eb 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -164,7 +164,7 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 	if (!opts.object_dir)
- 		opts.object_dir = get_object_directory();
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index bf34aa43f22..88cbcb5a64f 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -104,7 +104,10 @@ static int graph_verify(int argc, const char **argv)
+ 	opts.progress = isatty(2);
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options,
+-			     builtin_commit_graph_verify_usage, 0);
++			     builtin_commit_graph_verify_usage,
++			     PARSE_OPT_KEEP_UNKNOWN);
++	if (argc)
++		usage_with_options(builtin_commit_graph_verify_usage, options);
  
--	if (argc == 0)
-+	if (!argc)
- 		goto usage;
+ 	if (!opts.obj_dir)
+ 		opts.obj_dir = get_object_directory();
+@@ -261,7 +264,10 @@ static int graph_write(int argc, const char **argv)
  
- 	if (!strcmp(argv[0], "repack"))
-@@ -175,10 +175,9 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 		return cmd_multi_pack_index_verify(argc, argv);
- 	else if (!strcmp(argv[0], "expire"))
- 		return cmd_multi_pack_index_expire(argc, argv);
--	else {
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options,
+-			     builtin_commit_graph_write_usage, 0);
++			     builtin_commit_graph_write_usage,
++			     PARSE_OPT_KEEP_UNKNOWN);
++	if (argc)
++		usage_with_options(builtin_commit_graph_write_usage, options);
+ 
+ 	if (opts.reachable + opts.stdin_packs + opts.stdin_commits > 1)
+ 		die(_("use at most one of --reachable, --stdin-commits, or --stdin-packs"));
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index af88f805aa2..09a2ccd2920 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -5,6 +5,11 @@ test_description='commit graph'
+ 
+ GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0
+ 
++test_expect_success 'usage' '
++	test_expect_code 129 git commit-graph write blah &&
++	test_expect_code 129 git commit-graph write verify
++'
 +
- usage:
--		error(_("unrecognized subcommand: %s"), argv[0]);
--		usage_with_options(builtin_multi_pack_index_usage,
--				   builtin_multi_pack_index_options);
--	}
-+	error(_("unrecognized subcommand: %s"), argv[0]);
-+	usage_with_options(builtin_multi_pack_index_usage,
-+			   builtin_multi_pack_index_options);
- }
+ test_expect_success 'setup full repo' '
+ 	mkdir full &&
+ 	cd "$TRASH_DIRECTORY/full" &&
 -- 
 2.32.0.874.ge7a9d58bfcf
 
