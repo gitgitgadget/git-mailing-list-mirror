@@ -2,173 +2,248 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDEE9C07E95
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 09:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A914DC07E9B
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 10:29:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A2EBD6120D
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 09:08:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FB0161019
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 10:29:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235371AbhGTI1J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 04:27:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53018 "EHLO
+        id S237141AbhGTJsI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 05:48:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234969AbhGTIZK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jul 2021 04:25:10 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B138EC0613E3
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 02:04:20 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id h4so28895430ljo.6
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 02:04:20 -0700 (PDT)
+        with ESMTP id S237639AbhGTJqN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jul 2021 05:46:13 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8770C0612E9
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 03:24:32 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id q18-20020a1ce9120000b02901f259f3a250so1723359wmc.2
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 03:24:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=WPGtAZNcw8LUnQS525FVePg+eM6QAblgUXwdl7/piJA=;
-        b=ENkOKFKMq50SV6LaJuaYuOFY3LO1FFf8VOfgQIuVHe9ILe+kKsdW2szYmt1y6lh0YK
-         5XGLzrVcAtliOodeK60K7CFnHT6/0eflsaeMD/84o7Oumzh1QYd1uQNWqtmAY41NtyiY
-         1eMcmzm27ozxxxjcBBMzeCG/162T0B0FhDX4U2KxKe+VUa1iPD1rzASUi/qW41/HuypM
-         qyOeuRvR7SSTT7d/HxkJoD2uvIZatbir3zs7NhvwAo5Vnn76hquOoJcPpJkvrbJ3LYN5
-         0dlHauDsdMm/e+BbrroTMJ6+aw9nR+AKwmDA47+8AAdUE1qt6EbrqiLKotZ5cE1dCcMI
-         Skow==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Oi1VeRUAlHt4mjCkCiIFPvQgA3VtFMWLSOPqWtrhkh4=;
+        b=g4SsB0iHLi258rULNzYujDRxwLjsDEcjXPFxSvJyqnxtX1RW7cEE9/5wNxowCNILAZ
+         q36JXUffN6fPj3vl5OCY61lm938D58HVbITcn9qiaEF+h/zTrqv+rJOGvg3tlmc0mITv
+         RUaRSNUQWRheSc1qHQAtvYIwm4wuqPIIUkK8pvd7Z5TGkq1FdPTMek9pYQcwr+D2NKaa
+         GuegQ/QbQpHo/uB8YYHPBpRAR8rTgh8VCbpT8XizAD9HCh/+TSE1b3Ic5TUvv0L1a6KD
+         iTNLQbMWmPTkN8GOTEebWFba1HCVEESzC/q5AIQQcqj1wL7DcFpqRQ4MVIsmg4YKMEFL
+         7avw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=WPGtAZNcw8LUnQS525FVePg+eM6QAblgUXwdl7/piJA=;
-        b=J0UnBeJKIdDcp/466rf8U1HA0KjKw8afmR2+5CwOqlKUPTAD8idx86q0sjxwKVlAv/
-         P+dZttu0z/u4kcZSYjYXizJYSFx38On6ckjVuxgQ+2I9Hm6ZZem9xbgucxIMyMdcG6SA
-         diFZXWGDpmgN/ZoUu3E6thnJaA1tt1zM3MB32/gB/7GJWtv4hHW9R4BUc5//x5a2udP2
-         E+pLD2ZV56XmFhzVf8xrbOb5ytMwT0tXHASiMW9wUUcvkrcl2wGzU1opVXTHUJ+m75le
-         AH0MDYZyHP/QDb/INkaqZbzGoIta2abCn5dxx9x50sa5CnK4q5XvJWrMeY35G4Hsj6nI
-         zzMA==
-X-Gm-Message-State: AOAM530cPE97uL+9gCjQjsZEuuVS6cEvHxDTEdv91/tg/HKIBVQvTrFa
-        9By/h0o9EvRmldE9avjDbmXNjJKFpW0=
-X-Google-Smtp-Source: ABdhPJwUVpLlIz/NG7syVKBMxVQmv0kLBQfUAlFzfCHWrgi/EYv9eBBfbbLgSkny7e+CCDBhFtcoTg==
-X-Received: by 2002:a2e:a808:: with SMTP id l8mr26156010ljq.355.1626771857709;
-        Tue, 20 Jul 2021 02:04:17 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id q13sm1476841lfu.272.2021.07.20.02.04.16
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Oi1VeRUAlHt4mjCkCiIFPvQgA3VtFMWLSOPqWtrhkh4=;
+        b=RDiPc3IXtNW0V1XjoVAk1vIz/PLhBPp+PRUA3pqzY72I4FCwR20h3iKHEn3ZEOjoWQ
+         tdHPrlVovaBl4EdSg/rjpumv8rd0fJw+6L0yS4tsThTT5xz2UYWEkD10On6oUbddvn6n
+         JAJH83oKO3VKMdTssBywR6+Jj2d+vXrrIGLdT2i7d7/qeXX5Vyz5iwaGEQhqLVLqy2pW
+         lPXXk2L5dPLfL0S7TbIxFYr18eLgduqKJXbrPW8JBLVhju2Q/owrtHX8Ar4RV/T6l6db
+         KhIeuYOHRogPydnaQ8M58+2iXBjhtllL2mceCKCaMAttNLAZNXHfB6JRAh1rRiKfmYtP
+         44ww==
+X-Gm-Message-State: AOAM5300txm9q3IYHuarJxpOsrsdcOo7flLsjlDtQbzu8baqE/FACmRQ
+        aAaOH9vGJTHaeVoYeal68JCVqcnFAdERUg==
+X-Google-Smtp-Source: ABdhPJw78ybiKysER3nWq3lr9PJTe/oX9QCw8eT1wD314HQXdTU1zJBzKQSgZJLqVHDlipcsNUrzTA==
+X-Received: by 2002:a7b:cd15:: with SMTP id f21mr31488324wmj.148.1626776671323;
+        Tue, 20 Jul 2021 03:24:31 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id l23sm9684536wme.22.2021.07.20.03.24.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 02:04:16 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Andy Zhang <zhgdrx@gmail.com>, git@vger.kernel.org
-Subject: Re: why "git rebase" searching the duplicate patches in <upstream
- branch> rather than in <new base branch>?
-References: <CAJcwCMPU9EhRkqeei_LnYyTJRZUQgHCvomrBbW0Qn+Jp1yhQfQ@mail.gmail.com>
-        <CAJcwCMPHFNHi5i=xRg=GAJL5HiUfKu_KUPwYwELofLLtOAK1bg@mail.gmail.com>
-        <xmqqmtqij63t.fsf@gitster.g>
-Date:   Tue, 20 Jul 2021 12:04:15 +0300
-In-Reply-To: <xmqqmtqij63t.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        19 Jul 2021 15:23:18 -0700")
-Message-ID: <87a6mhgxv4.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        Tue, 20 Jul 2021 03:24:30 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 10/12] refs/files: remove unused "oid" in lock_ref_oid_basic()
+Date:   Tue, 20 Jul 2021 12:24:15 +0200
+Message-Id: <patch-10.12-753c20f89bf-20210720T102051Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.874.ge7a9d58bfcf
+In-Reply-To: <cover-00.12-00000000000-20210720T102051Z-avarab@gmail.com>
+References: <cover-00.11-00000000000-20210716T140631Z-avarab@gmail.com> <cover-00.12-00000000000-20210720T102051Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+In the preceding commit the last caller that passed a non-NULL OID was
+changed to pass NULL to lock_ref_oid_basic(). As noted in preceding
+commits use of this API has been going away (we should use ref
+transactions, or lock_raw_ref()), so we're unlikely to gain new
+callers that want to pass the "oid".
 
-> Andy Zhang <zhgdrx@gmail.com> writes:
->
->> why "git rebase" searching the duplicate patches in <upstream
->> branch> rather than in <new base branch>?
->>
->> hi, all:
->>
->>  I am reading the help of "git rebase", it says:
->>     "If the upstream branch already contains a change you have made
->> (e.g., because you mailed a patch which was applied upstream), then
->> that commit will be skipped. "
->>
->>  But, because we are applying commits to <new base branch> rather than
->> to <upstream branch>, I really don't understand why we are searching
->> the duplicate patches in <upstream branch> rather than in <new base
->> branch>?
->
-> It is either a design bug or a documentation bug, or both ;-)
+So let's remove it, doing so means we can remove the "mustexist"
+condition, and therefore anything except the "flags =
+RESOLVE_REF_NO_RECURSE" case.
 
-It's definitely /at least/ a documentation bug, as description of the
-feature is not precise enough. For example, it's unclear if such a
-commit will appear in the todo list of --interactive. Will it?
+Furthermore, since the verify_lock() function we called did most of
+its work when the "oid" was passed (as "old_oid") we can inline the
+trivial part of it that remains in its only remaining caller. Without
+a NULL "oid" passed it was equivalent to calling refs_read_ref_full()
+followed by oidclr().
 
-It looks like documentation of "git rebase" should be revised to make
-clearer distinction between <branch>, <upstream>, and <newbase>.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ refs/files-backend.c | 72 ++++++++------------------------------------
+ 1 file changed, 12 insertions(+), 60 deletions(-)
 
->
-> I do think it makes sense to skip commits from the branch we are
-> rebasing that have equivalent commits in the upstream, as it is
-> expected that upstream might have already applied/cherry-picked some
-> of the changes you are rebasing, and you do not want to use the same
-> change twice.
-
-To me this only makes sense for the branch we rebase /onto/, and thus it
-actually makes sense for <newbase>, and for <upstream> it only happens
-to make sense by default as <newbase>=<upstream> in this case.
-
-If Git currently indeed searches for duplicates in <upstream>, then it
-looks like implementation bug, or misfeature. I think the <newbase>
-should rather be used.
-
->
-> When we are transplanting a series of commits from an old base to
-> totally unrelated base using the --onto option, e.g. when replaying
-> the contents of 'topic' relative to 'next' down to 'master' in your
-> topology, however,
->
->> Old tree is:
->>
->> o---o---o---o---o  master
->>     \
->>      o---o---o---o---o  next
->>                       \
->>                        o---o---o  topic
->
-> it is not necessarily obvious where to stop digging back at.
-
-Similar problem should exist for explicitly specified <upstream> that
-might happen to have little in common with the current <branch>, right?
-If so, then it's already somehow being solved, even if simply by
-ignoring the issue, so adding <newbase> to the picture doesn't actually
-bring anything significantly new.
-
-> In the
-> above picture where 'master' and 'next' have ancestry relationship,
-> we could try to see if the three commits on 'topic' branch being
-> replayed match any of the commits in next..master range, but when
-> using the --onto option, there does not have to be any relationship
-> between the <upstream> and <new base> (they do not have to share a
-> root commit).  So from that point of view, it probably makes sense
-> to default to --no-reapply-cherry-picks when --onto is used, while
-> defaulting --reapply-cherry-picks when --onto is not used.
-
-I don't actually like this.
-
-First, in general, changing default of another option is not to be taken
-lightly. For example, defaulting to --fork-point when no <upstream> is
-specified is already a point of confusion.
-
-Second, changing the default is not backward compatible, so there should
-be very sound reason to change it.
-
-Finally, if user does specify /both/ --onto and
---no-reapply-cherry-picks, where would Git supposedly stop digging for
-matching cherry-picks? Provided this is to be solved anyway, the
-rationale to change the default does not sound strong enough.
-
-Overall, it seems that we should take the <newbase> rather than
-<upstream> (that is still <upstream> when --onto is not specified), and
-apply the skipping logic from there, to whatever depth the merge-base
-will give us. If it's already implemented this way, then only the manual
-page needs to be fixed.
-
-Thanks,
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 819351c82fc..8bbabc140b2 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -852,42 +852,6 @@ static struct ref_iterator *files_ref_iterator_begin(
+ 	return ref_iterator;
+ }
+ 
+-/*
+- * Verify that the reference locked by lock has the value old_oid
+- * (unless it is NULL).  Fail if the reference doesn't exist and
+- * mustexist is set. Return 0 on success. On error, write an error
+- * message to err, set errno, and return a negative value.
+- */
+-static int verify_lock(struct ref_store *ref_store, struct ref_lock *lock,
+-		       const struct object_id *old_oid, int mustexist,
+-		       struct strbuf *err)
+-{
+-	assert(err);
+-
+-	if (refs_read_ref_full(ref_store, lock->ref_name,
+-			       mustexist ? RESOLVE_REF_READING : 0,
+-			       &lock->old_oid, NULL)) {
+-		if (old_oid) {
+-			int save_errno = errno;
+-			strbuf_addf(err, "can't verify ref '%s'", lock->ref_name);
+-			errno = save_errno;
+-			return -1;
+-		} else {
+-			oidclr(&lock->old_oid);
+-			return 0;
+-		}
+-	}
+-	if (old_oid && !oideq(&lock->old_oid, old_oid)) {
+-		strbuf_addf(err, "ref '%s' is at %s but expected %s",
+-			    lock->ref_name,
+-			    oid_to_hex(&lock->old_oid),
+-			    oid_to_hex(old_oid));
+-		errno = EBUSY;
+-		return -1;
+-	}
+-	return 0;
+-}
+-
+ static int remove_empty_directories(struct strbuf *path)
+ {
+ 	/*
+@@ -913,15 +877,12 @@ static int create_reflock(const char *path, void *cb)
+  */
+ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+ 					   const char *refname,
+-					   const struct object_id *old_oid,
+ 					   unsigned int flags, int *type,
+ 					   struct strbuf *err)
+ {
+ 	struct strbuf ref_file = STRBUF_INIT;
+ 	struct ref_lock *lock;
+ 	int last_errno = 0;
+-	int mustexist = (old_oid && !is_null_oid(old_oid));
+-	int resolve_flags = RESOLVE_REF_NO_RECURSE;
+ 	int resolved;
+ 
+ 	files_assert_main_repository(refs, "lock_ref_oid_basic");
+@@ -929,12 +890,9 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+ 
+ 	CALLOC_ARRAY(lock, 1);
+ 
+-	if (mustexist)
+-		resolve_flags |= RESOLVE_REF_READING;
+-
+ 	files_ref_path(refs, &ref_file, refname);
+-	resolved = !!refs_resolve_ref_unsafe(&refs->base,
+-					     refname, resolve_flags,
++	resolved = !!refs_resolve_ref_unsafe(&refs->base, refname,
++					     RESOLVE_REF_NO_RECURSE,
+ 					     &lock->old_oid, type);
+ 	if (!resolved && errno == EISDIR) {
+ 		/*
+@@ -952,8 +910,8 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+ 					    refname);
+ 			goto error_return;
+ 		}
+-		resolved = !!refs_resolve_ref_unsafe(&refs->base,
+-						     refname, resolve_flags,
++		resolved = !!refs_resolve_ref_unsafe(&refs->base, refname,
++						     RESOLVE_REF_NO_RECURSE,
+ 						     &lock->old_oid, type);
+ 	}
+ 	if (!resolved) {
+@@ -988,10 +946,10 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+ 		goto error_return;
+ 	}
+ 
+-	if (verify_lock(&refs->base, lock, old_oid, mustexist, err)) {
+-		last_errno = errno;
+-		goto error_return;
+-	}
++	if (refs_read_ref_full(&refs->base, lock->ref_name,
++			       0,
++			       &lock->old_oid, NULL))
++		oidclr(&lock->old_oid);
+ 	goto out;
+ 
+  error_return:
+@@ -1410,8 +1368,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
+ 
+ 	logmoved = log;
+ 
+-	lock = lock_ref_oid_basic(refs, newrefname, NULL, REF_NO_DEREF, NULL,
+-				  &err);
++	lock = lock_ref_oid_basic(refs, newrefname, REF_NO_DEREF, NULL, &err);
+ 	if (!lock) {
+ 		if (copy)
+ 			error("unable to copy '%s' to '%s': %s", oldrefname, newrefname, err.buf);
+@@ -1433,8 +1390,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
+ 	goto out;
+ 
+  rollback:
+-	lock = lock_ref_oid_basic(refs, oldrefname, NULL,
+-				  REF_NO_DEREF, NULL, &err);
++	lock = lock_ref_oid_basic(refs, oldrefname, REF_NO_DEREF, NULL, &err);
+ 	if (!lock) {
+ 		error("unable to lock %s for rollback: %s", oldrefname, err.buf);
+ 		strbuf_release(&err);
+@@ -1841,9 +1797,7 @@ static int files_create_symref(struct ref_store *ref_store,
+ 	struct ref_lock *lock;
+ 	int ret;
+ 
+-	lock = lock_ref_oid_basic(refs, refname, NULL,
+-				  REF_NO_DEREF, NULL,
+-				  &err);
++	lock = lock_ref_oid_basic(refs, refname, REF_NO_DEREF, NULL, &err);
+ 	if (!lock) {
+ 		error("%s", err.buf);
+ 		strbuf_release(&err);
+@@ -3060,9 +3014,7 @@ static int files_reflog_expire(struct ref_store *ref_store,
+ 	 * reference itself, plus we might need to update the
+ 	 * reference if --updateref was specified:
+ 	 */
+-	lock = lock_ref_oid_basic(refs, refname, NULL,
+-				  REF_NO_DEREF,
+-				  &type, &err);
++	lock = lock_ref_oid_basic(refs, refname, REF_NO_DEREF, &type, &err);
+ 	if (!lock) {
+ 		error("cannot lock ref '%s': %s", refname, err.buf);
+ 		strbuf_release(&err);
 -- 
-Sergey Organov
+2.32.0.874.ge7a9d58bfcf
+
