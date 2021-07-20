@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 066C2C07E95
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 10:31:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA321C07E95
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 10:32:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E300E6101E
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 10:31:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0F1E6101E
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 10:32:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237086AbhGTJvB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 05:51:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43508 "EHLO
+        id S235892AbhGTJuz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 05:50:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237679AbhGTJqS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jul 2021 05:46:18 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EE25C0612FC
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 03:24:34 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id a23-20020a05600c2257b0290236ec98bebaso1727291wmm.1
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 03:24:34 -0700 (PDT)
+        with ESMTP id S237647AbhGTJqO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jul 2021 05:46:14 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FF30C0613B5
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 03:24:27 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id f190so10407448wmf.4
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 03:24:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yCvY7+A3Pc8OMQ+NkfKOGjSFEZyvhHn+BLOkIHSuvE4=;
-        b=sWm5kfvrCJSU9NN8qSFWT9sl3A9RkNc3dSmEdfjYQw1TJEoKmvCnEyPKvi6i0mxYv/
-         UMPuHBLlOUwUCAQnABsmQbi4Ooklg7+PlHAE6mw0VfKLVCLj8ieA6cIi5ZsJ26og3s3h
-         Hr6ZO1l0074QL5OVp91NSU8wDGz/KFeJR5q3uk2kdcSTYOGy4j0qzeaeP3Mwq7F3bg4f
-         Zpe4AC8Rds+2ZwvW0cPlEkF1msmFEPz1JOE4lRzoC7ItlgisJU6Ga4jGYox44pStCr/9
-         mOyrz51a0BbuJhy0eGOycBbeghPQDPyQ72riGZ/x5yndyIPTb130O6PyWjle0CrKh3Tc
-         qE1w==
+        bh=KY+tWZQPyoSryn7STBqGNabPfDxysc33R8mcW+m9lqs=;
+        b=jebTL7FSHxZQYoH+GLrHyduYC0GltIaXDtCE09rOE8mhgb0KsYEMH+1IUDtSFmUXhG
+         mC3Q8mvYdlv2HYsxDluO9VoUcGPmvFVUtac2lOjfPluqzyypqrg/6YCLb81p4h3z8RVZ
+         0RooQ9hBhhjETYM0HOYkqkhuazYpdKUyT1BGlVJAYQ2iI3Zyjto0qw/d4lZzTMIgJ5KI
+         i/HMH0Zt05prjaxvDaVrUp2SyHcEL9Byn+OIcSgfsxQVUREYBqIgsdRVUM2cyUs3CFJs
+         u6r9SdzUju3ap4MxLHtPt284VGRwSltw/YKFfo9Iu98d/MSy2ARM9vJ0lO8WKXDkLgqe
+         OnrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yCvY7+A3Pc8OMQ+NkfKOGjSFEZyvhHn+BLOkIHSuvE4=;
-        b=Rp7d85aK3PZL7TGWW+UcSj/qpTc+yIz7VnIs5ws0MbKa/MBifGrjRbQk4OtrpCaA4c
-         +IxEN9Z22d37Vgt7cVtLyxmtJkEY1zjnVKCsDf/C+DkIbDOQrM3elq+hBi9dy7jVlb+U
-         BXG1SmTG+WpWdMCOUt81y+ftSwOjpZ0dr59byGbQp/PF9ScKcLdBZC/tetjgecGJL9Tv
-         PTz29aFF1hdnl0i9YW1NW7E1+yo9CiNtb9HYaQFf9CkdgZ6QAVgVY/apzst2uYu90xrn
-         MuAIq06yxj/LNNcXcH2eIiKK9C6ratMWodvyzYAaQFNHpF5/Kdg6kR97eZJv2VE+WuEJ
-         de9A==
-X-Gm-Message-State: AOAM5316eEEqq/dJxsqaOuNqhmf3d2eCw7f7F6CG2U+eRD+6D8HtqbR1
-        n6FUUAMpqLwdOZUdHZ2GbZhWoxAjA191WQ==
-X-Google-Smtp-Source: ABdhPJw/YgncUZ4ElBlYwTP/ZnX37HS8IVZZLSVD5GnUMvjOwD5FJhH5Raa2DpmK8XXEDCICi5moPA==
-X-Received: by 2002:a7b:cb53:: with SMTP id v19mr29786013wmj.127.1626776672762;
-        Tue, 20 Jul 2021 03:24:32 -0700 (PDT)
+        bh=KY+tWZQPyoSryn7STBqGNabPfDxysc33R8mcW+m9lqs=;
+        b=dOm2BNqldrZ84upRkURisvbuhMRsOcCvYGk8u/DH+eu3BHgvRsK7SCY1MWDfPXYHtV
+         9/Voop1DFU4AgGQwr+sXHoKh8m4y4pyOIsxk8qAsoU/rbQeszSkvInVjEHLScGAKNFqU
+         YeSn60wsWDmQIVyPUdFD4FLY8St2paMd09YmcfM/N7VRw0uL4rqOjdF94P8RB4kG5L10
+         xnBFyT9zJQBqAsLL2RskvuEyofwbTAEKStY4faSf7fcCylpq2YDx6PeQOmk9lh4Agi0x
+         vcVcP0Nyb5g5dtrUi+/ZSLvc6nF0dRYAr/GjzT/+dycaep4r06SmmAhA30fGvNPjxj4D
+         ygBQ==
+X-Gm-Message-State: AOAM531i5UDG6R1g/S4xjxnUNondFCTLVGflGpf40oWwtIkAfR0y3CRj
+        n7G5DHdmpbIetQgDykEHlQYTScGK5VYp2w==
+X-Google-Smtp-Source: ABdhPJy6OGAPwdo8i0cb14zyZFp+0v9/ZfEKm/4vAXr+4+tClrQ2LIfeBGgmxRuclaU6ClpVWuAkWg==
+X-Received: by 2002:a1c:741a:: with SMTP id p26mr30647650wmc.47.1626776665861;
+        Tue, 20 Jul 2021 03:24:25 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l23sm9684536wme.22.2021.07.20.03.24.32
+        by smtp.gmail.com with ESMTPSA id l23sm9684536wme.22.2021.07.20.03.24.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 03:24:32 -0700 (PDT)
+        Tue, 20 Jul 2021 03:24:25 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Michael Haggerty <mhagger@alum.mit.edu>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 12/12] refs/files: remove unused "errno != ENOTDIR" condition
-Date:   Tue, 20 Jul 2021 12:24:17 +0200
-Message-Id: <patch-12.12-452253d597d-20210720T102051Z-avarab@gmail.com>
+Subject: [PATCH v3 04/12] refs/files: remove unused "skip" in lock_raw_ref() too
+Date:   Tue, 20 Jul 2021 12:24:09 +0200
+Message-Id: <patch-04.12-7fb7ff97491-20210720T102051Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.874.ge7a9d58bfcf
 In-Reply-To: <cover-00.12-00000000000-20210720T102051Z-avarab@gmail.com>
 References: <cover-00.11-00000000000-20210716T140631Z-avarab@gmail.com> <cover-00.12-00000000000-20210720T102051Z-avarab@gmail.com>
@@ -77,44 +77,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As a follow-up to the preceding commit where we removed the adjacent
-"errno == EISDIR" condition in the same function, remove the
-"last_errno != ENOTDIR" condition here.
+Remove the unused "skip" parameter to lock_raw_ref(), it was never
+used. We do use it when passing "skip" to the
+refs_rename_ref_available() function in files_copy_or_rename_ref(),
+but not here.
 
-It's not possible for us to hit this condition added in
-5b2d8d6f218 (lock_ref_sha1_basic(): improve diagnostics for ref D/F
-conflicts, 2015-05-11). Since a1c1d8170db (refs_resolve_ref_unsafe:
-handle d/f conflicts for writes, 2017-10-06) we've explicitly caught
-these in refs_resolve_ref_unsafe() before returning NULL:
-
-	if (errno != ENOENT &&
-	    errno != EISDIR &&
-	    errno != ENOTDIR)
-		return NULL;
-
-We'd then always return the refname from refs_resolve_ref_unsafe()
-even if we were in a broken state as explained in the preceding
-commit. The elided context here is a call to refs_resolve_ref_unsafe().
+This is part of a larger series that modifies lock_ref_oid_basic()
+extensively, there will be no more modifications of this function in
+this series, but since the preceding commit removed this unused
+parameter from lock_ref_oid_basic(), let's do it here too for
+consistency.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- refs/files-backend.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ refs/files-backend.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index f83aa1063f4..443182da102 100644
+index a59823d667e..af332fa8fe4 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -894,8 +894,7 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
- 				     RESOLVE_REF_NO_RECURSE,
- 				     &lock->old_oid, type)) {
- 		last_errno = errno;
--		if (last_errno != ENOTDIR ||
--		    !refs_verify_refname_available(&refs->base, refname,
-+		if (!refs_verify_refname_available(&refs->base, refname,
- 						   NULL, NULL, err))
- 			strbuf_addf(err, "unable to resolve reference '%s': %s",
- 				    refname, strerror(last_errno));
+@@ -531,7 +531,6 @@ static void unlock_ref(struct ref_lock *lock)
+ static int lock_raw_ref(struct files_ref_store *refs,
+ 			const char *refname, int mustexist,
+ 			const struct string_list *extras,
+-			const struct string_list *skip,
+ 			struct ref_lock **lock_p,
+ 			struct strbuf *referent,
+ 			unsigned int *type,
+@@ -568,7 +567,7 @@ static int lock_raw_ref(struct files_ref_store *refs,
+ 		 * reason to expect this error to be transitory.
+ 		 */
+ 		if (refs_verify_refname_available(&refs->base, refname,
+-						  extras, skip, err)) {
++						  extras, NULL, err)) {
+ 			if (mustexist) {
+ 				/*
+ 				 * To the user the relevant error is
+@@ -673,7 +672,7 @@ static int lock_raw_ref(struct files_ref_store *refs,
+ 							  REMOVE_DIR_EMPTY_ONLY)) {
+ 				if (refs_verify_refname_available(
+ 						    &refs->base, refname,
+-						    extras, skip, err)) {
++						    extras, NULL, err)) {
+ 					/*
+ 					 * The error message set by
+ 					 * verify_refname_available() is OK.
+@@ -710,7 +709,7 @@ static int lock_raw_ref(struct files_ref_store *refs,
+ 		 */
+ 		if (refs_verify_refname_available(
+ 				    refs->packed_ref_store, refname,
+-				    extras, skip, err))
++				    extras, NULL, err))
+ 			goto error_return;
+ 	}
+ 
+@@ -2412,7 +2411,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 	}
+ 
+ 	ret = lock_raw_ref(refs, update->refname, mustexist,
+-			   affected_refnames, NULL,
++			   affected_refnames,
+ 			   &lock, &referent,
+ 			   &update->type, err);
+ 	if (ret) {
 -- 
 2.32.0.874.ge7a9d58bfcf
 
