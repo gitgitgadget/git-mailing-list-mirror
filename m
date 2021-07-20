@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93241C07E9B
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7322AC636CA
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:09:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 71BBF610C7
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:09:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6061361003
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:09:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232726AbhGTQ2E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 12:28:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49742 "EHLO
+        id S231305AbhGTQ2h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 12:28:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232770AbhGTQY1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jul 2021 12:24:27 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DBFDC0613DC
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:05:04 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id k4so26769177wrc.8
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:05:04 -0700 (PDT)
+        with ESMTP id S232994AbhGTQYb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jul 2021 12:24:31 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46220C061574
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:05:06 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id l6so12714359wmq.0
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:05:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=luGuMJDPRMnjXEoCSqhvE+ut/GB0VLXv5Jme/aSENz4=;
-        b=idRStOs6G5y/+xB61Ep3mlx8ysx5wrAQ82R96AANi6GK05JFj9DSYRulvzfC8/+4co
-         vsVelgGFsxFku+TgQet1vBZvpEbdeZ5GLQwh5F+/wcPG0NXzZXBMlwYlnv9cSK2CG/jt
-         rVUmk32XrPtjM9pAaQup53Z3wplO60h0ZFudpzdOjfDdFvJYGIud5iuACuCYOfendaXZ
-         pSPUT5ERgQsLRwnCeT9tKMUiesFC3xaNCH1ZxyEeHAkxJTcM7vliZIW1tKKx1+uopsvz
-         X/Y2h4EiEmjsNn3njBeZFyKk2B2vSIFzRjVht5O/Wce+/jQAv2ei/299YzcelXiOn8vj
-         q2VA==
+        bh=vS3g4wjwVgWYF9DEvXctmDtiPK5MuvaZwl5SZRTztt4=;
+        b=l0HFKIvIGw/ljbQr7HrCcMgX64o7FcaQhOjQL1IORv3B7q5DbauQ/jXhqmmADcVDAD
+         bLkTJ5x+viC/yR/8uwataojvNIksejA6myWuMgDIbdi5gDeprF6YSu3HZ2NnumceTaom
+         it0MBgXlBSWegOzhoAx2V1n6Qzub+nPKsUWqIelv4bMSXz9mKI40gCOUEnJQphSFhcLC
+         v46d3U7VoOQAatOjpVehL3n+LdgAJ7V1oxaJBTeE83feY3cv0y35cD8Whp3Tyy7vD2R6
+         YI10rw06bNn7a7oVPcRT53Y7KI8wG+Cf2AeNTkT7bVceVZNzNj63e/ZRtZMGDXuKSA5/
+         cl6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=luGuMJDPRMnjXEoCSqhvE+ut/GB0VLXv5Jme/aSENz4=;
-        b=d2l5OkP4YggkV7x15aLT2AloDWfCuCsoohw+zjpRiXbg81tyD8/cuftUjynB7iBwE8
-         EZqsm6x9i6PNtASMfyvOin1DpIbB3xLl6O0+kll3dhrSU3UOE9HcmK261RQR/HsIfBx2
-         NW6OcU9aar9Bntb+M+OSRFGnO+aCV5VkN6/44MITT9gUl2XNivX0Q3azUdxzd9DyA0Jd
-         UXeAOH8I/n+XUcXKo4msSgFymYgjyVC3hmkTG9blXtjKIBOtiCgum/BaROvqaYCMvYCZ
-         DQZZLfJiTGJV/KlX9RrCAw0P06tPHKmoYXkCSPhGBwvgeDSnCr58Y+HlIXA5LlibQkuP
-         j/VA==
-X-Gm-Message-State: AOAM53154g4VgcmN3cKWgyQoTSDTbF+uUc+1F0SQR2La2hsKyDOC+5ty
-        dedY7bKGkBxih3YYDpaC6TiJTR8L+Z4=
-X-Google-Smtp-Source: ABdhPJwSJUDXAL61SKAYphmSFHCkwSgddOgX4ggOIHYxWYaD9r71OT8YSsroBO4PEm1qCP3LQk5ICQ==
-X-Received: by 2002:a05:6000:1a86:: with SMTP id f6mr17223858wry.127.1626800703151;
-        Tue, 20 Jul 2021 10:05:03 -0700 (PDT)
+        bh=vS3g4wjwVgWYF9DEvXctmDtiPK5MuvaZwl5SZRTztt4=;
+        b=nZlyuJ4malkZ8F5SUcV2Q/a0mIZtyrDy4fRajbkHwyAIVP9LlURjDWqe0RBu5+T74Z
+         5iIUBzmSq4LzgimxPVxFdLb5Db2tWDT6wIfpGnkQDRxP3YwLfDdO/Hl2ZhyRxxdUB1JA
+         97oY2TRTsIptpAwmrC5wv0cFHEYeMY08t6Mb36SQ7e5LUMYWHMQ4nA7mUz7don4IZ95G
+         fzICW8RL2B6iXyCro1C33D687TLgjFMvJM7u7JKNeqPtZt+YCn3k9wOI0spmepP9Ik96
+         gqFrolP7MSue1Xbf/+hm8Re8jGNfFzRIkmm51OXDzLOwad7eKUZqCSIuXCDo0KO2jyRH
+         cR4Q==
+X-Gm-Message-State: AOAM531KFRMNJb+YWNSVU5MOoAcy711pJceJzn8j0nxmJIQMVSi0MmMs
+        sP3em2sgtzmOIeLumbf0TvnyoKUXNj4=
+X-Google-Smtp-Source: ABdhPJzqCTqA3IIU4b+tnE61i2SAs+9rwGr1ADZxBM3W2bl2JYJ+olBt8mNVGtVn3u5q9KxKqbGhDQ==
+X-Received: by 2002:a05:600c:6d8:: with SMTP id b24mr39177253wmn.111.1626800704909;
+        Tue, 20 Jul 2021 10:05:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v11sm23779911wrs.4.2021.07.20.10.05.02
+        by smtp.gmail.com with ESMTPSA id p2sm19876467wmg.6.2021.07.20.10.05.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 10:05:02 -0700 (PDT)
-Message-Id: <73eece0caacb7519edf338f040f08d381456df88.1626800687.git.gitgitgadget@gmail.com>
+        Tue, 20 Jul 2021 10:05:04 -0700 (PDT)
+Message-Id: <4a5891fa8cc9514535d70b52a4fce2b21991bfef.1626800687.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1054.git.git.1626800686.gitgitgadget@gmail.com>
 References: <pull.1054.git.git.1626800686.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 20 Jul 2021 17:04:43 +0000
-Subject: [PATCH 23/26] t1301: document what needs to be done for reftable
+Date:   Tue, 20 Jul 2021 17:04:46 +0000
+Subject: [PATCH 26/26] t7004: avoid direct filesystem access
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,44 +77,33 @@ From: Han-Wen Nienhuys <hanwen@google.com>
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- t/t1301-shared-repo.sh | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ t/t7004-tag.sh | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-index 84bf1970d8b..a5755b4a434 100755
---- a/t/t1301-shared-repo.sh
-+++ b/t/t1301-shared-repo.sh
-@@ -22,9 +22,10 @@ test_expect_success 'shared = 0400 (faulty permission u-w)' '
- 	)
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 2f72c5c6883..8bd84b0e404 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -97,7 +97,8 @@ test_expect_success 'creating a tag with --create-reflog should create reflog' '
+ 	test_when_finished "git tag -d tag_with_reflog" &&
+ 	git tag --create-reflog tag_with_reflog &&
+ 	git reflog exists refs/tags/tag_with_reflog &&
+-	sed -e "s/^.*	//" .git/logs/refs/tags/tag_with_reflog >actual &&
++	git reflog --format="format:tag: tagging %h (%s, %cd)%n" \
++		--date=format:%Y-%m-%d refs/tags/tag_with_reflog >actual &&
+ 	test_cmp expected actual
  '
  
-+# TODO(hanwen): for REFTABLE should inspect group-readable of .git/reftable/
- for u in 002 022
- do
--	test_expect_success POSIXPERM "shared=1 does not clear bits preset by umask $u" '
-+	test_expect_success REFFILES,POSIXPERM "shared=1 does not clear bits preset by umask $u" '
- 		mkdir sub && (
- 			cd sub &&
- 			umask $u &&
-@@ -114,7 +115,8 @@ test_expect_success POSIXPERM 'info/refs respects umask in unshared repo' '
- 	test_cmp expect actual
+@@ -108,7 +109,9 @@ test_expect_success 'annotated tag with --create-reflog has correct message' '
+ 	test_when_finished "git tag -d tag_with_reflog" &&
+ 	git tag -m "annotated tag" --create-reflog tag_with_reflog &&
+ 	git reflog exists refs/tags/tag_with_reflog &&
+-	sed -e "s/^.*	//" .git/logs/refs/tags/tag_with_reflog >actual &&
++	git reflog \
++		--format="format:tag: tagging %h (%s, %cd)%n" \
++		--date=format:%Y-%m-%d >actual &&
+ 	test_cmp expected actual
  '
  
--test_expect_success POSIXPERM 'git reflog expire honors core.sharedRepository' '
-+# For reftable, the check on .git/reftable/ is sufficient.
-+test_expect_success REFFILES,POSIXPERM 'git reflog expire honors core.sharedRepository' '
- 	umask 077 &&
- 	git config core.sharedRepository group &&
- 	git reflog expire --all &&
-@@ -201,7 +203,7 @@ test_expect_success POSIXPERM 're-init respects core.sharedrepository (remote)'
- 	test_cmp expect actual
- '
- 
--test_expect_success POSIXPERM 'template can set core.sharedrepository' '
-+test_expect_success REFFILES,POSIXPERM 'template can set core.sharedrepository' '
- 	rm -rf child.git &&
- 	umask 0022 &&
- 	git config core.sharedrepository 0666 &&
 -- 
 gitgitgadget
-
