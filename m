@@ -7,103 +7,168 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23968C07E95
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 07:24:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDEE9C07E95
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 09:08:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EEF8661175
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 07:24:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A2EBD6120D
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 09:08:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231690AbhGTGoD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 02:44:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59006 "EHLO
+        id S235371AbhGTI1J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 04:27:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229761AbhGTGn6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jul 2021 02:43:58 -0400
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 748A9C061574
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 00:24:37 -0700 (PDT)
-Received: by mail-oo1-xc2c.google.com with SMTP id s11-20020a4ae48b0000b02902667598672bso1162579oov.12
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 00:24:37 -0700 (PDT)
+        with ESMTP id S234969AbhGTIZK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jul 2021 04:25:10 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B138EC0613E3
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 02:04:20 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id h4so28895430ljo.6
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 02:04:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=/efE6va2A1i8HNdfdE9vVwFqPKGud9OqWBR8S/5L7Xc=;
-        b=a8g80hk+/jY3Zri+K+cggJzTrkf2h+wKsIf0jSz21zHiOLiMUKxoPQySfLrGDDDB5h
-         uw+cyv+W9jG4F1VC3ANq9eADnyrfyLabBrQ3xTtHacc2/SjgboPGMCIB72ZzU6B/z11W
-         AJr00qjijiGZhs2fuRA8IA0iuYVeQN5quIVv4z3duCvNr02AghlV5AQfF7dh73OKzLmX
-         kQ1iVSSlaF2/SweNzVE7Udj+t51TXjHwu2bAK8aDkI7578+b8rQvI0okZc/Jw7dz6OzR
-         tdjeMfj0iPdItL1XBqTyexIkX410RHGG+d7rokEGag44USAe9rHi3yWBK450MDDn0/ZA
-         s3Tw==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=WPGtAZNcw8LUnQS525FVePg+eM6QAblgUXwdl7/piJA=;
+        b=ENkOKFKMq50SV6LaJuaYuOFY3LO1FFf8VOfgQIuVHe9ILe+kKsdW2szYmt1y6lh0YK
+         5XGLzrVcAtliOodeK60K7CFnHT6/0eflsaeMD/84o7Oumzh1QYd1uQNWqtmAY41NtyiY
+         1eMcmzm27ozxxxjcBBMzeCG/162T0B0FhDX4U2KxKe+VUa1iPD1rzASUi/qW41/HuypM
+         qyOeuRvR7SSTT7d/HxkJoD2uvIZatbir3zs7NhvwAo5Vnn76hquOoJcPpJkvrbJ3LYN5
+         0dlHauDsdMm/e+BbrroTMJ6+aw9nR+AKwmDA47+8AAdUE1qt6EbrqiLKotZ5cE1dCcMI
+         Skow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=/efE6va2A1i8HNdfdE9vVwFqPKGud9OqWBR8S/5L7Xc=;
-        b=tvjTmzDAgUHUl/6zRZF7tKXcRHkpT9VE4Ibmp2IM1jg68iz2N+qsG/3qgDvmjmMLvy
-         vhMg0GLPGNFrKD0fatR3auKsubl2IQwO4pngrurBk6hZIUG+f7BHGxmUdIr6Y/um6D5T
-         SYINeWK02Wjz7njaxcmaEPagXujASseDu8QhtKMZi73UJ+rSqE/8BpBwu+3ZI7mPdeuL
-         8/8AMu3KBjiTYZhjI/BE8c7Otd/Mi2h643wA3KgVtIwtLQEvvBWOHIkqY5InmnpnrmXL
-         fgaBIYyriaFYv0KVza9vmtKlw+/5wCqoytLhLv8gPD/NpfiuyaWK5+hQ+yXt7sx9ih/m
-         s3Zw==
-X-Gm-Message-State: AOAM531mAMfLqqGWsTDtgmn0ojLEWYoWBWPIURSpRYSoBFkbRcTxhLcU
-        SNxFyXo3D9YCYYrYUW2dFHE=
-X-Google-Smtp-Source: ABdhPJw74TjSq/BKHl/ZZ9CkLuQlLO/yhMV/NQwBwUlOZWkdEw/dVdZBk8Qehr0T5U/Wuw0lf5uO5A==
-X-Received: by 2002:a4a:892a:: with SMTP id f39mr19881668ooi.19.1626765876858;
-        Tue, 20 Jul 2021 00:24:36 -0700 (PDT)
-Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id 81sm4057078otv.10.2021.07.20.00.24.36
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=WPGtAZNcw8LUnQS525FVePg+eM6QAblgUXwdl7/piJA=;
+        b=J0UnBeJKIdDcp/466rf8U1HA0KjKw8afmR2+5CwOqlKUPTAD8idx86q0sjxwKVlAv/
+         P+dZttu0z/u4kcZSYjYXizJYSFx38On6ckjVuxgQ+2I9Hm6ZZem9xbgucxIMyMdcG6SA
+         diFZXWGDpmgN/ZoUu3E6thnJaA1tt1zM3MB32/gB/7GJWtv4hHW9R4BUc5//x5a2udP2
+         E+pLD2ZV56XmFhzVf8xrbOb5ytMwT0tXHASiMW9wUUcvkrcl2wGzU1opVXTHUJ+m75le
+         AH0MDYZyHP/QDb/INkaqZbzGoIta2abCn5dxx9x50sa5CnK4q5XvJWrMeY35G4Hsj6nI
+         zzMA==
+X-Gm-Message-State: AOAM530cPE97uL+9gCjQjsZEuuVS6cEvHxDTEdv91/tg/HKIBVQvTrFa
+        9By/h0o9EvRmldE9avjDbmXNjJKFpW0=
+X-Google-Smtp-Source: ABdhPJwUVpLlIz/NG7syVKBMxVQmv0kLBQfUAlFzfCHWrgi/EYv9eBBfbbLgSkny7e+CCDBhFtcoTg==
+X-Received: by 2002:a2e:a808:: with SMTP id l8mr26156010ljq.355.1626771857709;
+        Tue, 20 Jul 2021 02:04:17 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id q13sm1476841lfu.272.2021.07.20.02.04.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 00:24:36 -0700 (PDT)
-Date:   Tue, 20 Jul 2021 02:24:35 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Message-ID: <60f67a334777f_14a799208b9@natae.notmuch>
-In-Reply-To: <44006e7b0bdda50dc51153cc2efb6ae954d4eecb.1626762728.git.ps@pks.im>
-References: <60f5d923848d3_145c71208cc@natae.notmuch>
- <44006e7b0bdda50dc51153cc2efb6ae954d4eecb.1626762728.git.ps@pks.im>
-Subject: RE: [PATCH] t0000: fix test if run with TEST_OUTPUT_DIRECTORY
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Tue, 20 Jul 2021 02:04:16 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Andy Zhang <zhgdrx@gmail.com>, git@vger.kernel.org
+Subject: Re: why "git rebase" searching the duplicate patches in <upstream
+ branch> rather than in <new base branch>?
+References: <CAJcwCMPU9EhRkqeei_LnYyTJRZUQgHCvomrBbW0Qn+Jp1yhQfQ@mail.gmail.com>
+        <CAJcwCMPHFNHi5i=xRg=GAJL5HiUfKu_KUPwYwELofLLtOAK1bg@mail.gmail.com>
+        <xmqqmtqij63t.fsf@gitster.g>
+Date:   Tue, 20 Jul 2021 12:04:15 +0300
+In-Reply-To: <xmqqmtqij63t.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        19 Jul 2021 15:23:18 -0700")
+Message-ID: <87a6mhgxv4.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt wrote:
-> Testcases in t0000 are quite special given that they many of them run
-> nested testcases to verify that testing functionality itself works as
-> expected. These nested testcases are realized by writing a new ad-hoc
-> test script which again sources test-lib.sh, where the new script is
-> created in a nested subdirectory located beneath the current trash
-> directory. We then execute the new test script with the nested
-> subdirectory as current working directory and explicitly re-export
-> TEST_OUTPUT_DIRECTORY to point to that directory.
-> 
-> While this works as expected in the general case, it falls apart when
-> the developer has TEST_OUTPUT_DIRECTORY explicitly defined either via
-> the environment or via config.mak. In that case, test-lib.sh will
-> clobber the value that we've just carefully set up to instead contain
-> what the developer has defined. As a result, the TEST_OUTPUT_DIRECTORY
-> continues to point at the root output directory, not at the nested one.
-> 
-> This issue causes breakage in the 'test_atexit is run' test case: the
-> nested test case writes files into "../../", which is assumed to be the
-> parent's trash directory. But because TEST_OUTPUT_DIRECTORY already
-> points to to the root output directory, we instead end up writing those
-> files outside of the output directory. The parent test case will then
-> try to check whether those files still exist in its own trash directory,
-> which thus must fail now.
-> 
-> Fix the issue by adding a new TEST_OUTPUT_DIRECTORY_OVERRIDE variable.
-> If set, then we'll always override the TEST_OUTPUT_DIRECTORY with its
-> value after sourcing GIT-BUILD-OPTIONS.
+Junio C Hamano <gitster@pobox.com> writes:
 
-This is a very *very* narrowly-specific hack, but I guess it's better
-than the test suite failing.
+> Andy Zhang <zhgdrx@gmail.com> writes:
+>
+>> why "git rebase" searching the duplicate patches in <upstream
+>> branch> rather than in <new base branch>?
+>>
+>> hi, all:
+>>
+>>  I am reading the help of "git rebase", it says:
+>>     "If the upstream branch already contains a change you have made
+>> (e.g., because you mailed a patch which was applied upstream), then
+>> that commit will be skipped. "
+>>
+>>  But, because we are applying commits to <new base branch> rather than
+>> to <upstream branch>, I really don't understand why we are searching
+>> the duplicate patches in <upstream branch> rather than in <new base
+>> branch>?
+>
+> It is either a design bug or a documentation bug, or both ;-)
 
+It's definitely /at least/ a documentation bug, as description of the
+feature is not precise enough. For example, it's unclear if such a
+commit will appear in the todo list of --interactive. Will it?
+
+It looks like documentation of "git rebase" should be revised to make
+clearer distinction between <branch>, <upstream>, and <newbase>.
+
+>
+> I do think it makes sense to skip commits from the branch we are
+> rebasing that have equivalent commits in the upstream, as it is
+> expected that upstream might have already applied/cherry-picked some
+> of the changes you are rebasing, and you do not want to use the same
+> change twice.
+
+To me this only makes sense for the branch we rebase /onto/, and thus it
+actually makes sense for <newbase>, and for <upstream> it only happens
+to make sense by default as <newbase>=<upstream> in this case.
+
+If Git currently indeed searches for duplicates in <upstream>, then it
+looks like implementation bug, or misfeature. I think the <newbase>
+should rather be used.
+
+>
+> When we are transplanting a series of commits from an old base to
+> totally unrelated base using the --onto option, e.g. when replaying
+> the contents of 'topic' relative to 'next' down to 'master' in your
+> topology, however,
+>
+>> Old tree is:
+>>
+>> o---o---o---o---o  master
+>>     \
+>>      o---o---o---o---o  next
+>>                       \
+>>                        o---o---o  topic
+>
+> it is not necessarily obvious where to stop digging back at.
+
+Similar problem should exist for explicitly specified <upstream> that
+might happen to have little in common with the current <branch>, right?
+If so, then it's already somehow being solved, even if simply by
+ignoring the issue, so adding <newbase> to the picture doesn't actually
+bring anything significantly new.
+
+> In the
+> above picture where 'master' and 'next' have ancestry relationship,
+> we could try to see if the three commits on 'topic' branch being
+> replayed match any of the commits in next..master range, but when
+> using the --onto option, there does not have to be any relationship
+> between the <upstream> and <new base> (they do not have to share a
+> root commit).  So from that point of view, it probably makes sense
+> to default to --no-reapply-cherry-picks when --onto is used, while
+> defaulting --reapply-cherry-picks when --onto is not used.
+
+I don't actually like this.
+
+First, in general, changing default of another option is not to be taken
+lightly. For example, defaulting to --fork-point when no <upstream> is
+specified is already a point of confusion.
+
+Second, changing the default is not backward compatible, so there should
+be very sound reason to change it.
+
+Finally, if user does specify /both/ --onto and
+--no-reapply-cherry-picks, where would Git supposedly stop digging for
+matching cherry-picks? Provided this is to be solved anyway, the
+rationale to change the default does not sound strong enough.
+
+Overall, it seems that we should take the <newbase> rather than
+<upstream> (that is still <upstream> when --onto is not specified), and
+apply the skipping logic from there, to whatever depth the merge-base
+will give us. If it's already implemented this way, then only the manual
+page needs to be fixed.
+
+Thanks,
 -- 
-Felipe Contreras
+Sergey Organov
