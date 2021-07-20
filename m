@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E8DEC07E9B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55FF8C636C8
 	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 10:40:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2BE3F6113C
+	by mail.kernel.org (Postfix) with ESMTP id 3C09961175
 	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 10:40:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235683AbhGTJ7K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 05:59:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46200 "EHLO
+        id S237203AbhGTJ7N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 05:59:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236425AbhGTJ4K (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236262AbhGTJ4K (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 20 Jul 2021 05:56:10 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4C77C0613EE
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AAB2C0613E9
         for <git@vger.kernel.org>; Tue, 20 Jul 2021 03:36:40 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id m11-20020a05600c3b0bb0290228f19cb433so1224708wms.0
+Received: by mail-wr1-x432.google.com with SMTP id t5so25418905wrw.12
         for <git@vger.kernel.org>; Tue, 20 Jul 2021 03:36:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=80GoSsR6PdqwqviMcSNCekMfq0aB+E1fQQkO1RL2oMo=;
-        b=Q/vKNCsF7xliISJe8s7T2P0T17NEmFIP85LncqdKGVglK9rIgBk2G1aH3VrlI9xjMB
-         yhv8dWZdzCdPcRguBZLk/0Fs0Ged38P1cVFjkPbvTkgBkz96yLRRM3Sg2Slr4QPv3Knw
-         YTJN+S3fwVzOlwfEFReLjBIChQOi0YXqAz+K9NQwEIJisIlmec26SBkIZwcdrZivIPY7
-         PApLB8pXw8CE0aMD7T0AOl7T265aDLrJcD5fM+8GzIIdakZY6wjuV4G0IRYQ0+IR8usG
-         lMjITHXe9jSDJRQJ63K/vqBkOEjY3wIUJOLztVL6LchbUb+F28RYCd2vmUUZtYtKj5h1
-         ozFg==
+        bh=3SmJDJvsOG2gFGwfBSH1N2QCy/wGVsNdWNxop02Q4HM=;
+        b=Iheq0QSSZFs+Jl90+wQYhZu5rvlzZOwE/cGMc7AhdRnQqtQzMGkrIl9kMawO2fWjCf
+         Nyavh4h32qW2fP2yEM8laU1k+17un3jpdTMxaHyd+Hs1QIsPIaSd/Rm9jeNtG+xPLlzt
+         6gk+WTDTHo2ob3gx60WcxOsYNUKaQAlL3dIuoMBvPlDPh+Q6+G5rNChk0ZvbKAvPq+XB
+         CjWLkxKVuWXotiiyxLTBlr+hr4b8mCoVcbRdmGykk7SvbYmRDIX7CzlFPUu7bJqO+WS8
+         H3TKHfempahk3RrXmtnx4OeOgSuLERVUOQnH8mtZo3eGj4pmE+tiWYI1ToqE0NQLl5qy
+         yXOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=80GoSsR6PdqwqviMcSNCekMfq0aB+E1fQQkO1RL2oMo=;
-        b=TG8nPkC9pW7u291M8c1Lie577d9ln9G7MOsaV2u2l56sziZz91rKPUwI+KqrudLuRx
-         Yoe4y+O/USTBKa+uS4L6NdrRlazSnh2muBJKgMIbHH3N6WGKly8st4UZSZLIMzsDLeeY
-         ykw7LVEbhZMBdVf46xW/hSjXO+dfRDVOzI8rpS4sWOv+564uCrs4yPvAmKDgmQRBz7kF
-         f2zpj1Vm9i5gCDE7gJpnkeFJzAb0/PfDZcUZfe50YW8X0R1Sg4pKbj9dctZpcmiMOYKt
-         CaCMaaSu+MeHsDxRsfmJ/hju5XoKWe3VF/JUOvZp5P/6Qg5Fagv4S9WHAiLbNa0yB8My
-         /hlQ==
-X-Gm-Message-State: AOAM53298GV/04fJnywHQqR/bxc9EUxKBBtUZQrPngev7o2bKsTHhnH+
-        9rGOFFDCPk7fdguB6MVJOb2BdwZZZd8=
-X-Google-Smtp-Source: ABdhPJzPgVAOd0y1xMMXJPO1oAPn+4frYFfJxNV9iRqkgHFVS+LuyfFT/U13wsquiscsumhGEIZBnA==
-X-Received: by 2002:a05:600c:350b:: with SMTP id h11mr12359334wmq.20.1626777399490;
-        Tue, 20 Jul 2021 03:36:39 -0700 (PDT)
+        bh=3SmJDJvsOG2gFGwfBSH1N2QCy/wGVsNdWNxop02Q4HM=;
+        b=hb8ERQ1rQJayyFWFiZHJtl4dJnwe54fV+k11R+QyRyvENo5zbXhXT+5ABVyWjV1JCq
+         I4V6QrlbEyNj1kqXcVMcVkSudG5ZMLXd+CU9gBnwVvUSkF7ho8342RXab9+mJGmi7QTQ
+         4NXIqTG1qAm0W0R2nq89WoabZtmLl7ajyvSytJXl87hSJhsScCizDVtCYzbeKXlWTavc
+         hWE/4RcbQOkX54rv/UX1DBi2socQhhZclEUd6nNLkwyUo8kTQHBH46HgkRPX7467qEAg
+         CzsEEt/cwfKrpNXRTqkexDwyKvqVSLu9ju0LBrAyTiSKMnQRNC6FU5uv8spP3TkKjT6Z
+         dvVw==
+X-Gm-Message-State: AOAM533iFlT5bmrsFaqmUNlKmzscgIUhRRFqGsrf60DCXmoMgsBdRYzO
+        mxRyHDWfn4cUPupWqzmZQGmPdX3CogE=
+X-Google-Smtp-Source: ABdhPJwFH6kZT/LgduIDwrGtwY9wOZRIM+AstFs+fiA1jqiJx2eDsuep6NDVRhHM5Ev7MdoDc1ozLA==
+X-Received: by 2002:adf:fc85:: with SMTP id g5mr35349855wrr.296.1626777398874;
+        Tue, 20 Jul 2021 03:36:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h15sm22397624wrq.88.2021.07.20.03.36.39
+        by smtp.gmail.com with ESMTPSA id g15sm19126278wmh.44.2021.07.20.03.36.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 03:36:39 -0700 (PDT)
-Message-Id: <73ce9b54e869740ff23253d4153405444c673276.1626777394.git.gitgitgadget@gmail.com>
+        Tue, 20 Jul 2021 03:36:38 -0700 (PDT)
+Message-Id: <cfbdd447eeeff41a7cd32ba513ae302588438753.1626777394.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.981.v2.git.1626777393.gitgitgadget@gmail.com>
 References: <pull.981.git.1623675888.gitgitgadget@gmail.com>
         <pull.981.v2.git.1626777393.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 20 Jul 2021 10:36:28 +0000
-Subject: [PATCH v2 07/12] diff --color-moved: unify moved block growth
- functions
+Date:   Tue, 20 Jul 2021 10:36:27 +0000
+Subject: [PATCH v2 06/12] diff --color-moved: call comparison function
+ directly
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,78 +79,59 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-After the last two commits pmb_advance_or_null() and
-pmb_advance_or_null_multi_match() differ only in the comparison they
-perform. Lets simplify the code by combining them into a single
-function.
+This change will allow us to easily combine pmb_advance_or_null() and
+pmb_advance_or_null_multi_match() in the next commit. Calling
+xdiff_compare_lines() directly rather than using a function pointer
+from the hash map has little effect on the run time.
+
+Test                                                                  HEAD^             HEAD
+-------------------------------------------------------------------------------------------------------------
+4002.1: diff --no-color-moved --no-color-moved-ws large change        0.41(0.37+0.04)   0.41(0.39+0.02) +0.0%
+4002.2: diff --color-moved --no-color-moved-ws large change           0.82(0.79+0.02)   0.83(0.79+0.03) +1.2%
+4002.3: diff --color-moved-ws=allow-indentation-change large change   0.92(0.89+0.03)   0.91(0.85+0.05) -1.1%
+4002.4: log --no-color-moved --no-color-moved-ws                      1.31(1.21+0.10)   1.33(1.22+0.10) +1.5%
+4002.5: log --color-moved --no-color-moved-ws                         1.47(1.36+0.10)   1.47(1.39+0.08) +0.0%
+4002.6: log --color-moved-ws=allow-indentation-change                 1.50(1.41+0.09)   1.51(1.42+0.09) +0.7%
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- diff.c | 41 ++++++++++++-----------------------------
- 1 file changed, 12 insertions(+), 29 deletions(-)
+ diff.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index c056d917d0d..b03f79b626c 100644
+index 55384449170..c056d917d0d 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -1003,36 +1003,23 @@ static void pmb_advance_or_null(struct diff_options *o,
- 	unsigned flags = o->color_moved_ws_handling & XDF_WHITESPACE_FLAGS;
+@@ -995,17 +995,20 @@ static void add_lines_to_move_detection(struct diff_options *o,
+ }
  
+ static void pmb_advance_or_null(struct diff_options *o,
+-				struct moved_entry *match,
+-				struct hashmap *hm,
++				struct emitted_diff_symbol *l,
+ 				struct moved_block *pmb,
+ 				int pmb_nr)
+ {
+ 	int i;
++	unsigned flags = o->color_moved_ws_handling & XDF_WHITESPACE_FLAGS;
++
  	for (i = 0; i < pmb_nr; i++) {
-+		int match;
  		struct moved_entry *prev = pmb[i].match;
  		struct moved_entry *cur = (prev && prev->next_line) ?
  				prev->next_line : NULL;
--		if (cur && xdiff_compare_lines(cur->es->line, cur->es->len,
--						l->line, l->len,
--						flags)) {
--			pmb[i].match = cur;
--		} else {
--			pmb[i].match = NULL;
--		}
--	}
--}
- 
--static void pmb_advance_or_null_multi_match(struct diff_options *o,
--					    struct emitted_diff_symbol *l,
--					    struct moved_block *pmb,
--					    int pmb_nr)
--{
--	int i;
--
--	for (i = 0; i < pmb_nr; i++) {
--		struct moved_entry *prev = pmb[i].match;
--		struct moved_entry *cur = (prev && prev->next_line) ?
--			prev->next_line : NULL;
--		if (cur && !cmp_in_block_with_wsd(o, cur, l, &pmb[i])) {
--			/* Advance to the next line */
-+		if (o->color_moved_ws_handling &
-+		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
-+			match = cur &&
-+				!cmp_in_block_with_wsd(o, cur, l, &pmb[i]);
-+		else
-+			match = cur &&
-+				xdiff_compare_lines(cur->es->line, cur->es->len,
-+						    l->line, l->len, flags);
-+		if (match)
+-		if (cur && !hm->cmpfn(o, &cur->ent, &match->ent, NULL)) {
++		if (cur && xdiff_compare_lines(cur->es->line, cur->es->len,
++						l->line, l->len,
++						flags)) {
  			pmb[i].match = cur;
--		} else {
-+		else
- 			moved_block_clear(&pmb[i]);
--		}
- 	}
- }
- 
-@@ -1153,11 +1140,7 @@ static void mark_color_as_moved(struct diff_options *o,
- 			continue;
- 		}
- 
--		if (o->color_moved_ws_handling &
--		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
--			pmb_advance_or_null_multi_match(o, l, pmb, pmb_nr);
--		else
--			pmb_advance_or_null(o, l, pmb, pmb_nr);
-+		pmb_advance_or_null(o, l, pmb, pmb_nr);
+ 		} else {
+ 			pmb[i].match = NULL;
+@@ -1154,7 +1157,7 @@ static void mark_color_as_moved(struct diff_options *o,
+ 		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
+ 			pmb_advance_or_null_multi_match(o, l, pmb, pmb_nr);
+ 		else
+-			pmb_advance_or_null(o, match, hm, pmb, pmb_nr);
++			pmb_advance_or_null(o, l, pmb, pmb_nr);
  
  		pmb_nr = shrink_potential_moved_blocks(pmb, pmb_nr);
  
