@@ -2,75 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AEBAC07E9B
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 11:42:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A3BCC07E95
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 11:52:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 35D0661029
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 11:42:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E0EF1610FB
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 11:52:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237469AbhGTLCH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 07:02:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60752 "EHLO
+        id S237034AbhGTLLq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 07:11:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236848AbhGTK7d (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jul 2021 06:59:33 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81E5EC0613DB
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 04:40:08 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id k4so25633736wrc.8
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 04:40:08 -0700 (PDT)
+        with ESMTP id S237203AbhGTLLg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jul 2021 07:11:36 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFE49C061762
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 04:52:14 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id h8so28135722eds.4
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 04:52:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1MzRfzyqaVG9jzGJaiPUefdLQUsQ4UTbCbgFCyLTvks=;
-        b=to9hbBJxRsikIIhwob6ct7YY8hQgI7ED6J9JW/dl9FpmDq85MyFaJBdSrF79L8QuxS
-         h+BVcHP5viyL36AnbUNvuLFEkl690UvYmrL/5I72RdGJRzwDmfX1yjdV9OEpgyJccQ6/
-         VD2eqL93wU6NYoDEk579HT5AwUeD9aI0Ai+t5FIZtJLVe6PdHQKaG+BET6vZaTMGKUEq
-         l4hKbeO88BYK8pv9S5KMSa/y1p/xqNoe927qaOSElfLZQoSnflcshEl2ojLID0VWS0kc
-         N7nDE96PUYnLW+GfVR9Onji0TlFO+2fCQAXJKiHiJpvg+RHG36yUmV+C7qRyT2Us33Bb
-         caCQ==
+        bh=z/ZbnzTKpkP1CAMhggcuNIgtP/1e+nw/W2ODrD2+6kU=;
+        b=c68bmcFZ1Wsa45oXHt+JkaGjE5ZxdDELjzX2EbFKN+nAIXyLeSx8e/X3P3kpEYjLGV
+         xxiE7E189RelppVHzhSzyBJ7uXmEFkY/emjvG1xCYRhnlKeYZIf2iYfqbgWzTVE/d9Fi
+         z+TZecCaNV7gPQ0sK+wPXErUR/rU0XtVZpMY6Ane4SXAw3s3GNPBsEDhLPGCRbTB+qs1
+         aY9huX9OVnQBFvzXz5f1WQc1CTjtehRmrJidUHoz3s2dbncIRx5OJJD+sz7SThhOGG4c
+         TD3BLrk8numiFXq2JHUAFGUA4OE59C+AZb+Ptu4bd1eAfQBgs2GZBT24V/PGIL3ekaf/
+         GBfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1MzRfzyqaVG9jzGJaiPUefdLQUsQ4UTbCbgFCyLTvks=;
-        b=XdUf0n59tKLQbQ4NlLCOH74R1Kv2x1FdiMCl3xnq9J4SYl+aqL7cEw6OJ5Olu8qOd0
-         itNYFqiyI7fsaI36zb1fZstJZOMXFSMIIvInP1Z/VFG3OtcQw7Y/WmoQYWW75Ef1KmsS
-         uJYLUQ9Q6luXfvDIjhnwAzDywo6vnn5UUvec+B8uJOzgzy4bxcXDEfUoX0d5dSnhNLJh
-         DVsJk1XVx5Jt5P/KUa4bz71MT+keGwApd0/13ThgzsBSem0XFNDcvnv4sm3Yo0IkPgYY
-         6EHv3nsAfDronVtCCji4NJcnTLevCkp2BxHnzfh6b6RkwSZG6TlPfc5KqDDfQVjxtFx6
-         mehw==
-X-Gm-Message-State: AOAM530DIgqUpf/SCkU/es+dTeh25QeghSbAmZaJcxtdNaJVeMqJFAyU
-        mcXau9kKNfJo1WoSJRsDPv+1gpAh7743Rw==
-X-Google-Smtp-Source: ABdhPJzR6+9GBO2EGP2GXS40lZ4818rq6vfl2aTGRpSZKvsHPpgSNiU6T+K+lf9rEKdEOz3Ozzoc/w==
-X-Received: by 2002:a5d:6850:: with SMTP id o16mr34276159wrw.319.1626781206686;
-        Tue, 20 Jul 2021 04:40:06 -0700 (PDT)
+        bh=z/ZbnzTKpkP1CAMhggcuNIgtP/1e+nw/W2ODrD2+6kU=;
+        b=i91SC+7nE7Qvn48Zt7QZMV6PYRfaFOGbXRO2KW9YgeBQ1AMiWkpCiqypVzY6k8yCMx
+         oIO8s2PfjR2UhVTZReHxbH9sGT3a3tBXm4v8RFtp8Vfe+EcB18kSGDj4OHHsjeZUpYyW
+         AzGfx8PIpoQMpjLH8yIPRsEObmavm6Ru03eB7Jp51CbY66l5MbVKzZ+h+lIutQ7p9PDA
+         vFVtlRI82PvFUpW9Rc9DZ0tiG1d7mj8H0zdGEr/+jZEhsF7dXcAa7jLMCmvsY1eQqUKs
+         45ZzrIbl9Ydy76vjncW1UxwQeMHHDN69CYN752upjCIrVq4HKKif3YRw/gVuxpwZANOz
+         daOw==
+X-Gm-Message-State: AOAM533vRpTGgnDmz154DP70mw7MlXPoC5ZRLxK8nwu2zjy1i6fEBMuk
+        CAK9zk9lHWQKddafTv+wX9pp2QQQseSREA==
+X-Google-Smtp-Source: ABdhPJzsQIjCEGBl1O2j0wPcWtxaxD9dibBGQHSveBQ/ogkQ2HYY3jxPng/gk1o5v/m+Ek242L/6vA==
+X-Received: by 2002:a50:fb04:: with SMTP id d4mr39980798edq.143.1626781933325;
+        Tue, 20 Jul 2021 04:52:13 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y66sm19683595wmy.39.2021.07.20.04.40.05
+        by smtp.gmail.com with ESMTPSA id i11sm9100409edu.97.2021.07.20.04.52.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 04:40:06 -0700 (PDT)
+        Tue, 20 Jul 2021 04:52:12 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 5/6] commit-graph: early exit to "usage" on !argc
-Date:   Tue, 20 Jul 2021 13:39:44 +0200
-Message-Id: <patch-5.6-7acb4bd75ce-20210720T113707Z-avarab@gmail.com>
+Subject: [PATCH 1/2] bundle tests: use ">file" not ": >file"
+Date:   Tue, 20 Jul 2021 13:52:08 +0200
+Message-Id: <patch-1.2-746d727113b-20210720T115052Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.874.ge7a9d58bfcf
-In-Reply-To: <cover-0.6-00000000000-20210720T113707Z-avarab@gmail.com>
-References: <cover-0.5-00000000000-20210718T074936Z-avarab@gmail.com> <cover-0.6-00000000000-20210720T113707Z-avarab@gmail.com>
+In-Reply-To: <cover-0.2-00000000000-20210720T115052Z-avarab@gmail.com>
+References: <cover-0.2-00000000000-20210720T115052Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,43 +77,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rather than guarding all of the !argc with an additional "if" arm
-let's do an early goto to "usage". This also makes it clear that
-"save_commit_buffer" is not needed in this case.
+Change redundant uses of ":" on the LHS of a ">" to the more commonly
+use ">file" pattern.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/commit-graph.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ t/t5607-clone-bundle.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 6e49184439f..bf34aa43f22 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -331,16 +331,17 @@ int cmd_commit_graph(int argc, const char **argv, const char *prefix)
- 			     builtin_commit_graph_options,
- 			     builtin_commit_graph_usage,
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
-+	if (!argc)
-+		goto usage;
+diff --git a/t/t5607-clone-bundle.sh b/t/t5607-clone-bundle.sh
+index f4c383cd5ce..c9323a08fe8 100755
+--- a/t/t5607-clone-bundle.sh
++++ b/t/t5607-clone-bundle.sh
+@@ -54,14 +54,14 @@ test_expect_success 'bundle --stdin <rev-list options>' '
+ '
  
- 	save_commit_buffer = 0;
+ test_expect_success 'empty bundle file is rejected' '
+-	: >empty-bundle &&
++	>empty-bundle &&
+ 	test_must_fail git fetch empty-bundle
+ '
  
--	if (argc > 0) {
--		if (!strcmp(argv[0], "verify"))
--			return graph_verify(argc, argv);
--		if (!strcmp(argv[0], "write"))
--			return graph_write(argc, argv);
--	}
-+	if (!strcmp(argv[0], "verify"))
-+		return graph_verify(argc, argv);
-+	else if (argc && !strcmp(argv[0], "write"))
-+		return graph_write(argc, argv);
+ # This triggers a bug in older versions where the resulting line (with
+ # --pretty=oneline) was longer than a 1024-char buffer.
+ test_expect_success 'ridiculously long subject in boundary' '
+-	: >file4 &&
++	>file4 &&
+ 	test_tick &&
+ 	git add file4 &&
+ 	printf "%01200d\n" 0 | git commit -F - &&
+@@ -75,7 +75,7 @@ test_expect_success 'ridiculously long subject in boundary' '
+ '
  
-+usage:
- 	usage_with_options(builtin_commit_graph_usage,
- 			   builtin_commit_graph_options);
- }
+ test_expect_success 'prerequisites with an empty commit message' '
+-	: >file1 &&
++	>file1 &&
+ 	git add file1 &&
+ 	test_tick &&
+ 	git commit --allow-empty-message -m "" &&
 -- 
 2.32.0.874.ge7a9d58bfcf
 
