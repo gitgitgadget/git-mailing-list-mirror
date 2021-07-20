@@ -2,224 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37D88C07E95
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:22:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C299DC07E95
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:47:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 184B461003
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:22:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B15DF608FC
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:47:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230453AbhGTQmN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 12:42:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53832 "EHLO
+        id S231919AbhGTRHL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 13:07:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232035AbhGTQly (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jul 2021 12:41:54 -0400
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EDC6C061768
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:22:29 -0700 (PDT)
-Received: by mail-pg1-x52a.google.com with SMTP id r21so4965523pgv.13
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:22:29 -0700 (PDT)
+        with ESMTP id S229708AbhGTRHI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jul 2021 13:07:08 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A0A9C061762
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:47:45 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id hc15so35581738ejc.4
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:47:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=9vbuTuq8iY5+NR3rnN/rHZVHTZFRn3xfX1QzCbFnNQo=;
-        b=mqrfziAvFUWS7WzI+Smm9VikaUJUjuLeVO1nmntawgsloresWvbIac4wumIImXetzf
-         jYZO5fUSuAUTn7cuB64AmvKLYTfW8awAtakNmegeE3pmK/TRIAcQU5At4a/LjE6Zw7pb
-         AySd4p8wWEltZd93DMu1iFfJlSqJxNCSzcKbxG+mVC0PWJoTHsjGcFfDVx2F/Mdjn5dU
-         mcbcjnxx/acPdBwADJgg7hNUpOLxP+ldYq0TWCuN/ByZ/7mdYdPuyl0AGs6R0UTsTJHM
-         4XI1cdRHHcNn0dmOaWaB99veOVasugZGxS9mdRptwgETfDns5RRydCNlEOd+Ejjlh4oE
-         fqYQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=T2oHsuE8blnn/gdycyK8vXgrAQJzRY/SIITfM3eHpoY=;
+        b=F1y6PKLNICu1tpsIxUJLN3X8+m0iIZjfG09tjhj+FGOqYIvdDZnuXPOxfkzfjeVURo
+         PqYCpaGylHkkz8Xh9u7jv4mG1h9bSP3TFzMBDtIaisRPVVfI8mj5YL7cwnu4hN1N0wEj
+         ull8K63zkxGsN0dFlALfJVgTnn0XupgEsdBnsOqW6D1mAFTTSC2YSXAB6a+xfy5CK7kz
+         sNvfqIo4gwvnaIx9lPCIs1fmZDQFSlXo12wvdCnqxQ1C1fYy8XCaq3EaildLyKgBzNMz
+         p5KV5ZdbSB+AZIDHlnNTN6ceWnAnCDb7E/C3SsZ3X+WYlbmhd00vxTISWQrs98IWZXGC
+         39IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=9vbuTuq8iY5+NR3rnN/rHZVHTZFRn3xfX1QzCbFnNQo=;
-        b=a1S+UYHl2b/MRO+FB8kbAovd1CjPm4Ls3wUHlPAyK1pxwHBF34Ajbz2VRb7lO7W+Tt
-         c45DY2XM1LU1EuATyBwym/EM87uViGRs5I78ryJMdB1i294Z8UJla3VBCczJsNkGUZaQ
-         cY66c0jmiWAINS80CoAQrg6o//x2thM1e5skAKkhN3g8StGsJCjMnqE6lIagIxePy8UA
-         QOeO6o1qxkIs83KotAiBoGb0h4sEURpmwngNNJv1LlFBGdcMWE4XtgES21XZvBdpARsj
-         9c7uztO0jXlBRlpbfgGqpkXMU5GIy8qt21uQglrOGXywxLX0ZzFtm3kfxDIJw1O8Z/ld
-         VXhg==
-X-Gm-Message-State: AOAM533axvM7qJspjU7A8xlY2tgXtW/jEmvI8xW4I6gu7cuHDItdFAjE
-        NFS1uew6/FgUSTN4yOPud+U=
-X-Google-Smtp-Source: ABdhPJxGJ4wqMTSPZt7s9L1zmyL/P8ElYskuyIkSEj+W9lC93yoyrOkAqADpdcIhuX5T/FxQ6PhRxA==
-X-Received: by 2002:a62:ee16:0:b029:2fe:ffcf:775a with SMTP id e22-20020a62ee160000b02902feffcf775amr31814659pfi.59.1626801749118;
-        Tue, 20 Jul 2021 10:22:29 -0700 (PDT)
-Received: from smtpclient.apple ([119.82.121.47])
-        by smtp.gmail.com with ESMTPSA id a23sm25299619pfa.16.2021.07.20.10.22.26
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 Jul 2021 10:22:28 -0700 (PDT)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
-Subject: Re: [GSoC] Git Blog 9
-From:   Atharva Raykar <raykar.ath@gmail.com>
-In-Reply-To: <CAOLTT8QLrG+R3sOHpMsAiveOT1wTKR-_Nw8Ro6iXL1_MTMZ6eA@mail.gmail.com>
-Date:   Tue, 20 Jul 2021 22:52:25 +0530
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Hariom verma <hariom18599@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5DDACB9C-4AC8-45A8-B9AE-5727464AA95D@gmail.com>
-References: <CAOLTT8QLrG+R3sOHpMsAiveOT1wTKR-_Nw8Ro6iXL1_MTMZ6eA@mail.gmail.com>
-To:     ZheNing Hu <adlternative@gmail.com>
-X-Mailer: Apple Mail (2.3654.100.0.2.22)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=T2oHsuE8blnn/gdycyK8vXgrAQJzRY/SIITfM3eHpoY=;
+        b=naHA+ixG7sp2Nd1GJJ1Xn25EvaDeX3hRZ2kTfXj51OLUUvUD5zzm4ZG5qrFer9e+o7
+         ZtN80BxtPGK3Ew7mFU1/dznjBr/Y50FBHcyjjIvT5jlV7mt8OHL1C8sTqT+G/b4OGgC4
+         w2DHBVFHrWdRj6AUZ7aCaMZoPvzMdHUZTL9Na1VPVBIgZKXAVqZ2uyWAVPt2S0964uw2
+         XECIWOs+T4Kz05HI5Lu0Tnpd6J54b+3UY0EWqPUcoZfHzZpUm9PRzUvyl6qi96BbNX0F
+         i9AziM0TyGQF9oXIFNm79Wlr3Clk0mupyt3vNqZ6yIVT23PsTQqHLSL0panG+PLivJBM
+         E5/g==
+X-Gm-Message-State: AOAM533bFxOoqJ67By5IM5TqysCam9IbREjY/kNqcYh/3lHQe/jd/5Id
+        9auuaw8hy0oDYL+n2sraAUw=
+X-Google-Smtp-Source: ABdhPJyFMebY2D0p6BLEFPMDqXv7eD6lknvJRcxbsbGX0eDWzxxaH4HcbysRx70mEFEbRyL6lHiGCw==
+X-Received: by 2002:a17:906:2844:: with SMTP id s4mr33751135ejc.263.1626803263895;
+        Tue, 20 Jul 2021 10:47:43 -0700 (PDT)
+Received: from szeder.dev (62-165-236-2.pool.digikabel.hu. [62.165.236.2])
+        by smtp.gmail.com with ESMTPSA id k21sm7391423ejj.55.2021.07.20.10.47.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Jul 2021 10:47:43 -0700 (PDT)
+Date:   Tue, 20 Jul 2021 19:47:39 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>
+Subject: Re: [PATCH v3 6/6] commit-graph: show usage on "commit-graph
+ [write|verify] garbage"
+Message-ID: <20210720174739.GA2025@szeder.dev>
+References: <cover-0.5-00000000000-20210718T074936Z-avarab@gmail.com>
+ <cover-0.6-00000000000-20210720T113707Z-avarab@gmail.com>
+ <patch-6.6-5c1694e071e-20210720T113707Z-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-6.6-5c1694e071e-20210720T113707Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19-Jul-2021, at 12:25, ZheNing Hu <adlternative@gmail.com> wrote:
->=20
-> [...]
-> ### BUG REPORT 2
->=20
-> * What did you do before the bug happened? (Steps to reproduce your =
-issue)
->=20
-> Normally execute the test under git/t.
->=20
-> * What did you expect to happen? (Expected behavior)
->=20
-> Pass the test t/t0500-progress-display.sh.
->=20
-> * What happened instead? (Actual behavior)
->=20
-> ```zsh
-> $ sh t0500-progress-display.sh -d -i -v
-> ...
-> expecting success of 0500.3 'progress display breaks long lines #1':
-> sed -e "s/Z$//" >expect <<\EOF &&
-> Working hard.......2.........3.........4.........5.........6: 0%
-> (100/100000)<CR>
-> Working hard.......2.........3.........4.........5.........6: 1%
-> (1000/100000)<CR>
-> Working hard.......2.........3.........4.........5.........6: Z
-> 10% (10000/100000)<CR>
-> 100% (100000/100000)<CR>
-> 100% (100000/100000), done.
-> EOF
->=20
-> cat >in <<-\EOF &&
-> progress 100
-> progress 1000
-> progress 10000
-> progress 100000
-> EOF
-> test-tool progress --total=3D100000 \
-> "Working hard.......2.........3.........4.........5.........6" \
-> <in 2>stderr &&
->=20
-> show_cr <stderr >out &&
-> test_cmp expect out
->=20
-> --- expect 2021-07-19 06:09:39.800189433 +0000
-> +++ out 2021-07-19 06:09:39.803522767 +0000
-> @@ -1,6 +1,5 @@
-> Working hard.......2.........3.........4.........5.........6: 0%
-> (100/100000)<CR>
-> Working hard.......2.........3.........4.........5.........6: 1%
-> (1000/100000)<CR>
-> -Working hard.......2.........3.........4.........5.........6:
-> - 10% (10000/100000)<CR>
-> - 100% (100000/100000)<CR>
-> - 100% (100000/100000), done.
-> +Working hard.......2.........3.........4.........5.........6: 10%
-> (10000/100000)<CR>
-> +Working hard.......2.........3.........4.........5.........6: 100%
-> (100000/100000)<CR>
-> +Working hard.......2.........3.........4.........5.........6: 100%
-> (100000/100000), done.
-> not ok 3 - progress display breaks long lines #1
-> #
-> # sed -e "s/Z$//" >expect <<\EOF &&
-> # Working hard.......2.........3.........4.........5.........6: 0%
-> (100/100000)<CR>
-> # Working hard.......2.........3.........4.........5.........6: 1%
-> (1000/100000)<CR>
-> # Working hard.......2.........3.........4.........5.........6: Z
-> # 10% (10000/100000)<CR>
-> # 100% (100000/100000)<CR>
-> # 100% (100000/100000), done.
-> # EOF
-> #
-> # cat >in <<-\EOF &&
-> # progress 100
-> # progress 1000
-> # progress 10000
-> # progress 100000
-> # EOF
-> # test-tool progress --total=3D100000 \
-> # "Working hard.......2.........3.........4.........5.........6" \
-> # <in 2>stderr &&
-> #
-> # show_cr <stderr >out &&
-> # test_cmp expect out
-> #
-> ```
->=20
-> * What's different between what you expected and what actually =
-happened?
->=20
-> It seems that the progress display is not working normally.
->=20
-> * Anything else you want to add:
->=20
-> I am thinking:
-> 1. Is this bug caused by my own patches?
-> So I switched to other branches, including upstream/master, see the =
-bug too.
-> 2. Is this bug caused by zsh?
-> So I switched to bash, and saw the bug too.
-> 3. Does this bug only appear on my Arch-Linux?
-> So I asked my classmates (who use arch linux too) to download git/git
-> from github and perform the test, see the bug too.
-> 4. Does Ubuntu also have this bug?
-> No. In the case of using Ubuntu's docker and Centos's virtual machine,
-> after cloning git/git from github, they actually passed the test!!!
->=20
-> So what's wrong with Arch-Linux?
+On Tue, Jul 20, 2021 at 01:39:45PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> Change the parse_options() invocation in the commit-graph code to make
+> sense. We're calling it twice, once for common options parsing, and
+> then for the sub-commands.
+> 
+> But we never checked if we had something leftover in argc in "write"
+> or "verify", as a result we'd silently accept garbage in these
+> subcommands. Let's not do that.
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/commit-graph.c  | 10 ++++++++--
+>  t/t5318-commit-graph.sh |  5 +++++
+>  2 files changed, 13 insertions(+), 2 deletions(-)
+> 
+> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+> index bf34aa43f22..88cbcb5a64f 100644
+> --- a/builtin/commit-graph.c
+> +++ b/builtin/commit-graph.c
+> @@ -104,7 +104,10 @@ static int graph_verify(int argc, const char **argv)
+>  	opts.progress = isatty(2);
+>  	argc = parse_options(argc, argv, NULL,
+>  			     options,
+> -			     builtin_commit_graph_verify_usage, 0);
+> +			     builtin_commit_graph_verify_usage,
+> +			     PARSE_OPT_KEEP_UNKNOWN);
+> +	if (argc)
+> +		usage_with_options(builtin_commit_graph_verify_usage, options);
 
-I noticed there's already a thread about this problem here:
-=
-https://lore.kernel.org/git/49498ed0-cfd5-2305-cee7-5c5939a19bcf@campoint.=
-net/
+Checking 'argc' alone is sufficient to catch unsupported parameters.
 
-This seems to be a bug with a recent bash, and a fix was suggested =
-there.
+Using PARSE_OPT_KEEP_UNKNOWN is not only unnecessary, but arguably
+wrong here, because 'git commit-graph write --foo' won't print "error:
+unknown option `foo'", and we don't want to pass the remaining
+unrecognized options to a different command, like e.g. 'git difftool',
+or another parse_options(), like e.g. 'git archive'.
 
-> * [System Info]
->=20
-> ```
-> git version:
-> git version 2.32.0
-> cpu: x86_64
-> no commit associated with this build
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> uname: Linux 5.12.15-arch1-1 #1 SMP PREEMPT Wed, 07 Jul 2021 23:35:29
-> +0000 x86_64
-> compiler info: gnuc: 11.1
-> libc info: glibc: 2.33
-> $SHELL (typically, interactive shell): /bin/zsh
-> ```
->=20
-> * [Enabled Hooks]
->=20
-> None.
->=20
-> [...]
-
----
-Atharva Raykar
-=E0=B2=85=E0=B2=A5=E0=B2=B0=E0=B3=8D=E0=B2=B5 =E0=B2=B0=E0=B2=BE=E0=B2=AF=E0=
-=B3=8D=E0=B2=95=E0=B2=B0=E0=B3=8D
-=E0=A4=85=E0=A4=A5=E0=A4=B0=E0=A5=8D=E0=A4=B5 =E0=A4=B0=E0=A4=BE=E0=A4=AF=E0=
-=A4=95=E0=A4=B0
-
+>  	if (!opts.obj_dir)
+>  		opts.obj_dir = get_object_directory();
+> @@ -261,7 +264,10 @@ static int graph_write(int argc, const char **argv)
+>  
+>  	argc = parse_options(argc, argv, NULL,
+>  			     options,
+> -			     builtin_commit_graph_write_usage, 0);
+> +			     builtin_commit_graph_write_usage,
+> +			     PARSE_OPT_KEEP_UNKNOWN);
+> +	if (argc)
+> +		usage_with_options(builtin_commit_graph_write_usage, options);
+>  
+>  	if (opts.reachable + opts.stdin_packs + opts.stdin_commits > 1)
+>  		die(_("use at most one of --reachable, --stdin-commits, or --stdin-packs"));
+> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+> index af88f805aa2..09a2ccd2920 100755
+> --- a/t/t5318-commit-graph.sh
+> +++ b/t/t5318-commit-graph.sh
+> @@ -5,6 +5,11 @@ test_description='commit graph'
+>  
+>  GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0
+>  
+> +test_expect_success 'usage' '
+> +	test_expect_code 129 git commit-graph write blah &&
+> +	test_expect_code 129 git commit-graph write verify
+> +'
+> +
+>  test_expect_success 'setup full repo' '
+>  	mkdir full &&
+>  	cd "$TRASH_DIRECTORY/full" &&
+> -- 
+> 2.32.0.874.ge7a9d58bfcf
+> 
