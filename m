@@ -2,59 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EC36C07E9B
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 14:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1690BC636C8
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 14:27:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3FBD0611F2
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 14:27:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 005AC6121E
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 14:27:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237295AbhGTNqm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 09:46:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40476 "EHLO
+        id S239213AbhGTNqu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 09:46:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240214AbhGTNkl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jul 2021 09:40:41 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 268CAC0613E1
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 07:20:31 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id c17so5337178wmb.5
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 07:20:31 -0700 (PDT)
+        with ESMTP id S237662AbhGTNlB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jul 2021 09:41:01 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C3BBC0613E3
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 07:20:34 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id u1so26259696wrs.1
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 07:20:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=oOX4EeBNxVMn4u3V7Cv5nyxqvmKyv37jmj5mY5GHheM=;
-        b=uZq8j2nZM7iWLh5aMLWrfLzlQ412ov3V5kInSIYxsopPHmqcUghsMGg24dt5qN89x4
-         aDrB9Es7r9m250RSpnHOo+KFLJ9iZ3L7xkTltYsmpZzhJtiKXNIqu+35Z5pY3ZlYMLei
-         LlZCBSaD+ZHPIeS72WHvbV+TjswxjB7yWte9UnGzZEXH3FDciGVchcU2PAmqoW93OVEm
-         TXjboXqqotRmyc4lUMk2iyWA/+wTdllfuJ1cwI2yFoREjLMIQU0rHyPDb8SQbupxn9s0
-         B/ZNo6WtQF8QW3tQNNm/yARZEfhsS48UaM5OjhiQqBate9WsCze7Kn8wmcEXLflwRhsZ
-         3iRg==
+        bh=sa2iNz7KJt+fEbBJpuVsGvV2BzwQTJkb3u7b/7Xfkdw=;
+        b=JyGbOE3zDE5PCXiOQpjSE8ajJIRXtisLu4Mp9ov6PrBngpBRBkMCkh6byoFNwsW18U
+         IeAMEoPXJriofdxyG8htGTeaxCI4jmUoAVHYSZLVEyOiDTdI1qSwMSYKMRIZJHp69unt
+         kQOyFeRHxVbdzRNPGxHiW7MTh0yMPbflKLiqJFDhP2NNAOQT20q0qbwFNP82JwFb85CF
+         qtKZuRLMk0QnmBx/eD9dTdYPGrioBx/AfzYS3cNz5HXKLdh2M5PnklzOLyyEDo8LPTtY
+         eQVo5wLS0x0GvfU1JeeBNsdqJDDU0pqdpAorZurTMoWXmIQbHhucyWO/oH3VPliQU5fT
+         to9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=oOX4EeBNxVMn4u3V7Cv5nyxqvmKyv37jmj5mY5GHheM=;
-        b=rjMO06rZ8QZlNbg+DdOnaO15M662W/kCYRxFGf5RUUdNvWBeYke/YifXCZrUTpQfn6
-         adOaaeVvUB4In78y1DkxmOBzBd8ZWOentIYA4xxGRRwhfsooQSTYDZasrzEnHGpEfQuj
-         1UTaYw90dUNzO+CCVHSqEC7+ziVrMZMB45ItcqTuBPWnFV0P1Up1F995OtZ2PTZggLBT
-         Dy2oxI4dYBsq3ThU/uvtQLc0TlNh/gn7W2VQ8Fu0DVnEhWUD+gGR5ofAyr08BCzAuC3R
-         tHVv0WmP8ExXRxt7NQTyus+ZuVc5wPFM7x8dKbufPUfZi+w1V4gPr5Vnb4kZFVwrYJJF
-         qNHg==
-X-Gm-Message-State: AOAM530aq71Tjb1JK5TkhEC8A2iitqBsUPOGtC/VpGkGFZJqJ8hAMWJG
-        DajEFHP1689w3PK8icDaj7zG+IjUEErnOw==
-X-Google-Smtp-Source: ABdhPJzK1vDC3HXR6hEIgcWGOe06gV8wromsNkQWxiEQI25jQEdDaPkGWxRzzceqOq8dYJZanG/zlg==
-X-Received: by 2002:a1c:6a1a:: with SMTP id f26mr32415275wmc.61.1626790829439;
-        Tue, 20 Jul 2021 07:20:29 -0700 (PDT)
+        bh=sa2iNz7KJt+fEbBJpuVsGvV2BzwQTJkb3u7b/7Xfkdw=;
+        b=qXXV9L8KiadXm6TJeDfl4W/ep73C3IZfEDpcko3fXY7fSTOrsRF+O/qBARvKOZz372
+         whlkR2cogEvjC0M+gF55S4cvcEuGXK6rgWI2+dMMcFdFdedekYEBslR9vRa8wQklAx+n
+         thKgUA0B0ljFmGdfkPj1bTaMPgDXtGEKP7n38bJD0WX7nAro5mMN7/uRREDJxOhVwwP6
+         MVXMFBijQlaBbWw2wFAqnvZxPaQUGO3Fq+wbsn2WjbAdkJeTx0juUnQSr6nBp95a2ewg
+         EPT9XAr+QDTjP/QP2j4/1Xl3OJWb41gQbX7bYugyrf8ZznH67yLSXDzfQo+AU9RhRrhb
+         oJwg==
+X-Gm-Message-State: AOAM530/OTNuyHvruAzB8RTivFghoQIeZur71jWB8CuMvSW4kSOodxuy
+        4DhJSc19Gn2F9wnt4f0X6R3k2cJ9ZIyeHg==
+X-Google-Smtp-Source: ABdhPJyUbQl36u0aEkFpMPLfqqD3dJ5CAwOAZ2zsBLnRaq1qfv/abCKJnvUGtU9v+WTSy6NaWU32aQ==
+X-Received: by 2002:a5d:4a4c:: with SMTP id v12mr35766296wrs.256.1626790832354;
+        Tue, 20 Jul 2021 07:20:32 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c2sm23785370wrn.28.2021.07.20.07.20.28
+        by smtp.gmail.com with ESMTPSA id c2sm23785370wrn.28.2021.07.20.07.20.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 07:20:28 -0700 (PDT)
+        Tue, 20 Jul 2021 07:20:31 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,12 +63,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 0/3] bundle doc: generalize & elaborate
-Date:   Tue, 20 Jul 2021 16:20:23 +0200
-Message-Id: <cover-0.3-00000000000-20210720T141611Z-avarab@gmail.com>
+Subject: [PATCH v6 2/3] bundle doc: elaborate on object prerequisites
+Date:   Tue, 20 Jul 2021 16:20:25 +0200
+Message-Id: <patch-2.3-a0f95ce3a1d-20210720T141611Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.874.ge7a9d58bfcf
-In-Reply-To: <cover-0.3-00000000000-20210702T112254Z-avarab@gmail.com>
-References: <cover-0.3-00000000000-20210702T112254Z-avarab@gmail.com>
+In-Reply-To: <cover-0.3-00000000000-20210720T141611Z-avarab@gmail.com>
+References: <cover-0.3-00000000000-20210702T112254Z-avarab@gmail.com> <cover-0.3-00000000000-20210720T141611Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,65 +76,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A v6 of improvements to the "git bundle" documentation. See
-https://lore.kernel.org/git/cover-0.3-00000000000-20210702T112254Z-avarab@gmail.com/
-for v5.
+Split out the discussion bout "object prerequisites" into its own
+section, and add some more examples of the common cases.
 
-Junio, I think this addresess the points you raised in
-https://lore.kernel.org/git/xmqq7di8rbtj.fsf@gitster.g/
+See 2e0afafebd (Add git-bundle: move objects and references by
+archive, 2007-02-22) for the introduction of the documentation being
+changed here.
 
-I used your suggested wording, but changed "empty repository" to "a
-repository with no common history" for the purposes of the
-documentation that's trying to talk about what you can unbundle where
-without ambiguity.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Documentation/git-bundle.txt | 37 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 34 insertions(+), 3 deletions(-)
 
-Ævar Arnfjörð Bjarmason (3):
-  bundle doc: rewrite the "DESCRIPTION" section
-  bundle doc: elaborate on object prerequisites
-  bundle doc: elaborate on rev<->ref restriction
-
- Documentation/git-bundle.txt | 141 ++++++++++++++++++++++++++++-------
- 1 file changed, 115 insertions(+), 26 deletions(-)
-
-Range-diff against v5:
-1:  3b447500da9 = 1:  d5360bb6f74 bundle doc: rewrite the "DESCRIPTION" section
-2:  444b06740bc ! 2:  a0f95ce3a1d bundle doc: elaborate on object prerequisites
-    @@ Documentation/git-bundle.txt: contained in the union of the given bases.  Each b
-     +OBJECT PREREQUISITES
-     +--------------------
-     +
-    -+When creating bundles it is possible to create a fully self-contained
-    -+bundle with all the prerequisite objects, as well as providing
-    -+negative revisions to exclude prerequisite objects.
-    ++When creating bundles it is possible to create a self-contained bundle
-    ++that can be unbundled in a repository with no common history, as well
-    ++as providing negative revisions to exclude objects needed in the
-    ++earlier parts of the history.
-     +
-    -+A revision such as `new` will produce a tip with all the prerequisite
-    -+objects needed for the `new` reference.
-    ++Feeding a revision such as `new` to `git bundle create` will create a
-    ++bundle file that contains all the objects reachable from the revision
-    ++`new`. That bundle can be unbundled in any repository to obtain a full
-    ++history that leads to the revision `new`:
-    ++
-    ++----------------
-    ++$ git bundle create full.bundle new
-    ++----------------
-     +
-     +A revision range such as `old..new` will produce a bundle tip that'll
-    -+require any objects existing before `new` to already be present in the
-    -+repository performing the 'git bundle unbundle' operation.
-    ++that'll require the revision `old` (and any objects reachable from it)
-    ++to exist for the bundle to be "unbundle"-able:
-    ++
-    ++----------------
-    ++$ git bundle create full.bundle old..new
-    ++----------------
-     +
-     +A self-contained bundle without any prerequisites can be extracted
-     +into anywhere, even into an empty repository, or be cloned from
-3:  6d8f2f27088 = 3:  6d66d4480ff bundle doc: elaborate on rev<->ref restriction
+diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
+index 9c743aed49f..d5627b8cc51 100644
+--- a/Documentation/git-bundle.txt
++++ b/Documentation/git-bundle.txt
+@@ -45,6 +45,7 @@ header is (mostly) in the format emitted by linkgit:git-show-ref[1].
+ 
+ Like the the packed archive format itself bundles can either be
+ self-contained, or be created using exclusions.
++See the "OBJECT PREREQUISITES" section below.
+ 
+ Bundles created using revision exclusions are "thin packs" created
+ using the `--thin` option to linkgit:git-pack-objects[1], and
+@@ -153,19 +154,49 @@ contained in the union of the given bases.  Each basis can be
+ specified explicitly (e.g. `^master~10`), or implicitly (e.g.
+ `master~10..master`, `--since=10.days.ago master`).
+ 
+-It is very important that the basis used be held by the destination.
++OBJECT PREREQUISITES
++--------------------
++
++When creating bundles it is possible to create a self-contained bundle
++that can be unbundled in a repository with no common history, as well
++as providing negative revisions to exclude objects needed in the
++earlier parts of the history.
++
++Feeding a revision such as `new` to `git bundle create` will create a
++bundle file that contains all the objects reachable from the revision
++`new`. That bundle can be unbundled in any repository to obtain a full
++history that leads to the revision `new`:
++
++----------------
++$ git bundle create full.bundle new
++----------------
++
++A revision range such as `old..new` will produce a bundle tip that'll
++that'll require the revision `old` (and any objects reachable from it)
++to exist for the bundle to be "unbundle"-able:
++
++----------------
++$ git bundle create full.bundle old..new
++----------------
++
++A self-contained bundle without any prerequisites can be extracted
++into anywhere, even into an empty repository, or be cloned from
++(i.e., `new`, but not `old..new`).
++
+ It is okay to err on the side of caution, causing the bundle file
+ to contain objects already in the destination, as these are ignored
+ when unpacking at the destination.
+ 
+-`git clone` can use any bundle created without negative refspecs
+-(e.g., `new`, but not `old..new`).
+ If you want to match `git clone --mirror`, which would include your
+ refs such as `refs/remotes/*`, use `--all`.
+ If you want to provide the same set of refs that a clone directly
+ from the source repository would get, use `--branches --tags` for
+ the `<git-rev-list-args>`.
+ 
++The 'git bundle verify' command can be used to check whether your
++recipient repository has the required prerequisite commits for a
++bundle.
++
+ EXAMPLES
+ --------
+ 
 -- 
 2.32.0.874.ge7a9d58bfcf
 
