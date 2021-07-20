@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 731F0C636C9
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0750DC636C9
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:09:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 55A8260FED
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:09:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E24F16113B
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 17:09:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234908AbhGTQ2g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 12:28:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49718 "EHLO
+        id S232215AbhGTQ1s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 12:27:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232992AbhGTQYb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jul 2021 12:24:31 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B83F2C0613DE
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:05:05 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id f8-20020a1c1f080000b029022d4c6cfc37so1894320wmf.5
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:05:05 -0700 (PDT)
+        with ESMTP id S232695AbhGTQY0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jul 2021 12:24:26 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED676C061767
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:05:03 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id r11so26758907wro.9
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 10:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=yyG7ptp3kPeTvu91jaJSIgDSemxiR1k8pmNU3KvV//Y=;
-        b=vXQ45p/d6Vwavx6HcH24mUTcT5zlZ9VvBrebSehM6cm09xEpwDsyoRuneLVhGFR+8b
-         aTsGWWcrOb60x7iDsZ/OMrx0e+9OvPtAwflmb/P6Mgn9zZG1062TCkFZKnLAhxwEVGPh
-         ZRFazBlV8rFZENpYEd7ZTD2+/rO3l/VquDEqSA+3X/1Pe8j/Ez3BQ/WRlA9t67o4HmV3
-         45I3WBfSxWsgYCnDGynhfEIpvAzv8CzFgw1ag9Qbq8IgHbO1eTevXNXC4jvbuy+QgwPd
-         DlePidOgAPDdIE0xfzuVugsZVx24sYArSLtVxLZOpNie75EHzMV13/yN4lxOsZpibu73
-         rxFA==
+        bh=OsQSLvt2u3LVkRXrYhUjj9EbYAyMPEEngwbUfGEcNKY=;
+        b=WbT5qXvenQV2oL05syz4DDviooyL/zNH1LjP+QVeO3Og8FK7HQEuVxSqBt5rrKF1og
+         fEnzGLlMiXiBIGz54u2X+QCVip9ilugGRhvtGhNs/p0KNkET0wIgCTlJOyhxfbmXUXTW
+         gEAXA0r7QU7/JUMb6JC2jwK8ZSxh+xyaIPjKFJNvO14KKAE2JFdVPiL/xRD2PS2s6gFb
+         lvpjmPpLl1RxhFG+bL9OWqkgQIOYvdSH3Km5zbnco1zhIdjgOYXSH+47uFuUCk0bhBj6
+         8weSPUvT3K9zPdBks4fTnR6W2y3z6BplEZa1FFcwkXDsYotTE3ytvaWOx+xSCLRX19q7
+         90Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yyG7ptp3kPeTvu91jaJSIgDSemxiR1k8pmNU3KvV//Y=;
-        b=g6JjFjk9Wo203ZpYcN5BQtoLm7fc7DTRJiktS/5cd/RcjlX8y1/5DiOf6vueGHu9f9
-         4wbyIv78eC1ExvlLl2sLDjA4rfWxb3PTo0a/QA25eV3IYWJnghfN6oqtdcUnZeOXc73N
-         yarSPjUw+kIXhVfJBBTQY0A+5lOYZYweoinaSEDZvZA1q6jx9L8lVALCEw1dzqD89ZOz
-         lEqznZSA+3Q926X0t3HmmBkUUKhu0lRNTpGW4GWXNznwaoDfY7KVapt7fUOPqbMKaswL
-         pOqhmr8ydnuC9Ol3cVlxVz5PvZTwYdnA4AUKkrkvtuEQEWwiGMOZ8+hAoXDryAIUDkyH
-         PFEQ==
-X-Gm-Message-State: AOAM533/9xQWehzzx5JXtM1oLiDdxROwMeR7/8smEWXuW6IZcl9vxkea
-        oi0gsCaJ4E0oKHrPsdltARVxNolgW2I=
-X-Google-Smtp-Source: ABdhPJwIeKz2vheyEFMCZEkiie2Q+7pQjh/gfhjXg9BRjclqWcpuiCkD/nLKaWk9VYQwTvRDpG8HvQ==
-X-Received: by 2002:a7b:c4d3:: with SMTP id g19mr32416849wmk.78.1626800704361;
-        Tue, 20 Jul 2021 10:05:04 -0700 (PDT)
+        bh=OsQSLvt2u3LVkRXrYhUjj9EbYAyMPEEngwbUfGEcNKY=;
+        b=e+HeH7hxCLQcLp9sYRtp49C7MMEBOo2RNAj91aMBMroQ5DIIzHEQKKKEH70DcUofxO
+         guYQLR2wuNYo6dqW8Zj1iNFklRU0RhpAZs0mjqnvz+UAYP0C/5GVT4iPdimM04kvKMJM
+         otfx2pS9bdW/vVkC27951xJzsVEhDGI/id16c5yI3NHoZM50VgzmSNbHqruo06UAxSJF
+         FXLc4livfNO2T5kwFRWGB/qnXNvlq30BsSLlM8ny8YDEwHPLs4Zu48VEReqrB2lHXU9S
+         R3ys0eU5VIHUgdIodc0vMbs286+fkvk9wpawF/4zAlip2hL4+RS1iijNO9Lz/jpRiJPh
+         ojpQ==
+X-Gm-Message-State: AOAM533VG3FCp7/IIgK/YVhX406H+cftyXGXF9O3tLKwlnv2/uidINKv
+        gQCqs87cLpuy6k/rC00pNlBlTESfNRk=
+X-Google-Smtp-Source: ABdhPJwDcCK7q3oyT7bVHGxrmI44keo6n/tHSXWMPZGrKDNon4CHEJISK36sicslCZArVBEfmHJ5Pg==
+X-Received: by 2002:a5d:568a:: with SMTP id f10mr18150526wrv.293.1626800702588;
+        Tue, 20 Jul 2021 10:05:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p2sm19876446wmg.6.2021.07.20.10.05.03
+        by smtp.gmail.com with ESMTPSA id 19sm20275752wmu.17.2021.07.20.10.05.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 10:05:04 -0700 (PDT)
-Message-Id: <f0a528b9ece4ec964f7698843613ae025f2b5f5d.1626800687.git.gitgitgadget@gmail.com>
+        Tue, 20 Jul 2021 10:05:02 -0700 (PDT)
+Message-Id: <3c9c3a2d56df2ef525072ede5cb420b2690bb979.1626800687.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1054.git.git.1626800686.gitgitgadget@gmail.com>
 References: <pull.1054.git.git.1626800686.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 20 Jul 2021 17:04:45 +0000
-Subject: [PATCH 25/26] t1404: annotate test cases with REFFILES
+Date:   Tue, 20 Jul 2021 17:04:42 +0000
+Subject: [PATCH 22/26] Add "test-tool dump-reftable" command.
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,174 +75,81 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-* Reftable for now lacks detailed error messages for directory/file conflicts.
-  Skip message comparisons.
-
-* Mark tests that muck with .git directly as REFFILES.
+This command dumps individual tables or a stack of of tables.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- t/t1404-update-ref-errors.sh | 56 +++++++++++++++++++++++++++---------
- 1 file changed, 42 insertions(+), 14 deletions(-)
+ Makefile                 | 1 +
+ t/helper/test-reftable.c | 5 +++++
+ t/helper/test-tool.c     | 1 +
+ t/helper/test-tool.h     | 1 +
+ t/t0031-reftable.sh      | 6 ++++++
+ 5 files changed, 14 insertions(+)
 
-diff --git a/t/t1404-update-ref-errors.sh b/t/t1404-update-ref-errors.sh
-index b729c1f4803..811d5bb56d4 100755
---- a/t/t1404-update-ref-errors.sh
-+++ b/t/t1404-update-ref-errors.sh
-@@ -27,7 +27,9 @@ test_update_rejected () {
- 	fi &&
- 	printf "create $prefix/%s $C\n" $create >input &&
- 	test_must_fail git update-ref --stdin <input 2>output.err &&
--	test_i18ngrep -F "$error" output.err &&
-+	if test_have_prereq REFFILES ; then
-+		test_i18ngrep -F "$error" output.err
-+	fi &&
- 	git for-each-ref $prefix >actual &&
- 	test_cmp unchanged actual
+diff --git a/Makefile b/Makefile
+index 19566c661f1..6014f74a1b8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2467,6 +2467,7 @@ REFTABLE_OBJS += reftable/writer.o
+ 
+ REFTABLE_TEST_OBJS += reftable/basics_test.o
+ REFTABLE_TEST_OBJS += reftable/block_test.o
++REFTABLE_TEST_OBJS += reftable/dump.o
+ REFTABLE_TEST_OBJS += reftable/merged_test.o
+ REFTABLE_TEST_OBJS += reftable/pq_test.o
+ REFTABLE_TEST_OBJS += reftable/record_test.o
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+index 996da85f7b5..26b03d7b789 100644
+--- a/t/helper/test-reftable.c
++++ b/t/helper/test-reftable.c
+@@ -14,3 +14,8 @@ int cmd__reftable(int argc, const char **argv)
+ 	tree_test_main(argc, argv);
+ 	return 0;
  }
-@@ -101,7 +103,9 @@ df_test() {
- 		printf "%s\n" "delete $delname" "create $addname $D"
- 	fi >commands &&
- 	test_must_fail git update-ref --stdin <commands 2>output.err &&
--	test_cmp expected-err output.err &&
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected-err output.err
-+	fi &&
- 	printf "%s\n" "$C $delref" >expected-refs &&
- 	git for-each-ref --format="%(objectname) %(refname)" $prefix/r >actual-refs &&
- 	test_cmp expected-refs actual-refs
-@@ -336,7 +340,9 @@ test_expect_success 'missing old value blocks update' '
- 	EOF
- 	printf "%s\n" "update $prefix/foo $E $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
++
++int cmd__dump_reftable(int argc, const char **argv)
++{
++	return reftable_dump_main(argc, (char *const *)argv);
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 01201629fca..ed543037bb8 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -59,6 +59,7 @@ static struct test_cmd cmds[] = {
+ 	{ "read-midx", cmd__read_midx },
+ 	{ "ref-store", cmd__ref_store },
+ 	{ "reftable", cmd__reftable },
++	{ "dump-reftable", cmd__dump_reftable },
+ 	{ "regex", cmd__regex },
+ 	{ "repository", cmd__repository },
+ 	{ "revision-walking", cmd__revision_walking },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index cb90b7f4f7b..284cfe70d94 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -19,6 +19,7 @@ int cmd__dump_cache_tree(int argc, const char **argv);
+ int cmd__dump_fsmonitor(int argc, const char **argv);
+ int cmd__dump_split_index(int argc, const char **argv);
+ int cmd__dump_untracked_cache(int argc, const char **argv);
++int cmd__dump_reftable(int argc, const char **argv);
+ int cmd__example_decorate(int argc, const char **argv);
+ int cmd__fast_rebase(int argc, const char **argv);
+ int cmd__genrandom(int argc, const char **argv);
+diff --git a/t/t0031-reftable.sh b/t/t0031-reftable.sh
+index 7899a1c580e..f024968ed66 100755
+--- a/t/t0031-reftable.sh
++++ b/t/t0031-reftable.sh
+@@ -288,4 +288,10 @@ test_expect_success 'FETCH_HEAD' '
+ 	test_cmp expect actual
  '
  
- test_expect_success 'incorrect old value blocks update' '
-@@ -347,7 +353,9 @@ test_expect_success 'incorrect old value blocks update' '
- 	EOF
- 	printf "%s\n" "update $prefix/foo $E $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'existing old value blocks create' '
-@@ -358,7 +366,9 @@ test_expect_success 'existing old value blocks create' '
- 	EOF
- 	printf "%s\n" "create $prefix/foo $E" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'incorrect old value blocks delete' '
-@@ -369,7 +379,9 @@ test_expect_success 'incorrect old value blocks delete' '
- 	EOF
- 	printf "%s\n" "delete $prefix/foo $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'missing old value blocks indirect update' '
-@@ -380,7 +392,9 @@ test_expect_success 'missing old value blocks indirect update' '
- 	EOF
- 	printf "%s\n" "update $prefix/symref $E $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'incorrect old value blocks indirect update' '
-@@ -392,7 +406,9 @@ test_expect_success 'incorrect old value blocks indirect update' '
- 	EOF
- 	printf "%s\n" "update $prefix/symref $E $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'existing old value blocks indirect create' '
-@@ -404,7 +420,9 @@ test_expect_success 'existing old value blocks indirect create' '
- 	EOF
- 	printf "%s\n" "create $prefix/symref $E" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'incorrect old value blocks indirect delete' '
-@@ -416,7 +434,9 @@ test_expect_success 'incorrect old value blocks indirect delete' '
- 	EOF
- 	printf "%s\n" "delete $prefix/symref $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'missing old value blocks indirect no-deref update' '
-@@ -427,7 +447,9 @@ test_expect_success 'missing old value blocks indirect no-deref update' '
- 	EOF
- 	printf "%s\n" "option no-deref" "update $prefix/symref $E $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'incorrect old value blocks indirect no-deref update' '
-@@ -439,7 +461,9 @@ test_expect_success 'incorrect old value blocks indirect no-deref update' '
- 	EOF
- 	printf "%s\n" "option no-deref" "update $prefix/symref $E $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'existing old value blocks indirect no-deref create' '
-@@ -451,7 +475,9 @@ test_expect_success 'existing old value blocks indirect no-deref create' '
- 	EOF
- 	printf "%s\n" "option no-deref" "create $prefix/symref $E" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'incorrect old value blocks indirect no-deref delete' '
-@@ -463,7 +489,9 @@ test_expect_success 'incorrect old value blocks indirect no-deref delete' '
- 	EOF
- 	printf "%s\n" "option no-deref" "delete $prefix/symref $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success REFFILES 'non-empty directory blocks create' '
++test_expect_success 'dump reftable' '
++	initialize &&
++	hash_id=$(git config extensions.objectformat) &&
++	test-tool dump-reftable $(test "${hash_id}" = "sha256" && echo "-6") -s .git/reftable
++'
++
+ test_done
 -- 
 gitgitgadget
 
