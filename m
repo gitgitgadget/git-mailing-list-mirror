@@ -4,156 +4,178 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE29FC636C9
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 20:40:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B00BBC636C9
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 20:41:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A778360FEA
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 20:40:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A4816100C
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 20:41:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231655AbhGTT7b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 15:59:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36122 "EHLO
+        id S231404AbhGTT7r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 15:59:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230015AbhGTTeg (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232370AbhGTTeg (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 20 Jul 2021 15:34:36 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8379EC061762
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 13:14:43 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id f8-20020a1c1f080000b029022d4c6cfc37so2171063wmf.5
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 13:14:43 -0700 (PDT)
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2019EC0613DE
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 13:14:44 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id u1so27364134wrs.1
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 13:14:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=LxQkQBRfHZID/NeCkl+5Df7UWdumZc+YV5wyHpznmWU=;
-        b=Zai3R6NlfA7EhJh6RzXHk7BXYUtmR/xrxRIr40bIsq6wBxwdl+JBkMrTv5Z9kYxfEb
-         ERf/g6c5fWdZDNTIiB6DwA9mm8LS0MWyNoXK97BQ5v3Y4BK0saXAOxzA5ZQWsLEzXLDK
-         l71VkEdQrw09e2tkvFID/dJwC0PzrR7uxP82mMXXWc8T+EeVIEciWmy9v5A7lHRXBJEo
-         /fxNDy8jCvJiOxVdJ+7pCn7qsUVobnyjxcyrGUmyvaitXwN+90xxbvallzZH+8P46ppH
-         n2Hu1pBOc7afi7JTMaAjjs7vh+f3h9F4AjBFfwjhXVx1eqsn6jlCRvYMPUtLtgpOLYvz
-         foWA==
+        bh=f/KiyvI/Q1CXlsOXJtPYGGM2ZxsZJqz3uYZNz5JOQt8=;
+        b=KTUfTqvTbkoIT9iYR7z15ScxKMPvMx7sMf1j9jHil//K4Wh/lnKYHC0tKhi5Kkf4ST
+         U9xNuzDIuODAzD0uK4QiGt5+nd16flNPcTWVvnYqp6yAy9dizUe4/TfhRLVNN+QF4nIe
+         KhigVcW4Yx2nwAuFcEboCCKIwWidqHDENpzFxSoA8ORNG45FFajtP2GS5W3qknS1DPn2
+         daKiX4nxFbJE3qGY8hX7VyJB5XOrZNG0DU4Vnh6f5nPX9SsyjJgMEI53Tgvl874BLo/R
+         /Lv7W2LMYoBhzEm+uxlj2lF9RcLC2GO2vBmUxX+CPYLUvt3rZLkYFnwsNhHAP5aVb8wG
+         Q51A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=LxQkQBRfHZID/NeCkl+5Df7UWdumZc+YV5wyHpznmWU=;
-        b=SvdRZEOB0HBmp/dy17GHKS9BrvtdO8K1v0pB0OJ0i6rCuY/2QUCeKArBh6HpT/T30i
-         PsX1wg3dYLcj/NihfU7OiL1AEB1A+OGNLIqEqSztn3SSVFt9SUF8prS2xZKYh3GuvwOb
-         F9eyg/XcCJVLzhavIyi/5oByLgzjvCCWfYcoqRSx3O5NSVfze8hrzYsbMBSrD005ATbU
-         XV6O9oXha83GVK4DSzYqmZzNiCKidU4TdUbs94cVLdT4kSy7QLgoh3TqqlJRtw4KMdhD
-         QM/02A+koYFDmWhvA82VnzuB66VjY9bRPazNdYMYTozqgAtPWpTwk142owjaDY9MjECZ
-         xSbw==
-X-Gm-Message-State: AOAM5302AgKhGAX5Ov9FJu2qrzzCDWnBhR0xHo9Zzkl0ydWxXoIjeGPj
-        OdAVZ/U6MlkGN1nlQhWJNQVKeUYiFXU=
-X-Google-Smtp-Source: ABdhPJwyLopcs/hoYKijDoduURmyUO06pJzqGeVSDYlEbu/f70VRkQAnvV4CYcLwXEKlzDKfk8ksmg==
-X-Received: by 2002:a05:600c:2319:: with SMTP id 25mr170675wmo.91.1626812082140;
+        bh=f/KiyvI/Q1CXlsOXJtPYGGM2ZxsZJqz3uYZNz5JOQt8=;
+        b=Ac6bLKut8ptCbaNrXNQmfnfLekLP3HQukUQTNSvcGwT9O9289rbPV13TxwVFSauJYI
+         oWtywIxXMhrc++ocDjbUrg8LHYe/QguslsfWWuw+OFA5EjZDjOkvyXpahqUrPr01QH9+
+         QsFaYtEWKOzSbYar/8uNEqzV1oxsLEEVNCjuIou8PE+k3WDZuMvrWa62WabrK/Cs9OIl
+         ZueTIhdVJ1DC1+GkyIHtb6SW+V6uPoW7m1V6cKPInOPtX+m7URNU5hqsUkP6E7XERNpw
+         BY9FJfrq6RwS98iU79MGUioUtsHiwd6J5FE9TtWUc/6Fvt5Q1alfisxrH4j7BU3kYEOM
+         +3bQ==
+X-Gm-Message-State: AOAM530/crWzJ3lZztBUQbrl3OL4Lcn7Z4FgIZ3xuA/3TBoOGeOkas4i
+        t1o9pm+gar/XZHcMp7deNKZhq1T9Ji0=
+X-Google-Smtp-Source: ABdhPJx4ospaESpkYCvQ8r7euFo1hI3cN7VJ+S4Xypg9lYAg28kY0V7sBWr5cil6kNANK/V1QXQezw==
+X-Received: by 2002:adf:facf:: with SMTP id a15mr37969348wrs.39.1626812082711;
         Tue, 20 Jul 2021 13:14:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o18sm3973976wmh.0.2021.07.20.13.14.41
+        by smtp.gmail.com with ESMTPSA id q19sm3146620wmq.38.2021.07.20.13.14.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 13:14:41 -0700 (PDT)
-Message-Id: <pull.973.v2.git.1626812081.gitgitgadget@gmail.com>
-In-Reply-To: <pull.973.git.1624932786.gitgitgadget@gmail.com>
+        Tue, 20 Jul 2021 13:14:42 -0700 (PDT)
+Message-Id: <6e74958f5900855cc0c3b6484b2b2a7732293e6c.1626812081.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.973.v2.git.1626812081.gitgitgadget@gmail.com>
 References: <pull.973.git.1624932786.gitgitgadget@gmail.com>
+        <pull.973.v2.git.1626812081.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 20 Jul 2021 20:14:34 +0000
-Subject: [PATCH v2 0/7] Sparse index: integrate with commit and checkout
+Date:   Tue, 20 Jul 2021 20:14:35 +0000
+Subject: [PATCH v2 1/7] p2000: add 'git checkout -' test and decrease depth
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, newren@gmail.com, matheus.bernardino@usp.br,
-        stolee@gmail.com, Derrick Stolee <derrickstolee@github.com>
+        stolee@gmail.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series extends our integration of sparse-index to 'git commit' and 'git
-checkout'.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-This is based on ds/status-with-sparse-index (v7) and v2.32.0. The hard work
-was already done in that topic, so these changes are simple.
+As we increase our list of commands to test in
+p2000-sparse-operations.sh, we will want to have a slightly smaller test
+repository. Reduce the size by a factor of four by reducing the depth of
+the step that creates a big index around a moderately-sized repository.
 
-Recall that we have delayed our integration with 'git add' until we can work
-out the concerns about how to deal with pathspecs outside of the
-sparse-checkout definition. Those concerns might have some overlap with how
-'git commit' takes a pathspec, but this seems like a rare enough case to
-handle here and we can be more careful with the behavior change in the next
-series which will integrate with git add.
+Also add a step to run 'git checkout -' on repeat. This requires having
+a previous location in the reflog, so add that to the initialization
+steps.
 
-In addition to the tests that already exist in t1092, I have integrated
-these changes in microsoft/git and tested them against the Scalar functional
-tests, which go through quite a few complicated scenarios, verifying that
-things work the same across the full index and sparse-index cases.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ t/perf/p2000-sparse-operations.sh | 27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
-
-Update in V2
-============
-
- * There is no change to the code, but it is presented in a slightly
-   different order.
- * We've been discussing some complicated directory/file conflict cases, in
-   particular with a staged change inside the directory. These tests are
-   added and described as documenting incorrect behavior that should be
-   changed.
- * After those tests are in place, we can motivate the change to
-   twoway_merge() as necessary for a more-common situation (still rare) but
-   still incorrect in an already-broken situation. Hopefully that balance is
-   sufficient for now, until we can do the bigger work of fixing the bad
-   behavior.
-
-Thanks, -Stolee
-
-Derrick Stolee (7):
-  p2000: add 'git checkout -' test and decrease depth
-  p2000: compress repo names
-  commit: integrate with sparse-index
-  sparse-index: recompute cache-tree
-  checkout: stop expanding sparse indexes
-  t1092: document bad 'git checkout' behavior
-  unpack-trees: resolve sparse-directory/file conflicts
-
- builtin/checkout.c                       |   8 +-
- builtin/commit.c                         |   3 +
- cache-tree.c                             |   2 -
- sparse-index.c                           |   2 +
- t/perf/p2000-sparse-operations.sh        |  47 ++++--
- t/t1092-sparse-checkout-compatibility.sh | 197 ++++++++++++++++++++++-
- unpack-trees.c                           |  11 ++
- 7 files changed, 240 insertions(+), 30 deletions(-)
-
-
-base-commit: e5ca291076a8a936283bb2c57433c4393d3f80c2
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-973%2Fderrickstolee%2Fsparse-index%2Fcommit-and-checkout-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-973/derrickstolee/sparse-index/commit-and-checkout-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/973
-
-Range-diff vs v1:
-
- 1:  bb3dd1fdd48 = 1:  6e74958f590 p2000: add 'git checkout -' test and decrease depth
- 2:  eb15bf37685 = 2:  3e1d03c41be p2000: compress repo names
- 3:  413babe6e77 ! 3:  cd94f820052 commit: integrate with sparse-index
-     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse-index is e
-      +	ensure_not_expanded commit --include deep/deeper1/a -m deeper
-       '
-       
-     - test_expect_success 'reset mixed and checkout orphan' '
-     + # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
- 4:  ffe8473caab = 4:  65e79b8037c sparse-index: recompute cache-tree
- 5:  8710fee36b7 ! 5:  e9a9981477e checkout: stop expanding sparse indexes
-     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse-index is n
-      +	ensure_not_expanded restore -s rename-out-to-out -- deep/deeper1
-       '
-       
-     - test_expect_success 'reset mixed and checkout orphan' '
-     + # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
- -:  ----------- > 6:  4b801c854fb t1092: document bad 'git checkout' behavior
- -:  ----------- > 7:  71e301501c8 unpack-trees: resolve sparse-directory/file conflicts
-
+diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
+index 94513c97748..f7f8c012103 100755
+--- a/t/perf/p2000-sparse-operations.sh
++++ b/t/perf/p2000-sparse-operations.sh
+@@ -6,7 +6,7 @@ test_description="test performance of Git operations using the index"
+ 
+ test_perf_default_repo
+ 
+-SPARSE_CONE=f2/f4/f1
++SPARSE_CONE=f2/f4
+ 
+ test_expect_success 'setup repo and indexes' '
+ 	git reset --hard HEAD &&
+@@ -27,7 +27,7 @@ test_expect_success 'setup repo and indexes' '
+ 	OLD_COMMIT=$(git rev-parse HEAD) &&
+ 	OLD_TREE=$(git rev-parse HEAD^{tree}) &&
+ 
+-	for i in $(test_seq 1 4)
++	for i in $(test_seq 1 3)
+ 	do
+ 		cat >in <<-EOF &&
+ 			100755 blob $BLOB	a
+@@ -43,14 +43,23 @@ test_expect_success 'setup repo and indexes' '
+ 	done &&
+ 
+ 	git sparse-checkout init --cone &&
+-	git branch -f wide $OLD_COMMIT &&
++	git sparse-checkout set $SPARSE_CONE &&
++	git checkout -b wide $OLD_COMMIT &&
++
++	for l2 in f1 f2 f3 f4
++	do
++		echo more bogus >>$SPARSE_CONE/$l2/a &&
++		git commit -a -m "edit $SPARSE_CONE/$l2/a" || return 1
++	done &&
++
+ 	git -c core.sparseCheckoutCone=true clone --branch=wide --sparse . full-index-v3 &&
+ 	(
+ 		cd full-index-v3 &&
+ 		git sparse-checkout init --cone &&
+ 		git sparse-checkout set $SPARSE_CONE &&
+ 		git config index.version 3 &&
+-		git update-index --index-version=3
++		git update-index --index-version=3 &&
++		git checkout HEAD~4
+ 	) &&
+ 	git -c core.sparseCheckoutCone=true clone --branch=wide --sparse . full-index-v4 &&
+ 	(
+@@ -58,7 +67,8 @@ test_expect_success 'setup repo and indexes' '
+ 		git sparse-checkout init --cone &&
+ 		git sparse-checkout set $SPARSE_CONE &&
+ 		git config index.version 4 &&
+-		git update-index --index-version=4
++		git update-index --index-version=4 &&
++		git checkout HEAD~4
+ 	) &&
+ 	git -c core.sparseCheckoutCone=true clone --branch=wide --sparse . sparse-index-v3 &&
+ 	(
+@@ -66,7 +76,8 @@ test_expect_success 'setup repo and indexes' '
+ 		git sparse-checkout init --cone --sparse-index &&
+ 		git sparse-checkout set $SPARSE_CONE &&
+ 		git config index.version 3 &&
+-		git update-index --index-version=3
++		git update-index --index-version=3 &&
++		git checkout HEAD~4
+ 	) &&
+ 	git -c core.sparseCheckoutCone=true clone --branch=wide --sparse . sparse-index-v4 &&
+ 	(
+@@ -74,7 +85,8 @@ test_expect_success 'setup repo and indexes' '
+ 		git sparse-checkout init --cone --sparse-index &&
+ 		git sparse-checkout set $SPARSE_CONE &&
+ 		git config index.version 4 &&
+-		git update-index --index-version=4
++		git update-index --index-version=4 &&
++		git checkout HEAD~4
+ 	)
+ '
+ 
+@@ -97,5 +109,6 @@ test_perf_on_all git status
+ test_perf_on_all git add -A
+ test_perf_on_all git add .
+ test_perf_on_all git commit -a -m A
++test_perf_on_all git checkout -f -
+ 
+ test_done
 -- 
 gitgitgadget
+
