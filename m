@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7A60C636CA
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C901C636CE
 	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 10:31:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B10A61186
+	by mail.kernel.org (Postfix) with ESMTP id 7723F61242
 	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 10:31:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237709AbhGTJtp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 05:49:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43758 "EHLO
+        id S237500AbhGTJtR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 05:49:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237651AbhGTJqO (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S237674AbhGTJqO (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 20 Jul 2021 05:46:14 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DACEC0613BD
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 03:24:30 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id f10-20020a05600c4e8ab029023e8d74d693so1716384wmq.3
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 03:24:30 -0700 (PDT)
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDD3DC0613B3
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 03:24:25 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id u5-20020a7bc0450000b02901480e40338bso1287541wmc.1
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 03:24:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=IM+n33hI6Lqx7U/j+V12GnoODEmZo1L/cn2BWi4aFoA=;
-        b=e4HwgtYRvoWMwxR2Ft+c1G56W1T2KAz4gnwIwttOpn4RTdqNNr2XcI4Bp4v0g9Jfo/
-         CsMcDX/eOgA8gxmGjjRsedT6VLBcsftqXjoMwASUW03UonetXA7/m2bibPNRTRE/ilLY
-         U4qffWJ29HrPF8MMgbabAoRFJwBKo28+lvYnrcAvdkO5zRsqHcqibM++lQ788Yunn42P
-         A8Zi2wtV29Hb2lij179G3kvaMbt8N/vevmkVYWezDSz99Vzb7R9aNm9WyUVbVV16AHJX
-         qDxmc+Zm5Rhpy0YV4ey9iE2FwSvkW+OTIyLoPYTYWrwMYQtli2z1iWxDOQ60xQWWau7r
-         huog==
+        bh=UAIwz2LkcNS7M0zdOjdG//UwSqGXWyC8Mh97oVNpkkY=;
+        b=K/PmAAlz4tngDuqiQJqFi2pk0VrSSgr8/NJFg2St5AiU9XdKmQY03hQ7Q5IJZ+PGry
+         Csz0iT1g5cr0glh1xfgXFs3CsNZpHvvW1UK4Vwx4dcrmfdjaViorpGUQLLztbFL0//74
+         5LQtFGA+Q2FW0RY00ar9hlTf9vz6SnRKl6E9uuGCZHUYLkHosGAKb+kxLxVeW/E2d68Q
+         IOX1LCqsGl/spl7VQPtkB61mL0JFhI1ShnSHwvaGRHXJ50ai0F9MzkbJ6ExXYHS/1ZC2
+         RoA+8pspLQEKgXjmtlboDJc54F9+XEDbx5bEbfStXA5WeoWGbfZk+yVWdQoiQsi3X7YD
+         1URQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=IM+n33hI6Lqx7U/j+V12GnoODEmZo1L/cn2BWi4aFoA=;
-        b=rY4nOCadIcafT9HQc6oBxenzw6GY9nENZQaCT0bBijDO91tOYbkmjEW2PExpGC+RvI
-         bRdAx2KvC/i2thBujT+Q3Ww286CYDCVmpHQyg30TQVxL+ycb4kDytTLCpJBRG2OqPqCa
-         uACTceDpAFUk4ohcVmDeC+aGrWNp+DnflhXVC6KjfKtP8iRTfL/But2HZb7asi8dcOKe
-         v4zDQ1TGG04mUYBCv9ubOquJN2OOk4Wg7yrLqmHH0NSv8NFxL26ufP17PkMCU/OJNfyN
-         n5vjADZvsdsn/molEmOcUb5lFdi3J2BDOotI7QIV4HXblJvQQxbG09yE7hQQw2O/kaOc
-         zGkA==
-X-Gm-Message-State: AOAM530SOG/iJnXiIab2+egq66KT78MYMn9ZUO4VtHjPJemr5fzDB+af
-        ii48Q6Zjsc4hcCItYxqliwTkgx1sUxvafw==
-X-Google-Smtp-Source: ABdhPJwNBtHyYiLIl6PqI+TtWdMnmCP9WLTU0ps2VsA6+NUMzAFLEFCFWFfbp99d3drZj5j6iC61Vg==
-X-Received: by 2002:a7b:c385:: with SMTP id s5mr30049740wmj.43.1626776668409;
-        Tue, 20 Jul 2021 03:24:28 -0700 (PDT)
+        bh=UAIwz2LkcNS7M0zdOjdG//UwSqGXWyC8Mh97oVNpkkY=;
+        b=ZX6VdsHbbjdLWEPCDuOSRwhm0WlLkW7kjqANGB3spvFxUMlrpyYMNtMytrbK7SKJyn
+         xuBtsD9vd+Vob3qKl8zN2FVnVyC/EhrvZjLOeGWs51UauOPl5u2pTw81K1t7Erx32rO6
+         FwMw5XmdK9ubsI1bTv1LKd3RSY3hYWndsfE+rKg0YEPxaxSXnlVlq9uRfgBfIrBR0V0f
+         KquVn7zMvGeXMjgsDlO3evWrp6KsBdJnuvfRxzizUuO5FQsQFGt8m/bOpdk4sMf5EiHE
+         1ORQmYtqBRJXbeMxjEQtkpwTbt5j45XyX2NBONYEfnR15Czqia9ajjoz+nrCI3IUKiKM
+         Zr4g==
+X-Gm-Message-State: AOAM532Mp7xsZTEkm13YzEhwIHFgX/NMBfBeVqPHW1+RaeT+7fp4LdhO
+        0K3lNulXFNOs+AccGTBDbdG8DtwPjwYSXA==
+X-Google-Smtp-Source: ABdhPJzWrddGlpgNaJ4SkQrf+bEMijxuhfIedF3DO6X8iouvAvO82eCRlQnH2bjpseCmjScguftc2g==
+X-Received: by 2002:a1c:4c15:: with SMTP id z21mr30971449wmf.114.1626776664334;
+        Tue, 20 Jul 2021 03:24:24 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l23sm9684536wme.22.2021.07.20.03.24.27
+        by smtp.gmail.com with ESMTPSA id l23sm9684536wme.22.2021.07.20.03.24.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 03:24:27 -0700 (PDT)
+        Tue, 20 Jul 2021 03:24:23 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Michael Haggerty <mhagger@alum.mit.edu>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 07/12] refs: make repo_dwim_log() accept a NULL oid
-Date:   Tue, 20 Jul 2021 12:24:12 +0200
-Message-Id: <patch-07.12-e45ec439db0-20210720T102051Z-avarab@gmail.com>
+Subject: [PATCH v3 02/12] refs/files: remove unused REF_DELETING in lock_ref_oid_basic()
+Date:   Tue, 20 Jul 2021 12:24:07 +0200
+Message-Id: <patch-02.12-dfb9e34076e-20210720T102051Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.874.ge7a9d58bfcf
 In-Reply-To: <cover-00.12-00000000000-20210720T102051Z-avarab@gmail.com>
 References: <cover-00.11-00000000000-20210716T140631Z-avarab@gmail.com> <cover-00.12-00000000000-20210720T102051Z-avarab@gmail.com>
@@ -77,61 +77,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the repo_dwim_log() function initially added as dwim_log() in
-eb3a48221fd (log --reflog: use dwim_log, 2007-02-09) to accept a NULL
-oid parameter. The refs_resolve_ref_unsafe() function it invokes
-already deals with it, but it didn't.
+The lock_ref_oid_basic() function has gradually been by most callers
+no longer performing a low-level "acquire lock, update and release",
+and instead using the ref transaction API. So there are only 4
+remaining callers of lock_ref_oid_basic().
 
-This allows for a bit more clarity in a reflog-walk.c codepath added
-in f2eba66d4d1 (Enable HEAD@{...} and make it independent from the
-current branch, 2007-02-03). We'll shortly use this in
-builtin/reflog.c as well.
+None of those callers pass REF_DELETING anymore, the last caller went
+away in 92b1551b1d (refs: resolve symbolic refs first,
+2016-04-25).
+
+Before that we'd refactored and moved this code in:
+
+ - 8df4e511387 (struct ref_update: move "have_old" into "flags",
+   2015-02-17)
+
+ - 7bd9bcf372d (refs: split filesystem-based refs code into a new
+   file, 2015-11-09)
+
+ - 165056b2fc (lock_ref_for_update(): new function, 2016-04-24)
+
+We then finally stopped using it in 92b1551b1d (noted above). So let's
+remove the handling of this parameter.
+
+By itself this change doesn't benefit us much, but it's the start of
+even more removal of unused code in and around this function in
+subsequent commits.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- reflog-walk.c | 3 +--
- refs.c        | 5 +++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ refs/files-backend.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/reflog-walk.c b/reflog-walk.c
-index e9cd3283694..8ac4b284b6b 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -158,10 +158,9 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
- 		}
- 		reflogs = read_complete_reflog(branch);
- 		if (!reflogs || reflogs->nr == 0) {
--			struct object_id oid;
- 			char *b;
- 			int ret = dwim_log(branch, strlen(branch),
--					   &oid, &b);
-+					   NULL, &b);
- 			if (ret > 1)
- 				free(b);
- 			else if (ret == 1) {
-diff --git a/refs.c b/refs.c
-index 8b9f7c3a80a..d9635436759 100644
---- a/refs.c
-+++ b/refs.c
-@@ -698,7 +698,7 @@ int repo_dwim_log(struct repository *r, const char *str, int len,
- 		strbuf_addf(&path, *p, len, str);
- 		ref = refs_resolve_ref_unsafe(refs, path.buf,
- 					      RESOLVE_REF_READING,
--					      &hash, NULL);
-+					      oid ? &hash : NULL, NULL);
- 		if (!ref)
- 			continue;
- 		if (refs_reflog_exists(refs, path.buf))
-@@ -710,7 +710,8 @@ int repo_dwim_log(struct repository *r, const char *str, int len,
- 			continue;
- 		if (!logs_found++) {
- 			*log = xstrdup(it);
--			oidcpy(oid, &hash);
-+			if (oid)
-+				oidcpy(oid, &hash);
- 		}
- 		if (!warn_ambiguous_refs)
- 			break;
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 677b7e4cdd2..326f0224218 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -934,8 +934,6 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+ 
+ 	if (mustexist)
+ 		resolve_flags |= RESOLVE_REF_READING;
+-	if (flags & REF_DELETING)
+-		resolve_flags |= RESOLVE_REF_ALLOW_BAD_NAME;
+ 
+ 	files_ref_path(refs, &ref_file, refname);
+ 	resolved = !!refs_resolve_ref_unsafe(&refs->base,
 -- 
 2.32.0.874.ge7a9d58bfcf
 
