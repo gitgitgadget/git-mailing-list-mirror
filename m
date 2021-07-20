@@ -2,89 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EE63C07E9B
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 21:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 384C9C636C8
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 21:11:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA6CC610CC
-	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 21:03:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 235DA60C41
+	for <git@archiver.kernel.org>; Tue, 20 Jul 2021 21:11:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236038AbhGTUV3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 16:21:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45696 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234978AbhGTUQr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jul 2021 16:16:47 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73C06C061766
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 13:57:24 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id w188so604087oif.10
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 13:57:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=YDdXbLdN4vBCdUd4Lxo2BJnuX38Dp12yMHJkfypy5yE=;
-        b=nIUi034bnypwIjU9sebGkaZ+sf7k26QrmPOBOynLyqJdSnLcKueF1mASbkKLyzLmL1
-         pU1I1+0gnw3vEgf4+KqdwyZ1ElgCsfFZUTX9XapceunUUaY/JKDGGb4PP8rFI63/cOLx
-         GYE4SPxhqclxUI2carGWW9YUXuR6DQ7LbyDLZ1w58rGe9BJG7heolCjMxkNw624WmZyx
-         0zCIAgx/dtZciERqaapjXdvyUgS3OT81jwpHzuNPj9/0yvRpyfCDRO5npJbWsYBJktNn
-         lycPEya+GREkRQMbcWJuz3PdECZtEdFXzZNNCo1aIU95xljO1D7amgTdCSYiiRhVJq+Y
-         5cWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=YDdXbLdN4vBCdUd4Lxo2BJnuX38Dp12yMHJkfypy5yE=;
-        b=kxi45SGuwy87MLd9wOA2ByzTkI0XlczJEC/VskxKAgXnnfuFBYP8ZHByaco3ojNPX3
-         MX98tWd0L0+6AFqBlEwC1q7pNqXns/95Ue5qxagEuputC6G5xQRYh9MpID3ft1ffFfCG
-         4NF57JjA/HBCkpyyJLaluT1jIfzN8P75U0mWDhnQ/AaWxeQY7kQj+LUuGL6MW+TWFxs8
-         RQJF40s9EamScFVdzyqYxCA2bQ0PqUzlmMrQo06Zm9l8yq0eyMh7VERCuO5b8IUHSaxe
-         F38VAitzeVKHq99k2lFSNKtDVqXk7QkBsHg776EbYGZZCAlW1kOLg+Uyt6XUGKVbURs+
-         hWpg==
-X-Gm-Message-State: AOAM5333KmhyVglgu7eqzkACOV3vOGxkmZ3RgkUfZP9HBehwuAUVtaRd
-        3IBnuIJPLJN7k1gJpt4Sunw=
-X-Google-Smtp-Source: ABdhPJySmK2WttBV2ysgbO5jSMwPqmpozOEIF6j+SPVKkSsAdO0iAgDlIk94JkYEQEI4PV3n9Q71Mg==
-X-Received: by 2002:aca:75c3:: with SMTP id q186mr3163779oic.86.1626814643886;
-        Tue, 20 Jul 2021 13:57:23 -0700 (PDT)
-Received: from localhost (fixed-187-189-167-231.totalplay.net. [187.189.167.231])
-        by smtp.gmail.com with ESMTPSA id s5sm4203985oof.29.2021.07.20.13.57.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 13:57:23 -0700 (PDT)
-Date:   Tue, 20 Jul 2021 15:57:21 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Message-ID: <60f738b161f2_14a79920870@natae.notmuch>
-In-Reply-To: <patch-1.2-746d727113b-20210720T115052Z-avarab@gmail.com>
-References: <cover-0.2-00000000000-20210720T115052Z-avarab@gmail.com>
- <patch-1.2-746d727113b-20210720T115052Z-avarab@gmail.com>
-Subject: RE: [PATCH 1/2] bundle tests: use ">file" not ": >file"
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        id S236024AbhGTUaZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 16:30:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55406 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229738AbhGTUVs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jul 2021 16:21:48 -0400
+Received: (qmail 5115 invoked by uid 109); 20 Jul 2021 21:02:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 20 Jul 2021 21:02:25 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27474 invoked by uid 111); 20 Jul 2021 21:02:25 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 20 Jul 2021 17:02:25 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 20 Jul 2021 17:02:24 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com
+Subject: Re: [PATCH] pack-bitmap: clarify comment in
+ filter_bitmap_exclude_type()
+Message-ID: <YPc54AdUqD6T31ad@coredump.intra.peff.net>
+References: <0d52628985bf4f499e0d5622ea40cdf499e73ebe.1626812121.git.me@ttaylorr.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0d52628985bf4f499e0d5622ea40cdf499e73ebe.1626812121.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> Change redundant uses of ":" on the LHS of a ">" to the more commonly
-> use ">file" pattern.
+On Tue, Jul 20, 2021 at 04:16:22PM -0400, Taylor Blau wrote:
 
-While this is redundant in bash, it's not redundant in zsh.
+> The code that eventually became filter_bitmap_exclude_type() was
+> originally introduced in 4f3bd5606a (pack-bitmap: implement BLOB_NONE
+> filtering, 2020-02-14) to accelerate BLOB_NONE filters with bitmaps.
+> 
+> In 856e12c18a (pack-bitmap.c: make object filtering functions generic,
+> 2020-05-04), it became filter_bitmap_exclude_type(). But not all of the
+> comments were updated to be agnostic to the provided type.
+> 
+> Remove the remaining comments which should have been updated in
+> 856e12c18a to reflect the type-agnostic nature of the function.
+> 
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+> Noticed while I was reading some code in this area to see if we had
+> accelerated the relatively new type filters. This trivial fix hopefully
+> shouldn't produce conflicts with other in-flight bitmap series.
 
-Probably not a big deal since I don't think the test suite can run in
-zsh right now, but it's taking us on the opposite direction.
+Yep, this looks good. I wrote a near-identical patch while working on
+[1], but that topic got stalled on "how is this part of partial clones
+even supposed to work?". But there's no reason not to make this trivial
+fix in isolation.
 
--- =
-
-Felipe Contreras=
+-Peff
