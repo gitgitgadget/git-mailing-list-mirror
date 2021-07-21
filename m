@@ -2,67 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E043FC12002
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 09:35:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8495C636C9
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 10:04:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B3FCA61181
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 09:35:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC30C6120C
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 10:04:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236236AbhGUIx4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jul 2021 04:53:56 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:29433 "EHLO smtp.hosts.co.uk"
+        id S238022AbhGUJWT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jul 2021 05:22:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52916 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236848AbhGUIrx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jul 2021 04:47:53 -0400
-Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1m68Vw-0006Nu-6D; Wed, 21 Jul 2021 10:27:41 +0100
-Subject: Re: [PATCH v6 3/3] bundle doc: elaborate on rev<->ref restriction
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <cover-0.3-00000000000-20210702T112254Z-avarab@gmail.com>
- <cover-0.3-00000000000-20210720T141611Z-avarab@gmail.com>
- <patch-3.3-6d66d4480ff-20210720T141611Z-avarab@gmail.com>
- <xmqqo8awhh5z.fsf@gitster.g>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <68ea4cc0-b9d3-a7fb-7c22-fa828f9dc52f@iee.email>
-Date:   Wed, 21 Jul 2021 10:27:40 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S238236AbhGUJKN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jul 2021 05:10:13 -0400
+Received: (qmail 1753 invoked by uid 109); 21 Jul 2021 09:50:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Jul 2021 09:50:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2716 invoked by uid 111); 21 Jul 2021 09:50:44 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Jul 2021 05:50:44 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 21 Jul 2021 05:50:43 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH v2 02/24] pack-bitmap-write.c: gracefully fail to write
+ non-closed bitmaps
+Message-ID: <YPft87yCjR9e+93E@coredump.intra.peff.net>
+References: <cover.1617991824.git.me@ttaylorr.com>
+ <cover.1624314293.git.me@ttaylorr.com>
+ <3e637d9ec83435540ad32b8325b0dce87f61bae0.1624314293.git.me@ttaylorr.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqo8awhh5z.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Disposition: inline
+In-Reply-To: <3e637d9ec83435540ad32b8325b0dce87f61bae0.1624314293.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20/07/2021 21:19, Junio C Hamano wrote:
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->
->> +Revisions must accompanied by reference names to be packaged in a
->> +bundle, since the header of the bundle is in a format similar to 'git
->> +show-ref'.
-> This may be an improvement in the way how the description refers to
-> "show-ref", but we do not have to say anything about "show-ref" ;-)
->
-> The reason we should give readers why they must give refs while
-> creating a bundle, I think, is because the only way to access the
-> contents of the bundle is to fetch refs from it, and the refs given
-> to the command when the bundle was created becomes the refs that can
-> be fetched from the bundle.
->
-> Thanks.
->
-Should the `list-heads` option be mentioned for investigating existing
-bundles?
---
-Philip
+On Mon, Jun 21, 2021 at 06:25:01PM -0400, Taylor Blau wrote:
+
+> The set of objects covered by a bitmap must be closed under
+> reachability, since it must be the case that there is a valid bit
+> position assigned for every possible reachable object (otherwise the
+> bitmaps would be incomplete).
+> 
+> Pack bitmaps are never written from 'git repack' unless repacking
+> all-into-one, and so we never write non-closed bitmaps (except in the
+> case of partial clones where we aren't guaranteed to have all objects).
+> 
+> But multi-pack bitmaps change this, since it isn't known whether the
+> set of objects in the MIDX is closed under reachability until walking
+> them. Plumb through a bit that is set when a reachable object isn't
+> found.
+> 
+> As soon as a reachable object isn't found in the set of objects to
+> include in the bitmap, bitmap_writer_build() knows that the set is not
+> closed, and so it now fails gracefully.
+
+Leaving aside your intended use here, I think it's nice to get rid of a
+deep-buried die() like this in general.
+
+The amount of error-plumbing you had to do is a little unpleasant, but I
+think is unavoidable. The only non-obvious part was this hunk:
+
+> @@ -463,8 +488,11 @@ void bitmap_writer_build(struct packing_data *to_pack)
+>  		struct commit *child;
+>  		int reused = 0;
+>  
+> -		fill_bitmap_commit(ent, commit, &queue, &tree_queue,
+> -				   old_bitmap, mapping);
+> +		if (fill_bitmap_commit(ent, commit, &queue, &tree_queue,
+> +				       old_bitmap, mapping) < 0) {
+> +			closed = 0;
+> +			break;
+> +		}
+>  
+>  		if (ent->selected) {
+>  			store_selected(ent, commit);
+
+This is the right thing to do because we still want to free memory, stop
+progress, etc. I gave a look over what will run after breaking out of
+the loop, and compute_xor_offsets(), which you already handled, is the
+only thing we'd want to avoid running. Good.
+
+-Peff
