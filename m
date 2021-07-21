@@ -6,398 +6,266 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05BEBC12002
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 11:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C163EC636CE
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 12:09:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D6FA160E08
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 11:56:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A24561263
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 12:09:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238101AbhGULPb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jul 2021 07:15:31 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53140 "EHLO cloud.peff.net"
+        id S232704AbhGUL2o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jul 2021 07:28:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53204 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237505AbhGUKwR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jul 2021 06:52:17 -0400
-Received: (qmail 2345 invoked by uid 109); 21 Jul 2021 11:32:30 -0000
+        id S233692AbhGUL2n (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jul 2021 07:28:43 -0400
+Received: (qmail 2454 invoked by uid 109); 21 Jul 2021 12:09:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Jul 2021 11:32:30 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Jul 2021 12:09:00 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3818 invoked by uid 111); 21 Jul 2021 11:32:49 -0000
+Received: (qmail 4117 invoked by uid 111); 21 Jul 2021 12:09:19 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Jul 2021 07:32:49 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Jul 2021 08:09:19 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 21 Jul 2021 07:32:49 -0400
+Date:   Wed, 21 Jul 2021 08:09:19 -0400
 From:   Jeff King <peff@peff.net>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
         jonathantanmy@google.com
-Subject: Re: [PATCH v2 13/24] pack-bitmap: read multi-pack bitmaps
-Message-ID: <YPgF4X2PeFvBuJXm@coredump.intra.peff.net>
+Subject: Re: [PATCH v2 14/24] pack-bitmap: write multi-pack bitmaps
+Message-ID: <YPgObwXjt/tzAJvV@coredump.intra.peff.net>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1624314293.git.me@ttaylorr.com>
- <7d44ba6299c06c956d5ac8ba01a0288d109c3cae.1624314293.git.me@ttaylorr.com>
+ <a8cec2463d0993b1118abdd31cb6c9e88a32e0c4.1624314293.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <7d44ba6299c06c956d5ac8ba01a0288d109c3cae.1624314293.git.me@ttaylorr.com>
+In-Reply-To: <a8cec2463d0993b1118abdd31cb6c9e88a32e0c4.1624314293.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 21, 2021 at 06:25:31PM -0400, Taylor Blau wrote:
+On Mon, Jun 21, 2021 at 06:25:34PM -0400, Taylor Blau wrote:
 
-> This prepares the code in pack-bitmap to interpret the new multi-pack
-> bitmaps described in Documentation/technical/bitmap-format.txt, which
-> mostly involves converting bit positions to accommodate looking them up
-> in a MIDX.
-> 
-> Note that there are currently no writers who write multi-pack bitmaps,
-> and that this will be implemented in the subsequent commit.
-
-There's quite a lot going on in this one, of course, but most of it
-looks right. A few hunks did puzzle me:
-
-> @@ -302,12 +377,18 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
->  		return -1;
->  	}
->  
-> -	if (bitmap_git->pack) {
-> +	if (bitmap_git->pack || bitmap_git->midx) {
-> +		/* ignore extra bitmap file; we can only handle one */
->  		warning("ignoring extra bitmap file: %s", packfile->pack_name);
->  		close(fd);
->  		return -1;
->  	}
->  
-> +	if (!is_pack_valid(packfile)) {
-> +		close(fd);
-> +		return -1;
-> +	}
-> +
-
-What's this extra is_pack_valid() doing? I wouldn't expect many changes
-at all to this non-midx code path (aside from the "did we already load a
-midx bitmap" in the earlier part of the hunk, which makes sense).
-
-> -static int load_pack_bitmap(struct bitmap_index *bitmap_git)
-> +static int load_reverse_index(struct bitmap_index *bitmap_git)
+> +static int add_ref_to_pending(const char *refname,
+> +			      const struct object_id *oid,
+> +			      int flag, void *cb_data)
 > +{
-> +	if (bitmap_is_midx(bitmap_git)) {
-> +		uint32_t i;
-> +		int ret;
+> +	struct rev_info *revs = (struct rev_info*)cb_data;
+> +	struct object *object;
 > +
-> +		ret = load_midx_revindex(bitmap_git->midx);
-> +		if (ret)
-> +			return ret;
-> +
-> +		for (i = 0; i < bitmap_git->midx->num_packs; i++) {
-> +			if (prepare_midx_pack(the_repository, bitmap_git->midx, i))
-> +				die(_("load_reverse_index: could not open pack"));
-> +			ret = load_pack_revindex(bitmap_git->midx->packs[i]);
-> +			if (ret)
-> +				return ret;
-> +		}
+> +	if ((flag & REF_ISSYMREF) && (flag & REF_ISBROKEN)) {
+> +		warning("symbolic ref is dangling: %s", refname);
 > +		return 0;
 > +	}
-> +	return load_pack_revindex(bitmap_git->pack);
-> +}
-
-OK, this new function is used in load_bitmap(), which is used for both
-pack and midx bitmaps. So if we have a midx bitmap, we'll
-unconditionally load the revindex here. But:
-
-  - why do we then load individual pack revindexes? I can believe it may
-    be necessary to meet the assumptions of some other part of the code,
-    but it would be nice to have a comment giving us some clue.
-
-  - in open_midx_bitmap_1(), we also unconditionally load the midx
-    reverse index. I think that will always happen before us here (we
-    cannot load_bitmap() a bitmap that has not been opened). So is this
-    load_midx_revindex() call always a noop?
-
-> +static int open_bitmap(struct repository *r,
-> +		       struct bitmap_index *bitmap_git)
-> +{
-> +	assert(!bitmap_git->map);
 > +
-> +	if (!open_midx_bitmap(r, bitmap_git))
+> +	object = parse_object_or_die(oid, refname);
+> +	if (object->type != OBJ_COMMIT)
 > +		return 0;
-> +	return open_pack_bitmap(r, bitmap_git);
+> +
+> +	add_pending_object(revs, object, "");
+> +	if (bitmap_is_preferred_refname(revs->repo, refname))
+> +		object->flags |= NEEDS_BITMAP;
+> +	return 0;
 > +}
 
-We always prefer a midx bitmap over a pack one. That makes sense, since
-that means we can leave old pack bitmaps in place when generating midx
-bitmaps, if we choose to.
+OK, so we'll look at each ref to get the set of commits that we want to
+traverse to put into the bitmap. Which is roughly the same as what the
+pack bitmap does. We only generate bitmaps for all-into-one repacks, so
+it is traversing all of the reachable objects. It is a little different
+in that the pack version is probably hitting reflogs, but IMHO we are
+better off to ignore reflogs for the purposes of bitmaps (I would
+suggest to do so in the pack-bitmap case, too, except that it is
+combined with the "what to pack" traversal there, and by the time we see
+each commit we don't know how we got there).
 
->  static int bitmap_position(struct bitmap_index *bitmap_git,
->  			   const struct object_id *oid)
->  {
-> -	int pos = bitmap_position_packfile(bitmap_git, oid);
-> +	int pos;
-> +	if (bitmap_is_midx(bitmap_git))
-> +		pos = bitmap_position_midx(bitmap_git, oid);
-> +	else
-> +		pos = bitmap_position_packfile(bitmap_git, oid);
->  	return (pos >= 0) ? pos : bitmap_position_extended(bitmap_git, oid);
->  }
-
-Makes sense. Not new in your patch, but this "int" return is fudging the
-same 32-bit space we were talking about elsewhere (i.e., "pos" really
-could be 2^32, or even more due to extended objects).
-
-In practice I think even 2^31 objects is pretty out-of-reach, but it may
-be worth changing the return type (and the callers), or even just
-catching the overflow with an assertion.
-
-> @@ -752,8 +911,13 @@ static int in_bitmapped_pack(struct bitmap_index *bitmap_git,
->  		struct object *object = roots->item;
->  		roots = roots->next;
->  
-> -		if (find_pack_entry_one(object->oid.hash, bitmap_git->pack) > 0)
-> -			return 1;
-> +		if (bitmap_is_midx(bitmap_git)) {
-> +			if (bsearch_midx(&object->oid, bitmap_git->midx, NULL))
-> +				return 1;
-> +		} else {
-> +			if (find_pack_entry_one(object->oid.hash, bitmap_git->pack) > 0)
-> +				return 1;
-> +		}
->  	}
-
-Makes sense. TBH, I am not sure this in_bitmapped_pack() function is all
-that useful. It is used only as part of a heuristic to avoid bitmaps
-when we don't have coverage of any "have" commits. But I'm not sure that
-heuristic is actually useful.
-
-Anyway, we should definitely not get into ripping it out here. This
-series is complicated enough. :) Just a note for possible future work.
-
->  	if (pos < bitmap_num_objects(bitmap_git)) {
-> -		off_t ofs = pack_pos_to_offset(pack, pos);
-> +		struct packed_git *pack;
-> +		off_t ofs;
+> +struct bitmap_commit_cb {
+> +	struct commit **commits;
+> +	size_t commits_nr, commits_alloc;
 > +
-> +		if (bitmap_is_midx(bitmap_git)) {
-> +			uint32_t midx_pos = pack_pos_to_midx(bitmap_git->midx, pos);
-> +			uint32_t pack_id = nth_midxed_pack_int_id(bitmap_git->midx, midx_pos);
+> +	struct write_midx_context *ctx;
+> +};
 > +
-> +			pack = bitmap_git->midx->packs[pack_id];
-> +			ofs = nth_midxed_offset(bitmap_git->midx, midx_pos);
-> +		} else {
-> +			pack = bitmap_git->pack;
-> +			ofs = pack_pos_to_offset(pack, pos);
-> +		}
-> +
-
-All of the hunks like this make perfect sense. The big problem would be
-if we _missed_ a place that needed conversion to handle midx. But the
-nice thing is that it would segfault quickly in such an instance. So
-there I'm mostly relying on test coverage, plus our experience running
-with this code at scale.
-
->  static void try_partial_reuse(struct bitmap_index *bitmap_git,
-> +			      struct packed_git *pack,
->  			      size_t pos,
->  			      struct bitmap *reuse,
->  			      struct pack_window **w_curs)
->  {
-> -	off_t offset, header;
-> +	off_t offset, delta_obj_offset;
-
-I'm OK with all of this in one big patch. But I suspect you _could_
-just put:
-
-  if (bitmap_git->midx)
-	return; /* partial reuse not implemented for midx yet */
-
-to start with, and then actually implement it later. I call out this
-code in particular just because it's got a lot of subtleties (the
-"reuse" bits are much more intimate with the assumptions of packs and
-bitmaps than most other code).
-
-I'm not sure if it's worth the trouble at this point or not.
-
->  	enum object_type type;
->  	unsigned long size;
->  
-> -	if (pos >= bitmap_num_objects(bitmap_git))
-> -		return; /* not actually in the pack or MIDX */
-> +	/*
-> +	 * try_partial_reuse() is called either on (a) objects in the
-> +	 * bitmapped pack (in the case of a single-pack bitmap) or (b)
-> +	 * objects in the preferred pack of a multi-pack bitmap.
-> +	 * Importantly, the latter can pretend as if only a single pack
-> +	 * exists because:
-> +	 *
-> +	 *   - The first pack->num_objects bits of a MIDX bitmap are
-> +	 *     reserved for the preferred pack, and
-> +	 *
-> +	 *   - Ties due to duplicate objects are always resolved in
-> +	 *     favor of the preferred pack.
-> +	 *
-> +	 * Therefore we do not need to ever ask the MIDX for its copy of
-> +	 * an object by OID, since it will always select it from the
-> +	 * preferred pack. Likewise, the selected copy of the base
-> +	 * object for any deltas will reside in the same pack.
-> +	 *
-> +	 * This means that we can reuse pos when looking up the bit in
-> +	 * the reuse bitmap, too, since bits corresponding to the
-> +	 * preferred pack precede all bits from other packs.
-> +	 */
->  
-> -	offset = header = pack_pos_to_offset(bitmap_git->pack, pos);
-> -	type = unpack_object_header(bitmap_git->pack, w_curs, &offset, &size);
-> +	if (pos >= pack->num_objects)
-> +		return; /* not actually in the pack or MIDX preferred pack */
-
-It feels weird to go from bitmap_num_objects() back to
-pack->num_objects. But I agree it's the right thing for the "pretend as
-if only a single pack exists" reasons given above.
-
-> +static uint32_t midx_preferred_pack(struct bitmap_index *bitmap_git)
+> +static const struct object_id *bitmap_oid_access(size_t index,
+> +						 const void *_entries)
 > +{
-> +	struct multi_pack_index *m = bitmap_git->midx;
-> +	if (!m)
-> +		BUG("midx_preferred_pack: requires non-empty MIDX");
-> +	return nth_midxed_pack_int_id(m, pack_pos_to_midx(bitmap_git->midx, 0));
+> +	const struct pack_midx_entry *entries = _entries;
+> +	return &entries[index].oid;
 > +}
-
-This part is really subtle. We infer the preferred pack by looking at
-the pack of the 0th bit position. In general that works, since that's
-part of the definition of the preferred pack.
-
-Could this ever be fooled if we had a preferred pack with 0 objects in
-it? I don't know why we would have such a thing, but just trying to
-think of cases where our assumptions might not hold (and what bad things
-could happen).
-
-> +	if (bitmap_is_midx(bitmap_git))
-> +		pack = bitmap_git->midx->packs[midx_preferred_pack(bitmap_git)];
-> +	else
-> +		pack = bitmap_git->pack;
-> +	objects_nr = pack->num_objects;
 > +
->  	while (i < result->word_alloc && result->words[i] == (eword_t)~0)
->  		i++;
->  
-> -	/* Don't mark objects not in the packfile */
-> +	/*
-> +	 * Don't mark objects not in the packfile or preferred pack. This bitmap
-> +	 * marks objects eligible for reuse, but the pack-reuse code only
-> +	 * understands how to reuse a single pack. Since the preferred pack is
-> +	 * guaranteed to have all bases for its deltas (in a multi-pack bitmap),
-> +	 * we use it instead of another pack. In single-pack bitmaps, the choice
-> +	 * is made for us.
-> +	 */
->  	if (i > objects_nr / BITS_IN_EWORD)
->  		i = objects_nr / BITS_IN_EWORD;
-
-OK, so this clamps our "quick" contiguous set of bits to the number of
-objects in the preferred pack. Makes sense. And then we hit the
-object-by-object loop below...
-
-> @@ -1213,7 +1437,15 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
->  				break;
->  
->  			offset += ewah_bit_ctz64(word >> offset);
-> -			try_partial_reuse(bitmap_git, pos + offset, reuse, &w_curs);
-> +			if (bitmap_is_midx(bitmap_git)) {
-> +				/*
-> +				 * Can't reuse from a non-preferred pack (see
-> +				 * above).
-> +				 */
-> +				if (pos + offset >= objects_nr)
-> +					continue;
-> +			}
-> +			try_partial_reuse(bitmap_git, pack, pos + offset, reuse, &w_curs);
-
-...and this likewise makes sure we never go past that first pack. Good.
-
-I think this "continue" could actually be a "break", as the loop is
-iterating over "offset" (and "pos + offset" always gets larger). In
-fact, it could break out of the outer loop as well (which is
-incrementing "pos"). It's probably a pretty small efficiency in
-practice, though.
-
-> @@ -1511,8 +1749,13 @@ uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
->  		struct object_id oid;
->  		struct object_entry *oe;
->  
-> -		nth_packed_object_id(&oid, bitmap_git->pack,
-> -				     pack_pos_to_index(bitmap_git->pack, i));
-> +		if (bitmap_is_midx(bitmap_git))
-> +			nth_midxed_object_oid(&oid,
-> +					      bitmap_git->midx,
-> +					      pack_pos_to_midx(bitmap_git->midx, i));
-> +		else
-> +			nth_packed_object_id(&oid, bitmap_git->pack,
-> +					     pack_pos_to_index(bitmap_git->pack, i));
->  		oe = packlist_find(mapping, &oid);
-
-Could this be using nth_bitmap_object_oid()? I guess not, because we are
-feeding from pack_pos_to_*. I'm not sure if another helper function is
-worth it (pack_pos_to_bitmap_index() or something?).
-
-> @@ -1575,7 +1831,31 @@ static off_t get_disk_usage_for_type(struct bitmap_index *bitmap_git,
->  				break;
->  
->  			offset += ewah_bit_ctz64(word >> offset);
-> -			pos = base + offset;
-> +
-> +			if (bitmap_is_midx(bitmap_git)) {
-> +				uint32_t pack_pos;
-> +				uint32_t midx_pos = pack_pos_to_midx(bitmap_git->midx, base + offset);
-> +				uint32_t pack_id = nth_midxed_pack_int_id(bitmap_git->midx, midx_pos);
-> +				off_t offset = nth_midxed_offset(bitmap_git->midx, midx_pos);
-> +
-> +				pack = bitmap_git->midx->packs[pack_id];
-> +
-> +				if (offset_to_pack_pos(pack, offset, &pack_pos) < 0) {
-> +					struct object_id oid;
-> +					nth_midxed_object_oid(&oid, bitmap_git->midx, midx_pos);
-> +
-> +					die(_("could not find %s in pack #%"PRIu32" at offset %"PRIuMAX),
-> +					    oid_to_hex(&oid),
-> +					    pack_id,
-> +					    (uintmax_t)offset);
-> +				}
-> +
-> +				pos = pack_pos;
-> +			} else {
-> +				pack = bitmap_git->pack;
-> +				pos = base + offset;
-> +			}
-> +
->  			total += pack_pos_to_offset(pack, pos + 1) -
->  				 pack_pos_to_offset(pack, pos);
->  		}
-
-In the midx case, we have to go from midx-bitmap-pos to midx-index-pos,
-to then get the pack/ofs combo, which then gives us a real "pos" in the
-pack. I don't think there's a faster way to do it (and this is still
-much faster than looking up objects in the pack only to check their
-revindex).
-
-But then with the result, we compare the offset of "pos" and "pos + 1".
-We need to know "pos" to find "pos + 1". But in the midx case, don't we
-already have the offset of "pos" (it is "offset" in the bitmap_is_midx()
-conditional, which is shadowing the completely unrelated "offset" in the
-outer loop).
-
-We could reuse it, saving ourselves an extra round-trip of pack_pos to
-index_pos to offset. It would just mean stuffing the "total +=" line
-into the two sides of the conditional.
-
-> +off_t bitmap_pack_offset(struct bitmap_index *bitmap_git, uint32_t pos)
+> +static void bitmap_show_commit(struct commit *commit, void *_data)
 > +{
-> +	if (bitmap_is_midx(bitmap_git))
-> +		return nth_midxed_offset(bitmap_git->midx,
-> +					 pack_pos_to_midx(bitmap_git->midx, pos));
-> +	return nth_packed_object_offset(bitmap_git->pack,
-> +					pack_pos_to_index(bitmap_git->pack, pos));
-> +}
+> +	struct bitmap_commit_cb *data = _data;
+> +	if (oid_pos(&commit->object.oid, data->ctx->entries,
+> +		    data->ctx->entries_nr,
+> +		    bitmap_oid_access) > -1) {
 
-Does anybody call this function? I don't see any users by the end of the
-series.
+This "> -1" struck me as a little bit funny. Perhaps ">= 0" would be a
+more obvious way of saying "we found it"?
+
+> +	/*
+> +	 * Skipping promisor objects here is intentional, since it only excludes
+> +	 * them from the list of reachable commits that we want to select from
+> +	 * when computing the selection of MIDX'd commits to receive bitmaps.
+> +	 *
+> +	 * Reachability bitmaps do require that their objects be closed under
+> +	 * reachability, but fetching any objects missing from promisors at this
+> +	 * point is too late. But, if one of those objects can be reached from
+> +	 * an another object that is included in the bitmap, then we will
+> +	 * complain later that we don't have reachability closure (and fail
+> +	 * appropriately).
+> +	 */
+> +	fetch_if_missing = 0;
+> +	revs.exclude_promisor_objects = 1;
+
+Makes sense.
+
+> +	/*
+> +	 * Pass selected commits in topo order to match the behavior of
+> +	 * pack-bitmaps when configured with delta islands.
+> +	 */
+> +	revs.topo_order = 1;
+> +	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
+
+Hmm. Why do we want to match this side effect of delta islands here?
+
+The only impact this has is on the order of commits we feed for bitmap
+selection (and during the actual generation phase, it may impact
+visitation order).
+
+Now I'm of the opinion that topo order is probably the best thing for
+bitmap generation (since the bitmaps themselves are connected to the
+graph structure). But if it is the best thing, shouldn't we perhaps be
+turning on topo-order for single-pack bitmaps, too?
+
+And if it isn't the best thing, then why would we want it here?
+
+> +	if (prepare_revision_walk(&revs))
+> +		die(_("revision walk setup failed"));
+
+We call init_revisions(), and then go straight to
+prepare_revision_walk() with no call to setup_revisions() between. It
+doesn't seem to be clearly documented, but I think you're supposed to,
+as it finalizes some bits like diff_setup_done().
+
+I suspect it works OK in practice, and I did find a few other spots that
+do not call it (e.g., builtin/am.c:write_commit_patch). But most spots
+do at least an empty setup_revisions(0, NULL, &rev, NULL).
+
+> +	/*
+> +	 * Build the MIDX-order index based on pdata.objects (which is already
+> +	 * in MIDX order; c.f., 'midx_pack_order_cmp()' for the definition of
+> +	 * this order).
+> +	 */
+> +	ALLOC_ARRAY(index, pdata.nr_objects);
+> +	for (i = 0; i < pdata.nr_objects; i++)
+> +		index[i] = (struct pack_idx_entry *)&pdata.objects[i];
+
+This cast is correct because the pack_idx_entry is at the start of each
+object_entry. But maybe:
+
+  index[i] = &pdata.objects[i].idx;
+
+would be less scary looking?
+
+> +	/*
+> +	 * bitmap_writer_finish expects objects in lex order, but pack_order
+> +	 * gives us exactly that. use it directly instead of re-sorting the
+> +	 * array.
+> +	 *
+> +	 * This changes the order of objects in 'index' between
+> +	 * bitmap_writer_build_type_index and bitmap_writer_finish.
+> +	 *
+> +	 * The same re-ordering takes place in the single-pack bitmap code via
+> +	 * write_idx_file(), which is called by finish_tmp_packfile(), which
+> +	 * happens between bitmap_writer_build_type_index() and
+> +	 * bitmap_writer_finish().
+> +	 */
+> +	for (i = 0; i < pdata.nr_objects; i++)
+> +		index[ctx->pack_order[i]] = (struct pack_idx_entry *)&pdata.objects[i];
+
+Ditto here.
+
+> +	bitmap_writer_select_commits(commits, commits_nr, -1);
+
+Not related to your patch, but I had to refresh my memory on what this
+"-1" was for. It's "max_bitmaps", and is ignored if it's negative. But
+the only callers pass "-1"! So we could get rid of it entirely.
+
+It probably makes sense to leave that cleanup out of this
+already-complicated series. But maybe worth doing later on top.
+
+> @@ -930,9 +1100,16 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+>  		for (i = 0; i < ctx.m->num_packs; i++) {
+>  			ALLOC_GROW(ctx.info, ctx.nr + 1, ctx.alloc);
+>  
+> +			if (prepare_midx_pack(the_repository, ctx.m, i)) {
+> +				error(_("could not load pack %s"),
+> +				      ctx.m->pack_names[i]);
+> +				result = 1;
+> +				goto cleanup;
+> +			}
+
+It might be worth a comment here. I can easily believe that there is
+some later part of the bitmap generation code that assumes the packs are
+loaded. But somebody reading this is not likely to understand why it's
+here.
+
+Should this be done conditionally only if we're writing a bitmap? (That
+might also make it obvious why we are doing it).
+
+> @@ -947,8 +1124,26 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+>  	for_each_file_in_pack_dir(object_dir, add_pack_to_midx, &ctx);
+>  	stop_progress(&ctx.progress);
+>  
+> -	if (ctx.m && ctx.nr == ctx.m->num_packs && !packs_to_drop)
+> -		goto cleanup;
+> +	if (ctx.m && ctx.nr == ctx.m->num_packs && !packs_to_drop) {
+> +		struct bitmap_index *bitmap_git;
+> +		int bitmap_exists;
+> +		int want_bitmap = flags & MIDX_WRITE_BITMAP;
+> +
+> +		bitmap_git = prepare_bitmap_git(the_repository);
+> +		bitmap_exists = bitmap_git && bitmap_is_midx(bitmap_git);
+> +		free_bitmap_index(bitmap_git);
+> +
+> +		if (bitmap_exists || !want_bitmap) {
+> +			/*
+> +			 * The correct MIDX already exists, and so does a
+> +			 * corresponding bitmap (or one wasn't requested).
+> +			 */
+> +			if (!want_bitmap)
+> +				clear_midx_files_ext(the_repository, ".bitmap",
+> +						     NULL);
+> +			goto cleanup;
+> +		}
+> +	}
+
+So this makes "git multi-pack-index write --write-bitmap" actually write
+a bitmap, even if the midx itself didn't need updating? Sounds good.
+Likewise, we'll delete a bitmap if one exists but we were not requested
+to write one. Makes sense.
+
+I do think nice-to-have bits like this could have come in a separate
+patch with their own explanation and tests. It may not be worth trying
+to extract it at this point, though.
+
+> @@ -1075,9 +1271,6 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+>  	hold_lock_file_for_update(&lk, midx_name, LOCK_DIE_ON_ERROR);
+>  	f = hashfd(get_lock_file_fd(&lk), get_lock_file_path(&lk));
+>  
+> -	if (ctx.m)
+> -		close_midx(ctx.m);
+> -
+>  	if (ctx.nr - dropped_packs == 0) {
+>  		error(_("no pack files to index."));
+>  		result = 1;
+
+I'm not sure what this hunk is doing. We do pick up the close_midx()
+call at the end of the function, amidst the other cleanup.
+
+I expect the answer is something like "we need it open when we generate
+the bitmaps". But it makes me wonder if we could hit any cases where we
+try to overwrite it while it's still open, which would cause problems on
+Windows.
 
 -Peff
