@@ -2,132 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 978A0C12002
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 14:40:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 905BCC636C9
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 16:52:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7F1046121F
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 14:40:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6EE5261208
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 16:52:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238548AbhGUOAU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jul 2021 10:00:20 -0400
-Received: from siwi.pair.com ([209.68.5.199]:31768 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232937AbhGUOAT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jul 2021 10:00:19 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id CAFB53F4098;
-        Wed, 21 Jul 2021 10:40:55 -0400 (EDT)
-Received: from SME-RED-HCI8.sme.test.net (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 95F1F3F4047;
-        Wed, 21 Jul 2021 10:40:55 -0400 (EDT)
-Subject: Re: [PATCH v3 29/34] fsmonitor--daemon: use a cookie file to sync
- with file system
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
- <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
- <555caca2216dd3e459c118d76b46eb983a58e051.1625150864.git.gitgitgadget@gmail.com>
- <878s2pboha.fsf@evledraar.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <8b7e1d69-b89a-239b-af4b-53d90dbec651@jeffhostetler.com>
-Date:   Wed, 21 Jul 2021 10:40:54 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        id S233838AbhGUQMD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jul 2021 12:12:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33252 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230378AbhGUQMC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jul 2021 12:12:02 -0400
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22BABC061575
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 09:52:39 -0700 (PDT)
+Received: by mail-il1-x136.google.com with SMTP id m20so2856387ili.9
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 09:52:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=zPiWqCFdOFiciJ2cGrfjERG1/QquONpABIGN/ptvREk=;
+        b=MKDqcc7dNUM8cwZ51Qk7feNcNqo99d5pJCSfPA9nHRnJMONzGLsZz+f78UryOoHpRS
+         KP/pRQv6bzqwvYnhIaQaTUuEjQ9J0eKB7cFbO4AX6mC0uChS91Fpk5nD12rCQ/MXIVmf
+         3/fUJD0YLLcTGxVypcjiManhE3APIxNrL+HEAK5ntJsZxafkAVTrglUxZMRkL1mwyJe3
+         E9PxFq3zrtqcElWCY/ZXeM6CgH6CBzPLvG6G8CtFZevGNLXRu+LI/bfwZ/FV/7/VYXw6
+         bJxOUATFZeIV9qUdmp5WyVuv2Fu9t/Wtix2yG4ajoAHtG7FBNRuO7X1fExKUwKkmHMYt
+         leXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=zPiWqCFdOFiciJ2cGrfjERG1/QquONpABIGN/ptvREk=;
+        b=OwailB3FVig6fCt5KiMp46O1fVr96URCOBPV9+3vqANDqUy1q1TSLS9nlpmtmxU/+9
+         kWgk6nQ9APaTe3ECnSj3phE9ZL2QxpqrivVWqRAQm+aB542KH4VUgbc+K1juaTTbcc39
+         fFf67sHjZQ5Gnt6MguhBoU3Pp721KxHy53fYJti9hrw53jFBvUXeEv9HpYrhT7jjCw4a
+         K7IUZrDYV/9hKdcOTLZw67DFmlpV2YNz3lBe/kvT+2ds8pBy8PgkhpLF8qLRp3IwWg9p
+         kkV/imb97aHdwMz0GWaEJ3ntQjnMFqHNvY+pnpi+l0umAskcrLyqYuAmF7qNC55ndDdI
+         bgcQ==
+X-Gm-Message-State: AOAM533ttti6iFdWPeGG7I/iv2TigxXh2+wUmUMMxYNPqSNxX0otUxiu
+        hTL/DwFKlJXs6A59gNj8lyVhQ90ilXEHC5cm
+X-Google-Smtp-Source: ABdhPJzj/pvIXAZxN9TjEk/LhTGBlZHqs07e/Pz859gDvu+zXcUEwbFVl+SBkiLYZXIkPqH7g4s3FA==
+X-Received: by 2002:a92:d083:: with SMTP id h3mr25151166ilh.157.1626886358442;
+        Wed, 21 Jul 2021 09:52:38 -0700 (PDT)
+Received: from localhost ([2600:1700:d843:8f:2c46:d8ae:a4c3:9466])
+        by smtp.gmail.com with ESMTPSA id f3sm15049334iob.30.2021.07.21.09.52.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Jul 2021 09:52:37 -0700 (PDT)
+Date:   Wed, 21 Jul 2021 12:52:37 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, avarab@gmail.com
+Subject: [PATCH v2] multi-pack-index: fix potential segfault without
+ sub-command
+Message-ID: <12804130427fd71e88ce10aed283c1f9cdd330ef.1626886330.git.me@ttaylorr.com>
+References: <YPfWkzRtQKthOgZx@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <878s2pboha.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YPfWkzRtQKthOgZx@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Since cd57bc41bb (builtin/multi-pack-index.c: display usage on
+unrecognized command, 2021-03-30) we have used a "usage" label to avoid
+having two separate callers of usage_with_options (one when no arguments
+are given, and another for unrecognized sub-commands).
 
+But the first caller has been broken since cd57bc41bb, since it will
+happily jump to usage without arguments, and then pass argv[0] to the
+"unrecognized subcommand" error.
 
-On 7/1/21 7:17 PM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Thu, Jul 01 2021, Jeff Hostetler via GitGitGadget wrote:
-> 
->> From: Jeff Hostetler <jeffhost@microsoft.com>
->>
->> Teach fsmonitor--daemon client threads to create a cookie file
->> inside the .git directory and then wait until FS events for the
->> cookie are observed by the FS listener thread.
->>
->> This helps address the racy nature of file system events by
->> blocking the client response until the kernel has drained any
->> event backlog.
->>
->> This is especially important on MacOS where kernel events are
->> only issued with a limited frequency.  See the `latency` argument
->> of `FSeventStreamCreate()`.  The kernel only signals every `latency`
->> seconds, but does not guarantee that the kernel queue is completely
->> drained, so we may have to wait more than one interval.  If we
->> increase the frequency, the system is more likely to drop events.
->> We avoid these issues by having each client thread create a unique
->> cookie file and then wait until it is seen in the event stream.
-> 
-> Is this a guaranteed property of any API fsmonitor might need to work
-> with (linux, darwin, Windows) that if I perform a bunch of FS operations
-> on my working tree, that if I finish up by touching this cookie file
-> that that'll happen last?
-> 
-> I'd think that wouldn't be the case, i.e. on POSIX filesystems unless
-> you run around fsyncing both files and directories you're not guaranteed
-> that they're on disk, and even then the kernel might decide to sync your
-> cookie earlier, won't it?
-> 
-> E.g. on Linux you can even have cross-FS watches, and mix & match
-> different FS types. I'd expect to get events in whatever
-> implementation-defined order the VFS layer + FS decided to sync them to
-> disk in & get to firing off an event for me.
-> 
-> Or do these APIs all guarantee that a linear view of the world is
-> presented to the API consumer?
-> 
+Many compilers will save us from a segfault here, but the end result is
+ugly, since it mentions an unrecognized subcommand when we didn't even
+pass one, and (on GCC) includes "(null)" in its output.
 
+Move the "usage" label down past the error about unrecognized
+subcommands so that it is only triggered when it should be. While we're
+at it, bulk up our test coverage in this area, too.
 
-Theoretically, none of these APIs guarantee a complete linear ordering.
-We receive events from the FS in the order that the FS decides to
-perform the actual IO.  And the inner workings of the FS is private.
-Even if we directly read the journal rather than listening for
-notifications, we probably still don't know whether the FS reordered
-the queue of things heading to disk.
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+I didn't realize that we are veering away from test_i18ngrep in new
+tests, so here's a version of this trivial patch with grep instead.
 
-However in practice, the events for the cookie files do tend to arrive
-in order.  And the net effect is that the worker thread in the daemon
-is sync'd up with IO activity that was initiated before the request.
+Range-diff against v1:
+1:  8c0bb3e0dc ! 1:  1280413042 multi-pack-index: fix potential segfault without sub-command
+    @@ t/t5319-multi-pack-index.sh: test_expect_success 'load reverse index when missin
 
+     +test_expect_success 'usage shown without sub-command' '
+     +	test_expect_code 129 git multi-pack-index 2>err &&
+    -+	! test_i18ngrep "unrecognized subcommand" err
+    ++	! grep "unrecognized subcommand" err
+     +'
+     +
+      test_done
 
-BTW Watchman also uses cookie files for this same reason.
+ builtin/multi-pack-index.c  | 2 +-
+ t/t5319-multi-pack-index.sh | 5 +++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index 5d3ea445fd..8ff0dee2ec 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -176,8 +176,8 @@ int cmd_multi_pack_index(int argc, const char **argv,
+ 	else if (!strcmp(argv[0], "expire"))
+ 		return cmd_multi_pack_index_expire(argc, argv);
+ 	else {
+-usage:
+ 		error(_("unrecognized subcommand: %s"), argv[0]);
++usage:
+ 		usage_with_options(builtin_multi_pack_index_usage,
+ 				   builtin_multi_pack_index_options);
+ 	}
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 7609f1ea64..c0ec5a6fd3 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -837,4 +837,9 @@ test_expect_success 'load reverse index when missing .idx, .pack' '
+ 	)
+ '
 
-It should also be noted that some operations are just racy.  If you're
-doing a bunch of IO in one window and a 'git status' in another window,
-your result will be racy -- status (without FSM) makes 2 passes on the
-disk: the first to verify mtimes on items in the index and the second
-to look for untracked files.  the status result may be "blurry" (for
-lack of a better word).  So the same questions
-     "does the FS reorder my IO?",
-     "did status see the fully sync'd FS?",
-and etc can also be asked in the normal (non FSM) case, right?
-
-So it may be the case that having an fsmonitor (mine, Watchman, etc)
-and the untracked-cache, we'll have less skew in status results
-because the status process shouldn't have to do any scanning.
-But I'm not sure I want to make that assertion yet.
-
-Thanks,
-Jeff
-
++test_expect_success 'usage shown without sub-command' '
++	test_expect_code 129 git multi-pack-index 2>err &&
++	! grep "unrecognized subcommand" err
++'
++
+ test_done
+--
+2.31.1.163.ga65ce7f831
