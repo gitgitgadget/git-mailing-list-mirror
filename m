@@ -6,92 +6,68 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D17B6C07E9B
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 08:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 603AAC12002
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 08:13:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B83296100C
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 08:09:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 464F9611C1
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 08:13:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235465AbhGUH2T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jul 2021 03:28:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55848 "EHLO cloud.peff.net"
+        id S235371AbhGUHdO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jul 2021 03:33:14 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55866 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235919AbhGUH2C (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jul 2021 03:28:02 -0400
-Received: (qmail 7195 invoked by uid 109); 21 Jul 2021 08:08:37 -0000
+        id S236241AbhGUHao (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jul 2021 03:30:44 -0400
+Received: (qmail 7361 invoked by uid 109); 21 Jul 2021 08:10:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Jul 2021 08:08:37 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Jul 2021 08:10:59 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32193 invoked by uid 111); 21 Jul 2021 08:08:37 -0000
+Received: (qmail 32216 invoked by uid 111); 21 Jul 2021 08:11:00 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Jul 2021 04:08:37 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Jul 2021 04:11:00 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 21 Jul 2021 04:08:35 -0400
+Date:   Wed, 21 Jul 2021 04:10:59 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>
-Subject: Re: [PATCH v3 6/6] commit-graph: show usage on "commit-graph
- [write|verify] garbage"
-Message-ID: <YPfWA4uA6OTKeOd9@coredump.intra.peff.net>
-References: <cover-0.5-00000000000-20210718T074936Z-avarab@gmail.com>
- <cover-0.6-00000000000-20210720T113707Z-avarab@gmail.com>
- <patch-6.6-5c1694e071e-20210720T113707Z-avarab@gmail.com>
- <20210720174739.GA2025@szeder.dev>
- <20210720175530.GA23408@szeder.dev>
- <YPcU3LSpa/r5nFCP@nand.local>
- <87lf60vfyn.fsf@evledraar.gmail.com>
- <YPdEeBGi3RVrB/fu@nand.local>
- <87im14unfd.fsf@evledraar.gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com
+Subject: Re: [PATCH] multi-pack-index: fix potential segfault without
+ sub-command
+Message-ID: <YPfWkzRtQKthOgZx@coredump.intra.peff.net>
+References: <8c0bb3e0dc121bd68f7014000fbb60b28750a0fe.1626715096.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87im14unfd.fsf@evledraar.gmail.com>
+In-Reply-To: <8c0bb3e0dc121bd68f7014000fbb60b28750a0fe.1626715096.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 21, 2021 at 09:26:38AM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Mon, Jul 19, 2021 at 01:18:49PM -0400, Taylor Blau wrote:
 
-> <digression>
+> Since cd57bc41bb (builtin/multi-pack-index.c: display usage on
+> unrecognized command, 2021-03-30) we have used a "usage" label to avoid
+> having two separate callers of usage_with_options (one when no arguments
+> are given, and another for unrecognized sub-commands).
 > 
-> I do think in general this recent proliferation of t/helper over new
-> plumbing built-ins has sent git a bit in the wrong direction.
+> But the first caller has been broken since cd57bc41bb, since it will
+> happily jump to usage without arguments, and then pass argv[0] to the
+> "unrecognized subcommand" error.
 > 
-> E.g. I think the likes of t/helper/test-pkt-line.c should really be a
-> plumbing tool, the same goes for many (but not all) the test tool, we
-> could just document them as being "unstable plumbing" or whatever.
+> Many compilers will save us from a segfault here, but the end result is
+> ugly, since it mentions an unrecognized subcommand when we didn't even
+> pass one, and (on GCC) includes "(null)" in its output.
+> 
+> Move the "usage" label down past the error about unrecognized
+> subcommands so that it is only triggered when it should be. While we're
+> at it, bulk up our test coverage in this area, too.
 
-FWIW, I agree with you here. These kind of "inspection" tools are handy
-when you are debugging something. Building a copy of test-tool on a
-production system is only a mild inconvenience for me, but not being
-able to ask a user things like "what does git pack-bitmap --dump
-.git/objects/pack*.bitmap say" is occasionally quite annoying.
+Good find. The code change seems obviously correct.
 
-The flip side is that we expect the overall quality of user-visible
-tools to be a bit higher, and we're generally on the hook to keep
-supporting them. Maybe that's solvable with documentation. I dunno.
+> +test_expect_success 'usage shown without sub-command' '
+> +	test_expect_code 129 git multi-pack-index 2>err &&
+> +	! test_i18ngrep "unrecognized subcommand" err
+> +'
 
-> But I think I've been losing that argument recently, e.g. after [1]
-> (which I argued we should put into git-ls-files) even things like git's
-> basic idea of the state of the index are exposed in some helpers, but
-> not corresponding plumbing.
-
-Yeah. I wish "ls-files --debug" showed more of the extension data, for
-example.
-
-> Anyway, even if we assume that's an argument that would carry the day in
-> general I'd find it hard to justify git-env--helper being a thing that
-> should be exposed to users or post-"make install", it's purely for the
-> use of our own test suite.
-
-Yeah, I'd agree with that. The most valuable helpers to me are the ones
-that help us understand what Git is seeing, or what's in a binary file
-format. Obscure-case "functional" helpers are less likely to be
-generally useful.
+I think we're avoiding test_i18ngrep in new code these days.
 
 -Peff
