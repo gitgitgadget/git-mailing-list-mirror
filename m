@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73221C6377A
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 22:22:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC761C6377C
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 22:22:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 509846023D
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 22:22:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C532861249
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 22:22:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230059AbhGUVlv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jul 2021 17:41:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52342 "EHLO
+        id S230086AbhGUVlw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jul 2021 17:41:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230030AbhGUVlt (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230034AbhGUVlt (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 21 Jul 2021 17:41:49 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0669AC061575
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1724C0613C1
         for <git@vger.kernel.org>; Wed, 21 Jul 2021 15:22:24 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id u8-20020a7bcb080000b02901e44e9caa2aso1816848wmj.4
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 15:22:23 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id f17so3754121wrt.6
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 15:22:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=h0VFWCNsWZK4UmPlI6kOWFtU1JKQ5qQE6h5moSC4ZcA=;
-        b=to4+XFXNy8UoyJEtw0u8/BcmijKX0OzowFb7+9HhuQkIXxRMLvJORKgloRqNek9g2j
-         GnIFmEu63+SJTxlY7ACpRs+IinoUvMuBcPFMC2hzoee5VHf4GbKbO08fvW98AZIs7jel
-         Af+GmExw42fgMM5r8FoWC81FIxZfoK2vLjTdC+e4RzWlyHf0qhK07cR73uN5coBH3WCt
-         Fspt4l8iq1qxeIuH46fvgjaX+dcbXKbmSLpYCIHEX0HE9FKfXsuVLj8S/qTW+QjnBVhE
-         XT7wgTYxdorzADhKBPcApmNO9i0qMCtcDBphH1t3yQSn9GyYz8a8OojT+7qPHXXX95sJ
-         +sPA==
+        bh=TACC9ysPC52bUkj1hBVK/5G6tthYhpggI0bp4Px3x+M=;
+        b=rhmYTDvFpO0XSn6NAN2EMY6gKMqPvw7+hp5aC38sZTzEu4Tow1z/Mpih+1adiFWHp+
+         2TfBKjiJX8oOXDfmFRDNtLKMSCC4491ZMtRqKKe9GdD6wDu9lT/NoAlbNqNQKOSoDc7P
+         I4mMEMVLuQyLt3RcsVxnYULSXWmkFqaXvSUWGhWVJn6c5idkFhG3JhMIQTMXHbsSOiji
+         cZHDrzB+Q4S7By3VB9QE+j7NWWTXihJjZvIiIqFm8g+eBgtdBcgvveY/Ler4WsUCkZ5b
+         Tt+yMIdaIb0MC0vkbeDc5Obssq7Cx5K9SlmDB4i8erkoZiV5N58OkzHreQQRKv6GvqgC
+         ro/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=h0VFWCNsWZK4UmPlI6kOWFtU1JKQ5qQE6h5moSC4ZcA=;
-        b=kXe4jZBCUIbJM6Ey2t5VRwOhH5C+klsqsdgBksLYfM4raCQrCOKk1ei4KoHVFjiw3M
-         rE9p8v4uXifcvxK9eVvhA1Flx/nMCBMEBhq1v9h6RwPJeeqYUKS6Jmc1cD7FU5TYBCzm
-         es4se5zUtatC3TEn4NSEGdOgn6rXPQI1bVmIU2kJ8O7A5YAt76i+/CMMx1XL0+b7BEOs
-         0/uVRk6cl+IAtdo/gF3ar4KF/LQQSX9Ms6ENuy0F4/zlZq6KrEN1ckio2cMvr2wYwU3s
-         L4BCZPr1Lpw7hMsmN8fE70gPSKp2OsyPIvbdUHojd0vCIja+3TVp03xl+i305AL0M0FK
-         E4WA==
-X-Gm-Message-State: AOAM5330u3vHiM7VXHahdte5f0iMY20iv6qcuzr9DlOw8w/UV47ajd9g
-        vDO3pDcUsUKOVj/+KFUcy0p7pA+YFGAAHg==
-X-Google-Smtp-Source: ABdhPJx2iF5HZAbkxP48tBzdxE56BdLwFOo/x3UYaRtSWKtcirKNnz9/7pMyFIQ8xDlA+MDM0fG4MA==
-X-Received: by 2002:a1c:4e10:: with SMTP id g16mr3644441wmh.66.1626906142336;
-        Wed, 21 Jul 2021 15:22:22 -0700 (PDT)
+        bh=TACC9ysPC52bUkj1hBVK/5G6tthYhpggI0bp4Px3x+M=;
+        b=kXgx1V0IN0iBEWUChy9xUhNsDM7vjtp0V2ktLkidNvy2tKDuEFKPsmd/x8/f90JYFj
+         mdIpsEHMZrRC6cBB64HpMuQE7wEn7tFBt76yv9vVzdZ6uCLuDED+2hNFnrlanTcK02xP
+         qmE8DQid9Z5YAEZueXAY0DhF5PT6/xnp4JUkYvCwO70TXJzL6oW2+Wzu+i+GeqeDd1SD
+         JNXMUb9puiSAKHMVjX8H1/prEIDtVgsEmDv4cBNVqfeZpn+UFtgCd8CfGmHP8dl/XpJG
+         upW2sm4vYzJrMhFD20uoBIdeY/pmHAFSY/Lw6HYC/CPn1D7MfO5SCgUiBFUGmid5qaH5
+         6yMQ==
+X-Gm-Message-State: AOAM531Qolq/uNKFrV2zEj7Q/Kn1DUZViLlGU35iTddpfxtxk/PXrCY/
+        emn3ZlqfplXEZ91GBjeM2ktIfogM7PqJzg==
+X-Google-Smtp-Source: ABdhPJymvk+iLq8Kj/2r8IdJyUVPNB1eaxTxZdUwAcA/hF5R8GPHZV1KK2knwfiOK4mzQrehJ8R6Ig==
+X-Received: by 2002:a5d:6a05:: with SMTP id m5mr45549690wru.253.1626906143162;
+        Wed, 21 Jul 2021 15:22:23 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d9sm27792132wrx.76.2021.07.21.15.22.21
+        by smtp.gmail.com with ESMTPSA id d9sm27792132wrx.76.2021.07.21.15.22.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jul 2021 15:22:21 -0700 (PDT)
+        Wed, 21 Jul 2021 15:22:22 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 2/5] http: drop support for curl < 7.16.0
-Date:   Thu, 22 Jul 2021 00:22:13 +0200
-Message-Id: <patch-2.5-1c9f3bc031b-20210721T220402Z-avarab@gmail.com>
+Subject: [PATCH v2 3/5] http: drop support for curl < 7.19.4
+Date:   Thu, 22 Jul 2021 00:22:14 +0200
+Message-Id: <patch-3.5-faae88b7fec-20210721T220402Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.874.ge7a9d58bfcf
 In-Reply-To: <cover-0.5-00000000000-20210721T220402Z-avarab@gmail.com>
 References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net> <cover-0.5-00000000000-20210721T220402Z-avarab@gmail.com>
@@ -81,571 +81,193 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-In the last commit we dropped support for curl < 7.11.1, let's
-continue that and drop support for versions older than 7.16.0. This
-allows us to get rid of some now-obsolete #ifdefs.
+In the last commit we dropped support for curl < 7.16.0, let's
+continue that and drop support for versions older than 7.19.4. This
+allows us to simplify the code by getting rid of some "#ifdef"'s.
 
-Choosing 7.16.0 is a somewhat arbitrary cutoff:
+Git was broken with vanilla curl < 7.19.4 from v2.12.0 until
+v2.15.0. Compiling with it was broken by using CURLPROTO_* outside any
+"#ifdef" in aeae4db174 (http: create function to get curl allowed
+protocols, 2016-12-14), and fixed in v2.15.0 in f18777ba6ef (http: fix
+handling of missing CURLPROTO_*, 2017-08-11).
 
-  1. It came out in October of 2006, almost 15 years ago.
-     Besides being a nice round number, around 10 years is
-     a common end-of-life support period, even for conservative
-     distributions.
+It's unclear how much anyone was impacted by that in practice, since
+as noted in [1] RHEL versions using curl older than that still
+compiled, because RedHat backported some features. Perhaps other
+vendors did the same.
 
-  2. That version introduced the curl_multi interface, which
-     gives us a lot of bang for the buck in removing #ifdefs
+Still, it's one datapoint indicating that it wasn't in active use at
+the time. That (the v2.12.0 release) was in Feb 24, 2017, with v2.15.0
+on Oct 30, 2017, it's now mid-2021.
 
-RHEL 5 came with curl 7.15.5[1] (released in August 2006). RHEL 5's
-extended life cycle program ended on 2020-11-30[1]. RHEL 6 comes with
-curl 7.19.7 (released in November 2009), and RHEL 7 comes with
-7.29.0 (released in February 2013).
-
-1. http://lore.kernel.org/git/873e1f31-2a96-5b72-2f20-a5816cad1b51@jupiterrise.com
+1. http://lore.kernel.org/git/c8a2716d-76ac-735c-57f9-175ca3acbcb0@jupiterrise.com;
+   followed-up by f18777ba6ef (http: fix handling of missing CURLPROTO_*,
+   2017-08-11)
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- http-push.c   | 23 ---------------------
- http-walker.c | 12 -----------
- http.c        | 56 +--------------------------------------------------
- http.h        | 25 +----------------------
- imap-send.c   |  4 ----
- remote-curl.c |  4 ----
- 6 files changed, 2 insertions(+), 122 deletions(-)
+ http.c | 50 --------------------------------------------------
+ http.h |  4 ----
+ 2 files changed, 54 deletions(-)
 
-diff --git a/http-push.c b/http-push.c
-index d7cb1675a2d..aa3de7c1086 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -203,10 +203,8 @@ static void curl_setup_http(CURL *curl, const char *url,
- 	curl_easy_setopt(curl, CURLOPT_INFILE, buffer);
- 	curl_easy_setopt(curl, CURLOPT_INFILESIZE, buffer->buf.len);
- 	curl_easy_setopt(curl, CURLOPT_READFUNCTION, fread_buffer);
--#ifndef NO_CURL_IOCTL
- 	curl_easy_setopt(curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
- 	curl_easy_setopt(curl, CURLOPT_IOCTLDATA, buffer);
--#endif
- 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_fn);
- 	curl_easy_setopt(curl, CURLOPT_NOBODY, 0);
- 	curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, custom_req);
-@@ -249,8 +247,6 @@ static void process_response(void *callback_data)
- 	finish_request(request);
- }
- 
--#ifdef USE_CURL_MULTI
--
- static void start_fetch_loose(struct transfer_request *request)
- {
- 	struct active_request_slot *slot;
-@@ -299,7 +295,6 @@ static void start_mkcol(struct transfer_request *request)
- 		FREE_AND_NULL(request->url);
- 	}
- }
--#endif
- 
- static void start_fetch_packed(struct transfer_request *request)
- {
-@@ -605,7 +600,6 @@ static void finish_request(struct transfer_request *request)
- 	}
- }
- 
--#ifdef USE_CURL_MULTI
- static int is_running_queue;
- static int fill_active_slot(void *unused)
- {
-@@ -629,7 +623,6 @@ static int fill_active_slot(void *unused)
- 	}
- 	return 0;
- }
--#endif
- 
- static void get_remote_object_list(unsigned char parent);
- 
-@@ -658,10 +651,8 @@ static void add_fetch_request(struct object *obj)
- 	request->next = request_queue_head;
- 	request_queue_head = request;
- 
--#ifdef USE_CURL_MULTI
- 	fill_active_slots();
- 	step_active_slots();
--#endif
- }
- 
- static int add_send_request(struct object *obj, struct remote_lock *lock)
-@@ -696,10 +687,8 @@ static int add_send_request(struct object *obj, struct remote_lock *lock)
- 	request->next = request_queue_head;
- 	request_queue_head = request;
- 
--#ifdef USE_CURL_MULTI
- 	fill_active_slots();
- 	step_active_slots();
--#endif
- 
- 	return 1;
- }
-@@ -1682,21 +1671,15 @@ static int delete_remote_branch(const char *pattern, int force)
- 
- static void run_request_queue(void)
- {
--#ifdef USE_CURL_MULTI
- 	is_running_queue = 1;
- 	fill_active_slots();
- 	add_fill_function(NULL, fill_active_slot);
--#endif
- 	do {
- 		finish_all_active_slots();
--#ifdef USE_CURL_MULTI
- 		fill_active_slots();
--#endif
- 	} while (request_queue_head && !aborted);
- 
--#ifdef USE_CURL_MULTI
- 	is_running_queue = 0;
--#endif
- }
- 
- int cmd_main(int argc, const char **argv)
-@@ -1770,10 +1753,6 @@ int cmd_main(int argc, const char **argv)
- 		break;
- 	}
- 
--#ifndef USE_CURL_MULTI
--	die("git-push is not available for http/https repository when not compiled with USE_CURL_MULTI");
--#endif
--
- 	if (!repo->url)
- 		usage(http_push_usage);
- 
-@@ -1786,9 +1765,7 @@ int cmd_main(int argc, const char **argv)
- 
- 	http_init(NULL, repo->url, 1);
- 
--#ifdef USE_CURL_MULTI
- 	is_running_queue = 0;
--#endif
- 
- 	/* Verify DAV compliance/lock support */
- 	if (!locking_available()) {
-diff --git a/http-walker.c b/http-walker.c
-index 90d8ecb57ef..19e31623f04 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -127,7 +127,6 @@ static void release_object_request(struct object_request *obj_req)
- 	free(obj_req);
- }
- 
--#ifdef USE_CURL_MULTI
- static int fill_active_slot(struct walker *walker)
- {
- 	struct object_request *obj_req;
-@@ -146,7 +145,6 @@ static int fill_active_slot(struct walker *walker)
- 	}
- 	return 0;
- }
--#endif
- 
- static void prefetch(struct walker *walker, unsigned char *sha1)
- {
-@@ -163,10 +161,8 @@ static void prefetch(struct walker *walker, unsigned char *sha1)
- 	http_is_verbose = walker->get_verbosely;
- 	list_add_tail(&newreq->node, &object_queue_head);
- 
--#ifdef USE_CURL_MULTI
- 	fill_active_slots();
- 	step_active_slots();
--#endif
- }
- 
- static int is_alternate_allowed(const char *url)
-@@ -357,11 +353,9 @@ static void fetch_alternates(struct walker *walker, const char *base)
- 	 * wait for them to arrive and return to processing this request's
- 	 * curl message
- 	 */
--#ifdef USE_CURL_MULTI
- 	while (cdata->got_alternates == 0) {
- 		step_active_slots();
- 	}
--#endif
- 
- 	/* Nothing to do if they've already been fetched */
- 	if (cdata->got_alternates == 1)
-@@ -505,12 +499,8 @@ static int fetch_object(struct walker *walker, unsigned char *hash)
- 		return 0;
- 	}
- 
--#ifdef USE_CURL_MULTI
- 	while (obj_req->state == WAITING)
- 		step_active_slots();
--#else
--	start_object_request(walker, obj_req);
--#endif
- 
- 	/*
- 	 * obj_req->req might change when fetching alternates in the callback
-@@ -623,9 +613,7 @@ struct walker *get_http_walker(const char *url)
- 	walker->cleanup = cleanup;
- 	walker->data = data;
- 
--#ifdef USE_CURL_MULTI
- 	add_fill_function(walker, (int (*)(void *)) fill_active_slot);
--#endif
- 
- 	return walker;
- }
 diff --git a/http.c b/http.c
-index 56182a89e25..ef00e930232 100644
+index ef00e930232..1f0d7664d35 100644
 --- a/http.c
 +++ b/http.c
-@@ -26,10 +26,8 @@ ssize_t http_post_buffer = 16 * LARGE_PACKET_MAX;
- 
- static int min_curl_sessions = 1;
+@@ -28,9 +28,7 @@ static int min_curl_sessions = 1;
  static int curl_session_count;
--#ifdef USE_CURL_MULTI
  static int max_requests = -1;
  static CURLM *curlm;
--#endif
- #ifndef NO_CURL_EASY_DUPHANDLE
+-#ifndef NO_CURL_EASY_DUPHANDLE
  static CURL *curl_default;
- #endif
-@@ -117,14 +115,6 @@ static int curl_empty_auth = -1;
+-#endif
  
- enum http_follow_config http_follow_config = HTTP_FOLLOW_INITIAL;
+ #define PREV_BUF_SIZE 4096
  
--#if LIBCURL_VERSION_NUM >= 0x071700
--/* Use CURLOPT_KEYPASSWD as is */
--#elif LIBCURL_VERSION_NUM >= 0x070903
--#define CURLOPT_KEYPASSWD CURLOPT_SSLKEYPASSWD
+@@ -440,24 +438,8 @@ static void init_curl_http_auth(CURL *result)
+ 
+ 	credential_fill(&http_auth);
+ 
+-#if LIBCURL_VERSION_NUM >= 0x071301
+ 	curl_easy_setopt(result, CURLOPT_USERNAME, http_auth.username);
+ 	curl_easy_setopt(result, CURLOPT_PASSWORD, http_auth.password);
 -#else
--#define CURLOPT_KEYPASSWD CURLOPT_SSLCERTPASSWD
--#endif
--
- static struct credential cert_auth = CREDENTIAL_INIT;
- static int ssl_cert_password_required;
- static unsigned long http_auth_methods = CURLAUTH_ANY;
-@@ -168,7 +158,6 @@ size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- 	return size / eltsize;
- }
- 
--#ifndef NO_CURL_IOCTL
- curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp)
- {
- 	struct buffer *buffer = clientp;
-@@ -185,7 +174,6 @@ curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp)
- 		return CURLIOE_UNKNOWNCMD;
- 	}
- }
--#endif
- 
- size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- {
-@@ -233,12 +221,9 @@ static void finish_active_slot(struct active_request_slot *slot)
- 
- static void xmulti_remove_handle(struct active_request_slot *slot)
- {
--#ifdef USE_CURL_MULTI
- 	curl_multi_remove_handle(curlm, slot->curl);
--#endif
- }
- 
--#ifdef USE_CURL_MULTI
- static void process_curl_messages(void)
- {
- 	int num_messages;
-@@ -266,7 +251,6 @@ static void process_curl_messages(void)
- 		curl_message = curl_multi_info_read(curlm, &num_messages);
- 	}
- }
--#endif
- 
- static int http_options(const char *var, const char *value, void *cb)
- {
-@@ -315,18 +299,14 @@ static int http_options(const char *var, const char *value, void *cb)
- 
- 	if (!strcmp("http.minsessions", var)) {
- 		min_curl_sessions = git_config_int(var, value);
--#ifndef USE_CURL_MULTI
- 		if (min_curl_sessions > 1)
- 			min_curl_sessions = 1;
--#endif
- 		return 0;
- 	}
--#ifdef USE_CURL_MULTI
- 	if (!strcmp("http.maxrequests", var)) {
- 		max_requests = git_config_int(var, value);
- 		return 0;
- 	}
--#endif
- 	if (!strcmp("http.lowspeedlimit", var)) {
- 		curl_low_speed_limit = (long)git_config_int(var, value);
- 		return 0;
-@@ -574,7 +554,7 @@ static void set_curl_keepalive(CURL *c)
- 	curl_easy_setopt(c, CURLOPT_TCP_KEEPALIVE, 1);
- }
- 
--#elif LIBCURL_VERSION_NUM >= 0x071000
-+#else
- static int sockopt_callback(void *client, curl_socket_t fd, curlsocktype type)
- {
- 	int ka = 1;
-@@ -595,12 +575,6 @@ static void set_curl_keepalive(CURL *c)
- {
- 	curl_easy_setopt(c, CURLOPT_SOCKOPTFUNCTION, sockopt_callback);
- }
--
--#else
--static void set_curl_keepalive(CURL *c)
--{
--	/* not supported on older curl versions */
--}
- #endif
- 
- static void redact_sensitive_header(struct strbuf *header)
-@@ -1121,7 +1095,6 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
- 	no_pragma_header = curl_slist_append(http_copy_default_headers(),
- 		"Pragma:");
- 
--#ifdef USE_CURL_MULTI
- 	{
- 		char *http_max_requests = getenv("GIT_HTTP_MAX_REQUESTS");
- 		if (http_max_requests != NULL)
-@@ -1131,7 +1104,6 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
- 	curlm = curl_multi_init();
- 	if (!curlm)
- 		die("curl_multi_init failed");
--#endif
- 
- 	if (getenv("GIT_SSL_NO_VERIFY"))
- 		curl_ssl_verify = 0;
-@@ -1154,10 +1126,8 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
- 		curl_ssl_verify = 1;
- 
- 	curl_session_count = 0;
--#ifdef USE_CURL_MULTI
- 	if (max_requests < 1)
- 		max_requests = DEFAULT_MAX_REQUESTS;
--#endif
- 
- 	set_from_env(&http_proxy_ssl_cert, "GIT_PROXY_SSL_CERT");
- 	set_from_env(&http_proxy_ssl_key, "GIT_PROXY_SSL_KEY");
-@@ -1201,9 +1171,7 @@ void http_cleanup(void)
- 	curl_easy_cleanup(curl_default);
- #endif
- 
--#ifdef USE_CURL_MULTI
- 	curl_multi_cleanup(curlm);
--#endif
- 	curl_global_cleanup();
- 
- 	string_list_clear(&extra_http_headers, 0);
-@@ -1250,7 +1218,6 @@ struct active_request_slot *get_active_slot(void)
- 	struct active_request_slot *slot = active_queue_head;
- 	struct active_request_slot *newslot;
- 
--#ifdef USE_CURL_MULTI
- 	int num_transfers;
- 
- 	/* Wait for a slot to open up if the queue is full */
-@@ -1259,7 +1226,6 @@ struct active_request_slot *get_active_slot(void)
- 		if (num_transfers < active_requests)
- 			process_curl_messages();
- 	}
--#endif
- 
- 	while (slot != NULL && slot->in_use)
- 		slot = slot->next;
-@@ -1330,7 +1296,6 @@ struct active_request_slot *get_active_slot(void)
- 
- int start_active_slot(struct active_request_slot *slot)
- {
--#ifdef USE_CURL_MULTI
- 	CURLMcode curlm_result = curl_multi_add_handle(curlm, slot->curl);
- 	int num_transfers;
- 
-@@ -1348,11 +1313,9 @@ int start_active_slot(struct active_request_slot *slot)
- 	 * something.
- 	 */
- 	curl_multi_perform(curlm, &num_transfers);
--#endif
- 	return 1;
- }
- 
--#ifdef USE_CURL_MULTI
- struct fill_chain {
- 	void *data;
- 	int (*fill)(void *);
-@@ -1411,11 +1374,9 @@ void step_active_slots(void)
- 		fill_active_slots();
- 	}
- }
--#endif
- 
- void run_active_slot(struct active_request_slot *slot)
- {
--#ifdef USE_CURL_MULTI
- 	fd_set readfds;
- 	fd_set writefds;
- 	fd_set excfds;
-@@ -1428,7 +1389,6 @@ void run_active_slot(struct active_request_slot *slot)
- 		step_active_slots();
- 
- 		if (slot->in_use) {
--#if LIBCURL_VERSION_NUM >= 0x070f04
- 			long curl_timeout;
- 			curl_multi_timeout(curlm, &curl_timeout);
- 			if (curl_timeout == 0) {
-@@ -1440,10 +1400,6 @@ void run_active_slot(struct active_request_slot *slot)
- 				select_timeout.tv_sec  =  curl_timeout / 1000;
- 				select_timeout.tv_usec = (curl_timeout % 1000) * 1000;
- 			}
--#else
--			select_timeout.tv_sec  = 0;
--			select_timeout.tv_usec = 50000;
--#endif
- 
- 			max_fd = -1;
- 			FD_ZERO(&readfds);
-@@ -1466,12 +1422,6 @@ void run_active_slot(struct active_request_slot *slot)
- 			select(max_fd+1, &readfds, &writefds, &excfds, &select_timeout);
- 		}
- 	}
--#else
--	while (slot->in_use) {
--		slot->curl_result = curl_easy_perform(slot->curl);
--		finish_active_slot(slot);
+-	{
+-		static struct strbuf up = STRBUF_INIT;
+-		/*
+-		 * Note that we assume we only ever have a single set of
+-		 * credentials in a given program run, so we do not have
+-		 * to worry about updating this buffer, only setting its
+-		 * initial value.
+-		 */
+-		if (!up.len)
+-			strbuf_addf(&up, "%s:%s",
+-				http_auth.username, http_auth.password);
+-		curl_easy_setopt(result, CURLOPT_USERPWD, up.buf);
 -	}
 -#endif
  }
  
- static void release_active_slot(struct active_request_slot *slot)
-@@ -1485,9 +1435,7 @@ static void release_active_slot(struct active_request_slot *slot)
- 			curl_session_count--;
- 		}
- 	}
--#ifdef USE_CURL_MULTI
- 	fill_active_slots();
+ /* *var must be free-able */
+@@ -471,22 +453,10 @@ static void var_override(const char **var, char *value)
+ 
+ static void set_proxyauth_name_password(CURL *result)
+ {
+-#if LIBCURL_VERSION_NUM >= 0x071301
+ 		curl_easy_setopt(result, CURLOPT_PROXYUSERNAME,
+ 			proxy_auth.username);
+ 		curl_easy_setopt(result, CURLOPT_PROXYPASSWORD,
+ 			proxy_auth.password);
+-#else
+-		struct strbuf s = STRBUF_INIT;
+-
+-		strbuf_addstr_urlencode(&s, proxy_auth.username,
+-					is_rfc3986_unreserved);
+-		strbuf_addch(&s, ':');
+-		strbuf_addstr_urlencode(&s, proxy_auth.password,
+-					is_rfc3986_unreserved);
+-		curl_proxyuserpwd = strbuf_detach(&s, NULL);
+-		curl_easy_setopt(result, CURLOPT_PROXYUSERPWD, curl_proxyuserpwd);
 -#endif
  }
  
- void finish_all_active_slots(void)
-@@ -1613,12 +1561,10 @@ static int handle_curl_result(struct slot_results *results)
- 	} else {
- 		if (results->http_connectcode == 407)
- 			credential_reject(&proxy_auth);
--#if LIBCURL_VERSION_NUM >= 0x070c00
- 		if (!curl_errorstr[0])
- 			strlcpy(curl_errorstr,
- 				curl_easy_strerror(results->curl_result),
- 				sizeof(curl_errorstr));
--#endif
- 		return HTTP_ERROR;
- 	}
+ static void init_curl_proxy_auth(CURL *result)
+@@ -748,7 +718,6 @@ void setup_curl_trace(CURL *handle)
+ 	curl_easy_setopt(handle, CURLOPT_DEBUGDATA, NULL);
  }
+ 
+-#ifdef CURLPROTO_HTTP
+ static long get_curl_allowed_protocols(int from_user)
+ {
+ 	long allowed_protocols = 0;
+@@ -764,7 +733,6 @@ static long get_curl_allowed_protocols(int from_user)
+ 
+ 	return allowed_protocols;
+ }
+-#endif
+ 
+ #if LIBCURL_VERSION_NUM >=0x072f00
+ static int get_curl_http_version_opt(const char *version_string, long *opt)
+@@ -906,19 +874,11 @@ static CURL *get_curl_handle(void)
+ 	}
+ 
+ 	curl_easy_setopt(result, CURLOPT_MAXREDIRS, 20);
+-#if LIBCURL_VERSION_NUM >= 0x071301
+ 	curl_easy_setopt(result, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
+-#elif LIBCURL_VERSION_NUM >= 0x071101
+-	curl_easy_setopt(result, CURLOPT_POST301, 1);
+-#endif
+-#ifdef CURLPROTO_HTTP
+ 	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS,
+ 			 get_curl_allowed_protocols(0));
+ 	curl_easy_setopt(result, CURLOPT_PROTOCOLS,
+ 			 get_curl_allowed_protocols(-1));
+-#else
+-	warning(_("Protocol restrictions not supported with cURL < 7.19.4"));
+-#endif
+ 	if (getenv("GIT_CURL_VERBOSE"))
+ 		http_trace_curl_no_data();
+ 	setup_curl_trace(result);
+@@ -1012,11 +972,9 @@ static CURL *get_curl_handle(void)
+ 			die("Invalid proxy URL '%s'", curl_http_proxy);
+ 
+ 		curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host);
+-#if LIBCURL_VERSION_NUM >= 0x071304
+ 		var_override(&curl_no_proxy, getenv("NO_PROXY"));
+ 		var_override(&curl_no_proxy, getenv("no_proxy"));
+ 		curl_easy_setopt(result, CURLOPT_NOPROXY, curl_no_proxy);
+-#endif
+ 	}
+ 	init_curl_proxy_auth(result);
+ 
+@@ -1147,9 +1105,7 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+ 			ssl_cert_password_required = 1;
+ 	}
+ 
+-#ifndef NO_CURL_EASY_DUPHANDLE
+ 	curl_default = get_curl_handle();
+-#endif
+ }
+ 
+ void http_cleanup(void)
+@@ -1167,9 +1123,7 @@ void http_cleanup(void)
+ 	}
+ 	active_queue_head = NULL;
+ 
+-#ifndef NO_CURL_EASY_DUPHANDLE
+ 	curl_easy_cleanup(curl_default);
+-#endif
+ 
+ 	curl_multi_cleanup(curlm);
+ 	curl_global_cleanup();
+@@ -1248,11 +1202,7 @@ struct active_request_slot *get_active_slot(void)
+ 	}
+ 
+ 	if (slot->curl == NULL) {
+-#ifdef NO_CURL_EASY_DUPHANDLE
+-		slot->curl = get_curl_handle();
+-#else
+ 		slot->curl = curl_easy_duphandle(curl_default);
+-#endif
+ 		curl_session_count++;
+ 	}
+ 
 diff --git a/http.h b/http.h
-index d2f8cc56617..cb092622a73 100644
+index cb092622a73..19f19dbe74c 100644
 --- a/http.h
 +++ b/http.h
-@@ -10,31 +10,12 @@
- #include "remote.h"
- #include "url.h"
+@@ -12,10 +12,6 @@
  
--/*
-- * We detect based on the cURL version if multi-transfer is
-- * usable in this implementation and define this symbol accordingly.
-- * This shouldn't be set by the Makefile or by the user (e.g. via CFLAGS).
-- */
--#undef USE_CURL_MULTI
--
--#if LIBCURL_VERSION_NUM >= 0x071000
--#define USE_CURL_MULTI
  #define DEFAULT_MAX_REQUESTS 5
--#endif
--
--#if LIBCURL_VERSION_NUM >= 0x070c00
--#define curl_global_init(a) curl_global_init_mem(a, xmalloc, free, \
--						xrealloc, xstrdup, xcalloc)
--#endif
  
--#if (LIBCURL_VERSION_NUM < 0x070c04) || (LIBCURL_VERSION_NUM == 0x071000)
-+#if LIBCURL_VERSION_NUM == 0x071000
- #define NO_CURL_EASY_DUPHANDLE
- #endif
- 
--#if LIBCURL_VERSION_NUM < 0x070c03
--#define NO_CURL_IOCTL
+-#if LIBCURL_VERSION_NUM == 0x071000
+-#define NO_CURL_EASY_DUPHANDLE
 -#endif
 -
  /*
   * CURLOPT_USE_SSL was known as CURLOPT_FTP_SSL up to 7.16.4,
   * and the constants were known as CURLFTPSSL_*
-@@ -72,9 +53,7 @@ struct buffer {
- size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
- size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
- size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
--#ifndef NO_CURL_IOCTL
- curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp);
--#endif
- 
- /* Slot lifecycle functions */
- struct active_request_slot *get_active_slot(void);
-@@ -91,11 +70,9 @@ void finish_all_active_slots(void);
- int run_one_slot(struct active_request_slot *slot,
- 		 struct slot_results *results);
- 
--#ifdef USE_CURL_MULTI
- void fill_active_slots(void);
- void add_fill_function(void *data, int (*fill)(void *));
- void step_active_slots(void);
--#endif
- 
- void http_init(struct remote *remote, const char *url,
- 	       int proactive_auth);
-diff --git a/imap-send.c b/imap-send.c
-index bb085d66d10..9844328b7b3 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -1526,11 +1526,7 @@ static int curl_append_msgs_to_imap(struct imap_server_conf *server,
- 	if (cred.username) {
- 		if (res == CURLE_OK)
- 			credential_approve(&cred);
--#if LIBCURL_VERSION_NUM >= 0x070d01
- 		else if (res == CURLE_LOGIN_DENIED)
--#else
--		else
--#endif
- 			credential_reject(&cred);
- 	}
- 
-diff --git a/remote-curl.c b/remote-curl.c
-index 9e6918468e4..482d5a4656d 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -706,7 +706,6 @@ static size_t rpc_out(void *ptr, size_t eltsize,
- 	return avail;
- }
- 
--#ifndef NO_CURL_IOCTL
- static curlioerr rpc_ioctl(CURL *handle, int cmd, void *clientp)
- {
- 	struct rpc_state *rpc = clientp;
-@@ -727,7 +726,6 @@ static curlioerr rpc_ioctl(CURL *handle, int cmd, void *clientp)
- 		return CURLIOE_UNKNOWNCMD;
- 	}
- }
--#endif
- 
- struct check_pktline_state {
- 	char len_buf[4];
-@@ -946,10 +944,8 @@ static int post_rpc(struct rpc_state *rpc, int stateless_connect, int flush_rece
- 		rpc->initial_buffer = 1;
- 		curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, rpc_out);
- 		curl_easy_setopt(slot->curl, CURLOPT_INFILE, rpc);
--#ifndef NO_CURL_IOCTL
- 		curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, rpc_ioctl);
- 		curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, rpc);
--#endif
- 		if (options.verbosity > 1) {
- 			fprintf(stderr, "POST %s (chunked)\n", rpc->service_name);
- 			fflush(stderr);
 -- 
 2.32.0.874.ge7a9d58bfcf
 
