@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4240EC6377A
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 23:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00DECC6377B
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 23:23:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 27BF161241
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 23:23:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE3586108B
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 23:23:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231173AbhGUWmj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jul 2021 18:42:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38164 "EHLO
+        id S231177AbhGUWml (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jul 2021 18:42:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230091AbhGUWmi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jul 2021 18:42:38 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66F94C061757
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 16:23:13 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 14-20020a05600c028eb0290228f19cb433so484787wmk.0
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 16:23:13 -0700 (PDT)
+        with ESMTP id S231164AbhGUWmj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jul 2021 18:42:39 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42B89C061575
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 16:23:14 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id a23-20020a05600c2257b0290236ec98bebaso1882851wmm.1
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 16:23:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SYYNQVaJf+Dyb4ed+bE+B9leJBA3aKE2k3ni+pJiUmw=;
-        b=pJiLEQWAL1Ac1x6Ux3nsAO9IYooBn+echjTuWApSwbGxkMcNFXY33CcBYMTOVBX3tk
-         CaSt3A7PYImYN+t0cXmJH9h7ePfCleVFZjqOPQaYpm0gk00eL+6e40coKrg1p+L/SzAt
-         KgcyliiE48m0A9U0Dtm2D0cPu078n2Rl/tENxvPevx4iuQ4L0aIlEGIospVxcIqX5hGc
-         yU++TrsPd2c0n+PH7kxTYILhmpQsY9kQ668SJpBt/y+dkFphSfhp/OPMBWGKpVLQEhdt
-         0MpxfdGLMfvWlNug3fQo13B7QU56v19SrFXx4BOpK4ahaAbnOxxPQEz6AYLe8vReVdpa
-         GLtw==
+        bh=BD5ep6McKnqZh4kQK3eRMCFgv51sbPR9ow5DGY9a9KU=;
+        b=aK1qliKpxAClGcSbVcdsJmoDexcq45Zg+JMpL4iuvvZaN/5qWuFbxb9uzxmpzeBan/
+         v1GJPCDG8/wh24gt3xo3ITbQFI9wGqZ+tl9LyRe3BdRAOxRcZ7U/GisBp1n6IiXiOk8Y
+         o4Nu9JfnB4keNlDvjg3ZqGp5KwO6XxKRPlNJZJaqeTsApoe1mtJQN9k3dejtp5FKxUuz
+         DkBCjJGVJUWJs0X2OTWdVX5ER+v7LQimZc03j6byvaCQ1jn+Wub7s4q+CXd9VJn3g+9h
+         f0tfP081OSfYWZW7uI1UpSWfXzs8zkT/F6IrXZrgz5GCWbOGDN9gPx4ZLt/rxL9hkf0T
+         XklQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SYYNQVaJf+Dyb4ed+bE+B9leJBA3aKE2k3ni+pJiUmw=;
-        b=bSBx4vm+g8XqSUvpbu25jVTGgbJV4JV2y0p28Xq7QaTRXE/nTbiqb41tWLZHNH2P/F
-         cCajg60u/3OrHa+Txbz1Y/fZUU1rsHMkoHBF99xDk4WEy/WygK+ERhm/Adi/zE+NG2GB
-         NxpetzV1i5F6tpUuRcUbtriM5y2GuX0IEpPyWrB5ALi0htE9zFrbL5VvamC4gjxmWy6O
-         nUx0W7Gr1Zewf76ayU/lK9y5ixOXrfGP4t5tY27BudZ/mXSXO5cxkowkMvqvGnM2Mkbr
-         DPzyJ8mrh3TjLEuwACImOJ5eD6HemFvdEHBTZ+ZpTt+9iryR/nr0ZCuNXg6s0BmAqQxo
-         gUbw==
-X-Gm-Message-State: AOAM533B6jq6f7PJiaaFD40rTWvwFIfkavuXUizFsi3bGKFO1hHFjLjr
-        Ma8dq+8hGVVcqW3k1qAzoTZThgMZZOLZXA==
-X-Google-Smtp-Source: ABdhPJxVdKbNj0hNZIQgGGC0vLSws0YY3SEBTSiR5tj/KScWlORNeNFp4UzSDEG3by0e9M9Exwh2Hg==
-X-Received: by 2002:a05:600c:4f56:: with SMTP id m22mr4564385wmq.103.1626909791704;
-        Wed, 21 Jul 2021 16:23:11 -0700 (PDT)
+        bh=BD5ep6McKnqZh4kQK3eRMCFgv51sbPR9ow5DGY9a9KU=;
+        b=WdXD+/busx5+wyKURaq0i0qJ33j6COK1ph1ygH+fUzLQG6r/J6psJMZ/1XKCrkSNZR
+         /9RLbawYUuvRwT85Nn5PTwZPIMrjV6tx257L1OfdqE6eF0G2lz9FdtR9VF3RpGDcWJb/
+         uJ2MZ7jn2SsID1Ii7R3XR+ZDk7+Juk4ZnKXosXsRLIE9rwUZCqGsBmOvIpfv1DB1ztRB
+         GbSlsstLxzbrbU8ILTVl5cTdqV0Nk0ocdi3iTVYi/Ep1ohWl+fsa8fHYWwR0BiBSOxb8
+         v9hixIgjQR6wmpkI+rCgZbpLLaKOMCps1vk3jakjKst7DvCVstOGSJEJ+a8y44H7x+bQ
+         xNbQ==
+X-Gm-Message-State: AOAM532SpwnMBNHMYxdq6mw5e1nryD9BXz4QaJT74GX3sUjlLgE3vIhm
+        rwg04bHfcMVvsdwK/098ZqKwCkg/kDGiOw==
+X-Google-Smtp-Source: ABdhPJxkKkYzxdNryTWDz+bY3a3p6NYDZzhevlKqHUGYm5Obyrt96AacGh2t3uccZ1DeweXS5BMzhw==
+X-Received: by 2002:a1c:a7d2:: with SMTP id q201mr6357642wme.61.1626909792662;
+        Wed, 21 Jul 2021 16:23:12 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v11sm27690260wrs.4.2021.07.21.16.23.10
+        by smtp.gmail.com with ESMTPSA id v11sm27690260wrs.4.2021.07.21.16.23.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jul 2021 16:23:11 -0700 (PDT)
+        Wed, 21 Jul 2021 16:23:12 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 1/5] Makefile: move ".PHONY: cscope" near its target
-Date:   Thu, 22 Jul 2021 01:23:02 +0200
-Message-Id: <patch-1.5-6b4ddc126d9-20210721T231900Z-avarab@gmail.com>
+Subject: [PATCH v3 2/5] Makefile: add QUIET_GEN to "cscope" target
+Date:   Thu, 22 Jul 2021 01:23:03 +0200
+Message-Id: <patch-2.5-d3d5d332e92-20210721T231900Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.955.ge7c5360f7e7
 In-Reply-To: <cover-0.5-00000000000-20210721T231900Z-avarab@gmail.com>
 References: <cover-0.5-0000000000-20210629T110837Z-avarab@gmail.com> <cover-0.5-00000000000-20210721T231900Z-avarab@gmail.com>
@@ -80,39 +80,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the ".PHONY: cscope" rule to live alongside the "cscope" target
-itself, not to be all the way near the bottom where we define the
-"FORCE" rule.
+Don't show the very verbose $(FIND_SOURCE_FILES) command on every
+"make cscope" invocation.
 
-That line was last modified in 2f76919517e (MinGW: avoid collisions
-between "tags" and "TAGS", 2010-09-28).
+See my recent 3c80fcb591 (Makefile: add QUIET_GEN to "tags" and "TAGS"
+targets, 2021-03-28) for the same fix for the other adjacent targets.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index c7c46c017d3..7dd93ef4c3e 100644
+index 7dd93ef4c3e..69410095949 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2749,6 +2749,7 @@ tags: FORCE
- 	$(FIND_SOURCE_FILES) | xargs ctags -a -o tags+ && \
- 	mv tags+ tags
+@@ -2751,7 +2751,7 @@ tags: FORCE
  
-+.PHONY: cscope
+ .PHONY: cscope
  cscope:
- 	$(RM) cscope*
+-	$(RM) cscope*
++	$(QUIET_GEN)$(RM) cscope* && \
  	$(FIND_SOURCE_FILES) | xargs cscope -b
-@@ -3260,7 +3261,7 @@ endif
  
- .PHONY: all install profile-clean cocciclean clean strip
- .PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_modern_shell
--.PHONY: FORCE cscope
-+.PHONY: FORCE
- 
- ### Check documentation
- #
+ ### Detect prefix changes
 -- 
 2.32.0.955.ge7c5360f7e7
 
