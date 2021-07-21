@@ -2,83 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84069C12002
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 18:15:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCDC3C12002
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 19:18:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A1C060720
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 18:15:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A454B6120D
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 19:18:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237460AbhGUReh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jul 2021 13:34:37 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50601 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230191AbhGUReg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jul 2021 13:34:36 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9766FC0058;
-        Wed, 21 Jul 2021 14:15:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=j1JNYBhujE1c
-        Pg+3McmYsqqssUNTPMwhnGAgIxRr0/w=; b=TCAvU1XEnRCR9FI2YAydZavuU/1l
-        58EqyJ5hWRF4QaEOJzzblp1lS8dIqWHYqy1hHm2rUntlTeY3vxlPc+wXACi2JVYA
-        d/lDV3BEVA2dODS6Or6WDZlLIcMxwvI0JjGHH+EfT8wPD8/AueYsJt2+QJAbwFBi
-        Ta6UENxuNFKmVS0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8E896C0057;
-        Wed, 21 Jul 2021 14:15:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 11811C0052;
-        Wed, 21 Jul 2021 14:15:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2021, #02; Thu, 8)
-In-Reply-To: <87tul24iw2.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Sat, 10 Jul 2021 10:56:19 +0200")
-References: <xmqq8s2ga19f.fsf@gitster.g> <87tul24iw2.fsf@evledraar.gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-Date:   Wed, 21 Jul 2021 11:15:11 -0700
-Message-ID: <xmqqsg07cz4g.fsf@gitster.g>
+        id S240025AbhGUSiM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jul 2021 14:38:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38390 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238640AbhGUSiL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jul 2021 14:38:11 -0400
+Received: from mail.aixigo.de (mail.aixigo.de [IPv6:2001:67c:13b0:ffff::60])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 20191C061575
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 12:18:46 -0700 (PDT)
+Received: from mailhost.ac.aixigo.de (mailhost.ac.aixigo.de [172.19.96.11])
+        by mail.aixigo.de (OpenSMTPD) with ESMTPS id 7e2b0763 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
+        Wed, 21 Jul 2021 21:18:44 +0200 (CEST)
+Received: from vmdpcl078.ac.aixigo.de ([172.19.100.218])
+        by mailhost.ac.aixigo.de (8.15.2/8.15.2/Debian-14~deb10u1) with ESMTPS id 16LJIhJv3182888
+        (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT);
+        Wed, 21 Jul 2021 21:18:43 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aixigo.com;
+        s=default; t=1626895123;
+        bh=W7Ycno5mL6shRsuJwb1cmNKs21d8UF7laIivYzqef10=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=y9lyKePcJ3VlX3NrmLlZLqnBZWJp+Cd7g3ja1LFDCx0OK9Iz/SHU/6uB4U5a/embO
+         MILVK0gC5wriEuJ/OT2usmwtT9L9AUn0Bx71Wrh2cPjEACPh6AspXWV1RqVHkrJZ6a
+         JhUxtwvTzpJ0056wgQHatVPYUW93lNTYNw0PEd/w=
+Subject: Re: [PATCH v2 4/8] pull: since --ff-only overrides, handle it first
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+References: <pull.1049.git.git.1626536507.gitgitgadget@gmail.com>
+ <pull.1049.v2.git.git.1626831744.gitgitgadget@gmail.com>
+ <1a821d3b1ddf22b62b14d3b573015c3d8c90e2de.1626831744.git.gitgitgadget@gmail.com>
+From:   Matthias Baumgarten <matthias.baumgarten@aixigo.com>
+Message-ID: <5f334459-26ef-6bf6-d72e-31564b10cd2c@aixigo.com>
+Date:   Wed, 21 Jul 2021 21:18:38 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 96F4FA52-EA4F-11EB-814B-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1a821d3b1ddf22b62b14d3b573015c3d8c90e2de.1626831744.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: de-DE
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: clamav-milter 0.103.2 at srvvm01.ac.aixigo.de
+X-Virus-Status: Clean
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On 7/21/21 3:42 AM, Elijah Newren via GitGitGadget wrote:
+> There are both merge and rebase branches in the logic, and previously
+> both had to handle fast-forwarding.  Merge handled that implicitly
+> (because git merge handles it directly), while in rebase it was
+> explicit.  Given that the --ff-only flag is meant to override any
+> --rebase or --no-rebase, make the code reflect that by handling
+> --ff-only before the merge-vs-rebase logic.
 
->> * ab/serve-cleanup (2021-06-28) 8 commits
->>  - upload-pack.c: convert to new serve.c "startup" config cb
->> ...
-> I have a re-roll of this queued locally. It seemed people were on the
-> fence about the whole "startup config" thing so I initially planned to
-> just drop it, but then I started fixing some other related serve.c code
-> and found a good/better use for it, so maybe I'll keep it. Will post it
-> soon.
->
-> FWIW Han-Wen's "let's rename the serve() function" suggestion sent me o=
-n
-> an Odyssey of discovering various unused/overly-complex-for-no-reason
-> code around protcol v1/v2 that I think we should just clean up...
+Great. That now will work as I would expect it to.
 
-I do not think the startup config thing got much traction, either,
-but in any case did I miss an update for this one?
-
-Thanks.
+-- 
+aixigo AG
+Karl-Friedrich-Str. 68, 52072 Aachen, Germany
+phone: +49 (0)241 559709-390, fax: +49 (0)241 559709-99
+email: matthias.baumgarten@aixigo.com
+web: https://www.aixigo.com
+District Court Aachen – HRB 8057
+Board: Christian Friedrich, Tobias Haustein
+Chairman of the Supervisory Board: Dr. Roland Schlager
