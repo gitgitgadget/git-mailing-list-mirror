@@ -2,140 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 905BCC636C9
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 16:52:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1103C12002
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 16:54:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6EE5261208
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 16:52:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A1B5611C1
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 16:54:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233838AbhGUQMD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jul 2021 12:12:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33252 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230378AbhGUQMC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jul 2021 12:12:02 -0400
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22BABC061575
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 09:52:39 -0700 (PDT)
-Received: by mail-il1-x136.google.com with SMTP id m20so2856387ili.9
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 09:52:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=zPiWqCFdOFiciJ2cGrfjERG1/QquONpABIGN/ptvREk=;
-        b=MKDqcc7dNUM8cwZ51Qk7feNcNqo99d5pJCSfPA9nHRnJMONzGLsZz+f78UryOoHpRS
-         KP/pRQv6bzqwvYnhIaQaTUuEjQ9J0eKB7cFbO4AX6mC0uChS91Fpk5nD12rCQ/MXIVmf
-         3/fUJD0YLLcTGxVypcjiManhE3APIxNrL+HEAK5ntJsZxafkAVTrglUxZMRkL1mwyJe3
-         E9PxFq3zrtqcElWCY/ZXeM6CgH6CBzPLvG6G8CtFZevGNLXRu+LI/bfwZ/FV/7/VYXw6
-         bJxOUATFZeIV9qUdmp5WyVuv2Fu9t/Wtix2yG4ajoAHtG7FBNRuO7X1fExKUwKkmHMYt
-         leXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=zPiWqCFdOFiciJ2cGrfjERG1/QquONpABIGN/ptvREk=;
-        b=OwailB3FVig6fCt5KiMp46O1fVr96URCOBPV9+3vqANDqUy1q1TSLS9nlpmtmxU/+9
-         kWgk6nQ9APaTe3ECnSj3phE9ZL2QxpqrivVWqRAQm+aB542KH4VUgbc+K1juaTTbcc39
-         fFf67sHjZQ5Gnt6MguhBoU3Pp721KxHy53fYJti9hrw53jFBvUXeEv9HpYrhT7jjCw4a
-         K7IUZrDYV/9hKdcOTLZw67DFmlpV2YNz3lBe/kvT+2ds8pBy8PgkhpLF8qLRp3IwWg9p
-         kkV/imb97aHdwMz0GWaEJ3ntQjnMFqHNvY+pnpi+l0umAskcrLyqYuAmF7qNC55ndDdI
-         bgcQ==
-X-Gm-Message-State: AOAM533ttti6iFdWPeGG7I/iv2TigxXh2+wUmUMMxYNPqSNxX0otUxiu
-        hTL/DwFKlJXs6A59gNj8lyVhQ90ilXEHC5cm
-X-Google-Smtp-Source: ABdhPJzj/pvIXAZxN9TjEk/LhTGBlZHqs07e/Pz859gDvu+zXcUEwbFVl+SBkiLYZXIkPqH7g4s3FA==
-X-Received: by 2002:a92:d083:: with SMTP id h3mr25151166ilh.157.1626886358442;
-        Wed, 21 Jul 2021 09:52:38 -0700 (PDT)
-Received: from localhost ([2600:1700:d843:8f:2c46:d8ae:a4c3:9466])
-        by smtp.gmail.com with ESMTPSA id f3sm15049334iob.30.2021.07.21.09.52.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jul 2021 09:52:37 -0700 (PDT)
-Date:   Wed, 21 Jul 2021 12:52:37 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, avarab@gmail.com
-Subject: [PATCH v2] multi-pack-index: fix potential segfault without
- sub-command
-Message-ID: <12804130427fd71e88ce10aed283c1f9cdd330ef.1626886330.git.me@ttaylorr.com>
-References: <YPfWkzRtQKthOgZx@coredump.intra.peff.net>
+        id S231702AbhGUQOF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jul 2021 12:14:05 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58958 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229561AbhGUQOE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jul 2021 12:14:04 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 925DB14275F;
+        Wed, 21 Jul 2021 12:54:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LqoqABbrrUwBGeHk2j2xCjtXRnojlVjuzyPfCE
+        21q+k=; b=uhfJgu0VzNZZWMO42R4QkQoHxQRWEqS5QxNFA2G7ZdruSXNRn7K98p
+        86GCfo0UoXt6sYqFUh+uu2M4LfRJ0jylMZ26CoYABnMBVd+b6cqLlFvqS4jvc4ZT
+        aHT5JqplkZRdo+YajjgzanNa+E3S+ow8fftw0dioooz4XTagVrbKc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8B94014275D;
+        Wed, 21 Jul 2021 12:54:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D510214275B;
+        Wed, 21 Jul 2021 12:54:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>
+Subject: Re: [PATCH v3 6/6] commit-graph: show usage on "commit-graph
+ [write|verify] garbage"
+References: <cover-0.5-00000000000-20210718T074936Z-avarab@gmail.com>
+        <cover-0.6-00000000000-20210720T113707Z-avarab@gmail.com>
+        <patch-6.6-5c1694e071e-20210720T113707Z-avarab@gmail.com>
+        <20210720174739.GA2025@szeder.dev> <20210720175530.GA23408@szeder.dev>
+        <YPcU3LSpa/r5nFCP@nand.local> <87lf60vfyn.fsf@evledraar.gmail.com>
+        <YPdEeBGi3RVrB/fu@nand.local> <87im14unfd.fsf@evledraar.gmail.com>
+        <YPfWA4uA6OTKeOd9@coredump.intra.peff.net>
+Date:   Wed, 21 Jul 2021 09:54:36 -0700
+In-Reply-To: <YPfWA4uA6OTKeOd9@coredump.intra.peff.net> (Jeff King's message
+        of "Wed, 21 Jul 2021 04:08:35 -0400")
+Message-ID: <xmqqmtqfehf7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YPfWkzRtQKthOgZx@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 558CFB92-EA44-11EB-A56D-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since cd57bc41bb (builtin/multi-pack-index.c: display usage on
-unrecognized command, 2021-03-30) we have used a "usage" label to avoid
-having two separate callers of usage_with_options (one when no arguments
-are given, and another for unrecognized sub-commands).
+Jeff King <peff@peff.net> writes:
 
-But the first caller has been broken since cd57bc41bb, since it will
-happily jump to usage without arguments, and then pass argv[0] to the
-"unrecognized subcommand" error.
+>> But I think I've been losing that argument recently, e.g. after [1]
+>> (which I argued we should put into git-ls-files) even things like git's
+>> basic idea of the state of the index are exposed in some helpers, but
+>> not corresponding plumbing.
+>
+> Yeah. I wish "ls-files --debug" showed more of the extension data, for
+> example.
 
-Many compilers will save us from a segfault here, but the end result is
-ugly, since it mentions an unrecognized subcommand when we didn't even
-pass one, and (on GCC) includes "(null)" in its output.
+Let me second that ;-)  With extensions and even more drastic things
+like sparse index entries, "pretend that the index is a flat list of
+<mode, object, path>" is sometimes not useful in debugging (as bugs
+and design mistakes might lie in the code that makes us pretend).
 
-Move the "usage" label down past the error about unrecognized
-subcommands so that it is only triggered when it should be. While we're
-at it, bulk up our test coverage in this area, too.
+Even with packed objects, we still "pretetend that an object file is
+a single line '<type> SP <len> NUL' followed by payload bytes,
+deflated", as if packed objects do not exist.  I do not offhand
+recall we have a good debugging option in the plumbing, or a
+dedicated debugging tool, but because the format for packed objects
+has been stable, we are probably OK.  Contrast to that, the index is
+designed to be more ephemeral and its format is subject to change,
+so we may in more need for a good debugging option.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
-I didn't realize that we are veering away from test_i18ngrep in new
-tests, so here's a version of this trivial patch with grep instead.
+> Yeah, I'd agree with that. The most valuable helpers to me are the ones
+> that help us understand what Git is seeing, or what's in a binary file
+> format. Obscure-case "functional" helpers are less likely to be
+> generally useful.
 
-Range-diff against v1:
-1:  8c0bb3e0dc ! 1:  1280413042 multi-pack-index: fix potential segfault without sub-command
-    @@ t/t5319-multi-pack-index.sh: test_expect_success 'load reverse index when missin
-
-     +test_expect_success 'usage shown without sub-command' '
-     +	test_expect_code 129 git multi-pack-index 2>err &&
-    -+	! test_i18ngrep "unrecognized subcommand" err
-    ++	! grep "unrecognized subcommand" err
-     +'
-     +
-      test_done
-
- builtin/multi-pack-index.c  | 2 +-
- t/t5319-multi-pack-index.sh | 5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 5d3ea445fd..8ff0dee2ec 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -176,8 +176,8 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 	else if (!strcmp(argv[0], "expire"))
- 		return cmd_multi_pack_index_expire(argc, argv);
- 	else {
--usage:
- 		error(_("unrecognized subcommand: %s"), argv[0]);
-+usage:
- 		usage_with_options(builtin_multi_pack_index_usage,
- 				   builtin_multi_pack_index_options);
- 	}
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 7609f1ea64..c0ec5a6fd3 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -837,4 +837,9 @@ test_expect_success 'load reverse index when missing .idx, .pack' '
- 	)
- '
-
-+test_expect_success 'usage shown without sub-command' '
-+	test_expect_code 129 git multi-pack-index 2>err &&
-+	! grep "unrecognized subcommand" err
-+'
-+
- test_done
---
-2.31.1.163.ga65ce7f831
+Yup
