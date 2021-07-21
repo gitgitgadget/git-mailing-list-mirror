@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ACA6AC636C8
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 01:43:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44B33C07E9B
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 01:43:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 90D0C6113B
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 01:43:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B64661178
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 01:43:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231187AbhGUBCx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Jul 2021 21:02:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52598 "EHLO
+        id S230511AbhGUBDC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Jul 2021 21:03:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230288AbhGUBCH (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230282AbhGUBCH (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 20 Jul 2021 21:02:07 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FF59C0613DE
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05791C0613DD
         for <git@vger.kernel.org>; Tue, 20 Jul 2021 18:42:32 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id k4so380319wrc.8
-        for <git@vger.kernel.org>; Tue, 20 Jul 2021 18:42:32 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id f9so368560wrq.11
+        for <git@vger.kernel.org>; Tue, 20 Jul 2021 18:42:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HiROisDT4T5MvSgx7njmc0Y7ZYyNM7DadaK7YGuEV+0=;
-        b=XyJElbFgpiM2qGyoqm+Z+9FnvVS17JGRWgGWE086eMjtq53uaJDFWEmZX1obX1xFoH
-         T1YkzLT9N63RWM8yBUF7Igl6nhYYwSZI+Bnybl73u96JrvhmzykSsUhaZlazXnHqIRnb
-         HSRk0rLhsBw+2Ib70TX9P0DsI64T4jnAnmtCTQDEh+HClH94Sl4nEFaoCWE3c0S9hhlo
-         g0cZ/PoJUcBIIo0c8mlyUftrvpRLE7HTI3leILrRzVhYnRwCxC84Y0ey8P7BTCbYjjjI
-         OrT0L3oo/Jj7pofUSqZ3KJYX22o30tIZxZowB1u9ZqQRFq8hfDry1aU8lmM063B7JL9l
-         eTcw==
+        bh=rcHy2kpyRrd2ur35EtZQmqWsp1/MLlYIB4KAKIEEBjM=;
+        b=eU1EWz33nouYslDTpYCHVv0P6NQboYwyg+Zwyvt8sBwhjsT7KcfiLAj3baonoVTbl0
+         JVOz/XxPXkusQf6XslmkdoU0SeZxdpNZvj4Y+QggrR16E/of45wrKs4aRUkwkPeGDy8m
+         4WzbnNsa9GJanq8weo0UEwkP/8WoLlQYotB+eMjD28wGmSn1XqwPa2Rb1nE2MQlZ6Cv/
+         ofe6107oXlZLnjSPH21bX+zFhMADZpr0yAeM4Bl0gSzLQjUJCPTnr58/ueKD2FTgldNR
+         XGgRDeb4/3dExXNSCRWBAZ9mprwwod51eP9qvVALFV2qPwFQXS/VasOyLmCS3HK/YU5V
+         mCng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HiROisDT4T5MvSgx7njmc0Y7ZYyNM7DadaK7YGuEV+0=;
-        b=Jw2HYaiN43T4l7T4C1ixUcXO+22NZ7UCEX5UQmWEMtuKt2lQJ26FlBkMrE5TPK86cT
-         llqkjhsn2kQTAdkQ4dxU4SQ1FFkMzpaNvtcwkipD9ZS+AGxFmHLPghAVvavQPVdWSYUJ
-         3OVZZr4pg8MSASQKwSsPjz2czPqXSqvC9jBLOMgfhzKSJXA5sc/MQM26mFsl5djb1cNi
-         C+JLdvqPfTAPvLCc3eK8M6G8eYWBkiBfCzAsEP6sHw7qL2aptub7jhspXdNxYsZplSQl
-         MjI0frdoPfDWPa5KvhRaNAFGFijDTVyZN+YFrfCCmDQQSuqVaqJ0GGYVggLuJlimld4Y
-         m97A==
-X-Gm-Message-State: AOAM532meSW5BbkH4KDG6cbUQ9CUo5LIr864XWq0l4ZyuQGbL1opysmM
-        N/ZbcQOn4LSSwTpwMbvEZGn7vUQs1Jk=
-X-Google-Smtp-Source: ABdhPJwKGsNpD5D330I8FcIXviCCnc8puHxvzp5sUfYgHHwy1YJe+TCg9+X8SuKkSFNGHsG09aDxQQ==
-X-Received: by 2002:adf:d1c3:: with SMTP id b3mr20746125wrd.4.1626831751140;
-        Tue, 20 Jul 2021 18:42:31 -0700 (PDT)
+        bh=rcHy2kpyRrd2ur35EtZQmqWsp1/MLlYIB4KAKIEEBjM=;
+        b=POiPZOR0H7r06S02xrELtYMtge/PDQrUItI9yC01csIkoIps5qQVP2Q9oXjEhBHlwS
+         esh1K1ZiZ7595Whle3LgHnu+s5/d92ixooAV1JmIBTZC8wvv5cfGRiqMfNdItgNyxN9y
+         SfWI42uFMImADwKUTf+iXpY+bi2bY3I6cckicm8kCCFhswTYYmciWb6fEpkxSMNheQnY
+         DNqEelY1upLV2wNtiLntZWozeltvqPVcXaWcF+iBDhsGz6CxOW9vEsq2KwABuWMEB5Dw
+         vK0Bhi9sRAlcgkZZ59DqzX73kfqQ1ezXKX5XCRN30ty/Er6KWPz5bJeBvWAk+6Mheqy2
+         nq6Q==
+X-Gm-Message-State: AOAM5304ivxcCs7/j5pOZGS0UEqtSSVOQto9tB2j8Dntb9h+PG1R9Qag
+        hSRvzrrZADSIrVBxN4pkxNhlZ7IHs9A=
+X-Google-Smtp-Source: ABdhPJxNyfTbippKaxHZXuT6pDPJlhIpiLvSFimHANYYR2A4s6oEloN4HaI1ivujLOBQcszQl7pNZg==
+X-Received: by 2002:a5d:65cb:: with SMTP id e11mr41159927wrw.105.1626831750558;
+        Tue, 20 Jul 2021 18:42:30 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u2sm20498426wmc.42.2021.07.20.18.42.30
+        by smtp.gmail.com with ESMTPSA id n18sm24382199wrt.89.2021.07.20.18.42.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 20 Jul 2021 18:42:30 -0700 (PDT)
-Message-Id: <f03b15b7eb03de2fe696e12622031bff484c4912.1626831744.git.gitgitgadget@gmail.com>
+Message-Id: <90d49e0fb7897512d7386a72787bb15c3f23a4f6.1626831744.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1049.v2.git.git.1626831744.gitgitgadget@gmail.com>
 References: <pull.1049.git.git.1626536507.gitgitgadget@gmail.com>
         <pull.1049.v2.git.git.1626831744.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 21 Jul 2021 01:42:24 +0000
-Subject: [PATCH v2 8/8] pull: fix handling of multiple heads
+Date:   Wed, 21 Jul 2021 01:42:23 +0000
+Subject: [PATCH v2 7/8] pull: update docs & code for option compatibility with
+ rebasing
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,71 +83,182 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-With multiple heads, we should not allow rebasing or fast-forwarding.
-Make sure any fast-forward request calls out specifically the fact that
-multiple branches are in play.  Also, since we cannot fast-forward to
-multiple branches, fix our computation of can_ff.
+git-pull.txt includes merge-options.txt, which is written assuming
+merges will happen.  git-pull has allowed rebases for many years; update
+the documentation to reflect that.
+
+While at it, pass any `--signoff` flag through to the rebase backend too
+so that we don't have to document it as merge-specific.  Rebase has
+supported the --signoff flag for years now as well.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/pull.c               | 18 ++++++++++++++----
- t/t7601-merge-pull-config.sh |  2 +-
- 2 files changed, 15 insertions(+), 5 deletions(-)
+ Documentation/git-merge.txt     |  2 ++
+ Documentation/git-pull.txt      |  9 ++++----
+ Documentation/merge-options.txt | 40 +++++++++++++++++++++++++++++++++
+ builtin/pull.c                  |  2 ++
+ 4 files changed, 48 insertions(+), 5 deletions(-)
 
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 3819fadac1f..e4f3352eb58 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -61,6 +61,8 @@ merge has resulted in conflicts.
+ 
+ OPTIONS
+ -------
++:git-merge: 1
++
+ include::merge-options.txt[]
+ 
+ -m <msg>::
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index cad3f6bfcee..077961dfa1f 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -19,13 +19,12 @@ Incorporates changes from a remote repository into the current branch.
+ If the current branch is behind the remote, then by default it will
+ fast-forward the current branch to match the remote.  If the current
+ branch and the remote have diverged, the user needs to specify how to
+-reconcile the divergent branches with `--no-ff`, `--ff`, or `--rebase`
+-(or the corresponding configuration options in `pull.ff` or
+-`pull.rebase`).
++reconcile the divergent branches with `--rebase` or `--no-rebase` (or
++the corresponding configuration option in `pull.rebase`).
+ 
+ More precisely, `git pull` runs `git fetch` with the given parameters
+ and then depending on configuration options or command line flags,
+-will call either `git merge` or `git rebase` to reconcile diverging
++will call either `git rebase` or `git merge` to reconcile diverging
+ branches.
+ 
+ <repository> should be the name of a remote repository as
+@@ -136,7 +135,7 @@ published that history already.  Do *not* use this option
+ unless you have read linkgit:git-rebase[1] carefully.
+ 
+ --no-rebase::
+-	Override earlier --rebase.
++	This is shorthand for --rebase=false.
+ 
+ Options related to fetching
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index eb0aabd396f..907327bf759 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -2,6 +2,9 @@
+ --no-commit::
+ 	Perform the merge and commit the result. This option can
+ 	be used to override --no-commit.
++ifdef::git-pull[]
++	Only useful when merging.
++endif::git-pull[]
+ +
+ With --no-commit perform the merge and stop just before creating
+ a merge commit, to give the user a chance to inspect and further
+@@ -39,6 +42,7 @@ set to `no` at the beginning of them.
+ 	to `MERGE_MSG` before being passed on to the commit machinery in the
+ 	case of a merge conflict.
+ 
++ifdef::git-merge[]
+ --ff::
+ --no-ff::
+ --ff-only::
+@@ -47,6 +51,22 @@ set to `no` at the beginning of them.
+ 	default unless merging an annotated (and possibly signed) tag
+ 	that is not stored in its natural place in the `refs/tags/`
+ 	hierarchy, in which case `--no-ff` is assumed.
++endif::git-merge[]
++ifdef::git-pull[]
++--ff-only::
++	Only update to the new history if there is no divergent local
++	history.  This is the default when no method for reconciling
++	divergent histories is provided (via the --rebase=* flags).
++
++--ff::
++--no-ff::
++	When merging rather than rebasing, specifies how a merge is
++	handled when the merged-in history is already a descendant of
++	the current history.  If merging is requested, `--ff` is the
++	default unless merging an annotated (and possibly signed) tag
++	that is not stored in its natural place in the `refs/tags/`
++	hierarchy, in which case `--no-ff` is assumed.
++endif::git-pull[]
+ +
+ With `--ff`, when possible resolve the merge as a fast-forward (only
+ update the branch pointer to match the merged branch; do not create a
+@@ -55,9 +75,11 @@ descendant of the current history), create a merge commit.
+ +
+ With `--no-ff`, create a merge commit in all cases, even when the merge
+ could instead be resolved as a fast-forward.
++ifdef::git-merge[]
+ +
+ With `--ff-only`, resolve the merge as a fast-forward when possible.
+ When not possible, refuse to merge and exit with a non-zero status.
++endif::git-merge[]
+ 
+ -S[<keyid>]::
+ --gpg-sign[=<keyid>]::
+@@ -73,6 +95,9 @@ When not possible, refuse to merge and exit with a non-zero status.
+ 	In addition to branch names, populate the log message with
+ 	one-line descriptions from at most <n> actual commits that are being
+ 	merged. See also linkgit:git-fmt-merge-msg[1].
++ifdef::git-pull[]
++	Only useful when merging.
++endif::git-pull[]
+ +
+ With --no-log do not list one-line descriptions from the
+ actual commits being merged.
+@@ -102,10 +127,17 @@ With --no-squash perform the merge and commit the result. This
+ option can be used to override --squash.
+ +
+ With --squash, --commit is not allowed, and will fail.
++ifdef::git-pull[]
+++
++Only useful when merging.
++endif::git-pull[]
+ 
+ --no-verify::
+ 	This option bypasses the pre-merge and commit-msg hooks.
+ 	See also linkgit:githooks[5].
++ifdef::git-pull[]
++	Only useful when merging.
++endif::git-pull[]
+ 
+ -s <strategy>::
+ --strategy=<strategy>::
+@@ -127,6 +159,10 @@ With --squash, --commit is not allowed, and will fail.
+ 	default trust model, this means the signing key has been signed by
+ 	a trusted key.  If the tip commit of the side branch is not signed
+ 	with a valid key, the merge is aborted.
++ifdef::git-pull[]
+++
++Only useful when merging.
++endif::git-pull[]
+ 
+ --summary::
+ --no-summary::
+@@ -166,3 +202,7 @@ endif::git-pull[]
+ 	projects that started their lives independently. As that is
+ 	a very rare occasion, no configuration variable to enable
+ 	this by default exists and will not be added.
++ifdef::git-pull[]
+++
++Only useful when merging.
++endif::git-pull[]
 diff --git a/builtin/pull.c b/builtin/pull.c
-index a15d4154093..d6631d23d17 100644
+index 94464ca196f..a15d4154093 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -913,12 +913,18 @@ static int run_rebase(const struct object_id *newbase,
- 	return ret;
- }
- 
--static int get_can_ff(struct object_id *orig_head, struct object_id *orig_merge_head)
-+static int get_can_ff(struct object_id *orig_head,
-+		      struct oid_array *merge_heads)
- {
- 	int ret;
- 	struct commit_list *list = NULL;
- 	struct commit *merge_head, *head;
-+	struct object_id *orig_merge_head;
- 
-+	if (merge_heads->nr > 1)
-+		return 0;
-+
-+	orig_merge_head = &merge_heads->oid[0];
- 	head = lookup_commit_reference(the_repository, orig_head);
- 	commit_list_insert(head, &list);
- 	merge_head = lookup_commit_reference(the_repository, orig_merge_head);
-@@ -1057,10 +1063,14 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 			die(_("Cannot merge multiple branches into empty head."));
- 		return pull_into_void(merge_heads.oid, &curr_head);
- 	}
--	if (opt_rebase && merge_heads.nr > 1)
--		die(_("Cannot rebase onto multiple branches."));
-+	if (merge_heads.nr > 1) {
-+		if (opt_rebase)
-+			die(_("Cannot rebase onto multiple branches."));
-+		if (opt_ff && !strcmp(opt_ff, "--ff-only"))
-+			die(_("Cannot fast-forward to multiple branches."));
-+	}
- 
--	can_ff = get_can_ff(&orig_head, &merge_heads.oid[0]);
-+	can_ff = get_can_ff(&orig_head, &merge_heads);
- 
- 	/* ff-only takes precedence over rebase */
- 	if (opt_ff && !strcmp(opt_ff, "--ff-only")) {
-diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
-index 742ed3981c7..1f652f433ee 100755
---- a/t/t7601-merge-pull-config.sh
-+++ b/t/t7601-merge-pull-config.sh
-@@ -331,7 +331,7 @@ test_expect_success 'Multiple heads warns about inability to fast forward' '
- 	test_i18ngrep "You have divergent branches" err
- '
- 
--test_expect_failure 'Multiple can never be fast forwarded' '
-+test_expect_success 'Multiple can never be fast forwarded' '
- 	git reset --hard c0 &&
- 	test_must_fail git -c pull.ff=only pull . c1 c2 c3 2>err &&
- 	test_i18ngrep ! "You have divergent branches" err &&
+@@ -893,6 +893,8 @@ static int run_rebase(const struct object_id *newbase,
+ 	strvec_pushv(&args, opt_strategy_opts.v);
+ 	if (opt_gpg_sign)
+ 		strvec_push(&args, opt_gpg_sign);
++	if (opt_signoff)
++		strvec_push(&args, opt_signoff);
+ 	if (opt_autostash == 0)
+ 		strvec_push(&args, "--no-autostash");
+ 	else if (opt_autostash == 1)
 -- 
 gitgitgadget
+
