@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03AECC6377B
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 22:58:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D46BC6377A
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 22:58:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E735761261
-	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 22:58:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C7D861249
+	for <git@archiver.kernel.org>; Wed, 21 Jul 2021 22:58:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230413AbhGUWR6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jul 2021 18:17:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60570 "EHLO
+        id S230425AbhGUWSA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jul 2021 18:18:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230402AbhGUWRx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jul 2021 18:17:53 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95C03C061575
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 15:58:28 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id g12so2235641wme.2
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 15:58:28 -0700 (PDT)
+        with ESMTP id S230408AbhGUWRy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jul 2021 18:17:54 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCFCFC061796
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 15:58:30 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id o30-20020a05600c511eb029022e0571d1a0so1851740wms.5
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 15:58:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cEf1xRD2P0TRa0UR6b4B94ry55kqqrQ6cD9UNsUfTBE=;
-        b=lvR5OHp1SFzcjvJBkYW1EI71oU2h6yunrmE89kOIeZJPktjGv+hBjtcBqpyBb7SA9Z
-         slX1nwsNWt3Keze0UMWhrN0W46ftdxioL7ZNpA+mw+9JcOnicw9Rc2Ku/SarpFKii7UP
-         lNHJHYrJsLVW9Ia0FXb68Nb4naEDcYUgJx7ASlEkIJlYhks/NGKnJvza20oQbgrqphv9
-         pn8waSmqmmadL2SJ48wuDFipvRHq9FN8Gw9ba9LvOA/NuZBIx+dUKqTWbszDN0AOP943
-         aBdX5abzT7wMXoIYmKdEs0pE03eJs7aI/4oI9o5w+CbtyAsJpwKX1D6kZMvURfTjpAtf
-         isJA==
+        bh=HRsddE9U+TLcTdxYSZ5Cb133KMYDZ1JObsBO+6/1MjQ=;
+        b=di53IarjNnU6tOgGPl4DTtA3rOVkhNaKNskvmrEAT4v9if7Lk1lNaDWFKf7y4IGZ5d
+         BxryJ2JoH3CSd/rsZdSezxUszl4oUA86//Ym9tO5WPSKKIabONuteB3kRigUaKpcg0L0
+         3iSYbSVIp7Ktky9SAhXGugHSzDvfZixiTZ9AjeN01jK5/DT5Ggpi/1gj9bOHtZvP+ETL
+         tXla0Qmb6LI9kSPyJIX7k7ZAr/ZNkrSbEgnq098YPWDlf6EqoaTFTvzTwKMMTf6fTU06
+         B6i6NzjNs1rbMBP32kMnEjGseUvjfEyRlGliImNR+oXxucHCfuGhCqrkILJLeOLRoha8
+         lhUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cEf1xRD2P0TRa0UR6b4B94ry55kqqrQ6cD9UNsUfTBE=;
-        b=ccrqPmGuzSHvucf4l8ZrVRyxCiiuYxreC4HsoQsYYTo5GbDNTn+O9gSmtaGF1A9LK9
-         xq4nE9vuMjfELxIXHX37qxWMLy9ARuTrnJutvQgXD5TuhG9mQ8z1fVYur+6p1QfJptLq
-         ZsHk0C/PPoHY4k0PT0yUFm2wG9Ko/pE1iIHH6dkNx1ToBlOxBiY71exX8eEot+K9fzY0
-         KQzHR2snf/pMVmIRXfqUIRA1cdCnpnmfnGWu9uHxtkryYhPKXESk2ZkUX9tm8Rn/voBe
-         N5vaNVLXkS10+BP1Re5n+3U7vaGCEkMW0hBwk4o5JslH460DNUcZ0OFbNldGg6XdaUs5
-         CD7Q==
-X-Gm-Message-State: AOAM532aEmhgut8ZVmCWJwnz7+aGfO+49RdJEpre2Z3o2WVCdIvhhk+6
-        Tx+fX2pGxtE1pdmZv7QHkGXozdbt42w0hg==
-X-Google-Smtp-Source: ABdhPJxj01fxtsl14kX62ryEqgPWfV/vA2K7B2dFtd8XrOwGYXox6QOjapUrAR7JSABXK3D0ypO+Cw==
-X-Received: by 2002:a05:600c:3581:: with SMTP id p1mr6303430wmq.150.1626908307006;
-        Wed, 21 Jul 2021 15:58:27 -0700 (PDT)
+        bh=HRsddE9U+TLcTdxYSZ5Cb133KMYDZ1JObsBO+6/1MjQ=;
+        b=nXRcIwJGzp3IsdZhwIHksqwr0rlS32WDKkTxr8fdmOB/c3Hc09BTXfAV1A3vEEfqNa
+         ZqSA3fzLuZx860tEbpXCvsLtjRN6d26SrtCyDo6q+IdNINusFfaIal/ATVHf4QPwMzTT
+         dyctGcYHGyAJ5/MMBsJpmRhm0KEohDVOWjr1YkIsX/MU2rGPZVvbxcbmJoJXf+soNWGR
+         zMS3YpUY84v28yFlr7J0nbVBiMGYpm5WrobbWi6lJrx9oUaF+jfrYpaUqlG0kIUc1BqL
+         r3NLEScFYcrkT36mne/DWHaGNQ6sxgc/MT/lu6DvkzgcDcBoQS8Y/9Jp1oJpj7E74scJ
+         qpbg==
+X-Gm-Message-State: AOAM530yQTAgiqe/3WzlBxBQrkftCkTep3g7yvDfoDdQO/DBof5TGUAK
+        HLjSD0OAM7Y8h6gSJeQ9OPQRQO5Mj9f3Lw==
+X-Google-Smtp-Source: ABdhPJx3vMve7mKsAEvnuujLO7gen/zpXrKM6aVsmTLPGC2PsDb1m4CnANWmBXRizTCD+qkqSh5H9g==
+X-Received: by 2002:a7b:c251:: with SMTP id b17mr6074399wmj.83.1626908309201;
+        Wed, 21 Jul 2021 15:58:29 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g18sm23129818wmk.37.2021.07.21.15.58.26
+        by smtp.gmail.com with ESMTPSA id g18sm23129818wmk.37.2021.07.21.15.58.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jul 2021 15:58:26 -0700 (PDT)
+        Wed, 21 Jul 2021 15:58:28 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Patrick Steinhardt <ps@pks.im>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 3/8] test-lib tests: stop using a subshell in write_sub_test_lib_test()
-Date:   Thu, 22 Jul 2021 00:57:42 +0200
-Message-Id: <patch-3.8-7d5ed335a36-20210721T225504Z-avarab@gmail.com>
+Subject: [PATCH v2 6/8] test-lib tests: avoid subshell for "test_cmp" for readability
+Date:   Thu, 22 Jul 2021 00:57:45 +0200
+Message-Id: <patch-6.8-022ddbabf63-20210721T225504Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.955.ge7c5360f7e7
 In-Reply-To: <cover-0.8-00000000000-20210721T225504Z-avarab@gmail.com>
 References: <cover-0.8-00000000000-20210614T104351Z-avarab@gmail.com> <cover-0.8-00000000000-20210721T225504Z-avarab@gmail.com>
@@ -80,49 +80,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now that this function doesn't handle running the test anymore we can
-do away with the sub-shell, which was used to scope an "unset" and
-"export" shell variables.
+The use of a sub-shell for running the test_cmp of stdout/stderr for
+the test author was introduced in this form in 565b6fa87bb (tests:
+refactor mechanics of testing in a sub test-lib, 2012-12-16), but from
+looking at the history that seemed to have diligently copied my
+original ad-hoc implementation in 7b905119703 (t/t0000-basic.sh: Run
+the passing TODO test inside its own test-lib, 2010-08-19).
+
+There's no reason to use a subshell here, we try to avoid it in
+general. It also improves readability, if the test fails we print out
+the relative path in the trash directory that needs to be looked
+at.
+
+Before that was mostly obscured, since the "write_sub_test_lib_test"
+will pick the directory for you from the test name.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/lib-subtest.sh | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ t/lib-subtest.sh | 20 +++++++-------------
+ 1 file changed, 7 insertions(+), 13 deletions(-)
 
 diff --git a/t/lib-subtest.sh b/t/lib-subtest.sh
-index 8f3f6dddcf4..727b0850e9b 100644
+index d98390606b8..96a4e6e259a 100644
 --- a/t/lib-subtest.sh
 +++ b/t/lib-subtest.sh
-@@ -1,20 +1,17 @@
- write_sub_test_lib_test () {
- 	name="$1" descr="$2" # stdin is the body of the test code
- 	mkdir "$name" &&
+@@ -111,23 +111,17 @@ run_sub_test_lib_test_err () {
+ 
+ check_sub_test_lib_test () {
+ 	name="$1" # stdin is the expected output from the test
 -	(
 -		cd "$name" &&
--		write_script "$name.sh" "$TEST_SHELL_PATH" <<-EOF &&
--		test_description='$descr (run in sub test-lib)
-+	write_script "$name/$name.sh" "$TEST_SHELL_PATH" <<-EOF &&
-+	test_description='$descr (run in sub test-lib)
- 
--		This is run in a sub test-lib so that we do not get incorrect
--		passing metrics
--		'
-+	This is run in a sub test-lib so that we do not get incorrect
-+	passing metrics
-+	'
- 
--		# Point to the t/test-lib.sh, which isn't in ../ as usual
--		. "\$TEST_DIRECTORY"/test-lib.sh
--		EOF
--		cat >>"$name.sh"
+-		test_must_be_empty err &&
+-		sed -e 's/^> //' -e 's/Z$//' >expect &&
+-		test_cmp expect out
 -	)
-+	# Point to the t/test-lib.sh, which isn't in ../ as usual
-+	. "\$TEST_DIRECTORY"/test-lib.sh
-+	EOF
-+	cat >>"$name/$name.sh"
++	test_must_be_empty "$name"/err &&
++	sed -e 's/^> //' -e 's/Z$//' >"$name"/expect &&
++	test_cmp "$name/"expect "$name"/out
  }
  
- _run_sub_test_lib_test_common () {
+ check_sub_test_lib_test_err () {
+ 	name="$1" # stdin is the expected output from the test
+ 	# expected error output is in descriptor 3
+-	(
+-		cd "$name" &&
+-		sed -e 's/^> //' -e 's/Z$//' >expect.out &&
+-		test_cmp expect.out out &&
+-		sed -e 's/^> //' -e 's/Z$//' <&3 >expect.err &&
+-		test_cmp expect.err err
+-	)
++	sed -e 's/^> //' -e 's/Z$//' >"$name"/expect.out &&
++	test_cmp "$name"/expect.out "$name"/out &&
++	sed -e 's/^> //' -e 's/Z$//' <&3 >"$name"/expect.err &&
++	test_cmp "$name"/expect.err "$name"/err
+ }
+ 
 -- 
 2.32.0.955.ge7c5360f7e7
 
