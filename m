@@ -2,177 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 860D4C4338F
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 22:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FB89C4338F
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 22:57:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6066460EB2
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 22:56:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEA2D60EB2
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 22:57:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232445AbhGVWQN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jul 2021 18:16:13 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40370 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231596AbhGVWQM (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 22 Jul 2021 18:16:12 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 230086042E;
-        Thu, 22 Jul 2021 22:56:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1626994576;
-        bh=a4cHn/kqIBfjOFYzC2XkGT1zQSuQx7T8yUHEa8BJ5Hw=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=fW+kqbmBysDDzhFTCApiX4Tg7g7kiKqevZV7gcEjTki5oIq10JfxetLHg+irI/5FO
-         nDsX+UaedwSeaU5md+Q6QG67H8Whd4sUpAVrGcPqOXLrKUynHpztttxjeWKHekQ+na
-         9ujGL9KV4JW3nhtP4jri7xKwLoHn4QNwLuM8BFAVViVMAsQiETOy7URsBpkeFuAz0k
-         Li7eIDUNflmz3zVSe9mOnQCSoiKLcxqr1eh9dCQ/mrMCglTO17+xiRx9dOUTmqLJnZ
-         XHURIxmc/8SjDfhyBAQ6bxaJRvssFjewUhDLDtETDNqcuLuslupk6OPel+j9vutF2q
-         emAWInrAa4LHuzO/Ihrsceahe1QSrtsjKGSgV4607MahEO3vZu9PY62/37h3HK9Blu
-         Q7zKk1cmlFQteuHhhO538I23jGnyLH2mVvi8wvPi8Lkd+Mk4rzXlx6cIM/uhxaKrOF
-         oxWoJ7dPcoJPgO1wzg4tCJNKiHCp+31YdcOtSqEQqDPkixF+vD9
-Date:   Thu, 22 Jul 2021 22:56:12 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>,
-        "Tom G . Christensen" <tgc@jupiterrise.com>,
-        Mischa POSLAWSKY <git@shiar.nl>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/5] drop support for ancient curl
-Message-ID: <YPn3jP0n+ghomSkX@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>,
-        "Tom G . Christensen" <tgc@jupiterrise.com>,
-        Mischa POSLAWSKY <git@shiar.nl>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net>
- <cover-0.5-00000000000-20210721T220402Z-avarab@gmail.com>
- <YPimBp+TkaJ9ycuM@camp.crustytoothpaste.net>
- <87czravm96.fsf@evledraar.gmail.com>
+        id S232412AbhGVWQ6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jul 2021 18:16:58 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:46261 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231596AbhGVWQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jul 2021 18:16:58 -0400
+Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1m6hdC-000C6X-9K; Thu, 22 Jul 2021 23:57:31 +0100
+Subject: Re: [PATCH 7/7] fast-forward: add help about merge vs. rebase
+To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "Randall S . Becker" <rsbecker@nexbridge.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Denton Liu <liu.denton@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20210722000854.1899129-1-felipe.contreras@gmail.com>
+ <20210722000854.1899129-8-felipe.contreras@gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <76d59e73-ae5d-3bef-4aa3-5d1af9611577@iee.email>
+Date:   Thu, 22 Jul 2021 23:57:30 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Ce0Vyfs0uhvqUjCD"
-Content-Disposition: inline
-In-Reply-To: <87czravm96.fsf@evledraar.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+In-Reply-To: <20210722000854.1899129-8-felipe.contreras@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+minor nit/query on format..
+On 22/07/2021 01:08, Felipe Contreras wrote:
+> Now that we have a locus for merge versus rebase documentation, we can
+> refer to it on the diverging advice.
+>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  Documentation/git-fast-forward.txt | 48 ++++++++++++++++++++++++++++++
+>  advice.c                           |  4 ++-
+>  2 files changed, 51 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-fast-forward.txt b/Documentation/git-fast-forward.txt
+> index 38c920964f..1989fdec4a 100644
+> --- a/Documentation/git-fast-forward.txt
+> +++ b/Documentation/git-fast-forward.txt
+> @@ -50,6 +50,54 @@ synchronize the two branches.
+>  
+>  THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOUR MAY CHANGE.
+>  
+> +MERGE OR REBASE
+> +---------------
+> +
+> +The decision to whether merge or rebase depends on the situation and the
+> +project. Traditionally git has prefered merge over rebase, but that creates a
+> +new commit, and that's frowned up on some projects, so you can't just simply
+> +choose to merge blindly.
+> +
+> +------------
+> +    D---C---B---A origin/master
+> +	 \
+> +	  X---Y master
+> +------------
+> +
+> +The nature of distributed version control systems make this divergence
+> +unavoidable; you must decide how to synchronize this divergence.
+> +
+> +Should you choose to merge, the two heads (master and origin/master) will be joined
+> +together in a new commit:
+> +
+> +------------
+> +	  origin/master
+> +		|
+> +		v
 
---Ce0Vyfs0uhvqUjCD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+.. here, in my email reader, the arrow doesn't align to the commit
+because of the single char (+) indent relative to tab spacing. Does this
+cause any problems when formatted in the html/web style?
 
-On 2021-07-22 at 07:09:59, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> I'll clarify this along with other fixes in a re-roll, but I think our
-> policy shouldn't have anything to do with upstream promises of support,
-> but merely the trade-off of how easy it is for us to support old
-> software & how likely it is that people use it in practice along with
-> git.
+It was my impression that, for ASCII art diagrams, we used space
+indenting, leaving tabs for regular text indents. I quss you have an
+auto tab setting that converts the 8-spaces to tabs in the source txt.
 
-I don't think I agree.  We should try to support major operating systems
-well provided we can adequately be expected to test on them, and that
-means that they should have publicly available security support.  In
-other words, a developer on the relevant operating system should be able
-to test on that OS without paying ongoing money for the privilege of doing
-so securely.
+It is good to have diagrams for the visual learners!
 
-Once an operating system is no longer supported security-wise, we should
-no longer support it, either, since we can't be expected to test or
-develop on it securely.  Nobody could responsibly run such an image on
-a CI system or test with it on an Internet-connected computer, so we
-should no longer consider it worthy of our support.
-
-> So as an example we still say we support Perl 5.8, which is ridiculously
-> ancient as far as any notion of upstream security support goes (and as
-> an aside, does have real DoS issues exposed by e.g. the gitweb we ship).
->=20
-> But while we could probably bump that to something more modern nowadays
-> in practice we're not a mostly-Perl project, so I haven't found it to be
-> worth it to bump it when working on the relevant code.
-
-I've actually argued in favor of bumping the version to 5.14 a long time
-ago.  I can send a patch for that.  It has a bunch of nice new features
-we could take advantage of.
-
-> I'm only using RHEL 5 as a shorthand for a system that's usually the
-> most ancient thing people want to build new gits with in practice.
->=20
-> It's just not the case that you can't run RHEL 5 or even RHEL 4 "safely"
-> even today. Upstream has just abandoned it, but that doesn't mean users
-> in the wild have. There's also CentOS, not everyone cares about IBM
-> corporate support policies.
-
-Yes, and CentOS has dropped support earlier than Red Hat has.
-
-Just because users want to run new versions of Git on systems that
-should long ago have been abandoned[0] does not mean we should take the
-burden of maintaining that code for them.  Since they have the source
-code, they can build and maintain Git on those old systems and apply
-any necessary patches.  If this becomes burdensome, then perhaps the
-cost of maintaining the system will be an incentive to replace it with a
-secure system.
-
-I am unconvinced that we should make it easier for people to run
-insecure operating systems because they pose a hazard to the Internet
-when connected to it.  Just because it is behind some firewall doesn't
-mean that it cannot be compromised, and once it is, it can then become
-a source of spam and abuse.  This is not an idle thought experiment; it
-does practically happen with great frequency on the Internet today.  An
-unsupported system might be acceptable if it has no network connectivity
-at all, but then it would not need a newer version of Git.
-
-It is not that I have not experienced such load-bearing obsolete systems
-before: I have, and I have done my best to support them.  But I've also
-been happy to be clear to management and/or customers about what that
-means in terms of costs and that we were taking a real, substantial
-risk, and been clear what the consequences were.  In no situation,
-however, did I try to convince outside parties that my obsolete OS was
-deserving of someone else's maintenance burden or argue that the system
-should not be replaced as soon as possible.
-
-> We should have the view that git's critical infrastructure and we should
-> be wary of breaking things. It would also just be counter-productive,
-> the result would probably be that the ancient box wouldn't get an
-> upgraded git, and would still have preventable CVE's in git itself
-> present (e.g. the gitmodules RCE).
-
-Considering that the machine already has multiple CVEs, probably
-including root code execution vulnerabilities, I'm not sure how much
-worse we could make it.  It's already trivial to compromise with or
-without a newer version of Git.
-
-[0] I should point out that ten years of support is already extremely
-generous.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---Ce0Vyfs0uhvqUjCD
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYPn3iwAKCRB8DEliiIei
-gdmbAP9IM7bwRFKkCQntXfgRIprlg4YeM+axcJdWn0AYb4Ig2QD/QqAd6Ijm5DR1
-iDjLPLEL2S8U2CWf68aKk0RSzZ7LXw8=
-=u7i/
------END PGP SIGNATURE-----
-
---Ce0Vyfs0uhvqUjCD--
+> +    D---C---B---A---M master
+> +	 \	   /
+> +	  X---Y---+
+> +------------
+> +
+> +This new commit is called a "merge commit" and has two parents (A and Y).
+> +
+> +Rebasing on the other hand rewrites the history:
+> +
+> +------------
+> +	  origin/master
+> +		|
+> +		v
+> +    D---C---B---A---X'---Y' master
+> +------------
+> +
+> +The commits that diverged (X and Y) are rewritten as if they were created on top
+> +of the new base (A). This creates a linear history, which is cleaner, but some
+> +people prefer to preserve the original hsitory.
+> +
+> +In both cases it's likely you would have to resolve conflicts, the difference is
+> +that in a merge you would have to do it all at once in one commit, while with a
+> +rebase you would have to do it on every rewritten commit.
+> +
+>  SEE ALSO
+>  --------
+>  linkgit:git-merge[1], linkgit:git-rebase[1]
+> diff --git a/advice.c b/advice.c
+> index 60de7fbc4e..7f422b05d3 100644
+> --- a/advice.c
+> +++ b/advice.c
+> @@ -337,5 +337,7 @@ void diverging_advice(void)
+>  		"\n"
+>  		"or:\n"
+>  		"\n"
+> -		"\tgit rebase\n"));
+> +		"\tgit rebase\n"
+> +		"\n"
+> +		"For more information check \"git help fast-forward\".\n"));
+>  }
+--
+Philip
