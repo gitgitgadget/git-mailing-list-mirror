@@ -7,87 +7,121 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 634BBC63793
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 08:08:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE1F4C63793
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 08:10:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4542961283
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 08:08:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C02FB6121E
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 08:10:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230499AbhGVH1z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jul 2021 03:27:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42922 "EHLO
+        id S230331AbhGVH3j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jul 2021 03:29:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230100AbhGVH1z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jul 2021 03:27:55 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78959C061575
-        for <git@vger.kernel.org>; Thu, 22 Jul 2021 01:08:29 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id l26so5683771eda.10
-        for <git@vger.kernel.org>; Thu, 22 Jul 2021 01:08:29 -0700 (PDT)
+        with ESMTP id S230100AbhGVH3i (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jul 2021 03:29:38 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C876C061575
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 01:10:13 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id v1so5695755edt.6
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 01:10:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uaR11Zxzp8at2bywoh7G4sl0eolzn9btsrM+ENeuhDo=;
-        b=Ah4KXP+ib+tkr9qcx1wZMv1U49v0U313ihcL3sZ2TO13e/+CLl1VfBwh9PpBqqnsLR
-         xC6wBXJi5QNsfPXxcsYZgDIs3ESW1gviIYI8YaRQpDxCn8nHz8uX1NnKz4PxpUr3P3Wn
-         GUivfvuf2BB2Qrr22cU89lyo4HD9UW8nyf+vhbSUItW5PLNwlZFC2QvCZf9qomTA2AiV
-         Iyi1nDmZxLgBiAZIcW+fO3v+Tev/e8Gap7xx5NYQpmzbR1Dp284hUqsZ2E0xvBkUAy+B
-         lKJWrxtFIHC4Qs0HqBSIjR6+whqnRE0zxNfV4+SZhQKapVb2eqkaKq1f797RgDdx3tlh
-         GtsA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=TfgOklZb9ZGOwOl51i/1ddzwyEF6nIQDxBKq82PXTvo=;
+        b=TIWU2DNBj7QcyeHmN3bbB9Dl0e3EceGv8SUi30X9i7YJBuKpacDjTrgfW6FLHnts64
+         nc3hDX1fkFD0PW2yEIn114QFL5+FoAgapwbzVRAMq2b3hOfOltad7S704g/rBe+HZ5I7
+         5LcMV0YWeKO1R+x3hwBlbRLBPlxjgFkKzClmeDBgcUpvIXhFJ0D8Y2OJWs0HL65BhR08
+         PNFAB2BHbhXfHVBr+A/C1hB8N5zS28qjofSuNa8BdtsmVaRM3kxwZW7ARkupqwBBxSe8
+         s1gKDWjNuOi0PqLnAL4UAVjkeIrOOFh5aG3giZCpZfYnXeUQXQPiErJCfjwfjaU5d4KM
+         ObHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uaR11Zxzp8at2bywoh7G4sl0eolzn9btsrM+ENeuhDo=;
-        b=XGU8uWBfWLTfWBgT6LNzBmcTFmENFP7D4ffy2YQ/NabkX0LwfUAsgxmPgPfUkcD4if
-         LDot60N9/QMUODUEVW/2bC/83ovqk3BBRfC0CcsJw/pNuQCP1XrZtMuhHkvk4U3nROYb
-         Y4WV6gzBhFcMKSsUbmtYZqHCDOi5aUDrMForEbJ8NBZp+/TdYG2ggsFl1akA/Y0+Kz2v
-         jzc4s4CrgbjKbKq8Kalp5jYYqAvbgjDmsuEQApyB4XqvdM/L84zwR+vc0PegDzKOKtGY
-         8sBqPjp98QRRBifxlOKLvngihxHR2+owce/VIdeGJoxj1wPtYyqZrHZxJsA3KjSYePXV
-         j+QQ==
-X-Gm-Message-State: AOAM531yoa9N5XvrINbqlrWGqoKt5tCAQABm8A1SOyupTrwMM0RpfNuU
-        2iuR9ER6x6PTYOYcgxCI19Iog0VxZy6aUCsRRvo=
-X-Google-Smtp-Source: ABdhPJx3ll6q4V6SrLIThLHQ/w2Id2v3A8dBeILMzVk05LGUd6EAh6bQ2HC33N1fewL3nh7RPDY7i3vagFHZl84rHms=
-X-Received: by 2002:a05:6402:6cf:: with SMTP id n15mr40805907edy.362.1626941307063;
- Thu, 22 Jul 2021 01:08:27 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1000.git.1626939557.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1000.git.1626939557.gitgitgadget@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 22 Jul 2021 10:08:15 +0200
-Message-ID: <CAP8UFD3ENBZdm8yQn6J-yb4PvUsrzTA3KGxes42dE3bTrYbr9Q@mail.gmail.com>
-Subject: Re: [PATCH 0/5] [GSOC] ref-filter: add %(raw) and %(rest) atoms
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=TfgOklZb9ZGOwOl51i/1ddzwyEF6nIQDxBKq82PXTvo=;
+        b=G3cUw9vPiE5Mk+RhnyRbVTW7EJf5nzLBe6bv41QvL9KXDrGYSAlgJcnHM+N5DQ+G9A
+         xgyEro3raVrzqySZXSjIDQxq0fuiun7VYrVZypBBmwXsfv5udvLtZRpKHiL5EmiY2SJn
+         PmCAxba6kQgfXfTZ5u6RURrtEG3Uf9prJYIzCCOMXyVeGypnWrUdt40OysvCqU4X5FvB
+         Il7/R+t/8UTyBsBxRTDx0WEnIu1OIJwDUVVBLDLWYNd7Gd2DGqtL8cTcgaicJ9maLKOJ
+         zFDDDTVYZfAnRILaPoVEcrLwLRcRa+VAqZvIfgHwXHNFYHqlBp7mAbEE7EdVd+g/52zX
+         iwDw==
+X-Gm-Message-State: AOAM531d+3QN4045wmQc2iDMg01tEzeeTBFoXc3O5zK5AEmiubNTnFnE
+        SzxxTI7CGdFYMXHP+1H0GK94h8L8OCdCEQ==
+X-Google-Smtp-Source: ABdhPJy6z+T8J40xbjExBNYS8Y9q4udGB8z2zBL7nu1kDzTux9CXKOkoYRec23QHBxJqQMEvB0+BBA==
+X-Received: by 2002:a05:6402:128d:: with SMTP id w13mr52480974edv.1.1626941411452;
+        Thu, 22 Jul 2021 01:10:11 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id w2sm11922186edx.58.2021.07.22.01.10.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Jul 2021 01:10:10 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
         Hariom Verma <hariom18599@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Philip Oakley <philipoakley@iee.email>,
         ZheNing Hu <adlternative@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 2/5] [GSOC] ref-filter: add %(raw) atom
+Date:   Thu, 22 Jul 2021 10:06:21 +0200
+References: <pull.1000.git.1626939557.gitgitgadget@gmail.com>
+ <ecd41b370e62cc88f1606569ec700eaca837fa1f.1626939557.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <ecd41b370e62cc88f1606569ec700eaca837fa1f.1626939557.git.gitgitgadget@gmail.com>
+Message-ID: <877dhivkei.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 22, 2021 at 9:39 AM ZheNing Hu via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> This patch series is split from my main patch series zh/ref-filter-raw-data,
-> to make things easier for reviewers to read.
 
-Thanks for doing that!
+On Thu, Jul 22 2021, ZheNing Hu via GitGitGadget wrote:
 
-> This patch series provided %(raw) and %(rest) for ref-filter, which will be
-> used by zh/cat-file-reuse-ref-filter-logic later.
+> [..] add a new member in
+> `struct atom_value`: `s_size`, which can record raw object size, it
+> can help us add raw object data to the buffer or compare two buffers
+> which contain raw object data.
 
-Great!
+I didn't look in detail, just one nit/comment, no need to re-roll for this:
 
-It would be nice if you could also point to the previous times when
-you sent this to the mailing list, so that previous reviews can more
-easily be found and maybe checked.
 
-Another nice improvement would be to link to a branch on GitHub or
-GitLab, so that people could more easily fetch your work and try it.
+>  struct atom_value {
+>  	const char *s;
+> +	size_t s_size;
+>  	int (*handler)(struct atom_value *atomv, struct ref_formatting_state *state,
+>  		       struct strbuf *err);
+>  	uintmax_t value; /* used for sorting when not FIELD_STR */
+>  	struct used_atom *atom;
+>  };
+>  
+> +#define ATOM_VALUE_S_SIZE_INIT (-1)
+> +
+
+This and then later doing (this appears to be the only initialization?):
+
+>  	if (format->need_color_reset_at_eol) {
+>  		struct atom_value resetv;
+> +		resetv.s_size = ATOM_VALUE_S_SIZE_INIT;
+>  		resetv.s = GIT_COLOR_RESET;
+>  		if (append_atom(&resetv, &state, error_buf)) {
+>  			pop_stack_element(&state.stack);
+
+Is a rather unusual pattern, more typical would be:
+
+	struct atom_value { .... }
+	#define ATOM_VALUE_INIT { \
+		.s_size = -1, \
+	}
+
+Then:
+
+	struct atom_value resetv = ATOM_VALUE_INIT;
+
+You could keep that "#define ATOM_VALUE_S_SIZE_INIT (-1)" to check the
+init value, personally I think it's just fine to hardcode the -1 literal
+and do "size < 0" checks, which we us as convention in a lot of other
+places for "not initialized".
