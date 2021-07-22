@@ -2,168 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-14.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEEC6C4338F
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 22:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1C17C4338F
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 22:42:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A31A960EB2
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 22:37:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91C8B60EB6
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 22:42:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232192AbhGVV5G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jul 2021 17:57:06 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57161 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231596AbhGVV5F (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jul 2021 17:57:05 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 334BF14F788;
-        Thu, 22 Jul 2021 18:37:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=YoaLBFvk93Fp
-        S+ftDgqT90SFgWqYlqi3hhq3SgsZeSM=; b=uFDFiBAjTOD7bgTbviETF9tK0Vnb
-        fkvjHu1jkHvJ879wdo2MG7Fs+FaMdUWkcs/6aQLWTNW19ZkEyVKKwoWqrmyZqXbC
-        WUKT9A5K91oEa99oYbmwuCjzCJMRlDel+z5B48/R4g4Gg/iheCUW0nvkvTvXfi4X
-        BxtF0P1tWIh5Yoo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2C22214F787;
-        Thu, 22 Jul 2021 18:37:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 720B414F786;
-        Thu, 22 Jul 2021 18:37:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: What's cooking in git.git (Jul 2021, #05; Wed, 21)
-References: <xmqqo8av9j7f.fsf@gitster.g> <87a6mevkrx.fsf@evledraar.gmail.com>
-Date:   Thu, 22 Jul 2021 15:37:35 -0700
-In-Reply-To: <87a6mevkrx.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Thu, 22 Jul 2021 09:33:39 +0200")
-Message-ID: <xmqqbl6u7z68.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232024AbhGVWCD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jul 2021 18:02:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46720 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231596AbhGVWCC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jul 2021 18:02:02 -0400
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A04DC061575
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 15:42:36 -0700 (PDT)
+Received: by mail-qk1-x72b.google.com with SMTP id q15so6998483qkm.8
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 15:42:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=GTBjU7Qau7/0RU4kH/jChsIpeVuH++m2axoce4kpePg=;
+        b=A2tqUaRiQK6wrD/i6b+LRyWRRmhjf0P9pm4INNgwm9PWPXVF0Y59s1rg5FF0xiRDju
+         TcvgPr+QcslCKKo59j9PIy6pBWs7QEXcspaAicGor0QB2baRZkj3o3SwVKk4Q38NzG07
+         Gi6I1Ebcl0uaru35A00lSSn5DkcsQ1WWiZrSClGSP/IDAqJE9JpeyO8k6tNVljZC+yeB
+         lMctvc3xMhHalAq14oD1ipI/kRSpX5NzhirQcvVrZwX5+JnpuD5hc6RYCdRxUQ29Bk3N
+         NCNDaBmIuw7relFvWek0di1RtzvrmI8d6JkHBGD8XUjLkmciV9+clg80bV7Eg2/U6Hpn
+         lL8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=GTBjU7Qau7/0RU4kH/jChsIpeVuH++m2axoce4kpePg=;
+        b=OwAG+Jzf6yMdVYK2xNXXJKCt6fey4aCsrbha0Bc0I8Ud1mTJegYxHZA+NUoRy2OsoW
+         faA+SsMcPF5yVYa7HMam6VWHVDPDXXBW/WMcV/+RE7yEOmPjNYL1vrDUIlC4N3Msh8Yn
+         5p4TeS86j5RWbChjZGgpppt1JOeKvrHp0DDyIn9DtxmdAe8Zfd4MpfOVs3pk53z9c9WW
+         VdedqQmNNpdVM1rzHq21alGVL7uDOxL+RX1u5aFtXpqcGqKfRMkDgGbnqkVVr+TiihNl
+         rlws6+bd4DFcS+aXFDuplPCGmemNhgd90ST5y7fYNs8LX6KmZn+Kzub8riOA0Y1c+EIS
+         WmiQ==
+X-Gm-Message-State: AOAM531fjw8SScg2clNV9xK9c5UWFUdP0769owjZCqvKF4uwcuVmyAi7
+        c5XPPYCLA8YCXSsaBsOK+cGGl89+/SzjFQ==
+X-Google-Smtp-Source: ABdhPJwwcbWbpIRUWHFER4PbzR5u8MVXD7XhbF/8VW9B7EzbYGkt5QrtmlT/BKI8HOGajT7hulFSxA==
+X-Received: by 2002:a05:620a:311:: with SMTP id s17mr2094021qkm.266.1626993754965;
+        Thu, 22 Jul 2021 15:42:34 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id u3sm11042827qtg.16.2021.07.22.15.42.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Jul 2021 15:42:34 -0700 (PDT)
+Subject: Re: 'git range-diff' does not detect submodule changes if
+ 'diff.submodule=log'
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git mailing list <git@vger.kernel.org>
+References: <e469038c-d78c-cd4b-0214-7094746b9281@gmail.com>
+ <nycvar.QRO.7.76.6.2107221516240.55@tvgsbejvaqbjf.bet>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <98bdd571-e4f1-a9a5-d7e6-81b1b6c89b45@gmail.com>
+Date:   Thu, 22 Jul 2021 18:42:33 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6A5B47E6-EB3D-11EB-8C9A-D5C30F5B5667-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <nycvar.QRO.7.76.6.2107221516240.55@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Hi Dscho,
 
->> * ab/refs-files-cleanup (2021-07-20) 12 commits
->>  - refs/files: remove unused "errno !=3D ENOTDIR" condition
->>  - refs/files: remove unused "errno =3D=3D EISDIR" code
->>  - refs/files: remove unused "oid" in lock_ref_oid_basic()
->>  - reflog expire: don't lock reflogs using previously seen OID
->>  - refs/files: add a comment about refs_reflog_exists() call
->>  - refs: make repo_dwim_log() accept a NULL oid
->>  - refs API: pass the "lock OID" to reflog "prepare"
->>  - refs/debug: re-indent argument list for "prepare"
->>  - refs/files: remove unused "skip" in lock_raw_ref() too
->>  - refs/files: remove unused "extras/skip" in lock_ref_oid_basic()
->>  - refs/files: remove unused REF_DELETING in lock_ref_oid_basic()
->>  - refs/packet: add missing BUG() invocations to reflog callbacks
->>  (this branch is used by hn/refs-errno-cleanup.)
+Le 2021-07-22 à 09:19, Johannes Schindelin a écrit :
+> Hi Philippe,
+> 
+> On Mon, 19 Jul 2021, Philippe Blain wrote:
+> 
+>> I noticed that 'git range-diff' silently "drops" submodule changes if
+>> 'diff.submodule=log' is set in the config. This is because the 'diff --git'
+>> header is not shown in that case, and the code in range-diff.c::read_patches
+>> expects that header to be found to detect changes.
 >>
->>  Patches are mostly good, but needs typofixes etc.
+>> If 'diff.submodule' is instead set to 'diff', the range-diff outright errors
+>> with
+>> (at least in my case):
 >>
->>  Will merge to 'next'.
->
-> Yay, thanks!
-
-Yikes, I shouldn't have said Will merge when I clearly said "needs
-typofixes".  If you are employing the strategy to wear me out and
-mistakenly merge topics prematurely, it is succeeding X-<.
-
->> * ab/attribute-format (2021-07-13) 5 commits
->> [...]
->> * ab/imap-send-read-everything-simplify (2021-07-07) 1 commit
->> [...]
->> * ab/pkt-line-tests (2021-07-19) 1 commit
->
-> Thanks!
-
-Thanks for all of these.
-
->> * ab/bundle-doc (2021-07-20) 3 commits
->>  - bundle doc: elaborate on rev<->ref restriction
->>  - bundle doc: elaborate on object prerequisites
->>  - bundle doc: rewrite the "DESCRIPTION" section
+>> error: git apply: bad git-diff - inconsistent old filename on line 1
+>> error: could not parse git header 'diff --git
+>> error: path/to/submodule/and/some/file/within
+>> '
+>> error: could not parse log for '@{u}..@{1}'
 >>
->>  Doc update.
 >>
->>  Expecting a reroll.
->>  at least for the second patch.
-
-Sorry, I think we have a reroll that updates the second one and that
-is what we list here.  IOW the comment is stale.
-
-> My reading-between-the-lines of
-> https://lore.kernel.org/git/xmqqsg08hhs0.fsf@gitster.g/ and
-> https://lore.kernel.org/git/xmqqo8awhh5z.fsf@gitster.g/ is that you'd b=
-e
-> happy toh have this be merged down in its current form, no?
-
-As I commented, the tip one's mention of show-ref is rather iffy.
-I thought you'd be rephrasing it further in response to Philip's
-"what about list-heads?" (I am not sure if it is wise to stress on
-list-heads, which was a debugging aid, when ls-remote is available).
-
-Also, the second one talks about "object prerequisites" (I think
-calling them "prerequisite objects" would be more natural, though)
-and the third one uses "basis" (I take that the "bases" in "the
-given bases" is used as the plural for the word), but it is not
-clear to readers that these mean the same thing.  If we are touching
-the doc, we may want to make sure the end-result as a whole gives a
-coherent narrative.
-
->> * ab/pack-stdin-packs-fix (2021-07-09) 2 commits
->>  - pack-objects: fix segfault in --stdin-packs option
->>  - pack-objects tests: cover blindspots in stdin handling
+>> I think it would make sense to force '--submodule=short' for range-diff,
+>> something like:
 >>
->>  Input validation of "git pack-objects --stdin-packs" has been
->>  corrected.
+>> diff --git a/range-diff.c b/range-diff.c
+>> index 1a4471fe4c..d74b9c7a55 100644
+>> --- a/range-diff.c
+>> +++ b/range-diff.c
+>> @@ -54,7 +54,7 @@ static int read_patches(const char *range, struct
+>> string_list *list,
 >>
->>  Ack?
->>  cf. <YND3h2l10PlnSNGJ@nand.local>
->
-> Have re-rolled & addressed that, I think
-> https://lore.kernel.org/git/YPcA0oxJgedIf57K@nand.local/ can be read as
-> "sure, let's take =C3=86var's v2 as-is", but let's have Taylor Ack that=
- :)
-
-OK.
-
->> * ab/make-tags-cleanup (2021-06-29) 5 commits
->>  - Makefile: normalize clobbering & xargs for tags targets
->>  - Makefile: don't use "FORCE" for tags targets
->>  - Makefile: fix "cscope" target to refer to cscope.out
->>  - Makefile: add QUIET_GEN to "cscope" target
->>  - Makefile: move ".PHONY: cscope" near its target
+>>          strvec_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
+>>                       "--reverse", "--date-order", "--decorate=no",
+>> -                    "--no-prefix",
+>> +                    "--no-prefix", "--submodule=short",
+>>                       /*
+>>                        * Choose indicators that are not used anywhere
+>>                        * else in diffs, but still look reasonable
 >>
->>  Build clean-up for "make tags" and friends.
 >>
->>  Expecting a reroll.
->>  Hopefully with a final reroll it would become good enough shape for '=
-next'?
->>  cf. <YN5AwdVC3QAcy2tA@coredump.intra.peff.net>
->>  cf. <67c45b13-df8f-8065-377a-fbd2f80992ee@ramsayjones.plus.com>
->
-> Re-rolled since & addressed those, hopefully ready for "next" now:
-> https://lore.kernel.org/git/cover-0.5-00000000000-20210721T231900Z-avar=
-ab@gmail.com/
+>> What do you think ?
+> 
+> Sure. I never thought that `range-diff` would be useful in the context of
+> submodules. But then, I am an anti-fan of submodules anyway, so don't put
+> too much stock into my opinion about anything submodule-related.
 
-Thanks.
+OK. I'll try to find the time to send a patch for that.
+
+> 
+>> P.S. As an aside,
+>> I'm  not sure why you chose to skip the 'diff --git' header with
+>> '--submodule=log'
+>> (I did not search the list), but I think that in general 'git diff' and
+>> friends,
+>> it would be nice to be able to still see this header even with
+>> --submodule=log...
+> 
+> I don't remember the details. It might be that `git-tbdiff` did it that
+> way, and I copied it without questioning.
+> 
+> *clicketyclick*
+> 
+> Yep, that seems plausible:
+> https://github.com/trast/tbdiff/blob/047d1c79dfada57522a42f307cd4b0ddcb098934/git-tbdiff.py#L48
+
+I meant when you implemented '--submodule=log' back in the days, why did you choose
+to skip the 'diff --git' header. In fact I dig up the thread and keeping that header
+is something Jens Lehmann actually suggested [1] (near the end of the message).
+I for one would find it useful; it's easy to miss submodules changes among a sea of other
+changes if the submodule is updated with just a few commits... yet another thing to
+add to my list :)
+
+Cheers,
+
+Philippe.
+
+[1] https://lore.kernel.org/git/4AC9D6EB.8090002@web.de/
