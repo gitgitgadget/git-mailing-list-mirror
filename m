@@ -2,474 +2,1032 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B60A0C6377B
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 01:27:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5604C6377B
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 02:27:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9732261244
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 01:27:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83300610CC
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 02:27:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230190AbhGVAqp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jul 2021 20:46:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37786 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230182AbhGVAql (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jul 2021 20:46:41 -0400
-Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FCADC061575
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 18:27:16 -0700 (PDT)
-Received: by mail-qt1-x849.google.com with SMTP id j15-20020ac84c8f0000b0290257b7db4a28so2548532qtv.9
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 18:27:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=dSo0WzwrdWgLJRCoyVDqCB1ALGw2w51oSH5FJjMhX5M=;
-        b=SaX0e2dpcNks3fuFqzrVPNY3thvQeZAT9zA0ZZk2odkTPxrxj5JGXVdOeNuqQqsjjL
-         /eR5yHCXmXEWzS/AA5JZr5XpdYmIC1fXPx3uykswxQnFD2R+KXrY7r/0EKDPhs2aYZ3I
-         SJMlnSiUmL+OqtJV2G2rpExotPC7luXUt2DKalLEIMVFyKflBsKI8PouTYV8M39qYJuS
-         s9TowI9b6ePlEovKwOt3B1VwO54LZlzMHgu0D7019cxIfa7MgFTLD1zcT1Zuic7KoaRR
-         gUlfPrGalbTbT1p5EujbSHWxoOir+E1KWQAvWW8lexjt/nlCnNOvzqAAkbul0Oio6B9+
-         Gyrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=dSo0WzwrdWgLJRCoyVDqCB1ALGw2w51oSH5FJjMhX5M=;
-        b=oJ7qulg2vsSOq2ZccLcK86ZcRUuob5gc2YxcRcuQfOy8I1FhS50zaf6aabfoSbBNlx
-         KLWDm95Hg0Gmo7mG8EA3krR5/WPAUjOTxMuUi+ESTL4qn/mzQWXwgM4I1Y1wETDq6jTb
-         4tTdCNZvxVh/Sp10+JgUW/r9O1d2iNgO3XzeYFxc4PmC/4qnxwTJq/AUIUHusnqCSwzA
-         3EV87zXcu/8dAnDlhTZC+YjYn+/TRapeeqT6jK57piUdbviU9HuMbKTf5jEcbh2lClsv
-         KHkVZ8PvmGMNRkuDIFpTA1BW8Sw0WKk0Lqujo6GaDQa/SE3wttW46FhjY+DlxRKwMZyY
-         1y8w==
-X-Gm-Message-State: AOAM533XKSyiDT4m+l5t4W4R+Oj5/Jt2LFDrQBqg/lKiJBHtSg8kdVtL
-        Fxu+qdBT5zt4fVUeAnCcH8IneoB2LpMhtFGrvit9Ry43ZVnCgCPhEcF9N5r/cMSD2EqfGvWqhpt
-        X5BJnsIrpDffnjlfQmNiupR6Jgvn5mxC3s3YK5NCnu+QUWfbZwf9G1hUVpr6ofx6axElvK3tjtg
-        ==
-X-Google-Smtp-Source: ABdhPJxRYonRWO1YwZel5eJdE5LqpASXHk4B635nLyZxXYBxeji499zhwp1P+AvbIT0MYBS8RgjM9Z4Qx8pWjSVZlXc=
-X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:200:83f3:cefc:ff34:3095])
- (user=emilyshaffer job=sendgmr) by 2002:a0c:fa08:: with SMTP id
- q8mr33832478qvn.8.1626917235334; Wed, 21 Jul 2021 18:27:15 -0700 (PDT)
-Date:   Wed, 21 Jul 2021 18:27:07 -0700
-In-Reply-To: <20210722012707.205776-1-emilyshaffer@google.com>
-Message-Id: <20210722012707.205776-3-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20210722012707.205776-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.32.0.402.g57bb445576-goog
-Subject: [PATCH v6 2/2] tr2: log parent process name
-From:   Emily Shaffer <emilyshaffer@google.com>
+        id S230163AbhGVBqq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jul 2021 21:46:46 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59012 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229916AbhGVBqp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jul 2021 21:46:45 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 068D3149995;
+        Wed, 21 Jul 2021 22:27:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=a13nN/mgd4wsPhIpLscBXn35U
+        IQ5xyf1dn9kuY+a7dc=; b=wDSWKMuKpb8BBSgjwrNcyHcH0+inxM2SlRdqBrxgh
+        NxwCY+QZ9BHpun019lbDWSmqia7l7fKkrrTfUwB+MpzZUsGlVNTwvYYwQjogUmNa
+        cDHBG9P5eL7/7R7H1Qqr5lIU3QTmTqfhAtFym8Ns+7nQav4rmmO4pzDmhcEhr/HP
+        rk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E047F149994;
+        Wed, 21 Jul 2021 22:27:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0FC4E149992;
+        Wed, 21 Jul 2021 22:27:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: What's cooking in git.git (Jul 2021, #05; Wed, 21)
+X-master-at: daab8a564f8bbac55f70f8bf86c070e001a9b006
+X-next-at: 7e0b7c1f0c169fbf424a182c53f9a5a516fe85f4
+Date:   Wed, 21 Jul 2021 19:27:16 -0700
+Message-ID: <xmqqo8av9j7f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 55D190A4-EA94-11EB-A09F-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It can be useful to tell who invoked Git - was it invoked manually by a
-user via CLI or script? By an IDE?  In some cases - like 'repo' tool -
-we can influence the source code and set the GIT_TRACE2_PARENT_SID
-environment variable from the caller process. In 'repo''s case, that
-parent SID is manipulated to include the string "repo", which means we
-can positively identify when Git was invoked by 'repo' tool. However,
-identifying parents that way requires both that we know which tools
-invoke Git and that we have the ability to modify the source code of
-those tools. It cannot scale to keep up with the various IDEs and
-wrappers which use Git, most of which we don't know about. Learning
-which tools and wrappers invoke Git, and how, would give us insight to
-decide where to improve Git's usability and performance.
+It has only been two days since the previous issue, but here it is.
 
-Unfortunately, there's no cross-platform reliable way to gather the name
-of the parent process. If procfs is present, we can use that; otherwise
-we will need to discover the name another way. However, the process ID
-should be sufficient to look up the process name on most platforms, so
-that code may be shareable.
+Two topics at the tip of 'seen' breaks CI (d000d1d); it can be seen
+that an extra CI run on 'seen' without them (7d8ed3b) passes.
 
-Git for Windows gathers similar information and logs it as a "data_json"
-event. However, since "data_json" has a variable format, it is difficult
-to parse effectively in some languages; instead, let's pursue a
-dedicated "cmd_ancestry" event to record information about the ancestry
-of the current process and a consistent, parseable way.
+ (d000d1d) https://github.com/git/git/actions/runs/1053603028
+ (7d8ed3b) https://github.com/git/git/actions/runs/1053483465
 
-Git for Windows also gathers information about more than one generation
-of parent. In Linux further ancestry info can be gathered with procfs,
-but it's unwieldy to do so. In the interest of later moving Git for
-Windows ancestry logging to the 'cmd_ancestry' event, and in the
-interest of later adding more ancestry to the Linux implementation - or
-of adding this functionality to other platforms which have an easier
-time walking the process tree - let's make 'cmd_ancestry' accept an
-array of parentage.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
+--- >8 ------ >8 ------ >8 ---=20
 
-Notes:
-    Since v3:
-    
-    Junio and Randall suggested ditching "get_process_name(ppid)" as the API to
-    implement on various platforms, and I liked the suggestion a lot. So instead,
-    I added "get_ancestry_names(strvec *names)".
-    
-     - Using a strvec instead of a char** makes cleanup easier, since strvec takes
-       care of counting the number of strings in the array for us. Otherwise we'd
-       need to include size as a return or out-param in get_ancestry_names(), and
-       that's what the util class is for, right? :)
-     - I made get_ancestry_names() static instead of putting it into
-       git-compat-util.h. I think I had put get_process_name() into that header to
-       facilitate non-procfs implementations, but compat/procinfo.c doesn't seem to
-       me to indicate "procfs only", and if we do need to implement
-       get_process_name() somewhere else, it'll be pretty easy to move it.
-     - I added a description of "cmd_ancestry" to
-       Documentation/technical/api-trace2.txt. I didn't see any user-facing docs to
-       update (for example, "git grep cmd_path" produces only that one doc file).
-    
-    Thanks, all.
-    
-     - Emily
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen',
+which means nothing more than that I have found them of interest for
+some reason (like "it may have hard-to-resolve conflicts with
+another topic already in flight" or "this may turn out to be
+useful").  Do not read too much into a topic being in (or not in)
+'seen'.  The ones marked with '.' do not appear in any of the
+integration branches, but I am still holding onto them.
 
- Documentation/technical/api-trace2.txt | 14 +++++++
- compat/linux/procinfo.c                | 55 ++++++++++++++++++++++++++
- config.mak.uname                       |  2 +
- t/t0210/scrub_normal.perl              |  6 +++
- t/t0211/scrub_perf.perl                |  5 +++
- t/t0212/parse_events.perl              |  5 ++-
- trace2.c                               | 13 ++++++
- trace2.h                               | 10 +++++
- trace2/tr2_tgt.h                       |  3 ++
- trace2/tr2_tgt_event.c                 | 21 ++++++++++
- trace2/tr2_tgt_normal.c                | 19 +++++++++
- trace2/tr2_tgt_perf.c                  | 16 ++++++++
- 12 files changed, 168 insertions(+), 1 deletion(-)
- create mode 100644 compat/linux/procinfo.c
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index 3f52f981a2..8a0b360a0e 100644
---- a/Documentation/technical/api-trace2.txt
-+++ b/Documentation/technical/api-trace2.txt
-@@ -493,6 +493,20 @@ about specific error arguments.
- }
- ------------
- 
-+`"cmd_ancestry"`::
-+	This event contains the text command name for the parent (and earlier
-+	generations of parents) of the current process, in an array ordered from
-+	nearest parent to furthest great-grandparent. It may not be implemented
-+	on all platforms.
-++
-+------------
-+{
-+	"event":"cmd_ancestry",
-+	...
-+	"ancestry":["bash","tmux: server","systemd"]
-+}
-+------------
-+
- `"cmd_name"`::
- 	This event contains the command name for this git process
- 	and the hierarchy of commands from parent git processes.
-diff --git a/compat/linux/procinfo.c b/compat/linux/procinfo.c
-new file mode 100644
-index 0000000000..578fed4cd3
---- /dev/null
-+++ b/compat/linux/procinfo.c
-@@ -0,0 +1,55 @@
-+#include "cache.h"
-+
-+#include "strbuf.h"
-+#include "strvec.h"
-+#include "trace2.h"
-+
-+static void get_ancestry_names(struct strvec *names)
-+{
-+	/*
-+	 * NEEDSWORK: We could gather the entire pstree into an array to match
-+	 * functionality with compat/win32/trace2_win32_process_info.c.
-+	 * To do so, we may want to examine /proc/<pid>/stat. For now, just
-+	 * gather the immediate parent name which is readily accessible from
-+	 * /proc/$(getppid())/comm.
-+	 */
-+	struct strbuf procfs_path = STRBUF_INIT;
-+	struct strbuf name = STRBUF_INIT;
-+
-+	/* try to use procfs if it's present. */
-+	strbuf_addf(&procfs_path, "/proc/%d/comm", getppid());
-+	if (strbuf_read_file(&name, procfs_path.buf, 0)) {
-+		strbuf_release(&procfs_path);
-+		strbuf_trim_trailing_newline(&name);
-+		strvec_push(names, strbuf_detach(&name, NULL));
-+	}
-+
-+	return;
-+	/* NEEDSWORK: add non-procfs-linux implementations here */
-+}
-+
-+void trace2_collect_process_info(enum trace2_process_info_reason reason)
-+{
-+	if (!trace2_is_enabled())
-+		return;
-+
-+	/* someday we may want to write something extra here, but not today */
-+	if (reason == TRACE2_PROCESS_INFO_EXIT)
-+		return;
-+
-+	if (reason == TRACE2_PROCESS_INFO_STARTUP) {
-+		/*
-+		 * NEEDSWORK: we could do the entire ptree in an array instead,
-+		 * see compat/win32/trace2_win32_process_info.c.
-+		 */
-+		struct strvec names = STRVEC_INIT;
-+
-+		get_ancestry_names(&names);
-+
-+		if (names.nr)
-+			trace2_cmd_ancestry(names.v);
-+		strvec_clear(&names);
-+	}
-+
-+	return;
-+}
-diff --git a/config.mak.uname b/config.mak.uname
-index 185ff79b14..d3bd4c6843 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -58,6 +58,8 @@ ifeq ($(uname_S),Linux)
- 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
- 	BASIC_CFLAGS += -DHAVE_SYSINFO
- 	PROCFS_EXECUTABLE_PATH = /proc/self/exe
-+	HAVE_PLATFORM_PROCINFO = YesPlease
-+	COMPAT_OBJS += compat/linux/procinfo.o
- endif
- ifeq ($(uname_S),GNU/kFreeBSD)
- 	HAVE_ALLOCA_H = YesPlease
-diff --git a/t/t0210/scrub_normal.perl b/t/t0210/scrub_normal.perl
-index c65d1a815e..7cc4de392a 100644
---- a/t/t0210/scrub_normal.perl
-+++ b/t/t0210/scrub_normal.perl
-@@ -42,6 +42,12 @@
- 	# so just omit it for testing purposes.
- 	# print "cmd_path _EXE_\n";
-     }
-+    elsif ($line =~ m/^cmd_ancestry/) {
-+	# 'cmd_ancestry' is not implemented everywhere, so for portability's
-+	# sake, skip it when parsing normal.
-+	#
-+	# print "$line";
-+    }
-     else {
- 	print "$line";
-     }
-diff --git a/t/t0211/scrub_perf.perl b/t/t0211/scrub_perf.perl
-index 351af7844e..d164b750ff 100644
---- a/t/t0211/scrub_perf.perl
-+++ b/t/t0211/scrub_perf.perl
-@@ -44,6 +44,11 @@
- 	# $tokens[$col_rest] = "_EXE_";
- 	goto SKIP_LINE;
-     }
-+    elsif ($tokens[$col_event] =~ m/cmd_ancestry/) {
-+	# 'cmd_ancestry' is platform-specific and not implemented everywhere,
-+	# so skip it.
-+	goto SKIP_LINE;
-+    }
-     elsif ($tokens[$col_event] =~ m/child_exit/) {
- 	$tokens[$col_rest] =~ s/ pid:\d* / pid:_PID_ /;
-     }
-diff --git a/t/t0212/parse_events.perl b/t/t0212/parse_events.perl
-index 6584bb5634..b6408560c0 100644
---- a/t/t0212/parse_events.perl
-+++ b/t/t0212/parse_events.perl
-@@ -132,7 +132,10 @@
- 	# just omit it for testing purposes.
- 	# $processes->{$sid}->{'path'} = "_EXE_";
-     }
--    
-+    elsif ($event eq 'cmd_ancestry') {
-+	# 'cmd_ancestry' is platform-specific and not implemented everywhere, so
-+	# just skip it for testing purposes.
-+    }
-     elsif ($event eq 'cmd_name') {
- 	$processes->{$sid}->{'name'} = $line->{'name'};
- 	$processes->{$sid}->{'hierarchy'} = $line->{'hierarchy'};
-diff --git a/trace2.c b/trace2.c
-index 256120c7fd..b9b154ac44 100644
---- a/trace2.c
-+++ b/trace2.c
-@@ -260,6 +260,19 @@ void trace2_cmd_path_fl(const char *file, int line, const char *pathname)
- 			tgt_j->pfn_command_path_fl(file, line, pathname);
- }
- 
-+void trace2_cmd_ancestry_fl(const char *file, int line, const char **parent_names)
-+{
-+	struct tr2_tgt *tgt_j;
-+	int j;
-+
-+	if (!trace2_enabled)
-+		return;
-+
-+	for_each_wanted_builtin (j, tgt_j)
-+		if (tgt_j->pfn_command_ancestry_fl)
-+			tgt_j->pfn_command_ancestry_fl(file, line, parent_names);
-+}
-+
- void trace2_cmd_name_fl(const char *file, int line, const char *name)
- {
- 	struct tr2_tgt *tgt_j;
-diff --git a/trace2.h b/trace2.h
-index 0d990db817..9b7286c572 100644
---- a/trace2.h
-+++ b/trace2.h
-@@ -133,6 +133,16 @@ void trace2_cmd_path_fl(const char *file, int line, const char *pathname);
- 
- #define trace2_cmd_path(p) trace2_cmd_path_fl(__FILE__, __LINE__, (p))
- 
-+/*
-+ * Emit an 'ancestry' event with the process name of the current process's
-+ * parent process.
-+ * This gives post-processors a way to determine what invoked the command and
-+ * learn more about usage patterns.
-+ */
-+void trace2_cmd_ancestry_fl(const char *file, int line, const char **parent_names);
-+
-+#define trace2_cmd_ancestry(v) trace2_cmd_ancestry_fl(__FILE__, __LINE__, (v))
-+
- /*
-  * Emit a 'cmd_name' event with the canonical name of the command.
-  * This gives post-processors a simple field to identify the command
-diff --git a/trace2/tr2_tgt.h b/trace2/tr2_tgt.h
-index 7b90469212..1f66fd6573 100644
---- a/trace2/tr2_tgt.h
-+++ b/trace2/tr2_tgt.h
-@@ -27,6 +27,8 @@ typedef void(tr2_tgt_evt_error_va_fl_t)(const char *file, int line,
- 
- typedef void(tr2_tgt_evt_command_path_fl_t)(const char *file, int line,
- 					    const char *command_path);
-+typedef void(tr2_tgt_evt_command_ancestry_fl_t)(const char *file, int line,
-+						const char **parent_names);
- typedef void(tr2_tgt_evt_command_name_fl_t)(const char *file, int line,
- 					    const char *name,
- 					    const char *hierarchy);
-@@ -108,6 +110,7 @@ struct tr2_tgt {
- 	tr2_tgt_evt_atexit_t                    *pfn_atexit;
- 	tr2_tgt_evt_error_va_fl_t               *pfn_error_va_fl;
- 	tr2_tgt_evt_command_path_fl_t           *pfn_command_path_fl;
-+	tr2_tgt_evt_command_ancestry_fl_t	*pfn_command_ancestry_fl;
- 	tr2_tgt_evt_command_name_fl_t           *pfn_command_name_fl;
- 	tr2_tgt_evt_command_mode_fl_t           *pfn_command_mode_fl;
- 	tr2_tgt_evt_alias_fl_t                  *pfn_alias_fl;
-diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
-index 6353e8ad91..578a9a5287 100644
---- a/trace2/tr2_tgt_event.c
-+++ b/trace2/tr2_tgt_event.c
-@@ -261,6 +261,26 @@ static void fn_command_path_fl(const char *file, int line, const char *pathname)
- 	jw_release(&jw);
- }
- 
-+static void fn_command_ancestry_fl(const char *file, int line, const char **parent_names)
-+{
-+	const char *event_name = "cmd_ancestry";
-+	const char *parent_name = NULL;
-+	struct json_writer jw = JSON_WRITER_INIT;
-+
-+	jw_object_begin(&jw, 0);
-+	event_fmt_prepare(event_name, file, line, NULL, &jw);
-+	jw_object_inline_begin_array(&jw, "ancestry");
-+
-+	while ((parent_name = *parent_names++))
-+		jw_array_string(&jw, parent_name);
-+
-+	jw_end(&jw); /* 'ancestry' array */
-+	jw_end(&jw); /* event object */
-+
-+	tr2_dst_write_line(&tr2dst_event, &jw.json);
-+	jw_release(&jw);
-+}
-+
- static void fn_command_name_fl(const char *file, int line, const char *name,
- 			       const char *hierarchy)
- {
-@@ -584,6 +604,7 @@ struct tr2_tgt tr2_tgt_event = {
- 	fn_atexit,
- 	fn_error_va_fl,
- 	fn_command_path_fl,
-+	fn_command_ancestry_fl,
- 	fn_command_name_fl,
- 	fn_command_mode_fl,
- 	fn_alias_fl,
-diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
-index 31b602c171..a5751c8864 100644
---- a/trace2/tr2_tgt_normal.c
-+++ b/trace2/tr2_tgt_normal.c
-@@ -160,6 +160,24 @@ static void fn_command_path_fl(const char *file, int line, const char *pathname)
- 	strbuf_release(&buf_payload);
- }
- 
-+static void fn_command_ancestry_fl(const char *file, int line, const char **parent_names)
-+{
-+	const char *parent_name = NULL;
-+	struct strbuf buf_payload = STRBUF_INIT;
-+
-+	/* cmd_ancestry parent <- grandparent <- great-grandparent */
-+	strbuf_addstr(&buf_payload, "cmd_ancestry ");
-+	while ((parent_name = *parent_names++)) {
-+		strbuf_addstr(&buf_payload, parent_name);
-+		/* if we'll write another one after this, add a delimiter */
-+		if (parent_names && *parent_names)
-+			strbuf_addstr(&buf_payload, " <- ");
-+	}
-+
-+	normal_io_write_fl(file, line, &buf_payload);
-+	strbuf_release(&buf_payload);
-+}
-+
- static void fn_command_name_fl(const char *file, int line, const char *name,
- 			       const char *hierarchy)
- {
-@@ -306,6 +324,7 @@ struct tr2_tgt tr2_tgt_normal = {
- 	fn_atexit,
- 	fn_error_va_fl,
- 	fn_command_path_fl,
-+	fn_command_ancestry_fl,
- 	fn_command_name_fl,
- 	fn_command_mode_fl,
- 	fn_alias_fl,
-diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-index a8018f18cc..af4d65a0a5 100644
---- a/trace2/tr2_tgt_perf.c
-+++ b/trace2/tr2_tgt_perf.c
-@@ -253,6 +253,21 @@ static void fn_command_path_fl(const char *file, int line, const char *pathname)
- 	strbuf_release(&buf_payload);
- }
- 
-+static void fn_command_ancestry_fl(const char *file, int line, const char **parent_names)
-+{
-+	const char *event_name = "cmd_ancestry";
-+	struct strbuf buf_payload = STRBUF_INIT;
-+
-+	strbuf_addstr(&buf_payload, "ancestry:[");
-+	/* It's not an argv but the rules are basically the same. */
-+	sq_append_quote_argv_pretty(&buf_payload, parent_names);
-+	strbuf_addch(&buf_payload, ']');
-+
-+	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL, NULL,
-+			 &buf_payload);
-+	strbuf_release(&buf_payload);
-+}
-+
- static void fn_command_name_fl(const char *file, int line, const char *name,
- 			       const char *hierarchy)
- {
-@@ -532,6 +547,7 @@ struct tr2_tgt tr2_tgt_perf = {
- 	fn_atexit,
- 	fn_error_va_fl,
- 	fn_command_path_fl,
-+	fn_command_ancestry_fl,
- 	fn_command_name_fl,
- 	fn_command_mode_fl,
- 	fn_alias_fl,
--- 
-2.32.0.402.g57bb445576-goog
+With maint, master, next, seen, todo:
 
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-vcs/git/
+
+With all the integration branches and topics broken out:
+
+	https://github.com/gitster/git/
+
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
+
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
+
+Release tarballs are available at:
+
+	https://www.kernel.org/pub/software/scm/git/
+
+--------------------------------------------------
+[New Topics]
+
+* ab/bundle-tests (2021-07-20) 2 commits
+ - bundle tests: use test_cmp instead of grep
+ - bundle tests: use ">file" not ": >file"
+
+ "git bundle" gained more test coverage.
+
+ Will merge to 'next'.
+
+
+* es/config-based-hooks (2021-07-20) 9 commits
+ - hook: implement hookcmd.<name>.skip
+ - hook: teach 'hookcmd' config to alias hook scripts
+ - hook: allow out-of-repo 'git hook' invocations
+ - hook: include hooks from the config
+ - hook: allow running non-native hooks
+ - hook: treat hookdir hook specially
+ - hook: introduce "git hook list"
+ - hook: allow parallel hook execution
+ - hook: run a list of hooks instead
+ (this branch uses ab/config-based-hooks-base.)
+
+ The "hooks defined via the configuration variables" topic.
+
+
+* fs/ssh-signing (2021-07-20) 10 commits
+ - SQUASH???
+ - ssh signing: add documentation
+ - ssh signing: add more tests for logs, tags & push certs
+ - ssh signing: duplicate t7510 tests for commits
+ - ssh signing: add test prereqs
+ - ssh signing: parse ssh-keygen output and verify signatures
+ - ssh signing: provide a textual representation of the signing key
+ - ssh signing: retrieve a default key from ssh-agent
+ - ssh signing: add ssh signature format and signing using ssh keys
+ - ssh signing: preliminary refactoring and clean-up
+
+ Use ssh public crypto for object and push-cert signing.
+
+ Seems to break tests when merged to 'seen'.
+
+
+* hn/refs-debug-empty-prefix (2021-07-19) 1 commit
+  (merged to 'next' on 2021-07-20 at 2772d3efb2)
+ + refs/debug: quote prefix
+
+ Debugging aid.
+
+ Will merge to 'master'.
+
+
+* pb/submodule-recurse-doc (2021-07-20) 1 commit
+ - doc: clarify description of 'submodule.recurse'
+
+ Doc update.
+
+ Will merge to 'next'.
+
+
+* ps/t0000-output-directory-fix (2021-07-20) 1 commit
+  (merged to 'next' on 2021-07-20 at 7e0b7c1f0c)
+ + t0000: fix test if run with TEST_OUTPUT_DIRECTORY
+ (this branch uses jk/t0000-subtests-fix.)
+
+ "TEST_OUTPUT_DIRECTORY=3Dthere make test" failed to work, which has
+ been corrected.
+
+ Will merge to 'master'.
+
+
+* tb/bitmap-type-filter-comment-fix (2021-07-20) 1 commit
+ - pack-bitmap: clarify comment in filter_bitmap_exclude_type()
+
+ In-code comment update.
+
+ Will merge to 'next'.
+
+
+* tb/reverse-midx (2021-07-19) 1 commit
+  (merged to 'next' on 2021-07-20 at 995cb54b5b)
+ + multi-pack-index: fix potential segfault without sub-command
+
+ The code that gives an error message in "git multi-pack-index" when
+ no subcommand is given tried to print a NULL pointer as a strong,
+ which has been corrected.
+
+ Will merge to 'master'.
+
+
+* hn/refs-test-cleanup (2021-07-19) 5 commits
+ - t2402: use ref-store test helper to create broken symlink
+ - t3320: use git-symbolic-ref rather than filesystem access
+ - t6120: use git-update-ref rather than filesystem access
+ - t1503: mark symlink test as REFFILES
+ - t6050: use git-update-ref rather than filesystem access
+
+ A handful of tests that assumed implementation details of files
+ backend for refs have been cleaned up.
+
+ Will merge to 'next'.
+
+--------------------------------------------------
+[Stalled]
+
+* ao/p4-avoid-decoding (2021-04-12) 2 commits
+ - git-p4: do not decode data from perforce by default
+ - git-p4: avoid decoding more data from perforce
+
+ "git p4" in Python-2 days used to accept a lot more kinds of data
+ from Perforce server as uninterrupted byte sequence, but after
+ switching to Python-3, too many things are expected to be in UTF-8,
+ which broke traditional use cases.
+
+ Waiting for reviews.
+
+
+* tv/p4-fallback-encoding (2021-04-30) 1 commit
+ - git-p4: git-p4.fallbackEncoding to specify non UTF-8 charset
+
+ "git p4" learns the fallbackEncoding configuration variable to
+ safely accept changeset descriptions that aren't written in UTF-8.
+
+ Waiting for reviews.
+
+--------------------------------------------------
+[Cooking]
+
+* hn/reftable (2021-07-20) 26 commits
+ - t7004: avoid direct filesystem access
+ - t1404: annotate test cases with REFFILES
+ - t1401,t2011: parameterize HEAD.lock for REFFILES
+ - t1301: document what needs to be done for reftable
+ - Add "test-tool dump-reftable" command.
+ - git-prompt: prepare for reftable refs backend
+ - refs: RFC: Reftable support for git-core
+ - reftable: add dump utility
+ - reftable: implement stack, a mutable database of reftable files.
+ - reftable: implement refname validation
+ - reftable: add merged table view
+ - reftable: add a heap-based priority queue for reftable records
+ - reftable: reftable file level tests
+ - reftable: read reftable files
+ - reftable: generic interface to tables
+ - reftable: write reftable files
+ - reftable: a generic binary tree implementation
+ - reftable: reading/writing blocks
+ - Provide zlib's uncompress2 from compat/zlib-compat.c
+ - reftable: (de)serialization for the polymorphic record type.
+ - reftable: add blocksource, an abstraction for random access reads
+ - reftable: utility functions
+ - reftable: add error related functionality
+ - reftable: RFC: add LICENSE
+ - init-db: set the_repository->hash_algo early on
+ - hash.h: provide constants for the hash IDs
+
+ The "reftable" backend for the refs API.
+
+
+* jk/config-env-doc (2021-07-20) 3 commits
+ - doc/git-config: simplify "override" advice for FILES section
+ - doc/git-config: clarify GIT_CONFIG environment variable
+ - doc/git-config: explain --file instead of referring to GIT_CONFIG
+
+ Documentation around GIT_CONFIG has been updated.
+
+ Will merge to 'next'.
+
+
+* js/ci-check-whitespace-updates (2021-07-14) 2 commits
+ - ci(check-whitespace): restrict to the intended commits
+ - ci(check-whitespace): stop requiring a read/write token
+
+ CI update.
+
+ Will merge to 'next'.
+
+
+* js/ci-make-sparse (2021-07-14) 1 commit
+  (merged to 'next' on 2021-07-20 at 99f518bdef)
+ + ci: run `make sparse` as part of the GitHub workflow
+
+ The CI gained a new job to run "make sparse" check.
+
+ Will merge to 'master'.
+
+
+* pb/dont-complete-aliased-options (2021-07-16) 1 commit
+  (merged to 'next' on 2021-07-20 at bbc531c710)
+ + parse-options: don't complete option aliases by default
+
+ The completion support used to offer alternate spelling of options
+ that exist only for compatibility, which has been corrected.
+
+ Will merge to 'master'.
+
+
+* ab/refs-files-cleanup (2021-07-20) 12 commits
+ - refs/files: remove unused "errno !=3D ENOTDIR" condition
+ - refs/files: remove unused "errno =3D=3D EISDIR" code
+ - refs/files: remove unused "oid" in lock_ref_oid_basic()
+ - reflog expire: don't lock reflogs using previously seen OID
+ - refs/files: add a comment about refs_reflog_exists() call
+ - refs: make repo_dwim_log() accept a NULL oid
+ - refs API: pass the "lock OID" to reflog "prepare"
+ - refs/debug: re-indent argument list for "prepare"
+ - refs/files: remove unused "skip" in lock_raw_ref() too
+ - refs/files: remove unused "extras/skip" in lock_ref_oid_basic()
+ - refs/files: remove unused REF_DELETING in lock_ref_oid_basic()
+ - refs/packet: add missing BUG() invocations to reflog callbacks
+ (this branch is used by hn/refs-errno-cleanup.)
+
+ Patches are mostly good, but needs typofixes etc.
+
+ Will merge to 'next'.
+
+
+* en/pull-conflicting-options (2021-07-20) 8 commits
+ - pull: fix handling of multiple heads
+ - pull: update docs & code for option compatibility with rebasing
+ - pull: abort by default when fast-forwarding is not possible
+ - pull: make --rebase and --no-rebase override pull.ff=3Donly
+ - pull: since --ff-only overrides, handle it first
+ - pull: abort if --ff-only is given and fast-forwarding is impossible
+ - t7601: add tests of interactions with multiple merge heads and config
+ - t7601: test interaction of merge/rebase/fast-forward flags and options
+
+ "git pull" had various corner cases that were not well thought out
+ around its --rebase backend, e.g. "git pull --ff-only" did not stop
+ but went ahead and rebased when the history on other side is not a
+ descendant of our history.  The series tries to fix them up.
+
+
+* jk/t0000-subtests-fix (2021-07-19) 1 commit
+  (merged to 'next' on 2021-07-20 at 81412e1684)
+ + t0000: clear GIT_SKIP_TESTS before running sub-tests
+ (this branch is used by ps/t0000-output-directory-fix.)
+
+ Test fix.
+
+ Will merge to 'master'.
+
+
+* dl/packet-read-response-end-fix (2021-07-09) 1 commit
+  (merged to 'next' on 2021-07-16 at 6a7734b6b5)
+ + pkt-line: replace "stateless separator" with "response end"
+
+ Error message update.
+
+ Will merge to 'master'.
+
+
+* hj/commit-allow-empty-message (2021-07-09) 2 commits
+  (merged to 'next' on 2021-07-16 at 86b79d3010)
+ + commit: remove irrelavent prompt on `--allow-empty-message`
+ + commit: reorganise commit hint strings
+
+ "git commit --allow-empty-message" won't abort the operation upon
+ an empty message, but the hint shown in the editor said otherwise.
+
+ Will merge to 'master'.
+
+
+* ab/attribute-format (2021-07-13) 5 commits
+  (merged to 'next' on 2021-07-20 at 44e5606a6e)
+ + advice.h: add missing __attribute__((format)) & fix usage
+ + *.h: add a few missing __attribute__((format))
+ + *.c static functions: add missing __attribute__((format))
+ + sequencer.c: move static function to avoid forward decl
+ + *.c static functions: don't forward-declare __attribute__
+
+ Many "printf"-like helper functions we have have been annotated
+ with __attribute__() to catch placeholder/parameter mismatches.
+
+ Will merge to 'master'.
+
+
+* dl/diff-merge-base (2021-07-12) 1 commit
+  (merged to 'next' on 2021-07-20 at 013d013bcf)
+ + git-diff: fix missing --merge-base docs
+
+ "git diff --merge-base" documentation has been updated.
+
+ Will merge to 'master'.
+
+
+* en/rename-limits-doc (2021-07-15) 4 commits
+  (merged to 'next' on 2021-07-20 at a89253d530)
+ + rename: bump limit defaults yet again
+ + diffcore-rename: treat a rename_limit of 0 as unlimited
+ + doc: clarify documentation for rename/copy limits
+ + diff: correct warning message when renameLimit exceeded
+
+ Documentation on "git diff -l<n>" and diff.renameLimit have been
+ updated, and the defaults for these limits have been raised.
+
+ Will merge to 'master'.
+
+
+* jk/typofix (2021-07-13) 1 commit
+  (merged to 'next' on 2021-07-13 at cce3caa34e)
+ + doc/rev-list-options: fix duplicate word typo
+
+ Typofix.
+
+ Will merge to 'master'.
+
+
+* ab/gitignore-discovery-doc (2021-07-06) 1 commit
+  (merged to 'next' on 2021-07-13 at 02f3b3deab)
+ + docs: .gitignore parsing is to the top of the repo
+
+ Doc update.
+
+ Will merge to 'master'.
+
+
+* bc/rev-list-without-commit-line (2021-07-12) 1 commit
+  (merged to 'next' on 2021-07-13 at 1ceed60061)
+ + rev-list: add option for --pretty=3Dformat without header
+
+ "git rev-list" learns to omit the "commit <object-name>" header
+ lines from the output with the `--no-commit-header` option.
+
+ Will merge to 'master'.
+
+
+* ab/imap-send-read-everything-simplify (2021-07-07) 1 commit
+  (merged to 'next' on 2021-07-13 at ab59128bfb)
+ + imap-send.c: use less verbose strbuf_fread() idiom
+
+ Code simplification.
+
+ Will merge to 'master'.
+
+
+* ab/pkt-line-tests (2021-07-19) 1 commit
+  (merged to 'next' on 2021-07-20 at 8e5e53450c)
+ + test-lib-functions: use test-tool for [de]packetize()
+
+ Tests that cover protocol bits have been updated and helpers
+ used there have been consolidated.
+
+ Will merge to 'master'.
+
+
+* bc/inactive-submodules (2021-07-02) 1 commit
+ - submodule: mark submodules with update=3Dnone as inactive
+
+ Usability update for inactive submodules.
+
+ Under review.
+ cf. <fc5ec100-1d42-4199-236e-7a99c9218f38@gmail.com>
+ cf. <bf1893ee-6973-d8b2-659e-bb239a0a9ae2@gmail.com>
+
+
+* en/ort-perf-batch-14 (2021-07-20) 7 commits
+ - merge-ort: restart merge with cached renames to reduce process entry c=
+ost
+ - merge-ort: avoid recursing into directories when we don't need to
+ - merge-ort: defer recursing into directories when merge base is matched
+ - merge-ort: add a handle_deferred_entries() helper function
+ - merge-ort: add data structures for allowable trivial directory resolve=
+s
+ - merge-ort: add some more explanations in collect_merge_info_callback()
+ - merge-ort: resolve paths early when we have sufficient information
+
+ Further optimization on "merge -sort" backend.
+
+ Will merge to 'next'.
+
+
+* cf/fetch-set-upstream-while-detached (2021-07-06) 1 commit
+ - fetch: fix segfault on --set-upstream while on a detached HEAD
+
+ "git fetch --set-upstream" while on detached HEAD segfaulted
+ instead of noticing that such an operation did not make sense.
+
+ Expecting a reroll.
+ cf. <xmqqsg0ri5mq.fsf@gitster.g>
+
+
+* ps/perf-with-separate-output-directory (2021-07-02) 1 commit
+ - perf: fix when running with TEST_OUTPUT_DIRECTORY
+
+ Test update.
+
+ Will merge to 'next'.
+
+
+* sm/worktree-add-lock (2021-07-15) 3 commits
+  (merged to 'next' on 2021-07-16 at 609c0a4944)
+ + worktree: teach `add` to accept --reason <string> with --lock
+ + worktree: mark lock strings with `_()` for translation
+ + t2400: clean up '"add" worktree with lock' test
+
+ "git worktree add --lock" learned to record why the worktree is
+ locked with a custom message.
+
+ Will merge to 'master'.
+
+
+* ab/bundle-doc (2021-07-20) 3 commits
+ - bundle doc: elaborate on rev<->ref restriction
+ - bundle doc: elaborate on object prerequisites
+ - bundle doc: rewrite the "DESCRIPTION" section
+
+ Doc update.
+
+ Expecting a reroll.
+ at least for the second patch.
+
+
+* ab/pack-stdin-packs-fix (2021-07-09) 2 commits
+ - pack-objects: fix segfault in --stdin-packs option
+ - pack-objects tests: cover blindspots in stdin handling
+
+ Input validation of "git pack-objects --stdin-packs" has been
+ corrected.
+
+ Ack?
+ cf. <YND3h2l10PlnSNGJ@nand.local>
+
+
+* ds/commit-and-checkout-with-sparse-index (2021-07-20) 7 commits
+ - unpack-trees: resolve sparse-directory/file conflicts
+ - t1092: document bad 'git checkout' behavior
+ - checkout: stop expanding sparse indexes
+ - sparse-index: recompute cache-tree
+ - commit: integrate with sparse-index
+ - p2000: compress repo names
+ - p2000: add 'git checkout -' test and decrease depth
+ (this branch uses ds/status-with-sparse-index.)
+
+ "git checkout" and "git commit" learn to work without unnecessarily
+ expanding sparse indexes.
+
+ Will merge to 'next'.
+
+
+* ew/many-alternate-optim (2021-07-07) 5 commits
+  (merged to 'next' on 2021-07-16 at a2d8bc731d)
+ + oidtree: a crit-bit tree for odb_loose_cache
+ + oidcpy_with_padding: constify `src' arg
+ + make object_directory.loose_objects_subdir_seen a bitmap
+ + avoid strlen via strbuf_addstr in link_alt_odb_entry
+ + speed up alt_odb_usable() with many alternates
+
+ Optimization for repositories with many alternate object store.
+
+ Will merge to 'master'.
+
+
+* jk/log-decorate-optim (2021-07-14) 7 commits
+  (merged to 'next' on 2021-07-16 at 5637878b90)
+ + load_ref_decorations(): fix decoration with tags
+  (merged to 'next' on 2021-07-08 at a3b6f978ab)
+ + add_ref_decoration(): rename s/type/deco_type/
+ + load_ref_decorations(): avoid parsing non-tag objects
+ + object.h: add lookup_object_by_type() function
+ + object.h: expand docstring for lookup_unknown_object()
+ + log: avoid loading decorations for userformats that don't need it
+ + pretty.h: update and expand docstring for userformat_find_requirements=
+()
+
+ Optimize "git log" for cases where we wasted cycles to load ref
+ decoration data that may not be needed.
+
+ Will merge to 'master'.
+
+
+* js/ci-windows-update (2021-07-06) 7 commits
+  (merged to 'next' on 2021-07-13 at 329771e960)
+ + ci: accelerate the checkout
+ + ci (vs-build): build with NO_GETTEXT
+ + artifacts-tar: respect NO_GETTEXT
+ + ci (windows): transfer also the Git-tracked files to the test jobs
+ + ci: upgrade to using actions/{up,down}load-artifacts v2
+ + ci (vs-build): use `cmd` to copy the DLLs, not `powershell`
+ + ci: use the new GitHub Action to download git-sdk-64-minimal
+
+ GitHub Actions / CI update.
+
+ Will merge to 'master'.
+
+
+* jt/push-negotiation-fixes (2021-07-15) 3 commits
+ - fetch: die on invalid --negotiation-tip hash
+ - send-pack: fix push nego. when remote has refs
+ - send-pack: fix push.negotiate with remote helper
+
+ Bugfix for common ancestor negotiation recently introduced in "git
+ push" codepath.
+
+ Needs review.
+
+
+* ab/make-tags-cleanup (2021-06-29) 5 commits
+ - Makefile: normalize clobbering & xargs for tags targets
+ - Makefile: don't use "FORCE" for tags targets
+ - Makefile: fix "cscope" target to refer to cscope.out
+ - Makefile: add QUIET_GEN to "cscope" target
+ - Makefile: move ".PHONY: cscope" near its target
+
+ Build clean-up for "make tags" and friends.
+
+ Expecting a reroll.
+ Hopefully with a final reroll it would become good enough shape for 'nex=
+t'?
+ cf. <YN5AwdVC3QAcy2tA@coredump.intra.peff.net>
+ cf. <67c45b13-df8f-8065-377a-fbd2f80992ee@ramsayjones.plus.com>
+
+
+* tb/multi-pack-bitmaps (2021-06-28) 24 commits
+ - p5326: perf tests for MIDX bitmaps
+ - p5310: extract full and partial bitmap tests
+ - midx: respect 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP'
+ - t7700: update to work with MIDX bitmap test knob
+ - t5319: don't write MIDX bitmaps in t5319
+ - t5310: disable GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP
+ - t0410: disable GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP
+ - t5326: test multi-pack bitmap behavior
+ - t/helper/test-read-midx.c: add --checksum mode
+ - t5310: move some tests to lib-bitmap.sh
+ - pack-bitmap: write multi-pack bitmaps
+ - pack-bitmap: read multi-pack bitmaps
+ - pack-bitmap.c: introduce 'bitmap_is_preferred_refname()'
+ - pack-bitmap.c: introduce 'nth_bitmap_object_oid()'
+ - pack-bitmap.c: introduce 'bitmap_num_objects()'
+ - midx: infer preferred pack when not given one
+ - midx: respect 'core.multiPackIndex' when writing
+ - midx: clear auxiliary .rev after replacing the MIDX
+ - midx: make a number of functions non-static
+ - Documentation: describe MIDX-based bitmaps
+ - Documentation: build 'technical/bitmap-format' by default
+ - pack-bitmap-write.c: free existing bitmaps
+ - pack-bitmap-write.c: gracefully fail to write non-closed bitmaps
+ - pack-bitmap.c: harden 'test_bitmap_walk()' to check type bitmaps
+
+ The reachability bitmap file used to be generated only for a single
+ pack, but now we've learned to generate bitmaps for history that
+ span across multiple packfiles.
+
+ Comments?
+
+
+* ds/status-with-sparse-index (2021-07-14) 16 commits
+  (merged to 'next' on 2021-07-20 at 1558d36c0f)
+ + t1092: document bad sparse-checkout behavior
+ + fsmonitor: integrate with sparse index
+ + wt-status: expand added sparse directory entries
+ + status: use sparse-index throughout
+ + status: skip sparse-checkout percentage with sparse-index
+ + diff-lib: handle index diffs with sparse dirs
+ + dir.c: accept a directory as part of cone-mode patterns
+ + unpack-trees: unpack sparse directory entries
+ + unpack-trees: rename unpack_nondirectories()
+ + unpack-trees: compare sparse directories correctly
+ + unpack-trees: preserve cache_bottom
+ + t1092: add tests for status/add and sparse files
+ + t1092: expand repository data shape
+ + t1092: replace incorrect 'echo' with 'cat'
+ + sparse-index: include EXTENDED flag when expanding
+ + sparse-index: skip indexes with unmerged entries
+ (this branch is used by ds/commit-and-checkout-with-sparse-index.)
+
+ "git status" codepath learned to work with sparsely populated index
+ without hydrating it fully.
+
+ Will merge to 'master'.
+
+
+* ab/config-based-hooks-base (2021-06-29) 33 commits
+ - hooks: fix a TOCTOU in "did we run a hook?" heuristic
+ - receive-pack: convert receive hooks to hook.h
+ - post-update: use hook.h library
+ - receive-pack: convert 'update' hook to hook.h
+ - hooks: allow callers to capture output
+ - run-command: allow capturing of collated output
+ - reference-transaction: use hook.h to run hooks
+ - transport: convert pre-push hook to use config
+ - hook: convert 'post-rewrite' hook in sequencer.c to hook.h
+ - hook: provide stdin by string_list or callback
+ - run-command: add stdin callback for parallelization
+ - am: convert 'post-rewrite' hook to hook.h
+ - hook: support passing stdin to hooks
+ - run-command: allow stdin for run_processes_parallel
+ - run-command: remove old run_hook_{le,ve}() hook API
+ - receive-pack: convert push-to-checkout hook to hook.h
+ - read-cache: convert post-index-change hook to use config
+ - commit: use hook.h to execute hooks
+ - git-p4: use 'git hook' to run hooks
+ - send-email: use 'git hook run' for 'sendemail-validate'
+ - git hook run: add an --ignore-missing flag
+ - merge: use config-based hooks for post-merge hook
+ - hooks: convert 'post-checkout' hook to hook library
+ - am: convert applypatch hooks to use config
+ - rebase: teach pre-rebase to use hook.h
+ - gc: use hook library for pre-auto-gc hook
+ - hook: add 'run' subcommand
+ - hook-list.h: add a generated list of hooks, like config-list.h
+ - hook.c: add a hook_exists() wrapper and use it in bugreport.c
+ - hook.[ch]: move find_hook() to this new library
+ - Makefile: remove an out-of-date comment
+ - Makefile: stop hardcoding {command,config}-list.h
+ - Makefile: mark "check" target as .PHONY
+ (this branch is used by es/config-based-hooks.)
+
+ Restructuring of (a subset of) Emily's config-based-hooks series,
+ to demonstrate that a series can be presented as a more logical and
+ focused progression.
+
+ Waiting for reviews.
+
+
+* ab/doc-retire-alice-bob (2021-06-16) 6 commits
+ - pack-protocol doc: use "www-data" in place of "alice"
+ - doc: replace "alice" and "bob" with "jdoe" and "msmith"
+ - fast-import doc: change "bob" in an example to "file.txt"
+ - daemon doc + code comments: reword "alice" example
+ - gitcvs-migration doc: replace "alice" and "bob" with "you" and "www-da=
+ta"
+ - gittutorial doc: replace "alice" and "bob" with "you" and "www-data"
+
+ Documentation update to avoid Alice and Bob in contexts where Eve
+ does not appear in.
+
+ Will discard.
+ Let's shelve this one for now, as it does not seem to solve any
+ real problems (other than ceasing to use Alice and Bob in contexts
+ that do not call for Eve).
+
+
+* ab/serve-cleanup (2021-06-28) 8 commits
+ - upload-pack.c: convert to new serve.c "startup" config cb
+ - serve: add support for a "startup" git_config() callback
+ - serve.c: add trace2 regions for advertise & command
+ - serve.c: add call_{advertise,command}() indirection
+ - serve: use designated initializers
+ - transport: use designated initializers
+ - transport: rename "fetch" in transport_vtable to "fetch_refs"
+ - serve: mark has_capability() as static
+
+ Code clean-up around "git serve".
+
+ Expecting a reroll.
+ cf. <cover-0.8-00000000000-20210628T191634Z-avarab@gmail.com>
+ cf. <87tul24iw2.fsf@evledraar.gmail.com>
+
+
+* es/superproject-aware-submodules (2021-06-16) 5 commits
+ - SQUASH???
+ - submodule: cache superproject gitdir during 'update'
+ - submodule: cache superproject gitdir during absorbgitdirs
+ - introduce submodule.superprojectGitDir cache
+ - t7400-submodule-basic: modernize inspect() helper
+
+ A configuration variable in a submodule points at the location of
+ the superproject it is bound to (RFC).
+
+ Waiting for reviews.
+
+
+* en/zdiff3 (2021-06-15) 2 commits
+ - update documentation for new zdiff3 conflictStyle
+ - xdiff: implement a zealous diff3, or "zdiff3"
+
+ "Zealous diff3" style of merge conflict presentation has been added.
+
+ Expecting a reroll.
+ cf. <CABPp-BE7-E03+x38EK-=3DAE5mwwdST+d50hiiud2eY2Nsf3rM5g@mail.gmail.co=
+m>
+
+
+* pw/diff-color-moved-fix (2021-07-20) 12 commits
+ - diff --color-moved: intern strings
+ - diff: use designated initializers for emitted_diff_symbol
+ - diff --color-moved-ws=3Dallow-indentation-change: improve hash lookups
+ - diff --color-moved: stop clearing potential moved blocks
+ - diff --color-moved: shrink potential moved blocks as we go
+ - diff --color-moved: unify moved block growth functions
+ - diff --color-moved: call comparison function directly
+ - diff --color-moved-ws=3Dallow-indentation-change: simplify and optimiz=
+e
+ - diff: simplify allow-indentation-change delta calculation
+ - diff --color-moved: avoid false short line matches and bad zerba color=
+ing
+ - diff --color-moved=3Dzebra: fix alternate coloring
+ - diff --color-moved: add perf tests
+
+ Long-overdue correctness and performance update to "diff
+ --color-moved" feature.
+
+
+* hn/refs-errno-cleanup (2021-07-20) 7 commits
+ - refs: make errno output explicit for refs_resolve_ref_unsafe
+ - refs: explicitly return failure_errno from parse_loose_ref_contents
+ - refs: add failure_errno to refs_read_raw_ref() signature
+ - refs: make errno output explicit for read_raw_ref_fn
+ - refs/files-backend: stop setting errno from lock_ref_oid_basic
+ - refs: remove EINVAL errno output from specification of read_raw_ref_fn
+ - refs file backend: move raceproof_create_file() here
+ (this branch uses ab/refs-files-cleanup.)
+
+ Futz with the way 'errno' is relied on in the refs API to carry the
+ failure modes up the callchain.
+
+ Will merge to 'next'.
+
+
+* ab/test-tool-cache-cleanup (2021-06-08) 4 commits
+ - read-cache perf: add a perf test for refresh_index()
+ - test-tool: migrate read-cache-again to parse_options()
+ - test-tool: migrate read-cache-perf to parse_options()
+ - test-tool: split up test-tool read-cache
+
+ Test code shuffling.
+
+ Waiting for reviews.
+
+
+* ab/pack-objects-stdin (2021-07-09) 5 commits
+ - pack-objects.c: make use of REV_INFO_STDIN_LINE_PROCESS
+ - pack-objects.c: do stdin parsing via revision.c's API
+ - revision.[ch]: add a "handle_stdin_line" API
+ - revision.h: refactor "disable_stdin" and "read_from_stdin"
+ - upload-pack: run is_repository_shallow() before setup_revisions()
+
+ Introduce handle_stdin_line callback to revision API and uses it.
+
+
+* ar/submodule-add (2021-07-12) 4 commits
+ - submodule--helper: introduce add-clone subcommand
+ - submodule--helper: refactor module_clone()
+ - submodule: prefix die messages with 'fatal'
+ - t7400: test failure to add submodule in tracked path
+
+ Rewrite of "git submodule" in C continues.
+
+ Will merge to 'next'.
+
+
+* ds/gender-neutral-doc-guidelines (2021-07-16) 1 commit
+  (merged to 'next' on 2021-07-20 at 06d325e064)
+ + CodingGuidelines: recommend gender-neutral description
+
+ A guideline for gender neutral documentation has been added.
+
+ Will merge to 'master'.
+
+
+* gh/gitweb-branch-sort (2021-06-10) 1 commit
+ - gitweb: use HEAD as secondary sort key in git_get_heads_list()
+
+ Tie-break branches that point at the same object in the list of
+ branches on GitWeb to show the one pointed at by HEAD early.
+
+ Waiting for reviews.
+
+
+* lh/systemd-timers (2021-07-02) 3 commits
+ - maintenance: add support for systemd timers on Linux
+ - maintenance: `git maintenance run` learned `--scheduler=3D<scheduler>`
+ - cache.h: Introduce a generic "xdg_config_home_for(=E2=80=A6)" function
+
+ "git maintenance" scheduler learned to use systemd timers as a
+ possible backend.
+
+ Waiting for reviews.
+
+
+* fc/completion-updates (2021-06-07) 4 commits
+ - completion: bash: add correct suffix in variables
+ - completion: bash: fix for multiple dash commands
+ - completion: bash: fix for suboptions with value
+ - completion: bash: fix prefix detection in branch.*
+
+ Command line completion updates.
+
+ Expecting a reroll.
+ cf. <60be6f7fa4435_db80d208f2@natae.notmuch>
+
+
+* ab/update-submitting-patches (2021-06-08) 3 commits
+ - SubmittingPatches: remove pine-specific hints from MUA hints
+ - SubmittingPatches: replace discussion of Travis with GitHub Actions
+ - SubmittingPatches: move discussion of Signed-off-by above "send"
+
+ Reorganize and update the SubmitingPatches document.
+
+ Expecting a reroll.
+ cf. <20210607172542.GA6312@szeder.dev>
+ cf. <nycvar.QRO.7.76.6.2106072346560.55@tvgsbejvaqbjf.bet>
+
+
+* zh/ref-filter-raw-data (2021-07-15) 18 commits
+ - cat-file: use fast path when using default_format
+ - ref-filter: remove grab_oid() function
+ - cat-file: re-implement --textconv, --filters options
+ - cat-file: reuse err buf in batch_object_write()
+ - cat-file: reuse ref-filter logic
+ - cat-file: create p1006-cat-file.sh
+ - cat-file: change batch_objects parameter name
+ - cat-file: add has_object_file() check
+ - ref-filter: modify the error message and value in get_object
+ - ref-filter: add cat_file_mode to ref_format
+ - ref-filter: introduce free_ref_array_item_value() function
+ - ref-filter: pass get_object() return value to their callers
+ - ref-filter: add %(rest) atom
+ - ref-filter: use non-const ref_format in *_atom_parser()
+ - ref-filter: --format=3D%(raw) re-support --perl
+ - ref-filter: add %(raw) atom
+ - ref-filter: add obj-type check in grab contents
+ - Merge branch 'zh/cat-file-batch-fix' into zh/ref-filter-raw-data
+
+ Prepare the "ref-filter" machinery that drives the "--format"
+ option of "git for-each-ref" and its friends to be used in "git
+ cat-file --batch".
+
+ Heavy performance degradation has been observed with this series.
+
+
+* jh/builtin-fsmonitor (2021-07-12) 35 commits
+ - BANDAID: sparse fixes
+ - t7527: test FS event reporing on MacOS WRT case and Unicode
+ - fsmonitor: handle shortname for .git
+ - t7527: test status with untracked-cache and fsmonitor--daemon
+ - fsmonitor: force update index after large responses
+ - fsmonitor: enhance existing comments
+ - fsmonitor--daemon: use a cookie file to sync with file system
+ - fsmonitor--daemon: periodically truncate list of modified files
+ - t7527: create test for fsmonitor--daemon
+ - t/perf/p7519: add fsmonitor--daemon test cases
+ - t/perf: avoid copying builtin fsmonitor files into test repo
+ - t/perf/p7519: speed up test using "test-tool touch"
+ - t/helper/test-touch: add helper to touch a series of files
+ - fsmonitor--daemon: implement handle_client callback
+ - fsmonitor-fs-listen-macos: implement FSEvent listener on MacOS
+ - fsmonitor-fs-listen-macos: add macos header files for FSEvent
+ - fsmonitor-fs-listen-win32: implement FSMonitor backend on Windows
+ - fsmonitor--daemon: create token-based changed path cache
+ - fsmonitor--daemon: define token-ids
+ - fsmonitor--daemon: add pathname classification
+ - fsmonitor: do not try to operate on bare repos
+ - fsmonitor--daemon: implement 'start' command
+ - fsmonitor--daemon: implement 'run' command
+ - fsmonitor-fs-listen-macos: stub in backend for MacOS
+ - fsmonitor-fs-listen-win32: stub in backend for Windows
+ - t/helper/fsmonitor-client: create IPC client to talk to FSMonitor Daem=
+on
+ - fsmonitor--daemon: implement 'stop' and 'status' commands
+ - fsmonitor--daemon: add a built-in fsmonitor daemon
+ - fsmonitor: use IPC to query the builtin FSMonitor daemon
+ - fsmonitor: config settings are repository-specific
+ - help: include fsmonitor--daemon feature flag in version info
+ - fsmonitor-ipc: create client routines for git-fsmonitor--daemon
+ - fsmonitor--daemon: update fsmonitor documentation
+ - fsmonitor--daemon: man page
+ - simple-ipc: preparations for supporting binary messages.
+
+ An attempt to write and ship with a watchman equivalent tailored
+ for our use.
+
+ So, where are we with this topic?
+
+
+* es/trace2-log-parent-process-name (2021-06-09) 1 commit
+ - tr2: log parent process name
+
+ trace2 logs learned to show parent process name to see in what
+ context Git was invoked.
+
+ Expecting a reroll.
+ cf. <YNux62he9Mk43Y1B@google.com>
+
+
+* ab/send-email-optim (2021-05-28) 13 commits
+  (merged to 'next' on 2021-07-08 at 35ac315894)
+ + perl: nano-optimize by replacing Cwd::cwd() with Cwd::getcwd()
+ + send-email: move trivial config handling to Perl
+ + perl: lazily load some common Git.pm setup code
+ + send-email: lazily load modules for a big speedup
+ + send-email: get rid of indirect object syntax
+ + send-email: use function syntax instead of barewords
+ + send-email: lazily shell out to "git var"
+ + send-email: lazily load config for a big speedup
+ + send-email: copy "config_regxp" into git-send-email.perl
+ + send-email: refactor sendemail.smtpencryption config parsing
+ + send-email: remove non-working support for "sendemail.smtpssl"
+ + send-email tests: test for boolean variables without a value
+ + send-email tests: support GIT_TEST_PERL_FATAL_WARNINGS=3Dtrue
+
+ "git send-email" optimization.
+
+ Will merge to 'master'.
+
+
+* ab/fsck-unexpected-type (2021-07-12) 21 commits
+ - fsck: report invalid object type-path combinations
+ - fsck: report invalid types recorded in objects
+ - object-store.h: move read_loose_object() below 'struct object_info'
+ - fsck: don't hard die on invalid object types
+ - object-file.c: return -2 on "header too long" in unpack_loose_header()
+ - object-file.c: return -1, not "status" from unpack_loose_header()
+ - object-file.c: guard against future bugs in loose_object_info()
+ - object-file.c: stop dying in parse_loose_header()
+ - object-file.c: split up ternary in parse_loose_header()
+ - object-file.c: simplify unpack_loose_short_header()
+ - object-file.c: add missing braces to loose_object_info()
+ - object-file.c: make parse_loose_header_extended() public
+ - object-file.c: don't set "typep" when returning non-zero
+ - cache.h: move object functions to object-store.h
+ - cat-file tests: test for current --allow-unknown-type behavior
+ - cat-file tests: add corrupt loose object test
+ - rev-list tests: test for behavior with invalid object types
+ - cat-file tests: test that --allow-unknown-type isn't on by default
+ - cat-file tests: test for missing object with -t and -s
+ - fsck tests: add test for fsck-ing an unknown type
+ - fsck tests: refactor one test to use a sub-repo
+
+ "git fsck" has been taught to report mismatch between expected and
+ actual types of an object better.
+
+ Needs review.
