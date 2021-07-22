@@ -2,155 +2,242 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BBB1C6377D
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 09:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 504B2C6377D
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 10:23:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8609761222
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 09:46:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1AE4F61287
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 10:23:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231349AbhGVJFl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jul 2021 05:05:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36938 "EHLO
+        id S231488AbhGVJnF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jul 2021 05:43:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231411AbhGVJFk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jul 2021 05:05:40 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A480AC061575
-        for <git@vger.kernel.org>; Thu, 22 Jul 2021 02:46:14 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id qa36so7453133ejc.10
-        for <git@vger.kernel.org>; Thu, 22 Jul 2021 02:46:14 -0700 (PDT)
+        with ESMTP id S230410AbhGVJnE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jul 2021 05:43:04 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E04A7C061575
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 03:23:39 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id j8-20020a17090aeb08b0290173bac8b9c9so3586191pjz.3
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 03:23:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=PjDoh62fV8uQfdWVMwwTvzLJCy0VZivFRx5JFFuj+64=;
-        b=RoIjC74J7sxZQNyKAUYVYveWDCgZhHu2nGqne+fUMf2g+GeeZjLlcp9rqfNyekUrrt
-         fi3YGHu/flwpwfrjV/9YZtI07Bsy1s5fTch7ZOahofRZTjcl8l+Cn4K99eDtSu42K01C
-         N4zAWSokcQ7jVa8xNHqcFTRQBrLsGPH2M/Es6Iu+emgosyJBj3expW82Ebbi+w95Vgfe
-         8RYbNppbBhOsZQJxCs5MJV5EQSyK2qzt8u1c9OEeOd8XXi9auMDYqhxkY5Ug40H86Xuf
-         v9sFS3XyHQceqBT6KrJ+vkbBOJ3Oqtsm8PQLYUNTGX49Fv8HYw02RbH4SOGSThonMsKP
-         MIrQ==
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :cc:to;
+        bh=EO3hvB8LLSWOwtdV7ItEqB2Df4csYI3HqbQKdc3Usl8=;
+        b=KhyTVc460UPyaadTgWB/VoHdrHmcyn1QJ8W3Yfy7dX+Ljfj6ySay8eB6wMXAiEqKGs
+         U2NmyGfFJIdB9uizwdzIWubdorrUoM8m6IuBzkTwueqGl3w75Vs9vTEnI5jzojwM3ZE1
+         njOKaOWPhRlu7/ijB7sIiMAl93C5/nzj/n3CFMns2Vz92NjmA004Pm4w5V3bAPqEfBVO
+         lU75KCxf8gB8kyLjjqW4l5Bjp80iv9+u0L3ORgBRadID69S7wmaw9+0CCJpT74WhryO5
+         tVrSqZuRsm/LbaEEsnOKSmHwuD4E2N4bNB0AIFsHuOjrNc+0zqIOvLXxQ8UHJbl33Qxg
+         LO5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PjDoh62fV8uQfdWVMwwTvzLJCy0VZivFRx5JFFuj+64=;
-        b=qfCa9V3rl+53yrxoDYo28vtuapOysa0iDlgIOjk8Hwi+064lzQ5vnF+f/vIpZgSg5D
-         kVrS0d0JbossEmfTAUfASEMOcT3dew0mix3M0CPAbqAbVW8Jn4YwrUr7wCAbNRI09NQd
-         PlSphKhAiRpeUWQSa6mTcv6PWPn42ukVgvHFalMTjTTLngbm7m1CiX4kCAWBgAPF0dye
-         4ONVv5fqHYBl2OUIhp3vbdjyT/xO3qj1yV+NrHgo0sQJuC+ARplLx8URpGCnpcS3FT5Z
-         Da9th/x5JKzDrBraogC47O1w9pEta4tdYlvNrCG7B9nLIc4rAlR+aswbbfeUMiorv0wB
-         /wDg==
-X-Gm-Message-State: AOAM5312c+M7kvDy1t14gvASvut+9Sc6bsa0muw+URmnjWXDI5niPyxO
-        pEESJXCTqio+/eSFYUxcQCVZKC0ATUc1MGO3nl8=
-X-Google-Smtp-Source: ABdhPJwFMVEYMF3T50cf6WpFdOoWSDLj4/SVNMs2ViQcfunCrJafnVt/uzlok7qwIg9wKT2tKY66HjkbGSOzLcg9/zA=
-X-Received: by 2002:a17:906:43c9:: with SMTP id j9mr41895874ejn.57.1626947173306;
- Thu, 22 Jul 2021 02:46:13 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAB9Jk9AafnUQr6q8t=b4Dh0PZHUA=fKJmtXxxObuGpF_w-_2wQ@mail.gmail.com>
- <871r7qvhhr.fsf@evledraar.gmail.com>
-In-Reply-To: <871r7qvhhr.fsf@evledraar.gmail.com>
-From:   Angelo Borsotti <angelo.borsotti@gmail.com>
-Date:   Thu, 22 Jul 2021 11:46:01 +0200
-Message-ID: <CAB9Jk9DqCR8C9qx6-gZmpTQfBAKnEupQTb1WkJgN3YOqSO0=2A@mail.gmail.com>
-Subject: Re: Extracting a file
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:cc:to;
+        bh=EO3hvB8LLSWOwtdV7ItEqB2Df4csYI3HqbQKdc3Usl8=;
+        b=eyNNgq2qrTC4hCqcFZWRFXFsp+8Cpijzq/ACdXoLzV5ob53ttaJzB4bkTu2lb+q21k
+         Id8HJO30IkhIyskyhOfL066UPEeMQjb4JTgG30Pf6M1jYX0Jp+bNrp8HDOBO1VpxMrRD
+         SZ0B0NMrleTWmCT5kzVUIRwYKvteeJeM6HDsyEnFjpZPiKnfU4htsf0hoiMA2b+z3nFn
+         ZriAr6728ZrkdyMMPQmVibjRauZ9tFvocoe7cE0yHLlCqomZHq65OEQK2SOTzB1Xp2Hv
+         W9edzJ2LWA3TXKQQQrkhnzIa2qwEBX1dr/uHhRIF1PghoRaMqSzSQ1jeEiFXqCGhtaYE
+         i1Eg==
+X-Gm-Message-State: AOAM5310y5fNwAV0R31+lyes0at+OgviV5BQOZAcMtuzt+WClURaf73M
+        lgb7ro6IZrL7N0wylumLmz1Wlu6xwjqXPg==
+X-Google-Smtp-Source: ABdhPJy3Lu5nMOc6BC2P8TxVlOpkfmOOSVAFGQH3tURedcwcCpG9X2XewNhoxiHagSXps5EYIorNBQ==
+X-Received: by 2002:a63:44a:: with SMTP id 71mr11893333pge.259.1626949419140;
+        Thu, 22 Jul 2021 03:23:39 -0700 (PDT)
+Received: from smtpclient.apple ([119.82.121.47])
+        by smtp.gmail.com with ESMTPSA id b15sm32257040pgm.15.2021.07.22.03.23.37
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 22 Jul 2021 03:23:38 -0700 (PDT)
+From:   Atharva Raykar <raykar.ath@gmail.com>
+Content-Type: text/plain;
+        charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
+Subject: [BUG?] submodule-config.c:config_from() has left me confused
+Message-Id: <FB8C1154-6092-48C7-96B8-6B6D9A28D9AA@gmail.com>
+Date:   Thu, 22 Jul 2021 15:53:35 +0530
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Heiko Voigt <hvoigt@hvoigt.net>
+To:     Git List <git@vger.kernel.org>
+X-Mailer: Apple Mail (2.3654.100.0.2.22)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Git Developers,
 
-thank you for your quick reply.
+While I was working on converting submodule code from shell to C, I had
+a question about the submodule-config API.
 
-Actually, I did not want to make git behave like a read-only filesystem,
-but only to be able to get what is stored in it using some easy to remember
-command.
+The usual way of obtaining the submodule configuration is by using the
+'submodule_from_path()' or 'submodule_from_name()' functions. Taking the
+example of the former, a call to it would look something like:
 
-I guess that:
+const struct submodule *sub =3D submodule_from_path(repo, oid, =
+path-to-submod);
 
-    git mv A B &&
-    git checkout HEAD -- A
+So my first question is what is the exact purpose of the second
+argument?
 
-renames file A in the work, current, directory to B, and then recovers
-A from the
-repository. This changes the file on which I am working. After having
-read the old
-A, and understood what changes I make that are not correct, I should delete=
- A,
-and rename B back to A.
-If something gets wrong with this, I risk to damage my original A.
-This is why it is
-better not to change it, and instead get a copy of the old one with
-another name,
-which is what
+The API docs say it should be a tree-ish:
 
-git show HASH:file/path/name.ext > some_new_name.ext
+   Given a tree-ish in the superproject and a path, return the submodule =
+that
+   is bound at the path in the named tree.
 
-does.
+My guess is that the tree-ish that we pass lets us obtain the submodule
+configuration for that specific commit or tree in the superproject.
 
--Angelo
+Looking at the underlying implementation[1], it seems to me that the =
+'oid'
+argument treats the 'null_oid()' specially to mean "get the =
+configuration from
+the latest revision".
 
-On Thu, 22 Jul 2021 at 11:13, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avara=
-b@gmail.com> wrote:
->
->
-> On Thu, Jul 22 2021, Angelo Borsotti wrote:
->
-> > Hi,
-> >
-> > sometimes there is a need to extract a file from a commit.
-> > E.g. some changes have been applied to it in the work directory,
-> > and the app being implemented no longer works properly.
-> > It would be fine to have a look at that file, some commits ago,
-> > when all worked fine.
-> > Of course, it is possible to recover the entire old commit, or to
-> > make a new branch, or checkout the file (which requires to save
-> > the new one before), but the most simple and safe way is to
-> > extract the file, giving it a new name.
-> > That is possible, using this (hard to remember) trick:
-> >
-> > git show HASH:file/path/name.ext > some_new_name.ext
-> >
-> > Would not be better to have a "copy" command to copy a file from a comm=
-it
-> > to a new one in the current directory?
->
-> That's an interesting feature request, FWIW you can do this now with:
->
->     git mv A B &&
->     git checkout HEAD -- A
->
-> I wonder if having a "git copy" for that would be more confusing that
-> not, i.e. a frequent difficulty new users used to have with git if they
-> were used to cvs/svn was to look for a "copy" command, thinking that
-> git's data model (like those older VCS's) needed the user to use a "mv"
-> or "copy" to track history.
->
-> On the other hand perhaps git's so thoroughly established that it's not
-> much of an educational issue anymore.
->
-> > This would make a git repository resemble a (readonly) filesystem, whic=
-h
-> > actually it is.
-> > Note also that the ability to get from a repository what one has stored
-> > in it is the most basic feature anyone wants from a repository.
->
-> Git is actively not such a "read-only FS" in the sense of some version
-> control systems, i.e. needing to declare that you are now going to
-> "edit" the file etc.
->
-> It is for bare repositories, but a checkout explicitly concerns itself
-> with you doing arbitrary changes on the FS, and git needing to keep up.
->
-> So maybe there should be a "copy", but if your starting point for
-> wanting it is to make git behave like a read-only FS I don't think
-> that'll lead anywhere productive.
+While I had these questions, Christian noticed a possible bug in the
+implementation[2]:
+
+---8<------8<------8<------8<---
+
+> It seems to me that config_from() in submodule-config.c accepts a path =
+or a
+> tree oid and submodule_from_path() just calls config_from().
+>=20
+> By the way it seems to me that config_from() is buggy when it's passed =
+a
+> tree oid as it does:
+>=20
+> ```
+>         if (!gitmodule_oid_from_commit(treeish_name, &oid, &rev))
+>                 goto out;
+> ```
+>=20
+> but gitmodule_oid_from_commit() returns 0 on success so instead of =
+doing a
+> `goto out` which will error out, it should continue to proceed using =
+the oid
+> it got. So I think it should be something like:
+>=20
+> ```
+>         if (gitmodule_oid_from_commit(treeish_name, &oid, &rev)) {
+>                 switch (lookup_type) {
+>                 case lookup_name:
+>                         submodule =3D cache_lookup_name(cache, &oid, =
+key);
+>                         break;
+>                 case lookup_path:
+>                         submodule =3D cache_lookup_path(cache, &oid, =
+key);
+>                         break;
+>                 }
+>                 if (submodule)
+>                         goto out;
+>         }
+> ```
+>=20
+> Or maybe the gitmodule_oid_from_commit() call should be moved after =
+the switch ().
+
+---8<------8<------8<------8<---
+
+I do agree that it looks wrong, but despite that, it still seems to pass =
+'t7411' [3][4].
+
+This should have failed according to my understanding:
+
+cat >super/expect <<EOF
+Submodule name: 'a' for path 'a'
+Submodule name: 'a' for path 'b'
+Submodule name: 'submodule' for path 'submodule'
+Submodule name: 'submodule' for path 'submodule'
+EOF
+
+test_expect_success 'test parsing and lookup of submodule config by =
+path' '
+	(cd super &&
+		test-tool submodule-config \
+			HEAD^ a \
+			HEAD b \
+			HEAD^ submodule \
+			HEAD submodule \
+				>actual &&
+		test_cmp expect actual
+	)
+'
+
+Since HEAD and HEAD^ are valid tree-ish objects, the =
+gitmodule_oid_from_commit()
+line should have returned early with a NULL object, but that does not =
+happen.
+The output seems to match what I would expect from the API.
+
+Applying Christian's suggestions pass the same test as well.
+
+I also wonder what is the situation with the case where, the oid is =
+non-null
+and invalid?
+
+If we look at the code again:
+
+static int gitmodule_oid_from_commit(const struct object_id =
+*treeish_name,
+				     struct object_id *gitmodules_oid,
+				     struct strbuf *rev)
+{
+	int ret =3D 0;
+
+	if (is_null_oid(treeish_name)) {
+		oidclr(gitmodules_oid);
+		return 1;
+	}
+
+	strbuf_addf(rev, "%s:.gitmodules", oid_to_hex(treeish_name));
+	if (get_oid(rev->buf, gitmodules_oid) >=3D 0)
+		ret =3D 1;
+
+	return ret;
+}
+
+...what happens to the value of gitmodules_oid when get_oid() fails?
+
+*If* it is set to NULL, it would probably lead to undefined behaviour =
+when
+we try to hash the oid for the submodule cache lookup in [1]. If it is =
+set
+to 'null_oid()' or zero'd out (like with oidclr()), then it should =
+return
+the submodule from the latest revision, which does not seem desirable, =
+as
+the input is invalid.
+
+Is this a bug in my understanding or in the program? Or is it a bit of =
+both?
+
+Footnotes:
+---------
+
+[1]: =
+https://github.com/git/git/blob/daab8a564f8bbac55f70f8bf86c070e001a9b006/s=
+ubmodule-config.c#L545-L615
+[2]: =
+https://github.com/tfidfwastaken/git/commit/7ad7a9d1d03653aadfdc87b60e3a15=
+2b1cb37f22#r53637226
+[3]: https://github.com/git/git/blob/master/t/t7411-submodule-config.sh
+[4]: =
+https://github.com/git/git/blob/master/t/helper/test-submodule-config.c
+
+---
+Atharva Raykar
+=E0=B2=85=E0=B2=A5=E0=B2=B0=E0=B3=8D=E0=B2=B5 =E0=B2=B0=E0=B2=BE=E0=B2=AF=E0=
+=B3=8D=E0=B2=95=E0=B2=B0=E0=B3=8D
+=E0=A4=85=E0=A4=A5=E0=A4=B0=E0=A5=8D=E0=A4=B5 =E0=A4=B0=E0=A4=BE=E0=A4=AF=E0=
+=A4=95=E0=A4=B0
+
