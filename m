@@ -7,94 +7,80 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5B45C4338F
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 18:50:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD7C2C4320A
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 18:57:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8EA1260EB5
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 18:50:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E05A60E74
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 18:57:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230171AbhGVSKR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jul 2021 14:10:17 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59555 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229771AbhGVSKQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jul 2021 14:10:16 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A03BFCB64E;
-        Thu, 22 Jul 2021 14:50:50 -0400 (EDT)
+        id S230076AbhGVSQr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jul 2021 14:16:47 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58325 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229977AbhGVSQr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jul 2021 14:16:47 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 426E513022D;
+        Thu, 22 Jul 2021 14:57:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KJwb/rSOT/jJlmVfDx1QKfP/Dnw2JKF8yJ8o1B
-        EfHtY=; b=XAHydjX9v7Pbtbq0FR1QC6atTk5R2kcdpVs8OQdjFmOrQnrF+LfrvT
-        vPyJOnN3C4EgTv8zypJ9EPMWuuTvoEBeHAhVq+vbbCdw4qM8Rh2Ak96DZXMk4qAn
-        VMDvU5eVCnHuGqo8WWIhvQfDHziObxDlq6BFLMm+4U55+zHt0PMTM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 967D0CB64D;
-        Thu, 22 Jul 2021 14:50:50 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=QOllk+TPFulyjy29B79yCHpnrQ7k0CClUchteZbbM6Q=; b=Uu0M
+        oX/v9sEyFLPcQBPFozmr/hURhvcf25dd8cKQmL9RiLasAj+jHdeyQ3iAN1U+FF0O
+        bFtaVFVQp6B+Me1Kp2qoAttoH7A6BcIsPCqG4NWMSG43p8OusTSMtUA/16x+xmlk
+        vssIaEwc0YjxKvJslwQE1dnisqa//pr9sbzP6JM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3BEA513022C;
+        Thu, 22 Jul 2021 14:57:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.3.135])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 272D8CB64C;
-        Thu, 22 Jul 2021 14:50:50 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7D5D513022B;
+        Thu, 22 Jul 2021 14:57:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Kristof Provost <Kristof@provost-engineering.be>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v3 4/5] Makefile: the "cscope" target always creates a
- "cscope.out"
-References: <cover-0.5-0000000000-20210629T110837Z-avarab@gmail.com>
-        <cover-0.5-00000000000-20210721T231900Z-avarab@gmail.com>
-        <patch-4.5-f8d151f1f6a-20210721T231900Z-avarab@gmail.com>
-        <xmqqk0li9tks.fsf@gitster.g> <YPmxsCatUIByQnig@nand.local>
-Date:   Thu, 22 Jul 2021 11:50:49 -0700
-In-Reply-To: <YPmxsCatUIByQnig@nand.local> (Taylor Blau's message of "Thu, 22
-        Jul 2021 13:58:08 -0400")
-Message-ID: <xmqqfsw69o8m.fsf@gitster.g>
+To:     Matthias Baumgarten <matthias.baumgarten@aixigo.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: pull.rebase config vs. --ff-only on command line
+References: <c62933fb-96b2-99f5-7169-372f486f6e39@aixigo.com>
+        <CABPp-BEHZcfZNL+PG1vmqXGf4Qs3eoULb4NDDgbmOB30HzJu_Q@mail.gmail.com>
+        <60f1b7853b8a2_ade9208c1@natae.notmuch>
+        <00b50aa6-9b61-9f80-1d8d-2db3ed5e7638@aixigo.com>
+        <60f1c9378d5a1_3302085c@natae.notmuch>
+        <fa757764-db25-849d-d8d5-e28908059f6b@aixigo.com>
+Date:   Thu, 22 Jul 2021 11:57:16 -0700
+Message-ID: <xmqq7dhi9nxv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BBC4E3B4-EB1D-11EB-B479-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A33F2A1A-EB1E-11EB-BD29-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Matthias Baumgarten <matthias.baumgarten@aixigo.com> writes:
 
->> >  cscope.out: $(FOUND_SOURCE_FILES)
->> > -	$(QUIET_GEN)$(RM) cscope* && \
->> > -	echo $(FOUND_SOURCE_FILES) | xargs cscope -b
->> > +	$(QUIET_GEN)$(RM) cscope.out && \
->> > +	echo $(FOUND_SOURCE_FILES) | xargs cscope -f$@ -b
+> If my assumption were true, and every explicit (cli given) option
+> would overwrite implicitly given ones (i.e. configured options),
+> wouldn't
 >
-> But that alone is a good change in my mind at least. Then it's clear
-> that that target is responsible for generating cscope.out and nothing
-> else.
+>  * git -c pull.ff=only pull, do a fast-forward (or merge)
 
-Probably.  The preparatory $(RM) is close enough to the invocation
-of cscope that anybody adding other options like '-q' should be
-careful enough to notice that the line needs to be touched, too, so
-I can be talked into thinking that $(RM) change here is a good one.
-I do not know about "-f$@", which is "Meh" to me.  Is there a good
-reason to suspect that they might want to change the default output
-filename?
+This should fast-forward if it can or otherwise fail if it cannot,
+right?
 
-> So I'd be in favor of rewording the patch message and only retaining
-> this hunk (and dropping the other two).
+>  * git -c pull.ff=only pull --merge, force a merge commit
 
-Yup.  I do not mind dropping one half of this hunk, too, but again,
-I do not mind keeping -f$@, either [*1*].
+This would fast-forward if it can or otherwise create a merge.
+Unlike "pull --no-ff", this should not "force" a merge commit.
 
+>  * git -c pull.ff=only pull --rebase, force rebase
 
-[Footnote]
+This would rebase (we may not have our own commits on top of theirs,
+in which case it would end up fast-forwarding plus rebasing 0
+commits).
 
-*1* if the patch to add cscope support anew were done with -f$@, I
-   wouldn't have insisted removing it, out of the principle "any Meh
-   change is not worth applying once the code was written and
-   working".
+I do not think the phrase "force rebase" makes much sense, though.
