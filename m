@@ -2,157 +2,219 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1C17C4338F
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 22:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAF04C4338F
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 22:51:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 91C8B60EB6
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 22:42:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD86960EB2
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 22:51:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232024AbhGVWCD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jul 2021 18:02:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46720 "EHLO
+        id S232300AbhGVWLH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jul 2021 18:11:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231596AbhGVWCC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jul 2021 18:02:02 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A04DC061575
-        for <git@vger.kernel.org>; Thu, 22 Jul 2021 15:42:36 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id q15so6998483qkm.8
-        for <git@vger.kernel.org>; Thu, 22 Jul 2021 15:42:36 -0700 (PDT)
+        with ESMTP id S231596AbhGVWLH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jul 2021 18:11:07 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A6B8C061575
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 15:51:40 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id f1so1136002plg.3
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 15:51:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=GTBjU7Qau7/0RU4kH/jChsIpeVuH++m2axoce4kpePg=;
-        b=A2tqUaRiQK6wrD/i6b+LRyWRRmhjf0P9pm4INNgwm9PWPXVF0Y59s1rg5FF0xiRDju
-         TcvgPr+QcslCKKo59j9PIy6pBWs7QEXcspaAicGor0QB2baRZkj3o3SwVKk4Q38NzG07
-         Gi6I1Ebcl0uaru35A00lSSn5DkcsQ1WWiZrSClGSP/IDAqJE9JpeyO8k6tNVljZC+yeB
-         lMctvc3xMhHalAq14oD1ipI/kRSpX5NzhirQcvVrZwX5+JnpuD5hc6RYCdRxUQ29Bk3N
-         NCNDaBmIuw7relFvWek0di1RtzvrmI8d6JkHBGD8XUjLkmciV9+clg80bV7Eg2/U6Hpn
-         lL8Q==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=PXS3CkVhu6Q28cDvLDgLl3etgej//kmXK36bYK8huzE=;
+        b=R1p0EbZq7fmWKOW8+pPOj/LrWjJ7NU+9csRrHRWXyBvSTmgMiJ+gKkkk23aQH0IoFr
+         3JOaWvdHxqAZdb6xj+QrqBiwgAqEgW7tXQTUDYWsI23kEups5ZOEZlIRUQakdboTwGLw
+         4ZA0R6buadJJXkM6FwiFaT01wmpx1j/7zRDxCsW9ADjqwWWCKFr7cymF5Dp5LVQKp76f
+         sCmeAcf7A4f4V+FeGwl9VndtwezJ2ifjiMbgLRNHYMIMMc6A++Xu+7iV2ZMpeYvPZR+7
+         p51QN0IX+KLUAz1WWw8cKzdyMixQF758Tt1IMM/Hysdq4dCE7Tus3A1+5yDSQkCtRWpY
+         e6zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=GTBjU7Qau7/0RU4kH/jChsIpeVuH++m2axoce4kpePg=;
-        b=OwAG+Jzf6yMdVYK2xNXXJKCt6fey4aCsrbha0Bc0I8Ud1mTJegYxHZA+NUoRy2OsoW
-         faA+SsMcPF5yVYa7HMam6VWHVDPDXXBW/WMcV/+RE7yEOmPjNYL1vrDUIlC4N3Msh8Yn
-         5p4TeS86j5RWbChjZGgpppt1JOeKvrHp0DDyIn9DtxmdAe8Zfd4MpfOVs3pk53z9c9WW
-         VdedqQmNNpdVM1rzHq21alGVL7uDOxL+RX1u5aFtXpqcGqKfRMkDgGbnqkVVr+TiihNl
-         rlws6+bd4DFcS+aXFDuplPCGmemNhgd90ST5y7fYNs8LX6KmZn+Kzub8riOA0Y1c+EIS
-         WmiQ==
-X-Gm-Message-State: AOAM531fjw8SScg2clNV9xK9c5UWFUdP0769owjZCqvKF4uwcuVmyAi7
-        c5XPPYCLA8YCXSsaBsOK+cGGl89+/SzjFQ==
-X-Google-Smtp-Source: ABdhPJwwcbWbpIRUWHFER4PbzR5u8MVXD7XhbF/8VW9B7EzbYGkt5QrtmlT/BKI8HOGajT7hulFSxA==
-X-Received: by 2002:a05:620a:311:: with SMTP id s17mr2094021qkm.266.1626993754965;
-        Thu, 22 Jul 2021 15:42:34 -0700 (PDT)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id u3sm11042827qtg.16.2021.07.22.15.42.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Jul 2021 15:42:34 -0700 (PDT)
-Subject: Re: 'git range-diff' does not detect submodule changes if
- 'diff.submodule=log'
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git mailing list <git@vger.kernel.org>
-References: <e469038c-d78c-cd4b-0214-7094746b9281@gmail.com>
- <nycvar.QRO.7.76.6.2107221516240.55@tvgsbejvaqbjf.bet>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <98bdd571-e4f1-a9a5-d7e6-81b1b6c89b45@gmail.com>
-Date:   Thu, 22 Jul 2021 18:42:33 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.12.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=PXS3CkVhu6Q28cDvLDgLl3etgej//kmXK36bYK8huzE=;
+        b=fF3jkCgUA6VPKA5CTdIdhfogOBXgQycqPKD6hwMCmouvFXER3ZrmoZKS91y35mLHF4
+         s+hlRPOWToEjUJYLr++laZuQaCc5xraWVkPJClXKT8XV6iTIs0ctIyYO3zWYJ+lZDqNc
+         pqLaztyBQnlh1nb2KRIfIqxNy2y2chAoJ52H9YGrO+SYk8LAj1GN+9vlmq50tup6FVbb
+         Dr6FNuF9mxJh8OlhDntsIP9Xbe39k6yTDkO91M7rHmE/lZN6ZjejhxMa3LUVUsxbVL6g
+         KXI6rVBdOdjjCkeN9e44lJa7DyvVasJE5XurL6Qo9xp9/wOUzseyboc1vTlHtkHIJLuj
+         ATbg==
+X-Gm-Message-State: AOAM530JDUPkqqgc2SabgngzkB5UkpupU4zAyuMq7L7KbMv28r3/2QPT
+        JFZbKIFXHIZSykW+grIAdJNMkA==
+X-Google-Smtp-Source: ABdhPJxSeqfAYIE9dzR3jWJN1OCVQ5PZZM4pxmoavSaWvxtxKVra4SEamFGYeKAc33M9NwZZmsEQWA==
+X-Received: by 2002:a62:a516:0:b029:333:1995:5e75 with SMTP id v22-20020a62a5160000b029033319955e75mr1839566pfm.67.1626994299781;
+        Thu, 22 Jul 2021 15:51:39 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:3c03:6226:e12f:afc9])
+        by smtp.gmail.com with ESMTPSA id g2sm30953906pfv.91.2021.07.22.15.51.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Jul 2021 15:51:39 -0700 (PDT)
+Date:   Thu, 22 Jul 2021 15:51:33 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 6/9] hook: include hooks from the config
+Message-ID: <YPn2dfjzFLovIYIX@google.com>
+References: <20210715232603.3415111-1-emilyshaffer@google.com>
+ <20210715232603.3415111-7-emilyshaffer@google.com>
+ <87im1ay67y.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2107221516240.55@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <87im1ay67y.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+On Fri, Jul 16, 2021 at 11:01:24AM +0200, Ævar Arnfjörð Bjarmason wrote:
+> 
+> 
+> On Thu, Jul 15 2021, Emily Shaffer wrote:
+> 
+> > +static struct hook * find_hook_by_command(struct list_head *head, const char *command)
+> 
+> nit: "*find[...]" not "* find[...]", also let's wrap the long line.
+ACK
+> 
+> > +{
+> > +	struct list_head *pos = NULL, *tmp = NULL;
+> > +	struct hook *found = NULL;
+> > +
+> > +	list_for_each_safe(pos, tmp, head) {
+> > +		struct hook *it = list_entry(pos, struct hook, list);
+> > +		if (!strcmp(it->command, command)) {
+> > +		    list_del(pos);
+> > +		    found = it;
+> > +		    break;
+> 
+> Indented with spaces.
 
-Le 2021-07-22 Ã  09:19, Johannes Schindelin a Ã©critÂ :
-> Hi Philippe,
-> 
-> On Mon, 19 Jul 2021, Philippe Blain wrote:
-> 
->> I noticed that 'git range-diff' silently "drops" submodule changes if
->> 'diff.submodule=log' is set in the config. This is because the 'diff --git'
->> header is not shown in that case, and the code in range-diff.c::read_patches
->> expects that header to be found to detect changes.
->>
->> If 'diff.submodule' is instead set to 'diff', the range-diff outright errors
->> with
->> (at least in my case):
->>
->> error: git apply: bad git-diff - inconsistent old filename on line 1
->> error: could not parse git header 'diff --git
->> error: path/to/submodule/and/some/file/within
->> '
->> error: could not parse log for '@{u}..@{1}'
->>
->>
->> I think it would make sense to force '--submodule=short' for range-diff,
->> something like:
->>
->> diff --git a/range-diff.c b/range-diff.c
->> index 1a4471fe4c..d74b9c7a55 100644
->> --- a/range-diff.c
->> +++ b/range-diff.c
->> @@ -54,7 +54,7 @@ static int read_patches(const char *range, struct
->> string_list *list,
->>
->>          strvec_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
->>                       "--reverse", "--date-order", "--decorate=no",
->> -                    "--no-prefix",
->> +                    "--no-prefix", "--submodule=short",
->>                       /*
->>                        * Choose indicators that are not used anywhere
->>                        * else in diffs, but still look reasonable
->>
->>
->> What do you think ?
-> 
-> Sure. I never thought that `range-diff` would be useful in the context of
-> submodules. But then, I am an anti-fan of submodules anyway, so don't put
-> too much stock into my opinion about anything submodule-related.
-
-OK. I'll try to find the time to send a patch for that.
+I don't know how I even did this. *facepalm*
 
 > 
->> P.S. As an aside,
->> I'm  not sure why you chose to skip the 'diff --git' header with
->> '--submodule=log'
->> (I did not search the list), but I think that in general 'git diff' and
->> friends,
->> it would be nice to be able to still see this header even with
->> --submodule=log...
+> Also is there some subtlety in the list macro here or can we just
+> "s/break/return it/" and skip the break/return pattern?
+
+I guess it's probably fine, but we'd need the final return anyway
+("otherwise returns NULL"). IMO one return is more readable than two
+returns, so I'd rather leave this.
 > 
-> I don't remember the details. It might be that `git-tbdiff` did it that
-> way, and I copied it without questioning.
+> > +static struct hook * append_or_move_hook(struct list_head *head, const char *command)
 > 
-> *clicketyclick*
+> Same whitespace nits.
+ACK
 > 
-> Yep, that seems plausible:
-> https://github.com/trast/tbdiff/blob/047d1c79dfada57522a42f307cd4b0ddcb098934/git-tbdiff.py#L48
+> > +	if (!to_add) {
+> > +		/* adding a new hook, not moving an old one */
+> > +		to_add = xmalloc(sizeof(*to_add));
+> > +		to_add->command = command;
+> > +		to_add->feed_pipe_cb_data = NULL;
+> > +		/* This gets overwritten in hook_list() for hookdir hooks. */
+> > +		to_add->from_hookdir = 0;
+> 
+> I commented on init verbosity elsewhere, i.e. we could do some things
+> via macros, but in this case just having an "init" helper make sense,
+> but we have at least two places copying the same init of all fields,
+> should just be hook_init_hook() or whatever it'll be called. Maybe with
+> a second "from hookdir" param?
 
-I meant when you implemented '--submodule=log' back in the days, why did you choose
-to skip the 'diff --git' header. In fact I dig up the thread and keeping that header
-is something Jens Lehmann actually suggested [1] (near the end of the message).
-I for one would find it useful; it's easy to miss submodules changes among a sea of other
-changes if the submodule is updated with just a few commits... yet another thing to
-add to my list :)
+Hm, where is the second place where we init everything? I think with
+this commit we remove anywhere we're putting together a 'struct hook' manually
+except during this helper? Hooks from hookdir are initted by
+'append_or_move_hook()'ing them to the end of the list and modifying the
+from_hookdir field, and builtin/hook.c just calls hook_list() (and some
+list.h helpers to find an entry).
 
-Cheers,
+> 
+> > +	if (!strcmp(key, hook_key)) {
+> > +		const char *command = value;
+> > +		struct strbuf hookcmd_name = STRBUF_INIT;
+> > +
+> > +
+> 
+> Nit: 3x\n, not 2x\n
+> 
+> > +		if (!command) {
+> > +			strbuf_release(&hookcmd_name);
+> 
+> You don't need to strbuf_release() things that you haven't done anything
+> except init'd, but also...
+> 
+> > +			BUG("git_config_get_value overwrote a string it shouldn't have");
+> 
+> ...even if that were the case and it called malloc() memory diligence
+> when we're calling BUG() is probably going overboard, and I say that as
+> someone who'll tend to go overboard with it :)
 
-Philippe.
+:) ok.
 
-[1] https://lore.kernel.org/git/4AC9D6EB.8090002@web.de/
+> 
+> > +		}
+> > +
+> > +		/* TODO: implement skipping hooks */
+> > +
+> > +		/* TODO: immplement hook aliases */
+> > +
+> > +		/*
+> > +		 * TODO: implement an option-getting callback, e.g.
+> > +		 *   get configs by pattern hookcmd.$value.*
+> > +		 *   for each key+value, do_callback(key, value, cb_data)
+> > +		 */
+> 
+> I think we should drop the TODO and just let the commit message /
+> comments speak to what we actually implement, and subsequent patches can
+> add more features.
+
+Ok, sure.
+
+> 
+> > -
+> > +	struct strbuf hook_key = STRBUF_INIT;
+> > +	struct hook_config_cb cb_data = { &hook_key, hook_head };
+> 
+> Let's use designated initializers.
+ACK
+> 
+> >  
+> >  	INIT_LIST_HEAD(hook_head);
+> >  
+> >  	if (!hookname)
+> >  		return NULL;
+> >  
+> > +	/* Add the hooks from the config, e.g. hook.pre-commit.command */
+> > +	strbuf_addf(&hook_key, "hook.%s.command", hookname);
+> > +	git_config(hook_config_lookup, &cb_data);
+> > +
+> > +
+> 
+> Another 3x\n
+ACK
+> 
+> > +	/* to enable oneliners, let config-specified hooks run in shell */
+> > +	cp->use_shell = !run_me->from_hookdir;
+> 
+> I've lost track at this point, but doesn't that mean we're going to use
+> a shell when we run our own do-not-need-a-shell hooks ourselves?
+> 
+> Isn't isatty() more appropriate here, or actually even interactively why
+> is the shell needed (maybe this is answered elswhere...).
+
+use_shell means "conditionally guess whether I need to wrap this thing
+in `sh -c`" - it doesn't have anything to do with TTY or not. So we need
+this for something like `hook.post-commit.command = echo "made a
+commit"`. In this case the entire argv[0] will be the oneliner, which
+you will need use_shell set for. If we *do* just do something simple,
+like `hook.post-commit.command = /bin/mail`, even though
+use_shell is marked, the child_process runner will notice that there's
+no reason to wrap in 'sh -c' and so will just run the /bin/mail
+executable directly.
+
+ - Emily
