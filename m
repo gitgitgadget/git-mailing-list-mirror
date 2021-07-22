@@ -2,98 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 395E7C63793
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 06:27:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 042E7C6377D
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 07:09:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C5E261264
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 06:27:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD9AB61241
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 07:09:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231402AbhGVFrA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jul 2021 01:47:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48228 "EHLO
+        id S230051AbhGVG2z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jul 2021 02:28:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231404AbhGVFq7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jul 2021 01:46:59 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8090C0613CF
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 23:27:34 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id pf12-20020a17090b1d8cb0290175c085e7a5so2861485pjb.0
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 23:27:34 -0700 (PDT)
+        with ESMTP id S229547AbhGVG2y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jul 2021 02:28:54 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6CCFC061575
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 00:09:28 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so4432872otl.3
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 00:09:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=xLU0mq23x8stiioj+uzlsEsPaVjjohyNag61vRDxC7o=;
-        b=sedqRzwf0icuiz8pyzHyP94a4PVMEE6N8+TNXJU2zEGcJaT+bKAnD6+aMpFGSJo0BG
-         0siljTQdMp0LK1z2UFTuV8317qeqJXG+5Sqh+Ppcnp6c7jC2tQsK3i0BD5UImoM3ScM4
-         Js8+blw9rpuJ2+Xn0Bu8dsJb4LqaFnsVd2sZ550uNofV6klrFd7aA6tEwmxID/jnLDVA
-         XpDnHd9VrSJdcLxJGFnScSWgjMZJBL8V8DmjsNFKSveFXTaVYJQE8ZdevEWfxyGtgA+c
-         jgx9YdpAw+1n9JCME1oaZdg6Bvein5jEbzuoJairCl6StUivaVC72GpbI4nDU1uyYVhO
-         grpw==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=lPVjWWeq3esCzU9Ts6F0FKvXTNmZ3L5e4iP5ByzqHYI=;
+        b=r0GpLVCpaBqV+tkLwO8cWz8Z7PaUIk4v1/5nWX5LflQK0WsBdMCf1Z5f9cZqUwbsxD
+         zOqxDlBTWqss/n2EJf4ox+BfQXtlITUwjbjA+8rRT79LunL+Fa/WdZHGYinBwPQSBopK
+         52UoZjNdP22dfx+qLZ2NR5xz2avsYQGKJhUPjufqNRzmNOaOKYL/9YoebBU6k2eU3jIn
+         YOek/DSft7PF226JXpOkGuvsLYHTd4ffxYCslUe8LFcaOvcvFc/qTKg8RFJCaifBkmCb
+         E3ytZ3kTAN1WEgy8lQtxT3jVwzj/HBDCdwC5s+PR1TWSNML7ayUrqNzMU9WFePL4XO2B
+         MQsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=xLU0mq23x8stiioj+uzlsEsPaVjjohyNag61vRDxC7o=;
-        b=AoEaYJx/qePnfHQ198wZ75ldd3j18mqJWavbV9A3wq+lhD9OyrFDVO6KJA+2Z0l8HC
-         krrqFv2mNR0BJGyhmjPH3jJrP/mcW4fJdWIvzLt/n5x9dtRlyBnOuwOVwDq6oMXiuql8
-         QrsawSTlTa+uBS0rLQtnHc18spa04sSl/o/TTM5sKDrR2wGPkqQf0ortnezb+v+DW7ov
-         GotPr3/uLAVQq3CKu8Qy5TtPp84607iaNQf0qHRFIsuvu/Jm9DEI02UB4AN7qsblFg/c
-         YBy8hZSfZZs6VeKPSc+SZbtvBrACJ0B/tkRHcj7S9/M2Q4D9MK0D8NJnrNLRLJEqiyVi
-         DA9w==
-X-Gm-Message-State: AOAM530nZIt46Ag5ROpjpBJ4ommiyYsrvWcN+kJ817xcxP0H6Lk4ZT5J
-        BqFIzj/b9RrU4kXIV0cNb1I=
-X-Google-Smtp-Source: ABdhPJyNCxf3V4RYS6B1/VLWLdfawsXPB4Gj2XeSBFJ+h97SdJZ9usdkZInD6Sk2K4QwT66LfHeI1g==
-X-Received: by 2002:a62:dec1:0:b029:32d:1f6:3890 with SMTP id h184-20020a62dec10000b029032d01f63890mr40149310pfg.13.1626935254265;
-        Wed, 21 Jul 2021 23:27:34 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-13.three.co.id. [180.214.233.13])
-        by smtp.gmail.com with ESMTPSA id v13sm1863817pja.44.2021.07.21.23.27.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Jul 2021 23:27:33 -0700 (PDT)
-Subject: Re: [PATCH v2 0/5] drop support for ancient curl
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=lPVjWWeq3esCzU9Ts6F0FKvXTNmZ3L5e4iP5ByzqHYI=;
+        b=WXPV20uQS2zBUhofLxop3NNHfQRRxw/l1DGyGk+RzhQMqdo23H8PPnSYxAjtOUQCUc
+         fzqCv+XU2JNI5hw6yVMfSNU+gJceqqJ48hyIYL5l6UuEoOgmmk704DyCY7gCfLLw8rMp
+         23U6kHLfGSa6AyC8v2AtigkQ6G4/PO50toaeWDlJtd2/j0RxKirjkYPmj9cU0XTCQSyW
+         KQfPEVlj7mkPdDlQXVqK/v/dVcusrknjQpgn7VpzSbJMoxrWxPIDzB1oAf58LYbusKQu
+         JvZ4xcrQC2VuxmtBp2I4kzrLtqD4GzXpOP/NtCzF0tS+B4EgranYYPsm5Ri97k7LkIoh
+         wN0Q==
+X-Gm-Message-State: AOAM533hww449Mr+vN81zH+YdIEgmZKsCImlMN6+NStj8S+ffrioVqFI
+        gIcHXLK9jjaNkdLePHtMK9s=
+X-Google-Smtp-Source: ABdhPJzkIOLGHqRAOwr0h6l4LXH+UG7lfuEISEsV+l7ccYwXTYzDXRNxU2bLyJiy5NW0NNm9NYi8Cg==
+X-Received: by 2002:a9d:638f:: with SMTP id w15mr10298118otk.148.1626937768313;
+        Thu, 22 Jul 2021 00:09:28 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id 48sm5053012otf.13.2021.07.22.00.09.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Jul 2021 00:09:27 -0700 (PDT)
+Date:   Thu, 22 Jul 2021 02:09:26 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>,
-        "Tom G . Christensen" <tgc@jupiterrise.com>,
-        Mischa POSLAWSKY <git@shiar.nl>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net>
- <cover-0.5-00000000000-20210721T220402Z-avarab@gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <3fb05d7e-fbce-5f13-406e-95218abe87f5@gmail.com>
-Date:   Thu, 22 Jul 2021 13:27:29 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
-MIME-Version: 1.0
-In-Reply-To: <cover-0.5-00000000000-20210721T220402Z-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Matthias Baumgarten <matthias.baumgarten@aixigo.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Message-ID: <60f919a6939ec_31ad20835@natae.notmuch>
+In-Reply-To: <pull.1049.v3.git.git.1626930290.gitgitgadget@gmail.com>
+References: <pull.1049.v2.git.git.1626831744.gitgitgadget@gmail.com>
+ <pull.1049.v3.git.git.1626930290.gitgitgadget@gmail.com>
+Subject: RE: [PATCH v3 0/8] Handle pull option precedence
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/07/21 05.22, Ævar Arnfjörð Bjarmason wrote:
-> This series simplifies the http code by dropping support for curl
-> versions older than 7.19.4, released in March 2009.
+Elijah Newren via GitGitGadget wrote:
+> Based on a recent list of rules for flag/option precedence for git-pull[1]
+> from Junio (particularly focusing on rebase vs. merge vs. fast-forward),
+> here's an attempt to implement and document it. Given multiple recent
+> surprises from users about some of these behaviors[2][3] and a coworker just
+> yesterday expressing some puzzlement with git-pull and rebase vs. merge, it
+> seems like a good time to address some of these issues.
+> 
+> Since the handling of conflicting options was holding up two of Alex's
+> patches[4][5], and his patches fix some of the tests, I also include those
+> two patches in my series, with a few small changes to the first (so I've
+> kept him as author) and more substantial changes to the second (so I've
+> given him an Initial-patch-by attribution).
+> 
+> Changes since v2:
+> 
+>  * Remove some unnecessary changes in patch 4, pointed out by Junio.
 
-But INSTALL says:
+All my previous objections to v2 still stand:
 
->         - "libcurl" library is used by git-http-fetch, git-fetch, and, if
->           the curl version >= 7.34.0, for git-imap-send.  You might also
->           want the "curl" executable for debugging purposes. If you do not
->           use http:// or https:// repositories, and do not want to put
->           patches into an IMAP mailbox, you do not have to have them
->           (use NO_CURL).
-
-I think it's worth mentioning minimal required curl version (7.19.4) there.
+https://lore.kernel.org/git/60f80feeb4461_1305dc208b8@natae.notmuch/
 
 -- 
-An old man doll... just what I always wanted! - Clara
+Felipe Contreras
