@@ -7,116 +7,102 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 781A3C63793
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 09:13:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F6BCC63793
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 09:14:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BB3E60C3D
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 09:13:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EFEF461001
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 09:14:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231313AbhGVIcd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jul 2021 04:32:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57602 "EHLO
+        id S231236AbhGVIeR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jul 2021 04:34:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231550AbhGVIc2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jul 2021 04:32:28 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C082C0613D3
-        for <git@vger.kernel.org>; Thu, 22 Jul 2021 02:13:04 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id t2so5867046edd.13
-        for <git@vger.kernel.org>; Thu, 22 Jul 2021 02:13:03 -0700 (PDT)
+        with ESMTP id S230419AbhGVIeQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jul 2021 04:34:16 -0400
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6822CC061575
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 02:14:51 -0700 (PDT)
+Received: by mail-il1-x12b.google.com with SMTP id b6so4688295iln.12
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 02:14:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=o/j+c0XDan/Jtjwx0/RjR9GqBSNgH2+Y0/KRSonGAFw=;
-        b=qJ9yFwY8E8q7Ts1Df8IfW7FqbpjULP9NCj+l/hin7NsOH7HVYu4Qrup2Cjct/d9seq
-         /isTZrkpfLlh3nau7S+21Gl5BvhdN05UxKQyEQXBAnLhCTLTCNrGKazMAmQ9cOESXc2A
-         cfWQ48uey4l/Bt1/iJft+QUW+VH5nRkyCXt/ciwj8DKz9VCvceFDRMJXiCYnWqFx2Rcf
-         Mb3yfrYzdrYS4S6DHKd/4iCRvcUqkiHtNOKcbTmtnHYzoXJ6iwtoTqI+Ax3JnrPjV6vf
-         eMGQ81n08I/tXYJ8WlxGIVT6eZ1cjNDdAq5I6xHUEcokPTZoqBEgrtCjVhPUStbDNhk1
-         wQVg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=newbNUzoVXHrzqm8sKdg7Blz7erZ4tMbfDYrVk+Wgxo=;
+        b=Q77q387aHaAlFsnvAvCAyKkEecJreojAt1BQz9ax9Whw6WiF6nw2tKSfOehC6SvQVg
+         cljeRFCMQQGfwI/vQPvA9FRqELfzl23oXA3rEJV7JLtAQYjRLvjW2SLPlWdPdOok0KpB
+         Pawy/SywkOaTsFpc9BzszLWTS2QS+R3OJ/h2ObhruoG2mo8etMnNilYCsx7kf+tAd4hz
+         +TJVRB+jrmPg1DOUb0CSF7zob0ASpQCUqeho1uk3CNEvuPPsivQgBMS6fvmXY68FrU2e
+         qgnjjQwLAC3QoEpXmhN9KFZ9GBBQEOvO6w/a2CJIp6pc8uxhP/lcrveL3zKPrI5EyTJb
+         UbJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=o/j+c0XDan/Jtjwx0/RjR9GqBSNgH2+Y0/KRSonGAFw=;
-        b=sEAicE2C0uC1OhMSr/OyIzavTTePHVZ4jEJMD4IF55Da+fUAr7X+yJrN6/bG3AgeIg
-         wSiT9O/pdOrnipYMPWFIvuW0r+LNvBJZu3ByeX47sjWLgHddOLxQ/Z4aq0yWocsYNs+Y
-         VYvvN/+m26Qlg9xm/VAxwG5e67SmzouvlC9I8vcKXpSj8rhmp+1kWwCHr7PaBEBaq72z
-         nGc10LwcKmZzjPsCjhbDj2ld9n+AUzOb17Om/bTvORrELxG7psOXj8iL8dTyJJv1pdxF
-         Zekop9v+gFi5wCCFcAjHPxwIQBmkw+vPtP7H0MPT5oFQlYAy+NscEZiLOUh8x7CnyjRe
-         brFQ==
-X-Gm-Message-State: AOAM533ZP75uUOZ22Nkn31Uu1NDgSWpyT4GsuJGO0kl52fYq5x2sZL4z
-        iEsTyxQjrz4Kq/Afxrmp1LQ=
-X-Google-Smtp-Source: ABdhPJxGEVSLy3VvtuRWjkSXaQJI34roSgIHEqXlXJGUI/bhSKfMN62orGW3VIsB8GIosuLCZl65mQ==
-X-Received: by 2002:a05:6402:d63:: with SMTP id ec35mr53779486edb.347.1626945182573;
-        Thu, 22 Jul 2021 02:13:02 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id m26sm9845105edf.4.2021.07.22.02.13.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jul 2021 02:13:01 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Angelo Borsotti <angelo.borsotti@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: Extracting a file
-Date:   Thu, 22 Jul 2021 11:05:58 +0200
-References: <CAB9Jk9AafnUQr6q8t=b4Dh0PZHUA=fKJmtXxxObuGpF_w-_2wQ@mail.gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <CAB9Jk9AafnUQr6q8t=b4Dh0PZHUA=fKJmtXxxObuGpF_w-_2wQ@mail.gmail.com>
-Message-ID: <871r7qvhhr.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=newbNUzoVXHrzqm8sKdg7Blz7erZ4tMbfDYrVk+Wgxo=;
+        b=GbVCOBHC3mfKzIr72ake0ezw/sjkv5u0xCVPhuR3UgVw+KacfYTtCSyoYmDdDSBh0f
+         K6IEqUyyW89Pd8mH8+1+AECpFcEwvpo0u9slq0l5BUdwo0JLRzZCkNmiS/muTbWqlZBb
+         unmMAHB4vYoWWVd+qVh34U5N43uhoWn3/7HpfhvqIEydXAmKOC6Uw/Pg6LTnhtU++8TW
+         Xpcneb008vopy5nrSXkbfRvmYmCE1+6vInV2Z5drgLEAjVYr8UQfyUtpySHmtvS3euzF
+         GVxWeOMgaR0IKLKjC2/yaPX2V27K/zCICgYMGKQ2U1E7RE74W8kPVU+QyQBttv8HhYTY
+         Ogxg==
+X-Gm-Message-State: AOAM530owJG9qmI9q8O9vlLtdm0I1gntMMo2O40J+VKxhDCwF1SQ2ONR
+        f0OMD1/O/2bsYy+q55XDi7DZ7SVvA6IQbl2o5Js=
+X-Google-Smtp-Source: ABdhPJxlMsTO6qRpT5Z/pSY2bpAjvlx5wtNfT08RJ9pKIf37DZbccHdpAtDZLBIVClKjFWhPSgngs3tvrBGHd0ky+FA=
+X-Received: by 2002:a05:6e02:ea9:: with SMTP id u9mr26883466ilj.174.1626945290924;
+ Thu, 22 Jul 2021 02:14:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1000.git.1626939557.gitgitgadget@gmail.com>
+ <a7b4e45f14a27bd67172e24660f448e4c9cce5d8.1626939557.git.gitgitgadget@gmail.com>
+ <CAP8UFD3nmnu7fEOG75O46qEKtFHppbeZy3Y-NkPTCgphM5MPqA@mail.gmail.com>
+In-Reply-To: <CAP8UFD3nmnu7fEOG75O46qEKtFHppbeZy3Y-NkPTCgphM5MPqA@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Thu, 22 Jul 2021 17:15:15 +0800
+Message-ID: <CAOLTT8SNgbJRnmtfL4J=ypo1Q98gY9DE3g6BjBnX895tkMLcng@mail.gmail.com>
+Subject: Re: [PATCH 1/5] [GSOC] ref-filter: add obj-type check in grab contents
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Philip Oakley <philipoakley@iee.email>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, Jul 22 2021, Angelo Borsotti wrote:
-
-> Hi,
+Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B47=E6=9C=
+=8822=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=884:51=E5=86=99=E9=81=93=
+=EF=BC=9A
 >
-> sometimes there is a need to extract a file from a commit.
-> E.g. some changes have been applied to it in the work directory,
-> and the app being implemented no longer works properly.
-> It would be fine to have a look at that file, some commits ago,
-> when all worked fine.
-> Of course, it is possible to recover the entire old commit, or to
-> make a new branch, or checkout the file (which requires to save
-> the new one before), but the most simple and safe way is to
-> extract the file, giving it a new name.
-> That is possible, using this (hard to remember) trick:
+> On Thu, Jul 22, 2021 at 9:39 AM ZheNing Hu via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: ZheNing Hu <adlternative@gmail.com>
+> >
+> > Only tag and commit objects use `grab_sub_body_contents()` to grab
+> > object contents in the current codebase.  We want to teach the
+> > function to also handle blobs and trees to get their raw data,
+> > without parsing a blob (whose contents looks like a commit or a tag)
+> > incorrectly as a commit or a tag.
+> >
+> > Skip the block of code that is specific to handling commits and tags
+> > early when the given object is of a wrong type to help later
+> > addition to handle other types of objects in this function.
 >
-> git show HASH:file/path/name.ext > some_new_name.ext
+> Small nit in case the series is rerolled: it looks like this commit
+> would change only `grab_sub_body_contents()`, but there are a few
+> changes to grab_values() too. Maybe you could add that it's needed to
+> pass a `struct expand_data *data` instead of only `void *buf` to both
+> `grab_sub_body_contents()` and `grab_values()` to be able to check the
+> object type.
 >
-> Would not be better to have a "copy" command to copy a file from a commit
-> to a new one in the current directory?
+Indeed so. I will add them.
 
-That's an interesting feature request, FWIW you can do this now with:
-
-    git mv A B &&
-    git checkout HEAD -- A
-
-I wonder if having a "git copy" for that would be more confusing that
-not, i.e. a frequent difficulty new users used to have with git if they
-were used to cvs/svn was to look for a "copy" command, thinking that
-git's data model (like those older VCS's) needed the user to use a "mv"
-or "copy" to track history.
-
-On the other hand perhaps git's so thoroughly established that it's not
-much of an educational issue anymore.
-
-> This would make a git repository resemble a (readonly) filesystem, which
-> actually it is.
-> Note also that the ability to get from a repository what one has stored
-> in it is the most basic feature anyone wants from a repository.
-
-Git is actively not such a "read-only FS" in the sense of some version
-control systems, i.e. needing to declare that you are now going to
-"edit" the file etc.
-
-It is for bare repositories, but a checkout explicitly concerns itself
-with you doing arbitrary changes on the FS, and git needing to keep up.
-
-So maybe there should be a "copy", but if your starting point for
-wanting it is to make git behave like a read-only FS I don't think
-that'll lead anywhere productive.
+Thanks.
+--
+ZheNing Hu
