@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC941C6377B
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 00:09:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35774C6377B
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 00:09:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B260161241
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 00:09:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 185F361244
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 00:09:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229679AbhGUX2Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jul 2021 19:28:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48430 "EHLO
+        id S229715AbhGUX22 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jul 2021 19:28:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229536AbhGUX2Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jul 2021 19:28:24 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CB74C061575
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 17:09:00 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id s2-20020a0568301e02b02904ce2c1a843eso3700649otr.13
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 17:09:00 -0700 (PDT)
+        with ESMTP id S229536AbhGUX21 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jul 2021 19:28:27 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91591C061575
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 17:09:02 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id 59-20020a9d0ac10000b0290462f0ab0800so3714409otq.11
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 17:09:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WIbiQUipN5dWiNDSYBNUUros+PzR38xCI8hqa6nFSCc=;
-        b=pmyp/azF6hgT6yuOg3wxWV7TSTtPcll75XH8MGr0mRpL0ZqNDaoaYPCFaBAzVyRulq
-         RHbN7nk06p8xhN1+mJbsDHV2bGQRIrMirOk64Bc14gVk7lAk38k1XXzkhXdvIaBYznCJ
-         PzIo4gntVItBTbQaaLz2v7zfCrRa/4Py8JlD6KQhsNS6AKU/v/j1yLmPoz1WddyHxV9j
-         YTRb6HT/jfEbWRTrugPddizadu6lt6Y/Biy3P3JDrt2CPf/Ry5TjmUEShAxhBQHHtq62
-         SSwSKM+7SE+HiUlIed0LO+xmMijnni632H6Wa9zmaYj+77uu2eWL4F4h2oY3qREDooaf
-         x9ng==
+        bh=SNngWaWxSosnim3ZT5QbxKb5RKsuTOMO6GT6Fy3AMrw=;
+        b=JSLR7smtfjyPZhy+Fro1S63KpHPPqDYYSJKDshlcSIhoNWD1qOQla49C7jekaNDbJQ
+         AT/NIQJ1+iA/X9dluqDdTLnprG5GRW7SVnRJ3PhpBZhaY7t222McXnuj542QhYB4/b0X
+         rqPmnzF8X9s/zCBTBd4UoPEn3gq3vRub1n78aG6H2ZNt7YsTo0PjoJyCrBacoZWf7Toy
+         mt/3CWC2WQ2VEAoDGKt5KBv8avZZi2tWdJUm1+l+LKesSM1jgJBxIcL+RhTfOSHtXxhG
+         qF1YfWOqXs1mtfG9IOOGNtUMCpHlclSi97y0ieYduwU/08iSNoJ68+Vhwn38eAYUfHlJ
+         rYEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WIbiQUipN5dWiNDSYBNUUros+PzR38xCI8hqa6nFSCc=;
-        b=XnpH2nR304GXSa+HK/N0WRgqLneT7fH9AS13x0clezAZkKp1Rr8Sl5mlUj9PNxEIuC
-         QUFQKzSkOhEM1lOoF6JZHzN0QkPjK1e/e6o4GDkx/2C1o77klFFEQGbDnZrV1pB4OeUK
-         SfXZj4KeUmJupJqQ32VUzUxI+T47PcY3H/tx/Z/pttTqs8tlI/ag3mQfpSHEIKWtc386
-         cp3t/8E+GWNBwQGVUjSVYZ4CsBTfoitNbrvuN2DsPm18yf2S+PuBgmIyM3RxJbP80dWS
-         FDLOXsl8eHPe4m+Ur6XSEynmKCdI67GhdbZNblNXMH4SDmvwKDqZrsZ5qAjPm8KI2ATx
-         eOgg==
-X-Gm-Message-State: AOAM531trHoO3PWLCeQ/YY6O8IKaycaeoQU3cGjGft4kB8phMok6RHYr
-        ii6xjsSlWnLm5tgkO6jcd8f5onfLPS7hJg==
-X-Google-Smtp-Source: ABdhPJwyZ16fmlAcgb00rL8ab18U7P2tLp5xiwyq2PAVpN5r0S9puRbzdO/+utIduDMCfz/yvOF9FA==
-X-Received: by 2002:a05:6830:2458:: with SMTP id x24mr9265608otr.312.1626912539823;
-        Wed, 21 Jul 2021 17:08:59 -0700 (PDT)
+        bh=SNngWaWxSosnim3ZT5QbxKb5RKsuTOMO6GT6Fy3AMrw=;
+        b=PkuTEtriY1fRJYGfpFKlHs7hSsWD91r/Hb1+ieKlrRuUhin2y3boVHOU4WpY89L0hy
+         WqD2WGqKmeKMfEyr07Hmnl7A6JFgwW6wLFF6MfQNph8oKAadSPSu+vj2AeKp9UdIio7k
+         Q0otrkRAYMgoMvaE3VS1mlZxbGI7kvIyMAMVMb2ARPAK+B2Nw83b7wvC4QJRjR2j5UoT
+         9wOKPPslB27bbX7IiJNZ0gdYQZ4jN0Jd0qdhBVMtxoBclzVOFAcKruEdtjfm6Nt72Otq
+         OUvEpSn4mnjoYd+qjCeGOft1NVuR4HnP5sS+RdPJ3ilVKesMsY2VPHh/e8VSSbrQk0+U
+         FEWQ==
+X-Gm-Message-State: AOAM5313F73kzryD9oWxZkcQYliC6pkGugP9UXHJ07BwqU3xX3PXQRZ8
+        5iOdgfPs+SxvGSSpeRLivcVxq160nFqnWQ==
+X-Google-Smtp-Source: ABdhPJxHka3AqfGEE2Bs+YyAFD3XeXz8z6/CHspg7E0J+ZVw3WXTz7QXAghYazrjqRvsx4ThLkOufg==
+X-Received: by 2002:a05:6830:19f6:: with SMTP id t22mr13459050ott.32.1626912541785;
+        Wed, 21 Jul 2021 17:09:01 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id g66sm4851372oob.27.2021.07.21.17.08.58
+        by smtp.gmail.com with ESMTPSA id 68sm4851514otd.74.2021.07.21.17.09.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jul 2021 17:08:59 -0700 (PDT)
+        Wed, 21 Jul 2021 17:09:01 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Alex Henrie <alexhenrie24@gmail.com>,
@@ -66,9 +66,9 @@ Cc:     Alex Henrie <alexhenrie24@gmail.com>,
         Elijah Newren <newren@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 1/7] merge: improve fatal fast-forward message
-Date:   Wed, 21 Jul 2021 19:08:48 -0500
-Message-Id: <20210722000854.1899129-2-felipe.contreras@gmail.com>
+Subject: [PATCH 2/7] merge: add diverging advice for novices
+Date:   Wed, 21 Jul 2021 19:08:49 -0500
+Message-Id: <20210722000854.1899129-3-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0.40.gb9b36f9b52
 In-Reply-To: <20210722000854.1899129-1-felipe.contreras@gmail.com>
 References: <20210722000854.1899129-1-felipe.contreras@gmail.com>
@@ -78,36 +78,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The documentation of --ff-only says:
+Diverging branches is one of the most confusing aspects of distributed
+version control systems for novices, so a little help explaining what to
+do on those situations will come in handy.
 
-  With `--ff-only`, resolve the merge as a fast-forward when possible.
-  When not possible, refuse to merge and exit with a non-zero status.
+Right now this advice will be displayed only when the user does
+`git merge --ff-only`, `git pull --ff-only`, or has configured
+`pull.ff=only` for `git pull`, but in the future it's expected that
+--ff-only will be the default for `git pull`, and a proposed `git
+fast-forward` command will imply --ff-only, in addition to `git update`.
 
-So when the user does --ff-only, and a fast-forward is not possible, the
-user wants git to abort, therefore an error message of:
-
- fatal: Not possible to fast-forward, aborting.
-
-is redundant; no need to say ", aborting".
-
-Additionally, use lowercase and lose the full stop to be consistent with
-other die() messages.
+So it makes sense to add the advice in preparation for those future
+changes, although even currently it helps.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- builtin/merge.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ advice.c        | 11 +++++++++++
+ advice.h        |  1 +
+ builtin/merge.c |  4 +++-
+ 3 files changed, 15 insertions(+), 1 deletion(-)
 
+diff --git a/advice.c b/advice.c
+index 0b9c89c48a..8f068c8be9 100644
+--- a/advice.c
++++ b/advice.c
+@@ -326,3 +326,14 @@ void detach_advice(const char *new_name)
+ 
+ 	fprintf(stderr, fmt, new_name);
+ }
++
++void diverging_advice(void)
++{
++	advise(_("Diverging branches can't be fast-forwarded, you need to either:\n"
++		"\n"
++		"\tgit merge\n"
++		"\n"
++		"or:\n"
++		"\n"
++		"\tgit rebase\n"));
++}
+diff --git a/advice.h b/advice.h
+index bd26c385d0..6ce967c962 100644
+--- a/advice.h
++++ b/advice.h
+@@ -97,5 +97,6 @@ void NORETURN die_resolve_conflict(const char *me);
+ void NORETURN die_conclude_merge(void);
+ void advise_on_updating_sparse_paths(struct string_list *pathspec_list);
+ void detach_advice(const char *new_name);
++void diverging_advice(void);
+ 
+ #endif /* ADVICE_H */
 diff --git a/builtin/merge.c b/builtin/merge.c
-index a8a843b1f5..05e631229d 100644
+index 05e631229d..56a526f42c 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -1620,7 +1620,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+@@ -1619,8 +1619,10 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		}
  	}
  
- 	if (fast_forward == FF_ONLY)
--		die(_("Not possible to fast-forward, aborting."));
-+		die(_("unable to fast-forward"));
+-	if (fast_forward == FF_ONLY)
++	if (fast_forward == FF_ONLY) {
++		diverging_advice();
+ 		die(_("unable to fast-forward"));
++	}
  
  	if (autostash)
  		create_autostash(the_repository,
