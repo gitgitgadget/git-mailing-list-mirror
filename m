@@ -2,98 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25634C4338F
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 21:29:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EABEC4338F
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 21:58:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CE8360E8F
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 21:29:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F2E5860EB5
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 21:58:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232120AbhGVUsa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jul 2021 16:48:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58544 "EHLO
+        id S232105AbhGVVRh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jul 2021 17:17:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231946AbhGVUsW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jul 2021 16:48:22 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93B88C061575
-        for <git@vger.kernel.org>; Thu, 22 Jul 2021 14:28:56 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id o3-20020a05600c5103b029024c0f9e1a5fso2093188wms.4
-        for <git@vger.kernel.org>; Thu, 22 Jul 2021 14:28:56 -0700 (PDT)
+        with ESMTP id S231336AbhGVVRe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jul 2021 17:17:34 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87E9AC061575
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 14:58:08 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id e10so999884pls.2
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 14:58:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=CpONMo1NgsRjmLqGOdzgyXEs+Ovf29aJOIu4Ra261PI=;
-        b=NQ4iEEpVFX817oF1nFGBDysJeryCeSG1r/iwAzF4s7qtyKvN0Vdbw0aj5DsBXSOFQ+
-         6V9u9qv73Z+Q0JxevNjcfd+UQXBQwQgBCJ2voVs80MkawVzpoMZeveR23Wj6xCi59fyW
-         AjBgU9ooUD4Da2lCoZXAdqcx/csnpmWTfYtQf1ENWzsdf/FjVX30SWn72AGE6FIYgGND
-         PKpjZJyzrKUlxWpaNYDXj8QqBlfzSgutZ2jSuTsxxcJLkjAnjASmOPtfIHHkEUOrVNUF
-         DvtYg8eQWOyiDQTl99KgTj9n9lGNywJcHR5kH6z3exAg46XvH53WIWflsqCLwOM2kfsI
-         Jfdg==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=R9efw6/4IJuLMVlFNm5p2l8hZF/Eb0cYKT1oM/u3tyk=;
+        b=oM457bVXZyL6CwSKeLjD7Pwk1nIeKM84boCBsV+HwEr0INei4SNr0zO8TmO0eBfQMq
+         fVszVQhp3AHEQv06FSoyp47yvH53lhF/GtviMV26LfLQoTWwJHl0k+WskoIHfHzg2XHO
+         eoL6t5Pe1tBj1/6a4+UrSpJNMtcC30g5z9Pyb1hYt1TgYJS66hwMvOnw3F/iAyBc1KVz
+         vLL8frayObRB0MQMUi81kpOrwZllLd5ppuzJrEY/mc9EYuNMJAMh1KbVnWTb54svb98D
+         xhSfqit7+MkPv6DtpeNHLrBUH/2EYcrzyXzb1688JOr7TKHUhDLICnGxycAfZI8LYSfm
+         frlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=CpONMo1NgsRjmLqGOdzgyXEs+Ovf29aJOIu4Ra261PI=;
-        b=PLMV1Col5Ue6dAGpYEX7IX25lj+sKW2Xo+GfDMJMCk/9QcR0f9qfDpEGOGrNxwkklC
-         KZ+AXlv8X1pI0NGV7SzB4mbLDxQZpzRt+811zzoG3vNRVASpiw/UDdktJjgEIem0afGS
-         0DviWEk1F8v5Y5eZTa37aW6T9qco0eKvEdkRuciqgZnFe5yRP0W1TplRAfezM2EJkVbQ
-         XMRBnp61XOZK1ttPHyEWSi2oSo/dnqpQNSjW4EEq0Gv0KzAHDSe5y/xOgtqZkIC3vwlg
-         b+czBVWotMCJd8zp+hbbOM9OJiZhv8QqkUCMmh5I0epRZZK4gVPPU8MgJ8/PEdpcXgpn
-         Q2+Q==
-X-Gm-Message-State: AOAM530vnzDIo0j8aZe6HKWJCX+tIrEYkFsbFOTZ0bXvAEYMDfR59pSM
-        sFrPVNJcWnXsI2f30DrAzMQfwHeK8Pw=
-X-Google-Smtp-Source: ABdhPJzGXh1yhSCFvnloyn2NSrOx8yKEjwgTITjKuTWX2FM+m+BQGqGu0sz1bWU9tuwf8akIq9R+Rw==
-X-Received: by 2002:a05:600c:19d3:: with SMTP id u19mr11470912wmq.115.1626989335266;
-        Thu, 22 Jul 2021 14:28:55 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o15sm3558927wmh.40.2021.07.22.14.28.54
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=R9efw6/4IJuLMVlFNm5p2l8hZF/Eb0cYKT1oM/u3tyk=;
+        b=GN6ac40vMpxM1m0iJGUdGS0VF1pvCG5qIqOxy49jdoF/QhWScZy+AB+8zDbhujN5ak
+         grfnrDaWksrsUet/Z9va7Kn5faQ6PyIKl4EzjVllxf18gJuDsHKjcFAROydakbVat8KH
+         OE9J/G1qZV60c63fH0tz9fV99hgvgmprkCruJhgrW2l4GwRLolBcYZPEPTnhsgdw/Ity
+         98/lznlZQgjaCL9FVYyJbw9utRmZYILqQwdk1nQpBEmUoNZUWz8plLieAX57cTR+uMBM
+         ZLGouhG7BcJx8J8uz0YIN5HSib/6T6KWtaIXVgZTOaU2/5CpU0u8n7+rVH+nbQheUvtX
+         Yh7A==
+X-Gm-Message-State: AOAM532wRKYyr5cz4W1rtudLRtxMceJghyN4dYnL2AojV41DtDHB9PBW
+        /BtYQdhh+Gye6poGXKHDyGrUmQ==
+X-Google-Smtp-Source: ABdhPJz2chZ/GWvp9ga6B5YEhCvcZHUHN+qb4Mi+EjCKHvA0n7V09EfD8r3T/nfWj82WVvw8msIskw==
+X-Received: by 2002:a63:234c:: with SMTP id u12mr1931245pgm.345.1626991087854;
+        Thu, 22 Jul 2021 14:58:07 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:3c03:6226:e12f:afc9])
+        by smtp.gmail.com with ESMTPSA id a16sm30070824pfo.66.2021.07.22.14.58.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jul 2021 14:28:54 -0700 (PDT)
-Message-Id: <81e46f955363fee8576b378f22273436e28b3675.1626989327.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1052.v2.git.git.1626989327.gitgitgadget@gmail.com>
-References: <pull.1052.git.git.1626718050.gitgitgadget@gmail.com>
-        <pull.1052.v2.git.git.1626989327.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 22 Jul 2021 21:28:47 +0000
-Subject: [PATCH v2 11/11] t6001: avoid direct file system access
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 22 Jul 2021 14:58:07 -0700 (PDT)
+Date:   Thu, 22 Jul 2021 14:58:01 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Josh Steadmon <steadmon@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 02/27] gc: use hook library for pre-auto-gc hook
+Message-ID: <YPnp6akn9bfxGlnG@google.com>
+References: <cover-00.30-00000000000-20210614T101920Z-avarab@gmail.com>
+ <cover-00.27-0000000000-20210617T101216Z-avarab@gmail.com>
+ <patch-02.27-7209f73f28-20210617T101217Z-avarab@gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-02.27-7209f73f28-20210617T101217Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+On Thu, Jun 17, 2021 at 12:22:36PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> 
+> 
+> Using the hook.h library instead of the run-command.h library to run
+> pre-auto-gc means that those hooks can be set up in config files, as
+> well as in the hookdir. pre-auto-gc is called only from builtin/gc.c.
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
----
- t/t6001-rev-list-graft.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+This one is a good example of an issue Junio pointed out to me in an
+earlier iteration - since the strvecs in run_hooks_opt need to be
+cleared, you need to be careful with exiting without running
+run_hooks_opt_clear(). need_to_gc() can exit before running the hook in
+some cases.
 
-diff --git a/t/t6001-rev-list-graft.sh b/t/t6001-rev-list-graft.sh
-index 90d93f77fa7..7294147334a 100755
---- a/t/t6001-rev-list-graft.sh
-+++ b/t/t6001-rev-list-graft.sh
-@@ -23,7 +23,8 @@ test_expect_success setup '
- 	git commit -a -m "Third in one history." &&
- 	A2=$(git rev-parse --verify HEAD) &&
- 
--	rm -f .git/refs/heads/main .git/index &&
-+	git update-ref -d refs/heads/main &&
-+	rm -f .git/index &&
- 
- 	echo >fileA fileA again &&
- 	echo >subdir/fileB fileB again &&
--- 
-gitgitgadget
+ - Emily
+
+> 
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/gc.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index f05d2f0a1a..a12641a691 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -32,6 +32,7 @@
+>  #include "remote.h"
+>  #include "object-store.h"
+>  #include "exec-cmd.h"
+> +#include "hook.h"
+>  
+>  #define FAILED_RUN "failed to run %s"
+>  
+> @@ -348,6 +349,8 @@ static void add_repack_incremental_option(void)
+>  
+>  static int need_to_gc(void)
+>  {
+> +	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
+> +
+>  	/*
+>  	 * Setting gc.auto to 0 or negative can disable the
+>  	 * automatic gc.
+> @@ -394,8 +397,11 @@ static int need_to_gc(void)
+>  	else
+>  		return 0;
+>  
+> -	if (run_hook_le(NULL, "pre-auto-gc", NULL))
+> +	if (run_hooks("pre-auto-gc", &hook_opt)) {
+> +		run_hooks_opt_clear(&hook_opt);
+>  		return 0;
+> +	}
+> +	run_hooks_opt_clear(&hook_opt);
+>  	return 1;
+>  }
+>  
+> -- 
+> 2.32.0.576.g59759b6ca7d
+> 
