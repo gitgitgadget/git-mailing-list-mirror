@@ -2,142 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EABEC4338F
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 21:58:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F4163C4338F
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 22:09:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F2E5860EB5
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 21:58:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D860360EB4
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 22:09:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232105AbhGVVRh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jul 2021 17:17:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36714 "EHLO
+        id S232024AbhGVV3I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jul 2021 17:29:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231336AbhGVVRe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jul 2021 17:17:34 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87E9AC061575
-        for <git@vger.kernel.org>; Thu, 22 Jul 2021 14:58:08 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id e10so999884pls.2
-        for <git@vger.kernel.org>; Thu, 22 Jul 2021 14:58:08 -0700 (PDT)
+        with ESMTP id S231313AbhGVV3I (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jul 2021 17:29:08 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9E16C061575
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 15:09:41 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id 68-20020a9d0f4a0000b02904b1f1d7c5f4so216058ott.9
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 15:09:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=R9efw6/4IJuLMVlFNm5p2l8hZF/Eb0cYKT1oM/u3tyk=;
-        b=oM457bVXZyL6CwSKeLjD7Pwk1nIeKM84boCBsV+HwEr0INei4SNr0zO8TmO0eBfQMq
-         fVszVQhp3AHEQv06FSoyp47yvH53lhF/GtviMV26LfLQoTWwJHl0k+WskoIHfHzg2XHO
-         eoL6t5Pe1tBj1/6a4+UrSpJNMtcC30g5z9Pyb1hYt1TgYJS66hwMvOnw3F/iAyBc1KVz
-         vLL8frayObRB0MQMUi81kpOrwZllLd5ppuzJrEY/mc9EYuNMJAMh1KbVnWTb54svb98D
-         xhSfqit7+MkPv6DtpeNHLrBUH/2EYcrzyXzb1688JOr7TKHUhDLICnGxycAfZI8LYSfm
-         frlQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=Rzx1HHiFcJrJEoq7vpW72NMWM2asfi3djco/stBJFzQ=;
+        b=Epwsjh0Kje17TTGijzkDb2pnxXfLDImPohVWHOZxSOWD6bZPNfVvE6x9ZIjHRFUqOE
+         4i4Z7JnVLQj1Go9rOJe5xYSeryj7h8QQqDJPQPA9mgE/NrHMN/8MI9QCwVpyO3c93y/Y
+         rK4iKJaFn1GNSAI5c1JQrT8F81bjDOe7iULqXv0u90x2Yu/OrVJqzB0bpCpPdBW5T1Pg
+         8JD0TYBBZvkoWn538d9PBYV0ZE6hIRUk93gm80L4wjkVd9dSuOpYIxyvSNKC7XU0QXqY
+         KQ8C+aswLSx7oIeHcH9wHcXHxniP1pRJ4LkAGr545fZnwfVwb5pQ8BTl43luVmmaHaR6
+         LvUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=R9efw6/4IJuLMVlFNm5p2l8hZF/Eb0cYKT1oM/u3tyk=;
-        b=GN6ac40vMpxM1m0iJGUdGS0VF1pvCG5qIqOxy49jdoF/QhWScZy+AB+8zDbhujN5ak
-         grfnrDaWksrsUet/Z9va7Kn5faQ6PyIKl4EzjVllxf18gJuDsHKjcFAROydakbVat8KH
-         OE9J/G1qZV60c63fH0tz9fV99hgvgmprkCruJhgrW2l4GwRLolBcYZPEPTnhsgdw/Ity
-         98/lznlZQgjaCL9FVYyJbw9utRmZYILqQwdk1nQpBEmUoNZUWz8plLieAX57cTR+uMBM
-         ZLGouhG7BcJx8J8uz0YIN5HSib/6T6KWtaIXVgZTOaU2/5CpU0u8n7+rVH+nbQheUvtX
-         Yh7A==
-X-Gm-Message-State: AOAM532wRKYyr5cz4W1rtudLRtxMceJghyN4dYnL2AojV41DtDHB9PBW
-        /BtYQdhh+Gye6poGXKHDyGrUmQ==
-X-Google-Smtp-Source: ABdhPJz2chZ/GWvp9ga6B5YEhCvcZHUHN+qb4Mi+EjCKHvA0n7V09EfD8r3T/nfWj82WVvw8msIskw==
-X-Received: by 2002:a63:234c:: with SMTP id u12mr1931245pgm.345.1626991087854;
-        Thu, 22 Jul 2021 14:58:07 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:3c03:6226:e12f:afc9])
-        by smtp.gmail.com with ESMTPSA id a16sm30070824pfo.66.2021.07.22.14.58.06
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=Rzx1HHiFcJrJEoq7vpW72NMWM2asfi3djco/stBJFzQ=;
+        b=eDHofzyTYXjFvw3c/vDKANRqXd6krDwoUzUbrRZDYqv8hRW91+QJD5Yon70H1srQYq
+         QCOYBVITynGdxzVp/DZvGyRkK/Jy0kALT1T3cSNQXk/PiB07NS2s12AMUtoEmBg/VFzC
+         xealonPCmhTysiLjHl5kcJYZV9bDqXcyPBtHL3Tb5ba89tCI8LKXnOJTF+fzJCQ91tbY
+         yyyhvcCJpNOc6QJavlap28BgnEiA3GMOd9pnmJIQ4uSCDFTCrDdcKJvNant+MOmB+D4Y
+         ZAaB/6QXTJn6WyHUm0V8oYKV3RsFmV784t9Hp3s41LbM9rP74ptaWJ1K0xQtJMddeGEz
+         ED5A==
+X-Gm-Message-State: AOAM531y7KfYi7G8XyXpeO6vaC/8Qm24/TfZO6yh6q6nlKHfNrz7H/0c
+        L2Kf2dvutqCpXYOIuK746EU=
+X-Google-Smtp-Source: ABdhPJyTEUd5os+WdzMaBmHvkaF4X9pA4LETqAQTxIWotpSr4/+sndbC1XCSK0cOBA/o6+GZDm3vcA==
+X-Received: by 2002:a05:6830:b83:: with SMTP id a3mr1218684otv.319.1626991781256;
+        Thu, 22 Jul 2021 15:09:41 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id u126sm608128ooa.23.2021.07.22.15.09.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jul 2021 14:58:07 -0700 (PDT)
-Date:   Thu, 22 Jul 2021 14:58:01 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Josh Steadmon <steadmon@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 02/27] gc: use hook library for pre-auto-gc hook
-Message-ID: <YPnp6akn9bfxGlnG@google.com>
-References: <cover-00.30-00000000000-20210614T101920Z-avarab@gmail.com>
- <cover-00.27-0000000000-20210617T101216Z-avarab@gmail.com>
- <patch-02.27-7209f73f28-20210617T101217Z-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-02.27-7209f73f28-20210617T101217Z-avarab@gmail.com>
+        Thu, 22 Jul 2021 15:09:40 -0700 (PDT)
+Date:   Thu, 22 Jul 2021 17:09:39 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Matthias Baumgarten <matthias.baumgarten@aixigo.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <60f9eca348290_678a208fb@natae.notmuch>
+In-Reply-To: <xmqq7dhi9nxv.fsf@gitster.g>
+References: <c62933fb-96b2-99f5-7169-372f486f6e39@aixigo.com>
+ <CABPp-BEHZcfZNL+PG1vmqXGf4Qs3eoULb4NDDgbmOB30HzJu_Q@mail.gmail.com>
+ <60f1b7853b8a2_ade9208c1@natae.notmuch>
+ <00b50aa6-9b61-9f80-1d8d-2db3ed5e7638@aixigo.com>
+ <60f1c9378d5a1_3302085c@natae.notmuch>
+ <fa757764-db25-849d-d8d5-e28908059f6b@aixigo.com>
+ <xmqq7dhi9nxv.fsf@gitster.g>
+Subject: Re: pull.rebase config vs. --ff-only on command line
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 17, 2021 at 12:22:36PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
-> 
-> Using the hook.h library instead of the run-command.h library to run
-> pre-auto-gc means that those hooks can be set up in config files, as
-> well as in the hookdir. pre-auto-gc is called only from builtin/gc.c.
+Junio C Hamano wrote:
+> Matthias Baumgarten <matthias.baumgarten@aixigo.com> writes:
 
-This one is a good example of an issue Junio pointed out to me in an
-earlier iteration - since the strvecs in run_hooks_opt need to be
-cleared, you need to be careful with exiting without running
-run_hooks_opt_clear(). need_to_gc() can exit before running the hook in
-some cases.
+> >  * git -c pull.ff=only pull --merge, force a merge commit
+> 
+> This would fast-forward if it can or otherwise create a merge.
+> Unlike "pull --no-ff", this should not "force" a merge commit.
 
- - Emily
+Today people rely on this doing a fast-forward-only merge (with
+--no-rebase).
 
-> 
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  builtin/gc.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index f05d2f0a1a..a12641a691 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -32,6 +32,7 @@
->  #include "remote.h"
->  #include "object-store.h"
->  #include "exec-cmd.h"
-> +#include "hook.h"
->  
->  #define FAILED_RUN "failed to run %s"
->  
-> @@ -348,6 +349,8 @@ static void add_repack_incremental_option(void)
->  
->  static int need_to_gc(void)
->  {
-> +	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
-> +
->  	/*
->  	 * Setting gc.auto to 0 or negative can disable the
->  	 * automatic gc.
-> @@ -394,8 +397,11 @@ static int need_to_gc(void)
->  	else
->  		return 0;
->  
-> -	if (run_hook_le(NULL, "pre-auto-gc", NULL))
-> +	if (run_hooks("pre-auto-gc", &hook_opt)) {
-> +		run_hooks_opt_clear(&hook_opt);
->  		return 0;
-> +	}
-> +	run_hooks_opt_clear(&hook_opt);
->  	return 1;
->  }
->  
-> -- 
-> 2.32.0.576.g59759b6ca7d
-> 
+Changing this would break existing behavior they rely on.
+
+It's not hypothetical [1].
+
+[1] https://www.reddit.com/r/git/comments/omcngl/do_you_use_both_pullff_and_pullrebase/
+
+-- 
+Felipe Contreras
