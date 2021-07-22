@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBB1DC432BE
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 21:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13303C4338F
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 21:28:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE12A60EB5
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 21:28:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F338160C41
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 21:28:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231719AbhGVUsS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jul 2021 16:48:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58506 "EHLO
+        id S231797AbhGVUsT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jul 2021 16:48:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231607AbhGVUsR (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231613AbhGVUsR (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 22 Jul 2021 16:48:17 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A36F8C06175F
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24C5DC061575
         for <git@vger.kernel.org>; Thu, 22 Jul 2021 14:28:51 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id h24-20020a1ccc180000b029022e0571d1a0so420897wmb.5
+Received: by mail-wr1-x430.google.com with SMTP id o1so196022wrp.5
         for <git@vger.kernel.org>; Thu, 22 Jul 2021 14:28:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=o9KVw4pEzNFeWgplGe9YGi9/mdHySu7RVQZAxi7KePI=;
-        b=OkTuzmvr1s5YddGvtfi2boC4KK3b0BOIqzMJFw27Q8SVl4rb/rGMK8UI+Vx5zZOcsw
-         5u/defwPXtatAKqXaC1f91iRpdmk6KNR6YZOdvAp5yJngeFzpFF4hVUYg/cLomR3cLFS
-         G8wDi1D6BeLZxVzafqZrJWdHVvpdVujdh7Gy4Jzi/dZ/16ppt4AAh55c+BxuzkRFXXwO
-         DlsaL2t4TEh/Q/VmR2N+RuPK+YxeQm7iMz546DKJdDK62Fq3nkWBN/PgFBGWZkypsqa5
-         dz8AemT314lMwXcnkvCh0cyzP/7HHMGWwbKyFAVz3oq3pIbMPUVU7Ie5L4Y134KH7SDa
-         AxaQ==
+        bh=dkjFbKCqgkmzb3ALYM/j8lsueduBg9xjD6SXKLT3gIk=;
+        b=qgGi3DanEp/0KDz0WpoW7T1Tu4IfGM15/U0ICKejM6Gy9o8RSkcA4TbYc9ZrWbC6hT
+         hLRwVw9QrR5UsXMwE0SebEk6uhUhnzTnM+wg/hQS2PLAJWL5omr3h6Mq+PguhQxdzRqu
+         eeQ7EkczQB5Yr3Wd2duQvUsJVW76ASs5vKMbua8aJQNcNTxUosJdyzvfIBi3Fv6FLo9s
+         kIGshJKBeiuo24FHuGFjPDNmHE3jh+Qv5V4P6rBmCNR/V3sQ6kZXj+FKDDPbZj8g+lHK
+         Vzgh7/VaTRK6u/4yP0XvGnduFY9wmnKDSKqFddiy+Traf5cO1sgPj2D08pnQEIpMwLvj
+         SBMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=o9KVw4pEzNFeWgplGe9YGi9/mdHySu7RVQZAxi7KePI=;
-        b=EGEhO2ZfmMmkEhKY7onlj8vNcu5Zi1C1itOO9XTv7L1AoMsNy7f+bE6SpAe/iWqNe2
-         WXkBdy62Un5d3KnX3aPM/FmLdq388Xnthr7j3Op3Rt8dx3WkP76QspbRbmvkl38VTrd3
-         8sNEbigKMq9tlxVwFoy4l80bgh8/K83SJAvy2er6ZC1Dqx2nzjo+wjvc+htf1+pxwY9E
-         Mwdl+B2wHheNcl2INvAhWctJ1tcOiVioxRGtClFSA/BEtZUvwYswKriEzA0ML4xyjqgZ
-         Xbyv110esGRhHKyf5NGI0LT8aLf3jVskMQ936q4qkxdfU0zgGg7Nqgz8Zp8VlzyMjAnq
-         ZRnA==
-X-Gm-Message-State: AOAM530fF94Bxo3Y0sv00upsnYTru3zg6P0An70gmhEpAP9CQWuRfQn0
-        K+FcrrMN9F1o6+4BHl+ytkO4N2c93qU=
-X-Google-Smtp-Source: ABdhPJyKAzYqdGOiqxXZL58FZdctyHRGiIMmg7Zjm8kSlJ7fI/Nl9lnF8iYDlqzaDjmOBRa+WJoKKQ==
-X-Received: by 2002:a05:600c:4c11:: with SMTP id d17mr11103779wmp.121.1626989330346;
-        Thu, 22 Jul 2021 14:28:50 -0700 (PDT)
+        bh=dkjFbKCqgkmzb3ALYM/j8lsueduBg9xjD6SXKLT3gIk=;
+        b=EpFn6iQEgdx4MHe19o9H4zctS+yzjwjIKyhrVHD1nAE4FKhpPo85hhMowXwOdNovpT
+         tc/K5TDSeQMNowjHKNvWixPL207fCSFBsu4vBHtxojafImzAHxRcXIKrfwevbOYmK2mG
+         cO7f589K4nT4pdbWFWTrwjwmBXCOpz3AVRiIrVDi6zc8GgRBXUMBYztMOf2w01jla6SF
+         GPDisIneoeWyicQX4wJ/igh9DMap9MXjXuY2cBUkYUpTw6kDinD1CMMZ2EVcZagOpY1z
+         QqLozW76mwojaLrRJQMG8MGv8tflct1iZCXEgOKwVsOoV8WPpDl8fwxngyepJq+Q/wyG
+         fkhw==
+X-Gm-Message-State: AOAM5306Fa5PH+aG9E7rloGKkOAciMaLZR6JOnfteqzLdXDYNDRITjlJ
+        W2IkWu6nXpvx3b4rhNw59+H7kwQFmnc=
+X-Google-Smtp-Source: ABdhPJwU/AWVB01UW95L9btykDFy8n2BiVOkPHAHnSAOrda7P3F1vHgtp9FRwgUwkWhh6KW10FmNQg==
+X-Received: by 2002:a5d:59ae:: with SMTP id p14mr1983949wrr.148.1626989329753;
+        Thu, 22 Jul 2021 14:28:49 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e8sm9778121wrc.6.2021.07.22.14.28.49
+        by smtp.gmail.com with ESMTPSA id b12sm31409234wro.1.2021.07.22.14.28.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jul 2021 14:28:50 -0700 (PDT)
-Message-Id: <cbf90c13e5beb0849f4e112c6d4e8e0f8675b508.1626989327.git.gitgitgadget@gmail.com>
+        Thu, 22 Jul 2021 14:28:49 -0700 (PDT)
+Message-Id: <cbd2128c3313ea7627f16d3758ed402a280d3ea9.1626989327.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1052.v2.git.git.1626989327.gitgitgadget@gmail.com>
 References: <pull.1052.git.git.1626718050.gitgitgadget@gmail.com>
         <pull.1052.v2.git.git.1626989327.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 22 Jul 2021 21:28:39 +0000
-Subject: [PATCH v2 03/11] t6120: use git-update-ref rather than filesystem
- access
+Date:   Thu, 22 Jul 2021 21:28:38 +0000
+Subject: [PATCH v2 02/11] t1503: mark symlink test as REFFILES
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,33 +78,22 @@ From: Han-Wen Nienhuys <hanwen@google.com>
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- t/t6120-describe.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ t/t1503-rev-parse-verify.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 1a501ee09e1..bae2419150b 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -107,7 +107,8 @@ test_expect_success 'describe --contains defaults to HEAD without commit-ish' '
- check_describe tags/A --all A^0
- 
- test_expect_success 'renaming tag A to Q locally produces a warning' "
--	mv .git/refs/tags/A .git/refs/tags/Q &&
-+	git update-ref refs/tags/Q $(git rev-parse refs/tags/A) &&
-+	git update-ref -d refs/tags/A &&
- 	git describe HEAD 2>err >out &&
- 	cat >expected <<-\EOF &&
- 	warning: tag 'Q' is externally known as 'A'
-@@ -135,7 +136,8 @@ test_expect_success 'abbrev=0 will not break misplaced tag (2)' '
+diff --git a/t/t1503-rev-parse-verify.sh b/t/t1503-rev-parse-verify.sh
+index bf081023917..40958615ebb 100755
+--- a/t/t1503-rev-parse-verify.sh
++++ b/t/t1503-rev-parse-verify.sh
+@@ -142,7 +142,7 @@ test_expect_success 'main@{n} for various n' '
+ 	test_must_fail git rev-parse --verify main@{$Np1}
  '
  
- test_expect_success 'rename tag Q back to A' '
--	mv .git/refs/tags/Q .git/refs/tags/A
-+	git update-ref refs/tags/A $(git rev-parse refs/tags/Q) &&
-+	git update-ref -d refs/tags/Q
+-test_expect_success SYMLINKS 'ref resolution not confused by broken symlinks' '
++test_expect_success SYMLINKS,REFFILES 'ref resolution not confused by broken symlinks' '
+ 	ln -s does-not-exist .git/refs/heads/broken &&
+ 	test_must_fail git rev-parse --verify broken
  '
- 
- test_expect_success 'pack tag refs' 'git pack-refs'
 -- 
 gitgitgadget
 
