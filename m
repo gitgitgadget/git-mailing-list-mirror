@@ -2,177 +2,301 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49B8FC07E9D
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 04:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA44DC6377D
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 05:04:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0D51E6108B
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 04:22:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 92FCB60FF2
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 05:04:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229931AbhGVDmO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jul 2021 23:42:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48466 "EHLO
+        id S229639AbhGVEYT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jul 2021 00:24:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229889AbhGVDmN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jul 2021 23:42:13 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39CE9C061575
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 21:22:49 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id t6so5337974oic.0
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 21:22:49 -0700 (PDT)
+        with ESMTP id S229488AbhGVEYS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jul 2021 00:24:18 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9350C061757
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 22:04:53 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id f9so4444840wrq.11
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 22:04:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=V3hRE/scOdwta3OXB6u4rcT/Ps4mlLuNFGdbfknH9ls=;
-        b=psKUROhViAzUUAdeT5b3UBnatVZb12bsOZpbhK5hBp3JMbkiZOJ3DXSANzc4UGLZ/D
-         LYOhxzmb3kR4WzaqxFYDpVd0zPxFfNWHlUGn0y7Fdhuwza/pHj2E/s2KkBLLUwNTuZhs
-         Ec8L8SsegYzWaYkg0+Cp+aMJOk5BUAdztWmYXTfJVts1AoOp306nvvieKyuqeo+AVZge
-         QgxRW42y3XfdRz2VhZtFnr8K4HrND2xECjnhNo81eHDE+VuCYG07CTlapNYE4Vv59g0l
-         LeL+pT07g3QcPMcYs2/T3dVxjVbrGKNZuOY3SIYJd2OuLijXwuXtN3mVjbEmeM6z+Qle
-         e8Sw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=KxJkBheq548xtQ4rZAGg4aLZc02uro/12/govHV5GFw=;
+        b=uuuOf7M9ccT0cnASGd9s7xV5ZEp8WMoBS/7CEaM5m+RQaLs4eWO+XkUzPgUzZE/gfH
+         0VhU0/1LMfZ4baZDNxB1oZE1n58Szn5orMnLSwbm1PFEpeYY8FQgwN8lBjjQbpvU+H+C
+         XtglD1HTKZNZrr45rwLC56LdIpiil3+N+HeX1uoAnLbENd4jZXsuLwpDpFUsrtC86C2u
+         HhOwlXr+Or1egoOf8e0w53et4PQv98cTZs0Xw5w53a7IDJAcO+WduIaFJIinGyXo1uzE
+         J4X9heYPIrVgi//0vnYGEJ3fsDcjxuuS5c3DLm6MGxgCXlXxdqY0hMUWmRE2xOvEdn5V
+         W0BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=V3hRE/scOdwta3OXB6u4rcT/Ps4mlLuNFGdbfknH9ls=;
-        b=B+2jbCXANLpmQJD1FR5GBGNAzH1k1PreBEIp+QSWedbKWZ1XG93FhaFJAAx6uNNTRy
-         mnUSRTFGzf0fTScIuSW6KA9mrZgquTgeLgv05/NZCQVrNiEoT9CkE3WNdJNoim5JQyB5
-         jaVLErwg1IzifeDTHnwFDIJsNN1boop3VJCDoj3qrFLB23SX8OojKfIM9Qwuiscybh0o
-         28P7TSneodZd9+vofd9z80Yr9DusaVs0GS41FSlfpcnCdUrev4fWSBWek7xpidbnKrBV
-         7eOUH0sXTNOEwwsDYOPGYkvT4SVB1N5Zv8WK2hf0Y8OOTYgn2CFFirqtVIqMJs+2XKdr
-         H2gw==
-X-Gm-Message-State: AOAM531BovjbPzGdzMJl8/w4Ne5EZ4+W5rgVONYhhLtcleUJT6PQ8NNI
-        ZawharHvxQRw+W4r0lIoOgQuVr6D9Ew3lwS3unw=
-X-Google-Smtp-Source: ABdhPJzN8NxGhncFUbH7ShTPC91/gsDbu7SxR9K4d0xHFfCrZ1fZlD50wFH+Mo/6/5myQdtCEvxD3NiTplvpfKL8kmw=
-X-Received: by 2002:aca:38c3:: with SMTP id f186mr4542346oia.39.1626927768644;
- Wed, 21 Jul 2021 21:22:48 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=KxJkBheq548xtQ4rZAGg4aLZc02uro/12/govHV5GFw=;
+        b=m3Vb1BJPfSA1DR4IRgbIpuUMU852qgUlHGpA4A1t8qpxXvvJJBrB+/kNC3zUr3XKeL
+         HYhgIz32GEGKMxOyJNOqRFrW46jhVNy36oLphqgczyKOnix5DfVbVqP0CTjvXcaXrYJy
+         WBbaYyyu4BZfpzerea+OsWVd1wTMAIObYCkbgvq5mr8WlBWBpxP652+GJlaTU+8mIXox
+         DZES+YkSkfvlMCaZzW8CcmK4MMKLxk/cYppwLlXKn/QYgQkJvg2M63uN0NqGhvE6rkUo
+         xJ6ldNlR2id5SYzMFpDqB1wBrdRcb9ZvfAF9IYIH81hT2AdCkXhXPJgrkYiU9zLm1R88
+         eqgQ==
+X-Gm-Message-State: AOAM533hiyuM2ffmldVBtQJTOOcETC8dOMteWcRfE+3foZ+Ah4KfC/W0
+        q+Wf9Axr4Adc6Q/psAiDtBd5RXpEu3E=
+X-Google-Smtp-Source: ABdhPJy5xvRGn60WWlIrTznoruv1Gxh2hM4hofdPyU6iRUD6ML4fLXz+/zfoSPfNXdVqaTJknXBa6A==
+X-Received: by 2002:adf:ea08:: with SMTP id q8mr45934025wrm.297.1626930292402;
+        Wed, 21 Jul 2021 22:04:52 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e8sm7399117wrc.6.2021.07.21.22.04.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Jul 2021 22:04:52 -0700 (PDT)
+Message-Id: <175609272110e4f8d71dce3e6c4e6ca010a8f366.1626930290.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1049.v3.git.git.1626930290.gitgitgadget@gmail.com>
+References: <pull.1049.v2.git.git.1626831744.gitgitgadget@gmail.com>
+        <pull.1049.v3.git.git.1626930290.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 22 Jul 2021 05:04:43 +0000
+Subject: [PATCH v3 1/8] t7601: test interaction of merge/rebase/fast-forward
+ flags and options
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.973.git.1624932786.gitgitgadget@gmail.com> <pull.973.v2.git.1626812081.gitgitgadget@gmail.com>
-In-Reply-To: <pull.973.v2.git.1626812081.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 21 Jul 2021 21:22:37 -0700
-Message-ID: <CABPp-BGbM_+bznuCCLfctt-XqVdCuROa9+s_jpeQXmTHEyZmjg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/7] Sparse index: integrate with commit and checkout
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Matthias Baumgarten <matthias.baumgarten@aixigo.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 20, 2021 at 1:14 PM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> This series extends our integration of sparse-index to 'git commit' and 'git
-> checkout'.
->
-> This is based on ds/status-with-sparse-index (v7) and v2.32.0. The hard work
-> was already done in that topic, so these changes are simple.
->
-> Recall that we have delayed our integration with 'git add' until we can work
-> out the concerns about how to deal with pathspecs outside of the
-> sparse-checkout definition. Those concerns might have some overlap with how
-> 'git commit' takes a pathspec, but this seems like a rare enough case to
-> handle here and we can be more careful with the behavior change in the next
-> series which will integrate with git add.
->
-> In addition to the tests that already exist in t1092, I have integrated
-> these changes in microsoft/git and tested them against the Scalar functional
-> tests, which go through quite a few complicated scenarios, verifying that
-> things work the same across the full index and sparse-index cases.
->
->
-> Update in V2
-> ============
->
->  * There is no change to the code, but it is presented in a slightly
->    different order.
->  * We've been discussing some complicated directory/file conflict cases, in
->    particular with a staged change inside the directory. These tests are
->    added and described as documenting incorrect behavior that should be
->    changed.
->  * After those tests are in place, we can motivate the change to
->    twoway_merge() as necessary for a more-common situation (still rare) but
->    still incorrect in an already-broken situation. Hopefully that balance is
->    sufficient for now, until we can do the bigger work of fixing the bad
->    behavior.
+From: Elijah Newren <newren@gmail.com>
 
-I read the first five patches previously.  The tiny changes there in
-the range-diff still look good to me.
+The interaction of rebase and merge flags and options was not well
+tested.  Add several tests to check for correct behavior from the
+following rules:
+    * --ff-only vs. --[no-]rebase
+      (and the related pull.ff=only vs. pull.rebase)
+    * --rebase[=!false] vs. --no-ff and --ff
+      (and the related pull.rebase=!false overrides pull.ff=!only)
+    * command line flags take precedence over config, except:
+      * --no-rebase heeds pull.ff=!only
+      * pull.rebase=!false vs --no-ff and --ff
 
-I very much appreciate the new patch 6.
+For more details behind these rules and a larger table of individual
+cases, refer to https://lore.kernel.org/git/xmqqwnpqot4m.fsf@gitster.g/
+and the links found therein.
 
-As noted in 7/7, I'm a little unhappy with the patch to
-twoway_merge(), BUT you've clearly documented the shortcomings in very
-good detail and pointed out how git has (likely for decades) messed up
-in related ways for non-sparse checkouts with D/F conflicts.  You've
-documented it well enough and argued well enough about the relative
-merits, that I have to agree with you that this is a good step
-forward.  I do hope we circle back and tie up the loose ends at some
-point.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ t/t7601-merge-pull-config.sh | 182 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 182 insertions(+)
 
-So, the whole series is:
+diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
+index 52e8ccc933a..a44e6e69f2b 100755
+--- a/t/t7601-merge-pull-config.sh
++++ b/t/t7601-merge-pull-config.sh
+@@ -143,6 +143,188 @@ test_expect_success 'pull.rebase not set and --ff-only given (not-fast-forward)'
+ 	test_i18ngrep ! "Pulling without specifying how to reconcile" err
+ '
+ 
++test_does_rebase () {
++	git reset --hard c2 &&
++	git "$@" . c1 &&
++	# Check that we actually did a rebase
++	git rev-list --count HEAD >actual &&
++	git rev-list --merges --count HEAD >>actual &&
++	test_write_lines 3 0 >expect &&
++	test_cmp expect actual &&
++	rm actual expect
++}
++
++# Prefers merge over fast-forward
++test_does_merge_when_ff_possible () {
++	git reset --hard c0 &&
++	git "$@" . c1 &&
++	# Check that we actually did a merge
++	git rev-list --count HEAD >actual &&
++	git rev-list --merges --count HEAD >>actual &&
++	test_write_lines 3 1 >expect &&
++	test_cmp expect actual &&
++	rm actual expect
++}
++
++# Prefers fast-forward over merge or rebase
++test_does_fast_forward () {
++	git reset --hard c0 &&
++	git "$@" . c1 &&
++
++	# Check that we did not get any merges
++	git rev-list --count HEAD >actual &&
++	git rev-list --merges --count HEAD >>actual &&
++	test_write_lines 2 0 >expect &&
++	test_cmp expect actual &&
++
++	# Check that we ended up at c1
++	git rev-parse HEAD >actual &&
++	git rev-parse c1^{commit} >expect &&
++	test_cmp actual expect &&
++
++	# Remove temporary files
++	rm actual expect
++}
++
++# Doesn't fail when fast-forward not possible; does a merge
++test_falls_back_to_full_merge () {
++	git reset --hard c2 &&
++	git "$@" . c1 &&
++	# Check that we actually did a merge
++	git rev-list --count HEAD >actual &&
++	git rev-list --merges --count HEAD >>actual &&
++	test_write_lines 4 1 >expect &&
++	test_cmp expect actual &&
++	rm actual expect
++}
++
++# Attempts fast forward, which is impossible, and bails
++test_attempts_fast_forward () {
++	git reset --hard c2 &&
++	test_must_fail git "$@" . c1 2>err &&
++	test_i18ngrep "Not possible to fast-forward, aborting" err
++}
++
++#
++# Group 1: Interaction of --ff-only with --[no-]rebase
++# (And related interaction of pull.ff=only with pull.rebase)
++#
++test_expect_failure '--ff-only overrides --rebase' '
++	test_attempts_fast_forward pull --rebase --ff-only
++'
++
++test_expect_failure '--ff-only overrides --rebase even if first' '
++	test_attempts_fast_forward pull --ff-only --rebase
++'
++
++test_expect_success '--ff-only overrides --no-rebase' '
++	test_attempts_fast_forward pull --ff-only --no-rebase
++'
++
++test_expect_failure 'pull.ff=only overrides pull.rebase=true' '
++	test_attempts_fast_forward -c pull.ff=only -c pull.rebase=true pull
++'
++
++test_expect_success 'pull.ff=only overrides pull.rebase=false' '
++	test_attempts_fast_forward -c pull.ff=only -c pull.rebase=false pull
++'
++
++# Group 2: --rebase=[!false] overrides --no-ff and --ff
++# (And related interaction of pull.rebase=!false and pull.ff=!only)
++test_expect_success '--rebase overrides --no-ff' '
++	test_does_rebase pull --rebase --no-ff
++'
++
++test_expect_success '--rebase overrides --ff' '
++	test_does_rebase pull --rebase --ff
++'
++
++test_expect_success '--rebase fast-forwards when possible' '
++	test_does_fast_forward pull --rebase --ff
++'
++
++test_expect_success 'pull.rebase=true overrides pull.ff=false' '
++	test_does_rebase -c pull.rebase=true -c pull.ff=false pull
++'
++
++test_expect_success 'pull.rebase=true overrides pull.ff=true' '
++	test_does_rebase -c pull.rebase=true -c pull.ff=true pull
++'
++
++# Group 3: command line flags take precedence over config
++test_expect_failure '--ff-only takes precedence over pull.rebase=true' '
++	test_attempts_fast_forward -c pull.rebase=true pull --ff-only
++'
++
++test_expect_success '--ff-only takes precedence over pull.rebase=false' '
++	test_attempts_fast_forward -c pull.rebase=false pull --ff-only
++'
++
++test_expect_failure '--no-rebase takes precedence over pull.ff=only' '
++	test_falls_back_to_full_merge -c pull.ff=only pull --no-rebase
++'
++
++test_expect_success '--rebase takes precedence over pull.ff=only' '
++	test_does_rebase -c pull.ff=only pull --rebase
++'
++
++test_expect_success '--rebase overrides pull.ff=true' '
++	test_does_rebase -c pull.ff=true pull --rebase
++'
++
++test_expect_success '--rebase overrides pull.ff=false' '
++	test_does_rebase -c pull.ff=false pull --rebase
++'
++
++test_expect_success '--rebase overrides pull.ff unset' '
++	test_does_rebase pull --rebase
++'
++
++# Group 4: --no-rebase heeds pull.ff=!only or explict --ff or --no-ff
++
++test_expect_success '--no-rebase works with --no-ff' '
++	test_does_merge_when_ff_possible pull --no-rebase --no-ff
++'
++
++test_expect_success '--no-rebase works with --ff' '
++	test_does_fast_forward pull --no-rebase --ff
++'
++
++test_expect_success '--no-rebase does ff if pull.ff unset' '
++	test_does_fast_forward pull --no-rebase
++'
++
++test_expect_success '--no-rebase heeds pull.ff=true' '
++	test_does_fast_forward -c pull.ff=true pull --no-rebase
++'
++
++test_expect_success '--no-rebase heeds pull.ff=false' '
++	test_does_merge_when_ff_possible -c pull.ff=false pull --no-rebase
++'
++
++# Group 5: pull.rebase=!false in combination with --no-ff or --ff
++test_expect_success 'pull.rebase=true and --no-ff' '
++	test_does_rebase -c pull.rebase=true pull --no-ff
++'
++
++test_expect_success 'pull.rebase=true and --ff' '
++	test_does_rebase -c pull.rebase=true pull --ff
++'
++
++test_expect_success 'pull.rebase=false and --no-ff' '
++	test_does_merge_when_ff_possible -c pull.rebase=false pull --no-ff
++'
++
++test_expect_success 'pull.rebase=false and --ff, ff possible' '
++	test_does_fast_forward -c pull.rebase=false pull --ff
++'
++
++test_expect_success 'pull.rebase=false and --ff, ff not possible' '
++	test_falls_back_to_full_merge -c pull.rebase=false pull --ff
++'
++
++# End of groupings for conflicting merge vs. rebase flags/options
++
+ test_expect_success 'merge c1 with c2' '
+ 	git reset --hard c1 &&
+ 	test -f c0.c &&
+-- 
+gitgitgadget
 
-Reviewed-by: Elijah Newren <newren@gmail.com>
-
->
-> Thanks, -Stolee
->
-> Derrick Stolee (7):
->   p2000: add 'git checkout -' test and decrease depth
->   p2000: compress repo names
->   commit: integrate with sparse-index
->   sparse-index: recompute cache-tree
->   checkout: stop expanding sparse indexes
->   t1092: document bad 'git checkout' behavior
->   unpack-trees: resolve sparse-directory/file conflicts
->
->  builtin/checkout.c                       |   8 +-
->  builtin/commit.c                         |   3 +
->  cache-tree.c                             |   2 -
->  sparse-index.c                           |   2 +
->  t/perf/p2000-sparse-operations.sh        |  47 ++++--
->  t/t1092-sparse-checkout-compatibility.sh | 197 ++++++++++++++++++++++-
->  unpack-trees.c                           |  11 ++
->  7 files changed, 240 insertions(+), 30 deletions(-)
->
->
-> base-commit: e5ca291076a8a936283bb2c57433c4393d3f80c2
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-973%2Fderrickstolee%2Fsparse-index%2Fcommit-and-checkout-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-973/derrickstolee/sparse-index/commit-and-checkout-v2
-> Pull-Request: https://github.com/gitgitgadget/git/pull/973
->
-> Range-diff vs v1:
->
->  1:  bb3dd1fdd48 = 1:  6e74958f590 p2000: add 'git checkout -' test and decrease depth
->  2:  eb15bf37685 = 2:  3e1d03c41be p2000: compress repo names
->  3:  413babe6e77 ! 3:  cd94f820052 commit: integrate with sparse-index
->      @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse-index is e
->       + ensure_not_expanded commit --include deep/deeper1/a -m deeper
->        '
->
->      - test_expect_success 'reset mixed and checkout orphan' '
->      + # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
->  4:  ffe8473caab = 4:  65e79b8037c sparse-index: recompute cache-tree
->  5:  8710fee36b7 ! 5:  e9a9981477e checkout: stop expanding sparse indexes
->      @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse-index is n
->       + ensure_not_expanded restore -s rename-out-to-out -- deep/deeper1
->        '
->
->      - test_expect_success 'reset mixed and checkout orphan' '
->      + # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
->  -:  ----------- > 6:  4b801c854fb t1092: document bad 'git checkout' behavior
->  -:  ----------- > 7:  71e301501c8 unpack-trees: resolve sparse-directory/file conflicts
->
-> --
-> gitgitgadget
