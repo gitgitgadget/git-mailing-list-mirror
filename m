@@ -2,139 +2,316 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D878C6377D
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 13:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C021C63793
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 13:28:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4354C61289
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 13:19:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 637BD61287
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 13:28:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231994AbhGVMi3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jul 2021 08:38:29 -0400
-Received: from mout.gmx.net ([212.227.15.19]:45109 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232057AbhGVMi2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jul 2021 08:38:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1626959942;
-        bh=oxn7FwA/A8KBLZFb4lYzYDynJEMJ7DmfN4kFKqDqTa0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=AgGgtIuJaVeMpA7RegY7M6urJVXa67uL/l1RT/MeLLqg4Ibx8Z/vC/dY4SZ7L3x/O
-         xJ+bmTJ7/2ka2FIpcf+XxrMzx5rVUk8mzr4y42TeLsLc68UYXIw8ImH6kxnxRdyiH1
-         MN4uolrhHwJg6FES/eaDLSHvT+qnH0k7YwPHuw/s=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.102.245] ([89.1.212.32]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M8QWA-1m28l41Zlg-004SA7; Thu, 22
- Jul 2021 15:19:02 +0200
-Date:   Thu, 22 Jul 2021 15:19:01 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-cc:     Git mailing list <git@vger.kernel.org>
-Subject: Re: 'git range-diff' does not detect submodule changes if
- 'diff.submodule=log'
-In-Reply-To: <e469038c-d78c-cd4b-0214-7094746b9281@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2107221516240.55@tvgsbejvaqbjf.bet>
-References: <e469038c-d78c-cd4b-0214-7094746b9281@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:6z5R4uaFYbsCRlXka6Ak5kBqDuof6GxcZvqNQIRSi8I3Lr0kT0J
- vXujxXBbVBz2Q603/42863OqtagRp80lQYpMmK8v4hUUP3nTcMniiwdlzo/b3uu3nvLY6HO
- cu9gnQiqDjm6qJhOC/ZTw1AuIcqUMn5Frgax5IEUN/gHBPWDHvfCWOrSzCeIQFRH4QsFSl8
- d/DjMlUBuLXbh5AFEuzzg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:TGffa9AchrY=:IrontJzx29CbfQ2kRyxBJ5
- bC87QYNUlvX4YGHCx79zfTXF5oF9+f08lzjezo8BuhNzcDs3uI2NVMeVdZoJHh6dS1hqiZOln
- Lio8U0M35VzVk90ikcA/tgzQpKiDhJDGCb0iDfbrpB2dEquLIGKyotW1yeRUC8kFv5gxd4zrB
- pDcQ/U8Cwj3ieXGvgwmPBQ0EQADkR4bz4CeXQySehwcknyVYAG6RnCH2H0GEvTJrJTlqDvOI2
- 9hSUFBYaWVHkWPoSBF1IY5BddbfWgXQ2jHw7Xr0r869BILzABKrwzdDq5K8Lpe1DIJ+9tWo8H
- RYeQz/4ZVeCnPAzj29i8MxxlKLDFFP1asBoH5qsMoJ8ROPZyKOzXazxyNr+2UtN9SYaqm5FaT
- lEdmKArhfKCriQ5WWPXqvMWaXQks+Si7Z2D++mJX+qRWUkx9GHpG/BAeq7FFMbxqFSYhABZwX
- xzb+jABIpBOvnXBjdGupQ0z3YqtjBZpxDjCofuavJupRr2CK3z+1ED49w+LdVWorTdTIsFQUD
- LY0X0GUQwr2QVl3sMy6JPlJZ0CfL58DayaIsP6I3hNrKn4CZR9Nih2d3SujgIrbhdbq4hoLn9
- RtA/YCm0Jx2LK3rwcqR2fQgobbmb2sZFh7/m2yDOsGYlsm9EsQVgmTCKFFjAiJNbpPV/t59GM
- io/d5C30QWx/5Ckw8Zd90JSbG3IcjIXSqXx7CnTK7r+VeyFHtHSwyd90s5VrgNWahu4zxYjUq
- CN2WVsKTHy6lPURSuEk6zSOax2Vxnj4gKXIQcnl7smQiO/h+sVd+GjPuIHNIMHCt8BRaLsoFo
- wV/A1oqzunU5THRejrYaRVuVOMqZynqZH8ZcGBuL98vjtU91XbLDCoG+afIDv5A3GCX0G6JCS
- UzFzfu7AbsAlrsgmqWSL3GWcvXU+lu77L7vjZwDDlIG5oVptID1qvwcXHrlLTPtJxIp4Sc/49
- xXRNP0+yqa03AFyPuCwK/U8Jq4OSJ/o9VKznZlNwF7EHfkyx0Amqt4otpkWqQN2+cRTE9KF6E
- jnw3uWukiMYxJ6LeIUM5xXxuYGNbNd2LhjjiMypeppbdC9BqDW8A7wlc/1TX15yXDn8Jt0M1o
- qUkso3RSdM61c+1/QbvEFSWzPKIlQJmuUQ/Vco9XJ3mfQ7qV5ZoIkpq3A==
+        id S232097AbhGVMsN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jul 2021 08:48:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59868 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232032AbhGVMsM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jul 2021 08:48:12 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7EABC061575
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 06:28:46 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id ds11-20020a17090b08cbb0290172f971883bso4317846pjb.1
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 06:28:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=uJNo49L1mjyhTEBFbjZEs69YLFW/XfQlppHXKDwcJLk=;
+        b=sTwZNuj6pXSbreaNQ0TBTDOZPIda/9jnARzc2XEjmQfEFv1wg5fS603dGCrCXKyR6j
+         8cdMGQqxRYApqeDd2glazC2Gsg1Ccuetc2fmJtIGyS7LKJ96Bk3WQ+jhmGfP8MND5mBp
+         AfDOJa7nvKRnBPt4cNOAslW0F5JTjgz1p+jYi+MvomD9pcomyldG7O81o1HRGdku0RdC
+         rJo4mWApQqGZ23koFkT/ApXXBFx7Jb2mzIXcza/E82vej0wdEIsDv39OrPJ+U16ciUFr
+         sqxJp6pIUvPi+YH0y7yzix3CDNQ69NFhfBkJIfJUvyC/bTeEj39xgxzgyX/jMFaGb8zg
+         Qh7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=uJNo49L1mjyhTEBFbjZEs69YLFW/XfQlppHXKDwcJLk=;
+        b=QmhAqHS3UIgTpddV8I5P1Oe11R7oqEiv7retmZko6/xqWqGUpcNngJnEXtVjZU9bJY
+         nSvCA4b5Vetv1wbxMa9ShPW7cNxhtfII9hLY7N0Icwny3aCEaAKO2YkcczVq1eJbLfKX
+         yTEPsAclVdtGKoqRSspSjktHAeW/90LJhMoZ937jvqyqrbEvLfjoYr/HVhu3yioA0H9L
+         X21Mj7dkDELSa0UtcxxTUvjacca5+Z8u/2NijByTi1b1cFvxtw8aljykJykzqGFvcHSi
+         ZSIePuBlcwjZt+PJPN89N43KXNAGQtYHymRlpoehb9C07g5boAlMBAUklp8gEt+zXNrg
+         ks8g==
+X-Gm-Message-State: AOAM5338bLj5/riiHQ1QcVxSl6Lxgyxmrkj2A3hAHHQePxaJQpe0Mt40
+        BxuVSvc7tCNkTQHO4YDywkg=
+X-Google-Smtp-Source: ABdhPJxA9rUUy+YSLEeD99/Ke6XOudpMchsAswLhtvEsq6xn7mNdkUoY03oeWLIHND27ZIDarbnDPg==
+X-Received: by 2002:a17:90b:a0d:: with SMTP id gg13mr24017280pjb.199.1626960526067;
+        Thu, 22 Jul 2021 06:28:46 -0700 (PDT)
+Received: from smtpclient.apple ([119.82.121.47])
+        by smtp.gmail.com with ESMTPSA id c24sm30472698pfn.86.2021.07.22.06.28.42
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 22 Jul 2021 06:28:45 -0700 (PDT)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
+Subject: Re: [GSoC] [PATCH] submodule--helper: introduce add-config subcommand
+From:   Atharva Raykar <raykar.ath@gmail.com>
+In-Reply-To: <87sg06tvab.fsf@evledraar.gmail.com>
+Date:   Thu, 22 Jul 2021 18:58:38 +0530
+Cc:     Git List <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Prathamesh Chavan <pc44800@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <4DEF3E9A-C6FA-4402-8182-D4E618CF2CCC@gmail.com>
+References: <20210722112143.97944-1-raykar.ath@gmail.com>
+ <87sg06tvab.fsf@evledraar.gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-Mailer: Apple Mail (2.3654.100.0.2.22)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philippe,
+On 22-Jul-2021, at 17:20, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
+<avarab@gmail.com> wrote:
+>=20
+>=20
+> On Thu, Jul 22 2021, Atharva Raykar wrote:
+>=20
+>> +static void config_submodule_in_gitmodules(const char *name, const =
+char *var, const char *value)
+>> +{
+>> +	char *key;
+>> +
+>> +	if (!is_writing_gitmodules_ok())
+>> +		die(_("please make sure that the .gitmodules file is in =
+the working tree"));
+>> +
+>> +	key =3D xstrfmt("submodule.%s.%s", name, var);
+>> +	config_set_in_gitmodules_file_gently(key, value);
+>> +	free(key);
+>> +}
+>=20
+> Just a small point not per-se to do with this patch, but aren't all
+> callers of config_set_in_gitmodules_file_gently() wanting to prefix
+> thigs with "submodule."? Looks like its API could be simplified a bit
+> with that xstrfmt() and free() inside that function.
 
-On Mon, 19 Jul 2021, Philippe Blain wrote:
+Yes, you are right, all the callers prefix with "submodule.". Changing
+the API to what you suggested, would require some special handling in
+'submodule--helper:module_config()', which will be dead code after the
+whole series is done, so probably a better time to change it would be
+during the cleanup after the conversion.
 
-> I noticed that 'git range-diff' silently "drops" submodule changes if
-> 'diff.submodule=3Dlog' is set in the config. This is because the 'diff -=
--git'
-> header is not shown in that case, and the code in range-diff.c::read_pat=
-ches
-> expects that header to be found to detect changes.
->
-> If 'diff.submodule' is instead set to 'diff', the range-diff outright er=
-rors
-> with
-> (at least in my case):
->
-> error: git apply: bad git-diff - inconsistent old filename on line 1
-> error: could not parse git header 'diff --git
-> error: path/to/submodule/and/some/file/within
-> '
-> error: could not parse log for '@{u}..@{1}'
->
->
-> I think it would make sense to force '--submodule=3Dshort' for range-dif=
-f,
-> something like:
->
-> diff --git a/range-diff.c b/range-diff.c
-> index 1a4471fe4c..d74b9c7a55 100644
-> --- a/range-diff.c
-> +++ b/range-diff.c
-> @@ -54,7 +54,7 @@ static int read_patches(const char *range, struct
-> string_list *list,
->
->         strvec_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
->                      "--reverse", "--date-order", "--decorate=3Dno",
-> -                    "--no-prefix",
-> +                    "--no-prefix", "--submodule=3Dshort",
->                      /*
->                       * Choose indicators that are not used anywhere
->                       * else in diffs, but still look reasonable
->
->
-> What do you think ?
+>> +static void configure_added_submodule(struct add_data *add_data)
+>> +{
+>> +	char *key, *submod_pathspec =3D NULL;
+>> +	struct child_process add_submod =3D CHILD_PROCESS_INIT;
+>> +	struct child_process add_gitmodules =3D CHILD_PROCESS_INIT;
+>> +	int pathspec_key_exists, activate =3D 0;
+>=20
+> Usual style is to have different variables on different lines, unless
+> they're closely related (like "int i, j"), so "char *key;\n char
+> *submod[...]" in this case.
 
-Sure. I never thought that `range-diff` would be useful in the context of
-submodules. But then, I am an anti-fan of submodules anyway, so don't put
-too much stock into my opinion about anything submodule-related.
+Okay.
 
-> P.S. As an aside,
-> I'm  not sure why you chose to skip the 'diff --git' header with
-> '--submodule=3Dlog'
-> (I did not search the list), but I think that in general 'git diff' and
-> friends,
-> it would be nice to be able to still see this header even with
-> --submodule=3Dlog...
+>> +
+>> +	key =3D xstrfmt("submodule.%s.url", add_data->sm_name);
+>> +	git_config_set_gently(key, add_data->realrepo);
+>> +	free(key);
+>> +
+>> +	add_submod.git_cmd =3D 1;
+>> +	strvec_pushl(&add_submod.args, "add",
+>> +		     "--no-warn-embedded-repo", NULL);
+>> +	if (add_data->force)
+>> +		strvec_push(&add_submod.args, "--force");
+>> +	strvec_pushl(&add_submod.args, "--", add_data->sm_path, NULL);
+>> +
+>> +	if (run_command(&add_submod))
+>> +		die(_("Failed to add submodule '%s'"), =
+add_data->sm_path);
+>> +
+>> +	config_submodule_in_gitmodules(add_data->sm_name, "path", =
+add_data->sm_path);
+>> +	config_submodule_in_gitmodules(add_data->sm_name, "url", =
+add_data->repo);
+>> +	if (add_data->branch)
+>> +		config_submodule_in_gitmodules(add_data->sm_name,
+>> +					       "branch", =
+add_data->branch);
+>> +
+>> +	add_gitmodules.git_cmd =3D 1;
+>> +	strvec_pushl(&add_gitmodules.args,
+>> +		     "add", "--force", "--", ".gitmodules", NULL);
+>> +
+>> +	if (run_command(&add_gitmodules))
+>> +		die(_("Failed to register submodule '%s'"), =
+add_data->sm_path);
+>=20
+> Looks good at a glance.
+>=20
+>> +	/*
+>> +	 * NEEDSWORK: In a multi-working-tree world this needs to be
+>> +	 * set in the per-worktree config.
+>> +	 */
+>=20
+> So should we have a failing test for that scenario, or...? (Update: =
+but
+> read ahead...)
+>=20
+>> +static int add_config(int argc, const char **argv, const char =
+*prefix)
+>> +{
+>> +	int force =3D 0;
+>> +	struct add_data add_data =3D ADD_DATA_INIT;
+>> +
+>> +	struct option options[] =3D {
+>> +		OPT_STRING('b', "branch", &add_data.branch,
+>> +			   N_("branch"),
+>> +			   N_("branch of repository to store in "
+>> +			      "the submodule configuration")),
+>> +		OPT_STRING(0, "url", &add_data.repo,
+>> +			   N_("string"),
+>> +			   N_("url to clone submodule from")),
+>> +		OPT_STRING(0, "resolved-url", &add_data.realrepo,
+>> +			   N_("string"),
+>> +			   N_("url to clone the submodule from, after it =
+has "
+>> +			      "been dereferenced relative to parent's =
+url, "
+>> +			      "in the case where <url> is a relative =
+url")),
+>> +		OPT_STRING(0, "path", &add_data.sm_path,
+>> +			   N_("path"),
+>> +			   N_("where the new submodule will be cloned =
+to")),
+>> +		OPT_STRING(0, "name", &add_data.sm_name,
+>> +			   N_("string"),
+>> +			   N_("name of the new submodule")),
+>> +		OPT__FORCE(&force, N_("allow adding an otherwise ignored =
+submodule path"),
+>> +			   PARSE_OPT_NOCOMPLETE),
+>> +		OPT_END()
+>> +	};
+>> +
+>> +	const char *const usage[] =3D {
+>> +		N_("git submodule--helper add-config "
+>> +		   "[--force|-f] [--branch|-b <branch>] "
+>> +		   "--url <url> --resolved-url <resolved-url> "
+>> +		   "--path <path> --name <name>"),
+>> +		NULL
+>> +	};
+>=20
+> I'd say consider adding this as a "static" earlier in the file, but =
+it's
+> an established pattern in this file, so let's keep it.
+>=20
+>> +	argc =3D parse_options(argc, argv, prefix, options, usage, 0);
+>=20
+> It's fine to omit it for a helper, but we're being non-pedantic about
+> checking mandatory options here. Would do it in a "real" built-in, but
+> for internal use it's fine.
+>=20
+>> +	if (argc !=3D 0)
+>=20
+> Style: if (!argc)
 
-I don't remember the details. It might be that `git-tbdiff` did it that
-way, and I copied it without questioning.
+Will fix.
 
-*clicketyclick*
+>> +		usage_with_options(usage, options);
+>> +
+>> +	add_data.force =3D !!force;
+>> +	configure_added_submodule(&add_data);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> #define SUPPORT_SUPER_PREFIX (1<<0)
+>>=20
+>> struct cmd_struct {
+>> @@ -2949,6 +3073,7 @@ static struct cmd_struct commands[] =3D {
+>> 	{"name", module_name, 0},
+>> 	{"clone", module_clone, 0},
+>> 	{"add-clone", add_clone, 0},
+>> +	{"add-config", add_config, 0},
+>> 	{"update-module-mode", module_update_module_mode, 0},
+>> 	{"update-clone", update_clone, 0},
+>> 	{"ensure-core-worktree", ensure_core_worktree, 0},
+>> diff --git a/git-submodule.sh b/git-submodule.sh
+>> index 053daf3724..f713cb113c 100755
+>> --- a/git-submodule.sh
+>> +++ b/git-submodule.sh
+>> @@ -242,33 +242,7 @@ cmd_add()
+>> 	fi
+>>=20
+>> 	git submodule--helper add-clone ${GIT_QUIET:+--quiet} =
+${force:+"--force"} ${progress:+"--progress"} ${branch:+--branch =
+"$branch"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" =
+--url "$realrepo" ${reference:+"$reference"} =
+${dissociate:+"--dissociate"} ${depth:+"$depth"} || exit
+>> -	git config submodule."$sm_name".url "$realrepo"
+>> -
+>> -	git add --no-warn-embedded-repo $force "$sm_path" ||
+>> -	die "fatal: $(eval_gettext "Failed to add submodule =
+'\$sm_path'")"
+>> -
+>> -	git submodule--helper config submodule."$sm_name".path =
+"$sm_path" &&
+>> -	git submodule--helper config submodule."$sm_name".url "$repo" &&
+>> -	if test -n "$branch"
+>> -	then
+>> -		git submodule--helper config submodule."$sm_name".branch =
+"$branch"
+>> -	fi &&
+>> -	git add --force .gitmodules ||
+>> -	die "fatal: $(eval_gettext "Failed to register submodule =
+'\$sm_path'")"
+>> -
+>> -	# NEEDSWORK: In a multi-working-tree world, this needs to be
+>> -	# set in the per-worktree config.
+>=20
+> Ah, this is the NEEDSWORK comment, just copied to the C code...
+>=20
+>> -	if git config --get submodule.active >/dev/null
+>> -	then
+>> -		# If the submodule being adding isn't already covered by =
+the
+>> -		# current configured pathspec, set the submodule's =
+active flag
+>> -		if ! git submodule--helper is-active "$sm_path"
+>> -		then
+>> -			git config submodule."$sm_name".active "true"
+>> -		fi
+>> -	else
+>> -		git config submodule."$sm_name".active "true"
+>> -	fi
+>> +	git submodule--helper add-config ${force:+--force} =
+${branch:+--branch "$branch"} --url "$repo" --resolved-url "$realrepo" =
+--path "$sm_path" --name "$sm_name"
+>> }
+>>=20
+>=20
+> Very nice to have this simplified.
+>=20
+> Would be good to split this very long line across multiple lines
+> though...
 
-Yep, that seems plausible:
-https://github.com/trast/tbdiff/blob/047d1c79dfada57522a42f307cd4b0ddcb098=
-934/git-tbdiff.py#L48
+I followed the established pattern of not splitting the lines from the
+previous conversions ('submodule--helper update-clone' being the
+exception in that file).
 
-Ciao,
-Dscho
+In this case, I felt it should be fine because a follow-up series that
+completes the full conversion will get rid of that line entirely.
+
