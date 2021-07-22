@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66987C63793
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 05:05:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 952BAC6377D
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 05:05:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46961610F7
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 05:05:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D14D61279
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 05:05:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230090AbhGVEYj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jul 2021 00:24:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57696 "EHLO
+        id S229955AbhGVEYl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jul 2021 00:24:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229930AbhGVEYW (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229927AbhGVEYW (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 22 Jul 2021 00:24:22 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7403C061575
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 22:04:56 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id k14-20020a05600c1c8eb02901f13dd1672aso1832481wms.0
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 22:04:56 -0700 (PDT)
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA4B4C0613C1
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 22:04:57 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id l7so4457765wrv.7
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 22:04:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=kVAQf2/yjNlX6b4QxRxeoH0KdMrziGNezYhRideg//g=;
-        b=cZjzRzFUXLI3jgiBJuVXGbZ0gbv+Vi3/QJR8JVz4skeosXicoe/rNLdpHyLxM6z7Bo
-         pXPuaNRM4d0RMJZtJ2j9F2l16ZfWt9W3Ui8XzhjR5UHDDjt5YhBoqZHaTGhoV5Zpt8UI
-         Yn8k6ct8NhSn6TJj9j6VaOfDMuJw8jda18eqK8Luqiuh13MXaycCJsWfZLqehXX/RzuU
-         RlbXx5H4/nvZPOnGRkDaM+4yB2HhC+o2eL9tzksDJRdryOCPp6dE0eFzJ+6htN8trGiy
-         VrHIRPAvbd0TyVOZ/g/V/0MUntZjgRA/HknH6OMseKwrxkX+1iVll4zbZayfm7ROSk3L
-         t+jw==
+        bh=EmP26rVYFu+5DDOXiB3E0xPtqgcGXQ2j4BGSsFSir/M=;
+        b=Owuz0ZnIejgk+xFWymvcA50KgO5tAlyFg3r85nfBUbfztqBJGssBkqyT+BgKunXtNE
+         OvAtEqZmlxCKHbpJPV6X9GpiPZWrhb7rqyuKcVfSlaUf8VNCZGEKNN5Dw1A9T8e8t70W
+         7/Qp8pjENooJi0lQrTO364lU+1gidw4bOXfha8gzIfz5XD8sKOvB3mx/XSCG+VkwREoK
+         Jt5i18cnGWzGe+9/BqavsC5ZssQInQ6Ozm9W5D1PqIhyggqCqrf8zu0N3dYfO/aNiABb
+         QrdlELezazOfmyj+sytxVeHAU0Gi1fg74OZNoFSuqfx1Ko84BmLPlR+EC5p8d+lwAbDm
+         4GeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=kVAQf2/yjNlX6b4QxRxeoH0KdMrziGNezYhRideg//g=;
-        b=UZ61lPxAetISjz3gLT00Lu8z5Ft/qaAb+1A8RpJF/iZCDsMRYCitRq+P+urGZaEE10
-         BV+Y57YZ3UAjlCjHmvwXTFp+SgV9QudrRedK8HjKt8o9yUH9mP2e5ndtZSR/8UfQTqlU
-         4mDkrIL5rGcCvoTWRnSyuzTrBlhjgg08T3mJETpIkKLcusrAig9N2lIy/xcpxveNDMlu
-         CRR+rgHzWzhp8I7BSTs86Oc2BkKBKfPlyZUIqI7qucfE/hFDae4GyOaur3c/l5xd/wyG
-         Xwy9EpLjAueryhOd0ffQdgU4TGb7Cl3U6zMgVBGAn97djoO12aB2kwrhEvZg9HFr2ovM
-         5Y4g==
-X-Gm-Message-State: AOAM530NhiJFGKNjOBLfYvavxzLXRhfTIsV2dmHcvypYf8wcoLHpbl1U
-        1t/XAZ5FJO/U2sUwu7H3/KlM2DJTuAA=
-X-Google-Smtp-Source: ABdhPJx0STBOJ0PURemmbuEFJldamaVS7xPZVsimL5pHVkUe2yLUZaJ2+MP3HY8aLchLA66Nq4IjWQ==
-X-Received: by 2002:a05:600c:4401:: with SMTP id u1mr7334592wmn.49.1626930295429;
-        Wed, 21 Jul 2021 22:04:55 -0700 (PDT)
+        bh=EmP26rVYFu+5DDOXiB3E0xPtqgcGXQ2j4BGSsFSir/M=;
+        b=F/jr75StDx5ZPZD5LoBQqMkqrfPDIWaSorQYGwgvsSw+7g5N0b2dkI52hUQDYi9InD
+         fF8828PTNS1jKBsCUqCH58TSVinXU0yFawSEU1cqto1z4QGn+5/zHkvRlR0ScM6NJoWI
+         LjgMpd2jao8WaD7zFa/EITKbtuRsmJt4FUdD0j0VgveZB/gPRUYcD843hmRny8hlr9tb
+         pHpIrLZZ5r75c6i15A6Ofi+cmKN+vAe1J9yojqx0OwGOMxCiODLUU/ly2GZyaq6e71Xd
+         fQ3/Czn5clZkF5rK5VGvs5A/chYeJV37dk6N6L9hE4DVJVyKfa/5pxYnrAkzjEbQpIhC
+         eZwQ==
+X-Gm-Message-State: AOAM532g03yOTz4r7A4fCznkYKrBcn6u/GyIwhVxf3EN4vl/HVVLIaK5
+        z5BBqvs5LyY4o1LK5PHVOkgrr1GWGDY=
+X-Google-Smtp-Source: ABdhPJz9yGk8h0mejz1m4vJ4w5J+FIuW3ZYBX6ZdYAWUSYOjOsEp7PiyiAbaBrBB/2KfxezkNFXUZg==
+X-Received: by 2002:adf:8b1d:: with SMTP id n29mr46991404wra.291.1626930296495;
+        Wed, 21 Jul 2021 22:04:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s24sm31192662wra.33.2021.07.21.22.04.54
+        by smtp.gmail.com with ESMTPSA id n7sm12712982wrw.77.2021.07.21.22.04.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jul 2021 22:04:55 -0700 (PDT)
-Message-Id: <7447c719bd7448e99d0e6ff4728fe56371b1d6a9.1626930290.git.gitgitgadget@gmail.com>
+        Wed, 21 Jul 2021 22:04:56 -0700 (PDT)
+Message-Id: <768dec715582640ca6a48b3e158d1a61e422d0cc.1626930290.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1049.v3.git.git.1626930290.gitgitgadget@gmail.com>
 References: <pull.1049.v2.git.git.1626831744.gitgitgadget@gmail.com>
         <pull.1049.v3.git.git.1626930290.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 22 Jul 2021 05:04:48 +0000
-Subject: [PATCH v3 6/8] pull: abort by default when fast-forwarding is not
- possible
+Date:   Thu, 22 Jul 2021 05:04:50 +0000
+Subject: [PATCH v3 8/8] pull: fix handling of multiple heads
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,620 +83,71 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-We have for some time shown a long warning when the user does not
-specify how to reconcile divergent branches with git pull.  Make it an
-error now.
+With multiple heads, we should not allow rebasing or fast-forwarding.
+Make sure any fast-forward request calls out specifically the fact that
+multiple branches are in play.  Also, since we cannot fast-forward to
+multiple branches, fix our computation of can_ff.
 
-Initial-patch-by: Alex Henrie <alexhenrie24@gmail.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-pull.txt    | 20 +++++++++------
- builtin/pull.c                | 10 +++++---
- t/t4013-diff-various.sh       |  2 +-
- t/t5520-pull.sh               | 20 +++++++--------
- t/t5521-pull-options.sh       |  4 +--
- t/t5524-pull-msg.sh           |  4 +--
- t/t5553-set-upstream.sh       | 14 +++++-----
- t/t5604-clone-reference.sh    |  4 +--
- t/t6402-merge-rename.sh       | 18 ++++++-------
- t/t6409-merge-subtree.sh      |  6 ++---
- t/t6417-merge-ours-theirs.sh  | 10 ++++----
- t/t7601-merge-pull-config.sh  | 48 +++++++++++++++++------------------
- t/t7603-merge-reduce-heads.sh |  2 +-
- 13 files changed, 84 insertions(+), 78 deletions(-)
+ builtin/pull.c               | 18 ++++++++++++++----
+ t/t7601-merge-pull-config.sh |  2 +-
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index 5c3fb67c014..cad3f6bfcee 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -15,14 +15,18 @@ SYNOPSIS
- DESCRIPTION
- -----------
- 
--Incorporates changes from a remote repository into the current
--branch.  In its default mode, `git pull` is shorthand for
--`git fetch` followed by `git merge FETCH_HEAD`.
--
--More precisely, 'git pull' runs 'git fetch' with the given
--parameters and calls 'git merge' to merge the retrieved branch
--heads into the current branch.
--With `--rebase`, it runs 'git rebase' instead of 'git merge'.
-+Incorporates changes from a remote repository into the current branch.
-+If the current branch is behind the remote, then by default it will
-+fast-forward the current branch to match the remote.  If the current
-+branch and the remote have diverged, the user needs to specify how to
-+reconcile the divergent branches with `--no-ff`, `--ff`, or `--rebase`
-+(or the corresponding configuration options in `pull.ff` or
-+`pull.rebase`).
-+
-+More precisely, `git pull` runs `git fetch` with the given parameters
-+and then depending on configuration options or command line flags,
-+will call either `git merge` or `git rebase` to reconcile diverging
-+branches.
- 
- <repository> should be the name of a remote repository as
- passed to linkgit:git-fetch[1].  <refspec> can name an
 diff --git a/builtin/pull.c b/builtin/pull.c
-index 9bf03255291..4514a1478ea 100644
+index 2f1d1f4037d..b311ea6b9df 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -927,9 +927,9 @@ static int get_can_ff(struct object_id *orig_head, struct object_id *orig_merge_
+@@ -913,12 +913,18 @@ static int run_rebase(const struct object_id *newbase,
+ 	return ret;
+ }
  
- static void show_advice_pull_non_ff(void)
+-static int get_can_ff(struct object_id *orig_head, struct object_id *orig_merge_head)
++static int get_can_ff(struct object_id *orig_head,
++		      struct oid_array *merge_heads)
  {
--	advise(_("Pulling without specifying how to reconcile divergent branches is\n"
--		 "discouraged. You can squelch this message by running one of the following\n"
--		 "commands sometime before your next pull:\n"
-+	advise(_("You have divergent branches and need to specify how to reconcile them.\n"
-+		 "You can do so by running one of the following commands sometime before\n"
-+		 "your next pull:\n"
- 		 "\n"
- 		 "  git config pull.rebase false  # merge (the default strategy)\n"
- 		 "  git config pull.rebase true   # rebase\n"
-@@ -1067,8 +1067,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		opt_rebase = REBASE_FALSE;
+ 	int ret;
+ 	struct commit_list *list = NULL;
+ 	struct commit *merge_head, *head;
++	struct object_id *orig_merge_head;
+ 
++	if (merge_heads->nr > 1)
++		return 0;
++
++	orig_merge_head = &merge_heads->oid[0];
+ 	head = lookup_commit_reference(the_repository, orig_head);
+ 	commit_list_insert(head, &list);
+ 	merge_head = lookup_commit_reference(the_repository, orig_merge_head);
+@@ -1057,10 +1063,14 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 			die(_("Cannot merge multiple branches into empty head."));
+ 		return pull_into_void(merge_heads.oid, &curr_head);
  	}
- 	/* If no action specified and we can't fast forward, then warn. */
--	if (!opt_ff && rebase_unspecified && !can_ff)
-+	if (!opt_ff && rebase_unspecified && !can_ff) {
- 		show_advice_pull_non_ff();
-+		die(_("Need to specify how to reconcile divergent branches."));
+-	if (opt_rebase && merge_heads.nr > 1)
+-		die(_("Cannot rebase onto multiple branches."));
++	if (merge_heads.nr > 1) {
++		if (opt_rebase)
++			die(_("Cannot rebase onto multiple branches."));
++		if (opt_ff && !strcmp(opt_ff, "--ff-only"))
++			die(_("Cannot fast-forward to multiple branches."));
 +	}
  
- 	if (opt_rebase) {
- 		int ret = 0;
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 7fadc985ccc..eb989f7f191 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -65,7 +65,7 @@ test_expect_success setup '
- 	export GIT_AUTHOR_DATE GIT_COMMITTER_DATE &&
+-	can_ff = get_can_ff(&orig_head, &merge_heads.oid[0]);
++	can_ff = get_can_ff(&orig_head, &merge_heads);
  
- 	git checkout master &&
--	git pull -s ours . side &&
-+	git pull -s ours --no-rebase . side &&
- 
- 	GIT_AUTHOR_DATE="2006-06-26 00:05:00 +0000" &&
- 	GIT_COMMITTER_DATE="2006-06-26 00:05:00 +0000" &&
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index e2c0c510222..672001a18bd 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -136,12 +136,12 @@ test_expect_success 'the default remote . should not break explicit pull' '
- 	git reset --hard HEAD^ &&
- 	echo file >expect &&
- 	test_cmp expect file &&
--	git pull . second &&
-+	git pull --no-rebase . second &&
- 	echo modified >expect &&
- 	test_cmp expect file &&
- 	git reflog -1 >reflog.actual &&
- 	sed "s/^[0-9a-f][0-9a-f]*/OBJID/" reflog.actual >reflog.fuzzy &&
--	echo "OBJID HEAD@{0}: pull . second: Fast-forward" >reflog.expected &&
-+	echo "OBJID HEAD@{0}: pull --no-rebase . second: Fast-forward" >reflog.expected &&
- 	test_cmp reflog.expected reflog.fuzzy
- '
- 
-@@ -226,7 +226,7 @@ test_expect_success 'fail if the index has unresolved entries' '
- 	test_commit modified2 file &&
- 	git ls-files -u >unmerged &&
- 	test_must_be_empty unmerged &&
--	test_must_fail git pull . second &&
-+	test_must_fail git pull --no-rebase . second &&
- 	git ls-files -u >unmerged &&
- 	test_file_not_empty unmerged &&
- 	cp file expected &&
-@@ -409,37 +409,37 @@ test_expect_success 'pull --rebase --no-autostash & rebase.autostash unset' '
- 
- test_expect_success 'pull succeeds with dirty working directory and merge.autostash set' '
- 	test_config merge.autostash true &&
--	test_pull_autostash 2
-+	test_pull_autostash 2 --no-rebase
- '
- 
- test_expect_success 'pull --autostash & merge.autostash=true' '
- 	test_config merge.autostash true &&
--	test_pull_autostash 2 --autostash
-+	test_pull_autostash 2 --autostash --no-rebase
- '
- 
- test_expect_success 'pull --autostash & merge.autostash=false' '
- 	test_config merge.autostash false &&
--	test_pull_autostash 2 --autostash
-+	test_pull_autostash 2 --autostash --no-rebase
- '
- 
- test_expect_success 'pull --autostash & merge.autostash unset' '
- 	test_unconfig merge.autostash &&
--	test_pull_autostash 2 --autostash
-+	test_pull_autostash 2 --autostash --no-rebase
- '
- 
- test_expect_success 'pull --no-autostash & merge.autostash=true' '
- 	test_config merge.autostash true &&
--	test_pull_autostash_fail --no-autostash
-+	test_pull_autostash_fail --no-autostash --no-rebase
- '
- 
- test_expect_success 'pull --no-autostash & merge.autostash=false' '
- 	test_config merge.autostash false &&
--	test_pull_autostash_fail --no-autostash
-+	test_pull_autostash_fail --no-autostash --no-rebase
- '
- 
- test_expect_success 'pull --no-autostash & merge.autostash unset' '
- 	test_unconfig merge.autostash &&
--	test_pull_autostash_fail --no-autostash
-+	test_pull_autostash_fail --no-autostash --no-rebase
- '
- 
- test_expect_success 'pull.rebase' '
-diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
-index 63a688bdbf5..7601c919fdc 100755
---- a/t/t5521-pull-options.sh
-+++ b/t/t5521-pull-options.sh
-@@ -113,7 +113,7 @@ test_expect_success 'git pull --force' '
- 	git pull two &&
- 	test_commit A &&
- 	git branch -f origin &&
--	git pull --all --force
-+	git pull --no-rebase --all --force
- 	)
- '
- 
-@@ -179,7 +179,7 @@ test_expect_success 'git pull --allow-unrelated-histories' '
- 	(
- 		cd dst &&
- 		test_must_fail git pull ../src side &&
--		git pull --allow-unrelated-histories ../src side
-+		git pull --no-rebase --allow-unrelated-histories ../src side
- 	)
- '
- 
-diff --git a/t/t5524-pull-msg.sh b/t/t5524-pull-msg.sh
-index c278adaa5a2..b2be3605f5a 100755
---- a/t/t5524-pull-msg.sh
-+++ b/t/t5524-pull-msg.sh
-@@ -28,7 +28,7 @@ test_expect_success setup '
- test_expect_success pull '
- (
- 	cd cloned &&
--	git pull --log &&
-+	git pull --no-rebase --log &&
- 	git log -2 &&
- 	git cat-file commit HEAD >result &&
- 	grep Dollar result
-@@ -41,7 +41,7 @@ test_expect_success '--log=1 limits shortlog length' '
- 	git reset --hard HEAD^ &&
- 	test "$(cat afile)" = original &&
- 	test "$(cat bfile)" = added &&
--	git pull --log=1 &&
-+	git pull --no-rebase --log=1 &&
- 	git log -3 &&
- 	git cat-file commit HEAD >result &&
- 	grep Dollar result &&
-diff --git a/t/t5553-set-upstream.sh b/t/t5553-set-upstream.sh
-index b1d614ce18c..9c12c0f8c32 100755
---- a/t/t5553-set-upstream.sh
-+++ b/t/t5553-set-upstream.sh
-@@ -108,27 +108,27 @@ test_expect_success 'setup commit on main and other pull' '
- 
- test_expect_success 'pull --set-upstream upstream main sets branch main but not other' '
- 	clear_config main other &&
--	git pull --set-upstream upstream main &&
-+	git pull --no-rebase --set-upstream upstream main &&
- 	check_config main upstream refs/heads/main &&
- 	check_config_missing other
- '
- 
- test_expect_success 'pull --set-upstream main:other2 does not set the branch other2' '
- 	clear_config other2 &&
--	git pull --set-upstream upstream main:other2 &&
-+	git pull --no-rebase --set-upstream upstream main:other2 &&
- 	check_config_missing other2
- '
- 
- test_expect_success 'pull --set-upstream upstream other sets branch main' '
- 	clear_config main other &&
--	git pull --set-upstream upstream other &&
-+	git pull --no-rebase --set-upstream upstream other &&
- 	check_config main upstream refs/heads/other &&
- 	check_config_missing other
- '
- 
- test_expect_success 'pull --set-upstream upstream tag does not set the tag' '
- 	clear_config three &&
--	git pull --tags --set-upstream upstream three &&
-+	git pull --no-rebase --tags --set-upstream upstream three &&
- 	check_config_missing three
- '
- 
-@@ -144,16 +144,16 @@ test_expect_success 'pull --set-upstream http://nosuchdomain.example.com fails w
- 
- test_expect_success 'pull --set-upstream upstream HEAD sets branch HEAD' '
- 	clear_config main other &&
--	git pull --set-upstream upstream HEAD &&
-+	git pull --no-rebase --set-upstream upstream HEAD &&
- 	check_config main upstream HEAD &&
- 	git checkout other &&
--	git pull --set-upstream upstream HEAD &&
-+	git pull --no-rebase --set-upstream upstream HEAD &&
- 	check_config other upstream HEAD
- '
- 
- test_expect_success 'pull --set-upstream upstream with more than one branch does nothing' '
- 	clear_config main three &&
--	git pull --set-upstream upstream main three &&
-+	git pull --no-rebase --set-upstream upstream main three &&
- 	check_config_missing main &&
- 	check_config_missing three
- '
-diff --git a/t/t5604-clone-reference.sh b/t/t5604-clone-reference.sh
-index e845d621f61..24340e6d56e 100755
---- a/t/t5604-clone-reference.sh
-+++ b/t/t5604-clone-reference.sh
-@@ -87,7 +87,7 @@ test_expect_success 'updating origin' '
- '
- 
- test_expect_success 'pulling changes from origin' '
--	git -C C pull origin
-+	git -C C pull --no-rebase origin
- '
- 
- # the 2 local objects are commit and tree from the merge
-@@ -96,7 +96,7 @@ test_expect_success 'that alternate to origin gets used' '
- '
- 
- test_expect_success 'pulling changes from origin' '
--	git -C D pull origin
-+	git -C D pull --no-rebase origin
- '
- 
- # the 5 local objects are expected; file3 blob, commit in A to add it
-diff --git a/t/t6402-merge-rename.sh b/t/t6402-merge-rename.sh
-index 3da2896e3bc..3a32b1a45cf 100755
---- a/t/t6402-merge-rename.sh
-+++ b/t/t6402-merge-rename.sh
-@@ -103,7 +103,7 @@ test_expect_success 'setup' '
- test_expect_success 'pull renaming branch into unrenaming one' \
- '
- 	git show-branch &&
--	test_expect_code 1 git pull . white &&
-+	test_expect_code 1 git pull --no-rebase . white &&
- 	git ls-files -s &&
- 	test_stdout_line_count = 3 git ls-files -u B &&
- 	test_stdout_line_count = 1 git ls-files -s N &&
-@@ -119,7 +119,7 @@ test_expect_success 'pull renaming branch into another renaming one' \
- 	rm -f B &&
- 	git reset --hard &&
- 	git checkout red &&
--	test_expect_code 1 git pull . white &&
-+	test_expect_code 1 git pull --no-rebase . white &&
- 	test_stdout_line_count = 3 git ls-files -u B &&
- 	test_stdout_line_count = 1 git ls-files -s N &&
- 	sed -ne "/^g/{
-@@ -133,7 +133,7 @@ test_expect_success 'pull unrenaming branch into renaming one' \
- '
- 	git reset --hard &&
- 	git show-branch &&
--	test_expect_code 1 git pull . main &&
-+	test_expect_code 1 git pull --no-rebase . main &&
- 	test_stdout_line_count = 3 git ls-files -u B &&
- 	test_stdout_line_count = 1 git ls-files -s N &&
- 	sed -ne "/^g/{
-@@ -147,7 +147,7 @@ test_expect_success 'pull conflicting renames' \
- '
- 	git reset --hard &&
- 	git show-branch &&
--	test_expect_code 1 git pull . blue &&
-+	test_expect_code 1 git pull --no-rebase . blue &&
- 	test_stdout_line_count = 1 git ls-files -u A &&
- 	test_stdout_line_count = 1 git ls-files -u B &&
- 	test_stdout_line_count = 1 git ls-files -u C &&
-@@ -163,7 +163,7 @@ test_expect_success 'interference with untracked working tree file' '
- 	git reset --hard &&
- 	git show-branch &&
- 	echo >A this file should not matter &&
--	test_expect_code 1 git pull . white &&
-+	test_expect_code 1 git pull --no-rebase . white &&
- 	test_path_is_file A
- '
- 
-@@ -173,7 +173,7 @@ test_expect_success 'interference with untracked working tree file' '
- 	git show-branch &&
- 	rm -f A &&
- 	echo >A this file should not matter &&
--	test_expect_code 1 git pull . red &&
-+	test_expect_code 1 git pull --no-rebase . red &&
- 	test_path_is_file A
- '
- 
-@@ -183,7 +183,7 @@ test_expect_success 'interference with untracked working tree file' '
- 	git checkout -f main &&
- 	git tag -f anchor &&
- 	git show-branch &&
--	git pull . yellow &&
-+	git pull --no-rebase . yellow &&
- 	test_path_is_missing M &&
- 	git reset --hard anchor
- '
-@@ -210,7 +210,7 @@ test_expect_success 'updated working tree file should prevent the merge' '
- 	echo >>M one line addition &&
- 	cat M >M.saved &&
- 	git update-index M &&
--	test_expect_code 128 git pull . yellow &&
-+	test_expect_code 128 git pull --no-rebase . yellow &&
- 	test_cmp M M.saved &&
- 	rm -f M.saved
- '
-@@ -222,7 +222,7 @@ test_expect_success 'interference with untracked working tree file' '
- 	git tag -f anchor &&
- 	git show-branch &&
- 	echo >M this file should not matter &&
--	git pull . main &&
-+	git pull --no-rebase . main &&
- 	test_path_is_file M &&
- 	! {
- 		git ls-files -s |
-diff --git a/t/t6409-merge-subtree.sh b/t/t6409-merge-subtree.sh
-index d406b2343cb..ba7890ec521 100755
---- a/t/t6409-merge-subtree.sh
-+++ b/t/t6409-merge-subtree.sh
-@@ -100,7 +100,7 @@ test_expect_success 'merge update' '
- 	git checkout -b topic_2 &&
- 	git commit -m "update git-gui" &&
- 	cd ../git &&
--	git pull -s subtree gui topic_2 &&
-+	git pull --no-rebase -s subtree gui topic_2 &&
- 	git ls-files -s >actual &&
- 	(
- 		echo "100644 $o3 0	git-gui/git-gui.sh" &&
-@@ -129,7 +129,7 @@ test_expect_success 'initial ambiguous subtree' '
- test_expect_success 'merge using explicit' '
- 	cd ../git &&
- 	git reset --hard topic_2 &&
--	git pull -Xsubtree=git-gui gui topic_2 &&
-+	git pull --no-rebase -Xsubtree=git-gui gui topic_2 &&
- 	git ls-files -s >actual &&
- 	(
- 		echo "100644 $o3 0	git-gui/git-gui.sh" &&
-@@ -142,7 +142,7 @@ test_expect_success 'merge using explicit' '
- test_expect_success 'merge2 using explicit' '
- 	cd ../git &&
- 	git reset --hard topic_2 &&
--	git pull -Xsubtree=git-gui2 gui topic_2 &&
-+	git pull --no-rebase -Xsubtree=git-gui2 gui topic_2 &&
- 	git ls-files -s >actual &&
- 	(
- 		echo "100644 $o1 0	git-gui/git-gui.sh" &&
-diff --git a/t/t6417-merge-ours-theirs.sh b/t/t6417-merge-ours-theirs.sh
-index ac9aee9a662..ec065d6a658 100755
---- a/t/t6417-merge-ours-theirs.sh
-+++ b/t/t6417-merge-ours-theirs.sh
-@@ -69,11 +69,11 @@ test_expect_success 'binary file with -Xours/-Xtheirs' '
- '
- 
- test_expect_success 'pull passes -X to underlying merge' '
--	git reset --hard main && git pull -s recursive -Xours . side &&
--	git reset --hard main && git pull -s recursive -X ours . side &&
--	git reset --hard main && git pull -s recursive -Xtheirs . side &&
--	git reset --hard main && git pull -s recursive -X theirs . side &&
--	git reset --hard main && test_must_fail git pull -s recursive -X bork . side
-+	git reset --hard main && git pull --no-rebase -s recursive -Xours . side &&
-+	git reset --hard main && git pull --no-rebase -s recursive -X ours . side &&
-+	git reset --hard main && git pull --no-rebase -s recursive -Xtheirs . side &&
-+	git reset --hard main && git pull --no-rebase -s recursive -X theirs . side &&
-+	git reset --hard main && test_must_fail git pull --no-rebase -s recursive -X bork . side
- '
- 
- test_expect_success SYMLINKS 'symlink with -Xours/-Xtheirs' '
+ 	/* ff-only takes precedence over rebase */
+ 	if (opt_ff && !strcmp(opt_ff, "--ff-only")) {
 diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
-index 0c0dfecd2a3..742ed3981c7 100755
+index 742ed3981c7..1f652f433ee 100755
 --- a/t/t7601-merge-pull-config.sh
 +++ b/t/t7601-merge-pull-config.sh
-@@ -27,120 +27,120 @@ test_expect_success 'setup' '
- 	git tag c3
+@@ -331,7 +331,7 @@ test_expect_success 'Multiple heads warns about inability to fast forward' '
+ 	test_i18ngrep "You have divergent branches" err
  '
  
--test_expect_success 'pull.rebase not set' '
-+test_expect_success 'pull.rebase not set, ff possible' '
- 	git reset --hard c0 &&
- 	git pull . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set and pull.ff=true' '
- 	git reset --hard c0 &&
- 	test_config pull.ff true &&
- 	git pull . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set and pull.ff=false' '
- 	git reset --hard c0 &&
- 	test_config pull.ff false &&
- 	git pull . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set and pull.ff=only' '
- 	git reset --hard c0 &&
- 	test_config pull.ff only &&
- 	git pull . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set and --rebase given' '
- 	git reset --hard c0 &&
- 	git pull --rebase . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set and --no-rebase given' '
- 	git reset --hard c0 &&
- 	git pull --no-rebase . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set and --ff given' '
- 	git reset --hard c0 &&
- 	git pull --ff . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set and --no-ff given' '
- 	git reset --hard c0 &&
- 	git pull --no-ff . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set and --ff-only given' '
- 	git reset --hard c0 &&
- 	git pull --ff-only . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set (not-fast-forward)' '
- 	git reset --hard c2 &&
--	git -c color.advice=always pull . c1 2>err &&
-+	test_must_fail git -c color.advice=always pull . c1 2>err &&
- 	test_decode_color <err >decoded &&
- 	test_i18ngrep "<YELLOW>hint: " decoded &&
--	test_i18ngrep "Pulling without specifying how to reconcile" decoded
-+	test_i18ngrep "You have divergent branches" decoded
- '
- 
- test_expect_success 'pull.rebase not set and pull.ff=true (not-fast-forward)' '
- 	git reset --hard c2 &&
- 	test_config pull.ff true &&
- 	git pull . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set and pull.ff=false (not-fast-forward)' '
- 	git reset --hard c2 &&
- 	test_config pull.ff false &&
- 	git pull . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set and pull.ff=only (not-fast-forward)' '
- 	git reset --hard c2 &&
- 	test_config pull.ff only &&
- 	test_must_fail git pull . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set and --rebase given (not-fast-forward)' '
- 	git reset --hard c2 &&
- 	git pull --rebase . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set and --no-rebase given (not-fast-forward)' '
- 	git reset --hard c2 &&
- 	git pull --no-rebase . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set and --ff given (not-fast-forward)' '
- 	git reset --hard c2 &&
- 	git pull --ff . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set and --no-ff given (not-fast-forward)' '
- 	git reset --hard c2 &&
- 	git pull --no-ff . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_expect_success 'pull.rebase not set and --ff-only given (not-fast-forward)' '
- 	git reset --hard c2 &&
- 	test_must_fail git pull --ff-only . c1 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err
-+	test_i18ngrep ! "You have divergent branches" err
- '
- 
- test_does_rebase () {
-@@ -325,16 +325,16 @@ test_expect_success 'pull.rebase=false and --ff, ff not possible' '
- 
- # End of groupings for conflicting merge vs. rebase flags/options
- 
--test_expect_failure 'Multiple heads warns about inability to fast forward' '
-+test_expect_success 'Multiple heads warns about inability to fast forward' '
- 	git reset --hard c1 &&
- 	test_must_fail git pull . c2 c3 2>err &&
--	test_i18ngrep "Pulling without specifying how to reconcile" err
-+	test_i18ngrep "You have divergent branches" err
- '
- 
- test_expect_failure 'Multiple can never be fast forwarded' '
+-test_expect_failure 'Multiple can never be fast forwarded' '
++test_expect_success 'Multiple can never be fast forwarded' '
  	git reset --hard c0 &&
  	test_must_fail git -c pull.ff=only pull . c1 c2 c3 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err &&
-+	test_i18ngrep ! "You have divergent branches" err &&
- 	# In addition to calling out "cannot fast-forward", we very much
- 	# want the "multiple branches" piece to be called out to users.
- 	test_i18ngrep "Cannot fast-forward to multiple branches" err
-@@ -343,7 +343,7 @@ test_expect_failure 'Multiple can never be fast forwarded' '
- test_expect_success 'Cannot rebase with multiple heads' '
- 	git reset --hard c0 &&
- 	test_must_fail git -c pull.rebase=true pull . c1 c2 c3 2>err &&
--	test_i18ngrep ! "Pulling without specifying how to reconcile" err &&
-+	test_i18ngrep ! "You have divergent branches" err &&
- 	test_i18ngrep "Cannot rebase onto multiple branches." err
- '
- 
-diff --git a/t/t7603-merge-reduce-heads.sh b/t/t7603-merge-reduce-heads.sh
-index 98948955ae5..27cd94ad6f7 100755
---- a/t/t7603-merge-reduce-heads.sh
-+++ b/t/t7603-merge-reduce-heads.sh
-@@ -68,7 +68,7 @@ test_expect_success 'merge c1 with c2, c3, c4, c5' '
- 
- test_expect_success 'pull c2, c3, c4, c5 into c1' '
- 	git reset --hard c1 &&
--	git pull . c2 c3 c4 c5 &&
-+	git pull --no-rebase . c2 c3 c4 c5 &&
- 	test "$(git rev-parse c1)" != "$(git rev-parse HEAD)" &&
- 	test "$(git rev-parse c1)" = "$(git rev-parse HEAD^1)" &&
- 	test "$(git rev-parse c2)" = "$(git rev-parse HEAD^2)" &&
+ 	test_i18ngrep ! "You have divergent branches" err &&
 -- 
 gitgitgadget
-
