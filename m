@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B6E9C4338F
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 21:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F119CC432BE
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 21:29:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 745A960E8F
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 21:28:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D667C60EB5
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 21:29:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231613AbhGVUsX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Jul 2021 16:48:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58516 "EHLO
+        id S231816AbhGVUsY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Jul 2021 16:48:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231717AbhGVUsS (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231607AbhGVUsS (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 22 Jul 2021 16:48:18 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05830C061575
-        for <git@vger.kernel.org>; Thu, 22 Jul 2021 14:28:53 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id l11-20020a7bc34b0000b029021f84fcaf75so2364892wmj.1
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 396E9C061757
+        for <git@vger.kernel.org>; Thu, 22 Jul 2021 14:28:52 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id g15so212827wrd.3
         for <git@vger.kernel.org>; Thu, 22 Jul 2021 14:28:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=vysnlRXYw/aOCYJK3a3w3iXK3uaa7j22KJHUUCfJpig=;
-        b=NtsSzau1dZxj4UEJuRM2iOTs+KCIOsr6P6yHuNFJgxXpg1SxdEa3U13UlDm2RUkaDq
-         pBXI8lLRbaR3fviw5IRydAV1+ug5Cp+1233Mu9MpMbKkFcd946PoeGv0ph9VkUNHhJXr
-         DGt60Sq2dxRG0fmnwYWaUHcHB1sVos0U8Zxun2dtQb3JVmo55z5nzM7synGkbCR2nRvz
-         8CG6xWNdDboXZP/Vw+uzwVKUPfZgMAw/eAXfssPsBZkekMs8PC1gjFuWBcgjUroFhDY3
-         JbTynEKiiEj9Fk351mnlJ4SmMenXfIReApgezQlee9ofbtv8w1+Cc3qlrHHQFDf8EVYV
-         q12g==
+        bh=h6uXKl0tUCfl08p2NwWTeTQTNvBkftMiBGuKvpgJW90=;
+        b=aNpMjbB3bt4ft5RouqSpeKaiidbZx+SWIJWNxOJeFz29/FSkJ7GzRF5DjzO8ahxhSd
+         jbOs4BLRhiDIKAPKhdI/5JZ7hu01idkpll5LAcIWYYZfbY2iU0q4lXqfxZZCI6kJ4e26
+         UoGkHwyCIfdjIEHWNrZSDFDbL5r7f/emVL/8h9gA3qkQqcG1H3tcFNg4ZcArDQO/pyiv
+         54TmI1UhNfxE23c2vZ3K9c7TI6F/QZR51x1UwtwgX7/kwy50Mq8bYzF/0rcLbIuqow0T
+         rbfI0BoQPsqiD6DsqgGzjVNdOAoYgICu1BwCTAD8NbCKJZYE8n7luJXqgnyQc6E6F93Y
+         pLuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=vysnlRXYw/aOCYJK3a3w3iXK3uaa7j22KJHUUCfJpig=;
-        b=KpmpckMAe1zjWCosgwffoD8B0jA3B1J7A2E2vfaGlhL8dUqUepoCfU3bx7uq/AD5W0
-         kuqe+hp0kNMcFhWu0qGkiN8YSfc/8pFDXMEGaD7QtW8mSUbS0MJ+Jo3R4xRze/9Rsg5c
-         SSgeMpEX6Z5AW/B7FXKpEEz/0I+DpGipoptK2Y3MXbawbA7wzb6kYLf9oTGDDOk78UDK
-         Te/GEqUtKatZf7gBOMFYkZKCo201Ex3sluuf/GwsFY4BF2KulfwIHkxPDHsToALJU6Co
-         oTPbTvr3VwtMTjjuKR5j21c/K29tE99iQx94gFkjWZtxZ4LM39Q7ZHJ9gVPvdeu9nl/8
-         3xwQ==
-X-Gm-Message-State: AOAM530pQn5g7Tw7c77621QaCb5S9iSoZfkWGJ1aiwiLYY9TyaRl4Ijz
-        AshvpPZQ1R80Z9QszyJpjQFiKgFwW1Y=
-X-Google-Smtp-Source: ABdhPJyLwKOdaD5X9ndPaf7AiVVXNFsqswO8HDbPODXVprqYJ4ovg16jr0mPmb7Cx/dtEG8uDB5X7A==
-X-Received: by 2002:a1c:7f57:: with SMTP id a84mr11278653wmd.46.1626989331516;
-        Thu, 22 Jul 2021 14:28:51 -0700 (PDT)
+        bh=h6uXKl0tUCfl08p2NwWTeTQTNvBkftMiBGuKvpgJW90=;
+        b=bWnPQMX5KDH1g3ROyGAuV7QnVwmcVmDLafo+1gtZmkztx/O8uIZvPNIRkTxcFtoDi1
+         AfsLwrdiotO7KE3A5Ok5or6ysMuxk0yYlxkuofqPoTCulRpq4Ys1kmwENpqu4XRYgQTt
+         lrFDMvYBEBVkmmGUlFjDp7t3UiDoF61yCaqQszKVCqtPINzXT8iygDswb0y4hYv1oISX
+         3Qoq7cB+/tzGLk7e8uM6kWw242hZg4yLvsSjcL+T1Uvdxa95O9/QyOZVBRPyTp8jVDWz
+         uzTSRUyedgfTeD0XB5B6fjK2X9XK6+IH8kravsJFLW+XlUdWLk8//otwMdAvjNzXu4PL
+         +4jA==
+X-Gm-Message-State: AOAM5309nfxoSWJBzYox3A03n5DvXZD90vDnL/RDHKd009CmOc2y+4XR
+        m5cIfVRXPJWmQ0zlhF94x47oLWndQ84=
+X-Google-Smtp-Source: ABdhPJz7r20GrLrYKVxR4Rnh7NCrcjkMfFgbYLp5BYYWt4dpvg7T6Rt6KandusMgnE9JMy7syr+nBQ==
+X-Received: by 2002:a05:6000:1867:: with SMTP id d7mr1901044wri.199.1626989330927;
+        Thu, 22 Jul 2021 14:28:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g138sm31185212wmg.32.2021.07.22.14.28.51
+        by smtp.gmail.com with ESMTPSA id l14sm29438251wrs.22.2021.07.22.14.28.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jul 2021 14:28:51 -0700 (PDT)
-Message-Id: <0047266de6bc2f7f198cbc73cbb1e8adf2581535.1626989327.git.gitgitgadget@gmail.com>
+        Thu, 22 Jul 2021 14:28:50 -0700 (PDT)
+Message-Id: <7b98d092811c3b479b41e5ef3327d795d794fde2.1626989327.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1052.v2.git.git.1626989327.gitgitgadget@gmail.com>
 References: <pull.1052.git.git.1626718050.gitgitgadget@gmail.com>
         <pull.1052.v2.git.git.1626989327.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 22 Jul 2021 21:28:41 +0000
-Subject: [PATCH v2 05/11] t2402: use ref-store test helper to create broken
- symlink
+Date:   Thu, 22 Jul 2021 21:28:40 +0000
+Subject: [PATCH v2 04/11] t3320: use git-symbolic-ref rather than filesystem
+ access
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,22 +79,46 @@ From: Han-Wen Nienhuys <hanwen@google.com>
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- t/t2402-worktree-list.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t3320-notes-merge-worktrees.sh | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
-index fedcefe8de3..4012bd67b04 100755
---- a/t/t2402-worktree-list.sh
-+++ b/t/t2402-worktree-list.sh
-@@ -230,7 +230,7 @@ test_expect_success 'broken main worktree still at the top' '
- 		EOF
- 		cd linked &&
- 		echo "worktree $(pwd)" >expected &&
--		echo "ref: .broken" >../.git/HEAD &&
-+		(cd ../ && test-tool ref-store main create-symref HEAD .broken ) &&
- 		git worktree list --porcelain >out &&
- 		head -n 3 out >actual &&
- 		test_cmp ../expected actual &&
+diff --git a/t/t3320-notes-merge-worktrees.sh b/t/t3320-notes-merge-worktrees.sh
+index 052516e6c6a..6b2d507f3e7 100755
+--- a/t/t3320-notes-merge-worktrees.sh
++++ b/t/t3320-notes-merge-worktrees.sh
+@@ -46,8 +46,9 @@ test_expect_success 'create some new worktrees' '
+ test_expect_success 'merge z into y fails and sets NOTES_MERGE_REF' '
+ 	git config core.notesRef refs/notes/y &&
+ 	test_must_fail git notes merge z &&
+-	echo "ref: refs/notes/y" >expect &&
+-	test_cmp expect .git/NOTES_MERGE_REF
++	echo "refs/notes/y" >expect &&
++	git symbolic-ref NOTES_MERGE_REF >actual &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'merge z into y while mid-merge in another workdir fails' '
+@@ -57,7 +58,7 @@ test_expect_success 'merge z into y while mid-merge in another workdir fails' '
+ 		test_must_fail git notes merge z 2>err &&
+ 		test_i18ngrep "a notes merge into refs/notes/y is already in-progress at" err
+ 	) &&
+-	test_path_is_missing .git/worktrees/worktree/NOTES_MERGE_REF
++	test_must_fail git -C worktree symbolic-ref NOTES_MERGE_REF
+ '
+ 
+ test_expect_success 'merge z into x while mid-merge on y succeeds' '
+@@ -68,8 +69,9 @@ test_expect_success 'merge z into x while mid-merge on y succeeds' '
+ 		test_i18ngrep "Automatic notes merge failed" out &&
+ 		grep -v "A notes merge into refs/notes/x is already in-progress in" out
+ 	) &&
+-	echo "ref: refs/notes/x" >expect &&
+-	test_cmp expect .git/worktrees/worktree2/NOTES_MERGE_REF
++	echo "refs/notes/x" >expect &&
++	git -C worktree2 symbolic-ref NOTES_MERGE_REF >actual &&
++	test_cmp expect actual
+ '
+ 
+ test_done
 -- 
 gitgitgadget
 
