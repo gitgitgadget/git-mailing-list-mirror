@@ -2,157 +2,204 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77130C6377B
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 01:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8433DC6377B
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 01:27:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5284560698
-	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 01:24:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F0BA61261
+	for <git@archiver.kernel.org>; Thu, 22 Jul 2021 01:27:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229838AbhGVAnx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Jul 2021 20:43:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37164 "EHLO
+        id S230135AbhGVAqh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Jul 2021 20:46:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229621AbhGVAnw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jul 2021 20:43:52 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E822C061575
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 18:24:28 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id c197so4903637oib.11
-        for <git@vger.kernel.org>; Wed, 21 Jul 2021 18:24:28 -0700 (PDT)
+        with ESMTP id S229621AbhGVAqh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jul 2021 20:46:37 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14966C061575
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 18:27:12 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id s186-20020a252cc30000b029055bc7fcfebdso5608097ybs.12
+        for <git@vger.kernel.org>; Wed, 21 Jul 2021 18:27:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=FC149rhDyUhPFhWJAQ5URNMd2GywkdujlIYR5w78wFU=;
-        b=ZziQCo64OBkZbOXlNY4C/4Kx9IHV5QpKnv/uBR4ytFf0sK1uzHBPS845onHBIOjD68
-         z3hQ02ZJFNJQ78jBlS52Y1Wu9bSy6R4OBWteSJCJQRrHwLSnIy/Xvpj2+ok4QoYH2Kwr
-         UDHmpJ+gEto5C+6G7vB9++cG7tMT7jsqFXa9c7ggJmH/ZJyWF1VxixDA9ir2N4i/IV0R
-         9S8f613/emG/8Cu63lEnFcoFpYsu164Zhh9fn/Nqsj9JVgVFRwyO3mOhB2aXS+PHPjFL
-         /vaOJhwc/NfqVCqJo/Ti2zJbo8vP2O85BEL+x55OoVMb3sceUINF8M6MKaOWtTHVme41
-         V5sQ==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=3LeAk584/Mq3DJ6gi8lONrMu5bbEMneIQWT0ehlFoCY=;
+        b=qVJYzQloK0OpycJE/NnrRt0xihhB4W+AVPTYcC6i1W6dnv1yN1pDRmIcMG7baSLOvb
+         9Q7RgyskmCwx3UyePxNyBmpSwt0j/hxfTDynU4Dg2g8jkiaO73e5IA41iQakB940ftTg
+         Z8g0Tp2CzHk8ObUvVS8IeMTlfN1+bNBgalCDuy+WdpGOIfetY8ELVl26uFlqrgr4dB0V
+         dfLv/QqgPU4o0smjAgjZ0RmQ5IAWZMWaCgz/W4N/wTXCKeRZKP4Cu+mbJPlcE1yEes2V
+         i94OSGAtMa2sCR/yowbib9Ik7UPjQgvBUqMP7VFHT36tiABpWSz8IasYD7Kopf4hMls5
+         nycQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=FC149rhDyUhPFhWJAQ5URNMd2GywkdujlIYR5w78wFU=;
-        b=Pu7yuTVQMumrVVk7eM3ThupgoZmiWj1XgQ6A5MSX+jO+NRQWCY72w8vA1j65Yu9AN7
-         v3K7V1GUDKHyKCoF1fDSMfF4g0TfjJ5V0fV7m1iKFGAF4lDjN+owh9HJ8qI50UNCchbl
-         D0knyGCJ1kfAio4uIE9EH/pRht9KuY2v9gIxop1sASiMFCfu4ovwkaDFMJyGyuC0jBRy
-         fdAg052yneMBsvgEjOJjGsdhWr3eun93ein8vyEcjyd/a4jj+rEofci8nGWOgYFZJhmq
-         ZiFkNZt6KSitbYhkWxvPsF1Av6xtjC9OFhPdYvjt9oLS7q6AS7NocAHyfE6XItfpBcHj
-         lJOg==
-X-Gm-Message-State: AOAM531J1fIK7Qm7fu1vZ0aTTUb2J36U5dqFgXrzLlXhF08myeTUdRMn
-        NIGDUbDWRi1ux8rkoOHCCmc=
-X-Google-Smtp-Source: ABdhPJxNEdK7kZ+Gk0ARqdqDj3hvGLDdzfuoOS4ciyqlbrdQj5oaYEycIbHdxavcRR1FwWdtxEHolQ==
-X-Received: by 2002:a05:6808:d53:: with SMTP id w19mr2869087oik.48.1626917067421;
-        Wed, 21 Jul 2021 18:24:27 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id s24sm3681204ooq.37.2021.07.21.18.24.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jul 2021 18:24:26 -0700 (PDT)
-Date:   Wed, 21 Jul 2021 20:24:25 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Alex Henrie <alexhenrie24@gmail.com>,
-        Marc Branchaud <marcnarc@xiplink.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        Stephen Haberman <stephen@exigencecorp.com>
-Message-ID: <60f8c8c92a215_1d0abb20859@natae.notmuch>
-In-Reply-To: <xmqqtukn9p0g.fsf@gitster.g>
-References: <20210721221545.1878514-1-felipe.contreras@gmail.com>
- <xmqqy29z9r94.fsf@gitster.g>
- <xmqqtukn9p0g.fsf@gitster.g>
-Subject: Re: [PATCH] doc: pull: fix rebase=false documentation
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
+         :from:to:cc:content-transfer-encoding;
+        bh=3LeAk584/Mq3DJ6gi8lONrMu5bbEMneIQWT0ehlFoCY=;
+        b=JSkgOPNb+lL+dQdVbaE+dlMXn8vxjB1aqv/ylB9QKCN9N2iBTpDqc6sUXh0uKyrckR
+         yAKogPlvKoA5q1xLP5jT8llR4rQ89TMWnmJp8lsxyLpGCKt9djO47miZyU/DEJ9vUc8l
+         cdCY45LSCMSbPB3yLpE+pTHErbMz50AND0Yd/QFp58W9FYJRmZo2ldv+kp6etc2CFdaI
+         PzUR9ZSUEz+GLT0RRPSBryw4Mwj8K1ijMXWxKHD4iISblcUSkw8ZQRQccNUtCbzDHfmG
+         i4Nv6bPQYe/zR41cAyMlb9jysrc6dGFLtxbI/uBg9ypPdr3ntaJbthjwbhzBY5guvTVB
+         UOGw==
+X-Gm-Message-State: AOAM5338GME/QMCP2VoFSF9E9XEhfkUr9LdQU38/Tdjy+OjkAcID249e
+        ZXQc7TqbHFxr40Atj2rO38sHqQTzRPWl1SA0foIZqp/v0KMLBfpZcgrUmfYq0uU6h7z8cA1U1yL
+        9LXg4A6HcU8k/tKIDDIQCTv3tNSB4Vm1v4IbpO1+omp14gQhVCUW2Ai+CMKBvKVPj8/PdcvXxKw
+        ==
+X-Google-Smtp-Source: ABdhPJxKFSJXsVx5DOZU44eErbOw7EG/5krIPKts4G4IIOYjnvDVCBs6eNO0FZo0e0gJWJ8Ok8sIyf70sn5U4SpeZnw=
+X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:200:83f3:cefc:ff34:3095])
+ (user=emilyshaffer job=sendgmr) by 2002:a25:4f08:: with SMTP id
+ d8mr12249868ybb.10.1626917231135; Wed, 21 Jul 2021 18:27:11 -0700 (PDT)
+Date:   Wed, 21 Jul 2021 18:27:05 -0700
+In-Reply-To: <20210608221059.1935021-1-emilyshaffer@google.com>
+Message-Id: <20210722012707.205776-1-emilyshaffer@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+X-Mailer: git-send-email 2.32.0.402.g57bb445576-goog
+Subject: [PATCH v6 0/2] tr2: log parent process name
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> > Felipe Contreras <felipe.contreras@gmail.com> writes:
-> >
-> >> diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-> >> index 5c3fb67c01..7f4b2d1982 100644
-> >> --- a/Documentation/git-pull.txt
-> >> +++ b/Documentation/git-pull.txt
-> >> @@ -117,7 +117,7 @@ When set to `preserve` (deprecated in favor of `merges`), rebase with the
-> >>  `--preserve-merges` option passed to `git rebase` so that locally created
-> >>  merge commits will not be flattened.
-> >>  +
-> >> -When false, merge the current branch into the upstream branch.
-> >> +When false, merge the upstream branch into the current branch.
-> >>  +
-> >>  When `interactive`, enable the interactive mode of rebase.
-> >>  +
-> >
-> > Looks correct.  Will queue.  Thanks.
-> 
-> By the way, I'll update the proposed log message to say only that
-> the documentation needs to be fixed as it does not say what the
-> command does.
+Since v5, I reshuffled some of the platform-specific compilation recipe
+around per Jeff H's comments on v5. I think these are at odds with
+=C3=86var's comments, though, so I guess let's take a look and see how
+strongly we feel? :)
 
-Fine by me, although I'd appreciate if you minimize the use of your
-words and maximize the use of mine.
+Otherwise I also made the logic inversion Junio suggested to make the
+logic easier to follow in procinfo.c:trace2_collect_process_info.
 
-  The documentation says --rebase=false merges our current branch into
-  the upstream branch, and while many people think that's what should
-  happen, that's not what actually happens; it's the *opposite*.
+Thanks,
+ - Emily
 
-  Fix the documentation so that we explain what the code actually does.
+Emily Shaffer (2):
+  tr2: make process info collection platform-generic
+  tr2: log parent process name
 
-> We should be able to fix the inaccuracies in the
-> documentation quickly without advocating different behaviour or
-> trashing the current behaviour in the proposed log message.
+ Documentation/technical/api-trace2.txt | 14 +++++++
+ Makefile                               |  4 ++
+ compat/linux/procinfo.c                | 55 ++++++++++++++++++++++++++
+ compat/stub/procinfo.c                 | 11 ++++++
+ config.mak.uname                       |  3 ++
+ t/t0210/scrub_normal.perl              |  6 +++
+ t/t0211/scrub_perf.perl                |  5 +++
+ t/t0212/parse_events.perl              |  5 ++-
+ trace2.c                               | 13 ++++++
+ trace2.h                               | 16 +++++---
+ trace2/tr2_tgt.h                       |  3 ++
+ trace2/tr2_tgt_event.c                 | 21 ++++++++++
+ trace2/tr2_tgt_normal.c                | 19 +++++++++
+ trace2/tr2_tgt_perf.c                  | 16 ++++++++
+ 14 files changed, 184 insertions(+), 7 deletions(-)
+ create mode 100644 compat/linux/procinfo.c
+ create mode 100644 compat/stub/procinfo.c
 
-I'm not trashing the current behavior, I'm explaining what the consensus
-is. I spent several man-days re-reading old threads, and this is the
-consensus of what should happen:
+Range-diff against v5:
+-:  ---------- > 1:  80084448e4 tr2: make process info collection platform-=
+generic
+1:  7a7e1ebbfa ! 2:  485f9a24f0 tr2: log parent process name
+    @@ Documentation/technical/api-trace2.txt: about specific error argumen=
+ts.
+      	This event contains the command name for this git process
+      	and the hierarchy of commands from parent git processes.
+    =20
+    - ## Makefile ##
+    -@@ Makefile: ifneq ($(PROCFS_EXECUTABLE_PATH),)
+    - 	BASIC_CFLAGS +=3D '-DPROCFS_EXECUTABLE_PATH=3D"$(procfs_executable_p=
+ath_SQ)"'
+    - endif
+    -=20
+    -+ifdef HAVE_PROCFS_LINUX
+    -+	BASIC_CFLAGS +=3D -DHAVE_PROCFS_LINUX
+    -+	COMPAT_OBJS +=3D compat/procinfo.o
+    -+endif
+    -+
+    - ifdef HAVE_NS_GET_EXECUTABLE_PATH
+    - 	BASIC_CFLAGS +=3D -DHAVE_NS_GET_EXECUTABLE_PATH
+    - endif
+    -
+    - ## compat/procinfo.c (new) ##
+    + ## compat/linux/procinfo.c (new) ##
+     @@
+     +#include "cache.h"
+     +
+    @@ compat/procinfo.c (new)
+     +
+     +static void get_ancestry_names(struct strvec *names)
+     +{
+    -+#ifdef HAVE_PROCFS_LINUX
+     +	/*
+     +	 * NEEDSWORK: We could gather the entire pstree into an array to mat=
+ch
+     +	 * functionality with compat/win32/trace2_win32_process_info.c.
+    @@ compat/procinfo.c (new)
+     +	}
+     +
+     +	return;
+    -+#endif
+     +	/* NEEDSWORK: add non-procfs-linux implementations here */
+     +}
+     +
+    @@ compat/procinfo.c (new)
+     +
+     +		get_ancestry_names(&names);
+     +
+    -+		if (names.nr =3D=3D 0) {
+    -+			strvec_clear(&names);
+    -+			return;
+    -+		}
+    -+
+    -+		trace2_cmd_ancestry(names.v);
+    -+
+    ++		if (names.nr)
+    ++			trace2_cmd_ancestry(names.v);
+     +		strvec_clear(&names);
+     +	}
+     +
+    @@ config.mak.uname: ifeq ($(uname_S),Linux)
+      	FREAD_READS_DIRECTORIES =3D UnfortunatelyYes
+      	BASIC_CFLAGS +=3D -DHAVE_SYSINFO
+      	PROCFS_EXECUTABLE_PATH =3D /proc/self/exe
+    -+	HAVE_PROCFS_LINUX =3D YesPlease
+    ++	HAVE_PLATFORM_PROCINFO =3D YesPlease
+    ++	COMPAT_OBJS +=3D compat/linux/procinfo.o
+      endif
+      ifeq ($(uname_S),GNU/kFreeBSD)
+      	HAVE_ALLOCA_H =3D YesPlease
+    @@ trace2.h: void trace2_cmd_path_fl(const char *file, int line, const =
+char *pathna
+      /*
+       * Emit a 'cmd_name' event with the canonical name of the command.
+       * This gives post-processors a simple field to identify the command
+    -@@ trace2.h: enum trace2_process_info_reason {
+    - 	TRACE2_PROCESS_INFO_EXIT,
+    - };
+    -=20
+    --#if defined(GIT_WINDOWS_NATIVE)
+    -+#if ( defined(GIT_WINDOWS_NATIVE) || defined(HAVE_PROCFS_LINUX) )
+    - void trace2_collect_process_info(enum trace2_process_info_reason reas=
+on);
+    - #else
+    - #define trace2_collect_process_info(reason) \
+    =20
+      ## trace2/tr2_tgt.h ##
+     @@ trace2/tr2_tgt.h: typedef void(tr2_tgt_evt_error_va_fl_t)(const cha=
+r *file, int line,
+--=20
+2.32.0.402.g57bb445576-goog
 
-  1. git pull              # merge HEAD into upstream
-  2. git pull origin topic # merge topic into HEAD
-
-Of the people that expressed an opinion, 100% of them stated that what
-`git pull` does in the first case today is not desirable.
-
-> I also happen to think that "flipping the merge order" is not a good
-> thing to do anyway [*1*]; keeping the log message to state just "the
-> description does not reflect reality-fix it" has the added benefit
-> that we do not have to debate it.
-
-But people have spent many hours debating it already.
-
-Yes, you are correct that if *everyone* followed the topic branch
-workflow, everything would work correctly, but that's not what happens
-in reality, in reality people do all kinds of workflows, and wrong
-merges are pervasive.
-
-Everyone--including Linus, Jeff, and you--agree that there's two
-different ways of using `git pull`: integrator versus developer.
-
-When a user is doing `git pull` to synchronize changes to push to the
-same branch, that's a centralized two-way workflow, so he is acting both
-as an integrator and as a developer, and it's in that particular case
-that the order of the parents should be reversed. Everyone agrees on
-that.
-
-When the user the opposite explicitely: `git pull origin master`
-Linus calls it a "back-merge" [1], and in that case the order of the
-parents should not be reversed.
-
-This has already been discussed many times, and the problem remains.
-
-[1] https://lore.kernel.org/git/CA+55aFwM0vy+pw-Xv=gA19ULMwAXNPhdO3qR5A3hkMrZKJFNSQ@mail.gmail.com/
-
--- 
-Felipe Contreras
