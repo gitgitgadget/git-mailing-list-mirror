@@ -2,99 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5563C4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A91BCC4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:55:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE3D260E73
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:50:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86D7A60E98
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:55:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229907AbhGWQKO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 12:10:14 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52663 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229847AbhGWQKM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 12:10:12 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0227D139007;
-        Fri, 23 Jul 2021 12:50:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=l1QqeBxvgb1AeRV0BT6W+WvFpTFWmgd63nRGIS
-        v3SUI=; b=jTAaFimsZTEpm4xssB1bljFC7h3Q0ZOLrNzeRIygq9uyJtgeUo5E0M
-        VrA1kLSTm4D55OI9L0BK4KAh099H+Js5J7ZgqtAzlyiOCoYHj3dRUB7GmjRdnKA8
-        hiNOC4GCN1NfhRiy+655UnK75GJ6eKsAfKikXEUb6Aacdl7P45rjg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EE98F139006;
-        Fri, 23 Jul 2021 12:50:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.71.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4555A139005;
-        Fri, 23 Jul 2021 12:50:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Angelo Borsotti <angelo.borsotti@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, git <git@vger.kernel.org>
-Subject: Re: Extracting a file
-References: <CAB9Jk9AafnUQr6q8t=b4Dh0PZHUA=fKJmtXxxObuGpF_w-_2wQ@mail.gmail.com>
-        <871r7qvhhr.fsf@evledraar.gmail.com>
-        <CAB9Jk9DqCR8C9qx6-gZmpTQfBAKnEupQTb1WkJgN3YOqSO0=2A@mail.gmail.com>
-        <YPppNYOO26xAq2fn@coredump.intra.peff.net>
-Date:   Fri, 23 Jul 2021 09:50:41 -0700
-In-Reply-To: <YPppNYOO26xAq2fn@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 23 Jul 2021 03:01:09 -0400")
-Message-ID: <xmqq5yx1oty6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1E8CC242-EBD6-11EB-AB6F-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+        id S231547AbhGWQOb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 12:14:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40610 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231400AbhGWQOa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 12:14:30 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B01AC0613CF
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 09:55:00 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id a19so2478217oiw.6
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 09:55:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=QZN1LROnfhFaw/hFBEtWFMCTe2EriNB/J08TmpKHeUQ=;
+        b=gfteiIHZ1ATYRajjFQsHkk1IOQqYirfubWnIyYrP9/u54B8c8D/AA76j1RKME0l0BD
+         ArXCGpxBTzy8sn5v/R4f8Dfk37Up6NJM366CgnWxXXkbfZ+1+/bjQsMCK1j7YvTDd8Zn
+         5ph21PtWsQUqnKuLRBHivyBCKeCAXv1ZBdIt/J7d5ZZtG6JD5ZXKkExls4dxHmRpTTUL
+         uBlaEvoELv190EyzqMxiAKpw1cTBssZqjDuHDHHJWU1ULI2EjAvy3IcYjDoamBqIfWbh
+         1vhuvuMzYoBylM+JsWDgK93hZvbWLG2kJ8zRpMZwqpZi0im4iBweFHXdjQDBsZ7h0PQv
+         3ZWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=QZN1LROnfhFaw/hFBEtWFMCTe2EriNB/J08TmpKHeUQ=;
+        b=Txk/lsDcKIpSLVPUxOFxNqeZANe6X1V44e1jfNHSyiSsdZGAzSEE6h0FUcv9mnUsEu
+         zlAAblj4pimguB9SYJsnLU5ZdILOVantRiezc7+5QKAwIOeYh8d4ImD8UytH2ez1kXN1
+         qnfNWqKC/+UQyfYK87Vdsh/bZrY1haAmEBobZ1QUS7LBuajk5A2HR44rza3ZWu/y1njY
+         qX1/f0fvulTLLpv/U6UmEKHaWFUNJWyD/Yx2gd/uvfTh1ss33SVgcSU1ZvLBdvcJ0yE9
+         /23jkeDW/Exqxh5/rAQtQ58A8prRGdQ+1Afqjo6hbHIaBEjRNrRgTmPq1F0PeejxeXrm
+         LhTw==
+X-Gm-Message-State: AOAM533FFU9yfmQOyHgaSE2GtwXVt8EUpQ69YNrT8uLwKqv0KINEBUWn
+        NPcHGyXR+Ems/hln9gIWh7M=
+X-Google-Smtp-Source: ABdhPJwmEYmpluIcokNpSOyRDAWDA3e9r1lAtIxP0dWuGDwh1R/Qc7VGpWGtSHSMYIJzZyGggjnxBQ==
+X-Received: by 2002:aca:1c17:: with SMTP id c23mr9143541oic.75.1627059298946;
+        Fri, 23 Jul 2021 09:54:58 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id y19sm6001504oia.22.2021.07.23.09.54.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jul 2021 09:54:58 -0700 (PDT)
+Date:   Fri, 23 Jul 2021 11:54:57 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Philip Oakley <philipoakley@iee.email>, Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Marc Branchaud <marcnarc@xiplink.com>,
+        Elijah Newren <newren@gmail.com>,
+        Stephen Haberman <stephen@exigencecorp.com>
+Message-ID: <60faf46153f62_defb208aa@natae.notmuch>
+In-Reply-To: <9cb70776-8684-9d1e-e4c5-188c6c19fdc7@iee.email>
+References: <20210721221545.1878514-1-felipe.contreras@gmail.com>
+ <xmqqy29z9r94.fsf@gitster.g>
+ <xmqqtukn9p0g.fsf@gitster.g>
+ <60f8c8c92a215_1d0abb20859@natae.notmuch>
+ <YPpwIazVxL4GoLbC@coredump.intra.peff.net>
+ <9cb70776-8684-9d1e-e4c5-188c6c19fdc7@iee.email>
+Subject: Re: [PATCH] doc: pull: fix rebase=false documentation
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Philip Oakley wrote:
+> On 23/07/2021 08:30, Jeff King wrote:
+> > On Wed, Jul 21, 2021 at 08:24:25PM -0500, Felipe Contreras wrote:
+> >
+> >> I'm not trashing the current behavior, I'm explaining what the consensus
+> >> is. I spent several man-days re-reading old threads, and this is the
+> >> consensus of what should happen:
+> >>
+> >>   1. git pull              # merge HEAD into upstream
+> >>   2. git pull origin topic # merge topic into HEAD
+> >>
+> >> Of the people that expressed an opinion, 100% of them stated that what
+> >> `git pull` does in the first case today is not desirable.
+> > I did not participate in the threads you linked earlier, so I am
+> > probably not in that 100%. But you did use my name below:
+> >
+> >> Yes, you are correct that if *everyone* followed the topic branch
+> >> workflow, everything would work correctly, but that's not what happens
+> >> in reality, in reality people do all kinds of workflows, and wrong
+> >> merges are pervasive.
+> >>
+> >> Everyone--including Linus, Jeff, and you--agree that there's two
+> >> different ways of using `git pull`: integrator versus developer.
+> >>
+> >> When a user is doing `git pull` to synchronize changes to push to the
+> >> same branch, that's a centralized two-way workflow, so he is acting both
+> >> as an integrator and as a developer, and it's in that particular case
+> >> that the order of the parents should be reversed. Everyone agrees on
+> >> that.
+> >>
+> >> When the user the opposite explicitely: `git pull origin master`
+> >> Linus calls it a "back-merge" [1], and in that case the order of the
+> >> parents should not be reversed.
+> > So I feel compelled to say now that I do not think that changing the
+> > order of parents for "git pull" is the obviously correct thing to do.
+> While I never `pull` because it's not right for me as a 'contributor', I
+> do agree that the default 'maintainer' view of `pull` will need to be
+> retained for long term backward compatibility.
 
-> On Thu, Jul 22, 2021 at 11:46:01AM +0200, Angelo Borsotti wrote:
->
->> Actually, I did not want to make git behave like a read-only filesystem,
->> but only to be able to get what is stored in it using some easy to remember
->> command.
->> 
->> I guess that:
->> 
->>     git mv A B &&
->>     git checkout HEAD -- A
->> 
->> renames file A in the work, current, directory to B, and then recovers
->> A from the
->> repository. This changes the file on which I am working. After having
->> read the old
->> A, and understood what changes I make that are not correct, I should delete A,
->> and rename B back to A.
->> If something gets wrong with this, I risk to damage my original A.
->> This is why it is
->> better not to change it, and instead get a copy of the old one with
->> another name,
->> which is what
->> 
->> git show HASH:file/path/name.ext > some_new_name.ext
->
-> You might also like "git checkout -p HASH -- A", which will let you pick
-> individual hunks from HASH:A and apply them to your working tree.
+Of course, but a maintainer never does `git pull` to merge a pull request,
+she does `git pull github/john topic`, does she not?
 
-There is
+Nobody was in favor of reversing the parents in the case of
+`git pull $where $what`, that would be the wrong thing to do.
 
-    git cat-file --textconv --filters HASH:A >my-temporary-file-to-inspect
+So the maintainer view of `git pull` would remain fine.
 
-which would not touch the index or any tracked working tree file,
-other than the target of redirection.
+> What I have rarely seen in the discussion is explanation that is based
+> on workflow style, though the potential `update` command (1) may break
+> some of the deadlock about the direction of 'pull requests', and
+> possibly confusion regarding the location of the 'golden' publish repo.
 
+I think that's because most of the people that follow a workflow don't
+have this problem.
+
+It's only newcomers that don't follow any workflow that are hit by this.
+Another name for this no-workflow is trunk-based development [1].
+Essentially everyone pulls and pushes to the same branch.
+
+People that use topic branches don't need `git update`, people who
+follow trunk-based development do.
+
+> (1) there are a lot of 'update' commands floating about, esp on Git for
+> Windows. If there is a suitably named `update` command to do the `pull
+> --contributor` merge-ff swap then many of the issues could fade away.
+
+Indeed. And at least when I was maintaining my git-fc fork, people did
+enjoy my implementation of `git update`.
+
+[1] https://trunkbaseddevelopment.com/
+
+-- 
+Felipe Contreras
