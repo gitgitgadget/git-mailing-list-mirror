@@ -8,65 +8,64 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F58EC4320A
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 12:55:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51FB8C4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 12:55:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 435D460E53
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 12:55:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3707F60E95
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 12:55:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235074AbhGWMO3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 08:14:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41882 "EHLO
+        id S235234AbhGWMOa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 08:14:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235206AbhGWMO2 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235213AbhGWMO2 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 23 Jul 2021 08:14:28 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F124DC061575
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 05:55:00 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id e2so2255126wrq.6
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 05:55:00 -0700 (PDT)
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94070C06175F
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 05:55:01 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id l11-20020a7bc34b0000b029021f84fcaf75so3460417wmj.1
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 05:55:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=gpsvLaWgPvvMD33tMjM4ZkG9Z9LR9WQE9oNq5yJMXjw=;
-        b=EjVaVWkCn8iBLO9s7qZRNuFzlHZE6AkMtXdHNoWjc8IJ37tWtbv4snpeuUgxJLlFiP
-         +oWkLs57gVt7QBA8NWGsvxNnX1EoK4ey4//oC7zZ7bF/asTtlbyUvLbTnFoJtIb1YNbe
-         tNgXOEMzSGFHuFVZ4k9EYVSEOJEaK7wxEvy0ctveLJ4E6/9V5An1Dw7u50xeaZpHDTun
-         Ed3n2U4ssCN+TChwPU1VvwM/I3SDRahmGVuHw9yS6WpjmZi7OtcmQ7ML3IH/Gy9iLvA4
-         hnISgfm8IbM95dI+YL68qvaCC2DSFbzorLYl+Xh9lSW7hKUfbYMGtj3QqSFWdjoGoHxN
-         FOBw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=TVK0Yc51pWKWhE8HF8xtg5T3t6+DIcR3OfwUI+86W9A=;
+        b=BfAkS0VCX452J29mSOmtSQ+MQWElwaZlYGO5rX3uuRSx4iV2Ogj7cywKGMB702JCCF
+         +iF22+yhwCGqUIaqyvu0cGO3LVyXgSzCq5vPtZgS6PP6rMzpO5g2tOoAjxzCyO8e5zUv
+         wMsL03hYYb4dU/wlSBYcGh7QtAAAkugrdreY9ux8o/sdVgruE+D++6O3+n0+b33m4nm2
+         nFzdeWYvuKgk2hdMPblPB8xU3fA2oatz6FOHbB6TK1Fa2neXQuRYEYHTzTutpD4w2SP1
+         KOHwtY6pfvk3WH0NFJ3WIeFT575XitpFDYhvKvqAled4HLeP0wKglLQhCBeAxEkJxSN1
+         FK9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=gpsvLaWgPvvMD33tMjM4ZkG9Z9LR9WQE9oNq5yJMXjw=;
-        b=nPEAyzkVpn4Cj/VxhouvhU2nRtGCUE4KNMQXtagENIrTqLIiFi0LQRbA2KesWT5ogi
-         YIbzwhG/SmDPf5B8MRtbZVx7+sQQq4sYPNN8JyUNBz6mU7DVUnhL4LS3HQmeHKBcjPNp
-         hzmyj/3x862f0nSI9qglm+l4XpS1Kg+JsKggAL55are8iCzv/5Q3pmIUZ7tX6AdTR2Vy
-         UiJuK3LnOt6KLVl5gJqhPjw2D2a4EIjf7loT9VpyFRKZGsTvTJHyIywvSBIZlMG1H2zU
-         JSFecFssHK4Rc53nZpuZY9sfVzmw+KismpO4MPqCih8Kh6ZgrN/3N9vtVzlgKDdcvRDF
-         oPWg==
-X-Gm-Message-State: AOAM530wSAWfnClU+1w381RB1MD3cefSnbkkQyk/HlvhCXisodVmxEaK
-        aCtuf1QFhwEv2EzLSVLL/iQZEV/kFs0=
-X-Google-Smtp-Source: ABdhPJzvE07otzziAsqVuG5pJxsYV+3/YyjMCoQ6ocNpp/Us5xyUiUHHNIiT98PuLmIWSdgi3QQXqQ==
-X-Received: by 2002:adf:e405:: with SMTP id g5mr5105793wrm.365.1627044899592;
-        Fri, 23 Jul 2021 05:54:59 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=TVK0Yc51pWKWhE8HF8xtg5T3t6+DIcR3OfwUI+86W9A=;
+        b=STGYomARzaqofGCbnP/CCVnYEAqxZ6cbhaiQwqpyP8TUNpC7sPRk3D9e5B270BMxxN
+         olZzAoDBaWegC1z7+74qMw3Ms1nL9Wu6iBl0TW7ZCj50qi+U+r5qUiLbhcR05v36AsWS
+         0Cjki17pSfWklyKJK8P/GL1AjR2P9d4W9xaLhAQ8ein0O5MwGhE7AAnijHnbV0dPZ9uL
+         PbBdIqtW7ujwo6HTpBIq5oJ+vh4k5TDxb+vbPXcEcUE3SHk7To3dMkMW4zVnYDVvY9id
+         5fGTYCDgY2QNsjzHd5ECp/vFMsJPgtGRw/b9dt0p7/B9ms994QpdK741wUBPyJqHDWSK
+         irzw==
+X-Gm-Message-State: AOAM530gw4Zmc/Rwoag5TSa6yUoP9PX4bjXngz4KF1cN9fRZgCuZfVta
+        0EfT8zmtJaMfhAVBvfJd1f514JkNiAU=
+X-Google-Smtp-Source: ABdhPJxT9QelQ6M8/mhZwxMZ4Yh2JQFzgDqAMZZUHUVBNitpUp0//4U04cTD7F6QaOXOIJO6haTpnQ==
+X-Received: by 2002:a05:600c:4f05:: with SMTP id l5mr14020887wmq.96.1627044900227;
+        Fri, 23 Jul 2021 05:55:00 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x8sm32819286wrt.93.2021.07.23.05.54.59
+        by smtp.gmail.com with ESMTPSA id n5sm31730528wri.31.2021.07.23.05.54.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 23 Jul 2021 05:54:59 -0700 (PDT)
-Message-Id: <9f8ab62b84256be6d7d984d576ff4fda09d88a1d.1627044897.git.gitgitgadget@gmail.com>
+Message-Id: <77367a69daad042d2a6ed56b922ade892337cf16.1627044897.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.990.git.1627044897.gitgitgadget@gmail.com>
 References: <pull.990.git.1627044897.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 23 Jul 2021 12:54:51 +0000
-Subject: [PATCH 1/7] diffcore-rename: use a mem_pool for exact rename
- detection's hashmap
-MIME-Version: 1.0
+Date:   Fri, 23 Jul 2021 12:54:52 +0000
+Subject: [PATCH 2/7] merge-ort: set up a memory pool
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>
@@ -76,97 +75,73 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Exact rename detection, via insert_file_table(), uses a hashmap to store
-files by oid.  Use a mem_pool for the hashmap entries so these can all be
-allocated and deallocated together.
-
-For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-performance work; instrument with trace2_region_* calls", 2020-10-28),
-this change improves the performance as follows:
-
-                            Before                  After
-    no-renames:      204.2  ms ±  3.0  ms   202.5  ms ±  3.2  ms
-    mega-renames:      1.076 s ±  0.015 s     1.072 s ±  0.012 s
-    just-one-mega:   364.1  ms ±  7.0  ms   357.3  ms ±  3.9  ms
+merge-ort has a lot of data structures, and they all tend to be freed
+together in clear_or_reinit_internal_opts().  Set up a memory pool to
+allow us to make these allocations and deallocations faster.  Future
+commits will adjust various callers to make use of this memory pool.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diffcore-rename.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ merge-ort.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 4ef0459cfb5..23b917eca42 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -317,10 +317,11 @@ static int find_identical_files(struct hashmap *srcs,
- }
+diff --git a/merge-ort.c b/merge-ort.c
+index e361443087a..cb33c76760f 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -37,6 +37,8 @@
+ #include "unpack-trees.h"
+ #include "xdiff-interface.h"
  
- static void insert_file_table(struct repository *r,
-+			      struct mem_pool *pool,
- 			      struct hashmap *table, int index,
- 			      struct diff_filespec *filespec)
- {
--	struct file_similarity *entry = xmalloc(sizeof(*entry));
-+	struct file_similarity *entry = mem_pool_alloc(pool, sizeof(*entry));
- 
- 	entry->index = index;
- 	entry->filespec = filespec;
-@@ -336,7 +337,8 @@ static void insert_file_table(struct repository *r,
-  * and then during the second round we try to match
-  * cache-dirty entries as well.
-  */
--static int find_exact_renames(struct diff_options *options)
-+static int find_exact_renames(struct diff_options *options,
-+			      struct mem_pool *pool)
- {
- 	int i, renames = 0;
- 	struct hashmap file_table;
-@@ -346,7 +348,7 @@ static int find_exact_renames(struct diff_options *options)
++#define USE_MEMORY_POOL 1 /* faster, but obscures memory leak hunting */
++
+ /*
+  * We have many arrays of size 3.  Whenever we have such an array, the
+  * indices refer to one of the sides of the three-way merge.  This is so
+@@ -339,6 +341,17 @@ struct merge_options_internal {
  	 */
- 	hashmap_init(&file_table, NULL, NULL, rename_src_nr);
- 	for (i = rename_src_nr-1; i >= 0; i--)
--		insert_file_table(options->repo,
-+		insert_file_table(options->repo, pool,
- 				  &file_table, i,
- 				  rename_src[i].p->one);
+ 	struct strmap conflicted;
  
-@@ -355,7 +357,7 @@ static int find_exact_renames(struct diff_options *options)
- 		renames += find_identical_files(&file_table, i, options);
- 
- 	/* Free the hash data structure and entries */
--	hashmap_clear_and_free(&file_table, struct file_similarity, entry);
-+	hashmap_clear(&file_table);
- 
- 	return renames;
- }
-@@ -1341,6 +1343,7 @@ void diffcore_rename_extended(struct diff_options *options,
- 	int num_destinations, dst_cnt;
- 	int num_sources, want_copies;
- 	struct progress *progress = NULL;
-+	struct mem_pool local_pool;
- 	struct dir_rename_info info;
- 	struct diff_populate_filespec_options dpf_options = {
- 		.check_binary = 0,
-@@ -1409,11 +1412,18 @@ void diffcore_rename_extended(struct diff_options *options,
- 		goto cleanup; /* nothing to do */
- 
- 	trace2_region_enter("diff", "exact renames", options->repo);
-+	mem_pool_init(&local_pool, 32*1024);
- 	/*
- 	 * We really want to cull the candidates list early
- 	 * with cheap tests in order to avoid doing deltas.
- 	 */
--	rename_count = find_exact_renames(options);
-+	rename_count = find_exact_renames(options, &local_pool);
 +	/*
-+	 * Discard local_pool immediately instead of at "cleanup:" in order
-+	 * to reduce maximum memory usage; inexact rename detection uses up
-+	 * a fair amount of memory, and mem_pools can too.
++	 * pool: memory pool for fast allocation/deallocation
++	 *
++	 * We allocate room for lots of filenames and auxiliary data
++	 * structures in merge_options_internal, and it tends to all be
++	 * freed together too.  Using a memory pool for these provides a
++	 * nice speedup.
 +	 */
-+	mem_pool_discard(&local_pool, 0);
- 	trace2_region_leave("diff", "exact renames", options->repo);
++	struct mem_pool internal_pool;
++	struct mem_pool *pool; /* NULL, or pointer to internal_pool */
++
+ 	/*
+ 	 * paths_to_free: additional list of strings to free
+ 	 *
+@@ -603,6 +616,12 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
+ 		strmap_clear(&opti->output, 0);
+ 	}
  
- 	/* Did we only want exact renames? */
++#if USE_MEMORY_POOL
++	mem_pool_discard(&opti->internal_pool, 0);
++	if (!reinitialize)
++		opti->pool = NULL;
++#endif
++
+ 	/* Clean out callback_data as well. */
+ 	FREE_AND_NULL(renames->callback_data);
+ 	renames->callback_data_nr = renames->callback_data_alloc = 0;
+@@ -4344,6 +4363,12 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
+ 
+ 	/* Initialization of various renames fields */
+ 	renames = &opt->priv->renames;
++#if USE_MEMORY_POOL
++	mem_pool_init(&opt->priv->internal_pool, 0);
++	opt->priv->pool = &opt->priv->internal_pool;
++#else
++	opt->priv->pool = NULL;
++#endif
+ 	for (i = MERGE_SIDE1; i <= MERGE_SIDE2; i++) {
+ 		strintmap_init_with_options(&renames->dirs_removed[i],
+ 					    NOT_RELEVANT, NULL, 0);
 -- 
 gitgitgadget
 
