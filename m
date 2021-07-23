@@ -2,95 +2,201 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8F04C4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 17:32:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A8BFC4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 17:34:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0CC460EE2
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 17:32:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6A1260EB1
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 17:33:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232676AbhGWQvi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 12:51:38 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63641 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231979AbhGWQvc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 12:51:32 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AAFA81555D8;
-        Fri, 23 Jul 2021 13:32:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/XPKngaSaGJej0hP6ngnDG9sKab0Pl7oTHcekE
-        3PCDg=; b=Knm6IJiPag57AbEeyWewYWm1im9yvYdy/rU45Cd1R9hA+mkw9gRRUa
-        RUzw0F5pVAFOpVLAogv0GziCSBs0ll2sGZrp9tCLz4ucar+5pZTTfsdkGSS9HNuO
-        gn1xTodeDuUgD3O4zr4HTb4Wj/NWtSxpWYDK9nQWeJNu5JdkKchOI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A36E81555D7;
-        Fri, 23 Jul 2021 13:32:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.71.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EADED1555D3;
-        Fri, 23 Jul 2021 13:32:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v2 08/11] t1410: mark test as REFFILES
-References: <pull.1052.git.git.1626718050.gitgitgadget@gmail.com>
-        <pull.1052.v2.git.git.1626989327.gitgitgadget@gmail.com>
-        <f931a26de58e3cc7bb6522fab47e934aca7dc776.1626989327.git.gitgitgadget@gmail.com>
-Date:   Fri, 23 Jul 2021 10:32:01 -0700
-In-Reply-To: <f931a26de58e3cc7bb6522fab47e934aca7dc776.1626989327.git.gitgitgadget@gmail.com>
-        (Han-Wen Nienhuys via GitGitGadget's message of "Thu, 22 Jul 2021
-        21:28:44 +0000")
-Message-ID: <xmqqo8atndgu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E48D4A16-EBDB-11EB-A16C-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+        id S231597AbhGWQxZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 12:53:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50004 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230172AbhGWQxY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 12:53:24 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A365C061575
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 10:33:57 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id t14so2674189oiw.0
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 10:33:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=ssC1zmIYQYnNpd+Yw6xbUNkS38SOJTFwn9rsYguar4Y=;
+        b=IjUFxbnO3jIFrZsgGegntq9VC3hrIphpsmNNpeOh7aUaSRuRbCzDOI8OKIXawAZXd3
+         nIxsa2Crnp12xE+SaGIhknQOouY3ho6b1y0TJTLU2hPayhWMAzHuqCuFBhDgAVsM4xVx
+         h48dPXRG80AklwyD+5v+oj3ED+RvxAPqJK1VjMKtXYRW0/JXVVePFNG7n26S3ZF5EF6F
+         CfMWYz2UgNayDsxdEVJB97wzP069R9ItfknoBFZutm3ZpPPdnuLBBPF9Z/I3CjErlSSQ
+         2y9Xl137qWF8uFyqQ3g5OOB97Xznu4gWWB/NijHnziTdI7dQHSwbr0aoZBrscjIITooC
+         EaSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=ssC1zmIYQYnNpd+Yw6xbUNkS38SOJTFwn9rsYguar4Y=;
+        b=nCO3qe73qSWrRUiloLFftWmRuxVIQK8j0UZyjd1IjU017f47DnN2uNp8eIOnkC2Qq5
+         mx2RMnKbPkcMQ8wneoqGYmItzaecRzf4KtXtDDMsWXvIMN5xlurtEY801GhCWuZrsjBO
+         gTZajG5c5N1oliTVYS6M1utB5EDb92Ho/iumNxoXs8uzMorQ2CRIc0AVIVqaNkB+iIXE
+         BUtTIkR8xvlQx7nmOOy/VBZcHqDoK6we0trbCX6reWElczkYdkuLzYPkgrRC0zR9KfB5
+         nh6hoeJY+dkVKxZ/dtOFdDP34odiGVKuofpnqXNjxb4q2Tpa+cS+GZ2y5lT0fpRFkKUV
+         M9nQ==
+X-Gm-Message-State: AOAM533E3L0PhyA6/HqUsLJOD7Rx7LoB7wcITGOCxl7iPJZVCgMyWQ+K
+        vzDzeBUB6GHvvU9ru8+hLxk=
+X-Google-Smtp-Source: ABdhPJwTEjOhClHVbA2Ya/KFtQ51KzHYqhZ+8HRYRjggP7OlD2vrfCsbWTzLh0bZNbP6L029TcqVog==
+X-Received: by 2002:aca:d682:: with SMTP id n124mr3836405oig.128.1627061636631;
+        Fri, 23 Jul 2021 10:33:56 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id m19sm5824043otp.55.2021.07.23.10.33.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jul 2021 10:33:56 -0700 (PDT)
+Date:   Fri, 23 Jul 2021 12:33:54 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Message-ID: <60fafd8295996_defb208dc@natae.notmuch>
+In-Reply-To: <YPnwBu4oMA9K445J@google.com>
+References: <20210715232603.3415111-1-emilyshaffer@google.com>
+ <20210715232603.3415111-5-emilyshaffer@google.com>
+ <87lf66y6pd.fsf@evledraar.gmail.com>
+ <YPnwBu4oMA9K445J@google.com>
+Subject: Re: [PATCH 4/9] hook: treat hookdir hook specially
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hello Emily,
 
-> From: Han-Wen Nienhuys <hanwen@google.com>
->
-> In reftable, one cannot take a lock on an individual ref.
->
-> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-> ---
->  t/t1410-reflog.sh | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+Emily Shaffer wrote:
+> On Fri, Jul 16, 2021 at 10:58:34AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
+> > On Thu, Jul 15 2021, Emily Shaffer wrote:
+> > =
 
-Makes sense, I guess, but it makes it sound as if you can only take
-a big single lock to freeze everything (as opposed to being able to
-work on independent refs in parallel).  Is that what you meant to
-say?
+> > > Soon, we will allow users to specify hooks using the config. These
+> > > config-specified hooks may require different child_process options =
+than
+> > > hook executables in the gitdir. So, let's differentiate between hoo=
+ks
+> > > coming from the gitdir and hooks coming from the config.
+> > >
+> > > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> > > ---
+> > >  hook.c | 3 ++-
+> > >  hook.h | 2 ++
+> > >  2 files changed, 4 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/hook.c b/hook.c
+> > > index 19138a8290..3a588cb055 100644
+> > > --- a/hook.c
+> > > +++ b/hook.c
+> > > @@ -117,6 +117,7 @@ struct list_head* hook_list(const char* hooknam=
+e)
+> > >  		struct hook *to_add =3D xmalloc(sizeof(*to_add));
+> > >  		to_add->hook_path =3D hook_path;
+> > >  		to_add->feed_pipe_cb_data =3D NULL;
+> > > +		to_add->from_hookdir =3D 1;
+> > >  		list_add_tail(&to_add->list, hook_head);
+> > >  	}
+> > >  =
 
-A file somewhere in .git/refs/ directory shouldn't be a way to lock
-a ref in the reftable world, either, so it doubly makes sense.
+> > > @@ -200,7 +201,7 @@ static int pick_next_hook(struct child_process =
+*cp,
+> > >  	cp->dir =3D hook_cb->options->dir;
+> > >  =
 
-> diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-> index 27b9080251a..d42f067ff8c 100755
-> --- a/t/t1410-reflog.sh
-> +++ b/t/t1410-reflog.sh
-> @@ -374,7 +374,9 @@ test_expect_failure 'reflog with non-commit entries displays all entries' '
->  	test_line_count = 3 actual
->  '
->  
-> -test_expect_success 'reflog expire operates on symref not referrent' '
-> +# This test takes a lock on an individual ref; this is not supported in
-> +# reftable.
-> +test_expect_success REFFILES 'reflog expire operates on symref not referrent' '
->  	git branch --create-reflog the_symref &&
->  	git branch --create-reflog referrent &&
->  	git update-ref referrent HEAD &&
+> > >  	/* add command */
+> > > -	if (hook_cb->options->absolute_path)
+> > > +	if (run_me->from_hookdir && hook_cb->options->absolute_path)
+> > >  		strvec_push(&cp->args, absolute_path(run_me->hook_path));
+> > >  	else
+> > >  		strvec_push(&cp->args, run_me->hook_path);
+> > > diff --git a/hook.h b/hook.h
+> > > index 586ddf40bb..60389cd8cd 100644
+> > > --- a/hook.h
+> > > +++ b/hook.h
+> > > @@ -22,6 +22,8 @@ struct hook {
+> > >  	/* The path to the hook */
+> > >  	const char *hook_path;
+> > >  =
+
+> > > +	unsigned from_hookdir : 1;
+> > > +
+> > >  	/*
+> > >  	 * Use this to keep state for your feed_pipe_fn if you are using
+> > >  	 * run_hooks_opt.feed_pipe. Otherwise, do not touch it.
+> > =
+
+> > The "from_hookdir" looks like it isn't used until 6/9, and maybe the
+> > absolute_path change too? In any case this seems like a carried-forwa=
+rd
+> > rebase of
+> > https://lore.kernel.org/git/20210311021037.3001235-5-emilyshaffer@goo=
+gle.com/
+> > or some version thereof.
+> > =
+
+> > At this point I tihnk it would be way better to squash this and other=
+
+> > such changes that basically add a field to a struct that isn't used y=
+et
+> > into whatever commit use/need them.
+> =
+
+> I think at this point we run into you and me having different
+> patch-storytelling styles - which probably is what led to the big topic=
+
+> restart in the first place ;)
+
+Yes, but as a reader of the story I prefer not to have to read the
+entire thing in order to understand it. I prefer each page to tell a
+small story.
+
+> I'd prefer to see the "start using config too" patch stay as small as i=
+t
+> can; that's why I ended up with a handful of minor setup commits and
+> then one "and now here's config" commit.
+
+I'm in favor of small patches too, but not to the point where the patch
+is not useful by itself.
+
+This is where where patch storytelling and actual storytelling differ:
+we don't need Chekhov's guns.
+
+> Even if it's different from how you would tell it - is it wrong? (And i=
+f
+> it is, that's fine, and I'll change it, but I don't think it is - that'=
+s
+> why I structured the series this way.)
+
+It's not wrong.
+
+But one of the strongest advantages of open source is that you can have
+many more reviewers than in closed source, and following Linus's law:
+"given enough eyeballs, all bugs are shallow", that's a great thing.
+
+But in order to fully take advantage of that you need to write patches
+in a way that armchair reviewers can simply take a cursory look at the
+patch and figure out that's obviously correct.
+
+Putting my armchair reviewer hat I cannot do that for this particular
+patch, I would need to do more work to make sense of it, and while I'm
+writing this message to explains that, others will simply skip it, and
+that's a lost opportunity.
+
+Cheers.
+
+-- =
+
+Felipe Contreras=
