@@ -8,65 +8,65 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 571C2C432BE
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 09:04:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7B4FC4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 09:04:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4454F60EC0
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 09:04:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BB47260EC0
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 09:04:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234226AbhGWIXe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 04:23:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44958 "EHLO
+        id S234576AbhGWIXi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 04:23:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234442AbhGWIXd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 04:23:33 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F26DC061757
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 02:04:07 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id q3so1615294wrx.0
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 02:04:07 -0700 (PDT)
+        with ESMTP id S234523AbhGWIXf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 04:23:35 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC7BFC061757
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 02:04:08 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id y8so1504227wrt.10
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 02:04:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=O9u986p91/Gwi+fKy8spnM0GBKp3DiyL5kpCBbLklIA=;
-        b=qnr0Yy5U6hQmO78opT2udERzkJgzA2nemzwBdRa1lYr4qHolwrO6Bkz986GfuyenS3
-         qzZsfGmj60bi9ERUnQOT1TrRji3TfC0cwRzpRtn9vLVa/fS2GUDtZa55cvuLH5oi9Yl/
-         MH63Nvh3tQMGhfdPkZOYr1n3IJd6p7Dt/xtY5FI2ZhnP0klVhz7B3ldoiHlpGn/RTzJL
-         7HOn7ojRAxmd2DpXl6STuQ35vMzrgRw8RaLYdu92r5hSokyRH095Q12eGdsbYkhkb3Li
-         2ieHT7WJeoayGN8cbs3LYKRG+ufUFm04g8NQXK0kJZuZnquLPXFrWfAaFkYSY3kcWZ2/
-         rB5w==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=Ca2KXkFHsfgiUzryFz51HZ51xSa9CI22tzwqJYc8+JA=;
+        b=RgewNfKMId/nP4nYKMutQI+qRdgOE18urkAT6c3Deeq84dUBS78GDJQ/K2812E0K1u
+         zZrLZEu5IXpGe7oJ7wIQkeB1Y1U5TjfjTnwk3uU4skBkeIQiLG6CDJqJ/iU+2VHC3Wjh
+         oPo3Z9CEKx/ZOVZae8Ye/QF8xnsscaJMCzILDGBdgwhCYBkztdF2+xAyuB2+A432qbBB
+         scRY7XHda2yE4XqgISyaVvE3RLKIAupCciMZcBQ56rbPMkHo/y+JOSjmZbBs0/UtfKaY
+         GekzH79ewQ1Wc7aLwEAQr2ptBksC3Aw0jv00dW14B+MBreI1kSNcHJ1y4DpdFPs46lpx
+         5AWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=O9u986p91/Gwi+fKy8spnM0GBKp3DiyL5kpCBbLklIA=;
-        b=lh6VjDYuNxTYCXauysZUQIezm9jF5d652Fg0T3ZGDNNaUEYJakHlhcQrftKjf3Wqyb
-         b7fVvSky1ZcRt7/X2LMXuyy1vWBsBbbee7YNO1yBAoZsZZn8h3W8xKDK3XKdJhvRcJs8
-         5Y3PMcbjDDQXY6zzQGc7csmYZKRlXxTeuDuPy72B2hFRgzPrCNuHjNIM3iSkNS80eHaj
-         v5vAuu7A5GJsAmP4UJaXxfgZidNlkiydTe0LGMUbEIlGbvWgiYeQUFIJkpnt37lato52
-         kSKgYa6qsV8jRGaCh9k0MgYhiBh5xqe0z/G1GB53/ZU1JIaoGcMKD/XdpYuqGeUKw8F5
-         vA2w==
-X-Gm-Message-State: AOAM532AxwJEdGujxfnckYcR27s7igigRdqOquRM/gUuYgcOf/y4ndoy
-        zQcIyfxe2PWHSf/+3o1+WssOxiUqhFc=
-X-Google-Smtp-Source: ABdhPJwm7n0iuG8W9yKXDP/N/ElDP7+LzM+pdkCq70jrH1WhohKVEcR2fDlWUtNWjWPpwrhcz15z3Q==
-X-Received: by 2002:a5d:4402:: with SMTP id z2mr4056506wrq.44.1627031045983;
-        Fri, 23 Jul 2021 02:04:05 -0700 (PDT)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=Ca2KXkFHsfgiUzryFz51HZ51xSa9CI22tzwqJYc8+JA=;
+        b=D88iLESfqRoU5NdlB5g5oaof0aSx8FrOYMT+ZrQQYpqCYcRWIe47aAydV/ugKgndWO
+         bbxSbwLJJ2BqK7a4mkqzSOZsoJ6/O+gSbyfAldQbZTpiwFzFg3Cn6iI0SUP1JhPptzXH
+         2wY3ONJoqdjzZX80OE6fSlRCpVIlhN0F/sxjPk00ZcXKt9N0J8thtuLiE2OLHP1er4XE
+         MHpdcnHRefm7s6a87BBMeKTfwsT4Hc7gzabHT3YcUSMNCL9QFD98j19krkbAHPUR1jTV
+         KD0ROljINuLZiLzmo5xxBNigpujqvKML5onW7FT85oF7lyfBnbaoN8ti4WG+0YorhsiI
+         l0Hw==
+X-Gm-Message-State: AOAM5317mQp96XdImrZ65COa6lxfGcZEhyAVstwHtXC+QaOMsUhqQ3eQ
+        kMfjwFImECHUL4SIYGM/0xNGtOioyiE=
+X-Google-Smtp-Source: ABdhPJwBawEgFa4zv8+YkO3FMnyrman3sOsqsfcjeGJiInfLK9AIiDodUGVUODQdTfdHdNebSR5BuA==
+X-Received: by 2002:a5d:6209:: with SMTP id y9mr4114653wru.402.1627031047362;
+        Fri, 23 Jul 2021 02:04:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 6sm4693811wmi.3.2021.07.23.02.04.05
+        by smtp.gmail.com with ESMTPSA id u2sm4977976wmm.37.2021.07.23.02.04.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jul 2021 02:04:05 -0700 (PDT)
-Message-Id: <d77268bb1882a6cfbea740053baac5546ca5c5f1.1627031043.git.gitgitgadget@gmail.com>
+        Fri, 23 Jul 2021 02:04:07 -0700 (PDT)
+Message-Id: <00a29dd16d7c5e176e560bec1dc335b1eb6ccaf8.1627031043.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1000.v2.git.1627031043.gitgitgadget@gmail.com>
 References: <pull.1000.git.1626939557.gitgitgadget@gmail.com>
         <pull.1000.v2.git.1627031043.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 23 Jul 2021 09:03:59 +0000
-Subject: [PATCH v2 1/5] [GSOC] ref-filter: add obj-type check in grab contents
-Fcc:    Sent
+Date:   Fri, 23 Jul 2021 09:04:01 +0000
+Subject: [PATCH v2 3/5] [GSOC] ref-filter: --format=%(raw) re-support --perl
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Christian Couder <christian.couder@gmail.com>,
@@ -84,95 +84,140 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-Only tag and commit objects use `grab_sub_body_contents()` to grab
-object contents in the current codebase.  We want to teach the
-function to also handle blobs and trees to get their raw data,
-without parsing a blob (whose contents looks like a commit or a tag)
-incorrectly as a commit or a tag. So it's needed to pass a
-`struct expand_data *data` instread of only `void *buf` to both
-`grab_sub_body_contents()` and `grab_values()` to be able to check
-the object type.
+Because the perl language can handle binary data correctly,
+add the function perl_quote_buf_with_len(), which can specify
+the length of the data and prevent the data from being truncated
+at '\0' to help `--format="%(raw)"` re-support `--perl`.
 
-Skip the block of code that is specific to handling commits and tags
-early when the given object is of a wrong type to help later
-addition to handle other types of objects in this function.
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Hariom Verma <hariom18599@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- ref-filter.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ Documentation/git-for-each-ref.txt |  4 ++--
+ quote.c                            | 17 +++++++++++++++++
+ quote.h                            |  1 +
+ ref-filter.c                       | 15 +++++++++++----
+ t/t6300-for-each-ref.sh            | 19 +++++++++++++++++--
+ 5 files changed, 48 insertions(+), 8 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 4db0e40ff4c..5cee6512fba 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1356,11 +1356,12 @@ static void append_lines(struct strbuf *out, const char *buf, unsigned long size
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index cbb6f87d13f..6da899c6296 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -241,8 +241,8 @@ raw:size::
+ 	The raw data size of the object.
+ 
+ Note that `--format=%(raw)` can not be used with `--python`, `--shell`, `--tcl`,
+-`--perl` because such language may not support arbitrary binary data in their
+-string variable type.
++because such language may not support arbitrary binary data in their string
++variable type.
+ 
+ The message in a commit or a tag object is `contents`, from which
+ `contents:<part>` can be used to extract various parts out of:
+diff --git a/quote.c b/quote.c
+index 8a3a5e39eb1..26719d21d1e 100644
+--- a/quote.c
++++ b/quote.c
+@@ -471,6 +471,23 @@ void perl_quote_buf(struct strbuf *sb, const char *src)
+ 	strbuf_addch(sb, sq);
  }
  
- /* See grab_values */
--static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
-+static void grab_sub_body_contents(struct atom_value *val, int deref, struct expand_data *data)
- {
- 	int i;
- 	const char *subpos = NULL, *bodypos = NULL, *sigpos = NULL;
- 	size_t sublen = 0, bodylen = 0, nonsiglen = 0, siglen = 0;
-+	void *buf = data->content;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
- 		struct used_atom *atom = &used_atom[i];
-@@ -1371,10 +1372,13 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
- 			continue;
- 		if (deref)
- 			name++;
--		if (strcmp(name, "body") &&
--		    !starts_with(name, "subject") &&
--		    !starts_with(name, "trailers") &&
--		    !starts_with(name, "contents"))
++void perl_quote_buf_with_len(struct strbuf *sb, const char *src, size_t len)
++{
++	const char sq = '\'';
++	const char bq = '\\';
++	const char *c = src;
++	const char *end = src + len;
 +
-+		if ((data->type != OBJ_TAG &&
-+		     data->type != OBJ_COMMIT) ||
-+		    (strcmp(name, "body") &&
-+		     !starts_with(name, "subject") &&
-+		     !starts_with(name, "trailers") &&
-+		     !starts_with(name, "contents")))
- 			continue;
- 		if (!subpos)
- 			find_subpos(buf,
-@@ -1438,17 +1442,19 @@ static void fill_missing_values(struct atom_value *val)
-  * pointed at by the ref itself; otherwise it is the object the
-  * ref (which is a tag) refers to.
-  */
--static void grab_values(struct atom_value *val, int deref, struct object *obj, void *buf)
-+static void grab_values(struct atom_value *val, int deref, struct object *obj, struct expand_data *data)
- {
-+	void *buf = data->content;
++	strbuf_addch(sb, sq);
++	while (c != end) {
++		if (*c == sq || *c == bq)
++			strbuf_addch(sb, bq);
++		strbuf_addch(sb, *c);
++		c++;
++	}
++	strbuf_addch(sb, sq);
++}
 +
- 	switch (obj->type) {
- 	case OBJ_TAG:
- 		grab_tag_values(val, deref, obj);
--		grab_sub_body_contents(val, deref, buf);
-+		grab_sub_body_contents(val, deref, data);
- 		grab_person("tagger", val, deref, buf);
- 		break;
- 	case OBJ_COMMIT:
- 		grab_commit_values(val, deref, obj);
--		grab_sub_body_contents(val, deref, buf);
-+		grab_sub_body_contents(val, deref, data);
- 		grab_person("author", val, deref, buf);
- 		grab_person("committer", val, deref, buf);
- 		break;
-@@ -1678,7 +1684,7 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
- 			return strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
- 					       oid_to_hex(&oi->oid), ref->refname);
- 		}
--		grab_values(ref->value, deref, *obj, oi->content);
-+		grab_values(ref->value, deref, *obj, oi);
- 	}
+ void python_quote_buf(struct strbuf *sb, const char *src)
+ {
+ 	const char sq = '\'';
+diff --git a/quote.h b/quote.h
+index 768cc6338e2..0fe69e264b0 100644
+--- a/quote.h
++++ b/quote.h
+@@ -94,6 +94,7 @@ char *quote_path(const char *in, const char *prefix, struct strbuf *out, unsigne
  
- 	grab_common_values(ref->value, deref, oi);
+ /* quoting as a string literal for other languages */
+ void perl_quote_buf(struct strbuf *sb, const char *src);
++void perl_quote_buf_with_len(struct strbuf *sb, const char *src, size_t len);
+ void python_quote_buf(struct strbuf *sb, const char *src);
+ void tcl_quote_buf(struct strbuf *sb, const char *src);
+ void basic_regex_quote_buf(struct strbuf *sb, const char *src);
+diff --git a/ref-filter.c b/ref-filter.c
+index a713507d783..0ff8574a00c 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -744,7 +744,10 @@ static void quote_formatting(struct strbuf *s, const char *str, size_t len, int
+ 		sq_quote_buf(s, str);
+ 		break;
+ 	case QUOTE_PERL:
+-		perl_quote_buf(s, str);
++		if (len != -1)
++			perl_quote_buf_with_len(s, str, len);
++		else
++			perl_quote_buf(s, str);
+ 		break;
+ 	case QUOTE_PYTHON:
+ 		python_quote_buf(s, str);
+@@ -1008,10 +1011,14 @@ int verify_ref_format(struct ref_format *format)
+ 		at = parse_ref_filter_atom(format, sp + 2, ep, &err);
+ 		if (at < 0)
+ 			die("%s", err.buf);
+-		if (format->quote_style && used_atom[at].atom_type == ATOM_RAW &&
+-		    used_atom[at].u.raw_data.option == RAW_BARE)
++
++		if ((format->quote_style == QUOTE_PYTHON ||
++		     format->quote_style == QUOTE_SHELL ||
++		     format->quote_style == QUOTE_TCL) &&
++		     used_atom[at].atom_type == ATOM_RAW &&
++		     used_atom[at].u.raw_data.option == RAW_BARE)
+ 			die(_("--format=%.*s cannot be used with"
+-			      "--python, --shell, --tcl, --perl"), (int)(ep - sp - 2), sp + 2);
++			      "--python, --shell, --tcl"), (int)(ep - sp - 2), sp + 2);
+ 		cp = ep + 1;
+ 
+ 		if (skip_prefix(used_atom[at].name, "color:", &color))
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 18554f62d94..3d15d0a5360 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -915,8 +915,23 @@ test_expect_success '%(raw) with --tcl must fail' '
+ 	test_must_fail git for-each-ref --format="%(raw)" --tcl
+ '
+ 
+-test_expect_success '%(raw) with --perl must fail' '
+-	test_must_fail git for-each-ref --format="%(raw)" --perl
++test_expect_success '%(raw) with --perl' '
++	git for-each-ref --format="\$name= %(raw);
++print \"\$name\"" refs/myblobs/blob1 --perl | perl >actual &&
++	cmp blob1 actual &&
++	git for-each-ref --format="\$name= %(raw);
++print \"\$name\"" refs/myblobs/blob3 --perl | perl >actual &&
++	cmp blob3 actual &&
++	git for-each-ref --format="\$name= %(raw);
++print \"\$name\"" refs/myblobs/blob8 --perl | perl >actual &&
++	cmp blob8 actual &&
++	git for-each-ref --format="\$name= %(raw);
++print \"\$name\"" refs/myblobs/first --perl | perl >actual &&
++	cmp one actual &&
++	git cat-file tree refs/mytrees/first > expected &&
++	git for-each-ref --format="\$name= %(raw);
++print \"\$name\"" refs/mytrees/first --perl | perl >actual &&
++	cmp expected actual
+ '
+ 
+ test_expect_success '%(raw) with --shell must fail' '
 -- 
 gitgitgadget
 
