@@ -2,204 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18E25C4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 18:17:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 507DAC4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 18:22:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EB3F660EB2
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 18:17:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BCDE60ED7
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 18:22:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229789AbhGWRgq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 13:36:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59842 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229626AbhGWRgp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 13:36:45 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6621C061575
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 11:17:18 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id 48-20020a9d0bb30000b02904cd671b911bso2951623oth.1
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 11:17:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=wTSAyEnyKiLycPuBreBnch5gqaZ/0SQSyBS8h2UvzO8=;
-        b=oN3v5tLjTMtmC5l+kkpolB2j5XBBGsn3YZAogsxSsb8L4Kamu20frsglxb6IPyOnQ3
-         sBfoMgDbZzpCcDdw6xZ8epFUfPhRaFNISRPb5Xghz3ixRFzQaiRMdu7tJv8mqpnB2c0Q
-         79lwkIaj/upMxL2JU5o48ZVSim2pzq60DXYSpv/RzmIyddnFhrRz64ikuodOAx9oT401
-         jITR+xzGUY+3+SxqQxbHTj45q5CsRcMkLt0dCBDFQQwN5oXHjsz3WkSXg6cFBu/YbcgH
-         ffkuR8ETPgOgEAw3pdO9cPWuqubZB8vZvmokmvzCxJYD+bDB43xFWzVlW6SD0bfqU/UV
-         ZGZQ==
+        id S229648AbhGWRmS convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 23 Jul 2021 13:42:18 -0400
+Received: from mail-ej1-f41.google.com ([209.85.218.41]:41560 "EHLO
+        mail-ej1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229459AbhGWRmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 13:42:17 -0400
+Received: by mail-ej1-f41.google.com with SMTP id hb6so4922165ejc.8
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 11:22:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wTSAyEnyKiLycPuBreBnch5gqaZ/0SQSyBS8h2UvzO8=;
-        b=YQyzvdGDwoZv92WHT5I8FfoOrU2yCkRrEwLhYjmphKImdVB9WnFllNioFGmBNR/Nh1
-         8ea/zzPkQkRN0P9320tcpSIWHhgH2cthsAO12Yo6AmT8kG5Ls/s3hCTvoEmCigwBIZL3
-         2qskZzVWorUIsMIrqlVnyxoLtzJUgN7qRS9YExF+DI8J6eZ45E4Hm/BisIIQV12ncPkM
-         kheF4sTkpFshPCFM2U5PTmbzhjE3jfqFlWm/l2qsh8DArirhIKZfnU89ggAsSnidUmbm
-         DzOo+2/48jVcBN797sAAkYyrpMOUtKAJl5UWfLBqehIuXa3zSuzA7ovpHiD+pStbEaIV
-         P4dQ==
-X-Gm-Message-State: AOAM530OjbTlCZd74udBK3tzY5IuDZSi44ayBR+E9iwQsYu6B/eXLt+P
-        ZYJ53vpve4tLurSTW/d7PCNsInMytFqR7wT1TuE=
-X-Google-Smtp-Source: ABdhPJyHOGPyH7PT1Ld8Tj3BTyk88fLgaCiWOIuIkPpuig/EqameyFcIyr6Yqi93i8zEOHXQYRuXJH/+H2oIDTyPXFk=
-X-Received: by 2002:a05:6830:78c:: with SMTP id w12mr3883349ots.162.1627064238095;
- Fri, 23 Jul 2021 11:17:18 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=jeAQQH1SszbqUp7tEESr5pHWDCqxaL7Ae6m46u9fY7k=;
+        b=bf1MTq/063F0dbeLCdSrGF5SHCkqjLDmrcPqBEaiGUDRz3AlBoIo98JWHB2jeqoxvf
+         e3tZHfWBskayskTpfbEGwzWNolOn6VVjfs7yfCVyTiQxeytJZuQWwNz30libIkUoAZXB
+         pkkYMeQ18rf4dnGwLz9YJuoBdDp+gmbukl3lsfvx44ghL1mFT5nsfF+x2W2JmKWoeEYD
+         qP9WahN38SoYszAWF0A23YMawruTVwahIqzKqlcpiQgBeAFJRWqcJF0x9noBYC9pHzLX
+         cR5qqkf2AGchDuai7z96l1EKn8D4G0Jl9qr2WAslTwk3+iO4BV6Z1kEl/j9PJdUwFIcf
+         LrSQ==
+X-Gm-Message-State: AOAM531Zqn5NTlKXby4FSb7yoDOOkk+J8SMgbiQQ/j1BfviNowZiPGqE
+        an3RGYag+bm/+2ZSTOYMGuO7/fnPzZiIAf367Nw=
+X-Google-Smtp-Source: ABdhPJzt0XwtEL1L/cNoIAWOkJeg+uRvXC5qCeXvBJQaHJivEkGn+b4iS16t2Tl5ZrBYpX2dVufjOnOcvK8Y22uIYg4=
+X-Received: by 2002:a17:906:f9c5:: with SMTP id lj5mr5900626ejb.482.1627064569234;
+ Fri, 23 Jul 2021 11:22:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.999.git.1626901619.gitgitgadget@gmail.com> <a577ea4c74d86e57defcc4f45011871b634bcf56.1626901619.git.gitgitgadget@gmail.com>
-In-Reply-To: <a577ea4c74d86e57defcc4f45011871b634bcf56.1626901619.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 23 Jul 2021 11:17:07 -0700
-Message-ID: <CABPp-BFPDoqfJs1YoeEBhJnEtz=5Owr61=nBwHyV8Gho7uTn3Q@mail.gmail.com>
-Subject: Re: [PATCH 3/5] pathspec: stop calling ensure_full_index
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+References: <20210715232603.3415111-1-emilyshaffer@google.com>
+ <20210715232603.3415111-5-emilyshaffer@google.com> <87lf66y6pd.fsf@evledraar.gmail.com>
+ <YPnwBu4oMA9K445J@google.com> <60fafd8295996_defb208dc@natae.notmuch>
+In-Reply-To: <60fafd8295996_defb208dc@natae.notmuch>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 23 Jul 2021 14:22:38 -0400
+Message-ID: <CAPig+cS6EmxZeO5Ad3oUMn2tkSwE1CdLTaA7-Pp2CbmO--EW3g@mail.gmail.com>
+Subject: Re: [PATCH 4/9] hook: treat hookdir hook specially
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 21, 2021 at 2:07 PM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Fri, Jul 23, 2021 at 1:34 PM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> Emily Shaffer wrote:
+> > On Fri, Jul 16, 2021 at 10:58:34AM +0200, Ævar Arnfjörð Bjarmason wrote:
+> > > At this point I tihnk it would be way better to squash this and other
+> > > such changes that basically add a field to a struct that isn't used yet
+> > > into whatever commit use/need them.
+> >
+> > I think at this point we run into you and me having different
+> > patch-storytelling styles - which probably is what led to the big topic
+> > restart in the first place ;)
 >
-> From: Derrick Stolee <dstolee@microsoft.com>
+> Yes, but as a reader of the story I prefer not to have to read the
+> entire thing in order to understand it. I prefer each page to tell a
+> small story.
 >
-> The add_pathspec_matches_against_index() focuses on matching a pathspec
-> to file entries in the index. This already works correctly for its only
-> use: checking if untracked files exist in the index.
->
-> The compatibility checks in t1092 already test that 'git add <dir>'
-> works for a directory outside of the sparse cone. That provides coverage
-> for removing this guard.
->
-> This finalizes our ability to run 'git add .' without expanding a sparse
-> index to a full one. This is evidenced by an update to t1092 and by
-> these performance numbers for p2000-sparse-operations.sh:
->
-> Test                                    HEAD~1            HEAD
-> --------------------------------------------------------------------------------
-> 2000.10: git add . (full-index-v3)      0.37(0.28+0.07)   0.36(0.27+0.06) -2.7%
-> 2000.11: git add . (full-index-v4)      0.33(0.26+0.06)   0.32(0.28+0.05) -3.0%
-> 2000.12: git add . (sparse-index-v3)    0.57(0.53+0.07)   0.06(0.06+0.07) -89.5%
-> 2000.13: git add . (sparse-index-v4)    0.57(0.53+0.07)   0.05(0.03+0.09) -91.2%
->
-> While the ~90% improvement is shown by the test results, it is worth
-> noting that expanding the sparse index was adding overhead in previous
-> commits. Comparing to the full index case, we see the performance go
-> from 0.33s to 0.05s, an 85% improvement.
+> Putting my armchair reviewer hat I cannot do that for this particular
+> patch, I would need to do more work to make sense of it, and while I'm
+> writing this message to explains that, others will simply skip it, and
+> that's a lost opportunity.
 
-These perf improvements are pretty sweet.
+Implicit in what Felipe and Ævar are saying is that a well-structured
+patch series asks the reviewer to keep only one or two details in mind
+after reading a patch in order to understand the next patch in the
+series, and that the reviewer shouldn't be expected to keep a large
+set of details in mind over several patches. Unlike the author of the
+patches who can keep all the details in mind at once and understands
+the series in its entirety, reviewers (usually) don't have such
+luxury[1]. So, it's important to hand-hold reviewers as much as
+possible by not asking them to remember a lot of details between
+patches and by ensuring that the details which they must remember only
+need to be remembered for a very short time. This is why it is
+helpful, for instance, to bundle documentation and test updates in the
+patch with changes to code, so the reviewer can see at a glance that
+the changes to documentation and tests match the changes to the code,
+rather than delaying documentation and test updates until later in the
+series.
 
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  pathspec.c                               | 2 --
->  t/t1092-sparse-checkout-compatibility.sh | 7 +++----
->  2 files changed, 3 insertions(+), 6 deletions(-)
->
-> diff --git a/pathspec.c b/pathspec.c
-> index 08f8d3eedc3..44306fdaca2 100644
-> --- a/pathspec.c
-> +++ b/pathspec.c
-> @@ -37,8 +37,6 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
->                         num_unmatched++;
->         if (!num_unmatched)
->                 return;
-> -       /* TODO: audit for interaction with sparse-index. */
-> -       ensure_full_index(istate);
->         for (i = 0; i < istate->cache_nr; i++) {
->                 const struct cache_entry *ce = istate->cache[i];
->                 if (sw_action == PS_IGNORE_SKIP_WORKTREE && ce_skip_worktree(ce))
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index a11d9d7f35d..f9e2f5f4aa1 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -322,9 +322,6 @@ test_expect_success 'commit including unstaged changes' '
->  test_expect_success 'status/add: outside sparse cone' '
->         init_repos &&
->
-> -       # adding a "missing" file outside the cone should fail
-> -       test_sparse_match test_must_fail git add folder1/a &&
-> -
-
-So this is removed because of non-matching errors.  In particular,
-sparse-checkout shows
-"""
-The following pathspecs didn't match any eligible path, but they do match index
-entries outside the current sparse checkout:
-folder1/a
-hint: Disable or modify the sparsity rules if you intend to update such entries.
-hint: Disable this message with "git config advice.updateSparsePath false"
-"""
-while sparse-index now shows:
-"""
-fatal: pathspec 'folder1/a' did not match any files
-"""
-
-The new error seems entirely reasonable to me.  No objection here.
-
-
-But allow me to go on a bit of a diversion...
-
-If we modify this setup slightly by running:
-
-$ mkdir folder1
-$ echo garbage >folder1/a
-$ git add folder1/a
-
-Then you'll get the first of those errors in both the sparse-index and
-the sparse-checkout.  I also like this behavior.
-
-If you unset the SKIP_WORKTREE bit manually, and then add:
-
-$ git update-index --no-skip-worktree folder1/a
-$ git add folder1/a
-
-Then the file is added with no error or warning.  I like this behavior too.
-
-If you further change the setup with:
-
-$ echo more garbage >folder1/z
-$ git add folder1/z
-
-Then you get no error, despite folder1/z being an untracked file
-outside of sparsity paths.  No bueno.  :-(
-
->         # folder1 is at HEAD, but outside the sparse cone
->         run_on_sparse mkdir folder1 &&
->         cp initial-repo/folder1/a sparse-checkout/folder1/a &&
-> @@ -633,7 +630,9 @@ test_expect_success 'sparse-index is not expanded' '
->         echo >>sparse-index/README.md &&
->         ensure_not_expanded add -A &&
->         echo >>sparse-index/extra.txt &&
-> -       ensure_not_expanded add extra.txt
-> +       ensure_not_expanded add extra.txt &&
-> +       echo >>sparse-index/untracked.txt &&
-> +       ensure_not_expanded add .
-
-:-)
-
->  '
->
->  # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
-> --
-
-So I added a lot of comments here, in part because I thought I'd test
-a bit more of what I said in response to your cover letter and see how
-close to it we were.  The patch in question looks fine.
-
-I just added an aside as a convenient place to check whether the
-behavior at the end of the series matches what you proposed in the
-cover letter, or what I proposed in response.  It appears it matches
-neither (though that's not due to this specific patch).
+[1]: If you've ever read a novel in which the author has multiple
+story lines running and switches between story lines infrequently,
+such that when the author switches back to story-line "A", which you
+last saw 100 pages ago, and you can't remember what was going in "A"
+or even who the minor characters are anymore, so that you have to go
+back and reread 10 or 20 pages from the previous time you saw "A",
+then that's representative of the difficulty reviewers can experience
+when reading a patch series, except with a patch series, the cognitive
+load is already quite high. (Very nice run-on sentence I just wrote.)
