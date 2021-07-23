@@ -2,103 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 507DAC4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 18:22:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DB72C4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 18:29:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2BCDE60ED7
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 18:22:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F54B60E8F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 18:29:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbhGWRmS convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 23 Jul 2021 13:42:18 -0400
-Received: from mail-ej1-f41.google.com ([209.85.218.41]:41560 "EHLO
-        mail-ej1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbhGWRmR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 13:42:17 -0400
-Received: by mail-ej1-f41.google.com with SMTP id hb6so4922165ejc.8
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 11:22:49 -0700 (PDT)
+        id S229539AbhGWRtI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 13:49:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34376 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229459AbhGWRtH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 13:49:07 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBC08C061575
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 11:29:39 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id u10so2799459oiw.4
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 11:29:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=AMx+7zbsCUFPdl4Oz1DEIRqEkyDsyEropaeLBkmloSQ=;
+        b=c3wBXm0HZbXIvS5QHGIJmJyDMw7dQavl/2CZDrMdFc1SzzyoPK8UoFA2UU7Ati5Q2e
+         T3l9ATrbLJ47Zc1sMRbOtQR9dGAKNuCys/aPiPEqsoozmrOyu9CIChCBHaqRZA7ACQxC
+         rajI7/PDeTBX8RNonIsE1T08BNP1g8e+svFhFZH8skaAdp0xkRwunm8b5SKLzhdKFs5T
+         R56F0TxA0zXaJQbi5Pm+wn1SAFJ8k9Cz//O8zyNh+KqUKM/yKyFAMynHTcPSpctnzBH5
+         3hvcYEPPkUJnnIEvOpE7b9EK6S/Zdvd79PSC3u45FGtHDwMX7lRS9IrnsGQ4b4xUFws8
+         FB+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=jeAQQH1SszbqUp7tEESr5pHWDCqxaL7Ae6m46u9fY7k=;
-        b=bf1MTq/063F0dbeLCdSrGF5SHCkqjLDmrcPqBEaiGUDRz3AlBoIo98JWHB2jeqoxvf
-         e3tZHfWBskayskTpfbEGwzWNolOn6VVjfs7yfCVyTiQxeytJZuQWwNz30libIkUoAZXB
-         pkkYMeQ18rf4dnGwLz9YJuoBdDp+gmbukl3lsfvx44ghL1mFT5nsfF+x2W2JmKWoeEYD
-         qP9WahN38SoYszAWF0A23YMawruTVwahIqzKqlcpiQgBeAFJRWqcJF0x9noBYC9pHzLX
-         cR5qqkf2AGchDuai7z96l1EKn8D4G0Jl9qr2WAslTwk3+iO4BV6Z1kEl/j9PJdUwFIcf
-         LrSQ==
-X-Gm-Message-State: AOAM531Zqn5NTlKXby4FSb7yoDOOkk+J8SMgbiQQ/j1BfviNowZiPGqE
-        an3RGYag+bm/+2ZSTOYMGuO7/fnPzZiIAf367Nw=
-X-Google-Smtp-Source: ABdhPJzt0XwtEL1L/cNoIAWOkJeg+uRvXC5qCeXvBJQaHJivEkGn+b4iS16t2Tl5ZrBYpX2dVufjOnOcvK8Y22uIYg4=
-X-Received: by 2002:a17:906:f9c5:: with SMTP id lj5mr5900626ejb.482.1627064569234;
- Fri, 23 Jul 2021 11:22:49 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210715232603.3415111-1-emilyshaffer@google.com>
- <20210715232603.3415111-5-emilyshaffer@google.com> <87lf66y6pd.fsf@evledraar.gmail.com>
- <YPnwBu4oMA9K445J@google.com> <60fafd8295996_defb208dc@natae.notmuch>
-In-Reply-To: <60fafd8295996_defb208dc@natae.notmuch>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 23 Jul 2021 14:22:38 -0400
-Message-ID: <CAPig+cS6EmxZeO5Ad3oUMn2tkSwE1CdLTaA7-Pp2CbmO--EW3g@mail.gmail.com>
-Subject: Re: [PATCH 4/9] hook: treat hookdir hook specially
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=AMx+7zbsCUFPdl4Oz1DEIRqEkyDsyEropaeLBkmloSQ=;
+        b=sO77hU4ivBRj4yngDTetys6yxQvONVGj6Det03VvxNmfkIdwIsJTw8vVF475PgJ/U5
+         KePUHuGEqggE832Bt9fQjNzaR4j6sne8y0nhiJ5phjPKoBl8SEJFeZY459MMjhJLWbf/
+         35RBtR2euWiodXVJvVOtca94mzVmrKFu8GuZL29z019c4NtPjmop0MiJliFWDRWhAaAv
+         LCYqrz0pNH12zUYrMZdQzmPm8Zuz86LlkWuW3Fqs28s/8HJ9+paylwvlGniRmRgH9NS0
+         //qRc6EhgDp74TNPgctAuq5QK4kg5gOq2uvYA/PBcvs9E50fgjSLtdiXylataR+S/6vn
+         HGew==
+X-Gm-Message-State: AOAM533YzfI1oms1MpFyr45ropHBkw7ddVZW0fRvWi/bDllHn8kU0Xel
+        0GHV0aDscY0zAGlkOg6qwlY=
+X-Google-Smtp-Source: ABdhPJx84Ec5NGkJXd/g3LbMmD8jlEUEon53z5Jsr8ewUsw66PBwE+uZPPWH1BrO4uoOHI6lMyVqvA==
+X-Received: by 2002:a05:6808:8d2:: with SMTP id k18mr3934245oij.176.1627064979156;
+        Fri, 23 Jul 2021 11:29:39 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id c21sm2185011oiw.16.2021.07.23.11.29.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jul 2021 11:29:38 -0700 (PDT)
+Date:   Fri, 23 Jul 2021 13:29:37 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Marc Branchaud <marcnarc@xiplink.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Stephen Haberman <stephen@exigencecorp.com>
+Message-ID: <60fb0a916c9cc_defb208eb@natae.notmuch>
+In-Reply-To: <xmqqwnphowdx.fsf@gitster.g>
+References: <20210721221545.1878514-1-felipe.contreras@gmail.com>
+ <xmqqy29z9r94.fsf@gitster.g>
+ <xmqqtukn9p0g.fsf@gitster.g>
+ <60f8c8c92a215_1d0abb20859@natae.notmuch>
+ <YPpwIazVxL4GoLbC@coredump.intra.peff.net>
+ <xmqqwnphowdx.fsf@gitster.g>
+Subject: Re: [PATCH] doc: pull: fix rebase=false documentation
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 23, 2021 at 1:34 PM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> Emily Shaffer wrote:
-> > On Fri, Jul 16, 2021 at 10:58:34AM +0200, Ævar Arnfjörð Bjarmason wrote:
-> > > At this point I tihnk it would be way better to squash this and other
-> > > such changes that basically add a field to a struct that isn't used yet
-> > > into whatever commit use/need them.
+Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > So I feel compelled to say now that I do not think that changing the
+> > order of parents for "git pull" is the obviously correct thing to do.
+> > And likewise, in the one thread I do remember participating in, I
+> > expressed something similar:
 > >
-> > I think at this point we run into you and me having different
-> > patch-storytelling styles - which probably is what led to the big topic
-> > restart in the first place ;)
->
-> Yes, but as a reader of the story I prefer not to have to read the
-> entire thing in order to understand it. I prefer each page to tell a
-> small story.
->
-> Putting my armchair reviewer hat I cannot do that for this particular
-> patch, I would need to do more work to make sense of it, and while I'm
-> writing this message to explains that, others will simply skip it, and
-> that's a lost opportunity.
+> >   https://lore.kernel.org/git/20140502214817.GA10801@sigill.intra.peff.net/
+> 
+> Thanks for the link.  Many articles in the thread are repeating the
+> same opinion over and over (and later even descend into ad-hominem
+> attacks) and it is not worth anybody's time to read all of them, but
+> I found that there still were some gems.
+> 
+> In an worldview where the first-parent chain is the trunk history,
+> merging in the upstream where you push back to into your working
+> repository where your new work is happening as the second parent
+> before pushing it back would obviously make the history that used to
+> be trunk to lose the first-parent-ness at that point.  And if you
+> ask if I just said is correct, everybody would say it is.  So there
+> is a concensus that the result of "git pull upstream main" becomes
+> a wrong shape for people in one workflow.
+> 
+> But that does not necessarily mean swapping the parent order would
+> produce the history of a right shape, either, even for those with
+> the "first-parent chain is the trunk" worldview.
 
-Implicit in what Felipe and Ævar are saying is that a well-structured
-patch series asks the reviewer to keep only one or two details in mind
-after reading a patch in order to understand the next patch in the
-series, and that the reviewer shouldn't be expected to keep a large
-set of details in mind over several patches. Unlike the author of the
-patches who can keep all the details in mind at once and understands
-the series in its entirety, reviewers (usually) don't have such
-luxury[1]. So, it's important to hand-hold reviewers as much as
-possible by not asking them to remember a lot of details between
-patches and by ensuring that the details which they must remember only
-need to be remembered for a very short time. This is why it is
-helpful, for instance, to bundle documentation and test updates in the
-patch with changes to code, so the reviewer can see at a glance that
-the changes to documentation and tests match the changes to the code,
-rather than delaying documentation and test updates until later in the
-series.
+Why not? Everyone who saw a problem agreed it would.
 
-[1]: If you've ever read a novel in which the author has multiple
-story lines running and switches between story lines infrequently,
-such that when the author switches back to story-line "A", which you
-last saw 100 pages ago, and you can't remember what was going in "A"
-or even who the minor characters are anymore, so that you have to go
-back and reread 10 or 20 pages from the previous time you saw "A",
-then that's representative of the difficulty reviewers can experience
-when reading a patch series, except with a patch series, the cognitive
-load is already quite high. (Very nice run-on sentence I just wrote.)
+Reversing the order of the parents creates a merge commit like so:
+
+  Y---X-+
+         \
+  B---A---M  trunk
+
+Most git experts work with topic branches, and when you do that, you get
+the same thing:
+
+    topic
+      |
+      v
+  Y---X-+
+         \
+  B---A---M  master
+
+If you merge topic to master, the first parent of the merge commit is A.
+
+If you do `git pull --reverse-parents` on a trunk-based workflow as
+above, you would get exactly the same shape of the history.
+
+How is it not the right shape?
+
+-- 
+Felipe Contreras
