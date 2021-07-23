@@ -6,70 +6,90 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E554C4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 07:01:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F446C4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 07:07:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 757B260EE2
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 07:01:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1222860EE2
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 07:07:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234143AbhGWGUg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 02:20:36 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55330 "EHLO cloud.peff.net"
+        id S234209AbhGWG0a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 02:26:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55344 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234136AbhGWGUg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 02:20:36 -0400
-Received: (qmail 10064 invoked by uid 109); 23 Jul 2021 07:01:09 -0000
+        id S234152AbhGWG03 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 02:26:29 -0400
+Received: (qmail 10087 invoked by uid 109); 23 Jul 2021 07:07:02 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 23 Jul 2021 07:01:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 23 Jul 2021 07:07:02 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22633 invoked by uid 111); 23 Jul 2021 07:01:11 -0000
+Received: (qmail 22660 invoked by uid 111); 23 Jul 2021 07:07:05 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 23 Jul 2021 03:01:11 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 23 Jul 2021 03:07:05 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 23 Jul 2021 03:01:09 -0400
+Date:   Fri, 23 Jul 2021 03:07:02 -0400
 From:   Jeff King <peff@peff.net>
-To:     Angelo Borsotti <angelo.borsotti@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: Extracting a file
-Message-ID: <YPppNYOO26xAq2fn@coredump.intra.peff.net>
-References: <CAB9Jk9AafnUQr6q8t=b4Dh0PZHUA=fKJmtXxxObuGpF_w-_2wQ@mail.gmail.com>
- <871r7qvhhr.fsf@evledraar.gmail.com>
- <CAB9Jk9DqCR8C9qx6-gZmpTQfBAKnEupQTb1WkJgN3YOqSO0=2A@mail.gmail.com>
+To:     Oliver Niebuhr <oliver.niebuhr@oliverniebuhr.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [Bug Report] Git does not push signingkey ID to GPG
+Message-ID: <YPpqlnuGrk8Gunep@coredump.intra.peff.net>
+References: <dfeebef5-6f48-082d-f49d-832863ff62a8@oliverniebuhr.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAB9Jk9DqCR8C9qx6-gZmpTQfBAKnEupQTb1WkJgN3YOqSO0=2A@mail.gmail.com>
+In-Reply-To: <dfeebef5-6f48-082d-f49d-832863ff62a8@oliverniebuhr.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 22, 2021 at 11:46:01AM +0200, Angelo Borsotti wrote:
+On Fri, Jul 23, 2021 at 01:42:20AM +0200, Oliver Niebuhr wrote:
 
-> Actually, I did not want to make git behave like a read-only filesystem,
-> but only to be able to get what is stored in it using some easy to remember
-> command.
+> I have edit the .gitconfig File accordingly and added
 > 
-> I guess that:
+> [user]
+> signingkey = NNN
+> [commit]
+> gpgsign = true
+> [alias]
+> amend = commit -S -s --amend
+> cm = commit -S -s
+> commit = commit -S -s
+> tag = tag -S -s
+> [gpg]
+> program = C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe
 > 
->     git mv A B &&
->     git checkout HEAD -- A
+> The Git User Name and eMail Address are the same which are set in the used
+> GPG Certificate.
 > 
-> renames file A in the work, current, directory to B, and then recovers
-> A from the
-> repository. This changes the file on which I am working. After having
-> read the old
-> A, and understood what changes I make that are not correct, I should delete A,
-> and rename B back to A.
-> If something gets wrong with this, I risk to damage my original A.
-> This is why it is
-> better not to change it, and instead get a copy of the old one with
-> another name,
-> which is what
+> Using '-S' from the Windows CMD Shell and Git Bash leads to an error.
+> Neither typing the command manually or using it through an alias works.
 > 
-> git show HASH:file/path/name.ext > some_new_name.ext
+> When I switch '-S' with '--gpg-sign=NNN' everything works as it should from
+> CMD Line - but not when I use for example SmartGit and enable 'Sign all
+> Commits'. After countless hours looking through the Web, I am not out of
+> Ideas.
 
-You might also like "git checkout -p HASH -- A", which will let you pick
-individual hunks from HASH:A and apply them to your working tree.
+This works fine for me. I get:
+
+  $ GIT_TRACE=1 git -c user.signingkey=1234abcd commit -S --amend --no-edit
+  03:03:26.487264 [pid=1285432] git.c:455           trace: built-in: git commit -S --amend --no-edit
+  03:03:26.491963 [pid=1285432] run-command.c:666   trace: run_command: gpg --status-fd=2 -bsau 1234abcd
+  error: gpg failed to sign the data
+  fatal: failed to write commit object
+
+In your trace, the key parameter that's passed is the empty string:
+
+> 00:30:45.064284 run-command.c:667       trace: run_command: 'C:\Program
+> Files (x86)\GnuPG\bin\gpg.exe' -bsau ''
+> gpg: skipped "": Invalid user ID
+> gpg: signing failed: Invalid user ID
+
+You showed config with user.signingkey set. Is it possible that you have
+other config (say, in the repo config file), that is taking precedence?
+
+What does:
+
+  git config --show-origin --get-all user.signingkey
+
+say when run inside the repository?
 
 -Peff
