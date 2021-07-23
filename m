@@ -2,104 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D94F1C4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 10:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18B1BC4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 10:16:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BCE2B608FE
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 10:05:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC65E600D3
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 10:16:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231357AbhGWJZI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 05:25:08 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:44530 "EHLO smtp.hosts.co.uk"
+        id S230238AbhGWJfq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 05:35:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55658 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230008AbhGWJZA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 05:25:00 -0400
-Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1m6s3J-000CQt-DJ; Fri, 23 Jul 2021 11:05:09 +0100
-Subject: Re: [PATCH] doc: pull: fix rebase=false documentation
-To:     Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Marc Branchaud <marcnarc@xiplink.com>,
-        Elijah Newren <newren@gmail.com>,
-        Stephen Haberman <stephen@exigencecorp.com>
-References: <20210721221545.1878514-1-felipe.contreras@gmail.com>
- <xmqqy29z9r94.fsf@gitster.g> <xmqqtukn9p0g.fsf@gitster.g>
- <60f8c8c92a215_1d0abb20859@natae.notmuch>
- <YPpwIazVxL4GoLbC@coredump.intra.peff.net>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <9cb70776-8684-9d1e-e4c5-188c6c19fdc7@iee.email>
-Date:   Fri, 23 Jul 2021 11:05:08 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S230025AbhGWJfq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 05:35:46 -0400
+Received: (qmail 11147 invoked by uid 109); 23 Jul 2021 10:16:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 23 Jul 2021 10:16:19 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24074 invoked by uid 111); 23 Jul 2021 10:16:21 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 23 Jul 2021 06:16:21 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 23 Jul 2021 06:16:18 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>,
+        "Tom G . Christensen" <tgc@jupiterrise.com>,
+        Mischa POSLAWSKY <git@shiar.nl>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/5] drop support for ancient curl
+Message-ID: <YPqW8lAcwno3j7Fq@coredump.intra.peff.net>
+References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net>
+ <cover-0.5-00000000000-20210721T220402Z-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <YPpwIazVxL4GoLbC@coredump.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover-0.5-00000000000-20210721T220402Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/07/2021 08:30, Jeff King wrote:
-> On Wed, Jul 21, 2021 at 08:24:25PM -0500, Felipe Contreras wrote:
->
->> I'm not trashing the current behavior, I'm explaining what the consensus
->> is. I spent several man-days re-reading old threads, and this is the
->> consensus of what should happen:
->>
->>   1. git pull              # merge HEAD into upstream
->>   2. git pull origin topic # merge topic into HEAD
->>
->> Of the people that expressed an opinion, 100% of them stated that what
->> `git pull` does in the first case today is not desirable.
-> I did not participate in the threads you linked earlier, so I am
-> probably not in that 100%. But you did use my name below:
->
->> Yes, you are correct that if *everyone* followed the topic branch
->> workflow, everything would work correctly, but that's not what happens
->> in reality, in reality people do all kinds of workflows, and wrong
->> merges are pervasive.
->>
->> Everyone--including Linus, Jeff, and you--agree that there's two
->> different ways of using `git pull`: integrator versus developer.
->>
->> When a user is doing `git pull` to synchronize changes to push to the
->> same branch, that's a centralized two-way workflow, so he is acting both
->> as an integrator and as a developer, and it's in that particular case
->> that the order of the parents should be reversed. Everyone agrees on
->> that.
->>
->> When the user the opposite explicitely: `git pull origin master`
->> Linus calls it a "back-merge" [1], and in that case the order of the
->> parents should not be reversed.
-> So I feel compelled to say now that I do not think that changing the
-> order of parents for "git pull" is the obviously correct thing to do.
-While I never `pull` because it's not right for me as a 'contributor', I
-do agree that the default 'maintainer' view of `pull` will need to be
-retained for long term backward compatibility.
+On Thu, Jul 22, 2021 at 12:22:11AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-What I have rarely seen in the discussion is explanation that is based
-on workflow style, though the potential `update` command (1) may break
-some of the deadlock about the direction of 'pull requests', and
-possibly confusion regarding the location of the 'golden' publish repo.
+> This series is a re-roll of patches found in Peff's GitHub repo at
+> jk/no-ancient-curl, which were already-rebased versions of those
+> patches. His original on-list version had his Signed-off-by, but the
+> range-diff is against that branch, hence the addition of
+> Signed-off-by in the range-diff.
 
-(1) there are a lot of 'update' commands floating about, esp on Git for
-Windows. If there is a suitably named `update` command to do the `pull
---contributor` merge-ff swap then many of the issues could fade away.
+Heh, OK. It's a little surprising to see random junk pulled out of my
+GitHub repo, but in this case I was holding onto them with the intent of
+eventually resending after more time passed.
 
-> And likewise, in the one thread I do remember participating in, I
-> expressed something similar:
->
->   https://lore.kernel.org/git/20140502214817.GA10801@sigill.intra.peff.net/
->
-> -Peff
---
-Philip
+So I'm happy to see these cleaned up and posted. I think what's on that
+branch should be good-ish, in the sense that I've been rebasing it
+forward as part of my daily routine, and it's part of the build that I
+use day-to-day. Though apparently I never applied the CURLOPT_POST301
+fix. :-/
+
+I know my S-o-b was on the originals to the list, but just to make
+clear: I am fine with using them on the rebased versions you grabbed.
+
+> I then added a couple of patches on top, one is based on my comments
+> on the v1 http://lore.kernel.org/git/871sokhoi9.fsf@gmail.com,
+> i.e. the CURLAUTH_DIGEST_IE and CURLOPT_USE_SSL flags are also
+> version-based, and we can drop support for curls that don't have them.
+
+Seems reasonable.
+
+> I then renamed the ancient CURLOPT_FILE alias to
+> CURLOPT_WRITEDATA. Incidentally that's how I remembered to dig up this
+> series, i.e. I tried to search for "CURLOPT_FILE" in API documentation
+> while reading our HTTP code, but had a hard time finding it, turns out
+> we were using a very ancient synonym for the preferred name.
+
+This seemed weirdly familiar. Looks like it was part of a series last
+year, but the trickier parts built on top merited a re-roll that never
+came:
+
+  https://lore.kernel.org/git/20201013191729.2524700-2-smcallis@google.com/
+
+> Jeff King (3):
+>   http: drop support for curl < 7.11.1
+>   http: drop support for curl < 7.16.0
+>   http: drop support for curl < 7.19.4
+> 
+> Ævar Arnfjörð Bjarmason (2):
+>   http: drop support for curl < 7.19.3 and < 7.16.4 (again)
+>   http: rename CURLOPT_FILE to CURLOPT_WRITEDATA
+
+So modulo the commit message tweaks that Junio suggested, this all looks
+fine. I actually think my original "#error on too-old curl" is still
+reasonable. Yes, people whose distro has backported all of these
+features could possibly still use it. But in that case they likely know
+what's going on and can rip out the #error. It seems much more likely
+to me that it _won't_ work, and they'll get confused by obscure errors
+when they try to use an old curl.
+
+But I don't feel too stronlgy about it either way.
+
+-Peff
