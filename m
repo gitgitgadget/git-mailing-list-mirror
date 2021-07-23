@@ -2,72 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38033C4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:02:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E9A5C432BE
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:10:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1B67C60725
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:02:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FCBA60EB5
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:10:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235614AbhGWPV3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 11:21:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56428 "EHLO
+        id S229852AbhGWPaL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 11:30:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235568AbhGWPV2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 11:21:28 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EDA3C061575
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 09:02:02 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id v8-20020a0568301bc8b02904d5b4e5ca3aso1656755ota.13
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 09:02:02 -0700 (PDT)
+        with ESMTP id S229492AbhGWPaK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 11:30:10 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2CE5C061575
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 09:10:42 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id u10so2352398oiw.4
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 09:10:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=Qz3xf33z6rZ9yFb0/Ynl8S3EDLegu7e2hZRisu8W07Y=;
-        b=eQEAevpBDNvenqcNJeSSbWY9Ls2p0fBwtbjv5s+imZp1Mqd/3Hb5ey7ahfhXhQj0BU
-         IliEjAGxfnOVF5IwwpSrMp7ZPzCSrqX+D5iXUspyC66H5GlG+U7Y3Ti25UIy+gM60jnJ
-         bpVlajvNbyr7SzDYYWbi5+8wyXKTyXMf+tCrzFOcMXiWM5Jvfs+RiJLWRHpPnF2gt+i2
-         6R+fHLtqtIt+qvl1sXRlxFDpsZPWMcqy8zAaG+h4HcVDnKszz2sibmZVbw1m5NNROQqW
-         ITQHTuEq0R9m9tEFKKIKhXaZevs1glyz3WYLMiTICat8FBnheUEC+KDsv5pletevx55G
-         F0Wg==
+        bh=r4C/Sf64RTUUYkdimsjxDnMAiCpj3TyjJ6FkcKPPw1s=;
+        b=Rdev2kMeyylZVWHZHGxRUiHfNxFqvoDYskZFJ7A3wU0mXnmb8WpsztIGdRulqB6ivY
+         d7kNbYPth+E4fo+l4QzdKWwx8482QWpkH/zRXw5nRKPHqik3y7GV42JbbTO/hoYm9tpg
+         4udaCy9cY9eQbETRXN9LDGd3iSuYv7DfNU1oIUfL9wUeeOKMfJlRw4JpSfoThjNZMC8O
+         FsiZP0wZ+qL0dj1Lo6Wp/R/WQ6Bpq0tpFF7XslOGgOH1hcmmUNXqf9scGD6cLLAOTIUB
+         8hHxcEzE7WOKN8cTk526oViHv9EbzAEDwXLGj76OTeGpNr8F3oxd4LdRljkXE4OUqJH0
+         Lyfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=Qz3xf33z6rZ9yFb0/Ynl8S3EDLegu7e2hZRisu8W07Y=;
-        b=EkP9oxBPDHa2fmK2PrrKg6veSST5Uvx7hbIv4JIKkWa+ScvPNVhUuCUC1YZu/UlvcW
-         YDYT5FeyE1+t7cQeOYypoLm+giHpuPLnZQ+yoqG4c3aniBZv+VlIlD+p73M8bMhYUNgd
-         QYN3a/dwasAcc7I6V6QWmbO0Fl00OY0dokQY+bOzA+8fscAYG0heCkyY+fSrr7YYAdd9
-         xm1+xylh8vYi1CWZK87eMadHd3Q5exLKjVJpg2kC5x6pc2bBj2oMbBPJF5L+OaSxuRvI
-         OARu6k9D1RNtiEJ2rO8JYCIFEj5hRxCo8yOrfuIrzQs64xBV45lltGDvcDMVP8noi1JE
-         x42A==
-X-Gm-Message-State: AOAM530aQ/wnZdmNAHg2zJnFaGcO5Oe7JpwwYp06Kda3hR/+L+YPDoq/
-        JK0O1zDHKjE56sKHTacfkYQ=
-X-Google-Smtp-Source: ABdhPJwGN6OFah4tT+wJL2tUB8JfwXysQhdBmW93SDs1H+yOrK5RkYO3apFlOaQAdJ21p+1Xqmw/3g==
-X-Received: by 2002:a9d:32f:: with SMTP id 44mr3581455otv.266.1627056121568;
-        Fri, 23 Jul 2021 09:02:01 -0700 (PDT)
+        bh=r4C/Sf64RTUUYkdimsjxDnMAiCpj3TyjJ6FkcKPPw1s=;
+        b=BeyHoGPwQBqbvXOSAwtSwH6qBvN4L9Wn8Yb2lh4vLGlS34QDzlDd9UDLlONZCInHxx
+         doaLISMrQ736sSYT/4mWbQsQbSrJumIlt9SXsrZjSR7tHksm6xTAxONN9Sp8bCZUQtqt
+         p13LbFM8FL1749y9z1ghQ/H+YhsoBTIh7ZtEiAXFFkOb4ttj5OixknzQAwN07LcwlyP/
+         OW/TKLDKEgL5102piNuh2j/ypdcI8u9eAd6cambRf/VanYpWem09pcy9NjrscNpLRuzJ
+         EG5g21RT5b4Esywy+pWywhve9hZuny3HrmWCwQOtTKS3lxO329VM5xZ24+VQbJcbsmJc
+         3cIA==
+X-Gm-Message-State: AOAM530rhK/a5MwROiWA5rZG1qt4waxviy9to9hhA9OpLrWpnU46SXiD
+        JJNFFvS1HnllHBRoDJ+VhYg=
+X-Google-Smtp-Source: ABdhPJwZ88tLeLpTtjgJsYPSTCF8hGZBRWWjn8Z2x1lS0wTaYZQzIq5h7VjZzcyKJ9JF//99g6gM1Q==
+X-Received: by 2002:aca:f497:: with SMTP id s145mr9487778oih.131.1627056642086;
+        Fri, 23 Jul 2021 09:10:42 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id z81sm5689722oia.41.2021.07.23.09.02.00
+        by smtp.gmail.com with ESMTPSA id r24sm5784883otg.14.2021.07.23.09.10.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jul 2021 09:02:01 -0700 (PDT)
-Date:   Fri, 23 Jul 2021 11:02:00 -0500
+        Fri, 23 Jul 2021 09:10:41 -0700 (PDT)
+Date:   Fri, 23 Jul 2021 11:10:40 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Cc:     Denton Liu <liu.denton@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
         Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <60fae7f8747c_defb20888@natae.notmuch>
-In-Reply-To: <86becf764243f129c980f073127ec3f08fd4477c.1627042470.git.gitgitgadget@gmail.com>
+Message-ID: <60faea007b6ce_defb20871@natae.notmuch>
+In-Reply-To: <pull.1002.git.1627042470.gitgitgadget@gmail.com>
 References: <pull.1002.git.1627042470.gitgitgadget@gmail.com>
- <86becf764243f129c980f073127ec3f08fd4477c.1627042470.git.gitgitgadget@gmail.com>
-Subject: RE: [PATCH 3/4] merge: apply autostash if fast-forward fails
+Subject: RE: [PATCH 0/4] [RFC] merge --autostash: apply autostash in more
+ cases
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -77,54 +76,30 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Philippe Blain via GitGitGadget wrote:
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
+> This series aims to apply the stash created by 'git merge --autostash' in 2
+> situations that were not covered by the code:
+> 
+>  1. If the merge is fast-forward but the fast-forward operation fails -
+>     PATCH 3/4
+>  2. If the merge strategy completely fails to handle the merge (exit code 2)
+>     - PATCH 4/4
+> 
+> The first 2 commits are small improvements that I noticed while implementing
+> the other two.
+> 
+> I'm marking it [RFC] because I'm not 100% sure that trying to apply the
+> autostash in 3/4 and 4/4 is actually the best course of action (or if it
+> would be better to call 'save_autostash' instead). That's because:
+> 
+> For 3/4 (fast-forward fails): I'm not sure if 'unpack_trees' (called by
+> 'checkout_fast_forward') is guaranteed to fail atomically, or it might fail
+> mid-way and leave the worktree unclean, in which case it might be better not
+> to apply the autostash, but just save it instead (and tell the user). In the
+> test case I'm adding, it does fail before starting to update the working
+> tree, but I'm not sure if it's always the case.
 
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -1560,6 +1560,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
->  					  &head_commit->object.oid,
->  					  &commit->object.oid,
->  					  overwrite_ignore)) {
-> +			apply_autostash(git_path_merge_autostash(the_repository));
->  			ret = 1;
->  			goto done;
->  		}
-
-I can verify that this fixes my simple test.
-
-> diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-> index 1cbc9715a81..216113d3537 100755
-> --- a/t/t7600-merge.sh
-> +++ b/t/t7600-merge.sh
-> @@ -122,6 +122,8 @@ test_expect_success 'setup' '
->  	c0=$(git rev-parse HEAD) &&
->  	cp file.1 file &&
->  	git add file &&
-> +	cp file.1 other &&
-> +	git add other &&
->  	test_tick &&
->  	git commit -m "commit 1" &&
->  	git tag c1 &&
-> @@ -711,6 +713,15 @@ test_expect_success 'fast-forward merge with --autostash' '
->  	test_cmp result.1-5 file
->  '
->  
-> +test_expect_success 'failed fast-forward merge with --autostash' '
-> +	git reset --hard c0 &&
-> +	git merge-file file file.orig file.5 &&
-> +	cp file.5 other &&
-> +	test_must_fail git merge --autostash c1 2>err &&
-> +	test_i18ngrep "Applied autostash." err &&
-
-I've heard others test we are moving away from test_i18ngrep in favor of
-grep.
-
-> +	test_cmp file.5 file
-> +'
-> +
->  test_expect_success 'octopus merge with --autostash' '
->  	git reset --hard c1 &&
->  	git merge-file file file.orig file.3 &&
+I'm not familiar with unpack_trees, but sans that possibility the whole
+series looks fine to me.
 
 -- 
 Felipe Contreras
