@@ -2,124 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0E10C4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 11:12:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B6B9C4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 12:14:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A872A60EC0
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 11:12:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4CC3260EB4
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 12:14:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231718AbhGWKb7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 06:31:59 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55742 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231428AbhGWKb5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 06:31:57 -0400
-Received: (qmail 11356 invoked by uid 109); 23 Jul 2021 11:12:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 23 Jul 2021 11:12:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24868 invoked by uid 111); 23 Jul 2021 11:12:30 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 23 Jul 2021 07:12:30 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 23 Jul 2021 07:12:30 -0400
-From:   Jeff King <peff@peff.net>
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Prathamesh Chavan <pc44800@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Rafael Silva <rafaeloliveira.cs@gmail.com>
-Subject: [PATCH] submodule: drop unused sm_name parameter from
- show_fetch_remotes()
-Message-ID: <YPqkHs47VDFBNZ0Z@coredump.intra.peff.net>
-References: <20210708095533.26226-1-raykar.ath@gmail.com>
- <20210710074801.19917-1-raykar.ath@gmail.com>
- <20210710074801.19917-5-raykar.ath@gmail.com>
+        id S234730AbhGWLeA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 07:34:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60760 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234670AbhGWLd7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 07:33:59 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36B94C061575
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 05:14:33 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id o5-20020a1c4d050000b02901fc3a62af78so3372764wmh.3
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 05:14:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=pSF7sbGGclKwgbNokW7NoFk5dxSvssYafDvM+8nwsPU=;
+        b=Bf9SyH5ICCZo8fxEsrEt8JSv8UZ4XAJ5OMgj3PAvuFwDAKpiZpqeC7bh9OgZuo8hXE
+         ZNDqj/wwuhx1lyy3BFFQh4islpi2+7cvT4pTx8b/UwaBnZlwKHhyr3nyGjCBROSfFjwX
+         C7MJ9S0r4UX+YwqU6h9SdEcSSGC9vu1EM6D/PRjzHCPriAassLL7j41Fd43rf8wEB9Yx
+         l6PpOt8pGl8Au7CqvGjao2b9BqnXDyNHd49TSKdmjA0lzG56ceGMxGhTh4yeZp3aDKNV
+         LcQkYqq/7Yx9/lU0mUdoqDckEe50vrMlKQDMP9o0Bo6boCyaxhxJIAr6PJzujgnwXTWa
+         xAzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=pSF7sbGGclKwgbNokW7NoFk5dxSvssYafDvM+8nwsPU=;
+        b=Q9UgxcsVqUzfN4zFAIInfYdWE9Zbly1bThTKoMEJQr8Cg/Ccz4ylr+o3TN16s3AxQS
+         aooZaQwiYwbv8IUJfeLTwjm1iUiU1BAanAXKm6RmvlSKvAOXMMBLykyQCJHZrIkVoI0U
+         B42Xr5Bth1P+XDaJm5KNfYuzF6psc3+H4jHME7SbTZT8kUxdkBiB9E9az7HjIHsH5E91
+         A1MIvxF9d+MQ6AKlfBScN4uh4Lu5P4InmgAMdgvb/paNGmoHryAJYG5NkuUYnl8oyeKa
+         TmDf9rik3Li5Ki7J6UHke6YipCelpjduVZpH+90UNnAlJ3F0JgoMSx08ef8Gq8lHskRG
+         0vMw==
+X-Gm-Message-State: AOAM530zbqeURiiic1ZOKQXWV5zr8VOZlvREWRa3tE+hnrHZOqEZcBAj
+        AK/YOjP5/Icf7HbHnSXwYAK5SVh3gT0=
+X-Google-Smtp-Source: ABdhPJzlNreL5G2qjc8wrIRg9YedRpBIZSaVtI8GpVI2lrI6fvT6xga69gWO0ZazdvK2gGBxyV/G3w==
+X-Received: by 2002:a05:600c:2319:: with SMTP id 25mr13708092wmo.91.1627042471817;
+        Fri, 23 Jul 2021 05:14:31 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a9sm32698707wrv.37.2021.07.23.05.14.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jul 2021 05:14:31 -0700 (PDT)
+Message-Id: <pull.1002.git.1627042470.gitgitgadget@gmail.com>
+From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 23 Jul 2021 12:14:26 +0000
+Subject: [PATCH 0/4] [RFC] merge --autostash: apply autostash in more cases
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210710074801.19917-5-raykar.ath@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 10, 2021 at 01:18:01PM +0530, Atharva Raykar wrote:
+This series aims to apply the stash created by 'git merge --autostash' in 2
+situations that were not covered by the code:
 
-> +static void show_fetch_remotes(FILE *output, const char *sm_name, const char *git_dir_path)
-> +{
-> +	struct child_process cp_remote = CHILD_PROCESS_INIT;
-> +	struct strbuf sb_remote_out = STRBUF_INIT;
-> +
-> +	cp_remote.git_cmd = 1;
-> +	strvec_pushf(&cp_remote.env_array,
-> +		     "GIT_DIR=%s", git_dir_path);
-> +	strvec_push(&cp_remote.env_array, "GIT_WORK_TREE=.");
-> +	strvec_pushl(&cp_remote.args, "remote", "-v", NULL);
-> +	if (!capture_command(&cp_remote, &sb_remote_out, 0)) {
-> +		char *next_line;
-> +		char *line = sb_remote_out.buf;
-> +		while ((next_line = strchr(line, '\n')) != NULL) {
-> +			size_t len = next_line - line;
-> +			if (strip_suffix_mem(line, &len, " (fetch)"))
-> +				fprintf(output, "  %.*s\n", (int)len, line);
-> +			line = next_line + 1;
-> +		}
-> +	}
-> +
-> +	strbuf_release(&sb_remote_out);
-> +}
+ 1. If the merge is fast-forward but the fast-forward operation fails -
+    PATCH 3/4
+ 2. If the merge strategy completely fails to handle the merge (exit code 2)
+    - PATCH 4/4
 
-The sm_name parameter is not used here. I don't think it's a bug; we
-just don't need it (there's a message that mentions the name, but it
-happens right before we call the function). Maybe this should go on top
-of ar/submodule-add?
+The first 2 commits are small improvements that I noticed while implementing
+the other two.
 
--- >8 --
-Subject: submodule: drop unused sm_name parameter from show_fetch_remotes()
+I'm marking it [RFC] because I'm not 100% sure that trying to apply the
+autostash in 3/4 and 4/4 is actually the best course of action (or if it
+would be better to call 'save_autostash' instead). That's because:
 
-This parameter has not been used since the function was introduced in
-8c8195e9c3 (submodule--helper: introduce add-clone subcommand,
-2021-07-10).
+For 3/4 (fast-forward fails): I'm not sure if 'unpack_trees' (called by
+'checkout_fast_forward') is guaranteed to fail atomically, or it might fail
+mid-way and leave the worktree unclean, in which case it might be better not
+to apply the autostash, but just save it instead (and tell the user). In the
+test case I'm adding, it does fail before starting to update the working
+tree, but I'm not sure if it's always the case.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/submodule--helper.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+For 4/4 (merge strategy fails): Same reasoning: I'm not sure if all
+strategies (and even less user-supplied ones, which are not documented but
+kind of supported) are guaranteed to 'exit 2' before messing up the working
+tree.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index ed4a50c78e..1e65ff599e 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2782,7 +2782,7 @@ struct add_data {
- };
- #define ADD_DATA_INIT { .depth = -1 }
- 
--static void show_fetch_remotes(FILE *output, const char *sm_name, const char *git_dir_path)
-+static void show_fetch_remotes(FILE *output, const char *git_dir_path)
- {
- 	struct child_process cp_remote = CHILD_PROCESS_INIT;
- 	struct strbuf sb_remote_out = STRBUF_INIT;
-@@ -2833,8 +2833,7 @@ static int add_submodule(const struct add_data *add_data)
- 				fprintf(stderr, _("A git directory for '%s' is found "
- 						  "locally with remote(s):"),
- 					add_data->sm_name);
--				show_fetch_remotes(stderr, add_data->sm_name,
--						   submod_gitdir_path);
-+				show_fetch_remotes(stderr, submod_gitdir_path);
- 				free(submod_gitdir_path);
- 				die(_("If you want to reuse this local git "
- 				      "directory instead of cloning again from\n"
+Philippe Blain (4):
+  merge: add missing word "strategy" to a message
+  Documentation: define 'MERGE_AUTOSTASH'
+  merge: apply autostash if fast-forward fails
+  merge: apply autostash if merge strategy fails
+
+ Documentation/merge-options.txt |  3 ++-
+ builtin/merge.c                 |  4 +++-
+ t/t7600-merge.sh                | 19 +++++++++++++++++++
+ 3 files changed, 24 insertions(+), 2 deletions(-)
+
+
+base-commit: d486ca60a51c9cb1fe068803c3f540724e95e83a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1002%2Fphil-blain%2Fmerge-autostash-ff-fails-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1002/phil-blain/merge-autostash-ff-fails-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1002
 -- 
-2.32.0.784.g92e169d3d7
-
+gitgitgadget
