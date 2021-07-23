@@ -2,203 +2,188 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F7B9C4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 20:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F553C4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 20:36:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60EA160EB0
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 20:26:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 59B3860EB2
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 20:36:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231480AbhGWTpr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 15:45:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60602 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229878AbhGWTpr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 15:45:47 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38BB0C061575
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 13:26:19 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id t14so3199098oiw.0
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 13:26:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+H6faYGB2cl1YtWPkM8wfrtjoVbgYVrTH8BLPfYtReI=;
-        b=Q6ZvUJcGUsCGUTAEh5IPJeFyKUtG2l9fBrwidusUc1dK7rwKXa3Xh9tumz9gjgBuMd
-         jaBnUTP8Aa7z7rqyainefhm6bXogusCK2EQNrY9qrJEHYbc6dpeUB8Ne9FAKWrEfKfNd
-         HXFCW836SEFVYLbiMl5abSSspuY8KcKxDFnKqgnPcpbBoMEPSfSUTq14yqtNDSjVMxxk
-         j4sjkgiOnc8TyXiwYnpuFSeI7Wo+sxzqpd1+ti+mw4Wxwko/eSH/AkCrDL6FPUzi388v
-         1/jvuETaZuOftPOq8rgIWZewHXGDEh50rI7/kK90AfT4uXbPOtD4eVtueGSsa40RaNOI
-         eU8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+H6faYGB2cl1YtWPkM8wfrtjoVbgYVrTH8BLPfYtReI=;
-        b=D0wBNZefJ9MdzrxIVja1CI1e4FKcz8isoEMuNm2A1sqB/BTeg0YNsg1waxE2LBbilU
-         U84YOY/hwlGz+iCDCvilwvjfi9DZpY3ub7/yU2g2WymPFgkEYypgJhk40r4NWd8wHukA
-         5hAK/ig6qyweDgno/jFX72Q8sMHERKI7lDuf4emYOUTJjpq3Fkj3X9e5K7e3sQXLHkcI
-         hqztMzMdJi7FWx1BdWQjgfeThY9kB2Qu3x5OEoJKNhBP8q/o+CoAEVc37E0NxPQWzw80
-         WSrmNBhs7cZ6EfdxBCEDX3RdagzYoY6ffzTRGq732v6RLPpxEVCTj0Jo74Sfk6Y22mAm
-         fZ8A==
-X-Gm-Message-State: AOAM532yS51KTXhtQVD2KkUP54lwC94dRtm2vX2SUYfexzMo2t8ng5yT
-        oqwm7gB7kbHHfaRwVwSB3RGEbVIWhGi/DX0yp2E=
-X-Google-Smtp-Source: ABdhPJxM59BizHEBJOSRzLnw8I7QTrLya5U0YzRVS0OtAg08IPuhyII+SEmO31bKepraqhIzYquc22X85GpS/yTWJNI=
-X-Received: by 2002:aca:acc5:: with SMTP id v188mr9723012oie.167.1627071978611;
- Fri, 23 Jul 2021 13:26:18 -0700 (PDT)
+        id S231350AbhGWT4L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 15:56:11 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57348 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229461AbhGWT4L (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 15:56:11 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E137C1D07;
+        Fri, 23 Jul 2021 16:36:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/XZ3wc/iQ56f5JoG/uEj9wGN+Rz9WmAb1BvA9J
+        JFI3k=; b=dHIJEIf9VhTmwu4wEFHQuPc2XJh0dYnJvfCQnd7KH9PccH+QjXCOG1
+        uAdtvywbagU7r629/8CiP0OIXMvHpkiQh5GhRj/YRcZBOUrxLq54VxmtSvJwDC01
+        +yO7JAfsFKi85DQ6CjqioB3HFGY5xnOI857LHvnqaTjDAgAhQj0U4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 95B1FC1D06;
+        Fri, 23 Jul 2021 16:36:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1E6BAC1D05;
+        Fri, 23 Jul 2021 16:36:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     git@vger.kernel.org, "Emily Shaffer" <emilyshaffer@google.com>,
+        "Jonathan Nieder" <jrnieder@gmail.com>,
+        "Christian Couder" <christian.couder@gmail.com>,
+        "Shourya Shukla" <periperidip@gmail.com>,
+        "Kaartic Sivaraam" <kaartic.sivaraam@gmail.com>,
+        "Eric Sunshine" <sunshine@sunshineco.com>,
+        "Prathamesh Chavan" <pc44800@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        "Rafael Silva" <rafaeloliveira.cs@gmail.com>
+Subject: Re: [GSoC] [PATCH] submodule--helper: introduce add-config subcommand
+References: <20210722112143.97944-1-raykar.ath@gmail.com>
+Date:   Fri, 23 Jul 2021 13:36:42 -0700
+In-Reply-To: <20210722112143.97944-1-raykar.ath@gmail.com> (Atharva Raykar's
+        message of "Thu, 22 Jul 2021 16:51:43 +0530")
+Message-ID: <xmqq4kckn4x1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1627066238.git.jonathantanmy@google.com> <f502997d159c7a30862fab3c3b443291539b6f29.1627066238.git.jonathantanmy@google.com>
-In-Reply-To: <f502997d159c7a30862fab3c3b443291539b6f29.1627066238.git.jonathantanmy@google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 23 Jul 2021 13:26:07 -0700
-Message-ID: <CABPp-BEUpXehjgh3-d4=r+V8CrYJxxBJ80Z8+EaJ=4ewvyGVDg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] unpack-trees: refactor prefetching code
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: B0D8F106-EBF5-11EB-8DA5-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 23, 2021 at 11:55 AM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> Refactor the prefetching code in unpack-trees.c into its own function,
-> because it will be used elsewhere in a subsequent commit.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  cache.h        |  9 +++++++++
->  read-cache.c   | 23 +++++++++++++++++++++++
->  unpack-trees.c | 27 ++++++++-------------------
->  3 files changed, 40 insertions(+), 19 deletions(-)
->
-> diff --git a/cache.h b/cache.h
-> index ba04ff8bd3..6f952e22c6 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -410,6 +410,15 @@ struct cache_entry *dup_cache_entry(const struct cache_entry *ce, struct index_s
->   */
->  void validate_cache_entries(const struct index_state *istate);
->
-> +/*
-> + * Bulk prefetch all missing cache entries that are not GITLINKs and that match
-> + * the given predicate. This function should only be called if
-> + * has_promisor_remote() returns true.
-> + */
-> +typedef int (*must_prefetch_predicate)(const struct cache_entry *);
-> +void prefetch_cache_entries(const struct index_state *istate,
-> +                           must_prefetch_predicate must_prefetch);
-> +
->  #ifdef USE_THE_INDEX_COMPATIBILITY_MACROS
->  extern struct index_state the_index;
->
-> diff --git a/read-cache.c b/read-cache.c
-> index ba2b012a6c..4e396bf17f 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -27,6 +27,7 @@
->  #include "progress.h"
->  #include "sparse-index.h"
->  #include "csum-file.h"
-> +#include "promisor-remote.h"
->
->  /* Mask for the name length in ce_flags in the on-disk index */
->
-> @@ -3657,3 +3658,25 @@ static void write_ieot_extension(struct strbuf *sb, struct index_entry_offset_ta
->                 strbuf_add(sb, &buffer, sizeof(uint32_t));
->         }
+Atharva Raykar <raykar.ath@gmail.com> writes:
+
+> This is meant to be a faithful conversion from shell to C, with only one
+> minor change: A warning is emitted if no value is specified in
+> 'submodule.active', ie, the config looks like: "[submodule] active\n",
+
+... meaning that submodule.active is *not* a boolean.
+
+In scripted porcelain, I think we let "submodule--helper is-active"
+to inspect its value(s), which may end up feeding a NULL as one of
+the pathspec elements when calling parse_pathspec(), so this may
+even be a bugfix.  In any case, I think "submodule--helper
+is-active" is where such a fix should happen and in the longer term,
+the code that says "if submodule.active exists, ask is-active and
+set submodule.*.active accordingly, otherwise activate everything"
+we see in this patch should be simplified to always ask is-active
+and let is-active worry about cases like missing submodule.active
+and submodule.active being valueless true, so let's not worry too
+much about what happens in this patch, because it needs to be
+cleaned up anyway after the dust settles.
+
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 862053c9f2..9658804d24 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2936,6 +2936,130 @@ static int add_clone(int argc, const char **argv, const char *prefix)
+>  	return 0;
 >  }
-> +
-> +void prefetch_cache_entries(const struct index_state *istate,
-> +                           must_prefetch_predicate must_prefetch)
+>  
+> +static void config_submodule_in_gitmodules(const char *name, const char *var, const char *value)
 > +{
-> +       int i;
-> +       struct oid_array to_fetch = OID_ARRAY_INIT;
+> +	char *key;
 > +
-> +       for (i = 0; i < istate->cache_nr; i++) {
-> +               struct cache_entry *ce = istate->cache[i];
+> +	if (!is_writing_gitmodules_ok())
+> +		die(_("please make sure that the .gitmodules file is in the working tree"));
 > +
-> +               if (S_ISGITLINK(ce->ce_mode) || !must_prefetch(ce))
-> +                       continue;
-> +               if (!oid_object_info_extended(the_repository, &ce->oid,
-> +                                             NULL,
-> +                                             OBJECT_INFO_FOR_PREFETCH))
-> +                       continue;
-> +               oid_array_append(&to_fetch, &ce->oid);
-> +       }
-> +       promisor_remote_get_direct(the_repository,
-> +                                  to_fetch.oid, to_fetch.nr);
-> +       oid_array_clear(&to_fetch);
-> +}
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index f88a69f8e7..ed92794032 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -392,6 +392,11 @@ static void report_collided_checkout(struct index_state *index)
->         string_list_clear(&list, 0);
->  }
->
-> +static int must_checkout(const struct cache_entry *ce)
-> +{
-> +       return ce->ce_flags & CE_UPDATE;
+> +	key = xstrfmt("submodule.%s.%s", name, var);
+> +	config_set_in_gitmodules_file_gently(key, value);
+
+This uses _gently() to avoid dying, but does it discard error return
+and hide it from our callers?
+
+> +	free(key);
 > +}
 > +
->  static int check_updates(struct unpack_trees_options *o,
->                          struct index_state *index)
->  {
-> @@ -442,28 +447,12 @@ static int check_updates(struct unpack_trees_options *o,
->         if (should_update_submodules())
->                 load_gitmodules_file(index, &state);
->
-> -       if (has_promisor_remote()) {
-> +       if (has_promisor_remote())
->                 /*
->                  * Prefetch the objects that are to be checked out in the loop
->                  * below.
->                  */
-> -               struct oid_array to_fetch = OID_ARRAY_INIT;
-> -               for (i = 0; i < index->cache_nr; i++) {
-> -                       struct cache_entry *ce = index->cache[i];
-> -
-> -                       if (!(ce->ce_flags & CE_UPDATE) ||
-> -                           S_ISGITLINK(ce->ce_mode))
-> -                               continue;
-> -                       if (!oid_object_info_extended(the_repository, &ce->oid,
-> -                                                     NULL,
-> -                                                     OBJECT_INFO_FOR_PREFETCH))
-> -                               continue;
-> -                       oid_array_append(&to_fetch, &ce->oid);
-> -               }
-> -               promisor_remote_get_direct(the_repository,
-> -                                          to_fetch.oid, to_fetch.nr);
-> -               oid_array_clear(&to_fetch);
-> -       }
-> +               prefetch_cache_entries(index, must_checkout);
->
->         get_parallel_checkout_configs(&pc_workers, &pc_threshold);
->
-> @@ -473,7 +462,7 @@ static int check_updates(struct unpack_trees_options *o,
->         for (i = 0; i < index->cache_nr; i++) {
->                 struct cache_entry *ce = index->cache[i];
->
-> -               if (ce->ce_flags & CE_UPDATE) {
-> +               if (must_checkout(ce)) {
->                         size_t last_pc_queue_size = pc_queue_size();
->
->                         if (ce->ce_flags & CE_WT_REMOVE)
-> --
-> 2.32.0.432.gabb21c7263-goog
+> +static void configure_added_submodule(struct add_data *add_data)
+> +{
+> +	char *key, *submod_pathspec = NULL;
+> +	struct child_process add_submod = CHILD_PROCESS_INIT;
+> +	struct child_process add_gitmodules = CHILD_PROCESS_INIT;
+> +	int pathspec_key_exists, activate = 0;
+> +
+> +	key = xstrfmt("submodule.%s.url", add_data->sm_name);
+> +	git_config_set_gently(key, add_data->realrepo);
+> +	free(key);
+> +
+> +	add_submod.git_cmd = 1;
+> +	strvec_pushl(&add_submod.args, "add",
+> +		     "--no-warn-embedded-repo", NULL);
+> +	if (add_data->force)
+> +		strvec_push(&add_submod.args, "--force");
+> +	strvec_pushl(&add_submod.args, "--", add_data->sm_path, NULL);
+> +
+> +	if (run_command(&add_submod))
+> +		die(_("Failed to add submodule '%s'"), add_data->sm_path);
+> +
+> +	config_submodule_in_gitmodules(add_data->sm_name, "path", add_data->sm_path);
+> +	config_submodule_in_gitmodules(add_data->sm_name, "url", add_data->repo);
+> +	if (add_data->branch)
+> +		config_submodule_in_gitmodules(add_data->sm_name,
+> +					       "branch", add_data->branch);
 
-This might have been slightly easier to review if you had introduced
-must_checkout() first, and then made the new prefetch_cache_entries()
-in a separate commit, so that comparing old and new code I didn't have
-to try to deduce the separate steps.  However, that's a really minor
-point since must_checkout() is so small.
+A failure in any of the above in the scripted version used to result
+in "failed to register submodule" error, but they are now ignored.
+Intended?
 
-Anyway, this patch looks good to me.
+> +	add_gitmodules.git_cmd = 1;
+> +	strvec_pushl(&add_gitmodules.args,
+> +		     "add", "--force", "--", ".gitmodules", NULL);
+> +
+> +	if (run_command(&add_gitmodules))
+> +		die(_("Failed to register submodule '%s'"), add_data->sm_path);
+> +
+> +	/*
+> +	 * NEEDSWORK: In a multi-working-tree world this needs to be
+> +	 * set in the per-worktree config.
+> +	 */
+> +	pathspec_key_exists = !git_config_get_string("submodule.active",
+> +						     &submod_pathspec);
+> +	if (pathspec_key_exists && !submod_pathspec) {
+> +		warning(_("The submodule.active configuration exists, but the "
+> +			  "pathspec was unset. If the submodule is not already "
+> +			  "active, the value of submodule.%s.active will be "
+> +			  "be set to 'true'."), add_data->sm_name);
+> +		activate = 1;
+> +	}
+> +
+> +	/*
+> +	 * If submodule.active does not exist, or if the pathspec was unset,
+> +	 * we will activate this module unconditionally.
+> +	 *
+> +	 * Otherwise, we ask is_submodule_active(), which iterates
+> +	 * through all the values of 'submodule.active' to determine
+> +	 * if this module is already active.
+> +	 */
+> +	if (!pathspec_key_exists || activate ||
+> +	    !is_submodule_active(the_repository, add_data->sm_path)) {
+> +		key = xstrfmt("submodule.%s.active", add_data->sm_name);
+> +		git_config_set_gently(key, "true");
+> +		free(key);
+> +	}
+
+This is the part I discussed earlier.  I think this "optimize so
+that we can avoid calling is_submodule_active()" should go away in
+the long run.  In the current code, is_submodule_active() needs to
+find out the value of submodule.active itself anyway, so the
+short-circuit is not working as an optimization.
+
+Other than the "what happens when we see errors?" issue, the patch
+looks quite straight-forward rewrite from the scripted version.
+
+Thanks.
