@@ -2,72 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28E05C4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 19:14:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5452C4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 19:22:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0672560E52
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 19:14:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 94A4660E97
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 19:22:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229986AbhGWSeM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 14:34:12 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:60497 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229461AbhGWSeL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 14:34:11 -0400
-Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1m70d8-0007Hd-D8; Fri, 23 Jul 2021 20:14:42 +0100
-Subject: Re: [PATCH 7/7] fast-forward: add help about merge vs. rebase
-To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-Cc:     Alex Henrie <alexhenrie24@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "Randall S . Becker" <rsbecker@nexbridge.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Denton Liu <liu.denton@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20210722000854.1899129-1-felipe.contreras@gmail.com>
- <20210722000854.1899129-8-felipe.contreras@gmail.com>
- <76d59e73-ae5d-3bef-4aa3-5d1af9611577@iee.email>
- <60faf81658201_defb208d4@natae.notmuch>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <b5cdd34b-c50e-f6f4-4462-c869836d309d@iee.email>
-Date:   Fri, 23 Jul 2021 20:14:41 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S229575AbhGWSmD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 14:42:03 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51219 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229461AbhGWSmD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 14:42:03 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C12E7D57F7;
+        Fri, 23 Jul 2021 15:22:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UPM8u5xh6gmfHSRN/gP0V/D0x3Dmzaaxb84PfZ
+        5xhcg=; b=RqdXE6Z4R0cQvA3l6yv7QvzxR4gUShgtaMbFPNLyz0FhcqMcdh9MSc
+        yHGtLk2ZpiXMMW22JYUax/jc2RgsfLkcXztsnFhWmOt9aKIa+ECpczUbLiXbzYGq
+        WjQMdWFrYoqMV+yEKgKBscwtEKI6jyiMRetUczOXdjg+LgnWGziyI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B7DE6D57F6;
+        Fri, 23 Jul 2021 15:22:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 39A8AD57F5;
+        Fri, 23 Jul 2021 15:22:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH 4/4] merge: apply autostash if merge strategy fails
+References: <pull.1002.git.1627042470.gitgitgadget@gmail.com>
+        <e02b945ce8595a8d7b1b4ad9c382a1beeb040ed4.1627042470.git.gitgitgadget@gmail.com>
+Date:   Fri, 23 Jul 2021 12:22:34 -0700
+In-Reply-To: <e02b945ce8595a8d7b1b4ad9c382a1beeb040ed4.1627042470.git.gitgitgadget@gmail.com>
+        (Philippe Blain via GitGitGadget's message of "Fri, 23 Jul 2021
+        12:14:30 +0000")
+Message-ID: <xmqqk0lgn8cl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <60faf81658201_defb208d4@natae.notmuch>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: text/plain
+X-Pobox-Relay-ID: 55B2991C-EBEB-11EB-A0B2-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/07/2021 18:10, Felipe Contreras wrote:
->> It is good to have diagrams for the visual learners!
-> Actually, it seems there's no such thing as "visual learners" [1]; we
-> are all visual learners.
->
-> Cheers.
->
->>> +    D---C---B---A---M master
->>> +	 \	   /
->>> +	  X---Y---+
->>> +------------
-> [1] https://www.theatlantic.com/science/archive/2018/04/the-myth-of-learning-styles/557687/
-It's a double myth, in that many try to suggest that a person has a
-single style (untrue), or that a single style is relevant in a
-particular context, when it should be that sometime individuals fail to
-learn (a particular item) when not provided with a particular style that
-would suit them in the moment. I.e the removal of a particular format
-(e.g. no visuals) will reduce the effectiveness of the manual (excepting
-the 'The pictures are better on radio' aphorism ;-).
+"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Philip
+> As explained in a03b55530a, and made more abvious by the tests added in
+> that commit, the autostash is then applied if the merge succeeds, either
+> directly or by committing (after conflict resolution or if '--no-commit'
+> was given), or if the merge is aborted with 'git merge --abort'. In some
+> other cases, like the user calling 'git reset --merge' or 'git merge
+> --quit', the autostash is not applied, but saved in the stash list.
+
+OK.
+
+> However, there exists a scenario that creates an autostash but does not
+> apply nor save it to the stash list: if the chosen merge strategy
+> completely fails to handle the merge, i.e. 'try_merge_strategy' returns
+> 2.
+>
+> Apply the autostash in that case also. An easy way to test that is to
+> try to merge more than two commits but explicitely ask for the 'recursive'
+> merge strategy.
+
+We know that the recursive that barfs when asked to merge more than
+one "other" histories will fail before touching the index or the
+working tree, but I do not think the merge-strategy protocol makes
+any guarantee as to what half-modified state the strategy would
+leave the index and the working tree in.
+
+So this change at the first glance looks risky, but at least we have
+a call to restore_state() before you added an apply_autostash().
+The restore_state() call is the same as the one is used between
+application of a strategy that has failed the same way in the loop,
+so we should be able to trust it to bring the state back to the
+pristine (i.e. after autostash removed the local changes).
+
+I think this change makes sense, too.
+
+(I didn't look at 1/4 and 2/4)
+
+Thanks.
+
+
+
+> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> ---
+>  builtin/merge.c  | 1 +
+>  t/t7600-merge.sh | 8 ++++++++
+>  2 files changed, 9 insertions(+)
+>
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 788a6b0cd55..d44c14a21a3 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -1709,6 +1709,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  		else
+>  			fprintf(stderr, _("Merge with strategy %s failed.\n"),
+>  				use_strategies[0]->name);
+> +		apply_autostash(git_path_merge_autostash(the_repository));
+>  		ret = 2;
+>  		goto done;
+>  	} else if (best_strategy == wt_strategy)
+> diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+> index 216113d3537..2ef39d3088e 100755
+> --- a/t/t7600-merge.sh
+> +++ b/t/t7600-merge.sh
+> @@ -732,6 +732,14 @@ test_expect_success 'octopus merge with --autostash' '
+>  	test_cmp result.1-3-5-9 file
+>  '
+>  
+> +test_expect_success 'failed merge (exit 2) with --autostash' '
+> +	git reset --hard c1 &&
+> +	git merge-file file file.orig file.5 &&
+> +	test_must_fail git merge -s recursive --autostash c2 c3 2>err &&
+> +	test_i18ngrep "Applied autostash." err &&
+> +	test_cmp result.1-5 file
+> +'
+> +
+>  test_expect_success 'conflicted merge with --autostash, --abort restores stash' '
+>  	git reset --hard c3 &&
+>  	cp file.1 file &&
