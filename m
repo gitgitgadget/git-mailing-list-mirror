@@ -2,116 +2,222 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4937EC4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 08:50:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94795C4320A
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 09:04:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2224960E0C
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 08:50:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7FD9160E78
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 09:04:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234480AbhGWIJ7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 04:09:59 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55484 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234276AbhGWIJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 04:09:58 -0400
-Received: (qmail 10801 invoked by uid 109); 23 Jul 2021 08:50:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 23 Jul 2021 08:50:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23278 invoked by uid 111); 23 Jul 2021 08:50:34 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 23 Jul 2021 04:50:34 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 23 Jul 2021 04:50:31 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
-        jonathantanmy@google.com
-Subject: Re: [PATCH v2 09/24] midx: infer preferred pack when not given one
-Message-ID: <YPqC19c2sFwuOCY9@coredump.intra.peff.net>
-References: <cover.1617991824.git.me@ttaylorr.com>
- <cover.1624314293.git.me@ttaylorr.com>
- <9495f6869d792264c4366c9914fcf93d544caa6a.1624314293.git.me@ttaylorr.com>
- <YPf4MTDpbvinoIia@coredump.intra.peff.net>
- <YPiAhw2eP2MOksUF@nand.local>
+        id S234519AbhGWIXd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 04:23:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44952 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234102AbhGWIXd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 04:23:33 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9518C061575
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 02:04:06 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id w12so1472670wro.13
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 02:04:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=iHfCrV+GAffbg6cdMgspDRx2Su7oFeQUJoV+fCO8agQ=;
+        b=EE/QCsK1spa3l2mcnBOAsfo1lZX9ifm/p9vKQGzujFG4iKAuwc6isoqFpY1Lb1oV98
+         AuaFIgQagMh60qv678HdZ/vDf1s0/nEYAUwwUdAR38HCKw+vs03fwEaKkdhE9e9n9Yal
+         nvKsIuQB9VclUdnFYlFszzRtb8HL+nF2b4uNY14616Aynla4FpYaOKq38VEdHjgNx/sE
+         Gp8KKEnPYv7Ddm2wo3lXbS7J3ioI3uTmFV9h2PsOEDpmqu3TlydojpTpQfHeKTFe2Jze
+         r5YPU/yXlkv0cfRLbtIMP9GHSvX0/RZPkiqYWls0fuSMFd/J56RlgCckG2TN6qd1dgSl
+         c/DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=iHfCrV+GAffbg6cdMgspDRx2Su7oFeQUJoV+fCO8agQ=;
+        b=oC83R+2VVUyXrkiU3HMHzW74V5xeGwRN486tevOHbZHeor5fSKzXda87qj42M2HK0K
+         zvzFBw8Lg/MhwkTOIzSK4qs0BE+XcKdlByU2rcZCzVtfDstBvPBi9CX7Bvo+N5IllMYb
+         jltRURpHsSC6ncVXY9TRwMoHZs6tOd3XDp9MV++12qJOtIKsaBQ0dD+KdRlEWWeMmBbW
+         mVN/c+SP6AS+gNRjxb5aBv1AlVMmA6LkUxpLoo4j5vg6z4WwoVZYqK/i+5DMegIVjhDA
+         4Zq82J2bWM/MomHP0y86Ij98eO0wOQwHOAmaFSEb5DPUX1cemR5+vuq1rwaAXkqOZMIp
+         VtrQ==
+X-Gm-Message-State: AOAM532rixMw2W35p+4S3jKRq16PsrFaZ3UZDrSoyxMNecJOfX1T/YlO
+        LG75qDHlhLsbkamk+LoCNLjnnG7p8ns=
+X-Google-Smtp-Source: ABdhPJxHZHzr9CmB+SRToYtEb+xqMl6j7jvJrl09MD+qaxCLmAQG5nlNLG6nTTfySUs3XQKsI+YVhQ==
+X-Received: by 2002:a05:6000:44:: with SMTP id k4mr4173613wrx.174.1627031045314;
+        Fri, 23 Jul 2021 02:04:05 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p8sm4636822wmc.24.2021.07.23.02.04.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jul 2021 02:04:04 -0700 (PDT)
+Message-Id: <pull.1000.v2.git.1627031043.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1000.git.1626939557.gitgitgadget@gmail.com>
+References: <pull.1000.git.1626939557.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 23 Jul 2021 09:03:58 +0000
+Subject: [PATCH v2 0/5] [GSOC] ref-filter: add %(raw) and %(rest) atoms
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YPiAhw2eP2MOksUF@nand.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 21, 2021 at 04:16:07PM -0400, Taylor Blau wrote:
+This patch series is split from my main patch series zh/ref-filter-raw-data,
+to make things easier for reviewers to read. It's last version is here:
+https://lore.kernel.org/git/pull.993.v2.git.1626363626.gitgitgadget@gmail.com/
 
-> > I dunno. Like I said, I was able to follow it, so maybe it is
-> > sufficient. I'm just not sure others would be able to.
-> 
-> I think that others will follow it, too. But I agree that it is
-> confusing, since we're fixing a bug that doesn't yet exist. In reality,
-> I wrote this patch after sending v1, and then reordered its position to
-> come before the implementation of MIDX bitmaps for that reason.
-> 
-> So in one sense, I prefer it this way because we don't ever introduce
-> the bug.  But in another sense, it is very jarring to read about an
-> interaction that has no basis in the code (yet).
-> 
-> I think that the best thing we could do without adding any significant
-> reordering would be to just call out the situation we're in. I added
-> this onto the end of the commit message which I think makes things a
-> little clearer:
-> 
->     (Note that multi-pack reachability bitmaps have yet to be
->     implemented; so in that sense this patch is fixing a bug which does
->     not yet exist.  But by having this patch beforehand, we can prevent
->     the bug from ever materializing.)
+This patch series provided %(raw) and %(rest) for ref-filter, which will be
+used by zh/cat-file-reuse-ref-filter-logic later.
 
-I do like fixing it up front. Here's my attempt at rewriting the commit
-message. I tried to omit details about pack order, and instead refer to
-the revindex code, and instead add more explanation of how this relates
-to the pack-reuse code.
+Change from last version:
 
-Something like:
+ 1. Define ATOM_VALUE_INIT used to initialize struct atom_value and delete
+    ATOM_VALUE_S_SIZE_INIT macro.
+ 2. Provide more complete commit message.
 
-  In 9218c6a40c (midx: allow marking a pack as preferred, 2021-03-30),
-  the multi-pack index code learned how to select a pack which all
-  duplicate objects are selected from. That is, if an object appears in
-  multiple packs, select the copy in the preferred pack before using one
-  from any other pack.
+ZheNing Hu (5):
+  [GSOC] ref-filter: add obj-type check in grab contents
+  [GSOC] ref-filter: add %(raw) atom
+  [GSOC] ref-filter: --format=%(raw) re-support --perl
+  [GSOC] ref-filter: use non-const ref_format in *_atom_parser()
+  [GSOC] ref-filter: add %(rest) atom
 
-  Later in that same series, 38ff7cabb6 (pack-revindex: write multi-pack
-  reverse indexes, 2021-03-30) learned to put the preferred pack at the
-  start of the pack order when generating a midx ".rev" file. So far,
-  that .rev ordering has not mattered. But it will be very important
-  once we start using the .rev ordering for midx bitmaps.
+ Documentation/git-for-each-ref.txt |   9 ++
+ builtin/tag.c                      |   2 +-
+ quote.c                            |  17 ++
+ quote.h                            |   1 +
+ ref-filter.c                       | 242 ++++++++++++++++++++++-------
+ ref-filter.h                       |   9 +-
+ t/t3203-branch-output.sh           |   4 +
+ t/t6300-for-each-ref.sh            | 235 ++++++++++++++++++++++++++++
+ t/t7004-tag.sh                     |   4 +
+ t/t7030-verify-tag.sh              |   4 +
+ 10 files changed, 464 insertions(+), 63 deletions(-)
 
-  There is code in pack-objects to reuse pack bytes verbatim when
-  bitmaps tell us a significant portion of the beginning of the code
-  should be in the output. This code relies on the pack mentioned by the
-  0th bit also being the pack that is preferred for duplicates (because
-  we'd want to make sure both bases and deltas come from the same pack).
-  For a pack .bitmap, this is trivially correct. For a midx bitmap, it
-  is only true when some pack gets both duplicate-priority and is placed
-  at the front of the .rev file. I.e., there must be _some_ preferred
-  pack.
 
-  So if the user did not specify a preferred pack, we pick one
-  arbitrarily.
+base-commit: daab8a564f8bbac55f70f8bf86c070e001a9b006
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1000%2Fadlternative%2Fref-filter-raw-data-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1000/adlternative/ref-filter-raw-data-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1000
 
-  There's no test here for a few reasons:
+Range-diff vs v1:
 
-    - the midx bitmap feature does not yet exist; this is preemptively
-      fixing a problem before introducing buggy code
+ 1:  a7b4e45f14a ! 1:  d77268bb188 [GSOC] ref-filter: add obj-type check in grab contents
+     @@ Commit message
+          object contents in the current codebase.  We want to teach the
+          function to also handle blobs and trees to get their raw data,
+          without parsing a blob (whose contents looks like a commit or a tag)
+     -    incorrectly as a commit or a tag.
+     +    incorrectly as a commit or a tag. So it's needed to pass a
+     +    `struct expand_data *data` instread of only `void *buf` to both
+     +    `grab_sub_body_contents()` and `grab_values()` to be able to check
+     +    the object type.
+      
+          Skip the block of code that is specific to handling commits and tags
+          early when the given object is of a wrong type to help later
+ 2:  ecd41b370e6 ! 2:  eafb79bad62 [GSOC] ref-filter: add %(raw) atom
+     @@ ref-filter.c: struct ref_formatting_state {
+       	struct used_atom *atom;
+       };
+       
+     -+#define ATOM_VALUE_S_SIZE_INIT (-1)
+     ++#define ATOM_VALUE_INIT { \
+     ++	.s_size = -1 \
+     ++}
+      +
+       /*
+        * Used to parse format string and sort specifiers
+     @@ ref-filter.c: static int parse_ref_filter_atom(const struct ref_format *format,
+       	switch (quote_style) {
+       	case QUOTE_NONE:
+      -		strbuf_addstr(s, str);
+     -+		if (len != ATOM_VALUE_S_SIZE_INIT)
+     ++		if (len != -1)
+      +			strbuf_add(s, str, len);
+      +		else
+      +			strbuf_addstr(s, str);
+     @@ ref-filter.c: static int append_atom(struct atom_value *v, struct ref_formatting
+      +		quote_formatting(&state->stack->output, v->s, v->s_size, state->quote_style);
+       	else
+      -		strbuf_addstr(&state->stack->output, v->s);
+     -+		if (v->s_size != ATOM_VALUE_S_SIZE_INIT)
+     ++		if (v->s_size != -1)
+      +			strbuf_add(&state->stack->output, v->s, v->s_size);
+      +		else
+      +			strbuf_addstr(&state->stack->output, v->s);
+     @@ ref-filter.c: static int populate_value(struct ref_array_item *ref, struct strbu
+       		const char *refname;
+       		struct branch *branch = NULL;
+       
+     -+		v->s_size = ATOM_VALUE_S_SIZE_INIT;
+     ++		v->s_size = -1;
+       		v->handler = append_atom;
+       		v->atom = atom;
+       
+     @@ ref-filter.c: static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array
+      -		cmp_fn = s->sort_flags & REF_SORTING_ICASE
+      -			? strcasecmp : strcmp;
+      -		cmp = cmp_fn(va->s, vb->s);
+     -+		if (va->s_size == ATOM_VALUE_S_SIZE_INIT &&
+     -+		    vb->s_size == ATOM_VALUE_S_SIZE_INIT) {
+     ++		if (va->s_size == -1 && vb->s_size == -1) {
+      +			int (*cmp_fn)(const char *, const char *);
+      +			cmp_fn = s->sort_flags & REF_SORTING_ICASE
+      +				? strcasecmp : strcmp;
+      +			cmp = cmp_fn(va->s, vb->s);
+      +		} else {
+     -+			size_t a_size = va->s_size == ATOM_VALUE_S_SIZE_INIT ?
+     ++			size_t a_size = va->s_size == -1 ?
+      +					strlen(va->s) : va->s_size;
+     -+			size_t b_size = vb->s_size == ATOM_VALUE_S_SIZE_INIT ?
+     ++			size_t b_size = vb->s_size == -1 ?
+      +					strlen(vb->s) : vb->s_size;
+      +			int (*cmp_fn)(const void *, const void *, size_t);
+      +			cmp_fn = s->sort_flags & REF_SORTING_ICASE
+     @@ ref-filter.c: static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array
+       		if (va->value < vb->value)
+       			cmp = -1;
+      @@ ref-filter.c: int format_ref_array_item(struct ref_array_item *info,
+     + 		append_literal(cp, sp, &state);
+       	}
+       	if (format->need_color_reset_at_eol) {
+     - 		struct atom_value resetv;
+     -+		resetv.s_size = ATOM_VALUE_S_SIZE_INIT;
+     +-		struct atom_value resetv;
+     ++		struct atom_value resetv = ATOM_VALUE_INIT;
+       		resetv.s = GIT_COLOR_RESET;
+       		if (append_atom(&resetv, &state, error_buf)) {
+       			pop_stack_element(&state.stack);
+ 3:  b6438fd4308 ! 3:  00a29dd16d7 [GSOC] ref-filter: --format=%(raw) re-support --perl
+     @@ ref-filter.c: static void quote_formatting(struct strbuf *s, const char *str, si
+       		break;
+       	case QUOTE_PERL:
+      -		perl_quote_buf(s, str);
+     -+		if (len != ATOM_VALUE_S_SIZE_INIT)
+     ++		if (len != -1)
+      +			perl_quote_buf_with_len(s, str, len);
+      +		else
+      +			perl_quote_buf(s, str);
+ 4:  33d332c664e = 4:  3a8173b42ed [GSOC] ref-filter: use non-const ref_format in *_atom_parser()
+ 5:  75eb2f6740e = 5:  71249dfd4e0 [GSOC] ref-filter: add %(rest) atom
 
-    - whether things go wrong with the current rules depends on things
-      like readdir() order, since that is used for some midx pack
-      ordering. So any test might happen to succeed or fail based on
-      factors outside of our control.
-
-Thoughts?
-
--Peff
+-- 
+gitgitgadget
