@@ -2,98 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 610A7C4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 17:02:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AD31C432BE
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 17:10:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C88960EB5
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 17:02:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7FEF860EB1
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 17:10:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231536AbhGWQWC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 12:22:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42520 "EHLO
+        id S231171AbhGWQaT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 12:30:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231166AbhGWQV6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 12:21:58 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF161C0613D3
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 10:02:31 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id k4-20020a17090a5144b02901731c776526so9779692pjm.4
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 10:02:31 -0700 (PDT)
+        with ESMTP id S229510AbhGWQaS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 12:30:18 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10D6BC061575
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 10:10:49 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id a5-20020a05683012c5b029036edcf8f9a6so2738720otq.3
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 10:10:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=T18N6/z5uaZR7NF1NEYqeeTNmTtPi2i9UaImKo4n3Fw=;
-        b=e1n/gjWaC+exJsdCl5dLsrAKQqsGvmrPrSR3I88mE1EN7Mac4AL2+9LYu4UBIg7Ko/
-         y7CBOB/jWho+eEDNSTC3KbJ/i+QsZDFW/p/1jIBUYb/H7F34Qh8AWuJiBgkRGGGww221
-         td6tB1IquyFAJZEO1PrbpChF6jVHTJ+3G/A2SaYRyfqqHrMk78szrXPEnd9Qjh+ICyzs
-         YD7mKbflmHR1Xj/lPXdXwWnbanLCLfOIAYDa/JRDUAjFm8zmdDzhp6T3reIrLF7eni1N
-         YVesW/vW0QVLoSp0+DiR+dsW9KDsM6HSPI7IwUpbk7Lj3+V3d5+QKvRvwjbyVlo3FOF8
-         VJbw==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=OqyOAJVGr9dYcxi0Od/X6kiSYyjSr1OYQbByhNjcF1U=;
+        b=UDpVVqnzlooQLxNltqIJLjbmBGluueDlEMiequIp1qIsm07On6UmHDfkd3u6lnZpxu
+         PTA6hutVOwyDxyk3fSZlwRqafyaEnNZqaa7T4+Fkl+7vcrzpPPFkcrPTmVnz71M43iQY
+         RphZciSdPJOWQ/7iv8n3iy6GbsgZU1Y3TZcnp9yhpQoh6ROvbgmqwy+LCecgN3rpRTNN
+         +fGn8xIB8Q62dqJtDxeQl1CArdoMNJat8WWSkVfdn1W0XOlo02uwLP8hkJhw6NJQIaZO
+         Wst+701GcdEY2dORftzuiQfX7gaWRnrMwKJ5V/ZDpzZ/C2xVHZP/HmQd4Y7oO+UrnQCa
+         3Rpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=T18N6/z5uaZR7NF1NEYqeeTNmTtPi2i9UaImKo4n3Fw=;
-        b=cQks3SEN6SNIKGNHbp70nOFBCqbl1fGTZqV8IRCat/q+pcEXPS6jTll7p9+pHY+M+J
-         toKqKnC/RkpYbfFtm3zcmz8ZLXX9lKb/0fBs+q8Ob/7avTYXsSjpvD0nW9Pz9qLjNBkZ
-         y/vMi1RPNddVMofGijyg//G+lHY5LYOb0ti/T8h9K+IbWknVlFw+syZVwzzcYnndIn4l
-         KjV9UPNtsvjkrK1H130pOOjNhWK/INOLuGifu4ck9Pacam3TLUxJnA6FSSK7Q2HZrnOW
-         aqd2zg1QNjr2xuz/OgNajqbShk72h8pavGN9W12sz+qaz4U7Ja+MesOZNWVuK0aUoC9N
-         +eKg==
-X-Gm-Message-State: AOAM533EEe7oPzSe9vwJYRNKiKszPWSY8BlAw4zCjpdNKOZGlZWu4j6Q
-        oo3VvxhpiHa+TXYf3zpMwr0=
-X-Google-Smtp-Source: ABdhPJxrrzCmaSHEBSYyY1UhaUU73lZRzpfF73zLD6OrSgD4Re7XQ4DgsIs9S4huiiCLVrnYYZmxdg==
-X-Received: by 2002:a63:fb08:: with SMTP id o8mr5732802pgh.72.1627059751331;
-        Fri, 23 Jul 2021 10:02:31 -0700 (PDT)
-Received: from smtpclient.apple ([119.82.121.47])
-        by smtp.gmail.com with ESMTPSA id m6sm2945581pgs.75.2021.07.23.10.02.29
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Jul 2021 10:02:31 -0700 (PDT)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
-Subject: Re: Bug: All git operations fail when .git contains a non-existent
- gitdir
-From:   Atharva Raykar <raykar.ath@gmail.com>
-In-Reply-To: <87o8atrpz7.fsf@evledraar.gmail.com>
-Date:   Fri, 23 Jul 2021 22:32:27 +0530
-Cc:     Tom Cook <tom.k.cook@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=OqyOAJVGr9dYcxi0Od/X6kiSYyjSr1OYQbByhNjcF1U=;
+        b=IsO0JAKSUVLexnyv3vg3+9gsI4m13HaOUXiVmww60V5BRq8e65aUTqKD4thAUT+Fkz
+         F29SPD8cS7XR8L67z6ZK3kHZ2Q7UhoKzFkF3ZKD3HWYsLQp45BkfnP6cW2LRqrXqRToR
+         RaE0hDozHTakXrelSPdodACS/PRoXsvLWjAJduqFubtWU2GVCp6Eydumno6NXN1RDGnB
+         Ljs3eGz3Y9jmFUZBi7pgbyeWk5fnseNysWUZ5rmo00vtVYA8Fx5yej9End9AJgu8JcPi
+         UeevSvQqtnxxcfCHK7Kfnf8FwBEQPxYKIObNtPwQAGm6fmQtDUAbjtbcJgQ4Df8CqU8c
+         cEuQ==
+X-Gm-Message-State: AOAM532qzardqcRQ0U2ZF8VTMXDsSgY/kyLxHQhG0SAJcOvhVafvBA3E
+        Lmtf+gYnJdOHiXloLMqZ1Q4=
+X-Google-Smtp-Source: ABdhPJxX1gPCkX6j38ZZgL6PRiIiJYD5mgU/fzBx/g3u4iDXp4FrpfYhQhK3W/sSE6myMbZw3ydF7Q==
+X-Received: by 2002:a9d:6e8a:: with SMTP id a10mr3701564otr.51.1627060248502;
+        Fri, 23 Jul 2021 10:10:48 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id v11sm3262052ott.68.2021.07.23.10.10.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jul 2021 10:10:47 -0700 (PDT)
+Date:   Fri, 23 Jul 2021 12:10:46 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Philip Oakley <philipoakley@iee.email>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
         git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <11ECE7FC-F85E-4731-9EE8-4DAAC7A6A08A@gmail.com>
-References: <CAFSh4UzCWMCpOGZUYnrxwK79F6jN3irdNs=J7O6RMCeJbBxFBw@mail.gmail.com>
- <YPimnEtNgKD32r2o@camp.crustytoothpaste.net>
- <CAFSh4Uyr5v9Ao-j0j7yO_HkUZSovBmSg7ADia7XCNZfsspFUYg@mail.gmail.com>
- <3D8703D8-54E6-4CF0-9E9F-CCAFFAA8914C@gmail.com>
- <87o8atrpz7.fsf@evledraar.gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-Mailer: Apple Mail (2.3654.100.0.2.22)
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "Randall S . Becker" <rsbecker@nexbridge.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Denton Liu <liu.denton@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Message-ID: <60faf81658201_defb208d4@natae.notmuch>
+In-Reply-To: <76d59e73-ae5d-3bef-4aa3-5d1af9611577@iee.email>
+References: <20210722000854.1899129-1-felipe.contreras@gmail.com>
+ <20210722000854.1899129-8-felipe.contreras@gmail.com>
+ <76d59e73-ae5d-3bef-4aa3-5d1af9611577@iee.email>
+Subject: Re: [PATCH 7/7] fast-forward: add help about merge vs. rebase
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23-Jul-2021, at 21:17, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
-<avarab@gmail.com> wrote:
->=20
-> [...]
-> The timing of this reply after [1] suggests that you may not have seen
-> that patch that fixes this issue (sans Junio's outstanding comments on
-> it).
->=20
-> Perhaps your E-Mail client is forcing threading by subject only, not
-> In-Reply-To chains?
->=20
-> 1. =
-https://lore.kernel.org/git/patch-1.1-fc26c46d39-20210722T140648Z-avarab@g=
-mail.com/
+Philip Oakley wrote:
+> minor nit/query on format..
+> On 22/07/2021 01:08, Felipe Contreras wrote:
+> > Now that we have a locus for merge versus rebase documentation, we can
+> > refer to it on the diverging advice.
+> >
+> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> > ---
+> >  Documentation/git-fast-forward.txt | 48 ++++++++++++++++++++++++++++++
+> >  advice.c                           |  4 ++-
+> >  2 files changed, 51 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/Documentation/git-fast-forward.txt b/Documentation/git-fast-forward.txt
+> > index 38c920964f..1989fdec4a 100644
+> > --- a/Documentation/git-fast-forward.txt
+> > +++ b/Documentation/git-fast-forward.txt
+> > @@ -50,6 +50,54 @@ synchronize the two branches.
+> >  
+> >  THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOUR MAY CHANGE.
+> >  
+> > +MERGE OR REBASE
+> > +---------------
+> > +
+> > +The decision to whether merge or rebase depends on the situation and the
+> > +project. Traditionally git has prefered merge over rebase, but that creates a
+> > +new commit, and that's frowned up on some projects, so you can't just simply
+> > +choose to merge blindly.
+> > +
+> > +------------
+> > +    D---C---B---A origin/master
+> > +	 \
+> > +	  X---Y master
+> > +------------
+> > +
+> > +The nature of distributed version control systems make this divergence
+> > +unavoidable; you must decide how to synchronize this divergence.
+> > +
+> > +Should you choose to merge, the two heads (master and origin/master) will be joined
+> > +together in a new commit:
+> > +
+> > +------------
+> > +	  origin/master
+> > +		|
+> > +		v
+> 
+> .. here, in my email reader, the arrow doesn't align to the commit
+> because of the single char (+) indent relative to tab spacing. Does this
+> cause any problems when formatted in the html/web style?
 
-Yes, that is exactly what happened, and I noticed your patch a few =
-minutes=20
-after I sent that message.=
+No, it looks fine.
+
+I don't have a problem with tabs or spaces, but git-pull.txt uses tabs.
+
+> It is good to have diagrams for the visual learners!
+
+Actually, it seems there's no such thing as "visual learners" [1]; we
+are all visual learners.
+
+Cheers.
+
+> > +    D---C---B---A---M master
+> > +	 \	   /
+> > +	  X---Y---+
+> > +------------
+
+[1] https://www.theatlantic.com/science/archive/2018/04/the-myth-of-learning-styles/557687/
+
+-- 
+Felipe Contreras
