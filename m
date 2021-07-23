@@ -2,166 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 579D6C4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 09:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97A35C4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 09:29:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2903B60E52
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 09:28:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6FC2F60EC0
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 09:29:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231994AbhGWIsB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 04:48:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50624 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229949AbhGWIsB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 04:48:01 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB83AC061575
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 02:28:34 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id r16so926860edt.7
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 02:28:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=9U+2ZxaHZoR4CdXrOQPvOBLdMlovLUfX5h9qXpxp8Ss=;
-        b=beej9bsHaya0OigQY0xcmj8Br/dTYNQuwbFm88ll0iljVn5k5j1xOEdDk6S780hANY
-         NJduLTEqXA+otgLQ1PVWOfpxDn3IA72WNZhwUZmC6pI2YXr+8B6RdHniLrF86W9SQvxH
-         vaUSCIydh2IHyVJ+Cp8WOsxJY8R8ee40Oxm++NyCOZgUA71QqImU3ZEx99XxfSstp90B
-         asycKWUHITs3Sj2bGM2wcBzkWnR8Ypoa0b2KRSjDLk5DkRLH3J0ryOTx0E9bSBkjkAy8
-         GTBqFgxgiODuiI/b2pFGVAnSTJJV6TZGbFqUvcZ7lDkz5p0pKRHgqI14MI5ByLDXEANj
-         S43g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=9U+2ZxaHZoR4CdXrOQPvOBLdMlovLUfX5h9qXpxp8Ss=;
-        b=QBFmHpsdKy7AOtHyTxJonieFuL/g/kESKOAMLNkaYAaZxmgHaQElSRiUOBqN/OhaCB
-         Yke6dhz6qskwMGE2DXTFycyFzSw7Y2EzX+3zy22UrH7hp7FYswP8Y6Lmwt3MtSUfIKlc
-         V+GN4DptWQCqA9boo/Ar/WUhZn4FM2fFqlMOfA2iB6f2oR3CGUekawlM0PaAN+duS7Yl
-         fm/bbCxwxbXbLuM8yrgeAG4b+2zvMQRPT6gwuQiJLeLE8tsLPUcd/fSh+VMYfoZdg31t
-         N5WYOhrvjWiBEk2CzsMshlPzKnXms2Td2ZDN1kIQjbtFLPQN6N2ZeF3ZTNFXRmuY6g/R
-         h9rg==
-X-Gm-Message-State: AOAM531T1QyvkuNIK/9zY7IJwIwm7qijmfNhLdj1+WnQUeAIXMCKG1xo
-        YiyKEr1Ew/WLdKHDjD3rabY=
-X-Google-Smtp-Source: ABdhPJymco1ksNyntxv7c/fCKDAJ5NkNTuTZJmrFR39qmkcMeFC66pmLfMNMBBFBxVAtyesKUNZGFw==
-X-Received: by 2002:aa7:d703:: with SMTP id t3mr4511774edq.50.1627032513302;
-        Fri, 23 Jul 2021 02:28:33 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id d2sm10312317ejo.13.2021.07.23.02.28.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jul 2021 02:28:32 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 4/9] hook: treat hookdir hook specially
-Date:   Fri, 23 Jul 2021 11:26:56 +0200
-References: <20210715232603.3415111-1-emilyshaffer@google.com>
- <20210715232603.3415111-5-emilyshaffer@google.com>
- <87lf66y6pd.fsf@evledraar.gmail.com> <YPnwBu4oMA9K445J@google.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <YPnwBu4oMA9K445J@google.com>
-Message-ID: <8735s5tm3t.fsf@evledraar.gmail.com>
+        id S232383AbhGWItG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 04:49:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55572 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230397AbhGWItB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 04:49:01 -0400
+Received: (qmail 10943 invoked by uid 109); 23 Jul 2021 09:29:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 23 Jul 2021 09:29:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23682 invoked by uid 111); 23 Jul 2021 09:29:37 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 23 Jul 2021 05:29:37 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 23 Jul 2021 05:29:34 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH] pack-bitmap: check pack validity when opening bitmap
+Message-ID: <YPqL/pZt6hNYN4hB@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When pack-objects adds an entry to its list of objects to pack, it may
+mark the packfile and offset that contains the file, which we can later
+use to output the object verbatim.  If the packfile is deleted while we
+are running (e.g., by another process running "git repack"), we may die
+in use_pack() if the pack file cannot be opened.
 
-On Thu, Jul 22 2021, Emily Shaffer wrote:
+We worked around this in 4c08018204 (pack-objects: protect against
+disappearing packs, 2011-10-14) by making sure we can open the pack
+before recording it as a source. This detects a pack which has already
+disappeared while generating the packing list, and because we keep the
+pack's file descriptor (or an mmap window) open, it means we can access
+it later (unless you exceed core.packedgitlimit).
 
-> On Fri, Jul 16, 2021 at 10:58:34AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->>=20
->>=20
->> On Thu, Jul 15 2021, Emily Shaffer wrote:
->>=20
->> > Soon, we will allow users to specify hooks using the config. These
->> > config-specified hooks may require different child_process options than
->> > hook executables in the gitdir. So, let's differentiate between hooks
->> > coming from the gitdir and hooks coming from the config.
->> >
->> > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
->> > ---
->> >  hook.c | 3 ++-
->> >  hook.h | 2 ++
->> >  2 files changed, 4 insertions(+), 1 deletion(-)
->> >
->> > diff --git a/hook.c b/hook.c
->> > index 19138a8290..3a588cb055 100644
->> > --- a/hook.c
->> > +++ b/hook.c
->> > @@ -117,6 +117,7 @@ struct list_head* hook_list(const char* hookname)
->> >  		struct hook *to_add =3D xmalloc(sizeof(*to_add));
->> >  		to_add->hook_path =3D hook_path;
->> >  		to_add->feed_pipe_cb_data =3D NULL;
->> > +		to_add->from_hookdir =3D 1;
->> >  		list_add_tail(&to_add->list, hook_head);
->> >  	}
->> >=20=20
->> > @@ -200,7 +201,7 @@ static int pick_next_hook(struct child_process *cp,
->> >  	cp->dir =3D hook_cb->options->dir;
->> >=20=20
->> >  	/* add command */
->> > -	if (hook_cb->options->absolute_path)
->> > +	if (run_me->from_hookdir && hook_cb->options->absolute_path)
->> >  		strvec_push(&cp->args, absolute_path(run_me->hook_path));
->> >  	else
->> >  		strvec_push(&cp->args, run_me->hook_path);
->> > diff --git a/hook.h b/hook.h
->> > index 586ddf40bb..60389cd8cd 100644
->> > --- a/hook.h
->> > +++ b/hook.h
->> > @@ -22,6 +22,8 @@ struct hook {
->> >  	/* The path to the hook */
->> >  	const char *hook_path;
->> >=20=20
->> > +	unsigned from_hookdir : 1;
->> > +
->> >  	/*
->> >  	 * Use this to keep state for your feed_pipe_fn if you are using
->> >  	 * run_hooks_opt.feed_pipe. Otherwise, do not touch it.
->>=20
->> The "from_hookdir" looks like it isn't used until 6/9, and maybe the
->> absolute_path change too? In any case this seems like a carried-forward
->> rebase of
->> https://lore.kernel.org/git/20210311021037.3001235-5-emilyshaffer@google=
-.com/
->> or some version thereof.
->>=20
->> At this point I tihnk it would be way better to squash this and other
->> such changes that basically add a field to a struct that isn't used yet
->> into whatever commit use/need them.
->
-> I think at this point we run into you and me having different
-> patch-storytelling styles - which probably is what led to the big topic
-> restart in the first place ;)
->
-> I'd prefer to see the "start using config too" patch stay as small as it
-> can; that's why I ended up with a handful of minor setup commits and
-> then one "and now here's config" commit.
->
-> Even if it's different from how you would tell it - is it wrong? (And if
-> it is, that's fine, and I'll change it, but I don't think it is - that's
-> why I structured the series this way.)
+The bitmap code that was added later does not do this; it adds entries
+to the packlist without checking that the packfile is still valid, and
+is vulnerable to this race. It needs the same treatment as 4c08018204.
 
-It's not wrong, if you'd like it that way sure.
+However, rather than add it in just that one spot, it makes more sense
+to simply open and check the packfile when we open the bitmap.
+Technically you can use the .bitmap without even looking in the .pack
+file (e.g., if you are just printing a list of objects without accessing
+them), but it's much simpler to do it early. That covers all later
+direct uses of the pack (due to the cached descriptor) without having to
+check each one directly. For example, in pack-objects we need to protect
+the packlist entries, but we also access the pack directly as part of
+the reuse_partial_pack_from_bitmap() feature. This patch covers both
+cases.
 
-The only reason I nudged you about it was that I assumed you'd perhaps
-mostly rebased these one-at-a-time on top of the base topic, before the
-base topic the patches were much larger.
+There's no test here, because the problem is inherently racy. I
+reproduced and verified the fix with this script:
 
-There is some arbitrary cut-off-limit where it makes sense to split the
-addition of code to be used later with the actual use, and that limit is
-a matter of taste.
+  rm -rf parent.git push.git fetch.git
 
-I thought perhaps given the base topic some of these patches should be
-squshed given their new size, but if you've looked at them and think
-it's fine as-is let's leave it at that.
+  push() {
+    (
+      cd push.git &&
+      echo content >>file &&
+      git add file &&
+      git commit -qm "change $1" &&
+      git push -q origin HEAD &&
+      echo "push $1..."
+    ) &&
+    (
+      cd parent.git &&
+      git repack -ad -q &&
+      echo "repack $1..."
+    )
+  }
+
+  fetch() {
+    rm -rf fetch.git &&
+    git clone -q file://$PWD/parent.git fetch.git &&
+    echo "fetch $1..."
+  }
+
+  git init --bare parent.git &&
+  git --git-dir=parent.git config transfer.unpacklimit 1 &&
+  git clone parent.git push.git &&
+  (for i in `seq 1 1000`; do push $i || break; done) &
+  pusher=$!
+  (for i in `seq 1 1000`; do fetch $i || break; done) &
+  fetcher=$!
+  wait $fetcher
+  kill $pusher
+
+That simulates a race between a client cloning and a push triggering a
+repack on the server. Without this patch, it generally fails within a
+couple hundred iterations with:
+
+  remote: fatal: packfile ./objects/pack/.tmp-1377349-pack-498afdec371232bdb99d1757872f5569331da61e.pack cannot be accessed
+  error: git upload-pack: git-pack-objects died with error.
+  fatal: git upload-pack: aborting due to possible repository corruption on the remote side.
+  remote: aborting due to possible repository corruption on the remote side.
+  fatal: early EOF
+  fatal: fetch-pack: invalid index-pack output
+
+With this patch, it reliably runs through all thousand attempts.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I wrote this patch in 2015 after seeing this race in production, and
+we've been running with it at GitHub ever since. I think I didn't
+upstream it back then because it was an incomplete fix without
+further changes to the pack-reuse code. And then of course I forgot all
+about it. Those pack-reuse changes came upstream in a14aebeac3 (Merge
+branch 'jk/packfile-reuse-cleanup', 2020-02-14), so this is a complete
+fix now (and recipe above is almost certainly triggering the problem in
+the reuse code path, since we'd generally be sending the whole pack).
+
+ pack-bitmap.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index bfc10148f5..c3a2c03b59 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -298,6 +298,11 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
+ 		return -1;
+ 	}
+ 
++	if (!is_pack_valid(packfile)) {
++		close(fd);
++		return -1;
++	}
++
+ 	bitmap_git->pack = packfile;
+ 	bitmap_git->map_size = xsize_t(st.st_size);
+ 	bitmap_git->map = xmmap(NULL, bitmap_git->map_size, PROT_READ, MAP_PRIVATE, fd, 0);
+-- 
+2.32.0.784.g92e169d3d7
