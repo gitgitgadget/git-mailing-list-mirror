@@ -2,86 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB7DFC4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB5F8C4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:49:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A178160E9C
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:47:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C40E460E73
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:49:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230098AbhGWQGy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 12:06:54 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58166 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229847AbhGWQGx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 12:06:53 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB306D412A;
-        Fri, 23 Jul 2021 12:47:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HQ6helV+djCvC1bFuBcYE4Whw69xZQkcWIOOg2
-        g+4OA=; b=sRlGi3TMJ1aZogmp48+bRB13pUlYyKIFoMv98JAT29vbe16sgX6trg
-        m1A5eUXso66MKZnUcHfJ3DY+ROR9KyaWXijtd2hu7tFOkAiXt7YgpzaUhzPYzF/e
-        ms+KdyN/IlAJiGpFeQx7tM+bBIlCUoCRX0b5Z3UklwVTe/rYiHyMU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D2FE6D4129;
-        Fri, 23 Jul 2021 12:47:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.71.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5EE91D4128;
-        Fri, 23 Jul 2021 12:47:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Angelo Borsotti <angelo.borsotti@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: Extracting a file
-References: <CAB9Jk9AafnUQr6q8t=b4Dh0PZHUA=fKJmtXxxObuGpF_w-_2wQ@mail.gmail.com>
-        <871r7qvhhr.fsf@evledraar.gmail.com>
-        <CAB9Jk9DqCR8C9qx6-gZmpTQfBAKnEupQTb1WkJgN3YOqSO0=2A@mail.gmail.com>
-        <YPppNYOO26xAq2fn@coredump.intra.peff.net>
-        <CAB9Jk9Af-GKFUQCiyN9fKmjA1hOLBw9mc_FPFBHX1m1NAnbfmQ@mail.gmail.com>
-Date:   Fri, 23 Jul 2021 09:47:24 -0700
-In-Reply-To: <CAB9Jk9Af-GKFUQCiyN9fKmjA1hOLBw9mc_FPFBHX1m1NAnbfmQ@mail.gmail.com>
-        (Angelo Borsotti's message of "Fri, 23 Jul 2021 09:38:41 +0200")
-Message-ID: <xmqqa6mdou3n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230467AbhGWQJE convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 23 Jul 2021 12:09:04 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:11876 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229847AbhGWQJD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 12:09:03 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 16NGnX6l098871
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 23 Jul 2021 12:49:33 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Jeff King'" <peff@peff.net>
+Cc:     "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
+        <avarab@gmail.com>, <git@vger.kernel.org>,
+        "'Nicolas Morey-Chaisemartin'" <NMoreyChaisemartin@suse.de>,
+        "'Tom G . Christensen'" <tgc@jupiterrise.com>,
+        "'Mischa POSLAWSKY'" <git@shiar.nl>,
+        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
+References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net>        <cover-0.5-00000000000-20210721T220402Z-avarab@gmail.com>        <YPqW8lAcwno3j7Fq@coredump.intra.peff.net> <xmqqo8atovbc.fsf@gitster.g>
+In-Reply-To: <xmqqo8atovbc.fsf@gitster.g>
+Subject: RE: [PATCH v2 0/5] drop support for ancient curl
+Date:   Fri, 23 Jul 2021 12:49:27 -0400
+Message-ID: <016801d77fe2$b7310ae0$259320a0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A930FD6A-EBD5-11EB-BC47-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQE0vbRnJUMvLfkMQVvxJmHGPWW9BwHenvwDAmPc0/0CIMzKH6xjLd9A
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Angelo Borsotti <angelo.borsotti@gmail.com> writes:
-
->> You might also like "git checkout -p HASH -- A", which will let you pick
->> individual hunks from HASH:A and apply them to your working tree.
+On July 23, 2021 12:21 PM, Junio C Hamano wrote:
+>Jeff King <peff@peff.net> writes:
 >
-> This shows the differences between the committed and the current file,
-> in a patch
-> form, which is handy to apply to the current file to make it equal to
-> the old, but
-> not if I want to browse the old file and understand how it was before.
+>> On Thu, Jul 22, 2021 at 12:22:11AM +0200, Ævar Arnfjörð Bjarmason wrote:
+>>
+>>> This series is a re-roll of patches found in Peff's GitHub repo at
+>>> jk/no-ancient-curl, which were already-rebased versions of those
+>>> patches. His original on-list version had his Signed-off-by, but the
+>>> range-diff is against that branch, hence the addition of
+>>> Signed-off-by in the range-diff.
+>>
+>> Heh, OK. It's a little surprising to see random junk pulled out of my
+>> GitHub repo, but in this case I was holding onto them with the intent
+>> of eventually resending after more time passed.
+>>
+>> So I'm happy to see these cleaned up and posted. I think what's on
+>> that branch should be good-ish, in the sense that I've been rebasing
+>> it forward as part of my daily routine, and it's part of the build
+>> that I use day-to-day. Though apparently I never applied the
+>> CURLOPT_POST301 fix. :-/
+>
+>Thanks.
+>
+>> I know my S-o-b was on the originals to the list, but just to make
+>> clear: I am fine with using them on the rebased versions you grabbed.
+>
+>Good.  S-o-b is merely "I can let the project use it" and does not say "I agree this is (still) relevant in the context of the code this is being
+>submitted to", so the above note is very much appreciated.
+>
+>> So modulo the commit message tweaks that Junio suggested, this all
+>> looks fine. I actually think my original "#error on too-old curl" is
+>> still reasonable. Yes, people whose distro has backported all of these
+>> features could possibly still use it. But in that case they likely
+>> know what's going on and can rip out the #error. It seems much more
+>> likely to me that it _won't_ work, and they'll get confused by obscure
+>> errors when they try to use an old curl.
+>>
+>> But I don't feel too stronlgy about it either way.
+>
+>Me neither.  Those who are vanilla would not be helped by having it, as their build would fail if their cURL is too old anyway even without
+>it.  Those who backported would have a build that may or may not work, but diagnosing it is part of the job of backporting their cURL
+>anyway.  So in practice, I think "#error if you are older than X" primarily would serve documentation purposes (which may be worth doing,
+>but requirements listed in INSTALL would probably be a better alternative anyway).
 
-Why doesn't a straight-forward "check out the path from an old
-version" work?  That is
+This is probably a red-herring, but from what I am observing, the curl 7.70 version is required for OpenSSL 3.0.0. Once we move there, which my team is working on, the near recent older version of curl could also be problematic and incompatible. This is rather unpleasant because the current standard libcurl on our platform is 7.65, which is too old to be compatible anyway, so we're going to have to put out a separate libcurl build. Curl seems to need to be closer to the bleeding edge to retain imminent compatibility.
 
-    git checkout $old_version -- path/to/file.ext
+-Randall
 
-Is it because you have changes to path/to/file.ext already (in which
-case "mv path/to/file.ext path/to/file.ext-saved" would be a quick
-way to save it away)?
-
-And then path/to/file.ext can be inspected to your heart's content,
-and when you are done and want to go back to the current state, you
-can do "git checkout HEAD -- path/to/file.ext" (followed by the
-earlier "mv" in reverse)?
