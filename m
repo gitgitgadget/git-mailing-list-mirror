@@ -2,62 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61070C4338F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAE3CC4320A
 	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 18:52:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 35FCD60E0C
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 18:52:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9BFEC60F21
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 18:52:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229627AbhGWSL4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 14:11:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39366 "EHLO
+        id S229761AbhGWSL5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 14:11:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229461AbhGWSLz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 14:11:55 -0400
+        with ESMTP id S229461AbhGWSL5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 14:11:57 -0400
 Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 082BAC061575
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 11:52:29 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id f62-20020a17090a28c4b02901733dbfa29cso7292016pjd.0
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 11:52:29 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E440C061575
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 11:52:30 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id f62-20020a17090a28c4b02901733dbfa29cso7292077pjd.0
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 11:52:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=V19lGWxQsziEMG4oMq6F5F7nUxCkmCkupIdSSkSVYgk=;
-        b=SNP6e0cc5Co9m0rA75Di6T81OsDI4f9uiExATTleXl/IHOLltw/PouYCtCMLdbhrIj
-         XvckAR1yXILwk34XsZAKlz0J+/ObYKWjMwaCTXsH+Y1FvSDOzJJeWVSFlKxo7tlasnJX
-         bi+IoBRQJDKsNrnpRxrOgsHfLT06JqofvPQZNoS0ak1gx/GYmAWA17v4C+zaW1AB+vP2
-         9CrE2vMF2U79PDs6vwc42SPT9Q6bWJRAYJt4dp53bdMlaMj5EY/cupL4/pnsm5V1kYJe
-         4AjioSfMJvGkACNK8/MS8GjRWU55eRLgQbMY2fuEsRx8weS6zSrB9elIdIB5ffU1Bto2
-         VHsA==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=pwTqZiBDjXRUztc4/N+QlR6QxaMAryQU3t0uztYEjY8=;
+        b=Xp1QlhEz25FovkhLwkzw803bPghHLQAfTUNXOXhut4DccYVw+XrSQMYCDiwGPOqGA9
+         qzqF+dvk2gwoHnbdZ0pcyuy507UjRCsNoLIBUujYCAo/dFS7gBqOfRtkKKo8BrpSAJVV
+         X3WlxcLUTqr8NKA/QSOhj9ux/afLFZOyeTT1e36nD/5Kt/UQhGVgbSstai8rWuC2dnb3
+         8bnbgXvSw7B5/idxpHqZmV2+uxnpJTFbk0waw+rNDA1FMv7KDEcZSSur0VbLUJy8zsNr
+         zvxQN8OoNAwEMF9W80FdpRHlf+cd/GJE2YAjcy5a2337oUilM1gXT3YJadtBf78wENRo
+         RnOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=V19lGWxQsziEMG4oMq6F5F7nUxCkmCkupIdSSkSVYgk=;
-        b=TZbJWr9ZylqiLEdjuVbpX+yNsa2HijuEBcKYtr3B8draRJQuA+TP9MqtDdCTVjL13q
-         FSemJ+8+hAhmZZ84c1Xp2MxAPr+by/XzQ+ZhD7PhCZT0tpjcO2bEobNK/Nq2F3LrV1kQ
-         ewTwflwaqUAdRQae5UWM2CDj+8Mmjvo8jFbne9yQDRINuj13O8JLJTKTZYVexZRsfdMT
-         FGmeDSkdypB2jQQUYLU1qATjqJlvYfkD40eYYsvl/ykh4KA0Jzd5OV692O/oO/tc5EqT
-         4Bswbkkf1c/pI+kKfkJFUs0dBKJgIHZpXdA5t1Y2Gc0ppf1nkjI8J6ADXTBvUePQk6rz
-         Ew7w==
-X-Gm-Message-State: AOAM531wpK0+niBogQuLjvY8t6d9BzYIhDBhM6zcuy/DNvXUpbDN44VH
-        JcqnnxyA48NG2wnLMUq07HHiTznf5p8JqK3LyCCYbovMVKwv7tClRNtqCV1MmiTYzaWcDl0lk4o
-        aMq+wq+XgUgj9leFFymDL6lgr5J3ItUm6/i9wjK0M/H1et/UlZYew2x5LD+Oz6cVqrY8PZBATsr
-        Rz
-X-Google-Smtp-Source: ABdhPJzNWqo6qF25UlR2gIZJaRZcrbM1h1RPWJtn6knUlRSSVvbYvMCuXTUBM3pjU3ensK5FBZtC4lTLLJhpkqbzf4dS
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=pwTqZiBDjXRUztc4/N+QlR6QxaMAryQU3t0uztYEjY8=;
+        b=t2LQmwKGRVzQ8QEyl4A4Zh4joJH0kZ3ukGJ2oztdZKa45cH/vKW/Ly3HTBG4b1iz0Z
+         tFIeNrqwoJFMvk0eaRGLM+mvrO6cg6OHn2qSXhWh6wT4zv+8A3zAPnF2aNhCTNd7aVzc
+         xPfkqSQQ2bSgK9uRevA/3dQPIbQQtTq7MPrNcTDKMP2mS34F/QSSnoRoXhcyuIP3v5Da
+         CmR6ZTMgoUR3gYD/hI8UAyck5OdpIPyFcYYhRiPCyyLRp6reNuDX80VWFZT1jEsIX3B9
+         3zhhLvR2NYXWAJPMpAMuyAmhanfqUMZ08fcZNDxkzKU3qKk3tNtgM3NJn1DQiyT1Al/q
+         5x1A==
+X-Gm-Message-State: AOAM5327jjzGRV2Ulp0jcRsfDD3IitmnHp6cVsBMsoN9M+W6iU8vh2a7
+        shXXmUo9dL50pJwJQ5/DpAezAJnutcxyJxeqhKLH/ZBdMU7khVULDXKjDG56RmHGSXy4I51qLCQ
+        1XfNAjlcRdxEk6RoBiL8ZlUOBUZsssgUhaBMLqVY11NPXFkbWxmvCNcKPvJztx873kjjlTgeG8j
+        Zl
+X-Google-Smtp-Source: ABdhPJwJXHqDk1JQoL+mDk392OrRH6oXEqfQ9SoYnK0rM8ztdaGNjIyh8afcN0g8WwCvWNQZdrUhk6H9/VoG9iPLSyoZ
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90b:189:: with SMTP id
- t9mr490895pjs.1.1627066348101; Fri, 23 Jul 2021 11:52:28 -0700 (PDT)
-Date:   Fri, 23 Jul 2021 11:52:21 -0700
-Message-Id: <cover.1627066238.git.jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:aa7:8b56:0:b029:2b9:77be:d305 with
+ SMTP id i22-20020aa78b560000b02902b977bed305mr5949216pfd.61.1627066349805;
+ Fri, 23 Jul 2021 11:52:29 -0700 (PDT)
+Date:   Fri, 23 Jul 2021 11:52:22 -0700
+In-Reply-To: <cover.1627066238.git.jonathantanmy@google.com>
+Message-Id: <f502997d159c7a30862fab3c3b443291539b6f29.1627066238.git.jonathantanmy@google.com>
 Mime-Version: 1.0
+References: <cover.1627066238.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.32.0.432.gabb21c7263-goog
-Subject: [PATCH 0/2] Another partial clone prefetch
+Subject: [PATCH 1/2] unpack-trees: refactor prefetching code
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
@@ -66,22 +71,130 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here's another instance in which we need to prefetch in order to avoid
-fetching objects one by one. More information is in patch 2's commit
-message.
+Refactor the prefetching code in unpack-trees.c into its own function,
+because it will be used elsewhere in a subsequent commit.
 
-Jonathan Tan (2):
-  unpack-trees: refactor prefetching code
-  cache-tree: prefetch in partial clone read-tree
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ cache.h        |  9 +++++++++
+ read-cache.c   | 23 +++++++++++++++++++++++
+ unpack-trees.c | 27 ++++++++-------------------
+ 3 files changed, 40 insertions(+), 19 deletions(-)
 
- cache-tree.c                       | 11 ++++++++--
- cache.h                            |  9 ++++++++
- read-cache.c                       | 23 +++++++++++++++++++++
- t/t1022-read-tree-partial-clone.sh | 33 ++++++++++++++++++++++++++++++
- unpack-trees.c                     | 27 ++++++++----------------
- 5 files changed, 82 insertions(+), 21 deletions(-)
- create mode 100755 t/t1022-read-tree-partial-clone.sh
-
+diff --git a/cache.h b/cache.h
+index ba04ff8bd3..6f952e22c6 100644
+--- a/cache.h
++++ b/cache.h
+@@ -410,6 +410,15 @@ struct cache_entry *dup_cache_entry(const struct cache_entry *ce, struct index_s
+  */
+ void validate_cache_entries(const struct index_state *istate);
+ 
++/*
++ * Bulk prefetch all missing cache entries that are not GITLINKs and that match
++ * the given predicate. This function should only be called if
++ * has_promisor_remote() returns true.
++ */
++typedef int (*must_prefetch_predicate)(const struct cache_entry *);
++void prefetch_cache_entries(const struct index_state *istate,
++			    must_prefetch_predicate must_prefetch);
++
+ #ifdef USE_THE_INDEX_COMPATIBILITY_MACROS
+ extern struct index_state the_index;
+ 
+diff --git a/read-cache.c b/read-cache.c
+index ba2b012a6c..4e396bf17f 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -27,6 +27,7 @@
+ #include "progress.h"
+ #include "sparse-index.h"
+ #include "csum-file.h"
++#include "promisor-remote.h"
+ 
+ /* Mask for the name length in ce_flags in the on-disk index */
+ 
+@@ -3657,3 +3658,25 @@ static void write_ieot_extension(struct strbuf *sb, struct index_entry_offset_ta
+ 		strbuf_add(sb, &buffer, sizeof(uint32_t));
+ 	}
+ }
++
++void prefetch_cache_entries(const struct index_state *istate,
++			    must_prefetch_predicate must_prefetch)
++{
++	int i;
++	struct oid_array to_fetch = OID_ARRAY_INIT;
++
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
++
++		if (S_ISGITLINK(ce->ce_mode) || !must_prefetch(ce))
++			continue;
++		if (!oid_object_info_extended(the_repository, &ce->oid,
++					      NULL,
++					      OBJECT_INFO_FOR_PREFETCH))
++			continue;
++		oid_array_append(&to_fetch, &ce->oid);
++	}
++	promisor_remote_get_direct(the_repository,
++				   to_fetch.oid, to_fetch.nr);
++	oid_array_clear(&to_fetch);
++}
+diff --git a/unpack-trees.c b/unpack-trees.c
+index f88a69f8e7..ed92794032 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -392,6 +392,11 @@ static void report_collided_checkout(struct index_state *index)
+ 	string_list_clear(&list, 0);
+ }
+ 
++static int must_checkout(const struct cache_entry *ce)
++{
++	return ce->ce_flags & CE_UPDATE;
++}
++
+ static int check_updates(struct unpack_trees_options *o,
+ 			 struct index_state *index)
+ {
+@@ -442,28 +447,12 @@ static int check_updates(struct unpack_trees_options *o,
+ 	if (should_update_submodules())
+ 		load_gitmodules_file(index, &state);
+ 
+-	if (has_promisor_remote()) {
++	if (has_promisor_remote())
+ 		/*
+ 		 * Prefetch the objects that are to be checked out in the loop
+ 		 * below.
+ 		 */
+-		struct oid_array to_fetch = OID_ARRAY_INIT;
+-		for (i = 0; i < index->cache_nr; i++) {
+-			struct cache_entry *ce = index->cache[i];
+-
+-			if (!(ce->ce_flags & CE_UPDATE) ||
+-			    S_ISGITLINK(ce->ce_mode))
+-				continue;
+-			if (!oid_object_info_extended(the_repository, &ce->oid,
+-						      NULL,
+-						      OBJECT_INFO_FOR_PREFETCH))
+-				continue;
+-			oid_array_append(&to_fetch, &ce->oid);
+-		}
+-		promisor_remote_get_direct(the_repository,
+-					   to_fetch.oid, to_fetch.nr);
+-		oid_array_clear(&to_fetch);
+-	}
++		prefetch_cache_entries(index, must_checkout);
+ 
+ 	get_parallel_checkout_configs(&pc_workers, &pc_threshold);
+ 
+@@ -473,7 +462,7 @@ static int check_updates(struct unpack_trees_options *o,
+ 	for (i = 0; i < index->cache_nr; i++) {
+ 		struct cache_entry *ce = index->cache[i];
+ 
+-		if (ce->ce_flags & CE_UPDATE) {
++		if (must_checkout(ce)) {
+ 			size_t last_pc_queue_size = pc_queue_size();
+ 
+ 			if (ce->ce_flags & CE_WT_REMOVE)
 -- 
 2.32.0.432.gabb21c7263-goog
 
