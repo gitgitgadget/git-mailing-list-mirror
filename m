@@ -2,118 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52B41C4320E
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:21:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82659C4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:36:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 39BDB60EB5
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:21:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5C8B760200
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 16:36:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230392AbhGWPkq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 11:40:46 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60447 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229722AbhGWPkk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 11:40:40 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E4D06D3C9F;
-        Fri, 23 Jul 2021 12:21:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=HgiJBt1SYoeu
-        8XAr3MEyrNe15XkrNUGefhKjWJan/3s=; b=hGI7FEe3v+jvH2xABMRapR23SB9d
-        bYhA2Sbb1sIBIOSpxoDW+3NRsc8mR5dqabuOG0snd3plaROgkyrlHs33zxZB7i3u
-        lrJM8RXGAxaJJJ23FP7fJDQef2avqh5cc2N1Z1yt4pgwCRwsARr/XjosbOS2G+4E
-        qFN4gpr0IgDE7lk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D9FC3D3C9C;
-        Fri, 23 Jul 2021 12:21:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.71.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 604BBD3C9B;
-        Fri, 23 Jul 2021 12:21:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>,
-        "Tom G . Christensen" <tgc@jupiterrise.com>,
-        Mischa POSLAWSKY <git@shiar.nl>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/5] drop support for ancient curl
-References: <20170809120024.7phdjzjv54uv5dpz@sigill.intra.peff.net>
-        <cover-0.5-00000000000-20210721T220402Z-avarab@gmail.com>
-        <YPqW8lAcwno3j7Fq@coredump.intra.peff.net>
-Date:   Fri, 23 Jul 2021 09:21:11 -0700
-In-Reply-To: <YPqW8lAcwno3j7Fq@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 23 Jul 2021 06:16:18 -0400")
-Message-ID: <xmqqo8atovbc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FF04BBAE-EBD1-11EB-9F95-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S230455AbhGWPzx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 11:55:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36248 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230393AbhGWPzu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 11:55:50 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DFE4C0613D3
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 09:36:22 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id v8-20020a0568301bc8b02904d5b4e5ca3aso1761521ota.13
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 09:36:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=/Wf+ZFMZdFp2oSBO91YhMo+I6AvpCQoCbl7a4EToo1Y=;
+        b=m0ssU6t/mFHgQPYRuh3jPXFWpIkYATSEChj8e0BFtBdl8lunbNpj7FwJePgkx1ZxEw
+         YG80eYLaOBVuvbMlmnWngWTIZ/XVQGE8s+YnEyapCJi1pMIpW/e6wAoOJOVp9s4bLRev
+         y4m/Xvpc2PY8xjFb42XBsc4iwngs1lvS7O3mty3Q0I1V3G8/A1900Dpg/OU5Ci510iGY
+         qYqlRDTeF+s4PLnk4Sv44H9suW2ZVvbkcW7ahg5I3+9zp1qmmILnVPPY9lL7rNbsC7K4
+         LrNMxUbcW/aBn8Q8vMfHIQdY6dcqCKn769o7ccDgdQst1IW+toPuy6kROxxVS1/Jkcm8
+         frlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=/Wf+ZFMZdFp2oSBO91YhMo+I6AvpCQoCbl7a4EToo1Y=;
+        b=Xgf5mFgQEtnt7b9dtADMe3FG9GggtZL5WbSFhbWSC6QwI9EMmcDBi4HUNRtXnBd53q
+         m61d6loPlbF2KdUDBoVEv4PabEkS3QoSzCO+OPsge2fa1hS3og9390qMOIkORkIx97tU
+         c4NGsYUKSlYB/4EVnb+zJR4nwKRYmWotLf9bnV9bFQlAFjCJZzn8Dl/rtr5qblTjsDmB
+         eGGQyn6JrgTZd9zAXVIEjUONvCci9GSnIHo7KNG4Df5hKLe66t33UN7PyGiI/s2slBBX
+         ldl2BVkSiX4Vllr+ppd9v2Bep2+OfbvWs8L+Uhxec4oU74qS3eCqArBCZLxBtCLypIW/
+         RIyA==
+X-Gm-Message-State: AOAM530IYq3ivZ99kIJQQ2zjYwyzpHXrK+kUdjkJIc/i8P7QlNUKHAD1
+        NUWWLL5KVG7ECXtr5GJOFyw=
+X-Google-Smtp-Source: ABdhPJxuym3KfLWWbZ6lxY1NlWXhRplgYv3soxPnmT12PSdGUsFp6bHZddsP2OdIreomnk7U6sRgCg==
+X-Received: by 2002:a9d:4789:: with SMTP id b9mr3572299otf.335.1627058181775;
+        Fri, 23 Jul 2021 09:36:21 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id s2sm5488575ooc.15.2021.07.23.09.36.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jul 2021 09:36:21 -0700 (PDT)
+Date:   Fri, 23 Jul 2021 11:36:20 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Marc Branchaud <marcnarc@xiplink.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Stephen Haberman <stephen@exigencecorp.com>
+Message-ID: <60faf00444122_defb208cb@natae.notmuch>
+In-Reply-To: <YPpwIazVxL4GoLbC@coredump.intra.peff.net>
+References: <20210721221545.1878514-1-felipe.contreras@gmail.com>
+ <xmqqy29z9r94.fsf@gitster.g>
+ <xmqqtukn9p0g.fsf@gitster.g>
+ <60f8c8c92a215_1d0abb20859@natae.notmuch>
+ <YPpwIazVxL4GoLbC@coredump.intra.peff.net>
+Subject: Re: [PATCH] doc: pull: fix rebase=false documentation
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Jeff King wrote:
+> On Wed, Jul 21, 2021 at 08:24:25PM -0500, Felipe Contreras wrote:
+> 
+> > I'm not trashing the current behavior, I'm explaining what the consensus
+> > is. I spent several man-days re-reading old threads, and this is the
+> > consensus of what should happen:
+> > 
+> >   1. git pull              # merge HEAD into upstream
+> >   2. git pull origin topic # merge topic into HEAD
+> > 
+> > Of the people that expressed an opinion, 100% of them stated that what
+> > `git pull` does in the first case today is not desirable.
+> 
+> I did not participate in the threads you linked earlier, so I am
+> probably not in that 100%. But you did use my name below:
+> 
+> > Yes, you are correct that if *everyone* followed the topic branch
+> > workflow, everything would work correctly, but that's not what happens
+> > in reality, in reality people do all kinds of workflows, and wrong
+> > merges are pervasive.
+> > 
+> > Everyone--including Linus, Jeff, and you--agree that there's two
+> > different ways of using `git pull`: integrator versus developer.
+> > 
+> > When a user is doing `git pull` to synchronize changes to push to the
+> > same branch, that's a centralized two-way workflow, so he is acting both
+> > as an integrator and as a developer, and it's in that particular case
+> > that the order of the parents should be reversed. Everyone agrees on
+> > that.
+> > 
+> > When the user the opposite explicitely: `git pull origin master`
+> > Linus calls it a "back-merge" [1], and in that case the order of the
+> > parents should not be reversed.
+> 
+> So I feel compelled to say now that I do not think that changing the
+> order of parents for "git pull" is the obviously correct thing to do.
 
-> On Thu, Jul 22, 2021 at 12:22:11AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
->
->> This series is a re-roll of patches found in Peff's GitHub repo at
->> jk/no-ancient-curl, which were already-rebased versions of those
->> patches. His original on-list version had his Signed-off-by, but the
->> range-diff is against that branch, hence the addition of
->> Signed-off-by in the range-diff.
->
-> Heh, OK. It's a little surprising to see random junk pulled out of my
-> GitHub repo, but in this case I was holding onto them with the intent o=
-f
-> eventually resending after more time passed.
->
-> So I'm happy to see these cleaned up and posted. I think what's on that
-> branch should be good-ish, in the sense that I've been rebasing it
-> forward as part of my daily routine, and it's part of the build that I
-> use day-to-day. Though apparently I never applied the CURLOPT_POST301
-> fix. :-/
+That's not the same as saying it's the wrong thing to do.
 
-Thanks.
+More importantly, while for you it might not be the obviously correct
+thing to do, it should be obvious that there is a problem. Whether
+reversing the parents in case #1 is the best solution or not is
+debatable.
 
-> I know my S-o-b was on the originals to the list, but just to make
-> clear: I am fine with using them on the rebased versions you grabbed.
+> And likewise, in the one thread I do remember participating in, I
+> expressed something similar:
+> 
+>   https://lore.kernel.org/git/20140502214817.GA10801@sigill.intra.peff.net/
 
-Good.  S-o-b is merely "I can let the project use it" and does not
-say "I agree this is (still) relevant in the context of the code
-this is being submitted to", so the above note is very much
-appreciated.
+In that comment you mentioned that you were not against reversing the
+order of the parents, but if we did, that it should done with a
+configuration that the user explicitely turns on:
 
-> So modulo the commit message tweaks that Junio suggested, this all look=
-s
-> fine. I actually think my original "#error on too-old curl" is still
-> reasonable. Yes, people whose distro has backported all of these
-> features could possibly still use it. But in that case they likely know
-> what's going on and can rip out the #error. It seems much more likely
-> to me that it _won't_ work, and they'll get confused by obscure errors
-> when they try to use an old curl.
->
-> But I don't feel too stronlgy about it either way.
+  I wanted to make one point: if we are going to do such a switch, let's
+  please make it something the user explicitly turns on.
 
-Me neither.  Those who are vanilla would not be helped by having it,
-as their build would fail if their cURL is too old anyway even
-without it.  Those who backported would have a build that may or may
-not work, but diagnosing it is part of the job of backporting their
-cURL anyway.  So in practice, I think "#error if you are older than
-X" primarily would serve documentation purposes (which may be worth
-doing, but requirements listed in INSTALL would probably be a better
-alternative anyway).
+I am not against adding a configuration to reverse the parents only on
+case #1. Additionally we could delineate a migration path that mentions
+that in the future this will be default, although that can be done and
+discussed later.
 
-Thanks.
+But the fact that there's a problem is not debatable.
+
+
+Either way it's precisely because `git pull` is a command with so much
+inertia that it's hard to change (although not impossible), that I
+decided to create a new `git update` command whose whole purpose is to
+implement case #1, which is intended for normal developers, not
+integrators, and there the order of the parents is reversed by default.
+
+-- 
+Felipe Contreras
