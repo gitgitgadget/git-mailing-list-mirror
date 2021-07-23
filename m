@@ -2,113 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A9A6C4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 19:44:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81FA5C4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 19:47:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E6AE860E99
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 19:44:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5C5BF60E76
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 19:47:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230406AbhGWTDi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 15:03:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51068 "EHLO
+        id S229762AbhGWTGb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 15:06:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229530AbhGWTDh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 15:03:37 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BDEBC061575
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 12:44:09 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id he41so5281553ejc.6
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 12:44:09 -0700 (PDT)
+        with ESMTP id S229530AbhGWTGa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 15:06:30 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AB78C061575
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 12:47:04 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id f20-20020a9d6c140000b02904bb9756274cso3151298otq.6
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 12:47:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=EOvQhAFTLOCBBLx2TJTjeudSbfYgThnPY7EKhDVH0yE=;
-        b=WCC9jigLPm4rXu37cuouxZ1fZ73jzWpaIGldmkso7Z3sbM7py3ljx147gTWRukudzV
-         4FRv3LO8agGwH/VxFEB9+kdGdNbppHcEtEUfE+se6W/zGjYGHDZ+eb0wkmS4i8ADdVWC
-         sh9IMfLWZCjrtwN0Rvhgd7iKv7JfjNpz0npjEpvlVCL9hUnUS4d65Rll5aq//RuSFrvu
-         oLUHvEc3V9o3w5UjBkC+YXRRDoyV1aDsQMxKYsMadpJrn6t5zp0CFYOty3ZYCJMHHRN/
-         m7y5MRrdK9PaUESuG1xArFafADuq2q9bS2q7xHxNOOFVPH+A9pR3eY4LaENAEVLS8+Ly
-         kD5A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SBBlRaocuDeXpdHJg+sjFaIJaFj+/jXSF/9KiwyFkYQ=;
+        b=kCPSXHqaoRrpw1I2QoJoJDEFhRCisyqPIjCkvFRCmGuF18ToCf9kQejIMLdtZh3Flo
+         NvZBGfFVf4okzm5z3HwnHbdjdgcNDDONi/ZtLkjPuSEGepOljHE9izVPW08RpqXb+dBx
+         u4YEXBoVXqpTE187a8vWJ9vlmb3c59p4ZyS6Gv+S+F+zy5rZbQRVbJtL7PnKgGyrQU00
+         YDyrcdQy46qL24SLYVrhLdwBvE/D8UR1e7g4B37VgamAv35/fPtDsEjJKqj+cWlbG2h/
+         3Lcux51EosYnbdI/KxqipFG2Qb4HF9WCkJ2OltzWUKjE9Lg8aFH0l4emmOz1VtG09f5a
+         ORCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=EOvQhAFTLOCBBLx2TJTjeudSbfYgThnPY7EKhDVH0yE=;
-        b=eCIgarGfmsJjes8lrQmfMQKi+s+oI6ORSSH5ndlzKNPAriLfoAYYlIADYIZwpb6Xur
-         BovGtGsIL2NGPtw0hrJswOFy42qvg2qfna+kLNrBtG3IXTqrAAPvtOE8f51Nd9us0Xxn
-         0x1W+D/+Z89wVMRulvZEdvhvgmFIAzgFLp2sM0mg8AIs/eOk9ve2O0g/oCA/kf0l9VdL
-         lS6s7dNzvVyASmC6VOSSeYU2b3RvSaJg6uXnulHTFqiddiloocyZ6/I7M+gDIsbWGo6k
-         xnCinrKueMhDiK6rogCMC9nMulVrnFASyVQDiTgbknYXZU9LUBMvjBUkR1tjvUKtvcNy
-         Xnlw==
-X-Gm-Message-State: AOAM531jNMI3eZW8XCInIxs9SNLDKf1NmDCWujFdgpj42WevrsMjHmcD
-        zZwFWjLE89B2LEFgd/YaTeY=
-X-Google-Smtp-Source: ABdhPJy7k6P4QeWZCbPUSglYP0rCtgX984ExYrxJsNC66rQzMqp90Tm57o57KPUEWCQvjebEnrREsw==
-X-Received: by 2002:a17:906:696:: with SMTP id u22mr6167621ejb.77.1627069447911;
-        Fri, 23 Jul 2021 12:44:07 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id a25sm14520251edr.21.2021.07.23.12.44.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jul 2021 12:44:07 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 06/12] refs API: pass the "lock OID" to reflog "prepare"
-Date:   Fri, 23 Jul 2021 21:41:47 +0200
-References: <cover-00.11-00000000000-20210716T140631Z-avarab@gmail.com>
- <cover-00.12-00000000000-20210720T102051Z-avarab@gmail.com>
- <patch-06.12-295594fe8ae-20210720T102051Z-avarab@gmail.com>
- <xmqq35s7efb3.fsf@gitster.g> <xmqqy29zd0dv.fsf@gitster.g>
- <CAFQ2z_PuNJ_KtS_O9R2s0jdGbNNKnKdS3=_-nEu6367pteCxwA@mail.gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <CAFQ2z_PuNJ_KtS_O9R2s0jdGbNNKnKdS3=_-nEu6367pteCxwA@mail.gmail.com>
-Message-ID: <87lf5wstlv.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SBBlRaocuDeXpdHJg+sjFaIJaFj+/jXSF/9KiwyFkYQ=;
+        b=qI7a3d8URAgmYZX+8dfux4EJC9WxF2Zvl/tJYf/fo2bZNzo45l7mdDE7CBTHHmpeRd
+         UUxmqy4Ve3XYBQ37KOUTO8G6wsL3mHKphXOJlS2Y/zHYpY2LO3YvW+DOAyZl38HZjpUw
+         0ppaOoNH6lCLMkArX1BFrnxYTsfr3GABChgyk4ZYPjhnaLOJI28ENc/9pxMRGTERy43K
+         kirJtS7jGpGiej5ivL4YhBoRlBDGZAdil9tP9gKY9ReVke8Iuk7vbrWPcQ+H06P0OFU8
+         g6MOB9N2p9TkPmnwD3sBk5qNlRnOvFitPCEj4HxAUnYdFhu8Lmr1Zrz9DX8HyRTckNXO
+         bzGw==
+X-Gm-Message-State: AOAM53257k/D16jRgQ6p5kwhlXiF8iT/UhB6pzm7Rii33RCSgjyCvEVp
+        ONSuvZ1s7To4NfMnbXgyrNF85jrIv251OHuHbQ8=
+X-Google-Smtp-Source: ABdhPJxztp+jw/8xUsnHC9+8rUxEfhjuCLoZNCDNjN7GMcfdQEag+Nvhxf1nBnVto4b5XxIa96jaEpsLTkPHY6oRy+4=
+X-Received: by 2002:a05:6830:1d73:: with SMTP id l19mr4010683oti.316.1627069623387;
+ Fri, 23 Jul 2021 12:47:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.999.git.1626901619.gitgitgadget@gmail.com> <76066a78ce077add4bc69819b017516e12ac0d45.1626901619.git.gitgitgadget@gmail.com>
+In-Reply-To: <76066a78ce077add4bc69819b017516e12ac0d45.1626901619.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 23 Jul 2021 12:46:52 -0700
+Message-ID: <CABPp-BHNS=6xX2=NxZnoVgtE8MqR3Tj9RE9m9ocV_+oHRjogoA@mail.gmail.com>
+Subject: Re: [PATCH 5/5] add: ignore outside the sparse-checkout in refresh()
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Jul 21 2021, Han-Wen Nienhuys wrote:
-
-> On Wed, Jul 21, 2021 at 7:48 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, Jul 21, 2021 at 2:07 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
->  Junio C Hamano <gitster@pobox.com> writes:
+> From: Derrick Stolee <dstolee@microsoft.com>
 >
->  > This obviously breaks the latest round of reftable topic, as it
->  > still wants this type to take const oid, and I do not think using
->  > on-filesystem lock as if we are using the files backend is not a
->  > good solution.
+> Since b243012 (refresh_index(): add flag to ignore SKIP_WORKTREE
+> entries, 2021-04-08), 'git add --refresh <path>' will output a warning
+> message when the path is outside the sparse-checkout definition. The
+> implementation of this warning happened in parallel with the
+> sparse-index work to add ensure_full_index() calls throughout the
+> codebase.
 >
->  Sorry for redundant negation.  "I do not think it is a good solution
->  to have everybody pretend as if they are files backend when they
->  lock refs." was what I meant.
+> Update this loop to have the proper logic that checks to see if the
+> pathspec is outside the sparse-checkout definition. This avoids the need
+> to expand the sparse directory entry and determine if the path is
+> tracked, untracked, or ignored. We simply avoid updating the stat()
+> information because there isn't even an entry that matches the path!
 >
-> Reftable could easily read the current OID for the reference, if necessary. 
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  builtin/add.c                            | 10 +++++++++-
+>  t/t1092-sparse-checkout-compatibility.sh |  6 +-----
+>  2 files changed, 10 insertions(+), 6 deletions(-)
+>
+> diff --git a/builtin/add.c b/builtin/add.c
+> index c76e6ddd359..d512ece655b 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -192,13 +192,21 @@ static int refresh(int verbose, const struct pathspec *pathspec)
+>         struct string_list only_match_skip_worktree = STRING_LIST_INIT_NODUP;
+>         int flags = REFRESH_IGNORE_SKIP_WORKTREE |
+>                     (verbose ? REFRESH_IN_PORCELAIN : REFRESH_QUIET);
+> +       struct pattern_list pl = { 0 };
+> +       int sparse_checkout_enabled = !get_sparse_checkout_patterns(&pl);
+>
+>         seen = xcalloc(pathspec->nr, 1);
+>         refresh_index(&the_index, flags, pathspec, seen,
+>                       _("Unstaged changes after refreshing the index:"));
+>         for (i = 0; i < pathspec->nr; i++) {
+>                 if (!seen[i]) {
+> -                       if (matches_skip_worktree(pathspec, i, &skip_worktree_seen)) {
+> +                       const char *path = pathspec->items[i].original;
+> +                       int dtype = DT_REG;
+> +
+> +                       if (matches_skip_worktree(pathspec, i, &skip_worktree_seen) ||
+> +                           (sparse_checkout_enabled &&
+> +                            !path_matches_pattern_list(path, strlen(path), NULL,
+> +                                                       &dtype, &pl, &the_index))) {
 
-(I'm replying to a mail of Han-Wen's that didn't make it on-list due to
-inline HTML, quoted here in its entirety sans signature, see
-https://lore.kernel.org/git/87eebptr7i.fsf@evledraar.gmail.com/)
+I was slightly worried from the description in the commit message
+about the case where you have a file without the SKIP_WORKTREE bit set
+despite not matching sparsity paths.  I was worried that you'd skip
+refreshing it, but I tweaked your testcases and couldn't trigger it.
 
-Junio: I can change the const around if desired. I thought we weren't
-particularly concerned about it in general except to avoid the verbosity
-of frequent casting, and in this case the lock API doesn't have "const".
+>                                 string_list_append(&only_match_skip_worktree,
+>                                                    pathspec->items[i].original);
+>                         } else {
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index 73c48a71d89..c61424e2074 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -347,7 +347,7 @@ test_expect_success 'status/add: outside sparse cone' '
+>         test_all_match git commit -m folder1/newer
+>  '
+>
+> -test_expect_failure 'add: pathspec within sparse directory' '
+> +test_expect_success 'add: pathspec within sparse directory' '
+>         init_repos &&
+>
+>         run_on_sparse mkdir folder1 &&
+> @@ -357,10 +357,6 @@ test_expect_failure 'add: pathspec within sparse directory' '
+>         # This "git add folder1/a" fails with a warning
+>         # in the sparse repos, differing from the full
+>         # repo. This is intentional.
+> -       #
+> -       # However, in the sparse-index, folder1/a does not
+> -       # match any cache entry and fails with a different
+> -       # error message. This needs work.
+>         test_sparse_match test_must_fail git add folder1/a &&
+>         test_sparse_match test_must_fail git add --refresh folder1/a &&
+>         test_all_match git status --porcelain=v2
+> --
+> gitgitgadget
 
-But as for the reftable incompatibility it seems to me irrespective of
-backend that a reflog API that supports expiry is going to want to have
-a callback for "give me a lock to expire this branch" and give you a
-reply of "OK, you have the lock, you can expire the log, and it's at
-this OID".
-
-Why would it be file-backend specific?
-
-
-
+This and Patch 4/5 look good to me.
