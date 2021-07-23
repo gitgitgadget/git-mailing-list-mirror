@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2163BC432BE
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 12:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CA00C4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 12:14:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F1EDD60ED4
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 12:14:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 20D3360ED4
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 12:14:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234758AbhGWLeB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 07:34:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60762 "EHLO
+        id S234818AbhGWLeD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 07:34:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234612AbhGWLeA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 07:34:00 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B447EC061757
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 05:14:33 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id o3-20020a05600c5103b029024c0f9e1a5fso3121804wms.4
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 05:14:33 -0700 (PDT)
+        with ESMTP id S234774AbhGWLeB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 07:34:01 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4CDCC061757
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 05:14:34 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id z7so2081777wrn.11
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 05:14:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jAH3N7M82HZ3MrUhNbVmtE5vAv7GcKpkAAhbEgb1yGY=;
-        b=fySswi2zjqOqc5RiyHdOftrUUTQDIilITamxV0hvTRUoCOv9BJ/Ehre+nQJPrdrulA
-         oXZpASlu4cCwSz2MMVV9ln3IYV7HtcAmfrqmrnhsXMPniMU2G39ig3RGau9b1oFoiqUW
-         PXljtVg3rYnnNIQJtDcYMBJZnVYqdC8QJ16/MuaexLLm1OaHnE1mkL2+9/S8lDlDKj80
-         WvtW3hjGXMZevk0i5TETig9ASivjV929cvKrB625J0Gl6Ro5gXQuCU6LLlNaR3fnsYAq
-         rlFSDAs/xjzjQT6mWPoG9vR6amE/kySeugL8SZO6jZ9UIwc50FLXrrDkcF2OccMj3OJk
-         bkhA==
+        bh=nmWVsTNt0irPKVLpD1ZQVBWsgSV971zvgmZmx6gv6Pg=;
+        b=UVvXoLOnQ+4JMcYMjj4YYslD0dbhPUUgDGRD808R7MKjzLZq8y649diD7i7uPjzojx
+         T7xw5z+p1B07zFXWV1JbTlLZAb44t5CsS6EZfZGGIvzsb3PGkLqBmjbzYva4wYp9n2B8
+         kE69E/dIkIf6TNTlr2vohJHL8hlBlD/ZtG6qVdFTbHVwzfLvBDKxO6N/38/4wqSEXjwT
+         dkKuVgwrP/D9DsRAEfK4qYka6pcb3r2vapFSIGQosEcoLT6KW8QvDip6KfMiHf/6YDc5
+         uRQ0a2RWJY9FnsmeQln9dML+cocJ7Hqw9rS9w9RftEhAgevZJ0ySVoBC83Xzi5gOqlTx
+         /ytA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jAH3N7M82HZ3MrUhNbVmtE5vAv7GcKpkAAhbEgb1yGY=;
-        b=TQx/WNXWH0/eFim+GsFNVjhBmKAnAHc7sd2ah8atXgoKcn31cisv0qzi/8HBYpcAa+
-         XtYOzqsHShBcJtPwCKCmrAWJw16NeYLu2a0yg3YsXwliK7iiHaqzhcvzsDhhSbuSAYKG
-         lv33EYEhK7DhaPZPLTIDHXYPIvxgMW0gOWj+gVo0fEVFh4Upb+352NjwxLeW1t+YPa88
-         hiV+nAbxQfalRm0tcW5o9pf58tp6aZLlGR9UUbDX5pi/3Xjp3FPHx59ml2PVchN1GyzB
-         0VZTCcWHlyWpBASCFaNKJk6+IfwX9M7PxUWVnnsX5NM20YljfkyVm2qe5rYYio2E0wAC
-         vDjQ==
-X-Gm-Message-State: AOAM531Tfwfb+oEhmDDcjM9r/r5HGeBjedZvBQ0Orp6YW91OVUz/OK/B
-        vUnxmYakxlYRYOphQN565PrJCcUT7Cg=
-X-Google-Smtp-Source: ABdhPJw3oR5QPrIJx/6CINeRVBJWk/hEyWh3ccn3qPbU0LVAnyzoAkWm0Zik7K/dW2Vq8IKQov+CpQ==
-X-Received: by 2002:a7b:cc16:: with SMTP id f22mr2272783wmh.99.1627042472407;
-        Fri, 23 Jul 2021 05:14:32 -0700 (PDT)
+        bh=nmWVsTNt0irPKVLpD1ZQVBWsgSV971zvgmZmx6gv6Pg=;
+        b=bOSo3+JL4Xy22h0KmXAJJJnm5Tfv+YKagB7bJPawkonBO+zRr0QH3/44HLFb7cpsD4
+         4FNGhQtJ0QpjWz5Wolc4qdZvolsZ9egBecCRHZulpHSLFuXZ3/CzRa3QUArF9Q8nfgKw
+         OcEiVKRhWzgkj3ecuatSMU+uTH3RousAUz3Rq0XbCbAZNeJzYwk5BaRtjKto0n+NRFYO
+         7MuYA68MvC1cQPLpxSfTpPiXqpjFL0tpZsWWdKVc57PtGDeXgiAPCnByK3seymE7OmWM
+         DWMVQlTjP+pIlWe3PRrYnQ+qOFm/jmbGcOFIkUDi+Ntmosu3dQXoNwj/g1kBLvIFpvNk
+         0+og==
+X-Gm-Message-State: AOAM530IgttIif6jtc3wr7x88Evdy7IntHVjgYepIR83KuoqWFP4FRRo
+        IhIdnrB9uW3lWFNLjyUPLLTLX1qMv80=
+X-Google-Smtp-Source: ABdhPJwrU5Nm4HPcdLQY/ipkvobHNFEdXVcWtjmwyz04ctqBwioiP6gHzvpoYq6S7GmRXSNuHiidZg==
+X-Received: by 2002:a5d:4527:: with SMTP id j7mr5021201wra.137.1627042473616;
+        Fri, 23 Jul 2021 05:14:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w9sm27826039wmc.19.2021.07.23.05.14.32
+        by smtp.gmail.com with ESMTPSA id m4sm8851658wmq.7.2021.07.23.05.14.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jul 2021 05:14:32 -0700 (PDT)
-Message-Id: <85016e679eb77cbb17edc9b6849251893a5e9ec2.1627042470.git.gitgitgadget@gmail.com>
+        Fri, 23 Jul 2021 05:14:33 -0700 (PDT)
+Message-Id: <86becf764243f129c980f073127ec3f08fd4477c.1627042470.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1002.git.1627042470.gitgitgadget@gmail.com>
 References: <pull.1002.git.1627042470.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 23 Jul 2021 12:14:27 +0000
-Subject: [PATCH 1/4] merge: add missing word "strategy" to a message
+Date:   Fri, 23 Jul 2021 12:14:29 +0000
+Subject: [PATCH 3/4] merge: apply autostash if fast-forward fails
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,37 +77,68 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-The variable 'best_strategy' holds the name of the merge strategy that
-resulted in fewer conflicts, if several strategies were tried. When
-that's the case but the best strategy was not the first one tried, we
-inform the user which strategy was the "best" one before recreating the
-merge and leaving the conflicted files in the tree.
+Since 'git merge' learned '--autostash' in a03b55530a (merge: teach
+--autostash option, 2020-04-07), 'cmd_merge', in the fast-forward case,
+calls 'create_autostash' before calling 'checkout_fast_forward' if
+'--autostash' is given.
 
-This informational message is missing the word "strategy", so it shows
-something like:
+However, if 'checkout_fast_forward' fails, the autostash is not applied
+to the working tree, nor saved in the stash list, since the code simply
+calls 'goto done'.
 
-    Using the recursive to prepare resolving by hand.
+Be more helpful to the user by applying the autostash in that case.
 
-Fix that.
+An easy way to test a failing fast-forward is when we are merging a
+branch that has a tracked file that conflicts with an untracked file in
+the working tree.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- builtin/merge.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/merge.c  |  1 +
+ t/t7600-merge.sh | 11 +++++++++++
+ 2 files changed, 12 insertions(+)
 
 diff --git a/builtin/merge.c b/builtin/merge.c
-index a8a843b1f54..74797b6c7a6 100644
+index 74797b6c7a6..788a6b0cd55 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -1715,7 +1715,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	else {
- 		printf(_("Rewinding the tree to pristine...\n"));
- 		restore_state(&head_commit->object.oid, &stash);
--		printf(_("Using the %s to prepare resolving by hand.\n"),
-+		printf(_("Using the %s strategy to prepare resolving by hand.\n"),
- 			best_strategy);
- 		try_merge_strategy(best_strategy, common, remoteheads,
- 				   head_commit);
+@@ -1560,6 +1560,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 					  &head_commit->object.oid,
+ 					  &commit->object.oid,
+ 					  overwrite_ignore)) {
++			apply_autostash(git_path_merge_autostash(the_repository));
+ 			ret = 1;
+ 			goto done;
+ 		}
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 1cbc9715a81..216113d3537 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -122,6 +122,8 @@ test_expect_success 'setup' '
+ 	c0=$(git rev-parse HEAD) &&
+ 	cp file.1 file &&
+ 	git add file &&
++	cp file.1 other &&
++	git add other &&
+ 	test_tick &&
+ 	git commit -m "commit 1" &&
+ 	git tag c1 &&
+@@ -711,6 +713,15 @@ test_expect_success 'fast-forward merge with --autostash' '
+ 	test_cmp result.1-5 file
+ '
+ 
++test_expect_success 'failed fast-forward merge with --autostash' '
++	git reset --hard c0 &&
++	git merge-file file file.orig file.5 &&
++	cp file.5 other &&
++	test_must_fail git merge --autostash c1 2>err &&
++	test_i18ngrep "Applied autostash." err &&
++	test_cmp file.5 file
++'
++
+ test_expect_success 'octopus merge with --autostash' '
+ 	git reset --hard c1 &&
+ 	git merge-file file file.orig file.3 &&
 -- 
 gitgitgadget
 
