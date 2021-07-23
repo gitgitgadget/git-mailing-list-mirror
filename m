@@ -2,70 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BF59C4338F
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 09:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65CC3C4338F
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 09:32:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A7CF60E52
-	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 09:29:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E8CA60E52
+	for <git@archiver.kernel.org>; Fri, 23 Jul 2021 09:32:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233526AbhGWItH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Jul 2021 04:49:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50876 "EHLO
+        id S230506AbhGWIvh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Jul 2021 04:51:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232265AbhGWItF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jul 2021 04:49:05 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2E1BC061575
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 02:29:35 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id e19so2655767ejs.9
-        for <git@vger.kernel.org>; Fri, 23 Jul 2021 02:29:35 -0700 (PDT)
+        with ESMTP id S229949AbhGWIvh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jul 2021 04:51:37 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 048BAC061575
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 02:32:10 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id he41so2751929ejc.6
+        for <git@vger.kernel.org>; Fri, 23 Jul 2021 02:32:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=s3uvsUNpNwfOlRhAYq/lusJrvXIA+7xp0BG81pyrW/s=;
-        b=hAEZdXvzEUjZ28lFDkk85ClQF/ItyZrkM38i8TQ6+Ii1aWu0L/sAB5+X1hcRr0wKgA
-         acsoaMPx0rcbITnwKYo1Ay8KnEQIvCU4UtX8Z+z3omC8+o/YnwOaTsFQL5n0TM9Cv0Wx
-         p9AaDU1cZgQ7RdjgfwBZuJt9Y/+w/Eugxkf4hv+lfcg0i0A5+iDy939zmqPdKnAHpXWD
-         xNN0kENjjT8iuaii2K+1wkFZ3XncQBrO6P6P8b5P3Npz4FGuIyTTWqFnjs2hG1eneYki
-         RLqpI0Glwys2XvyIfpsq5PGBIJcjwCShTpQVH74SGo8nkOrp30ingnFIE4l5EmTW5W8G
-         iJJw==
+        bh=vBohQUfUxejStetl2F9nkKgRG8l7eOFTqcLCVrM1yBI=;
+        b=AW4EOlWB+7rYvBWgKAGkkbtlOA2dfd6PEpISRvwEYfk6TDMfyTvUHUYevj9BcNo4kg
+         bxq2hv9LQ1hBGyT2SkUm714Zw6o4Gy0eQmW6xHP6vRkY691Kskr4e4f7btEO73vZxc2i
+         hs1Q21Ulp3seQhKN40VDnVnbJsWBSQg/pezclONIlacwj1T27dlMtUEKU7THJJnNv8TA
+         rA/nlYQNXqC2ZYZdx8FdfGbvkEMbCuD84b4P4QPYLv5O3vSJvt+EnWHWnZFViPQL9M7O
+         +642XhmdAa/H1+PKLlmg+Njk5gyvPbzRtbkWjLAk9A+EVZnri1kBXOKEqw/n2XbMCIyi
+         IBcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=s3uvsUNpNwfOlRhAYq/lusJrvXIA+7xp0BG81pyrW/s=;
-        b=TCfMbjqAVU3OChkNbLj4EdRvTskaE4gLlPqqA2EwMxjvESrBWqTZieUWm6oD7ayqF1
-         S9pTMccA4df0VFkptHAQ7Ux1sRvtPZKS98E4qU3lqYyxo9jbVs9Iv+FCVSsR6Rx4hvTT
-         P4ydMPfj6rhwTvz36G+MbIYKKIoSkhQjgMyM52lXEB5lmvVkGzFCHcyMnAB6K8rYnY2R
-         YI1W5Z59BL2m4jnY7guPgMJOzG4MxRpmjDYPjxMPlEnv6i533KaZd61FLQ2Jy0ZmdCmW
-         xsUXClWytM8ripQpdvxrwQbd3dT3G4MPfBKu1F/B1BRhq3QWTpss+7gLhapf196HtzSS
-         wzaA==
-X-Gm-Message-State: AOAM530lCm84t13KXATNeInZmTV0NCReFhRTCN9sfOdF7nCky0sgBh8P
-        nBNYPBUyD5yySHargO/XXF8=
-X-Google-Smtp-Source: ABdhPJwLgwv0JFN3+J0uCXTk33bFVCBtivKMq1n3p6e3VdfDIHNworBtIW8mC0DWDyjmweZUO3Ijow==
-X-Received: by 2002:a17:906:6011:: with SMTP id o17mr3706081ejj.157.1627032574516;
-        Fri, 23 Jul 2021 02:29:34 -0700 (PDT)
+        bh=vBohQUfUxejStetl2F9nkKgRG8l7eOFTqcLCVrM1yBI=;
+        b=GKng+LDW0Jm96QaqjdksxUHgSQkEzgxi1guXGmUK/xTAI1LZ6Pf1ZJvYYBqX5MOVgM
+         clZoT24ZrmlOBCI24rphtgP7D93nLR7rZqEQHfrKoCbVMSvAw9d7NBK8/XVbUKv0pOQ1
+         7BpMVI1U9lYWC1Mx0rMdegPoy1N/bvRYbL0T6Ghi3CJHoHh7WWNNJjc+f/R1GDiAnpmS
+         P+1C1AWZccIs5KhCuoyzvZUmwdRnGAOTMZbOtWVHTFI1RQQmiQmDRlbiLH6pU5KCvMUx
+         07Ze2Y1j/HF1rzE9je255SDLCe30IwvmjBsBBs4xvibChpIlCOD0kx1oHldRF876kOe1
+         gS/w==
+X-Gm-Message-State: AOAM5301wnHzDzhNmQWyheMuwrMFcPctnEf4ZcHWsJ+f0SuEKvylmc4o
+        7eSD/YU8IlFkMhaHp4g/KgU=
+X-Google-Smtp-Source: ABdhPJylcLQ9nvu076wV/KVKoD1gOLftQTk7jVlmzKlHRdzMLaDyuuJTrZ1Hc2WWppn8bRPPO5gI8w==
+X-Received: by 2002:a17:906:4f14:: with SMTP id t20mr3704049eju.12.1627032728557;
+        Fri, 23 Jul 2021 02:32:08 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id jw8sm10275182ejc.60.2021.07.23.02.29.34
+        by smtp.gmail.com with ESMTPSA id n2sm13694658edi.32.2021.07.23.02.32.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jul 2021 02:29:34 -0700 (PDT)
+        Fri, 23 Jul 2021 02:32:08 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Emily Shaffer <emilyshaffer@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/9] hook: introduce "git hook list"
-Date:   Fri, 23 Jul 2021 11:29:04 +0200
+Subject: Re: [PATCH 2/9] hook: allow parallel hook execution
+Date:   Fri, 23 Jul 2021 11:30:47 +0200
 References: <20210715232603.3415111-1-emilyshaffer@google.com>
- <20210715232603.3415111-4-emilyshaffer@google.com>
- <87o8b2y6u1.fsf@evledraar.gmail.com> <YPnuvRQLzKa6h9kk@google.com>
+ <20210715232603.3415111-3-emilyshaffer@google.com>
+ <87r1fyy728.fsf@evledraar.gmail.com> <YPnfWfHMWTWvJJkH@google.com>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <YPnuvRQLzKa6h9kk@google.com>
-Message-ID: <87zguds7ho.fsf@evledraar.gmail.com>
+In-reply-to: <YPnfWfHMWTWvJJkH@google.com>
+Message-ID: <87wnphs7de.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -76,99 +76,124 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Jul 22 2021, Emily Shaffer wrote:
 
-> On Fri, Jul 16, 2021 at 10:52:27AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+> On Fri, Jul 16, 2021 at 10:36:10AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
 armason wrote:
 >>=20
 >>=20
 >> On Thu, Jul 15 2021, Emily Shaffer wrote:
 >>=20
->> >  static const char * const builtin_hook_usage[] =3D {
->> >  	N_("git hook <command> [...]"),
->> > +	N_("git hook list <hookname>"),
->> >  	N_("git hook run [<args>] <hook-name> [-- <hook-args>]"),
->> >  	NULL
+>> > In many cases, there's no reason not to allow hooks to execute in
+>> > parallel. run_processes_parallel() is well-suited - it's a task queue
+>> > that runs its housekeeping in series, which means users don't
+>> > need to worry about thread safety on their callback data. True
+>> > multithreaded execution with the async_* functions isn't necessary her=
+e.
+>> > Synchronous hook execution can be achieved by only allowing 1 job to r=
+un
+>> > at a time.
+>> >
+>> > Teach run_hooks() to use that function for simple hooks which don't
+>> > require stdin or capture of stderr.
 >>=20
->> Uses <hook-name> already, let's use that too. I can't remember if it's
->> something I changed myself, or if your original version used both and I
->> picked one for consistency, or...
+>> This doesn't mention...
 >>=20
->> Anyway, I can re-roll the base topic or whatever, but let's have the end
->> result use one or the other.
->
-> 'hook-name' is fine, I'll use that. Thanks for pointing it out.
->
->>=20
->> > +	if (argc < 1) {
->> > +		usage_msg_opt(_("You must specify a hook event name to list."),
->> > +			      builtin_hook_usage, list_options);
->> > +	}
->>=20
->> {} braces not needed.
-> ACK
+>> >  	int ret;
+>> > -	struct run_hooks_opt opt =3D RUN_HOOKS_OPT_INIT;
+>> > +	struct run_hooks_opt opt;
+>> >=20=20
+>> > +	run_hooks_opt_init_sync(&opt);
 >>=20
 >>=20
->> > +	if (!strcmp(argv[0], "list"))
->> > +		return list(argc, argv, prefix);
->> >  	if (!strcmp(argv[0], "run"))
+>> ...why we need to bring the s/macro/func/ init pattern, back, but lookin=
+g ahead...
 >>=20
->> This should be "else if" now.
->>=20
->> (Doesn't matter for code execution, just IMO readability, but I'll leave
->> that to you ... :)
->
-> Eh, I think it's easier to read in the strcmps line up, so I will leave
-> it this way ;)
-
-*nod*
-
->>=20
->> >  		return run(argc, argv, prefix);
->> >  	else
->> > diff --git a/hook.c b/hook.c
->> > index 935751fa6c..19138a8290 100644
->> > --- a/hook.c
->> > +++ b/hook.c
->> > @@ -104,22 +104,20 @@ int hook_exists(const char *name)
->> >  struct list_head* hook_list(const char* hookname)
->> >  {
->> >  	struct list_head *hook_head =3D xmalloc(sizeof(struct list_head));
->> > +	const char *hook_path =3D find_hook(hookname);
+>> > +int configured_hook_jobs(void)a
+>> > +{
+>> > +	int n =3D online_cpus();
+>> > +	git_config_get_int("hook.jobs", &n);
 >> > +
+>> > +	return n;
+>> > +}
+>> > +
+>> >  int hook_exists(const char *name)
+>> >  {
+>> >  	return !!find_hook(name);
+>> > @@ -117,6 +125,26 @@ struct list_head* hook_list(const char* hookname)
+>> >  	return hook_head;
+>> >  }
 >> >=20=20
->> >  	INIT_LIST_HEAD(hook_head);
->> >=20=20
->> >  	if (!hookname)
->> >  		return NULL;
->> >=20=20
->> > -	if (have_git_dir()) {
->> > -		const char *hook_path =3D find_hook(hookname);
->> > -
->> > -		/* Add the hook from the hookdir */
->> > -		if (hook_path) {
->> > -			struct hook *to_add =3D xmalloc(sizeof(*to_add));
->> > -			to_add->hook_path =3D hook_path;
->> > -			to_add->feed_pipe_cb_data =3D NULL;
->> > -			list_add_tail(&to_add->list, hook_head);
->> > -		}
->> > +	/* Add the hook from the hookdir */
->> > +	if (hook_path) {
->> > +		struct hook *to_add =3D xmalloc(sizeof(*to_add));
->> > +		to_add->hook_path =3D hook_path;
->> > +		to_add->feed_pipe_cb_data =3D NULL;
->> > +		list_add_tail(&to_add->list, hook_head);
+>> > +void run_hooks_opt_init_sync(struct run_hooks_opt *o)
+>> > +{
+>> > +	strvec_init(&o->env);
+>> > +	strvec_init(&o->args);
+>> > +	o->path_to_stdin =3D NULL;
+>> > +	o->jobs =3D 1;
+>> > +	o->dir =3D NULL;
+>> > +	o->feed_pipe =3D NULL;
+>> > +	o->feed_pipe_ctx =3D NULL;
+>> > +	o->consume_sideband =3D NULL;
+>> > +	o->invoked_hook =3D NULL;
+>> > +	o->absolute_path =3D 0;
+>> > +}
+>> > +
+>> > +void run_hooks_opt_init_async(struct run_hooks_opt *o)
+>> > +{
+>> > +	run_hooks_opt_init_sync(o);
+>> > +	o->jobs =3D configured_hook_jobs();
+>> > +}
 >>=20
->> Maybe we should have a INIT for "struct hook" too? This also needlessly
->> leaves behind an un-free'd hook struct in a way that it wouldn't if we
->> just had this on the stack, no?
+>> ...okey, so it's because you brought back the "call jobs function" in
+>> one of the init functions.
+>>=20
+>> I had a comment in a previous round, I found
+>> https://lore.kernel.org/git/87lf7bzbrk.fsf@evledraar.gmail.com/, but I
+>> think there was a later one where I commented on the "jobs" field
+>> specifically.
+>>=20
+>> Anyway, it seems much easier to me to just keep the simpler macro init
+>> and then:
+>>=20
+>> > -	if (options->jobs !=3D 1)
+>> > -		BUG("we do not handle %d or any other !=3D 1 job number yet", optio=
+ns->jobs);
+>> > -
+>> >  	run_processes_parallel_tr2(options->jobs,
+>> >  				   pick_next_hook,
+>> >  				   notify_start_failure,
+>>=20
+>> There's this one place where we use the "jobs" parameter, just do
+>> something like this there:
+>>=20=20=20=20=20=20=20=20=20
+>>         int configured_hook_jobs(void)
+>>         {
+>>                 static int jobs;
+>>                 if (!jobs)
+>>                     return jobs;
+>>                 if (git_config_get_int("hook.jobs", &jobs))
+>>                     jobs =3D online_cpus();
+>>                 return jobs;
+>>         }
+>>=20
+>> I.e. you also needlessly call online_cpus() when we're about to override
+>> it in the config. The git_config_get_int()'s return value indicates
+>> whether you need to do that. Then just:
+>>=20
+>>     int jobs =3D options->jobs ? options->jobs : configured_hook_jobs();
+>>     run_processes_parallel_tr2(jobs, [...]);
 >
-> I can clean it up here, but I don't think we need an initializer for
-> struct hook. This code chunk gets moved into one of the list
-> manipulators (append_or_move() or something) after the config is
-> introduced.
+> Ahh, and then let RUN_HOOKS_OPT_INIT_ASYNC set jobs to 0 ("go look it
+> up"). Yeah, that makes sense.
 >
-> I don't think it leaves an unfreed hook laying around, does it?
-> list_add_tail() uses the malloc'd pointer, and we free() in
-> clear_hook_list(). What am I missing?
+> Shout if somehow you meant to leave just one initializer macro;
+> otherwise, I'll do it this way - with RUN_HOOKS_OPT_INIT_ASYNC and
+> RUN_HOOKS_OPT_INIT_SYNC. I think it's valuable for hook callers to make
+> it very plain at the callsite whether they're parallelizable or not, and
+> I think
+>
+>  struct run_hooks_opt opt =3D RUN_HOOKS_OPT_INIT;
+>  opt.jobs =3D 0;
+>
+> doesn't make that as obvious.
 
-I don't think you're missing anything. I replied on that "struct hook"
-in another E-Mail, i.e. I think I just misread parts of this. Thanks.
+Yes agreed, sorry about the ambiguity, I meant we should have two init
+macros, just like e.g. STRING_LIST_INIT_NODUP and STRING_LIST_INIT_DUP.
