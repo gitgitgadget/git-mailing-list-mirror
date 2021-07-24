@@ -5,65 +5,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75177C4338F
-	for <git@archiver.kernel.org>; Sat, 24 Jul 2021 14:14:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD974C4338F
+	for <git@archiver.kernel.org>; Sat, 24 Jul 2021 14:14:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4ED3060E97
-	for <git@archiver.kernel.org>; Sat, 24 Jul 2021 14:14:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C049060EB0
+	for <git@archiver.kernel.org>; Sat, 24 Jul 2021 14:14:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234402AbhGXNeB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Jul 2021 09:34:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40418 "EHLO
+        id S234440AbhGXNeE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Jul 2021 09:34:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233735AbhGXNd4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Jul 2021 09:33:56 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BE92C06175F
-        for <git@vger.kernel.org>; Sat, 24 Jul 2021 07:14:27 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id p5so286637wro.7
-        for <git@vger.kernel.org>; Sat, 24 Jul 2021 07:14:27 -0700 (PDT)
+        with ESMTP id S233824AbhGXNd5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Jul 2021 09:33:57 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 357CFC061575
+        for <git@vger.kernel.org>; Sat, 24 Jul 2021 07:14:28 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id b7so5395198wri.8
+        for <git@vger.kernel.org>; Sat, 24 Jul 2021 07:14:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=P1TviGA1ZrF42CSB15sOnM3QH6cl9wDACgfhC+0Es6U=;
-        b=s1gempbUTjd8GLQzmpAk8TsfhpWpuSJJMyFqyvzajb+2FNAb/u7PBjHHp7Lht6lFmr
-         bJjz8GhxS8Y1B3v8Y5ILil+O9CbarxMjTktK3YVVVlQQ4Hv/9r5AMNioe5Jx49gQOnTK
-         tnHFbBgT9riTYf5pfqKGfiUP7jRVAAuWqaJkBxNDUCmKt1tiXqkfuYTNkigzWcvVtZHY
-         KKVOdD0zgGDwYoMMUWqVTIOAyUK2d3ItXAW+dYtMDrZ8IXkadUuR3QtaHiNGzN/D6uGc
-         XqlGYxJ6D3pZoXIkSKOq6+PL+iEVLl/XG7u6kS3Q2IHRwHfG2XLmjyyRJOvrew57rCEn
-         iz5g==
+        bh=B9jYcPzdrAfozM60+tNBTAYjFIsDJ2ji25Fh25kKnmE=;
+        b=aVSplEGH5+KGtYNnaCaRax72cyMqGdED6odG/AJLVNa3LzFKMJwy8T0gKXPGAtK+h/
+         7gY4KqgSEJjmwwus7DEDj1sw5j3biQz42p2NALWRj5vmOV/RgY3X7z5ohTsJlp8frits
+         ZKECGc5sjzaTJeMOnjAjcVS3xONglaIhtkr5o0HBtb2DbKr7Ov9eOf14vMuZmrBWJrjB
+         mf46KDKYTcgemXFnyHGuCZPPTHOw3qElVpmbOOfnRU73wEdtyxGeQkr/m0gWHie29Ysa
+         LLvsh3HSYZQd2x6+udZx9Qonr/8f9YJJtyahgfovFkdrfCLfP7cauQ2QZzvpqHB4E8Qa
+         ekqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=P1TviGA1ZrF42CSB15sOnM3QH6cl9wDACgfhC+0Es6U=;
-        b=mP0w89ISEGEs6e/wYpglXV89BdRaVgc7ZPd24pJQ68cMTpx+4anFvrKSsRybDagQN3
-         HZnAT2H+YeoQg1bIOD5xbXFG5yvbemfGhDXJvILid5XO7o1LfETcHJnkGImrsgNdZ7rZ
-         hL9DDlw8CDHWg1H2fNGB80jMwce5aN8UWuj1U1BqrHRrvZMFUbUnup0sX2csQABcOm6N
-         mdE++ygx0UNBYwI/LNNWf+ALchVT65MevRmFQqXKxbEdn3rI5/o3XHywDldPzMQH2Kc4
-         OrFfYnHWXS9iJWhYNGveDWPYXqL321pRvlsqLYv1dMP7eV08DjDY2NdBw0uvbCK2H/nJ
-         Qneg==
-X-Gm-Message-State: AOAM533+bCnOhdPQ39K7E5Uly2++NMjB67pFtCJKOk7cN0YoxFuT1ccs
-        qOgkGK29jQMfgY4oZyTMrLF1QgyQ4rQ=
-X-Google-Smtp-Source: ABdhPJzXwWhoJKXROIvxelAlmF4Pc12S39DQIhpJWwWr0EzAIwF2c78Ewd1HQuCvFC5CvCSffdxsow==
-X-Received: by 2002:adf:ce10:: with SMTP id p16mr10281813wrn.205.1627136066231;
+        bh=B9jYcPzdrAfozM60+tNBTAYjFIsDJ2ji25Fh25kKnmE=;
+        b=CKDyKjYYq2RTdI7FP8/1liRCMrPsZVAs+phwJijU3OTFdb1/rvLzVBUpBvi8I7lXUA
+         YBsPetRU2BdkSHDhpLE/SoGn1/5SxCCRV9LEvDzAA8DfqtTKeyhZ5duD0GiCWaDRl9CQ
+         5/1KzTjcCPP4SZ3NH6+l6YW9Sz9OSQGIQNJfe8jyAZg66ae6Se0Eilz7t/7i+Idr96cJ
+         ntaaioEkWwnhS3/Xl8aK8WudCBJmVdVmN4UpRNKI+nxppBPQaAWek1LY+evDtP4DP1pE
+         YQqIdCAn5khB/ebISB9wl0EGIGp4GieBKPLz4qQ+kGsccniKrypK75Q4RmLtgXtEO82a
+         3uEQ==
+X-Gm-Message-State: AOAM532NsW/y9SL3Gg0MAzRVUnOK37uAytzajOWT0ty+jc8mk90ixwLA
+        YgrOELoHzEP/mDuPkEoHxFkOut7YFhQ=
+X-Google-Smtp-Source: ABdhPJxRiYc+Vw0Cs34f/EP3ZgzPuabhslS3wrlNl6sP7kndE5NSXtRaYzlO6eNCr7jJgmEq31dOTA==
+X-Received: by 2002:adf:e546:: with SMTP id z6mr10147748wrm.245.1627136066832;
         Sat, 24 Jul 2021 07:14:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d15sm36643639wri.39.2021.07.24.07.14.25
+        by smtp.gmail.com with ESMTPSA id p2sm23142738wmd.15.2021.07.24.07.14.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Jul 2021 07:14:25 -0700 (PDT)
-Message-Id: <0722f546df981081f69d6ba5c30f34f5033aea63.1627136062.git.gitgitgadget@gmail.com>
+        Sat, 24 Jul 2021 07:14:26 -0700 (PDT)
+Message-Id: <2300b0463f2fca76970ae7debcffa505909b8c4d.1627136062.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1000.v3.git.1627136061.gitgitgadget@gmail.com>
 References: <pull.1000.v2.git.1627031043.gitgitgadget@gmail.com>
         <pull.1000.v3.git.1627136061.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 24 Jul 2021 14:14:20 +0000
-Subject: [PATCH v3 4/5] [GSOC] ref-filter: use non-const ref_format in
- *_atom_parser()
+Date:   Sat, 24 Jul 2021 14:14:21 +0000
+Subject: [PATCH v3 5/5] [GSOC] ref-filter: add %(rest) atom
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,241 +85,198 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-Use non-const ref_format in *_atom_parser(), which can help us
-modify the members of ref_format in *_atom_parser().
+%(rest) is a atom used for cat-file batch mode, which can split
+the input lines at the first whitespace boundary, all characters
+before that whitespace are considered to be the object name;
+characters after that first run of whitespace (i.e., the "rest"
+of the line) are output in place of the %(rest) atom.
 
+In order to let "cat-file --batch=%(rest)" use the ref-filter
+interface, add %(rest) atom for ref-filter.
+
+Introduce the reject_atom() to reject the atom %(rest) for
+"git for-each-ref", "git branch", "git tag" and "git verify-tag".
+
+Suggected-by: Jacob Keller <jacob.keller@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Hariom Verma <hariom18599@gmail.com>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- builtin/tag.c |  2 +-
- ref-filter.c  | 44 ++++++++++++++++++++++----------------------
- ref-filter.h  |  4 ++--
- 3 files changed, 25 insertions(+), 25 deletions(-)
+ ref-filter.c             | 25 +++++++++++++++++++++++++
+ ref-filter.h             |  5 ++++-
+ t/t3203-branch-output.sh |  4 ++++
+ t/t6300-for-each-ref.sh  |  4 ++++
+ t/t7004-tag.sh           |  4 ++++
+ t/t7030-verify-tag.sh    |  4 ++++
+ 6 files changed, 45 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 82fcfc09824..452558ec957 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -146,7 +146,7 @@ static int verify_tag(const char *name, const char *ref,
- 		      const struct object_id *oid, void *cb_data)
- {
- 	int flags;
--	const struct ref_format *format = cb_data;
-+	struct ref_format *format = cb_data;
- 	flags = GPG_VERIFY_VERBOSE;
- 
- 	if (format->format)
 diff --git a/ref-filter.c b/ref-filter.c
-index 597354c941d..7cef839aaf1 100644
+index 7cef839aaf1..85e9e657fe7 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -226,7 +226,7 @@ static int strbuf_addf_ret(struct strbuf *sb, int ret, const char *fmt, ...)
- 	return ret;
- }
+@@ -157,6 +157,7 @@ enum atom_type {
+ 	ATOM_IF,
+ 	ATOM_THEN,
+ 	ATOM_ELSE,
++	ATOM_REST,
+ };
  
--static int color_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int color_atom_parser(struct ref_format *format, struct used_atom *atom,
- 			     const char *color_value, struct strbuf *err)
- {
- 	if (!color_value)
-@@ -264,7 +264,7 @@ static int refname_atom_parser_internal(struct refname_atom *atom, const char *a
+ /*
+@@ -559,6 +560,15 @@ static int if_atom_parser(struct ref_format *format, struct used_atom *atom,
  	return 0;
  }
  
--static int remote_ref_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int remote_ref_atom_parser(struct ref_format *format, struct used_atom *atom,
- 				  const char *arg, struct strbuf *err)
- {
- 	struct string_list params = STRING_LIST_INIT_DUP;
-@@ -311,7 +311,7 @@ static int remote_ref_atom_parser(const struct ref_format *format, struct used_a
- 	return 0;
- }
- 
--static int objecttype_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int objecttype_atom_parser(struct ref_format *format, struct used_atom *atom,
- 				  const char *arg, struct strbuf *err)
- {
- 	if (arg)
-@@ -323,7 +323,7 @@ static int objecttype_atom_parser(const struct ref_format *format, struct used_a
- 	return 0;
- }
- 
--static int objectsize_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int objectsize_atom_parser(struct ref_format *format, struct used_atom *atom,
- 				  const char *arg, struct strbuf *err)
- {
- 	if (!arg) {
-@@ -343,7 +343,7 @@ static int objectsize_atom_parser(const struct ref_format *format, struct used_a
- 	return 0;
- }
- 
--static int deltabase_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int deltabase_atom_parser(struct ref_format *format, struct used_atom *atom,
- 				 const char *arg, struct strbuf *err)
- {
- 	if (arg)
-@@ -355,7 +355,7 @@ static int deltabase_atom_parser(const struct ref_format *format, struct used_at
- 	return 0;
- }
- 
--static int body_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int body_atom_parser(struct ref_format *format, struct used_atom *atom,
- 			    const char *arg, struct strbuf *err)
- {
- 	if (arg)
-@@ -364,7 +364,7 @@ static int body_atom_parser(const struct ref_format *format, struct used_atom *a
- 	return 0;
- }
- 
--static int subject_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int subject_atom_parser(struct ref_format *format, struct used_atom *atom,
- 			       const char *arg, struct strbuf *err)
- {
- 	if (!arg)
-@@ -376,7 +376,7 @@ static int subject_atom_parser(const struct ref_format *format, struct used_atom
- 	return 0;
- }
- 
--static int trailers_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int trailers_atom_parser(struct ref_format *format, struct used_atom *atom,
- 				const char *arg, struct strbuf *err)
- {
- 	atom->u.contents.trailer_opts.no_divider = 1;
-@@ -402,7 +402,7 @@ static int trailers_atom_parser(const struct ref_format *format, struct used_ato
- 	return 0;
- }
- 
--static int contents_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int contents_atom_parser(struct ref_format *format, struct used_atom *atom,
- 				const char *arg, struct strbuf *err)
- {
- 	if (!arg)
-@@ -430,7 +430,7 @@ static int contents_atom_parser(const struct ref_format *format, struct used_ato
- 	return 0;
- }
- 
--static int raw_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int raw_atom_parser(struct ref_format *format, struct used_atom *atom,
- 				const char *arg, struct strbuf *err)
- {
- 	if (!arg)
-@@ -442,7 +442,7 @@ static int raw_atom_parser(const struct ref_format *format, struct used_atom *at
- 	return 0;
- }
- 
--static int oid_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int oid_atom_parser(struct ref_format *format, struct used_atom *atom,
- 			   const char *arg, struct strbuf *err)
- {
- 	if (!arg)
-@@ -461,7 +461,7 @@ static int oid_atom_parser(const struct ref_format *format, struct used_atom *at
- 	return 0;
- }
- 
--static int person_email_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int person_email_atom_parser(struct ref_format *format, struct used_atom *atom,
- 				    const char *arg, struct strbuf *err)
- {
- 	if (!arg)
-@@ -475,7 +475,7 @@ static int person_email_atom_parser(const struct ref_format *format, struct used
- 	return 0;
- }
- 
--static int refname_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int refname_atom_parser(struct ref_format *format, struct used_atom *atom,
- 			       const char *arg, struct strbuf *err)
- {
- 	return refname_atom_parser_internal(&atom->u.refname, arg, atom->name, err);
-@@ -492,7 +492,7 @@ static align_type parse_align_position(const char *s)
- 	return -1;
- }
- 
--static int align_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int align_atom_parser(struct ref_format *format, struct used_atom *atom,
- 			     const char *arg, struct strbuf *err)
- {
- 	struct align *align = &atom->u.align;
-@@ -544,7 +544,7 @@ static int align_atom_parser(const struct ref_format *format, struct used_atom *
- 	return 0;
- }
- 
--static int if_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int if_atom_parser(struct ref_format *format, struct used_atom *atom,
- 			  const char *arg, struct strbuf *err)
- {
- 	if (!arg) {
-@@ -559,7 +559,7 @@ static int if_atom_parser(const struct ref_format *format, struct used_atom *ato
- 	return 0;
- }
- 
--static int head_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+static int head_atom_parser(struct ref_format *format, struct used_atom *atom,
++static int rest_atom_parser(struct ref_format *format, struct used_atom *atom,
++			    const char *arg, struct strbuf *err)
++{
++	if (arg)
++		return strbuf_addf_ret(err, -1, _("%%(rest) does not take arguments"));
++	format->use_rest = 1;
++	return 0;
++}
++
+ static int head_atom_parser(struct ref_format *format, struct used_atom *atom,
  			    const char *arg, struct strbuf *unused_err)
  {
- 	atom->u.head = resolve_refdup("HEAD", RESOLVE_REF_READING, NULL, NULL);
-@@ -570,7 +570,7 @@ static struct {
- 	const char *name;
- 	info_source source;
- 	cmp_type cmp_type;
--	int (*parser)(const struct ref_format *format, struct used_atom *atom,
-+	int (*parser)(struct ref_format *format, struct used_atom *atom,
- 		      const char *arg, struct strbuf *err);
- } valid_atom[] = {
- 	[ATOM_REFNAME] = { "refname", SOURCE_NONE, FIELD_STR, refname_atom_parser },
-@@ -653,7 +653,7 @@ struct atom_value {
+@@ -615,6 +625,7 @@ static struct {
+ 	[ATOM_IF] = { "if", SOURCE_NONE, FIELD_STR, if_atom_parser },
+ 	[ATOM_THEN] = { "then", SOURCE_NONE },
+ 	[ATOM_ELSE] = { "else", SOURCE_NONE },
++	[ATOM_REST] = { "rest", SOURCE_NONE, FIELD_STR, rest_atom_parser },
+ 	/*
+ 	 * Please update $__git_ref_fieldlist in git-completion.bash
+ 	 * when you add new atoms
+@@ -993,6 +1004,11 @@ static const char *find_next(const char *cp)
+ 	return NULL;
+ }
+ 
++static int reject_atom(enum atom_type atom_type)
++{
++	return atom_type == ATOM_REST;
++}
++
  /*
-  * Used to parse format string and sort specifiers
-  */
--static int parse_ref_filter_atom(const struct ref_format *format,
-+static int parse_ref_filter_atom(struct ref_format *format,
- 				 const char *atom, const char *ep,
- 				 struct strbuf *err)
- {
-@@ -2557,9 +2557,9 @@ static void append_literal(const char *cp, const char *ep, struct ref_formatting
- }
+  * Make sure the format string is well formed, and parse out
+  * the used atoms.
+@@ -1013,6 +1029,8 @@ int verify_ref_format(struct ref_format *format)
+ 		at = parse_ref_filter_atom(format, sp + 2, ep, &err);
+ 		if (at < 0)
+ 			die("%s", err.buf);
++		if (reject_atom(used_atom[at].atom_type))
++			die(_("this command reject atom %%(%.*s)"), (int)(ep - sp - 2), sp + 2);
  
- int format_ref_array_item(struct ref_array_item *info,
--			   const struct ref_format *format,
--			   struct strbuf *final_buf,
--			   struct strbuf *error_buf)
-+			  struct ref_format *format,
-+			  struct strbuf *final_buf,
-+			  struct strbuf *error_buf)
- {
- 	const char *cp, *sp, *ep;
- 	struct ref_formatting_state state = REF_FORMATTING_STATE_INIT;
-@@ -2603,7 +2603,7 @@ int format_ref_array_item(struct ref_array_item *info,
- }
+ 		if ((format->quote_style == QUOTE_PYTHON ||
+ 		     format->quote_style == QUOTE_SHELL ||
+@@ -1932,6 +1950,12 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+ 			v->handler = else_atom_handler;
+ 			v->s = xstrdup("");
+ 			continue;
++		} else if (atom_type == ATOM_REST) {
++			if (ref->rest)
++				v->s = xstrdup(ref->rest);
++			else
++				v->s = xstrdup("");
++			continue;
+ 		} else
+ 			continue;
  
- void pretty_print_ref(const char *name, const struct object_id *oid,
--		      const struct ref_format *format)
-+		      struct ref_format *format)
- {
- 	struct ref_array_item *ref_item;
- 	struct strbuf output = STRBUF_INIT;
+@@ -2149,6 +2173,7 @@ static struct ref_array_item *new_ref_array_item(const char *refname,
+ 
+ 	FLEX_ALLOC_STR(ref, refname, refname);
+ 	oidcpy(&ref->objectname, oid);
++	ref->rest = NULL;
+ 
+ 	return ref;
+ }
 diff --git a/ref-filter.h b/ref-filter.h
-index baf72a71896..74fb423fc89 100644
+index 74fb423fc89..c15dee8d6b9 100644
 --- a/ref-filter.h
 +++ b/ref-filter.h
-@@ -116,7 +116,7 @@ void ref_array_sort(struct ref_sorting *sort, struct ref_array *array);
- void ref_sorting_set_sort_flags_all(struct ref_sorting *sorting, unsigned int mask, int on);
- /*  Based on the given format and quote_style, fill the strbuf */
- int format_ref_array_item(struct ref_array_item *info,
--			  const struct ref_format *format,
-+			  struct ref_format *format,
- 			  struct strbuf *final_buf,
- 			  struct strbuf *error_buf);
- /*  Parse a single sort specifier and add it to the list */
-@@ -137,7 +137,7 @@ void setup_ref_filter_porcelain_msg(void);
-  * name must be a fully qualified refname.
-  */
- void pretty_print_ref(const char *name, const struct object_id *oid,
--		      const struct ref_format *format);
-+		      struct ref_format *format);
+@@ -38,6 +38,7 @@ struct ref_sorting {
  
- /*
-  * Push a single ref onto the array; this can be used to construct your own
+ struct ref_array_item {
+ 	struct object_id objectname;
++	const char *rest;
+ 	int flag;
+ 	unsigned int kind;
+ 	const char *symref;
+@@ -76,14 +77,16 @@ struct ref_format {
+ 	 * verify_ref_format() afterwards to finalize.
+ 	 */
+ 	const char *format;
++	const char *rest;
+ 	int quote_style;
++	int use_rest;
+ 	int use_color;
+ 
+ 	/* Internal state to ref-filter */
+ 	int need_color_reset_at_eol;
+ };
+ 
+-#define REF_FORMAT_INIT { NULL, 0, -1 }
++#define REF_FORMAT_INIT { .use_color = -1 }
+ 
+ /*  Macros for checking --merged and --no-merged options */
+ #define _OPT_MERGED_NO_MERGED(option, filter, h) \
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index 5325b9f67a0..6e94c6db7b5 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -340,6 +340,10 @@ test_expect_success 'git branch --format option' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'git branch with --format=%(rest) must fail' '
++	test_must_fail git branch --format="%(rest)" >actual
++'
++
+ test_expect_success 'worktree colors correct' '
+ 	cat >expect <<-EOF &&
+ 	* <GREEN>(HEAD detached from fromtag)<RESET>
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 3d15d0a5360..0d2e062f791 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -1211,6 +1211,10 @@ test_expect_success 'basic atom: head contents:trailers' '
+ 	test_cmp expect actual.clean
+ '
+ 
++test_expect_success 'basic atom: rest must fail' '
++	test_must_fail git for-each-ref --format="%(rest)" refs/heads/main
++'
++
+ test_expect_success 'trailer parsing not fooled by --- line' '
+ 	git commit --allow-empty -F - <<-\EOF &&
+ 	this is the subject
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 2f72c5c6883..082be85dffc 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -1998,6 +1998,10 @@ test_expect_success '--format should list tags as per format given' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'git tag -l with --format="%(rest)" must fail' '
++	test_must_fail git tag -l --format="%(rest)" "v1*"
++'
++
+ test_expect_success "set up color tests" '
+ 	echo "<RED>v1.0<RESET>" >expect.color &&
+ 	echo "v1.0" >expect.bare &&
+diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
+index 3cefde9602b..10faa645157 100755
+--- a/t/t7030-verify-tag.sh
++++ b/t/t7030-verify-tag.sh
+@@ -194,6 +194,10 @@ test_expect_success GPG 'verifying tag with --format' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success GPG 'verifying tag with --format="%(rest)" must fail' '
++	test_must_fail git verify-tag --format="%(rest)" "fourth-signed"
++'
++
+ test_expect_success GPG 'verifying a forged tag with --format should fail silently' '
+ 	test_must_fail git verify-tag --format="tagname : %(tag)" $(cat forged1.tag) >actual-forged &&
+ 	test_must_be_empty actual-forged
 -- 
 gitgitgadget
-
