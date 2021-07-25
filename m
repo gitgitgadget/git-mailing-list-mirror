@@ -2,89 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8D3CC4338F
-	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 15:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E001C4338F
+	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 15:41:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B32FA60E09
-	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 15:04:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 263C360D07
+	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 15:41:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231292AbhGYOXl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Jul 2021 10:23:41 -0400
-Received: from smtprelay02.ispgateway.de ([80.67.18.14]:63235 "EHLO
-        smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231208AbhGYOXl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Jul 2021 10:23:41 -0400
+        id S231302AbhGYPA3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Jul 2021 11:00:29 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.18.16]:58823 "EHLO
+        smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231215AbhGYPA2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Jul 2021 11:00:28 -0400
 Received: from [87.152.157.21] (helo=[192.168.2.202])
-        by smtprelay02.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        by smtprelay04.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
         (Exim 4.94.2)
         (envelope-from <git@mfriebe.de>)
-        id 1m7feN-0002VV-0a
-        for git@vger.kernel.org; Sun, 25 Jul 2021 17:02:43 +0200
+        id 1m7gDF-0003AP-O4
+        for git@vger.kernel.org; Sun, 25 Jul 2021 17:38:45 +0200
+Subject: Re: Files modified, even after: git reset --hard
 From:   Martin <git@mfriebe.de>
 To:     git@vger.kernel.org
-Subject: Files modified, even after: git reset --hard
-Message-ID: <dd4aca2c-9ca2-e489-d78f-9d2a5580f1a5@mfriebe.de>
-Date:   Sun, 25 Jul 2021 17:04:08 +0200
+References: <dd4aca2c-9ca2-e489-d78f-9d2a5580f1a5@mfriebe.de>
+Message-ID: <4e9b54b4-8e40-7fd3-ae65-d33390f3af43@mfriebe.de>
+Date:   Sun, 25 Jul 2021 17:40:53 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.12.0
 MIME-Version: 1.0
+In-Reply-To: <dd4aca2c-9ca2-e489-d78f-9d2a5580f1a5@mfriebe.de>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Content-Language: en-GB
 X-Df-Sender: bWVAbWZyaWViZS5kZQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have some files, that will show up modified. Always.
+On 25/07/2021 17:04, Martin wrote:
+> I have some files, that will show up modified. Always.
+>
+> If I just switch to a commit, with clean worktree before, then those 
+> files will be modified.
+>
+...
+> But I *suspect* that the blob contains either CrLf, or mixed 
+> line-endings.
 
-If I just switch to a commit, with clean worktree before, then those 
-files will be modified.
+Also, if that is the case, what can I do to resolve the issue?
+The file has been fixed in the meantime. It is about the old commits....
 
-I can not stash them.
-git reset --hard does not change anything.
+filter branch is not an option. All commit hashes must be kept. No force 
+pushes to the repro...
 
-Diff shows the entire file is modified. I suspect its the line endings..
+That also means I can not use .gitattribute, because I could not amend 
+it for the old revisions.
+I might be able to use my local $GIT_DIR/info/attributes.
+But then I risk to make new commits to that file, and introduce new 
+wrong line-endings.
 
-This happens on windows, and
-   autocrlf=true
+Maybe git replace?
+I figure if I do not replace the commit objects, but only the blobs to 
+which they point. Then all commits should keep their hashes. (so 
+references to any commit by hash would remain working)
 
-The checked out file (which is marked as modified) has the correct CrLf 
-endings.
+But it's thousands of commits, between the introduction of the issue, 
+and the commit where it's fixed.
+So I guess I need to create as many new blobs, and replacement entries.
+- Is that practical? How does git perform with such many replacements
+- Is there an easy way to create them?
 
-What I have not been able to find, is what line endings are stored in 
-the blob.
-Its an xml file, so they should be just Lf.
-But I *suspect* that the blob contains either CrLf, or mixed line-endings.
-
-Could that be? that if a file does have unexpected line endings in the 
-commit's blob, that it shows as modified?
-
-One the one hand, yes, If I commit, that file will change.
-On the other hand, if I just check out (or do reset-hard) then I don't 
-expect modified files....
-
-So what should happen?
-
-This also causes problems, because in order to for example rebase 
-something, I first need to switch to some commit that can be checked out 
-without modified files.
-Or rebase will not work.
-
-Also in that repro, I had problems that some rebases failed with (with 
-and without --reapply-cherry-picks)
-    error: add_cacheinfo failed
-Those rebase where between an orphaned branch, and a "normal" branch.
-And it is possible that the file only had the line ending issues in one 
-of the 2 branches....
-But that I was not able to further investigate.
-
-
-
-//git for windows
-git version 2.32.0.windows.2
-
+Are there other, better solutions?
