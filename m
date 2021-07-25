@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD02BC432BE
-	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 13:09:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1362AC4338F
+	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 13:10:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A679160E78
-	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 13:09:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EF8A560F11
+	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 13:09:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230480AbhGYM3V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Jul 2021 08:29:21 -0400
-Received: from mx.kolabnow.com ([95.128.36.40]:38650 "EHLO mx.kolabnow.com"
+        id S231143AbhGYM3X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Jul 2021 08:29:23 -0400
+Received: from mx.kolabnow.com ([95.128.36.40]:38640 "EHLO mx.kolabnow.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230421AbhGYM25 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S230414AbhGYM25 (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 25 Jul 2021 08:28:57 -0400
 Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out003.mykolab.com (Postfix) with ESMTP id 3314040BCA;
-        Sun, 25 Jul 2021 15:08:56 +0200 (CEST)
+        by ext-mx-out003.mykolab.com (Postfix) with ESMTP id 267E740F59;
+        Sun, 25 Jul 2021 15:08:54 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
         content-transfer-encoding:mime-version:references:in-reply-to
         :message-id:date:date:subject:subject:from:from:received
-        :received:received; s=dkim20160331; t=1627218535; x=1629032936;
-         bh=/ggegXae2JaTFVQ3cd/o5SGgrTHuCVFp27usIrpE0pw=; b=jdJe0vLjjaeS
-        geqBrZpJDGUtDPXUCyFnAaUDikAf+nhMtpQ5z09xcgWWbbh0EWD7VYza99z6YwXh
-        o6s4oypJ/KMDq3SCrZavWIkVUdAFQdAErtSP+pUWA3v6LxJiTRGr/awSRbuGJFnk
-        AOFuV/TM30ATJKYeXgrlQZDA96f4lwD8AMKPBjjyz8Y4HiMlmBO/mWFl9OIbFkF9
-        6CXZY7rzUTXyi3NNa8eU087b+K9AQBGB26xU1pC5SSfMeI93JpxG4StZH886g7tf
-        e8PkuMseS693syQMUe+3KAmvxMgPFlmtsu0Mai7O/pRo8u6iQQ4bR28m3RrmLUbx
-        MBNIbV9U5vWAOCBj66kDjejpAfsNC6J5H60OJ0S+XB74hWV0qCLyMwut4KAec6RJ
-        IDKbBpj8vt6JCei+ZR5MPjUzYGSF6tx8n9aykiI6ikr9NEHSkmX+OlJ74J/NMwaU
-        d8KLYO5VkLjWpQ12jKwrz1Lbcf0qh7hpE1UWIWTxiNoTgQg4BUNl54DngOtLnFjV
-        SFKl6X652u1t/j5T+mDMYxJl8bi5Yog6W63gWGjBTALJIZQjcE01BAvCzfFCpfcQ
-        MqtuVpNiJuJ0HMJpxp9pHeQDax8vknloeiULFZEv/1oecL4oNgNRUIZCy4WZHbyK
-        RQWcHWM1z1hqZvrJGLutC4nk2bAEwNY=
+        :received:received; s=dkim20160331; t=1627218533; x=1629032934;
+         bh=YIY1dn33X2wJyIvL14v+OSYsLWLu5lOxPVe3xu+1evo=; b=0th43hfqFevs
+        dPZYrxJLb6yhLj/Dt1YwnIt7LimBZMfilX8AHeeAv1l61/HoSAbyx9rSSYus+svh
+        n67LeFXqB2XMfeZMr8FdY13a4nmcAlVD2C80abgH923NUDWY/sgGuC5n+CxS7Usf
+        HlQ8bLEs3VuCM9Lz1ylNeegXBJNvsdg0RlVu+zAU5ilYg0sIuv6Su4lu9mRIpErL
+        G2JewBZZo+C42TDzWI6WUi6ElVcU8y1cSVIQhuCUlVKb8nfIlCg6VyNuxJjNBybP
+        Epe3EECe2uIv8wb/DvHuwnFfwaFpbfzMQ+oyOeEB/NKoqr3lRVmpWnufj9JOZtB3
+        JSzDB3GleRwzF7RWxX1qpLkoWCMr15jXET/b5Ruuv8mU0Gy0CnMqFx4/LeGn5M9D
+        5pvrF0L3wl6Hx0E/6BvEsbCJbRuu4RxQonvKJKlcxNRaz20cxAFzzBLSuXJgH3Lg
+        MFj+Ikp03jpqnqpcfQxPAoUjvgsU900/UTGc/FZfP+xYbjBu4wwgJci2GQqtjhgi
+        vNZEdKEL6qLZxJ0S0aWkHxZYa9WGMfZ8ouXYfh/Pcdsn1ifoEWS9z8dRMyTWlxTe
+        46KtLn2UJiWw2Xc5OqJbDdL4ecbfpUMJ9utl2P1X8nr5JuWaCHtc2s01oo5pKX4U
+        HR7xMlxs0G8bbpaEJ82ZdvM07mKiDPw=
 X-Virus-Scanned: amavisd-new at mykolab.com
 Received: from mx.kolabnow.com ([127.0.0.1])
         by localhost (ext-mx-out003.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id F80yMCSGN1lK; Sun, 25 Jul 2021 15:08:55 +0200 (CEST)
-Received: from int-mx002.mykolab.com (unknown [10.9.13.2])
-        by ext-mx-out003.mykolab.com (Postfix) with ESMTPS id 811B4404BD;
-        Sun, 25 Jul 2021 15:08:55 +0200 (CEST)
-Received: from ext-subm003.mykolab.com (unknown [10.9.6.3])
-        by int-mx002.mykolab.com (Postfix) with ESMTPS id 439653F28;
+        with ESMTP id YVF__5j1xdQt; Sun, 25 Jul 2021 15:08:53 +0200 (CEST)
+Received: from int-mx001.mykolab.com (unknown [10.9.13.1])
+        by ext-mx-out003.mykolab.com (Postfix) with ESMTPS id 7EE3B404BD;
         Sun, 25 Jul 2021 15:08:53 +0200 (CEST)
+Received: from ext-subm003.mykolab.com (unknown [10.9.6.3])
+        by int-mx001.mykolab.com (Postfix) with ESMTPS id 56AEE17C;
+        Sun, 25 Jul 2021 15:08:51 +0200 (CEST)
 From:   andrzej@ahunt.org
 To:     git@vger.kernel.org
 Cc:     andrzej@ahunt.org, phillip.wood123@gmail.com, newren@gmail.com
-Subject: [PATCH v2 09/12] builtin/mv: free or UNLEAK multiple pointers at end of cmd_mv
-Date:   Sun, 25 Jul 2021 15:08:27 +0200
-Message-Id: <20210725130830.5145-10-andrzej@ahunt.org>
+Subject: [PATCH v2 08/12] convert: release strbuf to avoid leak
+Date:   Sun, 25 Jul 2021 15:08:26 +0200
+Message-Id: <20210725130830.5145-9-andrzej@ahunt.org>
 In-Reply-To: <20210725130830.5145-1-andrzej@ahunt.org>
 References: <20210620151204.19260-1-andrzej@ahunt.org>
  <20210725130830.5145-1-andrzej@ahunt.org>
@@ -65,129 +65,82 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-These leaks all happen at the end of cmd_mv, hence don't matter in any
-way. But we still fix the easy ones and squash the rest to get us closer
-to being able to run tests without leaks.
+apply_multi_file_filter and async_query_available_blobs both query
+subprocess output using subprocess_read_status, which writes data into
+the identically named filter_status strbuf. We add a strbuf_release to
+avoid leaking their contents.
 
-LSAN output from t0050:
+Leak output seen when running t0021 with LSAN:
 
-Direct leak of 384 byte(s) in 1 object(s) allocated from:
+Direct leak of 24 byte(s) in 1 object(s) allocated from:
     #0 0x49ab49 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
-    #1 0xa8c015 in xrealloc wrapper.c:126:8
-    #2 0xa0a7e1 in add_entry string-list.c:44:2
-    #3 0xa0a7e1 in string_list_insert string-list.c:58:14
-    #4 0x5dac03 in cmd_mv builtin/mv.c:248:4
-    #5 0x4ce83e in run_builtin git.c:475:11
-    #6 0x4ccafe in handle_builtin git.c:729:3
-    #7 0x4cb01c in run_argv git.c:818:4
-    #8 0x4cb01c in cmd_main git.c:949:19
-    #9 0x6bd9ad in main common-main.c:52:11
-    #10 0x7fbfeffc4349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+    #1 0xa8c2b5 in xrealloc wrapper.c:126:8
+    #2 0x9ff99d in strbuf_grow strbuf.c:98:2
+    #3 0x9ff99d in strbuf_addbuf strbuf.c:304:2
+    #4 0xa101d6 in subprocess_read_status sub-process.c:45:5
+    #5 0x77793c in apply_multi_file_filter convert.c:886:8
+    #6 0x77793c in apply_filter convert.c:1042:10
+    #7 0x77a0b5 in convert_to_git_filter_fd convert.c:1492:7
+    #8 0x8b48cd in index_stream_convert_blob object-file.c:2156:2
+    #9 0x8b48cd in index_fd object-file.c:2248:9
+    #10 0x597411 in hash_fd builtin/hash-object.c:43:9
+    #11 0x596be1 in hash_object builtin/hash-object.c:59:2
+    #12 0x596be1 in cmd_hash_object builtin/hash-object.c:153:3
+    #13 0x4ce83e in run_builtin git.c:475:11
+    #14 0x4ccafe in handle_builtin git.c:729:3
+    #15 0x4cb01c in run_argv git.c:818:4
+    #16 0x4cb01c in cmd_main git.c:949:19
+    #17 0x6bdc2d in main common-main.c:52:11
+    #18 0x7f42acf79349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
-Direct leak of 16 byte(s) in 1 object(s) allocated from:
-    #0 0x49a82d in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
-    #1 0xa8bd09 in do_xmalloc wrapper.c:41:8
-    #2 0x5dbc34 in internal_prefix_pathspec builtin/mv.c:32:2
-    #3 0x5da575 in cmd_mv builtin/mv.c:158:14
-    #4 0x4ce83e in run_builtin git.c:475:11
-    #5 0x4ccafe in handle_builtin git.c:729:3
-    #6 0x4cb01c in run_argv git.c:818:4
-    #7 0x4cb01c in cmd_main git.c:949:19
-    #8 0x6bd9ad in main common-main.c:52:11
-    #9 0x7fbfeffc4349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+SUMMARY: AddressSanitizer: 24 byte(s) leaked in 1 allocation(s).
 
-Direct leak of 16 byte(s) in 1 object(s) allocated from:
-    #0 0x49a82d in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
-    #1 0xa8bd09 in do_xmalloc wrapper.c:41:8
-    #2 0x5dbc34 in internal_prefix_pathspec builtin/mv.c:32:2
-    #3 0x5da4e4 in cmd_mv builtin/mv.c:148:11
-    #4 0x4ce83e in run_builtin git.c:475:11
-    #5 0x4ccafe in handle_builtin git.c:729:3
-    #6 0x4cb01c in run_argv git.c:818:4
-    #7 0x4cb01c in cmd_main git.c:949:19
-    #8 0x6bd9ad in main common-main.c:52:11
-    #9 0x7fbfeffc4349 in __libc_start_main (/lib64/libc.so.6+0x24349)
-
-Direct leak of 8 byte(s) in 1 object(s) allocated from:
-    #0 0x49a9a2 in calloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:154:3
-    #1 0xa8c119 in xcalloc wrapper.c:140:8
-    #2 0x5da585 in cmd_mv builtin/mv.c:159:22
-    #3 0x4ce83e in run_builtin git.c:475:11
-    #4 0x4ccafe in handle_builtin git.c:729:3
-    #5 0x4cb01c in run_argv git.c:818:4
-    #6 0x4cb01c in cmd_main git.c:949:19
-    #7 0x6bd9ad in main common-main.c:52:11
-    #8 0x7fbfeffc4349 in __libc_start_main (/lib64/libc.so.6+0x24349)
-
-Direct leak of 4 byte(s) in 1 object(s) allocated from:
-    #0 0x49a9a2 in calloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:154:3
-    #1 0xa8c119 in xcalloc wrapper.c:140:8
-    #2 0x5da4f8 in cmd_mv builtin/mv.c:149:10
-    #3 0x4ce83e in run_builtin git.c:475:11
-    #4 0x4ccafe in handle_builtin git.c:729:3
-    #5 0x4cb01c in run_argv git.c:818:4
-    #6 0x4cb01c in cmd_main git.c:949:19
-    #7 0x6bd9ad in main common-main.c:52:11
-    #8 0x7fbfeffc4349 in __libc_start_main (/lib64/libc.so.6+0x24349)
-
-Indirect leak of 65 byte(s) in 1 object(s) allocated from:
+Direct leak of 120 byte(s) in 5 object(s) allocated from:
     #0 0x49ab49 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
-    #1 0xa8c015 in xrealloc wrapper.c:126:8
-    #2 0xa00226 in strbuf_grow strbuf.c:98:2
-    #3 0xa00226 in strbuf_vaddf strbuf.c:394:3
-    #4 0xa065c7 in xstrvfmt strbuf.c:981:2
-    #5 0xa065c7 in xstrfmt strbuf.c:991:8
-    #6 0x9e7ce7 in prefix_path_gently setup.c:115:15
-    #7 0x9e7fa6 in prefix_path setup.c:128:12
-    #8 0x5dbdbf in internal_prefix_pathspec builtin/mv.c:55:23
-    #9 0x5da575 in cmd_mv builtin/mv.c:158:14
-    #10 0x4ce83e in run_builtin git.c:475:11
-    #11 0x4ccafe in handle_builtin git.c:729:3
-    #12 0x4cb01c in run_argv git.c:818:4
-    #13 0x4cb01c in cmd_main git.c:949:19
-    #14 0x6bd9ad in main common-main.c:52:11
-    #15 0x7fbfeffc4349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+    #1 0xa8c295 in xrealloc wrapper.c:126:8
+    #2 0x9ff97d in strbuf_grow strbuf.c:98:2
+    #3 0x9ff97d in strbuf_addbuf strbuf.c:304:2
+    #4 0xa101b6 in subprocess_read_status sub-process.c:45:5
+    #5 0x775c73 in async_query_available_blobs convert.c:960:8
+    #6 0x80029d in finish_delayed_checkout entry.c:183:9
+    #7 0xa65d1e in check_updates unpack-trees.c:493:10
+    #8 0xa5f469 in unpack_trees unpack-trees.c:1747:8
+    #9 0x525971 in checkout builtin/clone.c:815:6
+    #10 0x525971 in cmd_clone builtin/clone.c:1409:8
+    #11 0x4ce83e in run_builtin git.c:475:11
+    #12 0x4ccafe in handle_builtin git.c:729:3
+    #13 0x4cb01c in run_argv git.c:818:4
+    #14 0x4cb01c in cmd_main git.c:949:19
+    #15 0x6bdc2d in main common-main.c:52:11
+    #16 0x7fa253fce349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
-Indirect leak of 65 byte(s) in 1 object(s) allocated from:
-    #0 0x49ab49 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
-    #1 0xa8c015 in xrealloc wrapper.c:126:8
-    #2 0xa00226 in strbuf_grow strbuf.c:98:2
-    #3 0xa00226 in strbuf_vaddf strbuf.c:394:3
-    #4 0xa065c7 in xstrvfmt strbuf.c:981:2
-    #5 0xa065c7 in xstrfmt strbuf.c:991:8
-    #6 0x9e7ce7 in prefix_path_gently setup.c:115:15
-    #7 0x9e7fa6 in prefix_path setup.c:128:12
-    #8 0x5dbdbf in internal_prefix_pathspec builtin/mv.c:55:23
-    #9 0x5da4e4 in cmd_mv builtin/mv.c:148:11
-    #10 0x4ce83e in run_builtin git.c:475:11
-    #11 0x4ccafe in handle_builtin git.c:729:3
-    #12 0x4cb01c in run_argv git.c:818:4
-    #13 0x4cb01c in cmd_main git.c:949:19
-    #14 0x6bd9ad in main common-main.c:52:11
-    #15 0x7fbfeffc4349 in __libc_start_main (/lib64/libc.so.6+0x24349)
-
-SUMMARY: AddressSanitizer: 558 byte(s) leaked in 7 allocation(s).
+SUMMARY: AddressSanitizer: 120 byte(s) leaked in 5 allocation(s).
 
 Signed-off-by: Andrzej Hunt <andrzej@ahunt.org>
 ---
- builtin/mv.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ convert.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 3fccdcb645..c2f96c8e89 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -303,5 +303,10 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
- 		die(_("Unable to write new index file"));
- 
-+	string_list_clear(&src_for_dst, 0);
-+	UNLEAK(source);
-+	UNLEAK(dest_path);
-+	free(submodule_gitfile);
-+	free(modes);
- 	return 0;
+diff --git a/convert.c b/convert.c
+index fd9c84b025..0d6fb3410a 100644
+--- a/convert.c
++++ b/convert.c
+@@ -916,6 +916,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 	else
+ 		strbuf_swap(dst, &nbuf);
+ 	strbuf_release(&nbuf);
++	strbuf_release(&filter_status);
+ 	return !err;
  }
+ 
+@@ -966,6 +967,7 @@ int async_query_available_blobs(const char *cmd, struct string_list *available_p
+ 
+ 	if (err)
+ 		handle_filter_error(&filter_status, entry, 0);
++	strbuf_release(&filter_status);
+ 	return !err;
+ }
+ 
 -- 
 2.26.2
 
