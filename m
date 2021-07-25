@@ -2,283 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37A72C4338F
-	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 08:30:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EA8FC4338F
+	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 12:04:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0A95D60F42
-	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 08:30:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B68760E09
+	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 12:04:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230147AbhGYHtf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Jul 2021 03:49:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53494 "EHLO
+        id S230193AbhGYLYO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Jul 2021 07:24:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229853AbhGYHtd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Jul 2021 03:49:33 -0400
-Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7C15C06175F
-        for <git@vger.kernel.org>; Sun, 25 Jul 2021 01:30:03 -0700 (PDT)
-Received: by mail-ua1-x92d.google.com with SMTP id t26so2264158uao.12
-        for <git@vger.kernel.org>; Sun, 25 Jul 2021 01:30:03 -0700 (PDT)
+        with ESMTP id S229538AbhGYLYN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Jul 2021 07:24:13 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EF8BC061757
+        for <git@vger.kernel.org>; Sun, 25 Jul 2021 05:04:44 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id r6so8238743ioj.8
+        for <git@vger.kernel.org>; Sun, 25 Jul 2021 05:04:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tUaVNqqAjhh8ZKjedbiLPsUB0JIF8fKoQii3zXpwqkw=;
-        b=sfkJvkXG/8dYp60ON0OPTRz5PFtESJf7e1zrVkBWgduUaTZqJd04YzxsYDls0KU/vH
-         smZlAIJUySRAtTLy5KCGiUuKJE31H7q4Qrk3BsDHAUAQOpcaf8DluhWMxCVczrrXZP3L
-         yGVi875GJegEZBNQzGiy9R2an/Qjxo0ZCk3cT4GhBFbYXM1IpGNcOLpFiKJXFGoW2w6s
-         AJyHvMiAn9P7ib9DG/STaPNP6dgXD7SY0640eIZaozhU3WAwRC77bfd4qUFtH6y5usm5
-         iJCR3sWXsykW4X+ilOjLtMtzQekzW6vXTEUXjGn9CuOPkofb4k4vkeKHRfl3VMkjIhT9
-         Nrzg==
+         :cc:content-transfer-encoding;
+        bh=4iQRFVnL5AJh42n0LXxQtHr9dDMt+SpC3LvwF+rkQHM=;
+        b=eNPg01NUCuVnPNB3GuJqNe7qwCH+uUaYT6R5hvvn5aIwBqPnKbigINdwwfQpmRQ+Xm
+         c/25OOZGfIwZ3RQJyzLBWrzOi8jIi5h6ArBkb5x97a85SnREQ/Fi9NRR2a1VCnjmdUi0
+         dmJ0uas66vMDlEGqluakpe/jJSw7Q2Ekw3AmnHkf8/5RniZfHWSUf6WQDA4HopCK20i6
+         iDt9b8x0XVUnUvTHCs7uRhl5dga9YH4y3cHs/I2qW8jgClLtbdjKInnMudf/s/k386uW
+         gxxyBTT871e7eMc5pDXAyqAOSUyyf/VwgCeee4iRn598cGtbFXflpqIGb2VjkwMk65oh
+         uh4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tUaVNqqAjhh8ZKjedbiLPsUB0JIF8fKoQii3zXpwqkw=;
-        b=WRUQhuAp3pji2U96PDdJdsnLkc09nWjQ1kGq6rmaMd+g20Tg9xc4aXAwBI1IoGkUMh
-         5QWrxIBYTrbvDTedIfoavHJydTZTMxv6xL/0QLEAIgGDbM1igQfl+BNn98GPz6Hr+fIe
-         U0y13GBUY2udwzPzqAF4xrz92AZckGLhvDgzEL6c5JOES1zIYUcjWfI3ILoQzz4vI1VY
-         xE5/EcEe1NaF5cxMB9H+kweE+kEi4u4knDbgHMvwvNWdptaMcsAiTJuokXyowvLhLRRF
-         1N92NN19Yqr9XSL6tF6AVVtYNUF9c4Zmga2Gxu9WpUS3Lapd3DveCLdnWCMRZvvObijM
-         26oQ==
-X-Gm-Message-State: AOAM532StrLVTW9N+6hk7nQBwFg6guzv6zSYkomVCAZB++M6RG0LXpSt
-        L7+7ww/OMTt2R3U7nTCWckK66GrnPCK4bceH0F8=
-X-Google-Smtp-Source: ABdhPJzQI/nGXBk4LortXg06SqRiC5r9fSlqohCcofciOP1syrQwSeTlK7rKy4YXLB/9b26xpcZvUOgVbTgOtpzrnnc=
-X-Received: by 2002:ab0:1e81:: with SMTP id o1mr382226uak.86.1627201802848;
- Sun, 25 Jul 2021 01:30:02 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4iQRFVnL5AJh42n0LXxQtHr9dDMt+SpC3LvwF+rkQHM=;
+        b=Bo6LwRO/wssLQ557JDVRf4K+EPkf4dd0twIZJyr+MMuDjog/UR1L8PqimCCyJ4Entl
+         7tNwQLe/nBm6E64WuYyH6zX0a2A2jSCt6IHtXagD1xZDhB5jSSgj8eP6p6Tawssc4aLN
+         yZdG9FTscaLlT8ttKPokG5yhxnMHTYHNLlgTyIk6/n/5Lrupk1ChC4YMPqxFWWBENx5s
+         NkHqBJiWp7iHhO5qinZ44kwsYHZJXDaJ2OqnG08JjjLJlc1LFvaNlWwi6zkNg+ovNZsI
+         B+QGuuwrjphPt5vgPx5bA3SKOq3H0n5MXLef5qStr4dpyG1/02E5pGib2y37ZkT5/kiq
+         WPJw==
+X-Gm-Message-State: AOAM533rlZ9293Unyg76BZzx5JyTCprzF8OMJMojr2e6kxE2n6IbXoqm
+        pkAh9Xaqwms+Fyg75Y/1H6byZhknolTK/rueZZ4=
+X-Google-Smtp-Source: ABdhPJyDogDvvEuSFADC7/IojIc5lte5ZO3L3J0y6xDyyS0JVRTlb6nbz9zL1m1/2+MkVpMuC32bZP5Ok3Dck8k5/gw=
+X-Received: by 2002:a02:ccad:: with SMTP id t13mr11953123jap.29.1627214683538;
+ Sun, 25 Jul 2021 05:04:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1000.v2.git.1627031043.gitgitgadget@gmail.com>
- <pull.1000.v3.git.1627136061.gitgitgadget@gmail.com> <2300b0463f2fca76970ae7debcffa505909b8c4d.1627136062.git.gitgitgadget@gmail.com>
-In-Reply-To: <2300b0463f2fca76970ae7debcffa505909b8c4d.1627136062.git.gitgitgadget@gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sun, 25 Jul 2021 01:29:52 -0700
-Message-ID: <CA+P7+xpfWA_e3rn2vfWBPixFJop-zomj9_N99n9ufe1MxV-1KA@mail.gmail.com>
-Subject: Re: [PATCH v3 5/5] [GSOC] ref-filter: add %(rest) atom
-To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+References: <CAOLTT8RR3nvtXotqhSO8xPCzGQpGUA8dnNgraAjREZ6uLf4n4w@mail.gmail.com>
+ <87im0zs8wn.fsf@evledraar.gmail.com>
+In-Reply-To: <87im0zs8wn.fsf@evledraar.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sun, 25 Jul 2021 20:05:12 +0800
+Message-ID: <CAOLTT8Sbusr8=iJbG1qXcSerivZqP5xm-GS8R7TqDMh7QXSZaA@mail.gmail.com>
+Subject: Re: [GSOC] How to improve the performance of git cat-file --batch
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        ZheNing Hu <adlternative@gmail.com>
+        Hariom verma <hariom18599@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 24, 2021 at 7:14 AM ZheNing Hu via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E2021=E5=
+=B9=B47=E6=9C=8825=E6=97=A5=E5=91=A8=E6=97=A5 =E4=B8=8A=E5=8D=885:23=E5=86=
+=99=E9=81=93=EF=BC=9A
 >
-> From: ZheNing Hu <adlternative@gmail.com>
 >
-> %(rest) is a atom used for cat-file batch mode, which can split
-> the input lines at the first whitespace boundary, all characters
-> before that whitespace are considered to be the object name;
-> characters after that first run of whitespace (i.e., the "rest"
-> of the line) are output in place of the %(rest) atom.
+> On Sat, Jul 24 2021, ZheNing Hu wrote:
 >
-> In order to let "cat-file --batch=%(rest)" use the ref-filter
-> interface, add %(rest) atom for ref-filter.
+> > After reusing ref-filter logic for cat-file --batch, the function of
+> > cat-file --batch has been enhanced,
+> > but the performance of cat-file is severely degraded. So we need a
+> > better solution to solve it.
+> > its last version is here:
+> > https://lore.kernel.org/git/pull.993.v2.git.1626363626.gitgitgadget@gma=
+il.com/
+> >
+> > Use google doc to show some of my recent ideas:
+> > https://docs.google.com/document/d/1hyM-ecMd8C_TJ3OsOn46nMr8ZxCUxeK7HKj=
+-bRkq3sk/edit?usp=3Dsharing
+> >
+> > Anyone is welcome to comment and suggest better solutions!
 >
-> Introduce the reject_atom() to reject the atom %(rest) for
-> "git for-each-ref", "git branch", "git tag" and "git verify-tag".
+> Having looked at that Google Doc it seems to just discuss "Plan A", or
+> there some multi-doc magic and there's a "Plan B", or...? I'm not very
+> familiar with Google Docs.
 >
-> Suggected-by: Jacob Keller <jacob.keller@gmail.com>
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Hariom Verma <hariom18599@gmail.com>
-> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-> ---
 
-Thanks for the improved  commit message here. That helps clarify what
-this atom does and aids in understanding the implementation.
+There may be several plan that have not been written to it for the time bei=
+ng.
 
-Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
+> Anyway, I'd encourage you to just send this as an E-Mail to the mailing
+> list.
+>
 
->  ref-filter.c             | 25 +++++++++++++++++++++++++
->  ref-filter.h             |  5 ++++-
->  t/t3203-branch-output.sh |  4 ++++
->  t/t6300-for-each-ref.sh  |  4 ++++
->  t/t7004-tag.sh           |  4 ++++
->  t/t7030-verify-tag.sh    |  4 ++++
->  6 files changed, 45 insertions(+), 1 deletion(-)
+Ok, I can migrate them here.
+
+> Having skimmed it I'm a bit confused about this in reference to
+> performance generally. I haven't looked into the case you're discussing,
+> but as I noted in
+> https://lore.kernel.org/git/87im1p6x34.fsf@evledraar.gmail.com/ the
+> profiling clearly shows that the main problem is that you've added
+> object lookups we skipped before.
 >
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 7cef839aaf1..85e9e657fe7 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -157,6 +157,7 @@ enum atom_type {
->         ATOM_IF,
->         ATOM_THEN,
->         ATOM_ELSE,
-> +       ATOM_REST,
->  };
+
+Yeah, you showed me last time that lookup_object() took up a lot of time.
+
+> I think any plan to improve performance should start with a perf test,
+> see which of your patches have performance regressions, if some don't
+> and are otherwise OK perhaps those can go in earlier.
 >
->  /*
-> @@ -559,6 +560,15 @@ static int if_atom_parser(struct ref_format *format, struct used_atom *atom,
->         return 0;
->  }
->
-> +static int rest_atom_parser(struct ref_format *format, struct used_atom *atom,
-> +                           const char *arg, struct strbuf *err)
-> +{
-> +       if (arg)
-> +               return strbuf_addf_ret(err, -1, _("%%(rest) does not take arguments"));
-> +       format->use_rest = 1;
-> +       return 0;
-> +}
-> +
->  static int head_atom_parser(struct ref_format *format, struct used_atom *atom,
->                             const char *arg, struct strbuf *unused_err)
->  {
-> @@ -615,6 +625,7 @@ static struct {
->         [ATOM_IF] = { "if", SOURCE_NONE, FIELD_STR, if_atom_parser },
->         [ATOM_THEN] = { "then", SOURCE_NONE },
->         [ATOM_ELSE] = { "else", SOURCE_NONE },
-> +       [ATOM_REST] = { "rest", SOURCE_NONE, FIELD_STR, rest_atom_parser },
->         /*
->          * Please update $__git_ref_fieldlist in git-completion.bash
->          * when you add new atoms
-> @@ -993,6 +1004,11 @@ static const char *find_next(const char *cp)
->         return NULL;
->  }
->
-> +static int reject_atom(enum atom_type atom_type)
-> +{
-> +       return atom_type == ATOM_REST;
-> +}
-> +
->  /*
->   * Make sure the format string is well formed, and parse out
->   * the used atoms.
-> @@ -1013,6 +1029,8 @@ int verify_ref_format(struct ref_format *format)
->                 at = parse_ref_filter_atom(format, sp + 2, ep, &err);
->                 if (at < 0)
->                         die("%s", err.buf);
-> +               if (reject_atom(used_atom[at].atom_type))
-> +                       die(_("this command reject atom %%(%.*s)"), (int)(ep - sp - 2), sp + 2);
->
->                 if ((format->quote_style == QUOTE_PYTHON ||
->                      format->quote_style == QUOTE_SHELL ||
-> @@ -1932,6 +1950,12 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
->                         v->handler = else_atom_handler;
->                         v->s = xstrdup("");
->                         continue;
-> +               } else if (atom_type == ATOM_REST) {
-> +                       if (ref->rest)
-> +                               v->s = xstrdup(ref->rest);
-> +                       else
-> +                               v->s = xstrdup("");
-> +                       continue;
->                 } else
->                         continue;
->
-> @@ -2149,6 +2173,7 @@ static struct ref_array_item *new_ref_array_item(const char *refname,
->
->         FLEX_ALLOC_STR(ref, refname, refname);
->         oidcpy(&ref->objectname, oid);
-> +       ref->rest = NULL;
->
->         return ref;
->  }
-> diff --git a/ref-filter.h b/ref-filter.h
-> index 74fb423fc89..c15dee8d6b9 100644
-> --- a/ref-filter.h
-> +++ b/ref-filter.h
-> @@ -38,6 +38,7 @@ struct ref_sorting {
->
->  struct ref_array_item {
->         struct object_id objectname;
-> +       const char *rest;
->         int flag;
->         unsigned int kind;
->         const char *symref;
-> @@ -76,14 +77,16 @@ struct ref_format {
->          * verify_ref_format() afterwards to finalize.
->          */
->         const char *format;
-> +       const char *rest;
->         int quote_style;
-> +       int use_rest;
->         int use_color;
->
->         /* Internal state to ref-filter */
->         int need_color_reset_at_eol;
->  };
->
-> -#define REF_FORMAT_INIT { NULL, 0, -1 }
-> +#define REF_FORMAT_INIT { .use_color = -1 }
->
->  /*  Macros for checking --merged and --no-merged options */
->  #define _OPT_MERGED_NO_MERGED(option, filter, h) \
-> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-> index 5325b9f67a0..6e94c6db7b5 100755
-> --- a/t/t3203-branch-output.sh
-> +++ b/t/t3203-branch-output.sh
-> @@ -340,6 +340,10 @@ test_expect_success 'git branch --format option' '
->         test_cmp expect actual
->  '
->
-> +test_expect_success 'git branch with --format=%(rest) must fail' '
-> +       test_must_fail git branch --format="%(rest)" >actual
-> +'
-> +
->  test_expect_success 'worktree colors correct' '
->         cat >expect <<-EOF &&
->         * <GREEN>(HEAD detached from fromtag)<RESET>
-> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index 3d15d0a5360..0d2e062f791 100755
-> --- a/t/t6300-for-each-ref.sh
-> +++ b/t/t6300-for-each-ref.sh
-> @@ -1211,6 +1211,10 @@ test_expect_success 'basic atom: head contents:trailers' '
->         test_cmp expect actual.clean
->  '
->
-> +test_expect_success 'basic atom: rest must fail' '
-> +       test_must_fail git for-each-ref --format="%(rest)" refs/heads/main
-> +'
-> +
->  test_expect_success 'trailer parsing not fooled by --- line' '
->         git commit --allow-empty -F - <<-\EOF &&
->         this is the subject
-> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-> index 2f72c5c6883..082be85dffc 100755
-> --- a/t/t7004-tag.sh
-> +++ b/t/t7004-tag.sh
-> @@ -1998,6 +1998,10 @@ test_expect_success '--format should list tags as per format given' '
->         test_cmp expect actual
->  '
->
-> +test_expect_success 'git tag -l with --format="%(rest)" must fail' '
-> +       test_must_fail git tag -l --format="%(rest)" "v1*"
-> +'
-> +
->  test_expect_success "set up color tests" '
->         echo "<RED>v1.0<RESET>" >expect.color &&
->         echo "v1.0" >expect.bare &&
-> diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
-> index 3cefde9602b..10faa645157 100755
-> --- a/t/t7030-verify-tag.sh
-> +++ b/t/t7030-verify-tag.sh
-> @@ -194,6 +194,10 @@ test_expect_success GPG 'verifying tag with --format' '
->         test_cmp expect actual
->  '
->
-> +test_expect_success GPG 'verifying tag with --format="%(rest)" must fail' '
-> +       test_must_fail git verify-tag --format="%(rest)" "fourth-signed"
-> +'
-> +
->  test_expect_success GPG 'verifying a forged tag with --format should fail silently' '
->         test_must_fail git verify-tag --format="tagname : %(tag)" $(cat forged1.tag) >actual-forged &&
->         test_must_be_empty actual-forged
-> --
-> gitgitgadget
+
+Makes sense. Last time the test performance of commits is here:
+https://lore.kernel.org/git/CAOLTT8RR4+tUuT2yc2PDL9NwCburW8bM_Sht6nhKJ_fYV8=
+fGsQ@mail.gmail.com/
+
+The main commit with performance degradation is "[GSOC] cat-file:
+reuse ref-filter logic",
+we need to focus on it.
+
+> Then we'll have the smallest possible set of changes that's correct, but
+> introduces performance regressions, and can look at what those are doing
+> to slow things down...
+
+Ok.
+
+Thanks.
+--
+ZheNing Hu
