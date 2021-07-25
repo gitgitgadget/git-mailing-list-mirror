@@ -2,98 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD2FBC4338F
-	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 12:22:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19EDCC4338F
+	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 12:46:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B86A460F26
-	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 12:22:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F04C960E90
+	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 12:46:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230195AbhGYLlg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Jul 2021 07:41:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47342 "EHLO
+        id S230280AbhGYMGV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Jul 2021 08:06:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229538AbhGYLlf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Jul 2021 07:41:35 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C92BC061757
-        for <git@vger.kernel.org>; Sun, 25 Jul 2021 05:22:05 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id n10so8513848plf.4
-        for <git@vger.kernel.org>; Sun, 25 Jul 2021 05:22:05 -0700 (PDT)
+        with ESMTP id S230192AbhGYMGT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Jul 2021 08:06:19 -0400
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6772DC061757
+        for <git@vger.kernel.org>; Sun, 25 Jul 2021 05:46:48 -0700 (PDT)
+Received: by mail-io1-xd2a.google.com with SMTP id f11so8342045ioj.3
+        for <git@vger.kernel.org>; Sun, 25 Jul 2021 05:46:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:user-agent:content-language:to:cc:from
-         :subject:content-transfer-encoding;
-        bh=vrQ33mqXGMyygEQOyeRag9YL7RKHl2kkqR45ZBJxuhY=;
-        b=JYdLSXj2SfJw5OeIvkaKPgs4lEsFzzi/WJqkZnISHQMEK5fe6stQfLdcdw4URiPLK6
-         +jRpruQsIxqmepFv15xyz5WgW7LBqFNMSYpMLywAY4b5IfUtNeSdCssGeS/9Ek4GpjMC
-         A6pY9+0A5JjM9Manl6vVhiVzwK19H6AcvbY0nsdNb8j11KfuonS4/Gu6Y3eU7OmYLErU
-         7GCUBbB2FL6IQ4R+OgeubqgwMTbjY/kkdZixqmlF0PzY9+pwLhPGkiXV9wquKIeTr9vu
-         PtqAolKI3FYNOn8V9XwyUD0sfVFSrpZyW6gKsHKisgBwmtqFluS64s4cCeRszX3dO7/X
-         Wxaw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=SZDMAbQr/a/6tHiqGOlRMEUks48VQcu73CBNI4XAbp8=;
+        b=ZEayw0WeVAQxvD9KVy0GaDFRcm9I2fvzv4EgRTx4ZUnekru8qEHZFTj/oMq6kt79Fv
+         6kCfQcT8OsXsqtampUmHus1xKEFqo4gOhdY7y0YDnUBiOmELVE2NF4l7ePz5/KY/aE6j
+         Z8MWoHH6HPl/WzrZvKg+fiYlMsyepNI8hDQBuRFE2PQNhiqc1vtyLT5GJioWgK4sT5dL
+         vAOC4MHPteOJqGTpWSO2jadO64UIbqSj1c72NJU+6ZY6psedB0iBhPO2wCOxLyPcCrnJ
+         93edt5IPhVskYR5SjaYfXLoH8LS9XYP+MhOAkIocQzJBk4l8G5fsl/bvD7D6vC8hr8Zc
+         z7Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent
-         :content-language:to:cc:from:subject:content-transfer-encoding;
-        bh=vrQ33mqXGMyygEQOyeRag9YL7RKHl2kkqR45ZBJxuhY=;
-        b=S2UCugbAQbeMCcJ13Ud4fhhEfw5hm9JqJPgqvPEXZIl83vdaXpWs2EdtaX5BiSoDtQ
-         KheS8Gpy0Cy/GX/RBLgyJ8FX0HT69VoHpSzVBGHMPS/bgiMlfDjE4ARrmRWL2g8B+KNi
-         tTMvUUIigK4T0ivTwS8VpT87Ib4c2NiqX210D15FGfeiQXFE928k3ga0xYPoEqDc1WN/
-         0LQtzJ920Ht5YuIklbKQ+4QxStyvV3GgcqWhm7bptnTKefWX5xHBAZdXnFZDmPFNGiEd
-         2A9x0Q6T8plx3GNuU8tj4CslwXV7S3TCTKH0D4vezLsAWXh3FWqdLQ9u7IFqirS+drxE
-         Z+DA==
-X-Gm-Message-State: AOAM532Kh/8853mSveOqpDOenVwwUNimzmiRjEIJm+4JayT8y33WMvJm
-        rytV7hZhUsIf6nrgZQ8BSX6ceSr1+F96iQ==
-X-Google-Smtp-Source: ABdhPJzaol33lS6AktqpeLZRxt1KEszs1WTPsa6THOaHzOZ8eGsl6Ho76jhXqATPe6G/vSc2ZDuO2Q==
-X-Received: by 2002:aa7:8704:0:b029:328:c7ca:fe33 with SMTP id b4-20020aa787040000b0290328c7cafe33mr12779699pfo.12.1627215724695;
-        Sun, 25 Jul 2021 05:22:04 -0700 (PDT)
-Received: from [192.168.0.46] ([119.82.121.47])
-        by smtp.gmail.com with UTF8SMTPSA id u3sm11006210pjn.18.2021.07.25.05.22.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 25 Jul 2021 05:22:04 -0700 (PDT)
-Message-ID: <90b6bd2d-71e1-b8af-e027-8023f8d4f14c@gmail.com>
-Date:   Sun, 25 Jul 2021 17:52:00 +0530
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=SZDMAbQr/a/6tHiqGOlRMEUks48VQcu73CBNI4XAbp8=;
+        b=hRjr5vKJm925A7uGO49g+zD9O3aQbG7Oux+jIDjNkDrVqTqI7noYnbhZIzrmdwOr/X
+         AaQw4b+uLnh1fQSRI+lYGyDo/0XaYJcHUIv2t1viUavkQljk33YXdmvEeUYqf4h5/wOU
+         FL8Cetrshzh0XMD4EayAXdH/0W8w6lRyxFU53pvjfYOnIlfL5OZQiKZNIEwbJ+2ntYzT
+         bfYHgor7pM3mYFd+fTmepJCO/XQdvHsC+mI61hPCNrEs54eEIzPPlMsWBeAO4eranioe
+         fBPEVi+U6KyZZTi9Ix1nSIfMMuIiZGphO/D3oh40/EspycOuLYrq6q81l4fLUzZp5NyG
+         tZAg==
+X-Gm-Message-State: AOAM531Fhcjv/xTX7sLAOlqvsXLAQaM9ZqWjvmCdvlNNUKrT+3P1WDgL
+        ZkbVwMcUZHtwFEaHV7MfL4KGrAhClgwi6H3v2VQ=
+X-Google-Smtp-Source: ABdhPJwssd/KJvre4PcrvO5lyeS40W+eJskyKjsQ+YQ0Hp18+PIkagzhdO+SBcFsw7qwgS4oRlTaS9FU9ANM7+jwUvE=
+X-Received: by 2002:a05:6638:24c3:: with SMTP id y3mr12066734jat.10.1627217207160;
+ Sun, 25 Jul 2021 05:46:47 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.0
-Content-Language: en-GB
-To:     git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        avarab@gmail.com, Emily Shaffer <emilyshaffer@google.com>
-From:   Atharva Raykar <raykar.ath@gmail.com>
-Subject: [GSoC] A small survey + My Git Blog, week 10
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1000.git.1626939557.gitgitgadget@gmail.com>
+ <pull.1000.v2.git.1627031043.gitgitgadget@gmail.com> <eafb79bad62f13fc8fd70ba1dce3e8fbab870e52.1627031043.git.gitgitgadget@gmail.com>
+ <xmqqh7glouiw.fsf@gitster.g> <CAOLTT8SggCXkajPG3om+6zhM_K8fyAb2qTBDj40JJa1pszshzg@mail.gmail.com>
+ <xmqqy29vk3sp.fsf@gitster.g>
+In-Reply-To: <xmqqy29vk3sp.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sun, 25 Jul 2021 20:47:16 +0800
+Message-ID: <CAOLTT8Sm=qs0K84C=yJOL7Ct5GUeHYe=ODXiGpwCSx11vgEnwA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/5] [GSOC] ref-filter: add %(raw) atom
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Philip Oakley <philipoakley@iee.email>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B47=E6=9C=8825=E6=97=
+=A5=E5=91=A8=E6=97=A5 =E4=B8=8A=E5=8D=881:41=E5=86=99=E9=81=93=EF=BC=9A
+>
+> ZheNing Hu <adlternative@gmail.com> writes:
+>
+> >> It may make sense to
+> >>
+> >>  * Turn atom_value.s_size field into ssize_t instead of size_t
+> >>
+> >
+> > Will the conversion of size_t and ssize_t break -Wsign-conversion?
+> > Although there is a lot of code in Git that has broken it, but I am not
+> > sure if it is wise to use ssize_t here.
+> >
+> >>  * Rewrite (v->s_size !=3D -1) comparison to (v->s_size < 0)
+> >>
+> >
+> > For size_t, this scheme is wrong.
+> >
+> >>
+> >> Optionally we could introduce #define ATOM_SIZE_UNSPECIFIED (-1) and
+> >> use it to initialize .s_size in ATOM_VALUE_INIT, but if we are just
+> >> going to test "is it negative, then it is not given", then it probably
+> >> is not needed.
+> >>
+> >
+> > It seems that this is the only method left. Although I think
+> > ATOM_SIZE_UNSPECIFIED
+> > is not very useful becasue we already have ATOM_VALUE_INIT.
+>
+> Sorry, but I think you misread what I wrote.
+>
+> These three were not offered as "you can do one of these three, pick
+> one you like" choices.  I meant to say "I think it makes sense to do
+> all these three things, but the last one is optional, doing only the
+> first two may be good enough".  As the second one requires that the
+> first is done, of course, doing only the second one would not make
+> sense.
+>
 
-Week 10 of my Git blog can be found here:
-https://atharvaraykar.me/gitnotes/week10
+OK. I know it now, I will do all of them.
 
-As for the "survey part", jump to the section here:
-https://atharvaraykar.me/gitnotes/week10#the-mailing-list-developer-workflow
+> Also, you seem to have missed the distinction between _INIT and
+> _UNSPECIFIED.  You can initialize something to (1) a reasonable
+> default value, or (2) unusable value that you can detect at runtime
+> and notice that it was not set.  If you called something to
+> FOO_INIT, your readers cannot tell which one it is, but if you call
+> it FOO_UNSPECIFIED, it is clear it is the latter case.
+>
 
-...feel free to reply in this thread.
+Thanks for clarification, I understand the difference between them now.
 
-A preview of the other contents of this post:
+> In many places, we do use ssize_t for "normally this is size, but we
+> can express exception cases (like errors) by storing negative value"
+> in our codebase (grep for it), and I think the member in question is
+> prime candidate for such use.
+>
 
-- Project progress (relevant to mentors)
-- Me trying to find a good MUA to work with Git:
-  (https://atharvaraykar.me/gitnotes/week10#blooper-of-the-week-woe-is-email)
-  [responses to this appreciated as well!]
+Yeah, as abspath.c:137, `ssize_t len` used to distinguish situations
+if an error is
+returned from strbuf_readlink().
 
-Have a great day!
+           ssize_t len;
+           ...
+           len =3D strbuf_readlink(&symlink, resolved->buf,
+                                             st.st_size);
+           if (len < 0) {
+                               if (flags & REALPATH_DIE_ON_ERROR)
+                                       die_errno("Invalid symlink '%s'",
+                                                 resolved->buf);
+                               else
+                                       goto error_out;
+                       }
+           ...
 
--- 
-Atharva Raykar
-ಅಥರ್ವ ರಾಯ್ಕರ್
-अथर्व रायकर
+Or just read() and write(), they return is ssize_t too,
+which can return -1 and set errno when an exception occurs.
+
+Thanks.
+--
+ZheNing Hu
