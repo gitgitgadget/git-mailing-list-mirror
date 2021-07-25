@@ -2,64 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	MAILING_LIST_MULTI,SPF_HELO_NONE autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69DF4C4338F
-	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 08:28:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37A72C4338F
+	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 08:30:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D01360E78
-	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 08:28:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A95D60F42
+	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 08:30:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230127AbhGYHra (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Jul 2021 03:47:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53034 "EHLO
+        id S230147AbhGYHtf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Jul 2021 03:49:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229853AbhGYHra (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Jul 2021 03:47:30 -0400
-Received: from mail-vs1-xe2d.google.com (mail-vs1-xe2d.google.com [IPv6:2607:f8b0:4864:20::e2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB356C061757
-        for <git@vger.kernel.org>; Sun, 25 Jul 2021 01:27:59 -0700 (PDT)
-Received: by mail-vs1-xe2d.google.com with SMTP id p13so3540661vsg.2
-        for <git@vger.kernel.org>; Sun, 25 Jul 2021 01:27:59 -0700 (PDT)
+        with ESMTP id S229853AbhGYHtd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Jul 2021 03:49:33 -0400
+Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7C15C06175F
+        for <git@vger.kernel.org>; Sun, 25 Jul 2021 01:30:03 -0700 (PDT)
+Received: by mail-ua1-x92d.google.com with SMTP id t26so2264158uao.12
+        for <git@vger.kernel.org>; Sun, 25 Jul 2021 01:30:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=PkzN4xUqkEIsZRn4ZbuUqQLptDu/wlgD8kxpp1Hk9e8=;
-        b=Bb7ZUBbpMwjPcL4UvJhvXJ+FGP+or0B2zYPfr03eltpK1GHKyTSPl1tbYgmGiEUujG
-         8kGz4x168og3mrgZe0UPGJ/a55Ffq/CqCNBTg+wXlgbKF7xv69LiX4UeNgL3nvEqb8RB
-         pcux2cpQ1o1EfZeTsi8gJ7Vzc9AayaLwMhlNTozCCPdihLCHVoxQuLMwQMlDXFQJWN/e
-         sjtGQHOKB4XHuyWAZ4BJhNADkO5+ZDQy0yUXacU60k5Ds9zTpP+/WvUF4orgGclGCDvZ
-         YKI4fokr35y92VlodkSzE00Se1n8qR87Cj2IoEdak9KhqauuHa5ozk01aubxVOXWVNdO
-         N1rg==
+         :cc;
+        bh=tUaVNqqAjhh8ZKjedbiLPsUB0JIF8fKoQii3zXpwqkw=;
+        b=sfkJvkXG/8dYp60ON0OPTRz5PFtESJf7e1zrVkBWgduUaTZqJd04YzxsYDls0KU/vH
+         smZlAIJUySRAtTLy5KCGiUuKJE31H7q4Qrk3BsDHAUAQOpcaf8DluhWMxCVczrrXZP3L
+         yGVi875GJegEZBNQzGiy9R2an/Qjxo0ZCk3cT4GhBFbYXM1IpGNcOLpFiKJXFGoW2w6s
+         AJyHvMiAn9P7ib9DG/STaPNP6dgXD7SY0640eIZaozhU3WAwRC77bfd4qUFtH6y5usm5
+         iJCR3sWXsykW4X+ilOjLtMtzQekzW6vXTEUXjGn9CuOPkofb4k4vkeKHRfl3VMkjIhT9
+         Nrzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PkzN4xUqkEIsZRn4ZbuUqQLptDu/wlgD8kxpp1Hk9e8=;
-        b=P6eIPsxh8jFzYqOz5sL6fiC5c19dxA4Cb26W7BUmEZsazWbpgKo2D5hie/4+G4v3EO
-         3aV5zeCYYIenxmC4WSS0wXK9vkN60gQfJsPQGoDd0NbM5oSNn7hpdvhjAbmj2qqYKalU
-         yZ3//ZL1Fv9z1ronRc5THAgF/ZOb9GW1I81ro4cnGSHIH5oTNoMoOrO1w28OyaaUu6az
-         gsi+zwYPt8a9Tclq8lk1CeBKW8aKYN+28z4jWT1dlx4Sxz5gjV9koAVgXPk0MY2o6L6i
-         MsNdsBxRcZWijXSfFbGc6cNCCa3yQzPZUtUDwlQdOdJ1Fo8iilc01BUYMWg/RJ7GOLi6
-         jiPg==
-X-Gm-Message-State: AOAM5315SMoV2nWMOga5XIznX6fsG5kFO4sOIAI9u9AO6UlFSq8gb6iz
-        Bee69JtjvpRyYHAHPkFjqWodCis9NQU6d3tz7Js=
-X-Google-Smtp-Source: ABdhPJzS1jjUS9hnoTVN+v0rwbL5AhmMfkrh6MJPRsAR0ROqBCQd8X5GFkz+9TK3AtRU4VG98aHk0vCk9XVeYsJDwP0=
-X-Received: by 2002:a67:f90c:: with SMTP id t12mr9526719vsq.27.1627201678999;
- Sun, 25 Jul 2021 01:27:58 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=tUaVNqqAjhh8ZKjedbiLPsUB0JIF8fKoQii3zXpwqkw=;
+        b=WRUQhuAp3pji2U96PDdJdsnLkc09nWjQ1kGq6rmaMd+g20Tg9xc4aXAwBI1IoGkUMh
+         5QWrxIBYTrbvDTedIfoavHJydTZTMxv6xL/0QLEAIgGDbM1igQfl+BNn98GPz6Hr+fIe
+         U0y13GBUY2udwzPzqAF4xrz92AZckGLhvDgzEL6c5JOES1zIYUcjWfI3ILoQzz4vI1VY
+         xE5/EcEe1NaF5cxMB9H+kweE+kEi4u4knDbgHMvwvNWdptaMcsAiTJuokXyowvLhLRRF
+         1N92NN19Yqr9XSL6tF6AVVtYNUF9c4Zmga2Gxu9WpUS3Lapd3DveCLdnWCMRZvvObijM
+         26oQ==
+X-Gm-Message-State: AOAM532StrLVTW9N+6hk7nQBwFg6guzv6zSYkomVCAZB++M6RG0LXpSt
+        L7+7ww/OMTt2R3U7nTCWckK66GrnPCK4bceH0F8=
+X-Google-Smtp-Source: ABdhPJzQI/nGXBk4LortXg06SqRiC5r9fSlqohCcofciOP1syrQwSeTlK7rKy4YXLB/9b26xpcZvUOgVbTgOtpzrnnc=
+X-Received: by 2002:ab0:1e81:: with SMTP id o1mr382226uak.86.1627201802848;
+ Sun, 25 Jul 2021 01:30:02 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1000.v2.git.1627031043.gitgitgadget@gmail.com>
- <pull.1000.v3.git.1627136061.gitgitgadget@gmail.com> <ac5d98647dad31ebe165daa7cbf84f2b7e5fbe80.1627136062.git.gitgitgadget@gmail.com>
-In-Reply-To: <ac5d98647dad31ebe165daa7cbf84f2b7e5fbe80.1627136062.git.gitgitgadget@gmail.com>
+ <pull.1000.v3.git.1627136061.gitgitgadget@gmail.com> <2300b0463f2fca76970ae7debcffa505909b8c4d.1627136062.git.gitgitgadget@gmail.com>
+In-Reply-To: <2300b0463f2fca76970ae7debcffa505909b8c4d.1627136062.git.gitgitgadget@gmail.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sun, 25 Jul 2021 01:27:48 -0700
-Message-ID: <CA+P7+xqYMt1TvDY-GO--Aw5n9L7_06e-TExszcsS5oWWtFUxsA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/5] [GSOC] ref-filter: --format=%(raw) re-support --perl
+Date:   Sun, 25 Jul 2021 01:29:52 -0700
+Message-ID: <CA+P7+xpfWA_e3rn2vfWBPixFJop-zomj9_N99n9ufe1MxV-1KA@mail.gmail.com>
+Subject: Re: [PATCH v3 5/5] [GSOC] ref-filter: add %(rest) atom
 To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git mailing list <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -72,7 +72,6 @@ Cc:     Git mailing list <git@vger.kernel.org>,
         Philip Oakley <philipoakley@iee.email>,
         ZheNing Hu <adlternative@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -82,168 +81,204 @@ On Sat, Jul 24, 2021 at 7:14 AM ZheNing Hu via GitGitGadget
 >
 > From: ZheNing Hu <adlternative@gmail.com>
 >
-> Because the perl language can handle binary data correctly,
-> add the function perl_quote_buf_with_len(), which can specify
-> the length of the data and prevent the data from being truncated
-> at '\0' to help `--format=3D"%(raw)"` re-support `--perl`.
+> %(rest) is a atom used for cat-file batch mode, which can split
+> the input lines at the first whitespace boundary, all characters
+> before that whitespace are considered to be the object name;
+> characters after that first run of whitespace (i.e., the "rest"
+> of the line) are output in place of the %(rest) atom.
 >
-> Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> In order to let "cat-file --batch=%(rest)" use the ref-filter
+> interface, add %(rest) atom for ref-filter.
+>
+> Introduce the reject_atom() to reject the atom %(rest) for
+> "git for-each-ref", "git branch", "git tag" and "git verify-tag".
+>
+> Suggected-by: Jacob Keller <jacob.keller@gmail.com>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Hariom Verma <hariom18599@gmail.com>
 > Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 > ---
 
-I presume that we used to support raw with perl before in cat-file? It
-did read a bit weird to see "Re-support" in the title, because the
-previous patch which introduced the raw atom when in ref-filter code
-never supported perl. Still, I think it's fairly clear either way and
-that change wouldn't deserve a reroll on its own.
+Thanks for the improved  commit message here. That helps clarify what
+this atom does and aids in understanding the implementation.
 
-Makes sense. Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
+Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
 
->  Documentation/git-for-each-ref.txt |  4 ++--
->  quote.c                            | 17 +++++++++++++++++
->  quote.h                            |  1 +
->  ref-filter.c                       | 15 +++++++++++----
->  t/t6300-for-each-ref.sh            | 19 +++++++++++++++++--
->  5 files changed, 48 insertions(+), 8 deletions(-)
+>  ref-filter.c             | 25 +++++++++++++++++++++++++
+>  ref-filter.h             |  5 ++++-
+>  t/t3203-branch-output.sh |  4 ++++
+>  t/t6300-for-each-ref.sh  |  4 ++++
+>  t/t7004-tag.sh           |  4 ++++
+>  t/t7030-verify-tag.sh    |  4 ++++
+>  6 files changed, 45 insertions(+), 1 deletion(-)
 >
-> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-e=
-ach-ref.txt
-> index cbb6f87d13f..6da899c6296 100644
-> --- a/Documentation/git-for-each-ref.txt
-> +++ b/Documentation/git-for-each-ref.txt
-> @@ -241,8 +241,8 @@ raw:size::
->         The raw data size of the object.
->
->  Note that `--format=3D%(raw)` can not be used with `--python`, `--shell`=
-, `--tcl`,
-> -`--perl` because such language may not support arbitrary binary data in =
-their
-> -string variable type.
-> +because such language may not support arbitrary binary data in their str=
-ing
-> +variable type.
->
->  The message in a commit or a tag object is `contents`, from which
->  `contents:<part>` can be used to extract various parts out of:
-> diff --git a/quote.c b/quote.c
-> index 8a3a5e39eb1..26719d21d1e 100644
-> --- a/quote.c
-> +++ b/quote.c
-> @@ -471,6 +471,23 @@ void perl_quote_buf(struct strbuf *sb, const char *s=
-rc)
->         strbuf_addch(sb, sq);
->  }
->
-> +void perl_quote_buf_with_len(struct strbuf *sb, const char *src, size_t =
-len)
-> +{
-> +       const char sq =3D '\'';
-> +       const char bq =3D '\\';
-> +       const char *c =3D src;
-> +       const char *end =3D src + len;
-> +
-> +       strbuf_addch(sb, sq);
-> +       while (c !=3D end) {
-> +               if (*c =3D=3D sq || *c =3D=3D bq)
-> +                       strbuf_addch(sb, bq);
-> +               strbuf_addch(sb, *c);
-> +               c++;
-> +       }
-> +       strbuf_addch(sb, sq);
-> +}
-> +
->  void python_quote_buf(struct strbuf *sb, const char *src)
->  {
->         const char sq =3D '\'';
-> diff --git a/quote.h b/quote.h
-> index 768cc6338e2..0fe69e264b0 100644
-> --- a/quote.h
-> +++ b/quote.h
-> @@ -94,6 +94,7 @@ char *quote_path(const char *in, const char *prefix, st=
-ruct strbuf *out, unsigne
->
->  /* quoting as a string literal for other languages */
->  void perl_quote_buf(struct strbuf *sb, const char *src);
-> +void perl_quote_buf_with_len(struct strbuf *sb, const char *src, size_t =
-len);
->  void python_quote_buf(struct strbuf *sb, const char *src);
->  void tcl_quote_buf(struct strbuf *sb, const char *src);
->  void basic_regex_quote_buf(struct strbuf *sb, const char *src);
 > diff --git a/ref-filter.c b/ref-filter.c
-> index 01545618101..597354c941d 100644
+> index 7cef839aaf1..85e9e657fe7 100644
 > --- a/ref-filter.c
 > +++ b/ref-filter.c
-> @@ -746,7 +746,10 @@ static void quote_formatting(struct strbuf *s, const=
- char *str, size_t len, int
->                 sq_quote_buf(s, str);
->                 break;
->         case QUOTE_PERL:
-> -               perl_quote_buf(s, str);
-> +               if (len !=3D -1)
-> +                       perl_quote_buf_with_len(s, str, len);
-> +               else
-> +                       perl_quote_buf(s, str);
->                 break;
->         case QUOTE_PYTHON:
->                 python_quote_buf(s, str);
-> @@ -1010,10 +1013,14 @@ int verify_ref_format(struct ref_format *format)
->                 at =3D parse_ref_filter_atom(format, sp + 2, ep, &err);
+> @@ -157,6 +157,7 @@ enum atom_type {
+>         ATOM_IF,
+>         ATOM_THEN,
+>         ATOM_ELSE,
+> +       ATOM_REST,
+>  };
+>
+>  /*
+> @@ -559,6 +560,15 @@ static int if_atom_parser(struct ref_format *format, struct used_atom *atom,
+>         return 0;
+>  }
+>
+> +static int rest_atom_parser(struct ref_format *format, struct used_atom *atom,
+> +                           const char *arg, struct strbuf *err)
+> +{
+> +       if (arg)
+> +               return strbuf_addf_ret(err, -1, _("%%(rest) does not take arguments"));
+> +       format->use_rest = 1;
+> +       return 0;
+> +}
+> +
+>  static int head_atom_parser(struct ref_format *format, struct used_atom *atom,
+>                             const char *arg, struct strbuf *unused_err)
+>  {
+> @@ -615,6 +625,7 @@ static struct {
+>         [ATOM_IF] = { "if", SOURCE_NONE, FIELD_STR, if_atom_parser },
+>         [ATOM_THEN] = { "then", SOURCE_NONE },
+>         [ATOM_ELSE] = { "else", SOURCE_NONE },
+> +       [ATOM_REST] = { "rest", SOURCE_NONE, FIELD_STR, rest_atom_parser },
+>         /*
+>          * Please update $__git_ref_fieldlist in git-completion.bash
+>          * when you add new atoms
+> @@ -993,6 +1004,11 @@ static const char *find_next(const char *cp)
+>         return NULL;
+>  }
+>
+> +static int reject_atom(enum atom_type atom_type)
+> +{
+> +       return atom_type == ATOM_REST;
+> +}
+> +
+>  /*
+>   * Make sure the format string is well formed, and parse out
+>   * the used atoms.
+> @@ -1013,6 +1029,8 @@ int verify_ref_format(struct ref_format *format)
+>                 at = parse_ref_filter_atom(format, sp + 2, ep, &err);
 >                 if (at < 0)
 >                         die("%s", err.buf);
-> -               if (format->quote_style && used_atom[at].atom_type =3D=3D=
- ATOM_RAW &&
-> -                   used_atom[at].u.raw_data.option =3D=3D RAW_BARE)
-> +
-> +               if ((format->quote_style =3D=3D QUOTE_PYTHON ||
-> +                    format->quote_style =3D=3D QUOTE_SHELL ||
-> +                    format->quote_style =3D=3D QUOTE_TCL) &&
-> +                    used_atom[at].atom_type =3D=3D ATOM_RAW &&
-> +                    used_atom[at].u.raw_data.option =3D=3D RAW_BARE)
->                         die(_("--format=3D%.*s cannot be used with"
-> -                             "--python, --shell, --tcl, --perl"), (int)(=
-ep - sp - 2), sp + 2);
-> +                             "--python, --shell, --tcl"), (int)(ep - sp =
-- 2), sp + 2);
->                 cp =3D ep + 1;
+> +               if (reject_atom(used_atom[at].atom_type))
+> +                       die(_("this command reject atom %%(%.*s)"), (int)(ep - sp - 2), sp + 2);
 >
-
-Right, so now we have to check all of the format quote styles instead
-of just checking that its set to any of them, since we want to
-continue in the case of perl.
-
-Ok.
-
->                 if (skip_prefix(used_atom[at].name, "color:", &color))
+>                 if ((format->quote_style == QUOTE_PYTHON ||
+>                      format->quote_style == QUOTE_SHELL ||
+> @@ -1932,6 +1950,12 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+>                         v->handler = else_atom_handler;
+>                         v->s = xstrdup("");
+>                         continue;
+> +               } else if (atom_type == ATOM_REST) {
+> +                       if (ref->rest)
+> +                               v->s = xstrdup(ref->rest);
+> +                       else
+> +                               v->s = xstrdup("");
+> +                       continue;
+>                 } else
+>                         continue;
+>
+> @@ -2149,6 +2173,7 @@ static struct ref_array_item *new_ref_array_item(const char *refname,
+>
+>         FLEX_ALLOC_STR(ref, refname, refname);
+>         oidcpy(&ref->objectname, oid);
+> +       ref->rest = NULL;
+>
+>         return ref;
+>  }
+> diff --git a/ref-filter.h b/ref-filter.h
+> index 74fb423fc89..c15dee8d6b9 100644
+> --- a/ref-filter.h
+> +++ b/ref-filter.h
+> @@ -38,6 +38,7 @@ struct ref_sorting {
+>
+>  struct ref_array_item {
+>         struct object_id objectname;
+> +       const char *rest;
+>         int flag;
+>         unsigned int kind;
+>         const char *symref;
+> @@ -76,14 +77,16 @@ struct ref_format {
+>          * verify_ref_format() afterwards to finalize.
+>          */
+>         const char *format;
+> +       const char *rest;
+>         int quote_style;
+> +       int use_rest;
+>         int use_color;
+>
+>         /* Internal state to ref-filter */
+>         int need_color_reset_at_eol;
+>  };
+>
+> -#define REF_FORMAT_INIT { NULL, 0, -1 }
+> +#define REF_FORMAT_INIT { .use_color = -1 }
+>
+>  /*  Macros for checking --merged and --no-merged options */
+>  #define _OPT_MERGED_NO_MERGED(option, filter, h) \
+> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+> index 5325b9f67a0..6e94c6db7b5 100755
+> --- a/t/t3203-branch-output.sh
+> +++ b/t/t3203-branch-output.sh
+> @@ -340,6 +340,10 @@ test_expect_success 'git branch --format option' '
+>         test_cmp expect actual
+>  '
+>
+> +test_expect_success 'git branch with --format=%(rest) must fail' '
+> +       test_must_fail git branch --format="%(rest)" >actual
+> +'
+> +
+>  test_expect_success 'worktree colors correct' '
+>         cat >expect <<-EOF &&
+>         * <GREEN>(HEAD detached from fromtag)<RESET>
 > diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index 18554f62d94..3d15d0a5360 100755
+> index 3d15d0a5360..0d2e062f791 100755
 > --- a/t/t6300-for-each-ref.sh
 > +++ b/t/t6300-for-each-ref.sh
-> @@ -915,8 +915,23 @@ test_expect_success '%(raw) with --tcl must fail' '
->         test_must_fail git for-each-ref --format=3D"%(raw)" --tcl
+> @@ -1211,6 +1211,10 @@ test_expect_success 'basic atom: head contents:trailers' '
+>         test_cmp expect actual.clean
 >  '
 >
-> -test_expect_success '%(raw) with --perl must fail' '
-> -       test_must_fail git for-each-ref --format=3D"%(raw)" --perl
-> +test_expect_success '%(raw) with --perl' '
-> +       git for-each-ref --format=3D"\$name=3D %(raw);
-> +print \"\$name\"" refs/myblobs/blob1 --perl | perl >actual &&
-> +       cmp blob1 actual &&
-> +       git for-each-ref --format=3D"\$name=3D %(raw);
-> +print \"\$name\"" refs/myblobs/blob3 --perl | perl >actual &&
-> +       cmp blob3 actual &&
-> +       git for-each-ref --format=3D"\$name=3D %(raw);
-> +print \"\$name\"" refs/myblobs/blob8 --perl | perl >actual &&
-> +       cmp blob8 actual &&
-> +       git for-each-ref --format=3D"\$name=3D %(raw);
-> +print \"\$name\"" refs/myblobs/first --perl | perl >actual &&
-> +       cmp one actual &&
-> +       git cat-file tree refs/mytrees/first > expected &&
-> +       git for-each-ref --format=3D"\$name=3D %(raw);
-> +print \"\$name\"" refs/mytrees/first --perl | perl >actual &&
-> +       cmp expected actual
+> +test_expect_success 'basic atom: rest must fail' '
+> +       test_must_fail git for-each-ref --format="%(rest)" refs/heads/main
+> +'
+> +
+>  test_expect_success 'trailer parsing not fooled by --- line' '
+>         git commit --allow-empty -F - <<-\EOF &&
+>         this is the subject
+> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+> index 2f72c5c6883..082be85dffc 100755
+> --- a/t/t7004-tag.sh
+> +++ b/t/t7004-tag.sh
+> @@ -1998,6 +1998,10 @@ test_expect_success '--format should list tags as per format given' '
+>         test_cmp expect actual
 >  '
 >
->  test_expect_success '%(raw) with --shell must fail' '
+> +test_expect_success 'git tag -l with --format="%(rest)" must fail' '
+> +       test_must_fail git tag -l --format="%(rest)" "v1*"
+> +'
+> +
+>  test_expect_success "set up color tests" '
+>         echo "<RED>v1.0<RESET>" >expect.color &&
+>         echo "v1.0" >expect.bare &&
+> diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
+> index 3cefde9602b..10faa645157 100755
+> --- a/t/t7030-verify-tag.sh
+> +++ b/t/t7030-verify-tag.sh
+> @@ -194,6 +194,10 @@ test_expect_success GPG 'verifying tag with --format' '
+>         test_cmp expect actual
+>  '
+>
+> +test_expect_success GPG 'verifying tag with --format="%(rest)" must fail' '
+> +       test_must_fail git verify-tag --format="%(rest)" "fourth-signed"
+> +'
+> +
+>  test_expect_success GPG 'verifying a forged tag with --format should fail silently' '
+>         test_must_fail git verify-tag --format="tagname : %(tag)" $(cat forged1.tag) >actual-forged &&
+>         test_must_be_empty actual-forged
 > --
 > gitgitgadget
->
