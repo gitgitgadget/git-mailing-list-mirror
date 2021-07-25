@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A3FEC4338F
-	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 13:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99A32C432BE
+	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 13:09:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5FE0E60E78
-	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 13:09:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E2D960E78
+	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 13:09:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230471AbhGYM24 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Jul 2021 08:28:56 -0400
-Received: from mx.kolabnow.com ([95.128.36.40]:26132 "EHLO mx.kolabnow.com"
+        id S230472AbhGYM27 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Jul 2021 08:28:59 -0400
+Received: from mx.kolabnow.com ([95.128.36.40]:38618 "EHLO mx.kolabnow.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230192AbhGYM2W (ORCPT <rfc822;git@vger.kernel.org>);
+        id S230244AbhGYM2W (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 25 Jul 2021 08:28:22 -0400
 Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out001.mykolab.com (Postfix) with ESMTP id 63A71AB0;
-        Sun, 25 Jul 2021 15:08:37 +0200 (CEST)
+        by ext-mx-out003.mykolab.com (Postfix) with ESMTP id A58E140BCA;
+        Sun, 25 Jul 2021 15:08:40 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
         content-transfer-encoding:mime-version:references:in-reply-to
         :message-id:date:date:subject:subject:from:from:received
-        :received:received; s=dkim20160331; t=1627218516; x=1629032917;
-         bh=VqjrI+/TJRXkejnTF3C7M+Xu7sNgcudEVHyrtpY9rDc=; b=T4+z6N16oKZl
-        WKNcmu3IiwlHg/E0zNGR8X8aw4/p3x2byRt3gXQJO/8La0RSLx4c2OrJX9M7F8ci
-        Tj9kFuvCiKJnWwBobpsyflL1qPAPYMmZiYYODypdsLXFRmUJuzCg6e+r2tYSEteD
-        ZR6MRYglQ6Fn3RD/7yBZ5zRojKUwBifbPqihZQuO423eWSA4Ubydt8DX8ZN9PY5L
-        CeBznW7TKSAZlUzq2DH2gnmhCgPN3lpREsmPNBRL3NuCKXMDBYjJZDZhkCnv/xpt
-        Hfb0lWVJ4crJ8NgLBWQGtqJAGMtga6LOOTW/s147ICV5QfNzGC5/lPULJketj4nF
-        dRUcsbHlPXZ0opAtPu2CSF5NjnLNMTJEGZ78RyYshBiNxid99PF6c2jFkaapSWvr
-        spmVTz29lmIqTDP3EQKkOTDmlo6S5qt03X7kkLnBtmCoTCCGsEzKQztEerxzD4GD
-        V2Faf99IFk5mBkOpKMXWBzpcqg32pSPMmUtfBpClxNI3MY+hHjKC6vI8FYJlYgCr
-        bvdS9gTKv39E9cfQxwdacL7P0JXwTlbkEQMi5TH1hnTu930bzqxtTKNqieF+uxZS
-        uDLHz37DgPyIjSqnSy/FqBSFmWCTM7qXmYnWMD5PRpfPqoSNGSnLi93sbhxQPluM
-        1+F0FOrliQdLP/H09uSVPXWM7tGUbNU=
+        :received:received; s=dkim20160331; t=1627218520; x=1629032921;
+         bh=8/FKFnvqTqw73g96MjnuKPOwSdBPD8pGOoyeNu6u2+Q=; b=vy+5Zv926mRJ
+        XdOC6QPlcWlDTKKBGCenifg5dR+lEw6Zxa8cAwyjnJ63ku0awNJm7jcEh+/RBX32
+        z27MGT8UzrjrD6tkYnSyld0IsU0FWW7ce/rqtOmXBtErvEtAJ6RQ7bp5zo/u6Nfs
+        CHgNlcnZvtnvTn/KoiaUdCn/nOXqEW4ZXVp+LgYG9Bc5pJ9oTQRcljQj/4slEP4x
+        2yFVt6eI8LT1bXTP6sQBUBvue+gNXNieWeM0nbdvLYfwH29/i8AQnbmUJQDRgIyy
+        VwpyTD3RHlN2vPFsealnqvExL3Bv30yq+dl9jUcLQLJsr1E3BTEaHwJ49+YqiTyv
+        QiQBAcza+euHULamuKPgPlBfdo5fnChszFWtcmqXH2l79j9f/cGPOVhzg7BQmnVv
+        1uJH6luikLRmYoV3S+mgeSi9DeIb1dYeV6IJM9LisdwB85g4oqCIZ7FbT70Z22Cm
+        9dv9qyWmxAmzR1WOb2yZz1p3Rwv5BSfzYvYZXyJpjWovXcswQStvHyMK1t3hORFZ
+        wm4dHptASY5losZphkXj9NY0NVnhoOOH05bXup3OHAtgcPxvU+4yHyXkQsD4mBLU
+        7u5qdiaYcaiFxAz1L46ZOwsgvZX/NWTdRckubT/uPgA7/eEr4aivjTJkQ0AtUtc3
+        Pocrdy95xPcfnmG+TKM10R+aRp0r1MY=
 X-Virus-Scanned: amavisd-new at mykolab.com
 Received: from mx.kolabnow.com ([127.0.0.1])
-        by localhost (ext-mx-out001.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id vXNtkQBMku0M; Sun, 25 Jul 2021 15:08:36 +0200 (CEST)
+        by localhost (ext-mx-out003.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id YpEpx9n8wkwB; Sun, 25 Jul 2021 15:08:40 +0200 (CEST)
 Received: from int-mx001.mykolab.com (unknown [10.9.13.1])
-        by ext-mx-out001.mykolab.com (Postfix) with ESMTPS id B4C3C702;
-        Sun, 25 Jul 2021 15:08:36 +0200 (CEST)
+        by ext-mx-out003.mykolab.com (Postfix) with ESMTPS id 074C0404BD;
+        Sun, 25 Jul 2021 15:08:39 +0200 (CEST)
 Received: from ext-subm003.mykolab.com (unknown [10.9.6.3])
-        by int-mx001.mykolab.com (Postfix) with ESMTPS id 44CB917C;
-        Sun, 25 Jul 2021 15:08:35 +0200 (CEST)
+        by int-mx001.mykolab.com (Postfix) with ESMTPS id D089D17C;
+        Sun, 25 Jul 2021 15:08:37 +0200 (CEST)
 From:   andrzej@ahunt.org
 To:     git@vger.kernel.org
 Cc:     andrzej@ahunt.org, phillip.wood123@gmail.com, newren@gmail.com
-Subject: [PATCH v2 01/12] fmt-merge-msg: free newly allocated temporary strings when done
-Date:   Sun, 25 Jul 2021 15:08:19 +0200
-Message-Id: <20210725130830.5145-2-andrzej@ahunt.org>
+Subject: [PATCH v2 02/12] environment: move strbuf into block to plug leak
+Date:   Sun, 25 Jul 2021 15:08:20 +0200
+Message-Id: <20210725130830.5145-3-andrzej@ahunt.org>
 In-Reply-To: <20210725130830.5145-1-andrzej@ahunt.org>
 References: <20210620151204.19260-1-andrzej@ahunt.org>
  <20210725130830.5145-1-andrzej@ahunt.org>
@@ -65,68 +65,69 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-origin starts off pointing to somewhere within line, which is owned by
-the caller. Later we might allocate a new string using xmemdupz() or
-xstrfmt(). To avoid leaking these new strings, we introduce a to_free
-pointer - which allows us to safely free the newly allocated string when
-we're done (we cannot just free origin directly as it might still be
-pointing to line).
+realpath is only populated if we execute the git_work_tree_initialized
+block. However that block also causes us to return early, meaning we
+never actually release the strbuf in the case where we populated it.
+Therefore we move all strbuf related code into the block to guarantee
+that we can't leak it.
 
-LSAN output from t0090:
+LSAN output from t0095:
 
-Direct leak of 8 byte(s) in 1 object(s) allocated from:
-    #0 0x49a82d in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
-    #1 0xa71f49 in do_xmalloc wrapper.c:41:8
-    #2 0xa720b0 in do_xmallocz wrapper.c:75:8
-    #3 0xa720b0 in xmallocz wrapper.c:83:9
-    #4 0xa720b0 in xmemdupz wrapper.c:99:16
-    #5 0x8092ba in handle_line fmt-merge-msg.c:187:23
-    #6 0x8092ba in fmt_merge_msg fmt-merge-msg.c:666:7
-    #7 0x5ce2e6 in prepare_merge_message builtin/merge.c:1119:2
-    #8 0x5ce2e6 in collect_parents builtin/merge.c:1215:3
-    #9 0x5c9c1e in cmd_merge builtin/merge.c:1454:16
-    #10 0x4ce83e in run_builtin git.c:475:11
-    #11 0x4ccafe in handle_builtin git.c:729:3
-    #12 0x4cb01c in run_argv git.c:818:4
-    #13 0x4cb01c in cmd_main git.c:949:19
-    #14 0x6b3fad in main common-main.c:52:11
-    #15 0x7fb929620349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+Direct leak of 129 byte(s) in 1 object(s) allocated from:
+    #0 0x49a9b9 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
+    #1 0x78f585 in xrealloc wrapper.c:126:8
+    #2 0x713ff4 in strbuf_grow strbuf.c:98:2
+    #3 0x713ff4 in strbuf_getcwd strbuf.c:597:3
+    #4 0x4f0c18 in strbuf_realpath_1 abspath.c:99:7
+    #5 0x5ae4a4 in set_git_work_tree environment.c:259:3
+    #6 0x6fdd8a in setup_discovered_git_dir setup.c:931:2
+    #7 0x6fdd8a in setup_git_directory_gently setup.c:1235:12
+    #8 0x4cb50d in get_bloom_filter_for_commit t/helper/test-bloom.c:41:2
+    #9 0x4cb50d in cmd__bloom t/helper/test-bloom.c:95:3
+    #10 0x4caa1f in cmd_main t/helper/test-tool.c:124:11
+    #11 0x4caded in main common-main.c:52:11
+    #12 0x7f0869f02349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
-SUMMARY: AddressSanitizer: 8 byte(s) leaked in 1 allocation(s).
+SUMMARY: AddressSanitizer: 129 byte(s) leaked in 1 allocation(s).
+
+It looks like this leak has existed since realpath was first added to
+set_git_work_tree() in:
+  3d7747e318 (real_path: remove unsafe API, 2020-03-10)
 
 Signed-off-by: Andrzej Hunt <andrzej@ahunt.org>
 ---
- fmt-merge-msg.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ environment.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
-index 0f66818e0f..b969dc6ebb 100644
---- a/fmt-merge-msg.c
-+++ b/fmt-merge-msg.c
-@@ -108,6 +108,7 @@ static int handle_line(char *line, struct merge_parents *merge_parents)
- 	struct origin_data *origin_data;
- 	char *src;
- 	const char *origin, *tag_name;
-+	char *to_free = NULL;
- 	struct src_data *src_data;
- 	struct string_list_item *item;
- 	int pulling_head = 0;
-@@ -183,12 +184,13 @@ static int handle_line(char *line, struct merge_parents *merge_parents)
- 	if (!strcmp(".", src) || !strcmp(src, origin)) {
- 		int len = strlen(origin);
- 		if (origin[0] == '\'' && origin[len - 1] == '\'')
--			origin = xmemdupz(origin + 1, len - 2);
-+			origin = to_free = xmemdupz(origin + 1, len - 2);
- 	} else
--		origin = xstrfmt("%s of %s", origin, src);
-+		origin = to_free = xstrfmt("%s of %s", origin, src);
- 	if (strcmp(".", src))
- 		origin_data->is_local_branch = 0;
- 	string_list_append(&origins, origin)->util = origin_data;
-+	free(to_free);
- 	return 0;
+diff --git a/environment.c b/environment.c
+index 2f27008424..d6b22ede7e 100644
+--- a/environment.c
++++ b/environment.c
+@@ -253,21 +253,20 @@ static int git_work_tree_initialized;
+  */
+ void set_git_work_tree(const char *new_work_tree)
+ {
+-	struct strbuf realpath = STRBUF_INIT;
+-
+ 	if (git_work_tree_initialized) {
++		struct strbuf realpath = STRBUF_INIT;
++
+ 		strbuf_realpath(&realpath, new_work_tree, 1);
+ 		new_work_tree = realpath.buf;
+ 		if (strcmp(new_work_tree, the_repository->worktree))
+ 			die("internal error: work tree has already been set\n"
+ 			    "Current worktree: %s\nNew worktree: %s",
+ 			    the_repository->worktree, new_work_tree);
++		strbuf_release(&realpath);
+ 		return;
+ 	}
+ 	git_work_tree_initialized = 1;
+ 	repo_set_worktree(the_repository, new_work_tree);
+-
+-	strbuf_release(&realpath);
  }
  
+ const char *get_git_work_tree(void)
 -- 
 2.26.2
 
