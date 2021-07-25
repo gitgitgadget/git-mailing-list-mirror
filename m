@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 566A9C4338F
-	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 13:09:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4469C4338F
+	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 13:09:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 33CD760F11
-	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 13:09:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90CB460E78
+	for <git@archiver.kernel.org>; Sun, 25 Jul 2021 13:09:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230260AbhGYM3O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Jul 2021 08:29:14 -0400
-Received: from mx.kolabnow.com ([95.128.36.40]:26156 "EHLO mx.kolabnow.com"
+        id S230515AbhGYM3S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Jul 2021 08:29:18 -0400
+Received: from mx.kolabnow.com ([95.128.36.40]:38630 "EHLO mx.kolabnow.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230393AbhGYM24 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S230407AbhGYM24 (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 25 Jul 2021 08:28:56 -0400
 Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out001.mykolab.com (Postfix) with ESMTP id 6B96312AF;
-        Sun, 25 Jul 2021 15:08:51 +0200 (CEST)
+        by ext-mx-out003.mykolab.com (Postfix) with ESMTP id 2736E40DA3;
+        Sun, 25 Jul 2021 15:08:47 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
         content-transfer-encoding:mime-version:references:in-reply-to
         :message-id:date:date:subject:subject:from:from:received
-        :received:received; s=dkim20160331; t=1627218531; x=1629032932;
-         bh=A4jfMVoN5EZDxkwMeNoVN0kq2ZhI2EM9h6L6F87MdK0=; b=o4GarRYzNCx0
-        tEG0Iw9M7uQXLuvGx1cgGPZZfpcD+1SlkLXojdhM6M9DkLth7bHbHTv5RDQSwgLc
-        0GrTYjbEuF/d1ZJonzKD5X2VRDemoZ7toTNPt6KvFqbCUDVunUSxsA2DuXjP8MlJ
-        EhRnp13duR8iRqqqn+Cwu+QL/v4BwBHbApNEEWeVe/FBuvM0Y4PS3P9nFcz0pFAn
-        HSXr5rIK7MK5TCnO32JeQqpZICeON7tVxi0ES2lYN3E0Cjgd69e9LgiTKRWfHJdZ
-        ECgxfxfrwAs0gG7XHgaAQfwblXQI5haWLbNI779NaM7ivSRZvZlt8UFfLcboUuWT
-        2YNNYya+YnwEc7LXRN0tjrWHep857UMFTm+Jzj+fI1jqT18f0Pl+GcE0C4Cm0Y2/
-        VaW4knmF7P8CHfEVCFMXYKdcvmIcGnYKHi/e3gk0rac9DyV67W5ik1nyfRyT6fJY
-        G2KM3G4oBvV4sHVbYbjS62CW0kJ74TTIqyrd37waG7KNWRNRFlE577P1gBkY/14e
-        /OMKSlOZIU6xq/VQlBNR/dgDBOhWFxyTwksi0AFKcSx+1I9UtdqqLIHxnKYEaELz
-        d99XZfwVwvtTRljfweJo5cZQQHUJmMFsBIGjyKQwDBijOOCvmicAKuk5z+ZoxLVp
-        ybP+iqijC+gm/IYh5yWPKdq6ySl90R8=
+        :received:received; s=dkim20160331; t=1627218526; x=1629032927;
+         bh=GNeahixVkafQRAY3BFeO9RDRUhm3PxsrtB3d0UN4CkQ=; b=ZJqy3ZN6rhcs
+        N2lRjfl0QkwIYC0QBuppDwKya+Xn/bvWoh3r+KWhZyHNT51nw+OdkUI7DPZa8drk
+        IXcaDNPawZvs6vNTd1KdCS8XSu6Jbo7JFlSWqChavK4onadS0oWqXaAverrMLkui
+        tWLO3S7tvvv4doD1d9pw9VuNhC6Qyfryyo7c25bf2hRQTelvHMAvzxoC14BrLB1t
+        FMyF0g2LE8KAqrK9VAaGXphMlqpfmCKT6Ya4Btc+iYfexrPvy7/nPmGSOOFxFbHa
+        W89IQoNYmuUjvmteNtRXXBqrrUtiM5/3lHWR2NNhKJaxhGCKwaUMzKCDQnxPGIue
+        YpRFZ4fPxRJHbHwrdj1ZTC/xfxieskzCyl8BvLXXAWoGcErAWNH4P3F2M/HArlU7
+        0caotgN94ok7LBs5FPjigakdHo7LqRr4ErpdQA5Gs/zPt91F0dpTwhfxSxme8tBU
+        zsP43jPEo4OeXTZJUPrbMUa6ZX84cAshoX+rmLCLiq2hUsrZRp+6v/Z2v8+NyvG3
+        nWSbfouD8xXXe26lhEsCYqDNon8yZpDqTPFvPUUmJ+YRMotwuIDDC0PyQi5KJO7D
+        fgRq0Gfh5cmWfKq8qSffAZRsV1KNrOzpvxJ/HkTU75nPDuzUvONPtpKZj4/G5YM7
+        wMT+5OzinkYXgfq5liiEYbC1TIFNrkg=
 X-Virus-Scanned: amavisd-new at mykolab.com
 Received: from mx.kolabnow.com ([127.0.0.1])
-        by localhost (ext-mx-out001.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id OuZiXe8XszjL; Sun, 25 Jul 2021 15:08:51 +0200 (CEST)
-Received: from int-mx003.mykolab.com (unknown [10.9.13.3])
-        by ext-mx-out001.mykolab.com (Postfix) with ESMTPS id D30B5702;
-        Sun, 25 Jul 2021 15:08:50 +0200 (CEST)
+        by localhost (ext-mx-out003.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id b5KcehDG_CDK; Sun, 25 Jul 2021 15:08:46 +0200 (CEST)
+Received: from int-mx001.mykolab.com (unknown [10.9.13.1])
+        by ext-mx-out003.mykolab.com (Postfix) with ESMTPS id 948DD404BD;
+        Sun, 25 Jul 2021 15:08:46 +0200 (CEST)
 Received: from ext-subm003.mykolab.com (unknown [10.9.6.3])
-        by int-mx003.mykolab.com (Postfix) with ESMTPS id 4160A3B2A;
-        Sun, 25 Jul 2021 15:08:49 +0200 (CEST)
+        by int-mx001.mykolab.com (Postfix) with ESMTPS id 17A3417C;
+        Sun, 25 Jul 2021 15:08:45 +0200 (CEST)
 From:   andrzej@ahunt.org
 To:     git@vger.kernel.org
 Cc:     andrzej@ahunt.org, phillip.wood123@gmail.com, newren@gmail.com
-Subject: [PATCH v2 07/12] read-cache: call diff_setup_done to avoid leak
-Date:   Sun, 25 Jul 2021 15:08:25 +0200
-Message-Id: <20210725130830.5145-8-andrzej@ahunt.org>
+Subject: [PATCH v2 05/12] diffcore-rename: move old_dir/new_dir definition to plug leak
+Date:   Sun, 25 Jul 2021 15:08:23 +0200
+Message-Id: <20210725130830.5145-6-andrzej@ahunt.org>
 In-Reply-To: <20210725130830.5145-1-andrzej@ahunt.org>
 References: <20210620151204.19260-1-andrzej@ahunt.org>
  <20210725130830.5145-1-andrzej@ahunt.org>
@@ -65,50 +65,90 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-repo_diff_setup() calls through to diff.c's static prep_parse_options(),
-which in  turn allocates a new array into diff_opts.parseopts.
-diff_setup_done() is responsible for freeing that array, and has the
-benefit of verifying diff_opts too - hence we add a call to
-diff_setup_done() to avoid leaking parseopts.
+old_dir/new_dir are free()'d at the end of update_dir_rename_counts,
+however if we return early we'll never free those strings. Therefore
+we should move all new allocations after the possible early return,
+avoiding a leak.
 
-Output from the leak as found while running t0090 with LSAN:
+This seems like a fairly recent leak, that started happening since the
+early-return was added in:
+  1ad69eb0dc (diffcore-rename: compute dir_rename_counts in stages, 2021-02-27)
 
-Direct leak of 7120 byte(s) in 1 object(s) allocated from:
-    #0 0x49a82d in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
-    #1 0xa8bf89 in do_xmalloc wrapper.c:41:8
-    #2 0x7a7bae in prep_parse_options diff.c:5636:2
-    #3 0x7a7bae in repo_diff_setup diff.c:4611:2
-    #4 0x93716c in repo_index_has_changes read-cache.c:2518:3
-    #5 0x872233 in unclean merge-ort-wrappers.c:12:14
-    #6 0x872233 in merge_ort_recursive merge-ort-wrappers.c:53:6
-    #7 0x5d5b11 in try_merge_strategy builtin/merge.c:752:12
-    #8 0x5d0b6b in cmd_merge builtin/merge.c:1666:9
-    #9 0x4ce83e in run_builtin git.c:475:11
-    #10 0x4ccafe in handle_builtin git.c:729:3
-    #11 0x4cb01c in run_argv git.c:818:4
-    #12 0x4cb01c in cmd_main git.c:949:19
-    #13 0x6bdc2d in main common-main.c:52:11
-    #14 0x7f551eb51349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+LSAN output from t0022:
 
-SUMMARY: AddressSanitizer: 7120 byte(s) leaked in 1 allocation(s)
+Direct leak of 7 byte(s) in 1 object(s) allocated from:
+    #0 0x486804 in strdup ../projects/compiler-rt/lib/asan/asan_interceptors.cpp:452:3
+    #1 0xa71e48 in xstrdup wrapper.c:29:14
+    #2 0x7db9c7 in update_dir_rename_counts diffcore-rename.c:464:12
+    #3 0x7db6ae in find_renames diffcore-rename.c:1062:3
+    #4 0x7d76c3 in diffcore_rename_extended diffcore-rename.c:1472:18
+    #5 0x7b4cfc in diffcore_std diff.c:6705:4
+    #6 0x855e46 in log_tree_diff_flush log-tree.c:846:2
+    #7 0x856574 in log_tree_diff log-tree.c:955:3
+    #8 0x856574 in log_tree_commit log-tree.c:986:10
+    #9 0x9a9c67 in print_commit_summary sequencer.c:1329:7
+    #10 0x52e623 in cmd_commit builtin/commit.c:1862:3
+    #11 0x4ce83e in run_builtin git.c:475:11
+    #12 0x4ccafe in handle_builtin git.c:729:3
+    #13 0x4cb01c in run_argv git.c:818:4
+    #14 0x4cb01c in cmd_main git.c:949:19
+    #15 0x6b3f3d in main common-main.c:52:11
+    #16 0x7fe397c7a349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+Direct leak of 7 byte(s) in 1 object(s) allocated from:
+    #0 0x486804 in strdup ../projects/compiler-rt/lib/asan/asan_interceptors.cpp:452:3
+    #1 0xa71e48 in xstrdup wrapper.c:29:14
+    #2 0x7db9bc in update_dir_rename_counts diffcore-rename.c:463:12
+    #3 0x7db6ae in find_renames diffcore-rename.c:1062:3
+    #4 0x7d76c3 in diffcore_rename_extended diffcore-rename.c:1472:18
+    #5 0x7b4cfc in diffcore_std diff.c:6705:4
+    #6 0x855e46 in log_tree_diff_flush log-tree.c:846:2
+    #7 0x856574 in log_tree_diff log-tree.c:955:3
+    #8 0x856574 in log_tree_commit log-tree.c:986:10
+    #9 0x9a9c67 in print_commit_summary sequencer.c:1329:7
+    #10 0x52e623 in cmd_commit builtin/commit.c:1862:3
+    #11 0x4ce83e in run_builtin git.c:475:11
+    #12 0x4ccafe in handle_builtin git.c:729:3
+    #13 0x4cb01c in run_argv git.c:818:4
+    #14 0x4cb01c in cmd_main git.c:949:19
+    #15 0x6b3f3d in main common-main.c:52:11
+    #16 0x7fe397c7a349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+SUMMARY: AddressSanitizer: 14 byte(s) leaked in 2 allocation(s).
 
 Signed-off-by: Andrzej Hunt <andrzej@ahunt.org>
 ---
- read-cache.c | 1 +
- 1 file changed, 1 insertion(+)
+ diffcore-rename.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index 46ccd66f34..83d1817ad0 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2505,6 +2505,7 @@ int repo_index_has_changes(struct repository *repo,
- 		opt.flags.exit_with_status = 1;
- 		if (!sb)
- 			opt.flags.quick = 1;
-+		diff_setup_done(&opt);
- 		do_diff_cache(&cmp, &opt);
- 		diffcore_std(&opt);
- 		for (i = 0; sb && i < diff_queued_diff.nr; i++) {
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 2618bb07c1..c95857b51f 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -448,9 +448,9 @@ static void update_dir_rename_counts(struct dir_rename_info *info,
+ 				     const char *oldname,
+ 				     const char *newname)
+ {
+-	char *old_dir = xstrdup(oldname);
+-	char *new_dir = xstrdup(newname);
+-	char new_dir_first_char = new_dir[0];
++	char *old_dir;
++	char *new_dir;
++	const char new_dir_first_char = newname[0];
+ 	int first_time_in_loop = 1;
+ 
+ 	if (!info->setup)
+@@ -475,6 +475,10 @@ static void update_dir_rename_counts(struct dir_rename_info *info,
+ 		 */
+ 		return;
+ 
++
++	old_dir = xstrdup(oldname);
++	new_dir = xstrdup(newname);
++
+ 	while (1) {
+ 		int drd_flag = NOT_RELEVANT;
+ 
 -- 
 2.26.2
 
