@@ -7,128 +7,86 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16AE4C4338F
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 05:41:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0AFBC4338F
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 08:01:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E168E604DC
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 05:41:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F51160F0F
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 08:01:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231263AbhGZFAc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 01:00:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49374 "EHLO
+        id S232807AbhGZHVH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 03:21:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229654AbhGZFAc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jul 2021 01:00:32 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64639C061757
-        for <git@vger.kernel.org>; Sun, 25 Jul 2021 22:41:01 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id ga41so14500836ejc.10
-        for <git@vger.kernel.org>; Sun, 25 Jul 2021 22:41:01 -0700 (PDT)
+        with ESMTP id S232779AbhGZHVG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jul 2021 03:21:06 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F422C061757
+        for <git@vger.kernel.org>; Mon, 26 Jul 2021 01:01:34 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id gt31so14948348ejc.12
+        for <git@vger.kernel.org>; Mon, 26 Jul 2021 01:01:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=u576BD0UHiCj95fG4EX/26cw/XRZM/oruh8nHyZjy0Y=;
-        b=rubDD84Wi/o/SzN1k7UY9Sdm6BuPIA1DgHeW7b3xWw/kfxhwX/A6QO6J6x/SVISAgN
-         2Cb+1tKOLkryzpjvU8CByRQKNHfmjT0szKSwBGvduxx2otk1alForYizYnJrscYIDDTj
-         N6du00yFQWY32xLF1bgIB+CNnpRJawOTxEAGG7XhfEa4895dNG/D64FWODZFTP7KupLK
-         q0wYXr2xgJq1rSAFjENEj0V9zOqzypcBQ4rsgP9c+MSkBwQsjx8R9dkomKjys62Bjg0h
-         5nNxgqTo/YfgUKrtKpgMVGDK9w1LkxXLiGYALnwXwzzxzAECARRYWBl5mqzr2S6XP38c
-         Qh3g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SpvNkWAxLnBPgcpBYANVqGwVt9ujb0r0pk4fxRS6KY8=;
+        b=egOInLwbBg4IsEmVYV8sw/YUwAaaedB4rM3Uj52AFZe/6Hll1wt9zMCjEElBUP5tNm
+         G1WybJb08dNtFfZZgd2Fl2tgcTM3UJUTj2f05AfJRgSUnKVv5gu0eE6IeO9pvPaNCDRX
+         pV0CJJHyDn+loLv9tHC+jCbTh/ToG1LChxABSIbJrbCINRN96+GwhUHPprFlplaflpKz
+         GtgtpfzyoupBvFhzB1qg1yQ0pCLF3CLS7KkYzaj7w+HjqOs0UfakNYZ9/Xs3hHH0XMJq
+         0WNIJI7yM9AVD+9Y0NTG+34TDJeKlQTm5UBoH/rC5NQbx07ibyxZlggsnxokAU+FhzY1
+         OQjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=u576BD0UHiCj95fG4EX/26cw/XRZM/oruh8nHyZjy0Y=;
-        b=V+VM9tTYEyQTuJWAPnw/s8MnE+NhJu03zO6RdO4NUOTbBatcXsJxiWgf9+efoa1Dmi
-         gZv34174mlVojzQ9dxfpWnDqaORUWiOLup8k1x+BZQEJ2YKJ9o2sCX6nfU2cZMnV7K39
-         OXQu8DmUjRXzJTqGc+GTzc+AcWBe2NVDwK91LcGHq/xW/vvpImcWAfD10yLKAzx4umXT
-         YJT8ZkZ0/8F0t3xOQES5XURTya3jDG/0QfUKLMImtl8ViWxqMBG/h2xeuucy9t7NoY3H
-         qfn3gizGfcoOrEg7/YtpLyOuqILjSFpWCbagNMzwxaHS7FTIjy2gTv9UJ38IRrRQ+cZc
-         5D9A==
-X-Gm-Message-State: AOAM533Yfgud2QvMPAX5seD6+dq94t5pMvGGLRTuzscnV8Gf83Bs/CKs
-        CZswZJFPCCQDtHyARC8vjFs=
-X-Google-Smtp-Source: ABdhPJyqQmbRC9+9eQuhcQh9n3j3emQXIh3ntwfZGmMP1cz3cYuXSrt+SgV1u4L/rQpj5gzIpeXrlw==
-X-Received: by 2002:a17:906:2c19:: with SMTP id e25mr16136419ejh.477.1627278059253;
-        Sun, 25 Jul 2021 22:40:59 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id q9sm13823448ejf.70.2021.07.25.22.40.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Jul 2021 22:40:58 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys <hanwen@google.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 06/12] refs API: pass the "lock OID" to reflog "prepare"
-Date:   Mon, 26 Jul 2021 07:39:47 +0200
-References: <cover-00.11-00000000000-20210716T140631Z-avarab@gmail.com>
- <cover-00.12-00000000000-20210720T102051Z-avarab@gmail.com>
- <patch-06.12-295594fe8ae-20210720T102051Z-avarab@gmail.com>
- <xmqq35s7efb3.fsf@gitster.g> <xmqqy29zd0dv.fsf@gitster.g>
- <CAFQ2z_PuNJ_KtS_O9R2s0jdGbNNKnKdS3=_-nEu6367pteCxwA@mail.gmail.com>
- <87lf5wstlv.fsf@evledraar.gmail.com> <xmqqzguclpr2.fsf@gitster.g>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <xmqqzguclpr2.fsf@gitster.g>
-Message-ID: <87fsw1skcb.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SpvNkWAxLnBPgcpBYANVqGwVt9ujb0r0pk4fxRS6KY8=;
+        b=t1Syg0JpMF3lE5u3lYNG6JVQxH+yUWAcvysjNGKTJxfjvFCVlmNd0tN9065YiAjSsT
+         r/WZFAfKNnERQIuK4O9fkB8aYJAwUMNm51yW1n15J1LqKEHe/xPtaAWraSEfG8IpTk5l
+         +M02/MDpIqfuLWk3qT92MeJC6V3e11JPLrNTL+UBDA/6gSL5TISc5io57juxrv88ZkV5
+         yZ40zeO/Uw1RAwSMghMoMS37Ky0SGqufk12KHbODdKlDcAseUgrGNIDhkjfX4hbK5ZKa
+         cLZN79GLayN5MppaLQJrZXn9brOTx5+CLoLYPcD8ThrA4BgJqEj1Pa/B9hUj+zMwY2cm
+         udgQ==
+X-Gm-Message-State: AOAM5327ECVr9jNIXXycjdPiIHy1jodzLb0tFn0h2nVh2gqzu9zTxy/z
+        C54V5mujPaX3D0MDllj96bprxvygEQqQv0/4P/g=
+X-Google-Smtp-Source: ABdhPJzthAyWYOHOtwgIa3QRy1tuvBxtWiO/7mklzorQUTPwigq53mRfbGC0hjLw5c650jo+0JgdCUkU9v6YIhVwHU8=
+X-Received: by 2002:a17:907:762d:: with SMTP id jy13mr15747059ejc.211.1627286493282;
+ Mon, 26 Jul 2021 01:01:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20210620151204.19260-1-andrzej@ahunt.org> <CABPp-BG0a0OM7s7cmO8yCeyA5TOCD_yOSJJepQE8MFEHct4EQA@mail.gmail.com>
+In-Reply-To: <CABPp-BG0a0OM7s7cmO8yCeyA5TOCD_yOSJJepQE8MFEHct4EQA@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 26 Jul 2021 10:01:22 +0200
+Message-ID: <CAP8UFD1h7b0GkZWzuXfatFVVvXHvEWs=V63poUT4ovoM-extUA@mail.gmail.com>
+Subject: Re: [PATCH 00/12] Fix all leaks in tests t0002-t0099: Part 2
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Andrzej Hunt <andrzej@ahunt.org>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Jul 23 2021, Junio C Hamano wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Mon, Jun 21, 2021 at 11:54 PM Elijah Newren <newren@gmail.com> wrote:
 >
->> On Wed, Jul 21 2021, Han-Wen Nienhuys wrote:
->>
->>> On Wed, Jul 21, 2021 at 7:48 PM Junio C Hamano <gitster@pobox.com> wrot=
-e:
->>>
->>>  Junio C Hamano <gitster@pobox.com> writes:
->>>
->>>  > This obviously breaks the latest round of reftable topic, as it
->>>  > still wants this type to take const oid, and I do not think using
->>>  > on-filesystem lock as if we are using the files backend is not a
->>>  > good solution.
->>>
->>>  Sorry for redundant negation.  "I do not think it is a good solution
->>>  to have everybody pretend as if they are files backend when they
->>>  lock refs." was what I meant.
->>>
->>> Reftable could easily read the current OID for the reference, if necess=
-ary.=20
->>
->> (I'm replying to a mail of Han-Wen's that didn't make it on-list due to
->> inline HTML, quoted here in its entirety sans signature, see
->> https://lore.kernel.org/git/87eebptr7i.fsf@evledraar.gmail.com/)
->>
->> Junio: I can change the const around if desired. I thought we weren't
->> particularly concerned about it in general except to avoid the verbosity
->> of frequent casting, and in this case the lock API doesn't have "const".
->>
->> But as for the reftable incompatibility it seems to me irrespective of
->> backend that a reflog API that supports expiry is going to want to have
->> a callback for "give me a lock to expire this branch" and give you a
->> reply of "OK, you have the lock, you can expire the log, and it's at
->> this OID".
->>
->> Why would it be file-backend specific?
+> On Sun, Jun 20, 2021 at 8:14 AM <andrzej@ahunt.org> wrote:
+> >
+> > From: Andrzej Hunt <andrzej@ahunt.org>
+> >
+> > This series plugs more of the leaks that were found while running
+> > t0002-t0099 with LSAN.
+> >
+> > See also the first series (already merged) at [1]. I'm currently
+> > expecting at least another 2 series before t0002-t0099 run leak free.
+> > I'm not being particularly systematic about the order of patches -
+> > although I am trying to send out "real" (if mostly small) leaks first,
+> > before sending out the more boring patches that add free()/UNLEAK() to
+> > cmd_* and direct helpers thereof.
 >
-> If you feed const oid to *_reflog_expire() method of any backend
-> (including the ones that that are *not* files backend), and if you
-> expect they all will use lockfile API to copy it into lock->old_oid
-> so that it can be fed safely to prepare_fn(), then the arrangement
-> for constness you have set up in your series would work out OK for
-> everybody.  But for any backend that does not use one-file-per-ref
-> filesystem mapping, it is rather strange to use lockfile API for
-> locking refs, no?  THat is what I meant by files-backend specific.
+> I've read over the series.  It provides some good clear fixes.  I
+> noted on patches 2, 6, and 12 that a some greps suggested that leaks
+> similar to the ones being fixed likely also affect other places of the
+> codebase.  Those other places don't need to be fixed as part of this
+> series, but they might be good items for #leftoverbits or GSoC early
+> tasks (cc: Christian in case he wants to record those somewhere).
 
-It won't be using the lockfile API, but as an implementation detail the
-non-const old_oid is where the "struct object id *" you get passed comes
-from in the file API.
-
-Is that what you mean by the behavior being file-backend specific?
+Yeah, thanks for letting me know!
