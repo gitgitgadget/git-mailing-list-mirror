@@ -2,117 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C39CC4338F
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 22:05:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36642C4338F
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 22:09:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2D7F160F6C
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 22:05:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0B28160F6E
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 22:09:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233491AbhGZVYy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 17:24:54 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63761 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232876AbhGZVYw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jul 2021 17:24:52 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 02F89D19F1;
-        Mon, 26 Jul 2021 18:05:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cBTICY56f7RkAemADoovd2R9O7K3hggdq7oZbE
-        0AN14=; b=nsD/kQCpAEzdiqx8MqhgglTSEKUhmWibIcGWbj1o8Q6TosWPclwUjm
-        2qfTO5onxahP2RleDeO2QDYyS4WB8BQEUD/v+5pycE6JPEq341P8IYwF6gzCOGSk
-        PUs8XJHlrBgNy/uYec/B6GsVyzHrkf9sl4oH1WSt3RnSJjNXPNnDg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED1F1D19EB;
-        Mon, 26 Jul 2021 18:05:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.71.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S233492AbhGZV3B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 17:29:01 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40478 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232875AbhGZV3B (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 26 Jul 2021 17:29:01 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 30512D19E8;
-        Mon, 26 Jul 2021 18:05:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>,
-        Fabian Stelzer <fs@gigacodes.de>
-Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Duy Nguyen <pclouds@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 4/5] Use a better name for the function interpolating
- paths
-References: <pull.66.v2.git.1625155388.gitgitgadget@gmail.com>
-        <pull.66.v3.git.1627164413.gitgitgadget@gmail.com>
-        <19fd9c3c803a300b586c76736301a7379c4c6226.1627164413.git.gitgitgadget@gmail.com>
-Date:   Mon, 26 Jul 2021 15:05:18 -0700
-In-Reply-To: <19fd9c3c803a300b586c76736301a7379c4c6226.1627164413.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Sat, 24 Jul 2021
-        22:06:52 +0000")
-Message-ID: <xmqqh7gghgtd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E417260769;
+        Mon, 26 Jul 2021 22:09:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1627337369;
+        bh=UhKmh3Gkph83+R9sZlCnLMIR+Xkwi9Hd32BO4UhbpDU=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=RaFo6gZtfXRh8ZpDvnSinR8UpmtiEBEJYd9Ehz8WOY6z/RqKMoBdtDCE1MsBkzKVR
+         TV3Yn8xCLc2gsSDRPydBZ1WonFZ7fvGdrn/DNt9zlpQXAvjbUwEv43MdZDTU9UgeTg
+         5/19oO0HgLKLGr1akexy7L81kedFztytiNukmzcEFO8zEKab+n9ZBODvfglTqWQlj4
+         fyeNprUe4ZFov1nt5GlozpLg9RI6FeUudB3udKJ+x7oLxkDY7vLW+CfkiTMZQrSXAg
+         C6euONB+niqCmxUNwS5Cxg8+TuaUUgYZN1GZlyniiHmbzk1cpsj8trHVctR+6HdvCy
+         sEhCZ9HZRzcS+F5HyDMnKhgtRDOUoFyZutZs9O+z4b+iyGvHignXFLPFCr6xdUFaD4
+         0e2TwSjTOJNzNgwe1BH36hsb8Nf0YkI/5yMwI8hGM/WPSw3I3r+Dji0do5p1Dov7us
+         Yzlwc2pUvWpG8KHuXdFvXPZ1ZZCtm6/d8qMtIHx4JFvdMvftX9x
+Date:   Mon, 26 Jul 2021 22:09:22 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Evan Miller <emmiller@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Exit code 255 after large clone (32-bit PowerPC)
+Message-ID: <YP8ykvsZie4mPE5o@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Evan Miller <emmiller@gmail.com>, git@vger.kernel.org
+References: <D3C1583B-8CC8-434B-8AF5-B9827A7FD037@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 90C865BC-EE5D-11EB-84B4-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="zLbPPyh9Ltbh4gxQ"
+Content-Disposition: inline
+In-Reply-To: <D3C1583B-8CC8-434B-8AF5-B9827A7FD037@gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> It is not immediately clear what `expand_user_path()` means, so let's
-> rename it to `interpolate_path()`. This also opens the path for
-> interpolating more than just a home directory.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> ...
-> diff --git a/cache.h b/cache.h
-> index ba04ff8bd36..87e4cbe9c5f 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -1246,7 +1246,7 @@ typedef int create_file_fn(const char *path, void *cb);
->  int raceproof_create_file(const char *path, create_file_fn fn, void *cb);
->  
->  int mkdir_in_gitdir(const char *path);
-> -char *expand_user_path(const char *path, int real_home);
-> +char *interpolate_path(const char *path, int real_home);
+--zLbPPyh9Ltbh4gxQ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This of course breaks any topic in flight that adds more places to
-use expand_user_path().
+On 2021-07-26 at 17:54:07, Evan Miller wrote:
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>=20
+> $ git clone -v git@github.com:macports/macports-ports.git
+> Cloning into 'macports-ports'...
+> remote: Enumerating objects: 1223319, done.
+> remote: Counting objects: 100% (685/685), done.
+> remote: Compressing objects: 100% (341/341), done.
+> remote: Total 1223319 (delta 289), reused 608 (delta 252), pack-reused 12=
+22634
+> Receiving objects: 100% (1223319/1223319), 244.46 MiB | 1.09 MiB/s, done.
+> Connection to github.com closed by remote host.
 
-I think Fabian's "ssh signing" is not as ready as this topic, and it
-can afford to wait by rebasing on top of this topic.  By the time
-"ssh signing" gets into testable shape (right now, it does not pass
-tests when merged to 'seen'), hopefully the "expand install-prefix"
-topic may already be in 'next' if not in 'master'.
+This message is the relevant detail here.  This means that the
+connection was reset, which could be due to the remote host (GitHub),
+but is more likely due to a network issue of some sort.  You'll have to
+do normal network troubleshooting to see why that might be.
 
-In the meantime, I am adding this band-aid at the tip of this topic
-to help these two topics play together better.
+It could very well be related to the fact that you're running a nearly
+14-year old operating system, but I just can't say for certain.  It's
+not a bug in Git, however.
 
-Thanks.
+Even if the data is otherwise transferred successfully, Git will exit
+unsuccessfully if this happens, and that will result in your data not
+being checked out.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
+--zLbPPyh9Ltbh4gxQ
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git a/cache.h b/cache.h
-index 87e4cbe9c5..679a27e17c 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1247,6 +1247,8 @@ int raceproof_create_file(const char *path, create_file_fn fn, void *cb);
- 
- int mkdir_in_gitdir(const char *path);
- char *interpolate_path(const char *path, int real_home);
-+/* NEEDSWORK: remove this synonym once in-flight topics have migrated */
-+#define expand_user_path interpolate_path
- const char *enter_repo(const char *path, int strict);
- static inline int is_absolute_path(const char *path)
- {
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYP8ykQAKCRB8DEliiIei
+gbdFAQDOvNWUZijdTbuu16mSJsXWLLclhMSgXiHk6T6xLCG02wD/XbDNqCnyKwYC
+jcoT5ocA16fGXofodqe2Ugfy7vziuAQ=
+=0TSL
+-----END PGP SIGNATURE-----
+
+--zLbPPyh9Ltbh4gxQ--
