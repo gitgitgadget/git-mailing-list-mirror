@@ -2,83 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 235AEC4338F
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 12:35:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9014AC4338F
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 12:46:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F012D60F46
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 12:35:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 729E4608FB
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 12:46:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234092AbhGZLyj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 07:54:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59276 "EHLO
+        id S234043AbhGZMGK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 08:06:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233742AbhGZLyj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jul 2021 07:54:39 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5D39C061757
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 05:35:06 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id go31so2413284ejc.6
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 05:35:06 -0700 (PDT)
+        with ESMTP id S234146AbhGZMFq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jul 2021 08:05:46 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01F39C061760
+        for <git@vger.kernel.org>; Mon, 26 Jul 2021 05:46:15 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id h24-20020a1ccc180000b029022e0571d1a0so6167937wmb.5
+        for <git@vger.kernel.org>; Mon, 26 Jul 2021 05:46:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=zrUG/G+luRtMJtGd4ZAkfl9t0Rfk7nSPep/0EZ0eCN8=;
-        b=OKm591FwM2bT9CxCrpBcpT+57BTLnb8C0bnsl03U1n0CWia8UuVwwzSrwvjbICT4CQ
-         n5d6Qwmv97CSQUHcaDe/vF9h9MdyuT/YxvsYlKYSz6NqsslnOHbI7Jyh7d61g7xv35xQ
-         Yr1NDSGpFcn6XG1N8n1+ogezacjynrn28AvFxurBw0iUv5pY2gNTNmvG51HwLPry+VBY
-         T+eXG2pPsEUenX7YfjQu9jBE0b2k0wpfQVhiF/WX82S6W8ZXJFZcu0hdgNCwN4l/L1Cz
-         jSvMLbzauyD7VeG5svHfy5ekC4vFuAZu9p4RNu2muomEMZJd1/NEVJbZ63ZoG0w2pm4I
-         qXHw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=lIB2AAOP3aOn+4x3Ic4fnOCSEJyID2+Csqbd4VIz00s=;
+        b=JWZLANNp3L2n3AqoThF08TnfunL23DguTTLGkSd9r9QTJNmMdlfrTcccVUlf+YGoTz
+         oJvEqc43Lnu9jDAGlvnzfd0kbR/kotR3h07ABIrjxKBTo5GakqwEm06+pDCsK4hDXix3
+         qMbkMEiFVE6wY6/yd8545pd62AGM8Gwvd1bLY9gKQBEp4eL1oL2Ri8nm1rxohCsHpuMC
+         5u/myty0Hxic/XX0E9Aw/yD68hVA7KDJYu03X9JfFKe8/kUX3F3PlKXBN4Mha47pAGdn
+         hR2v/Qb2u6WMwD5OAqYFCBp8C0exOgl00d1GxLuJv3QBOm0EPd26gEbUgAC1stZe4YqP
+         uf6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=zrUG/G+luRtMJtGd4ZAkfl9t0Rfk7nSPep/0EZ0eCN8=;
-        b=e2rcQt6TJVA4a6Spr2bhS3rAvXQQwKU6ADAprcJ5CmDGpj5o+aedFg4dft/Tlu1+WG
-         SaCU079sHzm50xF4py7DWOT4G7GZdlvb7fwMtgXZ+6BSyCRLj3K/jAddaXB0aCSoPkEM
-         wn+TfhRpKWFlFxBW0jxds9JdyEtn4/1VhPp5SzU8CJHfZAiAafJ+bRc3v6S2IaSSXcrk
-         /fPlVaKOQ3niE8V3H6P3JknLC+p2kvn7i1YZNP3V9pQ+boJ30rez53kiYQhHvuHRBCsF
-         SoA16IDocHI/ctoX7WpPL4t0Ev7HraNxusyx/QZk33EjA6oGDcLO26YlSWW1qdcTm7yD
-         GkLw==
-X-Gm-Message-State: AOAM531vlsdMksvfhfaPx4Fvgaa636ddSwOSYRSD7ozNBqa7BV8i52Ye
-        K2xBCbR5vpYQe2A7COK1mWQ=
-X-Google-Smtp-Source: ABdhPJxlaxKRgkbBlJ/z9RuHTei2yVNcWei8HwyW4rfZ3ZW5CEuk140gFfDMcr+kIsKUsm6exO+eug==
-X-Received: by 2002:a17:906:4a59:: with SMTP id a25mr3247296ejv.483.1627302905434;
-        Mon, 26 Jul 2021 05:35:05 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id f22sm18635098edr.16.2021.07.26.05.35.04
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=lIB2AAOP3aOn+4x3Ic4fnOCSEJyID2+Csqbd4VIz00s=;
+        b=tmGNv0kVGxyPXBcVN7HSM5IRTvRgnWpLIZ+B4VYCtD+UuAXC4q6s0LjcxT0Rg7uAKw
+         Wup7D7ViCLwgkAu8PcfGud4HCxx/x8D9FUZVWLAfZ4Fw6RFQRzGP6tZPVD+eqJmLBl9c
+         86cmUR/aftnFbx5qFjwJQZn9pu3CBvs/61DnXc57spv/XOawiU6FWs7moh6jL2bz+bZZ
+         c0Qzm41n6W0WcTz2gyIDZghDhqBi0159HirSqfRzTnnPkOEM+0qNJxwFl9VgEsPNOxDM
+         Mb/YI+VRxMhD9ncE83yZ1PQIa/b1n6jwazYmRyiagOlbvYVgMccjEcLiztuJzr7hgpzy
+         wqDA==
+X-Gm-Message-State: AOAM532JKdlGG3B94TCRWm5OlAGRKWD/ZsG1x5615C/BhDTFPYFAVtKZ
+        aLFnPK+qTB4lBhwnZIxxF8jAQRIqhRmNYg==
+X-Google-Smtp-Source: ABdhPJz5vFuwQB56diJtFzL7QjN7LTr+lpQAH3p6DImnuLUx44jK1PJevYQPYZLOQ11UsOgX69IpqA==
+X-Received: by 2002:a1c:9ace:: with SMTP id c197mr5501113wme.170.1627303573349;
+        Mon, 26 Jul 2021 05:46:13 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id w18sm45155444wrg.68.2021.07.26.05.46.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jul 2021 05:35:05 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com
-Subject: Re: [PATCH v3 0/3] packfile-uris: commit objects exclusio
-Date:   Mon, 26 Jul 2021 14:34:49 +0200
-References: <cover.1621327467.git.dyroneteng@gmail.com>
- <cover.1627292424.git.dyroneteng@gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <cover.1627292424.git.dyroneteng@gmail.com>
-Message-ID: <87czr5s162.fsf@evledraar.gmail.com>
+        Mon, 26 Jul 2021 05:46:12 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v5 1/5] upload-pack: run is_repository_shallow() before setup_revisions()
+Date:   Mon, 26 Jul 2021 14:46:06 +0200
+Message-Id: <patch-1.5-b0c7ec31ca9-20210726T124425Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.956.g6b0c84ceda8
+In-Reply-To: <cover-0.5-00000000000-20210726T124425Z-avarab@gmail.com>
+References: <cover-0.5-00000000000-20210709T105850Z-avarab@gmail.com> <cover-0.5-00000000000-20210726T124425Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Move the is_repository_shallow() added in b790e0f67cd (upload-pack:
+send shallow info over stdin to pack-objects, 2014-03-11) to above
+setup_revisions().
 
-On Mon, Jul 26 2021, Teng Long wrote:
+Running is_repository_shallow() before setup_revisions() doesn't
+matter now, but in subsequent commits we'll make the code that
+followed setup_revisions() happen inside a callback in that
+function. This isolated change documents that re-arranging this part
+of the code is OK in isolation.
 
-> Range-diff against v2:
-> -:  ---------- > 1:  91dce385f6 packfile-uris: support for excluding commit objects
-> -:  ---------- > 2:  92def8c72b t5702: support for excluding commit objects
-> -:  ---------- > 3:  01ab2cbb34 packfile-uri.txt: support for excluding commit objects
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/pack-objects.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-It looks like you provided the wrong base for the --range-diff (likely
-master?), so it's not a diff against v2, just whatever you used as a
-base.
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index de00adbb9e0..1fbaa34f91b 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3757,11 +3757,12 @@ static void get_object_list(int ac, const char **av)
+ 
+ 	repo_init_revisions(the_repository, &revs, NULL);
+ 	save_commit_buffer = 0;
+-	setup_revisions(ac, av, &revs, &s_r_opt);
+ 
+ 	/* make sure shallows are read */
+ 	is_repository_shallow(the_repository);
+ 
++	setup_revisions(ac, av, &revs, &s_r_opt);
++
+ 	save_warning = warn_on_object_refname_ambiguity;
+ 	warn_on_object_refname_ambiguity = 0;
+ 
+-- 
+2.32.0.956.g6b0c84ceda8
+
