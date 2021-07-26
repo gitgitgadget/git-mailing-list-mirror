@@ -2,147 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C226CC4338F
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 23:26:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54B17C4338F
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 23:44:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A270760E78
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 23:26:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BCFD60F6D
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 23:44:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233841AbhGZWqZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 18:46:25 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52456 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233904AbhGZWqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jul 2021 18:46:24 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AB35E155515;
-        Mon, 26 Jul 2021 19:26:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=MSjCmAeNexqm
-        bpjnzWz0a5RSVRCGg5fpjPJOqwzyIyE=; b=FTP+4KUX/eOaN33oKlJbJjBm5bhL
-        H8qCCT4M0GRuO4yg3LxepYiY8JP6pXFoU70ebfv8SMhBI2RIx4bbtpUKzasWfpya
-        Ra0PXY4XoOgAEC9vMznrX812BSJ8aaLDl6Ots3Qs2yy7CjCI+bORrKWVWCif2Jq4
-        SWOerZAFytf8uvU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A21A9155514;
-        Mon, 26 Jul 2021 19:26:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.71.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E711D155512;
-        Mon, 26 Jul 2021 19:26:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v3 12/34] fsmonitor-fs-listen-macos: stub in backend for
- MacOS
-References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
-        <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
-        <587580489473a7a2ad665bdf3c482ea5d2c54f61.1625150864.git.gitgitgadget@gmail.com>
-        <87sg0xbq9v.fsf@evledraar.gmail.com>
-        <nycvar.QRO.7.76.6.2107161748050.59@tvgsbejvaqbjf.bet>
-        <871r7yxkq8.fsf@evledraar.gmail.com>
-        <nycvar.QRO.7.76.6.2107262338320.55@tvgsbejvaqbjf.bet>
-Date:   Mon, 26 Jul 2021 16:26:48 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2107262338320.55@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Mon, 26 Jul 2021 23:40:18 +0200 (CEST)")
-Message-ID: <xmqqr1fkfyh3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233770AbhGZXEE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 19:04:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44814 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233380AbhGZXED (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jul 2021 19:04:03 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8505FC061757
+        for <git@vger.kernel.org>; Mon, 26 Jul 2021 16:44:31 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id f18-20020a05600c4e92b0290253c32620e7so334631wmq.5
+        for <git@vger.kernel.org>; Mon, 26 Jul 2021 16:44:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=SYJ/sKaULCKvnKa6OyHgHIOFRNsbzvglg1tDxMXE3IU=;
+        b=EXuoDnKJtA60qEqk6HYrDVTSabspPz4UNc3E6m8qfCrQkoucOUXcpC4ovki+CX6VZ/
+         Zd+ykIz4xPIU9q2bmVXmQySTVITOXcEvWT9SVWnJV7y45nCIfIxX3jc94oY6W3zyfCzj
+         VyXwxOdIPG20sTmizhG11V5+OUc+w06SBWf71zCYxmlzbu7GPuxysO1OQxvlZ06ob/k+
+         u4ypk+9yQgJWpb5FBf9r/puunlPAj7tuVPlqh76QVK8mWbF3pV54So9j7yldVmH+pz11
+         IoS70+f+sioW3VfjDJR0djf/8OZjlQozcAZGrfu0YEj2HCXxDVTpAyLeTttFqluO98Ue
+         IOjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=SYJ/sKaULCKvnKa6OyHgHIOFRNsbzvglg1tDxMXE3IU=;
+        b=nVms7zsZRUX582wJv4Tqlw2PZFA8toQwJTSFTyBIu3jFCol64piMhSGSty6eZSUpFU
+         Rgf9bMHJQ8/N56HnE/V0XZO45XdpmgvHVh4zLxekf+9JJFx1vajgjJvp8wZsbfsYErNy
+         PTNKqxUjbfwQ33ZgVImipt1N/7LtwGkFpeAfnebTwJSqG6eZ+myXwqgADit1/6wCqqKP
+         UkVGw9irc8d1FOmwO1Mbt8m+0tH1BzNq/7dlK/zJIIZeRl4AfQkftFx19Ylk7Yi/I6wV
+         6RLce1PRMLPskG4O5OhYGDWPLFgDMP+T+SoI0D29+KBhwAqddYpWtigo8WU3pA6J/oZy
+         NEwg==
+X-Gm-Message-State: AOAM531uoYwTmUbqgZoxbUbim7M7BVJ7ckYXag4cF2fF5rZuiy1i579A
+        1uq6Q1o/YKo1RbbQaw/gjs3qw5FA/UdZvA==
+X-Google-Smtp-Source: ABdhPJyA7z/Xrip9t0n60xMF+AEOIeUEQoMqcw7V6d+/p/gjPCy/5Y739nK5FzybTX1LLWuqyDOWsA==
+X-Received: by 2002:a05:600c:4f92:: with SMTP id n18mr1289625wmq.134.1627343069701;
+        Mon, 26 Jul 2021 16:44:29 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id n18sm1214545wrt.89.2021.07.26.16.44.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Jul 2021 16:44:29 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v4 00/11] fix "git reflog expire" race & get rid of EISDIR in refs API
+Date:   Tue, 27 Jul 2021 01:44:16 +0200
+Message-Id: <cover-00.11-0000000000-20210726T234237Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.988.g1a6a4b2c5f
+In-Reply-To: <cover-00.12-00000000000-20210720T102051Z-avarab@gmail.com>
+References: <cover-00.12-00000000000-20210720T102051Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F3D312D2-EE68-11EB-A2D9-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+This version hopefully addresses the weirdness of passing the
+lock->old_oid as the "oid". We still do so, but the "refs API: pass
+the "lock OID" to reflog "prepare"" and its change from s/const// is
+gone, instead the relevant (and much smaller) part of that is squashed
+into the "reflog expire: don't lock reflogs using previously seen OID"
+change.
 
-> Hi =C3=86var,
->
-> On Fri, 16 Jul 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> On Fri, Jul 16 2021, Johannes Schindelin wrote:
->>
->> > So you suggest that we name the new stuff after an `uname` that
->> > reflects a name that is no longer relevant? I haven't seen a real
->> > Darwin system in quite a long time, have you?
->>
->> It's not current? On an Mac Mini M1 which got released this year:
->>
->>     % uname -s
->>     Darwin
->>
->> We then have the same in config.mak.uname, it seemed the most obvious
->> and consistent to carry that through to file inclusion.
->
-> Sorry. I assumed that you knew that Darwin was the name for an open sou=
-rce
-> Operating System. See
-> https://en.wikipedia.org/wiki/Darwin_%28operating_system%29 for more
-> details.
->
-> Ciao,
-> Johannes
+Ævar Arnfjörð Bjarmason (11):
+  refs/packet: add missing BUG() invocations to reflog callbacks
+  refs/files: remove unused REF_DELETING in lock_ref_oid_basic()
+  refs/files: remove unused "extras/skip" in lock_ref_oid_basic()
+  refs/files: remove unused "skip" in lock_raw_ref() too
+  refs/debug: re-indent argument list for "prepare"
+  refs: make repo_dwim_log() accept a NULL oid
+  refs/files: add a comment about refs_reflog_exists() call
+  reflog expire: don't lock reflogs using previously seen OID
+  refs/files: remove unused "oid" in lock_ref_oid_basic()
+  refs/files: remove unused "errno == EISDIR" code
+  refs/files: remove unused "errno != ENOTDIR" condition
 
-Sorry, but I do not see that you are being more constructive than
-the other party, whom you blame to be not constructive, in this
-exchange.
+ builtin/reflog.c      |  13 ++---
+ reflog-walk.c         |   3 +-
+ refs.c                |   5 +-
+ refs.h                |   2 +-
+ refs/debug.c          |   4 +-
+ refs/files-backend.c  | 130 ++++++++++++------------------------------
+ refs/packed-backend.c |   5 ++
+ 7 files changed, 53 insertions(+), 109 deletions(-)
 
-The part of the file that the patch applies to uses $(uname_S) to
-implement platform specific special cases, and we are looking at
+Range-diff against v3:
+ 1:  737d2d8c3d =  1:  92fc3af072 refs/packet: add missing BUG() invocations to reflog callbacks
+ 2:  dfb9e34076 =  2:  67cd2331fb refs/files: remove unused REF_DELETING in lock_ref_oid_basic()
+ 3:  0f2262fec6 =  3:  7d76514b55 refs/files: remove unused "extras/skip" in lock_ref_oid_basic()
+ 4:  7fb7ff9749 =  4:  852f86e666 refs/files: remove unused "skip" in lock_raw_ref() too
+ 5:  4e526c34aa =  5:  685b48328a refs/debug: re-indent argument list for "prepare"
+ 6:  295594fe8a <  -:  ---------- refs API: pass the "lock OID" to reflog "prepare"
+ 7:  e45ec439db =  6:  b75e7673d7 refs: make repo_dwim_log() accept a NULL oid
+ 8:  8ae8e5ac02 =  7:  7fe6c9bd92 refs/files: add a comment about refs_reflog_exists() call
+ 9:  1050743e27 !  8:  c9c2da3599 reflog expire: don't lock reflogs using previously seen OID
+    @@ Commit message
+         [3].
+     
+         I'm leaving behind now-unused code the refs API etc. that takes the
+    -    now-NULL "oid" argument, and other code that can be simplified now
+    +    now-NULL "unused_oid" argument, and other code that can be simplified now
+         that we never have on OID in that context, that'll be cleaned up in
+         subsequent commits, but for now let's narrowly focus on fixing the
+         "git gc" issue. As the modified assert() shows we always pass a NULL
+    @@ builtin/reflog.c: static int cmd_reflog_delete(int argc, const char **argv, cons
+      					should_expire_reflog_ent,
+      					reflog_expiry_cleanup,
+     
+    + ## refs.h ##
+    +@@ refs.h: enum expire_reflog_flags {
+    +  * expiration policy that is desired.
+    +  *
+    +  * reflog_expiry_prepare_fn -- Called once after the reference is
+    +- *     locked.
+    ++ *     locked. Called with the OID of the locked reference.
+    +  *
+    +  * reflog_expiry_should_prune_fn -- Called once for each entry in the
+    +  *     existing reflog. It should return true iff that entry should be
+    +
+      ## refs/files-backend.c ##
+    +@@ refs/files-backend.c: static int expire_reflog_ent(struct object_id *ooid, struct object_id *noid,
+    + }
+    + 
+    + static int files_reflog_expire(struct ref_store *ref_store,
+    +-			       const char *refname, const struct object_id *oid,
+    ++			       const char *refname, const struct object_id *unused_oid,
+    + 			       unsigned int flags,
+    + 			       reflog_expiry_prepare_fn prepare_fn,
+    + 			       reflog_expiry_should_prune_fn should_prune_fn,
+    +@@ refs/files-backend.c: static int files_reflog_expire(struct ref_store *ref_store,
+    + 	int status = 0;
+    + 	int type;
+    + 	struct strbuf err = STRBUF_INIT;
+    ++	const struct object_id *oid;
+    + 
+    + 	memset(&cb, 0, sizeof(cb));
+    + 	cb.flags = flags;
+     @@ refs/files-backend.c: static int files_reflog_expire(struct ref_store *ref_store,
+      	 * reference itself, plus we might need to update the
+      	 * reference if --updateref was specified:
+    @@ refs/files-backend.c: static int files_reflog_expire(struct ref_store *ref_store
+      				  REF_NO_DEREF,
+      				  &type, &err);
+      	if (!lock) {
+    +@@ refs/files-backend.c: static int files_reflog_expire(struct ref_store *ref_store,
+    + 		strbuf_release(&err);
+    + 		return -1;
+    + 	}
+    ++	oid = &lock->old_oid;
+    + 
+    + 	/*
+    + 	 * When refs are deleted, their reflog is deleted before the
+     @@ refs/files-backend.c: static int files_reflog_expire(struct ref_store *ref_store,
+      		}
+      	}
+      
+    --	assert(oideq(&lock->old_oid, oid));
+    -+	assert(!oid);
+    - 	(*prepare_fn)(refname, &lock->old_oid, cb.policy_cb);
+    ++	assert(!unused_oid);
+    + 	(*prepare_fn)(refname, oid, cb.policy_cb);
+      	refs_for_each_reflog_ent(ref_store, refname, expire_reflog_ent, &cb);
+      	(*cleanup_fn)(cb.policy_cb);
+10:  753c20f89b =  9:  b61c734cf5 refs/files: remove unused "oid" in lock_ref_oid_basic()
+11:  8a71bbef97 = 10:  009abc9968 refs/files: remove unused "errno == EISDIR" code
+12:  452253d597 = 11:  acb131cc1c refs/files: remove unused "errno != ENOTDIR" condition
+-- 
+2.32.0.956.g6b0c84ceda8
 
-	ifeq ($(uname_S),Darwin)
-		...
-		FSMONITOR_DAEMON_BACKEND =3D macos
-		...
-	endif
-
-I find it a fair question why the name used there has to be
-different from the one we can automatically and mechanically
-get out of "uname -s".
-
-Then you respond that uname output is no longer relevant because
-Darwin is a name that is no longer relevant?  And when asked why the
-name is no longer relevant, you make a sniding comment implying that
-the other party does not know the name is an operating system?
-
-What is going on here?
-
-It does not really matter how "Darwin" is described in an
-encyclopedia in the context of this discussion.  What matters is
-that it is what the system's "uname -s" currently uses to identify
-itself, and what we guard the section of makefile snippet with,
-isn't it?
-
-ci/lib.sh seems to have an attempt to unify/translate among these
-names, and
-
- * on azure-pipelines, it wants to translate darwin to osx
- * on github-actions, it wants to translate macos to osx
-
-Presumably that is because these two systems call the platform with
-these two different names, and you want to pick a middle ground that
-nobody uses to be neutral, or something?
-
-Also, in contrib/vscode/init.sh, I see Darwin obtained from "uname -s"
-gets translated to "macOS".
-
-In any case, if your argument was "we picked macos because we use
-the same token elsewhere, while trying to translate away from Darwin
-as much as possible for such and such reasons", I would have found
-it a productive exchange, but unfortunately that is not what I am
-seeing here.
