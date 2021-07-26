@@ -2,121 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33308C432BE
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 17:54:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1494CC4338F
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 17:56:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1194860F6D
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 17:54:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E491960F8F
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 17:56:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232184AbhGZRNn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 13:13:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49058 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231839AbhGZRNl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jul 2021 13:13:41 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3682DC061764
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 10:54:09 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id 184so9717266qkh.1
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 10:54:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=4mFvoJgwiZKyFDIOKw7lgCpCoIuXVX1nBUjw/J9jk48=;
-        b=q2hfSngQH3JkAuKCb+4hVE87eZnEGaOSaiZNhb8+BxPWAn9FGSP0G+xYaRjtI2wXiR
-         o6K13kQAsGAhKedAraVJxiDuJ14DfeaqV8z+kSz3UUUl4dnHuCijsZpgCT5ELf8IVg/V
-         EGKH1lHNWDw9/Z7OrQiEAITJPz7dWk59HabwN7SeqG41WCkrCgf/EwiH1BfHNUwHS49O
-         dzzUZhU5Y6cybVpk/bPU/+m5wdIExXl6cIymG7wD+S9CvvrFmMNXpo88atGm35b/Teaj
-         fDXSmbLCvT4Rvo/DNw1DirSo2BlKrwCDrauVTSR8virFx+Z9PQKWq4x5osmrNx75WvrW
-         goZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=4mFvoJgwiZKyFDIOKw7lgCpCoIuXVX1nBUjw/J9jk48=;
-        b=WZRsAjMT8udEoBnw9aD/2OKx+9fFvg6icKi9M0+C90ExTQaPFa2WXplKPZfRFPlY/1
-         P3qa6t90W8KY1dc6tmsRZ6RdIbQrxyPAYpEcDVPbZDvFQIX7cCX/CfoByw+KtNJBowLA
-         Nx0jbxsU8eYjvennYFsf/J2lOFERN384qSo6jTQxSson4z0ukOdtiVDX0/Aou2aAVpCK
-         35+ZYzt3SI4307q2PUNZm56JwBWOeT16GXlvouDywNP5JEeKICdaHuZUDob5+/wmD3SU
-         J05JFLAZaOrEQ/S64DDZhXdaipPrtJv4IKaFZuhD7Z4kwcBdrzoFFBIFEQZSCuypbxef
-         JPcg==
-X-Gm-Message-State: AOAM530RjlEjp/27FiPYDY7hQ2fhTugXPk84SQEhnNkor9mslmDn3Cfn
-        A/VioOIH8JwSBVerK0G8p0+wBe0aao8ANg==
-X-Google-Smtp-Source: ABdhPJwC/1lccm69+k7Eoj4PLWOygPNR/vFHIvIg532RsuyU55Oa4TkSaSkIx4fwKxTY2GB6RIvkJQ==
-X-Received: by 2002:ae9:ee18:: with SMTP id i24mr18147513qkg.394.1627322048029;
-        Mon, 26 Jul 2021 10:54:08 -0700 (PDT)
-Received: from smtpclient.apple (host-68-169-160-88.MIDOLT1.epbfi.com. [68.169.160.88])
-        by smtp.gmail.com with ESMTPSA id f12sm287904qtj.40.2021.07.26.10.54.07
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 26 Jul 2021 10:54:07 -0700 (PDT)
-From:   Evan Miller <emmiller@gmail.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
-Subject: Exit code 255 after large clone (32-bit PowerPC)
-Message-Id: <D3C1583B-8CC8-434B-8AF5-B9827A7FD037@gmail.com>
-Date:   Mon, 26 Jul 2021 13:54:07 -0400
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3654.100.0.2.22)
+        id S231190AbhGZRQV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 13:16:21 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63515 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231455AbhGZRQU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jul 2021 13:16:20 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 106011534A3;
+        Mon, 26 Jul 2021 13:56:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PJbVXRUNjLh9FUvRnkndQLO58yTsNbCBZFcEJC
+        UNyY4=; b=Mz/gStKWRk3Hl9F9kSCpOfu20gswLJEFFa2L5emrFoR6Fs405Mqhfg
+        aiXJ1N0OBUEWYYxERwx1pDs0XdpuftaqPPgnyCwi0GJapxAQi28YGtMLyhWficBI
+        2zPaWeri1ALySI1/s+LoeCpFBAAUwgELIt6NFSy91SkfOlGIc2CGA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 07FF41534A2;
+        Mon, 26 Jul 2021 13:56:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4EC5A153484;
+        Mon, 26 Jul 2021 13:56:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Duy Nguyen <pclouds@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 0/5] mingw: handle absolute paths in expand_user_path()
+References: <pull.66.v2.git.1625155388.gitgitgadget@gmail.com>
+        <pull.66.v3.git.1627164413.gitgitgadget@gmail.com>
+Date:   Mon, 26 Jul 2021 10:56:44 -0700
+In-Reply-To: <pull.66.v3.git.1627164413.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Sat, 24 Jul 2021 22:06:48
+        +0000")
+Message-ID: <xmqqk0ldj6w3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: D7F20420-EE3A-11EB-8E9F-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-$ git clone -v git@github.com:macports/macports-ports.git
-Cloning into 'macports-ports'...
-remote: Enumerating objects: 1223319, done.
-remote: Counting objects: 100% (685/685), done.
-remote: Compressing objects: 100% (341/341), done.
-remote: Total 1223319 (delta 289), reused 608 (delta 252), pack-reused =
-1222634
-Receiving objects: 100% (1223319/1223319), 244.46 MiB | 1.09 MiB/s, =
-done.
-Connection to github.com closed by remote host.
-Resolving deltas: 100% (702052/702052), done.
+>  * Since our convention of %(...) interpolation does not involve uppercase
+>    keywords, I now use a lowercase one.
 
-What did you expect to happen? (Expected behavior)
+Makes sense.
 
-A successful clone.
+>  * Since this keyword is interpolated to the compiled-in prefix if built
+>    without runtime prefix support, I dropped the runtime part of the
+>    keyword.
 
-What happened instead? (Actual behavior)
+I have this nagging feeling that %(prefix) may be (mistakenly)
+expected to interporate to $(git rev-parse --show-prefix).  Of
+course, nobody would expect that in paths in the configuration
+files, but because we are borrowing %(token) convention from
+elsewhere, it is not outragous to imagine that either "for-each-ref"
+family or "log" family of placeholders may want to use %(prefix)"
+for such purpose (for that matter, they may also be helped to have
+the runtime-prefix information available).
 
-$ echo $?
-255
-$ ls -a macports-ports/
-.    ..   .git
+Perhaps %(installPrefix) or something may have less chance of making
+us regret later.  I am just raising this as a possible problem; I
+personally would not be confused if we settled on the %(prefix).
 
-What's different between what you expected and what actually happened?
+>  * Renamed the expand_user_path() to interpolate_path(), to remove the
+>    distraction as to the implementation detail which things get to be
+>    interpolated (because we extend it to interpolate more than just a home
+>    directory, which might well be unclear from the former name, anyway).
 
-Exit value was 255 instead of 0; no regular files (only .git files) are =
-visible in the cloned directory.
+Great.
 
-Anything else you want to add:
+>  * Adjusted the code comment above the interpolate_path() to remove a stale
+>    part, clarify another part, and to extend it to talk about the prefix
+>    expansion, too.
 
-Other repositories have cloned just fine; however, this repo is =
-considerably larger than the successful cases.
+These looked good, too.
 
-This is a 32-bit PowerPC machine.
-
-[System Info]
-git version:
-git version 2.32.0
-cpu: Power
-no commit associated with this build
-sizeof-long: 4
-sizeof-size_t: 4
-shell-path: /bin/sh
-uname: Darwin 8.11.0 Darwin Kernel Version 8.11.0: Wed Oct 10 18:26:00 =
-PDT 2007; root:xnu-792.24.17~1/RELEASE_PPC Power Macintosh
-compiler info: gnuc: 4.2
-libc info: no libc information available
-
+Thanks.
