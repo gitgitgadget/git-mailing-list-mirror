@@ -2,108 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0757DC4338F
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 21:40:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DB91C4338F
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 22:03:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD11660F6C
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 21:40:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1039C60F90
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 22:03:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232156AbhGZVAD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 17:00:03 -0400
-Received: from mout.gmx.net ([212.227.17.20]:34733 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229489AbhGZU77 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jul 2021 16:59:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1627335617;
-        bh=CHnZTmpsMyftfVKSJP2C/BVsoUL3D6d3R3rA9/+HoJM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=aD26NTdL4nSHAtoBzwfn0aCGpAgrlAz6JUK+HplYACPIiXDicCJvWeMid4x8lzXuy
-         +d1xsWkDzxzhcSc1bdWomrE+ms3xTRlrxjMX1wvtA3D00LWReMGIRFOnPnRoovNTjQ
-         ZyYnE5LcRAxXwhBXuxlE7qa4tYufPvYLUkDeOc1k=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.102.245] ([213.196.212.22]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N1wll-1l6DxA297Z-012JoI; Mon, 26
- Jul 2021 23:40:17 +0200
-Date:   Mon, 26 Jul 2021 23:40:18 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v3 12/34] fsmonitor-fs-listen-macos: stub in backend for
- MacOS
-In-Reply-To: <871r7yxkq8.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2107262338320.55@tvgsbejvaqbjf.bet>
-References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com> <pull.923.v3.git.1625150864.gitgitgadget@gmail.com> <587580489473a7a2ad665bdf3c482ea5d2c54f61.1625150864.git.gitgitgadget@gmail.com> <87sg0xbq9v.fsf@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2107161748050.59@tvgsbejvaqbjf.bet> <871r7yxkq8.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S233455AbhGZVXL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 17:23:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50126 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233365AbhGZVXK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jul 2021 17:23:10 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 722ACC061757
+        for <git@vger.kernel.org>; Mon, 26 Jul 2021 15:03:37 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id d18so18138698lfb.6
+        for <git@vger.kernel.org>; Mon, 26 Jul 2021 15:03:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iTjELqtA3nIFrXy6CSZHgxkeoGxJOd+AvEYJx93LI/U=;
+        b=YDLJoWi14J0aOMeF1tZ4uIOQpiRu6KimCNkknf90JaurXrTG6S+vb/akVoeRy5Qnys
+         OO/3ouXXw43gJ2gTDXMi4Te/Z5HZ+CJuw13M8YDlF3uBEmPIgeeBjAp+ZQecWC23F9vU
+         zMunluIXeRVW8OCl3AxYIJiPcBjjGh7xSeg2H1WJdKqp0/oyNo3zKu/E1/BYasgU8TlC
+         OkZ/+RHEOOZNjBxklPsnVZIRCFmJtUuXKGsqJaPKF+H2cpciKVtzdNbMh4Q0Mr/oFGvC
+         0t2d2Jq20zZ5TGGvpzqVJ8faqlQKfvu61Vb63/qEGgaVQP/wRMVgxW0d42Im1kVZtf85
+         042Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iTjELqtA3nIFrXy6CSZHgxkeoGxJOd+AvEYJx93LI/U=;
+        b=ejJPkgEXqQX5exh8r9VTFbJ+Yn97iU9FTZQV54l4+6S4YDSb/o5Gx8AnRiKJOgmHue
+         gQkzMpcPEs7AlT1McUk5qM/yZpgpV2B3/ZtAFmnbdBGdZ/ru2cpJwadLgNmAa+gp7VwD
+         dg4FHPV5PE5IXXK+36qfawmJOuQ5pU8m80lbg4gOCyP4TmD/uKe2q+JkV08VBR3JjWet
+         2hJiOlu7/raLFO+yZWkAr7BYwlfUMtfw4Xtk8ZrPUhuY64P6N/EekSEbjTe3X2/w92gZ
+         J+q7oillRyBdTTbSXpkJu7Pu1+AzwGWxbH3+0TfY4Wjlb9HF64L6Fl7/yTu6EHJToUH3
+         XGMg==
+X-Gm-Message-State: AOAM5314IcnpV9Lx6G9vMrzXW349SFqsdEhY08PNF+MH7cUW7kMmFNAP
+        3fXa5aC/AggUfCY6hVA+UAMngbvjBT8lXwqNYzQ=
+X-Google-Smtp-Source: ABdhPJwB4X+6tBpLVKac+Ci8QcY8d7JwzJnKtYsX5ZmTUku212I9WYUy1PR519+TyuprYJQpFZxONmasJ1ze94kQHwY=
+X-Received: by 2002:ac2:50c5:: with SMTP id h5mr8385856lfm.642.1627337015782;
+ Mon, 26 Jul 2021 15:03:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1285407259-1627335620=:55"
-X-Provags-ID: V03:K1:R5FbsQxKFzvgdSetgdS3EytqC8r3ybmFy/f8vWrBNW145/P8QdV
- HtN7v8trLAGfKn7ACyJhdoxA0qr5/dPflegz1YapfMBIlo3Zd0Wtcap9q4hXLSDWX/mml+9
- oNWM78fwv0DB91BFVjZYQbxr2xJiin+yqYh5+GJ//WB62bxMBN8HIgPCZfzd/xDCGXiiXMJ
- dtm7NdWw9ktVuE3jpJvNQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jFemxwySFhM=:VY/QmI67TsaDA5egn/Ddk/
- tEBJ1jqcIYOsFhLm+SZ+l9YGjwzdf331PgXMmtfd+llBkMc1Dy8X+l1CE3vR7L7ESekTaJ1Ir
- 6H0dpEiQlMJNK6LOEX8R4lZHJAto9inBzHvLpGxp9aD5IaKyQ2aF+bUGki9djGU0QHs7cP3xR
- J8zRLVpUDOCL37mMhZ9e9hgyGgBH3WODpEX42fPhF/tiinw6XrQ7qA25brR1ppC8oCwkF8qLQ
- NH7XPK2kEJcz5sbREQb2UzGnG18EvPLRFWBoMVmD8oYldDsM/SDzqsOcsvRAp7jUEjBfB9mE9
- 3YGKDG2dJYt/7GQLaKGEPP4vNWeM2rdZNW6pTBnCXz8e2D0t5/obhpNoF57peqPwA4WLgoEvD
- vfz3pL4MzU73WFx0L/l9rnIhPlWmecc2L8J5ikQ7FDC+AOhnYOvs9jrjvZqqQ3fOPP/N0Yexl
- Ki1BwOh89C0c+BrzAhIutQfzgF2mL8YmEzvp8pcvTRpMtGSFzYRgk8IKiLmAb3rOPTtVeMHW3
- UQI8wP6W9xL+oEKNBkFcnf3+bhvnCp69Rq4ye5y/cUfa7ws2zrkChLxzNga4VB3udcRanI8eO
- zfRNLF8KiRgZyKBCNaiMSoXA9D7YKkxNd2+Dm545+ty6XhiB7lDK3v0Lsy74YsowFRrFrPNeL
- vsPZPzlhFJxkhu+jqWG6Xirc9YurBRZEXZAvIaJKQ+lmOjUFQNNDgjjAe8pYcvn56zPK9b1H9
- lGCHkZx0JrN2T7czuZLFza8Q0VC33NbnaE6uj5wEU9lJBuFecmYds1/LEV9Zy/5o+ezjbiU+L
- ATNgz7AGfxfW73ey3QTdP1hSu1ngg5NkUZowtgMu34z8F6uI3JJc3XzNtui4QW+yO92lyorU3
- 0cJ7vJODtx3HxfmKdzOz2h1PgvsFEDCUaXONZl79FhvLc7gZGAeQ8A49ASxMG4zu/b68l1B60
- AJkr4HhTkqUXVCGCNyVyPJggGx+ZbenrZ5IRtsZZmCKJHE1u4/j5/f2NufdjPpo3iaRorMhyf
- IlzF7WL53Ca6KZvVDWuVXqN5I/Ow2nNt8w4mClBAqENFwlFIn7lkLGUVnJqL8ofh8lfjX85Xx
- 6QJRpq+2HGQB4OMsbZn6mGeAPl9SJvvP0s7bbT/qP5K5Cv2BN1LB1Yn5g==
+References: <dd4aca2c-9ca2-e489-d78f-9d2a5580f1a5@mfriebe.de>
+ <4e9b54b4-8e40-7fd3-ae65-d33390f3af43@mfriebe.de> <04f3b300-3ccf-c91b-6406-6a998b473a24@mfriebe.de>
+ <bfc257c7-bf74-06be-ac62-9a6d27f565c9@mfriebe.de> <CAPx1GvcHiaGsuOybOijRYpmivO0dLvUFacAeOrM4DfY-uuXB2Q@mail.gmail.com>
+ <070f7f5e-0e6c-2edc-1403-9265c810df17@mfriebe.de> <CAPx1GvdM7CzsbT1SWW9+OPcG9FL7WXQ7YD6aM7P0krujp_OrkQ@mail.gmail.com>
+ <67f35be7-3317-6486-cdb6-62eb691eaf10@mfriebe.de>
+In-Reply-To: <67f35be7-3317-6486-cdb6-62eb691eaf10@mfriebe.de>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Mon, 26 Jul 2021 15:03:24 -0700
+Message-ID: <CAPx1Gvey1uSr58Uf7VpC0c6J+R0tUP=VUP_dGmv_yVO-CwmvXg@mail.gmail.com>
+Subject: Re: Files modified, even after: git reset --hard
+To:     Martin <git@mfriebe.de>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, Jul 26, 2021 at 12:57 PM Martin <git@mfriebe.de> wrote:
+> Is it possible that those cheats also look at the "replaced" (rather
+> than the "replacement") commit(s)?
 
---8323328-1285407259-1627335620=:55
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+They look at `stat` system call (well, `lstat` *call*) data, not the
+actual files.  This works better on Unix systems, where `lstat` is
+a real system call, than it does on Windows, where it's faked up
+from whatever Windows really stores as information about files.
 
-Hi =C3=86var,
+> I am pretty sure I have "git replace"d all blobs for some of the files,
+> and yet they do get phantoms.
 
-On Fri, 16 Jul 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+The stat data are stored in Git's index.  It's the rebuilding of various
+index entries that updates what Git uses to do a fast check of file
+status.  (Note that the stat data on the index itself count as part of
+the cheating; this gets tricky.  See [1].)
 
-> On Fri, Jul 16 2021, Johannes Schindelin wrote:
->
-> > So you suggest that we name the new stuff after an `uname` that
-> > reflects a name that is no longer relevant? I haven't seen a real
-> > Darwin system in quite a long time, have you?
->
-> It's not current? On an Mac Mini M1 which got released this year:
->
->     % uname -s
->     Darwin
->
-> We then have the same in config.mak.uname, it seemed the most obvious
-> and consistent to carry that through to file inclusion.
+There is an article at [2] on how Windows implements `stat`. It's
+probably out of date (says "VS2005").  It's interesting to me what's
+wrong here: `st_dev` is made to mirror `st_rdev` but `st_dev` should
+probably always just be zero, and they chose to attempt to store a
+file *creation* time in `st_ctime`, when that is in `st_birthtime` in a
+modern Unix-like system: the `ctime` field is the *inode change time*,
+not a file creation time.  (Fortunately Git uses neither field.)
 
-Sorry. I assumed that you knew that Darwin was the name for an open source
-Operating System. See
-https://en.wikipedia.org/wiki/Darwin_%28operating_system%29 for more
-details.
+Chris
 
-Ciao,
-Johannes
-
---8323328-1285407259-1627335620=:55--
+[1]: https://git-scm.com/docs/racy-git/en
+[2]: https://web.archive.org/web/20101214222704/http://msdn.microsoft.com/en-us/library/14h5k7ff(v=vs.80).aspx
