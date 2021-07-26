@@ -2,100 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E679CC4338F
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 17:53:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33308C432BE
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 17:54:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C702F60F6B
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 17:53:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1194860F6D
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 17:54:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231639AbhGZRNN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 13:13:13 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57630 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229680AbhGZRNM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jul 2021 13:13:12 -0400
-Received: (qmail 24968 invoked by uid 109); 26 Jul 2021 17:53:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 26 Jul 2021 17:53:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22967 invoked by uid 111); 26 Jul 2021 17:53:41 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 26 Jul 2021 13:53:40 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 26 Jul 2021 13:53:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] ci: run "apt-get update" before "apt-get install"
-Message-ID: <YP72o/1Yg02BcDXw@coredump.intra.peff.net>
-References: <pull.994.git.1626177086682.gitgitgadget@gmail.com>
- <pull.994.v2.git.1626263433838.gitgitgadget@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.994.v2.git.1626263433838.gitgitgadget@gmail.com>
+        id S232184AbhGZRNn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 13:13:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49058 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231839AbhGZRNl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jul 2021 13:13:41 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3682DC061764
+        for <git@vger.kernel.org>; Mon, 26 Jul 2021 10:54:09 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id 184so9717266qkh.1
+        for <git@vger.kernel.org>; Mon, 26 Jul 2021 10:54:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=4mFvoJgwiZKyFDIOKw7lgCpCoIuXVX1nBUjw/J9jk48=;
+        b=q2hfSngQH3JkAuKCb+4hVE87eZnEGaOSaiZNhb8+BxPWAn9FGSP0G+xYaRjtI2wXiR
+         o6K13kQAsGAhKedAraVJxiDuJ14DfeaqV8z+kSz3UUUl4dnHuCijsZpgCT5ELf8IVg/V
+         EGKH1lHNWDw9/Z7OrQiEAITJPz7dWk59HabwN7SeqG41WCkrCgf/EwiH1BfHNUwHS49O
+         dzzUZhU5Y6cybVpk/bPU/+m5wdIExXl6cIymG7wD+S9CvvrFmMNXpo88atGm35b/Teaj
+         fDXSmbLCvT4Rvo/DNw1DirSo2BlKrwCDrauVTSR8virFx+Z9PQKWq4x5osmrNx75WvrW
+         goZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=4mFvoJgwiZKyFDIOKw7lgCpCoIuXVX1nBUjw/J9jk48=;
+        b=WZRsAjMT8udEoBnw9aD/2OKx+9fFvg6icKi9M0+C90ExTQaPFa2WXplKPZfRFPlY/1
+         P3qa6t90W8KY1dc6tmsRZ6RdIbQrxyPAYpEcDVPbZDvFQIX7cCX/CfoByw+KtNJBowLA
+         Nx0jbxsU8eYjvennYFsf/J2lOFERN384qSo6jTQxSson4z0ukOdtiVDX0/Aou2aAVpCK
+         35+ZYzt3SI4307q2PUNZm56JwBWOeT16GXlvouDywNP5JEeKICdaHuZUDob5+/wmD3SU
+         J05JFLAZaOrEQ/S64DDZhXdaipPrtJv4IKaFZuhD7Z4kwcBdrzoFFBIFEQZSCuypbxef
+         JPcg==
+X-Gm-Message-State: AOAM530RjlEjp/27FiPYDY7hQ2fhTugXPk84SQEhnNkor9mslmDn3Cfn
+        A/VioOIH8JwSBVerK0G8p0+wBe0aao8ANg==
+X-Google-Smtp-Source: ABdhPJwC/1lccm69+k7Eoj4PLWOygPNR/vFHIvIg532RsuyU55Oa4TkSaSkIx4fwKxTY2GB6RIvkJQ==
+X-Received: by 2002:ae9:ee18:: with SMTP id i24mr18147513qkg.394.1627322048029;
+        Mon, 26 Jul 2021 10:54:08 -0700 (PDT)
+Received: from smtpclient.apple (host-68-169-160-88.MIDOLT1.epbfi.com. [68.169.160.88])
+        by smtp.gmail.com with ESMTPSA id f12sm287904qtj.40.2021.07.26.10.54.07
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 26 Jul 2021 10:54:07 -0700 (PDT)
+From:   Evan Miller <emmiller@gmail.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
+Subject: Exit code 255 after large clone (32-bit PowerPC)
+Message-Id: <D3C1583B-8CC8-434B-8AF5-B9827A7FD037@gmail.com>
+Date:   Mon, 26 Jul 2021 13:54:07 -0400
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3654.100.0.2.22)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 14, 2021 at 11:50:33AM +0000, Johannes Schindelin via GitGitGadget wrote:
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> +    - name: Install other dependencies
-> +      run: |
-> +        sudo apt-get install -q -y libssl-dev libcurl4-openssl-dev libexpat-dev gettext zlib1g-dev
+$ git clone -v git@github.com:macports/macports-ports.git
+Cloning into 'macports-ports'...
+remote: Enumerating objects: 1223319, done.
+remote: Counting objects: 100% (685/685), done.
+remote: Compressing objects: 100% (341/341), done.
+remote: Total 1223319 (delta 289), reused 608 (delta 252), pack-reused =
+1222634
+Receiving objects: 100% (1223319/1223319), 244.46 MiB | 1.09 MiB/s, =
+done.
+Connection to github.com closed by remote host.
+Resolving deltas: 100% (702052/702052), done.
 
-My CI runs based on 'next' started failing today. I think we'd want this
-on top (of js/ci-make-sparse):
+What did you expect to happen? (Expected behavior)
 
--- >8 --
-Subject: [PATCH] ci: run "apt-get update" before "apt-get install"
+A successful clone.
 
-The "sparse" workflow runs "apt-get install" to pick up a few necessary
-packages. But it needs to run "apt-get update" first, or it risks trying
-to download an old package version that no longer exists. And in fact
-this happens now, with output like:
+What happened instead? (Actual behavior)
 
-  2021-07-26T17:40:51.2551880Z E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/main/c/curl/libcurl4-openssl-dev_7.68.0-1ubuntu2.5_amd64.deb  404  Not Found [IP: 52.147.219.192 80]
-  2021-07-26T17:40:51.2554304Z E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
+$ echo $?
+255
+$ ls -a macports-ports/
+.    ..   .git
 
-Our other ci jobs don't suffer from this; they rely on scripts in ci/,
-and ci/install-dependencies does the appropriate "apt-get update".
+What's different between what you expected and what actually happened?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I guess this package setup could also be moved into ci/install-dependencies.sh,
-but I don't think it really buys anything (the "apt-get update" line
-would not even be shared, because the outermost layer is a big switch
-statement on the jobname). OTOH, it looks like other one-off jobs are in
-there (e.g., StaticAnalysis).
+Exit value was 255 instead of 0; no regular files (only .git files) are =
+visible in the cloned directory.
 
-Anyway, this is the minimal fixup.
+Anything else you want to add:
 
- .github/workflows/main.yml | 1 +
- 1 file changed, 1 insertion(+)
+Other repositories have cloned just fine; however, this repo is =
+considerably larger than the successful cases.
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 1b5c039207..01878884ae 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -368,6 +368,7 @@ jobs:
-       run: sudo dpkg -i sparse-20.04/sparse_*.deb
-     - name: Install other dependencies
-       run: |
-+        sudo apt-get update -q &&
-         sudo apt-get install -q -y libssl-dev libcurl4-openssl-dev libexpat-dev gettext zlib1g-dev
-     - uses: actions/checkout@v2
-     - run: make sparse
--- 
-2.32.0.805.g1fa0022869
+This is a 32-bit PowerPC machine.
+
+[System Info]
+git version:
+git version 2.32.0
+cpu: Power
+no commit associated with this build
+sizeof-long: 4
+sizeof-size_t: 4
+shell-path: /bin/sh
+uname: Darwin 8.11.0 Darwin Kernel Version 8.11.0: Wed Oct 10 18:26:00 =
+PDT 2007; root:xnu-792.24.17~1/RELEASE_PPC Power Macintosh
+compiler info: gnuc: 4.2
+libc info: no libc information available
 
