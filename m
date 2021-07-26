@@ -6,88 +6,84 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6884C4338F
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 18:48:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BBB5C4320A
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 18:49:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B484E60F5B
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 18:48:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3606960FBF
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 18:49:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231921AbhGZSHx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 14:07:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34004 "EHLO
+        id S232041AbhGZSIj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 14:08:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbhGZSHw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jul 2021 14:07:52 -0400
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FC87C061757
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 11:48:21 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id y200so13239542iof.1
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 11:48:21 -0700 (PDT)
+        with ESMTP id S231924AbhGZSIi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jul 2021 14:08:38 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F342AC061757
+        for <git@vger.kernel.org>; Mon, 26 Jul 2021 11:49:05 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id u15so13077475iol.13
+        for <git@vger.kernel.org>; Mon, 26 Jul 2021 11:49:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=DhQE+FVc5gsiSQp4ZM9qhDyGsDMAbdihoT/pvqJxK24=;
-        b=kYgTILXA96iCcJdDVbdhZWFTHYFJ0RJmHNV/Nx5plnDN3etJO701EE8ykv/44sCjP1
-         KiLVA2zLYto/xBaQiq8Hgaza/pR+2UUtyUjsQw7zD4GKrCo/TqgPNCryDlfDulHGcYOY
-         5H+oyWWbN6Vz6arAPh5pQwsjgAJ050dGEFCSfZtQ5eqipgfnLCoR23L+xEHEBtK9AD3S
-         MuKDiyVf97imknNEk9NcF/qPxQ/9hA6E/htEfk3HJITkaNP8KAXHS6JiWe4cB37yYN20
-         hVhKFmWSpFw591Wj/kkakeSjjTQunt3Ym6zmCY3/4taXdehjEr8K+DY/P32WgBDXW7+E
-         w6tw==
+        bh=fnWt2kdkaGvIVi85NrzlIhXltb/T+b7V8IgYUD/LZyk=;
+        b=ZsEcWJDYbnSCql46Vj1A0CpKXB+4CZWlwuncNUo7wkbwqmLToFJ7fgrrfvxEw1qfF3
+         ffk+UeALj72+MAkzeJtES8Vn5bye5/iXj+Wu43E2V25Lgk5hsPfaFp0oIjSlBFeN2Qc2
+         GTMDY/JY0NtDbFlJ/tbhlTrK6LnetVwlBtvahxD3Fy6duPo4qjWG11WjXecVyI1lu48P
+         ItZiyv/5n4xNyNGhonX0x7hvujW+FRi5ZVOuTHZtNQs487vto7i/BWOYFuypsw4Q3bnG
+         UIJCK6FGvYYbr5P3eZy7jy20qU2YUd0Af/Zttr8TMNPxHheVNHoPUXJLPVSxtycajE3U
+         pxZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=DhQE+FVc5gsiSQp4ZM9qhDyGsDMAbdihoT/pvqJxK24=;
-        b=HdJp8fL3NWbDkaOkGnbjJSxwoiZzn0wzQwUyHh0CO7wE3R+tf62E1o4Zfi4/2Y40TU
-         LGZ1ZAT587LZO9SCNMBBjSvkKxXUbfnzWm+HNdiK12SHVTo1J0gt+gvmzLz8R41FqhKg
-         RpkKlLVMvhWxqdFjflUBai8Cn+qk2yqMlJGyyCbgjzgotzFA/+t0owEEfB8+dHP8OnMe
-         prrcP40sIO8VopqLE4InAMyqSfLBR81VQBso67j/cAQ3JwoZGeY+ca0Rt/kXlYssEAhD
-         GjEj+PtKbWqgWsLkAH4rbp/UGaXWh/3wU0F0YrDDOk/Mcitvv0beHASMAbUPE1ySYI8/
-         TRJw==
-X-Gm-Message-State: AOAM531xMUmOdL0ecDyD4KmkmwPL5VVpr8PMJ1CvI9JSwCrL0kZZdmx8
-        uTE4PS26CdK65AaS1Ev8rnBl2w==
-X-Google-Smtp-Source: ABdhPJztWUDegVLuHrvYnk5aI2YvxlS+DPBlxvH+amo24rHMQalNkJ7GI7FFhObeFKmC02rcxSFNrQ==
-X-Received: by 2002:a5d:925a:: with SMTP id e26mr15968968iol.195.1627325300881;
-        Mon, 26 Jul 2021 11:48:20 -0700 (PDT)
+        bh=fnWt2kdkaGvIVi85NrzlIhXltb/T+b7V8IgYUD/LZyk=;
+        b=ECxTAehHLIW6o79NjJ4joK8JDdIYseHUy5QRxgbdjHY8HYfuhI0ylqrc4XrJFNEGZV
+         kLPhLF1hwcBx4p6nURaJctUE73XAPPShZJQ+rcp9kEQ34LgbLAazwa9IWNKMmzcTyoSn
+         9fRyEWs61DQl+XwnzsiRziojQvhVfkg1G726YQMaceVBEyNpOVBIEP2k8dbsw/42PB8v
+         868XIf8uPRMBPOlrOPmayk1BtYGPq+UE038esGn6jP3wE4AKukUSkLRgtw0bRrrPRZ+o
+         wA6ctv1XzxtzZJrLytI6F1A9zJ7gUKc63HvxUuIyEtCYu1DEdo09601GjvEp9l5yAQjp
+         L7Mg==
+X-Gm-Message-State: AOAM530uyvUlh9oUsPrrzX+Uvg1G0R1WPD3h9bWqY2avzDpzNe3bKQLb
+        usCzfBHcDUjHjfmv8GqwonHkQg==
+X-Google-Smtp-Source: ABdhPJz/vSsQunReibK3f2RcMitzJaia5RRsgDVclfjTB2ThW5fe1P7QuQmyv+Vz3u5tgcHzvKmR6g==
+X-Received: by 2002:a05:6602:248f:: with SMTP id g15mr1583036ioe.198.1627325345529;
+        Mon, 26 Jul 2021 11:49:05 -0700 (PDT)
 Received: from localhost ([2600:1700:d843:8f:18ae:76f8:f6b8:4b88])
-        by smtp.gmail.com with ESMTPSA id x10sm264712ill.26.2021.07.26.11.48.20
+        by smtp.gmail.com with ESMTPSA id b9sm309902ilf.16.2021.07.26.11.49.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jul 2021 11:48:20 -0700 (PDT)
-Date:   Mon, 26 Jul 2021 14:48:19 -0400
+        Mon, 26 Jul 2021 11:49:05 -0700 (PDT)
+Date:   Mon, 26 Jul 2021 14:49:04 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
         jonathantanmy@google.com
-Subject: Re: [PATCH v2 02/24] pack-bitmap-write.c: gracefully fail to write
- non-closed bitmaps
-Message-ID: <YP8Dc9rHLrUmYQMl@nand.local>
+Subject: Re: [PATCH v2 04/24] Documentation: build 'technical/bitmap-format'
+ by default
+Message-ID: <YP8DoCEclqD3bXKP@nand.local>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1624314293.git.me@ttaylorr.com>
- <3e637d9ec83435540ad32b8325b0dce87f61bae0.1624314293.git.me@ttaylorr.com>
- <YPft87yCjR9e+93E@coredump.intra.peff.net>
- <YPhXb9Zns8S6aIod@nand.local>
- <YPpx0KoGUX0KfdSw@coredump.intra.peff.net>
+ <b0bb2e8051f19ec47140fda6500e092e37c6bea8.1624314293.git.me@ttaylorr.com>
+ <YPfv0YoLtpYp9866@coredump.intra.peff.net>
+ <YPfyEiXw7szt5mjl@coredump.intra.peff.net>
+ <YPhYFnudmHJ9lQek@nand.local>
+ <YPpyLaM1Rc9+w6KT@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YPpx0KoGUX0KfdSw@coredump.intra.peff.net>
+In-Reply-To: <YPpyLaM1Rc9+w6KT@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 23, 2021 at 03:37:52AM -0400, Jeff King wrote:
-> I thought about suggesting that it be called "err" or "ret" or
-> something. And then we do not have to care that fill_bitmap_commit()
-> only returns an error in the non-closed state. We are simply propagating
-> its error-return back up the stack.
+On Fri, Jul 23, 2021 at 03:39:25AM -0400, Jeff King wrote:
+> The question here is: should we continue to omit it from the html build,
+> since it does not render well (i.e., should we simply drop this patch).
 
-Hmm. For whatever the inconvience costs us, I do like that the variable
-can be named specifically like "open" or "closed" as opposed to the more
-generic "err" or "ret".
-
-So I'll probably keep it is unless you feel strongly (which I suspect
-you do not).
+I think that's a nice way of putting it. Since the HTML rendering is
+terrible, let's just drop this patch and leave cleaning it up as
+#leftoverbits.
 
 Thanks,
 Taylor
