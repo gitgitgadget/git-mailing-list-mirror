@@ -2,99 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DB91C4338F
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 22:03:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C39CC4338F
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 22:05:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1039C60F90
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 22:03:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2D7F160F6C
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 22:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233455AbhGZVXL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 17:23:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50126 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233365AbhGZVXK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jul 2021 17:23:10 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 722ACC061757
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 15:03:37 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id d18so18138698lfb.6
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 15:03:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iTjELqtA3nIFrXy6CSZHgxkeoGxJOd+AvEYJx93LI/U=;
-        b=YDLJoWi14J0aOMeF1tZ4uIOQpiRu6KimCNkknf90JaurXrTG6S+vb/akVoeRy5Qnys
-         OO/3ouXXw43gJ2gTDXMi4Te/Z5HZ+CJuw13M8YDlF3uBEmPIgeeBjAp+ZQecWC23F9vU
-         zMunluIXeRVW8OCl3AxYIJiPcBjjGh7xSeg2H1WJdKqp0/oyNo3zKu/E1/BYasgU8TlC
-         OkZ/+RHEOOZNjBxklPsnVZIRCFmJtUuXKGsqJaPKF+H2cpciKVtzdNbMh4Q0Mr/oFGvC
-         0t2d2Jq20zZ5TGGvpzqVJ8faqlQKfvu61Vb63/qEGgaVQP/wRMVgxW0d42Im1kVZtf85
-         042Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iTjELqtA3nIFrXy6CSZHgxkeoGxJOd+AvEYJx93LI/U=;
-        b=ejJPkgEXqQX5exh8r9VTFbJ+Yn97iU9FTZQV54l4+6S4YDSb/o5Gx8AnRiKJOgmHue
-         gQkzMpcPEs7AlT1McUk5qM/yZpgpV2B3/ZtAFmnbdBGdZ/ru2cpJwadLgNmAa+gp7VwD
-         dg4FHPV5PE5IXXK+36qfawmJOuQ5pU8m80lbg4gOCyP4TmD/uKe2q+JkV08VBR3JjWet
-         2hJiOlu7/raLFO+yZWkAr7BYwlfUMtfw4Xtk8ZrPUhuY64P6N/EekSEbjTe3X2/w92gZ
-         J+q7oillRyBdTTbSXpkJu7Pu1+AzwGWxbH3+0TfY4Wjlb9HF64L6Fl7/yTu6EHJToUH3
-         XGMg==
-X-Gm-Message-State: AOAM5314IcnpV9Lx6G9vMrzXW349SFqsdEhY08PNF+MH7cUW7kMmFNAP
-        3fXa5aC/AggUfCY6hVA+UAMngbvjBT8lXwqNYzQ=
-X-Google-Smtp-Source: ABdhPJwB4X+6tBpLVKac+Ci8QcY8d7JwzJnKtYsX5ZmTUku212I9WYUy1PR519+TyuprYJQpFZxONmasJ1ze94kQHwY=
-X-Received: by 2002:ac2:50c5:: with SMTP id h5mr8385856lfm.642.1627337015782;
- Mon, 26 Jul 2021 15:03:35 -0700 (PDT)
+        id S233491AbhGZVYy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 17:24:54 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63761 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232876AbhGZVYw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jul 2021 17:24:52 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 02F89D19F1;
+        Mon, 26 Jul 2021 18:05:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=cBTICY56f7RkAemADoovd2R9O7K3hggdq7oZbE
+        0AN14=; b=nsD/kQCpAEzdiqx8MqhgglTSEKUhmWibIcGWbj1o8Q6TosWPclwUjm
+        2qfTO5onxahP2RleDeO2QDYyS4WB8BQEUD/v+5pycE6JPEq341P8IYwF6gzCOGSk
+        PUs8XJHlrBgNy/uYec/B6GsVyzHrkf9sl4oH1WSt3RnSJjNXPNnDg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED1F1D19EB;
+        Mon, 26 Jul 2021 18:05:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 30512D19E8;
+        Mon, 26 Jul 2021 18:05:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>,
+        Fabian Stelzer <fs@gigacodes.de>
+Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Duy Nguyen <pclouds@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 4/5] Use a better name for the function interpolating
+ paths
+References: <pull.66.v2.git.1625155388.gitgitgadget@gmail.com>
+        <pull.66.v3.git.1627164413.gitgitgadget@gmail.com>
+        <19fd9c3c803a300b586c76736301a7379c4c6226.1627164413.git.gitgitgadget@gmail.com>
+Date:   Mon, 26 Jul 2021 15:05:18 -0700
+In-Reply-To: <19fd9c3c803a300b586c76736301a7379c4c6226.1627164413.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Sat, 24 Jul 2021
+        22:06:52 +0000")
+Message-ID: <xmqqh7gghgtd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <dd4aca2c-9ca2-e489-d78f-9d2a5580f1a5@mfriebe.de>
- <4e9b54b4-8e40-7fd3-ae65-d33390f3af43@mfriebe.de> <04f3b300-3ccf-c91b-6406-6a998b473a24@mfriebe.de>
- <bfc257c7-bf74-06be-ac62-9a6d27f565c9@mfriebe.de> <CAPx1GvcHiaGsuOybOijRYpmivO0dLvUFacAeOrM4DfY-uuXB2Q@mail.gmail.com>
- <070f7f5e-0e6c-2edc-1403-9265c810df17@mfriebe.de> <CAPx1GvdM7CzsbT1SWW9+OPcG9FL7WXQ7YD6aM7P0krujp_OrkQ@mail.gmail.com>
- <67f35be7-3317-6486-cdb6-62eb691eaf10@mfriebe.de>
-In-Reply-To: <67f35be7-3317-6486-cdb6-62eb691eaf10@mfriebe.de>
-From:   Chris Torek <chris.torek@gmail.com>
-Date:   Mon, 26 Jul 2021 15:03:24 -0700
-Message-ID: <CAPx1Gvey1uSr58Uf7VpC0c6J+R0tUP=VUP_dGmv_yVO-CwmvXg@mail.gmail.com>
-Subject: Re: Files modified, even after: git reset --hard
-To:     Martin <git@mfriebe.de>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 90C865BC-EE5D-11EB-84B4-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 26, 2021 at 12:57 PM Martin <git@mfriebe.de> wrote:
-> Is it possible that those cheats also look at the "replaced" (rather
-> than the "replacement") commit(s)?
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-They look at `stat` system call (well, `lstat` *call*) data, not the
-actual files.  This works better on Unix systems, where `lstat` is
-a real system call, than it does on Windows, where it's faked up
-from whatever Windows really stores as information about files.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> It is not immediately clear what `expand_user_path()` means, so let's
+> rename it to `interpolate_path()`. This also opens the path for
+> interpolating more than just a home directory.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> ...
+> diff --git a/cache.h b/cache.h
+> index ba04ff8bd36..87e4cbe9c5f 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1246,7 +1246,7 @@ typedef int create_file_fn(const char *path, void *cb);
+>  int raceproof_create_file(const char *path, create_file_fn fn, void *cb);
+>  
+>  int mkdir_in_gitdir(const char *path);
+> -char *expand_user_path(const char *path, int real_home);
+> +char *interpolate_path(const char *path, int real_home);
 
-> I am pretty sure I have "git replace"d all blobs for some of the files,
-> and yet they do get phantoms.
+This of course breaks any topic in flight that adds more places to
+use expand_user_path().
 
-The stat data are stored in Git's index.  It's the rebuilding of various
-index entries that updates what Git uses to do a fast check of file
-status.  (Note that the stat data on the index itself count as part of
-the cheating; this gets tricky.  See [1].)
+I think Fabian's "ssh signing" is not as ready as this topic, and it
+can afford to wait by rebasing on top of this topic.  By the time
+"ssh signing" gets into testable shape (right now, it does not pass
+tests when merged to 'seen'), hopefully the "expand install-prefix"
+topic may already be in 'next' if not in 'master'.
 
-There is an article at [2] on how Windows implements `stat`. It's
-probably out of date (says "VS2005").  It's interesting to me what's
-wrong here: `st_dev` is made to mirror `st_rdev` but `st_dev` should
-probably always just be zero, and they chose to attempt to store a
-file *creation* time in `st_ctime`, when that is in `st_birthtime` in a
-modern Unix-like system: the `ctime` field is the *inode change time*,
-not a file creation time.  (Fortunately Git uses neither field.)
+In the meantime, I am adding this band-aid at the tip of this topic
+to help these two topics play together better.
 
-Chris
+Thanks.
 
-[1]: https://git-scm.com/docs/racy-git/en
-[2]: https://web.archive.org/web/20101214222704/http://msdn.microsoft.com/en-us/library/14h5k7ff(v=vs.80).aspx
+
+diff --git a/cache.h b/cache.h
+index 87e4cbe9c5..679a27e17c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1247,6 +1247,8 @@ int raceproof_create_file(const char *path, create_file_fn fn, void *cb);
+ 
+ int mkdir_in_gitdir(const char *path);
+ char *interpolate_path(const char *path, int real_home);
++/* NEEDSWORK: remove this synonym once in-flight topics have migrated */
++#define expand_user_path interpolate_path
+ const char *enter_repo(const char *path, int strict);
+ static inline int is_absolute_path(const char *path)
+ {
