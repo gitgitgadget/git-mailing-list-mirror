@@ -2,89 +2,829 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E5CDC4338F
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 18:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E026C4338F
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 18:15:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 17AE460F90
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 18:13:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D9E1760F92
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 18:15:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232302AbhGZRd3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 13:33:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54236 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231207AbhGZRd3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jul 2021 13:33:29 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2FFAC061757
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 11:13:57 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id nd39so17861427ejc.5
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 11:13:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=unul+hGnesofkil6kxrjSGlIujnL3tIHcQqushDFuP8=;
-        b=SvMsOfHM8luZ1cdxS1xz3OLalkYq2QFOVkUqK4t9RBKo8O/IwZMx/CzoVzUwwCA2Uo
-         ND3UKYpsSfPsnOdCDzCFtVvHlh+uyEZXjJ7jKbotD5m54OGI/yHMafo4ZIs2uAK28bm0
-         bg/Q9iFn/BrtIqPr5KgUD/wqMn+tsqaHa+JiPnJjfrYsV1ULsnDZFqio6r2x2oirINu9
-         gG3Ldq4zldIJW55dVgfWNYmYJPlaIHGj8g7Q70ORKhR06mAi3SdZWW2g4p6KHnEZVpkw
-         Whq5UAPMChnANMVwOVwlfWZap7NOKT0I7gs8N9G5GVxBAfYyN6RFBu2MNjEftvgyRgZT
-         IeFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=unul+hGnesofkil6kxrjSGlIujnL3tIHcQqushDFuP8=;
-        b=gWtEl9znCCTESgPQwZz1Fl1gLKMi7yI08Yu1HuOg3ZSH0rfsJ8FAkXWQPrSgOIKYcN
-         jA/Zrh1vvrRIsXWuiiqfRiRn9RcXLgsUYPMXPAfPP0FCo2bGxy1/zl90JglaBTppiLOc
-         Ik8LVt2lyOmArOsYoeGkXWehg2EXk3pPDFiUi3IAN3QVi0UhZvwiapJinqP6lJXknog4
-         UREVQLQjx9lJzUID1AF8bZxZq4SwKHn96wPnZeNKw8XeeZT/aqdmjj94S/aGEShc+0Ey
-         Wsd/hrjQ0D7HQEdoVCIoI+XGqLhTSPcXmjpLWBWT+RgDWxHs59fenLUdDprAq8efjiZd
-         4YNg==
-X-Gm-Message-State: AOAM533Ix2Alka8h2ozMB5dR5yJN++T3I1DSGtr2j3dvvbzfv7QbZVLR
-        bldHv3gx9x9rzoyrFIJAGDXQ0SXvqaad2ONFEQY=
-X-Google-Smtp-Source: ABdhPJyVDaJs1IukAUU8l1JThh8z99NnLeRBrA7nAyFihVmY0BU9HbsLqo6vUpkMfMWbllWQZBJylDb21/uHKtZlPNY=
-X-Received: by 2002:a17:906:f88a:: with SMTP id lg10mr18079388ejb.283.1627323236374;
- Mon, 26 Jul 2021 11:13:56 -0700 (PDT)
+        id S232176AbhGZRfA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 13:35:00 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63965 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231207AbhGZRe7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jul 2021 13:34:59 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F3B59D0103;
+        Mon, 26 Jul 2021 14:15:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=gp4ZzvcQlzjpDpQxIUHZkuOXm47/blBUl3F74B
+        9sXok=; b=ZPc5XCFqoLfKFiy6xDAZ4C3SUN5PsqUVrnVlchohj25rYFAgVCjUZV
+        gf3vKTA6ZuBPGRQWYQT42udNCfPBHG9mbinLnGRQq+Ty27Lx1xh3QvjD4Gudh6r7
+        ij2bB/vmK8cIIe9vMP5weJ/HQK0o3j6j0kwoWKNn3dX4Aa+eOJaDI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EAEAED0102;
+        Mon, 26 Jul 2021 14:15:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 546FCD0101;
+        Mon, 26 Jul 2021 14:15:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, avarab@gmail.com
+Subject: Re: [PATCH v3 1/3] packfile-uris: support for excluding commit objects
+References: <cover.1627292424.git.dyroneteng@gmail.com>
+        <91dce385f630f4741bc6bb1540ef3c65e95a113f.1627292425.git.dyroneteng@gmail.com>
+Date:   Mon, 26 Jul 2021 11:15:25 -0700
+In-Reply-To: <91dce385f630f4741bc6bb1540ef3c65e95a113f.1627292425.git.dyroneteng@gmail.com>
+        (Teng Long's message of "Mon, 26 Jul 2021 17:46:12 +0800")
+Message-ID: <xmqqbl6pj60y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1003.git.1627311659384.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1003.git.1627311659384.gitgitgadget@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 26 Jul 2021 20:13:45 +0200
-Message-ID: <CAP8UFD37EyNcjPBeSmpAaryv9M0zqrZ98aQ36O6NXNZ9t_7CBw@mail.gmail.com>
-Subject: Re: [PATCH] Fix git-bisect when show-branch is configured to run with pager
-To:     Oded S via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, Oded Shimon <oded@istraresearch.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7387C846-EE3D-11EB-B3A0-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(Sorry, I forgot to keep the mailing list in Cc, in my first reply, so
-I am resending it...)
+Teng Long <dyroneteng@gmail.com> writes:
 
-On Mon, Jul 26, 2021 at 5:03 PM Oded S via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+> On the server, more sophisticated means of excluding objects should be
+> supported, such as commit object. This commit introduces a new
+> configuration `uploadpack.excludeobject` for this.
+
+Please avoid adjectives that express subjective values, like
+"sophisticated".  Readers will expect a lot more sophistication than
+your code actually offers and will be disappointed ("wow, that would
+be wonderful if we can say 'exclude commits made by bots, and those
+older than 3 months'---eh, you cannot do that?  where is your
+sophistication then?").
+
+Please avoid "should" without first describing the background for
+"why it should".  It would help if you briefly describe what we
+currently have and its limitation before this first paragraph
+(i.e. your "we can already exclude only blob objects" would become
+major part of the explanation, but you'd need to present in what
+situations it would help to be able to exclude other types).
+
+This commit is probalby doing too many things at once.  For example,
+refactoring like creation of match_packfile_uri_exclusions() helper
+function out of existing code (there probably are others) can and
+should be done as separate preparatory steps before the API gets
+modified (e.g. process-object callbacks gain an extra parameter) in
+tree-wide way.
+
+And by slimming the primary step that introduces the new feature,
+there will be a space to also add documentation and test in the same
+step, which would help reviewers.  With the current structure of the
+series, with a code dump in the first step with only a vague promiss
+of "sophistication" without documentation updates, reviewers cannot
+even tell how the "commit object" is used easily.
+
+Thanks.
+
+>  builtin/describe.c     |  4 +-
+>  builtin/pack-objects.c | 97 ++++++++++++++++++++++++------------------
+>  builtin/rev-list.c     |  2 +-
+>  fetch-pack.c           |  6 +++
+>  list-objects.c         | 37 +++++++++-------
+>  list-objects.h         |  2 +-
+>  object.c               | 15 +++++--
+>  object.h               |  4 ++
+>  pack-bitmap.c          |  8 ++--
+>  reachable.c            |  8 ++--
+>  revision.c             | 36 +++++++++++-----
+>  revision.h             |  4 ++
+>  upload-pack.c          |  7 +++
+>  13 files changed, 148 insertions(+), 82 deletions(-)
 >
-> From: Oded Shimon <oded@istraresearch.com>
-
-Could you explain a bit more here what is the unwanted behavior this
-patch fixes?
-
-> Signed-off-by: Oded Shimon <oded@istraresearch.com>
-> ---
->     Fix git-bisect when show-branch is configured to run with pager
-
-Usually subjects are something like:
-
-bisect: make sure show-branch doesn't use a pager
-
-Otherwise your patch looks good to me!
-
-Thanks!
+> diff --git a/builtin/describe.c b/builtin/describe.c
+> index 40482d8e9f..045da79b5c 100644
+> --- a/builtin/describe.c
+> +++ b/builtin/describe.c
+> @@ -485,9 +485,9 @@ static void process_commit(struct commit *commit, void *data)
+>  	pcd->current_commit = commit->object.oid;
+>  }
+>  
+> -static void process_object(struct object *obj, const char *path, void *data)
+> +static void process_object(struct object *obj, const char *path, void *show_data, void *carry_data)
+>  {
+> -	struct process_commit_data *pcd = data;
+> +	struct process_commit_data *pcd = show_data;
+>  
+>  	if (oideq(&pcd->looking_for, &obj->oid) && !pcd->dst->len) {
+>  		reset_revision_walk();
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 6d13cd3e1a..154c98bcb6 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -1188,6 +1188,24 @@ static int have_duplicate_entry(const struct object_id *oid,
+>  	return 1;
+>  }
+>  
+> +static int match_packfile_uri_exclusions(struct configured_exclusion *ex)
+> +{
+> +	int i;
+> +	const char *p;
+> +
+> +	if (ex) {
+> +		for (i = 0; i < uri_protocols.nr; i++) {
+> +			if (skip_prefix(ex->uri,
+> +					uri_protocols.items[i].string,
+> +					&p) &&
+> +			    *p == ':')
+> +				return 1;
+> +
+> +		}
+> +	}
+> +	return 0;
+> +}
+> +
+>  static int want_found_object(const struct object_id *oid, int exclude,
+>  			     struct packed_git *p)
+>  {
+> @@ -1293,7 +1311,8 @@ static int want_object_in_pack_one(struct packed_git *p,
+>  static int want_object_in_pack(const struct object_id *oid,
+>  			       int exclude,
+>  			       struct packed_git **found_pack,
+> -			       off_t *found_offset)
+> +			       off_t *found_offset,
+> +			       struct object *referred_commit)
+>  {
+>  	int want;
+>  	struct list_head *pos;
+> @@ -1333,21 +1352,13 @@ static int want_object_in_pack(const struct object_id *oid,
+>  	}
+>  
+>  	if (uri_protocols.nr) {
+> -		struct configured_exclusion *ex =
+> -			oidmap_get(&configured_exclusions, oid);
+> -		int i;
+> -		const char *p;
+> -
+> -		if (ex) {
+> -			for (i = 0; i < uri_protocols.nr; i++) {
+> -				if (skip_prefix(ex->uri,
+> -						uri_protocols.items[i].string,
+> -						&p) &&
+> -				    *p == ':') {
+> -					oidset_insert(&excluded_by_config, oid);
+> -					return 0;
+> -				}
+> -			}
+> +		if (referred_commit) {
+> +			if (oidmap_get(&configured_exclusions, &referred_commit->oid) && match_packfile_uri_exclusions(referred_ex))
+> +				return 0;
+> +		}
+> +		if (oidmap_get(&configured_exclusions, oid) && match_packfile_uri_exclusions(ex)) {
+> +			oidset_insert(&excluded_by_config, oid);
+> +			return 0;
+>  		}
+>  	}
+>  
+> @@ -1384,7 +1395,8 @@ static const char no_closure_warning[] = N_(
+>  );
+>  
+>  static int add_object_entry(const struct object_id *oid, enum object_type type,
+> -			    const char *name, int exclude)
+> +			    const char *name, int exclude,
+> +			    struct object *referred_commit)
+>  {
+>  	struct packed_git *found_pack = NULL;
+>  	off_t found_offset = 0;
+> @@ -1394,7 +1406,7 @@ static int add_object_entry(const struct object_id *oid, enum object_type type,
+>  	if (have_duplicate_entry(oid, exclude))
+>  		return 0;
+>  
+> -	if (!want_object_in_pack(oid, exclude, &found_pack, &found_offset)) {
+> +	if (!want_object_in_pack(oid, exclude, &found_pack, &found_offset, referred_commit)) {
+>  		/* The pack is missing an object, so it will not have closure */
+>  		if (write_bitmap_index) {
+>  			if (write_bitmap_index != WRITE_BITMAP_QUIET)
+> @@ -1420,7 +1432,7 @@ static int add_object_entry_from_bitmap(const struct object_id *oid,
+>  	if (have_duplicate_entry(oid, 0))
+>  		return 0;
+>  
+> -	if (!want_object_in_pack(oid, 0, &pack, &offset))
+> +	if (!want_object_in_pack(oid, 0, &pack, &offset, NULL))
+>  		return 0;
+>  
+>  	create_object_entry(oid, type, name_hash, 0, 0, pack, offset);
+> @@ -1560,7 +1572,7 @@ static void add_pbase_object(struct tree_desc *tree,
+>  		if (name[cmplen] != '/') {
+>  			add_object_entry(&entry.oid,
+>  					 object_type(entry.mode),
+> -					 fullname, 1);
+> +					 fullname, 1, NULL);
+>  			return;
+>  		}
+>  		if (S_ISDIR(entry.mode)) {
+> @@ -1628,7 +1640,7 @@ static void add_preferred_base_object(const char *name)
+>  	cmplen = name_cmp_len(name);
+>  	for (it = pbase_tree; it; it = it->next) {
+>  		if (cmplen == 0) {
+> -			add_object_entry(&it->pcache.oid, OBJ_TREE, NULL, 1);
+> +			add_object_entry(&it->pcache.oid, OBJ_TREE, NULL, 1, NULL);
+>  		}
+>  		else {
+>  			struct tree_desc tree;
+> @@ -2830,7 +2842,7 @@ static void add_tag_chain(const struct object_id *oid)
+>  			die(_("unable to pack objects reachable from tag %s"),
+>  			    oid_to_hex(oid));
+>  
+> -		add_object_entry(&tag->object.oid, OBJ_TAG, NULL, 0);
+> +		add_object_entry(&tag->object.oid, OBJ_TAG, NULL, 0, NULL);
+>  
+>  		if (tag->tagged->type != OBJ_TAG)
+>  			return;
+> @@ -2985,7 +2997,7 @@ static int git_pack_config(const char *k, const char *v, void *cb)
+>  			pack_idx_opts.flags &= ~WRITE_REV;
+>  		return 0;
+>  	}
+> -	if (!strcmp(k, "uploadpack.blobpackfileuri")) {
+> +	if (!strcmp(k, "uploadpack.excludeobject") || !strcmp(k, "uploadpack.blobpackfileuri")) {
+>  		struct configured_exclusion *ex = xmalloc(sizeof(*ex));
+>  		const char *oid_end, *pack_end;
+>  		/*
+> @@ -2998,11 +3010,11 @@ static int git_pack_config(const char *k, const char *v, void *cb)
+>  		    *oid_end != ' ' ||
+>  		    parse_oid_hex(oid_end + 1, &pack_hash, &pack_end) ||
+>  		    *pack_end != ' ')
+> -			die(_("value of uploadpack.blobpackfileuri must be "
+> -			      "of the form '<object-hash> <pack-hash> <uri>' (got '%s')"), v);
+> +                        die(_("value of uploadpack.excludeobject or uploadpack.blobpackfileuri must be "
+> +                              "of the form '<object-hash> <pack-hash> <uri>' (got '%s')"), v);
+>  		if (oidmap_get(&configured_exclusions, &ex->e.oid))
+> -			die(_("object already configured in another "
+> -			      "uploadpack.blobpackfileuri (got '%s')"), v);
+> +                        die(_("object already configured by an earlier "
+> +                              "uploadpack.excludeobject or uploadpack.blobpackfileuri (got '%s')"), v);
+>  		ex->pack_hash_hex = xcalloc(1, pack_end - oid_end);
+>  		memcpy(ex->pack_hash_hex, oid_end + 1, pack_end - oid_end - 1);
+>  		ex->uri = xstrdup(pack_end + 1);
+> @@ -3031,7 +3043,7 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+>  		return 0;
+>  
+>  	ofs = nth_packed_object_offset(p, pos);
+> -	if (!want_object_in_pack(oid, 0, &p, &ofs))
+> +	if (!want_object_in_pack(oid, 0, &p, &ofs, NULL))
+>  		return 0;
+>  
+>  	oi.typep = &type;
+> @@ -3059,7 +3071,7 @@ static void show_commit_pack_hint(struct commit *commit, void *_data)
+>  }
+>  
+>  static void show_object_pack_hint(struct object *object, const char *name,
+> -				  void *_data)
+> +				  void *show_data, void *carry_data)
+>  {
+>  	struct object_entry *oe = packlist_find(&to_pack, &object->oid);
+>  	if (!oe)
+> @@ -3224,7 +3236,7 @@ static void read_object_list_from_stdin(void)
+>  			die(_("expected object ID, got garbage:\n %s"), line);
+>  
+>  		add_preferred_base_object(p + 1);
+> -		add_object_entry(&oid, OBJ_NONE, p + 1, 0);
+> +		add_object_entry(&oid, OBJ_NONE, p + 1, 0, NULL);
+>  	}
+>  }
+>  
+> @@ -3233,7 +3245,7 @@ static void read_object_list_from_stdin(void)
+>  
+>  static void show_commit(struct commit *commit, void *data)
+>  {
+> -	add_object_entry(&commit->object.oid, OBJ_COMMIT, NULL, 0);
+> +	add_object_entry(&commit->object.oid, OBJ_COMMIT, NULL, 0, NULL);
+>  	commit->object.flags |= OBJECT_ADDED;
+>  
+>  	if (write_bitmap_index)
+> @@ -3243,10 +3255,11 @@ static void show_commit(struct commit *commit, void *data)
+>  		propagate_island_marks(commit);
+>  }
+>  
+> -static void show_object(struct object *obj, const char *name, void *data)
+> +static void show_object(struct object *obj, const char *name, void *show_data, void *carry_data)
+>  {
+> +	struct object *referred_commit = carry_data;
+>  	add_preferred_base_object(name);
+> -	add_object_entry(&obj->oid, obj->type, name, 0);
+> +	add_object_entry(&obj->oid, obj->type, name, 0, referred_commit);
+>  	obj->flags |= OBJECT_ADDED;
+>  
+>  	if (use_delta_islands) {
+> @@ -3265,7 +3278,7 @@ static void show_object(struct object *obj, const char *name, void *data)
+>  	}
+>  }
+>  
+> -static void show_object__ma_allow_any(struct object *obj, const char *name, void *data)
+> +static void show_object__ma_allow_any(struct object *obj, const char *name, void *show_data, void *carry_data)
+>  {
+>  	assert(arg_missing_action == MA_ALLOW_ANY);
+>  
+> @@ -3276,10 +3289,10 @@ static void show_object__ma_allow_any(struct object *obj, const char *name, void
+>  	if (!has_object(the_repository, &obj->oid, 0))
+>  		return;
+>  
+> -	show_object(obj, name, data);
+> +	show_object(obj, name, show_data, carry_data);
+>  }
+>  
+> -static void show_object__ma_allow_promisor(struct object *obj, const char *name, void *data)
+> +static void show_object__ma_allow_promisor(struct object *obj, const char *name, void *show_data, void *carry_data)
+>  {
+>  	assert(arg_missing_action == MA_ALLOW_PROMISOR);
+>  
+> @@ -3290,7 +3303,7 @@ static void show_object__ma_allow_promisor(struct object *obj, const char *name,
+>  	if (!has_object(the_repository, &obj->oid, 0) && is_promisor_object(&obj->oid))
+>  		return;
+>  
+> -	show_object(obj, name, data);
+> +	show_object(obj, name, show_data, carry_data);
+>  }
+>  
+>  static int option_parse_missing_action(const struct option *opt,
+> @@ -3397,7 +3410,7 @@ static void add_objects_in_unpacked_packs(void)
+>  		QSORT(in_pack.array, in_pack.nr, ofscmp);
+>  		for (i = 0; i < in_pack.nr; i++) {
+>  			struct object *o = in_pack.array[i].object;
+> -			add_object_entry(&o->oid, o->type, "", 0);
+> +			add_object_entry(&o->oid, o->type, "", 0, NULL);
+>  		}
+>  	}
+>  	free(in_pack.array);
+> @@ -3413,7 +3426,7 @@ static int add_loose_object(const struct object_id *oid, const char *path,
+>  		return 0;
+>  	}
+>  
+> -	add_object_entry(oid, type, "", 0);
+> +	add_object_entry(oid, type, "", 0, NULL);
+>  	return 0;
+>  }
+>  
+> @@ -3538,7 +3551,8 @@ static int get_object_list_from_bitmap(struct rev_info *revs)
+>  
+>  static void record_recent_object(struct object *obj,
+>  				 const char *name,
+> -				 void *data)
+> +				 void *show_data,
+> +				 void *carry_data)
+>  {
+>  	oid_array_append(&recent_objects, &obj->oid);
+>  }
+> @@ -3831,7 +3845,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+>  			 N_("respect islands during delta compression")),
+>  		OPT_STRING_LIST(0, "uri-protocol", &uri_protocols,
+>  				N_("protocol"),
+> -				N_("exclude any configured uploadpack.blobpackfileuri with this protocol")),
+> +				N_("exclude any configured uploadpack.excludeobject or "
+> +				   	"uploadpack.blobpackfileuri with this protocol")),
+>  		OPT_END(),
+>  	};
+>  
+> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+> index b4d8ea0a35..1cad33d9e8 100644
+> --- a/builtin/rev-list.c
+> +++ b/builtin/rev-list.c
+> @@ -266,7 +266,7 @@ static int finish_object(struct object *obj, const char *name, void *cb_data)
+>  	return 0;
+>  }
+>  
+> -static void show_object(struct object *obj, const char *name, void *cb_data)
+> +static void show_object(struct object *obj, const char *name, void *cb_data, void *carry_data)
+>  {
+>  	struct rev_list_info *info = cb_data;
+>  	struct rev_info *revs = info->revs;
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index 2318ebe680..39bb449586 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -23,6 +23,7 @@
+>  #include "fetch-negotiator.h"
+>  #include "fsck.h"
+>  #include "shallow.h"
+> +#include "strmap.h"
+>  
+>  static int transfer_unpack_limit = -1;
+>  static int fetch_unpack_limit = -1;
+> @@ -1576,6 +1577,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+>  	struct string_list packfile_uris = STRING_LIST_INIT_DUP;
+>  	int i;
+>  	struct strvec index_pack_args = STRVEC_INIT;
+> +	struct strset uris;
+>  
+>  	negotiator = &negotiator_alloc;
+>  	fetch_negotiator_init(r, negotiator);
+> @@ -1677,6 +1679,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+>  		}
+>  	}
+>  
+> +	strset_init(&uris);
+>  	for (i = 0; i < packfile_uris.nr; i++) {
+>  		int j;
+>  		struct child_process cmd = CHILD_PROCESS_INIT;
+> @@ -1684,6 +1687,8 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+>  		const char *uri = packfile_uris.items[i].string +
+>  			the_hash_algo->hexsz + 1;
+>  
+> +		if (!strset_add(&uris, uri))
+> +			continue;
+>  		strvec_push(&cmd.args, "http-fetch");
+>  		strvec_pushf(&cmd.args, "--packfile=%.*s",
+>  			     (int) the_hash_algo->hexsz,
+> @@ -1727,6 +1732,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+>  						 get_object_directory(),
+>  						 packname));
+>  	}
+> +	strset_clear(&uris);
+>  	string_list_clear(&packfile_uris, 0);
+>  	strvec_clear(&index_pack_args);
+>  
+> diff --git a/list-objects.c b/list-objects.c
+> index e19589baa0..fa3156dc89 100644
+> --- a/list-objects.c
+> +++ b/list-objects.c
+> @@ -24,7 +24,8 @@ struct traversal_context {
+>  static void process_blob(struct traversal_context *ctx,
+>  			 struct blob *blob,
+>  			 struct strbuf *path,
+> -			 const char *name)
+> +			 const char *name,
+> +			 struct object *referred_commit)
+>  {
+>  	struct object *obj = &blob->object;
+>  	size_t pathlen;
+> @@ -60,7 +61,7 @@ static void process_blob(struct traversal_context *ctx,
+>  	if (r & LOFR_MARK_SEEN)
+>  		obj->flags |= SEEN;
+>  	if (r & LOFR_DO_SHOW)
+> -		ctx->show_object(obj, path->buf, ctx->show_data);
+> +		ctx->show_object(obj, path->buf, ctx->show_data, referred_commit);
+>  	strbuf_setlen(path, pathlen);
+>  }
+>  
+> @@ -97,11 +98,13 @@ static void process_gitlink(struct traversal_context *ctx,
+>  static void process_tree(struct traversal_context *ctx,
+>  			 struct tree *tree,
+>  			 struct strbuf *base,
+> -			 const char *name);
+> +			 const char *name,
+> +			 struct object *referred_commit);
+>  
+>  static void process_tree_contents(struct traversal_context *ctx,
+>  				  struct tree *tree,
+> -				  struct strbuf *base)
+> +				  struct strbuf *base,
+> +				  struct object *referred_commit)
+>  {
+>  	struct tree_desc desc;
+>  	struct name_entry entry;
+> @@ -129,7 +132,7 @@ static void process_tree_contents(struct traversal_context *ctx,
+>  				    entry.path, oid_to_hex(&tree->object.oid));
+>  			}
+>  			t->object.flags |= NOT_USER_GIVEN;
+> -			process_tree(ctx, t, base, entry.path);
+> +			process_tree(ctx, t, base, entry.path, referred_commit);
+>  		}
+>  		else if (S_ISGITLINK(entry.mode))
+>  			process_gitlink(ctx, entry.oid.hash,
+> @@ -142,7 +145,7 @@ static void process_tree_contents(struct traversal_context *ctx,
+>  				    entry.path, oid_to_hex(&tree->object.oid));
+>  			}
+>  			b->object.flags |= NOT_USER_GIVEN;
+> -			process_blob(ctx, b, base, entry.path);
+> +			process_blob(ctx, b, base, entry.path, referred_commit);
+>  		}
+>  	}
+>  }
+> @@ -150,7 +153,8 @@ static void process_tree_contents(struct traversal_context *ctx,
+>  static void process_tree(struct traversal_context *ctx,
+>  			 struct tree *tree,
+>  			 struct strbuf *base,
+> -			 const char *name)
+> +			 const char *name,
+> +			 struct object *referred_commit)
+>  {
+>  	struct object *obj = &tree->object;
+>  	struct rev_info *revs = ctx->revs;
+> @@ -191,14 +195,14 @@ static void process_tree(struct traversal_context *ctx,
+>  	if (r & LOFR_MARK_SEEN)
+>  		obj->flags |= SEEN;
+>  	if (r & LOFR_DO_SHOW)
+> -		ctx->show_object(obj, base->buf, ctx->show_data);
+> +		ctx->show_object(obj, base->buf, ctx->show_data, referred_commit);
+>  	if (base->len)
+>  		strbuf_addch(base, '/');
+>  
+>  	if (r & LOFR_SKIP_TREE)
+>  		trace_printf("Skipping contents of tree %s...\n", base->buf);
+>  	else if (!failed_parse)
+> -		process_tree_contents(ctx, tree, base);
+> +		process_tree_contents(ctx, tree, base, referred_commit);
+>  
+>  	r = list_objects_filter__filter_object(ctx->revs->repo,
+>  					       LOFS_END_TREE, obj,
+> @@ -207,7 +211,7 @@ static void process_tree(struct traversal_context *ctx,
+>  	if (r & LOFR_MARK_SEEN)
+>  		obj->flags |= SEEN;
+>  	if (r & LOFR_DO_SHOW)
+> -		ctx->show_object(obj, base->buf, ctx->show_data);
+> +		ctx->show_object(obj, base->buf, ctx->show_data, referred_commit);
+>  
+>  	strbuf_setlen(base, baselen);
+>  	free_tree_buffer(tree);
+> @@ -314,9 +318,9 @@ void mark_edges_uninteresting(struct rev_info *revs,
+>  	}
+>  }
+>  
+> -static void add_pending_tree(struct rev_info *revs, struct tree *tree)
+> +static void add_pending_tree(struct rev_info *revs,  struct tree *tree, struct object *referred_commit)
+>  {
+> -	add_pending_object(revs, &tree->object, "");
+> +	add_pending_object_with_referred_commit(revs, &tree->object, "", referred_commit);
+>  }
+>  
+>  static void traverse_trees_and_blobs(struct traversal_context *ctx,
+> @@ -329,23 +333,24 @@ static void traverse_trees_and_blobs(struct traversal_context *ctx,
+>  	for (i = 0; i < ctx->revs->pending.nr; i++) {
+>  		struct object_array_entry *pending = ctx->revs->pending.objects + i;
+>  		struct object *obj = pending->item;
+> +		struct object *referred_commit = pending->referred_commit;
+>  		const char *name = pending->name;
+>  		const char *path = pending->path;
+>  		if (obj->flags & (UNINTERESTING | SEEN))
+>  			continue;
+>  		if (obj->type == OBJ_TAG) {
+>  			obj->flags |= SEEN;
+> -			ctx->show_object(obj, name, ctx->show_data);
+> +			ctx->show_object(obj, name, ctx->show_data, referred_commit);
+>  			continue;
+>  		}
+>  		if (!path)
+>  			path = "";
+>  		if (obj->type == OBJ_TREE) {
+> -			process_tree(ctx, (struct tree *)obj, base, path);
+> +			process_tree(ctx, (struct tree *)obj, base, path, referred_commit);
+>  			continue;
+>  		}
+>  		if (obj->type == OBJ_BLOB) {
+> -			process_blob(ctx, (struct blob *)obj, base, path);
+> +			process_blob(ctx, (struct blob *)obj, base, path, referred_commit);
+>  			continue;
+>  		}
+>  		die("unknown pending object %s (%s)",
+> @@ -370,7 +375,7 @@ static void do_traverse(struct traversal_context *ctx)
+>  		else if (get_commit_tree(commit)) {
+>  			struct tree *tree = get_commit_tree(commit);
+>  			tree->object.flags |= NOT_USER_GIVEN;
+> -			add_pending_tree(ctx->revs, tree);
+> +			add_pending_tree(ctx->revs, tree, &commit->object);
+>  		} else if (commit->object.parsed) {
+>  			die(_("unable to load root tree for commit %s"),
+>  			      oid_to_hex(&commit->object.oid));
+> diff --git a/list-objects.h b/list-objects.h
+> index a952680e46..ab946d34db 100644
+> --- a/list-objects.h
+> +++ b/list-objects.h
+> @@ -6,7 +6,7 @@ struct object;
+>  struct rev_info;
+>  
+>  typedef void (*show_commit_fn)(struct commit *, void *);
+> -typedef void (*show_object_fn)(struct object *, const char *, void *);
+> +typedef void (*show_object_fn)(struct object *, const char *, void *, void *);
+>  void traverse_commit_list(struct rev_info *, show_commit_fn, show_object_fn, void *);
+>  
+>  typedef void (*show_edge_fn)(struct commit *);
+> diff --git a/object.c b/object.c
+> index 14188453c5..6b1ce2fcde 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -322,9 +322,10 @@ void object_list_free(struct object_list **list)
+>   */
+>  static char object_array_slopbuf[1];
+>  
+> -void add_object_array_with_path(struct object *obj, const char *name,
+> -				struct object_array *array,
+> -				unsigned mode, const char *path)
+> +void add_object_array_with_path_and_referred_commit(struct object *obj, const char *name,
+> +						    struct object_array *array,
+> +						    unsigned mode, const char *path,
+> +						    struct object *referred_commit)
+>  {
+>  	unsigned nr = array->nr;
+>  	unsigned alloc = array->alloc;
+> @@ -339,6 +340,7 @@ void add_object_array_with_path(struct object *obj, const char *name,
+>  	}
+>  	entry = &objects[nr];
+>  	entry->item = obj;
+> +	entry->referred_commit = referred_commit;
+>  	if (!name)
+>  		entry->name = NULL;
+>  	else if (!*name)
+> @@ -354,6 +356,13 @@ void add_object_array_with_path(struct object *obj, const char *name,
+>  	array->nr = ++nr;
+>  }
+>  
+> +void add_object_array_with_path(struct object *obj, const char *name,
+> +				struct object_array *array,
+> +				unsigned mode, const char *path)
+> +{
+> +	add_object_array_with_path_and_referred_commit(obj, name, array, mode, path, NULL);
+> +}
+> +
+>  void add_object_array(struct object *obj, const char *name, struct object_array *array)
+>  {
+>  	add_object_array_with_path(obj, name, array, S_IFINVALID, NULL);
+> diff --git a/object.h b/object.h
+> index 87a6da47c8..de9f15b97d 100644
+> --- a/object.h
+> +++ b/object.h
+> @@ -43,6 +43,7 @@ struct object_array {
+>  	unsigned int alloc;
+>  	struct object_array_entry {
+>  		struct object *item;
+> +		struct object *referred_commit;
+>  		/*
+>  		 * name or NULL.  If non-NULL, the memory pointed to
+>  		 * is owned by this object *except* if it points at
+> @@ -157,6 +158,9 @@ void object_list_free(struct object_list **list);
+>  /* Object array handling .. */
+>  void add_object_array(struct object *obj, const char *name, struct object_array *array);
+>  void add_object_array_with_path(struct object *obj, const char *name, struct object_array *array, unsigned mode, const char *path);
+> +void add_object_array_with_path_and_referred_commit(struct object *obj, const char *name, struct object_array *array,
+> +						    unsigned mode, const char *path,
+> +						    struct object *referred_commit);
+>  
+>  /*
+>   * Returns NULL if the array is empty. Otherwise, returns the last object
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index 3ed15431cd..516eb235da 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -459,9 +459,9 @@ struct bitmap_show_data {
+>  	struct bitmap *base;
+>  };
+>  
+> -static void show_object(struct object *object, const char *name, void *data_)
+> +static void show_object(struct object *object, const char *name, void *show_data, void *carry_data)
+>  {
+> -	struct bitmap_show_data *data = data_;
+> +	struct bitmap_show_data *data = show_data;
+>  	int bitmap_pos;
+>  
+>  	bitmap_pos = bitmap_position(data->bitmap_git, &object->oid);
+> @@ -1268,9 +1268,9 @@ struct bitmap_test_data {
+>  };
+>  
+>  static void test_show_object(struct object *object, const char *name,
+> -			     void *data)
+> +			     void *show_data, void *carry_data)
+>  {
+> -	struct bitmap_test_data *tdata = data;
+> +	struct bitmap_test_data *tdata = show_data;
+>  	int bitmap_pos;
+>  
+>  	bitmap_pos = bitmap_position(tdata->bitmap_git, &object->oid);
+> diff --git a/reachable.c b/reachable.c
+> index 77a60c70a5..ebd817c446 100644
+> --- a/reachable.c
+> +++ b/reachable.c
+> @@ -47,14 +47,14 @@ static int add_one_ref(const char *path, const struct object_id *oid,
+>   * The traversal will have already marked us as SEEN, so we
+>   * only need to handle any progress reporting here.
+>   */
+> -static void mark_object(struct object *obj, const char *name, void *data)
+> +static void mark_object(struct object *obj, const char *name, void *show_data, void *carry_data)
+>  {
+> -	update_progress(data);
+> +	update_progress(show_data);
+>  }
+>  
+> -static void mark_commit(struct commit *c, void *data)
+> +static void mark_commit(struct commit *c, void *show_data)
+>  {
+> -	mark_object(&c->object, NULL, data);
+> +	mark_object(&c->object, NULL, show_data,  NULL);
+>  }
+>  
+>  struct recent_data {
+> diff --git a/revision.c b/revision.c
+> index 4853c85d0b..da0ce0e3f2 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -304,10 +304,11 @@ void mark_parents_uninteresting(struct commit *commit)
+>  	commit_stack_clear(&pending);
+>  }
+>  
+> -static void add_pending_object_with_path(struct rev_info *revs,
+> -					 struct object *obj,
+> -					 const char *name, unsigned mode,
+> -					 const char *path)
+> +static void add_pending_object_with_path_and_referred_commit(struct rev_info *revs,
+> +							     struct object *obj,
+> +							     const char *name, unsigned mode,
+> +							     const char *path,
+> +							     struct object *referred_commit)
+>  {
+>  	struct interpret_branch_name_options options = { 0 };
+>  	if (!obj)
+> @@ -326,20 +327,36 @@ static void add_pending_object_with_path(struct rev_info *revs,
+>  		strbuf_release(&buf);
+>  		return; /* do not add the commit itself */
+>  	}
+> -	add_object_array_with_path(obj, name, &revs->pending, mode, path);
+> +	add_object_array_with_path_and_referred_commit(obj, name, &revs->pending, mode, path, referred_commit);
+> +}
+> +
+> +static void add_pending_object_with_path(struct rev_info *revs,
+> +					 struct object *obj,
+> +					 const char *name, unsigned mode,
+> +					 const char *path) {
+> +	add_pending_object_with_path_and_referred_commit(revs, obj, name, mode, path, NULL);
+>  }
+>  
+>  static void add_pending_object_with_mode(struct rev_info *revs,
+>  					 struct object *obj,
+> -					 const char *name, unsigned mode)
+> +					 const char *name, unsigned mode,
+> +					 struct object *referred_commit)
+>  {
+> -	add_pending_object_with_path(revs, obj, name, mode, NULL);
+> +
+> +	add_pending_object_with_path_and_referred_commit(revs, obj, name, mode, NULL, referred_commit);
+> +}
+> +
+> +void add_pending_object_with_referred_commit(struct rev_info *revs,
+> +					     struct object *obj, const char *name,
+> +					     struct object *referred_commit)
+> +{
+> +	add_pending_object_with_mode(revs, obj, name, S_IFINVALID, referred_commit);
+>  }
+>  
+>  void add_pending_object(struct rev_info *revs,
+>  			struct object *obj, const char *name)
+>  {
+> -	add_pending_object_with_mode(revs, obj, name, S_IFINVALID);
+> +	add_pending_object_with_mode(revs, obj, name, S_IFINVALID, NULL);
+>  }
+>  
+>  void add_head_to_pending(struct rev_info *revs)
+> @@ -2764,7 +2781,6 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+>  			continue;
+>  		}
+>  
+> -
+>  		if (handle_revision_arg(arg, revs, flags, revarg_opt)) {
+>  			int j;
+>  			if (seen_dashdash || *arg == '^')
+> @@ -2817,7 +2833,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+>  		if (get_oid_with_context(revs->repo, revs->def, 0, &oid, &oc))
+>  			diagnose_missing_default(revs->def);
+>  		object = get_reference(revs, revs->def, &oid, 0);
+> -		add_pending_object_with_mode(revs, object, revs->def, oc.mode);
+> +		add_pending_object_with_mode(revs, object, revs->def, oc.mode, NULL);
+>  	}
+>  
+>  	/* Did the user ask for any diff output? Run the diff! */
+> diff --git a/revision.h b/revision.h
+> index a24f72dcd1..8a632e3587 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -424,6 +424,10 @@ void show_object_with_name(FILE *, struct object *, const char *);
+>  void add_pending_object(struct rev_info *revs,
+>  			struct object *obj, const char *name);
+>  
+> +void add_pending_object_with_referred_commit(struct rev_info *revs,
+> +					     struct object *obj, const char *name,
+> +					     struct object *referred_commit);
+> +
+>  void add_pending_oid(struct rev_info *revs,
+>  		     const char *name, const struct object_id *oid,
+>  		     unsigned int flags);
+> diff --git a/upload-pack.c b/upload-pack.c
+> index 5c1cd19612..d26fb351a3 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -1751,6 +1751,13 @@ int upload_pack_advertise(struct repository *r,
+>  			strbuf_addstr(value, " packfile-uris");
+>  			free(str);
+>  		}
+> +
+> +		if (!repo_config_get_string(the_repository,
+> +					    "uploadpack.excludeobject",
+> +					    &str) && str) {
+> +			strbuf_addstr(value, " packfile-uris");
+> +			free(str);
+> +		}
+>  	}
+>  
+>  	return 1;
