@@ -2,135 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E863FC4320A
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 13:33:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D66AC4338F
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 13:57:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C8C8860F02
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 13:33:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1474560F46
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 13:57:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230421AbhGZMxI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 08:53:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44500 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233563AbhGZMxH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jul 2021 08:53:07 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 913F7C061757
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 06:33:35 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id k13so6942675qth.10
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 06:33:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=HAuC+sx01wmwO/DGOX/OT5M7pTvi6hcM4YrB0sqhTnk=;
-        b=ND6cuASOw1ltnv9kf53tB74aj3e4FiVZ8Vy+cf10087fRDNTm8n6MrQWC04kN5HHgT
-         Z+XwbrrpTOkGdNLAAhmoU+lmqLNVGmFm3meycOTBxgK27hcKfGn9vwdq3eRU4P59XxQB
-         iybvIKyA7Be6b+jpNnEtoNi9lXbEI2Pivus5TgscjnxCceXOXHCKCEnDiBh+XC0h/ASG
-         8lh42N8wJ4pK2x3WdOE6eTiaMu2/ighV5955uwLIbBjuN0LEXi1538fiD0HOwIJA1aeC
-         jhwFzWePyBiByPqeSIe+sXcB8pk32KWFBCjDZ1NC5Xmcnj20QyaT0GKCc+Vs2dessh0G
-         uVnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=HAuC+sx01wmwO/DGOX/OT5M7pTvi6hcM4YrB0sqhTnk=;
-        b=fa+ps55NU0M3sq6yUIMuBY3ZjUEfa4zY5WfFYjeekmsqF0GRqZuQuQ6n7usRNO4O0Q
-         3O2bT8Ugr1dCJZb8ipKhcouQuhw6oZttFLTwzRtqyf0/bL4+LsA2jDX+71HYaIvlB2w+
-         jMWIRnsrhE44rM0MTSqEG1Wn1/W5e+UNxw4PVrzQtbSOljz95AdLrFJwtjavJQVYDfEK
-         UTrGwMsThTLSm1D5LhY7q7vM0TJrJQFib5MV3G4p8yhcT66JWcpT1ZjxxeiACB141qBg
-         BrgRZ6K+ofuY6IigZ0amtO5it6IFVfxn/0jDz03/h3covEepJDX4+ERnW3iMxlulTMd2
-         OLng==
-X-Gm-Message-State: AOAM532mjkeYSTo7i/qbKag4XGth7RyDaRS85QXEkJrXRh7LlMFVMfUN
-        ewI7KBM6GujkvYNG47JH5zY=
-X-Google-Smtp-Source: ABdhPJxVrNVjAfS04EuCE82RPyJ2eXL/a6kXac3eLJSEVNXpC8jngLkXk5N1UkLwA+tY8140bMs3ZQ==
-X-Received: by 2002:ac8:4b6f:: with SMTP id g15mr15077474qts.13.1627306414588;
-        Mon, 26 Jul 2021 06:33:34 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:8509:d58a:ff00:9b31? ([2600:1700:e72:80a0:8509:d58a:ff00:9b31])
-        by smtp.gmail.com with ESMTPSA id o15sm13054qtp.25.2021.07.26.06.33.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Jul 2021 06:33:33 -0700 (PDT)
-Subject: Re: [PATCH 2/5] add: allow operating on a sparse-only index
-To:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.999.git.1626901619.gitgitgadget@gmail.com>
- <791c6c2c9ade5b065fc0f367e00c52a493d086ef.1626901619.git.gitgitgadget@gmail.com>
- <CABPp-BHQ52WpCKc8dxaV+u1QZCeT-YieQynTmK_w84r_Tc=VGQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <26eb25b6-2805-6dff-fc59-f6bc52a03142@gmail.com>
-Date:   Mon, 26 Jul 2021 09:33:32 -0400
+        id S233993AbhGZNRD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 09:17:03 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.31.29]:53008 "EHLO
+        smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230421AbhGZNRC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jul 2021 09:17:02 -0400
+Received: from [84.163.73.49] (helo=[192.168.2.202])
+        by smtprelay02.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <git@mfriebe.de>)
+        id 1m815N-0004zw-7C; Mon, 26 Jul 2021 15:56:01 +0200
+Subject: Re: Files modified, even after: git reset --hard
+From:   Martin <git@mfriebe.de>
+To:     Chris Torek <chris.torek@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <dd4aca2c-9ca2-e489-d78f-9d2a5580f1a5@mfriebe.de>
+ <4e9b54b4-8e40-7fd3-ae65-d33390f3af43@mfriebe.de>
+ <04f3b300-3ccf-c91b-6406-6a998b473a24@mfriebe.de>
+ <bfc257c7-bf74-06be-ac62-9a6d27f565c9@mfriebe.de>
+ <CAPx1GvcHiaGsuOybOijRYpmivO0dLvUFacAeOrM4DfY-uuXB2Q@mail.gmail.com>
+ <070f7f5e-0e6c-2edc-1403-9265c810df17@mfriebe.de>
+ <CAPx1GvdM7CzsbT1SWW9+OPcG9FL7WXQ7YD6aM7P0krujp_OrkQ@mail.gmail.com>
+ <f454bf5b-c5ff-4140-02a8-b02dcd35c6b9@mfriebe.de>
+Message-ID: <5ca837f6-44dd-2b43-32dc-e1e134d18d61@mfriebe.de>
+Date:   Mon, 26 Jul 2021 15:57:29 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.12.0
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BHQ52WpCKc8dxaV+u1QZCeT-YieQynTmK_w84r_Tc=VGQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <f454bf5b-c5ff-4140-02a8-b02dcd35c6b9@mfriebe.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-Df-Sender: bWVAbWZyaWViZS5kZQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/23/2021 1:45 PM, Elijah Newren wrote:
-> On Wed, Jul 21, 2021 at 2:07 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
+On 26/07/2021 12:31, Martin wrote:
+> On 26/07/2021 04:59, Chris Torek wrote:
+>> On Sun, Jul 25, 2021 at 6:34 PM Martin <git@mfriebe.de> wrote:
+>>> Actually there is something else.
+>>>
+>>> If a file has line-endings that will change, then
+>>>      git add --renormalize .
+>>>      git commit -m foo
+>>> will commit those files.
+>>>
+>>> But I am now also getting files, that show modified, but that can 
+>>> not be
+>>> committed renormalized (0 lines changed).
 >>
-...
->> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
->> index a3c01d588d8..a11d9d7f35d 100755
->> --- a/t/t1092-sparse-checkout-compatibility.sh
->> +++ b/t/t1092-sparse-checkout-compatibility.sh
->> @@ -340,13 +340,6 @@ test_expect_success 'status/add: outside sparse cone' '
->>
->>         test_sparse_match git status --porcelain=v2 &&
->>
->> -       # This "git add folder1/a" fails with a warning
->> -       # in the sparse repos, differing from the full
->> -       # repo. This is intentional.
->> -       test_sparse_match test_must_fail git add folder1/a &&
->> -       test_sparse_match test_must_fail git add --refresh folder1/a &&
->> -       test_all_match git status --porcelain=v2 &&
->> -
-> 
-> Why was this chunk removed?  Nothing in the commit message mentions
-> this, and it's not clear to me the reason for it.
-> 
-> I tried adding it back in at the end of the series and it still works
-> (and further I can't change test_sparse_match to test_all_match and
-> have the test work).
+>> I believe (but can't demonstrate) that this is a temporary condition.
+>
+> I now found one, that does not seem temporary at all...
+>
+> git remote -v
+> origin  git://sourceware.org/git/binutils-gdb.git (fetch)
+> origin  git://sourceware.org/git/binutils-gdb.git (push)
+>
+> Switching to a far away commit
+> git switch -f --detach master
+> git rev-list master | wc -l
+> 93917
+>
+> git status shows no modified files
+>
+>
+> Then switching to  (this is on master branch)
+> git switch -f --detach a362ee23634
+> git rev-list a362ee23634 | wc -l
+> 4164
+>
+> git status --porcelain=v2
+> 1 .M N... 100644 100644 100644 
+> 9e677a52ae690808165993a0f3f17ac49e3969df 
+> 9e677a52ae690808165993a0f3f17ac49e3969df bfd/Makefile.dos
+> 1 .M N... 100644 100644 100644 
+> ff24f19c0b6e0c7fb713c79e8f1765bc22fe7adc 
+> ff24f19c0b6e0c7fb713c79e8f1765bc22fe7adc binutils/Makefile.dos
+> 1 .M N... 100644 100644 100644 
+> 1d9541c2f896842d1bafe68ccf0a51e291d66688 
+> 1d9541c2f896842d1bafe68ccf0a51e291d66688 gas/Makefile.dos
+> 1 .M N... 100644 100644 100644 
+> 57fab985680ea151379069abe414bcb590cdd743 
+> 57fab985680ea151379069abe414bcb590cdd743 ld/Makefile.dos
 
-I mentioned this in a reply to Junio, but this hunk removal is confusing.
+This seems an issue with gitforwindows.
 
-As of this patch, this hunk causes a failure due to an error message not
-matching, specifically this error:
+I checked on 2 linux distros (git 2.25 and 2.31.1) and both are fine.
 
+On Windows I set
+core.autocrlf false
+core.fscache false
 
-+ diff -u sparse-checkout-err sparse-index-err
---- sparse-checkout-err 2021-07-26 13:30:50.304291264 +0000
-+++ sparse-index-err    2021-07-26 13:30:50.308291259 +0000
-@@ -1,5 +1 @@
--The following pathspecs didn't match any eligible path, but they do match index
--entries outside the current sparse checkout:
--folder1/a
--hint: Disable or modify the sparsity rules if you intend to update such entries.
--hint: Disable this message with "git config advice.updateSparsePath false"
-+fatal: pathspec 'folder1/a' did not match any files
+Made a new clone, some (applied config as above), issue still present.
 
+Tested with gitforwindow 2.32, 2.31.1 and 2.30.2
 
-A similar test is added as a failure case in patch 4, then marked as success
-in patch 5. This organization of test changes could be organized better, so
-I will work on that in v2, along with your other suggestions.
-
-Thanks,
--Stolee
