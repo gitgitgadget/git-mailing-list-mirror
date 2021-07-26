@@ -5,57 +5,57 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29E41C432BE
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 23:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5DB5C4338F
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 23:44:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0DD6960F5D
-	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 23:44:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 930E560F5D
+	for <git@archiver.kernel.org>; Mon, 26 Jul 2021 23:44:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234147AbhGZXEQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 19:04:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44866 "EHLO
+        id S234094AbhGZXER (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 19:04:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233809AbhGZXEM (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234219AbhGZXEM (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 26 Jul 2021 19:04:12 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C349BC061760
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0191CC061757
         for <git@vger.kernel.org>; Mon, 26 Jul 2021 16:44:39 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id c16so3145754wrp.13
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 16:44:39 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id b7so12995556wri.8
+        for <git@vger.kernel.org>; Mon, 26 Jul 2021 16:44:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HNxVXXRDyI4L8G5q6ZN0S8Pzigq9Pz5EPYOqEs4g9BA=;
-        b=g8ax7pwG8mAqtbaJn7UkR39rnSYqF842wQ+NCKP0/sePJyXZaxwoLNJfMBm20mzFtO
-         YdcVuDH9V5iVz8lDfhm+wisFvRRVsp+ViSU9UGSz6NY521PoBC+oDBiJH73Kj2c+PXQK
-         5D4jrN6KNHm22yesxVQZNnArXnfXBV8Mk+ie/poxCLn645F8PV8q+ljFhDuRFpi/crf6
-         DYliCk6GCVFKQQZ9WcvgpEbRuFDvkFTYKbDvTO5yQmsgBOZJzr1VW8ZmWWWkmTVHyP4x
-         CxbKcjPam+1F9pWYaokcgxJnericKo3SvY232MvIcfeBP3+COW6XrcmaCn3wjy1pTa24
-         rQEA==
+        bh=MK6Z9Cquc5ZGzDpswqqlxg0vxDFGVV9ytrRsG0F+cXQ=;
+        b=RSrWPabPkIkaFLBFj2FWZkSzyLgInbzwZ6HK8Xpz/KVxSTrr9V+B/sfEElBfsvIU1f
+         qAJ4UXmaY+cB5c2oVM+MXf+gmp1cde1N20OpdT1kUGGsT+BWo7hAlLpp033yUuXzmIjK
+         3epVc2ReSXwFMwtGXA+jWzt6n02yjc5tabDdqUjbtD7zMZ8Rp26zzZPShsFD2XIi6MWD
+         bLaHtP/hq9Tl5Pgw2EHHFcWTmJFGjKReQ3uTNYxsDKoPzqfpMMTgzSROdJ5I5A2fQtBG
+         qkdBHaUPXiX8X/N8GNfKU34hmSK/8yHGCTCcLg/rdpM64PgS+SHyBGZm90KUrgAqxoQm
+         3sAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HNxVXXRDyI4L8G5q6ZN0S8Pzigq9Pz5EPYOqEs4g9BA=;
-        b=cAS7tASVnRoW62DNLRZCG/yj7GYmUjjtZFwuQR/8O+jWTCv6k3t6FTWU7U7IHpVEQV
-         KumgSh6o/amBWn3rXTz4PIaumyDMl5h1jMS4rmffTu0zStmYhBwj/DKX0hfJJLz1FRiW
-         O4Ybd0FYoqX1goA0AaISgJ15tyfSSnhrIe3SX54USpnCWEdjo6afvlE0nDxCR22sBFpi
-         Fbd4y7mWg+PjOx4McmeeMNFTEi11Dq9C6CV+czI+pIv0g+28s58uM/GZflLC+w7RsKE7
-         oveRszggShBXcEJA6CXvRqjbdgt/0AIyLFXvkZQd0p6qqtXZaDE9yNrwuBSWXjFAr5xF
-         ApWw==
-X-Gm-Message-State: AOAM5325rJaMnsqTRTBjMU/dbKT7h17jlrhtWFtZucFy3728L8twUKSw
-        YPOqEWTZucfxHQlQSea5gKiM6y1/ya2nBw==
-X-Google-Smtp-Source: ABdhPJybHuDxEyCUqvARf3UO04f+k+RpfJh9OQJSNl93AzMG4P0A+nv1cAsFnDO3g9fA1A93Uqksww==
-X-Received: by 2002:a05:6000:1c4:: with SMTP id t4mr21813217wrx.181.1627343078202;
-        Mon, 26 Jul 2021 16:44:38 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n18sm1214545wrt.89.2021.07.26.16.44.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=MK6Z9Cquc5ZGzDpswqqlxg0vxDFGVV9ytrRsG0F+cXQ=;
+        b=rPzfWMvBfGJyis7upxeQlFxJaSJmeaDBH/O6p3//2zmOh3Gi4E/q7p87I7gQOzOJ6P
+         dEwCBKPY8p+HOOv/5OYxvXusyFlhCMFfQeyckJs3hP4OaJ98uW0x5wDRtxV/IYUf7bdi
+         5bH8yzzAPMVdaIl5NQOAJGrmppYOPw90wTBVPa2lc0KPs7zP3TDgsaFce0eR0f+ZwKP7
+         vaTrdP2R1GZsnBqJMK3whaNzK0OsiT0JPVyy4vYwFokAEFmUGHLE3lZOv/8yOn9zF5u6
+         d5pbWXBaqpQxImqWI7oaKHW8TavLdPPedBdWOTeAf+CMFFgRe8gyEVaCfpfslB9m1yvr
+         1sFw==
+X-Gm-Message-State: AOAM530Mxwu3XzG5FaWfAxFHkn6N49AbRJOHrIxYXA31C7d/IqhZV84n
+        8sjL3ixMN6fvNSETUVCd94sbgHeR3UFxVQ==
+X-Google-Smtp-Source: ABdhPJx1VXC534y7pBIIKmTVtT4aJhZOJIyZTqQtcx2pe5MVNdnog6c49hhc3g17Z/k9IpL1JsU/MQ==
+X-Received: by 2002:a05:6000:1a86:: with SMTP id f6mr21113641wry.127.1627343077215;
         Mon, 26 Jul 2021 16:44:37 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id n18sm1214545wrt.89.2021.07.26.16.44.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Jul 2021 16:44:36 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Michael Haggerty <mhagger@alum.mit.edu>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 09/11] refs/files: remove unused "oid" in lock_ref_oid_basic()
-Date:   Tue, 27 Jul 2021 01:44:25 +0200
-Message-Id: <patch-09.11-b61c734cf5-20210726T234237Z-avarab@gmail.com>
+Subject: [PATCH v4 08/11] reflog expire: don't lock reflogs using previously seen OID
+Date:   Tue, 27 Jul 2021 01:44:24 +0200
+Message-Id: <patch-08.11-c9c2da3599-20210726T234237Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.988.g1a6a4b2c5f
 In-Reply-To: <cover-00.11-0000000000-20210726T234237Z-avarab@gmail.com>
 References: <cover-00.12-00000000000-20210720T102051Z-avarab@gmail.com> <cover-00.11-0000000000-20210726T234237Z-avarab@gmail.com>
@@ -77,173 +77,255 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the preceding commit the last caller that passed a non-NULL OID was
-changed to pass NULL to lock_ref_oid_basic(). As noted in preceding
-commits use of this API has been going away (we should use ref
-transactions, or lock_raw_ref()), so we're unlikely to gain new
-callers that want to pass the "oid".
+During reflog expiry, the cmd_reflog_expire() function first iterates
+over all reflogs in logs/*, and then one-by-one acquires the lock for
+each one and expires it. This behavior has been with us since this
+command was implemented in 4264dc15e1 ("git reflog expire",
+2006-12-19).
 
-So let's remove it, doing so means we can remove the "mustexist"
-condition, and therefore anything except the "flags =
-RESOLVE_REF_NO_RECURSE" case.
+Change this to stop calling lock_ref_oid_basic() with the OID we saw
+when we looped over the logs, instead have it pass the OID it managed
+to lock.
 
-Furthermore, since the verify_lock() function we called did most of
-its work when the "oid" was passed (as "old_oid") we can inline the
-trivial part of it that remains in its only remaining caller. Without
-a NULL "oid" passed it was equivalent to calling refs_read_ref_full()
-followed by oidclr().
+This mostly mitigates a race condition where e.g. "git gc" will fail
+in a concurrently updated repository because the branch moved since
+"git reflog expire --all" was started. I.e. with:
+
+    error: cannot lock ref '<refname>': ref '<refname>' is at <OID-A> but expected <OID-B>
+
+This behavior of passing in an "oid" was needed for an edge-case that
+I've untangled in this and preceding commits though, namely that we
+needed this OID because we'd:
+
+ 1. Lookup the reflog name/OID via dwim_log()
+ 2. With that OID, lock the reflog
+ 3. Later in builtin/reflog.c we use the OID we looked as input to
+    lookup_commit_reference_gently(), assured that it's equal to the
+    OID we got from dwim_log().
+
+We can be sure that this change is safe to make because between
+dwim_log (step #1) and lock_ref_oid_basic (step #2) there was no other
+logic relevant to the OID or expiry run in the cmd_reflog_expire()
+caller.
+
+We can thus treat that code as a black box, before and after this
+change it would get an OID that's been locked, the only difference is
+that now we mostly won't be failing to get the lock due to the TOCTOU
+race[0]. That failure was purely an implementation detail in how the
+"current OID" was looked up, it was divorced from the locking
+mechanism.
+
+What do we mean with "mostly"? It mostly mitigates it because we'll
+still run into cases where the ref is locked and being updated as we
+want to expire it, and other git processes wanting to update the refs
+will in turn race with us as we expire the reflog.
+
+That remaining race can in turn be mitigated with the
+core.filesRefLockTimeout setting, see 4ff0f01cb7 ("refs: retry
+acquiring reference locks for 100ms", 2017-08-21). In practice if that
+value is high enough we'll probably never have ref updates or reflog
+expiry failing, since the clients involved will retry for far longer
+than the time any of those operations could take.
+
+See [1] for an initial report of how this impacted "git gc" and a
+large discussion about this change in early 2019. In particular patch
+looked good to Michael Haggerty, see his[2]. That message seems to not
+have made it to the ML archive, its content is quoted in full in my
+[3].
+
+I'm leaving behind now-unused code the refs API etc. that takes the
+now-NULL "unused_oid" argument, and other code that can be simplified now
+that we never have on OID in that context, that'll be cleaned up in
+subsequent commits, but for now let's narrowly focus on fixing the
+"git gc" issue. As the modified assert() shows we always pass a NULL
+oid to reflog_expire() now.
+
+Unfortunately this sort of probabilistic contention is hard to turn
+into a test. I've tested this by running the following three subshells
+in concurrent terminals:
+
+    (
+        rm -rf /tmp/git &&
+        git init /tmp/git &&
+        while true
+        do
+            head -c 10 /dev/urandom | hexdump >/tmp/git/out &&
+            git -C /tmp/git add out &&
+            git -C /tmp/git commit -m"out"
+        done
+    )
+
+    (
+	rm -rf /tmp/git-clone &&
+        git clone file:///tmp/git /tmp/git-clone &&
+        while git -C /tmp/git-clone pull
+        do
+            date
+        done
+    )
+
+    (
+        while git -C /tmp/git-clone reflog expire --all
+        do
+            date
+        done
+    )
+
+Before this change the "reflog expire" would fail really quickly with
+the "but expected" error noted above.
+
+After this change both the "pull" and "reflog expire" will run for a
+while, but eventually fail because I get unlucky with
+core.filesRefLockTimeout (the "reflog expire" is in a really tight
+loop). As noted above that can in turn be mitigated with higher values
+of core.filesRefLockTimeout than the 100ms default.
+
+As noted in the commentary added in the preceding commit there's also
+the case of branches being racily deleted, that can be tested by
+adding this to the above:
+
+    (
+        while git -C /tmp/git-clone branch topic master &&
+	      git -C /tmp/git-clone branch -D topic
+        do
+            date
+        done
+    )
+
+With core.filesRefLockTimeout set to 10 seconds (it can probably be a
+lot lower) I managed to run all four of these concurrently for about
+an hour, and accumulated ~125k commits, auto-gc's and all, and didn't
+have a single failure. The loops visibly stall while waiting for the
+lock, but that's expected and desired behavior.
+
+0. https://en.wikipedia.org/wiki/Time-of-check_to_time-of-use
+1. https://lore.kernel.org/git/87tvg7brlm.fsf@evledraar.gmail.com/
+2. http://lore.kernel.org/git/b870a17d-2103-41b8-3cbc-7389d5fff33a@alum.mit.edu
+3. https://lore.kernel.org/git/87pnqkco8v.fsf@evledraar.gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- refs/files-backend.c | 72 ++++++++------------------------------------
- 1 file changed, 12 insertions(+), 60 deletions(-)
+ builtin/reflog.c     | 13 ++++++-------
+ refs.h               |  2 +-
+ refs/files-backend.c |  7 +++++--
+ 3 files changed, 12 insertions(+), 10 deletions(-)
 
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 09541d1c80..61795f22d5 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -629,8 +629,9 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 		free_worktrees(worktrees);
+ 		for (i = 0; i < collected.nr; i++) {
+ 			struct collected_reflog *e = collected.e[i];
++
+ 			set_reflog_expiry_param(&cb.cmd, explicit_expiry, e->reflog);
+-			status |= reflog_expire(e->reflog, &e->oid, flags,
++			status |= reflog_expire(e->reflog, NULL, flags,
+ 						reflog_expiry_prepare,
+ 						should_expire_reflog_ent,
+ 						reflog_expiry_cleanup,
+@@ -642,13 +643,12 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 
+ 	for (; i < argc; i++) {
+ 		char *ref;
+-		struct object_id oid;
+-		if (!dwim_log(argv[i], strlen(argv[i]), &oid, &ref)) {
++		if (!dwim_log(argv[i], strlen(argv[i]), NULL, &ref)) {
+ 			status |= error(_("%s points nowhere!"), argv[i]);
+ 			continue;
+ 		}
+ 		set_reflog_expiry_param(&cb.cmd, explicit_expiry, ref);
+-		status |= reflog_expire(ref, &oid, flags,
++		status |= reflog_expire(ref, NULL, flags,
+ 					reflog_expiry_prepare,
+ 					should_expire_reflog_ent,
+ 					reflog_expiry_cleanup,
+@@ -700,7 +700,6 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ 
+ 	for ( ; i < argc; i++) {
+ 		const char *spec = strstr(argv[i], "@{");
+-		struct object_id oid;
+ 		char *ep, *ref;
+ 		int recno;
+ 
+@@ -709,7 +708,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 
+-		if (!dwim_log(argv[i], spec - argv[i], &oid, &ref)) {
++		if (!dwim_log(argv[i], spec - argv[i], NULL, &ref)) {
+ 			status |= error(_("no reflog for '%s'"), argv[i]);
+ 			continue;
+ 		}
+@@ -724,7 +723,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ 			cb.cmd.expire_total = 0;
+ 		}
+ 
+-		status |= reflog_expire(ref, &oid, flags,
++		status |= reflog_expire(ref, NULL, flags,
+ 					reflog_expiry_prepare,
+ 					should_expire_reflog_ent,
+ 					reflog_expiry_cleanup,
+diff --git a/refs.h b/refs.h
+index 48970dfc7e..ddbf15f1c2 100644
+--- a/refs.h
++++ b/refs.h
+@@ -796,7 +796,7 @@ enum expire_reflog_flags {
+  * expiration policy that is desired.
+  *
+  * reflog_expiry_prepare_fn -- Called once after the reference is
+- *     locked.
++ *     locked. Called with the OID of the locked reference.
+  *
+  * reflog_expiry_should_prune_fn -- Called once for each entry in the
+  *     existing reflog. It should return true iff that entry should be
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index ccdf455049..98d9aa1601 100644
+index 5415306416..ccdf455049 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -852,42 +852,6 @@ static struct ref_iterator *files_ref_iterator_begin(
- 	return ref_iterator;
+@@ -3032,7 +3032,7 @@ static int expire_reflog_ent(struct object_id *ooid, struct object_id *noid,
  }
  
--/*
-- * Verify that the reference locked by lock has the value old_oid
-- * (unless it is NULL).  Fail if the reference doesn't exist and
-- * mustexist is set. Return 0 on success. On error, write an error
-- * message to err, set errno, and return a negative value.
-- */
--static int verify_lock(struct ref_store *ref_store, struct ref_lock *lock,
--		       const struct object_id *old_oid, int mustexist,
--		       struct strbuf *err)
--{
--	assert(err);
--
--	if (refs_read_ref_full(ref_store, lock->ref_name,
--			       mustexist ? RESOLVE_REF_READING : 0,
--			       &lock->old_oid, NULL)) {
--		if (old_oid) {
--			int save_errno = errno;
--			strbuf_addf(err, "can't verify ref '%s'", lock->ref_name);
--			errno = save_errno;
--			return -1;
--		} else {
--			oidclr(&lock->old_oid);
--			return 0;
--		}
--	}
--	if (old_oid && !oideq(&lock->old_oid, old_oid)) {
--		strbuf_addf(err, "ref '%s' is at %s but expected %s",
--			    lock->ref_name,
--			    oid_to_hex(&lock->old_oid),
--			    oid_to_hex(old_oid));
--		errno = EBUSY;
--		return -1;
--	}
--	return 0;
--}
--
- static int remove_empty_directories(struct strbuf *path)
- {
- 	/*
-@@ -913,15 +877,12 @@ static int create_reflock(const char *path, void *cb)
-  */
- static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
- 					   const char *refname,
--					   const struct object_id *old_oid,
- 					   unsigned int flags, int *type,
- 					   struct strbuf *err)
- {
- 	struct strbuf ref_file = STRBUF_INIT;
- 	struct ref_lock *lock;
- 	int last_errno = 0;
--	int mustexist = (old_oid && !is_null_oid(old_oid));
--	int resolve_flags = RESOLVE_REF_NO_RECURSE;
- 	int resolved;
+ static int files_reflog_expire(struct ref_store *ref_store,
+-			       const char *refname, const struct object_id *oid,
++			       const char *refname, const struct object_id *unused_oid,
+ 			       unsigned int flags,
+ 			       reflog_expiry_prepare_fn prepare_fn,
+ 			       reflog_expiry_should_prune_fn should_prune_fn,
+@@ -3049,6 +3049,7 @@ static int files_reflog_expire(struct ref_store *ref_store,
+ 	int status = 0;
+ 	int type;
+ 	struct strbuf err = STRBUF_INIT;
++	const struct object_id *oid;
  
- 	files_assert_main_repository(refs, "lock_ref_oid_basic");
-@@ -929,12 +890,9 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
- 
- 	CALLOC_ARRAY(lock, 1);
- 
--	if (mustexist)
--		resolve_flags |= RESOLVE_REF_READING;
--
- 	files_ref_path(refs, &ref_file, refname);
--	resolved = !!refs_resolve_ref_unsafe(&refs->base,
--					     refname, resolve_flags,
-+	resolved = !!refs_resolve_ref_unsafe(&refs->base, refname,
-+					     RESOLVE_REF_NO_RECURSE,
- 					     &lock->old_oid, type);
- 	if (!resolved && errno == EISDIR) {
- 		/*
-@@ -952,8 +910,8 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
- 					    refname);
- 			goto error_return;
- 		}
--		resolved = !!refs_resolve_ref_unsafe(&refs->base,
--						     refname, resolve_flags,
-+		resolved = !!refs_resolve_ref_unsafe(&refs->base, refname,
-+						     RESOLVE_REF_NO_RECURSE,
- 						     &lock->old_oid, type);
- 	}
- 	if (!resolved) {
-@@ -988,10 +946,10 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
- 		goto error_return;
- 	}
- 
--	if (verify_lock(&refs->base, lock, old_oid, mustexist, err)) {
--		last_errno = errno;
--		goto error_return;
--	}
-+	if (refs_read_ref_full(&refs->base, lock->ref_name,
-+			       0,
-+			       &lock->old_oid, NULL))
-+		oidclr(&lock->old_oid);
- 	goto out;
- 
-  error_return:
-@@ -1410,8 +1368,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
- 
- 	logmoved = log;
- 
--	lock = lock_ref_oid_basic(refs, newrefname, NULL, REF_NO_DEREF, NULL,
--				  &err);
-+	lock = lock_ref_oid_basic(refs, newrefname, REF_NO_DEREF, NULL, &err);
- 	if (!lock) {
- 		if (copy)
- 			error("unable to copy '%s' to '%s': %s", oldrefname, newrefname, err.buf);
-@@ -1433,8 +1390,7 @@ static int files_copy_or_rename_ref(struct ref_store *ref_store,
- 	goto out;
- 
-  rollback:
--	lock = lock_ref_oid_basic(refs, oldrefname, NULL,
--				  REF_NO_DEREF, NULL, &err);
-+	lock = lock_ref_oid_basic(refs, oldrefname, REF_NO_DEREF, NULL, &err);
- 	if (!lock) {
- 		error("unable to lock %s for rollback: %s", oldrefname, err.buf);
- 		strbuf_release(&err);
-@@ -1841,9 +1797,7 @@ static int files_create_symref(struct ref_store *ref_store,
- 	struct ref_lock *lock;
- 	int ret;
- 
--	lock = lock_ref_oid_basic(refs, refname, NULL,
--				  REF_NO_DEREF, NULL,
--				  &err);
-+	lock = lock_ref_oid_basic(refs, refname, REF_NO_DEREF, NULL, &err);
- 	if (!lock) {
- 		error("%s", err.buf);
- 		strbuf_release(&err);
-@@ -3061,9 +3015,7 @@ static int files_reflog_expire(struct ref_store *ref_store,
+ 	memset(&cb, 0, sizeof(cb));
+ 	cb.flags = flags;
+@@ -3060,7 +3061,7 @@ static int files_reflog_expire(struct ref_store *ref_store,
  	 * reference itself, plus we might need to update the
  	 * reference if --updateref was specified:
  	 */
--	lock = lock_ref_oid_basic(refs, refname, NULL,
--				  REF_NO_DEREF,
--				  &type, &err);
-+	lock = lock_ref_oid_basic(refs, refname, REF_NO_DEREF, &type, &err);
+-	lock = lock_ref_oid_basic(refs, refname, oid,
++	lock = lock_ref_oid_basic(refs, refname, NULL,
+ 				  REF_NO_DEREF,
+ 				  &type, &err);
  	if (!lock) {
- 		error("cannot lock ref '%s': %s", refname, err.buf);
+@@ -3068,6 +3069,7 @@ static int files_reflog_expire(struct ref_store *ref_store,
  		strbuf_release(&err);
+ 		return -1;
+ 	}
++	oid = &lock->old_oid;
+ 
+ 	/*
+ 	 * When refs are deleted, their reflog is deleted before the
+@@ -3111,6 +3113,7 @@ static int files_reflog_expire(struct ref_store *ref_store,
+ 		}
+ 	}
+ 
++	assert(!unused_oid);
+ 	(*prepare_fn)(refname, oid, cb.policy_cb);
+ 	refs_for_each_reflog_ent(ref_store, refname, expire_reflog_ent, &cb);
+ 	(*cleanup_fn)(cb.policy_cb);
 -- 
 2.32.0.956.g6b0c84ceda8
 
