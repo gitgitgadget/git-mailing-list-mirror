@@ -7,62 +7,61 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1E5BC4338F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:22:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B919C4338F
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:22:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8EA0F6023F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:22:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5377060BD3
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:22:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233360AbhG0VWZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jul 2021 17:22:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58274 "EHLO
+        id S233826AbhG0VWa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jul 2021 17:22:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233414AbhG0VVo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jul 2021 17:21:44 -0400
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18B96C061382
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:20:25 -0700 (PDT)
-Received: by mail-io1-xd2e.google.com with SMTP id h1so396137iol.9
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:20:25 -0700 (PDT)
+        with ESMTP id S233554AbhG0VVw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jul 2021 17:21:52 -0400
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D9B2C06136B
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:20:27 -0700 (PDT)
+Received: by mail-io1-xd2b.google.com with SMTP id a13so423378iol.5
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:20:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=SoorQ/GWxuzmOTfjtez+99in0f4knnTQwgEu6e/ih1M=;
-        b=MQlnHcTdcIK+ww4qJOMUJri0XNGOW0mmc9qv4YnYxAF1W+v9ZUYVZE6eSf4meoV2I4
-         XeE1DyXCgvApKRSicX+/JKdQY6KzUM+a3Lb91nnbbygn7AITHg9V8C1qRXt8gJrMiNmW
-         ZiQGDQe2uMbutaGSyjnd3+dItpjnb/fsimv9YI2h4SMoNCn7jZrOGKrm+WV7LGRwRWvs
-         3O2mo7tp7l3amstoqu/JQ+9UTiUySOm974BV80g0iMsef9jodVO6tttsx9C6xh7Wb7Vs
-         Vnz63uA85zilxk2zCAVfH4xdMyjJvm5zS6WLQxBQOUlmv1y9GKeF5AXOzZYT+6HDf43P
-         FYrw==
+        bh=sAWq7ApHqrUs88UHszHQDp+raK9BhywjCqAJGMbjwdk=;
+        b=Jtbgw6MJJNlcJGKxa9BeQwr5TEQMieCKc7c6bqagkamy4jYaoDRUU2TMpipNt1u0jn
+         00DftxahR3R2OZAzppHGsf9X4NX3w/LG9lrywYze+Yv3Vsar2JaE4FDKOEPsWBduuBjB
+         1uNDTz30WTs3JIIyu0p5yzlPuqn0xDnw7ivX0viU7e8UUJAXsIo39EvPiPpIb9qazFDV
+         l/yPuafgAfiS2XgupZF4cH7c6YzxTy8I2nSEpMcYqTvR3Gd/ojA+dbsMRVs60r5z5943
+         DHF3EXZvIaA61OBUK3h+MjQaWLxgjuRs098qhhuctKoAvg1Qvr9+ItqfqkwG+bjvDdRZ
+         IfoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=SoorQ/GWxuzmOTfjtez+99in0f4knnTQwgEu6e/ih1M=;
-        b=oBWt6RO5Z4nAlAwp8OjZ4xvhtVG+WBvuolMo/Tu7BKEJt18UUUSPyFv+0TzIdw7LA3
-         TEf8usbvgJi1Ao89wFuQPB190GYgydRutiIeiISU2ffQ1gxCiGoJnKIZCAIZ4qa9/qpB
-         6ifuj1Z4VAUeiXPmPEprjptVHJMKbJqdlFyDNJdzyihGLdybNAhe1Vaz0JYrGNrAGgKa
-         HIKFr/uwNVXwZAo6V/6yVIRagHgxDm/4vZag0AmkS3Wgf4OhzUHsrNG8SXsqRLsST7rE
-         gj4vgj09wC58Bgsk5dqIJL4qcPzYgYTOK1teIUO0XAstdAIcjJHsvYGYf3OB+yDZFfgO
-         MCFA==
-X-Gm-Message-State: AOAM532koRzxxmQ8ab0o04t28o1fN6Zyz/zJZ3mKT7XAkXru+WlZgDNz
-        lo725lLGDDw8jjkGMxcEDfoHIgjiYpkRWNA+
-X-Google-Smtp-Source: ABdhPJyeZNP1vXNaaj8m0wPHqS1L7Ti1XQQxAre5WcH9k9lo63KWrmbuLrQ8lN5I/hLMg/qxGA9bRQ==
-X-Received: by 2002:a05:6638:c58:: with SMTP id g24mr23122300jal.63.1627420824331;
-        Tue, 27 Jul 2021 14:20:24 -0700 (PDT)
+        bh=sAWq7ApHqrUs88UHszHQDp+raK9BhywjCqAJGMbjwdk=;
+        b=kwbT0RAikMN7CQczMdcOUUSl3Ox9D8BqLRNZa9/gTNfc8lSMfHBE8g7rTB5PgVP7UX
+         fdA7g208vXhRtJFi2nAuCog+tjfeVvDuHneLb1hkC1gkfM0tdETW4isIQCTRK3TC98pE
+         X4irCIcAoW9xzgcEzwUd/Qi3ImuyAxjKerE6Yw4UYwNc00jZ5HZSoJqpVEhMNtoVbu5Z
+         WNh9qjfP7qysrLBBEM1l3TwPrmNuTYPz/QoT2rovmrcvIzUYS7adqFSzHLDTTc/PfgRd
+         P+ZZFp1905NgWSaSbnZbWCAzAawMWpjSc8enopOe9NrPo6OSnQWn98pn18TJ4MF96+AS
+         jSDw==
+X-Gm-Message-State: AOAM53248isF1/vxVB95p9Lc/MCb4dQORxoxHzQKZfQcNcWJ/b/D0Fv0
+        XsB2Vp9l2tMfigQa2rE7xZkuxmRTd6bguxuQ
+X-Google-Smtp-Source: ABdhPJxch6hcbxjHKvJLE95gKt3EO+aj/ADR2XW4nWVUa5idSwHBI1P/uLmzzCs7pVjJAT8nbjxG1A==
+X-Received: by 2002:a02:8206:: with SMTP id o6mr22906302jag.92.1627420826949;
+        Tue, 27 Jul 2021 14:20:26 -0700 (PDT)
 Received: from localhost ([2600:1700:d843:8f:6813:d625:75e6:4f64])
-        by smtp.gmail.com with ESMTPSA id n18sm3182887ioz.5.2021.07.27.14.20.24
+        by smtp.gmail.com with ESMTPSA id k7sm2562511ilr.19.2021.07.27.14.20.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jul 2021 14:20:24 -0700 (PDT)
-Date:   Tue, 27 Jul 2021 17:20:23 -0400
+        Tue, 27 Jul 2021 14:20:26 -0700 (PDT)
+Date:   Tue, 27 Jul 2021 17:20:26 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         jonathantanmy@google.com
-Subject: [PATCH v3 23/25] midx: respect
- 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP'
-Message-ID: <50865e52a37590d0bef541fd96c95a0416d7d585.1627420428.git.me@ttaylorr.com>
+Subject: [PATCH v3 24/25] p5310: extract full and partial bitmap tests
+Message-ID: <0f1fd6e7d49d98ae7f7829b4debbef6382dfc3e1.1627420428.git.me@ttaylorr.com>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1627420428.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -73,88 +72,181 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce a new 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP' environment
-variable to also write a multi-pack bitmap when
-'GIT_TEST_MULTI_PACK_INDEX' is set.
+A new p5326 introduced by the next patch will want these same tests,
+interjecting its own setup in between. Move them out so that both perf
+tests can reuse them.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c          | 12 ++++++++++--
- ci/run-build-and-tests.sh |  1 +
- midx.h                    |  2 ++
- t/README                  |  4 ++++
- 4 files changed, 17 insertions(+), 2 deletions(-)
+ t/perf/lib-bitmap.sh         | 69 ++++++++++++++++++++++++++++++++++++
+ t/perf/p5310-pack-bitmaps.sh | 65 ++-------------------------------
+ 2 files changed, 72 insertions(+), 62 deletions(-)
+ create mode 100644 t/perf/lib-bitmap.sh
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 5f9bc74adc..82ab668272 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -515,6 +515,10 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		if (!(pack_everything & ALL_INTO_ONE) ||
- 		    !is_bare_repository())
- 			write_bitmaps = 0;
-+	} else if (write_bitmaps &&
-+		   git_env_bool(GIT_TEST_MULTI_PACK_INDEX, 0) &&
-+		   git_env_bool(GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP, 0)) {
-+		write_bitmaps = 0;
- 	}
- 	if (pack_kept_objects < 0)
- 		pack_kept_objects = write_bitmaps > 0;
-@@ -725,8 +729,12 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		update_server_info(0);
- 	remove_temporary_files();
- 
--	if (git_env_bool(GIT_TEST_MULTI_PACK_INDEX, 0))
--		write_midx_file(get_object_directory(), NULL, 0);
-+	if (git_env_bool(GIT_TEST_MULTI_PACK_INDEX, 0)) {
-+		unsigned flags = 0;
-+		if (git_env_bool(GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP, 0))
-+			flags |= MIDX_WRITE_BITMAP | MIDX_WRITE_REV_INDEX;
-+		write_midx_file(get_object_directory(), NULL, flags);
-+	}
- 
- 	string_list_clear(&names, 0);
- 	string_list_clear(&rollback, 0);
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 3ce81ffee9..7ee9ba9325 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -23,6 +23,7 @@ linux-gcc)
- 	export GIT_TEST_COMMIT_GRAPH=1
- 	export GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=1
- 	export GIT_TEST_MULTI_PACK_INDEX=1
-+	export GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=1
- 	export GIT_TEST_ADD_I_USE_BUILTIN=1
- 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
- 	export GIT_TEST_WRITE_REV_INDEX=1
-diff --git a/midx.h b/midx.h
-index 350f4d0a7b..aa3da557bb 100644
---- a/midx.h
-+++ b/midx.h
-@@ -8,6 +8,8 @@ struct pack_entry;
- struct repository;
- 
- #define GIT_TEST_MULTI_PACK_INDEX "GIT_TEST_MULTI_PACK_INDEX"
-+#define GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP \
-+	"GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP"
- 
- struct multi_pack_index {
- 	struct multi_pack_index *next;
-diff --git a/t/README b/t/README
-index 9e70122302..12014aa988 100644
---- a/t/README
-+++ b/t/README
-@@ -425,6 +425,10 @@ GIT_TEST_MULTI_PACK_INDEX=<boolean>, when true, forces the multi-pack-
- index to be written after every 'git repack' command, and overrides the
- 'core.multiPackIndex' setting to true.
- 
-+GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=<boolean>, when true, sets the
-+'--bitmap' option on all invocations of 'git multi-pack-index write',
-+and ignores pack-objects' '--write-bitmap-index'.
+diff --git a/t/perf/lib-bitmap.sh b/t/perf/lib-bitmap.sh
+new file mode 100644
+index 0000000000..63d3bc7cec
+--- /dev/null
++++ b/t/perf/lib-bitmap.sh
+@@ -0,0 +1,69 @@
++# Helper functions for testing bitmap performance; see p5310.
 +
- GIT_TEST_SIDEBAND_ALL=<boolean>, when true, overrides the
- 'uploadpack.allowSidebandAll' setting to true, and when false, forces
- fetch-pack to not request sideband-all (even if the server advertises
++test_full_bitmap () {
++	test_perf 'simulated clone' '
++		git pack-objects --stdout --all </dev/null >/dev/null
++	'
++
++	test_perf 'simulated fetch' '
++		have=$(git rev-list HEAD~100 -1) &&
++		{
++			echo HEAD &&
++			echo ^$have
++		} | git pack-objects --revs --stdout >/dev/null
++	'
++
++	test_perf 'pack to file (bitmap)' '
++		git pack-objects --use-bitmap-index --all pack1b </dev/null >/dev/null
++	'
++
++	test_perf 'rev-list (commits)' '
++		git rev-list --all --use-bitmap-index >/dev/null
++	'
++
++	test_perf 'rev-list (objects)' '
++		git rev-list --all --use-bitmap-index --objects >/dev/null
++	'
++
++	test_perf 'rev-list with tag negated via --not --all (objects)' '
++		git rev-list perf-tag --not --all --use-bitmap-index --objects >/dev/null
++	'
++
++	test_perf 'rev-list with negative tag (objects)' '
++		git rev-list HEAD --not perf-tag --use-bitmap-index --objects >/dev/null
++	'
++
++	test_perf 'rev-list count with blob:none' '
++		git rev-list --use-bitmap-index --count --objects --all \
++			--filter=blob:none >/dev/null
++	'
++
++	test_perf 'rev-list count with blob:limit=1k' '
++		git rev-list --use-bitmap-index --count --objects --all \
++			--filter=blob:limit=1k >/dev/null
++	'
++
++	test_perf 'rev-list count with tree:0' '
++		git rev-list --use-bitmap-index --count --objects --all \
++			--filter=tree:0 >/dev/null
++	'
++
++	test_perf 'simulated partial clone' '
++		git pack-objects --stdout --all --filter=blob:none </dev/null >/dev/null
++	'
++}
++
++test_partial_bitmap () {
++	test_perf 'clone (partial bitmap)' '
++		git pack-objects --stdout --all </dev/null >/dev/null
++	'
++
++	test_perf 'pack to file (partial bitmap)' '
++		git pack-objects --use-bitmap-index --all pack2b </dev/null >/dev/null
++	'
++
++	test_perf 'rev-list with tree filter (partial bitmap)' '
++		git rev-list --use-bitmap-index --count --objects --all \
++			--filter=tree:0 >/dev/null
++	'
++}
+diff --git a/t/perf/p5310-pack-bitmaps.sh b/t/perf/p5310-pack-bitmaps.sh
+index 452be01056..7ad4f237bc 100755
+--- a/t/perf/p5310-pack-bitmaps.sh
++++ b/t/perf/p5310-pack-bitmaps.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='Tests pack performance using bitmaps'
+ . ./perf-lib.sh
++. "${TEST_DIRECTORY}/perf/lib-bitmap.sh"
+ 
+ test_perf_large_repo
+ 
+@@ -25,56 +26,7 @@ test_perf 'repack to disk' '
+ 	git repack -ad
+ '
+ 
+-test_perf 'simulated clone' '
+-	git pack-objects --stdout --all </dev/null >/dev/null
+-'
+-
+-test_perf 'simulated fetch' '
+-	have=$(git rev-list HEAD~100 -1) &&
+-	{
+-		echo HEAD &&
+-		echo ^$have
+-	} | git pack-objects --revs --stdout >/dev/null
+-'
+-
+-test_perf 'pack to file (bitmap)' '
+-	git pack-objects --use-bitmap-index --all pack1b </dev/null >/dev/null
+-'
+-
+-test_perf 'rev-list (commits)' '
+-	git rev-list --all --use-bitmap-index >/dev/null
+-'
+-
+-test_perf 'rev-list (objects)' '
+-	git rev-list --all --use-bitmap-index --objects >/dev/null
+-'
+-
+-test_perf 'rev-list with tag negated via --not --all (objects)' '
+-	git rev-list perf-tag --not --all --use-bitmap-index --objects >/dev/null
+-'
+-
+-test_perf 'rev-list with negative tag (objects)' '
+-	git rev-list HEAD --not perf-tag --use-bitmap-index --objects >/dev/null
+-'
+-
+-test_perf 'rev-list count with blob:none' '
+-	git rev-list --use-bitmap-index --count --objects --all \
+-		--filter=blob:none >/dev/null
+-'
+-
+-test_perf 'rev-list count with blob:limit=1k' '
+-	git rev-list --use-bitmap-index --count --objects --all \
+-		--filter=blob:limit=1k >/dev/null
+-'
+-
+-test_perf 'rev-list count with tree:0' '
+-	git rev-list --use-bitmap-index --count --objects --all \
+-		--filter=tree:0 >/dev/null
+-'
+-
+-test_perf 'simulated partial clone' '
+-	git pack-objects --stdout --all --filter=blob:none </dev/null >/dev/null
+-'
++test_full_bitmap
+ 
+ test_expect_success 'create partial bitmap state' '
+ 	# pick a commit to represent the repo tip in the past
+@@ -97,17 +49,6 @@ test_expect_success 'create partial bitmap state' '
+ 	git update-ref HEAD $orig_tip
+ '
+ 
+-test_perf 'clone (partial bitmap)' '
+-	git pack-objects --stdout --all </dev/null >/dev/null
+-'
+-
+-test_perf 'pack to file (partial bitmap)' '
+-	git pack-objects --use-bitmap-index --all pack2b </dev/null >/dev/null
+-'
+-
+-test_perf 'rev-list with tree filter (partial bitmap)' '
+-	git rev-list --use-bitmap-index --count --objects --all \
+-		--filter=tree:0 >/dev/null
+-'
++test_partial_bitmap
+ 
+ test_done
 -- 
 2.31.1.163.ga65ce7f831
 
