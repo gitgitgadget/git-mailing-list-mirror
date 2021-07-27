@@ -2,231 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B6C0C4338F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 01:37:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEDE3C4338F
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 01:38:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1372A60F8F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 01:37:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AAC8C60F6B
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 01:38:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233249AbhG0A4r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 20:56:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41894 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229575AbhG0A4q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jul 2021 20:56:46 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98C72C061757
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 18:37:13 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id nb11so19522075ejc.4
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 18:37:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=AXt7AjI7+K9K5xOSoW9pWQyQSFlFE0CquUIJlc88R/Y=;
-        b=o4g2qK99JY4NYwnmlJac7ofPSFnIL/K4ALcg81TRNS8UrDglCni8ziUyiTGQ3mQq/A
-         ff0sk8LiVdZLWsyJB42KN8fBYrf5jLk1s1sb1idr+eXGGj8U/burh4tSF+2uIrtNOp0S
-         qCS0xx6oofPHGRuYsvPM4Oa6k6MBydMBCTqaUuOibq4XSx+VKxpuH3OlIRvRwg0lxjc3
-         0wznfXA0qsZ5aNX7XsXw7GrM4WAwB1lmaPAZtUHbOZnVE1L7Crnvu5NYjkYwgRxy18VB
-         jBWwiYV0jBST2egi7rMPBm4LFUjk3jVPPlak5y4LKSSAscur77s+6mOw3yeuF5rYkI6O
-         VAVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=AXt7AjI7+K9K5xOSoW9pWQyQSFlFE0CquUIJlc88R/Y=;
-        b=ZtOTtcuhvqNr29XoJ8GBwfMSwKjkfVfdJJ+/PYUBb6gfMmdrcnupWzAEUfuTSOpN5y
-         /iJ+zQeZJL29CHlg6kDF0F4OwgQDLZtOw22sc0UZpD8uIXjkddD02OnAWMrKavsilLsk
-         Y4gsV7W16OvSS1Ie2grFCWx6/5eoLbdKaAeV0DCi3nAYNEJxMtqrdNlHyMIG6HcRyBNR
-         IGMZWIHHu7ux0bfbT1DbNzNpdqELS0jYytRDRTSviJJZsSDMduAE1NxiHqVQWFKxyv4d
-         MzyR2yLkp+3Shpt4HyuRTaNv7uVODkXwmOSSAmn8dChm1YvdUu3XjA+IFV5IS1jeCqV4
-         ojpg==
-X-Gm-Message-State: AOAM530CgfBEkjrJiHqyLU5ucyZInLteAhLGHab5bs5KWRWOlbVGsP4g
-        galaqPFwfYlCpcOUpa6QjIbzWn0LSKxS6WtqRKo=
-X-Google-Smtp-Source: ABdhPJyqsJYW5SEU+End5o4s1HjZRAwSM0i9G8ut25nIYiey/xL44DIswO511ngQc5STko/dGtHMObMvObnNxsIF25U=
-X-Received: by 2002:a17:906:c256:: with SMTP id bl22mr20104216ejb.115.1627349832065;
- Mon, 26 Jul 2021 18:37:12 -0700 (PDT)
+        id S234048AbhG0A5b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 20:57:31 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40488 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229575AbhG0A5b (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 26 Jul 2021 20:57:31 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A124E6042E;
+        Tue, 27 Jul 2021 01:37:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1627349848;
+        bh=/HDgSOnieMOJfA1aB4fnJEDrL2PCI8VmIwekwuiWxZM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=XpBDhtLCC0GYQEU9lFZUtcDvA/n3TNXFlI+6MMX2yq6IEfD2+jqqowpRvFapDmmnm
+         DFEe1BnYK6sY56zpKt9rCqPL7Z0lOEvzS9dv6lhgKHmlSjl7NqduhbucFxCWAvVBEV
+         KzbuH+gLLU5fZR9v7YEg+ULrmwCvITpBJp63L+oHGzbL3MIwuKN+YQuoiIHp3Dl6nT
+         oJ8P9Ak6Drpvp6qMdgbq5BLjX+/aXDW4XiREiAFSIwYsk2alYuKoYoWhGiQpPe2cv4
+         CKVynClQndwi95dOaVFJtgCkqwzxXjzNUvHXirIc1ut+lWQkX1Kav6YMGEz8EGD6+z
+         9sHsaESP+zCTn/EQ+nDQ9PDtVR64L/t6zI3aqNBQHuHqVvZBd6oiK5IBnSqRl8vbQc
+         SNv6dLygA/dN9bpyOds8oyJlK/vZQsZFAHdtNPpAG/OXGgiHOeaN7rdy6SxfMhDuY+
+         aynErJ/TOeaqCvSD+urcCUdd+u63YoS4XqkSfA1pDqOprUkj7jX
+Date:   Tue, 27 Jul 2021 01:37:23 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Evan Miller <emmiller@gmail.com>, git@vger.kernel.org
+Subject: Re: Exit code 255 after large clone (32-bit PowerPC)
+Message-ID: <YP9jU194U7S1PFxS@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Evan Miller <emmiller@gmail.com>, git@vger.kernel.org
+References: <D3C1583B-8CC8-434B-8AF5-B9827A7FD037@gmail.com>
+ <YP8ykvsZie4mPE5o@camp.crustytoothpaste.net>
+ <874kcgsh94.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAOLTT8RR3nvtXotqhSO8xPCzGQpGUA8dnNgraAjREZ6uLf4n4w@mail.gmail.com>
- <87im0zs8wn.fsf@evledraar.gmail.com> <CAOLTT8Sbusr8=iJbG1qXcSerivZqP5xm-GS8R7TqDMh7QXSZaA@mail.gmail.com>
- <CAP8UFD1szPO-qmusSqiLRWxynV0gcy8UsnZORNn0USYAmRUGVw@mail.gmail.com>
-In-Reply-To: <CAP8UFD1szPO-qmusSqiLRWxynV0gcy8UsnZORNn0USYAmRUGVw@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Tue, 27 Jul 2021 09:37:44 +0800
-Message-ID: <CAOLTT8TdL7UhfVSOzbpmo-WFNrcKwmy=E720tNt4KM9o_p=keg@mail.gmail.com>
-Subject: Re: [GSOC] How to improve the performance of git cat-file --batch
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Hariom verma <hariom18599@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="9QscZgoBGRoMGaoz"
+Content-Disposition: inline
+In-Reply-To: <874kcgsh94.fsf@evledraar.gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B47=E6=9C=
-=8826=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=885:38=E5=86=99=E9=81=93=
-=EF=BC=9A
->
-> On Sun, Jul 25, 2021 at 2:04 PM ZheNing Hu <adlternative@gmail.com> wrote=
-:
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E2021=
-=E5=B9=B47=E6=9C=8825=E6=97=A5=E5=91=A8=E6=97=A5 =E4=B8=8A=E5=8D=885:23=E5=
-=86=99=E9=81=93=EF=BC=9A
->
-> > > Having skimmed it I'm a bit confused about this in reference to
-> > > performance generally. I haven't looked into the case you're discussi=
-ng,
-> > > but as I noted in
-> > > https://lore.kernel.org/git/87im1p6x34.fsf@evledraar.gmail.com/ the
-> > > profiling clearly shows that the main problem is that you've added
-> > > object lookups we skipped before.
+
+--9QscZgoBGRoMGaoz
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2021-07-27 at 00:51:05, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>=20
+> On Mon, Jul 26 2021, brian m. carlson wrote:
+>=20
+> > [[PGP Signed Part:Undecided]]
+> > On 2021-07-26 at 17:54:07, Evan Miller wrote:
+> >> What did you do before the bug happened? (Steps to reproduce your issu=
+e)
+> >>=20
+> >> $ git clone -v git@github.com:macports/macports-ports.git
+> >> Cloning into 'macports-ports'...
+> >> remote: Enumerating objects: 1223319, done.
+> >> remote: Counting objects: 100% (685/685), done.
+> >> remote: Compressing objects: 100% (341/341), done.
+> >> remote: Total 1223319 (delta 289), reused 608 (delta 252), pack-reused=
+ 1222634
+> >> Receiving objects: 100% (1223319/1223319), 244.46 MiB | 1.09 MiB/s, do=
+ne.
+> >> Connection to github.com closed by remote host.
 > >
-> > Yeah, you showed me last time that lookup_object() took up a lot of tim=
-e.
->
-> Could the document explain with some details why there are more calls
-> to lookup_object()? For example it could take an example `git cat-file
-> --batch ...` command (if possible a simple one), and say which
-> functions like lookup_object() it was using (and how many times) to
-> get the data it needs before using the ref-filter logic, and then the
-> same information after using the ref-filter logic.
->
+> > This message is the relevant detail here.  This means that the
+> > connection was reset, which could be due to the remote host (GitHub),
+> > but is more likely due to a network issue of some sort.  You'll have to
+> > do normal network troubleshooting to see why that might be.
+> >
+> > It could very well be related to the fact that you're running a nearly
+> > 14-year old operating system, but I just can't say for certain.  It's
+> > not a bug in Git, however.
+>=20
+> I'm not so sure it's not, I think the "Connection to github.com closed
+> by remote host" message is emitted by the C library, not Git itself (we
+> don't seem to have that exact wording anywhere, but maybe I missed
+> it).
 
-Sorry but this time I use gprof but can=E2=80=99t observe the same effect a=
-s before.
-lookup_object() is indeed a part of the time overhead, but its proportion i=
-s
-not very large this time.
+That message comes from OpenSSH.  I've seen it quite frequently in
+various other (non-Git) cases.  I think it's fair for us to exit
+unsuccessfully if OpenSSH exits unsuccessfully in this case.  For
+example, an attacker could try to tamper with the connection and send
+additional data, which OpenSSH would detect and exit unsuccessfully for.
+We also in general need to detect truncation attacks, which OpenSSH will
+do for us here.
 
-> It could be nice if there were also some data about how much time used
-> to be spent in lookup_object() and how much time is now spent there,
-> and how this compares with the whole slowdown we are seeing. If =C3=86var
-> already showed that, you can of course reuse what he already did.
->
+It's possible that if there's an older version of OpenSSH being used,
+that the problem happens to be related to a bug of some sort.  There
+were some versions which had various bugs that could be triggered by a
+rekey, which, if the threshold is set low enough, could be the cause of
+this particular problem.
 
-This is my test for git cat-file --batch --batch-all-objects >/dev/null:
+I think the fact that it's not being seen with HTTPS is the ultimate
+clue here.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-daab8a564: The fifth batch (upstream/master)
+--9QscZgoBGRoMGaoz
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Flat profile:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
-Each sample counts as 0.01 seconds.
-  %   cumulative   self              self     total
- time   seconds   seconds    calls   s/call   s/call  name
- 38.13      0.61     0.61  1968866     0.00     0.00  patch_delta
- 13.75      0.83     0.22  6568488     0.00     0.00
-unpack_object_header_buffer
- 11.25      1.01     0.18   344036     0.00     0.00  unpack_entry
-  7.50      1.13     0.12  1964667     0.00     0.00  hashmap_remove
-  6.88      1.24     0.11  6153182     0.00     0.00  hashmap_get
-  1.88      1.27     0.03  7746299     0.00     0.00  zlib_post_call
-  1.88      1.30     0.03   842731     0.00     0.00  bsearch_hash
-  1.88      1.33     0.03   827663     0.00     0.00  nth_packed_object_off=
-set
-  1.25      1.35     0.02 15385422     0.00     0.00  use_pack
-  1.25      1.37     0.02  6236120     0.00     0.00  get_delta_base
-  1.25      1.39     0.02  2581859     0.00     0.00  git_inflate_end
-  1.25      1.41     0.02   826650     0.00     0.00
-do_oid_object_info_extended
-  1.25      1.43     0.02   826650     0.00     0.00  find_pack_entry
-  1.25      1.45     0.02   825692     0.00     0.00  packed_to_object_type
-  1.25      1.47     0.02   378521     0.00     0.00  get_size_from_delta
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYP9jUgAKCRB8DEliiIei
+gfSbAQDugS1aHfrM/HaqHElbUDqvtiIGfL3lDFza9bB0UGlxPAEA4N1gju6O+nwU
+g+mppInpNg17os3fEZgObrHJ/JzL5wA=
+=Z+Ii
+-----END PGP SIGNATURE-----
 
-
-d3b5272a94: [GSOC] cat-file: reuse ref-filter logic
-
-Flat profile:
-
-Each sample counts as 0.01 seconds.
-  %   cumulative   self              self     total
- time   seconds   seconds    calls   s/call   s/call  name
- 27.06      0.59     0.59  1968866     0.00     0.00  patch_delta
- 16.51      0.95     0.36  2202293     0.00     0.00
-unpack_object_header_buffer
- 13.76      1.25     0.30  5327015     0.00     0.00  hashmap_get
- 11.47      1.50     0.25   344036     0.00     0.00  unpack_entry
-  8.72      1.69     0.19   521278     0.00     0.00  lookup_object
-  4.13      1.78     0.09  1964667     0.00     0.00  hashmap_remove
-  2.75      1.84     0.06   348709     0.00     0.00  get_object
-  2.29      1.89     0.05        1     0.05     2.17  oid_array_for_each_un=
-ique
-  1.38      1.92     0.03  6373452     0.00     0.00  use_pack
-  0.92      1.94     0.02  2202293     0.00     0.00  unpack_compressed_ent=
-ry
-  0.92      1.96     0.02  1394836     0.00     0.00  grab_sub_body_content=
-s
-  0.92      1.98     0.02   348709     0.00     0.00  create_object
-  0.92      2.00     0.02   348709     0.00     0.00  format_ref_array_item
-  0.92      2.02     0.02    74557     0.00     0.00  fill_commit_graph_inf=
-o
-
-Because we called parse_object_buffer() in get_object(), lookup_object()
-is called indirectly...
-
-We can see that some functions are called the same times: patch_delta(),
-unpack_entry(), hashmap_remove()... But after using my patch,
-format_ref_array_item(), grab_sub_body_contents(), get_object(), lookup_obj=
-ect()
-begin to occupy a certain proportion.
-
-This is my test for git cat-file --batch-check --batch-all-objects >/dev/nu=
-ll:
-
-daab8a564: The fifth batch (upstream/master)
-
-Flat profile:
-
-Each sample counts as 0.01 seconds.
-  %   cumulative   self              self     total
- time   seconds   seconds    calls  ms/call  ms/call  name
- 47.83      0.11     0.11  3385670     0.00     0.00
-unpack_object_header_buffer
- 13.04      0.14     0.03  6941590     0.00     0.00  use_pack
-  8.70      0.16     0.02  1046130     0.00     0.00  expand_format
-  4.35      0.17     0.01   349013     0.00     0.00  oid_array_append
-  4.35      0.18     0.01   348710     0.00     0.00  strbuf_expand
-  4.35      0.19     0.01   348709     0.00     0.00  find_pack_entry
-  4.35      0.20     0.01   348230     0.00     0.00  packed_to_object_type
-  4.35      0.21     0.01   259719     0.00     0.00  git_inflate
-  4.35      0.22     0.01        1    10.00   210.00  oid_array_for_each_un=
-ique
-  4.35      0.23     0.01                             pack_basename
-
-d3b5272a94: [GSOC] cat-file: reuse ref-filter logic
-
-Flat profile:
-
-Each sample counts as 0.01 seconds.
-  %   cumulative   self              self     total
- time   seconds   seconds    calls  ms/call  ms/call  name
- 52.00      0.13     0.13  3385670     0.00     0.00
-unpack_object_header_buffer
- 16.00      0.17     0.04  6941590     0.00     0.00  use_pack
-  8.00      0.19     0.02  3296680     0.00     0.00  get_delta_base
-  4.00      0.20     0.01   348709     0.00     0.00  find_pack_entry
-  4.00      0.21     0.01   348709     0.00     0.00  oid_to_hex
-  4.00      0.22     0.01   348709     0.00     0.00  populate_value
-  4.00      0.23     0.01   348230     0.00     0.00  packed_object_info
-  4.00      0.24     0.01   348230     0.00     0.00  packed_to_object_type
-  4.00      0.25     0.01                             void_hashcmp
-
-Similarly, unpack_object_header_buffer(), use_pack(),
-find_pack_entry(), packed_to_object_type(), they are still called same
-times as before; populate_value(),
-packed_object_info(), oid_to_hex() are new.
-
-> The GIT_TRACE_PERFORMANCE, GIT_TRACE2_PERF env variables and the
-> associated trace_*() and trace2_*() functions might help you with
-> measuring how much time is spent in different functions.
-
-Thanks.
---
-ZheNing Hu
+--9QscZgoBGRoMGaoz--
