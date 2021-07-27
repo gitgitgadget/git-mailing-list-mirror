@@ -4,99 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39E53C4338F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 06:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3B58C4338F
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 07:57:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 203DF60F4F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 06:31:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BAE66611ED
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 07:57:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235653AbhG0Gbx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jul 2021 02:31:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51854 "EHLO
+        id S235847AbhG0H5U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jul 2021 03:57:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234803AbhG0Gbw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jul 2021 02:31:52 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 199DCC061757
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 23:31:53 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id u10so13998919oiw.4
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 23:31:53 -0700 (PDT)
+        with ESMTP id S235621AbhG0H5T (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jul 2021 03:57:19 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39F73C061757
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 00:57:18 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id b7so14182557edu.3
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 00:57:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=ihbf63FR/J4GzNbrFBanpgciD99It3Vts05SQ0Ab3PA=;
-        b=F7gZiIOfduCMo61L1dXssNaDGD2crvvd5+DPi/7ogv/s2I1vWCoHAaHs/iKbsyVEYD
-         6C1L01w00OfrGqptR55xu3rsJoVoBkGvUWIaThsAWyroXxuD33Q41O0y+hTksOQkx85h
-         3BkK/ql3p78SMFY3hY7xdzJrNhMXNdEeHZyzNoHxECK3w0eJTn9Vx8ArsezZReKenYP+
-         HW/P/8OkyH51o5KFDVECrvRqt9atXkZB1eV6JpBFmIdADnz5BCfDeeGLAUO3lZ5MLYoa
-         5uYlwKSvvmc+708aYkbv4CPZO8LQKjsPioTRZH0f5jR7bgKIyM9WATuq2b5jHvbkGW07
-         i97g==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=wZQy3YbuCB5rP26URWJIeW0Qq19O924QA2e79PKa4Kw=;
+        b=syBFSIEvjleemdx06aALvsXgGsRCyBARARSyRtoWp+7jW/d2VqWF+Vw91Cwtob4o5L
+         MJXC4pEA7YUZtKwCDkmUv0D16ze5WpMz15qzQ3dDAZfUZUIFpgODFjnPsXlbss6iaykJ
+         M8gjA7ORItU0qQ9Av+R9gl67qEhRBvtTo5xL+CpNPTp76Dd9Jmq2fTbIR/w8rBLsBOHu
+         D/ci4GGAMUR4AxgxdBLvuPJPjT4a11wCyd1++piT+Xhqm1WmpjTpwk5UA0xk4QXA87dN
+         H6sFAGUM9/VO7Xpt1pvIvfNy1EEwwgi1TbEnkz2K7PVSSmoO512+lQMH6pcWn7pQbvST
+         V0xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=ihbf63FR/J4GzNbrFBanpgciD99It3Vts05SQ0Ab3PA=;
-        b=fUtM63TWlpvs1twdCaoIlmC6a2WT0YTZZP2tVWghsm5FrKoN+BHcfpWkTdZUdS5GPF
-         CKZSgU2ZGAVX+e5AK3RvqPAc0FceIiKgY1yPMeiC0YLUsQsveHRAdv10gJjpsD7SFtim
-         tz/GAHeB9FIcgQqcFyK97VyUsGV22MX0V8sIn3sRlnzod1G1FhszWB9QlxJh9uX6xV4W
-         qGXDaM+GhB0bmbHiAyI1aYf4Ufi5MxZrifFD2EvCRm2neJLl4g5jlGpyKdlAJY74GKRs
-         /EhmX7iHJmgJ5OpHtc4vi6VPpn9arBKKdRexZG23p6rMDGwScVUDlZPxxV3Q3LdsseVI
-         jFwA==
-X-Gm-Message-State: AOAM533OfOXHHbGyMUiaZVnKpXRV1eut1YsR/Pl2m6RD6ZAJRyKd91Ik
-        cDxiYHOqKZ+VQzPMeKTZwhk=
-X-Google-Smtp-Source: ABdhPJz6OWD3Z80Z6suGTBPQuRsNzhfWFFXcMkwdDCmLJluHo3ve/J944JNKYXTtbklAiDYJom9CuQ==
-X-Received: by 2002:aca:4406:: with SMTP id r6mr13614765oia.50.1627367512481;
-        Mon, 26 Jul 2021 23:31:52 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id a192sm369931ooc.10.2021.07.26.23.31.51
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=wZQy3YbuCB5rP26URWJIeW0Qq19O924QA2e79PKa4Kw=;
+        b=mtKhgIVLDNMtPedP4M5oPKQ6eYY7XhvkSW+db5Q8dqrdBG2CWmRq3pifFhCyynKyaw
+         FJLwS9p4eKO3ckvBmMLSv1sWUijueJPxI3D39pJ64kJicU7zx93vOb0+GLJsIHKi5BtH
+         c9g0DerPK0I9IYLPcjtRy2ecJKU1CCJ3Y5wvlAVWJ34N0ykLsFwIBLuu2BPpRF0FvDUG
+         /PWHzVrenezzc34n7T3L4cjTQL9Kw8Yosra12COcNOOgOpocBixMnuKY3y/RvwU6VCyI
+         NIQScNO0doaElQtPbJ+UeF7o0YjT06/Vyckbq+dVunc8Urn7x9T8DwKkLHtUzb8WU1D5
+         0H9g==
+X-Gm-Message-State: AOAM533BAvdb9U+8yQ5mH7YG8G2X5JY187UZC/HVEvw300Q/fC7Ryz20
+        yh06TO8s18wQ+2IU7XwJ8T+AB7hext5ihg==
+X-Google-Smtp-Source: ABdhPJwnG9UcG4xBmSvglDMcbiC3WT343YG0n3bp/w9m0Q5v2hwVDwFIA7BiPXkwha6bJzEmkNjwvQ==
+X-Received: by 2002:aa7:d8d0:: with SMTP id k16mr26057236eds.202.1627372636544;
+        Tue, 27 Jul 2021 00:57:16 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id m12sm628576ejd.21.2021.07.27.00.57.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jul 2021 23:31:51 -0700 (PDT)
-Date:   Tue, 27 Jul 2021 01:31:50 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Git List Mailing <git@vger.kernel.org>,
-        Alex Henrie <alexhenrie24@gmail.com>
-Message-ID: <60ffa856a332d_7d082086f@natae.notmuch>
-In-Reply-To: <xmqqeebregns.fsf@gitster.g>
-References: <20210721134650.1866387-1-felipe.contreras@gmail.com>
- <CAHk-=whf-9kNV3y5G-VVA2K5EZCnvv94paAEj6p=i2R4RM2emQ@mail.gmail.com>
- <xmqqeebregns.fsf@gitster.g>
-Subject: Re: [PATCH v2] pull: introduce --merge option
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Tue, 27 Jul 2021 00:57:15 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/3] send-pack: fix push.negotiate with remote helper
+Date:   Tue, 27 Jul 2021 09:56:38 +0200
+References: <cover.1624486920.git.jonathantanmy@google.com>
+ <cover.1626370766.git.jonathantanmy@google.com>
+ <af40bee611d4dbbd9bb5f1466bec0be118b74165.1626370766.git.jonathantanmy@google.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <af40bee611d4dbbd9bb5f1466bec0be118b74165.1626370766.git.jonathantanmy@google.com>
+Message-ID: <87y29sqjd1.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> 
-> > On Wed, Jul 21, 2021 at 6:47 AM Felipe Contreras
-> > <felipe.contreras@gmail.com> wrote:
-> >>
-> >> Users need to specify if they want to either --merge or --rebase, but
-> >> unfortunately the former is missing.
-> >
-> > Ack. I think it's just historical, because long long ago it used to be
-> > that 'git pull' always merged unless told otherwise with --rebase.
-> 
-> The "--no-rebase" option, which is documented as a synonym for
-> "--rebase=false", has been there, but the implementation is buggy in
-> some corner cases, which has been worked on recently in a separate
-> thread.  I do not think it is too bad to add "--merge" as yet
-> another synonym for "--rebase=false".
 
-Any particular reason why this is not a topic? [1]
+On Thu, Jul 15 2021, Jonathan Tan wrote:
 
-[1] https://lore.kernel.org/git/xmqq35s0fj9o.fsf@gitster.g/
 
--- 
-Felipe Contreras
+> +	git init client &&
+> +	test_when_finished 'rm -rf client' &&
+
+Nit (don't think this needs a re-roll): Better to do test_when_finished
+before whatever creates the thing, in case the command has a bug/errors
+out etc. during development. Ditto the below.
