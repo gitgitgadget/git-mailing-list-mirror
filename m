@@ -2,125 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93E5AC4338F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 00:42:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5C48C4338F
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 00:55:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7BFD160F55
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 00:42:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC3CC60F02
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 00:55:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234925AbhG0ABi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 20:01:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57992 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234724AbhG0ABZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jul 2021 20:01:25 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82F77C0613CF
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 17:41:52 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id u15-20020a05600c19cfb02902501bdb23cdso664228wmq.0
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 17:41:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=RIH9xwMS/wVvgBREhMzvZdnz1R+SporpNqyLTVV/JZM=;
-        b=Dv9q9M1wVQl1E8isutzG4tToeX7BLBrDVf8CN/OxwlpUai1MkdqebQatD+7aXFJCyS
-         Rtqu6SBg5bu7NIavMYGQZ2OLb2UtSlPX5wCcJ7MBR99MdfBZylRfoSgjuep8DvuX9fJ8
-         KolEExyB3xmyUqoOtNh91Bw42j4UP8ViAuGVuLMDhDvaO6yAwAPBsMSCpVhK5ssIQPs6
-         QH6e8GEE3x8EeOGvTJXxK23Fsa4BjP/wO/L7mbL/OmumYvwISU/5RLsVWO9EqPaU/OJg
-         um3aG7DvqCIqbwi1p9OpLhFPS+0l7dqaUOWAAYfQAZs0psa6XlpE5Tr8H/Y2SFHYP9LA
-         7ZYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=RIH9xwMS/wVvgBREhMzvZdnz1R+SporpNqyLTVV/JZM=;
-        b=kp2wt07AV4tf8fQiMAMJCQ11jt3pR/j5yeCuVW4VNTj6BEdaTDfa7Rx1NiW5rmfRzx
-         /2+Gzk8It89FQCHjg5U9DEYTlRw01fx4+JxgrrS6OoqV+PrGKbtwe4ROenhHkyCYDKhs
-         H69rStuTx/XS+NGjvEo5rsKcXvwkxFgRy2i6LrHjHL39XipQYiZJitGhiv21nIxGOI2H
-         dSzBJ5svv+6LMcdqxidFedQHPBl4Wfs1Gc0FWRQdmRhUwLYR2n/3i6HLo4RSXW0d6Now
-         bhalMUUuOb2NoKB/taQCIW1U6a29MZmEPjXARBsjw4fjjY6e4MNscCHaNubcuUO/W99T
-         82gg==
-X-Gm-Message-State: AOAM533KJsAkUvQRVb5As/lVFAF7YZtOju+YfKP7M3UWTojaaj0hFwcX
-        IPhXCHx4UC9qNu+lxCxEy+oOForuXiYBGw==
-X-Google-Smtp-Source: ABdhPJzMGKaswNlJXu0jC1yFUZidfnwIYvNb1ZXIv84l1WIGC5i8TMMMBcJEkArxgC1plgo7qwIR9g==
-X-Received: by 2002:a1c:790e:: with SMTP id l14mr1306644wme.119.1627346510889;
-        Mon, 26 Jul 2021 17:41:50 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c16sm1254377wru.82.2021.07.26.17.41.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jul 2021 17:41:50 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 4/4] bundle: show progress on "unbundle"
-Date:   Tue, 27 Jul 2021 02:41:42 +0200
-Message-Id: <patch-4.4-01643f2ccd-20210727T004015Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.32.0.988.g189fd9ae38
-In-Reply-To: <cover-0.4-0000000000-20210727T004015Z-avarab@gmail.com>
-References: <cover-0.4-0000000000-20210727T004015Z-avarab@gmail.com>
+        id S231752AbhG0AOt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 20:14:49 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.31.36]:9930 "EHLO
+        smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229524AbhG0AOr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jul 2021 20:14:47 -0400
+Received: from [84.163.73.49] (helo=[192.168.2.202])
+        by smtprelay02.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <git@mfriebe.de>)
+        id 1m8BLr-00067x-T9; Tue, 27 Jul 2021 02:53:43 +0200
+Subject: Re: Files modified, even after: git reset --hard
+To:     Chris Torek <chris.torek@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <dd4aca2c-9ca2-e489-d78f-9d2a5580f1a5@mfriebe.de>
+ <4e9b54b4-8e40-7fd3-ae65-d33390f3af43@mfriebe.de>
+ <04f3b300-3ccf-c91b-6406-6a998b473a24@mfriebe.de>
+ <bfc257c7-bf74-06be-ac62-9a6d27f565c9@mfriebe.de>
+ <CAPx1GvcHiaGsuOybOijRYpmivO0dLvUFacAeOrM4DfY-uuXB2Q@mail.gmail.com>
+ <070f7f5e-0e6c-2edc-1403-9265c810df17@mfriebe.de>
+ <CAPx1GvdM7CzsbT1SWW9+OPcG9FL7WXQ7YD6aM7P0krujp_OrkQ@mail.gmail.com>
+ <67f35be7-3317-6486-cdb6-62eb691eaf10@mfriebe.de>
+ <CAPx1Gvey1uSr58Uf7VpC0c6J+R0tUP=VUP_dGmv_yVO-CwmvXg@mail.gmail.com>
+From:   Martin <git@mfriebe.de>
+Message-ID: <3cfcbbd4-0b26-dedf-f5f2-85caebcb75da@mfriebe.de>
+Date:   Tue, 27 Jul 2021 02:55:13 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPx1Gvey1uSr58Uf7VpC0c6J+R0tUP=VUP_dGmv_yVO-CwmvXg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWVAbWZyaWViZS5kZQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "unbundle" command added in 2e0afafebd8 (Add git-bundle: move
-objects and references by archive, 2007-02-22) did not show progress
-output, even though the underlying API learned how to show progress in
-be042aff24c (Teach progress eye-candy to fetch_refs_from_bundle(),
-2011-09-18).
+On 27/07/2021 00:03, Chris Torek wrote:
+> On Mon, Jul 26, 2021 at 12:57 PM Martin <git@mfriebe.de> wrote:
+>> Is it possible that those cheats also look at the "replaced" (rather
+>> than the "replacement") commit(s)?
+> 
+> [1]: https://git-scm.com/docs/racy-git/en
+> [2]: https://web.archive.org/web/20101214222704/http://msdn.microsoft.com/en-us/library/14h5k7ff(v=vs.80).aspx
+> 
 
-Now we'll show "Unbundling objects" using the new --progress-title
-option to "git index-pack", to go with its existing "Receiving
-objects" and "Indexing objects" (which it shows when invoked with
-"--stdin", and with a pack file, respectively).
+Thanks for the info. I still think there is something wrong.
+So I made a simple testcase
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/bundle.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+https://github.com/User4martin/testrep.git
+git fetch origin 'refs/replace/*:refs/replace/*'
 
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index 10f6f45770..f027cce3fe 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -162,7 +162,11 @@ static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix)
- 	struct bundle_header header = BUNDLE_HEADER_INIT;
- 	int bundle_fd = -1;
- 	int ret;
-+	int progress = isatty(2);
-+
- 	struct option options[] = {
-+		OPT_BOOL(0, "progress", &progress,
-+			 N_("show progress meter")),
- 		OPT_END()
- 	};
- 	char* bundle_file;
-@@ -178,6 +182,13 @@ static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix)
- 	}
- 	if (!startup_info->have_repository)
- 		die(_("Need a repository to unbundle."));
-+
-+	if (progress) {
-+		strvec_push(&extra_args, "-v");
-+		strvec_push(&extra_args, "--progress-title");
-+		strvec_push(&extra_args, _("Unbundling objects"));
-+	}
-+
- 	ret = !!unbundle(the_repository, &header, bundle_fd, &extra_args) ||
- 		list_bundle_refs(&header, argc, argv);
- 	bundle_header_release(&header);
--- 
-2.32.0.988.g189fd9ae38
+
+All tested on linux. (Though git version 2.25.1)
+
+git init test
+
+FILE .gitattributes
+foo -text
+
+FILE foo
+AAAAA
+
+git add .gitattributes foo
+git commit -m A
+
+modify foo (real content modify)
+add / commit -m B
+modify foo (real content modify)
+add / commit -m C
+
+switch -d <A>
+modify foo to be the same as commited to "C"
+add / commit -m A2
+
+git show
+- get the old and new hash for the blob containing foo
+git replace old new
+
+Now commit A has the same content in foo as commit C
+(we are currently at the detached commit A2)
+
+git switch <C>
+git status  // all fine
+
+git switch <A>
+git status
+=> foo is modified
+git diff
+=> no diff
+
+
+So I would say, it is not autorclf, or line endings in this case.
+
+I do not know, if the above can be caused by "raciness".
+But it appears to only(?) happens if a replace is in place.
+
+So at this point my guess would be, that when the switch is done, at 
+some point something looks at the original blob, even though it is meant 
+to look at the replacement.
+
+
+
+
+
+
+
+
+
+
 
