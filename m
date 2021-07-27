@@ -7,61 +7,62 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D9CDC4338F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:21:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F54FC4338F
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:21:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5654160FE3
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:21:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2313E60F9C
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:21:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233965AbhG0VVo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jul 2021 17:21:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58318 "EHLO
+        id S232829AbhG0VVp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jul 2021 17:21:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234603AbhG0VVX (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234561AbhG0VVX (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 27 Jul 2021 17:21:23 -0400
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62DF5C061A1B
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:19:53 -0700 (PDT)
-Received: by mail-io1-xd2d.google.com with SMTP id n19so495634ioz.0
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:19:53 -0700 (PDT)
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE2A7C06139E
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:19:55 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id m13so408110iol.7
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:19:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=C4rTXIodw+uQYEyZy48W2xnYJw6KexJh005knbHDbY8=;
-        b=ve/PGuCxAZ9AddRzP88loc5WwULCVm302ypBf3pWynYzdusDm8jDaMlJXTjE3aIa3G
-         lRVdbP24sfNaJAzIehpsJjlF7zviJ+6x7jH0yCl/lcMK9VuYWurMIfwPGy5YmgC6jkjY
-         qvM0YkqYR8eGrY3Gs2Y4ANjjdsWshIPtyh4wjzao1xlCB3MJm06A0X/lr+65/2b4P1iI
-         vsedd8zUDP4N3tKybGd7Fld6muC7+fnWqCtESlo4q0oP6TIlDTXiXjQzP2p4ESkhuV0X
-         3POZtvUxR/n0UbX1LW1jzyVW+yT68PzhUDy/x7PESf2+WFUdc7EibzrC5Q2uedy+vzil
-         P1Kg==
+        bh=o9+qZ2NNd8ITQPR8Xi3EzbT8NJyiS+QVLRIjEZy9Lvo=;
+        b=eqrE+2Iz4AlkZJ+nvi277aUkybhvTOhrHlc4a4vuA/RqItMF3T8rQ7DX6YK4jCRd+i
+         c0q96leWO7K4Y9E6HntrCS98gR4FIXzrb9eXSoFWtPU00U/KAKAlmOYYf88eBLoY6OkG
+         sDQK3uCfeiIgFL+96EDvZfXWpOY+XWCss6suRP09WQhLS+Nzcg0roeRKwzHApMvVqMXa
+         9RzA9qD9xnJv2F48g9RY6W5EqAqA3LAiKKaxQeCksUjrBU3RUDlmz1y4qLKwYE+0xnQ+
+         dymrsa/8yMh4QdZxgFNpNpqeBHdcigZ0jCq/ZOtmmpsvBa1dxoIW7n24n+jCK/demszt
+         wxTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=C4rTXIodw+uQYEyZy48W2xnYJw6KexJh005knbHDbY8=;
-        b=JoMQpEBeZ/eTfLDYNox6hW4SpKUfjHR2zCAQMlS1Ho9TwpH8v9u3227DdFwx++ScpH
-         aBRkqUpQN5J+GqHMZrZWhHqHzP5/m2z5H5VabMrLdkKQbGrCwfm3ecVW8bAaliXwDEZC
-         YDSKv4UKrk0iz8b2YWWRfIcdE3sjzAD17DsjaK8IcLwjQHp+58QTeo5qEjDobOWs0J0a
-         PrfIdHruRGr2pHTL7hc38Aacy+GeCK4fj3Dzbmd3xl13suAQy0pscEYNJ1jNui4O4nVl
-         CaDT9FauXeSmHrLKbHLEEWmFEHvHxfokZKAYyXllcv31IHm5PMUIm9cd8/eqAxjUoaEw
-         g4mQ==
-X-Gm-Message-State: AOAM532FIqeTdHBzrnH8O/wvvUhuvPcObGAHMYafSgXHhNI92QaDxdyu
-        eg2ao3ld/QHjmN5ozlYLAJDMg79eJzf6aD3y
-X-Google-Smtp-Source: ABdhPJwNXgV5pIXN2kGkNtWa/Yrzj7+HzzsHewJTsc7hzkJWvJe8eIYv/8rFVjjsX+sq6+Sbte1iJA==
-X-Received: by 2002:a5d:925a:: with SMTP id e26mr20695939iol.195.1627420792748;
-        Tue, 27 Jul 2021 14:19:52 -0700 (PDT)
+        bh=o9+qZ2NNd8ITQPR8Xi3EzbT8NJyiS+QVLRIjEZy9Lvo=;
+        b=KbSmdKOvS8yOEp/CwEGIeFJLY3afEsNKXZg2cPTtSxaWzCs4ft0/AdReiy9CORMXbj
+         pJsIN7hOzBgiaZG+8obCinEBZ7iDk1QMc9ce6m8gBJOjfIHYCwiIUVQO6fCHqEYdHPa4
+         hOQllj42JpvjI+7GO2+v6vbykgvk2fS6Qj5M8lgEtLFF8H27AO9tg3Khjdr4A0d3hcGu
+         r/XHPlBIjm2bqch9IVwYIazwr6664VlblMa+EYAHhBB/DcVf2Yh+3BZV8XzbvNJ5Cdok
+         yWqWqEmTPCufbmt3HZmCPhtdWZhQMfVWce3x9a/0pLvda9+QgeW0DipTGINZ7Kra6CSG
+         BkGg==
+X-Gm-Message-State: AOAM532LUM5vEdQIV9a+u8Jn5E5t4p/Zd5M7B26Y0gel9RWWFeAUbtIl
+        HZHI56WZvChKtbDMNRAzxJBwYNOksfGflnMt
+X-Google-Smtp-Source: ABdhPJyXmzM+zsFXCydtRGZzoiYncx1s07knsn/NnfVpok+dr5uLNJXLJyaxzfgLknHmqnUAnfFfqA==
+X-Received: by 2002:a6b:f40a:: with SMTP id i10mr11284819iog.139.1627420795371;
+        Tue, 27 Jul 2021 14:19:55 -0700 (PDT)
 Received: from localhost ([2600:1700:d843:8f:6813:d625:75e6:4f64])
-        by smtp.gmail.com with ESMTPSA id i2sm2550444ilq.83.2021.07.27.14.19.52
+        by smtp.gmail.com with ESMTPSA id x11sm2572046ilu.3.2021.07.27.14.19.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jul 2021 14:19:52 -0700 (PDT)
-Date:   Tue, 27 Jul 2021 17:19:51 -0400
+        Tue, 27 Jul 2021 14:19:55 -0700 (PDT)
+Date:   Tue, 27 Jul 2021 17:19:54 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         jonathantanmy@google.com
-Subject: [PATCH v3 11/25] pack-bitmap.c: introduce 'nth_bitmap_object_oid()'
-Message-ID: <67e6897a34cb5283daac84053c468701216f90c5.1627420428.git.me@ttaylorr.com>
+Subject: [PATCH v3 12/25] pack-bitmap.c: introduce
+ 'bitmap_is_preferred_refname()'
+Message-ID: <743a1a138ef236e876f2c18257e5f4213c3acbc9.1627420428.git.me@ttaylorr.com>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1627420428.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -72,53 +73,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A subsequent patch to support reading MIDX bitmaps will be less noisy
-after extracting a generic function to fetch the nth OID contained in
-the bitmap.
+In a recent commit, pack-objects learned support for the
+'pack.preferBitmapTips' configuration. This patch prepares the
+multi-pack bitmap code to respect this configuration, too.
+
+The yet-to-be implemented code will find that it is more efficient to
+check whether each reference contains a prefix found in the configured
+set of values rather than doing an additional traversal.
+
+Implement a function 'bitmap_is_preferred_refname()' which will perform
+that check. Its caller will be added in a subsequent patch.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ pack-bitmap.c | 16 ++++++++++++++++
+ pack-bitmap.h |  1 +
+ 2 files changed, 17 insertions(+)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 54dc4f7915..9d0dd1cde7 100644
+index 9d0dd1cde7..6b12c96e32 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -223,6 +223,13 @@ static inline uint8_t read_u8(const unsigned char *buffer, size_t *pos)
- 
- #define MAX_XOR_OFFSET 160
- 
-+static int nth_bitmap_object_oid(struct bitmap_index *index,
-+				 struct object_id *oid,
-+				 uint32_t n)
-+{
-+	return nth_packed_object_id(oid, index->pack, n);
-+}
-+
- static int load_bitmap_entries_v1(struct bitmap_index *index)
+@@ -1652,3 +1652,19 @@ const struct string_list *bitmap_preferred_tips(struct repository *r)
  {
- 	uint32_t i;
-@@ -242,7 +249,7 @@ static int load_bitmap_entries_v1(struct bitmap_index *index)
- 		xor_offset = read_u8(index->map, &index->map_pos);
- 		flags = read_u8(index->map, &index->map_pos);
+ 	return repo_config_get_value_multi(r, "pack.preferbitmaptips");
+ }
++
++int bitmap_is_preferred_refname(struct repository *r, const char *refname)
++{
++	const struct string_list *preferred_tips = bitmap_preferred_tips(r);
++	struct string_list_item *item;
++
++	if (!preferred_tips)
++		return 0;
++
++	for_each_string_list_item(item, preferred_tips) {
++		if (starts_with(refname, item->string))
++			return 1;
++	}
++
++	return 0;
++}
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 020cd8d868..52ea10de51 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -94,5 +94,6 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
+ 			  uint16_t options);
  
--		if (nth_packed_object_id(&oid, index->pack, commit_idx_pos) < 0)
-+		if (nth_bitmap_object_oid(index, &oid, commit_idx_pos) < 0)
- 			return error("corrupt ewah bitmap: commit index %u out of range",
- 				     (unsigned)commit_idx_pos);
+ const struct string_list *bitmap_preferred_tips(struct repository *r);
++int bitmap_is_preferred_refname(struct repository *r, const char *refname);
  
-@@ -862,8 +869,8 @@ static unsigned long get_size_by_pos(struct bitmap_index *bitmap_git,
- 		off_t ofs = pack_pos_to_offset(pack, pos);
- 		if (packed_object_info(the_repository, pack, ofs, &oi) < 0) {
- 			struct object_id oid;
--			nth_packed_object_id(&oid, pack,
--					     pack_pos_to_index(pack, pos));
-+			nth_bitmap_object_oid(bitmap_git, &oid,
-+					      pack_pos_to_index(pack, pos));
- 			die(_("unable to get size of %s"), oid_to_hex(&oid));
- 		}
- 	} else {
+ #endif
 -- 
 2.31.1.163.ga65ce7f831
 
