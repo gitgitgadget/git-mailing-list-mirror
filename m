@@ -2,81 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6811BC4338F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 17:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBC85C432BE
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 17:55:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4CE0E60F4F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 17:51:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC0666056B
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 17:55:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230030AbhG0Rvz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jul 2021 13:51:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39108 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229593AbhG0Rvz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jul 2021 13:51:55 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39C9BC061757
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 10:51:54 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id d69-20020a25e6480000b02904f4a117bd74so19418662ybh.17
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 10:51:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=N8qV6lq6pkJU/16wBzG0S8iBBLcqTN1O3/5alh86hAg=;
-        b=ZJqNFMG6Lwa5BqJUW4HJsQxNd2i9yTESo8Nrzx4wzjusye9cWXatMgrx7wY0OO1wkG
-         ymqpV2zzJVtG/s3vukkKJHkOo78NwqguneuJQU2oz5kyAxtip2xti1inWjGrXII7GjvG
-         bBPRtbW85XpBtiml91rd2BMM+I/KHfg9+z6EP5Pp5rv0uD3hdbQxY1UDXlgF3lk4wDdq
-         PH1daYi2idF0HF76OSe4Uib1zQHMHYDTQfUOZHBic8POL4tF+AM9sqJcxhLYk3GWdgoA
-         wy5aOtz3j0VP56G8hz4vPLAPDrSeS70kQqNsqnIKefivZYo3bkvmKS4FyFbDUB76LMda
-         cbLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=N8qV6lq6pkJU/16wBzG0S8iBBLcqTN1O3/5alh86hAg=;
-        b=MqqyHjhx4D14kEm17++aSm+Z1Z+Lwv4IRMV5FiQzCKLiMXMhUUHZuGU1dftknp1rj8
-         F3lGii7CINX3wJZ2+l0tFN5DQQpT8M7AzfC28UB0ZZFyIoBVCzQ3ar8LruN2IdHuy3J9
-         r2fiDdwLuwahwIUScdUXUgqFncSM6Z8B2cKozxn9bZksIG+DdxjVCNW/u7p/RA40dObx
-         S7UEt+o3MvYKtWlNCW+uXr/MhYiQ/q/+sEGyAx3Q/rFA1IqKHoSncZbYUEY8IX5k7BpI
-         nzLX5kPHPg9kprgBEil9FH7ny37i6XCZKkMNL/8Me95M97jsmyXunSr4wW3CeFD3fHGJ
-         Xtyw==
-X-Gm-Message-State: AOAM530X9pB6GFc65tB/7o2SIJe1ZDYJmJNdd9jfb4r4zmQiWX/XKS/M
-        tCd2+bojNPpRV42UxH/xeXkLOcLndhV1VW4iXrJa
-X-Google-Smtp-Source: ABdhPJyhROoIObdghsVQHQE714JxQaEFot1aQv+heFQDbaOwW7mKkuj6JQNaqcD0cZe/Jys7RsCk/1urPTT/vDu7XzF1
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a25:7647:: with SMTP id
- r68mr33870736ybc.432.1627408313506; Tue, 27 Jul 2021 10:51:53 -0700 (PDT)
-Date:   Tue, 27 Jul 2021 10:51:51 -0700
-In-Reply-To: <20210616004508.87186-5-emilyshaffer@google.com>
-Message-Id: <20210727175151.2462983-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20210616004508.87186-5-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.32.0.432.gabb21c7263-goog
-Subject: Re: [PATCH v2 4/4] submodule: cache superproject gitdir during 'update'
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     emilyshaffer@google.com
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S231942AbhG0Rzy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jul 2021 13:55:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58946 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229962AbhG0Rzx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jul 2021 13:55:53 -0400
+Received: (qmail 31160 invoked by uid 109); 27 Jul 2021 17:55:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Jul 2021 17:55:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1253 invoked by uid 111); 27 Jul 2021 17:55:53 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Jul 2021 13:55:53 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 27 Jul 2021 13:55:52 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH v2 08/24] midx: respect 'core.multiPackIndex' when writing
+Message-ID: <YQBIqO5j0VHXL6V7@coredump.intra.peff.net>
+References: <dfd1daacc5b12d470bb6deec3448cf7dbde2bf0f.1624314293.git.me@ttaylorr.com>
+ <YPf1m01mcdJ3HNBt@coredump.intra.peff.net>
+ <YPhz+iOMu4Q7zjY4@nand.local>
+ <YPp98QgXW5PQHzyy@coredump.intra.peff.net>
+ <YP8F9ttlMXwNZBam@nand.local>
+ <YP8zsR+W8JeCWc1Q@nand.local>
+ <YQBCjSmdOPfrnNnK@coredump.intra.peff.net>
+ <YQBEIrRfcq5dhpZn@nand.local>
+ <YQBFi70c1wfXdKQf@coredump.intra.peff.net>
+ <YQBGvEQoZpw49Z7L@nand.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YQBGvEQoZpw49Z7L@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> A cached path to the superproject's gitdir might be added during 'git
+On Tue, Jul 27, 2021 at 01:47:40PM -0400, Taylor Blau wrote:
 
-[snip]
+> > BTW, yet another weirdness: close_object_store() will call close_midx()
+> > on the outermost midx struct, ignoring o->multi_pack_index->next
+> > entirely. So that's a leak, but also means we may not be closing the
+> > midx we're interested in (since write_midx_internal() takes an
+> > object-dir parameter, and we could be pointing to some other
+> > object-dir's midx).
+> 
+> Yuck, this is a mess. I'm tempted to say that we should be closing the
+> MIDX that we're operating on inside of write_midx_internal() so we can
+> write, but then declaring the whole object store to be bunk and calling
+> close_object_store() before leaving the function. Of course, one of
+> those steps should be closing the inner-most MIDX before closing the
+> next one and so on.
 
-> +		# Cache a pointer to the superproject's gitdir. This may have
+That gets even weirder when you look at other callers of
+write_midx_internal(). For instance, expire_midx_packs() is calling
+load_multi_pack_index() directly, and then passing it to
+write_midx_internal().
 
-Patches 3 and 4 look good to me except that for me, a cache is something
-that lets us avoid an expensive computation. But as far as I know, we're
-not planning to perform the expensive computation in the absence of a
-cache. Maybe the word "record" would fit better.
+So closing the whole object store there is likewise weird.
 
-This is nit-picky, though, and if others think that the word "cache"
-fits here, that's fine by me too.
+I actually think having write_midx_internal() open up a new midx is
+reasonable-ish. It's just that:
+
+  - it's weird when it stuffs duplicate packs into the
+    r->objects->packed_git list. But AFAICT that's not actually hurting
+    anything?
+
+  - we do need to make sure that the midx is closed (not just our copy,
+    but any other open copies that happen to be in the same process) in
+    order for things to work on Windows.
+
+So I guess because of the second point, the internal midx write probably
+needs to be calling close_object_store(). But because other callers use
+load_multi_pack_index(), it probably needs to be closing the one that is
+passed in, too! But of course not double-closing it if it did come from
+the regular object store. One easy easy way to avoid that is to just
+open a separate one.
+
+I have some spicy takes on how midx's should have been designed, but I
+think it's probably not productive to rant about it at this point. ;)
+
+-Peff
