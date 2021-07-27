@@ -2,162 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1257C4338F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 00:57:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71B6CC4338F
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 00:59:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7E88160F57
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 00:57:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 468AD60F41
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 00:59:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233249AbhG0ARK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 20:17:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33258 "EHLO
+        id S233821AbhG0AT3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 20:19:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbhG0ARK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jul 2021 20:17:10 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67EA6C061757
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 17:57:37 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id j1so15398989pjv.3
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 17:57:37 -0700 (PDT)
+        with ESMTP id S229524AbhG0AT2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jul 2021 20:19:28 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B1BCC061757
+        for <git@vger.kernel.org>; Mon, 26 Jul 2021 17:59:55 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id l6so11144595edc.5
+        for <git@vger.kernel.org>; Mon, 26 Jul 2021 17:59:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=niXLb99VsDACXcJ5xe6wMbh3fCWRK9cDWF8AaxsNRno=;
-        b=o3f4qppvgQ7vO4z7e7P8KC2YQ4w5f/GcKXN49HxwIQyWGZzdr5f80KsN5xqzAlz7Yj
-         zupybHCbkCLTdGT6S7QoQJm6EF0NEE4BHvAJUAJrUSVc5neWZYi9jI1QnL2ngNY2iPO5
-         uhMagOTue4vmyZR1GwY10AcfGDkpXzt7DoAoD+He3jNhCOgda2f0YjnBG6mMSuuyytF/
-         4NQoO4xu/sw0wzkJkzockitn64DdHiuiKbkmIwhw+FFjuzjZXKnP5dgPKt4nDUUti912
-         WD5oZuROk8d3A9GA/g0K0guETu/kJRBZnuCbpSLAAH86Rwakf6rn5Nf4a8F2+7S0Nrad
-         DA0g==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=unBrE6puyim8dfCJdiHpzQThxdowVZmz4X26MxftKgs=;
+        b=BI1+jLMZiR6/FQZKougUAZARX1A08Q1bcCS7a0pNsywFR8Dk66vTukgfCXWKpwNPEp
+         FBdhEWHT6Ic48k6AvjIcnhuO8xExJ4ep+kHjxfQJ0FRZ3m6w4dZa4sGdI+u6WifeTV8O
+         JKmMXtVhvt7mnGaX1s8D7oVXP1fdxgyF4ou9zFfUpoKsd5isMbcFofG/sRZUh2VpFm0r
+         5V9Ao/YZPvyIppJeGcG2Mk382PXQ/A94c1Pr7YsZZIBBE/RoRZSieP+djnSHSgkU6AVE
+         VEeQBRIe/6E6Pm3uIWloKZpts9LbCYTS1KFDgb47hXrtwgfPuCWqUvyNgfLUGiIf4O9e
+         FwRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=niXLb99VsDACXcJ5xe6wMbh3fCWRK9cDWF8AaxsNRno=;
-        b=kBs/lPqQ51k6ex6doX1wd68bSaFRBngGOIbcofG587s1QT3i/LB/riMw/rDohj86g2
-         QJxJ3dqO2C6kdqhsDjR0BsuJXuFYDk+qJ92T41cb0qo4KXqQ+z/S0tmLIIm0zajNdXew
-         P2x8rB5I3N7hncg0YFtJP7U0YaEXHzbyYP829sFI1z0Kr1xIETr7SfCzO+MOUTqG/2yn
-         v1tjIJHintshEluP0y3AqO1Gf4poITjb71xIbJ47iWlK2Uu0cotgA9fbkeGbFqm9frBl
-         yPxrQOJ/ZfHXeUh7MSL46WHgNuPG6dw9QwgpN7otrTBawrqRWWRxnQaivNmfW2yLDTVd
-         jcIA==
-X-Gm-Message-State: AOAM531aO5I10MQENn0DJeqcNeTkrm8GR2g3r5OOML0+ypoaVgpdCAxQ
-        sg4VQqd5zaDlG7b5jWaSOwKqxA==
-X-Google-Smtp-Source: ABdhPJyplJz5483VTHS480Nki5+jk7Jwq+BXWXzqUws9sQj8wp0PtsvgBVSyC3FqOeHU0B/WPWhTzg==
-X-Received: by 2002:aa7:8d10:0:b029:303:8d17:7b8d with SMTP id j16-20020aa78d100000b02903038d177b8dmr20278224pfe.26.1627347456767;
-        Mon, 26 Jul 2021 17:57:36 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:bde2:a44c:48a7:2f4])
-        by smtp.gmail.com with ESMTPSA id e23sm1274793pfd.26.2021.07.26.17.57.35
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=unBrE6puyim8dfCJdiHpzQThxdowVZmz4X26MxftKgs=;
+        b=MUFYXGFDElpr5ItgDVS7vSMFq1R8LNFTaSgKFKDYK1QRt9Bj9aG9X/WzWdajmEzmmP
+         NIeIXkD8BAiFIsjj1hX+PvsliEpfEUNT55zjN2A83fnPku40jFtjpyZhUONMd+FDU1FA
+         i9JuWI5/RA7Z6DasjUG5XZ8ksVBvso/x0Py3JFSFFvisEe7N/PUFMG7Vb+b6STA4wyXl
+         ljeaXakPDst7OvtyHBtFBSYelOXWbgYtwcqgPz0UyfmxNkNjgmq0hWI2NZIvH2ggMoei
+         ihRYG7x8L0ZNGLViTdDP7407sE+aecfSpxGeYqpZzSGps9Pe7GVH3Lqu8GR6/ILFMxd6
+         8Y8A==
+X-Gm-Message-State: AOAM532AFz6Ibxc82qq1feaE90LV3Ad12s+ulb7I0dBA2Ap/iPIu5a+W
+        Im1baSFB3v/VE58W3Yh67hs=
+X-Google-Smtp-Source: ABdhPJxC1O7dX7JvVoGcSGq60b78AjOQrktfQ4z0c/vmQJlLvag4+tPeF0RO2G9HkZH+DsMav7wQ6g==
+X-Received: by 2002:aa7:c2d7:: with SMTP id m23mr8196913edp.30.1627347593533;
+        Mon, 26 Jul 2021 17:59:53 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id n13sm362085ejk.97.2021.07.26.17.59.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jul 2021 17:57:36 -0700 (PDT)
-Date:   Mon, 26 Jul 2021 17:57:30 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     avarab@gmail.com, git@vger.kernel.org, iankaz@google.com,
-        sandals@crustytoothpaste.net
-Subject: Re: [RFC PATCH v2 2/2] hook: remote-suggested hooks
-Message-ID: <YP9Z+pDT6eZtlJhi@google.com>
-References: <87o8awvglr.fsf@evledraar.gmail.com>
- <20210720214809.3596513-1-jonathantanmy@google.com>
+        Mon, 26 Jul 2021 17:59:53 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Evan Miller <emmiller@gmail.com>, git@vger.kernel.org
+Subject: Re: Exit code 255 after large clone (32-bit PowerPC)
+Date:   Tue, 27 Jul 2021 02:51:05 +0200
+References: <D3C1583B-8CC8-434B-8AF5-B9827A7FD037@gmail.com>
+ <YP8ykvsZie4mPE5o@camp.crustytoothpaste.net>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <YP8ykvsZie4mPE5o@camp.crustytoothpaste.net>
+Message-ID: <874kcgsh94.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210720214809.3596513-1-jonathantanmy@google.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 20, 2021 at 02:48:09PM -0700, Jonathan Tan wrote:
-> 
-> > This is a bit orthagonal to what you're going for I guess, so sorry in
-> > advance about the "but what about" bikeshedding you must be getting
-> > tired of by now...
-> 
-> No - thanks for taking a look. More ideas are always welcome.
-> 
-> > ...but this part makes me think that if this is all we're aiming for as
-> > far as server-client interaction is concerned we'd be much better off
-> > with some general "server message-of-the-day" feature. I.e. server says
-> > while advertising:
-> > 
-> >     version 2
-> >     agent=...
-> >     # does protocol v2 have a nicer way to encode this in the capabilities? I think not...
-> >     motd=tellmeaboutref:suggested-hooks;master
-> 
-> Right now we don't have a way in capabilities to include arbitrary
-> strings, although we can extend it if needed.
-> 
-> > Client does, while handshake() etc.:
-> > 
-> >     # other stuff
-> >     command=ls-refs
-> >     ....
-> >     0000
-> >     # Get motd from server
-> >     command=motd
-> >     0001
-> >     refat suggested-hooks $SUGGESTED_HOOKS_AT_OID
-> >     refat master $MASTER_AT_OID
-> >     0000
-> > 
-> > And server says, after just invoking a "motd" hook or whatever, which
-> > would be passed the git version, the state of any refs we asked politely
-> > about and the client was willing to tell us about etc.
-> 
-> Ah...so the main difference is that it is the server that computes
-> whether a message is shown, based on information provided by the client
-> (different from my patches wherein the client computes whether a message
-> is shown).
-> 
-> I'm not sure how this is better, though. We don't need to build another
-> mechanism to print server messages (since it can already do so - the
-> same way it sends progress messages), but then we lose things like
-> translatability, and we have to build another endpoint for the server
-> ("command=motd").
-> 
-> Also, one thing to think about is that we want to be able to prompt
-> users when they run hook-using commands (e.g. "commit"). With my
-> patches, the necessary information is stored in a ref but with your
-> idea, we need to figure out where to store it (and I think that it is
-> not straightforward - I'd rather not use config or extra files in the
-> .git directory to store remote state, although if the Git project is OK
-> with doing this, we could do that).
 
-I think this is a pretty important point. To me, the ideal flow looks
-like this:
+On Mon, Jul 26 2021, brian m. carlson wrote:
 
- - I clone some repo, planning to just use the source code. I ignore the
-   hook prompt.
- - I notice some bug which is within my power to fix. I have forgotten
-   about the hook prompt, because I was having so much fun using the
-   source code in the repo.
- - I 'git commit' - and 'git commit' says, "Did you know this repo
-   suggests installing a commit-msg hook? You can install it by running
-   'git hook install pre-commit' and run it by running 'git commit
-   --amend --no-edit'. You can audit the commit-msg hook by running 'git
-   hook magic-audit-command-name-tbd'. You can hide this advice <typical
-   advice-hiding advice here>."
+> [[PGP Signed Part:Undecided]]
+> On 2021-07-26 at 17:54:07, Evan Miller wrote:
+>> What did you do before the bug happened? (Steps to reproduce your issue)
+>> 
+>> $ git clone -v git@github.com:macports/macports-ports.git
+>> Cloning into 'macports-ports'...
+>> remote: Enumerating objects: 1223319, done.
+>> remote: Counting objects: 100% (685/685), done.
+>> remote: Compressing objects: 100% (341/341), done.
+>> remote: Total 1223319 (delta 289), reused 608 (delta 252), pack-reused 1222634
+>> Receiving objects: 100% (1223319/1223319), 244.46 MiB | 1.09 MiB/s, done.
+>> Connection to github.com closed by remote host.
+>
+> This message is the relevant detail here.  This means that the
+> connection was reset, which could be due to the remote host (GitHub),
+> but is more likely due to a network issue of some sort.  You'll have to
+> do normal network troubleshooting to see why that might be.
+>
+> It could very well be related to the fact that you're running a nearly
+> 14-year old operating system, but I just can't say for certain.  It's
+> not a bug in Git, however.
 
-That way I don't add privilege (tell my computer it's OK to execute code
-I didn't look at) until the very possible moment. This workflow also
-captures changing intentions - I did not clone the code intending to
-contribute back, but at the moment my intentions changed, I was nudged
-to answer differently to a question I was asked with different earlier
-intentions. That use case isn't easy to capture with a MOTD, unless you
-run one on push, at which point it may be too late (e.g. if while fixing
-I also accidentally uploaded my oauth password, and now it'll live
-forever on GitHub in infamy).
+I'm not so sure it's not, I think the "Connection to github.com closed
+by remote host" message is emitted by the C library, not Git itself (we
+don't seem to have that exact wording anywhere, but maybe I missed
+it).
 
-MOTD approach also makes it hard to *update* hooks when the maintainer
-so recommends - would be nice to have something baked in to notice when
-there are new changes to the hooks, so we hopefully don't have
-developers running hook implementations correlating to the date they
-most recently cloned the project.
+I've seen other cases where I think OSX in particular is quite verbose
+in this area, but maybe I'm misrecalling.
 
- - Emily
+We've already received all objects as noted downthread, so having the
+connection go away should be something we handle gracefully, and the
+code in transport.c seems to try to do that.
+
+It's also quite unusual for us to exit with code 255, I don't think we
+do that intentionally anywhere (not from die, BUG etc.).
+
+Evan: Can you run this with some of GIT_TRACE=1 /
+GIT_TRACE_EVENT=/dev/stderr GIT_TRACE_PACKET=1 and see if some of those
+show what's happening in/around that 255 exit?
