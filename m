@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06359C432BE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F11FC4338F
 	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 13:16:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E32AF6128E
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 13:15:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7FDCC6128E
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 13:16:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236614AbhG0NP6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jul 2021 09:15:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58966 "EHLO
+        id S236629AbhG0NP7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jul 2021 09:15:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236604AbhG0NPw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jul 2021 09:15:52 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A64FC061764
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 06:15:51 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id b9so14335466wrx.12
+        with ESMTP id S236609AbhG0NPz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jul 2021 09:15:55 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06FD4C0613CF
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 06:15:52 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id a192-20020a1c7fc90000b0290253b32e8796so1406396wmd.0
         for <git@vger.kernel.org>; Tue, 27 Jul 2021 06:15:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=/Z2ObP/5m6Bqgpvniwr4cMuIjfLoyWcTtATrlnn97P4=;
-        b=st/yyezWxxx2diU5gbE9Z5ZF+atIpjIxoAj7PdGhsVHCRrAIf0ArWh+NE2UKGY4akS
-         nt5eO9ej1WxPM8QiSiFepmeJ4l99PJl50FL50hAhvlgm0C0YDg+ZVRlYOfbjDPXV1P+C
-         fI91yZ/P6QfLsJ78TOHtu/3VzECuzZtVaC+7jKbDuszgCV7jOvHSeyrL/4RW8km89yNJ
-         5cI1HzbqMNGgawmEdersrIYbXt6x7aOHBu1GxKlG0TeYh2So2Ur0vqsrqhyzieRWkxTp
-         ba/yi0COCYTG8T8kD5NrzoxOf2Veph+FGuSxzUvTOBVbeCpT6Xd8/iYRt8tBqJ0TCf3F
-         zf5A==
+        bh=VsX8aje9d9W0eTw8WLMAfBlbOVOcMc/JGcM1KgRET+c=;
+        b=H7eS/rXXohy/S4gFfn70CSDqWsTf0vqUMMDRLR1rYYbCh0jM2dzo9aMNuevJKixG+m
+         BcjeOYSVGHRxX4ZyeLLr2IOnaSlEdGvjVtWXEhWaPV772mRfaUNPGtmjfV+jwf8c+L/p
+         Uz7zTqkiXUHXakH8k1U3dualCLuNoTMSpabQPNSBqOeEHI7ytk0zt6SMt17Vo2GeMTOf
+         51nl849m+zI95LEUBaliWeLHCPTgvU8HDQd9c9z97Lzc7Egd6iiRMkxwtrpclr6qBqLV
+         Z6EGl+XNiWGpcCHx9wE4gvJRCclWoMHHIbTmKtYnMiFCgj0PYMZHj3wAWFGmHIKL8quY
+         BG8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/Z2ObP/5m6Bqgpvniwr4cMuIjfLoyWcTtATrlnn97P4=;
-        b=sDjLJA4/hrVlsMAkPS6bjy/Qwb7tCuJrxwDUOrl0SCmohtirDnap4sAgYvm8PsoYFK
-         I1/N0Z2YTcSbytMpr4HnBC5A7wYTMqOuA4UK6O65aX+lbDivAeUZVIY7SM0ohhDLxxZ+
-         yyT231iyKdMtR0YqvlFgblAXYHtOmLgnhfbsPTaagDz2CzP6wGj0t/3ZsOGNrleqliAR
-         S5q25NdKRjRYn1S8mHUnM/haEEeAbJNsj43jb9jejXCdCtDD1BI+2fzgZtxw7tg2xy9A
-         gAsgSJR88zJp4/YESJWtOwGQ7wd5Kx0y+HnU0cfoakDe3ZmsfTG8Q5FkRjE/cC4yv4Vo
-         /bPQ==
-X-Gm-Message-State: AOAM533EarcOc9r1s8AA+y+1uG8JbWyOeR0Fc6w3LZvJ/1kDvC8lzqb6
-        Db3l/pGivEvmTlZ+9O2OaiG/rhaS0vw=
-X-Google-Smtp-Source: ABdhPJzKDFnj5HJUIk6hEZry383lXQfJ1mjuFn/V5t9vc78ZBxstBIZygF/CatQZvyw2e7inWinb+g==
-X-Received: by 2002:a5d:64ac:: with SMTP id m12mr23936029wrp.89.1627391749876;
-        Tue, 27 Jul 2021 06:15:49 -0700 (PDT)
+        bh=VsX8aje9d9W0eTw8WLMAfBlbOVOcMc/JGcM1KgRET+c=;
+        b=TkmpX55TU4ZzUQnAP509kPjZkRzn8BhBahFAFCxQT4nrsjPsJZKJ95TgUiFdAU3Jh+
+         K/IXqMqPJXgjOhIBq9n6U9hRNhAilZ6gsHxTMbA97MBY/R2J6IClEf85uORMLSnnzIZW
+         cHbgHHzRVbMAuNAavpBEY5k7oz7YnYJk1V0kNFankdWeeFIeeEGQfXdUh36Htei5lQbt
+         lDc3BIPYbIk5yepHIcXpra1p5PlSKn+OBHtDZT1EWQ+qqJVU1mULu/5D4FSZxMQA+PRw
+         A3yE/uWmvEz1XLdpyjonY9ZLnkZT1nBKc+/u+eFNMKXprP0MgikDzvKIzF4iAmagx8h4
+         8I4w==
+X-Gm-Message-State: AOAM5317papY76pu2fovDS0GQ36wUwPleAYt1yEYaomZkjZGVFGxdRTk
+        9TNoCmT93owv8sphr2DKKKUYI5EGZ5A=
+X-Google-Smtp-Source: ABdhPJxTcmALhd/YVqarwKXZVOv5dfnrbEAoWaiZYW9WYA0WUG9tH2pSlTv7voUyrGR4kqXu+vIt7A==
+X-Received: by 2002:a05:600c:290:: with SMTP id 16mr3274304wmk.71.1627391750661;
+        Tue, 27 Jul 2021 06:15:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p7sm3373028wmq.5.2021.07.27.06.15.49
+        by smtp.gmail.com with ESMTPSA id y3sm3214576wrh.16.2021.07.27.06.15.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jul 2021 06:15:49 -0700 (PDT)
-Message-Id: <725764018ceb5bcecc748cc5169d4305ea9d7d23.1627391744.git.gitgitgadget@gmail.com>
+        Tue, 27 Jul 2021 06:15:50 -0700 (PDT)
+Message-Id: <eb677b1b6a89dd8dd52bd5b77ba4c2799bb29ad7.1627391744.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v5.git.git.1627391744.gitgitgadget@gmail.com>
 References: <pull.1041.v4.git.git.1626701596.gitgitgadget@gmail.com>
         <pull.1041.v5.git.git.1627391744.gitgitgadget@gmail.com>
 From:   "Fabian Stelzer via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 27 Jul 2021 13:15:40 +0000
-Subject: [PATCH v5 5/9] ssh signing: parse ssh-keygen output and verify
- signatures
+Date:   Tue, 27 Jul 2021 13:15:41 +0000
+Subject: [PATCH v5 6/9] ssh signing: add test prereqs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,270 +86,51 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Fabian Stelzer <fs@gigacodes.de>
 
-to verify a ssh signature we first call ssh-keygen -Y find-principal to
-look up the signing principal by their public key from the
-allowedSignersFile. If the key is found then we do a verify. Otherwise
-we only validate the signature but can not verify the signers identity.
-
-Verification uses the gpg.ssh.allowedSignersFile (see ssh-keygen(1) "ALLOWED
-SIGNERS") which contains valid public keys and a principal (usually
-user@domain). Depending on the environment this file can be managed by
-the individual developer or for example generated by the central
-repository server from known ssh keys with push access. If the
-repository only allows signed commits / pushes then the file can even be
-stored inside it.
-
-To revoke a key put the public key without the principal prefix into
-gpg.ssh.revocationKeyring or generate a KRL (see ssh-keygen(1)
-"KEY REVOCATION LISTS"). The same considerations about who to trust for
-verification as with the allowedSignersFile apply.
-
-Using SSH CA Keys with these files is also possible. Add
-"cert-authority" as key option between the principal and the key to mark
-it as a CA and all keys signed by it as valid for this CA.
+generate some ssh keys and a allowedSignersFile for testing
 
 Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
 ---
- builtin/receive-pack.c |   2 +
- gpg-interface.c        | 179 ++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 180 insertions(+), 1 deletion(-)
+ t/lib-gpg.sh | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index a34742513ac..62b11c5f3a4 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -131,6 +131,8 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
- {
- 	int status = parse_hide_refs_config(var, value, "receive");
+diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+index 9fc5241228e..b4fbcad4bf3 100644
+--- a/t/lib-gpg.sh
++++ b/t/lib-gpg.sh
+@@ -87,6 +87,33 @@ test_lazy_prereq RFC1991 '
+ 	echo | gpg --homedir "${GNUPGHOME}" -b --rfc1991 >/dev/null
+ '
  
-+	git_gpg_config(var, value, NULL);
++test_lazy_prereq GPGSSH '
++	ssh_version=$(ssh-keygen -Y find-principals -n "git" 2>&1)
++	test $? != 127 || exit 1
++	echo $ssh_version | grep -q "find-principals:missing signature file"
++	test $? = 0 || exit 1;
++	mkdir -p "${GNUPGHOME}" &&
++	chmod 0700 "${GNUPGHOME}" &&
++	ssh-keygen -t ed25519 -N "" -f "${GNUPGHOME}/ed25519_ssh_signing_key" >/dev/null &&
++	ssh-keygen -t rsa -b 2048 -N "" -f "${GNUPGHOME}/rsa_2048_ssh_signing_key" >/dev/null &&
++	ssh-keygen -t ed25519 -N "super_secret" -f "${GNUPGHOME}/protected_ssh_signing_key" >/dev/null &&
++	find "${GNUPGHOME}" -name *ssh_signing_key.pub -exec cat {} \; | awk "{print \"\\\"principal with number \" NR \"\\\" \" \$0}" > "${GNUPGHOME}/ssh.all_valid.allowedSignersFile" &&
++	cat "${GNUPGHOME}/ssh.all_valid.allowedSignersFile" &&
++	ssh-keygen -t ed25519 -N "" -f "${GNUPGHOME}/untrusted_ssh_signing_key" >/dev/null
++'
 +
- 	if (status)
- 		return status;
- 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index ec48a37b6cc..703225c3cd3 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -3,11 +3,13 @@
- #include "config.h"
- #include "run-command.h"
- #include "strbuf.h"
-+#include "dir.h"
- #include "gpg-interface.h"
- #include "sigchain.h"
- #include "tempfile.h"
- 
- static char *configured_signing_key;
-+static const char *ssh_allowed_signers, *ssh_revocation_file;
- static enum signature_trust_level configured_min_trust_level = TRUST_UNDEFINED;
- 
- struct gpg_format {
-@@ -51,6 +53,10 @@ static int verify_gpg_signed_buffer(struct signature_check *sigc,
- 				    struct gpg_format *fmt, const char *payload,
- 				    size_t payload_size, const char *signature,
- 				    size_t signature_size);
-+static int verify_ssh_signed_buffer(struct signature_check *sigc,
-+				    struct gpg_format *fmt, const char *payload,
-+				    size_t payload_size, const char *signature,
-+				    size_t signature_size);
- static int sign_buffer_gpg(struct strbuf *buffer, struct strbuf *signature,
- 			   const char *signing_key);
- static int sign_buffer_ssh(struct strbuf *buffer, struct strbuf *signature,
-@@ -78,7 +84,7 @@ static struct gpg_format gpg_format[] = {
- 		.program = "ssh-keygen",
- 		.verify_args = ssh_verify_args,
- 		.sigs = ssh_sigs,
--		.verify_signed_buffer = NULL, /* TODO */
-+		.verify_signed_buffer = verify_ssh_signed_buffer,
- 		.sign_buffer = sign_buffer_ssh
- 	},
- };
-@@ -343,6 +349,165 @@ static int verify_gpg_signed_buffer(struct signature_check *sigc,
- 	return ret;
- }
- 
-+static void parse_ssh_output(struct signature_check *sigc)
-+{
-+	const char *line, *principal, *search;
++SIGNING_KEY_PRIMARY="${GNUPGHOME}/ed25519_ssh_signing_key"
++SIGNING_KEY_SECONDARY="${GNUPGHOME}/rsa_2048_ssh_signing_key"
++SIGNING_KEY_UNTRUSTED="${GNUPGHOME}/untrusted_ssh_signing_key"
++SIGNING_KEY_WITH_PASSPHRASE="${GNUPGHOME}/protected_ssh_signing_key"
++SIGNING_KEY_PASSPHRASE="super_secret"
++SIGNING_ALLOWED_SIGNERS="${GNUPGHOME}/ssh.all_valid.allowedSignersFile"
 +
-+	/*
-+	 * ssh-keysign output should be:
-+	 * Good "git" signature for PRINCIPAL with RSA key SHA256:FINGERPRINT
-+	 * Good "git" signature for PRINCIPAL WITH WHITESPACE with RSA key SHA256:FINGERPRINT
-+	 * or for valid but unknown keys:
-+	 * Good "git" signature with RSA key SHA256:FINGERPRINT
-+	 */
-+	sigc->result = 'B';
-+	sigc->trust_level = TRUST_NEVER;
++GOOD_SIGNATURE_TRUSTED='Good "git" signature for'
++GOOD_SIGNATURE_UNTRUSTED='Good "git" signature with'
++KEY_NOT_TRUSTED="No principal matched"
++BAD_SIGNATURE="Signature verification failed"
 +
-+	line = xmemdupz(sigc->output, strcspn(sigc->output, "\n"));
-+
-+	if (skip_prefix(line, "Good \"git\" signature for ", &line)) {
-+		/* Valid signature and known principal */
-+		sigc->result = 'G';
-+		sigc->trust_level = TRUST_FULLY;
-+
-+		/* Search for the last "with" to get the full principal */
-+		principal = line;
-+		do {
-+			search = strstr(line, " with ");
-+			if (search)
-+				line = search + 1;
-+		} while (search != NULL);
-+		sigc->signer = xmemdupz(principal, line - principal - 1);
-+		sigc->fingerprint = xstrdup(strstr(line, "key") + 4);
-+		sigc->key = xstrdup(sigc->fingerprint);
-+	} else if (skip_prefix(line, "Good \"git\" signature with ", &line)) {
-+		/* Valid signature, but key unknown */
-+		sigc->result = 'G';
-+		sigc->trust_level = TRUST_UNDEFINED;
-+		sigc->fingerprint = xstrdup(strstr(line, "key") + 4);
-+		sigc->key = xstrdup(sigc->fingerprint);
-+	}
-+}
-+
-+static int verify_ssh_signed_buffer(struct signature_check *sigc,
-+				    struct gpg_format *fmt, const char *payload,
-+				    size_t payload_size, const char *signature,
-+				    size_t signature_size)
-+{
-+	struct child_process ssh_keygen = CHILD_PROCESS_INIT;
-+	struct tempfile *buffer_file;
-+	int ret = -1;
-+	const char *line;
-+	size_t trust_size;
-+	char *principal;
-+	struct strbuf ssh_keygen_out = STRBUF_INIT;
-+	struct strbuf ssh_keygen_err = STRBUF_INIT;
-+
-+	if (!ssh_allowed_signers) {
-+		error(_("gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification"));
-+		return -1;
-+	}
-+
-+	buffer_file = mks_tempfile_t(".git_vtag_tmpXXXXXX");
-+	if (!buffer_file)
-+		return error_errno(_("could not create temporary file"));
-+	if (write_in_full(buffer_file->fd, signature, signature_size) < 0 ||
-+	    close_tempfile_gently(buffer_file) < 0) {
-+		error_errno(_("failed writing detached signature to '%s'"),
-+			    buffer_file->filename.buf);
-+		delete_tempfile(&buffer_file);
-+		return -1;
-+	}
-+
-+	/* Find the principal from the signers */
-+	strvec_pushl(&ssh_keygen.args, fmt->program,
-+		     "-Y", "find-principals",
-+		     "-f", ssh_allowed_signers,
-+		     "-s", buffer_file->filename.buf,
-+		     NULL);
-+	ret = pipe_command(&ssh_keygen, NULL, 0, &ssh_keygen_out, 0,
-+			   &ssh_keygen_err, 0);
-+	if (ret && strstr(ssh_keygen_err.buf, "usage:")) {
-+		error(_("ssh-keygen -Y find-principals/verify is needed for ssh signature verification (available in openssh version 8.2p1+)"));
-+		goto out;
-+	}
-+	if (ret || !ssh_keygen_out.len) {
-+		/* We did not find a matching principal in the allowedSigners - Check
-+		 * without validation */
-+		child_process_init(&ssh_keygen);
-+		strvec_pushl(&ssh_keygen.args, fmt->program,
-+			     "-Y", "check-novalidate",
-+			     "-n", "git",
-+			     "-s", buffer_file->filename.buf,
-+			     NULL);
-+		ret = pipe_command(&ssh_keygen, payload, payload_size,
-+				   &ssh_keygen_out, 0, &ssh_keygen_err, 0);
-+	} else {
-+		/* Check every principal we found (one per line) */
-+		for (line = ssh_keygen_out.buf; *line;
-+		     line = strchrnul(line + 1, '\n')) {
-+			while (*line == '\n')
-+				line++;
-+			if (!*line)
-+				break;
-+
-+			trust_size = strcspn(line, "\n");
-+			principal = xmemdupz(line, trust_size);
-+
-+			child_process_init(&ssh_keygen);
-+			strbuf_release(&ssh_keygen_out);
-+			strbuf_release(&ssh_keygen_err);
-+			strvec_push(&ssh_keygen.args, fmt->program);
-+			/* We found principals - Try with each until we find a
-+			 * match */
-+			strvec_pushl(&ssh_keygen.args, "-Y", "verify",
-+				     "-n", "git",
-+				     "-f", ssh_allowed_signers,
-+				     "-I", principal,
-+				     "-s", buffer_file->filename.buf,
-+				     NULL);
-+
-+			if (ssh_revocation_file) {
-+				if (file_exists(ssh_revocation_file)) {
-+					strvec_pushl(&ssh_keygen.args, "-r",
-+						     ssh_revocation_file, NULL);
-+				} else {
-+					warning(_("ssh signing revocation file configured but not found: %s"),
-+						ssh_revocation_file);
-+				}
-+			}
-+
-+			sigchain_push(SIGPIPE, SIG_IGN);
-+			ret = pipe_command(&ssh_keygen, payload, payload_size,
-+					   &ssh_keygen_out, 0, &ssh_keygen_err, 0);
-+			sigchain_pop(SIGPIPE);
-+
-+			FREE_AND_NULL(principal);
-+
-+			ret &= starts_with(ssh_keygen_out.buf, "Good");
-+			if (ret == 0)
-+				break;
-+		}
-+	}
-+
-+	sigc->payload = xmemdupz(payload, payload_size);
-+	strbuf_stripspace(&ssh_keygen_out, 0);
-+	strbuf_stripspace(&ssh_keygen_err, 0);
-+	strbuf_add(&ssh_keygen_out, ssh_keygen_err.buf, ssh_keygen_err.len);
-+	sigc->output = strbuf_detach(&ssh_keygen_out, NULL);
-+	sigc->gpg_status = xstrdup(sigc->output);
-+
-+	parse_ssh_output(sigc);
-+
-+out:
-+	if (buffer_file)
-+		delete_tempfile(&buffer_file);
-+	strbuf_release(&ssh_keygen_out);
-+	strbuf_release(&ssh_keygen_err);
-+
-+	return ret;
-+}
-+
- int check_signature(const char *payload, size_t plen, const char *signature,
- 	size_t slen, struct signature_check *sigc)
- {
-@@ -453,6 +618,18 @@ int git_gpg_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "gpg.ssh.allowedsignersfile")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		return git_config_string(&ssh_allowed_signers, var, value);
-+	}
-+
-+	if (!strcmp(var, "gpg.ssh.revocationFile")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		return git_config_string(&ssh_revocation_file, var, value);
-+	}
-+
- 	if (!strcmp(var, "gpg.program") || !strcmp(var, "gpg.openpgp.program"))
- 		fmtname = "openpgp";
- 
+ sanitize_pgp() {
+ 	perl -ne '
+ 		/^-----END PGP/ and $in_pgp = 0;
 -- 
 gitgitgadget
 
