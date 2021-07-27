@@ -2,113 +2,231 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 203C6C4338F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 16:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B261C4320A
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 17:11:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0873C6101C
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 16:48:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F1F8960FEB
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 17:11:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229981AbhG0QsF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jul 2021 12:48:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52424 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbhG0QsE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jul 2021 12:48:04 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D458CC061757
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 09:48:03 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id t128so59308oig.1
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 09:48:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=iEb2QkNgcGMtg30Af6KUBsZSidFDTp1vue5rrvySqt0=;
-        b=tbZtvo0LdPeaJti9bkMlknfiy7HlAmiTfq5IiMk2zyf6krn0nVsAf/3ytApYfGmBke
-         gufPIa+OmrAYvNuAV0MCby3jfmrAzw+Ho3BxkBsbrCW8s36tasClyNjvhlN4IZUB/k6G
-         w3dW1KB+x4oF/O44iuN3+15O05hWUfi4fcDZI3hh+v1Hlz3tM0S/ffJ6FdyyV2vJ+v9q
-         prtiLa65f+Iqc1P8H6oF2m8r4MIumovidvkjn0YCTCDT2PmjZU92pCopuuXXMBoThNZI
-         i3IftnqDaP5lF68ZLyCcc8PYkxNWZ2pOUzRl47VM+B8i8bLx4WWVtCp8BIBe/QStD4Zf
-         5PIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=iEb2QkNgcGMtg30Af6KUBsZSidFDTp1vue5rrvySqt0=;
-        b=Cy3KxZ712kIC/pK9WjE/1r6QpARGr1wt3nqRTCDTTCWxuqoZAYOI+jc/sstw2UeOyD
-         kNaz3NO1/+XdYoWrFKoO3RQvZ1pdRsdNDoQYam2VFyk6GbXW+tmNOrEFMOIBis12LdOu
-         3wMAR5qvhHuE70AZOaLKYn+Ht3EllX37lWkmNYwfA6SV6NnoXCkX7lJGHX1FU8K6b0UY
-         FX/s6xqWWuV2zXnmocNvEQnCzFTWrCaQ8HWwXeWAAh0ki0CY+MAb2t9TiGd5LFgAm3qR
-         b0cvun9kO3J7py+T+xyxXi6hqx6WDUIiD3ZqjQxdWgDAiGBB+HDgE7EQTYVgZAXE825C
-         9lvg==
-X-Gm-Message-State: AOAM533l6lSYLZPP8Uj++KplUtb7pLs0OEVfnZ4vC+jaYy9pthRQGPxT
-        67W4Yu0whxrNLXq06wPoX6I=
-X-Google-Smtp-Source: ABdhPJwk3mowMCbvZ7QqRzxe0fGpolAbA8s/FM7IV8DkiCKg85vy9j+gDQWfgYEgu4bLO7GQeqJ5Fw==
-X-Received: by 2002:aca:3085:: with SMTP id w127mr3473450oiw.101.1627404482687;
-        Tue, 27 Jul 2021 09:48:02 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id h2sm617278oti.24.2021.07.27.09.48.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jul 2021 09:48:02 -0700 (PDT)
-Date:   Tue, 27 Jul 2021 11:48:00 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Git List Mailing <git@vger.kernel.org>
-Message-ID: <610038c0e1056_8fd52084a@natae.notmuch>
-In-Reply-To: <CAMMLpeQ-Qpct4TX__KVuCyjbgxtB49qTMRHYc9R9-o0cRu4MuA@mail.gmail.com>
-References: <20210721134650.1866387-1-felipe.contreras@gmail.com>
- <CAHk-=whf-9kNV3y5G-VVA2K5EZCnvv94paAEj6p=i2R4RM2emQ@mail.gmail.com>
- <xmqqeebregns.fsf@gitster.g>
- <CAMMLpeTL92cDmMHsE3iuhHQrVjwLFWHxE0CwD+uDBoPGAQCrkg@mail.gmail.com>
- <xmqqwnpcdu1w.fsf@gitster.g>
- <CAMMLpeQ-Qpct4TX__KVuCyjbgxtB49qTMRHYc9R9-o0cRu4MuA@mail.gmail.com>
-Subject: Re: [PATCH v2] pull: introduce --merge option
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S229514AbhG0RL2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jul 2021 13:11:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58778 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229453AbhG0RL0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jul 2021 13:11:26 -0400
+Received: (qmail 30895 invoked by uid 109); 27 Jul 2021 17:11:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Jul 2021 17:11:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 631 invoked by uid 111); 27 Jul 2021 17:11:26 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Jul 2021 13:11:26 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 27 Jul 2021 13:11:25 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH v2 14/24] pack-bitmap: write multi-pack bitmaps
+Message-ID: <YQA+PaWb7tweEKuk@coredump.intra.peff.net>
+References: <cover.1617991824.git.me@ttaylorr.com>
+ <cover.1624314293.git.me@ttaylorr.com>
+ <a8cec2463d0993b1118abdd31cb6c9e88a32e0c4.1624314293.git.me@ttaylorr.com>
+ <YPgObwXjt/tzAJvV@coredump.intra.peff.net>
+ <YP77DiffrCrxunvg@nand.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YP77DiffrCrxunvg@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie wrote:
-> On Tue, Jul 27, 2021 at 2:45 AM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Alex Henrie <alexhenrie24@gmail.com> writes:
-> >
-> > > Junio, would you be willing to accept adding -m without adding --merge also?
-> >
-> > My gut feeling is that "-m" without "--merge" in the context of
-> > "pull" is extremely unlikely to fly well.
-> >
-> > As "git pull" is a "git fetch" followed by a "git merge" (or "git
-> > rebase"), it takes the union of common command line options from
-> > both phases, and "git merge" takes "-m 'message'" which is an option
-> > fairly familiar to users (since it comes from "git commit").  Even
-> > if we are never going to pass "-m message" from "git pull" down to
-> > underlying "git merge", squatting on short and common "-m" would be
-> > a bad idea.
+On Mon, Jul 26, 2021 at 02:12:30PM -0400, Taylor Blau wrote:
+
+> > This "> -1" struck me as a little bit funny. Perhaps ">= 0" would be a
+> > more obvious way of saying "we found it"?
 > 
-> Thanks for the explanation. I forgot that "-m" usually means
-> "message". That does seem like a good reason to not use "-m" for
-> "merge".
+> Sure. (I looked for other uses of oid_pos() to see what is more
+> common, but there really are vanishingly few uses.) Easier to read might
+> even be:
+> 
+>     int pos = oid_pos(...);
+>     if (pos < 0)
+>       return;
+>     ALLOC_GROW(...);
+> 
+> which is what I ended up going for.
 
-It means --merge plenty of times:
+Sure, that's better still.
 
- * git restore -m
- * git checkout -m
- * git rebase -m
- * git diff -m
- * git read-tree -m
- * git diff-tree -m
+> [topo-sorting commits fed to bitmap writer]
+>
+> This comes from an investigation into why bitmap coverage had worsened
+> for some repositories using MIDX bitmaps at GitHub. The real reason was
+> resolved and unrelated to this, but trying to match the behavior of MIDX
+> bitmaps to our existing pack bitmap setup (which uses delta-islands) was
+> one strategy we tried while debugging.
+>
+> I actually suspect that it doesn't really matter what order we feed this
+> list to bitmap_writer_select_commits() in, because the first thing that
+> it does is QSORT() the incoming list of commits in date order.
 
--- 
-Felipe Contreras
+Hmm, yes, I agree that it shouldn't matter for that reason (though
+arguably topo order would still be better than a strict date order, it
+does nothing now).
+
+I remember looking into reasons why a single-pack bitmap versus a
+midx-of-a-single-pack bitmap might not be identical, but the interesting
+things turned out to be elsewhere. Did this actually change anything at
+all? If so, then perhaps the "it doesn't matter" is not as true as we
+are thinking. I could believe that it has a tiny impact when breaking
+times between identical committer dates, though.
+
+> But it does mirror the behavior of our previous bitmap generation
+> settings, which has been running for years.
+> 
+> So... we could probably drop this hunk? I'd probably rather err on the
+> safe side and leave this alone since it matches a system that we know to
+> work well in practice.
+
+I'd rather drop it, if we think it's doing nothing. While I do value
+history in production as a sign of stability, upstream review is a good
+time to make sure we understand all of the "why", and to clean things up
+(e.g., another example is the questionable close_midx() stuff discussed
+elsewhere).
+
+And if we do suspect it is doing something, then IMHO the right thing is
+probably still to drop it, and to introduce the feature identically to
+both the midx and pack bitmap generation code paths. But that should be
+a separate topic (and may actually involve fixing the QSORT to put
+things in topo order rather than just date order).
+
+> > > @@ -930,9 +1100,16 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+> > >  		for (i = 0; i < ctx.m->num_packs; i++) {
+> > >  			ALLOC_GROW(ctx.info, ctx.nr + 1, ctx.alloc);
+> > >
+> > > +			if (prepare_midx_pack(the_repository, ctx.m, i)) {
+> > > +				error(_("could not load pack %s"),
+> > > +				      ctx.m->pack_names[i]);
+> > > +				result = 1;
+> > > +				goto cleanup;
+> > > +			}
+> >
+> > It might be worth a comment here. I can easily believe that there is
+> > some later part of the bitmap generation code that assumes the packs are
+> > loaded. But somebody reading this is not likely to understand why it's
+> > here.
+> >
+> > Should this be done conditionally only if we're writing a bitmap? (That
+> > might also make it obvious why we are doing it).
+> 
+> Ah. Actually, I don't think this was necessary before, but we *do* need
+> it now because we want to compare the pack mtime's for inferring a
+> preferred pack when one wasn't given. And we also need to open the pack
+> indexes, too, because we care about the object counts (to make sure that
+> we don't infer a preferred pack which has no objects).
+> 
+> Luckily, any new packs will be loaded (and likewise have their indexes
+> open, too), via the the add_pack_to_midx() callback that we pass as an
+> argument to for_each_file_in_pack_dir().
+
+Hmm, OK. Your second paragraph makes it sound like we _don't_ need to do
+this. But the key is "new packs". In add_pack_to_midx() we skip any
+packs that are already in the existing midx, assuming they've already
+been added. And we probably must do that, otherwise we end up with
+duplicate structs that are not actually shared by ctx->m.
+
+> But we could do something like this instead:
+> 
+> --- 8< ---
+> 
+> diff --git a/midx.c b/midx.c
+> index 8426e1a0b1..a70a6bca81 100644
+> --- a/midx.c
+> +++ b/midx.c
+> @@ -1111,16 +1111,29 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+>  		for (i = 0; i < ctx.m->num_packs; i++) {
+>  			ALLOC_GROW(ctx.info, ctx.nr + 1, ctx.alloc);
+> 
+> -			if (prepare_midx_pack(the_repository, ctx.m, i)) {
+> -				error(_("could not load pack"));
+> -				result = 1;
+> -				goto cleanup;
+> -			}
+> -
+>  			ctx.info[ctx.nr].orig_pack_int_id = i;
+>  			ctx.info[ctx.nr].pack_name = xstrdup(ctx.m->pack_names[i]);
+> -			ctx.info[ctx.nr].p = ctx.m->packs[i];
+> +			ctx.info[ctx.nr].p = NULL;
+>  			ctx.info[ctx.nr].expired = 0;
+> +
+> +			if (flags & MIDX_WRITE_REV_INDEX) {
+> +				/*
+> +				 * If generating a reverse index, need to have
+> +				 * packed_git's loaded to compare their
+> +				 * mtimes and object count.
+> +				 */
+> +				if (prepare_midx_pack(the_repository, ctx.m, i)) {
+> +					error(_("could not load pack"));
+> +					result = 1;
+> +					goto cleanup;
+> +				}
+> +
+> +				if (open_pack_index(ctx.m->packs[i]))
+> +					die(_("could not open index for %s"),
+> +					    ctx.m->packs[i]->pack_name);
+> +				ctx.info[ctx.nr].p = ctx.m->packs[i];
+> +			}
+> +
+
+Yeah, was what I was suggesting: make it conditional on bitmaps (well, a
+.rev index, which is more precise), and put in comments. :)
+
+It's interesting that your earlier iteration didn't call
+open_pack_index(). Is it necessary, or not? From your description, it
+seems like it should be. But maybe some later step lazy-loads it? Even
+if so, I can see how prepare_midx_pack() would still be required
+(because we want to make sure we are using the same struct).
+
+> [closing the midx]
+> 
+> The reason is kind of annoying. If we're building a MIDX bitmap
+> in-process (e.g., `git multi-pack-index write --bitmap`) then we'll call
+> prepare_packed_git() to build our pseudo-packing list which we pass to
+> the bitmap generation machinery.
+> 
+> But prepare_packed_git() calls prepare_packed_git_one() ->
+> for_each_file_in_pack_dir() with the prepare_pack() callback -> which
+> the wants to see if the MIDX we have open already knows about a given
+> pack so we avoid opening it twice.
+> 
+> But even though the MIDX would have gone away by this point (with the
+> previous close_midx() call that is removed above), we still hold onto
+> a pointer to it via the object_store's `multi_pack_index` pointer. And
+> then all the way down in packfile.c:prepare_pack() we try to pass a
+> now-defunct pointer as the first argument to midx_contains_pack(), and
+> crash.
+> 
+> And clearing out that `multi_pack_index` pointer is tricky, because the
+> MIDX would have to compare the odb's `object_dir` with its own (which is
+> brittle in its own right), but also would have to see if that object
+> store is pointing at *it*, and not some other MIDX.
+> 
+> So we do have to keep it open there. Which makes me wonder how this
+> could possibly work on Windows, because holding the MIDX open will make
+> the commit_lock_file() definitely fail. But it seems OK in the
+> Windows-based CI runs?
+
+Forgetting Windows for a moment, it seems like the same "the pointer is
+bogus and we crash" is now just pushed down to the end of the function,
+rather than the middle. I.e., it is safe to close the midx we got from
+load_multi_pack_index(), but not one we got from
+prepare_multi_pack_index_one(). So it's hard to reason about this at all
+until that problem from patch 08 is resolved.
+
+-Peff
