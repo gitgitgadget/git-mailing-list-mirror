@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 751D6C4320E
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:21:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D9CDC4338F
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:21:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 63C4B6023F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:21:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5654160FE3
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:21:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235230AbhG0VVk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jul 2021 17:21:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58324 "EHLO
+        id S233965AbhG0VVo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jul 2021 17:21:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232289AbhG0VVV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jul 2021 17:21:21 -0400
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEA25C061A1A
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:19:50 -0700 (PDT)
-Received: by mail-io1-xd2a.google.com with SMTP id 185so386781iou.10
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:19:50 -0700 (PDT)
+        with ESMTP id S234603AbhG0VVX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jul 2021 17:21:23 -0400
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62DF5C061A1B
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:19:53 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id n19so495634ioz.0
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:19:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=14VoMTqRstgjyVn8leZFzzcDtR0358hVMjUWCoofY0k=;
-        b=XxOkzepAqpCkh9ofNpHkclLDx2bsWwexgu+aJYjy1UTtLmdqfNCZnVOIVHC9sxWIbt
-         1hdlfv6+m2q55PqaGnQ2AdUGPkdknmWtE1K/0yVegfxo5XgBNWuhfIgcTffUv/iLT4tx
-         p86fWXPavje8bhsRDSq/nlbDC6Fejwbfn4JoLt5x7FpSux4uHC7BiPVaHa5x2HlYVhpH
-         kMElc5mmP7esLgmIB3tauREgmZ1QjwTvZ/h4xKJCANnfS82rzIBfUQjJ6ZlUXcJGEFno
-         Qi28avyuYF4D0+qC9K0+S1LfvisvxKoWRsfppbIxsEG80NgvDualnZmHlb2y8mG6JWhS
-         GnHQ==
+        bh=C4rTXIodw+uQYEyZy48W2xnYJw6KexJh005knbHDbY8=;
+        b=ve/PGuCxAZ9AddRzP88loc5WwULCVm302ypBf3pWynYzdusDm8jDaMlJXTjE3aIa3G
+         lRVdbP24sfNaJAzIehpsJjlF7zviJ+6x7jH0yCl/lcMK9VuYWurMIfwPGy5YmgC6jkjY
+         qvM0YkqYR8eGrY3Gs2Y4ANjjdsWshIPtyh4wjzao1xlCB3MJm06A0X/lr+65/2b4P1iI
+         vsedd8zUDP4N3tKybGd7Fld6muC7+fnWqCtESlo4q0oP6TIlDTXiXjQzP2p4ESkhuV0X
+         3POZtvUxR/n0UbX1LW1jzyVW+yT68PzhUDy/x7PESf2+WFUdc7EibzrC5Q2uedy+vzil
+         P1Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=14VoMTqRstgjyVn8leZFzzcDtR0358hVMjUWCoofY0k=;
-        b=rCIMha0m2juh1usLay3ItnpMHpaaxRwX2730n5Eydc8Yi0VlBfTSiEwXWpL7Y9pFpV
-         xklNqqXS9u5gRQQ/cCqVFFJQM21nhvXJJV/VGtwB1ko/1YBlHuk3RFdKTxPof8iAb7P3
-         nojdvrBWMTN3CBTtOUhMZ4ALLBQNBgtY+JEYXfL0S0cbFUgzAcrZ7kFLH+B23tMI4kFv
-         Uxb/hZ8impB1coGt4XPDlz6GgokU4hzLtswwezp8U9Kr4X8z9vLD0uTamk55CSlDLLZp
-         Ewn7EhJMvMdHxAfej2Fe+tC3LaK19Xk9Sqq/L4sfgKdYxqsniyf8f6NbNHPcOnHGkWmF
-         N7Iw==
-X-Gm-Message-State: AOAM530x9d4w1IMo4GYTNmmjoyGVv30FWPnToYC/ABsUMkbf8C6XBghk
-        3z6/UnQa9j3ihNh4oDt19x2n4wcm+wQew2LX
-X-Google-Smtp-Source: ABdhPJzprSGglQJ1j0t+F8UfN8Fha95NxJpgAVNb8R3reTY0TG+4GgawgAbAz7Fy7Se55ReI9s35Xg==
-X-Received: by 2002:a02:bb12:: with SMTP id y18mr22768651jan.66.1627420790094;
-        Tue, 27 Jul 2021 14:19:50 -0700 (PDT)
+        bh=C4rTXIodw+uQYEyZy48W2xnYJw6KexJh005knbHDbY8=;
+        b=JoMQpEBeZ/eTfLDYNox6hW4SpKUfjHR2zCAQMlS1Ho9TwpH8v9u3227DdFwx++ScpH
+         aBRkqUpQN5J+GqHMZrZWhHqHzP5/m2z5H5VabMrLdkKQbGrCwfm3ecVW8bAaliXwDEZC
+         YDSKv4UKrk0iz8b2YWWRfIcdE3sjzAD17DsjaK8IcLwjQHp+58QTeo5qEjDobOWs0J0a
+         PrfIdHruRGr2pHTL7hc38Aacy+GeCK4fj3Dzbmd3xl13suAQy0pscEYNJ1jNui4O4nVl
+         CaDT9FauXeSmHrLKbHLEEWmFEHvHxfokZKAYyXllcv31IHm5PMUIm9cd8/eqAxjUoaEw
+         g4mQ==
+X-Gm-Message-State: AOAM532FIqeTdHBzrnH8O/wvvUhuvPcObGAHMYafSgXHhNI92QaDxdyu
+        eg2ao3ld/QHjmN5ozlYLAJDMg79eJzf6aD3y
+X-Google-Smtp-Source: ABdhPJwNXgV5pIXN2kGkNtWa/Yrzj7+HzzsHewJTsc7hzkJWvJe8eIYv/8rFVjjsX+sq6+Sbte1iJA==
+X-Received: by 2002:a5d:925a:: with SMTP id e26mr20695939iol.195.1627420792748;
+        Tue, 27 Jul 2021 14:19:52 -0700 (PDT)
 Received: from localhost ([2600:1700:d843:8f:6813:d625:75e6:4f64])
-        by smtp.gmail.com with ESMTPSA id u16sm2997915iob.41.2021.07.27.14.19.49
+        by smtp.gmail.com with ESMTPSA id i2sm2550444ilq.83.2021.07.27.14.19.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jul 2021 14:19:49 -0700 (PDT)
-Date:   Tue, 27 Jul 2021 17:19:49 -0400
+        Tue, 27 Jul 2021 14:19:52 -0700 (PDT)
+Date:   Tue, 27 Jul 2021 17:19:51 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         jonathantanmy@google.com
-Subject: [PATCH v3 10/25] pack-bitmap.c: introduce 'bitmap_num_objects()'
-Message-ID: <ca7f726abf825c30105ae330a12e0c7d20684076.1627420428.git.me@ttaylorr.com>
+Subject: [PATCH v3 11/25] pack-bitmap.c: introduce 'nth_bitmap_object_oid()'
+Message-ID: <67e6897a34cb5283daac84053c468701216f90c5.1627420428.git.me@ttaylorr.com>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1627420428.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -73,167 +73,52 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 A subsequent patch to support reading MIDX bitmaps will be less noisy
-after extracting a generic function to return how many objects are
-contained in a bitmap.
+after extracting a generic function to fetch the nth OID contained in
+the bitmap.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 37 +++++++++++++++++++++----------------
- 1 file changed, 21 insertions(+), 16 deletions(-)
+ pack-bitmap.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index a73960a55d..54dc4f7915 100644
+index 54dc4f7915..9d0dd1cde7 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -136,6 +136,11 @@ static struct ewah_bitmap *read_bitmap_1(struct bitmap_index *index)
- 	return b;
- }
+@@ -223,6 +223,13 @@ static inline uint8_t read_u8(const unsigned char *buffer, size_t *pos)
  
-+static uint32_t bitmap_num_objects(struct bitmap_index *index)
+ #define MAX_XOR_OFFSET 160
+ 
++static int nth_bitmap_object_oid(struct bitmap_index *index,
++				 struct object_id *oid,
++				 uint32_t n)
 +{
-+	return index->pack->num_objects;
++	return nth_packed_object_id(oid, index->pack, n);
 +}
 +
- static int load_bitmap_header(struct bitmap_index *index)
+ static int load_bitmap_entries_v1(struct bitmap_index *index)
  {
- 	struct bitmap_disk_header *header = (void *)index->map;
-@@ -154,7 +159,7 @@ static int load_bitmap_header(struct bitmap_index *index)
- 	/* Parse known bitmap format options */
- 	{
- 		uint32_t flags = ntohs(header->options);
--		size_t cache_size = st_mult(index->pack->num_objects, sizeof(uint32_t));
-+		size_t cache_size = st_mult(bitmap_num_objects(index), sizeof(uint32_t));
- 		unsigned char *index_end = index->map + index->map_size - the_hash_algo->rawsz;
+ 	uint32_t i;
+@@ -242,7 +249,7 @@ static int load_bitmap_entries_v1(struct bitmap_index *index)
+ 		xor_offset = read_u8(index->map, &index->map_pos);
+ 		flags = read_u8(index->map, &index->map_pos);
  
- 		if ((flags & BITMAP_OPT_FULL_DAG) == 0)
-@@ -399,7 +404,7 @@ static inline int bitmap_position_extended(struct bitmap_index *bitmap_git,
+-		if (nth_packed_object_id(&oid, index->pack, commit_idx_pos) < 0)
++		if (nth_bitmap_object_oid(index, &oid, commit_idx_pos) < 0)
+ 			return error("corrupt ewah bitmap: commit index %u out of range",
+ 				     (unsigned)commit_idx_pos);
  
- 	if (pos < kh_end(positions)) {
- 		int bitmap_pos = kh_value(positions, pos);
--		return bitmap_pos + bitmap_git->pack->num_objects;
-+		return bitmap_pos + bitmap_num_objects(bitmap_git);
- 	}
- 
- 	return -1;
-@@ -451,7 +456,7 @@ static int ext_index_add_object(struct bitmap_index *bitmap_git,
- 		bitmap_pos = kh_value(eindex->positions, hash_pos);
- 	}
- 
--	return bitmap_pos + bitmap_git->pack->num_objects;
-+	return bitmap_pos + bitmap_num_objects(bitmap_git);
- }
- 
- struct bitmap_show_data {
-@@ -668,7 +673,7 @@ static void show_extended_objects(struct bitmap_index *bitmap_git,
- 	for (i = 0; i < eindex->count; ++i) {
- 		struct object *obj;
- 
--		if (!bitmap_get(objects, bitmap_git->pack->num_objects + i))
-+		if (!bitmap_get(objects, bitmap_num_objects(bitmap_git) + i))
- 			continue;
- 
- 		obj = eindex->objects[i];
-@@ -826,7 +831,7 @@ static void filter_bitmap_exclude_type(struct bitmap_index *bitmap_git,
- 	 * individually.
- 	 */
- 	for (i = 0; i < eindex->count; i++) {
--		uint32_t pos = i + bitmap_git->pack->num_objects;
-+		uint32_t pos = i + bitmap_num_objects(bitmap_git);
- 		if (eindex->objects[i]->type == type &&
- 		    bitmap_get(to_filter, pos) &&
- 		    !bitmap_get(tips, pos))
-@@ -853,7 +858,7 @@ static unsigned long get_size_by_pos(struct bitmap_index *bitmap_git,
- 
- 	oi.sizep = &size;
- 
--	if (pos < pack->num_objects) {
-+	if (pos < bitmap_num_objects(bitmap_git)) {
+@@ -862,8 +869,8 @@ static unsigned long get_size_by_pos(struct bitmap_index *bitmap_git,
  		off_t ofs = pack_pos_to_offset(pack, pos);
  		if (packed_object_info(the_repository, pack, ofs, &oi) < 0) {
  			struct object_id oid;
-@@ -863,7 +868,7 @@ static unsigned long get_size_by_pos(struct bitmap_index *bitmap_git,
+-			nth_packed_object_id(&oid, pack,
+-					     pack_pos_to_index(pack, pos));
++			nth_bitmap_object_oid(bitmap_git, &oid,
++					      pack_pos_to_index(pack, pos));
+ 			die(_("unable to get size of %s"), oid_to_hex(&oid));
  		}
  	} else {
- 		struct eindex *eindex = &bitmap_git->ext_index;
--		struct object *obj = eindex->objects[pos - pack->num_objects];
-+		struct object *obj = eindex->objects[pos - bitmap_num_objects(bitmap_git)];
- 		if (oid_object_info_extended(the_repository, &obj->oid, &oi, 0) < 0)
- 			die(_("unable to get size of %s"), oid_to_hex(&obj->oid));
- 	}
-@@ -905,7 +910,7 @@ static void filter_bitmap_blob_limit(struct bitmap_index *bitmap_git,
- 	}
- 
- 	for (i = 0; i < eindex->count; i++) {
--		uint32_t pos = i + bitmap_git->pack->num_objects;
-+		uint32_t pos = i + bitmap_num_objects(bitmap_git);
- 		if (eindex->objects[i]->type == OBJ_BLOB &&
- 		    bitmap_get(to_filter, pos) &&
- 		    !bitmap_get(tips, pos) &&
-@@ -1131,8 +1136,8 @@ static void try_partial_reuse(struct bitmap_index *bitmap_git,
- 	enum object_type type;
- 	unsigned long size;
- 
--	if (pos >= bitmap_git->pack->num_objects)
--		return; /* not actually in the pack */
-+	if (pos >= bitmap_num_objects(bitmap_git))
-+		return; /* not actually in the pack or MIDX */
- 
- 	offset = header = pack_pos_to_offset(bitmap_git->pack, pos);
- 	type = unpack_object_header(bitmap_git->pack, w_curs, &offset, &size);
-@@ -1198,6 +1203,7 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 	struct pack_window *w_curs = NULL;
- 	size_t i = 0;
- 	uint32_t offset;
-+	uint32_t objects_nr = bitmap_num_objects(bitmap_git);
- 
- 	assert(result);
- 
-@@ -1205,8 +1211,8 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 		i++;
- 
- 	/* Don't mark objects not in the packfile */
--	if (i > bitmap_git->pack->num_objects / BITS_IN_EWORD)
--		i = bitmap_git->pack->num_objects / BITS_IN_EWORD;
-+	if (i > objects_nr / BITS_IN_EWORD)
-+		i = objects_nr / BITS_IN_EWORD;
- 
- 	reuse = bitmap_word_alloc(i);
- 	memset(reuse->words, 0xFF, i * sizeof(eword_t));
-@@ -1290,7 +1296,7 @@ static uint32_t count_object_type(struct bitmap_index *bitmap_git,
- 
- 	for (i = 0; i < eindex->count; ++i) {
- 		if (eindex->objects[i]->type == type &&
--			bitmap_get(objects, bitmap_git->pack->num_objects + i))
-+			bitmap_get(objects, bitmap_num_objects(bitmap_git) + i))
- 			count++;
- 	}
- 
-@@ -1511,7 +1517,7 @@ uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
- 	uint32_t i, num_objects;
- 	uint32_t *reposition;
- 
--	num_objects = bitmap_git->pack->num_objects;
-+	num_objects = bitmap_num_objects(bitmap_git);
- 	CALLOC_ARRAY(reposition, num_objects);
- 
- 	for (i = 0; i < num_objects; ++i) {
-@@ -1594,7 +1600,6 @@ static off_t get_disk_usage_for_type(struct bitmap_index *bitmap_git,
- static off_t get_disk_usage_for_extended(struct bitmap_index *bitmap_git)
- {
- 	struct bitmap *result = bitmap_git->result;
--	struct packed_git *pack = bitmap_git->pack;
- 	struct eindex *eindex = &bitmap_git->ext_index;
- 	off_t total = 0;
- 	struct object_info oi = OBJECT_INFO_INIT;
-@@ -1606,7 +1611,7 @@ static off_t get_disk_usage_for_extended(struct bitmap_index *bitmap_git)
- 	for (i = 0; i < eindex->count; i++) {
- 		struct object *obj = eindex->objects[i];
- 
--		if (!bitmap_get(result, pack->num_objects + i))
-+		if (!bitmap_get(result, bitmap_num_objects(bitmap_git) + i))
- 			continue;
- 
- 		if (oid_object_info_extended(the_repository, &obj->oid, &oi, 0) < 0)
 -- 
 2.31.1.163.ga65ce7f831
 
