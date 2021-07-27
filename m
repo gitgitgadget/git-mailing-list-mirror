@@ -7,120 +7,84 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B751C4338F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 22:44:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B0D3C4338F
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 22:56:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 15C0860184
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 22:44:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6064560F9B
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 22:56:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232824AbhG0WoW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jul 2021 18:44:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50172 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232452AbhG0WoW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jul 2021 18:44:22 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45289C061757
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 15:44:21 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id h8so578144ede.4
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 15:44:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=skydio.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qYdGX85E/Fx2YxAvdaMDNTSaC39l1PToGayGRRXztYk=;
-        b=aJ2K/2y7sNXVWnCndMnax0WoohRXGmD9uP/FSEuLofatEtPPvsh2M9FUPHxvtunfRV
-         yr6YZAkgltpKqx+jZj/jYWvbqbLi4i6cO12O5GpaIpl1XR4BY7n58sM33JEaVgwVmK2H
-         heE1MJ76EZFSV+VCrRUo/nVbUaASr6vEzvS7CvDL2gEGGLN80U5Ohlt75mZRoQ9IruL7
-         gKZUK6hJR8z1+iAkK3Qjs+geMBo/MniHnnKonxA9uzWsrXyTHHsXHxaTnowrEy/XCOZU
-         VJIgkCDB8odMzgFX88/RCzNEpDC+sM0s6sePAEgiFFrPbnXRtVmajLJ8/vmvx4zMi0fJ
-         tvag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qYdGX85E/Fx2YxAvdaMDNTSaC39l1PToGayGRRXztYk=;
-        b=MVMUdGpQ6/sOf4/rqejMGt7zBwK66XGzrWCsGYhm7tpOAsBeqWIbGo60H0YPtzB49D
-         0VDVyXkStyhU3FnHfIMVyw2mXVvR6Q3EqFaZRwglqVikmQJkitvIy/frkmMkLGy1iy+w
-         ry/J0o8XFN7WkRIq4CokDo7DNzvds1oEbP6RVCeyuMaVyxQdsl+K28AtOHoZES+pLqgV
-         awZ00jhCjJ+UWuL2mDqBs5KAP1QFRlHfh2/c8gdFT5UGRKnLE9ffPZ76CWHDkuYCS5xH
-         hkfOLl4xwD9T1i2/nYO0f4XTbP3kcPLDKJnprBOpwjd6u3NJu2uXWz5OHiya+z/kvSI4
-         lXfQ==
-X-Gm-Message-State: AOAM531ckSlDS96BCQdhzR1ZvzWEZQokI9GH4NmCH4YYR9Qk00MrLYG/
-        Cvb7E9bEhu8EA80wt+xU41LgoIea88prlIkqW+3Dew==
-X-Google-Smtp-Source: ABdhPJxSFACic88TEjfLWuIYFl7q7pi/H1ik9XNs66txe2EgoMSanvkoZDj4KKo894OHYNSgooLETfV6VtZWLq68vyQ=
-X-Received: by 2002:aa7:c04e:: with SMTP id k14mr29897756edo.193.1627425859692;
- Tue, 27 Jul 2021 15:44:19 -0700 (PDT)
+        id S232642AbhG0W4u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jul 2021 18:56:50 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53165 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232198AbhG0W4t (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jul 2021 18:56:49 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 770BED18AA;
+        Tue, 27 Jul 2021 18:56:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=OZVvBIG4o6dZT+iybShPfuSkdRy3Gb5jGO5ioX
+        Q6jhI=; b=gU044YPpN6LXBqKE6lbr7prlZ5qAeisiyLex9cKOk8x+5lWxswSo+/
+        py1y88gOQf8zqS49g5/Ucu2dvHQWA7y9D/IuaAX2wAuzomGUXFbdGf73uhFJ+qo/
+        P8Xhkd+otOYonuWSbgZUVNB8yiiUO1aWB1TXKKRk1AIB2ZBzhmUQs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6E3EDD18A9;
+        Tue, 27 Jul 2021 18:56:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ED607D18A8;
+        Tue, 27 Jul 2021 18:56:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3 4/5] Use a better name for the function interpolating
+ paths
+References: <pull.66.v2.git.1625155388.gitgitgadget@gmail.com>
+        <pull.66.v3.git.1627164413.gitgitgadget@gmail.com>
+        <19fd9c3c803a300b586c76736301a7379c4c6226.1627164413.git.gitgitgadget@gmail.com>
+        <xmqqh7gghgtd.fsf@gitster.g>
+        <99332fdf-24af-8938-2f55-b6e25ca12aad@gigacodes.de>
+Date:   Tue, 27 Jul 2021 15:56:47 -0700
+In-Reply-To: <99332fdf-24af-8938-2f55-b6e25ca12aad@gigacodes.de> (Fabian
+        Stelzer's message of "Tue, 27 Jul 2021 09:57:48 +0200")
+Message-ID: <xmqqfsvzcqmo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <fdfd283aeee311ebbfb50024e87935e7@oschina.cn>
-In-Reply-To: <fdfd283aeee311ebbfb50024e87935e7@oschina.cn>
-From:   Jerry Zhang <jerry@skydio.com>
-Date:   Tue, 27 Jul 2021 15:44:08 -0700
-Message-ID: <CAMKO5Cs1HP7JNmJLYKti0kajGmD4XK+Boc3WRV2Dpph5a3b5Xw@mail.gmail.com>
-Subject: Re: git apply --3way behaves abnormally when the patch contains
- binary changes.
-To:     "lilinchao@oschina.cn" <lilinchao@oschina.cn>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: EC2CF0F0-EF2D-11EB-8724-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 27, 2021 at 7:07 AM lilinchao@oschina.cn
-<lilinchao@oschina.cn> wrote:
->
-> I see the latest change about `git apply --3way` is 923cd87, but it doesn't seem to have been fully tested
-> (in t4108-apply-threeway.sh).
-> On latest Git version 2.32.0, consider test case below:
-> "
-> test_expect_success 'apply binary file patch with --3way' '
->         # 1. on new branch, commit binary file
->         git checkout -b left &&
->         cat "$TEST_DIRECTORY"/test-binary-1.png >bin.png &&
->         git add bin.png &&
->         git commit -m "add binary file" &&
->
->         # 2. based on left_bin branch, make any change, and commit
->         git checkout -b right &&
->         cat bin.png bin.png > bin.png &&
->         git add bin.png &&
->         git commit -m "update binary file" &&
->
->         # 3. make patch
->         git diff --binary left..right >bin.diff &&
->         # apply --3way, and it will fail
->         test_must_fail git apply --index --3way bin.diff
-> '
-> "
->
-> But  "git apply --index --3way bin.diff" will not faill on Git version 2.31.0.
-Are you sure? I checked out to "commit
-a5828ae6b52137b913b978e16cd2334482eb4c1f (HEAD, tag: v2.31.0)" and
-rebuilt and ran your test snippet and it still failed.
+Fabian Stelzer <fs@gigacodes.de> writes:
 
-This was the message from the failure on 2.31.0
-"error: the patch applies to 'bin.png'
-(e69de29bb2d1d6434b8b29ae775ad8c2e48c5391), which does not match the
-current contents.
-Falling back to three-way merge...
-warning: Cannot merge binary files: bin.png (ours vs. theirs)
-Applied patch to 'bin.png' with conflicts.
-U bin.png"
+>> I think Fabian's "ssh signing" is not as ready as this topic, and it
+>> can afford to wait by rebasing on top of this topic.  By the time
+>> "ssh signing" gets into testable shape (right now, it does not pass
+>> tests when merged to 'seen'), hopefully the "expand install-prefix"
+>> topic may already be in 'next' if not in 'master'.
+> I think the test problem is not due to my patch.
 
-Versus the message on 2.32.0
-"warning: Cannot merge binary files: bin.png (ours vs. theirs)
-Applied patch to 'bin.png' with conflicts.
-U bin.png"
+I've been seeing these test failers locally, every time
+fs/ssh-signing topic is merged to 'seen' (without the reftable
+thing).
 
-So the failure messaging is different but it returns 1 both times. Is
-there a difference between how we're testing?
+Test Summary Report
+-------------------
+t5534-push-signed.sh                             (Wstat: 256 Tests: 13 Failed: 2)
+  Failed tests:  8, 12
+  Non-zero exit status: 1
+t7528-signed-commit-ssh.sh                       (Wstat: 256 Tests: 23 Failed: 2)
+  Failed tests:  13, 17
+  Non-zero exit status: 1
 
-I did have to modify your test to add
-test_expect_success 'apply binary file patch with --3way' '
-       # 1. on new branch, commit binary file
-       git checkout -b left &&
-+       git reset --hard &&
+When reftable thing is merged, either compilation fails or t0031
+fails, and I suspect that these are not due to the ssh signing
+topic.
 
-If this behavior is important I'd urge you to add this test to the suite.
->
->
