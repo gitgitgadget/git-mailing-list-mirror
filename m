@@ -2,137 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5A49C4338F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 22:40:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B751C4338F
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 22:44:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BD65460F90
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 22:40:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15C0860184
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 22:44:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232576AbhG0Wk1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jul 2021 18:40:27 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60488 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232272AbhG0Wk0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jul 2021 18:40:26 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CFC8BD17CA;
-        Tue, 27 Jul 2021 18:40:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=mDfu+MkIE3cJ
-        yviih+PvjR6AoCza1ijBz/+s7vjLV7Q=; b=cfl9O0euGURhmgcRDmMewKTERwU8
-        D3wDeW/m+BeKLkn4hRCeMKEBnYaeX5Ke6hvUfv7UmzCsBNkhJ7HP0HOYQAX0tnrE
-        hAS3aUqGwfg4vRieoDhBBjg/vKkIwhSxaHUTHz+C/886D2VCo9NnPV2mojzTxawc
-        aVCk3QJOYO3CeWM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C70AFD17C9;
-        Tue, 27 Jul 2021 18:40:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.71.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4A269D17C8;
-        Tue, 27 Jul 2021 18:40:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     emilyshaffer@google.com, avarab@gmail.com, git@vger.kernel.org,
-        iankaz@google.com, sandals@crustytoothpaste.net
-Subject: Re: [RFC PATCH v2 2/2] hook: remote-suggested hooks
-References: <xmqqczr4fsso.fsf@gitster.g>
-        <20210727213942.2574308-1-jonathantanmy@google.com>
-Date:   Tue, 27 Jul 2021 15:40:24 -0700
-In-Reply-To: <20210727213942.2574308-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Tue, 27 Jul 2021 14:39:42 -0700")
-Message-ID: <xmqqmtq7crdz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232824AbhG0WoW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jul 2021 18:44:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50172 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232452AbhG0WoW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jul 2021 18:44:22 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45289C061757
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 15:44:21 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id h8so578144ede.4
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 15:44:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=skydio.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qYdGX85E/Fx2YxAvdaMDNTSaC39l1PToGayGRRXztYk=;
+        b=aJ2K/2y7sNXVWnCndMnax0WoohRXGmD9uP/FSEuLofatEtPPvsh2M9FUPHxvtunfRV
+         yr6YZAkgltpKqx+jZj/jYWvbqbLi4i6cO12O5GpaIpl1XR4BY7n58sM33JEaVgwVmK2H
+         heE1MJ76EZFSV+VCrRUo/nVbUaASr6vEzvS7CvDL2gEGGLN80U5Ohlt75mZRoQ9IruL7
+         gKZUK6hJR8z1+iAkK3Qjs+geMBo/MniHnnKonxA9uzWsrXyTHHsXHxaTnowrEy/XCOZU
+         VJIgkCDB8odMzgFX88/RCzNEpDC+sM0s6sePAEgiFFrPbnXRtVmajLJ8/vmvx4zMi0fJ
+         tvag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qYdGX85E/Fx2YxAvdaMDNTSaC39l1PToGayGRRXztYk=;
+        b=MVMUdGpQ6/sOf4/rqejMGt7zBwK66XGzrWCsGYhm7tpOAsBeqWIbGo60H0YPtzB49D
+         0VDVyXkStyhU3FnHfIMVyw2mXVvR6Q3EqFaZRwglqVikmQJkitvIy/frkmMkLGy1iy+w
+         ry/J0o8XFN7WkRIq4CokDo7DNzvds1oEbP6RVCeyuMaVyxQdsl+K28AtOHoZES+pLqgV
+         awZ00jhCjJ+UWuL2mDqBs5KAP1QFRlHfh2/c8gdFT5UGRKnLE9ffPZ76CWHDkuYCS5xH
+         hkfOLl4xwD9T1i2/nYO0f4XTbP3kcPLDKJnprBOpwjd6u3NJu2uXWz5OHiya+z/kvSI4
+         lXfQ==
+X-Gm-Message-State: AOAM531ckSlDS96BCQdhzR1ZvzWEZQokI9GH4NmCH4YYR9Qk00MrLYG/
+        Cvb7E9bEhu8EA80wt+xU41LgoIea88prlIkqW+3Dew==
+X-Google-Smtp-Source: ABdhPJxSFACic88TEjfLWuIYFl7q7pi/H1ik9XNs66txe2EgoMSanvkoZDj4KKo894OHYNSgooLETfV6VtZWLq68vyQ=
+X-Received: by 2002:aa7:c04e:: with SMTP id k14mr29897756edo.193.1627425859692;
+ Tue, 27 Jul 2021 15:44:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A276AE12-EF2B-11EB-9385-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <fdfd283aeee311ebbfb50024e87935e7@oschina.cn>
+In-Reply-To: <fdfd283aeee311ebbfb50024e87935e7@oschina.cn>
+From:   Jerry Zhang <jerry@skydio.com>
+Date:   Tue, 27 Jul 2021 15:44:08 -0700
+Message-ID: <CAMKO5Cs1HP7JNmJLYKti0kajGmD4XK+Boc3WRV2Dpph5a3b5Xw@mail.gmail.com>
+Subject: Re: git apply --3way behaves abnormally when the patch contains
+ binary changes.
+To:     "lilinchao@oschina.cn" <lilinchao@oschina.cn>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Tue, Jul 27, 2021 at 7:07 AM lilinchao@oschina.cn
+<lilinchao@oschina.cn> wrote:
+>
+> I see the latest change about `git apply --3way` is 923cd87, but it doesn't seem to have been fully tested
+> (in t4108-apply-threeway.sh).
+> On latest Git version 2.32.0, consider test case below:
+> "
+> test_expect_success 'apply binary file patch with --3way' '
+>         # 1. on new branch, commit binary file
+>         git checkout -b left &&
+>         cat "$TEST_DIRECTORY"/test-binary-1.png >bin.png &&
+>         git add bin.png &&
+>         git commit -m "add binary file" &&
+>
+>         # 2. based on left_bin branch, make any change, and commit
+>         git checkout -b right &&
+>         cat bin.png bin.png > bin.png &&
+>         git add bin.png &&
+>         git commit -m "update binary file" &&
+>
+>         # 3. make patch
+>         git diff --binary left..right >bin.diff &&
+>         # apply --3way, and it will fail
+>         test_must_fail git apply --index --3way bin.diff
+> '
+> "
+>
+> But  "git apply --index --3way bin.diff" will not faill on Git version 2.31.0.
+Are you sure? I checked out to "commit
+a5828ae6b52137b913b978e16cd2334482eb4c1f (HEAD, tag: v2.31.0)" and
+rebuilt and ran your test snippet and it still failed.
 
-> I think both "I want to vet" and "good enough for project X is good
-> enough for me" are both reasonable points of view, and this
-> remote-suggested hook scheme supports both.
+This was the message from the failure on 2.31.0
+"error: the patch applies to 'bin.png'
+(e69de29bb2d1d6434b8b29ae775ad8c2e48c5391), which does not match the
+current contents.
+Falling back to three-way merge...
+warning: Cannot merge binary files: bin.png (ours vs. theirs)
+Applied patch to 'bin.png' with conflicts.
+U bin.png"
 
-Sure. =20
+Versus the message on 2.32.0
+"warning: Cannot merge binary files: bin.png (ours vs. theirs)
+Applied patch to 'bin.png' with conflicts.
+U bin.png"
 
-I was just pointing out that the design is opinionated and not
-giving two points of view fair chance to compete.  It will strongly
-encourage users to the latter choice by prodding them when they want
-to do a hook-invoking operation (like "git commit").
+So the failure messaging is different but it returns 1 both times. Is
+there a difference between how we're testing?
 
-Not that opinionated design is necessarily a bad thing.
+I did have to modify your test to add
+test_expect_success 'apply binary file patch with --3way' '
+       # 1. on new branch, commit binary file
+       git checkout -b left &&
++       git reset --hard &&
 
-> I don't think we should compare the installed .git/hooks/pre-commit wit=
-h
-> remotes/origin/suggested-hooks (since the user may have locally modifie=
-d
-> that hook), so a solution involving storing the OID of the installed
-> hook somewhere (I haven't figured out where, though) and comparing that
-> OID against remotes/origin/suggested-hooks would be reasonable and woul=
-d
-> be compatible with the current approach (as opposed to the one which
-> =C3=86var describes which, if I understand it correctly, would require
-> "commit" to access the network to figure out if the hook the client has
-> is the latest one).
-
-Coping with local modification would not be rocket science.
-
-If I were to do this, when the end-user approves installation of
-and/or updates from remotes/origin/suggested-hooks/, the following
-would happen:
-
- (1) If .git/hooks/* does not have the hook installed, copy it from
-     the suggested hooks, and append two line trailer:
-
-	# do not edit below
-	# hook taken from <suggested hooks blob object name>
-
- (2) If .git/hooks/* does hold the hook, look for the "hook taken
-     from" trailer
-
-   (a) if "hook taken from" trailer is missing (i.e. it came from
-       somewhere other than "remote suggested" workflow) or it does
-       not point at a valid blob object, jump to "conflict exists"
-       below.
-
-   (b) using that (old) blob object name, perform (1) to recreate
-       the hook the user would have seen when on-disk version of
-       hook was created.  Difference between that and what is
-       on-disk is the end-user customization.
-
-       extract the current blob object from the suggested hooks tree
-       object, do the same as (1), and then replay the end-user
-       customization we figured out above.
-
-       If the replaying succeeds cleanly, we are done.  Otherwise we
-       have conflicts that cannot be resolved automatically.
-
-   (c) "conflict exists".  The usual three-way merge resolution is
-       needed.  I'd suggest to give users two (or three) files:
-
-       - Rename the current version the user has to *.bak;
-       - The new version from the project in the final file;
-       - The patch obtained in (b) above, if exists in a separate file.
-
-       and ask them to carry their customization forward to the
-       second one (this is in line with the "we encourage them to
-       adopt the project preferences" philosophy this proposal is
-       taking us, I think).
-
-I think configuration files under /etc/ on Debian-based distros have
-been managed in a similar way for at least the past 10 years if not
-longer, and since we are version control software ourselves, the
-conflict resolution users are asked to perform in (2)-(c) shouldn't
-be too much of a burden to our users anyway.
+If this behavior is important I'd urge you to add this test to the suite.
+>
+>
