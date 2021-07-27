@@ -2,108 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 487E7C4338F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 17:12:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 962ABC4338F
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 17:17:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2971960FF4
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 17:12:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C7EC60FEE
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 17:17:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229837AbhG0RMe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jul 2021 13:12:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58132 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbhG0RMc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jul 2021 13:12:32 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32BA9C061760
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 10:12:32 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id pg12-20020a17090b1e0cb0290177328fc06dso100637pjb.2
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 10:12:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=jti8i4g2/LmjKt+WhPfcogF1qbYMid6nRWCShxhzuQE=;
-        b=ssNNLzDFwdMsfQ3oBVe4aWRv8GTBrJHhAp/vqHz1GDb4SRfWHPeZv9bdOWVNho2sX4
-         XjLfZBd6XYv6UUnYx9xEgcBRMG/zqohKaLhwadybcgf8Eum4JurGoOnhzpA0Kif277k2
-         OruhSkPYgTztnhgBU3eCBAGRq5CfVOP/QmP5TK12L+VBuTCc37hpBLP91g6HEmd+x0yX
-         PGoPSy0gkNNVu14chekKTtZDLaFb6wgYiwLzxSuv5Hitn421OSH7b5vby8YtK0nxyLkc
-         v03Iv/TmqrP4HBxy4ck7AEPrWZiDKHNXPEikJkStv7eDThU/rgkr7Di3+F/ZJjGdFwGU
-         3aXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=jti8i4g2/LmjKt+WhPfcogF1qbYMid6nRWCShxhzuQE=;
-        b=jeDpf4eHfxRJ6vm0hp7V4wCnaYbNt17BTK+Cn7enkXn2fSeJpo1C3BXKLH75x8AOf+
-         5NTb5rgPZxJwtdK4w8Ff8S76Jy5HfHaTvrNX6/SM8qZCXtVBXnCcLIyAgUjUODVEZoe0
-         Q5Y4wd/bB6c60pTvZYxb9GOpAUyIgqUHXcDmuFAeHrFLuZwTSz7ZcaVnPO5/S/69EHdx
-         vIA8khPfhTAnSwsQ6k3cMhraaOzG42O40jlmyu/zCT/1ws7ZRqEStYP/wMf+rUn1l+nf
-         5Rfc6asHy3CH0DT5fLIjslExzqD/GHLQplsM1JbfnsyaKd/z4mSSKptj+7i7IfCyGJCf
-         fF2g==
-X-Gm-Message-State: AOAM530sEBfZEJSCR5SnUses6y+NdkHWCHuBDoc/LeF4oVgkCTljIofe
-        V+GazUTS7Wj/sE/iAKF90TmQg4ZA03WqiDeNzefN
-X-Google-Smtp-Source: ABdhPJwVQql0vbNs8UFb6zfFGaxbrAcg+e92kU75GrAj5rQ7i9LhxD2fKwhUbFkflbyZBERlScFDajV4OrVjNXK6K9qk
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:902:7b93:b029:12b:a0a5:78d2 with
- SMTP id w19-20020a1709027b93b029012ba0a578d2mr19526059pll.51.1627405951696;
- Tue, 27 Jul 2021 10:12:31 -0700 (PDT)
-Date:   Tue, 27 Jul 2021 10:12:25 -0700
-In-Reply-To: <20210616004508.87186-2-emilyshaffer@google.com>
-Message-Id: <20210727171225.2457893-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20210616004508.87186-2-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.32.0.432.gabb21c7263-goog
-Subject: Re: [PATCH v2 1/4] t7400-submodule-basic: modernize inspect() helper
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     emilyshaffer@google.com
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S229687AbhG0RRD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jul 2021 13:17:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58818 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229529AbhG0RRD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jul 2021 13:17:03 -0400
+Received: (qmail 30992 invoked by uid 109); 27 Jul 2021 17:17:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Jul 2021 17:17:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 743 invoked by uid 111); 27 Jul 2021 17:17:03 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Jul 2021 13:17:03 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 27 Jul 2021 13:17:02 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH v2 08/24] midx: respect 'core.multiPackIndex' when writing
+Message-ID: <YQA/jt0mhP0QjA26@coredump.intra.peff.net>
+References: <cover.1617991824.git.me@ttaylorr.com>
+ <cover.1624314293.git.me@ttaylorr.com>
+ <dfd1daacc5b12d470bb6deec3448cf7dbde2bf0f.1624314293.git.me@ttaylorr.com>
+ <YPf1m01mcdJ3HNBt@coredump.intra.peff.net>
+ <YPhz+iOMu4Q7zjY4@nand.local>
+ <YPp98QgXW5PQHzyy@coredump.intra.peff.net>
+ <YP8F9ttlMXwNZBam@nand.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YP8F9ttlMXwNZBam@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index a924fdb7a6..f5dc051a6e 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -107,25 +107,18 @@ test_expect_success 'setup - repository to add submodules to' '
->  # generates, which will expand symbolic links.
->  submodurl=$(pwd -P)
->  
-> -listbranches() {
-> -	git for-each-ref --format='%(refname)' 'refs/heads/*'
-> -}
-> -
->  inspect() {
->  	dir=$1 &&
-> -	dotdot="${2:-..}" &&
->  
-> -	(
-> -		cd "$dir" &&
-> -		listbranches >"$dotdot/heads" &&
-> -		{ git symbolic-ref HEAD || :; } >"$dotdot/head" &&
-> -		git rev-parse HEAD >"$dotdot/head-sha1" &&
-> -		git update-index --refresh &&
-> -		git diff-files --exit-code &&
-> -		git clean -n -d -x >"$dotdot/untracked"
-> -	)
-> +	git -C "$dir" for-each-ref --format='%(refname)' 'refs/heads/*' >heads &&
-> +	{ git -C "$dir" symbolic-ref HEAD || :; } >head &&
-> +	git -C "$dir" rev-parse HEAD >head-sha1 &&
-> +	git -C "$dir" update-index --refresh &&
-> +	git -C "$dir" diff-files --exit-code &&
-> +	git -C "$dir" clean -n -d -x >untracked
->  }
->  
-> +
+On Mon, Jul 26, 2021 at 02:59:02PM -0400, Taylor Blau wrote:
 
-Stray extra line.
+> > Hmm, after staring at this for a bit, I've unconfused and re-confused
+> > myself several times.
+> >
+> > Here are some interesting bits:
+> >
+> >   - calling load_multi_pack_index() directly creates a new midx object.
+> >     None of its m->packs[] array will be filled in. Nor is it reachable
+> >     as r->objects->multi_pack_index.
+> >
+> >   - in using that midx, we end up calling prepare_midx_pack() for
+> >     various packs, which creates a new packed_git struct and adds it to
+> >     r->objects->packed_git (via install_packed_git()).
+> >
+> > So that's a bit weird already, because we have packed_git structs in
+> > r->objects that came from a midx that isn't r->objects->multi_pack_index.
+> > And then if we later call prepare_multi_pack_index(), for example as
+> > part of a pack reprepare, then we'd end up with duplicates.
+> 
+> Ah, this jogged my memory: this is a relic from when we generated MIDX
+> bitmaps in-process with the rest of the `repack` code. And when we did
+> that, we did have to call `reprepare_packed_git()` after writing the new
+> packs but before moving them into place.
+> 
+> So that's where the `reprepare_packed_git()` came from, but we don't
+> have any of that code anymore, since we now generate MIDX bitmaps by
+> invoking:
+> 
+>     git multi-pack-index write --bitmap --stdin-packs --refs-snapshot
+> 
+> as a sub-process of `git repack`; no need for any reprepare which is
+> what was triggering this bug.
 
-Other than that, this is definitely a good simplification.
+OK, that makes sense, especially given the "close_midx() leaves the
+pointer bogus" stuff discussed elsewhere.
+
+> To be sure, I reverted this patch out of GitHub's fork, and reran the
+> tests both in normal mode (just `make test`) and then once more with the
+> `GIT_TEST_MULTI_PACK_INDEX{,_WRITE_BITMAP}` environment variables set.
+> Unsurprisingly, it passed both times.
+> 
+> I'm happy to keep digging further, but I think that I'm 99% satisfied
+> here. Digging further involves resurrecting a much older version of this
+> series (and others adjacent to it), and there are probably other bugs
+> lurking that would be annoying to tease out.
+> 
+> In any case, let's drop this patch from the series. It's disappointing
+> that we can't run:
+> 
+>     git -c core.multiPackIndex= multi-pack-index write
+> 
+> anymore, but I guess that's no worse than the state we were in before
+> this patch, so I'm content to let it live on.
+
+Great. If we can drop it, I think that is the best path forward. I think
+that may simplify things for the writing patch, too, then. It should not
+matter if we move close_midx() anymore, because we will not be closing
+the main r->objects->multi_pack_index struct.
+
+I do suspect we could be skipping the load _and_ close of the midx
+entirely in write_midx_internal(), and just using whatever the caller
+has passed in (and arguably just having most callers pass in the regular
+midx struct if they want us to reuse parts of it). That might be a
+cleanup we can leave for later, but it might be necessary to touch these
+bits anyway (if there is still some kind of close_midx() ordering gotcha
+in the function).
+
+-Peff
