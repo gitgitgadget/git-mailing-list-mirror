@@ -2,168 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41FD0C432BE
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 13:16:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91624C4320A
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 13:24:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2D0076128E
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 13:16:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C5D961A8A
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 13:24:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236644AbhG0NQD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jul 2021 09:16:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59000 "EHLO
+        id S237087AbhG0NY5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jul 2021 09:24:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236606AbhG0NP4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jul 2021 09:15:56 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37F98C06179B
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 06:15:54 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id l18so7504612wrv.5
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 06:15:54 -0700 (PDT)
+        with ESMTP id S237116AbhG0NX1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jul 2021 09:23:27 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10B00C0613D3
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 06:23:14 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id m10-20020a17090a34cab0290176b52c60ddso4804703pjf.4
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 06:23:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=/QAS9hnOSCruAnMJO67LhuiuXgP/Xzg2aTOWl4lMTCg=;
-        b=aBr/AID/O0+SPO1/sQcsHxNYUdd1vLaHEnhnkwsTgZ/REgtsR/s/uR9qHlaQpyrS5U
-         aE80HG7ZlWB7cfVXie/fTTEvTdSmii3amKZWW9bB/Cx8TDIA2+ZbVvlBfvG0q3wQFv5+
-         9fGec6L4cB7oh+9PNyEpw+7HIhtCz4tch1I3a02CjhgZST6dC5Jz2AJFfTHdgELB2qXV
-         SFtLAHfcN65UX1TMhe3Sokg1BJBgiGeSDb5nfc7LYKyPjka9JONNz8RWCYzIMZK0bzhh
-         5qGDErXPgX2KHbhUqM2CZ27FxTEpnul5KPsjWN9H4Bsr+rEpN7qPfMoZAP+5NYlOACmx
-         H5UA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=u+PUYA9TLPDOr46du4DrOXPYOVyz2d7I4wnfE2OLQkg=;
+        b=BRS8+Sn6D7gmQ/JfSDY9tDYboxlvG7kENAVmlO4eZPOKp3JEUpnqTVHFozvh2h5zWw
+         V2MhsYkPoURcU/1QC3OQpR7+ynU72IH1VFP0cG4+zITu99EcrZXd5Y7aR/NjxlJxjHUQ
+         SEYLG5B+txeL/cfN6XZoEpQnvOgDrP13zl1Subb754iNm1KDoTUkFt1bGahmdw9w1moQ
+         A8DyzrGQVn+uOV29kZic1vb86P/P/QfzEpI5QKixdARUOgtATR8ioMcjgt0i6JzBz6o4
+         dqMXUp+x0xCW0/DjdUOxYIbt3GB6rdKKNpcKY/qNbIe32bGnVBPQvmEAfnewnWe+ZDjV
+         no5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/QAS9hnOSCruAnMJO67LhuiuXgP/Xzg2aTOWl4lMTCg=;
-        b=PN7nEm0hOHzOF5RJ+qgXNmkM0Q5uIunZuoMCAWvaPMyCjsJvWwemzqyc2vAKFUxoKq
-         2JELFpQlpIwSt165ym5HggFB2Fnrvs/PY55EOBO1EYRfqVvAeJJmST0Yfrt9x8g9dRK4
-         JqKj6UtJwJdmis3Gz3sOXTu24VFvay/kfNk4pdhP23W/2ho67rVlZZLoXiPSzSxltF9n
-         cWxDnvjyR9+mSPkQ8Czm2UDxo7fMxpdbZaLMJMliJpbPkhtXg8qBo1rQWmRCvCIyuzFq
-         S3p6DwzSU6DRnN/wn0v1GU0L73b/70YdYAJagQZHzrNf2EhpK7JxM4QLbSX8rT2ZRiqF
-         t2Xg==
-X-Gm-Message-State: AOAM532id2cvZZELQRXAMoFMcL3spFqhS7xT7+bpgzNlFz4FN6hGHXQq
-        O/tAgRe598j3RCCl/MRFHeW+u6vwd1o=
-X-Google-Smtp-Source: ABdhPJwnmoWPnGwvGLXvD8PL/RC912wTdLJr+ono6NzmdS7ahfLVmHA3TsvV12H872tB/GqVnWWYSQ==
-X-Received: by 2002:a5d:4751:: with SMTP id o17mr17956838wrs.252.1627391752812;
-        Tue, 27 Jul 2021 06:15:52 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h9sm2969870wmb.35.2021.07.27.06.15.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jul 2021 06:15:52 -0700 (PDT)
-Message-Id: <f758ce0ade4575ab3a8de63aaced676eea35146a.1627391744.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1041.v5.git.git.1627391744.gitgitgadget@gmail.com>
-References: <pull.1041.v4.git.git.1626701596.gitgitgadget@gmail.com>
-        <pull.1041.v5.git.git.1627391744.gitgitgadget@gmail.com>
-From:   "Fabian Stelzer via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 27 Jul 2021 13:15:44 +0000
-Subject: [PATCH v5 9/9] ssh signing: add documentation
-Fcc:    Sent
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=u+PUYA9TLPDOr46du4DrOXPYOVyz2d7I4wnfE2OLQkg=;
+        b=ZJpWeEbHcKNjcKXDX59g0A8GtO7T9myE0gXlSR2jbtxRueEMIlg0GeuUvMhq8wNncw
+         +o8qGUEImopIJ60Fb0vYcFnFIooW5wLe1pmEp2BomMHfm73SbtZIFlcSnaTWHHM/QKMP
+         BBahMZx/zb0uXOmuD+PbgHC9bezwtgZkNi00F1sfRwetwL/Kf0dl32MjhLjVSnOpiE3F
+         1J68nL2zyaCfq5fjvoS6gjaXaXQVxi8FVJpVc8BN17SJHuk7bUZsyxHRsJfp5IEO0aAx
+         hm0v62sUpjisyE4F46YL3u457yuSARNVCOR+YbgNIH01IRhCN+oC4mdLZt4DAfunZDvQ
+         N9xg==
+X-Gm-Message-State: AOAM532pcQUixt+pUFpCLeJ8qFD2mFdGGpu50+kQd8HF9MxaGe9r9ohi
+        93BHWi6j/qhFTIbaUURC4JA=
+X-Google-Smtp-Source: ABdhPJzk8wOTz1Nnotzvd3GucuVyCAan1UHRghgSzJfHPphpuq3uLqNwIYOeuYj51CyTUkV1BbUnRw==
+X-Received: by 2002:a17:902:ed95:b029:ee:aa46:547a with SMTP id e21-20020a170902ed95b02900eeaa46547amr18804448plj.27.1627392193583;
+        Tue, 27 Jul 2021 06:23:13 -0700 (PDT)
+Received: from [192.168.0.46] ([119.82.121.47])
+        by smtp.gmail.com with UTF8SMTPSA id c83sm3905202pfb.164.2021.07.27.06.23.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Jul 2021 06:23:13 -0700 (PDT)
+Message-ID: <a562fbe5-e7a5-bb62-428e-92f9fd4fca18@gmail.com>
+Date:   Tue, 27 Jul 2021 18:53:09 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.0
+Subject: Re: [GSoC] A small survey + My Git Blog, week 10
+Content-Language: en-GB
+To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        avarab@gmail.com, Emily Shaffer <emilyshaffer@google.com>
+References: <90b6bd2d-71e1-b8af-e027-8023f8d4f14c@gmail.com>
+ <60ff06ad2b298_31bb20891@natae.notmuch>
+From:   Atharva Raykar <raykar.ath@gmail.com>
+In-Reply-To: <60ff06ad2b298_31bb20891@natae.notmuch>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Hans Jerry Illikainen <hji@dyntopia.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Gwyneth Morgan <gwymor@tilde.club>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        Fabian Stelzer <fs@gigacodes.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Fabian Stelzer <fs@gigacodes.de>
+On 27/07/21 00:32, Felipe Contreras wrote:
+> Atharva Raykar wrote:
+>> As for the "survey part", jump to the section here:
+>> https://atharvaraykar.me/gitnotes/week10#the-mailing-list-developer-workflow
+>>
+>> ...feel free to reply in this thread.
+> 
+> It would have been nice to copy the survey on the email.
 
-Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
----
- Documentation/config/gpg.txt  | 39 +++++++++++++++++++++++++++++++++--
- Documentation/config/user.txt |  6 ++++++
- 2 files changed, 43 insertions(+), 2 deletions(-)
+Okay. Thanks for quoting it here.
 
-diff --git a/Documentation/config/gpg.txt b/Documentation/config/gpg.txt
-index d94025cb368..dc790512e86 100644
---- a/Documentation/config/gpg.txt
-+++ b/Documentation/config/gpg.txt
-@@ -11,13 +11,13 @@ gpg.program::
- 
- gpg.format::
- 	Specifies which key format to use when signing with `--gpg-sign`.
--	Default is "openpgp" and another possible value is "x509".
-+	Default is "openpgp". Other possible values are "x509", "ssh".
- 
- gpg.<format>.program::
- 	Use this to customize the program used for the signing format you
- 	chose. (see `gpg.program` and `gpg.format`) `gpg.program` can still
- 	be used as a legacy synonym for `gpg.openpgp.program`. The default
--	value for `gpg.x509.program` is "gpgsm".
-+	value for `gpg.x509.program` is "gpgsm" and `gpg.ssh.program` is "ssh-keygen".
- 
- gpg.minTrustLevel::
- 	Specifies a minimum trust level for signature verification.  If
-@@ -33,3 +33,38 @@ gpg.minTrustLevel::
- * `marginal`
- * `fully`
- * `ultimate`
-+
-+gpg.ssh.allowedSignersFile::
-+	A file containing ssh public keys which you are willing to trust.
-+	The file consists of one or more lines of principals followed by an ssh
-+	public key.
-+	e.g.: user1@example.com,user2@example.com ssh-rsa AAAAX1...
-+	See ssh-keygen(1) "ALLOWED SIGNERS" for details.
-+	The principal is only used to identify the key and is available when
-+	verifying a signature.
-++
-+SSH has no concept of trust levels like gpg does. To be able to differentiate
-+between valid signatures and trusted signatures the trust level of a signature
-+verification is set to `fully` when the public key is present in the allowedSignersFile.
-+Therefore to only mark fully trusted keys as verified set gpg.minTrustLevel to `fully`.
-+Otherwise valid but untrusted signatures will still verify but show no principal
-+name of the signer.
-++
-+This file can be set to a location outside of the repository and every developer
-+maintains their own trust store. A central repository server could generate this
-+file automatically from ssh keys with push access to verify the code against.
-+In a corporate setting this file is probably generated at a global location
-+from automation that already handles developer ssh keys.
-++
-+A repository that only allows signed commits can store the file
-+in the repository itself using a path relative to the top-level of the working tree.
-+This way only committers with an already valid key can add or change keys in the keyring.
-++
-+Using a SSH CA key with the cert-authority option
-+(see ssh-keygen(1) "CERTIFICATES") is also valid.
-+
-+gpg.ssh.revocationFile::
-+	Either a SSH KRL or a list of revoked public keys (without the principal prefix).
-+	See ssh-keygen(1) for details.
-+	If a public key is found in this file then it will always be treated
-+	as having trust level "never" and signatures will show as invalid.
-diff --git a/Documentation/config/user.txt b/Documentation/config/user.txt
-index 59aec7c3aed..b3c2f2c541e 100644
---- a/Documentation/config/user.txt
-+++ b/Documentation/config/user.txt
-@@ -36,3 +36,9 @@ user.signingKey::
- 	commit, you can override the default selection with this variable.
- 	This option is passed unchanged to gpg's --local-user parameter,
- 	so you may specify a key using any method that gpg supports.
-+	If gpg.format is set to "ssh" this can contain the literal ssh public
-+	key (e.g.: "ssh-rsa XXXXXX identifier") or a file which contains it and
-+	corresponds to the private key used for signing. The private key
-+	needs to be available via ssh-agent. Alternatively it can be set to
-+	a file containing a private key directly. If not set git will call
-+	"ssh-add -L" and try to use the first key available.
--- 
-gitgitgadget
+>> What tools, systems and workflows do you find valuable in your
+>> day-to-day work? In particular I’d be happy getting insights like:
+>>
+>> * Any strategy or approach to work, kind of like the example I quoted
+>>   above
+>> * Any scripts and tools that assist you
+>> * Opinionated handling of multiple in-flight series and methods to
+>>   approaching reviews
+>> * Atharva, you are overthinking this! I just use a straightforward {
+>>   editor + MUA + git } stack and go with the flow!
+> 
+> Personally I use mbsync + notmuch + notmuch-vim + vim + msmtp. You can
+> watch an example session in asciinema.org [1].
+
+Thanks for the visual demonstration!
+
+> This deals with the filtering issue that you talked about in your blog
+> post, for example one of the latest queries I ran is
+> "from:felipe subject:mergetool", plus there's tags so I can mark
+> messages with "inbox", "git", or "to-do".
+> 
+> Of course you can use emacs instead of vim, but I use vim.
+> 
+> Haveing all the feedback readily available helps me address it easily.
+> 
+> For me notmuch is like git for mail.
+> 
+> Cheers.
+> 
+> [1] https://asciinema.org/a/oo4yUOQDDF2CrWZbzhZURFtTW
+> 
+
