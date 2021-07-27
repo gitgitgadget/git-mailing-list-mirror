@@ -7,62 +7,61 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE15AC4338F
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AE2AC4320E
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:21:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AAAD460F9C
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:21:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E84EE60F9C
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 21:21:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234083AbhG0VVx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jul 2021 17:21:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58316 "EHLO
+        id S234277AbhG0VVy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jul 2021 17:21:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234625AbhG0VVY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jul 2021 17:21:24 -0400
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CE24C0613A1
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:19:58 -0700 (PDT)
-Received: by mail-il1-x12b.google.com with SMTP id u7so636931ilj.8
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:19:58 -0700 (PDT)
+        with ESMTP id S234723AbhG0VVZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jul 2021 17:21:25 -0400
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A7ADC061796
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:20:09 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id n19so496435ioz.0
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 14:20:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=GI6oGBL1oYlqJpUNBU41aiv3Vp2jB9mHIYjgiOZ/U4c=;
-        b=G1aR/mQX6Njj9if6p3p4zfFDCG/iODOndlh+PvOMC7nekuwgBsddJgymyfzXpBaRGy
-         jAYTPFQhs1I0xtfH1MvNC7Y040ADvxRILYOCmACfhhNq4jX/GptuZsha9B4CuzukP6r3
-         ieqNWUmNlcHDkA51UY6rpNsoS6jzh3IdXOkb6NEBmJpeuMGxAr8uyls8WdO4GxXHWk7m
-         rJTUbStqTnL2kRUlM+Op8g77u6we58FNY2OkC9HLGfvsiwvPEI0TJx53bEOypynq2ULS
-         q6e7Wjj2LpT9tGiPxd00K3q2qxoLSR8pud94UyPuyjL7bAKWFfn5KF0Nf0Uhak5qVJ3a
-         aQTA==
+        bh=ZPrEzB0xIK/wOTqk4WBQW79bWc96glFVTSqPVLHOsMY=;
+        b=BigBgSo4Pr6EGl/JPADB6M37LvFEB6gqufHHRiKvDZQuS50Gj7pxrAJxBL3itbM068
+         dW2MsgbBKxI5bB5M2FveJgKc3OxzNcwoEEYybg97SC05IswEPJkWRgXBW1oa+ClbHDWi
+         UbPqPRy9IYGEjSJW6U6ShgufEoXv2jr33zFMbVD2ghxvUNJa/LxK7canv/+ogyJGiM/u
+         VDkt1PwzcJoGZt/grjldpnGfxspciRyaK1Ikva+KRPcPlNf5IYP5rH8+7fLKUW2UQdbh
+         YmPnF+mytFtJTKFbb3CTWcChaf/ZLe1/tkOcmBbujCxg2R3nFuj66DbR4WA1To/kj2WV
+         reqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=GI6oGBL1oYlqJpUNBU41aiv3Vp2jB9mHIYjgiOZ/U4c=;
-        b=l0TCAAmQbgMhU3ffplZJyYIW3iVNkuViS4g5SVR9c5WTeRKZUzSfyetg60zzNyk22C
-         weDBxK1/q2XrpV3YdprYYbV1sw+ZnpvbTjm0ZqnHYWCr3RzHJ4SOHBv2CAKpdLrgqJAh
-         9qGAB7F+ivyK1hQulwshoH6U5anPi4oR4P2ZKz1ZeTFv87SwVvI/S/qttSYLTyO1m1kJ
-         vLF1NOE55yFBYppzhgv6lcET7UIhG1P0txohX60Km1k0aRimnfUPpVSrxm8c/EvNY33j
-         96ROvjylAQopEuszy+2WWHknLbM6KyOx91lSE9opFw5Kq6QJR8qFMOOr8vSUnk5hkRWC
-         5AGQ==
-X-Gm-Message-State: AOAM531aIH+UmPyeyxwIhdEHrqOv5PthwLDViRgnAPJfs/Af+cRrc15U
-        jscSdlvyjz54maDIe6mMQrSlgAhp9zpB4kEk
-X-Google-Smtp-Source: ABdhPJyJYj95L53fRUyv9pudwLsEupp/YRb7TxiDpy3YMMKLc7G9/3Ni4QdJ/AfjDiQmBwqJlQ1c7w==
-X-Received: by 2002:a05:6e02:15c8:: with SMTP id q8mr4001299ilu.285.1627420797869;
-        Tue, 27 Jul 2021 14:19:57 -0700 (PDT)
+        bh=ZPrEzB0xIK/wOTqk4WBQW79bWc96glFVTSqPVLHOsMY=;
+        b=XIT0f+Ww0bFuoIo3HmasFQZeuvNt0AZ8ri4POvBwqUlKqsLpfTtNcX+fPoJ2+x+xX3
+         K6mPt4qDPozij+TapQKjqvz81rfHeEasyVfBcrXBGGVIrgmCn9l+XfkR4HTzjrhLWueD
+         kN2eWrK6GTXEKF84D5lfHRjdusyezhrhYxQKq9Rsqr6Lip5RXE/hgehT7OAZcBA9DN1Q
+         H7lQeaeEjFxy6n9+v2GO7agIR+a/GNRYYwoSggdhY0gyVZ/+PmuwWXPvVMMWq0K6/r5d
+         955wQI7JuPIAe3k21BVqy1HJ2+nCp9biYmXD1srxSBm6Jgh2U5thq+sHnmxCOpfkgWD1
+         htQA==
+X-Gm-Message-State: AOAM533ofJNXwsOJmHF7reP/lF4Q9rQMD60DEFxBOICvaecZ9a/6yAPL
+        /LjWV35pYwM4GSdQzU7KBTcLXulwqiR81WaG
+X-Google-Smtp-Source: ABdhPJwu/TVdoAf/tW8c8mR+l+p4w8TT5oR9OkuXa0gAhoG3Omitx2v7ZFuMOdVmvWclzKgR9709sA==
+X-Received: by 2002:a5d:9ccb:: with SMTP id w11mr20627575iow.174.1627420808611;
+        Tue, 27 Jul 2021 14:20:08 -0700 (PDT)
 Received: from localhost ([2600:1700:d843:8f:6813:d625:75e6:4f64])
-        by smtp.gmail.com with ESMTPSA id d186sm3334008iof.3.2021.07.27.14.19.57
+        by smtp.gmail.com with ESMTPSA id d9sm243609ilu.9.2021.07.27.14.20.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jul 2021 14:19:57 -0700 (PDT)
-Date:   Tue, 27 Jul 2021 17:19:56 -0400
+        Tue, 27 Jul 2021 14:20:08 -0700 (PDT)
+Date:   Tue, 27 Jul 2021 17:20:07 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         jonathantanmy@google.com
-Subject: [PATCH v3 13/25] pack-bitmap.c: avoid redundant calls to
- try_partial_reuse
-Message-ID: <a3b641b3e66a6fe8257064e976e271a5750aff9f.1627420428.git.me@ttaylorr.com>
+Subject: [PATCH v3 17/25] t/helper/test-read-midx.c: add --checksum mode
+Message-ID: <60ec8b3466e7f94610a45bdd1c79feb06e439429.1627420428.git.me@ttaylorr.com>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1627420428.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -73,125 +72,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-try_partial_reuse() is used to mark any bits in the beginning of a
-bitmap whose objects can be reused verbatim from the pack they came
-from.
+Subsequent tests will want to check for the existence of a multi-pack
+bitmap which matches the multi-pack-index stored in the pack directory.
 
-Currently this function returns void, and signals nothing to the caller
-when bits could not be reused. But multi-pack bitmaps would benefit from
-having such a signal, because they may try to pass objects which are in
-bounds, but from a pack other than the preferred one.
+The multi-pack bitmap includes the hex checksum of the MIDX it
+corresponds to in its filename (for example,
+'$packdir/multi-pack-index-<checksum>.bitmap'). As a result, some tests
+want a way to learn what '<checksum>' is.
 
-Any extra calls are noops because of a conditional in
-reuse_partial_packfile_from_bitmap(), but those loop iterations can be
-avoided by letting try_partial_reuse() indicate when it can't accept any
-more bits for reuse, and then listening to that signal.
+This helper addresses that need by printing the checksum of the
+repository's multi-pack-index.
 
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 40 +++++++++++++++++++++++++++++-----------
- 1 file changed, 29 insertions(+), 11 deletions(-)
+ t/helper/test-read-midx.c | 16 +++++++++++++++-
+ t/lib-bitmap.sh           |  4 ++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 6b12c96e32..1442f0c8f2 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -1134,22 +1134,26 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 	return NULL;
+diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
+index 7c2eb11a8e..cb0d27049a 100644
+--- a/t/helper/test-read-midx.c
++++ b/t/helper/test-read-midx.c
+@@ -60,12 +60,26 @@ static int read_midx_file(const char *object_dir, int show_objects)
+ 	return 0;
  }
  
--static void try_partial_reuse(struct bitmap_index *bitmap_git,
--			      size_t pos,
--			      struct bitmap *reuse,
--			      struct pack_window **w_curs)
-+/*
-+ * -1 means "stop trying further objects"; 0 means we may or may not have
-+ * reused, but you can keep feeding bits.
-+ */
-+static int try_partial_reuse(struct bitmap_index *bitmap_git,
-+			     size_t pos,
-+			     struct bitmap *reuse,
-+			     struct pack_window **w_curs)
- {
- 	off_t offset, header;
- 	enum object_type type;
- 	unsigned long size;
- 
- 	if (pos >= bitmap_num_objects(bitmap_git))
--		return; /* not actually in the pack or MIDX */
-+		return -1; /* not actually in the pack or MIDX */
- 
- 	offset = header = pack_pos_to_offset(bitmap_git->pack, pos);
- 	type = unpack_object_header(bitmap_git->pack, w_curs, &offset, &size);
- 	if (type < 0)
--		return; /* broken packfile, punt */
-+		return -1; /* broken packfile, punt */
- 
- 	if (type == OBJ_REF_DELTA || type == OBJ_OFS_DELTA) {
- 		off_t base_offset;
-@@ -1166,9 +1170,9 @@ static void try_partial_reuse(struct bitmap_index *bitmap_git,
- 		base_offset = get_delta_base(bitmap_git->pack, w_curs,
- 					     &offset, type, header);
- 		if (!base_offset)
--			return;
-+			return 0;
- 		if (offset_to_pack_pos(bitmap_git->pack, base_offset, &base_pos) < 0)
--			return;
-+			return 0;
- 
- 		/*
- 		 * We assume delta dependencies always point backwards. This
-@@ -1180,7 +1184,7 @@ static void try_partial_reuse(struct bitmap_index *bitmap_git,
- 		 * odd parameters.
- 		 */
- 		if (base_pos >= pos)
--			return;
-+			return 0;
- 
- 		/*
- 		 * And finally, if we're not sending the base as part of our
-@@ -1191,13 +1195,14 @@ static void try_partial_reuse(struct bitmap_index *bitmap_git,
- 		 * object_entry code path handle it.
- 		 */
- 		if (!bitmap_get(reuse, base_pos))
--			return;
-+			return 0;
- 	}
- 
- 	/*
- 	 * If we got here, then the object is OK to reuse. Mark it.
- 	 */
- 	bitmap_set(reuse, pos);
++static int read_midx_checksum(const char *object_dir)
++{
++	struct multi_pack_index *m;
++
++	setup_git_directory();
++	m = load_multi_pack_index(object_dir, 1);
++	if (!m)
++		return 1;
++	printf("%s\n", hash_to_hex(get_midx_checksum(m)));
 +	return 0;
++}
++
+ int cmd__read_midx(int argc, const char **argv)
+ {
+ 	if (!(argc == 2 || argc == 3))
+-		usage("read-midx [--show-objects] <object-dir>");
++		usage("read-midx [--show-objects|--checksum] <object-dir>");
+ 
+ 	if (!strcmp(argv[1], "--show-objects"))
+ 		return read_midx_file(argv[2], 1);
++	else if (!strcmp(argv[1], "--checksum"))
++		return read_midx_checksum(argv[2]);
+ 	return read_midx_file(argv[1], 0);
  }
- 
- int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
-@@ -1233,10 +1238,23 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 				break;
- 
- 			offset += ewah_bit_ctz64(word >> offset);
--			try_partial_reuse(bitmap_git, pos + offset, reuse, &w_curs);
-+			if (try_partial_reuse(bitmap_git, pos + offset, reuse,
-+					      &w_curs) < 0) {
-+				/*
-+				 * try_partial_reuse indicated we couldn't reuse
-+				 * any bits, so there is no point in trying more
-+				 * bits in the current word, or any other words
-+				 * in result.
-+				 *
-+				 * Jump out of both loops to avoid future
-+				 * unnecessary calls to try_partial_reuse.
-+				 */
-+				goto done;
-+			}
- 		}
- 	}
- 
-+done:
- 	unuse_pack(&w_curs);
- 
- 	*entries = bitmap_popcount(reuse);
+diff --git a/t/lib-bitmap.sh b/t/lib-bitmap.sh
+index ecb5d0e05d..09cd036f4d 100644
+--- a/t/lib-bitmap.sh
++++ b/t/lib-bitmap.sh
+@@ -260,3 +260,7 @@ have_delta () {
+ 	echo $1 | git cat-file --batch-check="%(deltabase)" >actual &&
+ 	test_cmp expect actual
+ }
++
++midx_checksum () {
++	test-tool read-midx --checksum "${1:-.git/objects}"
++}
 -- 
 2.31.1.163.ga65ce7f831
 
