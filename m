@@ -2,103 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E183C432BE
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 00:07:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB745C4338F
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 00:18:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6C7E060F6B
-	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 00:07:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8778660F6E
+	for <git@archiver.kernel.org>; Tue, 27 Jul 2021 00:18:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234083AbhGZX1L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Jul 2021 19:27:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50066 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233843AbhGZX1K (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jul 2021 19:27:10 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67342C061757
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 17:07:37 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id z4so1165937wrv.11
-        for <git@vger.kernel.org>; Mon, 26 Jul 2021 17:07:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5NM0cHwZCtcVhVVCDlP0u1lyxB4+5RmjCct2rQmMZ44=;
-        b=TuIkfokkFbhIKFzP9wAgdlj5cLvohRNuDPtvuFCH3uBqxuAlT8n63DJReWGUEhvCct
-         yAvF3sXuH1KW4OVu2jZIzCkX8vYOPfzxpvFMGP/9Ra9027BpCHdq8tpryLNtMGwFA+Eg
-         /Avnh864YV2IJUvGsaEbVz+p04akcdK5XVQ0IkQYXSn0IyN4oizjH/hAIpJp8ZjZsD7F
-         FAFF5GutcLO7gueRNEqgoixLYQ/J7pcpUj4IQ3ARojjO7B2K5nNbzTWbtHfK5E4hUl+2
-         rwyBnNKTyB+GTa4vWBXrpwM3DTnt9G9QF9SjGr7OEuior9D013JembB6X5M0zXLS05Va
-         3fvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5NM0cHwZCtcVhVVCDlP0u1lyxB4+5RmjCct2rQmMZ44=;
-        b=kRid0mmButkS2shfMks+Z2cIcPcqMJkB5AcXsDj0DWkwoEJbjiPT5oA7E58qHsuV91
-         u0G1CDm/kgzPzqeSU2OPvzBSl6Qak9HH10vGf/D3Z6cF+MGtCxDON4eqHlhI/Y9VnnXR
-         BOarj867L2sNbkfaId+xBnWGMcwTetJ3DN066pcTm+bcLNqoAMXyINAFB6AD/5vwOcfp
-         mHslPJdkVVuYbylYJ4zm/go3nBfUn3zhJv/adgYzzEIRgnvMz9JlpVTDd3GmMdAkt6lH
-         rdp1P30p2j0sBNgK1Z2H8k4jZrMHPqF4WaRbBjHbLVflx+yIOUBaUkO4oh5JPoLfyreY
-         1+hw==
-X-Gm-Message-State: AOAM533gze2CxOfEL/IUjlhSYqBRaZ1Yw5VXS7bLG9iiqWo8BcTqT8lp
-        U41KoWNtM/OZszUfOQSaJOV3tCCKx4QL8Q==
-X-Google-Smtp-Source: ABdhPJwStDjPcfnmiPO6y2Izeiurwv25kblMF1/ZGEkCCoPOk2q1Vj2sLdbrt4Ae8ttKt2EOJ2fAVA==
-X-Received: by 2002:a5d:4d07:: with SMTP id z7mr22905746wrt.244.1627344455827;
-        Mon, 26 Jul 2021 17:07:35 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id x16sm1310619wru.40.2021.07.26.17.07.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jul 2021 17:07:35 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Mike Hommey <mh@glandium.org>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] http.c: use error_errno(), not error() after fopen() failure
-Date:   Tue, 27 Jul 2021 02:07:33 +0200
-Message-Id: <patch-1.1-ad71faa6da-20210727T000657Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.32.0.988.g1a6a4b2c5f
+        id S234196AbhGZXht (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Jul 2021 19:37:49 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60143 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234006AbhGZXhs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jul 2021 19:37:48 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6E1CEDF31B;
+        Mon, 26 Jul 2021 20:18:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=TzVJ42nMskWD
+        2R7MpTL3rl8Ef9jP7wOJsOh+Y+R4FzA=; b=URubkTzWAt/4pTPZZorJ4GYypXol
+        60k1eDe3UEu8/Q6Wu73RckQV/VC1juUVObSTNHPMaYG5cUZ+zxaR6NlmyKFwypQ1
+        ibl0sas5C6eWPhHLOccZ03S3KDJwsGPtvBDiHRVk+aAUprep2JQ0SJJp3S72P5z1
+        2AczUWQjLlWhg7Q=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4E5D6DF317;
+        Mon, 26 Jul 2021 20:18:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AC29FDF316;
+        Mon, 26 Jul 2021 20:18:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v9 0/7] refs: cleanup errno sideband ref related functions
+References: <cover-0.7-00000000000-20210716T142032Z-avarab@gmail.com>
+        <cover-0.7-00000000000-20210720T102644Z-avarab@gmail.com>
+        <877dhcskh4.fsf@evledraar.gmail.com>
+Date:   Mon, 26 Jul 2021 17:18:14 -0700
+In-Reply-To: <877dhcskh4.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 27 Jul 2021 01:49:40 +0200")
+Message-ID: <xmqqmtq8fw3d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2314C62E-EE70-11EB-BA65-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Improve the error reporting added in e929cd20bb3 (http.c: new
-functions for the http API, 2009-06-06) to emit strerror(), as fopen()
-is a failing system call we'll have a meaningful errno to report.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- http.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> On Tue, Jul 20 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> A v9 re-roll of the v8, see
+>> https://lore.kernel.org/git/cover-0.7-00000000000-20210716T142032Z-ava=
+rab@gmail.com/
+>> and more imporantly the real summary of what this is in v7 at
+>> https://lore.kernel.org/git/cover-0.6-0000000000-20210714T114301Z-avar=
+ab@gmail.com/
+>
+> FYI I did not re-roll a v10 of this on top of the just re-rolled base
+> topic:
+> https://lore.kernel.org/git/cover-00.11-0000000000-20210726T234237Z-ava=
+rab@gmail.com/#t
+>
+> The range-diff I have locally between the two (this version, and my
+> rebased "should I need a re-roll" version) shows no changes, so this
+> still cleanly applies on top.
 
-diff --git a/http.c b/http.c
-index 8119247149..f7940f1b5e 100644
---- a/http.c
-+++ b/http.c
-@@ -2341,8 +2341,8 @@ struct http_pack_request *new_direct_http_pack_request(
- 	strbuf_addf(&preq->tmpfile, "%s.temp", sha1_pack_name(packed_git_hash));
- 	preq->packfile = fopen(preq->tmpfile.buf, "a");
- 	if (!preq->packfile) {
--		error("Unable to open local file %s for pack",
--		      preq->tmpfile.buf);
-+		error_errno("Unable to open local file %s for pack",
-+			    preq->tmpfile.buf);
- 		goto abort;
- 	}
- 
--- 
-2.32.0.988.g1a6a4b2c5f
+Thanks.  I just rebased it on top of the base topic locally.  No
+need to resend.
 
