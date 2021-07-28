@@ -2,117 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32EECC4320A
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 16:34:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DE69C432BE
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 16:41:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 139296101C
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 16:34:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 72A8F60EB9
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 16:41:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229690AbhG1QeJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jul 2021 12:34:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39954 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbhG1QeI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jul 2021 12:34:08 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49373C061757
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 09:34:06 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id e21so3352513pla.5
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 09:34:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rWqjt/awGr7dpHnms1Va4rMr5rXfhs4Reyu6r0bCTlw=;
-        b=NKEgKuU1CSI81oT9nsiNRKIeMvFfNIdEfYWZOt4l5FT2oOKwOjs5N7x/InjB2PvEnG
-         2E+WRontE775cRZYnTjcEGbQFqH4FXR0hIRUDVU5k+6kf2IsaOWpfWO9qoOjw7eJYcyY
-         1B5n/X4HNJy6AVpHIbl4cATDqBTzlDjPHBADt2aYrZUKVo8B7HIdmAjCoOYnh8WO4BoX
-         dhRyjl33Dr4Ow6eMlBcMPajOoHUBOOntg8797hjLr0+hHeSsruOKn6yj8y0l6wngPpda
-         t+as8Jxvksykvbd6DKaPAt3f+qKZ5z8ZegTx6cgzz/lC9MXR/opoyTFlEd9gnGnNv+1o
-         IlTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rWqjt/awGr7dpHnms1Va4rMr5rXfhs4Reyu6r0bCTlw=;
-        b=qFf/hbbzjA42AU8HUGK+KSdOgtNC1OnhheR1teWNug7W1crExyL05ALx0SqQa7KLXU
-         Dp/zMOhFKtRsXKYiKzgmz3shk0FJUiHlMUCMXX6l4gdWVJjGTUuP2OExSDbVkrqv8O6k
-         hd2nZBj5TNyIOllqfJkGWIVcr2ZjoTd3yrhlJUEEs9Clel7FigAsb3CRmtxdTCo7H2su
-         lgFTpuBPBC6CSaIpB59dGfXqRpNs59LL1aYAXQARdRU4S4oc6AiBi0+c9QVYMoWWSFKi
-         OvuBwaFxdUXc/2T6g0osAoXJrg1v8/LJQ3mibh7ttpQ8gUjogc/cvYbr3fvd56j3pyWM
-         sdgg==
-X-Gm-Message-State: AOAM533mQTqZFZ1/jfdKOromZxIYNWZF0Z0Pn3SzlkSUehySo22PWOSq
-        ccWGC5dRmPKNhN9PB4jnSA/jYQzm3vXOsjGGJ0JelELO
-X-Google-Smtp-Source: ABdhPJx2Kt2AP2EmVArohlOTqXN5pfb78emqRbhdBdxohOTaXXO/Sc3fi/C9CmiW6SHHFZaGtXLxlP1Q6QOgtw6oxcU=
-X-Received: by 2002:a63:6784:: with SMTP id b126mr588147pgc.421.1627490045819;
- Wed, 28 Jul 2021 09:34:05 -0700 (PDT)
+        id S229567AbhG1QlP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jul 2021 12:41:15 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56377 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229515AbhG1QlO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jul 2021 12:41:14 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D21DC149188;
+        Wed, 28 Jul 2021 12:41:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WPjbglINZ0yCROPtiKgNECpHAYTmykTHkAepvp
+        Xx8Jg=; b=FFLXym+CSh2Omz/DSWqwNZCuF+xAlx06xE1uVvj1sOHAKzQW4bI568
+        uzOEDvGXVFLxHFY6S9aVzs7FW4XVUTyqF+39sxUFlvF+A0itI+aHdegk1IWmsOSx
+        BTjnC/clN3hkacv7bF73Z2Yr2M3Arle6dBiWR/fSXmp8pdNDoX2ec=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BC038149187;
+        Wed, 28 Jul 2021 12:41:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 002A3149186;
+        Wed, 28 Jul 2021 12:41:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Oded S via GitGitGadget <gitgitgadget@gmail.com>,
+        Oded S <oded@istraresearch.com>
+Subject: Re: [PATCH] Fix git-bisect when show-branch is configured to run
+ with pager
+References: <pull.1003.git.1627311659384.gitgitgadget@gmail.com>
+        <xmqq4kcgkjhk.fsf@gitster.g> <xmqq7dhbehwl.fsf@gitster.g>
+        <CAP8UFD26AXTYPvSzBD1x6hSvK5SNbM0F5BPX5bLEbxUZa2dAUg@mail.gmail.com>
+Date:   Wed, 28 Jul 2021 09:41:08 -0700
+In-Reply-To: <CAP8UFD26AXTYPvSzBD1x6hSvK5SNbM0F5BPX5bLEbxUZa2dAUg@mail.gmail.com>
+        (Christian Couder's message of "Wed, 28 Jul 2021 08:37:01 +0200")
+Message-ID: <xmqq8s1qbdcr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <b3b5f044-8c76-ec71-45d6-1c7fea93c519@iee.email>
-In-Reply-To: <b3b5f044-8c76-ec71-45d6-1c7fea93c519@iee.email>
-From:   Daniel Knittl-Frank <knittl89@googlemail.com>
-Date:   Wed, 28 Jul 2021 18:33:54 +0200
-Message-ID: <CACx-yZ1Je+tnZdJ21gDPeuQa-QTuY2t9mDujNr7wqJWFMwwzxA@mail.gmail.com>
-Subject: Re: Using two-dot range notation in `git rebase`?
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9CE9A80E-EFC2-11EB-AE08-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
+Christian Couder <christian.couder@gmail.com> writes:
 
-    git log upstream..HEAD
-
-gives you all commits reachable from "HEAD", but not reachable from
-"upstream". If you want to rebase this range and copy it onto newbase,
-you'd run
-
-    git rebase --onto newbase upstream
-
-This will take the commits upstream..HEAD (the HEAD argument is
-implicit), and you end up with
-
-    newbase-.....-HEAD
-
-containing all commits from (the previous) "HEAD" up to (but
-excluding) "upstream". If "newbase" and "upstream" are identical, the
-command can be simplified to `git rebase newbase`.
-
-Maybe I'm misunderstanding the problem? Can you give an example of
-`git rebase --onto newbase upstream branch` not working as expected?
-
-Regards
-Daniel
-
-On Wed, Jul 28, 2021 at 5:38 PM Philip Oakley <philipoakley@iee.email> wrote:
+>> I wonder if it is just a simple matter of a few lines of code, like
+>> this?
 >
-> Is there a reasonable way to use the two-dot range notation in git
-> rebase, particularly in an  --onto situation?
+> Yeah, I also think it's a good idea.
 >
-> In my case I have a short series that depends on both some existing Git
-> for Windows (GfW) patches (`main` branch), and some patches now in
-> `git/master`. I'm now able to rebase it onto the GfW `shears/master`
-> branch which contains both sets of patches (and one that was in the last
-> git release).
+>> ---- >8 ------- >8 ------- >8 ------- >8 ------- >8 ----
+>> Subject: [PATCH] bisect: do not run show-branch just to show the current  commit
+>>
+>> In scripted versions of "git bisect", we used "git show-branch" to
+>> describe single commit in the bisect log and also to the interactive
 >
-> It felt that it ought to be possible to use a simple two dot range to
-> extract my series, rather than identifying the individual end points in
-> a similar manner to that used in the description"set of commits .. shown
-> by `git log <upstream>..HEAD`".
->
-> Or is this something that could be a project?
-> --
->
-> Philip
->
->
+> s/single/ a single/
 
+Thanks.
 
--- 
-typed with http://neo-layout.org
+>>         enum bisect_error res = BISECT_OK;
+>> +       struct commit *commit;
+>> +       struct pretty_print_context pp = {0};
+>> +       struct strbuf commit_msg = STRBUF_INIT;
+>> ...
+>> +       commit = lookup_commit_reference(the_repository, bisect_rev);
+>> +       format_commit_message(commit, "[%H] %s%n", &commit_msg, &pp);
+>> +       fputs(commit_msg.buf, stdout);
+>> +       strbuf_release(&commit_msg);
+>> +
+>>         return -abs(res);
+>
+> Nice! Now, the above line can be simplified to:
+>
+>          return BISECT_OK;
+>
+> And the declaration of the `res` variable can be moved into the else
+> clause where it is used.
+
+Thanks, again.
