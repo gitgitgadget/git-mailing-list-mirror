@@ -2,42 +2,42 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84117C4338F
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 21:35:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48B28C4338F
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 21:55:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 674E56069E
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 21:35:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3043E60FE7
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 21:55:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231886AbhG1VfF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jul 2021 17:35:05 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59565 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231665AbhG1VfE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jul 2021 17:35:04 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D4E3414AF00;
-        Wed, 28 Jul 2021 17:35:01 -0400 (EDT)
+        id S232165AbhG1VzJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jul 2021 17:55:09 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57869 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232169AbhG1VzH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jul 2021 17:55:07 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 86E2313FEEE;
+        Wed, 28 Jul 2021 17:55:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lg0FO47treap4uhzXUOIA/1n1nGAlweoVAlrbE
-        0dVAg=; b=V/vBSs5J/jX35vbo20bJLllVK8Jb4AZEGg+KzrUVXLhxfqta9HhhmR
-        UGKh+hF6ldgXwBF51YX5KF4vXo5RQelfjoX09hzWWDBMTOA0grPRIBxI6QiTLP9r
-        yZUW3rt1OCmDNuJaSYkSAVteg8TjaA6/ESEe2hx9YBuec7BVy1wL0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CBCBA14AEFE;
-        Wed, 28 Jul 2021 17:35:01 -0400 (EDT)
+        :content-type; s=sasl; bh=VlEWh7uK+FQL8NnryH9F3AVcEkX4Nhg35ND3xZ
+        ng9DU=; b=mQd8y3CiXNedY67Cia1w94uq1SZY+MN4CVTvLKif99hvC4qbmWIvV1
+        MT9ILWnQ3tbro78TsgmCXg009chTR9Ed44D1/Mui+ODMvP6xEvoV4vIPP4Z5R24e
+        lTBJ0F+YOJckQrIo+QIsPXrSYIpRJJDyYZj/TJCDK36xrp/LPg5W0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7E7DD13FEED;
+        Wed, 28 Jul 2021 17:55:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.71.182])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B98B914AEFB;
-        Wed, 28 Jul 2021 17:34:57 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A497513FEEC;
+        Wed, 28 Jul 2021 17:55:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Fabian Stelzer via GitGitGadget" <gitgitgadget@gmail.com>
@@ -51,20 +51,20 @@ Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Gwyneth Morgan <gwymor@tilde.club>
-Subject: Re: [PATCH v6 4/9] ssh signing: provide a textual representation of
- the signing key
+Subject: Re: [PATCH v6 5/9] ssh signing: parse ssh-keygen output and verify
+ signatures
 References: <pull.1041.v5.git.git.1627391744.gitgitgadget@gmail.com>
         <pull.1041.v6.git.git.1627501009.gitgitgadget@gmail.com>
-        <7d1d131ff5b43559c8a750ebdfd6faaba93c1ad1.1627501009.git.gitgitgadget@gmail.com>
-Date:   Wed, 28 Jul 2021 14:34:56 -0700
-In-Reply-To: <7d1d131ff5b43559c8a750ebdfd6faaba93c1ad1.1627501009.git.gitgitgadget@gmail.com>
+        <725764018ceb5bcecc748cc5169d4305ea9d7d23.1627501009.git.gitgitgadget@gmail.com>
+Date:   Wed, 28 Jul 2021 14:55:00 -0700
+In-Reply-To: <725764018ceb5bcecc748cc5169d4305ea9d7d23.1627501009.git.gitgitgadget@gmail.com>
         (Fabian Stelzer via GitGitGadget's message of "Wed, 28 Jul 2021
-        19:36:44 +0000")
-Message-ID: <xmqqeebi86m7.fsf@gitster.g>
+        19:36:45 +0000")
+Message-ID: <xmqq35ry85or.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A7E07AD4-EFEB-11EB-9D6C-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 760F95E6-EFEE-11EB-8F5E-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -73,116 +73,251 @@ X-Mailing-List: git@vger.kernel.org
 
 > From: Fabian Stelzer <fs@gigacodes.de>
 >
-> for ssh the user.signingkey can be a filename/path or even a literal ssh pubkey.
-> in push certs and textual output we prefer the ssh fingerprint instead.
+> to verify a ssh signature we first call ssh-keygen -Y find-principal to
 
-These sentences that lack the initial capital letters would look
-unusual and distracting in our "git log --no-merges" stream.
+"to" -> "To".
 
-> +static char *get_ssh_key_fingerprint(const char *signing_key)
-> +{
-> +	struct child_process ssh_keygen = CHILD_PROCESS_INIT;
-> +	int ret = -1;
-> +	struct strbuf fingerprint_stdout = STRBUF_INIT;
-> +	struct strbuf **fingerprint;
-> +
-> +	/*
-> +	 * With SSH Signing this can contain a filename or a public key
-> +	 * For textual representation we usually want a fingerprint
-> +	 */
-> +	if (istarts_with(signing_key, "ssh-")) {
-> +		strvec_pushl(&ssh_keygen.args, "ssh-keygen", "-lf", "-", NULL);
-> +		ret = pipe_command(&ssh_keygen, signing_key,
-> +				   strlen(signing_key), &fingerprint_stdout, 0,
-> +				   NULL, 0);
-> +	} else {
-> +		strvec_pushl(&ssh_keygen.args, "ssh-keygen", "-lf",
-> +			     configured_signing_key, NULL);
-> +		ret = pipe_command(&ssh_keygen, NULL, 0, &fingerprint_stdout, 0,
-> +				   NULL, 0);
-> +	}
-> +
-> +	if (!!ret)
-> +		die_errno(_("failed to get the ssh fingerprint for key '%s'"),
-> +			  signing_key);
-> +
-> +	fingerprint = strbuf_split_max(&fingerprint_stdout, ' ', 3);
-> +	if (!fingerprint[1])
-> +		die_errno(_("failed to get the ssh fingerprint for key '%s'"),
-> +			  signing_key);
-> +
-> +	return strbuf_detach(fingerprint[1], NULL);
-> +}
-> +
->  /* Returns the first public key from an ssh-agent to use for signing */
->  static char *get_default_ssh_signing_key(void)
->  {
-> @@ -490,6 +525,17 @@ static char *get_default_ssh_signing_key(void)
->  	return "";
+> look up the signing principal by their public key from the
+> allowedSignersFile. If the key is found then we do a verify. Otherwise
+> we only validate the signature but can not verify the signers identity.
+>
+> Verification uses the gpg.ssh.allowedSignersFile (see ssh-keygen(1) "ALLOWED
+> SIGNERS") which contains valid public keys and a principal (usually
+> user@domain). Depending on the environment this file can be managed by
+> the individual developer or for example generated by the central
+> repository server from known ssh keys with push access. If the
+> repository only allows signed commits / pushes then the file can even be
+> stored inside it.
+>
+> To revoke a key put the public key without the principal prefix into
+> gpg.ssh.revocationKeyring or generate a KRL (see ssh-keygen(1)
+> "KEY REVOCATION LISTS"). The same considerations about who to trust for
+> verification as with the allowedSignersFile apply.
+>
+> Using SSH CA Keys with these files is also possible. Add
+> "cert-authority" as key option between the principal and the key to mark
+> it as a CA and all keys signed by it as valid for this CA.
+>
+> Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
+> ---
+>  builtin/receive-pack.c |   2 +
+>  gpg-interface.c        | 179 ++++++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 180 insertions(+), 1 deletion(-)
+
+A lot of additions to support a new system, all looking quite
+straight-forward.
+
+> @@ -78,7 +84,7 @@ static struct gpg_format gpg_format[] = {
+>  		.program = "ssh-keygen",
+>  		.verify_args = ssh_verify_args,
+>  		.sigs = ssh_sigs,
+> -		.verify_signed_buffer = NULL, /* TODO */
+> +		.verify_signed_buffer = verify_ssh_signed_buffer,
+>  		.sign_buffer = sign_buffer_ssh
+>  	},
+>  };
+
+Nice.
+
+> @@ -343,6 +349,165 @@ static int verify_gpg_signed_buffer(struct signature_check *sigc,
+>  	return ret;
 >  }
 >  
-> +/* Returns a textual but unique representation ot the signing key */
-
-"ot" -> "of".
-
-> +const char *get_signing_key_id(void)
+> +static void parse_ssh_output(struct signature_check *sigc)
 > +{
-> +	if (!strcmp(use_format->name, "ssh")) {
-> +		return get_ssh_key_fingerprint(get_signing_key());
-> +	} else {
-> +		/* GPG/GPGSM only store a key id on this variable */
-> +		return get_signing_key();
+> +	const char *line, *principal, *search;
+> +
+> +	/*
+> +	 * ssh-keysign output should be:
+> +	 * Good "git" signature for PRINCIPAL with RSA key SHA256:FINGERPRINT
+> +	 * Good "git" signature for PRINCIPAL WITH WHITESPACE with RSA key SHA256:FINGERPRINT
 
-Hmph, we could ask gpg key fingerprint if we wanted to, and we
-cannot tell why "ssh" side needs a separate "key" and "key_id"
-while "gpg" side does not.  Hopefully it will become clear as we
-read on?
+A bit unfortunate line that is overly long.  These two are not
+mutually exclusive two different choices, but one is a special case
+of the other, no?  How about phrasing it like so instead?
 
-Again, dispatching on use_format->name looked rather unexpected.
+	/*
+	 * ssh-keysign output should be:
+	 * Good "git" signature for PRINCIPAL with RSA key SHA256:FINGERPRINT
+         *
+	 * or for valid but unknown keys:
+	 * Good "git" signature with RSA key SHA256:FINGERPRINT
+         *
+	 * Note that "PRINCIPAL" can contain whitespace, "RSA" and
+	 * "SHA256" part could be a different token that names of
+	 * the algorithms used, and "FINGERPRINT" is a hexadecimal
+         * string.  By finding the last occurence of " with ", we can
+         * reliably parse out the PRINCIPAL.
+	 */
+
+> +	 * or for valid but unknown keys:
+> +	 * Good "git" signature with RSA key SHA256:FINGERPRINT
+> +	 */
+> +	sigc->result = 'B';
+> +	sigc->trust_level = TRUST_NEVER;
+> +
+> +	line = xmemdupz(sigc->output, strcspn(sigc->output, "\n"));
+> +
+> +	if (skip_prefix(line, "Good \"git\" signature for ", &line)) {
+> +		/* Valid signature and known principal */
+> +		sigc->result = 'G';
+> +		sigc->trust_level = TRUST_FULLY;
+> +
+> +		/* Search for the last "with" to get the full principal */
+> +		principal = line;
+> +		do {
+> +			search = strstr(line, " with ");
+> +			if (search)
+> +				line = search + 1;
+> +		} while (search != NULL);
+> +		sigc->signer = xmemdupz(principal, line - principal - 1);
+> +		sigc->fingerprint = xstrdup(strstr(line, "key") + 4);
+
+OK.  This does not care the "RSA" part, which is future resistant.
+It assumes the <algo>:<fingerprint> comes after literal " key ",
+which I think is a reasonable thing to do.
+
+However, we never checked if the line has "key" in it, so
+strstr(line, "key") + 4 may not be pointing at where this code
+expects.
+
+> +		sigc->key = xstrdup(sigc->fingerprint);
+> +	} else if (skip_prefix(line, "Good \"git\" signature with ", &line)) {
+> +		/* Valid signature, but key unknown */
+> +		sigc->result = 'G';
+> +		sigc->trust_level = TRUST_UNDEFINED;
+> +		sigc->fingerprint = xstrdup(strstr(line, "key") + 4);
+> +		sigc->key = xstrdup(sigc->fingerprint);
+
+Likewise, I guess.
 
 > +	}
 > +}
 > +
->  const char *get_signing_key(void)
->  {
->  	if (configured_signing_key)
-> diff --git a/gpg-interface.h b/gpg-interface.h
-> index feac4decf8b..beefacbb1e9 100644
-> --- a/gpg-interface.h
-> +++ b/gpg-interface.h
-> @@ -64,6 +64,12 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature,
->  int git_gpg_config(const char *, const char *, void *);
->  void set_signing_key(const char *);
->  const char *get_signing_key(void);
+> +static int verify_ssh_signed_buffer(struct signature_check *sigc,
+> +				    struct gpg_format *fmt, const char *payload,
+> +				    size_t payload_size, const char *signature,
+> +				    size_t signature_size)
+> +{
+> +	struct child_process ssh_keygen = CHILD_PROCESS_INIT;
+> +	struct tempfile *buffer_file;
+> +	int ret = -1;
+> +	const char *line;
+> +	size_t trust_size;
+> +	char *principal;
+> +	struct strbuf ssh_keygen_out = STRBUF_INIT;
+> +	struct strbuf ssh_keygen_err = STRBUF_INIT;
 > +
-> +/*
-> + * Returns a textual unique representation of the signing key in use
-> + * Either a GPG KeyID or a SSH Key Fingerprint
-> + */
-> +const char *get_signing_key_id(void);
->  int check_signature(const char *payload, size_t plen,
->  		    const char *signature, size_t slen,
->  		    struct signature_check *sigc);
-> diff --git a/send-pack.c b/send-pack.c
-> index 5a79e0e7110..50cca7e439b 100644
-> --- a/send-pack.c
-> +++ b/send-pack.c
-> @@ -341,13 +341,13 @@ static int generate_push_cert(struct strbuf *req_buf,
->  {
->  	const struct ref *ref;
->  	struct string_list_item *item;
-> -	char *signing_key = xstrdup(get_signing_key());
-> +	char *signing_key_id = xstrdup(get_signing_key_id());
->  	const char *cp, *np;
->  	struct strbuf cert = STRBUF_INIT;
->  	int update_seen = 0;
->  
->  	strbuf_addstr(&cert, "certificate version 0.1\n");
-> -	strbuf_addf(&cert, "pusher %s ", signing_key);
-> +	strbuf_addf(&cert, "pusher %s ", signing_key_id);
+> +	if (!ssh_allowed_signers) {
+> +		error(_("gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification"));
+> +		return -1;
+> +	}
+> +
+> +	buffer_file = mks_tempfile_t(".git_vtag_tmpXXXXXX");
+> +	if (!buffer_file)
+> +		return error_errno(_("could not create temporary file"));
+> +	if (write_in_full(buffer_file->fd, signature, signature_size) < 0 ||
+> +	    close_tempfile_gently(buffer_file) < 0) {
+> +		error_errno(_("failed writing detached signature to '%s'"),
+> +			    buffer_file->filename.buf);
+> +		delete_tempfile(&buffer_file);
+> +		return -1;
+> +	}
+> +
+> +	/* Find the principal from the signers */
+> +	strvec_pushl(&ssh_keygen.args, fmt->program,
+> +		     "-Y", "find-principals",
+> +		     "-f", ssh_allowed_signers,
+> +		     "-s", buffer_file->filename.buf,
+> +		     NULL);
+> +	ret = pipe_command(&ssh_keygen, NULL, 0, &ssh_keygen_out, 0,
+> +			   &ssh_keygen_err, 0);
+> +	if (ret && strstr(ssh_keygen_err.buf, "usage:")) {
+> +		error(_("ssh-keygen -Y find-principals/verify is needed for ssh signature verification (available in openssh version 8.2p1+)"));
+> +		goto out;
+> +	}
+> +	if (ret || !ssh_keygen_out.len) {
+> +		/* We did not find a matching principal in the allowedSigners - Check
+> +		 * without validation */
+> +		child_process_init(&ssh_keygen);
+> +		strvec_pushl(&ssh_keygen.args, fmt->program,
+> +			     "-Y", "check-novalidate",
+> +			     "-n", "git",
+> +			     "-s", buffer_file->filename.buf,
+> +			     NULL);
+> +		ret = pipe_command(&ssh_keygen, payload, payload_size,
+> +				   &ssh_keygen_out, 0, &ssh_keygen_err, 0);
+> +	} else {
+> +		/* Check every principal we found (one per line) */
+> +		for (line = ssh_keygen_out.buf; *line;
+> +		     line = strchrnul(line + 1, '\n')) {
+> +			while (*line == '\n')
+> +				line++;
+> +			if (!*line)
+> +				break;
+> +
+> +			trust_size = strcspn(line, "\n");
+> +			principal = xmemdupz(line, trust_size);
+> +
+> +			child_process_init(&ssh_keygen);
+> +			strbuf_release(&ssh_keygen_out);
+> +			strbuf_release(&ssh_keygen_err);
+> +			strvec_push(&ssh_keygen.args, fmt->program);
+> +			/* We found principals - Try with each until we find a
+> +			 * match */
 
-Ahh...  We do not send GPG fingerprint in push certificate but you
-want to use the fingerprint when signing with SSH keys, and that is
-where the need for signing_key_id comes from?
+                        /*
+                         * Do not forget our multi-line comment
+                         * style, please.
+                         */
 
-OK.
+> +			strvec_pushl(&ssh_keygen.args, "-Y", "verify",
+> +				     "-n", "git",
+> +				     "-f", ssh_allowed_signers,
+> +				     "-I", principal,
+> +				     "-s", buffer_file->filename.buf,
+> +				     NULL);
+> +
+> +			if (ssh_revocation_file) {
+> +				if (file_exists(ssh_revocation_file)) {
+> +					strvec_pushl(&ssh_keygen.args, "-r",
+> +						     ssh_revocation_file, NULL);
+> +				} else {
+> +					warning(_("ssh signing revocation file configured but not found: %s"),
+> +						ssh_revocation_file);
+> +				}
+> +			}
+> +
+> +			sigchain_push(SIGPIPE, SIG_IGN);
+> +			ret = pipe_command(&ssh_keygen, payload, payload_size,
+> +					   &ssh_keygen_out, 0, &ssh_keygen_err, 0);
+> +			sigchain_pop(SIGPIPE);
+> +
+> +			FREE_AND_NULL(principal);
+> +
+> +			ret &= starts_with(ssh_keygen_out.buf, "Good");
+
+This is somewhat unusual construct in our codebase, I suspect.  And
+probably is even wrong.  Didn't you mean
+
+			if (!ret)
+				ret = starts_with(...);
+
+instead?  Surely, when pipe_command() failed, it is likely that
+ssh_keygen_out may not have anything useful, and checking what the
+first up-to-four bytes of it contain unconditionally may be cheap
+enough, but the person reading the code would expect you to peek
+into the result only when you actually got the result, no?
+
+> +			if (ret == 0)
+> +				break;
+
+It's more common to do
+
+			if (!ret)
+				break;
+
+in our codebase; in other words, we prefer not to compare with
+literal 0, like "if (x == 0)" or "if (y != 0)".
+
+Thanks.
