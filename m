@@ -2,264 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50846C4320A
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 04:30:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E0ADC4338F
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 04:45:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3729260C3F
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 04:30:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4BE28600D4
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 04:45:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233567AbhG1Eam (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jul 2021 00:30:42 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57314 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbhG1Eal (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jul 2021 00:30:41 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3D6F2DE48B;
-        Wed, 28 Jul 2021 00:30:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tydteJHKURzTpRqUA+lIxhOSPpS/Jf/8UgYoin
-        z2prQ=; b=xw3QYs3SvwaPFqq+vGTstXjY6WX20IKVu62p6+46nv/nM/8Xh1bmvK
-        3KQmbsw7/gsQarGuYwAfZbLg3iEO4B6JymghSLLljxmX6cJbSqgcszmc6hRLANAJ
-        r+pbJ11I9r/W2QhtnkATXCHmCjyiGEtZQpn6BrENRypjf2zIduidY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 33FAEDE48A;
-        Wed, 28 Jul 2021 00:30:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.71.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A0884DE489;
-        Wed, 28 Jul 2021 00:30:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jerry Zhang <jerry@skydio.com>
-Cc:     git@vger.kernel.org, lilinchao@oschina.cn
-Subject: Re: [PATCH] git-apply: fix --3way with binary patch
-References: <20210728024434.20230-1-jerry@skydio.com>
-Date:   Tue, 27 Jul 2021 21:30:38 -0700
-In-Reply-To: <20210728024434.20230-1-jerry@skydio.com> (Jerry Zhang's message
-        of "Tue, 27 Jul 2021 19:44:34 -0700")
-Message-ID: <xmqqh7gfawlt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8F653E52-EF5C-11EB-8745-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+        id S232469AbhG1Epq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jul 2021 00:45:46 -0400
+Received: from smtp501.hk.chengmail.me ([113.10.190.210]:39716 "EHLO
+        smtp501.hk.chengmail.me" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229546AbhG1Epp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jul 2021 00:45:45 -0400
+X-CHENGMAILHOST: 113.10.190.210
+X-CHENGMAIL-INSTANCEID: 6a01.6100e0e1.38866.0
+Date:   Wed, 28 Jul 2021 12:45:21 +0800
+From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
+To:     "Junio C Hamano" <gitster@pobox.com>,
+        "jerry@skydio.com" <jerry@skydio.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: Re: git apply --3way behaves abnormally when the patch contains
+        binary changes.
+References: <fdfd283aeee311ebbfb50024e87935e7@oschina.cn>, 
+        <CAMKO5Cs1HP7JNmJLYKti0kajGmD4XK+Boc3WRV2Dpph5a3b5Xw@mail.gmail.com>, 
+        <4eb90a4eef4011ebab68d4ae5272fd1139378@pobox.com>
+X-Priority: 3
+X-GUID: 97D76123-B745-43DC-B542-32A402FF7765
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.19.158[cn]
+Mime-Version: 1.0
+X-source-message-id: <2021072812442037686463@oschina.cn>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: base64
+Message-ID: <9f510f56ef5e11eb90f70026b95c99cc@oschina.cn>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jerry Zhang <jerry@skydio.com> writes:
+VGhlIGRlZmVjdGl2ZSB0ZXN0IGRlbW8gSSBwcm92aWRlZCBpcyBub3QgdGhhdCBpbXBvcnRhbnQo
+Zm9yIG1lKSwgdGhlIHB1cnBvc2Ugb2YgdGhpcyBpcyB0bwpicmluZyBvdXQgb3VyIHRvcGljIHRo
+YXQgImdpdCBhcHBseSAtMyIgYmVoYXZlcyBkaWZmZXJlbnRseSBvbiBkaWZmZXJlbnQgR2l0IHZl
+cnNpb24gd2hlbgp0aGUgcGF0Y2ggaXMgYmluYXJ5LgpNYXliZSBJIHdvdWxkIHNheSB0aGlzIGJy
+ZWFrcyBiYWNrd2FyZCBjb21wYXRpYmlsaXR5LCBidXQgdGhlIHBvb3IgdGVzdCBkZW1vIGRpZG4n
+dCBwcm92ZSB0aGlzLsKgCklmIGFueW9uZSB3b3VsZCBsaWtlIHRvIHNlZSB0aGUgaW5jb21wYXRp
+YmlsaXR5LCBoZSBjYW4gcnVuICJnaXQgYXBwbHkgLS1pbmRleCDCoC0zIGJpbmFyeS5kaWZmIiBp
+biBjb21tYW5kIGxpbmUgaW4gZGlmZmVyZW50IEdpdCB2ZXJzaW9uIGVudmlyb25tZW50LgoKPkpl
+cnJ5IFpoYW5nIDxqZXJyeUBza3lkaW8uY29tPiB3cml0ZXM6Cj4KPj4+wqDCoMKgwqDCoMKgwqDC
+oCAjIDIuIGJhc2VkIG9uIGxlZnRfYmluIGJyYW5jaCwgbWFrZSBhbnkgY2hhbmdlLCBhbmQgY29t
+bWl0Cj4+PsKgwqDCoMKgwqDCoMKgwqAgZ2l0IGNoZWNrb3V0IC1iIHJpZ2h0ICYmCj4+PsKgwqDC
+oMKgwqDCoMKgwqAgY2F0IGJpbi5wbmcgYmluLnBuZyA+IGJpbi5wbmcgJiYKPj4+wqDCoMKgwqDC
+oMKgwqDCoCBnaXQgYWRkIGJpbi5wbmcgJiYKPj4+wqDCoMKgwqDCoMKgwqDCoCBnaXQgY29tbWl0
+IC1tICJ1cGRhdGUgYmluYXJ5IGZpbGUiICYmCj4+Pgo+Pj7CoMKgwqDCoMKgwqDCoMKgICMgMy4g
+bWFrZSBwYXRjaAo+Pj7CoMKgwqDCoMKgwqDCoMKgIGdpdCBkaWZmIC0tYmluYXJ5IGxlZnQuLnJp
+Z2h0ID5iaW4uZGlmZiAmJgo+Pj7CoMKgwqDCoMKgwqDCoMKgICMgYXBwbHkgLS0zd2F5LCBhbmQg
+aXQgd2lsbCBmYWlsCj4+PsKgwqDCoMKgwqDCoMKgwqAgdGVzdF9tdXN0X2ZhaWwgZ2l0IGFwcGx5
+IC0taW5kZXggLS0zd2F5IGJpbi5kaWZmCj4+PiAnCj4+PiAiCj4+Pgo+Pj4gQnV0wqAgImdpdCBh
+cHBseSAtLWluZGV4IC0tM3dheSBiaW4uZGlmZiIgd2lsbCBub3QgZmFpbGwgb24gR2l0IHZlcnNp
+b24gMi4zMS4wLgo+PiBBcmUgeW91IHN1cmU/IEkgY2hlY2tlZCBvdXQgdG8gImNvbW1pdAo+PiBh
+NTgyOGFlNmI1MjEzN2I5MTNiOTc4ZTE2Y2QyMzM0NDgyZWI0YzFmIChIRUFELCB0YWc6IHYyLjMx
+LjApIiBhbmQKPj4gcmVidWlsdCBhbmQgcmFuIHlvdXIgdGVzdCBzbmlwcGV0IGFuZCBpdCBzdGls
+bCBmYWlsZWQuCj4KPklzbid0IGl0IGp1c3QgYmVjYXVzZSB0aGUgcmVwcm9kdWN0aW9uIHJlY2lw
+ZSBpcyBzaW1wbHkgd3Jvbmc/Cj4KPkl0IHNheXMKPgo+wqDCoMKgICogYmUgb24gbGVmdCBicmFu
+Y2ggYW5kIGhhdmUgYSBiaW5hcnkgZmlsZQo+wqDCoMKgICogYmUgb24gcmlnaHQgYnJhbmNoIGFu
+ZCBoYXZlIGEgbW9kaWZpZWQgYmluYXJ5IGZpbGUKPsKgwqDCoCAqIGNyZWF0ZSBhIHBhdGNoIHRv
+IHRha2UgbGVmdCB0byByaWdodAo+Cj5Ob3RpY2UgdGhhdCB3ZSBoYXZlIGEgcGF0Y2ggYW5kIHdl
+IGFyZSBzdGlsbCBvbiB0aGUgcmlnaHQgYnJhbmNoLgo+T2YgY291cnNlLCBhcHBseWluZyB0aGUg
+cGF0Y2ggdG8gdGFrZSB1cyBmcm9tIGxlZnQgdG8gcmlnaHQgd291bGQKPmZhaWwgZnJvbSB0aGF0
+IHN0YXRlLCBidXQgSSBfdGhpbmtfIHRoZSBpbnRlbnQgb2YgdGhlIHJlcHJvZHVjdGlvbgo+cmVj
+aXBlIHdhcywgYWZ0ZXIgYWxsIG9mIHRoZSBhYm92ZSwgZG8gdGhpcyBoZXJlOgo+Cj7CoMKgwqAg
+KiBzd2l0Y2ggdG8gbGVmdCBicmFuY2ggYW5kIGF0dGVtcHQgdG8gYXBwbHkgdGhlIHBhdGNoLgo+
+Cj5BbmQgdGhlIHBhdGNoIGlzIG1lYW50IHRvIHRha2UgdXMgZnJvbSBsZWZ0IHRvIHJpZ2h0LCBh
+bmQgd2UgYXJlIG9uCj5wcmlzdGluZSBsZWZ0LCB0aGUgYXBwbGljYXRpb24gb3VnaHQgdG8gY2xl
+YW5seSBzdWNjZWVkLCBubz8KPgo+ImdpdCBhcHBseSBiaW4uZGlmZiIgd291bGQgcHJvYmFibHkg
+d29yayBjb3JyZWN0bHkgYnV0IEkgZG8gbm90IGtub3cKPm9mZmhhbmQgd2hhdCB0aGUgY29kZSBh
+ZnRlciB5b3VyIGNoYW5nZSBkb2VzIHdpdGggLS0zd2F5IGVuYWJsZWQuCj4KPldlIHJlZnVzZSB0
+byBtZXJnZSBiaW5hcnkgZmlsZXMsIHNvIEkgd291bGQgbm90IGJlIHN1cnByaXNlZCBpZiB3ZQo+
+ZmFpbGVkIHRoZSAzd2F5IGluIHRoaXMgY2FzZSAoZXZlbiB0aG91Z2ggd2UgX2NvdWxkXyBmYXN0
+LWZvcndhcmQsCj5pdCBtYXkgbm90IGJlIHdvcnRoIGNvbXBsaWNhdGluZyB0aGUgLS0zd2F5IGxv
+Z2ljLS0tbm9ib2R5IHNhbmUKPndvdWxkIHNheSAtLTN3YXkgd2hlbiBpdCBpcyB1bm5lY2Vzc2Fy
+eSkgYnV0IGFmdGVyIDN3YXkgZmFpbHMsIGRvIHdlCj5zdGlsbCBjb3JyZWN0bHkgZmFsbCBiYWNr
+IHRvICJzdHJhaWdodCBhcHBsaWNhdGlvbiIgbGlrZSB3ZSBkbyBmb3IKPnRleHQgcGF0Y2hlcyB3
+aXRoIHlvdXIgY2hhbmdlP8KgIEJlZm9yZSB5b3VyIGNoYW5nZSwgd2Ugd291bGQgaGF2ZQo+Zmly
+c3QgYXR0ZW1wdGVkIHRoZSAic3RyYWlnaHQgYXBwbGljYXRpb24iLCB3aGljaCB3b3VsZCBzdWNj
+ZWVkIGFuZAo+d291bGRuJ3QgaGF2ZSBoaXQgIjN3YXkgd2lsbCByZWZ1c2UgdG8gbWVyZ2UgYmlu
+YXJpZXMiIGF0IGFsbC4KPgo+U28sIEkgZG8gbm90IHRoaW5rIGl0IGlzIGltcGxhdXNpYmxlIHRo
+YXQgd2UgYXJlIHNlZWluZyBhIGxlZ2l0Cj5yZWdyZXNzaW9uIHJlcG9ydC4KPgo+VGhhbmtzLg==
 
-> Binary patches applied with "--3way" will
-> always return a conflict even if the patch
-> should cleanly apply because the low level
-> merge function considers all binary merges
-> without a variant to be conflicting.
->
-> Fix by falling back to normal patch application
-> for all binary patches.
->
-> Add tests for --3way and normal applications
-> of binary patches.
->
-> Fixes: 923cd87ac8 ("git-apply: try threeway first when "--3way" is used")
-> Signed-off-by: Jerry Zhang <jerry@skydio.com>
-> ---
->  apply.c                   |  3 ++-
->  t/t4108-apply-threeway.sh | 45 +++++++++++++++++++++++++++++++++++++++
->  2 files changed, 47 insertions(+), 1 deletion(-)
->
-> diff --git a/apply.c b/apply.c
-> index 1d2d7e124e..78e52f0dc1 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -3638,7 +3638,8 @@ static int apply_data(struct apply_state *state, struct patch *patch,
->  	if (load_preimage(state, &image, patch, st, ce) < 0)
->  		return -1;
->  
-> -	if (!state->threeway || try_threeway(state, &image, patch, st, ce) < 0) {
-> +	if (!state->threeway || patch->is_binary ||
-> +		try_threeway(state, &image, patch, st, ce) < 0) {
-
-Thanks for a quick turnaround.  However.
-
-Because apply.c::three_way_merge() calls into ll_merge() that lets
-the low-level custom merge drivers to take over the actual merge, I
-do not think your "if binary, bypass and never call try_threway() at
-all" is the right solution.  The custom merge driver user uses for
-the path may successfully perform such a "trivial" three-way merge
-and return success.
-
-Why does the current code that lets threeway tried first fails to
-fall back to direct application?  The code before your change, if
-fed a binary patch that does not apply, would have failed the direct
-application first *and* then fell back to the threeway (if only to
-fail because we do not let binary files be merged), no?
-
-Is it that try_threeway()'s way to express failure slightly
-different from how direct application reports failure, but your
-change used the same "only if it is negative, we fail and fallback"
-logic?  IIRC, apply_fragments() which is the meat of the direct
-application logic reports failures by negative, but try_threeway()
-can return positive non-zero to signal a "recoverable" failure (aka
-"conflicted merge").  Which should lead us to explore a different
-approach, which is ...
-
-    Would it be possible for a patch to leave conflicts when
-    try_threeway() was attempted, but will cleanly apply if direct
-    application is done?
-
-If so, perhaps
-
- - we first run try_threeway() and see if it cleanly resolves; if
-   so, we are done.
-
- - then we try direct application and see if it cleanly applies; if
-   so, we are done.
-
- - finally we run try_threeway() again and let it fail with
-   conflict.
-
-might be the right sequence?  We theoretically could omit the first
-of these three steps, but that would mean we'd write 923cd87a
-(git-apply: try threeway first when "--3way" is used, 2021-04-06)
-off as a failed experiment and revert it, which would not be ideal.
-
-
-Also, independent from this "if we claim we try threeway first and
-fall back to direct application, we really should do so" fix we are
-discussing, I think our default binary merge can be a bit more
-lenient and resolve this particular case of applying the binary
-patch taken from itself (i.e. a patch that takes A to B gets applied
-using --3way option to A).  I wonder if it can be as simple as the
-attached patch.  FWIW, this change is sufficient (without the change
-to apply.c we are reviewing here) to make your new tests in t4108
-pass.
-
----- >8 ------- >8 ------- >8 ------- >8 ------- >8 ------- >8 ----
-Subject: ll-merge: teach ll_binary_merge() a trivial three-way merge
-
-The low-level binary merge code assumed that the caller will not
-feed trivial merges that would have been resolved at the tree level;
-because of this, ll_binary_merge() assumes the ancestor is different
-from either side, always failing the merge in conflict unless -Xours
-or -Xtheirs is in effect.
-
-But "git apply --3way" codepath could ask us to perform three-way
-merge between two binaries A and B using A as the ancestor version.
-The current code always fails such an application, but when given a
-binary patch that turns A into B and asked to apply it to A, there
-is no reason to fail such a request---we can trivially tell that the
-result must be B.
-
-Arguably, this fix may belong to one level higher at ll_merge()
-function, which dispatches to lower-level merge drivers, possibly
-even before it renormalizes the three input buffers.  But let's
-first see how this goes.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- ll-merge.c | 56 +++++++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 39 insertions(+), 17 deletions(-)
-
-diff --git c/ll-merge.c w/ll-merge.c
-index 261657578c..bc8038d404 100644
---- c/ll-merge.c
-+++ w/ll-merge.c
-@@ -46,6 +46,13 @@ void reset_merge_attributes(void)
- 	merge_attributes = NULL;
- }
- 
-+static int same_mmfile(mmfile_t *a, mmfile_t *b)
-+{
-+	if (a->size != b->size)
-+		return 0;
-+	return !memcmp(a->ptr, b->ptr, a->size);
-+}
-+
- /*
-  * Built-in low-levels
-  */
-@@ -58,9 +65,18 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
- 			   const struct ll_merge_options *opts,
- 			   int marker_size)
- {
-+	int status;
- 	mmfile_t *stolen;
- 	assert(opts);
- 
-+	/*
-+	 * With -Xtheirs or -Xours, we have cleanly merged;
-+	 * otherwise we got a conflict, unless 3way trivially
-+	 * resolves.
-+	 */
-+	status = (opts->variant == XDL_MERGE_FAVOR_OURS ||
-+		  opts->variant == XDL_MERGE_FAVOR_THEIRS) ? 0 : 1;
-+
- 	/*
- 	 * The tentative merge result is the common ancestor for an
- 	 * internal merge.  For the final merge, it is "ours" by
-@@ -68,18 +84,30 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
- 	 */
- 	if (opts->virtual_ancestor) {
- 		stolen = orig;
-+		status = 0;
- 	} else {
--		switch (opts->variant) {
--		default:
--			warning("Cannot merge binary files: %s (%s vs. %s)",
--				path, name1, name2);
--			/* fallthru */
--		case XDL_MERGE_FAVOR_OURS:
--			stolen = src1;
--			break;
--		case XDL_MERGE_FAVOR_THEIRS:
-+		if (same_mmfile(orig, src1)) {
- 			stolen = src2;
--			break;
-+			status = 0;
-+		} else if (same_mmfile(orig, src2)) { 
-+			stolen = src1;
-+			status = 0;
-+		} else if (same_mmfile(src1, src2)) {
-+			stolen = src1;
-+			status = 0;
-+		} else {
-+			switch (opts->variant) {
-+			default:
-+				warning("Cannot merge binary files: %s (%s vs. %s)",
-+					path, name1, name2);
-+				/* fallthru */
-+			case XDL_MERGE_FAVOR_OURS:
-+				stolen = src1;
-+				break;
-+			case XDL_MERGE_FAVOR_THEIRS:
-+				stolen = src2;
-+				break;
-+			}
- 		}
- 	}
- 
-@@ -87,13 +115,7 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
- 	result->size = stolen->size;
- 	stolen->ptr = NULL;
- 
--	/*
--	 * With -Xtheirs or -Xours, we have cleanly merged;
--	 * otherwise we got a conflict.
--	 */
--	return opts->variant == XDL_MERGE_FAVOR_OURS ||
--	       opts->variant == XDL_MERGE_FAVOR_THEIRS ?
--	       0 : 1;
-+	return status;
- }
- 
- static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
