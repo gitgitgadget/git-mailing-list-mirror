@@ -2,138 +2,188 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC15AC4338F
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 19:25:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2EFFC432BE
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 19:36:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD2176103A
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 19:25:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0BAF60BD3
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 19:36:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230164AbhG1TZw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jul 2021 15:25:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51606 "EHLO
+        id S230443AbhG1Tg4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jul 2021 15:36:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229690AbhG1TZw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jul 2021 15:25:52 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C9D7C061757
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 12:25:50 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id u25so5088811oiv.5
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 12:25:50 -0700 (PDT)
+        with ESMTP id S229690AbhG1Tgy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jul 2021 15:36:54 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD0ADC061757
+        for <git@vger.kernel.org>; Wed, 28 Jul 2021 12:36:51 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id n11so2160000wmd.2
+        for <git@vger.kernel.org>; Wed, 28 Jul 2021 12:36:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=reRX0A12R8sMVxCpc7ZjbVIDANMLyRtZic14AYOq+RY=;
-        b=Az9wNZIP1ggwrt71hYWGHh8qAAaIxyfY6ZR4TdY6zCd5qxsR5CT8TOwIJ+9YXGlfbA
-         7yjM2xYebDb5eHbvA7O8greQPwaA2ICT8NrLkj/0Ql3MqWIHjnGynFL1pJBKw/5tK5o8
-         rIrea5YLN9bZFBeBryd+3Ztcgp5dgHwUMCREyZeJAymfqMG92GvSHRKxvD5+Mczh30Dc
-         4kwT5YwHLmIdeK3GZF/o7Nvz9CBCRGTeEannt9KlcSZZ0z8+LuWnLKs7rp3WAukXiyv0
-         EPprLXvU37ImP8IYZf3lMCbZFKG0sr9P7+U06nF8HWPoWPfKDDLxNaAx8rlVLqeLv9pf
-         Bbkg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=lqbSXX8jpTPtZhYmCWc8M3GgipL/aUuCy5pf1+6Eg9Y=;
+        b=GtEa2JskS4fWVkqLHBwgNNJcvbJEbTD+Ie78tUXUjcX8QX4NCaFzQAT8MZaGanxL8I
+         7iIATVTN+NZ08DaP1TPzpHFifBJ73s3gCx/YJRuoEe2yBMoF746DxPDMMIPzjh6HKGIt
+         OeHSU9BxRJSvX4dwpKib8ip1QbC6CowJqpjwqpUCEb5cSz9ST3KSAU4WOfkSCIueSNkZ
+         NPwxt/i+pATjSIZ18DNn1kJtgl8ZdomlfYobWbP3wh4NuMAFCLZTH68IZnhq1U/rycrC
+         wOLb5x2t1wU5Y7amC9345/ocZBXR0HWhhBr5F/NXDDLkSWzPJXJgHkIkrjIC8Kf5pfw+
+         YLFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=reRX0A12R8sMVxCpc7ZjbVIDANMLyRtZic14AYOq+RY=;
-        b=l1gSiBTG2oa7dhFUIGkc/gfOOwDbSS02Vw24EjBmeulcjeCt1Rrnzsz7FWn0ZWTjy0
-         CPf0t2UTReEzsePaFb/nZTRMH0dLXHSM7ub2CwVfqeYDZExoTdZVlKcSWgCqiwhaG76p
-         prJmUw0zZ6Yz5uGRektURmPfbJcPXuVl4X01HriIYZJulTkL2D8m77p0dLdbw7gNb5RO
-         AUbNtYzLeg5jN9cUGzYKCDU6vdn90EAbUXjKJhCa056KpKSSwdOwKbSlrtuqEWbo4qX2
-         0i4ip3EyDz5LmLeWk8XFhd74aguFeu2NUd48p/YU1VhGyW7bjTdunaYx+E9pOdLC+OrY
-         /2Ng==
-X-Gm-Message-State: AOAM533wt3gmqDy1uKiRrFb+kGa5hasDFKXtG/3eusA3fk4B9gU8oZYm
-        TsLV1aMnobgmKnQSovAFCsA=
-X-Google-Smtp-Source: ABdhPJzLpQpcHpYjQOHspE88W4BnPhe35bfWsqD7PgSZ9OGU/z0UCdauudy0q24Pj0iaFV7yFqc0Jg==
-X-Received: by 2002:aca:d404:: with SMTP id l4mr648903oig.21.1627500349760;
-        Wed, 28 Jul 2021 12:25:49 -0700 (PDT)
-Received: from localhost (fixed-187-188-73-1.totalplay.net. [187.188.73.1])
-        by smtp.gmail.com with ESMTPSA id m19sm155310otp.55.2021.07.28.12.25.48
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=lqbSXX8jpTPtZhYmCWc8M3GgipL/aUuCy5pf1+6Eg9Y=;
+        b=UfumAavkYwpU8eBEfBh9JPBMVfYbBpF540SBm2DzcGeE10A5BRY4WU5L3JFdAJ78qy
+         /F0ix6aGcAUU+g6SiUJAVs5TEHyFg3fl9TYjIzZYik7C8mvU3RD3sCnJwJh22giO5KpY
+         OnoV3pi4sJZf8BnZhcdEoRneqkFMJN9FmCoiIn8e43dq6Fw1cy0/24oJPoILiD3gUk9u
+         Bmajl9W7ewjSHyJ77Ax6D9atok8xxynXjdus1cLJ6JEo5Nbn3PwvhhK07M3Y1JUSlo7o
+         DoC0jzec/1KjNaQfaPADpY4j+xbpjO0OX4rtJdI0S5tpVZpUTcAifKYvuAdJJK4hi0BW
+         JiXg==
+X-Gm-Message-State: AOAM530wUukExsWj/2DcNEwAHrMab7Knp1AOly+EfajG2N54TDIUS0Ff
+        ghqxHzubBmzgznutZ3zepSc4UO+5m04=
+X-Google-Smtp-Source: ABdhPJxTlYGSM8ZtJyFlyoHaBWE/Ijgx6dlNjFZpXaHM3f13fKZB4LB6+240aw+24Q/aRAkZ3oCkSA==
+X-Received: by 2002:a05:600c:35c1:: with SMTP id r1mr1219420wmq.0.1627501010531;
+        Wed, 28 Jul 2021 12:36:50 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q14sm762529wrs.8.2021.07.28.12.36.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jul 2021 12:25:49 -0700 (PDT)
-Date:   Wed, 28 Jul 2021 14:25:43 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Matthias Baumgarten <matthias.baumgarten@aixigo.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Git List Mailing <git@vger.kernel.org>
-Message-ID: <6101af37cabc_41362084d@natae.notmuch>
-In-Reply-To: <xmqqv94u9x2l.fsf@gitster.g>
-References: <20210721134650.1866387-1-felipe.contreras@gmail.com>
- <CAHk-=whf-9kNV3y5G-VVA2K5EZCnvv94paAEj6p=i2R4RM2emQ@mail.gmail.com>
- <xmqqeebregns.fsf@gitster.g>
- <CAMMLpeTL92cDmMHsE3iuhHQrVjwLFWHxE0CwD+uDBoPGAQCrkg@mail.gmail.com>
- <xmqqwnpcdu1w.fsf@gitster.g>
- <CAMMLpeQ-Qpct4TX__KVuCyjbgxtB49qTMRHYc9R9-o0cRu4MuA@mail.gmail.com>
- <610038c0e1056_8fd52084a@natae.notmuch>
- <9e8f1c87-cd08-e1a2-fd5d-713cb0590049@aixigo.com>
- <xmqqv94u9x2l.fsf@gitster.g>
-Subject: Re: [PATCH v2] pull: introduce --merge option
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Wed, 28 Jul 2021 12:36:49 -0700 (PDT)
+Message-Id: <pull.1041.v6.git.git.1627501009.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1041.v5.git.git.1627391744.gitgitgadget@gmail.com>
+References: <pull.1041.v5.git.git.1627391744.gitgitgadget@gmail.com>
+From:   "Fabian Stelzer via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 28 Jul 2021 19:36:40 +0000
+Subject: [PATCH v6 0/9] ssh signing: Add commit & tag signing/verification via SSH keys using
+ ssh-keygen
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwen@google.com>,
+        Fabian Stelzer <fs@gigacodes.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Hans Jerry Illikainen <hji@dyntopia.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Gwyneth Morgan <gwymor@tilde.club>,
+        Fabian Stelzer <fs@gigacodes.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Matthias Baumgarten <matthias.baumgarten@aixigo.com> writes:
-> 
-> > Add to Felipes list:
-> >
-> >  * git switch -m
-> >
-> > and maybe git cherry-pick -m where -m does not mean "merge" itself but
-> > is used to determine the parent of the merge (when picking merge 
-> > commits) to base on.
-> >
-> > Other examples of where -m has different meaning than merge:
-> >
-> >  * git am -m (message-id)
-> >  * git branch -m (move branch)
-> >
-> > I would rephrase the question as to what would I expect `git pull -m`
-> > to do, if I had never heard of it before. In the case of
-> > fast-forwarding and rebasing trying to add a merge commit message with
-> > -m would not even make sense. Only in the case of trying to create a
-> > merge commit by issuing git pull this would make sense. So if we could
-> > agree on that being not the most used scenario, I think -m would be a
-> > great short option for --merge.
-> 
-> I am afraid that you are misinterpreting what I said, comparing
-> apples and oranges, and drawing a wrong conclusion.
-> 
-> When I said "-m" would not fly well as a short-hand for "--merge" in
-> the context of "pull", I didn't mean "nobody would think 'm' stands
-> for 'merge'", and I didn't mean "more people would think 'm' stands
-> for 'message' more than 'merge'".  The reason why I find it
-> problematic is because it can be ambiguous.
+I have added support for using keyfiles directly, lots of tests and
+generally cleaned up the signing & verification code a lot.
 
-The question shouldn't be "can it be ambiguous?", the question should be
-"is it ambiguous?".
+I can still rename things from being gpg specific to a more general
+"signing" but thats rather cosmetic. Also i'm not sure if i named the new
+test files correctly.
 
-The *main* purpose of `git pull` is to integrate remote changes, and the
-first question asked is "how?".
+openssh 8.7 will add valid-after, valid-before options to the allowed keys
+keyring. This allows us to pass the commit timestamp to the verification
+call and make key rollover possible and still be able to verify older
+commits. Set valid-after=NOW when adding your key to the keyring and set
+valid-before to make it fail if used after a certain date. Software like
+gitolite/github or corporate automation can do this automatically when ssh
+push keys are addded / removed I will add this feature in a follow up patch
+afterwards.
 
-  git pull --merge|-m
-  git pull --rebase|-r
+v3 addresses some issues & refactoring and splits the large commit into
+several smaller ones.
 
-So I don't see why it is ambiguous.
+v4:
 
-The fact that a tiny minority of users might find a command (any command)
-ambiguous is not valid reason for its inexistence. By that rationale
-`git pull` shouldn't exist at all, because many find it ambiguous that
-it's not the symmetric command opposed to `git push`.
+ * restructures and cleans up the whole patch set - patches build on its own
+   now and commit messages try to explain whats going on
+ * got rid of the if branches and used callback functions in the format
+   struct
+ * fixed a bug with whitespace in principal identifiers that required a
+   rewrite of the parse_ssh_output function
+ * rewrote documentation to be more clear - also renamed keyring back to
+   allowedSignersFile
 
-The vast majority of users shouldn't suffer because of the confusion of
-a tiny few. The tiny few can simply look at the documentation.
+v5:
+
+ * moved t7527 to t7528 to not collide with another patch in "seen"
+ * clean up return logic for failed signing & verification
+ * some minor renames / reformatting to make things clearer
+
+v6: fixed tests when using shm output dir
+
+Fabian Stelzer (9):
+  ssh signing: preliminary refactoring and clean-up
+  ssh signing: add ssh signature format and signing using ssh keys
+  ssh signing: retrieve a default key from ssh-agent
+  ssh signing: provide a textual representation of the signing key
+  ssh signing: parse ssh-keygen output and verify signatures
+  ssh signing: add test prereqs
+  ssh signing: duplicate t7510 tests for commits
+  ssh signing: add more tests for logs, tags & push certs
+  ssh signing: add documentation
+
+ Documentation/config/gpg.txt     |  39 ++-
+ Documentation/config/user.txt    |   6 +
+ builtin/receive-pack.c           |   2 +
+ fmt-merge-msg.c                  |   6 +-
+ gpg-interface.c                  | 490 +++++++++++++++++++++++++++----
+ gpg-interface.h                  |   8 +-
+ log-tree.c                       |   8 +-
+ pretty.c                         |   4 +-
+ send-pack.c                      |   8 +-
+ t/lib-gpg.sh                     |  29 ++
+ t/t4202-log.sh                   |  23 ++
+ t/t5534-push-signed.sh           | 101 +++++++
+ t/t7031-verify-tag-signed-ssh.sh | 161 ++++++++++
+ t/t7528-signed-commit-ssh.sh     | 398 +++++++++++++++++++++++++
+ 14 files changed, 1218 insertions(+), 65 deletions(-)
+ create mode 100755 t/t7031-verify-tag-signed-ssh.sh
+ create mode 100755 t/t7528-signed-commit-ssh.sh
+
+
+base-commit: eb27b338a3e71c7c4079fbac8aeae3f8fbb5c687
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1041%2FFStelzer%2Fsshsign-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1041/FStelzer/sshsign-v6
+Pull-Request: https://github.com/git/git/pull/1041
+
+Range-diff vs v5:
+
+  1:  7c8502c65b8 =  1:  7c8502c65b8 ssh signing: preliminary refactoring and clean-up
+  2:  f05bab16096 =  2:  f05bab16096 ssh signing: add ssh signature format and signing using ssh keys
+  3:  071e6173d8e =  3:  071e6173d8e ssh signing: retrieve a default key from ssh-agent
+  4:  7d1d131ff5b =  4:  7d1d131ff5b ssh signing: provide a textual representation of the signing key
+  5:  725764018ce =  5:  725764018ce ssh signing: parse ssh-keygen output and verify signatures
+  6:  eb677b1b6a8 !  6:  18a26ca49e7 ssh signing: add test prereqs
+     @@ t/lib-gpg.sh: test_lazy_prereq RFC1991 '
+      +	test $? = 0 || exit 1;
+      +	mkdir -p "${GNUPGHOME}" &&
+      +	chmod 0700 "${GNUPGHOME}" &&
+     -+	ssh-keygen -t ed25519 -N "" -f "${GNUPGHOME}/ed25519_ssh_signing_key" >/dev/null &&
+     -+	ssh-keygen -t rsa -b 2048 -N "" -f "${GNUPGHOME}/rsa_2048_ssh_signing_key" >/dev/null &&
+     -+	ssh-keygen -t ed25519 -N "super_secret" -f "${GNUPGHOME}/protected_ssh_signing_key" >/dev/null &&
+     -+	find "${GNUPGHOME}" -name *ssh_signing_key.pub -exec cat {} \; | awk "{print \"\\\"principal with number \" NR \"\\\" \" \$0}" > "${GNUPGHOME}/ssh.all_valid.allowedSignersFile" &&
+     ++	ssh-keygen -t ed25519 -N "" -C "git ed25519 key" -f "${GNUPGHOME}/ed25519_ssh_signing_key" >/dev/null &&
+     ++	echo "\"principal with number 1\" $(cat "${GNUPGHOME}/ed25519_ssh_signing_key.pub")" >> "${GNUPGHOME}/ssh.all_valid.allowedSignersFile" &&
+     ++	ssh-keygen -t rsa -b 2048 -N "" -C "git rsa2048 key" -f "${GNUPGHOME}/rsa_2048_ssh_signing_key" >/dev/null &&
+     ++	echo "\"principal with number 2\" $(cat "${GNUPGHOME}/rsa_2048_ssh_signing_key.pub")" >> "${GNUPGHOME}/ssh.all_valid.allowedSignersFile" &&
+     ++	ssh-keygen -t ed25519 -N "super_secret" -C "git ed25519 encrypted key" -f "${GNUPGHOME}/protected_ssh_signing_key" >/dev/null &&
+     ++	echo "\"principal with number 3\" $(cat "${GNUPGHOME}/protected_ssh_signing_key.pub")" >> "${GNUPGHOME}/ssh.all_valid.allowedSignersFile" &&
+      +	cat "${GNUPGHOME}/ssh.all_valid.allowedSignersFile" &&
+      +	ssh-keygen -t ed25519 -N "" -f "${GNUPGHOME}/untrusted_ssh_signing_key" >/dev/null
+      +'
+  7:  c877951df23 =  7:  01da9a07934 ssh signing: duplicate t7510 tests for commits
+  8:  60265e8c399 =  8:  d9707443f5c ssh signing: add more tests for logs, tags & push certs
+  9:  f758ce0ade4 =  9:  275af516eba ssh signing: add documentation
 
 -- 
-Felipe Contreras
+gitgitgadget
