@@ -2,500 +2,307 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1843C4320A
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 19:37:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B936BC4338F
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 19:38:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 993956101E
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 19:37:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 989F461040
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 19:38:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231479AbhG1ThG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jul 2021 15:37:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54112 "EHLO
+        id S231636AbhG1Tif (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jul 2021 15:38:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231366AbhG1Tg7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jul 2021 15:36:59 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8A1DC061757
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 12:36:56 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id j2so3880124wrx.9
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 12:36:56 -0700 (PDT)
+        with ESMTP id S229542AbhG1Tie (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jul 2021 15:38:34 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7C41C061757
+        for <git@vger.kernel.org>; Wed, 28 Jul 2021 12:38:32 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id gs8so6346141ejc.13
+        for <git@vger.kernel.org>; Wed, 28 Jul 2021 12:38:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=h40kB1ZUz4iK3X+QXunk8obylMPpRXIzIDERXHHokwk=;
-        b=hTn3gJJakXtOACYg1gUBjHBctH81oEkvCPBzX9IJ5K9HuneD0f6PzIyKrCuZqxYayw
-         hQ2RYiUIm1dK7EIP9LWlYq0WlYBAOict3509nxpT1zZ/YMFmauhI58glbKk3E10JyaOD
-         PtpB0gIawBYus+QYvDqm6ji1Pi0lKCSsiSIfbG/6y2JMwyNGH20uIgm8Yua48wKuclNz
-         AoNGeR9UIgJOT6xu8R0Fnqy08JZT2bDFVYsarEw1Ill8oVeAWrSiOjn3OFCK1gtB02RQ
-         rl+Ew1haz5HS0dFxMmGJ9uqobMy7NRWu9jsqAp+RLGHpQy8qkB/krlQU7vVvu1lr66mw
-         e3LQ==
+        d=skydio.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PCXTzXSBeL8WNQ7L3QAHnCFmeuFTxyEhgAL7P0ArfQU=;
+        b=pZI4u8xHU31H03+Z0rIWVPdZflLbVoh7MLX7//D1Ya/ki3yJUlMq8noH2DWqv0uJXu
+         ij3V1rI10OVuilpz0zOHMqv7vO6L5wD2ftPHi4ew1pKWNxOoy9xI2qI3IxCN3Cle1M2c
+         uoS5u1TPGJcpdgnQlUxDwTYoVIbHWl4kfvJ1ktPsTMbCnnN++jmY4gca3EiroR0JAbj6
+         lVA48oMSEE2wHdo2c4pUO/d8p8nD1AGlR7NrA1GelOubmPhQZafT+6MfXRy9hplhyEz2
+         a+ypcfj3A/cya9AzAIw63TBhtDTB648EzDVSHVCcPpYn+EX1Gosuw/Em+3oHPPERWzub
+         9XQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=h40kB1ZUz4iK3X+QXunk8obylMPpRXIzIDERXHHokwk=;
-        b=aVwFL9re/WpN9oPVqwXuEGqRJ7ebb1VsFnLl58clZa1IobLAP5Y0Hh7BT7x6K1Kz5f
-         HwSs/EszFhX8N5N8r97ToBvEZ79lRIWsexzP3sqUUagT2yvoZc26BNq11R6+PXNtp2qe
-         t3EBPREIJSWK80aPm4dQCj1jtmST9MvE88uSPF9ruBEHTV0QkPDC5rswTFBDThmxh490
-         VfazsIS6w4LZlNDLAr8nPBMbjc/n2zdqmX3jnG9/AQupLKhnwiZhshtT4XZfGIctcmiv
-         sP5KmaI95erXNBgiSOxcBL0R8z8oCD2RTzSZBwvWyknm81eBEk2unYa3r1FUgyz36MeK
-         7jkg==
-X-Gm-Message-State: AOAM532XhRoVM74jU5IP9falxGcpM8qufSDtspS+J+Bd4TOGNK6hGqZZ
-        Ez2nhUUIl7JdJOBFDnoPWPy5LVtPGW0=
-X-Google-Smtp-Source: ABdhPJyn6jHycTRp4GAp9kG0API/sV+JaZGZOsfvlynjXEiRwYww0rhTm+K0uwqRLqtH5z6TgocF7w==
-X-Received: by 2002:adf:d087:: with SMTP id y7mr903842wrh.323.1627501015365;
-        Wed, 28 Jul 2021 12:36:55 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h12sm722955wrm.62.2021.07.28.12.36.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jul 2021 12:36:55 -0700 (PDT)
-Message-Id: <01da9a079348e965b00e9ff6cea75dbc74028123.1627501009.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1041.v6.git.git.1627501009.gitgitgadget@gmail.com>
-References: <pull.1041.v5.git.git.1627391744.gitgitgadget@gmail.com>
-        <pull.1041.v6.git.git.1627501009.gitgitgadget@gmail.com>
-From:   "Fabian Stelzer via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 28 Jul 2021 19:36:47 +0000
-Subject: [PATCH v6 7/9] ssh signing: duplicate t7510 tests for commits
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PCXTzXSBeL8WNQ7L3QAHnCFmeuFTxyEhgAL7P0ArfQU=;
+        b=gTifaXCUPT8OJ1mcdA8edWP0Omsf910K+zUa6mUXdAeAnbDV9HS0Brm3RPSb9FBGvK
+         fyIE1wF+tjvu5qtOi6ymcVp8xLykGvGjZih4M1/r5jXn72O8r7zbqzqKs618w95zl9VJ
+         hOi3u3kPFgXfmKOg70tyWJLB5Mo+26V/7OJsQb4XignFRkEIT7wqIckUuIFXq1AQQhY0
+         VnMxL/rez0vGj9Gch9eH7A020S1caHyV60tbU2S0Sz6fYhDZfcDJeo+EC5nAu1KvY5Ih
+         NxQli7l5J6YNvMt4Umia2ZdjLt9gusXK5YsqQD1x2+Wr+5/JRhnwCiaIs3/rrIAy+tpb
+         mnOw==
+X-Gm-Message-State: AOAM5314VdejuZ0uIrwWRFv4CHJLgqd4LDzAN9+jl9A5gHohjhjxBl70
+        0RjCC6rURKrx8O8df9MWR/+uMtetTQa6qTpO4qHrpw==
+X-Google-Smtp-Source: ABdhPJzDhmPUWlCYhEWizgs9aebLy4TrLUn/HLHQdnpn49w+OBP/BU6ohB4ha/WSHt1WDu/RGzmF2neJMthvmbW+MLE=
+X-Received: by 2002:a17:906:f1c4:: with SMTP id gx4mr1049604ejb.410.1627501111335;
+ Wed, 28 Jul 2021 12:38:31 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Hans Jerry Illikainen <hji@dyntopia.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Gwyneth Morgan <gwymor@tilde.club>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        Fabian Stelzer <fs@gigacodes.de>
+References: <20210728024434.20230-1-jerry@skydio.com> <xmqqh7gfawlt.fsf@gitster.g>
+In-Reply-To: <xmqqh7gfawlt.fsf@gitster.g>
+From:   Jerry Zhang <jerry@skydio.com>
+Date:   Wed, 28 Jul 2021 12:38:20 -0700
+Message-ID: <CAMKO5CvZCMHuzRLSs2aHJ3iUH-LBJfFP3fG+GgwtQvsKQPtT5Q@mail.gmail.com>
+Subject: Re: [PATCH] git-apply: fix --3way with binary patch
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, lilinchao@oschina.cn
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Fabian Stelzer <fs@gigacodes.de>
+On Tue, Jul 27, 2021 at 9:30 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Jerry Zhang <jerry@skydio.com> writes:
+>
+> > Binary patches applied with "--3way" will
+> > always return a conflict even if the patch
+> > should cleanly apply because the low level
+> > merge function considers all binary merges
+> > without a variant to be conflicting.
+> >
+> > Fix by falling back to normal patch application
+> > for all binary patches.
+> >
+> > Add tests for --3way and normal applications
+> > of binary patches.
+> >
+> > Fixes: 923cd87ac8 ("git-apply: try threeway first when "--3way" is used")
+> > Signed-off-by: Jerry Zhang <jerry@skydio.com>
+> > ---
+> >  apply.c                   |  3 ++-
+> >  t/t4108-apply-threeway.sh | 45 +++++++++++++++++++++++++++++++++++++++
+> >  2 files changed, 47 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/apply.c b/apply.c
+> > index 1d2d7e124e..78e52f0dc1 100644
+> > --- a/apply.c
+> > +++ b/apply.c
+> > @@ -3638,7 +3638,8 @@ static int apply_data(struct apply_state *state, struct patch *patch,
+> >       if (load_preimage(state, &image, patch, st, ce) < 0)
+> >               return -1;
+> >
+> > -     if (!state->threeway || try_threeway(state, &image, patch, st, ce) < 0) {
+> > +     if (!state->threeway || patch->is_binary ||
+> > +             try_threeway(state, &image, patch, st, ce) < 0) {
+>
+> Thanks for a quick turnaround.  However.
+>
+> Because apply.c::three_way_merge() calls into ll_merge() that lets
+> the low-level custom merge drivers to take over the actual merge, I
+> do not think your "if binary, bypass and never call try_threway() at
+> all" is the right solution.  The custom merge driver user uses for
+> the path may successfully perform such a "trivial" three-way merge
+> and return success.
+I understand now, thanks for the explanation
+>
+> Why does the current code that lets threeway tried first fails to
+> fall back to direct application?  The code before your change, if
+> fed a binary patch that does not apply, would have failed the direct
+> application first *and* then fell back to the threeway (if only to
+> fail because we do not let binary files be merged), no?
+>
+> Is it that try_threeway()'s way to express failure slightly
+> different from how direct application reports failure, but your
+> change used the same "only if it is negative, we fail and fallback"
+> logic?  IIRC, apply_fragments() which is the meat of the direct
+> application logic reports failures by negative, but try_threeway()
+> can return positive non-zero to signal a "recoverable" failure (aka
+> "conflicted merge").  Which should lead us to explore a different
+> approach, which is ...
+>
+>     Would it be possible for a patch to leave conflicts when
+>     try_threeway() was attempted, but will cleanly apply if direct
+>     application is done?
+>
+> If so, perhaps
+>
+>  - we first run try_threeway() and see if it cleanly resolves; if
+>    so, we are done.
+>
+>  - then we try direct application and see if it cleanly applies; if
+>    so, we are done.
+>
+>  - finally we run try_threeway() again and let it fail with
+>    conflict.
+>
+> might be the right sequence?  We theoretically could omit the first
+> of these three steps, but that would mean we'd write 923cd87a
+> (git-apply: try threeway first when "--3way" is used, 2021-04-06)
+> off as a failed experiment and revert it, which would not be ideal.
+>
+>
+> Also, independent from this "if we claim we try threeway first and
+> fall back to direct application, we really should do so" fix we are
+> discussing, I think our default binary merge can be a bit more
+> lenient and resolve this particular case of applying the binary
+> patch taken from itself (i.e. a patch that takes A to B gets applied
+> using --3way option to A).  I wonder if it can be as simple as the
+> attached patch.  FWIW, this change is sufficient (without the change
+> to apply.c we are reviewing here) to make your new tests in t4108
+> pass.
+So basically, another way of stating the problem would be that binary
+patches can apply cleanly with direct application in some cases where
+merge application is not clean. If i understand correctly this is unique
+to binary files, although it would be possible for a user to supply a custom
+merge driver for text files that is worse than direct application, that is
+most likely heavy user error that we shouldn't have to cater to. However
+the issue with binary is that the *default* merge driver is actually worse
+than direct application (in some cases). Therefore our options are
 
-Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
----
- t/t7528-signed-commit-ssh.sh | 398 +++++++++++++++++++++++++++++++++++
- 1 file changed, 398 insertions(+)
- create mode 100755 t/t7528-signed-commit-ssh.sh
+1. do as you suggest and run 3way -> direct -> 3way. I would modify
+this and say we should only attempt this for binary patches, since a text
+file that fails 3way would most likely also fail direct, so it would be a waste
+of time to try it. furthermore if we cache results from the first 3way and
+return them after attempting direct, it can save us from having to compute
+the 3way twice, so would be no worse than our current performance.
 
-diff --git a/t/t7528-signed-commit-ssh.sh b/t/t7528-signed-commit-ssh.sh
-new file mode 100755
-index 00000000000..e2c48f69e6d
---- /dev/null
-+++ b/t/t7528-signed-commit-ssh.sh
-@@ -0,0 +1,398 @@
-+#!/bin/sh
-+
-+test_description='ssh signed commit tests'
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+GNUPGHOME_NOT_USED=$GNUPGHOME
-+. "$TEST_DIRECTORY/lib-gpg.sh"
-+
-+test_expect_success GPGSSH 'create signed commits' '
-+	test_oid_cache <<-\EOF &&
-+	header sha1:gpgsig
-+	header sha256:gpgsig-sha256
-+	EOF
-+
-+	test_when_finished "test_unconfig commit.gpgsign" &&
-+	test_config gpg.format ssh &&
-+	test_config user.signingkey "${SIGNING_KEY_PRIMARY}" &&
-+
-+	echo 1 >file && git add file &&
-+	test_tick && git commit -S -m initial &&
-+	git tag initial &&
-+	git branch side &&
-+
-+	echo 2 >file && test_tick && git commit -a -S -m second &&
-+	git tag second &&
-+
-+	git checkout side &&
-+	echo 3 >elif && git add elif &&
-+	test_tick && git commit -m "third on side" &&
-+
-+	git checkout main &&
-+	test_tick && git merge -S side &&
-+	git tag merge &&
-+
-+	echo 4 >file && test_tick && git commit -a -m "fourth unsigned" &&
-+	git tag fourth-unsigned &&
-+
-+	test_tick && git commit --amend -S -m "fourth signed" &&
-+	git tag fourth-signed &&
-+
-+	git config commit.gpgsign true &&
-+	echo 5 >file && test_tick && git commit -a -m "fifth signed" &&
-+	git tag fifth-signed &&
-+
-+	git config commit.gpgsign false &&
-+	echo 6 >file && test_tick && git commit -a -m "sixth" &&
-+	git tag sixth-unsigned &&
-+
-+	git config commit.gpgsign true &&
-+	echo 7 >file && test_tick && git commit -a -m "seventh" --no-gpg-sign &&
-+	git tag seventh-unsigned &&
-+
-+	test_tick && git rebase -f HEAD^^ && git tag sixth-signed HEAD^ &&
-+	git tag seventh-signed &&
-+
-+	echo 8 >file && test_tick && git commit -a -m eighth -S"${SIGNING_KEY_UNTRUSTED}" &&
-+	git tag eighth-signed-alt &&
-+
-+	# commit.gpgsign is still on but this must not be signed
-+	echo 9 | git commit-tree HEAD^{tree} >oid &&
-+	test_line_count = 1 oid &&
-+	git tag ninth-unsigned $(cat oid) &&
-+	# explicit -S of course must sign.
-+	echo 10 | git commit-tree -S HEAD^{tree} >oid &&
-+	test_line_count = 1 oid &&
-+	git tag tenth-signed $(cat oid) &&
-+
-+	# --gpg-sign[=<key-id>] must sign.
-+	echo 11 | git commit-tree --gpg-sign HEAD^{tree} >oid &&
-+	test_line_count = 1 oid &&
-+	git tag eleventh-signed $(cat oid) &&
-+	echo 12 | git commit-tree --gpg-sign="${SIGNING_KEY_UNTRUSTED}" HEAD^{tree} >oid &&
-+	test_line_count = 1 oid &&
-+	git tag twelfth-signed-alt $(cat oid)
-+'
-+
-+test_expect_success GPGSSH 'verify and show signatures' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	test_config gpg.mintrustlevel UNDEFINED &&
-+	(
-+		for commit in initial second merge fourth-signed \
-+			fifth-signed sixth-signed seventh-signed tenth-signed \
-+			eleventh-signed
-+		do
-+			git verify-commit $commit &&
-+			git show --pretty=short --show-signature $commit >actual &&
-+			grep "${GOOD_SIGNATURE_TRUSTED}" actual &&
-+			! grep "${BAD_SIGNATURE}" actual &&
-+			echo $commit OK || exit 1
-+		done
-+	) &&
-+	(
-+		for commit in merge^2 fourth-unsigned sixth-unsigned \
-+			seventh-unsigned ninth-unsigned
-+		do
-+			test_must_fail git verify-commit $commit &&
-+			git show --pretty=short --show-signature $commit >actual &&
-+			! grep "${GOOD_SIGNATURE_TRUSTED}" actual &&
-+			! grep "${BAD_SIGNATURE}" actual &&
-+			echo $commit OK || exit 1
-+		done
-+	) &&
-+	(
-+		for commit in eighth-signed-alt twelfth-signed-alt
-+		do
-+			git show --pretty=short --show-signature $commit >actual &&
-+			grep "${GOOD_SIGNATURE_UNTRUSTED}" actual &&
-+			! grep "${BAD_SIGNATURE}" actual &&
-+			grep "${KEY_NOT_TRUSTED}" actual &&
-+			echo $commit OK || exit 1
-+		done
-+	)
-+'
-+
-+test_expect_success GPGSSH 'verify-commit exits success on untrusted signature' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	git verify-commit eighth-signed-alt 2>actual &&
-+	grep "${GOOD_SIGNATURE_UNTRUSTED}" actual &&
-+	! grep "${BAD_SIGNATURE}" actual &&
-+	grep "${KEY_NOT_TRUSTED}" actual
-+'
-+
-+test_expect_success GPGSSH 'verify-commit exits success with matching minTrustLevel' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	test_config gpg.minTrustLevel fully &&
-+	git verify-commit sixth-signed
-+'
-+
-+test_expect_success GPGSSH 'verify-commit exits success with low minTrustLevel' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	test_config gpg.minTrustLevel marginal &&
-+	git verify-commit sixth-signed
-+'
-+
-+test_expect_success GPGSSH 'verify-commit exits failure with high minTrustLevel' '
-+	test_config gpg.minTrustLevel ultimate &&
-+	test_must_fail git verify-commit eighth-signed-alt
-+'
-+
-+test_expect_success GPGSSH 'verify signatures with --raw' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	(
-+		for commit in initial second merge fourth-signed fifth-signed sixth-signed seventh-signed
-+		do
-+			git verify-commit --raw $commit 2>actual &&
-+			grep "${GOOD_SIGNATURE_TRUSTED}" actual &&
-+			! grep "${BAD_SIGNATURE}" actual &&
-+			echo $commit OK || exit 1
-+		done
-+	) &&
-+	(
-+		for commit in merge^2 fourth-unsigned sixth-unsigned seventh-unsigned
-+		do
-+			test_must_fail git verify-commit --raw $commit 2>actual &&
-+			! grep "${GOOD_SIGNATURE_TRUSTED}" actual &&
-+			! grep "${BAD_SIGNATURE}" actual &&
-+			echo $commit OK || exit 1
-+		done
-+	) &&
-+	(
-+		for commit in eighth-signed-alt
-+		do
-+			git verify-commit --raw $commit 2>actual &&
-+			grep "${GOOD_SIGNATURE_UNTRUSTED}" actual &&
-+			! grep "${BAD_SIGNATURE}" actual &&
-+			echo $commit OK || exit 1
-+		done
-+	)
-+'
-+
-+test_expect_success GPGSSH 'proper header is used for hash algorithm' '
-+	git cat-file commit fourth-signed >output &&
-+	grep "^$(test_oid header) -----BEGIN SSH SIGNATURE-----" output
-+'
-+
-+test_expect_success GPGSSH 'show signed commit with signature' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	git show -s initial >commit &&
-+	git show -s --show-signature initial >show &&
-+	git verify-commit -v initial >verify.1 2>verify.2 &&
-+	git cat-file commit initial >cat &&
-+	grep -v -e "${GOOD_SIGNATURE_TRUSTED}" -e "Warning: " show >show.commit &&
-+	grep -e "${GOOD_SIGNATURE_TRUSTED}" -e "Warning: " show >show.gpg &&
-+	grep -v "^ " cat | grep -v "^gpgsig.* " >cat.commit &&
-+	test_cmp show.commit commit &&
-+	test_cmp show.gpg verify.2 &&
-+	test_cmp cat.commit verify.1
-+'
-+
-+test_expect_success GPGSSH 'detect fudged signature' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	git cat-file commit seventh-signed >raw &&
-+	sed -e "s/^seventh/7th forged/" raw >forged1 &&
-+	git hash-object -w -t commit forged1 >forged1.commit &&
-+	test_must_fail git verify-commit $(cat forged1.commit) &&
-+	git show --pretty=short --show-signature $(cat forged1.commit) >actual1 &&
-+	grep "${BAD_SIGNATURE}" actual1 &&
-+	! grep "${GOOD_SIGNATURE_TRUSTED}" actual1 &&
-+	! grep "${GOOD_SIGNATURE_UNTRUSTED}" actual1
-+'
-+
-+test_expect_success GPGSSH 'detect fudged signature with NUL' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	git cat-file commit seventh-signed >raw &&
-+	cat raw >forged2 &&
-+	echo Qwik | tr "Q" "\000" >>forged2 &&
-+	git hash-object -w -t commit forged2 >forged2.commit &&
-+	test_must_fail git verify-commit $(cat forged2.commit) &&
-+	git show --pretty=short --show-signature $(cat forged2.commit) >actual2 &&
-+	grep "${BAD_SIGNATURE}" actual2 &&
-+	! grep "${GOOD_SIGNATURE_TRUSTED}" actual2
-+'
-+
-+test_expect_success GPGSSH 'amending already signed commit' '
-+	test_config gpg.format ssh &&
-+	test_config user.signingkey "${SIGNING_KEY_PRIMARY}" &&
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	git checkout fourth-signed^0 &&
-+	git commit --amend -S --no-edit &&
-+	git verify-commit HEAD &&
-+	git show -s --show-signature HEAD >actual &&
-+	grep "${GOOD_SIGNATURE_TRUSTED}" actual &&
-+	! grep "${BAD_SIGNATURE}" actual
-+'
-+
-+test_expect_success GPGSSH 'show good signature with custom format' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	FINGERPRINT=$(ssh-keygen -lf "${SIGNING_KEY_PRIMARY}" | awk "{print \$2;}") &&
-+	cat >expect.tmpl <<-\EOF &&
-+	G
-+	FINGERPRINT
-+	principal with number 1
-+	FINGERPRINT
-+
-+	EOF
-+	sed "s|FINGERPRINT|$FINGERPRINT|g" expect.tmpl >expect &&
-+	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP" sixth-signed >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success GPGSSH 'show bad signature with custom format' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	cat >expect <<-\EOF &&
-+	B
-+
-+
-+
-+
-+	EOF
-+	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP" $(cat forged1.commit) >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success GPGSSH 'show untrusted signature with custom format' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	cat >expect.tmpl <<-\EOF &&
-+	U
-+	FINGERPRINT
-+
-+	FINGERPRINT
-+
-+	EOF
-+	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP" eighth-signed-alt >actual &&
-+	FINGERPRINT=$(ssh-keygen -lf "${SIGNING_KEY_UNTRUSTED}" | awk "{print \$2;}") &&
-+	sed "s|FINGERPRINT|$FINGERPRINT|g" expect.tmpl >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success GPGSSH 'show untrusted signature with undefined trust level' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	cat >expect.tmpl <<-\EOF &&
-+	undefined
-+	FINGERPRINT
-+
-+	FINGERPRINT
-+
-+	EOF
-+	git log -1 --format="%GT%n%GK%n%GS%n%GF%n%GP" eighth-signed-alt >actual &&
-+	FINGERPRINT=$(ssh-keygen -lf "${SIGNING_KEY_UNTRUSTED}" | awk "{print \$2;}") &&
-+	sed "s|FINGERPRINT|$FINGERPRINT|g" expect.tmpl >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success GPGSSH 'show untrusted signature with ultimate trust level' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	cat >expect.tmpl <<-\EOF &&
-+	fully
-+	FINGERPRINT
-+	principal with number 1
-+	FINGERPRINT
-+
-+	EOF
-+	git log -1 --format="%GT%n%GK%n%GS%n%GF%n%GP" sixth-signed >actual &&
-+	FINGERPRINT=$(ssh-keygen -lf "${SIGNING_KEY_PRIMARY}" | awk "{print \$2;}") &&
-+	sed "s|FINGERPRINT|$FINGERPRINT|g" expect.tmpl >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success GPGSSH 'show lack of signature with custom format' '
-+	cat >expect <<-\EOF &&
-+	N
-+
-+
-+
-+
-+	EOF
-+	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP" seventh-unsigned >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success GPGSSH 'log.showsignature behaves like --show-signature' '
-+	test_config gpg.ssh.allowedSignersFile "${SIGNING_ALLOWED_SIGNERS}" &&
-+	test_config log.showsignature true &&
-+	git show initial >actual &&
-+	grep "${GOOD_SIGNATURE_TRUSTED}" actual
-+'
-+
-+test_expect_success GPGSSH 'check config gpg.format values' '
-+	test_config gpg.format ssh &&
-+	test_config user.signingkey "${SIGNING_KEY_PRIMARY}" &&
-+	test_config gpg.format ssh &&
-+	git commit -S --amend -m "success" &&
-+	test_config gpg.format OpEnPgP &&
-+	test_must_fail git commit -S --amend -m "fail"
-+'
-+
-+test_expect_failure GPGSSH 'detect fudged commit with double signature (TODO)' '
-+	sed -e "/gpgsig/,/END PGP/d" forged1 >double-base &&
-+	sed -n -e "/gpgsig/,/END PGP/p" forged1 | \
-+		sed -e "s/^$(test_oid header)//;s/^ //" | gpg --dearmor >double-sig1.sig &&
-+	gpg -o double-sig2.sig -u 29472784 --detach-sign double-base &&
-+	cat double-sig1.sig double-sig2.sig | gpg --enarmor >double-combined.asc &&
-+	sed -e "s/^\(-.*\)ARMORED FILE/\1SIGNATURE/;1s/^/$(test_oid header) /;2,\$s/^/ /" \
-+		double-combined.asc > double-gpgsig &&
-+	sed -e "/committer/r double-gpgsig" double-base >double-commit &&
-+	git hash-object -w -t commit double-commit >double-commit.commit &&
-+	test_must_fail git verify-commit $(cat double-commit.commit) &&
-+	git show --pretty=short --show-signature $(cat double-commit.commit) >double-actual &&
-+	grep "BAD signature from" double-actual &&
-+	grep "Good signature from" double-actual
-+'
-+
-+test_expect_failure GPGSSH 'show double signature with custom format (TODO)' '
-+	cat >expect <<-\EOF &&
-+	E
-+
-+
-+
-+
-+	EOF
-+	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP" $(cat double-commit.commit) >actual &&
-+	test_cmp expect actual
-+'
-+
-+
-+test_expect_failure GPGSSH 'verify-commit verifies multiply signed commits (TODO)' '
-+	git init multiply-signed &&
-+	cd multiply-signed &&
-+	test_commit first &&
-+	echo 1 >second &&
-+	git add second &&
-+	tree=$(git write-tree) &&
-+	parent=$(git rev-parse HEAD^{commit}) &&
-+	git commit --gpg-sign -m second &&
-+	git cat-file commit HEAD &&
-+	# Avoid trailing whitespace.
-+	sed -e "s/^Q//" -e "s/^Z/ /" >commit <<-EOF &&
-+	Qtree $tree
-+	Qparent $parent
-+	Qauthor A U Thor <author@example.com> 1112912653 -0700
-+	Qcommitter C O Mitter <committer@example.com> 1112912653 -0700
-+	Qgpgsig -----BEGIN PGP SIGNATURE-----
-+	QZ
-+	Q iHQEABECADQWIQRz11h0S+chaY7FTocTtvUezd5DDQUCX/uBDRYcY29tbWl0dGVy
-+	Q QGV4YW1wbGUuY29tAAoJEBO29R7N3kMNd+8AoK1I8mhLHviPH+q2I5fIVgPsEtYC
-+	Q AKCTqBh+VabJceXcGIZuF0Ry+udbBQ==
-+	Q =tQ0N
-+	Q -----END PGP SIGNATURE-----
-+	Qgpgsig-sha256 -----BEGIN PGP SIGNATURE-----
-+	QZ
-+	Q iHQEABECADQWIQRz11h0S+chaY7FTocTtvUezd5DDQUCX/uBIBYcY29tbWl0dGVy
-+	Q QGV4YW1wbGUuY29tAAoJEBO29R7N3kMN/NEAn0XO9RYSBj2dFyozi0JKSbssYMtO
-+	Q AJwKCQ1BQOtuwz//IjU8TiS+6S4iUw==
-+	Q =pIwP
-+	Q -----END PGP SIGNATURE-----
-+	Q
-+	Qsecond
-+	EOF
-+	head=$(git hash-object -t commit -w commit) &&
-+	git reset --hard $head &&
-+	git verify-commit $head 2>actual &&
-+	grep "Good signature from" actual &&
-+	! grep "BAD signature from" actual
-+'
-+
-+test_done
--- 
-gitgitgadget
+2. improve the default binary merge driver to be at least as good as direct
+application. this would allow us to say overall that "merge drivers should
+be at least as intelligent as direct patch application" and would greatly
+simplify logic in apply.c. Your change is a good first step in allowing it
+to handle more cases. A trivial way to make the binary merge driver
+at least as good as patch application is to generate a patch and apply
+it as part of the merge. I imagine this would have other consequences
+though as many parts of git use the binary merge driver.
 
+Separately I think it would be a worthwhile follow-up patch to also handle
+trivial three-way merges in try_threeway(). This would:
+1. Allow us to compare oid instead of the entire file buffer, which would be
+faster.
+2. Handle trivial merges of all file types, which would save time.
+
+>
+> ---- >8 ------- >8 ------- >8 ------- >8 ------- >8 ------- >8 ----
+> Subject: ll-merge: teach ll_binary_merge() a trivial three-way merge
+>
+> The low-level binary merge code assumed that the caller will not
+> feed trivial merges that would have been resolved at the tree level;
+> because of this, ll_binary_merge() assumes the ancestor is different
+> from either side, always failing the merge in conflict unless -Xours
+> or -Xtheirs is in effect.
+>
+> But "git apply --3way" codepath could ask us to perform three-way
+> merge between two binaries A and B using A as the ancestor version.
+> The current code always fails such an application, but when given a
+> binary patch that turns A into B and asked to apply it to A, there
+> is no reason to fail such a request---we can trivially tell that the
+> result must be B.
+>
+> Arguably, this fix may belong to one level higher at ll_merge()
+> function, which dispatches to lower-level merge drivers, possibly
+> even before it renormalizes the three input buffers.  But let's
+> first see how this goes.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  ll-merge.c | 56 +++++++++++++++++++++++++++++++++++++++-----------------
+>  1 file changed, 39 insertions(+), 17 deletions(-)
+>
+> diff --git c/ll-merge.c w/ll-merge.c
+> index 261657578c..bc8038d404 100644
+> --- c/ll-merge.c
+> +++ w/ll-merge.c
+> @@ -46,6 +46,13 @@ void reset_merge_attributes(void)
+>         merge_attributes = NULL;
+>  }
+>
+> +static int same_mmfile(mmfile_t *a, mmfile_t *b)
+> +{
+> +       if (a->size != b->size)
+> +               return 0;
+> +       return !memcmp(a->ptr, b->ptr, a->size);
+> +}
+> +
+>  /*
+>   * Built-in low-levels
+>   */
+> @@ -58,9 +65,18 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+>                            const struct ll_merge_options *opts,
+>                            int marker_size)
+>  {
+> +       int status;
+>         mmfile_t *stolen;
+>         assert(opts);
+>
+> +       /*
+> +        * With -Xtheirs or -Xours, we have cleanly merged;
+> +        * otherwise we got a conflict, unless 3way trivially
+> +        * resolves.
+> +        */
+> +       status = (opts->variant == XDL_MERGE_FAVOR_OURS ||
+> +                 opts->variant == XDL_MERGE_FAVOR_THEIRS) ? 0 : 1;
+> +
+>         /*
+>          * The tentative merge result is the common ancestor for an
+>          * internal merge.  For the final merge, it is "ours" by
+> @@ -68,18 +84,30 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+>          */
+>         if (opts->virtual_ancestor) {
+>                 stolen = orig;
+> +               status = 0;
+>         } else {
+> -               switch (opts->variant) {
+> -               default:
+> -                       warning("Cannot merge binary files: %s (%s vs. %s)",
+> -                               path, name1, name2);
+> -                       /* fallthru */
+> -               case XDL_MERGE_FAVOR_OURS:
+> -                       stolen = src1;
+> -                       break;
+> -               case XDL_MERGE_FAVOR_THEIRS:
+> +               if (same_mmfile(orig, src1)) {
+>                         stolen = src2;
+> -                       break;
+> +                       status = 0;
+> +               } else if (same_mmfile(orig, src2)) {
+> +                       stolen = src1;
+> +                       status = 0;
+> +               } else if (same_mmfile(src1, src2)) {
+> +                       stolen = src1;
+> +                       status = 0;
+> +               } else {
+> +                       switch (opts->variant) {
+> +                       default:
+> +                               warning("Cannot merge binary files: %s (%s vs. %s)",
+> +                                       path, name1, name2);
+> +                               /* fallthru */
+> +                       case XDL_MERGE_FAVOR_OURS:
+> +                               stolen = src1;
+> +                               break;
+> +                       case XDL_MERGE_FAVOR_THEIRS:
+> +                               stolen = src2;
+> +                               break;
+> +                       }
+>                 }
+>         }
+>
+> @@ -87,13 +115,7 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+>         result->size = stolen->size;
+>         stolen->ptr = NULL;
+>
+> -       /*
+> -        * With -Xtheirs or -Xours, we have cleanly merged;
+> -        * otherwise we got a conflict.
+> -        */
+> -       return opts->variant == XDL_MERGE_FAVOR_OURS ||
+> -              opts->variant == XDL_MERGE_FAVOR_THEIRS ?
+> -              0 : 1;
+> +       return status;
+>  }
+>
+>  static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
