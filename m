@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59FA0C432BE
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 19:36:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55894C4338F
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 19:36:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 44B7661040
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 19:36:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2DD1760BD3
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 19:36:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231339AbhG1Tg6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jul 2021 15:36:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54096 "EHLO
+        id S231378AbhG1ThA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jul 2021 15:37:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231287AbhG1Tg4 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229542AbhG1Tg4 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 28 Jul 2021 15:36:56 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B354C0613C1
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 12:36:53 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id f14-20020a05600c154eb02902519e4abe10so5139957wmg.4
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C83EC061757
+        for <git@vger.kernel.org>; Wed, 28 Jul 2021 12:36:54 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id m19so2178516wms.0
         for <git@vger.kernel.org>; Wed, 28 Jul 2021 12:36:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=JiArLkPcBhOFVOY2guTH1cDXj5SJxtbilBb4hOluZCg=;
-        b=tPfKz1RYj/T8TmwI2C5RyFtI+EJP4KoVfRFIX6IQ//4QYFTVw19gE/NPcJPtlFsicn
-         In0yMyyYC8vdTIT/NzSuRtrC3s+5zB4mx9zKuDOd31rd4lRwmpzJVeWABQ9vRiHc8zYv
-         FyAELAkWz8w99V1RO8BMnlKePl4Qd6awfWymhfX+rbzhwni0D6786Wj/9FzwUcU58g+v
-         jN1qeRQwcFnpAhj6nlLY3yN7ashpfK7dZGbW1FUBN3Kk9nzFZvhHFpCdI5PYOgMZ2rY1
-         rHlBD0NRGhsg81MZisyRaFmdLXCtDBYXq5+o9zCS76/qggqTXFX6EW1oFG6cCknkw4co
-         q9PA==
+        bh=V3GzVV4SshoF5I6PPjJe3yHYH1Nj6z8r5KXlmDLzRZo=;
+        b=AGfZmyJbtAusVlPWNErHjnDA3oM+gpnHwL8wtaQJw8GhjchSXUBFOdwvUNuru3Dcxx
+         0TcajdVgk80huR0IBUSuFSudmRooVef9HOnPHzgXMb3Hrh4s+eIO4tn+Gc9GjWewKBcL
+         wBJjBxDF95j8WnMfDPraF1QXE4QTC3wCAeRJBCQRWNsGOV7THCPHf+eY2ZOcDop0lbcm
+         mC0uAoVj1+rLWJ6Z/5JoIuulj3oqt5Ur5AKQz+y916xB8Yi/mqkGoJKAptFVUStvghHP
+         y6G/10x04Y4Uhu+PF4RCz8B1FLY9nSrMyjrUOaWB/7KsKlMNSjXC7/fYuylk4Wm/iSz3
+         Jo/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=JiArLkPcBhOFVOY2guTH1cDXj5SJxtbilBb4hOluZCg=;
-        b=bbw0iRSqRy3P/TQ39ApOC3kYchI57QTeMgT+loSniJMTbhxFlVIzYSarwbUuM9B3dR
-         9rjgDWDJPi4aJSmFKg6IjKJ19gJZotRma4N7ITgOWN/rLfZ59Wd+IrRZsTa1N61d4fiM
-         LDfkuRFgBVD0pJ3YCtVb2vp7ULGHzamewbZeUSnjiFmiDNWqTkHEmBRBEUkSTABBlbFz
-         CaWYIydk6+6/sV/GO2vBuMAzQb2SIUnXxCb32Oqq0lOY9NaissCf/FXHIitHTBxYSIkm
-         a7m3GrGsZq3GpSSk2OPOt8aQldPCy8bwD1Eeb6Boep4Td/tRE4A/Vyn2oHC9duOdSsZT
-         wv9g==
-X-Gm-Message-State: AOAM530jTbOcAwABgzUtkHe4bqfRt20E7Nb2ho1MDjUIXb+dm4nu+b3V
-        nOqrU/I01mX4rkimrxnXPSKjF0F3CqY=
-X-Google-Smtp-Source: ABdhPJyhVH6wrrYnPc0hZiIWReJINE6PZwVkPBEEf1L11Q5MZO7p0sZ2b71WHFmFMKE0GSw52PWY9A==
-X-Received: by 2002:a1c:9d14:: with SMTP id g20mr1145294wme.25.1627501011884;
-        Wed, 28 Jul 2021 12:36:51 -0700 (PDT)
+        bh=V3GzVV4SshoF5I6PPjJe3yHYH1Nj6z8r5KXlmDLzRZo=;
+        b=F65xMIl95bc5IgfMstxEEMEHdBsg6l21TxiAKIiKVFa56rkmRo9eiSkI15/GMu8Gne
+         i7TpyqLhhfh1ntqoaNcVGR8QVASkm6RfXfv+G+dPjnIVj85VRWbEB0wQFhVsqDMb03Ta
+         M+R5LfLs87WKtx3KiI7ghAsXxe5JIlWDkpcf2mFU4sb2onvQZHdddCFZnFemvws4W0Dt
+         2Fca3ChWE8/s6q26mp7BN1TuWyVB/1NezOHXSnMWsv2ks66D0CmOOsYG6BcyJU02PhvP
+         3xFq2akzXVeHkHaJKV2WUcPDipwXPYnZbf5bmIMRciJaOsNmkiJ97OMoSc72NfYI7Q3R
+         BRhg==
+X-Gm-Message-State: AOAM5337pJ+NRJVr7RzzYEP5MrfahM4CzQ9pE2MOH2BG1OM/Z3iE/Z8R
+        iDSQOVxUxobqCE0hm6fnkgGsMz2q37w=
+X-Google-Smtp-Source: ABdhPJzez2lWEEsUhZF2bwA2fdY26uJht0uRHGD3gCaFLO/eRS3ezG7jdmHmA35kubpZ2/unCkGjbA==
+X-Received: by 2002:a1c:e90d:: with SMTP id q13mr1114984wmc.163.1627501012678;
+        Wed, 28 Jul 2021 12:36:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p4sm794834wrt.23.2021.07.28.12.36.51
+        by smtp.gmail.com with ESMTPSA id m4sm829965wmq.7.2021.07.28.12.36.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jul 2021 12:36:51 -0700 (PDT)
-Message-Id: <f05bab16096c080891ee8f7e179eecce7f32e839.1627501009.git.gitgitgadget@gmail.com>
+        Wed, 28 Jul 2021 12:36:52 -0700 (PDT)
+Message-Id: <071e6173d8e418349d94fea97624e8cee9f1dde5.1627501009.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v6.git.git.1627501009.gitgitgadget@gmail.com>
 References: <pull.1041.v5.git.git.1627391744.gitgitgadget@gmail.com>
         <pull.1041.v6.git.git.1627501009.gitgitgadget@gmail.com>
 From:   "Fabian Stelzer via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 28 Jul 2021 19:36:42 +0000
-Subject: [PATCH v6 2/9] ssh signing: add ssh signature format and signing
- using ssh keys
+Date:   Wed, 28 Jul 2021 19:36:43 +0000
+Subject: [PATCH v6 3/9] ssh signing: retrieve a default key from ssh-agent
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,211 +86,55 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Fabian Stelzer <fs@gigacodes.de>
 
-implements the actual sign_buffer_ssh operation and move some shared
-cleanup code into a strbuf function
-
-Set gpg.format = ssh and user.signingkey to either a ssh public key
-string (like from an authorized_keys file), or a ssh key file.
-If the key file or the config value itself contains only a public key
-then the private key needs to be available via ssh-agent.
-
-gpg.ssh.program can be set to an alternative location of ssh-keygen.
-A somewhat recent openssh version (8.2p1+) of ssh-keygen is needed for
-this feature. Since only ssh-keygen is needed it can this way be
-installed seperately without upgrading your system openssh packages.
+if user.signingkey is not set and a ssh signature is requested we call
+ssh-add -L and use the first key we get
 
 Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
 ---
- gpg-interface.c | 137 +++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 129 insertions(+), 8 deletions(-)
+ gpg-interface.c | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
 diff --git a/gpg-interface.c b/gpg-interface.c
-index 31cf4ba3938..c131977b347 100644
+index c131977b347..3afacb48900 100644
 --- a/gpg-interface.c
 +++ b/gpg-interface.c
-@@ -41,12 +41,20 @@ static const char *x509_sigs[] = {
- 	NULL
- };
- 
-+static const char *ssh_verify_args[] = { NULL };
-+static const char *ssh_sigs[] = {
-+	"-----BEGIN SSH SIGNATURE-----",
-+	NULL
-+};
-+
- static int verify_gpg_signed_buffer(struct signature_check *sigc,
- 				    struct gpg_format *fmt, const char *payload,
- 				    size_t payload_size, const char *signature,
- 				    size_t signature_size);
- static int sign_buffer_gpg(struct strbuf *buffer, struct strbuf *signature,
- 			   const char *signing_key);
-+static int sign_buffer_ssh(struct strbuf *buffer, struct strbuf *signature,
-+			   const char *signing_key);
- 
- static struct gpg_format gpg_format[] = {
- 	{
-@@ -65,6 +73,14 @@ static struct gpg_format gpg_format[] = {
- 		.verify_signed_buffer = verify_gpg_signed_buffer,
- 		.sign_buffer = sign_buffer_gpg,
- 	},
-+	{
-+		.name = "ssh",
-+		.program = "ssh-keygen",
-+		.verify_args = ssh_verify_args,
-+		.sigs = ssh_sigs,
-+		.verify_signed_buffer = NULL, /* TODO */
-+		.sign_buffer = sign_buffer_ssh
-+	},
- };
- 
- static struct gpg_format *use_format = &gpg_format[0];
-@@ -443,6 +459,9 @@ int git_gpg_config(const char *var, const char *value, void *cb)
- 	if (!strcmp(var, "gpg.x509.program"))
- 		fmtname = "x509";
- 
-+	if (!strcmp(var, "gpg.ssh.program"))
-+		fmtname = "ssh";
-+
- 	if (fmtname) {
- 		fmt = get_format_by_name(fmtname);
- 		return git_config_string(&fmt->program, var, value);
-@@ -463,12 +482,30 @@ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *sig
- 	return use_format->sign_buffer(buffer, signature, signing_key);
- }
- 
-+/*
-+ * Strip CR from the line endings, in case we are on Windows.
-+ * NEEDSWORK: make it trim only CRs before LFs and rename
-+ */
-+static void remove_cr_after(struct strbuf *buffer, size_t offset)
-+{
-+	size_t i, j;
-+
-+	for (i = j = offset; i < buffer->len; i++) {
-+		if (buffer->buf[i] != '\r') {
-+			if (i != j)
-+				buffer->buf[j] = buffer->buf[i];
-+			j++;
-+		}
-+	}
-+	strbuf_setlen(buffer, j);
-+}
-+
- static int sign_buffer_gpg(struct strbuf *buffer, struct strbuf *signature,
- 		    const char *signing_key)
- {
- 	struct child_process gpg = CHILD_PROCESS_INIT;
- 	int ret;
--	size_t i, j, bottom;
-+	size_t bottom;
- 	struct strbuf gpg_status = STRBUF_INIT;
- 
- 	strvec_pushl(&gpg.args,
-@@ -494,13 +531,97 @@ static int sign_buffer_gpg(struct strbuf *buffer, struct strbuf *signature,
- 		return error(_("gpg failed to sign the data"));
- 
- 	/* Strip CR from the line endings, in case we are on Windows. */
--	for (i = j = bottom; i < signature->len; i++)
--		if (signature->buf[i] != '\r') {
--			if (i != j)
--				signature->buf[j] = signature->buf[i];
--			j++;
--		}
--	strbuf_setlen(signature, j);
-+	remove_cr_after(signature, bottom);
- 
+@@ -470,11 +470,35 @@ int git_gpg_config(const char *var, const char *value, void *cb)
  	return 0;
  }
-+
-+static int sign_buffer_ssh(struct strbuf *buffer, struct strbuf *signature,
-+			   const char *signing_key)
+ 
++/* Returns the first public key from an ssh-agent to use for signing */
++static char *get_default_ssh_signing_key(void)
 +{
-+	struct child_process signer = CHILD_PROCESS_INIT;
++	struct child_process ssh_add = CHILD_PROCESS_INIT;
 +	int ret = -1;
-+	size_t bottom, keylen;
-+	struct strbuf signer_stderr = STRBUF_INIT;
-+	struct tempfile *key_file = NULL, *buffer_file = NULL;
-+	char *ssh_signing_key_file = NULL;
-+	struct strbuf ssh_signature_filename = STRBUF_INIT;
++	struct strbuf key_stdout = STRBUF_INIT;
++	struct strbuf **keys;
 +
-+	if (!signing_key || signing_key[0] == '\0')
-+		return error(
-+			_("user.signingkey needs to be set for ssh signing"));
-+
-+	if (starts_with(signing_key, "ssh-")) {
-+		/* A literal ssh key */
-+		key_file = mks_tempfile_t(".git_signing_key_tmpXXXXXX");
-+		if (!key_file)
-+			return error_errno(
-+				_("could not create temporary file"));
-+		keylen = strlen(signing_key);
-+		if (write_in_full(key_file->fd, signing_key, keylen) < 0 ||
-+		    close_tempfile_gently(key_file) < 0) {
-+			error_errno(_("failed writing ssh signing key to '%s'"),
-+				    key_file->filename.buf);
-+			goto out;
-+		}
-+		ssh_signing_key_file = key_file->filename.buf;
-+	} else {
-+		/* We assume a file */
-+		ssh_signing_key_file = expand_user_path(signing_key, 1);
++	strvec_pushl(&ssh_add.args, "ssh-add", "-L", NULL);
++	ret = pipe_command(&ssh_add, NULL, 0, &key_stdout, 0, NULL, 0);
++	if (!ret) {
++		keys = strbuf_split_max(&key_stdout, '\n', 2);
++		if (keys[0])
++			return strbuf_detach(keys[0], NULL);
 +	}
 +
-+	buffer_file = mks_tempfile_t(".git_signing_buffer_tmpXXXXXX");
-+	if (!buffer_file) {
-+		error_errno(_("could not create temporary file"));
-+		goto out;
-+	}
-+
-+	if (write_in_full(buffer_file->fd, buffer->buf, buffer->len) < 0 ||
-+	    close_tempfile_gently(buffer_file) < 0) {
-+		error_errno(_("failed writing ssh signing key buffer to '%s'"),
-+			    buffer_file->filename.buf);
-+		goto out;
-+	}
-+
-+	strvec_pushl(&signer.args, use_format->program,
-+		     "-Y", "sign",
-+		     "-n", "git",
-+		     "-f", ssh_signing_key_file,
-+		     buffer_file->filename.buf,
-+		     NULL);
-+
-+	sigchain_push(SIGPIPE, SIG_IGN);
-+	ret = pipe_command(&signer, NULL, 0, NULL, 0, &signer_stderr, 0);
-+	sigchain_pop(SIGPIPE);
-+
-+	if (ret) {
-+		if (strstr(signer_stderr.buf, "usage:"))
-+			error(_("ssh-keygen -Y sign is needed for ssh signing (available in openssh version 8.2p1+)"));
-+
-+		error("%s", signer_stderr.buf);
-+		goto out;
-+	}
-+
-+	bottom = signature->len;
-+
-+	strbuf_addbuf(&ssh_signature_filename, &buffer_file->filename);
-+	strbuf_addstr(&ssh_signature_filename, ".sig");
-+	if (strbuf_read_file(signature, ssh_signature_filename.buf, 0) < 0) {
-+		error_errno(
-+			_("failed reading ssh signing data buffer from '%s'"),
-+			ssh_signature_filename.buf);
-+	}
-+	unlink_or_warn(ssh_signature_filename.buf);
-+
-+	/* Strip CR from the line endings, in case we are on Windows. */
-+	remove_cr_after(signature, bottom);
-+
-+out:
-+	if (key_file)
-+		delete_tempfile(&key_file);
-+	if (buffer_file)
-+		delete_tempfile(&buffer_file);
-+	strbuf_release(&signer_stderr);
-+	strbuf_release(&ssh_signature_filename);
-+	return ret;
++	strbuf_release(&key_stdout);
++	return "";
 +}
++
+ const char *get_signing_key(void)
+ {
+ 	if (configured_signing_key)
+ 		return configured_signing_key;
+-	return git_committer_info(IDENT_STRICT|IDENT_NO_DATE);
++	if (!strcmp(use_format->name, "ssh")) {
++		return get_default_ssh_signing_key();
++	} else {
++		return git_committer_info(IDENT_STRICT | IDENT_NO_DATE);
++	}
+ }
+ 
+ int sign_buffer(struct strbuf *buffer, struct strbuf *signature, const char *signing_key)
 -- 
 gitgitgadget
 
