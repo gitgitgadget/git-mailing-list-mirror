@@ -7,117 +7,109 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF290C4338F
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 00:53:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80D2BC4338F
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 01:08:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE9E060F9E
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 00:53:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 57F2B60F9E
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 01:08:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233008AbhG1AxK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jul 2021 20:53:10 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59982 "EHLO
+        id S233118AbhG1BIR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jul 2021 21:08:17 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61691 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232883AbhG1AxJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jul 2021 20:53:09 -0400
+        with ESMTP id S233008AbhG1BIQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jul 2021 21:08:16 -0400
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 651F5DD0DD;
-        Tue, 27 Jul 2021 20:53:08 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 445B7DD2F4;
+        Tue, 27 Jul 2021 21:08:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=U96JSxzpQ+3Sly7IIfzWvTW/giZJiPI54kFx9y
-        l5jhk=; b=Obe8Gl3TLTSih5cmsO48Cq+M3zNQTN4ZMRuLjEx1/CPDVstyOeODLc
-        btwpJK6C558znX9CS7CsDiTnACLkQCW+XtaJSwTD3APMPIreq3fhwbL/IPt67POR
-        Ios8qnx7j8U2xdRJd6NdrWouNHAXeRmvmbuGQtBSXcnWF+zvIMtZk=
+        :content-type; s=sasl; bh=1rQHwCgxoBuj6nIC4HVSFZRGOpw3lB1YfN1jCr
+        07Yng=; b=qIbPvt/ilpXdPtfZU6iIg7qpXg6X8bGYQroAwshn7YiPT/MjUTsPuu
+        bI0VOk7I0fii+WFLj6yTnn6X6ER4HFf4kigJFhkJniYSqJ29nqFIn/asLZvtJVx0
+        ETT/E0pnJw1aIMvGpv8VsvL7b28PdZAD+rZe559UcumScygJXGjRY=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BAC7DD0DB;
-        Tue, 27 Jul 2021 20:53:08 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 37713DD2F3;
+        Tue, 27 Jul 2021 21:08:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.71.182])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 17D67DD0D9;
-        Tue, 27 Jul 2021 20:53:06 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9A1F7DD2F2;
+        Tue, 27 Jul 2021 21:08:14 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Alex Henrie <alexhenrie24@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Fabian Stelzer <fabian.stelzer@campoint.net>,
-        Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szme?= =?utf-8?Q?k?= 
-        <zbyszek@in.waw.pl>
-Subject: Re: [PATCH] test-lib.sh: use GIT_TEST_COLUMNS over COLUMNS
-References: <CAMMLpeT3bJcr7mRDpxmk32VqpAbNpN=fgPjmkcY+0zOBYruybQ@mail.gmail.com>
-        <patch-1.1-f81f3911d5-20210726T235452Z-avarab@gmail.com>
-        <YQBEhj/Y6m0pqOth@coredump.intra.peff.net>
-Date:   Tue, 27 Jul 2021 17:53:04 -0700
-In-Reply-To: <YQBEhj/Y6m0pqOth@coredump.intra.peff.net> (Jeff King's message
-        of "Tue, 27 Jul 2021 13:38:14 -0400")
-Message-ID: <xmqqzgu7b6of.fsf@gitster.g>
+To:     Jerry Zhang <jerry@skydio.com>
+Cc:     "lilinchao@oschina.cn" <lilinchao@oschina.cn>,
+        git <git@vger.kernel.org>
+Subject: Re: git apply --3way behaves abnormally when the patch contains
+ binary changes.
+References: <fdfd283aeee311ebbfb50024e87935e7@oschina.cn>
+        <CAMKO5Cs1HP7JNmJLYKti0kajGmD4XK+Boc3WRV2Dpph5a3b5Xw@mail.gmail.com>
+Date:   Tue, 27 Jul 2021 18:08:13 -0700
+In-Reply-To: <CAMKO5Cs1HP7JNmJLYKti0kajGmD4XK+Boc3WRV2Dpph5a3b5Xw@mail.gmail.com>
+        (Jerry Zhang's message of "Tue, 27 Jul 2021 15:44:08 -0700")
+Message-ID: <xmqqv94vb5z6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 2B90BD02-EF3E-11EB-8662-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 48FDDD64-EF40-11EB-BF40-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Jerry Zhang <jerry@skydio.com> writes:
 
->> Let's instead solve this more thoroughly. We'll now take
->> GIT_TEST_COLUMNS over COLUMNS, and furthermore intentionally spoil the
->> COLUMNS variable to break any tests that rely on it being set to a
->> sane value.
->> 
->> If something breaks because we have a codepath that's not
->> term_columns() checking COLUMNS we'd like to know about it, the narrow
->> "shopt -u checkwinsize" fix won't give us that.
->
-> I guess people running with bash won't see the test breakage (because
-> bash will quietly "fix" the COLUMNS setting). But enough people run with
-> /bin/sh that we'll eventually notice.
->
->> This approach does mean that any tests of ours that expected to test
->> term_columns() behavior by setting COLUMNS will need to explicitly
->> unset GIT_TEST_COLUMNS, or set it to the empty string. I'm doing the
->> latter in all the tests changed here.
->
-> This is rather ugly, and I'm not in general a fan of adding more
-> test-only code into the bowels of Git itself. But it may be the least
-> bad solution.
+>>         # 2. based on left_bin branch, make any change, and commit
+>>         git checkout -b right &&
+>>         cat bin.png bin.png > bin.png &&
+>>         git add bin.png &&
+>>         git commit -m "update binary file" &&
+>>
+>>         # 3. make patch
+>>         git diff --binary left..right >bin.diff &&
+>>         # apply --3way, and it will fail
+>>         test_must_fail git apply --index --3way bin.diff
+>> '
+>> "
+>>
+>> But  "git apply --index --3way bin.diff" will not faill on Git version 2.31.0.
+> Are you sure? I checked out to "commit
+> a5828ae6b52137b913b978e16cd2334482eb4c1f (HEAD, tag: v2.31.0)" and
+> rebuilt and ran your test snippet and it still failed.
 
-Yeah, this really look unsatisfactory, especially with this repeated
-pattern that is hard to read:
+Isn't it just because the reproduction recipe is simply wrong?
 
-+	GIT_TEST_COLUMNS= COLUMNS=81 git branch --column=column >actual &&
-+	GIT_TEST_COLUMNS= COLUMNS=80 git branch --column=column >actual &&
-+	GIT_TEST_COLUMNS= COLUMNS=80 git branch >actual &&
-+	GIT_TEST_COLUMNS= COLUMNS=80 git branch -v | cut -c -8 | sed "s/ *$//" >actual &&
+It says
 
-Perhaps with something like
+    * be on left branch and have a binary file
+    * be on right branch and have a modified binary file
+    * create a patch to take left to right
 
-	test_with_columns () {
-        	local columns=$1
-		shift
-		GIT_TEST_COLUMNS= COLUMNS=$columns "$@"
-	}
+Notice that we have a patch and we are still on the right branch.
+Of course, applying the patch to take us from left to right would
+fail from that state, but I _think_ the intent of the reproduction
+recipe was, after all of the above, do this here:
 
-we may be able to hide the ugly implementation detail like this:
+    * switch to left branch and attempt to apply the patch.
 
-	test_with_columns 81 git branch --column=column >actual
+And the patch is meant to take us from left to right, and we are on
+pristine left, the application ought to cleanly succeed, no?
 
-and may become a bit more palatable?  A good thing is that this can
-be done as two-step process, with its first step being 
+"git apply bin.diff" would probably work correctly but I do not know
+offhand what the code after your change does with --3way enabled.
 
-    s/^(\s*)COLUMNS=(\d+)/$1test_with_columns $2/;
+We refuse to merge binary files, so I would not be surprised if we
+failed the 3way in this case (even though we _could_ fast-forward,
+it may not be worth complicating the --3way logic---nobody sane
+would say --3way when it is unnecessary) but after 3way fails, do we
+still correctly fall back to "straight application" like we do for
+text patches with your change?  Before your change, we would have
+first attempted the "straight application", which would succeed and
+wouldn't have hit "3way will refuse to merge binaries" at all.
 
-plus addition of the helper to test-lib, perhaps like so:
+So, I do not think it is implausible that we are seeing a legit
+regression report.
 
-	test_with_columns () {
-        	local columns=$1
-		shift
-		COLUMNS=$columns "$@"
-	}
-
-and the whole GIT_TEST_COLUMNS stuff being the second step.
+Thanks.
