@@ -2,128 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MSGID_FROM_MTA_HEADER,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA6D4C4338F
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 07:44:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13DF8C432BE
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 08:19:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD24260F9D
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 07:44:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EFB9F60F41
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 08:19:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234351AbhG1Hoe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jul 2021 03:44:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58096 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233407AbhG1Hob (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jul 2021 03:44:31 -0400
-Received: from mail.aixigo.de (mail.aixigo.de [IPv6:2001:67c:13b0:ffff::60])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id CE17BC061757
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 00:44:29 -0700 (PDT)
-Received: from mailhost.ac.aixigo.de (mailhost.ac.aixigo.de [172.19.96.11])
-        by mail.aixigo.de (OpenSMTPD) with ESMTPS id 7141a045 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-        Wed, 28 Jul 2021 09:44:26 +0200 (CEST)
-Received: from vmdpcl078.ac.aixigo.de (vmdpcl078.ac.aixigo.de [172.19.97.224])
-        by mailhost.ac.aixigo.de (8.15.2/8.15.2/Debian-14~deb10u1) with ESMTPS id 16S7iPKa038394
-        (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT);
-        Wed, 28 Jul 2021 09:44:25 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aixigo.com;
-        s=default; t=1627458265;
-        bh=rt78rysowXj8hDmV4A8DO9CC5toh4rR027r4Ud+03do=;
-        h=To:Cc:References:From:Subject:Date:In-Reply-To:From;
-        b=RtxjZXTPJhlyPMIzFk0veWN7wlHeYB+cdQhv48QkRHc9EfRTqJXuhV1LAqVp3I6Oe
-         ctUEkWy/4p7ZINdU2TJy+AAbUEmUVIXpRS6aKPwdAVT64WquQcLkAmcjlAbMFK2jAd
-         uQEpF62piyENQS1FjiJSiYvDd378flSNviOYzyKc=
-To:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git List Mailing <git@vger.kernel.org>
-References: <20210721134650.1866387-1-felipe.contreras@gmail.com>
- <CAHk-=whf-9kNV3y5G-VVA2K5EZCnvv94paAEj6p=i2R4RM2emQ@mail.gmail.com>
- <xmqqeebregns.fsf@gitster.g>
- <CAMMLpeTL92cDmMHsE3iuhHQrVjwLFWHxE0CwD+uDBoPGAQCrkg@mail.gmail.com>
- <xmqqwnpcdu1w.fsf@gitster.g>
- <CAMMLpeQ-Qpct4TX__KVuCyjbgxtB49qTMRHYc9R9-o0cRu4MuA@mail.gmail.com>
- <610038c0e1056_8fd52084a@natae.notmuch>
-From:   Matthias Baumgarten <matthias.baumgarten@aixigo.com>
-Subject: Re: [PATCH v2] pull: introduce --merge option
-Message-ID: <9e8f1c87-cd08-e1a2-fd5d-713cb0590049@aixigo.com>
-Date:   Wed, 28 Jul 2021 09:44:20 +0200
+        id S234574AbhG1IT0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jul 2021 04:19:26 -0400
+Received: from mail-eopbgr150048.outbound.protection.outlook.com ([40.107.15.48]:22274
+        "EHLO EUR01-DB5-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S235390AbhG1ITN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jul 2021 04:19:13 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Tg9sCqc8PxXGHA5zQ4GnBnn63LpqTcteD0joz3AfyEnwqO6MKhhShivnm6YjwdQkY6o9GCI9C/3R+HE64PdlBGaYCJmhWnjBUjmD8023NTsN673NAug2x/X5AHL4gq3XiTRwC4ldPsztU6zOgWLC49MgDGgFOlALcPo5SuRVSfge912x/4w7nmTcJ0J4fCNtqeVBOWxI1iucFLXueu2UBkRMuGsmrWSe6dQt0x9n9ZQ7IGPiXBfwx/0AVxvSJqCDZiy29SwX8F2PYCNTxNBHOt/OI6SV+JLm46v3K8A333VOz6WzDctpLFc+WAIGM2+9vdjEYFYEGntMGCUQCY9cRQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rFqC0Sb4m2+flqRmYlxsNv0ivQ+Ce4VTRbSUnvrnmgk=;
+ b=W/Q6XDAm9Ybh13I3AYg0wz1TTdQbvkWLlK4fDfaElxfcGdkCb59NdlytTvvQqdBDU+B0o7oxgps4K2g/ZbeyrTpNDV7OXgJb5qRTLvTfEo9hxgj4kqNcnwU8P1OTRsuDotE/OAFlaIvG/DWlnaI8grYJCS1OyqOXcbNXGxxgzeshldMWw6q5VH5oz1RzcBZBwlEA4g23Hng5PY/+x8u/sASowATMsv0tWHZirH5excb43fzUmpoVV1rNvcnjF+LjH073DEcMuJ7YIKEFrP7zhZ7bTGXsu8FvQquS3/GHynvQQThf2pF6XLECAsggi3Kq1B9zNiG9JN4O6eyCR54pBA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
+ dkim=pass header.d=gigacodes.de; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=campointnet.onmicrosoft.com; s=selector2-campointnet-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rFqC0Sb4m2+flqRmYlxsNv0ivQ+Ce4VTRbSUnvrnmgk=;
+ b=wKXbPTXToTUKX1gKIyu9fWJ3tEoTlDOdv4SPoXoKJcNak5vOF5LW000oLvAP14jjPh0TKzIKLREB82KuAS0WD2wfAkc1mGzrgeE6rsnx4FZNUlTz+HnW6mjXG/wH1xc/JuEJzT69B9V+1ytWvhIjuZkaKNF5GTeyYlYj3pEmzqw=
+Authentication-Results: gmail.com; dkim=none (message not signed)
+ header.d=none;gmail.com; dmarc=none action=none header.from=gigacodes.de;
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
+ by PA4PR10MB4526.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:be::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4373.17; Wed, 28 Jul
+ 2021 08:19:10 +0000
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::d8f3:d5f9:226:e9aa]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::d8f3:d5f9:226:e9aa%3]) with mapi id 15.20.4373.019; Wed, 28 Jul 2021
+ 08:19:10 +0000
+Subject: Re: [PATCH v3 4/5] Use a better name for the function interpolating
+ paths
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <pull.66.v2.git.1625155388.gitgitgadget@gmail.com>
+ <pull.66.v3.git.1627164413.gitgitgadget@gmail.com>
+ <19fd9c3c803a300b586c76736301a7379c4c6226.1627164413.git.gitgitgadget@gmail.com>
+ <xmqqh7gghgtd.fsf@gitster.g>
+ <99332fdf-24af-8938-2f55-b6e25ca12aad@gigacodes.de>
+ <xmqqfsvzcqmo.fsf@gitster.g> <xmqq8s1rcn0t.fsf@gitster.g>
+ <xmqq4kcfclw8.fsf@gitster.g> <xmqqczr3at7n.fsf@gitster.g>
+From:   Fabian Stelzer <fs@gigacodes.de>
+Message-ID: <6fdc3b2f-6135-d540-1868-080a423af0e8@gigacodes.de>
+Date:   Wed, 28 Jul 2021 10:18:59 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
-MIME-Version: 1.0
-In-Reply-To: <610038c0e1056_8fd52084a@natae.notmuch>
+ Thunderbird/78.11.0
+In-Reply-To: <xmqqczr3at7n.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: de-DE
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: clamav-milter 0.103.2 at srvvm01.ac.aixigo.de
-X-Virus-Status: Clean
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-ClientProxiedBy: AM3PR03CA0057.eurprd03.prod.outlook.com
+ (2603:10a6:207:5::15) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:102:12e::15)
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [IPv6:2003:ea:5820:600:5dc9:1fd2:e8fb:a1c8] (2003:ea:5820:600:5dc9:1fd2:e8fb:a1c8) by AM3PR03CA0057.eurprd03.prod.outlook.com (2603:10a6:207:5::15) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4373.19 via Frontend Transport; Wed, 28 Jul 2021 08:19:09 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 27bce63c-40bf-4bf6-fd9a-08d951a05ffe
+X-MS-TrafficTypeDiagnostic: PA4PR10MB4526:
+X-Microsoft-Antispam-PRVS: <PA4PR10MB45267FCC15C4A496B4AAE37BB6EA9@PA4PR10MB4526.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: UP9327Tkgf8SQ+I6185VDEDsOA9KtwV3A6RBXRprkBaJ9rtHqYj/OMyolxTi32ScLz4AMrWJkLHeVb8KDgvQXV35tScdmbCdF4x+np3htnSazWFkoajp0z0vs8Khv8SZ8wbQ350WEyL04xfI3h5pIJ7P9euYS7gdDbs7yOEioHkElKfcnFnogQXaOyBPoOy+jnnypIcDwMEP3QuhMw9HiW9mJV3h1aT0BUSWjwQsl/BdqexUV20zPIL8dtaGHCtI0dD7bPdsBYPvf4gx6TB4nxaa1wvpbfheymJsSgrKGjeZpMV6v/NgPhN+kUxdyL2c1uMoh8F9lea4fq5+Z+cL1rZnPiPWpVEpBU9bjozOtFFZCHQoOyxAyNOQ1osPmUu7tvVknmkacpbBneYmHfTZYYn9sQATFHSu+UyY8712d7lxBq7YGg4hDakRpMz2XQN6BpWyKqTtfTGtKLTvIgQosHoCW+GYQG5gcMpHgKND/8ZXlZgijmEyqUXFLTVrwtY3y53PFtBE2ZHUwcS87b8x21I4VWYZFoctqcTmqJ1qsDJiHNA8gSrbL0m4ovOmlvizs8mD0EDkydwnaRQCGU6b0RWkbravO4vl56ndpm6RcmmydGK1eA68EfMiknsM0Et8Zk7/kbMiYZrKfG7oZacVXaqjGlCRXahCPBSHuJ+ccuoZFReM0hlvnZ9A2Wqwr5Khky/+Sb87Ua185sUdUhwhXNgxxu2t3LDD1bD1g7asZCU=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(396003)(346002)(136003)(366004)(39830400003)(376002)(6486002)(316002)(186003)(31686004)(6666004)(8936002)(66476007)(66556008)(2906002)(53546011)(38100700002)(478600001)(66946007)(5660300002)(86362001)(83380400001)(36756003)(52116002)(6916009)(4326008)(2616005)(8676002)(31696002)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cndZeEtORmtZMURjeTE4RDcvZVVzemsvUUFNZ0lnVTF3UUc0dkpaSERxNlFV?=
+ =?utf-8?B?SVN2SHFjU3JLdDFxaUliRUVVaGU3eWo5N0VGSURPRnQyTVgxeEJiUnNZRmlH?=
+ =?utf-8?B?K3lIcVkwTjd4Q055RGw5UHNsWXVCdFV6OWZKUUEzWWUraFora210RWJGT1l6?=
+ =?utf-8?B?SGhRM09KNC9DcTJCWnQ3clJ4V2ZUN245M2R1NU9GQWZqRTdJNW9Xdjc4Wnpx?=
+ =?utf-8?B?ZFZSSGFibWIxL2hUaXBzczNiMTRaYk44MWtpeUczZnRaNTJ3WjBXWE1aR0ty?=
+ =?utf-8?B?cXdMdm13c2JuS2Vjb01RZFVtN3U0RFh6SWpLanV3b0FOZ3hjTU9zNTcyTkdC?=
+ =?utf-8?B?YmxwTXdvYzBLMWRBbVBldzQ0Q1FmOHphNGk4cWRaZlJJZnhRa3QyN1ArWGph?=
+ =?utf-8?B?dG96Q2g3dFMwRGZ2ODkxL1dWc0VhL2pjM0cvUmNsaDZyMW5KeEFsSTI5Tkts?=
+ =?utf-8?B?SWZiTzVOay9ueFpoWFdmUVNvZ2VDZ1MrNVgxaXVFK2dOMlZIcGlIb0ovRkxt?=
+ =?utf-8?B?R3Q0MVI3dFBtaFBSNVl3VmRDWnhUWmU5Nnl4NExvR3NMUmU3N0ZDc3B6RStD?=
+ =?utf-8?B?V3NrWktxNXdrb0Fzd2lyK0lscXNHSC9EWXl2MXh3dDBVT2lwbzVRVmFNakFp?=
+ =?utf-8?B?YkJYU2NCdlljU0orT3IxU01ZNER5NjZ4L0w5RG5CNjc5Zi9neVd4WVNCeGdT?=
+ =?utf-8?B?SHdUQ054dFZ1WHJGWldYMkVHL1VxeEhiRzZ1U0szbkQrblNhZHJaZWVqQUxR?=
+ =?utf-8?B?VEVON3QzcC9FM2pIbnpaUkF6T1U0cm1yMVUrN3h2RXVuQTUwUk1DYUgxbDB1?=
+ =?utf-8?B?cVQxTkFoYTN4eWpRWlhqWGhIbVVIZDZhcElwd2NQT0JyU0V1elRNb2NuRkJh?=
+ =?utf-8?B?eTNheUpLMW4zZ016SEhqM1UzZEpvNUlkM3UrMzVvTUdPQjdaanQ4QmNoVGda?=
+ =?utf-8?B?eWxYTlJOVk40aGYrRFE5WStBanhBckhkdnVJcGhTSW5wSjRoYjlBVlVIWSsx?=
+ =?utf-8?B?bkxyOFdTc1NHQm9XS29RSDRObUFKd0lkTnd4dnUvWmQvWkdxSWF6NjNLYzlY?=
+ =?utf-8?B?N0puSWc4dkdDUDdDZkd1MjJhbEx2S3lEdnRab2xPT25qelVBRDBKUkFvTjZW?=
+ =?utf-8?B?UUNraythRTczLzJRcS9jWXY2TVlRVmZRb3Mxbnlua2pHdWxKcFlHREJtdGxP?=
+ =?utf-8?B?K1RFUlp5NUtWcjJLTFRHUkp3TW4zMXlvVnVTUHJQQjdLSkxuRkhTa2tQd3Iy?=
+ =?utf-8?B?MGlYNSt6WGRtTmVZR3VxU3NzUGt2UmRrU054eVRSbTN0YXpWcnIvWWdnOHNR?=
+ =?utf-8?B?RkcvUDhrWVhvb0k2S0w4RTU4Vkx2STVCOE1ZdnU0QS9DcXFoaTNHa3dzbFFW?=
+ =?utf-8?B?amNxS2w2TlFSNlErSzgzUmtteGVCT2FRREJRdHN0N2MyK2pVc0pkQUtQQzVM?=
+ =?utf-8?B?RTFqTFliVjBVS0hNanMzb2E3OWxOQ2plNW5MNXVYd3hKWTVQRDU1RHVHMUlj?=
+ =?utf-8?B?Z3ZmbHZzaGVzNVNpdGZjcVNZRWE0Ny93UDQ2dmR0dE84dzIvVHpwSXVEMzl0?=
+ =?utf-8?B?M0lRNTJybW0wL1FyRTZ3TlNSb0xuZGc3RWpDem1ienIyRnI1SW1tYXY5L0tm?=
+ =?utf-8?B?NWpZTkxhMDBkSUV1MndWZXAxNWNlVG1jTHNUQTZuNysvem9zZUpPTEhCdkxq?=
+ =?utf-8?B?YzRORi93anFNTG1CZEhMelFnQ2Rhc0tBaFpwVzBXQkFOVDlUVDlubnExdDVG?=
+ =?utf-8?B?NUFLMW1zUzdCelRQV2xxQWdTVm5sTWJLcEJhQUsrSzd3RnQrbDFleFdHMm04?=
+ =?utf-8?B?MVkvUks3WDJSbzNQQmdHdmVLYUpzMWVmY2VUTEcySWlXeGhBbEZ5QW5uMUh6?=
+ =?utf-8?Q?MR7F7rdU76I/h?=
+X-OriginatorOrg: gigacodes.de
+X-MS-Exchange-CrossTenant-Network-Message-Id: 27bce63c-40bf-4bf6-fd9a-08d951a05ffe
+X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2021 08:19:09.8770
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8Psyumf9vWXTq0HqvS5tUvVQhKRGkL99f9sWvNzgDN4B10lh1LRDv9xAPCauSx+Jub7hfeNnKAHbHCeRWrQ53kd6mU0dp8vY1eWuOWFsyVU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR10MB4526
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/27/21 6:48 PM, Felipe Contreras wrote:
-> Alex Henrie wrote:
->> On Tue, Jul 27, 2021 at 2:45 AM Junio C Hamano <gitster@pobox.com> wrote:
->>>
->>> Alex Henrie <alexhenrie24@gmail.com> writes:
->>>
->>>> Junio, would you be willing to accept adding -m without adding --merge also?
->>>
->>> My gut feeling is that "-m" without "--merge" in the context of
->>> "pull" is extremely unlikely to fly well.
->>>
->>> As "git pull" is a "git fetch" followed by a "git merge" (or "git
->>> rebase"), it takes the union of common command line options from
->>> both phases, and "git merge" takes "-m 'message'" which is an option
->>> fairly familiar to users (since it comes from "git commit").  Even
->>> if we are never going to pass "-m message" from "git pull" down to
->>> underlying "git merge", squatting on short and common "-m" would be
->>> a bad idea.
+On 28.07.21 07:43, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
 >>
->> Thanks for the explanation. I forgot that "-m" usually means
->> "message". That does seem like a good reason to not use "-m" for
->> "merge".
-> 
-> It means --merge plenty of times:
-> 
->   * git restore -m
->   * git checkout -m
->   * git rebase -m
->   * git diff -m
->   * git read-tree -m
->   * git diff-tree -m
+>>> Junio C Hamano <gitster@pobox.com> writes:
+>>>
+>>>> Fabian Stelzer <fs@gigacodes.de> writes:
+>>>>
+>>>>>> I think Fabian's "ssh signing" is not as ready as this topic, and it
+>>>>>> can afford to wait by rebasing on top of this topic.  By the time
+>>>>>> "ssh signing" gets into testable shape (right now, it does not pass
+>>>>>> tests when merged to 'seen'), hopefully the "expand install-prefix"
+>>>>>> topic may already be in 'next' if not in 'master'.
+>>>>> I think the test problem is not due to my patch.
+>>>> I've been seeing these test failers locally, every time
+>>>> fs/ssh-signing topic is merged to 'seen' (without the reftable
+>>>> thing).
+>>>> ...
+>>> Interesting.  It seems that the failure has some correlation with
+>>> the use of --root=<trash directory> option.
+>>>
+>>>      $ sh t5534-push-signed.sh -i
+>> And 7528 fails with --root set to a /dev/shm/ trash directory.
+> An update.  The same failure can be seen _without_ merging the topic
+> to 'seen'.  The topic by itself will fail t5534 and t7528 when run
+> with --root= set to somewhere:
+>
+>      $ make
+>      $ testpen=/dev/shm/testpen.$$
+>      $ rm -fr "$testpen" && mkdir "$testpen"
+>      $ cd t
+>      $ sh t5534-*.sh --root=$testpen -i
+>      $ sh t7528-*.sh --root=$testpen -i
+>
+> on the branch itself, without getting interference by any other
+> topic, should hopefully be an easy enough way to reproduce the
+> problem.
+>
+> Thanks.
 
-Add to Felipes list:
 
-  * git switch -m
+ok, funny issue. in the ssh test setup i generated a few ssh keys for 
+testing and (wanting to be clever) concatenated them with a prefixed 
+principal into an allowedSigners file using find & awk.
 
-and maybe git cherry-pick -m where -m does not mean "merge" itself but 
-is used to determine the parent of the merge (when picking merge 
-commits) to base on.
+Turns out the directory entries in /dev/shm are the other way around.
 
-Other examples of where -m has different meaning than merge:
+touch ./t1 ./t2 /dev/shm/t1 /dev/shm/t2
 
-  * git am -m (message-id)
-  * git branch -m (move branch)
+find ./ -name 't[0-9]' results in:
+./t1
+./t2
 
-I would rephrase the question as to what would I expect `git pull -m` to 
-do, if I had never heard of it before. In the case of fast-forwarding 
-and rebasing trying to add a merge commit message with -m would not even 
-make sense. Only in the case of trying to create a merge commit by 
-issuing git pull this would make sense. So if we could agree on that 
-being not the most used scenario, I think -m would be a great short 
-option for --merge.
+a find /dev/shm -name 't[0-9]' returns:
+/dev/shm/t2
+/dev/shm/t1
 
--- 
-aixigo AG
-Karl-Friedrich-Str. 68, 52072 Aachen, Germany
-phone: +49 (0)241 559709-390, fax: +49 (0)241 559709-99
-email: matthias.baumgarten@aixigo.com
-web: https://www.aixigo.com
-District Court Aachen – HRB 8057
-Board: Christian Friedrich, Tobias Haustein
-Chairman of the Supervisory Board: Dr. Roland Schlager
+I'll change the test setup code to do this statically for each key. Not 
+such a good idea to rely on the file order in the dir anyway.
+
+Thanks
+
