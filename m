@@ -2,163 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D94AC4320A
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 07:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A40BEC432BE
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 07:38:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 657A560F9C
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 07:34:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 838F560FC2
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 07:38:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234970AbhG1He7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jul 2021 03:34:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55820 "EHLO
+        id S235068AbhG1Hiw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jul 2021 03:38:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234745AbhG1Hey (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jul 2021 03:34:54 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AF8EC061765
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 00:34:52 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id gn26so3066439ejc.3
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 00:34:52 -0700 (PDT)
+        with ESMTP id S234970AbhG1Hiv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jul 2021 03:38:51 -0400
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9FF6C061757
+        for <git@vger.kernel.org>; Wed, 28 Jul 2021 00:38:49 -0700 (PDT)
+Received: by mail-il1-x129.google.com with SMTP id d10so1789472ils.7
+        for <git@vger.kernel.org>; Wed, 28 Jul 2021 00:38:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=Z6GnWVdLm5Bl8586tcB+dGXgmaSb4QWvKvZi/c7c304=;
-        b=ePQlnmd1ESvRS7+e/BuEsDHHoEuEhgIDM5X23D/BqywNyIkoWNSBtdb50AvrWEjd97
-         WUf1RhvUn6s6DoK0GLWf+HW2ACzCXuUyy7DJzvpUJfF+97UUfxD3EY09YHCGqsuNt5Ii
-         ifXMfz8/vghmmqhlVERMhPZjpGSBO79OG1jC6wtE98du7jBwsgOdCCnh7zgH8vemQB9s
-         1pJvyMSY4nfXQbSo+dUvq0WG+CLkFKs42H8/zIhcskwD7uIe1VQo8R2XdHuPMPdazPA/
-         lmM3FX38NjBX617I5222BDAmZ14Gj/HaQI2BbWhM/BvZ1f1gO7o8K4ClJ1tTbsHOcFK8
-         wdeQ==
+        bh=0TISbtsf9qcNtlF1F/gdtR79uyjwmK1zC4W1XE7jsGU=;
+        b=o2wJRlBEf21jZopPB46esgDtbWzfDj0jbwnXWJxOV7hxesLyQS5v42nMQS9vwDsNmk
+         EOCrZXj2iOoOf2gbkE8Lko8DuVYCGdH0VT41sLOf6t42huuxgD2MmPC9MnDUaNxzADyJ
+         BXcg8Tg4K674cICKsCoM3lzu7Ci+jOBBr0B0Dmql0blmwLeheklzYIajw6iqSf2tlCUD
+         KrT4E94obbp9xRzvPen+5vopnVNH/U7KdLWuCIe6X3qVR+KYQyd0XdSrOyqGzzeV0MsD
+         ki5ad44ftl8zKSrm719S3MkCXdhpm0chmKX7mXXaDcb6YEMBl7NZSqarOfj2IhBDAkjH
+         QVgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Z6GnWVdLm5Bl8586tcB+dGXgmaSb4QWvKvZi/c7c304=;
-        b=mUZ/f4D6Lg6LDmphROM69aN+yh7CoClrMnZbvua0eVJFaSRHeXHXktD3cn8qX2GXl/
-         F32QicELmeI3iM8fgHyRxgZ2Du1CwJtRu8IsyCGV2Gp5idqUsmv9YR/MNNbvMG4zb7Cz
-         fxl2iLdUmo+MWoka4JJjPVzHzN+vLgFVAlF2kxQS8voY8h+eZUPYb9hlo1Plz8x1UUYs
-         G6Snv3btIkqDnsMV8CXt+KrIL2sdhzMBSkKBRC0tfjCCDywN2ADBalxHn6opnI4i+gEo
-         MyeMRnuKVu8m/60ujJ6agWxK1ScoIo9GvjyxpZ7Aq5Oi0mup1SJ+oV+Q6ISZtriM8uI0
-         TN1Q==
-X-Gm-Message-State: AOAM532sgMnzFRgXUS9RHGkFCLuK8ORVImE1AYWGC+4Zjh/yp+8gzqnF
-        ZANHSm+u/CKYWPVvkaB+Phmt8NyLWSs/xc4KFfc=
-X-Google-Smtp-Source: ABdhPJzNunet11q5G25OO0X3MZ92NhwihckcSMpHF0aH2BgP/2TyEkNl3eaJyHOwT/fyAj2asdzyAVgy9yVyu3SrtLs=
-X-Received: by 2002:a17:906:58c7:: with SMTP id e7mr25244825ejs.197.1627457690699;
- Wed, 28 Jul 2021 00:34:50 -0700 (PDT)
+        bh=0TISbtsf9qcNtlF1F/gdtR79uyjwmK1zC4W1XE7jsGU=;
+        b=mR2BZkrk3PGShR0fItTLpsM4OtlIYWkq1n5GjdsHlu/66ITJteAMIVotoMr5SDUxI2
+         36e11JSSQBXtWGIzAAkiK4n5LP5IJEkw/Tq2NVFCwYaKKGq0ZbEDSIyU4x6q29DR3VAG
+         FSsXw8eALX+hII0YgngrKFqlKEYv2nTtHEMesME1R4/21pFmTwHk4TNZbsmddRPu1mZ/
+         XA0hVuQMs3MUYwkWnr6u6Fs4wTf6vgH0j9sODpqvdEkS+IAUHbGZPmcFIguVnqByZ2z2
+         SPuJ3AzFDs+eDL6bJz64hRaepJOejUDQ2ylGzQcf54ex+MX2nM0LhBwcAU9yCSZDfk19
+         T8OQ==
+X-Gm-Message-State: AOAM531FfOj4duwI3hLV5Y1qSBxSVxcQAATpC6w/0VBuwzb3HIXMlAOS
+        uF3d8l/LFwXriNvQcCic3/Ir3VTZYRKP0UIUtaQ=
+X-Google-Smtp-Source: ABdhPJzBdO/GUy4evIBN0ZHEBFjo4T2rqxNErv2y+tEJgvmZhqX4YsWmuInQ44CCnBVj+VQ8jsnKXFUoZzWOPwLj9/Q=
+X-Received: by 2002:a92:ab0a:: with SMTP id v10mr19527637ilh.17.1627457929403;
+ Wed, 28 Jul 2021 00:38:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAOLTT8RR3nvtXotqhSO8xPCzGQpGUA8dnNgraAjREZ6uLf4n4w@mail.gmail.com>
- <87im0zs8wn.fsf@evledraar.gmail.com> <CAOLTT8Sbusr8=iJbG1qXcSerivZqP5xm-GS8R7TqDMh7QXSZaA@mail.gmail.com>
- <CAP8UFD1szPO-qmusSqiLRWxynV0gcy8UsnZORNn0USYAmRUGVw@mail.gmail.com> <CAOLTT8TdL7UhfVSOzbpmo-WFNrcKwmy=E720tNt4KM9o_p=keg@mail.gmail.com>
-In-Reply-To: <CAOLTT8TdL7UhfVSOzbpmo-WFNrcKwmy=E720tNt4KM9o_p=keg@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 28 Jul 2021 09:34:39 +0200
-Message-ID: <CAP8UFD1WtSX59AqfG=d0Ge2BcK+8LdyZk0mQuftpu=FKX-877Q@mail.gmail.com>
-Subject: Re: [GSOC] How to improve the performance of git cat-file --batch
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+References: <pull.1001.git.1626962763373.gitgitgadget@gmail.com>
+ <pull.1001.v2.git.1627135281887.gitgitgadget@gmail.com> <a8b260be-dae5-e717-d4cb-3ee123f93620@gmail.com>
+In-Reply-To: <a8b260be-dae5-e717-d4cb-3ee123f93620@gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Wed, 28 Jul 2021 15:39:22 +0800
+Message-ID: <CAOLTT8T9Fu4-r5-2PhNmopW751TBN1LRrwBU70HuKZ48JD1X5Q@mail.gmail.com>
+Subject: Re: [PATCH v2] [GSOC] cherry-pick: fix bug when used with GIT_CHERRY_PICK_HELP
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Hariom verma <hariom18599@gmail.com>
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Ramkumar Ramachandra <artagnon@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 27, 2021 at 3:37 AM ZheNing Hu <adlternative@gmail.com> wrote:
+Phillip Wood <phillip.wood123@gmail.com> =E4=BA=8E2021=E5=B9=B47=E6=9C=8828=
+=E6=97=A5=E5=91=A8=E4=B8=89 =E4=B8=8A=E5=8D=883:43=E5=86=99=E9=81=93=EF=BC=
+=9A
 >
-> Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B47=E6=
-=9C=8826=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=885:38=E5=86=99=E9=81=
-=93=EF=BC=9A
+> > diff --git a/builtin/revert.c b/builtin/revert.c
+> > index 237f2f18d4c..ec0abe7db73 100644
+> > --- a/builtin/revert.c
+> > +++ b/builtin/revert.c
+> > @@ -245,6 +245,7 @@ int cmd_cherry_pick(int argc, const char **argv, co=
+nst char *prefix)
 > >
-> > On Sun, Jul 25, 2021 at 2:04 PM ZheNing Hu <adlternative@gmail.com> wro=
-te:
-> > > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E20=
-21=E5=B9=B47=E6=9C=8825=E6=97=A5=E5=91=A8=E6=97=A5 =E4=B8=8A=E5=8D=885:23=
-=E5=86=99=E9=81=93=EF=BC=9A
-> >
-> > > > Having skimmed it I'm a bit confused about this in reference to
-> > > > performance generally. I haven't looked into the case you're discus=
-sing,
-> > > > but as I noted in
-> > > > https://lore.kernel.org/git/87im1p6x34.fsf@evledraar.gmail.com/ the
-> > > > profiling clearly shows that the main problem is that you've added
-> > > > object lookups we skipped before.
-> > >
-> > > Yeah, you showed me last time that lookup_object() took up a lot of t=
-ime.
-> >
-> > Could the document explain with some details why there are more calls
-> > to lookup_object()?
-
-Please note that here we are looking for the number of times the
-lookup_object() function is called. This means that to measure that
-properly, it might actually be better to have some way to count this
-number of times the lookup_object() function is called, rather than
-count the time spent in the function.
-
-For example you could add a trace_printf(...) call in the
-lookup_object() function, set GIT_TRACE=3D/tmp/git_trace.log, and then
-just run `git cat-file --batch ...` and count the number of times the
-new trace from lookup_object() appears in the log file.
-
-> > For example it could take an example `git cat-file
-> > --batch ...` command (if possible a simple one), and say which
-> > functions like lookup_object() it was using (and how many times) to
-> > get the data it needs before using the ref-filter logic, and then the
-> > same information after using the ref-filter logic.
+> >       opts.action =3D REPLAY_PICK;
+> >       sequencer_init_config(&opts);
+> > +     unsetenv("GIT_CHERRY_PICK_HELP");
 >
-> Sorry but this time I use gprof but can=E2=80=99t observe the same effect=
- as before.
-> lookup_object() is indeed a part of the time overhead, but its proportion=
- is
-> not very large this time.
+> This will break git-rebase--preserve-merges.sh which uses
+> GIT_CHERRY_PICK_HELP to set the help and ensure CHERRY_PICK_HEAD is
+> removed when picking commits. I'm a bit confused as to what the problem
 
-I am not sure gprof is a good tool for this. It looks like it tries to
-attribute spent times to functions by splitting time between many low
-level functions, and it doesn't seem like the right approach to me.
-For example if lookup_object() is called 5% more often, it could be
-that the excess time is attributed to some low level functions and not
-to lookup_object() itself.
+Yeah, I thought it would call some rebase-related code before, I
+didn=E2=80=99t expect it to
+call cherry-pick. On the other hand, I passed all tests, so I ignore
+it, there should be
+a test for it.
 
-That's why we might get a more accurate view of what happens by just
-counting the number of time the function is called.
+> is - how is 'git cherry-pick' being run with GIT_CHERRY_PICK_HELP set in
+> the environment outside of a rebase (your explanation in [1] does not
+> mention how GIT_CHERRY_PICK_HELP is set)? As far as I can see 'git
+> rebase -i' does not set it so the only case I can think of is
+> cherry-picking from an exec command  while running 'git rebase -p'
+>
 
-> > It could be nice if there were also some data about how much time used
-> > to be spent in lookup_object() and how much time is now spent there,
-> > and how this compares with the whole slowdown we are seeing. If =C3=86v=
-ar
-> > already showed that, you can of course reuse what he already did.
+Ah, because I want to find a way to suppress its advice messages about
+"git commit",
+and I don=E2=80=99t think anyone else is using this "feature".
 
-Now I regret having wrote the above, sorry, as it might not be the
-best way to look at this.
+> Best Wishes
+>
+> Phillip
+>
+> [1]
+> https://lore.kernel.org/git/CAOLTT8Ty47fyY7T3d68CYPKh9k+HAHsnCLJ=3DF0KaLm=
++0gp3+EQ@mail.gmail.com/
+>
 
-> This is my test for git cat-file --batch --batch-all-objects >/dev/null:
-
-[...]
-
-> Because we called parse_object_buffer() in get_object(), lookup_object()
-> is called indirectly...
-
-It would be nice if you could add a bit more details about how
-lookup_object() is called (both before and after the changes that
-degrade performance).
-
-> We can see that some functions are called the same times:
-
-When you say "the same times" I guess you mean that the same amount of
-time is spent in these functions.
-
-> patch_delta(),
-> unpack_entry(), hashmap_remove()... But after using my patch,
-> format_ref_array_item(), grab_sub_body_contents(), get_object(), lookup_o=
-bject()
-> begin to occupy a certain proportion.
-
-Thanks!
+Thanks.
+--
+ZheNing Hu
