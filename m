@@ -7,154 +7,115 @@ X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79BF6C4338F
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 02:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6DC6C4338F
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 03:14:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 504F260F9E
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 02:45:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AAFA560F51
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 03:14:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233500AbhG1Cpv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Jul 2021 22:45:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47614 "EHLO
+        id S233500AbhG1DOr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Jul 2021 23:14:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233406AbhG1Cpu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jul 2021 22:45:50 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79D2CC061757
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 19:45:49 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id 129so881176qkg.4
-        for <git@vger.kernel.org>; Tue, 27 Jul 2021 19:45:49 -0700 (PDT)
+        with ESMTP id S233437AbhG1DOq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jul 2021 23:14:46 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 521ACC061757
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 20:14:43 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id f91so845379qva.9
+        for <git@vger.kernel.org>; Tue, 27 Jul 2021 20:14:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skydio.com; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=vFuhFtvVqymEn3/jyY+vpA/8eC+cCAvA726w32Q36g0=;
-        b=XbKkQ9W2SvU7Y8N1ju8mcCOJenGQ/1JHapLpIyYy9vDXkxbjLpMaPElw35g58T+Hyi
-         UoWjsZOcg8s4hiNd6zG5rHx3ENR7oeBE3siDb8mLgkJGT7Fpdwtvk8hadUSxLpQwj+Db
-         I1hjdBwHjUcymvSFqdz2rXLIIFcGMzWbAolx0QxAxyuspdUfHhbHzCNRSH0wIqeT0JUh
-         V7ZZIbB1yOEz/V0zepCKhX35Fe9eU51XidwAMN0fJmkTgCWOY8jUTObhma+clTuS14hw
-         shCjx+iA2+B42TJmrxCpP6/G4c1gIKT6mLhNgx750g5WiPl+zdEkADjlRDzblnrgbJN9
-         EvjA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=auHNq0Y+OBLWtM4yWUoPORXJrpa6F/fMofzEuMWecLE=;
+        b=zp7u3SG19AYan3GahhH1nHfOkM2jzPX8HtvunTD2m01D7EL3eXHkfThVeJ+40xZ3lp
+         R8rOmSOQWbXY0HsfY/NvVBCtaSrfUQg2wNo2MoXTMwUJbsBxD8Dh3mvWSFNcOVM4J7by
+         nUkp5qSgMXsEAI72EJ18wgmDsKEkAt9lVz4K+wTH8E5i+MQoTaS8g4sdA8Ke8jvEDjV+
+         cbBDw1c6RQ0E1VCjOtBWlGGLkd8jkiuDAcexjyOfbKZBPemZ0hloXh+PbGFFoYf9TfrR
+         eV32S3Jb0fgXHN2MO/rGunXLYwDg9aMLD5q4exqt2qBuY7o7Pkfc67XP4KBM5f/EtBZF
+         RT2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=vFuhFtvVqymEn3/jyY+vpA/8eC+cCAvA726w32Q36g0=;
-        b=LAFuQ7ehojXdmOavLAsnOA5y8BYsUNqfEo0SHlG5EYs8rRsvJ5Z0ZjscOZXAZuNbzg
-         pfAcnam2313trpmmH7c71imcdaWpgcvHhZ9zh8ck7yq02CpuUUd7D97T1a5UaFr5bIUK
-         JY43A5lbElLKpEzzvujXca5hkporHG5k+Ty/xJcme1hgvo9WHI5hTME7i1gHzFbML2hH
-         l6PZlIFzS4pnH4yLUcnu0uuS9IHRvorprLt58uG7AmwpPeAM/2kbagfPWX+zwfS6CMnH
-         ThjhmuRwvs/ZWVQ6CqrwcAeLcTVQCfHybHKYl2xEERuA4wo/nxxjZJmde636HwtmW8VL
-         XZPQ==
-X-Gm-Message-State: AOAM530xMf0iUctVg5LTCYAmS34UiKHhS4pdtQb3SCDzKQUk8CCQw817
-        6Sar6pJmVnVgbqAZ+uvpiqgGr2KtCFsYqw==
-X-Google-Smtp-Source: ABdhPJwwpIzndsabAdOYyVCvxVcyrq73g2EjAtXPo737mODBkdzmA+5bZCaKHeHS0x+7gRM2f9v+3g==
-X-Received: by 2002:a37:f711:: with SMTP id q17mr25343906qkj.117.1627440347805;
-        Tue, 27 Jul 2021 19:45:47 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=auHNq0Y+OBLWtM4yWUoPORXJrpa6F/fMofzEuMWecLE=;
+        b=LIxmOxr54V6bHuopffPFrY3bjvAxSWbWdtpeDSM4vV0EIQkPguzmtKWhRx9dOOMUZD
+         W1y2rTOpLW7caoW0O1nwpruEDWchInjRUJzs/PnqNWJH+IvSoxJo7nWS2KKnG1DbdONd
+         2N409CUYgXU7YXI1yAgr2DwgViPQKl81vJT1RMRAiDifB7PZPD+gEH0yVl3FAoRqizML
+         tvoOMZx3Om4+1jQVxBaseQZMyGEtSFeFVEX8cKziITbwNrVvPt747TLWbJsP7tWO7kFB
+         2Ro4R4k6ckec8s6hAMr0CVJo+5cRcG3Dj22USrJK2gvK7dF35woBG2AUqjyxLnBtHuIM
+         rqvA==
+X-Gm-Message-State: AOAM533jzg7jos9wJcQW56KhTrtDGaU+ZI2mgBVbjacfle3SBU6JdpJb
+        AABEbCDDEHetO6BTknndVANoeCkiZ6Vlwg==
+X-Google-Smtp-Source: ABdhPJzQCCj/jllWhbxVknjQiKnq/nSBYlbEDZr6kNL3NrHL5t5B5VkrodkhyoWaVpmepMjqEWMT0A==
+X-Received: by 2002:a05:6214:948:: with SMTP id dn8mr791151qvb.30.1627442081600;
+        Tue, 27 Jul 2021 20:14:41 -0700 (PDT)
 Received: from jerry-desktop.localdomain ([50.236.240.214])
-        by smtp.gmail.com with ESMTPSA id w20sm2610517qkj.27.2021.07.27.19.45.46
+        by smtp.gmail.com with ESMTPSA id p19sm2225155qtx.10.2021.07.27.20.14.40
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Jul 2021 19:45:47 -0700 (PDT)
+        Tue, 27 Jul 2021 20:14:41 -0700 (PDT)
 From:   Jerry Zhang <jerry@skydio.com>
-To:     git@vger.kernel.org, gitster@pobox.com, lilinchao@oschina.cn
+To:     git@vger.kernel.org, gitster@pobox.com
 Cc:     Jerry Zhang <jerry@skydio.com>
-Subject: [PATCH] git-apply: fix --3way with binary patch
-Date:   Tue, 27 Jul 2021 19:44:34 -0700
-Message-Id: <20210728024434.20230-1-jerry@skydio.com>
+Subject: [PATCH V2] git-apply: silence errors for success cases
+Date:   Tue, 27 Jul 2021 20:14:37 -0700
+Message-Id: <20210728031437.14257-1-jerry@skydio.com>
 X-Mailer: git-send-email 2.32.0.4.g29b9734da9
+In-Reply-To: <xmqqwnsvw5xi.fsf@gitster.g>
+References: <xmqqwnsvw5xi.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Binary patches applied with "--3way" will
-always return a conflict even if the patch
-should cleanly apply because the low level
-merge function considers all binary merges
-without a variant to be conflicting.
+Certain invocations of "git apply --3way"
+will print error messages even though git
+is able to fall back on apply_fragments and
+apply the patch successfully with a return
+value of 0. To fix, return early from
+try_threeway() in the following cases:
 
-Fix by falling back to normal patch application
-for all binary patches.
+When the patch is a rename and no lines have
+changed. In this case, "git diff" doesn't
+record the blob info, so 3way is neither
+possible nor necessary.
 
-Add tests for --3way and normal applications
-of binary patches.
+When the patch is an addition and there is
+no add/add conflict, i.e. direct_to_threeway
+is false. In this case, threeway will fail
+since the preimage is not in cache, but isn't
+necessary anyway since there is no conflict.
 
-Fixes: 923cd87ac8 ("git-apply: try threeway first when "--3way" is used")
+Only error messaging is affected and other
+behavior does not change.
+
 Signed-off-by: Jerry Zhang <jerry@skydio.com>
 ---
- apply.c                   |  3 ++-
- t/t4108-apply-threeway.sh | 45 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+), 1 deletion(-)
+V1->V2: rebase onto master and rerun tests
+
+I think I addressed previous comments. What
+are the next steps for this patch?
+
+ apply.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/apply.c b/apply.c
-index 1d2d7e124e..78e52f0dc1 100644
+index 44bc31d6eb..fb321c707b 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -3638,7 +3638,8 @@ static int apply_data(struct apply_state *state, struct patch *patch,
- 	if (load_preimage(state, &image, patch, st, ce) < 0)
+@@ -3560,7 +3560,9 @@ static int try_threeway(struct apply_state *state,
+ 
+ 	/* No point falling back to 3-way merge in these cases */
+ 	if (patch->is_delete ||
+-	    S_ISGITLINK(patch->old_mode) || S_ISGITLINK(patch->new_mode))
++	    S_ISGITLINK(patch->old_mode) || S_ISGITLINK(patch->new_mode) ||
++	    (patch->is_new && !patch->direct_to_threeway) ||
++	    (patch->is_rename && !patch->lines_added && !patch->lines_deleted))
  		return -1;
  
--	if (!state->threeway || try_threeway(state, &image, patch, st, ce) < 0) {
-+	if (!state->threeway || patch->is_binary ||
-+		try_threeway(state, &image, patch, st, ce) < 0) {
- 		if (state->apply_verbosity > verbosity_silent &&
- 		    state->threeway && !patch->direct_to_threeway)
- 			fprintf(stderr, _("Falling back to direct application...\n"));
-diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
-index 65147efdea..d32748f899 100755
---- a/t/t4108-apply-threeway.sh
-+++ b/t/t4108-apply-threeway.sh
-@@ -230,4 +230,49 @@ test_expect_success 'apply with --3way --cached and conflicts' '
- 	test_cmp expect.diff actual.diff
- '
- 
-+test_expect_success 'apply binary file patch' '
-+	git reset --hard main &&
-+	cp $TEST_DIRECTORY/test-binary-1.png bin.png &&
-+	git add bin.png &&
-+	git commit -m "add binary file" &&
-+
-+	cp $TEST_DIRECTORY/test-binary-2.png bin.png &&
-+
-+	git diff --binary >bin.diff &&
-+	git reset --hard &&
-+
-+	# Apply must succeed.
-+	git apply bin.diff
-+'
-+
-+test_expect_success 'apply binary file patch with 3way' '
-+	git reset --hard main &&
-+	cp $TEST_DIRECTORY/test-binary-1.png bin.png &&
-+	git add bin.png &&
-+	git commit -m "add binary file" &&
-+
-+	cp $TEST_DIRECTORY/test-binary-2.png bin.png &&
-+
-+	git diff --binary >bin.diff &&
-+	git reset --hard &&
-+
-+	# Apply must succeed.
-+	git apply --3way --index bin.diff
-+'
-+
-+test_expect_success 'apply full-index patch with 3way' '
-+	git reset --hard main &&
-+	cp $TEST_DIRECTORY/test-binary-1.png bin.png &&
-+	git add bin.png &&
-+	git commit -m "add binary file" &&
-+
-+	cp $TEST_DIRECTORY/test-binary-2.png bin.png &&
-+
-+	git diff --full-index >bin.diff &&
-+	git reset --hard &&
-+
-+	# Apply must succeed.
-+	git apply --3way --index bin.diff
-+'
-+
- test_done
+ 	/* Preimage the patch was prepared for */
 -- 
 2.32.0.1314.g6ed4fcc4cc
 
