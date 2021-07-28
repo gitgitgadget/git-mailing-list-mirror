@@ -2,277 +2,346 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE31BC4338F
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 19:51:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2A40C4338F
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 20:04:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8ED4660E9B
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 19:51:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AAABF61040
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 20:04:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230502AbhG1TvT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jul 2021 15:51:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57316 "EHLO
+        id S230490AbhG1UEq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jul 2021 16:04:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229690AbhG1TvS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jul 2021 15:51:18 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C008BC061757
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 12:51:15 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id g23-20020a17090a5797b02901765d605e14so5680313pji.5
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 12:51:15 -0700 (PDT)
+        with ESMTP id S229762AbhG1UEp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jul 2021 16:04:45 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91308C061757
+        for <git@vger.kernel.org>; Wed, 28 Jul 2021 13:04:43 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id x90so4859588ede.8
+        for <git@vger.kernel.org>; Wed, 28 Jul 2021 13:04:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=43gqFfsC52WJMDbcGsS0kKRIH18W6MmpYNDgfkdxKKk=;
-        b=VYjkrvsUV4qKmSFZVoWT+uSepAZomL96ARiUr0BOyv/ZOyadeYg1h2urCQ28mtJGtl
-         3fmnsN633OeYeK+Fh7/WtlIuoQXThha1uISEPskxBEIlUdycCtTcCLCIYmYSYumimViD
-         /+Ch6OyHKDpQVjMGe9zkkhZfJITOQepljS1XCm9u+oafi1i5FyNynrOwwmA+8TogW7w3
-         4WJqub5XBoprI75ikxUG9uXFakAsDTmoAnEJPoxYfsjCWWetSofoH77czUBETEXwLBqy
-         idxiAQIB8UtJNkrU6WM7676/xE3m5WQVNqmBILdiQYIid7pA6rN3o0qshtNLVkbZdIjX
-         xWgw==
+        d=skydio.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qZhdosbgoLlG9CC2K6sMBs5XLkqaQa4w3+zCVngSgAI=;
+        b=v4zb/m1Y6shCqEv3pTGEeTXUDiMQ+9kpgnNjehR19t8E/VChK+BtfUekyqutDPKA6W
+         +JIx6IgT/00no/vVjVnzw986WA739ppthg11GQ/ALCJPvb/XQmt+PrK8b8xbWFLh+zCR
+         k8P6CoKAYa24JAQabk8LyQ9bIRjR0vdpAZbAwVkk/sV5n97DSNvaby9geYdk23ii29ar
+         vM2ibnOi8eTg0tv6tnbXR3qALfrQ3e0UQPgBJtwYmmis+jimwkbjr7lAyXA1K4H+jy4X
+         Tezf7LRd+V1/1MVxNNFIZ7yorrm2HQ07LnNktYwV/pes/uVS2PdquzCMieyj3v4cQyYs
+         +zzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=43gqFfsC52WJMDbcGsS0kKRIH18W6MmpYNDgfkdxKKk=;
-        b=IFpjwMmz6kkbYjwFHpFfVe+a71kO7T4wJNwHg5uP1QWIx1U5Qo7Kwhrbwt3FHUgZUW
-         WnVqxUpWuUNVBM34P1XOE6C8T3HVsZbqxycaxuGDE1TLJ8Q7/m6Agb2JS//cr6SqOAeu
-         oCGIeR1j8wjpmOVk2rbPCHnn3M6NEkrFopYNFTw7GyCxQhq/cvhmMUYHpBfUUsH4OloS
-         I+psT7pi7Tl4RQ61j8WZk+wg6sVG6NK3gxaKSJyaTFHdHiZ654Du91qEE3U0dCtGZldH
-         ujQUHQVV02Vg50Rp82z75jT6nVJ9puZn4FKHyPHWOEcHwP+gipkZgkF/5+K1HNWOaqPW
-         eVAA==
-X-Gm-Message-State: AOAM53290YgdiAWke9R29TI+paOUGBM0+UV1H4fhv6cn26Qr8qoWL/v3
-        HFCR+BUtf9XKD0tpMqa4OxGmV7sKSj1cZJeS
-X-Google-Smtp-Source: ABdhPJzdb/779Wa2IVJLzKtHRcAfzswISZuJGz5m17qnLOiYNczcO9yTTMYbk9s1saUlyRFHZKy83w==
-X-Received: by 2002:a17:90a:940e:: with SMTP id r14mr11028089pjo.41.1627501875156;
-        Wed, 28 Jul 2021 12:51:15 -0700 (PDT)
-Received: from [192.168.208.38] ([49.205.87.176])
-        by smtp.gmail.com with ESMTPSA id d31sm738653pgd.33.2021.07.28.12.51.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jul 2021 12:51:14 -0700 (PDT)
-Subject: Re: [GSoC] [PATCH v2] submodule--helper: introduce add-config
- subcommand
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Prathamesh Chavan <pc44800@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>, git@vger.kernel.org
-References: <20210722112143.97944-1-raykar.ath@gmail.com>
- <20210728115304.80643-1-raykar.ath@gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <07070c45-5761-b67e-59b1-aa90f8cd877b@gmail.com>
-Date:   Thu, 29 Jul 2021 01:21:05 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qZhdosbgoLlG9CC2K6sMBs5XLkqaQa4w3+zCVngSgAI=;
+        b=Q89qcRSXATLY72udR1nkswLePj4jI7UPerGMI4nnv90JtcoRMyWdPVggvRVG6r2Egm
+         om5DWpKjB/Dmn9BX9i7DAzE9NKK3wkOcYzLmxp22KvREjLkAqBqPtjfDsuO1P+8mEU/v
+         +HU37giQD30IW4+qV4rKDFQzrPEwxvUFnnnH6IEC/Se/va5qIYbQ2FfPtdIXcFsMrm5h
+         Fs9w+sQ2dZ/9wRM0i55CPHxL/xECieCec/KXWL4BgQ0F9fLColb0eHp0W8T6XKv+ybbK
+         +u0rIbkHc+UwfPYY/wuShR6iEqJRP76t8Wj4+Hmc95lta1PCs/nWWy8x30qA4qB2uSCn
+         4YlA==
+X-Gm-Message-State: AOAM532xwTqvOv0OAaw4Wz/ZC8Bnpv604/Yf9Xa8ajA9Pc927QBOcXEy
+        sDmahc9l6ljSe3v91rQpFxZ8EYkOHARroCbHKnc7HA==
+X-Google-Smtp-Source: ABdhPJwSbXyuTSETsMh71Qs4CtBosFW/bBXSD/cIMyeRmbkdB+Gqg4tv+8o7NlU6bzmFwanyqrJklIhI1+BRlsThL2s=
+X-Received: by 2002:a05:6402:1e91:: with SMTP id f17mr1764134edf.133.1627502682097;
+ Wed, 28 Jul 2021 13:04:42 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210728115304.80643-1-raykar.ath@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210728024434.20230-1-jerry@skydio.com> <xmqqh7gfawlt.fsf@gitster.g>
+ <CAMKO5CvZCMHuzRLSs2aHJ3iUH-LBJfFP3fG+GgwtQvsKQPtT5Q@mail.gmail.com>
+In-Reply-To: <CAMKO5CvZCMHuzRLSs2aHJ3iUH-LBJfFP3fG+GgwtQvsKQPtT5Q@mail.gmail.com>
+From:   Jerry Zhang <jerry@skydio.com>
+Date:   Wed, 28 Jul 2021 13:04:31 -0700
+Message-ID: <CAMKO5CsPK65wzkJSYv6dHO4wjsX1+U7yX5P95jS3UHXKThMjqw@mail.gmail.com>
+Subject: Re: [PATCH] git-apply: fix --3way with binary patch
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, lilinchao@oschina.cn
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Atharva,
-
-On 28/07/21 5:23 pm, Atharva Raykar wrote:
-> Add a new "add-config" subcommand to `git submodule--helper` with the
-> goal of converting part of the shell code in git-submodule.sh related to
-> `git submodule add` into C code. This new subcommand sets the
-> configuration variables of a newly added submodule, by registering the
-> url in local git config, as well as the submodule name and path in the
-> .gitmodules file. It also sets 'submodule.<name>.active' to "true" if
-> the submodule path has not already been covered by any pathspec
-> specified in 'submodule.active'.
-> 
-> This is meant to be a faithful conversion from shell to C, with only one
-> minor change: A warning is emitted if no value is specified in
-> 'submodule.active', ie, the config looks like: "[submodule] active\n",
-> because it is an invalid configuration. It would be helpful to let the
-> user know that the pathspec is unset, and the value of
-> 'submodule.<name>.active' might be set to 'true' so that they can
-> rectify their configuration and prevent future surprises (especially
-> given that the latter variable has a higher priority than the former).
-> 
-
-v2 doesn't have the warning that this paragraph describes. So, this could
-be dropped.
-
-> [ snip ]
+On Wed, Jul 28, 2021 at 12:38 PM Jerry Zhang <jerry@skydio.com> wrote:
 >
-> A comment has been
-> added to explain that only one value of 'submodule.active' is obtained
-> to check if we need to call is_submodule_active() at all.
+> On Tue, Jul 27, 2021 at 9:30 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > Jerry Zhang <jerry@skydio.com> writes:
+> >
+> > > Binary patches applied with "--3way" will
+> > > always return a conflict even if the patch
+> > > should cleanly apply because the low level
+> > > merge function considers all binary merges
+> > > without a variant to be conflicting.
+> > >
+> > > Fix by falling back to normal patch application
+> > > for all binary patches.
+> > >
+> > > Add tests for --3way and normal applications
+> > > of binary patches.
+> > >
+> > > Fixes: 923cd87ac8 ("git-apply: try threeway first when "--3way" is used")
+> > > Signed-off-by: Jerry Zhang <jerry@skydio.com>
+> > > ---
+> > >  apply.c                   |  3 ++-
+> > >  t/t4108-apply-threeway.sh | 45 +++++++++++++++++++++++++++++++++++++++
+> > >  2 files changed, 47 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/apply.c b/apply.c
+> > > index 1d2d7e124e..78e52f0dc1 100644
+> > > --- a/apply.c
+> > > +++ b/apply.c
+> > > @@ -3638,7 +3638,8 @@ static int apply_data(struct apply_state *state, struct patch *patch,
+> > >       if (load_preimage(state, &image, patch, st, ce) < 0)
+> > >               return -1;
+> > >
+> > > -     if (!state->threeway || try_threeway(state, &image, patch, st, ce) < 0) {
+> > > +     if (!state->threeway || patch->is_binary ||
+> > > +             try_threeway(state, &image, patch, st, ce) < 0) {
+> >
+> > Thanks for a quick turnaround.  However.
+> >
+> > Because apply.c::three_way_merge() calls into ll_merge() that lets
+> > the low-level custom merge drivers to take over the actual merge, I
+> > do not think your "if binary, bypass and never call try_threway() at
+> > all" is the right solution.  The custom merge driver user uses for
+> > the path may successfully perform such a "trivial" three-way merge
+> > and return success.
+> I understand now, thanks for the explanation
+> >
+> > Why does the current code that lets threeway tried first fails to
+> > fall back to direct application?  The code before your change, if
+> > fed a binary patch that does not apply, would have failed the direct
+> > application first *and* then fell back to the threeway (if only to
+> > fail because we do not let binary files be merged), no?
+> >
+> > Is it that try_threeway()'s way to express failure slightly
+> > different from how direct application reports failure, but your
+> > change used the same "only if it is negative, we fail and fallback"
+> > logic?  IIRC, apply_fragments() which is the meat of the direct
+> > application logic reports failures by negative, but try_threeway()
+> > can return positive non-zero to signal a "recoverable" failure (aka
+> > "conflicted merge").  Which should lead us to explore a different
+> > approach, which is ...
+> >
+> >     Would it be possible for a patch to leave conflicts when
+> >     try_threeway() was attempted, but will cleanly apply if direct
+> >     application is done?
+> >
+> > If so, perhaps
+> >
+> >  - we first run try_threeway() and see if it cleanly resolves; if
+> >    so, we are done.
+> >
+> >  - then we try direct application and see if it cleanly applies; if
+> >    so, we are done.
+> >
+> >  - finally we run try_threeway() again and let it fail with
+> >    conflict.
+> >
+> > might be the right sequence?  We theoretically could omit the first
+> > of these three steps, but that would mean we'd write 923cd87a
+> > (git-apply: try threeway first when "--3way" is used, 2021-04-06)
+> > off as a failed experiment and revert it, which would not be ideal.
+> >
+> >
+> > Also, independent from this "if we claim we try threeway first and
+> > fall back to direct application, we really should do so" fix we are
+> > discussing, I think our default binary merge can be a bit more
+> > lenient and resolve this particular case of applying the binary
+> > patch taken from itself (i.e. a patch that takes A to B gets applied
+> > using --3way option to A).  I wonder if it can be as simple as the
+> > attached patch.  FWIW, this change is sufficient (without the change
+> > to apply.c we are reviewing here) to make your new tests in t4108
+> > pass.
+> So basically, another way of stating the problem would be that binary
+> patches can apply cleanly with direct application in some cases where
+> merge application is not clean. If i understand correctly this is unique
+> to binary files, although it would be possible for a user to supply a custom
+> merge driver for text files that is worse than direct application, that is
+> most likely heavy user error that we shouldn't have to cater to. However
+> the issue with binary is that the *default* merge driver is actually worse
+> than direct application (in some cases). Therefore our options are
 >
-
-This could be me likely not understanding this properly. Anyways, where
-is this comment in the code? I only see a comment about how 'is_submodule_active'
-iterates over all values. I couldn't find any "one value" reference in it.
-  
-> Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Shourya Shukla <periperidip@gmail.com>
-> Based-on-patch-by: Shourya Shukla <periperidip@gmail.com>
-> Based-on-patch-by: Prathamesh Chavan <pc44800@gmail.com>
-> ---
-> 
-> Changes since v1:
-> 
-> * Remove the extra handling for the case where submodule.active is valueless, as
->    Junio pointed out that it is better dealt with in a cleanup patch.
-> 
-> * Do not discard error returns from 'config_submodule_in_gitmodules()', and also
->    ensure that any calls to it in 'configure_added_submodule()' die on failure,
->    like with the original shell porcelain.
-> 
-> * Style fixes.
-> 
->   builtin/submodule--helper.c | 120 ++++++++++++++++++++++++++++++++++++
->   git-submodule.sh            |  28 +--------
->   2 files changed, 121 insertions(+), 27 deletions(-)
-> 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 862053c9f2..60b47492cb 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -2936,6 +2936,125 @@ static int add_clone(int argc, const char **argv, const char *prefix)
->   	return 0;
->   }
->   
-> +static int config_submodule_in_gitmodules(const char *name, const char *var, const char *value)
-> +{
-> +	char *key;
-> +	int ret;
-> +
-> +	if (!is_writing_gitmodules_ok())
-> +		die(_("please make sure that the .gitmodules file is in the working tree"));
-> +
-> +	key = xstrfmt("submodule.%s.%s", name, var);
-> +	ret = config_set_in_gitmodules_file_gently(key, value);
-> +	free(key);
-> +
-> +	return ret;
-> +}
-> +
-> +static void configure_added_submodule(struct add_data *add_data)
-> +{
-> +	char *key;
-> +	char *val = NULL;
-> +	struct child_process add_submod = CHILD_PROCESS_INIT;
-> +	struct child_process add_gitmodules = CHILD_PROCESS_INIT;
-> +
-> +	key = xstrfmt("submodule.%s.url", add_data->sm_name);
-> +	git_config_set_gently(key, add_data->realrepo);
-> +	free(key);
-> +
-> +	add_submod.git_cmd = 1;
-> +	strvec_pushl(&add_submod.args, "add",
-> +		     "--no-warn-embedded-repo", NULL);
-> +	if (add_data->force)
-> +		strvec_push(&add_submod.args, "--force");
-> +	strvec_pushl(&add_submod.args, "--", add_data->sm_path, NULL);
-> +
-> +	if (run_command(&add_submod))
-> +		die(_("Failed to add submodule '%s'"), add_data->sm_path);
-> +
-
-> +	if (config_submodule_in_gitmodules(add_data->sm_name, "path", add_data->sm_path) ||
-> +	    config_submodule_in_gitmodules(add_data->sm_name, "url", add_data->repo))
-> +		die(_("Failed to register submodule '%s'"), add_data->sm_path);
-> +
-> +	if (add_data->branch)
-> +		if (config_submodule_in_gitmodules(add_data->sm_name,
-> +						   "branch", add_data->branch))
-> +			die(_("Failed to register submodule '%s'"), add_data->sm_path);
-> +
-> +	add_gitmodules.git_cmd = 1;
-> +	strvec_pushl(&add_gitmodules.args,
-> +		     "add", "--force", "--", ".gitmodules", NULL);
-> +
-> +	if (run_command(&add_gitmodules))
-> +		die(_("Failed to register submodule '%s'"), add_data->sm_path);
-> +
-
-We could restructure this portion like so ...
-
--- 8< --
-         add_gitmodules.git_cmd = 1;
-         strvec_pushl(&add_gitmodules.args,
-                      "add", "--force", "--", ".gitmodules", NULL);
-                                                                                                                                                                                              
-         if (config_submodule_in_gitmodules(add_data->sm_name, "path", add_data->sm_path) ||
-             config_submodule_in_gitmodules(add_data->sm_name, "url", add_data->repo) ||
-             (add_data->branch && config_submodule_in_gitmodules(add_data->sm_name,
-                                                                 "branch", add_data->branch)) ||
-             run_command(&add_gitmodules))
-                 die(_("Failed to register submodule '%s'"), add_data->sm_path);
--- >8 --
-
-.. to avoid the redundant "Failed to register submodule ..." error message.
-Whether the restructured version has poor readability or not is debatable, though.
-                           
-> +	/*
-> +	 * NEEDSWORK: In a multi-working-tree world this needs to be
-> +	 * set in the per-worktree config.
-> +	 *
-
-It might be a good idea to differentiate the NEEDSWORK comment from an informative
-comment about the code snippet.
-
-Also, you could add another NEEDSWORK/TODO comment regarding the change
-to 'is_submodule_active' which you mention before[1].
-
-[1]: https://public-inbox.org/git/a6de518a-d4a2-5a2b-28e2-ca8b62f2c85b@gmail.com/
-
-> +	 * If submodule.active does not exist, or if the pathspec was unset,
-> +	 * we will activate this module unconditionally.
-> +	 *
-> +	 * Otherwise, we ask is_submodule_active(), which iterates
-> +	 * through all the values of 'submodule.active' to determine
-> +	 * if this module is already active.
-> +	 */
-> +	if (git_config_get_string("submodule.active", &val) ||
-> +	    !is_submodule_active(the_repository, add_data->sm_path)) {
-> +		key = xstrfmt("submodule.%s.active", add_data->sm_name);
-> +		git_config_set_gently(key, "true");
-> +		free(key);
-> +	}
-
-It might be a good idea to expand this condition similar to the scripted version,
-to retain the following comment which seems like a useful one to keep.
-
-> [ snip ]
+> 1. do as you suggest and run 3way -> direct -> 3way. I would modify
+> this and say we should only attempt this for binary patches, since a text
+> file that fails 3way would most likely also fail direct, so it would be a waste
+> of time to try it. furthermore if we cache results from the first 3way and
+> return them after attempting direct, it can save us from having to compute
+> the 3way twice, so would be no worse than our current performance.
 >
-> -	if git config --get submodule.active >/dev/null
-> -	then
-> -		# If the submodule being adding isn't already covered by the
-> -		# current configured pathspec, set the submodule's active flag
-> -		if ! git submodule--helper is-active "$sm_path"
-> -		then
-> -			git config submodule."$sm_name".active "true"
-> -		fi
-> -	else
-> -		git config submodule."$sm_name".active "true"
-> -	fi
+> 2. improve the default binary merge driver to be at least as good as direct
+> application. this would allow us to say overall that "merge drivers should
+> be at least as intelligent as direct patch application" and would greatly
+> simplify logic in apply.c. Your change is a good first step in allowing it
+> to handle more cases. A trivial way to make the binary merge driver
+> at least as good as patch application is to generate a patch and apply
+> it as part of the merge. I imagine this would have other consequences
+> though as many parts of git use the binary merge driver.
 
-> +	git submodule--helper add-config ${force:+--force} ${branch:+--branch "$branch"} --url "$repo" --resolved-url "$realrepo" --path "$sm_path" --name "$sm_name"
->   }
->   
->   #
-> 
+Hmm I would have thought that binary patches allow context, similar to this
+test snippet
+"
+ test_expect_success 'apply complex binary file patch' '
+     git reset --hard main &&
+     cp $TEST_DIRECTORY/test-binary-1.png bin.png &&
+     git add bin.png &&
+     git commit -m "add binary file" &&
 
--- 
-Sivaraam
+     echo 1 >>bin.png &&
+     git diff --binary >bin.diff &&
+     git reset --hard &&
+
+     cat $TEST_DIRECTORY/test-binary-2.png
+$TEST_DIRECTORY/test-binary-1.png >bin.png &&
+     git add bin.png &&
+     git commit -m "change binary file" &&
+
+     # Apply must succeed.
+     git apply bin.diff
+ '
+"
+but upon running it I see that normal patch application still requires the
+preimage to match exactly.
+"
+error: the patch applies to 'bin.png'
+(836481bd1b9b6bd7a1bb8939cf4ea01e05946850), which does not match the
+current contents.
+error: bin.png: patch does not apply
+"
+
+So at least in regards to making the default binary merge driver "at
+least as intelligent" as
+direct patch application, your patch ought to do it.
+
+>
+> Separately I think it would be a worthwhile follow-up patch to also handle
+> trivial three-way merges in try_threeway(). This would:
+> 1. Allow us to compare oid instead of the entire file buffer, which would be
+> faster.
+> 2. Handle trivial merges of all file types, which would save time.
+>
+> >
+> > ---- >8 ------- >8 ------- >8 ------- >8 ------- >8 ------- >8 ----
+> > Subject: ll-merge: teach ll_binary_merge() a trivial three-way merge
+> >
+> > The low-level binary merge code assumed that the caller will not
+> > feed trivial merges that would have been resolved at the tree level;
+> > because of this, ll_binary_merge() assumes the ancestor is different
+> > from either side, always failing the merge in conflict unless -Xours
+> > or -Xtheirs is in effect.
+> >
+> > But "git apply --3way" codepath could ask us to perform three-way
+> > merge between two binaries A and B using A as the ancestor version.
+> > The current code always fails such an application, but when given a
+> > binary patch that turns A into B and asked to apply it to A, there
+> > is no reason to fail such a request---we can trivially tell that the
+> > result must be B.
+> >
+> > Arguably, this fix may belong to one level higher at ll_merge()
+> > function, which dispatches to lower-level merge drivers, possibly
+> > even before it renormalizes the three input buffers.  But let's
+> > first see how this goes.
+> >
+> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> > ---
+> >  ll-merge.c | 56 +++++++++++++++++++++++++++++++++++++++-----------------
+> >  1 file changed, 39 insertions(+), 17 deletions(-)
+> >
+> > diff --git c/ll-merge.c w/ll-merge.c
+> > index 261657578c..bc8038d404 100644
+> > --- c/ll-merge.c
+> > +++ w/ll-merge.c
+> > @@ -46,6 +46,13 @@ void reset_merge_attributes(void)
+> >         merge_attributes = NULL;
+> >  }
+> >
+> > +static int same_mmfile(mmfile_t *a, mmfile_t *b)
+> > +{
+> > +       if (a->size != b->size)
+> > +               return 0;
+> > +       return !memcmp(a->ptr, b->ptr, a->size);
+> > +}
+> > +
+> >  /*
+> >   * Built-in low-levels
+> >   */
+> > @@ -58,9 +65,18 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+> >                            const struct ll_merge_options *opts,
+> >                            int marker_size)
+> >  {
+> > +       int status;
+> >         mmfile_t *stolen;
+> >         assert(opts);
+> >
+> > +       /*
+> > +        * With -Xtheirs or -Xours, we have cleanly merged;
+> > +        * otherwise we got a conflict, unless 3way trivially
+> > +        * resolves.
+> > +        */
+> > +       status = (opts->variant == XDL_MERGE_FAVOR_OURS ||
+> > +                 opts->variant == XDL_MERGE_FAVOR_THEIRS) ? 0 : 1;
+> > +
+> >         /*
+> >          * The tentative merge result is the common ancestor for an
+> >          * internal merge.  For the final merge, it is "ours" by
+> > @@ -68,18 +84,30 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+> >          */
+> >         if (opts->virtual_ancestor) {
+> >                 stolen = orig;
+> > +               status = 0;
+> >         } else {
+> > -               switch (opts->variant) {
+> > -               default:
+> > -                       warning("Cannot merge binary files: %s (%s vs. %s)",
+> > -                               path, name1, name2);
+> > -                       /* fallthru */
+> > -               case XDL_MERGE_FAVOR_OURS:
+> > -                       stolen = src1;
+> > -                       break;
+> > -               case XDL_MERGE_FAVOR_THEIRS:
+> > +               if (same_mmfile(orig, src1)) {
+> >                         stolen = src2;
+> > -                       break;
+> > +                       status = 0;
+> > +               } else if (same_mmfile(orig, src2)) {
+> > +                       stolen = src1;
+> > +                       status = 0;
+> > +               } else if (same_mmfile(src1, src2)) {
+> > +                       stolen = src1;
+> > +                       status = 0;
+> > +               } else {
+> > +                       switch (opts->variant) {
+> > +                       default:
+> > +                               warning("Cannot merge binary files: %s (%s vs. %s)",
+> > +                                       path, name1, name2);
+> > +                               /* fallthru */
+> > +                       case XDL_MERGE_FAVOR_OURS:
+> > +                               stolen = src1;
+> > +                               break;
+> > +                       case XDL_MERGE_FAVOR_THEIRS:
+> > +                               stolen = src2;
+> > +                               break;
+> > +                       }
+> >                 }
+> >         }
+> >
+> > @@ -87,13 +115,7 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+> >         result->size = stolen->size;
+> >         stolen->ptr = NULL;
+> >
+> > -       /*
+> > -        * With -Xtheirs or -Xours, we have cleanly merged;
+> > -        * otherwise we got a conflict.
+> > -        */
+> > -       return opts->variant == XDL_MERGE_FAVOR_OURS ||
+> > -              opts->variant == XDL_MERGE_FAVOR_THEIRS ?
+> > -              0 : 1;
+> > +       return status;
+> >  }
+> >
+> >  static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
