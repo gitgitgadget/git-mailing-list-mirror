@@ -2,101 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 648CCC4338F
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 04:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58308C4338F
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 05:44:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 437216056C
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 04:46:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 40C59600EF
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 05:44:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233567AbhG1EqD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jul 2021 00:46:03 -0400
-Received: from smtp44.hk.chengmail.me ([113.10.190.92]:54914 "EHLO
-        smtp44.hk.chengmail.me" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232665AbhG1EqC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jul 2021 00:46:02 -0400
-X-CHENGMAILHOST: 113.10.190.92
-X-CHENGMAIL-INSTANCEID: 4498.6100e101.e010c.0
-Date:   Wed, 28 Jul 2021 12:45:53 +0800
-From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
-To:     "jerry@skydio.com" <jerry@skydio.com>, git <git@vger.kernel.org>,
-        "Junio C Hamano" <gitster@pobox.com>
-Cc:     "jerry@skydio.com" <jerry@skydio.com>
-Subject: Re: [PATCH] git-apply: fix --3way with binary patch
-References: <ee1d1a82ef4d11ebbb4cd4ae5278bc123046@skydio.com>
-X-Priority: 3
-X-GUID: 9572DB7F-4010-4A5E-B837-DB83CB3D4AFE
-X-Has-Attach: no
-X-Mailer: Foxmail 7.2.19.158[cn]
-Mime-Version: 1.0
-X-source-message-id: <2021072812445303069364@oschina.cn>
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: base64
-Message-ID: <b37a28faef5e11ebb9270024e87935e7@oschina.cn>
+        id S233519AbhG1FoC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jul 2021 01:44:02 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57190 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229814AbhG1FoB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jul 2021 01:44:01 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8EBA9139DE8;
+        Wed, 28 Jul 2021 01:44:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wXvSHru2MWrka4onrdl0BS3V9WE1Ai0sKSdFE1
+        PPQhc=; b=plGoTQw65HOoIHzskPPx7mCUIOJub7dxgFFbzoB4QhFUJHfmlYv+8D
+        LM+UPurLKvZNT69NdYUI1e+hah2gp2wYtVtBfg5loCVq5LSuLSrNlc8xYiHeGTo9
+        BmXKXsFWixVFgxNyeP8ggc8F2QhxbEeKyKscrWSTV8XGeVBNEnqm0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 873F2139DE7;
+        Wed, 28 Jul 2021 01:44:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C952E139DE0;
+        Wed, 28 Jul 2021 01:43:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3 4/5] Use a better name for the function interpolating
+ paths
+References: <pull.66.v2.git.1625155388.gitgitgadget@gmail.com>
+        <pull.66.v3.git.1627164413.gitgitgadget@gmail.com>
+        <19fd9c3c803a300b586c76736301a7379c4c6226.1627164413.git.gitgitgadget@gmail.com>
+        <xmqqh7gghgtd.fsf@gitster.g>
+        <99332fdf-24af-8938-2f55-b6e25ca12aad@gigacodes.de>
+        <xmqqfsvzcqmo.fsf@gitster.g> <xmqq8s1rcn0t.fsf@gitster.g>
+        <xmqq4kcfclw8.fsf@gitster.g>
+Date:   Tue, 27 Jul 2021 22:43:56 -0700
+In-Reply-To: <xmqq4kcfclw8.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        27 Jul 2021 17:39:03 -0700")
+Message-ID: <xmqqczr3at7n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: CD80FDDE-EF66-11EB-BB02-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SSBhbSBoYXBweSB0byBzZWUgdGhhdCB5b3UgZml4IHRoaXMgcHJvYmxlbSBpbiB0aW1lLgoKU29t
-ZSBhcHBsaWNhdGlvbiBwbGF0Zm9ybShsaWtlIEdpdGxhYiwgR2l0ZWUpIHdpbGwgdXNlICJnaXQg
-YXBwbHkgLS1pbmRleCB4eHgucGF0Y2giIHRvIG1lcmdlIHBhdGNoIGZpbGUsCmluIG9yZGVyIHRv
-IGNvbXBhdGlibGUgd2l0aCBtb3N0IHR5cGVzIG9mIGZpbGVzLCB0aGV5IHdpbGwgdXNlICItLTN3
-YXkiLCBzbyDCoGFsdGhvdWdoIGFzIEp1bm8gc2FpZAoiV2UgcmVmdXNlIHRvIG1lcmdlIGJpbmFy
-eSBmaWxlcywgc28gSSB3b3VsZCBub3QgYmUgc3VycHJpc2VkIGlmIHdlIGZhaWxlZCB0aGUgM3dh
-eSBpbiB0aGlzIGNhc2UiLAp3ZSB3b3VsZCBsaWtlIGl0IHN0aWxsIGJlaGF2ZSBhcyBiZWZvcmUg
-dGhhdCBmYWxsaW5nIGJhY2sgdG8gbm9ybWFsIHBhdGNoIGFwcGxpY2F0aW9uLCBzbyB0aGFua3Mg
-YWdhaW4gdG8gZml4IHRoaXMuCgo+QmluYXJ5IHBhdGNoZXMgYXBwbGllZCB3aXRoICItLTN3YXki
-IHdpbGwKPmFsd2F5cyByZXR1cm4gYSBjb25mbGljdCBldmVuIGlmIHRoZSBwYXRjaAo+c2hvdWxk
-IGNsZWFubHkgYXBwbHkgYmVjYXVzZSB0aGUgbG93IGxldmVsCj5tZXJnZSBmdW5jdGlvbiBjb25z
-aWRlcnMgYWxsIGJpbmFyeSBtZXJnZXMKPndpdGhvdXQgYSB2YXJpYW50IHRvIGJlIGNvbmZsaWN0
-aW5nLgo+Cj5GaXggYnkgZmFsbGluZyBiYWNrIHRvIG5vcm1hbCBwYXRjaCBhcHBsaWNhdGlvbgo+
-Zm9yIGFsbCBiaW5hcnkgcGF0Y2hlcy4KPgo+QWRkIHRlc3RzIGZvciAtLTN3YXkgYW5kIG5vcm1h
-bCBhcHBsaWNhdGlvbnMKPm9mIGJpbmFyeSBwYXRjaGVzLgo+Cj5GaXhlczogOTIzY2Q4N2FjOCAo
-ImdpdC1hcHBseTogdHJ5IHRocmVld2F5IGZpcnN0IHdoZW4gIi0tM3dheSIgaXMgdXNlZCIpCj5T
-aWduZWQtb2ZmLWJ5OiBKZXJyeSBaaGFuZyA8amVycnlAc2t5ZGlvLmNvbT4KPi0tLQo+IGFwcGx5
-LmPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDMgKystCj4gdC90NDEw
-OC1hcHBseS10aHJlZXdheS5zaCB8IDQ1ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKwo+IDIgZmlsZXMgY2hhbmdlZCwgNDcgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigt
-KQo+Cj5kaWZmIC0tZ2l0IGEvYXBwbHkuYyBiL2FwcGx5LmMKPmluZGV4IDFkMmQ3ZTEyNGUuLjc4
-ZTUyZjBkYzEgMTAwNjQ0Cj4tLS0gYS9hcHBseS5jCj4rKysgYi9hcHBseS5jCj5AQCAtMzYzOCw3
-ICszNjM4LDggQEAgc3RhdGljIGludCBhcHBseV9kYXRhKHN0cnVjdCBhcHBseV9zdGF0ZSAqc3Rh
-dGUsIHN0cnVjdCBwYXRjaCAqcGF0Y2gsCj4gaWYgKGxvYWRfcHJlaW1hZ2Uoc3RhdGUsICZpbWFn
-ZSwgcGF0Y2gsIHN0LCBjZSkgPCAwKQo+IHJldHVybiAtMTsKPgo+LQlpZiAoIXN0YXRlLT50aHJl
-ZXdheSB8fCB0cnlfdGhyZWV3YXkoc3RhdGUsICZpbWFnZSwgcGF0Y2gsIHN0LCBjZSkgPCAwKSB7
-Cj4rCWlmICghc3RhdGUtPnRocmVld2F5IHx8IHBhdGNoLT5pc19iaW5hcnkgfHwKPisJdHJ5X3Ro
-cmVld2F5KHN0YXRlLCAmaW1hZ2UsIHBhdGNoLCBzdCwgY2UpIDwgMCkgewo+IGlmIChzdGF0ZS0+
-YXBwbHlfdmVyYm9zaXR5ID4gdmVyYm9zaXR5X3NpbGVudCAmJgo+IMKgwqDCoCBzdGF0ZS0+dGhy
-ZWV3YXkgJiYgIXBhdGNoLT5kaXJlY3RfdG9fdGhyZWV3YXkpCj4gZnByaW50ZihzdGRlcnIsIF8o
-IkZhbGxpbmcgYmFjayB0byBkaXJlY3QgYXBwbGljYXRpb24uLi5cbiIpKTsKPmRpZmYgLS1naXQg
-YS90L3Q0MTA4LWFwcGx5LXRocmVld2F5LnNoIGIvdC90NDEwOC1hcHBseS10aHJlZXdheS5zaAo+
-aW5kZXggNjUxNDdlZmRlYS4uZDMyNzQ4Zjg5OSAxMDA3NTUKPi0tLSBhL3QvdDQxMDgtYXBwbHkt
-dGhyZWV3YXkuc2gKPisrKyBiL3QvdDQxMDgtYXBwbHktdGhyZWV3YXkuc2gKPkBAIC0yMzAsNCAr
-MjMwLDQ5IEBAIHRlc3RfZXhwZWN0X3N1Y2Nlc3MgJ2FwcGx5IHdpdGggLS0zd2F5IC0tY2FjaGVk
-IGFuZCBjb25mbGljdHMnICcKPiB0ZXN0X2NtcCBleHBlY3QuZGlmZiBhY3R1YWwuZGlmZgo+ICcK
-Pgo+K3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ2FwcGx5IGJpbmFyeSBmaWxlIHBhdGNoJyAnCj4rCWdp
-dCByZXNldCAtLWhhcmQgbWFpbiAmJgo+KwljcCAkVEVTVF9ESVJFQ1RPUlkvdGVzdC1iaW5hcnkt
-MS5wbmcgYmluLnBuZyAmJgo+KwlnaXQgYWRkIGJpbi5wbmcgJiYKPisJZ2l0IGNvbW1pdCAtbSAi
-YWRkIGJpbmFyeSBmaWxlIiAmJgo+Kwo+KwljcCAkVEVTVF9ESVJFQ1RPUlkvdGVzdC1iaW5hcnkt
-Mi5wbmcgYmluLnBuZyAmJgo+Kwo+KwlnaXQgZGlmZiAtLWJpbmFyeSA+YmluLmRpZmYgJiYKPisJ
-Z2l0IHJlc2V0IC0taGFyZCAmJgo+Kwo+KwkjIEFwcGx5IG11c3Qgc3VjY2VlZC4KPisJZ2l0IGFw
-cGx5IGJpbi5kaWZmCj4rJwo+Kwo+K3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ2FwcGx5IGJpbmFyeSBm
-aWxlIHBhdGNoIHdpdGggM3dheScgJwo+KwlnaXQgcmVzZXQgLS1oYXJkIG1haW4gJiYKPisJY3Ag
-JFRFU1RfRElSRUNUT1JZL3Rlc3QtYmluYXJ5LTEucG5nIGJpbi5wbmcgJiYKPisJZ2l0IGFkZCBi
-aW4ucG5nICYmCj4rCWdpdCBjb21taXQgLW0gImFkZCBiaW5hcnkgZmlsZSIgJiYKPisKPisJY3Ag
-JFRFU1RfRElSRUNUT1JZL3Rlc3QtYmluYXJ5LTIucG5nIGJpbi5wbmcgJiYKPisKPisJZ2l0IGRp
-ZmYgLS1iaW5hcnkgPmJpbi5kaWZmICYmCj4rCWdpdCByZXNldCAtLWhhcmQgJiYKPisKPisJIyBB
-cHBseSBtdXN0IHN1Y2NlZWQuCj4rCWdpdCBhcHBseSAtLTN3YXkgLS1pbmRleCBiaW4uZGlmZgo+
-KycKPisKPit0ZXN0X2V4cGVjdF9zdWNjZXNzICdhcHBseSBmdWxsLWluZGV4IHBhdGNoIHdpdGgg
-M3dheScgJwo+KwlnaXQgcmVzZXQgLS1oYXJkIG1haW4gJiYKPisJY3AgJFRFU1RfRElSRUNUT1JZ
-L3Rlc3QtYmluYXJ5LTEucG5nIGJpbi5wbmcgJiYKPisJZ2l0IGFkZCBiaW4ucG5nICYmCj4rCWdp
-dCBjb21taXQgLW0gImFkZCBiaW5hcnkgZmlsZSIgJiYKPisKPisJY3AgJFRFU1RfRElSRUNUT1JZ
-L3Rlc3QtYmluYXJ5LTIucG5nIGJpbi5wbmcgJiYKPisKPisJZ2l0IGRpZmYgLS1mdWxsLWluZGV4
-ID5iaW4uZGlmZiAmJgo+KwlnaXQgcmVzZXQgLS1oYXJkICYmCj4rCj4rCSMgQXBwbHkgbXVzdCBz
-dWNjZWVkLgo+KwlnaXQgYXBwbHkgLS0zd2F5IC0taW5kZXggYmluLmRpZmYKPisnCj4rCj4gdGVz
-dF9kb25lCj4tLQo+Mi4zMi4wLjEzMTQuZzZlZDRmY2M0Y2MKPg==
+Junio C Hamano <gitster@pobox.com> writes:
 
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> Fabian Stelzer <fs@gigacodes.de> writes:
+>>>
+>>>>> I think Fabian's "ssh signing" is not as ready as this topic, and it
+>>>>> can afford to wait by rebasing on top of this topic.  By the time
+>>>>> "ssh signing" gets into testable shape (right now, it does not pass
+>>>>> tests when merged to 'seen'), hopefully the "expand install-prefix"
+>>>>> topic may already be in 'next' if not in 'master'.
+>>>> I think the test problem is not due to my patch.
+>>>
+>>> I've been seeing these test failers locally, every time
+>>> fs/ssh-signing topic is merged to 'seen' (without the reftable
+>>> thing).
+>>> ...
+>> Interesting.  It seems that the failure has some correlation with
+>> the use of --root=<trash directory> option.
+>>
+>>     $ sh t5534-push-signed.sh -i
+>
+> And 7528 fails with --root set to a /dev/shm/ trash directory.
+
+An update.  The same failure can be seen _without_ merging the topic
+to 'seen'.  The topic by itself will fail t5534 and t7528 when run
+with --root= set to somewhere:
+
+    $ make
+    $ testpen=/dev/shm/testpen.$$
+    $ rm -fr "$testpen" && mkdir "$testpen"
+    $ cd t
+    $ sh t5534-*.sh --root=$testpen -i
+    $ sh t7528-*.sh --root=$testpen -i
+
+on the branch itself, without getting interference by any other
+topic, should hopefully be an easy enough way to reproduce the
+problem.
+
+Thanks.
