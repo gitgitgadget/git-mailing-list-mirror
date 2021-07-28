@@ -2,139 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DF4DC4338F
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 17:46:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C00D6C4338F
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 17:49:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E5F7B60ED4
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 17:46:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 98D2060BD3
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 17:49:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230412AbhG1RqY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jul 2021 13:46:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59968 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229556AbhG1RqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jul 2021 13:46:24 -0400
-Received: (qmail 4237 invoked by uid 109); 28 Jul 2021 17:46:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 28 Jul 2021 17:46:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12346 invoked by uid 111); 28 Jul 2021 17:46:22 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 28 Jul 2021 13:46:22 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 28 Jul 2021 13:46:21 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
-        jonathantanmy@google.com
-Subject: Re: [PATCH v2 08/24] midx: respect 'core.multiPackIndex' when writing
-Message-ID: <YQGX7SMu4UoTJ2VK@coredump.intra.peff.net>
-References: <YPhz+iOMu4Q7zjY4@nand.local>
- <YPp98QgXW5PQHzyy@coredump.intra.peff.net>
- <YP8F9ttlMXwNZBam@nand.local>
- <YP8zsR+W8JeCWc1Q@nand.local>
- <YQBCjSmdOPfrnNnK@coredump.intra.peff.net>
- <YQBEIrRfcq5dhpZn@nand.local>
- <YQBFi70c1wfXdKQf@coredump.intra.peff.net>
- <YQBGvEQoZpw49Z7L@nand.local>
- <YQBIqO5j0VHXL6V7@coredump.intra.peff.net>
- <YQBnE+ft/MR3zs1t@nand.local>
+        id S229556AbhG1RtE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jul 2021 13:49:04 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60474 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229581AbhG1RtA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jul 2021 13:49:00 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 235E4D9145;
+        Wed, 28 Jul 2021 13:48:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=MAaA9W4978crguTq//yXYJP3/BVmmMES+QZYGm
+        ylCHM=; b=sivsP9dS+iIIrc8WFIXdw2ozuxc7JvtOf+DyOQruJGcZZRP2ery9oO
+        m1J6mxPfcDQkbvrNobday99b4m3T4Eb/4Qe1eP6H6cyG2DulcR4HBTrLkqaoHpCA
+        zDDZFUz2DngY34D2yUHgFZ2m60EUReaueA1Sx5mSFF5tSVlhmxnKo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 18EF5D9144;
+        Wed, 28 Jul 2021 13:48:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9158FD9143;
+        Wed, 28 Jul 2021 13:48:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Boeckel <mathstuf@gmail.com>
+Cc:     git@vger.kernel.org,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 1/1] config: support setting up a remote tracking branch
+ upon creation
+References: <20210728135041.501850-1-mathstuf@gmail.com>
+        <20210728135041.501850-2-mathstuf@gmail.com>
+Date:   Wed, 28 Jul 2021 10:48:56 -0700
+In-Reply-To: <20210728135041.501850-2-mathstuf@gmail.com> (Ben Boeckel's
+        message of "Wed, 28 Jul 2021 09:50:41 -0400")
+Message-ID: <xmqqim0u9vnb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YQBnE+ft/MR3zs1t@nand.local>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 156371B2-EFCC-11EB-9AC1-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 27, 2021 at 04:05:39PM -0400, Taylor Blau wrote:
+Ben Boeckel <mathstuf@gmail.com> writes:
 
-> > I actually think having write_midx_internal() open up a new midx is
-> > reasonable-ish. It's just that:
-> >
-> >   - it's weird when it stuffs duplicate packs into the
-> >     r->objects->packed_git list. But AFAICT that's not actually hurting
-> >     anything?
-> 
-> It is hurting us when we try to write a MIDX bitmap, because we try to
-> see if one already exists. And to do that, we call prepare_bitmap_git(),
-> which tries to call open_pack_bitmap_1 on *each* pack in the packed_git
-> list. Critically, prepare_bitmap_git() errors out if it is called with a
-> bitmap_git that has a non-NULL `->pack` pointer.
+> The `branch.autoSetupMerge` works well for setting up tracking a local
+> branch, but there is no mechanism to automatically set up a remote
+> tracking situation.
 
-It doesn't error out. It does produce a warning(), though, if it ignores
-a bitmap (and that warning is doubly confusing because it is ignoring
-bitmap X because it has already loaded and will use that exact same X!).
+This description is probably insufficient to explain what's missing,
+probably because "set up a remote tracking situation" is a bit
+fuzzy.
 
-This causes t7700.13 to fail because it is being picky about stderr
-being empty.
+Without this patch, I can do this already:
 
-So the overall behavior is correct, but I agree it's sufficiently ugly
-that we should make sure it doesn't happen.
+    $ git checkout -t -b topic origin/topic
 
-  Side note: IMHO the "check all packs to see if there are any other
-  bitmaps to warn about" behavior is kind of pointless, and we should
-  consider just returning as soon as we have one. This is already
-  somewhat the case after your midx-bitmap patches, as we will not even
-  bother to look for a pack bitmap after finding a midx bitmap. That is
-  a good thing, because it means you can keep pack bitmaps around for
-  flexibility. But let's leave any changes to the pack-only behavior out
-  of this series for simplicity.
+And after the above, we have
 
-> I stepped away from my computer for an hour or so and thought about
-> this, and I think that the solution is two-fold:
-> 
->   - We should be more careful about freeing up the ->next pointers of a
->     MIDX, and releasing the memory we allocated to hold each MIDX struct
->     in the first place.
+    [branch "topic"]
+	remote = origin
+	merge = refs/heads/topic
 
-Yeah. This is a bug already before your series. I suspect nobody noticed
-because it's very rare for us to call close_midx() at all, and it only
-matters if there's an alternate odb with a midx. (The common call to
-close_midx() is in these write paths, but it is always using a single
-midx file).
+Of course, you can instead use a short-hand DWIM, e.g.
 
->   - We should always be operating on the repository's
->     r->objects->multi_pack_index, or any other MIDX that can be reached
->     via walking the `->next` pointers. If we do that consistently, then
->     we'll only have at most one instance of a MIDX struct corresponding
->     to each MIDX file on disk.
+    $ git checkout topic ;# assuming origin/topic exists
 
-Certainly that makes sense to me in terms of the Windows "must close the
-current midx before writing" behavior. We have to realize that we're
-operating in the current repo.
+gives us the same thing.  In either case, topic knows to integrate
+with the 'topic' branch from remote 'origin' and push back there.
 
-But we do allow an "--object-dir" option to "multi-pack-index write",
-and I don't see any other code explicitly requiring that it be part of
-the current repository. What I'm wondering is whether this would be
-breaking:
+So instead of saying "there is no mechanism to ...", be a bit more
+specific what you can and cannot do in this first paragraph.
 
-  cd $REPO/..
-  git multi-pack-index --object-dir $REPO/.git/objects write
+Then we can describe the solution we'd propose in the second and
+subsequent paragraphs.
 
-or:
+Thanks.
 
-  cd /some/other/repo
-  git multi-pack-index --object-dir $REPO/.git/objects write
 
-The latter does seem to work, but the former segfaults (usually -- if
-there's already a midx it is OK).
 
-If it is broken now, this may be a good time to explicitly forbid it.
-It does seem to make the --object-dir mostly pointless, though it would
-still work for operating on a midx in one of your alternates. I'm not
-sure I understand the original point of that option, and if the current
-behavior is sufficient.
+> +branch.defaultRemote::
+> +	When a new branch is created with 'git branch', 'git switch' or 'git
+> +	checkout', this value will be used to initialize the
+> +	"branch.<name>.remote" setting.
 
-If it turns out that we can't forbid writing midx's besides the ones in
-r->objects, it may be sufficient to just make any assumptions
-conditional. I.e., _if_ it's one of the ones mentioned by r->objects,
-then close it, but otherwise leave it open. But if we can get away with
-restricting ourselves as you described, I think the result will be much
-simpler, and we should prefer that.
+You mean without "-t"?  I offhand do not think of a reason why this
+is a good idea.  How would one create local topic branches that you
+plan to merge locally into your own larger topic branch to be shared
+with others?  Shouldn't there be an easy way to countermand the
+setting by this configuration?
 
--Peff
+> +branch.defaultPushRemote::
+> +	When a new branch is created with 'git branch', 'git switch' or 'git
+> +	checkout', this value will be used to initialize the
+> +	"branch.<name>.pushRemote" setting.
+
+Ditto.
+
+> +branch.defaultMerge::
+> +	When a new branch is created with 'git branch', 'git switch' or 'git
+> +	checkout', this value will be used to initialize the
+> +	"branch.<name>.merge" setting.
+
+So the expected use case is to fork multiple local branches, to
+integrate with the same branch from the remote?  I think we can
+already do 
+
+    $ git checkout -t -b xyzzy origin/master
+    $ git checkout -t -b frotz origin/master
+
+and you can lose -t with branch.autosetupmerge setting.  As the "git
+branch" command needs to get the name of your branch (e.g. 'xyzzy'
+or 'frotz') and which remote tracking branch you start from
+(e.g. 'origin/master'), even with branch.{defaultRemote,defaultMerge}
+configuration, you wouldn't lose that many keystrokes, I suspect.
+
+Or do you plan to make
+
+    $ git branch xyzzy
+
+a short-hand for
+
+    $ git branch -t xyzzy origin/master
+
+when defaultRemote and defaultMerge are set to 'origin' and
+'refs/heads/master'?  It would be way too confusing to start the
+new branch from origin/master in such a case, as everybody learned
+that "git branch xyzzy" that does not say where the branch initially
+points at uses HEAD.
