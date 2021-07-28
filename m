@@ -2,93 +2,310 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1485FC4338F
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 11:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E410C4338F
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 11:53:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E5B7260F91
-	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 11:33:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 242C360F9D
+	for <git@archiver.kernel.org>; Wed, 28 Jul 2021 11:53:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236059AbhG1Ldz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jul 2021 07:33:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54666 "EHLO
+        id S236084AbhG1Lxw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jul 2021 07:53:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235924AbhG1Ldz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jul 2021 07:33:55 -0400
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3234C061757
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 04:33:52 -0700 (PDT)
-Received: by mail-io1-xd2e.google.com with SMTP id r18so2612389iot.4
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 04:33:52 -0700 (PDT)
+        with ESMTP id S234631AbhG1Lxv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jul 2021 07:53:51 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A053BC061757
+        for <git@vger.kernel.org>; Wed, 28 Jul 2021 04:53:49 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id t21so2308115plr.13
+        for <git@vger.kernel.org>; Wed, 28 Jul 2021 04:53:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=4ZoMXW1d5RWIsxpb14SvKURH5eV6M5dVbGZmkswYhTo=;
-        b=IDngx4An9G3Zu2ubUd6PI83mDv5zbO5oJn/EDMQMbYnRUM8S1VV7IfbO3w0MAipZhw
-         oWGxjrR0ihmD/OdNGKsQXlW5z6UvEa8DU4teMZULs6KcBinbGpFXJhPm1sysITcw//8L
-         JoC5tGVrYLgh98I1yrk/9kXAXJWHb5E3+dPOdaiiZqnkSa2pD4yndJ8U3lRU+MR7kiCR
-         qzhqnj61VT0fEqoAJiTxHV0KLaojAIcLSntZ9HiBHTU2pMnVLZfMpjmy/c1TSiLVq+OM
-         T4vfbzNhV8aVNq/WTglcY8SlLHnwNhAwd2S2xhUdhHuAk/QWRkiQ4EOQvJs2pveY5v1t
-         GOhQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ZdNEulesznMQqP3TIIITdKUdJxZNCqu9NNBCZo/2nk8=;
+        b=cM06UVzFyq/+VThJnmvcxRnefUe/c9+wT/cC6uHdfTtizCd2ZVYfIhYfBOk6h7gJWU
+         gABQDM/P22YY398v0rBTAirfVsr2ueBpFPyWlb+4lskyt8vAYkALzzm2ld6tAqXF1tbb
+         4Y+5nUjQzXNpYdLCsIe5v2LvJMQOW/rxnV2Ga55ukxu7A5Tj9GHRo8jMO2IyeMMYZ/Wa
+         39m+g9s1DTp/ANGajJE36k1jFnD9XvF1sCeNqyYNmKvOR872eGpZ6SE3YIQU8S+XJm/G
+         HC3ZshqwAqAwWWSzW1ecvE3bj7EfHJCKfQI7PBxi28heMT0u3k7nOrUD9kcEOEGHbXsz
+         /4Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=4ZoMXW1d5RWIsxpb14SvKURH5eV6M5dVbGZmkswYhTo=;
-        b=pAtdAZTuxox7zTR4eopmSZ8mjlg38rYZUSGI31Yp74SOCqnvdq/yXp2jEInSZ04URA
-         UA7Q3FqAoASObokno92SedljhIqe1jEzGZd/U9+5LeIyPTbvYb5buUFirdJ2U8zB+NAR
-         Tx17pKgDSlFMdsRPJQkzT556ugmHvbn8g0vFErRfEtckgaCMYQNfoY6TsPVKrH2vs3yz
-         zvRJoXFJqYll5KI89Du2lGfDkyEm/GPKXcVP793M4Z4Hy7O/Xcw2Dtpz5gF7WVO+cBWp
-         56igIpyLZnY4f5Ddzt9qOG7CF2Soffj9zfnc+B5cj6op+XHTveIPM5WJMGsad7R8PtWO
-         cZtw==
-X-Gm-Message-State: AOAM532L4LAx83XHuxRP2ZLdTZTfc1lov1rrq6VfSxU5KwGQvJ3J0l2I
-        6Ku5ays0Nb51EqrYPuU2t4JEkVRnSNr/CUAmRDM=
-X-Google-Smtp-Source: ABdhPJz7wlHHkj/M1OKLwxv/aFfeZY19dKLHpvVwB9r7HF08pCYN71fD4lzqqPiMFRe/Z9rC1ZO8pjxA4jaJ9/Gk44M=
-X-Received: by 2002:a05:6638:33a6:: with SMTP id h38mr26113875jav.130.1627472032298;
- Wed, 28 Jul 2021 04:33:52 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ZdNEulesznMQqP3TIIITdKUdJxZNCqu9NNBCZo/2nk8=;
+        b=eqKxhhUzsk5sZZB4fTq+9wm0ls25WVQkXl7w/foPWiDsDEaV3MfspmBsTeF518Wal1
+         MFJkm4hNwcT5bDKjDv7/sAMrVVmIvRmFrC8W6wHwh7gOvJje+snxaEzjJDWVVUTmGwNT
+         q6+NN5DvJvleZboDMDy+wRNhq1GffA3koFsy2LG7EtUyDlpw/2JmT6Qtu71Rh1Rr0632
+         ENyu1ZKSbZPsSHLYJ3ialSYKrldzYSo0sN1kQ7cXhzNL/4qoh1SwHWG3HZaJLG+Iq26o
+         J3mCYGGKkgi/Fz3TvWL9Qse2cH52UOHqOmEhYimz6g5eDfOHFi3OCrGU6mnS+UA9El6Z
+         J38w==
+X-Gm-Message-State: AOAM5305k8YPbmDjvU+Lp6ZR6CqItry4MLYtMj70HGRr4DIWC0Ti/Ou9
+        rYm+N7ZlbqypGSshJPwJCn1C/YU1ymPpvbbT
+X-Google-Smtp-Source: ABdhPJxnBhIQ/Y6W7MlXEYMG2h0fZTOwCy3WOTh09gPIGEQjTHe1j6PvHt2EOSzkQeSVOC4+Jzp5CQ==
+X-Received: by 2002:a17:90a:e54a:: with SMTP id ei10mr9263751pjb.1.1627473228928;
+        Wed, 28 Jul 2021 04:53:48 -0700 (PDT)
+Received: from atharva-on-air.Dlink ([119.82.121.47])
+        by smtp.gmail.com with ESMTPSA id w184sm7300312pfw.85.2021.07.28.04.53.44
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 28 Jul 2021 04:53:48 -0700 (PDT)
+From:   Atharva Raykar <raykar.ath@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Atharva Raykar <raykar.ath@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, "Emily Shaffer" <emilyshaffer@google.com>,
+        "Jonathan Nieder" <jrnieder@gmail.com>,
+        "Junio C Hamano" <gitster@pobox.com>,
+        "Christian Couder" <christian.couder@gmail.com>,
+        "Shourya Shukla" <periperidip@gmail.com>,
+        "Kaartic Sivaraam" <kaartic.sivaraam@gmail.com>,
+        "Eric Sunshine" <sunshine@sunshineco.com>,
+        "Prathamesh Chavan" <pc44800@gmail.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        "Rafael Silva" <rafaeloliveira.cs@gmail.com>
+Subject: [GSoC] [PATCH v2] submodule--helper: introduce add-config subcommand
+Date:   Wed, 28 Jul 2021 17:23:04 +0530
+Message-Id: <20210728115304.80643-1-raykar.ath@gmail.com>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210722112143.97944-1-raykar.ath@gmail.com>
+References: <20210722112143.97944-1-raykar.ath@gmail.com>
 MIME-Version: 1.0
-References: <pull.1001.git.1626962763373.gitgitgadget@gmail.com>
- <pull.1001.v2.git.1627135281887.gitgitgadget@gmail.com> <a8b260be-dae5-e717-d4cb-3ee123f93620@gmail.com>
- <xmqq1r7jebbf.fsf@gitster.g> <xmqqtukfcvzv.fsf@gitster.g>
-In-Reply-To: <xmqqtukfcvzv.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Wed, 28 Jul 2021 19:34:25 +0800
-Message-ID: <CAOLTT8SR86q+q37traSpk7iWEzAaGTtZzAWrck+0LnqgSefKRA@mail.gmail.com>
-Subject: Re: [PATCH v2] [GSOC] cherry-pick: fix bug when used with GIT_CHERRY_PICK_HELP
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Ramkumar Ramachandra <artagnon@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B47=E6=9C=8828=E6=97=
-=A5=E5=91=A8=E4=B8=89 =E4=B8=8A=E5=8D=885:00=E5=86=99=E9=81=93=EF=BC=9A
+Add a new "add-config" subcommand to `git submodule--helper` with the
+goal of converting part of the shell code in git-submodule.sh related to
+`git submodule add` into C code. This new subcommand sets the
+configuration variables of a newly added submodule, by registering the
+url in local git config, as well as the submodule name and path in the
+.gitmodules file. It also sets 'submodule.<name>.active' to "true" if
+the submodule path has not already been covered by any pathspec
+specified in 'submodule.active'.
 
-> Otherwise we can allocate a new bit in the structure, have relevant
-> callers set it, and teach cherry-pick an unadvertised command line
-> option that sets the bit, and use that option only from
-> git-rebase--preserve-merges when it makes a call to cherry-pick.
-> When "rebase -p" is either retired or rewritten in C, we can retire
-> the option from cherry-pick.
->
+This is meant to be a faithful conversion from shell to C, with only one
+minor change: A warning is emitted if no value is specified in
+'submodule.active', ie, the config looks like: "[submodule] active\n",
+because it is an invalid configuration. It would be helpful to let the
+user know that the pathspec is unset, and the value of
+'submodule.<name>.active' might be set to 'true' so that they can
+rectify their configuration and prevent future surprises (especially
+given that the latter variable has a higher priority than the former).
 
-Just use a PARSE_OPT_HIDDEN cannot prevent the user from using
-the option... Is there a better way?
+The structure of the conditional to check if we need to set the 'active'
+toggle looks different from the shell version -- but behaves the same.
+The change was made to decrease code duplication. A comment has been
+added to explain that only one value of 'submodule.active' is obtained
+to check if we need to call is_submodule_active() at all.
 
---
-ZheNing Hu
+Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Shourya Shukla <periperidip@gmail.com>
+Based-on-patch-by: Shourya Shukla <periperidip@gmail.com>
+Based-on-patch-by: Prathamesh Chavan <pc44800@gmail.com>
+---
+
+Changes since v1:
+
+* Remove the extra handling for the case where submodule.active is valueless, as
+  Junio pointed out that it is better dealt with in a cleanup patch.
+
+* Do not discard error returns from 'config_submodule_in_gitmodules()', and also
+  ensure that any calls to it in 'configure_added_submodule()' die on failure,
+  like with the original shell porcelain.
+
+* Style fixes.
+
+ builtin/submodule--helper.c | 120 ++++++++++++++++++++++++++++++++++++
+ git-submodule.sh            |  28 +--------
+ 2 files changed, 121 insertions(+), 27 deletions(-)
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 862053c9f2..60b47492cb 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2936,6 +2936,125 @@ static int add_clone(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
+ 
++static int config_submodule_in_gitmodules(const char *name, const char *var, const char *value)
++{
++	char *key;
++	int ret;
++
++	if (!is_writing_gitmodules_ok())
++		die(_("please make sure that the .gitmodules file is in the working tree"));
++
++	key = xstrfmt("submodule.%s.%s", name, var);
++	ret = config_set_in_gitmodules_file_gently(key, value);
++	free(key);
++
++	return ret;
++}
++
++static void configure_added_submodule(struct add_data *add_data)
++{
++	char *key;
++	char *val = NULL;
++	struct child_process add_submod = CHILD_PROCESS_INIT;
++	struct child_process add_gitmodules = CHILD_PROCESS_INIT;
++
++	key = xstrfmt("submodule.%s.url", add_data->sm_name);
++	git_config_set_gently(key, add_data->realrepo);
++	free(key);
++
++	add_submod.git_cmd = 1;
++	strvec_pushl(&add_submod.args, "add",
++		     "--no-warn-embedded-repo", NULL);
++	if (add_data->force)
++		strvec_push(&add_submod.args, "--force");
++	strvec_pushl(&add_submod.args, "--", add_data->sm_path, NULL);
++
++	if (run_command(&add_submod))
++		die(_("Failed to add submodule '%s'"), add_data->sm_path);
++
++	if (config_submodule_in_gitmodules(add_data->sm_name, "path", add_data->sm_path) ||
++	    config_submodule_in_gitmodules(add_data->sm_name, "url", add_data->repo))
++		die(_("Failed to register submodule '%s'"), add_data->sm_path);
++
++	if (add_data->branch)
++		if (config_submodule_in_gitmodules(add_data->sm_name,
++						   "branch", add_data->branch))
++			die(_("Failed to register submodule '%s'"), add_data->sm_path);
++
++	add_gitmodules.git_cmd = 1;
++	strvec_pushl(&add_gitmodules.args,
++		     "add", "--force", "--", ".gitmodules", NULL);
++
++	if (run_command(&add_gitmodules))
++		die(_("Failed to register submodule '%s'"), add_data->sm_path);
++
++	/*
++	 * NEEDSWORK: In a multi-working-tree world this needs to be
++	 * set in the per-worktree config.
++	 *
++	 * If submodule.active does not exist, or if the pathspec was unset,
++	 * we will activate this module unconditionally.
++	 *
++	 * Otherwise, we ask is_submodule_active(), which iterates
++	 * through all the values of 'submodule.active' to determine
++	 * if this module is already active.
++	 */
++	if (git_config_get_string("submodule.active", &val) ||
++	    !is_submodule_active(the_repository, add_data->sm_path)) {
++		key = xstrfmt("submodule.%s.active", add_data->sm_name);
++		git_config_set_gently(key, "true");
++		free(key);
++	}
++}
++
++static int add_config(int argc, const char **argv, const char *prefix)
++{
++	int force = 0;
++	struct add_data add_data = ADD_DATA_INIT;
++
++	struct option options[] = {
++		OPT_STRING('b', "branch", &add_data.branch,
++			   N_("branch"),
++			   N_("branch of repository to store in "
++			      "the submodule configuration")),
++		OPT_STRING(0, "url", &add_data.repo,
++			   N_("string"),
++			   N_("url to clone submodule from")),
++		OPT_STRING(0, "resolved-url", &add_data.realrepo,
++			   N_("string"),
++			   N_("url to clone the submodule from, after it has "
++			      "been dereferenced relative to parent's url, "
++			      "in the case where <url> is a relative url")),
++		OPT_STRING(0, "path", &add_data.sm_path,
++			   N_("path"),
++			   N_("where the new submodule will be cloned to")),
++		OPT_STRING(0, "name", &add_data.sm_name,
++			   N_("string"),
++			   N_("name of the new submodule")),
++		OPT__FORCE(&force, N_("allow adding an otherwise ignored submodule path"),
++			   PARSE_OPT_NOCOMPLETE),
++		OPT_END()
++	};
++
++	const char *const usage[] = {
++		N_("git submodule--helper add-config "
++		   "[--force|-f] [--branch|-b <branch>] "
++		   "--url <url> --resolved-url <resolved-url> "
++		   "--path <path> --name <name>"),
++		NULL
++	};
++
++	argc = parse_options(argc, argv, prefix, options, usage, 0);
++
++	if (argc)
++		usage_with_options(usage, options);
++
++	add_data.force = !!force;
++	configure_added_submodule(&add_data);
++
++	return 0;
++}
++
+ #define SUPPORT_SUPER_PREFIX (1<<0)
+ 
+ struct cmd_struct {
+@@ -2949,6 +3068,7 @@ static struct cmd_struct commands[] = {
+ 	{"name", module_name, 0},
+ 	{"clone", module_clone, 0},
+ 	{"add-clone", add_clone, 0},
++	{"add-config", add_config, 0},
+ 	{"update-module-mode", module_update_module_mode, 0},
+ 	{"update-clone", update_clone, 0},
+ 	{"ensure-core-worktree", ensure_core_worktree, 0},
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 053daf3724..f713cb113c 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -242,33 +242,7 @@ cmd_add()
+ 	fi
+ 
+ 	git submodule--helper add-clone ${GIT_QUIET:+--quiet} ${force:+"--force"} ${progress:+"--progress"} ${branch:+--branch "$branch"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"--dissociate"} ${depth:+"$depth"} || exit
+-	git config submodule."$sm_name".url "$realrepo"
+-
+-	git add --no-warn-embedded-repo $force "$sm_path" ||
+-	die "fatal: $(eval_gettext "Failed to add submodule '\$sm_path'")"
+-
+-	git submodule--helper config submodule."$sm_name".path "$sm_path" &&
+-	git submodule--helper config submodule."$sm_name".url "$repo" &&
+-	if test -n "$branch"
+-	then
+-		git submodule--helper config submodule."$sm_name".branch "$branch"
+-	fi &&
+-	git add --force .gitmodules ||
+-	die "fatal: $(eval_gettext "Failed to register submodule '\$sm_path'")"
+-
+-	# NEEDSWORK: In a multi-working-tree world, this needs to be
+-	# set in the per-worktree config.
+-	if git config --get submodule.active >/dev/null
+-	then
+-		# If the submodule being adding isn't already covered by the
+-		# current configured pathspec, set the submodule's active flag
+-		if ! git submodule--helper is-active "$sm_path"
+-		then
+-			git config submodule."$sm_name".active "true"
+-		fi
+-	else
+-		git config submodule."$sm_name".active "true"
+-	fi
++	git submodule--helper add-config ${force:+--force} ${branch:+--branch "$branch"} --url "$repo" --resolved-url "$realrepo" --path "$sm_path" --name "$sm_name"
+ }
+ 
+ #
+-- 
+2.32.0
+
