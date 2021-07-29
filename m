@@ -2,86 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70D57C4320A
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 15:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2996AC4338F
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 15:29:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5467460F43
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 15:26:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1042E60F22
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 15:29:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237842AbhG2P00 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Jul 2021 11:26:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60874 "EHLO cloud.peff.net"
+        id S230140AbhG2P3E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Jul 2021 11:29:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60884 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237854AbhG2P0Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jul 2021 11:26:25 -0400
-Received: (qmail 8749 invoked by uid 109); 29 Jul 2021 15:26:21 -0000
+        id S229657AbhG2P3D (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jul 2021 11:29:03 -0400
+Received: (qmail 8763 invoked by uid 109); 29 Jul 2021 15:28:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 29 Jul 2021 15:26:21 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 29 Jul 2021 15:28:59 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20561 invoked by uid 111); 29 Jul 2021 15:26:21 -0000
+Received: (qmail 20584 invoked by uid 111); 29 Jul 2021 15:28:59 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 29 Jul 2021 11:26:21 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 29 Jul 2021 11:28:59 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 29 Jul 2021 11:26:20 -0400
+Date:   Thu, 29 Jul 2021 11:28:58 -0400
 From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/7] merge-ort: add pool_alloc, pool_calloc, and
- pool_strndup wrappers
-Message-ID: <YQLInKdjor6Vs1yE@coredump.intra.peff.net>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 4/7] merge-ort: switch our strmaps over to using
+ memory pools
+Message-ID: <YQLJOsvATnTBd9pB@coredump.intra.peff.net>
 References: <pull.990.git.1627044897.gitgitgadget@gmail.com>
- <e30b8c8fea110b2475d00a4b37eb62a4883999c4.1627044897.git.gitgitgadget@gmail.com>
- <bc24ea9c-178c-bcc9-2097-2271df93ae76@gmail.com>
- <CABPp-BGjrKWXn2ZzeJ-nsZTwsDE=gbaX=1YKfiNtC70VeN9VVA@mail.gmail.com>
+ <pull.990.v2.git.1627531121.gitgitgadget@gmail.com>
+ <dd8839b284330892a3bbcafbc03d71489fc9b01f.1627531121.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABPp-BGjrKWXn2ZzeJ-nsZTwsDE=gbaX=1YKfiNtC70VeN9VVA@mail.gmail.com>
+In-Reply-To: <dd8839b284330892a3bbcafbc03d71489fc9b01f.1627531121.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 28, 2021 at 04:49:18PM -0600, Elijah Newren wrote:
+On Thu, Jul 29, 2021 at 03:58:38AM +0000, Elijah Newren via GitGitGadget wrote:
 
-> On Mon, Jul 26, 2021 at 8:36 AM Derrick Stolee <stolee@gmail.com> wrote:
-> >
-> > On 7/23/2021 8:54 AM, Elijah Newren via GitGitGadget wrote:
-> > > From: Elijah Newren <newren@gmail.com>
-> > >
-> > > We need functions which will either call
-> > >     xmalloc, xcalloc, xstrndup
-> > > or
-> > >     mem_pool_alloc, mem_pool_calloc, mem_pool_strndup
-> > > depending on whether we have a non-NULL memory pool.  Add these
-> > > functions; the next commit will make use of these.
-> >
-> > I briefly considered that this should just be the way the
-> > mem_pool_* methods work. It does rely on the caller knowing
-> > to free() the allocated memory when their pool is NULL, so
-> > perhaps such a universal change might be too much. What do
-> > you think?
-> 
-> That's interesting, but I'm worried it might be a bit much.  Do others
-> on the list have an opinion here?
+> diff --git a/merge-ort.c b/merge-ort.c
+> index 2bca4b71f2a..5fd2a4ccd35 100644
+> --- a/merge-ort.c
+> +++ b/merge-ort.c
+> @@ -539,15 +539,19 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
+>  	void (*strset_func)(struct strset *) =
+>  		reinitialize ? strset_partial_clear : strset_clear;
+>  
+> -	/*
+> -	 * We marked opti->paths with strdup_strings = 0, so that we
+> -	 * wouldn't have to make another copy of the fullpath created by
+> -	 * make_traverse_path from setup_path_info().  But, now that we've
+> -	 * used it and have no other references to these strings, it is time
+> -	 * to deallocate them.
+> -	 */
+> -	free_strmap_strings(&opti->paths);
+> -	strmap_func(&opti->paths, 1);
+> +	if (opti->pool)
+> +		strmap_func(&opti->paths, 0);
 
-FWIW, I had the same thought. You can also provide a helper to make the
-freeing side nicer:
+This isn't new in your patch here, but I did scratch my head a bit over
+what "strmap_func" is. It's a bit less confusing if you read the whole
+function (as opposed to a diff), since then you're more likely to see
+the definition. But something like "strmap_clear_func()" would have been
+a lot less confusing.
 
-  static void mem_pool_free(struct mem_pool *m, void *ptr)
-  {
-	if (m)
-		return; /* will be freed when pool frees */
-	free(ptr);
-  }
+Arguably, the existence of these function indirections is perhaps a sign
+that the strmap API should provide a version of the clear functions that
+takes "partial / not-partial" as a parameter.
 
-We do something similar with unuse_commit_buffer(), where the caller
-isn't aware of we pulled the buffer from cache or allocated it
-especially for them.
+(Again, not really part of this patch series, but I hadn't looked at
+some of the earlier optimization steps).
 
 -Peff
