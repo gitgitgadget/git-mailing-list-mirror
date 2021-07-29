@@ -2,329 +2,185 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D8FEC4338F
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 02:01:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 934F1C4338F
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 02:03:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03A5A6103A
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 02:01:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7587C6103B
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 02:03:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233365AbhG2CBk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Jul 2021 22:01:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55644 "EHLO
+        id S233197AbhG2CDo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Jul 2021 22:03:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233162AbhG2CBj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jul 2021 22:01:39 -0400
-Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53C0FC061757
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 19:01:36 -0700 (PDT)
-Received: by mail-qv1-xf32.google.com with SMTP id d17so2618469qvn.13
-        for <git@vger.kernel.org>; Wed, 28 Jul 2021 19:01:36 -0700 (PDT)
+        with ESMTP id S233310AbhG2CDm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jul 2021 22:03:42 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DC00C0613D3
+        for <git@vger.kernel.org>; Wed, 28 Jul 2021 19:03:39 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id k7so4359632qki.11
+        for <git@vger.kernel.org>; Wed, 28 Jul 2021 19:03:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=HpOzNGm6NtxtxvPkNkJ7u5w1nrTthnnB9832wtBb/mU=;
-        b=i8ZpFjFrGpDg8Ld+tEtSmRlctH46FVUy7iHwY8CBPOiAnvEWdmJXxJIp/Qc/Gjn0Dj
-         uwvOBlWfizGX0Vt3z8/Qg2FM03BvqNML9XiCsl7dMh0i98DeDiJ02us55w325dIQxQBY
-         QhrIHBWh843iDZ8byPHLPVULhaMyUMacUWCmPaZ2z7+otXauxQFxrhoy/tB8pG14bWCd
-         zxyzM9lMCJ4Jr/mdBlXiXW9wsKY16x/lHRFNq9zfkLh/Nnhz0TJvcbNGfZPYDNmBF00L
-         klVwQW+u/NGTwlQ2B8I4MsBeW8bs+yuI5knBR704HE5fmhKVKfA4kUJv9hI/WOlPnWla
-         XX8A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=cHZCQsV/2zGHjMxuJIZyiY9/KeYMpK2Wx77FfvooPF8=;
+        b=UiVbwklSh9IbbfgpKpTuzaEd5L6u+8B2vCXNx8wzY0Ly4GXYwC8iwoi+0JIXYXOpeD
+         /QTnrb2FLsnftd2URUGaUnf8SDneescAL3O4d+awBT95rvFerDF5bWgfkpHXXGIW1DHH
+         Pqy3WMagIFlHAjzRWYbKWNY2G41mOO0nHXuW7qOT+0DqD4Q26gBEjJJnEa/B7MeR+UQk
+         dMNHK0uYXg7yjWJtDY0FmpMLEW3ckI9TPlZKaTAu4D5rtmiJnN2IbrhkWCQSZwKDVPi4
+         l2xerytL79Zwwogk9hmZS73E4onM86KykxwAxbIPIY+mn4kuO5Bej7x14035JQdFi3hx
+         VvUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=HpOzNGm6NtxtxvPkNkJ7u5w1nrTthnnB9832wtBb/mU=;
-        b=lx9tC0rI1EqmK5S0irqsiNT3+vS3Jwy7cqDlPqRScnEGMHN6XGKpX93s+4+9R5Q8hl
-         hf1ud8pAz9mBmjoBj5G2+sRvtGGTgcygRcSugk9MRiCl3dpHl3BbGbF4kgHE/At9cDql
-         P1TIFAVgqLJJi9tfrjUZMmoyinBfCC8UGAmBdaNigFWrSLzZrBObUAB7/T+1RrxmRQMP
-         M3BxKd1Hd3Hye3k4/113JUyb/FAed0ARehNSI8yFrQzp0nwwYnjOxRUvlZZvgsYX5PuF
-         pp2nZS+PiALLvkWB64rFhAC+qgY979jwTMwNwoJ7W0e24/wjOwVIAq1RZiujpJDRsumh
-         sNnw==
-X-Gm-Message-State: AOAM531xJeXj9Mr2eg6w9mkaR4aKIQb69vIrwaF9FOUnt2l/ExYmHMQm
-        kVfKyPRUV4a4Lvp+jm7tpD7ywbWkPqUF/Q==
-X-Google-Smtp-Source: ABdhPJxic3spZz3pOJTMSJAi1LhJYFOrp52OsSZhee7RzuBdJR2Bl1Yj4IJ4MS0786R1c4VSajjitQ==
-X-Received: by 2002:a05:6214:767:: with SMTP id f7mr3067243qvz.16.1627524095203;
-        Wed, 28 Jul 2021 19:01:35 -0700 (PDT)
-Received: from localhost ([24.169.20.255])
-        by smtp.gmail.com with ESMTPSA id z9sm763256qtn.54.2021.07.28.19.01.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jul 2021 19:01:34 -0700 (PDT)
-From:   Ben Boeckel <mathstuf@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Ben Boeckel <mathstuf@gmail.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=cHZCQsV/2zGHjMxuJIZyiY9/KeYMpK2Wx77FfvooPF8=;
+        b=ozAG3qmXm6jFTsX0UyAZQjVhe0LKjkPvhnVfZg3T0ktl7BBqahxG+Hbp+juhenLNnn
+         SWJACsN3shnRHWxgGpxH+JSn5CFUvCnvPddY9Bh8fT/pPwuGrN9hhnB2AtRUPf2Sa6jb
+         7IhTRR5XdRVwLPEH+JCHecEi8mEEsao1cA1zZUw1txZxM7CpPZk9YDj+rXiCBX+MUs2L
+         xM4O768PfQSxFAedTe5X9vOD143Grj+ELOAOEnXZWab8B2cUk7npxiIYdtfgRDxeENGn
+         hpFBlMWH4qcwHnKgAu8pN4oQ9Mk7PzV5+pu22WRT5ARLK+Enza/vdic6jP11XSKAmDJV
+         hA8A==
+X-Gm-Message-State: AOAM53235lleSgr9x/0Wp0UN8dxdtJnBqxTHmvS9rrpLKv6dzWMqnjkx
+        cHEgg98CYrbDXWXn2gxTlVs=
+X-Google-Smtp-Source: ABdhPJwanuyYVWVLD8N6/AbsJDMIlOdM0izifTH5ooKXaIuGH1Ivv72aZUU5fdpxDjTxPrxF4oaETQ==
+X-Received: by 2002:a05:620a:11bc:: with SMTP id c28mr2814007qkk.113.1627524218085;
+        Wed, 28 Jul 2021 19:03:38 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:cb4:2b6c:a89e:4048? ([2600:1700:e72:80a0:cb4:2b6c:a89e:4048])
+        by smtp.gmail.com with ESMTPSA id 11sm970807qki.128.2021.07.28.19.03.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Jul 2021 19:03:37 -0700 (PDT)
+Subject: Re: [PATCH v2 0/5] Sparse Index: Integrate with 'git add'
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH 1/1] config: support a default remote tracking setup upon branch creation
-Date:   Wed, 28 Jul 2021 22:01:25 -0400
-Message-Id: <20210729020125.746206-2-mathstuf@gmail.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210729020125.746206-1-mathstuf@gmail.com>
-References: <20210728135041.501850-1-mathstuf@gmail.com>
- <20210729020125.746206-1-mathstuf@gmail.com>
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.999.git.1626901619.gitgitgadget@gmail.com>
+ <pull.999.v2.git.1627312727.gitgitgadget@gmail.com>
+ <CABPp-BHnvEPuYahFAoVSF58k99t__N2-M4OKKHDAAK2qrhY3WQ@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <6a63736a-feb8-b74b-ef68-73cc71009e1d@gmail.com>
+Date:   Wed, 28 Jul 2021 22:03:36 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABPp-BHnvEPuYahFAoVSF58k99t__N2-M4OKKHDAAK2qrhY3WQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The `branch.autoSetupMerge` works well today for setting up tracking a
-local branch, but there is no easy mechanism to automatically set up a
-remote tracking situation for workflows which use a single set of
-branches for integration without specifying `--track` to every branch
-creation command or branching directly from the remote ref. This patch
-adds the following configuration values:
+On 7/28/2021 7:13 PM, Elijah Newren wrote:
+> On Mon, Jul 26, 2021 at 9:18 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+...
+>>  * a full proposal for what to do with "git (add|mv|rm)" and paths outside
+>>    the cone is delayed to another series (with an RFC round) because the
+>>    behavior of the sparse-index matches a full index with sparse-checkout.
+> 
+> I think this makes sense.
+> 
+> I've read through the patches, and I like this version...with one
+> exception.  Can we mark the test added in patch 1 under
+> 
+>      # 3. Rename the file to another sparse filename and
+>      #    accept conflict markers as resolved content.
+> 
+> as NEEDSWORK or even MAYNEEDWORK?
 
-  - `branch.defaultRemote`: initializes `branch.<name>.remote` if not
-    otherwise given;
-  - `branch.defaultMerge`: initializes `branch.<name>.merge` if not
-    otherwise given.
+I have no objection to adding a blurb such as:
 
-These effectively make branch creation commands such as `git branch`,
-`git switch`, and `git checkout -b` have an implicit `-t
-${branch.defaultRemote}/${branch.defaultMerge}` argument and is
-equivalent to doing:
+	# NEEDSWORK: allowing adds outside the sparse cone can be
+	# confusingto users, as the file can disappear from the
+	# worktree without warning in later Git commands.
 
-    $ git branch new-topic      # or another branch creation command
-    $ git branch --set-upstream-to=${branch.defaultRemote}/${branch.defaultMerge} new-topic
+And perhaps I'm misunderstanding the situation a bit, but that
+seems to apply not just to this third case, but all of them. I
+don't see why the untracked case is special compared to the
+tracked case. More investigation may be required on my part.
 
-In a fork-based workflow where contributions to the main project flow in
-through forks of the main repository rather than pushing directly to it
-(not uncommon of forge-hosted projects), the following setup may be
-used:
+>  I'm still quite unconvinced that it
+> is testing for correct behavior, and don't want to paint ourselves
+> into a corner.  In particular, we don't allow folks to "git add
+> $IGNORED_FILE" without a --force override because it's likely to be a
+> mistake. 
 
-    $ git config remote.pushDefault myfork    # push to `myfork` by default
-    $ git config push.default simple          # the default
-    $ git config branch.autoSetupMerge always # always setup tracking
-    $ git config branch.defaultRemote origin  # track from `origin`
-    $ git config branch.defaultMerge main     # track the `main` branch
+I agree about ignored files, and that is true whether or not they
+are in the sparse cone.
 
-With this setup, branches will automatically be set up to track
-`origin/main` while being pushed to `myfork` by default. Some tools
-(at least Vim's fugitive plugin) will show the commit differences
-between both the tracking branch and the default push target. This
-allows such tools to easily show "what needs to be merged?", "what has
-happened on the target branch since this topic has been created?", and
-"what is my status against my fork's current status?" at a glance.
+> I think the same logic holds for adding untracked files
+> outside the sparsity cone.  But it's actually even worse than that
+> case because there's a secondary level of surprise too: adding files
+> outside the sparsity cone will result in delayed user surprises when
+> the next git command that happens to call unpack_trees() (which are
+> found all over the codebase) removes the file from the working tree.
+> I've had some such reports already.
 
-Additionally, with the `extensions.worktreeConfig` setting, when a
-separate work tree which is used for changes against a different branch
-(e.g., a branch tracking a prior release), the `branch.defaultMerge`
-setting may be changed independently, e.g., to `maint`.
+I believe this is testing a realistic scenario that users are
+hitting in the wild today. I would believe that users succeed with
+these commands more often than they are confused by the file
+disappearing from the worktree in a later Git command, so having
+this sequence of events be documented as a potential use case has
+some value.
 
-Signed-off-by: Ben Boeckel <mathstuf@gmail.com>
----
- Documentation/config/branch.txt | 14 ++++++++++++
- branch.c                        | 22 ++++++++++---------
- branch.h                        |  2 ++
- config.c                        | 10 +++++++++
- environment.c                   |  2 ++
- t/t3200-branch.sh               | 39 +++++++++++++++++++++++++++++++++
- 6 files changed, 79 insertions(+), 10 deletions(-)
+I simultaneously don't think it is behavior we want to commit to
+as a contract for all future Git versions, but there is value in
+showing how this situation changes with any future meddling. In
+particular: will users be able to self-discover the "new" way of
+doing things?
 
-diff --git a/Documentation/config/branch.txt b/Documentation/config/branch.txt
-index cc5f3249fc..ab5cd2c1ed 100644
---- a/Documentation/config/branch.txt
-+++ b/Documentation/config/branch.txt
-@@ -1,3 +1,17 @@
-+branch.defaultRemote::
-+	Tells 'git branch', 'git switch' and 'git checkout' to set up new branches
-+	so that it will track a branch on the specified remote. This can be
-+	used, in conjunction with `branch.defaultMerge`, in projects where
-+	branches tend to target a single branch. This will be used to
-+	initialize the "branch.<name>.remote" setting.
-+
-+branch.defaultMerge::
-+	Tells 'git branch', 'git switch' and 'git checkout' to set up new branches
-+	so that it will track a branch with this name. This can be used, in
-+	conjunction with `branch.defaultRemote` in projects where branches tend
-+	to target a single branch. This will be used to initialize the
-+	"branch.<name>.merge" setting.
-+
- branch.autoSetupMerge::
- 	Tells 'git branch', 'git switch' and 'git checkout' to set up new branches
- 	so that linkgit:git-pull[1] will appropriately merge from the
-diff --git a/branch.c b/branch.c
-index 7a88a4861e..097d5af647 100644
---- a/branch.c
-+++ b/branch.c
-@@ -60,6 +60,8 @@ int install_branch_config(int flag, const char *local, const char *origin, const
- 	const char *shortname = NULL;
- 	struct strbuf key = STRBUF_INIT;
- 	int rebasing = should_setup_rebase(origin);
-+	const char *actual_origin = origin ? origin : git_branch_remote;
-+	const char *actual_remote = remote ? remote : git_branch_merge;
- 
- 	if (skip_prefix(remote, "refs/heads/", &shortname)
- 	    && !strcmp(local, shortname)
-@@ -70,12 +72,12 @@ int install_branch_config(int flag, const char *local, const char *origin, const
- 	}
- 
- 	strbuf_addf(&key, "branch.%s.remote", local);
--	if (git_config_set_gently(key.buf, origin ? origin : ".") < 0)
-+	if (git_config_set_gently(key.buf, actual_origin ? actual_origin : ".") < 0)
- 		goto out_err;
- 
- 	strbuf_reset(&key);
- 	strbuf_addf(&key, "branch.%s.merge", local);
--	if (git_config_set_gently(key.buf, remote) < 0)
-+	if (git_config_set_gently(key.buf, actual_remote) < 0)
- 		goto out_err;
- 
- 	if (rebasing) {
-@@ -88,27 +90,27 @@ int install_branch_config(int flag, const char *local, const char *origin, const
- 
- 	if (flag & BRANCH_CONFIG_VERBOSE) {
- 		if (shortname) {
--			if (origin)
-+			if (actual_origin)
- 				printf_ln(rebasing ?
- 					  _("Branch '%s' set up to track remote branch '%s' from '%s' by rebasing.") :
- 					  _("Branch '%s' set up to track remote branch '%s' from '%s'."),
--					  local, shortname, origin);
-+					  local, shortname, actual_origin);
- 			else
- 				printf_ln(rebasing ?
- 					  _("Branch '%s' set up to track local branch '%s' by rebasing.") :
- 					  _("Branch '%s' set up to track local branch '%s'."),
- 					  local, shortname);
- 		} else {
--			if (origin)
-+			if (actual_origin)
- 				printf_ln(rebasing ?
- 					  _("Branch '%s' set up to track remote ref '%s' by rebasing.") :
- 					  _("Branch '%s' set up to track remote ref '%s'."),
--					  local, remote);
-+					  local, actual_remote);
- 			else
- 				printf_ln(rebasing ?
- 					  _("Branch '%s' set up to track local ref '%s' by rebasing.") :
- 					  _("Branch '%s' set up to track local ref '%s'."),
--					  local, remote);
-+					  local, actual_remote);
- 		}
- 	}
- 
-@@ -119,9 +121,9 @@ int install_branch_config(int flag, const char *local, const char *origin, const
- 	error(_("Unable to write upstream branch configuration"));
- 
- 	advise(_(tracking_advice),
--	       origin ? origin : "",
--	       origin ? "/" : "",
--	       shortname ? shortname : remote);
-+	       actual_origin ? actual_origin : "",
-+	       actual_origin ? "/" : "",
-+	       shortname ? shortname : actual_remote);
- 
- 	return -1;
- }
-diff --git a/branch.h b/branch.h
-index df0be61506..7d7990dda7 100644
---- a/branch.h
-+++ b/branch.h
-@@ -14,6 +14,8 @@ enum branch_track {
- };
- 
- extern enum branch_track git_branch_track;
-+extern const char* git_branch_remote;
-+extern const char* git_branch_merge;
- 
- /* Functions for acting on the information about branches. */
- 
-diff --git a/config.c b/config.c
-index f33abeab85..a46c5a43a1 100644
---- a/config.c
-+++ b/config.c
-@@ -1599,6 +1599,16 @@ static int git_default_branch_config(const char *var, const char *value)
- 			return error(_("malformed value for %s"), var);
- 		return 0;
- 	}
-+	if (!strcmp(var, "branch.defaultremote")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		return git_config_string(&git_branch_remote, var, value);
-+	}
-+	if (!strcmp(var, "branch.defaultmerge")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		return git_config_string(&git_branch_merge, var, value);
-+	}
- 
- 	/* Add other config variables here and to Documentation/config.txt. */
- 	return 0;
-diff --git a/environment.c b/environment.c
-index 2f27008424..d550deabbd 100644
---- a/environment.c
-+++ b/environment.c
-@@ -60,6 +60,8 @@ int global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
- char *check_roundtrip_encoding = "SHIFT-JIS";
- unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
- enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
-+const char* git_branch_remote = NULL;
-+const char* git_branch_merge = NULL;
- enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
- enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
- #ifndef OBJECT_CREATION_MODE
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index cc4b10236e..82137e8451 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -797,6 +797,45 @@ test_expect_success 'test tracking setup via --track but deeper' '
- 	test "$(git config branch.my7.merge)" = refs/heads/o/o
- '
- 
-+test_expect_success 'test tracking setup via branch.default* and --track' '
-+	git config branch.autosetupmerge always &&
-+	git config branch.defaultremote local &&
-+	git config branch.defaultmerge main &&
-+	git config remote.local.url . &&
-+	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-+	(git show-ref -q refs/remotes/local/main || git fetch local) &&
-+	git branch --track other/foo my2 &&
-+	git config branch.autosetupmerge false &&
-+	test "$(git config branch.my2.remote)" = other &&
-+	test "$(git config branch.my2.merge)" = refs/heads/foo
-+'
-+
-+test_expect_success 'test tracking setup via branch.default* and --no-track' '
-+	git config branch.autosetupmerge always &&
-+	git config branch.defaultremote local &&
-+	git config branch.defaultmerge main &&
-+	git config remote.local.url . &&
-+	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-+	(git show-ref -q refs/remotes/local/main || git fetch local) &&
-+	git branch --no-track my2 &&
-+	git config branch.autosetupmerge false &&
-+	! test "$(git config branch.my2.remote)" = local &&
-+	! test "$(git config branch.my2.merge)" = refs/heads/main
-+'
-+
-+test_expect_success 'test tracking setup via branch.default*' '
-+	git config branch.autosetupmerge always &&
-+	git config branch.defaultremote local &&
-+	git config branch.defaultmerge main &&
-+	git config remote.local.url . &&
-+	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-+	(git show-ref -q refs/remotes/local/main || git fetch local) &&
-+	git branch my2 &&
-+	git config branch.autosetupmerge false &&
-+	test "$(git config branch.my2.remote)" = local &&
-+	test "$(git config branch.my2.merge)" = refs/heads/main
-+'
-+
- test_expect_success 'test deleting branch deletes branch config' '
- 	git branch -d my7 &&
- 	test -z "$(git config branch.my7.remote)" &&
--- 
-2.31.1
+The proposal part of changing how add/mv/rm behave in these cases
+would need to adjust this test with something that would also help
+direct users to a helpful resolution. For example, the first run
+of
 
+	git add sparse/dir/file
+
+could error out with an error message saying "The pathspec is
+outside of your sparse cone, so staging the file might lead to
+a staged change that is removed from your working directory."
+But we should _also_ include two strategies for getting out of
+this state:
+
+1. Adjust your sparse-checkout definition so this file is in scope.
+
+-or- (and this is the part that would be new)
+
+2. If you understand the risks of staging a file outside the sparse
+   cone, then run 'git add --sparse sparse/dir/file'.
+
+(Insert whatever option would be appropriate for --sparse here.)
+
+Such a warning message would allow users who follow the steps listed
+in the test to know how to adjust their usage to then get into a
+good state.
+
+> If that test is marked as NEEDSWORK or even as the correct behavior
+> still being under dispute, then you can happily apply my:
+
+I would classify this as "The test documents current behavior, but
+isn't a contract for future behavior." With a concept such as my
+suggestion above, the test could be modified to check for the
+warning and then run the second command with the extra option and
+complete the test's expectations. Having the existing behavior
+documented in a test helps demonstrate how behavior is changing.
+
+We we've discussed, we want to give such a behavior change the
+right venue for feedback and suggestions for alternate approaches,
+and this series is not the right place for that. Hopefully you
+can tell that it is on my mind and that I want to recommend a
+change in the near future.
+
+Thanks,
+-Stolee
