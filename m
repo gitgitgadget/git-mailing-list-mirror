@@ -2,207 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A8EAC4338F
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 19:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12A7FC4338F
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 19:30:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 81E486069E
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 19:23:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6F53608FB
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 19:30:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229961AbhG2TXX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Jul 2021 15:23:23 -0400
-Received: from mout.gmx.net ([212.227.15.15]:35841 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229653AbhG2TXV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jul 2021 15:23:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1627586596;
-        bh=7UHHUthtJfQulJbQLFah/xOR3NbCApiudlTq2vz+eXg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=RS7H0Bl2RYiGO8mLlrP2mBuS3OdTU4oltkzWtt6hnKVwl3z7YQ3Oy1aIAxhQoZoMW
-         SGQrfpIoXsW+ZsWtyEmL9dRIfGKmGCad4BSPw/7zaQJw983Qm5zBnAQpuupuPs9XnV
-         VYxRvBZYSIz73pl59V7DUiPhOlth2wBR8CIN36Bo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.102.245] ([89.1.212.168]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mn2aD-1mrddz0hKZ-00k4Fg; Thu, 29
- Jul 2021 21:23:16 +0200
-Date:   Thu, 29 Jul 2021 21:23:21 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] mingw: align symlinks-related rmdir() behavior with
- Linux
-In-Reply-To: <pull.1008.git.1627586493659.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2107292122480.55@tvgsbejvaqbjf.bet>
-References: <pull.1008.git.1627586493659.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S229695AbhG2Taq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Jul 2021 15:30:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51004 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229606AbhG2Tap (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jul 2021 15:30:45 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44531C061765
+        for <git@vger.kernel.org>; Thu, 29 Jul 2021 12:30:41 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id a13so8574710iol.5
+        for <git@vger.kernel.org>; Thu, 29 Jul 2021 12:30:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Y9h10qeSPkjTbVXtoKlg/Fz9WMU3lU2Nz4ZYxgKACQI=;
+        b=FNLoXjk2MdgZ3u+iE7DaMs9tI2hxMHAJNF1fI1qFj8ZFDFmi3Y2FstjCnuji5raIv9
+         BeHaxutPCa6F/Jq2hj4jf173LS+JvZNJXU3r/qLpW4lGxs0sKWLiEQ7rbjRVadSStdF6
+         P0KT8ANY3P1dpu1hGXOCQMD1CXeAFkFoszAHbTev/SezxMYI89/r7x5FYuAw5NUEKnk5
+         1dpKMjrsP+00N+LjRkWPB+Eaeq1YsrItRC66+9kFpufZ4cDSs+allE0S0gJKDWutZYyZ
+         6dLVgM8Z0QpwParnjwQXyDuuOUIn5SLY9077rvI3J0daVhb0nyPCR98pPXnyQ53gRk8D
+         TPKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Y9h10qeSPkjTbVXtoKlg/Fz9WMU3lU2Nz4ZYxgKACQI=;
+        b=gtmUWy+dfcOp79I9nmuHXSqnC1JqdKY66wPlGPVikYfiBT8p+u7QzyK6/lB+Y4gUn7
+         ytHByN6CLnp+AgQA2jozL7YbowauH80OKPlkoUm2lYmS6iNeIp9wuGvn017tL5WoZTuZ
+         MLl1ywTLgVRXfWboPfbmn6guQtjX07QHMWFXxOJraEZqUEJaYMlEH/217Zrra13qVwLx
+         pIGUSa6lO9NuCH7GN/TTr/j0erSVxkk2+hAbJRiAsWlMQ2rqXfMCGcmWQNideYpZ07EG
+         PAarlSumr/RCEjYKRs8/Hw9HMVR6ZulQeb6/n+gLEJYUqtpXyKvXfHfqnox4I+UYBECw
+         KDnw==
+X-Gm-Message-State: AOAM5304k4acHnp0KVswZ9OOPbSdrhZCiqRsNIUskoJxBtnMPH1cFKvc
+        LlkRlRhuwtndFF4/TBuDO+i5gPhaW4qGcRIL
+X-Google-Smtp-Source: ABdhPJx07XN87ZjbR+B6aAShC6kWX1ZhziNCAbYOIfXpvaHzl0qwWVx2T7vJVGU4PrnIGJO4wyFXmg==
+X-Received: by 2002:a02:6606:: with SMTP id k6mr270673jac.51.1627587040581;
+        Thu, 29 Jul 2021 12:30:40 -0700 (PDT)
+Received: from localhost ([2600:1700:d843:8f:46df:20:8c6c:2d4b])
+        by smtp.gmail.com with ESMTPSA id j4sm2788195iom.28.2021.07.29.12.30.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Jul 2021 12:30:40 -0700 (PDT)
+Date:   Thu, 29 Jul 2021 15:30:39 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH v3 09/25] midx: avoid opening multiple MIDXs when writing
+Message-ID: <YQMB32fvSiH9julg@nand.local>
+References: <cover.1617991824.git.me@ttaylorr.com>
+ <cover.1627420428.git.me@ttaylorr.com>
+ <40cff5beb50cdfbd13ae7f6017152f2628b25814.1627420428.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1724417173-1627586602=:55"
-X-Provags-ID: V03:K1:ZqDRtKNGoVycQjJ7aV5HPxRh+PZjQLGVg9tLGbUIPJGSIrppno3
- 0KAoFyponZxXwiRR/eMIYUVKkK2Xa2mM04xFI+0RtxsHEPweFfYxaS2WzCnBDSO1LIn3ENh
- OCTKXfBw5g4wf4RKrCsLlAgdDfMhDtSphGJyTttpznOIbCOwuHf3N9HsWJlp4CY/95W5T3q
- VmOzRAnF3WD8cH05vwwrQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:3hEIfpxolq8=:YsvMTFDgSUvSuW4QToQwUG
- Q5Py/wxN3Sh3izKx1/WVP8eJlyXhI6/jvFq0oeOOgdg6XPOfP4VpLCw824OFTSUYNA7TBMd3k
- 3bxICQI3xNmobEPQPgtWUJD4JVlkox0NM864zIOFRzphl+7qQWnaKWsfYbYji7YAvzVrm24G3
- Yf4rJRWjMk/Up6vvmg8kAFQyXdiRHOMb+kvfIyrUlD7MPYZt815k0EjX8cT2bFundnp5bGif5
- YH565oay4bFQItmFJ0ymO3yMZG5AqrpUeeQ02KWYfLb9byMfkhj59Qo2KHywTDhqK0dAqzoT9
- zu7IckPjW9Ee8B8H+I6N7rzRX1O5YAmFJYgSU4dZcY5tyfcVLdrWSg4oB1LPkGVuJH9hgLeou
- 2zI4UjnGaPfUaziRUV6yEyE0mAa3uE93IqCS5Gl8mV+CeMQLKPcLm+TRapChzrzpyR5mPZFdz
- ORkOw1aP0BAXVjp+XnJdviBz845IkJPOvx3gxICZXWfXiGD6EJCwP3gYS0PXZ/OGcenvBkIaZ
- rujjyfk8WB2tB2efE/ch53scKkMCEd8UaC3/CQT8+QMDSYPOwDPxUihtpcG9ttWDjIU0lmVx2
- WEtab9DVlhh7Z1v7nTJMGsTLluPcUF1NNoLoueFPE1whyCttjrTEy5q8uj7ia1vL/mZwe3CMV
- 7JFUUeCFV9+WCl5uEnMsSkOnMiaqu2yp4w6Y66cBenbpFaKE2XihC/qYXiHCeDdSeMb6nnRc2
- d82GuPVeo1OS4Iv/80nqG4AkPhmIHh1P2//19xjBNmIsWQrcu2ceop6FrZKT4TJFSo3tZxaqy
- kyGUwi9zLah3/ttDEDfpHIdM8E8XaepgyZwCa6lb3hBSOcKfCA8RWpydcwgM8GtAg5fEzGmhA
- eXEhLLLBICIBodEOUQ3aSPnXXEx2ZkvyMi/whW7cOHWLc4W99q5945jEckJRbU6z0Mr6N6wIi
- 0MP+HQA10zBIRRsIA5Pcm9cDcE2xIYlQyJI1T64+7Kw9YSN+TyN7c+tfA34TA30LSWhGQHmml
- pvYvrapWpjUs6ONmsSlPaxHd7GfcKmV3Wr+fF1xsl8soYfRxz6PCgFdAtRnc3MsZkdj31bfkb
- bKifb8oiMo+OHco5DZblS1e4yzy9ZSkg5vrar5TVh/YHvg49Iunpz4wxQ==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <40cff5beb50cdfbd13ae7f6017152f2628b25814.1627420428.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1724417173-1627586602=:55
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-
-On Thu, 29 Jul 2021, Johannes Schindelin via GitGitGadget wrote:
-
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-
-Sorry for missing this, this line should have read
-
-	From: Thomas B=C3=A9tous <tomspycell@gmail.com>
-
-Ciao,
-Dscho
-
+On Tue, Jul 27, 2021 at 05:19:46PM -0400, Taylor Blau wrote:
+> @@ -914,10 +915,14 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+>  		die_errno(_("unable to create leading directories of %s"),
+>  			  midx_name);
 >
-> When performing a rebase, rmdir() is called on the folder .git/logs. On
-> Unix rmdir() exits without deleting anything in case .git/logs is a
-> symbolic link but the equivalent functions on Windows (_rmdir, _wrmdir
-> and RemoveDirectoryW) do not behave the same and remove the folder if it
-> is symlinked even if it is not empty.
->
-> This creates issues when folders in .git/ are symlinks which is
-> especially the case when git-repo[1] is used.
->
-> This commit updates mingw_rmdir() so that its behavior is the same as
-> Linux rmdir() in case of symbolic links.
->
-> This fixes https://github.com/git-for-windows/git/issues/2967
->
-> [1]: git-repo is a python tool built on top of Git which helps manage
-> many Git repositories. It stores all the .git/ folders in a central
-> place by taking advantage of symbolic links.
-> More information: https://gerrit.googlesource.com/git-repo/
->
-> Signed-off-by: Thomas B=C3=A9tous <tomspycell@gmail.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->     mingw: support the git-repo tool better
->
->     This addresses an issue, originally reported at
->     https://github.com/git-for-windows/git/issues/2967, where the git-re=
-po
->     tool [https://gerrit.googlesource.com/git-repo/] replaces folders in
->     .git/ with symlinks and mingw_rmdir() erroneously removes the symlin=
-k
->     target directory's contents.
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1008%2=
-Fdscho%2Ffix-rmdir-with-symlinks-on-windows-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1008/dsch=
-o/fix-rmdir-with-symlinks-on-windows-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1008
->
->  compat/mingw.c    | 15 +++++++++++++++
->  t/t3400-rebase.sh | 10 ++++++++++
->  t/test-lib.sh     |  6 ++++++
->  3 files changed, 31 insertions(+)
->
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index aa647b367b0..685d3efa3c0 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -341,6 +341,21 @@ int mingw_rmdir(const char *pathname)
->  {
->  	int ret, tries =3D 0;
->  	wchar_t wpathname[MAX_PATH];
-> +	struct stat st;
-> +
-> +	/*
-> +	* Contrary to Linux rmdir(), Windows' _wrmdir() and _rmdir()
-> +	* will remove the directory at the path if it is a symbolic link
-> +	* which leads to issues when symlinks are used in the .git folder
-> +	* (in the context of git-repo for instance). So before calling _wrmdir=
-()
-> +	* we first check if the path is a symbolic link. If it is, we exit
-> +	* and return the same error as Linux rmdir() in this case (ENOTDIR).
-> +	*/
-> +	if (!mingw_lstat(pathname, &st) && S_ISLNK(st.st_mode)) {
-> +		errno =3D ENOTDIR;
-> +		return -1;
+> -	if (m)
+> -		ctx.m = m;
+> -	else
+> -		ctx.m = load_multi_pack_index(object_dir, 1);
+> +	for (cur = get_multi_pack_index(the_repository); cur; cur = cur->next) {
+> +		if (!strcmp(object_dir, cur->object_dir)) {
+> +			ctx.m = cur;
+> +			break;
+> +		}
 > +	}
-> +
->  	if (xutftowcs_path(wpathname, pathname) < 0)
->  		return -1;
->
-> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-> index 0bb88aa982b..23dbd3c82ed 100755
-> --- a/t/t3400-rebase.sh
-> +++ b/t/t3400-rebase.sh
-> @@ -406,4 +406,14 @@ test_expect_success 'refuse to switch to branch che=
-cked out elsewhere' '
->  	test_i18ngrep "already checked out" err
->  '
->
-> +test_expect_success MINGW,SYMLINKS_WINDOWS 'rebase when .git/logs is a =
-symlink' '
-> +	git checkout main &&
-> +	mv .git/logs actual_logs &&
-> +	cmd //c "mklink /D .git\logs ..\actual_logs" &&
-> +	git rebase -f HEAD^ &&
-> +	test -L .git/logs &&
-> +	rm .git/logs &&
-> +	mv actual_logs .git/logs
-> +'
-> +
->  test_done
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index adaf03543e8..73f6d645b66 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -1513,6 +1513,12 @@ test_lazy_prereq SYMLINKS '
->  	ln -s x y && test -h y
->  '
->
-> +test_lazy_prereq SYMLINKS_WINDOWS '
-> +	# test whether symbolic links are enabled on Windows
-> +	test_have_prereq MINGW &&
-> +	cmd //c "mklink y x" &> /dev/null && test -h y
-> +'
-> +
->  test_lazy_prereq FILEMODE '
->  	test "$(git config --bool core.filemode)" =3D true
->  '
->
-> base-commit: ebf3c04b262aa27fbb97f8a0156c2347fecafafb
-> --
-> gitgitgadget
->
->
+> +	if (!ctx.m)
+> +		ctx.m = get_local_multi_pack_index(the_repository);
 
---8323328-1724417173-1627586602=:55--
+Oops, the `if (!ctx.m)` part of this diff is just plain wrong.
+
+I think that I had in my mind that some callers don't pass object_dir,
+and so that we should fall-back to the local MIDX in that case. And so I
+probably meant to write `if (!object_dir && !ctx.m)` instead.
+
+But, all of the callers *do* pass the result of get_object_directory(),
+so we don't need to do anything of the sort.
+
+On a related note, though, a side-effect of this change is that this
+makes it no longer possible to do
+
+    git multi-pack-index write --object-dir=/not/an/alternate.git/objects
+
+since get_local_multi_pack_index() will only populate the MIDXs in
+alternate object stores. We never enforced that `--object-dir` must
+point to an alternate, but the documentation uses `<alt>` to describe
+the argument to this flag, and accepting arbitrary non-alternate paths
+seems like a footgun to me.
+
+So I'm OK with "breaking" that behavior, as long as nobody complains
+loudly. Obviously it makes the fix easier to write, but I'd argue that
+the behavior we're losing is worth getting rid of anyway.
+
+Thanks,
+Taylor
