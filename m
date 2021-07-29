@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69519C4320A
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 14:52:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88BBFC432BE
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 14:52:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 43EF560EBC
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 14:52:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6BB4060EBB
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 14:52:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237656AbhG2OwS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Jul 2021 10:52:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38846 "EHLO
+        id S237669AbhG2OwT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Jul 2021 10:52:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236712AbhG2OwP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jul 2021 10:52:15 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 116EDC0613C1
-        for <git@vger.kernel.org>; Thu, 29 Jul 2021 07:52:11 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id o5-20020a1c4d050000b02901fc3a62af78so7026356wmh.3
-        for <git@vger.kernel.org>; Thu, 29 Jul 2021 07:52:10 -0700 (PDT)
+        with ESMTP id S237404AbhG2OwQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jul 2021 10:52:16 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D161C061765
+        for <git@vger.kernel.org>; Thu, 29 Jul 2021 07:52:13 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id q3so7356117wrx.0
+        for <git@vger.kernel.org>; Thu, 29 Jul 2021 07:52:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=m3Z0ant7md1f9wJf0Q9VKxSUWOMpn0V3rnRB1ujIDL0=;
-        b=tKfoOlPtSQLVc3GHej+ZTFayP6L8qVb5qWMtdKjBraxmSL1EdIoik43FrKsmIKtBAT
-         XLDLRsZGZJYI2K3k9+ZC6fw81rzASUYGwjhkITU3J0rg78E5IwBl7JR8GXoJwSUZuSpn
-         gGpp2IobtAKOWKdLz5OatAvMT/9f++hX84cGDOcfnZCqVlztz5zV+RWZpPe/tzjyDE7r
-         0H6oCY7FqJPOxcZrAHrQCyJCZSZMr/Ogj67yR/JuEpqDyLLhNm6RQTGef5SBeBJ2wWVK
-         CZu32/t4NKwbZQXp96uQ/ZboDEimNMnXmMPMtMPsMrvuuXspMx9hFauPXE9ymiFDU4O9
-         VASw==
+        bh=KkF6IMbAMZ/rUGP/m1B+r+kVHZeLn8AMYuVyXWvvMuQ=;
+        b=BZmim6mFMv5Tm6IAj5awT/TjDmrOmyirXZ4ccEIg5mi3pDnJ+qzjlarws/3FpfRNVi
+         2M5kQdscPjRVf9Z+JnIG/uRD5dMxWnhIVK/qC3lpfP/IJ+9OSXhnx8aBX8si5tufKDY1
+         SKOxORXVHDdLn+O0Gt0IhqeqaZzvSAQbMPdm4HvMzt6P9mvnJS7QgFnxI3thWeTCdXll
+         mA90A+t0DT4ZIm9/zpEyKlQYlQaml6dL9fYItiYuztWIIl68rhiHs+xlvk7wgQHPiIYB
+         7yPq9RCK5LHv7NdC9zgt/jDfYOUrOxwm3qoBFDEgA3GVC+NTla0Z2DpZuCru139Nkavy
+         w99A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=m3Z0ant7md1f9wJf0Q9VKxSUWOMpn0V3rnRB1ujIDL0=;
-        b=oK6b0gU2U6DYWTMjg2DRhI+IfMCiY/ZrfsjG8Cy3Lt/Bn5gIt4OXlE1uJ2R8LPW94q
-         WG7860EQPOveXLZNTM6ZEyZitwcn1Wf+C3dAGMU9ABT0PCAdLxeUn+XLx1KSHtcHEGlI
-         3K4/gW9HTVm/+t+M4FOtVl44hl1HSM5j+xsDwTg5epwFsoFO6GA4oNuff6zAv6jTrw2L
-         8iewrlqL9DCxnMhN7dcYTJxCSujpUGbquOMUiSFZ+uwl6PFm6RWrx9hm8NEITi9jPGPG
-         yyblJpAVl9kHzub9UcnWuJL6xJvFkeQ/8WGGwU6ckdRQw4w1RXYlAmQLmyQbS+or7AGX
-         z6SA==
-X-Gm-Message-State: AOAM5335SfIdDp5bVSq9Hy7T5UXhxQJ4ZzS0kGjeXAJ4B7nRb0SzepKy
-        av1J/p8O/gPqWM+CssT5OtQ4JRbqVeo=
-X-Google-Smtp-Source: ABdhPJwRTAhh41XW176IEbMnoMM4FSRVBqtV7dg5+GFpmngFBYJmVY6cwq7zDAbI3KQgJftuCjaFBQ==
-X-Received: by 2002:a05:600c:206:: with SMTP id 6mr15153354wmi.137.1627570329701;
-        Thu, 29 Jul 2021 07:52:09 -0700 (PDT)
+        bh=KkF6IMbAMZ/rUGP/m1B+r+kVHZeLn8AMYuVyXWvvMuQ=;
+        b=GaT/VwmQG6lggsDfandF7rmEXSbB7zD8zdo5rFOU4hPLQ9L2rLF7X6o5uBCUzmQrJk
+         iAWYqe3r/3XxTLK4lhDARRWouQBbhv4Jbu6J5HG5+OFs958Wo7ofQ4OuGea8rsVO7wZH
+         NZz+wOtAfdPcQFsqkn4DYQOGd126kV+byX5j3T2fED03f/yBNwjVCxpvYbyyyFY2l5Dl
+         oLUsbsTcndPpUMEiGObmhZX78dfGLcc9t/bH0NUT9hEN0GTizOsWhxPnuYMg62rCdLqG
+         rwKDP5NidnuhF9MBxldeek4tSjn/slH9Ca4ZtUoMqGdj5S3yJTKO7RtOf/w0mhtiK/h6
+         FUFQ==
+X-Gm-Message-State: AOAM5303g3axM2hBlD1BU3uiHQTtC55JdxcPY6gE5rePXwQwllubir6Y
+        /MsLy4Z3ogiWc/WMc+3FKDpE1ssNS54=
+X-Google-Smtp-Source: ABdhPJwZ9e8zKQL2ivBHas7eORZiGSAOakkgHd82pbaltnDKM5Mb/zybvW8xeDQF5GQhjFP7+6QtFg==
+X-Received: by 2002:adf:f852:: with SMTP id d18mr1201877wrq.201.1627570331770;
+        Thu, 29 Jul 2021 07:52:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b6sm9645925wmj.34.2021.07.29.07.52.09
+        by smtp.gmail.com with ESMTPSA id f15sm3570476wrp.12.2021.07.29.07.52.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jul 2021 07:52:09 -0700 (PDT)
-Message-Id: <5e96df4df582744a89b10ce55887a2c2aacc7e70.1627570327.git.gitgitgadget@gmail.com>
+        Thu, 29 Jul 2021 07:52:11 -0700 (PDT)
+Message-Id: <0ec03ab021da8b8a2278af3e14960c5cf4689646.1627570327.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.999.v3.git.1627570327.gitgitgadget@gmail.com>
 References: <pull.999.v2.git.1627312727.gitgitgadget@gmail.com>
         <pull.999.v3.git.1627570327.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 29 Jul 2021 14:52:03 +0000
-Subject: [PATCH v3 1/5] t1092: test merge conflicts outside cone
+Date:   Thu, 29 Jul 2021 14:52:06 +0000
+Subject: [PATCH v3 4/5] add: ignore outside the sparse-checkout in refresh()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,79 +78,70 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Conflicts can occur outside of the sparse-checkout definition, and in
-that case users might try to resolve the conflicts in several ways.
-Document a few of these ways in a test. Make it clear that this behavior
-is not necessarily the optimal flow, since users can become confused
-when Git deletes these files from the worktree in later commands.
+Since b243012 (refresh_index(): add flag to ignore SKIP_WORKTREE
+entries, 2021-04-08), 'git add --refresh <path>' will output a warning
+message when the path is outside the sparse-checkout definition. The
+implementation of this warning happened in parallel with the
+sparse-index work to add ensure_full_index() calls throughout the
+codebase.
+
+Update this loop to have the proper logic that checks to see if the
+pathspec is outside the sparse-checkout definition. This avoids the need
+to expand the sparse directory entry and determine if the path is
+tracked, untracked, or ignored. We simply avoid updating the stat()
+information because there isn't even an entry that matches the path!
 
 Reviewed-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 43 ++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ builtin/add.c                            | 10 +++++++++-
+ t/t1092-sparse-checkout-compatibility.sh |  6 +-----
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
+diff --git a/builtin/add.c b/builtin/add.c
+index c76e6ddd359..d512ece655b 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -192,13 +192,21 @@ static int refresh(int verbose, const struct pathspec *pathspec)
+ 	struct string_list only_match_skip_worktree = STRING_LIST_INIT_NODUP;
+ 	int flags = REFRESH_IGNORE_SKIP_WORKTREE |
+ 		    (verbose ? REFRESH_IN_PORCELAIN : REFRESH_QUIET);
++	struct pattern_list pl = { 0 };
++	int sparse_checkout_enabled = !get_sparse_checkout_patterns(&pl);
+ 
+ 	seen = xcalloc(pathspec->nr, 1);
+ 	refresh_index(&the_index, flags, pathspec, seen,
+ 		      _("Unstaged changes after refreshing the index:"));
+ 	for (i = 0; i < pathspec->nr; i++) {
+ 		if (!seen[i]) {
+-			if (matches_skip_worktree(pathspec, i, &skip_worktree_seen)) {
++			const char *path = pathspec->items[i].original;
++			int dtype = DT_REG;
++
++			if (matches_skip_worktree(pathspec, i, &skip_worktree_seen) ||
++			    (sparse_checkout_enabled &&
++			     !path_matches_pattern_list(path, strlen(path), NULL,
++							&dtype, &pl, &the_index))) {
+ 				string_list_append(&only_match_skip_worktree,
+ 						   pathspec->items[i].original);
+ 			} else {
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 91e30d6ec22..4c3bcb34999 100755
+index dee20db5bb1..ddc86bb4152 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -114,6 +114,16 @@ test_expect_success 'setup' '
- 		git add . &&
- 		git commit -m "file to dir" &&
+@@ -339,11 +339,7 @@ test_expect_success 'status/add: outside sparse cone' '
  
-+		for side in left right
-+		do
-+			git checkout -b merge-$side base &&
-+			echo $side >>deep/deeper2/a &&
-+			echo $side >>folder1/a &&
-+			echo $side >>folder2/a &&
-+			git add . &&
-+			git commit -m "$side" || return 1
-+		done &&
-+
- 		git checkout -b deepest base &&
- 		echo "updated deepest" >deep/deeper1/deepest/a &&
- 		git commit -a -m "update deepest" &&
-@@ -482,6 +492,39 @@ test_expect_success 'merge' '
- 	test_all_match git rev-parse HEAD^{tree}
- '
+ 	# Adding the path outside of the sparse-checkout cone should fail.
+ 	test_sparse_match test_must_fail git add folder1/a &&
+-
+-	test_must_fail git -C sparse-checkout add --refresh folder1/a 2>sparse-checkout-err &&
+-	test_must_fail git -C sparse-index add --refresh folder1/a 2>sparse-index-err &&
+-	# NEEDSWORK: A sparse index changes the error message.
+-	! test_cmp sparse-checkout-err sparse-index-err &&
++	test_sparse_match test_must_fail git add --refresh folder1/a &&
  
-+# NEEDSWORK: This test is documenting current behavior, but that
-+# behavior can be confusing to users so there is desire to change it.
-+# Right now, users might be using this flow to work through conflicts,
-+# so any solution should present advice to users who try this sequence
-+# of commands to follow whatever new method we create.
-+test_expect_success 'merge with conflict outside cone' '
-+	init_repos &&
-+
-+	test_all_match git checkout -b merge-tip merge-left &&
-+	test_all_match git status --porcelain=v2 &&
-+	test_all_match test_must_fail git merge -m merge merge-right &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	# Resolve the conflict in different ways:
-+	# 1. Revert to the base
-+	test_all_match git checkout base -- deep/deeper2/a &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	# 2. Add the file with conflict markers
-+	test_all_match git add folder1/a &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	# 3. Rename the file to another sparse filename and
-+	#    accept conflict markers as resolved content.
-+	run_on_all mv folder2/a folder2/z &&
-+	test_all_match git add folder2 &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	test_all_match git merge --continue &&
-+	test_all_match git status --porcelain=v2 &&
-+	test_all_match git rev-parse HEAD^{tree}
-+'
-+
- test_expect_success 'merge with outside renames' '
- 	init_repos &&
- 
+ 	# NEEDSWORK: Adding a newly-tracked file outside the cone succeeds
+ 	test_sparse_match git add folder1/new &&
 -- 
 gitgitgadget
 
