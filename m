@@ -2,112 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 510C1C4338F
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 20:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D303C4338F
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 20:43:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 335BA60F21
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 20:13:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0301D60F4B
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 20:43:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232169AbhG2UNP convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 29 Jul 2021 16:13:15 -0400
-Received: from mail-ej1-f51.google.com ([209.85.218.51]:38620 "EHLO
-        mail-ej1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229735AbhG2UNP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jul 2021 16:13:15 -0400
-Received: by mail-ej1-f51.google.com with SMTP id nd39so12736139ejc.5
-        for <git@vger.kernel.org>; Thu, 29 Jul 2021 13:13:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ViyyqrgHgirkBH1oV+mbqFLq6NY4TjFmoyRU4n5ZR0g=;
-        b=ZTvTWCuRbAKjmDwrThH09cg7uQyk2faulVpWrJditIFji/IY1f8AbFmFoGeGODO6Mh
-         zGNvQBX733JzRx1kA2SL/KFZqw0he6vKAcp690UOJPiMzkgRDRKsM9FbrU5X7iDdVpxi
-         4z5cX5S/yRza9E214KrUaaRF6LWBDwFI6XUovhE09xX0FeSNKpu4QESUi6xPh03KpMqW
-         26pVCiL9inm3jgTtkT0TUjT5sxCT8SxPFvh3ZYs183sVZ/1MgjrHlkIkr1pfLvxXS94n
-         +BxYlzBdW+j77Ve4/qlv/SFhSQjzLjxvzw9kimGAwq0kcPMIdAv2MXsx4IwluOyUXuGx
-         Osmw==
-X-Gm-Message-State: AOAM531QP7C/3WKgr1Q588K7WgzgrGtCLbSFYq79ypLe4R9IuvXSWNcO
-        YAVXo6z6KW9whz5xqdO5/szBTv/vzeA3Y5zc7eY=
-X-Google-Smtp-Source: ABdhPJzM3D357o1n95rQ+Crl5zr/sXVt8Y3XBju/96LUAe4ND/cYk74giotC5+JE8gMv9u4M3iT/trJWsvQjuJHLmJs=
-X-Received: by 2002:a17:906:eb4c:: with SMTP id mc12mr6057020ejb.311.1627589589561;
- Thu, 29 Jul 2021 13:13:09 -0700 (PDT)
+        id S233247AbhG2Unz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Jul 2021 16:43:55 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51314 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233087AbhG2Unz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jul 2021 16:43:55 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5C9161484BD;
+        Thu, 29 Jul 2021 16:43:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=E9iLPTqUTHxu5ThIKVQFYZt1p0rr08WhXyRJoE
+        x7D5E=; b=h7aKczQPsPjOxRs9GfmLHWkF9Tn2rBzZvcsDh/jcD9L6610tArbuLP
+        IwqemqBSlDCfgv1dyWgmcWZ/imI8/NxYcRl8CvEpRUZ2pGDS+OTm5+l/SAi/IQE8
+        3Zr00nGj7WWyustJYJykmywM1XRdGpVorXpFmL9zire3MV5szpLEI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 545011484BC;
+        Thu, 29 Jul 2021 16:43:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9AF871484BB;
+        Thu, 29 Jul 2021 16:43:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     Fabian Stelzer via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Hans Jerry Illikainen <hji@dyntopia.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Gwyneth Morgan <gwymor@tilde.club>
+Subject: Re: [PATCH v6 5/9] ssh signing: parse ssh-keygen output and verify
+ signatures
+References: <pull.1041.v5.git.git.1627391744.gitgitgadget@gmail.com>
+        <pull.1041.v6.git.git.1627501009.gitgitgadget@gmail.com>
+        <725764018ceb5bcecc748cc5169d4305ea9d7d23.1627501009.git.gitgitgadget@gmail.com>
+        <xmqq35ry85or.fsf@gitster.g>
+        <54671c83-4b1f-5e24-a6ad-226a4f45f952@gigacodes.de>
+Date:   Thu, 29 Jul 2021 13:43:46 -0700
+In-Reply-To: <54671c83-4b1f-5e24-a6ad-226a4f45f952@gigacodes.de> (Fabian
+        Stelzer's message of "Thu, 29 Jul 2021 11:12:27 +0200")
+Message-ID: <xmqqczr04zr1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1008.git.1627586493659.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1008.git.1627586493659.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 29 Jul 2021 16:12:58 -0400
-Message-ID: <CAPig+cR9rb+ydc5age+2FzLtTtXhg1t77p5NrA7bqN0iyU6Kyg@mail.gmail.com>
-Subject: Re: [PATCH] mingw: align symlinks-related rmdir() behavior with Linux
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: ACF2995E-F0AD-11EB-AFB8-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 29, 2021 at 3:21 PM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> When performing a rebase, rmdir() is called on the folder .git/logs. On
-> Unix rmdir() exits without deleting anything in case .git/logs is a
-> symbolic link but the equivalent functions on Windows (_rmdir, _wrmdir
-> and RemoveDirectoryW) do not behave the same and remove the folder if it
-> is symlinked even if it is not empty.
+Fabian Stelzer <fs@gigacodes.de> writes:
+
+>>> +		/* Search for the last "with" to get the full principal */
+>>> +		principal = line;
+>>> +		do {
+>>> +			search = strstr(line, " with ");
+>>> +			if (search)
+>>> +				line = search + 1;
+>>> +		} while (search != NULL);
+>>> +		sigc->signer = xmemdupz(principal, line - principal - 1);
+>>> +		sigc->fingerprint = xstrdup(strstr(line, "key") + 4);
+>> OK.  This does not care the "RSA" part, which is future resistant.
+>> It assumes the <algo>:<fingerprint> comes after literal " key ",
+>> which I think is a reasonable thing to do.
+>> However, we never checked if the line has "key" in it, so
+>> strstr(line, "key") + 4 may not be pointing at where this code
+>> expects.
 >
-> This creates issues when folders in .git/ are symlinks which is
-> especially the case when git-repo[1] is used.
+> Hmm. What would i do if i don't find "key"? Still mark the signature
+> as valid an just leave fingerprint & key empty?
 
-"issues" is a rather nebulous word. It doesn't help the reader
-understand what actually goes wrong. Presumably some step later in the
-rebase fails? Or is the problem that subsequent interaction with
-git-repo fails because the link which git-repo (presumably) created
-disappears out from underneath it?
-
-> This commit updates mingw_rmdir() so that its behavior is the same as
-> Linux rmdir() in case of symbolic links.
-
-Okay, makes sense so far as the above explanation goes. But it also
-feels like a band-aid fix to support a use-case which only works by
-accident on Unix, if I'm reading between the lines correctly. That is,
-presumably rmdir(".git/logs") is an intended cleanup action but the
-fact that the cleanup doesn't happen as intended when it is a symlink
-is not intentional behavior, thus git-repo's reliance upon that
-behavior is questionable.
-
-I guess this would also help tools which replace .git/worktrees with a
-symlink since git-worktree -- as a cleanup -- removes its
-.git/worktrees directory when the last worktree is removed...
-
-> Signed-off-by: Thomas Bétous <tomspycell@gmail.com>
-> ---
->  compat/mingw.c    | 15 +++++++++++++++
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> @@ -341,6 +341,21 @@ int mingw_rmdir(const char *pathname)
-> +       /*
-> +       * Contrary to Linux rmdir(), Windows' _wrmdir() and _rmdir()
-> +       * will remove the directory at the path if it is a symbolic link
-> +       * which leads to issues when symlinks are used in the .git folder
-> +       * (in the context of git-repo for instance). So before calling _wrmdir()
-> +       * we first check if the path is a symbolic link. If it is, we exit
-> +       * and return the same error as Linux rmdir() in this case (ENOTDIR).
-> +       */
-> +       if (!mingw_lstat(pathname, &st) && S_ISLNK(st.st_mode)) {
-> +               errno = ENOTDIR;
-> +               return -1;
-> +       }
-
-Unfortunately, this code comment doesn't help future readers
-understand when/how this case can be triggered, which means that
-anyone working on this code in the future will have to consult the
-commit message anyhow in order to obtain the necessary understanding.
-This suggests that either the comment should be dropped altogether,
-thus forcing the person to consult the commit message (probably
-undesirable), or improved to give enough information to understand
-when/how it can be triggered.
+We didn't get a satisfactory response from the ssh-keygen we expect
+that tells us that the external tool successfully decided that the
+signature is good or bad.  I would feel safer if we said we did not
+see a good signature in such a case.
