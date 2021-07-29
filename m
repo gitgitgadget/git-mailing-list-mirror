@@ -2,157 +2,179 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6882DC4338F
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 19:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0515EC4338F
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 19:21:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 44C4A60EE2
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 19:09:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DBD8B60462
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 19:21:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232099AbhG2TJ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Jul 2021 15:09:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46154 "EHLO
+        id S230527AbhG2TVl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Jul 2021 15:21:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229896AbhG2TJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jul 2021 15:09:57 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A88BC061765
-        for <git@vger.kernel.org>; Thu, 29 Jul 2021 12:09:53 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id f13so8146679plj.2
-        for <git@vger.kernel.org>; Thu, 29 Jul 2021 12:09:53 -0700 (PDT)
+        with ESMTP id S230056AbhG2TVl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jul 2021 15:21:41 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D7ABC061765
+        for <git@vger.kernel.org>; Thu, 29 Jul 2021 12:21:36 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id l18so8228711wrv.5
+        for <git@vger.kernel.org>; Thu, 29 Jul 2021 12:21:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=9ushP6xjE/qSP5pBCPRYy9J6pJiozLwIhndLTlWYo2w=;
-        b=jfdtJQDx91XBV+wrlvRpyKM3MPD3A+O+apZfNksqh6ctBkekV9LNCOZnz4qoeILfE7
-         Jg81E+p48Ojm48igW5g1ZlqGV5lUIWEeMd2Tmo1rSj7pG3bMS7NZ2D4QkKXTmdr7nJj+
-         U7YTb/MRQ/r5cIfzxnkgJQsCJrm4GhgXXlQnOvvSMbng6Gzfucx4UYuX0AO79UVu+Aam
-         uRHlkNgcaxRjFXjCGhgtb1kMHzYBFZ1/mDB4wOLhJ6H6hB2jpSwdFzofJSL18I9wf4li
-         oY+EO/GNGUAz+EGurh5+1kgU+M3w35dcnoOy9zyi04QuExOpUO53nG94VoKxecZ1FbjK
-         j/Bw==
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=YKT4OJUOh3lPVp9QmMZxDL/gtZTymaLksxeZlGVQqq8=;
+        b=Qmd9RNm6QL/D4ydArJFYdZi5pyWows/8waV6FUxMpKblCn9sDY/nD2Gqjb1AV4nGXj
+         JrER+BRBPH6cQYGaZLImsdflgIxCoh+yCCVb7vUpSjcPWALtvIUsP+0u8euU5hcYVayT
+         /37ap7ULXGr68PWXuNbo5hCOIr5/8AfNvQiTn3b9ctmhwtlhN4CfFvwYyZmSFY2G7Tql
+         +JrLEBW+vQzMUzefS9cC5kPw8Jvv5IsY6i1GFweIApnF5L8A+lUDBZQCPzhlyAQpfU0o
+         uFIzlRc2N5l5NpCZa0XcLO+UUiZ94P5Br+5e7xKH0mQGwI+xvR86azg+cec+Y05ayQFN
+         pCbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=9ushP6xjE/qSP5pBCPRYy9J6pJiozLwIhndLTlWYo2w=;
-        b=m0tGYI0EENH9Qizi7aN883Yj/42XVObG5V0C/nMddH1a9pMPk5T1j4V0mJfCLVmqSB
-         kXFPgtPwdh61PPt84xpFlqLBpgA7Oi1OLZcEJzS9uY/2YQoISAHvI1R1r477GKjxtEfH
-         z3aiCpfyXaYkpCA9LX+tcaLa41C8vaprK0EnOV6PtkJGrQ7RNALclkcRknnb29kLnQrR
-         zuNzDBtp246KgkMv9VTRAByBl/7kW8AO24jQuDpPXogG9rBHLVh2ydZYQfThYCoOsNhl
-         LI6mXF2FuqidA5RGyG+jObEQvdEjN/KXkoBItiwZAa61ui3WfK6ztA6ch6/dmbX0YLsE
-         sWQw==
-X-Gm-Message-State: AOAM533phd9R1egso0sF50jsQjzRpDHKG/IlihIdSJREio5Ewp8OpKNa
-        C3GXSU/g6117VwCDV6tw8ILaEWw+HBZZvw==
-X-Google-Smtp-Source: ABdhPJyj7tXgf116c+e9WypLU0zigpiLp9qv1za1pMeToJXCGU7jek/HKa8VN1VhKGn0RVDwvkHv2w==
-X-Received: by 2002:a17:90b:1d86:: with SMTP id pf6mr6925724pjb.104.1627585793037;
-        Thu, 29 Jul 2021 12:09:53 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:12b4:7532:e087:f8ab])
-        by smtp.gmail.com with ESMTPSA id n8sm1809938pfd.100.2021.07.29.12.09.51
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=YKT4OJUOh3lPVp9QmMZxDL/gtZTymaLksxeZlGVQqq8=;
+        b=b0KQUnm5/Y456ff1fKwO7iH9clsoTitfdEbzEKmSH3qvFnyGw6eHscX7mcvW1xb4K6
+         cUZkNxs2fX+X67ctxHEi5BOY4+em2bMwY2AUmYVa3d0U5dIfj7Ye61rKjNBtamkeDK7g
+         s2x3k0jVrzDAT0vCM01NSwPdtDGGuob6EjVhyFVmKB8fCLOlVROmueiix2Brl2IF5gJr
+         eAwiziz+pbcOovgC/f59/NFVe2xL513FL0doq/7IxsaHI3z5/HHFNkFFZPd/xZR0f+c5
+         5RuHPVC9tk54CLmgkCsgvsfpg5cMOwSRbhDvceBi0BI/qQa6GmPz4ElB3g9jBNaEtaQo
+         uzoA==
+X-Gm-Message-State: AOAM533jkKJYssQGWSpVvqeB1sqSa8tPViF950rNWvPhjhTyBQ4b5dEt
+        5gjGmdmIcE1gvk1Y+HISO0aIkE93hWM=
+X-Google-Smtp-Source: ABdhPJx0wIi3AYFxJmmD3lhGNP7jJpJXCU6yr7h0aYnb+b87xAUd2vEfq2z9jQ5aSf3EDo8Wo7BPFw==
+X-Received: by 2002:adf:e0c4:: with SMTP id m4mr6569680wri.312.1627586495153;
+        Thu, 29 Jul 2021 12:21:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e5sm5307047wrr.36.2021.07.29.12.21.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jul 2021 12:09:52 -0700 (PDT)
-Date:   Thu, 29 Jul 2021 12:09:45 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     Fabian Stelzer via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Hans Jerry Illikainen <hji@dyntopia.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Gwyneth Morgan <gwymor@tilde.club>
-Subject: Re: [PATCH v6 6/9] ssh signing: add test prereqs
-Message-ID: <YQL8+UFtVJPlJroe@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Fabian Stelzer via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Hans Jerry Illikainen <hji@dyntopia.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Gwyneth Morgan <gwymor@tilde.club>
-References: <pull.1041.v5.git.git.1627391744.gitgitgadget@gmail.com>
- <pull.1041.v6.git.git.1627501009.gitgitgadget@gmail.com>
- <18a26ca49e7a9b0046559ac8d5c62c99ea7262ae.1627501009.git.gitgitgadget@gmail.com>
+        Thu, 29 Jul 2021 12:21:34 -0700 (PDT)
+Message-Id: <pull.1008.git.1627586493659.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 29 Jul 2021 19:21:33 +0000
+Subject: [PATCH] mingw: align symlinks-related rmdir() behavior with Linux
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <18a26ca49e7a9b0046559ac8d5c62c99ea7262ae.1627501009.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021.07.28 19:36, Fabian Stelzer via GitGitGadget wrote:
-> From: Fabian Stelzer <fs@gigacodes.de>
-> 
-> generate some ssh keys and a allowedSignersFile for testing
-> 
-> Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
-> ---
->  t/lib-gpg.sh | 29 +++++++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
-> 
-> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-> index 9fc5241228e..600c8d1a026 100644
-> --- a/t/lib-gpg.sh
-> +++ b/t/lib-gpg.sh
-> @@ -87,6 +87,35 @@ test_lazy_prereq RFC1991 '
->  	echo | gpg --homedir "${GNUPGHOME}" -b --rfc1991 >/dev/null
->  '
->  
-> +test_lazy_prereq GPGSSH '
-> +	ssh_version=$(ssh-keygen -Y find-principals -n "git" 2>&1)
-> +	test $? != 127 || exit 1
-> +	echo $ssh_version | grep -q "find-principals:missing signature file"
-> +	test $? = 0 || exit 1;
-> +	mkdir -p "${GNUPGHOME}" &&
-> +	chmod 0700 "${GNUPGHOME}" &&
-> +	ssh-keygen -t ed25519 -N "" -C "git ed25519 key" -f "${GNUPGHOME}/ed25519_ssh_signing_key" >/dev/null &&
-> +	echo "\"principal with number 1\" $(cat "${GNUPGHOME}/ed25519_ssh_signing_key.pub")" >> "${GNUPGHOME}/ssh.all_valid.allowedSignersFile" &&
-> +	ssh-keygen -t rsa -b 2048 -N "" -C "git rsa2048 key" -f "${GNUPGHOME}/rsa_2048_ssh_signing_key" >/dev/null &&
-> +	echo "\"principal with number 2\" $(cat "${GNUPGHOME}/rsa_2048_ssh_signing_key.pub")" >> "${GNUPGHOME}/ssh.all_valid.allowedSignersFile" &&
-> +	ssh-keygen -t ed25519 -N "super_secret" -C "git ed25519 encrypted key" -f "${GNUPGHOME}/protected_ssh_signing_key" >/dev/null &&
-> +	echo "\"principal with number 3\" $(cat "${GNUPGHOME}/protected_ssh_signing_key.pub")" >> "${GNUPGHOME}/ssh.all_valid.allowedSignersFile" &&
-> +	cat "${GNUPGHOME}/ssh.all_valid.allowedSignersFile" &&
-> +	ssh-keygen -t ed25519 -N "" -f "${GNUPGHOME}/untrusted_ssh_signing_key" >/dev/null
-> +'
-> +
-> +SIGNING_KEY_PRIMARY="${GNUPGHOME}/ed25519_ssh_signing_key"
-> +SIGNING_KEY_SECONDARY="${GNUPGHOME}/rsa_2048_ssh_signing_key"
-> +SIGNING_KEY_UNTRUSTED="${GNUPGHOME}/untrusted_ssh_signing_key"
-> +SIGNING_KEY_WITH_PASSPHRASE="${GNUPGHOME}/protected_ssh_signing_key"
-> +SIGNING_KEY_PASSPHRASE="super_secret"
-> +SIGNING_ALLOWED_SIGNERS="${GNUPGHOME}/ssh.all_valid.allowedSignersFile"
-> +
-> +GOOD_SIGNATURE_TRUSTED='Good "git" signature for'
-> +GOOD_SIGNATURE_UNTRUSTED='Good "git" signature with'
-> +KEY_NOT_TRUSTED="No principal matched"
-> +BAD_SIGNATURE="Signature verification failed"
-> +
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Is there a reason why we don't use these variables in the script above?
+When performing a rebase, rmdir() is called on the folder .git/logs. On
+Unix rmdir() exits without deleting anything in case .git/logs is a
+symbolic link but the equivalent functions on Windows (_rmdir, _wrmdir
+and RemoveDirectoryW) do not behave the same and remove the folder if it
+is symlinked even if it is not empty.
 
-Also, in general I feel that it's better to add tests in the same commit
-where new features are added, rather than having standalone test
-commits.
+This creates issues when folders in .git/ are symlinks which is
+especially the case when git-repo[1] is used.
 
+This commit updates mingw_rmdir() so that its behavior is the same as
+Linux rmdir() in case of symbolic links.
 
->  sanitize_pgp() {
->  	perl -ne '
->  		/^-----END PGP/ and $in_pgp = 0;
-> -- 
-> gitgitgadget
-> 
+This fixes https://github.com/git-for-windows/git/issues/2967
+
+[1]: git-repo is a python tool built on top of Git which helps manage
+many Git repositories. It stores all the .git/ folders in a central
+place by taking advantage of symbolic links.
+More information: https://gerrit.googlesource.com/git-repo/
+
+Signed-off-by: Thomas Bétous <tomspycell@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    mingw: support the git-repo tool better
+    
+    This addresses an issue, originally reported at
+    https://github.com/git-for-windows/git/issues/2967, where the git-repo
+    tool [https://gerrit.googlesource.com/git-repo/] replaces folders in
+    .git/ with symlinks and mingw_rmdir() erroneously removes the symlink
+    target directory's contents.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1008%2Fdscho%2Ffix-rmdir-with-symlinks-on-windows-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1008/dscho/fix-rmdir-with-symlinks-on-windows-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1008
+
+ compat/mingw.c    | 15 +++++++++++++++
+ t/t3400-rebase.sh | 10 ++++++++++
+ t/test-lib.sh     |  6 ++++++
+ 3 files changed, 31 insertions(+)
+
+diff --git a/compat/mingw.c b/compat/mingw.c
+index aa647b367b0..685d3efa3c0 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -341,6 +341,21 @@ int mingw_rmdir(const char *pathname)
+ {
+ 	int ret, tries = 0;
+ 	wchar_t wpathname[MAX_PATH];
++	struct stat st;
++
++	/*
++	* Contrary to Linux rmdir(), Windows' _wrmdir() and _rmdir()
++	* will remove the directory at the path if it is a symbolic link
++	* which leads to issues when symlinks are used in the .git folder
++	* (in the context of git-repo for instance). So before calling _wrmdir()
++	* we first check if the path is a symbolic link. If it is, we exit
++	* and return the same error as Linux rmdir() in this case (ENOTDIR).
++	*/
++	if (!mingw_lstat(pathname, &st) && S_ISLNK(st.st_mode)) {
++		errno = ENOTDIR;
++		return -1;
++	}
++
+ 	if (xutftowcs_path(wpathname, pathname) < 0)
+ 		return -1;
+ 
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 0bb88aa982b..23dbd3c82ed 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -406,4 +406,14 @@ test_expect_success 'refuse to switch to branch checked out elsewhere' '
+ 	test_i18ngrep "already checked out" err
+ '
+ 
++test_expect_success MINGW,SYMLINKS_WINDOWS 'rebase when .git/logs is a symlink' '
++	git checkout main &&
++	mv .git/logs actual_logs &&
++	cmd //c "mklink /D .git\logs ..\actual_logs" &&
++	git rebase -f HEAD^ &&
++	test -L .git/logs &&
++	rm .git/logs &&
++	mv actual_logs .git/logs
++'
++
+ test_done
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index adaf03543e8..73f6d645b66 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1513,6 +1513,12 @@ test_lazy_prereq SYMLINKS '
+ 	ln -s x y && test -h y
+ '
+ 
++test_lazy_prereq SYMLINKS_WINDOWS '
++	# test whether symbolic links are enabled on Windows
++	test_have_prereq MINGW &&
++	cmd //c "mklink y x" &> /dev/null && test -h y
++'
++
+ test_lazy_prereq FILEMODE '
+ 	test "$(git config --bool core.filemode)" = true
+ '
+
+base-commit: ebf3c04b262aa27fbb97f8a0156c2347fecafafb
+-- 
+gitgitgadget
