@@ -2,185 +2,209 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88251C4338F
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 14:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BD73C432BE
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 14:52:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C2BE60EBC
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 14:49:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76BF660EBC
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 14:52:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229934AbhG2Otk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Jul 2021 10:49:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38160 "EHLO
+        id S229927AbhG2OwQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Jul 2021 10:52:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229864AbhG2Otk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jul 2021 10:49:40 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32ED8C061765
-        for <git@vger.kernel.org>; Thu, 29 Jul 2021 07:49:36 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id o13so6177856qkk.9
-        for <git@vger.kernel.org>; Thu, 29 Jul 2021 07:49:36 -0700 (PDT)
+        with ESMTP id S229918AbhG2OwO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jul 2021 10:52:14 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 439F4C061765
+        for <git@vger.kernel.org>; Thu, 29 Jul 2021 07:52:10 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id z4so7285955wrv.11
+        for <git@vger.kernel.org>; Thu, 29 Jul 2021 07:52:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Ypi0QDN/olawj0/h1iQ/cqx5/qTv0H2YW+9cLg3+3sw=;
-        b=e2LQK04BE3m/LX+mTVLd6QglHz4GSdM1nneX1NMK+mrELt2LniOMTnVfkWWLYwyn+v
-         hy58AZXXUMspUePDD+vWSKUWbOSCOsDerQ9PQMRkE3jGOSiol7fjIkM/VcN9pfTS630/
-         iZGLOAc6Z4rDIUFmIphXOz2IuKxb4sAtWyGfvJFWtruFFv5ozb6IpFpzckHwZyIH1+ki
-         zr64Y22JW0edp4kW8W71B2cBFw2NnNCZiJNgEshKt/lcs2OUHmvapBIFpsPgfmKNQlHy
-         2NYFLQXGevc7F75EJvWOuD60ZP82Z9GirthFdTVuHsYDdstK81y/uNdGFDVLjOcNojWg
-         1Htw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=x9b2nDgdmBFtr2mkDSTsXzBep9pKYX9OvykNpPOOG4M=;
+        b=VIznoSYWrvjPrm8J83IlqfrFjuaDdy6yo5PEpUHLHZZjbws8JkC3WTKGYuYKTgyJX2
+         SxUkNPYiinMVQyBq04cqSwspc1rSuAU7cMPok0Alcc9O01COLucbeT4GYbKFJUBfXDVr
+         xYth6zZ+24eN5Wxb54Grs/CtSSZFuNbnrYfGdvzhZLMv30sZSQ5rKVGKw4lCT0ul+T0g
+         28NUyUhPQMAHsf7SttGJ/oKVJl8aHdSCzRfY+OV573sNL7qEX8w9AeV2oWf0MZ0vV+ib
+         XIyzuXfU9DI2gLWo+egyUCrZUAd7QHoCVw6HHrzYUVhhcvEtbk8BOITqCmvor2lGE547
+         AKHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Ypi0QDN/olawj0/h1iQ/cqx5/qTv0H2YW+9cLg3+3sw=;
-        b=m9y8V1u7el9CBpFWKapMLE+ypZH1sQW2s+7iLLeuXGYP1qqJgYj+JzO+VilNcP+aFf
-         zAboxZCSGTV5TjHk1kCVflJ6AII2RpiS6ndLQCeEePLG+40bB44eCqFyXxEe1/239jEf
-         kQvMJ6XqRrfzy26//35pvxHZn2dCR54zT3cJlrAf4Bnq3c9AVpLOBC73+EQUMVlS49g6
-         +wFIPrKxe3f4fSyVWvcXWrhk97FqxLoDRfkQyUw0JGuGQGyeEyvQWrPH5TEGJkQsA5+Q
-         A+PvGaLW7MMpCGAh0wKj9vI+3qswlsMNe69c4obH7ldnmK0j2Tgf6mfM3hXHS0EIu3Uv
-         dyww==
-X-Gm-Message-State: AOAM531wWg51kPyzKRkn2GRdtJQ8MCNtqDOFhMl8+4kNqsaP9f2a3nOO
-        NEggwJfUQurpxIu+rFfsNlU=
-X-Google-Smtp-Source: ABdhPJyy+sLX1W0kO/kDT70JYu74LRJ34aDIXPMXqkw0yjWpAG+gkm1/dDeREsO2GVQN2YGknwWuAw==
-X-Received: by 2002:a05:620a:749:: with SMTP id i9mr5713599qki.307.1627570175173;
-        Thu, 29 Jul 2021 07:49:35 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:444a:5a21:a4e5:7d54? ([2600:1700:e72:80a0:444a:5a21:a4e5:7d54])
-        by smtp.gmail.com with ESMTPSA id s14sm1927219qke.1.2021.07.29.07.49.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Jul 2021 07:49:34 -0700 (PDT)
-Subject: Re: [PATCH v2 0/5] Sparse Index: Integrate with 'git add'
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.999.git.1626901619.gitgitgadget@gmail.com>
- <pull.999.v2.git.1627312727.gitgitgadget@gmail.com>
- <CABPp-BHnvEPuYahFAoVSF58k99t__N2-M4OKKHDAAK2qrhY3WQ@mail.gmail.com>
- <6a63736a-feb8-b74b-ef68-73cc71009e1d@gmail.com>
- <CABPp-BGUTg=GarkhP0MwjWKWmDyRJiEL2J75wFz52y2xi_50mw@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <2a24488f-d0c8-d1f4-7115-36ac0745658d@gmail.com>
-Date:   Thu, 29 Jul 2021 10:49:32 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=x9b2nDgdmBFtr2mkDSTsXzBep9pKYX9OvykNpPOOG4M=;
+        b=nTvA3HUWazYGOxF5+TyNprqg+oEOMmYh2uGyzZQnPNFAGUMroyrT03wEcb6TJgIQhY
+         2jFT5HZTMaHp7IPIfLu8Czwj4KUPT3+LAkXWaqyXy43Nvkouh7Tw/xqycYA7UeTTre23
+         YFfo7oIeTnDDfwU7SQIXytZgWEbY5F5S6A67nxeqXIBnu5n11xsF1annE3yN6Ks/II45
+         IeQwiWI5CrjSf3hsRfoXTY3aajrwmRnxIbZAZbgTP4jbgUGvoGz9imnwhGR1yAj96rPc
+         z3VyX0tvNsJl/y+UtHNUyKUA5GBXepeW+WVz8BUSCJnv0xfEHzKqFcgOkQmI3Az1dGUc
+         rPNA==
+X-Gm-Message-State: AOAM533YqoOJVV6a4jJecYr6KDzjBXftUZt/03LBwrXipGypfLnWTlMb
+        CuD+3SKcW8fqD4xYzad4KRvdm1RbQ7M=
+X-Google-Smtp-Source: ABdhPJyqOraB1zN/KQ7NU4MGBuiiy5rN017byj6HiSJxg54ZjC8HyAdIWbg+5eKni2d2tZ6Jj5h+9A==
+X-Received: by 2002:adf:f707:: with SMTP id r7mr5180254wrp.175.1627570328892;
+        Thu, 29 Jul 2021 07:52:08 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f5sm3853189wrs.5.2021.07.29.07.52.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Jul 2021 07:52:08 -0700 (PDT)
+Message-Id: <pull.999.v3.git.1627570327.gitgitgadget@gmail.com>
+In-Reply-To: <pull.999.v2.git.1627312727.gitgitgadget@gmail.com>
+References: <pull.999.v2.git.1627312727.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 29 Jul 2021 14:52:02 +0000
+Subject: [PATCH v3 0/5] Sparse Index: Integrate with 'git add'
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BGUTg=GarkhP0MwjWKWmDyRJiEL2J75wFz52y2xi_50mw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, newren@gmail.com, matheus.bernardino@usp.br,
+        stolee@gmail.com, Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/28/2021 10:57 PM, Elijah Newren wrote:
-> On Wed, Jul 28, 2021 at 8:03 PM Derrick Stolee <stolee@gmail.com> wrote:
->>
->> On 7/28/2021 7:13 PM, Elijah Newren wrote:
->>> On Mon, Jul 26, 2021 at 9:18 AM Derrick Stolee via GitGitGadget
->>> <gitgitgadget@gmail.com> wrote:
->> ...
->>>>  * a full proposal for what to do with "git (add|mv|rm)" and paths outside
->>>>    the cone is delayed to another series (with an RFC round) because the
->>>>    behavior of the sparse-index matches a full index with sparse-checkout.
->>>
->>> I think this makes sense.
->>>
->>> I've read through the patches, and I like this version...with one
->>> exception.  Can we mark the test added in patch 1 under
->>>
->>>      # 3. Rename the file to another sparse filename and
->>>      #    accept conflict markers as resolved content.
->>>
->>> as NEEDSWORK or even MAYNEEDWORK?
->>
->> I have no objection to adding a blurb such as:
->>
->>         # NEEDSWORK: allowing adds outside the sparse cone can be
->>         # confusingto users, as the file can disappear from the
->>         # worktree without warning in later Git commands.
->>
-> 
-> Sounds great to me other than the simple typo (s/confusingto/confusing to/)
-> 
->> And perhaps I'm misunderstanding the situation a bit, but that
->> seems to apply not just to this third case, but all of them. I
->> don't see why the untracked case is special compared to the
->> tracked case. More investigation may be required on my part.
-> 
-> The possible cases for files outside the sparsity patterns are:
->   a) untracked
->   b) tracked and SKIP_WORKTREE
->   c) tracked and !SKIP_WORKTREE (e.g. because merge conflicts)
-> 
-> From the above set, we've been talking about untracked and I think
-> we're on the same page about those.  Case (b) was already corrected by
-> Matheus a number of releases back; git-add will throw an error
-> explaining the situation and prevent the adding.  The error tells the
-> user to expand their sparsity set to work on those files.  For case
-> (c), you are right that those are problematic in the same way (they
-> can disappear later after a git-add)...but we're also in the situation
-> where the only way to get rid of the conflicting stages is to run git
-> add.  So, in my mind, case (c) puts us between a rock and a hard
-> place, and we probably need to allow the git-add.
+This patch series re-submits the 'git add' integration with sparse-index.
+The performance gains are the same as before.
 
-I appreciate this additional context. Thanks.
- 
->>>  I'm still quite unconvinced that it
->>> is testing for correct behavior, and don't want to paint ourselves
->>> into a corner.  In particular, we don't allow folks to "git add
->>> $IGNORED_FILE" without a --force override because it's likely to be a
->>> mistake.
->>
->> I agree about ignored files, and that is true whether or not they
->> are in the sparse cone.
-> 
-> Yes, and...
-> 
->>> I think the same logic holds for adding untracked files
->>> outside the sparsity cone.
-> 
-> In my opinion, "outside the sparsity cone" is another form of "being
-> ignored", and in my mind should be treated similarly -- it should
-> generally require an override to add such files.  (Case (c) possibly
-> being an exception, though maybe even it shouldn't be.)
+It is based on ds/commit-and-checkout-with-sparse-index.
 
-I don't hold that same interpretation. I think of it instead as
-"hidden" files, but they still matter. I also think that advising
-one to adjust their sparsity patterns might be dangerous because
-not all users know the ramifications of doing that. They might
-accidentally download an enormous amount of data to correct a
-single file.
+This series was delayed from its initial submission for a couple reasons.
 
-Having an override seems like the best option, and we can hopefully
-make it consistent across all the cases and commands.
+The first was because it was colliding with some changes in
+mt/add-rm-in-sparse-checkout, so now we are far enough along that that
+branch is in our history and we can work forwards.
 
-...
+The other concern was about how 'git add ' should respond when a path
+outside of the sparse-checkout cone exists. One recommendation (that I am
+failing to find a link to the message, sorry) was to disallow adding files
+that would become index entries with SKIP_WORKTREE on. However, as I worked
+towards that goal I found that change would cause problems for a realistic
+scenario: merge conflicts outside of the sparse-checkout cone.
 
-> Trying to get out of a corner we paint ourselves into with
-> sparse-checkout would be massively harder, which is why I keep harping
-> on this kind of thing.  I'm very concerned it's happening even despite
-> my numerous comments and worries about it.
-...
-> I'm totally fine with such changes not being part of this series.  I
-> just don't want a test_expect_success that checks for behavior that I
-> consider buggy unless it comes with a disclaimer that it's checking
-> for existing rather than expected behavior.
+Update: Elijah points out that the SKIP_WORKTREE bit is removed from
+conflict files, which allows adding the conflicted files without warning.
+(However, we also need to be careful about untracked files, as documented in
+the test added here.)
 
-I understand your perspective. I'll send a v3 soon that adds a
-comment on top of the entire test signalling the things we talked
-about here: this is a documentation of behavior, not an endorsement,
-and we should probably change it because users can get confused.
+The first patch of this series adds tests that create merge conflicts
+outside of the sparse cone and then presents different ways a user could
+resolve the situation. We want all of them to be feasible, and this
+includes:
 
-Thanks,
--Stolee
+ 1. Reverting the file to a known version in history.
+ 2. Adding the file with its contents on disk.
+ 3. Moving the file to a new location in the sparse directory.
+
+The one place I did continue to update is 'git add --refresh ' to match the
+behavior added by mt/add-rm-in-sparse-checkout which outputs an error
+message. This happens even when the file exists in the working directory,
+but that seems appropriate enough.
+
+
+Updates in V3
+=============
+
+ * Added disclaimer to the merge-conflict test that this is documenting
+   current behavior, not endorsing it.
+
+ * Added Elijah's reviewed-by. Thanks for the review!
+
+Thanks, -Stolee
+
+Derrick Stolee (5):
+  t1092: test merge conflicts outside cone
+  add: allow operating on a sparse-only index
+  pathspec: stop calling ensure_full_index
+  add: ignore outside the sparse-checkout in refresh()
+  add: remove ensure_full_index() with --renormalize
+
+ builtin/add.c                            | 15 ++++--
+ pathspec.c                               |  2 -
+ t/t1092-sparse-checkout-compatibility.sh | 67 ++++++++++++++++++++----
+ 3 files changed, 70 insertions(+), 14 deletions(-)
+
+
+base-commit: 71e301501c88399711a1bf8515d1747e92cfbb9b
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-999%2Fderrickstolee%2Fsparse-index%2Fadd-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-999/derrickstolee/sparse-index/add-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/999
+
+Range-diff vs v2:
+
+ 1:  8f2fd9370fe ! 1:  5e96df4df58 t1092: test merge conflicts outside cone
+     @@ Metadata
+       ## Commit message ##
+          t1092: test merge conflicts outside cone
+      
+     +    Conflicts can occur outside of the sparse-checkout definition, and in
+     +    that case users might try to resolve the conflicts in several ways.
+     +    Document a few of these ways in a test. Make it clear that this behavior
+     +    is not necessarily the optimal flow, since users can become confused
+     +    when Git deletes these files from the worktree in later commands.
+     +
+     +    Reviewed-by: Elijah Newren <newren@gmail.com>
+          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+      
+       ## t/t1092-sparse-checkout-compatibility.sh ##
+     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'merge' '
+       	test_all_match git rev-parse HEAD^{tree}
+       '
+       
+     ++# NEEDSWORK: This test is documenting current behavior, but that
+     ++# behavior can be confusing to users so there is desire to change it.
+     ++# Right now, users might be using this flow to work through conflicts,
+     ++# so any solution should present advice to users who try this sequence
+     ++# of commands to follow whatever new method we create.
+      +test_expect_success 'merge with conflict outside cone' '
+      +	init_repos &&
+      +
+ 2:  6e43f118fa0 ! 2:  defab1b86d3 add: allow operating on a sparse-only index
+     @@ Commit message
+          the use of a sparse index. We modify a test in t1092 to demonstrate
+          these changes which will be remedied in future changes.
+      
+     +    Reviewed-by: Elijah Newren <newren@gmail.com>
+          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+      
+       ## builtin/add.c ##
+ 3:  2ae91e0af29 ! 3:  9fc4313c889 pathspec: stop calling ensure_full_index
+     @@ Commit message
+          commits. Comparing to the full index case, we see the performance go
+          from 0.33s to 0.05s, an 85% improvement.
+      
+     +    Reviewed-by: Elijah Newren <newren@gmail.com>
+          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+      
+       ## pathspec.c ##
+ 4:  a79728d4c64 ! 4:  0ec03ab021d add: ignore outside the sparse-checkout in refresh()
+     @@ Commit message
+          tracked, untracked, or ignored. We simply avoid updating the stat()
+          information because there isn't even an entry that matches the path!
+      
+     +    Reviewed-by: Elijah Newren <newren@gmail.com>
+          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+      
+       ## builtin/add.c ##
+ 5:  1543550a4e8 ! 5:  adf5b15ac3d add: remove ensure_full_index() with --renormalize
+     @@ Commit message
+          SKIP_WORKTREE bit, so it will continue to do so with a sparse index
+          because the sparse directory entries also have this bit set.
+      
+     +    Reviewed-by: Elijah Newren <newren@gmail.com>
+          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+      
+       ## builtin/add.c ##
+
+-- 
+gitgitgadget
