@@ -2,151 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MSGID_FROM_MTA_HEADER,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCBADC4338F
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 21:14:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02F38C4338F
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 21:21:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC76360F01
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 21:14:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD268604D7
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 21:21:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233472AbhG2VO6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Jul 2021 17:14:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33198 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229738AbhG2VO6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jul 2021 17:14:58 -0400
-Received: (qmail 11081 invoked by uid 109); 29 Jul 2021 21:14:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 29 Jul 2021 21:14:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27470 invoked by uid 111); 29 Jul 2021 21:14:54 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 29 Jul 2021 17:14:54 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 29 Jul 2021 17:14:53 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 0/7] Final optimization batch (#15): use memory pools
-Message-ID: <YQMaTTjgTB3wD8wY@coredump.intra.peff.net>
-References: <pull.990.git.1627044897.gitgitgadget@gmail.com>
- <pull.990.v2.git.1627531121.gitgitgadget@gmail.com>
- <YQLVPN9n5E1Yvi/q@coredump.intra.peff.net>
- <CABPp-BH2PQ_rHDPNBghdkhO=kaNfQBnU28UFh9c-sPBNUOM4gA@mail.gmail.com>
+        id S230438AbhG2VVY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Jul 2021 17:21:24 -0400
+Received: from mail-eopbgr60041.outbound.protection.outlook.com ([40.107.6.41]:7809
+        "EHLO EUR04-DB3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S230344AbhG2VVY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jul 2021 17:21:24 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=WvVBpVhYA5CvdJfOE6pLCh+0SzcRbzj9bzAF8F/9kX5ZUh7uxf0sp1soDMZmOR6vFcuhyGniOYC0QyivlzJilQLqgC8A4gdrtACPCWlmzZdAXx3GgiW5dBKgXrRhXxsjQMH9lYiYehyUfCmBsF8LIVJVDEg38k/Gx+7pX37x88G2EwpatNwkjCbJ0wxqr4ST6NG9q3b8foZnxUz4CMHJlDgl4iuuTP0WwCxMrvu6qOXmx7MvwVYQRViVXZYsFygbwGAQAeH9U5sLEYMO2RtHMdccrGAG0kyx4v3vxeU9L47DhUqegytpI/XAvYyEthH7Ey83W8euLVVGLegpF95OFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=w/CKUkhcGnkwNfOSX4E/C9GDXr8E8kCrfcXFOWIZsn4=;
+ b=jsrTHt4u/GKyDZS4oAOb1FPjw2y9gJ9nk8Zcc6x7/z7HT+LzXcJIEjMeDg1e8uvci+L0zJLCyXDF73gfCyOSzL+ldhR//YsK8jzo+UdsrTzFgb5ahtEw6OcSAWm/uc5XordWiIhRj+37yjqoYrVjGlUan2MNJ0ne13xmbX58rDgCexfpiBNLoGxp4em1lOLEN5l0mca3oNa8YZsy58xT4BHv2mhQPMvuGvpJmvItyN+lc5OM8zR8Ywy/+fGcxUZgMPsdZBC85zzXdvmEIk/c0PH8PaS+Gv3zVbUTSeU6v643S2a8PuvWXJXo0YFdtNs4dX3Pxy/DLmrWDJYhr6oAJA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
+ dkim=pass header.d=gigacodes.de; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=campointnet.onmicrosoft.com; s=selector2-campointnet-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=w/CKUkhcGnkwNfOSX4E/C9GDXr8E8kCrfcXFOWIZsn4=;
+ b=taX3e3F/xTPN23UKLiGWCmdJ7IF2keiBo6SsK9sx1Ce0jK7UDenMFesxoEhWYxSJQwHDkjTLPGBKR1m8wUjgjK0XRmDrA6l27fElo8FJKJB0Ot8cF8BJW3tnQklmUQW5d1VYQy1GSFPTqZs8yC31WQyaUQgNyu/dZFeLc+Li2fs=
+Authentication-Results: tilde.club; dkim=none (message not signed)
+ header.d=none;tilde.club; dmarc=none action=none header.from=gigacodes.de;
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
+ by PR3PR10MB4319.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:a5::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4373.21; Thu, 29 Jul
+ 2021 21:21:18 +0000
+Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::d8f3:d5f9:226:e9aa]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::d8f3:d5f9:226:e9aa%3]) with mapi id 15.20.4373.022; Thu, 29 Jul 2021
+ 21:21:18 +0000
+Subject: Re: [PATCH v6 3/9] ssh signing: retrieve a default key from ssh-agent
+To:     Josh Steadmon <steadmon@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        gitgitgadget@gmail.com, git@vger.kernel.org, hanwen@google.com,
+        sandals@crustytoothpaste.net, rsbecker@nexbridge.com,
+        bagasdotme@gmail.com, hji@dyntopia.com, avarab@gmail.com,
+        felipe.contreras@gmail.com, sunshine@sunshineco.com,
+        gwymor@tilde.club
+References: <071e6173d8e418349d94fea97624e8cee9f1dde5.1627501009.git.gitgitgadget@gmail.com>
+ <20210728224832.2717826-1-jonathantanmy@google.com>
+ <f3e72ec9-3ed4-9955-a7bd-042fa6eb016c@gigacodes.de>
+ <YQL84R7qNv8pnHro@google.com>
+From:   Fabian Stelzer <fs@gigacodes.de>
+Message-ID: <655f49be-7752-ca07-e9dd-9923300096ba@gigacodes.de>
+Date:   Thu, 29 Jul 2021 23:21:17 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+In-Reply-To: <YQL84R7qNv8pnHro@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PR0P264CA0248.FRAP264.PROD.OUTLOOK.COM (2603:10a6:100::20)
+ To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BH2PQ_rHDPNBghdkhO=kaNfQBnU28UFh9c-sPBNUOM4gA@mail.gmail.com>
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [IPv6:2a02:908:176:e980:2d4e:7e07:50bd:bf92] (2a02:908:176:e980:2d4e:7e07:50bd:bf92) by PR0P264CA0248.FRAP264.PROD.OUTLOOK.COM (2603:10a6:100::20) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4373.18 via Frontend Transport; Thu, 29 Jul 2021 21:21:17 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: f8226262-3393-425a-86ef-08d952d6cdf0
+X-MS-TrafficTypeDiagnostic: PR3PR10MB4319:
+X-Microsoft-Antispam-PRVS: <PR3PR10MB4319B35E38E9A01EF322FCC4B6EB9@PR3PR10MB4319.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: ad3QqIgEUFcihfrPvNcilDzQdYtqn/rabTN110ojDPqvGrnTwoVSQrG3rA19vppthSho//XdBnqX/gU2qeozfIQvOp+q8EbC6CM3jDG+rxe2Md0ryijCEc55KnkmMDqqk8MBp3pfqMESy3/xr3oRY7sXb7C42YBKJxPlZrDVP0ee/IMlCmUmX2AvnnI6Pgkm0dHJfd0+8st0nXnYW06Ffwu9LHnRr0FL3YOOCBE5jE2pytcQIosaILGDiL9hQUn39dYqNslI40H5LJhfLBCtrUMBavjwHtZ3r5JCTwmukD7gjdrAUuvokoYTfhr27HFIQJBjBNwL66iS3TvMPRGHXDNIkWF2xsSGRjV8b5cTRaMr0Oy1WDuQoQh+zA5XVJjueUaf/MqO0xt+/mpL5cUkaowPBVyrP9ugsc3ZKcP5DznVEfCjmbG4zxlr+d82nW5b8Aj0/f3KyrQkKtdpJPWTWWG7/uIccOhHQrXOlsUEmM2lFpylHTvCNVrgocS5OpiY7rMJ/Z9/wdvkiplFp8MBJveGjSJge0PkfJxlTAPwFldP2Ac47d+lpDmgI34GLSMeyGTH4AolQVqjC6lCBuj8rHajfeI9TtlZPmR7mVbxvM3a2ZZYF7PRDIf8inn9aTMeSqcDIMEl09kISl+cxv1FThXmngyhoY1kWbW+SxYxLEG4Kz/+WOpc4wAfvQAGD6vr5vGkO5MWVpxiYFRNCU95PLyX4TLehzYXunapKWt1dg10Vf9sX/0qyrrFFK3XyUQf
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(366004)(136003)(376002)(39830400003)(396003)(346002)(6486002)(83380400001)(8936002)(921005)(2616005)(186003)(66476007)(66556008)(110136005)(316002)(66946007)(86362001)(8676002)(31696002)(53546011)(5660300002)(7416002)(2906002)(36756003)(31686004)(478600001)(52116002)(38100700002)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VGJYMmRvOHFlU0FjQlNUUFlUNE1HbTJCRngzWHE3OFJ0ZW4yRGlLbWJkUlFt?=
+ =?utf-8?B?aW1yVFpRbjFJNWhBTVFSVU1zcVRMSElYUDFqZUdxcXJIMjZNT0RPKzFMSDN5?=
+ =?utf-8?B?WnRLZzJQM3dCSVlwYVg2SC91alhiNkZkRmswMHZ4dVQzVHVEL29Id2Y0S1I4?=
+ =?utf-8?B?dkNJS21vQnlmbmlTWStrVktMRFA2RWFFeG5jcE15dEJlSzB3Q0lDZ3lacFZh?=
+ =?utf-8?B?UFhJbWkrYU10WFQrVWtTUWxXQ0E1Rjg2b09hWjFBUENaOWtpVW05ZlRTUk96?=
+ =?utf-8?B?TWdKL2tFdkRUNE1hSEk3ZXdnNDVqdDZLdklFUHBSQ3gzcllQMFdWWG1ab2Fa?=
+ =?utf-8?B?SzNkRzZzZnRnNkNYQlVlbGNVcDAyNGhtczVYbm9yUnJrMWwvTHhzY0FKMmJh?=
+ =?utf-8?B?ODlEbzBvK0x1NnVodmJ4REZPbTdBblpRUEVwVTI4Qzh4Wjh3Y3JIN1RiVFZu?=
+ =?utf-8?B?eWR3Y3M1UDdQK1g0VW9Ga1FFRUJWMDdlREtoTkVyeHVzVStRaFMxVXJJR3ZC?=
+ =?utf-8?B?TFJGazUzT1AzR2orZlZueFZ3djA5amNnZWtmbmlJd0NXbTZoTzFhanZXQXI5?=
+ =?utf-8?B?SkIvbXM3MXZGaEtNRUZDb1Z6cnRHd1ZBbHdiVjFORTd2aVBYUUVJV2dPR1pa?=
+ =?utf-8?B?WlpKV01EeTdGNUVhYkVJcWtubzM2MkRFbkJrclcyS0dpZHdQM05QOVltNDdt?=
+ =?utf-8?B?R2hVL1dFcFhkOUxnS2puMkhPUXc0eXYwMk5uQ2RPQkNlbEFmbWU5R2h0WXI0?=
+ =?utf-8?B?bnpJMDMrVmltTy93ekNrWTRVVDBuNUhlTGNPdFpYU3ZzcllFTUFZVTV0ZGN2?=
+ =?utf-8?B?M0JTM240Z2RBUFZuTUlvVkxMeVF0NFdiYkN6SEVkUUFid0FRNS9ROVhKc1NF?=
+ =?utf-8?B?N29UVVFITXp1MGhCeS8xTHlWZTJuRngweFZaOVphbTY4ZDYweGZyTmNrUUox?=
+ =?utf-8?B?TCt1YmdGOVowTkpWWDlDVGlrU2N6QW9UdjZFN3JmeVoydE1CZk5lR0FnQmhQ?=
+ =?utf-8?B?VmpoaTl0ajQvNnBnc2JiL1lxL1pBbmJwZ0JiM1ExY2NvS054MDFSQlJxd0tM?=
+ =?utf-8?B?WkVGNFpjMXNQWXVHQmszc3BLM3hOOFFUWWlpc1lGcmJqWiszd0UzMEFFZU5u?=
+ =?utf-8?B?dkxqQ2VmT29CWThCZm9ZU3ZhTXBINXlObDM3SlRhclN5UTBaRFA1ZVVidkxx?=
+ =?utf-8?B?T1JEaWNmZm5mNkJocjlQdkM2S3FJODRIMkdRVWdxeHM3bDdmOU9yQjhtdVBj?=
+ =?utf-8?B?ZFVzMXZ5OXhjeVVwT2Rib0IrZTc1TGdwYyt1eXZSM3JIUVN6TlcydURuWEJ1?=
+ =?utf-8?B?WEVjam82dkVqUnFxZXRNU0dEVWljSUVtRGZYSFM5VTdFTTRSU0gxc0JYR3lJ?=
+ =?utf-8?B?alhiQkNrQVRLanZyWHJUYVRBOE9ERmJIUWdoSmJFYnBpR2w5S0Z2VE40SzJw?=
+ =?utf-8?B?OG43bWloeExDbkxQOXQwbjB5ck5vMENqazBuRGh4NURrN0JBc2Y3SE5DbHFC?=
+ =?utf-8?B?MThHRG1vRmdHTzdBdzhUSlhxcHJ6TlEyUWdWRWoxbHdKQVdoWG04MU5YMU9V?=
+ =?utf-8?B?RmR5b0ZNZTZJeUhiMVZGaHppSmh5VDg5RVpPZmV0cS94b3RidmcyQVltV1JV?=
+ =?utf-8?B?VW4wbjFDWHJ4Qm55dHJjSWlnZWlPejZCU0lPT2MvNVhZaXdaL0ZacEIrTTYr?=
+ =?utf-8?B?S0pESVdjMnlsQzhwWUJ1M2JXYVFPTkpPSllSei8rTS9HQVpzL1pEMnZUWVhr?=
+ =?utf-8?B?QmdRYW12bXh3VFBKK09RZk13b1dOZHFVZUV5MjE3Tm04bzhtZG0ySE52RVJw?=
+ =?utf-8?B?S2s5VHYzTE5JbzZpUUk5bzJ1OWg3dWVDT2R1d0xrL0NSRTlVeUpWeXFEeTJH?=
+ =?utf-8?Q?y/gy2Yj7Np+bv?=
+X-OriginatorOrg: gigacodes.de
+X-MS-Exchange-CrossTenant-Network-Message-Id: f8226262-3393-425a-86ef-08d952d6cdf0
+X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jul 2021 21:21:18.2322
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: gRgt6ktxpv4J0qTa1B/1icYPYCW4uGX2ddF2OanrTAqOpJj1jWLSBDMzNwO9CkmTcbFpLIK5n1VErQWFwBkoV/l9NqEmJKQ9tZwzmCG8Uns=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB4319
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 29, 2021 at 02:46:03PM -0600, Elijah Newren wrote:
-
-> You make fair points about the absolute timings for rebase, but the
-> "grand scheme of things" involves usecases outside of traditional
-> rebases.  Some of those involve far more merges, making the relative
-> timings more important.  They also involve much less overhead -- not
-> only do they get to ignore the "git checkout" present in most rebases,
-> but they also get to exclude the index or worktree updating that are
-> present above.  Without that extra overhead, the relative improvement
-> from this patch is even greater. One particular example usecase that
-> is coming soon is the introduction of `git log --remerge-diff`; it
-> makes the timing of individual merges critical since it does so many
-> of them.  And it becomes even more important for users who change the
-> default from --diff-merges=off to --diff-merges=remerge-diff, because
-> then any `git log -p` will potentially remerge hundreds or thousands
-> of merge commits.  (I've got lots of users who have -p imply
-> --remerge-diff since last November.)
-
-Ooh, I hadn't considered doing a bunch of fast in-memory merges for
---remerge-diff. That is a very compelling use case, I agree.
-
-> >   Benchmark #1: ./test-tool.nopool fast-rebase --onto HEAD base hwmon-updates
-> >     Time (mean ± σ):     921.1 ms ± 146.0 ms    [User: 843.0 ms, System: 77.5 ms]
-> >     Range (min … max):   660.9 ms … 1112.2 ms    10 runs
-> >
-> >   Benchmark #2: ./test-tool.pool fast-rebase --onto HEAD base hwmon-updates
-> >     Time (mean ± σ):     635.4 ms ± 125.5 ms    [User: 563.7 ms, System: 71.3 ms]
-> >     Range (min … max):   496.8 ms … 856.7 ms    10 runs
-> >
-> >   Benchmark #3: ./test-tool.tcmalloc fast-rebase --onto HEAD base hwmon-updates
-> >     Time (mean ± σ):     727.3 ms ± 139.9 ms    [User: 654.1 ms, System: 72.9 ms]
-> >     Range (min … max):   476.3 ms … 900.5 ms    10 runs
+On 29.07.21 21:09, Josh Steadmon wrote:
+> On 2021.07.29 10:59, Fabian Stelzer wrote:
+>> On 29.07.21 00:48, Jonathan Tan wrote:
+>>>> if user.signingkey is not set and a ssh signature is requested we call
+>>>> ssh-add -L and use the first key we get
+>>>
+>>> [snip]
+>>>
+>>> Could the commit message have a better explanation of why we need this?
+>>> (Also, I would think that the command being run needs to be configurable
+>>> instead of being just the first "ssh-add" in $PATH, and the parsing of
+>>> the output should be more rigorous. But this is moot if we don't need
+>>> this feature in the first place.)
+>>>
+>>
+>> How about:
+>> If user.signingkey ist not set and a ssh signature is requested we call
+>> ssh-add -L und use the first key we get. This enables us to activate commit
+>> signing globally for all users on a shared server when ssh-agent forwarding
+>> is already in use without the need to touch an individual users gitconfig.
+>>
+>> Maybe a general gpg.ssh.signingKeyDefaultCommand that we call and use the
+>> first returned line as key would be useful and achieve the same goal without
+>> having this default for everyone.
+>> On the other hand i like having less configuration / good defaults for
+>> individual users. But I'm coming from a corporate environment, not an open
+>> source project.
 > 
-> That's some _really_ wide variance on your runs, making me wonder if
-> you are running other things on your (I presume) laptop that are
-> potentially muddying the numbers.  Would the tcmalloc case actually
-> have the fastest run in general, or was it just lucky to hit a "quiet"
-> moment on the laptop?
+> Doesn't this run the risk of using the wrong key (and potentially
+> exposing someone's identity)? On my work machine, my corporate SSH key
+> is not actually the first key in my SSH agent.
+> 
+> Rather than making this behavior the default, could it instead be
+> enabled only if the signing key is set to "use-ssh-agent" or something
+> similar?
+> 
 
-Yeah, I noticed that, too. The system was otherwise unloaded, but there
-I think a big part of it was that my prepare commands flipped back and forth
-between the pre-/post-rename states twice. Even though that isn't
-included in the timings, I think it was just creating a lot of delayed
-work for the OS to do when it decided to write back all those inodes.
+If we introduce a signingKeyDefaultComand we don't need the 
+"use-ssh-agent" flag.
 
-Switching it to:
+If user.signingkey is set it is used no matter what. A private key needs 
+to be available either in the specified file or via ssh agent.
 
-  hyperfine \
-    -p 'git checkout 5.4-renames^0 &&
-        git branch -f hwmon-updates fd8bdb23b91876ac1e624337bb88dc1dcc21d67e' \
-    -L version nopool,pool,tcmalloc \
-    './test-tool.{version} fast-rebase --onto HEAD base hwmon-updates'
+If it is not set then an automatic way to get a default key would be great.
+So if we set signingKeyDefaultCommand to "ssh-add" (or a script 
+returning a key) then the first available key could be used.
+If this variable is unset and no user.signingkey is specified we fail 
+and tell the user to set a signingkey.
 
-produces much smoother results:
-
-  Benchmark #1: ./test-tool.nopool fast-rebase --onto HEAD base hwmon-updates
-    Time (mean ± σ):     649.7 ms ±   5.0 ms    [User: 595.1 ms, System: 54.3 ms]
-    Range (min … max):   643.7 ms … 661.9 ms    10 runs
-   
-  Benchmark #2: ./test-tool.pool fast-rebase --onto HEAD base hwmon-updates
-    Time (mean ± σ):     405.0 ms ±   3.0 ms    [User: 354.9 ms, System: 50.0 ms]
-    Range (min … max):   401.0 ms … 411.9 ms    10 runs
-   
-  Benchmark #3: ./test-tool.tcmalloc fast-rebase --onto HEAD base hwmon-updates
-    Time (mean ± σ):     476.7 ms ±   3.9 ms    [User: 430.1 ms, System: 46.4 ms]
-    Range (min … max):   472.3 ms … 484.1 ms    10 runs
-   
-  Summary
-    './test-tool.pool fast-rebase --onto HEAD base hwmon-updates' ran
-      1.18 ± 0.01 times faster than './test-tool.tcmalloc fast-rebase --onto HEAD base hwmon-updates'
-      1.60 ± 0.02 times faster than './test-tool.nopool fast-rebase --onto HEAD base hwmon-updates'
-
-So the pool is definitively faster, though we can go a fair ways by
-using a better allocator. :)
-
-> I did similar testing a year ago, before I even looked at memory
-> pools.  I was surprised by how big a speedup I saw, and considered
-> asking on the list if we could push to use a different allocator by
-> default.  Ultimately, I figured that probably wouldn't fly and
-> distributors might override our choices anyway.  It was at that point
-> that I decided to start tweaking mem-pool.[ch] (which ended up getting
-> merged at edab8a8d07 ("Merge branch 'en/mem-pool'", 2020-08-27)), and
-> then integrating that into strmap/strset/strintmap -- all in an effort
-> to guarantee that we realized the speedups that I knew were possible
-> due to my testing with the special allocators.
-
-Yeah, I think choice of allocator should be outside the scope of Git. It
-would be a packaging issue if people want to squeeze out every bit. I do
-agree there's something to be said for Git just handling this itself,
-regardless of the platform or build. I'm just always on the lookout for
-places where we can get free speedups without having to pay any
-maintenance cost for them. :)
-
-> I think you make a good suggestion to drop the USE_MEMORY_POOL switch.
-> I think I'll do it as an additional patch at the end of the series,
-> just so it's easy for me to restore if by change it's ever needed.
-
-Yeah, between that cleanup reducing the maintenance cost and your
-compelling use cases above, I think I'm convinced that this is a good
-direction.
-
--Peff
+If this variable is set to "ssh-add" by default or unset and needs to be
+set explicitly set to have an automatic default key can be decided.
