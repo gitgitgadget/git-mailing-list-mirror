@@ -2,112 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD0A4C4338F
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 19:33:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89B39C4338F
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 19:34:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A46FA608FB
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 19:33:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6ABED60C40
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 19:34:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231599AbhG2Td3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Jul 2021 15:33:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51636 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229616AbhG2TdY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jul 2021 15:33:24 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A96CDC061765
-        for <git@vger.kernel.org>; Thu, 29 Jul 2021 12:33:20 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id a13so8583104iol.5
-        for <git@vger.kernel.org>; Thu, 29 Jul 2021 12:33:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=IE00Lo/8fV13UNS87shISqCqOMxJbswsCBKLOVS0XjY=;
-        b=zIWGWr4mS57ayrc5ln86HaR4WEBNgPr2E439duQp0BWQvO3itt55p5LYNwRL8IZZD8
-         yxe383T2DpbUbIUHHTltVsHMyJPkHfWWkzmEDIC+LEy1LS3cCWuoQ51cUbqRcanbljjV
-         XF/SZNZPqazMB4DwMaW5eb0D8n6IEyJ1Byiq2/jq1hO+Kn/a6sexQnlwndKb35bWmyUZ
-         pV41GIlBJUBXqPsjERr75ptNbeDPBSC8Pwqgj7urfZdrlT44Ts+D2qa9sakvcB7JEs+B
-         e6asHQJgWenRDJjf2DPkgs9igSqGMXXtI9UzWuktri5v8a7MTrjuKoFqH6aFR3QbrGin
-         TWwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=IE00Lo/8fV13UNS87shISqCqOMxJbswsCBKLOVS0XjY=;
-        b=WKXvtkgkJDJmqsVsdZ3gbMNfdf5OIDayvJEdbFAzb9km6R0Smz2U9AhLlrYfIbNH8R
-         +oU/Kbhiy37U8Y6kDPYBGP7FOo8QDw3X4IjEZpaj8vzZYuqqaSzfGEaeSTopWuSxHqOv
-         biqy1dDN08qPw4FEFT4C9gjqi9dLRUQFfDq5fSZcWHTdIIF7B005aJmZcA+uMK3N9yX7
-         XUIEqb/PNUgwOfL+VakypwsrmAO5IaUgzsf1e1rcw/DzpMxbVlVN+V0GjyZ1NiGsxYOb
-         PV4bVfG/MDul/VNn+pajjBj6v8TmQDP9ufTP28z11inK6MNoRT/sO1QVWhGCK05kLqt7
-         3pHg==
-X-Gm-Message-State: AOAM533K+woGFCwjHeoaLibCELxZMLaw+ZjGCb8woJ3gLIrGnYS8kEh1
-        yy9uvMgAkl2LMmIKo0BzNYhjBg==
-X-Google-Smtp-Source: ABdhPJzL/jrGqFKoUl0avSXeyx14yTDCLgPMG1APDngkgILbB+aPa39AERJ0VBKFRyWMzVihIlBlfQ==
-X-Received: by 2002:a5e:c803:: with SMTP id y3mr5346257iol.107.1627587200083;
-        Thu, 29 Jul 2021 12:33:20 -0700 (PDT)
-Received: from localhost ([2600:1700:d843:8f:46df:20:8c6c:2d4b])
-        by smtp.gmail.com with ESMTPSA id r16sm2339854iln.30.2021.07.29.12.33.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jul 2021 12:33:19 -0700 (PDT)
-Date:   Thu, 29 Jul 2021 15:33:18 -0400
-From:   Taylor Blau <me@ttaylorr.com>
+        id S229713AbhG2TeE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Jul 2021 15:34:04 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63067 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229606AbhG2TeE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jul 2021 15:34:04 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 880A413A6A5;
+        Thu, 29 Jul 2021 15:34:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Vvy3cIf9OGlVURzAMHSaAJ0N9OIwlbLo40JRVP
+        R76Lo=; b=RYZRQYff0YEAIrARcE3RXL1wM/USVmr992S5lW4kczMIhd7q3unWu1
+        rhGoCVXLjQ5Ta23IdDgULIAeyodrd7cR2N4xm/fQLI5Tn6Iv4Dxp3bRPTDfqhnyc
+        J6aBGFAXitmUtxUcpAa3oOMmI0YXjDE2g+1dvZFOT1ozNmuHAbdcQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8140B13A6A3;
+        Thu, 29 Jul 2021 15:34:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C2E7213A6A2;
+        Thu, 29 Jul 2021 15:33:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
-        jonathantanmy@google.com
-Subject: Re: [PATCH v2 14/24] pack-bitmap: write multi-pack bitmaps
-Message-ID: <YQMCfnlr6BAXC/c0@nand.local>
-References: <cover.1617991824.git.me@ttaylorr.com>
- <cover.1624314293.git.me@ttaylorr.com>
- <a8cec2463d0993b1118abdd31cb6c9e88a32e0c4.1624314293.git.me@ttaylorr.com>
- <YPgObwXjt/tzAJvV@coredump.intra.peff.net>
- <YP77DiffrCrxunvg@nand.local>
- <YQA+PaWb7tweEKuk@coredump.intra.peff.net>
- <YQBtfRP0svLL6VDl@nand.local>
- <YQGZZTXjSuZkHJgm@coredump.intra.peff.net>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        Daniel Knittl-Frank <knittl89@googlemail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Using two-dot range notation in `git rebase`?
+References: <b3b5f044-8c76-ec71-45d6-1c7fea93c519@iee.email>
+        <CACx-yZ1Je+tnZdJ21gDPeuQa-QTuY2t9mDujNr7wqJWFMwwzxA@mail.gmail.com>
+        <dc7668ff-37ad-1d9e-fc92-df432549b4e2@iee.email>
+        <YQKBNXsMdroX3DfY@coredump.intra.peff.net>
+        <xmqqr1fh59go.fsf@gitster.g>
+        <YQLldzh5OEY+mPLY@coredump.intra.peff.net>
+Date:   Thu, 29 Jul 2021 12:33:56 -0700
+In-Reply-To: <YQLldzh5OEY+mPLY@coredump.intra.peff.net> (Jeff King's message
+        of "Thu, 29 Jul 2021 13:29:27 -0400")
+Message-ID: <xmqq5yws6hjv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YQGZZTXjSuZkHJgm@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: EB037E52-F0A3-11EB-B18A-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 28, 2021 at 01:52:37PM -0400, Jeff King wrote:
-> On Tue, Jul 27, 2021 at 04:33:01PM -0400, Taylor Blau wrote:
->
-> > > It's interesting that your earlier iteration didn't call
-> > > open_pack_index(). Is it necessary, or not? From your description, it
-> > > seems like it should be. But maybe some later step lazy-loads it? Even
-> > > if so, I can see how prepare_midx_pack() would still be required
-> > > (because we want to make sure we are using the same struct).
-> >
-> > It's only necessary now (at least for determining a preferred pack if
-> > the caller didn't specify one with `--preferred-pack`) because we care
-> > about reading the `num_objects` field, which the index must be loaded
-> > for.
->
-> I guess I'm a little confused about "now" in your sentence. I understand
-> that it's not necessary before your series to have loaded all of the
-> index files ahead of time. But didn't we need to do so in v2 of your
-> series, which has the preferred-pack logic?
->
-> If so, then was the v2 version buggy, since it only called
-> prepare_midx_pack() and not open_pack_index()? And then v3 is fixing
-> that? Or is something else opening the pack index for us?
+Jeff King <peff@peff.net> writes:
 
-In earlier versions of this series, I don't think we needed to have the
-indexes loaded by this point, since (before v3) we didn't care about
-ignoring the empty packs when finding a default preferred-pack.
+> Potentially it opens the door for stuff like:
+>
+>   git rebase ^A B C D
+>
+> but I am not sure if that is helpful or horrifying. ;)
 
-But now we do, and so we need to call open_pack_index() ourselves.
-Confusingly, we only need to do that on packs that *are* included in the
-MIDX, since prepare_midx_pack() doesn't do it for us, but
-add_pack_to_midx() does.
+It is the "you might be forgetting that 'rebase' is a tool to rebase
+a single branch, and is not a tool to replay a history on a commit"
+example.
 
-Thanks,
-Taylor
+The "multi-pick" variant of "git cherry-pick" probably has a lot
+more affinity with the idea of specifying general sub-graph of
+history to be replayed, expressed in the "externded SHA-1" syntax, I
+would think.
+
+Thanks.
