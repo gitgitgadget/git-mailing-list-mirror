@@ -2,127 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 536BEC4338F
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 18:38:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59B1AC4338F
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 19:05:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3074160F01
-	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 18:38:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 38E7360041
+	for <git@archiver.kernel.org>; Thu, 29 Jul 2021 19:05:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229896AbhG2SiI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Jul 2021 14:38:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38440 "EHLO
+        id S229925AbhG2TF5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Jul 2021 15:05:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229620AbhG2SiI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jul 2021 14:38:08 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD487C061765
-        for <git@vger.kernel.org>; Thu, 29 Jul 2021 11:38:03 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id c2-20020a0568303482b029048bcf4c6bd9so6824282otu.8
-        for <git@vger.kernel.org>; Thu, 29 Jul 2021 11:38:03 -0700 (PDT)
+        with ESMTP id S229713AbhG2TF4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jul 2021 15:05:56 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0F22C061765
+        for <git@vger.kernel.org>; Thu, 29 Jul 2021 12:05:51 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id a26so12864420lfr.11
+        for <git@vger.kernel.org>; Thu, 29 Jul 2021 12:05:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8/QtzBCSbbcmoyfmHSrV6XjvsjU7a8HOKbOe98fiaK4=;
-        b=fbAdBdcPaFxxdu0aZlKViHwfEtVLWTcSJAo1jZaxXSDpAw61REb6FOkjz8WnQ7EUg4
-         Emehqw3vDkOAOxhrNunnUk2SM0JwCih0a3HEkItWk0p9CUHt+MJxdIeGvga1emYzkpak
-         eLMbUdZPg5cnNlwBO4L8nZojeEJwNK0pMMz9ohGPuPR8CyHZEBKdtlaB5Mnf2vu3jehS
-         W9SPPweSALpZib24tMJwhfgm6g9dNnfZFKS2sCRzRdT3ZHHIFnsFTnQmirlQxCVY/sik
-         0WbJ+NDSfMJ16Jl8e4JcVFvCK9yLBLEkgIJRXPsD8KK91nhqCKFmxDR73nbt45Zaid7q
-         viww==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=8i4cxoxiZuCph/97CWcR7SCb54j4KlbcYD6MolsqFgE=;
+        b=fY4tHLWDW1pbmLOY6o3K3XhNi0t5SGaSEjooLaQinGQwrgLPM9Hxb+58iflS2+Rhdw
+         uFzI6GPBLWcCtUtMkytlIC3Ed/DBBeAW+SQARIxWkZ5mSuS7oQXqzlmcMbsZyIPTUt22
+         g/9Hn756nE9lYoUsOqkR4UiSP70bl4hZ/kLDcyUfjwfrUB3EoHbIpsY701jbGf2BKVr1
+         0HNw+B+PsBrKGGk5ozaUy+KVeaLQDw0rnl0m7kajUooA4Hr/sQlJ3+Sgh3luBlqf/l6T
+         nfNvrcVkuR7Ml7Ou3X/FGTTL2BJnQ3ZGzYPivnv3vo5s5CsrWGh7Jg7E+1MPhMM3Zbrd
+         xBfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8/QtzBCSbbcmoyfmHSrV6XjvsjU7a8HOKbOe98fiaK4=;
-        b=FCheDUltVyF9Z9CXCzp4Y1HHvxhwHvpkGP7vxNGHm6LWXaGWotCSJmaP7SRIQS/PXe
-         neS5zTx9DJ2AHFwDqXSxrXnmKmbMYN/HIEASEzdCeahGjvwdBNeMXmnuYh8gAc2h4r92
-         vR+0I6PTBmRSzFtBZaQgh4rY21LbZTSUlmWyeD53ezOXzN/8H3EvEkeUO1Q8QZPRJbV/
-         7b+tMhU2iEuM81T/pQf4SCSGwyx/suyGKfDjgiKb8kTC1TiStLGGhC8VvZ7+MG8bSQNv
-         CSsPGsbIpb8iJp26JD7dw/GDAeat8iXX+FMUIhTgDG0eiVAW8rO2dgYIt+Vov80pVwWx
-         5I4Q==
-X-Gm-Message-State: AOAM531c1tXhAQ6cWyfctz3IFbJ6H9mOBwjYFMuDnKd+ih3dWzM3D8TW
-        f/ikMsPZVvx07WKrHFXXBpvbjgIbqBaAGvffPH0=
-X-Google-Smtp-Source: ABdhPJyD4BD4xX8yognZLX/VFAx0jlvTtUYs3ah0ReGPvqZsoSfUpzi3mj3l9qI2cq6EKOFH2sWcLsOK/LRbtLOo7Gc=
-X-Received: by 2002:a05:6830:78c:: with SMTP id w12mr4324000ots.162.1627583883140;
- Thu, 29 Jul 2021 11:38:03 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=8i4cxoxiZuCph/97CWcR7SCb54j4KlbcYD6MolsqFgE=;
+        b=MUNlrgfKtUpnJBAmcly/GM5oUFcYPlxYTb7NcXGI11s/ZOj5+/yW2UrbL7nwABhHm3
+         gjDFMcp+H3BMUA2afcVu910G5TQwNt6UVMed8eDc4/xMci7IpNPzoksZowBbYyA/i4iT
+         AsfpfM7JbjLL5dbBnnBKHJ1Ig/vFtphSH6hwSjrGOi+1OOooNvA+eOqLsRp9jhxOTk83
+         md/eibZRSMgfDdZ7CFGc+UofwtK6A+e8QZ1dVS5XEKosfNFfeEk9GIPQ+OIvBJGoKItC
+         uuINabE/sYRY2DV6Here7HEzm99UbaAjMLuUWVVETVVI4JplzVCjT03dqUkPQEB4H9My
+         JG6Q==
+X-Gm-Message-State: AOAM5336x6AKu+KMjcV0P1VhXsQAzRbY0d+rGnhdaY4F6ZbiBY4J4J3Q
+        4JTIjI8ZyzOs/tFjLpDRvPPxSB6lMUY=
+X-Google-Smtp-Source: ABdhPJwy6okqVPYHQATf8TeBm4UihwaKz7RrG3FpsmS+lcIOft7p28cdGBeu9PNULOk2KfPQPZotzQ==
+X-Received: by 2002:ac2:53a6:: with SMTP id j6mr2126244lfh.408.1627585549903;
+        Thu, 29 Jul 2021 12:05:49 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id z5sm376813lfs.126.2021.07.29.12.05.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Jul 2021 12:05:49 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
+        Daniel Knittl-Frank <knittl89@googlemail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Using two-dot range notation in `git rebase`?
+References: <b3b5f044-8c76-ec71-45d6-1c7fea93c519@iee.email>
+        <CACx-yZ1Je+tnZdJ21gDPeuQa-QTuY2t9mDujNr7wqJWFMwwzxA@mail.gmail.com>
+        <dc7668ff-37ad-1d9e-fc92-df432549b4e2@iee.email>
+        <YQKBNXsMdroX3DfY@coredump.intra.peff.net>
+        <xmqqv94t59oq.fsf@gitster.g>
+Date:   Thu, 29 Jul 2021 22:05:47 +0300
+In-Reply-To: <xmqqv94t59oq.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+        29 Jul 2021 10:09:09 -0700")
+Message-ID: <87fsvxx7n8.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.990.git.1627044897.gitgitgadget@gmail.com>
- <pull.990.v2.git.1627531121.gitgitgadget@gmail.com> <dd8839b284330892a3bbcafbc03d71489fc9b01f.1627531121.git.gitgitgadget@gmail.com>
- <YQLJOsvATnTBd9pB@coredump.intra.peff.net>
-In-Reply-To: <YQLJOsvATnTBd9pB@coredump.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 29 Jul 2021 12:37:52 -0600
-Message-ID: <CABPp-BHzJ365Jed38s-VQb2PqRy7t=58sZwgmeVG=mqKeA2neg@mail.gmail.com>
-Subject: Re: [PATCH v2 4/7] merge-ort: switch our strmaps over to using memory pools
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 29, 2021 at 9:29 AM Jeff King <peff@peff.net> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Jeff King <peff@peff.net> writes:
 >
-> On Thu, Jul 29, 2021 at 03:58:38AM +0000, Elijah Newren via GitGitGadget wrote:
+>> I do think "git rebase --onto here old..end" is a sensible thing to ask
+>> for. If we were designing it today, I'd probably suggest that rebase
+>> take arbitrary revision sets (and either require "--onto", or perhaps as
+>> long as there is only one negative tip given, that becomes the "--onto"
+>> point).
 >
-> > diff --git a/merge-ort.c b/merge-ort.c
-> > index 2bca4b71f2a..5fd2a4ccd35 100644
-> > --- a/merge-ort.c
-> > +++ b/merge-ort.c
-> > @@ -539,15 +539,19 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
-> >       void (*strset_func)(struct strset *) =
-> >               reinitialize ? strset_partial_clear : strset_clear;
-> >
-> > -     /*
-> > -      * We marked opti->paths with strdup_strings = 0, so that we
-> > -      * wouldn't have to make another copy of the fullpath created by
-> > -      * make_traverse_path from setup_path_info().  But, now that we've
-> > -      * used it and have no other references to these strings, it is time
-> > -      * to deallocate them.
-> > -      */
-> > -     free_strmap_strings(&opti->paths);
-> > -     strmap_func(&opti->paths, 1);
-> > +     if (opti->pool)
-> > +             strmap_func(&opti->paths, 0);
+> The unfortunate origin of "rebase" makes this a bit awkward.  If it
+> were a tool to cherry-pick multiple commits on top of the current
+> commit ("on arbitrary point" is trivially implemented by first
+> checking that point out and make it cuttent), the range notation
+> would have made a lot more sense, and I think it indeed is what the
+> multi-pick kind of "git cherry-pick" today does.
 >
-> This isn't new in your patch here, but I did scratch my head a bit over
-> what "strmap_func" is. It's a bit less confusing if you read the whole
-> function (as opposed to a diff), since then you're more likely to see
-> the definition. But something like "strmap_clear_func()" would have been
-> a lot less confusing.
+> But "rebase" is a tool to "rebase a branch", and it is done by
+> replaying the history leading to the tip of a given branch (the one
+> that is currently checked out being the default) on top of another
+> commit.  So its parameters serve dual purpose---which part of the
+> commit DAG to take commits to be replayed from *and* which branch
+> will be used to point at the tip of the resulting rewritten history.
+>
+> If you can forget the latter, then multi-pick cherry-pick is already
+> there [*1*].
 
-Makes sense.
+To me it seems like the long-term way to go is to obsolete cherry-pick
+as end-user interface in favor of something like "git rebase --pick", to
+stop repeating the same functionality in both "rebase" and
+"cherry-pick". Besides, the two-dot notation would fit nicely then.
 
-> Arguably, the existence of these function indirections is perhaps a sign
-> that the strmap API should provide a version of the clear functions that
-> takes "partial / not-partial" as a parameter.
+"Take these commits and put them there" (= current rebase) and "take
+those commits and put them here" (= current cherry-pick) are similar
+enough to be handled by the same command with the same set of features.
 
-Are you suggesting a modification of str{map,intmap,set}_clear() to
-take an extra parameter, or removing the
-str{map,intmap,set}_partial_clear() functions and introducing new
-functions that take a partial/not-partial parameter?  I think you're
-suggesting the latter, and that makes more sense to me...but I'm
-drawing blanks trying to come up with a reasonable function name.
-
-(If it helps for context -- the only current callers of the
-*_partial_clear() functions are found in diffcore-rename.c and
-merge-ort.c, so it'd be a pretty easy change to make to those.  There
-are additionally some callers of strmap_clear() and strset_clear() in
-builtin/shortlog.c and rerere.c, and it'd be nice to avoid exposing
-those to the complexity of the partial clearing.)
-
-> (Again, not really part of this patch series, but I hadn't looked at
-> some of the earlier optimization steps).
-
-Yeah, but this is the kind of reason I wanted you to review this
-series, because I figured you might have more good comments on the
-str{map,intmap,set} API calls.  :-)
+Thanks,
+-- 
+Sergey Organov
