@@ -2,146 +2,185 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D095DC4338F
-	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 17:45:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45001C4338F
+	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 17:59:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A89F560EE2
-	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 17:45:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 22DBB60F4B
+	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 17:59:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230263AbhG3Rpx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Jul 2021 13:45:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36832 "EHLO
+        id S230195AbhG3R74 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Jul 2021 13:59:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230246AbhG3Rpv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jul 2021 13:45:51 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67CC6C061765
-        for <git@vger.kernel.org>; Fri, 30 Jul 2021 10:45:45 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id 190so10167874qkk.12
-        for <git@vger.kernel.org>; Fri, 30 Jul 2021 10:45:45 -0700 (PDT)
+        with ESMTP id S229773AbhG3R7z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jul 2021 13:59:55 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87F9EC06175F
+        for <git@vger.kernel.org>; Fri, 30 Jul 2021 10:59:50 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id z4so12348815wrv.11
+        for <git@vger.kernel.org>; Fri, 30 Jul 2021 10:59:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=tsBosJ/+P29PhVPerzq8RpzjfYD4A6oyS7tqay8F6Ss=;
-        b=V7YWNvs04U2yBX7QBSCyoCpPb5ej01kv8YJMD4vKi9rF3cGt0pkLcCEtn5xeObxwMa
-         yLzwhRSn0hl4BDqhpVOCUrj6jMpKZtBP1IuYQtMMi/BtNlBZAbefE8wTxBAJG4hFzjmy
-         mhcPB3Mi0mADQyVx+5+cu3DotCUXZEr/W5/0+wfuB0/g6tiRTYEfMMCXh8LLfb6s2K1y
-         XZiFT+H7C5mcmnBzI/9maK4l5cvsJMat+8LjsjGeMi2+1Qo0xTihHhbKaTdGHbgCS1cX
-         TOPPpVbjAQiSHL/qdi+jYOd+GEcDFKHvdbppNEU+cnP1C52DD1Iae7PS1gCI3cvAwm4F
-         hMPA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=lr59/iGAXKJvhR+a9kdpCdsOayGaxsyutvxwMdiKPHI=;
+        b=hq7J+a+bXgG4eHVZRD0bJbFgMIFKyS/rYOjqwdhzsMlrEBo4Vax0YvnhzqBj0i7aLE
+         ACqDYs3/ToYH6I7WUB4z7tj1LF+jNgExsLsWqniw6Xa9imIHdTn2FNXLv2pH8z6pwYge
+         5OpWATIUlbkfg0iSkFmIGWDHzzL13hkHcWwgsVxGM1qRpHrWsCg+xPz/aBC2QXIJK39j
+         TcOSy+zdmLa/Lv+/ZO0ZxCzhn7L9xRh1FkNf/XNY4AxOiK0SsyZ+ni5eKy9pNvyUzPt1
+         o268O5APWjAF7AqRyrCHeyaaV+9J16CbWh/2mCfiNENGKNZM+OQB3XNv2tLS2b3d8LCj
+         VUPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=tsBosJ/+P29PhVPerzq8RpzjfYD4A6oyS7tqay8F6Ss=;
-        b=E4b5PHI7BwsEJKNdyWCAflXmF5iZoo+e/pTlvhaYgkyTT0B04NSKvIYGfWosT1/JkO
-         tmlbnhDXSqLKxsHqg0WmvICdrv985uuafHgutmPMoBSZw4XGLWaokJaHvOg5ekj/BCWz
-         2UncBDizyCxSiKxvrdux3Ln/aZQA03ml/zQ6dZk/eXrbdoxQTbIjffWQ46qh0Co44EMG
-         Ij8cHO69zOYqOVwYlFK252PoqWFqIxi4n4Z3sqUsdH7nCBwKmDYx9Tx7a/tlRRwqyoyn
-         eJOo9yHx4cc1S/dh5IMnIWIcEY8/AQD888ezSqa92oN7cggi3wvKDBvRrvawwXLAF218
-         o0Pw==
-X-Gm-Message-State: AOAM530q8iuZF7NgB/F7K8nvgvNW3+hpH9b027OPPIBuyx2LFzniiIUu
-        LDOyPMQq8bkEKHO0T9nYMMY=
-X-Google-Smtp-Source: ABdhPJzeRpYhBOQNKtIsAe4ViCSI6ICs5tAEVb6ZxTWFnmWJVbSfNiw4Q90ldinYkfvYOaM15+0p2g==
-X-Received: by 2002:a05:620a:7d3:: with SMTP id 19mr3375602qkb.351.1627667143198;
-        Fri, 30 Jul 2021 10:45:43 -0700 (PDT)
-Received: from localhost ([24.169.20.255])
-        by smtp.gmail.com with ESMTPSA id x14sm888850qtv.17.2021.07.30.10.45.42
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=lr59/iGAXKJvhR+a9kdpCdsOayGaxsyutvxwMdiKPHI=;
+        b=emoxVmFq66dd470+g3Jzhh8cB2V8nwP5DLKWJ1eQBkjKGJpI84VzKTkoWqiLx2IvXF
+         yY8G+CsrLtETkycK+i+OwB0o4jrxCI5gfVPE5E5yfF5CeF5q1hJtC9QG9lHuU6GUZQYP
+         jbstcmNw093iXXEW5fVqkI8llAVoi8OymO9YnFisGbzfIfCLQpw+tWlXTG5EPqex5pVW
+         Tep35NRfbAQOkGob8IOFqNoyxIxQyoFXBWaJ6ucXlPv0Iw3mlCDPeyJ04EDPKyida9ps
+         Jj6Wrv9YpP/EZHBmO8dhWJ/qKf4anwY65YGYyRnjLnhAU5V8PmY5OBMRj3BYHhIeSdXg
+         9mng==
+X-Gm-Message-State: AOAM532sRah9TJHN1T1T63h76EZBJ/OGieq+vNJKBNsb05F5d5ryLiib
+        42ndX12TEOzOJaOLBxj3wkWbRGpjw2UDBQ==
+X-Google-Smtp-Source: ABdhPJxLsS4qbYyQWv9qGQ/Y4NQw2RZT7TI3BQlSGt7RipJMwWtLj/rc+7QcRyLHykJzLIOC/UiBwg==
+X-Received: by 2002:a05:6000:1149:: with SMTP id d9mr4497732wrx.26.1627667988752;
+        Fri, 30 Jul 2021 10:59:48 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id i186sm2540311wmi.43.2021.07.30.10.59.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jul 2021 10:45:42 -0700 (PDT)
-Date:   Fri, 30 Jul 2021 13:45:41 -0400
-From:   Ben Boeckel <mathstuf@gmail.com>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 0/1] Improve automatic setup of tracking for new branches
-Message-ID: <YQQ6xSlX+0LvBBWX@erythro.dev.benboeckel.internal>
-References: <20210728135041.501850-1-mathstuf@gmail.com>
- <20210729020125.746206-1-mathstuf@gmail.com>
- <9b8b3a12-6801-1c5d-9cfb-c87b51cd9548@gmail.com>
- <YQQFWtKo8b1WJIGe@erythro.dev.benboeckel.internal>
- <7b50ebc6-7b28-412d-b124-9bd54750c922@gmail.com>
+        Fri, 30 Jul 2021 10:59:48 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>,
+        "Tom G . Christensen" <tgc@jupiterrise.com>,
+        Mischa POSLAWSKY <git@shiar.nl>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v4 0/5] drop support for ancient curl
+Date:   Fri, 30 Jul 2021 19:59:41 +0200
+Message-Id: <cover-v4-0.5-00000000000-20210730T175650Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.1071.g36f34456314
+In-Reply-To: <cover-v3-0.7-00000000000-20210730T092843Z-avarab@gmail.com>
+References: <cover-v3-0.7-00000000000-20210730T092843Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <7b50ebc6-7b28-412d-b124-9bd54750c922@gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 30, 2021 at 12:01:36 -0400, Philippe Blain wrote:
-> Hi again,
-> 
-> Le 2021-07-30 à 09:57, Ben Boeckel a écrit :
-> > On Fri, Jul 30, 2021 at 09:35:39 -0400, Philippe Blain wrote:
-> >> Le 2021-07-28 à 22:01, Ben Boeckel a écrit :
-> >>
-> >> Small nit: usually when sending a second version of a patch, you would use
-> >> the '-v2' argument to 'git format-patch' so that the patch and cover letter
-> >> is prefixed [PATCH v2].
-> > 
-> > Yes, I realized that I had forgotten the `--reroll-count=` argument when
-> > making this patch (I suppose a way to store the Cc list for a topic
-> > somewhere would be nice so I didn't lean so heavily on shell history
-> > would help this).
-> 
-> There is 'format.cc', but it's not branch-specific, so you would have to
-> use one worktree per branch with extension.worktreeConfig...
+Per the feature creep feedback on v3 this v4 ejects the two new
+changes new in v3. The below range-diff is against v2, not v3.
 
-I suppose a `branch.<name>.cc` configuration might be in order :) .
-Though at that point, `branch.<name>.rerollCount` and
-`branch.<name>.sendEmailTo` also make sense…
+I dug into the 7.16.4 v.s. 7.17.0 documentation issue and found that
+it's bug in curl's docs, for which I submitted a patch.
 
-More brainstorming below too.
+I considered keeping
+<patch-v3-5.7-b857a9ef7b1-20210730T092843Z-avarab@gmail.com>, but
+sequencing it in made the range diff quite a bit larger, so per the
+feature creep feedback I ejected it too. Junio: Perhaps you'd like to
+cherry-pick it on top too, or it can be dug up post-release.
 
-> > FWIW, my main gripe with the email-based workflow is the lack of
-> > coordinated metadata (LWN has numerous comments by me about my views if
-> > you're curious, but I should really formalize them into blog posts). But
-> > when in Rome :) .
-> 
-> I agree. I almost always use Gitgitgadget [1], which keeps track of the CC list for
-> me, of updating the re-roll count, of adding the in-reply-to header such that subsequent
-> versions of the series are sent as a response to the cover letter of the previous version,
-> generating a range-diff against the previous version,
-> commenting on the PR when the series is mentioned in "What's cooking", etc.
+Jeff King (3):
+  http: drop support for curl < 7.11.1
+  http: drop support for curl < 7.16.0
+  http: drop support for curl < 7.19.4
 
-That's nifty. I guess since I started here, things are a bit messy for
-this patch though?
+Ævar Arnfjörð Bjarmason (2):
+  http: drop support for curl < 7.19.3 and < 7.17.0 (again)
+  http: rename CURLOPT_FILE to CURLOPT_WRITEDATA
 
-> Some things it does not support are: sending a patch as a response to some random
-> mail on the list, which is sometimes useful, reading the commit notes to generate
-> in-patch commentaries [2], customizing the diff generated by 'format-patch'.
-> Other things are listed at [3].
-> 
-> Recently I've even been using only the terminal with Gitgitgadget:
-> I use 'git branch --edit-description'
-> to write my cover letter, and then use the 'gh' GitHub CLI to open my PR:
+ http-push.c   |  29 +--------
+ http-walker.c |  14 +----
+ http.c        | 169 ++------------------------------------------------
+ http.h        |  46 --------------
+ imap-send.c   |   4 --
+ remote-curl.c |  11 +---
+ 6 files changed, 10 insertions(+), 263 deletions(-)
 
-I think having `branch.<name>.coverLetter` and/or
-`branch.coverLetterDirectory` (defaulting to reading `<name>` or
-`<name>.txt`) to store the cover letter contents would be nice. I know
-I've blown away enough `0000-*.patch` edits with an ill-timed `git
-format-patch` before…
+Range-diff against v1:
+1:  dcbb6f95652 ! 1:  6bd41764a54 http: drop support for curl < 7.11.1
+    @@ Commit message
+         Drop support for this ancient version of curl and simplify the code by
+         allowing us get rid of some "#ifdef"'s.
+     
+    -    Git will not build with vanilla curl older than 7.11.1 due to (at
+    -    least) two issues:
+    -
+    -      - our use of CURLOPT_POSTFIELDSIZE in 37ee680d9b
+    -        (http.postbuffer: allow full range of ssize_t values,
+    -        2017-04-11). This field was introduced in curl 7.11.1.
+    -
+    -      - our use of CURLPROTO_* outside any #ifdef in aeae4db174
+    -        (http: create function to get curl allowed protocols,
+    -        2016-12-14). These were introduced in curl 7.19.4.
+    +    Git will not build with vanilla curl older than 7.11.1 due our use of
+    +    CURLOPT_POSTFIELDSIZE in 37ee680d9b
+    +    (http.postbuffer: allow full range of ssize_t values,
+    +    2017-04-11). This field was introduced in curl 7.11.1.
+     
+         We could solve these compilation problems with more #ifdefs,
+         but it's not worth the trouble. Version 7.11.1 came out in
+    -    March of 2004, over 13 years ago. Let's declare that too old
+    +    March of 2004, over 17 years ago. Let's declare that too old
+         and drop any existing ifdefs that go further back. One
+         obvious benefit is that we'll have fewer conditional bits
+         cluttering the code.
+2:  1c9f3bc031b = 2:  fb308258e2b http: drop support for curl < 7.16.0
+3:  faae88b7fec ! 3:  fba5560a3ba http: drop support for curl < 7.19.4
+    @@ Commit message
+         http: drop support for curl < 7.19.4
+     
+         In the last commit we dropped support for curl < 7.16.0, let's
+    -    continue that and drop support for versions older than 7.19.4. This
+    +    continue that and drop support for versions older than 7.19.3. This
+         allows us to simplify the code by getting rid of some "#ifdef"'s.
+     
+         Git was broken with vanilla curl < 7.19.4 from v2.12.0 until
+4:  9a30e92520c ! 4:  42d1c72ff7e http: drop support for curl < 7.19.3 and < 7.16.4 (again)
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    http: drop support for curl < 7.19.3 and < 7.16.4 (again)
+    +    http: drop support for curl < 7.19.3 and < 7.17.0 (again)
+     
+         Remove the conditional use of CURLAUTH_DIGEST_IE and
+         CURLOPT_USE_SSL. These two have been split from earlier simpler checks
+         against LIBCURL_VERSION_NUM for ease of review.
+     
+         The CURLAUTH_DIGEST_IE flag was added in n 7.19.3[1], and
+    -    CURLOPT_USE_SSL in 7.16.4[2], as noted in [2] it was then renamed from
+    -    the older CURLOPT_FTP_SSL.
+    +    CURLOPT_USE_SSL in 7.17.0[2][3], as noted in [2] it was then renamed
+    +    from the older CURLOPT_FTP_SSL.
+    +
+    +    The documentation[2] currently claims that it was introduced in
+    +    7.16.4, but the symbols-in-versions file correctly states
+    +    7.17.0[3].
+    +
+    +    I've submitted an upstream
+    +    patch (<patch-1.1-953bab490-20210730T170510Z-avarab@gmail.com>) to the
+    +    curl-library mailing list fix the documentation.
+     
+         1. https://curl.se/libcurl/c/CURLOPT_HTTPAUTH.html
+         2. https://curl.se/libcurl/c/CURLOPT_USE_SSL.html
+    +    3. https://github.com/curl/curl/blob/master/docs/libcurl/symbols-in-versions
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+5:  64e510b4a6b = 5:  e34ab1d1f65 http: rename CURLOPT_FILE to CURLOPT_WRITEDATA
+-- 
+2.32.0.1071.g36f34456314
 
-Forges could use this to hook in with their push options[1] through
-their wrappers or other tools.
-
---Ben
-
-[1]https://docs.gitlab.com/ee/user/project/push_options.html#push-options-for-merge-requests
