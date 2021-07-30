@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3E04C4338F
-	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 09:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2568C432BE
+	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 09:35:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7F46161019
-	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 09:35:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC01461019
+	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 09:35:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238276AbhG3JfI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Jul 2021 05:35:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50988 "EHLO
+        id S238347AbhG3JfJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Jul 2021 05:35:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238226AbhG3JfI (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238260AbhG3JfI (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 30 Jul 2021 05:35:08 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B99D1C0613CF
-        for <git@vger.kernel.org>; Fri, 30 Jul 2021 02:35:02 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id p5so10473037wro.7
-        for <git@vger.kernel.org>; Fri, 30 Jul 2021 02:35:02 -0700 (PDT)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA75BC0613C1
+        for <git@vger.kernel.org>; Fri, 30 Jul 2021 02:35:03 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id p5so10473121wro.7
+        for <git@vger.kernel.org>; Fri, 30 Jul 2021 02:35:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=m+svhJdTJWXbq8oKAs8+k2KGDh4gvZWJRLLHxCfYklU=;
-        b=sZbLjtfp/dLpmYFPZ/WDYVmEb4PJpmCofHGcoDQcjGsfC1yP4DusFITQlQhiU+gtj1
-         u31loTcfNhSlQE6vzVFCMwcWVZQmGcCYuxTkywp8nX6QDF/ZxEzlNP/T96OreFa/NiUZ
-         rX5j/YhwAnPNyYuNnVT+o5DAnctvVryyccS65R2bq9KFNb2U7ThJKqSbMPUA8b6IfqWV
-         63Djddewe7SYGVjBgWEJ3k6p3u7hy4E2HHImIj7q7ND/J7nqULhm0rFHyQBiG8CWOw6H
-         ZfFDcZiyXuASVthLOTkJ0c13+oZXQ/3rlKifNGgN1kyoDrz0ngBn+6zS1C7gj6ZY8hTK
-         dyFg==
+        bh=uqtUirrA6RBMRqwGn2IHf5VsqwHfBMe4uA1fE38P5zQ=;
+        b=OEpqakv2yHyrg8RZoeuK8WiVIcGGKGQt1iF/I2Qw3CKUt+QH5GI/I97G3ufO50VGOB
+         sOXjDccJcmSjvxZ3JPuWj/O3rmJ4zftcJXXtV/9FBKPUZ5psqXgq0tnDcB0KRZoU2Z3J
+         i/moCiSL4QYGo/bzCfrpi0G7IFFGG/6uEE8pdC6z2jjCBWZtVLF/GtnUHqRexLIkPqkY
+         at2ZdZ4zXWT+0fyVYVk8rAQ7q9BhGJ2AWg2DmGOTTGcW40e6CusEAZkdC67gCWYZHYq9
+         GNMk/Kj8ME/u7Gvr8zkyIhaAlKD9oxFTJS0DK/IaEMQpa8gSlIai27qkQYURwagU+fkb
+         dIAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=m+svhJdTJWXbq8oKAs8+k2KGDh4gvZWJRLLHxCfYklU=;
-        b=ke8J2JdftAKCpdbxSvLWogCxBEcd3/IDoegnKv5C9ozeHAkdq4m/zVSLKYJQQWhzh3
-         Xa+cJ+wzHoe0b1uxJmlHsYgzyBEJTPynWsSBXqnCC3m+bBkTcGL8knu/cOyyybuY90Jq
-         jQR3Wi0M+HFRrhEUosMiCM+amh7/g9CH13Uqcw9eU1Pz0FVB3izgfTO62LaB+w5MyohK
-         Z1guAis9mKlkMa8p0auADEMq45HsA8dOyhEEuLWsNda/EcueU2yht05fojcb27pfBo5y
-         G6SbeuH8VXMFEzMmtKF4WuNi/esVPLlg2wu0tHYufLE10opE2fBwyUrTuTyU5J0oAHvJ
-         IK4w==
-X-Gm-Message-State: AOAM533bGEEPNUbGY0D90wgOKR/fTqquOxpAz9RCU2248O57boWgBJIy
-        VMz6/IMNLb6eDsDE4ZSMWq5S7gCP+2OBvA==
-X-Google-Smtp-Source: ABdhPJz8caEuV4mvz3/9QW+4LIDFCojlkdTIOP3l6ErjL32GKuuTCjUeUfT+WBO8dCSv9OZBWdLTyw==
-X-Received: by 2002:a5d:4fd0:: with SMTP id h16mr2085806wrw.268.1627637701134;
-        Fri, 30 Jul 2021 02:35:01 -0700 (PDT)
+        bh=uqtUirrA6RBMRqwGn2IHf5VsqwHfBMe4uA1fE38P5zQ=;
+        b=i14ZNbnr2IpfjpVfn9/el/rRpkjyp+Hvz2PvBTgZvErEE98Fj8BlGI74feB1alqxkf
+         rpcnJC1h9IpWpMALUVHhDfH9mbBNZ0Kj2TUvsxzy7kjCGAeJImlpE9A0fJYFLIwuBrTX
+         ZM/JV5eojip7Pqt4SDHyheurNbdXNJx2WpzmGB6raOBBmFWX60Df2/a3+NtVzqjVYlXF
+         pURwlFCNtSeJsVfMVQ5vakU+VR065rvpTOhSzQnPkaYRIWKRxV4bH5+ZtUuyDqXjKxam
+         eNHCTf0DY4sv1jaDkvxClwV5xtUv9xzESMmAOJSlTVjKvyPgCKV6qv4ewjhq+dVHLr4G
+         9efQ==
+X-Gm-Message-State: AOAM531JfO7T36QeydFH+F2osUVK3SfWfxIE8q5JZTMHoh9GME933ing
+        f9HQluV4UZYcoq2pYfmbZ9J5tdNfS2JfkQ==
+X-Google-Smtp-Source: ABdhPJw4e+8IZ8HjiTQt0xC3GqLm5+0ABG5LxSQWKVKPI0dgLwUJr7bm4j1nCivfyeBgJ/23JNG9Wg==
+X-Received: by 2002:a5d:5906:: with SMTP id v6mr2034451wrd.194.1627637702045;
+        Fri, 30 Jul 2021 02:35:02 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id t17sm1089903wru.94.2021.07.30.02.34.59
+        by smtp.gmail.com with ESMTPSA id t17sm1089903wru.94.2021.07.30.02.35.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jul 2021 02:35:00 -0700 (PDT)
+        Fri, 30 Jul 2021 02:35:01 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -67,12 +67,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 0/7] drop support for ancient curl, improve version checks
-Date:   Fri, 30 Jul 2021 11:31:52 +0200
-Message-Id: <cover-v3-0.7-00000000000-20210730T092843Z-avarab@gmail.com>
+Subject: [PATCH v3 1/7] http: drop support for curl < 7.11.1
+Date:   Fri, 30 Jul 2021 11:31:53 +0200
+Message-Id: <patch-v3-1.7-6bd41764a54-20210730T092843Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.1069.g516d52f3d85
-In-Reply-To: <cover-0.5-00000000000-20210721T220402Z-avarab@gmail.com>
-References: <cover-0.5-00000000000-20210721T220402Z-avarab@gmail.com>
+In-Reply-To: <cover-v3-0.7-00000000000-20210730T092843Z-avarab@gmail.com>
+References: <cover-0.5-00000000000-20210721T220402Z-avarab@gmail.com> <cover-v3-0.7-00000000000-20210730T092843Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,97 +80,285 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This should address the feedback on v2, except that I did not update
-the INSTALL document as Bagas Sanjaya suggested. We did not have
-existing discussion of the generally supported minimal support minimal
-version there, that would make sense as a follow-up patch.
+From: Jeff King <peff@peff.net>
 
-There's minor commit message changes here, and two new patches, one is
-another missed ifdef we could remove because the version comparion was
-wrong, and the last commit entirely gets rid of LIBCURL_VERSION_NUM
-checks in the codebase in favor of checking specific defined macros.
+Drop support for this ancient version of curl and simplify the code by
+allowing us get rid of some "#ifdef"'s.
 
-Jeff King (3):
-  http: drop support for curl < 7.11.1
-  http: drop support for curl < 7.16.0
-  http: drop support for curl < 7.19.4
+Git will not build with vanilla curl older than 7.11.1 due our use of
+CURLOPT_POSTFIELDSIZE in 37ee680d9b
+(http.postbuffer: allow full range of ssize_t values,
+2017-04-11). This field was introduced in curl 7.11.1.
 
-Ævar Arnfjörð Bjarmason (4):
-  http: drop support for curl < 7.19.3 and <= 7.16.4 (or <7.17.0)
-    (again)
-  http: drop support for curl < 7.18.0 (again)
-  http: rename CURLOPT_FILE to CURLOPT_WRITEDATA
-  http: centralize the accounting of libcurl dependencies
+We could solve these compilation problems with more #ifdefs,
+but it's not worth the trouble. Version 7.11.1 came out in
+March of 2004, over 17 years ago. Let's declare that too old
+and drop any existing ifdefs that go further back. One
+obvious benefit is that we'll have fewer conditional bits
+cluttering the code.
 
- git-curl-compat.h | 119 ++++++++++++++++++++++++++
- http-push.c       |  29 +------
- http-walker.c     |  14 +--
- http.c            | 212 ++++++----------------------------------------
- http.h            |  46 ----------
- imap-send.c       |  10 +--
- remote-curl.c     |  11 +--
- 7 files changed, 153 insertions(+), 288 deletions(-)
- create mode 100644 git-curl-compat.h
+This patch drops all #ifdefs that reference older versions
+(note that curl's preprocessor macros are in hex, so we're
+looking for 070b01, not 071101).
 
-Range-diff against v2:
-1:  dcbb6f95652 ! 1:  6bd41764a54 http: drop support for curl < 7.11.1
-    @@ Commit message
-         Drop support for this ancient version of curl and simplify the code by
-         allowing us get rid of some "#ifdef"'s.
-     
-    -    Git will not build with vanilla curl older than 7.11.1 due to (at
-    -    least) two issues:
-    -
-    -      - our use of CURLOPT_POSTFIELDSIZE in 37ee680d9b
-    -        (http.postbuffer: allow full range of ssize_t values,
-    -        2017-04-11). This field was introduced in curl 7.11.1.
-    -
-    -      - our use of CURLPROTO_* outside any #ifdef in aeae4db174
-    -        (http: create function to get curl allowed protocols,
-    -        2016-12-14). These were introduced in curl 7.19.4.
-    +    Git will not build with vanilla curl older than 7.11.1 due our use of
-    +    CURLOPT_POSTFIELDSIZE in 37ee680d9b
-    +    (http.postbuffer: allow full range of ssize_t values,
-    +    2017-04-11). This field was introduced in curl 7.11.1.
-     
-         We could solve these compilation problems with more #ifdefs,
-         but it's not worth the trouble. Version 7.11.1 came out in
-    -    March of 2004, over 13 years ago. Let's declare that too old
-    +    March of 2004, over 17 years ago. Let's declare that too old
-         and drop any existing ifdefs that go further back. One
-         obvious benefit is that we'll have fewer conditional bits
-         cluttering the code.
-2:  1c9f3bc031b = 2:  fb308258e2b http: drop support for curl < 7.16.0
-3:  faae88b7fec = 3:  9fcd3a3e486 http: drop support for curl < 7.19.4
-4:  9a30e92520c ! 4:  230b968382f http: drop support for curl < 7.19.3 and < 7.16.4 (again)
-    @@ Metadata
-     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## Commit message ##
-    -    http: drop support for curl < 7.19.3 and < 7.16.4 (again)
-    +    http: drop support for curl < 7.19.3 and <= 7.16.4 (or <7.17.0) (again)
-     
-         Remove the conditional use of CURLAUTH_DIGEST_IE and
-         CURLOPT_USE_SSL. These two have been split from earlier simpler checks
-         against LIBCURL_VERSION_NUM for ease of review.
-     
-    -    The CURLAUTH_DIGEST_IE flag was added in n 7.19.3[1], and
-    -    CURLOPT_USE_SSL in 7.16.4[2], as noted in [2] it was then renamed from
-    -    the older CURLOPT_FTP_SSL.
-    +    The CURLAUTH_DIGEST_IE flag was added in 7.19.3[1], and
-    +    CURLOPT_USE_SSL in 7.16.4[2] or 7.17.0[3], depending on the source. As
-    +    noted in [2] it was then renamed around that time from the older
-    +    CURLOPT_FTP_SSL.
-     
-         1. https://curl.se/libcurl/c/CURLOPT_HTTPAUTH.html
-         2. https://curl.se/libcurl/c/CURLOPT_USE_SSL.html
-    +    3. https://github.com/curl/curl/blob/master/docs/libcurl/symbols-in-versions
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
--:  ----------- > 5:  b857a9ef7b1 http: drop support for curl < 7.18.0 (again)
-5:  64e510b4a6b = 6:  95e42b17ce8 http: rename CURLOPT_FILE to CURLOPT_WRITEDATA
--:  ----------- > 7:  93a2775d0ee http: centralize the accounting of libcurl dependencies
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ http.c        | 53 ---------------------------------------------------
+ http.h        | 12 +-----------
+ remote-curl.c |  3 ---
+ 3 files changed, 1 insertion(+), 67 deletions(-)
+
+diff --git a/http.c b/http.c
+index 8119247149a..56182a89e25 100644
+--- a/http.c
++++ b/http.c
+@@ -19,19 +19,11 @@
+ static struct trace_key trace_curl = TRACE_KEY_INIT(CURL);
+ static int trace_curl_data = 1;
+ static int trace_curl_redact = 1;
+-#if LIBCURL_VERSION_NUM >= 0x070a08
+ long int git_curl_ipresolve = CURL_IPRESOLVE_WHATEVER;
+-#else
+-long int git_curl_ipresolve;
+-#endif
+ int active_requests;
+ int http_is_verbose;
+ ssize_t http_post_buffer = 16 * LARGE_PACKET_MAX;
+ 
+-#if LIBCURL_VERSION_NUM >= 0x070a06
+-#define LIBCURL_CAN_HANDLE_AUTH_ANY
+-#endif
+-
+ static int min_curl_sessions = 1;
+ static int curl_session_count;
+ #ifdef USE_CURL_MULTI
+@@ -68,15 +60,9 @@ static struct {
+ 	{ "tlsv1.3", CURL_SSLVERSION_TLSv1_3 },
+ #endif
+ };
+-#if LIBCURL_VERSION_NUM >= 0x070903
+ static const char *ssl_key;
+-#endif
+-#if LIBCURL_VERSION_NUM >= 0x070908
+ static const char *ssl_capath;
+-#endif
+-#if LIBCURL_VERSION_NUM >= 0x071304
+ static const char *curl_no_proxy;
+-#endif
+ #if LIBCURL_VERSION_NUM >= 0x072c00
+ static const char *ssl_pinnedkey;
+ #endif
+@@ -101,9 +87,7 @@ static struct {
+ 	{ "digest", CURLAUTH_DIGEST },
+ 	{ "negotiate", CURLAUTH_GSSNEGOTIATE },
+ 	{ "ntlm", CURLAUTH_NTLM },
+-#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+ 	{ "anyauth", CURLAUTH_ANY },
+-#endif
+ 	/*
+ 	 * CURLAUTH_DIGEST_IE has no corresponding command-line option in
+ 	 * curl(1) and is not included in CURLAUTH_ANY, so we leave it out
+@@ -143,7 +127,6 @@ enum http_follow_config http_follow_config = HTTP_FOLLOW_INITIAL;
+ 
+ static struct credential cert_auth = CREDENTIAL_INIT;
+ static int ssl_cert_password_required;
+-#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+ static unsigned long http_auth_methods = CURLAUTH_ANY;
+ static int http_auth_methods_restricted;
+ /* Modes for which empty_auth cannot actually help us. */
+@@ -153,7 +136,6 @@ static unsigned long empty_auth_useless =
+ 	| CURLAUTH_DIGEST_IE
+ #endif
+ 	| CURLAUTH_DIGEST;
+-#endif
+ 
+ static struct curl_slist *pragma_header;
+ static struct curl_slist *no_pragma_header;
+@@ -237,12 +219,8 @@ static void finish_active_slot(struct active_request_slot *slot)
+ 	if (slot->results != NULL) {
+ 		slot->results->curl_result = slot->curl_result;
+ 		slot->results->http_code = slot->http_code;
+-#if LIBCURL_VERSION_NUM >= 0x070a08
+ 		curl_easy_getinfo(slot->curl, CURLINFO_HTTPAUTH_AVAIL,
+ 				  &slot->results->auth_avail);
+-#else
+-		slot->results->auth_avail = 0;
+-#endif
+ 
+ 		curl_easy_getinfo(slot->curl, CURLINFO_HTTP_CONNECTCODE,
+ 			&slot->results->http_connectcode);
+@@ -305,14 +283,10 @@ static int http_options(const char *var, const char *value, void *cb)
+ 		return git_config_string(&ssl_version, var, value);
+ 	if (!strcmp("http.sslcert", var))
+ 		return git_config_pathname(&ssl_cert, var, value);
+-#if LIBCURL_VERSION_NUM >= 0x070903
+ 	if (!strcmp("http.sslkey", var))
+ 		return git_config_pathname(&ssl_key, var, value);
+-#endif
+-#if LIBCURL_VERSION_NUM >= 0x070908
+ 	if (!strcmp("http.sslcapath", var))
+ 		return git_config_pathname(&ssl_capath, var, value);
+-#endif
+ 	if (!strcmp("http.sslcainfo", var))
+ 		return git_config_pathname(&ssl_cainfo, var, value);
+ 	if (!strcmp("http.sslcertpasswordprotected", var)) {
+@@ -461,12 +435,6 @@ static int curl_empty_auth_enabled(void)
+ 	if (curl_empty_auth >= 0)
+ 		return curl_empty_auth;
+ 
+-#ifndef LIBCURL_CAN_HANDLE_AUTH_ANY
+-	/*
+-	 * Our libcurl is too old to do AUTH_ANY in the first place;
+-	 * just default to turning the feature off.
+-	 */
+-#else
+ 	/*
+ 	 * In the automatic case, kick in the empty-auth
+ 	 * hack as long as we would potentially try some
+@@ -479,7 +447,6 @@ static int curl_empty_auth_enabled(void)
+ 	if (http_auth_methods_restricted &&
+ 	    (http_auth_methods & ~empty_auth_useless))
+ 		return 1;
+-#endif
+ 	return 0;
+ }
+ 
+@@ -552,7 +519,6 @@ static void init_curl_proxy_auth(CURL *result)
+ 
+ 	var_override(&http_proxy_authmethod, getenv("GIT_HTTP_PROXY_AUTHMETHOD"));
+ 
+-#if LIBCURL_VERSION_NUM >= 0x070a07 /* CURLOPT_PROXYAUTH and CURLAUTH_ANY */
+ 	if (http_proxy_authmethod) {
+ 		int i;
+ 		for (i = 0; i < ARRAY_SIZE(proxy_authmethods); i++) {
+@@ -570,7 +536,6 @@ static void init_curl_proxy_auth(CURL *result)
+ 	}
+ 	else
+ 		curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
+-#endif
+ }
+ 
+ static int has_cert_password(void)
+@@ -879,12 +844,8 @@ static CURL *get_curl_handle(void)
+     }
+ #endif
+ 
+-#if LIBCURL_VERSION_NUM >= 0x070907
+ 	curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
+-#endif
+-#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+ 	curl_easy_setopt(result, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+-#endif
+ 
+ #ifdef CURLGSSAPI_DELEGATION_FLAG
+ 	if (curl_deleg) {
+@@ -940,14 +901,10 @@ static CURL *get_curl_handle(void)
+ 		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
+ 	if (has_cert_password())
+ 		curl_easy_setopt(result, CURLOPT_KEYPASSWD, cert_auth.password);
+-#if LIBCURL_VERSION_NUM >= 0x070903
+ 	if (ssl_key != NULL)
+ 		curl_easy_setopt(result, CURLOPT_SSLKEY, ssl_key);
+-#endif
+-#if LIBCURL_VERSION_NUM >= 0x070908
+ 	if (ssl_capath != NULL)
+ 		curl_easy_setopt(result, CURLOPT_CAPATH, ssl_capath);
+-#endif
+ #if LIBCURL_VERSION_NUM >= 0x072c00
+ 	if (ssl_pinnedkey != NULL)
+ 		curl_easy_setopt(result, CURLOPT_PINNEDPUBLICKEY, ssl_pinnedkey);
+@@ -1180,12 +1137,8 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+ 		curl_ssl_verify = 0;
+ 
+ 	set_from_env(&ssl_cert, "GIT_SSL_CERT");
+-#if LIBCURL_VERSION_NUM >= 0x070903
+ 	set_from_env(&ssl_key, "GIT_SSL_KEY");
+-#endif
+-#if LIBCURL_VERSION_NUM >= 0x070908
+ 	set_from_env(&ssl_capath, "GIT_SSL_CAPATH");
+-#endif
+ 	set_from_env(&ssl_cainfo, "GIT_SSL_CAINFO");
+ 
+ 	set_from_env(&user_agent, "GIT_HTTP_USER_AGENT");
+@@ -1367,12 +1320,8 @@ struct active_request_slot *get_active_slot(void)
+ 	else
+ 		curl_easy_setopt(slot->curl, CURLOPT_FOLLOWLOCATION, 0);
+ 
+-#if LIBCURL_VERSION_NUM >= 0x070a08
+ 	curl_easy_setopt(slot->curl, CURLOPT_IPRESOLVE, git_curl_ipresolve);
+-#endif
+-#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+ 	curl_easy_setopt(slot->curl, CURLOPT_HTTPAUTH, http_auth_methods);
+-#endif
+ 	if (http_auth.password || curl_empty_auth_enabled())
+ 		init_curl_http_auth(slot->curl);
+ 
+@@ -1654,13 +1603,11 @@ static int handle_curl_result(struct slot_results *results)
+ 			credential_reject(&http_auth);
+ 			return HTTP_NOAUTH;
+ 		} else {
+-#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+ 			http_auth_methods &= ~CURLAUTH_GSSNEGOTIATE;
+ 			if (results->auth_avail) {
+ 				http_auth_methods &= results->auth_avail;
+ 				http_auth_methods_restricted = 1;
+ 			}
+-#endif
+ 			return HTTP_REAUTH;
+ 		}
+ 	} else {
+diff --git a/http.h b/http.h
+index bf3d1270ad8..d2f8cc56617 100644
+--- a/http.h
++++ b/http.h
+@@ -22,13 +22,7 @@
+ #define DEFAULT_MAX_REQUESTS 5
+ #endif
+ 
+-#if LIBCURL_VERSION_NUM < 0x070704
+-#define curl_global_cleanup() do { /* nothing */ } while (0)
+-#endif
+-
+-#if LIBCURL_VERSION_NUM < 0x070800
+-#define curl_global_init(a) do { /* nothing */ } while (0)
+-#elif LIBCURL_VERSION_NUM >= 0x070c00
++#if LIBCURL_VERSION_NUM >= 0x070c00
+ #define curl_global_init(a) curl_global_init_mem(a, xmalloc, free, \
+ 						xrealloc, xstrdup, xcalloc)
+ #endif
+@@ -37,10 +31,6 @@
+ #define NO_CURL_EASY_DUPHANDLE
+ #endif
+ 
+-#if LIBCURL_VERSION_NUM < 0x070a03
+-#define CURLE_HTTP_RETURNED_ERROR CURLE_HTTP_NOT_FOUND
+-#endif
+-
+ #if LIBCURL_VERSION_NUM < 0x070c03
+ #define NO_CURL_IOCTL
+ #endif
+diff --git a/remote-curl.c b/remote-curl.c
+index 6c320d57045..e738ae2c48a 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -185,8 +185,6 @@ static int set_option(const char *name, const char *value)
+ 						 strbuf_detach(&unquoted, NULL));
+ 		}
+ 		return 0;
+-
+-#if LIBCURL_VERSION_NUM >= 0x070a08
+ 	} else if (!strcmp(name, "family")) {
+ 		if (!strcmp(value, "ipv4"))
+ 			git_curl_ipresolve = CURL_IPRESOLVE_V4;
+@@ -197,7 +195,6 @@ static int set_option(const char *name, const char *value)
+ 		else
+ 			return -1;
+ 		return 0;
+-#endif /* LIBCURL_VERSION_NUM >= 0x070a08 */
+ 	} else if (!strcmp(name, "from-promisor")) {
+ 		options.from_promisor = 1;
+ 		return 0;
 -- 
 2.32.0.1069.g516d52f3d85
 
