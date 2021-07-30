@@ -2,370 +2,327 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AB93C4338F
-	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 02:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 498D2C4338F
+	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 06:22:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60B0C60F5E
-	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 02:30:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3546361008
+	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 06:22:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235162AbhG3Cak (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Jul 2021 22:30:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35456 "EHLO
+        id S237523AbhG3GW1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Jul 2021 02:22:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235158AbhG3Caj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jul 2021 22:30:39 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29103C061765
-        for <git@vger.kernel.org>; Thu, 29 Jul 2021 19:30:35 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id o2-20020a9d22020000b0290462f0ab0800so7922798ota.11
-        for <git@vger.kernel.org>; Thu, 29 Jul 2021 19:30:35 -0700 (PDT)
+        with ESMTP id S237427AbhG3GW0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jul 2021 02:22:26 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B38C8C061765
+        for <git@vger.kernel.org>; Thu, 29 Jul 2021 23:22:22 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id d2so5700107qto.6
+        for <git@vger.kernel.org>; Thu, 29 Jul 2021 23:22:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=IqwGVxytREbWk14O/k2WtfDGXvOdFaARBegue5Q2ExE=;
-        b=lI/pKHFCBpAkj1vQ8vuMxBWaRJEq7n1dQ32mfxGPptI4rpQ70U7mR52ukrQzB3e0HE
-         Lw+CWqpAlfJOVkwOk7AMUsHDjwc8qyy3nTcM65TuIvf/D2Rhd5bfxkiquCt8tEArWVhb
-         lm5K9xp5cAvPQiH9sGcNv6umEcHedOVhuyRjbIUhU33gUG5qbsCcPxnDE1DxLyNQIKRy
-         k8I1boAD2fliaktEy579Zp+uNh56xgWaFjWUxHfuFcqtlUkUOe+I7lsE2FFIfG2FVWxA
-         TvzIrcb1dKs7c28rEXjxF6t87GejwS1Lm4JHJA8AI3pm9YDFLczrVNzDfiX3Cs6icN7q
-         IbTw==
+        bh=UmYEiWV03cAHr72oCfCzpF3lRi8M8f+XFD0deFVrPkM=;
+        b=BbuPEQecYCyzXXMyXdP0woBYPx1eCzPSSJzBVmqlr0TWfUfvs7h9LsGKorHcF/szyc
+         mcG0PwPKACZIkbRYaWtiZWMJ94VJGe+QJ/wid3fd0rItrEG6UU0s3Ys3rl5l4s1EqnqZ
+         QAR0JQ8fSjEhFGGoHa7slFqcIqbpGqAh5cGAdoPDuOZHQq2idflzzbPmaanQYoMjYncm
+         gPQ7eLD+SSip88WFP0Nx0PGwj7fBQlAK4oafLsnZ9WFdCiYBFSo6rjjE4+VVaBX4MENb
+         tRHBDqcsPSM9eALCw7yPEIxb3oL80DVCAeC3hNf+i3v0YnUSFA47Ryp8pvwEvCKmvr+R
+         7iRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=IqwGVxytREbWk14O/k2WtfDGXvOdFaARBegue5Q2ExE=;
-        b=VK55vKtuSGAIKVxC559IwWocePMOr2p76w7aDc41UdFVr8JQp12Be+rJtEfB+bTosm
-         zxGU1v4Dw9Xk6MZVDf36qAXNrP9GfLM7pk6ui3kZfwA3hRZpOc0c1ZxqV/pDrRIxaB8L
-         h+pLTZaWVtJYKpfVdWs0c24ksSAAByOcYAkbKH5lvDQY/wxV2VpTlxoMEodaYbtOt9Ol
-         sswtW1XqTHzi8oYkizlX1X0586PTJoDjWdDm7YK7+vAcc9WJLJcjoyWFyg/AIkFVmoom
-         iLiuuJ1vJmDnS54GqIvnz4bNUeX6QqJ45Lu6lPWJ1z0hh0RRTN9suV4HS6ZIA1sb3GlK
-         M6dg==
-X-Gm-Message-State: AOAM5317b/FlykZI/nAppcFd/Le/llyaw3qR2rJmiJta3HeZ7xK67WJP
-        i1L+uNy2et4IJoTyFAq/iRhZ7Ej+jEPHMOJSM8U=
-X-Google-Smtp-Source: ABdhPJwL/Vl0XtywIgrH0Q4WW7aZGfuc4qq9/YTNmp0u5ndWsOuwr0a5LgvA6Gm+hJrurbtX/cQoX3TZHUxS1eLj7H8=
-X-Received: by 2002:a05:6830:78c:: with SMTP id w12mr341731ots.162.1627612234520;
- Thu, 29 Jul 2021 19:30:34 -0700 (PDT)
+        bh=UmYEiWV03cAHr72oCfCzpF3lRi8M8f+XFD0deFVrPkM=;
+        b=PRj0kxjy1qWvoUY9DySlXN+2vm/jnuSChiTweX5C+y/MhtWoxOtYnutBSIT1K+gLlB
+         kwKTZZWZlGJD8bjbAYn80aDk1jzTXvIM17FTW9jTCmJV2LygmJyVE8fcR0OmVGSGSwId
+         EIUpwkV32ROCpM6DfbCa1u2qcu+eVCCLYkbHpWj88QApBJ1WFYZGV7OM5MYZ07lG6fwS
+         NsFu6XWigjrLF1oW54WFVlF6vY7gweamm23TT+FZNAez8sOa0i1QwWmqcfl603zbwZlb
+         T+4zM1vtFW2JS3RZScdHOkxClt51jVfmjnbaG0U0n1gvXIlIAEm/Bxf8m9oKLwc00HzP
+         qisQ==
+X-Gm-Message-State: AOAM5308xm9vP4dpxIsat7uEBkKlV3OmPKrfn8yRYUFEuOY+hmXhiwhs
+        31eBiTPjuEBKVKNknq1/DpCKtfijSRU+jmFgqHc=
+X-Google-Smtp-Source: ABdhPJwk1shqkYGRejtA0gjNeTRrVhA+N4lfQkwIiqbkrJ2KQPsRADeG+9GD4sZRl3+tbEGLyfeljkrK4xxC/0Ve1Wg=
+X-Received: by 2002:ac8:75c2:: with SMTP id z2mr929288qtq.303.1627626141874;
+ Thu, 29 Jul 2021 23:22:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.990.git.1627044897.gitgitgadget@gmail.com>
- <pull.990.v2.git.1627531121.gitgitgadget@gmail.com> <dd8839b284330892a3bbcafbc03d71489fc9b01f.1627531121.git.gitgitgadget@gmail.com>
- <YQLJOsvATnTBd9pB@coredump.intra.peff.net> <CABPp-BHzJ365Jed38s-VQb2PqRy7t=58sZwgmeVG=mqKeA2neg@mail.gmail.com>
- <YQMLBW6LAZmQ8nDz@coredump.intra.peff.net>
-In-Reply-To: <YQMLBW6LAZmQ8nDz@coredump.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 29 Jul 2021 20:30:23 -0600
-Message-ID: <CABPp-BE8OEjcMrJO8uijLFsvvpQH9KA=a+p_6bH71Z6QxXLB6w@mail.gmail.com>
-Subject: Re: [PATCH v2 4/7] merge-ort: switch our strmaps over to using memory pools
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
+References: <20210722112143.97944-1-raykar.ath@gmail.com> <20210728115304.80643-1-raykar.ath@gmail.com>
+ <07070c45-5761-b67e-59b1-aa90f8cd877b@gmail.com> <d206fa7a-a450-552b-824c-518ee481c480@gmail.com>
+ <251ef131-bdd1-3881-659e-3caf20b65a53@gmail.com>
+In-Reply-To: <251ef131-bdd1-3881-659e-3caf20b65a53@gmail.com>
+From:   Atharva Raykar <raykar.ath@gmail.com>
+Date:   Fri, 30 Jul 2021 11:52:10 +0530
+Message-ID: <CADi-XoRNRrtC6bQ-DETj=0Bmy=WJzv3mk++QkrpDOZ6THGhaZQ@mail.gmail.com>
+Subject: Re: [GSoC] [PATCH v2] submodule--helper: introduce add-config subcommand
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>
+        Prathamesh Chavan <pc44800@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 29, 2021 at 2:09 PM Jeff King <peff@peff.net> wrote:
+On Fri, Jul 30, 2021 at 1:00 AM Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
 >
-> On Thu, Jul 29, 2021 at 12:37:52PM -0600, Elijah Newren wrote:
->
-> > > Arguably, the existence of these function indirections is perhaps a sign
-> > > that the strmap API should provide a version of the clear functions that
-> > > takes "partial / not-partial" as a parameter.
+> On 29/07/21 11:05 pm, Atharva Raykar wrote:
+> > (apologies for the reflowed text, seems to only happen when replying to
+> > this message?? Won't affect this response much though)
 > >
-> > Are you suggesting a modification of str{map,intmap,set}_clear() to
-> > take an extra parameter, or removing the
-> > str{map,intmap,set}_partial_clear() functions and introducing new
-> > functions that take a partial/not-partial parameter?  I think you're
-> > suggesting the latter, and that makes more sense to me...but I'm
-> > drawing blanks trying to come up with a reasonable function name.
 >
-> It does seem a shame to add the "partial" parameter to strmap_clear(),
-> just because most callers don't need it (so they end up with this
-> inscrutable "0" parameter).
+> In case you're using thunderbird then you could see if the following helps:
 >
-> What if there was a flags field? Then it could be combined with the
-> free_values parameter. The result is kind of verbose in two ways:
->
->  - now strset_clear(), etc, need a "flags" parameter, which they didn't
->    before (and is just "0" most of the time!)
->
->  - now "strmap_clear(foo, 1)" becomes "strmap_clear(foo, STRMAP_FREE_VALUES)".
->    That's a lot longer, though arguably it's easier to understand since
->    the boolean is explained.
->
-> Having gone through the exercise, I am not sure it is actually making
-> anything more readable (messy patch is below for reference).
+> http://kb.mozillazine.org/Plain_text_e-mail_%28Thunderbird%29#Flowed_format
 
-Thanks for diving in.  Since it's not clear if it's helping, I'll just
-take your earlier suggestion to rename the "strmap_func" variable to
-"strmap_clear_func" instead.
+Yeah, I have pretty much been following the setup that is in the
+git-format-patch [1] documentation. It worked fine until the last couple of
+days. The mailing list is now rejecting all my mails. My guess is because
+Thunderbird is forcing a 'Content-Transfer-Encoding: 7-bit' which I read causes
+problems with this list [2]. Strangely, so far, this header is added only when
+I send mails to git@vger.kernel.org, not elsewhere.
+(sending this from GMail for now)
 
+Here's the error message:
+------8<------8<------8<------
+
+<git@vger.kernel.org>: host 23.128.96.18[23.128.96.18] said: 550 5.7.1
+    Content-Policy reject msg: Wrong MIME labeling on 8-bit character texts.
+    BF:<H 0>; S229739AbhG2RfR (in reply to end of DATA command)
+
+------8<------8<------8<------
+
+I'll try fixing my mail situation today, and if I still have problems, I'll
+bring it up on a separate thread.
+
+[1] https://git-scm.com/docs/git-format-patch#_approach_1_add_on
+[2] https://lore.kernel.org/git/alpine.DEB.2.20.1611031554100.3108@virtualbox/
+
+> > On 29/07/21 01:21, Kaartic Sivaraam wrote:
+> >> Hi Atharva,
+> >>
+> >> On 28/07/21 5:23 pm, Atharva Raykar wrote:
+> >>> Add a new "add-config" subcommand to `git submodule--helper` with the
+> >>> goal of converting part of the shell code in git-submodule.sh related to
+> >>> `git submodule add` into C code. This new subcommand sets the
+> >>> configuration variables of a newly added submodule, by registering the
+> >>> url in local git config, as well as the submodule name and path in the
+> >>> .gitmodules file. It also sets 'submodule.<name>.active' to "true" if
+> >>> the submodule path has not already been covered by any pathspec
+> >>> specified in 'submodule.active'.
+> >>>
+> >>> This is meant to be a faithful conversion from shell to C, with only one
+> >>> minor change: A warning is emitted if no value is specified in
+> >>> 'submodule.active', ie, the config looks like: "[submodule] active\n",
+> >>> because it is an invalid configuration. It would be helpful to let the
+> >>> user know that the pathspec is unset, and the value of
+> >>> 'submodule.<name>.active' might be set to 'true' so that they can
+> >>> rectify their configuration and prevent future surprises (especially
+> >>> given that the latter variable has a higher priority than the former).
+> >>>
+> >>
+> >> v2 doesn't have the warning that this paragraph describes. So, this could
+> >> be dropped.
+> >
+> > My bad, looks like I forgot to edit the commit message.
+> >
+> >>> [ snip ]
+> >>>
+> >>> A comment has been
+> >>> added to explain that only one value of 'submodule.active' is obtained
+> >>> to check if we need to call is_submodule_active() at all.
+> >>>
+> >>
+> >> This could be me likely not understanding this properly. Anyways, where
+> >> is this comment in the code? I only see a comment about how
+> >> 'is_submodule_active'
+> >> iterates over all values. I couldn't find any "one value" reference in it.
+> >
+> > Looks like my comment does not explain it clearly. It would have made
+> > more sense to start the comment with "If there is no value found for
+> > submodule.active", but I think instead of modifying that comment (which
+> > is clear enough as it is), I'll make the commit message better, by
+> > removing the mention of the "we check one value".
+> >
+> > It seems like the line:
+> >
+> >       if (git_config_get_string("submodule.active", &val)
+> >
+> > makes it clear that a single string is being queried first. The larger
+> > point was about why that conditional was needed, if we were going to
+> > call 'is_submodule_active()' to retrieve the value anyway.
+> >
 >
-> diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-> index 3e7ab1ca82..dfbdba53da 100644
-> --- a/builtin/shortlog.c
-> +++ b/builtin/shortlog.c
-> @@ -242,7 +242,7 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
->                 insert_records_from_trailers(log, &dups, commit, &ctx, oneline_str);
->         }
+> Ah. Now I get the idea. A rephrasing might indeed make this clear.
 >
-> -       strset_clear(&dups);
-> +       strset_clear(&dups, 0);
->         strbuf_release(&ident);
->         strbuf_release(&oneline);
->  }
-> diff --git a/diffcore-rename.c b/diffcore-rename.c
-> index 7e6b3e1b14..0c960111d1 100644
-> --- a/diffcore-rename.c
-> +++ b/diffcore-rename.c
-> @@ -665,9 +665,10 @@ void partial_clear_dir_rename_count(struct strmap *dir_rename_count)
+> >>> +    if (config_submodule_in_gitmodules(add_data->sm_name, "path", add_data->sm_path) ||
+> >>> +        config_submodule_in_gitmodules(add_data->sm_name, "url", add_data->repo))
+> >>> +        die(_("Failed to register submodule '%s'"), add_data->sm_path);
+> >>> +
+> >>> +    if (add_data->branch)
+> >>> +        if (config_submodule_in_gitmodules(add_data->sm_name,
+> >>> +                           "branch", add_data->branch))
+> >>> +            die(_("Failed to register submodule '%s'"), add_data->sm_path);
+> >>> +
+> >>> +    add_gitmodules.git_cmd = 1;
+> >>> +    strvec_pushl(&add_gitmodules.args,
+> >>> +             "add", "--force", "--", ".gitmodules", NULL);
+> >>> +
+> >>> +    if (run_command(&add_gitmodules))
+> >>> +        die(_("Failed to register submodule '%s'"), add_data->sm_path);
+> >>> +
+> >>
+> >> We could restructure this portion like so ...
+> >>
+> >> -- 8< --
+> >>          add_gitmodules.git_cmd = 1;
+> >>          strvec_pushl(&add_gitmodules.args,
+> >>                       "add", "--force", "--", ".gitmodules", NULL);
+> >>>
+> >>          if (config_submodule_in_gitmodules(add_data->sm_name, "path", add_data->sm_path) ||
+> >>              config_submodule_in_gitmodules(add_data->sm_name, "url", add_data->repo) ||
+> >>              (add_data->branch && config_submodule_in_gitmodules(add_data->sm_name,
+> >>                                                                  "branch", add_data->branch)) ||
+> >>              run_command(&add_gitmodules))
+> >>                  die(_("Failed to register submodule '%s'"),
+> >> add_data->sm_path);
+> >> -- >8 --
+> >>
+> >> .. to avoid the redundant "Failed to register submodule ..." error message.
+> >> Whether the restructured version has poor readability or not is debatable, though.
+> >
+> > Yeah, I felt the redundancy in this case was okay, I find that big
+> > conditional rather hard to read.
+> >
 >
->         strmap_for_each_entry(dir_rename_count, &iter, entry) {
->                 struct strintmap *counts = entry->value;
-> -               strintmap_clear(counts);
-> +               strintmap_clear(counts, 0);
->         }
-> -       strmap_partial_clear(dir_rename_count, 1);
-> +       strmap_clear(dir_rename_count,
-> +                    STRMAP_FREE_VALUES | STRMAP_PARTIAL_CLEAR);
->  }
+> I tried to make it as easy to read as possible but its a really long one
+> indeed. So, I could understand. But the redundancy bothered me a bit ;-)
 >
->  static void cleanup_dir_rename_info(struct dir_rename_info *info,
-> @@ -683,15 +684,15 @@ static void cleanup_dir_rename_info(struct dir_rename_info *info,
->                 return;
+> >>> +    /*
+> >>> +     * NEEDSWORK: In a multi-working-tree world this needs to be
+> >>> +     * set in the per-worktree config.
+> >>> +     *
+> >>
+> >> It might be a good idea to differentiate the NEEDSWORK comment from an
+> >> informative comment about the code snippet.
+> >
+> > Okay. I suppose you mean give this part it's own closing delimiter and
+> > start the next line with a new multiline comment.
+> >
 >
->         /* idx_map */
-> -       strintmap_clear(&info->idx_map);
-> +       strintmap_clear(&info->idx_map, 0);
+> Yeah. I did mean this.
 >
->         /* dir_rename_guess */
-> -       strmap_clear(&info->dir_rename_guess, 1);
-> +       strmap_clear(&info->dir_rename_guess, STRMAP_FREE_VALUES);
+> > If you meant something else, do let me know.
+> >
+> >> Also, you could add another NEEDSWORK/TODO comment regarding the change
+> >> to 'is_submodule_active' which you mention before[1].
+> >>
+> >> [1]: https://public-inbox.org/git/a6de518a-d4a2-5a2b-28e2-ca8b62f2c85b@gmail.com/
+> >
+> > Good point. I'll add it.
+> >
+> >>> +     * If submodule.active does not exist, or if the pathspec was unset,
+> >>> +     * we will activate this module unconditionally.
+> >>> +     *
+> >>> +     * Otherwise, we ask is_submodule_active(), which iterates
+> >>> +     * through all the values of 'submodule.active' to determine
+> >>> +     * if this module is already active.
+> >>> +     */
+> >>> +    if (git_config_get_string("submodule.active", &val) ||
+> >>> +        !is_submodule_active(the_repository, add_data->sm_path)) {
+> >>> +        key = xstrfmt("submodule.%s.active", add_data->sm_name);
+> >>> +        git_config_set_gently(key, "true");
+> >>> +        free(key);
+> >>> +    }
+> >>
+> >> It might be a good idea to expand this condition similar to the scripted version,
+> >> to retain the following comment which seems like a useful one to keep.
+> >
+> > I felt that this version had less redundant code, and hence seemed more
+> > readable than the expanded conditional in shell.
+> >
+> > For comparison this is the same code imitating the shell version:
+> >
+> > if (!git_config_get_string("submodule.active", &var) && var) {
+> >
+> >       /*
+> >        * If the submodule being added isn't already covered by the
+> >        * current configured pathspec, set the submodule's active flag
+> >        */
+> >       if (!is_submodule_active(the_repository, info->sm_path)) {
+> >               key = xstrfmt("submodule.%s.active", info->sm_name);
+> >               git_config_set_gently(key, "true");
+> >               free(key);
+> >       }
+> >
+> > } else {
+> >       key = xstrfmt("submodule.%s.active", info->sm_name);
+> >       git_config_set_gently(key, "true");
+> >       free(key);
+> > }
+> >
+> > It repeats the string allocation and freeing, and also is a lot more
+> > code to parse mentally while reading. The shorter version that I used
+> > does not feel more "clever" to me than this either.
+> >
+> > As for the comment, I felt that the new one I introduced (Otherwise, we
+> > ask ...) covers the same ground.
+> >
 >
->         /* relevant_source_dirs */
->         if (info->relevant_source_dirs &&
->             info->relevant_source_dirs != dirs_removed) {
-> -               strintmap_clear(info->relevant_source_dirs);
-> +               strintmap_clear(info->relevant_source_dirs, 0);
->                 FREE_AND_NULL(info->relevant_source_dirs);
->         }
+> I think the comment you introduced only mentions that 'is_submodule_active'
+> iterates over configs to determine that a submodule is active. It doesn't mention
+> that we set the submodule's active flag if the submodule is not covered by the
+> current configured pathspec, which is what the original tries to convey.
+> Correct me if I missed anything.
 >
-> @@ -716,7 +717,7 @@ static void cleanup_dir_rename_info(struct dir_rename_info *info,
+> > I am open to reverting to the expanded conditional, but it would be nice
+> > if you could help me understand the motivation behind why it should be done.
+> >
 >
->                 if (!strintmap_get(dirs_removed, source_dir)) {
->                         string_list_append(&to_remove, source_dir);
-> -                       strintmap_clear(counts);
-> +                       strintmap_clear(counts, 0);
->                         continue;
->                 }
+> I'm not against short-circuiting the conditional. I suggested expanding the conditional
+> so that we get a structure similar to the scripted version. That way we could keep the
+> original comment close to the inside conditional where it felt relevant :)
+
+Ah okay, so the reason is so that we could keep the structure similar
+to retain the
+comment? Okay, I'll change that.
+
+> >>> [ snip ]
+> >>>
+> >>> -    if git config --get submodule.active >/dev/null
+> >>> -    then
+> >>> -        # If the submodule being adding isn't already covered by the
+> >>> -        # current configured pathspec, set the submodule's active flag
+> >>> -        if ! git submodule--helper is-active "$sm_path"
+> >>> -        then
+> >>> -            git config submodule."$sm_name".active "true"
+> >>> -        fi
+> >>> -    else
+> >>> -        git config submodule."$sm_name".active "true"
+> >>> -    fi
+> >>> +    git submodule--helper add-config ${force:+--force}
+> >>> ${branch:+--branch "$branch"} --url "$repo" --resolved-url "$realrepo"
+> >>> --path "$sm_path" --name "$sm_name"
+> >>>    }
+> >>>      #
+> >>>
+> >>
+> >
 >
-> @@ -1045,8 +1046,8 @@ static int find_basename_matches(struct diff_options *options,
->                 }
->         }
 >
-> -       strintmap_clear(&sources);
-> -       strintmap_clear(&dests);
-> +       strintmap_clear(&sources, 0);
-> +       strintmap_clear(&dests, 0);
->
->         return renames;
->  }
-> @@ -1700,7 +1701,7 @@ void diffcore_rename_extended(struct diff_options *options,
->         FREE_AND_NULL(rename_src);
->         rename_src_nr = rename_src_alloc = 0;
->         if (break_idx) {
-> -               strintmap_clear(break_idx);
-> +               strintmap_clear(break_idx, 0);
->                 FREE_AND_NULL(break_idx);
->         }
->         trace2_region_leave("diff", "write back to queue", options->repo);
-> diff --git a/merge-ort.c b/merge-ort.c
-> index 0fb942692a..0765e23577 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -532,15 +532,10 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
->  {
->         struct rename_info *renames = &opti->renames;
->         int i;
-> -       void (*strmap_func)(struct strmap *, int) =
-> -               reinitialize ? strmap_partial_clear : strmap_clear;
-> -       void (*strintmap_func)(struct strintmap *) =
-> -               reinitialize ? strintmap_partial_clear : strintmap_clear;
-> -       void (*strset_func)(struct strset *) =
-> -               reinitialize ? strset_partial_clear : strset_clear;
-> +       unsigned flags = reinitialize ? STRMAP_PARTIAL_CLEAR : 0;
->
->         if (opti->pool)
-> -               strmap_func(&opti->paths, 0);
-> +               strmap_clear(&opti->paths, flags);
->         else {
->                 /*
->                  * We marked opti->paths with strdup_strings = 0, so that
-> @@ -550,15 +545,15 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
->                  * to these strings, it is time to deallocate them.
->                  */
->                 free_strmap_strings(&opti->paths);
-> -               strmap_func(&opti->paths, 1);
-> +               strmap_clear(&opti->paths, flags | STRMAP_FREE_VALUES);
->         }
->
->         /*
->          * All keys and values in opti->conflicted are a subset of those in
->          * opti->paths.  We don't want to deallocate anything twice, so we
->          * don't free the keys and we pass 0 for free_values.
->          */
-> -       strmap_func(&opti->conflicted, 0);
-> +       strmap_clear(&opti->conflicted, flags);
->
->         if (!opti->pool) {
->                 /*
-> @@ -579,24 +574,24 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
->
->         /* Free memory used by various renames maps */
->         for (i = MERGE_SIDE1; i <= MERGE_SIDE2; ++i) {
-> -               strintmap_func(&renames->dirs_removed[i]);
-> -               strmap_func(&renames->dir_renames[i], 0);
-> -               strintmap_func(&renames->relevant_sources[i]);
-> +               strintmap_clear(&renames->dirs_removed[i], flags);
-> +               strmap_clear(&renames->dir_renames[i], flags);
-> +               strintmap_clear(&renames->relevant_sources[i], flags);
->                 if (!reinitialize)
->                         assert(renames->cached_pairs_valid_side == 0);
->                 if (i != renames->cached_pairs_valid_side &&
->                     -1 != renames->cached_pairs_valid_side) {
-> -                       strset_func(&renames->cached_target_names[i]);
-> -                       strmap_func(&renames->cached_pairs[i], 1);
-> -                       strset_func(&renames->cached_irrelevant[i]);
-> +                       strset_clear(&renames->cached_target_names[i], flags);
-> +                       strmap_clear(&renames->cached_pairs[i], flags | STRMAP_FREE_VALUES);
-> +                       strset_clear(&renames->cached_irrelevant[i], flags);
->                         partial_clear_dir_rename_count(&renames->dir_rename_count[i]);
->                         if (!reinitialize)
->                                 strmap_clear(&renames->dir_rename_count[i], 1);
->                 }
->         }
->         for (i = MERGE_SIDE1; i <= MERGE_SIDE2; ++i) {
-> -               strintmap_func(&renames->deferred[i].possible_trivial_merges);
-> -               strset_func(&renames->deferred[i].target_dirs);
-> +               strintmap_clear(&renames->deferred[i].possible_trivial_merges, flags);
-> +               strset_clear(&renames->deferred[i].target_dirs, flags);
->                 renames->deferred[i].trivial_merges_okay = 1; /* 1 == maybe */
->         }
->         renames->cached_pairs_valid_side = 0;
-> @@ -1482,7 +1477,7 @@ static int handle_deferred_entries(struct merge_options *opt,
->                         if (ret < 0)
->                                 return ret;
->                 }
-> -               strintmap_clear(&copy);
-> +               strintmap_clear(&copy, 0);
->                 strintmap_for_each_entry(&renames->deferred[side].possible_trivial_merges,
->                                          &iter, entry) {
->                         const char *path = entry->key;
-> diff --git a/strmap.c b/strmap.c
-> index 4fb9f6100e..7343800df5 100644
-> --- a/strmap.c
-> +++ b/strmap.c
-> @@ -37,10 +37,11 @@ void strmap_init_with_options(struct strmap *map,
->         map->strdup_strings = strdup_strings;
->  }
->
-> -static void strmap_free_entries_(struct strmap *map, int free_values)
-> +static void strmap_free_entries_(struct strmap *map, unsigned flags)
->  {
->         struct hashmap_iter iter;
->         struct strmap_entry *e;
-> +       int free_values = flags & STRMAP_FREE_VALUES;
->
->         if (!map)
->                 return;
-> @@ -64,16 +65,13 @@ static void strmap_free_entries_(struct strmap *map, int free_values)
->         }
->  }
->
-> -void strmap_clear(struct strmap *map, int free_values)
-> +void strmap_clear(struct strmap *map, unsigned flags)
->  {
-> -       strmap_free_entries_(map, free_values);
-> -       hashmap_clear(&map->map);
-> -}
-> -
-> -void strmap_partial_clear(struct strmap *map, int free_values)
-> -{
-> -       strmap_free_entries_(map, free_values);
-> -       hashmap_partial_clear(&map->map);
-> +       strmap_free_entries_(map, flags);
-> +       if (flags & STRMAP_PARTIAL_CLEAR)
-> +               hashmap_partial_clear(&map->map);
-> +       else
-> +               hashmap_clear(&map->map);
->  }
->
->  static struct strmap_entry *create_entry(struct strmap *map,
-> diff --git a/strmap.h b/strmap.h
-> index 1e152d832d..d03d451654 100644
-> --- a/strmap.h
-> +++ b/strmap.h
-> @@ -46,16 +46,14 @@ void strmap_init_with_options(struct strmap *map,
->                               struct mem_pool *pool,
->                               int strdup_strings);
->
-> -/*
-> - * Remove all entries from the map, releasing any allocated resources.
-> - */
-> -void strmap_clear(struct strmap *map, int free_values);
-> +#define STRMAP_FREE_VALUES 1 /* 1 for historical compat, but we should probably
-> +                               update callers to use the correct name) */
-> +#define STRMAP_PARTIAL_CLEAR 2
->
->  /*
-> - * Similar to strmap_clear() but leaves map->map->table allocated and
-> - * pre-sized so that subsequent uses won't need as many rehashings.
-> + * Remove all entries from the map, releasing any allocated resources.
->   */
-> -void strmap_partial_clear(struct strmap *map, int free_values);
-> +void strmap_clear(struct strmap *map, unsigned flags);
->
->  /*
->   * Insert "str" into the map, pointing to "data".
-> @@ -148,14 +146,10 @@ static inline void strintmap_init_with_options(struct strintmap *map,
->         map->default_value = default_value;
->  }
->
-> -static inline void strintmap_clear(struct strintmap *map)
-> -{
-> -       strmap_clear(&map->map, 0);
-> -}
-> -
-> -static inline void strintmap_partial_clear(struct strintmap *map)
-> +static inline void strintmap_clear(struct strintmap *map, unsigned flags)
->  {
-> -       strmap_partial_clear(&map->map, 0);
-> +       /* maybe clear STRMAP_FREE_VALUES bit for extra protection */
-> +       strmap_clear(&map->map, flags);
->  }
->
->  static inline int strintmap_contains(struct strintmap *map, const char *str)
-> @@ -232,14 +226,9 @@ static inline void strset_init_with_options(struct strset *set,
->         strmap_init_with_options(&set->map, pool, strdup_strings);
->  }
->
-> -static inline void strset_clear(struct strset *set)
-> -{
-> -       strmap_clear(&set->map, 0);
-> -}
-> -
-> -static inline void strset_partial_clear(struct strset *set)
-> +static inline void strset_clear(struct strset *set, unsigned flags)
->  {
-> -       strmap_partial_clear(&set->map, 0);
-> +       strmap_clear(&set->map, flags);
->  }
->
->  static inline int strset_contains(struct strset *set, const char *str)
+> --
+> Sivaraam
