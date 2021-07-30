@@ -2,195 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F31CC4338F
-	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 21:08:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69847C4338F
+	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 22:50:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4764D60F4A
-	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 21:08:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E9FA60F36
+	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 22:50:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231897AbhG3VId (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Jul 2021 17:08:33 -0400
-Received: from mail-40131.protonmail.ch ([185.70.40.131]:55131 "EHLO
-        mail-40131.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231645AbhG3VIa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jul 2021 17:08:30 -0400
-Date:   Fri, 30 Jul 2021 21:08:20 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=eagain.st;
-        s=protonmail; t=1627679302;
-        bh=rvi927yGMQv/8/zevaKkexuBFi++nQOs0usc/zwU+D8=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=fh7hSc2kbuVBnk94KvWnwt4z55BnhpDqpJjMopKEzqB2RDyWcOFoCXAOjG9qwnmx6
-         yxyw3ktfbzef6CSlcWY79WAVZoGsMQMz2i3r+u5M9FrTX096nrvgheA9lgx+V3VDY9
-         W6S3sATLAEhAiBCyJsyt31gnLK0+46tILdtG+fNm4kT+jdS0KiqwmdVxJiBv9xLWjJ
-         0exe6nkAYkxnCwPmExEbIm1eUZ/K7RkS+GqWy1yrToGZOrOgttgr0y4jBep0u5/cxl
-         ee5AQgmX7NNzvnGnJ1OBgOEc2DXBj3NhzLE6knZQjovgFS0gxc1vvs+kzvY66onswu
-         FwKB5WndFziUw==
-To:     Junio C Hamano <gitster@pobox.com>
-From:   Kim Altintop <kim@eagain.st>
-Cc:     git@vger.kernel.org, Brandon Williams <bwilliams.eng@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Reply-To: Kim Altintop <kim@eagain.st>
-Subject: Re: [PATCH] upload-pack.c: treat want-ref relative to namespace
-Message-ID: <CD6S5MUMEIW3.3ULMDKKSQ92UW@schmidt>
-In-Reply-To: <xmqqbl6j1vgh.fsf@gitster.g>
-References: <20210730135845.633234-1-kim@eagain.st> <xmqqbl6j1vgh.fsf@gitster.g>
+        id S232672AbhG3WuE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Jul 2021 18:50:04 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52129 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229604AbhG3WuE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jul 2021 18:50:04 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E1FA11440CB;
+        Fri, 30 Jul 2021 18:49:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=JPnHaEBll7lP
+        M+KzG5Trm03QUyaNBfD1UB4+tw63WRE=; b=GbDzIvhH/pTjpD0muV48bWSK6Kkb
+        TN5gtOx1Z4LCY4484D/6S1L5zF++s673AJLUjfNocESC1J3oM3PtViswYIYanQwo
+        CveA1UE9GYEcKdfwLz3Ziq+EcZlLG1m9tAWzR9cD5662Iz8hC0pQ3nlmbFKXbLky
+        NyD/YMq+Mp00+wY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CE7CA1440CA;
+        Fri, 30 Jul 2021 18:49:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0E0601440C8;
+        Fri, 30 Jul 2021 18:49:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4 0/5] drop support for ancient curl
+References: <cover-v3-0.7-00000000000-20210730T092843Z-avarab@gmail.com>
+        <cover-v4-0.5-00000000000-20210730T175650Z-avarab@gmail.com>
+        <xmqq7dh71v5g.fsf@gitster.g> <xmqqy29nzila.fsf@gitster.g>
+Date:   Fri, 30 Jul 2021 15:49:52 -0700
+In-Reply-To: <xmqqy29nzila.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        30 Jul 2021 12:50:57 -0700")
+Message-ID: <xmqqa6m3zab3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 74B40920-F188-11EB-83C2-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri Jul 30, 2021 at 8:57 PM CEST, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Kim Altintop <kim@eagain.st> writes:
-[..]
-> > Also check if the wanted ref is hidden via 'hideRefs', and respond with
-> > an error otherwise. It was previously possible to request any ref, but
-> > note that this is still the case unless 'hideRefs' is in effect.
-[..]
-> Nicely described. I have a question on the last sentence, though.
-> Do you mean that any ref can be requested when a namespace is in
-> use, as long as 'hideRefs' is not in effect? What does "any ref"
-> exactly mean---even thouse outside the given namespace (and if so
-> how?)
-
-Thank you. It seems like I got confused for a moment when writing the commi=
-t
-message. It's not possible to get a ref outside the namespace anymore. I re=
-moved
-that sentence.
-
-> > +test_expect_success 'setup namespaced repo' '
-> > +=09(
-> > +=09=09git init -b main "$REPO" &&
-> > +=09=09cd "$REPO" &&
-> > +=09=09test_commit a &&
-> > +=09=09test_commit b &&
-> > +=09=09git checkout a &&
-> > +=09=09test_commit c &&
-> > +=09=09git checkout a &&
-> > +=09=09test_commit d &&
-> > +=09=09git update-ref refs/heads/ns-no b &&
-> > +=09=09git update-ref refs/namespaces/ns/refs/heads/ns-yes c &&
-> > +=09=09git update-ref refs/namespaces/ns/refs/heads/hidden d
-> > +=09) &&
-> > +    git -C "$REPO" config uploadpack.allowRefInWant true &&
-> > +    git -C "$REPO" config transfer.hideRefs refs/heads/hidden
-> > +'
+>>>     +    The documentation[2] currently claims that it was introduced=
+ in
+>>>     +    7.16.4, but the symbols-in-versions file correctly states
+>>>     +    7.17.0[3].
+>>>     +
+>>>     +    I've submitted an upstream
+>>>     +    patch (<patch-1.1-953bab490-20210730T170510Z-avarab@gmail.co=
+m>) to the
+>>>     +    curl-library mailing list fix the documentation.
+>>
+>> I am not sure how to get to the patch, but I suspect you might be
+>> misreading "up to X", which is different from "before X".  Once cURL
+>> mailing list confirms my suspicion, we would need to come back and
+>> update this patch again.
 >
-> I wonder why the last two are outside the subshell? IOW, you could
-> have configured the newly created repository while you were still in
-> there.
-
-To be honest, I don't know. I did that because the other repo setups in tha=
-t
-file follow the same pattern, I suppose that qualifies as "cargo culting". =
-Happy
-to remove the subshell, unless others point out that there is some specific
-reason for it.
-
-> Unless you mean to make all subsequent tests to be done inside the
-> 'ns' namespace, and even when you do, you do not want to do this
-> in order to keep each test as independent as possible (iow, make
-> some of them skippable without affecting the later tests). Run the
-> final test in a subshell, e.g.
+> Ah, I found it at https://curl.se/mail/lib-2021-07/0058.html
 >
-> oid=3D$(git -C "$REPO" rev-parse c) &&
-> test-tool pkt-line pack >in <<-EOF &&
-> ...
-> EOF
+> Nobody seems to have responded yet, but I do think you are
+> misreading what "X was known under a different name Y up to 7.16.4"
+> means.  These places do not say "before 7.16.4", which would have
+> implied that as of 7.16.4 you would be able to use X (not Y).
 >
-> (
-> export GIT_NAMESPACE=3Dns &&
-> test-tool ... >out <in
-> ) &&
-> check_output
->
-> or if the command you want to run with a custom environment variable
-> is a single external executable like this case, do
->
-> oid=3D$(git -C "$REPO" rev-parse c) &&
-> test-tool pkt-line pack >in <<-EOF &&
-> ...
-> EOF
-> GIT_NAMESPACE=3Dns test-tool ... >out <in &&
-> check_output
->
-> That way, the environment will be kept clean without GIT_NAMESPACE
-> outside the invocation of test-tool.
->
-> Note that you cannot use this technique directly with test_must_fail
-> which is *not* an external executable but is a shell function.
->
-> test_must_fail env GIT_NAMESPACE=3Dns test-tool ...
->
-> would be the way to write a step that must fail.
+> But because "up to" is "less than or equal to but not more than"
+> (e.g https://dictionary.cambridge.org/us/dictionary/english/up-to),
+> what applies to 7.16.3 also applies to 7.16.4, but not to 7.17.0.
+> IOW, the feature X was known as Y when 7.16.4 was current, so our
+> use of X would not have worked with that exact version.  We would
+> have needed to wait until the next version (7.17.0).
 
+It seems that Daniel has exactly the same reaction as I did.
 
-Ah thanks! I had tried
+    https://curl.se/mail/lib-2021-07/0059.html
 
-...
-GIT_NAMESPACE=3Dns test-tool ... >out <in
+So, let's fix the log message for [4/5] on our end again.
 
+-- >8 --
+http: drop support for curl < 7.19.3 and < 7.17.0 (again)
 
-but the linter complained about this without giving a hint as to what the f=
-ix
-would be. It turns out that "env" works, ie.
+Remove the conditional use of CURLAUTH_DIGEST_IE and
+CURLOPT_USE_SSL. These two have been split from earlier simpler
+checks against LIBCURL_VERSION_NUM for ease of review.
 
-...
-env GIT_NAMESPACE=3Dns test-tool ...
-test_must_fail env GIT_NAMESPACE=3Dns test-tool ...
+According to
 
+  https://github.com/curl/curl/blob/master/docs/libcurl/symbols-in-versio=
+ns
 
->
-> > diff --git a/upload-pack.c b/upload-pack.c
-> > index 297b76fcb4..008ac75125 100644
-> > --- a/upload-pack.c
-> > +++ b/upload-pack.c
-> > @@ -1417,21 +1417,24 @@ static int parse_want_ref(struct packet_writer =
-*writer, const char *line,
-> >  =09=09=09  struct string_list *wanted_refs,
-> >  =09=09=09  struct object_array *want_obj)
-> >  {
-> > -=09const char *arg;
-> > +=09const char *refname_nons;
-> >  =09if (skip_prefix(line, "want-ref ", &arg)) {
->
-> Don't you receive the result in refname_nons here, as arg is no
-> longer there?
+the CURLAUTH_DIGEST_IE flag became available in 7.19.3, and
+CURLOPT_USE_SSL in 7.17.0.
 
-Ouch. Will fix.
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
->
-> >  =09=09struct object_id oid;
-> >  =09=09struct string_list_item *item;
-> >  =09=09struct object *o;
-> > +=09=09struct strbuf refname =3D STRBUF_INIT;
-> >
-> > -=09=09if (read_ref(arg, &oid)) {
-> > -=09=09=09packet_writer_error(writer, "unknown ref %s", arg);
-> > -=09=09=09die("unknown ref %s", arg);
-> > +=09=09strbuf_addf(&refname, "%s%s", get_git_namespace(), refname_nons)=
-;
-> > +=09=09if (ref_is_hidden(refname_nons, refname.buf) ||
-> > +=09=09    read_ref(refname.buf, &oid)) {
-> > +=09=09=09packet_writer_error(writer, "unknown ref %s", refname_nons);
-> > +=09=09=09die("unknown ref %s", refname.buf);
-> >  =09=09}
->
-> OK. Assuming that it makes sense for the hideRefs mechanism to kick
-> in here (which I would prefer to hear from others who've worked with
-> this code, say Jonathan Tan?), the updated code makes sense.
-
-I have also updated the code for the v2 to use refname_nons for any die() c=
-alls,
-as I realised that this may be transmitted to the client via sideband (is t=
-hat
-correct?).
-
+diff --git a/http.c b/http.c
+index 1f0d7664d3..e9446850a6 100644
+--- a/http.c
++++ b/http.c
+@@ -120,9 +120,7 @@ static int http_auth_methods_restricted;
+ /* Modes for which empty_auth cannot actually help us. */
+ static unsigned long empty_auth_useless =3D
+ 	CURLAUTH_BASIC
+-#ifdef CURLAUTH_DIGEST_IE
+ 	| CURLAUTH_DIGEST_IE
+-#endif
+ 	| CURLAUTH_DIGEST;
+=20
+ static struct curl_slist *pragma_header;
+@@ -893,10 +891,8 @@ static CURL *get_curl_handle(void)
+ 	if (curl_ftp_no_epsv)
+ 		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0);
+=20
+-#ifdef CURLOPT_USE_SSL
+ 	if (curl_ssl_try)
+ 		curl_easy_setopt(result, CURLOPT_USE_SSL, CURLUSESSL_TRY);
+-#endif
+=20
+ 	/*
+ 	 * CURL also examines these variables as a fallback; but we need to que=
+ry
+diff --git a/http.h b/http.h
+index 19f19dbe74..3db5a0cf32 100644
+--- a/http.h
++++ b/http.h
+@@ -12,15 +12,6 @@
+=20
+ #define DEFAULT_MAX_REQUESTS 5
+=20
+-/*
+- * CURLOPT_USE_SSL was known as CURLOPT_FTP_SSL up to 7.16.4,
+- * and the constants were known as CURLFTPSSL_*
+-*/
+-#if !defined(CURLOPT_USE_SSL) && defined(CURLOPT_FTP_SSL)
+-#define CURLOPT_USE_SSL CURLOPT_FTP_SSL
+-#define CURLUSESSL_TRY CURLFTPSSL_TRY
+-#endif
+-
+ struct slot_results {
+ 	CURLcode curl_result;
+ 	long http_code;
