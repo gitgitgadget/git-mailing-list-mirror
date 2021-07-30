@@ -2,138 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48DA8C4338F
-	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 15:06:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49A73C4338F
+	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 16:01:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2684B60F0F
-	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 15:06:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 28F6060EBC
+	for <git@archiver.kernel.org>; Fri, 30 Jul 2021 16:01:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239234AbhG3PGI convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 30 Jul 2021 11:06:08 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:54974 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238909AbhG3PGI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jul 2021 11:06:08 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 16UF60gR032795
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 30 Jul 2021 11:06:00 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Fabian Stelzer'" <fs@gigacodes.de>,
-        "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     "'Jonathan Tan'" <jonathantanmy@google.com>,
-        <gitgitgadget@gmail.com>, <git@vger.kernel.org>,
-        <hanwen@google.com>, <sandals@crustytoothpaste.net>,
-        <bagasdotme@gmail.com>, <hji@dyntopia.com>, <avarab@gmail.com>,
-        <felipe.contreras@gmail.com>, <sunshine@sunshineco.com>,
-        <gwymor@tilde.club>
-References: <725764018ceb5bcecc748cc5169d4305ea9d7d23.1627501009.git.gitgitgadget@gmail.com> <20210728230452.2719333-1-jonathantanmy@google.com> <d4bda019-bbea-6645-e46a-18a702d3f0ad@gigacodes.de> <xmqq8s1o4zn8.fsf@gitster.g> <039a01d784bc$e92568a0$bb7039e0$@nexbridge.com> <8b8fafad-0c49-0d17-b8f4-3e797a3fc9b6@gigacodes.de> <039b01d784c0$518b7440$f4a25cc0$@nexbridge.com> <ef39f1f8-9da1-25e9-ec30-b7023705b58a@gigacodes.de> <03a101d784c9$0cb413a0$261c3ae0$@nexbridge.com> <30489b9f-8bbb-22c3-bd36-95f430a45ba9@gigacodes.de> <001601d7854e$e0d24960$a276dc20$@nexbridge.com> <6f5f654c-fd5f-a8a5-acdc-14e24f6843c6@gigacodes.de>
-In-Reply-To: <6f5f654c-fd5f-a8a5-acdc-14e24f6843c6@gigacodes.de>
-Subject: RE: [PATCH v6 5/9] ssh signing: parse ssh-keygen output and verify signatures
-Date:   Fri, 30 Jul 2021 11:05:54 -0400
-Message-ID: <001a01d78554$688e1cd0$39aa5670$@nexbridge.com>
+        id S229626AbhG3QBp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Jul 2021 12:01:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37602 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229570AbhG3QBn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jul 2021 12:01:43 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E554BC06175F
+        for <git@vger.kernel.org>; Fri, 30 Jul 2021 09:01:38 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id z24so9857690qkz.7
+        for <git@vger.kernel.org>; Fri, 30 Jul 2021 09:01:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=GLQNg7eUZeNh9aOn+3V8gc7GGF6P/rPCAO+FkBW2lAA=;
+        b=N85i2FuwPYnZMl53iBG2a0YmVJ2Pngm/ZlUTuVrOB0hkUMcSLs5ZPcuoSKGsarBJRx
+         lPrO9n6d4wfsm8DbQpF1rYIdaL33CbpeCJP1xZWLj0L09epgWyNITPRf7OLi7bejHOOg
+         Oy6+BvkkBdKrVErlm++SWxPBCJRZXEVT308F2Z+y9HhTqPnKZwOrPjr8Yl91pN8Ilxjl
+         xcfOidTWlhWG3Ot3gRUpxze1a4/PrHO+uTXYyHHy+LjzUPuCQOaqekKJPls9JyWoVhUd
+         AuMsPKyNkSE82MO4c/2pxx+tDOMfofGTVkQVaCnVEjyR4JfQb1HZu+uUpHDOdgT7CThx
+         SlWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=GLQNg7eUZeNh9aOn+3V8gc7GGF6P/rPCAO+FkBW2lAA=;
+        b=sYY24aV0VUG1qq8dLpaWLtbOynfTSylJJ8xOL3tZQZbqedljtyxhw9xR7AJQ12pODB
+         PR+uYC70tHXlGiL9RoZ5ZbjkZxwb7SgX+Z8TSRdupLERIRKnZp9CoaaQLxbLqKFBru5M
+         ZSA2PAczl55azEbO75nGLHPJ8lW4gTejkzqu+yYnq0sNtmI+9n9r/3WKEP8ikRWAl5m2
+         KflHNR1gZZDwBpq+4W2K0McvTBIDQBg9o4Z/BMpsuzoS4Wi42FSkkg9HybfTer/VjVl/
+         hLHOTsO98ZxXgYa8ejCwhbiCO1L/vx0bbI88wnBwHVhRY3nXXtMqW40Y9ijxDadmnMol
+         JB1Q==
+X-Gm-Message-State: AOAM533T9bKrJKRYTYI1NffNm2iloMTZzbnbQNHTlPt+0wEpRPf+d64j
+        056ZC5YcKIFF8un6EyOROiI=
+X-Google-Smtp-Source: ABdhPJzxhrFu4HP4xnMZyKvckPoW0wETAIjG6KYp5vLXVON7NSF1nIse6KKV0dcxoZd+u4aJIbVkhw==
+X-Received: by 2002:a05:620a:172c:: with SMTP id az44mr3015812qkb.324.1627660898116;
+        Fri, 30 Jul 2021 09:01:38 -0700 (PDT)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id w5sm776878qtv.3.2021.07.30.09.01.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 30 Jul 2021 09:01:37 -0700 (PDT)
+Subject: Re: [PATCH 0/1] Improve automatic setup of tracking for new branches
+To:     Ben Boeckel <mathstuf@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Taylor Blau <me@ttaylorr.com>
+References: <20210728135041.501850-1-mathstuf@gmail.com>
+ <20210729020125.746206-1-mathstuf@gmail.com>
+ <9b8b3a12-6801-1c5d-9cfb-c87b51cd9548@gmail.com>
+ <YQQFWtKo8b1WJIGe@erythro.dev.benboeckel.internal>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <7b50ebc6-7b28-412d-b124-9bd54750c922@gmail.com>
+Date:   Fri, 30 Jul 2021 12:01:36 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-thread-index: AQKDCFfzyN3R5qbWeAOurSL0iTEETgJUwDMMAWiTjqoCKdmprwGGogTJAa8E9FUCtq61mQKrihMfAig7+M8BLRyVugILgkoOAg1jB6GpVSqS8A==
-Content-Language: en-ca
+In-Reply-To: <YQQFWtKo8b1WJIGe@erythro.dev.benboeckel.internal>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On July 30, 2021 10:32 AM, Fabian Stelzer wrote:
->On 30.07.21 16:26, Randall S. Becker wrote:
->> On July 30, 2021 4:17 AM, Fabian Stelzer wrote:
->>> Subject: Re: [PATCH v6 5/9] ssh signing: parse ssh-keygen output and
->>> verify signatures
->>>
->>> On 30.07.21 00:28, Randall S. Becker wrote:
->>>> On July 29, 2021 5:29 PM, Fabian Stelzer wrote:
->>>>> On 29.07.21 23:25, Randall S. Becker wrote:
->>>>>> On July 29, 2021 5:13 PM, Fabian Stelzer wrote:
->>>>>>> Subject: Re: [PATCH v6 5/9] ssh signing: parse ssh-keygen output
->>>>>>> and verify signatures
->>>>>>>
->>>>>>> On 29.07.21 23:01, Randall S. Becker wrote:
->>>>>>>> On July 29, 2021 4:46 PM, Junio wrote:
->>>>>>>>> Fabian Stelzer <fs@gigacodes.de> writes:
->>>>>>>>>
->>>>>>>>>> On 29.07.21 01:04, Jonathan Tan wrote:
->>>>>>>>>>
->>>>>>>>>>> Also, is this output documented to be stable even across locales?
->>>>>>>>>> Not really :/ (it currently is not locale specific)
->>>>>>>>>
->>>>>>>>> We probably want to defeat l10n of the message by spawning it in the C locale regardless.
->>>>>>>>>
->>>>>>>>>> The documentation states to only check the commands exit code.
->>>>>>>>>> Do we trust the exit code enough to rely on it for verification?
->>>>>>>>>
->>>>>>>>> Is the exit code sufficient to learn who signed it?  Without
->>>>>>>>> knowing that, we cannot see if the principal is in or not in
->>>>>>>>> our
->>>>>>>> keychain, no?
->>>>>>>>
->>>>>>>> Have we not had issues in the past depending on exit code? I'm not sure this can be made entirely portable.
->>>>>>>>
->>>>>>>
->>>>>>> To find the principal (who signed it) we don't have to parse the output.
->>>>>>> Since verification is first a call to look up the principals
->>>>>>> matching the signatures public key from the allowedSignersFile
->>>>>>> and then trying verification with each one we already know which
->>>>>>> one matched (usually there is only one. I think multiples is only
->>>>>>> possible with an SSH
->>>>> CA).
->>>>>>> Of course this even more relies on the exit code of ssh-keygen.
->>>>>>>
->>>>>>> Not sure which is more portable and reliable. Parsing the textual output or the exit code. At the moment my patch does both.
->>>>>>
->>>>>> What about a configurable exit code for this? See the comment below about that.
->>>>>>
->>>>>
->>>>> I'm not sure what you mean. Something like "treat exit(123) as success"?
->>>>
->>>> How about gpg.ssh.successExit=123 or something like that.
->>>>
->>>
->>> I don't quite understand what the benefit would be. Do you have any
->>> specific portability problems/concerns where the ssh-keygen format is different or exit codes differ?
->>> I think using a script that provides exit(0) on success and the
->>> correct output to wrap ssh-keygen and setting it in gpg.ssh.command can already cover edge cases when needed.
->>>
->>>>
->>>> Is there documentation on the possible arguments the patch series
->>>> will use for this so one can create a wrapper script? I had to look
->>>> into
->>> the code to find out what GIT_SSH_COMMAND actually required when the ssh variant was "ssh". I'd rather not have to do that in this
->case.
->>>>
->>>
->>> The documentation in ssh-keygen(1) is quite good and straight forward
->>> for verification and signing. Again if you have any specific portability concerns i'd be glad to help.
->>
->> I do know the ssh-keygen interface and that does not really answer my doubts.
->>
->> My point here is that ssh-keygen is not always available in the same form on all platforms. Providing a full emulation of all arguments is
->not effective or likely even possible, and a waste of time. I'm asking for documentation on what specific options you are using for each
->function. OpenSSL is not available everywhere, and even where it is, the latest versions are not always available. It is important to know
->what the specific interface is being used.
->>
->>
->
->Fair enough. Where would you expect to look for such documentation?
->I'm not sure sth like config/gpg.txt is the right place for this.
+Hi again,
 
-My suggestion is wherever gpg.ssh.command is documented. So really, I think config/gpg.txt is the place. It's that or we create some common location for compatibility layer documentation (what I would really prefer). If there is a good place to put that, I might be willing to take on the documentation task, but my $DAYJOB is keeping me from anything heavy at this point.
+Le 2021-07-30 à 09:57, Ben Boeckel a écrit :
+> On Fri, Jul 30, 2021 at 09:35:39 -0400, Philippe Blain wrote:
+>> Le 2021-07-28 à 22:01, Ben Boeckel a écrit :
+>>
+>> Small nit: usually when sending a second version of a patch, you would use
+>> the '-v2' argument to 'git format-patch' so that the patch and cover letter
+>> is prefixed [PATCH v2].
+> 
+> Yes, I realized that I had forgotten the `--reroll-count=` argument when
+> making this patch (I suppose a way to store the Cc list for a topic
+> somewhere would be nice so I didn't lean so heavily on shell history
+> would help this).
 
-With my thanks,
-Randall
+There is 'format.cc', but it's not branch-specific, so you would have to
+use one worktree per branch with extension.worktreeConfig...
 
+> 
+> FWIW, my main gripe with the email-based workflow is the lack of
+> coordinated metadata (LWN has numerous comments by me about my views if
+> you're curious, but I should really formalize them into blog posts). But
+> when in Rome :) .
+> 
+
+I agree. I almost always use Gitgitgadget [1], which keeps track of the CC list for
+me, of updating the re-roll count, of adding the in-reply-to header such that subsequent
+versions of the series are sent as a response to the cover letter of the previous version,
+generating a range-diff against the previous version,
+commenting on the PR when the series is mentioned in "What's cooking", etc.
+
+Some things it does not support are: sending a patch as a response to some random
+mail on the list, which is sometimes useful, reading the commit notes to generate
+in-patch commentaries [2], customizing the diff generated by 'format-patch'.
+Other things are listed at [3].
+
+Recently I've even been using only the terminal with Gitgitgadget:
+I use 'git branch --edit-description'
+to write my cover letter, and then use the 'gh' GitHub CLI to open my PR:
+
+$ git config --get-regexp alias.desc*
+alias.desc-title !git config branch.$(git branch --show-current).description | head -1
+alias.desc-body !git config branch.$(git branch --show-current).description | tail -n+3
+$ gh pr create --title "$(git desc-title)" --body "$(git desc-body)" --head phil-blain:$(git branch --show-current)
+
+
+Cheers,
+Philippe.
+
+[1] https://gitgitgadget.github.io/
+[2] https://github.com/gitgitgadget/gitgitgadget/issues/173
+[3] https://github.com/gitgitgadget/gitgitgadget/issues
