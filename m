@@ -2,174 +2,200 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90DAFC4338F
-	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 18:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 431B8C4338F
+	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 20:37:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F93C60F3A
-	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 18:29:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C7C160725
+	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 20:37:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229625AbhGaS3o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 31 Jul 2021 14:29:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37616 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbhGaS3o (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Jul 2021 14:29:44 -0400
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD039C0613CF
-        for <git@vger.kernel.org>; Sat, 31 Jul 2021 11:29:37 -0700 (PDT)
-Received: by mail-qt1-x831.google.com with SMTP id g11so8875347qts.11
-        for <git@vger.kernel.org>; Sat, 31 Jul 2021 11:29:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=lN/yluzoDBtagAsBB3VflgpbufCumjBwMkfOXpkRi9o=;
-        b=FSQGSnP1cyxb/alv9kWtTH9m2/hBDLHtZPZj1C0yEYfusFGH3hu9S9ejU1NCmxQ+gV
-         HX7IUWM44EB3kgQpMxk4JDxHXq30UzZeZIYQotIBQL+IV+RIiQHUorL8NyQ8v9/B0SQc
-         vFQG2PBuJ/ExTq/+PLoHvJ52LVzLB8qaXDwUSD5Yrh6Ay1wRuJNjKrv2OY76b5ZG2bgd
-         Eov1suG//RrT74hMJkViXd8LyyHuKckjpf1zo/R3zs5FhaJ8Vajc1xLZdlo6jAjRCD2k
-         ugRmymTDxKnP8UYK9nCPanmiCzOvgznvsrrCeHDzBgE0ooNG5PDleT2sBN3ESiyYecNF
-         JctQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=lN/yluzoDBtagAsBB3VflgpbufCumjBwMkfOXpkRi9o=;
-        b=NbMEyhyNY9ZPv+R+OrEk5+1bcDKJUCVnl8pRAM7BcgtdSoboRgi57aqYHvosRBtkGv
-         j+YrQ/9UhvunngKO8fBLzYSEZ/HKYLyqEAAKCP+WxBVk4UCZrrYQb7H/9LIKgJt/aS9j
-         6fXoieBb7cYqbIppFOl50MvdQYiw89Y7IXdhYHXhLOHvqcxqFCfxV2OOtINXijhxcttw
-         S7LqB/MkkGWYcrDMil1JS7MPlTyPyYciV2Bo0wqEzWkdgwbJN7VcDa79j6U+Twh1BZFD
-         oPbNvL/Cg5YbLpKZhO8uSc8LH2aXGri4eV/zmjeAWHRS6wbgt3AWCNaOHFRk3+pabYfz
-         qldQ==
-X-Gm-Message-State: AOAM531RvlaYImj3JFCGxq+ZO/0Jka147Axsrye+cZuceFmI4Dz+ONyl
-        Dqcb5N157p2Q37RFDCujKZM=
-X-Google-Smtp-Source: ABdhPJwTNHSlPwsQmUHOzLcisucetvEnQFLpeYnvikzIWFKbX+ZmHEyjdB+lDQzB4+Y8/JzBsFp5GA==
-X-Received: by 2002:ac8:5ac6:: with SMTP id d6mr7574482qtd.261.1627756176545;
-        Sat, 31 Jul 2021 11:29:36 -0700 (PDT)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id d25sm2273726qtq.55.2021.07.31.11.29.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 31 Jul 2021 11:29:35 -0700 (PDT)
-Subject: Re: [GSoC] A small survey + My Git Blog, week 10
-To:     Atharva Raykar <raykar.ath@gmail.com>, git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        avarab@gmail.com, Emily Shaffer <emilyshaffer@google.com>
-References: <90b6bd2d-71e1-b8af-e027-8023f8d4f14c@gmail.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <ee679a57-0851-962d-a63a-6a0bdba35b2e@gmail.com>
-Date:   Sat, 31 Jul 2021 14:29:34 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.12.0
+        id S231739AbhGaUhQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 31 Jul 2021 16:37:16 -0400
+Received: from mail-40136.protonmail.ch ([185.70.40.136]:56306 "EHLO
+        mail-40136.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231462AbhGaUhP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Jul 2021 16:37:15 -0400
+Date:   Sat, 31 Jul 2021 20:36:59 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=eagain.st;
+        s=protonmail; t=1627763826;
+        bh=AsUKO9tmNoY30Bt9xizBWwCSN5mBGQZT5vZO9alNM+4=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=iwlb+mNiFOtK+xI5RLJYQ0+ZNpxwlLPZsZk9Z6Xh7N5H9V0GctOZZwVesuM2WjyXU
+         nmuapQU5UAcDAeq6wVEX5uqu1gBDpOUoekG/GOW/DgjJmh1M5zq5RZbeJ7wKgKl3wS
+         UYSPDJedfXuNATUeoXQymwialsnxptMJa/TunIN+MmdJjVJ8yilPy+6vphWVJmXwP2
+         WTg0KdGmAWkx2v1UJ65Fn6crJZYb/BQoRUK5fShpQeyo8b04x+ixLGCH4Qy564XlFY
+         d25FwQpIE2kimGTCaC3XBct0GePn8G8Y2ZO1RBmO3k80uClS8PVfUQeicdUw53IsS3
+         rQxLb1VKcAbew==
+To:     git@vger.kernel.org
+From:   Kim Altintop <kim@eagain.st>
+Cc:     Kim Altintop <kim@eagain.st>,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Reply-To: Kim Altintop <kim@eagain.st>
+Subject: [PATCH v2] upload-pack.c: treat want-ref relative to namespace
+Message-ID: <20210731203415.618641-1-kim@eagain.st>
+In-Reply-To: <20210730135845.633234-1-kim@eagain.st>
+References: <20210730135845.633234-1-kim@eagain.st>
 MIME-Version: 1.0
-In-Reply-To: <90b6bd2d-71e1-b8af-e027-8023f8d4f14c@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Atharva,
+When 'upload-pack' runs within the context of a git namespace, treat any
+'want-ref' lines the client sends as relative to that namespace.
 
-Le 2021-07-25 à 08:22, Atharva Raykar a écrit :
-> Hello all,
-> 
-> Week 10 of my Git blog can be found here:
-> https://atharvaraykar.me/gitnotes/week10
-> 
-> As for the "survey part", jump to the section here:
-> https://atharvaraykar.me/gitnotes/week10#the-mailing-list-developer-workflow
-> 
-> ...feel free to reply in this thread.
-> 
+Also check if the wanted ref is hidden via 'hideRefs'. If it is hidden,
+respond with an error as if the ref didn't exist.
 
-Quoting your "survey" questions:
+Signed-off-by: Kim Altintop <kim@eagain.st>
+---
 
-> What tools, systems and workflows do you find valuable in your
-> day-to-day work? In particular I’d be happy getting insights like:
-> 
-> * Any strategy or approach to work, kind of like the example I quoted
->   above
-> * Any scripts and tools that assist you
-> * Opinionated handling of multiple in-flight series and methods to
->   approaching reviews
-> * Atharva, you are overthinking this! I just use a straightforward {
->   editor + MUA + git } stack and go with the flow!
+Changes from v1:
 
-I'm a small-time contributor, but I do read the mailing list regularly.
-
-As such, I'm not subscribed to the list; I read it on lore.kernel.org
-or public-inbox.org (nicer colors!). The UI of public-inbox is very clear
-with respect to threading, and the front page also lists messages in
-a way that it is easy to quickly see what's new.
-
-When I want to reply to a message that I read on the list, I import it
-into a "Git mailing list" IMAP folder in my Gmail account so that I can answer
-using my mail client (Thunderbird for now since Apple Mail has been reliably
-crashing at launch for the last months) and quote relevant parts of the message.
-
-To import a thread from the mailing list I use a combination of the excellent
-'b4' tool, developed by the kernel community [1], and 'git imap-send'. It's
-basically this:
-
-$ git config --get alias.ml-imap
-!f() { b4 mbox -o- $1 | git imap-send; }; f
-
-This sometimes does not work if some messages in the thread were not created
-using  'git format-patch', since 'git imap-send' expects the "From", "Date"
-and "Subject" headers in a certain order. So I created a small Python script,
-'git in', for this case [2].
-
-For small and simple reviews, I also simply import the patches into Thunderbird
-and reply inline. If I want to do a more in-depth review and browse the code as
-modified by a series, I fetch the contributor's branch and take a look locally.
-More often than not though people do not provide a 'git fetch'-ready link in their
-cover letter. So in that case I use 'b4 am' [1] to fetch the latest version of a series
-and apply it locally. Before 'b4' was created I used 'git pw' [3], a command line
-client for Patchwork, and the Git patchwork instance at [4], but these days I prefer
-'b4' as it's more closely integrated with public-inbox.
-
-For my own contribution I use Gitgitgdaget [5], it handles almost everything needed
-for git.git contributions:  keeping track of the CC list for
-me, updating the re-roll count,  adding the In-Reply-To header such that subsequent
-versions of the series are sent as a response to the cover letter of the previous version,
-generating a range-diff against the previous version, providing a 'git fetch'-ready tag,
-commenting on the PR when the series is mentioned in Junio's "What's cooking", etc.
-
-Some things it does not support are: sending a patch as a response to some random
-mail on the list, which is sometimes useful, reading the commit notes to generate
-in-patch commentaries [6], customizing the diff generated by 'format-patch'.
-Other things are listed at [7].
-
-Recently I've also been using only the terminal with Gitgitgadget:
-I use 'git branch --edit-description' to write my cover letter,
-and then use the 'gh' GitHub CLI [8] to open my PR:
-
-$ git config --get-regexp alias.desc*
-alias.desc-title !git config branch.$(git branch --show-current).description | head -1
-alias.desc-body !git config branch.$(git branch --show-current).description | tail -n+3
-$ gh pr create --title "$(git desc-title)" --body "$(git desc-body)" --head phil-blain:$(git branch --show-current)
-
-I hope this provides a different perspective!
-
-Cheers,
-Philippe.
+  * Amend commit message
+  * upload-pack.c: fix variable renaming (how could this even work?)
+  * upload-pack.c: hide namespace in all output, including die()
+  * t5703: don't use subshell in repo setup
+  * t5703: use "env" keyword to correctly scope GIT_NAMESPACE
 
 
-[1] https://pypi.org/project/b4/
-[2] https://gist.github.com/phil-blain/d350e91959efa6e7afce60e74bf7e4a8
-[3] https://patchwork.readthedocs.io/projects/git-pw/en/latest/usage/
-[4] https://patchwork.kernel.org/project/git/list/
-[5] https://gitgitgadget.github.io/
-[6] https://github.com/gitgitgadget/gitgitgadget/issues/173
-[7] https://github.com/gitgitgadget/gitgitgadget/issues
-[8] https://cli.github.com/
+ t/t5703-upload-pack-ref-in-want.sh | 72 ++++++++++++++++++++++++++++++
+ upload-pack.c                      | 17 ++++---
+ 2 files changed, 82 insertions(+), 7 deletions(-)
+
+diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-i=
+n-want.sh
+index e9e471621d..96df3073d1 100755
+--- a/t/t5703-upload-pack-ref-in-want.sh
++++ b/t/t5703-upload-pack-ref-in-want.sh
+@@ -298,6 +298,78 @@ test_expect_success 'fetching with wildcard that match=
+es multiple refs' '
+ =09grep "want-ref refs/heads/o/bar" log
+ '
+
++REPO=3D"$(pwd)/repo-ns"
++
++test_expect_success 'setup namespaced repo' '
++=09git init -b main "$REPO" &&
++=09cd "$REPO" &&
++=09test_commit a &&
++=09test_commit b &&
++=09git checkout a &&
++=09test_commit c &&
++=09git checkout a &&
++=09test_commit d &&
++=09git update-ref refs/heads/ns-no b &&
++=09git update-ref refs/namespaces/ns/refs/heads/ns-yes c &&
++=09git update-ref refs/namespaces/ns/refs/heads/hidden d &&
++=09git -C "$REPO" config uploadpack.allowRefInWant true &&
++=09git -C "$REPO" config transfer.hideRefs refs/heads/hidden
++'
++
++test_expect_success 'want-ref with namespaces' '
++=09oid=3D$(git -C "$REPO" rev-parse c) &&
++=09cat >expected_refs <<-EOF &&
++=09$oid refs/heads/ns-yes
++=09EOF
++=09>expected_commits &&
++
++=09oid=3D$(git -C "$REPO" rev-parse c) &&
++=09test-tool pkt-line pack >in <<-EOF &&
++=09$(write_command fetch)
++=090001
++=09no-progress
++=09want-ref refs/heads/ns-yes
++=09have $oid
++=09done
++=090000
++=09EOF
++
++=09env GIT_NAMESPACE=3Dns test-tool -C "$REPO" serve-v2 --stateless-rpc >o=
+ut <in &&
++=09check_output
++'
++
++test_expect_success 'want-ref outside namespace' '
++=09oid=3D$(git -C "$REPO" rev-parse c) &&
++=09test-tool pkt-line pack >in <<-EOF &&
++=09$(write_command fetch)
++=090001
++=09no-progress
++=09want-ref refs/heads/ns-no
++=09have $oid
++=09done
++=090000
++=09EOF
++
++=09test_must_fail env GIT_NAMESPACE=3Dns test-tool -C "$REPO" serve-v2 --s=
+tateless-rpc >out <in &&
++=09grep "unknown ref" out
++'
++
++test_expect_success 'hideRefs with namespaces' '
++=09oid=3D$(git -C "$REPO" rev-parse c) &&
++=09test-tool pkt-line pack >in <<-EOF &&
++=09$(write_command fetch)
++=090001
++=09no-progress
++=09want-ref refs/heads/hidden
++=09have $oid
++=09done
++=090000
++=09EOF
++
++=09test_must_fail env GIT_NAMESPACE=3Dns test-tool -C "$REPO" serve-v2 --s=
+tateless-rpc >out <in &&
++=09grep "unknown ref" out
++'
++
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
+
+diff --git a/upload-pack.c b/upload-pack.c
+index 297b76fcb4..c897802f1c 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -1417,21 +1417,24 @@ static int parse_want_ref(struct packet_writer *wri=
+ter, const char *line,
+ =09=09=09  struct string_list *wanted_refs,
+ =09=09=09  struct object_array *want_obj)
+ {
+-=09const char *arg;
+-=09if (skip_prefix(line, "want-ref ", &arg)) {
++=09const char *refname_nons;
++=09if (skip_prefix(line, "want-ref ", &refname_nons)) {
+ =09=09struct object_id oid;
+ =09=09struct string_list_item *item;
+ =09=09struct object *o;
++=09=09struct strbuf refname =3D STRBUF_INIT;
+
+-=09=09if (read_ref(arg, &oid)) {
+-=09=09=09packet_writer_error(writer, "unknown ref %s", arg);
+-=09=09=09die("unknown ref %s", arg);
++=09=09strbuf_addf(&refname, "%s%s", get_git_namespace(), refname_nons);
++=09=09if (ref_is_hidden(refname_nons, refname.buf) ||
++=09=09    read_ref(refname.buf, &oid)) {
++=09=09=09packet_writer_error(writer, "unknown ref %s", refname_nons);
++=09=09=09die("unknown ref %s", refname_nons);
+ =09=09}
+
+-=09=09item =3D string_list_append(wanted_refs, arg);
++=09=09item =3D string_list_append(wanted_refs, refname_nons);
+ =09=09item->util =3D oiddup(&oid);
+
+-=09=09o =3D parse_object_or_die(&oid, arg);
++=09=09o =3D parse_object_or_die(&oid, refname_nons);
+ =09=09if (!(o->flags & WANTED)) {
+ =09=09=09o->flags |=3D WANTED;
+ =09=09=09add_object_array(o, NULL, want_obj);
+--
+2.32.0
+
+
