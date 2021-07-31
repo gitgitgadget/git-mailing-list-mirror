@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DDC8C4338F
-	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 17:27:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B280AC432BE
+	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 17:27:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 103ED61050
-	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 17:27:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 96ACF61050
+	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 17:27:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231293AbhGaR15 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 31 Jul 2021 13:27:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48998 "EHLO
+        id S231404AbhGaR16 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 31 Jul 2021 13:27:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229840AbhGaR1w (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Jul 2021 13:27:52 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 065A9C0613CF
-        for <git@vger.kernel.org>; Sat, 31 Jul 2021 10:27:45 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id z4so15736340wrv.11
-        for <git@vger.kernel.org>; Sat, 31 Jul 2021 10:27:44 -0700 (PDT)
+        with ESMTP id S230479AbhGaR1x (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Jul 2021 13:27:53 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83984C0613D5
+        for <git@vger.kernel.org>; Sat, 31 Jul 2021 10:27:46 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id h13so2238564wrp.1
+        for <git@vger.kernel.org>; Sat, 31 Jul 2021 10:27:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0G2Aq0f99MPciHnA4RscP5rIVPzkEOXnzeJ+kRWgLxI=;
-        b=DY/+MM4FJcwZfhvMP5+Jm6m1VD0xYbSIVk5DFvcE4o/OJzGLnXyIIHBEbrSofzbKai
-         ExrTwzcoOWiM6mEewZq/l18erBh0XDIuX3MJu8EhN+l3W2Ppc+hm7X7n38ckN96wS5Vm
-         HZ7XQOmeUj416BK+HCmao9ARtL9onFv0OO9yB4U21ZBvqCyjtYfqJbRBcKp2v6OK3lFf
-         YbP65Blq5SzAM1jRy7SMO8Svep8ZqBiQd0kowkQPJyM1HBkeyhHdgzbAZCzGbSGXmD+x
-         2NJuTLZ6ClXQDEgA3N9LD/bzC56O8jndsx5vJ18r8tDX+gvq53xOCabhvfW7Yr1zxDZz
-         gG5A==
+        bh=Mxs78hw82mLcuiyukDBRKAlZGx7o8hUECUOhrCJvi0E=;
+        b=QSmsZVabMUiI72ttU9COIwDKxURZGYEpkcIzSaE0GhQsWSMvPAkmSmUYTRQMu7q4x1
+         YIEmetzxvyj1OGRIUGx1c+Oa9kOd39qUvDohABQwbV5TI1hdcyoGATdkaMOOccNxVLtj
+         s4wOoDcHCgCiMJMdQU9qGXl5dmHTu62uVK2b6/x4Mpm1E9lKeXiiqNxxGfa5ZNDlbCTf
+         wsqqCVyK+vDI4eOz4mjfVEGsD3Xd9ultGj25BESZAocK9yBsozY3gn8BBaOLDQ0uzHTr
+         0EklhvK0NL/w4OAC2dEIDVwl6EdNXot0L+hHr6+OTyTPFdDyZ0ykCXwZLsfwDSp6ipLr
+         G/eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0G2Aq0f99MPciHnA4RscP5rIVPzkEOXnzeJ+kRWgLxI=;
-        b=AeHtUTZWA2nFewLAEQfZXeTzEDyAE51crV6yHX+AADohzRSV1D3y+bjFGV7S5RrP/J
-         E+QkGS3URnKMx6V5pFvz0H5g/AmxbhPEEiyjetLscDtXuJVFiQ3eXWn+COqP0vtCwOnT
-         eebjudBEZ9Lze3CcEGOPhaH2bZcAyUO7rHYiByimqfwvFTpJ8mbAJYtaX/CAUuFzc4jg
-         t0DbQQEYPLzrTIIRvzH/+Ohf3sfo/XjH3HtQKFElhPPzgoeBPz0GTs3djLi0sq++F6NV
-         1mb6nPCD62DuuC45Fjhazn0qDJNR3rzwNW5lIDieo3VbFKKiQsPrVog8BfcRY0ucR0zm
-         ytIQ==
-X-Gm-Message-State: AOAM5323MqaZvQRiNp+XMgcaX5ldSqiosQItVkHcnYdAwtmtKC7/OpjH
-        vHx/+jEaF1VHfotL9F6KU9pmgQz1Q3g=
-X-Google-Smtp-Source: ABdhPJyCWOPJMZUDkEDAFN/csozjtCq0kaKXleumjXOj7nmuYtELPMzD21EWFsOkGn/JrDKeQc0gPw==
-X-Received: by 2002:a5d:6d86:: with SMTP id l6mr9174314wrs.260.1627752463612;
-        Sat, 31 Jul 2021 10:27:43 -0700 (PDT)
+        bh=Mxs78hw82mLcuiyukDBRKAlZGx7o8hUECUOhrCJvi0E=;
+        b=sqqwvrqS5YPFv1dFCXAnSJUXZ5yfTtm8XXB2ZIbA+D3QEaxs4AULpQCk72faup1tOP
+         HJshJDJZ2NIUt82dOVW9WEHjLVPMO/teknR0LWUvV629VL49OfZmVGgVKcOWWoJ0eoKH
+         FmqyQ6rFYlswOwY3j31R2YhsTHppTbH9ORMJXXFzjp56xMFih2TcEFYZfR/FxigOMFK4
+         Lj4BUD56gnvKZGKHTQd3vOoyk+bx9qAW2guz9u2CBvAfuhGxz0GzNe45v/JDHZyuH3e2
+         BSFdDrBtMJwsmnXoEnpNkPSwBXxQAa6iPg7mtF7Z1G1r8FUOTnNk2ORdPYC/Jdz0V8eS
+         yltA==
+X-Gm-Message-State: AOAM533oAyXZEcivlsJmaCaPg1/CIiuJttyfbCHRFtBiVDKzn0g2VJXe
+        I0dn4dhlPZV4UK7UsrtflayMzwxyed4=
+X-Google-Smtp-Source: ABdhPJw/wYDkrnDZqrQ9REzNSYMQkmw00guEUJoNpIet2x49/fpAvfrLSGbuT1QNmO75p5Lau5MYkg==
+X-Received: by 2002:adf:f1c6:: with SMTP id z6mr9193613wro.207.1627752465185;
+        Sat, 31 Jul 2021 10:27:45 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b14sm5568032wrm.43.2021.07.31.10.27.43
+        by smtp.gmail.com with ESMTPSA id t8sm5974864wmj.5.2021.07.31.10.27.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Jul 2021 10:27:43 -0700 (PDT)
-Message-Id: <6646f6fd1cae3b7ebe279317b95405f2b6d71e9e.1627752458.git.gitgitgadget@gmail.com>
+        Sat, 31 Jul 2021 10:27:44 -0700 (PDT)
+Message-Id: <08cf2498f96759a94543d61b9a05e02280ab19d2.1627752458.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.990.v4.git.1627752458.gitgitgadget@gmail.com>
 References: <pull.990.v3.git.1627645664.gitgitgadget@gmail.com>
         <pull.990.v4.git.1627752458.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 31 Jul 2021 17:27:33 +0000
-Subject: [PATCH v4 4/9] merge-ort: set up a memory pool
+Date:   Sat, 31 Jul 2021 17:27:35 +0000
+Subject: [PATCH v4 6/9] diffcore-rename, merge-ort: add wrapper functions for
+ filepair alloc/dealloc
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,73 +81,140 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-merge-ort has a lot of data structures, and they all tend to be freed
-together in clear_or_reinit_internal_opts().  Set up a memory pool to
-allow us to make these allocations and deallocations faster.  Future
-commits will adjust various callers to make use of this memory pool.
+We want to be able to allocate filespecs and filepairs using a mem_pool.
+However, filespec data will still remain outside the pool (perhaps in
+the future we could plumb the pool through the various diff APIs to
+allocate the filespec data too, but for now we are limiting the scope).
+Add some extra functions to allocate these appropriately based on the
+non-NULL-ness of opt->priv->pool, as well as some extra functions to
+handle correctly deallocating the relevant parts of them.  A future
+commit will make use of these new functions.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ diffcore-rename.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ diffcore.h        |  2 ++
+ merge-ort.c       | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 85 insertions(+)
 
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 73d884099eb..5bc559f79e9 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -1328,6 +1328,47 @@ static void handle_early_known_dir_renames(struct dir_rename_info *info,
+ 	rename_src_nr = new_num_src;
+ }
+ 
++static void free_filespec_data(struct diff_filespec *spec)
++{
++	if (!--spec->count)
++		diff_free_filespec_data(spec);
++}
++
++MAYBE_UNUSED
++static void pool_free_filespec(struct mem_pool *pool,
++			       struct diff_filespec *spec)
++{
++	if (!pool) {
++		free_filespec(spec);
++		return;
++	}
++
++	/*
++	 * Similar to free_filespec(), but only frees the data.  The spec
++	 * itself was allocated in the pool and should not be individually
++	 * freed.
++	 */
++	free_filespec_data(spec);
++}
++
++MAYBE_UNUSED
++void pool_diff_free_filepair(struct mem_pool *pool,
++			     struct diff_filepair *p)
++{
++	if (!pool) {
++		diff_free_filepair(p);
++		return;
++	}
++
++	/*
++	 * Similar to diff_free_filepair() but only frees the data from the
++	 * filespecs; not the filespecs or the filepair which were
++	 * allocated from the pool.
++	 */
++	free_filespec_data(p->one);
++	free_filespec_data(p->two);
++}
++
+ void diffcore_rename_extended(struct diff_options *options,
+ 			      struct strintmap *relevant_sources,
+ 			      struct strintmap *dirs_removed,
+diff --git a/diffcore.h b/diffcore.h
+index 533b30e21e7..b58ee6b1934 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -127,6 +127,8 @@ struct diff_filepair {
+ #define DIFF_PAIR_MODE_CHANGED(p) ((p)->one->mode != (p)->two->mode)
+ 
+ void diff_free_filepair(struct diff_filepair *);
++void pool_diff_free_filepair(struct mem_pool *pool,
++			     struct diff_filepair *p);
+ 
+ int diff_unmodified_pair(struct diff_filepair *);
+ 
 diff --git a/merge-ort.c b/merge-ort.c
-index 63f67246d3d..3f425436263 100644
+index 99c75690855..e79830f9181 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -37,6 +37,8 @@
- #include "unpack-trees.h"
- #include "xdiff-interface.h"
+@@ -690,6 +690,48 @@ static void path_msg(struct merge_options *opt,
+ 	strbuf_addch(sb, '\n');
+ }
  
-+#define USE_MEMORY_POOL 1 /* faster, but obscures memory leak hunting */
++MAYBE_UNUSED
++static struct diff_filespec *pool_alloc_filespec(struct mem_pool *pool,
++						 const char *path)
++{
++	struct diff_filespec *spec;
++	size_t len;
 +
- /*
-  * We have many arrays of size 3.  Whenever we have such an array, the
-  * indices refer to one of the sides of the three-way merge.  This is so
-@@ -339,6 +341,17 @@ struct merge_options_internal {
- 	 */
- 	struct strmap conflicted;
- 
-+	/*
-+	 * pool: memory pool for fast allocation/deallocation
-+	 *
-+	 * We allocate room for lots of filenames and auxiliary data
-+	 * structures in merge_options_internal, and it tends to all be
-+	 * freed together too.  Using a memory pool for these provides a
-+	 * nice speedup.
-+	 */
-+	struct mem_pool internal_pool;
-+	struct mem_pool *pool; /* NULL, or pointer to internal_pool */
++	if (!pool)
++		return alloc_filespec(path);
 +
- 	/*
- 	 * paths_to_free: additional list of strings to free
- 	 *
-@@ -603,6 +616,12 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
- 		strmap_clear(&opti->output, 0);
- 	}
- 
-+#if USE_MEMORY_POOL
-+	mem_pool_discard(&opti->internal_pool, 0);
-+	if (!reinitialize)
-+		opti->pool = NULL;
-+#endif
++	/* Same code as alloc_filespec, except allocate from pool */
++	len = strlen(path);
 +
- 	/* Clean out callback_data as well. */
- 	FREE_AND_NULL(renames->callback_data);
- 	renames->callback_data_nr = renames->callback_data_alloc = 0;
-@@ -4381,6 +4400,12 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
- 
- 	/* Initialization of various renames fields */
- 	renames = &opt->priv->renames;
-+#if USE_MEMORY_POOL
-+	mem_pool_init(&opt->priv->internal_pool, 0);
-+	opt->priv->pool = &opt->priv->internal_pool;
-+#else
-+	opt->priv->pool = NULL;
-+#endif
- 	for (i = MERGE_SIDE1; i <= MERGE_SIDE2; i++) {
- 		strintmap_init_with_options(&renames->dirs_removed[i],
- 					    NOT_RELEVANT, NULL, 0);
++	spec = mem_pool_calloc(pool, 1, st_add3(sizeof(*spec), len, 1));
++	memcpy(spec+1, path, len);
++	spec->path = (void*)(spec+1);
++
++	spec->count = 1;
++	spec->is_binary = -1;
++	return spec;
++}
++
++MAYBE_UNUSED
++static struct diff_filepair *pool_diff_queue(struct mem_pool *pool,
++					     struct diff_queue_struct *queue,
++					     struct diff_filespec *one,
++					     struct diff_filespec *two)
++{
++	struct diff_filepair *dp;
++
++	if (!pool)
++		return diff_queue(queue, one, two);
++
++	/* Same code as diff_queue, except allocate from pool */
++	dp = mem_pool_calloc(pool, 1, sizeof(*dp));
++	dp->one = one;
++	dp->two = two;
++	if (queue)
++		diff_q(queue, dp);
++	return dp;
++}
++
+ static void *pool_calloc(struct mem_pool *pool, size_t count, size_t size)
+ {
+ 	if (!pool)
 -- 
 gitgitgadget
 
