@@ -2,117 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 827C9C4338F
-	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 02:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 830B3C4320A
+	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 02:25:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52E6D60F48
-	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 02:25:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 62FB460EB2
+	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 02:25:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235124AbhGaCZU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Jul 2021 22:25:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49676 "EHLO
+        id S235510AbhGaCZW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Jul 2021 22:25:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231464AbhGaCZS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jul 2021 22:25:18 -0400
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1919CC0613CF
-        for <git@vger.kernel.org>; Fri, 30 Jul 2021 19:25:12 -0700 (PDT)
-Received: by mail-qv1-xf2a.google.com with SMTP id x12so6195931qvo.12
-        for <git@vger.kernel.org>; Fri, 30 Jul 2021 19:25:12 -0700 (PDT)
+        with ESMTP id S234326AbhGaCZU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jul 2021 22:25:20 -0400
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 734A4C06175F
+        for <git@vger.kernel.org>; Fri, 30 Jul 2021 19:25:13 -0700 (PDT)
+Received: by mail-qt1-x834.google.com with SMTP id a19so7825957qtx.1
+        for <git@vger.kernel.org>; Fri, 30 Jul 2021 19:25:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+PVSvhjZdEK5Sdu3J4l7fxAdfKiCIW75rqc/kwICupY=;
-        b=CKuLc8e9ZTG8XHXG0bbiP0zy+OFAElSL4mFhSAyqQ1YNdD1A4Kh9bUYS2yIFumib5h
-         ak3v9kk9sR95d9wnmBNNzGxxP8Ubj6GaafjFz96DyzlXURc1vOMaLTjk5aHBTGxPxtqk
-         endeSnqMTL0j2NvU3e3/5ja7RFgJitdvTpxRCyrY2WbX8dmIAm0UlzWClZE43lSq3848
-         jmObz6bGtlnQ+4MunZ4ijj9ZAteTV+sb9ad2n/x/2N70h4yIfenIy32Vh00/uOq6at3R
-         2NKO+99ZLPmzBMdijCFOGsLXN6OlUD0EZ4sWOg79yKQq984WVHWEDW4xUmWM91HC1ZyD
-         WzfQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=hV16QzQD4oTUCaV7eqsKgIXqxMD0XUMExMXFqOGoH24=;
+        b=X7OAylaNFxlR5DuuoSOmJa7K605dRpNybiIlDnDBzW77afUfOCdbkvXyi96KSjkN6W
+         WPLIhSqwrDVe+PqI6mSWii/YDlLEmkr5s8tsohoEoFrLyDlz716Ms36M9tCYfD4XEbw0
+         h7YLkxuiLXYlEg+g5LWSAUa75H/ffG+rbcBeuOXccstMtMD8wHU0bh5rrOSjei5ipQjA
+         I+AVYP/+gyisB7+XVbhHrKa4bG+ygtNP0xuyMIRLdvskw+LFvZFguf0b+7aIjwmZsDE1
+         rjsjjRL/EufJPp5K5Wi42BGi3k+LUXpdY1lbYK3tG7tGdUdgh0mgV4pXvEy3gbUEX5Bt
+         DLXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+PVSvhjZdEK5Sdu3J4l7fxAdfKiCIW75rqc/kwICupY=;
-        b=DUx2daZQjxnV9G1YXJNI0Jo/TcA+o0OsgLoRwStfrHJT4NTFD1T0DLjs0gcObqxjd2
-         4URUETj5DYDJWFMnTFQp8805XoVrPbgryonjI+vjNWjimOdTbEiIbd9TGfW5+5CiOEUb
-         EJ0trCPpv5Irq1fiE0fJJ+6hs5CXe22SYdwjYRiDaPJznmA9ZjUtfmPjCzAzGlj4QIyy
-         NA0fmUrP3VXNX74gN7NIKzvpGucFpFAnOwsFDpYJHNmprhgntktKTxuIFbdK66rcxz7j
-         Ln9c8F/aNNH8tITh4QLJlCRcg0aZoDxpKyv/cnge5+0iQ0pPAEoarppxGFxqBRiCa0q5
-         fIAA==
-X-Gm-Message-State: AOAM532NzAA++n7UOiDcr7im6/ZpmMISmRz44fOzkXJ9FITpLxsn+QE4
-        q64l6Ei7W+GuvKvZtgXgbTxXj9HDBPN2Pg==
-X-Google-Smtp-Source: ABdhPJxbPDOPWhIdrqPOc6CqfmkrLcesuMIwiMf91UOGjLJ8MUS9uGRjzCqp5G+pfqtPq1XtosyP9g==
-X-Received: by 2002:a05:6214:a93:: with SMTP id ev19mr6143374qvb.27.1627698310638;
-        Fri, 30 Jul 2021 19:25:10 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=hV16QzQD4oTUCaV7eqsKgIXqxMD0XUMExMXFqOGoH24=;
+        b=OU/973MTTfRTNuYS/QcBVM+LPubU/EHXvGkiv5gvpjn5B9/0gXA+yOQ03uDNi9D7XB
+         tW/QapaIcLNXhBlYdndvRRsglbRVHaY8lAm//oI1Q2Wwp4pEkfcsYerlKR/VqRPpYhMs
+         TzgLl11pw7TM1GLZMOzybbcaLVlY+2daIVum20xdgFy3cM7O6CzJbGEomA7kWO7EA0gS
+         LtbT9PZ5jJQqRm4CPyCprd5XYUpHOoEEUDZ6OFS5pbLucKEoiZ7kn5OQUJ6wAw62BVKM
+         VOY+ntbz3FyLWiAZMpGzpsgcyl1Fku63ImkxCHjYcmgg4jrotHsS1djGtPndhMUqdg5D
+         9J6Q==
+X-Gm-Message-State: AOAM530XI6A2SPjAsJZa/llYkZgaT2bn+pnFdjkiFIpG1PpjLCY6/oID
+        XhfFW6XstjmBo5Yg0DnGF2M4dE9kdBQ9fA==
+X-Google-Smtp-Source: ABdhPJxeJc/sv48rGsWcOUGiFBP5TtCGbxvgTePJ/URfDpL4+R1OwpOgfDryTAm/z4JNea0z5qeG+g==
+X-Received: by 2002:a05:622a:16:: with SMTP id x22mr5074495qtw.90.1627698312485;
+        Fri, 30 Jul 2021 19:25:12 -0700 (PDT)
 Received: from localhost ([24.169.20.255])
-        by smtp.gmail.com with ESMTPSA id z11sm1437963qtq.77.2021.07.30.19.25.09
+        by smtp.gmail.com with ESMTPSA id j4sm1831823qkk.78.2021.07.30.19.25.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jul 2021 19:25:09 -0700 (PDT)
+        Fri, 30 Jul 2021 19:25:12 -0700 (PDT)
 From:   Ben Boeckel <mathstuf@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Ben Boeckel <mathstuf@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v1 0/4] advice: remove usage of `advice_*` global variables
-Date:   Fri, 30 Jul 2021 22:25:00 -0400
-Message-Id: <20210731022504.1912702-1-mathstuf@gmail.com>
+Subject: [PATCH v1 1/4] advice: add a function to set the value of an advice type
+Date:   Fri, 30 Jul 2021 22:25:01 -0400
+Message-Id: <20210731022504.1912702-2-mathstuf@gmail.com>
 X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210731022504.1912702-1-mathstuf@gmail.com>
+References: <20210731022504.1912702-1-mathstuf@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+This is setup for removing the `advice` global variables.
 
-When looking at global variable usage for my `branch.default*` settings,
-I found the `advice_` variables which were simple enough to resolve.
-
---Ben
-
+Signed-off-by: Ben Boeckel <mathstuf@gmail.com>
 ---
+ advice.c | 5 +++++
+ advice.h | 5 +++++
+ 2 files changed, 10 insertions(+)
 
-Ben Boeckel (4):
-  advice: add a function to set the value of an advice type
-  advice: add enum variants for missing advice variables
-  advice: remove uses of global `advice_` variables
-  advice: remove static global variables for advice tracking
-
- advice.c                    | 88 ++++---------------------------------
- advice.h                    | 38 +++-------------
- branch.c                    |  2 +-
- builtin/add.c               |  8 ++--
- builtin/am.c                |  2 +-
- builtin/checkout.c          |  6 +--
- builtin/clone.c             |  2 +-
- builtin/commit.c            |  4 +-
- builtin/fetch.c             |  2 +-
- builtin/merge.c             |  4 +-
- builtin/push.c              | 12 ++---
- builtin/replace.c           |  2 +-
- builtin/reset.c             |  2 +-
- builtin/rm.c                |  2 +-
- builtin/submodule--helper.c |  2 +-
- commit.c                    |  2 +-
- editor.c                    |  2 +-
- notes-merge.c               |  2 +-
- object-name.c               |  2 +-
- remote.c                    | 12 ++---
- run-command.c               |  2 +-
- sequencer.c                 |  8 ++--
- unpack-trees.c              | 18 ++++----
- wt-status.c                 |  6 +--
- 24 files changed, 68 insertions(+), 162 deletions(-)
-
-
-base-commit: eb27b338a3e71c7c4079fbac8aeae3f8fbb5c687
+diff --git a/advice.c b/advice.c
+index 0b9c89c48a..fd58631dc1 100644
+--- a/advice.c
++++ b/advice.c
+@@ -187,6 +187,11 @@ int advice_enabled(enum advice_type type)
+ 	}
+ }
+ 
++void advice_set(enum advice_type type, int value)
++{
++	advice_setting[type].enabled = value;
++}
++
+ void advise_if_enabled(enum advice_type type, const char *advice, ...)
+ {
+ 	va_list params;
+diff --git a/advice.h b/advice.h
+index bd26c385d0..74425a9f1a 100644
+--- a/advice.h
++++ b/advice.h
+@@ -87,6 +87,11 @@ void advise(const char *advice, ...);
+  */
+ int advice_enabled(enum advice_type type);
+ 
++/**
++ * Enable or disable advice of a certain kind.
++ */
++void advice_set(enum advice_type type, int value);
++
+ /**
+  * Checks the visibility of the advice before printing.
+  */
 -- 
 2.31.1
 
