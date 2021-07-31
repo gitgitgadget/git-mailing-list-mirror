@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93670C4320A
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84D44C4338F
 	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 02:42:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6F78260E09
+	by mail.kernel.org (Postfix) with ESMTP id 634C060F48
 	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 02:42:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234655AbhGaCmm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Jul 2021 22:42:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53678 "EHLO
+        id S231682AbhGaCml (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Jul 2021 22:42:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231462AbhGaCmi (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231453AbhGaCmi (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 30 Jul 2021 22:42:38 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25144C0613D3
-        for <git@vger.kernel.org>; Fri, 30 Jul 2021 19:42:33 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id k7so11302963qki.11
-        for <git@vger.kernel.org>; Fri, 30 Jul 2021 19:42:33 -0700 (PDT)
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07CADC06175F
+        for <git@vger.kernel.org>; Fri, 30 Jul 2021 19:42:32 -0700 (PDT)
+Received: by mail-qv1-xf32.google.com with SMTP id x12so6209307qvo.12
+        for <git@vger.kernel.org>; Fri, 30 Jul 2021 19:42:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HNYVQWMat+KPgO74MK+N8jTAoNvDTlqr2bfJREHgCvc=;
-        b=dWsC+wbOIFkel43cxHknSy51a9OyzPfNXfGNE4PYXMZMcMwrz0lRd5tsW/SMcC4JZb
-         g9pJWV8L5yflAbPPtXyYsxl1kTbTAb8zyNx9mjV+U2Q8tCODesZc2yeMxBgYryn37/Yv
-         mZTT4aVJoTAnzaj9Y2ylXDKD9T2jeHzUiNmEEhYRs8eVdu0yxAuoYQFr0mAgxzayKJVY
-         f+Jm7yNe08rxfPNgZ78gjRIwfO52yJ6Xu3zepZgYCacvRcik0w8i26ovHMLVsX8RXSlN
-         Pq7QbgXe4rBxcGaB6B3LDOlI2PTVyCNH4QdvdJhffxd6KMjVSZzMYjJygpd5oyrOjmia
-         YSFQ==
+        bh=uV8rbFZ3ElcotGxBhDYSXLHyZKRBbis9T9URYhw1oek=;
+        b=HoQhVpAoVf8xwzytLvXlWQFE08W+GPOQXg1TfvAn1K6Ucs7vItKlNFCcMfuXHVOQOs
+         88NFP+iHJjOI+r5A12srV9ToKisZFsVAN75xD+TMz3rUbn2bUXRM/hfWhvwnLbKz/RbG
+         qPcVJQ6kELGSICDADhdkBqaWr5q3antd1C79Aiw8VTJBfDjx1BaJn8zH0ew+6vaj9XpF
+         OtBmKbAyWFSz3YVV9mDkbXqOE4bk/Cg9Q7PPPrkAmdzrpT2JpTtKAt+QsWQ9Bo+nJlzk
+         F58yt//xMWjleEKTRNDLWgnS9V7ShH/y5VgQvHrrP763KDaUcjAQzdJ2I0hwu3T+PvmH
+         PvDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HNYVQWMat+KPgO74MK+N8jTAoNvDTlqr2bfJREHgCvc=;
-        b=mj9Gw060FeYe2LIScDQHw+GqrmBeV+xqQGXt6egf/vy6LcVG7PooU/2BXnMJXmfrL7
-         Gw1seaGbAgjWJXe0sIW8otrO2g5xmPFEaryfbEbSw9PO/16uZTvug+wAjxXKwQzUKTCS
-         urSUfoTFSJpYxClP0W4/4smZ6EV+Ww9xBMznSyVmuueP/IatRbJLSanouDgPofvQcGTa
-         RrAhiw3zTYTTy2q3EUHqI7myXCy+X4qbL0KnlRn//NBJLvYAsgn2WhJcfGE1wQxEdYcA
-         pY9hHRCgXHlLN0FzIHynyPG/Pft2ZWxYvU7fOgGNRj/C6dhp0g/vXubP949E51pI653f
-         7MOA==
-X-Gm-Message-State: AOAM530gvUR8VkrU1Z8TIywGrvixTrXndpKbvCnVzAl2LX69LqSsxfq2
-        Yn/GmJR1v7NVKgjG8syHjGPfD97uGZFVJA==
-X-Google-Smtp-Source: ABdhPJwGuI9Ko9RxZnSdtPSrwQJIg9Ug1iLw6XxbKUS3iBuEBFrdjEkjH9qH7OImLbE0i4uOVYFx6Q==
-X-Received: by 2002:a37:9d41:: with SMTP id g62mr5399888qke.55.1627699352191;
-        Fri, 30 Jul 2021 19:42:32 -0700 (PDT)
-Received: from localhost ([24.169.20.255])
-        by smtp.gmail.com with ESMTPSA id o63sm1944318qkf.4.2021.07.30.19.42.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=uV8rbFZ3ElcotGxBhDYSXLHyZKRBbis9T9URYhw1oek=;
+        b=D8jIM8+nRqA0BoyReYz1w/8DM3R6Ml4Mo8b3Tje3lbDxqqlM9UIX/nDq7XxgH2+TYI
+         Y9f2buJDgPZvjgr8XRXaIgO7AJ90ELYCbRZ6G6u+4JaccagAnl/vqGxIkuwDBKGb8z63
+         uSRSyqNig++VqU8FK2KIW7soe1GCCQiS/lZ9W5D3xA4j1gCyoiD36VegPobeBytcIeVg
+         uXeORsiRnvgyPDaNrDWbJpNBaQwb4Up3yv1xPEToftO93oWD1XxnUNFn8yKbSvQS0S3j
+         bEuGLAx08+JKteNQjbdygmPyYvHu4mNWXHBINL+Efg94TPnytad6sU2e8z/2s3LSj4Bj
+         p2hA==
+X-Gm-Message-State: AOAM532G4FIzGLaxf1Bo74iS2NkL84htv5Gv6WRrd6YuVTXXh4njRPg4
+        4zrjw2PhnNksWdiZPLJVlBXdprGW4PoRYg==
+X-Google-Smtp-Source: ABdhPJx57IlkZvvbfMTKrzgaOGrFWI9sbmrZjEOkJg+OWinMOf8sLdQjRlhJ5bkphH89WQRalh4T3w==
+X-Received: by 2002:a0c:e88f:: with SMTP id b15mr6192059qvo.8.1627699351064;
         Fri, 30 Jul 2021 19:42:31 -0700 (PDT)
+Received: from localhost ([24.169.20.255])
+        by smtp.gmail.com with ESMTPSA id o2sm1917600qkm.109.2021.07.30.19.42.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Jul 2021 19:42:30 -0700 (PDT)
 From:   Ben Boeckel <mathstuf@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Ben Boeckel <mathstuf@gmail.com>, Jeff King <peff@peff.net>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v1 3/6] apply: move `apply_default_*whitespace` to `apply.c`
-Date:   Fri, 30 Jul 2021 22:42:18 -0400
-Message-Id: <20210731024221.2113906-4-mathstuf@gmail.com>
+Subject: [PATCH v1 2/6] mailmap: move `git_default_mailmap_config` to `mailmap.c`
+Date:   Fri, 30 Jul 2021 22:42:17 -0400
+Message-Id: <20210731024221.2113906-3-mathstuf@gmail.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210731024221.2113906-1-mathstuf@gmail.com>
 References: <20210731024221.2113906-1-mathstuf@gmail.com>
@@ -74,56 +74,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These variables are only set and used in this file, so they can become
-`static`.
+This allows mailmap-specific variables to be tracked locally in
+`mailmap.c` instead of globally.
 
 Signed-off-by: Ben Boeckel <mathstuf@gmail.com>
 ---
- apply.c       | 3 +++
- cache.h       | 2 --
- environment.c | 2 --
- 3 files changed, 3 insertions(+), 4 deletions(-)
+ cache.h   |  2 --
+ config.c  | 12 +-----------
+ mailmap.c | 16 ++++++++++++++--
+ mailmap.h |  2 ++
+ 4 files changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index 44bc31d6eb..15dcd8b7d7 100644
---- a/apply.c
-+++ b/apply.c
-@@ -23,6 +23,9 @@
- #include "apply.h"
- #include "entry.h"
- 
-+static char *apply_default_whitespace;
-+static char *apply_default_ignorewhitespace;
-+
- struct gitdiff_data {
- 	struct strbuf *root;
- 	int linenr;
 diff --git a/cache.h b/cache.h
-index 551a6cb5cf..dc6c4172cb 100644
+index 6ea1ea5854..551a6cb5cf 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -944,8 +944,6 @@ extern int assume_unchanged;
- extern int prefer_symlink_refs;
- extern int warn_ambiguous_refs;
- extern int warn_on_object_refname_ambiguity;
--extern char *apply_default_whitespace;
--extern char *apply_default_ignorewhitespace;
- extern const char *git_attributes_file;
- extern const char *git_hooks_path;
- extern int zlib_compression_level;
-diff --git a/environment.c b/environment.c
-index 5d45152731..0cc086d847 100644
---- a/environment.c
-+++ b/environment.c
-@@ -36,8 +36,6 @@ int repository_format_precious_objects;
- int repository_format_worktree_config;
- const char *git_commit_encoding;
- const char *git_log_output_encoding;
--char *apply_default_whitespace;
--char *apply_default_ignorewhitespace;
- const char *git_attributes_file;
- const char *git_hooks_path;
- int zlib_compression_level = Z_BEST_SPEED;
+@@ -1718,8 +1718,6 @@ int author_ident_sufficiently_given(void);
+ 
+ extern const char *git_commit_encoding;
+ extern const char *git_log_output_encoding;
+-extern const char *git_mailmap_file;
+-extern const char *git_mailmap_blob;
+ 
+ /* IO helper functions */
+ void maybe_flush_or_die(FILE *, const char *);
+diff --git a/config.c b/config.c
+index 840be51710..c45001adbe 100644
+--- a/config.c
++++ b/config.c
+@@ -15,6 +15,7 @@
+ #include "strbuf.h"
+ #include "quote.h"
+ #include "hashmap.h"
++#include "mailmap.h"
+ #include "string-list.h"
+ #include "object-store.h"
+ #include "utf8.h"
+@@ -1603,17 +1604,6 @@ static int git_default_push_config(const char *var, const char *value)
+ 	return 0;
+ }
+ 
+-static int git_default_mailmap_config(const char *var, const char *value)
+-{
+-	if (!strcmp(var, "mailmap.file"))
+-		return git_config_pathname(&git_mailmap_file, var, value);
+-	if (!strcmp(var, "mailmap.blob"))
+-		return git_config_string(&git_mailmap_blob, var, value);
+-
+-	/* Add other config variables here and to Documentation/config.txt. */
+-	return 0;
+-}
+-
+ int git_default_config(const char *var, const char *value, void *cb)
+ {
+ 	if (starts_with(var, "core."))
+diff --git a/mailmap.c b/mailmap.c
+index d1f7c0d272..e1d9a2bbdb 100644
+--- a/mailmap.c
++++ b/mailmap.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "config.h"
+ #include "string-list.h"
+ #include "mailmap.h"
+ #include "object-store.h"
+@@ -12,8 +13,19 @@ static inline void debug_mm(const char *format, ...) {}
+ static inline const char *debug_str(const char *s) { return s; }
+ #endif
+ 
+-const char *git_mailmap_file;
+-const char *git_mailmap_blob;
++static const char *git_mailmap_file;
++static const char *git_mailmap_blob;
++
++int git_default_mailmap_config(const char *var, const char *value)
++{
++	if (!strcmp(var, "mailmap.file"))
++		return git_config_pathname(&git_mailmap_file, var, value);
++	if (!strcmp(var, "mailmap.blob"))
++		return git_config_string(&git_mailmap_blob, var, value);
++
++	/* Add other config variables here and to Documentation/config.txt. */
++	return 0;
++}
+ 
+ struct mailmap_info {
+ 	char *name;
+diff --git a/mailmap.h b/mailmap.h
+index 7e99fccb46..48bfe9fac7 100644
+--- a/mailmap.h
++++ b/mailmap.h
+@@ -3,6 +3,8 @@
+ 
+ struct string_list;
+ 
++int git_default_mailmap_config(const char *var, const char *value);
++
+ int read_mailmap(struct string_list *map);
+ void clear_mailmap(struct string_list *map);
+ 
 -- 
 2.31.1
 
