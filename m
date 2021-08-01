@@ -2,153 +2,330 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 797CFC4338F
-	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 00:27:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E745AC4338F
+	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 06:34:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4AD5E61050
-	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 00:27:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C41F461057
+	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 06:34:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229558AbhHAA12 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 31 Jul 2021 20:27:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41014 "EHLO
+        id S229907AbhHAGeW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Aug 2021 02:34:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbhHAA11 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Jul 2021 20:27:27 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFF80C06175F
-        for <git@vger.kernel.org>; Sat, 31 Jul 2021 17:27:19 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id y18so19313285oiv.3
-        for <git@vger.kernel.org>; Sat, 31 Jul 2021 17:27:19 -0700 (PDT)
+        with ESMTP id S230045AbhHAGeU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Aug 2021 02:34:20 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E625C06175F
+        for <git@vger.kernel.org>; Sat, 31 Jul 2021 23:34:13 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id z3so14723919plg.8
+        for <git@vger.kernel.org>; Sat, 31 Jul 2021 23:34:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/h9uVh0nLZKorvIp0FTRVCC56yBEf9N19EwXdTGd7O4=;
-        b=kWwo5mgMNJd0N0uYtudnyl/xWI5QrQWm4y2mWt4nesyFKsRUhS/DRfvVHlh9fKoTdG
-         gYuEd3Y58IJZIC4YADWTSAaBC9lYSgG7q0ggpDNne1qNDcrGzckPSx27e2aVJptjfeDB
-         x0gyCJ0v7jJZJHDHy1LY1DPo9OCL4c+4wm0YG1icgxn/kKNDZAUaMbn2Mow1yi+V9UST
-         1RC3K3+OykfCoGu3j9Gdks/cibjBjpJqg+eWbRiyrUvNIRLDxzFqnYv7ANC+pB965jTZ
-         M/9as8MTfSHwSrDEMsY4XI3vuBkyub7TlVEMyEZkymcp7bWgiamB4fozNrfhi4yGHnPa
-         xPaA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=a7cyY5DvcOToS0jxsf2127EYKG1KEgTq0sooUAeU//c=;
+        b=rsfD8bUK8mdYRTKTTKgGts/X+0PNBnz7VjMo+/k7f/UN26aEC+XcbG+sIAxMmF+AIe
+         pXjB0VtmmAQXUx/2Cv2WvKJUnN4ao4Lce8Rsxy8xJrqAnkGzBqxncL58ZNC3gKHmAz4s
+         /uzWlWu/OU8UHrWW9Qc0NCpcO79U69Ssz8edrlAz73m2SzCk9TmJfDcOwdIJO0SBIIYj
+         1f9aG0LXh3UZhY9FMD6R1XrgANOE1MdIcxKyfg5Af6hr+3eCsOz8Lv17i2kLeUVT63z+
+         XGjrYSyJmzgHyKelpAu49+DKPq+dU08c0/z/IwRot1MSlZBA1kaif1H5bSPsloyK7pTG
+         rWSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/h9uVh0nLZKorvIp0FTRVCC56yBEf9N19EwXdTGd7O4=;
-        b=oUFfn7gq7jMDnSjm5Al4Vlz9/ChFgk9YO7CKp7sAw+i7ItXuZ+jVf2tUXK2YwfPbMj
-         auMUCvFeh2waaMyEnZX3h7s6ba2XK+OS/WYHPavZW2Lpl2Rj09ncdWPrapRi5W3EtGw6
-         RRs8k1PuJ00JLMZqWafL+/ezBWwUgTVTu1WQi5s8UBhrVbJstvcQub3LJm/pFSoFiOCi
-         XcNVVPu0DZ6iWB9PV+JolxRzDzNJDn4jtNS3TuuvCAAjAL7vUG+k0YeT7B6bb6evYVHX
-         Z7EOFPpiwoqrfqqDjbJhYgmoY+sr0T0KnjBywzymXmrzA9e35OdckdrIzVU7/7f53Lvx
-         EMYw==
-X-Gm-Message-State: AOAM5315oA9XRUu7eKw1KF+UmO8vD8PCbPzqvDQHOpCCIxC2aMQ+UTBf
-        OKLks3GBPVvnafHZIvGxX+xJ2c62wMedxcf8dGg=
-X-Google-Smtp-Source: ABdhPJwCvKC+FDUparIdvHMYMwxt/JvxCeMNhnB8zOrXOBEM+a5ccF0yn11kKTSz7HvIDFOM8eai5yjk/N9dALD+Fks=
-X-Received: by 2002:aca:d644:: with SMTP id n65mr6260594oig.31.1627777639195;
- Sat, 31 Jul 2021 17:27:19 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=a7cyY5DvcOToS0jxsf2127EYKG1KEgTq0sooUAeU//c=;
+        b=rBnfoh0RQiU4YOy6aFuWsRXEYkh+VvguJkzW0VgMC3ztlzw+BFTUCY3BAYTQhwscV6
+         iBppP8AlS4v9krARM7qMhSoUY3cM1vkbNglz1mmLLNbIJYmQPcycKFOPOd87APCAi9cZ
+         j7eHpoK1MFBR6scMsOWcYhHVlkke/d3R/5HHsMeafcn47VuYire8Q9kAIP2cpDKtWRIW
+         rZG4tchIJtiIA5FWPvtsa1fS4b3j1S9KW/Tmf/2Pnjjz0awZUVFb19iHuOzomu4JBZlX
+         n2MjwVGt+2lh2Dej9x1fdsno2GpRWvJ4+AS7hac8sGHn2Bmr7XCXMlL4u9ReaMJQVX7Z
+         O9ew==
+X-Gm-Message-State: AOAM531czzbPSUOJQIyF7c48BgiwXBvDG3jGdXUrlHJpSWqvQ6CpU+rQ
+        WMqsV9A45/fgZka46l+oacPSpMnlkuARAzUR
+X-Google-Smtp-Source: ABdhPJyMdoG14HkEF5SljHFnTF++54aX2RaZUplGBowXKyFxvS0V8FoVJH3HRiVqrbY651GIPj6mDQ==
+X-Received: by 2002:a17:90b:3556:: with SMTP id lt22mr11800432pjb.174.1627799652381;
+        Sat, 31 Jul 2021 23:34:12 -0700 (PDT)
+Received: from atharva-on-air.Dlink ([119.82.121.47])
+        by smtp.gmail.com with ESMTPSA id q17sm8847945pgd.39.2021.07.31.23.34.08
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 31 Jul 2021 23:34:11 -0700 (PDT)
+From:   Atharva Raykar <raykar.ath@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Atharva Raykar <raykar.ath@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, "Emily Shaffer" <emilyshaffer@google.com>,
+        "Jonathan Nieder" <jrnieder@gmail.com>,
+        "Junio C Hamano" <gitster@pobox.com>,
+        "Christian Couder" <christian.couder@gmail.com>,
+        "Shourya Shukla" <periperidip@gmail.com>,
+        "Kaartic Sivaraam" <kaartic.sivaraam@gmail.com>,
+        "Eric Sunshine" <sunshine@sunshineco.com>,
+        "Prathamesh Chavan" <pc44800@gmail.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        "Rafael Silva" <rafaeloliveira.cs@gmail.com>
+Subject: [GSoC] [PATCH v3] submodule--helper: introduce add-config subcommand
+Date:   Sun,  1 Aug 2021 12:03:52 +0530
+Message-Id: <20210801063352.50813-1-raykar.ath@gmail.com>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210728115304.80643-1-raykar.ath@gmail.com>
+References: <20210728115304.80643-1-raykar.ath@gmail.com>
 MIME-Version: 1.0
-References: <644619140.20210731114616@yandex.ru>
-In-Reply-To: <644619140.20210731114616@yandex.ru>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 31 Jul 2021 18:27:07 -0600
-Message-ID: <CABPp-BHkhwKFb74fUMW3nOGrCD6waBPBjp-UY2fRhU6=WUxOow@mail.gmail.com>
-Subject: Re: Ambigious messages
-To:     Eugen Konkov <kes-kes@yandex.ru>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eugen,
+Add a new "add-config" subcommand to `git submodule--helper` with the
+goal of converting part of the shell code in git-submodule.sh related to
+`git submodule add` into C code. This new subcommand sets the
+configuration variables of a newly added submodule, by registering the
+url in local git config, as well as the submodule name and path in the
+.gitmodules file. It also sets 'submodule.<name>.active' to "true" if
+the submodule path has not already been covered by any pathspec
+specified in 'submodule.active'.
 
-On Sat, Jul 31, 2021 at 2:56 AM Eugen Konkov <kes-kes@yandex.ru> wrote:
->
-> $ git checkout 51c7d41b82b5b
-> error: Your local changes to the following files would be overwritten by checkout:
->        lib/Mojo/IOLoop/Stream.pm
-> Please commit your changes or stash them before you switch branches.
-> Aborting
+This is meant to be a faithful conversion from shell to C, although we
+add comments to areas that could be improved in future patches, after
+the conversion has settled.
 
-The error seems quite reasonable to me...but can I ask how you got
-into this state?
+Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Shourya Shukla <periperidip@gmail.com>
+Based-on-patch-by: Shourya Shukla <periperidip@gmail.com>
+Based-on-patch-by: Prathamesh Chavan <pc44800@gmail.com>
+---
 
-There's two ways I know of:
+Changes since v2:
 
-1) Setting a sparse-checkout to only have certain paths, and then
-recreating a file outside the sparsity paths anyway.
-2) Trying to adjust your sparse-checkout to have a different set of
-paths, then hit Ctrl-C while it is in the middle of running.
+* Change the commit message, which erroneously still spoke about a warning that
+  has since been removed.
 
-Did you do one of these?  If not, what'd you do?  If so, which one?
+* Change the structure of the code that checks if a submodule is active, so that
+  it more closely resembles the conditional in the original shell version, and
+  preserves the original comments.
 
-I've only had confused users come to me when they did the latter; they
-apparently assumed Ctrl-C would abort the operation and return to the
-previous state, but it does not -- whatever was successfully checked
-out before they hit Ctrl-C remains written to the working copy, but
-the .git/info/sparse-checkout file is updated last so the system
-continues assuming the old checkout.  I wonder if we need to add some
-special Ctrl-C handling inside sparse-checkout adjustments or
-something.
+* Add NEEDSWORK comments, one to state the future intention of removing the
+  check for 'submodule.active' before anyway calling is_submodule_active().
+  The other comment is to state the intention of adding a warning in a future
+  patch when 'is_submodule_active()' reads a valueless 'submodule.active'.
 
-> $ git checkout lib/Mojo/IOLoop/Stream.pm
-> error: pathspec 'lib/Mojo/IOLoop/Stream.pm' did not match any file(s) known to git
+Fetch-it-via:
+git fetch https://github.com/tfidfwastaken/git.git submodule-helper-add-config-3
 
-This error message is clearly suboptimal and should be improved.
-Alternatively, though, we could perhaps change the behavior so that
-when in a sparse-checkout and the file(s) that match are SKIP_WORKTREE
-but present anyway, we could just remove the file from the working
-copy (i.e. make it match the index).
+ builtin/submodule--helper.c | 128 ++++++++++++++++++++++++++++++++++++
+ git-submodule.sh            |  28 +-------
+ submodule.c                 |   5 ++
+ 3 files changed, 134 insertions(+), 27 deletions(-)
 
-> $ git add lib/Mojo/IOLoop/Stream.pm
-> The following pathspecs didn't match any eligible path, but they do match index
-> entries outside the current sparse checkout:
-> lib/Mojo/IOLoop/Stream.pm
-> hint: Disable or modify the sparsity rules if you intend to update such entries.
-> hint: Disable this message with "git config advice.updateSparsePath false"
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 862053c9f2..791ceeb63e 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2936,6 +2936,133 @@ static int add_clone(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
+ 
++static int config_submodule_in_gitmodules(const char *name, const char *var, const char *value)
++{
++	char *key;
++	int ret;
++
++	if (!is_writing_gitmodules_ok())
++		die(_("please make sure that the .gitmodules file is in the working tree"));
++
++	key = xstrfmt("submodule.%s.%s", name, var);
++	ret = config_set_in_gitmodules_file_gently(key, value);
++	free(key);
++
++	return ret;
++}
++
++static void configure_added_submodule(struct add_data *add_data)
++{
++	char *key;
++	char *val = NULL;
++	struct child_process add_submod = CHILD_PROCESS_INIT;
++	struct child_process add_gitmodules = CHILD_PROCESS_INIT;
++
++	key = xstrfmt("submodule.%s.url", add_data->sm_name);
++	git_config_set_gently(key, add_data->realrepo);
++	free(key);
++
++	add_submod.git_cmd = 1;
++	strvec_pushl(&add_submod.args, "add",
++		     "--no-warn-embedded-repo", NULL);
++	if (add_data->force)
++		strvec_push(&add_submod.args, "--force");
++	strvec_pushl(&add_submod.args, "--", add_data->sm_path, NULL);
++
++	if (run_command(&add_submod))
++		die(_("Failed to add submodule '%s'"), add_data->sm_path);
++
++	if (config_submodule_in_gitmodules(add_data->sm_name, "path", add_data->sm_path) ||
++	    config_submodule_in_gitmodules(add_data->sm_name, "url", add_data->repo))
++		die(_("Failed to register submodule '%s'"), add_data->sm_path);
++
++	if (add_data->branch)
++		if (config_submodule_in_gitmodules(add_data->sm_name,
++						   "branch", add_data->branch))
++			die(_("Failed to register submodule '%s'"), add_data->sm_path);
++
++	add_gitmodules.git_cmd = 1;
++	strvec_pushl(&add_gitmodules.args,
++		     "add", "--force", "--", ".gitmodules", NULL);
++
++	if (run_command(&add_gitmodules))
++		die(_("Failed to register submodule '%s'"), add_data->sm_path);
++
++	/*
++	 * NEEDSWORK: In a multi-working-tree world this needs to be
++	 * set in the per-worktree config.
++	 */
++	/*
++	 * NEEDSWORK: In the longer run, we need to get rid of this
++	 * pattern of querying "submodule.active" before calling
++	 * is_submodule_active(), since that function needs to find
++	 * out the value of "submodule.active" again anyway.
++	 */
++	if (!git_config_get_string("submodule.active", &val) && val) {
++		/*
++		 * If the submodule being added isn't already covered by the
++		 * current configured pathspec, set the submodule's active flag
++		 */
++		if (!is_submodule_active(the_repository, add_data->sm_path)) {
++			key = xstrfmt("submodule.%s.active", add_data->sm_name);
++			git_config_set_gently(key, "true");
++			free(key);
++		}
++	} else {
++		key = xstrfmt("submodule.%s.active", add_data->sm_name);
++		git_config_set_gently(key, "true");
++		free(key);
++	}
++}
++
++static int add_config(int argc, const char **argv, const char *prefix)
++{
++	int force = 0;
++	struct add_data add_data = ADD_DATA_INIT;
++
++	struct option options[] = {
++		OPT_STRING('b', "branch", &add_data.branch,
++			   N_("branch"),
++			   N_("branch of repository to store in "
++			      "the submodule configuration")),
++		OPT_STRING(0, "url", &add_data.repo,
++			   N_("string"),
++			   N_("url to clone submodule from")),
++		OPT_STRING(0, "resolved-url", &add_data.realrepo,
++			   N_("string"),
++			   N_("url to clone the submodule from, after it has "
++			      "been dereferenced relative to parent's url, "
++			      "in the case where <url> is a relative url")),
++		OPT_STRING(0, "path", &add_data.sm_path,
++			   N_("path"),
++			   N_("where the new submodule will be cloned to")),
++		OPT_STRING(0, "name", &add_data.sm_name,
++			   N_("string"),
++			   N_("name of the new submodule")),
++		OPT__FORCE(&force, N_("allow adding an otherwise ignored submodule path"),
++			   PARSE_OPT_NOCOMPLETE),
++		OPT_END()
++	};
++
++	const char *const usage[] = {
++		N_("git submodule--helper add-config "
++		   "[--force|-f] [--branch|-b <branch>] "
++		   "--url <url> --resolved-url <resolved-url> "
++		   "--path <path> --name <name>"),
++		NULL
++	};
++
++	argc = parse_options(argc, argv, prefix, options, usage, 0);
++
++	if (argc)
++		usage_with_options(usage, options);
++
++	add_data.force = !!force;
++	configure_added_submodule(&add_data);
++
++	return 0;
++}
++
+ #define SUPPORT_SUPER_PREFIX (1<<0)
+ 
+ struct cmd_struct {
+@@ -2949,6 +3076,7 @@ static struct cmd_struct commands[] = {
+ 	{"name", module_name, 0},
+ 	{"clone", module_clone, 0},
+ 	{"add-clone", add_clone, 0},
++	{"add-config", add_config, 0},
+ 	{"update-module-mode", module_update_module_mode, 0},
+ 	{"update-clone", update_clone, 0},
+ 	{"ensure-core-worktree", ensure_core_worktree, 0},
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 053daf3724..f713cb113c 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -242,33 +242,7 @@ cmd_add()
+ 	fi
+ 
+ 	git submodule--helper add-clone ${GIT_QUIET:+--quiet} ${force:+"--force"} ${progress:+"--progress"} ${branch:+--branch "$branch"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"--dissociate"} ${depth:+"$depth"} || exit
+-	git config submodule."$sm_name".url "$realrepo"
+-
+-	git add --no-warn-embedded-repo $force "$sm_path" ||
+-	die "fatal: $(eval_gettext "Failed to add submodule '\$sm_path'")"
+-
+-	git submodule--helper config submodule."$sm_name".path "$sm_path" &&
+-	git submodule--helper config submodule."$sm_name".url "$repo" &&
+-	if test -n "$branch"
+-	then
+-		git submodule--helper config submodule."$sm_name".branch "$branch"
+-	fi &&
+-	git add --force .gitmodules ||
+-	die "fatal: $(eval_gettext "Failed to register submodule '\$sm_path'")"
+-
+-	# NEEDSWORK: In a multi-working-tree world, this needs to be
+-	# set in the per-worktree config.
+-	if git config --get submodule.active >/dev/null
+-	then
+-		# If the submodule being adding isn't already covered by the
+-		# current configured pathspec, set the submodule's active flag
+-		if ! git submodule--helper is-active "$sm_path"
+-		then
+-			git config submodule."$sm_name".active "true"
+-		fi
+-	else
+-		git config submodule."$sm_name".active "true"
+-	fi
++	git submodule--helper add-config ${force:+--force} ${branch:+--branch "$branch"} --url "$repo" --resolved-url "$realrepo" --path "$sm_path" --name "$sm_name"
+ }
+ 
+ #
+diff --git a/submodule.c b/submodule.c
+index 0b1d9c1dde..8577667773 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -237,6 +237,11 @@ int option_parse_recurse_submodules_worktree_updater(const struct option *opt,
+ /*
+  * Determine if a submodule has been initialized at a given 'path'
+  */
++/*
++ * NEEDSWORK: Emit a warning if submodule.active exists, but is valueless,
++ * ie, the config looks like: "[submodule] active\n".
++ * Since that is an invalid pathspec, we should inform the user.
++ */
+ int is_submodule_active(struct repository *repo, const char *path)
+ {
+ 	int ret = 0;
+-- 
+2.32.0
 
-The error message is correct, but this is the case Stolee was talking
-about recently where it'd be good to add an override to "git add" to
-allow adding it anyway and add information about using that option to
-this error message.
-
-> $ git --version
-> git version 2.32.0
->
-> Here I do not understand how to checkout to different commit
-> or how to commit the subject file
-
-I'll give you three different ways you should be able to do it:
-
-1. Since you wanted to just restore the file to the version in the
-index (as per your `git checkout lib/Mojo/IOLoop/Stream.pm` command),
-you can simply delete the file (`rm lib/Mojo/IOLoop/Stream.pm`) and
-everything would be fine.
-
-2. You could change your sparsity paths to include this file so it
-doesn't think it should be excluded from the working tree, e.g. `git
-sparse-checkout add lib/Mojo/IOLoop` or even `git sparse-checkout add
-lib/Mojo/IOLoop/Stream.pm`.  That'd be most useful if you made
-important edits to the file or want to continue editing the file and
-committing changes in it.
-
-3. You could just disable the sparse-checkout entirely (`git
-sparse-checkout disable`).  That'd make it so you don't have to worry
-about this path or any other being simultaneously excluded and present
-in the working tree.  You should be able to fix things up normally.
-And, if you want, when you're done fixing things up, then set up a
-sparse-checkout again.
-
-
-> It would be nice to show hint about how to exlude this file from unindex
-
-Yes, we need to improve some error messages here (and perhaps tweak
-some behavior as well).  Thanks for the report.
-
-Elijah
