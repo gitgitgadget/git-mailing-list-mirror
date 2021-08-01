@@ -2,200 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 431B8C4338F
-	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 20:37:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D45FDC4320E
+	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 00:07:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2C7C160725
-	for <git@archiver.kernel.org>; Sat, 31 Jul 2021 20:37:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B71C761042
+	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 00:07:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231739AbhGaUhQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 31 Jul 2021 16:37:16 -0400
-Received: from mail-40136.protonmail.ch ([185.70.40.136]:56306 "EHLO
-        mail-40136.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231462AbhGaUhP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Jul 2021 16:37:15 -0400
-Date:   Sat, 31 Jul 2021 20:36:59 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=eagain.st;
-        s=protonmail; t=1627763826;
-        bh=AsUKO9tmNoY30Bt9xizBWwCSN5mBGQZT5vZO9alNM+4=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=iwlb+mNiFOtK+xI5RLJYQ0+ZNpxwlLPZsZk9Z6Xh7N5H9V0GctOZZwVesuM2WjyXU
-         nmuapQU5UAcDAeq6wVEX5uqu1gBDpOUoekG/GOW/DgjJmh1M5zq5RZbeJ7wKgKl3wS
-         UYSPDJedfXuNATUeoXQymwialsnxptMJa/TunIN+MmdJjVJ8yilPy+6vphWVJmXwP2
-         WTg0KdGmAWkx2v1UJ65Fn6crJZYb/BQoRUK5fShpQeyo8b04x+ixLGCH4Qy564XlFY
-         d25FwQpIE2kimGTCaC3XBct0GePn8G8Y2ZO1RBmO3k80uClS8PVfUQeicdUw53IsS3
-         rQxLb1VKcAbew==
-To:     git@vger.kernel.org
-From:   Kim Altintop <kim@eagain.st>
-Cc:     Kim Altintop <kim@eagain.st>,
-        Brandon Williams <bwilliams.eng@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Reply-To: Kim Altintop <kim@eagain.st>
-Subject: [PATCH v2] upload-pack.c: treat want-ref relative to namespace
-Message-ID: <20210731203415.618641-1-kim@eagain.st>
-In-Reply-To: <20210730135845.633234-1-kim@eagain.st>
-References: <20210730135845.633234-1-kim@eagain.st>
+        id S229761AbhHAAHx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 31 Jul 2021 20:07:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36384 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229465AbhHAAHx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Jul 2021 20:07:53 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECF93C06175F
+        for <git@vger.kernel.org>; Sat, 31 Jul 2021 17:07:44 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id d8so16598950wrm.4
+        for <git@vger.kernel.org>; Sat, 31 Jul 2021 17:07:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=sYY9oOQA8LmHjf5RsofxwS0zRf/KFOLozjHIV890fuQ=;
+        b=nexOaYCExMvegfhUwufj55aCcq4ANFlYkolJBEEs9ycTXJhtIfSMSZhrg87MIhIoFZ
+         D5kauWR/Xoq1DCzi0MAA0dMqnJgxVmKTbLSeebraMKoeTMqmpT72exfACUyHv/YrsGhl
+         x6bhKv7ZAxYdeNhoIZ5pcgDOaoZJhmeROgKWcDIvscNwrXEjCf1Q8N6oVXg5b4Y8Zs/s
+         0CkMcoSuf8qEg9qqnNtqhIVXP6p0Uer/LA++OIHCyAvo52GUjusHs46BqXbINcgvXg45
+         //vW7pSaT0MxA7dQ7phjnjrYDuqtJCUekTC9VtfUPbonHMLUf04ACvWm6Y/3g5YmbJBw
+         zqJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=sYY9oOQA8LmHjf5RsofxwS0zRf/KFOLozjHIV890fuQ=;
+        b=NxP5Ub0BRB7F+l4Ci0Z7E6POoVKFTRx5hL+cUsgJOHoCUbnHVhkosLa+H5e5rzrHnx
+         phYdm2KAzYvkKVLgsEI1Bf+DtmRJxdUs7Aqxr+tMaAlLoB/YaGcZIcWz4CCW1w0POHme
+         ofi57Y4CsYrmPDvXiMHzRhq6NsdHpejb4lcjpSqCxFBOpRWYr95CiRptiiaw9AuHZgvg
+         lmATGF8HgZ6a8saCVFXh+uH0jfEgsJ05M+k3kYS1/uVt1ilaxOa4hsbye93Kx/Hl1UAs
+         8EWNAuWwmyp2332WG+xwRzYMl1Dx7NlhcKXC+jJ37wIfAZBKLkKwmwfOZJsSETIUc/f8
+         ciVw==
+X-Gm-Message-State: AOAM530kMn9dAuQ4JrmzpOr+GsynE/1SGs+2I0bYgGw7qrJXGN8IHOEC
+        MXWiB9nFQ79QFYPp7PUbAJBzZWgH+Uk=
+X-Google-Smtp-Source: ABdhPJz/v2FWfbsAvC7+zaB/n0n/xs+jl8XYHsSJ1FVNcGKXNh4We1cJ/ATUC+tEMMRJ+/Am8Y6bbw==
+X-Received: by 2002:adf:80e8:: with SMTP id 95mr10140021wrl.388.1627776463576;
+        Sat, 31 Jul 2021 17:07:43 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l33sm5348951wms.12.2021.07.31.17.07.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 31 Jul 2021 17:07:43 -0700 (PDT)
+Message-Id: <pull.1055.git.git.1627776461.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 01 Aug 2021 00:07:39 +0000
+Subject: [PATCH 0/2] [RFC] Switch default merge backend from recursive to ort
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Christian Couder <chriscool@tuxfamily.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When 'upload-pack' runs within the context of a git namespace, treat any
-'want-ref' lines the client sends as relative to that namespace.
+This is an RFC series designed to spur feedback about switching the default
+merge backend (reviewing the patches is of secondary importance at this
+point). Some questions:
 
-Also check if the wanted ref is hidden via 'hideRefs'. If it is hidden,
-respond with an error as if the ref didn't exist.
+ * Are there things others want before this series is considered for
+   inclusion?
+ * What kind of timeline do others think is reasonable?
+ * Would it be beneficial to let this series sit in 'next' for an extended
+   duration to gain more feedback?
 
-Signed-off-by: Kim Altintop <kim@eagain.st>
----
+Some potentially useful context in relation to the above:
 
-Changes from v1:
+ * I've personally used the ort backend for well over a year
+ * I have ~50 testers using ort as the default merge backend since Nov.
+   2020.
+ * ort fixes known bugs in recursive, and there are no known regressions
+   (more testers may change that)
+ * ort is significantly faster than recursive
+ * ort provides one new feature already, and enables more that are on the
+   way
+ * The commit message of patch 1 has more details about the last three items
+   above
 
-  * Amend commit message
-  * upload-pack.c: fix variable renaming (how could this even work?)
-  * upload-pack.c: hide namespace in all output, including die()
-  * t5703: don't use subshell in repo setup
-  * t5703: use "env" keyword to correctly scope GIT_NAMESPACE
+So...thoughts?
 
+Elijah Newren (2):
+  Change default merge backend from recursive to ort
+  Update docs for change of default merge backend
 
- t/t5703-upload-pack-ref-in-want.sh | 72 ++++++++++++++++++++++++++++++
- upload-pack.c                      | 17 ++++---
- 2 files changed, 82 insertions(+), 7 deletions(-)
-
-diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-i=
-n-want.sh
-index e9e471621d..96df3073d1 100755
---- a/t/t5703-upload-pack-ref-in-want.sh
-+++ b/t/t5703-upload-pack-ref-in-want.sh
-@@ -298,6 +298,78 @@ test_expect_success 'fetching with wildcard that match=
-es multiple refs' '
- =09grep "want-ref refs/heads/o/bar" log
- '
-
-+REPO=3D"$(pwd)/repo-ns"
-+
-+test_expect_success 'setup namespaced repo' '
-+=09git init -b main "$REPO" &&
-+=09cd "$REPO" &&
-+=09test_commit a &&
-+=09test_commit b &&
-+=09git checkout a &&
-+=09test_commit c &&
-+=09git checkout a &&
-+=09test_commit d &&
-+=09git update-ref refs/heads/ns-no b &&
-+=09git update-ref refs/namespaces/ns/refs/heads/ns-yes c &&
-+=09git update-ref refs/namespaces/ns/refs/heads/hidden d &&
-+=09git -C "$REPO" config uploadpack.allowRefInWant true &&
-+=09git -C "$REPO" config transfer.hideRefs refs/heads/hidden
-+'
-+
-+test_expect_success 'want-ref with namespaces' '
-+=09oid=3D$(git -C "$REPO" rev-parse c) &&
-+=09cat >expected_refs <<-EOF &&
-+=09$oid refs/heads/ns-yes
-+=09EOF
-+=09>expected_commits &&
-+
-+=09oid=3D$(git -C "$REPO" rev-parse c) &&
-+=09test-tool pkt-line pack >in <<-EOF &&
-+=09$(write_command fetch)
-+=090001
-+=09no-progress
-+=09want-ref refs/heads/ns-yes
-+=09have $oid
-+=09done
-+=090000
-+=09EOF
-+
-+=09env GIT_NAMESPACE=3Dns test-tool -C "$REPO" serve-v2 --stateless-rpc >o=
-ut <in &&
-+=09check_output
-+'
-+
-+test_expect_success 'want-ref outside namespace' '
-+=09oid=3D$(git -C "$REPO" rev-parse c) &&
-+=09test-tool pkt-line pack >in <<-EOF &&
-+=09$(write_command fetch)
-+=090001
-+=09no-progress
-+=09want-ref refs/heads/ns-no
-+=09have $oid
-+=09done
-+=090000
-+=09EOF
-+
-+=09test_must_fail env GIT_NAMESPACE=3Dns test-tool -C "$REPO" serve-v2 --s=
-tateless-rpc >out <in &&
-+=09grep "unknown ref" out
-+'
-+
-+test_expect_success 'hideRefs with namespaces' '
-+=09oid=3D$(git -C "$REPO" rev-parse c) &&
-+=09test-tool pkt-line pack >in <<-EOF &&
-+=09$(write_command fetch)
-+=090001
-+=09no-progress
-+=09want-ref refs/heads/hidden
-+=09have $oid
-+=09done
-+=090000
-+=09EOF
-+
-+=09test_must_fail env GIT_NAMESPACE=3Dns test-tool -C "$REPO" serve-v2 --s=
-tateless-rpc >out <in &&
-+=09grep "unknown ref" out
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
-
-diff --git a/upload-pack.c b/upload-pack.c
-index 297b76fcb4..c897802f1c 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1417,21 +1417,24 @@ static int parse_want_ref(struct packet_writer *wri=
-ter, const char *line,
- =09=09=09  struct string_list *wanted_refs,
- =09=09=09  struct object_array *want_obj)
- {
--=09const char *arg;
--=09if (skip_prefix(line, "want-ref ", &arg)) {
-+=09const char *refname_nons;
-+=09if (skip_prefix(line, "want-ref ", &refname_nons)) {
- =09=09struct object_id oid;
- =09=09struct string_list_item *item;
- =09=09struct object *o;
-+=09=09struct strbuf refname =3D STRBUF_INIT;
-
--=09=09if (read_ref(arg, &oid)) {
--=09=09=09packet_writer_error(writer, "unknown ref %s", arg);
--=09=09=09die("unknown ref %s", arg);
-+=09=09strbuf_addf(&refname, "%s%s", get_git_namespace(), refname_nons);
-+=09=09if (ref_is_hidden(refname_nons, refname.buf) ||
-+=09=09    read_ref(refname.buf, &oid)) {
-+=09=09=09packet_writer_error(writer, "unknown ref %s", refname_nons);
-+=09=09=09die("unknown ref %s", refname_nons);
- =09=09}
-
--=09=09item =3D string_list_append(wanted_refs, arg);
-+=09=09item =3D string_list_append(wanted_refs, refname_nons);
- =09=09item->util =3D oiddup(&oid);
-
--=09=09o =3D parse_object_or_die(&oid, arg);
-+=09=09o =3D parse_object_or_die(&oid, refname_nons);
- =09=09if (!(o->flags & WANTED)) {
- =09=09=09o->flags |=3D WANTED;
- =09=09=09add_object_array(o, NULL, want_obj);
---
-2.32.0
+ Documentation/git-rebase.txt                  | 17 ++--
+ Documentation/gitfaq.txt                      |  2 +-
+ Documentation/merge-options.txt               |  4 +-
+ Documentation/merge-strategies.txt            | 98 +++++++++++--------
+ .../technical/directory-rename-detection.txt  | 14 +--
+ Documentation/user-manual.txt                 |  2 +-
+ builtin/merge.c                               | 10 +-
+ builtin/rebase.c                              |  2 +-
+ sequencer.c                                   |  4 +-
+ 9 files changed, 89 insertions(+), 64 deletions(-)
 
 
+base-commit: eb27b338a3e71c7c4079fbac8aeae3f8fbb5c687
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1055%2Fnewren%2Fort-default-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1055/newren/ort-default-v1
+Pull-Request: https://github.com/git/git/pull/1055
+-- 
+gitgitgadget
