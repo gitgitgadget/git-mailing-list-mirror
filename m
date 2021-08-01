@@ -2,330 +2,221 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E745AC4338F
-	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 06:34:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0297C4338F
+	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 06:45:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C41F461057
-	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 06:34:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A88E161050
+	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 06:45:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229907AbhHAGeW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Aug 2021 02:34:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41160 "EHLO
+        id S229570AbhHAGpl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Aug 2021 02:45:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230045AbhHAGeU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Aug 2021 02:34:20 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E625C06175F
-        for <git@vger.kernel.org>; Sat, 31 Jul 2021 23:34:13 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id z3so14723919plg.8
-        for <git@vger.kernel.org>; Sat, 31 Jul 2021 23:34:13 -0700 (PDT)
+        with ESMTP id S229543AbhHAGpi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Aug 2021 02:45:38 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99528C06175F
+        for <git@vger.kernel.org>; Sat, 31 Jul 2021 23:45:30 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id l18so16588437ioh.11
+        for <git@vger.kernel.org>; Sat, 31 Jul 2021 23:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=a7cyY5DvcOToS0jxsf2127EYKG1KEgTq0sooUAeU//c=;
-        b=rsfD8bUK8mdYRTKTTKgGts/X+0PNBnz7VjMo+/k7f/UN26aEC+XcbG+sIAxMmF+AIe
-         pXjB0VtmmAQXUx/2Cv2WvKJUnN4ao4Lce8Rsxy8xJrqAnkGzBqxncL58ZNC3gKHmAz4s
-         /uzWlWu/OU8UHrWW9Qc0NCpcO79U69Ssz8edrlAz73m2SzCk9TmJfDcOwdIJO0SBIIYj
-         1f9aG0LXh3UZhY9FMD6R1XrgANOE1MdIcxKyfg5Af6hr+3eCsOz8Lv17i2kLeUVT63z+
-         XGjrYSyJmzgHyKelpAu49+DKPq+dU08c0/z/IwRot1MSlZBA1kaif1H5bSPsloyK7pTG
-         rWSQ==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=QkunUBaJRrmwRLefmE8Fa5o0cZdCdcvNXHIT2POTrLA=;
+        b=QU4srcyeB8NeKWpf02mUfTGm6g+O/vfKQRxImtp0ohbRvRPduA1PWCMlLoPx25dVTS
+         ApPjJ6h774UwGqqoElRMfX9T58ooM9ufsi8EZIldlTErTVvcxpG2WNLY+SRxZrKPfdoG
+         baYYLcHjQv/99PyY0roYEL9Xlj0Ev6rt9Il8+tXjMZGGAfgScbUEQBPOOUmIFmR3NJBb
+         DjkJIj2NKZ/zu2W0s0A4/XlG/AAhk6b0pLev+726E/zt74cgIML1U41L52JpmfAI+EV9
+         XNjztRfV64fChmmJL6gf0mJReJsmybG+MsoLM93lfsscNaoTQDXukHPh5MD6rtertNhH
+         kRMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=a7cyY5DvcOToS0jxsf2127EYKG1KEgTq0sooUAeU//c=;
-        b=rBnfoh0RQiU4YOy6aFuWsRXEYkh+VvguJkzW0VgMC3ztlzw+BFTUCY3BAYTQhwscV6
-         iBppP8AlS4v9krARM7qMhSoUY3cM1vkbNglz1mmLLNbIJYmQPcycKFOPOd87APCAi9cZ
-         j7eHpoK1MFBR6scMsOWcYhHVlkke/d3R/5HHsMeafcn47VuYire8Q9kAIP2cpDKtWRIW
-         rZG4tchIJtiIA5FWPvtsa1fS4b3j1S9KW/Tmf/2Pnjjz0awZUVFb19iHuOzomu4JBZlX
-         n2MjwVGt+2lh2Dej9x1fdsno2GpRWvJ4+AS7hac8sGHn2Bmr7XCXMlL4u9ReaMJQVX7Z
-         O9ew==
-X-Gm-Message-State: AOAM531czzbPSUOJQIyF7c48BgiwXBvDG3jGdXUrlHJpSWqvQ6CpU+rQ
-        WMqsV9A45/fgZka46l+oacPSpMnlkuARAzUR
-X-Google-Smtp-Source: ABdhPJyMdoG14HkEF5SljHFnTF++54aX2RaZUplGBowXKyFxvS0V8FoVJH3HRiVqrbY651GIPj6mDQ==
-X-Received: by 2002:a17:90b:3556:: with SMTP id lt22mr11800432pjb.174.1627799652381;
-        Sat, 31 Jul 2021 23:34:12 -0700 (PDT)
-Received: from atharva-on-air.Dlink ([119.82.121.47])
-        by smtp.gmail.com with ESMTPSA id q17sm8847945pgd.39.2021.07.31.23.34.08
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 31 Jul 2021 23:34:11 -0700 (PDT)
-From:   Atharva Raykar <raykar.ath@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Atharva Raykar <raykar.ath@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, "Emily Shaffer" <emilyshaffer@google.com>,
-        "Jonathan Nieder" <jrnieder@gmail.com>,
-        "Junio C Hamano" <gitster@pobox.com>,
-        "Christian Couder" <christian.couder@gmail.com>,
-        "Shourya Shukla" <periperidip@gmail.com>,
-        "Kaartic Sivaraam" <kaartic.sivaraam@gmail.com>,
-        "Eric Sunshine" <sunshine@sunshineco.com>,
-        "Prathamesh Chavan" <pc44800@gmail.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>,
-        "Rafael Silva" <rafaeloliveira.cs@gmail.com>
-Subject: [GSoC] [PATCH v3] submodule--helper: introduce add-config subcommand
-Date:   Sun,  1 Aug 2021 12:03:52 +0530
-Message-Id: <20210801063352.50813-1-raykar.ath@gmail.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210728115304.80643-1-raykar.ath@gmail.com>
-References: <20210728115304.80643-1-raykar.ath@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=QkunUBaJRrmwRLefmE8Fa5o0cZdCdcvNXHIT2POTrLA=;
+        b=PNSEDQIV6Bag+V2YkjvHS0nUzhNwLRGaFasm4h2+2VUQl42Uwz67js7reAMWMa7GmX
+         OilW2Lmtan3/kipYI9PAkCl2AZisXbDjX07lQ60smK107+poyawZucnTg2eomRZMtX41
+         wYcfa7J6WChVwCeNq17pbmXYp8U2wzA3ppjua3wVIEuwmhr1nHUzFABFr0qv1zhMX/jx
+         V7NSy8eEyflExIz9g1QjzuDgEQYNFRxk7AqwhZ0v+UoCq3uux4CQSxoTtDtyFEZ8Z7Vo
+         3mE3OTN9T18KftGv3Kk+QRR7Y1r2unkIb1gOm0MKWL9hd5b2Ko7RIna/FOZ8dK8Z4Cqy
+         yI+A==
+X-Gm-Message-State: AOAM530lDkoN/r7I6BTD51KRho4ES8IJSQA84ZWb8S3fDHZu6QwHN5i0
+        oUIPLzWfgR8LWRrnrALOrvUmUZvn6UHLAABxhgWtGVqLp6K3/l9y5Eg=
+X-Google-Smtp-Source: ABdhPJx15Yz7RB5fIArkyYI2VGJIqikWC5xwXaHD+7+5UOAsdxfCMOTFYNRETox9B6CwttOLaPAIb/4b/l898Jz9tDo=
+X-Received: by 2002:a05:6602:25da:: with SMTP id d26mr780505iop.106.1627800330042;
+ Sat, 31 Jul 2021 23:45:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sun, 1 Aug 2021 14:46:09 +0800
+Message-ID: <CAOLTT8RwwMF07f=XxWN=zGsPU0VQ8FqPVdyepQp78Ei8WZpSrw@mail.gmail.com>
+Subject: [GSoC] Git Blog 11
+To:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom verma <hariom18599@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new "add-config" subcommand to `git submodule--helper` with the
-goal of converting part of the shell code in git-submodule.sh related to
-`git submodule add` into C code. This new subcommand sets the
-configuration variables of a newly added submodule, by registering the
-url in local git config, as well as the submodule name and path in the
-.gitmodules file. It also sets 'submodule.<name>.active' to "true" if
-the submodule path has not already been covered by any pathspec
-specified in 'submodule.active'.
+My eleventh week blog finished:
+The web version is here:
+https://adlternative.github.io/GSOC-Git-Blog-11/
 
-This is meant to be a faithful conversion from shell to C, although we
-add comments to areas that could be improved in future patches, after
-the conversion has settled.
+### Attempt to optimize performance
 
-Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Shourya Shukla <periperidip@gmail.com>
-Based-on-patch-by: Shourya Shukla <periperidip@gmail.com>
-Based-on-patch-by: Prathamesh Chavan <pc44800@gmail.com>
----
+This week, at the prompt of my mentor Christian, I used `gprof` for some
+performance tests about `git cat-file --batch`:
+[Re: [GSOC] How to improve the performance of git cat-file --batch]
+(https://lore.kernel.org/git/CAOLTT8TdL7UhfVSOzbpmo-WFNrcKwmy=E720tNt4KM9o_p=keg@mail.gmail.com/)
 
-Changes since v2:
+```
+This is my test for git cat-file --batch --batch-all-objects >/dev/null:
 
-* Change the commit message, which erroneously still spoke about a warning that
-  has since been removed.
+daab8a564: The fifth batch (upstream/master)
 
-* Change the structure of the code that checks if a submodule is active, so that
-  it more closely resembles the conditional in the original shell version, and
-  preserves the original comments.
+Flat profile:
 
-* Add NEEDSWORK comments, one to state the future intention of removing the
-  check for 'submodule.active' before anyway calling is_submodule_active().
-  The other comment is to state the intention of adding a warning in a future
-  patch when 'is_submodule_active()' reads a valueless 'submodule.active'.
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total
+ time   seconds   seconds    calls   s/call   s/call  name
+ 38.13      0.61     0.61  1968866     0.00     0.00  patch_delta
+ 13.75      0.83     0.22  6568488     0.00     0.00
+unpack_object_header_buffer
+ 11.25      1.01     0.18   344036     0.00     0.00  unpack_entry
+  7.50      1.13     0.12  1964667     0.00     0.00  hashmap_remove
+  6.88      1.24     0.11  6153182     0.00     0.00  hashmap_get
+  1.88      1.27     0.03  7746299     0.00     0.00  zlib_post_call
+  1.88      1.30     0.03   842731     0.00     0.00  bsearch_hash
+  1.88      1.33     0.03   827663     0.00     0.00  nth_packed_object_offset
+  1.25      1.35     0.02 15385422     0.00     0.00  use_pack
+  1.25      1.37     0.02  6236120     0.00     0.00  get_delta_base
+  1.25      1.39     0.02  2581859     0.00     0.00  git_inflate_end
+  1.25      1.41     0.02   826650     0.00     0.00
+do_oid_object_info_extended
+  1.25      1.43     0.02   826650     0.00     0.00  find_pack_entry
+  1.25      1.45     0.02   825692     0.00     0.00  packed_to_object_type
+  1.25      1.47     0.02   378521     0.00     0.00  get_size_from_delta
 
-Fetch-it-via:
-git fetch https://github.com/tfidfwastaken/git.git submodule-helper-add-config-3
 
- builtin/submodule--helper.c | 128 ++++++++++++++++++++++++++++++++++++
- git-submodule.sh            |  28 +-------
- submodule.c                 |   5 ++
- 3 files changed, 134 insertions(+), 27 deletions(-)
+d3b5272a94: [GSOC] cat-file: reuse ref-filter logic
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 862053c9f2..791ceeb63e 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2936,6 +2936,133 @@ static int add_clone(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+static int config_submodule_in_gitmodules(const char *name, const char *var, const char *value)
-+{
-+	char *key;
-+	int ret;
-+
-+	if (!is_writing_gitmodules_ok())
-+		die(_("please make sure that the .gitmodules file is in the working tree"));
-+
-+	key = xstrfmt("submodule.%s.%s", name, var);
-+	ret = config_set_in_gitmodules_file_gently(key, value);
-+	free(key);
-+
-+	return ret;
-+}
-+
-+static void configure_added_submodule(struct add_data *add_data)
-+{
-+	char *key;
-+	char *val = NULL;
-+	struct child_process add_submod = CHILD_PROCESS_INIT;
-+	struct child_process add_gitmodules = CHILD_PROCESS_INIT;
-+
-+	key = xstrfmt("submodule.%s.url", add_data->sm_name);
-+	git_config_set_gently(key, add_data->realrepo);
-+	free(key);
-+
-+	add_submod.git_cmd = 1;
-+	strvec_pushl(&add_submod.args, "add",
-+		     "--no-warn-embedded-repo", NULL);
-+	if (add_data->force)
-+		strvec_push(&add_submod.args, "--force");
-+	strvec_pushl(&add_submod.args, "--", add_data->sm_path, NULL);
-+
-+	if (run_command(&add_submod))
-+		die(_("Failed to add submodule '%s'"), add_data->sm_path);
-+
-+	if (config_submodule_in_gitmodules(add_data->sm_name, "path", add_data->sm_path) ||
-+	    config_submodule_in_gitmodules(add_data->sm_name, "url", add_data->repo))
-+		die(_("Failed to register submodule '%s'"), add_data->sm_path);
-+
-+	if (add_data->branch)
-+		if (config_submodule_in_gitmodules(add_data->sm_name,
-+						   "branch", add_data->branch))
-+			die(_("Failed to register submodule '%s'"), add_data->sm_path);
-+
-+	add_gitmodules.git_cmd = 1;
-+	strvec_pushl(&add_gitmodules.args,
-+		     "add", "--force", "--", ".gitmodules", NULL);
-+
-+	if (run_command(&add_gitmodules))
-+		die(_("Failed to register submodule '%s'"), add_data->sm_path);
-+
-+	/*
-+	 * NEEDSWORK: In a multi-working-tree world this needs to be
-+	 * set in the per-worktree config.
-+	 */
-+	/*
-+	 * NEEDSWORK: In the longer run, we need to get rid of this
-+	 * pattern of querying "submodule.active" before calling
-+	 * is_submodule_active(), since that function needs to find
-+	 * out the value of "submodule.active" again anyway.
-+	 */
-+	if (!git_config_get_string("submodule.active", &val) && val) {
-+		/*
-+		 * If the submodule being added isn't already covered by the
-+		 * current configured pathspec, set the submodule's active flag
-+		 */
-+		if (!is_submodule_active(the_repository, add_data->sm_path)) {
-+			key = xstrfmt("submodule.%s.active", add_data->sm_name);
-+			git_config_set_gently(key, "true");
-+			free(key);
-+		}
-+	} else {
-+		key = xstrfmt("submodule.%s.active", add_data->sm_name);
-+		git_config_set_gently(key, "true");
-+		free(key);
-+	}
-+}
-+
-+static int add_config(int argc, const char **argv, const char *prefix)
-+{
-+	int force = 0;
-+	struct add_data add_data = ADD_DATA_INIT;
-+
-+	struct option options[] = {
-+		OPT_STRING('b', "branch", &add_data.branch,
-+			   N_("branch"),
-+			   N_("branch of repository to store in "
-+			      "the submodule configuration")),
-+		OPT_STRING(0, "url", &add_data.repo,
-+			   N_("string"),
-+			   N_("url to clone submodule from")),
-+		OPT_STRING(0, "resolved-url", &add_data.realrepo,
-+			   N_("string"),
-+			   N_("url to clone the submodule from, after it has "
-+			      "been dereferenced relative to parent's url, "
-+			      "in the case where <url> is a relative url")),
-+		OPT_STRING(0, "path", &add_data.sm_path,
-+			   N_("path"),
-+			   N_("where the new submodule will be cloned to")),
-+		OPT_STRING(0, "name", &add_data.sm_name,
-+			   N_("string"),
-+			   N_("name of the new submodule")),
-+		OPT__FORCE(&force, N_("allow adding an otherwise ignored submodule path"),
-+			   PARSE_OPT_NOCOMPLETE),
-+		OPT_END()
-+	};
-+
-+	const char *const usage[] = {
-+		N_("git submodule--helper add-config "
-+		   "[--force|-f] [--branch|-b <branch>] "
-+		   "--url <url> --resolved-url <resolved-url> "
-+		   "--path <path> --name <name>"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options, usage, 0);
-+
-+	if (argc)
-+		usage_with_options(usage, options);
-+
-+	add_data.force = !!force;
-+	configure_added_submodule(&add_data);
-+
-+	return 0;
-+}
-+
- #define SUPPORT_SUPER_PREFIX (1<<0)
- 
- struct cmd_struct {
-@@ -2949,6 +3076,7 @@ static struct cmd_struct commands[] = {
- 	{"name", module_name, 0},
- 	{"clone", module_clone, 0},
- 	{"add-clone", add_clone, 0},
-+	{"add-config", add_config, 0},
- 	{"update-module-mode", module_update_module_mode, 0},
- 	{"update-clone", update_clone, 0},
- 	{"ensure-core-worktree", ensure_core_worktree, 0},
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 053daf3724..f713cb113c 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -242,33 +242,7 @@ cmd_add()
- 	fi
- 
- 	git submodule--helper add-clone ${GIT_QUIET:+--quiet} ${force:+"--force"} ${progress:+"--progress"} ${branch:+--branch "$branch"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"--dissociate"} ${depth:+"$depth"} || exit
--	git config submodule."$sm_name".url "$realrepo"
--
--	git add --no-warn-embedded-repo $force "$sm_path" ||
--	die "fatal: $(eval_gettext "Failed to add submodule '\$sm_path'")"
--
--	git submodule--helper config submodule."$sm_name".path "$sm_path" &&
--	git submodule--helper config submodule."$sm_name".url "$repo" &&
--	if test -n "$branch"
--	then
--		git submodule--helper config submodule."$sm_name".branch "$branch"
--	fi &&
--	git add --force .gitmodules ||
--	die "fatal: $(eval_gettext "Failed to register submodule '\$sm_path'")"
--
--	# NEEDSWORK: In a multi-working-tree world, this needs to be
--	# set in the per-worktree config.
--	if git config --get submodule.active >/dev/null
--	then
--		# If the submodule being adding isn't already covered by the
--		# current configured pathspec, set the submodule's active flag
--		if ! git submodule--helper is-active "$sm_path"
--		then
--			git config submodule."$sm_name".active "true"
--		fi
--	else
--		git config submodule."$sm_name".active "true"
--	fi
-+	git submodule--helper add-config ${force:+--force} ${branch:+--branch "$branch"} --url "$repo" --resolved-url "$realrepo" --path "$sm_path" --name "$sm_name"
- }
- 
- #
-diff --git a/submodule.c b/submodule.c
-index 0b1d9c1dde..8577667773 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -237,6 +237,11 @@ int option_parse_recurse_submodules_worktree_updater(const struct option *opt,
- /*
-  * Determine if a submodule has been initialized at a given 'path'
-  */
-+/*
-+ * NEEDSWORK: Emit a warning if submodule.active exists, but is valueless,
-+ * ie, the config looks like: "[submodule] active\n".
-+ * Since that is an invalid pathspec, we should inform the user.
-+ */
- int is_submodule_active(struct repository *repo, const char *path)
- {
- 	int ret = 0;
--- 
-2.32.0
+Flat profile:
 
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total
+ time   seconds   seconds    calls   s/call   s/call  name
+ 27.06      0.59     0.59  1968866     0.00     0.00  patch_delta
+ 16.51      0.95     0.36  2202293     0.00     0.00
+unpack_object_header_buffer
+ 13.76      1.25     0.30  5327015     0.00     0.00  hashmap_get
+ 11.47      1.50     0.25   344036     0.00     0.00  unpack_entry
+  8.72      1.69     0.19   521278     0.00     0.00  lookup_object
+  4.13      1.78     0.09  1964667     0.00     0.00  hashmap_remove
+  2.75      1.84     0.06   348709     0.00     0.00  get_object
+  2.29      1.89     0.05        1     0.05     2.17  oid_array_for_each_unique
+  1.38      1.92     0.03  6373452     0.00     0.00  use_pack
+  0.92      1.94     0.02  2202293     0.00     0.00  unpack_compressed_entry
+  0.92      1.96     0.02  1394836     0.00     0.00  grab_sub_body_contents
+  0.92      1.98     0.02   348709     0.00     0.00  create_object
+  0.92      2.00     0.02   348709     0.00     0.00  format_ref_array_item
+  0.92      2.02     0.02    74557     0.00     0.00  fill_commit_graph_info
+```
+
+Before, I thought that the proportion of `lookup_object()` is not very
+large(11.47%), so
+I didn't care about it. But Christian strongly recommends that I use
+`trace_printf()` to
+observe the number of calls to `lookup_object()`.
+
+Here is an amazing fact:
+
+The number of calls to `lookup_object()` before and after using my
+patch are 0 and
+522709 respectively. Therefore, I am very surprised, why do we have
+these additional calls?
+
+```
+(gdb) bt
+#0  lookup_object (r=r@entry=0x5555558b8cc0 <the_repo>,
+oid=oid@entry=0x5555558b8980 <oi>) at object.c:92
+#1  0x0000555555665572 in lookup_commit (r=0x5555558b8cc0 <the_repo>,
+oid=0x5555558b8980 <oi>) at commit.c:62
+#2  0x00005555556edff5 in parse_object_buffer (r=0x5555558b8cc0
+<the_repo>, oid=oid@entry=0x5555558b8980 <oi>, type=OBJ_COMMIT,
+size=788, buffer=0x5555558d0080, eaten_p=eaten_p@entry=0x7fffffffcc0c)
+    at object.c:214
+#3  0x000055555571da42 in get_object (ref=ref@entry=0x7fffffffcf30,
+deref=deref@entry=0, obj=obj@entry=0x7fffffffcc90,
+oi=oi@entry=0x5555558b8980 <oi>, err=err@entry=0x7fffffffcf10)
+    at ref-filter.c:1774
+#4  0x000055555571fdc2 in populate_value
+(ref=ref@entry=0x7fffffffcf30, err=err@entry=0x7fffffffcf10) at
+ref-filter.c:1999
+#5  0x00005555557202eb in get_ref_atom_value
+(ref=ref@entry=0x7fffffffcf30, atom=0, v=v@entry=0x7fffffffcea8,
+err=err@entry=0x7fffffffcf10) at ref-filter.c:2033
+#6  0x00005555557212d6 in format_ref_array_item
+(info=info@entry=0x7fffffffcf30, format=format@entry=0x7fffffffd0f0,
+final_buf=final_buf@entry=0x7fffffffd060,
+    error_buf=error_buf@entry=0x7fffffffcf10) at ref-filter.c:2627
+#7  0x00005555555859d8 in batch_object_write (scratch=0x7fffffffd060,
+opt=0x7fffffffd0d0, data=<optimized out>, obj_name=0x0) at
+builtin/cat-file.c:224
+```
+
+After printing the call stack of `lookup_object()`, we can know that
+the `parse_buffer()`
+is calling them. A very straightforward idea, can we avoid calling
+this function?
+
+In `parse_object_buffer()`, `parse_blob_buffer()`, ``parse_tree_buffer()`,
+`parse_commit_buffer()`, and `parse_tag_buffer()` parse the object
+data, and then store
+it in `struct object *obj`, finally return it to the caller.
+
+`get_object()` will feed the `obj` to `grab_values()`, and then
+`grab_values()` will feed the
+`obj` to `grab_tag_values()`, `grab_commit_values()`, which can fill
+the object info in `obj` to
+implement some atom, e.g. `%(tag)`, `%(type)`, `%(object)`, `%(tree)`,
+`%(numparent)`,`%(parent)`.
+It is worth noting that `%(objectname)`, `%(objecttype)`,
+`%(objectsize)`, `%(deltabase)`, `%(rest)`,
+`%(raw)` are did not appear in them, this means that we can avoid
+parsing object buffer when we
+don't use those atoms which require `obj`'s information!
+
+After some processing and adaptation, I made the patch which can skip
+`parse_object_buffer()`
+in some cases, this is the result of the performance test of
+`t/perf/p1006-cat-file.sh`:
+
+```
+Test                                        HEAD~             HEAD
+------------------------------------------------------------------------------------
+1006.2: cat-file --batch-check              0.10(0.09+0.00)
+0.11(0.10+0.00) +10.0%
+1006.3: cat-file --batch-check with atoms   0.09(0.08+0.01)
+0.09(0.06+0.03) +0.0%
+1006.4: cat-file --batch                    0.62(0.58+0.04)
+0.57(0.54+0.03) -8.1%
+1006.5: cat-file --batch with atoms         0.63(0.60+0.02)
+0.52(0.49+0.02) -17.5%
+```
+
+We can see that the performance of `git cat-file --batch` has been a
+certain improvement!
+
+Tell a joke: removing 1984531500 if checking can reduce the startup
+time of GTA5 by 70%. :-D
+
+Currently the patch has not been submitted to the mailing list, let us
+wait a bit...
+
+--
+ZheNing Hu
