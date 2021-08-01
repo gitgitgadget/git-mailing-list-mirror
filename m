@@ -2,128 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13A13C4338F
-	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 08:25:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52292C4320A
+	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 08:56:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DEFFC603E9
-	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 08:25:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 34A3C610A0
+	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 08:56:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231527AbhHAI0D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Aug 2021 04:26:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39032 "EHLO
+        id S231446AbhHAI45 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Aug 2021 04:56:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229885AbhHAI0D (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Aug 2021 04:26:03 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76F47C06175F
-        for <git@vger.kernel.org>; Sun,  1 Aug 2021 01:25:54 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id l17so19782584ljn.2
-        for <git@vger.kernel.org>; Sun, 01 Aug 2021 01:25:54 -0700 (PDT)
+        with ESMTP id S229885AbhHAI45 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Aug 2021 04:56:57 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4D13C06175F
+        for <git@vger.kernel.org>; Sun,  1 Aug 2021 01:56:48 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id yk17so18035224ejb.11
+        for <git@vger.kernel.org>; Sun, 01 Aug 2021 01:56:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rtTfk9JZOc1MMNaC+4uRvLmWHuLtBLSaI0HZz1rL6Qg=;
-        b=lw0Yabhh9hRnU+UqLt+RNxGEDXLsZ6xUJk2b3sSs+j/3nxSyQ6/NISlOIOt6Qiowdc
-         cdjKa1MaT+BE1cZ485a36FMrudBks+i2z6XY54AbrVXcRhV1NmPQo+o6PsyteAHVg/Yc
-         CkLzYrEuc5BrbX783ueDM/ono7nyPmxI//L6tawvX7WnTqDC2XqCDAwYaiBvz9pUttjZ
-         0ftjF/uqKLeJ9aiblFd0sHX2g5WtO1nR1TKFtsCw0WSVPAMGC7RbFhW9wv3HB66J1JLv
-         JTf2GfwcvnmVxGDko/V8Jw0R4Jj9fRaUZ60nw5TvqkE+hU9Ow7Z6gjN4vt37Nljp27jq
-         uASQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=aFVh2OIjJh31bxRv7wbUH/8d2s8g80RGpFC/W9b5YmU=;
+        b=vHP4epLoQ2cr9s/MizrHx7vESj9Xicul8f8PVJBoZVYCDFX9QPp6esqJuKLnRvCCpu
+         craxHdMitfGFWviuAiR3VEfWjuXvcgCbZX6XgR3g3yhy4h1fcB8NHpCyjO95ob6pNPT+
+         kQx/uiXW0JY+EKVh02q/m2rnFxYaK34U0284w0ke9eEwbKtpyjrydMRqwNHapFlMhO0l
+         M3nqhRwFRoRB55mvkf1rAftYcNnswqfNSJbNZtXitVrS69vSINDyVQ5P6s9G4x7+1b5l
+         JBTEUw+WywVBVEElhqXshj/ycwW928ug2d6mwsLhLsWoa+FyK+zNyarGebzG3g5N3FWi
+         PuPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rtTfk9JZOc1MMNaC+4uRvLmWHuLtBLSaI0HZz1rL6Qg=;
-        b=Hh6JmZG2z2C1wnN1AFawxWEXFgBCAOR36SuwczdS+OmRj5AroG+uEm8UpmMOBCwbgu
-         suCiRFJa+JIpppff9qJqpTsONF83f877ujbZDTl7qI6DgJToh5b4Pg63OvOda2KdKg8C
-         13vnfDGhM2NVAPWOxf6CE+ntuKza7M7GpzIMdlr1TW8I4xpG3RJKdBLlbEZWwBzajkeW
-         OgqIoSGzbyV5PT3cAIShngj194KFg8GFoDq+NNFEzJ7E04t3C9/uWW6DCJeL9wNR3Nlk
-         2fvMsllch+iN/Qnq3AwvQTj3JoCYQbR8cRZFlV3+OHCq2sTLP7mdV1gD9g2V1dQYgVkZ
-         b6Fg==
-X-Gm-Message-State: AOAM5301Q9CIT0h6YRHJ8g5yAvc278yxrTZscA7F1ZRew8pLYqBXT4tf
-        Ds5AxGB/3FmaV2kaV1UdclxaOirkl/zXtg==
-X-Google-Smtp-Source: ABdhPJw4cQVxm6MKZYA1mmgrQJuT3iIVW6UnF3wnfJ5WcO0Blb+ULeCYLw1vRAoZ6Tx3sm+qA9X+zQ==
-X-Received: by 2002:a2e:a909:: with SMTP id j9mr7625172ljq.145.1627806352602;
-        Sun, 01 Aug 2021 01:25:52 -0700 (PDT)
-Received: from paasan.lan (150.37-191-137.fiber.lynet.no. [37.191.137.150])
-        by smtp.gmail.com with ESMTPSA id bp34sm613032lfb.295.2021.08.01.01.25.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Aug 2021 01:25:52 -0700 (PDT)
-From:   =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-Subject: [PATCH] clone: Remove constraint on --bare and --origin
-Date:   Sun,  1 Aug 2021 10:25:46 +0200
-Message-Id: <20210801082546.18543-1-oystwa@gmail.com>
-X-Mailer: git-send-email 2.27.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=aFVh2OIjJh31bxRv7wbUH/8d2s8g80RGpFC/W9b5YmU=;
+        b=ca92xMuse8s8pEs9WLAxkBI2JDHAVtIrUtrESvnIALa69/EEBSEePU0OgO1Fb+qq6y
+         lm9XoPkrHs3EgncZ9MWcXIIXI3ePMZMea10r4GUNKFFdI8quyBpiMCrz2A+TlfHGYOYn
+         udSNKjcC4wYtAt6fLY4KwbxNXm6wY+Kus8cepMmJAiVGmcGii0zaTAcLDNtVk8dP0GTg
+         kZoUXTTV8KSHoFTYPwdmi1qIY9YZl7QcdcBp273RvpfBaodThNhfb7JJsvhERcdU2TLK
+         +i+XgbkMdYaHIWCJs/ii4FPUrU+3ZxvySyEkxxCeC23yEmbA4693g+y/+fFVY4zmhE6h
+         tAZg==
+X-Gm-Message-State: AOAM530Or9nZV1WJmS4UAStIbDVSokwB/+s28gON+1GNHak1PgXpLKse
+        tyd6ZJMgyl0ZXjlWymfPRFirbdSX2K6I86BJqaw=
+X-Google-Smtp-Source: ABdhPJzw4pSdHFdVJBhftKtSu1nX6IkrE/t+lRbPlroEr82E7fgS+3t2WYNKblHMGFQPkyvbq5Ytwmo9npsYu5jVPts=
+X-Received: by 2002:a17:906:4115:: with SMTP id j21mr1790068ejk.206.1627808207458;
+ Sun, 01 Aug 2021 01:56:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CAJcwCMPU9EhRkqeei_LnYyTJRZUQgHCvomrBbW0Qn+Jp1yhQfQ@mail.gmail.com>
+ <CAJcwCMPHFNHi5i=xRg=GAJL5HiUfKu_KUPwYwELofLLtOAK1bg@mail.gmail.com> <xmqqmtqij63t.fsf@gitster.g>
+In-Reply-To: <xmqqmtqij63t.fsf@gitster.g>
+From:   Andy Zhang <zhgdrx@gmail.com>
+Date:   Sun, 1 Aug 2021 16:59:27 +0800
+Message-ID: <CAJcwCMPaX4qTBfxG6UwswFXCAkGE1meX8GOFNQueKXmfHPMJ2Q@mail.gmail.com>
+Subject: Re: why "git rebase" searching the duplicate patches in <upstream
+ branch> rather than in <new base branch>?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This test has been present since long before clone was ported to C. Now
-there is no need for it, and since df61c88979 (clone: also configure url
-for bare clones, 2010-03-29) it's especially useful to allow both
-options.
+On Tue, Jul 20, 2021 at 6:23 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Andy Zhang <zhgdrx@gmail.com> writes:
+>
+> > why "git rebase" searching the duplicate patches in <upstream
+> > branch> rather than in <new base branch>?
+> >
+> > hi, all:
+> >
+> >  I am reading the help of "git rebase", it says:
+> >     "If the upstream branch already contains a change you have made
+> > (e.g., because you mailed a patch which was applied upstream), then
+> > that commit will be skipped. "
+> >
+> >  But, because we are applying commits to <new base branch> rather than
+> > to <upstream branch>, I really don't understand why we are searching
+> > the duplicate patches in <upstream branch> rather than in <new base
+> > branch>?
+>
+> It is either a design bug or a documentation bug, or both ;-)
+>
+It should NOT be a documentation bug, because, in my experiment, I
+observe that, "git"'s behavior is exactly the same as documentation.
+So, it should be "work as design".
 
-Signed-off-by: Øystein Walle <oystwa@gmail.com>
----
-
-A question on this constraint popped up on #git the other day. I
-investigated a bit and found no particular reason for its existence. All
-tests still pass (except the one removed here) and the behavior is as
-expected. I realize it might have gone under the radar for 11 years but
-it's still worth the noise to remove it, in my opinion.
-
-I wanted to include a bit on the reasoning for the original check in the
-commit message but I couldn't find it. 
-
- builtin/clone.c          | 3 ---
- t/t5606-clone-options.sh | 8 --------
- 2 files changed, 11 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 66fe66679c..70ec72ea85 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1014,9 +1014,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		option_bare = 1;
- 
- 	if (option_bare) {
--		if (option_origin)
--			die(_("--bare and --origin %s options are incompatible."),
--			    option_origin);
- 		if (real_git_dir)
- 			die(_("--bare and --separate-git-dir are incompatible."));
- 		option_no_checkout = 1;
-diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-index 3a595c0f82..4a8a2ca6f7 100755
---- a/t/t5606-clone-options.sh
-+++ b/t/t5606-clone-options.sh
-@@ -30,14 +30,6 @@ test_expect_success 'rejects invalid -o/--origin' '
- 
- '
- 
--test_expect_success 'disallows --bare with --origin' '
--
--	test_must_fail git clone -o foo --bare parent clone-bare-o 2>err &&
--	test_debug "cat err" &&
--	test_i18ngrep -e "--bare and --origin foo options are incompatible" err
--
--'
--
- test_expect_success 'disallows --bare with --separate-git-dir' '
- 
- 	test_must_fail git clone --bare --separate-git-dir dot-git-destiation parent clone-bare-sgd 2>err &&
--- 
-2.27.0
-
+> I do think it makes sense to skip commits from the branch we are
+> rebasing that have equivalent commits in the upstream, as it is
+> expected that upstream might have already applied/cherry-picked some
+> of the changes you are rebasing, and you do not want to use the same
+> change twice.
+>
+> When we are transplanting a series of commits from an old base to
+> totally unrelated base using the --onto option, e.g. when replaying
+> the contents of 'topic' relative to 'next' down to 'master' in your
+> topology, however,
+>
+> > Old tree is:
+> >
+> > o---o---o---o---o  master
+> >     \
+> >      o---o---o---o---o  next
+> >                       \
+> >                        o---o---o  topic
+>
+> it is not necessarily obvious where to stop digging back at.  In the
+> above picture where 'master' and 'next' have ancestry relationship,
+> we could try to see if the three commits on 'topic' branch being
+> replayed match any of the commits in next..master range, but when
+> using the --onto option, there does not have to be any relationship
+> between the <upstream> and <new base> (they do not have to share a
+> root commit).  So from that point of view, it probably makes sense
+> to default to --no-reapply-cherry-picks when --onto is used, while
+> defaulting --reapply-cherry-picks when --onto is not used.
+>
+>
