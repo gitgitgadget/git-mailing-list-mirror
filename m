@@ -2,151 +2,306 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 240FBC4338F
-	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 09:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FA49C4338F
+	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 10:10:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F07976109F
-	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 09:57:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F787610A1
+	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 10:10:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231561AbhHAJ5V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Aug 2021 05:57:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60766 "EHLO
+        id S231470AbhHAKKL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Aug 2021 06:10:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231860AbhHAJ5R (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Aug 2021 05:57:17 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E425C06179A
-        for <git@vger.kernel.org>; Sun,  1 Aug 2021 02:56:20 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id c16so17711291wrp.13
-        for <git@vger.kernel.org>; Sun, 01 Aug 2021 02:56:20 -0700 (PDT)
+        with ESMTP id S231446AbhHAKKK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Aug 2021 06:10:10 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 302B7C06175F
+        for <git@vger.kernel.org>; Sun,  1 Aug 2021 03:10:02 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id k4so6950989wrc.0
+        for <git@vger.kernel.org>; Sun, 01 Aug 2021 03:10:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=RJ+mA0xDwzk1gi+XDMQHJuNaMl/nPa4C9ya7Y4N6amU=;
-        b=BqktMn1xJPCmzBOX+zHKslmI/ZyDPPaoO60+CmsASJjOTVyPAEWlzowQtnPms5Fcrb
-         o4UTWufVK5uh++/BzBsT3VsMa17QNdIvTmRZI4zHKuFGbssaRdUwgpfSqmnXw2P+J9NK
-         vIfwDCesTMYliA+NVSPVhWzXjPvlVTpY6dH3DbZwOpjHYuCUa+N3hS+SlNkmNmaSzwm7
-         1ixM6R2l4OcLGrZyPR8HYHLxxPu+ePySoIW+cYDJk2KD1xLkPYXxg8t/u9b+xe5c3Dtf
-         Rp03NJOvpIVOhqM4q2NykmAJMnrXJX82BsLwi94p8RGGLq2qvOE4a7bvne0gnCrLF9pr
-         hDSg==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ipNNrDPabllTE5f483hFl2cFZCOpNHIoeFEP5QKcNDQ=;
+        b=D3Gb+4rQWDHIIi2JS7cEkVGxMjexygm+mKsJX4ahEEC240wM9Lv/+9ptWiRk1APqcb
+         LYklk+foyo5LpSH3gmeIRP5bjYgTSFEfIyTrhOBxYzhdI9hoMOO8tOqNwD+gjyo3J1s2
+         NugyE+SqCcVI6JhMwkHx9pDUwLP6aF46tiAMiv4CFdrkVDPXOSKjqe8p1rU3UCYtTW4I
+         ZIq9o59jiw3SErzcyxJR5A+UJfFOUdWl7pjCgrB9G1Q+J08eyKuDve+cIE1K+QO0D2K2
+         e2eSvh77p5b4frerqCWX4GAE8euNiBEPbW/dQIPiiflG6CFtdqakO3SJxj2VxXBctBgf
+         X83g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=RJ+mA0xDwzk1gi+XDMQHJuNaMl/nPa4C9ya7Y4N6amU=;
-        b=gUaQmUX4zycJYSnPMoln/9w4Q611CEayRj6dtrSzyXlPxzYvWY3QPtdCtWiUechfiU
-         axwEoodOTi7WmgSBZ6FJDyufSFfUGg7I3IPPaWZsYSgAgVCU/5aYaRjR4cYBc8uLE79X
-         IdEbkM0z47GTnRRSb+MXmUFw5v1L8Y9SwlaBypfz+/KrsDYc6++5I0VWAfDFfFkmE96w
-         CKMR3BDquqJIcqDqswQ3H/iLqimNd/8PvrlmjAdOqxN8qnR6sNSnElCneMZmMDkQ0Mzm
-         4OeKqd0veNA4O3FkThhXsi1nqoWaF9mz2eynLPW4Xpv3bczpKXWd5lVC8vWKRX/uuKXF
-         QGbA==
-X-Gm-Message-State: AOAM5338gqTJA0OSE3TqntPZpPlI537OjjG0GgmMP7nmtHa/oA2Z/+Pv
-        JDWt3uBzSZmaAcv1lZSJoaFPxKr1wCI=
-X-Google-Smtp-Source: ABdhPJwAKItFWNWqvvKSm5e9vc4tdYwN8EWNugpxvemevICLiVCzgqyJyRsK16WE9YStIufAAc8M/Q==
-X-Received: by 2002:adf:fc10:: with SMTP id i16mr11906596wrr.229.1627811778820;
-        Sun, 01 Aug 2021 02:56:18 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=ipNNrDPabllTE5f483hFl2cFZCOpNHIoeFEP5QKcNDQ=;
+        b=BzeW8VsG2K2sTsLajVjkSA+nSZDafWuJ/hHZEoUUoURWSv7qpdxtRCoI+BSX3tmpDw
+         T7nDCBGkHFW5B+zTo0N99s9ra1Eow8qK2vhdcifZBhO/SVO0Q9UnZNbFf3Er7YElol7o
+         atJh9ornxzsmWOJHeHeb4/mTm0y0CKuKUnXKdklhZYDUMvyK2qCtD7X4WXTe3JFF6ygi
+         Bq9H5IqdyHQe1IS3JhD6D4X0nkg5hkOrofCRgJlcW/risTNrg0OfaFTZqRbTkpOYyZDM
+         5boqKVgsLIlbk1myiiyR3dOesmZLZmDQ+GREV/jBn4HDrXyArB7xQENYRVmd89JFkK1E
+         7IqQ==
+X-Gm-Message-State: AOAM53193ZAQsEn/nIqoP7fa6otDWhWKhNm4CFHWk6YAn2aoi5Y0u8Cw
+        nNTiPGI6/FZPu1i2QfTYPH5akhZzqBk=
+X-Google-Smtp-Source: ABdhPJz67CnQp/wI5/rRrOwfBz0ouAjvnoN9U6IoIImZQFMWvZ9mABaAkkvpo/TKeZ+Li6R4mesXcg==
+X-Received: by 2002:adf:f7c5:: with SMTP id a5mr12116723wrq.99.1627812600696;
+        Sun, 01 Aug 2021 03:10:00 -0700 (PDT)
 Received: from [192.168.1.14] (host-2-98-21-22.as13285.net. [2.98.21.22])
-        by smtp.gmail.com with ESMTPSA id n5sm6960400wme.47.2021.08.01.02.56.18
+        by smtp.gmail.com with ESMTPSA id h9sm6813883wmb.35.2021.08.01.03.09.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 01 Aug 2021 02:56:18 -0700 (PDT)
-Subject: Re: [BUG] 'git rebase -i ---rebase-merges' can leave MERGE_MSG behind
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Sun, 01 Aug 2021 03:10:00 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/2] [GSOC] cherry-pick: fix bug when used with
+ GIT_CHERRY_PICK_HELP
+To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-References: <20210731062322.GB23408@szeder.dev>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Ramkumar Ramachandra <artagnon@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+References: <pull.1010.git.1627714877.gitgitgadget@gmail.com>
+ <0d0a55bd9c4094450749fa20a30d0d11203768d6.1627714878.git.gitgitgadget@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <80afcf4f-fc5a-7722-1a4d-c3e1f1de1e09@gmail.com>
-Date:   Sun, 1 Aug 2021 10:56:17 +0100
+Message-ID: <273d1864-422e-f31f-13ef-20cfe4871947@gmail.com>
+Date:   Sun, 1 Aug 2021 11:09:59 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.12.0
 MIME-Version: 1.0
-In-Reply-To: <20210731062322.GB23408@szeder.dev>
+In-Reply-To: <0d0a55bd9c4094450749fa20a30d0d11203768d6.1627714878.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 31/07/2021 07:23, SZEDER Gábor wrote:
-> Hi,
+On 31/07/2021 08:01, ZheNing Hu via GitGitGadget wrote:
+> From: ZheNing Hu <adlternative@gmail.com>
 > 
-> 'git rebase -i --rebase-merges' leaves a stray '.git/MERGE_MSG' file
-> behind after it re-created an unchanged merge commit.  The test script
-> below demonstrates this issue (it doesn't fail, but look at its
-> verbose output to see what the issue and its consequences are).
+> GIT_CHERRY_PICK_HELP is an environment variable, as the
+> implementation detail of some porcelain in git to help realize
+> the rebasing steps. E.g. `git rebase -p` set GIT_CHERRY_PICK_HELP
+> value in `git-rebase--preserve-merges.sh`, `git rebase --merge` set
+> GIT_CHERRY_PICK_HELP value in run_specific_rebase(). But If we set
+> the value of GIT_CHERRY_PICK_HELP when using `git cherry-pick`,
+> CHERRY_PICK_HEAD will be deleted, then we will get an error when we
+> try to use `git cherry-pick --continue` or other cherr-pick command.
 > 
-> This issue is as old as --rebase-merges, I see the same output with
-> v2.18.0, the first release containing this feature.
+> Introduce new "hidden" option `--delete-cherry-pick-head` for git
+> cherry-pick which indicates that CHERRY_PICK_HEAD will be deleted when
+> conflict occurs, which provided for some porcelain commands of git like
+> `git-rebase--preserve-merges.sh`. After `git rebase -p` completely
+> abolished, this option should be removed. At the same time, add the flag
+> `delete_cherry_pick_head` to `struct rebase_options` and
+> `struct replay_opts`, We can decide whether to delete CHERRY_PICK_HEAD
+> by setting, passing, and checking this flag bit.
 > 
-> I suspect that fixing this is merely a matter of adding a missing
-> unlink(".git/MERGE_MSG") to the right place, but I won't dive into the
-> sequencer machinery to figure out where that right place might be :)
+> Then we split print_advice() into two part: Firstly, print_advice()
+> will only be responsible for outputting content; Secondly, check if
+> we set the `delete_cherry_pick_head` flag; if set, delete CHERRY_PICK_HEAD.
+> In this way, the steps of printing advice and deleting CHERRY_PICK_HEAD
+> are decoupled. Finally, let `git-rebase--preserve-merges.sh` use the
+> `--delete-cherry-pick-head` option when it executes git cherry-pick, and
+> set the `delete_cherry_pick_head` flag in run_specific_rebase() when we
+> are using `git rebase --merge`, which can fix this breakage.
+> 
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by Hariom Verma <hariom18599@gmail.com>:
+> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Hepled-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+> ---
+>   builtin/rebase.c                |  3 +++
+>   builtin/revert.c                |  2 ++
+>   git-rebase--preserve-merges.sh  |  2 +-
+>   sequencer.c                     | 28 +++++++++++++---------------
+>   sequencer.h                     |  1 +
+>   t/t3507-cherry-pick-conflict.sh | 25 +++++++++++++++----------
+>   6 files changed, 35 insertions(+), 26 deletions(-)
+> 
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 12f093121d9..5983f37d531 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -84,6 +84,7 @@ struct rebase_options {
+>   		REBASE_FORCE = 1<<3,
+>   		REBASE_INTERACTIVE_EXPLICIT = 1<<4,
+>   	} flags;
+> +	int delete_cherry_pick_head;
+>   	struct strvec git_am_opts;
+>   	const char *action;
+>   	int signoff;
+> @@ -152,6 +153,7 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+>   		oidcpy(&replay.squash_onto, opts->squash_onto);
+>   		replay.have_squash_onto = 1;
+>   	}
+> +	replay.delete_cherry_pick_head = opts->delete_cherry_pick_head;
 
-Looking at do_merge() in sequencer.c .git/MERGE_MSG is written before it 
-checks if it can fast-forward. If it does fast-forward then 'git commit' 
-is not run and .git/MERGE_MSG is not removed. I think the best way to 
-fix it would be to move the fast-forward code so it comes before the 
-code that writes .git/MERGE_MSG. That way we'll not write the message if 
-we can fast-forward.
+I think we could just have
+	replay.delete_cherry_pick_head = 1;
+and not add a new member to rebase_options as we always want this set
+>   
+>   	return replay;
+>   }
+> @@ -948,6 +950,7 @@ static int run_specific_rebase(struct rebase_options *opts, enum action action)
+>   	if (opts->type == REBASE_MERGE) {
+>   		/* Run sequencer-based rebase */
+>   		setenv("GIT_CHERRY_PICK_HELP", resolvemsg, 1);
+> +		opts->delete_cherry_pick_head = 1;
+>   		if (!(opts->flags & REBASE_INTERACTIVE_EXPLICIT)) {
+>   			setenv("GIT_SEQUENCE_EDITOR", ":", 1);
+>   			opts->autosquash = 0;
+> diff --git a/builtin/revert.c b/builtin/revert.c
+> index 237f2f18d4c..15a4b6fe4ee 100644
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -127,6 +127,8 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+>   			OPT_BOOL(0, "allow-empty", &opts->allow_empty, N_("preserve initially empty commits")),
+>   			OPT_BOOL(0, "allow-empty-message", &opts->allow_empty_message, N_("allow commits with empty messages")),
+>   			OPT_BOOL(0, "keep-redundant-commits", &opts->keep_redundant_commits, N_("keep redundant, empty commits")),
+> +			OPT_BOOL_F(0, "delete-cherry-pick-head", &opts->delete_cherry_pick_head,
+> +				   N_("delete CHERRY_PICK_HEAD when conflict occurs"), PARSE_OPT_HIDDEN),
+>   			OPT_END(),
+>   		};
+>   		options = parse_options_concat(options, cp_extra);
+> diff --git a/git-rebase--preserve-merges.sh b/git-rebase--preserve-merges.sh
+> index b9c71d2a71b..eaa8f9de2c5 100644
+> --- a/git-rebase--preserve-merges.sh
+> +++ b/git-rebase--preserve-merges.sh
+> @@ -444,7 +444,7 @@ pick_one_preserving_merges () {
+>   			output eval git cherry-pick $allow_rerere_autoupdate \
+>   				$allow_empty_message \
+>   				${gpg_sign_opt:+$(git rev-parse --sq-quote "$gpg_sign_opt")} \
+> -				"$strategy_args" "$@" ||
+> +				"$strategy_args" --delete-cherry-pick-head "$@" ||
+>   				die_with_patch $sha1 "$(eval_gettext "Could not pick \$sha1")"
+>   			;;
+>   		esac
+> diff --git a/sequencer.c b/sequencer.c
+> index 0bec01cf38e..83cf6a5da3c 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -397,24 +397,13 @@ static void free_message(struct commit *commit, struct commit_message *msg)
+>   	unuse_commit_buffer(commit, msg->message);
+>   }
+>   
+> -static void print_advice(struct repository *r, int show_hint,
+> -			 struct replay_opts *opts)
+> +static void print_advice(struct replay_opts *opts, int show_hint)
+>   {
+>   	char *msg = getenv("GIT_CHERRY_PICK_HELP");
+>   
+>   	if (msg) {
+> -		fprintf(stderr, "%s\n", msg);
+> -		/*
+> -		 * A conflict has occurred but the porcelain
+> -		 * (typically rebase --interactive) wants to take care
+> -		 * of the commit itself so remove CHERRY_PICK_HEAD
+> -		 */
+> -		refs_delete_ref(get_main_ref_store(r), "", "CHERRY_PICK_HEAD",
+> -				NULL, 0);
+> -		return;
+> -	}
+> -
+> -	if (show_hint) {
+> +		advise("%s\n", msg);
+
+This is a change in behavior as the advice will now be prefixed with 
+"hint: ". I think that is probably an improvement so long as it does not 
+make the lines too long when the advice is printed.
+
+> +	} else if (show_hint) {
+>   		if (opts->no_commit)
+>   			advise(_("after resolving the conflicts, mark the corrected paths\n"
+>   				 "with 'git add <paths>' or 'git rm <paths>'"));
+> @@ -2265,7 +2254,16 @@ static int do_pick_commit(struct repository *r,
+>   		      ? _("could not revert %s... %s")
+>   		      : _("could not apply %s... %s"),
+>   		      short_commit_name(commit), msg.subject);
+> -		print_advice(r, res == 1, opts);
+> +		print_advice(opts, res == 1);
+> +		if (opts->delete_cherry_pick_head) {
+> +			/*
+> +			 * A conflict has occurred but the porcelain
+> +			 * (typically rebase --interactive) wants to take care
+> +			 * of the commit itself so remove CHERRY_PICK_HEAD
+> +			 */
+> +			refs_delete_ref(get_main_ref_store(r), "", "CHERRY_PICK_HEAD",
+> +					NULL, 0);
+> +		}
+>   		repo_rerere(r, opts->allow_rerere_auto);
+>   		goto leave;
+>   	}
+> diff --git a/sequencer.h b/sequencer.h
+> index d57d8ea23d7..76fb4af56fd 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -49,6 +49,7 @@ struct replay_opts {
+>   	int reschedule_failed_exec;
+>   	int committer_date_is_author_date;
+>   	int ignore_date;
+> +	int delete_cherry_pick_head;
+>   
+>   	int mainline;
+>   
+> diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
+> index 014001b8f32..f17621d1915 100755
+> --- a/t/t3507-cherry-pick-conflict.sh
+> +++ b/t/t3507-cherry-pick-conflict.sh
+> @@ -76,6 +76,21 @@ test_expect_success 'advice from failed cherry-pick --no-commit' "
+>   	test_cmp expected actual
+>   "
+>   
+> +test_expect_success 'advice from failed cherry-pick with GIT_CHERRY_PICK_HELP' "
+> +	pristine_detach initial &&
+> +	(
+> +		picked=\$(git rev-parse --short picked) &&
+> +		cat <<-EOF >expected &&
+> +		error: could not apply \$picked... picked
+> +		hint: and then do something else
+> +		EOF
+> +		GIT_CHERRY_PICK_HELP='and then do something else' &&
+> +		export GIT_CHERRY_PICK_HELP &&
+> +		test_must_fail git cherry-pick picked 2>actual &&
+> +		test_cmp expected actual
+> +	)
+> +"
+> +
+>   test_expect_success 'failed cherry-pick sets CHERRY_PICK_HEAD' '
+>   	pristine_detach initial &&
+>   	test_must_fail git cherry-pick picked &&
+> @@ -109,16 +124,6 @@ test_expect_success \
+>   	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD
+>   '
+>   
+> -test_expect_success 'GIT_CHERRY_PICK_HELP suppresses CHERRY_PICK_HEAD' '
+> -	pristine_detach initial &&
+> -	(
+> -		GIT_CHERRY_PICK_HELP="and then do something else" &&
+> -		export GIT_CHERRY_PICK_HELP &&
+> -		test_must_fail git cherry-pick picked
+> -	) &&
+> -	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD
+> -'
+> -
+>   test_expect_success 'git reset clears CHERRY_PICK_HEAD' '
+>   	pristine_detach initial &&
+
+I think it would be useful to add a test for the new cherry-pick option 
+that is added in this patch. Overall this patch is looking pretty good 
+it just needs a few small changes, thanks for working on it.
 
 Best Wishes
 
 Phillip
-
-> 
->    ---  >8  ---
-> 
-> #!/bin/sh
-> 
-> test_description='test'
-> 
-> . ./test-lib.sh
-> . "$TEST_DIRECTORY"/lib-rebase.sh
-> 
-> test_expect_success '--rebase-merges leaves MERGE_MSG behind' '
-> 	# A-B-M-D-E-F
-> 	#  \ /
-> 	#   C
-> 	test_commit A &&
-> 	test_commit B &&
-> 	git checkout -b branch HEAD^ &&
-> 	test_commit C &&
-> 	git checkout master &&
-> 	git merge --log branch &&
-> 	test_commit D &&
-> 	test_commit E &&
-> 	test_commit F &&
-> 
-> 	# Rewrite a commit after the merge:
-> 	write_script todo-editor <<-\EOF &&
-> 	sed -i -e "/^pick .* E$/ s/^pick/edit/" "$1"
-> 	EOF
-> 
-> 	# No MERGE_MSG present before starting the rebase, good:
-> 	test_path_is_missing .git/MERGE_MSG &&
-> 
-> 	# Start rebasing before the merge, so the sequencer has to
-> 	# re-create an identical merge commit.
-> 	GIT_EDITOR=./todo-editor git rebase -i --rebase-merges A &&
-> 
-> 	# Just to make sure that the history so far is unchanged:
-> 	test_cmp_rev E HEAD &&
-> 
-> 	# BUG: now there is a stray MERGE_MSG file:
-> 	cat .git/MERGE_MSG &&
-> 
-> 	# And it interferes with the next "git commit", because its
-> 	# content is included in the commit message template:
-> 	echo foo >>E.t &&
-> 	GIT_EDITOR=cat git commit -a
-> '
-> 
-> test_done
-> 
