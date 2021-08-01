@@ -2,218 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53EA4C4320E
-	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 07:08:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13A13C4338F
+	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 08:25:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 295B961050
-	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 07:08:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DEFFC603E9
+	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 08:25:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229598AbhHAHGz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Aug 2021 03:06:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48660 "EHLO
+        id S231527AbhHAI0D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Aug 2021 04:26:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229543AbhHAHGy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Aug 2021 03:06:54 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAF7AC0613D3
-        for <git@vger.kernel.org>; Sun,  1 Aug 2021 00:06:46 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id i10so16106496pla.3
-        for <git@vger.kernel.org>; Sun, 01 Aug 2021 00:06:46 -0700 (PDT)
+        with ESMTP id S229885AbhHAI0D (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Aug 2021 04:26:03 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76F47C06175F
+        for <git@vger.kernel.org>; Sun,  1 Aug 2021 01:25:54 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id l17so19782584ljn.2
+        for <git@vger.kernel.org>; Sun, 01 Aug 2021 01:25:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
-         :date:mime-version:content-transfer-encoding;
-        bh=sO4RPGU6iRhB7SAH9tm+1R4IsIGVw8x/ORDPZ6NG+cc=;
-        b=SC6/uJqhys27DBzy7Fs+f5ScaTlSi2JdpGuzFNQSPJY5JO+uqZRth/SoiJ97uMGUPi
-         NfZ+9nNFWHCwT1x5wElzWMsDGPaZ0Ldf6Hs0zE8oTtEyyFujkKZJkKXC80FjE61uT86g
-         uVcf1zGAXFuZn9tUcrFpZSF6g3e4NZ9rygOjJ0wA/Z//E0ReAatyv9HymCUrUxv1NPxy
-         BsmHPswca+oIYVp5OFUhFdDe0vnIlpUJ3dnO4eiEi5Fh4fDh2yLAbbf0Gt6pn1RMp6U8
-         5778ESEYG3o743T35srr1uze9hSWyV0y7ntrN8kdkv5SCKixiY6OvjyI/+dQAyCnr27D
-         WZag==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rtTfk9JZOc1MMNaC+4uRvLmWHuLtBLSaI0HZz1rL6Qg=;
+        b=lw0Yabhh9hRnU+UqLt+RNxGEDXLsZ6xUJk2b3sSs+j/3nxSyQ6/NISlOIOt6Qiowdc
+         cdjKa1MaT+BE1cZ485a36FMrudBks+i2z6XY54AbrVXcRhV1NmPQo+o6PsyteAHVg/Yc
+         CkLzYrEuc5BrbX783ueDM/ono7nyPmxI//L6tawvX7WnTqDC2XqCDAwYaiBvz9pUttjZ
+         0ftjF/uqKLeJ9aiblFd0sHX2g5WtO1nR1TKFtsCw0WSVPAMGC7RbFhW9wv3HB66J1JLv
+         JTf2GfwcvnmVxGDko/V8Jw0R4Jj9fRaUZ60nw5TvqkE+hU9Ow7Z6gjN4vt37Nljp27jq
+         uASQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject
-         :in-reply-to:message-id:date:mime-version:content-transfer-encoding;
-        bh=sO4RPGU6iRhB7SAH9tm+1R4IsIGVw8x/ORDPZ6NG+cc=;
-        b=nyvid+OnJxL0PSuoU7PiUB1muYXc8gGbORWZ/PfCtP2trGTNMk1DFIJ7vCWyT9xbfc
-         JQ0oizzMfvwMkfizLDCTejc9z+KE/wnMr72sld3ekNBIT/2OvvJcQ/zuOlI20viiJuf0
-         jl5A8tDDFGk+metc5uyg5S3FK7nrdqm2gN5aAIZ5FtREsM3fXr3XlDNyI6NVb83Cjc/B
-         JChDp26Sk+2uRWpRqhse8Wx5MrPhatzLjwL8zXk9P5+lEttbcgDBr5o1gbR+awyTH4Kc
-         5J/uSum3bAbPl0AIoiAWC5LxSUWWlBB4FokIvX3V1P6UERy32NovcfenKWjvd7p08AGz
-         9pJA==
-X-Gm-Message-State: AOAM531TkAHMeybRfx15pPX5kBIMJqG0oBPlzVoQ0h3Fu5Ll2Ezlc0rZ
-        8zpyMvKqHKh8uTPuKpfYVKE=
-X-Google-Smtp-Source: ABdhPJy9OVjCN9lz5JUY3p+JPWTbtSOGPhTTLCYaKgQEoCwoIO+t4YAa8Mc/jwYgsDh68Z1Ptc+Dng==
-X-Received: by 2002:a17:903:2346:b029:12c:841a:f44c with SMTP id c6-20020a1709032346b029012c841af44cmr9525918plh.74.1627801605871;
-        Sun, 01 Aug 2021 00:06:45 -0700 (PDT)
-Received: from atharva-on-air ([119.82.121.47])
-        by smtp.gmail.com with ESMTPSA id 65sm7686001pgi.12.2021.08.01.00.06.43
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rtTfk9JZOc1MMNaC+4uRvLmWHuLtBLSaI0HZz1rL6Qg=;
+        b=Hh6JmZG2z2C1wnN1AFawxWEXFgBCAOR36SuwczdS+OmRj5AroG+uEm8UpmMOBCwbgu
+         suCiRFJa+JIpppff9qJqpTsONF83f877ujbZDTl7qI6DgJToh5b4Pg63OvOda2KdKg8C
+         13vnfDGhM2NVAPWOxf6CE+ntuKza7M7GpzIMdlr1TW8I4xpG3RJKdBLlbEZWwBzajkeW
+         OgqIoSGzbyV5PT3cAIShngj194KFg8GFoDq+NNFEzJ7E04t3C9/uWW6DCJeL9wNR3Nlk
+         2fvMsllch+iN/Qnq3AwvQTj3JoCYQbR8cRZFlV3+OHCq2sTLP7mdV1gD9g2V1dQYgVkZ
+         b6Fg==
+X-Gm-Message-State: AOAM5301Q9CIT0h6YRHJ8g5yAvc278yxrTZscA7F1ZRew8pLYqBXT4tf
+        Ds5AxGB/3FmaV2kaV1UdclxaOirkl/zXtg==
+X-Google-Smtp-Source: ABdhPJw4cQVxm6MKZYA1mmgrQJuT3iIVW6UnF3wnfJ5WcO0Blb+ULeCYLw1vRAoZ6Tx3sm+qA9X+zQ==
+X-Received: by 2002:a2e:a909:: with SMTP id j9mr7625172ljq.145.1627806352602;
+        Sun, 01 Aug 2021 01:25:52 -0700 (PDT)
+Received: from paasan.lan (150.37-191-137.fiber.lynet.no. [37.191.137.150])
+        by smtp.gmail.com with ESMTPSA id bp34sm613032lfb.295.2021.08.01.01.25.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Aug 2021 00:06:45 -0700 (PDT)
-References: <90b6bd2d-71e1-b8af-e027-8023f8d4f14c@gmail.com>
- <ee679a57-0851-962d-a63a-6a0bdba35b2e@gmail.com>
-User-agent: mu4e 1.4.15; emacs 27.2
-From:   Atharva Raykar <raykar.ath@gmail.com>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        avarab@gmail.com, Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [GSoC] A small survey + My Git Blog, week 10
-In-reply-to: <ee679a57-0851-962d-a63a-6a0bdba35b2e@gmail.com>
-Message-ID: <m2pmuxy77j.fsf@gmail.com>
-Date:   Sun, 01 Aug 2021 12:36:40 +0530
+        Sun, 01 Aug 2021 01:25:52 -0700 (PDT)
+From:   =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
+Subject: [PATCH] clone: Remove constraint on --bare and --origin
+Date:   Sun,  1 Aug 2021 10:25:46 +0200
+Message-Id: <20210801082546.18543-1-oystwa@gmail.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This test has been present since long before clone was ported to C. Now
+there is no need for it, and since df61c88979 (clone: also configure url
+for bare clones, 2010-03-29) it's especially useful to allow both
+options.
 
-Philippe Blain <levraiphilippeblain@gmail.com> writes:
+Signed-off-by: Øystein Walle <oystwa@gmail.com>
+---
 
-> Hi Atharva,
->
-> Le 2021-07-25 =C3=A0 08:22, Atharva Raykar a =C3=A9crit :
->> Hello all,
->> Week 10 of my Git blog can be found here:
->> https://atharvaraykar.me/gitnotes/week10
->> As for the "survey part", jump to the section here:
->> https://atharvaraykar.me/gitnotes/week10#the-mailing-list-developer-work=
-flow
->> ...feel free to reply in this thread.
->>
->
-> Quoting your "survey" questions:
->
->> What tools, systems and workflows do you find valuable in your
->> day-to-day work? In particular I=E2=80=99d be happy getting insights=20
->> like:
->> * Any strategy or approach to work, kind of like the example I=20
->> quoted
->>   above
->> * Any scripts and tools that assist you
->> * Opinionated handling of multiple in-flight series and methods=20
->> to
->>   approaching reviews
->> * Atharva, you are overthinking this! I just use a=20
->> straightforward {
->>   editor + MUA + git } stack and go with the flow!
->
-> I'm a small-time contributor, but I do read the mailing list=20
-> regularly.
->
-> As such, I'm not subscribed to the list; I read it on=20
-> lore.kernel.org
-> or public-inbox.org (nicer colors!). The UI of public-inbox is=20
-> very clear
-> with respect to threading, and the front page also lists=20
-> messages in
-> a way that it is easy to quickly see what's new.
->
-> When I want to reply to a message that I read on the list, I=20
-> import it
-> into a "Git mailing list" IMAP folder in my Gmail account so=20
-> that I can answer
-> using my mail client (Thunderbird for now since Apple Mail has=20
-> been reliably
-> crashing at launch for the last months) and quote relevant parts=20
-> of the message.
->
-> To import a thread from the mailing list I use a combination of=20
-> the excellent
-> 'b4' tool, developed by the kernel community [1], and 'git=20
-> imap-send'. It's
-> basically this:
->
-> $ git config --get alias.ml-imap
-> !f() { b4 mbox -o- $1 | git imap-send; }; f
->
-> This sometimes does not work if some messages in the thread were=20
-> not created
-> using  'git format-patch', since 'git imap-send' expects the=20
-> "From", "Date"
-> and "Subject" headers in a certain order. So I created a small=20
-> Python script,
-> 'git in', for this case [2].
->
-> For small and simple reviews, I also simply import the patches=20
-> into Thunderbird
-> and reply inline. If I want to do a more in-depth review and=20
-> browse the code as
-> modified by a series, I fetch the contributor's branch and take=20
-> a look locally.
-> More often than not though people do not provide a 'git=20
-> fetch'-ready link in their
-> cover letter. So in that case I use 'b4 am' [1] to fetch the=20
-> latest version of a series
-> and apply it locally. Before 'b4' was created I used 'git pw'=20
-> [3], a command line
-> client for Patchwork, and the Git patchwork instance at [4], but=20
-> these days I prefer
-> 'b4' as it's more closely integrated with public-inbox.
->
-> For my own contribution I use Gitgitgdaget [5], it handles=20
-> almost everything needed
-> for git.git contributions:  keeping track of the CC list for
-> me, updating the re-roll count,  adding the In-Reply-To header=20
-> such that subsequent
-> versions of the series are sent as a response to the cover=20
-> letter of the previous version,
-> generating a range-diff against the previous version, providing=20
-> a 'git fetch'-ready tag,
-> commenting on the PR when the series is mentioned in Junio's=20
-> "What's cooking", etc.
->
-> Some things it does not support are: sending a patch as a=20
-> response to some random
-> mail on the list, which is sometimes useful, reading the commit=20
-> notes to generate
-> in-patch commentaries [6], customizing the diff generated by=20
-> 'format-patch'.
-> Other things are listed at [7].
->
-> Recently I've also been using only the terminal with=20
-> Gitgitgadget:
-> I use 'git branch --edit-description' to write my cover letter,
-> and then use the 'gh' GitHub CLI [8] to open my PR:
->
-> $ git config --get-regexp alias.desc*
-> alias.desc-title !git config branch.$(git branch=20
-> --show-current).description | head -1
-> alias.desc-body !git config branch.$(git branch=20
-> --show-current).description | tail -n+3
-> $ gh pr create --title "$(git desc-title)" --body "$(git=20
-> desc-body)" --head phil-blain:$(git branch --show-current)
->
-> I hope this provides a different perspective!
+A question on this constraint popped up on #git the other day. I
+investigated a bit and found no particular reason for its existence. All
+tests still pass (except the one removed here) and the behavior is as
+expected. I realize it might have gone under the radar for 11 years but
+it's still worth the noise to remove it, in my opinion.
 
-Thanks for the detailed reply!
+I wanted to include a bit on the reasoning for the original check in the
+commit message but I couldn't find it. 
 
-I like that it covers a lot about how you retrieve patches and=20
-respond
-to reviews.
+ builtin/clone.c          | 3 ---
+ t/t5606-clone-options.sh | 8 --------
+ 2 files changed, 11 deletions(-)
 
-You have convinced me to give Gitgitgadget a try for my next patch=20
-:^)
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 66fe66679c..70ec72ea85 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1014,9 +1014,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		option_bare = 1;
+ 
+ 	if (option_bare) {
+-		if (option_origin)
+-			die(_("--bare and --origin %s options are incompatible."),
+-			    option_origin);
+ 		if (real_git_dir)
+ 			die(_("--bare and --separate-git-dir are incompatible."));
+ 		option_no_checkout = 1;
+diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+index 3a595c0f82..4a8a2ca6f7 100755
+--- a/t/t5606-clone-options.sh
++++ b/t/t5606-clone-options.sh
+@@ -30,14 +30,6 @@ test_expect_success 'rejects invalid -o/--origin' '
+ 
+ '
+ 
+-test_expect_success 'disallows --bare with --origin' '
+-
+-	test_must_fail git clone -o foo --bare parent clone-bare-o 2>err &&
+-	test_debug "cat err" &&
+-	test_i18ngrep -e "--bare and --origin foo options are incompatible" err
+-
+-'
+-
+ test_expect_success 'disallows --bare with --separate-git-dir' '
+ 
+ 	test_must_fail git clone --bare --separate-git-dir dot-git-destiation parent clone-bare-sgd 2>err &&
+-- 
+2.27.0
 
-> Cheers,
-> Philippe.
->
->
-> [1] https://pypi.org/project/b4/
-> [2]=20
-> https://gist.github.com/phil-blain/d350e91959efa6e7afce60e74bf7e4a8
-> [3]=20
-> https://patchwork.readthedocs.io/projects/git-pw/en/latest/usage/
-> [4] https://patchwork.kernel.org/project/git/list/
-> [5] https://gitgitgadget.github.io/
-> [6] https://github.com/gitgitgadget/gitgitgadget/issues/173
-> [7] https://github.com/gitgitgadget/gitgitgadget/issues
-> [8] https://cli.github.com/
