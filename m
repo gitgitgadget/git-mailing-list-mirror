@@ -7,170 +7,98 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92EF8C4338F
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 06:25:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2C0DC4338F
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 06:52:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E15461042
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 06:25:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AAC6E610A0
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 06:52:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230432AbhHBGZ5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 02:25:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43344 "EHLO
+        id S232434AbhHBGxF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 02:53:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbhHBGZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Aug 2021 02:25:56 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7387C06175F
-        for <git@vger.kernel.org>; Sun,  1 Aug 2021 23:25:47 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id nd39so29129170ejc.5
-        for <git@vger.kernel.org>; Sun, 01 Aug 2021 23:25:47 -0700 (PDT)
+        with ESMTP id S232298AbhHBGxE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Aug 2021 02:53:04 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91BEEC06175F
+        for <git@vger.kernel.org>; Sun,  1 Aug 2021 23:52:55 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id hw6so15308452ejc.10
+        for <git@vger.kernel.org>; Sun, 01 Aug 2021 23:52:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FNutrbJV482QZPi3KeDs9r6UV4ho/TxxWWd3yqeY2fs=;
-        b=SEpRYBVp269cYoNVFlp4jsp+kfxSiJ15xFDZzudJwso+ZS16KP/GD2uxkovOvAupk3
-         IS/qEVbX1SIPkuMwvP8omIbGhT+dUQ+8UdHQ0wcQ1dIDIkvS6s1T4YnqA6z0JUwSy/hj
-         Xbt+3Z1OmJsnfqY/uYhxd6qL7F/iLR1BLfJHKTiSacmMfii+7Uj86ddaZJH5vdI0/j+2
-         rM31Jk8aM138rMJYXJ87RlRqGJk6l88PcHKN9yHWmL08XzKKdWMH4OXx/Dau5Nr3uY6Y
-         UwyPKhT3et8A9EEiT+aUo+rhvrhVs5bgbP9cfe356+VdJJztYlFRMxS/3mo6h+KFUijj
-         7MQQ==
+         :cc:content-transfer-encoding;
+        bh=GXTS9HACDqEQOG70pBDmZA4i2I3HujN3SCMxe8q/vw4=;
+        b=KtFRHOtuFFNBbRPESO2DlpFhXe1oh8slOkWDsQEL4sesSSWHq16eUPfWC5quwXpy3e
+         wbzcg4w0MODE0diOGArqJJKcsVMl3ysM5qtgqeyIUinjWuqjlC97By/8HD6Yq3YnZHLc
+         avcEc5V58rTjRfmJmAGjwfNtXOXfvUQE5xKZECQBh7VSTauRQ0J/TZZr3vuNPQCvxEof
+         0CMIwypVbDERWzUq+u7NICfk1d42GU570Pqql0P+ekgRPAyP8uY1Yev9ZRyhxLvzQT+L
+         XA7RO7t69ajCAod9tiEU7atmIEZqpRvrXW4bwyLdDUMEcTlr4rxtSi3B/V05DR5ttJ4X
+         raRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FNutrbJV482QZPi3KeDs9r6UV4ho/TxxWWd3yqeY2fs=;
-        b=VykxEXgVeL90hcIxPHSC2IdXRE25iiaFs/CanjDfpc73BCeBOopyPqIv6I+zu3UDc3
-         15vJR7XtkN6Ixe+bwuWWO3dtopYqgD+pwQvtnIZ/nDyd4BSK2PDEKrIiivI8eespJzUi
-         oOalMSJP3JypuyvJ/HAFS1ohBAM5m74V26JyZpns47d2NutzHd/RPeijrh1CKJYfEp5V
-         idx5F38fiSmRcbbNCWm8rAXTC4g+G7cWXiE8a4uCMHOEIZbzWgwBnvVubmR6B9FS25Rs
-         ScZYRwIT3ohdorxtOSCqcpd9scfAVh0kdqNRlgFfzm7PyfK7kbEN0i6nuW8ZLEl47IpU
-         NLOQ==
-X-Gm-Message-State: AOAM533Q/MfOk5VLvKbP6Ahtqgv6vDGQbgY6I8f3IPbJFaWdY/w1IyHf
-        jS6UfyxzOEJ6tO1gZyK1L/bUUsi8Kjsv1SI8zdY=
-X-Google-Smtp-Source: ABdhPJw8Tacz/Mvosz3uWcTRhfkWZdkAFQjYLcin/+18sztt0QRNIB54jiW3zm4pgl4KXGcMSxHIlPAGw6r/hieb2fc=
-X-Received: by 2002:a17:906:8cd:: with SMTP id o13mr5160136eje.341.1627885546394;
- Sun, 01 Aug 2021 23:25:46 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=GXTS9HACDqEQOG70pBDmZA4i2I3HujN3SCMxe8q/vw4=;
+        b=ds92CFAWiTG71Z/5o8lRvUsDgAvL8qb4vp4gUOobMkW6GJ8Q+W/KrPvUz3ad1OsMv8
+         8mn17Z7zNN/+GD7JhgyZHSTDhZdLTs1t2p3QXZsZMDiiISBl/p4C54Lr2NRX+NVQ+f7c
+         tGH/b9iju+zrwDofC3Y7TmzCLBRy++yMGr8vJEalC1ctJ6pJbjBfxbySFdybpkC/5nof
+         Mc7PFAdYlOPeknj/TdoPuCtgh9lwSfGJSbo9BA+SoEWzXIQj7ilmZL2G2dFg48pDfa3c
+         iGsbWt9Z0bPgK9/q7wmChcHAM3vgfhGCrzI11EsOpEODj1iCYIOZ0GK9OEvxfX+v5k9h
+         95kA==
+X-Gm-Message-State: AOAM533rKzLcOnOClYo7nroMMZBXo37T1/xuyk/VWKnnfs4lHLR5kzHp
+        s1Rw8GUfH/mMW1ALmucj2Ph8DWYGi0d93grWTCM=
+X-Google-Smtp-Source: ABdhPJzUNMNDIiVZiVF6ar3u3I2fJsSwboqyeIOhTdb10hfoX9d3GE//6v2QC+uobWYrAn53LC/ABu8E5IATQSJ2ypc=
+X-Received: by 2002:a17:906:58c7:: with SMTP id e7mr13752734ejs.197.1627887174132;
+ Sun, 01 Aug 2021 23:52:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAOLTT8RwwMF07f=XxWN=zGsPU0VQ8FqPVdyepQp78Ei8WZpSrw@mail.gmail.com>
-In-Reply-To: <CAOLTT8RwwMF07f=XxWN=zGsPU0VQ8FqPVdyepQp78Ei8WZpSrw@mail.gmail.com>
+References: <m2lf5lxog6.fsf@gmail.com> <m2k0l5xo1q.fsf@gmail.com>
+In-Reply-To: <m2k0l5xo1q.fsf@gmail.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 2 Aug 2021 08:25:35 +0200
-Message-ID: <CAP8UFD16pqERdF4Mdq=_ktvFB1rcXwB9PRy8TjNq=ThH5HbeqA@mail.gmail.com>
-Subject: Re: [GSoC] Git Blog 11
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Hariom verma <hariom18599@gmail.com>,
-        Git List <git@vger.kernel.org>
+Date:   Mon, 2 Aug 2021 08:52:43 +0200
+Message-ID: <CAP8UFD0V3hoDUkeMyAaeo_=cZ46P-Yka1v67FFNbQ5Me5Hh_+g@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_=5BGSoC=5D_My_Git_Dev_Blog_=E2=80=93_Week_11?=
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     git <git@vger.kernel.org>, Shourya Shukla <periperidip@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 1, 2021 at 8:45 AM ZheNing Hu <adlternative@gmail.com> wrote:
->
-> My eleventh week blog finished:
-> The web version is here:
-> https://adlternative.github.io/GSOC-Git-Blog-11/
+On Sun, Aug 1, 2021 at 4:00 PM Atharva Raykar <raykar.ath@gmail.com> wrote:
+
+> Here it is:
+> https://atharvaraykar.me/gitnotes/week11
 
 Great, thanks!
 
-> ### Attempt to optimize performance
->
-> This week, at the prompt of my mentor Christian, I used `gprof` for some
-> performance tests about `git cat-file --batch`:
-> [Re: [GSOC] How to improve the performance of git cat-file --batch]
-> (https://lore.kernel.org/git/CAOLTT8TdL7UhfVSOzbpmo-WFNrcKwmy=E720tNt4KM9o_p=keg@mail.gmail.com/)
+> > Preview:
+> >
+> > - Project progress: where I discuss a rough plan for making =E2=80=99gi=
+t
+> > submodule=E2=80=99 a
+> >   true builtin.
 
-[...]
+So your plan is the following:
 
-> Here is an amazing fact:
->
-> The number of calls to `lookup_object()` before and after using my
-> patch are 0 and
-> 522709 respectively. Therefore, I am very surprised, why do we have
-> these additional calls?
+  - Rename git-submodule.sh to git-submodule-legacy.sh.
+  - Create builtin/submodule.c, that will read from a config switch
+called =E2=80=98submodule.useBuiltin=E2=80=99. If this is set to false, jus=
+t call the
+legacy shell script, else use the builtin versions.
+  - Copy the functions from builtin/submodule--helper.c to
+builtin/submodule.c one by one. Make necessary changes in the flag
+parsing.
+  - Once all the functions have been successfully copied, make the
+default value of submodule.useBuiltin to true.
+  - =E2=80=A6eventually remove submodule--helper.c and the shell script
+entirely, and deprecate the =E2=80=98submodule.useBuiltin=E2=80=99 option.
 
-> After printing the call stack of `lookup_object()`, we can know that
-> the `parse_buffer()`
-> is calling them.
-
-s/the `parse_buffer()`/`parse_buffer()`/
-
-or
-
-s/the `parse_buffer()`/the `parse_buffer()` function/
-
-Also: s/them/it/
-
-> A very straightforward idea, can we avoid calling
-> this function?
->
-> In `parse_object_buffer()`, `parse_blob_buffer()`, ``parse_tree_buffer()`,
-> `parse_commit_buffer()`, and `parse_tag_buffer()` parse the object
-
-s/parse/we parse/
-
-> data, and then store
-> it in `struct object *obj`, finally return it to the caller.
-
-Maybe: s/finally/and finally/
-
-> `get_object()` will feed the `obj` to `grab_values()`, and then
-> `grab_values()` will feed the
-> `obj` to `grab_tag_values()`, `grab_commit_values()`, which can fill
-> the object info in `obj` to
-> implement some atom, e.g. `%(tag)`, `%(type)`, `%(object)`, `%(tree)`,
-> `%(numparent)`,`%(parent)`.
-> It is worth noting that `%(objectname)`, `%(objecttype)`,
-> `%(objectsize)`, `%(deltabase)`, `%(rest)`,
-> `%(raw)` are did not appear in them, this means that we can avoid
-
-s/are did not/don't/
-
-> parsing object buffer when we
-> don't use those atoms which require `obj`'s information!
->
-> After some processing and adaptation, I made the patch which can skip
-
-s/the patch/a patch/
-
-> `parse_object_buffer()`
-> in some cases, this is the result of the performance test of
-> `t/perf/p1006-cat-file.sh`:
->
-> ```
-> Test                                        HEAD~             HEAD
-> ------------------------------------------------------------------------------------
-> 1006.2: cat-file --batch-check              0.10(0.09+0.00)
-> 0.11(0.10+0.00) +10.0%
-> 1006.3: cat-file --batch-check with atoms   0.09(0.08+0.01)
-> 0.09(0.06+0.03) +0.0%
-> 1006.4: cat-file --batch                    0.62(0.58+0.04)
-> 0.57(0.54+0.03) -8.1%
-> 1006.5: cat-file --batch with atoms         0.63(0.60+0.02)
-> 0.52(0.49+0.02) -17.5%
-> ```
->
-> We can see that the performance of `git cat-file --batch` has been a
-> certain improvement!
-
-Yeah, sure -8.1% or -17.5% is really nice! But why +10.0% for
-`cat-file --batch-check`?
-
-> Tell a joke: removing 1984531500 if checking can reduce the startup
-> time of GTA5 by 70%. :-D
-
-s/if checking/checks/
-
-As this joke refers to:
-
-https://rockstarintel.com/a-fan-reduces-gta-online-loading-times-by-70
-
-it might be nice to add a link to help people like me who didn't know
-about this and had to google it.
-
-> Currently the patch has not been submitted to the mailing list, let us
-> wait a bit...
-
-Looking forward to it...
+I wonder though how in the tests you are going to check both the new
+builtin submodule and the old git-submodule.sh? Do you plan to run the
+tests twice (once with submodule.useBuiltin set to true, and once with
+it set to false)?
