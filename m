@@ -2,101 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D372C4338F
-	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 21:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9942FC4338F
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 02:19:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3788560FC1
-	for <git@archiver.kernel.org>; Sun,  1 Aug 2021 21:53:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7418E61042
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 02:19:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230287AbhHAVxY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Aug 2021 17:53:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38390 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230146AbhHAVxY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Aug 2021 17:53:24 -0400
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BA8AC06175F
-        for <git@vger.kernel.org>; Sun,  1 Aug 2021 14:53:14 -0700 (PDT)
-Received: by mail-qk1-x732.google.com with SMTP id t68so14936299qkf.8
-        for <git@vger.kernel.org>; Sun, 01 Aug 2021 14:53:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+RNTlamNP7EGxtKJW9QFZ7Ed0BCIofefA7Yqh2ReX5M=;
-        b=fbX7BO8+/Lbx7E2Mc7jbagzePIYDNvNkvxeqS4aCDOYmwqZkdcG8ZrQk9TSVE43S0A
-         GExtTiqGZ8srrwzR3SdXoIytRQ/vtRmqbVSEWnnxVMlkn4zeo5asmOsOGO6IKsJdbDEE
-         C2agil/MjAj0d05YI2Tom/iAcaFUZxCtGo5q4O6eUqyuQbn4296zUUQ6HoIFezYjgyun
-         SGuYNnNQxBrI5wlQ9Ibd2JyXYGtIWZBDcegbm/V/8XhM5ciWK4YK4FpfA9aNOiIqAMxo
-         I9GAdKgJ0GERSRqbOQydfc3a8A6kTlK5RAQPQf6E4rrt28yjy2i4MPWSr/EWY4NSPOab
-         bQ1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+RNTlamNP7EGxtKJW9QFZ7Ed0BCIofefA7Yqh2ReX5M=;
-        b=M2wehgYnhol7zrxUV5O+4NEf8OvGMPNxuX9vg8lhnXugjatbd33AsWhJRC8YB2Qehh
-         N1gm5qxGqXtAiw5KSp5rAEcdW+3h6qYYezOZdfmlsuxqZ/GigfjpibO7p53xIYkbTw8B
-         DtzywYmOqo7xzfPFC3AAr2VcN/YTztBT3Pg2Uqx3RkVz0i9KyEAQm1smUptU+EJx0+OB
-         C+JNOhlZn035KjtK8lEJ0EnnhK5DeHb/CYIXmMfeGYtWi+PGQEMC58nLByiwYzXdMlqV
-         xIM02ccYrM2NsCM9IBFPm345tsM1B9H0fc14aC7TJ9VekeKZh4BT438L/RrjBayL6xd/
-         I/wg==
-X-Gm-Message-State: AOAM531TrMpcyPXG8XvRJaX5tvz9FrF3SqNKIZpNA+RckkPtBAu+uZ/G
-        EuDxkHECN7n5AYu2cPe4OB7YZy/rqmM=
-X-Google-Smtp-Source: ABdhPJyS9FGGyXhmn6WUm5LFvcPZvGDACi3v1fp3b0Ke3PzsH2O6+p5NOVSzwbHxuzzWtPqd8w+xug==
-X-Received: by 2002:a05:620a:2a15:: with SMTP id o21mr12067469qkp.132.1627854793495;
-        Sun, 01 Aug 2021 14:53:13 -0700 (PDT)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id j127sm4755819qkf.20.2021.08.01.14.53.12
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 01 Aug 2021 14:53:13 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     jonathantanmy@google.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] t7508: avoid non POSIX BRE
-Date:   Sun,  1 Aug 2021 14:53:00 -0700
-Message-Id: <20210801215300.53781-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.32.0.826.g286871f41a
+        id S231361AbhHBCTJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Aug 2021 22:19:09 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54043 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230341AbhHBCTH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Aug 2021 22:19:07 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3CFA213840E;
+        Sun,  1 Aug 2021 22:18:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=CUwP+0FRPZZw
+        FTUThhhYnkcF9Lhh6bK0U/XoNicU7ew=; b=Uhiv/EBIZdIBzJB26EgcgmXLbj8X
+        QHVCL8fVib+Ar0HBDpQu9XUyzc2yBCplM3CRH+UswXme9JHtYBwDbLDzaYfju0Vi
+        lpqS/yjYB6ka06Gt2SAfKu4ThkkwrUslxt3dJYCkJCbOUOzjfzr+x9R/2lCwojIc
+        wVqP8VfrDsYpeF8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3597513840D;
+        Sun,  1 Aug 2021 22:18:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7C9A913840C;
+        Sun,  1 Aug 2021 22:18:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] clone: Remove constraint on --bare and --origin
+References: <20210801082546.18543-1-oystwa@gmail.com>
+Date:   Sun, 01 Aug 2021 19:18:53 -0700
+In-Reply-To: <20210801082546.18543-1-oystwa@gmail.com> (=?utf-8?Q?=22?=
+ =?utf-8?Q?=C3=98ystein?= Walle"'s
+        message of "Sun, 1 Aug 2021 10:25:46 +0200")
+Message-ID: <xmqq4kc8zj02.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: FCD0C784-F337-11EB-BF45-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-24c30e0b6 (wt-status: tolerate dangling marks, 2020-09-01) adds a test
-that uses a BRE which breaks at least with OpenBSD's grep.
+=C3=98ystein Walle <oystwa@gmail.com> writes:
 
-switch to an ERE as it is done for similar checks and while at it, remove
-the now obsolete test_i18ngrep call.
+> This test has been present since long before clone was ported to C. Now
+> there is no need for it, and since df61c88979 (clone: also configure ur=
+l
+> for bare clones, 2010-03-29) it's especially useful to allow both
+> options.
+>
+> Signed-off-by: =C3=98ystein Walle <oystwa@gmail.com>
+> ---
+>
+> A question on this constraint popped up on #git the other day. I
+> investigated a bit and found no particular reason for its existence. Al=
+l
+> tests still pass (except the one removed here) and the behavior is as
+> expected. I realize it might have gone under the radar for 11 years but
+> it's still worth the noise to remove it, in my opinion.
+>
+> I wanted to include a bit on the reasoning for the original check in th=
+e
+> commit message but I couldn't find it.=20
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- t/t7508-status.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I suspect that this originally was because "git clone --bare" does
+not use any remote-tracking branch (i.e. no refs/remotes/origin/*)
+and the only expected way to update a "git clone --bare" repository
+was to run "git fetch --mirror [--prune]", so there was no need to
+make the nickname "origin" to be configurable.
 
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index 2b72451ba3..05c6c02435 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -882,7 +882,7 @@ test_expect_success 'status shows detached HEAD properly after checking out non-
- 	git clone upstream downstream &&
- 	git -C downstream checkout @{u} &&
- 	git -C downstream status >actual &&
--	test_i18ngrep "HEAD detached at [0-9a-f]\\+" actual
-+	grep -E "HEAD detached at [0-9a-f]+" actual
- '
- 
- test_expect_success 'setup status submodule summary' '
--- 
-2.32.0.826.g286871f41a
+I do not offhand know what other features in "git clone --bare" that
+were added since then affect the resulting repository so that the
+name "origin" it leaves there (perhaps in its configuration, if not
+names in ref hierarchy) is visible to the end user and deserves to
+be customizable.
 
+In short, I think the "don't use --origin in a bare repository" was
+not because "doing so will break X and Y", but because "doing so
+does not make any practical difference".  So I am OK to lift this
+check.  It is a small enough change that is easy to revert if there
+were some valid reasons we failed to consider.
+
+Thanks.
