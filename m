@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A159C4338F
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 14:59:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F23BC4338F
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 15:05:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C50661029
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 14:59:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1C4EC610FF
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 15:05:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234313AbhHBO70 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 10:59:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55710 "EHLO
+        id S234686AbhHBPF7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 11:05:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233981AbhHBO7Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Aug 2021 10:59:25 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13A75C06175F
-        for <git@vger.kernel.org>; Mon,  2 Aug 2021 07:59:16 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id a19so11827756qtx.1
-        for <git@vger.kernel.org>; Mon, 02 Aug 2021 07:59:16 -0700 (PDT)
+        with ESMTP id S234340AbhHBPF6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Aug 2021 11:05:58 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BCD4C061760
+        for <git@vger.kernel.org>; Mon,  2 Aug 2021 08:05:48 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id t66so16890180qkb.0
+        for <git@vger.kernel.org>; Mon, 02 Aug 2021 08:05:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=yGGMAD2xU/pMM6Y92bM9f+40PBzcOk6ZOp5CvekhaSc=;
-        b=s1UzjyiylKou3B5BKRmA/OnUYMhO98Opg1/8yYnTU6Zxmh4+oVkn3B/ntK8BLEXVkB
-         ateGxWq9qfj0FSwPGonDPgztMLrZwIpGoFBfw4Q5IvdEvpgdW3A/s9K5NSavG77m/ioh
-         5YDyBWjgRm1ud6oB5Uo8QR5OVg4JXsEJTsxii3SGD1v3ueuUGGvI35V37vVSA5zLsnVk
-         bE1fOe9kDIG4HLNQ4rAKgyiXWkgswriKDQ2z+u1b5XlMIYJseN1qE+h0rYsrtMJ/XINs
-         WzOTqnsa7UBDE7axBdhCCbbp8IX85Bf6qBJ+u/GPBGsrRiFFBlpYf1rT+o+go7M6T0qx
-         qxwQ==
+        bh=T9aYMifCPbJKMBcVPNRErmkSmx9O06Qpc23dqLmPVjs=;
+        b=jMIipOP9jC7A4KURYA5f05Xtg1Jj0MvmlkCzdyQ7TaeeYb67FAXhkV4TKLgjL7sPPJ
+         7N43etksIW1f1HgH3Z+ryj3skO2YZZ8LEBfSUvvzO4nAVHkvyP3aYSaUoNQhnuF6kwjP
+         Y8KWTUbuXayKDbDMGW8KGE/NXHaGHgbo6KcZAj1o6fBLoSD+M/DBv7XQLmTOzJcR0Xrk
+         L6W+rANZxjgprdtdETKeVZ+bJB31os5feugvRzhkBE8NHS4Zin5SktdKod6VJa4/9JDF
+         NNl5IP/R3M0v8YzaxKxQJclm8FvuM0UXpnaCgD6JZc5SVDPV8+12GPfLndcYsi5DnvxS
+         jO+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=yGGMAD2xU/pMM6Y92bM9f+40PBzcOk6ZOp5CvekhaSc=;
-        b=WvLFU3kKXViB5S74gmAKiHXBv7hkZXarWtbzW2nscOs/4i2eXcM4CL5WrKD5Z/moJo
-         toQXc9cBt6BPhiB1Z0EmXPbhUDTEKZoedDj6Vq57u4t6nGkdkbBPaWipQoRBlhUYZi6H
-         oWBVz4dQ1WQXKfJj6TInY1v48B6JKHHi013lEQh2vqnEy9dZ+vDd5jJLDX584UpICcko
-         Zt9eQ7IpD4pZfaLSd7CwZJnzPT0ym1N2bVorJZDmEMextjiJ1rsRX5fwoRyJHJTZwb2L
-         fs/ZsAAoZA6wlttc6k91crehY1TbmP+b/k/vFfMZ15wcSAnKeD73T5SyzlFb8Mr3MRYV
-         L+Wg==
-X-Gm-Message-State: AOAM532G+x0DCITEXPR1YNILM48+Dl4dAG7Z2RKm8FiQlA2bbVsMU07+
-        C2+A9NTOCQZnd+iC8Fl6YVw=
-X-Google-Smtp-Source: ABdhPJxQL57hD/Yb3GydbhZZ9tBekcYAePa8haB0HioQUKNS5wESq+DxIKHlATNqbN3Qbr3QjnsBaw==
-X-Received: by 2002:a05:622a:134f:: with SMTP id w15mr14675641qtk.24.1627916355147;
-        Mon, 02 Aug 2021 07:59:15 -0700 (PDT)
+        bh=T9aYMifCPbJKMBcVPNRErmkSmx9O06Qpc23dqLmPVjs=;
+        b=pEIZdBbDJCcGiZwvlz0MHmCSnCKrw27wf+krv8nIAUX51xtQvjwSO6l/6zc54Mq03n
+         WyKToTGym4dQi4kVH3E4fSAXCXzfxSQ86CJ/eph1qGX18P7XlzahJukr6fE58MQp4LJl
+         H/VD9vwGoY/hmi/l0W2PjRS+pBgtukBwzEmbSsHthLfU3bz+ztiZVFdPIFLom+XskM30
+         ytlM/UKtoBIo95OoUEZXJxZtoEBXsIALXPsmlJvu0KPcF8FSoUVpaOxsCs9vo84kaepE
+         RqPy4iznTBvcC4dADwAtbOQXaAIO/3Gkkt8PNKnbxwm7GXtQBG+FyEbA6tLI8K50+jyT
+         fb4g==
+X-Gm-Message-State: AOAM531zH168Cc61Q/Ze91APFCx8pnL1uBeRDyL3+zipaQcbNd6QdvVt
+        D4HFeuADQ4tc00kkuLX9ZJc=
+X-Google-Smtp-Source: ABdhPJwuUZd14D8GzOPfavpaQWH8oM8TJ6i8jO/BXos2ps5jT5kWRKGbLe66O5J17XIg1oGRD+6wIA==
+X-Received: by 2002:ae9:e40a:: with SMTP id q10mr10618443qkc.172.1627916747501;
+        Mon, 02 Aug 2021 08:05:47 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:34d1:2d41:f9b7:ccbc? ([2600:1700:e72:80a0:34d1:2d41:f9b7:ccbc])
-        by smtp.gmail.com with ESMTPSA id n5sm5890950qkp.116.2021.08.02.07.59.13
+        by smtp.gmail.com with ESMTPSA id l25sm1239650qtv.69.2021.08.02.08.05.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Aug 2021 07:59:14 -0700 (PDT)
-Subject: Re: [PATCH 2/2] Update docs for change of default merge backend
+        Mon, 02 Aug 2021 08:05:46 -0700 (PDT)
+Subject: Re: [PATCH 0/2] [RFC] Switch default merge backend from recursive to
+ ort
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Cc:     Christian Couder <chriscool@tuxfamily.org>,
@@ -75,14 +76,13 @@ Cc:     Christian Couder <chriscool@tuxfamily.org>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Elijah Newren <newren@gmail.com>
 References: <pull.1055.git.git.1627776461.gitgitgadget@gmail.com>
- <35490397590ae4d39ba98c7eb206bfadc22ddf35.1627776462.git.gitgitgadget@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <4f223333-7cbb-2304-2e81-dc91a3281241@gmail.com>
-Date:   Mon, 2 Aug 2021 10:59:12 -0400
+Message-ID: <ec1bb449-347a-924d-7462-3cef6facc0e9@gmail.com>
+Date:   Mon, 2 Aug 2021 11:05:44 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.12.0
 MIME-Version: 1.0
-In-Reply-To: <35490397590ae4d39ba98c7eb206bfadc22ddf35.1627776462.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1055.git.git.1627776461.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -91,93 +91,50 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 7/31/2021 8:07 PM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-...
-> diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-> index afdaeab8503..072bf84fa8a 100644
-> --- a/Documentation/gitfaq.txt
-> +++ b/Documentation/gitfaq.txt
-> @@ -275,7 +275,7 @@ best to always use a regular merge commit.
->  
->  [[merge-two-revert-one]]
->  If I make a change on two branches but revert it on one, why does the merge of those branches include the change?::
-> -	By default, when Git does a merge, it uses a strategy called the recursive
-> +	By default, when Git does a merge, it uses a strategy called the ort
->  	strategy, which does a fancy three-way merge.  In such a case, when Git
+> This is an RFC series designed to spur feedback about switching the default
+> merge backend (reviewing the patches is of secondary importance at this
+> point). Some questions:
+> 
+>  * Are there things others want before this series is considered for
+>    inclusion?
+>  * What kind of timeline do others think is reasonable?
+>  * Would it be beneficial to let this series sit in 'next' for an extended
+>    duration to gain more feedback?
+> 
+> Some potentially useful context in relation to the above:
+> 
+>  * I've personally used the ort backend for well over a year
+>  * I have ~50 testers using ort as the default merge backend since Nov.
+>    2020.
+>  * ort fixes known bugs in recursive, and there are no known regressions
+>    (more testers may change that)
+>  * ort is significantly faster than recursive
+>  * ort provides one new feature already, and enables more that are on the
+>    way
+>  * The commit message of patch 1 has more details about the last three items
+>    above
+> 
+> So...thoughts?
 
-nit: I feel like quotes around "ort" would be beneficial here. It would have
-also helped the previous version, too, in my opinion.
+I fully endorse this change as soon as possible. I've applied the patches
+you supplied here and submitted a PR to microsoft/git [1] to take them.
 
->  	performs the merge, it considers exactly three points: the two heads and a
->  	third point, called the _merge base_, which is usually the common ancestor of
-> diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-> index eb0aabd396f..72b53188504 100644
-> --- a/Documentation/merge-options.txt
-> +++ b/Documentation/merge-options.txt
-> @@ -112,8 +112,8 @@ With --squash, --commit is not allowed, and will fail.
->  	Use the given merge strategy; can be supplied more than
->  	once to specify them in the order they should be tried.
->  	If there is no `-s` option, a built-in list of strategies
-> -	is used instead ('git merge-recursive' when merging a single
-> -	head, 'git merge-octopus' otherwise).
-> +	is used instead (`ort` when merging a single head,
-> +	`octopus` otherwise).
->  
->  -X <option>::
->  --strategy-option=<option>::
-> diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-> index 2912de706bf..6caf3fd6486 100644
-> --- a/Documentation/merge-strategies.txt
-> +++ b/Documentation/merge-strategies.txt
-> @@ -6,28 +6,23 @@ backend 'merge strategies' to be chosen with `-s` option.  Some strategies
->  can also take their own options, which can be passed by giving `-X<option>`
->  arguments to `git merge` and/or `git pull`.
->  
-> -resolve::
-> -	This can only resolve two heads (i.e. the current branch
-> -	and another branch you pulled from) using a 3-way merge
-> -	algorithm.  It tries to carefully detect criss-cross
-> -	merge ambiguities and is considered generally safe and
-> -	fast.
-> -
-> -recursive::
-> -	This can only resolve two heads using a 3-way merge
-> -	algorithm.  When there is more than one common
-> -	ancestor that can be used for 3-way merge, it creates a
-> -	merged tree of the common ancestors and uses that as
-> -	the reference tree for the 3-way merge.  This has been
-> -	reported to result in fewer merge conflicts without
-> -	causing mismerges by tests done on actual merge commits
-> -	taken from Linux 2.6 kernel development history.
-> -	Additionally this can detect and handle merges involving
-> -	renames, but currently cannot make use of detected
-> -	copies.  This is the default merge strategy when pulling
-> -	or merging one branch.
-> +ort::
-> +	This is the default merge strategy when pulling or merging one
-> +	branch.  This strategy can only resolve two heads using a
-> +	3-way merge algorithm.  When there is more than one common
-> +	ancestor that can be used for 3-way merge, it creates a merged
-> +	tree of the common ancestors and uses that as the reference
-> +	tree for the 3-way merge.  This has been reported to result in
-> +	fewer merge conflicts without causing mismerges by tests done
-> +	on actual merge commits taken from Linux 2.6 kernel
-> +	development history.  Additionally this strategy can detect
-> +	and handle merges involving renames.  It does not make use of
-> +	detected copies.  The name for this algorithm is an acronym
-> +	("Ostensibly Recursive's Twin") and came from the fact that it
-> +	was written as a replacement for the previous default
-> +	algorithm, recursive.
+[1] https://github.com/microsoft/git/pull/404
 
-nit: Quotes around "recursive" might be useful here, too.
+I've done my own share of testing on some of our private monorepos to see
+how ORT compares to the recursive algorithm. My data is not perhaps as
+rigorous as yours, but I did notice that the ORT algorithm was consistently
+within the 5-6 second range while the recursive algorithm would vary within
+the 7-20 second range (and some outliers near 30s).
 
->  +
-> -The 'recursive' strategy can take the following options:
-> +The 'ort' strategy can take the following options:
+Of course, I'm particularly excited about the benefits to the sparse index
+work. I also have a prototype of a 'git merge' integration with sparse
+index which was not very hard because the ORT strategy does not use the
+index as a data structure. With that change, my tests dropped to between
+0.5s and 1.5 seconds. (This shows just how much my earlier timings were
+stuck on index reads and writes.) Now, the largest indicator of time is
+how long it takes to resolve text conflicts.
 
-(Like these quotes.)
+Thanks! What a monumental effort.
 
-Other than my nits, these doc updates are solid.
-
-Thanks,
 -Stolee
