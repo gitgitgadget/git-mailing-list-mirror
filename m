@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B13B1C432BE
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 16:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92C49C4320A
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 16:53:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9955F610FF
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 16:53:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E21761106
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 16:53:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233015AbhHBQyD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 12:54:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57382 "EHLO
+        id S233232AbhHBQyE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 12:54:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233069AbhHBQxy (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233019AbhHBQxy (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 2 Aug 2021 12:53:54 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B6E6C06175F
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E57EFC0613D5
         for <git@vger.kernel.org>; Mon,  2 Aug 2021 09:53:44 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id m12so17457258wru.12
+Received: by mail-wr1-x42a.google.com with SMTP id l18so22233461wrv.5
         for <git@vger.kernel.org>; Mon, 02 Aug 2021 09:53:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=seSpVRnyF3qCO7FBgEfjVHC57Fx6Tbn3cxCgWT3vZUg=;
-        b=niJ/9cW1BXgEIJov646R6sO3MlIfYRnifE/F8YqfJsl6si4ZeCvtcVVYbBSMl/1Cp1
-         ZQL1N3IjlfZxaVPv15ONheownAeBq0KS34mfuMNRBrepyNqEvGxSnbXf51sRWKgqcxvh
-         dMwKVWfUU6VNPQaCmmeYieXh1z134AmR7qRaaWZgtO1/yiOFIs6LSYf0QDo4YJQut85p
-         lkEOm055jCnOLGdZa+t5IPyuEzgWZi70eoSwyObn7MXS23GsLoVV0S94vNhoDT6pidv/
-         soTE75ah79jSN6yKDUXqvK2NiVxQd8AIqEQt+E531rsfTIyDMS3XFWaQcVhF/eF+9jy0
-         C3Jg==
+        bh=KpLmbp75Sux4pwv8U+t0kPz7J/1D/BqHpfoLRrm2OjA=;
+        b=qB0i/r4EGgUo33HWajScwvfSdq67CMHqW/vp4Ew5qoWVyKGp13TU0cnYjL8rE74bIT
+         K8YtPRv3ykHapTSCqQqtRAecbACv5aII17vsvyMhvJ2GJ5hT0BKtMTVI7mQ9/ea9RwS0
+         on7Zhcbkp0zigMs5lvXQDkkoMFSKgz8kpaokZX8Dr2RpgN0srGDpvChGy+Y/qXU61dhR
+         Ic21tGt6DM/bsJCzQnD/NzdwgHwMWAYu9eUjil26EpFl577IEGPazFHDNzS8/AAcnBBy
+         /WQvNPPYp7doOasU1Y5xI2Bo3Gm8jd03ijnkcExT1K167qXzI4pUdd5NAQH10dOQBmn9
+         N5xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=seSpVRnyF3qCO7FBgEfjVHC57Fx6Tbn3cxCgWT3vZUg=;
-        b=loOLAjVO7oTJNab2nnpRXl48NlGBi6pMBaqE6Eyu/NxRNCpnAAi+d93+NQ/BTKTP9F
-         jPn6LX6L237eRdFx+PmIx0Tin/spJLO5PcrlqwWymGRkKEQoMKJf9LkmC1TTltQAQqxy
-         qa35ZWpMg6SchPwyqCeEudI+4qodrT7/Kxa/zuJzojQIXt5As/v51ofsJ6sZS7Vuhgtu
-         yI+lJeCGThqQKsVpUU7unmALpO/ILhWam1Kew+9bFispwB2JRnIOR2/WkyPxfalDYljh
-         2kBmCiboocBlt8/r/ByOa00L4lKM+DTDHEYouRYYOZvWpT7xJLN1+b5x/V4JJTE0NZCT
-         ytBw==
-X-Gm-Message-State: AOAM5308RookavKcDtAkFWfgcgzw8SRYT3+E6QfztXGiD7QNqjVGKBIJ
-        Zg1wsf6Dsxw5eFVfeMTKF3Yq2WbqU7U=
-X-Google-Smtp-Source: ABdhPJwiu0tPBQLzLaeTA+ZB7JRpRzvG7G2V7cNXDNtUmtljWqFUOqf9OHV5m02KrxvIHwb8Tt3qew==
-X-Received: by 2002:adf:fd90:: with SMTP id d16mr19673525wrr.105.1627923222981;
-        Mon, 02 Aug 2021 09:53:42 -0700 (PDT)
+        bh=KpLmbp75Sux4pwv8U+t0kPz7J/1D/BqHpfoLRrm2OjA=;
+        b=qdFQ1+REkxJRaJxM1wnGkZoN0/cbFvRpWxrCAb4kyLzyo7uJM2VRJFDrIEpCZwYn8n
+         Bkh6FIZSy8+dKzVdwOOEoanhIhHK79PVf6ub0MuReD2I6S8sqsU910wUMDOPGjr4/rV1
+         mZHd9n0HvxPQAwVFmqlUbXq8tlRCFH3NzUQkMnVdWonBDqoufkeEkSUsoWRutAd+TKjn
+         WOzOLJZLUiPOfmEhk6laYLhfpBLOgnZRVkUmHiLHHkwL55RKFmER6obTFsD91EAR19Zm
+         XPNkplK3oxwFcrgjm9wiCMAfRTgt+VipsNREK5gKBOQeQDQvefPq25NsrB2p4fEDTmuX
+         vqMA==
+X-Gm-Message-State: AOAM5315DXFmyHNVSGB5SWJuHu8E44o75wuRUUvpPhLtGQRoByNBn7hN
+        8ObrXWRAEiqstpg21vpvpOUcLh9tetQ=
+X-Google-Smtp-Source: ABdhPJxQ/qQ8VD/BIAXWCcUp4QieljHAnLlrRQLSogeS1acVxwZ1qT5atHfGJQBG4afDAF3TGGD6BQ==
+X-Received: by 2002:adf:dd07:: with SMTP id a7mr18138909wrm.377.1627923223558;
+        Mon, 02 Aug 2021 09:53:43 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e3sm12498687wrv.65.2021.08.02.09.53.42
+        by smtp.gmail.com with ESMTPSA id z20sm10425230wmi.36.2021.08.02.09.53.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Aug 2021 09:53:42 -0700 (PDT)
-Message-Id: <45bc0772c64ee09a69122d3721271f827a21f909.1627923216.git.gitgitgadget@gmail.com>
+        Mon, 02 Aug 2021 09:53:43 -0700 (PDT)
+Message-Id: <1326e99a1fd1704e44b4f2d1a5731fe9da4d0a8a.1627923216.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1052.v3.git.git.1627923216.gitgitgadget@gmail.com>
 References: <pull.1052.v2.git.git.1626989327.gitgitgadget@gmail.com>
         <pull.1052.v3.git.git.1627923216.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 02 Aug 2021 16:53:33 +0000
-Subject: [PATCH v3 08/11] t1410: mark test as REFFILES
+Date:   Mon, 02 Aug 2021 16:53:34 +0000
+Subject: [PATCH v3 09/11] t7064: use update-ref -d to remove upstream branch
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,30 +77,32 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This test takes a lock on the target of a symref, and then verifies that it is
-possible to expire the symref's reflog. In reftable, one can only take a global
-lock (which would prevent the symref reflog from being expired altogether.)
+The previous code tested this by writing $ZERO_OID explicitly in the packed-refs
+file. This is a type of corruption that doesn't reflect realistic use-cases. In
+addition, even the ref-store test-tool refuses to write invalid OIDs.
+(update-ref interprets $ZERO_OID is deleting the ref).
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- t/t1410-reflog.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ t/t7064-wtstatus-pv2.sh | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index 27b9080251a..d42f067ff8c 100755
---- a/t/t1410-reflog.sh
-+++ b/t/t1410-reflog.sh
-@@ -374,7 +374,9 @@ test_expect_failure 'reflog with non-commit entries displays all entries' '
- 	test_line_count = 3 actual
- '
+diff --git a/t/t7064-wtstatus-pv2.sh b/t/t7064-wtstatus-pv2.sh
+index 4613882caff..eeb0534163d 100755
+--- a/t/t7064-wtstatus-pv2.sh
++++ b/t/t7064-wtstatus-pv2.sh
+@@ -373,10 +373,7 @@ test_expect_success 'verify upstream fields in branch header' '
  
--test_expect_success 'reflog expire operates on symref not referrent' '
-+# This test takes a lock on an individual ref; this is not supported in
-+# reftable.
-+test_expect_success REFFILES 'reflog expire operates on symref not referrent' '
- 	git branch --create-reflog the_symref &&
- 	git branch --create-reflog referrent &&
- 	git update-ref referrent HEAD &&
+ 		## Test upstream-gone case. Fake this by pointing
+ 		## origin/initial-branch at a non-existing commit.
+-		OLD=$(git rev-parse origin/initial-branch) &&
+-		NEW=$ZERO_OID &&
+-		mv .git/packed-refs .git/old-packed-refs &&
+-		sed "s/$OLD/$NEW/g" <.git/old-packed-refs >.git/packed-refs &&
++		git update-ref -d refs/remotes/origin/initial-branch &&
+ 
+ 		HUF=$(git rev-parse HEAD) &&
+ 
 -- 
 gitgitgadget
 
