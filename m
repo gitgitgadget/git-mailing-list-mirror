@@ -2,220 +2,291 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14F0AC43214
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 13:50:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61E32C4320E
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 14:34:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 02D3E610FE
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 13:50:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47FD260F4B
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 14:34:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234748AbhHBNuN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 09:50:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38414 "EHLO
+        id S234183AbhHBOer (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 10:34:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234756AbhHBNtR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Aug 2021 09:49:17 -0400
-Received: from forward103p.mail.yandex.net (forward103p.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:106])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5AA9C06121C
-        for <git@vger.kernel.org>; Mon,  2 Aug 2021 06:48:26 -0700 (PDT)
-Received: from forward101q.mail.yandex.net (forward101q.mail.yandex.net [IPv6:2a02:6b8:c0e:4b:0:640:4012:bb98])
-        by forward103p.mail.yandex.net (Yandex) with ESMTP id B13DC18C3690;
-        Mon,  2 Aug 2021 16:48:20 +0300 (MSK)
-Received: from vla5-7c8bfce2718b.qloud-c.yandex.net (vla5-7c8bfce2718b.qloud-c.yandex.net [IPv6:2a02:6b8:c18:348f:0:640:7c8b:fce2])
-        by forward101q.mail.yandex.net (Yandex) with ESMTP id ABFF4CF40005;
-        Mon,  2 Aug 2021 16:48:20 +0300 (MSK)
-Received: from vla1-62318bfe5573.qloud-c.yandex.net (vla1-62318bfe5573.qloud-c.yandex.net [2a02:6b8:c0d:3819:0:640:6231:8bfe])
-        by vla5-7c8bfce2718b.qloud-c.yandex.net (mxback/Yandex) with ESMTP id 31UBLiqmOd-mKH8mX1i;
-        Mon, 02 Aug 2021 16:48:20 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1627912100;
-        bh=wIZSfWYBqT5ZRudtIKHR0pERPIQlah9Du5aHCDIlNvQ=;
-        h=In-Reply-To:Subject:To:Message-ID:From:References:Date:CC;
-        b=Y8w+RejNK5eeKNPH+B3ThrSacX4aKzOq9jucEkQTUbWBJjETVtWMbnok3hA9OP92P
-         5cgw7sKjvYYQiUCzE02lLppcd9GLxaIH/JprmLL0vxAl4pGQGu8sxdHMb+3V0EFcXo
-         EOm6tNL+1zR9SivORyw2sGBMBmIa46D+jKDr6/j0=
-Authentication-Results: vla5-7c8bfce2718b.qloud-c.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by vla1-62318bfe5573.qloud-c.yandex.net (smtp/Yandex) with ESMTPSA id hRy3xfmwbr-mKsWWbHm;
-        Mon, 02 Aug 2021 16:48:20 +0300
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (Client certificate not present)
-Date:   Mon, 2 Aug 2021 16:48:19 +0300
-From:   Eugen Konkov <kes-kes@yandex.ru>
-Message-ID: <1522228698.20210802164819@yandex.ru>
-To:     Elijah Newren <newren@gmail.com>
-CC:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: Ambigious messages
-In-Reply-To: <CABPp-BHkhwKFb74fUMW3nOGrCD6waBPBjp-UY2fRhU6=WUxOow@mail.gmail.com>
-References: <644619140.20210731114616@yandex.ru> 
-  <CABPp-BHkhwKFb74fUMW3nOGrCD6waBPBjp-UY2fRhU6=WUxOow@mail.gmail.com>
+        with ESMTP id S234418AbhHBOel (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Aug 2021 10:34:41 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88D48C06175F
+        for <git@vger.kernel.org>; Mon,  2 Aug 2021 07:34:31 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id 190so16687805qkk.12
+        for <git@vger.kernel.org>; Mon, 02 Aug 2021 07:34:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=IrHMrNVEuOk3vD+goUYaGPQbzFWcqFLvCEzogt3kzi0=;
+        b=N6NrQvDBM+JdYxANALyUt4KetY2m8LbG7LsJp5077TUVznNMWPyCp7lBlJDxVi62Qy
+         1TVCvEg6SDv8ikccDAbi7WKv+kMkfX1SgSlEWOf3DlUdx2hjwGmCzLZ1LcUA6k1s16BK
+         qrX52hxMB5kja04psZGOQk+MPVgaHR4vFqXu4uAl96F+RYcGmw1vsDbfgivzPJz2E1Bb
+         OwczAywvx2xD2SUbaXWe+m1XNsQmHgIg3xvZQiU6tCZ+lEGxY0xBNHfX6BzwiaFdQXS4
+         ip9eGwqPMA6HGv3U3Uqs/Rw4t07Ux+2oim7KbTOVEEud7RqbVxUbjSG1YcJdMtdaDx9h
+         pN+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=IrHMrNVEuOk3vD+goUYaGPQbzFWcqFLvCEzogt3kzi0=;
+        b=kpWUtebTPE9HHEwryeh0FbtdbALFi1MXTAQGj6QafM7+pHl5G6yyKhNZV7Tvg/Tcrw
+         ZLY6VF0vSUOdAlKxjIiyt7AGnm4vj4h1pMSlnYAdKnw2bqD4EvB8bS4Tq82e73plyc5z
+         SWPx5Q1x1gaDH9xGp5wLCDfhhUCq3BYyokkTNzmcviSS94cKLzHI0MZ3iXyL+Kplob2l
+         utH4UN3teAyJkdFQaOz26Rqgosok6Du6jqANafhOJitQIjD62iGN8lhfuCF8c5PClis2
+         fLrB/SqknkC/zZRYazRSUNa9AMFnDQr3lZkp4X1gebUQmM2KGJYOR0conJH+Bbfm4PCo
+         5nMw==
+X-Gm-Message-State: AOAM533Ib8UfKyBZr0h/4yQHxSm2C3jGtSOpDYxOnnVSedfoLYQzsUr2
+        66jQgyFTdlBtuUgviIgg6cc=
+X-Google-Smtp-Source: ABdhPJxvGcSCr+dl2rbnWfRpZX37tr5R9MqI0p8VXKePD2kAVbg4yr1kRMo0vyp5z39Us0+3H6hqPg==
+X-Received: by 2002:a37:a5ca:: with SMTP id o193mr16011973qke.352.1627914870560;
+        Mon, 02 Aug 2021 07:34:30 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:34d1:2d41:f9b7:ccbc? ([2600:1700:e72:80a0:34d1:2d41:f9b7:ccbc])
+        by smtp.gmail.com with ESMTPSA id o27sm6023216qkk.124.2021.08.02.07.34.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Aug 2021 07:34:30 -0700 (PDT)
+Subject: Re: [PATCH 2/2] sparse-checkout: clear tracked sparse dirs
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1009.git.1627579637.gitgitgadget@gmail.com>
+ <9212bbf4e3cab20fe49ab8e6dd4ac0277c4f2805.1627579637.git.gitgitgadget@gmail.com>
+ <CABPp-BGbRbyCYYS+NcYrC-T4hJf7BCoLE2HsXFM4K51A0wSgcg@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <76639e16-204d-7812-d4c5-56c70e280bed@gmail.com>
+Date:   Mon, 2 Aug 2021 10:34:28 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+In-Reply-To: <CABPp-BGbRbyCYYS+NcYrC-T4hJf7BCoLE2HsXFM4K51A0wSgcg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Elijah,
+On 7/30/2021 9:52 AM, Elijah Newren wrote:
+> On Thu, Jul 29, 2021 at 11:27 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+...
+>> Leaving these ignored files in the sparse directories makes it
+>> impossible to gain performance benefits in the sparse index. When we
+>> track into these directories, we need to know if the files are ignored
+>> or not, which might depend on the _tracked_ .gitignore file(s) within
+>> the sparse directory. This depends on the indexed version of the file,
+>> so the sparse directory must be expanded.
+> 
+> Is this the issue I highlighted at
+> https://lore.kernel.org/git/CABPp-BHsiLTtv6AuycRrQ5K6q0=ZTJe0kd7uTUL+UT=nxj66zA@mail.gmail.com/,
+> the paragraph "...I thought the point of add_patterns()..." or is
+> there more or other things involved here?
 
-Sunday, August 1, 2021, 3:27:07 AM, you wrote:
+This is exactly that point. I'm not sure why I didn't pick up on your
+earlier concerns as something to do _immediately_, but for some reason
+I thought I could delay it until later.
 
-> Hi Eugen,
+>> If users depend on ignored files within the sparse directories, then
+>> they have created a bad shape in their repository. Regardless, such
+>> shapes would create risk that changing the behavior for all cone mode
+>> users might be too risky to take on at the moment. Since this data shape
+>> makes it impossible to get performance benefits using the sparse index,
+>> we limit the change to only be enabled when the sparse index is enabled.
+>> Users can opt out of this behavior by disabline the sparse index.
+> 
+> s/disabline/disabling/, otherwise, I fully agree with this paragraph.
 
-> On Sat, Jul 31, 2021 at 2:56 AM Eugen Konkov <kes-kes@yandex.ru> wrote:
+Will fix. Thanks.
+ 
+>> Depending on user feedback or real-world use, we might want to consider
+>> expanding the behavior change to all of cone mode. Since we are
+>> currently restricting to the sparse index case, we can use the existence
+>> of sparse directory entries in the index as indicators of which
+>> directories should be removed.
+> 
+> Let's just expand it to all of cone mode.
 
->> $ git checkout 51c7d41b82b5b
->> error: Your local changes to the following files would be overwritten by checkout:
->>        lib/Mojo/IOLoop/Stream.pm
->> Please commit your changes or stash them before you switch branches.
->> Aborting
+I'm open to that. I'll leave this version open for feedback a bit longer
+before doing so.
 
-> The error seems quite reasonable to me...but can I ask how you got
-> into this state?
+>> +       /*
+>> +        * NEEDSWORK: For now, only use this behavior when index.sparse
+>> +        * is enabled. We may want this behavior enabled whenever using
+>> +        * cone mode patterns.
+>> +        */
+>> +       prepare_repo_settings(r);
+>> +       if (!r->worktree || !r->settings.sparse_index)
+>> +               return;
+> 
+> s/may/do/  :-)
 
-> There's two ways I know of:
+Maybe!
+ 
+>> +
+>> +       /*
+>> +        * Since we now depend on the sparse index to enable this
+>> +        * behavior, use it to our advantage. This process is more
+>> +        * complicated without it.
+>> +        */
+> 
+> Ah, the real reason why you limited this change to sparse-index comes out.  :-)
+> 
+>> +       convert_to_sparse(r->index);
+>> +
+>> +       strbuf_addstr(&path, r->worktree);
+>> +       strbuf_complete(&path, '/');
+>> +       pathlen = path.len;
+>> +
+>> +       for (i = 0; i < r->index->cache_nr; i++) {
+>> +               struct cache_entry *ce = r->index->cache[i];
+>> +
+>> +               /*
+>> +                * Is this a sparse directory? If so, then definitely
+>> +                * include it. All contained content is outside of the
+>> +                * patterns.
+> 
+> "include"?  I would have used the word "remove", but it gets confusing
+> because the question is if we want to include it in our list of things
+> to remove or remove it from the working directory.
 
-> 1) Setting a sparse-checkout to only have certain paths, and then
-> recreating a file outside the sparsity paths anyway.
-> 2) Trying to adjust your sparse-checkout to have a different set of
-> paths, then hit Ctrl-C while it is in the middle of running.
+This comment is a bit stale, sorry. Earlier I was populating a list of
+the directories, but in this version I'm just deleting them immediately.
 
-> Did you do one of these?  If not, what'd you do?  If so, which one?
+>> +                */
+>> +               if (S_ISSPARSEDIR(ce->ce_mode) &&
+>> +                   repo_file_exists(r, ce->name)) {
+>> +                       strbuf_setlen(&path, pathlen);
+>> +                       strbuf_addstr(&path, ce->name);
+>> +
+>> +                       /*
+>> +                        * Removal is "best effort". If something blocks
+>> +                        * the deletion, then continue with a warning.
+>> +                        */
+>> +                       if (remove_dir_recursively(&path, 0))
+>> +                               warning(_("failed to remove directory '%s'"), path.buf);
+> 
+> Um, doesn't this delete untracked files that are not ignored as well
+> as the ignored files?  If so, was that intentional?  I'm fully on
+> board with removing the gitignore'd files, but I'm worried removing
+> other untracked files is dangerous.
 
-> I've only had confused users come to me when they did the latter; they
-> apparently assumed Ctrl-C would abort the operation and return to the
-> previous state, but it does not -- whatever was successfully checked
-> out before they hit Ctrl-C remains written to the working copy, but
-> the .git/info/sparse-checkout file is updated last so the system
-> continues assuming the old checkout.  I wonder if we need to add some
-> special Ctrl-C handling inside sparse-checkout adjustments or
-> something.
+I believe that 'git sparse-checkout (set|add|reapply)' will fail before
+reaching this method if there are untracked files that could potentially
+be removed. I will double-check to ensure this is the case. It is
+definitely my intention to protect any untracked, non-ignored files in
+these directories by failing the sparse-checkout modification.
 
->> $ git checkout lib/Mojo/IOLoop/Stream.pm
->> error: pathspec 'lib/Mojo/IOLoop/Stream.pm' did not match any file(s) known to git
+> My implementation of this concept (in an external tool) was more along
+> the lines of
+> 
+>   * Get $LIST_OF_NON_SPARSE_DIRECTORIES by walking `git ls-files -t`
+> output and finding common fully-sparse directories
+>   * git clean -fX $LIST_OF_NON_SPARSE_DIRECTORIES
 
-> This error message is clearly suboptimal and should be improved.
-> Alternatively, though, we could perhaps change the behavior so that
-> when in a sparse-checkout and the file(s) that match are SKIP_WORKTREE
-> but present anyway, we could just remove the file from the working
-> copy (i.e. make it match the index).
+I initially was running 'git clean -dfx -- <dir> ...' but that also
+requires parsing and expanding the index (or being very careful with
+the sparse index).
 
->> $ git add lib/Mojo/IOLoop/Stream.pm
->> The following pathspecs didn't match any eligible path, but they do match index
->> entries outside the current sparse checkout:
->> lib/Mojo/IOLoop/Stream.pm
->> hint: Disable or modify the sparsity rules if you intend to update such entries.
->> hint: Disable this message with "git config advice.updateSparsePath false"
+> 
+>> +               }
+>> +       }
+>> +
+>> +       strbuf_release(&path);
+>> +
+>> +       /*
+>> +        * This is temporary: the sparse-checkout builtin is not
+>> +        * integrated with the sparse-index yet, so we need to keep
+>> +        * it full during the process.
+>> +        */
+>> +       ensure_full_index(r->index);
+>> +}
+>> +
+>>  static int update_working_directory(struct pattern_list *pl)
+>>  {
+>>         enum update_sparsity_result result;
+>> @@ -141,6 +207,8 @@ static int update_working_directory(struct pattern_list *pl)
+>>         else
+>>                 rollback_lock_file(&lock_file);
+>>
+>> +       clean_tracked_sparse_directories(r);
+>> +
+>>         r->index->sparse_checkout_patterns = NULL;
+>>         return result;
+>>  }
+> 
+> (Adding a comment here just to separate the two blocks below.)
+> 
+>> @@ -540,8 +608,11 @@ static int modify_pattern_list(int argc, const char **argv, enum modify_type m)
+>>  {
+>>         int result;
+>>         int changed_config = 0;
+>> +       struct pattern_list *old_pl = xcalloc(1, sizeof(*old_pl));
+>>         struct pattern_list *pl = xcalloc(1, sizeof(*pl));
+>>
+>> +       get_sparse_checkout_patterns(old_pl);
+>> +
+>>         switch (m) {
+>>         case ADD:
+>>                 if (core_sparse_checkout_cone)
+>> @@ -567,7 +638,9 @@ static int modify_pattern_list(int argc, const char **argv, enum modify_type m)
+>>                 set_config(MODE_NO_PATTERNS);
+>>
+>>         clear_pattern_list(pl);
+>> +       clear_pattern_list(old_pl);
+>>         free(pl);
+>> +       free(old_pl);
+>>         return result;
+>>  }
+> 
+> You create an old_pl, populate it with get_sparse_checkout_patterns(),
+> do nothing with it, then clear and free it?  I'm confused by the above
+> two blocks.
 
-> The error message is correct, but this is the case Stolee was talking
-> about recently where it'd be good to add an override to "git add" to
-> allow adding it anyway and add information about using that option to
-> this error message.
+Sorry that this is also stale. I should read my own patches more carefully.
 
->> $ git --version
->> git version 2.32.0
+I was originally going to focus only on the directories that were "leaving"
+the sparse-checkout definition, but that did not catch the 'reapply' case
+or cases where the user created the directories by other means.
 
->> Here I do not understand how to checkout to different commit
->> or how to commit the subject file
+Will delete these bits.
+>> +       git -C repo sparse-checkout reapply &&
+>> +       test_path_is_missing repo/folder1 &&
+>> +       test_path_is_missing repo/deep/deeper2 &&
+>> +       test_path_is_dir repo/obj &&
+>> +       test_path_is_file repo/file.o &&
+>> +
+>> +       git -C repo status --porcelain=v2 >out &&
+>> +       test_must_be_empty out &&
+>> +
+>> +       git -C repo sparse-checkout set deep/deeper2 &&
+>> +       test_path_is_missing repo/deep/deeper1 &&
+>> +       test_path_is_dir repo/deep/deeper2 &&
+> 
+> What's the expectation for repo/obj?
 
-> I'll give you three different ways you should be able to do it:
+I will add
 
-> 1. Since you wanted to just restore the file to the version in the
-> index (as per your `git checkout lib/Mojo/IOLoop/Stream.pm` command),
-> you can simply delete the file (`rm lib/Mojo/IOLoop/Stream.pm`) and
-> everything would be fine.
+	test_path_is_dir repo/obj
 
-> 2. You could change your sparsity paths to include this file so it
-> doesn't think it should be excluded from the working tree, e.g. `git
-> sparse-checkout add lib/Mojo/IOLoop` or even `git sparse-checkout add
-> lib/Mojo/IOLoop/Stream.pm`.  That'd be most useful if you made
-> important edits to the file or want to continue editing the file and
-> committing changes in it.
+because this ignored directory should not be removed. This is
+simulating the build artifacts that might appear in ignored
+directories whose parents are in the sparse-checkout definition.
 
-> 3. You could just disable the sparse-checkout entirely (`git
-> sparse-checkout disable`).  That'd make it so you don't have to worry
-> about this path or any other being simultaneously excluded and present
-> in the working tree.  You should be able to fix things up normally.
-> And, if you want, when you're done fixing things up, then set up a
-> sparse-checkout again.
-
-
->> It would be nice to show hint about how to exlude this file from unindex
-
-> Yes, we need to improve some error messages here (and perhaps tweak
-> some behavior as well).  Thanks for the report.
-
->>Thanks for the report.
-Thank you for the support!
-
-> Did you do one of these?  If not, what'd you do?  If so, which one?
-None  of  these.  I even do not remember sharp command how I fall into
-this. This were two or three months ago... I just remember that I have
-added this file to "ignore" it from tracking:
-
-     git update-index --assume-unchanged lib/Mojo/IOLoop/Stream.pm
-
-This feature is like: hide file from output.
-Git  do something with this file so it is tracked in some way but just
-is not displayed when `git status` command is done.
-
-So it would be nice if I can do:
-
-    git hide lib/Mojo/IOLoop/Stream.pm
-
-and this file is hidden from output.
-But `git status --verbose` will show it anyway. Compare:
-
-git status
-
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-1       modified:   cpanfile.snapshot
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-2       modified:   ext/Auth/Mojolicious/Plugin/Auth.pm
-3       modified:   front/readme.txt
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-4       .prove
-
-
-git status --verbose
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-1       modified:   cpanfile.snapshot
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-2       modified:   ext/Auth/Mojolicious/Plugin/Auth.pm
-3       modified:   front/readme.txt
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-4       .prove
-
-Files hidden from output:
-      (use "git unhide <file>...." to unhide these files)
-5      lib/Mojo/IOLoop/Stream.pm
-
-
-I   am   not   expert,   this  is just my user point of view. Probably
-there  alredy  some exisisting interface. I just outline how it would be
-handy from my point.
-
-Also this topic seems hot: https://stackoverflow.com/questions/936249/how-to-stop-tracking-and-ignore-changes-to-a-file-in-git
-
-
-
-
--- 
-Best regards,
-Eugen Konkov
-
+Thanks,
+-Stolee
