@@ -2,214 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53296C4338F
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 21:48:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0786C4338F
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 21:53:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3222960F4B
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 21:48:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BECDB60187
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 21:53:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231656AbhHBVsm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 17:48:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45862 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231609AbhHBVsm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Aug 2021 17:48:42 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 044C5C06175F
-        for <git@vger.kernel.org>; Mon,  2 Aug 2021 14:48:31 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id h24-20020a1ccc180000b029022e0571d1a0so839268wmb.5
-        for <git@vger.kernel.org>; Mon, 02 Aug 2021 14:48:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=0vGkKC9qN57TrhF8r6CFWI+yL1U5erxVJG2kdc5odPk=;
-        b=gSZ2iwBPGhEwg/urgEcRoeX5ufKCLobL6RshpeUqi7dvzVCalSbenL1BGNwau9V8Mj
-         CjIRf8QQUjrwkQafUj9+QWphSuyo/xg7Tb2Z3qHq3xFdgCJGGLBzzchkIvNn1Eei3r4m
-         z2b2na4T8c/Fxu9dK0CPTE8bRxmLLsiGkWrKVL6/qL5oYXyohU9GFa/iL3tecqwM8e14
-         dkT0Wp4nJ0R+V7FB8drx89sHn+7M2e4wBv9fcAZVJ4ojGb+J1oxU3xgR38uCW0VTsdnD
-         Vn6n3mlEvXVG+vQfgA/06hBn+SlA78vUytg3GnK3cko9ax6BlTg3e0WuzgM7IKHFe4mM
-         cJlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=0vGkKC9qN57TrhF8r6CFWI+yL1U5erxVJG2kdc5odPk=;
-        b=m5tdB8pchrmPvrP5JSpqlfyIUZ574I07vYQDzEjxsK1HwWh5dMMyMD+tesDkhqNyJQ
-         j8xHiZud1cs7xemhLVNiPmDCAR4UyGWiL0nKHF3yIa4UVKfBPEKEIUupXsBeQbLoAAmA
-         sA+ze50/Yq7zXxcNrbuIq7wMVBfDsHwOlA1/csQJ9aUzmc3ExnBYV3z0LyYfmvIAxeFX
-         2xekn0BY4x+m//oQeyY8xzB4gv/OcyX8A0c+J/x94MtT3VIEVVYye4vPki42jWbSkgWt
-         n9FW6EBdajV1LN51dxbILRqOl/6fblA/MfWnaPL6ngalZPP9+IMZeeOzqFBQz832xxcx
-         GUaA==
-X-Gm-Message-State: AOAM532ssf8sxt5bxt+NdsAozmw5WQUnx31bcaMdp+M3pQGqFkTkFLdM
-        aeTA5awCXy86D6SqiGleV50=
-X-Google-Smtp-Source: ABdhPJyBD9h13Hc2scTky8IE6wzm4neCOhRsv5isTDuzWy0ELUN5wA73MApYRAcNF0IELk2nsx5pdw==
-X-Received: by 2002:a1c:a7d2:: with SMTP id q201mr924582wme.61.1627940909652;
-        Mon, 02 Aug 2021 14:48:29 -0700 (PDT)
-Received: from szeder.dev (78-131-14-245.pool.digikabel.hu. [78.131.14.245])
-        by smtp.gmail.com with ESMTPSA id j14sm12475996wrr.16.2021.08.02.14.48.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Aug 2021 14:48:29 -0700 (PDT)
-Date:   Mon, 2 Aug 2021 23:48:27 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 3/3] entry: show finer-grained counter in "Filtering
- content" progress line
-Message-ID: <20210802214827.GE23408@szeder.dev>
-References: <20210620200303.2328957-1-szeder.dev@gmail.com>
- <cover-0.3-0000000000-20210722T121801Z-avarab@gmail.com>
- <patch-3.3-f65001627a-20210722T121801Z-avarab@gmail.com>
+        id S232594AbhHBVxM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 17:53:12 -0400
+Received: from mout.gmx.net ([212.227.15.15]:49319 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229567AbhHBVxK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Aug 2021 17:53:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1627941176;
+        bh=7ThRyXlxxYDvgkk13sOQ3zUhIpbBzEUN5FY6fSeQNYM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=BrbFgcaUK5Fdf6eadiJfrIvSlxpraHxyQqlpRsENwUV/PjoxPRMt8Y1uLvzJEHfiw
+         YX+0pial2ZzcV1H0Q12RGJdl67OMglIxe6qLSvCAK4SerrOwc8W7ywl4tzeCMF7Ui7
+         OJaaGZikAndthYgCLH3PAZ7MvvjocOFTZgo+Om8U=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.101.220] ([89.1.212.168]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MRCK6-1mXj3c07HQ-00NCpW; Mon, 02
+ Aug 2021 23:52:56 +0200
+Date:   Mon, 2 Aug 2021 23:52:54 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Ben Boeckel <mathstuf@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v1 2/4] advice: add enum variants for missing advice
+ variables
+In-Reply-To: <20210731022504.1912702-3-mathstuf@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2108022333360.55@tvgsbejvaqbjf.bet>
+References: <20210731022504.1912702-1-mathstuf@gmail.com> <20210731022504.1912702-3-mathstuf@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-3.3-f65001627a-20210722T121801Z-avarab@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:MU2FQfOUDq5rkWblzvsN5HzHvquXoXINYPCob1gfE5Fi7ow3/bQ
+ 07I/JNdRBcBdxwV5RqxRdDmJCN8emXlu+KXKHJgIIlmxP12GS/DVzBGbq4S21eg86G3u6FD
+ doyRV0xaVstS3V2TnE1JdnChwxzG0DWJn/uOholzPNoG9PSGRM/iKthFX+hjlx5o7jZx9eo
+ lGabJ7MBb31WYsSKn80Hg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:zzvH+5SgGPw=:mr0rn0gXZek6K9t8FHfL/l
+ s3EUsRWNyrBVHfgoTPkm0XLuCBB3CtNDaxUL2aC+ECmkW7xbPHrqx/DqWIWmCW3DjzGqxNpq/
+ tU5N480fkxnWtW3/Grxs+30CB448gyO67sA2g16H9QKzk3Pwef7VHmQ+iadsGGMGyL3wJjPua
+ 93YbYCvvi+qgXKE/Wa5guhJoJR8J7uMBeRogQoTz0d8JnBpia0qM/pWyuDbtJ3d7fqRMOk+vC
+ yEtXoQXjppAcSHSs1ml3bVJTSLeLjarWz7HfAtBDPZkmXCHNpseRwmsPwDvelJeFSPrQajUnJ
+ djf6Lw3QkzVBXGSFHZHm6ZOd43zqwJbOh5ohWpQQHPS63dXq2xu4dNbpO1wHIED7XmazbBs1B
+ qRS5GQxGYthaGSbfhNtb4U6Rlzsei/+nW3rat9ZR+u339LLkRPJ/z8BzBuarMTo/66xib3RlX
+ RaZwcYY/UAKemO+ASJjI8ceWWqcmE4aeT2Bb/3wxC6hraCbu/PZmR11u1zFm1cVKRbfFBFqMX
+ pFU0rS9mN4T8qdcxQ4/aEvaZp8jj/br758tzOFAPMGoyVf+ajtG3VPXooCyF8txk2aLsYuGss
+ WsqbEZyWzNw/qEBlzHe3VgBginJrqgNSUKQdg4iefavaUKLICkiKAR/2Y9uwuhMzIUCqnYV4v
+ ep2CcY0GM2mIzVX8yPHLXWZf+0EPcek5DOdwKg+s6WZL/JFuMtZOAq0xR3qwnAW++J47br/9y
+ MXU83A2JuBgHXkkAqGXAaVwpsMBMvReHf+BqTOz8SIT4F8NNJYT6U3E4UrfW9KfTQGefQh5na
+ fDFMzfFHtFED3aPnU4p/353G0k7I7fKtzozF9q9hSJ1q58yAep1AuH5dre6h/pCNiw/QH1hWD
+ xtxzAR6BF2q5MyYltk1lHKX1o/64lQsY8mO6mujr24STe/0SoYVUlAE/ngCH/OTmayWpQC48W
+ /p4KAq6d4uXQwDat298cQF9k8RvjGmF9Gw9RC+fMI6ND7pY1r+qyuXKVVAnnQV3Bep1nobFvb
+ vjgNJoHf+ZXNJ0hEr8jNBdZb8NpNK4Hn4AG5yNnKBQBtPiz6/rTV1j58VpT943n18Pi4x9Jd9
+ TuLdcV/80IVSAerHaRt9ZO7O2VqgMUdhT7FWPxfemtzMDFi/pzNApjBCQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 22, 2021 at 02:20:17PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> From: SZEDER Gábor <szeder.dev@gmail.com>
-> 
-> The "Filtering content" progress in entry.c:finish_delayed_checkout()
-> is unusual because of how it calculates the progress count and because
-> it shows the progress of a nested loop.  It works basically like this:
-> 
->   start_delayed_progress(p, nr_of_paths_to_filter)
->   for_each_filter {
->       display_progress(p, nr_of_paths_to_filter - nr_of_paths_still_left_to_filter)
->       for_each_path_handled_by_the_current_filter {
->           checkout_entry()
->       }
->   }
->   stop_progress(p)
-> 
-> There are two issues with this approach:
-> 
->   - The work done by the last filter (or the only filter if there is
->     only one) is never counted, so if the last filter still has some
->     paths to process, then the counter shown in the "done" progress
->     line will not match the expected total.
-> 
->     This would cause a BUG() in an upcoming change that adds an
->     assertion checking if the "total" at the end matches the last
->     progress bar update..
-> 
->     This is because both
+Hi Ben,
 
-"Both" what?
+On Fri, 30 Jul 2021, Ben Boeckel wrote:
 
->     use only one filter.  (The test 'delayed
->     checkout in process filter' uses two filters but the first one
->     does all the work, so that test already happens to succeed even
->     with such an assertion.)
-> 
->   - The progress counter is updated only once per filter, not once per
->     processed path, so if a filter has a lot of paths to process, then
->     the counter might stay unchanged for a long while and then make a
->     big jump (though the user still gets a sense of progress, because
->     we call display_throughput() after each processed path to show the
->     amount of processed data).
-> 
-> Move the display_progress() call to the inner loop, right next to that
-> checkout_entry() call that does the hard work for each path, and use a
-> dedicated counter variable that is incremented upon processing each
-> path.
-> 
-> After this change the 'invalid file in delayed checkout' in
-> 't0021-conversion.sh' would succeed with the future BUG() assertion
-> discussed above but the 'missing file in delayed checkout' test would
-> still fail, because its purposefully buggy filter doesn't process any
-> paths, so we won't execute that inner loop at all (this will be fixed
-> in a subsequent commit).
+> These were missed in their addition in 887a0fd573 (add: change advice
+> config variables used by the add API, 2020-02-06). All other global
+> variable settings have entries already.
 
-I don't like how the updates to the commit message keeps referring to
-some future BUG().
+It took quite a bit of reading and looking through the `git log` history
+to piece together what is going on here, and I wish the commit message
+would have explained this better.
 
-A benefit of my original submission is that all those checks are added
-at the beginning of the patch series, so when looking at these later
-bugfix patches reviewers can easily run the problematic tests with
-GIT_TEST_CHECK_PROGRESS=1 to see the failure themselves and to confirm
-that the fix indeed works.  Without those checks the next best thing
-is applying the patch below and then looking at the verbose log of
-those tests:
+A big puzzlement came from the claim that "These were missed" is not only
+missing a noun that clarifies what "These" are meant to be, but also from
+the fact that `git grep advice_setting 887a0fd573` comes up empty. Which
+suggests to me that nothing was missed there, but the problem lies with
+`hw/advise-ng`, merged via c4a09cc9ccb (Merge branch 'hw/advise-ng',
+2020-03-25), is based on v2.25.0, but was only merged after v2.26.0, which
+contains daef1b300b0 (Merge branch 'hw/advice-add-nothing', 2020-02-14).
 
+In other words, the addition of the two entries `addEmptyPathspec` and
+`addIgnoredFile` happened in a diverging branch from the addition of the
+`advice_setting` array, and the problem lies with the merge of the latter
+into a branch that already had merged the former.
 
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index b5749f327d..93a67f2f1f 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -955,7 +955,8 @@ test_expect_success PERL 'missing file in delayed checkout' '
- 	) &&
- 
- 	rm -rf repo-cloned &&
--	test_must_fail git clone repo repo-cloned 2>git-stderr.log &&
-+	test_must_fail env GIT_PROGRESS_DELAY=0 git clone repo repo-cloned 2>git-stderr.log &&
-+	cat git-stderr.log &&
- 	grep "error: .missing-delay\.a. was not filtered properly" git-stderr.log
- '
- 
-@@ -976,7 +977,8 @@ test_expect_success PERL 'invalid file in delayed checkout' '
- 	) &&
- 
- 	rm -rf repo-cloned &&
--	test_must_fail git clone repo repo-cloned 2>git-stderr.log &&
-+	test_must_fail env GIT_PROGRESS_DELAY=0 git clone repo repo-cloned 2>git-stderr.log &&
-+	cat git-stderr.log &&
- 	grep "error: external filter .* signaled that .unfiltered. is now available although it has not been delayed earlier" git-stderr.log
- '
- 
+It would have helped me to read something along these lines:
 
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  entry.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
-> 
-> diff --git a/entry.c b/entry.c
-> index 125fabdbd5..d92dd020b3 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -162,7 +162,7 @@ static int remove_available_paths(struct string_list_item *item, void *cb_data)
->  int finish_delayed_checkout(struct checkout *state, int *nr_checkouts)
->  {
->  	int errs = 0;
-> -	unsigned delayed_object_count;
-> +	unsigned processed_paths = 0;
->  	off_t filtered_bytes = 0;
->  	struct string_list_item *filter, *path;
->  	struct progress *progress;
-> @@ -172,12 +172,10 @@ int finish_delayed_checkout(struct checkout *state, int *nr_checkouts)
->  		return errs;
->  
->  	dco->state = CE_RETRY;
-> -	delayed_object_count = dco->paths.nr;
-> -	progress = start_delayed_progress(_("Filtering content"), delayed_object_count);
-> +	progress = start_delayed_progress(_("Filtering content"), dco->paths.nr);
->  	while (dco->filters.nr > 0) {
->  		for_each_string_list_item(filter, &dco->filters) {
->  			struct string_list available_paths = STRING_LIST_INIT_NODUP;
-> -			display_progress(progress, delayed_object_count - dco->paths.nr);
->  
->  			if (!async_query_available_blobs(filter->string, &available_paths)) {
->  				/* Filter reported an error */
-> @@ -224,6 +222,7 @@ int finish_delayed_checkout(struct checkout *state, int *nr_checkouts)
->  				ce = index_file_exists(state->istate, path->string,
->  						       strlen(path->string), 0);
->  				if (ce) {
-> +					display_progress(progress, ++processed_paths);
->  					errs |= checkout_entry(ce, state, NULL, nr_checkouts);
->  					filtered_bytes += ce->ce_stat_data.sd_size;
->  					display_throughput(progress, filtered_bytes);
-> -- 
-> 2.32.0.957.gd9e39d72fe6
-> 
+	In daef1b300b0 (Merge branch 'hw/advice-add-nothing', 2020-02-14),
+	two advice settings were introduced into the `advice_config`
+	array.
+
+	Subsequently, c4a09cc9ccb (Merge branch 'hw/advise-ng',
+	2020-03-25) started to deprecate `advice_config` in favor of a new
+	array, `advice_setting`.
+
+	However, the latter branch did not include the former branch, and
+	therefore `advice_setting` is missing the two entries added by the
+	`hw/advice-add-nothing` branch.
+
+	These are currently the only entries in `advice_config` missing
+	from `advice_setting`.
+
+FWIW I manually verified that last paragraph's claim.
+
+The diff itself looks correct to me.
+
+Ciao,
+Dscho
