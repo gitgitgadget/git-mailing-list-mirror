@@ -2,100 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6A34C432BE
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 22:38:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 460A8C432BE
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 22:46:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B8CAB60560
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 22:38:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 27EEB60C3F
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 22:46:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233146AbhHBWix (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 18:38:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57914 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233038AbhHBWis (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Aug 2021 18:38:48 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97112C06175F
-        for <git@vger.kernel.org>; Mon,  2 Aug 2021 15:38:38 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id n11so11313135wmd.2
-        for <git@vger.kernel.org>; Mon, 02 Aug 2021 15:38:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=xv+Tv09nJQdWH1UkNyJtccwUehY8HAGKEeBNlMlE68k=;
-        b=Qg/li+gFOEBMLDdSNZ+Y04JO5EQYJ0O5Us9wgm1Io68VjKOaQwF3vvovSFlYzJb+ZA
-         qAid0tui/iVBIv6rPe4ZGKsMpKGiOVMaoMLJSGKbXv/n21/wLmdUOXu7lN2dgspvkfU4
-         S22Neelj8/c3M9HttQOr3bXUdz0zHwqrkjYb0Mmzq2GYaM5z6oBLPZIFX4piC/3ednzK
-         Vv5HMsErzpGVL78QyYfCgpfACadEw0OkLEnGdEyt/QaNrb4kOmjRYdpRM7cITtVmFMKo
-         VSrCNmnE998TVCJ6lLFe4SV0E+KFLsAnhfIhWbsfJPDxTSEAFDaUy4COrVqrkwNgtdMJ
-         wvAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=xv+Tv09nJQdWH1UkNyJtccwUehY8HAGKEeBNlMlE68k=;
-        b=aNmuQbVi/DjemWaZX+2OaZCC9nzg+Afb8u/HcbwyjEcB1B1T5Jtm4iG3hElj9re9De
-         c7UAj2pws4O1/ohMksyNRPkS8LXuYPsI9TOJfG3iVjTz/OZuFhzsRbZ7HVpo5ooYX+c6
-         dAnoH7IBEJUfXkuzUTNbb+K78NHL66SV9i7sFG9hweHAjPhX0ljmHlH6TuyJYtoYtZcr
-         7/D7yJJmMb/CnpMfaEt24u/Hn9qG1Vzm0gRihf7d7I1kvpBmSmtQjeUQ5mzdtFoIUqS1
-         TJ5Jz4zRZm1WkXMxYsppToyj25Ap7q+KUrSbjA2g2obK94hdDbYRtJbeLbThZsiRd2K2
-         2OFA==
-X-Gm-Message-State: AOAM532kaA0QSuCa2MGWWe7ZesbbbPnmvjXMJnKRB9Uknnmh1s7hCV3o
-        +E8jec9lmcmkl/vlAj6vQH6O1kVkpE0=
-X-Google-Smtp-Source: ABdhPJzXA2dVhhGoxZEXKAaYD0DlKuKF99S48bLKuxZg+mPonhh9ZSMR6msZC5tnpG7Kouh1kLQ1Rg==
-X-Received: by 2002:a7b:c1c7:: with SMTP id a7mr18699037wmj.53.1627943917298;
-        Mon, 02 Aug 2021 15:38:37 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c10sm11656884wmb.40.2021.08.02.15.38.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Aug 2021 15:38:37 -0700 (PDT)
-Message-Id: <020eaa2c819779fbb21960c42981303f858e2674.1627943914.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1006.v2.git.1627943914.gitgitgadget@gmail.com>
-References: <pull.1006.git.1627925390.gitgitgadget@gmail.com>
-        <pull.1006.v2.git.1627943914.gitgitgadget@gmail.com>
-From:   "Mahi Kolla via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 02 Aug 2021 22:38:34 +0000
-Subject: [PATCH v2 3/3] clone test: update whitespace according to style guide
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S232083AbhHBWqj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 18:46:39 -0400
+Received: from mout.gmx.net ([212.227.15.18]:53285 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231126AbhHBWqh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Aug 2021 18:46:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1627944365;
+        bh=mDZ3wULFMfGnO53wlk6dr1rvs4z2gLYNyuSxPQSWhUU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=LXiwaffYDjuQ8sV6bC8U5A1MWMSCf8UwV2SsWf0Oqnx2IxkaSwagmyBHA1MfEyhwH
+         buc3Vq/dGJ1oOZHqUP5FZr+3GixCeQIp7GL9Mpus2v3wuvUPMkQ3RYxsZRMMd0Y3rp
+         tnsrtUKtcBwAR7Po80NRAHWnwttXR3S3/QlskVUU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.101.220] ([89.1.212.168]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MfpOd-1mmUI02ZwH-00gDQg; Tue, 03
+ Aug 2021 00:46:05 +0200
+Date:   Tue, 3 Aug 2021 00:46:02 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 1/2] Change default merge backend from recursive to ort
+In-Reply-To: <8f6af8d494e0924aef4ae6963b8dca2228dad9b1.1627776462.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2108030030000.55@tvgsbejvaqbjf.bet>
+References: <pull.1055.git.git.1627776461.gitgitgadget@gmail.com> <8f6af8d494e0924aef4ae6963b8dca2228dad9b1.1627776462.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Mahi Kolla <mahikolla@google.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:tprR4aF26F3ZpLVtCDM6+syNtqZ2FPGi3d7/4ofC6vT+M2qYyh6
+ LObfPUNi1hA9GajZCVUD1/vFv6IGaIgaDIdyChZhKt35r9I0haiXlqlOmpCyu1nW9RInja9
+ gdjUzsdknabcgI1/wB3lu+EjHu0WA18//PGBWt8gW2wCl9XQITNnYsPMdhYmewLO/J2vxlb
+ +9Mm9daXScj3RWO+QSf8w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:FQP4XcbrvI8=:FPMQoqMBSO5eF98wZHo6ra
+ vMZB9I/wVGLQZ7BQUmiMf4lVgTrbBZbNPJ6bEljG2F2tUri9zAWCMjwNRijc1gFlMg2i5jEbw
+ OQxtzbNjQMG3JcmEkQyk9JImM0pN6AXu+y3bLt6oA3kKLEy4ZnwbyESE5k6rRsu2qoE7CJhQo
+ nj0V6p/WHm+k0hoiT+iLVhhaNB2klo3ylvH5R7g6GoM756ooHYFt7GUgtA3R14yZL1HW56jXw
+ XaM8a8cYvcbOTg2jiEBQWnLApvSRtxihMMVcYizQ3nDN+8ZVLrsmOMeudI3L5AzJshaTRmbdW
+ NhaMV+duph6gsvGTnhsbBg5ezRKRl2qOEXOaFQ9NMwAJNGaYnybKqFuz37eleo/r7YmerxHMr
+ XGY8qeUWk2/QJ4yR0j952OIkmJMQUM+UdKE+gQrgV7puaETiZw666Ot/plJcCWim4EqcMIJOi
+ qzFqZbZKrUONOygh7W+Ai/7poWcomOnnusUyZUMEkH+KOcPeYzxydk7IdZvd3TfgTIBd5KSPc
+ WcaHv53UDrLXh6CZc7V6hvluGkQ0FITTzG8IYEwJO+uk8PnIvky6AcSePmirpXOMQ/mT1H2Ld
+ l81nOpBZgYSpSbLpU3BP4KMLyxh8rMdL3jQUDoBqJbe/qCtBBh4eaEgGka7RPsD/BsyMceRbr
+ Rxpq+OMZwDUpArMPGsrNtwkWBbJQwvCS4+Ykh91cHj4/cXQO181sXj44E1VT3jmJK+Jli/9C0
+ 3U1qx0GyYR+Ajvy4Wk+yz4DJGIzXAxNXotJHjTlLTtlXqfbczrkH3W6itv/IrovThezq3230x
+ b63ssPxcOicdEVAk/onu1bvoNXTWi9L4iD39P5cAjPuOTubiXwAKCsNCw18bm6sO90NEvd0Dt
+ jwYf/LEIEwOCVo671StV++SfpQQHtzRDmIINjMr5PmJkHzlMs1pYRmvnpjcrTg8ZnVrC38c9D
+ gWaPp20cHlm5GqfLL6oaF4t/UoVBFTvUN+195QKJPLR7aY4i0tYS2MYXY84pPKZ9dwz5gRw3L
+ DYraMVE/53bYqQDzBGfi/dVPtITdpGJVNag7PqaxHphRhO4EEd07nxUUgpJQwKzqhiJm5bNvw
+ rGgzx3Eu7qSOde4eUBWNLzNL1BIP5P5bvM9LGNdromlt5vtpK+gAuaOnQ==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Mahi Kolla <mahikolla@google.com>
+Hi Elijah,
 
-Previously, the code used spaces to appropriately format. The spaces have been replaced with tabs to follow style guide standards.
+On Sun, 1 Aug 2021, Elijah Newren via GitGitGadget wrote:
 
-Signed-off-by: Mahi Kolla <mahikolla@google.com>
----
- t/t5606-clone-options.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> From: Elijah Newren <newren@gmail.com>
+>
+> There are a few reasons to switch the default:
+> [...]
 
-diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-index 69c4bacf52f..1a3f1e9ab18 100755
---- a/t/t5606-clone-options.sh
-+++ b/t/t5606-clone-options.sh
-@@ -18,8 +18,8 @@ test_expect_success 'setup' '
- 
- test_expect_success 'clone --recurse-submodules sets submodule.recurse=true' '
- 
--        git clone --recurse-submodules parent clone-rec-submodule &&
--        git config submodule.recurse true
-+	git clone --recurse-submodules parent clone-rec-submodule &&
-+	git config submodule.recurse true
- 
- '
- 
--- 
-gitgitgadget
+I think it would be really fantastic to change to the new default right
+after v2.33.0.
+
+As to the patch, I only struggled slightly with the changes to
+`sequencer.c`:
+
+> diff --git a/sequencer.c b/sequencer.c
+> index 0bec01cf38e..a98de9a8d15 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -636,7 +636,7 @@ static int do_recursive_merge(struct repository *r,
+>  	for (i =3D 0; i < opts->xopts_nr; i++)
+>  		parse_merge_opt(&o, opts->xopts[i]);
+>
+> -	if (opts->strategy && !strcmp(opts->strategy, "ort")) {
+> +	if (!opts->strategy || strcmp(opts->strategy, "recursive")) {
+
+At this stage, we're in `do_recursive_merge()`, and there is only one
+caller, `do_pick_commit()`, and the caller is guarded by the following
+condition:
+
+        else if (!opts->strategy ||
+                 !strcmp(opts->strategy, "recursive") ||
+                 !strcmp(opts->strategy, "ort") ||
+                 command =3D=3D TODO_REVERT) {
+
+The issue I see is with `git revert` allowing custom merge strategies. I
+_think_ we need a slightly different patch here, something like this:
+
+-	if (opts->strategy && !strcmp(opts->strategy, "ort")) {
++	if (!opts->strategy || !strcmp(opts->strategy, "ort")) {
+
+>  		memset(&result, 0, sizeof(result));
+>  		merge_incore_nonrecursive(&o, base_tree, head_tree, next_tree,
+>  					    &result);
+> @@ -3968,7 +3968,7 @@ static int do_merge(struct repository *r,
+>  	o.branch2 =3D ref_name.buf;
+>  	o.buffer_output =3D 2;
+>
+> -	if (opts->strategy && !strcmp(opts->strategy, "ort")) {
+> +	if (!opts->strategy || strcmp(opts->strategy, "recursive")) {
+
+It took me a while to convince myself that this is correct. At least now I
+_think_ it is correct: `do_merge()` defines:
+
+        const char *strategy =3D !opts->xopts_nr &&
+                (!opts->strategy ||
+                 !strcmp(opts->strategy, "recursive") ||
+                 !strcmp(opts->strategy, "ort")) ?
+                NULL : opts->strategy;
+
+and then hands off to `git merge -s <strategy>` if `strategy` is set,
+_before_ this hunk. Therefore we can be pretty certain that
+`opts->strategy` is either not set, or "ort", or "recursive" at that
+stage.
+
+However, I think we could use the same idea I outlined in the previous
+hunk, to make things more obvious:
+
+-	if (opts->strategy && !strcmp(opts->strategy, "ort")) {
++	if (!opts->strategy || !strcmp(opts->strategy, "ort")) {
+
+Thank you,
+Dscho
+
+>  		/*
+>  		 * TODO: Should use merge_incore_recursive() and
+>  		 * merge_switch_to_result(), skipping the call to
+> --
+> gitgitgadget
+>
+>
