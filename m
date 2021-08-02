@@ -2,98 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46AF1C4338F
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 22:15:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 166A5C4338F
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 22:38:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 215A06018A
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 22:15:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F0ACB60560
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 22:38:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232005AbhHBWPX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 18:15:23 -0400
-Received: from mout.gmx.net ([212.227.15.19]:44461 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231875AbhHBWPV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Aug 2021 18:15:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1627942508;
-        bh=2epQdxq67IHs2Dbjq+E5J6B1PPIc1EcZ+Ah6OJbfBGQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=FQWoF2cRE77JSAsHX7dB6nW4z4NcZwcXBNMQ3MlyyZcjZJad30K6QODtyG6p5yf3e
-         jwGoP3UA6+g50rpUHbs8ZBOYhqy/bn2MC6iVKgB2tZlJfEWg049iCeExGWLhjCjynL
-         Dd2pC1cizJ9v1mU6B9kVb4A797gLyA3obYdsOW9c=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.101.220] ([89.1.212.168]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MVeMA-1mc4Q33vEq-00Rd8O; Tue, 03
- Aug 2021 00:15:08 +0200
-Date:   Tue, 3 Aug 2021 00:15:06 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Ben Boeckel <mathstuf@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 0/4] advice: remove usage of `advice_*` global
- variables
-In-Reply-To: <20210731022504.1912702-1-mathstuf@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2108030009330.55@tvgsbejvaqbjf.bet>
-References: <20210731022504.1912702-1-mathstuf@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S233029AbhHBWis (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 18:38:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57902 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231920AbhHBWir (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Aug 2021 18:38:47 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8906FC06175F
+        for <git@vger.kernel.org>; Mon,  2 Aug 2021 15:38:36 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id k38-20020a05600c1ca6b029025af5e0f38bso444632wms.5
+        for <git@vger.kernel.org>; Mon, 02 Aug 2021 15:38:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to;
+        bh=53L5rDyzZYfJZfs+L27RCEdPK7pv5caDgdM3Kw2D5W0=;
+        b=X4d+utT+nL+cHVfZx3NrNTm3YfxABjzXITfTxuD6a7XxcoAgdN/0okDg97vkwTc47e
+         +glJHR3b9t9mFP1Be69riVUPb+U5GOQpAguIfiMAaXfE2EHkTWxg60CjaLU2R2B4zFre
+         f10FaTcUtEaISvAgoDIypyuGwiioagrsYIsf+9ghzvjBczr7GXfc2JnE8NtdDW9pFVzY
+         bhJEkE/Y8w7AJCVCm5njnS3XxhVyqyxwThateQmG0piwycySHl+kze0Mx/zhBz7+//MS
+         dFn4z4JxFtcCSRBTjiAELc83ORFlD6AtUYYx3lKns9dAUIZPzc1XxE2XVVVc2/eK9dSY
+         0+SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to;
+        bh=53L5rDyzZYfJZfs+L27RCEdPK7pv5caDgdM3Kw2D5W0=;
+        b=jsYQpJsaG94usz7QlD9DB1M+CUf+f/GRW14GOLPx+fDa710wUVcRk2vdquVQmKsiLR
+         AuX+/R52Br1EvlyEX3DKC1y4H4OAAty9yYbHkr26I/sopp2ZMsfFyewHhRqbyPpiGiv5
+         vOV3yvCUuNuvohYXBsVzamMAaEGR0POQuSrxDyxxYtFhbcBIz3p0BhLs6Bj0daA2vqyK
+         D6UG3PaHqp2NiCtRkpmmkgXhlVm47Mn6TVVj5Wo6nImrXh8DU8Dr6xivzvVFKn6VEGUA
+         6ne9IFtq0Cxi5Oh+r3yhIFw7ZFsMXYQt26fINQPSmISr0Kj/TjL94mrozHbv7ZbIjvfA
+         YwaA==
+X-Gm-Message-State: AOAM531D9M54fiz4b9ei1XBzClXjKCZ5BNIy+RBVYHcuPWGxsInK63GK
+        yaVlzfXeiw9bsu04ysB98N1yKyuCTUY=
+X-Google-Smtp-Source: ABdhPJxQ8jZLE8jNdrHnvwy+BNY5sN7/I8NFenOkVAGPLVh6/IvHOQrdrmbv17yHQQ2wtFed+cIPcQ==
+X-Received: by 2002:a7b:c0c9:: with SMTP id s9mr18887889wmh.188.1627943915218;
+        Mon, 02 Aug 2021 15:38:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n18sm11328812wrt.78.2021.08.02.15.38.34
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Aug 2021 15:38:34 -0700 (PDT)
+Message-Id: <pull.1006.v2.git.1627943914.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1006.git.1627925390.gitgitgadget@gmail.com>
+References: <pull.1006.git.1627925390.gitgitgadget@gmail.com>
+From:   "Mahi Kolla via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 02 Aug 2021 22:38:31 +0000
+Subject: [PATCH v2 0/3] clone: update submodule.recurse in config when using --recurse-submodule
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:BvtJUEzy7dihjiu4ModB5RzntiXHooT0/nw+FHEGAZ3T2CHmMYP
- yJk7Wr77Oea8bVHHbsucLtCM29/vNVh/TJHFnY6iriE9ZsrxKdnUQ+M3L0GJirQbhawyB7l
- TMsm6o1l9bF+/uRsSITUMHTl5tMjtm7aBzfaGZQ3kfrKspfDmHeyWpACo81ib/CxoQcclvG
- E5NvcealeMTu15r0bypew==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:cLGHVr5c1bk=:l67wW27tcUhZnIVENLSAhP
- BKGoqi2sXn0u2yc9sy7QTILC8EnRaWhPgZKxYJ6TF3TV9+h7Lg1i5XVXn3/Zwix9mgQduBWw/
- wxR7keORfJ8RLiUFIMkKgLOVX+Q9/YCPX48an8unlhPNxa99JyhYmF4VnM8uT+TZ1FCvuHSys
- yVoOHGRVivtC2gcvZC5ZIBab5AUT2PEOmam3HgKspXZd2h6eWDzTTHSeQwkerHLnxMWzLcU+R
- /Hp/7+YQMuqE+4x0E2gJwzZCfEZsR53k8B80fzIMdZo+8GVHNNpIS7klCYejR5ijXqBfUw4KH
- VH1mEMoCk4SAN2qUjXQpKYQdtQN9YEjYM5xc5JTPoNyU9vdGFezbrnzepjci8UV0w04VyQnxm
- 5YkElzM9NlT3qlpXok9lSs67B5vx2ocBgPdNIVe30kAAFzRa7+OWO/aPJ20rFI8sedTMGw0pg
- MnDTbwTLRNrBD+hyIOLyTRGY5kMqwqWhScn0RaDkBrDLF6OdBmR++Qvt5trxai1FsHey6//Z7
- oI/RyrlrRMf2JbVYZ1OP4ua6op+aVk305E653MU7M4nK0hP7CcK2YLgx4peUOa84cugbjXjti
- S+12zz6T93AHHt1vPDzSSmDY1kq+vM7hGua88lYjNVfBodB57qCOvs7Ch47vWAACIj/uaCCig
- JjlNXjItDAA47SZqxAa1VI/0zszbfhBLF5o/o6M9gGWE8UoFfLeJLBGtqO2AxgeWXnti+6gqN
- N2gmFHpG26/qrz1ZmTQ707lJis2jcgO3muE1cFL/jEjh5LpOemOUlSEKsW0CCABImJ/A2jl51
- wUTjK8B8vTdhq2DWBvW0vB9zS5dO+MIhdNN3rP2pcLHegxgQjBB+lSFOk1aAOv3G8n0prxbfj
- aYiZERJzbMRKfBDvWDRikP/fiPhMWvozC8K8P/Bi2sbQF5nvSvfZiHAOhlOPITO/eYVxnSxBE
- bKiPtg+GY5zD3tCz3vtlvxlA5Ba1ONAfXTnyGhGPwfJN9QDEOoWQS9ccpVgvDV9k5pjPmk8O6
- rdSyGJ1XUEYAwqnsORpW28l1eAOuZKNodLsvntGmjyfLrTQLYZ6XN2GFuHD7r+kMxYtfuCPNZ
- SGv0SkXWVeG58SOUCmXVMcWBK4sD9wG1XuGP0tPy/oTsB1EKSDgevEFGg==
+To:     git@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ben,
+When running 'git clone --recurse-submodules', developers expect various
+other commands such as 'pull' and 'checkout' to also run recursively into
+submodules.The submitted code updates the 'submodule.recurse' config value
+to true when 'git clone' is run with the '--recurse-submodules' option.
 
-On Fri, 30 Jul 2021, Ben Boeckel wrote:
+Signed-off-by: Mahi Kolla mahikolla@google.com
 
-> When looking at global variable usage for my `branch.default*` settings,
-> I found the `advice_` variables which were simple enough to resolve.
+Mahi Kolla (3):
+  clone: update submodule.recurse in config when using
+    --recurse-submodule
+  clone: update submodule.recurse in config when using
+    --recurse-submodule
+  clone test: update whitespace according to style guide
 
-Even better, it concludes the journey started in c4a09cc9ccb (Merge branch
-'hw/advise-ng', 2020-03-25).
+ builtin/clone.c          | 1 +
+ t/t5606-clone-options.sh | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
-I reviewed the entire series and left a few comments I believe to be
-constructive.
 
-Since patch 2/4 resolves a problem introduced by merging divergent changes
-(one adding `advice_settings`, the other adding two entries to
-`advice_config`), an obvious concern with this patch series is: How can we
-guarantee that we're not introducing a similar problem when removing
-`advice_config`? A future branch could easily add entries to that array,
-and a merge of this here topic could potentially forget to add those
-entries to `advice_settings`.
+base-commit: 940fe202adcbf9fa1825c648d97cbe1b90d26aec
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1006%2F24mahik%2Fmaster-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1006/24mahik/master-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1006
 
-However, such a future merge would always cause merge (add/remove)
-conflicts in the `advice_config` array, i.e. it will be much easier to
-notice such a divergence, and hence it will be much more likely that the
-`advice_setting` array will be adjusted accordingly in such a hypothetical
-merge.
+Range-diff vs v1:
 
-Ciao,
-Dscho
+ 1:  fea3d6d72b6 = 1:  fea3d6d72b6 clone: update submodule.recurse in config when using --recurse-submodule
+ 2:  dd13a65ef0f = 2:  dd13a65ef0f clone: update submodule.recurse in config when using --recurse-submodule
+ -:  ----------- > 3:  020eaa2c819 clone test: update whitespace according to style guide
+
+-- 
+gitgitgadget
