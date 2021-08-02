@@ -2,71 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2759C4338F
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 18:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE607C432BE
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 18:43:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C066C60F55
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 18:42:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C1A6E60EC0
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 18:43:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229847AbhHBSmj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 14:42:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56476 "EHLO
+        id S230486AbhHBSns (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 14:43:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229537AbhHBSmj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Aug 2021 14:42:39 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A74BC06175F
-        for <git@vger.kernel.org>; Mon,  2 Aug 2021 11:42:27 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id z11so3385876edb.11
-        for <git@vger.kernel.org>; Mon, 02 Aug 2021 11:42:27 -0700 (PDT)
+        with ESMTP id S230506AbhHBSnq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Aug 2021 14:43:46 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C0AC06175F
+        for <git@vger.kernel.org>; Mon,  2 Aug 2021 11:43:36 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id qk33so32374719ejc.12
+        for <git@vger.kernel.org>; Mon, 02 Aug 2021 11:43:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=yUyzfA/y/SnWgPkWyZB1VqP/YR18QSOv5LobFX7cnhc=;
-        b=L5FZe9MHtndsrKpvmuDuq3PxfxnFquYg4o1xVfnxva1fatV9VJNX8HQpj22b+9aNwA
-         04XL1KdkGAz/iLrht/k97dZbjJ5cdWaXtVX3lOKKHTmQDDausi8KrTXytDjhRnt+a1c/
-         dWC8gbPozwt83fNboM4whMuJQFEiR21kkoevzHWSfrkxy1+6IJqrpXArW+VneDGckrZ7
-         57twaULnFGhwSMnh0XVrIorFzs6AH6gjKtu8a02+FRIZVu9mc3/dq7BpbgWK3ImTNze4
-         Oqieqk5nqCkdSUnwqgD047CXY+QdZdf6R5jbII/5zsjS9YQiKIWFevY+qJ/U5i+hvi4Q
-         lF1Q==
+        bh=RSoPzG7WJnvNVbkQUkgT8IH+BMHH6lQ18YAHccjRwL4=;
+        b=GOSxp74ftGt//RC43O/ChipoDEwpTuUrZKDjWSr9vdVrQbatjWtGtH/8UJ34r1Ytn5
+         UmPHaxzHYH9p8XA/PTh4CmB1K1fnsQ0OkiG243SsivQENlYxwWTCFbKyDGZx35R0Syry
+         CEwWt6P7pnSI+t3PhfIwrck9J6vPPbfNnN1y2An6aZvLinW3lCeTnz1fo3g/q2dWZHmK
+         zutS4OBCguRV4wzjHvbUkVsGHgh/ANkBg/FeAvL/jSAJZHX0PyimvzyyBsFHEliXDj0p
+         2wL+afAmT4gv7tOJpqxhmz0KFl1OoX9fhfvbEgrNmn39RpzGjXiFjRDbttyj+4BvA9u1
+         hlsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=yUyzfA/y/SnWgPkWyZB1VqP/YR18QSOv5LobFX7cnhc=;
-        b=aAVnjtvegtYcJSrUBabiWt1QSSQPnLxp8ARbXAcP8VttyhUgI/md5zM4UJTgrUcZW/
-         ar2MsRhtgx3jB5NMmIUkBn/osdozf4TiMGZUTS6tK8Iue7g3Ki0dV0L7B/pg9uty47B+
-         1rJt4AWVnbHvjKO0VNdZXP/se5Deg/LbASmLFRRYdPwt4L7WcS6UH3SsA5EahjEo8N/R
-         RJJ7sLUgo8kJlJWg56vBPRf/HEfrhNukv6j4B6hCNd5lNd9RjOJVmpN/pFvVhN5plMdX
-         KZNE6Efn7O7jIndx4HrapK7l5V7dwo00+9OYx1EIEsq6g1VnpLt1q/Ud9bZfwZ2wM12y
-         6MTg==
-X-Gm-Message-State: AOAM531AYKjJetlTgVqvVMMTcM05llvFUQ164+USKHZwth/NvV42DxVO
-        4g6HFqWddbXTEZ4hS2sTieTjemAeTiKhGA==
-X-Google-Smtp-Source: ABdhPJwflU5pyUzOslyxrWkwgo8LuAu2fv748CBzVT7FP5Kl20smIaz/vaEteC4F3UVG/mVwiKllNA==
-X-Received: by 2002:a05:6402:206a:: with SMTP id bd10mr20803907edb.263.1627929746132;
-        Mon, 02 Aug 2021 11:42:26 -0700 (PDT)
+        bh=RSoPzG7WJnvNVbkQUkgT8IH+BMHH6lQ18YAHccjRwL4=;
+        b=LQyzeo85/U2QMlB3sQzfzk0jKSTUYathfGb66UumL5eO4YpjGRthgsfpVOlLHGQ1Ut
+         K5/K9/2XmojanUP698QserjeMjGeyZV9qWpAr5bMRaHaql51GXl88omFbxNDbmwZ2BrL
+         I1IPh/Zz+l3iNbDMJzcF1p7Uploa3Ag3MR46FQq+f0i3hR/A0wbF4y1XYBpPt4ffEcUw
+         evZcljeZzxrm6mA0nlGAftVW+EfcvU9YNyr1y0OAkJeCcAELGsyXGaWGIqe9nXjiHsUm
+         qoeiqHbY0qrMNgAmrwx73TOBNCeKYg42S2LaaB7QVG/5Q6bBqzyR0TcnMGVu60XYhakh
+         uP0Q==
+X-Gm-Message-State: AOAM533DH76Wtbd/7AI8FD+ktr//gcNUJCPyek/R1PsFw0WM63l3f1Jf
+        l0c3xrbdcy2gH5Eby9FDvME=
+X-Google-Smtp-Source: ABdhPJxGVGhKWIxSAk0W1dglUqRBCEnVamA9TvvehdU5qKbFAK0a6XL/Po7TqCkXeqImDNyDINrxgg==
+X-Received: by 2002:a17:907:98e1:: with SMTP id ke1mr17122382ejc.162.1627929815537;
+        Mon, 02 Aug 2021 11:43:35 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id c28sm4978469ejc.102.2021.08.02.11.42.25
+        by smtp.gmail.com with ESMTPSA id m12sm5010386ejd.21.2021.08.02.11.43.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Aug 2021 11:42:25 -0700 (PDT)
+        Mon, 02 Aug 2021 11:43:35 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     'Emily Shaffer' <emilyshaffer@google.com>, git@vger.kernel.org
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
 Subject: Re: [PATCH v6 2/2] tr2: log parent process name
-Date:   Mon, 02 Aug 2021 20:41:36 +0200
+Date:   Mon, 02 Aug 2021 20:42:46 +0200
 References: <20210722012707.205776-1-emilyshaffer@google.com>
  <20210722012707.205776-3-emilyshaffer@google.com>
- <87o8agp29o.fsf@evledraar.gmail.com>
- <00a501d787b8$f8347a80$e89d6f80$@nexbridge.com>
+ <87lf5kp27s.fsf@evledraar.gmail.com> <xmqqwnp3x19i.fsf@gitster.g>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <00a501d787b8$f8347a80$e89d6f80$@nexbridge.com>
-Message-ID: <87eebbofhq.fsf@evledraar.gmail.com>
+In-reply-to: <xmqqwnp3x19i.fsf@gitster.g>
+Message-ID: <87bl6fofft.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -75,59 +74,29 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Aug 02 2021, Randall S. Becker wrote:
+On Mon, Aug 02 2021, Junio C Hamano wrote:
 
-> On August 2, 2021 6:22 AM: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wroteL
->>On Wed, Jul 21 2021, Emily Shaffer wrote:
->>
->>> Git for Windows also gathers information about more than one
->>> generation of parent. In Linux further ancestry info can be gathered
->>> with procfs, but it's unwieldy to do so.
->>
->>Having read the win32 get_processes() implementation and read proc(5) I d=
-on't get how it's unweildy to do so on Linux? Perhaps I'm
->>missing some special-case but this rather simple patch-on-top seems to do=
- the job for me. This includes the unrelated enum/switch/case
->>change I suggested.
->>
->>I can submit it as a patch-on-top with SOB etc, but maybe there's some su=
-btle reason it won't work properly. It works for me, I get e.g.:
->>
->>    {
->>      "event": "cmd_ancestry",
->>      "sid": "20210802T102731.879424Z-Hc2f5b994-P00001acc",
->>      "thread": "main",
->>      "time": "2021-08-02T10:27:31.879618Z",
->>      "file": "compat/linux/procinfo.c",
->>      "line": 66,
->>      "ancestry": [
->>        "bash",
->>        "screen",
->>        "systemd"
->>      ]
->>    }
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> Should not the subfields of "ancestry" also have field names? I get that =
-they are a list, but it seems a bit restrictive.
+>> On Wed, Jul 21 2021, Emily Shaffer wrote:
+>>
+>>>  compat/linux/procinfo.c                | 55 ++++++++++++++++++++++++++
+>>> [...]
+>>> +	/* NEEDSWORK: add non-procfs-linux implementations here */
+>>
+>> We'd want non-Windows and non-Linux implementations of this, but that
+>> NEEDSWORK comment should not be in compat/linux/procinfo.c, where we're
+>> never going to add non-Linux code.
 >
-> My preference here would be:
+> I am puzzled.  This is talking about additional implementation for
+> Linux that does not use procfs, no (i.e. what to do with builds of
+> Linux that compile out the procfs support or installations that do
+> not mount the /proc hierarchy)?
 >
->      "ancestry": [
->        "ancestor": [
-> 	"program": "bash",
-> 	"pid" : 1234 ],
->        "ancestor": [
->               "program": "screen"],
->        "ancestor": [
->        	"program" : "systemd"],
->      ]
->
-> With more richness available in the ancestor.
+> The comment seems to be at the right place to remind us of them,
+> even though I do not know how important such an environment is.
 
-That sounds sensible, but to be clear that's a relevant comment on
-Emily's original patch, my "let's implement the same for Linux" is just
-faithfully reproducing what we're already doing in the Windows
-implementation.
+Yes, I see I misread that, nevermind the narrow suggestion then.
 
-But yes, I'd think that including the PID would be a sensible thing to
-do...
+Is there a way to do this sort of thing on Linux without procfs? Other
+than things that use procfs themselves, e.g. parsing "ps" output.
