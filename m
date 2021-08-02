@@ -2,314 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8000C4338F
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 18:50:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 783DCC4338F
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 19:00:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C53CC60F70
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 18:50:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 502AD610FC
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 19:00:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229663AbhHBSvE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 14:51:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58606 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229551AbhHBSvC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Aug 2021 14:51:02 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE96EC06175F
-        for <git@vger.kernel.org>; Mon,  2 Aug 2021 11:50:51 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id a1so6793509ioa.12
-        for <git@vger.kernel.org>; Mon, 02 Aug 2021 11:50:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=l/cp0kaCP5hVtaD2bRdnXrspdsnMat/wMuIoGv+WEO8=;
-        b=ikW76kwF9uGqrhBV1XPKhIa0pOoLigP3pZ+XXJG0a7jH8joWn0CSfEYNO+HPIiVzIE
-         00P+Lqny+f6rdB/0wHFgxKeSkcW0iCgypyxaHgxK4icpKeMiZGmQVo7/FvJFSSVJe04I
-         8ixqW1h3nwuzf92yL9/JPJGYfe2059jOwar9XI26J968MbLO+zM1haVEPrpF066cj0wc
-         Sto4yRnzO/2j+LsYlPkt/20n61rW7nlprDtLQos4am6dzEB1usDWcat5+PdRwOKq2Fsl
-         KSiC4XfuuGcbNJJ0kXENUI/K7FM8fwAfnyQYVOfOFEHPcA2usq1WgY4Kfmw9VW74Zu8I
-         26vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=l/cp0kaCP5hVtaD2bRdnXrspdsnMat/wMuIoGv+WEO8=;
-        b=TSGmf/xa/Ag2tSWNgQQyI0x3a1HW8hQvp6HjLmulpJ1O/Qh47DwWWS0xVzCWNiUgUP
-         9bqDC+3m7P+90URM0oPJOEAsR5m7EyAmRP9dPeOaK0yOehe1FiaJAg4aWpi825/BH/jn
-         DSJ+iGmpOMTrimf7fCjkvw5PX0IAhKqg20NtfbFeadhZ90utx9bg5bZSV+p5tNGfi34Z
-         GNEtk+acsNW9b5DnMe9e8M5udP2ymJnoxN2Nc/d5tg6AenpDF9LGf6y1T3WY/i/l8G6j
-         gk42Nx0t8EWxJjb1cb3F5vo2EJ9mIcu5CQNxPomhvIScdV6jN1/wkbbNTWkJIUmR+XgJ
-         qKTA==
-X-Gm-Message-State: AOAM5329WD/B7Ga12CUyW5jBTGhSDXKt1K/8rVIQsJUB2tVNCr7DdbgM
-        KbkKUT2ZFeMirJ4wt8gHerj1bM/uQs5qKROEvmE=
-X-Google-Smtp-Source: ABdhPJzIzOf3mBXQqS62gOUT8l5rq/627iukBImHvxWS95NHLhM1mt6gS3nidjJmZAft+qFdFeDY3gxP355i1tWqxPE=
-X-Received: by 2002:a05:6638:44f:: with SMTP id r15mr16112192jap.55.1627930250358;
- Mon, 02 Aug 2021 11:50:50 -0700 (PDT)
+        id S229969AbhHBTAW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 15:00:22 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61517 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229607AbhHBTAU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Aug 2021 15:00:20 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BEC62D0F8A;
+        Mon,  2 Aug 2021 15:00:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9V9tta+CAKQSA7L0lFBNHpsszQkaioUXJJIc9m
+        /aL/Q=; b=A7l4yzGaMAXVGPGEVrrKkwq+eWQYzaDUHtTTRFCPrqN63lVPVxpP9u
+        PZgMkvJrJ9o3wsyL7uS18CzRYS6O8cgShwZ9ItK9Zy6wJWnNN+Cgu7gLCJ7zliiV
+        CE5pWL1//lBseSi6y81VnUo7P1gBnfgMFXjgjuXQbqVn2TgVGiBOg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 128BFD0F83;
+        Mon,  2 Aug 2021 15:00:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 14B5BD0F70;
+        Mon,  2 Aug 2021 15:00:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Chris Torek <chris.torek@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 1/4] connected: do not sort input revisions
+References: <cover.1624858240.git.ps@pks.im> <cover.1627896460.git.ps@pks.im>
+        <1fd83f726a04dfb5be27c74cb116618cb76be923.1627896460.git.ps@pks.im>
+Date:   Mon, 02 Aug 2021 12:00:02 -0700
+In-Reply-To: <1fd83f726a04dfb5be27c74cb116618cb76be923.1627896460.git.ps@pks.im>
+        (Patrick Steinhardt's message of "Mon, 2 Aug 2021 11:38:01 +0200")
+Message-ID: <xmqqa6lzwu31.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20210722134012.99457-1-raykar.ath@gmail.com> <20210802130627.36170-1-raykar.ath@gmail.com>
-In-Reply-To: <20210802130627.36170-1-raykar.ath@gmail.com>
-From:   Shourya Shukla <periperidip@gmail.com>
-Date:   Tue, 3 Aug 2021 00:20:39 +0530
-Message-ID: <CACdWUYXhckBkHLPnRDxxb=raAD0=7236jAzvneBLhw8fXvGTMw@mail.gmail.com>
-Subject: Re: [GSoC] [PATCH v2] submodule--helper: run update procedures from C
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D9141062-F3C3-11EB-9226-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le lun. 2 ao=C3=BBt 2021 =C3=A0 18:36, Atharva Raykar <raykar.ath@gmail.com=
-> a =C3=A9crit :
->
-> Add a new submodule--helper subcommand `run-update-procedure` that runs
-> the update procedure if the SHA1 of the submodule does not match what
-> the superproject expects.
->
-> This is an intermediate change that works towards total conversion of
-> `submodule update` from shell to C.
->
-> Specific error codes are returned so that the shell script calling the
-> subcommand can take a decision on the control flow, and preserve the
-> error messages across subsequent recursive calls of `cmd_update`.
->
-> This patch could have been approached differently, by first changing the
-> `is_tip_reachable` and `fetch_in_submodule` shell functions to be
-> `submodule--helper` subcommands, and then following up with a patch that
-> introduces the `run-update-procedure` subcommand. We have not done it
-> like that because those functions are trivial enough to convert directly
-> along with these other changes. This lets us avoid the boilerplate and
-> the cleanup patches that will need to be introduced in following that
-> approach.
+Patrick Steinhardt <ps@pks.im> writes:
 
-I feel that this part is more suitable for a cover letter rather than the c=
-ommit
-message itself. It is a useful piece of info though.
+> In order to compute whether objects reachable from a set of tips are all
+> connected, we do a revision walk with these tips as positive references
+> and `--not --all`. `--not --all` will cause the revision walk to load
+> all preexisting references as uninteresting, which can be very expensive
+> in repositories with many references.
+>
+> Benchmarking the git-rev-list(1) command highlights that by far the most
+> expensive single phase is initial sorting of the input revisions: after
+> all references have been loaded, we first sort commits by author date.
+> In a real-world repository with about 2.2 million references, it makes
+> up about 40% of the total runtime of git-rev-list(1).
 
-> This change is more focused on doing a faithful conversion, so for now we
-> are not too concerned with trying to reduce subprocess spawns.
->
-> Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Shourya Shukla <periperidip@gmail.com>
-> ---
->
-> Notable changes since v1:
->
-> * Modified the code structure in
->   submodule--helper.c:run_update_command(), while fixing problems with
->   the translation marks.
->
-> * Renamed '--sha1' and '--subsha1' options to '--oid' and '--suboid' to
->   since the argument is parsed into an object_id struct, not plain sha1
->   data.
->
-> * Used option callbacks to parse the SHA1 arguments directly.
->
-> * Moved the conditional out of 'do_run_update_procedure()'.
->
-> Feedback required:
->
-> =C3=86var felt that it would be clearer to populate the 'fatal' messages
-> after the run_command() operation in 'run_update_command()', to make it
-> more readable [1]. I have attempted something like that here, and it has =
-led
-> to a lot more duplicated 'switch' statements, which feels suboptimal.
-> I'd appreciate suggestions to make it more legible.
->
-> [1] https://lore.kernel.org/git/87r1fps63r.fsf@evledraar.gmail.com/
->
-> Fetch-it-Via:
-> git fetch https://github.com/tfidfwastaken/git submodule-run-update-proc-=
-list-2
->
->  builtin/submodule--helper.c | 253 ++++++++++++++++++++++++++++++++++++
->  git-submodule.sh            | 106 +++++----------
->  2 files changed, 286 insertions(+), 73 deletions(-)
->
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index d55f6262e9..b9c40324d0 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -2029,6 +2029,20 @@ struct submodule_update_clone {
->         .max_jobs =3D 1, \
->  }
->
-> +struct update_data {
-> +       const char *recursive_prefix;
-> +       const char *sm_path;
-> +       const char *displaypath;
-> +       struct object_id oid;
-> +       struct object_id suboid;
-> +       struct submodule_update_strategy update_strategy;
-> +       int depth;
-> +       unsigned int force: 1;
-> +       unsigned int quiet: 1;
-> +       unsigned int nofetch: 1;
-> +       unsigned int just_cloned: 1;
-> +};
-> +#define UPDATE_DATA_INIT { .update_strategy =3D SUBMODULE_UPDATE_STRATEG=
-Y_INIT }
->
->  static void next_submodule_warn_missing(struct submodule_update_clone *s=
-uc,
->                 struct strbuf *out, const char *displaypath)
-> @@ -2282,6 +2296,175 @@ static int git_update_clone_config(const char *va=
-r, const char *value,
->         return 0;
->  }
-> +
-> +static int run_update_command(struct update_data *ud, int subforce)
-> +{
-> +       struct child_process cp =3D CHILD_PROCESS_INIT;
-> +       char *oid =3D oid_to_hex(&ud->oid);
-> +       int must_die_on_failure =3D 0;
-> +
-> +       cp.dir =3D xstrdup(ud->sm_path);
-> +       switch (ud->update_strategy.type) {
-> +       case SM_UPDATE_CHECKOUT:
-> +               cp.git_cmd =3D 1;
-> +               strvec_pushl(&cp.args, "checkout", "-q", NULL);
+Nice finding.
 
-Would it be possible to add the 'if' statement above just before the
-'switch' (or after,
-whichever seems okay) since this is common amongst (almost) all the cases?
+> Ultimately, the connectivity check shouldn't really bother about the
+> order of input revisions at all. We only care whether we can actually
+> walk all objects until we hit the cut-off point. So sorting the input is
+> a complete waste of time.
 
-> +               if (subforce)
-> +                       strvec_push(&cp.args, "-f");
-> +               break;
-> +       case SM_UPDATE_REBASE:
-> +               cp.git_cmd =3D 1;
-> +               strvec_push(&cp.args, "rebase");
-> +               if (ud->quiet)
-> +                       strvec_push(&cp.args, "--quiet");
-> +               must_die_on_failure =3D 1;
-> +               break;
-> +       case SM_UPDATE_MERGE:
-> +               cp.git_cmd =3D 1;
-> +               strvec_push(&cp.args, "merge");
-> +               if (ud->quiet)
-> +                       strvec_push(&cp.args, "--quiet");
-> +               must_die_on_failure =3D 1;
-> +               break;
-> +       case SM_UPDATE_COMMAND:
-> +               /* NOTE: this does not handle quoted arguments */
-> +               strvec_split(&cp.args, ud->update_strategy.command);
-> +               must_die_on_failure =3D 1;
-> +               break;
-> +       case SM_UPDATE_UNSPECIFIED:
-> +       case SM_UPDATE_NONE:
-> +               BUG("update strategy should have been specified");
-> +       }
+Sorting of positive side is done to help both performance and
+correctness in regular use of the traversal machinery, especially
+when reachability bitmap is not in effect, but on the negative side
+I do not think there is any downside to omit sorting offhand.  The
+only case that may get affected is when the revision.c::SLOP kicks
+in to deal with oddball commits with incorrect committer timestamps,
+but then the result of the sorting isn't to be trusted anyway, so...
 
-If the original did not bug out, do we need to? The documentation does
-not mention
-this as well:
-https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-none
+> Introduce a new "--unsorted-input" flag to git-rev-list(1) which will
+> cause it to not sort the commits and adjust the connectivity check to
+> always pass the flag. This results in the following speedups, executed
+> in a clone of gitlab-org/gitlab [1]:
+> ...
+> [1]: https://gitlab.com/gitlab-org/gitlab.git. Note that not all refs
+>      are visible to clients.
 
-> +
-> +       strvec_push(&cp.args, oid);
-> +
-> +       prepare_submodule_repo_env(&cp.env_array);
-> +
-> +       if (run_command(&cp)) {
-> +               if (must_die_on_failure) {
-> +                       switch (ud->update_strategy.type) {
-> +                       case SM_UPDATE_CHECKOUT:
-> +                               die(_("Unable to checkout '%s' in submodu=
-le path '%s'"),
-> +                                     oid, ud->displaypath);
-> +                               break;
-> +                       case SM_UPDATE_REBASE:
-> +                               die(_("Unable to rebase '%s' in submodule=
- path '%s'"),
-> +                                     oid, ud->displaypath);
-> +                               break;
-> +                       case SM_UPDATE_MERGE:
-> +                               die(_("Unable to merge '%s' in submodule =
-path '%s'"),
-> +                                     oid, ud->displaypath);
-> +                               break;
-> +                       case SM_UPDATE_COMMAND:
-> +                               die(_("Execution of '%s %s' failed in sub=
-module path '%s'"),
-> +                                     ud->update_strategy.command, oid, u=
-d->displaypath);
-> +                               break;
-> +                       case SM_UPDATE_UNSPECIFIED:
-> +                       case SM_UPDATE_NONE:
-> +                               BUG("update strategy should have been spe=
-cified");
-> +                       }
-> +               }
-> +               /*
-> +                * This signifies to the caller in shell that
-> +                * the command failed without dying
-> +                */
-> +               return 1;
-> +       }
-> +
-> +       switch (ud->update_strategy.type) {
-> +       case SM_UPDATE_CHECKOUT:
-> +               printf(_("Submodule path '%s': checked out '%s'\n"),
-> +                      ud->displaypath, oid);
-> +               break;
-> +       case SM_UPDATE_REBASE:
-> +               printf(_("Submodule path '%s': rebased into '%s'\n"),
-> +                      ud->displaypath, oid);
-> +               break;
-> +       case SM_UPDATE_MERGE:
-> +               printf(_("Submodule path '%s': merged in '%s'\n"),
-> +                      ud->displaypath, oid);
-> +               break;
-> +       case SM_UPDATE_COMMAND:
-> +               printf(_("Submodule path '%s': '%s %s'\n"),
-> +                      ud->displaypath, ud->update_strategy.command, oid)=
-;
-> +               break;
-> +       case SM_UPDATE_UNSPECIFIED:
-> +       case SM_UPDATE_NONE:
-> +               BUG("update strategy should have been specified");
-> +       }
-> +
-> +       return 0;
-> +}
-> +
-> +static int do_run_update_procedure(struct update_data *ud)
-> +{
-> +       int subforce =3D is_null_oid(&ud->suboid) || ud->force;
-> +
-> +       if (!ud->nofetch) {
-> +               /*
-> +                * Run fetch only if `oid` isn't present or it
-> +                * is not reachable from a ref.
-> +                */
-> +               if (!is_tip_reachable(ud->sm_path, &ud->oid))
-> +                       if (fetch_in_submodule(ud->sm_path, ud->depth, ud=
-->quiet, NULL) &&
-> +                           !ud->quiet)
-> +                               fprintf_ln(stderr,
-> +                                          _("Unable to fetch in submodul=
-e path '%s'; "
-> +                                            "trying to directly fetch %s=
-:"),
-> +                                          ud->displaypath, oid_to_hex(&u=
-d->oid));
+So is this the 2.2 million refs thing?
 
-I was wondering if an OID is invalid, will it be counted as
-unreachable and vice-versa?
-If that is the case then that would simplify the work.
+> @@ -3584,7 +3586,7 @@ int prepare_revision_walk(struct rev_info *revs)
+>  
+>  	if (!revs->reflog_info)
+>  		prepare_to_use_bloom_filter(revs);
+> -	if (revs->no_walk != REVISION_WALK_NO_WALK_UNSORTED)
+> +	if (revs->no_walk != REVISION_WALK_NO_WALK_UNSORTED && !revs->unsorted_input)
+>  		commit_list_sort_by_date(&revs->commits);
+
+Looks quite straight-forward.
+
+I however suspect that in the longer term it may be cleaner to get
+rid of REVSISION_WALK_NO_WALK_UNSORTED if we do this.  The knob that
+controls if we sort the initial traversal tips and the knob that
+controls if we walk from these tips used to be tied to --no-walk
+only because ca92e59e30b wanted to affect only no-walk case, but
+with your new finding, it clearly is not limited to the no-walk case
+to want to avoid sorting.
+
+
