@@ -2,137 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63A52C4338F
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 17:26:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D17BC4320E
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 17:29:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 37B8B60F9C
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 17:26:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 87ECC60F9C
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 17:29:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229797AbhHBR0w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 13:26:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58987 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229567AbhHBR0v (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Aug 2021 13:26:51 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4FC9CD04BD;
-        Mon,  2 Aug 2021 13:26:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=EASwqF3XE7FN
-        oTKiLzFtQhMS2QE8MY5ogCDZhuIhW9I=; b=vPndB+F9iZPn4004hsMxMBE0ek1F
-        41lSdxoZ2XN1KDTKaE0wbCWDvvNWlbB8KOywF+usK9f3dREpPnZANPitEa71p4fp
-        1OxrGjbq9BA1WWI/cSSIPjIkegSqzza0xAZvEvb5SGnED7jnzipB2gMl0UpO1K3E
-        Mr3BDAvj9YF9zsQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 47F29D04BC;
-        Mon,  2 Aug 2021 13:26:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.71.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9D814D04B9;
-        Mon,  2 Aug 2021 13:26:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v4 08/11] reflog expire: don't lock reflogs using
- previously seen OID
-References: <cover-00.12-00000000000-20210720T102051Z-avarab@gmail.com>
-        <cover-00.11-0000000000-20210726T234237Z-avarab@gmail.com>
-        <patch-08.11-c9c2da3599-20210726T234237Z-avarab@gmail.com>
-Date:   Mon, 02 Aug 2021 10:26:39 -0700
-In-Reply-To: <patch-08.11-c9c2da3599-20210726T234237Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 27 Jul
- 2021 01:44:24 +0200")
-Message-ID: <xmqqeebbwyeo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230086AbhHBRaG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 13:30:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38328 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230425AbhHBRaD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Aug 2021 13:30:03 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6234AC06175F
+        for <git@vger.kernel.org>; Mon,  2 Aug 2021 10:29:53 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id j2so22296325wrx.9
+        for <git@vger.kernel.org>; Mon, 02 Aug 2021 10:29:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to;
+        bh=Je8IuD2gLatLFU2Du1Qz3P79a7Lu3jWQccbLkaW8jpI=;
+        b=QRvE9NfB6c/UvUEsvVgXdrPWZ/R2qzGxnoj/eBgidLizs3Bn8AS8fD33U3k2EOrnW4
+         K9bcwsqb0wIG+OJ2TCVg6cAAJYGys6mEqsK3hNaJDB2vqtsJ/f7SM0gWPVxDbcEAbUoJ
+         pHiYz4+YV8KnPQ4KV19dyzKJ9Kw/Zj6tNK0qUWE/LYX15bQV3m6UhHLUZmUKx4vOunUd
+         N3R761Jne04rU1HNGB/57onWQ+XMyoLi+sZgX5kcQ4oZiPpIr3LihjhwqlsyXAzGDbWr
+         VxMbkWNTtF4sq6GL7ZVpbgBA6aQUZYnPGQIGdt6KWgkHZY+3f4LvN9s0zqn3SrVdf4U+
+         oXPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to;
+        bh=Je8IuD2gLatLFU2Du1Qz3P79a7Lu3jWQccbLkaW8jpI=;
+        b=S61dWD3iuSmDG3Ow69SjQ/eb1aLpLD7Boq4sNa0PkAWb5ZaRSWTEbF9lfjdlWOWRhy
+         zj7958HzNkj0MHCPB/7AgtJOiirGc9Hy+6uxtGdXpyX+gImKaVv/nCFsYvTlYGeGBMQu
+         4jEG4Yi3Q2NFEPmsV8MbzVmeRBZXrxywkHkSwvZLGbdo66cLNbQlAetg1cnpapSK94NB
+         AO9dNWYbMOlGzBPEFkr4emTKQapPLwojLeIz2gVJ7Ha8D7LiyHjgGzv6SzNIZ8Uo+MKi
+         USPN2GykADvV9FmgB6+LnpnKvIf0/Ci2VgDBKkot9zUjx8QUX/ZjWAEbG20K/tTl99w2
+         kp+A==
+X-Gm-Message-State: AOAM530Msthct9KBiRWBokROR9q597AfVHqwSs7mvu1Hfl872dj/IAWA
+        n2TLVDrHBtNLIQ6bmLkWCvi2LmQCZPI=
+X-Google-Smtp-Source: ABdhPJz1afHXFql3r93sziRhl985SDXjaNUkBWMPGyOfAEWLQX6hGBwbcEZMlIjuMNvf+4DW5EOxPw==
+X-Received: by 2002:adf:ed4a:: with SMTP id u10mr18401284wro.86.1627925392009;
+        Mon, 02 Aug 2021 10:29:52 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j14sm11915413wrr.16.2021.08.02.10.29.51
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Aug 2021 10:29:51 -0700 (PDT)
+Message-Id: <pull.1006.git.1627925390.gitgitgadget@gmail.com>
+From:   "Mahi Kolla via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 02 Aug 2021 17:29:48 +0000
+Subject: [PATCH 0/2] clone: update submodule.recurse in config when using --recurse-submodule
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CBF964C0-F3B6-11EB-960A-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+When running 'git clone --recurse-submodules', developers expect various
+other commands such as 'pull' and 'checkout' to also run recursively into
+submodules.The submitted code updates the 'submodule.recurse' config value
+to true when 'git clone' is run with the '--recurse-submodules' option.
 
-> During reflog expiry, the cmd_reflog_expire() function first iterates
-> ...
-> I'm leaving behind now-unused code the refs API etc. that takes the
-> now-NULL "unused_oid" argument, and other code that can be simplified n=
-ow
-> that we never have on OID in that context, that'll be cleaned up in
-> subsequent commits, but for now let's narrowly focus on fixing the
-> "git gc" issue. As the modified assert() shows we always pass a NULL
-> oid to reflog_expire() now.
+Signed-off-by: Mahi Kolla mahikolla@google.com
 
-OK.  Nicely described.
+Mahi Kolla (2):
+  clone: update submodule.recurse in config when using
+    --recurse-submodule
+  clone: update submodule.recurse in config when using
+    --recurse-submodule
 
->  static int files_reflog_expire(struct ref_store *ref_store,
-> -			       const char *refname, const struct object_id *oid,
-> +			       const char *refname, const struct object_id *unused_oid,
->  			       unsigned int flags,
->  			       reflog_expiry_prepare_fn prepare_fn,
->  			       reflog_expiry_should_prune_fn should_prune_fn,
-> @@ -3049,6 +3049,7 @@ static int files_reflog_expire(struct ref_store *=
-ref_store,
->  	int status =3D 0;
->  	int type;
->  	struct strbuf err =3D STRBUF_INIT;
-> +	const struct object_id *oid;
-> =20
->  	memset(&cb, 0, sizeof(cb));
->  	cb.flags =3D flags;
-> @@ -3060,7 +3061,7 @@ static int files_reflog_expire(struct ref_store *=
-ref_store,
->  	 * reference itself, plus we might need to update the
->  	 * reference if --updateref was specified:
->  	 */
-> -	lock =3D lock_ref_oid_basic(refs, refname, oid,
-> +	lock =3D lock_ref_oid_basic(refs, refname, NULL,
->  				  REF_NO_DEREF,
->  				  &type, &err);
->  	if (!lock) {
-> @@ -3068,6 +3069,7 @@ static int files_reflog_expire(struct ref_store *=
-ref_store,
->  		strbuf_release(&err);
->  		return -1;
->  	}
-> +	oid =3D &lock->old_oid;
+ builtin/clone.c          | 1 +
+ t/t5606-clone-options.sh | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
-OK.  That makes it more clear that the object name the locking code
-read is what gets used.
 
-> @@ -3111,6 +3113,7 @@ static int files_reflog_expire(struct ref_store *=
-ref_store,
->  		}
->  	}
-> =20
-> +	assert(!unused_oid);
->  	(*prepare_fn)(refname, oid, cb.policy_cb);
->  	refs_for_each_reflog_ent(ref_store, refname, expire_reflog_ent, &cb);
->  	(*cleanup_fn)(cb.policy_cb);
-
-The preference in this codebase is
-
-	ptr_to_function(params);
-
-over
-
-	(*ptr_to_function)(params);
-
-Once it is written and committed, it is not worth changing, but just
-for the record...
-
-THanks.
-
+base-commit: 940fe202adcbf9fa1825c648d97cbe1b90d26aec
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1006%2F24mahik%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1006/24mahik/master-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1006
+-- 
+gitgitgadget
