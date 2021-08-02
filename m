@@ -2,163 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 460A8C432BE
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 22:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC4A0C4338F
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 23:23:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 27EEB60C3F
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 22:46:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C7AD160E78
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 23:23:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232083AbhHBWqj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 18:46:39 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53285 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231126AbhHBWqh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Aug 2021 18:46:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1627944365;
-        bh=mDZ3wULFMfGnO53wlk6dr1rvs4z2gLYNyuSxPQSWhUU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=LXiwaffYDjuQ8sV6bC8U5A1MWMSCf8UwV2SsWf0Oqnx2IxkaSwagmyBHA1MfEyhwH
-         buc3Vq/dGJ1oOZHqUP5FZr+3GixCeQIp7GL9Mpus2v3wuvUPMkQ3RYxsZRMMd0Y3rp
-         tnsrtUKtcBwAR7Po80NRAHWnwttXR3S3/QlskVUU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.101.220] ([89.1.212.168]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MfpOd-1mmUI02ZwH-00gDQg; Tue, 03
- Aug 2021 00:46:05 +0200
-Date:   Tue, 3 Aug 2021 00:46:02 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 1/2] Change default merge backend from recursive to ort
-In-Reply-To: <8f6af8d494e0924aef4ae6963b8dca2228dad9b1.1627776462.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2108030030000.55@tvgsbejvaqbjf.bet>
-References: <pull.1055.git.git.1627776461.gitgitgadget@gmail.com> <8f6af8d494e0924aef4ae6963b8dca2228dad9b1.1627776462.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S232634AbhHBXXZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 19:23:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40234 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232208AbhHBXXY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Aug 2021 19:23:24 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 984EFC061764
+        for <git@vger.kernel.org>; Mon,  2 Aug 2021 16:23:14 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id d131-20020a1c1d890000b02902516717f562so952380wmd.3
+        for <git@vger.kernel.org>; Mon, 02 Aug 2021 16:23:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=G75EU94H3VvMzOV2C8WaNF1CXSRXS5uIWoEJ+blAAaY=;
+        b=Q5Ocx0h226XflatDZ9DVS5Sddn3J8obEiIc2XooAIHfCxN0enhV6SHr7/50nqZebam
+         bPilRtKKJqELKLn5/wtEY2HN7KmbFHxFg1GJEF72/rEMX3moBMwPTICQEWvIce7LvvC+
+         ViW7CzEsttHbzkfMTxyTy1MK9O59LkdZRt/lo8yt82DOvuU8a5zOs1K1VUmM8TXRx52T
+         9aH0xicvSyhbod7yayQtFNc+LcfZ62MhtiMdZZfakvrpr0drB6ncan/OkEc6D9IWTqMG
+         0Y9WW78ttxuyEx1HW2OCvrhlgfeZNJ7qAlNa5s5QLKqZDwapRA9vNYhM7lTcS6Cr4TiN
+         diYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=G75EU94H3VvMzOV2C8WaNF1CXSRXS5uIWoEJ+blAAaY=;
+        b=ujVWSGM0AqpSSvl90Hm0gn7tzJeHybXrMdVtRjfLGAE1RmJXiKuAHEGNKTwdfAll0H
+         25doRPxcuiTsqvdh8mLBrHcJDXyETFhzywlu2QuqMKHnh+RVwZnCVx76iIvgVyYiGGkX
+         Q32w7AzqUnO4L4yySwX3q9E0bB8AnH4zJZfjbk35Pp9N9PCMEGw4RVSx3/r+MCX1TSzm
+         aKbfFysTVtVqoBVr7HX6f9ARvbnBW9aPikhrOCLOGbVrF7GugyeFi6REf9hZDd5p85u1
+         mQuSXW9GB/4YKkrjD3OZ5+WX5MbqCtz1xaTzVH0D/8I4HILJIikto5a1Bn25qWPbtJFk
+         D7fw==
+X-Gm-Message-State: AOAM531QU54Gj6G8B5XA4gHtZjVE0imxWQmzns9pPQ+rDMcjVcbP/Uet
+        +r9A6fWFskwGu2Wj4yecAaEtXrp+Ql0=
+X-Google-Smtp-Source: ABdhPJyfAglcmQTGAhF9l5TwXaeOGe2rbS5iG3VEiEqJCMHxMMrS8OjxB00Bp9n0PimPIu1It28tgQ==
+X-Received: by 2002:a05:600c:1c11:: with SMTP id j17mr1173073wms.132.1627946593310;
+        Mon, 02 Aug 2021 16:23:13 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a12sm12617217wrr.84.2021.08.02.16.23.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Aug 2021 16:23:12 -0700 (PDT)
+Message-Id: <fea3d6d72b63c06138d8eeb61e45edb30abbd79d.1627946590.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1006.v3.git.1627946590.gitgitgadget@gmail.com>
+References: <pull.1006.v2.git.1627943914.gitgitgadget@gmail.com>
+        <pull.1006.v3.git.1627946590.gitgitgadget@gmail.com>
+From:   "Mahi Kolla via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 02 Aug 2021 23:23:07 +0000
+Subject: [PATCH v3 1/4] clone: update submodule.recurse in config when using
+ --recurse-submodule
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:tprR4aF26F3ZpLVtCDM6+syNtqZ2FPGi3d7/4ofC6vT+M2qYyh6
- LObfPUNi1hA9GajZCVUD1/vFv6IGaIgaDIdyChZhKt35r9I0haiXlqlOmpCyu1nW9RInja9
- gdjUzsdknabcgI1/wB3lu+EjHu0WA18//PGBWt8gW2wCl9XQITNnYsPMdhYmewLO/J2vxlb
- +9Mm9daXScj3RWO+QSf8w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:FQP4XcbrvI8=:FPMQoqMBSO5eF98wZHo6ra
- vMZB9I/wVGLQZ7BQUmiMf4lVgTrbBZbNPJ6bEljG2F2tUri9zAWCMjwNRijc1gFlMg2i5jEbw
- OQxtzbNjQMG3JcmEkQyk9JImM0pN6AXu+y3bLt6oA3kKLEy4ZnwbyESE5k6rRsu2qoE7CJhQo
- nj0V6p/WHm+k0hoiT+iLVhhaNB2klo3ylvH5R7g6GoM756ooHYFt7GUgtA3R14yZL1HW56jXw
- XaM8a8cYvcbOTg2jiEBQWnLApvSRtxihMMVcYizQ3nDN+8ZVLrsmOMeudI3L5AzJshaTRmbdW
- NhaMV+duph6gsvGTnhsbBg5ezRKRl2qOEXOaFQ9NMwAJNGaYnybKqFuz37eleo/r7YmerxHMr
- XGY8qeUWk2/QJ4yR0j952OIkmJMQUM+UdKE+gQrgV7puaETiZw666Ot/plJcCWim4EqcMIJOi
- qzFqZbZKrUONOygh7W+Ai/7poWcomOnnusUyZUMEkH+KOcPeYzxydk7IdZvd3TfgTIBd5KSPc
- WcaHv53UDrLXh6CZc7V6hvluGkQ0FITTzG8IYEwJO+uk8PnIvky6AcSePmirpXOMQ/mT1H2Ld
- l81nOpBZgYSpSbLpU3BP4KMLyxh8rMdL3jQUDoBqJbe/qCtBBh4eaEgGka7RPsD/BsyMceRbr
- Rxpq+OMZwDUpArMPGsrNtwkWBbJQwvCS4+Ykh91cHj4/cXQO181sXj44E1VT3jmJK+Jli/9C0
- 3U1qx0GyYR+Ajvy4Wk+yz4DJGIzXAxNXotJHjTlLTtlXqfbczrkH3W6itv/IrovThezq3230x
- b63ssPxcOicdEVAk/onu1bvoNXTWi9L4iD39P5cAjPuOTubiXwAKCsNCw18bm6sO90NEvd0Dt
- jwYf/LEIEwOCVo671StV++SfpQQHtzRDmIINjMr5PmJkHzlMs1pYRmvnpjcrTg8ZnVrC38c9D
- gWaPp20cHlm5GqfLL6oaF4t/UoVBFTvUN+195QKJPLR7aY4i0tYS2MYXY84pPKZ9dwz5gRw3L
- DYraMVE/53bYqQDzBGfi/dVPtITdpGJVNag7PqaxHphRhO4EEd07nxUUgpJQwKzqhiJm5bNvw
- rGgzx3Eu7qSOde4eUBWNLzNL1BIP5P5bvM9LGNdromlt5vtpK+gAuaOnQ==
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Mahi Kolla <mahikolla@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+From: Mahi Kolla <mahikolla@google.com>
 
-On Sun, 1 Aug 2021, Elijah Newren via GitGitGadget wrote:
+When running 'git clone --recurse-submodules', developers expect various other commands such as 'pull' and 'checkout' to also run recursively into submodules.The submitted code updates the 'submodule.recurse' config value to true when 'git clone' is run with the '--recurse-submodules' option.
 
-> From: Elijah Newren <newren@gmail.com>
->
-> There are a few reasons to switch the default:
-> [...]
+Signed-off-by: Mahi Kolla <mahikolla@google.com>
+---
+ builtin/clone.c          | 1 +
+ t/t5606-clone-options.sh | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
-I think it would be really fantastic to change to the new default right
-after v2.33.0.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 66fe66679c8..f41fd1afb66 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1130,6 +1130,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 					   strbuf_detach(&sb, NULL));
+ 		}
+ 
++                string_list_append(&option_config, "submodule.recurse=true");
+ 		if (option_required_reference.nr &&
+ 		    option_optional_reference.nr)
+ 			die(_("clone --recursive is not compatible with "
+diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+index 3a595c0f82c..3daef8c941f 100755
+--- a/t/t5606-clone-options.sh
++++ b/t/t5606-clone-options.sh
+@@ -16,6 +16,13 @@ test_expect_success 'setup' '
+ 
+ '
+ 
++test_expect_success 'clone --recurse-submodules sets submodule.recurse=true' '
++
++        git clone --recurse-submodules parent clone-rec-submodule &&
++        test_config_global submodule.recurse true 
++
++'
++
+ test_expect_success 'clone -o' '
+ 
+ 	git clone -o foo parent clone-o &&
+-- 
+gitgitgadget
 
-As to the patch, I only struggled slightly with the changes to
-`sequencer.c`:
-
-> diff --git a/sequencer.c b/sequencer.c
-> index 0bec01cf38e..a98de9a8d15 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -636,7 +636,7 @@ static int do_recursive_merge(struct repository *r,
->  	for (i =3D 0; i < opts->xopts_nr; i++)
->  		parse_merge_opt(&o, opts->xopts[i]);
->
-> -	if (opts->strategy && !strcmp(opts->strategy, "ort")) {
-> +	if (!opts->strategy || strcmp(opts->strategy, "recursive")) {
-
-At this stage, we're in `do_recursive_merge()`, and there is only one
-caller, `do_pick_commit()`, and the caller is guarded by the following
-condition:
-
-        else if (!opts->strategy ||
-                 !strcmp(opts->strategy, "recursive") ||
-                 !strcmp(opts->strategy, "ort") ||
-                 command =3D=3D TODO_REVERT) {
-
-The issue I see is with `git revert` allowing custom merge strategies. I
-_think_ we need a slightly different patch here, something like this:
-
--	if (opts->strategy && !strcmp(opts->strategy, "ort")) {
-+	if (!opts->strategy || !strcmp(opts->strategy, "ort")) {
-
->  		memset(&result, 0, sizeof(result));
->  		merge_incore_nonrecursive(&o, base_tree, head_tree, next_tree,
->  					    &result);
-> @@ -3968,7 +3968,7 @@ static int do_merge(struct repository *r,
->  	o.branch2 =3D ref_name.buf;
->  	o.buffer_output =3D 2;
->
-> -	if (opts->strategy && !strcmp(opts->strategy, "ort")) {
-> +	if (!opts->strategy || strcmp(opts->strategy, "recursive")) {
-
-It took me a while to convince myself that this is correct. At least now I
-_think_ it is correct: `do_merge()` defines:
-
-        const char *strategy =3D !opts->xopts_nr &&
-                (!opts->strategy ||
-                 !strcmp(opts->strategy, "recursive") ||
-                 !strcmp(opts->strategy, "ort")) ?
-                NULL : opts->strategy;
-
-and then hands off to `git merge -s <strategy>` if `strategy` is set,
-_before_ this hunk. Therefore we can be pretty certain that
-`opts->strategy` is either not set, or "ort", or "recursive" at that
-stage.
-
-However, I think we could use the same idea I outlined in the previous
-hunk, to make things more obvious:
-
--	if (opts->strategy && !strcmp(opts->strategy, "ort")) {
-+	if (!opts->strategy || !strcmp(opts->strategy, "ort")) {
-
-Thank you,
-Dscho
-
->  		/*
->  		 * TODO: Should use merge_incore_recursive() and
->  		 * merge_switch_to_result(), skipping the call to
-> --
-> gitgitgadget
->
->
