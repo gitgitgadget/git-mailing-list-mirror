@@ -2,149 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 676AEC4338F
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 17:49:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8199DC4338F
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 18:03:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 42AF56101D
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 17:49:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D23961050
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 18:03:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229571AbhHBRuI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 13:50:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43262 "EHLO
+        id S229722AbhHBSDc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 14:03:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229537AbhHBRuH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Aug 2021 13:50:07 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37C50C06175F
-        for <git@vger.kernel.org>; Mon,  2 Aug 2021 10:49:57 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id c16so5653151lfc.2
-        for <git@vger.kernel.org>; Mon, 02 Aug 2021 10:49:57 -0700 (PDT)
+        with ESMTP id S229537AbhHBSDb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Aug 2021 14:03:31 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AB58C06175F
+        for <git@vger.kernel.org>; Mon,  2 Aug 2021 11:03:20 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id 61-20020a9d0d430000b02903eabfc221a9so18325589oti.0
+        for <git@vger.kernel.org>; Mon, 02 Aug 2021 11:03:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=mnhGcDduwfJ9g3cobX4eP6w3KAote3OeNO+BUnU+KX8=;
-        b=PBG+ZpkbCmFTpdQeJmgu3K0PQsHwrMzdq7CmpK8l7EtEo+lTYqVFGhIuQoo77Nk6MN
-         tz/KxlPFg+k3hbJhBokp6pFbVqQE+z+xyl+tzSaPKHap3N9PFJXAgnOOGNfh/KzS/wcL
-         fVjMlOMUHuQPf1pi3MSkQi/UG0n2pPS+MXbyyqZ4TCo2E+36neUKvMqzexFo89Ij6MAW
-         h/NtJFfMwuXZm4HirPX16sg9PCIwqv4rwJ97txJhs5bGprduxBA5Id+dOdzzG6QQjb+j
-         LbiclBFN8y3D5rro60iQ46Z15GFC/C+85v1zQBwetiACifWpc6w8q/S0nwTwDsVMcDG+
-         dwKg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=VZX1OiASETCDTe5ruy5IIjwOB7sNcarNT6OxUe982t4=;
+        b=axEX7fL6L6gEefyKd+uJi/m4vKxUUTeaRdoIGbx/Gj7i27GsbqGuI399ch9SPltifJ
+         pI0r3MDEgm8AYkzLNMRksjCT95k6SxvJSOcNJkGGNnVPoxY5ntlXEtgmHEyfQz2Oywan
+         2K9kFw4V+NCjKW9pASZX6rLzKORJZwxphxFdbji4/zFg2OBSf0cUyGtONs3KFmokYo43
+         9ii9j4XYXFrD3os2tBBu1UcrkkAFgblkZBKjl3RlV/ycBxiiBqZIbox+Fpcn5dW/+kOM
+         U4P+yn/HWxBuzag9uvAuCIwwymvngnPN1n4Dl9wkDOZWSH0sWeKL2prZGS65WTVSCgxV
+         KQKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=mnhGcDduwfJ9g3cobX4eP6w3KAote3OeNO+BUnU+KX8=;
-        b=kSrC9TeTG/6TUDJhUe8onhaPkbOhBsSzan3M6UYKnDfBNUEwzyOGyQ+pkD8XGaleNG
-         yad7G03/YvF2Ns7ClHvM4etCkDp3uZTH9vuHsZiBT1cYMKI0iYmo9omMfQmjm89hxVbX
-         0wrGq+ZRBC+sp6vFvvgczqsXWFl6uv1yhPxDSMNkx4rBAUMlMzSL3/a97onErxwq7Miy
-         n5Zuc/HcfMbDdx4prwwhxKx4r/HSt3GTY5XFCxFP6v1+ofwhb1ZYjvTMuptwQQWTQR3W
-         9CqZeol50YCC84LiWUn5Cf1U9H5Vsvy2hwd4YlZluaMeS0udoL0Heffe3wY+Y/Zcctyj
-         JWzA==
-X-Gm-Message-State: AOAM530GdQm3XEU2Q27KR1K5sLs0n+o56+5+JsZ+dzgF0MNGvjLaWIsj
-        rnwrDjyZqt6ujWtSjPRbNDE=
-X-Google-Smtp-Source: ABdhPJzR7cr5za0cY6udRqFhF57D/DWNU4dDt9RmIkaYjrajJwkDyu1Rt7Km99rh02c9xSwNceecKg==
-X-Received: by 2002:ac2:5978:: with SMTP id h24mr9066304lfp.354.1627926595580;
-        Mon, 02 Aug 2021 10:49:55 -0700 (PDT)
-Received: from paasan.lan (150.37-191-137.fiber.lynet.no. [37.191.137.150])
-        by smtp.gmail.com with ESMTPSA id a13sm1017359lfu.13.2021.08.02.10.49.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Aug 2021 10:49:54 -0700 (PDT)
-From:   =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-To:     avarab@gmail.com, gitster@pobox.com
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-Subject: [PATCH v2] clone: Allow combining --bare and --origin
-Date:   Mon,  2 Aug 2021 19:49:44 +0200
-Message-Id: <20210802174944.53745-1-oystwa@gmail.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <8735rsqlal.fsf@evledraar.gmail.com>
-References: <8735rsqlal.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=VZX1OiASETCDTe5ruy5IIjwOB7sNcarNT6OxUe982t4=;
+        b=WZF43uYYw4xySYfimOkq2Dwryy6a4HPeu4o2Ff8qpeDersMz+VDFGh547z+6QwbUsU
+         bIvG6du/kQSwIjVb+MifWvrVwcAYtciguuupdPBH0/plr5df6qT7qsykHs4bQb4OmeAZ
+         vfNbYEDbKJRam+nVFj3Vx/2s9eqGE16tofRpaWWxkn/j9CTPP+B9SOkb5z/YsyNMTAlF
+         2hqlq7rpvNNSl6P/vmdXPFLzQ+CHv9GmarTYBbD92rOvO0EIkRpO0f/QRgNRjmhD2+X/
+         OP5qv78CTEWrEKUEMSWj3hpdCnE/MgRaNeJWnie8OgnBE0A73QJVelP3JMxrSgJxtQtu
+         c9HQ==
+X-Gm-Message-State: AOAM530k5Hld/A/HydgR0J88+iZvUKEx+Gz8egHxi8JdulHGBVIra79t
+        J7em/ex/JFdcr2e9Eck/bik=
+X-Google-Smtp-Source: ABdhPJzVUAUKbgTxC+XojAxW1B3B0o+fe8fz5vGwxyLHNYb5gyTj/sUYqwpSRQfP/Svw5SdV7CVk5Q==
+X-Received: by 2002:a05:6830:1e96:: with SMTP id n22mr12314494otr.11.1627927399939;
+        Mon, 02 Aug 2021 11:03:19 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:34d1:2d41:f9b7:ccbc? ([2600:1700:e72:80a0:34d1:2d41:f9b7:ccbc])
+        by smtp.gmail.com with ESMTPSA id n21sm1845687ooj.22.2021.08.02.11.03.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Aug 2021 11:03:19 -0700 (PDT)
+Subject: Re: [PATCH 0/2] [RFC] Switch default merge backend from recursive to
+ ort
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <pull.1055.git.git.1627776461.gitgitgadget@gmail.com>
+ <ec1bb449-347a-924d-7462-3cef6facc0e9@gmail.com>
+ <CABPp-BHNYPzJc=oksWfkUGqsrmK_nhr_24WcaqjZoK_+4wG=tA@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <c27894f0-b0d2-a1a6-bac3-31e82b0283df@gmail.com>
+Date:   Mon, 2 Aug 2021 14:03:16 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABPp-BHNYPzJc=oksWfkUGqsrmK_nhr_24WcaqjZoK_+4wG=tA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The constraint on passing both these options simultaneously has been
-present since long before clone was ported to C. At the time no
-configuration referencing the remote repository was written at all in
-bare clones.
+On 8/2/2021 12:27 PM, Elijah Newren wrote:
+> On Mon, Aug 2, 2021 at 9:05 AM Derrick Stolee <stolee@gmail.com> wrote:
+>> I've done my own share of testing on some of our private monorepos to see
+>> how ORT compares to the recursive algorithm. My data is not perhaps as
+>> rigorous as yours, but I did notice that the ORT algorithm was consistently
+>> within the 5-6 second range while the recursive algorithm would vary within
+>> the 7-20 second range (and some outliers near 30s).
+...
+> One quick question on your timings here, though: in the past, when you
+> compared timings, you compared merge-recursive *without* rename
+> detection to merge-ort *with* rename detection.  Are you doing the
+> same here (just so others have a better sense of what is being
+> compared)?
 
-Since df61c88979 (clone: also configure url for bare clones, 2010-03-29)
-the remote repository is mentioned in the configuration file also for
-bare repos, so it makes sense to allow the user to rename it if they
-wish.
-
-Signed-off-by: Øystein Walle <oystwa@gmail.com>
----
-
-Hi Junio and Ævar,
-
-I investigated a bit more and updated the commit message accordingly.
-Instead of just removing the test I have replaced it with one that
-checks that the behavior is as intended. 
-
-Ævar, I was a bit melodramatic when I wrote "especially useful". I have
-toned the commit message down a bit :-) In truth, I don't personally
-have a use-case for this (I did reach out to the person who asked about
-it in #git but did't get a reply) and have no problems with seeing this
-patch ultimately rejected. It's just a result of me seeing it asked
-about and getting an itch from it. But in my humble opinion this is now
-an "artificial" constraint (for lack of a better term) and should be
-removed on the grounds that there is no reason for it to be there in the
-first place.
+Yes, I continue to test with merge.renames=0 in the config. That makes
+the data more impressive.
 
 Thanks,
-Øsse
-
- builtin/clone.c          |  3 ---
- t/t5606-clone-options.sh | 10 +++++-----
- 2 files changed, 5 insertions(+), 8 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 66fe66679c..70ec72ea85 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1014,9 +1014,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		option_bare = 1;
- 
- 	if (option_bare) {
--		if (option_origin)
--			die(_("--bare and --origin %s options are incompatible."),
--			    option_origin);
- 		if (real_git_dir)
- 			die(_("--bare and --separate-git-dir are incompatible."));
- 		option_no_checkout = 1;
-diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-index 3a595c0f82..c40dde816d 100755
---- a/t/t5606-clone-options.sh
-+++ b/t/t5606-clone-options.sh
-@@ -30,12 +30,12 @@ test_expect_success 'rejects invalid -o/--origin' '
- 
- '
- 
--test_expect_success 'disallows --bare with --origin' '
--
--	test_must_fail git clone -o foo --bare parent clone-bare-o 2>err &&
--	test_debug "cat err" &&
--	test_i18ngrep -e "--bare and --origin foo options are incompatible" err
-+test_expect_success '--bare works with -o/--origin' '
- 
-+	git clone --bare --origin=somewhere parent clone-bare &&
-+	url="$(git -C clone-bare config --local remote.somewhere.url)" &&
-+	test -n "$url" &&
-+	test_must_fail git -C clone-bare config --local remote.origin.url
- '
- 
- test_expect_success 'disallows --bare with --separate-git-dir' '
--- 
-2.27.0
-
+-Stolee
