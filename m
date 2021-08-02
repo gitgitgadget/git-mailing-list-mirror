@@ -2,120 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16BBEC4338F
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 21:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 829A7C4338F
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 21:11:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E78F860F4B
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 21:08:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B1A660F4B
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 21:11:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231704AbhHBVIO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 17:08:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35954 "EHLO
+        id S232532AbhHBVL5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 17:11:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231397AbhHBVIN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Aug 2021 17:08:13 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7532BC06175F
-        for <git@vger.kernel.org>; Mon,  2 Aug 2021 14:08:03 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id b13so12111885wrs.3
-        for <git@vger.kernel.org>; Mon, 02 Aug 2021 14:08:03 -0700 (PDT)
+        with ESMTP id S232147AbhHBVL5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Aug 2021 17:11:57 -0400
+Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38F82C06175F
+        for <git@vger.kernel.org>; Mon,  2 Aug 2021 14:11:47 -0700 (PDT)
+Received: by mail-il1-x131.google.com with SMTP id x7so14404263ilh.10
+        for <git@vger.kernel.org>; Mon, 02 Aug 2021 14:11:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=ZMP9PZsC49mibdEen0Cw6ByiSDzfVhNguJsvz6UsTZY=;
-        b=pZ2yFHNQaCoJm/O6ycvO0VUDEkYtqrLBlr+fhnhvthd9G6LNbT/A2xTUizrpOy9Qod
-         /xycuJ6rSQhfFNBiTUM6qIpj5ZY/w7e64ZSsPwx7+ACuKYuE/80x6HQA50w/vfYecxkk
-         7eq5EWhfDpuPUxgTNiQEj5XkkR6rN/RZegSfG0IJUERuiyUVN1O7B0URE5Tz47oyZuJf
-         3svMihzuefN1CRTV41fNtvrP/b0BSMKJI+KeNtxRuB7fVEOciFHRJDCA/mhcD1IIdFBt
-         Wg57Nw5pHcR+uJiTtEhfewJ7WScamyCELl0NXg+ucVOuVEvXNoJr5+A2oiXfqrtn464+
-         Im4Q==
+         :content-disposition:in-reply-to;
+        bh=geAAeL66nsq29YJyKvDhIre/eG/GlToETDCmkWLTp/I=;
+        b=EKROg1TK5yFpJuNwoiA3bf7Q6JAmL7dZGjEpXNiAttENWzpmd/fu/BbjRMNlM1CWxd
+         nhikIcNT9kCm435SnInUxp6gfuK3CjQAu5W063WWz8KtGiW/6V6u2U8c/9VzXhrr8joi
+         pwBWvKQwHtj+bRHnJ4fyd6RUmTPqNwFMKFKGboKinszTKgBkoUzM8yOlQK/w1av+eRMc
+         GWdBRdQo1LeNaraojBfrFe27f3COoNUpS2cmBV1C1qTZl4zW5NA1p7Y4VxdaTZ25I18t
+         mrF/bqzkxegD5EUd1wPxm9uy4khiFD8878MkcQMPWsjfsQEqQH+E3w8eoJGE/WG2QNDX
+         fmVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=ZMP9PZsC49mibdEen0Cw6ByiSDzfVhNguJsvz6UsTZY=;
-        b=mTmSUKeF/Y+5K7Z+0qrPakEDAPRDF/jmbpZhUray/12agkEQecdBolsd4lkT1A+Nmc
-         3Kh1AmqMYvgMDmiJUloVWLC7CdzOntLHlW46wqQWvl8CPgUWvoBWgTURHay22p+afIJK
-         Qc+p0YTUY3VeSR7+2GlkV52McDNrBJxv22+p+KvbDUI8b7tUz/TzQUwnlY6BzyH6xB3W
-         yvij17OcUZ37BonS8C6EPBYAeRcMHQ3OjWj2LGv41Qc1JIkdajlKRWZtMda3Npd2+qy4
-         dfUv0hdOk0V0sy63gJW+kndr1Ws8QyH3bvRxWIBCv6zB3JFPJZf7Wu6VvCfnhKmbMbWu
-         0Mdw==
-X-Gm-Message-State: AOAM531E9Xn0h0zAqg2qIhX7H3Npj61MRT8ycGoFsNKokJO0G4LxV89F
-        2e+oz80x8x6n9wz/tCnAuPQ=
-X-Google-Smtp-Source: ABdhPJyg3Ldh11UhWX2qPIIs/GFEW6YCbVqBEDfFZIBoSoHGSOnZx8mlxkGwe2z79g7q0P+kjNVnJw==
-X-Received: by 2002:adf:eec9:: with SMTP id a9mr18733759wrp.226.1627938482097;
-        Mon, 02 Aug 2021 14:08:02 -0700 (PDT)
-Received: from szeder.dev (78-131-14-245.pool.digikabel.hu. [78.131.14.245])
-        by smtp.gmail.com with ESMTPSA id v5sm12880533wrd.74.2021.08.02.14.08.01
+         :mime-version:content-disposition:in-reply-to;
+        bh=geAAeL66nsq29YJyKvDhIre/eG/GlToETDCmkWLTp/I=;
+        b=uddYuxolWuXuwxOWWS/iZtERCUP0TMqlQLGwOSFrgAkad+6IkulfRDD/D+WP6QStTj
+         3TIoEmFQvGg/qc2ZxvTB9Om+4gc3jY6kw+kAnTtVPX5J65fSaNNkQtXrqjNbh2YEZQuJ
+         ksVt4iYghHb4PEhjD3bK50wKjdZU8GLbqUmsWzYKig6QGBsNOlub+C0D/NlxKnlpR02/
+         fuxId9LBPqu4VmzUjEx6MT9xg944Cxj8BfdcWOLGVmkJKgCaB2c4dkNB5FNrqT22yupu
+         wcW+ma0briFrIKO6cItMIlnCTLs9yJGQw5YRomo6wRKTPpRkIi1v6aSiqmKV3Lm0bCnG
+         l29A==
+X-Gm-Message-State: AOAM530vsZZPr82ibpNTGQ+DMdobBPOdyxV3u6SDl23W32Cmfy8MtN2u
+        EmEXOHEeP4IAZ6Uq6dwarVCTuA==
+X-Google-Smtp-Source: ABdhPJxdhy1G8GSm9dE3vihGNKTkVV6fxTlBIG0Z6n5nTgbOEhTfO4VuCCKayaC3c68KaH7Jw1edPg==
+X-Received: by 2002:a92:ced0:: with SMTP id z16mr501677ilq.0.1627938706657;
+        Mon, 02 Aug 2021 14:11:46 -0700 (PDT)
+Received: from localhost ([2600:1700:d843:8f:7d0f:79d3:4a41:12d8])
+        by smtp.gmail.com with ESMTPSA id z22sm4568346ioe.52.2021.08.02.14.11.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Aug 2021 14:08:01 -0700 (PDT)
-Date:   Mon, 2 Aug 2021 23:07:59 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 1/3] commit-graph: fix bogus counter in "Scanning merged
- commits" progress line
-Message-ID: <20210802210759.GD23408@szeder.dev>
-References: <20210620200303.2328957-1-szeder.dev@gmail.com>
- <cover-0.3-0000000000-20210722T121801Z-avarab@gmail.com>
- <patch-1.3-832a6c1f78-20210722T121801Z-avarab@gmail.com>
+        Mon, 02 Aug 2021 14:11:46 -0700 (PDT)
+Date:   Mon, 2 Aug 2021 17:11:45 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2021, #01; Sun, 1)
+Message-ID: <YQhfkScjUBu7o/fp@nand.local>
+References: <xmqqk0l4xuvo.fsf@gitster.g>
+ <87wnp4p4xo.fsf@evledraar.gmail.com>
+ <xmqq5ywnyg7f.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-1.3-832a6c1f78-20210722T121801Z-avarab@gmail.com>
+In-Reply-To: <xmqq5ywnyg7f.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 22, 2021 at 02:20:15PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> From: SZEDER Gábor <szeder.dev@gmail.com>
-> 
-> The final value of the counter of the "Scanning merged commits"
-> progress line is always one less than its expected total, e.g.:
-> 
->   Scanning merged commits:  83% (5/6), done.
-> 
-> This happens because while iterating over an array the loop variable
-> is passed to display_progress() as-is, but while C arrays (and thus
-> the loop variable) start at 0 and end at N-1, the progress counter
-> must end at N.  This causes the failures of the tests
-> 'fetch.writeCommitGraph' and 'fetch.writeCommitGraph with submodules'
-> in 't5510-fetch.sh' when run with GIT_TEST_CHECK_PROGRESS=1.
+On Mon, Aug 02, 2021 at 09:16:52AM -0700, Junio C Hamano wrote:
+> >> * ab/pack-stdin-packs-fix (2021-07-09) 2 commits
+> >> ...
+> > As noted in
+> > https://lore.kernel.org/git/87sg00qfbp.fsf@evledraar.gmail.com/ let's
+> > take Taylor's https://lore.kernel.org/git/YPcA0oxJgedIf57K@nand.local/
+> > as that Ack (he was also CC'd on my reply to the last WC...)>
+>
+> Thanks.
 
-There is no GIT_TEST_CHECK_PROGRESS in this patch series.
+Sorry if my lack of response caused any confusion. I thought that [1]
+and [2] made it clear enough that I was OK with the series moving
+forward.
 
-> Fix this by passing 'i + 1' to display_progress(), like most other
-> callsites do.
-> 
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  commit-graph.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 1a2602da61..918061f207 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -2096,7 +2096,7 @@ static void sort_and_scan_merged_commits(struct write_commit_graph_context *ctx)
->  
->  	ctx->num_extra_edges = 0;
->  	for (i = 0; i < ctx->commits.nr; i++) {
-> -		display_progress(ctx->progress, i);
-> +		display_progress(ctx->progress, i + 1);
->  
->  		if (i && oideq(&ctx->commits.list[i - 1]->object.oid,
->  			  &ctx->commits.list[i]->object.oid)) {
-> -- 
-> 2.32.0.957.gd9e39d72fe6
-> 
+I'm not overly excited about the outcome, since I thought taking my
+suggestions would have made the tests easier, not harder, to write, but
+I don't feel strongly enough to advocate for it further.
+
+Thanks,
+Taylor
+
+[1]: https://lore.kernel.org/git/YPcA0oxJgedIf57K@nand.local/
+[2]: https://lore.kernel.org/git/YPl90eSyuovU3CvT@nand.local/
