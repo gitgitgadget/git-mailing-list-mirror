@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CB26C4338F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D37C7C4320A
 	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 22:38:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 22E2760560
+	by mail.kernel.org (Postfix) with ESMTP id BE95E60560
 	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 22:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233043AbhHBWiu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 18:38:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57906 "EHLO
+        id S233116AbhHBWix (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 18:38:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232695AbhHBWis (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232130AbhHBWis (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 2 Aug 2021 18:38:48 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EBF0C061764
-        for <git@vger.kernel.org>; Mon,  2 Aug 2021 15:38:37 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id f9-20020a05600c1549b029025b0f5d8c6cso445714wmg.4
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06B32C0613D5
+        for <git@vger.kernel.org>; Mon,  2 Aug 2021 15:38:38 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id p5so23200913wro.7
         for <git@vger.kernel.org>; Mon, 02 Aug 2021 15:38:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=G75EU94H3VvMzOV2C8WaNF1CXSRXS5uIWoEJ+blAAaY=;
-        b=Jv1slNRVnRjrlGFqpP4GYMZnA2VW/afoadHc0nIwTnlgq8N1oaPIcUZeV+OpLPr1Iy
-         ctasrCB6aBGKc8iX3s80wf6uLsYhqhHnxCqVLHnWmbA4NXEC3qss6cqYujvlphdG6yuQ
-         jsN3tonpiJ9tIE2X4GUgEoFAntQzuPo0TEZwnNLfq1tG9RQx8+G7ZzTjP6ojOY04jlPO
-         0k/OepWsjR3TsSoTwP50cEHnX7YYpgDyJn7l1oFtkBbPhsokl77kTIX/P1eHroxzPfq0
-         W0XqVfFx7ZJ3W2MH3gAQFFLKQymqNq0cKrE4M7gqhS7DVErVwFcxlL6JlplPAOAcfutO
-         KU2A==
+        bh=sRMkGQ9d48liM5p3XqWstj4cz8j7g/2tUl9I/WtyjK8=;
+        b=ZIa5nkAdpxVazOjVuRaK07VRQ57+X5BAyHCuAx7xKQZRsLQeRYSJJtM7McB/UwYsLA
+         PaWFjMthOU/lL7Nv5SUE0iaz/tLyPPbFIuHgdVfGagdl9Cwrqjok2/ROx8suTG4nyffX
+         lWIkMg7ab/ejeZQZzK2pOoy5pYolxdq1oeJQcjIWlAYpp8662gvEeKyBgdyYPiqkZLh+
+         H9Ayjx4OyKpZJ+iX+gjloauqEdC6SzfzYwlm4IMkFy+fn6fZ65+VjNqQpPEczqk8J8EZ
+         DQS0bgJVHsdDHScgmRjMBysCI2b6eZqTU3bM6nlwaXDp4z3XYpR9jxdR82DNp2AOg6YP
+         VWpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=G75EU94H3VvMzOV2C8WaNF1CXSRXS5uIWoEJ+blAAaY=;
-        b=e59omV/dAY0yyHNpCPgzetNi03LTNyJuwoFFtjl+ZOyHomNiczjLQ1KsAg1rAYmD0f
-         tlvqUARUi1NzBCDBPXLdI1x8N/WHy5hWzuKLhYhFyIWXwm/Dfhbqxjy6i/4i787f/1Af
-         fETPUbI6A6Zz3tSjh53We+AqcQDrQ38SK3wKhA4sBxHbdeeeqYIMngOBlWarnxKBqr2r
-         7TgWodkqAWC6lk2pQ38nxYRbp9oYmzjFFy12xOZmBUHaYqn2NkTCcALKWtX3zjsdPD51
-         zU5whrh8IaqM1cJ7P3DTmX/OO3Mst2PccIwhY2uJNH9PNWblsvgn0DyijyjAXyNwDCAk
-         IWag==
-X-Gm-Message-State: AOAM533vzokwaXjy7jD5yyambU5nAQdb8bZRcoAfXfDWl9n1r+An9a10
-        tCDAlxEIYNTosmjxyInnS+IpZsn2VRM=
-X-Google-Smtp-Source: ABdhPJyS+RV9RV0hNJV2DTQBUOmjNE2JXQjg8W0HojHJzCo2OJ4FMwglKi2B7Bbo73Bg3yhX9HX/Aw==
-X-Received: by 2002:a7b:cc16:: with SMTP id f22mr1042983wmh.99.1627943915930;
-        Mon, 02 Aug 2021 15:38:35 -0700 (PDT)
+        bh=sRMkGQ9d48liM5p3XqWstj4cz8j7g/2tUl9I/WtyjK8=;
+        b=FsCMvKhkXNA1/JpABN6cvNcgFtdwngTN8kdc1aEDu1299Zx1wiqmLVg7G7xrXMESpI
+         F0nWKtPcZJEhQd/woNAGPExkKejr6XkpvqZJds6JRQXjfrSyIyEKyQpsAywNWGOIRDqv
+         SOZQZJf4pSnf48FzmQhiIr1sNmhkUHs4b07pJ5ZkN5H8jP3z/TqJAvl9GNWy9HKOOo1X
+         RZcE8CNnTQRBhsKA2LXGfReiz1ustj6UyTsMVbHdtVPXKU1PG1hdmE6KcXE0HT6ErQY1
+         YRiElQdVTJXuZNHlal0pUSrNlzGRYejPdzReJ2N0ls8aVTwNNcbhRnrw40gk86P7w8Mj
+         HAHQ==
+X-Gm-Message-State: AOAM532le2DQIjdVYBQvCMWR1PRU0vbWA9SsoP4j6aZbaa7FQbwkhLiD
+        qEzvaElI24e7R96oJEKzla8TUurO7B0=
+X-Google-Smtp-Source: ABdhPJznEc2ZAnBB32TmZwCLtogo1QnFpQCPHkrctjRxW7AC8A9oHUMQYaI1JYQkpFokdWx/cSUBfQ==
+X-Received: by 2002:a5d:620d:: with SMTP id y13mr19856766wru.45.1627943916664;
+        Mon, 02 Aug 2021 15:38:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w10sm10765835wrr.23.2021.08.02.15.38.35
+        by smtp.gmail.com with ESMTPSA id s14sm11187046wmc.25.2021.08.02.15.38.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Aug 2021 15:38:35 -0700 (PDT)
-Message-Id: <fea3d6d72b63c06138d8eeb61e45edb30abbd79d.1627943914.git.gitgitgadget@gmail.com>
+        Mon, 02 Aug 2021 15:38:36 -0700 (PDT)
+Message-Id: <dd13a65ef0f648f13cc220303092a657148c19ac.1627943914.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1006.v2.git.1627943914.gitgitgadget@gmail.com>
 References: <pull.1006.git.1627925390.gitgitgadget@gmail.com>
         <pull.1006.v2.git.1627943914.gitgitgadget@gmail.com>
 From:   "Mahi Kolla via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 02 Aug 2021 22:38:32 +0000
-Subject: [PATCH v2 1/3] clone: update submodule.recurse in config when using
+Date:   Mon, 02 Aug 2021 22:38:33 +0000
+Subject: [PATCH v2 2/3] clone: update submodule.recurse in config when using
  --recurse-submodule
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
@@ -80,40 +80,22 @@ When running 'git clone --recurse-submodules', developers expect various other c
 
 Signed-off-by: Mahi Kolla <mahikolla@google.com>
 ---
- builtin/clone.c          | 1 +
- t/t5606-clone-options.sh | 7 +++++++
- 2 files changed, 8 insertions(+)
+ t/t5606-clone-options.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 66fe66679c8..f41fd1afb66 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1130,6 +1130,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 					   strbuf_detach(&sb, NULL));
- 		}
- 
-+                string_list_append(&option_config, "submodule.recurse=true");
- 		if (option_required_reference.nr &&
- 		    option_optional_reference.nr)
- 			die(_("clone --recursive is not compatible with "
 diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-index 3a595c0f82c..3daef8c941f 100755
+index 3daef8c941f..69c4bacf52f 100755
 --- a/t/t5606-clone-options.sh
 +++ b/t/t5606-clone-options.sh
-@@ -16,6 +16,13 @@ test_expect_success 'setup' '
+@@ -19,7 +19,7 @@ test_expect_success 'setup' '
+ test_expect_success 'clone --recurse-submodules sets submodule.recurse=true' '
+ 
+         git clone --recurse-submodules parent clone-rec-submodule &&
+-        test_config_global submodule.recurse true 
++        git config submodule.recurse true
  
  '
  
-+test_expect_success 'clone --recurse-submodules sets submodule.recurse=true' '
-+
-+        git clone --recurse-submodules parent clone-rec-submodule &&
-+        test_config_global submodule.recurse true 
-+
-+'
-+
- test_expect_success 'clone -o' '
- 
- 	git clone -o foo parent clone-o &&
 -- 
 gitgitgadget
 
