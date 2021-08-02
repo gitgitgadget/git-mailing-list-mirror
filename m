@@ -2,70 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8096EC4320A
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 09:38:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E15DC4338F
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 09:38:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 65208610D0
-	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 09:38:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3195E610CC
+	for <git@archiver.kernel.org>; Mon,  2 Aug 2021 09:38:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233108AbhHBJiT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 05:38:19 -0400
-Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:55473 "EHLO
+        id S233103AbhHBJiY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 05:38:24 -0400
+Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:34089 "EHLO
         wout2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232871AbhHBJiS (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 2 Aug 2021 05:38:18 -0400
+        by vger.kernel.org with ESMTP id S233116AbhHBJiU (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 2 Aug 2021 05:38:20 -0400
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id 2CCAE32005CA;
-        Mon,  2 Aug 2021 05:38:08 -0400 (EDT)
+        by mailout.west.internal (Postfix) with ESMTP id 871733200805;
+        Mon,  2 Aug 2021 05:38:10 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Mon, 02 Aug 2021 05:38:08 -0400
+  by compute4.internal (MEProxy); Mon, 02 Aug 2021 05:38:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=sRvXTRj2BFYEmOAU5FhhwrIp3Hv
-        TDhVqzm4KfXrhpxY=; b=JbgD0kxMEI3Vd4f4zLNxYlBNasR9NywU/LfA2XAN7yH
-        aX0gjH6tpkTCXQ+uLu+nHu1L10wa7V/6xNMP39STwbvSbc+BZbyk9HU/DICILe7E
-        sCwNmxR8HDsOl8p6WUqfdWXfTgTs+dosmAAiUKY4lTfkcy3MK+EjRmzY5KQJUwrK
-        /upOmfoQnsQMefkGBxWn21rspr/7Hyx0QrC8EhehMWo1R4AcEzQiJefS8ah8oxBS
-        Hw/ckvwpT0FhYh4P3j9RyOZW09kWUyKMPKGHems5nV8wu1RQ8BmXTwTnV/tgh2wn
-        il9rT8V9ZELkPfJuhZ+YVaSmtOeWh5ioiBdirsqwIfw==
+        :content-type:in-reply-to; s=fm1; bh=93N8ysp77PoML+bln2szyPXQ/9Z
+        xtRwBT3iPhy082LU=; b=IdM4qSH1rknNJ3T7uCKt7BAxuXsWG/TjanhRpuZGZOt
+        vO/J3I9CrD2EmqrizwUfOobxv9cvaho5cHRtcQ90ROVQb6lzJdNpBKOFFXbN6ms+
+        U3kHHHGCGxace568Tqo8HQs+0J3iz2S0V3DZjI/ADK7thJZe1/iCKTEwUDUPn8ss
+        JWXHawE9zWwtoSz+xKWTzcLsbYLBMvpVp72FXxL8HZTxiF0SScGLl6LrlRWZ/NXZ
+        WAeUcWdmP8oItGDaoOEcu6vh5H75Tc5hOCrAXt7ZprgKit8C0z8CB+tfLF18KtEt
+        wTs6IDDlKJf5NyPkn216IgyNO3roESLCnfmX3KDHeDg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=sRvXTR
-        j2BFYEmOAU5FhhwrIp3HvTDhVqzm4KfXrhpxY=; b=aWVcE3AuxYyJ2zks3Hkfqr
-        TQWnVdoeASI7Eh01PSr+NZPZVoN2Tcn7t6klx0LzupKnJpuWRtmAA7MPb8zDsQO7
-        6B221z7mIcNJkCXZUnv8+vRIUbSMB+q1n7dcWYwFO4sVp5uD65wD16bEw25L0Jvk
-        bVSb6e1YOjaaA2ww/aeKAN220UiNM1J1StoOAuETc02q8SH3gKU92s2OqqU4sbeB
-        cX3q0wVVIVI2EdBmouDAMcAarZpc6N5KVEghUbO+TrvW/C/br9F7EyQJxSVqHj8G
-        TnRIHmrCru1dzyb55PzUszkunusZf3IDtXBzEOUjGU7HXngjkANdx0M5D5OcUtdQ
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=93N8ys
+        p77PoML+bln2szyPXQ/9ZxtRwBT3iPhy082LU=; b=ULn6PN4JfTbjHVuSNXanSN
+        wnoFdK6wPch2wkzwCdpXjRjRgCi49ZWhJqvhKOy4mQxp7WAGObF33NHTCrW/KHhu
+        Fnc+Ppz6TCs4QnUSvDptgaNqpHm9Mllahs/RSfmbqSJvbWfoG3a+9zHZ2NsT1WIk
+        sFGjhzx0btZWPsdUghoVveqwx6OuE3MNsBkg9K1Mi5I3vkjkVwJJlDu33aCQ4ghL
+        1cLclR9HoOIwRk1gfr5eCVbc3uUl7Hu3SC3/zeDxsow9xmPbqGg0El1t+XI7j+3Q
+        pVrN/jUv6ZaHbMe4vCWi56HMMBv2DlcN662lh6k1xeTtInAwkDMF3kbRC1dELoBA
         ==
-X-ME-Sender: <xms:_7wHYUX2Fu1Yeugml2l0We9W682e7Z08mYzQn0ND-uUD3_B5NzlYpw>
-    <xme:_7wHYYn1mrmLrHsIMHLQBUvGxNmzUET3ANNdGMZ-PxhnVs86S-OEMVAUOqkM_ngEu
-    EGK_KMhly9_-A9skg>
-X-ME-Received: <xmr:_7wHYYb5P1-zGQOUXtwlvaO8FqmTCw-hh56_Qwt_-sZmPCq2dKQxvI9wXqBLt053zagPS04iMiacPxb-9pqCkx9qrmFhsHuMZo3HofU4VlRZHYelqboWCg>
+X-ME-Sender: <xms:Ar0HYRjGdrXBvJLo0zcdZwzAomh6CWOcUs7YKr3Y5vtSFGim4gLqYA>
+    <xme:Ar0HYWAEoq-N_RIZ-uVCG1v5paIdGIBh1lzyfNvhRlzqUsMJ0a4R6emxS1TbM9b9P
+    M4c6kOnz-X45WBpZA>
+X-ME-Received: <xmr:Ar0HYRF1ypczOzFDD7UZF3EbyTVOEd16CYGXfSLhoTZ478dgviFQ7Ecj4VrX5y453g5vIRapUqQyP0fv3G_nlWIpWD8nzAip76X5PzuaAB8FSMbIdSrrOQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddriedvgddugecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveduueeitefgieevvefgtdeuueevveeggeevgfegvdeuleeivdelleelkeeuvddunecu
-    ffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:_7wHYTUO14iGH1-S_q8vauGtyx1u4_o_Te9Uq-wf0alP1z54Jxv-Gg>
-    <xmx:_7wHYeludMX_HGCL8nyvCIoWJLddcqM8ZbkqX0Q-A_hN8wYKzPf1hA>
-    <xmx:_7wHYYcr63s0acPzxsPfRXvlf5Mn9eq__8Xp9IJHLLtie30XjpdjkQ>
-    <xmx:_7wHYcZ2coPXclV4Ouj0h5FttPI2xFOWVUr4VTBvxVkoKXpRjlyRig>
+    ephefgjeeuveejteduhefgffefffdvjeefjeeivdekfffgkeeugfehveetueefleeknecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimh
+X-ME-Proxy: <xmx:Ar0HYWSK8HQed9ZG8KAiUTKkN-ckfnuAr7gEZYa3A98DRuUUggPvQg>
+    <xmx:Ar0HYeyING8fCLhc1otRQq94Pir8IYFIwK6xQykAl-5cqJ0ScIc4rA>
+    <xmx:Ar0HYc7w2O4X5WbAJ5a5mxUzGok6CR7gMyTnwQVZQIm_sqmRvGWZqA>
+    <xmx:Ar0HYVnhAW82uftlM6uP6fYAn7zhQHdPW4wS38cKPgPNp9UlR4YQEg>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Aug 2021 05:38:06 -0400 (EDT)
+ 2 Aug 2021 05:38:08 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id c2ecb61a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 2 Aug 2021 09:38:03 +0000 (UTC)
-Date:   Mon, 2 Aug 2021 11:38:01 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 30656bc6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 2 Aug 2021 09:38:07 +0000 (UTC)
+Date:   Mon, 2 Aug 2021 11:38:06 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
@@ -75,13 +75,13 @@ Cc:     Jeff King <peff@peff.net>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v3 1/4] connected: do not sort input revisions
-Message-ID: <1fd83f726a04dfb5be27c74cb116618cb76be923.1627896460.git.ps@pks.im>
+Subject: [PATCH v3 2/4] revision: stop retrieving reference twice
+Message-ID: <db854806498b316b4f59c33d70a1ea9c1401fdb7.1627896460.git.ps@pks.im>
 References: <cover.1624858240.git.ps@pks.im>
  <cover.1627896460.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="MKnWqu4+dpP9xZz2"
+        protocol="application/pgp-signature"; boundary="uAzoqpYH79JdQWvO"
 Content-Disposition: inline
 In-Reply-To: <cover.1627896460.git.ps@pks.im>
 Precedence: bulk
@@ -89,131 +89,80 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---MKnWqu4+dpP9xZz2
+--uAzoqpYH79JdQWvO
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In order to compute whether objects reachable from a set of tips are all
-connected, we do a revision walk with these tips as positive references
-and `--not --all`. `--not --all` will cause the revision walk to load
-all preexisting references as uninteresting, which can be very expensive
-in repositories with many references.
+When queueing up references for the revision walk, `handle_one_ref()`
+will resolve the reference's object ID and then queue the ID as pending
+object via `add_pending_oid()`. But `add_pending_oid()` will again try
+to resolve the object ID to an object, effectively duplicating the work
+its caller already did before.
 
-Benchmarking the git-rev-list(1) command highlights that by far the most
-expensive single phase is initial sorting of the input revisions: after
-all references have been loaded, we first sort commits by author date.
-In a real-world repository with about 2.2 million references, it makes
-up about 40% of the total runtime of git-rev-list(1).
+Fix the issue by instead calling `add_pending_object()`, which takes the
+already-resolved object as input. In a repository with lots of refs,
+this translates in a nearly 10% speedup:
 
-Ultimately, the connectivity check shouldn't really bother about the
-order of input revisions at all. We only care whether we can actually
-walk all objects until we hit the cut-off point. So sorting the input is
-a complete waste of time.
+    Benchmark #1: HEAD~: rev-list --unsorted-input --objects --quiet --not =
+--all --not $newrev
+      Time (mean =C2=B1 =CF=83):      5.015 s =C2=B1  0.038 s    [User: 4.6=
+98 s, System: 0.316 s]
+      Range (min =E2=80=A6 max):    4.970 s =E2=80=A6  5.089 s    10 runs
 
-Introduce a new "--unsorted-input" flag to git-rev-list(1) which will
-cause it to not sort the commits and adjust the connectivity check to
-always pass the flag. This results in the following speedups, executed
-in a clone of gitlab-org/gitlab [1]:
-
-    Benchmark #1: git rev-list  --objects --quiet --not --all --not $(cat n=
-ewrev)
-      Time (mean =C2=B1 =CF=83):      7.639 s =C2=B1  0.065 s    [User: 7.3=
-04 s, System: 0.335 s]
-      Range (min =E2=80=A6 max):    7.543 s =E2=80=A6  7.742 s    10 runs
-
-    Benchmark #2: git rev-list --unsorted-input --objects --quiet --not --a=
-ll --not $newrev
-      Time (mean =C2=B1 =CF=83):      4.995 s =C2=B1  0.044 s    [User: 4.6=
-57 s, System: 0.337 s]
-      Range (min =E2=80=A6 max):    4.909 s =E2=80=A6  5.048 s    10 runs
+    Benchmark #2: HEAD: rev-list --unsorted-input --objects --quiet --not -=
+-all --not $newrev
+      Time (mean =C2=B1 =CF=83):      4.606 s =C2=B1  0.029 s    [User: 4.2=
+60 s, System: 0.345 s]
+      Range (min =E2=80=A6 max):    4.565 s =E2=80=A6  4.657 s    10 runs
 
     Summary
-      'git rev-list --unsorted-input --objects --quiet --not --all --not $(=
-cat newrev)' ran
-        1.53 =C2=B1 0.02 times faster than 'git rev-list  --objects --quiet=
- --not --all --not $newrev'
-
-[1]: https://gitlab.com/gitlab-org/gitlab.git. Note that not all refs
-     are visible to clients.
+      'HEAD: rev-list --unsorted-input --objects --quiet --not --all --not =
+$newrev' ran
+        1.09 =C2=B1 0.01 times faster than 'HEAD~: rev-list --unsorted-inpu=
+t --objects --quiet --not --all --not $newrev'
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- connected.c | 1 +
- revision.c  | 4 +++-
- revision.h  | 1 +
- 3 files changed, 5 insertions(+), 1 deletion(-)
+ revision.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/connected.c b/connected.c
-index b18299fdf0..b5f9523a5f 100644
---- a/connected.c
-+++ b/connected.c
-@@ -106,6 +106,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
- 	if (opt->progress)
- 		strvec_pushf(&rev_list.args, "--progress=3D%s",
- 			     _("Checking connectivity"));
-+	strvec_push(&rev_list.args, "--unsorted-input");
-=20
- 	rev_list.git_cmd =3D 1;
- 	rev_list.env =3D opt->env;
 diff --git a/revision.c b/revision.c
-index cddd0542a6..7eb09009ba 100644
+index 7eb09009ba..f06a5d63a3 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -2256,6 +2256,8 @@ static int handle_revision_opt(struct rev_info *revs,=
- int argc, const char **arg
- 	} else if (!strcmp(arg, "--author-date-order")) {
- 		revs->sort_order =3D REV_SORT_BY_AUTHOR_DATE;
- 		revs->topo_order =3D 1;
-+	} else if (!strcmp(arg, "--unsorted-input")) {
-+		revs->unsorted_input =3D 1;
- 	} else if (!strcmp(arg, "--early-output")) {
- 		revs->early_output =3D 100;
- 		revs->topo_order =3D 1;
-@@ -3584,7 +3586,7 @@ int prepare_revision_walk(struct rev_info *revs)
+@@ -1534,7 +1534,7 @@ static int handle_one_ref(const char *path, const str=
+uct object_id *oid,
 =20
- 	if (!revs->reflog_info)
- 		prepare_to_use_bloom_filter(revs);
--	if (revs->no_walk !=3D REVISION_WALK_NO_WALK_UNSORTED)
-+	if (revs->no_walk !=3D REVISION_WALK_NO_WALK_UNSORTED && !revs->unsorted_=
-input)
- 		commit_list_sort_by_date(&revs->commits);
- 	if (revs->no_walk)
- 		return 0;
-diff --git a/revision.h b/revision.h
-index fbb068da9f..ef6998509a 100644
---- a/revision.h
-+++ b/revision.h
-@@ -134,6 +134,7 @@ struct rev_info {
- 			simplify_history:1,
- 			show_pulls:1,
- 			topo_order:1,
-+			unsorted_input:1,
- 			simplify_merges:1,
- 			simplify_by_decoration:1,
- 			single_worktree:1,
+ 	object =3D get_reference(cb->all_revs, path, oid, cb->all_flags);
+ 	add_rev_cmdline(cb->all_revs, object, path, REV_CMD_REF, cb->all_flags);
+-	add_pending_oid(cb->all_revs, path, oid, cb->all_flags);
++	add_pending_object(cb->all_revs, object, path);
+ 	return 0;
+ }
+=20
 --=20
 2.32.0
 
 
---MKnWqu4+dpP9xZz2
+--uAzoqpYH79JdQWvO
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEHvPkACgkQVbJhu7ck
-PpRzBw//blcegALRgqFsLLJpH2p9neeu4vapq26WuhF/IWPC9cOpdz94WV6MUmjx
-jFUmt7/rwc8Brsk0MFrlEJsHMqNa97kg6uagni1fMqhN5LqVmCJiXm5KRl2SCQNL
-079fpJwtuD0OdeYkFcNXGAgO6zVOH2eJR0Z20XCPVJ3AHe+Ww/afd/bWlWSwJOQQ
-T34vKO1c17PuAFycimHnUAhirJrTKTLZhvd8uJ7WMdnGWnSOcCiQWLoZaVDsnwOi
-aZbcvxZNEGO5k7Rh0rKwqZ7I3haCEXbichWk9ju2s657MQl2B+liS9aRMeLh8CFV
-AtcfyV+ik4ge+IRAIH5U/ECuhBt/Pq7tOIHPfmmPUdsNz55BI25Yyh1IbKtzpRV2
-B7nlnwSpqxKyOEHW4CK9GstLL2ehKWCPncGu/JzyuOty1MqpMrcaxoDaMgilpdNr
-Hyw5yv4RwBF3OdrA4x20Xs//ZzuLV4kVpioADE5qThjIDr055ikc1oUjL3E5ky1J
-Z76eKrkADz4DbUFWnG55ZwiI4e+JJa9qYoNP/GhQAcR7nqOTJe/ZlO0shdnDzPgR
-IGz7CjWrrWZaE+zOnSfKUzeLibP6exdHavAOPZe2qT7x3J399WsHhvdQL1X4imKz
-/0NXBBCLOwgehFRW7LHtskW8Ef97cN6HO0jq3UFRfR+mggRp/GA=
-=7vrt
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEHvP0ACgkQVbJhu7ck
+PpTQyA/+L/NmgUW4sIEIkodeewJKVaB2GLxAUsFtmiSRqeaiAHMdyog6VJDeYrN2
+oSkn79dNU63SWf4n+rsqX/K2K0XSIvPixRIEnAlcS+niG0HLqJLCLIyZCb9rLV8e
+FsnAa297JKRtQf+Tf9funQsJRcCsEcLtGFC4xsaj3weP364JAC3ZLWrUHAY1gDNK
+jwCXJ3J2TppNedRJWeodgw09d9zO8YENpbzul327EQM/1pbVbgJ48d0+KnRlwxhF
+LdLiMPSBUdmtrE43kgh0CJHOHBwlEYQlJvEantk6oTbjn9IPjS56FEpuPvRJvbm0
+Gn6VNLsZubNLdqrXcRNjgvv8ZzTW+ZJ+hLvGCgZrMLTCFBJw457M6lSSsuz6sPnk
+G5JlzYBeY6e10DGoKVSj7cinOtTVW3x7FuvjfUK+hGgVrBbnbxBDbBCK1RN1RXJ3
+8m9PI4c5nqGrwOGN2f9mDUAVFfGClUcu4jVImxwGoMNyf24rPD+zpiYyJc8JUjZJ
+gIMxRbYHk2D1isC9QV9dI+0dgG3+IR1Xi/k0dvaZV7il8EeM4rwB/ZiH/qD7DJVh
+HMVG/XVUi3tc9Knpt0CvlS5HORAUuGptPdYBFTMqMChg92dQ5iF7TvTqfsq0+AFC
+rGtON8Ix2vvgfBH/g/5I0aB8GSC3ccJPsPP/FD8oSN4RULrIRyA=
+=3IS5
 -----END PGP SIGNATURE-----
 
---MKnWqu4+dpP9xZz2--
+--uAzoqpYH79JdQWvO--
