@@ -2,79 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F29FC432BE
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 22:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65DCBC4320A
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 22:41:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E101601FD
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 22:38:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 470216105A
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 22:41:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229922AbhHCWix (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 18:38:53 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37964 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233570AbhHCWhy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Aug 2021 18:37:54 -0400
-Received: (qmail 3275 invoked by uid 109); 3 Aug 2021 22:37:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 03 Aug 2021 22:37:39 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19854 invoked by uid 111); 3 Aug 2021 22:37:40 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Aug 2021 18:37:40 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 3 Aug 2021 18:37:38 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 0/2] [RFC] Switch default merge backend from recursive to
- ort
-Message-ID: <YQnFMmyd744Oolep@coredump.intra.peff.net>
-References: <pull.1055.git.git.1627776461.gitgitgadget@gmail.com>
- <YQlnNXgk3qcGb5Bk@coredump.intra.peff.net>
- <xmqqim0mtc3u.fsf@gitster.g>
+        id S229869AbhHCWlp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Aug 2021 18:41:45 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54282 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229789AbhHCWlp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Aug 2021 18:41:45 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0100AD71DD;
+        Tue,  3 Aug 2021 18:41:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=gDXVYIHFoSjfez/lR4pdfCsxdaX32/Uo9/XEna
+        q9iUw=; b=vZ/iqOTIKJMgQiwFLPZNrqKurldoDV63mHYvzSIx9u4yFY0K/D30+X
+        IoTJlnM5k13/b5MFHZd+6xlVZatjBM2Fw19k6mvEQfg4K80WekaN6e6IxV3NPnYO
+        pTR6AeNhGdBStr2EexeGylVfJdPqfdxucbWk+u1y93bL7FxFmmaDo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EBDCBD71DC;
+        Tue,  3 Aug 2021 18:41:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7D213D71DA;
+        Tue,  3 Aug 2021 18:41:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Mahi Kolla via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 0/4] clone: update submodule.recurse in config when
+ using --recurse-submodule
+References: <pull.1006.v2.git.1627943914.gitgitgadget@gmail.com>
+        <pull.1006.v3.git.1627946590.gitgitgadget@gmail.com>
+Date:   Tue, 03 Aug 2021 15:41:30 -0700
+In-Reply-To: <pull.1006.v3.git.1627946590.gitgitgadget@gmail.com> (Mahi Kolla
+        via GitGitGadget's message of "Mon, 02 Aug 2021 23:23:06 +0000")
+Message-ID: <xmqq5ywmtalh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqim0mtc3u.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: F2D0A96E-F4AB-11EB-A5F3-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 03, 2021 at 03:08:53PM -0700, Junio C Hamano wrote:
+"Mahi Kolla via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > It would make sense to me to do the switch in 'next' early in the
-> > post-v2.33 cycle. It can cook there for a bit, but I think we have found
-> > that it's much more likely to see actual use once it hits 'master'. So I
-> > don't see a particular reason to have it sit in 'next' for a long time.
-> > We should get as much exposure in 'master' during the v2.34 cycle as
-> > possible.
-> 
-> I do not mind queuing what is available today to 'next' to gain 2
-> more weeks of dogfood time during the pre-release freeze.  If an
-> simple escape hatch that lets us say "anytime we ask ort, use
-> recursive instead as an emergency measure" can be added with a
-> trivially obvious small patch, that would be a plus.
+> When running 'git clone --recurse-submodules', developers expect various
+> other commands such as 'pull' and 'checkout' to also run recursively into
+> submodules.
 
-Yeah, I am happy even starting the 'next' portion sooner than the
-release. :) As Elijah explained, we already have that emergency measure
-in place (pull.merge).
-
--Peff
+Some developers might, but "developers expect" as if we speak for
+everybody is a bold statement to make that needs to be
+substantiated, I would think.  Is this something easy to make
+opt-in, e.g. "git clone --recurse-submodules=sticky" or something?
