@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 997E1C4320E
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31B08C432BE
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:39:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82C0E60BD3
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:39:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1996D60BD3
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:39:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240231AbhHCTkD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 15:40:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51544 "EHLO
+        id S240184AbhHCTkE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Aug 2021 15:40:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240228AbhHCTjw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Aug 2021 15:39:52 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF06DC0617BC
-        for <git@vger.kernel.org>; Tue,  3 Aug 2021 12:39:33 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id h13so13026859wrp.1
-        for <git@vger.kernel.org>; Tue, 03 Aug 2021 12:39:33 -0700 (PDT)
+        with ESMTP id S240238AbhHCTj4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Aug 2021 15:39:56 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E91BC061383
+        for <git@vger.kernel.org>; Tue,  3 Aug 2021 12:39:35 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id a192-20020a1c7fc90000b0290253b32e8796so2494947wmd.0
+        for <git@vger.kernel.org>; Tue, 03 Aug 2021 12:39:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1u8+Szhb8RDp/4I1F53C70kQTLq03qQLbPQPfcada8o=;
-        b=JdlMB+9P87pApXzJ4kMoXTKXLKUJQFSOel26YJLQDOYl05l3/DGcH/T0bc5tagyDY/
-         Vsn6NNouGNYp9vmo1IOc6MYvCUpPQoXEIWbEwxyYxHM2bJ/MNGAsPEwcTxs7d8niz9g9
-         UX6dQSDbzQRV9+IGgZOafXTFetcXm3Z5pizRP357eAJk+qah+8cUEQ7oLiVc6fcSBlGu
-         HBUi03SIFpQlOv7x9GXYyNEGcWZAsOL7AvDrMCic8RVB2MJ/IAwxdnqg1Kij4l4UpDuY
-         wVTxTzhkCN+11AebU6Z+sjbDsW8Gh5R34H42DA5Oey6Awz8CnalG6Gao58tGgiQshjne
-         OgZA==
+        bh=q3XRO2JHGoG03/g3gEaz2PJltoYcpBW/dzqMzPu1hMY=;
+        b=EhecSSXyObNRQ/OPwF+/V5HJEQsagytgr55gGF+IFM+dR/P8rGhvr5/+vwfXU10qkp
+         e2E8wnhdqnfr24DWze848QYb7sqPYP1YzLni011ZmHKqCqcUeTkiZI1pXxlvfez0QwM4
+         m7UYK66V5GG1zZM+Ogdc+iPZSxUHErAhrw63fqHhVR1HnxlVXElv+3Hx83eCg0t86Cl5
+         mDTYu5mzlT+PuXFxfgweaxoPD0kb2Y5f1fIrp+VZ9rbTFitkbrCVChWvKntLuVvFK2XK
+         tZK7kW1KIarP6dbe+P3z+xzVQ0O0NW+fUM1AVVQ5tiUTdHZt/dA+u7DxogCWd5KRmR92
+         yCLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1u8+Szhb8RDp/4I1F53C70kQTLq03qQLbPQPfcada8o=;
-        b=QLeTc7puIHzBYPLkhX0WXiJN2tr/F8nFpvTLOwIhTNeeLEOwId+8dQSTye+5TuqACj
-         9S6GBVRVfyfDwrknI/XfOtafajxGFUsQZnhwumxeiSmtaag0B5s4xes6KhsOhAfd/sCs
-         RbyufPIJcaYn70I5a30kxjLDFIT4OhM6FgT/wAN0NpYVowDnF/IIbwDfEHbOx4alnvLM
-         mTGk36HAbFk2QUqD1V19W3682A1QM1AEkeKQCsqWSeGboxRwopSf8Ds287f+m8iGVXcb
-         imC+8aUjuRoymr9UMSOSK+5UQVqFXK+M3Abl8Mnhq85aCiG5LqUXEjiFMMaOhiLdtsF5
-         AE4g==
-X-Gm-Message-State: AOAM530NxM704q93/bEmqIxVjpwT6ZZFHQ04n8vjLkzx7Uk4RLbdzyZa
-        +z+4/ANjMmqfVMTV1VchmE1y98wf7LL5zQ==
-X-Google-Smtp-Source: ABdhPJzZlsdtEt+2nVMjEs4c0uJ1eMvJzmIQAGoJnSCj0qgmjETU6Mbn581aeC8wHktt+YIsT11Fqw==
-X-Received: by 2002:a5d:58c1:: with SMTP id o1mr25025468wrf.6.1628019572151;
-        Tue, 03 Aug 2021 12:39:32 -0700 (PDT)
+        bh=q3XRO2JHGoG03/g3gEaz2PJltoYcpBW/dzqMzPu1hMY=;
+        b=oYIdSXncXeay/MIm414Fi47YSIGM29be2EYvaBRMnrp/YuXSivWJw5emfu4ivKW2Pm
+         k5MdjoOlhXc1bQNfxXFgoFDQpDzRgLEi1BelvetIobVPc9FrC46+0Ug7R/vTV1mCKoYJ
+         gu5jvOQBf5mMAC1jN2LdQBcenTJN+KJ1qTmvZlKfKSLlM46GmrTrm1H7IcoCA1brPXCv
+         0Mmkyd/IY1phvfQYtWCq2s7gWCzo+Ipzd6EAwsm6TAdpE1AkLkfiBD/zGnJX+8b1ZKz8
+         6K2KpK1mlNH+TiRD8caBG8od/3Q9SHsxQ/SD7hgKxfPJ5JSLV58of+jy+UxQaYRusRpU
+         hrkQ==
+X-Gm-Message-State: AOAM530y1oGPazsyiqEZ2VkKIhWj3jB7cZWYSmcHn3b/+NPEB5Y2qM2Z
+        3Pj7JPb7mk88CBZYKQWuXVxpRqv0gM4QsA==
+X-Google-Smtp-Source: ABdhPJyzHDO0EfjbwcRPWw0j6flD5+e+Tvrs/m0CPheDNSqiz/zc58E5bT/75RohdVokdIcKvYrapg==
+X-Received: by 2002:a1c:46c4:: with SMTP id t187mr6081317wma.64.1628019573934;
+        Tue, 03 Aug 2021 12:39:33 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n8sm15333562wrx.46.2021.08.03.12.39.31
+        by smtp.gmail.com with ESMTPSA id n8sm15333562wrx.46.2021.08.03.12.39.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 12:39:31 -0700 (PDT)
+        Tue, 03 Aug 2021 12:39:33 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -70,9 +70,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 22/36] hook: support passing stdin to hooks
-Date:   Tue,  3 Aug 2021 21:38:48 +0200
-Message-Id: <patch-v4-22.36-639e59e9ed0-20210803T191505Z-avarab@gmail.com>
+Subject: [PATCH v4 24/36] run-command: add stdin callback for parallelization
+Date:   Tue,  3 Aug 2021 21:38:50 +0200
+Message-Id: <patch-v4-24.36-0c24221b522-20210803T191505Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.rc0.593.g54be4d223c3
 In-Reply-To: <cover-v4-00.36-00000000000-20210803T191505Z-avarab@gmail.com>
 References: <cover-00.27-0000000000-20210617T101216Z-avarab@gmail.com> <cover-v4-00.36-00000000000-20210803T191505Z-avarab@gmail.com>
@@ -85,140 +85,372 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Some hooks (such as post-rewrite) need to take input via stdin.
-Previously, callers provided stdin to hooks by setting
-run-command.h:child_process.in, which takes a FD. Callers would open the
-file in question themselves before calling run-command(). However, since
-we will now need to seek to the front of the file and read it again for
-every hook which runs, hook.h:run_command() takes a path and handles FD
-management itself. Since this file is opened for read only, it should
-not prevent later parallel execution support.
+If a user of the run_processes_parallel() API wants to pipe a large
+amount of information to stdin of each parallel command, that
+information could exceed the buffer of the pipe allocated for that
+process's stdin.  Generally this is solved by repeatedly writing to
+child_process.in between calls to start_command() and finish_command();
+run_processes_parallel() did not provide users an opportunity to access
+child_process at that time.
 
-On the frontend, this is supported by asking for a file path, rather
-than by reading stdin. Reading directly from stdin would involve caching
-the entire stdin (to memory or to disk) and reading it back from the
-beginning to each hook. We'd want to support cases like insufficient
-memory or storage for the file. While this may prove useful later, for
-now the path of least resistance is to just ask the user to make this
-interim file themselves.
+Because the data might be extremely large (for example, a list of all
+refs received during a push from a client) simply taking a string_list
+or strbuf is not as scalable as using a callback; the rest of the
+run_processes_parallel() API also uses callbacks, so making this feature
+match the rest of the API reduces mental load on the user.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-hook.txt |  7 ++++++-
- builtin/hook.c             |  4 +++-
- hook.c                     |  8 +++++++-
- hook.h                     |  3 +++
- t/t1800-hook.sh            | 18 ++++++++++++++++++
- 5 files changed, 37 insertions(+), 3 deletions(-)
+ builtin/fetch.c             |  1 +
+ builtin/submodule--helper.c |  2 +-
+ hook.c                      |  1 +
+ run-command.c               | 54 +++++++++++++++++++++++++++++++++++--
+ run-command.h               | 17 +++++++++++-
+ submodule.c                 |  1 +
+ t/helper/test-run-command.c | 31 ++++++++++++++++++---
+ t/t0061-run-command.sh      | 30 +++++++++++++++++++++
+ 8 files changed, 129 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
-index 097fb9de63b..fa68c1f3912 100644
---- a/Documentation/git-hook.txt
-+++ b/Documentation/git-hook.txt
-@@ -8,7 +8,7 @@ git-hook - run git hooks
- SYNOPSIS
- --------
- [verse]
--'git hook' run [--ignore-missing] <hook-name> [-- <hook-args>]
-+'git hook' run [--to-stdin=<path>] [--ignore-missing] <hook-name> [-- <hook-args>]
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 25740c13df1..fef6e85d003 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1817,6 +1817,7 @@ static int fetch_multiple(struct string_list *list, int max_children)
+ 		result = run_processes_parallel_tr2(max_children,
+ 						    &fetch_next_remote,
+ 						    &fetch_failed_to_start,
++						    NULL,
+ 						    &fetch_finished,
+ 						    &state,
+ 						    "fetch", "parallel/fetch");
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index f73963ad67d..f42ded548bf 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2294,7 +2294,7 @@ static int update_submodules(struct submodule_update_clone *suc)
+ 	int i;
  
- DESCRIPTION
- -----------
-@@ -32,6 +32,11 @@ what those are.
- OPTIONS
- -------
+ 	run_processes_parallel_tr2(suc->max_jobs, update_clone_get_next_task,
+-				   update_clone_start_failure,
++				   update_clone_start_failure, NULL,
+ 				   update_clone_task_finished, suc, "submodule",
+ 				   "parallel/update");
  
-+--to-stdin::
-+	For "run"; Specify a file which will be streamed into the
-+	hook's stdin. The hook will receive the entire file from
-+	beginning to EOF.
-+
- --ignore-missing::
- 	Ignore any missing hook by quietly returning zero. Used for
- 	tools that want to do a blind one-shot run of a hook that may
-diff --git a/builtin/hook.c b/builtin/hook.c
-index f33db9953c7..27dce6a2f0e 100644
---- a/builtin/hook.c
-+++ b/builtin/hook.c
-@@ -7,7 +7,7 @@
- #include "strvec.h"
- 
- #define BUILTIN_HOOK_RUN_USAGE \
--	N_("git hook run [--ignore-missing] <hook-name> [-- <hook-args>]")
-+	N_("git hook run [--ignore-missing] [--to-stdin=<path>] <hook-name> [-- <hook-args>]")
- 
- static const char * const builtin_hook_usage[] = {
- 	BUILTIN_HOOK_RUN_USAGE,
-@@ -29,6 +29,8 @@ static int run(int argc, const char **argv, const char *prefix)
- 	struct option run_options[] = {
- 		OPT_BOOL(0, "ignore-missing", &ignore_missing,
- 			 N_("exit quietly with a zero exit code if the requested hook cannot be found")),
-+		OPT_STRING(0, "to-stdin", &opt.path_to_stdin, N_("path"),
-+			   N_("file to read into hooks' stdin")),
- 		OPT_END(),
- 	};
- 	int ret;
 diff --git a/hook.c b/hook.c
-index 5ecf79c8397..63c9a60921f 100644
+index 63c9a60921f..a7462639d97 100644
 --- a/hook.c
 +++ b/hook.c
-@@ -88,7 +88,13 @@ static int pick_next_hook(struct child_process *cp,
- 	if (!run_me)
+@@ -175,6 +175,7 @@ int run_hooks(const char *hook_name, const char *hook_path,
+ 	run_processes_parallel_tr2(jobs,
+ 				   pick_next_hook,
+ 				   notify_start_failure,
++				   NULL,
+ 				   notify_hook_finished,
+ 				   &cb_data,
+ 				   "hook",
+diff --git a/run-command.c b/run-command.c
+index 482ee2d76c6..f1616858d18 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1492,6 +1492,7 @@ struct parallel_processes {
+ 
+ 	get_next_task_fn get_next_task;
+ 	start_failure_fn start_failure;
++	feed_pipe_fn feed_pipe;
+ 	task_finished_fn task_finished;
+ 
+ 	struct {
+@@ -1519,6 +1520,13 @@ static int default_start_failure(struct strbuf *out,
+ 	return 0;
+ }
+ 
++static int default_feed_pipe(struct strbuf *pipe,
++			     void *pp_cb,
++			     void *pp_task_cb)
++{
++	return 1;
++}
++
+ static int default_task_finished(int result,
+ 				 struct strbuf *out,
+ 				 void *pp_cb,
+@@ -1549,6 +1557,7 @@ static void pp_init(struct parallel_processes *pp,
+ 		    int n,
+ 		    get_next_task_fn get_next_task,
+ 		    start_failure_fn start_failure,
++		    feed_pipe_fn feed_pipe,
+ 		    task_finished_fn task_finished,
+ 		    void *data)
+ {
+@@ -1567,6 +1576,7 @@ static void pp_init(struct parallel_processes *pp,
+ 	pp->get_next_task = get_next_task;
+ 
+ 	pp->start_failure = start_failure ? start_failure : default_start_failure;
++	pp->feed_pipe = feed_pipe ? feed_pipe : default_feed_pipe;
+ 	pp->task_finished = task_finished ? task_finished : default_task_finished;
+ 
+ 	pp->nr_processes = 0;
+@@ -1664,6 +1674,37 @@ static int pp_start_one(struct parallel_processes *pp)
+ 	return 0;
+ }
+ 
++static void pp_buffer_stdin(struct parallel_processes *pp)
++{
++	int i;
++	struct strbuf sb = STRBUF_INIT;
++
++	/* Buffer stdin for each pipe. */
++	for (i = 0; i < pp->max_processes; i++) {
++		if (pp->children[i].state == GIT_CP_WORKING &&
++		    pp->children[i].process.in > 0) {
++			int done;
++			strbuf_reset(&sb);
++			done = pp->feed_pipe(&sb, pp->data,
++					      pp->children[i].data);
++			if (sb.len) {
++				if (write_in_full(pp->children[i].process.in,
++					      sb.buf, sb.len) < 0) {
++					if (errno != EPIPE)
++						die_errno("write");
++					done = 1;
++				}
++			}
++			if (done) {
++				close(pp->children[i].process.in);
++				pp->children[i].process.in = 0;
++			}
++		}
++	}
++
++	strbuf_release(&sb);
++}
++
+ static void pp_buffer_stderr(struct parallel_processes *pp, int output_timeout)
+ {
+ 	int i;
+@@ -1728,6 +1769,7 @@ static int pp_collect_finished(struct parallel_processes *pp)
+ 		pp->nr_processes--;
+ 		pp->children[i].state = GIT_CP_FREE;
+ 		pp->pfd[i].fd = -1;
++		pp->children[i].process.in = 0;
+ 		child_process_init(&pp->children[i].process);
+ 
+ 		if (i != pp->output_owner) {
+@@ -1761,6 +1803,7 @@ static int pp_collect_finished(struct parallel_processes *pp)
+ int run_processes_parallel(int n,
+ 			   get_next_task_fn get_next_task,
+ 			   start_failure_fn start_failure,
++			   feed_pipe_fn feed_pipe,
+ 			   task_finished_fn task_finished,
+ 			   void *pp_cb)
+ {
+@@ -1769,7 +1812,9 @@ int run_processes_parallel(int n,
+ 	int spawn_cap = 4;
+ 	struct parallel_processes pp;
+ 
+-	pp_init(&pp, n, get_next_task, start_failure, task_finished, pp_cb);
++	sigchain_push(SIGPIPE, SIG_IGN);
++
++	pp_init(&pp, n, get_next_task, start_failure, feed_pipe, task_finished, pp_cb);
+ 	while (1) {
+ 		for (i = 0;
+ 		    i < spawn_cap && !pp.shutdown &&
+@@ -1786,6 +1831,7 @@ int run_processes_parallel(int n,
+ 		}
+ 		if (!pp.nr_processes)
+ 			break;
++		pp_buffer_stdin(&pp);
+ 		pp_buffer_stderr(&pp, output_timeout);
+ 		pp_output(&pp);
+ 		code = pp_collect_finished(&pp);
+@@ -1797,11 +1843,15 @@ int run_processes_parallel(int n,
+ 	}
+ 
+ 	pp_cleanup(&pp);
++
++	sigchain_pop(SIGPIPE);
++
+ 	return 0;
+ }
+ 
+ int run_processes_parallel_tr2(int n, get_next_task_fn get_next_task,
+ 			       start_failure_fn start_failure,
++			       feed_pipe_fn feed_pipe,
+ 			       task_finished_fn task_finished, void *pp_cb,
+ 			       const char *tr2_category, const char *tr2_label)
+ {
+@@ -1811,7 +1861,7 @@ int run_processes_parallel_tr2(int n, get_next_task_fn get_next_task,
+ 				   ((n < 1) ? online_cpus() : n));
+ 
+ 	result = run_processes_parallel(n, get_next_task, start_failure,
+-					task_finished, pp_cb);
++					feed_pipe, task_finished, pp_cb);
+ 
+ 	trace2_region_leave(tr2_category, tr2_label, NULL);
+ 
+diff --git a/run-command.h b/run-command.h
+index cfb6887e4ae..80d394664ae 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -422,6 +422,20 @@ typedef int (*start_failure_fn)(struct strbuf *out,
+ 				void *pp_cb,
+ 				void *pp_task_cb);
+ 
++/**
++ * This callback is called repeatedly on every child process who requests
++ * start_command() to create a pipe by setting child_process.in < 0.
++ *
++ * pp_cb is the callback cookie as passed into run_processes_parallel, and
++ * pp_task_cb is the callback cookie as passed into get_next_task_fn.
++ * The contents of 'send' will be read into the pipe and passed to the pipe.
++ *
++ * Return nonzero to close the pipe.
++ */
++typedef int (*feed_pipe_fn)(struct strbuf *pipe,
++			    void *pp_cb,
++			    void *pp_task_cb);
++
+ /**
+  * This callback is called on every child process that finished processing.
+  *
+@@ -456,10 +470,11 @@ typedef int (*task_finished_fn)(int result,
+ int run_processes_parallel(int n,
+ 			   get_next_task_fn,
+ 			   start_failure_fn,
++			   feed_pipe_fn,
+ 			   task_finished_fn,
+ 			   void *pp_cb);
+ int run_processes_parallel_tr2(int n, get_next_task_fn, start_failure_fn,
+-			       task_finished_fn, void *pp_cb,
++			       feed_pipe_fn, task_finished_fn, void *pp_cb,
+ 			       const char *tr2_category, const char *tr2_label);
+ 
+ /**
+diff --git a/submodule.c b/submodule.c
+index 8e611fe1dbf..db1700a502d 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1632,6 +1632,7 @@ int fetch_populated_submodules(struct repository *r,
+ 	run_processes_parallel_tr2(max_parallel_jobs,
+ 				   get_next_submodule,
+ 				   fetch_start_failure,
++				   NULL,
+ 				   fetch_finish,
+ 				   &spf,
+ 				   "submodule", "parallel/fetch");
+diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
+index 7ae03dc7123..9348184d303 100644
+--- a/t/helper/test-run-command.c
++++ b/t/helper/test-run-command.c
+@@ -32,8 +32,13 @@ static int parallel_next(struct child_process *cp,
  		return 0;
  
--	cp->no_stdin = 1;
-+	/* reopen the file for stdin; run_command closes it. */
-+	if (hook_cb->options->path_to_stdin) {
-+		cp->no_stdin = 0;
-+		cp->in = xopen(hook_cb->options->path_to_stdin, O_RDONLY);
-+	} else {
-+		cp->no_stdin = 1;
-+	}
- 	cp->env = hook_cb->options->env.v;
- 	cp->stdout_to_stderr = 1;
- 	cp->trace2_hook_name = hook_cb->hook_name;
-diff --git a/hook.h b/hook.h
-index 53ea3a9649e..cd6a68a3b50 100644
---- a/hook.h
-+++ b/hook.h
-@@ -36,6 +36,9 @@ struct run_hooks_opt
- 
- 	/* Path to initial working directory for subprocess */
- 	const char *dir;
+ 	strvec_pushv(&cp->args, d->argv);
++	cp->in = d->in;
++	cp->no_stdin = d->no_stdin;
+ 	strbuf_addstr(err, "preloaded output of a child\n");
+ 	number_callbacks++;
 +
-+	/* Path to file which should be piped to stdin for each hook */
-+	const char *path_to_stdin;
- };
++	*task_cb = xmalloc(sizeof(int));
++	*(int*)(*task_cb) = 2;
+ 	return 1;
+ }
  
- #define RUN_HOOKS_OPT_INIT { \
-diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-index 49df5a2cdfb..217db848b3f 100755
---- a/t/t1800-hook.sh
-+++ b/t/t1800-hook.sh
-@@ -135,4 +135,22 @@ test_expect_success 'git -c core.hooksPath=<PATH> hook run' '
+@@ -55,6 +60,17 @@ static int task_finished(int result,
+ 	return 1;
+ }
+ 
++static int test_stdin(struct strbuf *pipe, void *cb, void *task_cb)
++{
++	int *lines_remaining = task_cb;
++
++	if (*lines_remaining)
++		strbuf_addf(pipe, "sample stdin %d\n", --(*lines_remaining));
++
++	return !(*lines_remaining);
++}
++
++
+ struct testsuite {
+ 	struct string_list tests, failed;
+ 	int next;
+@@ -185,7 +201,7 @@ static int testsuite(int argc, const char **argv)
+ 		suite.tests.nr, max_jobs);
+ 
+ 	ret = run_processes_parallel(max_jobs, next_test, test_failed,
+-				     test_finished, &suite);
++				     test_stdin, test_finished, &suite);
+ 
+ 	if (suite.failed.nr > 0) {
+ 		ret = 1;
+@@ -413,15 +429,22 @@ int cmd__run_command(int argc, const char **argv)
+ 
+ 	if (!strcmp(argv[1], "run-command-parallel"))
+ 		exit(run_processes_parallel(jobs, parallel_next,
+-					    NULL, NULL, &proc));
++					    NULL, NULL, NULL, &proc));
+ 
+ 	if (!strcmp(argv[1], "run-command-abort"))
+ 		exit(run_processes_parallel(jobs, parallel_next,
+-					    NULL, task_finished, &proc));
++					    NULL, NULL, task_finished, &proc));
+ 
+ 	if (!strcmp(argv[1], "run-command-no-jobs"))
+ 		exit(run_processes_parallel(jobs, no_job,
+-					    NULL, task_finished, &proc));
++					    NULL, NULL, task_finished, &proc));
++
++	if (!strcmp(argv[1], "run-command-stdin")) {
++		proc.in = -1;
++		proc.no_stdin = 0;
++		exit (run_processes_parallel(jobs, parallel_next, NULL,
++					     test_stdin, NULL, &proc));
++	}
+ 
+ 	fprintf(stderr, "check usage\n");
+ 	return 1;
+diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
+index 7d599675e35..87759482ad1 100755
+--- a/t/t0061-run-command.sh
++++ b/t/t0061-run-command.sh
+@@ -143,6 +143,36 @@ test_expect_success 'run_command runs in parallel with more tasks than jobs avai
  	test_cmp expect actual
  '
  
-+test_expect_success 'stdin to hooks' '
-+	write_script .git/hooks/test-hook <<-\EOF &&
-+	echo BEGIN stdin
-+	cat
-+	echo END stdin
-+	EOF
++cat >expect <<-EOF
++preloaded output of a child
++listening for stdin:
++sample stdin 1
++sample stdin 0
++preloaded output of a child
++listening for stdin:
++sample stdin 1
++sample stdin 0
++preloaded output of a child
++listening for stdin:
++sample stdin 1
++sample stdin 0
++preloaded output of a child
++listening for stdin:
++sample stdin 1
++sample stdin 0
++EOF
 +
-+	cat >expect <<-EOF &&
-+	BEGIN stdin
-+	hello
-+	END stdin
++test_expect_success 'run_command listens to stdin' '
++	write_script stdin-script <<-\EOF &&
++	echo "listening for stdin:"
++	while read line; do
++		echo "$line"
++	done
 +	EOF
-+
-+	echo hello >input &&
-+	git hook run --to-stdin=input test-hook 2>actual &&
++	test-tool run-command run-command-stdin 2 ./stdin-script 2>actual &&
 +	test_cmp expect actual
 +'
 +
- test_done
+ cat >expect <<-EOF
+ preloaded output of a child
+ asking for a quick stop
 -- 
 2.33.0.rc0.595.ge31e012651d
 
