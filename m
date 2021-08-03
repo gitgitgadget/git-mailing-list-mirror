@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B071EC432BE
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83B54C4320E
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:40:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9BCBA61037
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:40:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C95560EE8
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:40:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240276AbhHCTkO (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S240218AbhHCTkO (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 3 Aug 2021 15:40:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51516 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240218AbhHCTj6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Aug 2021 15:39:58 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC20DC06179E
-        for <git@vger.kernel.org>; Tue,  3 Aug 2021 12:39:40 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id b13so15628482wrs.3
-        for <git@vger.kernel.org>; Tue, 03 Aug 2021 12:39:40 -0700 (PDT)
+        with ESMTP id S240222AbhHCTj7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Aug 2021 15:39:59 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 798DFC06136C
+        for <git@vger.kernel.org>; Tue,  3 Aug 2021 12:39:42 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id c16so26472221wrp.13
+        for <git@vger.kernel.org>; Tue, 03 Aug 2021 12:39:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=p9lxZ1nFhaiOgv1gjNp59SSY+ODJl8LIdh58BMvHMS4=;
-        b=cEpzuNtX8FedseCbnw+xeExNIkSeiwDoE+F6SMsr69Uf9awgdNNFSWGEqbADc80O1H
-         Ypx0xEdpZHFbB/z/SwcTLCjeWcnbp6w5bQGfQjqUL/xjFlj0qXvqD0V9EYj5pX6sq1xo
-         Cd02pbRRSm6faq4m38VflMwWG7fdjmoS+21KMhyzUmb6p2IWOXYCBKdgPAGeZxvbEGPl
-         gYZu3i7AgIo2PRaILThJoYs1h9nP0fkGhTuY3CkjP3Emgd31quX7gNIagErirvwFhLtu
-         KCmBzkECcro5Ial3fWl/nkfpyana7gkLhILYOtFG7Flo0HsTNc4YVDJs3RPlYiz12c38
-         bamg==
+        bh=mvW3V7M+OI+BgkcwtyCLIYcAP2tVMxhrTUAAeJ6vL9I=;
+        b=ftavWhffpyUguFy++suVR7o1V2MxBRu0cGBpMPXf5O6VvFMxbzrSVkpcN+WB76BaBh
+         NTccn9Sh/NEHCD4Qr/k0JgfldXeoj9eW/cS0GmNISk6gorDoX6+DL53S6PVaqoinru69
+         KGGwHuYGHtOL2RaLzilROsRlTt0mztG/5oBhqBHjFiFXEPrhDEbrkSi3tguJI5FlS33Y
+         udOlhjOxA/q1SMnLrRppHHuDg+CzV/C04eXJtzOnB4vrRBXjZjNQK5fshTYd1AX/w9lc
+         O+krdCTti3c+NPkQ9fGJmhosBU4l6gCEpfDDvi0TpjsqZq4ILVpokgtA3NzLxar1+dPb
+         A8UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=p9lxZ1nFhaiOgv1gjNp59SSY+ODJl8LIdh58BMvHMS4=;
-        b=s6UFVOe0nFTfK6c00ZIKg8TH37dMm2SMNkLDi/pJyncuz9tjqYCFXaBXVIDFEgnr4e
-         8rcT9VtGcGP12jJaewDcQ6WRJ05uExVV/q8cwWXpaMO7q6VM+URfqcQjXVzbhkTnPbho
-         fnmGDV2EIpWpwlDTL5UY8Ncod1aDxiAF/1TbfyZCw6JHCtTUE+pvHCBIp2BDZ+3BB5jk
-         0RDPpjlJlqhkmBHeBFScMd0n5jbjyqnu4KmCE3+3Kfx91AFsH5J/5LsRQY+9Ysdd3gjE
-         dFKdLrIWiwr2UJuKgAnQZtw99cWEcAHGpWq6s6knU5NHvxYJuDGMMAu0z2yS/4fvWkSs
-         pDqw==
-X-Gm-Message-State: AOAM532nfhUxlx/ulwxAgLUakw3jhciPsGPML3wvAUQii1GXpucCtx8S
-        GHYXrVvStUQ+AfxTXOHuYeG6YLFVQMrHbA==
-X-Google-Smtp-Source: ABdhPJyAEUPRH7tGMmdDj0SIaGOPmezoBgGb9UIypG0ldlAcau4EpJhrLMaFZkM7QwplejeZdWH/bA==
-X-Received: by 2002:adf:ebd2:: with SMTP id v18mr25516876wrn.248.1628019579177;
-        Tue, 03 Aug 2021 12:39:39 -0700 (PDT)
+        bh=mvW3V7M+OI+BgkcwtyCLIYcAP2tVMxhrTUAAeJ6vL9I=;
+        b=pQAOemBR91LPnzTJF2lFZM3x2Yi/whammxOELaUU6go1fCdZeZGMZk8/ozaKM6dAqJ
+         +i8EPTS1plKEVuoYKczHn5SbNqQjl25sDZ5xdr2d7GvC7Xv5fGS3ol6mXa28rgUrntL6
+         kmH5/wqKqTptfaiL62huq82QQ45yzCZsvuq++w2WMxNFXpxQhjC3cU3UJbe0j1vNSdc7
+         /QtrJ4A2QWW7wx/O09jsXQ6hY8kLJ+Y8MCnwSknxpLFVvfIkRrNEEQTyj9+H6m1T2MQb
+         w+nrbqjz2b1uz5N0bDXCNAFfTeM8dQlT2Aqt6hRnDlkpSIrRv+TW8s6RHilUoKtAK+PS
+         LQDg==
+X-Gm-Message-State: AOAM532hEy0woHOZa54CGli6CkqlwEbM5U2yG/MUBJm6Iu6SPHfK4IDZ
+        2aYhprHITC2BM8dQYIOWIaFn7uiIIn1R1w==
+X-Google-Smtp-Source: ABdhPJx/zwJoEjd6ZG2Jlc7Cm/nZj10AF9QFdFCGfhvvbys2RXb1AGpwAeBoXyykC03LD7cYTuhy3w==
+X-Received: by 2002:a5d:4b41:: with SMTP id w1mr24035994wrs.367.1628019580809;
+        Tue, 03 Aug 2021 12:39:40 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n8sm15333562wrx.46.2021.08.03.12.39.38
+        by smtp.gmail.com with ESMTPSA id n8sm15333562wrx.46.2021.08.03.12.39.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 12:39:38 -0700 (PDT)
+        Tue, 03 Aug 2021 12:39:40 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -70,9 +70,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 30/36] reference-transaction: use hook.h to run hooks
-Date:   Tue,  3 Aug 2021 21:38:56 +0200
-Message-Id: <patch-v4-30.36-1ce456f9d9d-20210803T191505Z-avarab@gmail.com>
+Subject: [PATCH v4 32/36] hooks: allow callers to capture output
+Date:   Tue,  3 Aug 2021 21:38:58 +0200
+Message-Id: <patch-v4-32.36-0b6e9c6d07a-20210803T191505Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.rc0.593.g54be4d223c3
 In-Reply-To: <cover-v4-00.36-00000000000-20210803T191505Z-avarab@gmail.com>
 References: <cover-00.27-0000000000-20210617T101216Z-avarab@gmail.com> <cover-v4-00.36-00000000000-20210803T191505Z-avarab@gmail.com>
@@ -85,77 +85,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
+Some server-side hooks will require capturing output to send over
+sideband instead of printing directly to stderr. Expose that capability.
+
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- refs.c | 40 +++++++++++++---------------------------
- 1 file changed, 13 insertions(+), 27 deletions(-)
+ hook.c | 3 ++-
+ hook.h | 8 ++++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/refs.c b/refs.c
-index 6211692eaae..73d4a939267 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2062,47 +2062,33 @@ int ref_update_reject_duplicates(struct string_list *refnames,
- static int run_transaction_hook(struct ref_transaction *transaction,
- 				const char *state)
- {
--	struct child_process proc = CHILD_PROCESS_INIT;
--	struct strbuf buf = STRBUF_INIT;
--	const char *hook;
-+	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
-+	struct string_list to_stdin = STRING_LIST_INIT_NODUP;
- 	int ret = 0, i;
+diff --git a/hook.c b/hook.c
+index 9ae3007cdd3..efed5f73b4d 100644
+--- a/hook.c
++++ b/hook.c
+@@ -203,12 +203,13 @@ int run_hooks(const char *hook_name, const char *hook_path,
+ 				   pick_next_hook,
+ 				   notify_start_failure,
+ 				   options->feed_pipe,
+-				   NULL,
++				   options->consume_sideband,
+ 				   notify_hook_finished,
+ 				   &cb_data,
+ 				   "hook",
+ 				   hook_name);
  
--	hook = find_hook("reference-transaction");
--	if (!hook)
--		return ret;
--
--	strvec_pushl(&proc.args, hook, state, NULL);
--	proc.in = -1;
--	proc.stdout_to_stderr = 1;
--	proc.trace2_hook_name = "reference-transaction";
--
--	ret = start_command(&proc);
--	if (ret)
-+	if (!hook_exists("reference-transaction"))
- 		return ret;
- 
--	sigchain_push(SIGPIPE, SIG_IGN);
-+	strvec_push(&opt.args, state);
- 
- 	for (i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = transaction->updates[i];
-+		struct strbuf buf = STRBUF_INIT;
- 
--		strbuf_reset(&buf);
--		strbuf_addf(&buf, "%s %s %s\n",
-+		strbuf_addf(&buf, "%s %s %s",
- 			    oid_to_hex(&update->old_oid),
- 			    oid_to_hex(&update->new_oid),
- 			    update->refname);
--
--		if (write_in_full(proc.in, buf.buf, buf.len) < 0) {
--			if (errno != EPIPE)
--				ret = -1;
--			break;
--		}
-+		string_list_append(&to_stdin, strbuf_detach(&buf, NULL));
- 	}
- 
--	close(proc.in);
--	sigchain_pop(SIGPIPE);
--	strbuf_release(&buf);
-+	opt.feed_pipe = pipe_from_string_list;
-+	opt.feed_pipe_ctx = &to_stdin;
 +
-+	ret = run_hooks_oneshot("reference-transaction", &opt);
-+	to_stdin.strdup_strings = 1;
-+	string_list_clear(&to_stdin, 0);
+ 	if (options->absolute_path)
+ 		strbuf_release(&abs_path);
+ 	free(my_hook.feed_pipe_cb_data);
+diff --git a/hook.h b/hook.h
+index b55f283f90b..37a9690c2ca 100644
+--- a/hook.h
++++ b/hook.h
+@@ -58,6 +58,14 @@ struct run_hooks_opt
+ 	 */
+ 	feed_pipe_fn feed_pipe;
+ 	void *feed_pipe_ctx;
++
++	/*
++	 * Populate this to capture output and prevent it from being printed to
++	 * stderr. This will be passed directly through to
++	 * run_command:run_parallel_processes(). See t/helper/test-run-command.c
++	 * for an example.
++	 */
++	consume_sideband_fn consume_sideband;
+ };
  
--	ret |= finish_command(&proc);
- 	return ret;
- }
- 
+ #define RUN_HOOKS_OPT_INIT { \
 -- 
 2.33.0.rc0.595.ge31e012651d
 
