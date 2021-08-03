@@ -2,69 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9F2BC4320A
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 09:07:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C7B9C4338F
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 09:16:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D644A60F92
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 09:07:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 420EA603E7
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 09:16:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235004AbhHCJHp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 05:07:45 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:46759 "EHLO
+        id S235001AbhHCJQz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Aug 2021 05:16:55 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:55607 "EHLO
         out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S234922AbhHCJHp (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 3 Aug 2021 05:07:45 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.nyi.internal (Postfix) with ESMTP id 7782E5C003B;
-        Tue,  3 Aug 2021 05:07:34 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Tue, 03 Aug 2021 05:07:34 -0400
+        by vger.kernel.org with ESMTP id S234805AbhHCJQx (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 3 Aug 2021 05:16:53 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id D5A8F5C00D8;
+        Tue,  3 Aug 2021 05:16:42 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Tue, 03 Aug 2021 05:16:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=icMNvyAohaNEgweVvEGkr33AIyK
-        c7kbNttI5Nv5bdfQ=; b=GHekLvadDozO8lPMYod/a7XILJ00bu0yaz8W0aO7wmS
-        1PfPmfVvPJeYUGm3zIB5zV9giTqCjT8tgPmihbYBKOhsj6up3dBgrKEaTtoTot3h
-        J51b16GLGo2tVct7K6wQymDSCL5uYwWnrfwB+3oU7Ib+rIl8AWt+5dA4spmzJ1n3
-        9gwR394h+n2hhPRmWmmx5XZAevGNk+1GAmfQ5bXDKNk1SHeKy68aOiO1CodC8XQr
-        su+Pz8TodQihrMxBQMoNYI/wPjvU8/yH6Uw/rOVQFxhNIwUfxXMmG+LX4PC06+wy
-        Du0smdDH+rhMFCVcEmLPILGmS6D3TiIPtUyL+wHENUQ==
+        :content-type:in-reply-to; s=fm1; bh=FZjBheSGR85XSANNgaMLDNhpGQn
+        nzdafwIN951AIVoY=; b=k6evN/EVURG3cexkUoB1ERnEVLc2SQjew3x+h0QZ2z8
+        P1V1WqMFLsWrczPO8fcIiMsFgdeC/o/KNRNaPHs5UAcLI9PXnii28MRsCo4uYnqJ
+        vaapxPjof+8MFhXCaEGeYzXK5DmpTpW7qO1gk7MZzT6r1uECcCuuvDnRzGZVTleC
+        CaJPIpFYSvmizpzFYyupF99OF9RCjUsb1tII1duenyb4ein9ZAI7rTP0adDDpqhj
+        nJDtCJo02BRC7AIGNg+h5Nrwnkkc/Oaa/HlpiL0rP8kawcPtSten0BMQm53YK3HC
+        43lx6E2tw5rojGmzfhKas6yEGUPojls4oM/g30qtZGQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=icMNvy
-        AohaNEgweVvEGkr33AIyKc7kbNttI5Nv5bdfQ=; b=eHGO2syjuZV8NjAJmLLUB1
-        pxUEaCle/nRSPTqWo7nvCrm/2spdMYYpOjppYg3DHOs+KtIe/rid+NNMcxOcxMEl
-        d1oTUoMdqDjA8WrvgyiGvRGglIZAT8P4+IHpC3NrKmOqHQgGhO1YEIdZsVAZ+jov
-        2TFkwzXBYbjO64b4Dix4QgzgADk4R0rBla3yLZG7azKe3zF2qzHTqSGhQSfW8bIm
-        9l/N5yeTAazhF2N1Eo0XSn2FiGe43XQskg4LRm93riBPhbwqsLE3yI/rWzsBCN1H
-        NWeFIEsYSap25HhNOt79L/oz6gHDL3dRgDotZir46oy8Ixv5bLmMWYiYxYZQBwAw
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=FZjBhe
+        SGR85XSANNgaMLDNhpGQnnzdafwIN951AIVoY=; b=NvkQE9Ss4255lc5l/bihp0
+        ujwJtBIUaOmFvpOPA96TFaXvrRmimqdZNqiVufwRROhcady9r3iNhXZ5bQWHhTSb
+        np9rdEgrn2100JynnPXQXtxQu2Bx+qk4z7StZBwDYceR+RrxOVGopsTbcTSRjOr5
+        StLclmgzZs3Q69hw4Q1SeT1MwH77IMeFatM6Sl9ek0Bq71TNDX7tG5uAyTIa/V8h
+        ALRerppcb9Xvg+qr11cRYcGBoBKIGBpYRljYKPVIiyNXc2jHSpQjwPxTCIKvUZoD
+        4r3O6b8Ts30L3TKDqOQQ5Va8POPEF3ryTtI677hmFgfTYNaJ2p1luu0m5Yk8KaQA
         ==
-X-ME-Sender: <xms:VgcJYRbVSeBecPrbqU7P_tDZQvMfIznsuUXMJITRdng2lbQO1x_y1A>
-    <xme:VgcJYYaaH6HSOR94YP-BHXBwBXHheoaubi7maDA1O18t7FWgr2rKQ8ShTfp27_ro4
-    cgGPhQzvZe7-B7O6g>
-X-ME-Received: <xmr:VgcJYT-HMZ6A_PZ_-WH-XdkBWrBRM5TLpo6yWVbAe3z-FMQt9zsee_2tp1ckTeugD8483RkzaXQEt9x51rLpOY9-IcxEDBNZx-Yhz-ESe6el6m6lAsWh5g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrieeggddutdcutefuodetggdotefrodftvf
+X-ME-Sender: <xms:egkJYeG5d94zg_CXgGHYG1zMl-FEltYRthNc5szqCNZ8hDBm0iRpEA>
+    <xme:egkJYfVmXAuRhtzQLyRvIlMYYYAWPl98wijAaL-VHta3O6CyIXIh1TjnuThKgzyJX
+    P0YbyUs-VVE2s6xmg>
+X-ME-Received: <xmr:egkJYYJMFDLjDRxLGoJce9GtS7RZeqeYmpGbs6VBqI-OMRk0eV-7czta80Lq3Nl_Z4qaivSBdmib1RT4ugYWLhHWeEXTRGvSCr1Z0rp67dvz_2ZZF6fioQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrieeggdduvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
+    fjughrpeffhffvuffkfhggtggujgesghdtroertddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
+    epvdeffedvhfelheehleeghedtveeiieekffduvedvudetfeffjeffjeelleefvefhnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimh
-X-ME-Proxy: <xmx:VgcJYfqbkG86V3LHuYW1B4o3qex3cDVbe4sf-pZMjqCBmmwioZzWzg>
-    <xmx:VgcJYcrJcD_fLlqaYTP50s_R08Z4cpYCfkAuOi1obaM1WoWIEMsA-w>
-    <xmx:VgcJYVQDcAtpwMelEGg0uUUZtG3jqiokGxgMXVx9XkvqPm148fbmdQ>
-    <xmx:VgcJYderzv9hWZcPgXmPnVSOp1zPm6Y6HGp-zlUrs-1dp1XOUepq6w>
+X-ME-Proxy: <xmx:egkJYYHLHBjlmfdttddUrnG4GWpfFipykMsDzg1y4LvYwGOdpxrz0A>
+    <xmx:egkJYUVQSNiJGqcpq85eH2xSnDN0C6ZyTierCudaMU8ecgaYu099Cw>
+    <xmx:egkJYbPHamUxK6eD2eES07-tcBu9hLB_I14BU08eG1KwGQH-UVfQ1Q>
+    <xmx:egkJYWJZO7HoDwPrLr_mjZhgci03BxTiammTAVfJyo58jo-LApzP_g>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Aug 2021 05:07:32 -0400 (EDT)
+ 3 Aug 2021 05:16:40 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 49870fc6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 3 Aug 2021 09:07:31 +0000 (UTC)
-Date:   Tue, 3 Aug 2021 11:07:29 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 37a508c1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 3 Aug 2021 09:16:37 +0000 (UTC)
+Date:   Tue, 3 Aug 2021 11:16:36 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -73,90 +74,129 @@ Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Chris Torek <chris.torek@gmail.com>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v3 3/4] revision: avoid loading object headers multiple
- times
-Message-ID: <YQkHUZKZ6gkFkaD0@ncase>
+Subject: Re: [PATCH v3 4/4] revision: avoid hitting packfiles when commits
+ are in commit-graph
+Message-ID: <YQkJdDvRtyOPzszU@ncase>
 References: <cover.1624858240.git.ps@pks.im>
  <cover.1627896460.git.ps@pks.im>
- <b9897e102afbcab3bfee58ed8bda24257d8b54fb.1627896460.git.ps@pks.im>
- <xmqq5ywnws6v.fsf@gitster.g>
+ <f6fc2a5e6d94befa915fb59b6296ce3153820c13.1627896460.git.ps@pks.im>
+ <xmqqwnp3vcow.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="1MrF9xvAFFugggfL"
+        protocol="application/pgp-signature"; boundary="fl+HNKyGWIRjgBOS"
 Content-Disposition: inline
-In-Reply-To: <xmqq5ywnws6v.fsf@gitster.g>
+In-Reply-To: <xmqqwnp3vcow.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---1MrF9xvAFFugggfL
+--fl+HNKyGWIRjgBOS
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 02, 2021 at 12:40:56PM -0700, Junio C Hamano wrote:
+On Mon, Aug 02, 2021 at 01:01:03PM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
+[snip]
+> > +int find_object_in_graph(struct repository *repo, struct object *objec=
+t)
+> > +{
+> > +	struct commit *commit;
+> > +	uint32_t pos;
+> > +
+> > +	if (object->parsed) {
+> > +		if (object->type !=3D OBJ_COMMIT)
+> > +			return -1;
+> > +		return 0;
 >=20
-> > When loading references, we try to optimize loading of commits by using
-> > the commit graph. To do so, we first need to determine whether the
-> > object actually is a commit or not, which is why we always execute
-> > `oid_object_info()` first. Like this, we'll unpack the object header of
-> > each object first.
-> >
-> > This pattern can be quite inefficient in case many references point to
-> > the same commit: if the object didn't end up in the cached objects, then
-> > we'll repeatedly unpack the same object header, even if we've already
-> > seen the object before.
-> > ...
-> > Assuming that in almost all repositories, most references will point to
-> > either a tag or a commit, we'd have a modest increase in memory
-> > consumption of about 12.5% here.
+> This is puzzling---at least it is not consistent with what the
+> function name says ("please say if you find _this_ object in the
+> commit-graph file"---if that is not what this function does, it
+> needs a comment before the implementation).
 >=20
-> I wonder if we can also say almost all repositories, the majority of
-> refs point at the same object.  If that holds, this would certainly
-> be a win, but otherwise, it is not so clear.
+> The caller had object and we has already been parsed.  If the
+> function were "with help from commit-graph, please tell me if you
+> can positively say this is a commit", the above is understandable.
+> If we know positively that it is not commit, we say "no, it is not a
+> commit" (which may be suboptimal---if the caller falls back to
+> another codepath, the object will still not be a commit) and if we
+> know it is a commit, we can say "yes, it definitely is a commit" and
+> the caller can stop there.
+>=20
+> I guess my only problem with this function is that its name and what
+> it does does not align.  If the caller uses it for the real purpose
+> of the function I guessed, then the logic itself may be OK.
 
-I doubt that's the case in general. I rather assume that it's typically
-going to be a smallish subset that points to the same commit, but for
-these cases we at least avoid doing the lookup multiple times. As I
-said, it's definitely a tradeoff between memory and performance: in the
-worst case (all references point to different blobs) we allocate 33%
-more memory without having any speedups. A more realistic scenario would
-probably be something like a trunk-based development repo, where there's
-a single branch only and the rest is tags. There we'd allocate 11% more
-memory without any speedups. In general, it's going to be various shades
-of gray, where we allocate something from 0% to 11% more memory while
-getting some modest speedups in some cases.
+Fair point. The only caller for now only calls the function if the
+object's type is unknown, so it really is "Resolve the commit if it is
+one". I'll adjust the function's name.
 
-So if we only inspect this commit as a standalone it's definitely
-debatable whether we'd want to take it or not. But one important thing
-is that it's a prerequisite for patch 4/4: in order to not parse commits
-in case they're part of the commit-graph, we need to first obtain an
-object such that we can fill it in via the graph. So we have to call
-`lookup_unknown_object()` anyway. Might be sensible to document this as
-part of the commit message.
+> >  static int find_commit_in_graph(struct commit *item, struct commit_gra=
+ph *g, uint32_t *pos)
+> >  {
+> >  	uint32_t graph_pos =3D commit_graph_position(item);
+> > @@ -871,18 +913,7 @@ static int find_commit_in_graph(struct commit *ite=
+m, struct commit_graph *g, uin
+> >  		*pos =3D graph_pos;
+> >  		return 1;
+> >  	} else {
+> > -		struct commit_graph *cur_g =3D g;
+> > -		uint32_t lex_index;
+> > -
+> > -		while (cur_g && !bsearch_graph(cur_g, &(item->object.oid), &lex_inde=
+x))
+> > -			cur_g =3D cur_g->base_graph;
+> > -
+> > -		if (cur_g) {
+> > -			*pos =3D lex_index + cur_g->num_commits_in_base;
+> > -			return 1;
+> > -		}
+> > -
+> > -		return 0;
+> > +		return find_object_id_in_graph(&item->object.oid, g, pos);
+>=20
+> And I think this one is a op-op refactoring that does not change the
+> behaviour of find_commit_in_graph()?  It might be easier if done in
+> a separate preparatory step, but it is small enough.
+
+Will do.
+
+One thing that occurred to me this morning after waking up is that this
+commit changes semantics: if we're able to look up the commit via the
+commit-graph, then we'll happily consider it to exist in the repository.
+But given that we don't hit the object database at all anymore, it may
+be that the commit-graph was out of date while the commit got
+unreachable and thus pruned. So it may not even exist anymore in the
+repository.
+
+I wonder what our stance on this is. I can definitely understand the
+angle that this would be a deal breaker given that we now claim commits
+exist which don't anymore. On the other hand, we update commit-graphs
+via git-gc(1), which makes this scenario a lot less likely nowadays. Is
+there any precedent in our codebase where we treat commits part of the
+commit-graph as existing? If not, do we want to make that assumption?
 
 Patrick
 
---1MrF9xvAFFugggfL
+--fl+HNKyGWIRjgBOS
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEJB1AACgkQVbJhu7ck
-PpQYBRAAnxUyfsDzU+gJEl1QLP80Zv74XRp/9gPZ9alCIyGQ9NcHCPkTU5cvk0N8
-2K23TGgCWin/PWnbW8p9IlEt3LJyIYUskeawxk1gIA2P/mE6UKDrz9MMCORc7XxB
-LqnTLSEWYENTkwnOq6CaGfJbdY3wUytZBDv723HhKzaR8Fq4jt6wiN53pHWb3xfS
-3k0dgEekRUrn0jf1Vd2LQhlUPMV0GDZlx05RoWMWN1KTnAiFOtvZrY1zudAprQ/f
-0Cq67T9XuUK7K+2XfnfSKbjpfGLhSLcPSwUv3c0NX4sCoRAjHbOh2IUQHje+auqD
-EH/GDK9uvvLP80iU6FSpRjqNhKUCgZ6omzWmWc2LXhxkFWOCDE6eNe4qcaq69kex
-aVgKM3AFTnGzCRcL1Q7zCieJoALQmRHAjOkTaUTgCCePZ9niPKiM+LUAM9zHDEQv
-lkB9A42noW/Nsn5hENL4DL83SmDttLM0e8xmpU2ORaikvgj6iWyxahNMWchBQPFs
-hzJ6pqJR8OLrvW0c8FgZcMgi0j/0MXBYThV5ZFGQgYY+GvwQqu2x17DmCUi2Ap09
-e8nGh1II4OlHtkzRzM4MZHKOaFO1cJFdMeFuQCCiG+FV4V5+Yk8nu/79sGD9QDN2
-8kTYjhG95hvXvwnKYwMCdkSg2cnqdVwCdsILhs4Yi9V/V5i5Io8=
-=MtOw
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEJCXMACgkQVbJhu7ck
+PpQdtBAAkB6J7EUQ+bmkir+AAyTtcbcpdyzch8cUl/i14lN5fLTsdbF5mFMQJVVk
+6b3XhJEiGN7ug7oxTcZlSJZ1v0HxY1wPcziU9e+RfPWuPACdb6zSIsYq8n3rIwuE
+kkmg+LgNHkpU+So2WQWlglwy9ArNeG/pyCzs9xIuk6zWJTYmmC3Fhk6+g7C6B5e0
+Bqg7P3e3ep8S74H/HbIRYnJvOEAm2cfn+5+WE1xKT35nxpmunnhE8im4WzWHkNHV
+moK1MhEhuEfpGxrf2kH3Sm61W/aRqz4WYMO4AC0I+s9UUzeyVrlEJG3LmpEnAFLM
+wIhIldp8qmv5DZyJOyA8jVYylAEKstKRQFaA94svu97beDJ9dTYIJLhqJ5Lhhj59
+pHrKAMTlzHs3KmDkngN8wE64MF+umrGPtAGXVcmWDamW08kR0Mks4K4ucE+4TNtQ
+vo+Og7VAm0vYfuDj4tnX7ZIVZP+XyXSiXU0mVNZsFYluS0oXvEbRTZJWYh7Kl0wM
+KlEEPjf/LnnM8YlQe0AUvBtqDqHgxqoK82eGglgW8o85mnul0+tIXSvJjSMgHTrq
+Gj9+JYfxrfGTbHS0QGcIiFTHHV2im4r5D9RtEEkq1crHFyhvsX/fZ3psK9HzbA4n
+ZMQb4jZwff6X+/+fYq909qLc+Wz0V6TGuGErB5l2XZ8fMq32s5k=
+=w50C
 -----END PGP SIGNATURE-----
 
---1MrF9xvAFFugggfL--
+--fl+HNKyGWIRjgBOS--
