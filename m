@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3B7FC4338F
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:39:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98AB2C432BE
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:39:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B2EB60EE8
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:39:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7FDE26103C
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:39:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240197AbhHCTj4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S240176AbhHCTj4 (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 3 Aug 2021 15:39:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51542 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240196AbhHCTjj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Aug 2021 15:39:39 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FB1FC0613D5
-        for <git@vger.kernel.org>; Tue,  3 Aug 2021 12:39:27 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id f9-20020a05600c1549b029025b0f5d8c6cso2441520wmg.4
-        for <git@vger.kernel.org>; Tue, 03 Aug 2021 12:39:27 -0700 (PDT)
+        with ESMTP id S240204AbhHCTjk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Aug 2021 15:39:40 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53672C0617A3
+        for <git@vger.kernel.org>; Tue,  3 Aug 2021 12:39:28 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id n12-20020a05600c3b8cb029025a67bbd40aso2477493wms.0
+        for <git@vger.kernel.org>; Tue, 03 Aug 2021 12:39:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lA/GciJUmH/qCBPPiz7AGNvVtgWXz38AQgNSnm6L2+I=;
-        b=QsSCoWF6a0awAzCksV5SiuknckAgvIOGeKqIAA1ZBxev6ECBL4Fxbz4Xlhur4gnrS3
-         uD+N3rC0ak/XNbbcvr+rBlV6pxrUkfQNi3ZluAC7iNWUpofJ9dsZK831YUDQZWHcFlar
-         wwYTmoR2Stw79GUVK9YDx4yBNLUAc3cmuybi4Rp1R+TP9kjdmTv9byntMlk9/L495ca1
-         mV/XzFIjYRoUlpHvNp+1EJi9gYjGWm98nxXsdqLzbK7xKmaPQLeVHl3UyjJ1C6Z6YX6J
-         Pl7/ABpXcMyS2AceOgI3NLodWrLHcLWDI9ERXwUfta+MY0akOa/3LC9BGTpLQOSjT50z
-         T52A==
+        bh=wmNu7doJyXF6QA5Q08QNCB4BkAkAVAWjoaO4hJ5rNdE=;
+        b=ZAlRPEMqxKTZGiT+JAq8gUlaTV6CpphZoJszRWAjPuC2MQQg/b9OI8+H3ufDXPAoLS
+         sRdYkxt9+XIcxy4cWitRPJ30MpDAkvDzKEeNkAVgu59VvM6INAvIBKdjusN40ZFMEQ1B
+         mhgjLZLz3xetjw/sVSX22DmAGm0lmJhio8Adp8Wed1tNbtIVU1R8GDurcdOoyBt9Gddh
+         rrraQp6sScav3j1aJQp+RikwdveV8+RgJUFeufUvJrS03XSpCY0DfMT3d8bW7R31OOWG
+         6nn6jkXdjyx61xTpwqAZyxd8tCzYpiW8GOaTnFA1dp8ykTe0fiO+lI/Huc+DKfIzY7EJ
+         ns2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lA/GciJUmH/qCBPPiz7AGNvVtgWXz38AQgNSnm6L2+I=;
-        b=kpVvQxoEgouaZAz/A/sDLFHouJOGfuLe756O+m35Yhz35d51mueyVDSNJq5JaHcY9P
-         4k+Jt9sGbq+4F7CiKLAN91qM/+oWw6DHwWSHQu9Erklx0Hw1GEJ+oc2EI8crXGWgbBI+
-         ZF3H1B34ZpaIEWQ6Hov2rUvNwcLmMbl0z3vjU+5T3p3pX300XrJhQAJs9L9vp7Beacet
-         banXIsuItEJt8wU/PITzrsMVWbLy66cRMBe+Ftrv33HdoVJG3up/P0zBHBehAkoXRns6
-         dUh+pjL3iER49Z3QPyA6kiPI/2pAOMqIaViRNr2ACt0I0+OFbjCCqYU81my1ZMK/kCC5
-         W9aw==
-X-Gm-Message-State: AOAM5330RtYznrWbxpDjIVHjCtjVxllRn1CjbeeBcMv1VECVbgIa/z/5
-        iEp03uGYMjyHb+JO58fiw2Pww25N3UpEUA==
-X-Google-Smtp-Source: ABdhPJwzFIW5tVh+BVcznYkjmSYNCBarpP1eH3RSzmwGj7XBSQZ9HXmaak71JeNxJna3RIB70bMApQ==
-X-Received: by 2002:a7b:cb13:: with SMTP id u19mr23483818wmj.122.1628019565672;
-        Tue, 03 Aug 2021 12:39:25 -0700 (PDT)
+        bh=wmNu7doJyXF6QA5Q08QNCB4BkAkAVAWjoaO4hJ5rNdE=;
+        b=jM3Hz0vwzubL71G8ZTrcHuZdv6cTwKhk43M23y0S6Xj0ajkUFg4tu9UUVVLoie4YWh
+         t5k314p4ahdOWV099WUg1QD4JK6h29uHIXg15sCdhT9qFqwRBNs2STPHZQjofG9rI9NV
+         sXlyw47LIm37e+sSvnpAJ2kj8TIXIjkszG/MSxuGwY6w5jkScyoR6X2OMBoI8Ao0B3us
+         4i+O+V/M5nNPW1mQABpw6KAeg0GhP2T4SagYNpZGfOo4FiUx5fdA0cQKI9CqFTecXxNI
+         ovzJD/MAtYyb6f4CjVoAzBgNLW1VNtG/dlMeXNKl65yR2kc091nAbsModBCpwdBP2IuU
+         P0Aw==
+X-Gm-Message-State: AOAM532mlKGMbXgAzghRZsiAMK/yQSJuhN+qHdyvhC2DKnDKi/xLkfY3
+        8PYggcseopOzF2r9k71OlOaONLR3QQ8I5g==
+X-Google-Smtp-Source: ABdhPJyD/C0jLdmMZvcqBGJtvB4YQNU5Em1GfzpgBrZYar06/pDhp2/mcQlrp9veHFoCwjhnQlHVKw==
+X-Received: by 2002:a1c:1d81:: with SMTP id d123mr23535728wmd.72.1628019566578;
+        Tue, 03 Aug 2021 12:39:26 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n8sm15333562wrx.46.2021.08.03.12.39.24
+        by smtp.gmail.com with ESMTPSA id n8sm15333562wrx.46.2021.08.03.12.39.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 12:39:25 -0700 (PDT)
+        Tue, 03 Aug 2021 12:39:26 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -70,9 +70,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 15/36] send-email: use 'git hook run' for 'sendemail-validate'
-Date:   Tue,  3 Aug 2021 21:38:41 +0200
-Message-Id: <patch-v4-15.36-5b66b04bec7-20210803T191505Z-avarab@gmail.com>
+Subject: [PATCH v4 16/36] git-p4: use 'git hook' to run hooks
+Date:   Tue,  3 Aug 2021 21:38:42 +0200
+Message-Id: <patch-v4-16.36-14a37a43db2-20210803T191505Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.rc0.593.g54be4d223c3
 In-Reply-To: <cover-v4-00.36-00000000000-20210803T191505Z-avarab@gmail.com>
 References: <cover-00.27-0000000000-20210617T101216Z-avarab@gmail.com> <cover-v4-00.36-00000000000-20210803T191505Z-avarab@gmail.com>
@@ -85,99 +85,104 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Change the "sendmail-validate" hook to be run via the "git hook run"
-wrapper instead of via a direct invocation.
+Instead of duplicating the behavior of run-command.h:run_hook_le() in
+Python, we can directly call 'git hook run'. We emulate the existence
+check with the --ignore-missing flag.
 
-This is the smallest possibly change to get "send-email" using "git
-hook run". We still check the hook itself with "-x", and set a
-"GIT_DIR" variable, both of which are asserted by our tests. We'll
-need to get rid of this special behavior if we start running N hooks,
-but for now let's be as close to bug-for-bug compatible as possible.
+As this is the last hook execution in git.git to not go through "git
+hook run" or the hook.[ch] library we can now be absolutely sure that
+our assertion in hook.c that only hooks known by the generated (from
+githooks(5)) hook-list.h are permitted.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-send-email.perl   | 20 ++++++++++++--------
- t/t9001-send-email.sh |  4 ++--
- 2 files changed, 14 insertions(+), 10 deletions(-)
+ git-p4.py | 72 ++++++-------------------------------------------------
+ 1 file changed, 7 insertions(+), 65 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index e65d969d0bb..126850d974b 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -195,13 +195,13 @@ sub format_2822_time {
- my $editor;
+diff --git a/git-p4.py b/git-p4.py
+index 2b4500226aa..1f24cbf0bca 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -207,71 +207,13 @@ def decode_path(path):
+         return path
  
- sub system_or_msg {
--	my ($args, $msg) = @_;
-+	my ($args, $msg, $cmd_name) = @_;
- 	system(@$args);
- 	my $signalled = $? & 127;
- 	my $exit_code = $? >> 8;
- 	return unless $signalled or $exit_code;
+ def run_git_hook(cmd, param=[]):
+-    """Execute a hook if the hook exists."""
+-    if verbose:
+-        sys.stderr.write("Looking for hook: %s\n" % cmd)
+-        sys.stderr.flush()
+-
+-    hooks_path = gitConfig("core.hooksPath")
+-    if len(hooks_path) <= 0:
+-        hooks_path = os.path.join(os.environ["GIT_DIR"], "hooks")
+-
+-    if not isinstance(param, list):
+-        param=[param]
+-
+-    # resolve hook file name, OS depdenent
+-    hook_file = os.path.join(hooks_path, cmd)
+-    if platform.system() == 'Windows':
+-        if not os.path.isfile(hook_file):
+-            # look for the file with an extension
+-            files = glob.glob(hook_file + ".*")
+-            if not files:
+-                return True
+-            files.sort()
+-            hook_file = files.pop()
+-            while hook_file.upper().endswith(".SAMPLE"):
+-                # The file is a sample hook. We don't want it
+-                if len(files) > 0:
+-                    hook_file = files.pop()
+-                else:
+-                    return True
+-
+-    if not os.path.isfile(hook_file) or not os.access(hook_file, os.X_OK):
+-        return True
+-
+-    return run_hook_command(hook_file, param) == 0
+-
+-def run_hook_command(cmd, param):
+-    """Executes a git hook command
+-       cmd = the command line file to be executed. This can be
+-       a file that is run by OS association.
+-
+-       param = a list of parameters to pass to the cmd command
+-
+-       On windows, the extension is checked to see if it should
+-       be run with the Git for Windows Bash shell.  If there
+-       is no file extension, the file is deemed a bash shell
+-       and will be handed off to sh.exe. Otherwise, Windows
+-       will be called with the shell to handle the file assocation.
+-
+-       For non Windows operating systems, the file is called
+-       as an executable.
+-    """
+-    cli = [cmd] + param
+-    use_shell = False
+-    if platform.system() == 'Windows':
+-        (root,ext) = os.path.splitext(cmd)
+-        if ext == "":
+-            exe_path = os.environ.get("EXEPATH")
+-            if exe_path is None:
+-                exe_path = ""
+-            else:
+-                exe_path = os.path.join(exe_path, "bin")
+-            cli = [os.path.join(exe_path, "SH.EXE")] + cli
+-        else:
+-            use_shell = True
+-    return subprocess.call(cli, shell=use_shell)
+-
++    """args are specified with -a <arg> -a <arg> -a <arg>"""
++    args = ['git', 'hook', 'run', '--ignore-missing', cmd]
++    if param:
++        args.append("--")
++        for p in param:
++            args.append(p)
++    return subprocess.call(args) == 0
  
--	my @sprintf_args = ($args->[0], $exit_code);
-+	my @sprintf_args = ($cmd_name ? $cmd_name : $args->[0], $exit_code);
- 	if (defined $msg) {
- 		# Quiet the 'redundant' warning category, except we
- 		# need to support down to Perl 5.8, so we can't do a
-@@ -2031,10 +2031,10 @@ sub validate_patch {
- 	my ($fn, $xfer_encoding) = @_;
- 
- 	if ($repo) {
-+		my $hook_name = 'sendemail-validate';
- 		my $hooks_path = $repo->command_oneline('rev-parse', '--git-path', 'hooks');
- 		require File::Spec;
--		my $validate_hook = File::Spec->catfile($hooks_path,
--					    'sendemail-validate');
-+		my $validate_hook = File::Spec->catfile($hooks_path, $hook_name);
- 		my $hook_error;
- 		if (-x $validate_hook) {
- 			require Cwd;
-@@ -2044,13 +2044,17 @@ sub validate_patch {
- 			chdir($repo->wc_path() or $repo->repo_path())
- 				or die("chdir: $!");
- 			local $ENV{"GIT_DIR"} = $repo->repo_path();
--			$hook_error = system_or_msg([$validate_hook, $target]);
-+			my @validate_hook = ("git", "hook", "run", "--ignore-missing", $hook_name, "--", $target);
-+			$hook_error = system_or_msg(\@validate_hook, undef,
-+						       "git hook run $hook_name -- <patch>");
- 			chdir($cwd_save) or die("chdir: $!");
- 		}
- 		if ($hook_error) {
--			die sprintf(__("fatal: %s: rejected by sendemail-validate hook\n" .
--				       "%s\n" .
--				       "warning: no patches were sent\n"), $fn, $hook_error);
-+			$hook_error = sprintf(__("fatal: %s: rejected by %s hook\n" .
-+						 $hook_error . "\n" .
-+						 "warning: no patches were sent\n"),
-+					      $fn, $hook_name);
-+			die $hook_error;
- 		}
- 	}
- 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 57fc10e7f82..9ec7d75f0ff 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -539,7 +539,7 @@ test_expect_success $PREREQ "--validate respects relative core.hooksPath path" '
- 	test_path_is_file my-hooks.ran &&
- 	cat >expect <<-EOF &&
- 	fatal: longline.patch: rejected by sendemail-validate hook
--	fatal: command '"'"'my-hooks/sendemail-validate'"'"' died with exit code 1
-+	fatal: command '"'"'git hook run sendemail-validate -- <patch>'"'"' died with exit code 1
- 	warning: no patches were sent
- 	EOF
- 	test_cmp expect actual
-@@ -558,7 +558,7 @@ test_expect_success $PREREQ "--validate respects absolute core.hooksPath path" '
- 	test_path_is_file my-hooks.ran &&
- 	cat >expect <<-EOF &&
- 	fatal: longline.patch: rejected by sendemail-validate hook
--	fatal: command '"'"'$hooks_path/sendemail-validate'"'"' died with exit code 1
-+	fatal: command '"'"'git hook run sendemail-validate -- <patch>'"'"' died with exit code 1
- 	warning: no patches were sent
- 	EOF
- 	test_cmp expect actual
+ def write_pipe(c, stdin):
+     if verbose:
 -- 
 2.33.0.rc0.595.ge31e012651d
 
