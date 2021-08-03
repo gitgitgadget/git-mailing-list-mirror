@@ -2,83 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99499C4338F
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 17:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB0BDC4338F
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 17:14:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7589760F0F
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 17:01:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9FE80610FD
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 17:14:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237610AbhHCRBu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 13:01:50 -0400
-Received: from mail-ej1-f53.google.com ([209.85.218.53]:33437 "EHLO
-        mail-ej1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237657AbhHCRA5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Aug 2021 13:00:57 -0400
-Received: by mail-ej1-f53.google.com with SMTP id hs10so28718468ejc.0
-        for <git@vger.kernel.org>; Tue, 03 Aug 2021 10:00:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=E5FBFNyhY/wweHBTGhgOGL/6OXAxT5aUs3ae3GRvanQ=;
-        b=kMQydk1lVOOEtmfVFFfmOs5sK7+F4KV1O+10RDJy9JRPSVOF3BhrS/mYZ7CxdZ5Z9n
-         8N/RFJ2eqNtUC976Tkns/9tc0S0O8Tnzfyylp+Li8drk4cAWyXr1CGU7YH7/zFzxP4Tg
-         Mq3UX7gpfTEPns0tsXGxWYh6uyI86u0y2MExpbzkUg7tsLl3GA5X1gapvDhKwRUF75wy
-         K/FMiFHMltVgh3VY6M20U5JgHmbVUKUjIksNQJZlzQ3rljervE0U/gS5l7OnGL2yclpy
-         1JOIin30JO6gTUR/Y6eys3RQRL4d5R0ZpANSxS//FD/ohOq+Ox5xVlSVxYj0XFuGaP3j
-         qXYQ==
-X-Gm-Message-State: AOAM531BhgD8UwAac5q7WIynFrpWivDJnJGTzjNE5B4JkrSpaUAWpEax
-        mfSo+/4GZc6kmj3lNS+J0W26itd0USnQyw8DrSg=
-X-Google-Smtp-Source: ABdhPJx/KTx26KgtQrerOpQVSPAjSXuucFanGOwLi7GEEPINfjtvlY+3ZwqD2bkWdigqPBz3mxzSKNXJwk7LY6n8BUo=
-X-Received: by 2002:a17:906:c834:: with SMTP id dd20mr21741278ejb.371.1628010045700;
- Tue, 03 Aug 2021 10:00:45 -0700 (PDT)
+        id S237557AbhHCRO2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Aug 2021 13:14:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37204 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237830AbhHCROM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Aug 2021 13:14:12 -0400
+Received: (qmail 1656 invoked by uid 109); 3 Aug 2021 17:13:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 03 Aug 2021 17:13:47 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15421 invoked by uid 111); 3 Aug 2021 17:13:47 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Aug 2021 13:13:47 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 3 Aug 2021 13:13:46 -0400
+From:   Jeff King <peff@peff.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 0/2] [RFC] Switch default merge backend from recursive to
+ ort
+Message-ID: <YQl5SlmJsFbQ3Kw+@coredump.intra.peff.net>
+References: <pull.1055.git.git.1627776461.gitgitgadget@gmail.com>
+ <YQlnNXgk3qcGb5Bk@coredump.intra.peff.net>
+ <CABPp-BGgcpMbFrEjaDxpfb8=Wr_5O76qCDq1OSbpemrnYDcsqw@mail.gmail.com>
 MIME-Version: 1.0
-References: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com> <6116f4750fd228b96ee293033f867a964b87eb5f.1628004920.git.gitgitgadget@gmail.com>
-In-Reply-To: <6116f4750fd228b96ee293033f867a964b87eb5f.1628004920.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 3 Aug 2021 13:00:34 -0400
-Message-ID: <CAPig+cRrSnrD4jnOOrbqZUbvkxKi0oLH51L0dxC+m9nzDnmf4w@mail.gmail.com>
-Subject: Re: [PATCH 06/10] merge-strategies.txt: avoid giving special
- preference to patience algorithm
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CABPp-BGgcpMbFrEjaDxpfb8=Wr_5O76qCDq1OSbpemrnYDcsqw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 3, 2021 at 11:35 AM Elijah Newren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> We already have diff-algorithm that explains why there are special diff
-> algorithms, so we do not need to re-explain patience.  patience exists
-> as its own toplevel option for historical reasons, but there's no reason
-> to give it special preference or document it again and suggest it's more
-> important than other diff algorithms, so just refer to it as a
-> deprecated shorthand for `diff-algorithm=patience`.
+On Tue, Aug 03, 2021 at 10:57:12AM -0600, Elijah Newren wrote:
+
+> > The nice thing is that the two strategies can co-exist. So if it does
+> > turn out to have any regressions, it's an easy revert to switch back,
+> > and even post-release users can switch at runtime. We have pull.twohead,
+> > but I don't think we have an equivalent that would impact a bare "git
+> > merge" or "git rebase -m". Maybe it would be worth adding those as an
+> > escape hatch?
+> 
+> Actually, pull.twohead is not pull specific; it already affects merge,
+> rebase (-m is the default for rebase, btw), cherry-pick, and revert.
+> pull.twohead has affected a bare "git merge" since 1c7b76be7d ("Build
+> in merge", 2008-07-07).  I thought it was weird that "merge strategy"
+> for the merge command was specified via a config option under "pull",
+> and included my misgivings about it in the commit message of
+> 14c4586c2d ("merge,rebase,revert: select ort or recursive by config or
+> environment", 2020-11-02) when I made sequencer.c pay attention to
+> that config option as well:
+> 
+> """
+>     Also, allow folks to pick the new algorithm via config setting.  It
+>     turns out builtin/merge.c already had a way to allow users to specify a
+>     different default merge algorithm: pull.twohead.  Rather odd
+>     configuration name (especially to be in the 'pull' namespace rather than
+>     'merge') but it's there.  Add that same configuration to rebase,
+>     cherry-pick, and revert.
+> """
 >
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
-> diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-> @@ -37,11 +37,7 @@ theirs;;
->  patience;;
-> -       With this option, 'merge-recursive' spends a little extra time
-> -       to avoid mismerges that sometimes occur due to unimportant
-> -       matching lines (e.g., braces from distinct functions).  Use
-> -       this when the branches to be merged have diverged wildly.
-> -       See also linkgit:git-diff[1] `--patience`.
-> +       Deprecated shorthand for diff-algorithm=patience.
+> But no one had an alternate suggestion or opinion on attempting to
+> migrate the configuration to a different name, so it has just stuck.
+> Anyway, if folks want to try out 'ort' with the 2.32 or 2.33 releases,
+> they can set pull.twohead=ort.  Once we switch the default, they can
+> set pull.twohead=recursive to get the old default.
 
-Probably want to wrap backticks around `diff-algorithm=patience`. The
-rest of this file seems to be pretty consistent about it. Indeed, the
-existing deprecation in this file does so:
+Ah, thanks for clarifying. I think we are in good shape, then. We could
+possibly introduce merge.twohead as a synonym, but given that most
+people would probably not ever even look at this, it may not be worth
+worrying about.
 
-    rename-threshold=<n>;;
-        Deprecated synonym for `find-renames=<n>`.
-
-Maybe also s/shorthand/synonym/ for consistency with the existing
-deprecation notice.
+-Peff
