@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04F78C4338F
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 23:01:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0FB3C4338F
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 23:04:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE7B660F70
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 23:01:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C29EB60F93
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 23:04:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230114AbhHCXBy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 19:01:54 -0400
-Received: from mout.gmx.net ([212.227.15.18]:50091 "EHLO mout.gmx.net"
+        id S232231AbhHCXEO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Aug 2021 19:04:14 -0400
+Received: from mout.gmx.net ([212.227.15.18]:38189 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229824AbhHCXBy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Aug 2021 19:01:54 -0400
+        id S231482AbhHCXEN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Aug 2021 19:04:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1628031700;
-        bh=19Cl7YT60OCKGmpwirWchqZIGpBeJDSmcTWsJGkcNCc=;
+        s=badeba3b8450; t=1628031840;
+        bh=h8VADivIz9qZ2yPTaGJ2qSum/min1G08lSt3jabtNCM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Pgk7d97AdZLr7LP72j79rl6JHk95fQlsvfUGhOpikj/54IgOxBCLRCue9K52FrMF4
-         b6jMMZOVOgtm/86NWQ2+c/GtzWWTyzLUlAGt9bvjrEBT/xtjGrvqv+cptOHm7vsUce
-         IdxZJ35+4QWze+M6JcxddP6cYbAlbq83Lr3BobF4=
+        b=dRJrvYXzF8XZi4PPf9i0AEPRjgeYATScHaW+RoSyKEPqOGkU0NzEtKYALs6hZuA6f
+         I6KNg0e6clvtM402RceWMYs1Lq5nLeJwfxW1ybPUZ7VZvuiQnculFuqaIhOiKGEhMg
+         KoLNXtW3rrJ3QZPWdPW1ScQzM+5dGe47asWa/6Cw=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.101.220] ([89.1.212.168]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N5mGH-1nCxZv2qwl-017GT4; Wed, 04
- Aug 2021 01:01:40 +0200
-Date:   Wed, 4 Aug 2021 01:01:39 +0200 (CEST)
+Received: from [172.19.101.220] ([89.1.212.168]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MpDNl-1mwX9T2jL5-00qfdl; Wed, 04
+ Aug 2021 01:04:00 +0200
+Date:   Wed, 4 Aug 2021 01:03:59 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
 cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 08/10] merge-strategies.txt: fix simple capitalization
- error
-In-Reply-To: <010702d08417f86da033ae8a6093ec4b9ce6e19a.1628004920.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2108040058520.55@tvgsbejvaqbjf.bet>
-References: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com> <010702d08417f86da033ae8a6093ec4b9ce6e19a.1628004920.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 09/10] Documentation: add coverage of the `ort` merge
+ strategy
+In-Reply-To: <37a69fd2e0bdb7fba6b6c47c3edec0964165cb61.1628004920.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2108040102220.55@tvgsbejvaqbjf.bet>
+References: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com> <37a69fd2e0bdb7fba6b6c47c3edec0964165cb61.1628004920.git.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:rrEKFOekh2zyZFDxNg6pKXklGgZHmZaWwmRsRx1TBqCmpBoprVe
- TTBFRK95W1Js2ilxOGPSYbGLRZL3Jp3X4wEMWO7vwiXbNky8EaJvUv5R/xcx11CX6aty3m2
- 9Mbv7ampMYYXtFiwnlS+3qFepe/E/EvMsLOYGVZiWyUkDEfjcDIB79gxll4iyd7AGr1P502
- mtTvTmxXPJV/xF9uCZTuw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:DpD1bmPZR3k=:SC4DNn3Ou79geJLRgOlTTg
- AbVBIu/Ha9znOBidT5Li5JDZDeSYLFzm2QVuepNqV2cqv0fJ0jjbwgjJyFXo7wtIDdYdJ9ZDi
- tZ3r/juan/iiGy0yXXi9t4sVRUJs7jtmYBGlT6wmzFRVa9i2q6/2GfO3IIvhpDW5IzqpXUgQJ
- RTsWXeiAY9HKb+qLrhAuQMhzU8Hq6rr+8rBCYQNJ0+jRSo9KWfIfrV47fegbWRFU0qzUNHXUg
- H093wS1ljKruW+/3vWpTeg1hTmvXfWVpn36zpkXn8a/HbEycZ7zpn2Qf/y0Lm+Il+yjmgih+Y
- TP+2+9Byu7V43+0yjvpYVgqWSdSIdI0p5BA7yEb8IryxIFfEvtTWskYD2D8LMxNQyr2yv48PK
- bMNBRQ/G617PqlPDV2aUAmFL2tBEdHig65AbOX80rVdq7fyaB5oVdBYyMby0G2TGCMIV1nYPU
- rtRoKAZ2kYHAOUBJSem7br9098MlAXtIsSouhc+QffIza0BSqJ3zZNyqTPnStA4+UKDV1kaFO
- qkQyrE6f7oXeNEs8nKsqRqY9ckXNybEqTirBm5D6elDfw8xKYIHMDYQ0LgDnC5TTSUNlfFz1r
- zs8h7SkeMqq2OfFV721AA14YdrVmaZcvuSXGw2CvAM2vdLqctcoSmuAS6zURVIyD+Vrma61jv
- eyK+Cl/2H8eNxmc+N0NBpuz+Vg51mJPMMDZeZbT4au8UfW3gm2DNAT4NVMh+HCj+Oh07N6gFQ
- u6iibLgonHk0bP5FikVj0uufvKvBJrWgy3Ha/aYdn61zfS2QIvHRdIGOwO863kP+KPfz3ztNV
- qnHXFON4Tpt3Y8lEvcqwDV79ZquHK16LHse40ym9H76l+BGraO5flwkKD7A7PIhbfNH7ZkpHL
- NdC/emiWVJznX7RIGC9HYU+gRaFFzlGFwgU/XW+UQVD+T3trINYHmXUKjDmFgZPFkH+q7/x5J
- wzG6p13B3aiWFY9h8X/CzX6yq3UVkt7DrqGgLIdlARcKmp2Ud93tWoZ875UxN35Xk1Ts+fRqY
- LvFY8fBh5ceDqgss0bUVqTCU7WdWvt3DdkLsEywJ2nNJh9J/w6hid8xh3zqhSQsDP0TQDbY6N
- hVGYOHci3X6w/c/CWRMAYGl9mdRTzWwyigulqoOL8IaZ3J5TL1fknFFag==
+X-Provags-ID: V03:K1:R3KJ9BsYqwLUwVZBCGjJkUwfR9niRRTuXK/hRgii8BnSVDXlRWn
+ Mi+0zPSeMnZSkjXF4mFxWK/Zf/3elq847zF2C1Mt8OfgCaX+7Er4ZHrKrfEeck7BWigWsvA
+ GMdF0fGdsuTnGnrY/NHqDoN73MGhg1CE5G4lE5r0q6YYLLJdA73F/raR2SHW3y7beOOArG3
+ YbKan7G1QFwQVAekPsTzg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:MtP+r0V1Mgc=:OCazCpcVwtRrWNQFJ7xkXj
+ bkB9zGTKUlyHw6U3l0g6vyF8ye5E7g/VUPCD2EAw2qP3srzzKw0fxtHCmnrCCk1mRKTB5sPv5
+ s5xw1gQctxq2fTnuEPS6UXqFhXGVFI26KFyf0F0C41oRCmGK7ckAUz4RpHjHd+qoJP7kFViw4
+ nrCDMWYvvoujV9IXgp7knQIasyyysXUPzV7ErGv8LPB1gApMk/TEt9IDuoNiIaZhZl2thPtBj
+ UviVU++5EUSBGX0UKWIAuOXrQmGK9VIbl67TDu+81esSxuewZpL4ypE45tr67LfZvcoO6vmY7
+ SVnkwWDC5RBRLpt+/59OzUBNkhZdups7ho51hIDJR+lxPOhVA/46HnTBgjDgTCkckJ0eBFSDD
+ Zn6iLLkS3wjrTP+CB8zL0eIzx4ektwGn8YAQ5xJsBFWQAQ6r69E+MHHqD4aNvWaQulcl2Y4qh
+ 0iW/I+lLmKBZMK94FSSTJUL2BV9rn/u38qiOjmcXW3yet0g858nL+7Xbynwp8IVRZMwzy4hea
+ 7peSDgK/Bq2OxkBiVqnWa1y/Q5IDaUc9qD3va3JgDRDrcB4rEvnbBdarPIXv3AqbDsCbrMlIj
+ OpLABua4KEpu20YXWzN6oX2+YLYtrRu679qnOqQwPe6VtmWo7JzfwqBvgsbbgC/6QUWsqkzW8
+ zb/2tz9Ksfs9H0K37qY5b0z3HvhhIgt5buRPH4T+12WXvrKcaMgBZ63IYmaCMBNVQ4TMRy9MI
+ mC0tKo305HCqs/bQ9OGRBPu9g1yD6To+Eu5tbRXJWviPkJYn7Y/+pf0ARpr3fMm/3D0ffUPrh
+ LDktmCQtWpdj4C9lIGWL0x6q98SqM3hOD7n0xLjKZahLLoLAnIfSLRnGdibxyRxkq6BWsrRj8
+ vhSEZkH4UwfkFoZdbKRpzT3gO+iCeQarzt8865ZxcQacATX7Rvlt7ghEab6sGD3jVnBdsTgZ5
+ KP2P34EK2MrLUPohgAQ4DuHgGPafRJWkm/rJyFMudJ8tHGR8JbDSwd1LhycAuttuv1KDfwCCi
+ 8OjgRhYc0TqstnPbCOX3BZ7PpQz2qFwkZOyIEeJfpgMOmIuLVRtAne9kkcTppuYKbIUP8BwBP
+ J9W1zFEIbJ4QHESOn1H+hYnbEwv5rzhprDMCwcbbfBAe+5taWZiTq1Mrw==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -79,38 +79,66 @@ On Tue, 3 Aug 2021, Elijah Newren via GitGitGadget wrote:
 >
 > Signed-off-by: Elijah Newren <newren@gmail.com>
 > ---
->  Documentation/git-rebase.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  Documentation/git-rebase.txt       |  7 ++++---
+>  Documentation/merge-strategies.txt | 14 ++++++++++++++
+>  2 files changed, 18 insertions(+), 3 deletions(-)
 >
 > diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 7044afba362..b4429954480 100644
+> index b4429954480..3e112011c6f 100644
 > --- a/Documentation/git-rebase.txt
 > +++ b/Documentation/git-rebase.txt
-> @@ -530,7 +530,7 @@ The `--rebase-merges` mode is similar in spirit to t=
-he deprecated
->  where commits can be reordered, inserted and dropped at will.
+> @@ -340,9 +340,10 @@ See also INCOMPATIBLE OPTIONS below.
+>
+>  -m::
+>  --merge::
+> -	Use merging strategies to rebase.  When the recursive (default) merge
+> -	strategy is used, this allows rebase to be aware of renames on the
+> -	upstream side.  This is the default.
+> +	Use merging strategies to rebase.  When either the `recursive`
+> +	(default) or `ort` merge strategy is used, this allows rebase
+> +	to be aware of renames on the upstream side.  This is the
+> +	default.
+
+Since this now talks about two merge strategies, I think "This is the
+default" needs to specify which of the two strategies is the default.
+
 >  +
->  It is currently only possible to recreate the merge commits using the
-> -`recursive` merge strategy; Different merge strategies can be used only=
- via
-> +`recursive` merge strategy; different merge strategies can be used only=
- via
+>  Note that a rebase merge works by replaying each commit from the workin=
+g
+>  branch on top of the <upstream> branch.  Because of this, when a merge
+> diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-st=
+rategies.txt
+> index d21dbd1e051..d13d4a29875 100644
+> --- a/Documentation/merge-strategies.txt
+> +++ b/Documentation/merge-strategies.txt
+> @@ -96,6 +96,20 @@ subtree[=3D<path>];;
+>  	is prefixed (or stripped from the beginning) to make the shape of
+>  	two trees to match.
+>
+> +ort::
+> +	This is meant as a drop-in replacement for the `recursive`
+> +	algorithm (as reflected in its acronym -- "Ostensibly
+> +	Recursive's Twin"), and will likely replace it in the future.
+> +	It fixes corner cases that the `recursive` strategy handles
+> +	suboptimally, and is significantly faster in large
+> +	repositories -- especially when many renames are involved.
+> ++
+> +The `ort` strategy takes all the same options as `recursive`.
+> +However, it ignores three of those options: `no-renames`,
+> +`patience` and `diff-algorithm`.  It always runs with rename
+> +detection (it handles it much faster than `recursive` does), and
+> +it specifically uses diff-algorithm=3Dhistogram.
 
-I am not a native speaker, so I'm eager to learn what is the correct thing
-to do here. In particular since I continued in lower-case after a
-semicolon for _years_, right up until some native speaker mentioned that
-that's only correct if I continue with an incomplete sentence. If a
-complete sentence follows the semicolon, so the advice went, I should
-start the sentence with an upper-case letter.
-
-Could you help me understand the correct rules here?
+Probably `diff-algorithm=3Dhistogram` should also be enclosed within
+backticks.
 
 Thanks,
 Dscho
 
->  explicit `exec git merge -s <strategy> [...]` commands.
->  +
->  See also REBASING MERGES and INCOMPATIBLE OPTIONS below.
+> +
+>  resolve::
+>  	This can only resolve two heads (i.e. the current branch
+>  	and another branch you pulled from) using a 3-way merge
 > --
 > gitgitgadget
 >
