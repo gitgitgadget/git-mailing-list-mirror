@@ -2,429 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3462FC4338F
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 08:46:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9793C4338F
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 08:50:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14CA560F93
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 08:46:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B0D0561029
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 08:50:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234506AbhHCIrB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 04:47:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57802 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234453AbhHCIrB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Aug 2021 04:47:01 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90E4CC06175F
-        for <git@vger.kernel.org>; Tue,  3 Aug 2021 01:46:49 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id e5so22830455pld.6
-        for <git@vger.kernel.org>; Tue, 03 Aug 2021 01:46:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
-         :date:mime-version:content-transfer-encoding;
-        bh=Ek4SUG4iX/MqP3M6zBmK3nNtR5wjDXieaxaVBulEOE4=;
-        b=LxoHxieuU8PeIfpUvk5I8So6euj41RkItKm3nm5C479eI+T9DhJqnbAXRqtw0yfO3m
-         s9MD61xKlZlnPbqsUkEaGRyiL4c1n8KCPBxcDmRtny4zPMn7Am8bS5xvaO4O4X7d68by
-         3yJLtjyT0hMWxQ91GB/N92r7yid1jW2KCmy/1cb3Cj0j8FpkXTfHzwbVFuca7ELQueSj
-         wAyRNPmgN6hXh8EuC+ODQopcriqoHUxl4htsOr2qHBHM6/km63j3wdAJl4ulOTeZt+DQ
-         FxLvIxVcILPh+Y2KjAHLUOjQGE1RVzgy5XUWJxH5HpHZ6YqrvxMtibRPakjpu1wXSFrx
-         NF1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject
-         :in-reply-to:message-id:date:mime-version:content-transfer-encoding;
-        bh=Ek4SUG4iX/MqP3M6zBmK3nNtR5wjDXieaxaVBulEOE4=;
-        b=uYY3DxHia76rHhUGfq+21qVTfUID5O2VSRKsFQLImH2tRWDk+5RjtiGEEa+IMSpR8t
-         3nC/IryftSZRRoSi9gjHhN8F9jQXLq9SviC325BgL5cOU14uiSRgBQx9OcdqABqfxhVQ
-         NMOkO8b44lFTgKl1dtf/wFzVACmN6PMYfLIxRoC/5L0d273KQUqwHTbZv2AD9Jd8eIOC
-         NEOPZh7tMdaALC/rlHxc2fltcUntftit3vWKY+QCmqb9BlAINmZRkY+M73aJfYIjgs9o
-         RjBq/90xS5z/05izoSkQPvoNylYZE7DmhVJryLRqm2tKT1XLBAN/iMBTsCrysINBjuPt
-         wGAw==
-X-Gm-Message-State: AOAM531t5f1kNvcckWNiayaKHNVieljizKFovV3fnqwyN/WwPKIeKVcO
-        vr3difhT54ueO2YrTr3UHvk=
-X-Google-Smtp-Source: ABdhPJzrKTITDdHoo27ZZ92+RCXpvj7bUIpzlkDymgtydtZysDEhn8g8vSQFl0NrZA2011Ctrd/bnA==
-X-Received: by 2002:aa7:96fc:0:b029:3ab:8eff:ca39 with SMTP id i28-20020aa796fc0000b02903ab8effca39mr21429358pfq.62.1627980409105;
-        Tue, 03 Aug 2021 01:46:49 -0700 (PDT)
-Received: from atharva-on-air ([119.82.121.47])
-        by smtp.gmail.com with ESMTPSA id q14sm14466646pff.209.2021.08.03.01.46.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 01:46:48 -0700 (PDT)
-References: <20210722134012.99457-1-raykar.ath@gmail.com>
- <20210802130627.36170-1-raykar.ath@gmail.com>
- <CACdWUYXhckBkHLPnRDxxb=raAD0=7236jAzvneBLhw8fXvGTMw@mail.gmail.com>
-User-agent: mu4e 1.4.15; emacs 27.2
-From:   Atharva Raykar <raykar.ath@gmail.com>
-To:     Shourya Shukla <periperidip@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
+        id S234910AbhHCIua (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Aug 2021 04:50:30 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:59875 "EHLO
+        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234900AbhHCIu1 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 3 Aug 2021 04:50:27 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.nyi.internal (Postfix) with ESMTP id 6E0D25C012A;
+        Tue,  3 Aug 2021 04:50:16 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Tue, 03 Aug 2021 04:50:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm1; bh=t+w8gnjUhkjl1n27/8+QcN7ZyyV
+        qaYnVZc15JeHbX70=; b=SwW85T2w/OjtP82RJic0UZ1wcm2TU8cOfjvNoFatuLT
+        DxjNwc65N+4l5XOGKTGgZssFrLxdz6FiTGUBH2wzEQ0y/bhNY7ESzT5kz++eigvp
+        gUYI/gZwlKId5V4hru2ddwbRDC9ffWV+deheXYbquYv6Jk1aIHa8b5tA/Crwa2gx
+        ffgMjOD7jjQTTNSNAWdCxlqEOX+PQaNGASdzqS1SaBc2ulfNi6wyxnkVR3+gb7/s
+        VpZPEEOdzKEcjLEbbX6guCwJBl9Ikhmnxn682IbYfA1jWMA9Cmsn1/YGwH5+LHzP
+        jhenhkZ1n7vojszLGoHrLXjOFON7YzE7EPD3KaNfkTA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=t+w8gn
+        jUhkjl1n27/8+QcN7ZyyVqaYnVZc15JeHbX70=; b=AGZ/VgAdTz8wGWVasSjpaM
+        Pss4EuzzplDFX5U2LG009+AIe7ooM2cJcbWPQz03Isoz5E5kFRPo+nhsF/LMF+6O
+        R8P4OtAQkKHtKNzKqK9WXDmC9iz6zpSvnKM7kbkm9kTbVi5U1lg+vdAhQI7FOjvH
+        +RfK2aKKVqLFmmy7hZU/FCIt9AeJSXvNd5i+h6gF+pRPAx0ifY+dt+WSBZvmHaQL
+        lqn3bHaiCcyH3ZB6EAVENFibmIspASHtXd5luhqt+tYN2WglRwgWx+ZQOoAUL/5Q
+        OagWg5pYBrkzdFf0UUPL7CzInb4YSFZ9I4N0zi+sw4/4nSAeFWGK8sKyqKqEaQiQ
+        ==
+X-ME-Sender: <xms:SAMJYY7GAHGJ8tzntwNuA9qVK2qJ90HZ9dhC7eJPdHI8iK6OlWrvdw>
+    <xme:SAMJYZ46lkYFw4OIJL_xa2VubQeHUrPqnU4Pv3lSJeYcEj1565UpsrPnQzj4YyQl6
+    bmNIkUZbecLv23Gxw>
+X-ME-Received: <xmr:SAMJYXdBqQvQeDcPS0a390MAkZAFkCgc3Ypa2XXLi_v_WI89Gzj_KsozL7wVsPidRJHXeon5LC5eRNF-lQmSUZvX3IdISKoeuzKr0neAC72uNMsoJMDlEw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrieeggddtjecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    ephefgjeeuveejteduhefgffefffdvjeefjeeivdekfffgkeeugfehveetueefleeknecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimh
+X-ME-Proxy: <xmx:SAMJYdI1edhrti8ZYLA6gd2jWM6PQlICXIRG3bfzKjo9tG9_aCsxIw>
+    <xmx:SAMJYcJa0gcjDT9H0CbOmmP8iz-LebFgbc9qU-d4NzDPoCs5s3hWQA>
+    <xmx:SAMJYeyM2bmGAcPPvK-1Yw_LfN0x4nunYAPAEgulqXSoZ0oYgo3mnw>
+    <xmx:SAMJYU_rhJasFwXPgQqmKbOWgSNOUJv63-usBOdI8VwCECEYXdkL_Q>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Aug 2021 04:50:14 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 2944a943 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 3 Aug 2021 08:50:11 +0000 (UTC)
+Date:   Tue, 3 Aug 2021 10:50:09 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        Chris Torek <chris.torek@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Subject: Re: [GSoC] [PATCH v2] submodule--helper: run update procedures from C
-In-reply-to: <CACdWUYXhckBkHLPnRDxxb=raAD0=7236jAzvneBLhw8fXvGTMw@mail.gmail.com>
-Message-ID: <m2czquc3v0.fsf@gmail.com>
-Date:   Tue, 03 Aug 2021 14:16:43 +0530
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 1/4] connected: do not sort input revisions
+Message-ID: <YQkDQY9Qyqi7FCg6@ncase>
+References: <cover.1624858240.git.ps@pks.im>
+ <cover.1627896460.git.ps@pks.im>
+ <1fd83f726a04dfb5be27c74cb116618cb76be923.1627896460.git.ps@pks.im>
+ <871r7covsa.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Xzs82xqou7QbhK16"
+Content-Disposition: inline
+In-Reply-To: <871r7covsa.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Shourya Shukla <periperidip@gmail.com> writes:
+--Xzs82xqou7QbhK16
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Le lun. 2 ao=C3=BBt 2021 =C3=A0 18:36, Atharva Raykar=20
-> <raykar.ath@gmail.com> a =C3=A9crit :
->>
->> Add a new submodule--helper subcommand `run-update-procedure`=20
->> that runs
->> the update procedure if the SHA1 of the submodule does not=20
->> match what
->> the superproject expects.
->>
->> This is an intermediate change that works towards total=20
->> conversion of
->> `submodule update` from shell to C.
->>
->> Specific error codes are returned so that the shell script=20
->> calling the
->> subcommand can take a decision on the control flow, and=20
->> preserve the
->> error messages across subsequent recursive calls of=20
->> `cmd_update`.
->>
->> This patch could have been approached differently, by first=20
->> changing the
->> `is_tip_reachable` and `fetch_in_submodule` shell functions to=20
->> be
->> `submodule--helper` subcommands, and then following up with a=20
->> patch that
->> introduces the `run-update-procedure` subcommand. We have not=20
->> done it
->> like that because those functions are trivial enough to convert=20
->> directly
->> along with these other changes. This lets us avoid the=20
->> boilerplate and
->> the cleanup patches that will need to be introduced in=20
->> following that
->> approach.
->
-> I feel that this part is more suitable for a cover letter rather=20
-> than the commit
-> message itself. It is a useful piece of info though.
+On Mon, Aug 02, 2021 at 02:49:29PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
+mason wrote:
+> On Mon, Aug 02 2021, Patrick Steinhardt wrote:
+[snip]
+> > Introduce a new "--unsorted-input" flag to git-rev-list(1) which will
+> > cause it to not sort the commits and adjust the connectivity check to
+> > always pass the flag. This results in the following speedups, executed
+> > in a clone of gitlab-org/gitlab [1]:
+> >
+> >     Benchmark #1: git rev-list  --objects --quiet --not --all --not $(c=
+at newrev)
+> >       Time (mean =C2=B1 =CF=83):      7.639 s =C2=B1  0.065 s    [User:=
+ 7.304 s, System: 0.335 s]
+> >       Range (min =E2=80=A6 max):    7.543 s =E2=80=A6  7.742 s    10 ru=
+ns
+> >
+> >     Benchmark #2: git rev-list --unsorted-input --objects --quiet --not=
+ --all --not $newrev
+> >       Time (mean =C2=B1 =CF=83):      4.995 s =C2=B1  0.044 s    [User:=
+ 4.657 s, System: 0.337 s]
+> >       Range (min =E2=80=A6 max):    4.909 s =E2=80=A6  5.048 s    10 ru=
+ns
+> >
+> >     Summary
+> >       'git rev-list --unsorted-input --objects --quiet --not --all --no=
+t $(cat newrev)' ran
+> >         1.53 =C2=B1 0.02 times faster than 'git rev-list  --objects --q=
+uiet --not --all --not $newrev'
+>=20
+> Just bikeshedding for a potential re-roll, perhaps --unordered-input, so
+> that it matches/rhymes with the existing "git cat-file --unordered",
+> which serves the same conceptual purpose (except this one's input, that
+> one's output).
 
-Okay, that seems right, the message does seem a bit too
-context-sensitive.
+Yeah, I wasn't quite sure how to name it myself either. Internally, we
+typically use "unsorted" instead of "unordered", and there's also the
+preexisting "--no-walk=3D(sorted|unsorted)" flag for git-rev-list(1). With
+the latter in mind, I think that "unsorted" fits a bit better given that
+we already use it in the same command, but I don't particularly mind.
 
->> This change is more focused on doing a faithful conversion, so=20
->> for now we
->> are not too concerned with trying to reduce subprocess spawns.
->>
->> Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
->> Mentored-by: Christian Couder <christian.couder@gmail.com>
->> Mentored-by: Shourya Shukla <periperidip@gmail.com>
->> ---
->>
->> Notable changes since v1:
->>
->> * Modified the code structure in
->>   submodule--helper.c:run_update_command(), while fixing=20
->>   problems with
->>   the translation marks.
->>
->> * Renamed '--sha1' and '--subsha1' options to '--oid' and=20
->> '--suboid' to
->>   since the argument is parsed into an object_id struct, not=20
->>   plain sha1
->>   data.
->>
->> * Used option callbacks to parse the SHA1 arguments directly.
->>
->> * Moved the conditional out of 'do_run_update_procedure()'.
->>
->> Feedback required:
->>
->> =C3=86var felt that it would be clearer to populate the 'fatal'=20
->> messages
->> after the run_command() operation in 'run_update_command()', to=20
->> make it
->> more readable [1]. I have attempted something like that here,=20
->> and it has led
->> to a lot more duplicated 'switch' statements, which feels=20
->> suboptimal.
->> I'd appreciate suggestions to make it more legible.
->>
->> [1]=20
->> https://lore.kernel.org/git/87r1fps63r.fsf@evledraar.gmail.com/
->>
->> Fetch-it-Via:
->> git fetch https://github.com/tfidfwastaken/git=20
->> submodule-run-update-proc-list-2
->>
->>  builtin/submodule--helper.c | 253=20
->>  ++++++++++++++++++++++++++++++++++++
->>  git-submodule.sh            | 106 +++++----------
->>  2 files changed, 286 insertions(+), 73 deletions(-)
->>
->> diff --git a/builtin/submodule--helper.c=20
->> b/builtin/submodule--helper.c
->> index d55f6262e9..b9c40324d0 100644
->> --- a/builtin/submodule--helper.c
->> +++ b/builtin/submodule--helper.c
->> @@ -2029,6 +2029,20 @@ struct submodule_update_clone {
->>         .max_jobs =3D 1, \
->>  }
->>
->> +struct update_data {
->> +       const char *recursive_prefix;
->> +       const char *sm_path;
->> +       const char *displaypath;
->> +       struct object_id oid;
->> +       struct object_id suboid;
->> +       struct submodule_update_strategy update_strategy;
->> +       int depth;
->> +       unsigned int force: 1;
->> +       unsigned int quiet: 1;
->> +       unsigned int nofetch: 1;
->> +       unsigned int just_cloned: 1;
->> +};
->> +#define UPDATE_DATA_INIT { .update_strategy =3D=20
->> SUBMODULE_UPDATE_STRATEGY_INIT }
->>
->>  static void next_submodule_warn_missing(struct=20
->>  submodule_update_clone *suc,
->>                 struct strbuf *out, const char *displaypath)
->> @@ -2282,6 +2296,175 @@ static int=20
->> git_update_clone_config(const char *var, const char *value,
->>         return 0;
->>  }
->> +
->> +static int run_update_command(struct update_data *ud, int=20
->> subforce)
->> +{
->> +       struct child_process cp =3D CHILD_PROCESS_INIT;
->> +       char *oid =3D oid_to_hex(&ud->oid);
->> +       int must_die_on_failure =3D 0;
->> +
->> +       cp.dir =3D xstrdup(ud->sm_path);
->> +       switch (ud->update_strategy.type) {
->> +       case SM_UPDATE_CHECKOUT:
->> +               cp.git_cmd =3D 1;
->> +               strvec_pushl(&cp.args, "checkout", "-q", NULL);
->
-> Would it be possible to add the 'if' statement above just before=20
-> the
-> 'switch' (or after,
-> whichever seems okay) since this is common amongst (almost) all=20
-> the cases?
+For now, I'll keep "--unsorted-input", but please feel free to give me
+another shout if you disagree with my reasoning.
 
-I'll try it on once, if it makes the code more readable, I'll=20
-include it
-in the reroll.
+Patrick
 
->> +               if (subforce)
->> +                       strvec_push(&cp.args, "-f");
->> +               break;
->> +       case SM_UPDATE_REBASE:
->> +               cp.git_cmd =3D 1;
->> +               strvec_push(&cp.args, "rebase");
->> +               if (ud->quiet)
->> +                       strvec_push(&cp.args, "--quiet");
->> +               must_die_on_failure =3D 1;
->> +               break;
->> +       case SM_UPDATE_MERGE:
->> +               cp.git_cmd =3D 1;
->> +               strvec_push(&cp.args, "merge");
->> +               if (ud->quiet)
->> +                       strvec_push(&cp.args, "--quiet");
->> +               must_die_on_failure =3D 1;
->> +               break;
->> +       case SM_UPDATE_COMMAND:
->> +               /* NOTE: this does not handle quoted arguments=20
->> */
->> +               strvec_split(&cp.args,=20
->> ud->update_strategy.command);
->> +               must_die_on_failure =3D 1;
->> +               break;
->> +       case SM_UPDATE_UNSPECIFIED:
->> +       case SM_UPDATE_NONE:
->> +               BUG("update strategy should have been=20
->> specified");
->> +       }
->
-> If the original did not bug out, do we need to? The=20
-> documentation does
-> not mention
-> this as well:
-> https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-no=
-ne
+--Xzs82xqou7QbhK16
+Content-Type: application/pgp-signature; name="signature.asc"
 
-This was how the original shell porcelain did it:
-case "$update_module" in
-checkout)
-	command=3D"git checkout $subforce -q"
-	die_msg=3D"$(eval_gettext "Unable to checkout '\$sha1' in=20
-	submodule path '\$displaypath'")"
-	say_msg=3D"$(eval_gettext "Submodule path '\$displaypath':=20
-	checked out '\$sha1'")"
-	;;
-rebase)
-	command=3D"git rebase ${GIT_QUIET:+--quiet}"
-	die_msg=3D"$(eval_gettext "Unable to rebase '\$sha1' in=20
-	submodule path '\$displaypath'")"
-	say_msg=3D"$(eval_gettext "Submodule path '\$displaypath':=20
-	rebased into '\$sha1'")"
-	must_die_on_failure=3Dyes
-	;;
-merge)
-	command=3D"git merge ${GIT_QUIET:+--quiet}"
-	die_msg=3D"$(eval_gettext "Unable to merge '\$sha1' in submodule=20
-	path '\$displaypath'")"
-	say_msg=3D"$(eval_gettext "Submodule path '\$displaypath':=20
-	merged in '\$sha1'")"
-	must_die_on_failure=3Dyes
-	;;
-!*)
-	command=3D"${update_module#!}"
-	die_msg=3D"$(eval_gettext "Execution of '\$command \$sha1'=20
-	failed in submodule path '\$displaypath'")"
-	say_msg=3D"$(eval_gettext "Submodule path '\$displaypath':=20
-	'\$command \$sha1'")"
-	must_die_on_failure=3Dyes
-	;;
-*)
-	die "$(eval_gettext "Invalid update mode '$update_module' for=20
-	submodule path '$path'")"
-esac
+-----BEGIN PGP SIGNATURE-----
 
-The fallthrough case used to die, but I noticed that this branch=20
-will
-never get activated. This is because the 'update-clone' helper=20
-will not
-output any entry that has the update mode set to 'none', and thus=20
-the
-`while` loop that contains this code would never run.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEJA0AACgkQVbJhu7ck
+PpQoOBAApAtjLcftJKAQmZQ3u1wCkxm4iEVsAH1iiSEqViJyPLf2JzI0bGxwyMlm
++6XkS5ZGKFVc1MyEny3VSaZEoGZ8n4+rd1UWd5jwEbwBxhkpVnQVacJiDiD9i/F0
+x0r+93CthnSNlILXQvT5FPky2CDLOTVrL90SE6jp51Fsglmpv7eRDRk6HAxAgBp4
+sAyqWOOa4xDlAaj4kFTzcJyLyeVgMCWmVd1Qvsu8DtuUUApX8hfpGZacZtyifZQP
+thGzoCeOfHh6GCAEpPO3P77unuSaO9ixijXVaENAzjLABQuNOQd8ASIb+vD7tqIq
+jpetK+y3VJ2TbS/S8MXBZBb7YweVkpO3FlnbQfgYQXNd1OezskFHvWB7fjl5mBf/
+n4Mh6AgS5vdgNo+nyBDB9mr2GnaAEnUJizp7yY9WLI/0mj2pllU49/r0Hy7XpBjs
+HETMI+bD1wRAfAhDjy2Y0PWxBsoxzR7YO3OW1OqA+ZVIQ8STtra6zBPGegd8SxFG
+uwv+Gy0nHMdqrJTM0n2pXYMnBXSfdQngsah1AAAlht3E54wScVSvFmzcNRtFM3SW
+YkoWljot6361tl5/qZmUZk2loPbCiw+r7PyqO4qSCvOKwSLddqA7krgWSF2KpA84
+fPb9gqhS4s6VulX6rGk/sshVdeo5DACJDK0u4fFTYDW+GXysLS0=
+=mOZM
+-----END PGP SIGNATURE-----
 
-Which is why I decided to BUG out on that case, because that state
-should never be reached. But I see the source of confusion, and=20
-maybe I
-should have different BUG messages for SM_UPDATE_UNSPECIFIED and
-SM_UPDATE_NONE. The latter should probably say "should have been=20
-handled
-by update-clone".
-
->> +
->> +       strvec_push(&cp.args, oid);
->> +
->> +       prepare_submodule_repo_env(&cp.env_array);
->> +
->> +       if (run_command(&cp)) {
->> +               if (must_die_on_failure) {
->> +                       switch (ud->update_strategy.type) {
->> +                       case SM_UPDATE_CHECKOUT:
->> +                               die(_("Unable to checkout '%s'=20
->> in submodule path '%s'"),
->> +                                     oid, ud->displaypath);
->> +                               break;
->> +                       case SM_UPDATE_REBASE:
->> +                               die(_("Unable to rebase '%s' in=20
->> submodule path '%s'"),
->> +                                     oid, ud->displaypath);
->> +                               break;
->> +                       case SM_UPDATE_MERGE:
->> +                               die(_("Unable to merge '%s' in=20
->> submodule path '%s'"),
->> +                                     oid, ud->displaypath);
->> +                               break;
->> +                       case SM_UPDATE_COMMAND:
->> +                               die(_("Execution of '%s %s'=20
->> failed in submodule path '%s'"),
->> +=20
->> ud->update_strategy.command, oid, ud->displaypath);
->> +                               break;
->> +                       case SM_UPDATE_UNSPECIFIED:
->> +                       case SM_UPDATE_NONE:
->> +                               BUG("update strategy should=20
->> have been specified");
->> +                       }
->> +               }
->> +               /*
->> +                * This signifies to the caller in shell that
->> +                * the command failed without dying
->> +                */
->> +               return 1;
->> +       }
->> +
->> +       switch (ud->update_strategy.type) {
->> +       case SM_UPDATE_CHECKOUT:
->> +               printf(_("Submodule path '%s': checked out=20
->> '%s'\n"),
->> +                      ud->displaypath, oid);
->> +               break;
->> +       case SM_UPDATE_REBASE:
->> +               printf(_("Submodule path '%s': rebased into=20
->> '%s'\n"),
->> +                      ud->displaypath, oid);
->> +               break;
->> +       case SM_UPDATE_MERGE:
->> +               printf(_("Submodule path '%s': merged in=20
->> '%s'\n"),
->> +                      ud->displaypath, oid);
->> +               break;
->> +       case SM_UPDATE_COMMAND:
->> +               printf(_("Submodule path '%s': '%s %s'\n"),
->> +                      ud->displaypath,=20
->> ud->update_strategy.command, oid);
->> +               break;
->> +       case SM_UPDATE_UNSPECIFIED:
->> +       case SM_UPDATE_NONE:
->> +               BUG("update strategy should have been=20
->> specified");
->> +       }
->> +
->> +       return 0;
->> +}
->> +
->> +static int do_run_update_procedure(struct update_data *ud)
->> +{
->> +       int subforce =3D is_null_oid(&ud->suboid) || ud->force;
->> +
->> +       if (!ud->nofetch) {
->> +               /*
->> +                * Run fetch only if `oid` isn't present or it
->> +                * is not reachable from a ref.
->> +                */
->> +               if (!is_tip_reachable(ud->sm_path, &ud->oid))
->> +                       if (fetch_in_submodule(ud->sm_path,=20
->> ud->depth, ud->quiet, NULL) &&
->> +                           !ud->quiet)
->> +                               fprintf_ln(stderr,
->> +                                          _("Unable to fetch=20
->> in submodule path '%s'; "
->> +                                            "trying to=20
->> directly fetch %s:"),
->> +                                          ud->displaypath,=20
->> oid_to_hex(&ud->oid));
->
-> I was wondering if an OID is invalid, will it be counted as
-> unreachable and vice-versa?
-> If that is the case then that would simplify the work.
-
-Could you elaborate? I'm not sure what you mean by 'invalid' in=20
-this
-context. I don't think this code will receive any kind of=20
-malformed
-oid--they come from 'update-clone' which handles it correctly.
-
-As far as I can tell, the only way to check if a particular OID is
-unreachable is when we check if all the refs cannot find it.
+--Xzs82xqou7QbhK16--
