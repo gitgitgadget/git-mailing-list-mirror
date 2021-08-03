@@ -7,122 +7,124 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABBCCC4338F
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 00:37:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28923C4338F
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 00:43:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8295C60F01
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 00:37:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 055B060F93
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 00:43:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232891AbhHCAhN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 20:37:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57228 "EHLO
+        id S232848AbhHCAnO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 20:43:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232540AbhHCAhM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Aug 2021 20:37:12 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1C14C06175F
-        for <git@vger.kernel.org>; Mon,  2 Aug 2021 17:37:01 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id t66so18497984qkb.0
-        for <git@vger.kernel.org>; Mon, 02 Aug 2021 17:37:01 -0700 (PDT)
+        with ESMTP id S232540AbhHCAnM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Aug 2021 20:43:12 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8B0DC06175F
+        for <git@vger.kernel.org>; Mon,  2 Aug 2021 17:43:01 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id d2so12936616qto.6
+        for <git@vger.kernel.org>; Mon, 02 Aug 2021 17:43:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=5SvZVIp1OYCE8MAPt7M0UORSANVW+Sh7VW1GQeJVgEk=;
-        b=HyTDQpwDIiVbEFLVByjDSkL97e251GY7ZFNpgEgIHHeXc6Aa6EToxD0F8DvQQsqzAk
-         G/kGmESbOWFtT2zVMHvtDh9iRMYnI4D+aj6SVkHoG8OG1emi4lyzkakvr3Jc5hPXOqov
-         SMmrGtIr/wbvbeQLoM1PocjLjn14LbX3QunAlgIX1gkH4d3DUnVGstbX2QHFk95vnS9L
-         s2pBncVwaJyaNEOcEFAVGzt11H6at+pIoXzyZZlgleHs+KWWBCTCLuotV48TMNsY2Ybq
-         ze6dlBgSDxOS6P5uj+wU/2mQ9CFevZwejX3+n89tU9WFedGnXUcQ9FvJI6zQHYDFR0IA
-         ykQw==
+        bh=K+6fkcsAzrmAW36/7EEWpRMxtGU8F1uci00osKbr9e0=;
+        b=YTpC0A7NR1Z1GGlmuYgjQwY7+8oAkE0+tCIZefqTxO8zsFcuri/oF3Qxo583l7So7t
+         U1xiIsEXkrDJox2HM3EmStHDkPsOatdfOKVSKxxddYCyu/uUjs8mM+6R/UGv6kuvEZK+
+         JBABTfbz+K1GOvzQ1CJ/GvA/c4ALrj4x9SqWxcLGzZedJxQu9jazdpDnAFv2PFPuK/7i
+         SMgTxDi4oxY64JaEb0C34J2vH+nQTLSoz4OBWScy5IstmVjSiBRlyj9Gd3QHl3BIu5wo
+         daJ6HSZpFMEW5NGCLX9GCod15FSsD0C04kEC87lWJKItLKP31malLOYqnsGyCmaQ+oKC
+         K2wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5SvZVIp1OYCE8MAPt7M0UORSANVW+Sh7VW1GQeJVgEk=;
-        b=UyepuVCtl+Yzfl4pCtz/4m4eNsh+NnHg2dM+oZJKl39ONYhet2jjoEVte4FNoLMIng
-         RctcW05EDFxOaLok8z935+11CnpHcrFnh20+NiutfawCYp+LJXfPLTvfv+o+3sBTrP9n
-         h+JaSOM87OGkF5yPHMylmxQ/ZBaa4epTSulVOj5TFiu2gkqTtCTkKztZeUBhwfHmmpTm
-         d78bi4I2fbZZC61Pf36UsK/pcdFaW66rNv+eDEz3GHHTQb9EMHJhwDLgryP/CGjfGr6U
-         hAnKf60Y+YAX/RuvLhPSFpTwwh0W7TYmDgLtmYAN4lfqpqeyKx6SwJggwZm1Vcqy0/Fb
-         xbQA==
-X-Gm-Message-State: AOAM533vekeMzpuCQ3jBd9eEfsQPd43N3alrA1Y0ONXfHp+fnw5FwGxk
-        L2Da9xxZGFalTFP0zuuewLs=
-X-Google-Smtp-Source: ABdhPJwtSW70Kb/i5FhCJVw+qInI2jpLCad6HK4jyVFYlv53i5is/K10fxoOF7m0CWULSQ6yu0Wlew==
-X-Received: by 2002:a05:620a:893:: with SMTP id b19mr18258871qka.487.1627951021045;
-        Mon, 02 Aug 2021 17:37:01 -0700 (PDT)
+        bh=K+6fkcsAzrmAW36/7EEWpRMxtGU8F1uci00osKbr9e0=;
+        b=tnbcfSWPOsn3UPI2jyubneJD8cbXZbY3YGwNJR+vi0u8I6guOZC+Ae0SFH5CSeA8eE
+         zGukxkXMdrEKJ/MmOePEs6zlkEW+BYfKar2tnazWNkeOPNUITgqcS4IzxUsfzKFE9+yZ
+         5DzinKLEzwUKd0IuiuwX/I4CgWybTvli5hAUOsPWncHRrApLIOAqb/tP0/OD4lWM5NIW
+         6wo9n07QDlJzAvRY4FJCNUUzhf1L5dui78SA0n38OrCvqVc5bgp9eqhseTbpQIwiznQT
+         /nDAzZACNMovoNwvbRU3dgosHRkbYsS1hg1gHWHBBSS4RUeGwv69v4pMIT493ek5a5hv
+         u/9Q==
+X-Gm-Message-State: AOAM531u7UQJXZOH057UaHkaefDmHoEUYadhlAXVKrCIL2fy4T28fDu8
+        7gaNsC53ervGso2icUT0duA=
+X-Google-Smtp-Source: ABdhPJzGkx1z8LtZwNSGJHHl9SQ2nYlhxWFXAgn7aXFzDVf+0WZxeqyRZ6C/9a5HcVHUOIIAxFenyQ==
+X-Received: by 2002:ac8:7dcb:: with SMTP id c11mr17015208qte.260.1627951381025;
+        Mon, 02 Aug 2021 17:43:01 -0700 (PDT)
 Received: from localhost ([24.169.20.255])
-        by smtp.gmail.com with ESMTPSA id v11sm5654523qtc.0.2021.08.02.17.37.00
+        by smtp.gmail.com with ESMTPSA id o27sm6885622qkk.124.2021.08.02.17.42.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Aug 2021 17:37:00 -0700 (PDT)
-Date:   Mon, 2 Aug 2021 20:36:59 -0400
+        Mon, 02 Aug 2021 17:43:00 -0700 (PDT)
+Date:   Mon, 2 Aug 2021 20:42:55 -0400
 From:   Ben Boeckel <mathstuf@gmail.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 2/4] advice: add enum variants for missing advice
- variables
-Message-ID: <YQiPq3gFnDa49UA7@erythro.dev.benboeckel.internal>
+Subject: Re: [PATCH v1 3/4] advice: remove uses of global `advice_` variables
+Message-ID: <YQiRD2OA08iW2cx7@erythro.dev.benboeckel.internal>
 References: <20210731022504.1912702-1-mathstuf@gmail.com>
- <20210731022504.1912702-3-mathstuf@gmail.com>
- <nycvar.QRO.7.76.6.2108022333360.55@tvgsbejvaqbjf.bet>
+ <20210731022504.1912702-4-mathstuf@gmail.com>
+ <nycvar.QRO.7.76.6.2108022356300.55@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2108022333360.55@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2108022356300.55@tvgsbejvaqbjf.bet>
 User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 02, 2021 at 23:52:54 +0200, Johannes Schindelin wrote:
+On Tue, Aug 03, 2021 at 00:06:48 +0200, Johannes Schindelin wrote:
 > On Fri, 30 Jul 2021, Ben Boeckel wrote:
-> > These were missed in their addition in 887a0fd573 (add: change advice
-> > config variables used by the add API, 2020-02-06). All other global
-> > variable settings have entries already.
+> > There are now function APIs to access this information, so the global
+> > variables are no longer needed to communicate their values.
 > 
-> It took quite a bit of reading and looking through the `git log` history
-> to piece together what is going on here, and I wish the commit message
-> would have explained this better.
+> This commit message implies that the reader remembers that `hw/advise-ng`
+> introduced a new advice API with the express intent to eventually replace
+> those global `advice_*` variables.
 > 
-> A big puzzlement came from the claim that "These were missed" is not only
-> missing a noun that clarifies what "These" are meant to be, but also from
-> the fact that `git grep advice_setting 887a0fd573` comes up empty. Which
-> suggests to me that nothing was missed there, but the problem lies with
-> `hw/advise-ng`, merged via c4a09cc9ccb (Merge branch 'hw/advise-ng',
-> 2020-03-25), is based on v2.25.0, but was only merged after v2.26.0, which
-> contains daef1b300b0 (Merge branch 'hw/advice-add-nothing', 2020-02-14).
+> However, it is not the responsibility of the reader to remember that. It
+> is the responsibility of the commit message to describe this (so that the
+> reader can either remember it, or learn about it in the first place).
 
-Ah, I missed the logical merge conflict that was in effect here. I'll
-add this to the commit message.
+That makes sense, thanks. I guess I'm used to projects where I'm at
+least peripherally aware of most of what's going on, but that's because
+I work on cross-cutting concerns on them for the most part (build
+systems, CI, software process).
 
-> In other words, the addition of the two entries `addEmptyPathspec` and
-> `addIgnoredFile` happened in a diverging branch from the addition of the
-> `advice_setting` array, and the problem lies with the merge of the latter
-> into a branch that already had merged the former.
-> 
-> It would have helped me to read something along these lines:
-> 
-> 	In daef1b300b0 (Merge branch 'hw/advice-add-nothing', 2020-02-14),
-> 	two advice settings were introduced into the `advice_config`
-> 	array.
-> 
-> 	Subsequently, c4a09cc9ccb (Merge branch 'hw/advise-ng',
-> 	2020-03-25) started to deprecate `advice_config` in favor of a new
-> 	array, `advice_setting`.
-> 
-> 	However, the latter branch did not include the former branch, and
-> 	therefore `advice_setting` is missing the two entries added by the
-> 	`hw/advice-add-nothing` branch.
-> 
-> 	These are currently the only entries in `advice_config` missing
-> 	from `advice_setting`.
-> 
-> FWIW I manually verified that last paragraph's claim.
+> Now, as for the diff, I can guess just how tedious all of the
+> semi-repetitive `advice_*` -> `advice_enabled(ADVICE_*)` changes were from
+> trying to verify that they are all correct.
 
-I did as well :) ("All other global variable settings have entries
-already."). I also verified the reverse, but that was going to be moot
-with the other patches anyways. But having it called out as a separate
-paragraph sounds better.
+One of the times a case-insensitive word diff rendering would be handy.
+(Then letting the compiler verify that the new side actually works.)
+
+> Big thank you for that!
+
+You can thank this Vim macro which made the tedious bits trivial:
+
+    iadvice_enabled(<Esc>wgUwea)<Esc>]q
+
+> However, even reading through the diff the second time, I managed to miss
+> the subtlety that there were two `advice_set()` calls strewn in.
+> 
+> As I pointed out in my review of patch 1/4, I would much prefer to have
+> the addition of those callers in 1/4 along with the introduction of said
+> function.
+> 
+> However, now that I write this, I would like to correct my advice (pun
+> intended) from 1/4 to leave the removal of the assignment of the global
+> `advice_*` variables here: It would make much more sense to move them to
+> patch 4/4.
+
+Sounds good. I'll still keep it as a separate patch, but just have one
+for the read-only side, then a new patch which adds the write API and
+transforms the 2 write instances. The final patch can then stay the
+same. In short:
+
+  - 2/4 (read-only bits) -> v2 1/4
+  - 3/4 -> v2 2/4
+  - 1/4 + 3/4 (write bits) -> v2 3/4
+  - 4/4 -> mostly the same
 
 Thanks,
 
