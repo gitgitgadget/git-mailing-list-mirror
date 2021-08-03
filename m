@@ -2,86 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16706C4338F
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 02:57:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFDCCC4338F
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 03:08:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E3F68600CD
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 02:57:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 79BCB60EEA
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 03:08:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233562AbhHCC4X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 22:56:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60758 "EHLO
+        id S233567AbhHCDIo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 23:08:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233436AbhHCC4W (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Aug 2021 22:56:22 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2A83C06175F
-        for <git@vger.kernel.org>; Mon,  2 Aug 2021 19:56:04 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id t18so13091961qta.8
-        for <git@vger.kernel.org>; Mon, 02 Aug 2021 19:56:04 -0700 (PDT)
+        with ESMTP id S233436AbhHCDIn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Aug 2021 23:08:43 -0400
+Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13A19C06175F
+        for <git@vger.kernel.org>; Mon,  2 Aug 2021 20:08:32 -0700 (PDT)
+Received: by mail-qv1-xf34.google.com with SMTP id em4so5114468qvb.0
+        for <git@vger.kernel.org>; Mon, 02 Aug 2021 20:08:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=JKfd5StAYd4HD1/J8mGsQq7qds3hZuPxEPf7v/6PadU=;
-        b=tRDXmPIb4D0FRE7dDTkJgMlym4/KpTQI2MWMqLuUw4zOl5oo4Wi+eiwb7hUBAnPmJt
-         h5IA8qPR+/4A0+k4pEnd+iOykYwc8mxQqMG8FBdNweUzwAipu4mV7lFcw0q0H/gMI4g8
-         bQ0pEGnmCw5rXk6mt+2mFuUobMu/+4Q75DDKrFieUWiCN/r4f8xiKkGddLsVBaQUUG7+
-         dYXBrP1en5BjjVVEDFonEm25imBNtKn0mww5YTQKE8qRADJY0g5vhXo2wGfs2kGNQ6xD
-         l+eFITrmgggVrGG3Hwkqf8xoGPOR1bSmlJ5YrFf0oyRQmz/udEJG6FfeW83X8+3Eor5U
-         5FAw==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=//uGJOMTFsZiDAtUQsLyP20WTU0uVMz6ZD0l6+785rw=;
+        b=fntYEyGmW68jP96LoMG+AcUd7WdlcDsF8tvRjVjfTYFqvtO8gdxpKuMTHAqRi1WQ4Y
+         567qxRHmV+GFZbWxIt7ftnlfG2EzPid58N+UnZyMrl2H9/aPtO0s9VakJttTFRHwoscp
+         OHYxLfPLgF76Zroe75VeANomrJySdA3vIu4lCc/2NdRhzDqIWTSwTNGwqwC3bPIPs6Uq
+         qx+kKzWteoSCba/1gpL9mOaOgb+n1Y2yod7/3W+w0kXIFtMNGTrYSLK9c9OtbDtjgAyP
+         2FCAANDMZGbU/QBbWGxyCfy6HzB/+OFX8J7N5IYO4cD5xnLexbpUnXFZW8Ke8XW5pqu2
+         8Vtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+        h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=JKfd5StAYd4HD1/J8mGsQq7qds3hZuPxEPf7v/6PadU=;
-        b=SjoZQcnJxxVaowqDCl9+9JwQmpDfHLFLBaExpE7O52JJqHvOwIznkR5oJBK6gHGZ5G
-         hSNn4x4IftyTWN/hyuEcmRy1Pte9akQy0TPCtvpmpk/7UBtuQygkvUgZ6zjr29PijAkx
-         uwe3yf/D7U3OeWHg1Ekw+Ex4PDxApK+EbyntQYjlkWsDeWa9i8vrzeeSXSVN2IzylO34
-         1Lr3WpiMsYhWquuFy3pkVlv0qLQxCXJakSw1C0FXMv8vhgKbCLfH8n4AYCGveswI0HwN
-         jUcjg4pguuWe4xog7THMyGPUFXKLBVRTt5HXEONAha/DSzRGH/YQk/K60tE5VvTyR0c2
-         CE8Q==
-X-Gm-Message-State: AOAM530W35qseA/yxQ931biqzKGDwh6y0LgD8JrsyJZlbk+V3t3v6Ros
-        CJScXnrH1PNpmguNCrBMiww=
-X-Google-Smtp-Source: ABdhPJw2EOTbjQPlPqoeR2MShFMU95A/mv9E/0G/acjxjO5nEu6BLxCdgJz3wQuL7X706WiYUFlRog==
-X-Received: by 2002:ac8:76da:: with SMTP id q26mr16682596qtr.183.1627959364189;
-        Mon, 02 Aug 2021 19:56:04 -0700 (PDT)
+        bh=//uGJOMTFsZiDAtUQsLyP20WTU0uVMz6ZD0l6+785rw=;
+        b=lY8lfsyKYttmhdxStO67OFvzb4ckAAgibWz/laSCjrE+Ofba4F2AvExoPBPnP3AOqk
+         IY1+H5gpCeIoYWTexCw7Y5zPQbO7wVqGuBZVd2o+5wVEVz22hr6h5mg7ihcc3siXsOuO
+         Di6LNU8fo2lOIl70MZLWrtunOAzi6sICWbgbezt/7vHVFIR416jUI2toI76hXDqKOhu9
+         vGL5jnnUiiwQymZOYYzc945G1fSpM93CxSeRTOV1lIw/sTyDO0r6psWJpNv39QnXbfLR
+         kwuwKRih5f9aOsdZuGzr/eCB7PapVqfYXSdTDBcIOhL7QYnG33js0iKCP5TU8MrPZF8y
+         LaZw==
+X-Gm-Message-State: AOAM531zV6TwO9FhEq1Qi8jdjkGRnnO1y0G7pZq9c1kJda71W8yT7VhP
+        uAP0Wg3nR2vUFOQbUg8yY4CvaogvL0MhAA==
+X-Google-Smtp-Source: ABdhPJwe4RGkkQCGgcSpFJPQvupzePjsPJg2Qcm8d+kMs0evrBpPNvwtozsx2MtL9YuidUufRjU4VQ==
+X-Received: by 2002:a05:6214:10c4:: with SMTP id r4mr12841114qvs.58.1627960110371;
+        Mon, 02 Aug 2021 20:08:30 -0700 (PDT)
 Received: from [192.168.89.76] ([198.168.101.205])
-        by smtp.gmail.com with ESMTPSA id t6sm6837997qkg.75.2021.08.02.19.56.02
+        by smtp.gmail.com with ESMTPSA id h2sm7518198qkf.106.2021.08.02.20.08.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Aug 2021 19:56:03 -0700 (PDT)
-Subject: Re: [PATCH 1/2] Change default merge backend from recursive to ort
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Mon, 02 Aug 2021 20:08:29 -0700 (PDT)
+Subject: Re: [PATCH v3 0/4] clone: update submodule.recurse in config when
+ using --recurse-submodule
+To:     Mahi Kolla via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Cc:     Christian Couder <chriscool@tuxfamily.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.1055.git.git.1627776461.gitgitgadget@gmail.com>
- <8f6af8d494e0924aef4ae6963b8dca2228dad9b1.1627776462.git.gitgitgadget@gmail.com>
+References: <pull.1006.v2.git.1627943914.gitgitgadget@gmail.com>
+ <pull.1006.v3.git.1627946590.gitgitgadget@gmail.com>
 From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <49b61447-06b7-9c43-fdd6-25adc45f2a88@gmail.com>
-Date:   Mon, 2 Aug 2021 22:56:02 -0400
+Message-ID: <5e42756e-09bb-d51e-71c1-3aab93c2d27a@gmail.com>
+Date:   Mon, 2 Aug 2021 23:08:28 -0400
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
  Gecko/20100101 Thunderbird/78.12.0
 MIME-Version: 1.0
-In-Reply-To: <8f6af8d494e0924aef4ae6963b8dca2228dad9b1.1627776462.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1006.v3.git.1627946590.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: fr
 Content-Transfer-Encoding: 8bit
@@ -89,29 +77,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Hi Mahi,
 
-Le 2021-07-31 à 20:07, Elijah Newren via GitGitGadget a écrit :
-> From: Elijah Newren <newren@gmail.com>
+Le 2021-08-02 à 19:23, Mahi Kolla via GitGitGadget a écrit :
+> When running 'git clone --recurse-submodules', developers expect various
+> other commands such as 'pull' and 'checkout' to also run recursively into
+> submodules.The submitted code updates the 'submodule.recurse' config value
+> to true when 'git clone' is run with the '--recurse-submodules' option.
 > 
+> Signed-off-by: Mahi Kolla mahikolla@google.com
 > 
->    * `git diff AUTO_MERGE` -- ability to see what changes the user has
->      made to resolve conflicts so far (see commit 5291828df8 ("merge-ort:
->      write $GIT_DIR/AUTO_MERGE whenever we hit a conflict", 2021-03-20)
+> Mahi Kolla (4):
+>    clone: update submodule.recurse in config when using
+>      --recurse-submodule
+>    clone: update submodule.recurse in config when using
+>      --recurse-submodule
+>    clone test: update whitespace according to style guide
+>    clone: update whitespace according to style guide
+
+
+This could all be done in a single patch. As long as the patches are not merged
+to the 'next' branch, you can simply force-push and re '/submit' on Gitgitgadget.
+
 > 
->
-> The last three have been implemented already (though only one has been
-> submitted upstream so far; 
+>   builtin/clone.c          | 1 +
+>   t/t5606-clone-options.sh | 7 +++++++
+>   2 files changed, 8 insertions(+)
 
- From what I could find this indeed only refers to your 5291828df8 (merge-ort:
-write $GIT_DIR/AUTO_MERGE whenever we hit a conflict, 2021-03-20).
-This is a very nice improvement, but I noticed it is not mentioned in the doc.
-Do you plan to update the 'git diff' doc to mention that special ref ?
-(And maybe also gitrevisions(5), where most of the special refs are listed ?)
+I think this change would require a mention in the 'git-clone(1)' man page.
 
-Do you plan to implement a new '--auto-merge' option to 'git diff' as a shortcut
-to 'git diff AUTO_MERGE', in order to hide a bit the special ref from users ?
-
-Thanks a lot for your work,
-
-Philippe.
+I'm very much in favor of a change like this. It is a pretty big change in
+behaviour, but I really believe this is a good way forward. Thanks for getting
+the ball rolling on this!
