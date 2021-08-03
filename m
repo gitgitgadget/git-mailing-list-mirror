@@ -8,64 +8,63 @@ X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0FB3C4338F
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 23:04:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09BAFC4338F
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 23:05:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C29EB60F93
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 23:04:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD50260F70
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 23:05:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232231AbhHCXEO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 19:04:14 -0400
-Received: from mout.gmx.net ([212.227.15.18]:38189 "EHLO mout.gmx.net"
+        id S232259AbhHCXFb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Aug 2021 19:05:31 -0400
+Received: from mout.gmx.net ([212.227.15.18]:32827 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231482AbhHCXEN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Aug 2021 19:04:13 -0400
+        id S231482AbhHCXFb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Aug 2021 19:05:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1628031840;
-        bh=h8VADivIz9qZ2yPTaGJ2qSum/min1G08lSt3jabtNCM=;
+        s=badeba3b8450; t=1628031918;
+        bh=Ush3+vcJ2LL1KQqZ16ooPL+T34Tl8tVpXQzkrVvXB3w=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=dRJrvYXzF8XZi4PPf9i0AEPRjgeYATScHaW+RoSyKEPqOGkU0NzEtKYALs6hZuA6f
-         I6KNg0e6clvtM402RceWMYs1Lq5nLeJwfxW1ybPUZ7VZvuiQnculFuqaIhOiKGEhMg
-         KoLNXtW3rrJ3QZPWdPW1ScQzM+5dGe47asWa/6Cw=
+        b=OTQfKpXT6usUGyImT3kHnvMljafwVIZueuiQk1f8YI5qpnBVisRYK9UEgzdfqk3R1
+         AkMwnv44/TwscwJ+h4IqBow/AJMtZ/J1j5Xd0LBfBZbqWKzcE5BEvOSlpif729zVJf
+         FY/fo+YhNTff2yoNhQ7tY3gl8c59H+HyiL0rj8ww=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.19.101.220] ([89.1.212.168]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MpDNl-1mwX9T2jL5-00qfdl; Wed, 04
- Aug 2021 01:04:00 +0200
-Date:   Wed, 4 Aug 2021 01:03:59 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MOzOw-1mVtkA0x5w-00PQ62; Wed, 04
+ Aug 2021 01:05:18 +0200
+Date:   Wed, 4 Aug 2021 01:05:17 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
 cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 09/10] Documentation: add coverage of the `ort` merge
- strategy
-In-Reply-To: <37a69fd2e0bdb7fba6b6c47c3edec0964165cb61.1628004920.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2108040102220.55@tvgsbejvaqbjf.bet>
-References: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com> <37a69fd2e0bdb7fba6b6c47c3edec0964165cb61.1628004920.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 10/10] Update error message and code comment
+In-Reply-To: <2a7169c8c1be425d4234e414c106ad1278aacdd6.1628004920.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2108040104150.55@tvgsbejvaqbjf.bet>
+References: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com> <2a7169c8c1be425d4234e414c106ad1278aacdd6.1628004920.git.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:R3KJ9BsYqwLUwVZBCGjJkUwfR9niRRTuXK/hRgii8BnSVDXlRWn
- Mi+0zPSeMnZSkjXF4mFxWK/Zf/3elq847zF2C1Mt8OfgCaX+7Er4ZHrKrfEeck7BWigWsvA
- GMdF0fGdsuTnGnrY/NHqDoN73MGhg1CE5G4lE5r0q6YYLLJdA73F/raR2SHW3y7beOOArG3
- YbKan7G1QFwQVAekPsTzg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:MtP+r0V1Mgc=:OCazCpcVwtRrWNQFJ7xkXj
- bkB9zGTKUlyHw6U3l0g6vyF8ye5E7g/VUPCD2EAw2qP3srzzKw0fxtHCmnrCCk1mRKTB5sPv5
- s5xw1gQctxq2fTnuEPS6UXqFhXGVFI26KFyf0F0C41oRCmGK7ckAUz4RpHjHd+qoJP7kFViw4
- nrCDMWYvvoujV9IXgp7knQIasyyysXUPzV7ErGv8LPB1gApMk/TEt9IDuoNiIaZhZl2thPtBj
- UviVU++5EUSBGX0UKWIAuOXrQmGK9VIbl67TDu+81esSxuewZpL4ypE45tr67LfZvcoO6vmY7
- SVnkwWDC5RBRLpt+/59OzUBNkhZdups7ho51hIDJR+lxPOhVA/46HnTBgjDgTCkckJ0eBFSDD
- Zn6iLLkS3wjrTP+CB8zL0eIzx4ektwGn8YAQ5xJsBFWQAQ6r69E+MHHqD4aNvWaQulcl2Y4qh
- 0iW/I+lLmKBZMK94FSSTJUL2BV9rn/u38qiOjmcXW3yet0g858nL+7Xbynwp8IVRZMwzy4hea
- 7peSDgK/Bq2OxkBiVqnWa1y/Q5IDaUc9qD3va3JgDRDrcB4rEvnbBdarPIXv3AqbDsCbrMlIj
- OpLABua4KEpu20YXWzN6oX2+YLYtrRu679qnOqQwPe6VtmWo7JzfwqBvgsbbgC/6QUWsqkzW8
- zb/2tz9Ksfs9H0K37qY5b0z3HvhhIgt5buRPH4T+12WXvrKcaMgBZ63IYmaCMBNVQ4TMRy9MI
- mC0tKo305HCqs/bQ9OGRBPu9g1yD6To+Eu5tbRXJWviPkJYn7Y/+pf0ARpr3fMm/3D0ffUPrh
- LDktmCQtWpdj4C9lIGWL0x6q98SqM3hOD7n0xLjKZahLLoLAnIfSLRnGdibxyRxkq6BWsrRj8
- vhSEZkH4UwfkFoZdbKRpzT3gO+iCeQarzt8865ZxcQacATX7Rvlt7ghEab6sGD3jVnBdsTgZ5
- KP2P34EK2MrLUPohgAQ4DuHgGPafRJWkm/rJyFMudJ8tHGR8JbDSwd1LhycAuttuv1KDfwCCi
- 8OjgRhYc0TqstnPbCOX3BZ7PpQz2qFwkZOyIEeJfpgMOmIuLVRtAne9kkcTppuYKbIUP8BwBP
- J9W1zFEIbJ4QHESOn1H+hYnbEwv5rzhprDMCwcbbfBAe+5taWZiTq1Mrw==
+X-Provags-ID: V03:K1:GrGdAcGOqd0RXbkRBL5PGmvyXXDprxvd3CxR88iCbS9qG9yYAoe
+ Nuw2NeIvLpZFB2iHhXKsV1fPwcI4oTdRgVrXj6xflqbjYf0uFI1s58gIQs6xNbHAgo/0Jjd
+ PztSMHouEE4Ili12vDcCrz4HyNJ+xCLGwKIUL0DB23C1/ke28TWS2rZP7fngoNH7fE7Iqud
+ vboDUpVqRnvdF6Mgu19Zg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:FljxyTqvy/I=:a8gjBH8hMa7ydpvAtCZnFg
+ Rrun/0Tx4nxbKh8nc4aG3p6D7NaIHvZ4t+mKmlLne/plOj30DUgVSb+osDd1QzlYfxR8Py9hd
+ 4mp7tnGCkbzmdHLrgvgrSNdFboc8tceaO03c47XxH0GDHLaw/b5eQfJgPaZHfieO2lX8qdxXN
+ WDT44Ii9XMK/fqO8wSG+lxrhTC3mJaUjaPi2aApfE593L3edPl4nU+Eg6WJSg00WgOQo+2+VK
+ nyReIrLgy4o2XwzU8qeyaaS+ddgpn9vXk8sPP/+22Te3hjimu/jCe+9momSgOHGkhBLa0KF6D
+ S0wr+yG4WHJ9xJ7XAAtGQ3V6SrUYr3B45cPNSQAHeohMf+tpTpq2/1dQbgsxW6NhFipNV+Kcw
+ C2zN8yJGY7rpfDEaJiZXRspn9UbHuuQpBe9flnxnTBh+XXdincozKoDEsZmJo7+i5R24Rjnj9
+ 90BbQED75oCE8ddFq51gscQDI3iqb8qylZLeIj6LSHYENGiGWqnC+i67+urR+4s/7Nwql1Naq
+ Jntv2f0FQ+6xIlykjvfbkzTvSci6tMWhkZUCwqOrWtdbHi71AQ1UQtXS+E6lZTcG4qNFDxeoT
+ 7w4RQ1GIZSNiDzAzX04V/GGAYA1NB/Vo6UjJToH3XypuXXF2d6CFREMfJ7RZwhdx7vHkecX+d
+ hc5K6iLnAqYMq/PQjsLnVDiNH2J7z6QCGQ1xdaVlvaa+wDvQhtnmPxAKoVCt2zt1dErsb/PE2
+ osNKtoY1DK5c3yjgJ8+ZYjfXHcs20seQ35KsFpfDOtPanw8bQR2aN5xYv2J3CY6B5stnNNGg2
+ qZMZXPlUH0EtBZmAp31aOalAaiqO8ZAwVVhgAtAKRKXrV1Fs0UHJauvbJ5YgZKj1CEnAv6s4W
+ tE3KEf+bbjQY2uv6rMjGIjMS2Y4a8Qj/0O1RjC7gdPSfbKT7a5UVHulU8D+ILCg1bXF5dVFg/
+ BhGYd02auZbfC8cuvSLkOSopoQrY3qMcBhGJtjNpvv78ZFrKq45JjaeQ883FCCQwAKHFJ/E1o
+ v7uAY19JhjT++7L7WuJ58LMmCOPjjr/0mp8R5dpLkqMbf6wUSRW88X+nZ4ucXKQvuh9HP0USF
+ XL20r1s8CdURQoSLMaIGZbhl95GuqO+w/IKYVhWWL2ECsE5WWBgOK44gw==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -77,69 +76,51 @@ On Tue, 3 Aug 2021, Elijah Newren via GitGitGadget wrote:
 
 > From: Elijah Newren <newren@gmail.com>
 >
+> There were two locations in the code that referred to 'merge-recursive'
+> but which were also applicable to 'merge-ort'.  Update them to more
+> general wording.
+>
 > Signed-off-by: Elijah Newren <newren@gmail.com>
 > ---
->  Documentation/git-rebase.txt       |  7 ++++---
->  Documentation/merge-strategies.txt | 14 ++++++++++++++
->  2 files changed, 18 insertions(+), 3 deletions(-)
+>  builtin/merge.c | 2 +-
+>  sequencer.c     | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index b4429954480..3e112011c6f 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -340,9 +340,10 @@ See also INCOMPATIBLE OPTIONS below.
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index a8a843b1f54..24b62a9c532 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -738,7 +738,7 @@ static int try_merge_strategy(const char *strategy, =
+struct commit_list *common,
 >
->  -m::
->  --merge::
-> -	Use merging strategies to rebase.  When the recursive (default) merge
-> -	strategy is used, this allows rebase to be aware of renames on the
-> -	upstream side.  This is the default.
-> +	Use merging strategies to rebase.  When either the `recursive`
-> +	(default) or `ort` merge strategy is used, this allows rebase
-> +	to be aware of renames on the upstream side.  This is the
-> +	default.
+>  		for (x =3D 0; x < xopts_nr; x++)
+>  			if (parse_merge_opt(&o, xopts[x]))
+> -				die(_("Unknown option for merge-recursive: -X%s"), xopts[x]);
+> +				die(_("Unknown strategy option: -X%s"), xopts[x]);
 
-Since this now talks about two merge strategies, I think "This is the
-default" needs to specify which of the two strategies is the default.
+Since we updated our rules to start `die()` messages with a lower-case
+letter, we could sneak in this change here, too. That would save
+translators one extra round.
 
->  +
->  Note that a rebase merge works by replaying each commit from the workin=
-g
->  branch on top of the <upstream> branch.  Because of this, when a merge
-> diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-st=
-rategies.txt
-> index d21dbd1e051..d13d4a29875 100644
-> --- a/Documentation/merge-strategies.txt
-> +++ b/Documentation/merge-strategies.txt
-> @@ -96,6 +96,20 @@ subtree[=3D<path>];;
->  	is prefixed (or stripped from the beginning) to make the shape of
->  	two trees to match.
->
-> +ort::
-> +	This is meant as a drop-in replacement for the `recursive`
-> +	algorithm (as reflected in its acronym -- "Ostensibly
-> +	Recursive's Twin"), and will likely replace it in the future.
-> +	It fixes corner cases that the `recursive` strategy handles
-> +	suboptimally, and is significantly faster in large
-> +	repositories -- especially when many renames are involved.
-> ++
-> +The `ort` strategy takes all the same options as `recursive`.
-> +However, it ignores three of those options: `no-renames`,
-> +`patience` and `diff-algorithm`.  It always runs with rename
-> +detection (it handles it much faster than `recursive` does), and
-> +it specifically uses diff-algorithm=3Dhistogram.
-
-Probably `diff-algorithm=3Dhistogram` should also be enclosed within
-backticks.
-
-Thanks,
+Thank you,
 Dscho
 
-> +
->  resolve::
->  	This can only resolve two heads (i.e. the current branch
->  	and another branch you pulled from) using a 3-way merge
+>
+>  		o.branch1 =3D head_arg;
+>  		o.branch2 =3D merge_remote_util(remoteheads->item)->name;
+> diff --git a/sequencer.c b/sequencer.c
+> index 7f07cd00f3f..a4e5c43fcf2 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2065,7 +2065,7 @@ static int do_pick_commit(struct repository *r,
+>  		/*
+>  		 * We do not intend to commit immediately.  We just want to
+>  		 * merge the differences in, so let's compute the tree
+> -		 * that represents the "current" state for merge-recursive
+> +		 * that represents the "current" state for the merge machinery
+>  		 * to work on.
+>  		 */
+>  		if (write_index_as_tree(&head, r->index, r->index_file, 0, NULL))
 > --
 > gitgitgadget
->
 >
