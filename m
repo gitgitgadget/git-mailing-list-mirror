@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14705C432BE
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CD70C4338F
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:39:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E7F6D60EE8
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:39:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 62B0461037
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 19:39:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240202AbhHCTjj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 15:39:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51528 "EHLO
+        id S240168AbhHCTjl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Aug 2021 15:39:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240163AbhHCTjc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Aug 2021 15:39:32 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B2EAC0617A3
-        for <git@vger.kernel.org>; Tue,  3 Aug 2021 12:39:20 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id o7-20020a05600c5107b0290257f956e02dso2453833wms.1
-        for <git@vger.kernel.org>; Tue, 03 Aug 2021 12:39:20 -0700 (PDT)
+        with ESMTP id S240166AbhHCTjf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Aug 2021 15:39:35 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57E1DC06175F
+        for <git@vger.kernel.org>; Tue,  3 Aug 2021 12:39:24 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id k4so13117477wms.3
+        for <git@vger.kernel.org>; Tue, 03 Aug 2021 12:39:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lAAbXBYdpEO1cfxlL+YncxaM2ks2LM0GqRmmthC9rJ8=;
-        b=cnyzXfNsv+cfexBMeC5b4E5rZQ7+2zJGtJv7IfT7Te154t2ooN02O+LllzeB51JYsi
-         woXyP5aEaY8M0Dm9OB12rREW0ZEQfZHpUWITC474xaX/64BS8k8DdlTydwzEdHdOBXh0
-         +zXysZa/Gv/TV3znPV6wR4p4aqY0mbsg81nMPTj5zgqOZkEagnQC0kUmJENXthAMdEuf
-         0XehNi2xA+jBs1ra5m+Jx9+sbI0eDRJUtMgzMwLBwWw4KylccVMOhwcxn2FUpVC6rJKb
-         f72irRBWuQ0BkQ+6zsApZR6P1mNkTc34vlLFBLizL269eJ8h7n16WtK5crTAz9ZwwOYY
-         ZS4g==
+        bh=wxcYyH3X1IBtvpSgbAsZeL/2zSSIb+lJzM4MNiz9lK4=;
+        b=R+hg4Rbg6wCzJa8RbUCdb+PXsVN/9dC1bXGnhdDUqkef5fr7JO7UjhBzzzQf55Le7/
+         +WmvXIxTiG1Jb//L2EGrK7yLxAJeFXPUUrV1YB9lTHa2IUAI4zPhkx/vsHy/ZfZpahzo
+         DRO+7Mzbq0gPZAitt0v/2Qx3BUJVVLvIFPpvwOReB2x3rSY49up47GQdTyvA/OXe8U+w
+         RawD3iZBVxa/yANOvRpajxTUy8cUitQgzWCVnyjQuaH86hCX18EfZsCzCc62o8qoNzKA
+         SNxANXX82fgM1MF9oHrN7IUpIkrrAISJPfUueCzVjg18nBgi35ObELes8OJLyVapwKLG
+         ClyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lAAbXBYdpEO1cfxlL+YncxaM2ks2LM0GqRmmthC9rJ8=;
-        b=pXw66hjMWLIXTmrTN5qsUVhPYtgCikUCNmBvQtjY0oDGo6XZ+u9l0mhSvDAKVwVnn1
-         764ZlsqwhU/gXj6hhtN5bCHEvPfC9041e/6HSkNvZOBS3XOtmXzSaHbL/IX502Ms6Tf9
-         iq8BxGRh7fR3eHfAOqT2LZLRZr1MIkwtcOBcZvL+C0iqWPzi05YJxpv549KXQfJuJY71
-         82xVVgH2smt7p85p6e7VkF+m5AoKY6jRrtT7fUOvSbnC74VsAnfD8+JWxwmFTekdfBFT
-         pyAfPoxSMiBpkuH7eYkaGuBf5FBVOKd02CEUnGTY9flCimeAusUQB0Sr6NM5aUU20ZpH
-         ZlgQ==
-X-Gm-Message-State: AOAM531gyTAj4mUASnZIjlirM8m41rERiuPyzBaCXYqhrCOLM2HrzGPS
-        2gvhooRCXVWZoYVdL7MDT4OhkPYAWMkHsQ==
-X-Google-Smtp-Source: ABdhPJylH9pjWEcN1nVl6mfriQxW4QgFaF5sGpdmwNLgSVDXO8GlotgaHuD8/EBqiRepAL/2UTUqeA==
-X-Received: by 2002:a1c:2784:: with SMTP id n126mr4293546wmn.32.1628019558124;
-        Tue, 03 Aug 2021 12:39:18 -0700 (PDT)
+        bh=wxcYyH3X1IBtvpSgbAsZeL/2zSSIb+lJzM4MNiz9lK4=;
+        b=j+sh5UGsb/g8hI7yPNBnqSoQls5VKweaB6l+CSbk5oCYSQPBibcz+D9QxhghBQdybF
+         z4eCl3hUeO5rA6VTY7PLB/Ok+98EJUnMilP/yCH2+dChSTHz35RIaORh57cv2IJVjtem
+         l4mN2BJli5Nub+exwuxMSdpy8KA1OD6pXHbN+aYDPQ3J0VY8S7Ch0SpJTpxkhfWaIxFe
+         1hufJq4u/jO4HFkQJaj+3pXgcbnPasv2yT0/zydWBQ1hghp+Ygeo4dmCbJWeKvs2NBng
+         qNzSTUbbLmXC1LKN75F8wUOjvLMi8h9eCprsxEkj7XidkinzKAfuoevYvzTX+Dh19Zwn
+         kJ4A==
+X-Gm-Message-State: AOAM530et+kZkhfPTzsanfZGUPHV9IrnYHZ9hwwFm5LNQuHJOQwyDLjd
+        +7lqHXxb29SL22DY6Y5oFiPWER3aunrTdQ==
+X-Google-Smtp-Source: ABdhPJymQ9NCP59XXo34+iYVIVRMAc+PIKmesoQeCCd/UytwN8yIRB5Iqtci0P+Y/f84ADmVYArqYw==
+X-Received: by 2002:a1c:f314:: with SMTP id q20mr5990242wmq.154.1628019562648;
+        Tue, 03 Aug 2021 12:39:22 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n8sm15333562wrx.46.2021.08.03.12.39.16
+        by smtp.gmail.com with ESMTPSA id n8sm15333562wrx.46.2021.08.03.12.39.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 12:39:17 -0700 (PDT)
+        Tue, 03 Aug 2021 12:39:22 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -70,9 +70,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 08/36] hook: add 'run' subcommand
-Date:   Tue,  3 Aug 2021 21:38:34 +0200
-Message-Id: <patch-v4-08.36-7cb4a4cb69e-20210803T191505Z-avarab@gmail.com>
+Subject: [PATCH v4 12/36] hooks: convert 'post-checkout' hook to hook library
+Date:   Tue,  3 Aug 2021 21:38:38 +0200
+Message-Id: <patch-v4-12.36-ac875d284da-20210803T191505Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.rc0.593.g54be4d223c3
 In-Reply-To: <cover-v4-00.36-00000000000-20210803T191505Z-avarab@gmail.com>
 References: <cover-00.27-0000000000-20210617T101216Z-avarab@gmail.com> <cover-v4-00.36-00000000000-20210803T191505Z-avarab@gmail.com>
@@ -85,580 +85,235 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-In order to enable hooks to be run as an external process, by a
-standalone Git command, or by tools which wrap Git, provide an external
-means to run all configured hook commands for a given hook event.
+Move the running of the 'post-checkout' hook away from run-command.h
+to the new hook.h library. For "worktree" this requires a change to it
+to run the hooks from a given directory.
 
-Most of our hooks require more complex functionality than this, but
-let's start with the bare minimum required to support our simplest
-hooks.
-
-In terms of implementation the usage_with_options() and "goto usage"
-pattern here mirrors that of
-builtin/{commit-graph,multi-pack-index}.c.
+We could strictly speaking skip the "absolute_path" flag and just
+check if "dir" is specified, but let's split them up for clarity, as
+well as for any future user who'd like to set "dir" but not implicitly
+change the argument to an absolute path.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .gitignore                 |   1 +
- Documentation/git-hook.txt |  38 +++++++++++
- Documentation/githooks.txt |   4 ++
- Makefile                   |   1 +
- builtin.h                  |   1 +
- builtin/hook.c             |  85 ++++++++++++++++++++++++
- command-list.txt           |   1 +
- git.c                      |   1 +
- hook.c                     | 111 +++++++++++++++++++++++++++++++
- hook.h                     |  41 ++++++++++++
- t/t1800-hook.sh            | 133 +++++++++++++++++++++++++++++++++++++
- 11 files changed, 417 insertions(+)
- create mode 100644 Documentation/git-hook.txt
- create mode 100644 builtin/hook.c
- create mode 100755 t/t1800-hook.sh
+ builtin/checkout.c | 14 +++++++++-----
+ builtin/clone.c    |  6 ++++--
+ builtin/worktree.c | 28 ++++++++++++----------------
+ hook.c             |  9 +++++++++
+ hook.h             |  8 ++++++++
+ read-cache.c       |  1 +
+ reset.c            | 14 ++++++++++----
+ 7 files changed, 53 insertions(+), 27 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 6be9de41ae8..66189ca3cdc 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -77,6 +77,7 @@
- /git-grep
- /git-hash-object
- /git-help
-+/git-hook
- /git-http-backend
- /git-http-fetch
- /git-http-push
-diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
-new file mode 100644
-index 00000000000..660d6a992a0
---- /dev/null
-+++ b/Documentation/git-hook.txt
-@@ -0,0 +1,38 @@
-+git-hook(1)
-+===========
-+
-+NAME
-+----
-+git-hook - run git hooks
-+
-+SYNOPSIS
-+--------
-+[verse]
-+'git hook' run <hook-name> [-- <hook-args>]
-+
-+DESCRIPTION
-+-----------
-+
-+This command is an interface to git hooks (see linkgit:githooks[5]).
-+Currently it only provides a convenience wrapper for running hooks for
-+use by git itself. In the future it might gain other functionality.
-+
-+SUBCOMMANDS
-+-----------
-+
-+run::
-+	Run the `<hook-name>` hook. See linkgit:githooks[5] for
-+	the hook names we support.
-++
-+Any positional arguments to the hook should be passed after an
-+optional `--` (or `--end-of-options`, see linkgit:gitcli[7]). The
-+arguments (if any) differ by hook name, see linkgit:githooks[5] for
-+what those are.
-+
-+SEE ALSO
-+--------
-+linkgit:githooks[5]
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index b51959ff941..a16e62bc8c8 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -698,6 +698,10 @@ and "0" meaning they were not.
- Only one parameter should be set to "1" when the hook runs.  The hook
- running passing "1", "1" should not be possible.
- 
-+SEE ALSO
-+--------
-+linkgit:git-hook[1]
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/Makefile b/Makefile
-index 1740b99db00..e68ca41507f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1114,6 +1114,7 @@ BUILTIN_OBJS += builtin/get-tar-commit-id.o
- BUILTIN_OBJS += builtin/grep.o
- BUILTIN_OBJS += builtin/hash-object.o
- BUILTIN_OBJS += builtin/help.o
-+BUILTIN_OBJS += builtin/hook.o
- BUILTIN_OBJS += builtin/index-pack.o
- BUILTIN_OBJS += builtin/init-db.o
- BUILTIN_OBJS += builtin/interpret-trailers.o
-diff --git a/builtin.h b/builtin.h
-index 16ecd5586f0..91740c15149 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -164,6 +164,7 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix);
- int cmd_grep(int argc, const char **argv, const char *prefix);
- int cmd_hash_object(int argc, const char **argv, const char *prefix);
- int cmd_help(int argc, const char **argv, const char *prefix);
-+int cmd_hook(int argc, const char **argv, const char *prefix);
- int cmd_index_pack(int argc, const char **argv, const char *prefix);
- int cmd_init_db(int argc, const char **argv, const char *prefix);
- int cmd_interpret_trailers(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/hook.c b/builtin/hook.c
-new file mode 100644
-index 00000000000..41dd15550cf
---- /dev/null
-+++ b/builtin/hook.c
-@@ -0,0 +1,85 @@
-+#include "cache.h"
-+#include "builtin.h"
-+#include "config.h"
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index f4cd7747d35..6d69b4c0113 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -9,6 +9,7 @@
+ #include "config.h"
+ #include "diff.h"
+ #include "dir.h"
 +#include "hook.h"
-+#include "parse-options.h"
-+#include "strbuf.h"
-+#include "strvec.h"
-+
-+#define BUILTIN_HOOK_RUN_USAGE \
-+	N_("git hook run <hook-name> [-- <hook-args>]")
-+
-+static const char * const builtin_hook_usage[] = {
-+	BUILTIN_HOOK_RUN_USAGE,
-+	NULL
-+};
-+
-+static const char * const builtin_hook_run_usage[] = {
-+	BUILTIN_HOOK_RUN_USAGE,
-+	NULL
-+};
-+
-+static int run(int argc, const char **argv, const char *prefix)
-+{
-+	int i;
+ #include "ll-merge.h"
+ #include "lockfile.h"
+ #include "merge-recursive.h"
+@@ -106,13 +107,16 @@ struct branch_info {
+ static int post_checkout_hook(struct commit *old_commit, struct commit *new_commit,
+ 			      int changed)
+ {
+-	return run_hook_le(NULL, "post-checkout",
+-			   oid_to_hex(old_commit ? &old_commit->object.oid : null_oid()),
+-			   oid_to_hex(new_commit ? &new_commit->object.oid : null_oid()),
+-			   changed ? "1" : "0", NULL);
 +	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
-+	const char *hook_name;
-+	const char *hook_path;
-+	struct option run_options[] = {
-+		OPT_END(),
-+	};
-+	int ret;
 +
-+	argc = parse_options(argc, argv, prefix, run_options,
-+			     builtin_hook_run_usage,
-+			     PARSE_OPT_KEEP_DASHDASH);
-+
-+	if (!argc)
-+		goto usage;
-+
-+	/*
-+	 * Having a -- for "run" when providing <hook-args> is
-+	 * mandatory.
-+	 */
-+	if (argc > 1 && strcmp(argv[1], "--") &&
-+	    strcmp(argv[1], "--end-of-options"))
-+		goto usage;
-+
-+	/* Add our arguments, start after -- */
-+	for (i = 2 ; i < argc; i++)
-+		strvec_push(&opt.args, argv[i]);
-+
-+	/* Need to take into account core.hooksPath */
-+	git_config(git_default_config, NULL);
-+
-+	hook_name = argv[0];
-+	hook_path = find_hook(hook_name);
-+	if (!hook_path) {
-+		error("cannot find a hook named %s", hook_name);
-+		return 1;
-+	}
-+
-+	ret = run_hooks(hook_name, hook_path, &opt);
-+	run_hooks_opt_clear(&opt);
-+	return ret;
-+usage:
-+	usage_with_options(builtin_hook_run_usage, run_options);
-+}
-+
-+int cmd_hook(int argc, const char **argv, const char *prefix)
-+{
-+	struct option builtin_hook_options[] = {
-+		OPT_END(),
-+	};
-+
-+	argc = parse_options(argc, argv, NULL, builtin_hook_options,
-+			     builtin_hook_usage, PARSE_OPT_STOP_AT_NON_OPTION);
-+	if (!argc)
-+		goto usage;
-+
-+	if (!strcmp(argv[0], "run"))
-+		return run(argc, argv, prefix);
-+
-+usage:
-+	usage_with_options(builtin_hook_usage, builtin_hook_options);
-+}
-diff --git a/command-list.txt b/command-list.txt
-index a289f09ed6f..9ccd8e5aebe 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -103,6 +103,7 @@ git-grep                                mainporcelain           info
- git-gui                                 mainporcelain
- git-hash-object                         plumbingmanipulators
- git-help                                ancillaryinterrogators          complete
-+git-hook                                mainporcelain
- git-http-backend                        synchingrepositories
- git-http-fetch                          synchelpers
- git-http-push                           synchelpers
-diff --git a/git.c b/git.c
-index 18bed9a9964..540909c391f 100644
---- a/git.c
-+++ b/git.c
-@@ -538,6 +538,7 @@ static struct cmd_struct commands[] = {
- 	{ "grep", cmd_grep, RUN_SETUP_GENTLY },
- 	{ "hash-object", cmd_hash_object },
- 	{ "help", cmd_help },
-+	{ "hook", cmd_hook, RUN_SETUP },
- 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY | NO_PARSEOPT },
- 	{ "init", cmd_init_db },
- 	{ "init-db", cmd_init_db },
-diff --git a/hook.c b/hook.c
-index 1f1db1ec9bf..c8ff3975043 100644
---- a/hook.c
-+++ b/hook.c
-@@ -2,11 +2,14 @@
- #include "hook.h"
- #include "run-command.h"
- #include "hook-list.h"
-+#include "config.h"
- 
- static int known_hook(const char *name)
- {
- 	const char **p;
- 	size_t len = strlen(name);
-+	static int test_hooks_ok = -1;
-+
- 	for (p = hook_name_list; *p; p++) {
- 		const char *hook = *p;
- 
-@@ -14,6 +17,14 @@ static int known_hook(const char *name)
- 			return 1;
- 	}
- 
-+	if (test_hooks_ok == -1)
-+		test_hooks_ok = git_env_bool("GIT_TEST_FAKE_HOOKS", 0);
-+
-+	if (test_hooks_ok &&
-+	    (!strcmp(name, "test-hook") ||
-+	     !strcmp(name, "does-not-exist")))
-+		return 1;
-+
- 	return 0;
+ 	/* "new_commit" can be NULL when checking out from the index before
+ 	   a commit exists. */
+-
++	strvec_pushl(&opt.args,
++		     oid_to_hex(old_commit ? &old_commit->object.oid : null_oid()),
++		     oid_to_hex(new_commit ? &new_commit->object.oid : null_oid()),
++		     changed ? "1" : "0",
++		     NULL);
++	return run_hooks_oneshot("post-checkout", &opt);
  }
  
-@@ -59,3 +70,103 @@ int hook_exists(const char *name)
- {
- 	return !!find_hook(name);
- }
-+
-+void run_hooks_opt_clear(struct run_hooks_opt *o)
-+{
-+	strvec_clear(&o->env);
-+	strvec_clear(&o->args);
-+}
-+
-+static int pick_next_hook(struct child_process *cp,
-+			  struct strbuf *out,
-+			  void *pp_cb,
-+			  void **pp_task_cb)
-+{
-+	struct hook_cb_data *hook_cb = pp_cb;
-+	struct hook *run_me = hook_cb->run_me;
-+
-+	if (!run_me)
-+		return 0;
-+
-+	cp->no_stdin = 1;
-+	cp->env = hook_cb->options->env.v;
-+	cp->stdout_to_stderr = 1;
-+	cp->trace2_hook_name = hook_cb->hook_name;
-+
-+	/* add command */
-+	strvec_push(&cp->args, run_me->hook_path);
-+
-+	/*
-+	 * add passed-in argv, without expanding - let the user get back
-+	 * exactly what they put in
-+	 */
-+	strvec_pushv(&cp->args, hook_cb->options->args.v);
-+
-+	/* Provide context for errors if necessary */
-+	*pp_task_cb = run_me;
-+
-+	/*
-+	 * This pick_next_hook() will be called again, we're only
-+	 * running one hook, so indicate that no more work will be
-+	 * done.
-+	 */
-+	hook_cb->run_me = NULL;
-+
-+	return 1;
-+}
-+
-+static int notify_start_failure(struct strbuf *out,
-+				void *pp_cb,
-+				void *pp_task_cp)
-+{
-+	struct hook_cb_data *hook_cb = pp_cb;
-+	struct hook *attempted = pp_task_cp;
-+
-+	hook_cb->rc |= 1;
-+
-+	strbuf_addf(out, _("Couldn't start hook '%s'\n"),
-+		    attempted->hook_path);
-+
-+	return 1;
-+}
-+
-+static int notify_hook_finished(int result,
-+				struct strbuf *out,
-+				void *pp_cb,
-+				void *pp_task_cb)
-+{
-+	struct hook_cb_data *hook_cb = pp_cb;
-+
-+	hook_cb->rc |= result;
-+
-+	return 0;
-+}
-+
-+int run_hooks(const char *hook_name, const char *hook_path,
-+	      struct run_hooks_opt *options)
-+{
-+	struct hook my_hook = {
-+		.hook_path = hook_path,
-+	};
-+	struct hook_cb_data cb_data = {
-+		.rc = 0,
-+		.hook_name = hook_name,
-+		.options = options,
-+	};
-+	int jobs = 1;
-+
-+	if (!options)
-+		BUG("a struct run_hooks_opt must be provided to run_hooks");
-+
-+	cb_data.run_me = &my_hook;
-+
-+	run_processes_parallel_tr2(jobs,
-+				   pick_next_hook,
-+				   notify_start_failure,
-+				   notify_hook_finished,
-+				   &cb_data,
-+				   "hook",
-+				   hook_name);
-+
-+	return cb_data.rc;
-+}
-diff --git a/hook.h b/hook.h
-index 4c547ac15e5..361984c69d4 100644
---- a/hook.h
-+++ b/hook.h
-@@ -1,5 +1,8 @@
- #ifndef HOOK_H
- #define HOOK_H
-+#include "strbuf.h"
-+#include "strvec.h"
-+#include "run-command.h"
+ static int update_some(const struct object_id *oid, struct strbuf *base,
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 66fe66679c8..27fc05ee511 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -32,6 +32,7 @@
+ #include "connected.h"
+ #include "packfile.h"
+ #include "list-objects-filter-options.h"
++#include "hook.h"
  
  /*
-  * Returns the path to the hook file, or NULL if the hook is missing
-@@ -13,4 +16,42 @@ const char *find_hook(const char *name);
-  */
- int hook_exists(const char *hookname);
+  * Overall FIXMEs:
+@@ -775,6 +776,7 @@ static int checkout(int submodule_progress)
+ 	struct tree *tree;
+ 	struct tree_desc t;
+ 	int err = 0;
++	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
  
-+struct hook {
-+	/* The path to the hook */
-+	const char *hook_path;
-+};
+ 	if (option_no_checkout)
+ 		return 0;
+@@ -820,8 +822,8 @@ static int checkout(int submodule_progress)
+ 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+ 		die(_("unable to write new index file"));
+ 
+-	err |= run_hook_le(NULL, "post-checkout", oid_to_hex(null_oid()),
+-			   oid_to_hex(&oid), "1", NULL);
++	strvec_pushl(&hook_opt.args, oid_to_hex(null_oid()), oid_to_hex(&oid), "1", NULL);
++	err |= run_hooks_oneshot("post-checkout", &hook_opt);
+ 
+ 	if (!err && (option_recurse_submodules.nr > 0)) {
+ 		struct strvec args = STRVEC_INIT;
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index d22ece93e1a..330867c19bf 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -382,22 +382,18 @@ static int add_worktree(const char *path, const char *refname,
+ 	 * is_junk is cleared, but do return appropriate code when hook fails.
+ 	 */
+ 	if (!ret && opts->checkout) {
+-		const char *hook = find_hook("post-checkout");
+-		if (hook) {
+-			const char *env[] = { "GIT_DIR", "GIT_WORK_TREE", NULL };
+-			cp.git_cmd = 0;
+-			cp.no_stdin = 1;
+-			cp.stdout_to_stderr = 1;
+-			cp.dir = path;
+-			cp.env = env;
+-			cp.argv = NULL;
+-			cp.trace2_hook_name = "post-checkout";
+-			strvec_pushl(&cp.args, absolute_path(hook),
+-				     oid_to_hex(null_oid()),
+-				     oid_to_hex(&commit->object.oid),
+-				     "1", NULL);
+-			ret = run_command(&cp);
+-		}
++		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
 +
-+struct run_hooks_opt
-+{
-+	/* Environment vars to be set for each hook */
-+	struct strvec env;
++		strvec_pushl(&opt.env, "GIT_DIR", "GIT_WORK_TREE", NULL);
++		strvec_pushl(&opt.args,
++			     oid_to_hex(null_oid()),
++			     oid_to_hex(&commit->object.oid),
++			     "1",
++			     NULL);
++		opt.dir = path;
++		opt.absolute_path = 1;
 +
-+	/* Args to be passed to each hook */
-+	struct strvec args;
-+};
++		ret = run_hooks_oneshot("post-checkout", &opt);
+ 	}
+ 
+ 	strvec_clear(&child_env);
+diff --git a/hook.c b/hook.c
+index 981a9bf46e6..5ecf79c8397 100644
+--- a/hook.c
++++ b/hook.c
+@@ -92,6 +92,7 @@ static int pick_next_hook(struct child_process *cp,
+ 	cp->env = hook_cb->options->env.v;
+ 	cp->stdout_to_stderr = 1;
+ 	cp->trace2_hook_name = hook_cb->hook_name;
++	cp->dir = hook_cb->options->dir;
+ 
+ 	/* add command */
+ 	strvec_push(&cp->args, run_me->hook_path);
+@@ -145,6 +146,7 @@ static int notify_hook_finished(int result,
+ int run_hooks(const char *hook_name, const char *hook_path,
+ 	      struct run_hooks_opt *options)
+ {
++	struct strbuf abs_path = STRBUF_INIT;
+ 	struct hook my_hook = {
+ 		.hook_path = hook_path,
+ 	};
+@@ -158,6 +160,10 @@ int run_hooks(const char *hook_name, const char *hook_path,
+ 	if (!options)
+ 		BUG("a struct run_hooks_opt must be provided to run_hooks");
+ 
++	if (options->absolute_path) {
++		strbuf_add_absolute_path(&abs_path, hook_path);
++		my_hook.hook_path = abs_path.buf;
++	}
+ 	cb_data.run_me = &my_hook;
+ 
+ 	run_processes_parallel_tr2(jobs,
+@@ -168,6 +174,9 @@ int run_hooks(const char *hook_name, const char *hook_path,
+ 				   "hook",
+ 				   hook_name);
+ 
++	if (options->absolute_path)
++		strbuf_release(&abs_path);
 +
-+#define RUN_HOOKS_OPT_INIT { \
-+	.env = STRVEC_INIT, \
-+	.args = STRVEC_INIT, \
-+}
+ 	return cb_data.rc;
+ }
+ 
+diff --git a/hook.h b/hook.h
+index 2201ab9d568..53ea3a9649e 100644
+--- a/hook.h
++++ b/hook.h
+@@ -28,6 +28,14 @@ struct run_hooks_opt
+ 
+ 	/* Args to be passed to each hook */
+ 	struct strvec args;
 +
-+/*
-+ * Callback provided to feed_pipe_fn and consume_sideband_fn.
-+ */
-+struct hook_cb_data {
-+	/* rc reflects the cumulative failure state */
-+	int rc;
-+	const char *hook_name;
-+	struct hook *run_me;
-+	struct run_hooks_opt *options;
-+};
++	/* Resolve and run the "absolute_path(hook)" instead of
++	 * "hook". Used for "git worktree" hooks
++	 */
++	int absolute_path;
 +
-+void run_hooks_opt_clear(struct run_hooks_opt *o);
-+
-+/**
-+ * Takes an already resolved hook found via find_hook() and runs
-+ * it. Does not call run_hooks_opt_clear() for you.
-+ */
-+int run_hooks(const char *hookname, const char *hook_path,
-+	      struct run_hooks_opt *options);
- #endif
-diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-new file mode 100755
-index 00000000000..644df0a583c
---- /dev/null
-+++ b/t/t1800-hook.sh
-@@ -0,0 +1,133 @@
-+#!/bin/bash
-+
-+test_description='git-hook command'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'git hook usage' '
-+	test_expect_code 129 git hook &&
-+	test_expect_code 129 git hook run &&
-+	test_expect_code 129 git hook run -h &&
-+	test_expect_code 129 git hook run --unknown 2>err &&
-+	grep "unknown option" err
-+'
-+
-+test_expect_success 'setup GIT_TEST_FAKE_HOOKS=true to permit "test-hook" and "does-not-exist" names"' '
-+	GIT_TEST_FAKE_HOOKS=true &&
-+	export GIT_TEST_FAKE_HOOKS
-+'
-+
-+test_expect_success 'git hook run: nonexistent hook' '
-+	cat >stderr.expect <<-\EOF &&
-+	error: cannot find a hook named test-hook
-+	EOF
-+	test_expect_code 1 git hook run test-hook 2>stderr.actual &&
-+	test_cmp stderr.expect stderr.actual
-+'
-+
-+test_expect_success 'git hook run: basic' '
-+	write_script .git/hooks/test-hook <<-EOF &&
-+	echo Test hook
-+	EOF
-+
-+	cat >expect <<-\EOF &&
-+	Test hook
-+	EOF
-+	git hook run test-hook 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git hook run: stdout and stderr both write to our stderr' '
-+	write_script .git/hooks/test-hook <<-EOF &&
-+	echo >&1 Will end up on stderr
-+	echo >&2 Will end up on stderr
-+	EOF
-+
-+	cat >stderr.expect <<-\EOF &&
-+	Will end up on stderr
-+	Will end up on stderr
-+	EOF
-+	git hook run test-hook >stdout.actual 2>stderr.actual &&
-+	test_cmp stderr.expect stderr.actual &&
-+	test_must_be_empty stdout.actual
-+'
-+
-+test_expect_success 'git hook run: exit codes are passed along' '
-+	write_script .git/hooks/test-hook <<-EOF &&
-+	exit 1
-+	EOF
-+
-+	test_expect_code 1 git hook run test-hook &&
-+
-+	write_script .git/hooks/test-hook <<-EOF &&
-+	exit 2
-+	EOF
-+
-+	test_expect_code 2 git hook run test-hook &&
-+
-+	write_script .git/hooks/test-hook <<-EOF &&
-+	exit 128
-+	EOF
-+
-+	test_expect_code 128 git hook run test-hook &&
-+
-+	write_script .git/hooks/test-hook <<-EOF &&
-+	exit 129
-+	EOF
-+
-+	test_expect_code 129 git hook run test-hook
-+'
-+
-+test_expect_success 'git hook run arg u ments without -- is not allowed' '
-+	test_expect_code 129 git hook run test-hook arg u ments
-+'
-+
-+test_expect_success 'git hook run -- pass arguments' '
-+	write_script .git/hooks/test-hook <<-\EOF &&
-+	echo $1
-+	echo $2
-+	EOF
-+
-+	cat >expect <<-EOF &&
-+	arg
-+	u ments
-+	EOF
-+
-+	git hook run test-hook -- arg "u ments" 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git hook run -- out-of-repo runs excluded' '
-+	write_script .git/hooks/test-hook <<-EOF &&
-+	echo Test hook
-+	EOF
-+
-+	nongit test_must_fail git hook run test-hook
-+'
-+
-+test_expect_success 'git -c core.hooksPath=<PATH> hook run' '
-+	mkdir my-hooks &&
-+	write_script my-hooks/test-hook <<-\EOF &&
-+	echo Hook ran $1 >>actual
-+	EOF
-+
-+	cat >expect <<-\EOF &&
-+	Test hook
-+	Hook ran one
-+	Hook ran two
-+	Hook ran three
-+	Hook ran four
-+	EOF
-+
-+	# Test various ways of specifying the path. See also
-+	# t1350-config-hooks-path.sh
-+	>actual &&
-+	git hook run test-hook -- ignored 2>>actual &&
-+	git -c core.hooksPath=my-hooks hook run test-hook -- one 2>>actual &&
-+	git -c core.hooksPath=my-hooks/ hook run test-hook -- two 2>>actual &&
-+	git -c core.hooksPath="$PWD/my-hooks" hook run test-hook -- three 2>>actual &&
-+	git -c core.hooksPath="$PWD/my-hooks/" hook run test-hook -- four 2>>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
++	/* Path to initial working directory for subprocess */
++	const char *dir;
+ };
+ 
+ #define RUN_HOOKS_OPT_INIT { \
+diff --git a/read-cache.c b/read-cache.c
+index 99a174b91e6..c9e2b013972 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -28,6 +28,7 @@
+ #include "sparse-index.h"
+ #include "csum-file.h"
+ #include "promisor-remote.h"
++#include "hook.h"
+ 
+ /* Mask for the name length in ce_flags in the on-disk index */
+ 
+diff --git a/reset.c b/reset.c
+index 4bea758053b..6499bc5127d 100644
+--- a/reset.c
++++ b/reset.c
+@@ -7,6 +7,7 @@
+ #include "tree-walk.h"
+ #include "tree.h"
+ #include "unpack-trees.h"
++#include "hook.h"
+ 
+ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 	       const char *switch_to_branch, unsigned flags,
+@@ -126,10 +127,15 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 			ret = create_symref("HEAD", switch_to_branch,
+ 					    reflog_head);
+ 	}
+-	if (run_hook)
+-		run_hook_le(NULL, "post-checkout",
+-			    oid_to_hex(orig ? orig : null_oid()),
+-			    oid_to_hex(oid), "1", NULL);
++	if (run_hook) {
++		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++		strvec_pushl(&opt.args,
++			     oid_to_hex(orig ? orig : null_oid()),
++			     oid_to_hex(oid),
++			     "1",
++			     NULL);
++		run_hooks_oneshot("post-checkout", &opt);
++	}
+ 
+ leave_reset_head:
+ 	strbuf_release(&msg);
 -- 
 2.33.0.rc0.595.ge31e012651d
 
