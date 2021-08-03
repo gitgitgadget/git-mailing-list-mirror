@@ -7,91 +7,100 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43B86C4338F
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 00:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC69EC4338F
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 00:45:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 194B360F94
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 00:44:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9794960F93
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 00:45:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232926AbhHCAoU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Aug 2021 20:44:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58866 "EHLO
+        id S232879AbhHCApt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Aug 2021 20:45:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232311AbhHCAoT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Aug 2021 20:44:19 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7914BC06175F
-        for <git@vger.kernel.org>; Mon,  2 Aug 2021 17:44:08 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id a19so33414qkg.2
-        for <git@vger.kernel.org>; Mon, 02 Aug 2021 17:44:08 -0700 (PDT)
+        with ESMTP id S232311AbhHCAps (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Aug 2021 20:45:48 -0400
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6518FC06175F
+        for <git@vger.kernel.org>; Mon,  2 Aug 2021 17:45:38 -0700 (PDT)
+Received: by mail-qk1-x72b.google.com with SMTP id 14so196402qkc.4
+        for <git@vger.kernel.org>; Mon, 02 Aug 2021 17:45:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Z5PvUhKeZm00/d8OwLHklpSgXWWIUXNg0WbNxT50TnA=;
-        b=R8eU6R8l33eQl7+yA1/232dGdMdkBZBtRkcAPfrsWF2TFnRlgXp/QzplFkbRSXJDDU
-         0cGpLipGivQk4yzS/W14BtKm0dcKu5LKI9uRNdovjXymSdYbLquDDxcc4kHkT5kvISjf
-         mZO+mRBYX9qSWxr2ejIGnwwGBZcqxWU69dd+D8HD6CAFQfj2AYUyBYjQh9O3Ft1lBjD2
-         60H/fDsFEGOsImBT3kIVjoeuVn5PWqlXcRLM47oq+BSyP8T0gitGg8vJZmrnIxgtaknV
-         EIig7SEskOux8K73UBF0IQ+99+OMfyGCPb3MdDev8Edcmny299RMpfhC14b/kpzBQBXx
-         d1rQ==
+        bh=JV6jjK4G+sAT646cijRIVYeUoqurPQuocCEtk4Hjx08=;
+        b=G0UXmcTp14vLDyfOydfcdN599soSuA7V2yps3dGc5Vp5trztyMc1zw4ihRYlMp9q3V
+         zzVb6xRDfaINQbyhqsW/LQIU+pJeYqxASGDpVw8Sw4W3K4+UdRi7fLxPr7gJFj/EkUwz
+         I7I0W+yGCWj1ZTdgRrvj/1poKI/d9mFKk8vln7iIu/AYhLXz8Ptix/r6A+aGcNdzbLYy
+         rTjYYtAPJ4/R7YF1XBMzXKYtZrTf3EJcQhryC60wNqZp/qkEH99QGyQpOz/UbbKXa7B1
+         hJPTHzvanZ//oKYGjkJdACHgbTmVqsB3Y8tDqOzwS0JXu53Xzkq679XL/d3kt6RZGLbN
+         qpVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Z5PvUhKeZm00/d8OwLHklpSgXWWIUXNg0WbNxT50TnA=;
-        b=sCc4tPe42EX3hRpy/ReiVZEyyvHWIW5WiUk2zcrcwu+upSWNC+8bH24xllSoEQaX4t
-         iEc5ize48Ak/4s+CeA4xzMcSW8bA+kkMAgQSA35Xf14an0sIzQ8uF8zh2UrsbSH69RI5
-         Dl2hbTaBpZuprCYi08WFQIk222vxtlBEvFE/uOEs4BObtvPNxDL6PxefqfTRh0ZpVSP5
-         15vFKkn0gbUgOWzfSxn71Q+tikZKo1FC13g6yWOSD27brre+gB+eaPuZqHozLzmdGLgh
-         NTZzzjhdUvkktvrUZ/yWuO2Bcc0Zj2HRYzkECqp3zwW8UcPLNH18gQLO9Sz1XSEHlJuf
-         JzWA==
-X-Gm-Message-State: AOAM531PfiYKONfq+dyxLK6rEaVkrG2hJnyY7XtjvAVs7xOFseL1+rMW
-        atqdaq4ATXezMpSHF2rEkrU=
-X-Google-Smtp-Source: ABdhPJyFVMYvXbeM6FHMKzOZw9LicF3ScMflEJBA20uhOJWLNjxdtBWTHYBs+kwLvjJNK+KrTxvDnQ==
-X-Received: by 2002:a37:c11:: with SMTP id 17mr18699583qkm.1.1627951447705;
-        Mon, 02 Aug 2021 17:44:07 -0700 (PDT)
+        bh=JV6jjK4G+sAT646cijRIVYeUoqurPQuocCEtk4Hjx08=;
+        b=nvbAWKh+HZPFhsko3WRmvtnIO2oGk2E6gHize2kLHlJLSAWHgN2kd4xZsxCcCqGFl+
+         Aehrqy13NCz4IhZxqhfH5xVp533KLeSssPdOBjG74/SBmn1jQ4Q4Y3KJschsQN2MICbw
+         ZicvWgpgJF/WoqRGW3kS4yarXYUSSHwqcJHFAWoEhgDz58RkavG5BePLqJ2iCvCEzMEO
+         Cnmz05LC1g5qrvRKYzEu+0eYV/ZPgpUc9rr6K9/p6TRe6gCRuqAGq73gPFWzYpk3aqRL
+         Dn4bRkqMvNyE3RhCw8GPIQQtd4HtbGBzvINn03nonY7c9uVufdfU6wQnVXZBgPjchMAj
+         sFMw==
+X-Gm-Message-State: AOAM532CMGEnvdCJF8lYycf4XxGcvsdOs8w1MTmnJ6XC+fczDnrmCcC1
+        0ThRIqMk+lrsuzP9NBTVDxk=
+X-Google-Smtp-Source: ABdhPJx/DaidL743ipeNZOmfPFYt1hBZlGve2aouy4LdEq4IPCeu25RoAwYjMn2+lNjVlzfHBiOxgg==
+X-Received: by 2002:a05:620a:294b:: with SMTP id n11mr18296014qkp.145.1627951537645;
+        Mon, 02 Aug 2021 17:45:37 -0700 (PDT)
 Received: from localhost ([24.169.20.255])
-        by smtp.gmail.com with ESMTPSA id w18sm1568889qtk.6.2021.08.02.17.44.07
+        by smtp.gmail.com with ESMTPSA id n13sm5347223qtx.92.2021.08.02.17.45.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Aug 2021 17:44:07 -0700 (PDT)
-Date:   Mon, 2 Aug 2021 20:44:06 -0400
+        Mon, 02 Aug 2021 17:45:37 -0700 (PDT)
+Date:   Mon, 2 Aug 2021 20:45:36 -0400
 From:   Ben Boeckel <mathstuf@gmail.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 4/4] advice: remove static global variables for advice
- tracking
-Message-ID: <YQiRVhofZktlBF22@erythro.dev.benboeckel.internal>
+Subject: Re: [PATCH v1 0/4] advice: remove usage of `advice_*` global
+ variables
+Message-ID: <YQiRsEzF8psNTqRR@erythro.dev.benboeckel.internal>
 References: <20210731022504.1912702-1-mathstuf@gmail.com>
- <20210731022504.1912702-5-mathstuf@gmail.com>
- <nycvar.QRO.7.76.6.2108030007060.55@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.2108030009330.55@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2108030007060.55@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2108030009330.55@tvgsbejvaqbjf.bet>
 User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 03, 2021 at 00:09:25 +0200, Johannes Schindelin wrote:
+On Tue, Aug 03, 2021 at 00:15:06 +0200, Johannes Schindelin wrote:
 > On Fri, 30 Jul 2021, Ben Boeckel wrote:
-> > All of the preferences are now tracked as part of the `advice_setting`
-> > array and all consumers of the global variables have been removed, so
-> > the parallel tracking through `advice_config` is no longer necessary.
+> > When looking at global variable usage for my `branch.default*` settings,
+> > I found the `advice_` variables which were simple enough to resolve.
 > 
-> Maybe add "This concludes the move from the old advice API to the new one
-> introduced via c4a09cc9ccb (Merge branch 'hw/advise-ng', 2020-03-25)"?
+> Even better, it concludes the journey started in c4a09cc9ccb (Merge branch
+> 'hw/advise-ng', 2020-03-25).
 > 
-> At least this reader would have found that helpful.
+> I reviewed the entire series and left a few comments I believe to be
+> constructive.
 
-Agreed.
+Thanks, they've been helpful. I'll work on updating my topic in the
+coming days.
 
-> And as I mentioned in the review of patch 3/4, the removal of the
-> explicit assignment to the `advice_*` global variables should be moved
-> here.
+> Since patch 2/4 resolves a problem introduced by merging divergent changes
+> (one adding `advice_settings`, the other adding two entries to
+> `advice_config`), an obvious concern with this patch series is: How can we
+> guarantee that we're not introducing a similar problem when removing
+> `advice_config`? A future branch could easily add entries to that array,
+> and a merge of this here topic could potentially forget to add those
+> entries to `advice_settings`.
+> 
+> However, such a future merge would always cause merge (add/remove)
+> conflicts in the `advice_config` array, i.e. it will be much easier to
+> notice such a divergence, and hence it will be much more likely that the
+> `advice_setting` array will be adjusted accordingly in such a hypothetical
 
-I addressed this in the 3/4 thread.
+Yes, Git should be able to notice a conflict of this nature.
 
 Thanks,
 
