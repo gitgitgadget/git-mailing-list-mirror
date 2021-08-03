@@ -2,87 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7A68C4338F
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 20:57:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AAEFC4338F
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 21:00:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B954260C3F
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 20:57:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 059CA60F01
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 21:00:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231624AbhHCU5N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 16:57:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41658 "EHLO
+        id S231634AbhHCVAN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Aug 2021 17:00:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231351AbhHCU5N (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Aug 2021 16:57:13 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABE81C061757
-        for <git@vger.kernel.org>; Tue,  3 Aug 2021 13:57:01 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id u10so329291oiw.4
-        for <git@vger.kernel.org>; Tue, 03 Aug 2021 13:57:01 -0700 (PDT)
+        with ESMTP id S231519AbhHCVAM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Aug 2021 17:00:12 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A4A2C061757
+        for <git@vger.kernel.org>; Tue,  3 Aug 2021 14:00:01 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id s184so19575ios.2
+        for <git@vger.kernel.org>; Tue, 03 Aug 2021 14:00:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UISFD1ANLE/iBa3W2xN3EJZvOPoun5Og1CQkvgaugf0=;
-        b=dEjTziDXCLzlgyyzcAYPiPo8H9uaKSHW9YblNhlPxtI+tRJcxuYMZyFyXj2c3JGU3z
-         AG5Jth8eZ4LBiqHjvw3fllYc0YTflSObHOHg0+5ceTEIz3BEsxj6NYeAtUCl8rV17P8X
-         +ajvHEtPB9YoMGovyzvEsqu5C7bwpqrfpVvw51ZgPnGGJhHYPKh4llXheZp3b3gimHQ2
-         IhYjT2cc01gAU803NtDbHT8sqKw1Ck8X0lNhb9ME7vBZWL8RsXufTwQPEZwgs0cpQEpr
-         cCG+8RwCOxO7rTsAiAigjgWyrmijy3wiXXiLekSU2E9IlmTvDFqvdIgXJDq8nR0usz9z
-         58GA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=QoUprqWIXEo3jcapCLhlfaXT8fNHXJohRKnYdHhdYFA=;
+        b=l+0taKCB5daG0YUTvlY1qJsZfkvETeRCMCW2EGcO0rgux9lwfNbWGArDvzyYSTbso9
+         ATeq8gbqf9Alk/kqFv0burdkdWC19/G212/GKqmxygCPV4NIzBPmzz/J++B9rCxReGmc
+         2TtJubAad5Jbj3OSHM0HaA6J2xYDAgvojLxKK7Nf6yVJOjm0KwHDGyMoofNpVeiW6Ku0
+         GY1MQzXCLmsDk2gqSU2rJft5AIFcgZ5hSpMLKxLfmh6jBaQcvaponwjLXP4mfNrYMoPA
+         eex5qKvmIB6t44SkKRyT33UqvkrlCsciBTNrFiMEI9iQaglOyNX+moJkNwyjC3WS950z
+         E9Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UISFD1ANLE/iBa3W2xN3EJZvOPoun5Og1CQkvgaugf0=;
-        b=Yjnnt/75JkZjwwwkVumMf6tJnqnggd3zYt0vrn3lMYEzzngH/1NZLXTxxefSu1MJp+
-         /+dygAVPAMnYOrbKXFbqX9MMcsmg3JoyQyBE1yzgS6P7JorztzTiT3BgUOL96+j5ZV1A
-         mJzDI2foEe1nbOwmHGrHbW7/dIPADk3hsQVPyjod+xd6HdY7YbSIMRDWN0ZWNPSywHek
-         7Jm0zgv5dmIzEaA4+szIHc88tKhGSdQSzKn8D3UXVw0DTXP3gEKfBCJzLLRh501Px1Tg
-         PONzBus+/cd4VHx5v0gy8gIeJOlRu0eFrG656388z6WGxqtJesfzt3+nzbGOZ6QWSqRw
-         Wkag==
-X-Gm-Message-State: AOAM530RBpYjfEb/EzJAkLAg1Xa8OZbKuB9UWcZ80FiJSNmKceTz9YO0
-        lQ0AY0dT2hiBWJ0DEGDlhYsF+A0qq112gY3lUoQ=
-X-Google-Smtp-Source: ABdhPJwJJnxCyw2gVCCxa3QhW5iG9XBAaTEiN2/3kjjBwt7Oozv8uD9VbMnXcZih2OeX1uZPAfFPpJMVaFXoMJH63WI=
-X-Received: by 2002:a05:6808:1390:: with SMTP id c16mr15695186oiw.123.1628024221030;
- Tue, 03 Aug 2021 13:57:01 -0700 (PDT)
-MIME-Version: 1.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=QoUprqWIXEo3jcapCLhlfaXT8fNHXJohRKnYdHhdYFA=;
+        b=kPJ7EY97FVlYZZx++HNHj7sG51MRCo0t3GUTmj7EMEuTiCzd1GJ7/m4STtBxuVavEQ
+         RzZQegfcxo5znkJxOPQIlPgbqy7wBHBOvqBPp67+jPEWV90/+MYpjmXCs0Svc3Md6nfJ
+         F8N5yq4aHUVYxzjyQvJ/lz67m4QpmnYtvwBFI43YiywuyKm8gaEKUhm7hPAmVHeHoMGL
+         AwMXlqr7OjBLg91ZLpZLS4mwXEmthgtyr2pLV7HLwF618lC0f8ah4Vey3fGUg6QxPcEi
+         Cy/DWeDhGUlJQKWQVxuEl61wIvGxTbWl8nqgyudOqYmqY4v0kbJ9G6ZF571DdA17+RSy
+         FChw==
+X-Gm-Message-State: AOAM5330z103D8zZO9wUmwPKRdiiBJW3wjjxJ2UIJCgCiNtAZDYVYF9e
+        J+lDXxQdKOid7sV1IvEWZY5/uQ==
+X-Google-Smtp-Source: ABdhPJyVCEEXa3MPwfgGw5RvDJDpNf1roO2rNOAs604bUQZ7EJtEILHlxKTLNiACJfCGLIjEa9VpzA==
+X-Received: by 2002:a5d:93d1:: with SMTP id j17mr619803ioo.123.1628024400869;
+        Tue, 03 Aug 2021 14:00:00 -0700 (PDT)
+Received: from localhost ([2600:1700:d843:8f:a92c:44a1:9adc:e4de])
+        by smtp.gmail.com with ESMTPSA id a11sm21044ilf.79.2021.08.03.14.00.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Aug 2021 14:00:00 -0700 (PDT)
+Date:   Tue, 3 Aug 2021 16:59:59 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Cameron Steffen <cam.steffen94@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: git revert --continue --no-verify
+Message-ID: <YQmuT2ZYe1mzHBjI@nand.local>
 References: <CAAVFnNkW6Bc4bBDeea2v-VFydvEC0dBw+QXVA0-6OnmF8km3ZA@mail.gmail.com>
  <YQmsJUe6hAMy/QGA@nand.local>
-In-Reply-To: <YQmsJUe6hAMy/QGA@nand.local>
-From:   Cameron Steffen <cam.steffen94@gmail.com>
-Date:   Tue, 3 Aug 2021 15:56:49 -0500
-Message-ID: <CAAVFnN=W27rdE1EH-joscyJEooAsDrdtPropVVaBYwhte=cPJA@mail.gmail.com>
-Subject: Re: git revert --continue --no-verify
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+ <CAAVFnN=W27rdE1EH-joscyJEooAsDrdtPropVVaBYwhte=cPJA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAAVFnN=W27rdE1EH-joscyJEooAsDrdtPropVVaBYwhte=cPJA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`--no-verify` is an argument typically used with `git commit` in order
-to skip the pre-commit hook. Since the pre-commit hook also runs on
-`git revert --continue`, I expected to be able to use `--no-verify`.
+On Tue, Aug 03, 2021 at 03:56:49PM -0500, Cameron Steffen wrote:
+> `--no-verify` is an argument typically used with `git commit` in order
+> to skip the pre-commit hook. Since the pre-commit hook also runs on
+> `git revert --continue`, I expected to be able to use `--no-verify`.
 
-On Tue, Aug 3, 2021 at 3:50 PM Taylor Blau <me@ttaylorr.com> wrote:
->
-> Hi Cameron,
->
-> On Tue, Aug 03, 2021 at 02:17:07PM -0500, Cameron Steffen wrote:
-> > Today I tried to run this command and I just got a help screen. I am
-> > using 2.32.0.
-> >
-> > git revert --continue --no-verify
->
-> I can't think of any sequencer commands that support a `--[no-]verify`
-> argument. Did you mistake `--no-verify` for something else, like
-> `--no-edit` or `--no-commit`?
->
-> Thanks,
-> Taylor
+No, `git revert` doesn't pass unknown options down to `git commit`.
+
+Thanks,
+Taylor
