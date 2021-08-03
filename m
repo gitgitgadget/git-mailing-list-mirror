@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D06EAC4338F
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 15:35:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DD79C4320E
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 15:35:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC7E060EC0
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 15:35:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 37FC860EC0
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 15:35:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236942AbhHCPfn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 11:35:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47098 "EHLO
+        id S236756AbhHCPfp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Aug 2021 11:35:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236699AbhHCPfk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Aug 2021 11:35:40 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8423C061757
-        for <git@vger.kernel.org>; Tue,  3 Aug 2021 08:35:28 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id l4-20020a05600c1d04b02902506f89ad2dso2107905wms.1
-        for <git@vger.kernel.org>; Tue, 03 Aug 2021 08:35:28 -0700 (PDT)
+        with ESMTP id S236783AbhHCPfl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Aug 2021 11:35:41 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E059C06175F
+        for <git@vger.kernel.org>; Tue,  3 Aug 2021 08:35:30 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id n28-20020a05600c3b9cb02902552e60df56so2419858wms.0
+        for <git@vger.kernel.org>; Tue, 03 Aug 2021 08:35:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=H6IE53j+0vixel9VVxy+RBhi0U7Z6sCcxYfDzfDEu8U=;
-        b=SEmldSB0mxWZ+2Uh3I+X1MO/6k8GTJ+v6rXYGtpq4fljOqBoUaeAXd0BMxn4zQo38M
-         O4lB8fkcJsZFSlvgMKJ4Hk3yizzn2uSL6BlIk6DL1xZ9CtJI2mBfrv87nPIGRHuHmOxR
-         o5zLGxTXtjJT1VrT1cHKCFIqcNSHvo19AZDcNL8pB3Ps9GRBP+7jVZpAkMq82P6PaXmw
-         wzK3277CE2j1xI6liVHpyEIvDgCA1uIWfeGBjaP09o1fvCqAPQi3mHQobcp9odyzVhGP
-         WSG4qId6xq3oryfq56ciDoJQVSdfohVDzuyL0Bg8XfsikSkweOlJLf8lJuWlOYSnr3I9
-         xREA==
+        bh=2QPEZ90F6+sZdVdQ44dX266o26AHMoYaOlmu3t7V6xQ=;
+        b=cT0Aol0j30o5illAk0ZDAYwv2r41+uWQb1kPOv6vabZHzosX+SY9rL5OTCHJaMx6V6
+         exJjVc3+/Tg6if2o5RxDlfhk6K83tHikXynyQHjhzyL9mX45r3S0fNGrl3lNW6DX3gBd
+         LHgVoUQA7xmH4NVyf4hmiKKzBzUZMIwHKUHabiaPLFgvDE0Qu+B48AvIZZMc9meQYAlu
+         +IWwt0QXHzgM1A9gV3/yyaxH1mk/8FN+yhgoNsiw+en6iXMIE6cFjtYB8IbdGsF2mx3r
+         GMtPx8YojpSlN2/XqL/vrg8OjCpCMx4gGAvyQIh6Vn3ijJ8B+bDzPkSYuYeAGhtcdw+E
+         +mng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=H6IE53j+0vixel9VVxy+RBhi0U7Z6sCcxYfDzfDEu8U=;
-        b=Tbm5IlgFvqIpp16mSEwDQKlUb77G9X0z3xNqUT8lTHsTXwIcSl2p+Md9I0TAZfRz30
-         vGOViDP5kLAvu7Cz39+EX6Ymdx40d93XUdZNdrBMwSgB1bTXNZYK8DnCls5fMoCI3Gq/
-         SqzUdVa4HM43TZ696jTvcwKSCDQ3Y6h69z6sv7NJV72EEU3qHvONJRC49lxjnRVR1H1e
-         ah+rpNTe+8KLN3pGNnT04+YOynb+o/k6n++IR94Zjt7WR05IMUXXxT1Wim3elAKHld+c
-         bUhz3uMhTL0vGCIv3fko/wNoLOHCezkynhQg8qcBTn4gTbm/tHBSR9egsW7dT/ERK21B
-         vYVA==
-X-Gm-Message-State: AOAM532m/Ni6J2K1+D6rMQVVyFXIZhI50pTSOPoui4TxV13RD79cfiSa
-        zgHzzVFV8aOkmf4f5EFVIEkODLfypeE=
-X-Google-Smtp-Source: ABdhPJxkTmNbfRMvszyXM+YtjtxlS8H0wrrzsyVN5KsmWj7mxcxe34HBVmLTflM/KdTvI1qwxYB/Kw==
-X-Received: by 2002:a7b:c316:: with SMTP id k22mr4864559wmj.56.1628004927460;
-        Tue, 03 Aug 2021 08:35:27 -0700 (PDT)
+        bh=2QPEZ90F6+sZdVdQ44dX266o26AHMoYaOlmu3t7V6xQ=;
+        b=lNgAWanQvnSINp4UHxcHdzcWyOv2rCSfUJexCM29/gp5UVzUdcz/ZzSXyjtpJmcwse
+         cC9v8VybXeMRgzVP8o3OtbJba6oHyh+Ngsj9XHZyrjND7EJr67/C5tK9V1sCZbPf2G5Q
+         BqFSGXE8bMa5omLXYaQDRxR0ekAcEj4Q+RqBpp3Ntpbh4C0UxOUhoQgSSQLLP9QhfhHK
+         fJkUNixu/CV5lWHqfJ99XlQm3PKNBtvkD11/U7yqfyUbvBYPvLAkiCJLbefvaai54d3P
+         qvDfsyo72lZDUTxU+fpo5qbm3D3iO9v6t3JWurBQzQmzFETzIC8OlWadNa0QnLqyXYdH
+         Ebng==
+X-Gm-Message-State: AOAM531CwIpbkoIgdJ2t2dUcxsxwr6IG2e7VoCAB9rQfN2fRoAD8HyiQ
+        NyCvy4z8kE0NYIL9dyPIrRnxQmYjTgs=
+X-Google-Smtp-Source: ABdhPJzY8vjghuhtXY6Wq3EcGsM7OqOVxxR8pp9U4cebVC1XAaCaAK0NdzTsYFncCypAENtA3MiF4Q==
+X-Received: by 2002:a7b:c042:: with SMTP id u2mr22472739wmc.86.1628004929202;
+        Tue, 03 Aug 2021 08:35:29 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u11sm15286674wrt.89.2021.08.03.08.35.26
+        by smtp.gmail.com with ESMTPSA id v5sm15535427wrd.74.2021.08.03.08.35.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 08:35:27 -0700 (PDT)
-Message-Id: <5f974afe47ce46521f6c51484d1ebd59cd7339dd.1628004920.git.gitgitgadget@gmail.com>
+        Tue, 03 Aug 2021 08:35:28 -0700 (PDT)
+Message-Id: <7eecf879d608d8be17d4aa0ae087fb610156019c.1628004920.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com>
 References: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 03 Aug 2021 15:35:15 +0000
-Subject: [PATCH 05/10] merge-strategies.txt: do not imply using copy detection
- is desired
+Date:   Tue, 03 Aug 2021 15:35:17 +0000
+Subject: [PATCH 07/10] merge-strategies.txt: explain why no-renames might be
+ useful
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,37 +75,29 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Stating that the recursive strategy "currently cannot make use of
-detected copies" implies that this is a technical shortcoming of the
-current algorithm.  I disagree with that.  I don't see how copies could
-possibly be used in a sane fashion in a merge algorithm -- would we
-propagate changes in one file on one side of history to each copy of
-that file when merging?  That makes no sense to me.  I cannot think of
-anything else that would make sense either.  Change the wording to
-simply state that we ignore any copies.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/merge-strategies.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Documentation/merge-strategies.txt | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-index 6b6017e1cc8..bc82799365a 100644
+index eb43befac7b..d21dbd1e051 100644
 --- a/Documentation/merge-strategies.txt
 +++ b/Documentation/merge-strategies.txt
-@@ -16,9 +16,9 @@ recursive::
- 	causing mismerges by tests done on actual merge commits
- 	taken from Linux 2.6 kernel development history.
- 	Additionally this can detect and handle merges involving
--	renames, but currently cannot make use of detected
--	copies.  This is the default merge strategy when pulling
--	or merging one branch.
-+	renames.  It does not make use of detected copies.  This
-+	is the default merge strategy when pulling or merging one
-+	branch.
- +
- The 'recursive' strategy can take the following options:
+@@ -75,9 +75,10 @@ no-renormalize;;
+ 	`merge.renormalize` configuration variable.
  
+ no-renames;;
+-	Turn off rename detection. This overrides the `merge.renames`
+-	configuration variable.
+-	See also linkgit:git-diff[1] `--no-renames`.
++	Turn off rename detection, which can be computationally
++	expensive.  This overrides the `merge.renames`
++	configuration variable.  See also linkgit:git-diff[1]
++	`--no-renames`.
+ 
+ find-renames[=<n>];;
+ 	Turn on rename detection, optionally setting the similarity
 -- 
 gitgitgadget
 
