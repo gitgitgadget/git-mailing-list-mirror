@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DD79C4320E
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 15:35:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AEC9C4338F
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 15:35:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 37FC860EC0
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 15:35:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 567D560EC0
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 15:35:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236756AbhHCPfp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 11:35:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47108 "EHLO
+        id S236945AbhHCPfq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Aug 2021 11:35:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236783AbhHCPfl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Aug 2021 11:35:41 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E059C06175F
-        for <git@vger.kernel.org>; Tue,  3 Aug 2021 08:35:30 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id n28-20020a05600c3b9cb02902552e60df56so2419858wms.0
-        for <git@vger.kernel.org>; Tue, 03 Aug 2021 08:35:30 -0700 (PDT)
+        with ESMTP id S236892AbhHCPfm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Aug 2021 11:35:42 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DB73C061798
+        for <git@vger.kernel.org>; Tue,  3 Aug 2021 08:35:31 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id n12-20020a05600c3b8cb029025a67bbd40aso2042263wms.0
+        for <git@vger.kernel.org>; Tue, 03 Aug 2021 08:35:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=2QPEZ90F6+sZdVdQ44dX266o26AHMoYaOlmu3t7V6xQ=;
-        b=cT0Aol0j30o5illAk0ZDAYwv2r41+uWQb1kPOv6vabZHzosX+SY9rL5OTCHJaMx6V6
-         exJjVc3+/Tg6if2o5RxDlfhk6K83tHikXynyQHjhzyL9mX45r3S0fNGrl3lNW6DX3gBd
-         LHgVoUQA7xmH4NVyf4hmiKKzBzUZMIwHKUHabiaPLFgvDE0Qu+B48AvIZZMc9meQYAlu
-         +IWwt0QXHzgM1A9gV3/yyaxH1mk/8FN+yhgoNsiw+en6iXMIE6cFjtYB8IbdGsF2mx3r
-         GMtPx8YojpSlN2/XqL/vrg8OjCpCMx4gGAvyQIh6Vn3ijJ8B+bDzPkSYuYeAGhtcdw+E
-         +mng==
+        bh=XYj/cvfiez+VFwKHVolZX/cURqSRdpnPS4TgCLART1M=;
+        b=I/xxa82SmnJ1rVooC2BCL8MJ6vj0Bfi3GiyDxzcFAcBQfSxTHih0lIFxtl5dfE1Df8
+         cK7912kI0Zj6reUaMBCTa1uLWA+zOF3zneiTkS8pHyU83GOiC68mJsYL6EJe0Vnz+W8G
+         eI7YqWz/baWXDb+7pRzAC7ln7Jz4/NTjEtS2T0nXWXbSOWnD9Uq1ZfA/3PfeCpqD0lxF
+         JuG61mihSPcUy+3JNfnqtZkc2oTSf0AgCLtiGO9Rtd//ZMMJj6N6vqicAwsfWC73lqnp
+         Ca5A/h3gCwU2uG0ArSvjf1QUZaG0HbEV6wmZwUgd+82VW5v+0x+7tYw2tYfPefaj0C0A
+         42GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2QPEZ90F6+sZdVdQ44dX266o26AHMoYaOlmu3t7V6xQ=;
-        b=lNgAWanQvnSINp4UHxcHdzcWyOv2rCSfUJexCM29/gp5UVzUdcz/ZzSXyjtpJmcwse
-         cC9v8VybXeMRgzVP8o3OtbJba6oHyh+Ngsj9XHZyrjND7EJr67/C5tK9V1sCZbPf2G5Q
-         BqFSGXE8bMa5omLXYaQDRxR0ekAcEj4Q+RqBpp3Ntpbh4C0UxOUhoQgSSQLLP9QhfhHK
-         fJkUNixu/CV5lWHqfJ99XlQm3PKNBtvkD11/U7yqfyUbvBYPvLAkiCJLbefvaai54d3P
-         qvDfsyo72lZDUTxU+fpo5qbm3D3iO9v6t3JWurBQzQmzFETzIC8OlWadNa0QnLqyXYdH
-         Ebng==
-X-Gm-Message-State: AOAM531CwIpbkoIgdJ2t2dUcxsxwr6IG2e7VoCAB9rQfN2fRoAD8HyiQ
-        NyCvy4z8kE0NYIL9dyPIrRnxQmYjTgs=
-X-Google-Smtp-Source: ABdhPJzY8vjghuhtXY6Wq3EcGsM7OqOVxxR8pp9U4cebVC1XAaCaAK0NdzTsYFncCypAENtA3MiF4Q==
-X-Received: by 2002:a7b:c042:: with SMTP id u2mr22472739wmc.86.1628004929202;
+        bh=XYj/cvfiez+VFwKHVolZX/cURqSRdpnPS4TgCLART1M=;
+        b=dkHslPeKukcLd2cuLtCxtGsNk376LPd9G8wD9xFAIn9NwlQNeoHtLM2IgL8qLEA+2v
+         TWT4Qk0YiiYIY20HcDhAHvJ6TnVvBqIhxsWB59DF81d6ng306EDVZRBZaRv54MmSL6E6
+         Ir9y5KEaVcu6HIiPLkVEIvphI4ZodRuVNfUufGKySGK8BkdPpweXSJFgJAhgaZ+poD/q
+         aepYpzh3TSFbZ97FU+rjgVm7D5Nfls/rzVZc3qrVjW7YIuvSizX7RqhDs9BEtZmLIP9y
+         EpqOB1tjA8mmRr+/AiepR6rv4HgQ+uJTA6rr0P9C7QEvKASD3zZqSZcFKoCfhfVZCd9H
+         aEcw==
+X-Gm-Message-State: AOAM530TP0Bv1ppi4XxxlLJIC7zL0fJDH7KYLWuntKXhkjMiMCsXN/am
+        4MlyxKmT2SV83IpsQsC5f2X52GiKSEI=
+X-Google-Smtp-Source: ABdhPJxD7UKtQVXnS2lwGPOpdKG95cSzNgM1SMUoEh2Eow87xKk5bVtAfDN3HmVQEO88RKxvmcCVJQ==
+X-Received: by 2002:a1c:413:: with SMTP id 19mr22569321wme.74.1628004929999;
         Tue, 03 Aug 2021 08:35:29 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v5sm15535427wrd.74.2021.08.03.08.35.28
+        by smtp.gmail.com with ESMTPSA id g5sm2828963wmh.31.2021.08.03.08.35.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 08:35:28 -0700 (PDT)
-Message-Id: <7eecf879d608d8be17d4aa0ae087fb610156019c.1628004920.git.gitgitgadget@gmail.com>
+        Tue, 03 Aug 2021 08:35:29 -0700 (PDT)
+Message-Id: <010702d08417f86da033ae8a6093ec4b9ce6e19a.1628004920.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com>
 References: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 03 Aug 2021 15:35:17 +0000
-Subject: [PATCH 07/10] merge-strategies.txt: explain why no-renames might be
- useful
+Date:   Tue, 03 Aug 2021 15:35:18 +0000
+Subject: [PATCH 08/10] merge-strategies.txt: fix simple capitalization error
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,27 +76,22 @@ From: Elijah Newren <newren@gmail.com>
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/merge-strategies.txt | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ Documentation/git-rebase.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-index eb43befac7b..d21dbd1e051 100644
---- a/Documentation/merge-strategies.txt
-+++ b/Documentation/merge-strategies.txt
-@@ -75,9 +75,10 @@ no-renormalize;;
- 	`merge.renormalize` configuration variable.
- 
- no-renames;;
--	Turn off rename detection. This overrides the `merge.renames`
--	configuration variable.
--	See also linkgit:git-diff[1] `--no-renames`.
-+	Turn off rename detection, which can be computationally
-+	expensive.  This overrides the `merge.renames`
-+	configuration variable.  See also linkgit:git-diff[1]
-+	`--no-renames`.
- 
- find-renames[=<n>];;
- 	Turn on rename detection, optionally setting the similarity
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 7044afba362..b4429954480 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -530,7 +530,7 @@ The `--rebase-merges` mode is similar in spirit to the deprecated
+ where commits can be reordered, inserted and dropped at will.
+ +
+ It is currently only possible to recreate the merge commits using the
+-`recursive` merge strategy; Different merge strategies can be used only via
++`recursive` merge strategy; different merge strategies can be used only via
+ explicit `exec git merge -s <strategy> [...]` commands.
+ +
+ See also REBASING MERGES and INCOMPATIBLE OPTIONS below.
 -- 
 gitgitgadget
 
