@@ -2,70 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18849C4338F
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 08:55:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9F2BC4320A
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 09:07:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9F6461029
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 08:55:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D644A60F92
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 09:07:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234636AbhHCIzd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 04:55:33 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:53743 "EHLO
+        id S235004AbhHCJHp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Aug 2021 05:07:45 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:46759 "EHLO
         out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S234603AbhHCIzc (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 3 Aug 2021 04:55:32 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id C28AA5C012A;
-        Tue,  3 Aug 2021 04:55:21 -0400 (EDT)
+        by vger.kernel.org with ESMTP id S234922AbhHCJHp (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 3 Aug 2021 05:07:45 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.nyi.internal (Postfix) with ESMTP id 7782E5C003B;
+        Tue,  3 Aug 2021 05:07:34 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Tue, 03 Aug 2021 04:55:21 -0400
+  by compute2.internal (MEProxy); Tue, 03 Aug 2021 05:07:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=jnHuSTxYMJjSVjBgtE5k7/XY/Fa
-        alL8XNolG8g7mbe8=; b=tSGTQvYCzDX5U6Iq54o5JHH4pivE6l67u8Q33+3wJ5F
-        ZheVueVY0EIgMPUX0fTvZsow/4X9YW4dzCxVGz5CwkpTYssLPK+zyworLMmnZyJc
-        1IvdL2+Ahbq6FjNZH58jmn3kuF8CqKLWU3IGB7Rxkfwf4U+1qaV67jdCsxKNuyKI
-        TVoP9shB/bUvDcICWFGjmzDgLxVDbb+mtmzCXxN6H9xuvF+uZh5HnBST18epYrAO
-        g4GBu77cPXvLyyvtiTRvzsRB0iaCvL0de0K3a0Td5yICPCiQEYReeTKSclDwdLFW
-        axBH9TLBAd45jnf0kywrZMRKlsM1S6tx8uFtyE89oIQ==
+        :content-type:in-reply-to; s=fm1; bh=icMNvyAohaNEgweVvEGkr33AIyK
+        c7kbNttI5Nv5bdfQ=; b=GHekLvadDozO8lPMYod/a7XILJ00bu0yaz8W0aO7wmS
+        1PfPmfVvPJeYUGm3zIB5zV9giTqCjT8tgPmihbYBKOhsj6up3dBgrKEaTtoTot3h
+        J51b16GLGo2tVct7K6wQymDSCL5uYwWnrfwB+3oU7Ib+rIl8AWt+5dA4spmzJ1n3
+        9gwR394h+n2hhPRmWmmx5XZAevGNk+1GAmfQ5bXDKNk1SHeKy68aOiO1CodC8XQr
+        su+Pz8TodQihrMxBQMoNYI/wPjvU8/yH6Uw/rOVQFxhNIwUfxXMmG+LX4PC06+wy
+        Du0smdDH+rhMFCVcEmLPILGmS6D3TiIPtUyL+wHENUQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=jnHuST
-        xYMJjSVjBgtE5k7/XY/FaalL8XNolG8g7mbe8=; b=wrTWl8p7bQYwUv4pc/MPjq
-        H+ojwCq74qvRqe/jcmxjly0FrwcqoXTovqK4Ey+A7YVmE9loGcWO5x6mIgOBrtPy
-        puHPN+8HFTUbozppWfMBBAkdcjeJOFi0xIAE7W3/WXL2gFdbqKn2EHX1x/6IjXHw
-        8CGiPBFv54yjSxA8KoDaCfBekv88TGsy+PAO93Hn+ITiW8v0rclM9VQ/r5I42c6I
-        yXDq0pGkZB4xmpZ7ii3YtpDuj1zydGxMQVWLe43qVpRnhfgscMyFxgoErk3nVPI7
-        nTqbs6/lTcIA15Y/EXitylWrPHRTWV3/VaZGeMSimbC0nM+swguAbgfr6OMlvJWw
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=icMNvy
+        AohaNEgweVvEGkr33AIyKc7kbNttI5Nv5bdfQ=; b=eHGO2syjuZV8NjAJmLLUB1
+        pxUEaCle/nRSPTqWo7nvCrm/2spdMYYpOjppYg3DHOs+KtIe/rid+NNMcxOcxMEl
+        d1oTUoMdqDjA8WrvgyiGvRGglIZAT8P4+IHpC3NrKmOqHQgGhO1YEIdZsVAZ+jov
+        2TFkwzXBYbjO64b4Dix4QgzgADk4R0rBla3yLZG7azKe3zF2qzHTqSGhQSfW8bIm
+        9l/N5yeTAazhF2N1Eo0XSn2FiGe43XQskg4LRm93riBPhbwqsLE3yI/rWzsBCN1H
+        NWeFIEsYSap25HhNOt79L/oz6gHDL3dRgDotZir46oy8Ixv5bLmMWYiYxYZQBwAw
         ==
-X-ME-Sender: <xms:eQQJYb1wx-_Oe8aWcDl_ZbZ6D_-VYGOyMJWGLxG8jJ8NrT4XdHyiFQ>
-    <xme:eQQJYaHqZmObhFMxWm8AaUxgFR3xS36-var0ibo_WGpuV7FBYsaAF3WYlZ7ZUXP79
-    0q-jAxL6ouOY0tPCA>
-X-ME-Received: <xmr:eQQJYb7kaqu5eaDTFx3HqfhTf0xSVZVeI2vwGEo2TrV6mJ1wBPsNbjIagHSGoAOYAP9GcewCufPJjxEOs-QnsmCl_jqnQy-KhV6PT0DCflOSqz-l07mtmw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrieeggddtjecutefuodetggdotefrodftvf
+X-ME-Sender: <xms:VgcJYRbVSeBecPrbqU7P_tDZQvMfIznsuUXMJITRdng2lbQO1x_y1A>
+    <xme:VgcJYYaaH6HSOR94YP-BHXBwBXHheoaubi7maDA1O18t7FWgr2rKQ8ShTfp27_ro4
+    cgGPhQzvZe7-B7O6g>
+X-ME-Received: <xmr:VgcJYT-HMZ6A_PZ_-WH-XdkBWrBRM5TLpo6yWVbAe3z-FMQt9zsee_2tp1ckTeugD8483RkzaXQEt9x51rLpOY9-IcxEDBNZx-Yhz-ESe6el6m6lAsWh5g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrieeggddutdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epjeejtdeigfegkefgjeehveevjeejveeuvddtieekffevleeglefhgffgjeejfeefnecu
-    ffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:eQQJYQ2FEe5Gq2IWHgOLvNpwQzj9H9MSHiqaBUulVeoy7W6NSRs2sQ>
-    <xmx:eQQJYeEYP0W1N48djeNlwXMm5TC0ul2njQ4ufX4camigVbh5JKutkA>
-    <xmx:eQQJYR9airpAaLWc92M7OI0GKCVkMi7QHJwunZ1z7PFAlRryAQQgAg>
-    <xmx:eQQJYT5_lhGFEHpNl_0DdArc9mjdUBG2iGByxviSdH_1EVNgKCDKWA>
+    epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimh
+X-ME-Proxy: <xmx:VgcJYfqbkG86V3LHuYW1B4o3qex3cDVbe4sf-pZMjqCBmmwioZzWzg>
+    <xmx:VgcJYcrJcD_fLlqaYTP50s_R08Z4cpYCfkAuOi1obaM1WoWIEMsA-w>
+    <xmx:VgcJYVQDcAtpwMelEGg0uUUZtG3jqiokGxgMXVx9XkvqPm148fbmdQ>
+    <xmx:VgcJYderzv9hWZcPgXmPnVSOp1zPm6Y6HGp-zlUrs-1dp1XOUepq6w>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Aug 2021 04:55:20 -0400 (EDT)
+ 3 Aug 2021 05:07:32 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id acce20b4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 3 Aug 2021 08:55:18 +0000 (UTC)
-Date:   Tue, 3 Aug 2021 10:55:17 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 49870fc6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 3 Aug 2021 09:07:31 +0000 (UTC)
+Date:   Tue, 3 Aug 2021 11:07:29 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -74,88 +73,90 @@ Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Chris Torek <chris.torek@gmail.com>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v3 1/4] connected: do not sort input revisions
-Message-ID: <YQkEdYi/7vrS9ydC@ncase>
+Subject: Re: [PATCH v3 3/4] revision: avoid loading object headers multiple
+ times
+Message-ID: <YQkHUZKZ6gkFkaD0@ncase>
 References: <cover.1624858240.git.ps@pks.im>
  <cover.1627896460.git.ps@pks.im>
- <1fd83f726a04dfb5be27c74cb116618cb76be923.1627896460.git.ps@pks.im>
- <xmqqa6lzwu31.fsf@gitster.g>
+ <b9897e102afbcab3bfee58ed8bda24257d8b54fb.1627896460.git.ps@pks.im>
+ <xmqq5ywnws6v.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="HLw6RDomtUPJeaNG"
+        protocol="application/pgp-signature"; boundary="1MrF9xvAFFugggfL"
 Content-Disposition: inline
-In-Reply-To: <xmqqa6lzwu31.fsf@gitster.g>
+In-Reply-To: <xmqq5ywnws6v.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---HLw6RDomtUPJeaNG
+--1MrF9xvAFFugggfL
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 02, 2021 at 12:00:02PM -0700, Junio C Hamano wrote:
+On Mon, Aug 02, 2021 at 12:40:56PM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
-[snip]
-> > Introduce a new "--unsorted-input" flag to git-rev-list(1) which will
-> > cause it to not sort the commits and adjust the connectivity check to
-> > always pass the flag. This results in the following speedups, executed
-> > in a clone of gitlab-org/gitlab [1]:
+>=20
+> > When loading references, we try to optimize loading of commits by using
+> > the commit graph. To do so, we first need to determine whether the
+> > object actually is a commit or not, which is why we always execute
+> > `oid_object_info()` first. Like this, we'll unpack the object header of
+> > each object first.
+> >
+> > This pattern can be quite inefficient in case many references point to
+> > the same commit: if the object didn't end up in the cached objects, then
+> > we'll repeatedly unpack the same object header, even if we've already
+> > seen the object before.
 > > ...
-> > [1]: https://gitlab.com/gitlab-org/gitlab.git. Note that not all refs
-> >      are visible to clients.
+> > Assuming that in almost all repositories, most references will point to
+> > either a tag or a commit, we'd have a modest increase in memory
+> > consumption of about 12.5% here.
 >=20
-> So is this the 2.2 million refs thing?
+> I wonder if we can also say almost all repositories, the majority of
+> refs point at the same object.  If that holds, this would certainly
+> be a win, but otherwise, it is not so clear.
 
-Yeah, it is. The repo itself got 2.2 million refs, even though only 800k
-are publicly visible. It got even more when one considers its alternate,
-where it grows to 3.4 million in total.
+I doubt that's the case in general. I rather assume that it's typically
+going to be a smallish subset that points to the same commit, but for
+these cases we at least avoid doing the lookup multiple times. As I
+said, it's definitely a tradeoff between memory and performance: in the
+worst case (all references point to different blobs) we allocate 33%
+more memory without having any speedups. A more realistic scenario would
+probably be something like a trunk-based development repo, where there's
+a single branch only and the rest is tags. There we'd allocate 11% more
+memory without any speedups. In general, it's going to be various shades
+of gray, where we allocate something from 0% to 11% more memory while
+getting some modest speedups in some cases.
 
-> > @@ -3584,7 +3586,7 @@ int prepare_revision_walk(struct rev_info *revs)
-> > =20
-> >  	if (!revs->reflog_info)
-> >  		prepare_to_use_bloom_filter(revs);
-> > -	if (revs->no_walk !=3D REVISION_WALK_NO_WALK_UNSORTED)
-> > +	if (revs->no_walk !=3D REVISION_WALK_NO_WALK_UNSORTED && !revs->unsor=
-ted_input)
-> >  		commit_list_sort_by_date(&revs->commits);
->=20
-> Looks quite straight-forward.
->=20
-> I however suspect that in the longer term it may be cleaner to get
-> rid of REVSISION_WALK_NO_WALK_UNSORTED if we do this.  The knob that
-> controls if we sort the initial traversal tips and the knob that
-> controls if we walk from these tips used to be tied to --no-walk
-> only because ca92e59e30b wanted to affect only no-walk case, but
-> with your new finding, it clearly is not limited to the no-walk case
-> to want to avoid sorting.
-
-Right. The question also is what to do when the user calls `git rev-list
---no-walk=3Dsorted --unsorted-input`. Do we sort? Don't we? Should we mark
-these options as incompatible with each other and bail out? I guess just
-bailing out would be the easiest solution for now.
+So if we only inspect this commit as a standalone it's definitely
+debatable whether we'd want to take it or not. But one important thing
+is that it's a prerequisite for patch 4/4: in order to not parse commits
+in case they're part of the commit-graph, we need to first obtain an
+object such that we can fill it in via the graph. So we have to call
+`lookup_unknown_object()` anyway. Might be sensible to document this as
+part of the commit message.
 
 Patrick
 
---HLw6RDomtUPJeaNG
+--1MrF9xvAFFugggfL
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEJBHQACgkQVbJhu7ck
-PpQz+w//fl+Y5277jUuh2mt3jdv5PT51+/AX2+kSwyMspoK6yY5DAkOOAtvNx2U+
-sAnPpp31wt09lYF7uju/6s7On5mk1gLsqR4Fr/f4/gQFcn645x4J1/ivYf1Q8PfJ
-uYnqQTKzEvLZJU3HgIAb/5D5ryyppd/4KaSv73e9Ko2pcOPfDCrtNvefuXeM9XvC
-lOmq42/Va9mfwLI8uIaZ9PsoA/68SMjhGZWpRfYa21HRTLlwxTVY58bYZrAJb8RX
-x3tZv5INTtD/+mKTSoATr6M8TXYkJq+BHWNGEhtUjFDuFWx19fGop/chti5beSuP
-Zy0CjP3INXgOin19uDb1hAV855iRrxjOZDHZSnviNj0hWqBPdhmIL5fwPxBzi8ah
-u+49U5P8sTHnBsvxVromGvjHk0ahCniRN1iyxbHby713bSkVTCWo2lGw8+DPa/6w
-BSEUY+Q0a3AT3zgQFUg/Qm7F2VMi/9GPnsdz3MkQj0HyO0CnETLQnfIEWuOSvUMN
-IBTMhv3lPG1inuHFYsuAz8QGbP9BH4Ye3i4TnRHCF0XggwckVQ5/OGU683FNmOc0
-QKNuXwQRI0v6IuvHmyoaXfSlNO8llgZ3g8m0/TRMb+jTR1/+wM8IatOFsaRw6GEg
-s5DlLPRkfeadCzaQJH8ljT8suR8sHQQS8RFx0gyNQuS/lqH98FE=
-=IZG4
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEJB1AACgkQVbJhu7ck
+PpQYBRAAnxUyfsDzU+gJEl1QLP80Zv74XRp/9gPZ9alCIyGQ9NcHCPkTU5cvk0N8
+2K23TGgCWin/PWnbW8p9IlEt3LJyIYUskeawxk1gIA2P/mE6UKDrz9MMCORc7XxB
+LqnTLSEWYENTkwnOq6CaGfJbdY3wUytZBDv723HhKzaR8Fq4jt6wiN53pHWb3xfS
+3k0dgEekRUrn0jf1Vd2LQhlUPMV0GDZlx05RoWMWN1KTnAiFOtvZrY1zudAprQ/f
+0Cq67T9XuUK7K+2XfnfSKbjpfGLhSLcPSwUv3c0NX4sCoRAjHbOh2IUQHje+auqD
+EH/GDK9uvvLP80iU6FSpRjqNhKUCgZ6omzWmWc2LXhxkFWOCDE6eNe4qcaq69kex
+aVgKM3AFTnGzCRcL1Q7zCieJoALQmRHAjOkTaUTgCCePZ9niPKiM+LUAM9zHDEQv
+lkB9A42noW/Nsn5hENL4DL83SmDttLM0e8xmpU2ORaikvgj6iWyxahNMWchBQPFs
+hzJ6pqJR8OLrvW0c8FgZcMgi0j/0MXBYThV5ZFGQgYY+GvwQqu2x17DmCUi2Ap09
+e8nGh1II4OlHtkzRzM4MZHKOaFO1cJFdMeFuQCCiG+FV4V5+Yk8nu/79sGD9QDN2
+8kTYjhG95hvXvwnKYwMCdkSg2cnqdVwCdsILhs4Yi9V/V5i5Io8=
+=MtOw
 -----END PGP SIGNATURE-----
 
---HLw6RDomtUPJeaNG--
+--1MrF9xvAFFugggfL--
