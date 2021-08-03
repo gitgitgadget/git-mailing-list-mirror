@@ -8,60 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AEC9C4338F
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 15:35:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3401DC432BE
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 15:35:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 567D560EC0
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 15:35:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1613960EC0
+	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 15:35:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236945AbhHCPfq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 11:35:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47116 "EHLO
+        id S236807AbhHCPfr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Aug 2021 11:35:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236892AbhHCPfm (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236940AbhHCPfm (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 3 Aug 2021 11:35:42 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DB73C061798
-        for <git@vger.kernel.org>; Tue,  3 Aug 2021 08:35:31 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id n12-20020a05600c3b8cb029025a67bbd40aso2042263wms.0
-        for <git@vger.kernel.org>; Tue, 03 Aug 2021 08:35:31 -0700 (PDT)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 396C9C061757
+        for <git@vger.kernel.org>; Tue,  3 Aug 2021 08:35:30 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id l18so25755217wrv.5
+        for <git@vger.kernel.org>; Tue, 03 Aug 2021 08:35:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=XYj/cvfiez+VFwKHVolZX/cURqSRdpnPS4TgCLART1M=;
-        b=I/xxa82SmnJ1rVooC2BCL8MJ6vj0Bfi3GiyDxzcFAcBQfSxTHih0lIFxtl5dfE1Df8
-         cK7912kI0Zj6reUaMBCTa1uLWA+zOF3zneiTkS8pHyU83GOiC68mJsYL6EJe0Vnz+W8G
-         eI7YqWz/baWXDb+7pRzAC7ln7Jz4/NTjEtS2T0nXWXbSOWnD9Uq1ZfA/3PfeCpqD0lxF
-         JuG61mihSPcUy+3JNfnqtZkc2oTSf0AgCLtiGO9Rtd//ZMMJj6N6vqicAwsfWC73lqnp
-         Ca5A/h3gCwU2uG0ArSvjf1QUZaG0HbEV6wmZwUgd+82VW5v+0x+7tYw2tYfPefaj0C0A
-         42GQ==
+        bh=u3dqx4snabxia0SNBq9ULD2bPtVSCdZATA+JzXm0OFw=;
+        b=hYovjg2ybpQcmcjO3e0iZ1c5NR0cAPPYBDBmvW3uJTEQn5Jls7OvOTgcOsYjXRci5l
+         cy7/9E/s9PjptRR+Yplt/MAsOiAq6XB0xXTKH2zEBzpSQkTHADnii6+0hrobSldDzct/
+         viDP2MCvz0inBgTh6jT5CoG8C5iiKnT0COkdqOG21uSMLe15hDFZLR5TJoyKi5GwgYBL
+         q+0t5tN/g2gK/0hr9HZMZM10HDhTCStM+YhO4yopH4C/R8LLRxmTVKvLyWUzfkwmsSFy
+         TkBYrZs4pm41Pk2pyZFjECOSm4U5y/LpGUVgB2Tkp7X+8TECc0nZlOeLdB+DhsuDwery
+         XlMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XYj/cvfiez+VFwKHVolZX/cURqSRdpnPS4TgCLART1M=;
-        b=dkHslPeKukcLd2cuLtCxtGsNk376LPd9G8wD9xFAIn9NwlQNeoHtLM2IgL8qLEA+2v
-         TWT4Qk0YiiYIY20HcDhAHvJ6TnVvBqIhxsWB59DF81d6ng306EDVZRBZaRv54MmSL6E6
-         Ir9y5KEaVcu6HIiPLkVEIvphI4ZodRuVNfUufGKySGK8BkdPpweXSJFgJAhgaZ+poD/q
-         aepYpzh3TSFbZ97FU+rjgVm7D5Nfls/rzVZc3qrVjW7YIuvSizX7RqhDs9BEtZmLIP9y
-         EpqOB1tjA8mmRr+/AiepR6rv4HgQ+uJTA6rr0P9C7QEvKASD3zZqSZcFKoCfhfVZCd9H
-         aEcw==
-X-Gm-Message-State: AOAM530TP0Bv1ppi4XxxlLJIC7zL0fJDH7KYLWuntKXhkjMiMCsXN/am
-        4MlyxKmT2SV83IpsQsC5f2X52GiKSEI=
-X-Google-Smtp-Source: ABdhPJxD7UKtQVXnS2lwGPOpdKG95cSzNgM1SMUoEh2Eow87xKk5bVtAfDN3HmVQEO88RKxvmcCVJQ==
-X-Received: by 2002:a1c:413:: with SMTP id 19mr22569321wme.74.1628004929999;
-        Tue, 03 Aug 2021 08:35:29 -0700 (PDT)
+        bh=u3dqx4snabxia0SNBq9ULD2bPtVSCdZATA+JzXm0OFw=;
+        b=T/nxLckezyJ9ZtT3tLkvJSFtc7jB2Yha4k6KnK5NWtsXfj0UVKNTjeniRo4A/K1mQW
+         3ZiRSQ8VLKEtxjPf/MYg8mvuLzmhHHAgWJzLXLzCj5WCeoEcxcoiXiAie1/Py0Wc2ByP
+         r8qtiOmNBF7NDK0oa0lpIOfUWAF+PRJwREwbxM6Tn1h7e6n3FhEqFqqteY9FODl4g5OT
+         otpYSALzR/d9rP4v19CbOpaZf1xrMYfaMPWR7u+eFwjZpm2nXLxGY4fbx5x4VUQcBQPq
+         ObU2w60I9ku3sxriteB+/JX5+diclsVXadIZJNzmf2RHUGpBpeTzkleOtLD37tLt4jHh
+         7hzA==
+X-Gm-Message-State: AOAM533etikl/CckiZ1GdfVktHSyXaoat8uwdLUpwmByFk+JdOvJrs7V
+        YIKIN1XLHjvZZeZCSmdEM7kZ2ysZ46I=
+X-Google-Smtp-Source: ABdhPJwLb1pxUf63/NaUWRcHqv/sWabOkP2Qu0D7bkKPSMSYJjTOzBcLQkYqDpNWmqHyiEs7pwcGIA==
+X-Received: by 2002:a5d:6692:: with SMTP id l18mr23178621wru.85.1628004928490;
+        Tue, 03 Aug 2021 08:35:28 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g5sm2828963wmh.31.2021.08.03.08.35.29
+        by smtp.gmail.com with ESMTPSA id i7sm15563065wre.64.2021.08.03.08.35.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 08:35:29 -0700 (PDT)
-Message-Id: <010702d08417f86da033ae8a6093ec4b9ce6e19a.1628004920.git.gitgitgadget@gmail.com>
+        Tue, 03 Aug 2021 08:35:27 -0700 (PDT)
+Message-Id: <6116f4750fd228b96ee293033f867a964b87eb5f.1628004920.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com>
 References: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 03 Aug 2021 15:35:18 +0000
-Subject: [PATCH 08/10] merge-strategies.txt: fix simple capitalization error
+Date:   Tue, 03 Aug 2021 15:35:16 +0000
+Subject: [PATCH 06/10] merge-strategies.txt: avoid giving special preference
+ to patience algorithm
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,24 +75,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
+We already have diff-algorithm that explains why there are special diff
+algorithms, so we do not need to re-explain patience.  patience exists
+as its own toplevel option for historical reasons, but there's no reason
+to give it special preference or document it again and suggest it's more
+important than other diff algorithms, so just refer to it as a
+deprecated shorthand for `diff-algorithm=patience`.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-rebase.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/merge-strategies.txt | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 7044afba362..b4429954480 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -530,7 +530,7 @@ The `--rebase-merges` mode is similar in spirit to the deprecated
- where commits can be reordered, inserted and dropped at will.
- +
- It is currently only possible to recreate the merge commits using the
--`recursive` merge strategy; Different merge strategies can be used only via
-+`recursive` merge strategy; different merge strategies can be used only via
- explicit `exec git merge -s <strategy> [...]` commands.
- +
- See also REBASING MERGES and INCOMPATIBLE OPTIONS below.
+diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
+index bc82799365a..eb43befac7b 100644
+--- a/Documentation/merge-strategies.txt
++++ b/Documentation/merge-strategies.txt
+@@ -37,11 +37,7 @@ theirs;;
+ 	no 'theirs' merge strategy to confuse this merge option with.
+ 
+ patience;;
+-	With this option, 'merge-recursive' spends a little extra time
+-	to avoid mismerges that sometimes occur due to unimportant
+-	matching lines (e.g., braces from distinct functions).  Use
+-	this when the branches to be merged have diverged wildly.
+-	See also linkgit:git-diff[1] `--patience`.
++	Deprecated shorthand for diff-algorithm=patience.
+ 
+ diff-algorithm=[patience|minimal|histogram|myers];;
+ 	Use a different diff algorithm while merging, which can help
 -- 
 gitgitgadget
 
