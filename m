@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB2DFC432BE
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 05:38:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F31C1C4338F
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 05:38:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE8B560F25
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 05:38:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D821560F25
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 05:38:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235386AbhHDFiT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 01:38:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46722 "EHLO
+        id S235394AbhHDFiV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 01:38:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235338AbhHDFiS (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235370AbhHDFiS (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 4 Aug 2021 01:38:18 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14A08C06179B
-        for <git@vger.kernel.org>; Tue,  3 Aug 2021 22:38:06 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id n12-20020a05600c3b8cb029025a67bbd40aso3105654wms.0
-        for <git@vger.kernel.org>; Tue, 03 Aug 2021 22:38:06 -0700 (PDT)
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65C3DC061798
+        for <git@vger.kernel.org>; Tue,  3 Aug 2021 22:38:05 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id p5so812647wro.7
+        for <git@vger.kernel.org>; Tue, 03 Aug 2021 22:38:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=yGRI/7DWz4wYUAHxWOXasEQ1e39OsZKdaSNsPJcuiRs=;
-        b=lufZKUsJcf+AoPuZLODY9N/JBXFncvEGDE69WWatOKNm8XBWLIDPTJ7uBt5QoZlgYe
-         FwgrnKWihDL2s2ULJi5KntdChPdnkIIApt45AynzuEHtK8q2fcdZKDQR1mZ324jdECE6
-         o2JhmYFaVVwGJ0EkRf3KFIA6q39WtrWSQfv2mwpCtYpXP3Ac/5ctzxInC4c9JFlEI4+O
-         6OyunqYMwGRrjwWjeY71F+cfAypGEKCRXkF/CRg4V2X/5EMGSwPFw5oSCsntKiEj1TSf
-         h23VBo92ww9mBOwl2vPvi6CBFoU7FW6GmmzQJv24SvmovcB1/rLVshi3/QXqzbZZCIV4
-         IAlg==
+        bh=vXzpr4mBuAan/TfaY8pYS0X5/xTK3QoxcMpyEW5wNLA=;
+        b=RATmp/pVP9MMdZUWzc6p+ua70ogHZtdaprA0VWON/geS1XwIsRhM5LJDJa24tmquGU
+         Uz+1k9JiNaiXBnqeCFEw6ltrMgJAyFk5QPxE1Eo99+NEU2t19YVovcfX2WUpC/6doGQB
+         gDKJ0PpoVZoR9/JEUUiPOL2885zrybzNLHt8/0ZM4nAr0p7OIdPiOTLMF+R/HT5dMtLn
+         X/RZLdKV0NY7OZp2Ua815KcXfRunfrJB6JGs0bsFVFrEyZ/hp1ykc3OgsBXCoxfJB/ej
+         A9LR2Mgftcw5PJXHqriHMUzVIMQhByhKBXq5yB5j8Vj/azdxdO9KdWlx8reeAIAtFLCP
+         Jriw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yGRI/7DWz4wYUAHxWOXasEQ1e39OsZKdaSNsPJcuiRs=;
-        b=eODyBX9HxJmLft/3vB5mjMozeF+ClXbUomqfYKYUwID3USCfFf9DNO3FCstbH3FvOB
-         vL1Z0H3JkZaXUy0ifvY/4WY8JujRRF7MMZ7jE9pehOGiX3lIhP1HqUMaHuolFsxjRFcZ
-         9ZPLZI4PYHVW3F8/pP9p6QaCXFXYG+UzcpDsk3eZa0yAMvjjFE8s25q5eZywtvL8LjMB
-         QrcakpSUIXpbbcsBv1z8Lp2joyZiMPEZ/pWI8YPHkT+VHZSQ/JX/IG7XESJn+Uym7uhq
-         sQF3YN1nUMgDOD23LMdaB3p0sUkUoQRmK4TIgwR51lw1I83GsVrZQNU2UbHQE36FQdA3
-         CRaQ==
-X-Gm-Message-State: AOAM530up+cDATF/dtBSd6S1xrK1vbPy3Vn+y+PXBZz+Gs265zm91zoz
-        pttZBHGMPKxUwx7O5X1kPrA+R/DUlwY=
-X-Google-Smtp-Source: ABdhPJyMShVsRwIs2T4ptGLRTpEcVb5voSloNDOZEIzsmxM7j5LZKanRUB9HwKA8GSTFhjkbGzVd7Q==
-X-Received: by 2002:a05:600c:414e:: with SMTP id h14mr7796514wmm.92.1628055484507;
-        Tue, 03 Aug 2021 22:38:04 -0700 (PDT)
+        bh=vXzpr4mBuAan/TfaY8pYS0X5/xTK3QoxcMpyEW5wNLA=;
+        b=Rq5V1ekwQlPpwSJ10KndElHdpQ2Yf7ejTgAJUHos67n3hCbWTU5Cflp61czooz4fPI
+         Bs6q4T7rAYzx4MK6+Pu6TrvAEXvrtPiZNMfkMCPEz3O4Jj0ABi39+U+KiWUqSUD6MuqN
+         hMfWpVCFKYrQP1HYW3yHbnUhZh0/2Da68DkDOYdF5vh2UrJrMylYd1lREDao35oU2gHg
+         zHN4Kj43VGWP7DG3yf/NDXwyN7OrzukrzICnT/nJbf7Wd4oF+HyDTjpWdJeqhIvwmSZJ
+         GeSnKhqBy8OJkFfIUemKrdRnUqSwg0nmkPc/+08dShorvu5qic88QccKkRHkn5eloiY9
+         kPfw==
+X-Gm-Message-State: AOAM533YQGqleJj9KcauVOJg8Pm7NTqbeI7kDl0+y45vvKRxKtTQe86B
+        4YmdhoZfYooyOUDsGuacdb4zGq8axwM=
+X-Google-Smtp-Source: ABdhPJxn06GbgXCdHQI0UDJMXz/EguEyYocZHfjPnVNDsnDdtgs+4RehTw25SNNG+6Utrx5/QNqWlg==
+X-Received: by 2002:a5d:4b4e:: with SMTP id w14mr26434276wrs.341.1628055483889;
+        Tue, 03 Aug 2021 22:38:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 104sm1108158wrc.4.2021.08.03.22.38.04
+        by smtp.gmail.com with ESMTPSA id d8sm1107798wrv.20.2021.08.03.22.38.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 22:38:04 -0700 (PDT)
-Message-Id: <845d5bf510c5dea2bf6d96d6bc21f356d00fc562.1628055482.git.gitgitgadget@gmail.com>
+        Tue, 03 Aug 2021 22:38:03 -0700 (PDT)
+Message-Id: <4a0f088f3669a95c7f75e885d06c0a3bdaf31f42.1628055482.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1011.git.1628055482.gitgitgadget@gmail.com>
 References: <pull.1011.git.1628055482.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 04 Aug 2021 05:38:02 +0000
-Subject: [PATCH 2/2] Update docs for change of default merge backend
+Date:   Wed, 04 Aug 2021 05:38:01 +0000
+Subject: [PATCH 1/2] Change default merge backend from recursive to ort
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -88,256 +88,168 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Make it clear that `ort` is the default merge strategy now rather than
-`recursive`, including moving `ort` to the front of the list of merge
-strategies.
+There are a few reasons to switch the default:
+  * Correctness
+  * Extensibility
+  * Performance
+
+I'll provide some summaries about each.
+
+=== Correctness ===
+
+The original impetus for a new merge backend was to fix issues that were
+difficult to fix within recursive's design.  The success with this goal
+is perhaps most easily demonstrated by running the following:
+
+  $ git grep -2 KNOWN_FAILURE t/ | grep -A 4 GIT_TEST_MERGE_ALGORITHM
+  $ git grep test_expect_merge_algorithm.failure.success t/
+  $ git grep test_expect_merge_algorithm.success.failure t/
+
+In order, these greps show:
+
+  * Seven sets of submodule tests (10 total tests) that fail with
+    recursive but succeed with ort
+  * 22 other tests that fail with recursive, but succeed with ort
+  * 0 tests that pass with recursive, but fail with ort
+
+=== Extensibility ===
+
+Being able to perform merges without touching the working tree or index
+makes it possible to create new features that were difficult with the
+old backend:
+
+  * Merging, cherry-picking, rebasing, reverting in bare repositories...
+    or just on branches that aren't checked out.
+
+  * `git diff AUTO_MERGE` -- ability to see what changes the user has
+    made to resolve conflicts so far (see commit 5291828df8 ("merge-ort:
+    write $GIT_DIR/AUTO_MERGE whenever we hit a conflict", 2021-03-20)
+
+  * A --remerge-diff option for log/show, used to show diffs for merges
+    that display the difference between what an automatic merge would
+    have created and what was recorded in the merge.  (This option will
+    often result in an empty diff because many merges are clean, but for
+    the non-clean ones it will show how conflicts were fixed including
+    the removal of conflict markers, and also show additional changes
+    made outside of conflict regions to e.g. fix semantic conflicts.)
+
+  * A --remerge-diff-only option for log/show, similar to --remerge-diff
+    but also showing how cherry-picks or reverts differed from what an
+    automatic cherry-pick or revert would provide.
+
+The last three have been implemented already (though only one has been
+submitted upstream so far; the others were waiting for performance work
+to complete), and I still plan to implement the first one.
+
+=== Performance ===
+
+I'll quote from the summary of my final optimization for merge-ort
+(while fixing the testcase name from 'no-renames' to 'few-renames'):
+
+                               Timings
+
+                                          Infinite
+                 merge-       merge-     Parallelism
+                recursive    recursive    of rename    merge-ort
+                 v2.30.0      current     detection     current
+                ----------   ---------   -----------   ---------
+few-renames:      18.912 s    18.030 s     11.699 s     198.3 ms
+mega-renames:   5964.031 s   361.281 s    203.886 s     661.8 ms
+just-one-mega:   149.583 s    11.009 s      7.553 s     264.6 ms
+
+                           Speedup factors
+
+                                          Infinite
+                 merge-       merge-     Parallelism
+                recursive    recursive    of rename
+                 v2.30.0      current     detection    merge-ort
+                ----------   ---------   -----------   ---------
+few-renames:        1           1.05         1.6           95
+mega-renames:       1          16.5         29           9012
+just-one-mega:      1          13.6         20            565
+
+And, for partial clone users:
+
+             Factor reduction in number of objects needed
+
+                                          Infinite
+                 merge-       merge-     Parallelism
+                recursive    recursive    of rename
+                 v2.30.0      current     detection    merge-ort
+                ----------   ---------   -----------   ---------
+mega-renames:       1            1            1          181.3
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-rebase.txt       | 28 ++++-----
- Documentation/gitfaq.txt           |  2 +-
- Documentation/merge-options.txt    |  2 +-
- Documentation/merge-strategies.txt | 93 ++++++++++++++++--------------
- Documentation/user-manual.txt      |  2 +-
- 5 files changed, 67 insertions(+), 60 deletions(-)
+ builtin/merge.c  | 10 ++++++++--
+ builtin/rebase.c |  2 +-
+ sequencer.c      |  4 ++--
+ 3 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 73d49ec8d91..3f1030df70e 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -352,8 +352,8 @@ See also INCOMPATIBLE OPTIONS below.
+diff --git a/builtin/merge.c b/builtin/merge.c
+index d7b14bf4a7f..fbe21d413c1 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -88,9 +88,9 @@ static int autostash;
+ static int no_verify;
  
- -s <strategy>::
- --strategy=<strategy>::
--	Use the given merge strategy, instead of the default
--	`recursive`.  This implies `--merge`.
-+	Use the given merge strategy, instead of the default `ort`.
-+	This implies `--merge`.
- +
- Because 'git rebase' replays each commit from the working branch
- on top of the <upstream> branch using the given strategy, using
-@@ -366,7 +366,7 @@ See also INCOMPATIBLE OPTIONS below.
- --strategy-option=<strategy-option>::
- 	Pass the <strategy-option> through to the merge strategy.
- 	This implies `--merge` and, if no strategy has been
--	specified, `-s recursive`.  Note the reversal of 'ours' and
-+	specified, `-s ort`.  Note the reversal of 'ours' and
- 	'theirs' as noted above for the `-m` option.
- +
- See also INCOMPATIBLE OPTIONS below.
-@@ -527,7 +527,7 @@ The `--rebase-merges` mode is similar in spirit to the deprecated
- where commits can be reordered, inserted and dropped at will.
- +
- It is currently only possible to recreate the merge commits using the
--`recursive` merge strategy; different merge strategies can be used only via
-+`ort` merge strategy; different merge strategies can be used only via
- explicit `exec git merge -s <strategy> [...]` commands.
- +
- See also REBASING MERGES and INCOMPATIBLE OPTIONS below.
-@@ -1216,16 +1216,16 @@ successful merge so that the user can edit the message.
- If a `merge` command fails for any reason other than merge conflicts (i.e.
- when the merge operation did not even start), it is rescheduled immediately.
+ static struct strategy all_strategy[] = {
+-	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
++	{ "recursive",  NO_TRIVIAL },
+ 	{ "octopus",    DEFAULT_OCTOPUS },
+-	{ "ort",        NO_TRIVIAL },
++	{ "ort",        DEFAULT_TWOHEAD | NO_TRIVIAL },
+ 	{ "resolve",    0 },
+ 	{ "ours",       NO_FAST_FORWARD | NO_TRIVIAL },
+ 	{ "subtree",    NO_FAST_FORWARD | NO_TRIVIAL },
+@@ -1484,6 +1484,12 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			fast_forward = FF_NO;
+ 	}
  
--By default, the `merge` command will use the `recursive` merge
--strategy for regular merges, and `octopus` for octopus merges.  One
--can specify a default strategy for all merges using the `--strategy`
--argument when invoking rebase, or can override specific merges in the
--interactive list of commands by using an `exec` command to call `git
--merge` explicitly with a `--strategy` argument.  Note that when
--calling `git merge` explicitly like this, you can make use of the fact
--that the labels are worktree-local refs (the ref `refs/rewritten/onto`
--would correspond to the label `onto`, for example) in order to refer
--to the branches you want to merge.
-+By default, the `merge` command will use the `ort` merge strategy for
-+regular merges, and `octopus` for octopus merges.  One can specify a
-+default strategy for all merges using the `--strategy` argument when
-+invoking rebase, or can override specific merges in the interactive
-+list of commands by using an `exec` command to call `git merge`
-+explicitly with a `--strategy` argument.  Note that when calling `git
-+merge` explicitly like this, you can make use of the fact that the
-+labels are worktree-local refs (the ref `refs/rewritten/onto` would
-+correspond to the label `onto`, for example) in order to refer to the
-+branches you want to merge.
++	if (!use_strategies && !pull_twohead &&
++	    remoteheads && !remoteheads->next) {
++		char *default_strategy = getenv("GIT_TEST_MERGE_ALGORITHM");
++		if (default_strategy)
++			append_strategy(get_strategy(default_strategy));
++	}
+ 	if (!use_strategies) {
+ 		if (!remoteheads)
+ 			; /* already up-to-date */
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 12f093121d9..587a2f1d299 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1713,7 +1713,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		int i;
  
- Note: the first command (`label onto`) labels the revision onto which
- the commits are rebased; The name `onto` is just a convention, as a nod
-diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-index afdaeab8503..8c1f2d56751 100644
---- a/Documentation/gitfaq.txt
-+++ b/Documentation/gitfaq.txt
-@@ -275,7 +275,7 @@ best to always use a regular merge commit.
+ 		if (!options.strategy)
+-			options.strategy = "recursive";
++			options.strategy = "ort";
  
- [[merge-two-revert-one]]
- If I make a change on two branches but revert it on one, why does the merge of those branches include the change?::
--	By default, when Git does a merge, it uses a strategy called the recursive
-+	By default, when Git does a merge, it uses a strategy called the `ort`
- 	strategy, which does a fancy three-way merge.  In such a case, when Git
- 	performs the merge, it considers exactly three points: the two heads and a
- 	third point, called the _merge base_, which is usually the common ancestor of
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index f819bd8dd68..72b53188504 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -112,7 +112,7 @@ With --squash, --commit is not allowed, and will fail.
- 	Use the given merge strategy; can be supplied more than
- 	once to specify them in the order they should be tried.
- 	If there is no `-s` option, a built-in list of strategies
--	is used instead (`recursive` when merging a single head,
-+	is used instead (`ort` when merging a single head,
- 	`octopus` otherwise).
+ 		strbuf_reset(&buf);
+ 		for (i = 0; i < strategy_options.nr; i++)
+diff --git a/sequencer.c b/sequencer.c
+index a4e5c43fcf2..d08ddae52fa 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -636,7 +636,7 @@ static int do_recursive_merge(struct repository *r,
+ 	for (i = 0; i < opts->xopts_nr; i++)
+ 		parse_merge_opt(&o, opts->xopts[i]);
  
- -X <option>::
-diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-index 210f0f850b2..34c6c31d8e7 100644
---- a/Documentation/merge-strategies.txt
-+++ b/Documentation/merge-strategies.txt
-@@ -6,21 +6,23 @@ backend 'merge strategies' to be chosen with `-s` option.  Some strategies
- can also take their own options, which can be passed by giving `-X<option>`
- arguments to `git merge` and/or `git pull`.
+-	if (opts->strategy && !strcmp(opts->strategy, "ort")) {
++	if (!opts->strategy || !strcmp(opts->strategy, "ort")) {
+ 		memset(&result, 0, sizeof(result));
+ 		merge_incore_nonrecursive(&o, base_tree, head_tree, next_tree,
+ 					    &result);
+@@ -3988,7 +3988,7 @@ static int do_merge(struct repository *r,
+ 	o.branch2 = ref_name.buf;
+ 	o.buffer_output = 2;
  
--recursive::
--	This can only resolve two heads using a 3-way merge
--	algorithm.  When there is more than one common
--	ancestor that can be used for 3-way merge, it creates a
--	merged tree of the common ancestors and uses that as
--	the reference tree for the 3-way merge.  This has been
--	reported to result in fewer merge conflicts without
--	causing mismerges by tests done on actual merge commits
--	taken from Linux 2.6 kernel development history.
--	Additionally this can detect and handle merges involving
--	renames.  It does not make use of detected copies.  This
--	is the default merge strategy when pulling or merging one
--	branch.
-+ort::
-+	This is the default merge strategy when pulling or merging one
-+	branch.  This strategy can only resolve two heads using a
-+	3-way merge algorithm.  When there is more than one common
-+	ancestor that can be used for 3-way merge, it creates a merged
-+	tree of the common ancestors and uses that as the reference
-+	tree for the 3-way merge.  This has been reported to result in
-+	fewer merge conflicts without causing mismerges by tests done
-+	on actual merge commits taken from Linux 2.6 kernel
-+	development history.  Additionally this strategy can detect
-+	and handle merges involving renames.  It does not make use of
-+	detected copies.  The name for this algorithm is an acronym
-+	("Ostensibly Recursive's Twin") and came from the fact that it
-+	was written as a replacement for the previous default
-+	algorithm, `recursive`.
- +
--The 'recursive' strategy can take the following options:
-+The 'ort' strategy can take the following options:
- 
- ours;;
- 	This option forces conflicting hunks to be auto-resolved cleanly by
-@@ -36,16 +38,6 @@ theirs;;
- 	This is the opposite of 'ours'; note that, unlike 'ours', there is
- 	no 'theirs' merge strategy to confuse this merge option with.
- 
--patience;;
--	Deprecated synonym for `diff-algorithm=patience`.
--
--diff-algorithm=[patience|minimal|histogram|myers];;
--	Use a different diff algorithm while merging, which can help
--	avoid mismerges that occur due to unimportant matching lines
--	(such as braces from distinct functions).  See also
--	linkgit:git-diff[1] `--diff-algorithm`.  Defaults to the
--	`diff.algorithm` config setting.
--
- ignore-space-change;;
- ignore-all-space;;
- ignore-space-at-eol;;
-@@ -74,11 +66,6 @@ no-renormalize;;
- 	Disables the `renormalize` option.  This overrides the
- 	`merge.renormalize` configuration variable.
- 
--no-renames;;
--	Turn off rename detection. This overrides the `merge.renames`
--	configuration variable.
--	See also linkgit:git-diff[1] `--no-renames`.
--
- find-renames[=<n>];;
- 	Turn on rename detection, optionally setting the similarity
- 	threshold.  This is the default. This overrides the
-@@ -95,19 +82,39 @@ subtree[=<path>];;
- 	is prefixed (or stripped from the beginning) to make the shape of
- 	two trees to match.
- 
--ort::
--	This is meant as a drop-in replacement for the `recursive`
--	algorithm (as reflected in its acronym -- "Ostensibly
--	Recursive's Twin"), and will likely replace it in the future.
--	It fixes corner cases that the `recursive` strategy handles
--	suboptimally, and is significantly faster in large
--	repositories -- especially when many renames are involved.
-+recursive::
-+	This can only resolve two heads using a 3-way merge
-+	algorithm.  When there is more than one common
-+	ancestor that can be used for 3-way merge, it creates a
-+	merged tree of the common ancestors and uses that as
-+	the reference tree for the 3-way merge.  This has been
-+	reported to result in fewer merge conflicts without
-+	causing mismerges by tests done on actual merge commits
-+	taken from Linux 2.6 kernel development history.
-+	Additionally this can detect and handle merges involving
-+	renames.  It does not make use of detected copies.  This was
-+	the default strategy for resolving two heads from Git v0.99.9k
-+	until v2.33.0.
- +
--The `ort` strategy takes all the same options as `recursive`.
--However, it ignores three of those options: `no-renames`,
--`patience` and `diff-algorithm`.  It always runs with rename
--detection (it handles it much faster than `recursive` does), and
--it specifically uses `diff-algorithm=histogram`.
-+The 'recursive' strategy takes the same options as 'ort'.  However,
-+there are three additional options that 'ort' ignores (not documented
-+above) that are potentially useful with the 'recursive' strategy:
-+
-+patience;;
-+	Deprecated synonym for `diff-algorithm=patience`.
-+
-+diff-algorithm=[patience|minimal|histogram|myers];;
-+	Use a different diff algorithm while merging, which can help
-+	avoid mismerges that occur due to unimportant matching lines
-+	(such as braces from distinct functions).  See also
-+	linkgit:git-diff[1] `--diff-algorithm`.  Note that `ort`
-+	specifically uses `diff-algorithm=histogram`, while `recursive`
-+	defaults to the `diff.algorithm` config setting.
-+
-+no-renames;;
-+	Turn off rename detection. This overrides the `merge.renames`
-+	configuration variable.
-+	See also linkgit:git-diff[1] `--no-renames`.
- 
- resolve::
- 	This can only resolve two heads (i.e. the current branch
-@@ -131,13 +138,13 @@ ours::
- 	the 'recursive' merge strategy.
- 
- subtree::
--	This is a modified recursive strategy. When merging trees A and
-+	This is a modified ort strategy. When merging trees A and
- 	B, if B corresponds to a subtree of A, B is first adjusted to
- 	match the tree structure of A, instead of reading the trees at
- 	the same level. This adjustment is also done to the common
- 	ancestor tree.
- 
--With the strategies that use 3-way merge (including the default, 'recursive'),
-+With the strategies that use 3-way merge (including the default, 'ort'),
- if a change is made on both branches, but later reverted on one of the
- branches, that change will be present in the merged result; some people find
- this behavior confusing.  It occurs because only the heads and the merge base
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 96240598e3f..865074bed4e 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -3190,7 +3190,7 @@ that *updated* thing--the old state that you added originally ends up
- not being pointed to by any commit or tree, so it's now a dangling blob
- object.
- 
--Similarly, when the "recursive" merge strategy runs, and finds that
-+Similarly, when the "ort" merge strategy runs, and finds that
- there are criss-cross merges and thus more than one merge base (which is
- fairly unusual, but it does happen), it will generate one temporary
- midway tree (or possibly even more, if you had lots of criss-crossing
+-	if (opts->strategy && !strcmp(opts->strategy, "ort")) {
++	if (!opts->strategy || !strcmp(opts->strategy, "ort")) {
+ 		/*
+ 		 * TODO: Should use merge_incore_recursive() and
+ 		 * merge_switch_to_result(), skipping the call to
 -- 
 gitgitgadget
+
