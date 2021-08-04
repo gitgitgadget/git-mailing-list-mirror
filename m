@@ -2,92 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E35ADC4338F
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 02:05:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2653CC4338F
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 02:37:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C18E960E78
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 02:05:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00C3A6056B
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 02:37:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234108AbhHDCFw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 22:05:52 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57093 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232769AbhHDCFv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Aug 2021 22:05:51 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 034C4D8636;
-        Tue,  3 Aug 2021 22:05:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=k9pfPeCTn7Mw6Yo34OQvS3YwO5GjcSv7qaCC/m
-        sdIgw=; b=DlMnTZb1GFpLR8+d9QGpihvKOn5T68m0W3IXRwvRZKUMk3WHy6Quo0
-        s5a6gDVVlJUiN7+PF0Wn5jhdqWDQ6MT+MtviZt9oW9Szg9qEaxMxX9Pbh0cwDV14
-        DmRRCDY0Z+IHAXjivCCmBvIffevrAXRtGBH+V0wILfwzOhR9PQ6mc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EE5FFD8635;
-        Tue,  3 Aug 2021 22:05:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.71.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 795F3D8634;
-        Tue,  3 Aug 2021 22:05:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 07/10] merge-strategies.txt: explain why no-renames
- might be useful
-References: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com>
-        <7eecf879d608d8be17d4aa0ae087fb610156019c.1628004920.git.gitgitgadget@gmail.com>
-        <xmqqeebarr36.fsf@gitster.g>
-        <CABPp-BGKbV7WPKmMdzetXgzaqzzaGGQ6SRuKHENkQh98-huotw@mail.gmail.com>
-Date:   Tue, 03 Aug 2021 19:05:37 -0700
-In-Reply-To: <CABPp-BGKbV7WPKmMdzetXgzaqzzaGGQ6SRuKHENkQh98-huotw@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 3 Aug 2021 18:44:27 -0600")
-Message-ID: <xmqqr1faq80e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S234505AbhHDChl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Aug 2021 22:37:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34818 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231950AbhHDChg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Aug 2021 22:37:36 -0400
+Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EAA1C061575
+        for <git@vger.kernel.org>; Tue,  3 Aug 2021 19:37:23 -0700 (PDT)
+Received: by mail-ua1-x92e.google.com with SMTP id 79so361414uau.9
+        for <git@vger.kernel.org>; Tue, 03 Aug 2021 19:37:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=MTDdy4GXrHA0CZStzzJNbHH+uQs0f4ZEE6eLtkXFaB0=;
+        b=aO3SQIi3GK7eetFWzXvGQhJPwdTCj5QTObTo8mIZmk8eJBcpOHrCftwdY8WOrEjpV5
+         IFCVV/lDbarTSdNPncbJjWsT5yDdSaI10/Ve+r52MueUIl1vga4HZZAtAHkx7Zh25YXF
+         0QbtLEYzLf2PJPa5cEc5nzD3ktZ803wA/HvHoV5+dF+24DKOx6baxBnZmy+2xye5GA/R
+         CPB2JmZWopLf5yBe0KNkv3MnYnbRbsESeBuf3UMg13iHUVZtRi3dSweBlcKLbvv3cCE2
+         GywO1nzbP8hxZgH8AubWRIf7UaSi7YsPbD4w6WQIoThhu/meKT9fqpkjvDj0OzFGFm9X
+         FxnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=MTDdy4GXrHA0CZStzzJNbHH+uQs0f4ZEE6eLtkXFaB0=;
+        b=nlDUkO+lFeihmwD/S8ARnxJce1F8dlLZsosmmUdm5uQaEwsNWF/Hg6Z9vAk79u0YJE
+         8UMY+L4mBBDNcPVqpLg2ElGQbcgEPRmzYMmreTu0Duy/bj9Xrd2QaK9sjJKOGMGA6ItS
+         J+mNnm8NAeHHatWSJBcWvv5joP1df3K9K7OZbX6u6zFkIGdJr94kmqLQoDYr1IO1u2CF
+         qX1gSmr86Lvu+jAMak1zioM3guwvjnpD+F0Z5+lqm8QpsIhoHoeW0W/+ab7JnZxn3TJV
+         hF9WLLuzYkoQjRXIiPog/AvDPicFKPINb92VgY+j8Ul67mnt908AHYwNAq3aQzzTaBAR
+         ilnA==
+X-Gm-Message-State: AOAM532im5OYwRh8VPkeLiqosjKiLiEqWv/jN9SpowyVxZj42vNijyq5
+        nQMKYuryR9qMINrJmVrfQn1U7JRNhE26zj8DTCZ/r6Wi
+X-Google-Smtp-Source: ABdhPJy5Soe1RKIxSqjq5sOQ4BBMhQjzyAl1OQGKeEuftn5T0qINPG1OSWcA+KznE3V4W1N7YmJl8Eneael4KyCxD5E=
+X-Received: by 2002:ab0:2814:: with SMTP id w20mr16713151uap.140.1628044642047;
+ Tue, 03 Aug 2021 19:37:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 76968928-F4C8-11EB-9341-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+References: <20210804010900.33133-1-carenas@gmail.com>
+In-Reply-To: <20210804010900.33133-1-carenas@gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Tue, 3 Aug 2021 19:37:11 -0700
+Message-ID: <CAPUEspj56Pc6Ubbj+nY2gM3f7TX3PfvnSj8BGcMcG2evaeG4vw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] gitk: macOS improvements
+To:     git@vger.kernel.org, paulus@samba.org
+Cc:     sunshine@sunshineco.com, tair.sabirgaliev@bee.kz,
+        lists@haller-berlin.de, tobias.pietzsch@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Tested in Windows (with 8.6) as well not to introduce any regressions
 
->> >  no-renames;;
->> > -     Turn off rename detection. This overrides the `merge.renames`
->> > -     configuration variable.
->> > -     See also linkgit:git-diff[1] `--no-renames`.
->> > +     Turn off rename detection, which can be computationally
->> > +     expensive.  This overrides the `merge.renames`
->> > +     configuration variable.  See also linkgit:git-diff[1]
->> > +     `--no-renames`.
->>
->> Other reasons are that we may find a pair that the user did not
->> intend to when they made the change (i.e. it was done purely a
->> creation and a deletion but we found similarity), or we may find a
->> wrong original to consolidate changes from a side branch into, and
->> these are fundamental as it is our early design choice not to
->> record renames at the time of committing.
++CC Tobias (gmail instead of the one bouncing in the SoB)
+
+On Tue, Aug 3, 2021 at 6:09 PM Carlo Marcelo Arenas Bel=C3=B3n
+<carenas@gmail.com> wrote:
 >
-> Good points.  Trying to describe all of that makes it somewhat
-> lengthy; does it make sense to include all of that, or should I just
-> drop this patch?
-
-What do the git-diff page say?  If it is not worth saying there,
-perhaps we should not have to do so here, either.
-
-We should have _somewhere_ that lists these pitfalls that the users
-may want to be aware of, that is common to all the features that
-ends up using and relying on the rename machinery.  I do not think
-merge strategies documentation is the place.
-
-
+> The following patches improve the user experience for gitk in macOS
+> by avoiding to abort if the terminal where it is running hasn't been
+> authorized for Automation as reported a few[1,2] times already.
+>
+> It has been tested in macOS 11.5.1 using both the system tk (8.5) and
+> the latest (8.6.11) from brew, the third[3] patch is needed for using
+> 8.6 and has been included with the gitk version from brew as well.
+>
+> Carlo Marcelo Arenas Bel=C3=B3n (2):
+>   gitk: skip calling osascript to set frontmost for tk >=3D 8.6
+>   gitk: avoid fatal error if `exec osascript` fails
+>
+> Tobias Pietzsch (1):
+>   gitk: check main window visibility before waiting for it to show
+>
+>  gitk | 20 +++++++++++++-------
+>  1 file changed, 13 insertions(+), 7 deletions(-)
+>
+> [1] https://lore.kernel.org/git/20180724065120.7664-1-sunshine@sunshineco=
+.com/
+> [2] https://lore.kernel.org/git/20201025175149.11853-1-dev+git@drbeat.li/
+> [3] https://lore.kernel.org/git/pull.944.git.git.1610234771966.gitgitgadg=
+et@gmail.com/
+> --
+> 2.33.0.rc0.433.g9a510e7e11
