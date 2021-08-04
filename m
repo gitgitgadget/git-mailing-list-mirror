@@ -2,149 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79001C4338F
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 20:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86F12C4338F
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 20:59:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BEA661040
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 20:53:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A39D60184
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 20:59:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237474AbhHDUyB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 16:54:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58628 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231508AbhHDUyB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Aug 2021 16:54:01 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1BC0C061799
-        for <git@vger.kernel.org>; Wed,  4 Aug 2021 13:53:47 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id q3-20020a25bfc30000b02905592911c932so4157252ybm.15
-        for <git@vger.kernel.org>; Wed, 04 Aug 2021 13:53:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to;
-        bh=t6vY3P2Qx4mXnfsT0b+WpkPovb2REJLiw1rNNBmg2xs=;
-        b=PW83vcuYNJ5M4ERiuzyhNhCEeC9bfiIUEDecG+HOcgz+1ui0pPvCN5IZFvc61BJBIQ
-         4IKRD6H6ysG2VgPn+1Qn0HugPPkuAHlOk7Yt9tFxWqlAmyJUPNR4fhmtPeJrh5nwWPvy
-         76tpDxldiPNKsxF9iZBbWBK/F95ZPaJDdORqMOeKMn65lQfTVS7aofZaeleUK9O6uDV3
-         KCW61j3VcuDP2RTuLGJUdtVe5+zu3yYh1Th38O4yqzBYO/eNShMN/KaTV31RO9P2D6VY
-         vkpvlONgrc6J5ghr0wbl+CGnapEV0AC/tsAmCAMfxAjoUrfCxmQBQY7KGL8GmyfTAiBd
-         4vLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
-        bh=t6vY3P2Qx4mXnfsT0b+WpkPovb2REJLiw1rNNBmg2xs=;
-        b=ojgwjQU+eeq7SQU6uPj6hvlG1oXPx5gD1fhe63uRnXsjDWx7sSlGosX7J47hH6ZRgJ
-         IWYvSqc0hD8MGiAKS+SEAdP4N2XbvFRMwRbcAgQocgDFMzJKM3dkLjL0eOG0P9cQ4/43
-         wybAXUcCI2J4j8iyCQtpY0ViXU7hmxL70dlzeYxWp7IcgFNBZ27QFW95iWFsB78wee6Q
-         hq9tLb5NEV++exFTI9ZN3ajK/nJEqpByIIgFUSxWrg3rz5pc1GY5c1mS/KQfPgtNL2ig
-         o1l8/7stMPM4Us/zFWKw7vwGkrsfHnBCs6hV0IbPtMwHLNeNyDiIh7jXcKzSttsJWQBU
-         1PXg==
-X-Gm-Message-State: AOAM531UbsSUwHWS3linen18q6XhLX6SJOiMb43E9s6kWyyK9TmeXKYr
-        JY0+nJYyLjKeJ5GNaL8L7/4+WK+XvyZ30DuMBm4DFmxO98xW0gNFDHof3AlwCZj79KD8eyRGq6B
-        Hm+bSd0sCuvYiv4OFnEFCKPLXb6rzqtbEAcKDQx9iZuC8XTeOw4FtWrj1eeSuDGQ=
-X-Google-Smtp-Source: ABdhPJzsf5YfENaLXmo0bvRcUbMmSuhoNVGTTq1AMJ06A1oYGynXmIMvkr1QD7ODjBf2DekD5JfkUcMjvpHeUQ==
-X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:9758:1083:3c28:c541])
- (user=steadmon job=sendgmr) by 2002:a25:3046:: with SMTP id
- w67mr1761332ybw.134.1628110427047; Wed, 04 Aug 2021 13:53:47 -0700 (PDT)
-Date:   Wed,  4 Aug 2021 13:53:45 -0700
-Message-Id: <4d83766ab3425a5f4b361df2ac505d07fefd7899.1628109852.git.steadmon@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.32.0.554.ge1b32706d8-goog
-Subject: [RFC PATCH] sequencer: warn on skipping previously seen commit
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S238637AbhHDU7y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 16:59:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39042 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230407AbhHDU7y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Aug 2021 16:59:54 -0400
+Received: (qmail 7438 invoked by uid 109); 4 Aug 2021 20:59:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 04 Aug 2021 20:59:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28483 invoked by uid 111); 4 Aug 2021 20:59:41 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 04 Aug 2021 16:59:41 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 4 Aug 2021 16:59:40 -0400
+From:   Jeff King <peff@peff.net>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] fetch-pack: speed up loading of refs via commit graph
+Message-ID: <YQr/vLNjZomIe1ME@coredump.intra.peff.net>
+References: <08519b8ab6f395cffbcd5e530bfba6aaf64241a2.1628085347.git.ps@pks.im>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <08519b8ab6f395cffbcd5e530bfba6aaf64241a2.1628085347.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Silently skipping commits when rebasing with --no-reapply-cherry-picks
-(currently the default behavior) can cause user confusion. Issue a
-warning in this case so that users are aware of what's happening.
+On Wed, Aug 04, 2021 at 03:56:11PM +0200, Patrick Steinhardt wrote:
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
+> When doing reference negotiation, git-fetch-pack(1) is loading all refs
+> from disk in order to determine which commits it has in common with the
+> remote repository. This can be quite expensive in repositories with many
+> references though: in a real-world repository with around 2.2 million
+> refs, fetching a single commit by its ID takes around 44 seconds.
+> 
+> Dominating the loading time is decompression and parsing of the objects
+> which are referenced by commits. Given the fact that we only care about
+> commits (or tags which can be peeled to one) in this context, there is
+> thus an easy performance win by switching the parsing logic to make use
+> of the commit graph in case we have one available. Like this, we avoid
+> hitting the object database to parse these commits but instead only load
+> them from the commit-graph. This results in a significant performance
+> boost when executing git-fetch in said repository with 2.2 million refs:
+> 
+>     Benchmark #1: HEAD~: git fetch $remote $commit
+>       Time (mean ± σ):     44.168 s ±  0.341 s    [User: 42.985 s, System: 1.106 s]
+>       Range (min … max):   43.565 s … 44.577 s    10 runs
+> 
+>     Benchmark #2: HEAD: git fetch $remote $commit
+>       Time (mean ± σ):     19.498 s ±  0.724 s    [User: 18.751 s, System: 0.690 s]
+>       Range (min … max):   18.629 s … 20.454 s    10 runs
+> 
+>     Summary
+>       'HEAD: git fetch $remote $commit' ran
+>         2.27 ± 0.09 times faster than 'HEAD~: git fetch $remote $commit'
 
-We've had some complaints at $JOB where users were confused when
-rebasing branches that contained commits that were previously
-cherry-picked into their master branch. How do folks feel about adding a
-warning in this case?
+Nice. I've sometimes wondered if parse_object() should be doing this
+optimization itself. Though we'd possibly still want callers (like this
+one) to give us more hints, since we already know the type is
+OBJ_COMMIT. Whereas parse_object() would have to discover that itself
+(though we already incur the extra type lookup there to handle blobs).
 
- sequencer.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+I wonder where the remaining 20s is going. Do you have a lot of tags in
+your repository? We'll still parse all of those, which could be
+expensive. There might be some benefit to using peel_iterated_ref(),
+which will make us of packed-ref's peel hints, but:
 
-diff --git a/sequencer.c b/sequencer.c
-index 7f07cd00f3..8888031c7b 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -5099,6 +5099,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 	int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
- 	int rebase_cousins = flags & TODO_LIST_REBASE_COUSINS;
- 	int root_with_onto = flags & TODO_LIST_ROOT_WITH_ONTO;
-+	int skipped_commit = 0;
- 	struct strbuf buf = STRBUF_INIT, oneline = STRBUF_INIT;
- 	struct strbuf label = STRBUF_INIT;
- 	struct commit_list *commits = NULL, **tail = &commits, *iter;
-@@ -5149,8 +5150,12 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 		oidset_insert(&interesting, &commit->object.oid);
- 
- 		is_empty = is_original_commit_empty(commit);
--		if (!is_empty && (commit->object.flags & PATCHSAME))
-+		if (!is_empty && (commit->object.flags & PATCHSAME)) {
-+			warning(_("skipped previously seen commit %s"),
-+				short_commit_name(commit));
-+			skipped_commit = 1;
- 			continue;
-+		}
- 		if (is_empty && !keep_empty)
- 			continue;
- 
-@@ -5214,6 +5219,8 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 		oidcpy(&entry->entry.oid, &commit->object.oid);
- 		oidmap_put(&commit2todo, entry);
- 	}
-+	if (skipped_commit)
-+		warning(_("use --reapply-cherry-picks to include skipped commits"));
- 
- 	/*
- 	 * Second phase:
-@@ -5334,6 +5341,7 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
- 	const char *insn = flags & TODO_LIST_ABBREVIATE_CMDS ? "p" : "pick";
- 	int rebase_merges = flags & TODO_LIST_REBASE_MERGES;
- 	int reapply_cherry_picks = flags & TODO_LIST_REAPPLY_CHERRY_PICKS;
-+	int skipped_commit = 0;
- 
- 	repo_init_revisions(r, &revs, NULL);
- 	revs.verbose_header = 1;
-@@ -5369,8 +5377,12 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
- 	while ((commit = get_revision(&revs))) {
- 		int is_empty = is_original_commit_empty(commit);
- 
--		if (!is_empty && (commit->object.flags & PATCHSAME))
-+		if (!is_empty && (commit->object.flags & PATCHSAME)) {
-+			warning(_("skipped previously seen commit %s"),
-+				short_commit_name(commit));
-+			skipped_commit = 1;
- 			continue;
-+		}
- 		if (is_empty && !keep_empty)
- 			continue;
- 		strbuf_addf(out, "%s %s ", insn,
-@@ -5380,6 +5392,8 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
- 			strbuf_addf(out, " %c empty", comment_line_char);
- 		strbuf_addch(out, '\n');
- 	}
-+	if (skipped_commit)
-+		warning(_("use --reapply-cherry-picks to include skipped commits"));
- 	return 0;
- }
- 
--- 
-2.32.0.554.ge1b32706d8-goog
+  - you'd want to double check that we always call this during ref
+    iteration (it looks like we do, and I think peel_iterated_ref()
+    falls back to a normal peel otherwise)
 
+  - for a tag-of-tag-of-X, that will give us the complete peel to X. But
+    it looks like deref_without_lazy_fetch() marks intermediate tags
+    with the COMPLETE flag, too. I'm not sure how important that is
+    (i.e., is it necessary for correctness, or just an optimization, in
+    which case we might be better off guessing that tags are
+    single-layer, as it's by far the common case).
+
+If we don't go that route, there's another possible speedup: after
+parsing a tag, the type of tag->tagged (if it is not NULL) will be known
+from the tag's contents, and we can avoid the oid_object_info_extended()
+type lookup. It might need some extra surgery to convince the tag-parse
+not to fetch promisor objects, though.
+
+I'm not sure it would make that big a difference, though. If we save one
+type-lookup per parsed tag, then the tag parsing is likely to dwarf it.
+
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index b0c7be717c..0bf7ed7e47 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -137,8 +137,14 @@ static struct commit *deref_without_lazy_fetch(const struct object_id *oid,
+>  			break;
+>  		}
+>  	}
+> -	if (type == OBJ_COMMIT)
+> -		return (struct commit *) parse_object(the_repository, oid);
+> +
+> +	if (type == OBJ_COMMIT) {
+> +		struct commit *commit = lookup_commit(the_repository, oid);
+> +		if (!commit || repo_parse_commit(the_repository, commit))
+> +			return NULL;
+> +		return commit;
+> +	}
+
+Looks correct. You're using lookup_commit(), so we'll auto-create the
+struct as necessary. If there's any kind of type mismatch (say,
+previously we saw that oid as a non-commit), we'll get NULL there and
+bail, which makes sense. I think the original code could produce
+undefined behavior there if parse_object() found something other than
+"type", though in practice that is quite unlikely (since
+oid_object_info() would have just gone to the on-disk odb to get the
+type itself).
+
+-Peff
