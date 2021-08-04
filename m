@@ -2,105 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69250C4338F
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 23:49:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B4B6C4338F
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 00:06:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A2D561050
-	for <git@archiver.kernel.org>; Tue,  3 Aug 2021 23:49:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 126F660F94
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 00:06:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234543AbhHCXt4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 19:49:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53614 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233784AbhHCXtz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Aug 2021 19:49:55 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D58C4C061757
-        for <git@vger.kernel.org>; Tue,  3 Aug 2021 16:49:42 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id u25so815073oiv.5
-        for <git@vger.kernel.org>; Tue, 03 Aug 2021 16:49:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=YltKOh6Hg7KlL491X9+Z3Trq+TGdy/NdvQDS72kP8Eg=;
-        b=SVkr6unSb7RaG9CrW5gppwjD9/QcdG5RY+jm//cN1G4Lic7P/vCe3TLy6lao2ayDEY
-         9sJAHg/e3JNlQ9QVo6IMe1KyuP43w5Wi9o6swWbOKKmsWXaGCDwTD0oa1AMQFqiByQ8Z
-         DChbzH1EXTekQXRwznXm+RPZ+hLZwwGlcIgIFKENf7DYW87ZMdP78hKhLhqJIxo5r48z
-         xjKG2paWXaGBAAWGoEMgkXPt3pcS8MRMLifWC7Z8Dq4YyppQk94xZQw3LO+9ynZ6R0qF
-         d519xuBwX47VPhWzj2W8Rg3H1DCIVrytvvEWN/CjaXXp93j5IuxCL2PBMtf/qv7RteJI
-         CzUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=YltKOh6Hg7KlL491X9+Z3Trq+TGdy/NdvQDS72kP8Eg=;
-        b=miVBlIkXspmYrqrVE588hnzUVFKY9MLBtEF35dh/hAPDyOIVRIm6siW3OSTuvwMHV8
-         klQU9A/Wq61vLa2JQ77gnyyI+7GNu6rK/rSIfrNgTaHfwQ2jjufrtZx3WLkgTF0eGZKa
-         x1WT7Mpo0Qbb8sweq4hzW2g20myGbwddP+KcflWvdSJPqLRg2mAiyB70AeTdapXwNMUv
-         EqB4FV9RnmTZ5y1oc/xu/1GYlQerq4RJaZQPnDEFFXuZ0FIf9wdqXmc3HWtOWbqkoHI4
-         kIUcO/jnkCbAQ60hnEsxqGgcGBD96XUqbZVCNGG7Hl62fzpQueX1D6SfXsqxSWqpQRWZ
-         0gkg==
-X-Gm-Message-State: AOAM532B1PlWfb+80tkN2bEu1sfdUfY1i5Zmpp3UxGSBEvD42q3y1IXN
-        15k8ANocVkK8LsJbtlQKhdxDPLn4M8ItxU4UG6g=
-X-Google-Smtp-Source: ABdhPJwxCaYP3/3TLF5os7IgbzwCVBfpwmCBQFnZTEElcmmIXcn/XvDGGrETO34are2X+xMLNaNwv4gLcDRhHo2gV1c=
-X-Received: by 2002:aca:c0c3:: with SMTP id q186mr4912739oif.39.1628034582305;
- Tue, 03 Aug 2021 16:49:42 -0700 (PDT)
-MIME-Version: 1.0
+        id S233763AbhHDAHG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Aug 2021 20:07:06 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63349 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231593AbhHDAHF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Aug 2021 20:07:05 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 59075D79C1;
+        Tue,  3 Aug 2021 20:06:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pujAOHzuyJo9Q8RkiSL/gMxOrNjIGJlPltXbHn
+        ycqyM=; b=EiS5OdhCEAUz/Q6wwqN5MDRwXubnDYZGb2SeAxXFCMpDYsHprkmHtQ
+        aas/0n7dAyoS73TpvykD6ofBObD3AslhjeLHsJERWuKZY0rtbKPv9LYq4g28frC4
+        DjcRVblLCL5CZwgSEYwnRRR0cysrvF2XjEi1o0Q9z/UQeTI+Sgpew=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 50D9AD79C0;
+        Tue,  3 Aug 2021 20:06:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C8D6AD79BF;
+        Tue,  3 Aug 2021 20:06:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 02/10] directory-rename-detection.txt: small updates due
+ to merge-ort optimizations
 References: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com>
- <2a7169c8c1be425d4234e414c106ad1278aacdd6.1628004920.git.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.2108040104150.55@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2108040104150.55@tvgsbejvaqbjf.bet>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 3 Aug 2021 17:49:31 -0600
-Message-ID: <CABPp-BG7tRqPo2pz4ab0LNB3pWT0hZ=PpqC1u-MZKU-_LdUvjw@mail.gmail.com>
-Subject: Re: [PATCH 10/10] Update error message and code comment
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        <6b89ab8d9b1c03ce97fab73f7a2b4261fd90c0c4.1628004920.git.gitgitgadget@gmail.com>
+Date:   Tue, 03 Aug 2021 17:06:52 -0700
+In-Reply-To: <6b89ab8d9b1c03ce97fab73f7a2b4261fd90c0c4.1628004920.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Tue, 03 Aug 2021
+        15:35:12 +0000")
+Message-ID: <xmqqv94mrs2r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: DF5B0602-F4B7-11EB-BB56-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 3, 2021 at 5:05 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Elijah,
->
-> On Tue, 3 Aug 2021, Elijah Newren via GitGitGadget wrote:
->
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > There were two locations in the code that referred to 'merge-recursive'
-> > but which were also applicable to 'merge-ort'.  Update them to more
-> > general wording.
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> >  builtin/merge.c | 2 +-
-> >  sequencer.c     | 2 +-
-> >  2 files changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/builtin/merge.c b/builtin/merge.c
-> > index a8a843b1f54..24b62a9c532 100644
-> > --- a/builtin/merge.c
-> > +++ b/builtin/merge.c
-> > @@ -738,7 +738,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
-> >
-> >               for (x = 0; x < xopts_nr; x++)
-> >                       if (parse_merge_opt(&o, xopts[x]))
-> > -                             die(_("Unknown option for merge-recursive: -X%s"), xopts[x]);
-> > +                             die(_("Unknown strategy option: -X%s"), xopts[x]);
->
-> Since we updated our rules to start `die()` messages with a lower-case
-> letter, we could sneak in this change here, too. That would save
-> translators one extra round.
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Sure, will do.
+> diff --git a/Documentation/technical/directory-rename-detection.txt b/Documentation/technical/directory-rename-detection.txt
+> index 49b83ef3cc4..029ee2cedc5 100644
+> --- a/Documentation/technical/directory-rename-detection.txt
+> +++ b/Documentation/technical/directory-rename-detection.txt
+> @@ -2,9 +2,9 @@ Directory rename detection
+>  ==========================
+>  
+>  Rename detection logic in diffcore-rename that checks for renames of
+> -individual files is aggregated and analyzed in merge-recursive for cases
+> -where combinations of renames indicate that a full directory has been
+> -renamed.
+> +individual files is also aggregated there and then analyzed in either
+> +merge-ort or merge-recursive for cases where combinations of renames
+> +indicate that a full directory has been renamed.
+>  
+>  Scope of abilities
+>  ------------------
+> @@ -88,9 +88,11 @@ directory rename detection support in:
+>      Folks have requested in the past that `git diff` detect directory
+>      renames and somehow simplify its output.  It is not clear whether this
+>      would be desirable or how the output should be simplified, so this was
+> -    simply not implemented.  Further, to implement this, directory rename
+> -    detection logic would need to move from merge-recursive to
+> -    diffcore-rename.
+> +    simply not implemented.  Also, while diffcore-rename has most of the
+> +    logic for detecting directory renames, some of the logic is still found
+> +    within merge-ort and merge-recursive.  Fully supporting directory
+> +    rename detection in diffs would require copying or moving the remaining
+> +    bits of logic to the diff machinery.
+>  
+>    * am
+
+Looks good.
