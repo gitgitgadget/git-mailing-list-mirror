@@ -2,66 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC129C4338F
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 05:29:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58EAFC432BE
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 05:29:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8832060F25
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 05:29:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36E0F60F10
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 05:29:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235315AbhHDF3N (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S235321AbhHDF3N (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 4 Aug 2021 01:29:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44644 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235306AbhHDF3M (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235307AbhHDF3M (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 4 Aug 2021 01:29:12 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50212C0613D5
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDC10C061798
         for <git@vger.kernel.org>; Tue,  3 Aug 2021 22:28:59 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id l18so800939wrv.5
+Received: by mail-wm1-x32c.google.com with SMTP id m20-20020a05600c4f54b029024e75a15716so710590wmq.2
         for <git@vger.kernel.org>; Tue, 03 Aug 2021 22:28:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Eb2gIqsa0TkJ0CgjVzskyEOa6lf07aIoJQuYXmFnsEQ=;
-        b=YSWSVBeq04f3YXxBKC6A7nyZma7hQw805vAHpOpuoi7XkVuTGkFVCpfo9bP4MXoGtr
-         5uRps+4S9UJMd7m8wN3Npg8lceFuajBE1zFXYGZ1gXdlhvNJJb1Q4Z2PAX2D8jVcp9GL
-         l3Oszz9lKMR+8iYVL5A+apjvOmFVYRMWQFilvjhP8gI9fEKw7Y4e2/BFgN35Z9aN7N9x
-         eAsaYRdTjov51y2Stpgk6imFZ5aX97QJ+Negs3akfmGkklWPwfQDPzNp7DpclgCGHHC7
-         6KUdgaMEajNhdIA2J4sPTp4FleHa3huuV2qZeqoW+7FtNWt6V/7+X/yMODGv0hKA+lm1
-         S1KA==
+        bh=Ozz+Q6jIqdDXWdedQk8pgSDu4NYF2AUR0oe+dc6y6+A=;
+        b=UjdQ+1fLvcXud5SmbqhdxoC6FKH7GU75rbZnqFJXPd88y0GhNOH267N8EhntMHw+DH
+         BGMllIslMrgCVRIURB9mlbTkwWDDk+br1tOnJpF0Lcb7ulb5n2T9BHomLvaBx7DQw0yG
+         S0CeEB+iAfVJsXqNh90guTTJn2seWudRXUxNMhkdtZmB4AsTESQt9FFe/bqWP+M2naYL
+         MKwsDrCAXTPAphFtVhBse0PMzB/O0SCBrHefeJg7JlLvheOHRdjtsv4SG89lE0bSFFZL
+         pTArOHAuD4cw/97IJUp3Xk6NLhiopfNnOpcfAk/GAGHS82Dv+XJSw4E2DkiOx10oy8AF
+         sjhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Eb2gIqsa0TkJ0CgjVzskyEOa6lf07aIoJQuYXmFnsEQ=;
-        b=IJ5M7RSwIKiTwXfmYQ9RK24bBzXlXfmEdIZ+wN8WhpMe5ySlZj2+gpY9IoZfftq4co
-         X+Qrbh5gmFOyeTRfrl37eu8Q6l2NjHOpv1y53hAg3J7RH0zJrl8vdslpDuHXPIkqW1s0
-         ATIOGtH7VTUgeV3awKijlfSvVQSmTgAMxcR4vAnDuaKwa0i39hqBjB8+jqPGxtcPyGJY
-         gXXt1z1ze0Nz1LJPZRX7o1N5dDhC1acFCcOwa5/uUozVz8d+IyOUw2rh3VryV8B1vK60
-         WjTyqkiGz2My393MiClzGJcwELJkkwh4LfhQ/KMhu/39ENzT0ZQQIOVngsh/c51cRBfB
-         XNMg==
-X-Gm-Message-State: AOAM532P9odS6aLIYWUuWnj1MWTZN1Ej46JxZ+h0Zl4pGfbpwe8Jrqie
-        FrfftgvP7SzQXPzD0M8EymqDcWC6hko=
-X-Google-Smtp-Source: ABdhPJxWIwgn01dQLpyYEGIuBQFbczyey+oYCgYbSDSELxiMjRZa/EUPYYh7RW3s1Qh3HKBdqFYZbg==
-X-Received: by 2002:adf:ed82:: with SMTP id c2mr27161354wro.19.1628054937654;
-        Tue, 03 Aug 2021 22:28:57 -0700 (PDT)
+        bh=Ozz+Q6jIqdDXWdedQk8pgSDu4NYF2AUR0oe+dc6y6+A=;
+        b=fRnenKySHgC6CGl5wiKDeDH3u7/R1+Ime3wc0PoCoZRrceUgC2/1jArryhfpH9dBtk
+         ZG23KBP/l1bK08sdfhaIVgNFDDJ750Q/IQtR/sLpqz0POFB9BtsTgkfwBNDgC/Xh0rGJ
+         Que6yI5iTxPvPSlxo53wGrPMFEokfMAowINz0ua+7V5PRXLSU+2ujNS974nQg91N+emh
+         pc3OKMPPvBO8Efb/2SX+gRg87O9FCjv9r+PS0J2cOGzhBjtQIs1GCPisZW9gf9Y02gr+
+         JUuxxZ2IqRS0j/EIE5CCuuTKQ4kKx2ZqPuInOQ3IyHnFtBnpYjv5wBccy7X9paOycXeW
+         YQmg==
+X-Gm-Message-State: AOAM533/u4boMaBQBVcJToa1IR1zjYLfdGgSlGQL23NThYyWATJ9fYUp
+        kSRGidf/dH3c2o+dx4kfH2mZtA2n8/E=
+X-Google-Smtp-Source: ABdhPJzqyKSnHm7iqbzrTLeE2nvU7+xputvDh8B/zzXzPr9TmRhtqBmBKBqQUlSfKRunurWbcBUYAQ==
+X-Received: by 2002:a05:600c:35d6:: with SMTP id r22mr7697234wmq.41.1628054938440;
+        Tue, 03 Aug 2021 22:28:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n7sm1010595wmd.3.2021.08.03.22.28.56
+        by smtp.gmail.com with ESMTPSA id h16sm1071359wre.52.2021.08.03.22.28.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 22:28:57 -0700 (PDT)
-Message-Id: <pull.1059.v2.git.git.1628054935.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com>
+        Tue, 03 Aug 2021 22:28:58 -0700 (PDT)
+Message-Id: <3435239716822c0ce01232d06bc9f0170fb2f946.1628054936.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1059.v2.git.git.1628054935.gitgitgadget@gmail.com>
 References: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com>
+        <pull.1059.v2.git.git.1628054935.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 04 Aug 2021 05:28:45 +0000
-Subject: [PATCH v2 00/10] Documentation updates: merge-strategies
+Date:   Wed, 04 Aug 2021 05:28:46 +0000
+Subject: [PATCH v2 01/10] git-rebase.txt: correct antiquated claims about
+ --rebase-merges
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,190 +72,56 @@ To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I noticed while updating my switch-default-merge-strategy-to-ort submission,
-that many of the changes were good documentation updates that we might want
-for Git v2.33.0. So I pulled those changes out and split them into lots of
-little commits so that if any parts need discussion or are objectionable, we
-can just drop those from this series and apply the rest for v2.33.0.
+From: Elijah Newren <newren@gmail.com>
 
-The first 9 commits are just small documentation updates, but there is one
-commit at the end that updates an error message and a code comment.
+When --rebase-merges was first introduced, it only worked with the
+`recursive` strategy.  Some time later, it gained support for merges
+using the `octopus` strategy.  The limitation of only supporting these
+two strategies was documented in 25cff9f109 ("rebase -i --rebase-merges:
+add a section to the man page", 2018-04-25) and lifted in e145d99347
+("rebase -r: support merge strategies other than `recursive`",
+2019-07-31).  However, when the limitation was lifted, the documentation
+was not updated.  Update it now.
 
-Changes since v1:
+Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ Documentation/git-rebase.txt | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
- * Multiple tweaks suggested by Eric, Dscho, and Junio
- * Removed patch 7 explaining no-renames since that probably belongs in git
-   diff --no-renames instead, and this series is about merge-strategies.
- * Inserted a new patch 8 that strikes some misleading or at least
-   no-longer-important text from git-rebase.txt (due changes back in late
-   2006).
-
-Elijah Newren (10):
-  git-rebase.txt: correct antiquated claims about --rebase-merges
-  directory-rename-detection.txt: small updates due to merge-ort
-    optimizations
-  Documentation: edit awkward references to `git merge-recursive`
-  merge-strategies.txt: update wording for the resolve strategy
-  merge-strategies.txt: do not imply using copy detection is desired
-  merge-strategies.txt: avoid giving special preference to patience
-    algorithm
-  merge-strategies.txt: fix simple capitalization error
-  git-rebase.txt: correct out-of-date and misleading text about renames
-  merge-strategies.txt: add coverage of the `ort` merge strategy
-  Update error message and code comment
-
- Documentation/git-rebase.txt                  | 27 ++++++-----
- Documentation/merge-options.txt               |  4 +-
- Documentation/merge-strategies.txt            | 48 +++++++++++--------
- .../technical/directory-rename-detection.txt  | 14 +++---
- builtin/merge.c                               |  2 +-
- sequencer.c                                   |  2 +-
- 6 files changed, 55 insertions(+), 42 deletions(-)
-
-
-base-commit: 66262451ec94d30ac4b80eb3123549cf7a788afd
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1059%2Fnewren%2Fort-doc-updates-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1059/newren/ort-doc-updates-v2
-Pull-Request: https://github.com/git/git/pull/1059
-
-Range-diff vs v1:
-
-  1:  ab2367594a3 !  1:  34352397168 git-rebase.txt: correct antiquated claims about --rebase-merges
-     @@ Commit message
-          2019-07-31).  However, when the limitation was lifted, the documentation
-          was not updated.  Update it now.
-      
-     +    Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-      
-       ## Documentation/git-rebase.txt ##
-  2:  6b89ab8d9b1 =  2:  3fdd068231a directory-rename-detection.txt: small updates due to merge-ort optimizations
-  3:  c1d056f0794 !  3:  2a38320c2be Documentation: edit awkward references to `git merge-recursive`
-     @@ Commit message
-      
-       ## Documentation/git-rebase.txt ##
-      @@ Documentation/git-rebase.txt: See also INCOMPATIBLE OPTIONS below.
-     + 
-       -s <strategy>::
-       --strategy=<strategy>::
-     - 	Use the given merge strategy.
-     +-	Use the given merge strategy.
-      -	If there is no `-s` option 'git merge-recursive' is used
-      -	instead.  This implies --merge.
-     -+	If there is no `-s` option the `recursive` strategy is the
-     -+	default. This implies --merge.
-     ++	Use the given merge strategy, instead of the default
-     ++	`recursive`.  This implies `--merge`.
-       +
-       Because 'git rebase' replays each commit from the working branch
-       on top of the <upstream> branch using the given strategy, using
-  4:  3989f194ba9 !  4:  e422a1bc7d4 merge-strategies.txt: update wording for the resolve strategy
-     @@ Metadata
-       ## Commit message ##
-          merge-strategies.txt: update wording for the resolve strategy
-      
-     -    The resolve merge strategy was given prominent positioning in this
-     -    document, being listed first since it was the default at the time the
-     -    document was written.  It hasn't been the default since before Git v1.0
-     -    was released, though.  Move it later in the document, near `octopus` and
-     -    `ours`.
-     +    It is probably helpful to cover the default merge strategy first, so
-     +    move the text for the resolve strategy to later in the document.
-      
-          Further, the wording for "resolve" claimed that it was "considered
-     -    generally safe and fast", which implies that the other strategies are
-     -    not.  While such an implication may have been true in 2005 when written,
-     -    it may well be that `ort` is faster today (since it does not need to
-     -    recurse into all directories).  Also, since `resolve` was the default
-     -    for less than a year while `recursive` has been the default for a decade
-     -    and a half, I think `recursive` is more battle-tested than `resolve` is.
-     -    Just strike this extraneous phrase.
-     -
-     -    Also, provide some quick historical context that may help users
-     -    understand its purpose and place in the list of merge strategies.
-     +    generally safe and fast", which might imply in some readers minds that
-     +    the same is not true of other strategies.  Rather than adding this text
-     +    to all the strategies, just remove it from this one.
-      
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-      
-     @@ Documentation/merge-strategies.txt: subtree[=<path>];;
-      +	This can only resolve two heads (i.e. the current branch
-      +	and another branch you pulled from) using a 3-way merge
-      +	algorithm.  It tries to carefully detect criss-cross
-     -+	merge ambiguities.  It cannot handle renames.  This was
-     -+	the default merge algorithm prior to November 2005.
-     ++	merge ambiguities.  It does not handle renames.
-      +
-       octopus::
-       	This resolves cases with more than two heads, but refuses to do
-  5:  5f974afe47c =  5:  b1db5fdebe5 merge-strategies.txt: do not imply using copy detection is desired
-  6:  6116f4750fd !  6:  44101062e0e merge-strategies.txt: avoid giving special preference to patience algorithm
-     @@ Documentation/merge-strategies.txt: theirs;;
-      -	matching lines (e.g., braces from distinct functions).  Use
-      -	this when the branches to be merged have diverged wildly.
-      -	See also linkgit:git-diff[1] `--patience`.
-     -+	Deprecated shorthand for diff-algorithm=patience.
-     ++	Deprecated synonym for `diff-algorithm=patience`.
-       
-       diff-algorithm=[patience|minimal|histogram|myers];;
-       	Use a different diff algorithm while merging, which can help
-  7:  7eecf879d60 <  -:  ----------- merge-strategies.txt: explain why no-renames might be useful
-  8:  010702d0841 =  7:  d1521f98dee merge-strategies.txt: fix simple capitalization error
-  -:  ----------- >  8:  8978132397e git-rebase.txt: correct out-of-date and misleading text about renames
-  9:  37a69fd2e0b !  9:  bc92826f7e5 Documentation: add coverage of the `ort` merge strategy
-     @@ Metadata
-      Author: Elijah Newren <newren@gmail.com>
-      
-       ## Commit message ##
-     -    Documentation: add coverage of the `ort` merge strategy
-     +    merge-strategies.txt: add coverage of the `ort` merge strategy
-      
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-      
-     - ## Documentation/git-rebase.txt ##
-     -@@ Documentation/git-rebase.txt: See also INCOMPATIBLE OPTIONS below.
-     - 
-     - -m::
-     - --merge::
-     --	Use merging strategies to rebase.  When the recursive (default) merge
-     --	strategy is used, this allows rebase to be aware of renames on the
-     --	upstream side.  This is the default.
-     -+	Use merging strategies to rebase.  When either the `recursive`
-     -+	(default) or `ort` merge strategy is used, this allows rebase
-     -+	to be aware of renames on the upstream side.  This is the
-     -+	default.
-     - +
-     - Note that a rebase merge works by replaying each commit from the working
-     - branch on top of the <upstream> branch.  Because of this, when a merge
-     -
-       ## Documentation/merge-strategies.txt ##
-      @@ Documentation/merge-strategies.txt: subtree[=<path>];;
-       	is prefixed (or stripped from the beginning) to make the shape of
-     @@ Documentation/merge-strategies.txt: subtree[=<path>];;
-      +However, it ignores three of those options: `no-renames`,
-      +`patience` and `diff-algorithm`.  It always runs with rename
-      +detection (it handles it much faster than `recursive` does), and
-     -+it specifically uses diff-algorithm=histogram.
-     ++it specifically uses `diff-algorithm=histogram`.
-      +
-       resolve::
-       	This can only resolve two heads (i.e. the current branch
- 10:  2a7169c8c1b ! 10:  4a78ac53424 Update error message and code comment
-     @@ builtin/merge.c: static int try_merge_strategy(const char *strategy, struct comm
-       		for (x = 0; x < xopts_nr; x++)
-       			if (parse_merge_opt(&o, xopts[x]))
-      -				die(_("Unknown option for merge-recursive: -X%s"), xopts[x]);
-     -+				die(_("Unknown strategy option: -X%s"), xopts[x]);
-     ++				die(_("unknown strategy option: -X%s"), xopts[x]);
-       
-       		o.branch1 = head_arg;
-       		o.branch2 = merge_remote_util(remoteheads->item)->name;
-
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 55af6fd24e2..8a67227846a 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -1219,12 +1219,16 @@ successful merge so that the user can edit the message.
+ If a `merge` command fails for any reason other than merge conflicts (i.e.
+ when the merge operation did not even start), it is rescheduled immediately.
+ 
+-At this time, the `merge` command will *always* use the `recursive`
+-merge strategy for regular merges, and `octopus` for octopus merges,
+-with no way to choose a different one. To work around
+-this, an `exec` command can be used to call `git merge` explicitly,
+-using the fact that the labels are worktree-local refs (the ref
+-`refs/rewritten/onto` would correspond to the label `onto`, for example).
++By default, the `merge` command will use the `recursive` merge
++strategy for regular merges, and `octopus` for octopus merges.  One
++can specify a default strategy for all merges using the `--strategy`
++argument when invoking rebase, or can override specific merges in the
++interactive list of commands by using an `exec` command to call `git
++merge` explicitly with a `--strategy` argument.  Note that when
++calling `git merge` explicitly like this, you can make use of the fact
++that the labels are worktree-local refs (the ref `refs/rewritten/onto`
++would correspond to the label `onto`, for example) in order to refer
++to the branches you want to merge.
+ 
+ Note: the first command (`label onto`) labels the revision onto which
+ the commits are rebased; The name `onto` is just a convention, as a nod
 -- 
 gitgitgadget
+
