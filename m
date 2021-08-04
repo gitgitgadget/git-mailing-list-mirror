@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17E03C4338F
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 23:51:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CCA4C432BE
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 23:51:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0122060EFD
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 23:51:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 57D7160E74
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 23:51:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235936AbhHDXvV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 19:51:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41768 "EHLO
+        id S235971AbhHDXvW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 19:51:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235810AbhHDXvQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Aug 2021 19:51:16 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05752C06179B
+        with ESMTP id S235812AbhHDXvR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Aug 2021 19:51:17 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC221C06179E
         for <git@vger.kernel.org>; Wed,  4 Aug 2021 16:51:02 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id m12so4044926wru.12
-        for <git@vger.kernel.org>; Wed, 04 Aug 2021 16:51:01 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id h24-20020a1ccc180000b029022e0571d1a0so2444177wmb.5
+        for <git@vger.kernel.org>; Wed, 04 Aug 2021 16:51:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=WBURzoXb32xNA6NDmEzg0TyGL6bP5A+Zkc4bSql3u38=;
-        b=fh81W1JbgIHAUJhm9Ulz6nXyc67u3ZtFDId179u0JPCGWtnk17ir8OAB7Tgb1CAqoO
-         RQghNWdLbeUUqVdY37UCt/40spltlEpjGspv5KGupdsmQEU0d82qx0wNjEpRMyFSPIIM
-         y88ogvf8QsGWlITJU5BeHPhqo7nZcJHT6AsjNp0m0sw/vVRNoWRnpePifkxO4Ji4EOs+
-         E/heR9dnT2i3qStkiMqq7qF4KftsuIYzjEaZsojt4qDCyOXBRTjdU2+dGhXjLc8WX+bX
-         iYDAwZ2tVEOjmlj5tXAoQI7jqjAXbg96AJzK0lQP8JPNewPMzdz4SfEZpyWBBg/2emy4
-         wvTw==
+        bh=hoiRlzJZfKlM02prjvTE+U+5J4XabFbnNbVfxX0ySpA=;
+        b=LNYD/ECIz7fexj6Fv0hVOZ+XanH3K8shRAK2O6I4bMbmQpAC+oxzPOkr/DfY9V/FBl
+         6losXdJiFUihWhXhwHxAOPnifd0WdRG02ndZH1YkyoRbpf8vHBGrRN9EMFro6M9/5d6q
+         s5RtVLxetHsebYraqCxG1+az5heEx0JRxL+uIK9c7wsylfPdEWo/h1yqyIKa9uUaE1IQ
+         OsIu7JW1utyOJsqTVGWcL8g4YcM90xzTTiYCAmPyKXxRCBYfXEePJzi4Tkimi+tzEGNU
+         Ao2lllg5Y+/n6XULegwYfgLvG8XHsrL+UpgvlnNbao9h9T0aPIjP8oa3gGDE3Xgjhql7
+         J1eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WBURzoXb32xNA6NDmEzg0TyGL6bP5A+Zkc4bSql3u38=;
-        b=HT0/rYMj++aanZ9hvs05oQRgRrLwXlXedNdptSoh/HKm2tTgoes3PO5LM0KreuL2OE
-         F3NHyuXL6Mm2FaQbiX83JB7kQgaPFyGXcMHvphDtOyLFNDYHd+z1DHVQQpyKJhtR8TC1
-         kWJPTzthUjSF8UU+oi7Kr5xifVnLjpnHbC3pRCYvPTxuLgXcQLHe2dli6GqOsG60vrAm
-         mx3l0dFcABkUR2fgUD+SY3NPxBFyaR6NRGf7PBBl56Q1OUQtUx89Os7JmtzWM7pf/L1u
-         //M0jBOuQWcBIgwcCxRWT56nBvDKy3cmK3n3lV+PFHIEYm1qVP4+9Me3UAoj/olpzODo
-         XPNA==
-X-Gm-Message-State: AOAM533xPwKvB2XdoIVSSr2ZhiQJaDK4HBCJVZ5DWn/SHemaYe1a0uIk
-        3Rm4ldF887+zL6nBfmKexIQ0jYBk1Os=
-X-Google-Smtp-Source: ABdhPJyZvOnSONO4cKrDsqKXnn10+nmBHozkuKK2r9IVsmeFv9dO76Kah3Cqx5BYU7Zm4E3yecwJMQ==
-X-Received: by 2002:adf:df12:: with SMTP id y18mr1766271wrl.189.1628121060667;
-        Wed, 04 Aug 2021 16:51:00 -0700 (PDT)
+        bh=hoiRlzJZfKlM02prjvTE+U+5J4XabFbnNbVfxX0ySpA=;
+        b=DsfX2wqo2t/hwTRPT7ZbA17kbsYdtCE+8qP3uAubrz949XD6h4Uw7V/pCXDbucjuXi
+         cd307pyp4CWPUqYmc0ANji8q+U6XilDmRYVPO4P5SKqogWh85i+0kd/wx/lkqFG90Cji
+         Z71+mjCHD5HhjoRWTTZt4Q9w6j7biX2fOQczmyV/EUTXXC6NrdJUH+TOGWHX4O5V5TSl
+         mOJmuZHwUKYuRy/goctzwG6W8t1mqq5DcNnhwJmnPSFG78X+u5vuZKIB5c2y3fVCVT97
+         Mm5vo1ASbpJ4zvFvdlxnBxI83Nx8JaWWdzls8qAgXAtCXMLQHA7qEmeFdDhShioGaGPu
+         WbBA==
+X-Gm-Message-State: AOAM530N22PkKfb94k3eRG5c/02EcUR9xGvcfgv8lMsXZP3SLQCTAgre
+        pf0dfuLPy4gqtQUv/57/RNt83YursYE=
+X-Google-Smtp-Source: ABdhPJzWn4f64QWxfWwYMfB/nR4mowW14lYhpJR/V/7y7+IaCJW+eV1fXhqWkkbcq6kQHdpLlP0t1Q==
+X-Received: by 2002:a7b:cb01:: with SMTP id u1mr1833967wmj.44.1628121061323;
+        Wed, 04 Aug 2021 16:51:01 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b20sm8234586wmj.20.2021.08.04.16.51.00
+        by smtp.gmail.com with ESMTPSA id e6sm3676837wme.6.2021.08.04.16.51.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Aug 2021 16:51:00 -0700 (PDT)
-Message-Id: <2c82aacbcbd752e1944605d370e4d8677f778c73.1628121054.git.gitgitgadget@gmail.com>
+        Wed, 04 Aug 2021 16:51:01 -0700 (PDT)
+Message-Id: <032dcf7c18e4d14f8bb6b892cca6d554f5020d65.1628121054.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1059.v3.git.git.1628121054.gitgitgadget@gmail.com>
 References: <pull.1059.v2.git.git.1628054935.gitgitgadget@gmail.com>
         <pull.1059.v3.git.git.1628121054.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 04 Aug 2021 23:50:51 +0000
-Subject: [PATCH v3 07/10] merge-strategies.txt: fix simple capitalization
- error
+Date:   Wed, 04 Aug 2021 23:50:52 +0000
+Subject: [PATCH v3 08/10] git-rebase.txt: correct out-of-date and misleading
+ text about renames
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,26 +82,36 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
+Commit 58634dbff8 ("rebase: Allow merge strategies to be used when
+rebasing", 2006-06-21) added the --merge option to git-rebase so that
+renames could be detected (at least when using the `recursive` merge
+backend).  However, git-am -3 gained that same ability in commit
+579c9bb198 ("Use merge-recursive in git-am -3.", 2006-12-28).  As such,
+the comment about being able to detect renames is not particularly
+noteworthy.  Remove it.
+
 Acked-by: Derrick Stolee <dstolee@microsoft.com>
 Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-rebase.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/git-rebase.txt | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index c3edcb07e3e..cecdcfff47a 100644
+index cecdcfff47a..73d49ec8d91 100644
 --- a/Documentation/git-rebase.txt
 +++ b/Documentation/git-rebase.txt
-@@ -529,7 +529,7 @@ The `--rebase-merges` mode is similar in spirit to the deprecated
- where commits can be reordered, inserted and dropped at will.
+@@ -340,9 +340,7 @@ See also INCOMPATIBLE OPTIONS below.
+ 
+ -m::
+ --merge::
+-	Use merging strategies to rebase.  When the recursive (default) merge
+-	strategy is used, this allows rebase to be aware of renames on the
+-	upstream side.  This is the default.
++	Using merging strategies to rebase (default).
  +
- It is currently only possible to recreate the merge commits using the
--`recursive` merge strategy; Different merge strategies can be used only via
-+`recursive` merge strategy; different merge strategies can be used only via
- explicit `exec git merge -s <strategy> [...]` commands.
- +
- See also REBASING MERGES and INCOMPATIBLE OPTIONS below.
+ Note that a rebase merge works by replaying each commit from the working
+ branch on top of the <upstream> branch.  Because of this, when a merge
 -- 
 gitgitgadget
 
