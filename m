@@ -2,121 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3F5FC4338F
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 08:34:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4134C4338F
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 08:35:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A51860F6F
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 08:34:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC06860F6F
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 08:35:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236561AbhHDIev (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 04:34:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57838 "EHLO
+        id S236620AbhHDIfb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 04:35:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236354AbhHDIeu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Aug 2021 04:34:50 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A547C0613D5
-        for <git@vger.kernel.org>; Wed,  4 Aug 2021 01:34:37 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id a1so1496738ioa.12
-        for <git@vger.kernel.org>; Wed, 04 Aug 2021 01:34:37 -0700 (PDT)
+        with ESMTP id S236477AbhHDIfa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Aug 2021 04:35:30 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E0DAC0613D5
+        for <git@vger.kernel.org>; Wed,  4 Aug 2021 01:35:18 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id t3so2213825plg.9
+        for <git@vger.kernel.org>; Wed, 04 Aug 2021 01:35:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Hrt5cO0QHEfny3cBAOaIiUlW+yWJ5p2H5x2ceaGa/go=;
-        b=Y20gCfatc4oHMb84HlG2jvCAHJPZiuxspQqc7ql8XTIqvo9Mp5gDrWYMw0nHFawtYm
-         78ediS1NFAzkCr10I9iAHWjU2srGuzmoh1A4IR2G4xvxaCWjLoGXyJB568NZr/cLwZqS
-         4SDVkkQxF+P/BKHmT2oki8+GE4ruflIIw8WJlk8eYAQ8wB2VpGZeg7R98iPNvg7rhbiF
-         Id6gC5ufB6bD3IwOAvc41kfyjvDpxcwDnugJGuZacPGZh6S0I1UYYnIEwKPieNa+JcSZ
-         g8HlnZJeve2wN2T/yvNf2XE3vRD0qbPVR1548aTU2ryDTkDdNrn4EhI0+g3YmxJi3elI
-         jt6A==
+        h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
+         :date:mime-version:content-transfer-encoding;
+        bh=KOscSyzFxoCz08DfS93Q4CizAhkeNJEgyxd5RL6Hy50=;
+        b=Q058Auk9Y0mTh6/+UFomkzmWUetbDipDORc2AY0dqBefen7MGxZuTZx9hbqo8tY5Dj
+         RpdPuBkEFgUNh4u7clBeG9v2aIWl12/WsknVPqYP2944lqJR5a3t5c5aojQaEX5p3iEe
+         y37MxIQsF76UGCkhWYfTGZjMmYlACzRXqEDh9NQXRujjHC9+G0NRiMtV3MzDXS4EMB13
+         hD4jILzygU3guK1ytlrh4OACVNixzbboNkB67pW9jgz/UIgRctT0SUl87OpiYQtWyBJD
+         3CVg4mz6EMNfx1KinxGffLBZ0vRIIiY+XTYX0HEHU6yBCch6dqMjeSnlBWacEg3HJ3wk
+         DJXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Hrt5cO0QHEfny3cBAOaIiUlW+yWJ5p2H5x2ceaGa/go=;
-        b=KnvhxC0Nt13im50xa91rOpy3/qk8q15H35/t4R1Z4Kli3pM/UzkNR/mGl3fg2paBs4
-         yb1WKYIJbTtFyzaLG5t9pDaDw9cgIKcIrwVmluyKXeYby07NWDdA6a7uKvRtFhgkQltl
-         n0tEDa9q029cru++E1L7SzYkLe02tGedKpfUX3iznjcM1qzdHn18W+zqcMz3rHYIzpxi
-         XAncUIU3G5H1svI7tukyFo1DK0/V9Z+0W5ezzc0fy6qg9PyvY0/NPSe5D1B0vOgbThj7
-         q9ikPnzW7kS+Az1R4a2sSdSMS1Un2FpYQFqthpiNdrSzyxEHP4saEAqG1tYUg3gKVbj3
-         jt5A==
-X-Gm-Message-State: AOAM533gseSTN1ooqUPF8VdnsfZPhzeKZY8SjaFBp/88eGW/YKqzpTO0
-        16AYUXLkHoYlOmS9MObcoN3P1UOWacQWui9IZqE=
-X-Google-Smtp-Source: ABdhPJw2trxnsCfKnr95hr/PTq/1e/7CVzZ601ZLdEfQHL9i53mUgcJxJtkqQbGiw3fHiVNWMgv3CWewGJ0DwjSIvtc=
-X-Received: by 2002:a05:6638:974:: with SMTP id o20mr9822350jaj.10.1628066076846;
- Wed, 04 Aug 2021 01:34:36 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1010.git.1627714877.gitgitgadget@gmail.com>
- <pull.1010.v2.git.1627953383.gitgitgadget@gmail.com> <5d2fd55c580abc2057f2e6fe9f7d9c94748bf8de.1627953383.git.gitgitgadget@gmail.com>
- <xmqqa6lytat9.fsf@gitster.g>
-In-Reply-To: <xmqqa6lytat9.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Wed, 4 Aug 2021 16:35:20 +0800
-Message-ID: <CAOLTT8SkbNMcVocU9Lg3PfqTGHVEX8y27BMcP55HytfWH60w6g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] [GSOC] cherry-pick: fix bug when used with GIT_CHERRY_PICK_HELP
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
+        h=x-gm-message-state:references:user-agent:from:to:cc:subject
+         :in-reply-to:message-id:date:mime-version:content-transfer-encoding;
+        bh=KOscSyzFxoCz08DfS93Q4CizAhkeNJEgyxd5RL6Hy50=;
+        b=Ly9eHQwrGTE3zf/uD7NNkckDDCrCwXP9FQAeTwNI/cAu1lv3b3LqOGTzVZqIS/Q3fJ
+         +ANV7yJgfYaQcx0IhLu7x6kxb4KhQCogOJOeGsb8JPgeEgq+1rMR9ejDRo3nNgeUXwgx
+         zQ9R7BQRyDjiz7Ie2qWTafRby/uj2x9e8EPrnSQPaSaO8/aR0twpwByv45HEC5NWvJw7
+         HnOI8sfMtg4w9CCfbE0914cBP/q+i6FpKTCm+rAsNp9/QJBtOmMO2ikg1PJohliYrnnV
+         PQVOk/Au0mNsKOuAZgXiYDvUat1BjKf8kuc5hXaAimNpEd3m3uMxdPryiXc12Xbc7aTc
+         sGqg==
+X-Gm-Message-State: AOAM531xz5Yd3PTKpso1wCdChquSzrwd7aZ/toY3mSFObXJHARoznIK6
+        51Ca2cOaFTlvCZPNIgB2G4s=
+X-Google-Smtp-Source: ABdhPJz7clFnrDGCh5HFQQH67Zk6Lj8qB+PdgB2gZsHedewv7Tgf6vf3+WPyOypnrU+okhe8dIFwJQ==
+X-Received: by 2002:aa7:9ac4:0:b029:3c4:3e72:95fa with SMTP id x4-20020aa79ac40000b02903c43e7295famr5823751pfp.59.1628066117996;
+        Wed, 04 Aug 2021 01:35:17 -0700 (PDT)
+Received: from atharva-on-air ([119.82.121.47])
+        by smtp.gmail.com with ESMTPSA id f6sm1800679pfe.10.2021.08.04.01.35.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Aug 2021 01:35:17 -0700 (PDT)
+References: <20210722134012.99457-1-raykar.ath@gmail.com>
+ <87r1fps63r.fsf@evledraar.gmail.com>
+ <9532C3EF-257E-4898-8C75-C49EA4B66A99@gmail.com>
+User-agent: mu4e 1.4.15; emacs 27.2
+From:   Atharva Raykar <raykar.ath@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
         Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Ramkumar Ramachandra <artagnon@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Shourya Shukla <periperidip@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: Re: [GSoC] [PATCH] submodule--helper: run update procedures from C
+In-reply-to: <9532C3EF-257E-4898-8C75-C49EA4B66A99@gmail.com>
+Message-ID: <m2wnp1a9q7.fsf@gmail.com>
+Date:   Wed, 04 Aug 2021 14:05:12 +0530
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B48=E6=9C=884=E6=97=
-=A5=E5=91=A8=E4=B8=89 =E4=B8=8A=E5=8D=886:36=E5=86=99=E9=81=93=EF=BC=9A
->
 
-> > GIT_CHERRY_PICK_HELP value in run_specific_rebase().
+Atharva Raykar <raykar.ath@gmail.com> writes:
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> wrote:
+>>> static void update_submodule(struct update_clone_data *ucd)
+>>> {
+>>> 	fprintf(stdout, "dummy %s %d\t%s\n",
+>>> @@ -2379,6 +2552,79 @@ static int update_clone(int argc, const char **a=
+rgv, const char *prefix)
+>>> 	return update_submodules(&suc);
+>>> }
+>>>
+>>> +static int run_update_procedure(int argc, const char **argv, const cha=
+r *prefix)
+>>> +{
+>>> +	int force =3D 0, quiet =3D 0, nofetch =3D 0, just_cloned =3D 0;
+>>> +	char *prefixed_path, *update =3D NULL;
+>>> +	char *sha1 =3D NULL, *subsha1 =3D NULL;
+>>> +	struct update_data update_data =3D UPDATE_DATA_INIT;
+>>> +
+>>> +	struct option options[] =3D {
+>>> +		OPT__QUIET(&quiet, N_("suppress output for update by rebase or merge=
+")),
+>>> +		OPT__FORCE(&force, N_("force checkout updates"), 0),
+>>> +		OPT_BOOL('N', "no-fetch", &nofetch,
+>>> +			 N_("don't fetch new objects from the remote site")),
+>>> +		OPT_BOOL(0, "just-cloned", &just_cloned,
+>>> +			 N_("overrides update mode in case the repository is a fresh clone"=
+)),
+>>> +		OPT_INTEGER(0, "depth", &update_data.depth, N_("depth for shallow fe=
+tch")),
+>>> +		OPT_STRING(0, "prefix", &prefix,
+>>> +			   N_("path"),
+>>> +			   N_("path into the working tree")),
+>>> +		OPT_STRING(0, "update", &update,
+>>> +			   N_("string"),
+>>> +			   N_("rebase, merge, checkout or none")),
+>>> +		OPT_STRING(0, "recursive-prefix", &update_data.recursive_prefix, N_(=
+"path"),
+>>> +			   N_("path into the working tree, across nested "
+>>> +			      "submodule boundaries")),
+>>> +		OPT_STRING(0, "sha1", &sha1, N_("string"),
+>>> +			   N_("SHA1 expected by superproject")),
+>>> +		OPT_STRING(0, "subsha1", &subsha1, N_("string"),
+>>> +			   N_("SHA1 of submodule's HEAD")),
+>>> +		OPT_END()
+>>> +	};
+>>> +
+>>> +	const char *const usage[] =3D {
+>>> +		N_("git submodule--helper run-update-procedure [<options>] <path>"),
+>>> +		NULL
+>>> +	};
+>>> +
+>>> +	argc =3D parse_options(argc, argv, prefix, options, usage, 0);
+>>> +
+>>> +	if (argc !=3D 1)
+>>> +		usage_with_options(usage, options);
+>>> +	update_data.force =3D !!force;
+>>> +	update_data.quiet =3D !!quiet;
+>>> +	update_data.nofetch =3D !!nofetch;
+>>> +	update_data.just_cloned =3D !!just_cloned;
+>>
+>> For all of these just pass the reference to the update_data variable
+>> directly in the OPT_*(). No need to set an "int force", only to copy it
+>> over to update_data.force. Let's just use the latter only.
 >
-> "help realize the rebasing steps" did not tell us much on "how" the
-> environment variable helps or what it is used for.  A sentence at
-> this point, e.g.
+> Hmm, I'm trying to remember why the single bit values are treated this way
+> in this whole file...
 >
->     The variable carries a custom help message to be shown when one
->     step of replaying an existing commit fails in conflict.
->
-> may help.  And there is one leap in the logic flow here.
->
->     However, the code also removes CHERRY_PICK_HEAD pseudoref when
->     this environment variable exists, assuming that the presence of
->     it means the sequencer machinery and not end-user is doing the
->     cherry-picking.
->
+> ...there seems to be no good reason for it. The API docs for parse options
+> state that OPT_BOOL() is guaranteed to return either zero or one, so that
+> double negation does look unnecessary.
 
-Thanks, such a supplement is very good.
-
-> Hmph, this is a bit troubling.  So has this been part of the
-> "published" behaviour since d7e5c0cb (Introduce CHERRY_PICK_HEAD,
-> 2011-02-19) that introduced this test, and there are people who are
-> relying on it?  IOW, should the resolution to the original problem
-> report have been "if it hurts, don't do it" (in other words, "setting
-> GIT_CHERRY_PICK_HELP will remove CHERRY_PICK_HEAD, so if you do not
-> want to get the latter removed, do not set the former")?
->
-
-You mean that cherry_pick with GIT_CHERRY_PICK_HELP suppresses
-CHERRY_PICK_HEAD is not even a bug?
-
-It is reasonable for `git rebase -p` and  `git rebase -m` to delete
-CHERRY_PICK_HEAD when a conflict occurs, but it is not necessarily
-for git cherry-pick to delete it too. IOW, I suspect that instead of
-letting users
-not touch the trap here, it is better to remove the trap completely.
-
-Thanks.
---
-ZheNing Hu
+I forgot to mention why I did not address this change in my v3 patch.
+The reason why we are handling boolean values this way is because they
+are declared as bitfields in the 'update_data' struct. Since we cannot
+take the address of bitfields, we have to use a different variable to
+store when using 'parse_options()'.
