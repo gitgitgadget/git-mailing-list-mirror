@@ -8,179 +8,123 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8815C4338F
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 23:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3187CC4338F
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 23:51:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9141A60EBC
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 23:49:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 108E460EBC
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 23:51:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234086AbhHDXts (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 19:49:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41416 "EHLO
+        id S235706AbhHDXvM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 19:51:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232888AbhHDXtq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Aug 2021 19:49:46 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 800CBC0613D5
-        for <git@vger.kernel.org>; Wed,  4 Aug 2021 16:49:32 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id zb12so1526932ejb.5
-        for <git@vger.kernel.org>; Wed, 04 Aug 2021 16:49:32 -0700 (PDT)
+        with ESMTP id S232888AbhHDXvL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Aug 2021 19:51:11 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28CAFC061798
+        for <git@vger.kernel.org>; Wed,  4 Aug 2021 16:50:58 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id l4-20020a05600c1d04b02902506f89ad2dso4508442wms.1
+        for <git@vger.kernel.org>; Wed, 04 Aug 2021 16:50:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=0s2RoGpRdfWJihbFJdZ5uTtj473eD1Can29gMbw+BmQ=;
-        b=HxzqN2CTB8UwKAAH6uRAxTQHC/nIizQac5VGwyIxlKflrIlPsFBqyv8UB2cOZRawqU
-         FA0L8uqVSfhtBk0j5Ixi5aCLkWHC72ZtNbXyRJl+QR19RcP25edVCh8MylChbBzje0r0
-         rEM2n21sQhMXv5zMHJmbWyqrR/YvlkuE4BYzwceg3Gtz5I+ku0YK9Q655Bx3+SPhIVKC
-         Ud+t+q4V1JBLpvojmfLtb4LKOd/dK1wIStKL2EflEO3a7UQGMKP2FcFCKDm3jvzWz46B
-         ymg+ISzXAe0emm69nxU4eGNsaZ+0Xn6rXq+T4SUe9l3n74u2q8Z/MULGzZD/q/N4Ex7e
-         LmkQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=wt5gmRNRVTwDXL/bKPtXFYAtdu79hzBOjaNGfv3bFuA=;
+        b=axgsHRiSuFoB4Wm0XdD9JmxW3tGkSYHFS+AqAFCzrz+LIs0Rj94ZhzD4liUJEJrCBV
+         UrH9XhDQUjRRxJqlBrdu2wNjFF1LdWlPzt1AaRrNRJXbs5cZuOMH7+1OzNLvmN8a4fb9
+         sFEeCNd/JaXxYqZ2e7qMeV2P00SqDoEffgzjjmA3I+qq3CvpCVRsCsybAwxCPJ134K2q
+         JJfYced62zM4vPaEz+Tyawcah6amlCNt51F1l6VKuNrqTGru4Iy6H76W/WhJY3+id66p
+         /UPqYRN9Apdc6KqPYmUzWCmVtbG8/txPk5J7qbwAQDMsS9zQzpEEuzd1AAgHiZrYXvG6
+         vyIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=0s2RoGpRdfWJihbFJdZ5uTtj473eD1Can29gMbw+BmQ=;
-        b=f3/yYQcevtl1RWIR7iJGImgMOiXpbvcB3p6pnSi9xlISdeIp15hAMx8/UTL1sf8KEF
-         NeTyHViN+pW9T0h65MW0jBYoQbrBczpo3CKOGGImWVaGRL/vU57VRfQiVgnoEBOcYKjB
-         lGes+xf6DjaAsJR9V/FZSZxkrrZPp0vefvjTfkrlsS9NbThHsjo6rj6RLubFttAtT2bg
-         fyWGF2N0sNu43Nw7Lg+vlOzKn1v8+1SQzG5BWqjhffqGGYWE0niXcG3lHFw7Yz/1SH4e
-         ih5CUQSIN9dQaASeHo7VeVW68EftsmX30713ahenF4iQlTkix5oIqgIvMqXm1vFFwtjo
-         9cbQ==
-X-Gm-Message-State: AOAM533AWWPSerqWbfakilpLEffh62kapQ+QJkMvm+vzWsc4a58+NQ/x
-        bDBImw/zE3b1qvlzuVsAR/E=
-X-Google-Smtp-Source: ABdhPJz0wqtfopp2t53CAqYtbJdoL/plaAvSoMP/f1mytVm6c8+67n51I/FgXomYNx82XNcRWhtScg==
-X-Received: by 2002:a17:906:2642:: with SMTP id i2mr1610104ejc.323.1628120971002;
-        Wed, 04 Aug 2021 16:49:31 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id fi23sm1077849ejc.83.2021.08.04.16.49.30
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=wt5gmRNRVTwDXL/bKPtXFYAtdu79hzBOjaNGfv3bFuA=;
+        b=Hmqs60Krw1OpsqKYxKr43KfKZ8bDNnk5r1aN7ZDUdQdbj3Dk7SIGQPoZ8vY+vZC0q3
+         XGsXsMI2cVv2PYhubclr2EWarWHSshhCFKzzWgAwq1Z7/NFvFX7MlvHGwGz7Q2A1IHfc
+         gtH0Dodc7pIi8o/vxOUYceWCPgKF0bup0VVNnVqPod+ASdOd4a319MCCdoah0ukm57ma
+         tYWU6aOnLLWxyD0K5/rCnArChmavf5K2bZyKNPyQjd97ijwV/V+g874srXjDpncCTBWQ
+         NUQKUC3UkeDRRd8f6VzCEn09DfUac/of/+lRAZ6l1OwtC2aW3pZSrdLR6JkEujqv0KPz
+         faPA==
+X-Gm-Message-State: AOAM533cfmDvgOml18oIc8lTubk5vAzR0pdUhTNF9pRKnWZVL70rVqjN
+        lV62r8iaDDEeIaMEHd6TR1tXoU8h5fM=
+X-Google-Smtp-Source: ABdhPJzR7NCKWiC4Mvv/tDvckXi0tJgn9bzYZpfzgMo4AINlrshsK3pnYHYc9cqx/UIzN063rBuTvQ==
+X-Received: by 2002:a1c:4b18:: with SMTP id y24mr12456165wma.49.1628121056774;
+        Wed, 04 Aug 2021 16:50:56 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f17sm4910553wrt.18.2021.08.04.16.50.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Aug 2021 16:49:30 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com
-Subject: Re: [PATCH v2 2/2] connect, protocol: log negotiated protocol version
-Date:   Thu, 05 Aug 2021 01:40:51 +0200
-References: <cover.1628115064.git.steadmon@google.com>
- <d138b2615c1af288627b9a2f8f7dd3d2fed184d7.1628115065.git.steadmon@google.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <d138b2615c1af288627b9a2f8f7dd3d2fed184d7.1628115065.git.steadmon@google.com>
-Message-ID: <87a6lwn52u.fsf@evledraar.gmail.com>
+        Wed, 04 Aug 2021 16:50:56 -0700 (PDT)
+Message-Id: <75b81598a8085d7135fa80e3add317e09fd9fac2.1628121054.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1059.v3.git.git.1628121054.gitgitgadget@gmail.com>
+References: <pull.1059.v2.git.git.1628054935.gitgitgadget@gmail.com>
+        <pull.1059.v3.git.git.1628121054.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 04 Aug 2021 23:50:45 +0000
+Subject: [PATCH v3 01/10] git-rebase.txt: correct antiquated claims about
+ --rebase-merges
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Elijah Newren <newren@gmail.com>
 
-On Wed, Aug 04 2021, Josh Steadmon wrote:
+When --rebase-merges was first introduced, it only worked with the
+`recursive` strategy.  Some time later, it gained support for merges
+using the `octopus` strategy.  The limitation of only supporting these
+two strategies was documented in 25cff9f109 ("rebase -i --rebase-merges:
+add a section to the man page", 2018-04-25) and lifted in e145d99347
+("rebase -r: support merge strategies other than `recursive`",
+2019-07-31).  However, when the limitation was lifted, the documentation
+was not updated.  Update it now.
 
-> It is useful for performance monitoring and debugging purposes to know
-> the wire protocol used for remote operations. This may differ from the
-> version set in local configuration due to differences in version and/or
-> configuration between the server and the client. Therefore, log the
-> negotiated wire protocol version via trace2, for both clients and
-> servers.
->
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
-> ---
+Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Acked-by: Derrick Stolee <dstolee@microsoft.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ Documentation/git-rebase.txt | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-I know Taylor asked you to change it to a string from in int upthread in
-<YQmxSxTswHE/gTet@nand.local>, but I really don't see the point. But am
-willing to be convinced otherwise.
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 55af6fd24e2..8a67227846a 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -1219,12 +1219,16 @@ successful merge so that the user can edit the message.
+ If a `merge` command fails for any reason other than merge conflicts (i.e.
+ when the merge operation did not even start), it is rescheduled immediately.
+ 
+-At this time, the `merge` command will *always* use the `recursive`
+-merge strategy for regular merges, and `octopus` for octopus merges,
+-with no way to choose a different one. To work around
+-this, an `exec` command can be used to call `git merge` explicitly,
+-using the fact that the labels are worktree-local refs (the ref
+-`refs/rewritten/onto` would correspond to the label `onto`, for example).
++By default, the `merge` command will use the `recursive` merge
++strategy for regular merges, and `octopus` for octopus merges.  One
++can specify a default strategy for all merges using the `--strategy`
++argument when invoking rebase, or can override specific merges in the
++interactive list of commands by using an `exec` command to call `git
++merge` explicitly with a `--strategy` argument.  Note that when
++calling `git merge` explicitly like this, you can make use of the fact
++that the labels are worktree-local refs (the ref `refs/rewritten/onto`
++would correspond to the label `onto`, for example) in order to refer
++to the branches you want to merge.
+ 
+ Note: the first command (`label onto`) labels the revision onto which
+ the commits are rebased; The name `onto` is just a convention, as a nod
+-- 
+gitgitgadget
 
-It seems to me that both of these codepaths will never usefully use this
-new "UNKNOWN_VERSION" string you added, i.e.:
-
->  connect.c                             |  3 +++
->  protocol.c                            |  3 +++
->  t/t5705-session-id-in-capabilities.sh | 12 ++++++++++++
->  3 files changed, 18 insertions(+)
->
-> diff --git a/connect.c b/connect.c
-> index 70b13389ba..5f0e113625 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -150,6 +150,9 @@ enum protocol_version discover_version(struct packet_reader *reader)
->  		break;
->  	}
->  
-> +	trace2_data_string("transfer", NULL, "negotiated-version",
-> +			   format_protocol_version(version));
-
-Right after this.
-
->  	switch (version) {
->  	case protocol_v2:
->  		process_capabilities_v2(reader);
-
-We'll die here with BUG("unknown protocol version") if it's unknown..
-
-> diff --git a/protocol.c b/protocol.c
-> index 7ec7ce896e..f52dc2d7a2 100644
-> --- a/protocol.c
-> +++ b/protocol.c
-> @@ -87,6 +87,9 @@ enum protocol_version determine_protocol_version_server(void)
->  		string_list_clear(&list, 0);
->  	}
->  
-> +	trace2_data_string("transfer", NULL, "negotiated-version",
-> +			   format_protocol_version(version));
-> +
-
-And this code is simply unreachable as far as logging this
-"UNKNOWN_VERSION" string goes. If we did have an unknown version we'd
-die right above this with:
-
-    die("server is speaking an unknown protocol")
-
-And if we did not have a "version " at all we'd default to protocol_v0
-here, i.e. we either die already on an unknown version, or we don't log
-"UNKNOWN_VERSION" at all.
-
->  	return version;
->  }
->  
-> diff --git a/t/t5705-session-id-in-capabilities.sh b/t/t5705-session-id-in-capabilities.sh
-> index f1d189d5bc..88871c59b5 100755
-> --- a/t/t5705-session-id-in-capabilities.sh
-> +++ b/t/t5705-session-id-in-capabilities.sh
-> @@ -40,6 +40,7 @@ do
->  		test -z "$(grep \"key\":\"server-sid\" tr2-client-events)" &&
->  		test -z "$(grep \"key\":\"client-sid\" tr2-server-events)"
->  	'
-> +
->  done
->  
->  test_expect_success 'enable SID advertisement' '
-> @@ -73,6 +74,17 @@ do
->  		grep \"key\":\"server-sid\" tr2-client-events &&
->  		grep \"key\":\"client-sid\" tr2-server-events
->  	'
-> +
-> +	test_expect_success "client & server log negotiated version (v${PROTO})" '
-> +		test_when_finished "rm -rf local tr2-client-events tr2-server-events" &&
-> +		cp -r "$LOCAL_PRISTINE" local &&
-> +		GIT_TRACE2_EVENT="$(pwd)/tr2-client-events" \
-> +		git -c protocol.version=$PROTO -C local fetch \
-> +			--upload-pack "GIT_TRACE2_EVENT=\"$(pwd)/tr2-server-events\" git-upload-pack" \
-> +			origin &&
-> +		test "$(grep \"key\":\"negotiated-version\",\"value\":\"$PROTO\" tr2-client-events)" &&
-> +		test "$(grep \"key\":\"negotiated-version\",\"value\":\"$PROTO\" tr2-server-events)"
-> +	'
->  done
->  
->  test_done
-
-So given the above I think you can come up with trace2 output where we
-log "UNKNOWN_VERSION", it just seems rather useless. We'll hit a BUG()
-anyway, which we also trace2 log. In terms of anyone who collect logs
-surely they'll first care about logged BUG(), and second about any
-version aggregation involved in such a BUG(), and it's not a big deal if
-the report of versions doesn't include the "UNKNOWN VERSION" to go with
-such a one-off bug.
-
-But perhaps you and Taylor really do have a use-case for this, hence the
-"willing to be convinced otherwise". I suspect the desire to log
-"<unknown>" came from an assumption that we did so in any recoverable
-non-BUG() case, which we won't do.
