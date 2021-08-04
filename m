@@ -2,110 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76A99C4338F
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 15:58:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDBC0C4338F
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 17:06:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6124560F14
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 15:58:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 97E6760F38
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 17:06:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239634AbhHDP6c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 11:58:32 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:43886 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239291AbhHDP6b (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Aug 2021 11:58:31 -0400
-X-Greylist: delayed 453 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Aug 2021 11:58:31 EDT
-Received: from [10.0.2.15] ([147.147.167.4])
-        by smtp with ESMTPA
-        id BJAJmz3h1OQhvBJAKmSZD9; Wed, 04 Aug 2021 16:50:45 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1628092245; bh=bq3rXPWqdSnLhMyX4JLnLAJDUkrVCf6LcdA3CG87Hv0=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=YV0K8d5DeYTb38svy/G2Y26pzz2vETyZGTQR6or/BzBqVNgno/eYknywqlxkzeibx
-         X082GaqudcYJs9zGcC0/PTLs65aV6dgiEAuRkWEhXG277OcSkxf9aYPBzgPicLjH18
-         ROo3yDu3e2D4qH17dGvnZTCSN9sFCfxzOrG50s1AKFGCQ6ezMCFFgPesHE8LqRFjnJ
-         T5XrEnvoIj7FdVm5uAfHDapDZ8aYdcF0XtQuM03L3XDliqGQPM9Ssmx7F3He6DdUmX
-         5ouiEMJxLF2V+veon815eh6xV4aFcFyrYwYUE/94syUXyk7AB8DnFGdAjLZtGApslY
-         URA5xGwq3vZ8w==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=IvmFjI3g c=1 sm=1 tr=0
- a=ClpcMUpIpdFe3QrT4g3KPA==:117 a=ClpcMUpIpdFe3QrT4g3KPA==:17
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=YA1mVlVNuHaAdAA47UUA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v2 08/10] git-rebase.txt: correct out-of-date and
- misleading text about renames
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com>
- <pull.1059.v2.git.git.1628054935.gitgitgadget@gmail.com>
- <8978132397e95accee5676309d81832724aebba5.1628054936.git.gitgitgadget@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <eff818fc-9f4d-35db-a4df-8b05408d7d6c@ramsayjones.plus.com>
-Date:   Wed, 4 Aug 2021 16:50:43 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S239753AbhHDRGt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 13:06:49 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60041 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229765AbhHDRGs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Aug 2021 13:06:48 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E33121301CA;
+        Wed,  4 Aug 2021 13:06:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=keqigiyuNDh7
+        4GbFX8ZNU0LWKKoLZ/ErorczvYvqWNU=; b=mgnVpiLDIrm9sv7E9BYAoJfLHeU1
+        /yruhQ2Tg8O09pPLmNqDAN+y54m1iIDlhiDJnO+ccVK12iC3ht4JPCdKHN8sfSA4
+        INikYp2Rf36bGXFyV8DzxbgU7HIfTF4YLID2qgc7cL1ELunUTDbu43yAZf6o2jmj
+        Qd9MfrlBcoTL2cQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DAE501301C9;
+        Wed,  4 Aug 2021 13:06:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 28CA31301C8;
+        Wed,  4 Aug 2021 13:06:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
+Cc:     git@vger.kernel.org, rn+git@sigpipe.cz
+Subject: Re: [PATCH v2] clone: Allow combining --bare and --origin
+References: <xmqqv94mtdyj.fsf@gitster.g>
+        <20210804133010.25855-1-oystwa@gmail.com>
+Date:   Wed, 04 Aug 2021 10:06:31 -0700
+In-Reply-To: <20210804133010.25855-1-oystwa@gmail.com> (=?utf-8?Q?=22?=
+ =?utf-8?Q?=C3=98ystein?= Walle"'s
+        message of "Wed, 4 Aug 2021 15:30:10 +0200")
+Message-ID: <xmqqbl6dqgvc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <8978132397e95accee5676309d81832724aebba5.1628054936.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfOnlnuOKpMa05qFkP86Q7z6J6pRKdZNfSqgQ7tNNoAWCqwwNpigd4LvslRYjMX12glrHP1r25QBlyilXXR8k7fn6G03rgp0vNaAgRBgfy8aJjnVjBmiP
- 6ExIcBpsBkRiD7/68vagCi531NU6pFSNgm123KrURidkDncNq0ES7FeA82qeBed3Uke5D7yyTXUNhw==
+X-Pobox-Relay-ID: 51AE4F32-F546-11EB-826F-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+=C3=98ystein Walle <oystwa@gmail.com> writes:
 
-On 04/08/2021 06:28, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> Commit 58634dbff8 ("rebase: Allow merge strategies to be used when
-> rebasing", 2006-06-21) added the --merge option to git-rebase so that
-> renames could be detected (at least when using the `recursive` merge
-> backend).  However, git-am -3 gained that same ability in commit
-> 579c9bb198 ("Use merge-recursive in git-am -3.", 2006-12-28).  As such,
-> the comment about being able to detect renames is not particularly
-> noteworthy.  Remove it.  While tweaking this description, add a quick
-> comment about when --merge became the default.
+> Hi again,
+>
+> Thanks for accepting the patch.
+>
+>> It is somewhat unfortunate that we do not say what the name of the
+>> "origin" is anywhere in the resulting configuration file.  The only
+>> way to tell that "--origin somewhere" was used is to notice that there
+>> is only one remote and its name is "somewhere".
+>
+> This reads as self-contradictory to me. The word "origin" is nowhere in
+> the configuration file, that's true. But that's because the user chose
+> it to be that way, and the name the user chose is in the there.
 
-The last sentence of the commit message does not seem to apply to
-this patch (any more ...?).
+In other words, if there were two remotes in the configuration file,
+you cannot tell which one was given to --origin when you made the
+repository with "git clone".
 
-[Awesome work on 'merge -sort', by the way!]
+> The reason I see it as self-contradictory is that I see two different
+> usages of the word "origin" in your email:
+>
+>  1. A *term* meaning the repository that was cloned (e.g. 'name of the
+>  "origin"', remote.originName)
+>
+>  2. The *name* of a remote ('there is only one remote and its name is
+>  [not "origin"]')
+>
+> Seems you are aware since you write it in quotes :-)=20
 
-ATB,
-Ramsay Jones
+May be but #1 is not all that interesting. =20
 
-> 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  Documentation/git-rebase.txt | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index cecdcfff47a..73d49ec8d91 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -340,9 +340,7 @@ See also INCOMPATIBLE OPTIONS below.
->  
->  -m::
->  --merge::
-> -	Use merging strategies to rebase.  When the recursive (default) merge
-> -	strategy is used, this allows rebase to be aware of renames on the
-> -	upstream side.  This is the default.
-> +	Using merging strategies to rebase (default).
->  +
->  Note that a rebase merge works by replaying each commit from the working
->  branch on top of the <upstream> branch.  Because of this, when a merge
-> 
+I meant the only one thing.  The user told Git that 'somewhere' is
+the word, not 'origin' that is used by those who use the default
+configuration, will be used to refer to the remote the repository
+was cloned from.  In the first paragraph you quoted, I was referring
+to the fact that the knowledge will be lost once you did "git remote
+add elsewhere".
+
+We cannot tell between 'somewhere' and 'elsewhere', which one is
+what those who use the default configuration would refer to
+'origin'---presumably, 'somewhere' being the --origin's argument
+when "git clone" was run, has some significance over 'elsewhere' in
+the user's mind, even after the latter is added to the repository.
+
+But we'd end up treating them the same.  And something like
+remote.originName would help that.  Otherwise, we'd end up sending
+this message:
+
+    Even if we give "--bare --origin yourfavouritename" to you now,
+    unlike how 'origin' is treated in the default case, in the
+    resulting repository, 'yourfavouritename' is not special at all.
+
+Some people may want to treat yourfavouritename is not special at
+all, while some people may want to treat yourfavouritename truly as
+a replacement for 'origin' that is the default.  The message we
+would be sending is that we'd ignore the latter folks.
+
