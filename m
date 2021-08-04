@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27EEBC4338F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E62DCC4320A
 	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 05:29:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14A6F60F25
+	by mail.kernel.org (Postfix) with ESMTP id CE29660F10
 	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 05:29:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235456AbhHDF32 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 01:29:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44678 "EHLO
+        id S235466AbhHDF33 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 01:29:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235370AbhHDF3R (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Aug 2021 01:29:17 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 829BBC06179C
-        for <git@vger.kernel.org>; Tue,  3 Aug 2021 22:29:04 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id m12so773949wru.12
-        for <git@vger.kernel.org>; Tue, 03 Aug 2021 22:29:04 -0700 (PDT)
+        with ESMTP id S235372AbhHDF3S (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Aug 2021 01:29:18 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30AA6C0617A0
+        for <git@vger.kernel.org>; Tue,  3 Aug 2021 22:29:05 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id m20-20020a05600c4f54b029024e75a15716so710652wmq.2
+        for <git@vger.kernel.org>; Tue, 03 Aug 2021 22:29:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=8ssAhpZO4uqKR4lOw5NukyYByJ/cVei+6HTXJ8uYrv4=;
-        b=Atxa2XKloPVwxKR5tfOmV0JHcVyvWmG/lwBMR3uAMD8WKgpyjHDbUXx3NYkR1uqyeC
-         Gd9X2woh7aGDGfhQkt6eHSB6hBkWoS0FmrmxHy1vUP1/0dHHzbR5qGqJWZVnVZauKtvq
-         FSvOuE8yyO2evQfiIVjaacCmicvK/qWMViLps/oOxiWQtAQpqcwLXs/495xl+9fFt995
-         ViMan8hR8FvfJRGBZ1VEHMd6p4GogKyZxj6yiCW8F/PQ/3LtZSLZ6T5bMmXailxY9MOD
-         mA27L0qJfgOEAc5lFNecLyazjIEUz8O3N1nR1VH7JIc1/X1kQMYgRwGmKJIedoUHodCW
-         9+sQ==
+        bh=88u1gqyIE4EdznEVgM37Y1fW50MvyDeUEsu/DYjSZE0=;
+        b=WcejsJTL7XdnMkuPKXeUC3O+TtMclKjtVUHfci4/PvhMdzN4HVY7aU164s4LwTfsTI
+         D6CkLKNBRI40vlwtsGG6k15Nw3RWW8fTSBVzRtqJlOb5ShIzbOIBOSrIOObNIwc0jdLO
+         jLu01ySa2Tj5KVqBCIC0ytwOc9rt9AH/l/YzTuUmPsiLrPfhahpcTvt2ydI/kdrrdOLX
+         hinhYaBROrc2jBUjh6xASPjf5t8PtQiOaZFn/HTokL4CngyE4Og3wUamXmeQlGq0aAs4
+         mJ9ZOELLF/2rfqvf81CLUYz/s94n+XQcwst+foGA5liUURu06ELrTNsoMI063Y/Nx8Hm
+         sAxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8ssAhpZO4uqKR4lOw5NukyYByJ/cVei+6HTXJ8uYrv4=;
-        b=H7DaoeT+qBJiIREhk0xt310dt8pTKSGi8Su7ToDIHWRVN5FCD+HV48Xwy5Fq+hJ8jn
-         hnsi3WI+ZtKX2gmDhqsEdtCeKJ2p3MUwASHaVtChQHsjtueOKo7SUjv7yz+3WyzkPrDM
-         Sjv+DkmGxT9H/NcQk6gJ5X4rRF8Ex9p8qnQ1pKCE0sIpiNyCBx5e6Jq7L2VzLppn5g+T
-         0GYKvk2etlG+CBLtQfvCXKqYWPJuLiNRfHA17zGpJcAixO6DU/wppf84JB7w4quKHkUy
-         jYD+WBXQiFowvscMl33VQUHqf2lxLt8frLQjNaZUhktwp/QgltZ2cFHjbdIZ6y97Xq5Z
-         BDvg==
-X-Gm-Message-State: AOAM530tSWbjjPFK2VlJaygoDj6n5Rk7cyGKZsWgma2SESPGmWjPIHY0
-        cLEVd7thTG8keFEx4mYmypikrCNGucU=
-X-Google-Smtp-Source: ABdhPJyfcWHkKu0GF3RleCvC3W60x0rsYTr9CjSM1Ex265Sjd0D5TBF48+HVINdq5JvtmZtYHagW8Q==
-X-Received: by 2002:adf:f145:: with SMTP id y5mr26465927wro.102.1628054943224;
+        bh=88u1gqyIE4EdznEVgM37Y1fW50MvyDeUEsu/DYjSZE0=;
+        b=O6mLPU1rKDEUDQmVf175nCk8cLyxbH2hv+4kY/U27rhMrjq5b7OGKlCFag55vMcuru
+         iaIN24yAg7Qd4GgrQ5PT99tt8gB2tjgFBYroFqDmnRXJfOItFZlxH5qmstZfJ/pswpZo
+         1qiWq6UV098AquDnx9jEh9OSpURH3jADIlzUldNpAMHarffxsx1asgP9LtKuvatue4Ma
+         v/NUoJmGCjaxODaHE5svEcq5O2jqNpK3YXKi4GgT1ROn1ML2ePui7CPepRTnQab6vaiX
+         JfEDqn/ijAgdIj/VnUwdKWZGX6KCsKb29Kj3W9ACRC7Cd1XC35dQklKnqRfuAP9rVYlm
+         jveg==
+X-Gm-Message-State: AOAM530CbM0mGOnoDVwpAJU3+K0W0aSFqL6qocu5jXSRLz61gFuw7jvl
+        W+mV63HkQYTs9x8R3Amphsfohnu7pkY=
+X-Google-Smtp-Source: ABdhPJznxNmOpZe7byOSkT1fUm5GcFYX5GB0Uv5BSkehL+geTkVDlugYOJlLzTalxBFKO3RHax6dbg==
+X-Received: by 2002:a05:600c:2159:: with SMTP id v25mr7930849wml.187.1628054943827;
         Tue, 03 Aug 2021 22:29:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v12sm1038278wrq.59.2021.08.03.22.29.02
+        by smtp.gmail.com with ESMTPSA id m27sm1043737wrh.34.2021.08.03.22.29.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 22:29:02 -0700 (PDT)
-Message-Id: <bc92826f7e5e55978d4261b9c01626c215753990.1628054936.git.gitgitgadget@gmail.com>
+        Tue, 03 Aug 2021 22:29:03 -0700 (PDT)
+Message-Id: <4a78ac53424525d7099867d5a4377b8afb9bf18f.1628054936.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1059.v2.git.git.1628054935.gitgitgadget@gmail.com>
 References: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com>
         <pull.1059.v2.git.git.1628054935.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 04 Aug 2021 05:28:54 +0000
-Subject: [PATCH v2 09/10] merge-strategies.txt: add coverage of the `ort`
- merge strategy
+Date:   Wed, 04 Aug 2021 05:28:55 +0000
+Subject: [PATCH v2 10/10] Update error message and code comment
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,36 +79,41 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
+There were two locations in the code that referred to 'merge-recursive'
+but which were also applicable to 'merge-ort'.  Update them to more
+general wording.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/merge-strategies.txt | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ builtin/merge.c | 2 +-
+ sequencer.c     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-index b54bcf68f2d..210f0f850b2 100644
---- a/Documentation/merge-strategies.txt
-+++ b/Documentation/merge-strategies.txt
-@@ -95,6 +95,20 @@ subtree[=<path>];;
- 	is prefixed (or stripped from the beginning) to make the shape of
- 	two trees to match.
+diff --git a/builtin/merge.c b/builtin/merge.c
+index a8a843b1f54..d7b14bf4a7f 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -738,7 +738,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
  
-+ort::
-+	This is meant as a drop-in replacement for the `recursive`
-+	algorithm (as reflected in its acronym -- "Ostensibly
-+	Recursive's Twin"), and will likely replace it in the future.
-+	It fixes corner cases that the `recursive` strategy handles
-+	suboptimally, and is significantly faster in large
-+	repositories -- especially when many renames are involved.
-++
-+The `ort` strategy takes all the same options as `recursive`.
-+However, it ignores three of those options: `no-renames`,
-+`patience` and `diff-algorithm`.  It always runs with rename
-+detection (it handles it much faster than `recursive` does), and
-+it specifically uses `diff-algorithm=histogram`.
-+
- resolve::
- 	This can only resolve two heads (i.e. the current branch
- 	and another branch you pulled from) using a 3-way merge
+ 		for (x = 0; x < xopts_nr; x++)
+ 			if (parse_merge_opt(&o, xopts[x]))
+-				die(_("Unknown option for merge-recursive: -X%s"), xopts[x]);
++				die(_("unknown strategy option: -X%s"), xopts[x]);
+ 
+ 		o.branch1 = head_arg;
+ 		o.branch2 = merge_remote_util(remoteheads->item)->name;
+diff --git a/sequencer.c b/sequencer.c
+index 7f07cd00f3f..a4e5c43fcf2 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2065,7 +2065,7 @@ static int do_pick_commit(struct repository *r,
+ 		/*
+ 		 * We do not intend to commit immediately.  We just want to
+ 		 * merge the differences in, so let's compute the tree
+-		 * that represents the "current" state for merge-recursive
++		 * that represents the "current" state for the merge machinery
+ 		 * to work on.
+ 		 */
+ 		if (write_index_as_tree(&head, r->index, r->index_file, 0, NULL))
 -- 
 gitgitgadget
-
