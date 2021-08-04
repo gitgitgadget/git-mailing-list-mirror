@@ -7,80 +7,65 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0DC6C432BE
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 14:27:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4E60C4338F
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 14:55:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B011F60F58
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 14:27:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C154860F35
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 14:55:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238014AbhHDO1l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 10:27:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54418 "EHLO
+        id S238774AbhHDOzR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 10:55:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234423AbhHDO1c (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Aug 2021 10:27:32 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D81AC0613D5
-        for <git@vger.kernel.org>; Wed,  4 Aug 2021 07:27:19 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id f12so1722762qkh.10
-        for <git@vger.kernel.org>; Wed, 04 Aug 2021 07:27:19 -0700 (PDT)
+        with ESMTP id S234423AbhHDOzR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Aug 2021 10:55:17 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6068AC0613D5
+        for <git@vger.kernel.org>; Wed,  4 Aug 2021 07:55:03 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id y1so2703844iod.10
+        for <git@vger.kernel.org>; Wed, 04 Aug 2021 07:55:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=d36lJ4GTglvxx4WTLl/PtoKv+OVcG5Mz9SbRAFtYrl8=;
-        b=n7I0Q84oF5iyhzeliKNCg6VqBTySHBRNEFzUeIIEV+qjv4rhc92eonvrPkN2BebF2V
-         p2XkPHkW1TNrhXTe5IbMqzhXqChYPzq8qCD3Rmmk3MoDHuFEJemhk+iTyHKjzZmgik1L
-         EPGuDXe3tE5G8yr124S1G9F8qvTV5r1E0EMcwoYG6TCUN5tthfARikmJQyOy2rMDIAV7
-         I0gqHj5YooTBxU5UQy6W6yRAL2SzfSbyQWuy849P6lQ3FMCRXRKHi9kVY+04Ms090u8s
-         mvTqoZGOtNyCKqfbli8rCe0WsnGeuImDDkcSA68/URVZbTvQ9njlPZkmaxuPTh+NT7pq
-         agOA==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=Mz4Qz3uzWxd3Q8zxNSKDvvrw5b2dws6nD6s0BoePDII=;
+        b=tpeFlTfpm9cdQK+WmqVyjR/BSjtRlhuX/AJxG3Mm6onjPDj5MIG1JB3SIIL3CT+ykX
+         7yI1LdrrppMdWycDohk37w/4ANIQ2MtYEC3LnKv3etBC3Jf+ygYe3Jb+zQBHc9a6v/7w
+         9VfY3Yh7HneST8UExobMkv8aPD8/rTChhkhwhXmKwo2YBpApbgb3xVbPy0OyVY2yQlu/
+         VWHoU8qrvUSF413M7DZN0GM5erPy0JQuMLRh5AUcS3OCQTV+Rq4pOtKoYMvHjacf4Lx0
+         c8X1YQLPM3WdMzmlAofg7RydhYYDNLCizyOjvJFmf87yFc0e1dLg03xE4zr6WBynZbDE
+         wI2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+        h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=d36lJ4GTglvxx4WTLl/PtoKv+OVcG5Mz9SbRAFtYrl8=;
-        b=pmij5qaSP/TVP46c7iCavibycnFRJJDbakrUy95P3DNQNCqJ4RrTI++tvkM5F0XWKL
-         1OZTOZKfK5+SAYQqyMMTOfox8EypwvIkG3NJjR7CFWpc2685kc9rcu446KFLYV9ZVETI
-         hJR3PLJhsRvG3DBj4ipNcfGXRsXm3yiI+6w0Jgzszi+S1ofzdSV1VKVHheGtWYYfAK4Z
-         F1YxxWQh25r2RQ8hrO9Zp00p5Ku1sQLHre19yMHLB2tq75arbx0ZW6vfDEV81dycH70b
-         rOWivaNcjpZ5pLWrQDMogNNwDvev6zMu4fLZBGMBpAEdeStqUYyAvepHpWcfwaRs2u5V
-         aZiw==
-X-Gm-Message-State: AOAM533HOALxa2fE0vAYWji26cMTSAATJvF4iNyyvxDPvyQNPQUDYWP0
-        Hh/4fUNcn0REsbGiWLCmN4g=
-X-Google-Smtp-Source: ABdhPJwOZSJrEh8wP+cgb70mhi60NlTsH1RrOB/+pW6gPAYU3xHk05DWiPV0tAMfjrRdcLou6ky8kQ==
-X-Received: by 2002:ae9:e606:: with SMTP id z6mr26353535qkf.152.1628087238716;
-        Wed, 04 Aug 2021 07:27:18 -0700 (PDT)
+        bh=Mz4Qz3uzWxd3Q8zxNSKDvvrw5b2dws6nD6s0BoePDII=;
+        b=EDw7f5ISIofZlZIRPUBdecbb6h9g3cMuoufxOk2jUXblQoodx6KRC1D6y0aTDAdzUG
+         7uGjNsHZSTrFGbgY4PemBxsPVqoWA/p77TQHRfImEAm6mIZzQRcrvYgLN5xPiqiMev4a
+         XwmJUXhWaXBRjImdt7NCRjF99Q7sgsT4UMmG5PzaqPo9+bQq9dpiaMJQN23lVb8q5WDp
+         dnnwJHB0v/aJ/qmAGRPX19gjwhz9oJ3mAZd3GbqFgG0dsXDf3KEyiLH270ZCxvuF3VLV
+         8oXll/X3HmNcMLtxalUxjqWYNrZ20RNneSNcWXPSXbukRbZI4I8YEYRnUIoj/xOHL1K2
+         LqGg==
+X-Gm-Message-State: AOAM533fdvYYe17MBKTyFpHy9foPUFwwRaVXX+TWaRSssZPDShzdvgDn
+        10NkOiohyKz3D5g2cno0oJNvtDvAN1NXmw==
+X-Google-Smtp-Source: ABdhPJyZJ7eq3f1K2UxnzUubIP8/OU52LAML2gjzQEl56fMqgxvxhDEVstrOVhTB65U6Pvi+Hf7dMQ==
+X-Received: by 2002:a6b:7801:: with SMTP id j1mr11631iom.32.1628088902436;
+        Wed, 04 Aug 2021 07:55:02 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:3da5:bc29:43f3:f85c? ([2600:1700:e72:80a0:3da5:bc29:43f3:f85c])
-        by smtp.gmail.com with ESMTPSA id d28sm1378645qkj.25.2021.08.04.07.27.17
+        by smtp.gmail.com with ESMTPSA id g9sm1246849ilj.70.2021.08.04.07.55.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Aug 2021 07:27:18 -0700 (PDT)
-Subject: Re: [PATCH 0/2] Switch default merge backend from recursive to ort
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Christian Couder <chriscool@tuxfamily.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.1011.git.1628055482.gitgitgadget@gmail.com>
+        Wed, 04 Aug 2021 07:55:01 -0700 (PDT)
+Subject: Re: [PATCH] fetch-pack: speed up loading of refs via commit graph
+To:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <08519b8ab6f395cffbcd5e530bfba6aaf64241a2.1628085347.git.ps@pks.im>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <19187114-4a91-19b8-7c41-407a4a661f41@gmail.com>
-Date:   Wed, 4 Aug 2021 10:27:17 -0400
+Message-ID: <9532b3a8-baeb-50ac-766e-e9844aa63051@gmail.com>
+Date:   Wed, 4 Aug 2021 10:55:00 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.12.0
 MIME-Version: 1.0
-In-Reply-To: <pull.1011.git.1628055482.gitgitgadget@gmail.com>
+In-Reply-To: <08519b8ab6f395cffbcd5e530bfba6aaf64241a2.1628085347.git.ps@pks.im>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -88,26 +73,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/4/2021 1:38 AM, Elijah Newren via GitGitGadget wrote:
-> This is a reroll of my RFC series[1] to switch the default merge backend
-> from recursive to ort. The consensus seems to be that we should do this
-> immediately after the 2.33 release.
+On 8/4/2021 9:56 AM, Patrick Steinhardt wrote:
+> When doing reference negotiation, git-fetch-pack(1) is loading all refs
+> from disk in order to determine which commits it has in common with the
+> remote repository. This can be quite expensive in repositories with many
+> references though: in a real-world repository with around 2.2 million
+> refs, fetching a single commit by its ID takes around 44 seconds.
 > 
-> Note that folks who want to get the old merge backend after this series can
-> simply set pull.twohead=recursive. (And, similarly, before this series,
-> those who want to try out ort in Git 2.32 or Git 2.33 can set
-> pull.twohead=ort.)
-> 
-> Changes since the RFC version of this series:
-> 
->  * Now depends on the reroll of en/merge-strategy-docs I just submitted[2].
->  * Made tweaks to code and documentation suggested by Stolee, Dscho, and
->    Ævar
+> Dominating the loading time is decompression and parsing of the objects
+> which are referenced by commits. Given the fact that we only care about
+> commits (or tags which can be peeled to one) in this context, there is
+> thus an easy performance win by switching the parsing logic to make use
+> of the commit graph in case we have one available.
 
-I'm happy with this version (modulo a super tiny nitpick that doesn't merit
-a re-roll) and the docs that preceded it. I'm going to adapt my version for
-the microsoft/git fork to take this version and put it in our v2.33.0
-release.
+Nice find!
+
+> Like this, we avoid
+> hitting the object database to parse these commits but instead only load
+> them from the commit-graph. This results in a significant performance
+> boost when executing git-fetch in said repository with 2.2 million refs:
+> 
+>     Benchmark #1: HEAD~: git fetch $remote $commit
+>       Time (mean ± σ):     44.168 s ±  0.341 s    [User: 42.985 s, System: 1.106 s]
+>       Range (min … max):   43.565 s … 44.577 s    10 runs
+> 
+>     Benchmark #2: HEAD: git fetch $remote $commit
+>       Time (mean ± σ):     19.498 s ±  0.724 s    [User: 18.751 s, System: 0.690 s]
+>       Range (min … max):   18.629 s … 20.454 s    10 runs
+> 
+>     Summary
+>       'HEAD: git fetch $remote $commit' ran
+>         2.27 ± 0.09 times faster than 'HEAD~: git fetch $remote $commit'
+
+That's a great improvement. I'm sure that the remaining time is dominated
+by ref parsing.
+
+> -	if (type == OBJ_COMMIT)
+> -		return (struct commit *) parse_object(the_repository, oid);
+> +
+> +	if (type == OBJ_COMMIT) {
+> +		struct commit *commit = lookup_commit(the_repository, oid);
+> +		if (!commit || repo_parse_commit(the_repository, commit))
+> +			return NULL;
+> +		return commit;
+> +	}
+> +
+
+And this change looks obviously correct to me. I'm glad that the
+implementation actually doesn't care about the commit-graph, but
+instead cares about using the "standard" parsing approach instead
+of side-stepping the commit-graph via parse_object().
+
+I took a quick look for other instances where we use parse_object()
+but also know to expect a commit, but did not find one.
 
 Thanks,
 -Stolee
