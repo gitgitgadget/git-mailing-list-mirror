@@ -2,261 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E923C432BE
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 20:43:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79001C4338F
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 20:53:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7315C61040
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 20:43:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5BEA661040
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 20:53:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240979AbhHDUnN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 16:43:13 -0400
-Received: from mail-0201.mail-europe.com ([51.77.79.158]:37186 "EHLO
-        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240977AbhHDUnH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Aug 2021 16:43:07 -0400
-Date:   Wed, 04 Aug 2021 20:42:42 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=eagain.st;
-        s=protonmail; t=1628109770;
-        bh=7D2hSLEnw01n7ZQ00fSp/w6mGyEyM3g/mTPGsf0Vs84=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=tdTYQpHoaVWQoYuQ8pWLlEJi+saYwb3PBxQXYSDyBDp9CAhwfJo350uqVF9XSCQrw
-         bko3d2t3aGnTZYldL5i5mfTawtqKUfoTZmclP6dlKdSUIUgNV9wBvh417Hc+Q3W1wt
-         mMZD/qTeQAGY37KZlspBqDdhvQXC9lcCbU9mvyQHLEUEHdjN60ivtZvCcrlP8MtakM
-         xLTymrMA1yFQFWohXfnqty4LlqLloownF1QUP1knFbe9HDXchTmDWn+/bdKIWaZifm
-         hPwn05+QwxtdKCtEWlQ9tv0rn/iAKPagm/qNxzSd30MWTh6O4u1RRKBpUfULOV8zmi
-         cW/qiYPCOtzCw==
+        id S237474AbhHDUyB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 16:54:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58628 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231508AbhHDUyB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Aug 2021 16:54:01 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1BC0C061799
+        for <git@vger.kernel.org>; Wed,  4 Aug 2021 13:53:47 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id q3-20020a25bfc30000b02905592911c932so4157252ybm.15
+        for <git@vger.kernel.org>; Wed, 04 Aug 2021 13:53:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to;
+        bh=t6vY3P2Qx4mXnfsT0b+WpkPovb2REJLiw1rNNBmg2xs=;
+        b=PW83vcuYNJ5M4ERiuzyhNhCEeC9bfiIUEDecG+HOcgz+1ui0pPvCN5IZFvc61BJBIQ
+         4IKRD6H6ysG2VgPn+1Qn0HugPPkuAHlOk7Yt9tFxWqlAmyJUPNR4fhmtPeJrh5nwWPvy
+         76tpDxldiPNKsxF9iZBbWBK/F95ZPaJDdORqMOeKMn65lQfTVS7aofZaeleUK9O6uDV3
+         KCW61j3VcuDP2RTuLGJUdtVe5+zu3yYh1Th38O4yqzBYO/eNShMN/KaTV31RO9P2D6VY
+         vkpvlONgrc6J5ghr0wbl+CGnapEV0AC/tsAmCAMfxAjoUrfCxmQBQY7KGL8GmyfTAiBd
+         4vLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
+        bh=t6vY3P2Qx4mXnfsT0b+WpkPovb2REJLiw1rNNBmg2xs=;
+        b=ojgwjQU+eeq7SQU6uPj6hvlG1oXPx5gD1fhe63uRnXsjDWx7sSlGosX7J47hH6ZRgJ
+         IWYvSqc0hD8MGiAKS+SEAdP4N2XbvFRMwRbcAgQocgDFMzJKM3dkLjL0eOG0P9cQ4/43
+         wybAXUcCI2J4j8iyCQtpY0ViXU7hmxL70dlzeYxWp7IcgFNBZ27QFW95iWFsB78wee6Q
+         hq9tLb5NEV++exFTI9ZN3ajK/nJEqpByIIgFUSxWrg3rz5pc1GY5c1mS/KQfPgtNL2ig
+         o1l8/7stMPM4Us/zFWKw7vwGkrsfHnBCs6hV0IbPtMwHLNeNyDiIh7jXcKzSttsJWQBU
+         1PXg==
+X-Gm-Message-State: AOAM531UbsSUwHWS3linen18q6XhLX6SJOiMb43E9s6kWyyK9TmeXKYr
+        JY0+nJYyLjKeJ5GNaL8L7/4+WK+XvyZ30DuMBm4DFmxO98xW0gNFDHof3AlwCZj79KD8eyRGq6B
+        Hm+bSd0sCuvYiv4OFnEFCKPLXb6rzqtbEAcKDQx9iZuC8XTeOw4FtWrj1eeSuDGQ=
+X-Google-Smtp-Source: ABdhPJzsf5YfENaLXmo0bvRcUbMmSuhoNVGTTq1AMJ06A1oYGynXmIMvkr1QD7ODjBf2DekD5JfkUcMjvpHeUQ==
+X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:9758:1083:3c28:c541])
+ (user=steadmon job=sendgmr) by 2002:a25:3046:: with SMTP id
+ w67mr1761332ybw.134.1628110427047; Wed, 04 Aug 2021 13:53:47 -0700 (PDT)
+Date:   Wed,  4 Aug 2021 13:53:45 -0700
+Message-Id: <4d83766ab3425a5f4b361df2ac505d07fefd7899.1628109852.git.steadmon@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.32.0.554.ge1b32706d8-goog
+Subject: [RFC PATCH] sequencer: warn on skipping previously seen commit
+From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
-From:   Kim Altintop <kim@eagain.st>
-Cc:     Kim Altintop <kim@eagain.st>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bwilliams.eng@gmail.com>
-Reply-To: Kim Altintop <kim@eagain.st>
-Subject: [PATCH v3] upload-pack.c: treat want-ref relative to namespace
-Message-ID: <20210804203829.661565-1-kim@eagain.st>
-In-Reply-To: <20210731203415.618641-1-kim@eagain.st>
-References: <20210730135845.633234-1-kim@eagain.st> <20210731203415.618641-1-kim@eagain.st>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When 'upload-pack' runs within the context of a git namespace, treat any
-'want-ref' lines the client sends as relative to that namespace.
+Silently skipping commits when rebasing with --no-reapply-cherry-picks
+(currently the default behavior) can cause user confusion. Issue a
+warning in this case so that users are aware of what's happening.
 
-Also check if the wanted ref is hidden via 'hideRefs'. If it is hidden,
-respond with an error as if the ref didn't exist.
-
-Helped-by: Jonathan Tan <jonathantanmy@google.com>
-Signed-off-by: Kim Altintop <kim@eagain.st>
+Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
 
-Changes from v2:
+We've had some complaints at $JOB where users were confused when
+rebasing branches that contained commits that were previously
+cherry-picked into their master branch. How do folks feel about adding a
+warning in this case?
 
-    * upload-pack.c: release strbuf
-    * t5730: revert to scoping to $REPO via subshell in setup
-    * t5730: add "cross-check" tests as per review comments from Jonathan
+ sequencer.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
- t/t5703-upload-pack-ref-in-want.sh | 128 +++++++++++++++++++++++++++++
- upload-pack.c                      |  18 ++--
- 2 files changed, 139 insertions(+), 7 deletions(-)
-
-diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-i=
-n-want.sh
-index e9e471621d..4a828042bb 100755
---- a/t/t5703-upload-pack-ref-in-want.sh
-+++ b/t/t5703-upload-pack-ref-in-want.sh
-@@ -298,6 +298,134 @@ test_expect_success 'fetching with wildcard that matc=
-hes multiple refs' '
- =09grep "want-ref refs/heads/o/bar" log
- '
-
-+REPO=3D"$(pwd)/repo-ns"
-+
-+write_fetch_want_ref() {
-+=09local wanted_ref=3D"$1"
-+
-+=09write_command fetch
-+=09echo "0001"
-+=09echo "no-progress"
-+=09echo "want-ref $1"
-+=09echo "done"
-+=09echo "0000"
-+}
-+
-+test_expect_success 'setup namespaced repo' '
-+=09(
-+=09=09git init -b main "$REPO" &&
-+=09=09cd "$REPO" &&
-+=09=09test_commit a &&
-+=09=09test_commit b &&
-+=09=09git checkout a &&
-+=09=09test_commit c &&
-+=09=09git checkout a &&
-+=09=09test_commit d &&
-+=09=09git update-ref refs/heads/ns-no b &&
-+=09=09git update-ref refs/namespaces/ns/refs/heads/ns-yes c &&
-+=09=09git update-ref refs/namespaces/ns/refs/heads/hidden d
-+=09) &&
-+=09git -C "$REPO" config uploadpack.allowRefInWant true
-+'
-+
-+test_expect_success 'with namespace: want-ref is considered relative to na=
-mespace' '
-+=09wanted_ref=3Drefs/heads/ns-yes &&
-+
-+=09oid=3D$(git -C "$REPO" rev-parse $wanted_ref) &&
-+=09cat >expected_refs <<-EOF &&
-+=09$oid $wanted_ref
-+=09EOF
-+=09git -C "$REPO" rev-parse a $wanted_ref >expected_commits &&
-+
-+=09test-tool pkt-line pack >in <<-EOF &&
-+=09$(write_fetch_want_ref $wanted_ref)
-+=09EOF
-+
-+=09env GIT_NAMESPACE=3Dns test-tool -C "$REPO" serve-v2 --stateless-rpc >o=
-ut <in &&
-+=09check_output
-+'
-+
-+test_expect_success 'with namespace: want-ref outside namespace is unknown=
-' '
-+=09wanted_ref=3Drefs/heads/ns-no &&
-+
-+=09test-tool pkt-line pack >in <<-EOF &&
-+=09$(write_fetch_want_ref $wanted_ref)
-+=09EOF
-+
-+=09test_must_fail env GIT_NAMESPACE=3Dns \
-+=09=09test-tool -C "$REPO" serve-v2 --stateless-rpc >out <in &&
-+=09grep "unknown ref" out
-+'
-+
-+# Cross-check refs/heads/ns-no indeed exists
-+test_expect_success 'without namespace: want-ref outside namespace succeed=
-s' '
-+=09wanted_ref=3Drefs/heads/ns-no &&
-+
-+=09oid=3D$(git -C "$REPO" rev-parse $wanted_ref) &&
-+=09cat >expected_refs <<-EOF &&
-+=09$oid $wanted_ref
-+=09EOF
-+=09git -C "$REPO" rev-parse a $wanted_ref >expected_commits &&
-+
-+=09test-tool pkt-line pack >in <<-EOF &&
-+=09$(write_fetch_want_ref $wanted_ref)
-+=09EOF
-+
-+=09test-tool -C "$REPO" serve-v2 --stateless-rpc >out <in &&
-+=09check_output
-+'
-+
-+test_expect_success 'with namespace: hideRefs is matched, relative to name=
-space' '
-+=09wanted_ref=3Drefs/heads/hidden &&
-+=09git -C "$REPO" config transfer.hideRefs $wanted_ref &&
-+
-+=09test-tool pkt-line pack >in <<-EOF &&
-+=09$(write_fetch_want_ref $wanted_ref)
-+=09EOF
-+
-+=09test_must_fail env GIT_NAMESPACE=3Dns \
-+=09=09test-tool -C "$REPO" serve-v2 --stateless-rpc >out <in &&
-+=09grep "unknown ref" out
-+'
-+
-+# Cross-check refs/heads/hidden indeed exists
-+test_expect_success 'with namespace: want-ref succeeds if hideRefs is remo=
-ved' '
-+=09wanted_ref=3Drefs/heads/hidden &&
-+=09git -C "$REPO" config --unset transfer.hideRefs $wanted_ref &&
-+
-+=09oid=3D$(git -C "$REPO" rev-parse $wanted_ref) &&
-+=09cat >expected_refs <<-EOF &&
-+=09$oid $wanted_ref
-+=09EOF
-+=09git -C "$REPO" rev-parse a $wanted_ref >expected_commits &&
-+
-+=09test-tool pkt-line pack >in <<-EOF &&
-+=09$(write_fetch_want_ref $wanted_ref)
-+=09EOF
-+
-+=09env GIT_NAMESPACE=3Dns test-tool -C "$REPO" serve-v2 --stateless-rpc >o=
-ut <in &&
-+=09check_output
-+'
-+
-+test_expect_success 'without namespace: relative hideRefs does not match' =
-'
-+=09wanted_ref=3Drefs/namespaces/ns/refs/heads/hidden &&
-+=09git -C "$REPO" config transfer.hideRefs refs/heads/hidden &&
-+
-+=09oid=3D$(git -C "$REPO" rev-parse $wanted_ref) &&
-+=09cat >expected_refs <<-EOF &&
-+=09$oid $wanted_ref
-+=09EOF
-+=09git -C "$REPO" rev-parse a $wanted_ref >expected_commits &&
-+
-+=09test-tool pkt-line pack >in <<-EOF &&
-+=09$(write_fetch_want_ref $wanted_ref)
-+=09EOF
-+
-+=09env GIT_NAMESPACE=3Dns test-tool -C "$REPO" serve-v2 --stateless-rpc >o=
-ut <in &&
-+=09check_output
-+'
-+
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
-
-diff --git a/upload-pack.c b/upload-pack.c
-index 297b76fcb4..6ce07231d3 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1417,21 +1417,25 @@ static int parse_want_ref(struct packet_writer *wri=
-ter, const char *line,
- =09=09=09  struct string_list *wanted_refs,
- =09=09=09  struct object_array *want_obj)
- {
--=09const char *arg;
--=09if (skip_prefix(line, "want-ref ", &arg)) {
-+=09const char *refname_nons;
-+=09if (skip_prefix(line, "want-ref ", &refname_nons)) {
- =09=09struct object_id oid;
- =09=09struct string_list_item *item;
- =09=09struct object *o;
-+=09=09struct strbuf refname =3D STRBUF_INIT;
-
--=09=09if (read_ref(arg, &oid)) {
--=09=09=09packet_writer_error(writer, "unknown ref %s", arg);
--=09=09=09die("unknown ref %s", arg);
-+=09=09strbuf_addf(&refname, "%s%s", get_git_namespace(), refname_nons);
-+=09=09if (ref_is_hidden(refname_nons, refname.buf) ||
-+=09=09    read_ref(refname.buf, &oid)) {
-+=09=09=09packet_writer_error(writer, "unknown ref %s", refname_nons);
-+=09=09=09die("unknown ref %s", refname_nons);
- =09=09}
-+=09=09strbuf_release(&refname);
-
--=09=09item =3D string_list_append(wanted_refs, arg);
-+=09=09item =3D string_list_append(wanted_refs, refname_nons);
- =09=09item->util =3D oiddup(&oid);
-
--=09=09o =3D parse_object_or_die(&oid, arg);
-+=09=09o =3D parse_object_or_die(&oid, refname_nons);
- =09=09if (!(o->flags & WANTED)) {
- =09=09=09o->flags |=3D WANTED;
- =09=09=09add_object_array(o, NULL, want_obj);
---
-2.32.0
-
+diff --git a/sequencer.c b/sequencer.c
+index 7f07cd00f3..8888031c7b 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5099,6 +5099,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+ 	int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
+ 	int rebase_cousins = flags & TODO_LIST_REBASE_COUSINS;
+ 	int root_with_onto = flags & TODO_LIST_ROOT_WITH_ONTO;
++	int skipped_commit = 0;
+ 	struct strbuf buf = STRBUF_INIT, oneline = STRBUF_INIT;
+ 	struct strbuf label = STRBUF_INIT;
+ 	struct commit_list *commits = NULL, **tail = &commits, *iter;
+@@ -5149,8 +5150,12 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+ 		oidset_insert(&interesting, &commit->object.oid);
+ 
+ 		is_empty = is_original_commit_empty(commit);
+-		if (!is_empty && (commit->object.flags & PATCHSAME))
++		if (!is_empty && (commit->object.flags & PATCHSAME)) {
++			warning(_("skipped previously seen commit %s"),
++				short_commit_name(commit));
++			skipped_commit = 1;
+ 			continue;
++		}
+ 		if (is_empty && !keep_empty)
+ 			continue;
+ 
+@@ -5214,6 +5219,8 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+ 		oidcpy(&entry->entry.oid, &commit->object.oid);
+ 		oidmap_put(&commit2todo, entry);
+ 	}
++	if (skipped_commit)
++		warning(_("use --reapply-cherry-picks to include skipped commits"));
+ 
+ 	/*
+ 	 * Second phase:
+@@ -5334,6 +5341,7 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+ 	const char *insn = flags & TODO_LIST_ABBREVIATE_CMDS ? "p" : "pick";
+ 	int rebase_merges = flags & TODO_LIST_REBASE_MERGES;
+ 	int reapply_cherry_picks = flags & TODO_LIST_REAPPLY_CHERRY_PICKS;
++	int skipped_commit = 0;
+ 
+ 	repo_init_revisions(r, &revs, NULL);
+ 	revs.verbose_header = 1;
+@@ -5369,8 +5377,12 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+ 	while ((commit = get_revision(&revs))) {
+ 		int is_empty = is_original_commit_empty(commit);
+ 
+-		if (!is_empty && (commit->object.flags & PATCHSAME))
++		if (!is_empty && (commit->object.flags & PATCHSAME)) {
++			warning(_("skipped previously seen commit %s"),
++				short_commit_name(commit));
++			skipped_commit = 1;
+ 			continue;
++		}
+ 		if (is_empty && !keep_empty)
+ 			continue;
+ 		strbuf_addf(out, "%s %s ", insn,
+@@ -5380,6 +5392,8 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+ 			strbuf_addf(out, " %c empty", comment_line_char);
+ 		strbuf_addch(out, '\n');
+ 	}
++	if (skipped_commit)
++		warning(_("use --reapply-cherry-picks to include skipped commits"));
+ 	return 0;
+ }
+ 
+-- 
+2.32.0.554.ge1b32706d8-goog
 
