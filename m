@@ -2,100 +2,258 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2653CC4338F
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 02:37:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC129C4338F
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 05:29:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 00C3A6056B
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 02:37:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8832060F25
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 05:29:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234505AbhHDChl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Aug 2021 22:37:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34818 "EHLO
+        id S235315AbhHDF3N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 01:29:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231950AbhHDChg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Aug 2021 22:37:36 -0400
-Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EAA1C061575
-        for <git@vger.kernel.org>; Tue,  3 Aug 2021 19:37:23 -0700 (PDT)
-Received: by mail-ua1-x92e.google.com with SMTP id 79so361414uau.9
-        for <git@vger.kernel.org>; Tue, 03 Aug 2021 19:37:23 -0700 (PDT)
+        with ESMTP id S235306AbhHDF3M (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Aug 2021 01:29:12 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50212C0613D5
+        for <git@vger.kernel.org>; Tue,  3 Aug 2021 22:28:59 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id l18so800939wrv.5
+        for <git@vger.kernel.org>; Tue, 03 Aug 2021 22:28:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=MTDdy4GXrHA0CZStzzJNbHH+uQs0f4ZEE6eLtkXFaB0=;
-        b=aO3SQIi3GK7eetFWzXvGQhJPwdTCj5QTObTo8mIZmk8eJBcpOHrCftwdY8WOrEjpV5
-         IFCVV/lDbarTSdNPncbJjWsT5yDdSaI10/Ve+r52MueUIl1vga4HZZAtAHkx7Zh25YXF
-         0QbtLEYzLf2PJPa5cEc5nzD3ktZ803wA/HvHoV5+dF+24DKOx6baxBnZmy+2xye5GA/R
-         CPB2JmZWopLf5yBe0KNkv3MnYnbRbsESeBuf3UMg13iHUVZtRi3dSweBlcKLbvv3cCE2
-         GywO1nzbP8hxZgH8AubWRIf7UaSi7YsPbD4w6WQIoThhu/meKT9fqpkjvDj0OzFGFm9X
-         FxnQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Eb2gIqsa0TkJ0CgjVzskyEOa6lf07aIoJQuYXmFnsEQ=;
+        b=YSWSVBeq04f3YXxBKC6A7nyZma7hQw805vAHpOpuoi7XkVuTGkFVCpfo9bP4MXoGtr
+         5uRps+4S9UJMd7m8wN3Npg8lceFuajBE1zFXYGZ1gXdlhvNJJb1Q4Z2PAX2D8jVcp9GL
+         l3Oszz9lKMR+8iYVL5A+apjvOmFVYRMWQFilvjhP8gI9fEKw7Y4e2/BFgN35Z9aN7N9x
+         eAsaYRdTjov51y2Stpgk6imFZ5aX97QJ+Negs3akfmGkklWPwfQDPzNp7DpclgCGHHC7
+         6KUdgaMEajNhdIA2J4sPTp4FleHa3huuV2qZeqoW+7FtNWt6V/7+X/yMODGv0hKA+lm1
+         S1KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=MTDdy4GXrHA0CZStzzJNbHH+uQs0f4ZEE6eLtkXFaB0=;
-        b=nlDUkO+lFeihmwD/S8ARnxJce1F8dlLZsosmmUdm5uQaEwsNWF/Hg6Z9vAk79u0YJE
-         8UMY+L4mBBDNcPVqpLg2ElGQbcgEPRmzYMmreTu0Duy/bj9Xrd2QaK9sjJKOGMGA6ItS
-         J+mNnm8NAeHHatWSJBcWvv5joP1df3K9K7OZbX6u6zFkIGdJr94kmqLQoDYr1IO1u2CF
-         qX1gSmr86Lvu+jAMak1zioM3guwvjnpD+F0Z5+lqm8QpsIhoHoeW0W/+ab7JnZxn3TJV
-         hF9WLLuzYkoQjRXIiPog/AvDPicFKPINb92VgY+j8Ul67mnt908AHYwNAq3aQzzTaBAR
-         ilnA==
-X-Gm-Message-State: AOAM532im5OYwRh8VPkeLiqosjKiLiEqWv/jN9SpowyVxZj42vNijyq5
-        nQMKYuryR9qMINrJmVrfQn1U7JRNhE26zj8DTCZ/r6Wi
-X-Google-Smtp-Source: ABdhPJy5Soe1RKIxSqjq5sOQ4BBMhQjzyAl1OQGKeEuftn5T0qINPG1OSWcA+KznE3V4W1N7YmJl8Eneael4KyCxD5E=
-X-Received: by 2002:ab0:2814:: with SMTP id w20mr16713151uap.140.1628044642047;
- Tue, 03 Aug 2021 19:37:22 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Eb2gIqsa0TkJ0CgjVzskyEOa6lf07aIoJQuYXmFnsEQ=;
+        b=IJ5M7RSwIKiTwXfmYQ9RK24bBzXlXfmEdIZ+wN8WhpMe5ySlZj2+gpY9IoZfftq4co
+         X+Qrbh5gmFOyeTRfrl37eu8Q6l2NjHOpv1y53hAg3J7RH0zJrl8vdslpDuHXPIkqW1s0
+         ATIOGtH7VTUgeV3awKijlfSvVQSmTgAMxcR4vAnDuaKwa0i39hqBjB8+jqPGxtcPyGJY
+         gXXt1z1ze0Nz1LJPZRX7o1N5dDhC1acFCcOwa5/uUozVz8d+IyOUw2rh3VryV8B1vK60
+         WjTyqkiGz2My393MiClzGJcwELJkkwh4LfhQ/KMhu/39ENzT0ZQQIOVngsh/c51cRBfB
+         XNMg==
+X-Gm-Message-State: AOAM532P9odS6aLIYWUuWnj1MWTZN1Ej46JxZ+h0Zl4pGfbpwe8Jrqie
+        FrfftgvP7SzQXPzD0M8EymqDcWC6hko=
+X-Google-Smtp-Source: ABdhPJxWIwgn01dQLpyYEGIuBQFbczyey+oYCgYbSDSELxiMjRZa/EUPYYh7RW3s1Qh3HKBdqFYZbg==
+X-Received: by 2002:adf:ed82:: with SMTP id c2mr27161354wro.19.1628054937654;
+        Tue, 03 Aug 2021 22:28:57 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n7sm1010595wmd.3.2021.08.03.22.28.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Aug 2021 22:28:57 -0700 (PDT)
+Message-Id: <pull.1059.v2.git.git.1628054935.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com>
+References: <pull.1059.git.git.1628004920.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 04 Aug 2021 05:28:45 +0000
+Subject: [PATCH v2 00/10] Documentation updates: merge-strategies
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20210804010900.33133-1-carenas@gmail.com>
-In-Reply-To: <20210804010900.33133-1-carenas@gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Tue, 3 Aug 2021 19:37:11 -0700
-Message-ID: <CAPUEspj56Pc6Ubbj+nY2gM3f7TX3PfvnSj8BGcMcG2evaeG4vw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] gitk: macOS improvements
-To:     git@vger.kernel.org, paulus@samba.org
-Cc:     sunshine@sunshineco.com, tair.sabirgaliev@bee.kz,
-        lists@haller-berlin.de, tobias.pietzsch@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tested in Windows (with 8.6) as well not to introduce any regressions
+I noticed while updating my switch-default-merge-strategy-to-ort submission,
+that many of the changes were good documentation updates that we might want
+for Git v2.33.0. So I pulled those changes out and split them into lots of
+little commits so that if any parts need discussion or are objectionable, we
+can just drop those from this series and apply the rest for v2.33.0.
 
-+CC Tobias (gmail instead of the one bouncing in the SoB)
+The first 9 commits are just small documentation updates, but there is one
+commit at the end that updates an error message and a code comment.
 
-On Tue, Aug 3, 2021 at 6:09 PM Carlo Marcelo Arenas Bel=C3=B3n
-<carenas@gmail.com> wrote:
->
-> The following patches improve the user experience for gitk in macOS
-> by avoiding to abort if the terminal where it is running hasn't been
-> authorized for Automation as reported a few[1,2] times already.
->
-> It has been tested in macOS 11.5.1 using both the system tk (8.5) and
-> the latest (8.6.11) from brew, the third[3] patch is needed for using
-> 8.6 and has been included with the gitk version from brew as well.
->
-> Carlo Marcelo Arenas Bel=C3=B3n (2):
->   gitk: skip calling osascript to set frontmost for tk >=3D 8.6
->   gitk: avoid fatal error if `exec osascript` fails
->
-> Tobias Pietzsch (1):
->   gitk: check main window visibility before waiting for it to show
->
->  gitk | 20 +++++++++++++-------
->  1 file changed, 13 insertions(+), 7 deletions(-)
->
-> [1] https://lore.kernel.org/git/20180724065120.7664-1-sunshine@sunshineco=
-.com/
-> [2] https://lore.kernel.org/git/20201025175149.11853-1-dev+git@drbeat.li/
-> [3] https://lore.kernel.org/git/pull.944.git.git.1610234771966.gitgitgadg=
-et@gmail.com/
-> --
-> 2.33.0.rc0.433.g9a510e7e11
+Changes since v1:
+
+ * Multiple tweaks suggested by Eric, Dscho, and Junio
+ * Removed patch 7 explaining no-renames since that probably belongs in git
+   diff --no-renames instead, and this series is about merge-strategies.
+ * Inserted a new patch 8 that strikes some misleading or at least
+   no-longer-important text from git-rebase.txt (due changes back in late
+   2006).
+
+Elijah Newren (10):
+  git-rebase.txt: correct antiquated claims about --rebase-merges
+  directory-rename-detection.txt: small updates due to merge-ort
+    optimizations
+  Documentation: edit awkward references to `git merge-recursive`
+  merge-strategies.txt: update wording for the resolve strategy
+  merge-strategies.txt: do not imply using copy detection is desired
+  merge-strategies.txt: avoid giving special preference to patience
+    algorithm
+  merge-strategies.txt: fix simple capitalization error
+  git-rebase.txt: correct out-of-date and misleading text about renames
+  merge-strategies.txt: add coverage of the `ort` merge strategy
+  Update error message and code comment
+
+ Documentation/git-rebase.txt                  | 27 ++++++-----
+ Documentation/merge-options.txt               |  4 +-
+ Documentation/merge-strategies.txt            | 48 +++++++++++--------
+ .../technical/directory-rename-detection.txt  | 14 +++---
+ builtin/merge.c                               |  2 +-
+ sequencer.c                                   |  2 +-
+ 6 files changed, 55 insertions(+), 42 deletions(-)
+
+
+base-commit: 66262451ec94d30ac4b80eb3123549cf7a788afd
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1059%2Fnewren%2Fort-doc-updates-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1059/newren/ort-doc-updates-v2
+Pull-Request: https://github.com/git/git/pull/1059
+
+Range-diff vs v1:
+
+  1:  ab2367594a3 !  1:  34352397168 git-rebase.txt: correct antiquated claims about --rebase-merges
+     @@ Commit message
+          2019-07-31).  However, when the limitation was lifted, the documentation
+          was not updated.  Update it now.
+      
+     +    Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## Documentation/git-rebase.txt ##
+  2:  6b89ab8d9b1 =  2:  3fdd068231a directory-rename-detection.txt: small updates due to merge-ort optimizations
+  3:  c1d056f0794 !  3:  2a38320c2be Documentation: edit awkward references to `git merge-recursive`
+     @@ Commit message
+      
+       ## Documentation/git-rebase.txt ##
+      @@ Documentation/git-rebase.txt: See also INCOMPATIBLE OPTIONS below.
+     + 
+       -s <strategy>::
+       --strategy=<strategy>::
+     - 	Use the given merge strategy.
+     +-	Use the given merge strategy.
+      -	If there is no `-s` option 'git merge-recursive' is used
+      -	instead.  This implies --merge.
+     -+	If there is no `-s` option the `recursive` strategy is the
+     -+	default. This implies --merge.
+     ++	Use the given merge strategy, instead of the default
+     ++	`recursive`.  This implies `--merge`.
+       +
+       Because 'git rebase' replays each commit from the working branch
+       on top of the <upstream> branch using the given strategy, using
+  4:  3989f194ba9 !  4:  e422a1bc7d4 merge-strategies.txt: update wording for the resolve strategy
+     @@ Metadata
+       ## Commit message ##
+          merge-strategies.txt: update wording for the resolve strategy
+      
+     -    The resolve merge strategy was given prominent positioning in this
+     -    document, being listed first since it was the default at the time the
+     -    document was written.  It hasn't been the default since before Git v1.0
+     -    was released, though.  Move it later in the document, near `octopus` and
+     -    `ours`.
+     +    It is probably helpful to cover the default merge strategy first, so
+     +    move the text for the resolve strategy to later in the document.
+      
+          Further, the wording for "resolve" claimed that it was "considered
+     -    generally safe and fast", which implies that the other strategies are
+     -    not.  While such an implication may have been true in 2005 when written,
+     -    it may well be that `ort` is faster today (since it does not need to
+     -    recurse into all directories).  Also, since `resolve` was the default
+     -    for less than a year while `recursive` has been the default for a decade
+     -    and a half, I think `recursive` is more battle-tested than `resolve` is.
+     -    Just strike this extraneous phrase.
+     -
+     -    Also, provide some quick historical context that may help users
+     -    understand its purpose and place in the list of merge strategies.
+     +    generally safe and fast", which might imply in some readers minds that
+     +    the same is not true of other strategies.  Rather than adding this text
+     +    to all the strategies, just remove it from this one.
+      
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+     @@ Documentation/merge-strategies.txt: subtree[=<path>];;
+      +	This can only resolve two heads (i.e. the current branch
+      +	and another branch you pulled from) using a 3-way merge
+      +	algorithm.  It tries to carefully detect criss-cross
+     -+	merge ambiguities.  It cannot handle renames.  This was
+     -+	the default merge algorithm prior to November 2005.
+     ++	merge ambiguities.  It does not handle renames.
+      +
+       octopus::
+       	This resolves cases with more than two heads, but refuses to do
+  5:  5f974afe47c =  5:  b1db5fdebe5 merge-strategies.txt: do not imply using copy detection is desired
+  6:  6116f4750fd !  6:  44101062e0e merge-strategies.txt: avoid giving special preference to patience algorithm
+     @@ Documentation/merge-strategies.txt: theirs;;
+      -	matching lines (e.g., braces from distinct functions).  Use
+      -	this when the branches to be merged have diverged wildly.
+      -	See also linkgit:git-diff[1] `--patience`.
+     -+	Deprecated shorthand for diff-algorithm=patience.
+     ++	Deprecated synonym for `diff-algorithm=patience`.
+       
+       diff-algorithm=[patience|minimal|histogram|myers];;
+       	Use a different diff algorithm while merging, which can help
+  7:  7eecf879d60 <  -:  ----------- merge-strategies.txt: explain why no-renames might be useful
+  8:  010702d0841 =  7:  d1521f98dee merge-strategies.txt: fix simple capitalization error
+  -:  ----------- >  8:  8978132397e git-rebase.txt: correct out-of-date and misleading text about renames
+  9:  37a69fd2e0b !  9:  bc92826f7e5 Documentation: add coverage of the `ort` merge strategy
+     @@ Metadata
+      Author: Elijah Newren <newren@gmail.com>
+      
+       ## Commit message ##
+     -    Documentation: add coverage of the `ort` merge strategy
+     +    merge-strategies.txt: add coverage of the `ort` merge strategy
+      
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+     - ## Documentation/git-rebase.txt ##
+     -@@ Documentation/git-rebase.txt: See also INCOMPATIBLE OPTIONS below.
+     - 
+     - -m::
+     - --merge::
+     --	Use merging strategies to rebase.  When the recursive (default) merge
+     --	strategy is used, this allows rebase to be aware of renames on the
+     --	upstream side.  This is the default.
+     -+	Use merging strategies to rebase.  When either the `recursive`
+     -+	(default) or `ort` merge strategy is used, this allows rebase
+     -+	to be aware of renames on the upstream side.  This is the
+     -+	default.
+     - +
+     - Note that a rebase merge works by replaying each commit from the working
+     - branch on top of the <upstream> branch.  Because of this, when a merge
+     -
+       ## Documentation/merge-strategies.txt ##
+      @@ Documentation/merge-strategies.txt: subtree[=<path>];;
+       	is prefixed (or stripped from the beginning) to make the shape of
+     @@ Documentation/merge-strategies.txt: subtree[=<path>];;
+      +However, it ignores three of those options: `no-renames`,
+      +`patience` and `diff-algorithm`.  It always runs with rename
+      +detection (it handles it much faster than `recursive` does), and
+     -+it specifically uses diff-algorithm=histogram.
+     ++it specifically uses `diff-algorithm=histogram`.
+      +
+       resolve::
+       	This can only resolve two heads (i.e. the current branch
+ 10:  2a7169c8c1b ! 10:  4a78ac53424 Update error message and code comment
+     @@ builtin/merge.c: static int try_merge_strategy(const char *strategy, struct comm
+       		for (x = 0; x < xopts_nr; x++)
+       			if (parse_merge_opt(&o, xopts[x]))
+      -				die(_("Unknown option for merge-recursive: -X%s"), xopts[x]);
+     -+				die(_("Unknown strategy option: -X%s"), xopts[x]);
+     ++				die(_("unknown strategy option: -X%s"), xopts[x]);
+       
+       		o.branch1 = head_arg;
+       		o.branch2 = merge_remote_util(remoteheads->item)->name;
+
+-- 
+gitgitgadget
