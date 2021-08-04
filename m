@@ -2,72 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AC1CC4338F
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 20:10:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF2BEC4338F
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 20:37:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7AD1F60FC3
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 20:10:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B6D1F61002
+	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 20:37:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240820AbhHDULG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 16:11:06 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60435 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240818AbhHDULF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Aug 2021 16:11:05 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BF3C213178F;
-        Wed,  4 Aug 2021 16:10:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=7WpAYKeshcrS
-        Vfa6rnzL1Co8UAQNUq5tA0n2ctw+b2M=; b=h/Uha7FTVImOcZtn6pqfoaK65iGj
-        VEqwuB0M4tenlLr7T2KpOIH8LMFT0oW3p0lvoMoISGZvmmb8wIzSUJNeWVumDixY
-        9lwJPIbFCTllY9Khu1uUhjmeXmwQAaPKCaK48Os9+OsKT8+O0v4PW4C152cZxF1Z
-        sMq3Pg/aovKeWXk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B828F13178E;
-        Wed,  4 Aug 2021 16:10:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.71.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E410E13178D;
-        Wed,  4 Aug 2021 16:10:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: What's cooking in git.git (Aug 2021, #02; Tue, 3)
-References: <xmqqfsvpr8t5.fsf@gitster.g> <87wnp1mqv2.fsf@evledraar.gmail.com>
-        <xmqq4kc5ozi7.fsf@gitster.g> <87lf5hm0v7.fsf@evledraar.gmail.com>
-Date:   Wed, 04 Aug 2021 13:10:47 -0700
-In-Reply-To: <87lf5hm0v7.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 04 Aug 2021 21:53:02 +0200")
-Message-ID: <xmqqzgtxnf7c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S239908AbhHDUhn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 16:37:43 -0400
+Received: from mail-0201.mail-europe.com ([51.77.79.158]:41129 "EHLO
+        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231500AbhHDUhm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Aug 2021 16:37:42 -0400
+Date:   Wed, 04 Aug 2021 20:36:48 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=eagain.st;
+        s=protonmail; t=1628109417;
+        bh=kREOeGD2dxJSUVOo9mj0H2kcJVBGaSb+wfvLqJydGpM=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=y+3IB9edjJvhwO8OIRZ4yvpwsDK8hrOdVdhRhDHDAD3rmG/Cw9Wd0crqZeEp0g8PC
+         l5VsuHiph3iKve/sTVMjbfZil/TYf0fHky5l54eX1GnnQeHDgzBjGqbw/PQI6HqzPq
+         rb77wFEdbThYTiz1DgR1nEPcOyTJXw4ymLvNBBKCsng+mfjmjJxsAZZEUAiRaHBEpP
+         q+1TpeIfKqk50mSewbjC7f0pYvf7rFvUGoThOo814MHS5q08ATE97pGZ9+k5UIfec8
+         1U6ZZY4IrUbU9MVvokfp/vZVEdNB0bbCeiumbiP+pdaqA6qNczDn7ePYi2Me/K8uH1
+         I7TN7HOps6VaQ==
+To:     Jonathan Tan <jonathantanmy@google.com>
+From:   Kim Altintop <kim@eagain.st>
+Cc:     git@vger.kernel.org, bwilliams.eng@gmail.com, gitster@pobox.com
+Reply-To: Kim Altintop <kim@eagain.st>
+Subject: Re: [PATCH v2] upload-pack.c: treat want-ref relative to namespace
+Message-ID: <CDB0M5IP0WNJ.3I09ZETKF0VXS@schmidt>
+In-Reply-To: <20210802210644.3432544-1-jonathantanmy@google.com>
+References: <20210731203415.618641-1-kim@eagain.st> <20210802210644.3432544-1-jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 10072AF8-F560-11EB-9AFD-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Mon Aug 2, 2021 at 11:06 PM CEST, Jonathan Tan wrote:
+> > +test_expect_success 'setup namespaced repo' '
+> > +=09git init -b main "$REPO" &&
+> > +=09cd "$REPO" &&
+> > +=09test_commit a &&
+> > +=09test_commit b &&
+> > +=09git checkout a &&
+> > +=09test_commit c &&
+> > +=09git checkout a &&
+> > +=09test_commit d &&
+> > +=09git update-ref refs/heads/ns-no b &&
+> > +=09git update-ref refs/namespaces/ns/refs/heads/ns-yes c &&
+> > +=09git update-ref refs/namespaces/ns/refs/heads/hidden d &&
+> > +=09git -C "$REPO" config uploadpack.allowRefInWant true &&
+> > +=09git -C "$REPO" config transfer.hideRefs refs/heads/hidden
+> > +'
+>
+> If you're not using a subshell to set up the repo, you should add '-C
+> "$REPO"' to all the "git" commands (like you do in the last 2 lines)
+> instead of "cd"-ing halfway through the test. The helper function
+> test_commit also has that facility ('test_commit -C "$REPO" a', for
+> example).
 
-> This is because post-c49a177beca we don't "unset" COLUMNS anymore, whic=
-h
-> bash takes as license to update it.
+Ah, that answers the question raised by Junio in the first review. I'll rev=
+ert
+to using a subshell, as that seems clearer and is used throughout the file.
 
-Ah, OK.
+> > +test_expect_success 'want-ref with namespaces' '
+> > +=09oid=3D$(git -C "$REPO" rev-parse c) &&
+> > +=09cat >expected_refs <<-EOF &&
+> > +=09$oid refs/heads/ns-yes
+> > +=09EOF
+> > +=09>expected_commits &&
+> > +
+> > +=09oid=3D$(git -C "$REPO" rev-parse c) &&
+> > +=09test-tool pkt-line pack >in <<-EOF &&
+> > +=09$(write_command fetch)
+> > +=090001
+> > +=09no-progress
+> > +=09want-ref refs/heads/ns-yes
+> > +=09have $oid
+>
+> Do we need this "have" line? I think we can just omit it, since what the
+> client has is irrelevant to the test. (Same for the other tests.)
 
-Thanks.
+Hm no. I think I misread how this works.
+
+> > +test_expect_success 'want-ref outside namespace' '
+> > +=09oid=3D$(git -C "$REPO" rev-parse c) &&
+> > +=09test-tool pkt-line pack >in <<-EOF &&
+> > +=09$(write_command fetch)
+> > +=090001
+> > +=09no-progress
+> > +=09want-ref refs/heads/ns-no
+> > +=09have $oid
+> > +=09done
+> > +=090000
+> > +=09EOF
+> > +
+> > +=09test_must_fail env GIT_NAMESPACE=3Dns test-tool -C "$REPO" serve-v2=
+ --stateless-rpc >out <in &&
+> > +=09grep "unknown ref" out
+> > +'
+>
+> For the failure tests, it's safer to write them in pairs - one that
+> succeeds and one that fails. Here, a typo in "ns-no" (e.g. if I wrote
+> "ns-noo" instead) would cause the exact same result, but if we were to
+> write a pair of tests, we wouldn't have this problem.
+
+That's a good suggestion. However, I'm having some difficulties finding jus=
+t the
+right amount of common code to extract due to
+
+a. having to pass the namespace via env instead of --namespace (and the
+   different position for the success / test_must_fail cases), and
+b. having to rely on _persistent_ config for hideRefs, as opposed to being =
+able
+   to pass it via -c to upload-pack (ie. I'm worried about tests breaking i=
+f
+   they get reordered)
+
+So I'm not exactly happy with what I came up with for v3, but I'd also be
+reluctant to add --namespace / -c support to test-tool as part of this patc=
+h.
+Let me know what you think.
+
+
+> > diff --git a/upload-pack.c b/upload-pack.c
+> > index 297b76fcb4..c897802f1c 100644
+> > --- a/upload-pack.c
+> > +++ b/upload-pack.c
+> > @@ -1417,21 +1417,24 @@ static int parse_want_ref(struct packet_writer =
+*writer, const char *line,
+> >  =09=09=09  struct string_list *wanted_refs,
+> >  =09=09=09  struct object_array *want_obj)
+> >  {
+> > -=09const char *arg;
+> > -=09if (skip_prefix(line, "want-ref ", &arg)) {
+> > +=09const char *refname_nons;
+> > +=09if (skip_prefix(line, "want-ref ", &refname_nons)) {
+> >  =09=09struct object_id oid;
+> >  =09=09struct string_list_item *item;
+> >  =09=09struct object *o;
+> > +=09=09struct strbuf refname =3D STRBUF_INIT;
+>
+> "refname" needs to be released somewhere.
+
+Yeap :/
+
