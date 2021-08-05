@@ -2,109 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57A95C4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 02:09:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99CCCC4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 02:49:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 261276105A
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 02:09:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F06C60F10
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 02:49:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238167AbhHECJN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 22:09:13 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58644 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232116AbhHECJN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Aug 2021 22:09:13 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 68FA3E1696;
-        Wed,  4 Aug 2021 22:08:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=qeutovMaKAts
-        3wanrFboBw7hQ+LWRIDn+7QsxI/+AkE=; b=KNjjlYBgGUHqndn7xUbpD7suoLYP
-        aZLfUkNz8qFSwXUu84a8gDFrQ8ntBJJZ2KCaac2IfBGiUI8RyMqmt1YHyrrhXjeN
-        MMUYU5i+zh7tBiHqpVab1+rNl59nNpwaFJWJOMkfoUgwZlLpn5r9oBy6uwou6duh
-        3iIpf7uIVfSWEp4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 60301E1695;
-        Wed,  4 Aug 2021 22:08:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.71.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DEFCCE1694;
-        Wed,  4 Aug 2021 22:08:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: What's cooking in git.git (Aug 2021, #02; Tue, 3)
-References: <xmqqfsvpr8t5.fsf@gitster.g> <87wnp1mqv2.fsf@evledraar.gmail.com>
-        <xmqq4kc5ozi7.fsf@gitster.g> <87lf5hm0v7.fsf@evledraar.gmail.com>
-        <20210804212825.GH23408@szeder.dev>
-        <87fsvon5xm.fsf@evledraar.gmail.com>
-Date:   Wed, 04 Aug 2021 19:08:57 -0700
-In-Reply-To: <87fsvon5xm.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Thu, 05 Aug 2021 01:06:55 +0200")
-Message-ID: <xmqq4kc4myme.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S236848AbhHECuE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 22:50:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52690 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229807AbhHECuD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Aug 2021 22:50:03 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1321DC061765
+        for <git@vger.kernel.org>; Wed,  4 Aug 2021 19:49:50 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id z11so6195601edb.11
+        for <git@vger.kernel.org>; Wed, 04 Aug 2021 19:49:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=lmVtbD6OCxKYxsGuBwu8pdxuXMXPr+yyZDDvLt9BA6w=;
+        b=RuBQDyACFly4tBR3Fa8RfVBYxMQl/uRvbyHAs/PtQ0ZlraeNciIssM/B9Jrp6MzGoH
+         5UMuH6l06spz6h8g6qkUIAMoY2Idh8YP5iz8vXVm6NWQ3t4kJkjSTptepWAJK+1Z3U1p
+         Wmuk//OAKgtTkkwlRyUr/bHk8TbVDCEoQJ9u2G9Qs/lOuZ9CLImUMe6++A+f3picmqYF
+         nnjy4LaenS7NXvYtTAS+le8Tz62za7MA09MisexUPH3ZV7jKIZgReBUgE4vvzrsVlPXQ
+         2/PgnZRqPcGADZeI3kPO0HMtvmtUUWinvyFehcgTZcpVMKxR1ALUi/aP0pdT2drS1dwh
+         ys0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=lmVtbD6OCxKYxsGuBwu8pdxuXMXPr+yyZDDvLt9BA6w=;
+        b=ukHmxhVlSwhn5rtiRynCOn2bG+wCRu6326tAVg3h69dLeH0+nIafqhJfF3t56cyf6/
+         JWKs/Hk74+mKWR/eNHwD7VlV/dXLL4uh5KQDrKvXPkdIDkp2GD6pRYsLeWcwfOeSYP/q
+         w8/RBwJOZWVgpcVNs3Mp4mNF7QOrzrjWWm3H9FfEX6On2mDcKJN/9kmAlgco7C1BlNf/
+         7Bcb4iSSF0wNUdJjCaAtkC5Q6eFVFULKGTQQmSm3zQKsONGnqqlv8xGmtc8npXAt7/Py
+         ED/ZlPSdjrhxRG21L/uz0ggs4gVfKvKIJ/jibH0HHaPdNs0rlT/Pf29bT1aiRgkkL4Z0
+         AUhQ==
+X-Gm-Message-State: AOAM531qm1Zct4nVHQ1InR1cfgBup9TGe9u9JZznotomux8ALBST5Gzz
+        5aM9pok4ZzIh+4iSUNJlzT0=
+X-Google-Smtp-Source: ABdhPJz784JmxFmCNK9KshB1dQtc2ehnntTl93l+E1MjsZ9OCRNn5KZ17x+92jg/dFCsTZNM5G3iew==
+X-Received: by 2002:a50:bb43:: with SMTP id y61mr3492405ede.22.1628131788629;
+        Wed, 04 Aug 2021 19:49:48 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id d23sm1213317ejc.4.2021.08.04.19.49.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Aug 2021 19:49:47 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH v2 2/2] connect, protocol: log negotiated protocol version
+Date:   Thu, 05 Aug 2021 04:47:16 +0200
+References: <cover.1628115064.git.steadmon@google.com>
+ <d138b2615c1af288627b9a2f8f7dd3d2fed184d7.1628115065.git.steadmon@google.com>
+ <87a6lwn52u.fsf@evledraar.gmail.com> <YQs+VQIYDO3pkCNS@nand.local>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <YQs+VQIYDO3pkCNS@nand.local>
+Message-ID: <874kc4mwqc.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 18752ECE-F592-11EB-AD97-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> How would it be forgotten? If you introduce tests like the ones changed
-> in 1/3 of the series and expect git to pay attention to COLUMNS you'll
-> find that they won't work, because if you set COLUMNS=3D123 we won't ta=
-ke
-> it over the GIT_TEST_COLUMNS=3D80 set in test-lib.sh.
-> ...
-> ...I'd be happy to remove the helper if Junio would take that version o=
-f
-> the patch; :)
+On Wed, Aug 04 2021, Taylor Blau wrote:
 
-FWIW, I didn't *request* it; the resulting test scripts that set and
-unset both the standard COLUMNS and another test-only environment
-variable looked typo-prone and hard to read, and that is why I
-suggested to hide that behind a helper.
-
-If we do not have to add a test-only enviroment variable at all, I
-do not see the reason why we need a helper.
-
-> By narrowly targeting a fix at one specific shell's cleverness around
-> COLUMNS we'll leave open a window where we'll fail on other shells if
-> they introduce similar cleverness.
+> On Thu, Aug 05, 2021 at 01:40:51AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>
+>> On Wed, Aug 04 2021, Josh Steadmon wrote:
+>>
+>> > It is useful for performance monitoring and debugging purposes to know
+>> > the wire protocol used for remote operations. This may differ from the
+>> > version set in local configuration due to differences in version and/or
+>> > configuration between the server and the client. Therefore, log the
+>> > negotiated wire protocol version via trace2, for both clients and
+>> > servers.
+>> >
+>> > Signed-off-by: Josh Steadmon <steadmon@google.com>
+>> > ---
+>>
+>> I know Taylor asked you to change it to a string from in int upthread in
+>> <YQmxSxTswHE/gTet@nand.local>, but I really don't see the point. But am
+>> willing to be convinced otherwise.
 >
-> It hardly seems like a stretch that once bash starts doing that sort of
-> thing other shells might think to follow suit, and all have their own
-> non-standard way to turn it off.
+> The conversion to log a string instead of an integer is necessary if
+> Josh wants to write "<unknown>" instead of -1. To me, that seemed
+> clearer, and I like that it makes the trace2 representation for a
+> protocol version separate from the protocol_version enum.
 
-Hmph. Wouldn't the same argument apply to the much simpler single
-liner "shopt -u" solution?  When writing new tests, there is nothing
-to remember, and a new shell that needs a different trick to defeat
-the auto-COLUMNS would be detected quickly by running the tests in a
-terminal whose width is different from 80, no?
+Yes, having a magic -1 value would be bad, but since it seems we'll
+never get it in practice...
 
-> You also didn't address the other rationale for it, namely that it's
-> also future-proofing us for submarine breakages in non-git programs
-> which'll understand the new COLUMNS=3D10, but not GIT_TEST_COLUMNS=3D80=
-.
+>> It seems to me that both of these codepaths will never usefully use this
+>> new "UNKNOWN_VERSION" string you added, i.e.:
+>>
+>> >  connect.c                             |  3 +++
+>> >  protocol.c                            |  3 +++
+>> >  t/t5705-session-id-in-capabilities.sh | 12 ++++++++++++
+>> >  3 files changed, 18 insertions(+)
+>> >
+>> > diff --git a/connect.c b/connect.c
+>> > index 70b13389ba..5f0e113625 100644
+>> > --- a/connect.c
+>> > +++ b/connect.c
+>> > @@ -150,6 +150,9 @@ enum protocol_version discover_version(struct pack=
+et_reader *reader)
+>> >  		break;
+>> >  	}
+>> >
+>> > +	trace2_data_string("transfer", NULL, "negotiated-version",
+>> > +			   format_protocol_version(version));
+>>
+>> Right after this.
+>>
+>> >  	switch (version) {
+>> >  	case protocol_v2:
+>> >  		process_capabilities_v2(reader);
+>>
+>> We'll die here with BUG("unknown protocol version") if it's unknown..
+>
+> Good eyes. In fact, the second switch statement shouldn't even need a
+> case-arm for protocol_unknown_version (but has it to cover all
+> enumerated values).
 
-Isn't that another downside of the approach you are advocating?
+I didn't check if crafting an unknown version will be found earlier, or
+if we'll actually reach that "unknown" case.
 
-If we make Git rely on GIT_TEST_COLUMNS, we may honor it while
-everybody else ignores it.  If we only have to deal with COLUMNS
-like everybody else does, Git and other tools that are used in our
-tests will be affected the same way by overly-clever shells, no?
+> I didn't realize before that the unknown case really is dead code, so
+> we'll never log "<unknown>". And since the mapping from protocol_version
+> to string is identical for known values, we could probably do without
+> it.
+>
+> And I don't much care either way. I think the benefit is really pretty
+> slim, and arguably my code is just adding unnecessary overhead. So I'm
+> happy to go with or without it, but I'd be rather sad to spend much more
+> of our collective time discussing it.
+
+Yeah, I just think if we can be sure it's an integer *and* a valid
+version when we log it, people writing future log summarizing code will
+thank us, i.e. just 0, 1, 2, and in the future maybe 3, ..., but not -1
+or "<unknown>" or other values we'll trust die() etc. to handle.
