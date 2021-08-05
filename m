@@ -8,162 +8,100 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDDA1C4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 19:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54CD8C4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 19:48:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D258A60F35
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 19:28:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3551B60ED6
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 19:48:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235404AbhHET2x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 15:28:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55540 "EHLO
+        id S239037AbhHETsq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 15:48:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230342AbhHET2w (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Aug 2021 15:28:52 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A97BC061765
-        for <git@vger.kernel.org>; Thu,  5 Aug 2021 12:28:37 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id a8so11350169pjk.4
-        for <git@vger.kernel.org>; Thu, 05 Aug 2021 12:28:37 -0700 (PDT)
+        with ESMTP id S236704AbhHETsq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Aug 2021 15:48:46 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB2F6C061765
+        for <git@vger.kernel.org>; Thu,  5 Aug 2021 12:48:30 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id z6-20020a0568302906b02904f268d34f86so6022671otu.2
+        for <git@vger.kernel.org>; Thu, 05 Aug 2021 12:48:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=M+FcrpBv0EUcFYS3z8VwxK4Rd2iUMu/UzEgjWygBYUU=;
-        b=eqX625EWjs6oR5NIWymedGv3XcWQnIEk3C1y4oJstfp36NXYUJBiMch4KjdeswYQjG
-         2vEvf6vec6Y2Cs/3rif55u7hbta5iSefUXKjy1eY9eFnS6kmQQuIRfKoeXwmnvnurQve
-         F8QQhSWKDlYW60ejVHcfKxWOYGnCPORGTYOKOJpBIoR68VkxpY6JX0MbtVCwQ5F9nYOC
-         gqlSKIE/IP4qRalw6rOLnlRIfxM0/LqpJsr8LTZByUY22oHl9K6zR8g/GoZkh4/TnP4j
-         Pcq/uIHU4NcFdBuZApdLyE7GDoZ/Bd8kHVfN7J7pHATjhTuHOkRFKEiuQ1Nml+D7BCwR
-         byXA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=em8T61NA2LKtI0wWKXlROOwVSCcUWG76m0Z7iL53H4w=;
+        b=iQCE51s3p+WooSNfa1d6eceYRyGzVmW+5ktBVM0kqwNmyCb31YQA71hgEaQ/53Orcn
+         RSiIvbwmsCFwVi6j2fQ6cpoUohMfvI/GVHaZm5O6HvQq7IBIARKTdPDWiHzUaltt/+U7
+         ECBUqRTX0qTGeYtX3QF9DReJwLQp4rRDYtLAaq7ji15x1dHQeajxu8a48y7pukWMBFT2
+         tZURGNQg0BALvMlujqwwoAg9IVDFSOG8oEkP2rNtyW7CfxaL8y7X4FwnXrwnB+zldo9W
+         XwFRdZjlPdOGoABGL565s2I0Er+37a2atMzm95Ng+QvrGuBZFzAVyDomji8+2yDyHPWQ
+         UBzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=M+FcrpBv0EUcFYS3z8VwxK4Rd2iUMu/UzEgjWygBYUU=;
-        b=A6A2K7W79Z3pGpg6VScR+MdU8pJVnJzv/hBkdWKsW7o8PfVeHrWnehv1bLNOyD5gpL
-         U0u+A9ZJNuQQy1hBM4xICAyu3TA7dFRPiFttG50x6iyvHMTljPVRFOgtbN73lGqK/bIN
-         qe2Ifeo2FI7Y72mYGqeqIo0vV+5o2Ji8/YWOA3GYnreQy7oKOCK0Pu8LCUKl6yswmUKG
-         v3A+hwEWFFaFsSQrh5wqnGlDyo22BIt/32JhHRhue2Yse7v5WQQEJq/fumLcWCQtVGrj
-         95MuPzATzHDbE6lq1xgJdr/j+BolP/+Gw7pzHXdJaaYAt2NIaHAbTCN9lWQTDswdqjz5
-         z8cg==
-X-Gm-Message-State: AOAM5318eaiQfCdJoU1Gi5qKpu61HSTqinbmlO/ryTBudlUILQfo0haQ
-        1Rbl5B0MKnaATCWajS1r8VGL+s6CIGF1sg==
-X-Google-Smtp-Source: ABdhPJzFFM1jHvrrsGymDjXpA280xfeG6n4bEYPJnhWvv6qVBwaKrQVQkH1DdcnFfP6piZmISVq8Ug==
-X-Received: by 2002:a17:902:c651:b029:12c:1ec0:a8b8 with SMTP id s17-20020a170902c651b029012c1ec0a8b8mr5276179pls.40.1628191716951;
-        Thu, 05 Aug 2021 12:28:36 -0700 (PDT)
-Received: from localhost.localdomain ([183.82.191.73])
-        by smtp.gmail.com with ESMTPSA id c13sm7601854pfi.71.2021.08.05.12.28.34
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=em8T61NA2LKtI0wWKXlROOwVSCcUWG76m0Z7iL53H4w=;
+        b=pCDo9pyRGaisBVgF+hyWhJBRMy8tuZ0HeleQf9kO7Vr/zDSkZGVjkkcKv3btU5F6zq
+         G/SLvJwDjogvYLpobWQNn+BqABNEkV2nK/N4ZuyhVBDz/12LgbKUns2P/BzLRVdpJjax
+         cndrsEH4R2if7tkG+nr/RF+JbVBxN3sshxMukTGr0t2G+Jg/NxTP5s+IgVs7Qmz+8//k
+         d2Ewb13PZByt+9Mwmp/GWvVh2nuMxIrbmWttlpQRVlaUpDE2hLavm5J+ybpj7n2/VIVH
+         7c6cmajMrfaD2Hhy5aapevBNh/YPy/EEfzWLPP5z3iTRKF6ko+I/5V72BGye8gsZF8M7
+         Tqeg==
+X-Gm-Message-State: AOAM530xNoAgPpCKLTgcmqz/HeN5UGLkO7Ow8lNEDcHQT9QAJo8TOmj6
+        V7/Ui3Umkd/8t0JjEE87nI3hGOR9BQUPhg==
+X-Google-Smtp-Source: ABdhPJwjikrWK6I9fYXdAGdsrfZGvPuhXcH4gyqo3Ouf42ZWqRqficyCXc6ygVQG3h3ASB8iYWyUbA==
+X-Received: by 2002:a05:6830:1305:: with SMTP id p5mr5104873otq.353.1628192909973;
+        Thu, 05 Aug 2021 12:48:29 -0700 (PDT)
+Received: from localhost (fixed-187-189-69-1.totalplay.net. [187.189.69.1])
+        by smtp.gmail.com with ESMTPSA id i18sm1253805oik.3.2021.08.05.12.48.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Aug 2021 12:28:36 -0700 (PDT)
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Atharva Raykar <raykar.ath@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>
-Subject: [PATCH] submodule--helper: fix incorrect newlines in an error message
-Date:   Fri,  6 Aug 2021 00:58:03 +0530
-Message-Id: <20210805192803.679948-1-kaartic.sivaraam@gmail.com>
-X-Mailer: git-send-email 2.32.0.385.g8c8534732c.dirty
-In-Reply-To: <20210710074801.19917-5-raykar.ath@gmail.com>
-References: <20210710074801.19917-5-raykar.ath@gmail.com>
+        Thu, 05 Aug 2021 12:48:29 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     ZheNing Hu <adlternative@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Fabian Stelzer <fabian.stelzer@campoint.net>
+Subject: [PATCH] test: fix for COLUMNS and bash 5
+Date:   Thu,  5 Aug 2021 14:48:25 -0500
+Message-Id: <20210805194825.1796765-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.32.0.40.gb9b36f9b52
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A refactoring[1] done as part of the recent conversion of
-'git submodule add' to builtin, changed the error message
-shown when a Git directory already exists locally for a submodule
-name. Before the refactoring, the error used to appear like so:
+Since c49a177bec (test-lib.sh: set COLUMNS=80 for --verbose
+repeatability, 2021-06-29) multiple tests have been failing when using
+bash 5 because checkwinsize is enabled by default, therefore COLUMNS is
+reset using TIOCGWINSZ even for non-interactive shells.
 
-  --- START OF OUTPUT ---
-  $ git submodule add ../sub/ subm
-  A git directory for 'subm' is found locally with remote(s):
-    origin        /me/git-repos-for-test/sub
-  If you want to reuse this local git directory instead of cloning again from
-    /me/git-repos-for-test/sub
-  use the '--force' option. If the local git directory is not the correct repo
-  or you are unsure what this means choose another name with the '--name' option.
-  ---  END OF OUTPUT  ---
+It's debatable whether or not bash should even be doing that, but for
+now we can avoid this undesirable behavior by disabling this option.
 
-After the refactoring the error started appearing like so:
-
- --- START OF OUTPUT ---
-  $ git submodule add ../sub/ subm
-  A git directory for 'subm' is found locally with remote(s):  origin     /me/git-repos-for-test/sub
-  fatal: If you want to reuse this local git directory instead of cloning again from
-  /me/git-repos-for-test/sub
-  use the '--force' option. If the local git directory is not the correct repo
-  or if you are unsure what this means, choose another name with the '--name' option.
-
-  ---  END OF OUTPUT  ---
-
-As one could observe the remote information is printed along with the
-first line rather than on its own line. Also, there's an additional
-newline following output.
-
-Make the error message consistent with the error message that used to be
-printed before the refactoring.
-
-[1]: https://lore.kernel.org/git/20210710074801.19917-5-raykar.ath@gmail.com/#t
-
-Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Reported-by: Fabian Stelzer <fabian.stelzer@campoint.net>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
+ t/test-lib.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Even with this patch, the error message is still not fully consistent with the one that
-used to be printed before the refactoring. Here's the diff:
-
-3c3
-< If you want to reuse this local git directory instead of cloning again from
----
-> fatal: If you want to reuse this local git directory instead of cloning again from
-6c6
-< or you are unsure what this means choose another name with the '--name' option.
----
-> or if you are unsure what this means, choose another name with the '--name' option.
-
-
-The first part shows that it is additionally prefixed with 'fatal: '. While the 'fatal :' prefix
-made sense in other cases, I wonder if it's helpful in this case as the message being
-printed is an informative one. Should we avoid using 'die' to print this message?
-
-The second part of the diff shows that there's some small grammatcial tweaks in the last
-line. While I appreciate the intention, I'm not very sure if this change is a strict
-improvement. I wonder about this as the original sounded good enough to me and thus it
-feels like the change in message is triggering unnecesssary translation work. Should
-we avoid the change? Or does it actually seem like an improvement to the message?
-
-
-builtin/submodule--helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 3cbde305f3..560be07091 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2824,7 +2824,7 @@ static int add_submodule(const struct add_data *add_data)
- 		if (is_directory(submod_gitdir_path)) {
- 			if (!add_data->force) {
- 				fprintf(stderr, _("A git directory for '%s' is found "
--						  "locally with remote(s):"),
-+						  "locally with remote(s):\n"),
- 					add_data->sm_name);
- 				show_fetch_remotes(stderr, add_data->sm_name,
- 						   submod_gitdir_path);
-@@ -2835,7 +2835,7 @@ static int add_submodule(const struct add_data *add_data)
- 				      "use the '--force' option. If the local git "
- 				      "directory is not the correct repo\n"
- 				      "or if you are unsure what this means, choose "
--				      "another name with the '--name' option.\n"),
-+				      "another name with the '--name' option."),
- 				    add_data->realrepo);
- 			} else {
- 				printf(_("Reactivating local git directory for "
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index db61081d6b..a2b7dfecee 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -419,6 +419,12 @@ COLUMNS=80
+ export LANG LC_ALL PAGER TZ COLUMNS
+ EDITOR=:
+ 
++# Since bash 5.0, checkwinsize is enabled by default which does update the
++# COLUMNS variable every time a command completes, even for non-interactive
++# shells.
++# Disable that since we are aiming for reproducibility.
++test -n "$BASH_VERSION" && shopt -u checkwinsize 2>/dev/null
++
+ # A call to "unset" with no arguments causes at least Solaris 10
+ # /usr/xpg4/bin/sh and /bin/ksh to bail out.  So keep the unsets
+ # deriving from the command substitution clustered with the other
 -- 
-2.32.0.385.g8c8534732c.dirty
+2.32.0.40.gb9b36f9b52
 
