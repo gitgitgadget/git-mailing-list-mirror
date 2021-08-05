@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 695A2C4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 15:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBC60C4320E
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 15:07:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54E7060EEA
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 15:07:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B6B9C60EE5
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 15:07:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241857AbhHEPIH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 11:08:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51066 "EHLO
+        id S241872AbhHEPIJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 11:08:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241809AbhHEPH7 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S241795AbhHEPH7 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 5 Aug 2021 11:07:59 -0400
 Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E940AC06179C
-        for <git@vger.kernel.org>; Thu,  5 Aug 2021 08:07:42 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id m12so6984237wru.12
-        for <git@vger.kernel.org>; Thu, 05 Aug 2021 08:07:42 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74698C0617A2
+        for <git@vger.kernel.org>; Thu,  5 Aug 2021 08:07:44 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id d8so7011191wrm.4
+        for <git@vger.kernel.org>; Thu, 05 Aug 2021 08:07:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zgGF/4aXVhq6+B0j6d+3xu8KkDs5gOjRcJ/GTiaRotU=;
-        b=TMcH1oqA9yz4fuA/ooI0Px0W0lTZllhBMdnraTdqRCX1j3ra581XragtWVsdMOUqK8
-         Vw0+Q+RzJz2k0nJGKZO8B1+QyUjnxVvZX5FoTRqL6bRu1Uapm6K4fjKbtFPVMKgXlinU
-         Rr5//49EywD7fIltKeL6LLUD9giM+6P6b27S/fBTJw7uvztlXUVX3/038mB+z4rjOF6b
-         eLjq0KfGziZtE6v23tyroXbQN18irWA1Fr6ZzofofD3XmfmwPhCl60mOKIbTbO6Udtg4
-         3fmFSJkH7ZjSjrxqeoMbh5bhF5vspvJ7Qrzgsl9L6uftxplQeodyqJsDkbPMeRcOlk/D
-         z7Xg==
+        bh=Aybp8La8P+K9uxY6PEDr5NxTP9FXf57JA1TNG5/mSjI=;
+        b=o/4z2/kLl8nf6oV6xQT7GL1XKZIgn/VjlDCynf1TzyjsYMiEcQsMQ0cqGeg4vdzmLO
+         xmNfBii6FOSRuuN4kI27blGmPhe6mc1wU3EGKNixAXbGRRPOaDBUbT39V8aLDdlGuDde
+         1iAWSsMuYK+BmLSQJ5h7A/I4NkfrQh/gid5aleq5A3d0yrJLFkIWQHG2DXThLQ2QY8/B
+         BDF7qTQrC31/CpnauJMObP5LEsrxmnVpvGT0BkWYvsSnCxKASAittQBZyTxS2yi6KL/a
+         EFxjTST9wD+GlS3F3mufjSaVdtwHTPurfslNctJHAnNIiaL/wPA/xK2J0/u+2VCn2Wgs
+         9Npw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zgGF/4aXVhq6+B0j6d+3xu8KkDs5gOjRcJ/GTiaRotU=;
-        b=UZtO1WMVwh81we9+EjUE6e1NtaYubHJIusvKNVbSReQIOChkT7OXl5AuAtBd/dkGa0
-         84Tk0oR9YwbEgil86dnVm7UoG+jRl3jCnWEQCnrQnhOyax3d/SPCKcUU1GnA24sIOgvk
-         hXd5EVPlSIG2/Z0AtNl4OgW2rXStzgt9eYbiRb5UO3Sz4MLeNLix4O+XnzrTO1OCy95Q
-         pKbjNyywSwUHYDlkO6gNniC64ngMwAh2GrdjxHNucDnv3ROq0AkgJNBH/VrRDsO7kPl2
-         UJIl2XahoUPPUbEP4HdRh1sqH1Y9jsSWLqkN+enx528x/sF0TdWZ39rm45kuedXi58+E
-         afmQ==
-X-Gm-Message-State: AOAM532j7QrZIBp47bBVSyuAxnXUr80PRixEaOK0lk7Mpzg5ue6PeKXj
-        xbcxXFRjft/5iZW55Gw9QFa7ScG8mTPwbg==
-X-Google-Smtp-Source: ABdhPJysoFtAb0QjK5bZLJUal1fVq9D4cxdDLN0MwWnmt59CCvhpUU9aDDwdizc8TNFZbtEwtUdcDg==
-X-Received: by 2002:adf:a409:: with SMTP id d9mr5825833wra.237.1628176061268;
-        Thu, 05 Aug 2021 08:07:41 -0700 (PDT)
+        bh=Aybp8La8P+K9uxY6PEDr5NxTP9FXf57JA1TNG5/mSjI=;
+        b=n3n110j9gn0903NWaeTxjRw1rprN+WnNCTIjsmIBqlha56CTWxMZ3twCkwsbB+h4xh
+         7hCeyv1DxAJI630e7Rs+dJ3/X/B8VG//eUPkKq8spBj50rNJwf4y8TUlnx7WH73Orzxb
+         vHr1r+Q/L3NdDnnPcjYagHq4BN4y9aFbwhRoRnjrpCNYDUIyHDujwNjmdCQy0qGzlOpV
+         ZJZCUpUXf9GPZLPfhicPUou/IrZJfEbp/n1plL56WQLFM9su78HbYrjvsp8JZsi8kgc8
+         n6chC/fEWajuyuDlX71c53ZdBwQKNGxguCcM0I//yX0qkQu4hxshDsLQje4sEFbf+I5t
+         Qc0w==
+X-Gm-Message-State: AOAM530MMtJRfZPPJVCt24D8cPd6qEj9GqFr9QJUGl07Mm6mW2HzubUU
+        mqGXkUpggUuWyro6cX7G06AbSTfum2uBMA==
+X-Google-Smtp-Source: ABdhPJyzpvjzlyMgbDXiOY0wSS0kz0ISKuVruf4OvuZbC6yv5VKqUlpxohzkNymqtWw/83SzlpVihg==
+X-Received: by 2002:adf:fe89:: with SMTP id l9mr6010423wrr.396.1628176062824;
+        Thu, 05 Aug 2021 08:07:42 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id w4sm6856340wrm.24.2021.08.05.08.07.40
+        by smtp.gmail.com with ESMTPSA id w4sm6856340wrm.24.2021.08.05.08.07.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Aug 2021 08:07:40 -0700 (PDT)
+        Thu, 05 Aug 2021 08:07:42 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC PATCH 06/13] bundle-uri client: add transfer.injectBundleURI support
-Date:   Thu,  5 Aug 2021 17:07:22 +0200
-Message-Id: <RFC-patch-06.13-3427cb4de7-20210805T150534Z-avarab@gmail.com>
+Subject: [RFC PATCH 08/13] bundle.h: make "fd" version of read_bundle_header() public
+Date:   Thu,  5 Aug 2021 17:07:24 +0200
+Message-Id: <RFC-patch-08.13-c9700e66d9-20210805T150534Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.rc0.646.g585563e77f
 In-Reply-To: <RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com>
 References: <RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com>
@@ -78,162 +78,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the ability to inject "fake" bundle URIs into the newly supported
-bundle-uri dialog. As discussed in the added documentation this allows
-us to pretend as though the remote supports bundle URIs.
-
-This will be useful both for ad-hoc testing, and for the real use-case
-of retrofitting bundle URI support on-the-fly, i.e. to have:
-
-	git -c transfer.injectBundleURI "file://$(pwd)/local.bdl" \
-	clone https://example.com/git.git"
-
-Be similar in spirit to:
-
-	git clone --reference local-clone.git --disassociate \
-	https://example.com/git.git"
+Change the parse_bundle_header() function to be non-static, and rename
+it to parse_bundle_header_fd(). The parse_bundle_header() function is
+already public, and it's a thin wrapper around this function. This
+will be used by code that wants to pass a fd to the bundle API.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config/transfer.txt     | 20 ++++++++++++
- t/lib-t5730-protocol-v2-bundle-uri.sh | 46 +++++++++++++++++++++++++++
- transport.c                           | 33 +++++++++++++++++++
- 3 files changed, 99 insertions(+)
+ bundle.c | 8 ++++----
+ bundle.h | 2 ++
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/config/transfer.txt b/Documentation/config/transfer.txt
-index 505126a780..a9aff7f982 100644
---- a/Documentation/config/transfer.txt
-+++ b/Documentation/config/transfer.txt
-@@ -73,3 +73,23 @@ transfer.unpackLimit::
- transfer.advertiseSID::
- 	Boolean. When true, client and server processes will advertise their
- 	unique session IDs to their remote counterpart. Defaults to false.
-+
-+transfer.injectBundleURI::
-+	Allows for the injection of `bundle-uri` lines into the
-+	protocol v2 transport dialog (see `protocol.version` in
-+	linkgit:git-config[1]). See `bundle-uri` in
-+	link:technical/protocol-v2.html[the Git Wire Protocol, Version
-+	2] documentation for what the format looks like.
-++
-+Can be given more than once, each key being injected as one line into
-+the dialog.
-++
-+This is useful for testing the `bundle-uri` facility, and to e.g. use
-+linkgit:git-clone[1] to clone from a server which does not support
-+`bundle-uri`, but where the clone can benefit from getting some or
-+most of the data from a static bundle retrieved from elsewhere.
-++
-+Impacts any command that uses the transport to communicate with remote
-+linkgit:git-upload-pack[1] processes, e.g. linkgit:git-clone[1],
-+linkgit:git-fetch[1] and the linkgit:git-ls-remote-bundle-uri[1]
-+inspection command, this includes the `file://` protocol.
-diff --git a/t/lib-t5730-protocol-v2-bundle-uri.sh b/t/lib-t5730-protocol-v2-bundle-uri.sh
-index fccf7ccaa2..e5d17f6a81 100644
---- a/t/lib-t5730-protocol-v2-bundle-uri.sh
-+++ b/t/lib-t5730-protocol-v2-bundle-uri.sh
-@@ -270,3 +270,49 @@ test_expect_success "ls-remote-bundle-uri --[no-]quiet with $T5730_PROTOCOL:// u
- 	test_must_be_empty err &&
- 	test_cmp out.expect out.actual
- '
-+
-+test_expect_success "ls-remote-bundle-uri with -c transfer.injectBundleURI using with $T5730_PROTOCOL:// using protocol v2" '
-+	test_when_finished "rm -f log" &&
-+
-+	test_config -C "$T5730_PARENT" uploadpack.bundleURI \
-+		"$T5730_BUNDLE_URI_ESCAPED" &&
-+
-+	cat >expect <<-\EOF &&
-+	https://injected.example.com/fake-1.bdl
-+	https://injected.example.com/fake-2.bdl
-+	EOF
-+	GIT_TRACE_PACKET="$PWD/log" \
-+	git \
-+		-c protocol.version=2 \
-+		-c transfer.injectBundleURI="https://injected.example.com/fake-1.bdl" \
-+		-c transfer.injectBundleURI="https://injected.example.com/fake-2.bdl" \
-+		ls-remote-bundle-uri \
-+		"$T5730_URI" \
-+		>actual 2>err &&
-+	test_cmp expect actual &&
-+	test_path_is_missing log
-+'
-+
-+test_expect_success "ls-remote-bundle-uri with bad -c transfer.injectBundleURI protocol v2 with $T5730_PROTOCOL://" '
-+	test_when_finished "rm -f log" &&
-+
-+	test_config -C "$T5730_PARENT" uploadpack.bundleURI \
-+		"$T5730_BUNDLE_URI_ESCAPED" &&
-+
-+	cat >err.expect <<-\EOF &&
-+	error: bad (empty) transfer.injectBundleURI
-+	error: could not get the bundle-uri list
-+	EOF
-+
-+	test_must_fail env \
-+		GIT_TRACE_PACKET="$PWD/log" \
-+		git \
-+		-c protocol.version=2 \
-+		-c transfer.injectBundleURI \
-+		ls-remote-bundle-uri \
-+		"$T5730_URI" \
-+		>out 2>err.actual &&
-+	test_must_be_empty out &&
-+	test_cmp err.expect err.actual &&
-+	test_path_is_missing log
-+'
-diff --git a/transport.c b/transport.c
-index 286c96269d..bd8a914652 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1501,14 +1501,47 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
- 	return rc;
+diff --git a/bundle.c b/bundle.c
+index ab63f40226..f3a87308cf 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -61,8 +61,8 @@ static int parse_bundle_signature(struct bundle_header *header, const char *line
+ 	return -1;
  }
  
-+struct config_cb {
-+	struct transport *transport;
-+	int configured;
-+	int ret;
-+};
-+
-+static int bundle_uri_config(const char *var, const char *value, void *data)
-+{
-+	struct config_cb *cb = data;
-+	struct transport *transport = cb->transport;
-+	struct string_list *uri = &transport->bundle_uri;
-+
-+	if (!strcmp(var, "transfer.injectbundleuri")) {
-+		cb->configured = 1;
-+		if (!value)
-+			cb->ret = error(_("bad (empty) transfer.injectBundleURI"));
-+		else if (bundle_uri_parse_line(uri, value) < 0)
-+			cb->ret = error(_("bad transfer.injectBundleURI: '%s'"),
-+					value);
-+		return 0;
-+	}
-+	return 0;
-+}
-+
- int transport_get_remote_bundle_uri(struct transport *transport, int quiet)
+-static int parse_bundle_header(int fd, struct bundle_header *header,
+-			       const char *report_path)
++int read_bundle_header_fd(int fd, struct bundle_header *header,
++			  const char *report_path)
  {
- 	const struct transport_vtable *vtable = transport->vtable;
-+	struct config_cb cb = {
-+		.transport = transport,
-+	};
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int status = 0;
+@@ -138,7 +138,7 @@ int read_bundle_header(const char *path, struct bundle_header *header)
  
- 	/* Lazily configured */
- 	if (transport->got_remote_bundle_uri++)
+ 	if (fd < 0)
+ 		return error(_("could not open '%s'"), path);
+-	return parse_bundle_header(fd, header, path);
++	return read_bundle_header_fd(fd, header, path);
+ }
+ 
+ int is_bundle(const char *path, int quiet)
+@@ -148,7 +148,7 @@ int is_bundle(const char *path, int quiet)
+ 
+ 	if (fd < 0)
  		return 0;
+-	fd = parse_bundle_header(fd, &header, quiet ? NULL : path);
++	fd = read_bundle_header_fd(fd, &header, quiet ? NULL : path);
+ 	if (fd >= 0)
+ 		close(fd);
+ 	bundle_header_release(&header);
+diff --git a/bundle.h b/bundle.h
+index 1927d8cd6a..8adf0e7393 100644
+--- a/bundle.h
++++ b/bundle.h
+@@ -22,6 +22,8 @@ void bundle_header_release(struct bundle_header *header);
  
-+	git_config(bundle_uri_config, &cb);
-+
-+	/* Our own config can fake it up with transport.injectBundleURI */
-+	if (cb.configured)
-+		return cb.ret;
-+
- 	/*
- 	 * This is intentionally below the transport.injectBundleURI,
- 	 * we want to be able to inject into protocol v0, or into the
+ int is_bundle(const char *path, int quiet);
+ int read_bundle_header(const char *path, struct bundle_header *header);
++int read_bundle_header_fd(int fd, struct bundle_header *header,
++			  const char *report_path);
+ int create_bundle(struct repository *r, const char *path,
+ 		  int argc, const char **argv, struct strvec *pack_options,
+ 		  int version);
 -- 
 2.33.0.rc0.646.g585563e77f
 
