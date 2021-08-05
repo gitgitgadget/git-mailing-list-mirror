@@ -2,149 +2,213 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 859EAC4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 10:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C68DC4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 10:37:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 529986105A
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 10:13:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1CFAE60F02
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 10:37:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240411AbhHEKOA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 06:14:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39814 "EHLO
+        id S240476AbhHEKhu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 06:37:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240203AbhHEKN6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Aug 2021 06:13:58 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 750B9C061765
-        for <git@vger.kernel.org>; Thu,  5 Aug 2021 03:13:43 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id c16so5755115wrp.13
-        for <git@vger.kernel.org>; Thu, 05 Aug 2021 03:13:43 -0700 (PDT)
+        with ESMTP id S240436AbhHEKhs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Aug 2021 06:37:48 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BED70C061765
+        for <git@vger.kernel.org>; Thu,  5 Aug 2021 03:37:33 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id n12-20020a05600c3b8cb029025a67bbd40aso5975062wms.0
+        for <git@vger.kernel.org>; Thu, 05 Aug 2021 03:37:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=fjFnT3tFN3DDNUv4KHjTrSLRM5R8Axkx/uJ3oGXJX5Q=;
-        b=eEFv5JM4okYtX+fbp8OH/zmMsWtFkJH3xdRhTUHCxT6EunMbVN4rInioUGwEpx6G1u
-         HgvKCndgouDfa0Wil3EGk0H04ISG13jl4UsX7KjHK3TEQnGX3VyIWHzaWOAlbQjVEo9A
-         FXkQnW0Q4yQuXuCBm0MC5m8/C6bcsMtmQPAVzfmy8QfeKEl+SCc2IFmWxsw2a6Txsaj3
-         BkRMMq11k2uuiPaFLlT7SEi9RHus3wJ9LqzsrO3uZXaxUaTedfRK8ooo7SUTASPRHWeS
-         D2LanY1X3Ip39Thb4Z1C6gIK9GeOeREZdbIsS9EcQbhktCGgNo3DXoqbQjHtbcECtmGP
-         ADxA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=LYGNNGTtV5PMxU0yXjHlzbDhVx2xLiXrohB6G7SKTcE=;
+        b=q7gsTzQgKteP+Li6ai6QwV9co7WRnBbWFlPU4ieJWcKQ4Da4wIiV5AjdFPkS91sbxg
+         a5WEVo3fGFsyff9CHzVytbr9v6r4axhQUN1PJAlnGLfEbMh9fiPDY/dTZOYmjqbeASfC
+         wgIVyWBoUnU3UavkObQwA6mFNT5dg4DmL9whvdsgRgNgzUMJId7Q+EiT2xivENDvzesB
+         0a+APE0FcAi8ru79eDG4LYHsVJTJ3RXxQn//R8o1uSsn5pW/2dOMt1xBlvwRuHUEmUou
+         bVK1FprbCUb2JIUeGKgg2LOjXG1iSrTt1GOOGDmhUGc8DohMfBCUqYdw/gSl4ZmO4EJp
+         xoZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=fjFnT3tFN3DDNUv4KHjTrSLRM5R8Axkx/uJ3oGXJX5Q=;
-        b=FT+9QY35zJHzDzvDAySKrX0JhmZDEtcO3SbpTbgsOHnw3YYSLQ13aRStdSPmot4xRB
-         HEPm6edmU+Nyh6N2/37aXya6addOIu5GGZY7hFNTxR2vwigwgXXjH6T+P/Cz2FaMEs0a
-         B4XO5JUDpOZunukUvL6beDF5bI6Q/R3J++bYQ/m81Liq+IaAM2eYdVuw+Do+WRc61Dv4
-         vcxpRQx4OoaCUDFARyHczM47hLD6HqjpazJCQJfEr6R5g8oJiAY/LJe+1UeHFf9mN6IM
-         S/gSxS621qi69LNXPUZ95yBlW3jX3OEfcY5qbZbRWcgFcR6IV08xRZCvsDMt5UDse36m
-         ZIVQ==
-X-Gm-Message-State: AOAM532+AUloqKTBQM+GYng7GxluDOK9W7SPC5MFO9x/KuVHOI+naeqq
-        K0vvbkjjPDr1UuYNxGbUhGcBU+OTJiI=
-X-Google-Smtp-Source: ABdhPJyt7tBkW1uyNtHz2lwAIPRUw0vKVhkVkFSuWLDyTQVX8zbgGSeay/ZH6S5yCYDMOZ55R+a7OQ==
-X-Received: by 2002:adf:ba0d:: with SMTP id o13mr4217579wrg.134.1628158422096;
-        Thu, 05 Aug 2021 03:13:42 -0700 (PDT)
-Received: from [192.168.1.201] ([31.185.185.232])
-        by smtp.googlemail.com with ESMTPSA id j5sm5437540wrs.22.2021.08.05.03.13.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Aug 2021 03:13:41 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH] sequencer: warn on skipping previously seen commit
-To:     Junio C Hamano <gitster@pobox.com>,
-        Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org
-References: <4d83766ab3425a5f4b361df2ac505d07fefd7899.1628109852.git.steadmon@google.com>
- <xmqqsfzonbm1.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <d3f6eb6c-f2e4-b00c-3b4c-bf1e04c846b4@gmail.com>
-Date:   Thu, 5 Aug 2021 11:13:40 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=LYGNNGTtV5PMxU0yXjHlzbDhVx2xLiXrohB6G7SKTcE=;
+        b=Enlvp3UBg4e3K9GPIR/w72OdK3Csi5bV13izM7vohHLUdvLnwdZ349PBzI9R7SiT7H
+         zoGZBM19Jh8cens+KP1n2FOoBmmLzymYshYs3/+WppYKa5dfBb2trGioY4yxR5xogm7I
+         jPlFJ2hp74P+67CfoNon2WHgVHEERhRdF/bQ7GgvT7GmmjH7SC02IMrKsm3nZDCHTOQB
+         0mPHLHe9y7J8LSwgpbx/NhwlHAOXkwLmJc2p+2cXBTx4Ain6JFRTRdTc4264xDwcXjtp
+         nAL7d7L2/0QvwrINEkFJ7muYfNKS0hJOO8WAbvKoKeCqUtSAobe+blgedb93CORpfsTY
+         Z9sg==
+X-Gm-Message-State: AOAM531CkToCzrc06AYuVeOq4H6UlndAyy+EDvMeZsLPVeMNUcD61uiq
+        sFiPHsEfvIAu/RL2hUP4YyeG8+gNZRU25Q==
+X-Google-Smtp-Source: ABdhPJyABCLPLFpC+F+EY2jRR7s49XtS8LKX7vw/Ql+nxG65qUeWlRX6FAd84nh30uL4bE21epSO1A==
+X-Received: by 2002:a05:600c:1c11:: with SMTP id j17mr4243579wms.35.1628159851832;
+        Thu, 05 Aug 2021 03:37:31 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id e6sm5106152wme.6.2021.08.05.03.37.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Aug 2021 03:37:31 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Adam Spiers <git@adamspiers.org>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Ilya Bobyr <ilya.bobyr@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 0/9] test-lib tests: split off subtest code in t0000 into lib-subtest.sh
+Date:   Thu,  5 Aug 2021 12:37:19 +0200
+Message-Id: <cover-v3-0.9-0000000000-20210805T103237Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.rc0.635.g0ab9d6d3b5a
+In-Reply-To: <cover-0.8-00000000000-20210721T225504Z-avarab@gmail.com>
+References: <cover-0.8-00000000000-20210721T225504Z-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqsfzonbm1.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/08/2021 22:28, Junio C Hamano wrote:
-> Josh Steadmon <steadmon@google.com> writes:
-> 
->> Silently skipping commits when rebasing with --no-reapply-cherry-picks
->> (currently the default behavior) can cause user confusion. Issue a
->> warning in this case so that users are aware of what's happening.
->>
->> Signed-off-by: Josh Steadmon <steadmon@google.com>
->> ---
->>
->> We've had some complaints at $JOB where users were confused when
->> rebasing branches that contained commits that were previously
->> cherry-picked into their master branch. How do folks feel about adding a
->> warning in this case?
-> 
-> I'd unconditionally in support if this were done under --verbose
-> option, but it becomes iffy if this is done unconditionally.
+This series has been looking for reviewer attention for a while. It
+splits up the testing of test-lib.sh itself from t0000-basic.sh into a
+lib-subtest.sh library, a subsequent series of mine makes use of that
+library.
 
-Perhaps we could skip the warning if the user is going to edit the todo 
-list as they should see that the skipped commits have been commented 
-out. I'm not sure about requiring --verbose - that might mean the users 
-who would benefit most end up missing warning. As you say below I think 
-it depends how often it appears in practice.
+The diffstat is nicely negative since a lot of the test code is
+something we could delete as redundant, the tests are also made
+stricter as a result (e.g. now checking 1 exit code, not any
+non-zero).
 
-> This is because I do not expect everybody will stay to be ignorant
-> of the behaviour of the tool they use every day, and I'd fear that
-> we'd start hearing "yeah, I know the command would skip to avoid
-> duplicated changes, why waste lines to tell me that?" complaints.
-> 
-> Having said that, I _hope_ that in a project with good hygiene, such
-> a multiple cherry-picking would not be so common and an exception,
-> and if my _hope_ proves to be true, then I am OK with giving this
-> warning unconditionally.  The user may know what the command does
-> when it sees a duplicated change, but the warning becomes about the
-> presence of such duplicated changes, which would be a rare event
-> that is worth notifying about.
-> 
->>   		is_empty = is_original_commit_empty(commit);
->> -		if (!is_empty && (commit->object.flags & PATCHSAME))
->> +		if (!is_empty && (commit->object.flags & PATCHSAME)) {
->> +			warning(_("skipped previously seen commit %s"),
-> 
-> I am debating myself if s/seen/applied/ should be suggested here.
-> 
-> The existing text in the manual page says "a patch already accepted
-> upstream with a different commit message or timestamp will be
-> skipped", and "accepted" is a verb that would apply only in a
-> certain workflow, which is OK in the manual page that give more
-> context, but not here.  But 'seen' feels a bit too weak to me.
+For v2, see:
+https://lore.kernel.org/git/cover-0.8-00000000000-20210721T225504Z-avarab@gmail.com/
 
-Yes, I think 'applied' or 'cherry-picked' would be better than 'seen'
+The ony tricky part of this series is the "clever" way of (ab)using
+the object store and tags to detect copy/pasted tests. For this v3
+I've split that up into its own commit, see [56]/9 for the removal of
+the copy/pasting and the assertion, respectively.
 
->> +	if (skipped_commit)
->> +		warning(_("use --reapply-cherry-picks to include skipped commits"));
-> 
-> I'd be hesitant to endorse doing this kind of "here is how to use
-> this command" unconditionally.  Perhaps under --verbose, or hide it
-> under "advise.*".
+This series also depended on ps/t0000-output-directory-fix and
+jk/t0000-subtests-fix, since both made it mo "master" it's been
+rebased on "master". The range-diff that's not the split-up around
+[56]/9 is due to that rebasing.
 
-and use advise() rather than warning(). I'm guess this might be helpful 
-but it wont help them get their commits back as there is no way to stop 
-the rebase from dropping them at that point.
+Ævar Arnfjörð Bjarmason (9):
+  test-lib tests: move "run_sub_test" to a new lib-subtest.sh
+  test-lib tests: split up "write and run" into two functions
+  test-lib tests: stop using a subshell in write_sub_test_lib_test()
+  test-lib tests: don't provide a description for the sub-tests
+  test-lib tests: get rid of copy/pasted mock test code
+  test-lib tests: assert no copy/pasted mock test code
+  test-lib tests: avoid subshell for "test_cmp" for readability
+  test-lib tests: refactor common part of check_sub_test_lib_test*()
+  test-lib tests: assert 1 exit code, not non-zero
 
-Best Wishes
+ t/lib-subtest.sh | 127 ++++++++++++++
+ t/t0000-basic.sh | 448 +++++++++++++----------------------------------
+ 2 files changed, 245 insertions(+), 330 deletions(-)
+ create mode 100644 t/lib-subtest.sh
 
-Phillip
-
-> Thanks.
-> 
+Range-diff against v2:
+ 1:  7a06ea3a7b =  1:  3f34420a3e test-lib tests: move "run_sub_test" to a new lib-subtest.sh
+ 2:  28117b84ab !  2:  c9c16016da test-lib tests: split up "write and run" into two functions
+    @@ t/lib-subtest.sh: _run_sub_test_lib_test_common () {
+      run_sub_test_lib_test () {
+      	_run_sub_test_lib_test_common '' "$@"
+      }
+    -@@ t/lib-subtest.sh: check_sub_test_lib_test_err () {
+    - 		test_cmp expect.err err
+    - 	)
+    - }
+    -+
+     
+      ## t/t0000-basic.sh ##
+     @@ t/t0000-basic.sh: test_expect_success 'success is reported like this' '
+ 3:  7d5ed335a3 =  3:  76f57eadcd test-lib tests: stop using a subshell in write_sub_test_lib_test()
+ 4:  2a0dd64da9 =  4:  cde015c7dd test-lib tests: don't provide a description for the sub-tests
+ 5:  f60190dec6 !  5:  7d1e6b9a3e test-lib tests: get rid of copy/pasted mock test code
+    @@ Commit message
+         run_sub_test_lib_test*() functions let's fix those tests in
+         t0000-basic.sh that were verbosely copy/pasting earlier tests.
+     
+    -    I'm (ab)using writing a tag object under a ref-name that's
+    -    content-addressable from the content of the test script. If we can
+    -    update-ref that it's unique, if not we've got a duplicate. The tag
+    -    object stores the name of the earlier test for reporting the error.
+    +    In a subsequent commit we'll add an assertion to check whether we
+    +    caught all of the copy/pasting.
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    - ## t/lib-subtest.sh ##
+    -@@
+    -+_assert_unique_sub_test () {
+    -+	name=$1 &&
+    -+
+    -+	# Alert about the copy/paste programming
+    -+	hash=$(git hash-object -w "$name") &&
+    -+	cat >tag.sig <<-EOF &&
+    -+	object $hash
+    -+	type blob
+    -+	tag $hash
+    -+	tagger . <> 0 +0000
+    -+
+    -+	duplicate script detected!
+    -+
+    -+	This test script was already written as:
+    -+
+    -+	$name
+    -+
+    -+	You can just re-use its test code with your own
+    -+	run_sub_test_lib_test*()
+    -+	EOF
+    -+
+    -+	tag=$(git mktag <tag.sig) &&
+    -+	if ! git update-ref refs/tags/blob-$hash $tag $(test_oid zero) 2>/dev/null
+    -+	then
+    -+		msg=$(git for-each-ref refs/tags/blob-$hash \
+    -+			--format='%(contents)' refs/tags/blob-$hash)
+    -+		error "on write of $name: $msg"
+    -+		return 1
+    -+	fi
+    -+}
+    -+
+    - write_sub_test_lib_test () {
+    - 	name="$1" # stdin is the body of the test code
+    - 	mkdir "$name" &&
+    -@@ t/lib-subtest.sh: write_sub_test_lib_test () {
+    - 	# Point to the t/test-lib.sh, which isn't in ../ as usual
+    - 	. "\$TEST_DIRECTORY"/test-lib.sh
+    - 	EOF
+    --	cat >>"$name/$name.sh"
+    -+	cat >>"$name/$name.sh" &&
+    -+	_assert_unique_sub_test "$name/$name.sh"
+    - }
+    - 
+    - _run_sub_test_lib_test_common () {
+    -
+      ## t/t0000-basic.sh ##
+     @@ t/t0000-basic.sh: test_expect_success 'subtest: --verbose option' '
+      '
+ -:  ---------- >  6:  bc79b29f3c test-lib tests: assert no copy/pasted mock test code
+ 6:  022ddbabf6 !  7:  48176f3e60 test-lib tests: avoid subshell for "test_cmp" for readability
+    @@ t/lib-subtest.sh: run_sub_test_lib_test_err () {
+     +	sed -e 's/^> //' -e 's/Z$//' <&3 >"$name"/expect.err &&
+     +	test_cmp "$name"/expect.err "$name"/err
+      }
+    - 
+ 7:  ae0226e164 =  8:  fda7c4fbe3 test-lib tests: refactor common part of check_sub_test_lib_test*()
+ 8:  676547e001 =  9:  dd0af5bd6c test-lib tests: assert 1 exit code, not non-zero
+-- 
+2.33.0.rc0.635.g0ab9d6d3b5a
 
