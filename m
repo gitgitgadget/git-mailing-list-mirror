@@ -2,231 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CB24C4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 15:08:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23957C4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 16:16:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C54E60EEA
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 15:08:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0955A60F58
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 16:16:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241946AbhHEPIQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 11:08:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51094 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241835AbhHEPID (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Aug 2021 11:08:03 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F56AC06179B
-        for <git@vger.kernel.org>; Thu,  5 Aug 2021 08:07:48 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id z4so6990835wrv.11
-        for <git@vger.kernel.org>; Thu, 05 Aug 2021 08:07:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Zq9yKr/AODn6tSpbrJc7ZIRaanX1FQvkpW61hm4i6HI=;
-        b=BVHQZ+5BxLKwaapDL3qTsJLrZhqH+hUBjECglirzy3rW/qRUlokWJ4sZn/7aeEy+fo
-         InfhvPkzfKRHs2rm9ZeRrkU6qLtfXjs3aSi2OVHl5uqNFbw/oU2pTQOy5vcYmHHBFiEk
-         tAekcV2y1ZqY45C3o4e+W8YCiJHwQZhWJEcCxk9b0XMjqVtIgpOgkvnBZ0zkBouX7Coy
-         CBvZLAjHb/Iq/CCHlbiYzJ/iBThrntz14RkucxTgphF5F6icZiZLyxk+NeJKT+cLa8Mf
-         fAnxtbNjWSPB3hO9Q7PrZntiX3aLDPe4G9XGxuitSVACKJwA9wILdf/Wq72LUwhDLYqW
-         gEaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Zq9yKr/AODn6tSpbrJc7ZIRaanX1FQvkpW61hm4i6HI=;
-        b=beoeCI2Gn9dpEnqiyRfTh6fIytggD6qG4GJ7dgCgFooZSA4y7RdIEsVvCn4lN3NoJR
-         v7MPSjGN6Ba3QOkOlIYZoeNIfrvp4XUmFfg51II2fH++FrZtXPu7W434viHyovnR0ixw
-         Yk+5JSlIHyYmsmR4LpegJ7txHmoNB7z6879b9F1Fkh7HIqKbLIKDXZHgSDKph4Ghwl/w
-         J9QQs/c6DVRhLuviDD9E5kr8mux6CwHM5WwnR2gvIybDd+sZjExbEoLhPBXBxxVrjiHD
-         3ziTA/0KzJN4D5x26IBs6UJCLGRfDDp4f7+hWRoYxV4iBpNDK7FUFinoggM0TEQogwoU
-         EmvA==
-X-Gm-Message-State: AOAM532M79Q8IyL7E+4tBzfEqL7sJ+uE6ct4LCXAHw6tORF9sh/AUWzp
-        sBz1Hum4iCia4svnDbFUnPJcNWRFfZJY4g==
-X-Google-Smtp-Source: ABdhPJxsl9vxNwtmVQLR8UVlIRSliaUiaejmDAqkWhuIpJekIaxlhK+gP5dgjp1XzGe4axvS0CO9eg==
-X-Received: by 2002:adf:dfcb:: with SMTP id q11mr5896514wrn.16.1628176066612;
-        Thu, 05 Aug 2021 08:07:46 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id w4sm6856340wrm.24.2021.08.05.08.07.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Aug 2021 08:07:46 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <christian.couder@gmail.com>,
-        Albert Cui <albertqcui@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [RFC PATCH 13/13] bundle-uri docs: add design notes
-Date:   Thu,  5 Aug 2021 17:07:29 +0200
-Message-Id: <RFC-patch-13.13-1e657ed27a-20210805T150534Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.rc0.646.g585563e77f
-In-Reply-To: <RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com>
-References: <RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com>
+        id S230327AbhHEQRJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 12:17:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55056 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229842AbhHEQRI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Aug 2021 12:17:08 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F3303E61FB;
+        Thu,  5 Aug 2021 12:16:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2VkOZFeuzs5jPXZceRXHccO1u7I53viN/FwtcS
+        kwhcI=; b=F6dQCsJgkonKKZKyK9GG5pC9zyKa0p1FSD1zP2k7fteHczR3aax0eY
+        mN6nw5YP9oEHhyhUNF6duDL1UebiL8GKiEYToB/h10buarmrS+O5Y1rEduGw0vdu
+        y/fnJwrDic+xpNAC+WRBOdUD4AvFqGsa7+sSGOVyiIftIOdzjGXFM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E81B4E61FA;
+        Thu,  5 Aug 2021 12:16:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 677B2E61F9;
+        Thu,  5 Aug 2021 12:16:53 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v3 4/4] revision: avoid hitting packfiles when commits
+ are in commit-graph
+References: <cover.1624858240.git.ps@pks.im> <cover.1627896460.git.ps@pks.im>
+        <f6fc2a5e6d94befa915fb59b6296ce3153820c13.1627896460.git.ps@pks.im>
+        <xmqqwnp3vcow.fsf@gitster.g> <YQkJdDvRtyOPzszU@ncase>
+        <xmqqmtpytcny.fsf@gitster.g> <YQvFGuf3Ba/5UNXk@ncase>
+Date:   Thu, 05 Aug 2021 09:16:52 -0700
+In-Reply-To: <YQvFGuf3Ba/5UNXk@ncase> (Patrick Steinhardt's message of "Thu, 5
+        Aug 2021 13:01:46 +0200")
+Message-ID: <xmqqy29flvd7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8C07BE76-F608-11EB-BA87-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a design doc for the bundle-uri protocol extension to go along
-with the packfile-uri extension added in cd8402e0fd8 (Documentation:
-add Packfile URIs design doc, 2020-06-10).
+Patrick Steinhardt <ps@pks.im> writes:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/technical/bundle-uri.txt  | 119 ++++++++++++++++++++++++
- Documentation/technical/protocol-v2.txt |   5 +
- 2 files changed, 124 insertions(+)
- create mode 100644 Documentation/technical/bundle-uri.txt
+> On Tue, Aug 03, 2021 at 02:56:49PM -0700, Junio C Hamano wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> 
+>> > I wonder what our stance on this is. I can definitely understand the
+>> > angle that this would be a deal breaker given that we now claim commits
+>> > exist which don't anymore.
+>> 
+>> An optimization that produces a wrong result very fast is a useless
+>> optimization that has no place in our codebase.  But don't we have
+>> some clue recorded in the commit graph file that tells us with what
+>> packfile the graph is to be used (iow, if the named packfile still
+>> exists there, the objects recorded in the graph file are to be found
+>> there) or something?
+>
+> Unfortunately, no. For bitmaps we have this information given that a
+> bitmap is tied to a specific pack anyway. But for commit-graphs, the
+> story is different given that they don't really care about the packs per
+> se, but only about the commits.
 
-diff --git a/Documentation/technical/bundle-uri.txt b/Documentation/technical/bundle-uri.txt
-new file mode 100644
-index 0000000000..5ae9a15eaf
---- /dev/null
-+++ b/Documentation/technical/bundle-uri.txt
-@@ -0,0 +1,119 @@
-+Bundle URI Design Notes
-+=======================
-+
-+Protocol
-+--------
-+
-+See `bundle-uri` in the link:protocol-v2.html[protocol-v2]
-+documentation for a discussion of the bundle-uri command, and the
-+expectations of clients and servers.
-+
-+This document is a a more general discussion of how the `bundle-uri`
-+command fits in with the rest of the git ecosystem, its design goals
-+and non-goals, comparison to alternatives etc.
-+
-+Comparison with Packfile URIs
-+-----------------------------
-+
-+There is a similar "Packfile URIs" facility, see the
-+link:packfile-uri.html[packfile-uri] documentation for details.
-+
-+The Packfile URIs facility requires a much closer cooperation between
-+CDN and server than the bundle URI facility.
-+
-+I.e. the server MUST know what objects exist in the packfile URI it's
-+pointing to, as well as its pack checksum. Failure to do so will not
-+only result in a client error (the packfile hash won't match), but
-+even if it got past that would likely result in a corrupt repository
-+with tips pointing to unreachable objects.
-+
-+By comparison the bundle URIs are meant to be a "dumb" solution
-+friendly to e.g. having a weekly cronjob take a snapshot of a git
-+repository, that snapshot being uploaded to a network of FTP mirrors
-+(which may be inconsistent or out of date).
-+
-+The server does not need to know what state the side-channel download
-+is at, because the client will first validate it, and then optionally
-+negotiate with the server using what it discovers there.
-+
-+Using the local `transfer.injectBundleURI` configuration variable (see
-+linkgit:git-config[1]) the `bundle-uri` mechanism doesn't even need
-+the server to support it.
-+
-+Security
-+--------
-+
-+The omission of something equivalent to the packfile <OID> in the
-+Packfile URIs protocol is intentional, as having it would require
-+closer server and CDN cooperation than some server operators are
-+comfortable with.
-+
-+Furthermore, it is not needed for security. The server doesn't need to
-+trust its CDN. If the server were to attempt to send harmful content
-+to the client, the result would not validate against the server's
-+provided ref tips gotten from ls-refs.
-+
-+The lack of a such a hash does leave room open to a malicious CDN
-+operation to be annoying however. E.g. they could inject irrelevant
-+objects into the bundles, which would enlarge the downloaded
-+repository until a "gc" would eventually throw them away.
-+
-+In practice the lack of a hash is considered to be a non-issue. Anyone
-+concerned about such security problems between their server and their
-+CDN is going to be pointing to a "https" URL under their control. For
-+a client the "threat" is the same as without bundle-uri, i.e. a server
-+is free to be annoying today and send you garbage in the PACK that you
-+won't need.
-+
-+Security issues peculiar to bundle-uri
-+--------------------------------------
-+
-+Both packfile-uri and bundle-uri use the `fetch.uriProtocols`
-+configuration variable (see linkgit:git-config[1]) to configure which
-+protocols they support.
-+
-+By default this is set to "http,https" for both, but bundle-uri
-+supports adding "file" to that list. The server can thus point to
-+"file://" URIs it expects the client to have access to.
-+
-+This is primarily intended for use with the `transfer.injectBundleURI`
-+mechanism, but can also be useful e.g. in a centralized environment
-+where a server might point to a "file:///mnt/bundles/big-repo.bdl" it
-+knows to be mounted on the local machine (e.g. a racked server),
-+points to it in its "bundle-uri" response.
-+
-+The client can then add "file" to the `fetch.uriProtocols` list to
-+obey such responses. That does mean that a malicious server can point
-+to any arbitrary file on the local machine. The threat of this is
-+considered minimal, since anyone adding `file` to `fetch.uriProtocols`
-+likely knows what they're doing and controls both ands, and the worst
-+they can do is make a curl(1) pipe garbage into "index-pack" (which
-+will likely promptly die on the non-PACK-file).
-+
-+Security comparison with packfile-uri
-+-------------------------------------
-+
-+The initial implementation of packfile-uri needed special adjusting to
-+run "git fsck" on incoming .gitmodules files, this was to deal with a
-+general security issue in git, See CVE-2018-17456.
-+
-+The current packfile-uri mechanism requires special handling around
-+"fsck" to do such cross-PACK fsck's, this is because it first indexes
-+the "incremental" PACK, and then any PACK(s) provided via
-+packfile-uri, before finally doing a full connectivity check.
-+
-+This is effect doing the fsck one might do via "clone" and "fetch" in
-+reverse, or the equivalent of starting with the incremental "fetch",
-+followed by the "clone".
-+
-+Since the packfile-uri mechanism can result in the .gitmodules blob
-+referenced by such a "fetch" to be in the pack for the "clone" the
-+fetch-pack process needs to keep state between the indexing of
-+multiple packs, to remember to fsck the blob (via the "clone") later
-+after seeing it in a tree (from the "fetch).
-+
-+There are no known security issues with the way packfile-uri does
-+this, but since bundle-uri effectively emulates what a which doesn't
-+support either "bundle-uri" or "packfile-uri" would do on clone/fetch,
-+any future security issues peculiar to the packfile-uri approach are
-+unlikely to be shared by it.
-diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-index d10d5e9ef6..5536ea4b7e 100644
---- a/Documentation/technical/protocol-v2.txt
-+++ b/Documentation/technical/protocol-v2.txt
-@@ -696,3 +696,8 @@ intended to support future features such as:
-    they've got that OID already (for multi-tips the client would need
-    to fetch the bundle, or do e.g. HTTP range requests to get its
-    header).
-+
-+bundle-uri SEE ALSO
-+^^^^^^^^^^^^^^^^^^^
-+
-+See the link:bundle-uri.html[Bundle URI Design Notes] for more.
--- 
-2.33.0.rc0.646.g585563e77f
+[jc: refreshed Cc: list to limit to those in "shortlog commit-graph.[ch]"]
 
+On this subject, I'd ask those who have worked on the commit-graph
+for ideas.  It would be a glaring flaw _if_ the data structure that
+is designed to be a "cache of precomputed summary that would help
+runtime performance" has no way to detect out-of-date cache and/or
+to invalidate when it goes stale, but I somehow doubt that is the
+case, given the caliber of folks who have worked in it.  To me, it
+feels a lot more likely that we may be missing an existing mechanism
+to do so.  It could be that ...
+
+> We can do the following on top though:
+>
+> diff --git a/revision.c b/revision.c
+> index 3527ef3f65..9e62de20ab 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -368,6 +368,8 @@ static struct object *get_reference(struct rev_info *revs, const char *name,
+>  				object = NULL;
+>  				goto out;
+>  			}
+> +		} else if (!repo_has_object_file(revs->repo, oid)) {
+> +			die("bad object %s", name);
+>  		}
+>  	}
+>
+> We assert that the object exists, but `repo_has_object_file()` won't try
+> to unpack the object header given that we request no info about the
+> object. And because the object ID has been part of the commit-graph, we
+> know that it's a commit. It's a bit slower compared to the version where
+> we don't assert object existence, but still a lot faster compared to
+> looking up the object type via the ODB.
+
+... the above is the designed way to correctly use the commit-graph
+data?  That is, you find an object in the commit-graph, and you make
+sure the object exists in the object store in some other means
+(because there is no mechanism for commit-graph to prevent a gc from
+pruning an object recorded in it away) before you consider you can
+use the object.
+
+Thoughts and help?
+
+Thanks.
