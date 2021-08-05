@@ -2,180 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FF55C4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 03:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 715F7C4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 03:54:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1AF7561078
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 03:16:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5990D61073
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 03:54:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238456AbhHEDQw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 23:16:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58576 "EHLO
+        id S236641AbhHEDyp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 23:54:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238446AbhHEDQv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Aug 2021 23:16:51 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D8D2C061765
-        for <git@vger.kernel.org>; Wed,  4 Aug 2021 20:16:37 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id e2-20020a17090a4a02b029016f3020d867so6548704pjh.3
-        for <git@vger.kernel.org>; Wed, 04 Aug 2021 20:16:37 -0700 (PDT)
+        with ESMTP id S235929AbhHEDyo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Aug 2021 23:54:44 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79F2AC061765
+        for <git@vger.kernel.org>; Wed,  4 Aug 2021 20:54:31 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id s22-20020a17090a1c16b0290177caeba067so12165103pjs.0
+        for <git@vger.kernel.org>; Wed, 04 Aug 2021 20:54:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=0Zp5AaJxdX8xxWNzTGuh0QIpxMBtixVmiRtXDLvf8YE=;
-        b=JssqboUa3EzekPDMG+SmG0AfEU1upEgmqv4Pew8e22ZP5X1Q4/8oksqr4Szr4ttzZw
-         w6Z1kIeTO6RZhxwZYwPlkwSHmZmC9f4dpjNXha5Nj8lspPhZsRh6cl550rMwQ8vGeHri
-         ycNVEXBbBhl66XHqcAe36pCu5p/JbhBtxBIOLfuSlZ6AIbg3cuk3Havx4cBABaKI7rdK
-         yTRSuV3oo6JlbTTkbS0X7MeQ+qotC8/l4Kmn1BDaP9JYtvoYAkVCgW267b2EU9hSfhnD
-         ly4oEThMA/eLom0NUUh/Qwh/FGyf9IacytifSnwPrf46eby31zFlKrSYEzLd/7VjgKdZ
-         5pZQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=YIQfEfpfI+68fC5ybSmPmeN+CTRTmISSxT/asB9PySE=;
+        b=IibyawPabgJ2L1hpiJP9a6BG9LyrhRMqgpVf4qri8aaj4f+3I2eM69txilv5PApOuu
+         Als79SU/TEV5tpfNIXIpgKCOaQOhQEmT3fACuI1wlpqWtz3fGeUZ+WDy22FA/UrFD9R+
+         U5KChjIz8tz7F5G3y2uyx9RVD8UErHaPr419mS9mAQtEWoXG0liQQMTgMWl45dIPKnYO
+         Sg75BLrnK0wEX9hqRocmDltod2pIqY1yvN8r+ybnsDw66ZQHIN2heM9HTLmNo2nmAvzh
+         YXeS86YDd6kkN+OKhfwKeU1YAV7DoILXkEdOD3XLKr9o2HpMB2cmbn6AUwhZ4ux5Trg4
+         iC/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=0Zp5AaJxdX8xxWNzTGuh0QIpxMBtixVmiRtXDLvf8YE=;
-        b=tZug9HyrGYtqfr/Hxthmayg3gHSCyfbnOMzcawBY3zCEw8asXNwJPR7EQG3pCPBdcF
-         p7t55M/hdktMIi9Uc4bO6z131Ws2oaDMUDTHU1XWNzEyqDQAGJAR/VpT9meaZ1ooaxIx
-         r+mFt6K6lLMBmmJ2DWFf58c42TS/yRVpNFddkk6aF2xah4cKXpnzvh3DDpmeAK3DMdfD
-         ybf6YioCytaHtlwPlKkmvz07I7TuZcF1uy1HvwUMvwq8SvrRmhbTj4MUIsYJ9AEAGzyH
-         TocQnJyPj5hQxyVIfiZodJMKe0A7MmT9QeZ611YFmxUP8dvh1bXSaRTOEtUxPm/zFrff
-         SIgA==
-X-Gm-Message-State: AOAM531YTYLDXWm7rVJA07cmu/+SNJVzD90/VhqyLiRIxMK+Lw8WW841
-        m39Z+mvMdA7R/KKtH+wU78M=
-X-Google-Smtp-Source: ABdhPJyKKIEp1OlUAWcNZYRmeG1cQg1Lmcosjdp6RBr5ITcSpZ8NttM76ulKK1tWkNBe5pM8E8z3JA==
-X-Received: by 2002:aa7:8bd4:0:b029:3b4:d3d4:2ecd with SMTP id s20-20020aa78bd40000b02903b4d3d42ecdmr2587868pfd.58.1628133396943;
-        Wed, 04 Aug 2021 20:16:36 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:f138:fa21:11ea:ee0a])
-        by smtp.gmail.com with ESMTPSA id g25sm4532236pfk.138.2021.08.04.20.16.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Aug 2021 20:16:36 -0700 (PDT)
-Date:   Wed, 4 Aug 2021 20:16:33 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        huang guanlong <gl041188@gmail.com>, git@vger.kernel.org,
-        Hudson Ayers <hudsonayers@google.com>, Taylor Yu <tlyu@mit.edu>
-Subject: Re: [PATCH v3 10/10] diff-merges: let "-m" imply "-p"
-Message-ID: <YQtYEftByY8cNMml@google.com>
-References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
- <20210520214703.27323-1-sorganov@gmail.com>
- <20210520214703.27323-11-sorganov@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YIQfEfpfI+68fC5ybSmPmeN+CTRTmISSxT/asB9PySE=;
+        b=IQ0vzQomN/0Lo6oczppyyViDfTsOeztzPj4Vl2NU+/HiPHp2XRQVimgzKvzLfpjLBo
+         dCGlpfNaLrt7btrbK+LGqTs7/OQJj8PWbAcJUzBpdVAmuQepAQPj8u60ScixwV9o9CfV
+         4qyAWzh7K226hAod1qZ/LU5tkR2wd3DiG4bZMx2xu64EsLDtvJ9bKLLzgjFm8yQC/rgU
+         03Qh3d8naBpsOO871gWJbA/N4EpsKtZak7HWA5Cqe705HMYsjQVgqqrvLKTp/OUz+v2j
+         12ouQvD/ynuo4NyHXuqAiXsUM1oPOhxD1rgb3jmsk7CJpm6pQbCXog6eTI/vymElpSYh
+         QnrQ==
+X-Gm-Message-State: AOAM530G/eh6iZIVGD/R5GfCE2KliWWzXiks49DhcjsY3nvE34Q+g4uw
+        Vpn46CKzfYiXSlgfskfPbwyEV4MJHgWkEA6iNHI=
+X-Google-Smtp-Source: ABdhPJw1fgiFK1OaUgYJwyrhYIox8tSQ8ZmktcjolQolb+4LKtTB22p+B0gXdSM1GsGf2d8azcliHVN5wL3lIwPgxH4=
+X-Received: by 2002:a17:902:e28a:b029:12c:13e9:1166 with SMTP id
+ o10-20020a170902e28ab029012c13e91166mr403844plc.47.1628135670942; Wed, 04 Aug
+ 2021 20:54:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210520214703.27323-11-sorganov@gmail.com>
+References: <pull.1009.git.1627579637.gitgitgadget@gmail.com>
+ <9212bbf4e3cab20fe49ab8e6dd4ac0277c4f2805.1627579637.git.gitgitgadget@gmail.com>
+ <CABPp-BGbRbyCYYS+NcYrC-T4hJf7BCoLE2HsXFM4K51A0wSgcg@mail.gmail.com>
+ <76639e16-204d-7812-d4c5-56c70e280bed@gmail.com> <CABPp-BE1aKAsp6yKAzM-djRHuiP=GHC_Q7xZxMWPJ=f28bOeUg@mail.gmail.com>
+ <53d1b6ac-76a0-034b-109c-df2835c8fad6@gmail.com>
+In-Reply-To: <53d1b6ac-76a0-034b-109c-df2835c8fad6@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 4 Aug 2021 21:54:19 -0600
+Message-ID: <CABPp-BGi1CBnerhtV87Do+=RyEkSexRFPqG566MSvM3zDWam_A@mail.gmail.com>
+Subject: Re: [PATCH 2/2] sparse-checkout: clear tracked sparse dirs
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sergey,
+On Wed, Aug 4, 2021 at 7:55 PM Derrick Stolee <stolee@gmail.com> wrote:
+>
+> On 8/2/2021 12:17 PM, Elijah Newren wrote:
+> > On Mon, Aug 2, 2021 at 8:34 AM Derrick Stolee <stolee@gmail.com> wrote:
+> >>
+> >> On 7/30/2021 9:52 AM, Elijah Newren wrote:
+> >>> On Thu, Jul 29, 2021 at 11:27 AM Derrick Stolee via GitGitGadget
+> >>> <gitgitgadget@gmail.com> wrote:
+> > ...
+> >>>> +                */
+> >>>> +               if (S_ISSPARSEDIR(ce->ce_mode) &&
+> >>>> +                   repo_file_exists(r, ce->name)) {
+> >>>> +                       strbuf_setlen(&path, pathlen);
+> >>>> +                       strbuf_addstr(&path, ce->name);
+> >>>> +
+> >>>> +                       /*
+> >>>> +                        * Removal is "best effort". If something blocks
+> >>>> +                        * the deletion, then continue with a warning.
+> >>>> +                        */
+> >>>> +                       if (remove_dir_recursively(&path, 0))
+> >>>> +                               warning(_("failed to remove directory '%s'"), path.buf);
+> >>>
+> >>> Um, doesn't this delete untracked files that are not ignored as well
+> >>> as the ignored files?  If so, was that intentional?  I'm fully on
+> >>> board with removing the gitignore'd files, but I'm worried removing
+> >>> other untracked files is dangerous.
+> >>
+> >> I believe that 'git sparse-checkout (set|add|reapply)' will fail before
+> >> reaching this method if there are untracked files that could potentially
+> >> be removed. I will double-check to ensure this is the case. It is
+> >> definitely my intention to protect any untracked, non-ignored files in
+> >> these directories by failing the sparse-checkout modification.
+>
+> This is _not_ true, and I can document it with a test.
+>
+> Having untracked files outside of the sparse cone is just as bad as
+> ignored files, so I want to ensure that these get cleaned up, too.
+>
+> The correct thing would be to prevent the 'git sparse-checkout
+> (set|add|reapply)' command from making any changes to the sparse-checkout
+> cone or the worktree if there are untracked files that would be deleted.
+> (Right? Or is there another solution that I'm missing here?)
 
-Sergey Organov wrote:
+We could sparsify as much as possible and print warnings, much like we
+do with tracked files that are modified but not staged.  In fact, it
+might feel inconsistent if we sparsify as much as possible for one
+type of file, and abort if we cannot completely sparsify for a
+different type of file.  We could consider changing how we treat
+tracked files that are modified but not staged and have them abort the
+sparse-checkout commands as well, but I worry that might cause
+problems during conflict resolution in the middle of
+merges/rebases/cherry-picks/reverts.  I don't want users caught where
+they need to update their sparsity paths to gain new files/directories
+that will help them resolve some conflicts, but be unable to update
+their sparsity paths because they have conflicts.
 
-> Fix long standing inconsistency between -c/--cc that do imply -p on
-> one side, and -m that did not imply -p on the other side.
+That said, the basic idea of aborting sparse-checkout in cone mode
+when there are untracked unignored files in the way of removing
+directories sounds reasonable, if there's some clever way to avoid or
+ameliorate the inconsistency issues mentioned above.  Implementing it
+might require walking all untracked (and tracked?) files twice,
+though, because if there are untracked unignored files in the way, we
+probably don't want to abort after first deleting lots of ignored
+files.  (And there's a small race window in the double walk...)
+However, I don't expect people to run sparse-checkout commands all
+that often, so the double walk is probably a perfectly reasonable
+performance cost.  I just wanted to note it.
 
-As I mentioned before, I quite like this change for interactive use.
+> >>> My implementation of this concept (in an external tool) was more along
+> >>> the lines of
+> >>>
+> >>>   * Get $LIST_OF_NON_SPARSE_DIRECTORIES by walking `git ls-files -t`
+> >>> output and finding common fully-sparse directories
+> >>>   * git clean -fX $LIST_OF_NON_SPARSE_DIRECTORIES
+> >>
+> >> I initially was running 'git clean -dfx -- <dir> ...' but that also
+> >> requires parsing and expanding the index (or being very careful with
+> >> the sparse index).
+> >
+> > `git clean -dfx -- <dir> ...` could also be very dangerous because
+> > it'd delete untracked non-ignored files.  You want -X rather than -x.
+> > One of those cases where capitalization is critical.
+>
+> Good point. I'd like to avoid using `git clean` as a subcommand, if
+> possible, that way we have one fewer thing to do before integrating
+> the `git sparse-checkout` builtin with the sparse index.
 
-But:
-
-[...]
-> It's also worth to be noticed that exact historical semantics of -m is
-> still provided by --diff-merges=separate.
-
-Is that true?  When I try it locally, -m shows no diff by default,
-whereas --diff-merges=separate shows a diff for merges.
-
-Anyway, the reason I write is that this ended up tripping up some
-scripts, namely Rust's bootstrap.py
-(https://github.com/rust-lang/rust/commit/df004df3a79b70b4af2b8c267457a5be76bb0d85):
-
-	git log --author=bors --format=%H -n1 \
-		-m --first-parent \
-		-- src/llvm-project
-
-It's not clear what that *meant* the -m to do --- perhaps they intended
-it as an abbreviation for --merges.  That was fixed in Rust by
-https://github.com/rust-lang/rust/pull/87513; in the current code at
-https://github.com/rust-lang/rust/blob/master/src/bootstrap/bootstrap.py
-Rust now uses
-
-	git log --author=bors --format=%H -n1 \
-		--no-patch --first-parent \
-		-- [etc]
-
-There's also an open pull request at
-https://github.com/rust-lang/rust/pull/87532 to simplify it further, to
-
-	git rev-list --author=bors@rust-lang.org -n1 \
-		--merges --first-parent HEAD \
-		-- [etc]
-
-In any event, the code using -m was pretty clearly a typo, and people
-trying to build current Rust won't be affected since it's fixed
-already, so this might not be too worrisome.
-
-What happens if someone wants to build an older version of Rust?
-bootstrap.py is "symlinked" from x.py at the toplevel of a Rust
-distribution; the README explains
-
-	## Installing from Source
-
-	The Rust build system uses a Python script called `x.py` to build the compiler,
-	which manages the bootstrapping process. It lives in the root of the project.
-
-	The `x.py` command can be run directly on most systems in the following format:
-
-	```sh
-	./x.py <subcommand> [flags]
-	```
-
-so this tool is fundamental to everything.  The relevant code using 'git
-log -m' is used in the
-
-	if self.downloading_llvm() and stage0:
-
-case to find out how recently llvm changed, in order to check that we
-have downloaded that recent of a version of llvm.  It has a
-not-too-complicated workaround: if you build LLVM from source using
-the src/llvm-project submodule then this logic does not get triggered.
-
-In other words, I don't think this issue will be _too_ problematic for
-people working with the Rust project.  Hudson or Taylor (cc-ed) may be
-able to correct me if that's wrong.
-
-Still, it does feel a bit like we've pulled the rug from underneath
-script authors.  "git log --format=%H" is generally a pretty stable
-tool, and here we've changed it when passing -m from not printing
-diffs to printing diffs.  What do you think we should do?
-
-Some possibilities:
-
- a. Revert 'diff-merges: let "-m" imply "-p"'.  This buys us time to
-    make a more targeted change, make the change more gradually in a
-    future release, or just stop encouraging use of "-m" in docs.
-
- b. Make "-m" imply "-p", except in some more 'script-ish'
-    circumstances (e.g. when using log --format with a format string)
-
- c. Go ahead with the change and advertise it in release notes.
-
-Searching for other examples using
-https://codesearch.debian.net/search?q=%5Cbgit%5Cb.*%5Cblog%5Cb.*-m%5Cb&literal=0,
-I find that almost all uses of "git log -m" also include "-p", so (c)
-is kind of tempting.  What do you think?
-
-Thanks,
-Jonathan
+Oh, I didn't want to invoke a subcommand, I was just pointing out
+where similar code might be found in case we wanted to call the same
+functions from elsewhere (or maybe even turn some of it into library
+functions we could call).  But that might be a moot point if we end up
+making sparse-checkout fail if there are untracked unignored files
+hanging around in the relevant directories.
