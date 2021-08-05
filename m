@@ -8,71 +8,68 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F5BBC432BE
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 10:37:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D366BC4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 11:01:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1397D6105A
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 10:37:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B24D361102
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 11:01:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240508AbhHEKiF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 06:38:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45178 "EHLO
+        id S240682AbhHELBd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 07:01:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240499AbhHEKh4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Aug 2021 06:37:56 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFA8BC061765
-        for <git@vger.kernel.org>; Thu,  5 Aug 2021 03:37:40 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id e25-20020a05600c4b99b0290253418ba0fbso3349716wmp.1
-        for <git@vger.kernel.org>; Thu, 05 Aug 2021 03:37:40 -0700 (PDT)
+        with ESMTP id S234312AbhHELBc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Aug 2021 07:01:32 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E0E2C061765
+        for <git@vger.kernel.org>; Thu,  5 Aug 2021 04:01:18 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id l18so5980044wrv.5
+        for <git@vger.kernel.org>; Thu, 05 Aug 2021 04:01:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BQHV0IFhtdQgvc85qfOX4IyivFVjIQQqVEkMNXgFZuA=;
-        b=ULwppCl09mwfLXccD54xgcMp2qhWgR8Qot8yF5gSrAppFqgtj7iI2lad29sgvE3iAU
-         JT39FW3dT8uAPctDg/4Rp7R9Je5qNLn/IUaIeXMvZY2qICzxD6IXoCijb41xtnI9FaVR
-         pz4mpaozIo/uEVYxoipJI+Q9pr5TAHSa6MHfpNI6jKiba4BNKn85eiE4zGpcrKU+q3NY
-         FqKENbShiW5Ki/E+KwAXFTaLqvzreqxno80rfHNW/Hq3F4Dh8QRZNeYbeeHcZr4oM0uC
-         xfjDNmaA3og+DC5UQXzeb39U+tufbycafMqblt83GQUZC9IMFqCtgpe4YGMmhXYuaPiV
-         Uk7A==
+        bh=2MgrcmNuWLRyPg4u84oYVqKdKxZVFspqf6uqmg7WdLc=;
+        b=k53CFJHzHTvzaAYJ+bjlD9DB3y9Mnxe/ClfzKf6Mz+ZiVupInDSSlqHP6CCfZAyBTB
+         T0M2qt+DLq8jBDACMDn983t/7CHpFHcOT3nHvMX5UQy2KkUVIx72UWexHnAtQRjJla4Q
+         EJCSGImiTGeXC/ZlCTt15LNBnZJwWFIdWtrVmJGdfD8mMQLXrByXtnP7vaQcSOmVqi0I
+         sEvmnpYYU1pHUTSMN98O944f77j1SKJWdCBZtHNWczqwItnah3A4paqtWjAZJX/XszO1
+         p3Q0wrNZCFxmbhdCC33aPzyTc1ur9Y/eDAJ0/jqsTiaFvYFyaQFb26acmG1JXdOAJIxw
+         HjtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BQHV0IFhtdQgvc85qfOX4IyivFVjIQQqVEkMNXgFZuA=;
-        b=OwDthkYkF/GXTvusSSeN6aqwBchL2je3h6L8NYLp9OJFOH79Odnqz2S8O4dddmnibt
-         DVU1RJbHUsvhFOA14IC3br0//gAdaLygGtpGszFV2pWc+6aks/lAgabpNazGs3SpR3zs
-         wK2ednaXeP7gjSPbiBluuOrk0Zzx3y6QuPprWyUiMdpFIc0oo/OULQiBae6cMCEWB0Px
-         Efcp7DVfE+ompK8UPAc9F4Njjv5zzw0xRbugsJJzJ+xDJXf1OuV/C4hP1oEWKCBguI1m
-         g43So6uPnNeJflsIPuKVtKXv6ya2vpCXYoVFK+i1zECCxGFYbC/m8sqWvUGCwmQzudjX
-         spDw==
-X-Gm-Message-State: AOAM532m0fIBn75adgVMTpuDmC+M60D5VBs4kd4aFWB7if5+CdLuhHYD
-        IjGvU6tP3iR1PWdFiXvJotPbeERHx0ykEw==
-X-Google-Smtp-Source: ABdhPJyPVBQSwrH5N2eKWD9PSVOqfxiO3mqCfmoYr+cax3mYPX94ZxUSVP3xcTC4INaiePPyvRafwQ==
-X-Received: by 2002:a05:600c:5108:: with SMTP id o8mr4246248wms.97.1628159859312;
-        Thu, 05 Aug 2021 03:37:39 -0700 (PDT)
+        bh=2MgrcmNuWLRyPg4u84oYVqKdKxZVFspqf6uqmg7WdLc=;
+        b=kVEVy+64xFCE1akLr7yYSmti2uqUOUX6Ohk/NVxztGPVjlqherCvSGMRglX1b1SVZ4
+         V1UzfPLJh2KAKCAbmiMhLFvVPb5fRDw/sYNSC17mrbPvSfpic0A0iaSPrdxBXgxvobrn
+         +WSDORMoKjHh6R5kVLVJMeoGXzqbXd8uUv9+JlGNVbtqJzEWwOKf4ZitbBgH4+9st7uF
+         kQiJLyVSuteWKRV5dkVHCyzNY65+Eh9Vkw5/2T2yN8dIv2x/eTbB99UeEtNsJ4AlntJM
+         strKwv/L5RTvf3+AMysqicjUHYgs9Z+CmiEi9kgSeB2NTCas/o5uJX+NVzaaBcvenXDv
+         FVcQ==
+X-Gm-Message-State: AOAM531MWh6bgSbgB2u/S8DKyUQbARl8jt7jD21/DUg514kUeh2mG1GP
+        NPswf2k4qFcHvAJVAphXq4HaPg1YByePxA==
+X-Google-Smtp-Source: ABdhPJztXK1/NW90fm35l8qL2TVoRmDEZKwpNe2ExkzTL+S00nNIaAAavOdC+zS7x9czGKH3TX8Mcw==
+X-Received: by 2002:adf:e548:: with SMTP id z8mr4517433wrm.57.1628161276532;
+        Thu, 05 Aug 2021 04:01:16 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e6sm5106152wme.6.2021.08.05.03.37.38
+        by smtp.gmail.com with ESMTPSA id i10sm8836641wmq.21.2021.08.05.04.01.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Aug 2021 03:37:38 -0700 (PDT)
+        Thu, 05 Aug 2021 04:01:16 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Adam Spiers <git@adamspiers.org>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Ilya Bobyr <ilya.bobyr@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 9/9] test-lib tests: assert 1 exit code, not non-zero
-Date:   Thu,  5 Aug 2021 12:37:28 +0200
-Message-Id: <patch-v3-9.9-dd0af5bd6c-20210805T103237Z-avarab@gmail.com>
+Subject: [PATCH v2 0/3] progress.c API users: fix bogus counting
+Date:   Thu,  5 Aug 2021 13:01:10 +0200
+Message-Id: <cover-v2-0.3-0000000000-20210805T105720Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.rc0.635.g0ab9d6d3b5a
-In-Reply-To: <cover-v3-0.9-0000000000-20210805T103237Z-avarab@gmail.com>
-References: <cover-0.8-00000000000-20210721T225504Z-avarab@gmail.com> <cover-v3-0.9-0000000000-20210805T103237Z-avarab@gmail.com>
+In-Reply-To: <cover-0.3-0000000000-20210722T121801Z-avarab@gmail.com>
+References: <cover-0.3-0000000000-20210722T121801Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,72 +77,109 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Improve the testing for test-lib.sh itself to assert that we have a
-exit code of 1, not any non-zero. Improves code added in
-0445e6f0a12 (test-lib: '--run' to run only specific tests,
-2014-04-30).
+As a split-off from the larger topic these were submitted as part of
+[1] and which didn't get picked up. As I pointed out in [2] that
+larger topic had some hidden untested-for flaws.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/lib-subtest.sh | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+But these patches are just fixes to bogus progress bar output from
+that topic. Let's consider them in isolation...
 
-diff --git a/t/lib-subtest.sh b/t/lib-subtest.sh
-index 0b9ecdb6db..d6b625d397 100644
---- a/t/lib-subtest.sh
-+++ b/t/lib-subtest.sh
-@@ -43,8 +43,8 @@ write_sub_test_lib_test () {
- }
- 
- _run_sub_test_lib_test_common () {
--	neg="$1" name="$2" # stdin is the body of the test code
--	shift 2
-+	cmp_op="$1" want_code="$2" name="$3" # stdin is the body of the test code
-+	shift 3
- 
- 	# intercept pseudo-options at the front of the argument list that we
- 	# will not pass to child script
-@@ -80,33 +80,30 @@ _run_sub_test_lib_test_common () {
- 		GIT_SKIP_TESTS=$skip &&
- 		export GIT_SKIP_TESTS &&
- 		sane_unset GIT_TEST_FAIL_PREREQS &&
--		if test -z "$neg"
--		then
--			./"$name.sh" "$@" >out 2>err
--		else
--			! ./"$name.sh" "$@" >out 2>err
--		fi
-+		./"$name.sh" "$@" >out 2>err;
-+		ret=$? &&
-+		test "$ret" "$cmp_op" "$want_code"
- 	)
- }
- 
- write_and_run_sub_test_lib_test () {
- 	name="$1" descr="$2" # stdin is the body of the test code
- 	write_sub_test_lib_test "$@" || return 1
--	_run_sub_test_lib_test_common '' "$@"
-+	_run_sub_test_lib_test_common -eq 0 "$@"
- }
- 
- write_and_run_sub_test_lib_test_err () {
- 	name="$1" descr="$2" # stdin is the body of the test code
- 	write_sub_test_lib_test "$@" || return 1
--	_run_sub_test_lib_test_common '!' "$@"
-+	_run_sub_test_lib_test_common -eq 1 "$@"
- }
- 
- run_sub_test_lib_test () {
--	_run_sub_test_lib_test_common '' "$@"
-+	_run_sub_test_lib_test_common -eq 0 "$@"
- }
- 
- run_sub_test_lib_test_err () {
--	_run_sub_test_lib_test_common '!' "$@"
-+	_run_sub_test_lib_test_common -eq 1 "$@"
- }
- 
- _check_sub_test_lib_test_common () {
+Since v1 the only changes are to the commit messages, in response to
+SZEDER's feedback at
+https://lore.kernel.org/git/20210802210759.GD23408@szeder.dev/ and
+https://lore.kernel.org/git/20210802214827.GE23408@szeder.dev/;
+Hopefully this update addresses all of those outstanding comments.
+
+1. https://lore.kernel.org/git/20210620200303.2328957-1-szeder.dev@gmail.com/
+2. https://lore.kernel.org/git/cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com/
+
+SZEDER Gábor (2):
+  commit-graph: fix bogus counter in "Scanning merged commits" progress
+    line
+  entry: show finer-grained counter in "Filtering content" progress line
+
+Ævar Arnfjörð Bjarmason (1):
+  midx: don't provide a total for QSORT() progress
+
+ commit-graph.c | 2 +-
+ entry.c        | 7 +++----
+ midx.c         | 2 +-
+ 3 files changed, 5 insertions(+), 6 deletions(-)
+
+Range-diff against v1:
+1:  832a6c1f78 ! 1:  bcb13be500 commit-graph: fix bogus counter in "Scanning merged commits" progress line
+    @@ Commit message
+         This happens because while iterating over an array the loop variable
+         is passed to display_progress() as-is, but while C arrays (and thus
+         the loop variable) start at 0 and end at N-1, the progress counter
+    -    must end at N.  This causes the failures of the tests
+    -    'fetch.writeCommitGraph' and 'fetch.writeCommitGraph with submodules'
+    -    in 't5510-fetch.sh' when run with GIT_TEST_CHECK_PROGRESS=1.
+    +    must end at N. Fix this by passing 'i + 1' to display_progress(), like
+    +    most other callsites do.
+     
+    -    Fix this by passing 'i + 1' to display_progress(), like most other
+    -    callsites do.
+    +    There's an RFC series to add a GIT_TEST_CHECK_PROGRESS=1 mode[1] which
+    +    catches this issue in the 'fetch.writeCommitGraph' and
+    +    'fetch.writeCommitGraph with submodules' tests in
+    +    't5510-fetch.sh'. The GIT_TEST_CHECK_PROGRESS=1 mode is not part of
+    +    this series, but future changes to progress.c may add it or similar
+    +    assertions to catch this and similar bugs elsewhere.
+    +
+    +    1. https://lore.kernel.org/git/20210620200303.2328957-1-szeder.dev@gmail.com/
+     
+         Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+2:  3411fe0515 = 2:  8e67712c48 midx: don't provide a total for QSORT() progress
+3:  f65001627a ! 3:  c70e554e46 entry: show finer-grained counter in "Filtering content" progress line
+    @@ Commit message
+             paths to process, then the counter shown in the "done" progress
+             line will not match the expected total.
+     
+    -        This would cause a BUG() in an upcoming change that adds an
+    -        assertion checking if the "total" at the end matches the last
+    -        progress bar update..
+    -
+    -        This is because both use only one filter.  (The test 'delayed
+    -        checkout in process filter' uses two filters but the first one
+    -        does all the work, so that test already happens to succeed even
+    -        with such an assertion.)
+    +        The partially-RFC series to add a GIT_TEST_CHECK_PROGRESS=1
+    +        mode[1] helps spot this issue. Under it the 'missing file in
+    +        delayed checkout' and 'invalid file in delayed checkout' tests in
+    +        't0021-conversion.sh' fail, because both use only one
+    +        filter.  (The test 'delayed checkout in process filter' uses two
+    +        filters but the first one does all the work, so that test already
+    +        happens to succeed even with GIT_TEST_CHECK_PROGRESS=1.)
+     
+           - The progress counter is updated only once per filter, not once per
+             processed path, so if a filter has a lot of paths to process, then
+    @@ Commit message
+         path.
+     
+         After this change the 'invalid file in delayed checkout' in
+    -    't0021-conversion.sh' would succeed with the future BUG() assertion
+    -    discussed above but the 'missing file in delayed checkout' test would
+    -    still fail, because its purposefully buggy filter doesn't process any
+    -    paths, so we won't execute that inner loop at all (this will be fixed
+    -    in a subsequent commit).
+    +    't0021-conversion.sh' would succeed with the GIT_TEST_CHECK_PROGRESS=1
+    +    assertion discussed above, but the 'missing file in delayed checkout'
+    +    test would still fail.
+    +
+    +    It'll fail because its purposefully buggy filter doesn't process any
+    +    paths, so we won't execute that inner loop at all, see [2] for how to
+    +    spot that issue without GIT_TEST_CHECK_PROGRESS=1. It's not
+    +    straightforward to fix it with the current progress.c library (see [3]
+    +    for an attempt), so let's leave it for now.
+    +
+    +    1. https://lore.kernel.org/git/20210620200303.2328957-1-szeder.dev@gmail.com/
+    +    2. http://lore.kernel.org/git/20210802214827.GE23408@szeder.dev
+    +    3. https://lore.kernel.org/git/20210620200303.2328957-7-szeder.dev@gmail.com/
+     
+         Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 -- 
 2.33.0.rc0.635.g0ab9d6d3b5a
 
