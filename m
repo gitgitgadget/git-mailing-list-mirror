@@ -2,118 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51692C4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 18:39:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 948F5C4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 18:44:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 33C3C6024A
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 18:39:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 777856105A
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 18:44:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241483AbhHESj0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 14:39:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43856 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233465AbhHESjZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Aug 2021 14:39:25 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AADBBC061765
-        for <git@vger.kernel.org>; Thu,  5 Aug 2021 11:39:10 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id u21-20020a17090a8915b02901782c36f543so8129291pjn.4
-        for <git@vger.kernel.org>; Thu, 05 Aug 2021 11:39:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
-         :date:mime-version;
-        bh=m1HVC8UYTCesYNtLq3QB3e4WO4oqrz1T0WImPJ97Z+U=;
-        b=dQPNkbXYywY3345gbtaabSOOJ2hr69Oh+QgHJTWmDra19J2QzOy5HralfTI+YMGkP7
-         DJEDKMUQgl/zWhaZkzhCntyZMWcS4U8s0/CZrv2MaUDWqa0O8NnhuGa/B2/IDLnAvTl3
-         JvP5izgLDEYGa0v2H54LQDqYLjz3m6cv/QQpzkloHp2zdAvLh0SB42jTViFOr5YuSBxq
-         nilmRCadcJ8QqHdAw6iKQYOuNarf+P7lBuN+yvm+PlpibUbAf8VLJn884WKYFd3kUeeY
-         s6ft/31TSE6fv17kEDnzk/Sc5m+W6FgM173M+JxDtSJXs6GXu75/EK6GSKVHyU+Uh3QU
-         nhyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject
-         :in-reply-to:message-id:date:mime-version;
-        bh=m1HVC8UYTCesYNtLq3QB3e4WO4oqrz1T0WImPJ97Z+U=;
-        b=fNXnvb2ftxU1PHI7zW2i3HurMZ5qFyoHq6r6QOOeq7sfqEHAzhacDODrrz+NmkzOrU
-         ABt5B1yDFR96lLhEjsoFdjjPvMfAoU8isD5dEMusXAGfWNNAxGWKvp1GQ5YLJ1JEDhCz
-         4m8MyO74wGFIlhxEt4+KugiivamqeX0fFCv2Q4nJrYGAbG1s4tlyRSPial/0Dnr6YUyW
-         WKAfnc+LfkCid9lyKPQh0ZIgQK8azf+Q0dUWl/PjQMZoOEXwvQMEqABIeEPGXHYUNsFx
-         6Z75KNjj540tYVVudWVPa8cTCQ4eh9+p4KL/RZrUHCBZRB1bPBo4y8RatdXoVmZN+ScC
-         xriA==
-X-Gm-Message-State: AOAM531f4ICOGYBkQmDLc+pYxdQeSM8fyN5AdEh9nqSmiczQZzJQJh2W
-        cg9SnD7vRU7/nMcy5WND9PO2M0XisnCc/g==
-X-Google-Smtp-Source: ABdhPJwzRs6/OHbRB1zaNqPXs9qs1VpYcWdGoqNk7M5LOvi+KcQtcHlm2KFW9DIaW2WyIAyy52SvYA==
-X-Received: by 2002:a65:638d:: with SMTP id h13mr1538648pgv.178.1628188749870;
-        Thu, 05 Aug 2021 11:39:09 -0700 (PDT)
-Received: from atharva-on-air ([119.82.121.47])
-        by smtp.gmail.com with ESMTPSA id j5sm8702196pgg.41.2021.08.05.11.39.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Aug 2021 11:39:09 -0700 (PDT)
-References: <CANt7McFAu5gAFcgd+dejQjDQDxfcnyhz=BxSAejXGMMtGQzO_w@mail.gmail.com>
- <YPHgUuxqmKFkbEku@camp.crustytoothpaste.net>
- <CANt7McHrYhSe3JsS8UKX8NgsUajwxQY4h9KTtXkEXdd0Be_+yw@mail.gmail.com>
- <46F5B91F-4DBE-4F34-9395-7CC808FAC359@gmail.com>
- <CANt7McE4N0wv5bik8tSNrdTs-mcL20cJPMP42iPtZqhUpKgirA@mail.gmail.com>
-User-agent: mu4e 1.4.15; emacs 27.2
-From:   Atharva Raykar <raykar.ath@gmail.com>
-To:     Rostislav Krasny <rosti.bsd@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: Why do submodules detach HEAD? (was Re: Incorrect and
- inconsistent End-Of-Line characters in .gitmodules ...)
-In-reply-to: <CANt7McE4N0wv5bik8tSNrdTs-mcL20cJPMP42iPtZqhUpKgirA@mail.gmail.com>
-Message-ID: <m2bl6bvit1.fsf@gmail.com>
-Date:   Fri, 06 Aug 2021 00:08:02 +0530
+        id S240055AbhHESo0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 14:44:26 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58759 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241592AbhHESoY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Aug 2021 14:44:24 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E269C140550;
+        Thu,  5 Aug 2021 14:44:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=FRpt63UZcBNbu5ILnMyVCHr6TnAUBCjE5o35ke
+        96L0w=; b=io71oyLOchxRpYyCInWzyCpcbM6If4HWLsvCsjqWHzuhUB4Gd5b+Oi
+        EERR25XUckgL36O7Bhh5Ydne8XAC5ndocDeEz05cOyhfcYshbgHG8i9CV89NB2i3
+        scCk8yVrUM16ZFiFiCrcUUW0zDMzXkdXlEpqKBVzD6O8ft8WDgFw0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DA71614054F;
+        Thu,  5 Aug 2021 14:44:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 119AD14054C;
+        Thu,  5 Aug 2021 14:44:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Chris Torek <chris.torek@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v4 2/6] connected: do not sort input revisions
+References: <cover.1624858240.git.ps@pks.im> <cover.1628162156.git.ps@pks.im>
+        <9d7f484907e2bd2492e6676238579e9f0c6ed374.1628162156.git.ps@pks.im>
+Date:   Thu, 05 Aug 2021 11:44:05 -0700
+In-Reply-To: <9d7f484907e2bd2492e6676238579e9f0c6ed374.1628162156.git.ps@pks.im>
+        (Patrick Steinhardt's message of "Thu, 5 Aug 2021 13:25:28 +0200")
+Message-ID: <xmqqfsvnloju.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: 1D4B49F2-F61D-11EB-8AE4-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Patrick Steinhardt <ps@pks.im> writes:
 
-Rostislav Krasny <rosti.bsd@gmail.com> writes:
+> +	} else if (!strcmp(arg, "--unsorted-input")) {
+> +		if (revs->no_walk && !revs->unsorted_input)
+> +			die(_("--unsorted-input is incompatible with --no-walk and --no-walk=sorted"));
+> +		revs->unsorted_input = 1;
 
-> On Wed, Jul 21, 2021 at 10:26 AM Atharva Raykar <raykar.ath@gmail.com> wrote:
->> [...]
->> We want to have idempotence, ie, for a particular revision that is
->> registered by our parent project, we want 'update' to give the same
->> outcome every time, and not be dependent on whatever the state of the
->> branch is. This way we ensure that for a particular commit in the
->> parent project, the submodules will be in the same state for every
->> system in the world, after an 'update' is run.
->
-> All this is ok, but there could be other uses of sub-modules. Why not
-> to make this behavior configurable?
->
-> As a developer I may want to make new commits on those sub-modules and
-> always work with latest versions of their particular branches. In the
-> detached HEAD mode this is much harder to be done and also an error
-> prone operation. Commits that are done in the detached HEAD state may
-> easily be lost. [...]
+So this can be used with --no-walk=unsorted, even though doing
+so would be redundant and meaningless.  OK.
 
-Have you tried running 'submodule update --merge' or
-'submodule update --rebase'? Those modes will not detach your
-submodule's HEAD.
+> @@ -2651,6 +2655,8 @@ static int handle_revision_pseudo_opt(const char *submodule,
+>  	} else if (!strcmp(arg, "--not")) {
+>  		*flags ^= UNINTERESTING | BOTTOM;
+>  	} else if (!strcmp(arg, "--no-walk")) {
+> +		if (revs->unsorted_input)
+> +			die(_("--no-walk is incompatible with --no-walk=unsorted and --unsorted-input"));
 
-The Pro Git book has a section that explains a workflow that sounds
-similar to what you describe:
+And likewise, --no-walk is --no-walk=sorted so we do not allow it to
+be used with --unsorted-input or --no=walk=unsorted.  OK.
 
-https://git-scm.com/book/en/v2/Git-Tools-Submodules
+>  		revs->no_walk = 1;
+>  	} else if (skip_prefix(arg, "--no-walk=", &optarg)) {
+>  		/*
+> @@ -2658,9 +2664,12 @@ static int handle_revision_pseudo_opt(const char *submodule,
+>  		 * not allowed, since the argument is optional.
+>  		 */
+>  		revs->no_walk = 1;
+> -		if (!strcmp(optarg, "sorted"))
+> +		if (!strcmp(optarg, "sorted")) {
+> +			if (revs->unsorted_input)
+> +				die(_("--no-walk=sorted is incompatible with --no-walk=unsorted "
+> +				    "and --unsorted-input"));
 
-Around halfway down the page, look for the heading "Working on a
-Submodule". Does that fit your use case?
+OK.
 
-> [...] Google is full of questions about how this could be done, i.e. there
-> is an essential demand of such a new behavior.
+>  			revs->unsorted_input = 0;
+> -		else if (!strcmp(optarg, "unsorted"))
+> +		} else if (!strcmp(optarg, "unsorted"))
+>  			revs->unsorted_input = 1;
 
-It would be nice if you can share a specific link that captures the
-demand you are talking about. When I Googled about this behaviour, I got
-a range of different kinds of results, without a clearly voiced demand.
-If you can show an example that best represents this demand, the Git
-developers here may be able to address it better.
+This is --no-walk=unsorted; could it have been given after --no-walk
+or --no-walk=unsorted?
+
+The application of the incompatibility rules seems a bit uneven.  An
+earlier piece of code will reject "--no-walk=unsorted --no-walk" given
+in this order (see "And likewise" above).  But here, this part of
+the code will happily take "--no-walk --no-walk=unsorted".
+
+Of course these details can be fixed with more careful code design,
+but I wonder if it may be result in the code and behaviour that is
+far simpler to explain (and probably implement) if we declare that
+
+ * --no-walk is not a synonym to --no-walk=sorted; it just flips
+   .no_walk member on.
+
+ * --no-walk=sorted and --no-walk=unsorted flip .no_walk member on,
+   and then flips .unsorted_input member off or on, respectively.
+
+and define that the usual last-one-wins rule would apply?
+
+Thanks.
