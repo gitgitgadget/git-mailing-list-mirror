@@ -2,102 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15CEDC4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 22:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61088C4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 23:03:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ECAE760462
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 22:08:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C1AF6103B
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 23:03:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231537AbhHEWIY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 18:08:24 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61521 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230445AbhHEWIX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Aug 2021 18:08:23 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 964BC13BABA;
-        Thu,  5 Aug 2021 18:08:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=D7cNovbwW7wTI1DiR0p7XGIhIpx81631O9e+sQ
-        qy62Y=; b=cBpxvbLDalZPFAGetKz+3Il1iruiggOwpNjd8VsexpPUzWM/sgwjTe
-        9R3QI4XkGpYdW7uTIa1lD8wQFggnaMDp4zkizFnOuhDJLglYKLuPHSfcqDk50FQ+
-        eNu+J2OcdbseEg6IMTraAucFNwF5FABURTMPmJInUiyvq+9L3ijco=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8313613BAB5;
-        Thu,  5 Aug 2021 18:08:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.71.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A9B3113BA80;
-        Thu,  5 Aug 2021 18:08:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: Re: [PATCH] diff: drop unused options parameter from
- cmp_in_block_with_wsd()
-References: <YQxOevw7Q+NYX2YF@coredump.intra.peff.net>
-Date:   Thu, 05 Aug 2021 15:08:04 -0700
-In-Reply-To: <YQxOevw7Q+NYX2YF@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 5 Aug 2021 16:47:54 -0400")
-Message-ID: <xmqqa6lvk0jf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S242014AbhHEXDu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 19:03:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47118 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229482AbhHEXDt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Aug 2021 19:03:49 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3790C0613D5
+        for <git@vger.kernel.org>; Thu,  5 Aug 2021 16:03:33 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id db14so3870224qvb.10
+        for <git@vger.kernel.org>; Thu, 05 Aug 2021 16:03:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Xay5QVKK1LeweOPz1S8PdnEBddS+Z9N1R4ovM7oKm7w=;
+        b=kIqG+SKEmYgwmGJlo9cAmq4TY1g3Nwg41Jy0yxa+qHb1D2KmPcnJGnbDoF0XUsETyu
+         dtFUy1e9xpLfUbJ+ri09bWlJMjua4GeEa5aXPMTQvcFFC96OtCIZpgE0e+KeV7smjksB
+         Vwd5yvWBO12kPhQ8QhCsYEWxUg/eJA7wFR3wQsspQwHHfOuVZobnU3nfedNk6g0lhP7V
+         lXcYaI6BhUNl+BB9CJjpyUVTMiadtGJoJ8+QrWorPtO1t8QrDdXscsc4vJEjJMp+XWgS
+         PHZv7bSbWy5mKwaw9fqsTDy0K3b93J9oVvwyQk7F/ButBBeJvtOamNGJKqxtBKil3wNX
+         RDjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Xay5QVKK1LeweOPz1S8PdnEBddS+Z9N1R4ovM7oKm7w=;
+        b=C5Jp9dmbwYm5zy0O8fjswYDtUopmd+VsX+/2XyZSLqCyEf3vDn/A/H/hNUFCl3Ekvg
+         2P+qFFTpS6XyGbgw75GL20jsBHqdu4mCA0iXH/N9KraMEgnDkW+vXlsAwXTJshRtyI8o
+         93PkaMs8Hdkid/u/63R3QZ97qf4kO44BRsrPBVBxeWb2rbvCAjc4MoLOG/r3bln0me9z
+         sVKcfMxdzDjrlV1fCVQ2FLdLzIRdWk0/t0ReFKaA8vv16GY5UIdPW5prF7UOy/tHPDXP
+         lGLqrQQlVoRQPLzXPpPmgMjhFhrIlCGrAiEgM+8w7KRC0iwyEXfayY8FRKSXFvV/fRKx
+         DxUw==
+X-Gm-Message-State: AOAM532jiw8JEoWvoOoGPb7M5HdONiMSPL7gxuaqiqOFHiaeUs+g55Lx
+        mEQsRTUyIN5OPCVUGooVRr/ioaZRo04=
+X-Google-Smtp-Source: ABdhPJzKj2jOywUNAvguEBGEYoctMQIPSBC5ZjRvrPxIWt1P+Xnhsdp8AzDeQg1oDoM/QOo9QkGiHg==
+X-Received: by 2002:a0c:ab1c:: with SMTP id h28mr8018768qvb.39.1628204611033;
+        Thu, 05 Aug 2021 16:03:31 -0700 (PDT)
+Received: from localhost ([24.169.20.255])
+        by smtp.gmail.com with ESMTPSA id p19sm2645858qtx.10.2021.08.05.16.03.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Aug 2021 16:03:30 -0700 (PDT)
+From:   Ben Boeckel <mathstuf@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Ben Boeckel <mathstuf@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/4] advice: remove usage of `advice_*` global variables
+Date:   Thu,  5 Aug 2021 19:03:17 -0400
+Message-Id: <20210805230321.532218-1-mathstuf@gmail.com>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210731022504.1912702-1-mathstuf@gmail.com>
+References: <20210731022504.1912702-1-mathstuf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9C1474C2-F639-11EB-B247-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> When 8e809cbb2f (diff --color-moved-ws=allow-indentation-change:
-> simplify and optimize, 2021-07-20) stopped looking at o->emitted_symbols
-> and instead took the symbol as a parameter, we no longer need to look at
-> the diff_options struct at all.
->
-> Dropping the unused parameter makes it clear that the function is
-> independent of the diff options.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Just a small cleanup on top of pw/diff-color-moved-fix, which is now in
-> 'next'. I noticed due to my -Wunused-parameters patches (which one day
-> I'll finally clean up enough to send to the list).
+When looking at global variable usage for my `branch.default*` settings,
+I found the `advice_` variables which were simple enough to resolve.
 
-Nice.
+This concludes the journey started in c4a09cc9ccb (Merge branch
+'hw/advise-ng', 2020-03-25) to update the advice configuration API to
+help avoid bad coding patterns in usage of the `advice_` global
+variables.
 
->
->  diff.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
->
-> diff --git a/diff.c b/diff.c
-> index 2956c8f710..164af13b4f 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -863,8 +863,7 @@ static int compute_ws_delta(const struct emitted_diff_symbol *a,
->  	return a_width - b_width;
->  }
->  
-> -static int cmp_in_block_with_wsd(const struct diff_options *o,
-> -				 const struct moved_entry *cur,
-> +static int cmp_in_block_with_wsd(const struct moved_entry *cur,
->  				 const struct emitted_diff_symbol *l,
->  				 struct moved_block *pmb)
->  {
-> @@ -1016,7 +1015,7 @@ static void pmb_advance_or_null(struct diff_options *o,
->  		if (o->color_moved_ws_handling &
->  		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
->  			match = cur &&
-> -				!cmp_in_block_with_wsd(o, cur, l, &pmb[i]);
-> +				!cmp_in_block_with_wsd(cur, l, &pmb[i]);
->  		else
->  			match = cur && cur->es->id == l->id;
+New `advice_*` variables also in flight will conflict with this
+patchset, but the conflict resolution is trivial (if not at all
+automatic).
+
+Thanks,
+
+--Ben
+
+---
+v1 -> v2:
+  - improve commit messages to mention the history of the current state
+  - split the API updates between readers and writers of `advice_*` into
+    separate commits
+  - reorder commits to better show the progression of the replacement
+
+Ben Boeckel (4):
+  advice: add enum variants for missing advice variables
+  advice: remove read uses of global `advice_` variables
+  advice: add `advice_set` to update advice settings at runtime
+  advice: remove static global variables for advice tracking
+
+ advice.c                    | 88 ++++---------------------------------
+ advice.h                    | 38 +++-------------
+ branch.c                    |  2 +-
+ builtin/add.c               |  8 ++--
+ builtin/am.c                |  2 +-
+ builtin/checkout.c          |  6 +--
+ builtin/clone.c             |  2 +-
+ builtin/commit.c            |  4 +-
+ builtin/fetch.c             |  2 +-
+ builtin/merge.c             |  4 +-
+ builtin/push.c              | 12 ++---
+ builtin/replace.c           |  2 +-
+ builtin/reset.c             |  2 +-
+ builtin/rm.c                |  2 +-
+ builtin/submodule--helper.c |  2 +-
+ commit.c                    |  2 +-
+ editor.c                    |  2 +-
+ notes-merge.c               |  2 +-
+ object-name.c               |  2 +-
+ remote.c                    | 12 ++---
+ run-command.c               |  2 +-
+ sequencer.c                 |  8 ++--
+ unpack-trees.c              | 18 ++++----
+ wt-status.c                 |  6 +--
+ 24 files changed, 68 insertions(+), 162 deletions(-)
+
+
+base-commit: eb27b338a3e71c7c4079fbac8aeae3f8fbb5c687
+-- 
+2.31.1
+
