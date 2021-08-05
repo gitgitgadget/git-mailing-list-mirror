@@ -2,122 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,MSGID_FROM_MTA_HEADER,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D878C4320A
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 23:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4F63C4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 00:08:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E7AF360EE9
-	for <git@archiver.kernel.org>; Wed,  4 Aug 2021 23:51:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8244960C3F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 00:08:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235850AbhHDXvY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 19:51:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41778 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235848AbhHDXvS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Aug 2021 19:51:18 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1291BC061798
-        for <git@vger.kernel.org>; Wed,  4 Aug 2021 16:51:04 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id h24-20020a1ccc180000b029022e0571d1a0so2444187wmb.5
-        for <git@vger.kernel.org>; Wed, 04 Aug 2021 16:51:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=N3bRxUThchrqUgojwudTfdfXJqv0noPhV6RzsW4nUuk=;
-        b=ZhE59u4MzVvihZeWQfSc+cFUeJlTZwzB4BHMgUC070iUrlDoAMLBCSSNjj7fc6VFc9
-         P4t+Vr/Dm4DO49I/mrlg+EPNnkhs0O6kHb0dQ84/beRpOoNnEd80YROL9zgKxKWma1Fo
-         mQuGXLSSUbnwkOBNk/PdsZGnPLVECptaXWxJecriJX3WnQ5wS0QwVzCIFG7USr0R4NpC
-         ObNTzrydLcrqjgnT9xm5P5o6xiFNd0FECxdD1kcRQ0weNnTBkHEbCT53By3cFWixKaae
-         sTScIIZN7LDEzmeXdnCl7YHYTqklOnbu9hsyS3HjEc4QKRDsGsv3HUdy/hkYAuNMlrNK
-         96nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=N3bRxUThchrqUgojwudTfdfXJqv0noPhV6RzsW4nUuk=;
-        b=ccaunkmrtzisw89LD+lUf6odniuJ2q5zMggezg8qUZ5dAGdTk/uqSlzGKBNk4uXUFV
-         Ix7S18+L3TMMoGkSwMBHJ4UZJNh9XGExSFE0Ac51bc18IlVPjFoG5jYP5W0/lr86RQSF
-         TwE6GOZU5Z7/8eEh7sudYqMH66UZx95DOMzc+YRx/m/4PGkGFNeBU+pU1isS91SNJZ3b
-         RUcV9H5OU9+NdGRfxsvOYRzS2zVGZt7Slab58ALdMOLTK9Wc3maXqrTUyFRQg1BxqfRi
-         O2Ty+Lbf2yyGrSustNIOdPh+sBviiQsAhanlTspPgRpHR/q3XbVZ10i8UKTnujpIqRJS
-         Kzmg==
-X-Gm-Message-State: AOAM5334HxoEW/+RTbLOHgpu+OlixQgrQhGqo3F+mVFNIgDELLQmrVPL
-        +Xw0LLsp5iQJG3rolkISw+3y+BM2JRA=
-X-Google-Smtp-Source: ABdhPJxtBAQcDK0dPwiDQVaYV4oKL7j/wh3pZpqCXCV4YzK+/vutQjeAmoh7k1tC9C98d6ONJu21tA==
-X-Received: by 2002:a1c:1946:: with SMTP id 67mr1777407wmz.177.1628121062709;
-        Wed, 04 Aug 2021 16:51:02 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g16sm4760734wro.63.2021.08.04.16.51.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Aug 2021 16:51:02 -0700 (PDT)
-Message-Id: <0b881131b2b103605cc2ceec5cca6270694844b8.1628121054.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1059.v3.git.git.1628121054.gitgitgadget@gmail.com>
-References: <pull.1059.v2.git.git.1628054935.gitgitgadget@gmail.com>
-        <pull.1059.v3.git.git.1628121054.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 04 Aug 2021 23:50:54 +0000
-Subject: [PATCH v3 10/10] Update error message and code comment
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        id S235894AbhHEAId (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 20:08:33 -0400
+Received: from mail-oln040092066053.outbound.protection.outlook.com ([40.92.66.53]:6188
+        "EHLO EUR01-VE1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S229991AbhHEAIb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Aug 2021 20:08:31 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=A+aOwvhdYezjqz0iGYeL8LQePv5Xfbc3/cknne+PpKvUS8a0LirwGdQ0FMFI23R+hBRqLFdAg5yTZjG/R+CS5VDpBm9dfZ7YgRnkHhId8I4gqsgkMLuQNhklh1HjGKgDPKqpwKXM4VJfSH9Y7NMsEIT4cBYnbZY7lfLQgbpVBJUwvuXWecebpMQBB4SRxFSlUIbF48ZlxFpbnOYj/yCner2kWQKEVmepdqb+xSsvdd7vxrm2/qjrZ16cxQCFPDFu8gOxKm94MsoUGlwmR4PVXRIIV7iFPLHK4H3IgGPORgjnAn8qoEqXQIXokmsC4FiozdFPl4hXcaQpOVk6h29JDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cwNIUTasxMrERcItSRtErNoEXdXShJRKpDcxSG0pt8c=;
+ b=KM/kzFTJUFAurzFwzGBhHigZ+6CXGNxfqQDfZXiOrVCTCKKjJF/lXfaf5pngmmixtyMMR6ZggIL2h6+77RrKO9ylcMTAaHFJ2J8XN+Totoveyvoc8CndcEpOeX+tZ+TodfyZ8XYOISuM75OsfKkvQTS5lIdA/EJgwN/Zf3Y3P+XatUuGGCDjytJdUaSvdyMK5WTtE8ZsIrYQ3b1LFGQhNUacpwub8JNAeRvJA7cqDMEz98RpauOphmdXo3gH7YnFty6XmD6GLSV4lm2TBWLdcDc3MwhSQdShGIP2lXVuoPDbV9fL4Rjx678rbUpquWNaStHoigp0CWxRnkKQfRp8AQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+Received: from VE1EUR01FT050.eop-EUR01.prod.protection.outlook.com
+ (2a01:111:e400:7e19::4a) by
+ VE1EUR01HT113.eop-EUR01.prod.protection.outlook.com (2a01:111:e400:7e19::272)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4373.18; Thu, 5 Aug
+ 2021 00:08:16 +0000
+Received: from HE1PR05MB3371.eurprd05.prod.outlook.com
+ (2a01:111:e400:7e19::4b) by VE1EUR01FT050.mail.protection.outlook.com
+ (2a01:111:e400:7e19::288) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4394.16 via Frontend
+ Transport; Thu, 5 Aug 2021 00:08:16 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:E77D129831F5D7D4748CEAE02FC50842D4DD1670D79ED67250FE9D8AB956A66F;UpperCasedChecksum:A01302A3BFBEB9F9F7949E2B3FBD9D81EEAE7938B5066B3A0D045898E413F9C6;SizeAsReceived:7251;Count:45
+Received: from HE1PR05MB3371.eurprd05.prod.outlook.com
+ ([fe80::14a0:8b32:af06:711]) by HE1PR05MB3371.eurprd05.prod.outlook.com
+ ([fe80::14a0:8b32:af06:711%6]) with mapi id 15.20.4331.035; Thu, 5 Aug 2021
+ 00:08:15 +0000
+From:   zegolem <zegolem1383@outlook.fr>
 To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Cc:     zegolem <zegolem1383@outlook.fr>
+Subject: [PATCH] configure.ac: fix misspell in comments
+Date:   Thu,  5 Aug 2021 02:03:47 +0200
+Message-ID: <HE1PR05MB3371C8B2A590C32E0FDD212DD3F29@HE1PR05MB3371.eurprd05.prod.outlook.com>
+X-Mailer: git-send-email 2.32.0
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-TMN:  [DlKvICbP6PedcSK4Zg9Doy2lcVaDWr+y]
+X-ClientProxiedBy: MR2P264CA0113.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:500:33::29) To HE1PR05MB3371.eurprd05.prod.outlook.com
+ (2603:10a6:7:34::25)
+X-Microsoft-Original-Message-ID: <20210805000347.298313-1-zegolem1383@outlook.fr>
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from pcfixe.localdomain (109.0.235.140) by MR2P264CA0113.FRAP264.PROD.OUTLOOK.COM (2603:10a6:500:33::29) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4394.15 via Frontend Transport; Thu, 5 Aug 2021 00:08:14 +0000
+X-MS-PublicTrafficType: Email
+X-IncomingHeaderCount: 45
+X-EOPAttributedMessage: 0
+X-MS-Office365-Filtering-Correlation-Id: 860bd5ff-1b48-4486-e13b-08d957a51efe
+X-MS-TrafficTypeDiagnostic: VE1EUR01HT113:
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: xQihUc4ZqNQehlIEodkSVptdzgvPBojmvscZOwRf0phpUgLeKRoug9gNYYESe9Lt68lYCTYwvx8Ot5aV/Rz0qmqedOSZXE1tZF3bRQwGoAyxVJHGD2LIV2ONIopJgBgTp0Fuxl0Q+3ElxkyMgs4l5boO2sggHYeIrYNcD/7nwsnqBjFuY9Y+731q/YaXYB2u02Sx5KK75Gbgdy1HG8Gky8iQOK0DtVJOHh1WCnCZYFPXjFImrjQskJB093HD6MUAkoK++KCit7kAXDUePOV275ie8kid92YqQ1AcX/AZbDVGCr+aFGYiwacvu52Vc0xkagfVDFIdEYIq9mFBgH0jobyxiYLwCvhS1ldg4mh/aivXG1NARDSQ56Fm/BOjYZSllgkq0WrTsHSVhXK4YdafNo7NR2qirGcNgNUv95lFKOm+ckea4AIrwT3HzvSdewrz
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 0uhoutOu6GkZ3GY3D2TqFl4nr0NZrjkKiCjHKuPkIu7awfzW5fc86//hyj/cBju/OWTwtcNOUBwjvy5tIOLDa5jxCYJ5vvfXxFdM05DI0PRadYYtTz7yGA0rDL0FXd7gFp2ug+Ov5VE3kwCr8TkxRA==
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 860bd5ff-1b48-4486-e13b-08d957a51efe
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2021 00:08:15.3864
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource: VE1EUR01FT050.eop-EUR01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VE1EUR01HT113
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+There are two places in the file where 'you are' was written as 'your
+are'.
 
-There were two locations in the code that referred to 'merge-recursive'
-but which were also applicable to 'merge-ort'.  Update them to more
-general wording.
-
-Acked-by: Derrick Stolee <dstolee@microsoft.com>
-Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: ZIEGLER Florian <zegolem1383@outlook.fr>
 ---
- builtin/merge.c | 2 +-
- sequencer.c     | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index a8a843b1f54..d7b14bf4a7f 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -738,7 +738,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
- 
- 		for (x = 0; x < xopts_nr; x++)
- 			if (parse_merge_opt(&o, xopts[x]))
--				die(_("Unknown option for merge-recursive: -X%s"), xopts[x]);
-+				die(_("unknown strategy option: -X%s"), xopts[x]);
- 
- 		o.branch1 = head_arg;
- 		o.branch2 = merge_remote_util(remoteheads->item)->name;
-diff --git a/sequencer.c b/sequencer.c
-index 7f07cd00f3f..a4e5c43fcf2 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2065,7 +2065,7 @@ static int do_pick_commit(struct repository *r,
- 		/*
- 		 * We do not intend to commit immediately.  We just want to
- 		 * merge the differences in, so let's compute the tree
--		 * that represents the "current" state for merge-recursive
-+		 * that represents the "current" state for the merge machinery
- 		 * to work on.
- 		 */
- 		if (write_index_as_tree(&head, r->index, r->index_file, 0, NULL))
+Note: I didn't review the full file for other errors
+
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 031e8d3fee..44fd314a2e 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -955,7 +955,7 @@ else
+ fi
+ GIT_CONF_SUBST([NO_REGEX])
+ #
+-# Define FREAD_READS_DIRECTORIES if your are on a system which succeeds
++# Define FREAD_READS_DIRECTORIES if you are on a system which succeeds
+ # when attempting to read from an fopen'ed directory.
+ AC_CACHE_CHECK([whether system succeeds to read fopen'ed directory],
+  [ac_cv_fread_reads_directories],
+@@ -975,7 +975,7 @@ else
+ fi
+ GIT_CONF_SUBST([FREAD_READS_DIRECTORIES])
+ #
+-# Define SNPRINTF_RETURNS_BOGUS if your are on a system which snprintf()
++# Define SNPRINTF_RETURNS_BOGUS if you are on a system which snprintf()
+ # or vsnprintf() return -1 instead of number of characters which would
+ # have been written to the final string if enough space had been available.
+ AC_CACHE_CHECK([whether snprintf() and/or vsnprintf() return bogus value],
 -- 
-gitgitgadget
+2.32.0
+
