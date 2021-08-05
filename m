@@ -2,106 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54CD8C4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 19:48:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFCC9C4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 20:05:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3551B60ED6
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 19:48:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE55760525
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 20:05:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239037AbhHETsq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 15:48:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60112 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236704AbhHETsq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Aug 2021 15:48:46 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB2F6C061765
-        for <git@vger.kernel.org>; Thu,  5 Aug 2021 12:48:30 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id z6-20020a0568302906b02904f268d34f86so6022671otu.2
-        for <git@vger.kernel.org>; Thu, 05 Aug 2021 12:48:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=em8T61NA2LKtI0wWKXlROOwVSCcUWG76m0Z7iL53H4w=;
-        b=iQCE51s3p+WooSNfa1d6eceYRyGzVmW+5ktBVM0kqwNmyCb31YQA71hgEaQ/53Orcn
-         RSiIvbwmsCFwVi6j2fQ6cpoUohMfvI/GVHaZm5O6HvQq7IBIARKTdPDWiHzUaltt/+U7
-         ECBUqRTX0qTGeYtX3QF9DReJwLQp4rRDYtLAaq7ji15x1dHQeajxu8a48y7pukWMBFT2
-         tZURGNQg0BALvMlujqwwoAg9IVDFSOG8oEkP2rNtyW7CfxaL8y7X4FwnXrwnB+zldo9W
-         XwFRdZjlPdOGoABGL565s2I0Er+37a2atMzm95Ng+QvrGuBZFzAVyDomji8+2yDyHPWQ
-         UBzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=em8T61NA2LKtI0wWKXlROOwVSCcUWG76m0Z7iL53H4w=;
-        b=pCDo9pyRGaisBVgF+hyWhJBRMy8tuZ0HeleQf9kO7Vr/zDSkZGVjkkcKv3btU5F6zq
-         G/SLvJwDjogvYLpobWQNn+BqABNEkV2nK/N4ZuyhVBDz/12LgbKUns2P/BzLRVdpJjax
-         cndrsEH4R2if7tkG+nr/RF+JbVBxN3sshxMukTGr0t2G+Jg/NxTP5s+IgVs7Qmz+8//k
-         d2Ewb13PZByt+9Mwmp/GWvVh2nuMxIrbmWttlpQRVlaUpDE2hLavm5J+ybpj7n2/VIVH
-         7c6cmajMrfaD2Hhy5aapevBNh/YPy/EEfzWLPP5z3iTRKF6ko+I/5V72BGye8gsZF8M7
-         Tqeg==
-X-Gm-Message-State: AOAM530xNoAgPpCKLTgcmqz/HeN5UGLkO7Ow8lNEDcHQT9QAJo8TOmj6
-        V7/Ui3Umkd/8t0JjEE87nI3hGOR9BQUPhg==
-X-Google-Smtp-Source: ABdhPJwjikrWK6I9fYXdAGdsrfZGvPuhXcH4gyqo3Ouf42ZWqRqficyCXc6ygVQG3h3ASB8iYWyUbA==
-X-Received: by 2002:a05:6830:1305:: with SMTP id p5mr5104873otq.353.1628192909973;
-        Thu, 05 Aug 2021 12:48:29 -0700 (PDT)
-Received: from localhost (fixed-187-189-69-1.totalplay.net. [187.189.69.1])
-        by smtp.gmail.com with ESMTPSA id i18sm1253805oik.3.2021.08.05.12.48.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Aug 2021 12:48:29 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     ZheNing Hu <adlternative@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Fabian Stelzer <fabian.stelzer@campoint.net>
-Subject: [PATCH] test: fix for COLUMNS and bash 5
-Date:   Thu,  5 Aug 2021 14:48:25 -0500
-Message-Id: <20210805194825.1796765-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.32.0.40.gb9b36f9b52
+        id S240497AbhHEUGJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 16:06:09 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57985 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231184AbhHEUGJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Aug 2021 16:06:09 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5486613AE44;
+        Thu,  5 Aug 2021 16:05:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=loHrPhlXrZcY2+L/+++Kqj0343kuugx003riQ+
+        aN0t4=; b=DvvcJolfPyLN/RNEBJJbGA+ui8hw+FsuOzP0nz4bOP+by7Gm+pUsMJ
+        6ad6HRAWAFG1wO67Pqzv0LHptEOBu59Y7ZKFuDivx9D6+XLJx6thRSQGnz90HuL0
+        9Fo3OILFegUmuroDpjaL/6B4srEQBbX8R80MXUMzP582PLkOd0ClM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4C98313AE43;
+        Thu,  5 Aug 2021 16:05:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8EB4413AE42;
+        Thu,  5 Aug 2021 16:05:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     avarab@gmail.com, christian.couder@gmail.com, congdanhqx@gmail.com,
+        emilyshaffer@google.com, git@vger.kernel.org, jrnieder@gmail.com,
+        kaartic.sivaraam@gmail.com, pc44800@gmail.com,
+        periperidip@gmail.com, rafaeloliveira.cs@gmail.com,
+        sunshine@sunshineco.com
+Subject: Re: [GSoC] [PATCH v2 1/9] submodule--helper: add options for
+ compute_submodule_clone_url()
+References: <20210805071917.29500-1-raykar.ath@gmail.com>
+        <20210805074054.29916-1-raykar.ath@gmail.com>
+        <20210805074054.29916-2-raykar.ath@gmail.com>
+Date:   Thu, 05 Aug 2021 13:05:49 -0700
+In-Reply-To: <20210805074054.29916-2-raykar.ath@gmail.com> (Atharva Raykar's
+        message of "Thu, 5 Aug 2021 13:10:46 +0530")
+Message-ID: <xmqqzgtvk676.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 889CB7BC-F628-11EB-AD6A-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since c49a177bec (test-lib.sh: set COLUMNS=80 for --verbose
-repeatability, 2021-06-29) multiple tests have been failing when using
-bash 5 because checkwinsize is enabled by default, therefore COLUMNS is
-reset using TIOCGWINSZ even for non-interactive shells.
+Atharva Raykar <raykar.ath@gmail.com> writes:
 
-It's debatable whether or not bash should even be doing that, but for
-now we can avoid this undesirable behavior by disabling this option.
+> -static char *compute_submodule_clone_url(const char *rel_url)
+> +static char *compute_submodule_clone_url(const char *rel_url, const char *up_path, int quiet)
+>  {
+>  	char *remoteurl, *relurl;
+>  	char *remote = get_default_remote();
+> @@ -598,10 +598,14 @@ static char *compute_submodule_clone_url(const char *rel_url)
+>  
+>  	strbuf_addf(&remotesb, "remote.%s.url", remote);
+>  	if (git_config_get_string(remotesb.buf, &remoteurl)) {
+> -		warning(_("could not look up configuration '%s'. Assuming this repository is its own authoritative upstream."), remotesb.buf);
+> +		if (!quiet)
+> +			warning(_("could not look up configuration '%s'. "
+> +				  "Assuming this repository is its own "
+> +				  "authoritative upstream."),
+> +				remotesb.buf);
+>  		remoteurl = xgetcwd();
+>  	}
+> -	relurl = relative_url(remoteurl, rel_url, NULL);
+> +	relurl = relative_url(remoteurl, rel_url, up_path);
 
-Reported-by: Fabian Stelzer <fabian.stelzer@campoint.net>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- t/test-lib.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
+OK, so we can optionally operate silently, and also tell
+relative_url the path the URL should be made relative to.
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index db61081d6b..a2b7dfecee 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -419,6 +419,12 @@ COLUMNS=80
- export LANG LC_ALL PAGER TZ COLUMNS
- EDITOR=:
- 
-+# Since bash 5.0, checkwinsize is enabled by default which does update the
-+# COLUMNS variable every time a command completes, even for non-interactive
-+# shells.
-+# Disable that since we are aiming for reproducibility.
-+test -n "$BASH_VERSION" && shopt -u checkwinsize 2>/dev/null
-+
- # A call to "unset" with no arguments causes at least Solaris 10
- # /usr/xpg4/bin/sh and /bin/ksh to bail out.  So keep the unsets
- # deriving from the command substitution clustered with the other
--- 
-2.32.0.40.gb9b36f9b52
+Existing callers, of course, should pass NULL and 0 as these
+optional features are new, as we can see below.
 
+>  	free(remote);
+>  	free(remoteurl);
+> @@ -660,7 +664,7 @@ static void init_submodule(const char *path, const char *prefix,
+>  		if (starts_with_dot_dot_slash(url) ||
+>  		    starts_with_dot_slash(url)) {
+>  			char *oldurl = url;
+> -			url = compute_submodule_clone_url(oldurl);
+> +			url = compute_submodule_clone_url(oldurl, NULL, 0);
+>  			free(oldurl);
+>  		}
+>  
+> @@ -2134,7 +2138,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+>  	if (repo_config_get_string_tmp(the_repository, sb.buf, &url)) {
+>  		if (starts_with_dot_slash(sub->url) ||
+>  		    starts_with_dot_dot_slash(sub->url)) {
+> -			url = compute_submodule_clone_url(sub->url);
+> +			url = compute_submodule_clone_url(sub->url, NULL, 0);
+>  			need_free_url = 1;
+>  		} else
+>  			url = sub->url;
+
+All makes sense.
