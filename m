@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEE20C4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 01:25:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD446C432BE
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 01:26:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A28BD60BD3
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 01:25:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B64AA608FC
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 01:26:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237391AbhHEB0J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 21:26:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34278 "EHLO
+        id S237435AbhHEB0M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 21:26:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237305AbhHEB0H (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S237246AbhHEB0H (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 4 Aug 2021 21:26:07 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03894C06179B
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3C98C06179F
         for <git@vger.kernel.org>; Wed,  4 Aug 2021 18:25:52 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id m19so2292408wms.0
-        for <git@vger.kernel.org>; Wed, 04 Aug 2021 18:25:51 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id l34-20020a05600c1d22b02902573c214807so5103225wms.2
+        for <git@vger.kernel.org>; Wed, 04 Aug 2021 18:25:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8Ymf7R7rMeOKO93Ypm3exSNjCvOhNIqvGRAWbT0oYvA=;
-        b=R7920B05TK1Wd7XWPPChyuX6erKEIkVuiMfT2z6QJzH/opoOUBjxnC+35OgBV4BOMx
-         KBLbiprtt6i8EfsI595CKHTLVem6vqEmiNBs7fHYmyd3eMIEHgCmwz53zTmEtVTKw8jo
-         sxSXOoJlGvkj+954cQXwvdGt0pq4Lcrg3y8Xw433tZUsV82WN11zEjKPJFlyY5LW3bgt
-         6JlywCDyeTGzov8C+pV3AkLrG1ivKPLVEFDSxUvxMy/mVPPD7QVNDwcsQnXFnEFoAzZo
-         cUATrG3LaLhEXzW1IhuhM/vo4X9AH0Db5lkTifpK1WtCEnw9vnjaVdap5LsHJJkCBKYq
-         fCgg==
+        bh=JoUWmarRZN/gbmQypN5vWQszdQPq1pziAdy0aivBc4o=;
+        b=gudkbvr9aa3r3MRC4oH328tm78XNdPvzeJhGXZvtY+pPxnkZGmdtIZX5GVyhsCpszB
+         RXmis4NCYnFJPeiMcHhy/JFwc5frVYjmN4lZiMxt9EJTG38+zwf2cN3QdvntIQ6JBgRR
+         3aKsclKaAsz/cxzHZ3QY26sqgAi854gE7P0PPchq4az79Ni/c6oE3MIdmDrdhu7ZihQs
+         4OE794bsYCgt9gJe6bSUkbk4+3hBSQnyJ9XnGMeNn+OZrHrsebqyofT64f/snHSZGzry
+         QhrF5TY/4N/mLW1e9javGrpKwdYH8V35owZz3xYqwwCa2Nu6rlP4MXsjdNa3Dik2eoLA
+         SX5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8Ymf7R7rMeOKO93Ypm3exSNjCvOhNIqvGRAWbT0oYvA=;
-        b=Tx9ha87UOWaQoMuVXmUtNcKUaAwwFkxHkhZ56XUEAbUwxvTzCTX1gc1ZoAnmJ72ii/
-         YNlQa4lBA6iRdXpGJNrd1fsJJeB8daPRBcQa4adTU9ypKJDbc1fJoS5DO6hybKx2MAMq
-         iTrXQR9acuA8xsLr5HzhUCmhxS4YjJuUngQfbC4Jje7PMY3Jut2k0XHUezyEc/wRk99n
-         YxdlGaENlqY01lU1ZOEm8OFiROPbgzbzIBUUtaeN28JVvLh/ySZ1X8JcGXJfUQIQng7N
-         zrhrvC7B/eBP6Fx9i2BNP2cDtO43PZESmVbh5Sjb9vNO4H1eiA/T0jsbWwTLfoih1DV1
-         +V2g==
-X-Gm-Message-State: AOAM5306gp61Bzj7nzhIh3v64ECE9jYqpQSpwB+2xu7Hildl10virtDJ
-        db7SXKHqVHspiuwL0blmeX4za0zkVtlXHw==
-X-Google-Smtp-Source: ABdhPJxdUBDp7siqn3nNfbg2uuFLfv5sKZwlokEy6xS5WlRi/rcoB+4hQFhu0oSvEd9xYzbgdEkcOA==
-X-Received: by 2002:a1c:9d4a:: with SMTP id g71mr2177167wme.116.1628126750395;
-        Wed, 04 Aug 2021 18:25:50 -0700 (PDT)
+        bh=JoUWmarRZN/gbmQypN5vWQszdQPq1pziAdy0aivBc4o=;
+        b=WxBN25Wic/JNtxZu5kwl94pDcw7SzjtdqM6U9rRG6n25MD2y4dPBeUvOMQYVs6g4hw
+         xoERkOu0uLwi4s0jStgjPVXpyHxNRXtFjrDfR/rIwklHOPYF4vm7uZkZisygVQyGL3g7
+         8KIajAmiKzbuOxNj/SlU2VrrnwQ1G7s3QMojMNOihjUg2oitsGtWBaLCmYp52g7czlmi
+         OZp0+0cCpM+f+Gn9TJ4spqbU2iJKPkEAOH+p2+YmRADj8RDBzWUjxL+Uu5yGhY/F+7D4
+         B3k0LVIJ4NF6MJFdNK99w8mx0iZmGiTU/ptnpq/lbMWxvhV4ltWz6aK/MMO1XuN4nNiw
+         zTpg==
+X-Gm-Message-State: AOAM5314U2PpwQqsHPxCjs1Uh28hD19wG+1IX1Z5/pmdnmjGsYKPqVgl
+        6uQWBLfPVOppqPrhEUkaFBv9GI683ejikw==
+X-Google-Smtp-Source: ABdhPJxgvWcIaZ2/nNRbvvH3f5ABY7j+Q2q0MT34m4z286hoo3zjoF+JINnCFu4EhahyJrbteq0VJA==
+X-Received: by 2002:a05:600c:3b8d:: with SMTP id n13mr971510wms.69.1628126751272;
+        Wed, 04 Aug 2021 18:25:51 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v6sm4120176wru.50.2021.08.04.18.25.49
+        by smtp.gmail.com with ESMTPSA id v6sm4120176wru.50.2021.08.04.18.25.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 04 Aug 2021 18:25:50 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <carenas@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 06/10] serve: move transfer.advertiseSID check into session_id_advertise()
-Date:   Thu,  5 Aug 2021 03:25:39 +0200
-Message-Id: <patch-v4-06.10-33db6b7cf53-20210805T011823Z-avarab@gmail.com>
+Subject: [PATCH v4 07/10] serve.c: move version line to advertise_capabilities()
+Date:   Thu,  5 Aug 2021 03:25:40 +0200
+Message-Id: <patch-v4-07.10-9828e08cbad-20210805T011823Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.rc0.597.gc569a812f0a
 In-Reply-To: <cover-v4-00.10-00000000000-20210805T011823Z-avarab@gmail.com>
 References: <cover-00.12-00000000000-20210721T233307Z-avarab@gmail.com> <cover-v4-00.10-00000000000-20210805T011823Z-avarab@gmail.com>
@@ -82,53 +82,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 6b5b6e422ee (serve: advertise session ID in v2 capabilities,
-2020-11-11) the check for transfer.advertiseSID was added to the
-beginning of the main serve() loop. Thus on startup of the server we'd
-populate it.
-
-Let's instead use an explicit lazy initialization pattern in
-session_id_advertise() itself, we'll still look the config up only
-once per-process, but by moving it out of serve() itself the further
-changing of that routine becomes easier.
+The advertise_capabilities() is only called from serve() and we always
+emit this version line before it. In a subsequent commit I'll make
+builtin/upload-pack.c sometimes call advertise_capabilities()
+directly, so it'll make sense to have this line emitted by
+advertise_capabilities(), not serve() itself.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- serve.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ serve.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/serve.c b/serve.c
-index 967bf17d623..26829991333 100644
+index 26829991333..412c2cd1317 100644
 --- a/serve.c
 +++ b/serve.c
-@@ -9,7 +9,7 @@
- #include "serve.h"
- #include "upload-pack.h"
+@@ -112,6 +112,9 @@ static void advertise_capabilities(void)
+ 	struct strbuf value = STRBUF_INIT;
+ 	int i;
  
--static int advertise_sid;
-+static int advertise_sid = -1;
++	/* serve by default supports v2 */
++	packet_write_fmt(1, "version 2\n");
++
+ 	for (i = 0; i < ARRAY_SIZE(capabilities); i++) {
+ 		struct protocol_capability *c = &capabilities[i];
  
- static int always_advertise(struct repository *r,
- 			    struct strbuf *value)
-@@ -35,6 +35,9 @@ static int object_format_advertise(struct repository *r,
- 
- static int session_id_advertise(struct repository *r, struct strbuf *value)
- {
-+	if (advertise_sid == -1 &&
-+	    git_config_get_bool("transfer.advertisesid", &advertise_sid))
-+		advertise_sid = 0;
- 	if (!advertise_sid)
- 		return 0;
- 	if (value)
-@@ -300,8 +303,6 @@ static int process_request(void)
- /* Main serve loop for protocol version 2 */
+@@ -304,9 +307,6 @@ static int process_request(void)
  void serve(struct serve_options *options)
  {
--	git_config_get_bool("transfer.advertisesid", &advertise_sid);
--
  	if (options->advertise_capabilities || !options->stateless_rpc) {
- 		/* serve by default supports v2 */
- 		packet_write_fmt(1, "version 2\n");
+-		/* serve by default supports v2 */
+-		packet_write_fmt(1, "version 2\n");
+-
+ 		advertise_capabilities();
+ 		/*
+ 		 * If only the list of capabilities was requested exit
 -- 
 2.33.0.rc0.597.gc569a812f0a
 
