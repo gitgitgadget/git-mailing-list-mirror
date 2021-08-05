@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8381DC4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 01:25:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEE20C4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 01:25:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6B32C60C41
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 01:25:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A28BD60BD3
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 01:25:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237382AbhHEB0I (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 21:26:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34268 "EHLO
+        id S237391AbhHEB0J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 21:26:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237310AbhHEB0F (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Aug 2021 21:26:05 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41733C061765
-        for <git@vger.kernel.org>; Wed,  4 Aug 2021 18:25:51 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id n12so4298287wrr.2
+        with ESMTP id S237305AbhHEB0H (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Aug 2021 21:26:07 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03894C06179B
+        for <git@vger.kernel.org>; Wed,  4 Aug 2021 18:25:52 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id m19so2292408wms.0
         for <git@vger.kernel.org>; Wed, 04 Aug 2021 18:25:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=G/OPCK+F7JNnAuApsfx4c51/f8jN0LurlPT6Acj6JQQ=;
-        b=PL4GO3gXWshXafoiw135zvW55ImYsAFsN4TW0Yi18PDX0HgHmOaK/+QyuJmAgfSsm0
-         8M4Wkv0Hc5ScKJa5A4TaSrdTQS1U/iBHU0NCErPZmtIO8hVv0iSkgYpgzipRPNTMwi7+
-         3KVurEwFJGlGEBUbTbXn1mqWyVNSZH0nywy8DnXj3cPJ2AAVKmqa0Ip0PsQFwFHxLFUZ
-         2wah1IqVS6urAhwh2Hw7G5CksAqo+TA7OwFRLifBHpldIVU/0cwaEgKVFjEvvAEufO+I
-         Yh2bYCSt8NI2LIdnc0cfsyVun7eyiDocy51Syynfr+3efXDtlTbeYSwv6NTKz5XqN1Ck
-         ksCQ==
+        bh=8Ymf7R7rMeOKO93Ypm3exSNjCvOhNIqvGRAWbT0oYvA=;
+        b=R7920B05TK1Wd7XWPPChyuX6erKEIkVuiMfT2z6QJzH/opoOUBjxnC+35OgBV4BOMx
+         KBLbiprtt6i8EfsI595CKHTLVem6vqEmiNBs7fHYmyd3eMIEHgCmwz53zTmEtVTKw8jo
+         sxSXOoJlGvkj+954cQXwvdGt0pq4Lcrg3y8Xw433tZUsV82WN11zEjKPJFlyY5LW3bgt
+         6JlywCDyeTGzov8C+pV3AkLrG1ivKPLVEFDSxUvxMy/mVPPD7QVNDwcsQnXFnEFoAzZo
+         cUATrG3LaLhEXzW1IhuhM/vo4X9AH0Db5lkTifpK1WtCEnw9vnjaVdap5LsHJJkCBKYq
+         fCgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=G/OPCK+F7JNnAuApsfx4c51/f8jN0LurlPT6Acj6JQQ=;
-        b=DJCS+jBqnZ6enVTzJYiTkIfGHDQh4OXSnp87Hu06RtS9U7R9YikhPnhcxUtrGAva6H
-         kK8/VvXOY+thXpYdoy1EUZCCggJvI05K3GHsGsK/+BwkqeXKQCFV6/M3yQhUprues2DS
-         lTXeJLbDK39NWUEOM9HTkQOOJOO94u8jBDYOM9/7QwX/nXSUWhz3lhHwKjB/8VBN368U
-         kifnw339mld10niPff/sY/hCfZwS2t5RpuynHjzbFnlspeKYQe4Y3tiCx5rzp/uDNKcC
-         k7RcyWB7M4/fAf4DyKpBcRaHkVeu2Ea30ynRyeUvSyrxolbacoHscrJ+HS8IeUCFjUMb
-         Uctg==
-X-Gm-Message-State: AOAM533QgmgxCxQNFkG+k66ljkGZQpWlaqF91imNHxvsxHMaVxFDk6eQ
-        C7p88F9IU7NbH4FHwiRLjh5QStHH1sbbrw==
-X-Google-Smtp-Source: ABdhPJxm9bGqd/f0e74T6pB/PyNgnB5L6hhEEbLBTIFE/ku/CIcWqcMik/U1krLolWMsy6OnCctdHw==
-X-Received: by 2002:a5d:4009:: with SMTP id n9mr2009542wrp.397.1628126749607;
-        Wed, 04 Aug 2021 18:25:49 -0700 (PDT)
+        bh=8Ymf7R7rMeOKO93Ypm3exSNjCvOhNIqvGRAWbT0oYvA=;
+        b=Tx9ha87UOWaQoMuVXmUtNcKUaAwwFkxHkhZ56XUEAbUwxvTzCTX1gc1ZoAnmJ72ii/
+         YNlQa4lBA6iRdXpGJNrd1fsJJeB8daPRBcQa4adTU9ypKJDbc1fJoS5DO6hybKx2MAMq
+         iTrXQR9acuA8xsLr5HzhUCmhxS4YjJuUngQfbC4Jje7PMY3Jut2k0XHUezyEc/wRk99n
+         YxdlGaENlqY01lU1ZOEm8OFiROPbgzbzIBUUtaeN28JVvLh/ySZ1X8JcGXJfUQIQng7N
+         zrhrvC7B/eBP6Fx9i2BNP2cDtO43PZESmVbh5Sjb9vNO4H1eiA/T0jsbWwTLfoih1DV1
+         +V2g==
+X-Gm-Message-State: AOAM5306gp61Bzj7nzhIh3v64ECE9jYqpQSpwB+2xu7Hildl10virtDJ
+        db7SXKHqVHspiuwL0blmeX4za0zkVtlXHw==
+X-Google-Smtp-Source: ABdhPJxdUBDp7siqn3nNfbg2uuFLfv5sKZwlokEy6xS5WlRi/rcoB+4hQFhu0oSvEd9xYzbgdEkcOA==
+X-Received: by 2002:a1c:9d4a:: with SMTP id g71mr2177167wme.116.1628126750395;
+        Wed, 04 Aug 2021 18:25:50 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v6sm4120176wru.50.2021.08.04.18.25.48
+        by smtp.gmail.com with ESMTPSA id v6sm4120176wru.50.2021.08.04.18.25.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Aug 2021 18:25:49 -0700 (PDT)
+        Wed, 04 Aug 2021 18:25:50 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <carenas@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 05/10] serve.[ch]: don't pass "struct strvec *keys" to commands
-Date:   Thu,  5 Aug 2021 03:25:38 +0200
-Message-Id: <patch-v4-05.10-7714f81d62c-20210805T011823Z-avarab@gmail.com>
+Subject: [PATCH v4 06/10] serve: move transfer.advertiseSID check into session_id_advertise()
+Date:   Thu,  5 Aug 2021 03:25:39 +0200
+Message-Id: <patch-v4-06.10-33db6b7cf53-20210805T011823Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.rc0.597.gc569a812f0a
 In-Reply-To: <cover-v4-00.10-00000000000-20210805T011823Z-avarab@gmail.com>
 References: <cover-00.12-00000000000-20210721T233307Z-avarab@gmail.com> <cover-v4-00.10-00000000000-20210805T011823Z-avarab@gmail.com>
@@ -82,148 +82,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The serve.c API added in ed10cb952d3 (serve: introduce git-serve,
-2018-03-15) was passing in the raw capabilities "keys", but nothing
-downstream of it ever used them.
+In 6b5b6e422ee (serve: advertise session ID in v2 capabilities,
+2020-11-11) the check for transfer.advertiseSID was added to the
+beginning of the main serve() loop. Thus on startup of the server we'd
+populate it.
 
-Let's remove that code because it's not needed. If we do end up
-needing to pass information about the advertisement in the future
-it'll make more sense to have serve.c parse the capabilities keys and
-pass the result of its parsing, rather than expecting expecting its
-API users to parse the same keys again.
+Let's instead use an explicit lazy initialization pattern in
+session_id_advertise() itself, we'll still look the config up only
+once per-process, but by moving it out of serve() itself the further
+changing of that routine becomes easier.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- ls-refs.c       | 3 +--
- ls-refs.h       | 4 +---
- protocol-caps.c | 3 +--
- protocol-caps.h | 4 +---
- serve.c         | 9 +++------
- upload-pack.c   | 3 +--
- upload-pack.h   | 4 +---
- 7 files changed, 9 insertions(+), 21 deletions(-)
+ serve.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/ls-refs.c b/ls-refs.c
-index 88f6c3f60d8..a1a0250607f 100644
---- a/ls-refs.c
-+++ b/ls-refs.c
-@@ -138,8 +138,7 @@ static int ls_refs_config(const char *var, const char *value, void *data)
- 	return parse_hide_refs_config(var, value, "uploadpack");
- }
- 
--int ls_refs(struct repository *r, struct strvec *keys,
--	    struct packet_reader *request)
-+int ls_refs(struct repository *r, struct packet_reader *request)
- {
- 	struct ls_refs_data data;
- 
-diff --git a/ls-refs.h b/ls-refs.h
-index a99e4be0bdd..e2243a547bb 100644
---- a/ls-refs.h
-+++ b/ls-refs.h
-@@ -2,10 +2,8 @@
- #define LS_REFS_H
- 
- struct repository;
--struct strvec;
- struct packet_reader;
--int ls_refs(struct repository *r, struct strvec *keys,
--	    struct packet_reader *request);
-+int ls_refs(struct repository *r, struct packet_reader *request);
- int ls_refs_advertise(struct repository *r, struct strbuf *value);
- 
- #endif /* LS_REFS_H */
-diff --git a/protocol-caps.c b/protocol-caps.c
-index 13a9e63a04a..4b345c55046 100644
---- a/protocol-caps.c
-+++ b/protocol-caps.c
-@@ -74,8 +74,7 @@ static void send_info(struct repository *r, struct packet_writer *writer,
- 	}
- }
- 
--int cap_object_info(struct repository *r, struct strvec *keys,
--		    struct packet_reader *request)
-+int cap_object_info(struct repository *r, struct packet_reader *request)
- {
- 	struct requested_info info;
- 	struct packet_writer writer;
-diff --git a/protocol-caps.h b/protocol-caps.h
-index 0a9f49df115..15c4550360c 100644
---- a/protocol-caps.h
-+++ b/protocol-caps.h
-@@ -2,9 +2,7 @@
- #define PROTOCOL_CAPS_H
- 
- struct repository;
--struct strvec;
- struct packet_reader;
--int cap_object_info(struct repository *r, struct strvec *keys,
--		    struct packet_reader *request);
-+int cap_object_info(struct repository *r, struct packet_reader *request);
- 
- #endif /* PROTOCOL_CAPS_H */
 diff --git a/serve.c b/serve.c
-index 33d00c8c634..967bf17d623 100644
+index 967bf17d623..26829991333 100644
 --- a/serve.c
 +++ b/serve.c
-@@ -60,16 +60,13 @@ struct protocol_capability {
+@@ -9,7 +9,7 @@
+ #include "serve.h"
+ #include "upload-pack.h"
  
- 	/*
- 	 * Function called when a client requests the capability as a command.
--	 * The function will be provided the capabilities requested via 'keys'
--	 * as well as a struct packet_reader 'request' which the command should
-+	 * Will be provided a struct packet_reader 'request' which it should
- 	 * use to read the command specific part of the request.  Every command
- 	 * MUST read until a flush packet is seen before sending a response.
- 	 *
- 	 * This field should be NULL for capabilities which are not commands.
- 	 */
--	int (*command)(struct repository *r,
--		       struct strvec *keys,
--		       struct packet_reader *request);
-+	int (*command)(struct repository *r, struct packet_reader *request);
- };
+-static int advertise_sid;
++static int advertise_sid = -1;
  
- static struct protocol_capability capabilities[] = {
-@@ -294,7 +291,7 @@ static int process_request(void)
- 	if (has_capability(&keys, "session-id", &client_sid))
- 		trace2_data_string("transfer", NULL, "client-sid", client_sid);
+ static int always_advertise(struct repository *r,
+ 			    struct strbuf *value)
+@@ -35,6 +35,9 @@ static int object_format_advertise(struct repository *r,
  
--	command->command(the_repository, &keys, &reader);
-+	command->command(the_repository, &reader);
- 
- 	strvec_clear(&keys);
- 	return 0;
-diff --git a/upload-pack.c b/upload-pack.c
-index 297b76fcb43..ed60a9abd60 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1655,8 +1655,7 @@ enum fetch_state {
- 	FETCH_DONE,
- };
- 
--int upload_pack_v2(struct repository *r, struct strvec *keys,
--		   struct packet_reader *request)
-+int upload_pack_v2(struct repository *r, struct packet_reader *request)
+ static int session_id_advertise(struct repository *r, struct strbuf *value)
  {
- 	enum fetch_state state = FETCH_PROCESS_ARGS;
- 	struct upload_pack_data data;
-diff --git a/upload-pack.h b/upload-pack.h
-index 27ddcdc6cb0..63e3252c98d 100644
---- a/upload-pack.h
-+++ b/upload-pack.h
-@@ -11,10 +11,8 @@ struct upload_pack_options {
- void upload_pack(struct upload_pack_options *options);
- 
- struct repository;
--struct strvec;
- struct packet_reader;
--int upload_pack_v2(struct repository *r, struct strvec *keys,
--		   struct packet_reader *request);
-+int upload_pack_v2(struct repository *r, struct packet_reader *request);
- 
- struct strbuf;
- int upload_pack_advertise(struct repository *r,
++	if (advertise_sid == -1 &&
++	    git_config_get_bool("transfer.advertisesid", &advertise_sid))
++		advertise_sid = 0;
+ 	if (!advertise_sid)
+ 		return 0;
+ 	if (value)
+@@ -300,8 +303,6 @@ static int process_request(void)
+ /* Main serve loop for protocol version 2 */
+ void serve(struct serve_options *options)
+ {
+-	git_config_get_bool("transfer.advertisesid", &advertise_sid);
+-
+ 	if (options->advertise_capabilities || !options->stateless_rpc) {
+ 		/* serve by default supports v2 */
+ 		packet_write_fmt(1, "version 2\n");
 -- 
 2.33.0.rc0.597.gc569a812f0a
 
