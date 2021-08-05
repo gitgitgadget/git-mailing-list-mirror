@@ -2,153 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E42BC4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 10:13:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 859EAC4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 10:13:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 18D3D60C51
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 10:13:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 529986105A
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 10:13:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240286AbhHEKNR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 06:13:17 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:49601 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S240203AbhHEKNQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 5 Aug 2021 06:13:16 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id D0C9D5C00CB;
-        Thu,  5 Aug 2021 06:13:01 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Thu, 05 Aug 2021 06:13:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=pi++lerSJjMQOJAyn+dk8PzUYnl
-        xQfDIMI5HSFVnLGA=; b=pn0/EUND+vczpESOE3w3vbg5KbdX/r9/LLJdPhogSPL
-        6WZuOEEi6R8aNIGYhhpFjcoa/yLPwzlT9c49f9fJpyd6Y7tUDnkHsxQvU6D6xKfZ
-        te9d14zG31Yv8gJQbHKa44cgHElWvEtObqrV7iF/8sc3kdi3YMxMhigyG1Cvufs3
-        KfLAyM9M0WgIjjgJ/Ia3bRdLnaeNtfWg5edJy5GZP045WuVUrCu/vA7/RgfCVz4E
-        Mas8zOodMB419e7PDxHIgToPwL5Cw0b67mZ0JKeDhNtEbJddbyTEQhPuAYLC5ZEP
-        HJqmG+UbvFh+jg4qLJjyfzpskmrrvkZiatfCv3Q6RAA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=pi++le
-        rSJjMQOJAyn+dk8PzUYnlxQfDIMI5HSFVnLGA=; b=Pg+yqQnNL/45CSgFlEDaTH
-        aacx6c0zxgunix1bZGJcWIp/cBr33e9DC7BFaon8p0gx/+nNuFqawB7m3ZAnAiE+
-        psRatQrOlFgXp9I46YnRDOyHqLEi2deOkyitXPSFGbFZ/mU0AHJDL2npWXHhF6R6
-        hZPhD8wA4SdMIGII3+Avcw2V7aGqMAobPN0J4Nvmr7D3qdm9zhP+CCLCTLKGLJGM
-        tysbkYRT7/2G5mpV7pQX5URVEOO0v/KaM4kzsdCHXDeHRqQE2KxXiFXaezZaReNk
-        mYjZ2cJT8IDjCWBOETlFbBYHMNBO6O6Fl4ZBlvRbeYQTjjqPN5Ssgt4LFRnBYOyA
-        ==
-X-ME-Sender: <xms:rbkLYcenTEQ30hsey7sEr5aMu5jtIxSP0Sk5jh2NiQkn8s-cUNe2Sw>
-    <xme:rbkLYeNVyniNcC9O1J0ayJgoOUty_kXItk5FG-Tj_6H5d6MJtZ7j3_EDhLwPwGa9V
-    5EhpRxU_eGdCe8KMw>
-X-ME-Received: <xmr:rbkLYdjb9DUL_80h1Edp2t9gAU9GwjUS4nS2_ze4Q-3apN_jg4bpe9PvhDTb-Vkm9MQNjkJEowN-xAp-EvE9aJE3jb1qVoZkka-K7Xy24tBPOBwlVDH7JtI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrieelgddvvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvuffkfhggtggujgesghdtreertddtudenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    eptdffjeeiudduleehvdfgteeifeelheejtedvteduiedttedvtdffffefhfdvgffgnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimh
-X-ME-Proxy: <xmx:rbkLYR8XyTZmi0z1w-WPPXvR7EUaRLfGOaZIa9EyBJfP8fYMtqmcdA>
-    <xmx:rbkLYYt2PG2TKfPTwx6mVHOZnUqK1e74e9yfCR3HN2GZBYoOVm7D-w>
-    <xmx:rbkLYYH3SSjf1cwtTYApTsqA2ebo7KsjvxmsM_1CIVx2p_0_8jSYpA>
-    <xmx:rbkLYciMX0LL1tNj65gc3UgpZpzUukRoYFtaNs8iTJUm1ejseerunQ>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Aug 2021 06:12:59 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id c112de12 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 5 Aug 2021 10:12:56 +0000 (UTC)
-Date:   Thu, 5 Aug 2021 12:12:55 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Chris Torek <chris.torek@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v3 3/4] revision: avoid loading object headers multiple
- times
-Message-ID: <YQu5pyjcaye3P0N3@ncase>
-References: <cover.1624858240.git.ps@pks.im>
- <cover.1627896460.git.ps@pks.im>
- <b9897e102afbcab3bfee58ed8bda24257d8b54fb.1627896460.git.ps@pks.im>
- <87v94onguw.fsf@evledraar.gmail.com>
+        id S240411AbhHEKOA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 06:14:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39814 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240203AbhHEKN6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Aug 2021 06:13:58 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 750B9C061765
+        for <git@vger.kernel.org>; Thu,  5 Aug 2021 03:13:43 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id c16so5755115wrp.13
+        for <git@vger.kernel.org>; Thu, 05 Aug 2021 03:13:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=fjFnT3tFN3DDNUv4KHjTrSLRM5R8Axkx/uJ3oGXJX5Q=;
+        b=eEFv5JM4okYtX+fbp8OH/zmMsWtFkJH3xdRhTUHCxT6EunMbVN4rInioUGwEpx6G1u
+         HgvKCndgouDfa0Wil3EGk0H04ISG13jl4UsX7KjHK3TEQnGX3VyIWHzaWOAlbQjVEo9A
+         FXkQnW0Q4yQuXuCBm0MC5m8/C6bcsMtmQPAVzfmy8QfeKEl+SCc2IFmWxsw2a6Txsaj3
+         BkRMMq11k2uuiPaFLlT7SEi9RHus3wJ9LqzsrO3uZXaxUaTedfRK8ooo7SUTASPRHWeS
+         D2LanY1X3Ip39Thb4Z1C6gIK9GeOeREZdbIsS9EcQbhktCGgNo3DXoqbQjHtbcECtmGP
+         ADxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=fjFnT3tFN3DDNUv4KHjTrSLRM5R8Axkx/uJ3oGXJX5Q=;
+        b=FT+9QY35zJHzDzvDAySKrX0JhmZDEtcO3SbpTbgsOHnw3YYSLQ13aRStdSPmot4xRB
+         HEPm6edmU+Nyh6N2/37aXya6addOIu5GGZY7hFNTxR2vwigwgXXjH6T+P/Cz2FaMEs0a
+         B4XO5JUDpOZunukUvL6beDF5bI6Q/R3J++bYQ/m81Liq+IaAM2eYdVuw+Do+WRc61Dv4
+         vcxpRQx4OoaCUDFARyHczM47hLD6HqjpazJCQJfEr6R5g8oJiAY/LJe+1UeHFf9mN6IM
+         S/gSxS621qi69LNXPUZ95yBlW3jX3OEfcY5qbZbRWcgFcR6IV08xRZCvsDMt5UDse36m
+         ZIVQ==
+X-Gm-Message-State: AOAM532+AUloqKTBQM+GYng7GxluDOK9W7SPC5MFO9x/KuVHOI+naeqq
+        K0vvbkjjPDr1UuYNxGbUhGcBU+OTJiI=
+X-Google-Smtp-Source: ABdhPJyt7tBkW1uyNtHz2lwAIPRUw0vKVhkVkFSuWLDyTQVX8zbgGSeay/ZH6S5yCYDMOZ55R+a7OQ==
+X-Received: by 2002:adf:ba0d:: with SMTP id o13mr4217579wrg.134.1628158422096;
+        Thu, 05 Aug 2021 03:13:42 -0700 (PDT)
+Received: from [192.168.1.201] ([31.185.185.232])
+        by smtp.googlemail.com with ESMTPSA id j5sm5437540wrs.22.2021.08.05.03.13.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Aug 2021 03:13:41 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH] sequencer: warn on skipping previously seen commit
+To:     Junio C Hamano <gitster@pobox.com>,
+        Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org
+References: <4d83766ab3425a5f4b361df2ac505d07fefd7899.1628109852.git.steadmon@google.com>
+ <xmqqsfzonbm1.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <d3f6eb6c-f2e4-b00c-3b4c-bf1e04c846b4@gmail.com>
+Date:   Thu, 5 Aug 2021 11:13:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="H0mHus62wzynF47O"
-Content-Disposition: inline
-In-Reply-To: <87v94onguw.fsf@evledraar.gmail.com>
+In-Reply-To: <xmqqsfzonbm1.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 04/08/2021 22:28, Junio C Hamano wrote:
+> Josh Steadmon <steadmon@google.com> writes:
+> 
+>> Silently skipping commits when rebasing with --no-reapply-cherry-picks
+>> (currently the default behavior) can cause user confusion. Issue a
+>> warning in this case so that users are aware of what's happening.
+>>
+>> Signed-off-by: Josh Steadmon <steadmon@google.com>
+>> ---
+>>
+>> We've had some complaints at $JOB where users were confused when
+>> rebasing branches that contained commits that were previously
+>> cherry-picked into their master branch. How do folks feel about adding a
+>> warning in this case?
+> 
+> I'd unconditionally in support if this were done under --verbose
+> option, but it becomes iffy if this is done unconditionally.
 
---H0mHus62wzynF47O
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Perhaps we could skip the warning if the user is going to edit the todo 
+list as they should see that the skipped commits have been commented 
+out. I'm not sure about requiring --verbose - that might mean the users 
+who would benefit most end up missing warning. As you say below I think 
+it depends how often it appears in practice.
 
-On Mon, Aug 02, 2021 at 02:55:09PM +0200, =C6var Arnfj=F6r=F0 Bjarmason wro=
-te:
-> On Mon, Aug 02 2021, Patrick Steinhardt wrote:
-[snip]
-> > diff --git a/revision.c b/revision.c
-> > index f06a5d63a3..671b6d6513 100644
-> > --- a/revision.c
-> > +++ b/revision.c
-> > @@ -359,14 +359,22 @@ static struct object *get_reference(struct rev_in=
-fo *revs, const char *name,
-> >  				    const struct object_id *oid,
-> >  				    unsigned int flags)
-> >  {
-> > -	struct object *object;
-> > +	struct object *object =3D lookup_unknown_object(revs->repo, oid);
-> > +
-> > +	if (object->type =3D=3D OBJ_NONE) {
-> > +		int type =3D oid_object_info(revs->repo, oid, NULL);
-> > +		if (type < 0 || !object_as_type(object, type, 1)) {
->=20
-> Let's s/int type/enum object_type, personally I think we should never do
-> "type < 0" either, and check OBJ_BAD explicitly, but I've seemingly lost
-> that discussion on-list before.
->=20
-> But I think the consensus is that we should not do !type, but rather
-> type =3D=3D OBJ_NONE.
+> This is because I do not expect everybody will stay to be ignorant
+> of the behaviour of the tool they use every day, and I'd fear that
+> we'd start hearing "yeah, I know the command would skip to avoid
+> duplicated changes, why waste lines to tell me that?" complaints.
+> 
+> Having said that, I _hope_ that in a project with good hygiene, such
+> a multiple cherry-picking would not be so common and an exception,
+> and if my _hope_ proves to be true, then I am OK with giving this
+> warning unconditionally.  The user may know what the command does
+> when it sees a duplicated change, but the warning becomes about the
+> presence of such duplicated changes, which would be a rare event
+> that is worth notifying about.
+> 
+>>   		is_empty = is_original_commit_empty(commit);
+>> -		if (!is_empty && (commit->object.flags & PATCHSAME))
+>> +		if (!is_empty && (commit->object.flags & PATCHSAME)) {
+>> +			warning(_("skipped previously seen commit %s"),
+> 
+> I am debating myself if s/seen/applied/ should be suggested here.
+> 
+> The existing text in the manual page says "a patch already accepted
+> upstream with a different commit message or timestamp will be
+> skipped", and "accepted" is a verb that would apply only in a
+> certain workflow, which is OK in the manual page that give more
+> context, but not here.  But 'seen' feels a bit too weak to me.
 
-`oid_object_info()` does return an `int` though, so it feels kind of
-weird to me to stuff it into an enum right away. Furthermore, while
-`OBJ_BAD` does map to `-1`, the documentation of `oid_object_info()`
-currently asks for what I'm doing: """returns enum object_type or
-negative""".
+Yes, I think 'applied' or 'cherry-picked' would be better than 'seen'
 
-Patrick
+>> +	if (skipped_commit)
+>> +		warning(_("use --reapply-cherry-picks to include skipped commits"));
+> 
+> I'd be hesitant to endorse doing this kind of "here is how to use
+> this command" unconditionally.  Perhaps under --verbose, or hide it
+> under "advise.*".
 
---H0mHus62wzynF47O
-Content-Type: application/pgp-signature; name="signature.asc"
+and use advise() rather than warning(). I'm guess this might be helpful 
+but it wont help them get their commits back as there is no way to stop 
+the rebase from dropping them at that point.
 
------BEGIN PGP SIGNATURE-----
+Best Wishes
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmELuaYACgkQVbJhu7ck
-PpQPVA//ZRMElwqwDlOvOJmO0a/MXEphGpaD/+Gy4ywPoJjq1X97TSEQEBEdoSyZ
-JJf9R5dojEpvrucjvo5Z6YZB3b1A90qaoaCXnlljJ3iPNcJDdcGpngFOHtUHppmd
-6RPyEN1zmjpv23BXqKBUb+DY+SODUOPlSv8MCcJ3g5UKEiF3PjGYrJMevCBvT1dQ
-NtcQckdNdT9nPjcqJtf/tPRSXet5NQ+EeoIKWdQxVVUDxnMLDCPB4afMDnmuQdS3
-Z33oRvvnl4Iiree1kB63sBuU4G4IJq7Qph0u7Rcw8j6MCGDW3Q3WSuG4Ls9dszrg
-WYDEa4J1xO6XB7hiQi5dCYo0R8YYKXvBAuECRAODcxggrFWVfxKPNf25IaL4VkJN
-KnsqOn7GVEzK4WhAz0N+M1kQH3B0mGKWlg8J/ALW1NGUfl/daQA9GI8QahtEFfsT
-5PlVczACgqz9JERYWMODc9L1CShazK0gSnhdDvRPeuM/myT+FZ59PqM0ppaNLRzZ
-DlxSGr+ODNl3RJ4XLt2gEvwrc6LpgjMZkR/gBdeWEGNRK4NWKRzq2vVXDH0AvAOK
-x/XbSMceZX6RpEPb5wjScYN58cD79yT3FbU9ijllD3P+0+1nCik0lawXXpl03O+X
-3Mv4PY4V7sFfKNuqgls8Tqr2pOb9a4zCzrFesfkpKbNRDz720YU=
-=1km4
------END PGP SIGNATURE-----
+Phillip
 
---H0mHus62wzynF47O--
+> Thanks.
+> 
+
