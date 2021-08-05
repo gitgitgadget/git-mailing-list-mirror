@@ -2,135 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61088C4338F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECCF4C432BE
 	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 23:03:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2C1AF6103B
+	by mail.kernel.org (Postfix) with ESMTP id C3942610CD
 	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 23:03:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242014AbhHEXDu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 19:03:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47118 "EHLO
+        id S242027AbhHEXDv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 19:03:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbhHEXDt (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233896AbhHEXDt (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 5 Aug 2021 19:03:49 -0400
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3790C0613D5
-        for <git@vger.kernel.org>; Thu,  5 Aug 2021 16:03:33 -0700 (PDT)
-Received: by mail-qv1-xf2b.google.com with SMTP id db14so3870224qvb.10
-        for <git@vger.kernel.org>; Thu, 05 Aug 2021 16:03:33 -0700 (PDT)
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1663AC061798
+        for <git@vger.kernel.org>; Thu,  5 Aug 2021 16:03:34 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id dk2so3907678qvb.3
+        for <git@vger.kernel.org>; Thu, 05 Aug 2021 16:03:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Xay5QVKK1LeweOPz1S8PdnEBddS+Z9N1R4ovM7oKm7w=;
-        b=kIqG+SKEmYgwmGJlo9cAmq4TY1g3Nwg41Jy0yxa+qHb1D2KmPcnJGnbDoF0XUsETyu
-         dtFUy1e9xpLfUbJ+ri09bWlJMjua4GeEa5aXPMTQvcFFC96OtCIZpgE0e+KeV7smjksB
-         Vwd5yvWBO12kPhQ8QhCsYEWxUg/eJA7wFR3wQsspQwHHfOuVZobnU3nfedNk6g0lhP7V
-         lXcYaI6BhUNl+BB9CJjpyUVTMiadtGJoJ8+QrWorPtO1t8QrDdXscsc4vJEjJMp+XWgS
-         PHZv7bSbWy5mKwaw9fqsTDy0K3b93J9oVvwyQk7F/ButBBeJvtOamNGJKqxtBKil3wNX
-         RDjA==
+        bh=+0w2ZWyCz+3Q5f/O7IJjGcAHV2u3++QqgDNFYMB0Z2A=;
+        b=M6nZL9rPjINGCOLFuY8sgnC5AGcQJmkWG1RA5PT/bYzzjgc/qW6m9QetMj4G+Tbt0g
+         Sm4gHJrZLboeCM6zMaB/Dy76eJOMQ+eiLAebDbeOXSUcPJMsTwOrR/EzA/1SHO7AApHf
+         AOGU0P9DbZ+nQ+yRr5uZZg4aOj5LV3HuQnmdekyTZroRYjWtlb3XZ71j6znvaJqnnG/x
+         ZVzgZbVy26I7bSjJwC/7PHrHi/hmikzETEzknfsaYQrjMQHL1s0Pom7wC9jQ1690cXBT
+         95hQzARuWZozo8PKnSvqOR2davoEW6FevcVDR5Fnqkmhvdb7ghn1nK0vU4qn43Hg+Y/g
+         AXhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Xay5QVKK1LeweOPz1S8PdnEBddS+Z9N1R4ovM7oKm7w=;
-        b=C5Jp9dmbwYm5zy0O8fjswYDtUopmd+VsX+/2XyZSLqCyEf3vDn/A/H/hNUFCl3Ekvg
-         2P+qFFTpS6XyGbgw75GL20jsBHqdu4mCA0iXH/N9KraMEgnDkW+vXlsAwXTJshRtyI8o
-         93PkaMs8Hdkid/u/63R3QZ97qf4kO44BRsrPBVBxeWb2rbvCAjc4MoLOG/r3bln0me9z
-         sVKcfMxdzDjrlV1fCVQ2FLdLzIRdWk0/t0ReFKaA8vv16GY5UIdPW5prF7UOy/tHPDXP
-         lGLqrQQlVoRQPLzXPpPmgMjhFhrIlCGrAiEgM+8w7KRC0iwyEXfayY8FRKSXFvV/fRKx
-         DxUw==
-X-Gm-Message-State: AOAM532jiw8JEoWvoOoGPb7M5HdONiMSPL7gxuaqiqOFHiaeUs+g55Lx
-        mEQsRTUyIN5OPCVUGooVRr/ioaZRo04=
-X-Google-Smtp-Source: ABdhPJzKj2jOywUNAvguEBGEYoctMQIPSBC5ZjRvrPxIWt1P+Xnhsdp8AzDeQg1oDoM/QOo9QkGiHg==
-X-Received: by 2002:a0c:ab1c:: with SMTP id h28mr8018768qvb.39.1628204611033;
-        Thu, 05 Aug 2021 16:03:31 -0700 (PDT)
+        bh=+0w2ZWyCz+3Q5f/O7IJjGcAHV2u3++QqgDNFYMB0Z2A=;
+        b=CNMjW18kdI2f60Iju1vu10qoq0u8Aq2pfL7LQCzCNCAdBp8yJ548hLUhVNZhhByE2w
+         ceA397GBjugTJavK6uncfVSHkhcg5l/7z1SYC7rf8SE63KkDmAhivtesky9ivdAQOG5B
+         DaYPpW/kF4eqPAmkRJ+DxeWhG7VpzIwAURirCR4HQLRq+mLLb9Et0RFuL8jR0vERclop
+         pLDmhaoue2notu5cpz3EAyR5mz4mhB+2VNWRmNz6vGFgMfyM2b0U+njtMSM5ZHEOc3UJ
+         K/YbLJWf+/lmE7pJ3daYnjgVj7yjNS2ElvNMgBWtVHGi6ahyGMAj6xa0PVtvEILOUSAA
+         J05g==
+X-Gm-Message-State: AOAM530hjmRasNCPnRGbrewAO1EdBFABxFk3R7yjofAdtcQ1+8h3/4pn
+        mrCIGEWgNAH+q1iEIOe2r4qTSOtkhqY=
+X-Google-Smtp-Source: ABdhPJyG2VoI+cvzj2sA7r5W7fMaSGpRwRBbJMGK30J23H9RDg6kfKP1PcdRoOeRUIK3VfIRnJLtEw==
+X-Received: by 2002:a05:6214:528a:: with SMTP id kj10mr7985219qvb.38.1628204612792;
+        Thu, 05 Aug 2021 16:03:32 -0700 (PDT)
 Received: from localhost ([24.169.20.255])
-        by smtp.gmail.com with ESMTPSA id p19sm2645858qtx.10.2021.08.05.16.03.30
+        by smtp.gmail.com with ESMTPSA id bi3sm3086410qkb.133.2021.08.05.16.03.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Aug 2021 16:03:30 -0700 (PDT)
+        Thu, 05 Aug 2021 16:03:32 -0700 (PDT)
 From:   Ben Boeckel <mathstuf@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Ben Boeckel <mathstuf@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 0/4] advice: remove usage of `advice_*` global variables
-Date:   Thu,  5 Aug 2021 19:03:17 -0400
-Message-Id: <20210805230321.532218-1-mathstuf@gmail.com>
+Subject: [PATCH v2 1/4] advice: add enum variants for missing advice variables
+Date:   Thu,  5 Aug 2021 19:03:18 -0400
+Message-Id: <20210805230321.532218-2-mathstuf@gmail.com>
 X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210731022504.1912702-1-mathstuf@gmail.com>
+In-Reply-To: <20210805230321.532218-1-mathstuf@gmail.com>
 References: <20210731022504.1912702-1-mathstuf@gmail.com>
+ <20210805230321.532218-1-mathstuf@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+In daef1b300b0 (Merge branch 'hw/advice-add-nothing', 2020-02-14), two
+advice settings were introduced into the `advice_config` array.
 
-When looking at global variable usage for my `branch.default*` settings,
-I found the `advice_` variables which were simple enough to resolve.
+Subsequently, c4a09cc9ccb (Merge branch 'hw/advise-ng', 2020-03-25)
+started to deprecate `advice_config` in favor of a new array,
+`advice_setting`.
 
-This concludes the journey started in c4a09cc9ccb (Merge branch
-'hw/advise-ng', 2020-03-25) to update the advice configuration API to
-help avoid bad coding patterns in usage of the `advice_` global
-variables.
+However, the latter branch did not include the former branch, and
+therefore `advice_setting` is missing the two entries added by the
+`hw/advice-add-nothing` branch.
 
-New `advice_*` variables also in flight will conflict with this
-patchset, but the conflict resolution is trivial (if not at all
-automatic).
+These are currently the only entries in `advice_config` missing from
+`advice_setting`.
 
-Thanks,
-
---Ben
-
+Signed-off-by: Ben Boeckel <mathstuf@gmail.com>
 ---
-v1 -> v2:
-  - improve commit messages to mention the history of the current state
-  - split the API updates between readers and writers of `advice_*` into
-    separate commits
-  - reorder commits to better show the progression of the replacement
+ advice.c | 2 ++
+ advice.h | 2 ++
+ 2 files changed, 4 insertions(+)
 
-Ben Boeckel (4):
-  advice: add enum variants for missing advice variables
-  advice: remove read uses of global `advice_` variables
-  advice: add `advice_set` to update advice settings at runtime
-  advice: remove static global variables for advice tracking
-
- advice.c                    | 88 ++++---------------------------------
- advice.h                    | 38 +++-------------
- branch.c                    |  2 +-
- builtin/add.c               |  8 ++--
- builtin/am.c                |  2 +-
- builtin/checkout.c          |  6 +--
- builtin/clone.c             |  2 +-
- builtin/commit.c            |  4 +-
- builtin/fetch.c             |  2 +-
- builtin/merge.c             |  4 +-
- builtin/push.c              | 12 ++---
- builtin/replace.c           |  2 +-
- builtin/reset.c             |  2 +-
- builtin/rm.c                |  2 +-
- builtin/submodule--helper.c |  2 +-
- commit.c                    |  2 +-
- editor.c                    |  2 +-
- notes-merge.c               |  2 +-
- object-name.c               |  2 +-
- remote.c                    | 12 ++---
- run-command.c               |  2 +-
- sequencer.c                 |  8 ++--
- unpack-trees.c              | 18 ++++----
- wt-status.c                 |  6 +--
- 24 files changed, 68 insertions(+), 162 deletions(-)
-
-
-base-commit: eb27b338a3e71c7c4079fbac8aeae3f8fbb5c687
+diff --git a/advice.c b/advice.c
+index 0b9c89c48a..6da51be63c 100644
+--- a/advice.c
++++ b/advice.c
+@@ -106,6 +106,8 @@ static struct {
+ 	int enabled;
+ } advice_setting[] = {
+ 	[ADVICE_ADD_EMBEDDED_REPO]			= { "addEmbeddedRepo", 1 },
++	[ADVICE_ADD_EMPTY_PATHSPEC]			= { "addEmptyPathspec", 1 },
++	[ADVICE_ADD_IGNORED_FILE]			= { "addIgnoredFile", 1 },
+ 	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir", 1 },
+ 	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName", 1 },
+ 	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge", 1 },
+diff --git a/advice.h b/advice.h
+index bd26c385d0..95489ab4c6 100644
+--- a/advice.h
++++ b/advice.h
+@@ -45,6 +45,8 @@ extern int advice_add_empty_pathspec;
+  */
+  enum advice_type {
+ 	ADVICE_ADD_EMBEDDED_REPO,
++	ADVICE_ADD_EMPTY_PATHSPEC,
++	ADVICE_ADD_IGNORED_FILE,
+ 	ADVICE_AM_WORK_DIR,
+ 	ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
+ 	ADVICE_COMMIT_BEFORE_MERGE,
 -- 
 2.31.1
 
