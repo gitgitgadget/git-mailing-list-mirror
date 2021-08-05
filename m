@@ -2,136 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_NONE
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B85F0C4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 20:37:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA8CCC4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 20:40:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 96EAD6104F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 20:37:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE8F461104
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 20:40:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240906AbhHEUha (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 16:37:30 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63766 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240780AbhHEUha (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Aug 2021 16:37:30 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5D6061413D1;
-        Thu,  5 Aug 2021 16:37:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ir3++GK9JtyFNdjm9Tz/AnDPc2Yew82bW364VP
-        4LVko=; b=FY/ycGwo/JVZmA1f8TzdyhVSSuGv/Pl8dgS5Ugh1Ltb+W9em+jD7Mj
-        uRnt8Gb+i5lkBCmCuycXv6VAkpVDWKbAvvgtKwW9YfBy/VTCK/gqI8ZO09IOT2pz
-        61GDPUE1PxBuepZVdG/GWa4+3xpFmem3tQCYfY7pcIsWQU9RAC+sY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 53B011413CE;
-        Thu,  5 Aug 2021 16:37:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.71.182])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2428F1413CD;
-        Thu,  5 Aug 2021 16:37:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     avarab@gmail.com, christian.couder@gmail.com, congdanhqx@gmail.com,
-        emilyshaffer@google.com, git@vger.kernel.org, jrnieder@gmail.com,
-        kaartic.sivaraam@gmail.com, pc44800@gmail.com,
-        periperidip@gmail.com, rafaeloliveira.cs@gmail.com,
-        sunshine@sunshineco.com,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: Re: [GSoC] [PATCH v2 4/9] dir: libify and export helper functions
- from clone.c
-References: <20210805071917.29500-1-raykar.ath@gmail.com>
-        <20210805074054.29916-1-raykar.ath@gmail.com>
-        <20210805074054.29916-5-raykar.ath@gmail.com>
-Date:   Thu, 05 Aug 2021 13:37:10 -0700
-In-Reply-To: <20210805074054.29916-5-raykar.ath@gmail.com> (Atharva Raykar's
-        message of "Thu, 5 Aug 2021 13:10:49 +0530")
-Message-ID: <xmqqim0jk4qx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S241037AbhHEUkc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 16:40:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40764 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233465AbhHEUkc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Aug 2021 16:40:32 -0400
+Received: (qmail 12764 invoked by uid 109); 5 Aug 2021 20:40:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Aug 2021 20:40:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7344 invoked by uid 111); 5 Aug 2021 20:40:17 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Aug 2021 16:40:17 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 5 Aug 2021 16:40:16 -0400
+From:   Jeff King <peff@peff.net>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] fetch-pack: speed up loading of refs via commit graph
+Message-ID: <YQxMsDUNndA2KWbS@coredump.intra.peff.net>
+References: <08519b8ab6f395cffbcd5e530bfba6aaf64241a2.1628085347.git.ps@pks.im>
+ <YQr/vLNjZomIe1ME@coredump.intra.peff.net>
+ <YQt/g0iZxAVgw66o@ncase>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E9840AA4-F62C-11EB-A27F-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YQt/g0iZxAVgw66o@ncase>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Atharva Raykar <raykar.ath@gmail.com> writes:
+On Thu, Aug 05, 2021 at 08:04:51AM +0200, Patrick Steinhardt wrote:
 
-> These functions can be useful to other parts of Git. Let's move them to
-> dir.c, while renaming them to be make their functionality more explicit.
+> > Nice. I've sometimes wondered if parse_object() should be doing this
+> > optimization itself. Though we'd possibly still want callers (like this
+> > one) to give us more hints, since we already know the type is
+> > OBJ_COMMIT. Whereas parse_object() would have to discover that itself
+> > (though we already incur the extra type lookup there to handle blobs).
+> 
+> Would certainly make it much harder to hit this pitfall. The only thing
+> one needs to be cautious about is that we need to somehow assert the
+> object still exists in our ODB. Otherwise you may look up a commit via
+> the commit-graph even though the commit doesn't exist anymore.
 
-Hmph, guess_dir_name_from_git_url() is not all that more clarifying
-than the original, at least to me.  For a file-scope static helper,
-it probably was good enough with a short name with no function doc,
-but we should describe what it does in comments in dir.h and come up
-with a suitable name, taking input from that description.
+True, though what I really wonder is what exactly people are depending
+on parse_object() for. I.e., how many callers care about making sure it
+exists, and how many would be happy to have things magically go faster?
 
-> Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Shourya Shukla <shouryashukla.oo@gmail.com>
-> ---
->  builtin/clone.c | 118 +-----------------------------------------------
->  dir.c           | 114 ++++++++++++++++++++++++++++++++++++++++++++++
->  dir.h           |   3 ++
->  3 files changed, 119 insertions(+), 116 deletions(-)
+I'm not sure of a good way to answer that question, but I agree it's the
+sticking point on pushing the optimization down to that lower level.
 
-Again "show --color-moved" helps to see that these two helper
-functions are moved across files without any change other than the
-names, which is good.
+(In case it's not clear, this is all a question for the future, and
+shouldn't hold up your patch).
 
-> @@ -1041,8 +927,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  	if (argc == 2)
->  		dir = xstrdup(argv[1]);
->  	else
-> -		dir = guess_dir_name(repo_name, is_bundle, option_bare);
-> -	strip_trailing_slashes(dir);
-> +		dir = guess_dir_name_from_git_url(repo_name, is_bundle, option_bare);
-> +	strip_dir_trailing_slashes(dir);
+> > Do you have a lot of tags in your repository?
+> 
+> No, it's only about 2000 tags.
 
-So, what does this new public helper function guess?  The name of
-the function says it guesses a directory name, but it is not just
-any directory name, but a directory with some specific meaning.
+Hmm. In that case, I wonder if we could be using the ref peel data in
+the opposite direction:
 
-Here repo_name has the URL the user gave "git clone", and even
-though there are some code before this part that computed on the
-variable, it hasn't been modified.  And "from_git_url" is a good way
-to indicate that that is one of the input the function uses to guess
-the name of "the directory with some unknown specific meaning".
+  0. With modern packed-refs, the file tells us definitely whether an
+     object was peel-able or not.
 
-I think this codepath wants the new directory to create as the
-result of "git clone" operation in "dir".  So, even though I still
-do not have a good answer to the earlier "this is not just any
-directory but with some specific meaning---what is it?" question,
-adjectives that are appropriate for the "directory" to answer it
-may be along the lines of "new", "resulting", "cloned", etc.
+  1. If it is peel-able, then do the same tag-peeling we do now.  This
+     handles the intermediate stages, etc, and the optimization doesn't
+     help us.
 
-> diff --git a/dir.h b/dir.h
-> index b3e1a54a97..76441dde2d 100644
-> --- a/dir.h
-> +++ b/dir.h
-> @@ -453,6 +453,9 @@ static inline int is_dot_or_dotdot(const char *name)
->  
->  int is_empty_dir(const char *dir);
->  
+  2. If it isn't peel-able, then we know it's not a tag. We can
+     _guess_ that it's a commit, because most refs that point to
+     non-tags are, and try to look it up in the commit graph.
 
-We would want docstring here for the function (and possibly rename
-the function to clarify what kind of "dir" we are talking about).
+  3. If we do find it in the commit graph, we win. We saved having to
+     call oid_object_info() to get the type.
 
+  4. If we didn't, then we have to get the real type (it might simply be
+     a commit that isn't in the graph files), and we lose. We did a
+     pointless lookup in the graph file.
 
-> +char *guess_dir_name_from_git_url(const char *repo, int is_bundle, int is_bare);
-> +void strip_dir_trailing_slashes(char *dir);
-> +
->  void setup_standard_excludes(struct dir_struct *dir);
->  
->  char *get_sparse_checkout_filename(void);
+I think in general we'd win on balance, because most refs do point to
+commits. But I'm not sure how big the win would be. You'd have to time
+it on your weird 2M-ref case (though your numbers below suggest it may
+be a few seconds).
 
-Thanks.
+(And I know I'm spouting a lot of micro-optimization ideas here; I won't
+be offended if you don't feel like following up on them).
+
+> > I wonder where the remaining 20s is going. 
+> 
+> Rebasing this commit on top of my git-rev-list(1) series [1] for the
+> connectivity check gives another 25% speedup, going down from 20s to 14s
+> (numbers are a bit different given that I'm on a different machine right
+> now). From here on, it's multiple things which take time:
+> 
+>     - 20% of the time is spent sorting the refs in
+>       `mark_complete_and_common_ref()`. This time around I feel less
+>       comfortable to just disable sorting given that it may impact
+>       correctness.
+> 
+>     - 30% of the time is spent looking up object types via
+>       `oid_object_info_extended()`, where 75% of these lookups come from
+>       `deref_without_lazy_fetch()`. This can be improved a bit by doing
+>       the `lookup_unknown_object()` dance, buying a modest speedup of
+>       ~8%. But this again has memory tradeoffs given that we must
+>       allocate the object such that all types would fit.
+
+Thanks, that all makes sense.
+
+I think the suggestion I made above is similar to what you're thinking
+with lookup_unknown_commit(), but would avoid the extra allocations.
+
+-Peff
