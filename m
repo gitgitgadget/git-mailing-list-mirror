@@ -2,162 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 980C5C4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 18:25:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51692C4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 18:39:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74B4661154
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 18:25:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 33C3C6024A
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 18:39:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241185AbhHESZx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 14:25:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40580 "EHLO
+        id S241483AbhHESj0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 14:39:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240172AbhHESZt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Aug 2021 14:25:49 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AF20C061765
-        for <git@vger.kernel.org>; Thu,  5 Aug 2021 11:25:34 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id l19so11024504pjz.0
-        for <git@vger.kernel.org>; Thu, 05 Aug 2021 11:25:34 -0700 (PDT)
+        with ESMTP id S233465AbhHESjZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Aug 2021 14:39:25 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AADBBC061765
+        for <git@vger.kernel.org>; Thu,  5 Aug 2021 11:39:10 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id u21-20020a17090a8915b02901782c36f543so8129291pjn.4
+        for <git@vger.kernel.org>; Thu, 05 Aug 2021 11:39:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+GITS2m+EcixkmBguSTMaKO0ZEIcH4TS+KT/8snqcBE=;
-        b=tlT2Mbysh/yqLVlpFoMs1W2D6TQ38wAKtMZmuc37vBS9YgOnAv9P6rsVkhQXeuDUUn
-         +He1M/cibLEnVgUEAIkte8qx0nrFhOA6lLSDeOe1GLy97J4wvt/Novh9stMEUKwOms3e
-         2zlUuV3yf6UIKkogIfgYvPRbpI7Fvs4praeaDLkDZfBmwjziJpxCnQvYEvZMz47m3O8I
-         j07aNmjSSHkLYirQdJNaff55ziMd2vUd86b3emfB3CagkPZCZeUcghUymcK8BitdO6Yx
-         zgRvkZBqnKBBU2AFgsGXJf1RKTAc55htYFl2G/dzkLWYcRikw21/ItMkCYocOwG3H/jg
-         WXgw==
+        h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
+         :date:mime-version;
+        bh=m1HVC8UYTCesYNtLq3QB3e4WO4oqrz1T0WImPJ97Z+U=;
+        b=dQPNkbXYywY3345gbtaabSOOJ2hr69Oh+QgHJTWmDra19J2QzOy5HralfTI+YMGkP7
+         DJEDKMUQgl/zWhaZkzhCntyZMWcS4U8s0/CZrv2MaUDWqa0O8NnhuGa/B2/IDLnAvTl3
+         JvP5izgLDEYGa0v2H54LQDqYLjz3m6cv/QQpzkloHp2zdAvLh0SB42jTViFOr5YuSBxq
+         nilmRCadcJ8QqHdAw6iKQYOuNarf+P7lBuN+yvm+PlpibUbAf8VLJn884WKYFd3kUeeY
+         s6ft/31TSE6fv17kEDnzk/Sc5m+W6FgM173M+JxDtSJXs6GXu75/EK6GSKVHyU+Uh3QU
+         nhyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+GITS2m+EcixkmBguSTMaKO0ZEIcH4TS+KT/8snqcBE=;
-        b=XtLLClW808DtBshxO908kdT7gGmm0rEKjzhpo8KROFHkxZ+u0WS3ymL6JzjaOih9d1
-         HdsKF2bVsSC+kWHJVlSYadk3C+2yK1PnW8ok5Jt1SExsBFNwvaOlIWjYTeVsk8/9u9aH
-         jXH6q+MkS09Lnm+NWQmbBHqkexdP5U5nYVRaKgtvezqpRbqfgl8yu/t6PJvzqdRaHD0h
-         s1E4Tx1MzQ1nLlr9MP6ug3mEkm4GDm1CUWzNeMpin2Vb5oGb/FzEjWFPbwgBE70U/XH3
-         jOIVObJO2DGz3Oc/g9cSYx25AwmNQ6x4S6z1aR9nXkWx8MwEVxl0dQjYIoWfdXa5Ein+
-         dQeQ==
-X-Gm-Message-State: AOAM533tZkoJ59wBDDbrWUPwE6tXzBC0djArAi1nTz2G5jnPVH1W3jgs
-        TnBpY7qwbn4GcAcyJwK5hAhTcNddlsrLCA==
-X-Google-Smtp-Source: ABdhPJwQqjH+hIjl8/B8sIedLSuUKz2k9hz9RA4hFZXXzsNkjAbggDSkAui9eZgTVh8swG+OUvV59w==
-X-Received: by 2002:a63:6c5:: with SMTP id 188mr225316pgg.39.1628187933554;
-        Thu, 05 Aug 2021 11:25:33 -0700 (PDT)
-Received: from [192.168.208.38] ([183.82.191.73])
-        by smtp.gmail.com with ESMTPSA id z18sm3246121pfn.88.2021.08.05.11.25.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Aug 2021 11:25:33 -0700 (PDT)
-Subject: Re: [GSoC] [PATCH v3] submodule--helper: introduce add-config
- subcommand
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Prathamesh Chavan <pc44800@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>, git@vger.kernel.org
-References: <20210728115304.80643-1-raykar.ath@gmail.com>
- <20210801063352.50813-1-raykar.ath@gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <1013ed94-ad4f-6ec8-09fb-772edea4ea05@gmail.com>
-Date:   Thu, 5 Aug 2021 23:55:28 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:references:user-agent:from:to:cc:subject
+         :in-reply-to:message-id:date:mime-version;
+        bh=m1HVC8UYTCesYNtLq3QB3e4WO4oqrz1T0WImPJ97Z+U=;
+        b=fNXnvb2ftxU1PHI7zW2i3HurMZ5qFyoHq6r6QOOeq7sfqEHAzhacDODrrz+NmkzOrU
+         ABt5B1yDFR96lLhEjsoFdjjPvMfAoU8isD5dEMusXAGfWNNAxGWKvp1GQ5YLJ1JEDhCz
+         4m8MyO74wGFIlhxEt4+KugiivamqeX0fFCv2Q4nJrYGAbG1s4tlyRSPial/0Dnr6YUyW
+         WKAfnc+LfkCid9lyKPQh0ZIgQK8azf+Q0dUWl/PjQMZoOEXwvQMEqABIeEPGXHYUNsFx
+         6Z75KNjj540tYVVudWVPa8cTCQ4eh9+p4KL/RZrUHCBZRB1bPBo4y8RatdXoVmZN+ScC
+         xriA==
+X-Gm-Message-State: AOAM531f4ICOGYBkQmDLc+pYxdQeSM8fyN5AdEh9nqSmiczQZzJQJh2W
+        cg9SnD7vRU7/nMcy5WND9PO2M0XisnCc/g==
+X-Google-Smtp-Source: ABdhPJwzRs6/OHbRB1zaNqPXs9qs1VpYcWdGoqNk7M5LOvi+KcQtcHlm2KFW9DIaW2WyIAyy52SvYA==
+X-Received: by 2002:a65:638d:: with SMTP id h13mr1538648pgv.178.1628188749870;
+        Thu, 05 Aug 2021 11:39:09 -0700 (PDT)
+Received: from atharva-on-air ([119.82.121.47])
+        by smtp.gmail.com with ESMTPSA id j5sm8702196pgg.41.2021.08.05.11.39.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Aug 2021 11:39:09 -0700 (PDT)
+References: <CANt7McFAu5gAFcgd+dejQjDQDxfcnyhz=BxSAejXGMMtGQzO_w@mail.gmail.com>
+ <YPHgUuxqmKFkbEku@camp.crustytoothpaste.net>
+ <CANt7McHrYhSe3JsS8UKX8NgsUajwxQY4h9KTtXkEXdd0Be_+yw@mail.gmail.com>
+ <46F5B91F-4DBE-4F34-9395-7CC808FAC359@gmail.com>
+ <CANt7McE4N0wv5bik8tSNrdTs-mcL20cJPMP42iPtZqhUpKgirA@mail.gmail.com>
+User-agent: mu4e 1.4.15; emacs 27.2
+From:   Atharva Raykar <raykar.ath@gmail.com>
+To:     Rostislav Krasny <rosti.bsd@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: Why do submodules detach HEAD? (was Re: Incorrect and
+ inconsistent End-Of-Line characters in .gitmodules ...)
+In-reply-to: <CANt7McE4N0wv5bik8tSNrdTs-mcL20cJPMP42iPtZqhUpKgirA@mail.gmail.com>
+Message-ID: <m2bl6bvit1.fsf@gmail.com>
+Date:   Fri, 06 Aug 2021 00:08:02 +0530
 MIME-Version: 1.0
-In-Reply-To: <20210801063352.50813-1-raykar.ath@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/08/21 12:03 pm, Atharva Raykar wrote:
-> Add a new "add-config" subcommand to `git submodule--helper` with the
-> goal of converting part of the shell code in git-submodule.sh related to
-> `git submodule add` into C code. This new subcommand sets the
-> configuration variables of a newly added submodule, by registering the
-> url in local git config, as well as the submodule name and path in the
-> .gitmodules file. It also sets 'submodule.<name>.active' to "true" if
-> the submodule path has not already been covered by any pathspec
-> specified in 'submodule.active'.
-> 
-> This is meant to be a faithful conversion from shell to C, although we
-> add comments to areas that could be improved in future patches, after
-> the conversion has settled.
-> 
-> Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Shourya Shukla <periperidip@gmail.com>
-> Based-on-patch-by: Shourya Shukla <periperidip@gmail.com>
-> Based-on-patch-by: Prathamesh Chavan <pc44800@gmail.com>
-> ---
+
+Rostislav Krasny <rosti.bsd@gmail.com> writes:
+
+> On Wed, Jul 21, 2021 at 10:26 AM Atharva Raykar <raykar.ath@gmail.com> wrote:
+>> [...]
+>> We want to have idempotence, ie, for a particular revision that is
+>> registered by our parent project, we want 'update' to give the same
+>> outcome every time, and not be dependent on whatever the state of the
+>> branch is. This way we ensure that for a particular commit in the
+>> parent project, the submodules will be in the same state for every
+>> system in the world, after an 'update' is run.
 >
-
-The v3 mostly looks good to me. Just one style nit:
-
-> [ ... ]
+> All this is ok, but there could be other uses of sub-modules. Why not
+> to make this behavior configurable?
 >
-> +static void configure_added_submodule(struct add_data *add_data)
-> +{
-> +	char *key;
-> +	char *val = NULL;
-> +	struct child_process add_submod = CHILD_PROCESS_INIT;
-> +	struct child_process add_gitmodules = CHILD_PROCESS_INIT;
-> +
-> +	key = xstrfmt("submodule.%s.url", add_data->sm_name);
-> +	git_config_set_gently(key, add_data->realrepo);
-> +	free(key);
-> +
-> +	add_submod.git_cmd = 1;
-> +	strvec_pushl(&add_submod.args, "add",
-> +		     "--no-warn-embedded-repo", NULL);
-> +	if (add_data->force)
-> +		strvec_push(&add_submod.args, "--force");
-> +	strvec_pushl(&add_submod.args, "--", add_data->sm_path, NULL);
-> +
-> +	if (run_command(&add_submod))
-> +		die(_("Failed to add submodule '%s'"), add_data->sm_path);
-> +
-> +	if (config_submodule_in_gitmodules(add_data->sm_name, "path", add_data->sm_path) ||
-> +	    config_submodule_in_gitmodules(add_data->sm_name, "url", add_data->repo))
-> +		die(_("Failed to register submodule '%s'"), add_data->sm_path);
-> +
-> +	if (add_data->branch)
-> +		if (config_submodule_in_gitmodules(add_data->sm_name,
-> +						   "branch", add_data->branch))
-> +			die(_("Failed to register submodule '%s'"), add_data->sm_path);
-> +
+> As a developer I may want to make new commits on those sub-modules and
+> always work with latest versions of their particular branches. In the
+> detached HEAD mode this is much harder to be done and also an error
+> prone operation. Commits that are done in the detached HEAD state may
+> easily be lost. [...]
 
-As the body of if(add->branch) has a nested if in it and totally spans 3 lines, it might
-be a good idea to wrap it in braces like so:
+Have you tried running 'submodule update --merge' or
+'submodule update --rebase'? Those modes will not detach your
+submodule's HEAD.
 
-         if (add_data->branch) {
-                 if (config_submodule_in_gitmodules(add_data->sm_name,
-                                                    "branch", add_data->branch))
-                         die(_("Failed to register submodule '%s'"), add_data->sm_path);
-         }
+The Pro Git book has a section that explains a workflow that sounds
+similar to what you describe:
 
+https://git-scm.com/book/en/v2/Git-Tools-Submodules
 
-... or collapse both conditionals into a single if like so:
+Around halfway down the page, look for the heading "Working on a
+Submodule". Does that fit your use case?
 
-         if (add_data->branch &&
-             config_submodule_in_gitmodules(add_data->sm_name, "branch", add_data->branch))
-                 die(_("Failed to register submodule '%s'"), add_data->sm_path);
+> [...] Google is full of questions about how this could be done, i.e. there
+> is an essential demand of such a new behavior.
 
--- 
-Sivaraam
+It would be nice if you can share a specific link that captures the
+demand you are talking about. When I Googled about this behaviour, I got
+a range of different kinds of results, without a clearly voiced demand.
+If you can show an example that best represents this demand, the Git
+developers here may be able to address it better.
