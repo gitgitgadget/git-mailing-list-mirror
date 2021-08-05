@@ -2,76 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D707C4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 01:57:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57A95C4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 02:09:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A5D960F94
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 01:57:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 261276105A
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 02:09:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238049AbhHEB5Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Aug 2021 21:57:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41230 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231622AbhHEB5Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Aug 2021 21:57:24 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4ED9C061765
-        for <git@vger.kernel.org>; Wed,  4 Aug 2021 18:57:10 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id 21so5329994oin.8
-        for <git@vger.kernel.org>; Wed, 04 Aug 2021 18:57:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fb/CmoAGLEAKDW/UvhHEcs2hbKP3H3+cxpJyxq6I9u0=;
-        b=MFbjakt8n50YBDkz1vym1rIiqwI43rS3DnrRybuCjtwMKqY7lNNleY7bmUvo4lKvZC
-         7KLOZogtZmFmF/WlG/7eeGougkYipajXz2xSFN5kyxpWAGPLEjG+MneyBc/1Zs5TpzH6
-         AFiev+CAQh0nJEBU9laDhFAnNzrVPS8l1kYPaYTVTehjCnQxcOVHciBB4A4hvwT1Gfz0
-         8fP7EOdoilI671IlJkWQRVKcWojioF094ARcn++veUZ+QdJXh0Blq4MkeLr5L6NnMOBn
-         ZkUbCSGGqI9r9sN5RBg2q75qMK3uWaVva/tYetjBqANoZPxN6nRWPGmP2nEERwKxyYSR
-         OTOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fb/CmoAGLEAKDW/UvhHEcs2hbKP3H3+cxpJyxq6I9u0=;
-        b=Sslfo6ehe9cp8ngeiPkkiyoBFORpAOF+3OmsRlX/yssPBdREDu2z8zEqUmaQDwYAVU
-         yXs4kY6X+0Kd8AQTwUUMJTPVzKyNPjy5ME9YD8uzel+W2ZBUlzdQm3KsjC3Ljm5foxiP
-         uGRQWgIxIMPwpzyeoXwb16e3qK9vmWOwjVMBYFb0xZjMisjBCzeblLZ98Vz1NxmNJxCp
-         Iu08gyra3fHNT02H8XR8+Njqz96BJnzaWYlihO5LLnyclOl5sAIKKCiqjW7Dc1HY6OhA
-         A2Z3x4cBlCEm+J1vp67rfKl3eHz1TDntjtIdmDhaiSlUMqB0e4uyWBlfe/QDOgKCARUa
-         Htdw==
-X-Gm-Message-State: AOAM5327WgAIlGY5rNvSfY346+jgyJJ/qZW6aSqYroAZl5qiw9S8cna7
-        WNfcNwGZ7J4p9b6lwYvcJN4Acgv79Nwf//+x9Ko=
-X-Google-Smtp-Source: ABdhPJyiwTkMztV1SZj+tWvGMJToFleAa1eya5Pcgn3rHXmyCvhXs66YdDrUvuMec6Vm90hnNfhF0UcXde4yYGOtv+E=
-X-Received: by 2002:a05:6808:1390:: with SMTP id c16mr1648113oiw.123.1628128630028;
- Wed, 04 Aug 2021 18:57:10 -0700 (PDT)
+        id S238167AbhHECJN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Aug 2021 22:09:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58644 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232116AbhHECJN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Aug 2021 22:09:13 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 68FA3E1696;
+        Wed,  4 Aug 2021 22:08:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=qeutovMaKAts
+        3wanrFboBw7hQ+LWRIDn+7QsxI/+AkE=; b=KNjjlYBgGUHqndn7xUbpD7suoLYP
+        aZLfUkNz8qFSwXUu84a8gDFrQ8ntBJJZ2KCaac2IfBGiUI8RyMqmt1YHyrrhXjeN
+        MMUYU5i+zh7tBiHqpVab1+rNl59nNpwaFJWJOMkfoUgwZlLpn5r9oBy6uwou6duh
+        3iIpf7uIVfSWEp4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 60301E1695;
+        Wed,  4 Aug 2021 22:08:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DEFCCE1694;
+        Wed,  4 Aug 2021 22:08:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: What's cooking in git.git (Aug 2021, #02; Tue, 3)
+References: <xmqqfsvpr8t5.fsf@gitster.g> <87wnp1mqv2.fsf@evledraar.gmail.com>
+        <xmqq4kc5ozi7.fsf@gitster.g> <87lf5hm0v7.fsf@evledraar.gmail.com>
+        <20210804212825.GH23408@szeder.dev>
+        <87fsvon5xm.fsf@evledraar.gmail.com>
+Date:   Wed, 04 Aug 2021 19:08:57 -0700
+In-Reply-To: <87fsvon5xm.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Thu, 05 Aug 2021 01:06:55 +0200")
+Message-ID: <xmqq4kc4myme.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAAVFnNkW6Bc4bBDeea2v-VFydvEC0dBw+QXVA0-6OnmF8km3ZA@mail.gmail.com>
- <YQmsJUe6hAMy/QGA@nand.local> <CAAVFnN=W27rdE1EH-joscyJEooAsDrdtPropVVaBYwhte=cPJA@mail.gmail.com>
- <YQmuT2ZYe1mzHBjI@nand.local> <CAAVFnNmitHeimogaGUUwWGWhve+wbF6CXcSNUonGCWAgOSKzjA@mail.gmail.com>
- <YQm+PWAtc3rixqsw@nand.local> <74443c64-efe9-ea47-e918-d62b8c976abc@gmail.com>
- <YQtBezRE3l09cILa@nand.local>
-In-Reply-To: <YQtBezRE3l09cILa@nand.local>
-From:   Cameron Steffen <cam.steffen94@gmail.com>
-Date:   Wed, 4 Aug 2021 20:56:58 -0500
-Message-ID: <CAAVFnN=ynj8sa-5YPmU7=s2OcXzy8a_gsxRxVxFD_9LgWQOBtg@mail.gmail.com>
-Subject: Re: git revert --continue --no-verify
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 18752ECE-F592-11EB-AD97-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've updated my mental model to include "--continue is a shortcut for
-`git commit && ..`". That is a big help and resolves the issue for me
-since I know I can always fall back to running `git commit` manually.
-Thanks for all the replies!
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Cameron
+> How would it be forgotten? If you introduce tests like the ones changed
+> in 1/3 of the series and expect git to pay attention to COLUMNS you'll
+> find that they won't work, because if you set COLUMNS=3D123 we won't ta=
+ke
+> it over the GIT_TEST_COLUMNS=3D80 set in test-lib.sh.
+> ...
+> ...I'd be happy to remove the helper if Junio would take that version o=
+f
+> the patch; :)
+
+FWIW, I didn't *request* it; the resulting test scripts that set and
+unset both the standard COLUMNS and another test-only environment
+variable looked typo-prone and hard to read, and that is why I
+suggested to hide that behind a helper.
+
+If we do not have to add a test-only enviroment variable at all, I
+do not see the reason why we need a helper.
+
+> By narrowly targeting a fix at one specific shell's cleverness around
+> COLUMNS we'll leave open a window where we'll fail on other shells if
+> they introduce similar cleverness.
+>
+> It hardly seems like a stretch that once bash starts doing that sort of
+> thing other shells might think to follow suit, and all have their own
+> non-standard way to turn it off.
+
+Hmph. Wouldn't the same argument apply to the much simpler single
+liner "shopt -u" solution?  When writing new tests, there is nothing
+to remember, and a new shell that needs a different trick to defeat
+the auto-COLUMNS would be detected quickly by running the tests in a
+terminal whose width is different from 80, no?
+
+> You also didn't address the other rationale for it, namely that it's
+> also future-proofing us for submarine breakages in non-git programs
+> which'll understand the new COLUMNS=3D10, but not GIT_TEST_COLUMNS=3D80=
+.
+
+Isn't that another downside of the approach you are advocating?
+
+If we make Git rely on GIT_TEST_COLUMNS, we may honor it while
+everybody else ignores it.  If we only have to deal with COLUMNS
+like everybody else does, Git and other tools that are used in our
+tests will be affected the same way by overly-clever shells, no?
