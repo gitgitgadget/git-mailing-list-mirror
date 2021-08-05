@@ -2,70 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1B22C4320A
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 11:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 963B7C4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 11:25:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 718506112D
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 11:25:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7357161108
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 11:25:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241004AbhHELZr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 07:25:47 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:44057 "EHLO
+        id S241012AbhHELZu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 07:25:50 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:52783 "EHLO
         out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S240992AbhHELZp (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 5 Aug 2021 07:25:45 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 846815C0057;
-        Thu,  5 Aug 2021 07:25:31 -0400 (EDT)
+        by vger.kernel.org with ESMTP id S241003AbhHELZu (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 5 Aug 2021 07:25:50 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 0AEF85C0045;
+        Thu,  5 Aug 2021 07:25:36 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 05 Aug 2021 07:25:31 -0400
+  by compute1.internal (MEProxy); Thu, 05 Aug 2021 07:25:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=wIdT187urxsZ+ugFCKm5eRmv8lR
-        s/tUi4ybukcDS7F8=; b=QfIB4nWElak8JnxEds+WslvjrkIOd122w9weletMUJm
-        5btuMjJOwz8Et9YgSj7LoE+w8Z9YP7sygWZENpF1kdGRapLFx4yWalZvBPxyPhYX
-        bWYKhzsizwvGNbyt7ORs+znzyJDn9DgSljjicbvFoTnG9QKqDeWlQfhOEJL+/ESz
-        xDXKzkNBLkK5LK9yJlazm9qpC2M4MsuB0mi3l/4lkZHWyOwf3y+wHB7aWsnLWt/Z
-        Jh0esty0TRwyCEHCycHDdGye3YeUCrqTeOMbPjd85kLfNlJp/aXTTYDgpiGf3c4K
-        E/oAmLRM8vpSCvLPxFsy9eVq2usjHfnK2qqyZRGYXIQ==
+        :content-type:in-reply-to; s=fm1; bh=z/2OyS59uNq2K07hpBzSlfZPwmz
+        kvL+aHGjFrh896Zk=; b=psYi014jsA1/k8iE9e75mVb5JpTcr55O33y7s3ApsW5
+        E894eAIvbZ2srIGTYGgJDvt+SjV56ayHe4mlAot/qXFPZLNLY3J5Dp9X12GPY21i
+        unux9d0gmCBU9WgUEgW40DcjK6yv5woZdaNiS1K1U9UFLZ85FbZpdkqPypn/NUSP
+        B9VMvyOAJVyEM6K6xyE9pwgCzjL7Ol2V4M6RsScL+BmHUv4cFgFNsL+fG4sZyyyQ
+        ENGTvbvqMi8iN/k2nVKzNEVZgzLJEz+PF0HttrDUCn0M5Xp2jd+gTSlhE5fThK3m
+        mfZ/l8MWtm0b3DSRxlAffI9nT63sZt9u49csBOs1OWg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=wIdT18
-        7urxsZ+ugFCKm5eRmv8lRs/tUi4ybukcDS7F8=; b=IR98Vl0MzLBxcpr2xsDSIF
-        FXnAAqRS/omLU5hpg8OzIEE4TxtkNV3+RaqYUq5ihbQkMKzcuooZnQCD6HRDGT3i
-        cjy94tLNM1yBCOt7k+3D3OW2toU4j6XqYt54TyHrW8wF5Kw5wXUG2khgZ3DGpL5w
-        BYSFPxhPtiLeOEcdOVbiLmaLERCEKiybD9IerYdGQTwXtfP6RqEaxzlVBsd5+VMf
-        2s1cPt/iWBvHqhtf1eia1w3uSgLx3RiZeCq/1Ol63cxu9fgQTTWcoe2UlcBcY6Gs
-        k8X2Dw/WmsoEAOmhG8d6kO30vJgpWLoQO9VrLLcD/LRQTDEvJGAKqd1j2kdxFoyA
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=z/2OyS
+        59uNq2K07hpBzSlfZPwmzkvL+aHGjFrh896Zk=; b=u9lgqxdB8Wo1zLkdSz0uyS
+        xCMcrPUagvZ6MNBypgIGBCntKVKAmjcg9PuoO4scnKaonae/hdJMy6V/CS5QmyGl
+        dWehM/+11TR+3c3FCinppetYZeYDWGPUTAnzIAamradRrvDgQ2Lx98fFwz98lZr9
+        TpynksZR1nyL71bI4DArXh4DkqkAcXvAzX+0U0ij/W8SDrEPnnJlKecic5lO0iid
+        RUl7Du7y6ajD/FaaiCoFiBSsZZ5Nl+vWWDYOE+N2SeNKPZIKTxnmkNYAHcQm7U2P
+        yKFux06PT9IBo/9OgO05kbIiPNWfmEXN7Ta8m4FXhQi5t8eWAy8m7fbRixApkSrw
         ==
-X-ME-Sender: <xms:q8oLYa4ni9FEVUd8HdiDARU5ey4tqzN2U4gSdZIwyPMui9LSlkPT6g>
-    <xme:q8oLYT5VRP7TFWJyK7VCbnoeNMNYDiHhg4JusZShNjmTYmW1I68Q5thch1S6aIhUt
-    iigSQzHDBTz3SbMKA>
-X-ME-Received: <xmr:q8oLYZdXNvhbpijZgDwS4lclWGIiY0hiSVzIDPr5n453FkxMAYR6wcDUfZcRcWgRj7NntwsOzHbnItHFdilOgUPJbJM9bLcdwoR2nBVlyZ8MYcg64rtMl2o>
+X-ME-Sender: <xms:r8oLYZa48wgdOF_w5SF-2SD2c8peZjdlV2VYHn8Q0W7IyacrLYDasw>
+    <xme:r8oLYQZ42k0N46su05SQ7bYxOG0hvdXCuHnjBz_pJ3rUnD_IJ6Wkt3MrX5fezaq2q
+    4ZMY26YeTaZ7SEDLA>
+X-ME-Received: <xmr:r8oLYb_Wwj7BzkWnzvx0Hdd9eKD9MYl43vp6t2SSm-BGcJH_rf6Pn5PBtVSo94B0EH3LTLBianBZQibFOGPAXsaDJs7UT3AQiPZLDkXHGD9UMgiYE35dRdo>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrieelgdefkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveduueeitefgieevvefgtdeuueevveeggeevgfegvdeuleeivdelleelkeeuvddunecu
-    ffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:q8oLYXJh7Hef-8uYBg2gGrZ8z1g8V_pthtKPQBvWDJ89rXsPI6f2GA>
-    <xmx:q8oLYeKtjVz-3CbUtD3zncwsh1EpR7BiB0f8jBbswBxovP0iDIsXmA>
-    <xmx:q8oLYYyxynvtS4Ks1YjmQ36R61thidxwJZ52CG-D3bARWlzyks-5KQ>
-    <xmx:q8oLYW_U6TAGOKYMC_0H4VsiDmtbOv6nN3M1xK0lDvAWBo9kygoFsQ>
+    ephefgjeeuveejteduhefgffefffdvjeefjeeivdekfffgkeeugfehveetueefleeknecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimh
+X-ME-Proxy: <xmx:r8oLYXp13KTI5jEB6xfoMrbdiUMfR6Tu6nS_pZuUdZq_Jh8s-L8odg>
+    <xmx:r8oLYUplJZgk_6Uzsv6gU_DQiTh5lheTEJ4LYkJ4dd41WEG7rqtm4A>
+    <xmx:r8oLYdQ4C27eOcYX2dP54YfsL4pJh9snOOwJ6QtBxD316RsRZ0uvyQ>
+    <xmx:sMoLYVdvuLzJmW6I9lYqRNBswQ6bURrd-dGLHAf5euskfi0W4Twl5Q>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Aug 2021 07:25:30 -0400 (EDT)
+ 5 Aug 2021 07:25:34 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id a3568f38 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 5 Aug 2021 11:25:30 +0000 (UTC)
-Date:   Thu, 5 Aug 2021 13:25:28 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id a1b37944 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 5 Aug 2021 11:25:34 +0000 (UTC)
+Date:   Thu, 5 Aug 2021 13:25:32 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
@@ -75,13 +75,13 @@ Cc:     Jeff King <peff@peff.net>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v4 2/6] connected: do not sort input revisions
-Message-ID: <9d7f484907e2bd2492e6676238579e9f0c6ed374.1628162156.git.ps@pks.im>
+Subject: [PATCH v4 3/6] revision: stop retrieving reference twice
+Message-ID: <d8e63d0943bbe3829a53561a3a1cb4f9e6963337.1628162156.git.ps@pks.im>
 References: <cover.1624858240.git.ps@pks.im>
  <cover.1628162156.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="jKRFhBum+NdPou5e"
+        protocol="application/pgp-signature"; boundary="jnGsTv7E4D0Kq+eh"
 Content-Disposition: inline
 In-Reply-To: <cover.1628162156.git.ps@pks.im>
 Precedence: bulk
@@ -89,223 +89,81 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---jKRFhBum+NdPou5e
+--jnGsTv7E4D0Kq+eh
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In order to compute whether objects reachable from a set of tips are all
-connected, we do a revision walk with these tips as positive references
-and `--not --all`. `--not --all` will cause the revision walk to load
-all preexisting references as uninteresting, which can be very expensive
-in repositories with many references.
+When queueing up references for the revision walk, `handle_one_ref()`
+will resolve the reference's object ID via `get_reference()` and then
+queue the ID as pending object via `add_pending_oid()`. But given that
+`add_pending_oid()` is only a thin wrapper around `add_pending_object()`
+which fist calls `get_reference()`, we effectively resolve the reference
+twice and thus duplicate some of the work.
 
-Benchmarking the git-rev-list(1) command highlights that by far the most
-expensive single phase is initial sorting of the input revisions: after
-all references have been loaded, we first sort commits by author date.
-In a real-world repository with about 2.2 million references, it makes
-up about 40% of the total runtime of git-rev-list(1).
+Fix the issue by instead calling `add_pending_object()` directly, which
+takes the already-resolved object as input. In a repository with lots of
+refs, this translates into a near 10% speedup:
 
-Ultimately, the connectivity check shouldn't really bother about the
-order of input revisions at all. We only care whether we can actually
-walk all objects until we hit the cut-off point. So sorting the input is
-a complete waste of time.
+    Benchmark #1: HEAD~: rev-list --unsorted-input --objects --quiet --not =
+--all --not $newrev
+      Time (mean =C2=B1 =CF=83):      5.015 s =C2=B1  0.038 s    [User: 4.6=
+98 s, System: 0.316 s]
+      Range (min =E2=80=A6 max):    4.970 s =E2=80=A6  5.089 s    10 runs
 
-Introduce a new "--unsorted-input" flag to git-rev-list(1) which will
-cause it to not sort the commits and adjust the connectivity check to
-always pass the flag. This results in the following speedups, executed
-in a clone of gitlab-org/gitlab [1]:
-
-    Benchmark #1: git rev-list  --objects --quiet --not --all --not $(cat n=
-ewrev)
-      Time (mean =C2=B1 =CF=83):      7.639 s =C2=B1  0.065 s    [User: 7.3=
-04 s, System: 0.335 s]
-      Range (min =E2=80=A6 max):    7.543 s =E2=80=A6  7.742 s    10 runs
-
-    Benchmark #2: git rev-list --unsorted-input --objects --quiet --not --a=
-ll --not $newrev
-      Time (mean =C2=B1 =CF=83):      4.995 s =C2=B1  0.044 s    [User: 4.6=
-57 s, System: 0.337 s]
-      Range (min =E2=80=A6 max):    4.909 s =E2=80=A6  5.048 s    10 runs
+    Benchmark #2: HEAD: rev-list --unsorted-input --objects --quiet --not -=
+-all --not $newrev
+      Time (mean =C2=B1 =CF=83):      4.606 s =C2=B1  0.029 s    [User: 4.2=
+60 s, System: 0.345 s]
+      Range (min =E2=80=A6 max):    4.565 s =E2=80=A6  4.657 s    10 runs
 
     Summary
-      'git rev-list --unsorted-input --objects --quiet --not --all --not $(=
-cat newrev)' ran
-        1.53 =C2=B1 0.02 times faster than 'git rev-list  --objects --quiet=
- --not --all --not $newrev'
-
-[1]: https://gitlab.com/gitlab-org/gitlab.git. Note that not all refs
-     are visible to clients.
+      'HEAD: rev-list --unsorted-input --objects --quiet --not --all --not =
+$newrev' ran
+        1.09 =C2=B1 0.01 times faster than 'HEAD~: rev-list --unsorted-inpu=
+t --objects --quiet --not --all --not $newrev'
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/rev-list-options.txt |  8 ++++++-
- connected.c                        |  1 +
- revision.c                         | 13 ++++++++--
- t/t6000-rev-list-misc.sh           | 38 ++++++++++++++++++++++++++++++
- 4 files changed, 57 insertions(+), 3 deletions(-)
+ revision.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-op=
-tions.txt
-index 24569b06d1..b7bd27e171 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -968,6 +968,11 @@ list of the missing objects.  Object IDs are prefixed =
-with a ``?'' character.
- 	objects.
- endif::git-rev-list[]
-=20
-+--unsorted-input::
-+	Show commits in the order they were given on the command line instead
-+	of sorting them in reverse chronological order by commit time. Cannot
-+	be combined with `--no-walk` or `--no-walk=3Dsorted`.
-+
- --no-walk[=3D(sorted|unsorted)]::
- 	Only show the given commits, but do not traverse their ancestors.
- 	This has no effect if a range is specified. If the argument
-@@ -975,7 +980,8 @@ endif::git-rev-list[]
- 	given on the command line. Otherwise (if `sorted` or no argument
- 	was given), the commits are shown in reverse chronological order
- 	by commit time.
--	Cannot be combined with `--graph`.
-+	Cannot be combined with `--graph`. Cannot be combined with
-+	`--unsorted-input` if `sorted` or no argument was given.
-=20
- --do-walk::
- 	Overrides a previous `--no-walk`.
-diff --git a/connected.c b/connected.c
-index b18299fdf0..b5f9523a5f 100644
---- a/connected.c
-+++ b/connected.c
-@@ -106,6 +106,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
- 	if (opt->progress)
- 		strvec_pushf(&rev_list.args, "--progress=3D%s",
- 			     _("Checking connectivity"));
-+	strvec_push(&rev_list.args, "--unsorted-input");
-=20
- 	rev_list.git_cmd =3D 1;
- 	rev_list.env =3D opt->env;
 diff --git a/revision.c b/revision.c
-index 86bbcd10d2..793f76a509 100644
+index 793f76a509..0d99413856 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -2256,6 +2256,10 @@ static int handle_revision_opt(struct rev_info *revs=
-, int argc, const char **arg
- 	} else if (!strcmp(arg, "--author-date-order")) {
- 		revs->sort_order =3D REV_SORT_BY_AUTHOR_DATE;
- 		revs->topo_order =3D 1;
-+	} else if (!strcmp(arg, "--unsorted-input")) {
-+		if (revs->no_walk && !revs->unsorted_input)
-+			die(_("--unsorted-input is incompatible with --no-walk and --no-walk=3D=
-sorted"));
-+		revs->unsorted_input =3D 1;
- 	} else if (!strcmp(arg, "--early-output")) {
- 		revs->early_output =3D 100;
- 		revs->topo_order =3D 1;
-@@ -2651,6 +2655,8 @@ static int handle_revision_pseudo_opt(const char *sub=
-module,
- 	} else if (!strcmp(arg, "--not")) {
- 		*flags ^=3D UNINTERESTING | BOTTOM;
- 	} else if (!strcmp(arg, "--no-walk")) {
-+		if (revs->unsorted_input)
-+			die(_("--no-walk is incompatible with --no-walk=3Dunsorted and --unsort=
-ed-input"));
- 		revs->no_walk =3D 1;
- 	} else if (skip_prefix(arg, "--no-walk=3D", &optarg)) {
- 		/*
-@@ -2658,9 +2664,12 @@ static int handle_revision_pseudo_opt(const char *su=
-bmodule,
- 		 * not allowed, since the argument is optional.
- 		 */
- 		revs->no_walk =3D 1;
--		if (!strcmp(optarg, "sorted"))
-+		if (!strcmp(optarg, "sorted")) {
-+			if (revs->unsorted_input)
-+				die(_("--no-walk=3Dsorted is incompatible with --no-walk=3Dunsorted "
-+				    "and --unsorted-input"));
- 			revs->unsorted_input =3D 0;
--		else if (!strcmp(optarg, "unsorted"))
-+		} else if (!strcmp(optarg, "unsorted"))
- 			revs->unsorted_input =3D 1;
- 		else
- 			return error("invalid argument to --no-walk");
-diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
-index 12def7bcbf..8e213eb413 100755
---- a/t/t6000-rev-list-misc.sh
-+++ b/t/t6000-rev-list-misc.sh
-@@ -169,4 +169,42 @@ test_expect_success 'rev-list --count --objects' '
- 	test_line_count =3D $count actual
- '
+@@ -1534,7 +1534,7 @@ static int handle_one_ref(const char *path, const str=
+uct object_id *oid,
 =20
-+test_expect_success 'rev-list --unsorted-input results in different sortin=
-g' '
-+	git rev-list --unsorted-input HEAD HEAD~ >first &&
-+	git rev-list --unsorted-input HEAD~ HEAD >second &&
-+	! test_cmp first second &&
-+	sort first >first.sorted &&
-+	sort second >second.sorted &&
-+	test_cmp first.sorted second.sorted
-+'
-+
-+test_expect_success 'rev-list --unsorted-input compatible with --no-walk=
-=3Dunsorted' '
-+	git rev-list --unsorted-input --no-walk=3Dunsorted HEAD HEAD~ >actual &&
-+	git rev-parse HEAD >expect &&
-+	git rev-parse HEAD~ >>expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'rev-list --unsorted-input incompatible with --no-walk=
-=3Dsorted' '
-+	cat >expect <<-EOF &&
-+		fatal: --no-walk is incompatible with --no-walk=3Dunsorted and --unsorte=
-d-input
-+	EOF
-+	test_must_fail git rev-list --unsorted-input --no-walk HEAD 2>error &&
-+	test_cmp expect error &&
-+
-+	cat >expect <<-EOF &&
-+		fatal: --no-walk=3Dsorted is incompatible with --no-walk=3Dunsorted and =
---unsorted-input
-+	EOF
-+	test_must_fail git rev-list --unsorted-input --no-walk=3Dsorted HEAD 2>er=
-ror &&
-+	test_cmp expect error &&
-+
-+	cat >expect <<-EOF &&
-+		fatal: --unsorted-input is incompatible with --no-walk and --no-walk=3Ds=
-orted
-+	EOF
-+	test_must_fail git rev-list --no-walk --unsorted-input HEAD 2>error &&
-+	test_cmp expect error &&
-+	test_must_fail git rev-list --no-walk=3Dsorted --unsorted-input HEAD 2>er=
-ror &&
-+	test_cmp expect error
-+'
-+
- test_done
+ 	object =3D get_reference(cb->all_revs, path, oid, cb->all_flags);
+ 	add_rev_cmdline(cb->all_revs, object, path, REV_CMD_REF, cb->all_flags);
+-	add_pending_oid(cb->all_revs, path, oid, cb->all_flags);
++	add_pending_object(cb->all_revs, object, path);
+ 	return 0;
+ }
+=20
 --=20
 2.32.0
 
 
---jKRFhBum+NdPou5e
+--jnGsTv7E4D0Kq+eh
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmELyqcACgkQVbJhu7ck
-PpT2CxAAmlSFAkj9NPILs+ZaOhRvnp5YJSGHXRKqevQQkGPo35eADhPyxAr3O+F8
-rwgm0fxFX8vC5UKDhW9CJh7Zpvv9ZbmDc5U3gVwhmlQz/I8FJXnCw/UftFAHC63Q
-pJ8WCU0mMq37t/JpqZorpSKc0KCoiXEMxpD10Iu/d/LLVpHs+iGYatzZkF+NCUfl
-vX10zhqgxFbc6Cc1NPVga8dLGDYFoqqap/37/zWy7tVpkNeJ716HvVQ4UlY3Z0xd
-0uca2S03iIAY0hWV2G015u7HB03OeKuO+r3/WWKpflQGn2eGCbVl2NRs//cZA8x+
-4nmGBmhG8kjZjZDIi4gVIf8vnhuFVft4pdPW/M9Cc5PeVCUE465SBGo/AluWx4kD
-Gd/ewQqZm3xmMQ+KWdrEH+w3l+RS6wKsEbh1kfuXByYaotXsieqGBimMvG7OOosa
-DnRLWISyJU7AAmKm20gC33CTxpUutCto+UiWAJ58wOiODw5u2sgoCDwAu3F+R++L
-uDp8V8SLJSf7VnlDDdNR1kmqX0h0LqbvGuqp3TecCB/xt7Cy49UxnkbCQUkvkRvn
-gmMjeQ8grxXZFUb/kTw1eLkw4pe/WlooVraaZ064y6qvPDCUqtCL8HUiAItoGzR0
-j/7jOwS0XRnflDBcOmKdovbW5K4TQp8V+deOh6+InyS+fJQfZ/M=
-=qLd1
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmELyqwACgkQVbJhu7ck
+PpRt1w/+PeyFsUvXgmddh6HPnGpPhqF02Gv0pavPKwSBsAbZexM8q+41rGUg0n6B
+D+SZSpdMUyw3AJh/G3OiMeAKIYA7jwd755zm62VKRXsK3cUadMnDGwUd1j8ACwdR
+rz68G+68X5+D36+g33ds/YrNLfEeUA/HFEjXq9A6hvXkI1Nm0rDWhBXwwS7iA6mU
+AbLc7l04DGLK0fe7iDYw+XWV4yAf5J2Fv/jtSmtVSTZ6v6yUurGlWHuZrXkEd6SH
+3Va6z9KmVToJTlMZl1IfOMLDRfV079vO9oRHvBwpTESMlxP5XYNT1OroZE7quMLs
+wbkyMgCrdo5fugb9i7HbFsg6DNxH/OxVAq2G8dEaDm9WAMlqehyk4cwyuzA5kmmY
+GUQXcgdGD9q1SGDpQ+Zjfxzbv3Fj1OPxReByYcOfKBg1lSI32VP69dc7fG1tRWUC
+2HwCjA2WTxLN+qfeslM7llKmhVSxN5jbe+DfBPRbBKmVhNUJRlKX6DqUn3It6qbu
+e7K6+KIFT5eH2+KSmSaDamlY5sGdZmgqKQBQFk8yfP3EInt4vad4yoFkqc7qGet6
+84vGHigF+dKxgHGWGiovSA70k2TltSb2+Za/xE2/lvG1a9msU6qXflw5578E8uR9
+sRYlRe/gmvMHgZYGRpialh2tPkVtcs9WgHYSAZkNR95BZVy23B0=
+=5iLP
 -----END PGP SIGNATURE-----
 
---jKRFhBum+NdPou5e--
+--jnGsTv7E4D0Kq+eh--
