@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAB67C4338F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0FFCC4320A
 	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 07:20:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9896F60ED6
+	by mail.kernel.org (Postfix) with ESMTP id A96F5610CC
 	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 07:20:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238303AbhHEHUc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 03:20:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56164 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238513AbhHEHUb (ORCPT <rfc822;git@vger.kernel.org>);
+        id S238478AbhHEHUb (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 5 Aug 2021 03:20:31 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 984DEC06179E
-        for <git@vger.kernel.org>; Thu,  5 Aug 2021 00:20:13 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id l19so6782137pjz.0
-        for <git@vger.kernel.org>; Thu, 05 Aug 2021 00:20:13 -0700 (PDT)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56124 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238519AbhHEHUX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Aug 2021 03:20:23 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35BDCC0613C1
+        for <git@vger.kernel.org>; Thu,  5 Aug 2021 00:20:09 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id u13-20020a17090abb0db0290177e1d9b3f7so12741295pjr.1
+        for <git@vger.kernel.org>; Thu, 05 Aug 2021 00:20:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=e+6OCMo+DlGa2QWoBAGf75KRxMzKVKH6/dy+1rWuxBU=;
-        b=BGmcfAtzdJWICbC9IrGyAExp1EODVK5J6uFLNn6oadhz82fU0MWGQGAUq7eYGifHpD
-         PqMN61lvoU3l4lyhy+yOaYDSxUU229JkqHqcTsqnK+XYUzpkyzogCfN5V9l8mWv8DT3s
-         o0RF0LTbBHV17dJjQ08hb1HkgoaG4hq1Ogh4IJ6dcG0wAFHwid4vjQJzePp1UBiGBTr1
-         ANysse5IGIx0xZlpxooKc5q8wGEeIuq7kQtl+TeQXT47zxmosxG0l+SkxqElvlYffil9
-         Gr8rnbazbGzRlB5DSawCdiud8RYozkHRslWjBdUE6+SjImNqsAiUuzefE0ugyWVXjQ8u
-         AkTw==
+        bh=7PeTlolYUUEdH50YFM+tYWul3tHUIpiVifHEE94XnWs=;
+        b=mZFhmqG0tTcaSJGYzkPnsztugTDlAOJEr3JxgwPSQpL/QmXqlRfciJi/hiwUkaG3Xc
+         jOALrxkepY6zXQcHIqIcvOAwnCZLMCxJw5TEdkdkE9mTkG2Ykeo1MxBJv9Er/qTs1kAa
+         nc8gQlV3E5tiSVkC9xHpF9rQZSiIlLlOSOstHLls2TVmHx1ZeDKc50TP1mlvJk1O4qvn
+         vk3n0cHq90P580PCh2ExE2Kz4BqVKhcaA5OPOVDY34uSVXrQn05Cy61aC/AEDeFLYaQw
+         8FfHBlLy1tqE75estXMHojnzHI7ZyrHjtFzW+BCrwqIAyihX0Ry2imakkhgffxtHWuJy
+         kGLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=e+6OCMo+DlGa2QWoBAGf75KRxMzKVKH6/dy+1rWuxBU=;
-        b=X9S32YQq4693Y+o4nqk6GHv4x4SV0XIzZ2NHXlKaV/Eo5Vh+diIPRi4TjXAtKouas5
-         Swymv5YFRSkqLabljfn4zbSbFCQY8WL2w3l7S8iIOmXJ2uqddc3ySmGrZxvzfufkpft+
-         oZaU2o6QBnCt3Al+oBJNzqOp92MHiCFB0Js/ufvWUHMYz2ufNSz4bTTUgkldniRTRVlH
-         oJC53YJ1jBZS6nhaaAGuIpsZsuRmdZpQoT4G/XnWVnxozPWz12Ua/bxY1pVBMVd2jnGf
-         ntVCz9LkipqC2Pjcf1hyomqwmoAj8n73SbqCkYIvHd9Zf7sz2uXLJpPyNhlChQ2X85js
-         gAcQ==
-X-Gm-Message-State: AOAM532M4s/7/A43UdvYK0cS+l+cOeSj1FQyH++Ao4ALh9FvGDl5myCT
-        +og+hPRkLFBO0A3DUXmtm8Tx8sdLFSNNqzxo
-X-Google-Smtp-Source: ABdhPJydPDAMdBx9Prd+WaqF1aBqr3m9WRiqa73uuqlW7D32/KDdn+uy6+a/QudFmUjAVd5lRjyUWQ==
-X-Received: by 2002:a17:902:8ec2:b029:12c:dc6d:4e31 with SMTP id x2-20020a1709028ec2b029012cdc6d4e31mr2785896plo.80.1628148013037;
-        Thu, 05 Aug 2021 00:20:13 -0700 (PDT)
+        bh=7PeTlolYUUEdH50YFM+tYWul3tHUIpiVifHEE94XnWs=;
+        b=tjxA2p48UUMxcBf5Nzvk+4UE8YUt+y7qzsqkoEYGLuSUIyft220HbwZ7iyXHQa+0L1
+         RHzQt8uGrJ4YmiyP6Gk8i0okdMhk9IAyFicL0vu09e67R3VitPYo6iFk+jLB9fboKs2s
+         RwbXnVEehaiM2IbpX5+coyXKp2wz4s6lZv0/GPQ0WLy7AaRnukeVu/aRG7i56VyNf3LN
+         iShyrzesQj/Lu9JtBOJ7qVnLujbWNJQjAdBxkTClsI6Mpd86edNQLfZyRee3HPmRN3eJ
+         LPWAm53EfmRaT2qzDkTLPZAYC6AXWqU3yBoreeRRTrWn1/X+btE+RGisEw8WXzNSbhr8
+         cl0w==
+X-Gm-Message-State: AOAM531M+bikMTyRCxIy48sC358uvDWUkjhxTYUxZgkPwGENrPGmBYuW
+        AOpNoBc0p2kTY4H+0v6+RaPhPR9ZothRBDYu
+X-Google-Smtp-Source: ABdhPJxGKZJ8gLSueaoDgq738rVzBXscLcGx5B4w9foDAYXiz6A3qqtGzZnOXf0iqbJJZN+Fh66+xQ==
+X-Received: by 2002:a17:90a:ea82:: with SMTP id h2mr3286480pjz.99.1628148008628;
+        Thu, 05 Aug 2021 00:20:08 -0700 (PDT)
 Received: from atharva-on-air.Dlink ([119.82.121.47])
-        by smtp.gmail.com with ESMTPSA id p17sm8569603pjg.54.2021.08.05.00.20.09
+        by smtp.gmail.com with ESMTPSA id p17sm8569603pjg.54.2021.08.05.00.20.04
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 05 Aug 2021 00:20:12 -0700 (PDT)
+        Thu, 05 Aug 2021 00:20:08 -0700 (PDT)
 From:   Atharva Raykar <raykar.ath@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Atharva Raykar <raykar.ath@gmail.com>,
@@ -71,9 +71,9 @@ Cc:     Atharva Raykar <raykar.ath@gmail.com>,
         =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>,
         "Rafael Silva" <rafaeloliveira.cs@gmail.com>
-Subject: [GSoC] [PATCH 8/8] submodule--helper: remove resolve-relative-url subcommand
-Date:   Thu,  5 Aug 2021 12:49:17 +0530
-Message-Id: <20210805071917.29500-9-raykar.ath@gmail.com>
+Subject: [GSoC] [PATCH 7/8] submodule--helper: remove add-config subcommand
+Date:   Thu,  5 Aug 2021 12:49:16 +0530
+Message-Id: <20210805071917.29500-8-raykar.ath@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210805071917.29500-1-raykar.ath@gmail.com>
 References: <20210805071917.29500-1-raykar.ath@gmail.com>
@@ -83,54 +83,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The shell subcommand `resolve-relative-url` is no longer required, as
-its last caller has been removed when it was converted to C.
+Also no longer needed is this subcommand, as all of its functionality is
+being called by the newly-introduced `module_add()` directly within C.
 
 Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Shourya Shukla <periperidip@gmail.com>
 ---
- builtin/submodule--helper.c | 20 --------------------
- 1 file changed, 20 deletions(-)
+ builtin/submodule--helper.c | 49 -------------------------------------
+ 1 file changed, 49 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index da83e8e2a5..514891a22f 100644
+index 700cc8bbeb..da83e8e2a5 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -223,25 +223,6 @@ static char *compute_submodule_clone_url(const char *rel_url, const char *up_pat
- 	return relurl;
+@@ -2939,54 +2939,6 @@ static void configure_added_submodule(struct add_data *add_data)
+ 	}
  }
  
--static int resolve_relative_url(int argc, const char **argv, const char *prefix)
+-static int add_config(int argc, const char **argv, const char *prefix)
 -{
--	const char *up_path = NULL;
--	char *res;
--	const char *url;
+-	int force = 0;
+-	struct add_data add_data = ADD_DATA_INIT;
 -
--	if (argc != 2 && argc != 3)
--		die("resolve-relative-url only accepts one or two arguments");
+-	struct option options[] = {
+-		OPT_STRING('b', "branch", &add_data.branch,
+-			   N_("branch"),
+-			   N_("branch of repository to store in "
+-			      "the submodule configuration")),
+-		OPT_STRING(0, "url", &add_data.repo,
+-			   N_("string"),
+-			   N_("url to clone submodule from")),
+-		OPT_STRING(0, "resolved-url", &add_data.realrepo,
+-			   N_("string"),
+-			   N_("url to clone the submodule from, after it has "
+-			      "been dereferenced relative to parent's url, "
+-			      "in the case where <url> is a relative url")),
+-		OPT_STRING(0, "path", &add_data.sm_path,
+-			   N_("path"),
+-			   N_("where the new submodule will be cloned to")),
+-		OPT_STRING(0, "name", &add_data.sm_name,
+-			   N_("string"),
+-			   N_("name of the new submodule")),
+-		OPT__FORCE(&force, N_("allow adding an otherwise ignored submodule path"),
+-			   PARSE_OPT_NOCOMPLETE),
+-		OPT_END()
+-	};
 -
--	url = argv[1];
--	if (argc == 3)
--		up_path = argv[2];
+-	const char *const usage[] = {
+-		N_("git submodule--helper add-config "
+-		   "[--force|-f] [--branch|-b <branch>] "
+-		   "--url <url> --resolved-url <resolved-url> "
+-		   "--path <path> --name <name>"),
+-		NULL
+-	};
 -
--	res = compute_submodule_clone_url(url, up_path, 1);
--	puts(res);
--	free(res);
+-	argc = parse_options(argc, argv, prefix, options, usage, 0);
+-
+-	if (argc)
+-		usage_with_options(usage, options);
+-
+-	add_data.force = !!force;
+-	configure_added_submodule(&add_data);
+-
 -	return 0;
 -}
 -
- static int resolve_relative_url_test(int argc, const char **argv, const char *prefix)
+ static void die_on_index_match(const char *path, int force)
  {
- 	char *remoteurl, *res;
-@@ -3115,7 +3096,6 @@ static struct cmd_struct commands[] = {
+ 	struct pathspec ps;
+@@ -3158,7 +3110,6 @@ static struct cmd_struct commands[] = {
+ 	{"list", module_list, 0},
+ 	{"name", module_name, 0},
+ 	{"clone", module_clone, 0},
+-	{"add-config", add_config, 0},
+ 	{"add", module_add, SUPPORT_SUPER_PREFIX},
+ 	{"update-module-mode", module_update_module_mode, 0},
  	{"update-clone", update_clone, 0},
- 	{"ensure-core-worktree", ensure_core_worktree, 0},
- 	{"relative-path", resolve_relative_path, 0},
--	{"resolve-relative-url", resolve_relative_url, 0},
- 	{"resolve-relative-url-test", resolve_relative_url_test, 0},
- 	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
- 	{"init", module_init, SUPPORT_SUPER_PREFIX},
 -- 
 2.32.0
 
