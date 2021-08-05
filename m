@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73367C4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 10:37:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F5BBC432BE
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 10:37:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 59AFF60F02
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 10:37:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1397D6105A
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 10:37:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240540AbhHEKiE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 06:38:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45186 "EHLO
+        id S240508AbhHEKiF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 06:38:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240497AbhHEKhz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Aug 2021 06:37:55 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18F08C061799
+        with ESMTP id S240499AbhHEKh4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Aug 2021 06:37:56 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFA8BC061765
         for <git@vger.kernel.org>; Thu,  5 Aug 2021 03:37:40 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id m19so3056387wms.0
+Received: by mail-wm1-x336.google.com with SMTP id e25-20020a05600c4b99b0290253418ba0fbso3349716wmp.1
         for <git@vger.kernel.org>; Thu, 05 Aug 2021 03:37:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GDSs9BlWCzFZ0RpOvDk9UWgqFVpD7P+2gAqvWk65xp0=;
-        b=Nzf07hou8Z26izP7vENaFwUP1Ne9nb7YKUTMqESIeBDabXoNQdfJEzstkIECnqd/hu
-         xbVesX/WQT+YCpz/LtO7GPchMXubDIxUvemh2PKs2m4ltjjrVPS0zIeT1oYmajkMhASX
-         3oWTbP5c/fVS77ws0BepHZIeCh0UBV8jMCdSUpWqws6Yxeqi52xCQsYbuytX4vr7ifeO
-         2old/YDy0/IAs0YQdbJcXt0NRzNpAAGJ+fUo7BHbwtnbgnTuRhycELx4c6nxEF5+sCWN
-         NlGKfI8l68bnzbjdNbG124JK597outMVawl1hT9xA4keHgI/x4dEU6JdQqZJkcTCLFIa
-         bpSQ==
+        bh=BQHV0IFhtdQgvc85qfOX4IyivFVjIQQqVEkMNXgFZuA=;
+        b=ULwppCl09mwfLXccD54xgcMp2qhWgR8Qot8yF5gSrAppFqgtj7iI2lad29sgvE3iAU
+         JT39FW3dT8uAPctDg/4Rp7R9Je5qNLn/IUaIeXMvZY2qICzxD6IXoCijb41xtnI9FaVR
+         pz4mpaozIo/uEVYxoipJI+Q9pr5TAHSa6MHfpNI6jKiba4BNKn85eiE4zGpcrKU+q3NY
+         FqKENbShiW5Ki/E+KwAXFTaLqvzreqxno80rfHNW/Hq3F4Dh8QRZNeYbeeHcZr4oM0uC
+         xfjDNmaA3og+DC5UQXzeb39U+tufbycafMqblt83GQUZC9IMFqCtgpe4YGMmhXYuaPiV
+         Uk7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GDSs9BlWCzFZ0RpOvDk9UWgqFVpD7P+2gAqvWk65xp0=;
-        b=ilJyFfDEDwQvHD1cSnB2LqzRwFHBO2wtHqI2rNm9prg8oMDtYQpxGA8qOFQ82Y1kJT
-         HuUXcA8oYx0EdCeaE9/Z8wpRtYvK627Z760tMConnjvTP6xDmrBaQSgEITFjdrt4kBNL
-         ca+T6tsifBjaDPWvtNYvh/fLAtpYnVSiXivfSnGjUWhzyJisVqw3GyKp/iUFM99b4q+I
-         J5/uVKt8D5CGGeNCdTTN7+SSm3/mqYian54Em2db8FwswCldpYzBJUL2Z8Kr+E/k4ylw
-         +KL+cdM+TuGy55yt+Kli2eB5U/wW9alaonjkqf5ZTpNKnqMv0vKwmUpE7CR/5/Z4nWyN
-         cQqg==
-X-Gm-Message-State: AOAM533cXm+pKzSWyowaUoSMCzBwpxav4Sw/qNKmnNeI/Lv+S8jTwa5K
-        TsXl3RJu4JyRi1o2jFbjUH5S164V3uRqaQ==
-X-Google-Smtp-Source: ABdhPJw04A2d0B7JnU5mLbjsVQ3Ue5xGChdthdDGiCE/TbEKHHBT5Mtre9RxPmBmvIwXkPLhNwoSqQ==
-X-Received: by 2002:a7b:c083:: with SMTP id r3mr4347596wmh.65.1628159858542;
-        Thu, 05 Aug 2021 03:37:38 -0700 (PDT)
+        bh=BQHV0IFhtdQgvc85qfOX4IyivFVjIQQqVEkMNXgFZuA=;
+        b=OwDthkYkF/GXTvusSSeN6aqwBchL2je3h6L8NYLp9OJFOH79Odnqz2S8O4dddmnibt
+         DVU1RJbHUsvhFOA14IC3br0//gAdaLygGtpGszFV2pWc+6aks/lAgabpNazGs3SpR3zs
+         wK2ednaXeP7gjSPbiBluuOrk0Zzx3y6QuPprWyUiMdpFIc0oo/OULQiBae6cMCEWB0Px
+         Efcp7DVfE+ompK8UPAc9F4Njjv5zzw0xRbugsJJzJ+xDJXf1OuV/C4hP1oEWKCBguI1m
+         g43So6uPnNeJflsIPuKVtKXv6ya2vpCXYoVFK+i1zECCxGFYbC/m8sqWvUGCwmQzudjX
+         spDw==
+X-Gm-Message-State: AOAM532m0fIBn75adgVMTpuDmC+M60D5VBs4kd4aFWB7if5+CdLuhHYD
+        IjGvU6tP3iR1PWdFiXvJotPbeERHx0ykEw==
+X-Google-Smtp-Source: ABdhPJyPVBQSwrH5N2eKWD9PSVOqfxiO3mqCfmoYr+cax3mYPX94ZxUSVP3xcTC4INaiePPyvRafwQ==
+X-Received: by 2002:a05:600c:5108:: with SMTP id o8mr4246248wms.97.1628159859312;
+        Thu, 05 Aug 2021 03:37:39 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e6sm5106152wme.6.2021.08.05.03.37.37
+        by smtp.gmail.com with ESMTPSA id e6sm5106152wme.6.2021.08.05.03.37.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 05 Aug 2021 03:37:38 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Patrick Steinhardt <ps@pks.im>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 8/9] test-lib tests: refactor common part of check_sub_test_lib_test*()
-Date:   Thu,  5 Aug 2021 12:37:27 +0200
-Message-Id: <patch-v3-8.9-fda7c4fbe3-20210805T103237Z-avarab@gmail.com>
+Subject: [PATCH v3 9/9] test-lib tests: assert 1 exit code, not non-zero
+Date:   Thu,  5 Aug 2021 12:37:28 +0200
+Message-Id: <patch-v3-9.9-dd0af5bd6c-20210805T103237Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.rc0.635.g0ab9d6d3b5a
 In-Reply-To: <cover-v3-0.9-0000000000-20210805T103237Z-avarab@gmail.com>
 References: <cover-0.8-00000000000-20210721T225504Z-avarab@gmail.com> <cover-v3-0.9-0000000000-20210805T103237Z-avarab@gmail.com>
@@ -80,49 +80,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor the two check_sub_test_lib_test*() functions to avoid
-duplicating the same comparison they did of stdout. This duplication
-was initially added when check_sub_test_lib_test_err() was added in
+Improve the testing for test-lib.sh itself to assert that we have a
+exit code of 1, not any non-zero. Improves code added in
 0445e6f0a12 (test-lib: '--run' to run only specific tests,
 2014-04-30).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/lib-subtest.sh | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ t/lib-subtest.sh | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
 diff --git a/t/lib-subtest.sh b/t/lib-subtest.sh
-index 529f3a4d08..0b9ecdb6db 100644
+index 0b9ecdb6db..d6b625d397 100644
 --- a/t/lib-subtest.sh
 +++ b/t/lib-subtest.sh
-@@ -109,18 +109,22 @@ run_sub_test_lib_test_err () {
- 	_run_sub_test_lib_test_common '!' "$@"
+@@ -43,8 +43,8 @@ write_sub_test_lib_test () {
  }
  
-+_check_sub_test_lib_test_common () {
-+	name="$1" &&
-+	sed -e 's/^> //' -e 's/Z$//' >"$name"/expect.out &&
-+	test_cmp "$name"/expect.out "$name"/out
-+}
-+
- check_sub_test_lib_test () {
- 	name="$1" # stdin is the expected output from the test
--	test_must_be_empty "$name"/err &&
--	sed -e 's/^> //' -e 's/Z$//' >"$name"/expect &&
--	test_cmp "$name/"expect "$name"/out
-+	_check_sub_test_lib_test_common "$name" &&
-+	test_must_be_empty "$name"/err
+ _run_sub_test_lib_test_common () {
+-	neg="$1" name="$2" # stdin is the body of the test code
+-	shift 2
++	cmp_op="$1" want_code="$2" name="$3" # stdin is the body of the test code
++	shift 3
+ 
+ 	# intercept pseudo-options at the front of the argument list that we
+ 	# will not pass to child script
+@@ -80,33 +80,30 @@ _run_sub_test_lib_test_common () {
+ 		GIT_SKIP_TESTS=$skip &&
+ 		export GIT_SKIP_TESTS &&
+ 		sane_unset GIT_TEST_FAIL_PREREQS &&
+-		if test -z "$neg"
+-		then
+-			./"$name.sh" "$@" >out 2>err
+-		else
+-			! ./"$name.sh" "$@" >out 2>err
+-		fi
++		./"$name.sh" "$@" >out 2>err;
++		ret=$? &&
++		test "$ret" "$cmp_op" "$want_code"
+ 	)
  }
  
- check_sub_test_lib_test_err () {
- 	name="$1" # stdin is the expected output from the test
-+	_check_sub_test_lib_test_common "$name" &&
- 	# expected error output is in descriptor 3
--	sed -e 's/^> //' -e 's/Z$//' >"$name"/expect.out &&
--	test_cmp "$name"/expect.out "$name"/out &&
- 	sed -e 's/^> //' -e 's/Z$//' <&3 >"$name"/expect.err &&
- 	test_cmp "$name"/expect.err "$name"/err
+ write_and_run_sub_test_lib_test () {
+ 	name="$1" descr="$2" # stdin is the body of the test code
+ 	write_sub_test_lib_test "$@" || return 1
+-	_run_sub_test_lib_test_common '' "$@"
++	_run_sub_test_lib_test_common -eq 0 "$@"
  }
+ 
+ write_and_run_sub_test_lib_test_err () {
+ 	name="$1" descr="$2" # stdin is the body of the test code
+ 	write_sub_test_lib_test "$@" || return 1
+-	_run_sub_test_lib_test_common '!' "$@"
++	_run_sub_test_lib_test_common -eq 1 "$@"
+ }
+ 
+ run_sub_test_lib_test () {
+-	_run_sub_test_lib_test_common '' "$@"
++	_run_sub_test_lib_test_common -eq 0 "$@"
+ }
+ 
+ run_sub_test_lib_test_err () {
+-	_run_sub_test_lib_test_common '!' "$@"
++	_run_sub_test_lib_test_common -eq 1 "$@"
+ }
+ 
+ _check_sub_test_lib_test_common () {
 -- 
 2.33.0.rc0.635.g0ab9d6d3b5a
 
