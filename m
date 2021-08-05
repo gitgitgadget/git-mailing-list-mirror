@@ -7,65 +7,65 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7F75C4338F
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 11:25:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60BE7C4338F
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 11:25:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ADDED61102
-	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 11:25:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 421CB6112D
+	for <git@archiver.kernel.org>; Thu,  5 Aug 2021 11:25:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241010AbhHELZ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 07:25:58 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:41861 "EHLO
+        id S241016AbhHEL0D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 07:26:03 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:45369 "EHLO
         out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S241003AbhHELZ6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 5 Aug 2021 07:25:58 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 25AC95C0057;
-        Thu,  5 Aug 2021 07:25:44 -0400 (EDT)
+        by vger.kernel.org with ESMTP id S240808AbhHEL0C (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 5 Aug 2021 07:26:02 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id 90B7F5C008E;
+        Thu,  5 Aug 2021 07:25:48 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Thu, 05 Aug 2021 07:25:44 -0400
+  by compute5.internal (MEProxy); Thu, 05 Aug 2021 07:25:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=m1wieKDI9SUKAVqVuZgCY//laQW
-        8dsM1fv4J2VSA/UY=; b=U1FO/1VyesJ+LrdQ1Btuaf+ETQPJf6kPXvDND7C5W1v
-        oFalaSmazrv3VWElYHiT0rEaC4uFaHRMoJUU7zHTIfBNi7bHENDx56JU5VTPwkvd
-        SEv8u/RaIAoFNNHxyF3uCxDzfcVE8GM9QQ2Iafr+MNfFbMbd0SRVjqPypx04L7bE
-        HPBhNI5oRz0xbxdI/Nh8vdmdDnlociAmBo/NwoKyS/Hw46L9JbSgQAOw2S+rC32D
-        K7puzSKfibneowDFc73emsWLQ096dbhhB209l7mW7ELay1q3c7Qiaoypqp9otjib
-        griCPRNBVJnlX2aFZf1X2IxcEGUyiwkolqGdiXeeDLQ==
+        :content-type:in-reply-to; s=fm1; bh=mzvGiBrhHrgbfMgcKD5j1UozQZB
+        duOVUts4/SP/2L9k=; b=L3k1l0XvLX+Pa9r9wAWKX7tSq0NvaEL5/OswEzZnTr5
+        21GERK5koD1qP0in2OpMT5xXV69hm6k1yucxcRmuqiSlCesZjLSMpXvvyF7Zr/iA
+        yG2avby/AVJhRpgSMoqmxzhATv3LaLoBv9CMRKNMXkPSEEkcw2+GtVg2YNpdUmZY
+        831/jQ8X4kOOLZXQCJ1Y+YV/h0yd8B6RZoh62nRn+4napQT77E35vgOLixm2oya4
+        Qda1zq8Vc/T4N14ta2ldDi4A18c6RlKv7s6T9DVrlwUW2vCWS/QzlnaNOAoJW0Rk
+        DtidT2d8fGsy59FI5blvFR/6bxAl61y90tllA6eLvow==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=m1wieK
-        DI9SUKAVqVuZgCY//laQW8dsM1fv4J2VSA/UY=; b=kMDXNsWXsg1hEuKLEcnRCh
-        RQ33PjsLvOMOqkGCxdRojTaXmVruyR8mszoVfmOl491yCNaAA+gMsBkkD8hwRTZ1
-        G4vIHQxG0el32CNu1qITdsFYqzC6q38wgBmQLDP9wVvIOesZ+T4DS6WIWI6L81U/
-        0Zoap2XDl+5a+vopSTHLKMB0586/cr3yNPNEJyWrVa/UNs1WiC8TqxiLUrmJxDxA
-        +wKN4PbuZuZhvBSL6NndJ4k2/99pmmZN6jCiOQCzMKqyBi8kjajUZ3FPLAbqj3yV
-        /dU1E9JHH2ZVJ7JnHoid342eKGGHo6nTAgk+Iz+Un63wWPsZ62pGJwELpfOl8GFw
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=mzvGiB
+        rhHrgbfMgcKD5j1UozQZBduOVUts4/SP/2L9k=; b=J1zYDqBAt+4ngQmkswI9+E
+        5ELsgK2fiWVtAQGxyQRd2mixu6wry+d3NVkMhSoltCcmO8y2B+m15+0Dg2Jt/I6K
+        lclwtWd4SOWU1nvzHQM6wb4DUZuuzdXQzXgZWLp9wqkkkZ5bTmHMQHGMgcrfn3KE
+        ttWvzqiwir/GD0e0CKC54c2wsPq9AD5O9lWUPXejUwq3s9v0kHHJ+vv5ku/NEmEL
+        TSNeVggahlWIm+Jfq+XBd/tIrLYn/WfEUKc2YCjFMHh9vXFnY1e26S5TiJILM6vP
+        UZDw8nH7p9AO+WIP7ZS2oSXWV3zXKzSE2AV1Dm+mAVFj1GbrxOVd/S5AgWePCsPQ
         ==
-X-ME-Sender: <xms:t8oLYRlt82kWHQZIAO6j3s-V3tgXOojQnMsUKX2Wys_E2gcal148-w>
-    <xme:t8oLYc0FrFmz73IJ5FqgXDKtU_gagWVQKOZCzVpG9H2M7ACqgom6_urQHV7f9Jr3s
-    hlR-h48EupisRB9Xw>
-X-ME-Received: <xmr:t8oLYXr-0NHmg7w6MHYE6HDcGR0KgZw_MsM4akCugj54u4qZgo73k3Uq_iKGSNvQQE_HOKBYmI4tXIsptO1_XShUAAl_k86BVSbwZu9_Z-trxmLQkKCwMHo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrieelgdefkecutefuodetggdotefrodftvf
+X-ME-Sender: <xms:vMoLYaTvtT-ksh2qkm-wNVjDcIJoiVEpaxoQrbFgdSVuZTmz4EZ7Uw>
+    <xme:vMoLYfx86gCwObqMvs31tM90jjNAL3wWYy5c_t-nDjxvp3kE7e7ubdDXAYOz4urYU
+    OwnDRxlU-N-jyAZVg>
+X-ME-Received: <xmr:vMoLYX330cejiIgrmlVkZhiR6ppKD33zuNdjjiCTbu9X7p6Nyp4CK76JvUzgjP7c54nr-EJL5Xa2_CsH05fRyvlZ0wVwnJl-bvLU2J4tMNzVcpN7y2w_l6g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrieelgdefjecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
+    fjughrpeffhffvuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    ephefgjeeuveejteduhefgffefffdvjeefjeeivdekfffgkeeugfehveetueefleeknecu
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimh
-X-ME-Proxy: <xmx:t8oLYRli-cPJnbc2ec1zL3h-vkd229625BMFZTmIVeao7PgbakwWZg>
-    <xmx:t8oLYf3-oNiBo8GNPXkQTyAIMihgCYvtv7hc5lmW1JPs1kRP68sbJg>
-    <xmx:t8oLYQt8xtk3or8qgcoRqX0BLTiUEZwJTBPamnJ_JFMzR2ztw9xJuw>
-    <xmx:uMoLYZpKakhMnNUfz4dmXVRQschHJs9omGCT4T2fSCw_bTO7BEWzxA>
+X-ME-Proxy: <xmx:vMoLYWAa4Irh8McytV8H97UnB0mUO-vhlR87ydSv496nB6QwQZavMQ>
+    <xmx:vMoLYTg_4UV6u2Ur-eNkfY7STFwKyjuYrNsnG0QwLHV76AcoXYBP9A>
+    <xmx:vMoLYSrXOnjus8Ob77aasKy75O96tMeMeXzmrsHMG-PbAlvLeIQURQ>
+    <xmx:vMoLYeWFzlpW9sZecXbRAydL-BGbWnepzShMDPpqzs-c-qvD6Hy38A>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Aug 2021 07:25:42 -0400 (EDT)
+ 5 Aug 2021 07:25:47 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 9bf19aa9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 5 Aug 2021 11:25:42 +0000 (UTC)
-Date:   Thu, 5 Aug 2021 13:25:41 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 38af3e60 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 5 Aug 2021 11:25:46 +0000 (UTC)
+Date:   Thu, 5 Aug 2021 13:25:45 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
@@ -75,14 +75,14 @@ Cc:     Jeff King <peff@peff.net>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v4 5/6] commit-graph: split out function to search commit
- position
-Message-ID: <e33cd51ebf9751a156198ff489304c897923b64c.1628162156.git.ps@pks.im>
+Subject: [PATCH v4 6/6] revision: avoid hitting packfiles when commits are in
+ commit-graph
+Message-ID: <900c5a9c60282e0fb57840305cbab013ffa398f1.1628162156.git.ps@pks.im>
 References: <cover.1624858240.git.ps@pks.im>
  <cover.1628162156.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="9cuZXpie3t8T+fYL"
+        protocol="application/pgp-signature"; boundary="RPTxo5rE6WScDIPy"
 Content-Disposition: inline
 In-Reply-To: <cover.1628162156.git.ps@pks.im>
 Precedence: bulk
@@ -90,173 +90,166 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---9cuZXpie3t8T+fYL
-Content-Type: text/plain; charset=us-ascii
+--RPTxo5rE6WScDIPy
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The function `find_commit_in_graph()` assumes that the caller has passed
-an object which was already determined to be a commit given that it will
-access the commit's graph position, which is stored in a commit slab. In
-a subsequent patch, we want to search for an object ID though without
-knowing whether it is a commit or not, which is not currently possible.
+When queueing references in git-rev-list(1), we try to either reuse an
+already parsed object or alternatively we load the object header from
+disk in order to determine its type. This is inefficient for commits
+though in cases where we have a commit graph available: instead of
+hitting the real object on disk to determine its type, we may instead
+search the object graph for the object ID. In case it's found, we can
+directly fill in the commit object, otherwise we can still hit the disk
+to determine the object's type.
 
-Split out the logic to search the commit graph for a given object ID to
-prepare for this change. This commit also renames the function to
-`find_commit_pos_in_graph()`, which more accurately reflects what this
-function does. Furthermore, in order to allow for the searched object ID
-to be const, we need to adjust `bsearch_graph()`'s signature to accept a
-constant object ID as input, too.
+Expose a new function `parse_commit_in_graph_gently()`, which fills in
+an object of unknown type in case we find its object ID in the graph.
+This provides a big performance win in cases where there is a
+commit-graph available in the repository in case we load lots of
+references. The following has been executed in a real-world repository
+with about 2.2 million refs:
+
+    Benchmark #1: HEAD~: rev-list --unsorted-input --objects --quiet --not =
+--all --not $newrev
+      Time (mean =C2=B1 =CF=83):      4.508 s =C2=B1  0.039 s    [User: 4.1=
+31 s, System: 0.377 s]
+      Range (min =E2=80=A6 max):    4.455 s =E2=80=A6  4.576 s    10 runs
+
+    Benchmark #2: HEAD: rev-list --unsorted-input --objects --quiet --not -=
+-all --not $newrev
+      Time (mean =C2=B1 =CF=83):      3.072 s =C2=B1  0.031 s    [User: 2.7=
+07 s, System: 0.365 s]
+      Range (min =E2=80=A6 max):    3.040 s =E2=80=A6  3.144 s    10 runs
+
+    Summary
+      'HEAD: rev-list --unsorted-input --objects --quiet --not --all --not =
+$newrev' ran
+        1.47 =C2=B1 0.02 times faster than 'HEAD~: rev-list --unsorted-inpu=
+t --objects --quiet --not --all --not $newrev'
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- commit-graph.c | 55 +++++++++++++++++++++++++++-----------------------
- 1 file changed, 30 insertions(+), 25 deletions(-)
+ commit-graph.c | 26 ++++++++++++++++++++++++++
+ commit-graph.h |  7 +++++++
+ revision.c     | 17 +++++++++++++++--
+ 3 files changed, 48 insertions(+), 2 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 3860a0d847..8c4c7262c8 100644
+index 8c4c7262c8..cc7136243d 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -723,7 +723,7 @@ void close_commit_graph(struct raw_object_store *o)
- 	o->commit_graph =3D NULL;
+@@ -891,6 +891,32 @@ static int find_commit_pos_in_graph(struct commit *ite=
+m, struct commit_graph *g,
+ 	}
  }
 =20
--static int bsearch_graph(struct commit_graph *g, struct object_id *oid, ui=
-nt32_t *pos)
-+static int bsearch_graph(struct commit_graph *g, const struct object_id *o=
-id, uint32_t *pos)
- {
- 	return bsearch_hash(oid->hash, g->chunk_oid_fanout,
- 			    g->chunk_oid_lookup, g->hash_len, pos);
-@@ -864,25 +864,30 @@ static int fill_commit_in_graph(struct repository *r,
- 	return 1;
- }
-=20
--static int find_commit_in_graph(struct commit *item, struct commit_graph *=
-g, uint32_t *pos)
-+static int search_commit_pos_in_graph(const struct object_id *id, struct c=
-ommit_graph *g, uint32_t *pos)
++int parse_commit_in_graph_gently(struct repository *repo, struct object *o=
+bject)
 +{
-+	struct commit_graph *cur_g =3D g;
-+	uint32_t lex_index;
++	struct commit *commit;
++	uint32_t pos;
 +
-+	while (cur_g && !bsearch_graph(cur_g, id, &lex_index))
-+		cur_g =3D cur_g->base_graph;
-+
-+	if (cur_g) {
-+		*pos =3D lex_index + cur_g->num_commits_in_base;
-+		return 1;
++	if (object->parsed) {
++		if (object->type !=3D OBJ_COMMIT)
++			return -1;
++		return 0;
 +	}
++
++	if (!repo->objects->commit_graph)
++		return -1;
++
++	if (!search_commit_pos_in_graph(&object->oid, repo->objects->commit_graph=
+, &pos))
++		return -1;
++
++	commit =3D object_as_type(object, OBJ_COMMIT, 1);
++	if (!commit)
++		return -1;
++	if (!fill_commit_in_graph(repo, commit, repo->objects->commit_graph, pos))
++		return -1;
 +
 +	return 0;
 +}
 +
-+static int find_commit_pos_in_graph(struct commit *item, struct commit_gra=
-ph *g, uint32_t *pos)
- {
- 	uint32_t graph_pos =3D commit_graph_position(item);
- 	if (graph_pos !=3D COMMIT_NOT_FROM_GRAPH) {
- 		*pos =3D graph_pos;
- 		return 1;
- 	} else {
--		struct commit_graph *cur_g =3D g;
--		uint32_t lex_index;
--
--		while (cur_g && !bsearch_graph(cur_g, &(item->object.oid), &lex_index))
--			cur_g =3D cur_g->base_graph;
--
--		if (cur_g) {
--			*pos =3D lex_index + cur_g->num_commits_in_base;
--			return 1;
--		}
--
--		return 0;
-+		return search_commit_pos_in_graph(&item->object.oid, g, pos);
- 	}
- }
+ static int parse_commit_in_graph_one(struct repository *r,
+ 				     struct commit_graph *g,
+ 				     struct commit *item)
+diff --git a/commit-graph.h b/commit-graph.h
+index 96c24fb577..e2e93b0ee1 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -40,6 +40,13 @@ int open_commit_graph(const char *graph_file, int *fd, s=
+truct stat *st);
+  */
+ int parse_commit_in_graph(struct repository *r, struct commit *item);
 =20
-@@ -895,7 +900,7 @@ static int parse_commit_in_graph_one(struct repository =
-*r,
- 	if (item->object.parsed)
- 		return 1;
++/*
++ * Given an object of unknown type, try to fill in the object in case it i=
+s a
++ * commit part of the commit-graph. Returns 0 if the object is a parsed co=
+mmit
++ * or if it could be filled in via the commit graph, otherwise it returns =
+-1.
++ */
++int parse_commit_in_graph_gently(struct repository *repo, struct object *o=
+bject);
++
+ /*
+  * It is possible that we loaded commit contents from the commit buffer,
+  * but we also want to ensure the commit-graph content is correctly
+diff --git a/revision.c b/revision.c
+index 25f4784fdd..318b43026e 100644
+--- a/revision.c
++++ b/revision.c
+@@ -362,8 +362,21 @@ static struct object *get_reference(struct rev_info *r=
+evs, const char *name,
+ 	struct object *object =3D lookup_unknown_object(revs->repo, oid);
 =20
--	if (find_commit_in_graph(item, g, &pos))
-+	if (find_commit_pos_in_graph(item, g, &pos))
- 		return fill_commit_in_graph(r, item, g, pos);
-=20
- 	return 0;
-@@ -921,7 +926,7 @@ void load_commit_graph_info(struct repository *r, struc=
-t commit *item)
- 	uint32_t pos;
- 	if (!prepare_commit_graph(r))
- 		return;
--	if (find_commit_in_graph(item, r->objects->commit_graph, &pos))
-+	if (find_commit_pos_in_graph(item, r->objects->commit_graph, &pos))
- 		fill_commit_graph_info(item, r->objects->commit_graph, pos);
- }
-=20
-@@ -1091,9 +1096,9 @@ static int write_graph_chunk_data(struct hashfile *f,
- 				edge_value +=3D ctx->new_num_commits_in_base;
- 			else if (ctx->new_base_graph) {
- 				uint32_t pos;
--				if (find_commit_in_graph(parent->item,
--							 ctx->new_base_graph,
--							 &pos))
-+				if (find_commit_pos_in_graph(parent->item,
-+							     ctx->new_base_graph,
-+							     &pos))
- 					edge_value =3D pos;
- 			}
-=20
-@@ -1122,9 +1127,9 @@ static int write_graph_chunk_data(struct hashfile *f,
- 				edge_value +=3D ctx->new_num_commits_in_base;
- 			else if (ctx->new_base_graph) {
- 				uint32_t pos;
--				if (find_commit_in_graph(parent->item,
--							 ctx->new_base_graph,
--							 &pos))
-+				if (find_commit_pos_in_graph(parent->item,
-+							     ctx->new_base_graph,
-+							     &pos))
- 					edge_value =3D pos;
- 			}
-=20
-@@ -1235,9 +1240,9 @@ static int write_graph_chunk_extra_edges(struct hashf=
-ile *f,
- 				edge_value +=3D ctx->new_num_commits_in_base;
- 			else if (ctx->new_base_graph) {
- 				uint32_t pos;
--				if (find_commit_in_graph(parent->item,
--							 ctx->new_base_graph,
--							 &pos))
-+				if (find_commit_pos_in_graph(parent->item,
-+							     ctx->new_base_graph,
-+							     &pos))
- 					edge_value =3D pos;
- 			}
-=20
+ 	if (object->type =3D=3D OBJ_NONE) {
+-		int type =3D oid_object_info(revs->repo, oid, NULL);
+-		if (type < 0 || !object_as_type(object, type, 1)) {
++		/*
++		 * It's likely that the reference points to a commit, so we
++		 * first try to look it up via the commit-graph. If successful,
++		 * then we know it's a commit and don't have to unpack the
++		 * object header. We still need to assert that the object
++		 * exists, but given that we don't request any info about the
++		 * object this is a lot faster than `oid_object_info()`.
++		 */
++		if (parse_commit_in_graph_gently(revs->repo, object) < 0) {
++			int type =3D oid_object_info(revs->repo, oid, NULL);
++			if (type < 0 || !object_as_type(object, type, 1)) {
++				object =3D NULL;
++				goto out;
++			}
++		} else if (!repo_has_object_file(revs->repo, oid)) {
+ 			object =3D NULL;
+ 			goto out;
+ 		}
 --=20
 2.32.0
 
 
---9cuZXpie3t8T+fYL
+--RPTxo5rE6WScDIPy
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmELyrQACgkQVbJhu7ck
-PpSXLRAAqSuRcpDwYd1FrBLpc/neulBnhzApxXFPEGPBtWB5iuh5cN8jv96b++yz
-rgSO7jOt0kSHJz2e5y6If2//yRdDGUFirgEV6H4rRynLOUtTEXaLvnJJlGZ0pn7A
-2HZIG8dfl4/1aAGseppGHFbJjRwkEl67S3RCA5XEN6n4Mrf9tacqUO3BvK/NSozg
-B0B2Y/o5kQja6w8bCgtAFoVaJZxhAbGUWvNlCTRR0xMbz5jHhm8hCkBS0E2C3bxN
-81niqmFkNKsvPI8r5HoJlsc171ZxtnUbPaNDtYyQNOku252qo5CHcfE26iJlDEqi
-m6mh+jdb4WKpv2NFojkZSzDQ9TJl4u3v/aZPvHkCdNJwu15Xn/k17YcXrYZauobt
-jgKtzTNmbB7ZzlQo0TkbA3Vn1WIq+iCe3mM3Li/jVmIpoOMVEVwNQ/gP62LOjoDQ
-yxXbGocGF8u5vFT7Bu2if7FrXCKFVu62AkqtCcfMpjev5DlMUZGlMC2pjZ2XFQ5U
-6EelZ6SRjShwtha1GoVoSgzyPUeFtc6VzZj/474EELK9dnE8M1OmMa4ZZLAO1+uP
-m7TbyFcNLs3HgSpuuO6PTQ1u3jfDgXS9Yu940WPlLbGaeHen86daoz+Yb7RzUS56
-W7PzFheCpH2X+aV/PvgAq48gOpgAffEc4Ka5Bt10QUx0Dc0nwuY=
-=8h2a
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmELyrgACgkQVbJhu7ck
+PpTivw//ayV4br212PKUWX9pzC6HjGRoJOSuo2cQDu/mPtooHUd8+9mQ5TjjYPPZ
+GYm3aPaffbIteMBogtf3YCNx4U5Kixv7D2GdqwBEvAXq5LubfFKHcs6HNfMjk4os
+Ys8TPcr9g8sy9KCsQiQJB69kLYe4HZye3MnbR+i/zjS36jLH5w2X3LftOjYsBzLa
+iIlNhT2zwNfQ1OSNBWxe5hB6/Xl9UQQ2wTWVxTzTXhX+VJgM6ZOSzDTIbAlz1Z4a
+vSUssuoo4yiUHkMBBYpkYrVEEfJjmF7+uuDNnvV1qXq80rtMXlzx5HAg4w6cSxXD
+gjHC0HDFDsPv/fSiSGt08dEVXRfVxF318dmlLaVP4SrQlfVtgipGcUqrfTirmlJx
+3AFPHawEnxOx2P/SVpH1YV5+mfEn5u35yAHM/0m2Gx181xVdc5CBmblUL/3SkCsQ
+emeZZdPZeXg3C2e8iHMYQBfUC9IjuBnapd2iC6kmGAZvJzuteTH0RvtdYbdSBvTl
+ktvq5JmgPztItAWLPYBc1joaVfy1GxKL8ezu5bZZEf44kov3uHV5HUx8Fa4UBrRz
+fojLmw7l8CfWLkYgjC/R32sMw8yDWH2C1NafDT7xowIwXOrX7zGAzm6nqMr30VFe
+n+8n6eHnfn4Gne/JM3lEmm/cQfIlR1WQV9tNph4e2VcBYgMMWy8=
+=hhYg
 -----END PGP SIGNATURE-----
 
---9cuZXpie3t8T+fYL--
+--RPTxo5rE6WScDIPy--
