@@ -2,126 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84C39C4338F
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 14:38:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A94F9C4338F
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 14:50:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 55D95611C6
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 14:38:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 80064610FF
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 14:50:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239491AbhHFOil (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Aug 2021 10:38:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33012 "EHLO
+        id S242177AbhHFOui (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Aug 2021 10:50:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231739AbhHFOij (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Aug 2021 10:38:39 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A5AEC0613CF
-        for <git@vger.kernel.org>; Fri,  6 Aug 2021 07:38:22 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id j1so16946424pjv.3
-        for <git@vger.kernel.org>; Fri, 06 Aug 2021 07:38:22 -0700 (PDT)
+        with ESMTP id S241430AbhHFOtj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Aug 2021 10:49:39 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADD78C0613CF
+        for <git@vger.kernel.org>; Fri,  6 Aug 2021 07:49:18 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id p21so13354007edi.9
+        for <git@vger.kernel.org>; Fri, 06 Aug 2021 07:49:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=T9qKNibwxC3HMZ1FfCdhQ3K+fiYUc0E1Wd2uBth4lGs=;
-        b=YSLA0qpWz7w5M3vHBR/6bEC21faCgfM6txyB8eTEsuP3rDuG/ukpn+wgUmXnD7wUxq
-         mjZhKhxnOWmSQu4RZ5NwQX5gIaL4fYnIZHqRUK1ThjiHO/DVfeRpwjgGgKJKEe1neeRZ
-         hV4oySiTnrBZdSycu4kcTTKgclNElNt3v6Us0JtvvFzq5TOApXvAa/9v3/fWU/6faAM1
-         NmePHwkHVrm1tu8gJ4SPCPWff/HIOMMB6wWTnCzz/2dGi06qy4iVYsYIw6t7LAgivajS
-         ncqqRIdnK6C1Aj3NMFXYLJP6LHAY4A8ymnpknm/6MorsRch9cPfPH9ExOcm8yi3uUBvZ
-         /kAA==
+         :content-disposition:in-reply-to;
+        bh=VdgAkjUN8sGevCZqS1HeSRLfE2pRo3Iu6u9wjuzGo6o=;
+        b=N+xzd0oqstGFRwu3WsxvWt0voZAJYQRaOukT4QWuBdGp94q97AuscWCdXDqNS5uu0o
+         IwoV/iRJTzkBfbf4r/XQsy2ZGrd4W7md3eY5O50KKwzdLtg8t8gSvY5g2ScSfT9aH1ZU
+         UKtzMur+43mUohixqYOoO7b8ySyR6wVMUzh67smmsCO8lSDpcBIHy+sIF7OA5SdOI/a5
+         RcXtfDjlpGU2ohXYBPHJzndOCgf5fAKn9lHBc7ZdH38Z31lki2wIYVpQxEJK5oHEwgMo
+         a/RRG2FDfhRbR2OP1do3gNYUBt8cY+8zWAap1Al5weLTfPeZ4ChaeRbLYm9Ans5V50l5
+         VHTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=T9qKNibwxC3HMZ1FfCdhQ3K+fiYUc0E1Wd2uBth4lGs=;
-        b=WZQhdFUktsLU1yj8+FSV8YyD5p8RLyHySjVsU8lteDlImEA9Y7/Ebd9hULZU27Wqrt
-         s8MEi7SnIcBn6pJedMHQk3P/8oZ+QApfTns2N+dtTkIa+xf8FIQtZgXjg2XZiQUtWUPV
-         KlsjpnZClpVrXmk1gQqDlxwFYpBc4Vp52URWur+FhYtLDWgdEIr1/EpJUVoYEjS2lzP8
-         TnpQgnTePP1DGiohwh8DqjgqwcVNeHdMEepkPPJnwqlDwHuWmpEI22hp9iTwTh05UlId
-         yqoIbj0pPc9utyb7o2UTXcIeIyXE+zkpJ670KZbqNfum7t08pQ5ccTyh6JnDA57Y5Scq
-         /CIw==
-X-Gm-Message-State: AOAM530ArU3d4KMmDJ8DpSbYbtLmywSAeJFNj3K4M9wvb8ULxRfYetYa
-        T4ruIiMGyZvehAQo5LHoODU=
-X-Google-Smtp-Source: ABdhPJy+iFes92M839DmsJ2bqNKa95KYo8fXliS2wfcBAb1x/0bSqEz5NA3o4Omt11ohPOvFLN0KNg==
-X-Received: by 2002:a17:902:d293:b029:12c:8bb3:7997 with SMTP id t19-20020a170902d293b029012c8bb37997mr9124401plc.36.1628260702134;
-        Fri, 06 Aug 2021 07:38:22 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:6692:d3ab:8eba:ac7c])
-        by smtp.gmail.com with ESMTPSA id z18sm6503471pfn.88.2021.08.06.07.38.20
+         :mime-version:content-disposition:in-reply-to;
+        bh=VdgAkjUN8sGevCZqS1HeSRLfE2pRo3Iu6u9wjuzGo6o=;
+        b=hYOEOYVWB59Vtwct+7WJlW2bUCD+f+tIIMEUcowSKWJaBucP2UB9IdWIymSyOpDBkX
+         lQ1a6UsazFrW9J5+c04+5WP67M1+uhFqSLuUp69x4tSOuudP9wXN4GongqZp8nrIVmA3
+         nZ7wImAu00YU0fwpng+2Ccl79fnnIoNg89VcSuHoKh/yrOVDjNxZV0fgxo5m/2TleIDI
+         kex7029BDa4MVtNoJ4i32pH+Gzhfh7vrwU/3xYSl8MNuDsUea7qmXrPO2+uSfyv+PHlI
+         iJQZmsGjF0/pnD2+gTvHMvM+Oc8WH2VNtTj6wmpV09/AKrzFWdmwXtT8ObPvPQeou17Z
+         7YVA==
+X-Gm-Message-State: AOAM533EZ3/XuV9i71/PdQuOQbqel1HwHmIDutKUeMUl+FhTT3d7/q7j
+        bTpJRvnHFG0gdnEN6qlXSi4=
+X-Google-Smtp-Source: ABdhPJyFJ0JI10Wm5McZ92uzQm7hMMgkGZnLn2jPfaHh4xWtfS8G8oSQSoew1YtyR1xOHjsf7xuvkw==
+X-Received: by 2002:aa7:cd03:: with SMTP id b3mr14008271edw.54.1628261357351;
+        Fri, 06 Aug 2021 07:49:17 -0700 (PDT)
+Received: from szeder.dev (78-131-14-24.pool.digikabel.hu. [78.131.14.24])
+        by smtp.gmail.com with ESMTPSA id j5sm3962117edv.10.2021.08.06.07.49.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Aug 2021 07:38:21 -0700 (PDT)
-Date:   Fri, 6 Aug 2021 07:38:19 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <christian.couder@gmail.com>,
-        Albert Cui <albertqcui@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [RFC PATCH 00/13] Add bundle-uri: resumably clones, static
- "dumb" CDN etc.
-Message-ID: <YQ1JW8hHmG8B/oE3@google.com>
-References: <RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com>
+        Fri, 06 Aug 2021 07:49:16 -0700 (PDT)
+Date:   Fri, 6 Aug 2021 16:49:11 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, ZheNing Hu <adlternative@gmail.com>,
+        Fabian Stelzer <fabian.stelzer@campoint.net>
+Subject: Re: [PATCH] test: fix for COLUMNS and bash 5
+Message-ID: <20210806144911.GA1388237@szeder.dev>
+References: <20210805194825.1796765-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com>
+In-Reply-To: <20210805194825.1796765-1-felipe.contreras@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Aug 05, 2021 at 02:48:25PM -0500, Felipe Contreras wrote:
+> Since c49a177bec (test-lib.sh: set COLUMNS=80 for --verbose
+> repeatability, 2021-06-29) multiple tests have been failing when using
+> bash 5 because checkwinsize is enabled by default, therefore COLUMNS is
+> reset using TIOCGWINSZ even for non-interactive shells.
+> 
+> It's debatable whether or not bash should even be doing that, but for
+> now we can avoid this undesirable behavior by disabling this option.
+> 
+> Reported-by: Fabian Stelzer <fabian.stelzer@campoint.net>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  t/test-lib.sh | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index db61081d6b..a2b7dfecee 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -419,6 +419,12 @@ COLUMNS=80
 
-Ævar Arnfjörð Bjarmason wrote:
+COLUMNS is set just before the start of the hunk context ...
 
-> We're in the 2.33.0 rc cycle, and I'd hoped to have some more prep
-> work for this integrated already, but for now here's something
-> interesting I've been working on for early commentary/feedback.
->
-> This adds the the ability to protocol v2 for servers to optimistically
-> pre-seed supporting clients with one or more bundles via a new
-> "bundle-uri" protocol extension.
+>  export LANG LC_ALL PAGER TZ COLUMNS
+>  EDITOR=:
 
-My initial thought here is that even though this includes a comparison
-to packfile URIs, I suspect you're underestimating them. :)
+... so these two "commands" above are executed while COLUMNS is
+already set but checkwinsize is not yet disabled.  The reason I put
+quotes around that commands is that while exporting and setting
+variables are indeed commands as defined in the POSIX Shell Command
+Language specs, Bash with checkwinsize enabled only "checks the window
+size after each extern (non-builtin) command" (quoting 'man bash').
 
-Would it be possible to do the same pre-seeding using the packfile
-URIs protocol?  Nothing stops a server from sending more objects than
-the client asked for.  Is the issue that you want the client to be
-able to list "have"s based on that pack?  Can't the server obtain that
-same information at the same time as it obtains the bundle URL?
+So even though it is safe to execute these variable setting and
+exporting commands after setting COLUMNS but disabling checkwinsize, I
+think it would be prudent to disable checkwinsize before initializing
+COLUMNS.  (And perhaps adding "non-builtin" to the comment below.)
 
-The reason I ask is that this contains a number of differences
-relative to packfile URIs, most noticeably the use of bundles instead
-of packfiles as the format for the static content.  If we were
-starting from scratch and chose this design _instead_ of packfile URIs
-then that could make sense (though there are issues with the bundle
-format that we can also go into), but in a world where people are also
-using packfile URIs it makes for a kind of confusing UX.  Is a server
-operator expected to put both kinds of files on CDN and double their
-storage bill?  Is this meant as an alternative, a replacement, or
-something that combines well together with the packfile URIs feature?
-What does the intended end state look like?
-
-Projects like chromium have been using packfile URIs in production for
-about 11 months now and it's been working well.  Because of that, I'd
-be interested in understanding its shortcomings and improving it in
-place --- or in other words, I want _you_ to benefit from them instead
-of having to create an alternative to them.  Alternatively, if the
-packfile URIs protocol is fundamentally flawed, then I'd like us to
-understand that early and act on it instead of creating a parallel
-alternative and waiting for it to bitrot.
-
-I'll try to find time to look more closely at the patches to
-understand the use case in more detail, but it will take some time
-since I'm currently focused on the -rc.
-
-Thanks,
-Jonathan
+> +# Since bash 5.0, checkwinsize is enabled by default which does update the
+> +# COLUMNS variable every time a command completes, even for non-interactive
+> +# shells.
+> +# Disable that since we are aiming for reproducibility.
+> +test -n "$BASH_VERSION" && shopt -u checkwinsize 2>/dev/null
+> +
+>  # A call to "unset" with no arguments causes at least Solaris 10
+>  # /usr/xpg4/bin/sh and /bin/ksh to bail out.  So keep the unsets
+>  # deriving from the command substitution clustered with the other
+> -- 
+> 2.32.0.40.gb9b36f9b52
+> 
