@@ -2,412 +2,229 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C49AC4338F
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 01:15:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6E3AC432BE
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 01:45:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F0A8661176
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 01:14:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A806B60FE7
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 01:45:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242510AbhHFBPN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Aug 2021 21:15:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48280 "EHLO
+        id S243243AbhHFBpn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Aug 2021 21:45:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240606AbhHFBPL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Aug 2021 21:15:11 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B830C0613D5
-        for <git@vger.kernel.org>; Thu,  5 Aug 2021 18:14:57 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id m10-20020a17090a34cab0290176b52c60ddso13974981pjf.4
-        for <git@vger.kernel.org>; Thu, 05 Aug 2021 18:14:56 -0700 (PDT)
+        with ESMTP id S229510AbhHFBpn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Aug 2021 21:45:43 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6820BC061798
+        for <git@vger.kernel.org>; Thu,  5 Aug 2021 18:45:27 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id b1-20020a17090a8001b029017700de3903so10785286pjn.1
+        for <git@vger.kernel.org>; Thu, 05 Aug 2021 18:45:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=52Or5noors/qopjsI76HAZYS7LhXKdoSeAIVS5geYRM=;
-        b=Akt/shdv9svJlTUYTxkvl8GtEhJlj83DiruG/7mNHhJvtdx0aAqOvuQy7JXmY1T5qi
-         9Y9N8h0DN+rRHci/u1mzaWDf3aTgPydaeg4mE5dSuf+Qfi7thJ5vEdYv69JYRYrNXC9w
-         Hv2/UGSMSmXfKlwktLTHnArNDbgKgOi8OCBsXgumsF4wZ7ODwNKHNloaSWL0WGhhtVqa
-         vblPGjMn685lJUOGHy6jony1aHXmMp6wvLqmZ/tlLQ6zRRVjqmwrMqfIQDCFH8P3eFAR
-         kU5R28CIPqPi1TP1sjFf2pMR5HqiAy9ySVipDTgUJOZPtiObnmea6307ywS1MOpAdfLs
-         nF6Q==
+         :content-disposition:in-reply-to;
+        bh=efkQqzyjOE6tHIKJvd1Lw1J1/o/JY6uNX+Sq+dPtG3I=;
+        b=MBqDha1s3DYwgX3BHO9prbYSQPpz3W6zp6lKMxoKHks0l/A90jN5icwe2yCkIMC4M4
+         QhPrX8qg3QzUdv5YAT1C6kitOyZSH3k9f0t6SEcV/qvOMy9Y3uOE2wDgJ9G0vaAdZLC4
+         mrQFIxNGyZ3HVOXMcuQMys+wX0Hz2U9MDx3T6rON2KQVEc/GIjv9Kqe2WBnMGn2oRjnO
+         Rw9ONzYwsgLUIH991TlzlYE7Oc930jXNZpQKBLI2r5qQkL0oAwxrBlGL/ZCNQ5s0BWDc
+         CtfBls+r8DR9V5ssYgA0DnTTNjZsYHA1figBepy/xG8a3UASIdPfqjNHgLvwlhEvscoZ
+         dEuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=52Or5noors/qopjsI76HAZYS7LhXKdoSeAIVS5geYRM=;
-        b=XJvrIRrJLWdR+tDG22lO6WACaL2X4VcSR/OgWPf7DA5E2wiLPd0gWMUaRQnEnhzP5d
-         SHtcyPATys5wxNY7mokzW4yh7h71eP8noVgOz/QgWMvOIsTxdqBqyPNtJ6B+b9+AmImH
-         LWdZym3fet8LZ3alVTqrNAkbeSXXVDXqgF8Cyta5RW67J4CVGjsJC1gDn9yiTC80cnDy
-         vly51M5dyqVdtqxZaNtv26VUGA8C/M2irZ5i23F69HNOtv0LNsThBDWtLVd4chacE1B0
-         MBIEsURbz8qGzEsnU4acuI6p6QhZRTK5spXdeKqKtqRkPUfQ52RV4x5Tw9nzYA07tISb
-         eseg==
-X-Gm-Message-State: AOAM533v53hMwvAR6UGdrooQLfalzeBCUKi1SqQWXMIe7cg9XUUoY6Fm
-        ri3bpfiy1up1W4xv+rFrKJk=
-X-Google-Smtp-Source: ABdhPJzKQv3TUse0qTRzqZ03cKg7jUS0Jj2AOw3ob5MUrktLuP7Uv+VLbGwKQQ5fZvHXE5YBKkNW6Q==
-X-Received: by 2002:a17:90b:344:: with SMTP id fh4mr7327976pjb.29.1628212496464;
-        Thu, 05 Aug 2021 18:14:56 -0700 (PDT)
-Received: from localhost ([2402:800:63ed:3989:4118:d609:c805:f509])
-        by smtp.gmail.com with ESMTPSA id a11sm9825747pgj.75.2021.08.05.18.14.55
+         :mime-version:content-disposition:in-reply-to;
+        bh=efkQqzyjOE6tHIKJvd1Lw1J1/o/JY6uNX+Sq+dPtG3I=;
+        b=Pgog6TlWtU2tpt0bs6pE7chCih7JatqhS7gY2l2hx65qBp+PuEfwoqCid9+kZAd0bW
+         Q+zE2aNWCmBsxm69yFn7IIL+P+JMDcSEZTLQq9b5YKlZ3RvZ5mVB5I9+sbjsWpW6d5II
+         QaT6QbQVP0iWnkS7oFRegSrY1D+4hjnZyf4yQULWEXTHXDEEzukIcu0jYc2RwxJIDh0u
+         SyijXeStkjiva8dwCYpWndngxu+I7kKvxNAxyMxl4AziCbYvLdw/dIwgVyUePGaphgPL
+         NNQOQC8XIdQfubpqmRo76E7gmlIRqJblX6kOtYJeA+2zXHeSlbhKpfs+t/+nh6DQ6D5T
+         yXKQ==
+X-Gm-Message-State: AOAM531KhxhTaf93fR3dYYuo1+SEUCY5/ej7ygdxLGpgPRPHrQey9k8B
+        xDbOC6z7hWlVjhyj+l2GPwY=
+X-Google-Smtp-Source: ABdhPJwnRKa8GfE3w0/RFJscLtdfEcXCPFSw2rgsL7Brcx9UWcqHLTm/hX287mSL5j6I46DMwEa3+w==
+X-Received: by 2002:a17:902:7595:b029:12c:2d46:348d with SMTP id j21-20020a1709027595b029012c2d46348dmr6325137pll.49.1628214326809;
+        Thu, 05 Aug 2021 18:45:26 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:6692:d3ab:8eba:ac7c])
+        by smtp.gmail.com with ESMTPSA id c2sm9819693pgh.82.2021.08.05.18.45.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Aug 2021 18:14:55 -0700 (PDT)
-Date:   Fri, 6 Aug 2021 08:14:54 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     avarab@gmail.com, christian.couder@gmail.com,
-        emilyshaffer@google.com, git@vger.kernel.org, gitster@pobox.com,
-        jrnieder@gmail.com, kaartic.sivaraam@gmail.com, pc44800@gmail.com,
-        periperidip@gmail.com, rafaeloliveira.cs@gmail.com,
-        sunshine@sunshineco.com
-Subject: Re: [GSoC] [PATCH v2 6/9] submodule--helper: convert the bulk of
- cmd_add() to C
-Message-ID: <YQyNDv3bzVZwpAVl@danh.dev>
-References: <20210805071917.29500-1-raykar.ath@gmail.com>
- <20210805074054.29916-1-raykar.ath@gmail.com>
- <20210805074054.29916-7-raykar.ath@gmail.com>
+        Thu, 05 Aug 2021 18:45:26 -0700 (PDT)
+Date:   Thu, 5 Aug 2021 18:45:23 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        huang guanlong <gl041188@gmail.com>, git@vger.kernel.org,
+        Hudson Ayers <hudsonayers@google.com>,
+        Taylor Yu <tlyu@mit.edu>, Joshua Nelson <jyn514@gmail.com>
+Subject: [PATCH] Revert 'diff-merges: let "-m" imply "-p"'
+Message-ID: <YQyUM2uZdFBX8G0r@google.com>
+References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
+ <20210520214703.27323-1-sorganov@gmail.com>
+ <20210520214703.27323-11-sorganov@gmail.com>
+ <YQtYEftByY8cNMml@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210805074054.29916-7-raykar.ath@gmail.com>
+In-Reply-To: <YQtYEftByY8cNMml@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-08-05 13:10:51+0530, Atharva Raykar <raykar.ath@gmail.com> wrote:
-> Introduce the 'add' subcommand to `submodule--helper.c` that does all
-> the work 'submodule add' past the parsing of flags.
-> 
-> As with the previous conversions, this is meant to be a faithful
-> conversion with no modification to the behaviour of `submodule add`.
-> 
-> Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Helped-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> Mentored-by: Shourya Shukla <periperidip@gmail.com>
-> Based-on-patch-by: Shourya Shukla <periperidip@gmail.com>
-> Based-on-patch-by: Prathamesh Chavan <pc44800@gmail.com>
-> ---
->  builtin/submodule--helper.c | 160 ++++++++++++++++++++++++++++++++++++
->  git-submodule.sh            |  96 +---------------------
->  2 files changed, 162 insertions(+), 94 deletions(-)
-> 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 99aabf1078..05ae9ebe50 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -3046,6 +3046,165 @@ static int add_config(int argc, const char **argv, const char *prefix)
->  	return 0;
->  }
->  
-> +static void die_on_index_match(const char *path, int force)
-> +{
-> +	struct pathspec ps;
-> +	const char *args[] = { path, NULL };
-> +	parse_pathspec(&ps, 0, PATHSPEC_PREFER_CWD, NULL, args);
-> +
-> +	if (read_cache_preload(NULL) < 0)
-> +		die(_("index file corrupt"));
-> +
-> +	if (ps.nr) {
-> +		int i;
-> +		char *ps_matched = xcalloc(ps.nr, 1);
-> +
-> +		/* TODO: audit for interaction with sparse-index. */
-> +		ensure_full_index(&the_index);
-> +
-> +		/*
-> +		 * Since there is only one pathspec, we just need
-> +		 * need to check ps_matched[0] to know if a cache
-> +		 * entry matched.
-> +		 */
-> +		for (i = 0; i < active_nr; i++) {
-> +			ce_path_match(&the_index, active_cache[i], &ps,
-> +				      ps_matched);
-> +
-> +			if (ps_matched[0]) {
-> +				if (!force)
-> +					die(_("'%s' already exists in the index"),
-> +					    path);
-> +				if (!S_ISGITLINK(active_cache[i]->ce_mode))
-> +					die(_("'%s' already exists in the index "
-> +					      "and is not a submodule"), path);
-> +				break;
-> +			}
-> +		}
-> +		free(ps_matched);
-> +	}
-> +}
-> +
-> +static void die_on_repo_without_commits(const char *path)
-> +{
-> +	struct strbuf sb = STRBUF_INIT;
-> +	strbuf_addstr(&sb, path);
-> +	if (is_nonbare_repository_dir(&sb)) {
-> +		struct object_id oid;
-> +		if (resolve_gitlink_ref(path, "HEAD", &oid) < 0)
-> +			die(_("'%s' does not have a commit checked out"), path);
-> +	}
-> +}
-> +
-> +static int module_add(int argc, const char **argv, const char *prefix)
-> +{
-> +	int force = 0, quiet = 0, progress = 0, dissociate = 0;
-> +	struct add_data add_data = ADD_DATA_INIT;
-> +
-> +	struct option options[] = {
-> +		OPT_STRING('b', "branch", &add_data.branch, N_("branch"),
-> +			   N_("branch of repository to add as submodule")),
-> +		OPT__FORCE(&force, N_("allow adding an otherwise ignored submodule path"),
-> +			   PARSE_OPT_NOCOMPLETE),
-> +		OPT__QUIET(&quiet, N_("print only error messages")),
-> +		OPT_BOOL(0, "progress", &progress, N_("force cloning progress")),
-> +		OPT_STRING(0, "reference", &add_data.reference_path, N_("repository"),
-> +			   N_("reference repository")),
-> +		OPT_BOOL(0, "dissociate", &dissociate, N_("borrow the objects from reference repositories")),
-> +		OPT_STRING(0, "name", &add_data.sm_name, N_("name"),
-> +			   N_("sets the submodule’s name to the given string "
-> +			      "instead of defaulting to its path")),
-> +		OPT_INTEGER(0, "depth", &add_data.depth, N_("depth for shallow clones")),
-> +		OPT_END()
-> +	};
-> +
-> +	const char *const usage[] = {
-> +		N_("git submodule--helper add [<options>] [--] <repository> [<path>]"),
-> +		NULL
-> +	};
-> +
-> +	argc = parse_options(argc, argv, prefix, options, usage, 0);
-> +
-> +	if (!is_writing_gitmodules_ok())
-> +		die(_("please make sure that the .gitmodules file is in the working tree"));
-> +
-> +	if (prefix && *prefix &&
-> +	    add_data.reference_path && !is_absolute_path(add_data.reference_path))
-> +		add_data.reference_path = xstrfmt("%s%s", prefix, add_data.reference_path);
-> +
-> +	if (argc == 0 || argc > 2)
-> +		usage_with_options(usage, options);
-> +
-> +	add_data.repo = argv[0];
-> +	if (argc == 1)
-> +		add_data.sm_path = guess_dir_name_from_git_url(add_data.repo, 0, 0);
-> +	else
-> +		add_data.sm_path = xstrdup(argv[1]);
+This reverts commit f5bfcc823ba242a46e20fb6f71c9fbf7ebb222fe, which
+made "git log -m" imply "--patch" by default.  The logic was that
+"-m", which makes diff generation for merges perform a diff against
+each parent, has no use unless I am viewing the diff, so we could save
+the user some typing by turning on display of the resulting diff
+automatically.  That wasn't expected to adversely affect scripts
+because scripts would either be using a command like "git diff-tree"
+that already emits diffs by default or would be combining -m with a
+diff generation option such as --name-status.  By saving typing for
+interactive use without adversely affecting scripts in the wild, it
+would be a pure improvement.
 
-add_data.sm_path is allocated in this block (regardless of legs).
+The problem is that although diff generation options are only relevant
+for the displayed diff, a script author can imagine them affecting
+path limiting.  For example, I might run
 
-> +	if (prefix && *prefix && !is_absolute_path(add_data.sm_path))
-> +		add_data.sm_path = xstrfmt("%s%s", prefix, add_data.sm_path);
-> +
-> +	if (starts_with_dot_dot_slash(add_data.repo) ||
-> +	    starts_with_dot_slash(add_data.repo)) {
-> +		if (prefix)
-> +			die(_("Relative path can only be used from the toplevel "
-> +			      "of the working tree"));
-> +
-> +		/* dereference source url relative to parent's url */
-> +		add_data.realrepo = compute_submodule_clone_url(add_data.repo, NULL, 1);
-> +	} else if (is_dir_sep(add_data.repo[0]) || strchr(add_data.repo, ':')) {
-> +		add_data.realrepo = add_data.repo;
-> +	} else {
-> +		die(_("repo URL: '%s' must be absolute or begin with ./|../"),
-> +		    add_data.repo);
-> +	}
-> +
-> +	/*
-> +	 * normalize path:
-> +	 * multiple //; leading ./; /./; /../;
-> +	 */
-> +	normalize_path_copy(add_data.sm_path, add_data.sm_path);
-> +	strip_dir_trailing_slashes(add_data.sm_path);
-> +
-> +	die_on_index_match(add_data.sm_path, force);
-> +	die_on_repo_without_commits(add_data.sm_path);
-> +
-> +	if (!force) {
-> +		int exit_code = -1;
-> +		struct strbuf sb = STRBUF_INIT;
-> +		struct child_process cp = CHILD_PROCESS_INIT;
-> +		cp.git_cmd = 1;
-> +		cp.no_stdout = 1;
-> +		strvec_pushl(&cp.args, "add", "--dry-run", "--ignore-missing",
-> +			     "--no-warn-embedded-repo", add_data.sm_path, NULL);
-> +		if ((exit_code = pipe_command(&cp, NULL, 0, NULL, 0, &sb, 0))) {
-> +			strbuf_complete_line(&sb);
-> +			fputs(sb.buf, stderr);
-> +			return exit_code;
+	git log -w --format=%H -- README
 
-But, we don't free it when return from here.
+hoping to list commits that edited README, excluding whitespace-only
+changes.  In fact, a whitespace-only change is not TREESAME so the use
+of -w here has no effect (since we don't apply these diff generation
+flags to the diff_options struct rev_info::pruning used for this
+purpose), but the documentation suggests that it should work
 
-> +		}
-> +		strbuf_release(&sb);
-> +	}
-> +
-> +	if(!add_data.sm_name)
-> +		add_data.sm_name = add_data.sm_path;
-> +
-> +	if (check_submodule_name(add_data.sm_name))
-> +		die(_("'%s' is not a valid submodule name"), add_data.sm_name);
-> +
-> +	add_data.prefix = prefix;
-> +	add_data.force = !!force;
-> +	add_data.quiet = !!quiet;
-> +	add_data.progress = !!progress;
-> +	add_data.dissociate = !!dissociate;
-> +
-> +	if (add_submodule(&add_data))
-> +		return 1;
+	Suppose you specified foo as the <paths>. We shall call
+	commits that modify foo !TREESAME, and the rest TREESAME. (In
+	a diff filtered for foo, they look different and equal,
+	respectively.)
 
-And here.
+and a script author who has not tested whitespace-only changes
+wouldn't notice.
 
-> +	configure_added_submodule(&add_data);
-> +	free(add_data.sm_path);
+Similarly, a script author could include
 
-However, it will be free()-d here, is it intended?
+	git log -m --first-parent --format=%H -- README
 
-I think we may use UNLEAK above (for now) because we will exit process
-after this function.
+to filter the first-parent history for commits that modified README.
+The -m is a no-op but it reflects the script author's intent.  For
+example, until 1e20a407fe2 (stash list: stop passing "-m" to "git
+log", 2021-05-21), "git stash list" did this.
 
-However, I anticipated we may need to do more stuffs after this
-function in the future.
+As a result, we can't safely change "-m" to imply "-p" without fear of
+breaking such scripts.  Restore the previous behavior.
 
-> +
-> +	return 0;
-> +}
-> +
->  #define SUPPORT_SUPER_PREFIX (1<<0)
->  
->  struct cmd_struct {
-> @@ -3060,6 +3219,7 @@ static struct cmd_struct commands[] = {
->  	{"clone", module_clone, 0},
->  	{"add-clone", add_clone, 0},
->  	{"add-config", add_config, 0},
-> +	{"add", module_add, SUPPORT_SUPER_PREFIX},
->  	{"update-module-mode", module_update_module_mode, 0},
->  	{"update-clone", update_clone, 0},
->  	{"ensure-core-worktree", ensure_core_worktree, 0},
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 8c219ef382..1070540525 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -145,104 +145,12 @@ cmd_add()
->  		shift
->  	done
->  
-> -	if ! git submodule--helper config --check-writeable >/dev/null 2>&1
-> +	if test -z "$1"
->  	then
-> -		 die "fatal: $(eval_gettext "please make sure that the .gitmodules file is in the working tree")"
-> -	fi
-> -
-> -	if test -n "$reference_path"
-> -	then
-> -		is_absolute_path "$reference_path" ||
-> -		reference_path="$wt_prefix$reference_path"
-> -
-> -		reference="--reference=$reference_path"
-> -	fi
-> -
-> -	repo=$1
-> -	sm_path=$2
-> -
-> -	if test -z "$sm_path"; then
-> -		sm_path=$(printf '%s\n' "$repo" |
-> -			sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
-> -	fi
-> -
-> -	if test -z "$repo" || test -z "$sm_path"; then
->  		usage
->  	fi
->  
-> -	is_absolute_path "$sm_path" || sm_path="$wt_prefix$sm_path"
-> -
-> -	# assure repo is absolute or relative to parent
-> -	case "$repo" in
-> -	./*|../*)
-> -		test -z "$wt_prefix" ||
-> -		die "fatal: $(gettext "Relative path can only be used from the toplevel of the working tree")"
-> -
-> -		# dereference source url relative to parent's url
-> -		realrepo=$(git submodule--helper resolve-relative-url "$repo") || exit
-> -		;;
-> -	*:*|/*)
-> -		# absolute url
-> -		realrepo=$repo
-> -		;;
-> -	*)
-> -		die "fatal: $(eval_gettext "repo URL: '\$repo' must be absolute or begin with ./|../")"
-> -	;;
-> -	esac
-> -
-> -	# normalize path:
-> -	# multiple //; leading ./; /./; /../; trailing /
-> -	sm_path=$(printf '%s/\n' "$sm_path" |
-> -		sed -e '
-> -			s|//*|/|g
-> -			s|^\(\./\)*||
-> -			s|/\(\./\)*|/|g
-> -			:start
-> -			s|\([^/]*\)/\.\./||
-> -			tstart
-> -			s|/*$||
-> -		')
-> -	if test -z "$force"
-> -	then
-> -		git ls-files --error-unmatch "$sm_path" > /dev/null 2>&1 &&
-> -		die "fatal: $(eval_gettext "'\$sm_path' already exists in the index")"
-> -	else
-> -		git ls-files -s "$sm_path" | sane_grep -v "^160000" > /dev/null 2>&1 &&
-> -		die "fatal: $(eval_gettext "'\$sm_path' already exists in the index and is not a submodule")"
-> -	fi
-> -
-> -	if test -d "$sm_path" &&
-> -		test -z $(git -C "$sm_path" rev-parse --show-cdup 2>/dev/null)
-> -	then
-> -	    git -C "$sm_path" rev-parse --verify -q HEAD >/dev/null ||
-> -	    die "fatal: $(eval_gettext "'\$sm_path' does not have a commit checked out")"
-> -	fi
-> -
-> -	if test -z "$force"
-> -	then
-> -	    dryerr=$(git add --dry-run --ignore-missing --no-warn-embedded-repo "$sm_path" 2>&1 >/dev/null)
-> -	    res=$?
-> -	    if test $res -ne 0
-> -	    then
-> -		 echo >&2 "$dryerr"
-> -		 exit $res
-> -	    fi
-> -	fi
-> -
-> -	if test -n "$custom_name"
-> -	then
-> -		sm_name="$custom_name"
-> -	else
-> -		sm_name="$sm_path"
-> -	fi
-> -
-> -	if ! git submodule--helper check-name "$sm_name"
-> -	then
-> -		die "fatal: $(eval_gettext "'$sm_name' is not a valid submodule name")"
-> -	fi
-> -
-> -	git submodule--helper add-clone ${GIT_QUIET:+--quiet} ${force:+"--force"} ${progress:+"--progress"} ${branch:+--branch "$branch"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"--dissociate"} ${depth:+"$depth"} || exit
-> -	git submodule--helper add-config ${force:+--force} ${branch:+--branch "$branch"} --url "$repo" --resolved-url "$realrepo" --path "$sm_path" --name "$sm_name"
-> +	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper add ${GIT_QUIET:+--quiet} ${force:+--force} ${progress:+"--progress"} ${branch:+--branch "$branch"} ${reference_path:+--reference "$reference_path"} ${dissociate:+--dissociate} ${custom_name:+--name "$custom_name"} ${depth:+"$depth"} -- "$@"
->  }
->  
->  #
-> -- 
-> 2.32.0
-> 
+Noticed because Rust's src/bootstrap/bootstrap.py made use of this
+same construct: https://github.com/rust-lang/rust/pull/87513.  That
+script has been updated to omit the unnecessary "-m" option, but we
+can expect other scripts in the wild to have similar expectations.
 
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Hi,
+
+Joshua Nelson wrote[1]:
+> Jonathan Nieder wrote:
+
+>> What happens if someone wants to build an older version of Rust?
+>
+> For what it's worth, almost no one builds old versions of rust from source
+> except for distros, and distros wouldn't ever set download-ci-llvm = true. So
+> this shouldn't affect anyone in practice now that we've removed `-m` on master.
+
+Thanks.  With that out of the way, I started thinking more clearly
+about the intent behind this use of `-m` and I'm starting to think it
+wasn't a typo after all.
+
+As a result, in terms of
+
+>>  a. Revert 'diff-merges: let "-m" imply "-p"'.  This buys us time to
+>>     make a more targeted change, make the change more gradually in a
+>>     future release, or just stop encouraging use of "-m" in docs.
+>>
+>>  b. Make "-m" imply "-p", except in some more 'script-ish'
+>>     circumstances (e.g. when using log --format with a format string)
+>>
+>>  c. Go ahead with the change and advertise it in release notes.
+
+now I lean toward (a).  How about this patch?
+
+Thanks,
+Jonathan
+
+[1] https://lore.kernel.org/git/CAJ+j++Vj1gY93QuKDhDODXOJGXTiFFEzy0Oew+LWD7a5e7iaTA@mail.gmail.com/
+
+ Documentation/diff-options.txt | 8 ++++----
+ diff-merges.c                  | 1 -
+ t/t4013-diff-various.sh        | 4 ++--
+ 3 files changed, 6 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 0aebe832057..c89d530d3d1 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -49,9 +49,10 @@ ifdef::git-log[]
+ --diff-merges=m:::
+ -m:::
+ 	This option makes diff output for merge commits to be shown in
+-	the default format. The default format could be changed using
++	the default format. `-m` will produce the output only if `-p`
++	is given as well. The default format could be changed using
+ 	`log.diffMerges` configuration parameter, which default value
+-	is `separate`. `-m` implies `-p`.
++	is `separate`.
+ +
+ --diff-merges=first-parent:::
+ --diff-merges=1:::
+@@ -61,8 +62,7 @@ ifdef::git-log[]
+ --diff-merges=separate:::
+ 	This makes merge commits show the full diff with respect to
+ 	each of the parents. Separate log entry and diff is generated
+-	for each parent. This is the format that `-m` produced
+-	historically.
++	for each parent.
+ +
+ --diff-merges=combined:::
+ --diff-merges=c:::
+diff --git a/diff-merges.c b/diff-merges.c
+index 0dfcaa1b11b..d897fd8a293 100644
+--- a/diff-merges.c
++++ b/diff-merges.c
+@@ -107,7 +107,6 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
+ 
+ 	if (!strcmp(arg, "-m")) {
+ 		set_to_default(revs);
+-		revs->merges_imply_patch = 1;
+ 	} else if (!strcmp(arg, "-c")) {
+ 		set_combined(revs);
+ 		revs->merges_imply_patch = 1;
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 7fadc985ccc..e561a8e4852 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -455,8 +455,8 @@ diff-tree --stat --compact-summary initial mode
+ diff-tree -R --stat --compact-summary initial mode
+ EOF
+ 
+-test_expect_success 'log -m matches log -m -p' '
+-	git log -m -p master >result &&
++test_expect_success 'log -m matches pure log' '
++	git log master >result &&
+ 	process_diffs result >expected &&
+ 	git log -m >result &&
+ 	process_diffs result >actual &&
 -- 
-Danh
+2.32.0.605.g8dce9f2422-goog
+
