@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB082C4338F
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 12:02:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA9C3C432BE
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 12:02:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE3FC60EBC
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 12:02:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CBA7361102
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 12:02:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243574AbhHFMCh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Aug 2021 08:02:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53144 "EHLO
+        id S1343504AbhHFMCi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Aug 2021 08:02:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343502AbhHFMCd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Aug 2021 08:02:33 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B77DEC06179A
-        for <git@vger.kernel.org>; Fri,  6 Aug 2021 05:02:16 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id b1-20020a17090a8001b029017700de3903so12176584pjn.1
-        for <git@vger.kernel.org>; Fri, 06 Aug 2021 05:02:16 -0700 (PDT)
+        with ESMTP id S1343500AbhHFMCg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Aug 2021 08:02:36 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB3AFC061799
+        for <git@vger.kernel.org>; Fri,  6 Aug 2021 05:02:20 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id s22-20020a17090a1c16b0290177caeba067so22469900pjs.0
+        for <git@vger.kernel.org>; Fri, 06 Aug 2021 05:02:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=z0dczKJTO5baTemhmXZeMRVP4jza28YNvT8kLN9WZLY=;
-        b=NDcD8wOsnBvdo7WVBeryMaFdwXFBqi3m72QmPYaTNpsV7GnvRekNbCnwrHB7bcFS0V
-         bOX2kn5MtPjaCwdpIbPmNpaAyJsT1ohLCNdiSGrWg2KA/QrhyuhPSAwIk4ngR4KKGZhq
-         qyMy8NGEmcm12NjSEKbcaPvR9ns6tmE/M5da53LHCbPLg/r6tD1Jt5nLOEoIOh3O0ths
-         jJvz26MKbIXi4rDl/SCLpH8MEfTWwUVk510yF/QUWgP3Ddl/fFqx3cjgDcQKHIyqNU3M
-         c9kkCyxdIT4bzvAa/XFOVFsWrZxVcmEUarWBdPrCMg+EoMORlLpUU1X6Yr3TH9uXWwnC
-         wLkA==
+        bh=bC3LVEeg6ZqTUnpofrbrencrwjSmmnhJTnEsJIT6aqw=;
+        b=CfVB7XKheD96RmFTE3He/PnutHr/G/TNeoslxE3YUfEOPPDvp4DyjnNkO3mxRM4ctb
+         R5Hil5WO5KiFHy8HZQ+LmMwkkO10nurTGgadUYd/kF17AM5jTq0FSstf/oPIL7yafmUn
+         GzyUVkkwafRGhsfvbu/YCUpOY4zo7Exjoos7ukCSWBVQaKJNmBpBSffmb+PRtHohVkZP
+         qBkyA2A+Cx75EtpyEAeDRIIKFYZYEnTmUKpB46QGGXElw4dNQ/G14euty4e5lFpq6RW3
+         vjBMv6PAHIiNgCZ2lRH0PT+oen9NrtuoClkrhqXjplGdsQ1vrSs7iKga/8X20XLzVRtZ
+         JhNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=z0dczKJTO5baTemhmXZeMRVP4jza28YNvT8kLN9WZLY=;
-        b=GemJx3XdyiO9gknvbuw1lInP05HHgHJ9EUcqM4xol6KQxuz0TTayeRLxCa9BVa2Pyy
-         JHZ8xMLIqZcx8R8/gkwZYHi33CpajOQFgpIRAGoX0WWsdJalSOfYJTpkspyGvDO7hreN
-         rCMLPDUeyUfOqiDoCZNIp2+JKSgd6yNCSqblnIbKKbMSfctDPGFe9XCxTIn4jvzBDsss
-         p+/GqRNjIaOE+iKcYKqgR6+AECKYPVBDuxbE8jCO73NRXQEzJUyWwQeJr0++og5yDVOz
-         KxEFQlycIYTb8iu7BXKUjxUn6fi7MWkk7yCdCsfvj7zIJ9dEgpDGwshF15I9Uo0umz6a
-         JDdg==
-X-Gm-Message-State: AOAM5323qh9nguO2xTSjtyd7wV0g90ZeU6apB8Jun+Rim1HeYUH4s+Yf
-        aRDGfqEUBG5e8D7XmS8l754=
-X-Google-Smtp-Source: ABdhPJzn2o+7jnEUXkbpJtzGHm9Qm0dYL7gPPDSlN48x9cMUK1is4/+f5VKVu3KOCwWut8BrrE6dZA==
-X-Received: by 2002:a17:902:8c83:b029:129:17e5:a1cc with SMTP id t3-20020a1709028c83b029012917e5a1ccmr8264413plo.49.1628251336303;
-        Fri, 06 Aug 2021 05:02:16 -0700 (PDT)
+        bh=bC3LVEeg6ZqTUnpofrbrencrwjSmmnhJTnEsJIT6aqw=;
+        b=XlkujAH8vlhG6cWlyNdQzzwLlPwNzapkurn5zE97Q8UMyAqbbW02BJ/ynLOkg1M6Md
+         TLlG0eu0vlO/PXOlOLJXYvKOnhcAVuL5O4F7hrm/XGFYaApd2qQzlRNTDGU38MRDhNR9
+         yBK1NSX0VHS6DCNbW6p0HUKMJulPnyVpKB7tfxZpO4avFRL16s0G/hddDrX7RoACpF0C
+         Pe0Pw7l692rImGLHHbGTHsyXI5+LD3fJD9IWGBw+aDTubZC/HEORpx3arOj+8rtlSII5
+         VCVw4tfhVzqsg2Mo32skpkT4rrfxk9U+s5uplSAMg5RipHhRVdCL6uybokOtCGlwnl2l
+         CqVA==
+X-Gm-Message-State: AOAM533CTKeS0CP+d3ib+q8t4Jf69bZef/QeMhy3k6+sXSrpA0vZzMzS
+        nmJkvQFQlQWd1UukvVNAdDc=
+X-Google-Smtp-Source: ABdhPJxK2C61iVqDOwBv+i98Bcr4BGcSZ8jqFqQZ6+ktWaZXQNIkEjso5nrzmdZiQ8HqekskowKIIg==
+X-Received: by 2002:a17:902:f253:b029:12c:438a:fa7b with SMTP id j19-20020a170902f253b029012c438afa7bmr8406489plc.22.1628251340493;
+        Fri, 06 Aug 2021 05:02:20 -0700 (PDT)
 Received: from atharva-on-air.Dlink ([119.82.121.47])
-        by smtp.gmail.com with ESMTPSA id z8sm10338162pfa.113.2021.08.06.05.02.12
+        by smtp.gmail.com with ESMTPSA id z8sm10338162pfa.113.2021.08.06.05.02.16
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 Aug 2021 05:02:16 -0700 (PDT)
+        Fri, 06 Aug 2021 05:02:20 -0700 (PDT)
 From:   Atharva Raykar <raykar.ath@gmail.com>
 To:     raykar.ath@gmail.com
 Cc:     avarab@gmail.com, christian.couder@gmail.com, congdanhqx@gmail.com,
@@ -63,9 +63,9 @@ Cc:     avarab@gmail.com, christian.couder@gmail.com, congdanhqx@gmail.com,
         jrnieder@gmail.com, kaartic.sivaraam@gmail.com, pc44800@gmail.com,
         periperidip@gmail.com, rafaeloliveira.cs@gmail.com,
         sunshine@sunshineco.com
-Subject: [GSoC] [PATCH v3 2/8] submodule--helper: refactor resolve_relative_url() helper
-Date:   Fri,  6 Aug 2021 17:31:41 +0530
-Message-Id: <20210806120147.73349-3-raykar.ath@gmail.com>
+Subject: [GSoC] [PATCH v3 3/8] submodule--helper: remove repeated code in sync_submodule()
+Date:   Fri,  6 Aug 2021 17:31:42 +0530
+Message-Id: <20210806120147.73349-4-raykar.ath@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210806120147.73349-1-raykar.ath@gmail.com>
 References: <20210805074054.29916-1-raykar.ath@gmail.com>
@@ -76,115 +76,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor the helper function to resolve a relative url, by reusing the
-existing `compute_submodule_clone_url()` function.
+This part of `sync_submodule()` is doing the same thing that
+`compute_submodule_clone_url()` is doing. Let's reuse that helper here.
 
-`compute_submodule_clone_url()` performs the same work that
-`resolve_relative_url()` is doing, so we eliminate this code repetition
-by moving the former function's definition up, and calling it inside
-`resolve_relative_url()`.
+Note that this change adds a small overhead where we allocate and free
+the 'remote' twice, but that is a small price to pay for the higher
+level of abstraction we get.
 
 Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Shourya Shukla <periperidip@gmail.com>
 ---
- builtin/submodule--helper.c | 61 +++++++++++++++----------------------
- 1 file changed, 25 insertions(+), 36 deletions(-)
+ builtin/submodule--helper.c | 16 +++-------------
+ 1 file changed, 3 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 2d2d8ac637..f4b496bac6 100644
+index f4b496bac6..9b676c12f8 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -199,33 +199,46 @@ static char *relative_url(const char *remote_url,
- 	return strbuf_detach(&sb, NULL);
- }
- 
-+static char *compute_submodule_clone_url(const char *rel_url, const char *up_path, int quiet)
-+{
-+	char *remoteurl, *relurl;
-+	char *remote = get_default_remote();
-+	struct strbuf remotesb = STRBUF_INIT;
-+
-+	strbuf_addf(&remotesb, "remote.%s.url", remote);
-+	if (git_config_get_string(remotesb.buf, &remoteurl)) {
-+		if (!quiet)
-+			warning(_("could not look up configuration '%s'. "
-+				  "Assuming this repository is its own "
-+				  "authoritative upstream."),
-+				remotesb.buf);
-+		remoteurl = xgetcwd();
-+	}
-+	relurl = relative_url(remoteurl, rel_url, up_path);
-+
-+	free(remote);
-+	free(remoteurl);
-+	strbuf_release(&remotesb);
-+
-+	return relurl;
-+}
-+
- static int resolve_relative_url(int argc, const char **argv, const char *prefix)
- {
--	char *remoteurl = NULL;
--	char *remote = get_default_remote();
- 	const char *up_path = NULL;
- 	char *res;
- 	const char *url;
--	struct strbuf sb = STRBUF_INIT;
- 
- 	if (argc != 2 && argc != 3)
- 		die("resolve-relative-url only accepts one or two arguments");
- 
- 	url = argv[1];
--	strbuf_addf(&sb, "remote.%s.url", remote);
--	free(remote);
+@@ -1373,20 +1373,10 @@ static void sync_submodule(const char *path, const char *prefix,
+ 	if (sub && sub->url) {
+ 		if (starts_with_dot_dot_slash(sub->url) ||
+ 		    starts_with_dot_slash(sub->url)) {
+-			char *remote_url, *up_path;
+-			char *remote = get_default_remote();
+-			strbuf_addf(&sb, "remote.%s.url", remote);
 -
--	if (git_config_get_string(sb.buf, &remoteurl))
--		/* the repository is its own authoritative upstream */
--		remoteurl = xgetcwd();
+-			if (git_config_get_string(sb.buf, &remote_url))
+-				remote_url = xgetcwd();
 -
- 	if (argc == 3)
- 		up_path = argv[2];
- 
--	res = relative_url(remoteurl, url, up_path);
-+	res = compute_submodule_clone_url(url, up_path, 1);
- 	puts(res);
- 	free(res);
--	free(remoteurl);
- 	return 0;
- }
- 
-@@ -590,30 +603,6 @@ static int module_foreach(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
--static char *compute_submodule_clone_url(const char *rel_url, const char *up_path, int quiet)
--{
--	char *remoteurl, *relurl;
--	char *remote = get_default_remote();
--	struct strbuf remotesb = STRBUF_INIT;
+-			up_path = get_up_path(path);
+-			sub_origin_url = relative_url(remote_url, sub->url, up_path);
+-			super_config_url = relative_url(remote_url, sub->url, NULL);
 -
--	strbuf_addf(&remotesb, "remote.%s.url", remote);
--	if (git_config_get_string(remotesb.buf, &remoteurl)) {
--		if (!quiet)
--			warning(_("could not look up configuration '%s'. "
--				  "Assuming this repository is its own "
--				  "authoritative upstream."),
--				remotesb.buf);
--		remoteurl = xgetcwd();
--	}
--	relurl = relative_url(remoteurl, rel_url, up_path);
--
--	free(remote);
--	free(remoteurl);
--	strbuf_release(&remotesb);
--
--	return relurl;
--}
--
- struct init_cb {
- 	const char *prefix;
- 	unsigned int flags;
+-			free(remote);
++			char *up_path = get_up_path(path);
++			sub_origin_url = compute_submodule_clone_url(sub->url, up_path, 1);
++			super_config_url = compute_submodule_clone_url(sub->url, NULL, 1);
+ 			free(up_path);
+-			free(remote_url);
+ 		} else {
+ 			sub_origin_url = xstrdup(sub->url);
+ 			super_config_url = xstrdup(sub->url);
 -- 
 2.32.0
 
