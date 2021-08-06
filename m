@@ -2,210 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	NICE_REPLY_C,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E1AEC4338F
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 21:46:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D0A5C4338F
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 22:13:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 395E560F59
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 21:46:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA40361181
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 22:13:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244478AbhHFVqe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Aug 2021 17:46:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43864 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241587AbhHFVqd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Aug 2021 17:46:33 -0400
-Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F1CBC0613CF
-        for <git@vger.kernel.org>; Fri,  6 Aug 2021 14:46:17 -0700 (PDT)
-Received: by mail-qk1-x74a.google.com with SMTP id b190-20020a3767c70000b02903ca0967b842so5625858qkc.9
-        for <git@vger.kernel.org>; Fri, 06 Aug 2021 14:46:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=jjPaCzg5G67H85iTeC3ibSA3fxFbjAW8GzDSKh2DPs0=;
-        b=VFqx5FYL2hTCo009Hp7hwqH07i0rMIMTQbOYmPBUE7VR7eGBo0oFCt/PcC+XvEsOmU
-         4nKD1qtIh6nnDURqhuFTSrUJoo8vjyV/tKg5H3ne7i1xNDHkI90evIYD8q5xsAxE5L9g
-         sDXyurn/SHYZzSgMS34dN5tr/DHSA4zt4dGUhj5xl9i3yFRrK2edokSMYn+NQM8wrOnG
-         L6qSV7Ai32PVYUXVYYWxX0/6bX65sQN0tCu9zdR19zigsUinpDl95GUxDU1u2l9li4XY
-         O168VdjHCiu0Uj4kVt6Ppb4U/ciV7OrH10d2xfQX9Q4OfuE8HPpEXVYATZJVJ98DDZ/H
-         4JXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=jjPaCzg5G67H85iTeC3ibSA3fxFbjAW8GzDSKh2DPs0=;
-        b=GNNVR3k1miOuF1/gQBVquVLu7ouegN004HBNfUp7PmlHlu8wiwBanSrvamcSQldTbt
-         0t6iNIe6CaDVxxYozV0O4XdXkMw1RCCZhAaF0yRLhRIC+XHuSNu/An8ecZuA1aET93Gr
-         1usrBOWAvJXvAh3pLWYaRYv6zGTjCQ42XvzOakXD9ZJP3ad1hVXvX8Cdt0m0VAR8WkpN
-         swO2PvKrvn7dyhzEgK3xRgn96nQVvLuykICgtN+YPrdvhVtBnz/ftOLbAUkHMnUgOzZd
-         J18tXAr61xgcHgKMlCJEcFpSWN3x6l/qQKhL1PslYnDpkUGz0Sl/UKNJulZqMmldauJz
-         Wkig==
-X-Gm-Message-State: AOAM5333DByOsO0SGaQe+06kHZwCGgOQWmqYwL22irSAC4z8FKI5mPln
-        h21o5k9YXxMyfnjWm+OPu/2+a7SJwTLaevECM9KxGLzHe+JlP0FY4Bq7RweHCouZ24jXh0hpBmm
-        3rN5sq8Mg0bNJv+F9Q3TjnXUBm8A2GtsGJz+4RBv4Nx+XOCeJBko5imUCgw2MFW0BSswUjh2GCT
-        A+
-X-Google-Smtp-Source: ABdhPJwqJWYUQmfUaTxno1N4Ir/w+ltgUDT22KdOFvzjv9Z1ZPanEAB/v2n94Pf6pyVyS/vzy0t0Mrims5YscrK65hIQ
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6214:f2e:: with SMTP id
- iw14mr2114713qvb.36.1628286376661; Fri, 06 Aug 2021 14:46:16 -0700 (PDT)
-Date:   Fri,  6 Aug 2021 14:46:12 -0700
-Message-Id: <20210806214612.1501980-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.32.0.605.g8dce9f2422-goog
-Subject: [PATCH] transport: no warning if no server wait-for-done
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S242275AbhHFWNy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Aug 2021 18:13:54 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51145 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231577AbhHFWNx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Aug 2021 18:13:53 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 28EB3EFD16;
+        Fri,  6 Aug 2021 18:13:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=en4cBaQnAI0aMUM1BvpejTQOe9JKdCNIrV0orKcIXhw=; b=O4JD
+        Qu+vfLcGEZNEyK6NeZKHZO68WAUqrb/IXadq4sEnGEaawmCBX2onu09XQsd0VOtw
+        aQyjml7K0SQtHkHmndF+afORFCbfdt2/ArB2bIpmCT+y9XxoBwanzvVQcfGxBhvI
+        yoyKtf+mbj3lxxvSQzVJe3T7JBJZGUlfORoBuwo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1EAE7EFD15;
+        Fri,  6 Aug 2021 18:13:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 94418EFD14;
+        Fri,  6 Aug 2021 18:13:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Roman Neuhauser <rn+git@sigpipe.cz>
+Cc:     =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2] clone: Allow combining --bare and --origin
+References: <xmqqv94mtdyj.fsf@gitster.g>
+        <20210804133010.25855-1-oystwa@gmail.com> <xmqqbl6dqgvc.fsf@gitster.g>
+        <YQ2aXpfzyOOUFhQk@isis.sigpipe.cz>
+Date:   Fri, 06 Aug 2021 15:13:35 -0700
+Message-ID: <xmqqh7g2gr1s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8BBBB2AA-F703-11EB-BFBC-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the push.negotiate configuration variable was implemented in
-477673d6f3 ("send-pack: support push negotiation", 2021-05-05), Git was
-taught to print warning messages whenever that variable was set to true
-but push negotiation didn't happen. However, the lack of push
-negotiation is more similar to things like the usage of protocol v2 - in
-which the new feature is desired for performance, but if the feature
-is not there, the user does not intend to take any action - than to
-things like the usage of --filter - in which the new feature is desired
-for a certain outcome, and if the outcome does not happen, there is a
-high chance that the user would need to do something else (in this case,
-for example, reclone with "--depth" if the user needs the disk space).
+Roman Neuhauser <rn+git@sigpipe.cz> writes:
 
-Therefore, when pushing with push.negotiate set to true, do not warn if
-wait-for-done is not supported for any reason (e.g. if the server is
-using an older version of Git or if protocol v2 is deactivated on the
-server). This is done by using an internal-use-only parameter to "git
-fetch".
+>> But we'd end up treating them the same.  And something like
+>> remote.originName would help that.  Otherwise, we'd end up sending
+>> this message:
+>> 
+>>     Even if we give "--bare --origin yourfavouritename" to you now,
+>>     unlike how 'origin' is treated in the default case, in the
+>>     resulting repository, 'yourfavouritename' is not special at all.
+>
+> Isn't that the case in non-bare repositories as well?
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- builtin/fetch.c       |  8 +++++++-
- send-pack.c           | 11 +++--------
- t/t5516-fetch-push.sh |  3 +--
- transport.c           |  6 ++++--
- transport.h           |  6 ++++++
- 5 files changed, 21 insertions(+), 13 deletions(-)
+You have branches that are checked out.  The first branch that you'd
+presumably be using as the primary (traditionally called 'master')
+knows that the nickname used to call the remote it integrates with
+as the value of branch.master.remote
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 25740c13df..940d650aba 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -84,6 +84,7 @@ static struct string_list negotiation_tip = STRING_LIST_INIT_NODUP;
- static int fetch_write_commit_graph = -1;
- static int stdin_refspecs = 0;
- static int negotiate_only;
-+static int negotiate_only_failure_ok;
- 
- static int git_fetch_config(const char *k, const char *v, void *cb)
- {
-@@ -208,6 +209,8 @@ static struct option builtin_fetch_options[] = {
- 			N_("report that we have only objects reachable from this object")),
- 	OPT_BOOL(0, "negotiate-only", &negotiate_only,
- 		 N_("do not fetch a packfile; instead, print ancestors of negotiation tips")),
-+	OPT_BOOL(0, "negotiate-only-failure-ok", &negotiate_only_failure_ok,
-+		 N_("for internal use only: if --negotiate-only fails, do not print a warning message")),
- 	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
- 	OPT_BOOL(0, "auto-maintenance", &enable_auto_gc,
- 		 N_("run 'maintenance --auto' after fetching")),
-@@ -2059,8 +2062,11 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		gtransport = prepare_transport(remote, 1);
- 		if (gtransport->smart_options) {
- 			gtransport->smart_options->acked_commits = &acked_commits;
-+			gtransport->smart_options->negotiate_only_failure_ok =
-+				negotiate_only_failure_ok;
- 		} else {
--			warning(_("Protocol does not support --negotiate-only, exiting."));
-+			if (!negotiate_only_failure_ok)
-+				warning(_("Protocol does not support --negotiate-only, exiting."));
- 			return 1;
- 		}
- 		if (server_options.nr)
-diff --git a/send-pack.c b/send-pack.c
-index 5a79e0e711..020fd0b265 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -424,7 +424,8 @@ static void get_commons_through_negotiation(const char *url,
- 	child.git_cmd = 1;
- 	child.no_stdin = 1;
- 	child.out = -1;
--	strvec_pushl(&child.args, "fetch", "--negotiate-only", NULL);
-+	strvec_pushl(&child.args, "fetch", "--negotiate-only",
-+		     "--negotiate-only-failure-ok", NULL);
- 	for (ref = remote_refs; ref; ref = ref->next)
- 		strvec_pushf(&child.args, "--negotiation-tip=%s", oid_to_hex(&ref->new_oid));
- 	strvec_push(&child.args, url);
-@@ -447,13 +448,7 @@ static void get_commons_through_negotiation(const char *url,
- 		oid_array_append(commons, &oid);
- 	} while (1);
- 
--	if (finish_command(&child)) {
--		/*
--		 * The information that push negotiation provides is useful but
--		 * not mandatory.
--		 */
--		warning(_("push negotiation failed; proceeding anyway with push"));
--	}
-+	finish_command(&child);
- }
- 
- int send_pack(struct send_pack_args *args,
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 0916f76302..60b377edf2 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -222,8 +222,7 @@ test_expect_success 'push with negotiation proceeds anyway even if negotiation f
- 	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
- 	GIT_TEST_PROTOCOL_VERSION=0 GIT_TRACE2_EVENT="$(pwd)/event" \
- 		git -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main 2>err &&
--	grep_wrote 5 event && # 2 commits, 2 trees, 1 blob
--	test_i18ngrep "push negotiation failed" err
-+	grep_wrote 5 event # 2 commits, 2 trees, 1 blob
- '
- 
- test_expect_success 'push without wildcard' '
-diff --git a/transport.c b/transport.c
-index 17e9629710..913fc0f8e4 100644
---- a/transport.c
-+++ b/transport.c
-@@ -397,10 +397,12 @@ static int fetch_refs_via_pack(struct transport *transport,
- 
- 	if (data->options.acked_commits) {
- 		if (data->version < protocol_v2) {
--			warning(_("--negotiate-only requires protocol v2"));
-+			if (!data->options.negotiate_only_failure_ok)
-+				warning(_("--negotiate-only requires protocol v2"));
- 			ret = -1;
- 		} else if (!server_supports_feature("fetch", "wait-for-done", 0)) {
--			warning(_("server does not support wait-for-done"));
-+			if (!data->options.negotiate_only_failure_ok)
-+				warning(_("server does not support wait-for-done"));
- 			ret = -1;
- 		} else {
- 			negotiate_using_fetch(data->options.negotiation_tips,
-diff --git a/transport.h b/transport.h
-index 1cbab11373..98c90b46df 100644
---- a/transport.h
-+++ b/transport.h
-@@ -53,6 +53,12 @@ struct git_transport_options {
- 	 * common commits to this oidset instead of fetching any packfiles.
- 	 */
- 	struct oidset *acked_commits;
-+
-+	/*
-+	 * If the server does not support wait-for-done, do not print any
-+	 * warning messages.
-+	 */
-+	unsigned negotiate_only_failure_ok : 1;
- };
- 
- enum transport_family {
--- 
-2.32.0.605.g8dce9f2422-goog
+In a bare repository, there is no such clue.
 
+> Can't they just continue doing what they've been doing so far,
+> that is leave it at "origin"?  I'm not sure this would be my concern
+> as a user of this feature.
+
+That answer can be thrown back at you.  You can leave it at "origin"
+when using "--bare" ;-).
+
+The posted patch is a good first step to allow both options to be
+used at the same time.  Without the first step, these two options
+cannot coexist.
+
+But I am also saying that the first step alone is an inadequate
+solution that goes only halfway.  If you can get yourfavouritename,
+while others cannot use their favourite names, that is not a
+satisfying solution.
