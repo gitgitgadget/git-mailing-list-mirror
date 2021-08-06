@@ -2,52 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.9 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CC00C4338F
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 18:00:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E73F4C4338F
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 18:11:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2714E6115C
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 18:00:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C71AB61163
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 18:11:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242401AbhHFSAZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Aug 2021 14:00:25 -0400
-Received: from smtprelay06.ispgateway.de ([80.67.18.29]:39591 "EHLO
-        smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242299AbhHFSAY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Aug 2021 14:00:24 -0400
-Received: from [94.228.207.202] (helo=[192.168.2.21])
-        by smtprelay06.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
-        id 1mByvu-0005VP-PA; Fri, 06 Aug 2021 14:26:38 +0200
-Subject: Re: [BUG] Amending a shallow clone -> orphan branch
-To:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org
-References: <64760969-1ead-2bfb-6f98-1161d385c0ca@syntevo.com>
- <b3083a15-f2da-0eae-b07b-8a641c613906@gmail.com>
-From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Message-ID: <fbec1ce8-a1ec-b504-72a7-2f96b646127b@syntevo.com>
-Date:   Fri, 6 Aug 2021 15:27:18 +0300
-User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S242672AbhHFSLu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Aug 2021 14:11:50 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55034 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237391AbhHFSLu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Aug 2021 14:11:50 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 349B4D4427;
+        Fri,  6 Aug 2021 14:11:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=tLBRvprQN4Xl
+        xQ1qe7t78Xiqee3otyd8t62luZaocKw=; b=lO5bNN3SH9u+9lfPJiHhaDbLQ7B7
+        FRPlAzNFANgCPV+H2xWk3SS9eGwYArGy4XH1TCPeFo3u+dPJ4s+vjvFd3mu+eyuw
+        Dltb7CYgo6FGiMFYMIPZMe8Mws2XD+RhQxZ8gAT9L99pM+32ib4dLbdBH46OLu+z
+        ymWOly0wVj0IFmQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2AF51D4426;
+        Fri,  6 Aug 2021 14:11:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8105CD4425;
+        Fri,  6 Aug 2021 14:11:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+        git@vger.kernel.org, pclouds@gmail.com
+Subject: Re: [PATCH] makefile: update detect-compiler for newer Xcode version
+References: <20210806080634.11869-1-carenas@gmail.com>
+        <m2sfzmu1t7.fsf@gmail.com>
+Date:   Fri, 06 Aug 2021 11:11:31 -0700
+In-Reply-To: <m2sfzmu1t7.fsf@gmail.com> (Atharva Raykar's message of "Fri, 06
+        Aug 2021 19:12:44 +0530")
+Message-ID: <xmqq8s1eigto.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <b3083a15-f2da-0eae-b07b-8a641c613906@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: BAB53EE0-F6E1-11EB-9296-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06.08.2021 15:21, Bagas Sanjaya wrote:
-> So you're amending merge commit by adding dummy file, so that your 
-> `master` branch becomes divergent against origin. That dummy file isn't 
-> contained in any commits that are included with that merge commit.
+Atharva Raykar <raykar.ath@gmail.com> writes:
 
-Note, the problem isn't about merge commits, it happens for regular 
-commits as well. Maybe I should have picked a different repo for 
-example. Still, the problem with losing all parents is the same 
-regardless of merge/regular commit.
+> Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
+>
+> For those of us using Homebrew and using the LLVM installation from
+> there, we get:
+>
+> $ cc --version
+> Homebrew clang version 12.0.1
+> ...
+>> diff --git a/detect-compiler b/detect-compiler
+>> index 70b754481c..c85be83c64 100755
+>> --- a/detect-compiler
+>> +++ b/detect-compiler
+>> @@ -44,7 +44,7 @@ clang)
+>>  "FreeBSD clang")
+>>  	print_flags clang
+>>  	;;
+>> -"Apple LLVM")
+>> +"Apple LLVM"|"Apple clang")
+>>  	print_flags clang
+>>  	;;
+>>  *)
+>
+> So maybe we could add another case for "Homebrew clang"?
+
+$ clang --version 2>&1 | sed -ne 's/ version .*//p'
+Debian clang
+
+It might be necessary to cope with this "$VENDOR clang version"
+convention better with something like the following.
+
+I am afraid that this patch is being a bit too aggressive about
+LLVM, as I do not know if "$VENDOR LLVM version" is also a thing, or
+it is just oddity only at Apple, though.
+
+diff --git c/detect-compiler w/detect-compiler
+index 70b754481c..a80442a327 100755
+--- c/detect-compiler
++++ w/detect-compiler
+@@ -38,13 +38,7 @@ case "$(get_family)" in
+ gcc)
+ 	print_flags gcc
+ 	;;
+-clang)
+-	print_flags clang
+-	;;
+-"FreeBSD clang")
+-	print_flags clang
+-	;;
+-"Apple LLVM")
++clang | *" clang" | *" LLVM")
+ 	print_flags clang
+ 	;;
+ *)
