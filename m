@@ -2,163 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02B57C4338F
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 06:20:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BAC5C4338F
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 06:29:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB1F660F01
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 06:20:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B4B561164
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 06:29:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232094AbhHFGBW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Aug 2021 02:01:22 -0400
-Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:33445 "EHLO
-        wout2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229695AbhHFGBV (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 6 Aug 2021 02:01:21 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id 140C63200929;
-        Fri,  6 Aug 2021 02:01:05 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Fri, 06 Aug 2021 02:01:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=opzHEmM7cVV2xFVvVk8ckOs4rwY
-        nacRnTxiR6LT4lBA=; b=T2ArSl0bZbZIfs1mOwlsiG+53SPeVgQ+Yec4pXSIg1f
-        iz5J9G8jDQ2nY65OCVKPwdXJxnM8N5w4SaDnhc7KYaE8sQ6tucOzHaBMGI5DujVR
-        bc+LiHmXuuFDh0AKHNtnyhplzl1mteMunjtsWWpQmMO9VKoFUjGmRWUgawJ3BEon
-        kRfkvrrB+c9Z2PRvLedsi1ECDp7yZt89GAULOZN9yUSmKepuuYpiyeHjqS9zgsbS
-        row9il6e6dIK89AjtDJMUTmd+N3ga6MS+ufASWEJmRiaqTIyTXO3aa470D5joeyK
-        3i0svrx2+uNoik2+FDT2gUubqDiMWjBLIT+lCkqd37A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=opzHEm
-        M7cVV2xFVvVk8ckOs4rwYnacRnTxiR6LT4lBA=; b=I5CW9ZbGlIyLx7z5pF/57e
-        YEvJNt2nn2cnLxT/akIFiakM8pPdDf3FiU6giKw5lJumpvc2fiqr9O29GmGGeT/b
-        Gm9apigdIbO53eFaS8SNjs+w/Sd1ly8l8CFzuE1M2AgnGRMjhBoHwVlUWYJ+IwoP
-        HaYtVErj+Y5YQtpyA8jHZUiuCAgbCijlzW13GKqrknw08xR59Q4nwn7OBxPDCekk
-        CVvC/Lxknq2tD8dIV0ym5kgmKBAqQ+1nrEeqnIxclQvFQrwNgGR6icYYOHVpkqI9
-        KYPAqIHg6HIlRx9dhIVDwDmGcFbIOdW7KVV17ssUCZ9n2fCkD3IMHhNEWfJL0w2A
-        ==
-X-ME-Sender: <xms:INAMYQ3ybH1aksMekrUP31gpjg007oC0fRMxQCvsj6EZz_yB0WZGpA>
-    <xme:INAMYbHZzPqQykfbcCMhywGwVoZul4aTR3fUmji_s1lP94vNMc8iyJkXPMeBf4RJG
-    Lv7mYh2oa_Kuv2zJw>
-X-ME-Received: <xmr:INAMYY4OWvkQ8AA68Ot0FTFUac-JJUT0mm4H_H-o_qbfYujE_UxLVVXE1FWFhB5ZCkgh6lkyAKAgbIzwN7vNxoeA0ly2>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrjedtgdelkecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimh
-X-ME-Proxy: <xmx:INAMYZ0yN-gbc6lJzGXuyZ9iRpYTdICzjfdTMBzf9jHTat8KCxz9Hw>
-    <xmx:INAMYTFf-YFb7mjUwd-WUsXKhWTxvZRggJcnMTak7bu23nQlc1_8sw>
-    <xmx:INAMYS8qxiLUuQqzufERzHaUsRnt4uFm2Lhe1Ku9hAe5WixPDKooDA>
-    <xmx:INAMYY703us-47yRlohIbcaZSJYhW7qCmYwsrZNw2J0cXkiRYsHA9g>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Aug 2021 02:01:02 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 8623dd07 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 6 Aug 2021 06:00:58 +0000 (UTC)
-Date:   Fri, 6 Aug 2021 08:00:57 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Chris Torek <chris.torek@gmail.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v4 2/6] connected: do not sort input revisions
-Message-ID: <YQzQGVQdh4t0uZ3N@ncase>
-References: <cover.1624858240.git.ps@pks.im>
- <cover.1628162156.git.ps@pks.im>
- <9d7f484907e2bd2492e6676238579e9f0c6ed374.1628162156.git.ps@pks.im>
- <xmqqfsvnloju.fsf@gitster.g>
+        id S243330AbhHFGaE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Aug 2021 02:30:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60730 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229581AbhHFGaE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Aug 2021 02:30:04 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0433C061798
+        for <git@vger.kernel.org>; Thu,  5 Aug 2021 23:29:47 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id mz5-20020a17090b3785b0290176ecf64922so20902668pjb.3
+        for <git@vger.kernel.org>; Thu, 05 Aug 2021 23:29:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
+         :date:mime-version:content-transfer-encoding;
+        bh=xITfJHWsZ7eEVr1h5VDkb+BmAvNFDr4dy/MX96i2IkI=;
+        b=E6pLxHpKMUTR4uAB9s6FFJy/OYvjea2aHosZj6gl30vbyrFdAieHqGHgBKBxWG2tbv
+         E6TvYVrqX5xcCWlljaDkczVlK1hvzabIJMuKtwV+14O66nmJkvDzPiR6qyOYmgBuhG9p
+         Eh53GVhu0VP004dZuYO/hmvPgMx9Qncpx7mYQC4xmUJn7zcg1NHxeV9Ry2Xfqa4C6u2S
+         Vb2xM1uNVZ4KYeQa5P6ZU9DR8t/GwPjBnDP3CpmrV8sXwMSYb+PPVDFqvSFV8c+D2HtM
+         dBSW1yiFmGIzXzDgE93Ow5SznhobocT8naWz6NPTD7nKKgOZ0qbwRm88fPjymX63hcSx
+         SN1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:references:user-agent:from:to:cc:subject
+         :in-reply-to:message-id:date:mime-version:content-transfer-encoding;
+        bh=xITfJHWsZ7eEVr1h5VDkb+BmAvNFDr4dy/MX96i2IkI=;
+        b=VdJ/8nSIYwQaUzxraFJFs0LRtyh3GwsXu3RuPjYhLaK9i1OHT5hWjuBbkwY0wptGno
+         5nbDfKK2OF6gUe6NMjktY31B6SHAcdtqRslG/WaqMtoULUSTrg24gwsDA6dRW97G+baJ
+         2/0x25s854zxlV9bw/IARQw/oo2N8xts37U7vGowZ303ygb39f3Efb1LAA+kpPciAR66
+         LBLsNBPsgGNfKvRNhNkWkWMIn6+fi3NghqZlj/p1wsspy0FHs98FtN/mdjWD8SUPVpD2
+         N6JEQvLG6Ze124eDYoygVTyS1WIT3WgVmg5QoA2Qr9RcG0eRZdi/1+KinXdTzyn89pG3
+         fIOw==
+X-Gm-Message-State: AOAM53333/0C0r5EQ/MpxIyn678ul1n4TSVey45I5bGbL/kgxPX0QLAx
+        E7Zmg9UCI3By2rg+U1XMYzM=
+X-Google-Smtp-Source: ABdhPJzsmIV4o4pC+A4F/qlLzvIA/7yk4vRT4Pa+3bC8sV171znomyFk9UJfymx1whfVhFxzdTyWZg==
+X-Received: by 2002:a62:794e:0:b029:3c5:a678:efff with SMTP id u75-20020a62794e0000b02903c5a678efffmr9259113pfc.11.1628231387381;
+        Thu, 05 Aug 2021 23:29:47 -0700 (PDT)
+Received: from atharva-on-air ([119.82.121.47])
+        by smtp.gmail.com with ESMTPSA id 186sm9145526pfg.11.2021.08.05.23.29.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Aug 2021 23:29:47 -0700 (PDT)
+References: <20210710074801.19917-5-raykar.ath@gmail.com>
+ <20210805192803.679948-1-kaartic.sivaraam@gmail.com>
+User-agent: mu4e 1.4.15; emacs 27.2
+From:   Atharva Raykar <raykar.ath@gmail.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>
+Subject: Re: [PATCH] submodule--helper: fix incorrect newlines in an error
+ message
+In-reply-to: <20210805192803.679948-1-kaartic.sivaraam@gmail.com>
+Message-ID: <m28s1fuluy.fsf@gmail.com>
+Date:   Fri, 06 Aug 2021 11:59:41 +0530
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="v0pxknTkWhXXJnVV"
-Content-Disposition: inline
-In-Reply-To: <xmqqfsvnloju.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---v0pxknTkWhXXJnVV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
 
-On Thu, Aug 05, 2021 at 11:44:05AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> >  			revs->unsorted_input =3D 0;
-> > -		else if (!strcmp(optarg, "unsorted"))
-> > +		} else if (!strcmp(optarg, "unsorted"))
-> >  			revs->unsorted_input =3D 1;
->=20
-> This is --no-walk=3Dunsorted; could it have been given after --no-walk
-> or --no-walk=3Dunsorted?
->=20
-> The application of the incompatibility rules seems a bit uneven.  An
-> earlier piece of code will reject "--no-walk=3Dunsorted --no-walk" given
-> in this order (see "And likewise" above).  But here, this part of
-> the code will happily take "--no-walk --no-walk=3Dunsorted".
->=20
-> Of course these details can be fixed with more careful code design,
-> but I wonder if it may be result in the code and behaviour that is
-> far simpler to explain (and probably implement) if we declare that
->=20
->  * --no-walk is not a synonym to --no-walk=3Dsorted; it just flips
->    .no_walk member on.
->=20
->  * --no-walk=3Dsorted and --no-walk=3Dunsorted flip .no_walk member on,
->    and then flips .unsorted_input member off or on, respectively.
->=20
-> and define that the usual last-one-wins rule would apply?
->=20
-> Thanks.
+> A refactoring[1] done as part of the recent conversion of
+> 'git submodule add' to builtin, changed the error message
+> shown when a Git directory already exists locally for a submodule
+> name. Before the refactoring, the error used to appear like so:
+>
+> [...]
+>
+> As one could observe the remote information is printed along with the
+> first line rather than on its own line. Also, there's an additional
+> newline following output.
+>
+> Make the error message consistent with the error message that used to be
+> printed before the refactoring.
 
-Wouldn't that effectively change semantics though? If the user passes
-`git rev-list --no-walk=3Dunsorted --no-walk`, then the result is a sorted
-revwalk right now. One may argue that most likely, nobody is doing that,
-but you never really know.
+Thanks for catching this and sending a patch!
 
-An easier approach which keeps existing semantics is to just make
-`--no-walk` and `--unsorted-input` mutually exclusive:
+> [1]: https://lore.kernel.org/git/20210710074801.19917-5-raykar.ath@gmail.=
+com/#t
+>
+> Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+> ---
+>
+> Even with this patch, the error message is still not fully consistent wit=
+h the one that
+> used to be printed before the refactoring. Here's the diff:
+>
+> 3c3
+> < If you want to reuse this local git directory instead of cloning again =
+from
+> ---
+>> fatal: If you want to reuse this local git directory instead of cloning =
+again from
+> 6c6
+> < or you are unsure what this means choose another name with the '--name'=
+ option.
+> ---
+>> or if you are unsure what this means, choose another name with the '--na=
+me' option.
+>
+>
+> The first part shows that it is additionally prefixed with 'fatal: '. Whi=
+le the 'fatal :' prefix
+> made sense in other cases, I wonder if it's helpful in this case as the m=
+essage being
+> printed is an informative one. Should we avoid using 'die' to print this =
+message?
 
-    - If the `unsorted_input` bit is set and `no_walk` isn't, and we
-      observe any `--no-walk` option, then we bail.
+I had initially implemented that message as an fprintf() with return for
+the same reason, but Junio suggested we die() instead to keep the
+conversion more faithful to the original [1].
 
-    - Likewise, if the `no_walk` bit is set, then we bail when we see
-      `--unsorted-input` regardless of the value of `unsorted_input`.
-      This would keep current semantics of `--no-walk`, but prohobit
-      using it together with the new option.
+Although now that I think of it, it feels like a tradeoff between
+faithfulness to the original code and faithfulness to the original
+behaviour. I also think this change is fairly inconsequential and easily
+reversible so I am fine with it being done either way.
 
-Patrick
+[1] https://lore.kernel.org/git/xmqqk0n03k84.fsf@gitster.g/
 
---v0pxknTkWhXXJnVV
-Content-Type: application/pgp-signature; name="signature.asc"
+> The second part of the diff shows that there's some small grammatcial twe=
+aks in the last
+> line. While I appreciate the intention, I'm not very sure if this change =
+is a strict
+> improvement. I wonder about this as the original sounded good enough to m=
+e and thus it
+> feels like the change in message is triggering unnecesssary translation w=
+ork. Should
+> we avoid the change? Or does it actually seem like an improvement to the =
+message?
 
------BEGIN PGP SIGNATURE-----
+I don't think that extra 'if' was intended. I think it's better to avoid
+the change I inadvertently introduced.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEM0BgACgkQVbJhu7ck
-PpTgWw//Tys1FUcXenCKtB/8gBsjHrZiWdlsnh28XIAdQU13zByBYp9v/C5rWtPt
-aWQ+cOSDi+RD7FIEV7Vsma5d72jKedH5OEvMbqoioy8CGCBsySHgQnEUlf8nzyOA
-RdFAaDWElzNoVPgJa/jn6DBfSrnwa0Ir+QWAJvHhlYM9HDaNckXp3LvsFWfeyaLZ
-/0/MoFrABdeZRMo0AQ6SXSbsWMiw5DQKV8RNSR1zbxHKhLPF/AZkU+uPHG/uQ97m
-kP9b+prcxQ7FN2Iq30n1H7KyshCEADUPRrcdxfDuoZ2vNZeQd60nE/EMXZkw0Mji
-ZmGcQHLn31rzrcZDobX8mXeuGzeXDlu0uOrWXSEMfFlUuQCtFYK/a+DQ2Pyt044W
-JeNyqyMgyiMIasXOebq1h/1sJ4XkLRehZ52VGbMo8qMwcI09APSTbN3sI2e++TBL
-XleWbXt8veTiPF2KkBc4ADs0pIdyGpZiV+QebQNxrJZYc6tUyO8H+wjWpCDTx6R7
-HLoGmLwwTqk6t86AIrYgCYgfZ4jVsjkEbRbBlEjPnvcRzZo9NvbJ9igraEWsB/s8
-JAas+IY7rbXWtjdqeUQX0wmhq3SQHRO2pVAE40o1ZV439FB4vf/ZZk/2C2okSCju
-mRh7sgQvuwIVZqm8lwwyVOlf7JBkxE+2/V2hccYJfoROUTbnQ8I=
-=0jX2
------END PGP SIGNATURE-----
+> builtin/submodule--helper.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 3cbde305f3..560be07091 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2824,7 +2824,7 @@ static int add_submodule(const struct add_data *add=
+_data)
+>  		if (is_directory(submod_gitdir_path)) {
+>  			if (!add_data->force) {
+>  				fprintf(stderr, _("A git directory for '%s' is found "
+> -						  "locally with remote(s):"),
+> +						  "locally with remote(s):\n"),
+>  					add_data->sm_name);
+>  				show_fetch_remotes(stderr, add_data->sm_name,
+>  						   submod_gitdir_path);
+> @@ -2835,7 +2835,7 @@ static int add_submodule(const struct add_data *add=
+_data)
+>  				      "use the '--force' option. If the local git "
+>  				      "directory is not the correct repo\n"
+>  				      "or if you are unsure what this means, choose "
+> -				      "another name with the '--name' option.\n"),
+> +				      "another name with the '--name' option."),
+>  				    add_data->realrepo);
+>  			} else {
+>  				printf(_("Reactivating local git directory for "
 
---v0pxknTkWhXXJnVV--
+
+---
+Atharva Raykar
+=E0=B2=85=E0=B2=A5=E0=B2=B0=E0=B3=8D=E0=B2=B5 =E0=B2=B0=E0=B2=BE=E0=B2=AF=
+=E0=B3=8D=E0=B2=95=E0=B2=B0=E0=B3=8D
+=E0=A4=85=E0=A4=A5=E0=A4=B0=E0=A5=8D=E0=A4=B5 =E0=A4=B0=E0=A4=BE=E0=A4=AF=
+=E0=A4=95=E0=A4=B0
