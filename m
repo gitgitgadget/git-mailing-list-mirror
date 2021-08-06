@@ -2,71 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47610C4338F
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 19:30:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8910C4338F
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 19:57:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E4EB6115C
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 19:30:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1A5B61131
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 19:57:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243917AbhHFTbD convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 6 Aug 2021 15:31:03 -0400
-Received: from mail-ej1-f47.google.com ([209.85.218.47]:34720 "EHLO
-        mail-ej1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243646AbhHFTbC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Aug 2021 15:31:02 -0400
-Received: by mail-ej1-f47.google.com with SMTP id u3so16790654ejz.1
-        for <git@vger.kernel.org>; Fri, 06 Aug 2021 12:30:46 -0700 (PDT)
+        id S244214AbhHFT5b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Aug 2021 15:57:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47482 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244209AbhHFT5b (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Aug 2021 15:57:31 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FE6FC0613CF
+        for <git@vger.kernel.org>; Fri,  6 Aug 2021 12:57:14 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id k11-20020a17090a62cbb02901786a5edc9aso397162pjs.5
+        for <git@vger.kernel.org>; Fri, 06 Aug 2021 12:57:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=JeHDelfk+F6hgZERXP8qO4WrJfq4lolZrAfcFYht84A=;
+        b=RyFcLVwCDWKOlc2tWH43Ux6Aa85h1BMdEhL1xpELc62gBW8Nm1PnCldd8WbKmLbEpr
+         ioIN8R/L8zCxWQ0/GxvLd/LvCE5hNjWlfSU2qumenda2ADtUyGf9qtOVFXIwdHDlOgpE
+         5u7R+Pn+j35/lWepZbQB4uPae5nzEN5GL3l5t9nM2bt32GZ49gSXbq1xpXCGfATd4oSj
+         PiFo5yp/Ky5IR5pUfWrGrasb2IJOZpL/Pta2lfWMrYKi2WXi4RVWOUE8wDL6PP+I5u4w
+         3UbH4vJDQJjDzsAdAQG+mJv3hAA/10oaTPv2/nnVSSpyk+xuCHU4I8FKgZNmjt1ZLWAf
+         mA5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=6oOC/yiemJfhzZZfjFuBejnWEH8NomGP3DPN3mLKCF0=;
-        b=rhFT+GG2dJrFptaK7v2bOkbrz74vmrQNpcBHw7kepvUyFmR22FdLlQSP3XglIDE7Vm
-         VZqyxuiV4VGw/Zs3JjabasKOh+tfcTlKIx4lO6kYQuh0rM5TzQ17LdM9irzDnzex8xvh
-         Lgrs9Q+vbVBh+TTV5jZZ3KcmROtzQgbR6Hme0uMBfKSW2/+gG2OVm2jEdtoT0DvOQutx
-         unGVIrO5HSmJNxLk7pjXjWkMfbEFonib2rBMmx9PsIQj/u6CKlkkA9NNO+8BUz9GVwe7
-         0MURL6cBYdo8tFEzWYjvmQa4yB98t8ynpkxhw5DU6d89nNa0tuJ3yWtVX4gwejTMwSx5
-         V5sg==
-X-Gm-Message-State: AOAM530u+C5Fdic8ICWHHsgd9Hz3mGo5RTs4SLTbn88Yv7c7vIo4pMcG
-        hTeTDlPvkNEyupkHRKLZSSkrqXqRlbSDy9KAstU=
-X-Google-Smtp-Source: ABdhPJxEZIwyYtwJRty98UQK1Vdn8HckpyCbTJiEY2myjWDuRpxB+fyK7qSpAuKmi7AtrHFlgHZJ3YTkPJsm9UjeD30=
-X-Received: by 2002:a17:906:b2d9:: with SMTP id cf25mr11665738ejb.138.1628278245743;
- Fri, 06 Aug 2021 12:30:45 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=JeHDelfk+F6hgZERXP8qO4WrJfq4lolZrAfcFYht84A=;
+        b=AuBGYRjnlnHeIRanDxbOLY5YmTRaH02j52p7YLxYcDvxSCmE1BSRUOD2aOKhVpd9Rg
+         fgvdYFoGd9/HNf3QjX/2hulJ0KP13RRR7U04+Pvy35W6O24X3BOfEbRDb9/WYXPS1Jh5
+         dSBM7XZaeeWxQksJ3DycpwXpB5W2EOv821i9phhXCaLWf6u+og6cATtxLqzvGzRvmNIX
+         oUizXnp4xTmMkbB1q4m343uBmZ1+DBFk+ft01Juj0KU3QvfPXeM9hufAlYR/z7R1x9xf
+         JZky4raZd/4l9KPKrFQUEgoId0GXIV/2XzcSa8tCYj3QiBjE9UvS+UBFl9BTMbwaTDXn
+         BHqw==
+X-Gm-Message-State: AOAM531rYpZbhq+ZbvGi+rlPqtshrmjob8mXReoS5YasVB/7RkG+PD77
+        Du4VQLTmHNbXlfXw0CERCWE=
+X-Google-Smtp-Source: ABdhPJxDMt56mwF38EicLEJSVRKIdbVtVH7iMtlpXusLJ/JchQ3DZYXzUD8jiQkGBZ5f+KwJE3mugg==
+X-Received: by 2002:a17:902:c94f:b029:12c:dd57:c580 with SMTP id i15-20020a170902c94fb029012cdd57c580mr2136897pla.42.1628279833604;
+        Fri, 06 Aug 2021 12:57:13 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:7578:9c9b:8fe8:cece])
+        by smtp.gmail.com with ESMTPSA id h188sm2571838pfg.45.2021.08.06.12.57.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Aug 2021 12:57:13 -0700 (PDT)
+Date:   Fri, 6 Aug 2021 12:57:10 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Sergey Organov <sorganov@gmail.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        huang guanlong <gl041188@gmail.com>, git@vger.kernel.org,
+        Hudson Ayers <hudsonayers@google.com>,
+        Taylor Yu <tlyu@mit.edu>, Joshua Nelson <jyn514@gmail.com>
+Subject: Re: [PATCH] Revert 'diff-merges: let "-m" imply "-p"'
+Message-ID: <YQ2UFmCxRKNMOtrD@google.com>
+References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
+ <20210520214703.27323-1-sorganov@gmail.com>
+ <20210520214703.27323-11-sorganov@gmail.com>
+ <YQtYEftByY8cNMml@google.com>
+ <YQyUM2uZdFBX8G0r@google.com>
+ <xmqqh7g2ij5q.fsf@gitster.g>
+ <xmqqczqqihkk.fsf@gitster.g>
 MIME-Version: 1.0
-References: <20210805230321.532218-1-mathstuf@gmail.com> <RFC-cover-v3-0.4-0000000000-20210806T191231Z-avarab@gmail.com>
- <RFC-patch-v3-2.4-eefcafcf8f-20210806T191231Z-avarab@gmail.com>
-In-Reply-To: <RFC-patch-v3-2.4-eefcafcf8f-20210806T191231Z-avarab@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 6 Aug 2021 15:30:34 -0400
-Message-ID: <CAPig+cQiSzXG4NBX+X+1XxjQ9AN4B6us3m-gj-11zctCcm0NqQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 2/4] advice: remove read uses of most global
- `advice_` variables
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Ben Boeckel <mathstuf@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqczqqihkk.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-/On Fri, Aug 6, 2021 at 3:13 PM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> In c4a09cc9ccb (Merge branch 'hw/advise-ng', 2020-03-25), a new API for
-> accessing advice variables was introduced and deprecated `advice_config`
-> in favor of a new array, `advice_setting`.
->
-> This patch ports all but two uses which read the status of the global
-> `advice_` variables over to the new `advice_enabled` API. We'll deal
-> with advice_add_embedded_repo and advice_graft_file_deprecated
-> seperately.
+Junio C Hamano wrote:
 
-s/seperately/separately/
+> For example, 1e20a407 (stash list: stop passing "-m" to "git log",
+> 2021-05-21) that dropped "-m" must be reverted as well, no?
 
-> Signed-off-by: Ben Boeckel <mathstuf@gmail.com>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+No, that change is fine.  The "-m" doesn't have an effect one way or
+another after this revert.
+
+Thanks,
+Jonathan
