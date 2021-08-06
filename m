@@ -2,128 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02B78C4338F
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 12:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4605CC4338F
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 12:21:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA355610FF
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 12:02:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 16F2E61131
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 12:21:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343524AbhHFMDE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Aug 2021 08:03:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53292 "EHLO
+        id S243660AbhHFMVp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Aug 2021 08:21:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343523AbhHFMC6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Aug 2021 08:02:58 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D578DC061799
-        for <git@vger.kernel.org>; Fri,  6 Aug 2021 05:02:41 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id u13-20020a17090abb0db0290177e1d9b3f7so22423825pjr.1
-        for <git@vger.kernel.org>; Fri, 06 Aug 2021 05:02:41 -0700 (PDT)
+        with ESMTP id S243653AbhHFMVo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Aug 2021 08:21:44 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9CF7C061798
+        for <git@vger.kernel.org>; Fri,  6 Aug 2021 05:21:27 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id j1so16363635pjv.3
+        for <git@vger.kernel.org>; Fri, 06 Aug 2021 05:21:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/JDqnGesvhr5cT2Bez5FmdzqVa5gRIdbK+JYER4YI+M=;
-        b=iaULtITVdLn9MYXflLifxgwEpF/5jcpzM7AM9FkY2v3w6f1w+yKidVNHusRFL5Y2bM
-         FRzxd2x1T2SfLEvG7J8bZgptt0ay2cYTuxSaGovSRwfg6xfXELWBA6o6aXOb69Np6SFv
-         p6eoN3bBIkIYB5oICgoCT2lCYEcuSVU1wyiRkK9R0RdTLv4e3YeJbgmEzEtfrAEsYG1J
-         O71LVsu8TJFT27jOMX7MULcAY36EKql67LPm1dcTXANOIf1kfsOCsP7SPl1jbMo4kJGt
-         qkxCq3Q30Nhaqj+bk9aSVillISkAqPDhQDYwYOewAVEolacRbmkGDqqSsMI0LPd/k5N7
-         BVVw==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=lcCTIWF+5nC6CIEIZbIjr9OjPwJ0Uj5x81oSUgEe+3I=;
+        b=X0ttfniJyBjHPomIHL1h6+OOyTe9R4VkAbigtcipKVUu6fyR6tfUm4D4VFn4v4/ea6
+         o4leR9nxE+PQwtU85Fxz//fa5YMPACxst7f8tPvQYMasGGHteWfzMjkG/EV0Gc9c9NIh
+         YHJNGgRWFAgsNLbxsgAS7JmcNlLfZxcxP+xsV/BnkcpjkPrAeEr528SFasK58akpIW+0
+         ffL77cpy9jBVNCqDz4YJoJsh/O1leN7IKuwadiYJn4jWIlTptzDK9vJQ9UqTNnQVish/
+         DRT9CQCTbVoySj/V5Eva/4B+6zm9Sg5/nTgTl/fdTHXOiCa2VJnBAWtLoJy4SdB0JZHN
+         /J+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/JDqnGesvhr5cT2Bez5FmdzqVa5gRIdbK+JYER4YI+M=;
-        b=sZEiIRAuvbPBgC7st62/o+YXnEq/vJTePxrQejwiiM9SFKdEMiOicYNTTK00AnJuep
-         vWwq0uiX8jAWNLCyP9SZkzI0LOdhLn4e9E8rNqQYsan5qQPP294FC7Mn6umwK4ZFsPH+
-         5oF+M5pE2ceS7JSsCQTUS0I391PvVzGolLyMfYE1TQNzz4sjukFNbmNPQXWg99xc49Jg
-         z8d6ko3tLgoySHiAgHXmuKyEM1v3FRDCBlCmJJMTzl3LLxFr/wD5sDlV1M9xyYNOqi1z
-         yy/Jyq5yPanVsZR/+hgbbsH1HCV+U/KDrydNoFO8xF8y5nqQiAOayI9n8+EOmma6ckk5
-         CG2Q==
-X-Gm-Message-State: AOAM530MM9OghKFgx+N+11z2IXZDdE9r60p7j3iSxUTncQf8DjH6hKc+
-        7r+ZHuTZ1P2sxtTB6I0N0iE=
-X-Google-Smtp-Source: ABdhPJzZwp1W9gbKAB8b2pd+NcUcg2QW1ySCzfUSD1nDr+1NZVlcMklqrcqNE4QAAUg6rZ+Fzh3KyQ==
-X-Received: by 2002:a17:902:f253:b029:12c:438a:fa7b with SMTP id j19-20020a170902f253b029012c438afa7bmr8407775plc.22.1628251361447;
-        Fri, 06 Aug 2021 05:02:41 -0700 (PDT)
-Received: from atharva-on-air.Dlink ([119.82.121.47])
-        by smtp.gmail.com with ESMTPSA id z8sm10338162pfa.113.2021.08.06.05.02.37
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 Aug 2021 05:02:41 -0700 (PDT)
-From:   Atharva Raykar <raykar.ath@gmail.com>
-To:     raykar.ath@gmail.com
-Cc:     avarab@gmail.com, christian.couder@gmail.com, congdanhqx@gmail.com,
-        emilyshaffer@google.com, git@vger.kernel.org, gitster@pobox.com,
-        jrnieder@gmail.com, kaartic.sivaraam@gmail.com, pc44800@gmail.com,
-        periperidip@gmail.com, rafaeloliveira.cs@gmail.com,
-        sunshine@sunshineco.com
-Subject: [GSoC] [PATCH v3 8/8] submodule--helper: remove resolve-relative-url subcommand
-Date:   Fri,  6 Aug 2021 17:31:47 +0530
-Message-Id: <20210806120147.73349-9-raykar.ath@gmail.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210806120147.73349-1-raykar.ath@gmail.com>
-References: <20210805074054.29916-1-raykar.ath@gmail.com>
- <20210806120147.73349-1-raykar.ath@gmail.com>
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=lcCTIWF+5nC6CIEIZbIjr9OjPwJ0Uj5x81oSUgEe+3I=;
+        b=Afg68j40hXT+ofOCR1k7HZm3QqU4AJnWzN0C/Pwk8yopSdgkv1+gwEuu2pquNbqRBP
+         RvKEZ2IuZqhdNDdgYp43HhEfu0XAAflGmBft5O0qNnW9x1ffeSWplespIg3g1fad6Y99
+         81y2Xjy4Mc6w9NScW/JqwbdhI98Ywjdu6gSBumtTMfxhovNgR0DJ47D5cl9QoO6MCvDQ
+         v3bVMkEGqB/i/DKiPOkpxxt3zVJXUSAysCa7anklmkeCG4GeqFK4rJs27bNbTrW1ns/4
+         q7F3YFL7DvdxNfnBqjSN5paK5CPfqhqvveJBHmnWQEP+LNhD9dH3R84/8OC8PvXT39+L
+         c4Ew==
+X-Gm-Message-State: AOAM531Nh48aEQlREG97KbAWX4BVEGvmpshLodBuWkvnab5EklbsuB/J
+        dZMqb9M2AhfPvl4yPEETEItmJOn5hlQ=
+X-Google-Smtp-Source: ABdhPJybN9SJQGAAekI0iQPL/Q9cy13uhMla6uTzEP2utxmXfphi1UT3EtNFZFjPp3OUQsI441ithQ==
+X-Received: by 2002:a63:b09:: with SMTP id 9mr1319189pgl.53.1628252487184;
+        Fri, 06 Aug 2021 05:21:27 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-75.three.co.id. [180.214.232.75])
+        by smtp.gmail.com with ESMTPSA id 69sm1434841pfx.55.2021.08.06.05.21.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Aug 2021 05:21:26 -0700 (PDT)
+Subject: Re: [BUG] Amending a shallow clone -> orphan branch
+To:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
+        git@vger.kernel.org
+References: <64760969-1ead-2bfb-6f98-1161d385c0ca@syntevo.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <b3083a15-f2da-0eae-b07b-8a641c613906@gmail.com>
+Date:   Fri, 6 Aug 2021 19:21:24 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <64760969-1ead-2bfb-6f98-1161d385c0ca@syntevo.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The shell subcommand `resolve-relative-url` is no longer required, as
-its last caller has been removed when it was converted to C.
+Hi Alexandr, welcome to Git mailing list!
 
-Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Shourya Shukla <periperidip@gmail.com>
----
- builtin/submodule--helper.c | 20 --------------------
- 1 file changed, 20 deletions(-)
+On 06/08/21 07.04, Alexandr Miloslavskiy wrote:
+> Consider the following steps :
+> 
+> git clone --depth 1 --single-branch --branch master 
+> https://github.com/git/git
+> cd git
+>  >1.txt
+> git add 1.txt
+> git commit --amend
+> 
+> This results in an orphaned branch, where a single commit contains 
+> entire tree.
+> 
+> I understand that this is a bug, because certainly git knew shallow 
+> commit's parents and could reuse that when amending?
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index a858c2be29..9772435959 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -223,25 +223,6 @@ static char *compute_submodule_clone_url(const char *rel_url, const char *up_pat
- 	return relurl;
- }
- 
--static int resolve_relative_url(int argc, const char **argv, const char *prefix)
--{
--	const char *up_path = NULL;
--	char *res;
--	const char *url;
--
--	if (argc != 2 && argc != 3)
--		die("resolve-relative-url only accepts one or two arguments");
--
--	url = argv[1];
--	if (argc == 3)
--		up_path = argv[2];
--
--	res = compute_submodule_clone_url(url, up_path, 1);
--	puts(res);
--	free(res);
--	return 0;
--}
--
- static int resolve_relative_url_test(int argc, const char **argv, const char *prefix)
- {
- 	char *remoteurl, *res;
-@@ -3118,7 +3099,6 @@ static struct cmd_struct commands[] = {
- 	{"update-clone", update_clone, 0},
- 	{"ensure-core-worktree", ensure_core_worktree, 0},
- 	{"relative-path", resolve_relative_path, 0},
--	{"resolve-relative-url", resolve_relative_url, 0},
- 	{"resolve-relative-url-test", resolve_relative_url_test, 0},
- 	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
- 	{"init", module_init, SUPPORT_SUPER_PREFIX},
+I tested that, and below is `git status` after the test (using Git 2.32.0):
+
+> On branch master
+> Your branch and 'origin/master' have diverged,
+> and have 1 and 1 different commits each, respectively.
+>   (use "git pull" to merge the remote branch into yours)
+> 
+> nothing to commit, working tree clean
+
+So you're amending merge commit by adding dummy file, so that your 
+`master` branch becomes divergent against origin. That dummy file isn't 
+contained in any commits that are included with that merge commit.
+
 -- 
-2.32.0
-
+An old man doll... just what I always wanted! - Clara
