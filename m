@@ -2,94 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98C22C4338F
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 20:32:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BFDCC4338F
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 20:40:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7319461179
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 20:32:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6181A61163
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 20:40:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244926AbhHFUdA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Aug 2021 16:33:00 -0400
-Received: from a.mx.sigpipe.cz ([37.221.242.114]:1675 "EHLO a.mx.sigpipe.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230031AbhHFUc7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Aug 2021 16:32:59 -0400
-X-Greylist: delayed 522 seconds by postgrey-1.27 at vger.kernel.org; Fri, 06 Aug 2021 16:32:59 EDT
-Received: by a.mx.sigpipe.cz (Postfix, from userid 1001)
-        id 6742A155503595; Fri,  6 Aug 2021 22:23:58 +0200 (CEST)
-Date:   Fri, 6 Aug 2021 22:23:58 +0200
-From:   Roman Neuhauser <rn+git@sigpipe.cz>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?iso-8859-1?Q?=D8ystein?= Walle <oystwa@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2] clone: Allow combining --bare and --origin
-Message-ID: <YQ2aXpfzyOOUFhQk@isis.sigpipe.cz>
-References: <xmqqv94mtdyj.fsf@gitster.g>
- <20210804133010.25855-1-oystwa@gmail.com>
- <xmqqbl6dqgvc.fsf@gitster.g>
+        id S245030AbhHFUke (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Aug 2021 16:40:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57136 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231572AbhHFUke (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Aug 2021 16:40:34 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3190EC0613CF
+        for <git@vger.kernel.org>; Fri,  6 Aug 2021 13:40:17 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id ca5so18425031pjb.5
+        for <git@vger.kernel.org>; Fri, 06 Aug 2021 13:40:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=9uIhqhtUxB/2RpKQoM4aILqXEFoH5zJn3S2s5hCeWEU=;
+        b=TH/Br3xCUOXk9MKWXmWk7G+aF75UpVqZIBLN4GxEj1pC8YomSFhFcsA4V5pgyEqwPC
+         mfmIBvybIIPPyuEaM/ATFQD8aEybQKYXI7e7NLZCz9EYla16QhhyFzEuFcLqjWqbmnfJ
+         dvYjW9/o6HWxaUa6O5/9UqMbWcpdygQMu+VBh394PN50iLLwNiGjhqKhBepFaLnnoOZf
+         asn6bw7lY6wnZhCIlYOgVUaTK7PzGR6wch7WzUFZ/QhL6GbkVSdoBNKcGl8HS6W8FvG8
+         oz3Lq1uscewfbc/JbUpzDdXA545Kglj55Ifjwv6/+BOwkKG89ZVDF/wLdjII9pqt1dht
+         jjqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=9uIhqhtUxB/2RpKQoM4aILqXEFoH5zJn3S2s5hCeWEU=;
+        b=Jwj/59AdL6hQ4zoMmRZ38b2quPIFaUx9TXSvrZXCZ4j9cA8xDAw4cPXaqW/Q/IQTU3
+         JVr16hOxR142RLLEuYMY0ihRb6mWUB9zlwnJfzuJ6QX3gzzYAD/fFBZ9fqdDa5Phyn3U
+         a3SOFnng7sHtEc6XEQdNUKpqhylZ3F93jtahgjbRmJhcDsvzkPg/YzFkqhOjIqDfX4X5
+         sEEusbgm7yP+7/dkRG5zKStPU/8gjiQ/knW5tJYt6LVF8oof8tbqXj4p/VhIJVhojuzC
+         BEVUBag1REO++BA7qnDnzjqcsrAG1FYSqr6m1Q4GDa0dLQXapAzLyooveo4CL3PYsERL
+         I/9A==
+X-Gm-Message-State: AOAM532saJWjgNj9P1KY2Qyd2u+oV0e4+YRpdbB8VIOnMl1X2vFfWNwJ
+        98YJ6xaR49pVJFdWghB3Ci0=
+X-Google-Smtp-Source: ABdhPJx9CG72ADElRi5Y5vRzRx1nVUkNesbWiZvCFX7mNsnj7wpOytsBpYQzQvEgpX7wcRog+I8h+w==
+X-Received: by 2002:a17:90a:db51:: with SMTP id u17mr4252354pjx.111.1628282416744;
+        Fri, 06 Aug 2021 13:40:16 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:7578:9c9b:8fe8:cece])
+        by smtp.gmail.com with ESMTPSA id i5sm13513437pjk.47.2021.08.06.13.40.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Aug 2021 13:40:16 -0700 (PDT)
+Date:   Fri, 6 Aug 2021 13:40:13 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Patrick Steinhardt <ps@pks.im>,
+        Christian Couder <christian.couder@gmail.com>,
+        Albert Cui <albertqcui@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [RFC PATCH 00/13] Add bundle-uri: resumably clones, static
+ "dumb" CDN etc.
+Message-ID: <YQ2eLRjMRnVpdGVZ@google.com>
+References: <RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com>
+ <YQ1JW8hHmG8B/oE3@google.com>
+ <87h7g2zd8f.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqbl6dqgvc.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87h7g2zd8f.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Hi,
 
-i'm "the user" in this story.  Muchas gracias to osse for turning
-my bickering into a patch.
+Ævar Arnfjörð Bjarmason wrote:
 
-A little background.  I use --origin a lot (or git remmote rename
-afterwards), because origin carries no information about the remote
-repository, and I could have cloned any of those.  The URL I used
-in `git clone` has little to do with which remotes I'll want to
-pull from and which I'll want to push to.  "origin" is suspicious
-and I'm used to giving my remotes names that mean something to me.
+> Or perhaps not, but they're my currently my best effort to explain the
+> differences between the two and how they interact. So I think it's best
+> to point to those instead of coming up with something in this reply,
+> which'll inevitably be an incomplete rewrite of much of that.
+>
+> In short, there are use-cases that packfile-uri is inherently unsuitable
+> for, or rather changing the packfile-uri feature to support them would
+> pretty much make it indistinguishable from this bundle-uri mechanism,
+> which I think would just add more confusion to the protocol.
 
-My need for git clone --bare --origin surfaced when I was writing
-a tool for versioning dotfiles (don't we all have one).  It has to
-be able to work with pre-existing files in the home dir:
+Hm.  I was hoping you might say more about those use cases --- e.g. is
+there a concrete installation that wants to take advantage of this?
+By focusing on the real-world example, we'd get a better shared
+understanding of the underlying constraints.
 
-$ git dirs clone $url x
-# git-dir is $PWD/.git-dirs/repo.d/x
-# work-tree is $PWD
+After all, both are ways to reduce the bandwidth of a clone or other
+large fetch operation by offloading the bulk of content to static
+serving.
 
-I used git clone --bare / git config core.bare false /
-git config core.worktree ... and hit the error message when I tried
-to add support for --origin.
-
-# gitster@pobox.com / 2021-08-04 10:06:31 -0700:
-> In other words, if there were two remotes in the configuration file,
-> you cannot tell which one was given to --origin when you made the
-> repository with "git clone".
-
-I'm not sure why this matters (not saying it doesn't).
- 
-> But we'd end up treating them the same.  And something like
-> remote.originName would help that.  Otherwise, we'd end up sending
-> this message:
-> 
->     Even if we give "--bare --origin yourfavouritename" to you now,
->     unlike how 'origin' is treated in the default case, in the
->     resulting repository, 'yourfavouritename' is not special at all.
-
-Isn't that the case in non-bare repositories as well?
-BTW I don't like special cases but realize that the "origin" ship has
-sailed long ago.
- 
-> Some people may want to treat yourfavouritename is not special at
-> all, while some people may want to treat yourfavouritename truly as
-> a replacement for 'origin' that is the default.  The message we
-> would be sending is that we'd ignore the latter folks.
- 
-Can't they just continue doing what they've been doing so far,
-that is leave it at "origin"?  I'm not sure this would be my concern
-as a user of this feature.
-
--- 
-roman
+Thanks,
+Jonathan
