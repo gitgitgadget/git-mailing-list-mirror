@@ -2,121 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98BAFC4338F
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 16:44:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C76EC4338F
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 16:50:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 675DD60F70
-	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 16:44:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 45B1E61179
+	for <git@archiver.kernel.org>; Fri,  6 Aug 2021 16:50:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235158AbhHFQpC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Aug 2021 12:45:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33084 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229665AbhHFQpB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Aug 2021 12:45:01 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF12CC0613CF
-        for <git@vger.kernel.org>; Fri,  6 Aug 2021 09:44:45 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id v24-20020a0568300918b02904f3d10c9742so6228698ott.4
-        for <git@vger.kernel.org>; Fri, 06 Aug 2021 09:44:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=gQngdPDRr9Fysv2jIsmhkRTWhlUStwGZeigmPcyn0gU=;
-        b=MApW9BYPOZ+2e4kTOtovfuTHIzVsO3cPgu7lrWioiUfudSvBHp5433t0LhaikPswLC
-         Ng7rvIdvKVcv1GR5xBlvPJeaKVWYp48PVu7EeT7X5wiKX9Z7bk7C8nzRd6xFOR4nIEDI
-         Hl8byfP6NQD3I3VcrMfjnCkZpXeHnFFmickz3S19oHUvFR7/9SldClKppQ5rVtj01z+U
-         pVHyB4rZaaaORIR67MY/jLgzW2mCs4dFGUWcOplzglo/JkzAyh4cmLyU7H0pu6AgdvnO
-         TrEctIgNYdeb6ZEJ6ZGBHMZkiNvwhUG2j51vzcUXi2H31/xu+bh8nPkKZL/LcDKbTcAb
-         Rtxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=gQngdPDRr9Fysv2jIsmhkRTWhlUStwGZeigmPcyn0gU=;
-        b=nPTyCf8h/5QPeltt6DtfQ0dRotK8K9cQRp3EYiZn+/Tm3yf5vI2OdV1Vhac4vzxKpI
-         SrmHaHbr3x0jm/8jt3wdGpOsU+XV9JA1W1GZ95mMVVqNNgrXsBYCmpSPkrthwiBFTAO/
-         nfZIbhKYv6htGKgotzxxR2wQrPYXR5iic546NgexXLnbALGLq49TcpvjbITs9QdbFW/s
-         HFkqQQVJkH+dPCO4a8WqYr+jnkp/KJdVIejEU351heq+urhLiozJtk94c+vdkwUb7y09
-         PcJgplrpXOvZKhaAAhP9zmvIKuGc00wDiqc2uYi4+dmQWygEd69lx5WTCXkXJzjj+i+L
-         D4nA==
-X-Gm-Message-State: AOAM53124frE6Wm53+hZEDvAnBGFq85pwx6aNH78g42uS9oG8hZpLI02
-        rDjMg71jSm+bXHO1HarFFDH52iXZ3YvicA==
-X-Google-Smtp-Source: ABdhPJxL62rN6+c3Ej4vFAuaiQ1tT8p9aUjLabxRQHhE8ELakJbwsf4yg+PCzxTqRxLQven14npLog==
-X-Received: by 2002:a05:6830:2144:: with SMTP id r4mr8031374otd.19.1628268285083;
-        Fri, 06 Aug 2021 09:44:45 -0700 (PDT)
-Received: from localhost (fixed-187-189-69-1.totalplay.net. [187.189.69.1])
-        by smtp.gmail.com with ESMTPSA id s13sm941389otq.16.2021.08.06.09.44.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Aug 2021 09:44:44 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>,
+        id S236832AbhHFQvD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Aug 2021 12:51:03 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54123 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233896AbhHFQvC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Aug 2021 12:51:02 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F3568142381;
+        Fri,  6 Aug 2021 12:50:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2bfqJEteIu+WUYScQc+GbMYWqsUDwFYRs0bPaw
+        ZZ6ig=; b=NRTQzyYmxjbbGFGGH4/rKwThnpCMKV6FasaK5kEFum933eijurCGKT
+        xlZLte177h9fn5gvzQh+tr+wYFNU/Aa+TwakEJQWjDzi0vwPr/1SoKci4ejeDt/H
+        FzD4V0dtGP3du9i3D4XxXUHLct+jXr2L064rTKiJqEy/11dMMcfVQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EAFAF142380;
+        Fri,  6 Aug 2021 12:50:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.71.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3293014237C;
+        Fri,  6 Aug 2021 12:50:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Felipe Contreras <felipe.contreras@gmail.com>,
-        Fabian Stelzer <fabian.stelzer@campoint.net>
-Subject: [PATCH v2] test: fix for COLUMNS and bash 5
-Date:   Fri,  6 Aug 2021 11:44:33 -0500
-Message-Id: <20210806164433.8665-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.32.0.40.gb9b36f9b52
-In-Reply-To: <20210805194825.1796765-1-felipe.contreras@gmail.com>
-References: <20210805194825.1796765-1-felipe.contreras@gmail.com>
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Chris Torek <chris.torek@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v4 2/6] connected: do not sort input revisions
+References: <cover.1624858240.git.ps@pks.im> <cover.1628162156.git.ps@pks.im>
+        <9d7f484907e2bd2492e6676238579e9f0c6ed374.1628162156.git.ps@pks.im>
+        <xmqqfsvnloju.fsf@gitster.g> <YQzQGVQdh4t0uZ3N@ncase>
+Date:   Fri, 06 Aug 2021 09:50:42 -0700
+In-Reply-To: <YQzQGVQdh4t0uZ3N@ncase> (Patrick Steinhardt's message of "Fri, 6
+        Aug 2021 08:00:57 +0200")
+Message-ID: <xmqqwnoyikkd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 70E24BBA-F6D6-11EB-80A0-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since c49a177bec (test-lib.sh: set COLUMNS=80 for --verbose
-repeatability, 2021-06-29) multiple tests have been failing when using
-bash 5 because checkwinsize is enabled by default, therefore COLUMNS is
-reset using TIOCGWINSZ even for non-interactive shells.
+Patrick Steinhardt <ps@pks.im> writes:
 
-It's debatable whether or not bash should even be doing that, but for
-now we can avoid this undesirable behavior by disabling this option.
+> Wouldn't that effectively change semantics though? If the user passes
+> `git rev-list --no-walk=unsorted --no-walk`, then the result is a sorted
+> revwalk right now. One may argue that most likely, nobody is doing that,
+> but you never really know.
 
-Reported-by: Fabian Stelzer <fabian.stelzer@campoint.net>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
+True.
 
-Since v1 moved the code before setting COLUMNS as SZEDER Gábor suggested
-and mention checkwinsize could be set before bash 5 as Ævar Arnfjörð
-Bjarmason mentioned.
+> An easier approach which keeps existing semantics is to just make
+> `--no-walk` and `--unsorted-input` mutually exclusive:
+>
+>     - If the `unsorted_input` bit is set and `no_walk` isn't, and we
+>       observe any `--no-walk` option, then we bail.
+>
+>     - Likewise, if the `no_walk` bit is set, then we bail when we see
+>       `--unsorted-input` regardless of the value of `unsorted_input`.
+>       This would keep current semantics of `--no-walk`, but prohobit
+>       using it together with the new option.
 
-Range-diff against v1:
-1:  40273074de < -:  ---------- test: fix for COLUMNS and bash 5
--:  ---------- > 1:  9f8c3ffa6a test: fix for COLUMNS and bash 5
+True again.  As I said, I do prefer going in the "start tight to
+forbid combination" route.  But as I pointed out, the coverage by
+the posted patch seemed to have gap(s).
 
- t/test-lib.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index db61081d6b..6b1015a5af 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -409,6 +409,12 @@ then
- 	verbose=t
- fi
- 
-+# In bash if checkwinsize is enabled the COLUMNS variable is updated every time
-+# an external command completes, even for non-interactive shells. Since bash 5.0
-+# this is enabled by default.
-+# Disable that since we are aiming for reproducibility.
-+test -n "$BASH_VERSION" && shopt -u checkwinsize 2>/dev/null
-+
- # For repeatability, reset the environment to known value.
- # TERM is sanitized below, after saving color control sequences.
- LANG=C
--- 
-2.32.0.40.gb9b36f9b52
+Thanks.
 
