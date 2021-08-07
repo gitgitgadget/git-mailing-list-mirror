@@ -8,122 +8,233 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 062A7C4338F
-	for <git@archiver.kernel.org>; Sat,  7 Aug 2021 01:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09298C4338F
+	for <git@archiver.kernel.org>; Sat,  7 Aug 2021 01:37:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D1157603E7
-	for <git@archiver.kernel.org>; Sat,  7 Aug 2021 01:36:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D69D361186
+	for <git@archiver.kernel.org>; Sat,  7 Aug 2021 01:37:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229935AbhHGBgi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Aug 2021 21:36:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37954 "EHLO
+        id S229965AbhHGBhR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Aug 2021 21:37:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229749AbhHGBgh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Aug 2021 21:36:37 -0400
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75E77C0613CF
-        for <git@vger.kernel.org>; Fri,  6 Aug 2021 18:36:21 -0700 (PDT)
-Received: by mail-io1-xd2a.google.com with SMTP id 188so13485831ioa.8
-        for <git@vger.kernel.org>; Fri, 06 Aug 2021 18:36:21 -0700 (PDT)
+        with ESMTP id S229749AbhHGBhR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Aug 2021 21:37:17 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D397C0613CF
+        for <git@vger.kernel.org>; Fri,  6 Aug 2021 18:37:00 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id hw6so18099387ejc.10
+        for <git@vger.kernel.org>; Fri, 06 Aug 2021 18:37:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=0rEeNmEQ0XnNOG+7mauFiVs2Ero4CRtshaWN/HbVWCw=;
-        b=k+QcKGAFCSSUsPyn5I0xyqgEVIwYzYHqeCV00HTG8CEVLLI04/V7B4NglIQKDEZOYR
-         8TSx0Ff8liJEiv0sKjf+DvQp155M0QBI3QIts+527ujGBC5eHKzznGuelS8UbaNrzRv1
-         fsFaRexhzoWj/lJbltTbKHkeAdfB2og958kpNeUXGMCI9D3BdA5qSf9MzstVFZKb1a2n
-         f2iRLso5Q58YJFh3ceSCTw9+vrvjDFBejw4askhIqPwTmr5ejBV+nnZwhob18zH+b2SC
-         qWYm+OkjXQCDEiG/v5ESJkMWbISfvbQxyG1il0irBJ8BzAZUJ24c6FmZUbFNvLbIo0nx
-         vuLQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=wOB7br1rtvlxuQM5Npz1ABbzMDpt/ycqLs8c0epd0gE=;
+        b=hy0VPFpwkmsSAQ065GVbfMqpp+pfjEWooDf/vlbMWypfToSwozjJB93sTlD34XfzfW
+         8pBkLOqxvaLZzgqojAhQkW6zSQIHyv+lsMPUGmulseF6dyhhTyPSmTE3ghK8n5sHohKi
+         U8TP6fdGMPLiSF5qVXBOQX03q6AktjrBU6F2tMROeMPRJKZRSyPQWIU9nMHzCTHX+YC5
+         AdApjkTY3YZNp2FaOOFvT5FaSZ0uye2Rdxb4pLeTT290b2Hac9D2kPaDJj8vdMXYiXZD
+         1zNJjn4TtcOxcAMWPQgBytCxyHEaz7Iv+xrZamW+HwSTjXwpatFxrzmZyAv9ZX014sT7
+         xiKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=0rEeNmEQ0XnNOG+7mauFiVs2Ero4CRtshaWN/HbVWCw=;
-        b=dLqwmcBAwi3Trsa93WkSGFrfpnSuQYklZdFQaJKNAFhVSLAfulSvJWa5YzeHKXaCTq
-         Onv3b8JVm+etVlOGFhbCu/rovzgvwJ9+fy3nqxmj+EVxaUaC77IzIgQiCBlLNlurPDDS
-         X2B6gHo8EH6Rgsy9ECrpTcD+ilYtzQMy5zi8mAN4MosX93qN1QGpPY1sWRloNSu5gF0B
-         D6y2IJkWQ3i2hnJ8kqbaS/eRnZ7CsD1/J4VFtFY6GUK1eVMMBamig8LAHgxIzahCzgRP
-         wd+pdzjnf2KmXYQ9DdBcgcjc3wjEtRv+CiujgrvA0rb6XUTwOS/OObiVxcXKsg136LTL
-         FMhA==
-X-Gm-Message-State: AOAM531LPth9YChrtxjGjmgvCFZv/vejL4s7V3vvRQbZ/0quml7PkSqf
-        vCwUmEhMtfS3WOVchSeMPy4CEEKqhomViSEGPEE=
-X-Google-Smtp-Source: ABdhPJxiZrloQ0hqnnNjl0Y/70kmUJA7R3MgjtUQ1gQ9JAoM/SySaRL95sjl07+qzqgNQR0rLuf9/t770ombTkMFflI=
-X-Received: by 2002:a02:b047:: with SMTP id q7mr12505442jah.130.1628300180692;
- Fri, 06 Aug 2021 18:36:20 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=wOB7br1rtvlxuQM5Npz1ABbzMDpt/ycqLs8c0epd0gE=;
+        b=J3qxfruHIm3tBZWSPN1C2ZKrmMAVw410+hJs7Hu8cI5wkladuxXYPbkCbdY/WLPgoa
+         uZgU53HzxXfRnNZWC3/67WyCUzaJcBRJ+liFwH5QWCeiOiDs3xqGpVO6EX4YSX6p34zN
+         EaPEa8aTF4bavE6RsPEoVBR+umQJSZilSRcr/w+mDCicfAcoUalR5eAUyqX06ya6CK2d
+         4+aWE132EoXerg3tWONzbugr0Iui8uaOog6pS98VCl9g3tfmEh8Wld655XM1CeDeSLiP
+         punqt4Cc53SQB7eORn0kNdfPYTm517WM1nHb+cVxRqWVsY4FD7EorAotuULOhQw5glxZ
+         k5zQ==
+X-Gm-Message-State: AOAM533aGytUcED2kAWkAdkzBN5HlSYNnEP33wO4D3sLDtnaA8Tcbtgh
+        dsbC12vXB4QDblk9AgsyO08=
+X-Google-Smtp-Source: ABdhPJwh0SEvtePDqsb5aIQfhT6SVClxzqI4k+L1ipU2jb06Hl41VM7zP2iLk50igbdeV27GrBxRWQ==
+X-Received: by 2002:a17:907:72ce:: with SMTP id du14mr12581911ejc.523.1628300218876;
+        Fri, 06 Aug 2021 18:36:58 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id b15sm3344214ejv.15.2021.08.06.18.36.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Aug 2021 18:36:58 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] transport: no warning if no server wait-for-done
+Date:   Sat, 07 Aug 2021 03:31:01 +0200
+References: <20210806214612.1501980-1-jonathantanmy@google.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <20210806214612.1501980-1-jonathantanmy@google.com>
+Message-ID: <87eeb6yr0m.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20210805194825.1796765-1-felipe.contreras@gmail.com> <20210806164433.8665-1-felipe.contreras@gmail.com>
-In-Reply-To: <20210806164433.8665-1-felipe.contreras@gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sat, 7 Aug 2021 09:37:08 +0800
-Message-ID: <CAOLTT8S2_CucmhW8f6Ko8m5xUkfwSRjoqr_R_VyZdimGanMhoQ@mail.gmail.com>
-Subject: Re: [PATCH v2] test: fix for COLUMNS and bash 5
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Fabian Stelzer <fabian.stelzer@campoint.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> =E4=BA=8E2021=E5=B9=B48=E6=9C=
-=887=E6=97=A5=E5=91=A8=E5=85=AD =E4=B8=8A=E5=8D=8812:44=E5=86=99=E9=81=93=
-=EF=BC=9A
+
+On Fri, Aug 06 2021, Jonathan Tan wrote:
+
+> When the push.negotiate configuration variable was implemented in
+> 477673d6f3 ("send-pack: support push negotiation", 2021-05-05), Git was
+> taught to print warning messages whenever that variable was set to true
+> but push negotiation didn't happen. However, the lack of push
+> negotiation is more similar to things like the usage of protocol v2 - in
+> which the new feature is desired for performance, but if the feature
+> is not there, the user does not intend to take any action - than to
+> things like the usage of --filter - in which the new feature is desired
+> for a certain outcome, and if the outcome does not happen, there is a
+> high chance that the user would need to do something else (in this case,
+> for example, reclone with "--depth" if the user needs the disk space).
 >
-> Since c49a177bec (test-lib.sh: set COLUMNS=3D80 for --verbose
-> repeatability, 2021-06-29) multiple tests have been failing when using
-> bash 5 because checkwinsize is enabled by default, therefore COLUMNS is
-> reset using TIOCGWINSZ even for non-interactive shells.
->
-> It's debatable whether or not bash should even be doing that, but for
-> now we can avoid this undesirable behavior by disabling this option.
->
-> Reported-by: Fabian Stelzer <fabian.stelzer@campoint.net>
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> Therefore, when pushing with push.negotiate set to true, do not warn if
+> wait-for-done is not supported for any reason (e.g. if the server is
+> using an older version of Git or if protocol v2 is deactivated on the
+> server). This is done by using an internal-use-only parameter to "git
+> fetch".
+
+Tangentally related (the alternative was to start a thread on some
+2018-era patch of yours): Is it intentional that when you supply a
+gibberish OID or a nonexisting one as an explicit negotiation tip we
+don't even warn about it?
+
+Looking at the history of fetch-pack.c I suspect not. It goes back to
+ec06283844a (fetch-pack: introduce negotiator API, 2018-06-14), i.e. the
+"o && o->type == OBJ_COMMIT" check, now "if (c)" (as in could we look up
+a commit) on "master". That in turn seems to go back as far as
+9534f40bc42 (Be careful when dereferencing tags., 2005-11-02).
+
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 > ---
+>  builtin/fetch.c       |  8 +++++++-
+>  send-pack.c           | 11 +++--------
+>  t/t5516-fetch-push.sh |  3 +--
+>  transport.c           |  6 ++++--
+>  transport.h           |  6 ++++++
+>  5 files changed, 21 insertions(+), 13 deletions(-)
 >
-> Since v1 moved the code before setting COLUMNS as SZEDER G=C3=A1bor sugge=
-sted
-> and mention checkwinsize could be set before bash 5 as =C3=86var Arnfj=C3=
-=B6r=C3=B0
-> Bjarmason mentioned.
->
-> Range-diff against v1:
-> 1:  40273074de < -:  ---------- test: fix for COLUMNS and bash 5
-> -:  ---------- > 1:  9f8c3ffa6a test: fix for COLUMNS and bash 5
->
->  t/test-lib.sh | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index db61081d6b..6b1015a5af 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -409,6 +409,12 @@ then
->         verbose=3Dt
->  fi
->
-> +# In bash if checkwinsize is enabled the COLUMNS variable is updated eve=
-ry time
-> +# an external command completes, even for non-interactive shells. Since =
-bash 5.0
-> +# this is enabled by default.
-> +# Disable that since we are aiming for reproducibility.
-> +test -n "$BASH_VERSION" && shopt -u checkwinsize 2>/dev/null
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 25740c13df..940d650aba 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -84,6 +84,7 @@ static struct string_list negotiation_tip = STRING_LIST_INIT_NODUP;
+>  static int fetch_write_commit_graph = -1;
+>  static int stdin_refspecs = 0;
+>  static int negotiate_only;
+> +static int negotiate_only_failure_ok;
+>  
+>  static int git_fetch_config(const char *k, const char *v, void *cb)
+>  {
+> @@ -208,6 +209,8 @@ static struct option builtin_fetch_options[] = {
+>  			N_("report that we have only objects reachable from this object")),
+>  	OPT_BOOL(0, "negotiate-only", &negotiate_only,
+>  		 N_("do not fetch a packfile; instead, print ancestors of negotiation tips")),
+> +	OPT_BOOL(0, "negotiate-only-failure-ok", &negotiate_only_failure_ok,
+> +		 N_("for internal use only: if --negotiate-only fails, do not print a warning message")),
+>  	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
+>  	OPT_BOOL(0, "auto-maintenance", &enable_auto_gc,
+>  		 N_("run 'maintenance --auto' after fetching")),
+> @@ -2059,8 +2062,11 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  		gtransport = prepare_transport(remote, 1);
+>  		if (gtransport->smart_options) {
+>  			gtransport->smart_options->acked_commits = &acked_commits;
+> +			gtransport->smart_options->negotiate_only_failure_ok =
+> +				negotiate_only_failure_ok;
+>  		} else {
+> -			warning(_("Protocol does not support --negotiate-only, exiting."));
+> +			if (!negotiate_only_failure_ok)
+> +				warning(_("Protocol does not support --negotiate-only, exiting."));
+>  			return 1;
+
+But we still want to "return 1" here and not proceed with the fetch?, ah
+yes, because we run this via send-pack.c below...
+
+>  		}
+>  		if (server_options.nr)
+> diff --git a/send-pack.c b/send-pack.c
+> index 5a79e0e711..020fd0b265 100644
+> --- a/send-pack.c
+> +++ b/send-pack.c
+> @@ -424,7 +424,8 @@ static void get_commons_through_negotiation(const char *url,
+>  	child.git_cmd = 1;
+>  	child.no_stdin = 1;
+>  	child.out = -1;
+> -	strvec_pushl(&child.args, "fetch", "--negotiate-only", NULL);
+> +	strvec_pushl(&child.args, "fetch", "--negotiate-only",
+> +		     "--negotiate-only-failure-ok", NULL);
+>  	for (ref = remote_refs; ref; ref = ref->next)
+>  		strvec_pushf(&child.args, "--negotiation-tip=%s", oid_to_hex(&ref->new_oid));
+>  	strvec_push(&child.args, url);
+> @@ -447,13 +448,7 @@ static void get_commons_through_negotiation(const char *url,
+>  		oid_array_append(commons, &oid);
+>  	} while (1);
+>  
+> -	if (finish_command(&child)) {
+> -		/*
+> -		 * The information that push negotiation provides is useful but
+> -		 * not mandatory.
+> -		 */
+> -		warning(_("push negotiation failed; proceeding anyway with push"));
+> -	}
+> +	finish_command(&child);
+>  }
+>  
+>  int send_pack(struct send_pack_args *args,
+> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+> index 0916f76302..60b377edf2 100755
+> --- a/t/t5516-fetch-push.sh
+> +++ b/t/t5516-fetch-push.sh
+> @@ -222,8 +222,7 @@ test_expect_success 'push with negotiation proceeds anyway even if negotiation f
+>  	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
+>  	GIT_TEST_PROTOCOL_VERSION=0 GIT_TRACE2_EVENT="$(pwd)/event" \
+>  		git -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main 2>err &&
+> -	grep_wrote 5 event && # 2 commits, 2 trees, 1 blob
+> -	test_i18ngrep "push negotiation failed" err
+> +	grep_wrote 5 event # 2 commits, 2 trees, 1 blob
+>  '
+>  
+>  test_expect_success 'push without wildcard' '
+> diff --git a/transport.c b/transport.c
+> index 17e9629710..913fc0f8e4 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -397,10 +397,12 @@ static int fetch_refs_via_pack(struct transport *transport,
+>  
+>  	if (data->options.acked_commits) {
+>  		if (data->version < protocol_v2) {
+> -			warning(_("--negotiate-only requires protocol v2"));
+> +			if (!data->options.negotiate_only_failure_ok)
+> +				warning(_("--negotiate-only requires protocol v2"));
+>  			ret = -1;
+>  		} else if (!server_supports_feature("fetch", "wait-for-done", 0)) {
+> -			warning(_("server does not support wait-for-done"));
+> +			if (!data->options.negotiate_only_failure_ok)
+> +				warning(_("server does not support wait-for-done"));
+>  			ret = -1;
+>  		} else {
+>  			negotiate_using_fetch(data->options.negotiation_tips,
+> diff --git a/transport.h b/transport.h
+> index 1cbab11373..98c90b46df 100644
+> --- a/transport.h
+> +++ b/transport.h
+> @@ -53,6 +53,12 @@ struct git_transport_options {
+>  	 * common commits to this oidset instead of fetching any packfiles.
+>  	 */
+>  	struct oidset *acked_commits;
 > +
->  # For repeatability, reset the environment to known value.
->  # TERM is sanitized below, after saving color control sequences.
->  LANG=3DC
-> --
-> 2.32.0.40.gb9b36f9b52
->
+> +	/*
+> +	 * If the server does not support wait-for-done, do not print any
+> +	 * warning messages.
+> +	 */
+> +	unsigned negotiate_only_failure_ok : 1;
+>  };
+>  
+>  enum transport_family {
 
-This can work on Arch-Linux. LGTM.
+I find myself wondering if a new option for this, or if --negotiate-only
+shouldn't just pay attention to the existing --quiet and --verbose
+options, depending. We already pass that down to this level through the
+transport struct you're changing.
 
-Thanks.
---
-ZheNing Hu
+So since we're running a one-off special command here why not just pass
+--quiet and check args.quiet in fetch_refs_via_pack() before emitting
+the warning()? Ditto for fetch itself...
