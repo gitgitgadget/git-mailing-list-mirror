@@ -2,170 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BEECC4338F
-	for <git@archiver.kernel.org>; Sat,  7 Aug 2021 02:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F8E7C4338F
+	for <git@archiver.kernel.org>; Sat,  7 Aug 2021 02:09:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5959F61167
-	for <git@archiver.kernel.org>; Sat,  7 Aug 2021 02:08:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 16C6F61158
+	for <git@archiver.kernel.org>; Sat,  7 Aug 2021 02:09:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230031AbhHGCIh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Aug 2021 22:08:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44842 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229749AbhHGCIh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Aug 2021 22:08:37 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 700CEC0613CF
-        for <git@vger.kernel.org>; Fri,  6 Aug 2021 19:08:20 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id zb12so13397771ejb.5
-        for <git@vger.kernel.org>; Fri, 06 Aug 2021 19:08:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=5GGuN1UPgVgGHRXPCvEiioVgYKLkpM4xO756JB9Y7k0=;
-        b=JyhKksfWLU63LtKIYUPOsx57pJm9tHH0C1/gJKIpnNOV3GdrbW3fg3JylSdrNlGgHM
-         a/H1w26y3CoRDK4EbTIKGHoTlSD5znkxwgX814Ad9Az6IXOYlBosV9e5efYIoPMwqbuC
-         iWlAnbc4qsEQ4Y46x96/whXumKSufxgEZTIxKQTeUlzNPJLKvPvodiT6xKDOKlhnPXz5
-         B/4R6KPpTRn/2KEO8O4Otg6damm0BOsd8w2a5zaRVupoha+RORu1VJN4/iK+L+yS9P5E
-         2jVQybmATGisASW8rUzyWT+DTBv/zaGDq+EVej9kdMsZXOCMyv5bCO0UjMCu03hT8QtM
-         SYUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=5GGuN1UPgVgGHRXPCvEiioVgYKLkpM4xO756JB9Y7k0=;
-        b=HMiDt596VXv3Xz5VCzlsMNVn6i0quH1ObZ2Fm8artmPqqv/9HecYzts8j2vznOvhmo
-         HCXF2ODd24BzjFHRLmrxEAWk2SodJO9pDKAytYYf+PqO43JHebhCMyuBXFE8PZc3MHH+
-         XVEXlJuZJJA7ccuKUOYKhA4S3zqtb/cEsIxtItmCLtf1gHpZ0lOSD8ZuLdnvkmrW1zDn
-         sS5Kw6Gw/R6kt91JYUIYj3VxAbqSpDNU6IXZwVxOLAuksDCLdMdOLpXnsw9tG8a28pZN
-         bOrl9O29npWjMLTHk+lRPJ+N5MAwOWx+5j6eF23m01osp/d8WeAk+VGMLKsdkivWjKO9
-         593g==
-X-Gm-Message-State: AOAM531rN2MoqU1SbnUpDJvpsT75lDMUoA+QET+BVsplYb4xiVQlzRSb
-        rMaLedqSKW5wZLVd3tZj2mo=
-X-Google-Smtp-Source: ABdhPJyzkbzW1ahpzUyzB9zA5AZ798xx+2coa3j9/5i8jKrxkEAFj2VeSNySzkrK5PqpxAo7nhtWsQ==
-X-Received: by 2002:a17:906:a2c4:: with SMTP id by4mr12577880ejb.521.1628302098751;
-        Fri, 06 Aug 2021 19:08:18 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id mf1sm3381286ejb.51.2021.08.06.19.08.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Aug 2021 19:08:18 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        id S230042AbhHGCKC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Aug 2021 22:10:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41666 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229749AbhHGCKC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Aug 2021 22:10:02 -0400
+Received: (qmail 17527 invoked by uid 109); 7 Aug 2021 02:09:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 07 Aug 2021 02:09:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16859 invoked by uid 111); 7 Aug 2021 02:09:46 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 06 Aug 2021 22:09:46 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 6 Aug 2021 22:09:44 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/3] detect-compiler: clang updates
-Date:   Sat, 07 Aug 2021 04:02:45 +0200
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] build: catch clang that identifies itself as
+ "$VENDOR clang"
+Message-ID: <YQ3raB5ZtPHBQWSQ@coredump.intra.peff.net>
 References: <YQ2LdvwEnZN9LUQn@coredump.intra.peff.net>
  <20210806205235.988761-1-gitster@pobox.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <20210806205235.988761-1-gitster@pobox.com>
-Message-ID: <87bl6aypke.fsf@evledraar.gmail.com>
+ <20210806205235.988761-4-gitster@pobox.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <20210806205235.988761-4-gitster@pobox.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Aug 06, 2021 at 01:52:35PM -0700, Junio C Hamano wrote:
 
-On Fri, Aug 06 2021, Junio C Hamano wrote:
+> diff --git a/detect-compiler b/detect-compiler
+> index 955be1c906..11d60da5b7 100755
+> --- a/detect-compiler
+> +++ b/detect-compiler
+> @@ -38,13 +38,10 @@ case "$(get_family)" in
+>  gcc)
+>  	print_flags gcc
+>  	;;
+> -clang)
+> +clang | *" clang")
+>  	print_flags clang
+>  	;;
+> -"FreeBSD clang")
+> -	print_flags clang
+> -	;;
+> -"Apple LLVM"|"Apple clang")
+> +"Apple LLVM")
+>  	print_flags clang
+>  	;;
 
-> So here is a mini-series that summarizes what has been suggested so
-> far on the topic.
->
-> Carlo Marcelo Arenas Bel=C3=B3n (1):
->   build: update detect-compiler for newer Xcode version
->
-> Jeff King (1):
->   build: clang version may not be followed by extra words
->
-> Junio C Hamano (1):
->   build: catch clang that identifies itself as "$VENDOR clang"
->
->  detect-compiler | 9 +++------
->  1 file changed, 3 insertions(+), 6 deletions(-)
+All three patches look fine to me, and functionality-wise are a strict
+improvement over the status quo. But I suspect in the long run we'd need
+to keep all of the Apple bits in their own case-arm, like:
 
-Perhaps I've missed some obvious reason not to do this, but why are we
-parsing the --version output of two modern compilers, as opposed to just
-asking them what type/version they are via their usual macro facilities?
-I.e. something like the below:
+  # this must come first, so we prefer it over "* clang".
+  "Apple LLVM" | "Apple clang")
+	print_apple_magic
+        ;;
+  clang | *" clang")
+        print_flags clang
+        ;;
 
-diff --git a/detect-compiler b/detect-compiler
-index 70b754481c8..37908ac9ea8 100755
---- a/detect-compiler
-+++ b/detect-compiler
-@@ -5,19 +5,47 @@
-=20
- CC=3D"$*"
-=20
--# we get something like (this is at least true for gcc and clang)
-+#!/bin/sh
- #
--# FreeBSD clang version 3.4.1 (tags/RELEASE...)
--get_version_line() {
--	$CC -v 2>&1 | grep ' version '
--}
-+# Probe the compiler for vintage, version, etc. This is used for setting
-+# optional make knobs under the DEVELOPER knob.
-+
-+CC=3D"$*"
-+
-+v=3D$($CC -E - <<-EOF 2>&1 | grep -e '=3D')
-+GNUC=3D__GNUC__
-+GNUC_MINOR=3D__GNUC_MINOR__
-+GNUC_PATCHLEVEL=3D__GNUC_PATCHLEVEL__
-+clang=3D__clang__
-+clang_major=3D__clang_major__
-+clang_minor=3D__clang_minor__
-+clang_patchlevel=3D__clang_patchlevel__
-+EOF
-+eval "$v"
-=20
- get_family() {
--	get_version_line | sed 's/^\(.*\) version [0-9][^ ]* .*/\1/'
-+	# Clang also sets the GNUC macros, but GCC does not set
-+	# clang's.
-+	if test "$clang" !=3D "__clang__"
-+	then
-+		echo clang
-+	elif test "$GNUC" !=3D "__GNUC__"
-+	then
-+		echo gcc
-+	else
-+		echo unknown
-+	fi
- }
-=20
- get_version() {
--	get_version_line | sed 's/^.* version \([0-9][^ ]*\) .*/\1/'
-+	case "$(get_family)" in
-+	clang)
-+		echo "$clang_major.$clang_minor.$clang_patchlevel"
-+		;;
-+	gcc)
-+		echo "$GNUC.$GNUC_MINOR.$GNUC_PATCHLEVEL"
-+		;;
-+	esac
- }
-=20
- print_flags() {
-@@ -41,12 +69,6 @@ gcc)
- clang)
- 	print_flags clang
- 	;;
--"FreeBSD clang")
--	print_flags clang
--	;;
--"Apple LLVM")
--	print_flags clang
--	;;
- *)
- 	: unknown compiler family
- 	;;
+and then apple_magic does the version conversion from Wikipedia I linked
+to earlier.
+
+I don't think your patch is really making it significantly harder to get
+there, though splitting up "Apple LLVM" and "Apple clang" feels a bit
+like it's the wrong direction.
+
+I wasn't personally planning to take that next step, as I lack the
+platform to test it on. And as noted, unless you have a pretty old
+version of Xcode, it doesn't matter either way (so I'm content to leave
+it until dev with a mac is bitten by it and cares enough to make it more
+accurate).
+
+-Peff
