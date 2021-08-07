@@ -2,102 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D61DEC432BE
-	for <git@archiver.kernel.org>; Sat,  7 Aug 2021 19:00:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB38DC4338F
+	for <git@archiver.kernel.org>; Sat,  7 Aug 2021 20:28:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B12A06108D
-	for <git@archiver.kernel.org>; Sat,  7 Aug 2021 19:00:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8750A6103B
+	for <git@archiver.kernel.org>; Sat,  7 Aug 2021 20:28:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229758AbhHGTAq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 7 Aug 2021 15:00:46 -0400
-Received: from mout.gmx.net ([212.227.15.19]:48771 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229464AbhHGTAp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Aug 2021 15:00:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1628362825;
-        bh=xbvJyrFf2JFpbrRyEC3AGDqA5KcYdrNWM/dU7Yk2VPE=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=K0JQImK7XiIkAgpoplZlJjrkT6mQWHP7GofPK0xrIst2P54ypgPx/irSCrin/Nr/P
-         Cb9Gd8PwACh6NBVc+uT7NMOhwu2TBZoeHdHCD/v1E9s+ZyJxuAGncidaIPgNwo55ET
-         8b27CillLzFD09NfldCZnAXwXxUZwqmUrUHLkqRg=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from fv-az47-521.2mwgpeqsntxebho0dsvu5l0kwe.ex.internal.cloudapp.net
- ([20.88.23.86]) by mail.gmx.net (mrgmx005 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1Ml6qM-1mr2Au3fTQ-00lUJ9; Sat, 07 Aug 2021 21:00:25 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.33.0-rc1
-Date:   Sat,  7 Aug 2021 19:00:22 +0000
-Message-Id: <20210807190022.5103-1-johannes.schindelin@gmx.de>
+        id S229590AbhHGU2z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 7 Aug 2021 16:28:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57512 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229517AbhHGU2y (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Aug 2021 16:28:54 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F15B0C0613CF
+        for <git@vger.kernel.org>; Sat,  7 Aug 2021 13:28:36 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id g6so6878101qvj.8
+        for <git@vger.kernel.org>; Sat, 07 Aug 2021 13:28:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ieQBfjW2X4++i8jKiIRxZ6nr0n4dKC/Q6mcOT2YNBys=;
+        b=DPffnKKrj2GvblvHU+QbbvI15QtpE3zafuGkjo55ybsPnpW9ZJ0n/QWbdcmEbWrVQ9
+         v9G/SecJOnfq+dKOr/P4Ivhkge2bqGKRr3RuUpPU16NGafmmSptQwGFSYdBRL7l2Th5Y
+         mVa67WlM6I5Nm7lShvw+vft/dsEni7rx4lQOhf2gK3AuFBWm6qTnrB/PtVbceVlL6vhj
+         EZEADjOEpb/eagglUauQNYrXPpW+dzmlybx74AoaHva5o1nL3rLWva1Y3W/IPUHqZfle
+         jf+1XpLSQYpADjObi3Qy495E0ahqxyLFaXYfWL/1PHG263mHWra7MPvNe8Nfl1PEOVS2
+         Biug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ieQBfjW2X4++i8jKiIRxZ6nr0n4dKC/Q6mcOT2YNBys=;
+        b=rcAYO/k82uIqPJU5zcR2oWDxks9wLsPECslG/1AvJVgyUhkLMri0WjFq/wAp7Da91a
+         7wkTBec6+wZ3QqmCBFscYyGzVl/ah+AU/Cy5ALpB7b/zagrpNmL8QERw15cEkvMdK0fO
+         1VWHgx8Z9tp0q56yqLCkOENj1ivJJMQt0Dp2MfVmGr7sZqtZCceTq5mZTwaaSJAQdvPU
+         sObJQu/ZUhoZEB1qGESjgrKSM57dMTsOmj9NvUQBnadpaxBs2LU6roaMVHh4qSF/xRNB
+         xVPGcIUne2Xx53UXLhPQHt04Bxl8ihxXh5xudcyBs+Rpi+lAcUUr6V52Jws+jWUpxi/V
+         1rtA==
+X-Gm-Message-State: AOAM5315GWIt+lHwSERYWuLOlRRgBmOWRFVGJStC9L7IxUBMghvFdh0R
+        w7JN26DYct4Lc+tbCIYaSKW5hEbxN/o=
+X-Google-Smtp-Source: ABdhPJxRWbEZmHXmeX/y1wnPxpkYKifkL+jxOb/JRQ+3YqGhu9OZUzPBkRfz0H8k9zbIxQ1myJTcLQ==
+X-Received: by 2002:a05:6214:3a4:: with SMTP id m4mr17078293qvy.17.1628368115603;
+        Sat, 07 Aug 2021 13:28:35 -0700 (PDT)
+Received: from noah-XPS-13-9310.myfiosgateway.com (pool-173-48-203-160.bstnma.fios.verizon.net. [173.48.203.160])
+        by smtp.gmail.com with ESMTPSA id b1sm5037038qtq.12.2021.08.07.13.28.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 07 Aug 2021 13:28:35 -0700 (PDT)
+From:   Noah Pendleton <noah.pendleton@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Noah Pendleton <noah.pendleton@gmail.com>
+Subject: [PATCH 0/1] blame: Skip missing ignore-revs file
+Date:   Sat,  7 Aug 2021 16:27:51 -0400
+Message-Id: <20210807202752.1278672-1-noah.pendleton@gmail.com>
 X-Mailer: git-send-email 2.32.0
-Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:nBLxURSuVdNCBIDVdRuZpckx/8JM3R2BhiK+A8uzHN0h6qNjxBt
- y4lkb/DOEGHWqwt/I1khZZfj3839F3XeawmfRC7u5PrVi0OL3doWMtdO4S6r68Qrjonw7et
- fl+3gl6SWZ9IkyqtgrJDTfhBM3uIb42JgGpbxGekKOoixszIoK8GbcKxga1eAhhgxuX1STZ
- cIGjwMS+g9642yvsBh/mg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:woqAJp8UL2Q=:DrCpMxSRiK2eRA0eBL3Cvk
- hlaQhLeojG2BpUqnGQEPiLXdLtdszoB7ohQn7B+VqDuTynwmAZVviOBbcLxnxiHaE6DBV9C7C
- cTfRsRV1YPVuCCoyQdMoOHL9a8FFGnYz0L84jYkIHWIOMvd7reXh8z5RwEkXXAKhj8nFP7m/I
- nOcFWbCqTUgcwHQn3tL1iQJre6aq949xTunuI252eO5Bogm3xS/ZfaHYfKeqnWVGgyzSM2Qin
- wxnE/35UtL07bVqUfplDmhCEWAKjaif6BbNp7830S+MD7W+YGkGKBGO1BspnOWX8l1sOxgafS
- 39Yc3QBBmunuT1vfGmp/2TQuqlGWU/b3KGJaeU4lTbHD+6EMW21Mrl+kfDBXfZZlZyoFYLrL8
- O84Ou+xiJoo0oFKftTexIfHdg1LAR7EJ1aMRjK1q9qQqVf57ZFFpP+ZW07oJPnBIFMv7tUoRs
- 6vnrsu8sOg56N2XooSja7hzGqjo+ph1MZ5dMzSdUiJzBUPc9YX+KZ2IGHcRNdCbryCjyWLzkC
- bIyYkBLSg0IFPLQsL2V5h/AlZcTf+vnKAarO/1j2LlKueSGVu1GFDhdInZ/M5FKFgZYRxyFGZ
- dGJVDWgf+CXNK888PGgxkOAXerWl/0akibxd4Er+RakFznswIYXZCsj1Ang8ewD5B8M7jVWq7
- MT45hN7IvFS11chxpWqo+68e/jAAzVL2TcJ28DP6Uxbyl+EuHKWDvHVK7Os/1A2F5sJ5p3+5w
- 3nJ9gJI2Zs8eVRte+o8bapzwJuOGDY4WK/450LSCtTgXbegNLt42YMhPtlDx2XvQdV2asOPO0
- MTyJl1MGamLXl31xCVG0cXL3SFIVy3Zm2EfgB5PyIt4xzJh1Mf5ahcUXQ0v4hKxhZGRDibDuD
- 96NWapR5QeTXM6RPG6lor2fP1OSz0tJ/2nOVwpSa57LOdK0415niBIrdqSffoNVjQBY9n8l4b
- 6IXci+vKt2e/q4IPazyMbouA9C/6QreLppI08NMdhoQXZjB2EE83PB1B2bxUZWSu3P5U/wqJi
- zsr1eiT26/7SrXPnt9PcLM980kVgugnSL3ys1MXTVyGcgFBsaMbDY4lstCLSQnDwd8WSh4Dql
- EM0lsG86+PhM0pKaofhcfHDcb+wZ97QlR/UrqT0NN0k/mUXizGU2wJwrQ==
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+Setting a global `blame.ignoreRevsFile` can be convenient, since I
+usually use `.git-blame-ignore-revs` in repos. If the file is missing,
+though, `git blame` exits with failure. This patch changes it to skip
+over non-existent ignore-rev files instead of erroring.
 
-I hereby announce that Git for Windows 2.33.0-rc1 is available from:
 
-    https://github.com/git-for-windows/git/releases/tag/v2.33.0-rc1.windows.1
+Noah Pendleton (1):
+  blame: skip missing ignore-revs-file's
 
-Changes since Git for Windows v2.32.0(2) (July 6th 2021)
+ Documentation/blame-options.txt |  2 +-
+ Documentation/config/blame.txt  |  3 ++-
+ builtin/blame.c                 |  2 +-
+ t/t8013-blame-ignore-revs.sh    | 10 ++++++----
+ 4 files changed, 10 insertions(+), 7 deletions(-)
 
-New Features
+-- 
+2.32.0
 
-  * Comes with Git v2.33.0-rc1.
-  * Comes with Perl v5.34.0 (and some updated Perl modules).
-  * It is now possible to ask Git for Windows to use an SSH found on
-    the PATH instead of its bundled OpenSSH executable.
-
-Bug Fixes
-
-  * The installer no longer shows an error dialog when upgrading while
-    the Windows Terminal Profile option is checked.
-  * Interaction with the git repo tool was improved.
-
-Git-2.33.0-rc1-64-bit.exe | d470001da17840f42f1cd49bee0e37d65009b318e86b9c5a36d8839f648650c6
-Git-2.33.0-rc1-32-bit.exe | aba619bf53af7c54e5d6354672ece8a13f0160bf7a118d9946a885ecd24fe4ec
-PortableGit-2.33.0-rc1-64-bit.7z.exe | 30fe797dec6eb345c383f59d8098d5806ec706ef9f25e52cc5e6dc492626eb71
-PortableGit-2.33.0-rc1-32-bit.7z.exe | 91bc6c344505cbe8a795de8a3b50be8ec14e9bbc3d7b89289ad185507307c0c0
-MinGit-2.33.0-rc1-64-bit.zip | 1f035f7c2481ef0f63ae0b38c3716aa029193dcd9ef1e1e6ea40325c7f59658d
-MinGit-2.33.0-rc1-32-bit.zip | 210df801a76eb044578ff3fcf0ff67227fd15c0db37c1ab9ed84f12e83c16dc4
-MinGit-2.33.0-rc1-busybox-64-bit.zip | 362e4aef9f7171f3e2c2297a0c49a4687376e1702d0b4806bb64617fbe5ebbda
-MinGit-2.33.0-rc1-busybox-32-bit.zip | 04bf4028daf9f99bfdd72deaebcf46a6b8258722f7a5a531415654ac3bf944d8
-Git-2.33.0-rc1-64-bit.tar.bz2 | bc94eadb85f2fb0b5da22bd4b483f38edb772178e8e66a3891b64bb08ae34cc2
-Git-2.33.0-rc1-32-bit.tar.bz2 | 63f8b1f389edd0f4435bf59f5fb14eb27d5e48fb304e3a8174991f80afc221de
-
-Ciao,
-Johannes
