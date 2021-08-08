@@ -2,80 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17112C4338F
-	for <git@archiver.kernel.org>; Sun,  8 Aug 2021 18:26:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96A28C4338F
+	for <git@archiver.kernel.org>; Sun,  8 Aug 2021 19:00:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E594360EE4
-	for <git@archiver.kernel.org>; Sun,  8 Aug 2021 18:26:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 65C8160F92
+	for <git@archiver.kernel.org>; Sun,  8 Aug 2021 19:00:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231901AbhHHS1N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Aug 2021 14:27:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59482 "EHLO
+        id S232302AbhHHTAd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Aug 2021 15:00:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230049AbhHHS1M (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Aug 2021 14:27:12 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4043C061760
-        for <git@vger.kernel.org>; Sun,  8 Aug 2021 11:26:53 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id b1-20020a17090a8001b029017700de3903so17250091pjn.1
-        for <git@vger.kernel.org>; Sun, 08 Aug 2021 11:26:53 -0700 (PDT)
+        with ESMTP id S229977AbhHHTAd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Aug 2021 15:00:33 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C982CC061760
+        for <git@vger.kernel.org>; Sun,  8 Aug 2021 12:00:12 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id z3so14044889plg.8
+        for <git@vger.kernel.org>; Sun, 08 Aug 2021 12:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
+        h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=gsUDPBm3L6VctkeQX8SP/HRrfJpV/dh+piQEXTiqG2Q=;
-        b=cI56+bZ9JOyjAkKyMfvbj5BdqOGT4nNIPwwLrBbaAvxJh+kJf18YE4a2MD0SkmMN6t
-         3lNRdwCPBYU5VHQUweQ+BYkaG1los/oOUjsFz8jWJwvbxM9ChcnFrSl9zXJzywRmUrky
-         /UCpIGPt6JQQQQ0w3YQQIovGOg4EyavmI4aDYrK144BKq/D/sOMfyf3c3DUxpmMqwU7H
-         N+iUazQSK6DXXhGSYfhn7H1hAkqVGof6G5zCLDdHMhA1jwcak1RxEnM2J9Ta95h6A3OR
-         sIrkF1A5tf8BxlBcfsAPVKuWYE/lIcqnSzAa0oktCD5fc3CqjeZvIErVQviS+UBPGIcM
-         179g==
+        bh=NpqDU1hQYpnKT9G6E3hczjWGbx/KpG5j6SQXsagO7ZE=;
+        b=YS+AahbXEcoWCRzTtB3mxq9W5axm9WdnaTLOWfpDv5tv19t36Z1gETcAtNxtRgB5iB
+         Uc5iNTngp+qAP3f6PjH5IBwy6xzyAcUd6rh8MNvoqSykwUCtCSlDAjKldcvqrEpbhCYX
+         4rns5mdwz8bqiizbjRaZN8XWX4eHwUgj9suFNs2BiTQxN3MEeZPNzFnx8bHELkKPWxFQ
+         yQYRQif5yCYXpad9q9KrOKWOqvP1lNiLtoziGDD0rRgZaYHrONpITf5dHJLv19y/EB2M
+         G8f51iU1YDBLUgGdqnG5QLnHQyf4UqJ91FoZkQpByPqgJFQe4aKn6dzp2XkNdrq3DjzY
+         Al9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=gsUDPBm3L6VctkeQX8SP/HRrfJpV/dh+piQEXTiqG2Q=;
-        b=RAOd6zReurp0fTMAszjK8fJbZsYsai+69mES50FSjdeGUcjvEJBHQIlXqWEs+gBueB
-         F4tb5R60+YtM6q6dfeBSEvuw4Hi1JFWOPZ30soILaIcjnzmgJl3i6bDx8QJZDuHSIhg5
-         aIxdFB+dwn117Yj4z6EQRZu2FsZNzZjFAqtvtVVPmmSz0iz9411Ut77OLQwAWsW3PZEf
-         CfNwilv5RrBmT7fT1T2NfdCuPUVyfS0gXabzJEdy/DwoQh49j6lIDcqG9EaW7rG/SGDP
-         x90R5TMvYRbYcbmypJq2D4Mc1HPPLUJzcaCPbYqKKR5gxacITAfCQm7ANePeEh4S6LtD
-         64+g==
-X-Gm-Message-State: AOAM531+lylRrRMc9wf9PFm8DWQjpF5v6eeP3ZJsWnfZUKI+MOMVFNnv
-        W8oR/OdjaxMQOO8xyMkpsqI=
-X-Google-Smtp-Source: ABdhPJwfKJY6AYP07nZCJoXC4JJG0l/ts8urQG3ppfnCqjERz5Fc43WCkmDFCptjAz2hMyM3bhpf8g==
-X-Received: by 2002:a17:90b:1bca:: with SMTP id oa10mr22272026pjb.177.1628447213125;
-        Sun, 08 Aug 2021 11:26:53 -0700 (PDT)
+        bh=NpqDU1hQYpnKT9G6E3hczjWGbx/KpG5j6SQXsagO7ZE=;
+        b=rpSUgK6TKWLMal8esy9fthIclBrMKnQ4h8RC8yLzQGYrCHJvuT+DEBe7U4AntHEDwU
+         5425CpvVeHj4nWRSM6Nb7Nwu252MlJXbUkcUisWusfSPCCpoQmLW0h5qQ4m1kjQFhtPT
+         lq18E4HNuwZwwy09DFbdS3ibHJ8WS1I4qAJi0mUCMFW9ry+9Euv543aCjpILEzAZaato
+         rdF5PU6T8/fJj3lBwU0R6xHX2h5BNf4BivFs5Hxnm1i3mihCarq9e6eAv0Xmv6wSnmC2
+         DPvzydlCbfrnqhLIgeIISr+0LEv0sJ6cOFNo7oo4Ofe0YbhyA2I3ypuoUrKUxwi9k9WU
+         NkCA==
+X-Gm-Message-State: AOAM530pt3/mb1/HR0MGGooG5qUn6AwnYLP1A2DrW7MBSjCkyD89goYf
+        aRD5rxB3murW/yqTkAB61i8=
+X-Google-Smtp-Source: ABdhPJzz939tvzHEh5vAu/fKYcYUjFYXgRCN9t7ooVvsFQ/iZzCsHKHPlsJ8izURmFd2fQE2rHJ7gw==
+X-Received: by 2002:a17:90a:c7cc:: with SMTP id gf12mr3074157pjb.152.1628449212233;
+        Sun, 08 Aug 2021 12:00:12 -0700 (PDT)
 Received: from [192.168.208.38] ([49.205.84.169])
-        by smtp.gmail.com with ESMTPSA id bb14sm8806537pjb.14.2021.08.08.11.26.49
+        by smtp.gmail.com with ESMTPSA id k25sm17161081pfa.213.2021.08.08.12.00.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Aug 2021 11:26:52 -0700 (PDT)
-Subject: Re: [GSoC] [PATCH v4 1/8] submodule--helper: add options for
- compute_submodule_clone_url()
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Atharva Raykar <raykar.ath@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+        Sun, 08 Aug 2021 12:00:11 -0700 (PDT)
+Subject: Re: [GSoC] [PATCH v4 3/8] submodule--helper: remove repeated code in
+ sync_submodule()
+To:     Atharva Raykar <raykar.ath@gmail.com>
 Cc:     avarab@gmail.com, christian.couder@gmail.com, congdanhqx@gmail.com,
-        emilyshaffer@google.com, git@vger.kernel.org, jrnieder@gmail.com,
-        pc44800@gmail.com, periperidip@gmail.com,
+        emilyshaffer@google.com, git@vger.kernel.org, gitster@pobox.com,
+        jrnieder@gmail.com, pc44800@gmail.com, periperidip@gmail.com,
         rafaeloliveira.cs@gmail.com, sunshine@sunshineco.com
 References: <20210806120147.73349-1-raykar.ath@gmail.com>
  <20210807071613.99610-1-raykar.ath@gmail.com>
- <20210807071613.99610-2-raykar.ath@gmail.com>
- <0752736f-11d5-103b-653f-a4bbe6436304@gmail.com>
-Message-ID: <187083ab-a2e3-0933-5bff-9b409b2946ea@gmail.com>
-Date:   Sun, 8 Aug 2021 23:56:48 +0530
+ <20210807071613.99610-4-raykar.ath@gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <d37adee0-8636-548b-c581-16eaa417a05c@gmail.com>
+Date:   Mon, 9 Aug 2021 00:30:07 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <0752736f-11d5-103b-653f-a4bbe6436304@gmail.com>
+In-Reply-To: <20210807071613.99610-4-raykar.ath@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -83,77 +81,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/08/21 11:11 pm, Kaartic Sivaraam wrote:
-> On 07/08/21 12:46 pm, Atharva Raykar wrote:
->> Let's modify the interface to `compute_submodule_clone_url()` function
->> by adding two more arguments, so that we can reuse this in various parts
->> of `submodule--helper.c` that follow a common pattern, which is--read
->> the remote url configuration of the superproject and then call
->> `relative_url()`.
->>
->> This function is nearly identical to `resolve_relative_url()`, the only
->> difference being the extra warning message. We can add a quiet flag to
->> it, ...
+On 07/08/21 12:46 pm, Atharva Raykar wrote:
+> This part of `sync_submodule()` is doing the same thing that
+> `compute_submodule_clone_url()` is doing. Let's reuse that helper here.
 > 
-> It took me a while to figure what "it" meant in the above sentence. Does it
-> refer to `compute_submodule_clone_url` or `resolve_relative_url`. After one
-> sees the patch and takes a look at `resolve_relative_url`, it's clear the "it"
-> indeed does refer to `resolve_relative_url`. But it might worth clarifying this
-> in the commit message itself.
+
+Nice to see more code redundancy being removed. Now that we're using
+'compute_submodule_clone_url' in multiple places, I'm starting to
+wonder if the name still suits the helper. Yeah, I just started yet
+another naming discussion ;-) I guess this one wouldn't be tough though.
+It feels to me like 'resolve_relative_url' is a good enough name that
+doesn't mislead readers by having 'clone_url' in its name. In case anyone
+else has better name suggestions, they are indeed very welcome to suggest
+those :-)
+
+Once there's agreement on a particular name, I think the helper function
+could be renamed. Possibly in a new patch next to this one.
+
+> Note that this change adds a small overhead where we allocate and free
+> the 'remote' twice, but that is a small price to pay for the higher
+> level of abstraction we get.
 > 
-> Certainly not worth a re-roll on its own. May be Junio could amend this while queing ?
+> Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Shourya Shukla <periperidip@gmail.com>
+> ---
+>   builtin/submodule--helper.c | 16 +++-------------
+>   1 file changed, 3 insertions(+), 13 deletions(-)
 > 
-Actually, I just noticed two other things which might be re-roll worthy. Read on ...
-
-> -static char *compute_submodule_clone_url(const char *rel_url)
-> +static char *compute_submodule_clone_url(const char *rel_url, const char *up_path, int quiet)
->  {
->  	char *remoteurl, *relurl;
-
-I know this isn't new code. But there's already an argument names
-'rel_url'. So, a variable named 'relurl' in the same scope is making it
-hard to distinguish between these two. Could you also try distinguishing
-these better by renaming 'relurl' to 'res' or something else?
-
->  	char *remote = get_default_remote();
-> @@ -598,10 +598,14 @@ static char *compute_submodule_clone_url(const char *rel_url)
->  
->  	strbuf_addf(&remotesb, "remote.%s.url", remote);
->  	if (git_config_get_string(remotesb.buf, &remoteurl)) {
-> -		warning(_("could not look up configuration '%s'. Assuming this repository is its own authoritative upstream."), remotesb.buf);
-> +		if (!quiet)
-> +			warning(_("could not look up configuration '%s'. "
-> +				  "Assuming this repository is its own "
-> +				  "authoritative upstream."),
-> +				remotesb.buf);
->  		remoteurl = xgetcwd();
->  	}
-> -	relurl = relative_url(remoteurl, rel_url, NULL);
-> +	relurl = relative_url(remoteurl, rel_url, up_path);
-
-After reading 2/8 of the series, I just noticed that 'remoteurl' is always
-initialized in 'resolve_realtive_url'. It is either initialized to the return
-value of 'xgetcwd' or retains its assigned value of 'NULL'. But it looks
-like that's not the case here. 'remoteurl' could be used uninitialized
-when the above if block does not get executed which in turn could result in
-weird behaviour in case 'remoteurl' gets a value of anything other than 'NULL'
-at runtime.
-
-This again has nothing to do with the change done in this patch. Regardless, it
-looks like something worth correcting. Thus, I thought of pointing it out.
-
->  
->  	free(remote);
->  	free(remoteurl);
-> @@ -660,7 +664,7 @@ static void init_submodule(const char *path, const char *prefix,
->  		if (starts_with_dot_dot_slash(url) ||
->  		    starts_with_dot_slash(url)) {
->  			char *oldurl = url;
-> -			url = compute_submodule_clone_url(oldurl);
-> +			url = compute_submodule_clone_url(oldurl, NULL, 0);
->  			free(oldurl);
->  		}
->
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index f4b496bac6..9b676c12f8 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -1373,20 +1373,10 @@ static void sync_submodule(const char *path, const char *prefix,
+>   	if (sub && sub->url) {
+>   		if (starts_with_dot_dot_slash(sub->url) ||
+>   		    starts_with_dot_slash(sub->url)) {
+> -			char *remote_url, *up_path;
+> -			char *remote = get_default_remote();
+> -			strbuf_addf(&sb, "remote.%s.url", remote);
+> -
+> -			if (git_config_get_string(sb.buf, &remote_url))
+> -				remote_url = xgetcwd();
+> -
+> -			up_path = get_up_path(path);
+> -			sub_origin_url = relative_url(remote_url, sub->url, up_path);
+> -			super_config_url = relative_url(remote_url, sub->url, NULL);
+> -
+> -			free(remote);
+> +			char *up_path = get_up_path(path);
+> +			sub_origin_url = compute_submodule_clone_url(sub->url, up_path, 1);
+> +			super_config_url = compute_submodule_clone_url(sub->url, NULL, 1);
+>   			free(up_path);
+> -			free(remote_url);
+>   		} else {
+>   			sub_origin_url = xstrdup(sub->url);
+>   			super_config_url = xstrdup(sub->url);
+> 
 
 
 -- 
