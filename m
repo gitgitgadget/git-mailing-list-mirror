@@ -2,149 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C386C4320A
-	for <git@archiver.kernel.org>; Sun,  8 Aug 2021 18:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17112C4338F
+	for <git@archiver.kernel.org>; Sun,  8 Aug 2021 18:26:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 53671600CD
-	for <git@archiver.kernel.org>; Sun,  8 Aug 2021 18:21:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E594360EE4
+	for <git@archiver.kernel.org>; Sun,  8 Aug 2021 18:26:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231649AbhHHSWP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Aug 2021 14:22:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58424 "EHLO
+        id S231901AbhHHS1N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Aug 2021 14:27:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230049AbhHHSWO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Aug 2021 14:22:14 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2D78C061760
-        for <git@vger.kernel.org>; Sun,  8 Aug 2021 11:21:55 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id b1-20020a17090a8001b029017700de3903so17241924pjn.1
-        for <git@vger.kernel.org>; Sun, 08 Aug 2021 11:21:55 -0700 (PDT)
+        with ESMTP id S230049AbhHHS1M (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Aug 2021 14:27:12 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4043C061760
+        for <git@vger.kernel.org>; Sun,  8 Aug 2021 11:26:53 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id b1-20020a17090a8001b029017700de3903so17250091pjn.1
+        for <git@vger.kernel.org>; Sun, 08 Aug 2021 11:26:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=P0KujHxmSYr13mpd5zAbpQBGvxYfbKWKkDKUV6sEYlY=;
-        b=L9pFj9f9MVzE8LXaOeEIGsjgqW9vkf/z0vP9WyOJ+0Z7Au+tzlSgqTxgUoc7STF/tl
-         4BgXUL3xL0u2/slKpFSciP+CASc2cnpaG+8crEvfDZBCPZDgnL8OZE411I5GIc0fGSfI
-         lkCmlZICyIfWvvWZE3i0bGDkTV1K9PMa6AihpTr6z82D8j9/PuFKW4E/xWjpUFnNoVP1
-         5sTMgmvddWAZsXdejauJEzEBaNF9LRXfpNm2bOpUjUMWUqto212VxiCH0d+bCMkCfeO/
-         QhXxQIS+KQB4hDCdzTO14J7s21ZO8Qg3AGwV2uNgp6/ELHVl/x4eFJ0KBX0r8rFyo6Tr
-         W8BA==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=gsUDPBm3L6VctkeQX8SP/HRrfJpV/dh+piQEXTiqG2Q=;
+        b=cI56+bZ9JOyjAkKyMfvbj5BdqOGT4nNIPwwLrBbaAvxJh+kJf18YE4a2MD0SkmMN6t
+         3lNRdwCPBYU5VHQUweQ+BYkaG1los/oOUjsFz8jWJwvbxM9ChcnFrSl9zXJzywRmUrky
+         /UCpIGPt6JQQQQ0w3YQQIovGOg4EyavmI4aDYrK144BKq/D/sOMfyf3c3DUxpmMqwU7H
+         N+iUazQSK6DXXhGSYfhn7H1hAkqVGof6G5zCLDdHMhA1jwcak1RxEnM2J9Ta95h6A3OR
+         sIrkF1A5tf8BxlBcfsAPVKuWYE/lIcqnSzAa0oktCD5fc3CqjeZvIErVQviS+UBPGIcM
+         179g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=P0KujHxmSYr13mpd5zAbpQBGvxYfbKWKkDKUV6sEYlY=;
-        b=RL7E+y3D/0vaSdsbsOrNmYtlhN8YTzpJdEiRbJXJM7V1E4zrPh1bJkBF+g8I5huDii
-         /OUjmPm3q8GBKVTmy3RRxvGPXPbRiuS4ipvFHiyMQNqcE0rXwOBJUXgCHPZQgW2ecYYU
-         KartSlYHkd+FDY7E5tGN+HppBPgtSJ1HkZNF2fguGznK8nOgQ0qF+nc4ZdWLItv7rrQk
-         XimEtoCpp1y/yT36wYA1TtapjkTZML4R1iQrppUtfROy7UX+7iZGfSNgoOPW+i7yj7dX
-         +UJW4G9XlOCb1HOcVrqbDq1owNvcomboQDKW/oQiFKr7pR4VgNfbpsYgbhC6IB/ClK2B
-         Q6Lg==
-X-Gm-Message-State: AOAM53218AQRDpp7rN4toi1gUEiXz2GA59Qosl/hvDeLNMG28r8YttjS
-        jd1QSKWv6B60ipg8BRfQq3hSQtFKHw6tqfvi33Q=
-X-Google-Smtp-Source: ABdhPJwkqrKfyn+qlAgzj4+3ARQuyAfHoQR04VP1WKydrdOHvVsymC2hT2d51qysQ++HF8NJYbptpF3SdSiyWFUmAls=
-X-Received: by 2002:a17:90a:cf94:: with SMTP id i20mr30682352pju.219.1628446915400;
- Sun, 08 Aug 2021 11:21:55 -0700 (PDT)
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=gsUDPBm3L6VctkeQX8SP/HRrfJpV/dh+piQEXTiqG2Q=;
+        b=RAOd6zReurp0fTMAszjK8fJbZsYsai+69mES50FSjdeGUcjvEJBHQIlXqWEs+gBueB
+         F4tb5R60+YtM6q6dfeBSEvuw4Hi1JFWOPZ30soILaIcjnzmgJl3i6bDx8QJZDuHSIhg5
+         aIxdFB+dwn117Yj4z6EQRZu2FsZNzZjFAqtvtVVPmmSz0iz9411Ut77OLQwAWsW3PZEf
+         CfNwilv5RrBmT7fT1T2NfdCuPUVyfS0gXabzJEdy/DwoQh49j6lIDcqG9EaW7rG/SGDP
+         x90R5TMvYRbYcbmypJq2D4Mc1HPPLUJzcaCPbYqKKR5gxacITAfCQm7ANePeEh4S6LtD
+         64+g==
+X-Gm-Message-State: AOAM531+lylRrRMc9wf9PFm8DWQjpF5v6eeP3ZJsWnfZUKI+MOMVFNnv
+        W8oR/OdjaxMQOO8xyMkpsqI=
+X-Google-Smtp-Source: ABdhPJwfKJY6AYP07nZCJoXC4JJG0l/ts8urQG3ppfnCqjERz5Fc43WCkmDFCptjAz2hMyM3bhpf8g==
+X-Received: by 2002:a17:90b:1bca:: with SMTP id oa10mr22272026pjb.177.1628447213125;
+        Sun, 08 Aug 2021 11:26:53 -0700 (PDT)
+Received: from [192.168.208.38] ([49.205.84.169])
+        by smtp.gmail.com with ESMTPSA id bb14sm8806537pjb.14.2021.08.08.11.26.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 08 Aug 2021 11:26:52 -0700 (PDT)
+Subject: Re: [GSoC] [PATCH v4 1/8] submodule--helper: add options for
+ compute_submodule_clone_url()
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     Atharva Raykar <raykar.ath@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     avarab@gmail.com, christian.couder@gmail.com, congdanhqx@gmail.com,
+        emilyshaffer@google.com, git@vger.kernel.org, jrnieder@gmail.com,
+        pc44800@gmail.com, periperidip@gmail.com,
+        rafaeloliveira.cs@gmail.com, sunshine@sunshineco.com
+References: <20210806120147.73349-1-raykar.ath@gmail.com>
+ <20210807071613.99610-1-raykar.ath@gmail.com>
+ <20210807071613.99610-2-raykar.ath@gmail.com>
+ <0752736f-11d5-103b-653f-a4bbe6436304@gmail.com>
+Message-ID: <187083ab-a2e3-0933-5bff-9b409b2946ea@gmail.com>
+Date:   Sun, 8 Aug 2021 23:56:48 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <20210807202752.1278672-1-noah.pendleton@gmail.com>
- <xmqqr1f5hszw.fsf@gitster.g> <CADm0i3-ToKo1gNTXXLHH6i2d4qpz771VeRjDsfJjgbgMfhx6rA@mail.gmail.com>
- <xmqqtuk0h4ph.fsf@gitster.g> <xmqqim0fhlm1.fsf@gitster.g>
-In-Reply-To: <xmqqim0fhlm1.fsf@gitster.g>
-From:   Noah Pendleton <noah.pendleton@gmail.com>
-Date:   Sun, 8 Aug 2021 14:21:44 -0400
-Message-ID: <CADm0i39LV91kochHSGVHovaTbDOd0COrQPXHD3x8rEj-1Y+eMA@mail.gmail.com>
-Subject: Re: [PATCH 0/1] blame: Skip missing ignore-revs file
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <0752736f-11d5-103b-653f-a4bbe6436304@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Very good point- I see about 21 call sites for `git_config_pathname`,
-plus a few others (`git_config_get_pathname`) that bottom out in the
-same function. I could see the utility of optional paths for some of
-them: for example, `commit.template`, `core.excludesfile`. Some of the
-others seem a little more ambiguous, eg `http.sslcert` probably wants
-to always fail in case of missing file.
+On 08/08/21 11:11 pm, Kaartic Sivaraam wrote:
+> On 07/08/21 12:46 pm, Atharva Raykar wrote:
+>> Let's modify the interface to `compute_submodule_clone_url()` function
+>> by adding two more arguments, so that we can reuse this in various parts
+>> of `submodule--helper.c` that follow a common pattern, which is--read
+>> the remote url configuration of the superproject and then call
+>> `relative_url()`.
+>>
+>> This function is nearly identical to `resolve_relative_url()`, the only
+>> difference being the extra warning message. We can add a quiet flag to
+>> it, ...
+> 
+> It took me a while to figure what "it" meant in the above sentence. Does it
+> refer to `compute_submodule_clone_url` or `resolve_relative_url`. After one
+> sees the patch and takes a look at `resolve_relative_url`, it's clear the "it"
+> indeed does refer to `resolve_relative_url`. But it might worth clarifying this
+> in the commit message itself.
+> 
+> Certainly not worth a re-roll on its own. May be Junio could amend this while queing ?
+> 
+Actually, I just noticed two other things which might be re-roll worthy. Read on ...
 
-There seems to be a mix of fail-hard on invalid paths, printing a
-warning message and skipping, and silently ignoring.
+> -static char *compute_submodule_clone_url(const char *rel_url)
+> +static char *compute_submodule_clone_url(const char *rel_url, const char *up_path, int quiet)
+>  {
+>  	char *remoteurl, *relurl;
 
-Hard for me to predict what the least confusing behavior is around
-path configuration values, though, so maybe adding support for the
-`:(optional)` (and maybe additionally a `:(required)`) tag across the
-board to pathname configs is the right move.
+I know this isn't new code. But there's already an argument names
+'rel_url'. So, a variable named 'relurl' in the same scope is making it
+hard to distinguish between these two. Could you also try distinguishing
+these better by renaming 'relurl' to 'res' or something else?
 
-That patch might be beyond what I'm capable of, though I'm happy to
-put up a draft that applies it to the original `ignoreRevsFile` case
-as a starting point.
+>  	char *remote = get_default_remote();
+> @@ -598,10 +598,14 @@ static char *compute_submodule_clone_url(const char *rel_url)
+>  
+>  	strbuf_addf(&remotesb, "remote.%s.url", remote);
+>  	if (git_config_get_string(remotesb.buf, &remoteurl)) {
+> -		warning(_("could not look up configuration '%s'. Assuming this repository is its own authoritative upstream."), remotesb.buf);
+> +		if (!quiet)
+> +			warning(_("could not look up configuration '%s'. "
+> +				  "Assuming this repository is its own "
+> +				  "authoritative upstream."),
+> +				remotesb.buf);
+>  		remoteurl = xgetcwd();
+>  	}
+> -	relurl = relative_url(remoteurl, rel_url, NULL);
+> +	relurl = relative_url(remoteurl, rel_url, up_path);
 
-On Sun, Aug 8, 2021 at 1:50 PM Junio C Hamano <gitster@pobox.com> wrote:
+After reading 2/8 of the series, I just noticed that 'remoteurl' is always
+initialized in 'resolve_realtive_url'. It is either initialized to the return
+value of 'xgetcwd' or retains its assigned value of 'NULL'. But it looks
+like that's not the case here. 'remoteurl' could be used uninitialized
+when the above if block does not get executed which in turn could result in
+weird behaviour in case 'remoteurl' gets a value of anything other than 'NULL'
+at runtime.
+
+This again has nothing to do with the change done in this patch. Regardless, it
+looks like something worth correcting. Thus, I thought of pointing it out.
+
+>  
+>  	free(remote);
+>  	free(remoteurl);
+> @@ -660,7 +664,7 @@ static void init_submodule(const char *path, const char *prefix,
+>  		if (starts_with_dot_dot_slash(url) ||
+>  		    starts_with_dot_slash(url)) {
+>  			char *oldurl = url;
+> -			url = compute_submodule_clone_url(oldurl);
+> +			url = compute_submodule_clone_url(oldurl, NULL, 0);
+>  			free(oldurl);
+>  		}
 >
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > I think an easier way out is to introduce a new configuration
-> > variable blame.ignoreRevsFileIsOptional which takes a boolean value,
-> > and when it is set to true, silently ignore when the named file does
-> > not exist without any warning.  When the variable is set to false
-> > (or the variable does not exist), we can keep the current behaviour
-> > of noticing a misconfigured blame.ignoreRevsFile and error out.
-> >
-> > That way, the current users who rely on the typo detection feature
-> > can keep relying on it, and those who want to make it optional can
-> > do so without getting annoyed by a warning.
->
-> A bit more ambitious might want to consider another more generally
-> applicable avenue, which would help the userbase a lot more, before
-> continuing.
->
-> We start from the realization that this is not the only
-> configuration variable that specifies a filename that could be
-> missing.  There may be other variables that name files to be used
-> ("git config --help" would hopefully be the most comprehensive, but
-> "git grep -e git_config_pathname \*.c" would give us quicker
-> starting point to gauge how big an impact to the system we would be
-> talking about).
->
-> What do the codepaths that use these variables do when they find
-> that the named files are missing?  Do some of them die, some
-> others just warn, and yet some others silently ignore?  Would such
-> an inconsistency hurt our users?
->
-> Among the ones that die, are there ones that could reasonably
-> continue as if the configuration variable weren't there and no file
-> was specified (i.e. similar to what you want blame.ignoreRevsFile to
-> do)?  Among the ones that are silently ignored, are there ones that
-> may benefit by having a typo-detection?  Do all of them benefit if
-> the behaviour upon missing files can be configurable by the end-user?
->
-> Depending on the answers to the above questions, it might be that it
-> is not a desirable approach to add "blame.ignoreRevsFileIsOptional"
-> configuration variable, as all the existing configuration variables
-> that name files would want to add their own.  We might be better off
-> inventing a syntax for the value of blame.ignoreRevsFile (and other
-> variables that name files) to mark if the file is optional (i.e.
-> silently ignore if the named file does not exist) or required (i.e.
-> diagnose as a configuration error).  For example, we may borrow from
-> the "magic" syntax for pathspecs that begin with ":(", with comma
-> separated "magic" keywords and ends with ")" and specify optional
-> pathname configuration like so:
->
->     [blame] ignoreRevsFile = :(optional).gitignorerevs
->
-> and teach the config parser to pretend as if it saw nothing when it
-> notices that the named file is missing.  That approach would cover
-> not just this single variable, but other variables that are parsed
-> using git_config_pathname() may benefit the same way (of course, the
-> callsites for git_config_pathmame() must be inspected and adjusted
-> for this to happen).
->
-> Thanks.
->
+
+
+-- 
+Sivaraam
