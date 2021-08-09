@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62EACC4320A
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 06:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F123C4338F
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 06:30:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 44BC261053
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 06:30:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3DFE761055
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 06:30:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233260AbhHIGai (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Aug 2021 02:30:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47920 "EHLO
+        id S233288AbhHIGaj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Aug 2021 02:30:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233287AbhHIGah (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233285AbhHIGah (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 9 Aug 2021 02:30:37 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E84ECC0613D3
-        for <git@vger.kernel.org>; Sun,  8 Aug 2021 23:30:16 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id 14so17313989qkc.4
-        for <git@vger.kernel.org>; Sun, 08 Aug 2021 23:30:16 -0700 (PDT)
+Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF843C0613CF
+        for <git@vger.kernel.org>; Sun,  8 Aug 2021 23:30:17 -0700 (PDT)
+Received: by mail-qv1-xf35.google.com with SMTP id kl2so8414836qvb.11
+        for <git@vger.kernel.org>; Sun, 08 Aug 2021 23:30:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bnzBnMQhFZkKkyshh1/kSD2D62Z31DSS8JErgOgb95U=;
-        b=HwFKO36o3aUnwGHjcYsA9gaSNWzet7QFerQyka77RUOdknW+69nGZfBRMjadKrIoBM
-         Cu+WiZxlpMz5VtsKKzIsqxPj52KqxX4lPwoS2h7VnURjPenBHiRA3jhZOW2Fz/tmkrXx
-         L7gQGvNjo/wNCIEKWJNDe1sISbqwAjUlVOVw0BOmD5uee93AJXcuvdQjSM5yIHCPfgQh
-         8dmDxsVTqilhpNq/mu5VYLBeauKguCQ5wZF0aizAUSucYG41+Fk+7isvBncaHT9g64LJ
-         LXOAqpUJ1Wu5xq9Fn3PTXJfZotNmsgD78VjgCnh3n9BLBEqQCfIROa6OzZUSyTBvtLOw
-         1S4Q==
+        bh=zjOhvZHxZGWrtRDaP/beG7zzYAP6PHJOKlH7N9Bg1Os=;
+        b=V5PUsUl6+nSh5X7TsRywvumUpfM2lklcjaI+g/DisV8q3UjNo9YrJFA2tWbDQrWw0X
+         bnb/PqnVXnd0xRcS8g9hjwG3KAS9ZVddo8xwCdor1+N2VSmFgpvZZQCKsozPtv30H9+4
+         TkgWaAVZYXevvC0hz5tQHQ3YxWHz1ZesF2w0W637Vp/KbvooCP+d1KoFAv5IIxxNkc/4
+         MUAMAsMkkemCVkdHsx0DwDj8q0hsqg3SUrT6v1PYGbSiVB+G7439XhkS+p6U5u1/lc42
+         isd3khlyhHwSJ1hdnjM6idGr1st5Bz/drFZMf8Zk5XXkyZwPoyFCX7rekuaUcFJFs/Bi
+         BC0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bnzBnMQhFZkKkyshh1/kSD2D62Z31DSS8JErgOgb95U=;
-        b=ftbZQf0JHH7lfFzq6HM5FJsK4SNGHEIhLNt7RSL4sKslzezH2ceQCyO/00B9bfZ5NZ
-         tAQ0Zw0R0V3mulfoyituUvM5lScP4zTP/M+CeaPLLOZnbWjTTqd4Pp34q/gg/jwMYXzx
-         yX1muH/1lsMZ7iUDO0d8EQOpmFmKw0M3GRLRuyOADenAKEurs77qFjg2zFjc1HgszY7/
-         sIXHhTM9sjAQrIPCUlbAYXdNI2yTum04C3DWE+Ena4xLfANT9y0JBOR9132vnKmgN4VY
-         N4h8dE/J0VEOXTRNIQ/4/HKiK8k5sJ9se6EZogn9z9gbbk+MPehQAkvKS+CZtxryMLuX
-         o8qQ==
-X-Gm-Message-State: AOAM532E8HDMg2iAwv0BTnQwU19eXfUc+NSI7zyqzSCONZbA+1cNwZ3j
-        AKQlbgpLXS4INBPf0rREhTRSfmksglo=
-X-Google-Smtp-Source: ABdhPJyeACtS0ETkh8Ze5LQRy1kYunCXW63sJEhscfxuiyWplo/yYGdDsJk/OmLZ8oKtpuI9fzg7RA==
-X-Received: by 2002:ae9:ef43:: with SMTP id d64mr12573887qkg.252.1628490615995;
-        Sun, 08 Aug 2021 23:30:15 -0700 (PDT)
+        bh=zjOhvZHxZGWrtRDaP/beG7zzYAP6PHJOKlH7N9Bg1Os=;
+        b=ncjjYvxD+lzPJBmSDBEfSam9fBimKEjsi18KlQKDCSA7Mkx6LovTB3CYRBGG6cuQjk
+         GgwNdo67fn10gkmIDBVTqCX5WzglhdgJDvBko/0XDnh2C3LMpJ2EbF4g+kD3FM9Cog/B
+         AI1NJywCV2O6eik4SDEmxd5nCaeVT0KiJ7TEkiwj1qkm3SmIFp3xuFrAqKAysgDXlVuj
+         qUN70hX/8xlOYe58R61hCjVck/d7ktF3fsiJ6JgxQkVm19C4enYd7gNOTjANHTPq8x5X
+         UHSjst5EQMq0wniyX9NZmNofWX6M58FUTS7IqLaIvDSEUyRhmN6OcPVzrb8Gc9k/EFNV
+         3raw==
+X-Gm-Message-State: AOAM531zPBUgcIraVhriRABZobytayHE0Fpzmh76Q1E4iUV0yIy/XP17
+        qplbeg7T8wqMUyzKtWRN5a+pb+0vecc=
+X-Google-Smtp-Source: ABdhPJzi0R7UucXe2BsXJy3fQTU5ZoYNHu310rAkxxg6/pIr3OydW3rnzJCbzBwtiNBMQAT4twReOw==
+X-Received: by 2002:a0c:e908:: with SMTP id a8mr22217415qvo.61.1628490616874;
+        Sun, 08 Aug 2021 23:30:16 -0700 (PDT)
 Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id 10sm1239994qkv.135.2021.08.08.23.30.15
+        by smtp.gmail.com with ESMTPSA id 10sm1239994qkv.135.2021.08.08.23.30.16
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 Aug 2021 23:30:15 -0700 (PDT)
+        Sun, 08 Aug 2021 23:30:16 -0700 (PDT)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
 Cc:     jeffhost@microsoft.com,
         =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
-Subject: [PATCH 1/2] fixup! fsmonitor-ipc: create client routines for git-fsmonitor--daemon
-Date:   Sun,  8 Aug 2021 23:30:03 -0700
-Message-Id: <20210809063004.73736-2-carenas@gmail.com>
+Subject: [PATCH 2/2] fixup! fsmonitor--daemon: implement handle_client callback
+Date:   Sun,  8 Aug 2021 23:30:04 -0700
+Message-Id: <20210809063004.73736-3-carenas@gmail.com>
 X-Mailer: git-send-email 2.33.0.rc1.373.gc715f1a457
 In-Reply-To: <20210809063004.73736-1-carenas@gmail.com>
 References: <20210809063004.73736-1-carenas@gmail.com>
@@ -75,35 +75,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-fsmonitor: ensure enum ipc_active_state is defined before using
+fsmonitor: avoid extra ; for KHASH_INIT
 
-In file included from fsmonitor.c:6:
-fsmonitor-ipc.h:23:6: error: ISO C forbids forward references to 'enum' types [-Werror=pedantic]
-   23 | enum ipc_active_state fsmonitor_ipc__get_state(void);
-      |      ^~~~~~~~~~~~~~~~
-In file included from t/helper/test-fsmonitor-client.c:9:
-./fsmonitor-ipc.h:23:6: warning: ISO C forbids forward references to 'enum' types [-Wpedantic]
-enum ipc_active_state fsmonitor_ipc__get_state(void);
-     ^
+builtin/fsmonitor--daemon.c:622:75: error: ISO C does not allow extra ';' outside of a function [-Werror=pedantic]
+  622 | KHASH_INIT(str, const char *, int, 0, kh_str_hash_func, kh_str_hash_equal);
+      |                                                                           ^
 
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- fsmonitor-ipc.h | 2 ++
- 1 file changed, 2 insertions(+)
+ builtin/fsmonitor--daemon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fsmonitor-ipc.h b/fsmonitor-ipc.h
-index 837c5e5b64..7e02c7285a 100644
---- a/fsmonitor-ipc.h
-+++ b/fsmonitor-ipc.h
-@@ -1,6 +1,8 @@
- #ifndef FSMONITOR_IPC_H
- #define FSMONITOR_IPC_H
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index 25f18f2726..d018af346f 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -619,7 +619,7 @@ static int fsmonitor_parse_client_token(const char *buf_token,
+ 	return 0;
+ }
  
-+#include "simple-ipc.h"
-+
- /*
-  * Returns true if built-in file system monitor daemon is defined
-  * for this platform.
+-KHASH_INIT(str, const char *, int, 0, kh_str_hash_func, kh_str_hash_equal);
++KHASH_INIT(str, const char *, int, 0, kh_str_hash_func, kh_str_hash_equal)
+ 
+ static int do_handle_client(struct fsmonitor_daemon_state *state,
+ 			    const char *command,
 -- 
 2.33.0.rc1.373.gc715f1a457
 
