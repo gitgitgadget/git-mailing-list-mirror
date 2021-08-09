@@ -2,100 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AE7BC432BE
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 17:59:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4661C4338F
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 18:09:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 510D661159
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 17:59:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A84CA60F02
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 18:09:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235010AbhHISAO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Aug 2021 14:00:14 -0400
-Received: from mail-0201.mail-europe.com ([51.77.79.158]:55064 "EHLO
-        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235454AbhHIR61 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Aug 2021 13:58:27 -0400
-Date:   Mon, 09 Aug 2021 17:57:24 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=eagain.st;
-        s=protonmail; t=1628531853;
-        bh=PawN1DSchlwwynFD29hO5I1QaJ0beebmNePcuE23PCE=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=oPoJSlHyuAbWNfwCJvZfGaKyU0V+n5aUNXS9dpCybqAETmk5NFhUOvAb+8PfjBmf8
-         5w/kk8BzBoEpQn6kqbG7EHzLiGnE9boQ4/tG3k27yhHRsD/nrF4VXqLG8l0MSZXlQ2
-         8WTG4oX3Xf3X5tmGG+STp8f0ntUsaVt9wkuGs8tE2z3LpS+1IJV3UwJ0sZMiNpfi8w
-         cb+zAaSWiLQbafrU2TZuBPB180ickRs6dx1HVfzj1boO5OnFEPShjBvq8Q5Kv4ls9t
-         JtDoGhcFyyDtbBmVMzDOg3yZ1MbEDX5adaodAGzZwUbHdvnQ+K3gglIMaEmdBluDIo
-         rKHfCVNJhUuFg==
-To:     git@vger.kernel.org
-From:   Kim Altintop <kim@eagain.st>
-Cc:     kim@eagain.st, gitster@pobox.com, jonathantanmy@google.com,
-        bwilliams.eng@gmail.com
-Reply-To: Kim Altintop <kim@eagain.st>
-Subject: [PATCH 3/3] docs: clarify the interaction of transfer.hideRefs and namespaces
-Message-ID: <20210809175530.75326-4-kim@eagain.st>
-In-Reply-To: <20210809175530.75326-1-kim@eagain.st>
-References: <20210730135845.633234-1-kim@eagain.st> <20210731203415.618641-1-kim@eagain.st> <20210804203829.661565-1-kim@eagain.st> <20210804205951.668140-1-kim@eagain.st> <20210809175530.75326-1-kim@eagain.st>
+        id S232642AbhHISJV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Aug 2021 14:09:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42644 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230243AbhHISJU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Aug 2021 14:09:20 -0400
+Received: (qmail 2035 invoked by uid 109); 9 Aug 2021 18:08:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Aug 2021 18:08:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1628 invoked by uid 111); 9 Aug 2021 18:08:59 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Aug 2021 14:08:59 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 9 Aug 2021 14:08:58 -0400
+From:   Jeff King <peff@peff.net>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] detect-compiler: clang updates
+Message-ID: <YRFvOp+3kjfYdi0q@coredump.intra.peff.net>
+References: <YQ2LdvwEnZN9LUQn@coredump.intra.peff.net>
+ <20210806205235.988761-1-gitster@pobox.com>
+ <87bl6aypke.fsf@evledraar.gmail.com>
+ <YQ3suvJfspzRNPL9@coredump.intra.peff.net>
+ <875ywiyn4y.fsf@evledraar.gmail.com>
+ <YQ6VJW0AwkouDnDe@coredump.intra.peff.net>
+ <8735rlz5r2.fsf@evledraar.gmail.com>
+ <YQ6bTm6DxeJLhmeA@coredump.intra.peff.net>
+ <CAPUEsph1ZqE9KtT7ooJEa=jURq+=cG78MXwPxahb7f0YXYHL7g@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <CAPUEsph1ZqE9KtT7ooJEa=jURq+=cG78MXwPxahb7f0YXYHL7g@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Expand the section about namespaces in the documentation of
-`transfer.hideRefs` to point out the subtle differences between
-`upload-pack` and `receive-pack`.
+On Sat, Aug 07, 2021 at 05:30:39PM -0700, Carlo Arenas wrote:
 
-9bedd82017 (upload-pack.c: treat want-ref relative to namespace,
-2021-07-30) taught `upload-pack` to reject `want-ref`s for hidden refs,
-which is now documented.
+> On Sat, Aug 7, 2021 at 7:40 AM Jeff King <peff@peff.net> wrote:
+> > The distinction does not matter for our script (where we only care about
+> > "clang4" and up). I guess the most relevant test would be to get XCode
+> > 8.x and see what it says. I expect it to claim "clang 8.1.0" or similar,
+> > but actually be clang-3. And therefore not support
+> > -Wtautological-constant-out-of-range-compare.
+> 
+> uses Xcode 7.3 (based on clang 3.8) and either does support that flag
+> or ignores it silently
+> 
+>   https://www.travis-ci.com/github/carenas/git/builds/234772346
+> 
+> the same was observed with Xcode 8
+> 
+> both error later and fail to build because of a valid (but harmless)
+> -Wformat-extra-args warning that doesn't trigger in later versions
 
-Signed-off-by: Kim Altintop <kim@eagain.st>
----
- Documentation/config/transfer.txt | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+Thanks for testing. I think I was wrong that clang4 is the limit for
+that option, though. It comes originally from:
 
-diff --git a/Documentation/config/transfer.txt b/Documentation/config/trans=
-fer.txt
-index 505126a780..09ebb399ce 100644
---- a/Documentation/config/transfer.txt
-+++ b/Documentation/config/transfer.txt
-@@ -52,13 +52,16 @@ If you have multiple hideRefs values, later entries ove=
-rride earlier ones
- (and entries in more-specific config files override less-specific ones).
- +
- If a namespace is in use, the namespace prefix is stripped from each
--reference before it is matched against `transfer.hiderefs` patterns.
--For example, if `refs/heads/master` is specified in `transfer.hideRefs` an=
-d
--the current namespace is `foo`, then `refs/namespaces/foo/refs/heads/maste=
-r`
--is omitted from the advertisements but `refs/heads/master` and
--`refs/namespaces/bar/refs/heads/master` are still advertised as so-called
--"have" lines. In order to match refs before stripping, add a `^` in front =
-of
--the ref name. If you combine `!` and `^`, `!` must be specified first.
-+reference before it is matched against `transfer.hiderefs` patterns. For
-+example, if `refs/heads/master` is specified in `transfer.hideRefs` and th=
-e
-+current namespace is `foo`, then `refs/namespaces/foo/refs/heads/master` i=
-s
-+omitted from the advertisements. If `uploadpack.allowRefInWant` is set,
-+`upload-pack` will treat `want-ref refs/heads/master` in a protocol v2
-+`fetch` command as if `refs/heads/master` was unknown. Note, however, that
-+`receive-pack` will still advertise the object id `refs/heads/master` is
-+pointing to, but will conceil the name of the ref. In order to match refs
-+before stripping, add a `^` in front of the ref name. If you combine `!` a=
-nd
-+`^`, `!` must be specified first.
- +
- Even if you hide refs, a client may still be able to steal the target
- objects via the techniques described in the "SECURITY" section of the
---
-2.32.0
+  https://lore.kernel.org/git/20180317160832.GB15772@sigill.intra.peff.net/
 
+where clang4 just happened to be the oldest thing I had access to at the
+time, so we used that as a minimum. So probably all of our "clang4"
+could really be "any clang" (but it is probably OK to leave it as-is).
 
+-Peff
