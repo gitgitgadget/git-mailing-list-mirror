@@ -2,107 +2,205 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FEE0C4320A
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 19:11:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26BBDC4338F
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 19:11:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E63E760BD3
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 19:11:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 003DB61052
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 19:11:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235656AbhHITLm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Aug 2021 15:11:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53760 "EHLO
+        id S235838AbhHITMK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Aug 2021 15:12:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235487AbhHITLm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Aug 2021 15:11:42 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 864B5C0613D3
-        for <git@vger.kernel.org>; Mon,  9 Aug 2021 12:11:21 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id a20so17646564plm.0
-        for <git@vger.kernel.org>; Mon, 09 Aug 2021 12:11:21 -0700 (PDT)
+        with ESMTP id S235487AbhHITMJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Aug 2021 15:12:09 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B8A1C0613D3
+        for <git@vger.kernel.org>; Mon,  9 Aug 2021 12:11:48 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id h24-20020a1ccc180000b029022e0571d1a0so736212wmb.5
+        for <git@vger.kernel.org>; Mon, 09 Aug 2021 12:11:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=E1seFjOdjfXedtOJwIoHb9Hu47D8yX2ZZgGkCwMRnr0=;
-        b=HbYqFU82WmqGWhxmW3rFrUpiCCAsKzOtRwyDoeHnIMzFk4rcbXAMf79+QNGDmzGolF
-         lmwLVvLahUk17rV6Ph21an8j6Q67TxpdZJZVhkNVQg/Xz7shZgi59t9cq54zXNgSOnis
-         oB9bWU8gI8tw8lwjyDHnMbDunJZU9Mf7aeWcPKT93OFmHu7MJOGQqgMW1a97E/0kTsVv
-         UAR+Ytv0zcbrsu9BKNPJcDrT0by5doOCICrJxMV0rYVUxntsK5blJCg3bAwMPT1cA+Uq
-         TKPD/6+00PB47MbpMpfiqPyXcaNRSvU+sb/eYbAX2wfUEx8wdgDjBZiuHau1lZgExO+E
-         aoRA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=5GGKoCqbL6VwW8rnWGWkhbmr1Oo7THOF9L0LtmPGy+I=;
+        b=hnTiyDVzpM0rQJkOiNsna5ciYIeCX5LqLT9BWRo/2qobz+ytC/w2LIJJ13ETtD2ofR
+         5ytDRcOdnRnny+5t+lv0ZvQ9969VBQA9xQmK7WkWVFmG7Y4akACkqtZZNl1S59JlD4zA
+         NfXaoKaplUmp/vRgOCqYIxlutKhEUazVCH+JAbACzpT3JAdOsWc1ookGYIwM7O34G4xq
+         mK+TrGOjpfps3BlAWGUFrWv57vhbQeEVwnlrI0QvUBH/WSO6X6MoHeuZLvNIf1hQGA3M
+         Hwd56I6TC9BiWENBs7DzoW+cwD4mBuouD2agJ64amqoRMojtnFsKS4yXLdDXPJGvyXua
+         C09g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=E1seFjOdjfXedtOJwIoHb9Hu47D8yX2ZZgGkCwMRnr0=;
-        b=DRM43Cej7Z1y4dvPWCbPc1QFNW7RcMJI5WmLiyVSIjYoZ2AZk1XKzWTk0Thn4ntdaq
-         rCKOwMVvCvy0xIAoUOXR0QS00j5dHkcDOn3sW1vxik3zSCSem6Eyf+7OJCnlH6bZh/Ys
-         G6g79DURJvJTDVj6lgu9nMfLjcAV1h6La+Q4NgOEvVcOvDfTW1RJd5sDrBOVhDdRbMpL
-         SIHSpXSSdvDhMzaru9ayhFi/CRZ9JYB6N47Sq+scSgNFd2uY0mwADm2mQVj9KIFI4BCD
-         SvvDLaS7qbS6Tmy5WAxM4iW4CUbJs3lhW63+nNvU+rX8J+IxKp3IbjsUsGwMxTlTWtA7
-         Eu6g==
-X-Gm-Message-State: AOAM531iTuAGv1Ez8WvBXT5lPxxuzBsoNEVL6SczKY8a3VzBSQ1qb3R4
-        S4i2fFdT1udbtM3d+9Y0hnQ=
-X-Google-Smtp-Source: ABdhPJyMSfwNg3X7wG/VbMNkMeBwsc6kGIKW9HxZ1Fz5NQR/F6mWXt5eQ3b2rs4SbvzIR9jjG5uo5w==
-X-Received: by 2002:a17:902:bd81:b029:12c:b6fb:feef with SMTP id q1-20020a170902bd81b029012cb6fbfeefmr22042237pls.84.1628536281089;
-        Mon, 09 Aug 2021 12:11:21 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:4d74:2fd5:acb7:59ca])
-        by smtp.gmail.com with ESMTPSA id n35sm24566908pgb.90.2021.08.09.12.11.20
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=5GGKoCqbL6VwW8rnWGWkhbmr1Oo7THOF9L0LtmPGy+I=;
+        b=ZrUr285ceS6CAIlQ1nRe9PQkhsJ4zXcauZOIGSkDnTz9s+pF4QJ8HFuT9z/Y3F1MXc
+         wC/Bmj2bIzCLYa2W+nt7Ataye+pEezUrsymdkEd2SsGoQhAOz4m2t/XbUJ/bHYwhWdqS
+         zkBzz2EKy3Imjj0R+Lh+rXLDHeJn81zWrDiMwUjHvutJJ9+TbFneifAb38GFZ7e/Ke6m
+         Vb5pgkbyxg/TMkVzBtVR2AimdYhD2m2BzBvG8iSdKMOB/AlWM46crcP0VXSTAG3YRLQo
+         AQ0tOJVovp8GEuU7Oc5gWhpi+Tu+CVAC8Syoeq9VOcaPxbhnTLuQDkuO5SvLpKzz8ykD
+         e9EA==
+X-Gm-Message-State: AOAM532NjFmixX3spGO2zokAj4XMInklVgwdUTGDApdM8zeKWHyNBrDh
+        XyZBK3o2bzRXh1AwevpyGlfqFNHxKb8=
+X-Google-Smtp-Source: ABdhPJwQMEbFDtcAjgaewZJJjnmGDasP6ndlRADXcWFaFHXGLQHlCxg7GzLOQw+7gTd7FPQkyH6KrA==
+X-Received: by 2002:a05:600c:1c13:: with SMTP id j19mr18326462wms.164.1628536306975;
+        Mon, 09 Aug 2021 12:11:46 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h11sm398749wmc.23.2021.08.09.12.11.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Aug 2021 12:11:20 -0700 (PDT)
-Date:   Mon, 9 Aug 2021 12:11:18 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] transport: no warning if no server wait-for-done
-Message-ID: <YRF91qCi+c7csUxM@google.com>
-References: <20210806214612.1501980-1-jonathantanmy@google.com>
- <xmqqh7fyfrtl.fsf@gitster.g>
+        Mon, 09 Aug 2021 12:11:46 -0700 (PDT)
+Message-Id: <pull.1006.v4.git.1628536305810.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1006.v3.git.1627946590.gitgitgadget@gmail.com>
+References: <pull.1006.v3.git.1627946590.gitgitgadget@gmail.com>
+From:   "Mahi Kolla via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 09 Aug 2021 19:11:45 +0000
+Subject: [PATCH v4] clone: update submodule.recurse in config when using
+ --recurse-submodule
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqh7fyfrtl.fsf@gitster.g>
+To:     git@vger.kernel.org
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Mahi Kolla <mahikolla@google.com>,
+        Mahi Kolla <mahikolla@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: Mahi Kolla <mahikolla@google.com>
 
-Junio C Hamano wrote:
-> Jonathan Tan <jonathantanmy@google.com> writes:
+When running 'git clone --recurse-submodules', developers might expect various other commands such as 'pull' and 'checkout' to also run recursively into submodules. Set 'submodule.recurse' to true when 'git clone' is run with '--recurse-submodules'.
 
->> -	if (finish_command(&child)) {
->> -		/*
->> -		 * The information that push negotiation provides is useful but
->> -		 * not mandatory.
->> -		 */
->> -		warning(_("push negotiation failed; proceeding anyway with push"));
->> -	}
->
-> Perhaps like "optional ancestry negotiation failed---pushing
-> normally" or some phrasing that assures the users that pushing
-> without negotiation is perfectly normal?
+Since V1: Updated test and 'git clone' man page. Also updated commit message.
 
-The question is what the user will do with this information.
+Signed-off-by: Mahi Kolla <mahikolla@google.com>
+---
+    clone: update submodule.recurse in config when using --recurse-submodule
+    
+    When running 'git clone --recurse-submodules', developers might expect
+    various other commands such as 'pull' and 'checkout' to also run
+    recursively into submodules. Set 'submodule.recurse' to true when 'git
+    clone' is run with '--recurse-submodules'.
+    
+    Since V1: Updated test and 'git clone' man page. Also updated commit
+    message.
+    
+    Signed-off-by: Mahi Kolla mahikolla@google.com
+    
+    cc: Philippe Blain levraiphilippeblain@gmail.com
 
-Will they contact the service provider to ask them to turn on push
-negotiation?
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1006%2F24mahik%2Fmaster-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1006/24mahik/master-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1006
 
-Will they turn off push negotiation because they don't want to waste a
-round trip?
+Range-diff vs v3:
 
-Does what they will do depend on _why_ push negotiation failed?  If it
-failed because the server didn't declare the capability and the user
-has set push.negotate to true to represent "I want to live in the
-future by using push negotiation wherever it's available", then the
-message is noise.  If it failed due to a bug, then the message is more
-relevant to the user --- e.g., should we use a different exit status
-to distinguish between these two cases?
+ 1:  fea3d6d72b6 ! 1:  73937d48a53 clone: update submodule.recurse in config when using --recurse-submodule
+     @@ Metadata
+       ## Commit message ##
+          clone: update submodule.recurse in config when using --recurse-submodule
+      
+     -    When running 'git clone --recurse-submodules', developers expect various other commands such as 'pull' and 'checkout' to also run recursively into submodules.The submitted code updates the 'submodule.recurse' config value to true when 'git clone' is run with the '--recurse-submodules' option.
+     +    When running 'git clone --recurse-submodules', developers might expect various other commands such as 'pull' and 'checkout' to also run recursively into submodules. Set 'submodule.recurse' to true when 'git clone' is run with '--recurse-submodules'.
+     +
+     +    Since V1: Updated test and 'git clone' man page. Also updated commit message.
+      
+          Signed-off-by: Mahi Kolla <mahikolla@google.com>
+      
+     + ## Documentation/git-clone.txt ##
+     +@@ Documentation/git-clone.txt: branch of some repository for search indexing.
+     + 	This option can be given multiple times for pathspecs consisting
+     + 	of multiple entries.  The resulting clone has `submodule.active` set to
+     + 	the provided pathspec, or "." (meaning all submodules) if no
+     +-	pathspec is provided.
+     ++	pathspec is provided. In addition, `submodule.recurse` is set to true.
+     + +
+     + Submodules are initialized and cloned using their default settings. This is
+     + equivalent to running
+     +
+       ## builtin/clone.c ##
+      @@ builtin/clone.c: int cmd_clone(int argc, const char **argv, const char *prefix)
+       					   strbuf_detach(&sb, NULL));
+       		}
+       
+     -+                string_list_append(&option_config, "submodule.recurse=true");
+     ++		string_list_append(&option_config, "submodule.recurse=true");
+       		if (option_required_reference.nr &&
+       		    option_optional_reference.nr)
+       			die(_("clone --recursive is not compatible with "
+     @@ t/t5606-clone-options.sh: test_expect_success 'setup' '
+       
+      +test_expect_success 'clone --recurse-submodules sets submodule.recurse=true' '
+      +
+     -+        git clone --recurse-submodules parent clone-rec-submodule &&
+     -+        test_config_global submodule.recurse true 
+     ++	git clone --recurse-submodules parent clone-rec-submodule &&
+     ++	test_cmp_config -C clone-rec-submodule true submodule.recurse
+      +
+      +'
+      +
+ 2:  dd13a65ef0f < -:  ----------- clone: update submodule.recurse in config when using --recurse-submodule
+ 3:  020eaa2c819 < -:  ----------- clone test: update whitespace according to style guide
+ 4:  f3ddb344b49 < -:  ----------- clone: update whitespace according to style guide
 
-Thanks,
-Jonathan
+
+ Documentation/git-clone.txt | 2 +-
+ builtin/clone.c             | 1 +
+ t/t5606-clone-options.sh    | 7 +++++++
+ 3 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 3fe3810f1ce..1d6aeb9e367 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -276,7 +276,7 @@ branch of some repository for search indexing.
+ 	This option can be given multiple times for pathspecs consisting
+ 	of multiple entries.  The resulting clone has `submodule.active` set to
+ 	the provided pathspec, or "." (meaning all submodules) if no
+-	pathspec is provided.
++	pathspec is provided. In addition, `submodule.recurse` is set to true.
+ +
+ Submodules are initialized and cloned using their default settings. This is
+ equivalent to running
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 66fe66679c8..c6bb38d2fde 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1130,6 +1130,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 					   strbuf_detach(&sb, NULL));
+ 		}
+ 
++		string_list_append(&option_config, "submodule.recurse=true");
+ 		if (option_required_reference.nr &&
+ 		    option_optional_reference.nr)
+ 			die(_("clone --recursive is not compatible with "
+diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+index 3a595c0f82c..055b74069b3 100755
+--- a/t/t5606-clone-options.sh
++++ b/t/t5606-clone-options.sh
+@@ -16,6 +16,13 @@ test_expect_success 'setup' '
+ 
+ '
+ 
++test_expect_success 'clone --recurse-submodules sets submodule.recurse=true' '
++
++	git clone --recurse-submodules parent clone-rec-submodule &&
++	test_cmp_config -C clone-rec-submodule true submodule.recurse
++
++'
++
+ test_expect_success 'clone -o' '
+ 
+ 	git clone -o foo parent clone-o &&
+
+base-commit: 66262451ec94d30ac4b80eb3123549cf7a788afd
+-- 
+gitgitgadget
