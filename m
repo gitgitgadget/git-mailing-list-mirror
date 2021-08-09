@@ -2,126 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12604C4338F
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 21:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FCFBC4338F
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 21:07:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DEDB461019
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 21:01:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 415F860C51
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 21:07:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236132AbhHIVCL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Aug 2021 17:02:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50920 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233102AbhHIVCK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Aug 2021 17:02:10 -0400
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9F86C0613D3
-        for <git@vger.kernel.org>; Mon,  9 Aug 2021 14:01:49 -0700 (PDT)
-Received: by mail-oo1-xc2c.google.com with SMTP id l12-20020a4a94cc0000b02902618ad2ea55so4762246ooi.4
-        for <git@vger.kernel.org>; Mon, 09 Aug 2021 14:01:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8xvpNksmu5BDYb/7FYKUF7qJ+9g2KS3A/TaEEdcaS9E=;
-        b=fpXfny/8WxeIpCqWzfHmwuIlhHyTS4CUGDHjyqe658R4nBXK5jSlFkZU/pJBvHmT7a
-         WkhZwaLhepneGsB0XsuoZ3+0Z1oGWHVGQ7MTbCFPhDlZVDG1Li4SheCe3HRyD5KJTenb
-         RNW5HZK5Q+Ywog4HI9B1dBkQllx6thb+dEiXadomlw8Dip+Hqi/JBoWPbe0lrtZ8RT+1
-         +m6kly/TDdICSlp118xMFun54IDzHyqQ/F1TVKCOBOIc0+GNhsrFQ1jbQL9d4oYGEjy9
-         FqbfsREubRJMTxElaUMZdEOyrnI68/xlmt9bQAqJZAIzpJhan9SfteNokf66pQ6lzzL4
-         77Tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8xvpNksmu5BDYb/7FYKUF7qJ+9g2KS3A/TaEEdcaS9E=;
-        b=huklKNboKNtjuLyR6HTZ6UsOtj7ILZ/Brwbe7x2beNv3dlWX85sD+TGrY4rZ+eLwjk
-         5Ixkl50vF+acF7ouTk/W5MaxaWaROxYguQzBMJluaZIBIdP5F6Hq/8KBvYoES+KhuMJO
-         Q8o6TKG0/aD0A3bncYr463GtQ42rMDVxSmoeeGRVbrFy9MtD+Z9YGjll4B5m01H05EyB
-         NVk7Qtbwsw2Um0pQvck6qly8OlT5yNgZfxasLTK03eF2qFs0CjtNVfxaI6DY+SwH3ibD
-         I/KRDe+NCO4stxIy3xvg7/VbLz676B2/LIIxZN8woxaTQ/J3O8zJntedl+seodgDPmkq
-         D+9Q==
-X-Gm-Message-State: AOAM533htA3anjpXAJYT6sGfmA0W72RtqfFOzGc6so4ZlzoyhfPOwGa7
-        +rt5G62DpxlJC55CSqN7O8eilY3SOYcRQUO0jY0=
-X-Google-Smtp-Source: ABdhPJyGcdFy8QUAsqSSfSUlO5hoM8rOSfSXOHCsXgAWmAUM6tZmLYIy4ywvXmkZDl/Q1DAs9QQsuf3wHvyTV9Qqq1E=
-X-Received: by 2002:a4a:e923:: with SMTP id a3mr16160203ooe.45.1628542908306;
- Mon, 09 Aug 2021 14:01:48 -0700 (PDT)
+        id S233644AbhHIVII (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Aug 2021 17:08:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42786 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229516AbhHIVIH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Aug 2021 17:08:07 -0400
+Received: (qmail 3297 invoked by uid 109); 9 Aug 2021 21:07:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Aug 2021 21:07:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2520 invoked by uid 111); 9 Aug 2021 21:07:47 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Aug 2021 17:07:47 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 9 Aug 2021 17:07:46 -0400
+From:   Jeff King <peff@peff.net>
+To:     anatoly techtonik <techtonik@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Working with git binary stream
+Message-ID: <YRGZIjD7MioTc+Gh@coredump.intra.peff.net>
+References: <CAPkN8xJqqnJfdUM5fEEMA00JoKsFcqnQo--_qbCLAx1qXSrgdQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <pull.1011.git.1628055482.gitgitgadget@gmail.com>
- <4a0f088f3669a95c7f75e885d06c0a3bdaf31f42.1628055482.git.gitgitgadget@gmail.com>
- <f6e79035-1412-4f8b-5949-8e9cc7215785@gmail.com>
-In-Reply-To: <f6e79035-1412-4f8b-5949-8e9cc7215785@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 9 Aug 2021 14:01:37 -0700
-Message-ID: <CABPp-BEtkFkr=dw+A4K=jOY5wCDFtZicsShwwjmM1-aFRS1bSA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] Change default merge backend from recursive to ort
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPkN8xJqqnJfdUM5fEEMA00JoKsFcqnQo--_qbCLAx1qXSrgdQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 9, 2021 at 10:38 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
-...
-> > === Extensibility ===
-> >
-> > Being able to perform merges without touching the working tree or index
-> > makes it possible to create new features that were difficult with the
-> > old backend:
-> >
-> >    * Merging, cherry-picking, rebasing, reverting in bare repositories...
-> >      or just on branches that aren't checked out.
->
-> Rebasing without updating the worktree for each commit is exciting.
+On Mon, Aug 09, 2021 at 07:12:13PM +0300, anatoly techtonik wrote:
 
-Yeah, there appear to be some interesting twists from my initial
-investigations so far.  I may need to start some interesting
-discussions in the next cycle or two about what we should do here (and
-also for merges in bare repositories.)
+> As an alternative it appeared that that theres is also a
+> "git binary stream" log that is produced by
+> 
+> git cat-file --batch --batch-all-objects
+> 
+> Is there a way to reconstruct the repository given that stream?
 
-> I agree with others that this should be merged into next sooner rather
-> than later. I also agree with Peff's point about moving it into master
-> to get more people using it rather than sitting in next for too long.
+Yes, though it is probably not the easiest way to do so. Just dumping
+all of the object contents back into another repository will indeed give
+you the same hashes, etc. But if you change one object, then all its
+hash will change, and all of the other objects pointing to it will need
+to change, etc. And that dump is in apparently-random order with respect
+to the actual graph structure and relationship between objects.
 
-:-)
+You'd probably do better to build a tool around rev-list, and only use
+cat-file to fetch the verbatim object contents. At some point your tool
+would start to look a lot like fast-export/fast-import, and it may be
+less work to teach them whatever features you need to avoid any
+normalization (e.g., retaining signatures, encodings, etc).
 
-> I think the sequencer changes below are easier to follow in this
-> version.
+> Is there documentation on how to read it?
 
-Thanks for taking a look.
+The output format is described in the "BATCH FORMAT" section of "git
+help cat-file". Basically you get each object id, type, and size in
+bytes, followed by the object contents. You can use the size from the
+header to know how many bytes to read.
 
-> One thing I did wonder is whether there needs to be any change
-> to the CI scripts to ensure we keep testing both merge implementations.
+There's no tool to accept the whole stream. You'd have to parse each
+entry and feed it to "git hash-object" with the appropriate type.
 
-There did need to be such a change, but it was made previously in
-commit f3b964a07e ("Add testing with merge-ort merge strategy",
-2021-03-20).  That commit changed the default merge backend *for
-testing* to be merge-ort, and modified the linux-gcc job to explicitly
-specify recursive.  This commit doesn't change the testing story, so
-the recursive backend will still continue to be tested with the
-linux-gcc tests, or whenever someone requests it with
-GIT_TEST_MERGE_ALGORITHM=recursive, and otherwise merge-ort will be
-used.
+Having a mode to hash-object to read in a bunch of objects in "cat-file
+--batch" format wouldn't be unreasonable, but nobody has found a need
+for it so far. It would also be quite slow (it writes out individual
+loose objects, whereas something like fast-import writes out a packfile,
+including at least a basic attempt at deltas).
 
-> Best wishes and congratulations on an impressive achievement
-
-Thanks!
+-Peff
