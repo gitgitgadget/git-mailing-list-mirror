@@ -2,111 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB441C4338F
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 15:45:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EF0FC4320A
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 15:48:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BCC7961019
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 15:45:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E30AE61051
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 15:48:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235605AbhHIPqE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Aug 2021 11:46:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34408 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230095AbhHIPqD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Aug 2021 11:46:03 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44BE9C0613D3
-        for <git@vger.kernel.org>; Mon,  9 Aug 2021 08:45:43 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id a13so28073284iol.5
-        for <git@vger.kernel.org>; Mon, 09 Aug 2021 08:45:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JZYWvn74wuP6jqJecN+M6Z1wpySf79LWqa9jyDcjGi4=;
-        b=JtTuXx86GzfFx0XcCtbLhBTenquoQmilh9a0Vdr7wNeVTSh23pRsuJb3hGx0RvxRMo
-         MUE2fVxe2XruOe7zFiqpUmtEEfvySJLdflqssnGYfvh9rkSTmxS2gml+K2Rm/PyFgokF
-         C38eYxMrCfFUAwYNYU3NgfjJ8MQZPLsjnlNJDAqTSQbpOCl0ttR1BJgyO4F8uj5VCJbo
-         M9ykAObsDWTWBWXym4bEGnhqaxrVnMS/VlFSKli3zXM5NQ3jomRQy2T/bnhBbUGmLh6m
-         5K4/acnBU5LlgYCq5u5KoJs2P3wuYRhbVhj81SwGTRBehJyqzPP2UkTk8ng7DDf20b/1
-         9sTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JZYWvn74wuP6jqJecN+M6Z1wpySf79LWqa9jyDcjGi4=;
-        b=itfRZWlIV/NhVTpMEz7m+a6M/8/OleLTxqFLR0FU8hJF1W7PnlVE6MvuxTbfXMI7pR
-         APulTisfXZxL8BA1KFQW7UA+kJZYKkP/eZCZlyFlDXih2de3r7tIzrY+9Xugdlz+F2S9
-         n6/Ec/RvSvE0mQeVEQwFGdGY51FpcbMY9bhClKHXZ+XYrRnJeruBy0kNAOdUUWP6kYeI
-         NXxW7GTLtJ8EYENliflNQWkl3T2wfEMeZL45Enp+fdkFYlcCLLaS5hX3CCZ3qIl8y8xP
-         7iPn3FNIyF/PSfSS5YfnVijrWnyqRLhtf9anGzOK1O4sgsQEkrLzKAXxMEeK4jt4eei0
-         PuCA==
-X-Gm-Message-State: AOAM532Tbny/+Wds1Ji0rtdjt/HyyQk7dT8h8hJZOvnPBJO7WgA1Io1S
-        cQcjt1Mx5fmBsJK1Se+Xf5t8FIMsGc88KuVEX60=
-X-Google-Smtp-Source: ABdhPJx/qxpqeJXBjcMkp+sxni6nv5JXvnb/kGS1a+aS8qHj+q08MKWJy0LAzaBwfdmJXkeUG6/plO1zqu+6LDTf4tA=
-X-Received: by 2002:a02:6606:: with SMTP id k6mr23633736jac.51.1628523942643;
- Mon, 09 Aug 2021 08:45:42 -0700 (PDT)
+        id S235681AbhHIPsX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Aug 2021 11:48:23 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51692 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230095AbhHIPsX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Aug 2021 11:48:23 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CE2CF15E072;
+        Mon,  9 Aug 2021 11:48:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=iQXQww8c6SNxxaHf8ShdtojB0SLoWVq/oJALr2
+        Sq8LU=; b=LUpizIvvNxkNBMeeIOlN8bPe+Piiine4ZS1Cg5cXttC9V39VnAHCud
+        EsPujZ5IC4uyK5WcifYyUHpfwX4WxmK3g7qHOjTfampO4DEx/+zqjqrzC7iKKWFu
+        dEED1H/kjInNEa/MwtpMRIQC4qj9mFgfKsUNq4idb8nDj3bNJD2O4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C79CC15E071;
+        Mon,  9 Aug 2021 11:48:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 10D4315E06E;
+        Mon,  9 Aug 2021 11:47:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Noah Pendleton <noah.pendleton@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/1] blame: Skip missing ignore-revs file
+References: <20210807202752.1278672-1-noah.pendleton@gmail.com>
+        <xmqqr1f5hszw.fsf@gitster.g>
+        <CADm0i3-ToKo1gNTXXLHH6i2d4qpz771VeRjDsfJjgbgMfhx6rA@mail.gmail.com>
+        <xmqqtuk0h4ph.fsf@gitster.g> <xmqqim0fhlm1.fsf@gitster.g>
+        <CADm0i39LV91kochHSGVHovaTbDOd0COrQPXHD3x8rEj-1Y+eMA@mail.gmail.com>
+Date:   Mon, 09 Aug 2021 08:47:58 -0700
+In-Reply-To: <CADm0i39LV91kochHSGVHovaTbDOd0COrQPXHD3x8rEj-1Y+eMA@mail.gmail.com>
+        (Noah Pendleton's message of "Sun, 8 Aug 2021 14:21:44 -0400")
+Message-ID: <xmqq5ywehb69.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAPkN8xK7JnhatkdurEb16bC0wb+=Khd=xJ51YQUXmf2H23YCGw@mail.gmail.com>
- <CABPp-BGDB6jj+Et44D6D22KXprB89dNpyS_AAu3E8vOCtVaW1A@mail.gmail.com>
- <CAPkN8xK9__74a3aEFsevfdW_hQ-vzWE+c=QypRacTktuZOfdSw@mail.gmail.com>
- <87mtvolbuj.fsf@evledraar.gmail.com> <CAPkN8xLE68d5Ngpy+LOQ8SALNgfB-+q4F3mFK-QBD=+EOKZSVg@mail.gmail.com>
- <xmqqblc2srq0.fsf@gitster.c.googlers.com> <CAPkN8xKM0zi-AB1xKRGp=whEQTZAbn78w0JjvUXfGfRDky0C=w@mail.gmail.com>
- <08f31194-dce6-9434-c362-94d9a2d97563@kdbg.org> <xmqqlfb3g2jp.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqlfb3g2jp.fsf@gitster.c.googlers.com>
-From:   anatoly techtonik <techtonik@gmail.com>
-Date:   Mon, 9 Aug 2021 18:45:26 +0300
-Message-ID: <CAPkN8x+agKRRD0Zd-pxs_EuYO_Xm8EyE0nJLCWQB4KNuNkvK8Q@mail.gmail.com>
-Subject: Re: Round-tripping fast-export/import changes commit hashes
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2C85794C-F929-11EB-95C0-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 4, 2021 at 3:56 AM Junio C Hamano <gitster@pobox.com> wrote:
+Noah Pendleton <noah.pendleton@gmail.com> writes:
+
+> Very good point- I see about 21 call sites for `git_config_pathname`,
+> plus a few others (`git_config_get_pathname`) that bottom out in the
+> same function. I could see the utility of optional paths for some of
+> them: for example, `commit.template`, `core.excludesfile`. Some of the
+> others seem a little more ambiguous, eg `http.sslcert` probably wants
+> to always fail in case of missing file.
+
+Thanks for already doing initial surveillance.  Very useful.
+
+> There seems to be a mix of fail-hard on invalid paths, printing a
+> warning message and skipping, and silently ignoring.
 >
-> Johannes Sixt <j6t@kdbg.org> writes:
->
-> > Am 02.03.21 um 22:52 schrieb anatoly techtonik:
-> >> For my use case, where I just need to attach another branch in
-> >> time without altering original commits in any way, `reposurgeon`
-> >> can not be used.
-> >
-> > What do you mean by "attach another branch in time"? Because if you
-> > really do not want to alter original commits in any way, perhaps you
-> > only want `git fetch /the/other/repository master:the-other-one-s-master`?
->
-> Yeah, I had the same impression.  If a bit-for-bit identical copy of
-> the original history is needed, then fetching from the original
-> repository (either directly or via a bundle) would be a much simpler
-> and performant way.
+> Hard for me to predict what the least confusing behavior is around
+> path configuration values, though, so maybe adding support for the
+> `:(optional)` (and maybe additionally a `:(required)`) tag across the
+> board to pathname configs is the right move.
 
-The goal is to have an editable stream, which, if left without edits, would
-be bit-by-bit identical, so that external tools like `reposurgeon` could
-operate on that stream and be audited.
+I originally hoped only ":(optional)" would be necessary, but to
+keep the continuity in behaviour for those currently that do not die
+upon seeing a missing file, we probably should treat an unadorned
+value as asking for the "traditional" behaviour, at least in the
+shorter term, and allow those users who want to detect typos to
+tighten the rule using ":(required)".  I dunno.
 
-Right now, because the repository
-https://github.com/simons-public/protonfixes contains a signed commit
-right from the start, the simple fast-export and fast-import with git itself
-fails the check.
+> That patch might be beyond what I'm capable of, though I'm happy to
+> put up a draft that applies it to the original `ignoreRevsFile` case
+> as a starting point.
 
-I understand that patching `git` to add `--complete` to fast-import is
-realistically beyond my coding abilities, and my only option is to parse
-the binary stream produced by `git cat-file --batch`, which I also won't
-be able to do without specification.
-
-P.S. I am resurrecting the old thread, because my problem with editing
-the history of the repository with an external tool still can not be solved.
--- 
-anatoly t.
+Thanks for an offer.  We are not in a hurry (especially during the
+pre-release feature freeze), and hopefully this discussion would
+pique other developers' interest to nudge them to help ;-)
