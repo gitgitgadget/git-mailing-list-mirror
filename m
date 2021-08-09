@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 366D7C4338F
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 17:59:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AE7BC432BE
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 17:59:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A1A361153
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 17:59:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 510D661159
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 17:59:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234844AbhHISAL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Aug 2021 14:00:11 -0400
-Received: from mail-0201.mail-europe.com ([51.77.79.158]:53987 "EHLO
+        id S235010AbhHISAO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Aug 2021 14:00:14 -0400
+Received: from mail-0201.mail-europe.com ([51.77.79.158]:55064 "EHLO
         mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235306AbhHIR6T (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Aug 2021 13:58:19 -0400
-Date:   Mon, 09 Aug 2021 17:57:09 +0000
+        with ESMTP id S235454AbhHIR61 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Aug 2021 13:58:27 -0400
+Date:   Mon, 09 Aug 2021 17:57:24 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=eagain.st;
-        s=protonmail; t=1628531840;
-        bh=H7MkQaKJvT7+plVxYRS0OeDRqWCXDsG23RQXMDCzisg=;
+        s=protonmail; t=1628531853;
+        bh=PawN1DSchlwwynFD29hO5I1QaJ0beebmNePcuE23PCE=;
         h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=db422gGpZLKMcJ9PPUfq87W1Odme0GhnXaFbgZaJkySOfCksEt1GcZ/jBS7hMPgCs
-         d0D8SVQsch5iUR1BXnhsllzpl59zz8kguo86RvV1UFXda1Ggic/p30jtd64VKjBVJk
-         MBF7ZOI4aQVcg1dkt+LfGbhfOogs2rfCJVMVnBxeGoYn0s8ItcmZZAcU8WvRZ/y3SN
-         Jz0rB0LdxPMYjBmUl5/cNpTO1alPXgtFxBUrK3jNX+PGd/7bTbhg5bWzVaUS35uwci
-         ehgn4tlB1ChmpX/mGkdGBsUMsTGj3zfo2gxs4pyPkpXQ4ezvFGflqEsQzA2m6tIX2p
-         vrAyDb/h6UQOg==
+        b=oPoJSlHyuAbWNfwCJvZfGaKyU0V+n5aUNXS9dpCybqAETmk5NFhUOvAb+8PfjBmf8
+         5w/kk8BzBoEpQn6kqbG7EHzLiGnE9boQ4/tG3k27yhHRsD/nrF4VXqLG8l0MSZXlQ2
+         8WTG4oX3Xf3X5tmGG+STp8f0ntUsaVt9wkuGs8tE2z3LpS+1IJV3UwJ0sZMiNpfi8w
+         cb+zAaSWiLQbafrU2TZuBPB180ickRs6dx1HVfzj1boO5OnFEPShjBvq8Q5Kv4ls9t
+         JtDoGhcFyyDtbBmVMzDOg3yZ1MbEDX5adaodAGzZwUbHdvnQ+K3gglIMaEmdBluDIo
+         rKHfCVNJhUuFg==
 To:     git@vger.kernel.org
 From:   Kim Altintop <kim@eagain.st>
 Cc:     kim@eagain.st, gitster@pobox.com, jonathantanmy@google.com,
         bwilliams.eng@gmail.com
 Reply-To: Kim Altintop <kim@eagain.st>
-Subject: [PATCH 2/3] upload-pack.c: treat want-ref relative to namespace
-Message-ID: <20210809175530.75326-3-kim@eagain.st>
+Subject: [PATCH 3/3] docs: clarify the interaction of transfer.hideRefs and namespaces
+Message-ID: <20210809175530.75326-4-kim@eagain.st>
 In-Reply-To: <20210809175530.75326-1-kim@eagain.st>
 References: <20210730135845.633234-1-kim@eagain.st> <20210731203415.618641-1-kim@eagain.st> <20210804203829.661565-1-kim@eagain.st> <20210804205951.668140-1-kim@eagain.st> <20210809175530.75326-1-kim@eagain.st>
 MIME-Version: 1.0
@@ -46,207 +46,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When 'upload-pack' runs within the context of a git namespace, treat any
-'want-ref' lines the client sends as relative to that namespace.
+Expand the section about namespaces in the documentation of
+`transfer.hideRefs` to point out the subtle differences between
+`upload-pack` and `receive-pack`.
 
-Also check if the wanted ref is hidden via 'hideRefs'. If it is hidden,
-respond with an error as if the ref didn't exist.
+9bedd82017 (upload-pack.c: treat want-ref relative to namespace,
+2021-07-30) taught `upload-pack` to reject `want-ref`s for hidden refs,
+which is now documented.
 
-Helped-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Kim Altintop <kim@eagain.st>
 ---
- t/t5703-upload-pack-ref-in-want.sh | 129 +++++++++++++++++++++++++++++
- upload-pack.c                      |  18 ++--
- 2 files changed, 140 insertions(+), 7 deletions(-)
+ Documentation/config/transfer.txt | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-i=
-n-want.sh
-index cd4744b016..3e1e0b8fe1 100755
---- a/t/t5703-upload-pack-ref-in-want.sh
-+++ b/t/t5703-upload-pack-ref-in-want.sh
-@@ -339,6 +339,135 @@ test_expect_success 'fetching with wildcard that matc=
-hes multiple refs' '
- =09grep "want-ref refs/heads/o/bar" log
- '
-
-+REPO=3D"$(pwd)/repo-ns"
-+
-+test_expect_success 'setup namespaced repo' '
-+=09(
-+=09=09git init -b main "$REPO" &&
-+=09=09cd "$REPO" &&
-+=09=09test_commit a &&
-+=09=09test_commit b &&
-+=09=09git checkout a &&
-+=09=09test_commit c &&
-+=09=09git checkout a &&
-+=09=09test_commit d &&
-+=09=09git update-ref refs/heads/ns-no b &&
-+=09=09git update-ref refs/namespaces/ns/refs/heads/ns-yes c &&
-+=09=09git update-ref refs/namespaces/ns/refs/heads/hidden d
-+=09) &&
-+=09git -C "$REPO" config uploadpack.allowRefInWant true
-+'
-+
-+test_expect_success 'with namespace: want-ref is considered relative to na=
-mespace' '
-+=09wanted_ref=3Drefs/heads/ns-yes &&
-+
-+=09oid=3D$(git -C "$REPO" rev-parse "refs/namespaces/ns/$wanted_ref") &&
-+=09cat >expected_refs <<-EOF &&
-+=09$oid $wanted_ref
-+=09EOF
-+=09cat >expected_commits <<-EOF &&
-+=09$oid
-+=09$(git -C "$REPO" rev-parse a)
-+=09EOF
-+
-+=09test-tool pkt-line pack >in <<-EOF &&
-+=09$(write_fetch_command $wanted_ref)
-+=09EOF
-+
-+=09GIT_NAMESPACE=3Dns test-tool -C "$REPO" serve-v2 --stateless-rpc >out <=
-in &&
-+=09check_output
-+'
-+
-+test_expect_success 'with namespace: want-ref outside namespace is unknown=
-' '
-+=09wanted_ref=3Drefs/heads/ns-no &&
-+
-+=09test-tool pkt-line pack >in <<-EOF &&
-+=09$(write_fetch_command $wanted_ref)
-+=09EOF
-+
-+=09test_must_fail env GIT_NAMESPACE=3Dns \
-+=09=09test-tool -C "$REPO" serve-v2 --stateless-rpc >out <in &&
-+=09grep "unknown ref" out
-+'
-+
-+# Cross-check refs/heads/ns-no indeed exists
-+test_expect_success 'without namespace: want-ref outside namespace succeed=
-s' '
-+=09wanted_ref=3Drefs/heads/ns-no &&
-+
-+=09oid=3D$(git -C "$REPO" rev-parse $wanted_ref) &&
-+=09cat >expected_refs <<-EOF &&
-+=09$oid $wanted_ref
-+=09EOF
-+=09cat >expected_commits <<-EOF &&
-+=09$oid
-+=09$(git -C "$REPO" rev-parse a)
-+=09EOF
-+
-+=09test-tool pkt-line pack >in <<-EOF &&
-+=09$(write_fetch_command $wanted_ref)
-+=09EOF
-+
-+=09test-tool -C "$REPO" serve-v2 --stateless-rpc >out <in &&
-+=09check_output
-+'
-+
-+test_expect_success 'with namespace: hideRefs is matched, relative to name=
-space' '
-+=09wanted_ref=3Drefs/heads/hidden &&
-+=09git -C "$REPO" config transfer.hideRefs $wanted_ref &&
-+
-+=09test-tool pkt-line pack >in <<-EOF &&
-+=09$(write_fetch_command $wanted_ref)
-+=09EOF
-+
-+=09test_must_fail env GIT_NAMESPACE=3Dns \
-+=09=09test-tool -C "$REPO" serve-v2 --stateless-rpc >out <in &&
-+=09grep "unknown ref" out
-+'
-+
-+# Cross-check refs/heads/hidden indeed exists
-+test_expect_success 'with namespace: want-ref succeeds if hideRefs is remo=
-ved' '
-+=09wanted_ref=3Drefs/heads/hidden &&
-+=09git -C "$REPO" config --unset transfer.hideRefs $wanted_ref &&
-+
-+=09oid=3D$(git -C "$REPO" rev-parse "refs/namespaces/ns/$wanted_ref") &&
-+=09cat >expected_refs <<-EOF &&
-+=09$oid $wanted_ref
-+=09EOF
-+=09cat >expected_commits <<-EOF &&
-+=09$oid
-+=09$(git -C "$REPO" rev-parse a)
-+=09EOF
-+
-+=09test-tool pkt-line pack >in <<-EOF &&
-+=09$(write_fetch_command $wanted_ref)
-+=09EOF
-+
-+=09GIT_NAMESPACE=3Dns test-tool -C "$REPO" serve-v2 --stateless-rpc >out <=
-in &&
-+=09check_output
-+'
-+
-+test_expect_success 'without namespace: relative hideRefs does not match' =
-'
-+=09wanted_ref=3Drefs/namespaces/ns/refs/heads/hidden &&
-+=09git -C "$REPO" config transfer.hideRefs refs/heads/hidden &&
-+
-+=09oid=3D$(git -C "$REPO" rev-parse $wanted_ref) &&
-+=09cat >expected_refs <<-EOF &&
-+=09$oid $wanted_ref
-+=09EOF
-+=09cat >expected_commits <<-EOF &&
-+=09$oid
-+=09$(git -C "$REPO" rev-parse a)
-+=09EOF
-+
-+=09test-tool pkt-line pack >in <<-EOF &&
-+=09$(write_fetch_command $wanted_ref)
-+=09EOF
-+
-+=09test-tool -C "$REPO" serve-v2 --stateless-rpc >out <in &&
-+=09check_output
-+'
-+
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
-
-diff --git a/upload-pack.c b/upload-pack.c
-index 297b76fcb4..6ce07231d3 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1417,21 +1417,25 @@ static int parse_want_ref(struct packet_writer *wri=
-ter, const char *line,
- =09=09=09  struct string_list *wanted_refs,
- =09=09=09  struct object_array *want_obj)
- {
--=09const char *arg;
--=09if (skip_prefix(line, "want-ref ", &arg)) {
-+=09const char *refname_nons;
-+=09if (skip_prefix(line, "want-ref ", &refname_nons)) {
- =09=09struct object_id oid;
- =09=09struct string_list_item *item;
- =09=09struct object *o;
-+=09=09struct strbuf refname =3D STRBUF_INIT;
-
--=09=09if (read_ref(arg, &oid)) {
--=09=09=09packet_writer_error(writer, "unknown ref %s", arg);
--=09=09=09die("unknown ref %s", arg);
-+=09=09strbuf_addf(&refname, "%s%s", get_git_namespace(), refname_nons);
-+=09=09if (ref_is_hidden(refname_nons, refname.buf) ||
-+=09=09    read_ref(refname.buf, &oid)) {
-+=09=09=09packet_writer_error(writer, "unknown ref %s", refname_nons);
-+=09=09=09die("unknown ref %s", refname_nons);
- =09=09}
-+=09=09strbuf_release(&refname);
-
--=09=09item =3D string_list_append(wanted_refs, arg);
-+=09=09item =3D string_list_append(wanted_refs, refname_nons);
- =09=09item->util =3D oiddup(&oid);
-
--=09=09o =3D parse_object_or_die(&oid, arg);
-+=09=09o =3D parse_object_or_die(&oid, refname_nons);
- =09=09if (!(o->flags & WANTED)) {
- =09=09=09o->flags |=3D WANTED;
- =09=09=09add_object_array(o, NULL, want_obj);
+diff --git a/Documentation/config/transfer.txt b/Documentation/config/trans=
+fer.txt
+index 505126a780..09ebb399ce 100644
+--- a/Documentation/config/transfer.txt
++++ b/Documentation/config/transfer.txt
+@@ -52,13 +52,16 @@ If you have multiple hideRefs values, later entries ove=
+rride earlier ones
+ (and entries in more-specific config files override less-specific ones).
+ +
+ If a namespace is in use, the namespace prefix is stripped from each
+-reference before it is matched against `transfer.hiderefs` patterns.
+-For example, if `refs/heads/master` is specified in `transfer.hideRefs` an=
+d
+-the current namespace is `foo`, then `refs/namespaces/foo/refs/heads/maste=
+r`
+-is omitted from the advertisements but `refs/heads/master` and
+-`refs/namespaces/bar/refs/heads/master` are still advertised as so-called
+-"have" lines. In order to match refs before stripping, add a `^` in front =
+of
+-the ref name. If you combine `!` and `^`, `!` must be specified first.
++reference before it is matched against `transfer.hiderefs` patterns. For
++example, if `refs/heads/master` is specified in `transfer.hideRefs` and th=
+e
++current namespace is `foo`, then `refs/namespaces/foo/refs/heads/master` i=
+s
++omitted from the advertisements. If `uploadpack.allowRefInWant` is set,
++`upload-pack` will treat `want-ref refs/heads/master` in a protocol v2
++`fetch` command as if `refs/heads/master` was unknown. Note, however, that
++`receive-pack` will still advertise the object id `refs/heads/master` is
++pointing to, but will conceil the name of the ref. In order to match refs
++before stripping, add a `^` in front of the ref name. If you combine `!` a=
+nd
++`^`, `!` must be specified first.
+ +
+ Even if you hide refs, a client may still be able to steal the target
+ objects via the techniques described in the "SECURITY" section of the
 --
 2.32.0
 
