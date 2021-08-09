@@ -2,131 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88781C4338F
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 08:47:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AAFBC4338F
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 10:50:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5EE5D61004
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 08:47:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA90F610A4
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 10:50:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234006AbhHIIro (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Aug 2021 04:47:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50726 "EHLO
+        id S233875AbhHIKvA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Aug 2021 06:51:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233940AbhHIIrn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Aug 2021 04:47:43 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EA16C0613CF
-        for <git@vger.kernel.org>; Mon,  9 Aug 2021 01:47:22 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id a20so15661816plm.0
-        for <git@vger.kernel.org>; Mon, 09 Aug 2021 01:47:22 -0700 (PDT)
+        with ESMTP id S233632AbhHIKu7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Aug 2021 06:50:59 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 142C2C0613D3
+        for <git@vger.kernel.org>; Mon,  9 Aug 2021 03:50:39 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id f3so5280976plg.3
+        for <git@vger.kernel.org>; Mon, 09 Aug 2021 03:50:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
-         :date:mime-version;
-        bh=mbfi2Lxv/7Rb7VdxTzt1C8Cb2GxkBakE6C7Ucvo/4rw=;
-        b=lbpoPi4ApcMQQBKAWmcYf+7qcZNPj+CytT9lUGGvPUDu5d64grcS1qyiLHJLtrCLig
-         MzQKU2yQ2F4AMK3rIJ5uxWUvq+t/Qf6SXAjWRwXoE/TLVn7Vz9cxLQ+r9dcnGz7POdRc
-         kY1YP2me2dpbkQeqMAQ6l35leIrmL66JglNT0IJr8YX2iHac7iOYnuFevuunRdlixzuh
-         hKTZ4PALcY+f++wFetYqcZJZ/nwuheWGmnjZWO54S7LAJT7KjDRuY528toYtOJLKIP21
-         dXm/Men6ZxR2aea7Ir2UmYsjd4/lEk9KKirHLqbC0g8Jx7HXarqHOrjlosaL6yqZM/7O
-         m4oQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=HEtwwIA9AlxsdApRGa3UTH8dNoZPprblQJWAEk5mrD0=;
+        b=UOYsUsku/uYUtEvvwVN51cYHVjDX+jU1vUAMxLoqeXS4GxQGCUv5aVckMJDvOxcSEs
+         1epXsuhgSJOmPDpibTdFHZtMLRub5wRH43TkG+PJuxTAp5uhqNfBkARkChE7ipHPx5h/
+         f/bGX2HevPwnvoEsJlpFDJw72IOuXlLv9nZ5Y4TO1xVcyaR1N+kH7fGBc0Ej04YDj238
+         +spZA9x7P7VaCLJ1AxCrtmQeXYEXEU5OxfzXMUxv095vSyJl1PbgTVwKEbb7sVy2FfKj
+         4cRDZv+nW7FVPawezC34XE2/43IUuvI81drC5JNsQtY4YZZxRBWPFqEx+PHD2bcw2yMF
+         JplQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject
-         :in-reply-to:message-id:date:mime-version;
-        bh=mbfi2Lxv/7Rb7VdxTzt1C8Cb2GxkBakE6C7Ucvo/4rw=;
-        b=Rh9aHLYUQbpuoMsTViAJ0AdmOeKaFz9KuyX/FN8JtC2tcDdg+ntiHsxaOX1VRRgVq/
-         aT8rBCYV7Pd6YgKMVg8C7tBa1uLI9j4+cHwhTdptrdiwN4fpTVsklqUlHbaSNF0s01c2
-         8+hPUR7jhmi95qEzdvGjxvqkiv6Hf6RjXrefIMetYjx5tPS0Ue76DAUybcn/ygKGnbY0
-         Vj/jdeSHaDTvVRlzJlzuUj9W4LGzdVA2JmHAT+2mc5RbluRSWFZbn4UFGcBM+2VlZ5np
-         sRrmyMHArUxDPNwHCiHj+WW3QLRIpB9R5VFdgepQUhf4ydhxAPs0ZXEtnX50g9jFn2Ce
-         259w==
-X-Gm-Message-State: AOAM530yaiAad9LWgf/Athg8z6rquUI43Mpbl2A7c0yyhZNI/SXY0/a8
-        Hmk35YP36jmqD8DrlPwnW+A=
-X-Google-Smtp-Source: ABdhPJxg9t85Sxs/gZ6+HWkaCtMIxB3oy0QJXwLDUOPaEnyBjGw9Ds+hbfERikTIbIc/crx8980fow==
-X-Received: by 2002:a17:90b:1bce:: with SMTP id oa14mr23680631pjb.221.1628498841546;
-        Mon, 09 Aug 2021 01:47:21 -0700 (PDT)
-Received: from atharva-on-air ([119.82.121.47])
-        by smtp.gmail.com with ESMTPSA id n17sm22042735pgj.93.2021.08.09.01.47.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Aug 2021 01:47:21 -0700 (PDT)
-References: <20210806120147.73349-1-raykar.ath@gmail.com>
- <20210807071613.99610-1-raykar.ath@gmail.com>
- <20210807071613.99610-2-raykar.ath@gmail.com>
- <0752736f-11d5-103b-653f-a4bbe6436304@gmail.com>
- <187083ab-a2e3-0933-5bff-9b409b2946ea@gmail.com>
- <m27dgvaxfj.fsf@gmail.com>
-User-agent: mu4e 1.4.15; emacs 27.2
-From:   Atharva Raykar <raykar.ath@gmail.com>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, avarab@gmail.com,
-        christian.couder@gmail.com, congdanhqx@gmail.com,
-        emilyshaffer@google.com, git@vger.kernel.org, jrnieder@gmail.com,
-        pc44800@gmail.com, periperidip@gmail.com,
-        rafaeloliveira.cs@gmail.com, sunshine@sunshineco.com
-Subject: Re: [GSoC] [PATCH v4 1/8] submodule--helper: add options for
- compute_submodule_clone_url()
-In-reply-to: <m27dgvaxfj.fsf@gmail.com>
-Message-ID: <m2wnov9f8s.fsf@gmail.com>
-Date:   Mon, 09 Aug 2021 14:17:15 +0530
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=HEtwwIA9AlxsdApRGa3UTH8dNoZPprblQJWAEk5mrD0=;
+        b=SL69yltyTTTKQzGC5yiuzfH6g/VdABpHpo4hRzp+SiiVNKJKDPikH9AAWVXA6zug04
+         Nds1YkAghmm4f93fD+QYnjoR6XEwtci1nVaJpihKCgyv3Esh8R64rjdtVFCutXXJGtyA
+         4jRqGfgsEnoDwpHtcUWp/vU3qDw/DwztuwsvXHxt0N7KQLZH2yxyVAUmqDchyI/q5EOC
+         jXh0qWtcfxF8q+WuMvmP8tFSt/2FKItbNDitNIAdfYTGsR7B9lTuLONVIB1VvpjH2baj
+         F3XTHSRvuamMJz+vGOqVjYbYS4OhMhx5Q9QdFx5m2BFnBjurgna3M8+9rGNx5atjiuvK
+         QO9A==
+X-Gm-Message-State: AOAM530orrC3Y+dkfVnOd2Bk+CDx6DfBLN3NeLqSYR3EjMa0U0fgxF30
+        z/8gurQ7RKi7MiEp6NWnjRycP15Wh8s=
+X-Google-Smtp-Source: ABdhPJxTHBguQOxvON7TYFKT9BlsGmLujvH/hGsdkXWsWM4cvV4UkZx0dKo+viquSEsEnGgbTqFUSg==
+X-Received: by 2002:aa7:9117:0:b029:35c:4791:ff52 with SMTP id 23-20020aa791170000b029035c4791ff52mr23059674pfh.76.1628506238558;
+        Mon, 09 Aug 2021 03:50:38 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-88.three.co.id. [180.214.232.88])
+        by smtp.gmail.com with ESMTPSA id j187sm19552980pfb.132.2021.08.09.03.50.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Aug 2021 03:50:38 -0700 (PDT)
+Subject: Re: [PATCH/RFC 3/3] ci: run a pedantic build as part of the GitHub
+ workflow
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        git@vger.kernel.org
+Cc:     e@80x24.org
+References: <CAPUEsphf9F1+=zOMKx3j=jH8xqDwQX99+9uHiYUpXhFE1nervg@mail.gmail.com>
+ <20210809013833.58110-1-carenas@gmail.com>
+ <20210809013833.58110-4-carenas@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <c903b477-8438-7c9a-bbbc-ec87d1b05451@gmail.com>
+Date:   Mon, 9 Aug 2021 17:50:35 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20210809013833.58110-4-carenas@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 09/08/21 08.38, Carlo Marcelo Arenas Belón wrote:
+> similar to the recently added sparse task, it is nice to know as early
+> as possible.
+> 
+> add a dockerized build using fedora (that usually has the latest gcc)
+> to be ahead of the curve and avoid older ISO C issues at the same time.
+> 
 
-Atharva Raykar <raykar.ath@gmail.com> writes:
+But from GCC manual [1], the default C dialect used is `-std=gnu17`, 
+while `-pedantic` is only relevant for ISO C (such as `-std=c17`).
 
-> Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
->
->> On 08/08/21 11:11 pm, Kaartic Sivaraam wrote:
->>> On 07/08/21 12:46 pm, Atharva Raykar wrote:
->>> [...]
->>>  	char *remote = get_default_remote();
->>> @@ -598,10 +598,14 @@ static char *compute_submodule_clone_url(const char *rel_url)
->>>   	strbuf_addf(&remotesb, "remote.%s.url", remote);
->>>  	if (git_config_get_string(remotesb.buf, &remoteurl)) {
->>> -		warning(_("could not look up configuration '%s'. Assuming this repository is its own authoritative upstream."), remotesb.buf);
->>> +		if (!quiet)
->>> +			warning(_("could not look up configuration '%s'. "
->>> +				  "Assuming this repository is its own "
->>> +				  "authoritative upstream."),
->>> +				remotesb.buf);
->>>  		remoteurl = xgetcwd();
->>>  	}
->>> -	relurl = relative_url(remoteurl, rel_url, NULL);
->>> +	relurl = relative_url(remoteurl, rel_url, up_path);
->>
->> After reading 2/8 of the series, I just noticed that 'remoteurl' is always
->> initialized in 'resolve_realtive_url'. It is either initialized to the return
->> value of 'xgetcwd' or retains its assigned value of 'NULL'. But it looks
->> like that's not the case here. 'remoteurl' could be used uninitialized
->> when the above if block does not get executed which in turn could result in
->> weird behaviour in case 'remoteurl' gets a value of anything other than 'NULL'
->> at runtime.
->>
->> This again has nothing to do with the change done in this patch. Regardless, it
->> looks like something worth correcting. Thus, I thought of pointing it out.
->>
->
-> Right. I agree it should be corrected.
+And why not using `-pedantic-errors`, so that non-ISO features are 
+treated as errors?
 
-Actually on having another look, I'm not sure if we need to assign NULL
-to 'remoteurl' at all.
+Newcomers contributing to Git may think that based on what our CI do, 
+they can submit patches with C17 features (perhaps with GNU extensions). 
+Then at some time there is casual users that complain that Git doesn't 
+compile with their default older compiler (maybe they run LTS 
+distributions or pre-C17 compiler). Thus we want Git to be compiled 
+successfully using wide variety of compilers (maybe as old as GCC 4.8).
 
-The 'if (git_config_get_string(...))' on success will allocate
-'remoteurl'. If it fails, it will be given the return value of
-'xgetcwd()'. There is nothing in the config API docs that suggest a
-success mode for the git_config_get_*() functions that will assign
-nothing to the buffer we give it. Therefore, by the time we get to the
-variable's first use in the 'relative_url()' function, we are guaranteed
-to have a well-defined value.
+[1]: https://gcc.gnu.org/onlinedocs/gcc-11.2.0/gcc/Standards.html#Standards
 
-It seems to me that the original 'resolve_relative_url()' had an
-unnecessary NULL initialization.
+-- 
+An old man doll... just what I always wanted! - Clara
