@@ -2,107 +2,223 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63E37C4338F
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 04:42:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95946C43214
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 05:56:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D79060F92
-	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 04:42:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 735EC60F35
+	for <git@archiver.kernel.org>; Mon,  9 Aug 2021 05:56:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231667AbhHIEm4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Aug 2021 00:42:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52644 "EHLO
+        id S232981AbhHIF4p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Aug 2021 01:56:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbhHIEm4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Aug 2021 00:42:56 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04ADBC06175F
-        for <git@vger.kernel.org>; Sun,  8 Aug 2021 21:42:33 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id j77so27241663ybj.3
-        for <git@vger.kernel.org>; Sun, 08 Aug 2021 21:42:33 -0700 (PDT)
+        with ESMTP id S229483AbhHIF4k (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Aug 2021 01:56:40 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 237E1C0613CF
+        for <git@vger.kernel.org>; Sun,  8 Aug 2021 22:56:19 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id y1so25972695iod.10
+        for <git@vger.kernel.org>; Sun, 08 Aug 2021 22:56:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=8oyyTbmY6dCX8YSUEARMNVTEm/t4q57CEJyJPRQRk/o=;
-        b=YUttS3G561mBDdUJcH3kpmvpQIb0w2dVTXi95egJ9lVdtieYzKWMA8gBba2ubSCuZc
-         aPbCsd0enYne5+0dp3Bxh/3AtYHgBfsSJLN04oh/I8Ir+Z505vw1csUheEuDMqnYUztq
-         rx8J+x6kqIdqDz/qZ2a09jmmlJRanUWwgeKONh1ZKs8eqZTjMq1da0JGrmvG6yP69wBB
-         DxPlJQyvPzZgjSW3XHCjUmR5+MTb9rsIjgkedPccZ+oFdLH28QvpCitwMsG9JVjYsm6V
-         odC2MXm+LISFisI9YBjHZfk1/MNwPVTAs3zdOeALKFEv2vOgN/jeDat7Acj9OuoqnwOy
-         C0xg==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ljI4dcBvi3UCJdOdCZM/lI2WWxztrYACrFgKV2xYQk8=;
+        b=vT/nsBBe49nwoghEkRoiWXcOQctZUkKrfvoM19Cr9UM3cwsQrKjdcKHkP2IpPXyuUc
+         /8VEWmcskyon5H5lOj1zaAZ9weykXWz7FVYOLhYz9opHSo0VRkAcGzrPykCgRVrO1Vg4
+         MZy54VbS7ycrRmSmLrnBMvP8hBXkXrssMQrKyNJQPzs2+ZHQnagverCAucgFPo5aV3Tx
+         IC81AVmezXNU8cHonEUQuIhcpsXMxoOVaKcudN4FJgdGqfdpExIm5Bx3X4Nhuy+oy7BE
+         S2+cFD8z/H14ZF93+Ofh9s/L5JbSdLZuT54SsTyUBMWyfR/E6zhLNti0fCq7dob/4jA0
+         WLoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8oyyTbmY6dCX8YSUEARMNVTEm/t4q57CEJyJPRQRk/o=;
-        b=tyvNxAElz2cL4WvcJqF7PQXt8wy4iiCMVidTkWsFiGNtNq1vX+rzY1CoouV4WiDWCu
-         Jr45c4WnQjcCiKI1VAxoLm7Um5aRVvVhmC3fpfGY2FuslGlqnj3FtjMGo6W3lXygiRS2
-         LAzMY3Wi2Dy6jtLLWE6u/Qgmh17xgCKzq2v/dqWjI4hJyvyzxPzYpkYsCOsxHwKjBfyn
-         IVWMPSZ/0660JRcQAerYgTcPQnH5H5dNk46oWvuVrPkwU6pEelugkW7+tX0MaWSR2KZW
-         yD8C58f/OiuZ19WPr7LbcncQ6dvB31lrt3/DBFmP8Hja0vrPGwkG/cjmBzCVNcnQCiVO
-         RKfw==
-X-Gm-Message-State: AOAM530t+u5P9LtGEcEJmpYKhCdqRj/HQmn4+wlyvMg7izR33bFwC9Gi
-        N4/6HiQvyMySbxVmir22O0asXWPe988RTmN1Z5c=
-X-Google-Smtp-Source: ABdhPJw7G64ASHKGegzYx/MHP+/e2T0gLjB4awD5sCxV5LeG+M4LnaicDhNNh1/h1dMQ4+wIJQjz+a/FPR8jOUHrEvw=
-X-Received: by 2002:a25:a20a:: with SMTP id b10mr28943170ybi.478.1628484151946;
- Sun, 08 Aug 2021 21:42:31 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ljI4dcBvi3UCJdOdCZM/lI2WWxztrYACrFgKV2xYQk8=;
+        b=WQBWkHqBCpWT2+ch4cDu5LZOIcfFOmpH5YpmunzbWO7YVcDJcXt/O5NN2R5eC67/Zi
+         YPvtfjNmtsyRx+enkZdptfj+ypzeAFaZdVzaTMWg/1U3H4cvW1AegmzckEYntTEzu5Hg
+         ifWDYOt1l20MrrPZY3rKCMuUgGJA5iqQKX3r4EJvn56RpvwSyrHf9DC9z42MU6bFqzP7
+         T1zjEDk2swp9su03R+abJZ4PxrWMfebDt1dvtOt3A4FPoYlumvdZIzyaDgoycRHtT3O5
+         IfYLKHZRhTcxIv7rJ4ZHI6GziCsjg3ME7/56nO5IlamlyOCIxx8omU3ZCSkcqhlghgrW
+         ov9w==
+X-Gm-Message-State: AOAM5327rKplHtypZWH/XMuge43JryCVVziBZF965JCNhk1rSr7031X2
+        rkV9MO6uUAqBgJzHRyL0m7Q3+p0jS6+Bz7ceqjRtZjUUWpMzcVog
+X-Google-Smtp-Source: ABdhPJwPrEIUAnKhVxfPh/bQgc0L1HQ5tWObvgx+CDDQ/84LrbQPjdTutLXfMg620RoD2vE0DKY5z4NSLushTonVd7I=
+X-Received: by 2002:a02:b047:: with SMTP id q7mr21371666jah.130.1628488577536;
+ Sun, 08 Aug 2021 22:56:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAMMLpeR8C_gjZ0CE8-nEo7syt=t0MwMGVKw8BL0k_BTpsk2D5Q@mail.gmail.com>
- <CAPUEspik6iGd2X5tOCwvo+FNmcoipy1KGvfgNJd2KLu9-XS7Yw@mail.gmail.com>
- <CAMMLpeRDLxRfskKV0+S2CHTNVTnFgfO1K_sGQy_v6DXrA5JGcQ@mail.gmail.com>
- <CAHCo6sqi0WmxxKMU=Nx=z_3PDx84YmUOa+ACRcBbM=R_nr4nrg@mail.gmail.com> <CAMMLpeQmbT-YmK3RrhPwe1bs8KNkEztony0QtbzoSbgNYjH3zA@mail.gmail.com>
-In-Reply-To: <CAMMLpeQmbT-YmK3RrhPwe1bs8KNkEztony0QtbzoSbgNYjH3zA@mail.gmail.com>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Mon, 9 Aug 2021 12:42:20 +0800
-Message-ID: <CANYiYbGWc7_e+9FLX0_JnLfp2652TrK12gg6hQXc2eyB7KEnpg@mail.gmail.com>
-Subject: Re: Problems with Git's Spanish translation
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     =?UTF-8?Q?Christopher_D=C3=ADaz_Riveros?= 
-        <christopher.diaz.riv@gmail.com>, Carlo Arenas <carenas@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Git l10n discussion group <git-l10n@googlegroups.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Mon, 9 Aug 2021 13:56:06 +0800
+Message-ID: <CAOLTT8TYiUbXbkSTPY50jCU1bYP3JFx2P+hVmGL58S8V=AUMbA@mail.gmail.com>
+Subject: [GSoC] Git Blog 12
+To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom verma <hariom18599@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> =E4=BA=8E2021=E5=B9=B48=E6=9C=888=E6=
-=97=A5=E5=91=A8=E6=97=A5 =E4=B8=8A=E5=8D=8812:00=E5=86=99=E9=81=93=EF=BC=9A
->
-> You can reduce the displayed diff on GitHub in an instant by
-> fast-forwarding <https://github.com/ChrisADR/git-po> to
-> <https://github.com/git-l10n/git-po>.
+My twelfth week blog finished:
+The web version is here:
+https://adlternative.github.io/GSOC-Git-Blog-12/
 
-By using a specific diff driver, diff of your patch may be reduced
-from 5k to 1k lines. You can define custom diff driver by adding new
-git config and setting attributes for ".po" files.  See files in:
+## Week12 Avoid repetitive parsing
 
-    https://github.com/git-l10n/git-po-helper/tree/master/contrib/diff-dirv=
-er
+After we brought around `10%` optimization to `git cat-file --batch`
+through skip
+parse_object_buffer(), let's take a look at the result of gprof again:
 
-> > Sometimes the commiter adds extra changes trying to fix "Spanish correc=
-tness" according to their country... Which makes the diffs bigger and harde=
-r to read... And those same correctness changes are then "fixed" in another=
- commit by another person...
->
-> In my opinion, the "generic" Spanish translation (which is the only
-> Spanish translation we have at the moment) should avoid using words
-> that can have different meanings in different countries. If I've made
-> changes that seem to just change from one dialect to another, this is
-> why. And if you want me to drop any of the changes, just note them on
-> GitHub and I will. Right now I'm just trying to fix things that are
-> not controversial.
+```
+  %
+ time     calls(before)       calls(after)     name
+  1.24               0              349756     format_ref_array_item
+  1.24               0              349756     get_object
+  0.83         4184784             4534690     do_xmalloc
+  0.83               0             1399028     parse_ref_filter_atom
+  0.41         4184936             5932565     memory_limit_check
+  0.41          701711             1400412     strbuf_add
+  0.41               0             1399024     append_atom
+  0.41               0             1399024     quote_formatting
+  0.41              14              349770     strbuf_init
+  0.41               0              349756     populate_value
+  0.00         2100807             2449753     strbuf_grow
+  0.00         1973422             1973568     xmallocz
+  0.00               0             1399024     get_ref_atom_value
+  0.00               0             1399024     grab_values
+  0.00              77              699589     xstrdup
+  0.00              46              699558     xcalloc
+```
 
-Some languages have variants, such as "po/zh_CN.po" and "po/zh_TW.po"
-for Chinese language.  I wonder "po/es.po" should be rename as
-"po/es_ES.po" like "po/pt_PT.po", so that language variants for Latin
-American can use their own po files.
+gprof tells us that cat-file --batch will make a lot of copies by
+`xstrdup()`, `strbuf_add()`... after
+using the logic of ref-filter. But at present, the overhead of these
+copies cannot be easily avoided
+due to the inherent logic of ref-filter. So there are no good
+optimization points in ref-filter ? We must
+re-observe the whole problem from a macro perspective.
 
+`oid_object_info_extended()` can get some metadata of the object, e.g.
+`size`, `type`, `deltabase`,
+then we can use `grab_common_values()` to grab them. And those data in
+the content of the object
+like commits' `tree-oid`, `parent-oid` or tags' `deref-oid`, which are
+parsed by `parse_object_buffer()`,
+then in `grab_tag_values()` or `grab_commit_values()`, we can grab
+them. But many attributes of
+commit and tag are not obtained through `parse_object_buffer()`, such
+as `author-info` ,`commiter-info`,
+`tagger-info` etc.
+
+We need to call grab_sub_body_contents(), grab_person() to rescan the
+buffer and extract the data.
+What if we can combine these multiple scanning and parsing into one completion?
+At least intuitively, this has an opportunity to improve performance.
+So I check the implementation
+details of `parse_commit_buffer()` and `parse_tag_buffer()`, maybe we
+can pass some "hook pointer"
+to these parsing functions like `oid_object_info_extended()` does to
+extract only the information we need?
+The commit-slab caught my attention. It can be used to get some
+specified data content from the object.
+I am thinking about whether it is possible to design a `struct
+object_view` (temporarily called
+`struct commit_view`) to store the offset of the parsed data in the
+object content. `parse_commit_buffer()`
+will check whether we need something for in-depth parsing. Like this:
+
+```c
+struct commit_view {
+int need_tree : 1;
+int need_parents : 1;
+
+int need_author : 1;
+int need_author_name : 1;
+int need_author_email : 1;
+int need_author_date : 1;
+
+int need_committer : 1;
+int need_committer_name : 1;
+int need_committer_email : 1;
+int need_committer_date : 1;
+
+int tree_offset;
+int tree_length;
+
+int parents_nr;
+int *parents_offset;
+int *parents_length;
+
+int author_offset;
+int author_length;
+
+int author_name_offset;
+int author_name_length;
+int author_email_offset;
+int author_email_length;
+int author_date_offset;
+int author_date_length;
+
+int committer_offset;
+int committer_length;
+
+int committer_name_offset;
+int committer_name_length;
+int committer_email_offset;
+int committer_email_length;
+int committer_date_offset;
+int committer_date_length;
+};
+
+define_commit_slab(commit_view_slab, struct commit_view);
+static struct commit_view_slab view_slab = COMMIT_SLAB_INIT(1, view_slab);
+
+int parse_commit_buffer()
+{
+...
+if (view->need_author) {
+view->author_offset = bufptr - head;
+view->author_length = ident_len;
+}
+if (view->need_author_name || view->need_author_email ||
+    view->need_author_date) {
+if (split_ident_line(&ident, ident_line, ident_len) ||
+!ident.date_begin || !ident.date_end)
+return error("bad author line in commit %s",
+     oid_to_hex(&item->object.oid));
+if (view->need_author_name) {
+view->author_name_offset = ident.name_begin - head;
+view->author_name_length = ident.name_end - ident.name_begin;
+}
+if (view->need_author_email) {
+view->author_email_offset = ident.mail_begin - head + 1;
+view->author_email_length = ident.mail_end - ident.mail_begin + 2;
+}
+if (view->need_author_date) {
+view->author_date_offset = ident.date_begin - head;
+view->author_date_length = ident.date_end - ident.date_begin;
+}
+}
+...
+}
+
+```
+
+It's still in WIP, hope it can bring some help!
+
+There seems to be no tag-slab similar to commit-slab, do we need to invent it?
+
+It seems that GSOC has only the last few weeks left, I'm not sure how
+far this patch series is from
+being merged by the master branch. Performance optimization may have
+no end. By the way,
+is there a chance to avoid a large number of copies in the ref-filter?
+This may be another direction.
+
+Thanks.
 --
-Jiang Xin
+ZheNing Hu
