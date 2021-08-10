@@ -2,170 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7D18C4338F
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 23:04:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A82DCC4338F
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 23:49:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C4EA161008
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 23:04:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 80EE460F38
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 23:49:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235226AbhHJXFS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Aug 2021 19:05:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42622 "EHLO
+        id S235503AbhHJXuM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Aug 2021 19:50:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235196AbhHJXFR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Aug 2021 19:05:17 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2A2CC061765
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 16:04:54 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id s132so259759qke.9
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 16:04:54 -0700 (PDT)
+        with ESMTP id S235374AbhHJXuL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Aug 2021 19:50:11 -0400
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46229C061765
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 16:49:49 -0700 (PDT)
+Received: by mail-vs1-xe2f.google.com with SMTP id i1so349529vsk.8
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 16:49:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=LoB+WKPaWrwZBNiPWUjk7KMBBoq8fq+x+1GWiDzTaJI=;
-        b=CmAu7zFQWMOp7QRPDnO9oCLDZ3QK9GpsgMHC3zBTr/xRoBSab5dPZG+inZpxGUd9qT
-         5l4sSeASk/jJk+U25SjXs6EfgHCPIHA/4AMsZruFIeJYejmWOWDY9BvLphZPZIGmqLSZ
-         0qKmCMH4Dhhqt8ts5YOsiKZlkP/x7geSv7t0dSvTEwwlCCBaLXBviBcI5bSTxbAxNQiL
-         sljBN5ZCSMMID3hJTB3uhFtrYYRTF3zq2UuEAiIrrWI/nho1SH7aFITnpFf2/N2aPmIF
-         KvPtL74VtwMp7HIeD2ckukkZwvkjtQ1iKPMwh/m+SJpoitQNK+E0ZAFN13PU18cw3vpg
-         2b1A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=mdY8zl4cUMDo5bMQ8c2IkAg/ylORjrX/brXt11WjFUg=;
+        b=p73bmoqFrBgp+IHIeQeLz7X2oZ0KsLzRdiLjlGbQBlnbQq1QQNrCppgzz2SfNuL097
+         qqF6oo54Gk8NRiwC818KgwDzfnyc8jS1iV2qHm7dicluSR6Ji75BlbsGjjL5rKJdfkbP
+         /XobgnwVE0VQgVnZETQWC81rtEq5APQHzZ5I01oFQtl6tFU2UphypZuYgeuGLLcrBgck
+         OyRgXhu/WPpdkvY3ms1O0hJFH1LmbVCFwpJkAqubETs9CLeRJXNc+GZR3yM0QIMib1WD
+         3TcV0TI9NCuxOlqXPIRlRnaeJJ13Irhuqm6rzz719h1iqUR4Ub2mcAgcrfWQ6OwPC2AS
+         pCHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=LoB+WKPaWrwZBNiPWUjk7KMBBoq8fq+x+1GWiDzTaJI=;
-        b=NknHBGBXu/zr8Vr0uZiG4TntUHpcm4AgihHze1oTML+UI6ssaRW0r5vKwiagJ4CJzo
-         Y/Rzu5ubvptDZUdFtMvdUTMX8kcBNJD+LBXLVJ43R2HrRTogugTZSgrDAnWiyzjmH/OK
-         gVxeT1CRqcJm3e9wxND0Y+bk7SBSep+uc24h7JvboTuSQcKBLt1P5Uuj/t55xd3X2L8X
-         hYg0egrCxQ/q12f0mOh1GMHpk9B+RQ4xcS4OSV7xesYJPAMAMtEm2KEcrxxClxTS0JT4
-         z2lx39CFL+LwVhf+bEN/a/shGUqleAdLNsCuk/tffYnKgeyPIFSqSuy7h4Mk2iWagEd1
-         Alig==
-X-Gm-Message-State: AOAM533x45mXMlLGqmaiHFn/hbtSfvly28Ffizp8WDfX9X7ue5g66yPk
-        /LDFRYTfpFmM7doC/7oJ/nE=
-X-Google-Smtp-Source: ABdhPJwpj+br0mPtGwlqJo7B5BgnycQpuUG7fz6EEFs2005e5U81hkzfbj5Gb1zjb06AuO0fkDDv6Q==
-X-Received: by 2002:a37:e303:: with SMTP id y3mr31232525qki.45.1628636694035;
-        Tue, 10 Aug 2021 16:04:54 -0700 (PDT)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id c14sm6541504qtp.83.2021.08.10.16.04.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Aug 2021 16:04:53 -0700 (PDT)
-Subject: Re: [PATCH v4] clone: update submodule.recurse in config when using
- --recurse-submodule
-To:     Junio C Hamano <gitster@pobox.com>,
-        Mahi Kolla <mahikolla@google.com>
-Cc:     Mahi Kolla via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
-References: <pull.1006.v3.git.1627946590.gitgitgadget@gmail.com>
- <pull.1006.v4.git.1628536305810.gitgitgadget@gmail.com>
- <xmqqzgtqe2w6.fsf@gitster.g>
- <CAN3QUFYPjsvBRGegO-kC7+gcFDczOqQSw-UYphnLHx=6-6kkwA@mail.gmail.com>
- <xmqqa6lpdu4z.fsf@gitster.g>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <8f24d532-b021-2a96-415b-467f715cb1ec@gmail.com>
-Date:   Tue, 10 Aug 2021 19:04:51 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.12.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mdY8zl4cUMDo5bMQ8c2IkAg/ylORjrX/brXt11WjFUg=;
+        b=Z0BlEKxI+h1GQsHU0eSEcXd5MzOEMaHRRYpRqyKvVIQtH3FCQm33OkzNHW0LZTi07z
+         bkBlpqADrh6tJEmCnSSCP7koM8ffWLrgwOQyZsvvkNOXZbfL+02sw00vHYCT4vs/Vraa
+         qE4NHCcc9WQrj9JEU/89ItemAWg/ureYFCwxdvDBSgALoEs5exb8lEsS8HHIZ+1DMtOs
+         GtKOelzGWiX5+3jpQjjEnsAExB45V17O+h9cEM2dIVwbMsMyLFsF5Ry2b6H0oSAvgz0K
+         Nyfk+wMU/Swn1VMuYWUBb8UsdGo4OlFUH1Q1DkbgTIbUPMdQm6BYXIYeYN4ZByILYAuH
+         s6kg==
+X-Gm-Message-State: AOAM530VRx0zVE1EADYuwn9Svpsh0xp+/w50fgV6f/VAZpnr2/pTQbja
+        daQEDgMDLepIbb+TQTmHS4vLG4RRLnhgw/RV/vw=
+X-Google-Smtp-Source: ABdhPJw+Uqa0oOkO0p0bY8FIOmb32L8hmRE8F4i3Zk/mSIK1kng6QD61ISdvYH2GgRNCxXDFkH+o7GYD2dRnZX3SoNY=
+X-Received: by 2002:a05:6102:11e3:: with SMTP id e3mr1640411vsg.49.1628639387042;
+ Tue, 10 Aug 2021 16:49:47 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqa6lpdu4z.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+References: <CAPUEsphf9F1+=zOMKx3j=jH8xqDwQX99+9uHiYUpXhFE1nervg@mail.gmail.com>
+ <20210809013833.58110-1-carenas@gmail.com> <xmqqtujyftzx.fsf@gitster.g>
+ <YRIZsOaguDW0HaeI@carlos-mbp.lan> <0b973579-748e-ce2f-20aa-a967765cce83@web.de>
+In-Reply-To: <0b973579-748e-ce2f-20aa-a967765cce83@web.de>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Tue, 10 Aug 2021 16:49:36 -0700
+Message-ID: <CAPUEspiWdGRQoBnpn_uwjkqV7ffMm+MkzbNVU1rZ6yCwkpmNaA@mail.gmail.com>
+Subject: Re: [PATCH/RFC 0/3] pedantic errors in next
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        e@80x24.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-Le 2021-08-10 à 14:36, Junio C Hamano a écrit :
-> Mahi Kolla <mahikolla@google.com> writes:
-> 
->>> Is it possible to avoid changing the behaviour unconditionally and
->>> potentially breaking existing users by making it an opt-in feature,
->>> e.g. "git clone --recurse-submodules" would work as the current
->>> users would expect, while "git clone --recurse-submodules=sticky"
->>> would set submodule.recurse to true, or something?
->>
->> As mentioned, the `submodule.recurse=true` will only apply to active
->> submodules specified by the user. Setting this config value when the
->> user runs their initial `git clone` minimizes the number of times a
->> developer must use the `--recurse-submodule` option on other commands.
->>
->> However, this is a behavior change that may be surprising for
->> developers. To ensure a smooth rollout and easy adoption, I think
->> adding a message using an `advice.*` config setting would be useful.
-> 
-> It may be better than nothing, but that still is a unilateral
-> behaviour change.  Can't we come up with a way to make it an opt-in
-> feature?  I've already suggested to allow the "--recurse-submodules"
-> option of "git clone" to take an optional parameter (e.g. "sticky")
-> so that the user can request configuration variable to be set, but
-> you seem to be ignoring or skirting it.  
-
-The '--recures-submodule' option in 'git clone' already takes an optional
-argument, which is a pathspec and if given, only submodules matching the given
-pathspec will be initialized (as opposed to all submodules if the flag is given without
-an argument). So, it does not seem to be possible to use this
-flag as a way to also set 'submodule.recurse'.
-
-When Emily (CC'ed) sent her roadmap for submodule enhancements in [1], the enhancement
-that Mahi is suggesting was explicitely mentioned:
-
-> - git clone 
-...
-> What doesn't already work:
+On Tue, Aug 10, 2021 at 12:30 PM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
 >
->    * --recurse-submodules should turn on submodule.recurse=true
+> Those are different issues and they should be addressed by separate patch=
+es,
+> I think.  That's why I submitted a patch for the second one in
+> http://public-inbox.org/git/bab9f889-ee2e-d3c3-0319-e297b59261a0@web.de/.
 
-I don't know if Mahi is part of this effort or just came up with the same idea,
-but in any case maybe Emily would be able to add more justification for this change.
+agree, and that is why I mentioned not to merge mine but use your
+whole series instead when it is published (mine was just a stopgap to
+see if I could get SANITIZE=3Dundefined to behave meanwhile, but that I
+thought would be worth making public so anyone else affected might
+have something to start with)
 
-> Even though I am not
-> married to the "give optional parameter to --recurse-submodules"
-> design, unconditionally setting the variable, with or without advice
-> or warning, is a regression we'd want to avoid.
-> 
+would at least the two included in the chunks above be safe enough for
+RC2 as I hope?, is the one with the additional int too hacky to be
+considered for release?; FWIW hadn't been able to reproduce that issue
+you reported in t3301 even with an Apple M1 with macOS 11.5.1 (I use
+NO_GETTEXT=3D1 though, not sure that might be why)
 
-In my opinion, it would not be a regression; it would a behaviour change that
-would be a *vast improvement* for the majority of projects that use submodules, at
-least those that use non-optional submodules (which, I believe, is the vast majority
-of projects that use submodules, judging by what I've read on the web over the past 3
-years of my interest in the subject.)
+Anything I can help with?
 
-As soon as you use submodules in a non-optional way, you really *want* submodule.recurse=true,
-because if not:
-
-1. 'git checkout' does not recursively check out your submodules, which probably breaks your build.
-    You have to remember to always run 'git checkout --recurse-submodules' or run 'git submdule update'
-    after each checkout, and teach your team to do the same.
-2. 'git pull' fetches submodules commits, but does not recursively check out your submodules,
-    which also probably breaks your build. You have to remember to always run 'git pull --recurse-submodules',
-    or run 'git submodule update' after each pull, and also teach your team to do so.
-3. If you forget to do 1. or 2., and then use 'git commit -am "some message" (as a lot
-    of Git beginners unfortunately do), you regress the submodule commit, creating a lot
-    of problems down the line.
-
-These are the main reasons that I think Git should recurse by default. Setting 'submodule.recurse'
-also brings other niceties, like 'git grep' recursing into submodules.
-
-If we can agree that the behaviour *should* change eventually, then at least
-'git clone --recurse-submodules' could be changed *right now* to suggest setting
-'submodule.recurse' using the advice API, and stating that this will be the default
-some day.
-
-Even if we don't agree that the behaviour should enventually change, I think
-having this advice would be a strict improvement because
-it would help user discover the setting, which would already go a long way.
-
-Thanks,
-
-Philippe.
-
-
-[1] https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/
+Carlo
