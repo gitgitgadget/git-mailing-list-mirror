@@ -2,146 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63D48C4338F
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 15:52:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C6A0C4338F
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 16:58:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 383F460E97
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 15:52:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2F83360C40
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 16:58:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242363AbhHJPwU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Aug 2021 11:52:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55650 "EHLO
+        id S229572AbhHJQ6n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Aug 2021 12:58:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239191AbhHJPwU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Aug 2021 11:52:20 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 501E4C0613C1
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 08:51:58 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id s184so32910447ios.2
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 08:51:58 -0700 (PDT)
+        with ESMTP id S229474AbhHJQ6n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Aug 2021 12:58:43 -0400
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E128C0613C1
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 09:58:21 -0700 (PDT)
+Received: by mail-oo1-xc35.google.com with SMTP id o17-20020a4a64110000b0290263e1ba7ff9so5513750ooc.2
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 09:58:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=L0uqfweOMlYM9QGz4wM07C/43qcI+aQ/vqFNF39rOkc=;
-        b=SmwT08kYaKAuvPPQEruzxYgEBtJTMuhs4gMkMcewmchR2GO5QURWa9TNu9BlXn8eRC
-         rZ/r0ncdE3ngQws5GaiMxLR6UidrD6qH+1pwUqAA9MVKo0x8zNgt3PTBWY8R4ZC1TefJ
-         4dxVCAfrBWgwH4z++ih5hWtJp2N8eQgqZYewa59hsXOwMSTdIeCdejnto29QVy9BiEZc
-         ApjMc4Wmk57ClxVYYQimXwp8UCki69X9uOT4kz1UQf8Uc54OYPVIrgz+UyrpQ1eEFKCT
-         lJdjNm/8nQ+CSPq7X0aL99lrnTSCog224Zd++gx+icA9VU/7002D0Q0JjRVVaEIk/xTJ
-         9wpg==
+        bh=qt9PGzg1Hug7JFvCp6cn6s2Bz7oXtehfamloeMs8/34=;
+        b=pNb9JhrKZKifniJDLluWrjTUGyAZT8YCZl830EBcr0j06ZNmoSI2+rf6shTYmuZBuj
+         ECgm5SbEj2ZKJnWabQ5drQtEvs1E4UehiJG+vLMJa9OWRsXTWuB9WJs/89v8+oXyZFpa
+         BtrrFcg9pbasMnQzSx+qEhtxOUmZUMumfW8cYhRjrwTKxtO7JsEBgkVhOOjd/XpKGzi6
+         LCAt1/GZGaWQ6t+TAT2SK1mmOkWSuhyhfrCmd9GRooPTt+Hw9e4s8clds7RXVzEr8Aif
+         FlDBTKi9BnHoNr1Ix1KNnH//8Jj/h7qvKKfxyWfsEh2Yac0b4xQoVmzHQqydOsOaPuTA
+         flFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=L0uqfweOMlYM9QGz4wM07C/43qcI+aQ/vqFNF39rOkc=;
-        b=L0CbFSXXQxehlmAvIL79uWdEfq/cnnQ0VQHMD6NDBmT+POCdOBBabC6km2WEwzGe8Q
-         OaA8fvrfXFdY6I8z1KZF4iSsiaXhfCts0lANlYSizax7zsvrb8MyTvQxyEbQJLh1x7dC
-         yuM7ddBMINfd9dF7xBbXqTO0tbznVXVxF+g4ucQuHlTmmt3IBcddrOK9XeHe9Y5A16XU
-         gFPHVlTvZWi9mNNiXn773I11b5a8I8SvNw1IZINk4fLqTiNy3mC82OwmhBzxQ9mHoLX6
-         gzPEmnn4ZMaZphKJUBda2rdXZBC01VPeYo6ppXzjQ9KfCelmXymBwj/BHaNar0BKu0x3
-         vlzw==
-X-Gm-Message-State: AOAM530jj7m3/Ur4wIYoansV6Xp2sWh+gIJoqwvbUeRdDiZcRiJCDyZJ
-        0H/U1lU3a4k2bCsGkWtOEr4j4TVi61rb7HhMADk=
-X-Google-Smtp-Source: ABdhPJyMTio5yNXKJTYbcM7d97i62G2hcMoy5ezmcmlfj7KTaDIiyc9OiQ4tOTxjpXJcecCGK8o7ZOfftNG6PcSvJi8=
-X-Received: by 2002:a6b:c305:: with SMTP id t5mr289580iof.123.1628610717720;
- Tue, 10 Aug 2021 08:51:57 -0700 (PDT)
+        bh=qt9PGzg1Hug7JFvCp6cn6s2Bz7oXtehfamloeMs8/34=;
+        b=kA/7lBbQDwASa6vB4WNHFNkme0OrhSBQFkiYKaB1YvuKv0Qbw57FovTIPTcf+TiGRW
+         lyIWBvrBLNi1KbFGAHu+RQHky3pRrVprktO34/X3roCyaiX0QuflkbxJADksCh7/ovzs
+         Swa63uFCFcznMVZdZbkHnvhpKzmwPOrG77vQWsrmM0esIaU/YIOha9E6UK+jB9Wlt7u8
+         1TrEN21BInZpXTPJEeBRHhsV9d7C3Ww0E8qSl+jqFP4BYL5InKSui+jebZaIq//o5Nec
+         BUqqOvEsPc57VuxIqFXsIH/sCFxKQ9qMuVfxW7HLomZBP0HJsOrosipLozUCElRWInt7
+         fvYA==
+X-Gm-Message-State: AOAM531z2V9FTobuqNJ7CV+mSWu/YjTxw3RJkTeGdfij4UWRQ0HL7c2l
+        fstQPrMj+astncHjmdBsrEtTTBeJpUufbx8e1Vs=
+X-Google-Smtp-Source: ABdhPJzS21FmAzlRP2b7dV8PNpcao/hmGi0cTDzj3xwIMD6EpdAF3scdVeJUgtp7FRnRkeMmRhgLUHUdmp19yHwhz1Q=
+X-Received: by 2002:a4a:e923:: with SMTP id a3mr19138545ooe.45.1628614700425;
+ Tue, 10 Aug 2021 09:58:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAPkN8xK7JnhatkdurEb16bC0wb+=Khd=xJ51YQUXmf2H23YCGw@mail.gmail.com>
- <CABPp-BGDB6jj+Et44D6D22KXprB89dNpyS_AAu3E8vOCtVaW1A@mail.gmail.com>
- <CAPkN8xK9__74a3aEFsevfdW_hQ-vzWE+c=QypRacTktuZOfdSw@mail.gmail.com>
- <87mtvolbuj.fsf@evledraar.gmail.com> <CAPkN8xLE68d5Ngpy+LOQ8SALNgfB-+q4F3mFK-QBD=+EOKZSVg@mail.gmail.com>
- <xmqqblc2srq0.fsf@gitster.c.googlers.com> <CAPkN8xKM0zi-AB1xKRGp=whEQTZAbn78w0JjvUXfGfRDky0C=w@mail.gmail.com>
- <08f31194-dce6-9434-c362-94d9a2d97563@kdbg.org> <xmqqlfb3g2jp.fsf@gitster.c.googlers.com>
- <CAPkN8x+agKRRD0Zd-pxs_EuYO_Xm8EyE0nJLCWQB4KNuNkvK8Q@mail.gmail.com> <CABPp-BH5RhHR-KhhumuhZGy2F4ypUBoqgAatY5MKkQsB46KM4g@mail.gmail.com>
-In-Reply-To: <CABPp-BH5RhHR-KhhumuhZGy2F4ypUBoqgAatY5MKkQsB46KM4g@mail.gmail.com>
-From:   anatoly techtonik <techtonik@gmail.com>
-Date:   Tue, 10 Aug 2021 18:51:40 +0300
-Message-ID: <CAPkN8xLN_fKdbU8ugxLYJ1YeCJ8CxBWh+kdhAq1mR8hfAe-NAA@mail.gmail.com>
-Subject: Re: Round-tripping fast-export/import changes commit hashes
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+References: <pull.1013.git.1628587917.gitgitgadget@gmail.com> <f7722dab21dafb73e64754b1286913eaa826f865.1628587917.git.gitgitgadget@gmail.com>
+In-Reply-To: <f7722dab21dafb73e64754b1286913eaa826f865.1628587917.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 10 Aug 2021 09:58:09 -0700
+Message-ID: <CABPp-BFJD77wkroL5NFsH++a-yn0h6s6KM=Xfr2Ad_PfPQrUuw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] rebase --apply: restore some tests
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Victor Gambier <vgambier@excilys.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 9, 2021 at 9:15 PM Elijah Newren <newren@gmail.com> wrote:
+On Tue, Aug 10, 2021 at 2:32 AM Phillip Wood via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> The author wasn't interested in implementing that
-> suggestion (and it's a low priority for me that I may never get around
-> to).  The series also wasn't pushed through and eventually was
-> dropped.
-
-What it takes to validate the commit signature? Isn't it the same as
-validating commit tag? Is it possible to merge at least the `--fast-export`
-part? The effect of roundtrip would be the same, but at least external
-tools would be able to detect signed commits and warn users.
-
-> [1] https://lore.kernel.org/git/20210430232537.1131641-1-lukeshu@lukeshu.com/
-
-> Yes, and I mentioned several other reasons why a round-trip from
-> fast-export through fast-import cannot be relied upon to preserve
-> object hashes.
-
-Yes, I understand that. What would be the recommended way to detect
-which commits would change as a result of the round-trip? It will then
-be possible to warn users in `reposurgeon` `lint` command.
-
-> (3) fast-export works by looking for the relevant bits it knows how to
-> export.  You'd have to redesign it to fully parse every bit of data in
-> each object it looks at, throw errors if it didn't recognize any, and
-> make sure it exports all the bits.  That might be difficult since it's
-> hard to know how to future proof it.  How do you guarantee you've
-> printed every field in a commit struct, when that struct might gain
-> new fields in the future?  (This is especially challenging since
-> fast-export/fast-import might not be considered core tools, or at
-> least don't get as much attention as the "truly core" parts of git;
-> see https://lore.kernel.org/git/xmqq36mxdnpz.fsf@gitster-ct.c.googlers.com/)
-
-Looks like the only way to make it forward compatible is to introduce
-some kind of versioning and a validation schema like protobuf. Otherwise
-writing an importer and exporter for each and every thing that may
-encounter in a git stream may be unrealistic, yes.
-
-> > P.S. I am resurrecting the old thread, because my problem with editing
-> > the history of the repository with an external tool still can not be solved.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> Sure it can, just use fast-export's --reference-excluded-parents
-> option and don't export commits you know you won't need to change.
+> 980b482d28 ("rebase tests: mark tests specific to the am-backend with
+> --am", 2020-02-15) sought to prepare tests testing the "apply" backend
+> in preparation for 2ac0d6273f ("rebase: change the default backend
+> from "am" to "merge"", 2020-02-15). However some tests seem to have
+> been missed leading to us testing the "merge" backend twice. This
+> patch fixes some cases that I noticed while adding tests to these
+> files, I have not audited all the other rebase test files.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  t/t3403-rebase-skip.sh     | 2 +-
+>  t/t3418-rebase-continue.sh | 4 ++--
+>  2 files changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/t/t3403-rebase-skip.sh b/t/t3403-rebase-skip.sh
+> index 6365c5af2f7..a44e68d0ffb 100755
+> --- a/t/t3403-rebase-skip.sh
+> +++ b/t/t3403-rebase-skip.sh
+> @@ -52,7 +52,7 @@ test_expect_success setup '
+>         '
+>
+>  test_expect_success 'rebase with git am -3 (default)' '
+> -       test_must_fail git rebase main
+> +       test_must_fail git rebase --apply main
 
-How does `--reference-excluded-parents` help to read signed commits?
+Looks good.
 
-`reposurgeon` needs all commits to select those that are needed by
-different criteria. It is hard to tell which commits are not important without
-reading and processing them first.
+>  '
+>
+>  test_expect_success 'rebase --skip can not be used with other options' '
+> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+> index f4c2ee02bc9..e4cb8be0418 100755
+> --- a/t/t3418-rebase-continue.sh
+> +++ b/t/t3418-rebase-continue.sh
+> @@ -36,7 +36,7 @@ test_expect_success 'non-interactive rebase --continue works with touched file'
+>         git reset --hard &&
+>         git checkout main &&
+>
+> -       test_must_fail git rebase --onto main main topic &&
+> +       test_must_fail git rebase --apply --onto main main topic &&
 
-> Or, if for some reason you are really set on exporting everything and
-> then editing, then go ahead and create the full fast-export output,
-> including with all your edits, and then post-process it manually
-> before feeding to fast-import.  In particular, in the post-processing
-> step find the commits that were problematic that you know won't be
-> modified, such as your signed commit.  Then go edit that fast-export
-> dump and (a) remove the dump of the no-longer-signed signed commit
-> (because you don't want it), and (b) replace any references to the
-> no-longer-signed-commit (e.g. "from :12") to instead use the hash of
-> the actual original signed commit (e.g. "from
-> d3d24b63446c7d06586eaa51764ff0c619113f09").  If you do that, then git
-> fast-import will just build the new commits on the existing signed
-> commit instead of on some new commit that is missing the signature.
-> Technically, you can even skip step (a), as all it will do is produce
-> an extra commit in your repository that isn't used and thus will be
-> garbage collected later.
+I think the point here is that you're noticing that "git rebase -i"
+and "git rebase" are both built on the same rebase backend (the merge
+one) and thus that testing interactive vs. non-interactive isn't much
+of a test.  The real test we are interested in is merge-backend vs.
+apply-backend.  Your code change here is the necessary one to do that,
+but it least the test descriptions still talking about interactive vs.
+non-interactive even though that's not what we're concentrating on
+anymore.
 
-The problem is to detect problematic signed commits, because as I
-understand `fast-export` doesn't give any signs if commits were signed
-before the export.
--- 
-anatoly t.
+I'd say we'd at least want to change the description for this test,
+"non-interactive rebase ---continue works with..." => "rebase
+--continue with the apply backend works with...", but that we'd
+probably want to change the description of the test before it and
+maybe even just use rebase --merge rather than rebase -i.
+
+>         echo "Resolved" >F2 &&
+>         git add F2 &&
+>         test-tool chmtime =-60 F1 &&
+> @@ -254,7 +254,7 @@ test_rerere_autoupdate () {
+>         '
+>  }
+>
+> -test_rerere_autoupdate
+> +test_rerere_autoupdate --apply
+
+Looks good.
+
+>  test_rerere_autoupdate -m
+>  GIT_SEQUENCE_EDITOR=: && export GIT_SEQUENCE_EDITOR
+>  test_rerere_autoupdate -i
+> --
+> gitgitgadget
