@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E425C432BE
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 19:50:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBABCC4338F
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 19:50:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3086B60F94
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 19:50:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D16E860ED8
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 19:50:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232412AbhHJTul (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Aug 2021 15:50:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54460 "EHLO
+        id S232558AbhHJTun (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Aug 2021 15:50:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232085AbhHJTuk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Aug 2021 15:50:40 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD8CDC0613C1
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 12:50:17 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id b11so11705523wrx.6
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 12:50:17 -0700 (PDT)
+        with ESMTP id S231654AbhHJTul (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Aug 2021 15:50:41 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AE29C0613C1
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 12:50:18 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id g138so245039wmg.4
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 12:50:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=xF4Ml5ovwsHr66snlzRz3TrGLFSkIqW9omB3/KckS/A=;
-        b=rM+Vwq34lpV37sHsn8XMqoVifrSvdmoPy738QC9nJn7nhMRjM7zD3jFqxR+zBmrHZK
-         JeAfmTRt2S5/bN6RcFUz53u0itMqV6n8kjmpkztB98aItvRi+QguSNGjvKutyqMBZ7yK
-         jHMFxgpuzk7YGH7jooP0l+5qcoC3F1OB0skxxy9J0AepI1Grksm1HKqeZytENOrXVzYO
-         vlmDGxwFiUWmz+hXhzCRAsBDafIBJsFnV3XSbbySN3ofI/aHJZMuj7UyQfN0/Sd2Kbq1
-         0TRJLAQwKQZjrrQ7dsHrzg0t7TjAckd0uZQcjp/hbObCgiCh4DDIW4a2AUrgJccoEc3y
-         Zhrw==
+        bh=1hHIMQenL0YY07ojegpV/bWS0DueNnK3juz9ucy/bVk=;
+        b=QVgdGHPCvzMmM/zg2hPEhtfQ1fLRTM1tqjOeOaC6coIFmIvEzTIJzjvb12cEjAyORd
+         OchNEF09fyiDNNMPNTOL1Ul8A41OmABk4LaTyNXeKmqLG8lyZrPg1nN8XPz5f8cv4pwH
+         hPEC822CyuxPFM0qIDDftgw7hJx7vXi5f3xtlFWb9Bf1j5s+uCs7+sN2v6bdBp9kkWZW
+         t8WQW3wY4zlw131AVv4HhPG7b0adRWiS95iZvu61yYMEK0AywatN2j8jUvE0/mUSZMtW
+         PNyt9QJlk5iW8lriEx+t9IJ37sNn9VKtY84ULjnNG9XPX6vveqmAV6GT66j4vIjqojf6
+         g70Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=xF4Ml5ovwsHr66snlzRz3TrGLFSkIqW9omB3/KckS/A=;
-        b=njb9sk5BM1tBiiVljbDvAaK9GavJ8WKbvIHrO+fguj26SYnlrViaYFT1vDf1Xe8pxC
-         KYczxI8h1cE6Agzs83TsQbLv2lRI9L+Qt/6NBdNS6VU4ccVRoAoMzdXyzlENg4oTvFdk
-         aHhypqVQciqskyPSd6opWDk9K/2oxBLFrMnPqvczySEIERPJojq2s6yTsf72vgEeab1b
-         onF/rFfudRd0gZZxIL6WszlFFG7XdKvZvlEjqrO0mWBzLmZcShbPZAS0DezXDU461Ab3
-         l/yvi+8OW48fnbOVkxIRHF2ydiP54cK8qG9AR1h4x26wws7ljyqqAnhb/nT0MJzPYHSr
-         IcVQ==
-X-Gm-Message-State: AOAM532rio4M+C+WCQ3eOrL8el7AI9KpwKXYt4TCHajBOiNDRUrIik7f
-        xh4Lee2+YnteWRBLAL3jUj+9juT/CYU=
-X-Google-Smtp-Source: ABdhPJy9Cr3lwEIt6ED1Nq3C5Qo0WicpCpZnNi/YiiqLHEv8gKRHrPntrCvQxzJ8s1EJBVxIfrUMjw==
-X-Received: by 2002:a5d:4d8e:: with SMTP id b14mr2605655wru.422.1628625016450;
-        Tue, 10 Aug 2021 12:50:16 -0700 (PDT)
+        bh=1hHIMQenL0YY07ojegpV/bWS0DueNnK3juz9ucy/bVk=;
+        b=W+pGQVb242DG/mySa8Z8C10Dd6kvBfhtKjT1R0Nus4ySB0VsQVzbnmwGZteCIXKcbV
+         94s8J8Ns/YcBgW/e8xoIgY8tTjtKdlTVemPioAEggiTJzYrZaRZhrEA7dT0H5c7TOusB
+         h6P06sQdGYIyBxtwuF+dMXWrix2sPEerUSBJEfzuU3XlX8EC9NxDItaz4OPk8T7yi46h
+         KfSzdojhe+qY3pl+27DYfm7dQDZqY2Q8tctglGSBil6VZfQF8MT5+Wjwicf72GD9xqBU
+         I9mLgu2Mn5e6I8wV3vog4j90siTelYy3gSjs2OVeKkQj+uBtX60zwFfMEn09md6WP0OZ
+         1mWw==
+X-Gm-Message-State: AOAM531NjibWMNXA+ocjmXCeZb8r2Mhpar8Ew/+A4DooQ+KGd9ZkRmZM
+        8VUbwEy9qaJ7TMkpHIpVMM6CaIBcvKo=
+X-Google-Smtp-Source: ABdhPJzzbHq8IsMBJMxLTbY0mmDOUPgi2n1rqX+rMOm9ZpRM4tU0c+RHjRN/zNflqN8tNybuyOA2/g==
+X-Received: by 2002:a7b:cd86:: with SMTP id y6mr6222821wmj.181.1628625017093;
+        Tue, 10 Aug 2021 12:50:17 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i14sm19093561wmq.40.2021.08.10.12.50.16
+        by smtp.gmail.com with ESMTPSA id c9sm10261897wrm.43.2021.08.10.12.50.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 10 Aug 2021 12:50:16 -0700 (PDT)
-Message-Id: <fb3ff9108bf832d258155d3c6ee95c8546f21ba5.1628625013.git.gitgitgadget@gmail.com>
+Message-Id: <371985352680a767dfacb5477aa77e92e04008ee.1628625013.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1009.v2.git.1628625013.gitgitgadget@gmail.com>
 References: <pull.1009.git.1627579637.gitgitgadget@gmail.com>
         <pull.1009.v2.git.1628625013.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 10 Aug 2021 19:50:07 +0000
-Subject: [PATCH v2 2/8] sparse-index: silently return when not using cone-mode
- patterns
+Date:   Tue, 10 Aug 2021 19:50:08 +0000
+Subject: [PATCH v2 3/8] sparse-index: silently return when cache tree fails
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,56 +77,50 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-While the sparse-index is only enabled when core.sparseCheckoutCone is
-also enabled, it is possible for the user to modify the sparse-checkout
-file manually in a way that does not match cone-mode patterns. In this
-case, we should refuse to convert an index into a sparse index, since
-the sparse_checkout_patterns will not be initialized with recursive and
-parent path hashsets.
+If cache_tree_update() returns a non-zero value, then it could not
+create the cache tree. This is likely due to a path having a merge
+conflict. Since we are already returning early, let's return silently to
+avoid making it seem like we failed to write the index at all.
 
-Also silently return if there are no cache entries, which is a simple
-case: there are no paths to make sparse!
+If we remove our dependence on the cache tree within
+convert_to_sparse(), then we could still recover from this scenario and
+have a sparse index.
+
+When constructing the cache-tree extension in convert_to_sparse(), it is
+possible that we construct a tree object that is new to the object
+database. Without the WRITE_TREE_MISSING_OK flag, this results in an
+error that halts our conversion to a sparse index. Add this flag to
+remove this limitation.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- sparse-index.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ sparse-index.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/sparse-index.c b/sparse-index.c
-index c6b4feec413..bc5900eae35 100644
+index bc5900eae35..b6e90417556 100644
 --- a/sparse-index.c
 +++ b/sparse-index.c
-@@ -130,7 +130,8 @@ static int index_has_unmerged_entries(struct index_state *istate)
- int convert_to_sparse(struct index_state *istate)
- {
- 	int test_env;
--	if (istate->split_index || istate->sparse_index ||
-+
-+	if (istate->split_index || istate->sparse_index || !istate->cache_nr ||
- 	    !core_apply_sparse_checkout || !core_sparse_checkout_cone)
- 		return 0;
+@@ -179,10 +179,15 @@ int convert_to_sparse(struct index_state *istate)
  
-@@ -158,10 +159,16 @@ int convert_to_sparse(struct index_state *istate)
- 			return 0;
- 	}
- 
--	if (!istate->sparse_checkout_patterns->use_cone_patterns) {
--		warning(_("attempting to use sparse-index without cone mode"));
+ 	/* Clear and recompute the cache-tree */
+ 	cache_tree_free(&istate->cache_tree);
+-	if (cache_tree_update(istate, 0)) {
+-		warning(_("unable to update cache-tree, staying full"));
 -		return -1;
 -	}
 +	/*
-+	 * We need cone-mode patterns to use sparse-index. If a user edits
-+	 * their sparse-checkout file manually, then we can detect during
-+	 * parsing that they are not actually using cone-mode patterns and
-+	 * hence we need to abort this conversion _without error_. Warnings
-+	 * already exist in the pattern parsing to inform the user of their
-+	 * bad patterns.
++	 * Silently return if there is a problem with the cache tree update,
++	 * which might just be due to a conflict state in some entry.
++	 *
++	 * This might create new tree objects, so be sure to use
++	 * WRITE_TREE_MISSING_OK.
 +	 */
-+	if (!istate->sparse_checkout_patterns->use_cone_patterns)
++	if (cache_tree_update(istate, WRITE_TREE_MISSING_OK))
 +		return 0;
  
- 	/*
- 	 * NEEDSWORK: If we have unmerged entries, then stay full.
+ 	remove_fsmonitor(istate);
+ 
 -- 
 gitgitgadget
 
