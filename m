@@ -2,213 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14B8DC4338F
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 19:20:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B538DC4338F
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 19:30:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA24D60EBB
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 19:20:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 988F3604D7
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 19:30:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231512AbhHJTVE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Aug 2021 15:21:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47674 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230056AbhHJTVD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Aug 2021 15:21:03 -0400
-Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05FCAC0613C1
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 12:20:41 -0700 (PDT)
-Received: by mail-qt1-x849.google.com with SMTP id w11-20020ac857cb0000b029024e7e455d67so11859677qta.16
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 12:20:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=TORhpcQYHT4GjpOJmFSDTyP1k3+fhIHGVEK6OFT1X6w=;
-        b=IYRklHjanantmVJTl2WgAE1GszIVwGN9cPi12gs6iZt8ITjTIR7TvAZmApOo3YXbPS
-         HmyYxkhMwM6EjMiU8vdvY2K4eRySsny/efr25D5fbK+fwNsaeAsnHQvyfJjXyU2Nmc3v
-         LARAuR3ArzvZPxxSFtKLgBkGq5MBPif2DL+EYcgtNQ9QS3KosQ6QgdL2S/p9xfQCdIat
-         YcneSagWaodYuIF0QcwAtzb8k5j/Z5/uiEQGqjxZMMRvczcBCr+T1rPr2kPVEPDkXEEO
-         zlO+Hq1LDuGUjFAqEe0bo5EG6eTnsmByYK1JKgxgVcGaNFvVes7Kicag0K0DzuhVEy4H
-         EVqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=TORhpcQYHT4GjpOJmFSDTyP1k3+fhIHGVEK6OFT1X6w=;
-        b=DB9uKnRb6oHGsup7D2aW4SbyzRagKLICAgdw8aOn7lfT6qrJlJy6mEypF6nC5BMaic
-         IjqrLp4M25kZNabY5Az/qllg2hZ62T64OCxsRk8Klfxk/0R6XygYYez61mmnzfwur37b
-         dSn7zfjfrfRhgXKZUrhqF5UpVddmVBbALZucGwYK2+Idf0LBASiR+JUGDd+XBl5PT3P7
-         gPBvoUJZSgVexISX71kmLxfayX0ioQYrOOiD1m7+a80dvk+xUj9Hpe6OvMW1No2EbXix
-         81Ll/ON3esS6tQ95QY5Ct9jID5jD9IpCjQPYUECTZDOhPA08xqLEnymvqCcgZLTJ9mFt
-         EM1w==
-X-Gm-Message-State: AOAM531SGTMgriWnVJFlaER6FR7B3GzGsCDO+0KD4tvvDMupncTARy64
-        HNb2XF9s6zdUHz3yM44FF1GIy4Lszy/BKCuFsbxb5I+eOH7zi6ovjbmVG+I1XHM4Y7qgScSLI+P
-        4W6+FjTsAMwHiKQv9kQ1tgSkHazL3ZkJmTiJh4ry80f499dCppvaWMVE04jLtUvE=
-X-Google-Smtp-Source: ABdhPJxWeNKKi6f3GDOAdiVs0iyGQaZ8B7C9ilATGWV32akP0MAJKhTpNHZ/hlrg0Ve3D9Pb1OaxnPy/3YbIhg==
-X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:8483:7200:7ec:f495])
- (user=steadmon job=sendgmr) by 2002:a05:6214:e82:: with SMTP id
- hf2mr19628302qvb.24.1628623240097; Tue, 10 Aug 2021 12:20:40 -0700 (PDT)
-Date:   Tue, 10 Aug 2021 12:20:38 -0700
-In-Reply-To: <4d83766ab3425a5f4b361df2ac505d07fefd7899.1628109852.git.steadmon@google.com>
-Message-Id: <496da0b17476011b4ef4dde31593afc7572246eb.1628623058.git.steadmon@google.com>
-Mime-Version: 1.0
-References: <4d83766ab3425a5f4b361df2ac505d07fefd7899.1628109852.git.steadmon@google.com>
-X-Mailer: git-send-email 2.32.0.605.g8dce9f2422-goog
-Subject: [PATCH v2] sequencer: advise if skipping cherry-picked commit
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, phillip.wood123@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        id S232492AbhHJTbF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Aug 2021 15:31:05 -0400
+Received: from mout.web.de ([217.72.192.78]:47293 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231143AbhHJTbF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Aug 2021 15:31:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1628623835;
+        bh=fJustJ7lGrDBang3tr3yCwB1479Uk9u2eYsxyoH32+U=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=M4rXzJOZ+BxEWt8SHYaWoJIKbg5KeI/Ta622G+GoqxiMzUdGCCS4Wb1ET9ybtS4qH
+         E4rSg5q8SYgXKrzEHflJVgNIX7aWrKc9j3+sjNsou6eTcym3IFVI+420mhI5p8nJaQ
+         Htbs4T65AqCdDGGiZgaYargtSrqy1XfNII9evoq4=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([79.203.27.185]) by smtp.web.de
+ (mrweb103 [213.165.67.124]) with ESMTPSA (Nemesis) id
+ 0MThAi-1mdu0p0YBk-00QQv1; Tue, 10 Aug 2021 21:30:35 +0200
+Subject: Re: [PATCH/RFC 0/3] pedantic errors in next
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, e@80x24.org
+References: <CAPUEsphf9F1+=zOMKx3j=jH8xqDwQX99+9uHiYUpXhFE1nervg@mail.gmail.com>
+ <20210809013833.58110-1-carenas@gmail.com> <xmqqtujyftzx.fsf@gitster.g>
+ <YRIZsOaguDW0HaeI@carlos-mbp.lan>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <0b973579-748e-ce2f-20aa-a967765cce83@web.de>
+Date:   Tue, 10 Aug 2021 21:30:34 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.13.0
+MIME-Version: 1.0
+In-Reply-To: <YRIZsOaguDW0HaeI@carlos-mbp.lan>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:NcdnTQVF0ze7nC8T7sY4mB4v2JsD1ZBSqLxgufujoFv9UlOldYO
+ mlfhbrlIqU8CEnTAsDf7TObwWaF3slRBfxmnrOdTAc0+jm/USo6Wmdd5AjTpn9aBn0xd4HF
+ P1Ul2Y7zn+LssFyp0OT6MF+ojW5dGOPEWkQwGlU2oIVCVnEsCIlnpkZOI8IzMwgMWFrgiUM
+ +WEZtsmiHkkaKol/2HbLg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:XBLm0lswfws=:ONrsSnVqQRqwjQm7po40Lp
+ jFHSDFO/3cFyHJt3n62hu+ciN4IK1ZbZ3+5UtGMAJwgQaXN+xGnu0Xwgz2SQRWjAU/909zfLc
+ 4z+F7STwt+4ptgwzgkWjbJ3C2ztFeRljbob/uCkF5o7pmznT1gF0JYOXLPTJVesykBmcL85G4
+ emLHMiQ2mcO7grSD5OGBKTyOxR1AOTg52hA1omqwFwyE9tqOo7SIxf53uBtJVEwH9s7je9hHB
+ R97kQvlQ8mIFlRXGtBMxqo3gE88oPFLL8Ui1T71TcgK5IciaR6Vm32e+4qceBlJSO+W3aFRep
+ 82SMnNgHpXyk+yHUFIsTyF7upbox7oLhg7SfiamA0pQzDNuozb3V83wV9nsJRXcryPCvhO54R
+ 894N8Z9aqQc5YQidzsfNOrEyYzd6o5y9qDiN14lufllW7L4y9Cp3dnwVIWzx7bt3VljMpn3Wo
+ FBH6H6p2f8Z5pyPTSVOX0f6HFyJe08Qt2xfZeGZTcZDlGgEfr7v2tG09yrT3ank8j0HXY/9LX
+ A8PaaAhF+kYopA46RIjselP5EnIu1Eegsd3qXN+0co26XuqOFFR30M4uYhg/5SIT4XjP8Kdzl
+ ufWya/KxbUbZ1o/264dDXSvrWs9pnbCplh/KbApHPQ00qeoW5Ne34CcWvPm1zNaaLlzVf+QOR
+ 1iPRqCn55xoEPthZsG/9KFubXTxlEtYS+Hd0ejH8Cmlux7JGgHy1pUQC391UGKBwMO0SUASQa
+ Lq8K5IEQgI2c7fqQ0B6TFYQLNHvjZnqszl6r/Fe7AN2Rnd9sx1gsDNklU3q3iW3tuG8UnjTkX
+ 3YnmoSV71J+fGtv9PYZzhRS2Y/sATEWPiENmwbKUD4C7q1xHyDpj6TVLJeyVIotQ2Gg+8ftP7
+ 7lBGQDozq3pwjyoJI5IDCBdekykw/Et9UWUxXU/FlzMOK7I7GUS1ExK4P1FuVrnPvrw0Vg7Um
+ 7Ec3smBNGu93H4+BmFAaY4gpDDfysOdoW3NDuZt2SAaWmIJcBYl4L7h6GjRHippTptToj8LoS
+ dE4wFhDOheE9UVKa7XPfuwNUUMXihtZSX69xFk3hbfvCwIJcKYXoTdWqEHjTQZms9vCKjqtaX
+ CC1+V4JPbELgqmGMQv1DXOTLetdTUFO0LlJ
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Silently skipping commits when rebasing with --no-reapply-cherry-picks
-(currently the default behavior) can cause user confusion. Issue advice
-in this case so that users are aware of what's happening.
+Am 10.08.21 um 08:16 schrieb Carlo Marcelo Arenas Bel=C3=B3n:
+> Thanks,
+>
+> in the discussion above Ren=C3=A9[1] proposed a fix for UBsan issues tha=
+t were
+> reported and that it is still missing.
+>
+> my version of it didn't require the extra 4 bytes or showed issues with
+> notes so is probably incomplete and should be replaced from the original
+> if possible, but follows below:
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
-Changes in V2:
-* use advise_if_enabled() instead of warning()
-* s/seen/applied/ in the advice text
+With your three patches plus the one below t3301-notes.sh and several more
+fail on an Apple M1.  Adding an unused int member to struct leaf_node fixe=
+s
+that.  I didn't dig deeper into the notes code to understand the actual
+issue, though.
 
- Documentation/config/advice.txt |  3 +++
- advice.c                        |  3 +++
- advice.h                        |  1 +
- sequencer.c                     | 22 ++++++++++++++++++++--
- 4 files changed, 27 insertions(+), 2 deletions(-)
+>
+> Carlo
+>
+> [1] https://lore.kernel.org/git/bab9f889-ee2e-d3c3-0319-e297b59261a0@web=
+.de/
+>
+> +CC Ren=C3=A9 for advise
+> --- >8 ---
+> Date: Sun, 8 Aug 2021 20:45:56 -0700
+> Subject: [PATCH] build: fixes for SANITIZE=3Dundefined (WIP)
+> MIME-Version: 1.0
+> Content-Type: text/plain; charset=3DUTF-8
+> Content-Transfer-Encoding: 8bit
+>
+> mostly from instructions/code provided by Ren=C3=A9 in :
+>
+>   https://lore.kernel.org/git/20210807224957.GA5068@dcvr/
+>
+> tested with Xcode in macOS 11.5.1 (x86_64)
+> ---
+>  hash.h        | 2 +-
+>  object-file.c | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/hash.h b/hash.h
+> index 27a180248f..3127ba1ef8 100644
+> --- a/hash.h
+> +++ b/hash.h
+> @@ -115,7 +115,7 @@ static inline void git_SHA256_Clone(git_SHA256_CTX *=
+dst, const git_SHA256_CTX *s
+>
+>  struct object_id {
+>  	unsigned char hash[GIT_MAX_RAWSZ];
+> -	int algo;
+> +	uint8_t algo;
+>  };
+>
+>  /* A suitably aligned type for stack allocations of hash contexts. */
+> diff --git a/object-file.c b/object-file.c
+> index 374f3c26bf..2fa282a9b4 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -2406,7 +2406,7 @@ struct oidtree *odb_loose_cache(struct object_dire=
+ctory *odb,
+>  	struct strbuf buf =3D STRBUF_INIT;
+>  	size_t word_bits =3D bitsizeof(odb->loose_objects_subdir_seen[0]);
+>  	size_t word_index =3D subdir_nr / word_bits;
+> -	size_t mask =3D 1 << (subdir_nr % word_bits);
+> +	size_t mask =3D 1U << (subdir_nr % word_bits);
+>  	uint32_t *bitmap;
+>
+>  	if (subdir_nr < 0 ||
+>
 
-diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-index 8b2849ff7b..063eec2511 100644
---- a/Documentation/config/advice.txt
-+++ b/Documentation/config/advice.txt
-@@ -44,6 +44,9 @@ advice.*::
- 		Shown when linkgit:git-push[1] rejects a forced update of
- 		a branch when its remote-tracking ref has updates that we
- 		do not have locally.
-+	skippedCherryPicks::
-+		Shown when linkgit:git-rebase[1] skips a commit that has already
-+		been cherry-picked onto the upstream branch.
- 	statusAheadBehind::
- 		Shown when linkgit:git-status[1] computes the ahead/behind
- 		counts for a local ref compared to its remote tracking ref,
-diff --git a/advice.c b/advice.c
-index 0b9c89c48a..7768319b4a 100644
---- a/advice.c
-+++ b/advice.c
-@@ -34,6 +34,7 @@ int advice_checkout_ambiguous_remote_branch_name = 1;
- int advice_submodule_alternate_error_strategy_die = 1;
- int advice_add_ignored_file = 1;
- int advice_add_empty_pathspec = 1;
-+int advice_skipped_cherry_picks = 1;
- 
- static int advice_use_color = -1;
- static char advice_colors[][COLOR_MAXLEN] = {
-@@ -96,6 +97,7 @@ static struct {
- 	{ "submoduleAlternateErrorStrategyDie", &advice_submodule_alternate_error_strategy_die },
- 	{ "addIgnoredFile", &advice_add_ignored_file },
- 	{ "addEmptyPathspec", &advice_add_empty_pathspec },
-+	{ "skippedCherryPicks", &advice_skipped_cherry_picks },
- 
- 	/* make this an alias for backward compatibility */
- 	{ "pushNonFastForward", &advice_push_update_rejected }
-@@ -139,6 +141,7 @@ static struct {
- 	[ADVICE_SUBMODULE_ALTERNATE_ERROR_STRATEGY_DIE] = { "submoduleAlternateErrorStrategyDie", 1 },
- 	[ADVICE_UPDATE_SPARSE_PATH]			= { "updateSparsePath", 1 },
- 	[ADVICE_WAITING_FOR_EDITOR]			= { "waitingForEditor", 1 },
-+	[ADVICE_SKIPPED_CHERRY_PICKS]			= { "skippedCherryPicks", 1},
- };
- 
- static const char turn_off_instructions[] =
-diff --git a/advice.h b/advice.h
-index 9f8ffc7354..d705bf164c 100644
---- a/advice.h
-+++ b/advice.h
-@@ -75,6 +75,7 @@ extern int advice_add_empty_pathspec;
- 	ADVICE_SUBMODULE_ALTERNATE_ERROR_STRATEGY_DIE,
- 	ADVICE_UPDATE_SPARSE_PATH,
- 	ADVICE_WAITING_FOR_EDITOR,
-+	ADVICE_SKIPPED_CHERRY_PICKS,
- };
- 
- int git_default_advice_config(const char *var, const char *value);
-diff --git a/sequencer.c b/sequencer.c
-index 7f07cd00f3..1235f61c9d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -5099,6 +5099,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 	int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
- 	int rebase_cousins = flags & TODO_LIST_REBASE_COUSINS;
- 	int root_with_onto = flags & TODO_LIST_ROOT_WITH_ONTO;
-+	int skipped_commit = 0;
- 	struct strbuf buf = STRBUF_INIT, oneline = STRBUF_INIT;
- 	struct strbuf label = STRBUF_INIT;
- 	struct commit_list *commits = NULL, **tail = &commits, *iter;
-@@ -5149,8 +5150,13 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 		oidset_insert(&interesting, &commit->object.oid);
- 
- 		is_empty = is_original_commit_empty(commit);
--		if (!is_empty && (commit->object.flags & PATCHSAME))
-+		if (!is_empty && (commit->object.flags & PATCHSAME)) {
-+			advise_if_enabled(ADVICE_SKIPPED_CHERRY_PICKS,
-+					_("skipped previously applied commit %s"),
-+					short_commit_name(commit));
-+			skipped_commit = 1;
- 			continue;
-+		}
- 		if (is_empty && !keep_empty)
- 			continue;
- 
-@@ -5214,6 +5220,9 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 		oidcpy(&entry->entry.oid, &commit->object.oid);
- 		oidmap_put(&commit2todo, entry);
- 	}
-+	if (skipped_commit)
-+		advise_if_enabled(ADVICE_SKIPPED_CHERRY_PICKS,
-+				  _("use --reapply-cherry-picks to include skipped commits"));
- 
- 	/*
- 	 * Second phase:
-@@ -5334,6 +5343,7 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
- 	const char *insn = flags & TODO_LIST_ABBREVIATE_CMDS ? "p" : "pick";
- 	int rebase_merges = flags & TODO_LIST_REBASE_MERGES;
- 	int reapply_cherry_picks = flags & TODO_LIST_REAPPLY_CHERRY_PICKS;
-+	int skipped_commit = 0;
- 
- 	repo_init_revisions(r, &revs, NULL);
- 	revs.verbose_header = 1;
-@@ -5369,8 +5379,13 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
- 	while ((commit = get_revision(&revs))) {
- 		int is_empty = is_original_commit_empty(commit);
- 
--		if (!is_empty && (commit->object.flags & PATCHSAME))
-+		if (!is_empty && (commit->object.flags & PATCHSAME)) {
-+			advise_if_enabled(ADVICE_SKIPPED_CHERRY_PICKS,
-+					  _("skipped previously applied commit %s"),
-+					  short_commit_name(commit));
-+			skipped_commit = 1;
- 			continue;
-+		}
- 		if (is_empty && !keep_empty)
- 			continue;
- 		strbuf_addf(out, "%s %s ", insn,
-@@ -5380,6 +5395,9 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
- 			strbuf_addf(out, " %c empty", comment_line_char);
- 		strbuf_addch(out, '\n');
- 	}
-+	if (skipped_commit)
-+		advise_if_enabled(ADVICE_SKIPPED_CHERRY_PICKS,
-+				  _("use --reapply-cherry-picks to include skipped commits"));
- 	return 0;
- }
- 
--- 
-2.32.0.605.g8dce9f2422-goog
+The first hunk is about alignment (and missing the notes fix, as mentioned=
+).
+The second hunk is about shifting a signed 32-bit value 31 places to the
+left, which is undefined (because technically there are only 31 value bits=
+).
+Those are different issues and they should be addressed by separate patche=
+s,
+I think.  That's why I submitted a patch for the the second one in
+http://public-inbox.org/git/bab9f889-ee2e-d3c3-0319-e297b59261a0@web.de/.
 
+Ren=C3=A9
