@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C6A0C4338F
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 16:58:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CDEDC4338F
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 17:02:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F83360C40
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 16:58:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 751B860E78
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 17:02:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbhHJQ6n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Aug 2021 12:58:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42748 "EHLO
+        id S230228AbhHJRCW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Aug 2021 13:02:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229474AbhHJQ6n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Aug 2021 12:58:43 -0400
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E128C0613C1
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 09:58:21 -0700 (PDT)
-Received: by mail-oo1-xc35.google.com with SMTP id o17-20020a4a64110000b0290263e1ba7ff9so5513750ooc.2
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 09:58:21 -0700 (PDT)
+        with ESMTP id S229474AbhHJRCT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Aug 2021 13:02:19 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63B2EC0613C1
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 10:01:57 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id o185so29715842oih.13
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 10:01:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=qt9PGzg1Hug7JFvCp6cn6s2Bz7oXtehfamloeMs8/34=;
-        b=pNb9JhrKZKifniJDLluWrjTUGyAZT8YCZl830EBcr0j06ZNmoSI2+rf6shTYmuZBuj
-         ECgm5SbEj2ZKJnWabQ5drQtEvs1E4UehiJG+vLMJa9OWRsXTWuB9WJs/89v8+oXyZFpa
-         BtrrFcg9pbasMnQzSx+qEhtxOUmZUMumfW8cYhRjrwTKxtO7JsEBgkVhOOjd/XpKGzi6
-         LCAt1/GZGaWQ6t+TAT2SK1mmOkWSuhyhfrCmd9GRooPTt+Hw9e4s8clds7RXVzEr8Aif
-         FlDBTKi9BnHoNr1Ix1KNnH//8Jj/h7qvKKfxyWfsEh2Yac0b4xQoVmzHQqydOsOaPuTA
-         flFg==
+        bh=y1qkpDDbfhmOoQ3Q0sippAqeD/yIW1fqu91J5OMiCD0=;
+        b=kNORVgFGCmLKxRV6EZT2dfhvgsaFaY25T8rYmd7UBUrDu+4+zearMxVMjcAqEttnRm
+         Dfgw+C4u6DPgPEkhv1oNJYqm24wyAKai9G+/LQ1V0ESDR3LuES5XchFHcs4mHYpXHeHn
+         fT/GqwV3jj0yb9IZ3nJYONCjGNhMapKGN8z4MLa+DGAkBUh69g3tcy/LxGY39zkQOfjM
+         iys4NtXRFX+wF2hufsG7h4QRvd1e48UoKePJ0vBIbAEZ+uBlAwGFqIvRhdZtL1E9bdVB
+         2gxA8AeMYm+RT3BGaZdHLqndRG/h5g6gfMm9vCxHEPjWzXx2LgdAfTfNTDgkzdvHyq7c
+         zCyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=qt9PGzg1Hug7JFvCp6cn6s2Bz7oXtehfamloeMs8/34=;
-        b=kA/7lBbQDwASa6vB4WNHFNkme0OrhSBQFkiYKaB1YvuKv0Qbw57FovTIPTcf+TiGRW
-         lyIWBvrBLNi1KbFGAHu+RQHky3pRrVprktO34/X3roCyaiX0QuflkbxJADksCh7/ovzs
-         Swa63uFCFcznMVZdZbkHnvhpKzmwPOrG77vQWsrmM0esIaU/YIOha9E6UK+jB9Wlt7u8
-         1TrEN21BInZpXTPJEeBRHhsV9d7C3Ww0E8qSl+jqFP4BYL5InKSui+jebZaIq//o5Nec
-         BUqqOvEsPc57VuxIqFXsIH/sCFxKQ9qMuVfxW7HLomZBP0HJsOrosipLozUCElRWInt7
-         fvYA==
-X-Gm-Message-State: AOAM531z2V9FTobuqNJ7CV+mSWu/YjTxw3RJkTeGdfij4UWRQ0HL7c2l
-        fstQPrMj+astncHjmdBsrEtTTBeJpUufbx8e1Vs=
-X-Google-Smtp-Source: ABdhPJzS21FmAzlRP2b7dV8PNpcao/hmGi0cTDzj3xwIMD6EpdAF3scdVeJUgtp7FRnRkeMmRhgLUHUdmp19yHwhz1Q=
-X-Received: by 2002:a4a:e923:: with SMTP id a3mr19138545ooe.45.1628614700425;
- Tue, 10 Aug 2021 09:58:20 -0700 (PDT)
+        bh=y1qkpDDbfhmOoQ3Q0sippAqeD/yIW1fqu91J5OMiCD0=;
+        b=gqbMnXRlqnD7SQb7NKoU59pgIhdNONh+sZ4qiZJHVTEPApdCW98eBs6XmMruKX3Ewz
+         9PWHjh6caeLvX7LUajtDhFBjGpauG51ov/dxkNpS1sSlpKzUoO+64/fETYaTYzj576ho
+         kzpnCWvLUkZEYtw/cQ4S+akzL6hO/uACWikuIEFDuXCCx2dwKRCBcCx4wMJiho4crwAe
+         rjfNVM7FU8ya9Zp93CKSvQ6Po5071Pzv4HJcWxTK8RwpRFYZfQdOinASWd1hMw1DhHTp
+         pxL174/PUEixS6zdW+mOELPTxg5DiRFGXvOkmzoKl2x+M4+lL1C+qJlsRTRK+hBP3tQj
+         5Baw==
+X-Gm-Message-State: AOAM530LuuAObQcLqAWTV73/R/Fmq9J3LNnFLBUnRVCYRImTGEW3Pl/k
+        Qab6TAL0xw6bdJpP7Rgz74zaN7qGYnSt1D+G++s=
+X-Google-Smtp-Source: ABdhPJz/v073YE2tJ0KzwlGsMVt6lad0QKyztAGgQm9OjKP3OEF6ibu77YZarkv1a3VVo/zZOO6V5GCjgPZBc9ygAVI=
+X-Received: by 2002:a05:6808:85:: with SMTP id s5mr819291oic.31.1628614916798;
+ Tue, 10 Aug 2021 10:01:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1013.git.1628587917.gitgitgadget@gmail.com> <f7722dab21dafb73e64754b1286913eaa826f865.1628587917.git.gitgitgadget@gmail.com>
-In-Reply-To: <f7722dab21dafb73e64754b1286913eaa826f865.1628587917.git.gitgitgadget@gmail.com>
+References: <pull.1013.git.1628587917.gitgitgadget@gmail.com> <7559781ca92096f89a6dcbfeeaa4d2b4d7b98094.1628587917.git.gitgitgadget@gmail.com>
+In-Reply-To: <7559781ca92096f89a6dcbfeeaa4d2b4d7b98094.1628587917.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 10 Aug 2021 09:58:09 -0700
-Message-ID: <CABPp-BFJD77wkroL5NFsH++a-yn0h6s6KM=Xfr2Ad_PfPQrUuw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] rebase --apply: restore some tests
+Date:   Tue, 10 Aug 2021 10:01:45 -0700
+Message-ID: <CABPp-BFFTLgtrs_m9Gp7tSRwpBnAEoArhMZhhJcuzqNS_g8sUw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] t3403: fix commit authorship
 To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Victor Gambier <vgambier@excilys.com>,
@@ -74,76 +74,28 @@ On Tue, Aug 10, 2021 at 2:32 AM Phillip Wood via GitGitGadget
 >
 > From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> 980b482d28 ("rebase tests: mark tests specific to the am-backend with
-> --am", 2020-02-15) sought to prepare tests testing the "apply" backend
-> in preparation for 2ac0d6273f ("rebase: change the default backend
-> from "am" to "merge"", 2020-02-15). However some tests seem to have
-> been missed leading to us testing the "merge" backend twice. This
-> patch fixes some cases that I noticed while adding tests to these
-> files, I have not audited all the other rebase test files.
+> Setting GIT_AUTHOR_* when committing with --amend will only change the
+> author if we also pass --reset-author
 >
 > Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 > ---
->  t/t3403-rebase-skip.sh     | 2 +-
->  t/t3418-rebase-continue.sh | 4 ++--
->  2 files changed, 3 insertions(+), 3 deletions(-)
+>  t/t3403-rebase-skip.sh | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
 > diff --git a/t/t3403-rebase-skip.sh b/t/t3403-rebase-skip.sh
-> index 6365c5af2f7..a44e68d0ffb 100755
+> index e26762d0b29..6365c5af2f7 100755
 > --- a/t/t3403-rebase-skip.sh
 > +++ b/t/t3403-rebase-skip.sh
-> @@ -52,7 +52,7 @@ test_expect_success setup '
->         '
->
->  test_expect_success 'rebase with git am -3 (default)' '
-> -       test_must_fail git rebase main
-> +       test_must_fail git rebase --apply main
+> @@ -36,7 +36,8 @@ test_expect_success setup '
+>         test_tick &&
+>         GIT_AUTHOR_NAME="Another Author" \
+>                 GIT_AUTHOR_EMAIL="another.author@example.com" \
+> -               git commit --amend --no-edit -m amended-goodbye &&
+> +               git commit --amend --no-edit -m amended-goodbye \
+> +                       --reset-author &&
 
-Looks good.
-
->  '
->
->  test_expect_success 'rebase --skip can not be used with other options' '
-> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-> index f4c2ee02bc9..e4cb8be0418 100755
-> --- a/t/t3418-rebase-continue.sh
-> +++ b/t/t3418-rebase-continue.sh
-> @@ -36,7 +36,7 @@ test_expect_success 'non-interactive rebase --continue works with touched file'
->         git reset --hard &&
->         git checkout main &&
->
-> -       test_must_fail git rebase --onto main main topic &&
-> +       test_must_fail git rebase --apply --onto main main topic &&
-
-I think the point here is that you're noticing that "git rebase -i"
-and "git rebase" are both built on the same rebase backend (the merge
-one) and thus that testing interactive vs. non-interactive isn't much
-of a test.  The real test we are interested in is merge-backend vs.
-apply-backend.  Your code change here is the necessary one to do that,
-but it least the test descriptions still talking about interactive vs.
-non-interactive even though that's not what we're concentrating on
-anymore.
-
-I'd say we'd at least want to change the description for this test,
-"non-interactive rebase ---continue works with..." => "rebase
---continue with the apply backend works with...", but that we'd
-probably want to change the description of the test before it and
-maybe even just use rebase --merge rather than rebase -i.
-
->         echo "Resolved" >F2 &&
->         git add F2 &&
->         test-tool chmtime =-60 F1 &&
-> @@ -254,7 +254,7 @@ test_rerere_autoupdate () {
->         '
->  }
->
-> -test_rerere_autoupdate
-> +test_rerere_autoupdate --apply
-
-Looks good.
-
->  test_rerere_autoupdate -m
->  GIT_SEQUENCE_EDITOR=: && export GIT_SEQUENCE_EDITOR
->  test_rerere_autoupdate -i
-> --
-> gitgitgadget
+Makes sense...but doesn't the fact that this test worked either way
+suggest that the specifying of a special author name/email was totally
+superfluous and could just be removed?  If there really was a reason
+for specifying a different name/email, then is the test faulty for not
+checking for it somewhere?
