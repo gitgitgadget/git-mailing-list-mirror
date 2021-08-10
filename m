@@ -2,167 +2,185 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C58DC4320E
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 13:55:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12243C4338F
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 13:58:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 337F760EE7
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 13:55:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE6E0606A5
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 13:58:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235655AbhHJN4N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Aug 2021 09:56:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56470 "EHLO
+        id S240387AbhHJN62 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Aug 2021 09:58:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233558AbhHJN4M (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Aug 2021 09:56:12 -0400
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D15AC0613D3
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 06:55:50 -0700 (PDT)
-Received: by mail-qk1-x72c.google.com with SMTP id e14so22371756qkg.3
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 06:55:50 -0700 (PDT)
+        with ESMTP id S233465AbhHJN61 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Aug 2021 09:58:27 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F205C08EB1C
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 06:58:05 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id t35so1720729oiw.9
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 06:58:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=dj0FY3k5nkB9/CdSWu3NwPNUEvt73YlhyvhqRONc/eg=;
-        b=nPtShYCulQ7rXGAS1ZB5loTLid9mFh02nMwJ/zRTYIM+xx2OXAqVJL2cctYF3uX81d
-         ue54NyYpS+ypR+MZEw/vSlWMSwr5eHFLo3qYuEbxAwHNzJ5/6Hkt2/NYxvhM0WIDk/Yf
-         gmNoEb8LjIr9vN2JDdiaDaa0zDV+erFKjMoIEr09NNXpj58WHqONREWDNJDTWAW1P9cW
-         sv3sIc9KkrCP5honddE5Yh3RHENqN7tM/C3uEdFZV7mgiI6I833v5PmsOeTfavsy61ya
-         8FpOX/b/KsbLsfXOLJE8FjkQ1Va29ChS1iWPiOZIJCx4a0ip9rH/hu2nUkaRtfaLRwCD
-         m4IA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Vgy8S9Y9gDPSt2mEUgp7BZa/okDnQ5nSOCwiVqZGV3U=;
+        b=bxva97SSA1GGfrjsqDBwnfNO7g8m/JkplSSuSdyMiM1Cyw13h1B9VWOORV34ypnIXc
+         7NvGrfyNv9ofiQ/lQikggBLMUzbKjs81u0FW1x3Ecnv54NJBeZCQrWK+80meJLxfha1d
+         1QLcaFoSPqf9tYAe/Q4Zg72FgwJRkRfDCVZEdOHWQURKUvWH798QJHRrbkWyYLumKKoj
+         3daqsXWqtzYwmbkQpCV3uGnaVuPp9vGBjjdTR3oBA4INmJIUNwQaPKdUgY24zZIfiGYX
+         OKtE5lSVCXcU4kcnFHloYXh1JafhyOi4e/ySiAXYVC+SHJs0cqLyVowMGXT5o7Y1JLML
+         MxhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=dj0FY3k5nkB9/CdSWu3NwPNUEvt73YlhyvhqRONc/eg=;
-        b=fuLI1IdqaSmcrQ6YZN1B0Jr4QXuc8bdXRTWvii7ucmKQi5YH0cY3Nwvw4A/kecj6oM
-         a8l7iWHUzfyjVAxwsN96QM7oARFw2gb+eSnPWDiK8y3AO9iIaASxvOt5sS5Ud/MORxzl
-         0KYZ5EOCZzOEuFlUNisZ9/MrP3wIsy/xrFWK4apBb52FLDjaR+RCE8XuCoTJMDebD1ru
-         hZh5QqHjl0adMSKDDyrxudxLr+ag/wX1LiHoBxVp8o+gJMIyO4snBV/4ip7UNeZUJk8j
-         BusB+zSYrVFC13kSfEcQcXwoToMUn6R62qo1hj94pVz7djKQddoCXEc2NNcNhTNSQP+e
-         vr0g==
-X-Gm-Message-State: AOAM532m908TfbwdKcSGzrJGvgboF1DljXKYrJJDFkH6WnbnjyamQMse
-        2xPW/UdPcQWAVnres5mhMXw=
-X-Google-Smtp-Source: ABdhPJwtnU2UL2/Wg+fw4Jis3YkJPAgXxEUCQpqQ0C6O22eBYRzFfhg4g4jzXcCnirffqkvByPxPDg==
-X-Received: by 2002:a05:620a:14b8:: with SMTP id x24mr28909226qkj.475.1628603749017;
-        Tue, 10 Aug 2021 06:55:49 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:eca1:9959:196d:81ab? ([2600:1700:e72:80a0:eca1:9959:196d:81ab])
-        by smtp.gmail.com with ESMTPSA id m28sm5284964qki.86.2021.08.10.06.55.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Aug 2021 06:55:48 -0700 (PDT)
-Subject: Re: [RFC PATCH 00/13] Add bundle-uri: resumably clones, static "dumb"
- CDN etc.
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <christian.couder@gmail.com>,
-        Albert Cui <albertqcui@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-References: <RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <e7fe220b-2877-107e-8f7e-ea507a65feff@gmail.com>
-Date:   Tue, 10 Aug 2021 09:55:47 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Vgy8S9Y9gDPSt2mEUgp7BZa/okDnQ5nSOCwiVqZGV3U=;
+        b=ugGPFRfsreoIP1cTSNOHbJDH1pMLSK1mJCYiWJKJousWtoU9z9RaMAZLsM6g/sy+mg
+         rX0Esx8qRGe5PuLjPwKTDBcCIzGWtrjSJUka2bWnoCbzeIzLgoP1pgkqKzkMlzc1A+M6
+         GoCJOKr1zeDYXvFERA1Qi5lB/Ru8Zz2Wo5GUPCEyB08uTGcc2dabxSxnj/k8mArcGkQ7
+         fC54Lt8+IiVEMWVts4NkINPxJozCmc/+5zWwHs/02WMEPveLdin1EbqVAtBAmydKe8eX
+         BlTueJjm//ZGac47hodgf25JFpcGoDI8xkoGsISe5v6ycUHTVVqk9jqCUso+YqSKSB3V
+         m0Kg==
+X-Gm-Message-State: AOAM533urzjjBcOv9SIhZvnSnpHJU/p66gqsHXbk7Uczc2uJRJm0itHC
+        x/3+VgVqLY/elPHPZWCLCj5gznicJwmMxzCuMeU=
+X-Google-Smtp-Source: ABdhPJw0q7I6PaPWfsfAxYZwK27kG+4X0BDFF2tsHOAujDhkGzrFWWAIBbbwe7H0IZdBd8k3NWxBWbLb7FSN30PGZNw=
+X-Received: by 2002:a05:6808:85:: with SMTP id s5mr134388oic.31.1628603884615;
+ Tue, 10 Aug 2021 06:58:04 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <CAPkN8xJqqnJfdUM5fEEMA00JoKsFcqnQo--_qbCLAx1qXSrgdQ@mail.gmail.com>
+In-Reply-To: <CAPkN8xJqqnJfdUM5fEEMA00JoKsFcqnQo--_qbCLAx1qXSrgdQ@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 10 Aug 2021 06:57:53 -0700
+Message-ID: <CABPp-BH4dcsW52immJpTjgY5LjaVfKrY9MaUOnKT3byi2tBPpg@mail.gmail.com>
+Subject: Re: Working with git binary stream
+To:     anatoly techtonik <techtonik@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/5/2021 11:07 AM, Ævar Arnfjörð Bjarmason wrote:> We're in the 2.33.0 rc cycle, and I'd hoped to have some more prep
-> work for this integrated already, but for now here's something
-> interesting I've been working on for early commentary/feedback.
+On Mon, Aug 9, 2021 at 9:16 AM anatoly techtonik <techtonik@gmail.com> wrote:
+>
+> Hi.
+>
+> In https://lore.kernel.org/git/CAPkN8xK7JnhatkdurEb16bC0wb+=Khd=xJ51YQUXmf2H23YCGw@mail.gmail.com/T/#u
+> it became clear that it is impossible to make fast-export followed
+> by fast-import to get identical commit hashes for the resulting
+> repository (try https://github.com/simons-public/protonfixes).
+> It is also impossible to detect which commits would be altered
+> as a result of this operation. Because fast-export/import does
+> some implicit commit normalization, fixing that probably requires
+> too much effort.
+>
+> As an alternative it appeared that that theres is also a
+> "git binary stream" log that is produced by
+>
+> git cat-file --batch --batch-all-objects
+>
+> Is there a way to reconstruct the repository given that stream?
+> Is there documentation on how to read it?
 
-I've taking a brief look at the code, but mostly have thoughts about the
-core idea based on reading the documentation. I'll keep my feedback here
-restricted to that, especially because I saw some thoughts from Jonathan
-that question the idea.
+Peff already responded about hash-object.  And pointed you, again, to
+the manual for cat-file.
 
-> This adds the the ability to protocol v2 for servers to optimistically
-> pre-seed supporting clients with one or more bundles via a new
-> "bundle-uri" protocol extension.
+Can I suggest an alternative, even if it changes the problem statement
+slightly?  For some reason you didn't like my
+--reference-excluded-parents suggestion, but there's another way to do
+this as well with fast-export and fast-import as they exist today: use
+fast-export's --show-original-ids flag.  With that flag, you'll know
+the original hashes.  And if your filtering process does not modify a
+commit nor any of its ancestors, it can simply omit that commit (i.e.
+not pass it along to fast-import) and replace any references to the
+commit with a reference to the original hash.  So, for example if the
+`git fast-export --show-original-ids ...` output looked as follows (a
+simple repository with just three commits for demonstration purposes):
 
-To make sure I understand things correctly, I'm going to rewrite the
-description of the feature in my own words. Please correct me if I have
-misread something.
+"""
+reset refs/heads/main
+commit refs/heads/main
+mark :1
+original-oid 81b642ea15a614e84cdd52514a963735426ab06c
+author Developer Name <developer@foo.corp> 1628603376 -0400
+committer Developer Name <developer@foo.corp> 1628603376 -0400
+data 35
+First commit, which was gpg signed
+M 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 fileA
 
-This presents a new capability for protocol v2 that allows a server to
-notify a client that they can download a bundle to bootstrap their object
-database, and then come back to the origin server to "catch up" the
-remaining new objects since that bundle via a fetch negotiation.
+commit refs/heads/main
+mark :2
+original-oid 0024a18e9bfef3fd1091305cef4dd5a789164809
+author Developer Name <developer@foo.corp> 1628603396 -0400
+committer Developer Name <developer@foo.corp> 1628603396 -0400
+data 14
+Second commit
+from :1
+M 100644 f2e41136eac73c39554dede1fd7e67b12502d577 fileA
+M 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 fileB
 
-This idea is similar to the packfile-uri feature in that it offloads some
-server load to a dumb data store (like a CDN) but differs in a few key
-ways:
+commit refs/heads/main
+mark :3
+original-oid 96efb1173ad5c037f03f3639976f2465b1c58186
+author Developer Name <developer@foo.corp> 1628603422 -0400
+committer Developer Name <developer@foo.corp> 1628603422 -0400
+data 13
+Third commit
+from :2
+M 100644 f15bf479158b73b9bb79e158ce93d75190bc9597 fileA
+M 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 fileC
+"""
 
-1. The bundle download does not need to be controlled by the server, and
-   the server doesn't even need to know its contents. The client will
-   discover the content and share its view in a later negotiation.
+Then we'd parse the first commit, decide we didn't want to filter it,
+note that we hadn't filtered it or any of its parents, and then decide
+to replace any references to ":1" (the stream's name for the
+replacement for that commit) with
+"81b642ea15a614e84cdd52514a963735426ab06c" (the original hash).
 
-2. The packfile-uri could advertise a pack that contains only the large
-   reachable blobs, and hence could use the "happy path" for bitmaps to
-   compute a packfile containing all reachable objects except these large
-   blobs. For the bundle-uri feature to mimic this, the blobs would need
-   to be reachable from refs (perhaps shallow tags?) but it would not be
-   clear that the negotiation would prevent redownloading those files.
-   This is an area to explore and expand upon.
+Then we'd parse the second commit.  Perhaps on this one we decide we
+want to remove fileB.  So we output it after removing the fileB line,
+and after replacing ":1" with the appropriate hash.
 
-3. The bundle-uri feature is focused on "clone" scenarios, and I don't see
-   how it could be used to help "fetch" scenarios. To be fair, I also have
-   been vocal about how the packfile-uri feature is very hard to make
-   helpful for the "fetch" scenario. The benefits to "clone" seem to be
-   worth the effort alone. I think the bundle-api doubles-down on that
-   being the core functionality that matters, and that is fine by me. It
-   sacrifices the flexibility of the packfile-uri with a lower maintenance
-   burden for servers that want to implement it.
+Then we'd parse the third commit.  We decide we don't want to change
+this one, but we did change the second commit (the one with "mark
+:2"), so we still have to output it.  There are no direct references
+to :1, so we don't need to update those either.
 
-The biggest benefit that I see is that the Git server does not need to
-worry about whether the bundle has an exact set of data that it expects.
-There is no timing issue about whether or not the exact packfile is seeded.
-Instead, the server could have a fixed URL for its bundle and update its
-contents (atomically) at any schedule without worrying about concurrent
-clones being interrupted. From an operational perspective, I find the
-bundle-uri a better way to offload "clone" load.
+In the end, we'd pass this stream to fast-import:
 
-This also depends on that following "git fetch" being easy to serve. In
-that sense, it can be beneficial to be somewhat aware of the bundles that
-are being served: can we store the bundled refs as reachability bitmaps so
-we have those available for the negotiation in the following "git fetch"
-operations? This choice seems specific to how the server is deciding to
-create these bundles.
+"""
+reset refs/heads/main
+commit refs/heads/main
+mark :2
+original-oid 0024a18e9bfef3fd1091305cef4dd5a789164809
+author Developer Name <developer@foo.corp> 1628603396 -0400
+committer Developer Name <developer@foo.corp> 1628603396 -0400
+data 14
+Second commit
+from 81b642ea15a614e84cdd52514a963735426ab06c
+M 100644 f2e41136eac73c39554dede1fd7e67b12502d577 fileA
+M 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 fileB
 
-It also presents interesting ideas for how to create the bundle to focus
-on some core portion of the repo. The "thundering herd" of CI machines
-that re-clone repos at a high rate will also be likely to use the
-"--single-branch" option to reduce the refs that they will ask for in the
-negotiation. In that sense, we won't want a snapshot of all refs at a
-given time and instead might prefer a snapshot of the default branch or
-some set of highly-active branches.
+commit refs/heads/main
+mark :3
+original-oid 96efb1173ad5c037f03f3639976f2465b1c58186
+author Developer Name <developer@foo.corp> 1628603422 -0400
+committer Developer Name <developer@foo.corp> 1628603422 -0400
+data 13
+Third commit
+from :2
+M 100644 f15bf479158b73b9bb79e158ce93d75190bc9597 fileA
+M 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 fileC
+"""
 
-One question I saw Jonathan ask was "can we modify the packfile-uri
-capability to be better?" I think this feature has enough different goals
-that they could co-exist. That's the point of protocol v2, right? Servers
-can implement and advertise the subset of functionality that they think is
-best for their needs.
+and it'd recover the original commit as you wanted.
 
-I hope my ramblings provide some amount of clarity to the discussion, but
-also I intend to show support of the idea. If I was given the choice of
-which feature to support (I mostly work on the client experience, so take
-my choice with a grain of salt), then I would focus on implementing the
-bundle-uri capability _before_ the packfile-uri capability. And that's the
-best part: more options present more flexibility for different hosts to
-make different decisions.
-
-Thanks,
--Stolee
+This does presume that you're importing into the original repository
+(or a clone --mirror of it), because it expects certain hashes to
+already exist.  And when importing into such a repo, you want to use
+--force with fast-import.  But it should do what you're asking for,
+without needing to do any extra work in fast-export or fast-import.
