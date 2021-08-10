@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBABCC4338F
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 19:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD205C432BE
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 19:50:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D16E860ED8
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 19:50:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 99BF161051
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 19:50:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232558AbhHJTun (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Aug 2021 15:50:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54462 "EHLO
+        id S232465AbhHJTup (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Aug 2021 15:50:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231654AbhHJTul (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232424AbhHJTul (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 10 Aug 2021 15:50:41 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AE29C0613C1
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E451BC0613D3
         for <git@vger.kernel.org>; Tue, 10 Aug 2021 12:50:18 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id g138so245039wmg.4
+Received: by mail-wr1-x429.google.com with SMTP id h13so27837444wrp.1
         for <git@vger.kernel.org>; Tue, 10 Aug 2021 12:50:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=1hHIMQenL0YY07ojegpV/bWS0DueNnK3juz9ucy/bVk=;
-        b=QVgdGHPCvzMmM/zg2hPEhtfQ1fLRTM1tqjOeOaC6coIFmIvEzTIJzjvb12cEjAyORd
-         OchNEF09fyiDNNMPNTOL1Ul8A41OmABk4LaTyNXeKmqLG8lyZrPg1nN8XPz5f8cv4pwH
-         hPEC822CyuxPFM0qIDDftgw7hJx7vXi5f3xtlFWb9Bf1j5s+uCs7+sN2v6bdBp9kkWZW
-         t8WQW3wY4zlw131AVv4HhPG7b0adRWiS95iZvu61yYMEK0AywatN2j8jUvE0/mUSZMtW
-         PNyt9QJlk5iW8lriEx+t9IJ37sNn9VKtY84ULjnNG9XPX6vveqmAV6GT66j4vIjqojf6
-         g70Q==
+        bh=oc2wvXngXb26lsP7r8c0mk+JZ8u847riiXPKJWHBYNk=;
+        b=B4Lb46ahWBFeNrq2OngRNM8QHMngLZ1ijZlbyPMemBEJOah3m/QHcmGN0tLrRfvQqC
+         I0/kI0bHp0njGtEPW7k9VcS26MeIE0QnSBvzEm55Mu84BkMYFiM8CZgqGqX90+1GOUaQ
+         0hfbSujkdDb0ysk9ZtmD1hWQiC1+KUril93lEQjb94fL5DHH6rQcWqEmGOU/wSP9rXEt
+         GE02hxfOqhBAmDNvcMQ6T1TbS8lr3tugtPiEakafeHz30gGb+cVEi2PzqPS3vNouL1DA
+         iZrZxbRiCOv2vzKkDb6nhK8lR1YmGSgRnET4G3T5qjA6f1nk/rP+/aXXzMADk23Gn9Hv
+         NiyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1hHIMQenL0YY07ojegpV/bWS0DueNnK3juz9ucy/bVk=;
-        b=W+pGQVb242DG/mySa8Z8C10Dd6kvBfhtKjT1R0Nus4ySB0VsQVzbnmwGZteCIXKcbV
-         94s8J8Ns/YcBgW/e8xoIgY8tTjtKdlTVemPioAEggiTJzYrZaRZhrEA7dT0H5c7TOusB
-         h6P06sQdGYIyBxtwuF+dMXWrix2sPEerUSBJEfzuU3XlX8EC9NxDItaz4OPk8T7yi46h
-         KfSzdojhe+qY3pl+27DYfm7dQDZqY2Q8tctglGSBil6VZfQF8MT5+Wjwicf72GD9xqBU
-         I9mLgu2Mn5e6I8wV3vog4j90siTelYy3gSjs2OVeKkQj+uBtX60zwFfMEn09md6WP0OZ
-         1mWw==
-X-Gm-Message-State: AOAM531NjibWMNXA+ocjmXCeZb8r2Mhpar8Ew/+A4DooQ+KGd9ZkRmZM
-        8VUbwEy9qaJ7TMkpHIpVMM6CaIBcvKo=
-X-Google-Smtp-Source: ABdhPJzzbHq8IsMBJMxLTbY0mmDOUPgi2n1rqX+rMOm9ZpRM4tU0c+RHjRN/zNflqN8tNybuyOA2/g==
-X-Received: by 2002:a7b:cd86:: with SMTP id y6mr6222821wmj.181.1628625017093;
+        bh=oc2wvXngXb26lsP7r8c0mk+JZ8u847riiXPKJWHBYNk=;
+        b=h6f/lGJ5YFaS6UDuy+hydSXskR8phKExEsXf5ZOcx4cpnTazEU5sRhSaLHNRb3jrSc
+         oYrTxUtwAR79ZnwKG7lFCWCOy6z93T2w0i2mfvgnN4+kX5/mtPZj1w8z7OcywvAT/OpG
+         SuNw/ncTs3NOWuvXWCF0RLRr9u1zFw67hvDC2U5+AMiH6pVT6srEgBuZ0/o9475N/34i
+         vn5PYxiXd8C7qhFz0KoNc4NtZNGBjFy01EH0R/aBQcKAqGuY0751pA7kQF2T1zlK+jFG
+         brvI1GKPJ+OISKOcqk2X7xPBVQPhjmy3BA4zl/hZ/1EhSSiwyBYfE3tEOuXqoDX34l6K
+         n0QQ==
+X-Gm-Message-State: AOAM530402RkPWZ59x+ADngz5sbFz/4S1hE0TBUsDd3rot0FzFfY/4Qo
+        OorFPhWCDIjTxULmN3Be2LGESNfK18s=
+X-Google-Smtp-Source: ABdhPJywFUwpEg6Dj6ETEi8DRowCpF4yvX53pT7Mrxyq7wfpll+lNPGgPTDrUOtuEGH5v6flx9yANg==
+X-Received: by 2002:a5d:5106:: with SMTP id s6mr32735894wrt.359.1628625017644;
         Tue, 10 Aug 2021 12:50:17 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c9sm10261897wrm.43.2021.08.10.12.50.16
+        by smtp.gmail.com with ESMTPSA id z17sm24887110wrt.47.2021.08.10.12.50.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Aug 2021 12:50:16 -0700 (PDT)
-Message-Id: <371985352680a767dfacb5477aa77e92e04008ee.1628625013.git.gitgitgadget@gmail.com>
+        Tue, 10 Aug 2021 12:50:17 -0700 (PDT)
+Message-Id: <10bcadb284e49419f9b4baf75e05f719ec395d98.1628625013.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1009.v2.git.1628625013.gitgitgadget@gmail.com>
 References: <pull.1009.git.1627579637.gitgitgadget@gmail.com>
         <pull.1009.v2.git.1628625013.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 10 Aug 2021 19:50:08 +0000
-Subject: [PATCH v2 3/8] sparse-index: silently return when cache tree fails
+Date:   Tue, 10 Aug 2021 19:50:09 +0000
+Subject: [PATCH v2 4/8] unpack-trees: fix nested sparse-dir search
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,50 +77,73 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-If cache_tree_update() returns a non-zero value, then it could not
-create the cache tree. This is likely due to a path having a merge
-conflict. Since we are already returning early, let's return silently to
-avoid making it seem like we failed to write the index at all.
+The iterated search in find_cache_entry() was recently modified to
+include a loop that searches backwards for a sparse directory entry that
+matches the given traverse_info and name_entry. However, the string
+comparison failed to actually concatenate those two strings, so this
+failed to find a sparse directory when it was not a top-level directory.
 
-If we remove our dependence on the cache tree within
-convert_to_sparse(), then we could still recover from this scenario and
-have a sparse index.
-
-When constructing the cache-tree extension in convert_to_sparse(), it is
-possible that we construct a tree object that is new to the object
-database. Without the WRITE_TREE_MISSING_OK flag, this results in an
-error that halts our conversion to a sparse index. Add this flag to
-remove this limitation.
+This caused some errors in rare cases where a 'git checkout' spanned a
+diff that modified files within the sparse directory entry, but we could
+not correctly find the entry.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- sparse-index.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ unpack-trees.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/sparse-index.c b/sparse-index.c
-index bc5900eae35..b6e90417556 100644
---- a/sparse-index.c
-+++ b/sparse-index.c
-@@ -179,10 +179,15 @@ int convert_to_sparse(struct index_state *istate)
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 5786645f315..df1f4437723 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1255,9 +1255,10 @@ static int sparse_dir_matches_path(const struct cache_entry *ce,
+ static struct cache_entry *find_cache_entry(struct traverse_info *info,
+ 					    const struct name_entry *p)
+ {
+-	struct cache_entry *ce;
++	struct cache_entry *ce = NULL;
+ 	int pos = find_cache_pos(info, p->path, p->pathlen);
+ 	struct unpack_trees_options *o = info->data;
++	struct strbuf full_path = STRBUF_INIT;
  
- 	/* Clear and recompute the cache-tree */
- 	cache_tree_free(&istate->cache_tree);
--	if (cache_tree_update(istate, 0)) {
--		warning(_("unable to update cache-tree, staying full"));
--		return -1;
--	}
-+	/*
-+	 * Silently return if there is a problem with the cache tree update,
-+	 * which might just be due to a conflict state in some entry.
-+	 *
-+	 * This might create new tree objects, so be sure to use
-+	 * WRITE_TREE_MISSING_OK.
-+	 */
-+	if (cache_tree_update(istate, WRITE_TREE_MISSING_OK))
-+		return 0;
+ 	if (0 <= pos)
+ 		return o->src_index->cache[pos];
+@@ -1273,6 +1274,10 @@ static struct cache_entry *find_cache_entry(struct traverse_info *info,
+ 	if (pos < 0 || pos >= o->src_index->cache_nr)
+ 		return NULL;
  
- 	remove_fsmonitor(istate);
++	strbuf_addstr(&full_path, info->traverse_path);
++	strbuf_add(&full_path, p->path, p->pathlen);
++	strbuf_addch(&full_path, '/');
++
+ 	/*
+ 	 * Due to lexicographic sorting and sparse directory
+ 	 * entries ending with a trailing slash, our path as a
+@@ -1283,17 +1288,20 @@ static struct cache_entry *find_cache_entry(struct traverse_info *info,
+ 	while (pos >= 0) {
+ 		ce = o->src_index->cache[pos];
  
+-		if (strncmp(ce->name, p->path, p->pathlen))
+-			return NULL;
++		if (strncmp(ce->name, full_path.buf, full_path.len)) {
++			ce = NULL;
++			break;
++		}
+ 
+ 		if (S_ISSPARSEDIR(ce->ce_mode) &&
+ 		    sparse_dir_matches_path(ce, info, p))
+-			return ce;
++			break;
+ 
+ 		pos--;
+ 	}
+ 
+-	return NULL;
++	strbuf_release(&full_path);
++	return ce;
+ }
+ 
+ static void debug_path(struct traverse_info *info)
 -- 
 gitgitgadget
 
