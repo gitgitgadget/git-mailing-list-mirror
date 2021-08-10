@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB96BC4338F
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 11:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45CF3C4338F
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 11:48:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E91B60E09
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 11:48:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2AD296023E
+	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 11:48:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240369AbhHJLsc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Aug 2021 07:48:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54200 "EHLO
+        id S240388AbhHJLsh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Aug 2021 07:48:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240378AbhHJLrv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Aug 2021 07:47:51 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4663BC0613D3
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 04:47:28 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id q2so20616973plr.11
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 04:47:28 -0700 (PDT)
+        with ESMTP id S240282AbhHJLsT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Aug 2021 07:48:19 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F766C0617BD
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 04:47:41 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id 28-20020a17090a031cb0290178dcd8a4d1so1749710pje.0
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 04:47:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wbOFHg/LUZHa705OksnmWu/rR+vSdZbUpTXbCqEHrdE=;
-        b=OVPQiL+AEQsFcI44IjsArc7uFEHMkmnpWheDvEZUYjocnjuAbVlhhHF0vJ2XqdTyzk
-         moBeX0pqS6Zdj5nEmQKAUztLpN5EObLW40ZsRx8oqztByKv+KrmYeAT/m1e+NCNEw8pD
-         ZSasb//R4FlZTu8XViIwwKtULjAnt5cNDe7KJ7kYrsZ71WzDN+d7x9jckbLAf1ubGBT6
-         zJm8aWM7qt1NWBK5w6NydhITpuZLV/Qp+tmbnRfx8Ur5sKWnfRbUhLD6Z8EA2sN4H44x
-         PChF3750baOh4b0eXYbRg0SlzPdvRWPABv/azqjgsMVAuY2E8EtsMYLYSkAMBSvROint
-         z4BQ==
+        bh=5WMd2yqKqr7Qv5eGHfw13m9TryrKC0E1cGLSWKSXxRU=;
+        b=pQ/XSvkrYWDu4RcwAIJXuK6rBrGXBmhjcg35yW4iLAniJFIKsuInGw7NUyhTJMPuew
+         yXShcJ0ROVgXV8S9sLj+EwURBMm0zk2o69/vHZODqQ6X65ZxjOhftQNdP2APongRKfvj
+         mU4WXP4g+GjcqyHV5g+cPtb74eHNy78rtwD0iNDE/01nkBOdAUgqJAQGXijhwnJkA6Li
+         bLT2g3TkResZ/9S56puT51ScxwGGyKTRu/lw2N2lRlIVesXAr7Ul2G4EeZkt6qK1Zn8X
+         314F1c0Iib2vxRfvyChWzc/3Dx2vqxpTGRY0sUyP/+LIUmmJWy8hpKsWFXVd/T89yGJi
+         CAWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wbOFHg/LUZHa705OksnmWu/rR+vSdZbUpTXbCqEHrdE=;
-        b=Y0mtShw7qmk4TJD/tW4/Wo11FOGa37SlNZTAzJKM8gN/EKe+AmcOCACcoxJEnfMRiK
-         bALvpGurzar8OgRB5avaGAqKgLt5vMDkknnCC5nbbcyG46GeupST9TbB+pOHW4Rzl2D1
-         jcKOlhyMSeSSTfdd4nTfvxYR0IA9vP0sdnkYvl9mrnWIZAPxaQbpOzSpB5L4tYYoSPZi
-         KOWaqxnNOHxJPO29X7/Mqamj6YdQnvr1DIYxbbqaNmydM9jVdt6N+oJrKMo/ecOP+qzo
-         WVYleEHPRZXip9f7LksG/72ngKI4EPxkx7B37YJAyEUt7qsUEFNKMck7UDGv4PrVWf3J
-         EB4w==
-X-Gm-Message-State: AOAM5312Qh+U/VoHdwN6UJfqQBfLfn47Y8znTj1X0xbV0T3FLVXW7lgr
-        UuFdOwxIqBmpGBVU05b50ngRRaEXtw/8EA==
-X-Google-Smtp-Source: ABdhPJzwOxsqO34SQhz+7pNvhgXvipsjmBfUcdq2kzW3pKqZBLFnTbHTDwG9hkd1PqHC5KqJki6chA==
-X-Received: by 2002:a63:f011:: with SMTP id k17mr200080pgh.391.1628596047897;
-        Tue, 10 Aug 2021 04:47:27 -0700 (PDT)
+        bh=5WMd2yqKqr7Qv5eGHfw13m9TryrKC0E1cGLSWKSXxRU=;
+        b=imTWrHmxAdQmckJrLDgGcil8cQXElfq7T4GK19ouoKI/yxuFPt0fVB34Uw9MDAVqd2
+         zd29y0EKNA58jkTtka7jgR1nKlni3b8XZsrLfofMamg6JmwI2usaaFOR1qRMQOE4uItc
+         EkrkmNNdWLFLqj7bpIZaTdT0YrYfc8KqLuMHQszc9pwRJmW4e319bVZycCJJ7Rj3xUMH
+         CfIySyiQdbgK7a/3v+lFfsxD+L3Uwb0AA7g3Yi6Oi+ezx+eQF9zmfi3rJa0W2OwohCIf
+         HSTe0f+cI0HiYrTHannwdxdneTU7FtASsWWRmrrlt4G4tTfr+1K1teBL/COx/IqrmpyG
+         S9UQ==
+X-Gm-Message-State: AOAM530beNX9IQ74WIZ82wu3TJr8Ho4msASYiBnxHMYxIUfs5KqqUQ/b
+        W3lClFhBz6Res6EbvG8PY7Y=
+X-Google-Smtp-Source: ABdhPJyv2fy7U3fifZXjrNzmxwycB5CupSTfZBv0bY5Gb5f88lTKfifzNb+yrRKGNMCMECuvZFeSSQ==
+X-Received: by 2002:aa7:8148:0:b029:31b:10b4:f391 with SMTP id d8-20020aa781480000b029031b10b4f391mr22580536pfn.69.1628596060773;
+        Tue, 10 Aug 2021 04:47:40 -0700 (PDT)
 Received: from atharva-on-air.Dlink ([119.82.121.47])
-        by smtp.gmail.com with ESMTPSA id g19sm12410232pfc.168.2021.08.10.04.47.23
+        by smtp.gmail.com with ESMTPSA id g19sm12410232pfc.168.2021.08.10.04.47.36
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Aug 2021 04:47:27 -0700 (PDT)
+        Tue, 10 Aug 2021 04:47:40 -0700 (PDT)
 From:   Atharva Raykar <raykar.ath@gmail.com>
 To:     raykar.ath@gmail.com
 Cc:     avarab@gmail.com, christian.couder@gmail.com, congdanhqx@gmail.com,
@@ -63,9 +63,9 @@ Cc:     avarab@gmail.com, christian.couder@gmail.com, congdanhqx@gmail.com,
         jrnieder@gmail.com, kaartic.sivaraam@gmail.com, pc44800@gmail.com,
         periperidip@gmail.com, rafaeloliveira.cs@gmail.com,
         sunshine@sunshineco.com
-Subject: [GSoC] [PATCH v5 6/9] submodule--helper: remove add-clone subcommand
-Date:   Tue, 10 Aug 2021 17:16:38 +0530
-Message-Id: <20210810114641.27188-7-raykar.ath@gmail.com>
+Subject: [GSoC] [PATCH v5 9/9] submodule--helper: rename compute_submodule_clone_url()
+Date:   Tue, 10 Aug 2021 17:16:41 +0530
+Message-Id: <20210810114641.27188-10-raykar.ath@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210810114641.27188-1-raykar.ath@gmail.com>
 References: <20210807071613.99610-1-raykar.ath@gmail.com>
@@ -76,94 +76,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We no longer need this subcommand, as all of its functionality is being
-called by the newly-introduced `module_add()` directly within C.
+Let's rename 'compute_submodule_clone_url()' to 'resolve_relative_url()'
+to make it clear that this internal helper need not be used exclusively
+for computing submodule clone URLs.
+
+Since the original 'resolve-relative-url' subcommand and its C entry
+point has been removed in c461095ae3 (submodule--helper: remove
+resolve-relative-url subcommand, 2021-07-02), this rename can be done
+without causing any confusion about which function it actually binds to.
 
 Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Shourya Shukla <periperidip@gmail.com>
 ---
- builtin/submodule--helper.c | 60 -------------------------------------
- 1 file changed, 60 deletions(-)
+ builtin/submodule--helper.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index bbc5b4d9fd..6ab7de7741 100644
+index 65591e47eb..5ab4e17e75 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2860,65 +2860,6 @@ static int add_submodule(const struct add_data *add_data)
- 	return 0;
+@@ -199,7 +199,7 @@ static char *relative_url(const char *remote_url,
+ 	return strbuf_detach(&sb, NULL);
  }
  
--static int add_clone(int argc, const char **argv, const char *prefix)
--{
--	int force = 0, quiet = 0, dissociate = 0, progress = 0;
--	struct add_data add_data = ADD_DATA_INIT;
--
--	struct option options[] = {
--		OPT_STRING('b', "branch", &add_data.branch,
--			   N_("branch"),
--			   N_("branch of repository to checkout on cloning")),
--		OPT_STRING(0, "prefix", &prefix,
--			   N_("path"),
--			   N_("alternative anchor for relative paths")),
--		OPT_STRING(0, "path", &add_data.sm_path,
--			   N_("path"),
--			   N_("where the new submodule will be cloned to")),
--		OPT_STRING(0, "name", &add_data.sm_name,
--			   N_("string"),
--			   N_("name of the new submodule")),
--		OPT_STRING(0, "url", &add_data.realrepo,
--			   N_("string"),
--			   N_("url where to clone the submodule from")),
--		OPT_STRING(0, "reference", &add_data.reference_path,
--			   N_("repo"),
--			   N_("reference repository")),
--		OPT_BOOL(0, "dissociate", &dissociate,
--			 N_("use --reference only while cloning")),
--		OPT_INTEGER(0, "depth", &add_data.depth,
--			    N_("depth for shallow clones")),
--		OPT_BOOL(0, "progress", &progress,
--			 N_("force cloning progress")),
--		OPT__FORCE(&force, N_("allow adding an otherwise ignored submodule path"),
--			   PARSE_OPT_NOCOMPLETE),
--		OPT__QUIET(&quiet, "suppress output for cloning a submodule"),
--		OPT_END()
--	};
--
--	const char *const usage[] = {
--		N_("git submodule--helper add-clone [<options>...] "
--		   "--url <url> --path <path> --name <name>"),
--		NULL
--	};
--
--	argc = parse_options(argc, argv, prefix, options, usage, 0);
--
--	if (argc != 0)
--		usage_with_options(usage, options);
--
--	add_data.prefix = prefix;
--	add_data.progress = !!progress;
--	add_data.dissociate = !!dissociate;
--	add_data.force = !!force;
--	add_data.quiet = !!quiet;
--
--	if (add_submodule(&add_data))
--		return 1;
--
--	return 0;
--}
--
- static int config_submodule_in_gitmodules(const char *name, const char *var, const char *value)
+-static char *compute_submodule_clone_url(const char *rel_url, const char *up_path, int quiet)
++static char *resolve_relative_url(const char *rel_url, const char *up_path, int quiet)
  {
- 	char *key;
-@@ -3220,7 +3161,6 @@ static struct cmd_struct commands[] = {
- 	{"list", module_list, 0},
- 	{"name", module_name, 0},
- 	{"clone", module_clone, 0},
--	{"add-clone", add_clone, 0},
- 	{"add-config", add_config, 0},
- 	{"add", module_add, SUPPORT_SUPER_PREFIX},
- 	{"update-module-mode", module_update_module_mode, 0},
+ 	char *remoteurl, *resolved_url;
+ 	char *remote = get_default_remote();
+@@ -634,7 +634,7 @@ static void init_submodule(const char *path, const char *prefix,
+ 		if (starts_with_dot_dot_slash(url) ||
+ 		    starts_with_dot_slash(url)) {
+ 			char *oldurl = url;
+-			url = compute_submodule_clone_url(oldurl, NULL, 0);
++			url = resolve_relative_url(oldurl, NULL, 0);
+ 			free(oldurl);
+ 		}
+ 
+@@ -1355,8 +1355,8 @@ static void sync_submodule(const char *path, const char *prefix,
+ 		if (starts_with_dot_dot_slash(sub->url) ||
+ 		    starts_with_dot_slash(sub->url)) {
+ 			char *up_path = get_up_path(path);
+-			sub_origin_url = compute_submodule_clone_url(sub->url, up_path, 1);
+-			super_config_url = compute_submodule_clone_url(sub->url, NULL, 1);
++			sub_origin_url = resolve_relative_url(sub->url, up_path, 1);
++			super_config_url = resolve_relative_url(sub->url, NULL, 1);
+ 			free(up_path);
+ 		} else {
+ 			sub_origin_url = xstrdup(sub->url);
+@@ -2098,7 +2098,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 	if (repo_config_get_string_tmp(the_repository, sb.buf, &url)) {
+ 		if (starts_with_dot_slash(sub->url) ||
+ 		    starts_with_dot_dot_slash(sub->url)) {
+-			url = compute_submodule_clone_url(sub->url, NULL, 0);
++			url = resolve_relative_url(sub->url, NULL, 0);
+ 			need_free_url = 1;
+ 		} else
+ 			url = sub->url;
+@@ -3025,7 +3025,7 @@ static int module_add(int argc, const char **argv, const char *prefix)
+ 			      "of the working tree"));
+ 
+ 		/* dereference source url relative to parent's url */
+-		add_data.realrepo = compute_submodule_clone_url(add_data.repo, NULL, 1);
++		add_data.realrepo = resolve_relative_url(add_data.repo, NULL, 1);
+ 	} else if (is_dir_sep(add_data.repo[0]) || strchr(add_data.repo, ':')) {
+ 		add_data.realrepo = add_data.repo;
+ 	} else {
 -- 
 2.32.0
 
