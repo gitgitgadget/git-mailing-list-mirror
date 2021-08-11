@@ -2,83 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7D60C4338F
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 23:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1BAAC4338F
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 23:12:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE07660E78
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 23:07:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7CF7D61058
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 23:12:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232720AbhHKXII (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Aug 2021 19:08:08 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:33770 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232434AbhHKXIH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Aug 2021 19:08:07 -0400
-Received: from satellite ([147.147.167.4])
-        by smtp with ESMTPA
-        id DxJzmDZb4OQhvDxK1mVl73; Thu, 12 Aug 2021 00:07:41 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1628723261; bh=U1KGIZZt+agujaeggvrhp6S/KSQGySQ+PoXO1YXlcAc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=AA/EUHikdGMh+LPKU83A2H6rKZPVF3xkZ3xKklpe5TVi9Y7s+wNkAV/xPmHjU7ePu
-         7YI98d8PJUd4B9YtqTP+V1XOhT20Z4BZdT/jsjwvZxO62zTiKyDkFzJFfdNlPOowV0
-         IS1fEDSy0xiCOATEc8pJJC6iCo9Ct9c3KXWmrdh21YB2h3B2vLYkyb29c9HwJgBcWn
-         g2CtSMJiqMvLS2jZnrbr1uwjFP8XLlUah7TTe/cLF5t9gZ0vJXqqLgsv0ac9XKSxbi
-         ShLtCY9fba+n89W5mgdv3sUUI92qn5NkUhz36Q/tKR9v7TVqEig4Ab1qCVHug47iX1
-         h6dc9OTVV0E+A==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=IvmFjI3g c=1 sm=1 tr=0
- a=ClpcMUpIpdFe3QrT4g3KPA==:117 a=ClpcMUpIpdFe3QrT4g3KPA==:17
- a=kj9zAlcOel0A:10 a=1XWaLZrsAAAA:8 a=C4bOBg53Muni8pNyyUIA:9 a=CjuIK1q_8ugA:10
-X-AUTH: ramsayjones@:2500
-Date:   Thu, 12 Aug 2021 00:07:38 +0100
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/7] grep: typesafe versions of grep_source_init
-Message-ID: <YRRYOmwW9yKhvldn@satellite>
-References: <cover.1628618950.git.jonathantanmy@google.com>
- <e5e6a0dc1ef59b2ab419816e463814d93115e7f6.1628618950.git.jonathantanmy@google.com>
- <YRREPNA8GPyKdWBr@google.com>
+        id S232753AbhHKXNU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Aug 2021 19:13:20 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44878 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232684AbhHKXNT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Aug 2021 19:13:19 -0400
+Received: (qmail 23795 invoked by uid 109); 11 Aug 2021 23:12:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 11 Aug 2021 23:12:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16119 invoked by uid 111); 11 Aug 2021 23:12:56 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Aug 2021 19:12:56 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 11 Aug 2021 19:12:54 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?Q?Du=C5=A1an_=C4=8Cervenka?= | ACRIOS 
+        <cervenka@acrios.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Git merge improvement - "remove spaces/tabs from beginning of
+ line and end of line"
+Message-ID: <YRRZdmlfBjJTUimj@coredump.intra.peff.net>
+References: <2632907.cDO7J6XS3R@kuhadatko-gl552vw>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YRREPNA8GPyKdWBr@google.com>
-X-CMAE-Envelope: MS4wfNYeo45oFafd5z7y71dX4xZ+Dof/+k3bnPZIjbSUyjRbeCAbJS0rCO7XvWn+GFbI3XnrcrzF1CVogbtXNGFqcnvlulctgOrAOv3bpOeuB5nJXRoTO2E6
- u/GrxXyhtYOrmcrzft7sOBXQcS2+5fiaYM2cHl1g3xkgyea1Dcn76dGM
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2632907.cDO7J6XS3R@kuhadatko-gl552vw>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 11, 2021 at 02:42:20PM -0700, Emily Shaffer wrote:
-> On Tue, Aug 10, 2021 at 11:28:41AM -0700, Jonathan Tan wrote:
-> > 
-> > grep_source_init() can create "struct grep_source" objects and,
-> > depending on the value of the type passed, some void-pointer parameters have
-> > different meanings. Because one of these types (GREP_SOURCE_OID) will
-> > require an additional parameter in a subsequent patch, take the
-> > opportunity to increase clarity and type safety by replacing this
-> > function with individual functions for each type.
-> > 
-> > Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> Like Junio said, it is very neat.
+On Wed, Aug 11, 2021 at 12:25:10AM +0200, Dušan Červenka | ACRIOS wrote:
 
-[Sorry for piggy-backing, I have already deleted the original mail :( ]
+> Several times it happened that i added or removed condition in code but a lot 
+> of code stayed. Only indention was changed. If there was also other change on 
+> some line i had a conflict. And several times it happened that a lot of code 
+> was appended instead of replaced (if some line was similar with same 
+> indention). This made merging messed and confusing. If we would remove this 
+> spaces noise from beginning and end, we could get more acquired merge. What do 
+> you think? Of course this is only for looking for most matching lines. At the 
+> end the code should keep all necessary spaces.
 
-Just a quick note: grep_source_init_buf() is only called from
-grep.c:1833, before its definition at grep.c:1869, so it could be marked
-as static (as things stand). Do you anticipate any future callers from
-outside of grep.c? (after removing the declaration from grep.h, you
-would need to add a forward declaration or, better, move the definition
-to before the call (or the call (and grep_buffer()) after the definition)).
+Have you looked at the whitespace options you can pass to the
+merge-recursive strategy?  E.g.:
 
-ATB,
-Ramsay Jones
+  git merge -Xignore-space-at-eol some-branch
 
+It may not do quite what you want, though (it sounds like you are more
+interested in matching context with whitespace changes than ignoring
+spaces on modified lines).
 
+-Peff
