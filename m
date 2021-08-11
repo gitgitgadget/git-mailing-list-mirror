@@ -2,107 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99D8EC4338F
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 07:24:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33839C4338F
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 07:34:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 798A061008
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 07:24:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1650460EBD
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 07:34:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235109AbhHKHZC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Aug 2021 03:25:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41522 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235506AbhHKHZB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Aug 2021 03:25:01 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB56DC061765
-        for <git@vger.kernel.org>; Wed, 11 Aug 2021 00:24:37 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id u25so3275426oiv.5
-        for <git@vger.kernel.org>; Wed, 11 Aug 2021 00:24:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=zLcvWHqGlUYpyKfVJfBeyL9NoulUs7BbneGatMpfIYA=;
-        b=kx+6sJBIrHrXkdK3iOxIv21pCzIT5DqiayWXQ8aeNVOJ0NKt6+Jzn2KGCZs7g2TOUt
-         jSfUDNqf6pvoQVLpGN7Fis/uisL3raMQmb9m8QIctXlBDi4Rvn3Rtjp2cM793yqxM5YQ
-         XTMBfm/DodYHiv1F2xx2x12j8govA8Ogq5z8g0tOX3ERm17d0YpQgHmZKfeu4hse+oGQ
-         xGAJfwQcfF8Lf08rruN2/Be4t3Gv0i1oiICvXPA8a/2ILYI3/BM07tjspbzTsp4KDmbD
-         Dk4UrYWQaZCfI4ZS2Hv+8Lmo+8+4Bg/e/7zGpcfeU7dQ3LPZW0JFXTBX8bBe2Y0Srpsn
-         usYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=zLcvWHqGlUYpyKfVJfBeyL9NoulUs7BbneGatMpfIYA=;
-        b=EI2i7boP/CWe9Qul9hFOrUMXCBUhyPKwj36P+WAF5Bhw6WNrM8b2WYOVMtEC0BIUWq
-         hJftWUKiIWdx/2o42mUtZlVdYjP+/U2FmffuvHY/CwVKfrz5EeeuWBCuDv0utQpvns4M
-         VKwi7IhX3IjXd6Xjeu26jJowBrafxrSaoprqN+niQEyUjGdTDURgttOfsEHYRh2+FQOh
-         fmw9goTIhOMsgWvN/QK1DHuEGvaZiKubf0WhOKZJcPHnwoGvKjKTNQVqNv8Oj3tpX7Je
-         HzDV3w547ewvlf+iQSMsFbj4gSTlRp6O5ASnkozzXbn0WnF4ModcwqnvKhTwbYHtK1Ny
-         cB/A==
-X-Gm-Message-State: AOAM531wOJPFHT6L/jHSj5HDi4nLINZ5viMPvXTk99+prOE5Zpk6ATWR
-        0KfNr4P6iOiZdsXFLxatltw=
-X-Google-Smtp-Source: ABdhPJwH4ycvCDvKA/iQ0q6Mnwn64pQkbtJnAWdOT0z1EgcXmdhnHwDz7xftdfq4r6QZN+FjhUrWAA==
-X-Received: by 2002:a05:6808:1925:: with SMTP id bf37mr6772158oib.154.1628666677225;
-        Wed, 11 Aug 2021 00:24:37 -0700 (PDT)
-Received: from localhost (fixed-187-189-69-1.totalplay.net. [187.189.69.1])
-        by smtp.gmail.com with ESMTPSA id b24sm1205690otf.0.2021.08.11.00.24.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Aug 2021 00:24:36 -0700 (PDT)
-Date:   Wed, 11 Aug 2021 02:24:35 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Michael J Gruber <git@grubix.eu>
-Message-ID: <61137b336b712_209a208f7@natae.notmuch>
-In-Reply-To: <8034894f-a8dd-e1ee-1825-7cb172afdba3@gmail.com>
-References: <20210811045727.2381-1-felipe.contreras@gmail.com>
- <20210811045727.2381-7-felipe.contreras@gmail.com>
- <8034894f-a8dd-e1ee-1825-7cb172afdba3@gmail.com>
-Subject: Re: [PATCH 6/7] stage: add 'diff' subcommand
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+        id S235572AbhHKHet (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Aug 2021 03:34:49 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:41841 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235177AbhHKHes (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Aug 2021 03:34:48 -0400
+Received: from [192.168.1.103] (089144194204.atnat0003.highway.a1.net [89.144.194.204])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4Gl1mJ0njWz5tlL;
+        Wed, 11 Aug 2021 09:34:22 +0200 (CEST)
+Subject: Re: [PATCH v4] userdiff: improve java hunk header regex
+To:     Tassilo Horn <tsdh@gnu.org>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <20210810190937.305765-1-tsdh@gnu.org>
+ <d3484278-8413-0d10-e6cd-59a7ff04564b@kdbg.org> <87zgtoh6bm.fsf@gnu.org>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <95ebb2cf-2e6e-912e-7d80-3947a8e3d9e4@kdbg.org>
+Date:   Wed, 11 Aug 2021 09:34:22 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
+MIME-Version: 1.0
+In-Reply-To: <87zgtoh6bm.fsf@gnu.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya wrote:
-> On 11/08/21 11.57, Felipe Contreras wrote:
-> > @@ -12,6 +12,7 @@ SYNOPSIS
-> >   'git stage' [options] [--] [<paths>...]
-> >   'git stage' (-a | --add) [options] [--] [<paths>...]
-> >   'git stage' (-r | --remove) [options] [--] [<paths>...]
-> > +'git stage' (-d | --diff) [options] [--] [<paths>...]
-> >   
-> >   
-> >   DESCRIPTION
-> > @@ -32,11 +33,15 @@ OPTIONS
-> >   --remove::
-> >   	Remove changes from the staging area. See linkgit:git-reset[1].
-> >   
-> > +-d::
-> > +--diff::
-> > +	View the changes staged for the next commit. See linkgit:git-diff[1].
-> >   
+Am 11.08.21 um 07:22 schrieb Tassilo Horn:
+> Johannes Sixt <j6t@kdbg.org> writes:
+>> These new tests are very much appreciated. You do not have to go wild
+>> with that many return type tests; IMO, the simple one and the most
+>> complicated one should do it. (And btw, s/cart/card/)
 > 
-> Is it synonym to `git diff --staged`?
+> Well, they appeared naturally as a result during development and made it
+> easier to spot errors when you know up to which level of complexity it
+> still worked.  Is there a stronger reason to remove tests which might
+> not be needed, e.g., runtime cost on some CI machines?
 
-Yes, it's the same thing.
+I totally understand how the test cases evolved. Having many of them is
+not a big deal. It's just the disproportion of tests of this new feature
+vs. the existing tests that your patch creates, in particular, when
+earlier of the new tests are subsumed by later new tests.
 
-Although from discussions in 2013 people found it odd that the option is
---staged when specifying something that affects the future. It should
-probably be `git diff --stage`.
+> Another thing I've noticed (with my suggested patch) is that I should
+> not try to match constructor signatures.  I think that's impossible
+> because they are indistinguishable from method calls, e.g., in
+> 
+>   public class MyClass {
+>       MyClass(String RIGHT) {
+>           someMethodCall();
+>           someOtherMethod(17)
+>               .doThat();
+>           // Whatever
+>           // ChangeMe
+>       }
+>   }
+> 
+> there is no regex way to prefer MyClass(String RIGHT) over
+> someOtherMethod().
 
--- 
-Felipe Contreras
+Good find.
+
+> So all in all, I'd propose this version in the next patch version:
+> 
+> --8<---------------cut here---------------start------------->8---
+> PATTERNS("java",
+> 	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
+>          "^[ \t]*("
+>          /* Class, enum, and interface declarations */
+>          "(([a-z]+[ \t]+)*(class|enum|interface)[ \t]+[A-Za-z][A-Za-z0-9_$]*[ \t]+.*)"
+>          /* Method definitions; note that constructor signatures are not */
+>          /* matched because they are indistinguishable from method calls. */
+>          "|(([A-Za-z_<>&][][?&<>.,A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)"
+>          ")$",
+> 	 /* -- */
+> 	 "[a-zA-Z_][a-zA-Z0-9_]*"
+> 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+> 	 "|[-+*/<>%&^|=!]="
+> 	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
+> --8<---------------cut here---------------end--------------->8---
+
+That looks fine.
+
+One suggestion, though. You do not have to have all positive patterns
+("class, enum, interface" and "method definitions") in a single pattern
+separated by "|". You can place them on different "lines" (note the "\n"
+at the end of the first pattern):
+
+	/* Class, enum, and interface declarations */
+	"^[ \t]*(...(class|enum|interface)...)$\n"
+	/*
+	 * Method definitions; note that constructor signatures are not
+	 * matched because they are indistinguishable from method calls.
+	 */
+	"^[ \t]*(...[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*))$",
+
+I don't think there is a technical difference, but I find this form
+easier to understand because fewer open parentheses have to be tracked.
+
+-- Hannes
