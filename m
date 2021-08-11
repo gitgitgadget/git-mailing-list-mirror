@@ -2,76 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08BE7C4320A
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 10:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFB3EC4338F
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 10:46:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DBEFE600CD
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 10:31:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A02D160E97
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 10:46:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237080AbhHKKbU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Aug 2021 06:31:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57130 "EHLO
+        id S237022AbhHKKqX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Aug 2021 06:46:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237036AbhHKKbJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Aug 2021 06:31:09 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8422C061765
-        for <git@vger.kernel.org>; Wed, 11 Aug 2021 03:30:45 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id d1so2089848pll.1
-        for <git@vger.kernel.org>; Wed, 11 Aug 2021 03:30:45 -0700 (PDT)
+        with ESMTP id S232644AbhHKKqW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Aug 2021 06:46:22 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AB22C061765
+        for <git@vger.kernel.org>; Wed, 11 Aug 2021 03:45:59 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id m24-20020a17090a7f98b0290178b1a81700so4048874pjl.4
+        for <git@vger.kernel.org>; Wed, 11 Aug 2021 03:45:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
          :date:mime-version;
-        bh=zvvevIVNUGgh6n6/87sm0eC2Scio+sAEnkjuazyh7f4=;
-        b=Ia1YWejNzB3Dd5euKOQJqrZCVh75yxXvHupVfqCX77x3zDi8vOfRkcyJ9w4gvNNu0c
-         fQXLHPhbShdNSBG7UOguuafMjbIYxQsKIsvcXfbF+GwqvsrmrCZt80PHYm4NnDc87P6y
-         S12yEoxMlvAL363BarBlHe/lrtiavJQWCjgCrgiQmRqqSTM8IbhdAK4pDyqd+G102Ie4
-         FvK7KjmZTKtFu34IEMdVZXgebrj2aLH5aYFzyQVp5fl9jXROC6LPt/NdpJ3gaWa1IyVU
-         nHGfh7jK2jgCG49CXuaaeW+Qtl0oiXTmIUc+MKMtBC5lR08VzslJLV1Qg0qIhgHgmK31
-         NDlw==
+        bh=j8+ufrH4/VGCCpAKa6/reop+GDQ9ub3vyChoPJQY1UI=;
+        b=bCTgsgtcxueIgz6m6o0AvV1ob1LczbCIPLLDgIlCmvY9ss1nMH6WCNYzXA8a49R80f
+         nwMrY2GBnCFXFA5EJgzrBF6n69HocxxDSIknhSKSL5ZFKUQGMWi0nxBjF9Z5AM1bDdvt
+         Fz6I+Epfv7K71Sy+MTnO0Dc+flF8g6gY+2e9Qg1Q98L9EocwO8I0qyDWyPMutGYSDHo1
+         jSsVAPKNhZHMqHkPvFz8xyTVEy57zlSQQsD9b1a7GtNoio53+MBQJUJemw5vWQdaYvvT
+         brBKYc0OU9vNIbuHmfnXcrdH+Dde+2f5Dc4wgoqxi3w8iQhuWyiVhL95GIkQ1Ht+G0Gw
+         9lGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:references:user-agent:from:to:cc:subject
          :in-reply-to:message-id:date:mime-version;
-        bh=zvvevIVNUGgh6n6/87sm0eC2Scio+sAEnkjuazyh7f4=;
-        b=DfB+Ypn3KdCDrLUJc6ZlUaYSeSxKcjgHuPVOw8q7SzihdHKn+RAyKkPs08F0nf39/i
-         dYJ948UoznwhPXdd0pSzM2J6EF4KUF2YXUiewDoBqNO2gHKXfKWpl1svIvpCTbBi+c29
-         WTRtV2r7sqhSHcD4jKeGVYntGqjDMQFFqdEkWyeWMHNC7MkZHWl9DnJ6aXQA7lk74fnW
-         AoopyFJI1UqJItg/Yn+rnGRW47Ix9hvryVosJnfiIoEWxVQMCwCO6B2lXikCSO2rIhKE
-         9iy3BNTKpzWob2E2YPBYF6Ok1PXEir6MYZixXHEAkd+7Ilnd1l65ZimbQ4hRzhn/Prqw
-         9E0g==
-X-Gm-Message-State: AOAM530UHyadQb+wLaowtPshJSByHti8Xe9Cu9y59Kst/vb4quJs+d2q
-        nPSvOJGnF37pURysSexPqmY=
-X-Google-Smtp-Source: ABdhPJz9GAdEC+b5Zk69edF2+nAu/Moo3GQfMmIUifXANySXZwfXFsjL4Cqp6rXRLGtY5bhyK6g9yg==
-X-Received: by 2002:a65:6883:: with SMTP id e3mr221420pgt.90.1628677845383;
-        Wed, 11 Aug 2021 03:30:45 -0700 (PDT)
+        bh=j8+ufrH4/VGCCpAKa6/reop+GDQ9ub3vyChoPJQY1UI=;
+        b=j5btVFxifgKdiyjzl+7QbrWNCnouIMRmaPDv6giYBN27vDMixmHjinyQnIQQsI2oaa
+         yalepQfKZO/KMV9CHJUjEOI9+XPTtK2JYyOuWumfgR8Xh7zOk61hfmnSSqoC1kBUUkKh
+         Ykb5RWFs/6P2UbJPDVqAA8eNn6OEhYc0poHczIYUwIi824I8Nnm9pdKXDhF1ifRRhRiX
+         1H++XN8AObJjMYtGiITE99N+D3fQB0bF6PKvoyqYE5jFvDifihztBL7KbiNOyuIJ76mk
+         NEXPx4lmnwVj2yZNmx7ogMa+QIoGcDd/7M0JAPNQXT5Zz7V5Xi7Nmd8ucr+KM8nM6Xm7
+         fYzg==
+X-Gm-Message-State: AOAM533kfBfGBORFex9WhYGlL83Jtt1KmlK0JcYj72PzG/74ofVGo1gn
+        Ezb1TmylkBOU0Ec+yO5PvOc=
+X-Google-Smtp-Source: ABdhPJzQAkOQVVqnVu5R55zjQA2/9adb6ejfznMUyszMaGm5rtOd4P1Y00BEobFe2dR25ztoo8vZqg==
+X-Received: by 2002:a63:4f51:: with SMTP id p17mr730828pgl.29.1628678758753;
+        Wed, 11 Aug 2021 03:45:58 -0700 (PDT)
 Received: from atharva-on-air ([119.82.121.47])
-        by smtp.gmail.com with ESMTPSA id q140sm22913128pfc.191.2021.08.11.03.30.40
+        by smtp.gmail.com with ESMTPSA id f5sm25758582pjo.23.2021.08.11.03.45.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Aug 2021 03:30:45 -0700 (PDT)
-References: <20210807071613.99610-1-raykar.ath@gmail.com>
- <20210810114641.27188-1-raykar.ath@gmail.com>
- <20210810114641.27188-2-raykar.ath@gmail.com>
- <21917b01-94f7-2698-b904-2d75f37af447@gmail.com>
+        Wed, 11 Aug 2021 03:45:58 -0700 (PDT)
+References: <xmqqh7fwbx86.fsf@gitster.g>
 User-agent: mu4e 1.4.15; emacs 27.2
 From:   Atharva Raykar <raykar.ath@gmail.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     avarab@gmail.com, christian.couder@gmail.com, congdanhqx@gmail.com,
-        emilyshaffer@google.com, git@vger.kernel.org, gitster@pobox.com,
-        jrnieder@gmail.com, kaartic.sivaraam@gmail.com, pc44800@gmail.com,
-        periperidip@gmail.com, rafaeloliveira.cs@gmail.com,
-        sunshine@sunshineco.com
-Subject: Re: [GSoC] [PATCH v5 1/9] submodule--helper: add options for
- compute_submodule_clone_url()
-In-reply-to: <21917b01-94f7-2698-b904-2d75f37af447@gmail.com>
-Message-ID: <m2pmuk9stu.fsf@gmail.com>
-Date:   Wed, 11 Aug 2021 16:00:37 +0530
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2021, #04; Tue, 10)
+In-reply-to: <xmqqh7fwbx86.fsf@gitster.g>
+Message-ID: <m2mtpo9s4e.fsf@gmail.com>
+Date:   Wed, 11 Aug 2021 16:15:53 +0530
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -79,23 +71,28 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 10/08/21 18.46, Atharva Raykar wrote:
->>   	if (git_config_get_string(remotesb.buf, &remoteurl)) {
->> -		warning(_("could not look up configuration '%s'. Assuming this repository is its own authoritative upstream."), remotesb.buf);
->> +		if (!quiet)
->> +			warning(_("could not look up configuration '%s'. "
->> +				  "Assuming this repository is its own "
->> +				  "authoritative upstream."),
->> +				remotesb.buf);
->>   		remoteurl = xgetcwd();
->>   	}
+> Here are the topics that have been cooking in my tree.  Commits
+> prefixed with '+' are in 'next' (being in 'next' is a sign that a
+> topic is stable enough to be used and are candidate to be in a
+> future release).  Commits prefixed with '-' are only in 'seen',
+> which means nothing more than that I have found them of interest for
+> some reason (like "it may have hard-to-resolve conflicts with
+> another topic already in flight" or "this may turn out to be
+> useful").  Do not read too much into a topic being in (or not in)
+> 'seen'.  The ones marked with '.' do not appear in any of the
+> integration branches, but I am still holding onto them.
 >
-> Why did you split warning message? We could keep that in one line.
+> [...]
+>
+> --------------------------------------------------
+> [New Topics]
 
-That line was too long, and given that I was moving the function and
-changing it a little bit, I decided to make it adhere more closely to
-the CodingGuidelines [1] and local convention.
+Kaartic Sivaraam had sent a patch to fix a cosmetic bug introduced by my
+add-clone conversion series which has already been merged to master:
 
-[1] https://github.com/git/git/blob/6c85aac65fb455af85745130ce35ddae4678db84/Documentation/CodingGuidelines#L190
+https://lore.kernel.org/git/20210805192803.679948-1-kaartic.sivaraam@gmail.com/
+
+I think it will be re-rolled soon. Just wanted to ensure this did not
+get lost among the other topics.
