@@ -2,121 +2,195 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AB17C4338F
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 05:02:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7398C4338F
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 05:57:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 69B3D60F13
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 05:02:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9191060F46
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 05:57:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233933AbhHKFDG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Aug 2021 01:03:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56106 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233766AbhHKFDG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Aug 2021 01:03:06 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 40DEBCD6FF;
-        Wed, 11 Aug 2021 01:02:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=VL6neY6QvAXxpXvWAaBKuhQpSWPtHKAjQ0qXXXYGVBQ=; b=YNrl
-        c/YnKJyuvJ91OngOTGLNLLF5taPPzZ5edka3DnTO+QhtozGv+K9PorEBMiEwNmnh
-        D2aMYGTzectWszqGqfMGU0deI16q+4A4H2YIJObeR/Cc9vqdX8TU5xdS/tbXUCcj
-        hTRonCN3LgVX+cUx3vhqGCzHI36+ioQMxFfwO7w=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 378E2CD6FE;
-        Wed, 11 Aug 2021 01:02:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B65F5CD6FC;
-        Wed, 11 Aug 2021 01:02:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Mahi Kolla <mahikolla@google.com>
-Cc:     Mahi Kolla via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v4] clone: update submodule.recurse in config when using
- --recurse-submodule
-References: <pull.1006.v3.git.1627946590.gitgitgadget@gmail.com>
-        <pull.1006.v4.git.1628536305810.gitgitgadget@gmail.com>
-        <xmqqzgtqe2w6.fsf@gitster.g>
-        <CAN3QUFYPjsvBRGegO-kC7+gcFDczOqQSw-UYphnLHx=6-6kkwA@mail.gmail.com>
-        <xmqqa6lpdu4z.fsf@gitster.g>
-Date:   Tue, 10 Aug 2021 22:02:41 -0700
-Message-ID: <xmqqbl64bmku.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S234526AbhHKF5w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Aug 2021 01:57:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50030 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234443AbhHKF5v (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Aug 2021 01:57:51 -0400
+Received: from eggs.gnu.org (eggs.gnu.org [IPv6:2001:470:142:3::10])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4963C061765
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 22:57:28 -0700 (PDT)
+Received: from fencepost.gnu.org ([2001:470:142:3::e]:48646)
+        by eggs.gnu.org with esmtp (Exim 4.90_1)
+        (envelope-from <tsdh@gnu.org>)
+        id 1mDhEy-0002f3-0O; Wed, 11 Aug 2021 01:57:24 -0400
+Received: from auth1-smtp.messagingengine.com ([66.111.4.227]:55899)
+        by fencepost.gnu.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90_1)
+        (envelope-from <tsdh@gnu.org>)
+        id 1mDhEx-00086O-TX; Wed, 11 Aug 2021 01:57:23 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailauth.nyi.internal (Postfix) with ESMTP id 1DB3727C0054;
+        Wed, 11 Aug 2021 01:57:22 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Wed, 11 Aug 2021 01:57:22 -0400
+X-ME-Sender: <xms:wWYTYcFbzi0kDjWjRyRUTyXeNvtKsXAyVOu7A8u7A7sXFuw41KPEcQ>
+    <xme:wWYTYVWTLiPK8KzJA7PYaH0Gq9TfF400-1JB5xK81-_KepZOPvh74c5ll-2SvaMW6
+    kmTWdO9FjFBmA>
+X-ME-Received: <xmr:wWYTYWJx71KQKGLJIS3RuxoyTZs-8fDCZ6LcRt5-b362MjVQ46tKomGh9OeJHFR4SgewF74Xl3b8hQ8j4YNqQjzrTSHlp0w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrkedtgdelkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfhgfhffvufffjgfkgggtsehttdertd
+    dtredtnecuhfhrohhmpefvrghsshhilhhoucfjohhrnhcuoehtshguhhesghhnuhdrohhr
+    gheqnecuggftrfgrthhtvghrnhephfdtveehffejueekvdffleeiledujeetfefgvdefje
+    etveefgeekvdduteehveeinecuffhomhgrihhnpehuthhilhdrmhgrphenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehthhhorhhnodhmvghsmh
+    htphgruhhthhhpvghrshhonhgrlhhithihqdekieejfeekjeekgedqieefhedvleekqdht
+    shguhheppehgnhhurdhorhhgsehfrghsthhmrghilhdrfhhm
+X-ME-Proxy: <xmx:wWYTYeG-DDfoQQjT1qDO3P-XOIkuiLz82a01VEdn8xP8OAABt4isIA>
+    <xmx:wWYTYSUwmzVZ4V9qGRulHSh2_tQS5JHKijqhgqbBiAKvg_dxgho4sg>
+    <xmx:wWYTYRNaVzmByYq0VFWeSXUtRiI_UlqQcgDvszle5q_S25U6KESnqQ>
+    <xmx:wmYTYVdlDnQtUxpSovqomBeEtkU6L1S7flSkCpoSY0GqZVb53g7XhQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Aug 2021 01:57:21 -0400 (EDT)
+References: <20210810190937.305765-1-tsdh@gnu.org>
+ <d3484278-8413-0d10-e6cd-59a7ff04564b@kdbg.org>
+User-agent: mu4e 1.6.2; emacs 28.0.50
+From:   Tassilo Horn <tsdh@gnu.org>
+To:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4] userdiff: improve java hunk header regex
+Date:   Wed, 11 Aug 2021 07:22:06 +0200
+In-reply-to: <d3484278-8413-0d10-e6cd-59a7ff04564b@kdbg.org>
+Message-ID: <87zgtoh6bm.fsf@gnu.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5B6E23C4-FA61-11EB-9B1F-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> Mahi Kolla <mahikolla@google.com> writes:
+Hi Hannes & Junio,
+
+> These new tests are very much appreciated. You do not have to go wild
+> with that many return type tests; IMO, the simple one and the most
+> complicated one should do it. (And btw, s/cart/card/)
+
+Well, they appeared naturally as a result during development and made it
+easier to spot errors when you know up to which level of complexity it
+still worked.  Is there a stronger reason to remove tests which might
+not be needed, e.g., runtime cost on some CI machines?
+
+>> -	 "^[ \t]*(([A-Za-z_][A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$",
+>> +         "^[ \t]*("
+>> +         /* Class, enum, and interface declarations: */
+>> +         /*   optional modifiers: public */
+>> +         "(([a-z]+[ \t]+)*"
+>> +         /*   the kind of declaration */
+>> +         "(class|enum|interface)[ \t]+"
+>> +         /*   the name */
+>> +         "[A-Za-z][A-Za-z0-9_$]*[ \t]+.*)"
+>> +         /* Method & constructor signatures: */
+>> +         /*   optional modifiers: public static */
+>> +         "|(([a-z]+[ \t]+)*"
+>> +         /*   type params and return types for methods but not constructors */
+>> +         "("
+>> +         /*     optional type parameters: <A, B extends Comparable<B>> */
+>> +         "(<[A-Za-z0-9_,.&<> \t]+>[ \t]+)?"
+>> +         /*     return type: java.util.Map<A, B[]> or List<?> */
+>> +         "([A-Za-z_]([A-Za-z_0-9<>,.?]|\\[[ \t]*\\])*[ \t]+)+"
+>> +         /*   end of type params and return type */
+>> +         ")?"
+>> +         /*   the method name followed by the parameter list: myMethod(...) */
+>> +         "[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)"
+>> +         ")$",
 >
->>> Is it possible to avoid changing the behaviour unconditionally and
->>> potentially breaking existing users by making it an opt-in feature,
->>> e.g. "git clone --recurse-submodules" would work as the current
->>> users would expect, while "git clone --recurse-submodules=sticky"
->>> would set submodule.recurse to true, or something?
->>
->> As mentioned, the `submodule.recurse=true` will only apply to active
->> submodules specified by the user. Setting this config value when the
->> user runs their initial `git clone` minimizes the number of times a
->> developer must use the `--recurse-submodule` option on other commands.
->>
->> However, this is a behavior change that may be surprising for
->> developers. To ensure a smooth rollout and easy adoption, I think
->> adding a message using an `advice.*` config setting would be useful.
+> I don't see the point in this complicated regex. Please recall that it
+> will be applied only to syntactically correct Java text. Therefore,
+> you do not have to implement all syntactical corner cases, just be
+> sufficiently permissive.
 
-Let me outline some general rules on changing the behaviour of the
-system used around here.
+I actually find it easier to understand if it is broken up into more
+concrete alternatives and parts which are commented instaed of one
+opaque "permissively match everything in one alternative" regex.  It
+shows the intent of what you want to match.  But YMMV and since Junio
+agrees with you, I'm fine with that approach.
 
-First of all, if a proposed change of behaviour is a bugfix, the
-following does not apply [*1*].
+> What is wrong with
+>
+> 	"^[ \t]*(([A-Za-z_][][?&<>.,A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[
+> \t]*\\([^;]*)$",
 
-When a new behaviour is made available to those who want to use it,
-it starts as an opt-in feature.
+That doesn't work for
 
- - Existing users will not be surprised by a familiar command
-   suddenly changing its behaviour.  If users keep using the system
-   the same way as they used it before, the system will behave the
-   same way, without changing the behaviour.
+  <T> List<T> foo()
 
- - Those who want to use the new behaviour need to do something to
-   explicitly trigger it (with a command line option, configuration
-   variable, a new command, etc.)
+or
 
-Over time, a behaviour that used to be a "new way" may just become
-"one of the two ways available", and it may even turn out to be a
-more desirable one between the two.  At that point, we may propose
-to flip the default, with a migration plan that is carefully
-designed to avoid breaking existing users.
+  <T extends Foo & Bar> T foo()
 
-Even if it were an *improvement* to set the configuration variable,
-it is not an excuse to suddenly change the behaviour of the command
-for users who do not ask.  It needs to start as an optional feature,
-and if we really like it and manage to convince majority users to
-also like the new way, we may even consider making it the default,
-but it is way too premature to do so.
+so at least it needs to include &<> in the first group, too.
 
-Unless we can argue that the current behaviour *is* buggy, that is.
+Also, it doesn't match class/enum/interface declarations anymore, so
 
-Thanks.
+  class Foo {
+    String x = "ChangeMe";
+  }
 
+will have an empty hunk header.
 
-[Footnote]
+Another thing I've noticed (with my suggested patch) is that I should
+not try to match constructor signatures.  I think that's impossible
+because they are indistinguishable from method calls, e.g., in
 
-*1* A change that we have to say "not all users may be happy with
-    this new behaviour" or "developers would be surprised by the new
-    behaviour" cannot be a bugfix.
+  public class MyClass {
+      MyClass(String RIGHT) {
+          someMethodCall();
+          someOtherMethod(17)
+              .doThat();
+          // Whatever
+          // ChangeMe
+      }
+  }
+
+there is no regex way to prefer MyClass(String RIGHT) over
+someOtherMethod().
+
+So all in all, I'd propose this version in the next patch version:
+
+--8<---------------cut here---------------start------------->8---
+PATTERNS("java",
+	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
+         "^[ \t]*("
+         /* Class, enum, and interface declarations */
+         "(([a-z]+[ \t]+)*(class|enum|interface)[ \t]+[A-Za-z][A-Za-z0-9_$]*[ \t]+.*)"
+         /* Method definitions; note that constructor signatures are not */
+         /* matched because they are indistinguishable from method calls. */
+         "|(([A-Za-z_<>&][][?&<>.,A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)"
+         ")$",
+	 /* -- */
+	 "[a-zA-Z_][a-zA-Z0-9_]*"
+	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+	 "|[-+*/<>%&^|=!]="
+	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
+--8<---------------cut here---------------end--------------->8---
+
+That works for all my test cases (which I have also altered to include
+the method calls from above before the ChangeMe) except for
+java-constructor where it shows
+
+  public class MyClass {
+
+instead of
+
+      MyClass(String RIGHT) {
+
+in the hunk header which is expected as explained earlier and in the
+comment.
+
+Does that seem like a good middle ground?
+
+Bye,
+Tassilo
