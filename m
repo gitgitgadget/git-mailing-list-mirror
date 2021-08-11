@@ -7,85 +7,81 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C19E2C4338F
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 17:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71593C4338F
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 17:30:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 96C0C61076
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 17:20:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 452646101D
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 17:30:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229968AbhHKRVI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Aug 2021 13:21:08 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52827 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229590AbhHKRVG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Aug 2021 13:21:06 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BE1D014235B;
-        Wed, 11 Aug 2021 13:20:41 -0400 (EDT)
+        id S229777AbhHKRak (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Aug 2021 13:30:40 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55199 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229535AbhHKRaj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Aug 2021 13:30:39 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7E7D4D280F;
+        Wed, 11 Aug 2021 13:30:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=EyRAC6+NNpKw
-        smsRU4x4CoFt9tP7NGOzOWVe3CPTNiA=; b=jaw78KfYvJZ0Cv3uYm177m/t6NA5
-        pRYovf1V0aRCRYYPPwgR6CP52llx46SM/wS1EGopiu/YWwjuTugH8A5q80Qg4AuL
-        PCzYatNY7x52kRR+vR0IcyQcM0ABkwpHUA6lT2gaueaE+dIK/6CNhvTU5mJO/pak
-        MWBAWYTNIgKdlts=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B682214235A;
-        Wed, 11 Aug 2021 13:20:41 -0400 (EDT)
+        :content-type; s=sasl; bh=b0cfGBAbcTXgQlMq3SbEAh3WwjgCYsK+UV9TAs
+        ATzlc=; b=Qmi7P5lXYqDFZt7A7Iw6L5VJuEToSgJdx3+avsHM4cNnS8i/18Wti8
+        f2po8OKa+gqjcg0UADdN8+HE61wukjOAzAUrq044ii3Mdcguz0mGQY6+ax8O0yan
+        WNDFyKhJNe0CDEGkz+Unuy6HVL8OLgV4xWL4PdwpAXjfAU42X83Lc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 63907D280E;
+        Wed, 11 Aug 2021 13:30:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.3.135])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 111B4142359;
-        Wed, 11 Aug 2021 13:20:38 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 80AC3D280C;
+        Wed, 11 Aug 2021 13:30:14 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org, e@80x24.org,
-        Andrzej Hunt <andrzej@ahunt.org>
-Subject: Re: [PATCH/RFC 0/3] pedantic errors in next
-References: <CAPUEsphf9F1+=zOMKx3j=jH8xqDwQX99+9uHiYUpXhFE1nervg@mail.gmail.com>
-        <20210809013833.58110-1-carenas@gmail.com>
-        <xmqqtujyftzx.fsf@gitster.g> <YRIZsOaguDW0HaeI@carlos-mbp.lan>
-        <0b973579-748e-ce2f-20aa-a967765cce83@web.de>
-        <CAPUEspiWdGRQoBnpn_uwjkqV7ffMm+MkzbNVU1rZ6yCwkpmNaA@mail.gmail.com>
-        <1a18a701-7d14-d6c5-6929-30636e688006@web.de>
-Date:   Wed, 11 Aug 2021 10:20:37 -0700
-In-Reply-To: <1a18a701-7d14-d6c5-6929-30636e688006@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Wed, 11 Aug 2021 16:57:52 +0200")
-Message-ID: <xmqq5ywbaoey.fsf@gitster.g>
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     git@vger.kernel.org, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2021, #04; Tue, 10)
+References: <xmqqh7fwbx86.fsf@gitster.g> <m2mtpo9s4e.fsf@gmail.com>
+Date:   Wed, 11 Aug 2021 10:30:13 -0700
+In-Reply-To: <m2mtpo9s4e.fsf@gmail.com> (Atharva Raykar's message of "Wed, 11
+        Aug 2021 16:15:53 +0530")
+Message-ID: <xmqq1r6zanyy.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 72C50F80-FAC8-11EB-AD84-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: C9C668AA-FAC9-11EB-AD5F-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Atharva Raykar <raykar.ath@gmail.com> writes:
 
->> would at least the two included in the chunks above be safe enough for
->> RC2 as I hope?, is the one with the additional int too hacky to be
->> considered for release?;
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> I think your -pedantic fixes 1 and 2 should go into the next possible
-> release candidate because they fix regressions.
+>> Here are the topics that have been cooking in my tree.  Commits
+>> prefixed with '+' are in 'next' (being in 'next' is a sign that a
+>> topic is stable enough to be used and are candidate to be in a
+>> future release).  Commits prefixed with '-' are only in 'seen',
+>> which means nothing more than that I have found them of interest for
+>> some reason (like "it may have hard-to-resolve conflicts with
+>> another topic already in flight" or "this may turn out to be
+>> useful").  Do not read too much into a topic being in (or not in)
+>> 'seen'.  The ones marked with '.' do not appear in any of the
+>> integration branches, but I am still holding onto them.
+>>
+>> [...]
+>>
+>> --------------------------------------------------
+>> [New Topics]
+>
+> Kaartic Sivaraam had sent a patch to fix a cosmetic bug introduced by my
+> add-clone conversion series which has already been merged to master:
+>
+> https://lore.kernel.org/git/20210805192803.679948-1-kaartic.sivaraam@gmail.com/
+>
+> I think it will be re-rolled soon. Just wanted to ensure this did not
+> get lost among the other topics.
 
-I agree.  They are at the bottom of 'seen' just above 'master' in
-last night's pushout for this exact reason.
-
-> Same for my signed-left-shift fix in
-> http://public-inbox.org/git/bab9f889-ee2e-d3c3-0319-e297b59261a0@web.de=
-/
-> (or some improved version if it's lacking in some way) and the yet to b=
-e
-> published fix for the alignment issue.  I assume Andrzej as the reporte=
-r
-> or Eric as the original author would like to have a shot at the latter.
-
-Thanks.  It was missed as it was buried in the discussion exchange.
-Will queue together with cb/many-alternate-optim-fixup topic.
-
+Thanks.  Will (try to) keep an eye on it.
