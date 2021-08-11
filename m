@@ -2,93 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49228C4338F
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 13:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F067C4338F
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 13:54:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1780C60FE6
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 13:51:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D43FE60231
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 13:54:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232190AbhHKNvW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Aug 2021 09:51:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49300 "EHLO
+        id S231864AbhHKNya (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Aug 2021 09:54:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232084AbhHKNvW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Aug 2021 09:51:22 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC360C061765
-        for <git@vger.kernel.org>; Wed, 11 Aug 2021 06:50:58 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id p22so1186485qki.10
-        for <git@vger.kernel.org>; Wed, 11 Aug 2021 06:50:58 -0700 (PDT)
+        with ESMTP id S231176AbhHKNya (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Aug 2021 09:54:30 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AD73C061765
+        for <git@vger.kernel.org>; Wed, 11 Aug 2021 06:54:06 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id i4so2942433ila.1
+        for <git@vger.kernel.org>; Wed, 11 Aug 2021 06:54:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=PE5shFURadCBcs1/Klp20Te3l3Dnbi19IFEwo6S5Rts=;
-        b=Q39g5c1SdEC6R0bih/D29wxBPfRJy3HkAboiO4znr/P9srnpBilOKikkYJm9Tzecmc
-         N2wjFBZZo4SK5UMsmktqwJVd2FbO4ztXW+fcUq6FPWLuuSJlnLkjLfUmRMa/AMZnv9Ls
-         mY2ZIr4+uogWKcMDY16k2IxRW09KfAa06aAPg=
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=xE0ICxaoGMgmOssKHh4SqJ0WRI7px/hYdtIahfrvXDA=;
+        b=ihaUtsysqoArZ7m8ii/Cf7fh3TxeWmLo3CzQ5+mXPbvmS+5Y3a1TPFspBUbjT1/x9U
+         fhvChm0CzVLdwGl9dwbW3et9h6zpvRGnovFccQbixu8YkJegEcCoAKp+erBdoH3HmtqB
+         eWWOGUe8pu7AyOaY0Q0WQsvqiMn2NT3A6VQ2F3zPhOVwCcOE074Lo85sGjviIFXSchSj
+         FblM4pHUbNkpP9hCi9WVLu+WaVXVCMM2PUVzrrqxbeaiDTZTdBluAPmEvtn1JkPVGop1
+         WXxJUempO4Rrvgn6olCbxq53CwhoFOMcoDHpgkqKCLjoP84/UE/UJerdbDZtuqjq4rMC
+         43Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=PE5shFURadCBcs1/Klp20Te3l3Dnbi19IFEwo6S5Rts=;
-        b=Yyrku3gVu2PbdZfUpyJvxRDxYKEOGb8MFkspvTgY0WynFp4eE1cRjySo1at0BcFQBR
-         SGWYOIrhGFVJI/TMZgLPxXJ0XxVuHCbEeaHScqb0tC6FtDWwKxauxD+D4tXC0YdJSu9C
-         GxVbinSuJvcv2KS9E3socHph4xJK+x3lApfRyKfaD1QbCnZ+ME2MjQMcA3daGQ6ifiP6
-         viyAKJidpszR3TxtZz5IjX9B91rJVZq9FGzLnfBkBIavC6jYI2NzuB8R06hj+oDv4Sw+
-         xY4QiocW24ikQD8QF2TqbR4l9z0vcyJTOBljR+FHYGiTH5H7L53bBiURgBh8B0RrT93X
-         view==
-X-Gm-Message-State: AOAM531hi6I78KtkZYc1GmtV0Dpj1VwwJAiuwt9GkcjZXWtugyqRbBEp
-        X7YJA/VckTlLTYKuZsRArCsrVvYK2WyZi+Lp
-X-Google-Smtp-Source: ABdhPJx95YJHSAFW+mQFAIXYom4o7oYlQ8jur1teOr1uXwWqN/M6+jPBDFE8NpPQWC/U5l1b0RAHfg==
-X-Received: by 2002:a37:6688:: with SMTP id a130mr12716849qkc.310.1628689857855;
-        Wed, 11 Aug 2021 06:50:57 -0700 (PDT)
-Received: from nitro.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id m19sm9477388qtx.84.2021.08.11.06.50.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Aug 2021 06:50:57 -0700 (PDT)
-Date:   Wed, 11 Aug 2021 09:50:55 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     "lilinchao@oschina.cn" <lilinchao@oschina.cn>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=xE0ICxaoGMgmOssKHh4SqJ0WRI7px/hYdtIahfrvXDA=;
+        b=dgYBh/LXU4loOoRxlKxFTNTOYNCZ+O9Yg69FTEd2w9YIRQCW+gQsFPaGvciN8dgygh
+         Bpmo+L5qE2IkeATrmARtE4iCAI/2PMChtfDPlRnb2MlDSX0HKbJujlENn9kFwB1f6NJH
+         VBuCCC3lv3D0a+prshKGZcYHOHvw2terQclaOCfujFOtHqaTpGCdf0BnTr/wNcE6LEpu
+         DxKJdVub52/10jPCNj9yC9UTiFxzhBIZYSMQlsYLyQmzxMuXR6QADiDg1fKQCX5XntQC
+         FLpbdD1rSQjRLXQqPBLo8ZUDGFDRpW5xBg2NyEy5gNxDzd2Xw2NUP/2EZlWJwsK2mZoD
+         Qm5w==
+X-Gm-Message-State: AOAM530Dw/Za08ikqd14OtoMFN8g2aVgjV7wT6KTT+Jj7Gx6p6Ny/kmy
+        OvcxW9ac3gsbsrgXsnGAZ00=
+X-Google-Smtp-Source: ABdhPJwoqP64bd/fEaztW8RmjsXG0QEk09xPazlfdkOqhpvQilPGB1LbLk4P+M1unfdpv/tH5iWhLg==
+X-Received: by 2002:a05:6e02:190e:: with SMTP id w14mr320958ilu.61.1628690045975;
+        Wed, 11 Aug 2021 06:54:05 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:c8e6:437c:9315:4f5b? ([2600:1700:e72:80a0:c8e6:437c:9315:4f5b])
+        by smtp.gmail.com with ESMTPSA id n144sm4626801iod.32.2021.08.11.06.54.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Aug 2021 06:54:05 -0700 (PDT)
 Subject: Re: [QUESTION]Is it possible that git would support two-factor
  authentication?
-Message-ID: <20210811135055.tqdblurgk3vw5lgm@nitro.local>
+To:     "lilinchao@oschina.cn" <lilinchao@oschina.cn>,
+        git <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>, mjcheetham@github.com
 References: <66e42438fa9311ebaeb60026b95c99cc@oschina.cn>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <7c5df686-79ad-1cd8-6f14-d97e1b88bbfb@gmail.com>
+Date:   Wed, 11 Aug 2021 09:54:03 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <66e42438fa9311ebaeb60026b95c99cc@oschina.cn>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 11, 2021 at 07:00:50PM +0800, lilinchao@oschina.cn wrote:
+On 8/11/2021 7:00 AM, lilinchao@oschina.cn wrote:
 > Many websites support two-factor authentication(2FA) to log in, like Github, I wander if we can support it in application layer.
 > When client clone something, they need  input username and password, it is like a website login process. For security, we can
 > enable  2FA during this process.
 
-As you well know, "cloning" a repository can be done via any number of
-mechanisms:
+Typically, this is handled at the credential helper layer, which
+is a tool outside of the Git codebase that can more closely work
+with such 2FA/MFA requirements. For example, GCM Core [1] supports
+2FA with GitHub, Azure DevOps, and BitBucket.
 
-1. locally from another repository on disk
-2. locally, from a git bundle file
-3. remotely, using the anonymous git:// protocol
-4. remotely, using ssh or http(s) protocols
+[1] https://github.com/microsoft/Git-Credential-Manager-Core
 
-2-factor authentication does not make sense in the first three cases (you
-already have access to all the objects with 1 and 2, and the git:// protocol
-is public and anonymous by design). For the ssh/https scheme, 2fa is already
-supported by the underlying protocol, so it does not make sense for git to
-implement it again on the application level.
+The mechanism is that Git attempts an operation and gets an error
+code, so it asks for a credential from the helper. The helper
+then communicates with the server to do whatever authentication
+is required, including possibly performing multi-factor auth.
+All of these details are hidden from Git, which is good.
 
-Hope this helps.
+I've CC'd Matthew Cheetham who is the maintainer of GCM Core to
+correct me if I misstated anything here.
 
--K
+Thanks,
+-Stolee
