@@ -2,53 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B34FCC4338F
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 22:30:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFCE5C4338F
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 22:45:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9028F60F46
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 22:30:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C7C1761008
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 22:45:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232560AbhHKWbI convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 11 Aug 2021 18:31:08 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:27898 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232479AbhHKWbH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Aug 2021 18:31:07 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 17BMUdSQ075412
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 11 Aug 2021 18:30:40 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-Subject: RE: [ANNOUNCE] Git v2.33.0-rc1 (Build/Test Report)
-Date:   Wed, 11 Aug 2021 18:30:33 -0400
-Message-ID: <000801d78f00$832e98c0$898bca40$@nexbridge.com>
+        id S232672AbhHKWpm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Aug 2021 18:45:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59930 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232456AbhHKWpl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Aug 2021 18:45:41 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57909C061765
+        for <git@vger.kernel.org>; Wed, 11 Aug 2021 15:45:17 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id e11so1823636ljq.4
+        for <git@vger.kernel.org>; Wed, 11 Aug 2021 15:45:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=J9oi1FSGqrtOoXbZXL7FzuaLvQPeX0fvwXwk4VCgsy4=;
+        b=GWU52GQabd1EGGgiIVMoxROcNcR1kLCH0sJJP83E/2ZVf5XgJmml4lPqoq7ZUIQcRy
+         oktieCbPkf8e37DG0cNgCPqNFB0swaoXTs+dgNWwugLFRNocTmvxsrpKIrswUNInwfOP
+         PI9DS+ZyRmrhiNlI6z1CkMGMfmrzKdZOuuQXF/71oo+WOMHV24eWo/AEQtkNIcuo+ks/
+         xvbVSM9rdwNdWTLsJ0rMzpDyiz9PCm614YDI2cvzr14yYlz1vrcgZzV/wWM3GBdOA/h2
+         GZw2F4YY0/wOwkHqEDnK3La3yuCcxNzz79Y688YKO5I72syJE0S1ZG+GyCcGpvp7Gwtm
+         2/Ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=J9oi1FSGqrtOoXbZXL7FzuaLvQPeX0fvwXwk4VCgsy4=;
+        b=dULtqJ0YBI7J+M7tzJeVkgRsGFmcRPVKewzQ1d3i1T1Mha9l3oRo1dqRJ5vQ4NIgBK
+         DYF5YhJOlvS0lmeaoXtdAyMSnPTmCSwngkNo9Sy+yNzfmpOlpIa3yNxi80Q3QQlGKdqf
+         dYVpxBIoXadmDL6nLFu4EXrtmAtKWJnLAwT0e3cGRyOGF7pT/RRKpeLfuNCNhjim7xqx
+         Mo7IOMpaNDgt7kk0pqD0zC/bQqSOH/rlE2KroToxznCEf0KhNiOJc0eW13BiEpyKEPgh
+         AVL+9VTump3xQqrehIZPeEBwbFqllWBMOh6e3tn7rDzjE7Hrr/+/O0ln7wrC6DVyyIY5
+         m/wg==
+X-Gm-Message-State: AOAM532fdGOsayl25OBCrjS0jjc1vDkROK9I7prM1tYuNPCA+K6ZtNiv
+        S7jI621JDhaEsTeE8IyqKTWmYJ+idzgqwrt6DeW4ZA==
+X-Google-Smtp-Source: ABdhPJzPIkumg46bxYVxTKarxwSSYidzx0kAZvAsWNfyy4250PwFvAbJzD87j12oR8WpnqLcKQipr9DQR7DIvfDRx5E=
+X-Received: by 2002:a2e:9907:: with SMTP id v7mr648124lji.113.1628721915609;
+ Wed, 11 Aug 2021 15:45:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AdeO/4eiO56kT1vOTIyKWs6m9ZTbYQ==
+References: <cover.1628618950.git.jonathantanmy@google.com> <e5e6a0dc1ef59b2ab419816e463814d93115e7f6.1628618950.git.jonathantanmy@google.com>
+In-Reply-To: <e5e6a0dc1ef59b2ab419816e463814d93115e7f6.1628618950.git.jonathantanmy@google.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Wed, 11 Aug 2021 19:45:04 -0300
+Message-ID: <CAHd-oW4tLJf1VxWDOkzKtJCV9X_rqfWPg_yOONYo7S8O1kCjGQ@mail.gmail.com>
+Subject: Re: [PATCH 3/7] grep: typesafe versions of grep_source_init
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On August 6, 2021 8:07 PM, Junio C Hamano wrote:
+On Tue, Aug 10, 2021 at 3:29 PM Jonathan Tan <jonathantanmy@google.com> wrote:
 >
->A release candidate Git v2.33.0-rc1 is now available for testing at the usual places.  It is comprised of 396 non-merge commits since
->v2.32.0, contributed by 63 people, 19 of which are new faces [*].
+> diff --git a/grep.c b/grep.c
+> index 424a39591b..ba3711dc56 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -1830,7 +1830,7 @@ int grep_buffer(struct grep_opt *opt, char *buf, unsigned long size)
+>         struct grep_source gs;
+>         int r;
+>
+> -       grep_source_init(&gs, GREP_SOURCE_BUF, NULL, NULL, NULL);
+> +       grep_source_init_buf(&gs);
+>         gs.buf = buf;
+>         gs.size = size;
 
-Just a report that t0301.9 hung again on 2.32.0-rc1 on the NonStop ia64 platform, and t5563.8 hung on the x86 platform. These did not hang at rc0 or in 2.31.0. We have seen (and reported) these before and they do appear transient. I have been meaning to dig deeper into both of these tests to figure out why and what the conditions are, but there are many moving parts on the platform (it is MPP). It probably would take some brainstorming - I suspect there is something relating to timing in the message system that is causing this heartburn, but the features under test do not appear to be commonly used.
-
-Really just an FYI.
-
--Randall
-
+Small nit: perhaps `grep_source_init_buf()` could take `buf` and
+`size` too, so that all the fields get initialized by the same
+function.
