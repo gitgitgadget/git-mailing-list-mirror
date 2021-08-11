@@ -2,186 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B2EFC4338F
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 14:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C23FFC4338F
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 14:58:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2D43A60720
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 14:53:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A344060FA0
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 14:58:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232691AbhHKOyQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Aug 2021 10:54:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35868 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232787AbhHKOyQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Aug 2021 10:54:16 -0400
-Received: from eggs.gnu.org (eggs.gnu.org [IPv6:2001:470:142:3::10])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64DB6C0613D3
-        for <git@vger.kernel.org>; Wed, 11 Aug 2021 07:53:52 -0700 (PDT)
-Received: from fencepost.gnu.org ([2001:470:142:3::e]:33890)
-        by eggs.gnu.org with esmtp (Exim 4.90_1)
-        (envelope-from <tsdh@gnu.org>)
-        id 1mDpc6-0000DL-93
-        for git@vger.kernel.org; Wed, 11 Aug 2021 10:53:50 -0400
-Received: from auth2-smtp.messagingengine.com ([66.111.4.228]:59609)
-        by fencepost.gnu.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.90_1)
-        (envelope-from <tsdh@gnu.org>)
-        id 1mDpc6-0005SN-39; Wed, 11 Aug 2021 10:53:50 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailauth.nyi.internal (Postfix) with ESMTP id 890A427C005B;
-        Wed, 11 Aug 2021 10:53:49 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Wed, 11 Aug 2021 10:53:49 -0400
-X-ME-Sender: <xms:feQTYcX90cQ1JJZrLn19FuHlgleiBHKlgrfJLKRHBcPjzpvV7a2ikQ>
-    <xme:feQTYQkn-oYsB_a-FI6h3k3RnBNegSH1qDuRlI5KwEklUgpnRHqIlLPq1ES-d9b50
-    xwyHjpaH9caBA>
-X-ME-Received: <xmr:feQTYQYNQfnll17i5Jv-NP_PD5YkMf-leKeqE2MQtyIG5m10-NG2zzdFO1EfVbtaCiqEDDUJvY5VlwhAQ5wGgz8P3g6LLADb5g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrkedugdekvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertdertd
-    dtnecuhfhrohhmpefvrghsshhilhhoucfjohhrnhcuoehtshguhhesghhnuhdrohhrgheq
-    necuggftrfgrthhtvghrnhepveffkefhgedvfeeigfejueejvdffhfffueethffgkeeiie
-    ehleduleduledtfefhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomhepthhhohhrnhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqke
-    eijeefkeejkeegqdeifeehvdelkedqthhsughhpeepghhnuhdrohhrghesfhgrshhtmhgr
-    ihhlrdhfmh
-X-ME-Proxy: <xmx:feQTYbVb0QxWBWPSAlCgJ8yGyC7-9CPelGReOD39KbwN9E7pK-Tg5w>
-    <xmx:feQTYWluqEp9n2-QTlzmLDPLoCbIjsIkgNdmlsGsiKIHUqP82uvyFQ>
-    <xmx:feQTYQf1m3SmEtOor1t6dpwEPZTh2XLlRpalWqIbWvQRTsNn5V0eIg>
-    <xmx:feQTYduEpExcSSQbQTK0Nf4YKm-rREfpb2VjCAXSeS1Sm-d1eknjTg>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Aug 2021 10:53:48 -0400 (EDT)
-From:   Tassilo Horn <tsdh@gnu.org>
-To:     git@vger.kernel.org
-Cc:     Tassilo Horn <tsdh@gnu.org>
-Subject: [PATCH v5] userdiff: improve java hunk header regex
-Date:   Wed, 11 Aug 2021 16:53:41 +0200
-Message-Id: <20210811145341.43429-1-tsdh@gnu.org>
-X-Mailer: git-send-email 2.32.0
+        id S232540AbhHKO61 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Aug 2021 10:58:27 -0400
+Received: from mout.web.de ([212.227.15.3]:36977 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232769AbhHKO60 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Aug 2021 10:58:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1628693873;
+        bh=+ueJ+9o06uVfRQrVHVzw7hGPlyfH17/SmqYGXc+jcNQ=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=Z2vy9LcW9KpZg9CYNT5tc9OdICla6cQEAQRX+FrLCuk0GTzu6djES2SYqjhJqkXcs
+         n0mjxTIiZRGuGk9Z8Or1RW38RrpWL36Cp3rubHo17qk+kbJ6n+IXMRCDWpSTnJnucC
+         kprJC+y83P1Yl/t3EjWiSvEDPRZQ9ADP9rWN9tIU=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([79.203.27.185]) by smtp.web.de
+ (mrweb006 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 1MDMzC-1mN94J0scQ-00ArNm; Wed, 11 Aug 2021 16:57:53 +0200
+Subject: Re: [PATCH/RFC 0/3] pedantic errors in next
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        e@80x24.org, Andrzej Hunt <andrzej@ahunt.org>
+References: <CAPUEsphf9F1+=zOMKx3j=jH8xqDwQX99+9uHiYUpXhFE1nervg@mail.gmail.com>
+ <20210809013833.58110-1-carenas@gmail.com> <xmqqtujyftzx.fsf@gitster.g>
+ <YRIZsOaguDW0HaeI@carlos-mbp.lan>
+ <0b973579-748e-ce2f-20aa-a967765cce83@web.de>
+ <CAPUEspiWdGRQoBnpn_uwjkqV7ffMm+MkzbNVU1rZ6yCwkpmNaA@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <1a18a701-7d14-d6c5-6929-30636e688006@web.de>
+Date:   Wed, 11 Aug 2021 16:57:52 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPUEspiWdGRQoBnpn_uwjkqV7ffMm+MkzbNVU1rZ6yCwkpmNaA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:nH/t8AFWRBmX5+WtOMnhHzdCM9BPwKi5OsbllgqxSq46TSlUyff
+ tgxd1pSrUUj7pgGBwvjpVBSArzCXKURxwqw4QKSMBVlrSi3UWYe/w2aXYp9Z23SYoGqjOh7
+ EVqijZDXHlXm4cs+uqFGGFdxAKvZ+k2h8ia9ex6MKCUyi3+qEKt47d/GdvXxj7NVecE/agE
+ yarzOeSGhx4EMp41GsSwQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6ycgR3U+xBQ=:BuTBbNHwtFYEXfcTI+fk7N
+ Y4dwFol1s5X4bjWEBCc95a2np0kgwXsnNgpspCF5hAQtC0sulWm/0oSt3nmtBEtJ5xtQYDgqh
+ kPyK66uPKxlhW9B6KUy0DNhAuMDD27N/zwfJKi4WKOGaadS3h7iM2cfrhJYm9I4p9APqiC9M5
+ vrV9zA+lYvuXVT++9qwEzRPRgjlRQ1Q9RdhmXAW13fHDzTax0CVWyD2X0EgZUu4UZ8wseG9Wn
+ +ShtKCH6Zw3oEWtyUof8OykXDw2vZ4T+Hy9cRHXz3cmfgJrnTYeD7OvnJ6ILGcE2h76qki9E1
+ Xvsw0W0gv9mC//XNHcu1xbKS+6bep/8fyYNZits3zIlV5zETSZSRlGc6tA4oLajM9RhT4kmyQ
+ 0XV+WHwfK7B2ieXzdKoC2gddk+6GcPNk2JtowOCON3J3vIUcWmLShmn5EDJ7NbqFc08sQn910
+ i1/qArBBwJ1F0eBmhSye7IRmnp6N9ObXHjW/rGF0bVWq9mY8JpA8l8JXiM4S1cD0tHHrgBcvh
+ VnHoUMFaZqyAc0A7QZWNf7uUVxZ0fklttQccp5+ymN2vXj8VoE2n5U+qXfB6irtTowdRkllBV
+ CLKYczX2MN8qKAKtNCfUO3QWcMnNPqhZMfKQe2cGiLUfBWg0lkvXvSNu+beumvrVRIhwAJLYY
+ NJJQXCQsvOLnC3ZC/Q3z4VBezDwkGbFxhsI0VaOjVEYzqKyewJZgbv/PSF9AsVC19KtPd58wC
+ 0Jpwz4D5lfmOnFj18cN6T691SAWtF9zOkYplJ4k+8xT08vPSlPNbwcb8FmNUZ/h9E9+8sAnDH
+ v1BNBEXcarC0vw9OUWu1I89qm8Fvb52rm6J6kteTow0kHT7FD3vyKwCNhB0J0XXdI5QklxBp+
+ MsqIm/MVom8PLLUbOrsnkJVO/tUGgoSHYyzUWJkvhqO67WWC05aEpQFkLWLWv1ORNyxQhGJvM
+ og0vdGF6jZ9VjBbDvQZw/z3s1NaacfQqM4SkxGCF693ZJ2vgROJvAkxrGqhJzW+q8/TTsvrma
+ B2PGVmY70347YkjRAgNe/IB+t/zc10zzX8almtyn0mtDOr/r8X8R4hvJdEp+gKenY86nGyW76
+ Mhx+H39kGpTmWbhk2ZYqm4sWuRlonTewYk+
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, the git diff hunk headers show the wrong method signature if the
-method has a qualified return type, an array return type, or a generic return
-type because the regex doesn't allow dots (.), [], or < and > in the return
-type.  Also, type parameter declarations couldn't be matched.
+Hi Carlo,
 
-Add several t4018 tests asserting the right hunk headers for different cases:
+Am 11.08.21 um 01:49 schrieb Carlo Arenas:
+> On Tue, Aug 10, 2021 at 12:30 PM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>>
+>> Those are different issues and they should be addressed by separate pat=
+ches,
+>> I think.  That's why I submitted a patch for the second one in
+>> http://public-inbox.org/git/bab9f889-ee2e-d3c3-0319-e297b59261a0@web.de=
+/.
+>
+> agree, and that is why I mentioned not to merge mine but use your
+> whole series instead when it is published (mine was just a stopgap to
+> see if I could get SANITIZE=3Dundefined to behave meanwhile, but that I
+> thought would be worth making public so anyone else affected might
+> have something to start with)
+>
+> would at least the two included in the chunks above be safe enough for
+> RC2 as I hope?, is the one with the additional int too hacky to be
+> considered for release?;
 
-  - enum constant change
-  - change in generic method with bounded type parameters
-  - change in generic method with wildcard
-  - field change in a nested class
+I think your -pedantic fixes 1 and 2 should go into the next possible
+release candidate because they fix regressions.
 
-Signed-off-by: Tassilo Horn <tsdh@gnu.org>
----
- t/t4018/java-class-member-function          | 6 +++++-
- t/t4018/java-enum-constant                  | 6 ++++++
- t/t4018/java-method-return-generic-bounded  | 9 +++++++++
- t/t4018/java-method-return-generic-wildcard | 9 +++++++++
- t/t4018/java-nested-field                   | 6 ++++++
- userdiff.c                                  | 6 +++++-
- 6 files changed, 40 insertions(+), 2 deletions(-)
- create mode 100644 t/t4018/java-enum-constant
- create mode 100644 t/t4018/java-method-return-generic-bounded
- create mode 100644 t/t4018/java-method-return-generic-wildcard
- create mode 100644 t/t4018/java-nested-field
+Same for my signed-left-shift fix in
+http://public-inbox.org/git/bab9f889-ee2e-d3c3-0319-e297b59261a0@web.de/
+(or some improved version if it's lacking in some way) and the yet to be
+published fix for the alignment issue.  I assume Andrzej as the reporter
+or Eric as the original author would like to have a shot at the latter.
 
-diff --git a/t/t4018/java-class-member-function b/t/t4018/java-class-member-function
-index 298bc7a71b..a8d7850412 100644
---- a/t/t4018/java-class-member-function
-+++ b/t/t4018/java-class-member-function
-@@ -3,6 +3,10 @@ public class Beer
- 	int special;
- 	public static void main(String RIGHT[])
- 	{
--		System.out.print("ChangeMe");
-+            someMethodCall();
-+            someOtherMethod("17")
-+                .doThat();
-+            // Whatever
-+            System.out.print("ChangeMe");
- 	}
- }
-diff --git a/t/t4018/java-enum-constant b/t/t4018/java-enum-constant
-new file mode 100644
-index 0000000000..a1931c8379
---- /dev/null
-+++ b/t/t4018/java-enum-constant
-@@ -0,0 +1,6 @@
-+private enum RIGHT {
-+    ONE,
-+    TWO,
-+    THREE,
-+    ChangeMe
-+}
-diff --git a/t/t4018/java-method-return-generic-bounded b/t/t4018/java-method-return-generic-bounded
-new file mode 100644
-index 0000000000..66dd78c379
---- /dev/null
-+++ b/t/t4018/java-method-return-generic-bounded
-@@ -0,0 +1,9 @@
-+class MyExample {
-+    public <T extends Bar & Foo<T>, R> Map<T, R[]> foo(String[] RIGHT) {
-+        someMethodCall();
-+        someOtherMethod()
-+            .doThat();
-+        // Whatever...
-+        return (List<T>) Arrays.asList("ChangeMe");
-+    }
-+}
-diff --git a/t/t4018/java-method-return-generic-wildcard b/t/t4018/java-method-return-generic-wildcard
-new file mode 100644
-index 0000000000..96e9e5f2c1
---- /dev/null
-+++ b/t/t4018/java-method-return-generic-wildcard
-@@ -0,0 +1,9 @@
-+class MyExample {
-+    public List<? extends Comparable> foo(String[] RIGHT) {
-+        someMethodCall();
-+        someOtherMethod()
-+            .doThat();
-+        // Whatever...
-+        return Arrays.asList("ChangeMe");
-+    }
-+}
-diff --git a/t/t4018/java-nested-field b/t/t4018/java-nested-field
-new file mode 100644
-index 0000000000..d92d3ec688
---- /dev/null
-+++ b/t/t4018/java-nested-field
-@@ -0,0 +1,6 @@
-+class MyExample {
-+    private static class RIGHT {
-+        // change an inner class field
-+        String inner = "ChangeMe";
-+    }
-+}
-diff --git a/userdiff.c b/userdiff.c
-index 3c3bbe38b0..6644931ce1 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -142,7 +142,11 @@ PATTERNS("html",
- 	 "[^<>= \t]+"),
- PATTERNS("java",
- 	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
--	 "^[ \t]*(([A-Za-z_][A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$",
-+         /* Class, enum, and interface declarations */
-+         "^[ \t]*(([a-z]+[ \t]+)*(class|enum|interface)[ \t]+[A-Za-z][A-Za-z0-9_$]*[ \t]+.*)$\n"
-+         /* Method definitions; note that constructor signatures are not */
-+         /* matched because they are indistinguishable from method calls. */
-+         "^[ \t]*(([A-Za-z_<>&][][?&<>.,A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$",
- 	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
--- 
-2.32.0
+> FWIW hadn't been able to reproduce that issue
+> you reported in t3301 even with an Apple M1 with macOS 11.5.1 (I use
+> NO_GETTEXT=3D1 though, not sure that might be why)
 
+Strange.  I use Apple clang version 12.0.5 (clang-1205.0.22.11) on the
+same OS.
+
+At least the reproduction on Linux that you mentioned in your reply
+means I can calm down a bit because it's not just a problem on my
+system..
+
+Thank you,
+Ren=C3=A9
