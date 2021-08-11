@@ -2,94 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B113C4338F
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 01:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB19BC4338F
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 01:45:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D9D8F60EE9
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 01:34:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C99AF60F11
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 01:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230031AbhHKBfG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Aug 2021 21:35:06 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41090 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229798AbhHKBfG (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 10 Aug 2021 21:35:06 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0C5356042E;
-        Wed, 11 Aug 2021 01:34:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1628645653;
-        bh=fSjnESvRXzL0iWhkgSTOxFqX/0au1mjPQ2OqiWhcGGw=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=knsILF3PTclns08wP01F9L9NoERTxX7QtCl0Wsy5SQA0ojvDUqkBqPjKEcJtnTmtX
-         chvsb8DISgGqAH0TVHxrnroogk8AUVoqOaBRbh//Qiw5qwrUI/4vz8wlzJxbZsjMHo
-         1YgrCmdXDs4iMVID46rFBL5UfP7LRXK3FhHGtNfw7Ph9Njxw3z25zbwYK9/mgoqd1y
-         Tww/ynBFfEebj+1jDC1vsukzCW0lv8204gGqmX5/WoVW0hdbIJ+xuqpptMr2/vEgJz
-         SGi4i3M3oHiinG3V2llJ7Q32l5yZL7ytXPcFGQAkiyeJ33WElSrOeiXIugQUMx1wOF
-         0erLN9x2qkGfDKftj08GB+4hJovGrr2ozUMu/9/BbxqDYb8gkZXAEbBomWHZvj52Og
-         /wzbVkj1L1bTnPlonC0XTxRMo/ENfIvkBygI3ugmQEutps4fLB9PN03cfe3/BI1EpL
-         I6SL13DdNnTe0KPqvnvcz8Sa3z0Nsf8Rhcxv7Ewouc0v2iRHUKK
-Date:   Wed, 11 Aug 2021 01:34:09 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2021, #04; Tue, 10)
-Message-ID: <YRMpEV/uuHrxcOug@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqh7fwbx86.fsf@gitster.g>
+        id S230498AbhHKBp2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Aug 2021 21:45:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50416 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230215AbhHKBp2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Aug 2021 21:45:28 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9256C061765
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 18:45:05 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id lw7-20020a17090b1807b029017881cc80b7so7130781pjb.3
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 18:45:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=7uJYg0VcI6izMpykIfLqzYGY5DZujx4/3UQ8Gn6f8Bg=;
+        b=gwtmUq4kq6IAyrDrSIhbwfGqjwxPYNI2Y5YIDr77blVfAZor3Fs+G9vFEe0Yhcmw49
+         q94f5nIKMp1Duk5TsM9Ks73n+YPks78m85ipr1WTw3dDDiPvE8PrpfO5fKV3YEl4nFiO
+         H6VYi1uLmVOzml6vXddLIqZl1wwEIS4XS9rMSY+4cgctYrIrR5pvF85CVuR0L8HVxFPU
+         Pyv6fC5wpo+Mo8UwN9QaZE3MtvDw4Uen0pn2cB3+pDfTQMg3La2yp3kC0A2SUIdWZF8+
+         s0AQEOsnMoed0nbCymjh1rgFMpP4CBLGyX9Xav+gy4jiyfowCeuSBIcmJMoJ2jpGDwF/
+         Tunw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=7uJYg0VcI6izMpykIfLqzYGY5DZujx4/3UQ8Gn6f8Bg=;
+        b=EQuFcT9oKQO4Umtu2TpMeXgGoUsrfpRyH9wMEab231czyhQlqauZVpnJ9EK3Q+Pmcn
+         8kcHeXNz9MS+GVG6x57ge2GSncpfOz65JGGZc6H1Cyzq+/x6KtLGsHGtg0GuHLp/WEu+
+         HG0FjaXVlGzmyC+tXoGfFyWS+Do1BOPwHp/PoY5USflOnfgq3e0i9flbKtGdHmSj3Xhf
+         shMaOLDXHZwnbFQveovJo/RugNiAu7clb6vAe340Fo9XS9JGp00axquZ2ECSnvq8VnBR
+         HdWfijdu4DDq4W9uJAG5M1EBpaKK5cqn6RVQdLDgJ9mF+SSaWDGNPMRspa5EIOxEWEzf
+         aWrw==
+X-Gm-Message-State: AOAM531rO3fr+jUGYHO5U1t6FDPJPPkZJdHcagDg9MCDtZ1YPBBufUbd
+        8q4oqAu16zhkwaTCYnrkZmM=
+X-Google-Smtp-Source: ABdhPJwL1BOcP+i4BrUlGzYGfJU+adb9/jhn/N6lTQQ+M6j1nZo6F7pQmMS/HkxhQ5HyB9UUAkrLFg==
+X-Received: by 2002:a17:902:848c:b029:12c:daf3:94f1 with SMTP id c12-20020a170902848cb029012cdaf394f1mr2177706plo.50.1628646305385;
+        Tue, 10 Aug 2021 18:45:05 -0700 (PDT)
+Received: from localhost.localdomain ([47.246.98.155])
+        by smtp.gmail.com with ESMTPSA id j23sm4529769pjn.12.2021.08.10.18.45.03
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Aug 2021 18:45:04 -0700 (PDT)
+From:   Teng Long <dyroneteng@gmail.com>
+To:     gitster@pobox.com
+Cc:     avarab@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
+        jonathantanmy@google.com
+Subject: Re: [PATCH v3 1/3] packfile-uris: support for excluding commit objects
+Date:   Wed, 11 Aug 2021 09:44:57 +0800
+Message-Id: <20210811014457.15318-1-dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.31.1.449.gb2aa5456a8.dirty
+In-Reply-To: <xmqqbl6pj60y.fsf@gitster.g>
+References: <xmqqbl6pj60y.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="u3yDeoI/PFLVeDoy"
-Content-Disposition: inline
-In-Reply-To: <xmqqh7fwbx86.fsf@gitster.g>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+>> Please avoid adjectives that express subjective values, like
+>> "sophisticated".  Readers will expect a lot more sophistication than
+>> your code actually offers and will be disappointed ("wow, that would
+>> be wonderful if we can say 'exclude commits made by bots, and those
+>> older than 3 months'---eh, you cannot do that?  where is your
+>> sophistication then?").
 
---u3yDeoI/PFLVeDoy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I use it("sophisticated") from "packfile-uri.txt", but i agree with you.
+Documentation will also remove/replace the subjective word in the next
+patch.
 
-On 2021-08-11 at 01:12:41, Junio C Hamano wrote:
-> * bc/inactive-submodules (2021-07-02) 1 commit
->  - submodule: mark submodules with update=3Dnone as inactive
->=20
->  Usability update for inactive submodules.
->=20
->  Comments?
->  cf. <fc5ec100-1d42-4199-236e-7a99c9218f38@gmail.com>
->  cf. <bf1893ee-6973-d8b2-659e-bb239a0a9ae2@gmail.com>
+>> Please avoid "should" without first describing the background for
+>> "why it should".  It would help if you briefly describe what we
+>> currently have and its limitation before this first paragraph
+>> (i.e. your "we can already exclude only blob objects" would become
+>> major part of the explanation, but you'd need to present in what
+>> situations it would help to be able to exclude other types).
 
-I haven't had time to look at this recently, so I'd suggest dropping it
-for now, and hopefully I'll get back to it in the future.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Agree.
+Commit message will be appended with backgroud description.
 
---u3yDeoI/PFLVeDoy
-Content-Type: application/pgp-signature; name="signature.asc"
+>> This commit is probalby doing too many things at once.  For example,
+>> refactoring like creation of match_packfile_uri_exclusions() helper
+>> function out of existing code (there probably are others) can and
+>> should be done as separate preparatory steps before the API gets
+>> modified (e.g. process-object callbacks gain an e xtra parameter) in
+>> tree-wide way.
+>>
+>> And by slimming the primary step that introduces the new feature,
+>> there will be a space to also add documentation and test in the same
+>> step, which would help reviewers.  With the current structure of the
+>> series, with a code dump in the first step with only a vague promiss
+>> of "sophistication" without documentation updates, reviewers cannot
+>> even tell how the "commit object" is used easily.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+Agree.
+The current commit will be splitted for more clear reponsibilities, 
+documentation and tests ditto.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYRMpEAAKCRB8DEliiIei
-gQxjAQDwwdpCw9bb9hyn/8AcJvNR/kROyjQZEDJky6zA1OeOqgEAvaU7EWWOyLdh
-Q8pML2JWAJnd19yp7XvmD4qCmaxHTwE=
-=cNLS
------END PGP SIGNATURE-----
-
---u3yDeoI/PFLVeDoy--
+Thank you.
