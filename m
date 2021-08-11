@@ -2,99 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 675FEC4338F
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 22:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7D60C4338F
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 23:07:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 44DE16101E
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 22:49:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE07660E78
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 23:07:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232633AbhHKWth (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Aug 2021 18:49:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60808 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232434AbhHKWth (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Aug 2021 18:49:37 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0916AC061765
-        for <git@vger.kernel.org>; Wed, 11 Aug 2021 15:49:13 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id f3so4716590plg.3
-        for <git@vger.kernel.org>; Wed, 11 Aug 2021 15:49:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ucm5UVzDXxmCA5pmoe6T0ZNV5P/O7WAGeCsotjKq0rg=;
-        b=h0n1B1fxQ/oPaGzLoo1FOjF1MVNdMY2gyeMBe/9KCHY8tYd0YmcBdLtz8Jcy/4JUBv
-         l1qAdigwOZO9LNzg6QuXDlrEeCbZe7eW8QwcwTrod8XCG/lj4qZqLv+9HUUyR/JbOoDF
-         G5o17U7wP/s39inhE8wqWXFDdw/IRZ6uIS+mPwSpxHrIqI+jXuZvMyQnFq6tSfJLDSjQ
-         dd+3Nu+195u9chwNz6Gm9cajUL4o4Y1KEoAwrO5dKoQELd5otP9Nf2RdoYxBuqDNVyx5
-         wqfinkniUhkLP3dQOa7Y5Ho/3tAfQPwa0e6i048RzHohNTmxKbWqF6R28DJHZadwJXWs
-         qgsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=ucm5UVzDXxmCA5pmoe6T0ZNV5P/O7WAGeCsotjKq0rg=;
-        b=GfTmbYYLHT9bmMJGOB4cb2jWT3B4KDgM8UeEtdFvxl7G7JIcIdbCjiiibNWUyH/ero
-         XUC3VFv3lWTj6J4DtFL1y6sboNPpNSFoti2gtQ88KA8nZUL9hpOfSIJ/j+ybsABKmkzb
-         dDi+cNnVPGuV0pyg03YChaBzLzyJzjEcBR/RF7BwJTx8Beu7C9gUZMM1NuPSNBM8mzys
-         deoIxWdxe/46ehw7t0OrywLdQdh3mWZw+YLZbrpFstneWcipRkaD0TbvQwnKHmTeqSDU
-         IiSQv9Nh+rY+2horXUVKECBHE8/tD3xYpSLwTifmDdZNsR5rDkC38G916fl2VRXH5C01
-         hzPw==
-X-Gm-Message-State: AOAM531epfS230Hb0R78zSedO5opCAG5+2sDn0TDdO+rq54xoMj+C75/
-        3hycSDFwPJOUzLbo1EhkPUa38uGR/eGKkg==
-X-Google-Smtp-Source: ABdhPJx5dv/SJcezh2s9IS5bDDm8FXaKD0eUg9phjaszJyB3GcsL+N0BwXA+exzGN+t/EHOrvn9lXA==
-X-Received: by 2002:a63:2152:: with SMTP id s18mr983516pgm.25.1628722152252;
-        Wed, 11 Aug 2021 15:49:12 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:ed93:f007:3c2:569f])
-        by smtp.gmail.com with ESMTPSA id c12sm602317pfl.56.2021.08.11.15.49.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Aug 2021 15:49:10 -0700 (PDT)
-Date:   Wed, 11 Aug 2021 15:49:04 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/7] In grep, no adding submodule ODB as alternates
-Message-ID: <YRRT4I3MPoZXJZEl@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+        id S232720AbhHKXII (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Aug 2021 19:08:08 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:33770 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232434AbhHKXIH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Aug 2021 19:08:07 -0400
+Received: from satellite ([147.147.167.4])
+        by smtp with ESMTPA
+        id DxJzmDZb4OQhvDxK1mVl73; Thu, 12 Aug 2021 00:07:41 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1628723261; bh=U1KGIZZt+agujaeggvrhp6S/KSQGySQ+PoXO1YXlcAc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=AA/EUHikdGMh+LPKU83A2H6rKZPVF3xkZ3xKklpe5TVi9Y7s+wNkAV/xPmHjU7ePu
+         7YI98d8PJUd4B9YtqTP+V1XOhT20Z4BZdT/jsjwvZxO62zTiKyDkFzJFfdNlPOowV0
+         IS1fEDSy0xiCOATEc8pJJC6iCo9Ct9c3KXWmrdh21YB2h3B2vLYkyb29c9HwJgBcWn
+         g2CtSMJiqMvLS2jZnrbr1uwjFP8XLlUah7TTe/cLF5t9gZ0vJXqqLgsv0ac9XKSxbi
+         ShLtCY9fba+n89W5mgdv3sUUI92qn5NkUhz36Q/tKR9v7TVqEig4Ab1qCVHug47iX1
+         h6dc9OTVV0E+A==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=IvmFjI3g c=1 sm=1 tr=0
+ a=ClpcMUpIpdFe3QrT4g3KPA==:117 a=ClpcMUpIpdFe3QrT4g3KPA==:17
+ a=kj9zAlcOel0A:10 a=1XWaLZrsAAAA:8 a=C4bOBg53Muni8pNyyUIA:9 a=CjuIK1q_8ugA:10
+X-AUTH: ramsayjones@:2500
+Date:   Thu, 12 Aug 2021 00:07:38 +0100
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/7] grep: typesafe versions of grep_source_init
+Message-ID: <YRRYOmwW9yKhvldn@satellite>
 References: <cover.1628618950.git.jonathantanmy@google.com>
+ <e5e6a0dc1ef59b2ab419816e463814d93115e7f6.1628618950.git.jonathantanmy@google.com>
+ <YRREPNA8GPyKdWBr@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1628618950.git.jonathantanmy@google.com>
+In-Reply-To: <YRREPNA8GPyKdWBr@google.com>
+X-CMAE-Envelope: MS4wfNYeo45oFafd5z7y71dX4xZ+Dof/+k3bnPZIjbSUyjRbeCAbJS0rCO7XvWn+GFbI3XnrcrzF1CVogbtXNGFqcnvlulctgOrAOv3bpOeuB5nJXRoTO2E6
+ u/GrxXyhtYOrmcrzft7sOBXQcS2+5fiaYM2cHl1g3xkgyea1Dcn76dGM
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021.08.10 11:28, Jonathan Tan wrote:
-> This patch series removes the need to add submodule ODBs as alternates
-> in all codepaths covered by t7814. I believe that that is also all the
-> codepaths covered by "git grep", but if it isn't, the uncovered
-> codepaths will still work - they will just not benefit from the
-> performance improvements.
-> 
-> In doing this work of migrating away from adding submodule ODBs as
-> alternates, I'm mainly motivated by the possibility of adding partial
-> clone submodule support, but this has benefits even for those who do not
-> use partial clones, as described in the documentation in patch 1.
-> 
-> To reviewers: you can cherry-pick the last patch onto one of the earlier
-> ones to observe what happens when the code still accesses a submodule
-> object as if it were in the_repository.
+On Wed, Aug 11, 2021 at 02:42:20PM -0700, Emily Shaffer wrote:
+> On Tue, Aug 10, 2021 at 11:28:41AM -0700, Jonathan Tan wrote:
+> > 
+> > grep_source_init() can create "struct grep_source" objects and,
+> > depending on the value of the type passed, some void-pointer parameters have
+> > different meanings. Because one of these types (GREP_SOURCE_OID) will
+> > require an additional parameter in a subsequent patch, take the
+> > opportunity to increase clarity and type safety by replacing this
+> > function with individual functions for each type.
+> > 
+> > Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> Like Junio said, it is very neat.
 
-Thanks for this series. I am very excited to see steps toward enabling
-partial clones for submodules! And having fewer implicit references to
-the_repository is great as well.
+[Sorry for piggy-backing, I have already deleted the original mail :( ]
 
-I don't have any comments that other reviewers haven't already
-mentioned, so I'll just add:
+Just a quick note: grep_source_init_buf() is only called from
+grep.c:1833, before its definition at grep.c:1869, so it could be marked
+as static (as things stand). Do you anticipate any future callers from
+outside of grep.c? (after removing the declaration from grep.h, you
+would need to add a forward declaration or, better, move the definition
+to before the call (or the call (and grep_buffer()) after the definition)).
 
-Reviewed-by: Josh Steadmon <steadmon@google.com>
+ATB,
+Ramsay Jones
+
+
