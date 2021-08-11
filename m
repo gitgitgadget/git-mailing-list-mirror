@@ -2,213 +2,181 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30A40C4338F
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 23:59:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 850D0C4338F
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 00:15:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 16B3261019
-	for <git@archiver.kernel.org>; Tue, 10 Aug 2021 23:59:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 56E6160F25
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 00:15:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235592AbhHJX7t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Aug 2021 19:59:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54886 "EHLO
+        id S235652AbhHKAQU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Aug 2021 20:16:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234289AbhHJX7s (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Aug 2021 19:59:48 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DB82C061765
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 16:59:25 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id z2so1621691lft.1
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 16:59:25 -0700 (PDT)
+        with ESMTP id S235537AbhHKAQT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Aug 2021 20:16:19 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7F80C061765
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 17:15:56 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id o1-20020a05600c5101b02902e676fe1f04so2720798wms.1
+        for <git@vger.kernel.org>; Tue, 10 Aug 2021 17:15:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=2UchjkfOs45k5l1efoCmrWTwHRNpsBzcMkSH6EMxbak=;
-        b=rH+wOq+rJ5TUEuCrzVmdCi7D93nRoQhAnvjWKMkp1jc/JgKVl1mxJOA3enfeqqWYyU
-         2qIzQGk6P86FYWx4PeXpRbilvc+CudZJLYehP3Dtb+IEltenYIUymHGlqmGhcgwYBRZA
-         lLg3LfG+9vKqvFypnJ0qdnwgNGSBUFmIlX733AKfr7Z5hjbKfY3ozQ/Tek8nkrhNwQxp
-         y0+dvFbzT/NPhrFGbsLBy4uTJ0XbuiXZ6leed1F3kHcROoCrUXHLjr6Fdh8w2Xs4C0qa
-         c6pe7SsPTY7ERaewo6ehcBl/Cg3YQ5WqUL/ctQXIO7yvjs4pA+Jw5KNi8kTqUJ9j3/RN
-         uC6g==
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=Ch1SuKGoXvGKQZSFDqm9/Ya1aTQV9O4M/mo1Mzz5v9M=;
+        b=n/HrLIdE+I4zzlkFAn1k0F0iFnwJhxx6G8A7aCifH44Gc9Wiyj97bK2VnuW5ZN3Rlz
+         UaJwFfAMBC47WQGN6ir/wy4XRBv727PhmYeibM4d6sXPGQ4jdFAGrsQ5/q9bCOtbq0yg
+         6T2pDHNf8AvCxnNxqI3zK2JR7Q2gihLlzRiEYFmjW/ZQ9QWvQVoin8cjc/6hPYhZlyf8
+         tGkUFdsOuWjXsbAXPXovMswtM0gq6tQ2UM4ttTsSEZCqZSH1migoGkbYqUYWQ8ElCng0
+         ht5Nobvsf4RjQgVT8oR1+BLIO7K25i9J3F51mI3LHhoKHxtoeQU8CSNL86I19DotDjwP
+         j3hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2UchjkfOs45k5l1efoCmrWTwHRNpsBzcMkSH6EMxbak=;
-        b=AfX2lMfvj7oCgy9kPjb2veZSR8jCK97V6efIFrSYe1tXw+2tTYaWlpPphr/z5X1Tbd
-         T9jrJ/bz4ejP2lf+EJu6r7cYa8CFmZPmHxZv0qNsCczUjh8FLL+/EGgVrHNRGRjlsg4A
-         R7P7t+CwIhlhKPJ2Lm81DunYJM2Tp1u5gPywo/ta4N6eu9rHqLTnAz5q6KNCztJyW+4l
-         xONQd514PxfC07yNi83UOxqQ6VmCl+KQnIrPTdsv7g2HDuHA5wD/Ug9g7etapFGSwafV
-         UU1oBFjJvAmR3Eu+xejzBAihI0nv6Ye73/Ppix5JX+/bDCNRQxycIBsLBDlkIfobIjzX
-         oGWQ==
-X-Gm-Message-State: AOAM532kslGpPdHLFmeAja50erEoPtuYHVJVw5vPQTTTM3XANf72SOxX
-        xjKehq44h03bW/jtOsIKFJo1GKObXH19TD+aoOMo4g==
-X-Google-Smtp-Source: ABdhPJztrkYrMVl9QPNwcEIuLahLvww15J77ncRGgC/bYWB25Yh5Z8Yl+/yMnC9S1wF/oVXYIxQ9B2pMkamwittZhrc=
-X-Received: by 2002:a05:6512:556:: with SMTP id h22mr23128942lfl.461.1628639963560;
- Tue, 10 Aug 2021 16:59:23 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Ch1SuKGoXvGKQZSFDqm9/Ya1aTQV9O4M/mo1Mzz5v9M=;
+        b=NnK8BN8RZt2qpUqt7cSNZoVLMZAewScZfXhchBkkbor1CtalRI/TaL80cFi/KXWn9f
+         xX54DD+A8618FAT3XLRNOcqCoUb0bZNad00LEklTwoNMveHy4CRzxJs3OeeN9yRsN4M0
+         D+3bGltrNcHE69fZnBvAQVSQlBOCr8rrbNj+Glg6/G7HZOvwIemCf7mVbPnJLS/5UQRP
+         w4LBp2b9BasrBtSrhOrrXMRwZL4ayIJCvVuxJ0cYhtzeR5WJ9sBwej2Y+riNZ5q8/TSa
+         q5qfK0lL3hhQxBtsg7wa8t4VgZbc70nB72XwKKM5CfkGWuWgO69nhS6rfaMk6lU9waDY
+         7jqA==
+X-Gm-Message-State: AOAM531/tcLbP9PIGjiqsxsR9svQ2mr94FRDuDjWFhGi18xIfFrlHzON
+        qeK2EQztHBUTkHmsgsNbhDQ+bCPneC4=
+X-Google-Smtp-Source: ABdhPJy/qQsqTPN7Z+OjnJswpHRiKQBgb6+zKuKJsMafw7w1BdavJiw2jVeFPkCp+ql/PgYBQkBogg==
+X-Received: by 2002:a1c:4c02:: with SMTP id z2mr13313080wmf.62.1628640955379;
+        Tue, 10 Aug 2021 17:15:55 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y4sm22220032wmi.22.2021.08.10.17.15.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Aug 2021 17:15:54 -0700 (PDT)
+Message-Id: <pull.1012.git.1628640954160.gitgitgadget@gmail.com>
+From:   "Azeem Bande-Ali via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 11 Aug 2021 00:15:53 +0000
+Subject: [PATCH] help.c: help.autocorrect=prompt waits for user action
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1006.v3.git.1627946590.gitgitgadget@gmail.com>
- <pull.1006.v4.git.1628536305810.gitgitgadget@gmail.com> <xmqqzgtqe2w6.fsf@gitster.g>
- <CAN3QUFYPjsvBRGegO-kC7+gcFDczOqQSw-UYphnLHx=6-6kkwA@mail.gmail.com>
- <xmqqa6lpdu4z.fsf@gitster.g> <8f24d532-b021-2a96-415b-467f715cb1ec@gmail.com>
-In-Reply-To: <8f24d532-b021-2a96-415b-467f715cb1ec@gmail.com>
-From:   Mahi Kolla <mahikolla@google.com>
-Date:   Tue, 10 Aug 2021 16:59:11 -0700
-Message-ID: <CAN3QUFaPBqZj68PYv_+=KV_cvbyhHfDtNPpWDbnnNeq+XD8MrQ@mail.gmail.com>
-Subject: Re: [PATCH v4] clone: update submodule.recurse in config when using --recurse-submodule
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Mahi Kolla via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     David Barr <b@rr-dav.id.au>,
+        Azeem Bande-Ali <A.BandeAli@gmail.com>,
+        Azeem Bande-Ali <me@azeemba.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillippe and Junio,
+From: Azeem Bande-Ali <me@azeemba.com>
 
-On Tue, Aug 10, 2021 at 4:04 PM Philippe Blain
-<levraiphilippeblain@gmail.com> wrote:
->
-> Hi Junio,
->
-> Le 2021-08-10 =C3=A0 14:36, Junio C Hamano a =C3=A9crit :
-> > Mahi Kolla <mahikolla@google.com> writes:
-> >
-> >>> Is it possible to avoid changing the behaviour unconditionally and
-> >>> potentially breaking existing users by making it an opt-in feature,
-> >>> e.g. "git clone --recurse-submodules" would work as the current
-> >>> users would expect, while "git clone --recurse-submodules=3Dsticky"
-> >>> would set submodule.recurse to true, or something?
-> >>
-> >> As mentioned, the `submodule.recurse=3Dtrue` will only apply to active
-> >> submodules specified by the user. Setting this config value when the
-> >> user runs their initial `git clone` minimizes the number of times a
-> >> developer must use the `--recurse-submodule` option on other commands.
-> >>
-> >> However, this is a behavior change that may be surprising for
-> >> developers. To ensure a smooth rollout and easy adoption, I think
-> >> adding a message using an `advice.*` config setting would be useful.
-> >
-> > It may be better than nothing, but that still is a unilateral
-> > behaviour change.  Can't we come up with a way to make it an opt-in
-> > feature?  I've already suggested to allow the "--recurse-submodules"
-> > option of "git clone" to take an optional parameter (e.g. "sticky")
-> > so that the user can request configuration variable to be set, but
-> > you seem to be ignoring or skirting it.
->
-> The '--recures-submodule' option in 'git clone' already takes an optional
-> argument, which is a pathspec and if given, only submodules matching the =
-given
-> pathspec will be initialized (as opposed to all submodules if the flag is=
- given without
-> an argument). So, it does not seem to be possible to use this
-> flag as a way to also set 'submodule.recurse'.
->
+If help.autocorrect is set to 'prompt', the user is prompted
+before the suggested action is executed.
 
-Because of the optional pathspec argument, adding a `=3Dsticky` argument
-to the option may be hard to implement. That was my initial hesitation
-to the opt in design.
+Based on original patch by David Barr
+https://lore.kernel.org/git/1283758030-13345-1-git-send-email-david.barr@cordelta.com/
 
-> When Emily (CC'ed) sent her roadmap for submodule enhancements in [1], th=
-e enhancement
-> that Mahi is suggesting was explicitely mentioned:
->
-> > - git clone
-> ...
-> > What doesn't already work:
-> >
-> >    * --recurse-submodules should turn on submodule.recurse=3Dtrue
->
-> I don't know if Mahi is part of this effort or just came up with the same=
- idea,
-> but in any case maybe Emily would be able to add more justification for t=
-his change.
->
+Signed-off-by: Azeem Bande-Ali <me@azeemba.com>
+---
+    New config for help.autocorrect to prompt user before action
+    
+    Currently the prompt setting will wait X amount of time before taking an
+    action. Adding a new config that will instead prompt the user for a
+    confirmation before taking the action.
 
-I am part of the team and am implementing that exact feature from the
-roadmap :)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1012%2Fazeemba%2Fautoprompt-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1012/azeemba/autoprompt-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1012
 
-> > Even though I am not
-> > married to the "give optional parameter to --recurse-submodules"
-> > design, unconditionally setting the variable, with or without advice
-> > or warning, is a regression we'd want to avoid.
-> >
->
-> In my opinion, it would not be a regression; it would a behaviour change =
-that
-> would be a *vast improvement* for the majority of projects that use submo=
-dules, at
-> least those that use non-optional submodules (which, I believe, is the va=
-st majority
-> of projects that use submodules, judging by what I've read on the web ove=
-r the past 3
-> years of my interest in the subject.)
->
-> As soon as you use submodules in a non-optional way, you really *want* su=
-bmodule.recurse=3Dtrue,
-> because if not:
->
-> 1. 'git checkout' does not recursively check out your submodules, which p=
-robably breaks your build.
->     You have to remember to always run 'git checkout --recurse-submodules=
-' or run 'git submdule update'
->     after each checkout, and teach your team to do the same.
-> 2. 'git pull' fetches submodules commits, but does not recursively check =
-out your submodules,
->     which also probably breaks your build. You have to remember to always=
- run 'git pull --recurse-submodules',
->     or run 'git submodule update' after each pull, and also teach your te=
-am to do so.
-> 3. If you forget to do 1. or 2., and then use 'git commit -am "some messa=
-ge" (as a lot
->     of Git beginners unfortunately do), you regress the submodule commit,=
- creating a lot
->     of problems down the line.
->
-> These are the main reasons that I think Git should recurse by default. Se=
-tting 'submodule.recurse'
-> also brings other niceties, like 'git grep' recursing into submodules.
->
+ Documentation/config/help.txt | 20 +++++++++++++-------
+ help.c                        | 17 ++++++++++++++++-
+ 2 files changed, 29 insertions(+), 8 deletions(-)
 
-I completely agree with this! These are a lot of the reasons why the
-feature was initially suggested. An alternative path forward the team
-discussed was testing `submodule.recurse=3Dtrue` under
-`feature.experimental`. This way we can collect feedback from
-developers before making this the default config value.
+diff --git a/Documentation/config/help.txt b/Documentation/config/help.txt
+index 783a90a0f93..d36d98dd119 100644
+--- a/Documentation/config/help.txt
++++ b/Documentation/config/help.txt
+@@ -9,13 +9,19 @@ help.format::
+ 
+ help.autoCorrect::
+ 	If git detects typos and can identify exactly one valid command similar
+-	to the error, git will automatically run the intended command after
+-	waiting a duration of time defined by this configuration value in
+-	deciseconds (0.1 sec).  If this value is 0, the suggested corrections
+-	will be shown, but not executed. If it is a negative integer, or
+-	"immediate", the suggested command
+-	is run immediately. If "never", suggestions are not shown at all. The
+-	default value is zero.
++	to the error, git will try to suggest the correct command or even
++	run the intended command.
++	If this config value is 0, then the suggested command will be shown.
++	If it is positive, the suggested command will automatically
++	run after waiting for that many deciseconds (0.1 sec).
++	If it is "immediate", the suggested command will be
++	run immediately.
++	If it is "prompt", then the user will be shown the
++	suggestion and will be prompted for confirmation before the command
++	is run.
++	If it is "never", then no suggestion will be shown and no command
++	will be run.
++	0 is the default value for this config.
+ 
+ help.htmlPath::
+ 	Specify the path where the HTML documentation resides. File system paths
+diff --git a/help.c b/help.c
+index 3c3bdec2135..079156e0421 100644
+--- a/help.c
++++ b/help.c
+@@ -11,6 +11,7 @@
+ #include "version.h"
+ #include "refs.h"
+ #include "parse-options.h"
++#include "prompt.h"
+ 
+ struct category_description {
+ 	uint32_t category;
+@@ -472,6 +473,7 @@ int is_in_cmdlist(struct cmdnames *c, const char *s)
+ static int autocorrect;
+ static struct cmdnames aliases;
+ 
++#define AUTOCORRECT_PROMPT (-3)
+ #define AUTOCORRECT_NEVER (-2)
+ #define AUTOCORRECT_IMMEDIATELY (-1)
+ 
+@@ -486,6 +488,8 @@ static int git_unknown_cmd_config(const char *var, const char *value, void *cb)
+ 			autocorrect = AUTOCORRECT_NEVER;
+ 		} else if (!strcmp(value, "immediate")) {
+ 			autocorrect = AUTOCORRECT_IMMEDIATELY;
++		} else if (!strcmp(value, "prompt")) {
++			autocorrect = AUTOCORRECT_PROMPT;
+ 		} else {
+ 			int v = git_config_int(var, value);
+ 			autocorrect = (v < 0)
+@@ -618,7 +622,18 @@ const char *help_unknown_cmd(const char *cmd)
+ 				   _("Continuing under the assumption that "
+ 				     "you meant '%s'."),
+ 				   assumed);
+-		else {
++		else if (autocorrect == AUTOCORRECT_PROMPT) {
++			if (!isatty(STDIN_FILENO) | !isatty(STDERR_FILENO))
++				exit(1);
++
++			char *answer;
++			fprintf_ln(stderr, _("Assuming you meant: '%s'."),
++				   assumed);
++			answer = git_prompt(_("Continue? (y/N)"), PROMPT_ECHO);
++			if (!(starts_with(answer, "y") ||
++			      starts_with(answer, "Y")))
++				exit(1);
++		} else {
+ 			fprintf_ln(stderr,
+ 				   _("Continuing in %0.1f seconds, "
+ 				     "assuming that you meant '%s'."),
 
-> If we can agree that the behaviour *should* change eventually, then at le=
-ast
-> 'git clone --recurse-submodules' could be changed *right now* to suggest =
-setting
-> 'submodule.recurse' using the advice API, and stating that this will be t=
-he default
-> some day.
->
-> Even if we don't agree that the behaviour should enventually change, I th=
-ink
-> having this advice would be a strict improvement because
-> it would help user discover the setting, which would already go a long wa=
-y.
->
-> Thanks,
->
-> Philippe.
->
->
-> [1] https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/
-
-I agree that adding an advice message when a user runs `git clone
---recurse-submodules` would at least alert users of their options,
-giving them the choice to set `submodule.recurse` accordingly.
-
-Thanks!
-
-Best,
-Mahi Kolla
+base-commit: 2d755dfac9aadab25c3e025b849252b8c0a61465
+-- 
+gitgitgadget
