@@ -2,84 +2,50 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B65EC4338F
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 20:18:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB631C4338F
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 20:19:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DCC9D6104F
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 20:18:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C0B8D6104F
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 20:19:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231773AbhHKUTQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Aug 2021 16:19:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54744 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229946AbhHKUTM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Aug 2021 16:19:12 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C4A8C061765
-        for <git@vger.kernel.org>; Wed, 11 Aug 2021 13:18:48 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id 108-20020a9d01750000b029050e5cc11ae3so4853752otu.5
-        for <git@vger.kernel.org>; Wed, 11 Aug 2021 13:18:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=YHNM9BiWKvTJXbPsf7w+z768B8YSMPFRWfV1nhoVm7s=;
-        b=JHlU8kdBdi6d9mNcM0FZCpxXMLbfEoSqW/fTzT3GsHijubshOefF190I43PPV3Fnch
-         wwsgS60NqNzkVhCoQUMKFVrCLMGV8tNrO5kxu1KA1MxQHcxo4j5nlj5x0C95b09xONDo
-         V9vPHqDqol/lJXCJfu61SQxCuhRwL+hdPKHCayKLMDNT5hW0g5naH+slbq09tocYtoe7
-         OVSGrTxW3pglSC3KT2ab2jRBs4/RQf+fX5krWRAhwEmx5eBhdQeCTUWceZEKdP0u3O+c
-         Fq7JWHOwkBVqVNg0ugbQia/JZzcwNwDo0SffTOHxCwp8AboUO003+LIfD0Lfy0m1vyQ9
-         DzFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=YHNM9BiWKvTJXbPsf7w+z768B8YSMPFRWfV1nhoVm7s=;
-        b=Yykjjt3Oi/GCB0g43fYeKgtcjfgcdMvsnCoo24XyfUh4FO2a2w9R4roZUOlUy9WWqk
-         o3+LSzAoGA/q/ySBPkHiOuJiUZ9G17Cg8oeD/bURp6UfxoJr5SLzpoXFL62jOJl/GEKB
-         DUa2h4Ni5sYi1ip9zs+b9hr7fvDSl/d172X4jqt377gBSkh0GhUc/Y69mA2fXSZpUmT2
-         6hYO6kLNSe6McJXt4d/pX6spOiREnwXky1/DRYfth48pIbZsnFA70LfPr2KqdY2lz10L
-         fMsNtk28+EdzcNWGGrFc0JTekT3fcmBK6Uml0xac1NMyVzyUMy7HLlulHqatm2zr7aVt
-         tfDQ==
-X-Gm-Message-State: AOAM530YyFug3XGP+02+5Vh32ueXggwlJeG9qlrPc7rQqkS3MU7dfuhM
-        gqzpX4fU1pZ6glXylo68nv8=
-X-Google-Smtp-Source: ABdhPJx/uttG8A+JARD3EjZX6pTBSaq76HEOq0wc4vgEN8YfgCdeHxxLDbt5FtrZ+z9jRul5LK0zNw==
-X-Received: by 2002:a9d:704e:: with SMTP id x14mr553369otj.293.1628713127368;
-        Wed, 11 Aug 2021 13:18:47 -0700 (PDT)
-Received: from localhost (fixed-187-189-69-1.totalplay.net. [187.189.69.1])
-        by smtp.gmail.com with ESMTPSA id h187sm68890oif.48.2021.08.11.13.18.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Aug 2021 13:18:46 -0700 (PDT)
-Date:   Wed, 11 Aug 2021 15:18:45 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+        id S231444AbhHKUTm convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 11 Aug 2021 16:19:42 -0400
+Received: from mailproxy07.manitu.net ([217.11.48.71]:39468 "EHLO
+        mailproxy07.manitu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229946AbhHKUTm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Aug 2021 16:19:42 -0400
+X-Greylist: delayed 34477 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Aug 2021 16:19:42 EDT
+Received: from localhost (200116b86008d40055e599cb51dd17e8.dip.versatel-1u1.de [IPv6:2001:16b8:6008:d400:55e5:99cb:51dd:17e8])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: michael@grubix.eu)
+        by mailproxy07.manitu.net (Postfix) with ESMTPSA id 2055DC81D4;
+        Wed, 11 Aug 2021 22:19:17 +0200 (CEST)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <YRQfx+Njj1WxOnyG@coredump.intra.peff.net>
+References: <20210811045727.2381-1-felipe.contreras@gmail.com> <20210811045727.2381-7-felipe.contreras@gmail.com> <8034894f-a8dd-e1ee-1825-7cb172afdba3@gmail.com> <xmqqzgto9dkd.fsf@gitster.g> <YRQfx+Njj1WxOnyG@coredump.intra.peff.net>
+Subject: Re: [PATCH 6/7] stage: add 'diff' subcommand
+From:   Michael J Gruber <git@grubix.eu>
 Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Michael J Gruber <git@grubix.eu>
-Message-ID: <611430a5b83e1_19f82083b@natae.notmuch>
-In-Reply-To: <YRQfx+Njj1WxOnyG@coredump.intra.peff.net>
-References: <20210811045727.2381-1-felipe.contreras@gmail.com>
- <20210811045727.2381-7-felipe.contreras@gmail.com>
- <8034894f-a8dd-e1ee-1825-7cb172afdba3@gmail.com>
- <xmqqzgto9dkd.fsf@gitster.g>
- <YRQfx+Njj1WxOnyG@coredump.intra.peff.net>
-Subject: Re: [PATCH 6/7] stage: add 'diff' subcommand
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Matthieu Moy <git@matthieu-moy.fr>
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Message-ID: <162871314612.7067.6886805754107701040.git@grubix.eu>
+Date:   Wed, 11 Aug 2021 22:19:06 +0200
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
+Jeff King venit, vidit, dixit 2021-08-11 21:06:47:
 > On Wed, Aug 11, 2021 at 09:00:18AM -0700, Junio C Hamano wrote:
 > 
 > > A more notable aspect of the above list is not the similarity but
@@ -104,39 +70,65 @@ Jeff King wrote:
 > I do not mind the term "staging area", but using "the stage" as a noun
 > is simply confusing to me in this context.
 
-OK, but "stage" can be a noun.
+I think this exemplifies what I meant by discussing things in order. The
+concept "staging area" works in teaching and explaining things. But
+that does not imply that a "stage command" is the best way to convey
+that concept in the UI.
 
-Here is one of the definitions:
+Formost, "staging area" is a conceptual item much like a "commit", a
+"rev", a "reference", a "working tree" etc.
 
-  : a center of attention or scene of action
+When it comes to the UI, I don't think we have any concept or guide
+to decide what are verbs and nouns, what ends up as a command and what
+as an option or argument. In particular: Do we say "git verb object" or
+"git object verb"? Consequently, the status quo provides conflicting
+examples to follow.
 
-This definition doesn't imply what the action is about, but
-"commit stage" should be perfectly aligned with that definition.
+Take "git branch" and "git tag": Both use the term as a noun when they
+list the refs (but in singular form) and as a verb when they create
+them. The difference between "list" and "create" is indicated only by
+the absence or presence of an argument. We are used to that, and it's
+convenient, but it's certainly not good UI.
 
-Here's another one:
+For other subcommands, they use options like "-m" etc.
 
-  : one of two or more sections of a rocket that have their own fuel and engine
+"git remote", "git submodule" use arguments to indicate subcommands.
 
-These rocket stages need to be prepared before the launch, just like
-changes before a commit. A commit can be thought of as a single-stage
-rocket, and just like parts can be added and removed from this
-single-stage before launch, so can changes before a commit.
+At least, they stay within their "realm" ("git branch" acting on branch
+refs etc.).
 
-I understand why this might not seem natural to native English speakers,
-but it's perfectly aligned with the etymology of the word "stage"
-(to stay).
+The staging area/index is necessarily something that you not only "list"
+or act on, but also compare to other items, or create other items from
+(a commit). A very "non-verby" conceptual item, instead an "object" (in
+linguistic terms).
 
-I'm not saying it should be thought of this way, merely that it *can*.
+Therefore, "git stage" as an alias to "git add" does not serve the purpose
+of establishing "staging area" very well, and "git stage --diff" shows
+exactly the problem with turning an "object-like item" into a "verb-like
+command".
 
+In fact: "It adds the current state of pathspec to the staging area" is
+a perfect answer to the question: "What does git add pathspec do?"
 
-Either way, I also thought about adding yet another command
-`git staging-area` and diff instead of an option be a subcommand:
-`git staging-area diff`, but to be frank I don't think anybody would end
-up using this command, especially without default aliases (like
-`git sa`). So I opted against it.
+I mean, so much of git is about operating on or comparing between three
+different types of "sources": the working tree, the index, a treeish. A
+lot of confusion comes from the fact that we hide this behind different
+commands to act on them and different ways to specify these conceptual
+items:
+- You specify a treeish as an argument to a command.
+- You specify the index as an option (--cached, --staged) or by choosing
+  the right command.
+- You specify the working tree as an option (--worktree) or by choosing
+  the right command (checkout vs. reset) or number of options (diff).
 
-Even though `git stage --diff` is not ideal, it's the least bad option
-in my option.
+Newer commands like "restore" try to help but fail badly when e.g. "restore
+--staged" means you overwrite what is staged with something from a
+treeish.
 
--- 
-Felipe Contreras
+I still think it's very worthwhile to fantasize about a git which has
+only verb-like commands (such as diff, add, checkout, checkin) and a
+consistent way of specifying the objects to act upon (possibly amended
+by "git pluralnoun" being synonymous to "git ls noun" or similar
+convenience shortcuts).
+
+Michael
