@@ -2,159 +2,189 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1813EC432BE
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 08:07:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38942C4338F
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 08:08:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D9AA660EB5
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 08:07:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 21B3A60EB5
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 08:08:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235687AbhHKIH4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Aug 2021 04:07:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50526 "EHLO
+        id S236155AbhHKIIY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Aug 2021 04:08:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235945AbhHKIEh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Aug 2021 04:04:37 -0400
-Received: from eggs.gnu.org (eggs.gnu.org [IPv6:2001:470:142:3::10])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38E6BC0613D3
-        for <git@vger.kernel.org>; Wed, 11 Aug 2021 01:03:50 -0700 (PDT)
-Received: from fencepost.gnu.org ([2001:470:142:3::e]:50932)
-        by eggs.gnu.org with esmtp (Exim 4.90_1)
-        (envelope-from <tsdh@gnu.org>)
-        id 1mDjDG-00068e-Q5; Wed, 11 Aug 2021 04:03:46 -0400
-Received: from auth1-smtp.messagingengine.com ([66.111.4.227]:53229)
-        by fencepost.gnu.org with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.90_1)
-        (envelope-from <tsdh@gnu.org>)
-        id 1mDjDF-0001cB-2h; Wed, 11 Aug 2021 04:03:46 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailauth.nyi.internal (Postfix) with ESMTP id C37B227C0054;
-        Wed, 11 Aug 2021 04:03:43 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Wed, 11 Aug 2021 04:03:43 -0400
-X-ME-Sender: <xms:X4QTYa940Whfol2KVZruUr4wiZhwtwTwpW9Itg661EZwSDQ31XtbZg>
-    <xme:X4QTYau45x66ZzZmLVJysOBaoyzO6dogaXducumOsLM6VrVdWZ-0bk7ELi6ZTGvxs
-    LbWlL-VXirDgQ>
-X-ME-Received: <xmr:X4QTYQCbl9dv83VBuMOk2YqwuA4MKgLQW0WJ4-d7QYzf-iLVAWAJpGfjt3G-rujCcTrROmmdI9uza_VeNX6U5p-HURmNrLc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrkedtgdduvdegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpehffgfhvffuffgjkfggtgesthdtre
-    dttdertdenucfhrhhomhepvfgrshhsihhlohcujfhorhhnuceothhsughhsehgnhhurdho
-    rhhgqeenucggtffrrghtthgvrhhnpeevveeikeetkeeviefgfeffiedvteeguddvffeuue
-    duveegtddthedvhfeuveffhfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
-    mhgrihhlfhhrohhmpehthhhorhhnodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhith
-    ihqdekieejfeekjeekgedqieefhedvleekqdhtshguhheppehgnhhurdhorhhgsehfrghs
-    thhmrghilhdrfhhm
-X-ME-Proxy: <xmx:X4QTYSdrsikely4KFyaVOUNVtWgDn4wQC4ChnxF3buWFmTkGX7c47Q>
-    <xmx:X4QTYfNtdOPSRVs5igssvZnIN7r_iC2ndyr3S1-1mvGyC5esS70drQ>
-    <xmx:X4QTYcm-RQqcShdCyXatXR4xwpqbRWlLpW__fiam8xlPfwIBj-b4SA>
-    <xmx:X4QTYV0UhwH_sZ1uqYpPXb4ZQb-AXblPkHNB3kECAc-LUygtGhABtw>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Aug 2021 04:03:42 -0400 (EDT)
-References: <20210810190937.305765-1-tsdh@gnu.org>
- <d3484278-8413-0d10-e6cd-59a7ff04564b@kdbg.org> <87zgtoh6bm.fsf@gnu.org>
- <95ebb2cf-2e6e-912e-7d80-3947a8e3d9e4@kdbg.org>
-User-agent: mu4e 1.6.2; emacs 28.0.50
-From:   Tassilo Horn <tsdh@gnu.org>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] userdiff: improve java hunk header regex
-Date:   Wed, 11 Aug 2021 09:39:02 +0200
-In-reply-to: <95ebb2cf-2e6e-912e-7d80-3947a8e3d9e4@kdbg.org>
-Message-ID: <87wnosh0gz.fsf@gnu.org>
+        with ESMTP id S236069AbhHKIFl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Aug 2021 04:05:41 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C17C061765
+        for <git@vger.kernel.org>; Wed, 11 Aug 2021 01:04:40 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id e13-20020a9d63cd0000b02904fa42f9d275so2411356otl.1
+        for <git@vger.kernel.org>; Wed, 11 Aug 2021 01:04:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=uAK9WMfgBprY4daKCyQbVXLR+22m8R8jSVNb1svZoYA=;
+        b=JYHeHJMNMCdNGmGILcW77I8jhe314e8XoH/WpHV//Qp5D7oeQ7MVkeCpQ4Jyw9cGqh
+         TI3UBlzvEOMMy34ucXN0RmSgismZIYZ3wU47MyFcWqSiCmXkxjHpkTqLbz50UMjn6UWR
+         boTkFQf9K5AdaYH7Cyo0HyL06DZrQ1y53D/IgWVpDlba7s+YR6SHVOwedOSPTPUSQST5
+         Qz+WAIV4xRv1ZZXG6E/nhhGpDHILNfBCihyaQ1SgtB98q3b55GpUL+gDKlt6gEMDp9Nb
+         mQtR3XRPCDvYKzb60MAi6/MYEOAywjZ4b60DnzYbpeP3oSfjQe7BAsp/FdedOMXEff+g
+         lgIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=uAK9WMfgBprY4daKCyQbVXLR+22m8R8jSVNb1svZoYA=;
+        b=kXW7A9qC5V0rHiPcaAl5RI+hJ/2R2J0CtPJ3GAc9Vpun5PvBkwIJqtej/au768nx7Z
+         5D4rk53mrh95HITk5BVutLXOHNcXuK1CIQLzkRMIaca3VBHxtJcSFeJU7U7r3lOEgvTU
+         1uGsKShOoOaCZ9JF1zt7XHdBTZ5BD3jVra7OvLhSCdr4AjwKp/Wuau6bu3zGEKoVrYWh
+         Ei0v+kvfcNqAG7Bwd+3cIoysS6coev15M6jlH+ITrqpf1cp+95gNGB/ZSg4a8Jy4ko20
+         kEJorpqYCqROZEYx2X5/AQmB9NiwC7qn+JSVEWaAf9GrFqTBkLlUMzVj2hEk/pvpH4rA
+         nyDg==
+X-Gm-Message-State: AOAM5323qB+yGHcOTxhKQDYAKixZvV4v2G2zUIMdyW79JH9BBCM2cJC8
+        5C3YziwqjC0mA6YyLiJQzXc=
+X-Google-Smtp-Source: ABdhPJw8yKQRe2yTPnoqem4lwuatMRcL7bHEIRRRslgnF5j7U1hrXxmU7zY8b1ha2dVwfNEZaOZ4ug==
+X-Received: by 2002:a9d:604d:: with SMTP id v13mr2435607otj.314.1628669080229;
+        Wed, 11 Aug 2021 01:04:40 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id p124sm579760oia.8.2021.08.11.01.04.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Aug 2021 01:04:39 -0700 (PDT)
+Date:   Wed, 11 Aug 2021 01:04:38 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2021, #04; Tue, 10)
+Message-ID: <YROElmCJQGaR8Lsx@carlos-mbp.lan>
+References: <xmqqh7fwbx86.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqh7fwbx86.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Tue, Aug 10, 2021 at 06:12:41PM -0700, Junio C Hamano wrote:
+> 
+> * cb/ci-build-pedantic (2021-08-09) 1 commit
+>  - ci: run a pedantic build as part of the GitHub workflow
+>  (this branch uses cb/many-alternate-optim-fixup.)
+> 
+>  CI update.
+> 
+>  Will merge to 'next'.
 
-Hi Hannes,
+this version has the bug you reported[1] and provided a fix for
+because the base image doesn't include git, and while the bug is
+harmless it is still silly enough that should be worth fixing
+before going to next IMHO..
 
->>> These new tests are very much appreciated. You do not have to go
->>> wild with that many return type tests; IMO, the simple one and the
->>> most complicated one should do it. (And btw, s/cart/card/)
->> 
->> Well, they appeared naturally as a result during development and made
->> it easier to spot errors when you know up to which level of
->> complexity it still worked.  Is there a stronger reason to remove
->> tests which might not be needed, e.g., runtime cost on some CI
->> machines?
->
-> I totally understand how the test cases evolved. Having many of them
-> is not a big deal. It's just the disproportion of tests of this new
-> feature vs. the existing tests that your patch creates, in particular,
-> when earlier of the new tests are subsumed by later new tests.
+I was preparing a version 2 reroll that included the tests, as
+you suggested, which I was also planning to make a little more
+useful by including other test dependencies missing from other jobs.
 
-Sure thing, I'll see if I can remove some tests.
+on that line, I also forgot to build with PCRE, which was the reason
+why it was included as a dependency, and that has been corrected as
+well; alternatively it could be removed and make the job slightly faster.
 
->> Another thing I've noticed (with my suggested patch) is that I should
->> not try to match constructor signatures.  I think that's impossible
->> because they are indistinguishable from method calls, e.g., in
->> 
->>   public class MyClass {
->>       MyClass(String RIGHT) {
->>           someMethodCall();
->>           someOtherMethod(17)
->>               .doThat();
->>           // Whatever
->>           // ChangeMe
->>       }
->>   }
->> 
->> there is no regex way to prefer MyClass(String RIGHT) over
->> someOtherMethod().
->
-> Good find.
+but if you want to have a less buggy and even faster job[2] in next
+meanwhile could use instead the "1.5" reroll below which will be also
+easier to base on for v2; alternatively it could wait, but was also
+tempted to include UBsan in this job, and so it would need additional
+fixes before it can be promoted in that case
 
-The longer you play with it, the more you find out.
+Carlo
 
->> So all in all, I'd propose this version in the next patch version:
->> 
->> --8<---------------cut here---------------start------------->8---
->> PATTERNS("java",
->> 	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
->>          "^[ \t]*("
->>          /* Class, enum, and interface declarations */
->>          "(([a-z]+[ \t]+)*(class|enum|interface)[ \t]+[A-Za-z][A-Za-z0-9_$]*[ \t]+.*)"
->>          /* Method definitions; note that constructor signatures are not */
->>          /* matched because they are indistinguishable from method calls. */
->>          "|(([A-Za-z_<>&][][?&<>.,A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)"
->>          ")$",
->> 	 /* -- */
->> 	 "[a-zA-Z_][a-zA-Z0-9_]*"
->> 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
->> 	 "|[-+*/<>%&^|=!]="
->> 	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
->> --8<---------------cut here---------------end--------------->8---
->
-> That looks fine.
->
-> One suggestion, though. You do not have to have all positive patterns
-> ("class, enum, interface" and "method definitions") in a single
-> pattern separated by "|". You can place them on different "lines"
-> (note the "\n" at the end of the first pattern):
->
-> 	/* Class, enum, and interface declarations */
-> 	"^[ \t]*(...(class|enum|interface)...)$\n"
-> 	/*
-> 	 * Method definitions; note that constructor signatures are not
-> 	 * matched because they are indistinguishable from method calls.
-> 	 */
-> 	"^[ \t]*(...[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*))$",
->
-> I don't think there is a technical difference, but I find this form
-> easier to understand because fewer open parentheses have to be
-> tracked.
+[1] https://lore.kernel.org/git/xmqqeeb1dumx.fsf@gitster.g/
+[2] https://github.com/carenas/git/runs/3298216810
+--- >8 ---
+Subject: [PATCH v1.5] ci: run a pedantic build as part of the GitHub workflow
 
-Yes, indeed.  Because of that reason I've put the first ( and the last )
-on separate lines but your approach is even better.
+similar to the recently added sparse task, it is nice to know as early
+as possible.
 
-Patch version v5 will come anytime soon.
+add a dockerized build using fedora (that usually has the latest gcc)
+to be ahead of the curve and avoid older ISO C issues at the same time.
 
-Thanks!
-Tassilo
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+Changes in v1.5
+* really build with PCRE
+* install a smaller perl and git (used by the CI scripts)
+
+ .github/workflows/main.yml        |  2 ++
+ ci/install-docker-dependencies.sh |  6 ++++++
+ ci/run-build-and-tests.sh         | 11 ++++++++---
+ 3 files changed, 16 insertions(+), 3 deletions(-)
+
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 73856bafc9..b93561978d 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -324,6 +324,8 @@ jobs:
+           image: alpine
+         - jobname: Linux32
+           image: daald/ubuntu32:xenial
++        - jobname: pedantic
++          image: fedora
+     env:
+       jobname: ${{matrix.vector.jobname}}
+     runs-on: ubuntu-latest
+diff --git a/ci/install-docker-dependencies.sh b/ci/install-docker-dependencies.sh
+index 26a6689766..eba4b212e4 100755
+--- a/ci/install-docker-dependencies.sh
++++ b/ci/install-docker-dependencies.sh
+@@ -15,4 +15,10 @@ linux-musl)
+ 	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
+ 		pcre2-dev python3 musl-libintl perl-utils ncurses >/dev/null
+ 	;;
++pedantic)
++	dnf -yq update >/dev/null &&
++	dnf -yq install gcc make findutils diffutils perl-interpreter \
++		gettext git zlib-devel expat-devel openssl-devel \
++		curl-devel pcre2-devel >/dev/null
++	;;
+ esac
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 3ce81ffee9..724f9b54c8 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -10,6 +10,12 @@ windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
+ *) ln -s "$cache_dir/.prove" t/.prove;;
+ esac
+ 
++if test "$jobname" = "pedantic"
++then
++	export DEVOPTS=pedantic
++	export USE_LIBPCRE=1
++fi
++
+ make
+ case "$jobname" in
+ linux-gcc)
+@@ -35,10 +41,9 @@ linux-clang)
+ 	export GIT_TEST_DEFAULT_HASH=sha256
+ 	make test
+ 	;;
+-linux-gcc-4.8)
++linux-gcc-4.8|pedantic)
+ 	# Don't run the tests; we only care about whether Git can be
+-	# built with GCC 4.8, as it errors out on some undesired (C99)
+-	# constructs that newer compilers seem to quietly accept.
++	# built with GCC 4.8 or with pedantic
+ 	;;
+ *)
+ 	make test
+-- 
+2.33.0.rc1.379.g2890ef5eb6
+
