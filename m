@@ -2,231 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDD40C4338F
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 04:57:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AB17C4338F
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 05:02:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C034A60C40
-	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 04:57:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69B3D60F13
+	for <git@archiver.kernel.org>; Wed, 11 Aug 2021 05:02:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234253AbhHKE6J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Aug 2021 00:58:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36858 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234246AbhHKE6G (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Aug 2021 00:58:06 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B575BC06179E
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 21:57:41 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id c23-20020a0568301af7b029050cd611fb72so1970365otd.3
-        for <git@vger.kernel.org>; Tue, 10 Aug 2021 21:57:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=YyOgyO63SOQpzUzoJpNqPxCcQclSmwcjLeVz1LtpnVM=;
-        b=k19SIQ5VEeNuLy7kjQkTYNrPBrLhdRecIN6p7FHlK23FJprilH328fUWGmpI3oYNVw
-         dnqd1yhrnaP9LzADBDRVUr8ltVvsbC7FGCHgLq2cMtXHFr/Ip3TyLDghKPZQh5kgN+2O
-         uqz7KxfBOMKBJaXxLV6ISNSVNqs+YrIJ87rTCslz+L88/JbwhzbDY8dOizQPYP2pj8dU
-         J7+JhYqNpu5jh6NsAQ/MD8rVcxXIty+W2o5IRbwrWVgMwHuxOlciNlrPbwES52LstifI
-         nDg4N1UgY9Z9jUZowYx1u3Hav/E21Qj4/4ysWLXktHCmpYg6sNWRdc8STmcl9KfAUQ0z
-         QzRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=YyOgyO63SOQpzUzoJpNqPxCcQclSmwcjLeVz1LtpnVM=;
-        b=V3xUwfQZPPAB85v/B5LNn+OOtgNcjA81WZGchzjXDga6GfsLyez249E3MKeke50eV+
-         mNhy9u2zqy7t3wJQJO8aTP+hr2wQznj3Tdnlcz/kX3vnmmXDMSxopE0zBDB395k8e58H
-         fv1C7q00UjhF0/ZqZflMuePv9vc9LxogtavfhG5jWkncbWFBUnMX2PlEalHUz+kJGpJv
-         mfp0W56Rjse50FuaTTtWil3fFkBFPa0sv2mwUMf0KPIqfEnjvY5A+DN9Dxj4AJpsAxfg
-         4qJui6LMhAPw1UyPqULZtAIV8FJDVHq9WfTBVe94ytKAFTGRVEMuQrPKHXXNo4Qw5pmU
-         h2gA==
-X-Gm-Message-State: AOAM531ERsiIfzCFdXSvVI/pjF7mBpwjPafXtzgLec4NzqMjk2ROVx6r
-        GKwZeUMWtFk4mjRc2EvmS/YGI8u3Fos/vA==
-X-Google-Smtp-Source: ABdhPJwJV8uYvqSyRSR2TfTJ2Fm1kwoXcDWguGNPlexi3a5/mXGaLFAugNlwCE1mAhEEooTIJKEzLg==
-X-Received: by 2002:a05:6830:1dae:: with SMTP id z14mr11298704oti.348.1628657860876;
-        Tue, 10 Aug 2021 21:57:40 -0700 (PDT)
-Received: from localhost (fixed-187-189-69-1.totalplay.net. [187.189.69.1])
-        by smtp.gmail.com with ESMTPSA id h9sm1108060otr.67.2021.08.10.21.57.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Aug 2021 21:57:40 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Michael J Gruber <git@grubix.eu>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 7/7] stage: add 'edit' command
-Date:   Tue, 10 Aug 2021 23:57:27 -0500
-Message-Id: <20210811045727.2381-8-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.32.0.48.g096519100f
-In-Reply-To: <20210811045727.2381-1-felipe.contreras@gmail.com>
-References: <20210811045727.2381-1-felipe.contreras@gmail.com>
+        id S233933AbhHKFDG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Aug 2021 01:03:06 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56106 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233766AbhHKFDG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Aug 2021 01:03:06 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 40DEBCD6FF;
+        Wed, 11 Aug 2021 01:02:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=VL6neY6QvAXxpXvWAaBKuhQpSWPtHKAjQ0qXXXYGVBQ=; b=YNrl
+        c/YnKJyuvJ91OngOTGLNLLF5taPPzZ5edka3DnTO+QhtozGv+K9PorEBMiEwNmnh
+        D2aMYGTzectWszqGqfMGU0deI16q+4A4H2YIJObeR/Cc9vqdX8TU5xdS/tbXUCcj
+        hTRonCN3LgVX+cUx3vhqGCzHI36+ioQMxFfwO7w=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 378E2CD6FE;
+        Wed, 11 Aug 2021 01:02:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B65F5CD6FC;
+        Wed, 11 Aug 2021 01:02:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Mahi Kolla <mahikolla@google.com>
+Cc:     Mahi Kolla via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v4] clone: update submodule.recurse in config when using
+ --recurse-submodule
+References: <pull.1006.v3.git.1627946590.gitgitgadget@gmail.com>
+        <pull.1006.v4.git.1628536305810.gitgitgadget@gmail.com>
+        <xmqqzgtqe2w6.fsf@gitster.g>
+        <CAN3QUFYPjsvBRGegO-kC7+gcFDczOqQSw-UYphnLHx=6-6kkwA@mail.gmail.com>
+        <xmqqa6lpdu4z.fsf@gitster.g>
+Date:   Tue, 10 Aug 2021 22:02:41 -0700
+Message-ID: <xmqqbl64bmku.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5B6E23C4-FA61-11EB-9B1F-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/git-stage.txt |  5 +++
- builtin/stage.c             | 76 ++++++++++++++++++++++++++++++++++++-
- t/t3710-stage.sh            |  6 +++
- 3 files changed, 86 insertions(+), 1 deletion(-)
+Junio C Hamano <gitster@pobox.com> writes:
 
-diff --git a/Documentation/git-stage.txt b/Documentation/git-stage.txt
-index 460a8d6228..baea9d96e0 100644
---- a/Documentation/git-stage.txt
-+++ b/Documentation/git-stage.txt
-@@ -13,6 +13,7 @@ SYNOPSIS
- 'git stage' (-a | --add) [options] [--] [<paths>...]
- 'git stage' (-r | --remove) [options] [--] [<paths>...]
- 'git stage' (-d | --diff) [options] [--] [<paths>...]
-+'git stage' (-e | --edit)
- 
- 
- DESCRIPTION
-@@ -37,6 +38,10 @@ OPTIONS
- --diff::
- 	View the changes staged for the next commit. See linkgit:git-diff[1].
- 
-+-e::
-+--edit::
-+	Edit the changes in the staging area.
-+
- SEE ALSO
- --------
- linkgit:git-add[1]
-diff --git a/builtin/stage.c b/builtin/stage.c
-index c57bb2d683..49af18dda7 100644
---- a/builtin/stage.c
-+++ b/builtin/stage.c
-@@ -5,6 +5,9 @@
- #include "builtin.h"
- #include "parse-options.h"
- #include "run-command.h"
-+#include "diff.h"
-+#include "diffcore.h"
-+#include "revision.h"
- 
- static const char *const stage_usage[] = {
- 	N_("git stage [options] [--] <paths>..."),
-@@ -40,14 +43,83 @@ static int rerun(int argc, const char **argv, ...)
- 	return ret;
- }
- 
-+static int do_reset(const char *prefix)
-+{
-+	const char *argv[] = { "reset", "--quiet", NULL };
-+	return run_command_v_opt(argv, RUN_GIT_CMD);
-+}
-+
-+static int do_apply(const char *file, const char *prefix)
-+{
-+	const char *argv[] = { "apply", "--recount", "--cached", file, NULL };
-+	return run_command_v_opt(argv, RUN_GIT_CMD);
-+}
-+
-+static int run_edit(int argc, const char **argv, const char *prefix)
-+{
-+	char *file = git_pathdup("STAGE_EDIT.patch");
-+	int out;
-+	struct rev_info rev;
-+	int ret = 0;
-+	struct stat st;
-+
-+	repo_read_index(the_repository);
-+
-+	repo_init_revisions(the_repository, &rev, prefix);
-+	rev.diffopt.context = 7;
-+
-+	argc = setup_revisions(argc, argv, &rev, NULL);
-+	add_head_to_pending(&rev);
-+	if (!rev.pending.nr) {
-+		struct tree *tree;
-+		tree = lookup_tree(the_repository, the_repository->hash_algo->empty_tree);
-+		add_pending_object(&rev, &tree->object, "HEAD");
-+	}
-+
-+	rev.diffopt.output_format = DIFF_FORMAT_PATCH;
-+	rev.diffopt.use_color = 0;
-+	rev.diffopt.flags.ignore_dirty_submodules = 1;
-+
-+	out = open(file, O_CREAT | O_WRONLY, 0666);
-+	if (out < 0)
-+		die(_("Could not open '%s' for writing."), file);
-+	rev.diffopt.file = xfdopen(out, "w");
-+	rev.diffopt.close_file = 1;
-+
-+	if (run_diff_index(&rev, DIFF_INDEX_CACHED))
-+		die(_("Could not write patch"));
-+	if (launch_editor(file, NULL, NULL))
-+		exit(1);
-+
-+	if (stat(file, &st))
-+		die_errno(_("Could not stat '%s'"), file);
-+
-+	ret = do_reset(prefix);
-+	if (ret)
-+		goto leave;
-+
-+	if (!st.st_size)
-+		goto leave;
-+
-+	ret = do_apply(file, prefix);
-+	if (ret)
-+		goto leave;
-+
-+leave:
-+	unlink(file);
-+	free(file);
-+	return ret;
-+}
-+
- int cmd_stage(int argc, const char **argv, const char *prefix)
- {
--	int add = 0, remove = 0, diff = 0;
-+	int add = 0, remove = 0, diff = 0, edit = 0;
- 
- 	struct option options[] = {
- 		OPT_BOOL_F('a', "add", &add, N_("add changes"), PARSE_OPT_NONEG),
- 		OPT_BOOL_F('r', "remove", &remove, N_("remove changes"), PARSE_OPT_NONEG),
- 		OPT_BOOL_F('d', "diff", &diff, N_("show changes"), PARSE_OPT_NONEG),
-+		OPT_BOOL_F('e', "edit", &edit, N_("edit changes"), PARSE_OPT_NONEG),
- 		OPT_END()
- 	};
- 
-@@ -58,6 +130,8 @@ int cmd_stage(int argc, const char **argv, const char *prefix)
- 		return rerun(argc, argv, "reset", NULL);
- 	if (diff)
- 		return rerun(argc, argv, "diff", "--staged", NULL);
-+	if (edit)
-+		return run_edit(argc, argv, prefix);
- 
- 	return rerun(argc, argv, "add", NULL);
- }
-diff --git a/t/t3710-stage.sh b/t/t3710-stage.sh
-index aab979c20c..3c9522249f 100755
---- a/t/t3710-stage.sh
-+++ b/t/t3710-stage.sh
-@@ -42,4 +42,10 @@ test_expect_success 'diff' '
- 	test_file_not_empty out
- '
- 
-+test_expect_success 'edit' '
-+	GIT_EDITOR="sed -i -e \"s/^+foo$/+edit/\"" git stage --edit &&
-+	git stage --diff > out &&
-+	grep "^+edit$" out
-+'
-+
- test_done
--- 
-2.32.0.48.g096519100f
+> Mahi Kolla <mahikolla@google.com> writes:
+>
+>>> Is it possible to avoid changing the behaviour unconditionally and
+>>> potentially breaking existing users by making it an opt-in feature,
+>>> e.g. "git clone --recurse-submodules" would work as the current
+>>> users would expect, while "git clone --recurse-submodules=sticky"
+>>> would set submodule.recurse to true, or something?
+>>
+>> As mentioned, the `submodule.recurse=true` will only apply to active
+>> submodules specified by the user. Setting this config value when the
+>> user runs their initial `git clone` minimizes the number of times a
+>> developer must use the `--recurse-submodule` option on other commands.
+>>
+>> However, this is a behavior change that may be surprising for
+>> developers. To ensure a smooth rollout and easy adoption, I think
+>> adding a message using an `advice.*` config setting would be useful.
 
+Let me outline some general rules on changing the behaviour of the
+system used around here.
+
+First of all, if a proposed change of behaviour is a bugfix, the
+following does not apply [*1*].
+
+When a new behaviour is made available to those who want to use it,
+it starts as an opt-in feature.
+
+ - Existing users will not be surprised by a familiar command
+   suddenly changing its behaviour.  If users keep using the system
+   the same way as they used it before, the system will behave the
+   same way, without changing the behaviour.
+
+ - Those who want to use the new behaviour need to do something to
+   explicitly trigger it (with a command line option, configuration
+   variable, a new command, etc.)
+
+Over time, a behaviour that used to be a "new way" may just become
+"one of the two ways available", and it may even turn out to be a
+more desirable one between the two.  At that point, we may propose
+to flip the default, with a migration plan that is carefully
+designed to avoid breaking existing users.
+
+Even if it were an *improvement* to set the configuration variable,
+it is not an excuse to suddenly change the behaviour of the command
+for users who do not ask.  It needs to start as an optional feature,
+and if we really like it and manage to convince majority users to
+also like the new way, we may even consider making it the default,
+but it is way too premature to do so.
+
+Unless we can argue that the current behaviour *is* buggy, that is.
+
+Thanks.
+
+
+[Footnote]
+
+*1* A change that we have to say "not all users may be happy with
+    this new behaviour" or "developers would be surprised by the new
+    behaviour" cannot be a bugfix.
