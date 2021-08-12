@@ -2,198 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27BEFC432BE
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 20:48:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B5C4C4338F
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 20:56:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0A11B610A3
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 20:48:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 10A6660C41
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 20:56:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233293AbhHLUsd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Aug 2021 16:48:33 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64349 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229703AbhHLUsc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Aug 2021 16:48:32 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9D32613D771;
-        Thu, 12 Aug 2021 16:48:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=USh25oLPOsurIvDrzox7UUX4NyQKhB/UijZNsr
-        qFXMs=; b=tC9sNZbadRIp/wIhAqgQQuWHQdhshdCxJzNY7+eJRBPCNvAowTMkqZ
-        Gs9FqL9H7QxAkqARKqhgD5p/7PR2KrC9PEgM91FcfPtPWeaeCOZoWaRWW1gpa30z
-        LPgk85vlLrp2T7D73zFanHfq7uPRMnlcK9lTS78VOA0KtsArYHe60=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 962EA13D76F;
-        Thu, 12 Aug 2021 16:48:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D271313D76C;
-        Thu, 12 Aug 2021 16:48:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 5/6] hook: include hooks from the config
-References: <20210812004258.74318-1-emilyshaffer@google.com>
-        <20210812004258.74318-6-emilyshaffer@google.com>
-Date:   Thu, 12 Aug 2021 13:48:00 -0700
-In-Reply-To: <20210812004258.74318-6-emilyshaffer@google.com> (Emily Shaffer's
-        message of "Wed, 11 Aug 2021 17:42:57 -0700")
-Message-ID: <xmqqsfze1jb3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9642553A-FBAE-11EB-9CD3-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+        id S234217AbhHLU4r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Aug 2021 16:56:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53548 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232611AbhHLU4q (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Aug 2021 16:56:46 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2591C061756
+        for <git@vger.kernel.org>; Thu, 12 Aug 2021 13:56:20 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id h11so12583538oie.0
+        for <git@vger.kernel.org>; Thu, 12 Aug 2021 13:56:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=RhXhORa/y7Y+hOqsoKMRIzxeOAIs2TGVa5OeL2ZDGLw=;
+        b=Caw8RgLz+b9WQOil2le96trFjio5ccgvw3jrwEdZ5aGMKZmj2DZLpxbONykNzEC+7P
+         FlhakByvJ0Z6IT6nMR8c8QmtV8KYk9GQev4ZHq34KpIcknodqnJgT+Y4ggyiFnuXBivl
+         nkWQ18492UsZKu22J6QItze1oPYf7C5XTgdDYBxekOURTQddLq5oxZuZf6SYLqEGu19U
+         FJAsGGKLDyZbeE01/dFZGABXYBNug4n8rpBj3tJJ725iQq0lMPoPO8Mo8yprsRR5v9j8
+         JZLc2i6x0GBXzwK1B7t57uqFJd1NlIdUavRaZx8rAnn8TEbIpDNLV3ii2GhpE7wTofr9
+         8kfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=RhXhORa/y7Y+hOqsoKMRIzxeOAIs2TGVa5OeL2ZDGLw=;
+        b=ewNp79rKpa8K0jgkyv21JqhdYGCrAwc3cNPaHofmMQixkkl5//Fso5Mb0SS3WeDQAj
+         owrkiM0mG4iZH6pNfwBljtNHHuDbEdCZHr7N6CtlQZzhW+Jym4t7jsECg1PVXg6Trkfk
+         t8L4lYlnMcQ4WSbGGvDCvdLrqZExLjnK06miAQZE7Ryl36UpNKxfCMQOzgxFpY14Ez9/
+         5PHmVOqGLpoF6908GpIjmoQKKPm32xoEyRLN489X3it8BER6t+Vhvz34W5XvscduQDCt
+         8MFTri5BvFJ3xtXP61pvduxeTWGEqS7P++4/CjvdF0aaW9ZneafcjoY4ihPQtsp6ToJc
+         M5nQ==
+X-Gm-Message-State: AOAM532P86v0PAS6lDsFUpM7yEd+Mi9lk3nGgXkIpX1Fip0rIzzrnujj
+        kQxXXc1HWPEZa0gKSyAvvg8=
+X-Google-Smtp-Source: ABdhPJz3ICQHKMXo8iA5jKDKcpYZHqpJauB11APDkLMGxwJ+vY7np4Y+CtHXEkIb6matIzObG8+65g==
+X-Received: by 2002:aca:de8a:: with SMTP id v132mr1771869oig.74.1628801780070;
+        Thu, 12 Aug 2021 13:56:20 -0700 (PDT)
+Received: from localhost (fixed-187-189-69-1.totalplay.net. [187.189.69.1])
+        by smtp.gmail.com with ESMTPSA id g5sm429788ooq.17.2021.08.12.13.56.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Aug 2021 13:56:19 -0700 (PDT)
+Date:   Thu, 12 Aug 2021 15:56:08 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     git@vger.kernel.org, Xingman Chen <xichixingman@gmail.com>
+Message-ID: <61158ae83406a_a3522086a@natae.notmuch>
+In-Reply-To: <CAPUEsphWN_-BWyfF9mnPhL56RSnmPZfmvh_QwhjoAb3xin8V-w@mail.gmail.com>
+References: <YRHQAFDXs5xvyDND@coredump.intra.peff.net>
+ <CAPUEsphWN_-BWyfF9mnPhL56RSnmPZfmvh_QwhjoAb3xin8V-w@mail.gmail.com>
+Subject: Re: [PATCH] apply: keep buffer/size pair in sync when parsing binary
+ hunks
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Carlo Arenas wrote:
+> On Mon, Aug 9, 2021 at 9:24 PM Jeff King <peff@peff.net> wrote:
+> > diff --git a/apply.c b/apply.c
+> > index 44bc31d6eb..4ed4b27169 100644
+> > --- a/apply.c
+> > +++ b/apply.c
+> > @@ -1917,6 +1917,7 @@ static struct fragment *parse_binary_hunk(struct apply_state *state,
+> >
+> >         state->linenr++;
+> >         buffer += llen;
+> > +       size -= llen;
+> >         while (1) {
+> 
+> Ironically, I was looking at this code because of your previous
+> patch[1] that you suggested was ugly
+> and because I was going to suggest moving from a for to a while loop
+> to avoid the overly long line.
+> 
+> It is interesting to note though, that having a for (and obviously
+> removing the last 2 lines from the loop) with a comma separated
+> increment instead would
+> have made this issue IMHO more obvious, and also why I decided against
+> that; would it be a good idea to fix that as well?
 
-> Teach the hook.[hc] library to parse configs to populare the list of
-> hooks to run for a given event.
->
-> Multiple commands can be specified for a given hook by providing
-> multiple "hook.<friendly-name>.command = <path-to-hook>" and
-> "hook.<friendly-name>.event = <hook-event>" lines. Hooks will be run in
-> config order of the "hook.<name>.event" lines.
->
-> For example:
->
->   $ git config --list | grep ^hook
->   hook.bar.command=~/bar.sh
->   hook.bar.event=pre-commit
+What's the point in updating size when it can be calculated? Just add a
+pointer to the end of the buffer, and then size is the difference
+between the buffer which is moving, and the end pointer which is fixed:
 
-Your answer might be "read the design doc", but it is unclear to me
-why "bar" (friendly-name) is needed in this picture at all.  Is it
-because you may want to fire more than one command for pre-commit
-event?  IOW,
+-- 8< --
 
-	[hook "bar"]
-		command = bar1.sh
-		command = bar2.sh
-		event = pre-commit
+diff --git a/apply.c b/apply.c
+index 44bc31d6eb..cfb5a00356 100644
+--- a/apply.c
++++ b/apply.c
+@@ -1891,15 +1891,15 @@ static struct fragment *parse_binary_hunk(struct apply_state *state,
+ 	 * to 1-26 bytes, and 'a'-'z' corresponds to 27-52 bytes.
+ 	 */
+ 	int llen, used;
+-	unsigned long size = *sz_p;
+ 	char *buffer = *buf_p;
++	char *end = *buf_p + *sz_p;
+ 	int patch_method;
+ 	unsigned long origlen;
+ 	char *data = NULL;
+ 	int hunk_size = 0;
+ 	struct fragment *frag;
+ 
+-	llen = linelen(buffer, size);
++	llen = linelen(buffer, end - buffer);
+ 	used = llen;
+ 
+ 	*status_p = 0;
+@@ -1919,13 +1919,12 @@ static struct fragment *parse_binary_hunk(struct apply_state *state,
+ 	buffer += llen;
+ 	while (1) {
+ 		int byte_length, max_byte_length, newsize;
+-		llen = linelen(buffer, size);
++		llen = linelen(buffer, end - buffer);
+ 		used += llen;
+ 		state->linenr++;
+ 		if (llen == 1) {
+ 			/* consume the blank line */
+ 			buffer++;
+-			size--;
+ 			break;
+ 		}
+ 		/*
+@@ -1955,7 +1954,6 @@ static struct fragment *parse_binary_hunk(struct apply_state *state,
+ 			goto corrupt;
+ 		hunk_size = newsize;
+ 		buffer += llen;
+-		size -= llen;
+ 	}
+ 
+ 	CALLOC_ARRAY(frag, 1);
+@@ -1966,7 +1964,7 @@ static struct fragment *parse_binary_hunk(struct apply_state *state,
+ 	free(data);
+ 	frag->size = origlen;
+ 	*buf_p = buffer;
+-	*sz_p = size;
++	*sz_p = end - buffer;
+ 	*used_p = used;
+ 	frag->binary_patch_method = patch_method;
+ 	return frag;
 
-is easier to manage with an extra level of redirection?  I doubt it
-as 
-
-	[hook "pre-commit"]
-		command = bar1.sh
-		command = bar2.sh
-
-would be equally expressive and shorter.  Or would it help use case
-for multiple "friendly-name" to refer to the same "event", e.g.
-
-	[hook "xyzzy"]
-		event = pre-commit
-		command = xyzzy1
-
-	[hook "frotz"]
-		event = pre-commit
-                command = frotz1
-                command = frotz2
-
-or something?  I am not sure if this gives us useful extra
-flexibility, and if so, the extra flexibility helps us more than it
-confuses us.
-
-And moving the "event" to the second level in the configuration
-hierarchy, getting rid of "friendly-name" from the design, would not
-make this example unworkable, either:
-
->   $ git hook run
->   # Runs ~/bar.sh
->   # Runs .git/hooks/pre-commit
-
-Again, this is not an objection wrapped in a rhetorical question.
-It just is that I do not see how the extra level of redirection
-helps us.
-
-> diff --git a/Documentation/config/hook.txt b/Documentation/config/hook.txt
-> index 96d3d6572c..a97b980cca 100644
-> --- a/Documentation/config/hook.txt
-> +++ b/Documentation/config/hook.txt
-> @@ -1,3 +1,8 @@
-> +hook.<command>.command::
-> +	A command to execute during the <command> hook event. This can be an
-> +	executable on your device, a oneliner for your shell, or the name of a
-> +	hookcmd. See linkgit:git-hook[1].
-
-Please make sure you use the terminology consistently.  If the
-second level is "friendly name", hook.<name>.command should be
-described, instead of hook.<command>.command.
-
-Also, to help those who are familiar with the current Git from their
-use in the past 10 years or so, giving an example name from the
-current system may help, e.g. when describing hook.<name>.event,
-you may want to say the values are things like "pre-commit",
-"receive", etc.
-
-> +This command parses the default configuration files for pairs of configs like
-> +so:
-> +
-> +  [hook "linter"]
-> +    event = pre-commit
-> +    command = ~/bin/linter --c
-
-The above addition of .command should also have hook.<name>.event
-next to it, no?
-
-> +Conmmands are run in the order Git encounters their associated
-
-"Conmmands -> Commands", I would think.
-
-> +`hook.<name>.event` configs during the configuration parse (see
-> +linkgit:git-config[1]).
-
-Here you use <name>, which should be matched by the description in
-the first hunk of the patch to this file.
-
-> +In general, when instructions suggest adding a script to
-> +`.git/hooks/<hook-event>`, you can specify it in the config instead by running
-> +`git config --add hook.<some-name>.command <path-to-script> && git config --add
-> +hook.<some-name>.event <hook-event>` - this way you can share the script between
-> +multiple repos. That is, `cp ~/my-script.sh ~/project/.git/hooks/pre-commit`
-> +would become `git config --add hook.my-script.command ~/my-script.sh && git
-> +config --add hook.my-script.event pre-commit`.
-
-One repository may use a friendly name "xyzzy" while the other may
-use "frotz" to group the hooks that trigger upon "pre-commit" event,
-but unless one of the repositories change the friendly name to
-match, they cannot share these configurations, no?  It seems that an
-extra level of indirection is hindering sharing, rather than
-helping.
-
-> diff --git a/builtin/hook.c b/builtin/hook.c
-> index 3aa65dd791..ea49dc4ef6 100644
-> --- a/builtin/hook.c
-> +++ b/builtin/hook.c
-> @@ -49,7 +49,7 @@ static int list(int argc, const char **argv, const char *prefix)
->  	head = hook_list(hookname, 1);
->  
->  	if (list_empty(head)) {
-> -		printf(_("no commands configured for hook '%s'\n"),
-> +		printf(_("no hooks configured for event '%s'\n"),
->  		       hookname);
-> ...
-> @@ -58,7 +58,8 @@ static int list(int argc, const char **argv, const char *prefix)
->  		struct hook *item = list_entry(pos, struct hook, list);
->  		item = list_entry(pos, struct hook, list);
->  		if (item)
-> -			printf("%s\n", item->hook_path);
-> +			printf("%s\n", item->name ? item->name
-> +						  : _("hook from hookdir"));
->  	}
-
-I won't comment on this part as my comments on earlier patches would
-probably have butchered the preimage already for this change to
-survive intact ;-)
+-- 
+Felipe Contreras
