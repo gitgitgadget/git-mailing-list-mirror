@@ -2,155 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B48F6C4338F
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 13:42:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A5CBC4338F
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 16:10:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 89ED961077
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 13:42:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA92760C40
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 16:10:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232172AbhHLNmn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Aug 2021 09:42:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37370 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237268AbhHLNmj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Aug 2021 09:42:39 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EB7DC0613D9
-        for <git@vger.kernel.org>; Thu, 12 Aug 2021 06:42:14 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id f9-20020a05600c1549b029025b0f5d8c6cso7167809wmg.4
-        for <git@vger.kernel.org>; Thu, 12 Aug 2021 06:42:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=AMG6fvjM/2onHw+M//EEDZvB0BLYtkm6od9UeDwPgkk=;
-        b=E+JcHnNiuD+e7abfNrH16yA6kcMr1V+uO1cvzifJgkmEsuq26owKenYkqnMKBlFOP5
-         HGwwapGNaiy0hO0+EoQDUeenzPnpQzHn8Mhdq+BOLVjJQ6YHD8W8x6QwvRMxGX03u+IK
-         0U68iGyJ9w5P4ddMXaW8pvXQjiN/GecLV6jY2p7kJ9+Pv9G4SPPBP5IKfcAUt2rlHxr4
-         fcZARfVGiQ+0/hxLuKHb9bi6iiy8sXETfvCKTc7tl7eMCrmstkj5EtG6ZX+/q5H1a1Z3
-         7jIR0CcjyfHnd8XZbB8NrRRRRjd8f0sZJWWUke37xAATgQV2/XKNZzw8Bo4Xjolcd/ZR
-         yfGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=AMG6fvjM/2onHw+M//EEDZvB0BLYtkm6od9UeDwPgkk=;
-        b=S8A2+1Iv4mxa3rslx8ARQnNJR+zvTX7jcJ9TTrF+Csh2vivkVRq8c2MyCepD1LQ92N
-         3NQ7+7x18FyhM8m2aJCxzMkY044y3r6cUZGOIZUb5bWkS+yx4q3SnNNyeolihItOmTgb
-         EsZnc4ikyHkz5kAzwVTp/mIyBb44xKaDNLqgBUtHEmL3mzfpx44kqS+v61/GLb0AIQOL
-         klpA66h9b9MXwVDPNl+UjqRAsjLulPtsXE6qmQ6c4aa8N0BO84qNlgiT6JA2BFOvoIS+
-         6+/fJEqYVxarhfhUGWdKqCl08QR1d06JM3btZWtAeXMLLqlc5iNdrBc3IBrdEOLNr2tA
-         rhCQ==
-X-Gm-Message-State: AOAM530jLZX2v2L2lDrUUIAaIBt+kDgfYqjhV8Q5oHUGRDo8+qJQW3AG
-        +5N3Qs12U/VJ/d6W2IEYEKyoHx7aTGM=
-X-Google-Smtp-Source: ABdhPJyPnE2wKBMazkKezNsOs9aw5cHauqa9qWIipPRpVn1ZBiabYiu94zBIBBGNpOTime656+0ZVw==
-X-Received: by 2002:a1c:f315:: with SMTP id q21mr4125473wmq.76.1628775733081;
-        Thu, 12 Aug 2021 06:42:13 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m39sm2607566wms.10.2021.08.12.06.42.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Aug 2021 06:42:12 -0700 (PDT)
-Message-Id: <028c9dfc460b6c00bf481017a07a2a6d37780a76.1628775729.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1013.v2.git.1628775729.gitgitgadget@gmail.com>
-References: <pull.1013.git.1628587917.gitgitgadget@gmail.com>
-        <pull.1013.v2.git.1628775729.gitgitgadget@gmail.com>
-From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 12 Aug 2021 13:42:09 +0000
-Subject: [PATCH v2 3/3] rebase --continue: remove .git/MERGE_MSG
-Fcc:    Sent
+        id S231327AbhHLQLW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Aug 2021 12:11:22 -0400
+Received: from mout.gmx.net ([212.227.17.22]:57159 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229791AbhHLQLP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Aug 2021 12:11:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1628784648;
+        bh=qHJOFfiBe0zDKgzu0GnH9teUfFbdO/5ygWXYV0/NKUU=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=DrKYURbaO5Fd6P7VZWUarTWKoCn7XYw3enlNdzBCZc2PT4M8jsY+n2emTJxAZsUK0
+         LjC6fHs9N7OmYeZTMcwZPOHBvsRRLnJ3Ey3U97OvApGj5mSaD32XaMBlYkDozCseF0
+         x/aEU3ESNZ8PcM+0kf27W0QUb0887GQwY3GSvHHo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from
+ fv-az130-550.jopw5mwjxage1n2fsbb4uktgcg.xx.internal.cloudapp.net
+ ([13.77.152.230]) by mail.gmx.net (mrgmx104 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1Mw9QC-1n3z480mCS-00s5BU; Thu, 12 Aug 2021 18:10:48 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.33.0-rc2
+Date:   Thu, 12 Aug 2021 16:10:44 +0000
+Message-Id: <20210812161044.4739-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.32.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+Fcc:    Sent
+X-Provags-ID: V03:K1:gQQgsuxW7KBdbOCrLsKCl18/ayI8sjPbUL8r3DmTW8Tsjv2H0GV
+ jmPIyS44E+tn1Nat5OIj9xUXORcm3hvJ3Sd43QIe7tCIVlNyEYorMHnXBw0MIAsYEp9wEjt
+ l7v1TFCrInFsdXkOeb1iWTm0iE19hkvUBWeA7Zd9uAX0+CX79EDY9yif8oDY0TaCtgXfNNM
+ 7N8m5vhEfzdEmeUuOdBPg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:lXPiopT1tBo=:0wn4BdPdGXUdauZCLP3bpM
+ 9xdEu7KWCcmC9QpB/eULbDzZN/j4qefF/SpI/NOB3+eT/wT7KuNDds+pjfwsG/noOP2c7lW5l
+ TdgV3CAl1GwY8+8y7SwPIX+oEzMefj+cYz5e+69Qm5TDErpRyeyvb++7RxX2uYT9kuQnb0cxX
+ C9dOCK6Nbj/1jK4TGQGVqxGASDVOlL89qYuBBAZsx5Ho2EYoc0OtMtyjNkmX9k9MM9p6zqxAu
+ khJjP4ZmjK37hSRn4YeRsXa6e1qLhWHMv0IqfOjYcP1TF9nLVe6v+FxLzAoa+UxAvCKtc9+Km
+ C29mGgACMl4rYm9SW/h2vv0PTABSn16FHEDW/VfqlhgWu4U89S7Z6kVzmYXGbcYmkNute580q
+ 76FSff/lyx/W+RkL/mMbEeWNOwIxmOFkQvImrID2OpZBBRd7bSstm+tJikniPpNPTOse5nNbC
+ 1On11nYw5QwQw567yl4q7fxq674dxUksYpvfzNnTr5yB5Tc+uWv5vQJ9ebsqUw5frbC6ernh1
+ gqksmTBbwELTJIKW7ZQwoPnfx61giPwfAkdWkQuANHveo+AN0+LJziZSEMoTsVfgqDsqOoxY9
+ o1eb79dUXCdIJYFp/yQLIVLPyT/pTySFLZwC155Ij2tMsApAeUcN1y1jpN+XgroSv2pIHoT7I
+ CeQA459AbyOvqca3rlLDfBLhFV5Bv2eGl9m4zMxcQqEcESAJcF2zdIDWI/pQf5xqxl55OU1Bj
+ MJC9Z+sBWwGng1TxLbi2YC3YbfNivMSN2PXmxTxF7UxAD4JouPsIegF0yZxkyEKk+uZm88GhZ
+ o5xKcQwyobSw59kx0i280x07rDpen/kjxaU+Y4sYGiRmiO8sAytbUgDin63mjN9sREH1AxSy2
+ oWXO//j1W3aGAdmAwhOHqVjCgHwpTHyxPJ4BbfMf4dTxrotINSd4p9c3X8HkuZh1trq4R3UfH
+ mweziRq6xp4YVd6QDkrbW1IOvnDDgyS9dqP/lj3GQJtWr7M5hUGLnMadKCCFRE+j32CuC6OdD
+ 5Y9MUiKKLm8TVmqtCkX5vgFLDCymTmpnWtDJyF/S0lyUvXjMAnSgBVtF2K+nDyRO69uZufUHn
+ us7afPae5NZ81g18DCyHlDjv1OTROzw4X/pFXl3Z4/Y4Uck5z1QA4ePRw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Dear Git users,
 
-If the user skips the final commit by removing all the changes from
-the index and worktree with 'git restore' (or read-tree) and then runs
-'git rebase --continue' .git/MERGE_MSG is left behind. This will seed
-the commit message the next time the user commits which is not what we
-want to happen.
+I hereby announce that Git for Windows 2.33.0-rc2 is available from:
 
-Reported-by: Victor Gambier <vgambier@excilys.com>
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- sequencer.c                |  3 +++
- t/t3403-rebase-skip.sh     |  8 ++++++++
- t/t3418-rebase-continue.sh | 10 ++++++++++
- 3 files changed, 21 insertions(+)
+    https://github.com/git-for-windows/git/releases/tag/v2.33.0-rc2.windows.1
 
-diff --git a/sequencer.c b/sequencer.c
-index 7f07cd00f3f..52c7b461179 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4716,6 +4716,9 @@ static int commit_staged_changes(struct repository *r,
- 		    refs_delete_ref(get_main_ref_store(r), "",
- 				    "CHERRY_PICK_HEAD", NULL, 0))
- 			return error(_("could not remove CHERRY_PICK_HEAD"));
-+		if (unlink(git_path_merge_msg(r)) && errno != ENOENT)
-+			return error_errno(_("could not remove '%s'"),
-+					   git_path_merge_msg(r));
- 		if (!final_fixup)
- 			return 0;
- 	}
-diff --git a/t/t3403-rebase-skip.sh b/t/t3403-rebase-skip.sh
-index a44e68d0ffb..f6e48644978 100755
---- a/t/t3403-rebase-skip.sh
-+++ b/t/t3403-rebase-skip.sh
-@@ -20,6 +20,7 @@ test_expect_success setup '
- 	git add hello &&
- 	git commit -m "hello" &&
- 	git branch skip-reference &&
-+	git tag hello &&
- 
- 	echo world >> hello &&
- 	git commit -a -m "hello world" &&
-@@ -96,6 +97,13 @@ test_expect_success 'moved back to branch correctly' '
- 
- test_debug 'gitk --all & sleep 1'
- 
-+test_expect_success 'skipping final pick removes .git/MERGE_MSG' '
-+	test_must_fail git rebase --onto hello reverted-goodbye^ \
-+		reverted-goodbye &&
-+	git rebase --skip &&
-+	test_path_is_missing .git/MERGE_MSG
-+'
-+
- test_expect_success 'correct advice upon picking empty commit' '
- 	test_when_finished "git rebase --abort" &&
- 	test_must_fail git rebase -i --onto goodbye \
-diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-index bda5e5db802..738fbae9b29 100755
---- a/t/t3418-rebase-continue.sh
-+++ b/t/t3418-rebase-continue.sh
-@@ -31,6 +31,16 @@ test_expect_success 'merge based rebase --continue with works with touched file'
- 	git rebase --continue
- '
- 
-+test_expect_success 'merge based rebase --continue removes .git/MERGE_MSG' '
-+	git checkout -f --detach topic &&
-+
-+	test_must_fail git rebase --onto main HEAD^ &&
-+	git read-tree --reset -u HEAD &&
-+	test_path_is_file .git/MERGE_MSG &&
-+	git rebase --continue &&
-+	test_path_is_missing .git/MERGE_MSG
-+'
-+
- test_expect_success 'apply based rebase --continue works with touched file' '
- 	rm -fr .git/rebase-* &&
- 	git reset --hard &&
--- 
-gitgitgadget
+Changes since Git for Windows v2.32.0(2) (July 6th 2021)
+
+New Features
+
+  * Comes with Git v2.33.0-rc2.
+  * Comes with Perl v5.34.0 (and some updated Perl modules).
+  * It is now possible to ask Git for Windows to use an SSH found on
+    the PATH instead of its bundled OpenSSH executable.
+  * Comes with Git Credential Manager Core v2.0.498.54650.
+  * The experimental FSMonitor patches were replaced with a newer
+    version.
+
+Bug Fixes
+
+  * The installer no longer shows an error dialog when upgrading while
+    the Windows Terminal Profile option is checked.
+  * Interaction with the git repo tool was improved.
+
+Git-2.33.0-rc2-64-bit.exe | aa71ae664f4ce9221ef1102c8499552d9bc59c14680090e208142fb18c7a4093
+Git-2.33.0-rc2-32-bit.exe | 8d61c7d002f19ac47d89abd3ad572af61aff26c8fc97f2957ce336b0e5b8e3f5
+PortableGit-2.33.0-rc2-64-bit.7z.exe | 1b12bbfdf3dcbe4d464fab3026d08abd9c4309024b1ffc6343821ee612563707
+PortableGit-2.33.0-rc2-32-bit.7z.exe | b4b8f64fec11071e85f73b34c4c6fb057995f8a9bac2945d48f7690067cd9af6
+MinGit-2.33.0-rc2-64-bit.zip | 2749791cd2077773a44f3b8cba9fb90a73ec4f20893b1bb633af2bff2553028b
+MinGit-2.33.0-rc2-32-bit.zip | b613c4cbb27dff4055431bc5aba5dcf3c7c4cdec7f9cd09ab1592d5355ac483f
+MinGit-2.33.0-rc2-busybox-64-bit.zip | 17569916e3140bbee644461988f97641b90f2585aa9218a07a8f285f617ba5bf
+MinGit-2.33.0-rc2-busybox-32-bit.zip | 0360379ce1d6b52fac812f28e07884cf3c7c330bc288a0ecaf7da1ad8192a74b
+Git-2.33.0-rc2-64-bit.tar.bz2 | 6860e4e3061498b6c6a75d1a0055a0f99856b437745c594999f0ea2b2cf8e9be
+Git-2.33.0-rc2-32-bit.tar.bz2 | 325b37ff1f8021ccb78b5ce07679c01677689bf8044d17370707f933ebf747a2
+
+Ciao,
+Johannes
