@@ -2,161 +2,251 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B5C4C4338F
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 20:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CC0DC4338F
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 21:02:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10A6660C41
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 20:56:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B97360F35
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 21:02:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234217AbhHLU4r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Aug 2021 16:56:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53548 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232611AbhHLU4q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Aug 2021 16:56:46 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2591C061756
-        for <git@vger.kernel.org>; Thu, 12 Aug 2021 13:56:20 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id h11so12583538oie.0
-        for <git@vger.kernel.org>; Thu, 12 Aug 2021 13:56:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=RhXhORa/y7Y+hOqsoKMRIzxeOAIs2TGVa5OeL2ZDGLw=;
-        b=Caw8RgLz+b9WQOil2le96trFjio5ccgvw3jrwEdZ5aGMKZmj2DZLpxbONykNzEC+7P
-         FlhakByvJ0Z6IT6nMR8c8QmtV8KYk9GQev4ZHq34KpIcknodqnJgT+Y4ggyiFnuXBivl
-         nkWQ18492UsZKu22J6QItze1oPYf7C5XTgdDYBxekOURTQddLq5oxZuZf6SYLqEGu19U
-         FJAsGGKLDyZbeE01/dFZGABXYBNug4n8rpBj3tJJ725iQq0lMPoPO8Mo8yprsRR5v9j8
-         JZLc2i6x0GBXzwK1B7t57uqFJd1NlIdUavRaZx8rAnn8TEbIpDNLV3ii2GhpE7wTofr9
-         8kfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=RhXhORa/y7Y+hOqsoKMRIzxeOAIs2TGVa5OeL2ZDGLw=;
-        b=ewNp79rKpa8K0jgkyv21JqhdYGCrAwc3cNPaHofmMQixkkl5//Fso5Mb0SS3WeDQAj
-         owrkiM0mG4iZH6pNfwBljtNHHuDbEdCZHr7N6CtlQZzhW+Jym4t7jsECg1PVXg6Trkfk
-         t8L4lYlnMcQ4WSbGGvDCvdLrqZExLjnK06miAQZE7Ryl36UpNKxfCMQOzgxFpY14Ez9/
-         5PHmVOqGLpoF6908GpIjmoQKKPm32xoEyRLN489X3it8BER6t+Vhvz34W5XvscduQDCt
-         8MFTri5BvFJ3xtXP61pvduxeTWGEqS7P++4/CjvdF0aaW9ZneafcjoY4ihPQtsp6ToJc
-         M5nQ==
-X-Gm-Message-State: AOAM532P86v0PAS6lDsFUpM7yEd+Mi9lk3nGgXkIpX1Fip0rIzzrnujj
-        kQxXXc1HWPEZa0gKSyAvvg8=
-X-Google-Smtp-Source: ABdhPJz3ICQHKMXo8iA5jKDKcpYZHqpJauB11APDkLMGxwJ+vY7np4Y+CtHXEkIb6matIzObG8+65g==
-X-Received: by 2002:aca:de8a:: with SMTP id v132mr1771869oig.74.1628801780070;
-        Thu, 12 Aug 2021 13:56:20 -0700 (PDT)
-Received: from localhost (fixed-187-189-69-1.totalplay.net. [187.189.69.1])
-        by smtp.gmail.com with ESMTPSA id g5sm429788ooq.17.2021.08.12.13.56.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Aug 2021 13:56:19 -0700 (PDT)
-Date:   Thu, 12 Aug 2021 15:56:08 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     git@vger.kernel.org, Xingman Chen <xichixingman@gmail.com>
-Message-ID: <61158ae83406a_a3522086a@natae.notmuch>
-In-Reply-To: <CAPUEsphWN_-BWyfF9mnPhL56RSnmPZfmvh_QwhjoAb3xin8V-w@mail.gmail.com>
-References: <YRHQAFDXs5xvyDND@coredump.intra.peff.net>
- <CAPUEsphWN_-BWyfF9mnPhL56RSnmPZfmvh_QwhjoAb3xin8V-w@mail.gmail.com>
-Subject: Re: [PATCH] apply: keep buffer/size pair in sync when parsing binary
- hunks
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S233884AbhHLVCy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Aug 2021 17:02:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45982 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229655AbhHLVCx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Aug 2021 17:02:53 -0400
+Received: (qmail 24980 invoked by uid 109); 12 Aug 2021 21:02:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 12 Aug 2021 21:02:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25515 invoked by uid 111); 12 Aug 2021 21:02:28 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Aug 2021 17:02:28 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 12 Aug 2021 17:02:26 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH v3 18/25] t5326: test multi-pack bitmap behavior
+Message-ID: <YRWMYg2rvv7HjGE+@coredump.intra.peff.net>
+References: <cover.1617991824.git.me@ttaylorr.com>
+ <cover.1627420428.git.me@ttaylorr.com>
+ <3258ccfc1cc99038e43a37bd2d53c9d30a4f22ae.1627420428.git.me@ttaylorr.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <3258ccfc1cc99038e43a37bd2d53c9d30a4f22ae.1627420428.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Arenas wrote:
-> On Mon, Aug 9, 2021 at 9:24 PM Jeff King <peff@peff.net> wrote:
-> > diff --git a/apply.c b/apply.c
-> > index 44bc31d6eb..4ed4b27169 100644
-> > --- a/apply.c
-> > +++ b/apply.c
-> > @@ -1917,6 +1917,7 @@ static struct fragment *parse_binary_hunk(struct apply_state *state,
-> >
-> >         state->linenr++;
-> >         buffer += llen;
-> > +       size -= llen;
-> >         while (1) {
-> 
-> Ironically, I was looking at this code because of your previous
-> patch[1] that you suggested was ugly
-> and because I was going to suggest moving from a for to a while loop
-> to avoid the overly long line.
-> 
-> It is interesting to note though, that having a for (and obviously
-> removing the last 2 lines from the loop) with a comma separated
-> increment instead would
-> have made this issue IMHO more obvious, and also why I decided against
-> that; would it be a good idea to fix that as well?
+On Tue, Jul 27, 2021 at 05:20:10PM -0400, Taylor Blau wrote:
 
-What's the point in updating size when it can be calculated? Just add a
-pointer to the end of the buffer, and then size is the difference
-between the buffer which is moving, and the end pointer which is fixed:
+> diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
+> new file mode 100755
+> index 0000000000..c1b7d633e2
+> --- /dev/null
+> +++ b/t/t5326-multi-pack-bitmaps.sh
+> @@ -0,0 +1,277 @@
+> +#!/bin/sh
+> +
+> +test_description='exercise basic multi-pack bitmap functionality'
+> +. ./test-lib.sh
+> +. "${TEST_DIRECTORY}/lib-bitmap.sh"
+> +
+> +# We'll be writing our own midx and bitmaps, so avoid getting confused by the
+> +# automatic ones.
+> +GIT_TEST_MULTI_PACK_INDEX=0
+> +GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
 
--- 8< --
+This latter variable doesn't do anything at this point in the series.
+Probably not a big deal (it is simply a noop until then), but if it's
+not hard, it may make sense to bump the "respect ... WRITE_BITMAP" patch
+earlier in the series.
 
-diff --git a/apply.c b/apply.c
-index 44bc31d6eb..cfb5a00356 100644
---- a/apply.c
-+++ b/apply.c
-@@ -1891,15 +1891,15 @@ static struct fragment *parse_binary_hunk(struct apply_state *state,
- 	 * to 1-26 bytes, and 'a'-'z' corresponds to 27-52 bytes.
- 	 */
- 	int llen, used;
--	unsigned long size = *sz_p;
- 	char *buffer = *buf_p;
-+	char *end = *buf_p + *sz_p;
- 	int patch_method;
- 	unsigned long origlen;
- 	char *data = NULL;
- 	int hunk_size = 0;
- 	struct fragment *frag;
- 
--	llen = linelen(buffer, size);
-+	llen = linelen(buffer, end - buffer);
- 	used = llen;
- 
- 	*status_p = 0;
-@@ -1919,13 +1919,12 @@ static struct fragment *parse_binary_hunk(struct apply_state *state,
- 	buffer += llen;
- 	while (1) {
- 		int byte_length, max_byte_length, newsize;
--		llen = linelen(buffer, size);
-+		llen = linelen(buffer, end - buffer);
- 		used += llen;
- 		state->linenr++;
- 		if (llen == 1) {
- 			/* consume the blank line */
- 			buffer++;
--			size--;
- 			break;
- 		}
- 		/*
-@@ -1955,7 +1954,6 @@ static struct fragment *parse_binary_hunk(struct apply_state *state,
- 			goto corrupt;
- 		hunk_size = newsize;
- 		buffer += llen;
--		size -= llen;
- 	}
- 
- 	CALLOC_ARRAY(frag, 1);
-@@ -1966,7 +1964,7 @@ static struct fragment *parse_binary_hunk(struct apply_state *state,
- 	free(data);
- 	frag->size = origlen;
- 	*buf_p = buffer;
--	*sz_p = size;
-+	*sz_p = end - buffer;
- 	*used_p = used;
- 	frag->binary_patch_method = patch_method;
- 	return frag;
+> +test_expect_success 'create single-pack midx with bitmaps' '
+> +	git repack -ad &&
+> +	git multi-pack-index write --bitmap &&
+> +	test_path_is_file $midx &&
+> +	test_path_is_file $midx-$(midx_checksum $objdir).bitmap
+> +'
+> +
+> +basic_bitmap_tests
 
--- 
-Felipe Contreras
+We can't use a midx bitmap without a .rev file. The basic_bitmap_tests
+function covers that, but I wonder if we should also check:
+
+  test_path_is_file $midx-$(midx_checksum $objdir).rev
+
+in that first test.
+
+> +test_expect_success 'create new additional packs' '
+> +	for i in $(test_seq 1 16)
+> +	do
+> +		test_commit "$i" &&
+> +		git repack -d
+> +	done &&
+
+This loop needs an "|| return 1" inside to catch &&-chain problems (not
+that we expect "repack -d" to fail, but just on principle).
+
+> +	git checkout -b other2 HEAD~8 &&
+> +	for i in $(test_seq 1 8)
+> +	do
+> +		test_commit "side-$i" &&
+> +		git repack -d
+> +	done &&
+
+Ditto here.
+
+> +test_expect_success 'create multi-pack midx with bitmaps' '
+> +	git multi-pack-index write --bitmap &&
+> +
+> +	ls $objdir/pack/pack-*.pack >packs &&
+> +	test_line_count = 25 packs &&
+> +
+> +	test_path_is_file $midx &&
+> +	test_path_is_file $midx-$(midx_checksum $objdir).bitmap
+> +'
+
+Possible spot for checking the .rev file again (though really, it is
+belt-and-suspenders at this point).
+
+> +basic_bitmap_tests
+
+I love how the earlier refactoring made it easy to test the single- and
+multi-pack cases thoroughly.
+
+> +test_expect_success '--no-bitmap is respected when bitmaps exist' '
+> +	git multi-pack-index write --bitmap &&
+> +
+> +	test_commit respect--no-bitmap &&
+> +	GIT_TEST_MULTI_PACK_INDEX=0 git repack -d &&
+
+Do we need to set this env variable? We've already set it to 0 at the
+top of the script.
+
+> +	test_path_is_file $midx &&
+> +	test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
+> +
+> +	git multi-pack-index write --no-bitmap &&
+> +
+> +	test_path_is_file $midx &&
+> +	test_path_is_missing $midx-$(midx_checksum $objdir).bitmap
+> +'
+
+OK, so we expect "--no-bitmap" to drop the bitmap (just like it does for
+a regular pack bitmap). Makes sense. We probably should check:
+
+  test_path_is_missing $midx-$(midx_checksum $objdir).rev
+
+here, too (unlike the other spots, it isn't redundant; we could leave a
+stale file around and likely nobody would notice).
+
+> +test_expect_success 'setup midx with base from later pack' '
+> +	# Write a and b so that "a" is a delta on top of base "b", since Git
+> +	# prefers to delete contents out of a base rather than add to a shorter
+> +	# object.
+> +	test_seq 1 128 >a &&
+> +	test_seq 1 130 >b &&
+> +
+> +	git add a b &&
+> +	git commit -m "initial commit" &&
+> +
+> +	a=$(git rev-parse HEAD:a) &&
+> +	b=$(git rev-parse HEAD:b) &&
+> +
+> +	# In the first pack, "a" is stored as a delta to "b".
+> +	p1=$(git pack-objects .git/objects/pack/pack <<-EOF
+> +	$a
+> +	$b
+> +	EOF
+> +	) &&
+
+This is brittle with respect to Git's delta heuristics, of course, but I
+don't think there's a better way to do it with pack-objects. And this is
+not the first test to make similar assumptions. I think you can
+construct a known set of deltas using lib-pack.sh. It may get a bit
+complicated. As an alternative, maybe it makes sense to confirm that the
+deltas are set up as expected? You can do it with cat-file
+--batch-check.
+
+> +test_expect_success 'removing a MIDX clears stale bitmaps' '
+> +	rm -fr repo &&
+> +	git init repo &&
+> +	test_when_finished "rm -fr repo" &&
+> +	(
+> +		cd repo &&
+> +		test_commit base &&
+> +		git repack &&
+> +		git multi-pack-index write --bitmap &&
+> +
+> +		# Write a MIDX and bitmap; remove the MIDX but leave the bitmap.
+> +		stale_bitmap=$midx-$(midx_checksum $objdir).bitmap &&
+> +		rm $midx &&
+> +
+> +		# Then write a new MIDX.
+> +		test_commit new &&
+> +		git repack &&
+> +		git multi-pack-index write --bitmap &&
+> +
+> +		test_path_is_file $midx &&
+> +		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
+> +		test_path_is_missing $stale_bitmap
+> +	)
+
+Another spot where we might want to check that the stale .rev file has
+gone away (and optionally that the new one was written; I haven't noted
+all of those, though).
+
+> +test_expect_success 'pack.preferBitmapTips' '
+> +	git init repo &&
+> +	test_when_finished "rm -fr repo" &&
+> +	(
+> +		cd repo &&
+> +
+> +		test_commit_bulk --message="%s" 103 &&
+> +
+> +		git log --format="%H" >commits.raw &&
+> +		sort <commits.raw >commits &&
+> +
+> +		git log --format="create refs/tags/%s %H" HEAD >refs &&
+> +		git update-ref --stdin <refs &&
+> +
+> +		git multi-pack-index write --bitmap &&
+> +		test_path_is_file $midx &&
+> +		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
+> +
+> +		test-tool bitmap list-commits | sort >bitmaps &&
+> +		comm -13 bitmaps commits >before &&
+> +		test_line_count = 1 before &&
+> +
+> +		perl -ne "printf(\"create refs/tags/include/%d \", $.); print" \
+> +			<before | git update-ref --stdin &&
+> +
+> +		rm -fr $midx-$(midx_checksum $objdir).bitmap &&
+> +		rm -fr $midx-$(midx_checksum $objdir).rev &&
+> +		rm -fr $midx &&
+> +
+> +		git -c pack.preferBitmapTips=refs/tags/include \
+> +			multi-pack-index write --bitmap &&
+> +		test-tool bitmap list-commits | sort >bitmaps &&
+> +		comm -13 bitmaps commits >after &&
+> +
+> +		! test_cmp before after
+> +	)
+> +'
+
+OK, so we are not depending on any _specific_ commits to get bitmapped,
+but just confirming that we have some impact. That may be the best we
+can do given that we are subject to the bitmap code's heuristics (and
+anyway, this is exactly what the pack version does).
+
+Any other parts of the patch that I didn't quote looked very good to me.
+I'm happy to have such a thorough set of tests.
+
+-Peff
