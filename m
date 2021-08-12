@@ -2,120 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 833A2C4338F
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 10:52:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74103C4338F
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 11:55:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4D41160EE2
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 10:52:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 51CC860FC4
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 11:55:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236285AbhHLKwi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Aug 2021 06:52:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54836 "EHLO
+        id S237098AbhHLL4C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Aug 2021 07:56:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235059AbhHLKwh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Aug 2021 06:52:37 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32D8AC061765
-        for <git@vger.kernel.org>; Thu, 12 Aug 2021 03:52:12 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id w13-20020a17090aea0db029017897a5f7bcso10049339pjy.5
-        for <git@vger.kernel.org>; Thu, 12 Aug 2021 03:52:12 -0700 (PDT)
+        with ESMTP id S235145AbhHLL4B (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Aug 2021 07:56:01 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A43CC061765
+        for <git@vger.kernel.org>; Thu, 12 Aug 2021 04:55:36 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id h13so7941313wrp.1
+        for <git@vger.kernel.org>; Thu, 12 Aug 2021 04:55:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=yoUfVuJdj5LXO/rn/qcgFR0RK0AWlwUJ+Ya5ByE5YJ4=;
-        b=sZeDDkq9pSR0vpBlo3kH6NMP0RhuWRf7zQPoWs3rHKCRdIQwADbd30uY8gc8RljJnY
-         c3U0yisKVpZ0T7/q/He9N2lmFw7wQ4R8FWrTbQpCoknJBjc2KJIdsmkq0DSwmxEinJNI
-         JNqdPb/yTXEdDYW+XRMgsO7Doj5zV0LUFIcztYcdSz8z6KnveYvhQUaK2TG14fTJoRvX
-         vonGkW8TLl+oBuJoCeURCz+VFB94Ua7xuQA6hzFGnEkANNRgTu9BmPfUY2sHfkkVpn8e
-         NCmqPIZKFM48TZhc2Syjn1EZJ3Z+AsJ0sFdQ3IrFIth8cQrPRNziebNtZGKOinZAu3t+
-         E37w==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=qqiiCZwwY3gXOfLGPSGN/pVYlXEZsq8DL6fN15wT31U=;
+        b=JdBORc1eme/Q+vjaqNZVjBwHxVXUh7LicRJNRcXMXeDJhjiABi8xjsqGlAYFAS9skZ
+         5YLwEm7dzO7snAqacfuOPXZOvUH50yJFkzNmJiUDyKyuhn4kw5GaqJ6KiUna2SSZJVey
+         MUzoYi/wkMbU7/ohbxRo2Q+ynL3wZhMkXRiUbe2unOApJz8aXgLRlquJ8h2xpbWpOY/f
+         hSkdDgemDeQO3M22tt5vK61wFbxPo1IdI2fx0FsAxJ5kFRQxNDT0RNJllpuCtUWjBXW8
+         VPpmXVMioyNI2yo7LAb4Hu93fb3kHpHCrwDGxAc+PASaMIOM1unoK1v2GK9o8J9E550B
+         5MAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=yoUfVuJdj5LXO/rn/qcgFR0RK0AWlwUJ+Ya5ByE5YJ4=;
-        b=VDl4q4uVJ8/K0rj43nyb4IKFG8bvWqlKGggmUuzIXA5NGGz/iM+4lc5fgxj9UJcIz+
-         yYoF7xBDkly/igpUV/TiGwYBfJQGTERUG4t1zkRytcKg+bJBLXHX3HvgGlCFv9F5q+v4
-         6sRByeaExvLv8CNDPJbGrpYHe2jE85hd1Tf442Ycv/2Gx11LBj7YpMBXLu8bjvll1MI/
-         la8CL95p8NRh0cLMxjr8OMxw79DulsmP4grTKFP1l0dw0c0yXqxnUf80fhTaCdqFfpTo
-         dtRPLffhrqM+cpxHqbUwDPZECLExKaXDRtvxnWATy9J7WnCIODxdveGZwlRYvuaB6WUx
-         6n1w==
-X-Gm-Message-State: AOAM531r9tCWpDr3YAXV+d/fM3exUdvJECae/Rkj4oduQx527SYx9R+U
-        Agt1WYv6DSFu30zBBfYzb7A=
-X-Google-Smtp-Source: ABdhPJx3FpkBTuH9ijkYxVJE5WHs3Co4rS7DAfL/VcoIJBHS+W4ivyIQdarSakQbvGG0eFw7UR3t8w==
-X-Received: by 2002:a17:90a:14e4:: with SMTP id k91mr12407759pja.3.1628765531621;
-        Thu, 12 Aug 2021 03:52:11 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-66.three.co.id. [180.214.233.66])
-        by smtp.gmail.com with ESMTPSA id b20sm2819882pfl.9.2021.08.12.03.52.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Aug 2021 03:52:11 -0700 (PDT)
-Subject: Re: [PATCH] help.c: help.autocorrect=prompt waits for user action
-To:     Azeem Bande-Ali via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     David Barr <b@rr-dav.id.au>,
-        Azeem Bande-Ali <A.BandeAli@gmail.com>,
-        Azeem Bande-Ali <me@azeemba.com>
-References: <pull.1012.git.1628640954160.gitgitgadget@gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <4f72cd3d-bcc7-a9b0-cc11-f0d7c5650365@gmail.com>
-Date:   Thu, 12 Aug 2021 17:52:08 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=qqiiCZwwY3gXOfLGPSGN/pVYlXEZsq8DL6fN15wT31U=;
+        b=RYR78oxTXg76j6NrSPssZyzaqVhSdB3qMPnl0KULYKNqvnKODin9UT34f+12ZlkrGD
+         mdrWjeHHnO/PGEi4XiQ1peT6j9xKCP1doBJ37IDARLPcQWbNHk34q1+Ru3RYeSkiqMTh
+         u7fFRIDj/mUJl7ff6KOMbbK+czs2R4M9kADMJ/lKlBXQYIk1O0Y39+sBJwsnP6YvXr1R
+         ybFHHd3vODDT9EgfeMPZ2mtHCN34W3w6OBLHyHv8K+YfV+PiTKHpux3OOhGqusIia5lx
+         mmoK6pgJ4xLLSfGv5SkJBTJpOdxE8InjmdKsYvt0qz5nPWY8rMX8BSNo0gOaBzdtmmTA
+         4TWw==
+X-Gm-Message-State: AOAM531fX8VODwAZxbQZWaDzwLFj75/07WJ2oTFqjV7whE75lIGRXIux
+        OpaqUTZWxs45Vc7eilMFKb7kKxovhOQ=
+X-Google-Smtp-Source: ABdhPJyK5o99yJb+soC6vrMRH+/PE+nE9kArVqqRLcNO2iF+oWRvqMmg0oKyz44u0E9+G4w0COz8NA==
+X-Received: by 2002:adf:f046:: with SMTP id t6mr3712923wro.266.1628769335225;
+        Thu, 12 Aug 2021 04:55:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j4sm2519571wmi.4.2021.08.12.04.55.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Aug 2021 04:55:34 -0700 (PDT)
+Message-Id: <pull.1014.v4.git.1628769334197.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1014.v3.git.1628755346354.gitgitgadget@gmail.com>
+References: <pull.1014.v3.git.1628755346354.gitgitgadget@gmail.com>
+From:   "Joel Klinghed via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 12 Aug 2021 11:55:33 +0000
+Subject: [PATCH v4] commit: restore --edit when combined with --fixup
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <pull.1012.git.1628640954160.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Joel Klinghed <the_jk@spawned.biz>,
+        Joel Klinghed <the_jk@spawned.biz>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/08/21 07.15, Azeem Bande-Ali via GitGitGadget wrote:
->   help.autoCorrect::
->   	If git detects typos and can identify exactly one valid command similar
-> -	to the error, git will automatically run the intended command after
-> -	waiting a duration of time defined by this configuration value in
-> -	deciseconds (0.1 sec).  If this value is 0, the suggested corrections
-> -	will be shown, but not executed. If it is a negative integer, or
-> -	"immediate", the suggested command
-> -	is run immediately. If "never", suggestions are not shown at all. The
-> -	default value is zero.
-> +	to the error, git will try to suggest the correct command or even
-> +	run the intended command.
-> +	If this config value is 0, then the suggested command will be shown.
-> +	If it is positive, the suggested command will automatically
-> +	run after waiting for that many deciseconds (0.1 sec).
-> +	If it is "immediate", the suggested command will be
-> +	run immediately.
-> +	If it is "prompt", then the user will be shown the
-> +	suggestion and will be prompted for confirmation before the command
-> +	is run.
-> +	If it is "never", then no suggestion will be shown and no command
-> +	will be run.
-> +	0 is the default value for this config.
+From: Joel Klinghed <the_jk@spawned.biz>
 
-I think it's better to use bullet lists, e.g.:
+Recent changes to --fixup, adding amend suboption, caused the
+--edit flag to be ignored as use_editor was always set to zero.
 
-```
-If git detects typos and ...
-<skip>
-... git will try to suggest the correct command or even run the intended 
-command. Possible values are:
-     - 0 (default): show the suggested command
-     - positive number: run the suggested command after specified 
-deciseconds (0.1 sec).
-     - "immediate": run the suggested command immediately
-     - "prompt": show the suggestion and prompt for confirmation to run 
-the command
-     - "never": don't show any suggestions nor run them
-```
+Restore edit_flag having higher priority than fixup_message when
+deciding the value of use_editor by only changing the default
+if edit_flag is not set.
 
+Signed-off-by: Joel Klinghed <the_jk@spawned.biz>
+---
+    commit: restore --edit when combined with --fixup
+    
+    Recent changes to --fixup, adding amend suboption, caused the --edit
+    flag to be ignored as use_editor was always set to zero.
+    
+    Restore edit_flag having higher priority than fixup_message when
+    deciding the value of use_editor by only changing the default if
+    edit_flag is not set.
+    
+    Changes since v1: Added test verifying that --fixup --edit brings up
+    editor.
+    
+    Changes since v2: Clarify if condition and use write_script helper in
+    test.
+    
+    Changes since v3: Simplify test.
+    
+    Signed-off-by: Joel Klinghed the_jk@spawned.biz
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1014%2Fthejk%2Ffixup_edit-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1014/thejk/fixup_edit-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1014
+
+Range-diff vs v3:
+
+ 1:  6bc5d8bbe61 ! 1:  0c0cb647e03 commit: restore --edit when combined with --fixup
+     @@ t/t7500-commit-template-squash-signoff.sh: test_expect_success 'commit --fixup -
+       '
+      +test_expect_success 'commit --fixup --edit' '
+      +	commit_for_rebase_autosquash_setup &&
+     -+	write_script e-append <<-\EOF &&
+     -+	sed -e "2a\\
+     -+something\\
+     -+extra" <"$1" >"$1-"
+     -+	mv "$1-" "$1"
+     -+	EOF
+     -+	EDITOR="./e-append" git commit --fixup HEAD~1 --edit &&
+     ++	EDITOR="printf \"something\nextra\" >>" git commit --fixup HEAD~1 --edit &&
+      +	commit_msg_is "fixup! target message subject linesomething
+      +extra"
+      +'
+
+
+ builtin/commit.c                          | 3 ++-
+ t/t7500-commit-template-squash-signoff.sh | 7 +++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 190d215d43b..560aecd21b1 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1333,7 +1333,8 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 		} else {
+ 			fixup_commit = fixup_message;
+ 			fixup_prefix = "fixup";
+-			use_editor = 0;
++			if (edit_flag < 0)
++				use_editor = 0;
+ 		}
+ 	}
+ 
+diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
+index 7d02f79c0de..811566bf847 100755
+--- a/t/t7500-commit-template-squash-signoff.sh
++++ b/t/t7500-commit-template-squash-signoff.sh
+@@ -281,6 +281,13 @@ test_expect_success 'commit --fixup -m"something" -m"extra"' '
+ 
+ extra"
+ '
++test_expect_success 'commit --fixup --edit' '
++	commit_for_rebase_autosquash_setup &&
++	EDITOR="printf \"something\nextra\" >>" git commit --fixup HEAD~1 --edit &&
++	commit_msg_is "fixup! target message subject linesomething
++extra"
++'
++
+ get_commit_msg () {
+ 	rev="$1" &&
+ 	git log -1 --pretty=format:"%B" "$rev"
+
+base-commit: ebf3c04b262aa27fbb97f8a0156c2347fecafafb
 -- 
-An old man doll... just what I always wanted! - Clara
+gitgitgadget
