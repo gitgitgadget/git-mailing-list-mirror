@@ -2,92 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF2EFC4338F
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 08:05:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 029A6C4338F
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 08:35:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A3EF160EB9
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 08:05:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D04366103A
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 08:35:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235124AbhHLIGS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Aug 2021 04:06:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44166 "EHLO
+        id S234880AbhHLIgE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Aug 2021 04:36:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235084AbhHLIGR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Aug 2021 04:06:17 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDCA9C061765
-        for <git@vger.kernel.org>; Thu, 12 Aug 2021 01:05:52 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id m24-20020a17090a7f98b0290178b1a81700so9453642pjl.4
-        for <git@vger.kernel.org>; Thu, 12 Aug 2021 01:05:52 -0700 (PDT)
+        with ESMTP id S231449AbhHLIgB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Aug 2021 04:36:01 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07B15C061765
+        for <git@vger.kernel.org>; Thu, 12 Aug 2021 01:35:37 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id n12so5691430plf.4
+        for <git@vger.kernel.org>; Thu, 12 Aug 2021 01:35:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7f3YPpmbCYt9Wo3ixGHIP4WTX6UNhc8rOclyzPgIukg=;
-        b=Verno5L8m3xNOTWIN6IyOiuUz+yiFaDf3e+yB6x8cmIBNkqSx1lnATlXUSk4+zlZgx
-         Y0CtvxcSNcRy8N8zPtKBuE8EW8IUSPtcNeBKw/n6i5ZYHUBuQlstFNOhjIy95kJp+9+3
-         O8u+kQDHhkEU16+mDAjGODqyyGA3EgxIZgALRAAg+ISlUXWpjOb+gmAMaXS/iXyGYIoK
-         MqcD2xY6b5CO/55YjC69Jjt5QjA7LEQYJkHlf5UADrasANW4d6l67mToJ4GTsA0uzpuC
-         JAAvZbwIiNN7h+hnMCDtltONbacJD7e0cidAdNmw58QaR5+pDMH4E6miqDT+HguMZONB
-         Qg3Q==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=a7M85WY/lkYrZiohUcujemDF/ap+wvgHunHsbsmFpTg=;
+        b=DWz0F/Ct864BPdg3F8htLDju4trNC6UlxS3Ghmhjb6otP2ZN7Aqp2UDjBPNANuGVtC
+         /+ICuLFtO6hoynrRTiwDdHLVkGtKg/GBb7nAp2Bwh4eFkRMWYquXtm/Dn5NZAkSTWj7e
+         F/0wJkHh7WUb2/KFeCX2ejkedQDLjhktbPDmp1hHvQbQ5GckvPKplcUU74UosJFNGuDG
+         Z3+J+hWO+Z1fSrLWbYqKS5CGIm9gq6GvaHGFXT1NArx79QxIIAKM2mB4aAZESkazl6tH
+         DMTMisN044vQ2LH7ZWt0ZRcEV27AwKnEAdb8SWajl08pfo9zyPvZE4ERlAMDLpAARUit
+         GCLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7f3YPpmbCYt9Wo3ixGHIP4WTX6UNhc8rOclyzPgIukg=;
-        b=JmbSXn862XK3kOXqrNs4Ht+IS3593u9e92cINPk9eUjFJBzahD15g/K/YWGjaAStzq
-         84XQYdQmQnOupCSjOvAyITvzhZRTJ3VeOiCZoCxH3CVicr54wu5yb38e85xAkyI0mPbr
-         W1xlg8ijd4GjaaFM3AG7c1LzbFMvF3Sr53+d6gOAppzujeK2OS3dZSJP5gwBa/G0bxFs
-         EUXy4aAvGz/qwKPObvDJ0SfBzhLd+2H8T/vLdjj8MVOEtFebHM4l+hdBUl4/biDxOSnL
-         R17hMR+e6B14G4oTWLgzAAcakf6A3nuP85HLJXR8pVcP+ORAyFOFRD19nlKfoMZ6J1Sz
-         xHnQ==
-X-Gm-Message-State: AOAM533coCM72k2GSD2eGBAVkTeLxzJIGfZn1oOR/Zr3AVMnENxEFI0z
-        VCK2PuW42e5PgQytS9sQ3mc=
-X-Google-Smtp-Source: ABdhPJyoP2B3cx+lnkyvYX1NDsTORDVUOJyNYo47AQ3CPCXHVek/pwWujYNKgNgl/qJaYFBy+N7riw==
-X-Received: by 2002:a65:6110:: with SMTP id z16mr2805593pgu.152.1628755552425;
-        Thu, 12 Aug 2021 01:05:52 -0700 (PDT)
-Received: from localhost.localdomain ([47.246.98.159])
-        by smtp.gmail.com with ESMTPSA id a8sm2554933pgd.50.2021.08.12.01.05.51
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Aug 2021 01:05:52 -0700 (PDT)
-From:   Teng Long <dyroneteng@gmail.com>
-To:     peff@peff.net
-Cc:     dyroneteng@gmail.com, git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v1 1/1] list-objects.c: traverse_trees_and_blobs: rename and tree-wide
-Date:   Thu, 12 Aug 2021 16:05:42 +0800
-Message-Id: <20210812080542.5469-1-dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.32.0.dirty
-In-Reply-To: <YRQg+IJ3cxb3Vk+c@coredump.intra.peff.net>
-References: <YRQg+IJ3cxb3Vk+c@coredump.intra.peff.net>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=a7M85WY/lkYrZiohUcujemDF/ap+wvgHunHsbsmFpTg=;
+        b=daVvItfw/g9wE7WVoDtEfTQ0/yDI801L2fphX1NWM+nF2O4RYIWxig2vkx7Pm/4FS+
+         GR/U/DEYhBhlkFJ7FTZpdsTSLxBYr5c/csRPH+kkWA5i8FaBDuc6z3DatujHCq5DgSNK
+         YYmtA2inLh4cD2OoQzbWRb+BqJcPt/MmEa33v1ApSeU9aYZLb5y5X76oC/hTvjRsB1wb
+         W1Wj2/kXqghosWjiGToHmT7oVe17EyrLvLJ4HDQGH9hWbJx0RXgsfvvk6nL2kOL9CdzL
+         EiESWGpP04xVR4RN6N8+4CTcIb6VXc8vEsg/lQ0Lj64qNKOm+bpJzpq4XP8BcWuoX/En
+         3rDQ==
+X-Gm-Message-State: AOAM531cMWxrMlWSQuI/E0QzuPjf9lUIakJGVIQRZGUsaikfWnL/G7jX
+        gxeopnTHln51SacOIWbS0M2jOir3u4o=
+X-Google-Smtp-Source: ABdhPJxu98r9ZRJEX8l5SZmT14R57rsrE/zTIMzFT6aTmpuwnFS4C3E+MWMjyIfXMzfgktYMjeNLMg==
+X-Received: by 2002:a17:90a:6407:: with SMTP id g7mr3305460pjj.230.1628757336346;
+        Thu, 12 Aug 2021 01:35:36 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-47.three.co.id. [116.206.28.47])
+        by smtp.gmail.com with ESMTPSA id q11sm2289743pfk.32.2021.08.12.01.35.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Aug 2021 01:35:35 -0700 (PDT)
+Subject: Re: [PATCH] CodingGuidelines: recommend gender-neutral description
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+References: <xmqqmtqpzosf.fsf@gitster.g>
+ <2c7f188a-6ebe-b116-8299-86ca3732d79a@gmail.com>
+ <87czrl0wob.fsf@evledraar.gmail.com> <xmqqk0lrtuh4.fsf_-_@gitster.g>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <c3eed187-6f16-65eb-a4e5-cb747ba5f36a@gmail.com>
+Date:   Thu, 12 Aug 2021 15:35:32 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqk0lrtuh4.fsf_-_@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->>FWIW, I was about reply and suggest the exact same name. :)
->>
->>As something internal to list-objects.c, I don't think it matters all
->>that much either way. The name "traverse_commit_list()" is IMHO more
->>likely to confuse. It is public within the project, and of course
->>traverses any type of object. So "traverse_objects()" or something may
->>be more accurate.
+On 15/07/21 23.25, Junio C Hamano wrote:
+> +  - If you still need to refer to an example person that is
+> +    third-person singular, you may resort to "singular they" to avoid
+> +    "he/she/him/her", e.g.
+> +
+> +      A contributor asks their upstream to pull from them.
+> +
+> +    Note that this sounds ungrammatical and unnatural to those who
+> +    learned English as a second language in some parts of the world.
+> +
 
-On the basis of understanding the relationship between git objects,
-`traverse_commit_list` is understandable, for me.
+Addendum: For grammatical correctness (for ESL people), proper, plural 
+they can be used. So the last example can be rewritten as:
 
->>OTOH I do not find it all that confusing, and it may not be worth the
->>disruption to the code base.
+   Contributors ask their upstream to pull from their repository.
 
-Agree.
-
-It’s interesting to read your reply, because of learning a lot of
-abbreviations.
-
-Thank you.
+-- 
+An old man doll... just what I always wanted! - Clara
