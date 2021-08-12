@@ -2,305 +2,248 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4893C4338F
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 00:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36FC6C4338F
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 00:43:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A7BAD6109F
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 00:22:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EA6060F35
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 00:43:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233034AbhHLAWk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Aug 2021 20:22:40 -0400
-Received: from bee.birch.relay.mailchannels.net ([23.83.209.14]:41880 "EHLO
-        bee.birch.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232932AbhHLAWj (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 11 Aug 2021 20:22:39 -0400
-X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id 701FB341ED4;
-        Thu, 12 Aug 2021 00:13:52 +0000 (UTC)
-Received: from pdx1-sub0-mail-a13.g.dreamhost.com (100-96-99-6.trex.outbound.svc.cluster.local [100.96.99.6])
-        (Authenticated sender: dreamhost)
-        by relay.mailchannels.net (Postfix) with ESMTPA id 78D5D341DA1;
-        Thu, 12 Aug 2021 00:13:51 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
-Received: from pdx1-sub0-mail-a13.g.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384)
-        by 100.96.99.6 (trex/6.3.3);
-        Thu, 12 Aug 2021 00:13:52 +0000
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|novalis@novalis.org
-X-MailChannels-Auth-Id: dreamhost
-X-Well-Made-Trail: 465f39a3039167c1_1628727232266_958990141
-X-MC-Loop-Signature: 1628727232266:2441329059
-X-MC-Ingress-Time: 1628727232266
-Received: from pdx1-sub0-mail-a13.g.dreamhost.com (localhost [127.0.0.1])
-        by pdx1-sub0-mail-a13.g.dreamhost.com (Postfix) with ESMTP id 339E9806B4;
-        Wed, 11 Aug 2021 17:13:51 -0700 (PDT)
-Received: from corey.lan (unknown [98.113.183.123])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by pdx1-sub0-mail-a13.g.dreamhost.com (Postfix) with ESMTPSA id 5B15D80475;
-        Wed, 11 Aug 2021 17:13:50 -0700 (PDT)
-X-DH-BACKEND: pdx1-sub0-mail-a13
-From:   David Turner <dturner@twosigma.com>
+        id S233057AbhHLAnh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Aug 2021 20:43:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57946 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231649AbhHLAnh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Aug 2021 20:43:37 -0400
+Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5253AC061765
+        for <git@vger.kernel.org>; Wed, 11 Aug 2021 17:43:12 -0700 (PDT)
+Received: by mail-qv1-xf49.google.com with SMTP id b8-20020a0562141148b02902f1474ce8b7so2302612qvt.20
+        for <git@vger.kernel.org>; Wed, 11 Aug 2021 17:43:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=6eY1S0uA7ZanyPqqOXv8vI+XfIDjgfd94KBk+0IjzgI=;
+        b=Tfrlug/iYpuieu7CEHZjn6bg8RqfE57v8rAopD3hgFp5P01Ag7iksBY2CKtHTlve+Y
+         59JC3/Qx3uFnRP4ysfJsMbhO3KuJ/8a2d48v/kPLN7+6ZQD5fVvOv7hm6V41YrmSZ7+H
+         R/gUweyFp+xUGv1eEXHaBBjNv502tO3esKJwKverFD9ha69K/oZzcOu4i3W8/U1hDoEz
+         Kc+WYDwUlog60lGTbAymItqJ8Rn8+ya/rP3BSV6OefNdXGwrNcyLQgbsW6KzEWLiNyIN
+         dUYe48zfB70Y9vJG4kmWkHIlyBI90q90RH4MkKqpZQZNsDQb2Kn4ei974vcciIK40IQh
+         haFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
+         :from:to:cc:content-transfer-encoding;
+        bh=6eY1S0uA7ZanyPqqOXv8vI+XfIDjgfd94KBk+0IjzgI=;
+        b=pOvkLxpbHLUYhc1vrovbNFyyhS37691olHFe6fmoNiuoMb/WgkaB4RjEWq6T0u6tiF
+         /pzf8iRUDVdbndiPA7KCec6Nob89g5swLyNaYleePW4MMuPpnw67Jt3ujBtmP1pbJK8E
+         5aK357AIYnzEhxNY7qKqaQCdO5/8WHXcHXhM1BVBGX6wgVpB6ZTeWIySimFCZDU8vYUt
+         KCtmARM87+KzccBlsF3wybPkXhrKW9VHwjQavsmvDvEO+xNmp/cgj3K9T49UVQXo3pkq
+         9OVhk2Q0Ey/xXRL7gWIZ3Vt3hGl0sBEOUfXzMZl/q2OqOqyXlHfxK1EPVIxbv7vzIT9k
+         3ycA==
+X-Gm-Message-State: AOAM532LQRjE72oxDpxwJKhoo1AUuP4lpVKpV/hqmMNGq4gaREyqzDrF
+        azPhpF9VObncfaJ4K/UCRV2tbvVXql9bN0I3txQ+0Az2CAG45zXrQ2mrvCbbW7LDNyn5yyAoS/y
+        kCrfa3xIE1oxWww/qrPDyUjw2y4P1OEWfsl3iRsjV5xocSww09bJ4Haf9EUl/kUa/SPqgl+j9oA
+        ==
+X-Google-Smtp-Source: ABdhPJw3BaZvmYBWueRWjz4AbVe3fk1czoZ05/CCkM8viBLAL6NeJdT4R03I+gsQ2gvAzs33KEgLhZIf4kiWvGs3s3c=
+X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:200:1377:1116:63ab:bf4b])
+ (user=emilyshaffer job=sendgmr) by 2002:a05:6214:728:: with SMTP id
+ c8mr1299717qvz.53.1628728991348; Wed, 11 Aug 2021 17:43:11 -0700 (PDT)
+Date:   Wed, 11 Aug 2021 17:42:52 -0700
+In-Reply-To: <cover-v4-00.36-00000000000-20210803T191505Z-avarab@gmail.com>
+Message-Id: <20210812004258.74318-1-emilyshaffer@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.32.0.605.g8dce9f2422-goog
+Subject: [PATCH v2 0/6] config-based hooks restarted
+From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
-Cc:     novalis@novalis.org, David Turner <dturner@twosigma.com>
-Subject: [PATCH v3 2/3] diff --submodule=diff: do not fail on ever-initialied deleted submodules
-Date:   Wed, 11 Aug 2021 20:13:31 -0400
-Message-Id: <20210812001332.715876-2-dturner@twosigma.com>
-X-Mailer: git-send-email 2.11.GIT
-In-Reply-To: <20210812001332.715876-1-dturner@twosigma.com>
-References: <20210812001332.715876-1-dturner@twosigma.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Josh Steadmon <steadmon@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If you have ever initialized a submodule, open_submodule will open it.
-If you then delete the submodule's worktree directory (but don't
-remove it from .gitmodules), git diff --submodule=diff would error out
-as it attempted to chdir into the now-deleted working tree directory.
+This is the config-based hooks topic rebased onto v4 of =C3=86var's
+branch[1]. There is a happy CI build of it on GitHub[2].
 
-Instead, we chdir into the submodule's git directory and run the diff
-from there.
+The topic overall adds the ability to set up hooks by modifying the
+config, in addition to placing specially named hooks into the hookdir.
+This enables users to specify multiple hooks for a given event, and so
+this topic also fleshes out the use of the run_processes_parallel() API
+which is now introduced in =C3=86var's reordering of prior patches.
 
-Signed-off-by: David Turner <dturner@twosigma.com>
----
- submodule.c                                  |  10 ++
- t/t4060-diff-submodule-option-diff-format.sh | 158 +++++++++++++++++++++++++--
- 2 files changed, 161 insertions(+), 7 deletions(-)
+Patches 1-4 make some minor changes to prepare =C3=86var's series to handle
+more than one hook at a time. With the exception of patch 4, there
+should be no behavior change for existing hooks.
 
-diff --git a/submodule.c b/submodule.c
-index 0b1d9c1dde..d13d103975 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -710,6 +710,16 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
- 		strvec_push(&cp.args, oid_to_hex(new_oid));
- 
- 	prepare_submodule_repo_env(&cp.env_array);
-+
-+	if (!is_directory(path)) {
-+		// fall back to absorbed git dir, if any
-+		if (!sub)
-+			goto done;
-+		cp.dir = sub->gitdir;
-+		strvec_push(&cp.env_array, GIT_DIR_ENVIRONMENT "=.");
-+		strvec_push(&cp.env_array, GIT_WORK_TREE_ENVIRONMENT "=.");
-+	}
-+
- 	if (start_command(&cp))
- 		diff_emit_submodule_error(o, "(diff failed)\n");
- 
-diff --git a/t/t4060-diff-submodule-option-diff-format.sh b/t/t4060-diff-submodule-option-diff-format.sh
-index 69b9946931..d86e38abd8 100755
---- a/t/t4060-diff-submodule-option-diff-format.sh
-+++ b/t/t4060-diff-submodule-option-diff-format.sh
-@@ -703,10 +703,26 @@ test_expect_success 'path filter' '
- 	diff_cmp expected actual
- '
- 
--commit_file sm2
-+cat >.gitmodules <<-EOF
-+[submodule "sm2"]
-+	path = sm2
-+	url = bogus_url
-+EOF
-+git add .gitmodules
-+commit_file sm2 .gitmodules
-+
- test_expect_success 'given commit' '
- 	git diff-index -p --submodule=diff HEAD^ >actual &&
- 	cat >expected <<-EOF &&
-+	diff --git a/.gitmodules b/.gitmodules
-+	new file mode 100644
-+	index 1234567..89abcde
-+	--- /dev/null
-+	+++ b/.gitmodules
-+	@@ -0,0 +1,3 @@
-+	+[submodule "sm2"]
-+	+path = sm2
-+	+url = bogus_url
- 	Submodule sm1 $head7...0000000 (submodule deleted)
- 	Submodule sm2 0000000...$head9 (new submodule)
- 	diff --git a/sm2/foo8 b/sm2/foo8
-@@ -728,15 +744,21 @@ test_expect_success 'given commit' '
- '
- 
- test_expect_success 'setup .git file for sm2' '
--	(cd sm2 &&
--	 REAL="$(pwd)/../.real" &&
--	 mv .git "$REAL" &&
--	 echo "gitdir: $REAL" >.git)
-+	git submodule absorbgitdirs sm2
- '
- 
- test_expect_success 'diff --submodule=diff with .git file' '
- 	git diff --submodule=diff HEAD^ >actual &&
- 	cat >expected <<-EOF &&
-+	diff --git a/.gitmodules b/.gitmodules
-+	new file mode 100644
-+	index 1234567..89abcde
-+	--- /dev/null
-+	+++ b/.gitmodules
-+	@@ -0,0 +1,3 @@
-+	+[submodule "sm2"]
-+	+path = sm2
-+	+url = bogus_url
- 	Submodule sm1 $head7...0000000 (submodule deleted)
- 	Submodule sm2 0000000...$head9 (new submodule)
- 	diff --git a/sm2/foo8 b/sm2/foo8
-@@ -757,9 +779,67 @@ test_expect_success 'diff --submodule=diff with .git file' '
- 	diff_cmp expected actual
- '
- 
-+mv sm2 sm2-bak
-+
-+test_expect_success 'deleted submodule with .git file' '
-+	git diff-index -p --submodule=diff HEAD >actual &&
-+	cat >expected <<-EOF &&
-+	Submodule sm1 $head7...0000000 (submodule deleted)
-+	Submodule sm2 $head9...0000000 (submodule deleted)
-+	diff --git a/sm2/foo8 b/sm2/foo8
-+	deleted file mode 100644
-+	index 1234567..89abcde
-+	--- a/sm2/foo8
-+	+++ /dev/null
-+	@@ -1 +0,0 @@
-+	-foo8
-+	diff --git a/sm2/foo9 b/sm2/foo9
-+	deleted file mode 100644
-+	index 1234567..89abcde
-+	--- a/sm2/foo9
-+	+++ /dev/null
-+	@@ -1 +0,0 @@
-+	-foo9
-+	EOF
-+	diff_cmp expected actual
-+'
-+
-+echo submodule-to-blob>sm2
-+
-+test_expect_success 'typechanged(submodule->blob) submodule with .git file' '
-+	git diff-index -p --submodule=diff HEAD >actual &&
-+	cat >expected <<-EOF &&
-+	Submodule sm1 $head7...0000000 (submodule deleted)
-+	Submodule sm2 $head9...0000000 (submodule deleted)
-+	diff --git a/sm2/foo8 b/sm2/foo8
-+	deleted file mode 100644
-+	index 1234567..89abcde
-+	--- a/sm2/foo8
-+	+++ /dev/null
-+	@@ -1 +0,0 @@
-+	-foo8
-+	diff --git a/sm2/foo9 b/sm2/foo9
-+	deleted file mode 100644
-+	index 1234567..89abcde
-+	--- a/sm2/foo9
-+	+++ /dev/null
-+	@@ -1 +0,0 @@
-+	-foo9
-+	diff --git a/sm2 b/sm2
-+	new file mode 100644
-+	index 1234567..89abcde
-+	--- /dev/null
-+	+++ b/sm2
-+	@@ -0,0 +1 @@
-+	+submodule-to-blob
-+	EOF
-+	diff_cmp expected actual
-+'
-+
-+rm sm2
-+mv sm2-bak sm2
-+
- test_expect_success 'setup nested submodule' '
--	git submodule add -f ./sm2 &&
--	git commit -a -m "add sm2" &&
- 	git -C sm2 submodule add ../sm2 nested &&
- 	git -C sm2 commit -a -m "nested sub" &&
- 	head10=$(git -C sm2 rev-parse --short --verify HEAD)
-@@ -790,6 +870,7 @@ test_expect_success 'diff --submodule=diff with moved nested submodule HEAD' '
- 
- test_expect_success 'diff --submodule=diff recurses into nested submodules' '
- 	cat >expected <<-EOF &&
-+	Submodule sm1 $head7...0000000 (submodule deleted)
- 	Submodule sm2 contains modified content
- 	Submodule sm2 $head9..$head10:
- 	diff --git a/sm2/.gitmodules b/sm2/.gitmodules
-@@ -829,4 +910,67 @@ test_expect_success 'diff --submodule=diff recurses into nested submodules' '
- 	diff_cmp expected actual
- '
- 
-+(cd sm2; commit_file nested)
-+commit_file sm2
-+head12=$(cd sm2; git rev-parse --short --verify HEAD)
-+
-+mv sm2 sm2-bak
-+
-+test_expect_success 'diff --submodule=diff recurses into deleted nested submodules' '
-+	cat >expected <<-EOF &&
-+	Submodule sm1 $head7...0000000 (submodule deleted)
-+	Submodule sm2 $head12...0000000 (submodule deleted)
-+	diff --git a/sm2/.gitmodules b/sm2/.gitmodules
-+	deleted file mode 100644
-+	index 3a816b8..0000000
-+	--- a/sm2/.gitmodules
-+	+++ /dev/null
-+	@@ -1,3 +0,0 @@
-+	-[submodule "nested"]
-+	-	path = nested
-+	-	url = ../sm2
-+	diff --git a/sm2/foo8 b/sm2/foo8
-+	deleted file mode 100644
-+	index db9916b..0000000
-+	--- a/sm2/foo8
-+	+++ /dev/null
-+	@@ -1 +0,0 @@
-+	-foo8
-+	diff --git a/sm2/foo9 b/sm2/foo9
-+	deleted file mode 100644
-+	index 9c3b4f6..0000000
-+	--- a/sm2/foo9
-+	+++ /dev/null
-+	@@ -1 +0,0 @@
-+	-foo9
-+	Submodule nested $head11...0000000 (submodule deleted)
-+	diff --git a/sm2/nested/file b/sm2/nested/file
-+	deleted file mode 100644
-+	index ca281f5..0000000
-+	--- a/sm2/nested/file
-+	+++ /dev/null
-+	@@ -1 +0,0 @@
-+	-nested content
-+	diff --git a/sm2/nested/foo8 b/sm2/nested/foo8
-+	deleted file mode 100644
-+	index db9916b..0000000
-+	--- a/sm2/nested/foo8
-+	+++ /dev/null
-+	@@ -1 +0,0 @@
-+	-foo8
-+	diff --git a/sm2/nested/foo9 b/sm2/nested/foo9
-+	deleted file mode 100644
-+	index 9c3b4f6..0000000
-+	--- a/sm2/nested/foo9
-+	+++ /dev/null
-+	@@ -1 +0,0 @@
-+	-foo9
-+	EOF
-+	git diff --submodule=diff >actual 2>err &&
-+	test_must_be_empty err &&
-+	diff_cmp expected actual
-+'
-+
-+mv sm2-bak sm2
-+
- test_done
--- 
-2.11.GIT
+Patch 2 is opinionated about which hooks should and shouldn't be allowed
+to run in parallel; if you care about a specific hook, please take a
+look there.
+
+Patch 5 is the motivating feature - it begins to parse the config
+looking for hooks.
+
+Patch 6 takes advantage of the decoupling of hooks and GITDIR to allow
+out-of-repo hook runs, which would only run hooks specified in the
+system or global config. This mainly targets 'sendemail-validate', but
+'git-sendemail.perl' still explicitly disallows out-of-repo hook
+execution on that hook for now. (Maybe that change should be added in
+this series? Or maybe patch 6 belongs with that kind of change?)
+
+Since v1:
+
+The largest change is that the config schema is different, following the
+discussion from [3] and on. 'hookcmd' has gone away entirely, and all
+config-specified hooks need a user-provided name associated with them.
+
+I have also dropped the 'skip' config from this series (also discussed
+in [3]) as users can reset their 'hook.myhook.command' to 'true' or some
+other noop in a later config to effectively disable any hook. The 'skip'
+feature may be added later or may not, depending on if users ask us for
+it.
+
+The 'from_hookdir' field has been removed entirely. When storing hooks
+by name instead of by command, it makes sense enough to store the one
+from the hookdir in a special way - NULL name - because it does not have
+a name to specify. This way we can use that field as an indicator that
+the hook came from the hookdir, and we also do not need to reserve a
+name to use for hookdir hooks (as opposed to setting hookdir hooks to
+have name =3D "FROM_HOOKDIR" or something).
+
+The tests have been moved into t1800-hook.sh and simplified.
+
+The 'struct run_hooks_opt' initializer has been moved to macros (as
+opposed to functions), and .jobs=3D0 indicates that we should look up the
+configured job count or nproc at hook run time. =C3=86var asked me to chang=
+e
+these macros to RUN_HOOKS_OPT_INIT and RUN_HOOKS_OPT_INIT_SYNC or
+something to simplify the merge, but I did not do that - I removed all
+instances of RUN_HOOKS_OPT_INIT and now everybody uses
+RUN_HOOKS_OPT_INIT_SYNC or RUN_HOOKS_OPT_INIT_ASYNC. I think it's
+important for contributors to be able to tell at a glance whether the
+hook event expects resource contention that would prevent parallelism. I
+also think it makes the review easier (if longer) for folks who are
+reviewing trying to decide whether the parallelism is appropriate for
+each hook event. I do think that run_hooks_oneshot() also is a step
+backwards in this regard, but I didn't get a chance to say so on the
+commit that introduces it yet.
+
+Thanks in advance, all.
+
+ - Emily
+
+1: https://lore.kernel.org/git/cover-v4-00.36-00000000000-20210803T191505Z-=
+avarab%40gmail.com
+2: https://github.com/nasamuffin/git/actions/runs/1122126800 (which
+points to an earlier successul run before I messed with the commit
+messages)
+3: https://lore.kernel.org/git/87fswey5wd.fsf%40evledraar.gmail.com
+
+Emily Shaffer (6):
+  hook: run a list of hooks instead
+  hook: allow parallel hook execution
+  hook: introduce "git hook list"
+  hook: allow running non-native hooks
+  hook: include hooks from the config
+  hook: allow out-of-repo 'git hook' invocations
+
+ Documentation/config/hook.txt |   9 ++
+ Documentation/git-hook.txt    |  48 +++++-
+ builtin/am.c                  |   4 +-
+ builtin/checkout.c            |   2 +-
+ builtin/clone.c               |   2 +-
+ builtin/hook.c                |  68 +++++++-
+ builtin/merge.c               |   2 +-
+ builtin/rebase.c              |   2 +-
+ builtin/receive-pack.c        |   9 +-
+ builtin/worktree.c            |   2 +-
+ commit.c                      |   2 +-
+ git.c                         |   2 +-
+ hook.c                        | 289 +++++++++++++++++++++++++++++-----
+ hook.h                        |  61 +++++--
+ read-cache.c                  |   2 +-
+ refs.c                        |   2 +-
+ reset.c                       |   3 +-
+ sequencer.c                   |   4 +-
+ t/t1800-hook.sh               | 161 ++++++++++++++++++-
+ transport.c                   |   2 +-
+ 20 files changed, 596 insertions(+), 80 deletions(-)
+ create mode 100644 Documentation/config/hook.txt
+
+Range-diff against v1:
+1:  c4b95fb08a < -:  ---------- hook: treat hookdir hook specially
+-:  ---------- > 1:  5177e8ba2c hook: run a list of hooks instead
+-:  ---------- > 2:  eda439cd57 hook: allow parallel hook execution
+-:  ---------- > 3:  cdfe3b6e16 hook: introduce "git hook list"
+2:  e6a56ac674 =3D 4:  eb4e03e22b hook: allow running non-native hooks
+3:  32ad49ea9b ! 5:  2c8e874158 hook: include hooks from the config
+    @@ Commit message
+         hooks to run for a given event.
+    =20
+         Multiple commands can be specified for a given hook by providing
+    -    multiple "hook.<hookname>.command =3D <path-to-hook>" lines. Hooks=
+ will be
+    -    run in config order.
+    +    multiple "hook.<friendly-name>.command =3D <path-to-hook>" and
+    +    "hook.<friendly-name>.event =3D <hook-event>" lines. Hooks will be=
+ run in
+    +    config order of the "hook.<name>.event" lines.
+    =20
+         For example:
+    =20
+           $ git config --list | grep ^hook
+    -      hook.pre-commit.command=3D~/bar.sh
+    +      hook.bar.command=3D~/bar.sh
+    +      hook.bar.event=3Dpre-commit
+    =20
+           $ git hook run
+           # Runs ~/bar.sh
+    @@ hook.c: const char *find_hook_gently(const char *name)
+     -		struct hook *to_add =3D xmalloc(sizeof(*to_add));
+     -		to_add->hook_path =3D hook_path;
+     -		to_add->feed_pipe_cb_data =3D NULL;
+    --		to_add->from_hookdir =3D 1;
+     -		list_add_tail(&to_add->list, hook_head);
+     -	}
+     +	/* Add the hook from the hookdir. The placeholder makes it easier to
+    @@ hook.c: static int pick_next_hook(struct child_process *cp,
+     +	cp->use_shell =3D !!run_me->name;
+     +
+      	/* add command */
+    --	if (run_me->from_hookdir && hook_cb->options->absolute_path)
+    +-	if (hook_cb->options->absolute_path)
+     -		strvec_push(&cp->args, absolute_path(run_me->hook_path));
+     -	else
+     -		strvec_push(&cp->args, run_me->hook_path);
+    @@ hook.h: int hook_exists(const char *hookname);
+      	struct list_head list;
+     -	/* The path to the hook */
+     -	const char *hook_path;
+    --
+    --	unsigned from_hookdir : 1;
+     +	/*
+     +	 * The friendly name of the hook. NULL indicates the hook is from th=
+e
+     +	 * hookdir.
+4:  91e54185b3 =3D 6:  3216e51b6b hook: allow out-of-repo 'git hook' invoca=
+tions
+--=20
+2.32.0.605.g8dce9f2422-goog
 
