@@ -7,76 +7,86 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 999ADC4338F
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 00:13:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A9B6C432BE
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 00:13:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 76FEF6109E
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 00:13:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E8176109E
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 00:13:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232947AbhHLAOQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Aug 2021 20:14:16 -0400
-Received: from beige.elm.relay.mailchannels.net ([23.83.212.16]:24283 "EHLO
-        beige.elm.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232704AbhHLAOQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 11 Aug 2021 20:14:16 -0400
+        id S232974AbhHLAOS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Aug 2021 20:14:18 -0400
+Received: from bee.birch.relay.mailchannels.net ([23.83.209.14]:64678 "EHLO
+        bee.birch.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232704AbhHLAOS (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 11 Aug 2021 20:14:18 -0400
 X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
 Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id F271448203B;
-        Thu, 12 Aug 2021 00:13:50 +0000 (UTC)
-Received: from pdx1-sub0-mail-a13.g.dreamhost.com (100-101-162-87.trex-nlb.outbound.svc.cluster.local [100.101.162.87])
+        by relay.mailchannels.net (Postfix) with ESMTP id 3E66D121904;
+        Thu, 12 Aug 2021 00:13:53 +0000 (UTC)
+Received: from pdx1-sub0-mail-a13.g.dreamhost.com (100-96-11-200.trex-nlb.outbound.svc.cluster.local [100.96.11.200])
         (Authenticated sender: dreamhost)
-        by relay.mailchannels.net (Postfix) with ESMTPA id 80D4A481DCA;
-        Thu, 12 Aug 2021 00:13:50 +0000 (UTC)
+        by relay.mailchannels.net (Postfix) with ESMTPA id BBC40121546;
+        Thu, 12 Aug 2021 00:13:52 +0000 (UTC)
 X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
 Received: from pdx1-sub0-mail-a13.g.dreamhost.com (pop.dreamhost.com
  [64.90.62.162])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384)
-        by 100.101.162.87 (trex/6.3.3);
-        Thu, 12 Aug 2021 00:13:50 +0000
+        by 100.96.11.200 (trex/6.3.3);
+        Thu, 12 Aug 2021 00:13:53 +0000
 X-MC-Relay: Neutral
 X-MailChannels-SenderId: dreamhost|x-authsender|novalis@novalis.org
 X-MailChannels-Auth-Id: dreamhost
-X-Invention-Whimsical: 366e016b7c954d41_1628727230766_459930913
-X-MC-Loop-Signature: 1628727230766:2796154599
-X-MC-Ingress-Time: 1628727230766
+X-Dime-Drop: 13989e153a22cfde_1628727233000_3952743799
+X-MC-Loop-Signature: 1628727233000:2389700876
+X-MC-Ingress-Time: 1628727233000
 Received: from pdx1-sub0-mail-a13.g.dreamhost.com (localhost [127.0.0.1])
-        by pdx1-sub0-mail-a13.g.dreamhost.com (Postfix) with ESMTP id 2574F806B3;
-        Wed, 11 Aug 2021 17:13:50 -0700 (PDT)
+        by pdx1-sub0-mail-a13.g.dreamhost.com (Postfix) with ESMTP id 5C7DF806B3;
+        Wed, 11 Aug 2021 17:13:52 -0700 (PDT)
 Received: from corey.lan (unknown [98.113.183.123])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: novalis@novalis.org)
-        by pdx1-sub0-mail-a13.g.dreamhost.com (Postfix) with ESMTPSA id 9584480475;
-        Wed, 11 Aug 2021 17:13:48 -0700 (PDT)
+        by pdx1-sub0-mail-a13.g.dreamhost.com (Postfix) with ESMTPSA id 6AF7C80475;
+        Wed, 11 Aug 2021 17:13:51 -0700 (PDT)
 X-DH-BACKEND: pdx1-sub0-mail-a13
 From:   David Turner <dturner@twosigma.com>
 To:     git@vger.kernel.org
 Cc:     novalis@novalis.org, David Turner <dturner@twosigma.com>
-Subject: [PATCH v3 1/3] Remove unused var
-Date:   Wed, 11 Aug 2021 20:13:30 -0400
-Message-Id: <20210812001332.715876-1-dturner@twosigma.com>
+Subject: [PATCH v3 3/3] diff --submodule=diff: Don't print failure message twice
+Date:   Wed, 11 Aug 2021 20:13:32 -0400
+Message-Id: <20210812001332.715876-3-dturner@twosigma.com>
 X-Mailer: git-send-email 2.11.GIT
+In-Reply-To: <20210812001332.715876-1-dturner@twosigma.com>
+References: <20210812001332.715876-1-dturner@twosigma.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When we fail to start a diff command inside a submodule, immediately
+exit the routine rather than trying to finish the command and printing
+a second message.
+
 Signed-off-by: David Turner <dturner@twosigma.com>
 ---
- t/t4060-diff-submodule-option-diff-format.sh | 1 -
- 1 file changed, 1 deletion(-)
+ submodule.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/t/t4060-diff-submodule-option-diff-format.sh b/t/t4060-diff-submodule-option-diff-format.sh
-index dc7b242697..69b9946931 100755
---- a/t/t4060-diff-submodule-option-diff-format.sh
-+++ b/t/t4060-diff-submodule-option-diff-format.sh
-@@ -361,7 +361,6 @@ test_expect_success 'typechanged submodule(submodule->blob)' '
- rm -f sm1 &&
- test_create_repo sm1 &&
- head6=$(add_file sm1 foo6 foo7)
--fullhead6=$(cd sm1; git rev-parse --verify HEAD)
- test_expect_success 'nonexistent commit' '
- 	git diff-index -p --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
+diff --git a/submodule.c b/submodule.c
+index d13d103975..2e98e840af 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -720,8 +720,10 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
+ 		strvec_push(&cp.env_array, GIT_WORK_TREE_ENVIRONMENT "=.");
+ 	}
+ 
+-	if (start_command(&cp))
++	if (start_command(&cp)) {
+ 		diff_emit_submodule_error(o, "(diff failed)\n");
++		goto done;
++	}
+ 
+ 	while (strbuf_getwholeline_fd(&sb, cp.out, '\n') != EOF)
+ 		diff_emit_submodule_pipethrough(o, sb.buf, sb.len);
 -- 
 2.11.GIT
 
