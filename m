@@ -7,116 +7,126 @@ X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 181D8C4338F
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 21:22:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B34DBC4338F
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 21:32:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8D806103A
-	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 21:22:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9426760F00
+	for <git@archiver.kernel.org>; Thu, 12 Aug 2021 21:32:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236301AbhHLVXQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Aug 2021 17:23:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59524 "EHLO
+        id S236304AbhHLVdV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Aug 2021 17:33:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231270AbhHLVXN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Aug 2021 17:23:13 -0400
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8BEBC061756
-        for <git@vger.kernel.org>; Thu, 12 Aug 2021 14:22:47 -0700 (PDT)
-Received: by mail-io1-xd31.google.com with SMTP id q16so8020770ioj.0
-        for <git@vger.kernel.org>; Thu, 12 Aug 2021 14:22:47 -0700 (PDT)
+        with ESMTP id S234562AbhHLVdU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Aug 2021 17:33:20 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07485C061756
+        for <git@vger.kernel.org>; Thu, 12 Aug 2021 14:32:55 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id x10so10371458iop.13
+        for <git@vger.kernel.org>; Thu, 12 Aug 2021 14:32:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=vUYEe53SYbuB3SBZxcXN9A93+4HaFCe1o3M5TzuCl4g=;
-        b=hR3QD1d/L6B9RFM12mJF68uxqN0Rkcs8ZUAixHVK3VZZvyMMNZTqat0GlfYsgIzuoA
-         XdXZ6NdA4EgM+mwf+ytANMr6F7Txvxukh24Zf8U0rhn0Jz0gspxMboXG9rgx6D6ZNacq
-         FDyqYHt0jbF+SxWSESKyv4Ow+rbjT20lF72aVWmwzWvzQ5NemJSZYemYDXmP1xjRcfRu
-         oMotnDB/ZCTJOgHSKcXQXclWM98Eb/OjG59PrnnQGtHTrvqXtWZ25/GQTGtxQOmoZas8
-         gkkwDMhSYIeBxfv3IqOkafSDIHX4ARcCri0bAdrY0n98XCfE6oKtYpvOZPs8q9Z5Gg+e
-         EmjA==
+        bh=+Z+z68YdyNsrsIN5E5IQ3NP91E262Moy/kBf3a6rz4c=;
+        b=JLU71OwU537Wkb3Fm4P3kD9VjcnSJDwQflRNOdauc96PieRXB9HX1JJOsVBJ8dH6cC
+         F79cw8Dj+Zw/o1cYOPbKFTxMkL8Z2mSCdk7F+w3oBE/7iziYDhWMV7JGbG6PrASSLYuu
+         DcRC13ii4K1a7ivPJCPAfgH8oHnf8z/WQVo67Rjs99NMgI1pbr7EBKrJ46iWmHwOzR21
+         4Jg07dpsaSsokp09wSRqJbYm2SrjTdIvU48dIhJgLDvj/bQJ2OfTWObujOXdB7yFB+i5
+         gjvsDqDmwiVY1PPc0gGSDJjVTEMeGVYsOnlfNmdCCVFW4k1Pn7SO7h8eHYx0OmpKtAsU
+         qd1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=vUYEe53SYbuB3SBZxcXN9A93+4HaFCe1o3M5TzuCl4g=;
-        b=APcuvZoLtUu+AuIUlfFIHwhAcEwTMysUY0D9quwy1o+nkCo3KBI9471Mw9XvgfTYUX
-         DlpmNudHnEqx3z3lbc2oMWKWThkPV29hF31TAtae+LW9G56pDcVwayBPE75tQO9x+IGq
-         IXwmJJ/0Xm5Wd9ndw7pzpWOAtzvyttlRvcKAf7FulpdaxEd+UB3joPANY33msXXqkn0a
-         0+Fb1Apg72T/i2DdIpgY/zsfR1TiWXqCy/5707gJFdVEih9FkKzI8BYQA9o6ihsKQ8Ku
-         dHy2aGQ8+ohkVfPNIYbkUWlTHJ393Bu863clzANQXETT2sXqkU884qz6tpStURUqYcm4
-         /gvQ==
-X-Gm-Message-State: AOAM532X8nBLyh9OG6KDIsNA0uXyCcAiwPOO2XwvF4gnnBVfV+XBz1Bs
-        ZtM6TX77uuRCq6vEGM2HDmxdig==
-X-Google-Smtp-Source: ABdhPJwExtB8RSR+TLAXfm8S+CIzmzaWSy+LrDSBt154g+FnZHjGLmf9A4GT9LgXxs3kmPPhsLSgog==
-X-Received: by 2002:a5d:9b99:: with SMTP id r25mr4567421iom.104.1628803367329;
-        Thu, 12 Aug 2021 14:22:47 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g2sm777555ioq.42.2021.08.12.14.22.46
+        bh=+Z+z68YdyNsrsIN5E5IQ3NP91E262Moy/kBf3a6rz4c=;
+        b=n/lWyUtq5mdb+86e/q2xZeSt6p8GDgvDREBBeD47MzwbAumpjSxKoPW15Al42HAM61
+         CP0JJr66sUo7TqvTdjoREJE0C1uXxutdTpqO2wdh9uEG+Sw6OX2oWdK+VYPN6Me/qNOr
+         E2JOgEhOnmbLTw/SFGMloaIANdkLOpW99W3cXHaAzs7xZtKpFuZInjiBVpw/2eNA8j62
+         A4X8n6FBgS8S2dD7Lz44pD+S96K5xehHB+VOeQYVh4mmi2EE1EZQh9HRt8n33Gvwakw5
+         CUrdHzQZKBvmYn1zETDPoNaI72h5vNL5gWkIUS0mTNkE0w8Ym2FMhVMgls8mdM131wGT
+         uvYQ==
+X-Gm-Message-State: AOAM533o9SQBaC2ngc75aJjoImcPSa+tfTzDhWvHPQUBa3F+Z64qJJuO
+        LXY7AK/Q4s9SsuolzhXYJ1PIBg==
+X-Google-Smtp-Source: ABdhPJwLfWsaYy0OLBm04EJcEZJ2pxaxm+0rHRL+iL0iYQuBevHK1B4sOCuo03rSwFxdaSI8tbNiIw==
+X-Received: by 2002:a6b:8f08:: with SMTP id r8mr4561621iod.42.1628803974514;
+        Thu, 12 Aug 2021 14:32:54 -0700 (PDT)
+Received: from localhost ([2600:1700:d843:8f:e51e:bbd8:bead:b6a6])
+        by smtp.gmail.com with ESMTPSA id d18sm2283349ile.32.2021.08.12.14.31.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Aug 2021 14:22:46 -0700 (PDT)
-Date:   Thu, 12 Aug 2021 17:20:36 -0400
+        Thu, 12 Aug 2021 14:32:36 -0700 (PDT)
+Date:   Thu, 12 Aug 2021 17:31:07 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        dstolee@microsoft.com, gitster@pobox.com, jonathantanmy@google.com
-Subject: Re: [PATCH v3 09/25] midx: avoid opening multiple MIDXs when writing
-Message-ID: <YRWQpMXzF1Q8RmVu@nand.local>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH v3 17/25] t/helper/test-read-midx.c: add --checksum mode
+Message-ID: <YRWTGzdS1Ab80JnH@nand.local>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1627420428.git.me@ttaylorr.com>
- <40cff5beb50cdfbd13ae7f6017152f2628b25814.1627420428.git.me@ttaylorr.com>
- <YRWBZJDCVyUOhk2F@coredump.intra.peff.net>
- <YRWDBdpizLH/gX1a@coredump.intra.peff.net>
+ <60ec8b3466e7f94610a45bdd1c79feb06e439429.1627420428.git.me@ttaylorr.com>
+ <YRWFFgfXnyiRKdC1@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YRWDBdpizLH/gX1a@coredump.intra.peff.net>
+In-Reply-To: <YRWFFgfXnyiRKdC1@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 12, 2021 at 04:22:29PM -0400, Jeff King wrote:
-> On Thu, Aug 12, 2021 at 04:15:32PM -0400, Jeff King wrote:
+On Thu, Aug 12, 2021 at 04:31:18PM -0400, Jeff King wrote:
+> On Tue, Jul 27, 2021 at 05:20:07PM -0400, Taylor Blau wrote:
 >
-> > I think we'd need something like this:
+> > Subsequent tests will want to check for the existence of a multi-pack
+> > bitmap which matches the multi-pack-index stored in the pack directory.
 > >
-> > diff --git a/midx.c b/midx.c
-> > index 6dfafe7a8c..bfb6afea2e 100644
-> > --- a/midx.c
-> > +++ b/midx.c
-> > @@ -1123,8 +1123,7 @@ static int write_midx_internal(const char *object_dir,
-> >  	hold_lock_file_for_update(&lk, midx_name, LOCK_DIE_ON_ERROR);
-> >  	f = hashfd(get_lock_file_fd(&lk), get_lock_file_path(&lk));
+> > The multi-pack bitmap includes the hex checksum of the MIDX it
+> > corresponds to in its filename (for example,
+> > '$packdir/multi-pack-index-<checksum>.bitmap'). As a result, some tests
+> > want a way to learn what '<checksum>' is.
 > >
-> > -	if (ctx.m)
-> > -		close_midx(ctx.m);
-> > +	close_object_store(the_repository->objects);
-> >
-> >  	if (ctx.nr - dropped_packs == 0) {
-> >  		error(_("no pack files to index."));
-> >
-> > though I'm not sure:
-> >
-> >  - if this should be unconditional or dependent on ctx.m (I think the
-> >    latter, because if we are renaming over any open midx, we would have
-> >    filled in ctx.m earlier).
-> >
-> >  - if this should go below the "no pack files to index" check (i.e., is
-> >    there any point in closing if we know we will not write?). In fact,
-> >    its purpose might be more obvious right before finalize_hashfile(),
-> >    but I am OK either way on that.
+> > This helper addresses that need by printing the checksum of the
+> > repository's multi-pack-index.
 >
-> Ah, this close_midx() actually gets moved and made unconditional later
-> in the series.  But it still needs to be close_object_store() instead.
+> Makes sense. It might be nice to have a generic tool for pulling hashes
+> out of checksum files. Perhaps even a tool that is shipped with Git for
+> operating on such files (for in-the-field debugging and diagnosis). But
+> that can definitely be separate from this series (if ever).
 
-Exactly; this first patch should read:
+Yeah. That would definitely be in the spirit of "we should have more
+test-tool-like helpers exposed via user-facing plumbing". And I agree
+that it would be nice, but I definitely agree that it's a topic for a
+later date ;).
 
-    if (ctx.m)
-      close_object_store(the_repository->objects);
+> >  t/helper/test-read-midx.c | 16 +++++++++++++++-
+> >  t/lib-bitmap.sh           |  4 ++++
+> >  2 files changed, 19 insertions(+), 1 deletion(-)
+>
+> The patch itself looks fine to me. One curiosity:
+>
+> > diff --git a/t/lib-bitmap.sh b/t/lib-bitmap.sh
+> > index ecb5d0e05d..09cd036f4d 100644
+> > --- a/t/lib-bitmap.sh
+> > +++ b/t/lib-bitmap.sh
+> > @@ -260,3 +260,7 @@ have_delta () {
+> >  	echo $1 | git cat-file --batch-check="%(deltabase)" >actual &&
+> >  	test_cmp expect actual
+> >  }
+> > +
+> > +midx_checksum () {
+> > +	test-tool read-midx --checksum "${1:-.git/objects}"
+> > +}
+>
+> This default ".git/objects" will only _usually_ be the right thing. :)
+> If the actual C code accepted a missing object-dir, it could use the
+> correct object directory discovered by setup_git_directory().
+>
+> Probably not a big deal either way, though.
 
-and then the latter patch (15/25) we drop the conditional and move our
-call down until after the MIDX bitmap is written, but before we call
-commit_lock_file().
+Yeah. We could just sidestep the whole thing by not having the
+`.git/objects` default, since all callers of midx_checksum pass an
+argument, so that fallback is dead code anyway. Thanks for noting, I'll
+remove it for the next round.
 
 Thanks,
 Taylor
