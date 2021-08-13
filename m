@@ -5,63 +5,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 712FFC4320A
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 09:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15281C4338F
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 09:15:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 604CD6024A
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 09:15:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED27C6109E
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 09:15:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239124AbhHMJPs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Aug 2021 05:15:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49780 "EHLO
+        id S239354AbhHMJPz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Aug 2021 05:15:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239298AbhHMJPr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Aug 2021 05:15:47 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37E39C0617AE
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 02:15:21 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id d1so11110462pll.1
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 02:15:21 -0700 (PDT)
+        with ESMTP id S239179AbhHMJPy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Aug 2021 05:15:54 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F150C061756
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 02:15:28 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id a8so14350348pjk.4
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 02:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cQaM2pCdZ6/xsqjyfNVCIfzMUlR2erZA+YEMcVd+Bbk=;
-        b=rgEw0sJd9iXzfR3d21DX4FAoLHRbRtiD4oF2dtH6fZUjWchDG6Pp51oeHBGmWqhYL2
-         BuhyM8qvvyol5i9jIlB8vXhzQm9/3qHkYlQz5oHgt0GKfmHJ3TjFy7rNhhSIIVHLOADW
-         aARdVbudGEK5/DfOBXBOdiMVKf7U0gYIIQWx2Ucd0Ol6+sPgoJFTEfifF+7+Uwo4WhzS
-         Atr7CvbN2H8u8zW/vcDPqdiKzutF5vrHOnMKjdUXPQT0xf6cwktN0x82YNMS8xTJG5kZ
-         wh8aslS4Ym4Sta48VXHvNiccnRwyLltVDZnJn55c4idhR/i+Ovjou6SQdks7n1q7kauT
-         3/Fw==
+        bh=lEn4oeBK8CxlcAsOA0DPqcVBzgH8Xm3ZiDrENDy2Yj8=;
+        b=jOmGI9w70ydIMl+XmmKMrePPgcczufzF/19xluFHgaBBgRzD7Zga5apjq6o6TmvRHX
+         fsipNN4eJDthA0OmLXi1D/OSOljKylCuH2/moUJUWwnN36MnvUezKu+eF1LVgmlfXuzE
+         ++6CYVhlqAXoILYPiV8vAw/nDl+sCpzg+FfxQFMDXjejgfI2KUwOEU/+GefL300IFFPM
+         grXxMXqIZkNiOmsYgGQpPoDDVZZ9O2IICLGB92lb00Z+QNVJiSetXKRCApU6nmCha1oo
+         crpBh9IIO+MtkTH2EmBKxEU5ke0j8rViIhKXRQp4fzA0GAdm7yti02fty4+ITO69VulS
+         QPfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cQaM2pCdZ6/xsqjyfNVCIfzMUlR2erZA+YEMcVd+Bbk=;
-        b=nN3imbZU/hFX3x8FnyTl2MbspACnr3CAdLq8I7Yox6f229y/MiN3AU/ClIpePGfe+b
-         8KylrDeXjhOP90qqP491vBD7b90cQO8on5RPpKANUSxMpDu2cWAdxcR5LZNIOqk6ekvf
-         j3vR9BXGGhAxEr+bruHdPiEoxibmHAHzpq3LXaij5YKXSgNDTpxLJsxxLU3AmDSbQU7i
-         rkkXjvx+e0nNTv+hIXv2jkwkFArAZXk91Z7PNOwfFgZcpg95PdA787HcXxpAw4rtimO0
-         3xwWTw/rLIpm/YQ08zsJAICow3aXJ4JwZNL0tvU8CZQq/J5CWs8YF7cqE652pYwiRTqJ
-         Q54g==
-X-Gm-Message-State: AOAM533hfDE03M3pO03FhrLEgnbqyvOu/AVpSXnatvP779KvILmAgDR6
-        L6cFqMqDsG+ovOC4NnvvdAY=
-X-Google-Smtp-Source: ABdhPJwqS8neR9qvIXz0kZl84GXmj/OZ2D+xSj/CRDECNUfnbmulx0oEKscNTW/gxn7I84TqeW1L3Q==
-X-Received: by 2002:a63:cd4c:: with SMTP id a12mr1459973pgj.449.1628846120848;
-        Fri, 13 Aug 2021 02:15:20 -0700 (PDT)
+        bh=lEn4oeBK8CxlcAsOA0DPqcVBzgH8Xm3ZiDrENDy2Yj8=;
+        b=PoqZggLPNBOUznrymqvvVBDgbxJPXq9cm2gqhSeIc28gVtxyaD+dvj2QGaSHvhoSce
+         Iqu5ThKh0c1GSuZtFibe8Cd7q3+E8vvltjeBR3fO4b1JNUqCYX1ER5sd3BiKClZz2oNw
+         pRnV3zv+yHNkRLFxLmI+UZREE1MCf1wyqfrAYdw1blgI8L9P/xsX9+oOwaLIf24t7J9n
+         fH8QlEOLx8JbhW4lfwPEpZTt9tGHh/GkEbibRCzTiHhV0zJD//RBp3MzAVwHSbQeqOwZ
+         XSgHa3PfLzknoMWtKrZRqv7DjloBEJ9ElF2MBDiedxXi3ITgIsdE0MiG1xRsLanIX+wG
+         NDPg==
+X-Gm-Message-State: AOAM530ggsMk4GXPR+4CVvrK7e5YA5f9D7U7HIc68fE8LQPkG0ZaUHbn
+        3sGsHbREi14XFmuve42032w=
+X-Google-Smtp-Source: ABdhPJzK65XOnUUaAcRz2rfS2xWKOCcZmoWoFaS4NI/60QxZ3cta1yJs+P9LCvFnADjA9KtoJ/hJ2A==
+X-Received: by 2002:a17:90a:fb81:: with SMTP id cp1mr1727611pjb.52.1628846128149;
+        Fri, 13 Aug 2021 02:15:28 -0700 (PDT)
 Received: from localhost.localdomain ([47.246.98.158])
-        by smtp.gmail.com with ESMTPSA id p17sm1286968pjg.54.2021.08.13.02.15.19
+        by smtp.gmail.com with ESMTPSA id p17sm1286968pjg.54.2021.08.13.02.15.26
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Aug 2021 02:15:20 -0700 (PDT)
+        Fri, 13 Aug 2021 02:15:27 -0700 (PDT)
 From:   Teng Long <dyroneteng@gmail.com>
 To:     dyroneteng@gmail.com
 Cc:     git@vger.kernel.org, avarab@gmail.com, jonathantanmy@google.com
-Subject: [PATCH v1 2/3] git-pack-objects.txt: introduce `--uri-protocol` option
-Date:   Fri, 13 Aug 2021 17:14:55 +0800
-Message-Id: <307a1837196a1508963a70bf4c0c4ac5727e4d19.1628845748.git.dyroneteng@gmail.com>
+Subject: [PATCH v1 3/3] t5702: `fetch.uriprotocols` is configured without value
+Date:   Fri, 13 Aug 2021 17:14:56 +0800
+Message-Id: <3ee54255440fcc5cf549ab5e98fa51bbcd5df2e1.1628845748.git.dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.32.0.1.g0de8fe24d1.dirty
 In-Reply-To: <cover.1628845748.git.dyroneteng@gmail.com>
 References: <cover.1628845748.git.dyroneteng@gmail.com>
@@ -73,36 +73,43 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Teng Long <dyroneteng@gmail.com>
 ---
- Documentation/git-pack-objects.txt | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ t/t5702-protocol-v2.sh | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index 25d9fbe37a..16057b8c7d 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -313,6 +313,14 @@ raise an error.
- --unpack-unreachable::
- 	Keep unreachable objects in loose form. This implies `--revs`.
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 66af411057..cf3bc89775 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -945,6 +945,29 @@ test_expect_success 'packfile URIs with fetch instead of clone' '
+ 		fetch "$HTTPD_URL/smart/http_parent"
+ '
  
-+--uri-protocol::
-+	Exclude objects which hit the KEY (the object hash) of
-+	`uploadpack.excludeobject` or `uploadpack.blobpackfileuri`
-+	config (See linkgit:packfile-uri[1]) in repository and the
-+	VALUE (the packfile uri) matches the given option parameter.
-+	If this option is set, but without a value, it defaults to
-+	the value will be "http" and "https".
++test_expect_success 'packfile URIs with fetch by default `fetch.uriprotocols` config' '
++	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++	rm -rf "$P" http_child log &&
 +
- --delta-islands::
- 	Restrict delta matches based on "islands". See DELTA ISLANDS
- 	below.
-@@ -426,6 +434,7 @@ SEE ALSO
- linkgit:git-rev-list[1]
- linkgit:git-repack[1]
- linkgit:git-prune-packed[1]
-+linkgit:packfile-uri[1]
- 
- GIT
- ---
++	git init "$P" &&
++	git -C "$P" config "uploadpack.allowsidebandall" "true" &&
++
++	echo my-blob >"$P/my-blob" &&
++	git -C "$P" add my-blob &&
++	git -C "$P" commit -m x &&
++
++	configure_exclusion "$P" my-blob >h &&
++
++	git init http_child &&
++
++	GIT_TEST_SIDEBAND_ALL=1 GIT_TRACE_PACKET=`pwd`/log \
++	git -C http_child \
++		-c protocol.version=2 \
++		-c fetch.uriprotocols \
++		fetch "$HTTPD_URL/smart/http_parent" &&
++	grep "git< packfile-uris http,https" log
++'
++
+ test_expect_success 'fetching with valid packfile URI but invalid hash fails' '
+ 	P="$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
+ 	rm -rf "$P" http_child log &&
 -- 
 2.32.0.1.g0de8fe24d1.dirty
 
