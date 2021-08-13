@@ -7,73 +7,71 @@ X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA8CFC4338F
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 16:32:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9FDBC4320A
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 16:33:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A6DD76103A
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 16:32:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D1811610F7
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 16:33:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237391AbhHMQdM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Aug 2021 12:33:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37676 "EHLO
+        id S235578AbhHMQdv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Aug 2021 12:33:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236136AbhHMQdL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Aug 2021 12:33:11 -0400
-Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ADB5C061756
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 09:32:44 -0700 (PDT)
-Received: by mail-qv1-xf4a.google.com with SMTP id bo13-20020a05621414adb029035561c68664so7542604qvb.1
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 09:32:44 -0700 (PDT)
+        with ESMTP id S237860AbhHMQds (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Aug 2021 12:33:48 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1E14C0617AF
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 09:33:20 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id w200-20020a25c7d10000b02905585436b530so9676762ybe.21
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 09:33:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=4dlJpxRd5+UGpWihw/EuCcQ+/rzF0VwiOogLhRaTpTk=;
-        b=q0ORAP5Ks3Ierp8pctunuG/GZIhOBbc4qkp+uYDxVkkF0JEPzy+2Wx+ThiA6kzHBuO
-         pVijnOcogjaw4IWdaPqWtbdN0HXjQXFLLfhCTkFBR7XIapt6rXjjf7eYgafbpxDv4S8+
-         4vPE2DSXil91UtT88FH8l6wwGlP4cIOQSW9/1Z+IVXnyHu2DF0iAUjGChvjZgaTDBRjt
-         V3nrkWDez86k/OwtEhiiR05HRVR6r8RxguAToqORRb1vg2+idXoUu54ZeKAmKoDgvhW9
-         TuektTG+04xEP+DyKObnX3rGVdkI2D6lX0kQFwJ/JfZFQc2/j9GdKyj4QvwkFxENLIY2
-         7yqQ==
+        bh=9AtELwqgpyAIzQTIM6IQQKggxEAo7aGAMaPmBCy9ZoQ=;
+        b=O8h4l7XNRy2zgwVNObPDcUHt+bHLjQ/ZkMCD6UVn6WXd9syUdhrWcHiefIhchBKog5
+         YBntr2h4TxDG4bcsgqWETFjwM6hyJelr9IH3KiNMXhlf23GXLSU8fdX9Mr9Us79t33z2
+         3i3fF0nCLDj4D5K776sSPTcNmtfoNtSFtYwqrhRGhOiN19HUA9OhEiCLyIf+0bKgf2vM
+         dewVCX/S5twsjMLMQDeO0EeMkAXQ+bGG/jGNzDWGI/u7EK9Seq8P28DIk7+IPmEOVvZ7
+         e+uvoqoaJ/+AyVsRTuFPLpEA37WEWoRTSMwjkxc7hm6/LpAjhmgVP+vxKOVL77D65jFW
+         u8rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=4dlJpxRd5+UGpWihw/EuCcQ+/rzF0VwiOogLhRaTpTk=;
-        b=rCWXSq3/TorU3TwlaOT+GyZwiiNIqAeaL5US8wcB98jf3XkMfVYoBMKiEhWC68WcDB
-         7gq+NNTc4N1Psv8fRAbD1S8wATxoPeyA0y9akTeClPWmr6hs0/f4SNlIh8OnJ4wdqjZG
-         vpG2UM9IlUb5r3UjHr1P2o/L1i5YE7W3X9UJEueUim9AFHz/eEa7mt4g/aPecTFMzaPt
-         Rs7rD8w1WQQj82uJ3Qec82sT3Wc2r0xW9rkCDv1/oWQZnXmMnVPVaR2xtT7UM+DxNo3k
-         JPMsO77dFJbTifxG7x4pMI+o9GsANy7/3s5ZR97rkP8HvrNYhIa+Aeb43bd2e/6HpTP9
-         W8bw==
-X-Gm-Message-State: AOAM533EAFGkf9311wD3FJcQmBqqgJ9ys/2+nGW0hGRgrJq3qY+xONcY
-        0DUkyENR/rhXqw/oDxYHwdlmvqo9XfZbyFiOPk9q
-X-Google-Smtp-Source: ABdhPJw8prnZ1u0i7NKx8Yd3jnkK4yJIPjVrbLlBe69h5rTeJDMRIdJlTn3ponfk7Jc5KpRwgCRiQnpjxohObefU4A/u
+        bh=9AtELwqgpyAIzQTIM6IQQKggxEAo7aGAMaPmBCy9ZoQ=;
+        b=G71vp10KDV6ZFmd3pCz4Hu2B/L+EZkybgQQXfyrtAmgajaJCIx07vxD9x/i9WXar9W
+         PNg1Lj3rxeJhV4BGLsvgP/WGNo1/j9BvVG4WZNmcs8xp+mY/4ItDSUxRTfJXcuUXxn+z
+         Xpeg1Jl4lNeI02d0bk3VenkZ3hCIBAXJuDMjc8TT9+DwagKotU0r3tinS5YLTL//dmii
+         9TjfpZHm06hgPXBMXj+Mi1/CasIpLUSHH+evBAjkv9Ts1JHdU7Ox+tGbufhazZsora59
+         T+iHb8f+uHoE44HZsTdYyaEZru/e9z72ZI31aoy2NnbnQlZbTNzCDoSK+njaWhmbv9P8
+         RmhA==
+X-Gm-Message-State: AOAM532Z7XFQDlnYUM6z8L6DMd31HEzCdBF0L4AUPNQHVMCZDLWBLVQJ
+        0H5k/Og+EbJBGsfW/CyIITuSvvkk9+F0cjCLv68W
+X-Google-Smtp-Source: ABdhPJySABoeNPxlkCkxS2OIBtM7f+A5+fwL3UVJyX5TkgfvYqUsbv0t39iptAlzBGpvD3BvkI4HNg6oF58gfYkacj2b
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6214:728:: with SMTP id
- c8mr3502816qvz.53.1628872363711; Fri, 13 Aug 2021 09:32:43 -0700 (PDT)
-Date:   Fri, 13 Aug 2021 09:32:41 -0700
-In-Reply-To: <YRRYOmwW9yKhvldn@satellite>
-Message-Id: <20210813163241.3213428-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a5b:28b:: with SMTP id
+ x11mr3909213ybl.9.1628872399918; Fri, 13 Aug 2021 09:33:19 -0700 (PDT)
+Date:   Fri, 13 Aug 2021 09:33:18 -0700
+In-Reply-To: <xmqqwnoq6217.fsf@gitster.g>
+Message-Id: <20210813163318.3213751-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <YRRYOmwW9yKhvldn@satellite>
+References: <xmqqwnoq6217.fsf@gitster.g>
 X-Mailer: git-send-email 2.33.0.rc1.237.g0d66db33f3-goog
 Subject: Re: [PATCH 3/7] grep: typesafe versions of grep_source_init
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     ramsay@ramsayjones.plus.com
-Cc:     emilyshaffer@google.com, jonathantanmy@google.com,
+To:     gitster@pobox.com
+Cc:     matheus.bernardino@usp.br, jonathantanmy@google.com,
         git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Just a quick note: grep_source_init_buf() is only called from
-> grep.c:1833, before its definition at grep.c:1869, so it could be marked
-> as static (as things stand). Do you anticipate any future callers from
-> outside of grep.c? (after removing the declaration from grep.h, you
-> would need to add a forward declaration or, better, move the definition
-> to before the call (or the call (and grep_buffer()) after the definition)).
+> > Small nit: perhaps `grep_source_init_buf()` could take `buf` and
+> > `size` too, so that all the fields get initialized by the same
+> > function.
+> 
+> Sounds sensible.  Thanks.
 
-No, I do not - thanks for the note, and I'll make it static in the next
-reroll.
+Makes sense - I'll do this.
