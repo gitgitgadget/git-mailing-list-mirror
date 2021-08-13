@@ -8,65 +8,64 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDB9CC432BE
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 13:07:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70E9BC4320A
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 13:07:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A92696103A
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 13:07:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4D200610A5
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 13:07:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240608AbhHMNIJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Aug 2021 09:08:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46296 "EHLO
+        id S240609AbhHMNIK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Aug 2021 09:08:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240580AbhHMNIE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Aug 2021 09:08:04 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8378C061756
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 06:07:37 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id f12-20020a05600c4e8c00b002e6bdd6ffe2so3843293wmq.5
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 06:07:37 -0700 (PDT)
+        with ESMTP id S240582AbhHMNIF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Aug 2021 09:08:05 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85A12C0617AD
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 06:07:38 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id x12so13199006wrr.11
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 06:07:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=wMJwJOUMYeNAi/fBFFmqp192VYJLCAoYsFVRDbG/UGg=;
-        b=h4HfG9wMquYAJT9b3QRcCJPBvv97SOoHx8spozWRXTvhUYY8gRL/BI16brZPvu1oEt
-         Oz+1FiCggYyq6cgNVLdDDV+bvYPa4VHRRBukNgIuyRKpsTbDXYO5XTQp8mgEmSeH20Om
-         rEQlS+D0gMD6ZnajdcxZqVo0icAj5YtQvnN1lutT0FPaJgs6nnV26aVRNvBBlrVr2Hgh
-         THQPlMqhe8j8eovasPEiJC8G7tlFvngXr6T47/B+ukdKC8QyymqiBpSDMyOe0kP9mNyI
-         AjzqPQuUu8DKx7mv8MpwneFs2VDJz7xX04Qw6n3R6K8HFUGh0mZQmXx7EuWd8fzh6Pgf
-         XwjA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=BgsF+fo7/k1/tpNtuEPyAUz7wglr0K7widR0CaHWWCQ=;
+        b=pLkIQJdr3XgV6WOwIF3UBg8pgh+3m6kehG33OPBvIYwt8LDAD9J0xmzpE/e5qu7vHi
+         Q1CufLJI+7Cx3QpyW2J1ic6mBP1nlSSuS72BkV3WM2ZEuqr4MVb6Xjcem2P3haxRkiBa
+         zw8i5WhoXh8FX/ILrkBgLh46QBKJ5/IICo+xeKISmuaJM9X0cGhdzKlshRVQQXLyYhJH
+         ysYwFiOEoCJsyunco3/pEf1/Lj6BlUlkXxYurTqTr6NhERAxenlLUXiBzQwr4u9z2Fum
+         508nKfUvG3+b4i6u1x+q22hmTYOoz+bxzfmvlhM6lx+IhA5gFHMwL14Jf72YpHZy7dQ9
+         PzpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=wMJwJOUMYeNAi/fBFFmqp192VYJLCAoYsFVRDbG/UGg=;
-        b=LcShr7qddVDXAFfENpwJrB9cLEKaYDKJGq1Vw8QyBDA9+OXlt9Rwc1kQK+xHLmwXXf
-         QOoj+38VG2qZ3NLyhWNg1EufUWCNpTI0ol1KskpdhLuQW99Y0H/RTmovVpjRexdkP9xh
-         cw60HcBtlcQwvSu1XIOAJstT3quCLe7iSa87CyBIOStVBDVUaYlnTFeUj5oMenXhGDtD
-         YsxZmSUukuZetFll9YTO6YK+DIhGWu0wgg0frk4CeiEqV5YPHTas9XW3bwrZxNC3/Emp
-         NYnpX3rWA/fw6HIJtiYkHX1cVfRWagZevNYNCIsJzdGBVQeicwSoYaJQepQU2OVarxXt
-         /qXA==
-X-Gm-Message-State: AOAM533NrFTnQ9DIGoFpFBxym6ltOWyt+EDHqfGg9tkdHfYtfHXySoLd
-        NPSx9BSViy+glD8O9zec6xg1dGltiB8=
-X-Google-Smtp-Source: ABdhPJxa86Db4PMdFnV31v9fuluqRZSouNTGFfikZxzeBGK4fk7IzG6dE270wjM7bo2Wv2Qjd660iA==
-X-Received: by 2002:a7b:ce10:: with SMTP id m16mr2580478wmc.75.1628860056518;
-        Fri, 13 Aug 2021 06:07:36 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=BgsF+fo7/k1/tpNtuEPyAUz7wglr0K7widR0CaHWWCQ=;
+        b=EfGWSk0RBntLKxtxW1n4Q09Bx7K1VlGO0V2Zhnkuqe4T0WGnKQ+rmPq9NlH2mFa8Fz
+         E+rCfmxeOH9U3jHUq2f5131lXIqiomRJUnLReW6DU6uSO85O1lT0uk1XH9w7J8gPdXpD
+         9MgWL4qQ2L8Z0dDI2omrOYSWSWamIO8Nt9yjsOkJrqPl6LSckT9UwHhe8Y56oo/bQesS
+         ZII6zAl+lL3nWPlazf+ikEn3geuw0yLE2edaVo9gVzAlNznYEoLmmNJLH+jP6aTPe0sZ
+         Zfn8piHpjoyGm39BuJgOrqh3ifFxHmtfYwVp31l8lOS9gj6A0frksjAHrnwu0f/0qRRf
+         fQOw==
+X-Gm-Message-State: AOAM533wLhKfpObhpONoD3pqpahnUnBqTGpJFr/WZ/GNx6uE5Hhs0wCI
+        thhqYK/+WXv3JqxNay8kirEJ/Pwfm1I=
+X-Google-Smtp-Source: ABdhPJyegiIf3Fnp+MJEK7lKpqEfUkcyXb3w5ghByxz1xV/nv7vS1bDWtVLLuiFr3K9W6QQZ8Hxh6g==
+X-Received: by 2002:adf:fc09:: with SMTP id i9mr3152942wrr.110.1628860057177;
+        Fri, 13 Aug 2021 06:07:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y13sm1395947wmj.27.2021.08.13.06.07.36
+        by smtp.gmail.com with ESMTPSA id b18sm1550168wrr.89.2021.08.13.06.07.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 13 Aug 2021 06:07:36 -0700 (PDT)
-Message-Id: <01d5ed4cba04d69e484d2c040635632df914bfa6.1628860053.git.gitgitgadget@gmail.com>
+Message-Id: <f2a2e3531a181f68cee43f832045633aee519fb8.1628860053.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1015.git.1628860053.gitgitgadget@gmail.com>
 References: <pull.1015.git.1628860053.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 13 Aug 2021 13:07:32 +0000
-Subject: [PATCH 3/4] rebase -r: don't write .git/MERGE_MSG when
- fast-forwarding
-MIME-Version: 1.0
+Date:   Fri, 13 Aug 2021 13:07:33 +0000
+Subject: [PATCH 4/4] rebase -r: fix merge -c with a merge strategy
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
@@ -78,162 +77,60 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-When fast-forwarding we do not create a new commit so .git/MERGE_MSG
-is not removed and can end up seeding the message of a commit made
-after the rebase has finished. Avoid writing .git/MERGE_MSG when we
-are fast-forwarding by writing the file after the fast-forward
-checks.
+If a rebase is started with a --strategy option other than "ort" or
+"recursive" then "merge -c" does not allow the user to reword the
+commit message.
 
-Note that the way this change is implemented means we no longer write
-the author script when fast-forwarding either. I believe this is safe
-for the reasons below but it is a departure from what we do when
-fast-forwarding a non-merge commit. If we reword the merge then 'git
-commit --amend' will keep the authorship of the commit we're rewording
-as it ignores GIT_AUTHOR_* unless --reset-author is passed. It will
-also export the correct GIT_AUTHOR_* variables to any hooks and we
-already test the authorship of the reworded commit. If we are not
-rewording then we no longer call spilt_ident() which means we are no
-longer checking the commit author header looks sane. However this is
-what we already do when fast-forwarding non-merge commits in
-skip_unnecessary_picks() so I don't think we're breaking any promises
-by not checking the author here.
-
-Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- sequencer.c     | 81 +++++++++++++++++++++++++------------------------
- t/lib-rebase.sh | 10 ++++--
- 2 files changed, 49 insertions(+), 42 deletions(-)
+ sequencer.c              |  5 ++++-
+ t/t3430-rebase-merges.sh | 18 ++++++++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index cc8a361cceb..c2cba5ed4b1 100644
+index c2cba5ed4b1..a19980f62d9 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -983,7 +983,8 @@ static int run_git_commit(const char *defmsg,
- 
- 	cmd.git_cmd = 1;
- 
--	if (is_rebase_i(opts) && read_env_script(&cmd.env_array)) {
-+	if (is_rebase_i(opts) && !(!defmsg && (flags & AMEND_MSG)) &&
-+	    read_env_script(&cmd.env_array)) {
- 		const char *gpg_opt = gpg_sign_opt_quoted(opts);
- 
- 		return error(_(staged_changes_advice),
-@@ -3815,6 +3816,45 @@ static int do_merge(struct repository *r,
- 		goto leave_merge;
- 	}
- 
-+	/*
-+	 * If HEAD is not identical to the first parent of the original merge
-+	 * commit, we cannot fast-forward.
-+	 */
-+	can_fast_forward = opts->allow_ff && commit && commit->parents &&
-+		oideq(&commit->parents->item->object.oid,
-+		      &head_commit->object.oid);
-+
-+	/*
-+	 * If any merge head is different from the original one, we cannot
-+	 * fast-forward.
-+	 */
-+	if (can_fast_forward) {
-+		struct commit_list *p = commit->parents->next;
-+
-+		for (j = to_merge; j && p; j = j->next, p = p->next)
-+			if (!oideq(&j->item->object.oid,
-+				   &p->item->object.oid)) {
-+				can_fast_forward = 0;
-+				break;
-+			}
-+		/*
-+		 * If the number of merge heads differs from the original merge
-+		 * commit, we cannot fast-forward.
-+		 */
-+		if (j || p)
-+			can_fast_forward = 0;
-+	}
-+
-+	if (can_fast_forward) {
-+		rollback_lock_file(&lock);
-+		ret = fast_forward_to(r, &commit->object.oid,
-+				      &head_commit->object.oid, 0, opts);
-+		if (flags & TODO_EDIT_MERGE_MSG)
-+			goto fast_forward_edit;
-+
-+		goto leave_merge;
-+	}
-+
- 	if (commit) {
- 		const char *encoding = get_commit_output_encoding();
- 		const char *message = logmsg_reencode(commit, NULL, encoding);
-@@ -3864,45 +3904,6 @@ static int do_merge(struct repository *r,
+@@ -3934,7 +3934,10 @@ static int do_merge(struct repository *r,
+ 				strvec_pushf(&cmd.args,
+ 					     "-X%s", opts->xopts[k]);
  		}
- 	}
+-		strvec_push(&cmd.args, "--no-edit");
++		if (!(flags & TODO_EDIT_MERGE_MSG))
++			strvec_push(&cmd.args, "--no-edit");
++		else
++			strvec_push(&cmd.args, "--edit");
+ 		strvec_push(&cmd.args, "--no-ff");
+ 		strvec_push(&cmd.args, "--no-log");
+ 		strvec_push(&cmd.args, "--no-stat");
+diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+index 183c3a23838..43c82d9a33b 100755
+--- a/t/t3430-rebase-merges.sh
++++ b/t/t3430-rebase-merges.sh
+@@ -187,6 +187,24 @@ test_expect_success 'merge -c commits before rewording and reloads todo-list' '
+ 	check_reworded_commits E H
+ '
  
--	/*
--	 * If HEAD is not identical to the first parent of the original merge
--	 * commit, we cannot fast-forward.
--	 */
--	can_fast_forward = opts->allow_ff && commit && commit->parents &&
--		oideq(&commit->parents->item->object.oid,
--		      &head_commit->object.oid);
--
--	/*
--	 * If any merge head is different from the original one, we cannot
--	 * fast-forward.
--	 */
--	if (can_fast_forward) {
--		struct commit_list *p = commit->parents->next;
--
--		for (j = to_merge; j && p; j = j->next, p = p->next)
--			if (!oideq(&j->item->object.oid,
--				   &p->item->object.oid)) {
--				can_fast_forward = 0;
--				break;
--			}
--		/*
--		 * If the number of merge heads differs from the original merge
--		 * commit, we cannot fast-forward.
--		 */
--		if (j || p)
--			can_fast_forward = 0;
--	}
--
--	if (can_fast_forward) {
--		rollback_lock_file(&lock);
--		ret = fast_forward_to(r, &commit->object.oid,
--				      &head_commit->object.oid, 0, opts);
--		if (flags & TODO_EDIT_MERGE_MSG)
--			goto fast_forward_edit;
--
--		goto leave_merge;
--	}
--
- 	if (strategy || to_merge->next) {
- 		/* Octopus merge */
- 		struct child_process cmd = CHILD_PROCESS_INIT;
-diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-index 99d9e7efd2d..ec6b9b107da 100644
---- a/t/lib-rebase.sh
-+++ b/t/lib-rebase.sh
-@@ -173,10 +173,16 @@ set_reword_editor () {
- 
- 	write_script reword-editor.sh <<-EOF &&
- 	# Save the oid of the first reworded commit so we can check rebase
--	# fast-forwards to it
-+	# fast-forwards to it. Also check that we do not write .git/MERGE_MSG
-+	# when fast-forwarding
- 	if ! test -s reword-oid
- 	then
--		git rev-parse HEAD >reword-oid
-+		git rev-parse HEAD >reword-oid &&
-+		if test -f .git/MERGE_MSG
-+		then
-+			echo 1>&2 "error: .git/MERGE_MSG exists"
-+			exit 1
-+		fi
- 	fi &&
- 	# There should be no uncommited changes
- 	git diff --exit-code HEAD &&
++test_expect_success 'merge -c rewords when a strategy is given' '
++	git checkout -b merge-c-with-strategy H &&
++	write_script git-merge-override <<-\EOF &&
++	echo overridden$1 >G.t
++	git add G.t
++	EOF
++
++	PATH="$PWD:$PATH" \
++	GIT_SEQUENCE_EDITOR="echo merge -c H G >" \
++	GIT_EDITOR="echo edited >>" \
++		git rebase --no-ff -ir -s override -Xxopt E &&
++	test_write_lines overridden--xopt >expect &&
++	test_cmp expect G.t &&
++	test_write_lines H "" edited "" >expect &&
++	git log --format=%B -1 >actual &&
++	test_cmp expect actual
++
++'
+ test_expect_success 'with a branch tip that was cherry-picked already' '
+ 	git checkout -b already-upstream main &&
+ 	base="$(git rev-parse --verify HEAD)" &&
 -- 
 gitgitgadget
-
