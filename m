@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8C68C4338F
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 08:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50ADFC4338F
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 08:23:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB9476056B
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 08:23:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 344C46056B
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 08:23:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238821AbhHMIYN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Aug 2021 04:24:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37744 "EHLO
+        id S238973AbhHMIYP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Aug 2021 04:24:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238823AbhHMIXy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Aug 2021 04:23:54 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7192DC0612AC
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 01:23:27 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id f5so12088582wrm.13
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 01:23:27 -0700 (PDT)
+        with ESMTP id S238673AbhHMIXz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Aug 2021 04:23:55 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14A69C06124C
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 01:23:28 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id g138so6324228wmg.4
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 01:23:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=nB54XRvV0PUoeKaFKTkUHVNqT6ILEprINfQkt5qsgLY=;
-        b=o2BffcwZC1NWJ9kDBE4NFNsjXHHpNmULwhv1xM4SapYtPApqog5CNU/WJOQCAqUH/j
-         UrEgyyCgeQIzAcHvZiWEqNj//xS3GXY+Gq0nsc81aI93ArAIFnGoIvTyl8axlcUuMFxV
-         hh209hrZ2/FdKs2UAlceggJmYtsjCZKI4mUbQLUvfxx3aQTc7IPfaInl41KP3UpIsykT
-         FP4mZGC2bdalhZviq/g9O0OX/b6XuvA5bRanr/YR6qnz8JbafFUiDE9LBFLYqNfpBxxm
-         6fl2VUb17Z/U0QIoD1bY3pT0owqQkrWU+FI+MB0TWFLn7Y6eo7k66uX7VkMuOKkPcZzA
-         SZgg==
+        bh=CwEVQU+nR+mX/AL1EZNUNs9TGHKLJB/OiZcOeV7vLyM=;
+        b=OKzYr2ceTfmNY6SY7CXOdu4GG/CCCmHwIyia5cSVtysrjCNsm9FRsPQvhIYcQ9gfdH
+         p6c/d30ChmiJLt0GSuVHV1BRdcsetM2stvCCtTHYelwQEeC7f83LJ8714RZWROGFEMEL
+         dsNMBJidgHvue3yqO0+n4gugEXSUCwF4W9NXasHiC1bIEDMF70ocbm9+HsYIXfAzJ15g
+         Rhc7ClRGgba3fx2Yqv3T7BGuglBp+h4FH9fDa47hQuDPm0c7VeJ1qTPp5QlYbQCd5kKm
+         71hkeA8ori2SZDOhHOXuhxhkgDBVwHhZHviY/9r/tXk/2ReKToqu3yxAT4GImQ+/WaGE
+         RO+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=nB54XRvV0PUoeKaFKTkUHVNqT6ILEprINfQkt5qsgLY=;
-        b=X47LB9UVhR3aexpjFu3b1URs3//3jENLANLvSVfkOSYoYoMMIHjepOodH5usqdFPE7
-         P2a4wdoBdrukqMPyw2Trv7R46Eys0Sjmkm0yyfNXzoiX/+Eo82GX7c5knfhy9dgbpvLu
-         0o4LwkYYspH4VEwLJaZvPIGpSrttPQAZOTSw9ALsNKOzdGyms9Cf191g0gr3xuoSyFW4
-         VHZdMo6p8UmprMzHS/lrg5g3Scbfu6E5B6KZU1oZ9yNk47zXuvkKGWoJtgBddmJLKuWA
-         RoXxENTmGg8Qq5RzPvoJe1p+ZVESjZPwshoh+thFYFWcc67SD8Zpjl2ZZfVYZd9LY5sm
-         abyw==
-X-Gm-Message-State: AOAM5317Mwh8JZsbThCkzQqh3GtuLn4S6hi3tbmZcgnxnQdnh0qbfQlN
-        4apU1b3KFiGnnnXakb1k6D8duqt+gYU=
-X-Google-Smtp-Source: ABdhPJxSlGrD/fy3iKY/+T68VfGwCaBOaBPkES6SONunBvdMI99fsAZOqDIKWtR7BpQ1+dp6w7caHQ==
-X-Received: by 2002:adf:8102:: with SMTP id 2mr1598956wrm.89.1628843006055;
+        bh=CwEVQU+nR+mX/AL1EZNUNs9TGHKLJB/OiZcOeV7vLyM=;
+        b=Ya/XW/Qp3FrJwiYzyQ149QJ6PNmcXWoI1GSZE6KFkxWY37poqgVxv4hx1KKGn8W3I3
+         IlUt39R5RLLQazmbuyGsTIpZuQ2kshR8T4/Gt3s5QA/v1HSNkZcRc6s5LYvCLGntUBmH
+         BKNWWSXvBR9vtPjVmk/JnnN1V26aS0CemjaKCMkduauZh55ClupGClhtxG/yaMcn5qmg
+         Jls/XgEj/WFurn6vVixfMfKEzRUudcHxeH/VxPYn1SMpm0n6Y2iNLmT68sC0YH5wtUzj
+         PStqn69yOUbGRGRgvFf/RYP7JBZKZA5Pyvk1SjM/FBDZzfp3i3lT1+JJUmJNf1TO27Xm
+         g8kQ==
+X-Gm-Message-State: AOAM530W/+0xT3/he02tJ1JfAY/4puHEBjPmBBd/lYp0fbf0IdPo62Lk
+        F5xWnAtzBXuX19qNUmp09lrmrTWU5iU=
+X-Google-Smtp-Source: ABdhPJxl8DlbQOwt6+d4XGTio8UqMKWgC7A0tGk4Ie68DdD6OeEpbpFmlz1WzIGB44TMa+zoofeZ2w==
+X-Received: by 2002:a05:600c:20f:: with SMTP id 15mr1427846wmi.176.1628843006707;
         Fri, 13 Aug 2021 01:23:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s1sm676847wmh.46.2021.08.13.01.23.25
+        by smtp.gmail.com with ESMTPSA id i5sm827817wrw.13.2021.08.13.01.23.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Aug 2021 01:23:25 -0700 (PDT)
-Message-Id: <5b21b04683429fdf85b9df9723777fb6fad8ea7a.1628842990.git.gitgitgadget@gmail.com>
+        Fri, 13 Aug 2021 01:23:26 -0700 (PDT)
+Message-Id: <bd568c73a2df0d6ac28fcaeb10d706073f73fe0a.1628842990.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1016.git.1628842990.gitgitgadget@gmail.com>
 References: <pull.1016.git.1628842990.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 13 Aug 2021 08:23:06 +0000
-Subject: [PATCH 23/27] [GSOC] ref-filter: add deref member to struct used_atom
+Date:   Fri, 13 Aug 2021 08:23:07 +0000
+Subject: [PATCH 24/27] [GSOC] ref-filter: introduce symref_atom_parser()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,215 +83,55 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-In the original logic, the dereference flag '*' is stored
-at the beginning of used_atom[i].name. (e.g. '*objectname:short')
-This leads us to make some check on used_atom[i].name[0] to
-know if we the atom needs to be dereferenced.
-
-So add `deref` flag to struct used_atom used to indicate
-whether the atom needs to be dereferenced and let used_atom
-record only the remaining part (i.e. 'objectname:short')
-
-This can simplify the logic of the program.
+parse_ref_filter_atom() checks whether the type of the atom
+is ATOM_SYMREF, this is not necessary for other atoms. So
+add the symref_atom_parser() specifically to parse the atom,
+and set need_symref in it. This can make the program logic
+more concise.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Hariom Verma <hariom18599@gmail.com>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- ref-filter.c | 55 ++++++++++++++++++++--------------------------------
- 1 file changed, 21 insertions(+), 34 deletions(-)
+ ref-filter.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index 5e00dbd993a..bde1f3de9eb 100644
+index bde1f3de9eb..a0de5f21ff5 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -174,6 +174,7 @@ enum atom_type {
-  * array.
-  */
- static struct used_atom {
-+	unsigned int deref : 1;
- 	enum atom_type atom_type;
- 	const char *name;
- 	cmp_type type;
-@@ -321,7 +322,7 @@ static int objecttype_atom_parser(struct ref_format *format, struct used_atom *a
- {
- 	if (arg)
- 		return strbuf_addf_ret(err, -1, _("%%(objecttype) does not take arguments"));
--	if (*atom->name == '*')
-+	if (atom->deref)
- 		oi_deref.info.typep = &oi_deref.type;
- 	else
- 		oi.info.typep = &oi.type;
-@@ -333,13 +334,13 @@ static int objectsize_atom_parser(struct ref_format *format, struct used_atom *a
- {
- 	if (!arg) {
- 		atom->u.objectsize.option = O_SIZE;
--		if (*atom->name == '*')
-+		if (atom->deref)
- 			oi_deref.info.sizep = &oi_deref.size;
- 		else
- 			oi.info.sizep = &oi.size;
- 	} else if (!strcmp(arg, "disk")) {
- 		atom->u.objectsize.option = O_SIZE_DISK;
--		if (*atom->name == '*')
-+		if (atom->deref)
- 			oi_deref.info.disk_sizep = &oi_deref.disk_size;
- 		else
- 			oi.info.disk_sizep = &oi.disk_size;
-@@ -353,7 +354,7 @@ static int deltabase_atom_parser(struct ref_format *format, struct used_atom *at
- {
- 	if (arg)
- 		return strbuf_addf_ret(err, -1, _("%%(deltabase) does not take arguments"));
--	if (*atom->name == '*')
-+	if (atom->deref)
- 		oi_deref.info.delta_base_oid = &oi_deref.delta_base_oid;
- 	else
- 		oi.info.delta_base_oid = &oi.delta_base_oid;
-@@ -675,10 +676,13 @@ static int parse_ref_filter_atom(struct ref_format *format,
- 	const char *sp;
- 	const char *arg;
- 	int i, at, atom_len;
-+	int deref = 0;
+@@ -481,6 +481,13 @@ static int person_email_atom_parser(struct ref_format *format, struct used_atom
+ 	return 0;
+ }
  
- 	sp = atom;
--	if (*sp == '*' && sp < ep)
-+	if (*sp == '*' && sp < ep) {
- 		sp++; /* deref */
-+		deref = 1;
-+	}
- 	if (ep <= sp)
- 		return strbuf_addf_ret(err, -1, _("malformed field name: %.*s"),
- 				       (int)(ep-atom), atom);
-@@ -695,7 +699,7 @@ static int parse_ref_filter_atom(struct ref_format *format,
- 	/* Do we have the atom already used elsewhere? */
- 	for (i = 0; i < used_atom_cnt; i++) {
- 		int len = strlen(used_atom[i].name);
--		if (len == ep - atom && !memcmp(used_atom[i].name, atom, len))
-+		if (len == ep - sp && !memcmp(used_atom[i].name, sp, len))
- 			return i;
- 	}
- 
-@@ -719,17 +723,18 @@ static int parse_ref_filter_atom(struct ref_format *format,
- 	used_atom_cnt++;
- 	REALLOC_ARRAY(used_atom, used_atom_cnt);
- 	used_atom[at].atom_type = i;
--	used_atom[at].name = xmemdupz(atom, ep - atom);
-+	used_atom[at].deref = deref;
-+	used_atom[at].name = xmemdupz(sp, ep - sp);
- 	used_atom[at].type = valid_atom[i].cmp_type;
- 	used_atom[at].source = valid_atom[i].source;
- 	if (used_atom[at].source == SOURCE_OBJ) {
--		if (*atom == '*')
-+		if (deref)
- 			oi_deref.info.contentp = &oi_deref.content;
- 		else
- 			oi.info.contentp = &oi.content;
- 	}
- 	if (arg) {
--		arg = used_atom[at].name + (arg - atom) + 1;
-+		arg = used_atom[at].name + (arg - sp) + 1;
- 		if (!*arg) {
- 			/*
- 			 * Treat empty sub-arguments list as NULL (i.e.,
-@@ -741,7 +746,7 @@ static int parse_ref_filter_atom(struct ref_format *format,
- 	memset(&used_atom[at].u, 0, sizeof(used_atom[at].u));
- 	if (valid_atom[i].parser && valid_atom[i].parser(format, &used_atom[at], arg, err))
++static int symref_atom_parser(struct ref_format *format, struct used_atom *atom,
++			       const char *arg, struct strbuf *err)
++{
++	need_symref = 1;
++	return refname_atom_parser_internal(&atom->u.refname, arg, atom->name, err);
++}
++
+ static int refname_atom_parser(struct ref_format *format, struct used_atom *atom,
+ 			       const char *arg, struct strbuf *err)
+ {
+@@ -620,7 +627,7 @@ static struct {
+ 	[ATOM_RAW] = { "raw", SOURCE_OBJ, FIELD_STR, raw_atom_parser },
+ 	[ATOM_UPSTREAM] = { "upstream", SOURCE_NONE, FIELD_STR, remote_ref_atom_parser },
+ 	[ATOM_PUSH] = { "push", SOURCE_NONE, FIELD_STR, remote_ref_atom_parser },
+-	[ATOM_SYMREF] = { "symref", SOURCE_NONE, FIELD_STR, refname_atom_parser },
++	[ATOM_SYMREF] = { "symref", SOURCE_NONE, FIELD_STR, symref_atom_parser },
+ 	[ATOM_FLAG] = { "flag", SOURCE_NONE },
+ 	[ATOM_HEAD] = { "HEAD", SOURCE_NONE, FIELD_STR, head_atom_parser },
+ 	[ATOM_COLOR] = { "color", SOURCE_NONE, FIELD_STR, color_atom_parser },
+@@ -748,8 +755,6 @@ static int parse_ref_filter_atom(struct ref_format *format,
  		return -1;
--	if (*atom == '*')
-+	if (deref)
+ 	if (deref)
  		need_tagged = 1;
- 	if (i == ATOM_SYMREF)
- 		need_symref = 1;
-@@ -1112,13 +1117,10 @@ static void grab_common_values(struct atom_value *val, int deref, struct expand_
- 	int i;
+-	if (i == ATOM_SYMREF)
+-		need_symref = 1;
+ 	return at;
+ }
  
- 	for (i = 0; i < used_atom_cnt; i++) {
--		const char *name = used_atom[i].name;
- 		enum atom_type atom_type = used_atom[i].atom_type;
- 		struct atom_value *v = &val[i];
--		if (!!deref != (*name == '*'))
-+		if (!!deref != used_atom[i].deref)
- 			continue;
--		if (deref)
--			name++;
- 		if (atom_type == ATOM_OBJECTTYPE)
- 			v->s = xstrdup(type_name(oi->type));
- 		else if (atom_type == ATOM_OBJECTSIZE) {
-@@ -1144,13 +1146,10 @@ static void grab_tag_values(struct atom_value *val, int deref, struct object *ob
- 	struct tag *tag = (struct tag *) obj;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
--		const char *name = used_atom[i].name;
- 		enum atom_type atom_type = used_atom[i].atom_type;
- 		struct atom_value *v = &val[i];
--		if (!!deref != (*name == '*'))
-+		if (!!deref != used_atom[i].deref)
- 			continue;
--		if (deref)
--			name++;
- 		if (atom_type == ATOM_TAG)
- 			v->s = xstrdup(tag->tag);
- 		else if (atom_type == ATOM_TYPE && tag->tagged)
-@@ -1167,13 +1166,10 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
- 	struct commit *commit = (struct commit *) obj;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
--		const char *name = used_atom[i].name;
- 		enum atom_type atom_type = used_atom[i].atom_type;
- 		struct atom_value *v = &val[i];
--		if (!!deref != (*name == '*'))
-+		if (!!deref != used_atom[i].deref)
- 			continue;
--		if (deref)
--			name++;
- 		if (atom_type == ATOM_TREE) {
- 			v->s = xstrdup(do_grab_oid("tree", get_commit_tree_oid(commit), &used_atom[i]));
- 			continue;
-@@ -1327,10 +1323,8 @@ static void grab_person(enum atom_type type, struct atom_value *val, int deref,
- 		const char *name = used_atom[i].name;
- 		enum atom_type atom_type = used_atom[i].atom_type;
- 		struct atom_value *v = &val[i];
--		if (!!deref != (*name == '*'))
-+		if (!!deref != used_atom[i].deref)
- 			continue;
--		if (deref)
--			name++;
- 		if ((atom_type < type || atom_type > type + 3) &&
- 		    /*
- 		    * For a tag or a commit object, if "creator" or "creatordate" is
-@@ -1446,10 +1440,8 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct exp
- 		struct atom_value *v = &val[i];
- 		enum atom_type atom_type = atom->atom_type;
- 
--		if (!!deref != (*name == '*'))
-+		if (!!deref != used_atom[i].deref)
- 			continue;
--		if (deref)
--			name++;
- 
- 		if (atom_type == ATOM_RAW) {
- 			unsigned long buf_size = data->size;
-@@ -1895,7 +1887,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 		enum atom_type atom_type = atom->atom_type;
- 		const char *name = used_atom[i].name;
- 		struct atom_value *v = &ref->value[i];
--		int deref = 0;
-+		int deref = atom->deref;
- 		const char *refname;
- 		struct branch *branch = NULL;
- 
-@@ -1903,11 +1895,6 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 		v->handler = append_atom;
- 		v->atom = atom;
- 
--		if (*name == '*') {
--			deref = 1;
--			name++;
--		}
--
- 		if (atom_type == ATOM_REFNAME)
- 			refname = get_refname(atom, ref);
- 		else if (atom_type == ATOM_WORKTREEPATH) {
 -- 
 gitgitgadget
 
