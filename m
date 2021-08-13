@@ -8,60 +8,61 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9070DC4338F
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 21:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E68EC432BE
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 21:05:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7BA666109E
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 21:05:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01668610CC
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 21:05:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234724AbhHMVGL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Aug 2021 17:06:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44048 "EHLO
+        id S234574AbhHMVGM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Aug 2021 17:06:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234768AbhHMVGG (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234775AbhHMVGG (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 13 Aug 2021 17:06:06 -0400
-Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB5BBC0612A3
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 14:05:37 -0700 (PDT)
-Received: by mail-qv1-xf49.google.com with SMTP id kk20-20020a0562145094b029034e3ec4ffb4so8048490qvb.11
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 14:05:37 -0700 (PDT)
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48B67C0612A4
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 14:05:39 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id y3-20020a17090a8b03b02901787416b139so8546916pjn.4
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 14:05:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=3XoMnzdanjKGxVFJj5l5BZKbaCFlLhzXuokPGmMB2xM=;
-        b=pniNXyQNu53m9VkERjgR3r4oldo/GSfwBG5D4Qafi0qdGObeGJTJPa9cot51g3+AP2
-         fWoR+u7j0LdhHLiVfU10B4ZOX9F+nQU64ftnJ2wDUSLHIFpmwoqr37LilzVHm/Uuzf2Q
-         NomzFzIoZx+XKHgsly5Ij+TBbeyoSsz1vbjGgGLyOO7AlZRuQHcauLM/PxqG+E/1tb5v
-         NcBP9+3IGCQuMhTLb5CK2Pmjk/JhEk1B1smLOQfJbuK29mQI0V9i5H6KnG6uBiEGTWRc
-         O/5RWaoXgwKE+XGbBy3kFQuYgJ+YdYWi0isYojb4ZIWa+FifMtK5q5WZkbTsof905YvJ
-         bYjQ==
+        bh=7kZt6VPgSJmAAiy//C/YH8WyL+5qNm6bYvonnO1LYZ8=;
+        b=CiP9R5Hduaah5vW6kXGqsibXR12vwjzsZGrSXXtjeHMa7bJpzX1Bu/ry32GrjCdTrW
+         s4wCzRQSEkzXS1t+fYE/nF7kii9cXqk+aEJo0kjPNETMEzRNv3dQXyN4ic5TQsB+GFLM
+         OqSRX28727LtwG4ycK2x7aesZMrw9W4g2XNQNnrd8LCAXd3V6izsOO2CBEx2yQ0z3r+o
+         +70fbjAznDGlzSAu8TmncaiHUIRn1/NBM+ev1TeD5P7v06lmHe0t/Z6XiKmhT0wmXO2/
+         b2Ccbg1MX24acCTFiZwG2W7rm8mvB45riAzu8sco5PXuHxZtP8Ne9AUqel20zWDWgTXU
+         pDBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=3XoMnzdanjKGxVFJj5l5BZKbaCFlLhzXuokPGmMB2xM=;
-        b=EV2pa8N1w9EX5E3DnOiZ2GqoRO4sDe78/nUZvC+qtRyqObLyEoqSVZsICbfUL5BIaO
-         +FY8LhRQautqZuSoFp66jcHyXSkX7yMgeaTmLk+60Uj0opCDzDdhS9OBJWCSPwq28Rv7
-         esTLFmiKuqX3r7W5euqSRtNKg6/ETenLBJ3IQZLAvqDJJ/f2WoOkSHgAzznO930vs74U
-         LNN/1R88Xgfxq2QSL6fW+51HpMplIXyykOz9RuFG8OB17B3mrzHrt5iY36IfP46eL0bd
-         jx4MgZVPlUu3BUS/Quy8zqit60V0OQkI3dsK9e3U6+EUCoeBGO14ROAgOzc35M43SHuz
-         joQw==
-X-Gm-Message-State: AOAM530A0OFS36WTPuIix/5ZwJMb9KebVxtQ5znfk7RBJ1ODO+76l9iy
-        3iZwS+XjT3VNwnjgsl7OLJd7/wlyZ9E2Pa/YpE3ntnNZi3VAjAR1F8frDTWPaTeMHLL6EQWiKRr
-        hWqd9PgF1dIfWXVHvx+Z9nkwm1/YLl6h/1akbK84FypeESvCU5pPO7w4Qn1AJRZxCWYSxv1kqjc
-        rs
-X-Google-Smtp-Source: ABdhPJzIKvbEqLx9TJji3ROxKZTBfbqEGso9bDbw8Jcjor42nfwhjm8me1crWJ6jkVn6aii8XYwO8qnr2jaVHMuJfPI1
+        bh=7kZt6VPgSJmAAiy//C/YH8WyL+5qNm6bYvonnO1LYZ8=;
+        b=UGyVveM3WVdFHAGAsgUHoVE7hpTRYaA0X9A2Ega3B84/wDrSlA4cYiJ/+z8tPr9qhN
+         Qy6faEdgGFXT/r41BFKKRG8glGUpzuhdY8rzFI6Qi4nno3I9GER5cKgy2PcUsdoELo4Q
+         YsM2qcvDK06O8BFn3lAWGnh/hssbXs6T+p3SymDaLXrT2ePH0jLMPzm/x7raaN3iWpiS
+         Lik0orWpzHYo2LrD8l03ZN8Ee0J9lFLrgFLU0Je26xID7FVE5O+Li3SAtrr6fShW5oZy
+         OpjFB2CVLz7wpyIBhpYxQDL4TjxN1wl3ZHnOBvYm9KjzimUBX1FeeUxMyfs4dF2WKFYe
+         bRJQ==
+X-Gm-Message-State: AOAM533fiqSZmWnBcPEMllwBRlzxcA6N2VE67BzTY7XUgWuLVRkH7hY0
+        3KzUYsGBoNR7P+Syk7xbBH2qVMYKDwmnd1Kso6WVIAIWCb19KaSxBL+jYqNK8rd+rgKCaVgfHLb
+        kcJI//ciQAf6BizSHzbZkJAg083+qWvZw+mh35KV+LG/ZBPwhQMXio/VR8su9JJVcR+l04gPKNs
+        xN
+X-Google-Smtp-Source: ABdhPJy/UG7xBHgFT5KBa5JwMEhv8syKyf7+9mQNxPY3IRJfjwHPR8G2Bxi44TbqcqQcL9qUQDZGGMZQSat2cCj0IFAF
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6214:76d:: with SMTP id
- f13mr4637069qvz.53.1628888736763; Fri, 13 Aug 2021 14:05:36 -0700 (PDT)
-Date:   Fri, 13 Aug 2021 14:05:21 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:b40b:b029:12b:997f:5677 with
+ SMTP id x11-20020a170902b40bb029012b997f5677mr3526110plr.11.1628888738646;
+ Fri, 13 Aug 2021 14:05:38 -0700 (PDT)
+Date:   Fri, 13 Aug 2021 14:05:22 -0700
 In-Reply-To: <cover.1628888668.git.jonathantanmy@google.com>
-Message-Id: <50c69a988b2afca68f06e36949e4a8cc3a93940a.1628888668.git.jonathantanmy@google.com>
+Message-Id: <94db10a4e5943d689113693c64633ddffa5508cc.1628888668.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1628618950.git.jonathantanmy@google.com> <cover.1628888668.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.33.0.rc1.237.g0d66db33f3-goog
-Subject: [PATCH v2 6/8] grep: add repository to OID grep sources
+Subject: [PATCH v2 7/8] submodule-config: pass repo upon blob config read
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, matheus.bernardino@usp.br,
@@ -72,121 +73,123 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Record the repository whenever an OID grep source is created, and teach
-the worker threads to explicitly provide the repository when accessing
-objects.
+When reading the config of a submodule, if reading from a blob, read
+using an explicitly specified repository instead of by adding the
+submodule's ODB as an alternate and then reading an object from
+the_repository.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/grep.c | 15 ++++++---------
- grep.c         |  7 +++++--
- grep.h         | 13 ++++++++++++-
- 3 files changed, 23 insertions(+), 12 deletions(-)
+ config.c           | 18 ++++++++++++------
+ config.h           |  3 +++
+ submodule-config.c |  5 +++--
+ 3 files changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 69d8ea0808..d27e95e092 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -349,7 +349,7 @@ static int grep_oid(struct grep_opt *opt, const struct object_id *oid,
- 	struct grep_source gs;
+diff --git a/config.c b/config.c
+index f33abeab85..a85c12e6cc 100644
+--- a/config.c
++++ b/config.c
+@@ -1796,6 +1796,7 @@ int git_config_from_mem(config_fn_t fn,
  
- 	grep_source_name(opt, filename, tree_name_len, &pathbuf);
--	grep_source_init_oid(&gs, pathbuf.buf, path, oid);
-+	grep_source_init_oid(&gs, pathbuf.buf, path, oid, opt->repo);
- 	strbuf_release(&pathbuf);
- 
- 	if (num_threads > 1) {
-@@ -462,14 +462,11 @@ static int grep_submodule(struct grep_opt *opt,
- 	repo_read_gitmodules(subrepo, 0);
- 
- 	/*
--	 * NEEDSWORK: This adds the submodule's object directory to the list of
--	 * alternates for the single in-memory object store.  This has some bad
--	 * consequences for memory (processed objects will never be freed) and
--	 * performance (this increases the number of pack files git has to pay
--	 * attention to, to the sum of the number of pack files in all the
--	 * repositories processed so far).  This can be removed once the object
--	 * store is no longer global and instead is a member of the repository
--	 * object.
-+	 * All code paths tested by test code no longer need submodule ODBs to
-+	 * be added as alternates, but add it to the list just in case.
-+	 * Submodule ODBs added through add_submodule_odb_by_path() will be
-+	 * lazily registered as alternates when needed (and except in an
-+	 * unexpected code interaction, it won't be needed).
- 	 */
- 	add_submodule_odb_by_path(subrepo->objects->odb->path);
- 	obj_read_unlock();
-diff --git a/grep.c b/grep.c
-index 8a8105c2eb..79598f245f 100644
---- a/grep.c
-+++ b/grep.c
-@@ -1863,7 +1863,8 @@ void grep_source_init_file(struct grep_source *gs, const char *name,
- }
- 
- void grep_source_init_oid(struct grep_source *gs, const char *name,
--			  const char *path, const struct object_id *oid)
-+			  const char *path, const struct object_id *oid,
-+			  struct repository *repo)
+ int git_config_from_blob_oid(config_fn_t fn,
+ 			      const char *name,
++			      struct repository *repo,
+ 			      const struct object_id *oid,
+ 			      void *data)
  {
- 	gs->type = GREP_SOURCE_OID;
- 	gs->name = xstrdup_or_null(name);
-@@ -1872,6 +1873,7 @@ void grep_source_init_oid(struct grep_source *gs, const char *name,
- 	gs->size = 0;
- 	gs->driver = NULL;
- 	gs->identifier = oiddup(oid);
-+	gs->repo = repo;
- }
- 
- void grep_source_clear(struct grep_source *gs)
-@@ -1900,7 +1902,8 @@ static int grep_source_load_oid(struct grep_source *gs)
- {
- 	enum object_type type;
- 
--	gs->buf = read_object_file(gs->identifier, &type, &gs->size);
-+	gs->buf = repo_read_object_file(gs->repo, gs->identifier, &type,
-+					&gs->size);
- 	if (!gs->buf)
- 		return error(_("'%s': unable to read %s"),
- 			     gs->name,
-diff --git a/grep.h b/grep.h
-index 480b3f5bba..24c6b64cea 100644
---- a/grep.h
-+++ b/grep.h
-@@ -120,7 +120,16 @@ struct grep_opt {
- 	struct grep_pat *header_list;
- 	struct grep_pat **header_tail;
- 	struct grep_expr *pattern_expression;
-+
-+	/*
-+	 * NEEDSWORK: See if we can remove this field, because the repository
-+	 * should probably be per-source, not per-repo. This is potentially the
-+	 * cause of at least one bug - "git grep" ignoring the textconv
-+	 * attributes from submodules. See [1] for more information.
-+	 * [1] https://lore.kernel.org/git/CAHd-oW5iEQarYVxEXoTG-ua2zdoybTrSjCBKtO0YT292fm0NQQ@mail.gmail.com/
-+	 */
- 	struct repository *repo;
-+
- 	const char *prefix;
- 	int prefix_length;
- 	regex_t regexp;
-@@ -187,6 +196,7 @@ struct grep_source {
- 		GREP_SOURCE_BUF,
- 	} type;
- 	void *identifier;
-+	struct repository *repo; /* if GREP_SOURCE_OID */
- 
- 	char *buf;
+@@ -1804,7 +1805,7 @@ int git_config_from_blob_oid(config_fn_t fn,
  	unsigned long size;
-@@ -198,7 +208,8 @@ struct grep_source {
- void grep_source_init_file(struct grep_source *gs, const char *name,
- 			   const char *path);
- void grep_source_init_oid(struct grep_source *gs, const char *name,
--			  const char *path, const struct object_id *oid);
-+			  const char *path, const struct object_id *oid,
-+			  struct repository *repo);
- void grep_source_clear_data(struct grep_source *gs);
- void grep_source_clear(struct grep_source *gs);
- void grep_source_load_driver(struct grep_source *gs,
+ 	int ret;
+ 
+-	buf = read_object_file(oid, &type, &size);
++	buf = repo_read_object_file(repo, oid, &type, &size);
+ 	if (!buf)
+ 		return error(_("unable to load config blob object '%s'"), name);
+ 	if (type != OBJ_BLOB) {
+@@ -1820,6 +1821,7 @@ int git_config_from_blob_oid(config_fn_t fn,
+ }
+ 
+ static int git_config_from_blob_ref(config_fn_t fn,
++				    struct repository *repo,
+ 				    const char *name,
+ 				    void *data)
+ {
+@@ -1827,7 +1829,7 @@ static int git_config_from_blob_ref(config_fn_t fn,
+ 
+ 	if (get_oid(name, &oid) < 0)
+ 		return error(_("unable to resolve config blob '%s'"), name);
+-	return git_config_from_blob_oid(fn, name, &oid, data);
++	return git_config_from_blob_oid(fn, name, repo, &oid, data);
+ }
+ 
+ char *git_system_config(void)
+@@ -1958,12 +1960,16 @@ int config_with_options(config_fn_t fn, void *data,
+ 	 * If we have a specific filename, use it. Otherwise, follow the
+ 	 * regular lookup sequence.
+ 	 */
+-	if (config_source && config_source->use_stdin)
++	if (config_source && config_source->use_stdin) {
+ 		return git_config_from_stdin(fn, data);
+-	else if (config_source && config_source->file)
++	} else if (config_source && config_source->file) {
+ 		return git_config_from_file(fn, config_source->file, data);
+-	else if (config_source && config_source->blob)
+-		return git_config_from_blob_ref(fn, config_source->blob, data);
++	} else if (config_source && config_source->blob) {
++		struct repository *repo = config_source->repo ?
++			config_source->repo : the_repository;
++		return git_config_from_blob_ref(fn, repo, config_source->blob,
++						data);
++	}
+ 
+ 	return do_git_config_sequence(opts, fn, data);
+ }
+diff --git a/config.h b/config.h
+index a2200f3111..147f5e0490 100644
+--- a/config.h
++++ b/config.h
+@@ -49,6 +49,8 @@ const char *config_scope_name(enum config_scope scope);
+ struct git_config_source {
+ 	unsigned int use_stdin:1;
+ 	const char *file;
++	/* The repository if blob is not NULL; leave blank for the_repository */
++	struct repository *repo;
+ 	const char *blob;
+ 	enum config_scope scope;
+ };
+@@ -136,6 +138,7 @@ int git_config_from_mem(config_fn_t fn,
+ 			const char *buf, size_t len,
+ 			void *data, const struct config_options *opts);
+ int git_config_from_blob_oid(config_fn_t fn, const char *name,
++			     struct repository *repo,
+ 			     const struct object_id *oid, void *data);
+ void git_config_push_parameter(const char *text);
+ void git_config_push_env(const char *spec);
+diff --git a/submodule-config.c b/submodule-config.c
+index 2026120fb3..f95344028b 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -649,9 +649,10 @@ static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void
+ 			config_source.file = file;
+ 		} else if (repo_get_oid(repo, GITMODULES_INDEX, &oid) >= 0 ||
+ 			   repo_get_oid(repo, GITMODULES_HEAD, &oid) >= 0) {
++			config_source.repo = repo;
+ 			config_source.blob = oidstr = xstrdup(oid_to_hex(&oid));
+ 			if (repo != the_repository)
+-				add_to_alternates_memory(repo->objects->odb->path);
++				add_submodule_odb_by_path(repo->objects->odb->path);
+ 		} else {
+ 			goto out;
+ 		}
+@@ -702,7 +703,7 @@ void gitmodules_config_oid(const struct object_id *commit_oid)
+ 
+ 	if (gitmodule_oid_from_commit(commit_oid, &oid, &rev)) {
+ 		git_config_from_blob_oid(gitmodules_cb, rev.buf,
+-					 &oid, the_repository);
++					 the_repository, &oid, the_repository);
+ 	}
+ 	strbuf_release(&rev);
+ 
 -- 
 2.33.0.rc1.237.g0d66db33f3-goog
 
