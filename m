@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EFE9C4338F
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 08:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BCFEC4320E
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 08:23:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E4ACA6056B
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 08:23:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 85DFF6056B
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 08:23:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237883AbhHMIXp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Aug 2021 04:23:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37664 "EHLO
+        id S238637AbhHMIXt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Aug 2021 04:23:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233580AbhHMIXk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Aug 2021 04:23:40 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EE23C061756
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 01:23:13 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id k4so6336176wms.3
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 01:23:13 -0700 (PDT)
+        with ESMTP id S237439AbhHMIXl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Aug 2021 04:23:41 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3472EC0617AF
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 01:23:15 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id q6so618021wrv.6
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 01:23:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:mime-version:content-transfer-encoding
-         :fcc:to:cc;
-        bh=+e/GXE9YD/RlJPgIRKE46qzuvSibw50YYxZgzbWEJ2Y=;
-        b=GMC7BSuixS1Wo+Pz7PKCCZcB4ogLhlbOI/GSP2jgWyePanKdlS1xDknfzitLFigz+f
-         RC0KPsxaCgnSOiQ8AEqfJxZhD/Pkg9MakjdPHfq+vYSw3+IqTT5fpUNGLZNsHt5oorX0
-         QtJKnrEAlNgbxDm9qkeOyHH/1hxQZloIhP6mArPM9jNi/4U5yom0NgMHk2Pqftr/XHUs
-         ygOgY8bZ/TSu0Vj9/1CNUtU2kz7sWu+a/gmqhfkCT1VfDZIpU+6vF7LH8sjT13UkRBj0
-         DOr9U/ZH8sO2uj8WU6Xx8uWmZhQTVEQyi7l253S/LnkGpy4szor3a+Ats2KNZ3ztCYW7
-         3hfw==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=AOOm8J191P4j4KlKZ3cqk8UGe++6yL/hpw1DpiVJqyA=;
+        b=I0asmJR32+EDkDdPkVARXhjk3Uf+sY2h7oXdQCEtuK5gRM/xvxHsrriNPmNEnAPsQO
+         r3MR3reErJH2ZX9uGVZbJVkogjnITQ8/WFT1RMVA+bqD1DiPfNT7Dk/nnrQQVPo3e9cA
+         x0Wxyr4xDlD2vlI2m6mHG2rAHO8oO1DublxQXUNS+r39OoW1B2Uoso59aYXqgANltoKZ
+         hx0N5mg/2/8YMttdre0ZmR2XWmZPnaIixmS3dK7PqyzpJxlO5g1EvbXkNkeDVrmbXIEN
+         rUL1waZaXGniqlIvomhoJ9EGVXe83KtMx6fV7cqKn6D3vmji4R5aOmNMkkUy3gmHbmYu
+         i23Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=+e/GXE9YD/RlJPgIRKE46qzuvSibw50YYxZgzbWEJ2Y=;
-        b=f8mjXRMhY5+WKTp+WeSHmTOYke1fgSMRhj0xEDaVAF+dOmtEevtcV8nVn4GAvr1ukV
-         2xmhVwxjzxKCBMsVA2UwMKG5Kys+2nAU4PTFmDYcGwynmwVwknZLgZpEtHNbWRmxXV2v
-         QV4QeJFEDJ1pZGFWd0A994JpMlWJu2cUymRc0GzVwMx+pAWIUgYJ8wchfdM0KMIytUF0
-         qt6Of3BhQc15sB2RS/7R+tBhzsre5Kiwjjl8JOtUpJ9CShC9rPklJg7WGB+8qjWY+PeF
-         LEXSxW5Tkhce/IqRHATRQko4Adap/VUTRhRbemfeM12aS7XbUmzheLm4pOYcIjsGlz5x
-         zMJA==
-X-Gm-Message-State: AOAM532BXipTFHTAv0WJCmr3/fVjzjmdiuqmoKxnrbqRoGDlVN4HVgEv
-        JtBkt5f6rMPAKMVu6Vl1rLXY7BQB8i4=
-X-Google-Smtp-Source: ABdhPJwHQvEWndJMyTmyLilVHsNbZ8Fgv4DEzYwr+3Glq0+rMGbJ/MJ4OV8fNY90iSXqk8+1R/SZHA==
-X-Received: by 2002:a05:600c:4ecb:: with SMTP id g11mr1465240wmq.101.1628842991845;
-        Fri, 13 Aug 2021 01:23:11 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=AOOm8J191P4j4KlKZ3cqk8UGe++6yL/hpw1DpiVJqyA=;
+        b=dbBXQwbg3jAiGuItxkrBqg0HVABnxFt/qTuMTzrNLWyGS+hH7ptuk0bNNwLN0Y+DJu
+         89JiocxFTzJTrA4HMgG7VWo6hWMJkx45gZdEFkG3y5ZTA3209K1murEN2lYdhiVWEinU
+         OzCN2fOgA/qe5Vm+uO/obwmvpBaGQE/dmIyV6QlQwjxvsynsYbzkJkghYyho3Ytkrw5x
+         glF7c8HS1JE+RBmnAaaqFT8GzaRRI5HnAx506OYK1yD3U2+5QwSTzehl1j6xuVE//gYt
+         eKg1XhDyoftT2tw0IfxL+uR4yCKK9X0OKC8mdXE7HU5HojvpItY/01TBIJ0hUdqcRHmC
+         Av5Q==
+X-Gm-Message-State: AOAM531dBgoXavBVLSviF+X3TOMk6jxdkztX31a3M7p4yrGWYpPaYpPL
+        GSc5b4t9ZdFVoujGrq2Ymar7SmX/D/o=
+X-Google-Smtp-Source: ABdhPJzm0LYx9tSFKTY82aY1EIvxtSXox1GuFGBY3DQHY219+7Ui9rxH7vrmGoz5gW6eedUvgQw+Xw==
+X-Received: by 2002:adf:a452:: with SMTP id e18mr1767104wra.244.1628842993870;
+        Fri, 13 Aug 2021 01:23:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o2sm655396wmq.30.2021.08.13.01.23.10
+        by smtp.gmail.com with ESMTPSA id o24sm706406wmm.37.2021.08.13.01.23.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Aug 2021 01:23:11 -0700 (PDT)
-Message-Id: <pull.1016.git.1628842990.gitgitgadget@gmail.com>
+        Fri, 13 Aug 2021 01:23:13 -0700 (PDT)
+Message-Id: <452ea887e6123bc74b1a2f563ab0ea7c650867b9.1628842990.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1016.git.1628842990.gitgitgadget@gmail.com>
+References: <pull.1016.git.1628842990.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 13 Aug 2021 08:22:43 +0000
-Subject: [PATCH 00/27] [GSOC] [RFC] cat-file: reuse ref-filter logic
+Date:   Fri, 13 Aug 2021 08:22:46 +0000
+Subject: [PATCH 03/27] [GSOC] ref-filter: --format=%(raw) support --perl
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,120 +75,149 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
         Philip Oakley <philipoakley@iee.email>,
+        ZheNing Hu <adlternative@gmail.com>,
         ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series makes cat-file reuse ref-filter logic. At the same time,
-some performance optimizations have been carried out. It's last version is
-here:
-https://lore.kernel.org/git/pull.993.v2.git.1626363626.gitgitgadget@gmail.com/#t
+From: ZheNing Hu <adlternative@gmail.com>
 
-It seems that zh/ref-filter-raw-data is still hovering in the next branch
-(Because git is rc2) So I now want to show some recent performance
-optimizations first.
+Because the perl language can handle binary data correctly,
+add the function perl_quote_buf_with_len(), which can specify
+the length of the data and prevent the data from being truncated
+at '\0' to help `--format="%(raw)"` support `--perl`.
 
-Change from last version:
+Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
+Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+ Documentation/git-for-each-ref.txt |  4 ++--
+ quote.c                            | 17 +++++++++++++++++
+ quote.h                            |  1 +
+ ref-filter.c                       | 15 +++++++++++----
+ t/t6300-for-each-ref.sh            | 19 +++++++++++++++++--
+ 5 files changed, 48 insertions(+), 8 deletions(-)
 
- 1.  Use free_global_resource() to avoid memory leaks.
- 2.  Skip parse_object_buffer() which bring 12.5% performance optimization.
- 3.  Merge two for loop in grab_person() which bring 2% performance
-     optimization.
- 4.  Remove strlen from find_subpos.
- 5.  Introducing xstrvfmt_len() and xstrfmt_len().
- 6.  Remove second parsing in format_ref_array_item() which bring 1.9%
-     performance optimization
- 7.  Introduction ref_filter_slopbuf to instread xstrdup("").
- 8.  Add deref member to struct used_atom to simplify the logic of the
-     program.
- 9.  Introduce symref_atom_parser() to make the program logic more concise.
- 10. Use switch/case instread of if/else to increase the readability of the
-     code.
- 11. Reuse finnal buffer which bring 2% performance optimization.
- 12. Add need_get_object_info flag to reduce memory comparing.
-
-This is the result of the performance test after I did some optimization:
-
-Test                                        upstream/master   this tree
-------------------------------------------------------------------------------------
-1006.2: cat-file --batch-check              0.08(0.07+0.00)   0.09(0.08+0.01) +12.5%
-1006.3: cat-file --batch-check with atoms   0.06(0.04+0.02)   0.08(0.06+0.02) +33.3%
-1006.4: cat-file --batch                    0.49(0.46+0.02)   0.50(0.47+0.03) +2.0%
-1006.5: cat-file --batch with atoms         0.47(0.45+0.01)   0.49(0.47+0.02) +4.3%
-
-
-We can see that the performance of the current patch of git cat-file --batch
-is very close to upstream/master. The optimization of git cat-file
---batch-check does not seem obvious, because its optimization degree will be
-affected by noise, which may appear in the range of +12.5% to +50.0%. From
-an optimistic point of view, the execution time of git cat-file
---batch-check itself is relatively short, the optimization is of course not
-obvious.
-
-As GSOC is about to end, this patch series is estimated to be adjusted for
-some time, I can only wish this patch can be accepted in the future.
-
-Note: The previous part of this patch series is the duplicate content
-belonging to zh/ref-filter-raw-data.
-
-ZheNing Hu (27):
-  [GSOC] ref-filter: add obj-type check in grab contents
-  [GSOC] ref-filter: add %(raw) atom
-  [GSOC] ref-filter: --format=%(raw) support --perl
-  [GSOC] ref-filter: use non-const ref_format in *_atom_parser()
-  [GSOC] ref-filter: add %(rest) atom
-  [GSOC] ref-filter: pass get_object() return value to their callers
-  [GSOC] ref-filter: introduce free_ref_array_item_value() function
-  [GSOC] ref-filter: add cat_file_mode to ref_format
-  [GSOC] ref-filter: modify the error message and value in get_object
-  [GSOC] cat-file: add has_object_file() check
-  [GSOC] cat-file: change batch_objects parameter name
-  [GSOC] cat-file: create p1006-cat-file.sh
-  [GSOC] cat-file: reuse ref-filter logic
-  [GSOC] cat-file: reuse err buf in batch_object_write()
-  [GSOC] cat-file: re-implement --textconv, --filters options
-  [GSOC] ref-filter: remove grab_oid() function
-  [GSOC] ref-filter: performance optimization by skip
-    parse_object_buffer
-  [GSOC] ref-filter: use atom_type and merge two for loop in grab_person
-  [GSOC] ref-filter: remove strlen from find_subpos
-  [GSOC] ref-filter: introducing xstrvfmt_len() and xstrfmt_len()
-  [GSOC] ref-filter: remove second parsing in format_ref_array_item
-  [GSOC] ref-filter: introduction ref_filter_slopbuf
-  [GSOC] ref-filter: add deref member to struct used_atom
-  [GSOC] ref-filter: introduce symref_atom_parser()
-  [GSOC] ref-filter: use switch case instread of if else
-  [GSOC] ref-filter: reuse finnal buffer if no stack need
-  [GSOC] ref-filter: add need_get_object_info flag to struct expand_data
-
- Documentation/git-cat-file.txt     |   6 +
- Documentation/git-for-each-ref.txt |   9 +
- builtin/branch.c                   |   2 +
- builtin/cat-file.c                 | 275 +++------
- builtin/for-each-ref.c             |   3 +-
- builtin/tag.c                      |   4 +-
- builtin/verify-tag.c               |   2 +
- quote.c                            |  17 +
- quote.h                            |   1 +
- ref-filter.c                       | 902 +++++++++++++++++++----------
- ref-filter.h                       |  30 +-
- strbuf.c                           |  21 +
- strbuf.h                           |   6 +
- t/perf/p1006-cat-file.sh           |  28 +
- t/t1006-cat-file.sh                | 239 ++++++++
- t/t3203-branch-output.sh           |   4 +
- t/t6300-for-each-ref.sh            | 235 ++++++++
- t/t6301-for-each-ref-errors.sh     |   2 +-
- t/t7004-tag.sh                     |   4 +
- t/t7030-verify-tag.sh              |   4 +
- 20 files changed, 1283 insertions(+), 511 deletions(-)
- create mode 100755 t/perf/p1006-cat-file.sh
-
-
-base-commit: 5d213e46bb7b880238ff5ea3914e940a50ae9369
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1016%2Fadlternative%2Fcat-file-reuse-ref-filter-logic-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1016/adlternative/cat-file-reuse-ref-filter-logic-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1016
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index cbb6f87d13f..6da899c6296 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -241,8 +241,8 @@ raw:size::
+ 	The raw data size of the object.
+ 
+ Note that `--format=%(raw)` can not be used with `--python`, `--shell`, `--tcl`,
+-`--perl` because such language may not support arbitrary binary data in their
+-string variable type.
++because such language may not support arbitrary binary data in their string
++variable type.
+ 
+ The message in a commit or a tag object is `contents`, from which
+ `contents:<part>` can be used to extract various parts out of:
+diff --git a/quote.c b/quote.c
+index 8a3a5e39eb1..26719d21d1e 100644
+--- a/quote.c
++++ b/quote.c
+@@ -471,6 +471,23 @@ void perl_quote_buf(struct strbuf *sb, const char *src)
+ 	strbuf_addch(sb, sq);
+ }
+ 
++void perl_quote_buf_with_len(struct strbuf *sb, const char *src, size_t len)
++{
++	const char sq = '\'';
++	const char bq = '\\';
++	const char *c = src;
++	const char *end = src + len;
++
++	strbuf_addch(sb, sq);
++	while (c != end) {
++		if (*c == sq || *c == bq)
++			strbuf_addch(sb, bq);
++		strbuf_addch(sb, *c);
++		c++;
++	}
++	strbuf_addch(sb, sq);
++}
++
+ void python_quote_buf(struct strbuf *sb, const char *src)
+ {
+ 	const char sq = '\'';
+diff --git a/quote.h b/quote.h
+index 049d8dd0b3d..87ff458b06d 100644
+--- a/quote.h
++++ b/quote.h
+@@ -95,6 +95,7 @@ char *quote_path(const char *in, const char *prefix, struct strbuf *out, unsigne
+ 
+ /* quoting as a string literal for other languages */
+ void perl_quote_buf(struct strbuf *sb, const char *src);
++void perl_quote_buf_with_len(struct strbuf *sb, const char *src, size_t len);
+ void python_quote_buf(struct strbuf *sb, const char *src);
+ void tcl_quote_buf(struct strbuf *sb, const char *src);
+ void basic_regex_quote_buf(struct strbuf *sb, const char *src);
+diff --git a/ref-filter.c b/ref-filter.c
+index 1e660f60c4b..f2454d34ce8 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -747,7 +747,10 @@ static void quote_formatting(struct strbuf *s, const char *str, ssize_t len, int
+ 		sq_quote_buf(s, str);
+ 		break;
+ 	case QUOTE_PERL:
+-		perl_quote_buf(s, str);
++		if (len < 0)
++			perl_quote_buf(s, str);
++		else
++			perl_quote_buf_with_len(s, str, len);
+ 		break;
+ 	case QUOTE_PYTHON:
+ 		python_quote_buf(s, str);
+@@ -1010,10 +1013,14 @@ int verify_ref_format(struct ref_format *format)
+ 		at = parse_ref_filter_atom(format, sp + 2, ep, &err);
+ 		if (at < 0)
+ 			die("%s", err.buf);
+-		if (format->quote_style && used_atom[at].atom_type == ATOM_RAW &&
+-		    used_atom[at].u.raw_data.option == RAW_BARE)
++
++		if ((format->quote_style == QUOTE_PYTHON ||
++		     format->quote_style == QUOTE_SHELL ||
++		     format->quote_style == QUOTE_TCL) &&
++		     used_atom[at].atom_type == ATOM_RAW &&
++		     used_atom[at].u.raw_data.option == RAW_BARE)
+ 			die(_("--format=%.*s cannot be used with"
+-			      "--python, --shell, --tcl, --perl"), (int)(ep - sp - 2), sp + 2);
++			      "--python, --shell, --tcl"), (int)(ep - sp - 2), sp + 2);
+ 		cp = ep + 1;
+ 
+ 		if (skip_prefix(used_atom[at].name, "color:", &color))
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 18554f62d94..3d15d0a5360 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -915,8 +915,23 @@ test_expect_success '%(raw) with --tcl must fail' '
+ 	test_must_fail git for-each-ref --format="%(raw)" --tcl
+ '
+ 
+-test_expect_success '%(raw) with --perl must fail' '
+-	test_must_fail git for-each-ref --format="%(raw)" --perl
++test_expect_success '%(raw) with --perl' '
++	git for-each-ref --format="\$name= %(raw);
++print \"\$name\"" refs/myblobs/blob1 --perl | perl >actual &&
++	cmp blob1 actual &&
++	git for-each-ref --format="\$name= %(raw);
++print \"\$name\"" refs/myblobs/blob3 --perl | perl >actual &&
++	cmp blob3 actual &&
++	git for-each-ref --format="\$name= %(raw);
++print \"\$name\"" refs/myblobs/blob8 --perl | perl >actual &&
++	cmp blob8 actual &&
++	git for-each-ref --format="\$name= %(raw);
++print \"\$name\"" refs/myblobs/first --perl | perl >actual &&
++	cmp one actual &&
++	git cat-file tree refs/mytrees/first > expected &&
++	git for-each-ref --format="\$name= %(raw);
++print \"\$name\"" refs/mytrees/first --perl | perl >actual &&
++	cmp expected actual
+ '
+ 
+ test_expect_success '%(raw) with --shell must fail' '
 -- 
 gitgitgadget
+
