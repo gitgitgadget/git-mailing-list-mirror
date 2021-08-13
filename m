@@ -2,66 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5367C4338F
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 15:31:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0142DC4338F
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 15:35:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD1E160EFE
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 15:31:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CBEF260F91
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 15:35:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241328AbhHMPcQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Aug 2021 11:32:16 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52000 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241320AbhHMPcP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Aug 2021 11:32:15 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F1E83DD8F4;
-        Fri, 13 Aug 2021 11:31:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FABqL66csRY7GBzbuSREwD9Lao+8rUy3T80/0a
-        mZPNQ=; b=UMYbVhGCNVZ4Rz9Nqe0yybprsz+7W9odISzqKguZXO/VnNdyuJIP2K
-        vNVlZhUmYLfFCKaiyzhFeEXCe2YxuR2mcqIgLRewy4CMIRIl0I494e050ljQflWX
-        HA7YikJSm/0WkhkUNuHhugVeQWBaJ4c4Hg/gK8UzAGgdyVh90W62Q=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E9ED1DD8F3;
-        Fri, 13 Aug 2021 11:31:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 29138DD8F2;
-        Fri, 13 Aug 2021 11:31:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 0/3] rebase --continue: remove .git/MERGE_MSG
-References: <pull.1013.git.1628587917.gitgitgadget@gmail.com>
-        <pull.1013.v2.git.1628775729.gitgitgadget@gmail.com>
-        <CABPp-BGHmCCeY7j9hVDGZPuLU8gR-ka3iEzUjK0wvkSUSYdNxA@mail.gmail.com>
-Date:   Fri, 13 Aug 2021 08:31:46 -0700
-In-Reply-To: <CABPp-BGHmCCeY7j9hVDGZPuLU8gR-ka3iEzUjK0wvkSUSYdNxA@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 12 Aug 2021 17:46:22 -0700")
-Message-ID: <xmqqim09xswt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
+        id S236839AbhHMPgY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Aug 2021 11:36:24 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:38391 "EHLO
+        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S236719AbhHMPgY (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 13 Aug 2021 11:36:24 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.nyi.internal (Postfix) with ESMTP id E80F85C012A;
+        Fri, 13 Aug 2021 11:35:56 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+  by compute2.internal (MEProxy); Fri, 13 Aug 2021 11:35:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spawned.biz; h=
+        mime-version:message-id:in-reply-to:references:date:from:to:cc
+        :subject:content-type; s=fm3; bh=evX4C3SD7ooQVHOOuyIYXJB3Zlo3z+x
+        +G2NJokIdJ8s=; b=gQKtFJpjonVY0IZ//3tpVfRNC7GdKFIAnsSCCTU8gMDmeA+
+        4/pXZcyxxYYYAabjYd5vpwHSeplazekLcVtltVL6vKyrXWAjPsLvX779tPe33JO0
+        IU/jE2kFb//E/sf5xA/Y3l7woKkFXeEK8ojwCOb1YmjLS60EmXRls7nOV580LhT+
+        rPXPPyVkjWeiQNGqDxYn1lCYvSo9RpFHBuHYxtODKj1WtJNvnhHLev1TGIMYDtoF
+        lwjuUr+w5Gb4wZTNI8kJkQZfjvHoTaQCNFcRAQvRRYApa0PSI5rPUbpvte0seT2e
+        7cySx04TL5b3qRqoVb+NusW6b3xjsj7hP85yNOw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=evX4C3
+        SD7ooQVHOOuyIYXJB3Zlo3z+x+G2NJokIdJ8s=; b=TScfK7omhOYGxob+QlAn/b
+        9cNCaz3OIn7gtGA3SljYSdWaODVt3rDESCx5q7ZYzXUhgEYM0UMn0TLDrmlPVkFy
+        nYvPbJTXOAtF+5zqoBjDTd+06N1mwroPvK6AuqerC8BxPAK/7EZipDnAebWhHb5E
+        IXghPfGMNflfYtxWzpZLZ9NQXwvBXPZaBwZbq2Mhzxzcj5OLY8XXRosZ2KFTWwNF
+        LlH77bqJ2/w1sNgm3Vs1Iw/j/YHoK9oW0VCrj3VcYwAIRdTuKFUCjbgPSngB6Oy5
+        NRFAIAFmm9aVZ5JGxQBJDaJtM/JJghmmTVkN9bEubBtR8omx8raxQlGfT3xIeVvg
+        ==
+X-ME-Sender: <xms:W5EWYVZUY4BBP_Uv9Qu2N1E_-0d7GiyhPJUVtR9LsQrz-MBSHLhlvQ>
+    <xme:W5EWYcZIToMuuzjZPSvCuTAY9g-LLW70kMHoygHA_lgw7C-XPMs7bKVzIdWAt_ReP
+    CzEXzQHyaQfs2KNkA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrkeehgdelvdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedflfhovghl
+    ucfmlhhinhhghhgvugdfuceothhhvggpjhhksehsphgrfihnvggurdgsihiiqeenucggtf
+    frrghtthgvrhhnpedtkefgudekudejieejgfehleekkefguddvuefgudelfeefffdtveeu
+    ueehhfeifeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpehthhgvpghjkhesshhprgifnhgvugdrsghiii
+X-ME-Proxy: <xmx:W5EWYX84n_8L4JakyLEUQciPsRao1zjcXUKGN77jhXdAIsl6H3nh2w>
+    <xmx:W5EWYTqUhF-emjE9GV8S-sHEBpc2SOQWfD0F2wFTHEl_0mP0aiWvYQ>
+    <xmx:W5EWYQr9WvZLYrmicofBt8TX2xBA3U8utXcgKu73TfGWzUkCCdL_lQ>
+    <xmx:XJEWYbVZ0e7A3vhijiNcC1S4mzSXs-VBQI3tdt_d-sYe_xjlCvXx5A>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 6579FA038A7; Fri, 13 Aug 2021 11:35:55 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-554-g53a5f93b7d-fm-20210809.002-g53a5f93b
+Mime-Version: 1.0
+Message-Id: <1fc066c5-a085-4865-9eb9-853dfcbe33c2@www.fastmail.com>
+In-Reply-To: <0151003c-d544-1fab-18e9-34eb84842555@gmail.com>
+References: <pull.1014.v2.git.1628725421868.gitgitgadget@gmail.com>
+ <pull.1014.v3.git.1628755346354.gitgitgadget@gmail.com>
+ <e3a24819-9953-0245-7f64-472def4d180a@gmail.com>
+ <0576a44a-c726-4550-ad29-52f09982de98@www.fastmail.com>
+ <0151003c-d544-1fab-18e9-34eb84842555@gmail.com>
+Date:   Fri, 13 Aug 2021 17:35:43 +0200
+From:   "Joel Klinghed" <the_jk@spawned.biz>
+To:     phillip.wood@dunelm.org.uk,
+        "Joel Klinghed via GitGitGadget" <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     "Jeff King" <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Junio C Hamano" <gitster@pobox.com>
+Subject: Re: [PATCH v3] commit: restore --edit when combined with --fixup
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9247BF18-FC4B-11EB-A977-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
 
-> Thanks, this version looks good to me.
 
-Thanks, both.  Elijah, can I take that as your Reviewed-by?
+On Fri, Aug 13, 2021, at 15:06, Phillip Wood wrote:
+> On 12/08/2021 11:01, Joel Klinghed wrote:
+> > I looked at moving the condition to one place but as use_editor = 0
+> > is only set for --fixup if there isn't a suboption specified I didn't want
+> > to have to duplicate the check for a suboption when deciding if
+> > use_editor should default to zero.
+> 
+> I don't think you need to duplicate the check for a suboption, can't you 
+> just do this on top of master (i.e without you patch applied)?
+> 
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 243c626307..67a84ff6e4 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1251,11 +1251,6 @@ static int parse_and_validate_options(int argc, 
+> const char *argv[],
+>          if (force_author && renew_authorship)
+>                  die(_("Using both --reset-author and --author does not 
+> make sense"));
+> 
+> -       if (logfile || have_option_m || use_message)
+> -               use_editor = 0;
+> -       if (0 <= edit_flag)
+> -               use_editor = edit_flag;
+> -
+>          /* Sanity check options */
+>          if (amend && !current_head)
+>                  die(_("You have nothing to amend."));
+> @@ -1344,6 +1339,11 @@ static int parse_and_validate_options(int argc, 
+> const char *argv[],
+>                  }
+>          }
+> 
+> +       if (logfile || have_option_m || use_message)
+> +               use_editor = 0;
+> +       if (0 <= edit_flag)
+> +               use_editor = edit_flag;
+> +
+>          cleanup_mode = get_cleanup_mode(cleanup_arg, use_editor);
+> 
+>          handle_untracked_files_arg(s);
+> 
+> I chose to move the other clause that sets use_editor as well so they 
+> stay together.
+> 
+
+With the above change use_editor no longer defaults to 0 for --fixup as
+it used to do.
+My expected behavior (based on old versions):
+git commit --fixup <hash>  /// No editor
+git commit --fixup <hash> --edit  /// Editor
+As far as I can see your change would display an editor in both cases.
+
+An alternative would be:
++       if (logfile || have_option_m || use_message || fixup_message)
++               use_editor = 0;
++       if (0 <= edit_flag)
++               use_editor = edit_flag;
+
+That would fix the above cases but in 
+"commit: add amend suboption to --fixup to create amend! commit"
+the implementation left
+git commit --fixup amend:<hash>  // Editor
+and I didn't want to change that. But if the default should be no editor
+here as well then the above would be a better patch.
+
+/JK
