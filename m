@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FA9CC4338F
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 21:05:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34144C4338F
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 21:05:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52B586109D
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 21:05:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 06ACC60FC3
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 21:05:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234725AbhHMVF6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Aug 2021 17:05:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43974 "EHLO
+        id S234823AbhHMVGF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Aug 2021 17:06:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbhHMVF4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Aug 2021 17:05:56 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D904C061756
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 14:05:29 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id h9-20020a17090a470900b001791c0352aaso4957795pjg.2
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 14:05:29 -0700 (PDT)
+        with ESMTP id S234763AbhHMVF7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Aug 2021 17:05:59 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B850BC0617AF
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 14:05:32 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id k3-20020a170902c403b029012d1b645e45so6865657plk.4
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 14:05:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=HPs/J5doyeqzrGrU67x+aGWKVel1tmn2p10jq9Nu/Wg=;
-        b=Y99AWLgEJcjGnDC9symbQxVED7VKD1tyBz15fWgNZ/cDw7ka1iTtULZQ0XtkZ4Dc6/
-         01yK8evZdAfy/DUnSm335JKBsR/vyWeXTBjC1w9YBGoZ3e2jyA2CBHD89n3J3JU5BvwA
-         cCFSql8jcItOSXVHoLydgcGGvqiqmPsJOrAp/qPfSZ+AAvwTlpa21lGYQYbXCS2n6L9n
-         pUUQBb9qSxWXVQInyz/PbwBm9v6VnrDKBcT1pf+HolDxIEl7M1jrnKATco23EMSre/e3
-         pjJS1/ru/LDrXEoS/Um8lvu8X4KEN+dmAfvKzyqOAyhPqHKMA6AO0GTPk4vIY/FewCQS
-         qLXQ==
+        bh=gcuBlYHDN5+v6e09KvbwSDMhCeBJ0Ai0Ad7+1TXjHdo=;
+        b=j5HTD/TPIVTJtco7nEGAQLJroTPpEtO6rYhJwuV/873MQUBcLHpVl24NMZKI1C67UF
+         FYBGKUitRLoWknNtN8+cPdaXDpaJFOLK6+6wOlLehxITTuQtGEyOvBFcZqPo85SeXGBe
+         bQXC1Kb4Gsi5fr8eAcleDk8m5tUeBap8JDqWNeMBOwDo/0ZgSVn7Admnk1Rx88d38Aif
+         5bqbtlmgs8jcD0WkXv3BzqgRPR15WafsttbQVxgcL+Z27E0tb6hwCB/sWC0ZAgXMtgX5
+         CPyvuaek6Y6jKhf/W7aGU7fTFapLGpYAy3PckxXAEtF6vsZ2s1VmBitt5ki1NHV8z3zB
+         k7sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=HPs/J5doyeqzrGrU67x+aGWKVel1tmn2p10jq9Nu/Wg=;
-        b=jRgvWIYrA7eVQB75yr+5fgXvxbBGWz7vVttLMNiSG42V000+jFpKvAySclItLXWCVy
-         XHFD9ZJGfhxDBDSWkNJlfAVw/WpK+FW4gEGkydq5rBOa+zWzhvBjlX9664n6ypmeTbj7
-         bl2wb3JcAF+at4U9hvdftoeP8c8dXAAvv4aSHIBArXnNo9u7IbuBO+cd4DIxhiFTfdQw
-         kR+cEsmsITGFQg6LbH61p8uNXWZ92BdW80lIIIammlbaeT9KMtoTz8UtCThcAP2/ILSb
-         v7fUZWwMgWAwRd5raHmhI8JRPwOjlKDwRrCglCDZtBwOedmYLMJwuTtNxDn7zgAbowjx
-         cCNw==
-X-Gm-Message-State: AOAM531A1Yk1kr5uh0kdAj5iYbGipRMwp08uQMDrzHNKzNSmoaRsrba7
-        Man6sVbKs+7yAQpLdP5y//kObbEzarEYqpwP+DKqdHhrK0VMrgIw/X9D1+SncktB9TeHlsBnalI
-        oG/fHwFHZkQzaV67Ir6Qa1pOuktrS/Tfj6/JAI9ME0lvqLAUZBydnSZTeXIrkwUmjo4rGpvUWgi
-        pI
-X-Google-Smtp-Source: ABdhPJyu3Lq3Vpgw1ER55vSEHNmD/xiOq+JkjNtzNMt9AHSqYxikmypHUdxcZ4bNFD0AthSK8TcWD5qBx/cZT0dXtU+z
+        bh=gcuBlYHDN5+v6e09KvbwSDMhCeBJ0Ai0Ad7+1TXjHdo=;
+        b=DEOhEeWrf+Ed9Ip6pJqCsHbuqlEJliDaAhe/bT4jw7smsMcakQlIVXVvdVbvyE0OX5
+         vM9TDGmJsJ9KLpfowyrmnhmpMGk4n0XR0oT2gAjhSMBo3BYbMtjVifLhKBuSg+lL5Exh
+         594LWr5z1Hga7/sokRDuWGiP0ACmx43xAgkqsDFhX/TT2Oh1pIJPZjD0l0sSFt1vbwBN
+         3F7rsaLfXkjtLYg1i7zqGCTchHQzObC35SvErUYNJK3Sblsdn/JeLZ4STW6qmN8AOfiJ
+         +RPz+j6reLYLQa4yz7xLvUaEREuiH1AxPAwtyUxFMvExO1gqnn4xUz1FCquyzO+AZ+A/
+         EQ4w==
+X-Gm-Message-State: AOAM533qOtr80qklkVbqdY/ObeY/E3gMzg3jAeIdi0NSnBEV6NY3jTU1
+        BVU8t989LzqBkVe34Wy/AiNkN1jtZxKOcDH1duD3nvAelRaNp89SS9PW2WQEUUMMm2iJjkHNYm8
+        BtrcIIwkr1v9DFU11INcSm8VwSYSMvcWGnBBlfrhkExg3sUGtUDIu2kTjA75OOUfVog3O2H269p
+        Tg
+X-Google-Smtp-Source: ABdhPJwZmw9Cl7ECIz9m0rLjsnFL7/mO/tRM6CBK8QDcvagPskEeqOvTdq7P4D5pKOB1sWC43h6iTMWidq5trUsSq+SJ
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a62:ed06:0:b029:32c:a800:ba47 with
- SMTP id u6-20020a62ed060000b029032ca800ba47mr4165564pfh.56.1628888728953;
- Fri, 13 Aug 2021 14:05:28 -0700 (PDT)
-Date:   Fri, 13 Aug 2021 14:05:16 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a62:b414:0:b029:317:52d:7fd5 with
+ SMTP id h20-20020a62b4140000b0290317052d7fd5mr4325156pfn.30.1628888732158;
+ Fri, 13 Aug 2021 14:05:32 -0700 (PDT)
+Date:   Fri, 13 Aug 2021 14:05:18 -0700
 In-Reply-To: <cover.1628888668.git.jonathantanmy@google.com>
-Message-Id: <5994a517e8afc345e8f649b2368756e22b0e9ebe.1628888668.git.jonathantanmy@google.com>
+Message-Id: <aa3f1f3c8908bd497ef506db466fc123eaccf21d.1628888668.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1628618950.git.jonathantanmy@google.com> <cover.1628888668.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.33.0.rc1.237.g0d66db33f3-goog
-Subject: [PATCH v2 1/8] submodule: lazily add submodule ODBs as alternates
+Subject: [PATCH v2 3/8] grep: typesafe versions of grep_source_init
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, matheus.bernardino@usp.br,
@@ -73,144 +73,136 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach Git to add submodule ODBs as alternates to the object store of
-the_repository only upon the first access of an object not in
-the_repository, and not when add_submodule_odb() is called.
-
-This provides a means of gradually migrating from accessing a
-submodule's object through alternates to accessing a submodule's object
-by explicitly passing its repository object. Any Git command can declare
-that it might access submodule objects by calling add_submodule_odb()
-(as they do now), but the submodule ODBs themselves will not be added
-until needed, so individual commands and/or combinations of arguments
-can be migrated one by one.
-
-[The advantage of explicit repository-object passing is code clarity (it
-is clear which repository an object read is from), performance (there is
-no need to linearly search through all submodule ODBs whenever an object
-is accessed from any repository, whether superproject or submodule), and
-the possibility of future features like partial clone submodules (which
-right now is not possible because if an object is missing, we do not
-know which repository to lazy-fetch into).]
-
-This commit also introduces an environment variable that a test may set
-to make the actual registration of alternates fatal, in order to
-demonstrate that its codepaths do not need this registration.
+grep_source_init() can create "struct grep_source" objects and,
+depending on the value of the type passed, some void-pointer parameters have
+different meanings. Because one of these types (GREP_SOURCE_OID) will
+require an additional parameter in a subsequent patch, take the
+opportunity to increase clarity and type safety by replacing this
+function with individual functions for each type.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- object-file.c |  5 +++++
- submodule.c   | 20 +++++++++++++++++++-
- submodule.h   |  7 +++++++
- t/README      | 10 ++++++++++
- 4 files changed, 41 insertions(+), 1 deletion(-)
+ builtin/grep.c |  4 ++--
+ grep.c         | 46 ++++++++++++++++++++++++++++------------------
+ grep.h         |  7 ++++---
+ 3 files changed, 34 insertions(+), 23 deletions(-)
 
-diff --git a/object-file.c b/object-file.c
-index 3d27dc8dea..621b121bcb 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -32,6 +32,7 @@
- #include "packfile.h"
- #include "object-store.h"
- #include "promisor-remote.h"
-+#include "submodule.h"
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 87bcb934a2..e454335e9d 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -333,7 +333,7 @@ static int grep_oid(struct grep_opt *opt, const struct object_id *oid,
+ 	struct grep_source gs;
  
- /* The maximum size for an object header. */
- #define MAX_HEADER_LEN 32
-@@ -1592,6 +1593,10 @@ static int do_oid_object_info_extended(struct repository *r,
- 				break;
- 		}
+ 	grep_source_name(opt, filename, tree_name_len, &pathbuf);
+-	grep_source_init(&gs, GREP_SOURCE_OID, pathbuf.buf, path, oid);
++	grep_source_init_oid(&gs, pathbuf.buf, path, oid);
+ 	strbuf_release(&pathbuf);
  
-+		if (register_all_submodule_odb_as_alternates())
-+			/* We added some alternates; retry */
-+			continue;
-+
- 		/* Check if it is a missing object */
- 		if (fetch_if_missing && repo_has_promisor_remote(r) &&
- 		    !already_retried &&
-diff --git a/submodule.c b/submodule.c
-index 8e611fe1db..8fde90e906 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -165,6 +165,8 @@ void stage_updated_gitmodules(struct index_state *istate)
- 		die(_("staging updated .gitmodules failed"));
+ 	if (num_threads > 1) {
+@@ -359,7 +359,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
+ 	struct grep_source gs;
+ 
+ 	grep_source_name(opt, filename, 0, &buf);
+-	grep_source_init(&gs, GREP_SOURCE_FILE, buf.buf, filename, filename);
++	grep_source_init_file(&gs, buf.buf, filename);
+ 	strbuf_release(&buf);
+ 
+ 	if (num_threads > 1) {
+diff --git a/grep.c b/grep.c
+index 424a39591b..8a8105c2eb 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1825,14 +1825,24 @@ int grep_source(struct grep_opt *opt, struct grep_source *gs)
+ 	return grep_source_1(opt, gs, 0);
  }
  
-+static struct string_list added_submodule_odb_paths = STRING_LIST_INIT_NODUP;
-+
- /* TODO: remove this function, use repo_submodule_init instead. */
- int add_submodule_odb(const char *path)
- {
-@@ -178,12 +180,28 @@ int add_submodule_odb(const char *path)
- 		ret = -1;
- 		goto done;
- 	}
--	add_to_alternates_memory(objects_directory.buf);
-+	string_list_insert(&added_submodule_odb_paths,
-+			   strbuf_detach(&objects_directory, NULL));
- done:
- 	strbuf_release(&objects_directory);
- 	return ret;
- }
- 
-+int register_all_submodule_odb_as_alternates(void)
++static void grep_source_init_buf(struct grep_source *gs, char *buf,
++				 unsigned long size)
 +{
-+	int i;
-+	int ret = added_submodule_odb_paths.nr;
-+
-+	for (i = 0; i < added_submodule_odb_paths.nr; i++)
-+		add_to_alternates_memory(added_submodule_odb_paths.items[i].string);
-+	if (ret) {
-+		string_list_clear(&added_submodule_odb_paths, 0);
-+		if (git_env_bool("GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB", 0))
-+			BUG("register_all_submodule_odb_as_alternates() called");
-+	}
-+	return ret;
++	gs->type = GREP_SOURCE_BUF;
++	gs->name = NULL;
++	gs->path = NULL;
++	gs->buf = buf;
++	gs->size = size;
++	gs->driver = NULL;
++	gs->identifier = NULL;
 +}
 +
- void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- 					     const char *path)
+ int grep_buffer(struct grep_opt *opt, char *buf, unsigned long size)
  {
-diff --git a/submodule.h b/submodule.h
-index 84640c49c1..c252784bc2 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -97,7 +97,14 @@ int submodule_uses_gitfile(const char *path);
- #define SUBMODULE_REMOVAL_IGNORE_IGNORED_UNTRACKED (1<<2)
- int bad_to_remove_submodule(const char *path, unsigned flags);
+ 	struct grep_source gs;
+ 	int r;
  
-+/*
-+ * Call add_submodule_odb() to add the submodule at the given path to a list.
-+ * When register_all_submodule_odb_as_alternates() is called, the object stores
-+ * of all submodules in that list will be added as alternates in
-+ * the_repository.
-+ */
- int add_submodule_odb(const char *path);
-+int register_all_submodule_odb_as_alternates(void);
+-	grep_source_init(&gs, GREP_SOURCE_BUF, NULL, NULL, NULL);
+-	gs.buf = buf;
+-	gs.size = size;
++	grep_source_init_buf(&gs, buf, size);
  
- /*
-  * Checks if there are submodule changes in a..b. If a is the null OID,
-diff --git a/t/README b/t/README
-index 9e70122302..8b67b4f00b 100644
---- a/t/README
-+++ b/t/README
-@@ -448,6 +448,16 @@ GIT_TEST_CHECKOUT_WORKERS=<n> overrides the 'checkout.workers' setting
- to <n> and 'checkout.thresholdForParallelism' to 0, forcing the
- execution of the parallel-checkout code.
+ 	r = grep_source(opt, &gs);
  
-+GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=<boolean>, when true, makes
-+registering submodule ODBs as alternates a fatal action. Support for
-+this environment variable can be removed once the migration to
-+explicitly providing repositories when accessing submodule objects is
-+complete (in which case we might want to replace this with a trace2
-+call so that users can make it visible if accessing submodule objects
-+without an explicit repository still happens) or needs to be abandoned
-+for whatever reason (in which case the migrated codepaths still retain
-+their performance benefits).
-+
- Naming Tests
- ------------
+@@ -1840,28 +1850,28 @@ int grep_buffer(struct grep_opt *opt, char *buf, unsigned long size)
+ 	return r;
+ }
  
+-void grep_source_init(struct grep_source *gs, enum grep_source_type type,
+-		      const char *name, const char *path,
+-		      const void *identifier)
++void grep_source_init_file(struct grep_source *gs, const char *name,
++			   const char *path)
+ {
+-	gs->type = type;
++	gs->type = GREP_SOURCE_FILE;
+ 	gs->name = xstrdup_or_null(name);
+ 	gs->path = xstrdup_or_null(path);
+ 	gs->buf = NULL;
+ 	gs->size = 0;
+ 	gs->driver = NULL;
++	gs->identifier = xstrdup(path);
++}
+ 
+-	switch (type) {
+-	case GREP_SOURCE_FILE:
+-		gs->identifier = xstrdup(identifier);
+-		break;
+-	case GREP_SOURCE_OID:
+-		gs->identifier = oiddup(identifier);
+-		break;
+-	case GREP_SOURCE_BUF:
+-		gs->identifier = NULL;
+-		break;
+-	}
++void grep_source_init_oid(struct grep_source *gs, const char *name,
++			  const char *path, const struct object_id *oid)
++{
++	gs->type = GREP_SOURCE_OID;
++	gs->name = xstrdup_or_null(name);
++	gs->path = xstrdup_or_null(path);
++	gs->buf = NULL;
++	gs->size = 0;
++	gs->driver = NULL;
++	gs->identifier = oiddup(oid);
+ }
+ 
+ void grep_source_clear(struct grep_source *gs)
+diff --git a/grep.h b/grep.h
+index 72f82b1e30..480b3f5bba 100644
+--- a/grep.h
++++ b/grep.h
+@@ -195,9 +195,10 @@ struct grep_source {
+ 	struct userdiff_driver *driver;
+ };
+ 
+-void grep_source_init(struct grep_source *gs, enum grep_source_type type,
+-		      const char *name, const char *path,
+-		      const void *identifier);
++void grep_source_init_file(struct grep_source *gs, const char *name,
++			   const char *path);
++void grep_source_init_oid(struct grep_source *gs, const char *name,
++			  const char *path, const struct object_id *oid);
+ void grep_source_clear_data(struct grep_source *gs);
+ void grep_source_clear(struct grep_source *gs);
+ void grep_source_load_driver(struct grep_source *gs,
 -- 
 2.33.0.rc1.237.g0d66db33f3-goog
 
