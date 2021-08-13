@@ -2,145 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71104C4338F
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 04:12:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C38D1C4338F
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 04:34:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F72F60FED
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 04:12:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 98FD560C40
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 04:34:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233380AbhHMEMz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Aug 2021 00:12:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37196 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbhHMEMy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Aug 2021 00:12:54 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7A50C061756
-        for <git@vger.kernel.org>; Thu, 12 Aug 2021 21:12:26 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id b7so10216520plh.7
-        for <git@vger.kernel.org>; Thu, 12 Aug 2021 21:12:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=X+9dizbsv4OXBwctDz4X5vYZ0td9f/Wdd4TZhuqxDYA=;
-        b=SYVuQbW+999+VJfos20zR/U/dkJ9afxf/mVharnopaH69N27W0rdXyd+pAQSd1mjeP
-         pJTMmNmnYr5P8/5XqUvApX72xBGeayaPIN7DwJ2pXNOaLglQ0obY2Z9PBGN0b9z2naB8
-         BFGltwUEYTs+UFlDlvj+SNXxp6UosvahjBxyUpmiUzIfrdMTJzdr3c3h6q7hvLrrjWPg
-         ESuHreuY0OirA6tvN5fuBQiNsR3cuz2L0o1Vzl8/aCPvJaLcDf6qC+kcHI+28tIqD3Fd
-         VkL+fYugnYnO7dwjydBPHfae2P/Zf7ECuXpkXXK4pkVflgzp00qIM7o5vqdMQBQgprPN
-         wUcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=X+9dizbsv4OXBwctDz4X5vYZ0td9f/Wdd4TZhuqxDYA=;
-        b=AuLUiuzG9vEnHm0TeO2TtCoRLtv+sTs5Fnw3B8d8eSkkSN15ATo6IFOHjnM6YPMc1R
-         3JMmqqi2RRB4gs0BgJhMbgzogQmjBKWg5GtvuxXPoY86KHOToVq8d5vbj87dXS8WAaEG
-         usM9zU3iBouf5+sw1SiyHScHfJJkbbtaUA5On4QOrjKX2Q5Ls/8VqSDjU/QKzStNH4Yh
-         QYw+NIVcnCzy89R/4D3Gqg9xfu9Y3G0JXIzgIPHee2CXR2/eD40bQcFtZhbArHifEg66
-         adFZ9OSYtuf9Wc1zK+Im3kSX/BI/y3KkT887patzK44Ci4AHsLcO9IpECYtfdOlF9VTS
-         isyg==
-X-Gm-Message-State: AOAM532+BBJbliS0kldee64ldXQwf70PuZR/0hUi/2qAhRhNluYc1L2R
-        L+mqg20xd+bNYx2hiKWZAdl+eNdBNxzhfW9ZHdpJhA==
-X-Google-Smtp-Source: ABdhPJyoVxjwVMlwGcE4X1aYWQfLISJ9zsMTuVYzdnXaCl7yeyT7/XpVi09wk0ePqSKnO8P7TxyEX3DIbUCq+HGICns=
-X-Received: by 2002:a63:f342:: with SMTP id t2mr488194pgj.45.1628827945985;
- Thu, 12 Aug 2021 21:12:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1006.v4.git.1628536305810.gitgitgadget@gmail.com>
- <pull.1006.v5.git.1628736366133.gitgitgadget@gmail.com> <xmqqeeaz70ph.fsf@gitster.g>
- <YRW0pGXXWnY7C470@google.com> <c74a9d75-cd89-d020-dcb3-76509bc95284@gmail.com>
-In-Reply-To: <c74a9d75-cd89-d020-dcb3-76509bc95284@gmail.com>
-From:   Mahi Kolla <mahikolla@google.com>
-Date:   Thu, 12 Aug 2021 21:12:15 -0700
-Message-ID: <CAN3QUFa3TRh9rvV3xS8XWd-dTvMqS=2j5Vhvp0wP33oPte9_2w@mail.gmail.com>
+        id S238577AbhHMEfP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Aug 2021 00:35:15 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52335 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235002AbhHMEfP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Aug 2021 00:35:15 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8318EE12EB;
+        Fri, 13 Aug 2021 00:34:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=tbS05SpJu3B9VpyALzQcczDXGB7BaILtvDf9oN0OKAs=; b=Krre
+        QUWVRPjRjs5uLlM90NPcQyIXauQkFipgggfxa6eOwhoUDr3c6SLLvzYOgLOZgjTI
+        IEF7ljpigCuFcKYlh7nwMYfaVsAPBbylj1OpeC15QlUjMEjvob/3RlaVgW3/qHK0
+        CJm2h4ezBBx9nPiva4eKLWWgadX8LQ6Z8Kx9Zvc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7B3EDE12EA;
+        Fri, 13 Aug 2021 00:34:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 05275E12E9;
+        Fri, 13 Aug 2021 00:34:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Mahi Kolla via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Mahi Kolla <mahikolla@google.com>
 Subject: Re: [PATCH v5] clone: set submodule.recurse=true if user enables
  feature.experimental flag
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Mahi Kolla via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+References: <pull.1006.v4.git.1628536305810.gitgitgadget@gmail.com>
+        <pull.1006.v5.git.1628736366133.gitgitgadget@gmail.com>
+        <xmqqeeaz70ph.fsf@gitster.g> <YRW0pGXXWnY7C470@google.com>
+Date:   Thu, 12 Aug 2021 21:34:47 -0700
+Message-ID: <xmqqpmuiynbs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: CAA398B6-FBEF-11EB-98F6-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-Thank you all for the great feedback! I'm learning a lot as a
-first-time contributor :) I will be wrapping my internship this week
-and will continue contributing externally.
+> It seems surprising to me that a user would want to clone with all the
+> submodules fetched *without* intending to then use
+> superproject-plus-submodules together recursively. I would like to hear
+> more about the use case you have in mind, Junio.
 
-> >>
-> >>>
-> >>> Since V1: Made this an opt in feature under the experimental flag. Updated tests to reflect this design change. Also updated commit message.
-> >>
-> >> This does not belong to the commit log message proper.  Noting the
-> >> difference between the version being submitted and the pervious one
-> >> this way is a way to help reviewers and is very much appreciated,
-> >> but please do so below the three-dash line below your sign-off.
->
-> Mahi, since you're using Gitgitgadget, you would put this "since v1"
-> content in the PR description, and Gitgitgadget will append it under
-> the three-dash line when you /submit :) (Do keep the CC's automatically
-> added by GGG so that your next version is CC'ed to those that participated
-> in earlier rounds).
->
+You may need full forest of submodules with the superproject to
+build your ware (i.e. you'd probably want to clone and fetch-update
+them), but you may only be working on the sources in a small subset
+of submodules and do not need your recursive grep or diff to go
+outside that subset, for example.  You'd need to ask the people who
+recursively clone and not set submodule.recurse to true (I am not
+among them).
 
-Got it, thank you!
+> One scenario that did come to mind when I discussed this with Mahi is
+> that a user may provide a pathspec to --recurse-submodules (that is,
+> "yes, this repo has submodules a/ and b/, but I only care about the
+> contents of submodule a/") - and in that case, --recurse-submodules
+> seems to do the right thing with or without Mahi's change.
 
-> >
-> > It seemed to me that trying out this change on feature.experimental flag
-> > was the right approach, because users with that flag have already
-> > volunteered to be testers for upcoming behavior changes; this seems like
-> > one such that is likely to be welcome. By contrast, turning the behavior
-> > on with a separate config variable reduces the pool of testers
-> > essentially to "users who know about this change" - or, to be more
-> > reductive, "a handful of users at Google who we Google Git contributors
-> > already know want this change". I recommended to Mahi that we stick this
-> > feature under 'feature.experimental' because I really wanted to hear
-> > from more users than just Googlers.
->
-> I agree that we would not want yet another config variable that users would
-> have to set. If people know about submodule.recurse and want to always use this
-> behaviour, they already have it in their ~/.gitconfig, so they do not need a new
-> variable. If they do not know about submodule.recurse, then they probably won't learn
-> about this new variable either ;) That's why I suggested to Mahi that in any case it would
-> be a good thing that 'git clone --recurse-submodules' would at least inform users, using
-> an advice, that they might want to set submodule.recurse.
->
+Please be a bit more specific about "the right thing".  Do you mean
+"the submodules that matched the pathspec gets recursed into by
+later operations"?
 
-When discussing with the team, we revisited the feature.experimental
-design. As we have yet to gain strong consensus on making this a
-default config value, we've decided to ship it under a different
-config value: submodule.stickyRecursiveClone. Now, if the user sets
-submodule.stickyRecursiveClone=true, when they run git clone
---recurse-submodules, we will set submodule.recurse=true. While this
-may mean a smaller dataset (only people who know of this flag), we can
-still collect valuable data.
+If so, "git clone --resurse-submodules=. $from_there" may perhaps be
+the "there is no way to we make this opt-in?" I have been asking
+about (not "asking for")?
 
-As for the advice message, I agree that would be a really useful
-feature. I'll submit that as a different patch.
+> It seemed to me that trying out this change on feature.experimental flag
+> was the right approach, because users with that flag have already
+> volunteered to be testers for upcoming behavior changes
 
-> >>
-> >> Perhaps a separate (and new) configuration variable (in ~/.gitconfig
-> >> perhaps) can be used as that opt-in flag (I wonder if the existing
-> >> submodule.recurse variable can be that opt-in flag, though).
-> >>
+Yes, if we already have a consensus that a proposed change is
+something we hope to be desirable, then feature.experimental is a
+good way to see if early adopters can find problems in their real
+world use, as these volunteers may include audiences with different
+use pattern from the original advocates of a particular feature, who
+might have dogfooded the new feature to gain consensus that it may
+want to become the default.
 
-Unfortunately, the submodule.recurse variable can't be used as the
-opt-in flag because this would cause commands to run recursively even
-if developers don't have submodules in their project (aka don't run
-git clone --recurse-submodules). That's why the alternate config value
-seems a better choice at the moment.
+By the way, I am not fundamentally opposed to the feature being
+proposed.  I would imagine that such a feature would be liked by
+those who want to keep things simpler.  I however am hesitant to see
+it pushed too hastily without considering if it harms existing users
+with different preferences.
 
-Let me know what you guys think!
+IOW, I was primarily reacting to the apparent wrong order in which
+things are being done, first throwing this into feature.experimental
+before we have gathered enough confidence that it may be a good
+thing to do by having it in shipped version as an opt-in feature.
 
-Best,
-Mahi Kolla
+Thanks.
