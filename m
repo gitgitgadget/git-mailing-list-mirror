@@ -2,126 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07D93C4338F
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 22:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75564C4338F
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 22:57:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D5406610EA
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 22:30:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 52D9A60F51
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 22:57:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235232AbhHMWag (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Aug 2021 18:30:36 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:42162 "EHLO
+        id S235264AbhHMW54 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Aug 2021 18:57:56 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:42190 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S235029AbhHMWaf (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 13 Aug 2021 18:30:35 -0400
+        by vger.kernel.org with ESMTP id S235029AbhHMW54 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 13 Aug 2021 18:57:56 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E9C4E60448;
-        Fri, 13 Aug 2021 22:30:07 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 84A1860101;
+        Fri, 13 Aug 2021 22:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1628893808;
-        bh=5PD/7poFBNLQVSk02RbGUn+5tixf0VgNB6/MC9Bu2Aw=;
+        s=default; t=1628895418;
+        bh=iey5eiHTtLA/MVluBEnKQNi0BNhilDTuMg/BE5U5yrc=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=QTXfxLV8ekxBTcIU4Y+0QTrfSFOchwNM5ZIOA+IDkLgaLlRsV5Krh+H44p8FNN6en
-         9TyhJ0VuKAKGE3X3HhknwXFHbgMbooMFUyDhpa2eeS0x8Jx6DDgJ6DoMJwPLGWN3Se
-         JNB/QOyQ61q0M+znNIWZSSyvvEd0dt14IAzt6RkoaP+S+q4hDBVrqHPPPVUrcPvjnx
-         zoLSO5Hc6Hf7Z8OsQe2uQEBVXRmL4N0m7+SYanejITd39DrhIKtPWfKAYDat6yY/cm
-         U1qAFbumGQOI03Ro49qZ3drwKLtbIIF9s9S2AgWij6hkQzsWcLM1v93Jee56WCttfT
-         ai+2zxm4siZ/wNJgsGxRWu0KSI5VXBHWQmluJQPkjVLVKXxm4xrIk4QaFvIk2fhq0v
-         guhyrPEUgA6oUo+VL0OpzNb9ARnHoa/oTBHRG9EpJXOphJ3R91PYwTmsPKcG6uTs2B
-         jNoAcX7NZ4oi/Qbo5FSwbspgFyTMXGZtOv2I1vZgGbPvLhcn3BY
-Date:   Fri, 13 Aug 2021 22:30:03 +0000
+        b=T8ouGn+b5WyF8DLkUGOtebHwqLo6TLN2V11H2eZLBQfaGWjHLkgE7HVFpZL0F0t47
+         z2Dm+2Kv3u7GU23XDOi00cE3ZhLcZBO6jmyPOBPJMfgj10IJcK//Fa2Nlp27vog77e
+         DfgYHJGsrOBh/nJJ8NjoXK9okXshPLLLlwHefXjFFKDERae2q/TxAZwXQFrK8fjrmG
+         LP/jTBSUNYN2CHSsJv2KTvqiYV0D0S+WEkE7viKrDiYSxTau4s80XG21w9GIdKjv+G
+         Z3kqyDF1ag6TvsqCO35xH1GB6C6UG0vjreNRaIF13jkL7QN4ulf8UIOcxaGQLVMgfV
+         zSq4BPfFoNJR6gJUADgWBGyptC8QnBtPMFBl0txnq348GSAbCmv6PbK9iN14tFO78t
+         7dehm03N64DMq9ENcpof8A+7GyebP2DBc/ukuJf72FuiBNSz+AKESy1HNzPH+hcFl+
+         uqs8WS37ZarX9bM4wdtyp5cwwalrGudA1jUINGXfucdtmiLbdbA
+Date:   Fri, 13 Aug 2021 22:56:54 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Russell, Scott" <Scott.Russell2@ncr.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git clone corrupts file.
-Message-ID: <YRbya0UO2+PvOjL5@camp.crustytoothpaste.net>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     "lilinchao@oschina.cn" <lilinchao@oschina.cn>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [QUESTION]Is it possible that git would support two-factor
+ authentication?
+Message-ID: <YRb4tkINrABgaHGu@camp.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Russell, Scott" <Scott.Russell2@ncr.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <BN6PR15MB1426E50F03A0530CA9140F98CBFA9@BN6PR15MB1426.namprd15.prod.outlook.com>
- <BN6PR15MB14261C40E614CC11416388B4CBFA9@BN6PR15MB1426.namprd15.prod.outlook.com>
- <BN6PR15MB14264C9A96F4B5F6B01FA7FACBFA9@BN6PR15MB1426.namprd15.prod.outlook.com>
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        "lilinchao@oschina.cn" <lilinchao@oschina.cn>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+References: <66e42438fa9311ebaeb60026b95c99cc@oschina.cn>
+ <20210811135055.tqdblurgk3vw5lgm@nitro.local>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="YO7K/n3SYueP0bJT"
+        protocol="application/pgp-signature"; boundary="UjgaMzPqej/G9sC1"
 Content-Disposition: inline
-In-Reply-To: <BN6PR15MB14264C9A96F4B5F6B01FA7FACBFA9@BN6PR15MB1426.namprd15.prod.outlook.com>
+In-Reply-To: <20210811135055.tqdblurgk3vw5lgm@nitro.local>
 User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---YO7K/n3SYueP0bJT
+--UjgaMzPqej/G9sC1
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2021-08-13 at 18:54:43, Russell, Scott wrote:
-> File from git.
->=20
-> =E0=A8=8D=E2=BC=80=E2=BC=80=E2=80=80=E4=B4=80=E6=A4=80=E6=8C=80=E7=88=80=
-=E6=BC=80=E7=8C=80=E6=BC=80=E6=98=80=E7=90=80=E2=80=80=E5=98=80=E6=A4=80=E7=
-=8C=80=E7=94=80=E6=84=80=E6=B0=80=E2=80=80=E4=8C=80=E2=AC=80=E2=AC=80=E2=80=
-=80=E6=9C=80=E6=94=80=E6=B8=80=E6=94=80=E7=88=80=E6=84=80=E7=90=80=E6=94=80=
-=E6=90=80=E2=80=80=E6=A4=80=E6=B8=80=E6=8C=80=E6=B0=80=E7=94=80=E6=90=80=E6=
-=94=80=E2=80=80=E6=98=80=E6=A4=80=E6=B0=80=E6=94=80=E2=B8=80=E0=B4=80=E0=B4=
-=80
-> // Used by CamTest.rc
-> =E0=A8=8D=E2=BC=80=E2=BC=80=E0=B4=80=E0=B4=80
-> #define IDM_ABOUTBOX=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x0010
-> =E0=A8=8D=E2=8C=80=E6=90=80=E6=94=80=E6=98=80=E6=A4=80=E6=B8=80=E6=94=80=
-=E2=80=80=E4=A4=80=E4=90=80=E4=90=80=E5=BC=80=E4=84=80=E4=88=80=E4=BC=80=E5=
-=94=80=E5=90=80=E4=88=80=E4=BC=80=E5=A0=80=E2=80=80=E2=80=80=E2=80=80=E2=80=
-=80=E2=80=80=E2=80=80=E2=80=80=E2=80=80=E2=80=80=E2=80=80=E2=80=80=E2=80=80=
-=E2=80=80=E2=80=80=E2=80=80=E2=80=80=E2=80=80=E2=80=80=E2=80=80=E2=80=80=E3=
-=84=80=E3=80=80=E3=80=80=E0=B4=80=E0=B4=80
->=20
-> File in github.=C2=A0
->=20
-> //{{NO_DEPENDENCIES}}
-> // Microsoft Visual C++ generated include file.
-> // Used by CamTest.rc
-> //
+On 2021-08-11 at 13:50:55, Konstantin Ryabitsev wrote:
+> 2-factor authentication does not make sense in the first three cases (you
+> already have access to all the objects with 1 and 2, and the git:// proto=
+col
+> is public and anonymous by design). For the ssh/https scheme, 2fa is alre=
+ady
+> supported by the underlying protocol, so it does not make sense for git to
+> implement it again on the application level.
 
-We're probably going to need a little more information about this.  My
-guess as to what's happening here is that the editor you're using to
-view the file is set to read files as UTF-16, but the repository has
-them stored in UTF-8, or (less likely) vice versa.
+To expand on this a little bit, you can absolutely set up a Git server
+with OpenSSH and require 2FA with OpenSSH.  That should work just fine.
+You could also leverage a custom credential helper for HTTPS to require
+a 2FA code, send it to a server, which would issue a one-time token for
+Basic auth.  All of this is achievable with existing tooling that we
+have today or tooling that can be easily built.
 
-Can you tell us what editor or other tool you're using to view the file
-and what settings it's using for text encoding?  Can you tell us about
-any working-tree-encoding declarations in your .gitattributes?  You can
-use "git check-attr -a PATH" to see more information about that.
+One note here is that as a practical matter, many people require
+automated cloning of repositories, such as to use their CI systems.
+Those systems generally cannot practically use 2FA and the security
+would not be improved if they did, so some solution that allows for that
+to work is going to be required.
 
-What code page are you using on your system?  Are you using PowerShell,
-CMD, or Git Bash?  If you're using Git Bash, what are your locale
-settings?
+Also, in workflows that require many repositories to be cloned, it can
+be kind of a hassle to wait for one clone to complete, enter the 2FA
+code (or touch the YubiKey) for the second clone, wait for it to
+complete, do 2FA for the third clone, and so on.  So while you can do
+this, it's important to keep in mind that there are some user experience
+tradeoffs here that need to be considered as well.
 --=20
 brian m. carlson (he/him or they/them)
 Toronto, Ontario, CA
 
---YO7K/n3SYueP0bJT
+--UjgaMzPqej/G9sC1
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.3.1 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYRbyagAKCRB8DEliiIei
-gbT8AQCujWIlYI+qzZrMwOq/VzacslEmBZtx74AojEBPb0g2+gEAyP8GmiYyozhG
-da5YRGtxwsWDDpQdcee96eab1gHmKgE=
-=kdyL
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYRb4tgAKCRB8DEliiIei
+geq4AP40fZCJieDFvoa9XYqv+dUPJhzIPa7X/72XvbY9xACongEA3VXs5gm7GHCy
+SpCG90nSi3CHoGDzqWWYn9krTafvJgc=
+=ldbl
 -----END PGP SIGNATURE-----
 
---YO7K/n3SYueP0bJT--
+--UjgaMzPqej/G9sC1--
