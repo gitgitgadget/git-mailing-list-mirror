@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB675C4320E
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 08:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A92EC4338F
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 08:23:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C334A610CC
-	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 08:23:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 45516610A5
+	for <git@archiver.kernel.org>; Fri, 13 Aug 2021 08:23:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238995AbhHMIYE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Aug 2021 04:24:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37726 "EHLO
+        id S238886AbhHMIYF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Aug 2021 04:24:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238638AbhHMIXt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Aug 2021 04:23:49 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4800C0613A3
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 01:23:22 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id g138so6324086wmg.4
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 01:23:22 -0700 (PDT)
+        with ESMTP id S238650AbhHMIXu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Aug 2021 04:23:50 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 420E7C0612E7
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 01:23:23 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id o7-20020a05600c5107b0290257f956e02dso9083009wms.1
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 01:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fOADI/trlN6mNVmwFa7qg+nRyb7bve53nFF5H0UTQbo=;
-        b=LpUEekryTfxCTWfVNEPDJoEaXm5LQRvM0q1K75Ko28ewH5iaU2OKXjD43GwStWmzKT
-         UVTlkZW8309P/YotIeov4waE1PVRYHFhd6fYQNRyHWw7XKzcd7nioKtCLlP+O7qwYESH
-         x/Noe1pK733vpVYBJys134RGAxrJA+BPpFs+WG1IXXws5y75Jy84tIJw6NbgZw1WGaER
-         HvjK03As49gfeYUOqIOlHRepYCnNmlf89CNlEg8uX11Nh9w6/QN2vuxvxShK6iUPaHHr
-         ikuxoelb3NWfGoktnFowIIfBtueAvNoTLaGl7DEWNfyYiCwZDlZhdu1mQrs4EhDmsCle
-         ta4g==
+        bh=3drzlXPZkamKQqKZG3sXGWeLRwxrKrGClhbtE40WJZI=;
+        b=m48vTzG/2ZAK737JlrjcrNchv7e+DvzdofjWP2v095mmFCZujdsQK85T+LOSa3Hz2K
+         eoTRgqhFBrwp5LDfEI2rr0EHjTsfOmvuP7ZXz17UsdT5OvCzi/v5962noPtvkSJhGeTb
+         2330YRNGFVLByh1eZQq4zIILF/srflhFn/stAnQNdS6nY4ZvIJ+D5m8fEcqELrvnAkgD
+         nOrZXWzNdXdoenQGnu0d2XceQ/ACRXmzJdQ3W9xjhZFdUu+90ZBTphfUJYhY39TSlPcc
+         52YUzVvIdCkKWr9DF5joT3t3RLL4dl43lImbSwxFmSzLKfD4FvPVMEKq1HJpUKEfXLFi
+         OOcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fOADI/trlN6mNVmwFa7qg+nRyb7bve53nFF5H0UTQbo=;
-        b=qzU+M5gHZ/hxns18djIvYus09q1F1rBi2mVL4VNiuvuPvZpA7DEGku96Adh41EPFfV
-         zwpSliokNOJKzc4OkiTGmkTmeWQCV/6KBS96d4l6fFYz0hKNnNKEYgZEzyRnq6hAwjTI
-         LgEpPQyiGskZEv1paFf1Ankh4JRn9CZmuRuoki29wK3vnZccWVYkapo2H4jaUYMrKku/
-         R1D2J+mZouE7jJ/KiAUS1AQMUlbF1Tge5x1So10tO8QscVfM3hxtcIOUR10QWKZgG6LV
-         /N9ExSWoQ5mzFi22mVse4/LkmAivvYRwXUqj8UBMne2SJnhHotnWIbEM+2IWZvoD4M2W
-         anoQ==
-X-Gm-Message-State: AOAM531i26MbSDz6Kjpuc1txV8Kn2FXASDmbchjX0sLzFdwrdEpCOM/P
-        BNt4dfTAYCbG9FvUKFnNPW2J0bUUcEQ=
-X-Google-Smtp-Source: ABdhPJxd7hZZi3YTUfZJUX6qWKwrfIcPdvEJ9WATivmL0SjrTiNdz1/zVCS4G7VPreGTjPjcJYmeUw==
-X-Received: by 2002:a1c:80c9:: with SMTP id b192mr1468430wmd.73.1628843001393;
+        bh=3drzlXPZkamKQqKZG3sXGWeLRwxrKrGClhbtE40WJZI=;
+        b=l5FvW3f6CLs1CmGL17zN0CidcJme8uztf6qlqhlrksiCG5ElXO31InO0YYqAQtmjJk
+         IkbAgxcLJRmeAfuPZoEKaTwWQ+mo6MDJHhe6Ns7AHD5AhKt2I38xRb3Kt9aI3BWwwskp
+         ZD0N4BYk/Dy+jjC7Wh5YszRBZlizNscaVxk8abJN2MDHzuLGy9b/P9s+/Xrt2wCR4Ikh
+         WKFdCNimVwurWwxNaLetfxu8X2osCRj/vQIjo3C/LwoJR2iO2x+gNlCUJY2t0mCJkzG8
+         tJcoPOfXibz6D/t2skr3Ll6xgllXXvkB3ZI23xG7K14b7kqotCklHcOc0hJJLahFlejc
+         TD3A==
+X-Gm-Message-State: AOAM531FoiwWqV+dOPOJu1hL2JkZgWxXA2KGTE1+HYFo7wtJMlPXVTgh
+        3zt7NuW5xxxLDVw5uSdDnQnoPSbKXTI=
+X-Google-Smtp-Source: ABdhPJzdJjhrKsW7wWSDhXV7Vd5lIJIthZqRLeVo5xAdaMCw68clVJBlse5lJqoNMnUz1Eq4nWfqxg==
+X-Received: by 2002:a1c:4b0a:: with SMTP id y10mr1374866wma.111.1628843001932;
         Fri, 13 Aug 2021 01:23:21 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p14sm705306wmi.42.2021.08.13.01.23.20
+        by smtp.gmail.com with ESMTPSA id u25sm682828wml.8.2021.08.13.01.23.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 13 Aug 2021 01:23:21 -0700 (PDT)
-Message-Id: <898e36a92b778a7ec9dfb4f7780dc2dcf95057c1.1628842990.git.gitgitgadget@gmail.com>
+Message-Id: <ae2de77101497a7cc28867c56fad61d4cc1f2c49.1628842990.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1016.git.1628842990.gitgitgadget@gmail.com>
 References: <pull.1016.git.1628842990.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 13 Aug 2021 08:22:58 +0000
-Subject: [PATCH 15/27] [GSOC] cat-file: re-implement --textconv, --filters
- options
+Date:   Fri, 13 Aug 2021 08:22:59 +0000
+Subject: [PATCH 16/27] [GSOC] ref-filter: remove grab_oid() function
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,132 +83,79 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-After cat-file reuses the ref-filter logic, we re-implement the
-functions of --textconv and --filters options.
+Because "atom_type == ATOM_OBJECTNAME" implies the condition
+of `starts_with(name, "objectname")`, "atom_type == ATOM_TREE"
+implies the condition of `starts_with(name, "tree")`, so the
+check for `starts_with(name, field)` in grab_oid() is redundant.
 
-Add members `cat_file_cmdmode` to struct `ref_array_item`,
-so that struct `batch_option` member `cmdmode` will be passed
-to ref-filter, and then ref-filter will take use of it to filter
-the content of the object in get_object().
-
-Use `actual_oi` to record the real expand_data: it may point to the
-original `oi` or the `act_oi` processed by `textconv_object()` or
-`convert_to_working_tree()`. `grab_values()` will grab the contents
-of `actual_oi` and `grab_common_values()` to grab the contents of origin
-`oi`, this ensures that `%(objectsize)` still uses the size of the
-unfiltered data.
+So Remove the grab_oid() from ref-filter, to reduce repeated check.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Hariom Verma <hariom18599@gmail.com>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- builtin/cat-file.c |  2 +-
- ref-filter.c       | 37 +++++++++++++++++++++++++++++++++++--
- ref-filter.h       |  1 +
- 3 files changed, 37 insertions(+), 3 deletions(-)
+ ref-filter.c | 26 +++++++++-----------------
+ 1 file changed, 9 insertions(+), 17 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 034094dc640..77b470687e1 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -217,7 +217,7 @@ static void batch_object_write(const char *obj_name,
- 			       struct expand_data *data)
- {
- 	int ret;
--	struct ref_array_item item = { data->oid, data->rest };
-+	struct ref_array_item item = { data->oid, data->rest, opt->cmdmode };
- 
- 	strbuf_reset(scratch);
- 	strbuf_reset(err);
 diff --git a/ref-filter.c b/ref-filter.c
-index f83b6f83494..f7c448f6fa1 100644
+index f7c448f6fa1..8664d9a6f4e 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -1,3 +1,4 @@
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "cache.h"
- #include "parse-options.h"
-@@ -1759,6 +1760,9 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
- {
- 	/* parse_object_buffer() will set eaten to 0 if free() will be needed */
- 	int eaten = 1;
-+	struct expand_data *actual_oi = oi;
-+	struct expand_data act_oi = {0};
-+
- 	if (oi->info.contentp) {
- 		/* We need to know that to use parse_object_buffer properly */
- 		oi->info.sizep = &oi->size;
-@@ -1772,19 +1776,47 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
- 		BUG("Object size is less than zero.");
- 
- 	if (oi->info.contentp) {
--		*obj = parse_object_buffer(the_repository, &oi->oid, oi->type, oi->size, oi->content, &eaten);
-+		if ((ref->cat_file_cmdmode == 'c' || ref->cat_file_cmdmode == 'w') && !ref->rest)
-+			return strbuf_addf_ret(err, -1, _("missing path for '%s'"),
-+					       oid_to_hex(&act_oi.oid));
-+		if (oi->type == OBJ_BLOB) {
-+			if (ref->cat_file_cmdmode == 'c') {
-+				act_oi = *oi;
-+				if (textconv_object(the_repository,
-+						    ref->rest, 0100644, &act_oi.oid,
-+						    1, (char **)(&act_oi.content), &act_oi.size))
-+					actual_oi = &act_oi;
-+			} else if (ref->cat_file_cmdmode == 'w') {
-+				struct strbuf strbuf = STRBUF_INIT;
-+				struct checkout_metadata meta;
-+				act_oi = *oi;
-+
-+				init_checkout_metadata(&meta, NULL, NULL, &act_oi.oid);
-+				if (!convert_to_working_tree(&the_index, ref->rest, act_oi.content, act_oi.size, &strbuf, &meta))
-+					die("could not convert '%s' %s",
-+					    oid_to_hex(&oi->oid), ref->rest);
-+				act_oi.size = strbuf.len;
-+				act_oi.content = strbuf_detach(&strbuf, NULL);
-+				actual_oi = &act_oi;
-+			}
-+		}
-+		*obj = parse_object_buffer(the_repository, &actual_oi->oid, actual_oi->type, actual_oi->size, actual_oi->content, &eaten);
- 		if (!*obj) {
- 			if (!eaten)
-+				free(actual_oi->content);
-+			if (actual_oi != oi)
- 				free(oi->content);
- 			return strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
- 					       oid_to_hex(&oi->oid), ref->refname);
- 		}
--		grab_values(ref->value, deref, *obj, oi);
-+		grab_values(ref->value, deref, *obj, actual_oi);
+@@ -1081,16 +1081,6 @@ static const char *do_grab_oid(const char *field, const struct object_id *oid,
  	}
- 
- 	grab_common_values(ref->value, deref, oi);
- 	if (!eaten)
- 		free(oi->content);
-+	if (actual_oi != oi)
-+		free(actual_oi->content);
- 	return 0;
  }
  
-@@ -2193,6 +2225,7 @@ static struct ref_array_item *new_ref_array_item(const char *refname,
- 	FLEX_ALLOC_STR(ref, refname, refname);
- 	oidcpy(&ref->objectname, oid);
- 	ref->rest = NULL;
-+	ref->cat_file_cmdmode = 0;
- 
- 	return ref;
+-static int grab_oid(const char *name, const char *field, const struct object_id *oid,
+-		    struct atom_value *v, struct used_atom *atom)
+-{
+-	if (starts_with(name, field)) {
+-		v->s = xstrdup(do_grab_oid(field, oid, atom));
+-		return 1;
+-	}
+-	return 0;
+-}
+-
+ /* See grab_values */
+ static void grab_common_values(struct atom_value *val, int deref, struct expand_data *oi)
+ {
+@@ -1116,8 +1106,9 @@ static void grab_common_values(struct atom_value *val, int deref, struct expand_
+ 			}
+ 		} else if (atom_type == ATOM_DELTABASE)
+ 			v->s = xstrdup(oid_to_hex(&oi->delta_base_oid));
+-		else if (atom_type == ATOM_OBJECTNAME && deref)
+-			grab_oid(name, "objectname", &oi->oid, v, &used_atom[i]);
++		else if (atom_type == ATOM_OBJECTNAME && deref) {
++			v->s = xstrdup(do_grab_oid("objectname", &oi->oid, &used_atom[i]));
++		}
+ 	}
  }
-diff --git a/ref-filter.h b/ref-filter.h
-index ef3d89d73d4..853eb554a5b 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -39,6 +39,7 @@ struct ref_sorting {
- struct ref_array_item {
- 	struct object_id objectname;
- 	const char *rest;
-+	int cat_file_cmdmode;
- 	int flag;
- 	unsigned int kind;
- 	const char *symref;
+ 
+@@ -1158,9 +1149,10 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
+ 			continue;
+ 		if (deref)
+ 			name++;
+-		if (atom_type == ATOM_TREE &&
+-		    grab_oid(name, "tree", get_commit_tree_oid(commit), v, &used_atom[i]))
++		if (atom_type == ATOM_TREE) {
++			v->s = xstrdup(do_grab_oid("tree", get_commit_tree_oid(commit), &used_atom[i]));
+ 			continue;
++		}
+ 		if (atom_type == ATOM_NUMPARENT) {
+ 			v->value = commit_list_count(commit->parents);
+ 			v->s = xstrfmt("%lu", (unsigned long)v->value);
+@@ -1965,9 +1957,9 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+ 				v->s = xstrdup(buf + 1);
+ 			}
+ 			continue;
+-		} else if (!deref && atom_type == ATOM_OBJECTNAME &&
+-			   grab_oid(name, "objectname", &ref->objectname, v, atom)) {
+-				continue;
++		} else if (!deref && atom_type == ATOM_OBJECTNAME) {
++			   v->s = xstrdup(do_grab_oid("objectname", &ref->objectname, atom));
++			   continue;
+ 		} else if (atom_type == ATOM_HEAD) {
+ 			if (atom->u.head && !strcmp(ref->refname, atom->u.head))
+ 				v->s = xstrdup("*");
 -- 
 gitgitgadget
 
