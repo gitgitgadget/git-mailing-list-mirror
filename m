@@ -7,80 +7,86 @@ X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA222C432BE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE9C0C4320A
 	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 21:56:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8499460F9F
+	by mail.kernel.org (Postfix) with ESMTP id 9C5CF6101E
 	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 21:56:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232053AbhHNVrx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Aug 2021 17:47:53 -0400
-Received: from mout.gmx.net ([212.227.15.19]:40221 "EHLO mout.gmx.net"
+        id S232803AbhHNVth (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Aug 2021 17:49:37 -0400
+Received: from mout.gmx.net ([212.227.15.18]:56395 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229532AbhHNVrw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Aug 2021 17:47:52 -0400
+        id S229532AbhHNVth (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Aug 2021 17:49:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1628977612;
-        bh=vneFeE/UK46s6QBnsmgI1JmuEo7TV8fvZzI3Y923lVQ=;
+        s=badeba3b8450; t=1628977739;
+        bh=1yBUjuNaRh2atXln9K6Fqop3nJjn4NcBYuMwe76YbLs=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gLOKNbpLcVhIkTWYiLKNvsCFnqwp0lPPiXQoE7Es3bgs9KinBjM6VZEhfhBw6pI9B
-         /7yztFJbiGXFCgmQX2QmXF4nmEyGHnDgC7DXA0BuUdcmaXYDMcTJfMCnDezTFmcmL2
-         r8H9qTBqwPnkKwMN16/B1a+YRv9ve4vpQhr54IHo=
+        b=DTFVEY4R7xjXGHvAypFTM2rDgNtMQaFIF4TZALGSlng7YxZA6fektKv7BhXu78PmA
+         J8ltzJmCvMKFIyOA+O/rqxWSR7yoywoqMrs55VnzEBSbZqCdslzBE/HSAd5DAgLjet
+         9SGK8nyQpjsf8XhdlNZmcgIyBpcNhzFvAnteEAmw=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.23.60.179] ([213.196.213.229]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MzQkE-1n1blz3u4G-00vSBR; Sat, 14
- Aug 2021 23:46:52 +0200
-Date:   Sat, 14 Aug 2021 23:46:49 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MryT9-1mu5WB3Ehh-00nvkQ; Sat, 14
+ Aug 2021 23:48:58 +0200
+Date:   Sat, 14 Aug 2021 23:48:56 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Kim Altintop <kim@eagain.st>
-cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
-        bwilliams.eng@gmail.com, jrnieder@gmail.com,
-        sunshine@sunshineco.com
-Subject: Re: [PATCH v6 0/3] upload-pack: treat want-ref relative to
- namespace
-In-Reply-To: <20210813062237.10403-1-kim@eagain.st>
-Message-ID: <nycvar.QRO.7.76.6.2108142344570.59@tvgsbejvaqbjf.bet>
-References: <20210730135845.633234-1-kim@eagain.st> <20210731203415.618641-1-kim@eagain.st> <20210804203829.661565-1-kim@eagain.st> <20210804205951.668140-1-kim@eagain.st> <20210809175530.75326-1-kim@eagain.st> <20210813062237.10403-1-kim@eagain.st>
+To:     Derrick Stolee <stolee@gmail.com>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH 0/3] some small range-diff read_patches() fixes
+In-Reply-To: <65b00c6a-ef88-29c3-157b-24ad9f4d8a8c@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2108142348390.59@tvgsbejvaqbjf.bet>
+References: <YRGwGDvOte/o9vkd@coredump.intra.peff.net> <65b00c6a-ef88-29c3-157b-24ad9f4d8a8c@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:2VpHG9yRu/eRkKFCuU+BPE5H3ip4FM2qdF9eznL9LHxeNCI8OW0
- X1rl7UOogoYNC3aqITCZSxSGroDErcYKyBjzYxxU+Wdsxk3rT/xJDpTuPMKOWoUdxuFj9CC
- ECXf6PX6hrizQpGr0CUe+MVIfzxZN+2YMCgZ2nChHHPQOcg/5+RYWFHPzpwK2ZFps2jnSQm
- gwWcdV3TMtXU5AGNpJcEg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:RkppJyIQLl0=:2VDoFBHbgopxsxDSCU4jce
- PGX1jC9UXJKGeFE2DSkha7dhkBU1eltdPzmWEdx1FUkbxntdRbzx5hv+KIuvCd4u6UOWFA9FT
- ZI+zlv6/3o7Dj3OS0XvBTGJBAte30dS4/ZZGZlVWczd1v06QeUyAt70RKWAtUsuIDQ1J0zwwo
- 6tYD3cm+V4ivZMeFsBaG8oKl0hVQezKV6Hco7AUj1oWXbyktGfFgqPXC03JosywbLhBG2cNGo
- F8nqI/zTAgHQF54flDWhnsefVHXjAKdhm86qu6fMVO8tRl1Si5dSbhG4nvTAZ8zQMnM3+rW4H
- SdDI2meO/grObkG88nq/azI2S1rjo2TvF6GCpBoh8f1g55Bmk5sCor/kyLCaJJ6kAljDYaCgA
- 6iR/9aD1pY45EbUlEAeE0kIQdhYuTD3W5P3hiV0LOEZNfAcbbSoYSwe9qxsVZQ2gdbHif0ih4
- AxjkscPDe+foc6pXke9r4zKou8jVPt9jnps6Y345Sm+8GxJnSsddp9D1URvesBZz7aPxJaF/6
- BBN+iUW1tx2MvKvOzlgAaYAv/kTaqwVLCjNlq6axbhzJDqAY4v7ROwdyY6bfQsuufWt62r9rC
- gQgUW+X0XNRlVMrWw2V2951i5zlpjxO0sguWPCQXUz62hsV6PiTY+/3jJZzclOVxeIERuSclO
- SLQKrGirAnbUhT4MnrbpGj7CG45XFwyeS+wY0ve8A+ZAT4CqBUXY8L9lkBlQHi9e86vy7LNqQ
- yQAiRU5VcLsacSNxdazTW0p1dM594c6MOqsXFcSFxtZYhgBjok4LkGrmQhiLSkXDvQ4ExW3fJ
- aUI20REC9YhL0ky0/JsrzpR/pJD7qZrOH3PLlhVEEhl9s4qy9/ZTnTa8hhrjPe94gbfXqbb8w
- I0i+E5xkNJTD8RnfHHpigxeOvCq6v6ul1DNzh8JHBqas5YgHSc7DTGLdsdHWGCmcYReo3pZmh
- 0JnrSiVn6EkBXm0DcUlb+yvRtRAnL/Y4UQ9ldpz372Wg9s4c+jXmX/r9UoWzfFw6Shrk3FYhT
- O5KVjOq0LGabl1lsG7Zq1bwoa4EljyoLZcsa4GEYMSP74NByhHgQYYiiPRRlGGxZbZ+w9ywcI
- HdujQ4NyDfaWTv3ZlC5qA9mibHRfaZxZo04UO0DycLkylZQ3SIme9t5nA==
+X-Provags-ID: V03:K1:qNMv8Nxrifb5Onzfsk3nmhQ9piXcp1OvQyPyf6Nq0SxJ2CVrpf1
+ ZYx0t/PehkRnPOfIhqlPoqy/6kEtbYsSlsw3pfcjiqGN1obiDFUJ3HI96h4PQWGWvqPuHcy
+ 3S4tpmhmNS79AMoq4U7hG35reQifLYTV8Iblzb956t03z3fVvORNbQdfvb2lkiDtz9wJjFB
+ ZxuVlBSm7ieMCoFi2EM1w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:YKV3C/Vc3ow=:zh9HH13paS5GWH7KiAS3xs
+ KR6U+7Xt9dOWr2PP7nTZgG8krLr6RV50/Q/CM2LsvN4eA21Ny9kk6lh3abhS1BvjdK6jD7e/A
+ 6fCLK+rc9tsTMffCTR0OgALWYKIXqx4RxeOV326JmpRAyDSaE8H7SneW27i46LEQ7dTiIdzIN
+ QW6WlficMimpx0qGovYv9m5ejsKI04j837SZ1gj58zCNN7hzoYvXc9aqpUvN363gvAxMfdCSl
+ mNf/5PLMQvq0fAGwoXTeWYfp5Hv69X0T9QXREg+/o5S2So33hf816UAx0d3zFjaI8bt2tN1WH
+ 8W1++iLiO3gMkduQo3iQikAzYWP3PJbjXU3kVh/5yYdyDUZLOli1UQAFR51IMmQnuxyuWewx/
+ wSEnqhjL8yzBg5skuNcRvdZtezfKJWoA97jkWfIto031JgmGwftg6vnNp7oHqYdWv11Nv2lTg
+ aCrAK9yHV8/orjN6P8BNveXNYtN/ao5rYVjkpHG54eU0A/iClrx5BoBJ53zQmKh2IoPxfYyj+
+ nQLdeirugwdNw3kML9Kdbd5BD0JoB7JHiltH7TY9aD9DbjjC9iR8W86XltprywdifhTiViRDk
+ nK6PxrgoEppKpFoW6pCOSb2c8dT7h0ismB+GLhhVB0UCtVGUy5rFK8hZxwbMBeCx4P+JRnyvi
+ aR5VPMQHxQilAuYo6pWzuilmG955En5yNU/f8bhMKDmn7U2PFr2ZdXqtvXa6L8D/lW5CQpV62
+ xSG1VwozwA5w9vXALxRBEzhSRFMVD9cs6HMDk/PqItaUX0K5Fi+GTWjbAztRNS/2cpmlxKWYn
+ 65dsrJsVcua03scWEuokGbayd8hi3y/buUiBVPy9yuoHEDrQ7WVPT7U3+dtgiPC9BpZ3j8Bm3
+ T+/MkBg3Jk0d9qsLigi2tBYyUB4bhe2wi0bwqDiLc+Kpw7supIKu5ZLxKOxPvpDybYfc8lvUT
+ +xn2QrK9e0BFFXTEwRVMsOH6/TzU8rwNbUX1XS1oDVeXyuudI28YZEvQ6Si22VYM+IuYdW77a
+ PDUzmD8hxETZ3QqusuVbkHaO6KCQxAYpKnUrtwo0nx1VhJSnGbnMkaS/4kDSNEvEK58r7V826
+ EE33e22kVsWRC1xxIBHvUrYnkQrBeNUlnmhZrSKDxNJxW7+5ph305jPLw==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Kim,
+Hi,
 
-On Fri, 13 Aug 2021, Kim Altintop wrote:
+On Tue, 10 Aug 2021, Derrick Stolee wrote:
 
-> CC'ing Johannes Schindelin as suggested by git-contacts.
+> On 8/9/2021 6:45 PM, Jeff King wrote:
+> > Amidst all the talk of clang4 in another thread, I noticed that Debian
+> > unstable recently shipped a clang-14 package. So I tried it out, and i=
+t
+> > does find one small cleanup. And then looking at the surrounding code
+> > helped me find 2 more. :)
+> >
+> >   [1/3]: range-diff: drop useless "offset" variable from read_patches(=
+)
+> >   [2/3]: range-diff: handle unterminated lines in read_patches()
+> >   [3/3]: range-diff: use ssize_t for parsed "len" in read_patches()
+>
+> I gave these a read. The code diffs are obviously correct and the
+> explanations are well motivated. Thanks.
 
-`git-contacts` wouldn't know that there are better experts on the
-namespace matter.
-
-My only comment is that I would find the diff to `upload-pack.c` much
-easier to parse if the `arg` variable hadn't been renamed.
-
-Ciao,
-Johannes
+Same here. Thanks, both,
+Dscho
