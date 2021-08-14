@@ -2,113 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67679C4338F
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 09:21:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E830DC4338F
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 10:21:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 431BA60F00
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 09:21:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BBECA60F39
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 10:21:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237743AbhHNJVr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Aug 2021 05:21:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36886 "EHLO
+        id S237860AbhHNKWC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Aug 2021 06:22:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237596AbhHNJVq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Aug 2021 05:21:46 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6ADFC06175F
-        for <git@vger.kernel.org>; Sat, 14 Aug 2021 02:21:18 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id oa17so18905844pjb.1
-        for <git@vger.kernel.org>; Sat, 14 Aug 2021 02:21:18 -0700 (PDT)
+        with ESMTP id S237851AbhHNKTu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Aug 2021 06:19:50 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8C78C06129F
+        for <git@vger.kernel.org>; Sat, 14 Aug 2021 03:19:11 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id d16so1359130ljq.4
+        for <git@vger.kernel.org>; Sat, 14 Aug 2021 03:19:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Pm/nMaqR0Pl20fg5zxfF5fAaL0kKKxKfUUjgTRC3aHM=;
-        b=s75Lg3DF/HK/jRd4orwgFcfJ1oipYMh4HKsOfurhosDQjlVfFUDRZwxDteOH5IfBWw
-         64xiz95qzGhHaE4CD32MqllBXCAoKLlgX1EmZp0N+D1DcweZOEMFcX4e62jStkqXuB56
-         p6qlp5eA7ddR06gE5mrioKDI3aBagTtgqQHLfQG2C1Q59RfoyYTToZlXec3A+nHJ0xMy
-         Od+lHHjRezQlNVnHqRG7fuPBBcMpYVaKcu3ZbKpnnw9ayYEahcIoYmYxk5i6U/asThmD
-         RRtOCj+pE/hmHGiroKB7H5eADcL/CZaiIb4qQ/7h/I5/ghD0VihwkkHSnXb41FZBuPuA
-         ig/w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=if5Lp01Fh5VCTW+R6Nk/PcEt9EoMIiTitUkXLTTmcg8=;
+        b=JmaP1W8HFbC6odLwKsLODM/WpL+DuW2AI0wDw0Ukw+xLp3BHv2qJ1qnUumCeXMyeCi
+         uxKpezE/s4Zsl0n+wlc8SBakV/ex48e7sQe8EovivM1sfWvyFXqVMNkBvM0uzjMnq6vR
+         zdez91deUnQND7IF3SjMyTDkwLlbSpS9U16MrY/pb6e7D0J7eQsIipvL0dNxC/b/b1RB
+         S4fFhX98sDhFUhqncswadIXC2QeltwkRnEajF8x5DjbsV+ceomqFQ+WR7ywzvJYivn/Y
+         +n9FWajnJn+xyBE1rwZ0CMSB9E8zf3WqeAdzTM8lpLH7E1b3rc3YFCutz1WuCJN8pjgq
+         m/MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Pm/nMaqR0Pl20fg5zxfF5fAaL0kKKxKfUUjgTRC3aHM=;
-        b=qMxUnJREU/NrF0eoP6/tycD23Z97/6OVkwhu13WIu0jjWymXRVWgwCqHDUSHMQ5DbA
-         0MwBOAm8HoXAnJBQDW8ZZmQIk/BE8mbhXAXTLHrHmMDTV+azgOLlr6skqTsnHIdlkuBh
-         Pr2iEj3SYi6zDA17kbYEBSQnfnmxWVMtSTZlPz/ybi29gd0Qk6tVmsf/V+GfCA1nt1o2
-         sq9/IzA7Q+/X2w3sO6DRg6tIWpeASZeJ+tydRhLz7T72DzMd+MvzneUpCKoHAq+cRdN3
-         nK6sEpX7rZALgAP/ss4kN1L2wlnM6nQDdSxjysXLVYsqqasmr121UArfXpfGrPBggiRN
-         bBjA==
-X-Gm-Message-State: AOAM533BHmwlNlLvVmJcQvKE95DfOUl6B+Kg5zwiGWGE+JXE+t3mRB4/
-        TrB3rQ7n07FYs1F118f9PJddZBg8xMk=
-X-Google-Smtp-Source: ABdhPJwwjVrOSa+P1uEHpNjmDekD3hSLDwU2UhCbJmfSKNe+hsaeKMr7cUpa4nKUC9oaodZfj1o2hQ==
-X-Received: by 2002:a62:6042:0:b029:3e0:86b4:51b with SMTP id u63-20020a6260420000b02903e086b4051bmr6349404pfb.62.1628932878223;
-        Sat, 14 Aug 2021 02:21:18 -0700 (PDT)
-Received: from ubuntu.mate (subs03-180-214-233-93.three.co.id. [180.214.233.93])
-        by smtp.gmail.com with ESMTPSA id c23sm6005371pgb.74.2021.08.14.02.21.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Aug 2021 02:21:17 -0700 (PDT)
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     git@vger.kernel.org
-Cc:     git@matthieu-moy.fr, tom.russello@grenoble-inp.org,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH] send-email: Describe 'ssl' and 'tls' in --smtp-encryption
-Date:   Sat, 14 Aug 2021 16:20:36 +0700
-Message-Id: <20210814092035.42272-1-bagasdotme@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=if5Lp01Fh5VCTW+R6Nk/PcEt9EoMIiTitUkXLTTmcg8=;
+        b=KUyPOatlDRxKgUKZd8I6lI/wgpeIYnFDfoyNVuGZEm30eg3fjM2afafPSOt4WWNGzo
+         za3bVr29owX5BDdPW/I2llMcGCX/oQneZEecBRkSg9KruYbOeB2aNgiujTCjdBu835jQ
+         xqvElW8d9vYf6w9TNr4sAVIBnLMzYq8SnnrtqRDHr33rsGtWXYg5iuw0P75tgP/KN6Jm
+         cJOSEGxN5QyHsL4mjFJz8BO/i/s9/AuyAmsg30H5XMpxeKeCt/hFUxNTFLyUSVGYwOTH
+         Ielxfzmc3DmBE6r7FqIQ8nNRLDNNG2hVakNkr/QKZ/pkzMRMvdgwCdZ8yr+hApEzaLrn
+         eLjA==
+X-Gm-Message-State: AOAM533F0sdA2qiH2g+Yf1JwObeWtixXsZctn5E+LMla5UDQ1Ry8/82g
+        Fw1+c4lMB6Xset+0rGr6AMt3ceV74IScAUpTYMaahPovK38=
+X-Google-Smtp-Source: ABdhPJySET9n747u0w8Qek7jgcSs8LZiW8WtOGzNUpbKhD+cXiJY9dCSA1UKNejYndPpClcZDlTrRK4EtfR4lzRV394=
+X-Received: by 2002:a2e:9ec1:: with SMTP id h1mr5051469ljk.0.1628936349982;
+ Sat, 14 Aug 2021 03:19:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <75911f47-1433-f0a4-7d46-f1fb2fd44cf4@rawbw.com>
+In-Reply-To: <75911f47-1433-f0a4-7d46-f1fb2fd44cf4@rawbw.com>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Sat, 14 Aug 2021 03:18:59 -0700
+Message-ID: <CAPx1Gvdb=rtjWmc1Qe5iZyuwSF+s-YO7G__VUZ=iZw3x4bAKCw@mail.gmail.com>
+Subject: Re: 'git log' doesn't keep log of un-removed and then renamed directory
+To:     Yuri <yuri@freebsd.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The --smtp-encryption option accepts either 'ssl' or 'tls' value to
-enable TLS connection. The latter can cause confusion (for example [1]),
-because it means using STARTTLS, whereas users wanting SMTPS should set
-to the former instead.
+On Sat, Aug 14, 2021 at 2:21 AM Yuri <yuri@freebsd.org> wrote:
+>
+> In the FreeBSD ports tree I restored the previously removed directory
+> math/dynare:
+>
+> 1. git checkout 3fb72e318f7be~1 -- math/dynare
 
-Describe these values, together with difference between SMTPS and
-STARTTLS.
+[remaining complex shuffling action that mimics what's needed
+in SVN, snipped]
 
-[1]:
-https://lore.kernel.org/git/f7ee6a03-74f2-152e-5158-4103c744595a@benaaron.dev/T/#t
+Git is not SVN; do not expect it to behave *like* SVN.
 
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
----
- Documentation/git-send-email.txt | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+In particular, Git does not have file history.  Git has only commits.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 3db4eab4ba..1207a6a8eb 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -176,8 +176,12 @@ Sending
- 	for `sendmail` in `/usr/sbin`, `/usr/lib` and $PATH.
- 
- --smtp-encryption=<encryption>::
--	Specify the encryption to use, either 'ssl' or 'tls'.  Any other
--	value reverts to plain SMTP.  Default is the value of
-+	Specify the encryption to use, either 'ssl' (SMTPS or implicit
-+	TLS) or 'tls' (STARTTLS or Opportunistic TLS). Any other value
-+	reverts to plain SMTP. The difference between SMTPS and STARTTLS
-+	is SMTPS uses encrypted connection from beginning of connection,
-+	whereas in STARTTLS the existing connection is upgraded to use TLS
-+	if SMTP server supports it. Default is the value of
- 	`sendemail.smtpEncryption`.
- 
- --smtp-domain=<FQDN>::
+SVN has commits, but SVN commits contain file history.  In Git, the
+commits *are* the history, and are the *only history*.  Each commit has
+a full snapshot of every file, under the names you told Git to use, with
+the contents that you told Git to save.
 
-base-commit: 5d213e46bb7b880238ff5ea3914e940a50ae9369
--- 
-2.25.1
+The command `git log science/dynare` tells Git: Look through
+commits, one by one, and whenever there's a file whose name
+starts with `science/dynare` that's different in *this* commit, vs the
+previous one, tell me about this commit.  Since the old commits
+have files named `math/dynare/something` instead, Git doesn't
+tell you about them.
 
+The `git log` command has a flag, `--follow`, that has a trick up its
+sleeve (wait: does `git log` have sleeves? well, anyway). This trick
+is a bit limited though. Let's say there's a README file in the
+science/dynare/ directory, as of the latest commit.  If you run:
+
+    git log --follow science/dynare/README
+
+Git will look at *this* commit and find the file, and will look at this
+commit's *parent* and *not* find the file, because the parent does
+not have `science/dynare/README` in it.  But the parent does
+have `math/dynare/README` in it *and that file exactly matches*
+this commit's copy.  So `git log` will tell you about this commit and
+say that the file was *renamed*.  From this point backwards,
+`git log` will be looking, not for `science/dynare/README`, but
+instead for `math/dynare/README`.
+
+Unfortunately, the `--follow` trick only works on *one file*. But it
+will let you know that if you re-run your `git log` with `math/dynare`
+you can see what happened before the renaming.
+
+A future `git log` really should be smarter about detecting the
+whole-subtree renaming, and be able to follow it.  This won't
+require any change in the repository, just a smarter `git log`.
+But someone has to write that smarter `git log`.
+
+Chris
