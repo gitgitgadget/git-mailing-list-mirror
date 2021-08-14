@@ -2,131 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECF89C4320E
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 21:56:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E185C4338F
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 22:03:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF15460F48
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 21:56:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 737F560F48
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 22:03:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233422AbhHNVxy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Aug 2021 17:53:54 -0400
-Received: from mout.gmx.net ([212.227.15.19]:35141 "EHLO mout.gmx.net"
+        id S232468AbhHNWDg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Aug 2021 18:03:36 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60329 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233141AbhHNVxo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Aug 2021 17:53:44 -0400
+        id S229532AbhHNWDf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Aug 2021 18:03:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1628977988;
-        bh=xrf6c1kq6vKI/EHY9YfvI2fQ/uMZ9c8AQg7Y6tVL6sU=;
+        s=badeba3b8450; t=1628978574;
+        bh=eK23s3SCQNO3wUq9VJaTpmQAeY796jm1dImfylWq2XI=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=KBVDGPCXrK72gfBvG+QNDYu4pQatl4h4alxQO9JlaVQ9c4wWh+G/DdEqu8il0Hhm0
-         +go6ZD5bmNGdbInRzpgzlc3kwwoDq1TETixfp1lW7n1HHHmL/7/l3O03fjdOL8H32y
-         wQlaSJxGRkJa7qyQw0GGlFseCq/AgfYjaD82PYAg=
+        b=UbfDE1rC340SSIcly/dohzFRhA8D7TU8ehfZoja3nbtNhhRwGikkOQzUN711WcyA8
+         NKH0dCOhAP+xVsTGrfHqnUm6rAeuRNhZA22nIWnTvtZphMZy8661SQ8L1iqVk3ijY+
+         AmQW6GggF/GYQxvex7sPsvyi2jm7u0f2HPSvLDD0=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.60.179] ([213.196.213.229]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MEV3I-1mHiEI2ZFS-00FyR9; Sat, 14
- Aug 2021 23:53:08 +0200
-Date:   Sat, 14 Aug 2021 23:53:06 +0200 (CEST)
+Received: from [172.23.60.179] ([213.196.213.229]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M1ps8-1mCooY3Eeu-002Cr7; Sun, 15
+ Aug 2021 00:02:54 +0200
+Date:   Sun, 15 Aug 2021 00:02:48 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Victor Gambier <vgambier@excilys.com>
-Subject: Re: [PATCH 1/3] t3403: fix commit authorship
-In-Reply-To: <3b438e42-488c-e4ab-d1fe-3d0992ef0619@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2108142350420.59@tvgsbejvaqbjf.bet>
-References: <pull.1013.git.1628587917.gitgitgadget@gmail.com> <7559781ca92096f89a6dcbfeeaa4d2b4d7b98094.1628587917.git.gitgitgadget@gmail.com> <CABPp-BFFTLgtrs_m9Gp7tSRwpBnAEoArhMZhhJcuzqNS_g8sUw@mail.gmail.com> <xmqq5ywddtsn.fsf@gitster.g>
- <3b438e42-488c-e4ab-d1fe-3d0992ef0619@gmail.com>
+To:     "lilinchao@oschina.cn" <lilinchao@oschina.cn>
+cc:     Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, mjcheetham <mjcheetham@github.com>
+Subject: Re: Re: [QUESTION]Is it possible that git would support two-factor
+        authentication?
+In-Reply-To: <0d301aeafc0b11ebb27d0024e87935e7@oschina.cn>
+Message-ID: <nycvar.QRO.7.76.6.2108150001480.59@tvgsbejvaqbjf.bet>
+References: <66e42438fa9311ebaeb60026b95c99cc@oschina.cn>,         <9b199de2faab11eba548a4badb2c2b1195555@gmail.com> <0d301aeafc0b11ebb27d0024e87935e7@oschina.cn>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:I+4fcWxOwgBOlA0lG4ceWjmbWDsbIWlruBiJPrUQ45qYH6ANm7F
- 0G8MAKwxd5tRh22bHhQLASCBry1vGgMHvn4H66iBWiXySgrk0VouugDUT0h5+N+WnbIKgju
- UM5qe5h91v6k2OGMKJijmN3ZZgqp+3EbAcFH78A2NrJNNGVwJzTIeeGjv1HpNSO1wRqyeRU
- IwWzGYlW2i5hRZK2/nCng==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:wlyLT1H/H/Y=:MUzsesr0LoQQjvZaOENqXc
- PwPj3i1KU8DiJ6gRNRFi6qo2fR23H6Y7Xy/RJdCBp3c50kmiyzgkFwTN6zMLfmCY131ip+YfD
- q+MFiN37f/1nWnV878IaOV0mb5IX9KdCsnmCZkJ4QxLQaRAZKagF0TzydmaU5c5kOvseMq+pa
- zwS0pLohaFTadXz01dHi6NooH8BmFviwuxldNVmyDaBD8yv1Kw7G+xOvPdk8FWVWFuvPno5T+
- gAQ4AdSYCAsGqQXmuA25QeTxnXa7z3hR9DCCCNiGYMCG5WP4Svno0582b8+JkmW05sz3Jx66k
- zG4WxB45jMF88f8LYHC9ZUx1kygDadIhlcGiW0sH+k7+Q9hh/6eizEhuojH4EC/JnC3/n4nMF
- ZDBfIB3fbAgGcKZ2SdVqz0VdbPIHyuSUEu2zjDLNG8aABPhZaZPWy/+64OKh8Y8/dFXWOQtET
- fMlFeYUe7/o2ydzYHoAFN94yyLZxloQ9tgGOybnM8Mlga+UKg8oGfCyye2ls6S/26Y1GwEM3W
- FGMmekFbLjaIwHFzwwqD99dkM+wtmS5yCwHaLYooo2UjerR8y6YmTAXMler+dYNDIH9Rqexi4
- S/S46L5xWK1FcEylfXrlIQftj/IFcYRCiyPCYvLPOzsQDUR+JQderxhhtdKIdPYT4wqOTvBUj
- wc/7Bc0f/f9nv8p/duiHNg0pEKD/FnPHFrjNE5TzI+VxV1nA1zmyUx8KvSnVZnAtpU96+QigQ
- CRzGQZIT6DxGqXbTD8FngND48ZUFDEAaRV90SerD0K9dSE2sFNVyR434dlzz1qHAe7pDFZIBm
- k1zcq/N1JquSDS1Y4vLfqk6I8qyabMoXRogvyHZLi04RRyKvb7smH5ApFrLF/AKua2tkTF7hM
- WwrXPwot1pQKqR+ykcvNhmoH09Sn5Vr4BpGbkuSAKXWbLzV1E/Q5nL8PUk0lV6b64CncGy5qT
- kFMQpdpRun5ywj+Dz3UGvdl4jA7ytId42itnMAjoKRzeeqb4syIiZcyNbsipbEzlc94lvwj6n
- XFRLaJeZsETEbM1Zezdl8QtRyCVG8CwfELiTRFGQReip8LphRp5hmc0+Lt9ZnIvY4/1GDz0ok
- yQaZKZHGagJRuyeHjNQFU6OmFZO5l6QPeHwaUtD6Pglc0EFAT0el1rM2Q==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1786597639-1628978574=:59"
+X-Provags-ID: V03:K1:yoFm80aSq/UIXNuqC8Cg3zMea+im4DMpwyzK1ZdM1pCcgfuWcTP
+ ouwPCyqWSwjTTQNuU4goo5mdKbN14xckdkjGeXh0hCrfkJLGCSszz84zMogaKn3Gh1FvvKO
+ Hjyq039/VryGcHvvlDqwS0PWo0dX13lMhC7avoDeud4Id4BqJFIR5iozURLtT+aISO+ybx3
+ P3Ogm/h7nNdAg+irbthqA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xi/a4qVyTP4=:PdCdQC2DqB3vO84T3roocx
+ 2pAV7B0sff4dqm2/Bn9enCO+87pWFqy3OKoBHClAtZEEp/2kAyRhKsXq1LRhwFacrPK2ALSOD
+ FRG8qPWTN3OskBN5fFwja0R2s84ifYevUxIgR+ZcR7B5Ijdd+2b9MZthtjzsCqPotqmMDrhkw
+ HybKoGaT7Ev0h/5We0fEvrLEF0oQgCDnl6izD+Qg36o/1acc1kiaKDPpFLVb1QzhMV5awVDvh
+ bwxa3wpu4Utctg0f5opLwRMDnzqtjiEb2RyOWgnlqbEzFLIpDTWt9tFNI/XmI9PyRItjAiIRq
+ 2Y3C4Fr4oBCXtiNktEBGHKdvUhjbyZrMVg1EX8kKCxIQTU0bSFqjd2pL7L+OulbudnhEnr51A
+ FPNHnHVsxgEXD+FK0chgarDsudM/rOCz/4qMoLx49yG7L5SV02ctYzEFaShsZ/Im46kjcEGZ0
+ uwK/QLrDVULeKoBnWzCDeQ5+0vKquK2K4ioC1t3am5MNdQAp1eRwz2a9kk8tV2NP3psK5+L3o
+ Cr/WSMovbSQiS/5i9632I2D6KhE8sg+h2SC/ulcIkixnAoWjiElikcnjhutCbOdtC3NS0kOAy
+ YxGMrcYUiwTVlfyjkjKtuGiKbhczfwcYxdJNzRlcz3Hitxz6kkFQZEvKqAXz8t/g5PCdonKIA
+ BYsGtZD9xKTvZ6KagZjxhGySBHPKBF444X3B20GDuKnAj99dtFoPSR4bebWX/Q8HB18hUekL+
+ q0k8tYKgpwlEEQXXGPR1GevLL/OEfFNrgkcOuUfgZAHSBMByZSEl2Nmiq562ieuYPLKWlfV8r
+ D9ga835sKoWge/OnIlVm3oL2CPngVq9RyBPZwpZU9CNrgzxYxY4rmD/T0ko7saRFqRVwwpkqA
+ PoSh+wu81XxuFs3wRUPQQz4/E7bamf906gnIAbZSmDL3LrrHpCAar6evrAyBcjBQrNPfz2w9N
+ m874lvf57YInqdlQ+qI4mIRB/slomuak7F55CmYOie4R+Dr/Zty1C1k8sI85XI//dPSWXEO9s
+ ZzvZAsl1yUXZH1rhhnDqZ6oGLhpJhMAUJCKc7CCZBSnOPiOPQKf8UtGdbjjo1p3cszEPlBF+d
+ wF4ncGwpPJRiBLI8BKVQ1vnuwavMBXLafimL9MzZcUamf5QLFsfJ08r2A==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 12 Aug 2021, Phillip Wood wrote:
+--8323328-1786597639-1628978574=:59
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On 10/08/2021 19:43, Junio C Hamano wrote:
-> > Elijah Newren <newren@gmail.com> writes:
-> >
-> > > On Tue, Aug 10, 2021 at 2:32 AM Phillip Wood via GitGitGadget
-> > > <gitgitgadget@gmail.com> wrote:
-> > > >
-> > > > From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> > > >
-> > > > Setting GIT_AUTHOR_* when committing with --amend will only change=
- the
-> > > > author if we also pass --reset-author
-> > > >
-> > > > Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> > > > ---
-> > > >   t/t3403-rebase-skip.sh | 3 ++-
-> > > >   1 file changed, 2 insertions(+), 1 deletion(-)
-> > > >
-> > > > diff --git a/t/t3403-rebase-skip.sh b/t/t3403-rebase-skip.sh
-> > > > index e26762d0b29..6365c5af2f7 100755
-> > > > --- a/t/t3403-rebase-skip.sh
-> > > > +++ b/t/t3403-rebase-skip.sh
-> > > > @@ -36,7 +36,8 @@ test_expect_success setup '
-> > > >          test_tick &&
-> > > >          GIT_AUTHOR_NAME=3D"Another Author" \
-> > > >                  GIT_AUTHOR_EMAIL=3D"another.author@example.com" \
-> > > > -               git commit --amend --no-edit -m amended-goodbye &&
-> > > > +               git commit --amend --no-edit -m amended-goodbye \
-> > > > +                       --reset-author &&
-> > >
-> > > Makes sense...but doesn't the fact that this test worked either way
-> > > suggest that the specifying of a special author name/email was total=
-ly
-> > > superfluous and could just be removed?  If there really was a reason
-> > > for specifying a different name/email, then is the test faulty for n=
-ot
-> > > checking for it somewhere?
-> >
-> > Good point.  The commit tagged with amended-goodbye is later used in
-> > some tests that ensure the author ident does not change across a
-> > rebase.  If this commit gets created without authorship customized
-> > (i.e. before Phillip's fix), we would not catch a possible breakage
-> > to make rebase discard the original authorship information.
-> >
-> > But with this fix, we now can catch such a breakage.
->
-> I'll expand the commit message to make that clear
+Hi,
 
-Maybe you could even add a `test another.author@example.com =3D $(git show
--s --format=3D%ae HEAD)`?
+On Fri, 13 Aug 2021, lilinchao@oschina.cn wrote:
+
+> >On 8/11/2021 7:00 AM, lilinchao@oschina.cn wrote:
+> >> Many websites support two-factor authentication(2FA) to log in, like =
+Github, I wander if we can support it in application layer.
+> >> When client clone something, they need =C2=A0input username and passw=
+ord, it is like a website login process. For=C2=A0security, we can
+> >> enable =C2=A02FA during this process.
+> >
+> >Typically, this is handled at the credential helper layer, which
+> >is a tool outside of the Git codebase that can more closely work
+> >with such 2FA/MFA requirements. For example, GCM Core [1] supports
+> >2FA with GitHub, Azure DevOps, and BitBucket.
+> >
+> >[1] https://github.com/microsoft/Git-Credential-Manager-Core
+> >
+> >The mechanism is that Git attempts an operation and gets an error
+> >code, so it asks for a credential from the helper. The helper
+> >then communicates with the server to do whatever authentication
+> >is required, including possibly performing multi-factor auth.
+> >All of these details are hidden from Git, which is good.
+> >
+> Indeed, this is good, I've experienced this tool these days at WSL and W=
+indows,
+> but finally I hope these features can be supported by Git itself, and th=
+en the user end can easily configure it.
+
+The problem here is that 2FA is highly provider-specific. And that's why
+Git itself refuses to implement it. Hence the credential helper layer.
 
 Ciao,
-Dscho
+Johannes
+
+--8323328-1786597639-1628978574=:59--
