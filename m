@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66898C4338F
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 22:29:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FC8BC4338F
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 22:43:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 443D360F36
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 22:29:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0759460F11
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 22:43:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233662AbhHNW3q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Aug 2021 18:29:46 -0400
-Received: from mout.gmx.net ([212.227.17.22]:33713 "EHLO mout.gmx.net"
+        id S233844AbhHNWn5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Aug 2021 18:43:57 -0400
+Received: from mout.gmx.net ([212.227.15.19]:47633 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233223AbhHNW3p (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Aug 2021 18:29:45 -0400
+        id S233223AbhHNWnx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Aug 2021 18:43:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1628980147;
-        bh=bAWSoaNYhfwiKEvPdaotpQa7M1EAzifrX/BxiISijR8=;
+        s=badeba3b8450; t=1628981001;
+        bh=927QbYNRGMDoAL5wmU9ZElRPhjR+OBNogDCcoXyYoIs=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=IZOi4l4lVURs3Mest0VSW9fApy92rcBBt2z6lle6fAuhtxyJowCrDzGYBsQyVxQNH
-         USPXEkPaPZbo0myL3BEjby/Z2ssabjjGxyRDTGs86Od4OTlqMC+jjno0DjDdRTSTZx
-         zxqz72JrRfyqkReG8XQmlZ2i6tC5zIBJNPG+vHtY=
+        b=axB/B8l7IHEppXTbgg5nlpJaMWuPQvLN9+nQDibQC4dcFxceBmDvRfr0aQ2Kjvuk8
+         Uf9ktoC2M3ZlXMLKPew9dXO/bapKdbiUV/gfwT5SsfVvNN5rJzrTL+bTrJ4WEKp1Pc
+         BB5wpBNmtiTiTLpYpjShL0EGOgKpOFYal8xQOfU4=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.60.179] ([213.196.213.229]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M72oB-1mANyv2itj-008Xew; Sun, 15
- Aug 2021 00:29:06 +0200
-Date:   Sun, 15 Aug 2021 00:29:05 +0200 (CEST)
+Received: from [172.23.60.179] ([213.196.213.229]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MLi8g-1mWZFw3xMO-00Hii0; Sun, 15
+ Aug 2021 00:43:21 +0200
+Date:   Sun, 15 Aug 2021 00:43:19 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
-        git@vger.kernel.org, emaste@FreeBSD.org
-Subject: Re: [PATCH] ci: update freebsd 12 cirrus job
-In-Reply-To: <20210813093909.GA3866771@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.2108150022160.59@tvgsbejvaqbjf.bet>
-References: <20210812202200.82465-1-carenas@gmail.com> <20210813093909.GA3866771@szeder.dev>
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 0/4] rebase -r: some merge related fixes
+In-Reply-To: <pull.1015.git.1628860053.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2108150042250.59@tvgsbejvaqbjf.bet>
+References: <pull.1015.git.1628860053.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1871771184-1628980146=:59"
-X-Provags-ID: V03:K1:GxCg4/c9O2kgQ2krsQhToOuOjQkN/RHA95x9d9n8HDk4gTg3q59
- mZEwrbAQav78+9eD/QCCEwVEeaSBFf+/1c+oKSCu1DMqmQIVjkSibSN6trng+14km5eMPfZ
- 5NG4p5XGycQICjuyoSd35BbJNjN0El5hVHnBIJKUfGUhkQkCmNItKNLJfXVBcz1vwDOEWQ0
- 1tBtjRckpy5ZCyOrjlX8Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xhwzYa7g5qg=:/gJDbz2DFR8UM+x6bMwIRI
- 0IfxpKuvfISQBJandjPIJFLji4zvZhxs8KUZEAgfrNbIGl1lKv8UJr4Hr5PVNS38XDlL05mfJ
- kKzLvUuPPCmdhwmOVjsYhtABKWfpQofzUWiG2P0j8bLRAtwzdLUnbbNRaYJAX2bcHz5RFQbHn
- /UXpE9TfBbsgyojt5yDRPQKOdb+LDb1hWgEFu+cyxTriipEDxp+PnasfabMTp4/WBtXsyL0ZR
- 6GYLt8kql0LTzfvIhuUfxR7XlYkys1zHhSndJgi4XFIFldbIcngXKB78/CumI5swp3qAq8x9m
- zp9CTT3KTJKC0L98MoHQKeIUTuplASzmBkwuYvIB7tqbq/+ZZ4wqgwRn3FzN6k2GckT5y4mIt
- WBiYDO2x2ZYYOrMGAlPPEvR+JlhteN8eaAxKgcErJeN2oZ1iPfaMuEtvub55khep3SnjJwmPJ
- c+I6XkydyBrx7lrq0k0Nn4HMpjWr0uLu1PRYtDtbsOkwG7aZoiIQHDWDjSkF/xErPaB45jhpo
- UCeT4pxx2cwnn6ibRpP2kB/1J6Kmkm/0l4isHQ6Oaizv0XnsBGfNJn+fvMvvjhDfuHys02CeN
- 4dRu2GAWDg5zpCGp1Xjwi+Qk7dMZFCP9vFJqV0U0nK+9cn1yqghj6xWJNhHEVKFtCiEfdWomH
- sTSx0ONAGiU/G993oUl+svVANLQ2qb+1ZrwUt3UVWaoXM8+GOZbPCYr69ZMHfGlcymsqOP1Dn
- V/ODYNj+20AZlGLb1xoKYJMTCZjL7rRUAnAXDQKUWAPA0aRC4VcHQgF+QJbrkmq3Fv2ZhA1QL
- waqiNY3nczoW0eyTyknxD60t7x5HImb2KF6VUmuCozpb9BJ/yQ7ojzwrXB9F1hlonQHO8lU7W
- pJmjV8tgz5q56p+mvrDPopHxDjIUcWG8br3YIujpP9mmXuEZTkMbdCToyZbxk3hNsK5YECNDn
- +6ba3Y1Ptfw5+VUyKZ9r+W1u33rYO2GlIfeeOTR5ztDFfUOaoh+tqxkyTJT8ZBdVRGWGkCiKY
- 5mTPkrCYQWoR1tgQiOaE9xSN9t6gZ36eAkKgfBUabCNF/EpAVxH7bY4oevaBPbuWuTLY2uXtw
- OW+6ZdlvLJKrThuYJOECVhu0W1FWOx+soLQSagtWwefkCZgEsOUWgZ0xw==
+Content-Type: multipart/mixed; boundary="8323328-2037663009-1628981001=:59"
+X-Provags-ID: V03:K1:SXMWEWtgs/TS/hDNYNet0yXdRtKb7ZkJLlwNPW14vOZuROuurEh
+ h52RAZ06U1zsiKJbC+ShQ6JSMXglfbCWrDXhJnSnRQVSd7TCvrY6S4oSLmoUPVpJZrVAaID
+ lI+h3cv1Mamdmse60T1rfT/ifEBq0v6yl0VITzCpBsHwaZQoKlnPp62rQW+U3ZNECI0nGTm
+ EemCcx8kFcHzjlCNBy2Gg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:2nDpWizCV0s=:ha8p0nt9aOVpSD5ndwZnT0
+ kv9y/ASC48Hk80PFy5eSSz9qtebo2S0mdghLcXKDAv0cQophd32xEdwBnSGOqL4BpceGN1FBe
+ vcH/6Gkd99FA32VzwGAvGL0knaGGyZvkgseJABeZLGU6RxojJwcYqx+YR8+5ix1WDTqoepYSs
+ O9GVtYXRcWHwSc025xd+GcWstoAAOhoHgtB5qBalLLRn9m72LsqqqTPjSUSCTs+Qv7EzNbMWZ
+ 7OzWLlwQlvNkX+gO87EvTbdg9sBGx3u8ysuYF0MZm4CJHVONHfQrDVmbtFDvDsGVVZICPZzXM
+ oRosatZ+PIV5TrPpUZZZuT+gb2BuoAfiFZLlGbbvYUkhGcOSZq8JoIuF2QtXnSdSDbneFuqmG
+ Gdy1AX+5xlNG7zL18RDnBm/CdACKs4vUhHjtQhKmTb8RpXJLMfN2AiV7jxPBCPu86+4oAFK9v
+ INcWVJqR7V175H6/GlbjEh8n0k5KFlSPBi97gob292B5GE+Zsk7MIm4EMKZpvZNI61IQhYRYr
+ wNN6KX8HwaeS5ZSFdhd5B4Q1FDkKsikF9gdJqyDDd5jYeMIh4B0lRDBHX9xmRBeMOousYrCu2
+ GU2iXowKck412JnQ+ugdR57hyp7TQYuGHZ/Q2Hq43hBcbMEn+5h5/dZ1A0sh9bCKZkE8auWtG
+ dxSCXWM2N4ZTivG+5aAE7obbHrYSowiPN+7DFER8Ca+FWzdeKIB5q2/z5+lJUjDSRSX5tK1YR
+ MUvq3xoDzJ26djN0yPsVxTnrfe4AyGBC5SHdIKz1kZePXV76IfvAM4KFqBXNP7XdFACpy1LnK
+ suR8pHaWfz6owzyVS4u+vEz3MZxjAmQyx2JJV6Z91Elo+2oM+ruGcWKYdHRXeQ1zPlGO7E+V3
+ /4QHqGYZF842L1wE5vPa38CnQRpkRet83If36ZRDB/GzV2NNOmDMy4ZBon8NMdSF/KjVLdUp1
+ mJr4XTXi28JLBtoXfxwcu+xEqp4W1PIET+Wsfs6PvoiERXCbWzgLRYQ5NQe0A0rZiS57hG6ub
+ MojlDuypJtzTDMpsCJ47p6F0kLiW/Ulm2A8ViC9/SIc/TG+WUP5A9fmbzqy6GKOLzuDcsCg2l
+ tysL4VJUBZZePiDRWbMcsDg7Fr8u3PXDUS9fwfgSO9R83GbmbLOinHBrw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -72,108 +73,51 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1871771184-1628980146=:59
+--8323328-2037663009-1628981001=:59
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi G=C3=A1bor,
+Hi Phillip,
 
-On Fri, 13 Aug 2021, SZEDER G=C3=A1bor wrote:
+On Fri, 13 Aug 2021, Phillip Wood via GitGitGadget wrote:
 
-> On Thu, Aug 12, 2021 at 01:22:00PM -0700, Carlo Marcelo Arenas Bel=C3=B3=
-n wrote:
-> > make sure it uses a supported OS branch and uses all the resources
-> > that can be allocated efficiently.
-> >
-> > while only 1GB of memory is needed, 2GB is the minimum for a 2 CPU
-> > machine (the default), but by increasing parallelism wall time has
-> > been reduced by 35%.
-> >
-> > Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
-> > ---
-> >  .cirrus.yml | 9 ++++++++-
-> >  1 file changed, 8 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/.cirrus.yml b/.cirrus.yml
-> > index c2f5fe385a..e114ffee1a 100644
-> > --- a/.cirrus.yml
-> > +++ b/.cirrus.yml
-> > @@ -2,8 +2,15 @@ env:
-> >    CIRRUS_CLONE_DEPTH: 1
-> >
-> >  freebsd_12_task:
-> > +  env:
-> > +    GIT_PROVE_OPTS: "--timer --jobs 10"
+> This is a collection of merge related fixes for rebase -r
 >
-> Why these prove options?
-
-The only problem I see with it is that its `--jobs 10` disagrees with the
-`MAKEFLAGS: -j4` below. Either both should say 10, or both should say 4.
-
-> On other CI systems we pass 'prove' the option
-> '--state=3Dfailed,slow,save' as well to reduce runtime.  However, this
-> only works when there is a persistent place for prove's state files,
-> e.g. the cache feature of Travis CI.  If Cirrus CI lacks a similar
-> feature, then we can't benefit from this option, but it'd be worth
-> mentioning in the commit message.
-
-We also don't benefit from this in the GitHub workflow because there is
-likewise no easy way to persist the state.
-
-> > +    GIT_TEST_OPTS: "--no-chain-lint --no-bin-wrappers"
+>  * Make merge -c behave like reword.
+>  * When fast-forwarding a merge don't leave .git/MERGE_MSG around (repor=
+ted
+>    by G=C3=A1bor)
+>  * Make merge -c work when with --strategy
 >
-> Why these test options?
+> Phillip Wood (4):
+>   rebase -r: make 'merge -c' behave like reword
+>   rebase -i: Add another reword test
+>   rebase -r: don't write .git/MERGE_MSG when fast-forwarding
+>   rebase -r: fix merge -c with a merge strategy
 
-I guess that's for the same reason we use these options in the Windows
-tests: it speeds up things for a historically pretty slow build axis. At
-least I seem to see FreeBSD runs lagging behind all the time.
+I reviewed all four patches (the first one took the most time, obviously)
+and it was quite the pleasant read. I am in favor of integrating them
+as-are.
 
-> chain-linting is done by a mighty sed script; I think it's worth
-> running it with FreeBSD's 'sed' as well.
->
-> Quoting 't/README', '--no-bin-wrappers' "can speed up test runs
-> especially on platforms where running shell scripts is expensive".  Is
-> running shell scripts really that expensive on FreeBSD?
-
-I don't think it is FreeBSD per se, but the available VMs that make this
-speed-up worth our while.
-
-> OTOH, why are there no options that would show us some information
-> about test failures, i.e. why no '--verbose-log -x --immediate' like
-> on other CI systems?
-
-That's because we don't use the `ci/` scripts at all, and the failures are
-not actually shown.
-
-This is a mild annoyance to me, I have to admit: there is very little in
-the way of actionable information whenever the FreeBSD jobs fail.
-
-Lucky for me, I've so far only encountered breakages that _also_ affected
-the macOS build axes, and therefore I could diagnose the issues in the
-GitHub workflow run logs.
-
-But yes, it would be nice if the FreeBSD CI runs were more helpful in case
-of problems.
-
-As far as this here patch goes: I am in favor of integrating it as-is.
-
-Ciao,
+Thank you,
 Dscho
 
 >
-> > +    MAKEFLAGS: "-j4"
-> > +    DEFAULT_TEST_TARGET: prove
-> > +    DEVELOPER: 1
-> >    freebsd_instance:
-> > -    image: freebsd-12-1-release-amd64
-> > +    image_family: freebsd-12-2
-> > +    memory: 2G
-> >    install_script:
-> >      pkg install -y gettext gmake perl5
-> >    create_user_script:
-> > --
-> > 2.33.0.rc1.379.g2890ef5eb6
-> >
+>  sequencer.c                   | 106 ++++++++++++++++++----------------
+>  t/lib-rebase.sh               |  56 ++++++++++++++++++
+>  t/t3404-rebase-interactive.sh |  13 +++++
+>  t/t3430-rebase-merges.sh      |  38 +++++++++---
+>  4 files changed, 155 insertions(+), 58 deletions(-)
+>
+>
+> base-commit: 66262451ec94d30ac4b80eb3123549cf7a788afd
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1015%2=
+Fphillipwood%2Fwip%2Fsequencer-merge-c-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1015/phil=
+lipwood/wip/sequencer-merge-c-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1015
+> --
+> gitgitgadget
 >
 
---8323328-1871771184-1628980146=:59--
+--8323328-2037663009-1628981001=:59--
