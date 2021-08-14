@@ -4,70 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC2E8C4338F
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 07:10:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ED1FC4338F
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 08:02:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C770B6101E
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 07:10:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5B46760F42
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 08:02:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237087AbhHNHKk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Aug 2021 03:10:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36408 "EHLO
+        id S237489AbhHNICn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Aug 2021 04:02:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236519AbhHNHKk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Aug 2021 03:10:40 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F1D5C06175F
-        for <git@vger.kernel.org>; Sat, 14 Aug 2021 00:10:12 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id qk33so22339423ejc.12
-        for <git@vger.kernel.org>; Sat, 14 Aug 2021 00:10:12 -0700 (PDT)
+        with ESMTP id S237447AbhHNICm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Aug 2021 04:02:42 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4536EC06175F;
+        Sat, 14 Aug 2021 01:02:03 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id hv22-20020a17090ae416b0290178c579e424so19407466pjb.3;
+        Sat, 14 Aug 2021 01:02:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ZYXwFD5ypo7AE+T8HlopIxAjomJNfsodbp1xV0hBNSI=;
-        b=i0SxEiX/N7vxZRR0iyZLJawLWXzIS8cdjUVFvCY50AEj4He1rPe+lZU1kTqT36y98j
-         jAir/JOuSXJG340ao4gQ1faoKiONQZuiI0uPB82jFQqcSmk6nmnNZlWDJFSUqITUFUA2
-         sXqO8O3WeQzVnxaHRiB65GU62sJAAu66av5OaoNTsgfcf8QZKoSiwP0B5UzHcuFr773u
-         8+uP+MI8PPiNromHuid4S1X8CdwNNelMb5roFLUzvM3F+kIK8ZxIjS6pfU/OSwHe0l2Y
-         kM5zSaAmrs8gQnBpO+J1g2yfvz0RG4H7qt2cVMViNDyHyPaApKPFdB6ASnShHl2WkYzU
-         c4kw==
+        bh=PYmA/1frNak+/JEKetRqAi453W74LmX6mwHsC/CUI1o=;
+        b=Y9jIfM3ejXMOylyMOMJRthUV+gDv7owyzGDBBsBXIF9YeLgwDblvEHYNrU54D1ZMEl
+         7CkFDmXAy9YkmIbCLpTbOVbd688+sb4SGu8NoRK/XchJhBfRF5frLut4I2JWdiYLnrqQ
+         hGqSDorEMWyHsSLzDUzRTiIZrG3O/xEBR5jE77adD1I3YhOJEtytYUPvBPzI80eXw81z
+         2S/5xNon2iLxiAwn5og1Plvgt+NDjP3Tjl5UkBuYwm5MoRDk4Psl0lFuITIEq8lGI9Rw
+         bnkWP/Pd3h16G4NyRKczLm3XGTO3oJyu8g4VXwYHx+dIw86pglQyMprUGVTPB8H1jiqv
+         uL3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ZYXwFD5ypo7AE+T8HlopIxAjomJNfsodbp1xV0hBNSI=;
-        b=nXusXwKEnozoKyJ5GhM4Bs5zGGPwOm/ni9nsUvUzcG6v4WHn2HFyACWPa6DAocPk7u
-         o+J8Jn2TF/EoFqXtAFH8Z1pZ3R+TThCxodNcC10ixb8KkM3iFo5Dlevfpw5mZ8OIGtUo
-         fpGoH7WSn9C2BzTFqpcc60EudNQuXbGCGX1GwFhfDE54qv6NIKwStxpyyixBKVV8TlUt
-         ji7oyc1alhcG6rSpOME612j+LhzY949+gaJtKboheN5ndeSsg51LfsqYrIOK5GgdjobC
-         7pT86l3YQgDz0osdsjPYsEwsxXLHuYQwm4Xdw+qkH5H/dGUSbKTurMipi0qm2o5oK/e9
-         eJ3w==
-X-Gm-Message-State: AOAM533/+3P8GcQeSx4DtXXzfgY7oOL+bj/pO18HMwfcc9d97PCo79fM
-        bjtwEg1B8Ba8d+c1b491RVbUWKROj0o+2KGBssw=
-X-Google-Smtp-Source: ABdhPJxIX8g3fSIbC2qmkI9pmZeJ++0U46yuejrs4159jJDyOXpYfPuU+JXrSOASpr+lUkQDgPi4MeZSEZmQllk/EQ4=
-X-Received: by 2002:a17:906:58c7:: with SMTP id e7mr6206362ejs.197.1628925010751;
- Sat, 14 Aug 2021 00:10:10 -0700 (PDT)
+        bh=PYmA/1frNak+/JEKetRqAi453W74LmX6mwHsC/CUI1o=;
+        b=SGaAQBbcGTah4LMlsItK960MSI5gZuFaiZGlKlwu6SEltpxpWNqwLN77J+eWoRlJTz
+         06L05ypljohA5juAuO9qxNBuQwmxED51HWyXu8TwPxev5TmE5zKljTxhNBkQyJAksTGZ
+         QmoAJBRu0pno2Aam6k+cfvaphRJQSx1hIRJkw/vojE/Rvd3tPp0O5PU+aSnVchxByuJI
+         SYOMxd/38TcXYyp84FQUY0dBf47s9OC/YaitvmZzR0espNkVwxhRCBThwGxTol30s6Vi
+         3z3aZX82dYyJJn1b6rveMYx+vDkE1ZAGM3ckTa/FTm3xbtcZGfGUT7aJjaRAadYaEcZw
+         uFBQ==
+X-Gm-Message-State: AOAM532IErqMWeE80DsgICdy/40+eNCNcsVFLUjfoS+jgLNqfOTKsWAL
+        ZJhaOBZGOGeIjPyErOs818VlE/BM5nF9ynEaYSU=
+X-Google-Smtp-Source: ABdhPJylso2eqrMBsnpZ4X9Ay9Q6gCvZwhzjlijyvf6sqXnS7a0kvqgkcwVEghYUQ8J4G754nEWQZPTJKN+TAwUSyow=
+X-Received: by 2002:a17:903:192:b029:12c:bf13:ab28 with SMTP id
+ z18-20020a1709030192b029012cbf13ab28mr1545449plg.17.1628928122795; Sat, 14
+ Aug 2021 01:02:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <m2im09a4dl.fsf@gmail.com>
-In-Reply-To: <m2im09a4dl.fsf@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 14 Aug 2021 09:09:58 +0200
-Message-ID: <CAP8UFD2f1XLwzBn1oxX7MgWBvu1ypYZiryDcMhG=W4KVTmqCjw@mail.gmail.com>
-Subject: Re: [GSoC] My Git Dev Blog - Week 13
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     git <git@vger.kernel.org>, Shourya Shukla <periperidip@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+References: <xmqqo8a37eim.fsf@gitster.g>
+In-Reply-To: <xmqqo8a37eim.fsf@gitster.g>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sat, 14 Aug 2021 10:01:49 +0200
+Message-ID: <CAN0heSrPXdpPXTpY3Cdn-HHcuzLvc--Y_L+SgK-QGt5yS8u54w@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.33.0-rc2
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 13, 2021 at 2:58 PM Atharva Raykar <raykar.ath@gmail.com> wrote:
+On Thu, 12 Aug 2021 at 01:23, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Here's the link to the blog: <https://atharvaraykar.me/gitnotes/week13>
+> Git 2.33 Release Notes (draft)
+> ==============================
 
-Great, thanks!
+rc1 had a section "Backward compatibility notes" where the recent work
+on "git log -m" was mentioned. That was then dropped because of
+6a38e33331 ("Revert 'diff-merges: let "-m" imply "-p"'", 2021-08-05), so
+there are no backward compatibility notes in rc2.
+
+> Updates since Git 2.32
+> ----------------------
+>
+> UI, Workflows & Features
+
+>  * The "-m" option in "git log -m" that does not specify which format,
+>    if any, of diff is desired did not have any visible effect; it now
+>    implies some form of diff (by default "--patch") is produced.
+
+This is basically the same blurb. It was duplicated in rc1, and one of
+the copies remains in rc2. I believe it should be dropped.
+
+Martin
