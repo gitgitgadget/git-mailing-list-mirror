@@ -2,68 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49F78C4338F
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 22:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66898C4338F
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 22:29:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 348D660EE0
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 22:18:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 443D360F36
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 22:29:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233630AbhHNWSa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Aug 2021 18:18:30 -0400
-Received: from mout.gmx.net ([212.227.17.20]:39351 "EHLO mout.gmx.net"
+        id S233662AbhHNW3q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Aug 2021 18:29:46 -0400
+Received: from mout.gmx.net ([212.227.17.22]:33713 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233549AbhHNWSa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Aug 2021 18:18:30 -0400
+        id S233223AbhHNW3p (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Aug 2021 18:29:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1628979479;
-        bh=/L4wQAFmEE2g1qJff4UvnbW/2tQ4zO57IaAvFcMtE0Y=;
+        s=badeba3b8450; t=1628980147;
+        bh=bAWSoaNYhfwiKEvPdaotpQa7M1EAzifrX/BxiISijR8=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NCbFIoHjgIKptA+5DD3kN4Ee+ShKWR9hL0aWgq0JQcHCflRZlxGidBOnSeSrtmt+8
-         v6+xEIuquwC1MrMxQ9+PPESwW9VGrZHNt5tN+Ea+IxdQcQ4lUYPa8jCsZAMzecTPMh
-         Rzg9gIz3zkAzk2JnYLeUJSBOcDuP+fLxUXIdiQhU=
+        b=IZOi4l4lVURs3Mest0VSW9fApy92rcBBt2z6lle6fAuhtxyJowCrDzGYBsQyVxQNH
+         USPXEkPaPZbo0myL3BEjby/Z2ssabjjGxyRDTGs86Od4OTlqMC+jjno0DjDdRTSTZx
+         zxqz72JrRfyqkReG8XQmlZ2i6tC5zIBJNPG+vHtY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.23.60.179] ([213.196.213.229]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZTqg-1mcfXF27Yk-00WYId; Sun, 15
- Aug 2021 00:17:59 +0200
-Date:   Sun, 15 Aug 2021 00:17:57 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M72oB-1mANyv2itj-008Xew; Sun, 15
+ Aug 2021 00:29:06 +0200
+Date:   Sun, 15 Aug 2021 00:29:05 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] ci: use upload-artifacts v1 for dockerized jobs
-In-Reply-To: <20210813091349.88574-1-carenas@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2108150013510.59@tvgsbejvaqbjf.bet>
-References: <20210812065234.71399-1-carenas@gmail.com> <20210813091349.88574-1-carenas@gmail.com>
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+        git@vger.kernel.org, emaste@FreeBSD.org
+Subject: Re: [PATCH] ci: update freebsd 12 cirrus job
+In-Reply-To: <20210813093909.GA3866771@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.2108150022160.59@tvgsbejvaqbjf.bet>
+References: <20210812202200.82465-1-carenas@gmail.com> <20210813093909.GA3866771@szeder.dev>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-659242017-1628979479=:59"
-X-Provags-ID: V03:K1:17EEPpnsqkC/Nhqz7GwAZYpQF8PtuHys/mZJaZVsawNrz9fLKKm
- LzAHCjwN3s+syhTvTE6rIRVAJCIF5wUF/8NI0eNeKqgIRc07KD6Lu8GcXidXJa7233Vr6Di
- beAZ6x9K4ObH3pNdM+wiOOTYma2vSTg/bnbZoQcHnXTZzJsaf0nfup6eTg5Ni+L+10xmR5g
- oX8Xu1yiBZUgEykIWkw7A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ETOsmiJJD/Q=:MRWgo/Hl87M+n0/x9UlhS6
- 8xkKu57lvWuit/rCnd/CIvKQgz6eAbJhkOAN9DeFdyaMiTVvuEeQBkl26m/PRdH9sguX2n2KR
- N3x3MCwku83g0+7bu6VNjUco0RLV2T02RDrPaJhXdh55CRs0UXbwo2G4hOydy7wdQ0yfaBsqz
- 8l9rReOqA5PdpxfW++47AJ9mn/iIjIwaWfCq4be0Ab/pAnGzMBMXD95WY2VVARvPPZdPKgWWe
- mGvC/t3zp686LAZWs6gMgctWgHpeVv3L5WgLyw3muOVkHqIWg8gBUUr20HuyqJhNNMwGLKE1X
- OttOBu3fMYlmmXHjXKVAHi4iUTti7qLCn0Di2you3q+r1QgSZuoqrqVq1GqhxcQw2nfiitsz3
- M6t8XoY2lIhG7qXh0tskpGhx9M0VPWwLKv3/eyM7/PZOP3uh3MtIUS/aOY67DZC8B5ACWQ7GH
- 62JDsOtW3Vkc2SWEK+u7b/BiwZrHRZguWDSh9SlJFsCyWkIQI5t/+7UeZ5QoWD+SFgrFnwmiN
- VQF7OBn8hQkBPt3tcz7BzTdc1mx7HytWVeW6mQyt/MXE0apS+B3XKtMKk6LFiaOQOMxjg6qgQ
- XMXotB//mvd/orMgRSdCyi2zUzWzhjyaSRVOA9HTVR+SB6+EE5TUDnZiUJpIjM2hsb4Cs4U6A
- 0ys3SKpgJJBXl3owKDiCRx+AE7QScYiT2xHylM6tm3aPOSNbIEMv78IHoQVlRKNx0k4eSESTi
- ZTsaiD0j3KLilgazA7LvqX+kmjEAvpIvdY92GJc2vz+4ugUmfZoFi0+0ZJcHXj8ObgL7guWKy
- 6R1BpFLPwDKb8C31buK4m3zYbET7VFz1rjmabhaxx0Mrz964vqMAzddAaFcjB3iD/NfmNyYyc
- dtIwmmDds8jo7O4XdKjN6WTr5pJse/92YGrKmW335F2G+Ay6lP7tcFlAi5JpYHBrxb5odydbU
- rkD8IEJbecWA/G7bDUVOJ9xl6zkzJTB0da7+AJ/u2h3GTsXdKWzh3vXwKBHKFH9y9vrCormk4
- mzUUkzl3qMTvIRSYyDASCWyhu/eZvXwoIonWw9nMGR84R3F9lihBYymJsH6rQaXHA4UZFfwv1
- +2DqhCUGJr1KQrZ503+9I2cbmmYVdK3hzkRai3AI35DGtCokoshSsnx9A==
+Content-Type: multipart/mixed; boundary="8323328-1871771184-1628980146=:59"
+X-Provags-ID: V03:K1:GxCg4/c9O2kgQ2krsQhToOuOjQkN/RHA95x9d9n8HDk4gTg3q59
+ mZEwrbAQav78+9eD/QCCEwVEeaSBFf+/1c+oKSCu1DMqmQIVjkSibSN6trng+14km5eMPfZ
+ 5NG4p5XGycQICjuyoSd35BbJNjN0El5hVHnBIJKUfGUhkQkCmNItKNLJfXVBcz1vwDOEWQ0
+ 1tBtjRckpy5ZCyOrjlX8Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xhwzYa7g5qg=:/gJDbz2DFR8UM+x6bMwIRI
+ 0IfxpKuvfISQBJandjPIJFLji4zvZhxs8KUZEAgfrNbIGl1lKv8UJr4Hr5PVNS38XDlL05mfJ
+ kKzLvUuPPCmdhwmOVjsYhtABKWfpQofzUWiG2P0j8bLRAtwzdLUnbbNRaYJAX2bcHz5RFQbHn
+ /UXpE9TfBbsgyojt5yDRPQKOdb+LDb1hWgEFu+cyxTriipEDxp+PnasfabMTp4/WBtXsyL0ZR
+ 6GYLt8kql0LTzfvIhuUfxR7XlYkys1zHhSndJgi4XFIFldbIcngXKB78/CumI5swp3qAq8x9m
+ zp9CTT3KTJKC0L98MoHQKeIUTuplASzmBkwuYvIB7tqbq/+ZZ4wqgwRn3FzN6k2GckT5y4mIt
+ WBiYDO2x2ZYYOrMGAlPPEvR+JlhteN8eaAxKgcErJeN2oZ1iPfaMuEtvub55khep3SnjJwmPJ
+ c+I6XkydyBrx7lrq0k0Nn4HMpjWr0uLu1PRYtDtbsOkwG7aZoiIQHDWDjSkF/xErPaB45jhpo
+ UCeT4pxx2cwnn6ibRpP2kB/1J6Kmkm/0l4isHQ6Oaizv0XnsBGfNJn+fvMvvjhDfuHys02CeN
+ 4dRu2GAWDg5zpCGp1Xjwi+Qk7dMZFCP9vFJqV0U0nK+9cn1yqghj6xWJNhHEVKFtCiEfdWomH
+ sTSx0ONAGiU/G993oUl+svVANLQ2qb+1ZrwUt3UVWaoXM8+GOZbPCYr69ZMHfGlcymsqOP1Dn
+ V/ODYNj+20AZlGLb1xoKYJMTCZjL7rRUAnAXDQKUWAPA0aRC4VcHQgF+QJbrkmq3Fv2ZhA1QL
+ waqiNY3nczoW0eyTyknxD60t7x5HImb2KF6VUmuCozpb9BJ/yQ7ojzwrXB9F1hlonQHO8lU7W
+ pJmjV8tgz5q56p+mvrDPopHxDjIUcWG8br3YIujpP9mmXuEZTkMbdCToyZbxk3hNsK5YECNDn
+ +6ba3Y1Ptfw5+VUyKZ9r+W1u33rYO2GlIfeeOTR5ztDFfUOaoh+tqxkyTJT8ZBdVRGWGkCiKY
+ 5mTPkrCYQWoR1tgQiOaE9xSN9t6gZ36eAkKgfBUabCNF/EpAVxH7bY4oevaBPbuWuTLY2uXtw
+ OW+6ZdlvLJKrThuYJOECVhu0W1FWOx+soLQSagtWwefkCZgEsOUWgZ0xw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -71,65 +72,108 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-659242017-1628979479=:59
+--8323328-1871771184-1628980146=:59
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Carlo,
+Hi G=C3=A1bor,
 
-On Fri, 13 Aug 2021, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+On Fri, 13 Aug 2021, SZEDER G=C3=A1bor wrote:
 
-> e9f79acb28 (ci: upgrade to using actions/{up,down}load-artifacts v2,
-> 2021-06-23) changed all calls to that action from v1 to v2, but there
-> is still an open bug[1] that affects all nodejs actions and prevents
-> its use in 32-bit linux (as used by the Linux32 container)
+> On Thu, Aug 12, 2021 at 01:22:00PM -0700, Carlo Marcelo Arenas Bel=C3=B3=
+n wrote:
+> > make sure it uses a supported OS branch and uses all the resources
+> > that can be allocated efficiently.
+> >
+> > while only 1GB of memory is needed, 2GB is the minimum for a 2 CPU
+> > machine (the default), but by increasing parallelism wall time has
+> > been reduced by 35%.
+> >
+> > Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+> > ---
+> >  .cirrus.yml | 9 ++++++++-
+> >  1 file changed, 8 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/.cirrus.yml b/.cirrus.yml
+> > index c2f5fe385a..e114ffee1a 100644
+> > --- a/.cirrus.yml
+> > +++ b/.cirrus.yml
+> > @@ -2,8 +2,15 @@ env:
+> >    CIRRUS_CLONE_DEPTH: 1
+> >
+> >  freebsd_12_task:
+> > +  env:
+> > +    GIT_PROVE_OPTS: "--timer --jobs 10"
 >
-> move all dockerized jobs to use v1 that was built in C# and therefore
-> doesn't have this problem, which will otherwise manifest with confusing
-> messages like:
+> Why these prove options?
+
+The only problem I see with it is that its `--jobs 10` disagrees with the
+`MAKEFLAGS: -j4` below. Either both should say 10, or both should say 4.
+
+> On other CI systems we pass 'prove' the option
+> '--state=3Dfailed,slow,save' as well to reduce runtime.  However, this
+> only works when there is a persistent place for prove's state files,
+> e.g. the cache feature of Travis CI.  If Cirrus CI lacks a similar
+> feature, then we can't benefit from this option, but it'd be worth
+> mentioning in the commit message.
+
+We also don't benefit from this in the GitHub workflow because there is
+likewise no easy way to persist the state.
+
+> > +    GIT_TEST_OPTS: "--no-chain-lint --no-bin-wrappers"
 >
->   /usr/bin/docker exec  0285adacc4536b7cd962079c46f85fa05a71e66d7905b5e4=
-b9b1a0e8b305722a sh -c "cat /etc/*release | grep ^ID"
->   OCI runtime exec failed: exec failed: container_linux.go:380: starting=
- container process caused: no such file or directory: unknown
+> Why these test options?
 
-ACK!
+I guess that's for the same reason we use these options in the Windows
+tests: it speeds up things for a historically pretty slow build axis. At
+least I seem to see FreeBSD runs lagging behind all the time.
 
-This seems to be the same issue that didn't let us upgrade to
-actions/checkout@v2 in the `dockerized` matrix (but of course I did not
-notice the `upload-artifact` issue because the test suite did not fail
-when I was working on e9f79acb28).
+> chain-linting is done by a mighty sed script; I think it's worth
+> running it with FreeBSD's 'sed' as well.
+>
+> Quoting 't/README', '--no-bin-wrappers' "can speed up test runs
+> especially on platforms where running shell scripts is expensive".  Is
+> running shell scripts really that expensive on FreeBSD?
 
-Thank you,
+I don't think it is FreeBSD per se, but the available VMs that make this
+speed-up worth our while.
+
+> OTOH, why are there no options that would show us some information
+> about test failures, i.e. why no '--verbose-log -x --immediate' like
+> on other CI systems?
+
+That's because we don't use the `ci/` scripts at all, and the failures are
+not actually shown.
+
+This is a mild annoyance to me, I have to admit: there is very little in
+the way of actionable information whenever the FreeBSD jobs fail.
+
+Lucky for me, I've so far only encountered breakages that _also_ affected
+the macOS build axes, and therefore I could diagnose the issues in the
+GitHub workflow run logs.
+
+But yes, it would be nice if the FreeBSD CI runs were more helpful in case
+of problems.
+
+As far as this here patch goes: I am in favor of integrating it as-is.
+
+Ciao,
 Dscho
 
 >
-> [1] https://github.com/actions/runner/issues/1011
->
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
-> ---
-> v2:
-> * dropped unrelated chunk and better grammar as suggested by Junio
->
->  .github/workflows/main.yml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> index 47876a4f02..68596f2592 100644
-> --- a/.github/workflows/main.yml
-> +++ b/.github/workflows/main.yml
-> @@ -271,7 +271,7 @@ jobs:
->        if: failure()
->      - name: Upload failed tests' directories
->        if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
-> -      uses: actions/upload-artifact@v2
-> +      uses: actions/upload-artifact@v1
->        with:
->          name: failed-tests-${{matrix.vector.jobname}}
->          path: ${{env.FAILED_TEST_ARTIFACTS}}
-> --
-> 2.33.0.rc1.379.g2890ef5eb6
->
+> > +    MAKEFLAGS: "-j4"
+> > +    DEFAULT_TEST_TARGET: prove
+> > +    DEVELOPER: 1
+> >    freebsd_instance:
+> > -    image: freebsd-12-1-release-amd64
+> > +    image_family: freebsd-12-2
+> > +    memory: 2G
+> >    install_script:
+> >      pkg install -y gettext gmake perl5
+> >    create_user_script:
+> > --
+> > 2.33.0.rc1.379.g2890ef5eb6
+> >
 >
 
---8323328-659242017-1628979479=:59--
+--8323328-1871771184-1628980146=:59--
