@@ -2,205 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9340C4338F
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 20:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF53BC4338F
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 20:01:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 80BBF6044F
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 20:01:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C185160C3E
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 20:01:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229612AbhHNUBn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Aug 2021 16:01:43 -0400
-Received: from mout.web.de ([212.227.15.3]:51955 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229489AbhHNUBl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Aug 2021 16:01:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1628971240;
-        bh=tqQ1HdUA2wsjNt0xLFihGNDZOsiL5DKv3xGRph2jMQ4=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=sCAnjLwiL6uFC9HwfYjG3AC71zNKM8jBsrf3MCI/m8elXt/7IW1pIce76o7Q4gRA4
-         UyrGHx94Wds5PK0SUQWiwuJ0MP6+F1pQr13XU2T1yIq4XzpL2sK1ox+BwY29pGzOqP
-         TKX9K24O8b8NkEp8BtZW+6LVMUe2VNrvDcFwOpfg=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.27.185]) by smtp.web.de
- (mrweb003 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0LtFVL-1nDOs706ih-012lLQ; Sat, 14 Aug 2021 22:00:40 +0200
-Subject: [PATCH] oidtree: avoid unaligned access to crit-bit tree
-To:     Andrzej Hunt <andrzej@ahunt.org>, Eric Wong <e@80x24.org>,
-        git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>
-References: <20210627024718.25383-1-e@80x24.org>
- <20210629205305.7100-6-e@80x24.org>
- <3cbec773-cd99-cf9f-a713-45ef8e6746c3@ahunt.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <9583052d-9181-7532-304a-4bacfb9e1147@web.de>
-Date:   Sat, 14 Aug 2021 22:00:38 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.13.0
+        id S230029AbhHNUCY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Aug 2021 16:02:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37198 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229489AbhHNUCX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Aug 2021 16:02:23 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5961C061764
+        for <git@vger.kernel.org>; Sat, 14 Aug 2021 13:01:54 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id i10-20020a05600c354ab029025a0f317abfso12041976wmq.3
+        for <git@vger.kernel.org>; Sat, 14 Aug 2021 13:01:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=3WOs4eYM8yQnI8ki5n2mnNA4ZPX8WundO4DYwRlR8pc=;
+        b=aPkJ4Ds6Cg4DvhDRKARv89hPA9qprqyI41yD+9BUD/uUoeKa6njCLsGFGc2a3cTcZ+
+         pOu9E+nvr2Gj1sq0w4RvAIghYtC4wlWfMxeSe84oiYgyhcfdU8zZiFd6XWqX7PZxunek
+         98CDZo46vFJKaFV4HEcVpdKwjt+GhxeZ8xyxFQ8iBMni4TjCUbqTNrCIOyLO7FhndRVI
+         KHSyptbVhYKE/ZNlV6TQ5CUwh69VHbIn1KzMa51H6CCO1QPF8rJS4CITano84SlHxIMg
+         aELyIJ0QUqzcB8nljMQcsENq1a+ECt9L5TjY94PN4oGL0f9SEpmqslwGQXt5gCyTmu0e
+         vLlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=3WOs4eYM8yQnI8ki5n2mnNA4ZPX8WundO4DYwRlR8pc=;
+        b=fkpp3W4azNwPlOSzI+YWcRVCK/3c8V+oM22ipIrV0949ElvE2YWVrSt0iJfkqSaaZI
+         NEl4B/alXXdhBTLZk6mp6Rt7ALdunNNapagYkCN/WvFGK3xEzF1d9t7x1NzLioE1821K
+         HwIaY40vns7nRL9kcj5qkVBqK2IpUlHwIys8DuF0ECy81bJHqO6VXgIhcIhWskTGJfNs
+         ZTN2kRPL6+HgbpP1VY8j32jAXVr1MhBLZBP7G0EddgLYyWTEF9YLX/oFOe7lq9iEwHSG
+         5rmyGQkG1aDLGNqv3gf0wM3ZadeWSp8agDkjMT213UbEWvCJUUQI66E3T4bgq/7z6B2D
+         Z90Q==
+X-Gm-Message-State: AOAM531WCtuTt49qwiZaiH6ANM65tb+PA/Jd8qw7xE7Zlxm7BW05ffIt
+        VXWXlyTG2Mqnh8XQH+WORF8paZXzvng=
+X-Google-Smtp-Source: ABdhPJzDGFqIiKHcKTUg8QMusipUQCV/IaNYqbfK4v8FQ29ZwzcU4EIW9NTKN2nIgMoI6uXlqRMQJg==
+X-Received: by 2002:a1c:2390:: with SMTP id j138mr8484155wmj.51.1628971313231;
+        Sat, 14 Aug 2021 13:01:53 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.144])
+        by smtp.gmail.com with ESMTPSA id z1sm5543419wrv.22.2021.08.14.13.01.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 14 Aug 2021 13:01:52 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 3/3] rebase --continue: remove .git/MERGE_MSG
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1013.git.1628587917.gitgitgadget@gmail.com>
+ <pull.1013.v2.git.1628775729.gitgitgadget@gmail.com>
+ <028c9dfc460b6c00bf481017a07a2a6d37780a76.1628775729.git.gitgitgadget@gmail.com>
+ <xmqqa6lluexv.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <549ebc1e-2b3d-786b-6467-40fb521ea0cc@gmail.com>
+Date:   Sat, 14 Aug 2021 21:01:50 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-In-Reply-To: <3cbec773-cd99-cf9f-a713-45ef8e6746c3@ahunt.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:zhGSI0BBxtmXM8RB/ipa/eRJVdRO4dk4MQZ+CiqKuvo/Kw7ldNk
- NRdU7mPp1uvUIZ2m5ffOC25iLHlq5S+3bClYts4jfClEUkOUCLBKKUs/Ial+6dfAjInaNmL
- p2AsY16GZIagEC7kav6ouPoVbrqNQj66S+FzgVnUIBhE7Mr4zOT+cYS2L2sufzqf7yomdg7
- y9lMmMqIC688hMd3gPOMA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:TmDmqVxGBAU=:O4Q69b3221KbyiUVpXrbnB
- zw69Tjt2J0AU4ACCVOStHiW95lElBvQzdfSLbOwnoOh9VH6utcYudVKoJSU8SYHdwEe3mGTBK
- pbUxy8CkdaFpl4STLtaaDnhkIYGVI6JtlwyH9cnnCf2No6QClPKu3n4nVujnxNR7tzuwDjEBw
- jBSAgonzGoH2j/xf44VAzf2BQnHDFKrsOharGAimKu47ZTEjd+lpkQM5eAotp/+MqJnIje4sR
- 7URst/9sOdbM7uKrH+VsRu7/hW86XB39nGvcv5onmHifu0gF/o1dxF7RFBe/ET8r7IXMNGiNg
- iQhbHdyuUuh5bJ3wP827GtgW4xuxd6RPMTGa/ExvDDeoBdNo/dLsPGXydPBrj83Wc4QEZH35G
- MS4q/dsTTM1uHwxzPMwyk3E6wEPD4RS/48HH1vRAucoO7KDsB4cmx10bhOXar6EtYMY4VJ0T7
- x0OwAe+DSnm9zWlsDz1xt6n0BBD9bRBi3FK3VHc3qjLO9BGdIyXXNhxxv72Ux1csKfyAWxjGm
- nDWkQMHKjreycjdGbv+OBgaG/J7XGzzFnVkpLZtuXMnRmyRI6iwo51RXLlHMemo4qMgToxjEt
- q7ruD2GwGMqrw+bgsf8m9JL0oDDtN+g/+k0se8FqNLJ8zgofLMjpTzXn0oj6pRfzM2WSfdOhR
- aUGyn+lapIWq5k9bDg2TJPDggaklWtmX5MEjtDxRE32/8Jro560BxOh0HwgEmqnVxxR4sudeV
- 0vFGGQ/dnpWFELLVbITkUMVKI2+MkujmRVQHiUWeNr1+h/lQImjCxCLszvh9OYkmHbzBEWvFT
- p5y4qcdSuA7NEZYsPKEJqy3cpzJXiJSHQeCfGOIhD2Zk4eQjojQ+FQkh39UaAT0Gn+8Jf6xRo
- BLcmidKm6NgQDp+G0AUnh1jzN0fDSfWxfxXNQ7DDsRXNNvJViUwWFHT7sUfYNxrpDSTpNga+t
- nYXnwG4UaSb9x21dzgZRxoBaqdAVeTWNaNT3ERfZ3hKAp4mXdriaWMq2v8GSBbNXQZ1KVj6kL
- yKZ0mgRHls7oG6OgV4hd9n/wvJEoXRATUPerI1ieDvL4HrKBDzLWHK8k5fsPJT7PLvfb32FOR
- cuLeXGif+f6m161ie165osyht3inBAHiQ8z
+In-Reply-To: <xmqqa6lluexv.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The flexible array member "k" of struct cb_node is used to store the key
-of the crit-bit tree node.  It offers no alignment guarantees -- in fact
-the current struct layout puts it one byte after a 4-byte aligned
-address, i.e. guaranteed to be misaligned.
+On 14/08/2021 00:01, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> If the user skips the final commit by removing all the changes from
+>> the index and worktree with 'git restore' (or read-tree) and then runs
+>> 'git rebase --continue' .git/MERGE_MSG is left behind. This will seed
+>> the commit message the next time the user commits which is not what we
+>> want to happen.
+> 
+> I just remembered that "git rebase --skip" option exists.  Would it
+> have the same issue if used at the last step?
 
-oidtree uses a struct object_id as cb_node key.  Since cf0983213c (hash:
-add an algo member to struct object_id, 2021-04-26) it requires 4-byte
-alignment.  The mismatch is reported by UndefinedBehaviorSanitizer at
-runtime like this:
+--skip calls rerere_clear() which unlinks .git/MERGE_MSG. This patch 
+adds a test for --skip as well as --continue.
 
-hash.h:277:2: runtime error: member access within misaligned address 0x000=
-15000802d for type 'struct object_id', which requires 4 byte alignment
-0x00015000802d: note: pointer points here
- 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  0=
-0 00 00 00 00 00 00 00  00
-             ^
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior hash.h:277:2 in
+Best Wishes
 
-We can fix that by:
+Phillip
 
-1. eliminating the alignment requirement of struct object_id,
-2. providing the alignment in struct cb_node, or
-3. avoiding the issue by only using memcpy to access "k".
-
-Currently we only store one of two values in "algo" in struct object_id.
-We could use a uint8_t for that instead and widen it only once we add
-support for our twohundredth algorithm or so.  That would not only avoid
-alignment issues, but also reduce the memory requirements for each
-instance of struct object_id by ca. 9%.
-
-Supporting keys with alignment requirements might be useful to spread
-the use of crit-bit trees.  It can be achieved by using a wider type for
-"k" (e.g. uintmax_t), using different types for the members "byte" and
-"otherbits" (e.g. uint16_t or uint32_t for each), or by avoiding the use
-of flexible arrays like khash.h does.
-
-This patch implements the third option, though, because it has the least
-potential for causing side-effects and we're close to the next release.
-If one of the other options is implemented later as well to get their
-additional benefits we can get rid of the extra copies introduced here.
-
-Reported-by: Andrzej Hunt <andrzej@ahunt.org>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- cbtree.h  |  2 +-
- hash.h    |  2 +-
- oidtree.c | 20 +++++++++++++++-----
- 3 files changed, 17 insertions(+), 7 deletions(-)
-
-diff --git a/cbtree.h b/cbtree.h
-index fe4587087e..a04a312c3f 100644
-=2D-- a/cbtree.h
-+++ b/cbtree.h
-@@ -25,7 +25,7 @@ struct cb_node {
- 	 */
- 	uint32_t byte;
- 	uint8_t otherbits;
--	uint8_t k[FLEX_ARRAY]; /* arbitrary data */
-+	uint8_t k[FLEX_ARRAY]; /* arbitrary data, unaligned */
- };
-
- struct cb_tree {
-diff --git a/hash.h b/hash.h
-index 27a180248f..9e25c40e9a 100644
-=2D-- a/hash.h
-+++ b/hash.h
-@@ -115,7 +115,7 @@ static inline void git_SHA256_Clone(git_SHA256_CTX *ds=
-t, const git_SHA256_CTX *s
-
- struct object_id {
- 	unsigned char hash[GIT_MAX_RAWSZ];
--	int algo;
-+	int algo;	/* XXX requires 4-byte alignment */
- };
-
- /* A suitably aligned type for stack allocations of hash contexts. */
-diff --git a/oidtree.c b/oidtree.c
-index 580cab8ae2..0d39389bee 100644
-=2D-- a/oidtree.c
-+++ b/oidtree.c
-@@ -31,12 +31,19 @@ void oidtree_clear(struct oidtree *ot)
- void oidtree_insert(struct oidtree *ot, const struct object_id *oid)
- {
- 	struct cb_node *on;
-+	struct object_id k;
-
- 	if (!oid->algo)
- 		BUG("oidtree_insert requires oid->algo");
-
- 	on =3D mem_pool_alloc(&ot->mem_pool, sizeof(*on) + sizeof(*oid));
--	oidcpy_with_padding((struct object_id *)on->k, oid);
-+
-+	/*
-+	 * Clear the padding and copy the result in separate steps to
-+	 * respect the 4-byte alignment needed by struct object_id.
-+	 */
-+	oidcpy_with_padding(&k, oid);
-+	memcpy(on->k, &k, sizeof(k));
-
- 	/*
- 	 * n.b. Current callers won't get us duplicates, here.  If a
-@@ -68,17 +75,20 @@ int oidtree_contains(struct oidtree *ot, const struct =
-object_id *oid)
- static enum cb_next iter(struct cb_node *n, void *arg)
- {
- 	struct oidtree_iter_data *x =3D arg;
--	const struct object_id *oid =3D (const struct object_id *)n->k;
-+	struct object_id k;
-+
-+	/* Copy to provide 4-byte alignment needed by struct object_id. */
-+	memcpy(&k, n->k, sizeof(k));
-
--	if (x->algo !=3D GIT_HASH_UNKNOWN && x->algo !=3D oid->algo)
-+	if (x->algo !=3D GIT_HASH_UNKNOWN && x->algo !=3D k.algo)
- 		return CB_CONTINUE;
-
- 	if (x->last_nibble_at) {
--		if ((oid->hash[*x->last_nibble_at] ^ x->last_byte) & 0xf0)
-+		if ((k.hash[*x->last_nibble_at] ^ x->last_byte) & 0xf0)
- 			return CB_CONTINUE;
- 	}
-
--	return x->fn(oid, x->arg);
-+	return x->fn(&k, x->arg);
- }
-
- void oidtree_each(struct oidtree *ot, const struct object_id *oid,
-=2D-
-2.32.0
-
+> 
+> [Footnote]
+> 
+> I am not saying that it is an error to use "git restore HEAD . &&
+> git rebase --continue" when you'd usually use "git rebase --skip".
+> 
+> Nuking the difference the working tree files and the index has
+> relative to HEAD and telling the machinery to continue gives the
+> signal that the "conflict resolution" happened to have resulted in
+> an empty change, which should yield the same resulting history as
+> "git rebase --skip" would, because the resulting empty change should
+> be dropped (unless --empty=keep is in effect, that is).
+> 
