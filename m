@@ -2,386 +2,201 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EEC3C4338F
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 10:27:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0397C4338F
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 15:20:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7902060F21
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 10:27:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CD6660F11
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 15:20:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237697AbhHNK2X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Aug 2021 06:28:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51636 "EHLO
+        id S238628AbhHNPVQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Aug 2021 11:21:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237454AbhHNK2O (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Aug 2021 06:28:14 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53F7FC061764
-        for <git@vger.kernel.org>; Sat, 14 Aug 2021 03:27:46 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id r7so16747350wrs.0
-        for <git@vger.kernel.org>; Sat, 14 Aug 2021 03:27:46 -0700 (PDT)
+        with ESMTP id S234665AbhHNPVP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Aug 2021 11:21:15 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E91B7C061764
+        for <git@vger.kernel.org>; Sat, 14 Aug 2021 08:20:46 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id u1so8790052wmm.0
+        for <git@vger.kernel.org>; Sat, 14 Aug 2021 08:20:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=4NvtmSZpHJu5mSbaeExNEnsFO6UwD6TTm6492COgV5E=;
-        b=kh5s5bi/gPORndG3UC1xyZxnSpOR0qK2DjPZ+97fbN2lmw5yC5ugRCfyvQ+/LkoXNT
-         t4ydeRjfV9vAlxocfjtxUvp3kodp66RL6oVSpVrZM5Af8YJpOyl7Pb/NGszWSXFX5sWl
-         CArE1qKftyUu7uO23pOc+0O1iPjleBIOkU66nX3f4Ztj5Db6j8w/VbLp9he86TZZZxrV
-         EuGuiiplQyFa9CHI7I76wMUpGQLLRxbqQghR3piZpduF97IO6Es+1L4ZXV+gg135v6qw
-         LKNRWJ5pIx+xh2toLq6eyc3+fwqv1va8/XVIgScPWtOVtHcowZ/hX/sMZiF5iOs5bzOR
-         zPMQ==
+        h=from:subject:reply-to:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=rkhVv47oSk4rASCk9k0dvG8cSMvH5y8vDlzNT5FW95c=;
+        b=gfayKJ+ST6HTxEL3wqkkPHDWJhc8aoM5We++refutYl3jWUz8QLyoml8Dkcm912gZk
+         os0qROiygwTuqC2IVzLZL7OfYYFUPGXNbtAUSImD4R319OgXxieW9uZXEf3on5o6uZHt
+         IYomxcqHJzkZqA4SpuKb1O+yOmO+cEjWzalJquX4PaSqqpBDV+Fwa2y04mDCBBkG3vnQ
+         /Mh00x0lnyofDNfILkYT0HEJA2uG2K04ClNRzdZoaES/Zs0HCVEf/EqAnZj+XawdJ/8v
+         FK50dAadXhv2r8/T+II6hvlqxhCHhy9Bp/tRPo2Nu46q6BEm0tEaiyHNH/cA0N4dOJnZ
+         cicw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4NvtmSZpHJu5mSbaeExNEnsFO6UwD6TTm6492COgV5E=;
-        b=g3UX5JyP9wumhd+Na++xt6Bci4eyKikNW3VZKG1I7vPnyIRxXVIbcTEPRdjp/dvAf6
-         1zRIrtRBAuklGZ3W9ZrRooY3PhEjils5+ZFqLs+gcmiR9FXvoSsoTfcKpFtS4mlQ829F
-         e+y+OPpkZUiWHAh4KHq2XfXl7eVJCsyDrFIqqJ2iJAob0UJjRSfn4DHzTQ1+D5cIe6fF
-         bn63tiWg5EtahxsMBb7Agzwoz7YYnPqWUJvS+DIA8MI7p+qdKkx4q590ix5j9jcR+l6b
-         jiyvdS+36YzxYjETTkOgcNqUcoM0tnibcSeKkVKBvduaSe/j55HcuXSuwt7nWAWXFoOi
-         Mr3g==
-X-Gm-Message-State: AOAM530Say76poPrtqPnI10vUBfIyjROcWJrdeAuUQiZJrIi2B6EPmwJ
-        UwxU/r5zeF3YOqqPrnVMMBxJbVE0GMA=
-X-Google-Smtp-Source: ABdhPJzb3DlUNooPFx4kMcU0bhmi7QASfiZrhtwHcnCp9LpfiDHPBo+dwMGu+r/ZBNXIJiqcA78zJQ==
-X-Received: by 2002:adf:dbd0:: with SMTP id e16mr7797770wrj.65.1628936864785;
-        Sat, 14 Aug 2021 03:27:44 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a9sm4427481wrv.37.2021.08.14.03.27.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Aug 2021 03:27:44 -0700 (PDT)
-Message-Id: <pull.1010.v4.git.1628936863733.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1010.v3.git.1628142482640.gitgitgadget@gmail.com>
-References: <pull.1010.v3.git.1628142482640.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 14 Aug 2021 10:27:43 +0000
-Subject: [PATCH v4] [GSOC] cherry-pick: use better advice message
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:subject:reply-to:to:cc:references
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=rkhVv47oSk4rASCk9k0dvG8cSMvH5y8vDlzNT5FW95c=;
+        b=DlK/RN7C4SIWRqZs1t14js+RGfsfjC49Fk6lodlrVkd1GOBhBsignQ5ffCsI9pkFlK
+         rXqVXt/WzvP96rRtu6oGNZ1Kb31qll4sn5ale0lWyolxDAVauuExprPMTZVJEAMNX2dG
+         lp+MkmOrFmD2bme8aVOUl9CzF/qVTP1QtpVkoqhntvSOn069ECEUDtMmymR+EEa0FtSt
+         9iKMID4IGD7gZnnTJrF9PgsArhkFdBIeyYwDsPBSur699/UFBsX2sN3iU2oBA9sHi0Vp
+         1h+m/5kntOCc0EudS7ZTzng8WdpHbk84OD/wfF61sdDAylV0+3bYO+nzb1ePaTZJvKbN
+         ++3g==
+X-Gm-Message-State: AOAM5313Wjb1blEqs4pmyHRT4CbbY5xhTOsnZpwiLX45VBJQFT0QgkRY
+        tiLUCVCZIx2Pd9VRMy/kRGA=
+X-Google-Smtp-Source: ABdhPJwjgZXVn95wliSN9zvBLN0TEqc8DtZXXdStTveUDDlDUqrKhHDisDIQxZh2OEoqkB54WWjyxQ==
+X-Received: by 2002:a1c:39c4:: with SMTP id g187mr7565339wma.163.1628954445079;
+        Sat, 14 Aug 2021 08:20:45 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.144])
+        by smtp.gmail.com with ESMTPSA id o17sm4404939wmp.13.2021.08.14.08.20.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 14 Aug 2021 08:20:44 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3] commit: restore --edit when combined with --fixup
+Reply-To: phillip.wood@dunelm.org.uk
+To:     Joel Klinghed <the_jk@spawned.biz>, phillip.wood@dunelm.org.uk,
+        Joel Klinghed via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.1014.v2.git.1628725421868.gitgitgadget@gmail.com>
+ <pull.1014.v3.git.1628755346354.gitgitgadget@gmail.com>
+ <e3a24819-9953-0245-7f64-472def4d180a@gmail.com>
+ <0576a44a-c726-4550-ad29-52f09982de98@www.fastmail.com>
+ <0151003c-d544-1fab-18e9-34eb84842555@gmail.com>
+ <1fc066c5-a085-4865-9eb9-853dfcbe33c2@www.fastmail.com>
+Message-ID: <ec5f6698-46e9-c8c8-057d-b04851cb9265@gmail.com>
+Date:   Sat, 14 Aug 2021 16:20:37 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Han-Wen Nienhuys <hanwen@google.com>,
-        Ramkumar Ramachandra <artagnon@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+In-Reply-To: <1fc066c5-a085-4865-9eb9-853dfcbe33c2@www.fastmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+Hi Joel
 
-In the past, git cherry-pick would print such advice when
-there was a conflict:
+On 13/08/2021 16:35, Joel Klinghed wrote:
+> 
+> 
+> On Fri, Aug 13, 2021, at 15:06, Phillip Wood wrote:
+>> On 12/08/2021 11:01, Joel Klinghed wrote:
+>>> I looked at moving the condition to one place but as use_editor = 0
+>>> is only set for --fixup if there isn't a suboption specified I didn't want
+>>> to have to duplicate the check for a suboption when deciding if
+>>> use_editor should default to zero.
+>>
+>> I don't think you need to duplicate the check for a suboption, can't you
+>> just do this on top of master (i.e without you patch applied)?
+>>
+>> diff --git a/builtin/commit.c b/builtin/commit.c
+>> index 243c626307..67a84ff6e4 100644
+>> --- a/builtin/commit.c
+>> +++ b/builtin/commit.c
+>> @@ -1251,11 +1251,6 @@ static int parse_and_validate_options(int argc,
+>> const char *argv[],
+>>           if (force_author && renew_authorship)
+>>                   die(_("Using both --reset-author and --author does not
+>> make sense"));
+>>
+>> -       if (logfile || have_option_m || use_message)
+>> -               use_editor = 0;
+>> -       if (0 <= edit_flag)
+>> -               use_editor = edit_flag;
+>> -
+>>           /* Sanity check options */
+>>           if (amend && !current_head)
+>>                   die(_("You have nothing to amend."));
+>> @@ -1344,6 +1339,11 @@ static int parse_and_validate_options(int argc,
+>> const char *argv[],
+>>                   }
+>>           }
+>>
+>> +       if (logfile || have_option_m || use_message)
+>> +               use_editor = 0;
+>> +       if (0 <= edit_flag)
+>> +               use_editor = edit_flag;
+>> +
+>>           cleanup_mode = get_cleanup_mode(cleanup_arg, use_editor);
+>>
+>>           handle_untracked_files_arg(s);
+>>
+>> I chose to move the other clause that sets use_editor as well so they
+>> stay together.
+>>
+> 
+> With the above change use_editor no longer defaults to 0 for --fixup as
+> it used to do.
+> My expected behavior (based on old versions):
+> git commit --fixup <hash>  /// No editor
+> git commit --fixup <hash> --edit  /// Editor
+> As far as I can see your change would display an editor in both cases.
 
-hint: after resolving the conflicts, mark the corrected paths
-hint: with 'git add <paths>' or 'git rm <paths>'
-hint: and commit the result with 'git commit'
+I've just tested it and it works as expected. However moving the
+'if (logfile...)' breaks the test "commit --squash works with -c" so we
+need to just move the second if clause. This is what I have on top of
+master (i.e. without your patch so a plain fixup is still setting
+use_editor=0)
 
-But in fact, when we want to cherry-pick multiple commits,
-we should not use "git commit" after resolving conflicts, which
-will make Git generate some errors. We should recommend users to
-use `git cherry-pick --continue`, `git cherry-pick --abort`, just
-like git rebase does.
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 243c626307..7c9b1e7be3 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1253,8 +1253,6 @@ static int parse_and_validate_options(int argc, const char *argv[],
 
-This is the improved advice:
+         if (logfile || have_option_m || use_message)
+                 use_editor = 0;
+-       if (0 <= edit_flag)
+-               use_editor = edit_flag;
 
-hint: Resolve all conflicts manually, mark them as resolved with
-hint: "git add/rm <conflicted_files>", then run
-hint: "git cherry-pick --continue".
-hint: You can instead skip this commit: run "git cherry-pick --skip".
-hint: To abort and get back to the state before "git cherry-pick",
-hint: run "git cherry-pick --abort".
+         /* Sanity check options */
+         if (amend && !current_head)
+@@ -1344,6 +1342,9 @@ static int parse_and_validate_options(int argc, const char *argv[],
+                 }
+         }
 
-Similarly, this optimization can be applied to git revert:
++       if (0 <= edit_flag)
++               use_editor = edit_flag;
++
+         cleanup_mode = get_cleanup_mode(cleanup_arg, use_editor);
 
-hint: Resolve all conflicts manually, mark them as resolved with
-hint: "git add/rm <conflicted_files>", then run
-hint: "git revert --continue".
-hint: You can instead skip this commit: run "git revert --skip".
-hint: To abort and get back to the state before "git revert",
-hint: run "git revert --abort".
+         handle_untracked_files_arg(s);
+diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
+index 54c2082acb..3fa674e52d 100755
+--- a/t/t7500-commit-template-squash-signoff.sh
++++ b/t/t7500-commit-template-squash-signoff.sh
+@@ -270,7 +270,7 @@ EOF
+  
+  test_expect_success 'commit --fixup provides correct one-line commit message' '
+         commit_for_rebase_autosquash_setup &&
+-       git commit --fixup HEAD~1 &&
++       EDITOR="printf \"something\nextra\" >>" git commit --fixup HEAD~1 &&
+         commit_msg_is "fixup! target message subject line"
+  '
+  
+@@ -281,6 +281,14 @@ test_expect_success 'commit --fixup -m"something" -m"extra"' '
 
-It is worth mentioning that now we use advice() to print the content
-of GIT_CHERRY_PICK_HELP in print_advice(), each line of output will
-start with "hint: ".
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by Hariom Verma <hariom18599@gmail.com>:
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Hepled-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
-    [GSOC] cherry-pick: use better advice message
-    
-    Because git cherry-pick's past advice message is not good enough, it
-    often misleads new users of Git, so this patch makes git chery-pick
-    advice message better.
-    
-    v6:
-    https://lore.kernel.org/git/pull.1010.v3.git.1628142482640.gitgitgadget@gmail.com/
-    
-    v6-->v7:
-    
-     1. Modify the advice order, respect git cherry-pick --no-commit advice.
-     2. Let git revert also use better message.
-     3. Use double quotes instead of single quotes for the test body.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1010%2Fadlternative%2Fcherry-pick-help-fix-3-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1010/adlternative/cherry-pick-help-fix-3-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/1010
-
-Range-diff vs v3:
-
- 1:  701645dde17 ! 1:  dc51c0b8c2b [GSOC] cherry-pick: use better advice message
-     @@ Commit message
-          hint: To abort and get back to the state before "git cherry-pick",
-          hint: run "git cherry-pick --abort".
-      
-     +    Similarly, this optimization can be applied to git revert:
-     +
-     +    hint: Resolve all conflicts manually, mark them as resolved with
-     +    hint: "git add/rm <conflicted_files>", then run
-     +    hint: "git revert --continue".
-     +    hint: You can instead skip this commit: run "git revert --skip".
-     +    hint: To abort and get back to the state before "git revert",
-     +    hint: run "git revert --abort".
-     +
-          It is worth mentioning that now we use advice() to print the content
-          of GIT_CHERRY_PICK_HELP in print_advice(), each line of output will
-          start with "hint: ".
-     @@ sequencer.c: static void print_advice(struct repository *r, int show_hint,
-       		 * A conflict has occurred but the porcelain
-       		 * (typically rebase --interactive) wants to take care
-      @@ sequencer.c: static void print_advice(struct repository *r, int show_hint,
-     - 	}
-     - 
-     - 	if (show_hint) {
-     --		if (opts->no_commit)
-     -+		if (opts->action == REPLAY_PICK) {
-     + 		if (opts->no_commit)
-     + 			advise(_("after resolving the conflicts, mark the corrected paths\n"
-     + 				 "with 'git add <paths>' or 'git rm <paths>'"));
-     ++		else if (opts->action == REPLAY_PICK)
-      +			advise(_("Resolve all conflicts manually, mark them as resolved with\n"
-      +				 "\"git add/rm <conflicted_files>\", then run\n"
-      +				 "\"git cherry-pick --continue\".\n"
-      +				 "You can instead skip this commit: run \"git cherry-pick --skip\".\n"
-      +				 "To abort and get back to the state before \"git cherry-pick\",\n"
-      +				 "run \"git cherry-pick --abort\"."));
-     -+		} else if (opts->no_commit)
-     - 			advise(_("after resolving the conflicts, mark the corrected paths\n"
-     - 				 "with 'git add <paths>' or 'git rm <paths>'"));
-     ++		else if (opts->action == REPLAY_REVERT)
-     ++			advise(_("Resolve all conflicts manually, mark them as resolved with\n"
-     ++				 "\"git add/rm <conflicted_files>\", then run\n"
-     ++				 "\"git revert --continue\".\n"
-     ++				 "You can instead skip this commit: run \"git revert --skip\".\n"
-     ++				 "To abort and get back to the state before \"git revert\",\n"
-     ++				 "run \"git revert --abort\"."));
-       		else
-     + 			advise(_("after resolving the conflicts, mark the corrected paths\n"
-     + 				 "with 'git add <paths>' or 'git rm <paths>'\n"
-     +
-     + ## t/t3501-revert-cherry-pick.sh ##
-     +@@ t/t3501-revert-cherry-pick.sh: test_expect_success 'cherry-pick works with dirty renamed file' '
-     + 	grep -q "^modified$" renamed
-     + '
-     + 
-     ++test_expect_success 'advice from failed revert' '
-     ++	echo dream >dream &&
-     ++	git add dream &&
-     ++	git commit -m "add dream" &&
-     ++	dream_oid=$(git rev-parse --short HEAD) &&
-     ++	cat <<-EOF >expected &&
-     ++	error: could not revert $dream_oid... add dream
-     ++	hint: Resolve all conflicts manually, mark them as resolved with
-     ++	hint: "git add/rm <conflicted_files>", then run
-     ++	hint: "git revert --continue".
-     ++	hint: You can instead skip this commit: run "git revert --skip".
-     ++	hint: To abort and get back to the state before "git revert",
-     ++	hint: run "git revert --abort".
-     ++	EOF
-     ++	echo dream >>dream &&
-     ++	git add dream &&
-     ++	git commit -m "double-add dream" &&
-     ++	test_must_fail git revert HEAD^ 2>actual &&
-     ++	test_cmp expected actual
-     ++'
-     + test_done
-      
-       ## t/t3507-cherry-pick-conflict.sh ##
-     -@@ t/t3507-cherry-pick-conflict.sh: test_expect_success 'advice from failed cherry-pick' "
-     - 	picked=\$(git rev-parse --short picked) &&
-     +@@ t/t3507-cherry-pick-conflict.sh: test_expect_success 'failed cherry-pick does not advance HEAD' '
-     + 	test "$head" = "$newhead"
-     + '
-     + 
-     +-test_expect_success 'advice from failed cherry-pick' "
-     ++test_expect_success 'advice from failed cherry-pick' '
-     + 	pristine_detach initial &&
-     + 
-     +-	picked=\$(git rev-parse --short picked) &&
-     ++	picked=$(git rev-parse --short picked) &&
-       	cat <<-EOF >expected &&
-     - 	error: could not apply \$picked... picked
-     +-	error: could not apply \$picked... picked
-      -	hint: after resolving the conflicts, mark the corrected paths
-      -	hint: with 'git add <paths>' or 'git rm <paths>'
-      -	hint: and commit the result with 'git commit'
-     ++	error: could not apply $picked... picked
-      +	hint: Resolve all conflicts manually, mark them as resolved with
-     -+	hint: \"git add/rm <conflicted_files>\", then run
-     -+	hint: \"git cherry-pick --continue\".
-     -+	hint: You can instead skip this commit: run \"git cherry-pick --skip\".
-     -+	hint: To abort and get back to the state before \"git cherry-pick\",
-     -+	hint: run \"git cherry-pick --abort\".
-     ++	hint: "git add/rm <conflicted_files>", then run
-     ++	hint: "git cherry-pick --continue".
-     ++	hint: You can instead skip this commit: run "git cherry-pick --skip".
-     ++	hint: To abort and get back to the state before "git cherry-pick",
-     ++	hint: run "git cherry-pick --abort".
-       	EOF
-       	test_must_fail git cherry-pick picked 2>actual &&
-       
-     -@@ t/t3507-cherry-pick-conflict.sh: test_expect_success 'advice from failed cherry-pick --no-commit' "
-     - 	picked=\$(git rev-parse --short picked) &&
-     - 	cat <<-EOF >expected &&
-     - 	error: could not apply \$picked... picked
-     --	hint: after resolving the conflicts, mark the corrected paths
-     --	hint: with 'git add <paths>' or 'git rm <paths>'
-     -+	hint: Resolve all conflicts manually, mark them as resolved with
-     -+	hint: \"git add/rm <conflicted_files>\", then run
-     -+	hint: \"git cherry-pick --continue\".
-     -+	hint: You can instead skip this commit: run \"git cherry-pick --skip\".
-     -+	hint: To abort and get back to the state before \"git cherry-pick\",
-     -+	hint: run \"git cherry-pick --abort\".
-     - 	EOF
-     - 	test_must_fail git cherry-pick --no-commit picked 2>actual &&
-     + 	test_cmp expected actual
-     +-"
-     ++'
-       
-     + test_expect_success 'advice from failed cherry-pick --no-commit' "
-     + 	pristine_detach initial &&
-
-
- sequencer.c                     | 16 +++++++++++++++-
- t/t3501-revert-cherry-pick.sh   | 20 ++++++++++++++++++++
- t/t3507-cherry-pick-conflict.sh | 17 ++++++++++-------
- 3 files changed, 45 insertions(+), 8 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index 0bec01cf38e..2dd73d24a87 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -403,7 +403,7 @@ static void print_advice(struct repository *r, int show_hint,
- 	char *msg = getenv("GIT_CHERRY_PICK_HELP");
- 
- 	if (msg) {
--		fprintf(stderr, "%s\n", msg);
-+		advise("%s\n", msg);
- 		/*
- 		 * A conflict has occurred but the porcelain
- 		 * (typically rebase --interactive) wants to take care
-@@ -418,6 +418,20 @@ static void print_advice(struct repository *r, int show_hint,
- 		if (opts->no_commit)
- 			advise(_("after resolving the conflicts, mark the corrected paths\n"
- 				 "with 'git add <paths>' or 'git rm <paths>'"));
-+		else if (opts->action == REPLAY_PICK)
-+			advise(_("Resolve all conflicts manually, mark them as resolved with\n"
-+				 "\"git add/rm <conflicted_files>\", then run\n"
-+				 "\"git cherry-pick --continue\".\n"
-+				 "You can instead skip this commit: run \"git cherry-pick --skip\".\n"
-+				 "To abort and get back to the state before \"git cherry-pick\",\n"
-+				 "run \"git cherry-pick --abort\"."));
-+		else if (opts->action == REPLAY_REVERT)
-+			advise(_("Resolve all conflicts manually, mark them as resolved with\n"
-+				 "\"git add/rm <conflicted_files>\", then run\n"
-+				 "\"git revert --continue\".\n"
-+				 "You can instead skip this commit: run \"git revert --skip\".\n"
-+				 "To abort and get back to the state before \"git revert\",\n"
-+				 "run \"git revert --abort\"."));
- 		else
- 			advise(_("after resolving the conflicts, mark the corrected paths\n"
- 				 "with 'git add <paths>' or 'git rm <paths>'\n"
-diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-index 9d100cd1884..6766aed7282 100755
---- a/t/t3501-revert-cherry-pick.sh
-+++ b/t/t3501-revert-cherry-pick.sh
-@@ -158,4 +158,24 @@ test_expect_success 'cherry-pick works with dirty renamed file' '
- 	grep -q "^modified$" renamed
- '
- 
-+test_expect_success 'advice from failed revert' '
-+	echo dream >dream &&
-+	git add dream &&
-+	git commit -m "add dream" &&
-+	dream_oid=$(git rev-parse --short HEAD) &&
-+	cat <<-EOF >expected &&
-+	error: could not revert $dream_oid... add dream
-+	hint: Resolve all conflicts manually, mark them as resolved with
-+	hint: "git add/rm <conflicted_files>", then run
-+	hint: "git revert --continue".
-+	hint: You can instead skip this commit: run "git revert --skip".
-+	hint: To abort and get back to the state before "git revert",
-+	hint: run "git revert --abort".
-+	EOF
-+	echo dream >>dream &&
-+	git add dream &&
-+	git commit -m "double-add dream" &&
-+	test_must_fail git revert HEAD^ 2>actual &&
-+	test_cmp expected actual
+  extra"
+  '
++
++test_expect_success 'commit --fixup --edit' '
++       commit_for_rebase_autosquash_setup &&
++       EDITOR="printf \"something\nextra\" >>" git commit --fixup HEAD~1 --edit &&
++       commit_msg_is "fixup! target message subject linesomething
++extra"
 +'
- test_done
-diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
-index 014001b8f32..cb2ebea9ad3 100755
---- a/t/t3507-cherry-pick-conflict.sh
-+++ b/t/t3507-cherry-pick-conflict.sh
-@@ -47,20 +47,23 @@ test_expect_success 'failed cherry-pick does not advance HEAD' '
- 	test "$head" = "$newhead"
- '
- 
--test_expect_success 'advice from failed cherry-pick' "
-+test_expect_success 'advice from failed cherry-pick' '
- 	pristine_detach initial &&
- 
--	picked=\$(git rev-parse --short picked) &&
-+	picked=$(git rev-parse --short picked) &&
- 	cat <<-EOF >expected &&
--	error: could not apply \$picked... picked
--	hint: after resolving the conflicts, mark the corrected paths
--	hint: with 'git add <paths>' or 'git rm <paths>'
--	hint: and commit the result with 'git commit'
-+	error: could not apply $picked... picked
-+	hint: Resolve all conflicts manually, mark them as resolved with
-+	hint: "git add/rm <conflicted_files>", then run
-+	hint: "git cherry-pick --continue".
-+	hint: You can instead skip this commit: run "git cherry-pick --skip".
-+	hint: To abort and get back to the state before "git cherry-pick",
-+	hint: run "git cherry-pick --abort".
- 	EOF
- 	test_must_fail git cherry-pick picked 2>actual &&
- 
- 	test_cmp expected actual
--"
-+'
- 
- test_expect_success 'advice from failed cherry-pick --no-commit' "
- 	pristine_detach initial &&
-
-base-commit: daab8a564f8bbac55f70f8bf86c070e001a9b006
--- 
-gitgitgadget
++
+  get_commit_msg () {
+         rev="$1" &&
+         git log -1 --pretty=format:"%B" "$rev"
