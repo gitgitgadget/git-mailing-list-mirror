@@ -7,153 +7,162 @@ X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B263AC4338F
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 01:43:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFAADC4338F
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 02:07:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 81E656109D
-	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 01:43:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B7C2D6103A
+	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 02:07:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236308AbhHNBnP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Aug 2021 21:43:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49318 "EHLO
+        id S236426AbhHNCIU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Aug 2021 22:08:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232615AbhHNBnN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Aug 2021 21:43:13 -0400
-Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA720C061756
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 18:42:45 -0700 (PDT)
-Received: by mail-vs1-xe33.google.com with SMTP id k24so7411054vsg.9
-        for <git@vger.kernel.org>; Fri, 13 Aug 2021 18:42:45 -0700 (PDT)
+        with ESMTP id S236327AbhHNCIT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Aug 2021 22:08:19 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F35EC061756
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 19:07:52 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id x10so15720905iop.13
+        for <git@vger.kernel.org>; Fri, 13 Aug 2021 19:07:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=Vx5kNakLK8mCKkdYLTluz4KTMhhj24pyJnCjQHyzpg8=;
-        b=tMe5Da68FJFixAlKXNKdz/nwHEovAr2TzsAdNbZ4Ul6qEb3F3kX1LB2ct0IXXtER0s
-         kvlE9AmTCj0z2QH8ppj+9vzF8yp5j1HUcY/j7PySZGQ9ByA0JdcvXffg8wOrvONweMG1
-         2BFUeyG1MwElUpieUcg+sw3E5eJzmzn2FnZz5n0FLBH5gB31JkyiAf1j5PgkWKDevXol
-         +1/59t2h5cxNbfu5+9JWgMCThhyFGBW6eqVkXOHPKN2twiTpvz9rLWIxVCkkPh+J6y1F
-         N59qbQjWxvNbia6F70XlUZerxDpaVYbyA0oCL1S31p8ceUmWngfLVFUbFKuxU4rygIYg
-         fxsw==
+        bh=QJ+yfQqgupf1QXQ1lxvaRX1l7f+xJbk2+qlIMmIn2D8=;
+        b=UWDrApbao3a5llzw8E8hYDh0Dc50eTMn9aBO2AfijVypondhKEfqpA/28vfD++Hb24
+         ExN19lOpaU9r1Jt4Y3y1VoFYQ39+BPGTsPn80sMcRSRWBio6h4k2vKOdZR3n/ypYY5GZ
+         MAqGLrJrKVUGfFYpmwsHcLm8gNWH4DMWPa26vTTMKKobtxXfYYv9965JjtOcwwpqXrhN
+         /xtH6Oz671DOWgK74lb2/4I8nBTkorqIjezFPf3dsCYLsc6B9BCgz+TJuCY3jYzkNcuG
+         o/htDYoeyfokCjMRrjP2pjqaCtafGy2hYinEuwofrskqN5NXRjJwLMid687qXuSOZlOV
+         ZiwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Vx5kNakLK8mCKkdYLTluz4KTMhhj24pyJnCjQHyzpg8=;
-        b=TcelscPVZB0787dukEM+aTKyufpi3Trce14N7LAAuuc+Mb3YfOc5ohEx/ODbtAyIdQ
-         KIw3xroXBKA2zInQcn0T0Gbn+dgYLjdzafehnvkBim7gQJQkRbXKoSGCRTaUTpUOZKzi
-         HXJ43SxC41vIYL/ebLTld9aLmDmrWCWIBjAXV1H+FJC8kqZDaVXo/yhem1Km7KZlX9rz
-         roPjfMAHRXDC010CRvh8sC8Uj9I1dJPCxZeN2c8K81fa+EdteQXSFMvZyuE+wzw0HH1a
-         3oJgJvvW2rQYNiuJEd0uDk1ChlGpvX/Dpq2hy5ijhrEeRHtsvzM50AqaLN9T1VjDaJ3r
-         c5Ag==
-X-Gm-Message-State: AOAM530/Aw7BOu//TF3O4D6Lj5no+SePAD1NEGLgxyx7RrOpK/y5lks5
-        UEGyc2D947ccgWTltKyIUUXZBI2qu5vlFD2UA2I=
-X-Google-Smtp-Source: ABdhPJyFMfbbQeZ0mFQDO4MdQEyML4gi+P7H2IV9BbmKU94UnfTaQ40zfOl94ICufcy02PrTu6BH8YCkHhHVQWW3zkg=
-X-Received: by 2002:a67:fa0b:: with SMTP id i11mr4603120vsq.44.1628905364791;
- Fri, 13 Aug 2021 18:42:44 -0700 (PDT)
+        bh=QJ+yfQqgupf1QXQ1lxvaRX1l7f+xJbk2+qlIMmIn2D8=;
+        b=fpHpkwakDe67K52rzQspPVfGNliHy6y3PcrctapBJIfudO4sRE13EU8LgVj4mNdASv
+         TaDaCM5iSnhL3b04u9BwNFidXpa58Kkp3ePS4UCTcZwOKEfPer2inDdFQi9KIVpTBUj5
+         8Pm8tA5zVy10n0fAhuRSdWWE+eLBq0EiOoXkk1BvTH+XopQUZK97VLuSXUxx0m6jlnDW
+         /RwsrtnLBRcThROfp3m771ioOkDRDwQ3gUiYqpw57Dy9dfN+r+ShV2ib2ErBtbhJqZ++
+         K/rFIYmiV186xqKWZT+zmPTlDINIHz6hvG7i83yMM2PXWFUQraG/1t2eEmrtIzK2Nx4P
+         UIYw==
+X-Gm-Message-State: AOAM531F6R6gzjdYpAZf9+2p6VnFsj+B8rRT/JVU3pXogDs7I+NCLJj+
+        Ev4HWsujcHjC6pRz7HH8Q0G/64q84Xrn8yJtMRE=
+X-Google-Smtp-Source: ABdhPJyvU7jYhVep9F3AIMsJA+uiwxZy+/SDtE630EG6NFeGZNjyZE+OefMuZWOWfFbsiFJvZAMVSZYa4cxpvvvKRfI=
+X-Received: by 2002:a05:6602:25da:: with SMTP id d26mr4200015iop.106.1628906871644;
+ Fri, 13 Aug 2021 19:07:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210812202200.82465-1-carenas@gmail.com> <20210813093909.GA3866771@szeder.dev>
-In-Reply-To: <20210813093909.GA3866771@szeder.dev>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Fri, 13 Aug 2021 18:42:34 -0700
-Message-ID: <CAPUEspjW3jSUwnz39bWBCmNS8mo_Cfjk7NPA5BXpQvPoypUEMg@mail.gmail.com>
-Subject: Re: [PATCH] ci: update freebsd 12 cirrus job
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, emaste@freebsd.org
+References: <pull.1010.v2.git.1627953383.gitgitgadget@gmail.com>
+ <pull.1010.v3.git.1628142482640.gitgitgadget@gmail.com> <a510722c-d5a2-f00c-dd20-dd7f76da2408@gmail.com>
+ <xmqqzgtlumob.fsf@gitster.g>
+In-Reply-To: <xmqqzgtlumob.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sat, 14 Aug 2021 10:07:40 +0800
+Message-ID: <CAOLTT8Qrz_t60i6U0YvrgXKGkqVEx13ts5T1J1qKht3iMzC2bg@mail.gmail.com>
+Subject: Re: [PATCH v3] [GSOC] cherry-pick: use better advice message
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Ramkumar Ramachandra <artagnon@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 13, 2021 at 2:39 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
-ote:
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B48=E6=9C=8814=E6=97=
+=A5=E5=91=A8=E5=85=AD =E4=B8=8A=E5=8D=884:14=E5=86=99=E9=81=93=EF=BC=9A
 >
-> On Thu, Aug 12, 2021 at 01:22:00PM -0700, Carlo Marcelo Arenas Bel=C3=B3n=
- wrote:
-> > diff --git a/.cirrus.yml b/.cirrus.yml
-> > index c2f5fe385a..e114ffee1a 100644
-> > --- a/.cirrus.yml
-> > +++ b/.cirrus.yml
-> > @@ -2,8 +2,15 @@ env:
-> >    CIRRUS_CLONE_DEPTH: 1
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>
+> >> +++ b/t/t3507-cherry-pick-conflict.sh
+> >> @@ -53,9 +53,12 @@ test_expect_success 'advice from failed cherry-pick=
+' "
+> >>      picked=3D\$(git rev-parse --short picked) &&
+> >>      cat <<-EOF >expected &&
 > >
-> >  freebsd_12_task:
-> > +  env:
-> > +    GIT_PROVE_OPTS: "--timer --jobs 10"
+> > If you quote the here doc end marker then there is no substitution in
+> > the here doc so writing
+> >
+> >       cat <<-\EOF >expected &&
+> >
+> >>      error: could not apply \$picked... picked
+> >> -    hint: after resolving the conflicts, mark the corrected paths
+> >> -    hint: with 'git add <paths>' or 'git rm <paths>'
+> >> -    hint: and commit the result with 'git commit'
+> >> +    hint: Resolve all conflicts manually, mark them as resolved with
+> >> +    hint: \"git add/rm <conflicted_files>\", then run
+> >
+> > means you can replace \" with " here
 >
-> Why these prove options?
+> Hmph, actually the double-quote that opens the body of
+> test_expect_success should be stared at with a very cautious eyes,
+> as they often do not mean what the author of the patch thought they
+> do.  I can see that it already fooled your eyes into thinking that
+> there is no substitution, but $picked needs to be substituted into
+> its value.  The backslash before it is *not* about guarding it from
+> substitution inside here-doc; it is to pass literal "$" into the
+> string, which is the last parameter to test_expect_success, that
+> gets eval'ed.
+>
 
-that line came from the Github Actions part of ci/lib.sh.
+Yes, the escaping here comes from double-quote of test_expect_success
+instead of here-doc.
 
---jobs is the one I was going after, but kept --timer for consistency.
+> The original of this one, for example, would probably have been
+> better if written like so:
+>
+> test_expect_success 'advice from failed cherry-pick' '
+>         pristine_detach initial &&
+>         SQ=3D'\'' &&
+>
+>         picked=3D$(git rev-parse --short picked) &&
+>         cat <<-EOF >expected &&
+>         error: could not apply $picked... picked
+>         hint: after resolving the conflicts, mark the corrected paths
+>         hint: with ${SQ}git add <paths>${SQ} or ${SQ}git rm <paths>${SQ}
+>         hint: and commit the result with ${SQ}git commit${SQ}
+>         EOF
+>         test_must_fail git cherry-pick picked 2>actual &&
+>
+>         test_cmp expected actual
+> '
+>
 
-> On other CI systems we pass 'prove' the option
-> '--state=3Dfailed,slow,save' as well to reduce runtime.  However, this
-> only works when there is a persistent place for prove's state files,
-> e.g. the cache feature of Travis CI.
+Um? This section is not working for me.
 
-note that when GitHub Actions was added[1], it was explicitly excluded
-because it wasn't really that effective
+./test-lib.sh: eval: line 917: unexpected EOF while looking for matching `'=
+'
+./test-lib.sh: eval: line 932: syntax error: unexpected end of file
 
-> If Cirrus CI lacks a similar
-> feature, then we can't benefit from this option, but it'd be worth
-> mentioning in the commit message.
+> And because there is no single quote in the updated text, it would
+> become:
+>
+> test_expect_success 'advice from failed cherry-pick' '
+>         pristine_detach initial &&
+>
+>         picked=3D$(git rev-parse --short picked) &&
+>         cat <<-EOF >expected &&
+>         error: could not apply $picked... picked
+>         hint: Resolve all conflicts manually, mark them as resolved with
+>         hint: "git add/rm <conflicted_files>", then run
+>         EOF
+>         test_must_fail git cherry-pick picked 2>actual &&
+>
+>         test_cmp expected actual
+> '
+>
+> which makes it far easier to see that $picked needs to be
+> substituted, and the "git add/rm" are to be enclosed in dq pair.
 
-They do have the option and will likely be a small change that I could
-send as a follow up, but wasn't included in this change since it was
-"controversial" as pointed above.
+This section is exactly what I want. Using single quotes does make it
+look a lot easier.
 
-note also that the other uses of it aren't really being exercised,
-since AFAIK neither azure or travis are running now, and indeed last
-time I tried to run CI in my own account it didn't end up well, with
-no successful run and running out of credit before I could even
-attempt to fix them all.
-
-indeed, was even going to suggest (after release) that they are
-removed, which will also make the code cleaner for integrating cirrus
-(which still has a usable opensource plan).
-
-> > +    GIT_TEST_OPTS: "--no-chain-lint --no-bin-wrappers"
-> Why these test options?
-
-again lifted from the "GitHub Actions" code just for consistency and
-to avoid breaking if either of those are broken (considering the only
-other running CI does test with those unconditionally), but I realize
-now that I might have been too conservative since my focus with this
-commit was "speed and accuracy".
-
-> chain-linting is done by a mighty sed script; I think it's worth
-> running it with FreeBSD's 'sed' as well.
-
-indeed, even if I recall correctly it was Solaris sed the one that
-broke, and I would expect anyone breaking this chainlinting will
-notice very quickly on their local run.
-
-> Quoting 't/README', '--no-bin-wrappers' "can speed up test runs
-> especially on platforms where running shell scripts is expensive".  Is
-> running shell scripts really that expensive on FreeBSD?
-
-no, I am assuming they were added with Windows in mind, but note that
-as configure they also affect all the linux builds through GitHub
-Actions.
-Both these flags might be worth adding back for all non Windows
-systems, but doing so will be easier when using the "ci" scripts for
-all environments and after it has been discussed IMHO.
-
-> OTOH, why are there no options that would show us some information
-> about test failures, i.e. why no '--verbose-log -x --immediate' like
-> on other CI systems?
-
-I wasn't the original author, so can't answer why it wasn't done; but
-I sure think the next step will be to add support for it to the ci/
-scripts and with that make it more consistent, which likely will
-include that change.
-
-This patch was just the minimal change to make sure that it runs
-efficiently and is representative of current users.
-
-Carlo
-
-[1] https://lore.kernel.org/git/40fe4f7e2c34c6997a6824ef0dc6aad7a71a4434.15=
-86538752.git.congdanhqx@gmail.com/
+--
+ZheNing Hu
