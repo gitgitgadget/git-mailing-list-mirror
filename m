@@ -2,228 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A88A8C4338F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA222C432BE
 	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 21:56:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7634560F4B
+	by mail.kernel.org (Postfix) with ESMTP id 8499460F9F
 	for <git@archiver.kernel.org>; Sat, 14 Aug 2021 21:56:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231137AbhHNVlD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Aug 2021 17:41:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59004 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229532AbhHNVlC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Aug 2021 17:41:02 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21ADBC061764
-        for <git@vger.kernel.org>; Sat, 14 Aug 2021 14:40:33 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id q6so6609583wrv.6
-        for <git@vger.kernel.org>; Sat, 14 Aug 2021 14:40:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=+BdkStR9WjtB4JCUgsFA1/nVqZCV/zr4jPBDTpAYWaI=;
-        b=uAC6GAiUdKRwnqbXoIMJcNAWUFKm1nLlU5DoammoD75j5tCqBwnBBmA66RWXJslKsT
-         mrLIXZIvqweqaKGUAcHI5MY981sg3mvEXI7mghtVpJXIwK7fY2MdMMFt3dnfCTKxEt5W
-         ZQTNkamiaCFcChXKqZsHy10q3tERNrk2tXP8Y9s5ay3DASteJRQCO7c7uMqCYyKAV5Q6
-         1BoxvbLh+dCBNtHaqCPWleB/C50reYKLpdEIIT7d3S9PJo56letVYOItIXcbPDJSGTRx
-         xDO7GK57gnS65KW034YsZ18Pm5EDQl2oRdr2QkxV9cPeNVpfwlKxSUFK84eN69w2bZxe
-         naTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+BdkStR9WjtB4JCUgsFA1/nVqZCV/zr4jPBDTpAYWaI=;
-        b=EPstN0uDbgTGAZayBpEdVMfRgzSUS5Gqf3FiY7nGy4WcIzOj0rv3dT++xIc7lZpnfp
-         pS7PVpOd/rKDusVzRzVYDW78HUf8wqwKg7XBrYvzatHkaHtRX1lEmUMrOglrxk8SCeWE
-         N0QKYqzGffngBEg7Pj2Csc3aA1aO+eXZ19pa1QYuNXTdToTT0bDvWLvdQqQjkn+G16s/
-         ZLxCXzb40iWiHxp5qZ1yviTxGJ9L1iJIL8FCXTS7ErJRxKnFazDrEaVx99CFmFaZcI4N
-         myG9DkFuftJZ3X65ljpd3oRs7ZjWxSuchx6HM/8yMp0NeqvP1XYBzFG4I/m+4Lt3B/Xf
-         t4sw==
-X-Gm-Message-State: AOAM533uOSS221fU6f8Hlx4nyOtQgmJqRnvex05YKdvZVo0h1tdi2vIj
-        7oEM2ZUISuEmeU0/ZrBP65jiGJlqwgs=
-X-Google-Smtp-Source: ABdhPJy0gO/45mhhGi2sO5gQwMqz0ceo+VKo6rMVOfbvhWrDLRd6N25HydTca7iczdkKLjrzTEDD2g==
-X-Received: by 2002:adf:f245:: with SMTP id b5mr9742863wrp.78.1628977231669;
-        Sat, 14 Aug 2021 14:40:31 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a9sm6186795wrv.37.2021.08.14.14.40.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Aug 2021 14:40:31 -0700 (PDT)
-Message-Id: <pull.1014.v5.git.1628977230247.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1014.v4.git.1628769334197.gitgitgadget@gmail.com>
-References: <pull.1014.v4.git.1628769334197.gitgitgadget@gmail.com>
-From:   "Joel Klinghed via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 14 Aug 2021 21:40:30 +0000
-Subject: [PATCH v5] commit: restore --edit when combined with --fixup
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S232053AbhHNVrx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Aug 2021 17:47:53 -0400
+Received: from mout.gmx.net ([212.227.15.19]:40221 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229532AbhHNVrw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Aug 2021 17:47:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1628977612;
+        bh=vneFeE/UK46s6QBnsmgI1JmuEo7TV8fvZzI3Y923lVQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=gLOKNbpLcVhIkTWYiLKNvsCFnqwp0lPPiXQoE7Es3bgs9KinBjM6VZEhfhBw6pI9B
+         /7yztFJbiGXFCgmQX2QmXF4nmEyGHnDgC7DXA0BuUdcmaXYDMcTJfMCnDezTFmcmL2
+         r8H9qTBqwPnkKwMN16/B1a+YRv9ve4vpQhr54IHo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.60.179] ([213.196.213.229]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MzQkE-1n1blz3u4G-00vSBR; Sat, 14
+ Aug 2021 23:46:52 +0200
+Date:   Sat, 14 Aug 2021 23:46:49 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Kim Altintop <kim@eagain.st>
+cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
+        bwilliams.eng@gmail.com, jrnieder@gmail.com,
+        sunshine@sunshineco.com
+Subject: Re: [PATCH v6 0/3] upload-pack: treat want-ref relative to
+ namespace
+In-Reply-To: <20210813062237.10403-1-kim@eagain.st>
+Message-ID: <nycvar.QRO.7.76.6.2108142344570.59@tvgsbejvaqbjf.bet>
+References: <20210730135845.633234-1-kim@eagain.st> <20210731203415.618641-1-kim@eagain.st> <20210804203829.661565-1-kim@eagain.st> <20210804205951.668140-1-kim@eagain.st> <20210809175530.75326-1-kim@eagain.st> <20210813062237.10403-1-kim@eagain.st>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Joel Klinghed <the_jk@spawned.biz>,
-        Joel Klinghed <the_jk@spawned.biz>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:2VpHG9yRu/eRkKFCuU+BPE5H3ip4FM2qdF9eznL9LHxeNCI8OW0
+ X1rl7UOogoYNC3aqITCZSxSGroDErcYKyBjzYxxU+Wdsxk3rT/xJDpTuPMKOWoUdxuFj9CC
+ ECXf6PX6hrizQpGr0CUe+MVIfzxZN+2YMCgZ2nChHHPQOcg/5+RYWFHPzpwK2ZFps2jnSQm
+ gwWcdV3TMtXU5AGNpJcEg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:RkppJyIQLl0=:2VDoFBHbgopxsxDSCU4jce
+ PGX1jC9UXJKGeFE2DSkha7dhkBU1eltdPzmWEdx1FUkbxntdRbzx5hv+KIuvCd4u6UOWFA9FT
+ ZI+zlv6/3o7Dj3OS0XvBTGJBAte30dS4/ZZGZlVWczd1v06QeUyAt70RKWAtUsuIDQ1J0zwwo
+ 6tYD3cm+V4ivZMeFsBaG8oKl0hVQezKV6Hco7AUj1oWXbyktGfFgqPXC03JosywbLhBG2cNGo
+ F8nqI/zTAgHQF54flDWhnsefVHXjAKdhm86qu6fMVO8tRl1Si5dSbhG4nvTAZ8zQMnM3+rW4H
+ SdDI2meO/grObkG88nq/azI2S1rjo2TvF6GCpBoh8f1g55Bmk5sCor/kyLCaJJ6kAljDYaCgA
+ 6iR/9aD1pY45EbUlEAeE0kIQdhYuTD3W5P3hiV0LOEZNfAcbbSoYSwe9qxsVZQ2gdbHif0ih4
+ AxjkscPDe+foc6pXke9r4zKou8jVPt9jnps6Y345Sm+8GxJnSsddp9D1URvesBZz7aPxJaF/6
+ BBN+iUW1tx2MvKvOzlgAaYAv/kTaqwVLCjNlq6axbhzJDqAY4v7ROwdyY6bfQsuufWt62r9rC
+ gQgUW+X0XNRlVMrWw2V2951i5zlpjxO0sguWPCQXUz62hsV6PiTY+/3jJZzclOVxeIERuSclO
+ SLQKrGirAnbUhT4MnrbpGj7CG45XFwyeS+wY0ve8A+ZAT4CqBUXY8L9lkBlQHi9e86vy7LNqQ
+ yQAiRU5VcLsacSNxdazTW0p1dM594c6MOqsXFcSFxtZYhgBjok4LkGrmQhiLSkXDvQ4ExW3fJ
+ aUI20REC9YhL0ky0/JsrzpR/pJD7qZrOH3PLlhVEEhl9s4qy9/ZTnTa8hhrjPe94gbfXqbb8w
+ I0i+E5xkNJTD8RnfHHpigxeOvCq6v6ul1DNzh8JHBqas5YgHSc7DTGLdsdHWGCmcYReo3pZmh
+ 0JnrSiVn6EkBXm0DcUlb+yvRtRAnL/Y4UQ9ldpz372Wg9s4c+jXmX/r9UoWzfFw6Shrk3FYhT
+ O5KVjOq0LGabl1lsG7Zq1bwoa4EljyoLZcsa4GEYMSP74NByhHgQYYiiPRRlGGxZbZ+w9ywcI
+ HdujQ4NyDfaWTv3ZlC5qA9mibHRfaZxZo04UO0DycLkylZQ3SIme9t5nA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Joel Klinghed <the_jk@spawned.biz>
+Hi Kim,
 
-Recent changes to --fixup, adding amend suboption, caused the
---edit flag to be ignored as use_editor was always set to zero.
+On Fri, 13 Aug 2021, Kim Altintop wrote:
 
-Restore edit_flag having higher priority than fixup_message when
-deciding the value of use_editor by moving the edit flag condition
-later in the method.
+> CC'ing Johannes Schindelin as suggested by git-contacts.
 
-Signed-off-by: Joel Klinghed <the_jk@spawned.biz>
----
-    commit: restore --edit when combined with --fixup
-    
-    Recent changes to --fixup, adding amend suboption, caused the --edit
-    flag to be ignored as use_editor was always set to zero.
-    
-    Restore edit_flag having higher priority than fixup_message when
-    deciding the value of use_editor by only changing the default if
-    edit_flag is not set.
-    
-    Changes since v1: Added test verifying that --fixup --edit brings up
-    editor.
-    
-    Changes since v2: Clarify if condition and use write_script helper in
-    test.
-    
-    Changes since v3: Simplify test.
-    
-    Changes since v4: Using cleaner fix by Phillip Wood instead and added an
-    explicit verification to a test for --fixup without --edit.
-    
-    Signed-off-by: Joel Klinghed the_jk@spawned.biz
+`git-contacts` wouldn't know that there are better experts on the
+namespace matter.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1014%2Fthejk%2Ffixup_edit-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1014/thejk/fixup_edit-v5
-Pull-Request: https://github.com/gitgitgadget/git/pull/1014
+My only comment is that I would find the diff to `upload-pack.c` much
+easier to parse if the `arg` variable hadn't been renamed.
 
-Range-diff vs v4:
-
- 1:  0c0cb647e03 ! 1:  1c608daf0cd commit: restore --edit when combined with --fixup
-     @@ Commit message
-          --edit flag to be ignored as use_editor was always set to zero.
-      
-          Restore edit_flag having higher priority than fixup_message when
-     -    deciding the value of use_editor by only changing the default
-     -    if edit_flag is not set.
-     +    deciding the value of use_editor by moving the edit flag condition
-     +    later in the method.
-      
-          Signed-off-by: Joel Klinghed <the_jk@spawned.biz>
-      
-       ## builtin/commit.c ##
-      @@ builtin/commit.c: static int parse_and_validate_options(int argc, const char *argv[],
-     - 		} else {
-     - 			fixup_commit = fixup_message;
-     - 			fixup_prefix = "fixup";
-     --			use_editor = 0;
-     -+			if (edit_flag < 0)
-     -+				use_editor = 0;
-     + 
-     + 	if (logfile || have_option_m || use_message)
-     + 		use_editor = 0;
-     +-	if (0 <= edit_flag)
-     +-		use_editor = edit_flag;
-     + 
-     + 	/* Sanity check options */
-     + 	if (amend && !current_head)
-     +@@ builtin/commit.c: static int parse_and_validate_options(int argc, const char *argv[],
-       		}
-       	}
-       
-     ++	if (0 <= edit_flag)
-     ++		use_editor = edit_flag;
-     ++
-     + 	cleanup_mode = get_cleanup_mode(cleanup_arg, use_editor);
-     + 
-     + 	handle_untracked_files_arg(s);
-      
-       ## t/t7500-commit-template-squash-signoff.sh ##
-     +@@ t/t7500-commit-template-squash-signoff.sh: EOF
-     + 
-     + test_expect_success 'commit --fixup provides correct one-line commit message' '
-     + 	commit_for_rebase_autosquash_setup &&
-     +-	git commit --fixup HEAD~1 &&
-     ++	EDITOR="echo ignored >>" git commit --fixup HEAD~1 &&
-     + 	commit_msg_is "fixup! target message subject line"
-     + '
-     + 
-      @@ t/t7500-commit-template-squash-signoff.sh: test_expect_success 'commit --fixup -m"something" -m"extra"' '
-       
-       extra"
-
-
- builtin/commit.c                          | 5 +++--
- t/t7500-commit-template-squash-signoff.sh | 9 ++++++++-
- 2 files changed, 11 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 190d215d43b..854903ad113 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1246,8 +1246,6 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 
- 	if (logfile || have_option_m || use_message)
- 		use_editor = 0;
--	if (0 <= edit_flag)
--		use_editor = edit_flag;
- 
- 	/* Sanity check options */
- 	if (amend && !current_head)
-@@ -1337,6 +1335,9 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 		}
- 	}
- 
-+	if (0 <= edit_flag)
-+		use_editor = edit_flag;
-+
- 	cleanup_mode = get_cleanup_mode(cleanup_arg, use_editor);
- 
- 	handle_untracked_files_arg(s);
-diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
-index 7d02f79c0de..8515736003a 100755
---- a/t/t7500-commit-template-squash-signoff.sh
-+++ b/t/t7500-commit-template-squash-signoff.sh
-@@ -270,7 +270,7 @@ EOF
- 
- test_expect_success 'commit --fixup provides correct one-line commit message' '
- 	commit_for_rebase_autosquash_setup &&
--	git commit --fixup HEAD~1 &&
-+	EDITOR="echo ignored >>" git commit --fixup HEAD~1 &&
- 	commit_msg_is "fixup! target message subject line"
- '
- 
-@@ -281,6 +281,13 @@ test_expect_success 'commit --fixup -m"something" -m"extra"' '
- 
- extra"
- '
-+test_expect_success 'commit --fixup --edit' '
-+	commit_for_rebase_autosquash_setup &&
-+	EDITOR="printf \"something\nextra\" >>" git commit --fixup HEAD~1 --edit &&
-+	commit_msg_is "fixup! target message subject linesomething
-+extra"
-+'
-+
- get_commit_msg () {
- 	rev="$1" &&
- 	git log -1 --pretty=format:"%B" "$rev"
-
-base-commit: ebf3c04b262aa27fbb97f8a0156c2347fecafafb
--- 
-gitgitgadget
+Ciao,
+Johannes
