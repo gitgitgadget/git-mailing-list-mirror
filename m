@@ -2,193 +2,332 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0B8FC4338F
-	for <git@archiver.kernel.org>; Sun, 15 Aug 2021 12:49:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5772C4338F
+	for <git@archiver.kernel.org>; Sun, 15 Aug 2021 14:31:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A937E610FE
-	for <git@archiver.kernel.org>; Sun, 15 Aug 2021 12:49:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8CE346112E
+	for <git@archiver.kernel.org>; Sun, 15 Aug 2021 14:31:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238194AbhHOMtl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Aug 2021 08:49:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59864 "EHLO
+        id S238139AbhHOOcU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Aug 2021 10:32:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238097AbhHOMti (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Aug 2021 08:49:38 -0400
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28148C061764
-        for <git@vger.kernel.org>; Sun, 15 Aug 2021 05:49:06 -0700 (PDT)
-Received: by mail-io1-xd2e.google.com with SMTP id a13so19404478iol.5
-        for <git@vger.kernel.org>; Sun, 15 Aug 2021 05:49:06 -0700 (PDT)
+        with ESMTP id S232465AbhHOOcT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Aug 2021 10:32:19 -0400
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FF1DC061764
+        for <git@vger.kernel.org>; Sun, 15 Aug 2021 07:31:49 -0700 (PDT)
+Received: by mail-qt1-x836.google.com with SMTP id t16so12270538qta.9
+        for <git@vger.kernel.org>; Sun, 15 Aug 2021 07:31:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=2tjM2StS3RXCthAU62ywk1YG/vqf5l/L8OvZl+HMWdw=;
-        b=lETNxvlvDvganjnv0TFX69Qa71ar6BlOqJZZIjCli8KtFP198YZ3rumycDyIHC9YQ5
-         y91oHqeV83YE4Vc/inYDVidmVAnIr2BETXg8h89G7kORkwtTd8Y7AIOCUHPuGV47iHFl
-         cv9jtqZ1qU6lEshmLDADgURzH9DsDf/at4cNxvsf4ZZ8eEIDetM0Pm4MscchdFeKOURa
-         Z7OrfSNyUs/fQOQYPMJEMUIZBGZ7L+RH/EBnh10tU23qQSz6EEjWmWKIbuLq6TBaAslH
-         9EXilAtctYcadgXGKtHyYupGlU/CvER1Caxd9BvNSPuumQ1bNjdq3R6S/cmn39FAYDWt
-         aqYw==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=DFIWd+cq3O+WqeiD69VD9Wn63wsguJ5ly90NyF8st9M=;
+        b=GkonDw4NyORAEtzj9XZwkNd/tQSyMsix/7MIAFYTx56mGj53GDXqMhBPR9bMH+Ku+c
+         kIQfcM1FfZ4tLXOUP1XrpTy9H5aThs91p8Wgm6bMpsJuYM2yc+OV6Ur172b5vNWZoTQt
+         /uxGKdNRTMgYsUoUhpLVSyRfoi2miGxw3Cr6r/E2t3+0hBm7Jqm6o/0XjSt5zV8MU67M
+         w1TIAYdl1OvxfQybHxKNUxV9PV+9pQwx2RDawLiUM4qesOaPova4OGfeJKQ12Zk0j8hn
+         ZOEMkGtBNy4zp9xMlASgabeJjL0e6BhL0/9v84jLAfoCDQuUcjCOd3F2GOLY4yfUVte4
+         AFDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2tjM2StS3RXCthAU62ywk1YG/vqf5l/L8OvZl+HMWdw=;
-        b=Z0Y04N+4bGHh4H0NJVaKs/sd/rpEtaBNIcf6lEn+Fc4oLHE7p1lUb/j3o7kDOz87yi
-         /H1mvQ38D1FE+10Hc32eprB8anuaXu40PdRr1+vwj2jYbzJ2EHQTRSEGXjWF44WN2wAN
-         wnfTasP5KqonKrXIAo3cGKeqvxD1hoE/9IT9y5ickYrSdnoN6LUTzIEFK3qsGXbiuOC5
-         uhhjBEnHIgxobM4lCSdnx6wpTd3kCd+Op40c2atQel1n6EpaiA2IqVwQ687vorSz1TP3
-         3i6A2mvlMUa3GBzgjbRbRwB8Jhf/m0Kh9ldwzOZ8TJbJ6FfvbhbSH6GtzGjx5uuh/5AX
-         620A==
-X-Gm-Message-State: AOAM532Weq+A+bOuEdzXenuLUpR87H9h3TDRcq71uUcN2itYujRMyq8T
-        9e7AXjhcQ2phHUbeJYiW+AyC6wJIjcTQBu+p6cQ=
-X-Google-Smtp-Source: ABdhPJz8Dn9RpKewrEqrrYXYOB4wquqTIV8VmtgojOS9PtQVlew+jUXpRnI60PWXvnOVXDqvtvz1XRd1bL5bGx/1ys4=
-X-Received: by 2002:a02:cd89:: with SMTP id l9mr9966436jap.29.1629031745553;
- Sun, 15 Aug 2021 05:49:05 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=DFIWd+cq3O+WqeiD69VD9Wn63wsguJ5ly90NyF8st9M=;
+        b=WcXGsuZUJMSt8U1BWxiToa5p7vRcohLKUqPG333c5tgFiPwtcUy/bPGkYL+dsq4XDY
+         x8Jb+yymSDwuGHpKnnZj4T5OQP1QlixZBsBZ2ccmjcRyW5LJp2R61A8Pduojh7MPzBN0
+         OORADB62P6HRu5uLy6f0nOKAlAjQwifGREIhRBCRTbl1d4W6JeKANxxu8tBxkl9QdHZC
+         kvQQbkmAST6kLt8Os9jLmuYyUR5QmvHinUD1Tqr/tFS57A0BJPz3Y9VBn8pes6p6nq32
+         GzfQoe4IcQvgdD0DEmRtNsPi2vhcE6on+4Yt4W2IS7IX/AlBWFs28IO6RWUDpGMacttj
+         FP4g==
+X-Gm-Message-State: AOAM530vkVXvI9L7gdwCa7cyVEkZv4QbONwygv2ADanYb/+MwO8x3h5E
+        JlksHLvtyLFq+dclpGXQ+90=
+X-Google-Smtp-Source: ABdhPJyAvAjapgEN1vBpdXBVwbOV9HkQQnSJZwC7wgnIPE/8SGEY0qfHn8hGFyeGFvW+q6ub9ho7bg==
+X-Received: by 2002:a05:622a:14d:: with SMTP id v13mr10197842qtw.241.1629037908683;
+        Sun, 15 Aug 2021 07:31:48 -0700 (PDT)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id i16sm3522500qtq.52.2021.08.15.07.31.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 15 Aug 2021 07:31:48 -0700 (PDT)
+Subject: Re: Bug with Git shallow clones and submodules
+To:     Kevin Phillips <thefriendlycoder@gmail.com>, git@vger.kernel.org,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+References: <CANNNLMC_XEqjYPOig+pbqrS30dPCTmcDSev6yg+5EEBkJCaaig@mail.gmail.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <1a98c659-e7db-50a6-faf3-b3b4c15df679@gmail.com>
+Date:   Sun, 15 Aug 2021 10:31:46 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.13.0
 MIME-Version: 1.0
-References: <pull.1010.v3.git.1628142482640.gitgitgadget@gmail.com>
- <pull.1010.v4.git.1628936863733.gitgitgadget@gmail.com> <xmqqa6lju5qd.fsf@gitster.g>
-In-Reply-To: <xmqqa6lju5qd.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sun, 15 Aug 2021 20:48:54 +0800
-Message-ID: <CAOLTT8S6yOLuLh88wc6T1Wr2zJe=Wo2cYw=2ahOwAeN=e43Smw@mail.gmail.com>
-Subject: Re: [PATCH v4] [GSOC] cherry-pick: use better advice message
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Ramkumar Ramachandra <artagnon@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CANNNLMC_XEqjYPOig+pbqrS30dPCTmcDSev6yg+5EEBkJCaaig@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B48=E6=9C=8815=E6=97=
-=A5=E5=91=A8=E6=97=A5 =E4=B8=8A=E5=8D=884:33=E5=86=99=E9=81=93=EF=BC=9A
->
-> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: ZheNing Hu <adlternative@gmail.com>
-> >
-> > In the past, git cherry-pick would print such advice when
-> > there was a conflict:
-> > hint: after resolving the conflicts, mark the corrected paths
-> > hint: with 'git add <paths>' or 'git rm <paths>'
-> > hint: and commit the result with 'git commit'
->
-> In our log messages, we desciribe the current state in the present
-> tense.
->
-> It may be worth mentioning that this is because the program
-> originally was about picking only one commit and the hint was
-> inherited from those days.  Or it may not.  I dunno.
->
+Hi Kevin,
 
-Yes, may look at the time, the design is correct.
+Le 2021-08-11 à 10:59, Kevin Phillips a écrit :
+> We recently came across a bug in one of our Git projects which make
+> use of submodules. The basic problem is we have a Git repo that has 1
+> submodule within it which is set up to check out a specific branch,
 
-> > But in fact, when we want to cherry-pick multiple commits,
-> > we should not use "git commit" after resolving conflicts, which
-> > will make Git generate some errors. We should recommend users to
-> > use `git cherry-pick --continue`, `git cherry-pick --abort`, just
-> > like git rebase does.
->
-> I am not sure "should not" is the right phrase.  Also it does not
-> help readers to have a vague "generate some errors" than not saying
-> anything---it leaves readers puzzled with "what errors???"
->
+Just to make sure we are on the same page: you can't have a submodule
+"set up to check out a specific branch", at least
+not in the sense that the submodule is always "checked out" on a branch,
+and the superproject knows that the submodule should always be "on that branch";
+that's not how submodules work. As specified in [1], the config `submodule.<name>.branch`
+which your repo has in '.gitmodules' is only ever used by
+`git submodule update --remote`. The superproject itself only records at which *commit* the
+submodule is at.
 
-yes, this error is specifically that if we want pick a series of commits,
-after resolving conflicts and use git commit, `.git/sequencer` still exists=
-,
-but git cherry-pick has ended (the next step cherry-pick is not performed).
-This may be a very strange critical state.
+> and when we attempt to perform a shallow clone on the parent repo the
+> checkout fails with a "Server does not allow request for unadvertised
+> object" error. After doing a lot of testing and reading online I found
+> this StackOverflow thread (https://stackoverflow.com/a/61492323) that
+> explains our problem in great detail, which indicates to me that this
+> is likely not a problem specific to us, so I thought I'd report it to
+> see if it could be fixed.
 
-> Whether picking a single commit or a series of commits, after
-> resolving conflicts in the current step, wouldn't
->
->     $ git commit ;# to conclude the resolution
->     $ git cherry-pick --continue
->
-> do the right thing?
->
+I think your situation is related, but not exactly the same as the SO
+post. But torek's answer sure explains a lot of important points that
+are relevant in your situation.
 
-I think you mean that git commit is used to end a single cherry-pick.
-But in the face of a series of commits, errors will occur.
+> 
+> In our specific use case, we found the problem specifically when
+> running a build of our project using Gitlab CI. This tool
+> automatically performs a shallow checkout of projects being built by
+> using a "--depth=50" parameter. This caused odd Git checkout errors to
+> appear on our CI builds which weren't directly reproducible by our
+> developers local builds. Upon closer examination we were able to
+> reproduce outside of the CI environment by performing a checkout as
+> follows:
+> 
+>      git clone --recurse-submodules --depth=50  git@<path_to_repo>.git .
+> 
+> Based on my initial research, which was helped greatly by the
+> StackOverflow thread I linked to above, I was able to deduce the
+> following contributing factors:
+> 
+> The submodule that was causing us grief was the dpdk library located
+> here: http://git.dpdk.org/dpdk-stable/
+> 
+> This repository has a default branch named "default" which has only 2
+> commits on it: one for initializing the repo and one additional commit
+> All releases of this library are created from branches named by the
+> release version, and they all seem disjoint from one another, and they
+> are all disjoint from the default branch (ie: changes from the release
+> branches are never merged into the default branch)
+> 
+> our parent repo, which is an internal / non-public repository that can
+> not be shared, has a single submodule defined in it with the following
+> .gitmodule definition:
+> 
+> 
+> [submodule "dpdk-stable"]
+> path = dpdk-stable
+> url = https://git@dpdk.org/git/dpdk-stable
+> branch = 19.11
+> 
+> the specific revision we are checking out has the OID
+> 78bc27846101e481438a98c68cac47e4476085c0 which corresponds to the
+> 19.11.8 tag
+> the following git clone operation succeeds:
+> 
+> git clone --recurse-submodules git@<path_to_repo>.git .
+> 
+> the following git clone operation fails:
+> 
+> git clone --recurse-submodules --depth=50  git@<path_to_repo>.git .
 
-> > This is the improved advice:
->
-> It may be an improved advice, but just omit it and say something
-> like:
->
->         Suggest use of "git cherry-pick --contiue", so that it would
->         also apply to cases where multiple commits are being picked.
->
-> The actual message does not have to be reproduced here, as it is in
-> the source, and it can be seen in the test ;-)
->
+Thanks for the details here. I came up with this short reproducer script,
+which I think shows the behaviour you are seeing:
 
-Yes, maybe the commit message should be shorter and more concise.
+~~~bash
+#!/bin/bash
 
-> That would make the proposed log message conform to our norm,
-> i.e. brief description of what happens with the current system,
-> followed by description of the perceived problem, followed by
-> an order to the codebase to become different in a specific way
-> that solves the problem.
->
-> Taken together, perhaps
->
->         "git cherry-pick", upon seeing a conflict, says:
->
->             hint: ...
->
->         as if running "git commit" to conclude the resolution of
->         this single step were the end of the story.  This stems from
->         the fact that the command originally was to pick a single
->         commit and not a range of commits, and the message was
->         written back then and has not been adjusted.
->
->         When picking a range of commits and the command stops with a
->         conflict in the middle of the range, however, after
->         resolving the conflict and (optionally) recording the result
->         with "git commit", the user has to run "git cherry-pick
->         --continue" to have the rest of the range dealt with,
->         "--skip" to drop the current commit, or "--abort" to discard
->         the series.
->
+set -e
 
-Ok, I understand now, git commit just stopped git cherry-pick by
-delete CHERRY_PICK_HEAD in sequencer_post_commit_cleanup().
-we can still resume the process with git cherry-pick --continue.
+rm -rf test && mkdir test && cd test
+rm -rf project clone
 
->         Suggest use of "git cherry-pick --continue/--skip/--abort"
->         so that the message also covers the case where a range of
->         commits are being picked.
->
->
-> > Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> > Hepled-by: Junio C Hamano <gitster@pobox.com>
->
-> It seems that unlike other people I keep hepling you, whatever that
-> verb means ;-).
->
+# Create project
+git init project && cd project
+echo "content">file
+git add file
+git commit -m "initial in proj"
+git submodule add -b 19.11 https://dpdk.org/git/dpdk-stable
+git -C dpdk-stable -q checkout 78bc27846101e481438a98c68cac47e4476085c0
+git add dpdk-stable
+git commit -m "add lib to project"
+cd ../
 
-Ehhh, I seem to have forgotten the correction here.
+# Clone project
+GIT_TRACE2=3 git -c protocol.version=2 clone --no-local --recurse-submodules --depth=50 project clone 3> >(grep -E 'git clone|git fetch|git submodule|git rev-list' )
+~~~
 
-> Thanks.
->
+Note that in the "Create project" phase, I use the HTTPS URL
+https://dpdk.org/git/dpdk-stable, which is the recommended HTTPS URL at [2].
 
-Thanks.
---
-ZheNing Hu
+> 
+> we can work around the problem by doing a shallow clone with the
+> no-single-branch parameter, as in:
+> 
+> git clone --recurse-submodules --depth=50 --no-single-branch
+> git@<path_to_repo>.git .
+> 
+> Based on my current level of understanding, Git is automatically
+> setting the --single-branch flag when cloning submodules but only when
+> doing a shallow clone of the parent. This seems wrong to me. 
+
+In fact, the logic in the code is twofold:
+
+1. In 'git clone', '--depth' implies '--single-branch' [3]
+2. In 'git clone', '--single-branch' is used to clone submodules if
+    '--recurse-submodules' is used. This is the case since 132f600b06
+    (clone: pass --single-branch during --recurse-submodules, 2020-02-20)
+
+I'm not sure why you think this is wrong (in theory)...
+
+> In
+> addition, even if Git was going to enforce the single branch option on
+> submodules it stands to reason that it should be respecting the branch
+> defined in the .gitmodules file (ie: 19.11 in our case) instead of
+> using the default branch (ie: "default" in this case). 
+
+... in practice, here you are right: it is indeed unfortunate that the
+branch specified in '.gitmodules' is not used for the initial clone of
+the submodule if they are cloned with '--single-branch'.
+
+> My guess is, if
+> it were respecting the branch name then we wouldn't be getting the
+> "unadvertised object" error because the referenced OID would exist in
+> the submodule checkout because it would have the correct branch
+> checked out.
+
+I think your are right, since the following command does work:
+
+     git clone --single-branch --branch 19.11 https://dpdk.org/git/dpdk-stable &&
+     git -C dpdk-stable checkout 78bc27846101e481438a98c68cac47e4476085c0
+
+> 
+> For reference, this problem appears to be reproducible on several
+> different platforms (ie: several different Linux distros and Mac OSX
+> at least) and several different Git versions up to v2.32.0 which is
+> the latest version at the moment. Hopefully this problem can be fixed
+> in a future release of the command line tools. In the meantime we've
+> had to hack around the problem in our Gitlab CI builds by disabling
+> the shallow checkout features, which is less than ideal
+
+If you run my reproducer script above, you should see the steps that the code
+does to try to retrieve the commit you need, 78bc27846101e481438a98c68cac47e4476085c0:
+
+1. It invokes 'git clone' for the submodule:
+
+     child_start[0] git clone --no-checkout --progress --separate-git-dir $PWD/test/clone/.git/modules/dpdk-stable --single-branch -- https://dpdk.org/git/dpdk-stable $PWD/test/clone/dpdk-stable
+
+2. It checks if the clone downloaded the needed object:
+
+     start git rev-list -n 1 78bc27846101e481438a98c68cac47e4476085c0 --not --all
+
+    We know that it did not, because as noted above, the branch from '.gitmodules'
+    is not used in the single-branch clone, so only object from the 'default' branch
+    are available.
+3. It realizes the object is not there, so it runs "git fetch" in the submodule
+4. It checks again with the same 'git rev-list command' if the fetch downloaded
+    the needed object. Of course, it did not, because since the branch in '.gitmodules'
+    is not used for the initial single-branch clone, at that point the fetch refspec
+    in the submodule is '+refs/heads/default:refs/remotes/origin/default', and so a
+    simple 'git fetch' does not bring any new object.
+5. It falls back to fetching the needed commit by its hash:
+
+     start git fetch origin 78bc27846101e481438a98c68cac47e4476085c0
+
+6. The server at https://dpdk.org/git/dpdk-stable refuses this request and you get
+
+     error: Server does not allow request for unadvertised object 78bc27846101e481438a98c68cac47e4476085c0
+
+OK so why does the server refuses the request ? If you take a look at [4], you will
+understand that it's probably because the configs 'uploadpack.allowReachableSHA1InWant'
+and 'uploadpack.allowAnySHA1InWant' are both false (i.e. their default value) on the
+https://dpdk.org/git/dpdk-stable server. So the behaviour here is not a bug, it's
+working as it should (but leads to a bad experience for you).
+
+What is not unfortunately not mentioned in the documentation at [4]
+is that the two configs that I mention above only apply if version 0 of the Git transfer
+protocol is in effect. So this would mean that even though we specify '-c protocol.version=2'
+in the 'git clone' command in my script, the server uses protocol v0. Protocol v2 works
+starting in Git 2.18, so let's check what version is running at dpdk.org:
+
+$ GIT_TRACE_PACKET=1 GIT_TRACE_BARE=1 git ls-remote https://dpdk.org/git/dpdk-stable 2>&1 | grep agent
+packet:          git< 6ee0521feb765d9105241a3f6693762c471655cf HEAD\0multi_ack thin-pack side-band side-band-64k ofs-delta shallow deepen-since deepen-not deepen-relative no-progress include-tag multi_ack_detailed no-done symref=HEAD:refs/heads/default agent=git/2.20.1
+
+OK, it's running Git 2.20.1. And the list of capabilities above implies that it's responding
+with protocol v0, even if my local Git version if 2.29, which defaults to protocol v2. If
+it were responding with protocol v2, we would see:
+
+$ GIT_TRACE_PACKET=1 GIT_TRACE_BARE=1 git ls-remote https://github.com/git/git 2>&1 | grep agent
+packet:          git< agent=git/github-g78b452413e8b  # server version
+packet:          git< agent=git/github-g78b452413e8b
+packet:          git> agent=git/2.29.2  # client version
+packet:          git< agent=git/2.29.2
+
+And grepping for "version" would confirm it:
+
+$ GIT_TRACE_PACKET=1 GIT_TRACE_BARE=1 git ls-remote https://github.com/git/git 2>&1 | grep version
+packet:          git< version 2
+packet:          git< version 2
+
+I can't explain why the server refuses to talk with protocol v2. Maybe Jonathan (CC-ed),
+who worked on the implementation of protocol v2, would be able to explain that.
+
+And it gets weirder. If you instead use the Git URL (instead of the HTTPS URL)
+for the dpdk-stable submodule [2], then the server responds with protocol v2!
+
+$ GIT_TRACE_PACKET=1 GIT_TRACE_BARE=1 git ls-remote git://dpdk.org/dpdk-stable 2>&1 | grep agent
+packet:          git< agent=git/2.20.1
+packet:          git> agent=git/2.29.2
+$ GIT_TRACE_PACKET=1 GIT_TRACE_BARE=1 git ls-remote git://dpdk.org/dpdk-stable 2>&1 | grep version
+packet:          git> git-upload-pack /dpdk-stable\0host=dpdk.org\0\0version=2\0
+packet:          git< version 2
+
+And indeed, if you use the 'git://' URL in the 'git submodule add' command in my reproducer
+script, it succeeds !
+
+It don't understand this behaviour either.
+
+So a workaround for you would be to use the 'git://' URL in your '.gitmodules',
+if the Git port (9418) is not blocked in your infrastructure.
+
+I hope this helps,
+
+Philippe.
+
+P.S. for Jonathan I noticed some additional weirdness while debugging this:
+Some servers respond with a different Git version depending on the protocol:
+
+$ GIT_TRACE_PACKET=1 GIT_TRACE_BARE=1 git ls-remote  git://gcc.gnu.org/git/gcc.git 2>&1 | grep -E 'agent|version '
+packet:          git< version 2
+packet:          git< agent=git/2.26.2
+packet:          git> agent=git/2.29.2
+$ GIT_TRACE_PACKET=1 GIT_TRACE_BARE=1 git ls-remote  https://gcc.gnu.org/git/gcc.git 2>&1 | grep agent -E 'agent|version '
+packet:          git< 882f1d58bfa56737ff2de84c3cd1e0acfc318b86 HEAD\0multi_ack thin-pack side-band side-band-64k ofs-delta shallow deepen-since deepen-not deepen-relative no-progress include-tag multi_ack_detailed no-done symref=HEAD:refs/heads/master agent=git/2.27.0
+
+Here again, with HTTPS we fall back to protocol v0. The same behaviour happens
+with git://sourceware.org/git/binutils-gdb.git...
+
+1. https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt--bltbranchgt
+2. https://core.dpdk.org/contribute/#clone
+3. https://git-scm.com/docs/git-clone#Documentation/git-clone.txt---depthltdepthgt
+4. https://git-scm.com/docs/git-config#Documentation/git-config.txt-uploadpackallowReachableSHA1InWant
