@@ -2,135 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98CDDC4338F
-	for <git@archiver.kernel.org>; Sun, 15 Aug 2021 17:36:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72985C4338F
+	for <git@archiver.kernel.org>; Sun, 15 Aug 2021 18:01:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6786561104
-	for <git@archiver.kernel.org>; Sun, 15 Aug 2021 17:36:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 44B696112D
+	for <git@archiver.kernel.org>; Sun, 15 Aug 2021 18:01:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229599AbhHORhX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Aug 2021 13:37:23 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64394 "EHLO
+        id S229563AbhHOSAK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Aug 2021 14:00:10 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59494 "EHLO
         pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbhHORhW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Aug 2021 13:37:22 -0400
+        with ESMTP id S229456AbhHOR7y (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Aug 2021 13:59:54 -0400
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id ED3FD145603;
-        Sun, 15 Aug 2021 13:36:51 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6ABAE1456E5;
+        Sun, 15 Aug 2021 13:59:24 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fe90ijR1bj7ZdDikQ+gu+P1U37UZztKvHsLUVm
-        KDguI=; b=MzILFijlxO/rezFHcDl+oe2EXiRSqMSoZshCgqGOq9GcRU7uY9lIfQ
-        mOJxHmbs5RHm0VjAFNMW1jbypnflaL36XUINfS35j5MAOjU9kQjIV3/2/xdk0obC
-        A/dvNN2g8eCh72tDY7yvAwRHgEFtHz1ApeCmjoSXWcK3WFhu7U40o=
+        :content-type; s=sasl; bh=kOM921C2Fr0OayNOgHmIaif4CetEdRPM6FaphY
+        ZasAU=; b=Uy6044FRhMN1Gj7Eacf7cYo1ViivByrYJNIuKWveRWKjb8mCD0T5RJ
+        F6Tw6DTiJSqYxpUUW5TZ15hw7soCQNHp5B4KYXuYDyDQEAuNsv9LMX8dpwqNfVzY
+        uWyFjihfx2UCHMbjxGWLwdiecqlzdSkoqcWTMpf8d5WWBxISk/rgg=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E5DB0145602;
-        Sun, 15 Aug 2021 13:36:51 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5680E1456E3;
+        Sun, 15 Aug 2021 13:59:24 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.3.135])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 38117145601;
-        Sun, 15 Aug 2021 13:36:49 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 91E9A1456E2;
+        Sun, 15 Aug 2021 13:59:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Elijah Newren <newren@gmail.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Victor Gambier <vgambier@excilys.com>
-Subject: Re: [PATCH 1/3] t3403: fix commit authorship
-References: <pull.1013.git.1628587917.gitgitgadget@gmail.com>
-        <7559781ca92096f89a6dcbfeeaa4d2b4d7b98094.1628587917.git.gitgitgadget@gmail.com>
-        <CABPp-BFFTLgtrs_m9Gp7tSRwpBnAEoArhMZhhJcuzqNS_g8sUw@mail.gmail.com>
-        <xmqq5ywddtsn.fsf@gitster.g>
-        <3b438e42-488c-e4ab-d1fe-3d0992ef0619@gmail.com>
-        <nycvar.QRO.7.76.6.2108142350420.59@tvgsbejvaqbjf.bet>
-Date:   Sun, 15 Aug 2021 10:36:47 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2108142350420.59@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Sat, 14 Aug 2021 23:53:06 +0200 (CEST)")
-Message-ID: <xmqqsfzasj80.fsf@gitster.g>
+Cc:     Kim Altintop <kim@eagain.st>, git@vger.kernel.org,
+        jonathantanmy@google.com, bwilliams.eng@gmail.com,
+        jrnieder@gmail.com, sunshine@sunshineco.com
+Subject: Re: [PATCH v6 0/3] upload-pack: treat want-ref relative to namespace
+References: <20210730135845.633234-1-kim@eagain.st>
+        <20210731203415.618641-1-kim@eagain.st>
+        <20210804203829.661565-1-kim@eagain.st>
+        <20210804205951.668140-1-kim@eagain.st>
+        <20210809175530.75326-1-kim@eagain.st>
+        <20210813062237.10403-1-kim@eagain.st>
+        <nycvar.QRO.7.76.6.2108142344570.59@tvgsbejvaqbjf.bet>
+Date:   Sun, 15 Aug 2021 10:59:19 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2108142344570.59@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Sat, 14 Aug 2021 23:46:49 +0200 (CEST)")
+Message-ID: <xmqqeeausi6g.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5EAEEE24-FDEF-11EB-9B3F-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 84C1F996-FDF2-11EB-9626-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> > Good point.  The commit tagged with amended-goodbye is later used in
->> > some tests that ensure the author ident does not change across a
->> > rebase.  If this commit gets created without authorship customized
->> > (i.e. before Phillip's fix), we would not catch a possible breakage
->> > to make rebase discard the original authorship information.
->> >
->> > But with this fix, we now can catch such a breakage.
->>
->> I'll expand the commit message to make that clear
->
-> Maybe you could even add a `test another.author@example.com = $(git show
-> -s --format=%ae HEAD)`?
+> My only comment is that I would find the diff to `upload-pack.c` much
+> easier to parse if the `arg` variable hadn't been renamed.
 
-The version I have from Phillip has updated log message already, but
-not with such a regression prevention.
+If we only look at the patch text, perhaps.
 
-The test that the patch under discussion corrects does this:
+What is left in the resulting file is what people will be reading in
+the coming years, and because instead of just one string (whose name
+did not matter and a short-and-sweet arg was a perfect name for it),
+we now have to deal with two strings (one is the full and real name,
+and the other is the name without namespace prefix) we need to be
+clear which is which, the rename is an essential part of the patch
+to keep the result easier to understand.
 
-    test_expect_success 'correct authorship when committing empty pick' '
-        test_when_finished "git rebase --abort" &&
-        test_must_fail git rebase -i --onto goodbye \
-                amended-goodbye^ amended-goodbye &&
-        git commit --allow-empty &&
-        git log --pretty=format:"%an <%ae>%n%ad%B" -1 amended-goodbye >expect &&
-        git log --pretty=format:"%an <%ae>%n%ad%B" -1 HEAD >actual &&
-        test_cmp expect actual
-    '
+When I apply a patch to my tree to review it (e-mailed patch review
+is merely an efficient way to transmit the change---I do not expect
+that I can always review all non-trivial patches without stepping
+out of my MUA).  My review, after noticing typos, style glitches and
+design issues, of code and its correctness will begin after that.
 
-to ensure that the authorship is the same between the original
-(i.e. amended-goodbye) and the rebased (i.e. HEAD), with the
-expectation that a bug may lose the authorship and instead use the
-default one used in the test suite.  What this test truly cares is
-not that amended-goodbye was authored by another.author, but it was
-not written by the default author.
+"git show" can be driven with different options and in some cases
+use of certaion options helps seeing what is going on quite well.
+"--diff-algorithm" shifts which preimage lines match which postimage
+lines and sometimes helps reduce the clutter greatly. "--word-diff"
+is a great tool to see where in reflowed documentation patch actual
+changes are. "--color-moved" lets reviewer skip pure code movement,
+various options to "ignore space" sometimes helps declutter the
+patch. etc.
 
-We could test both, like the attached patch, for completeness.  The
-first half makes sure amended-goodbye (the original) was written by
-the another.author, and the other one makes sure that author is not
-the one we use to prepare commits for the tests by default.
+I wonder if we already have an option (or if there isn't, if we can
+design such a new option cleanly), that would help in this case.
+Essentially, what you want is an "I know what used to be arg is
+renamed to refname_nons in this patch; take advantage of that
+knowledge and show a diff that is less cluttered" option.
 
-I do not think the latter is actually a good idea ("As long as the
-command produces a result different from THIS, any random garbage is
-accepted" does not make a good test), so perhaps the first half
-would be good enough.
-
- t/t3403-rebase-skip.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git c/t/t3403-rebase-skip.sh w/t/t3403-rebase-skip.sh
-index e26762d0b2..1405720767 100755
---- c/t/t3403-rebase-skip.sh
-+++ w/t/t3403-rebase-skip.sh
-@@ -40,6 +40,14 @@ test_expect_success setup '
- 	test_tick &&
- 	git tag amended-goodbye &&
- 
-+	# Make sure the authorship info is different from the default one
-+	echo "Another Author <another.author@example.com>" >expect &&
-+	git log --pretty=format:"%an <%ae>" -1 amended-goodbye >actual &&
-+	test_cmp expect actual &&
-+
-+	git log --pretty=format:"%an <%ae>" -1 goodbye >unexpect &&
-+	! test_cmp unexpect actual &&
-+
- 	git checkout -f skip-reference &&
- 	echo moo > hello &&
- 	git commit -a -m "we should skip this" &&
+Thanks for a comment, anyway.
