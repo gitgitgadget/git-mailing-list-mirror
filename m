@@ -2,117 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94AADC4338F
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 12:28:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF775C43216
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 12:40:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 832A463266
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 12:28:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D4C7363272
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 12:40:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233702AbhHPM3O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 08:29:14 -0400
-Received: from mout.gmx.net ([212.227.15.18]:49293 "EHLO mout.gmx.net"
+        id S232167AbhHPMlA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 08:41:00 -0400
+Received: from mout.gmx.net ([212.227.17.21]:39015 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230099AbhHPM3M (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 08:29:12 -0400
+        id S229806AbhHPMkr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 08:40:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1629116910;
-        bh=QPM/V2VYEkHfkGfwfN9Ci+SLCApZ3MRFQy7+kwBMzQ8=;
+        s=badeba3b8450; t=1629117591;
+        bh=dE+7NivS/lCSBN+giBRF28soO8UkDkpcQAjwRtsk71Q=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Io/5hCHzbj7hRL6x/ej4XLSvQXJSL7bvt9DsLY9l4WuRRrS04OdhKWooUXicRBhOn
-         UFA12veWwwJ+7Jl8Us4A8P6gl1BewuRwk+s/tADnedj1pOhfCrOfd5VG1JoRqWA2S3
-         RWJEgo6DpfsT2ngTFLQVOrL5EU23wxPfetXtCfW4=
+        b=b6zADwQG1wY3CR0nkx7Mm1UskzaX5iDsxfng2HmanZlWwx0bciJQU03uGiIMGj5o5
+         bDm+wsIbT2/2aByJVKwGqItBFVsctbo2q0YHl8upVnOOowRRJSPjw4TR5Iy+S8Nn5f
+         lGmxKvW9sug3Gfj1a1kGyatzCC/WvZx5NfWoG9Vs=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.86.215] ([213.196.213.229]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbzyP-1mnZ210omd-00dWdo; Mon, 16
- Aug 2021 14:28:30 +0200
-Date:   Mon, 16 Aug 2021 14:28:28 +0200 (CEST)
+Received: from [172.30.86.215] ([213.196.213.229]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MN5eX-1mYVpj34sv-00J3o5; Mon, 16
+ Aug 2021 14:39:50 +0200
+Date:   Mon, 16 Aug 2021 14:39:48 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Azeem Bande-Ali via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, David Barr <b@rr-dav.id.au>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Azeem Bande-Ali <me@azeemba.com>,
-        Azeem Bande-Ali <A.BandeAli@gmail.com>
-Subject: Re: [PATCH v2] help.c: help.autocorrect=prompt waits for user
- action
-In-Reply-To: <xmqqmtpjubuv.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2108161427270.55@tvgsbejvaqbjf.bet>
-References: <pull.1012.git.1628640954160.gitgitgadget@gmail.com>        <pull.1012.v2.git.1628917872724.gitgitgadget@gmail.com> <xmqqmtpjubuv.fsf@gitster.g>
+To:     Kim Altintop <kim@eagain.st>
+cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
+        bwilliams.eng@gmail.com, jrnieder@gmail.com,
+        sunshine@sunshineco.com
+Subject: Re: [PATCH v6 0/3] upload-pack: treat want-ref relative to
+ namespace
+In-Reply-To: <20210815213453.GB10013@schmidt.localdomain>
+Message-ID: <nycvar.QRO.7.76.6.2108161431500.55@tvgsbejvaqbjf.bet>
+References: <20210730135845.633234-1-kim@eagain.st> <20210731203415.618641-1-kim@eagain.st> <20210804203829.661565-1-kim@eagain.st> <20210804205951.668140-1-kim@eagain.st> <20210809175530.75326-1-kim@eagain.st> <20210813062237.10403-1-kim@eagain.st>
+ <nycvar.QRO.7.76.6.2108142344570.59@tvgsbejvaqbjf.bet> <20210815213453.GB10013@schmidt.localdomain>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:26a8blskm7D3/UBedQPVrkREyl3qjmZD8IoBwe1QI5Q0dVuA2CJ
- vlyMK+2uER5WWaaFBKnEE4zV2KJoWR+PUqkhD5tWuRRZmrtWDn4LiAGFJYQQbA5q44XnsQn
- SyHnnKU1w/qeM2ZaB5uLxpmzlubQ8H5xB7yF+5f9ec4+Wx1zVUgXTpu6hqA1/6fULTAxOYN
- I7zjEWmlwXhj77kPSV44g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:SmaUOMa2wqY=:J3Q+ov0I697iSUzzlwU8k4
- n2fkdanxLvUXxg1DRQBfO1KaQDV7nqJs0ewEGbGNeiCFv8Bre56c0BXLyLdGUY52Fu2W9MN0+
- INuDcLS1+Y8NHCfmAgX+6wT0iZ1iPOvSn6KjPpCQ05JY6cc3NBJkcFy2IO6GQkLIaKa8cpEkj
- 4UmHVcj/8bOubAwTPoK0GiHCIiplWXMsGUbzNcQ6SL+ZGIwc4KAxJWmnRmJxpcyJL5JOWQ/6p
- AeB94T6gmBz9Ie3MlTkJkJ2m9u+2TpPYxB5Lm5Bf58hJG2uJl6n4bTy8PxfM+t84mefahkfNp
- gTd52q48G1fJ1ZHMoq1RYaoaMsi7vvh9QQD4fBn4AErnjyv6oTdigcu/sfjf/tLiMnzk1N8ce
- n1QqeLG5jz6y1zpLmlyWbH5lKh7CEVWvstjpbH1d6zFzSaMuCIU24xA6UuASp36jh4MloVmsV
- /7EXAT5JDg0iD8X7CTL13r/vAwsaxbywowTgmD/JfAFHh33VWyKViYfXUHtz/94YCZBDu85sI
- rRVPlFBl0T/eo1KS07qm7rdhD56GRi6fpjzScKQ/0e8nmsQRGAkdR8kST9x8/x/8jcMqpMePi
- dX9b9AXJ34cs5ItpZrCRQrLXx1oYFk2wXA0ytm6qCVUJcFTZ3+zhWQnXcTPD1nJ/vu3sM6Lgh
- 465E3ToETKyIOFG64kedPfBtYlHShRYAAqJq72kThORkVXyq1CxKOPizl59BHNRIOtDbcErEg
- hUs9d5U5CBHECKtxgXwqaeN2KQKbnXRCGI5IQvkPuQNLpn728W/f4PylZ4JH5W2TtPH3PttFG
- pX62Moo5tUGA4GcCVQPuO5oYHXDrf7TVwKEKd0SoVWHMA5AgjYjXBPhhJZybWd/oUUXdrpByT
- 77tVUbU6e5y1j1EpoUSCyegWfYN+xdaDCUJZu80XWqrfJhGKIQ6wL+3rIm4CI+jjN29Kxe3F0
- gwaUIh2JUPPzEBYvdRMIW/j2ehChEPYaJn0o+jxQ0dJcR4a568oiS0A+CHBkwlWR+y/kpxT3N
- GKjg/J0ttGY+8TEdFTem7EIijM/Reu5hePtZPTLimFMxtm4PapprnQ8NudIpRUq9895N7H11o
- 57eTE4V6Yp5+PDs86J4LP/vcQanII8+hQxhc8nU9uBW3Un5UI/d+tf/KA==
+X-Provags-ID: V03:K1:s9DiZ8ktHvG8eu3P0UzD2BP/OiCsDEsHOsL7mZBHsQbxKvPgDgd
+ rTMpSeYE7dhpoAtzg9BV2qYt8pCA/bJD3FDOaf3wm0liCHO4IscLn+rMa9fucmgvEPq/iiV
+ YS5tVg2yNtt55lTp6LGA7kgFGZgCdk1Mmll08sWC2BjzxRrmagBCo7vOBKNj3v+FQQBaGhM
+ xSVD5GKBpsKQPLCBYsZkQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:YKgmAOQSPis=:g8cyhhJf8qggRObXej0LKL
+ CzSoOcqHqxNEqRrBykxV676Yd5ilu4C9S3JFjP4UNfSLI5ADC2WPlWkxjCuxpO3pY5huxzNfH
+ CG7oaq6vynwQchJaKEghbYipcU7wdtSyc3A4VBOyUTC2uxEJT2Tf8SSltzmJhDRV3ow+eZdfI
+ r4KJbT0kuEzlAgcpfBDWVGjvnsbQEAyjqwWBxeCcZiqNV62CSkNRW1+hwp8b8wQkUYOW5JcUU
+ mxIesx87dKbce2Q6/1G2R5TlyUyN24i2zqq6sWJVv0dW+i+k78+6KUBbM303RqOG4pEEjo1wi
+ n2n8k6mEOhbFZdulq85t1AS4dnfObIbP9H9/i8FkeSHHwSAcIowebnHev+CoyzGKTx0WSpOJq
+ oSGoVkqk3ctd6hyfez53q0mYdXA7QLLrATHDrXJ4icNXnHFfJv7zXUA/wpM20U6dwmVTFxfU1
+ EnXaeOR4HBsE8xhBJbTknNRqLMFbUoj+oPb8kJrg0i+1bOSEj8Z5tjPZfsnsZIY6sHRh6iggq
+ p3h8dc6tqE0yFUpxUqAKdjSSEWG11bMmz8VbUeYCdVKfEniMLp+DOaLfrSQGJiwAaVAD0GFMt
+ JzpDg9HKyBzRzmBHMBv/2MByr92F8V7zjwVoMQ5akfj1FDu+0fqErnsOJ5GkOHRjl7m+z+f/l
+ aJrFZ/GjnJt8q6mMsmkGlAXhG1/OE5ETIeviMmgI5K7iMJlmj2sTNRM1ndinnfN6W+BK7GsR4
+ wBH3s0bQDwefhOgwqBf1U4qkMyUG8jsiZPYDlcfYj0ej0WX+RtbEgWHoSs9H+0KZS/UGbBbpC
+ 8qeSvOmph7KjWBIf44zdaGXoBqCcrmZAH663G0dMby+jeuXDsJNDaiX04jd7dU5yPAvpJ0Ddl
+ zKgWYnwSRwKQHIEFGpOfsy4JBu3Go35270anykZGYZiRjYsvU6omERLp4tSX7CgTPq3oIVk9L
+ peKJ9A64v9eCpXtnnw8AM774ptMM/hIvwKWe7PhaSx3kxksbdo07szuL3js4fuXYxg6jAv75i
+ /2cpVvKunqNSpI6MSUVLujA8Tad7/PfwKMCmvA573dAH7xuV9Ebhi5X4P8jTOvctM3E+qFSMP
+ +WMe7R3LFecpDdhFa3juGxmmlAfrdSxGlGSv0entFyyjCkL6bBsMr+67Q==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Kim,
 
-On Sat, 14 Aug 2021, Junio C Hamano wrote:
+On Sun, 15 Aug 2021, Kim Altintop wrote:
 
-> "Azeem Bande-Ali via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> On Sat, 14 Aug 2021 Johannes Schindelin wrote:
 >
-> > @@ -618,7 +628,17 @@ const char *help_unknown_cmd(const char *cmd)
-> >  				   _("Continuing under the assumption that "
-> >  				     "you meant '%s'."),
-> >  				   assumed);
-> > -		else {
-> > +		else if (autocorrect =3D=3D AUTOCORRECT_PROMPT) {
-> > +			char* answer;
+> > My only comment is that I would find the diff to `upload-pack.c` much
+> > easier to parse if the `arg` variable hadn't been renamed.
 >
-> Some people seem to make an asterisk stick to types like this, but
-> in our codebase written in C, an asterisk sticks to the identifier
-> that it makes into a pointer, i.e.
->
-> 			char *answer;
->
-> This is because doing so differently would confuse novices with
-> constructs like this:
->
-> 			int* a, b;
->
-> where only 'a' is a pointer, and 'b' is not.
->
-> > +			struct strbuf msg =3D STRBUF_INIT;
-> > +			strbuf_addf(&msg, _("Run '%s' instead? (y/N)"),
-> > +				    assumed);
->
-> I think these should be kept on a single line for readability, i.e.
->
-> 			strbuf_addf(&msg, _("Run '%s' instead? (y/N)"), assumed);
+> Can you explain why?
 
-It might even make sense to use the `xstrfmt()` function instead:
+Yes. I prefer patches to be really obvious. That way, it is really easy to
+spot bugs.
 
-			char *msg =3D xstrfmt(_("Run '%s' instead? (y/N)"), assumed);
-			[...]
-			free(msg);
+In this instance, the same patch that introduces a conditional block
+_also_ renames an involved variable.
+
+To satisfy myself that the patch does what is intended, I therefore have
+to virtually split the patch into the rename part and the
+added-conditional-block part.
+
+It would be easier for me if the modifications were presented as two
+separate patches. And I could imagine that I am not alone in this: you
+yourself might also have an easier time looking at the commits in six
+months from now if those concerns are separated into their own commit.
+
+> Just because the diff would be smaller? I can see that in a larger patch
+> it might have been preferable to put the rename into a separate commit,
+> but in a hunk-sized change it seemed fine. It is also that this
+> particular naming ("refname_nons") is used in other places in
+> upload-pack.c, so it seemed obvious that, if I introduce namespace
+> handling where it was previously missing, the terminology (if you will)
+> should be the same.
+>
+> From you comment, it seems like the proposer of a patch should assume
+> that the reviewers only look at the diff as sent in the email, and not
+> any context. Junio's response suggests something else, but I guess it's
+> fair that if someone feels like they got CC'ed by mistake, they're not
+> going to spend too much time.
+
+In this instance, I indeed did not spend more time than on reviewing the
+patch, simply because I am (currently, at least) not all that familiar
+with the `upload-pack.c` machinery. I probably touched it in the past, but
+for the moment, all I can comment on is the shape of the patch series,
+which is what I did.
+
+> So my question from above stands: are there better ways to find the
+> right people to CC, especially for newbies?
+
+When I look for reviewers in projects other than the ones where I know the
+usual reviewers' special areas of interest, I like to pick a function at
+the center of my contribution, then look at `git log -L
+:<function>:<file>` and try to figure out who was the last person to
+implement non-stylistic changes on that function. This has worked
+relatively well for me, in the past. Maybe it can help you here, too?
 
 Ciao,
 Dscho
