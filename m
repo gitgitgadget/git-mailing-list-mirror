@@ -2,179 +2,228 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3977C4338F
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 12:43:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C649FC4338F
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 12:46:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2C7E63272
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 12:43:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A90AD63276
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 12:46:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231642AbhHPMnQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 08:43:16 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:51539 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233824AbhHPMmn (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 16 Aug 2021 08:42:43 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id C91C85C00FD
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 08:42:05 -0400 (EDT)
-Received: from imap38 ([10.202.2.88])
-  by compute1.internal (MEProxy); Mon, 16 Aug 2021 08:42:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hurrell.net; h=
-        mime-version:message-id:date:from:to:subject:content-type; s=
-        fm3; bh=esXKDN6/zzdXkzhN3Q9bc7flBwrMLHmTMi052A/u8fM=; b=BQ7FIQd5
-        PhVWNF0bPGVnYH1Cp04vKUPXJ+OlmmnZ17vKiljxuKAe+8zo58gX8+I5TUrFamGf
-        iOAc7N7f0rqsTkh57ObDH1juCLk4OsLdOQVc4sR9cR5lPKKGawLYe+oeJnSV5fVG
-        lvKI6BX2yrdCqMX9XLE+u0Ja7DZVBv6+IEfpnkaMlufz8ngwrgvkGo3hnyHDiNpM
-        Im1s4WEkLeD+ZNU0210/+2ha2futd4FePl3uON82dVfELKsADlM3gVham61f1DDy
-        GxUjCBqYj8Aip8h2rzqjcg7bPBVzXMADnizdg2yyEGUEdAvaWxtXpXljzAcMoFCq
-        YEQWPCicJNo9rw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-type:date:from:message-id
-        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm3; bh=esXKDN6/zzdXkzhN3Q9bc7flBwrML
-        HmTMi052A/u8fM=; b=ZZhoLO4fmrCH8iXvLl69XMJEM0ZZH3R6UMk41wJMymCaK
-        Tu/FTBhRUq8tFmuBg4gnYPr/blWtRF+1RfxGX5TgIlkT32ST/aHlCfgvYuq069st
-        cQfQD4IynO0do+Q94a41X+nxkMA3d5+sSIVnSWOMzZQr95f6IjXWJe+PH7Bs9zca
-        jOFqNGcTZrRUSpLouItT620X1KCt5GSfi3/xhTO5H6w2Lih6ReVk2KcPZLrPa1ht
-        sVe9UeMbmS7SiLVHlWyVngXXQ5V8j9PdV7bn9iekURkk5T867PJ0tYFyRf8/h6NB
-        6IiulW6+QrhlXs+nE1aTS/pzW3xQslDUIUiLuivxQ==
-X-ME-Sender: <xms:HV0aYXEwnD2q1xaSp1Z5QwKD4YaY36b0dTcg2T8Lqe_ZLIVJGtgY1A>
-    <xme:HV0aYUVCKH1tpz16wcD2LeHvx5YK3mIaioAbpiBWJ55bB9Hjgok8v0-2yPZE0rgL5
-    b7xoE44XG965ycCGxU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrledugdehgecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecuogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenuc
-    fjughrpefofgggkfffhffvufgtsehttdertderredtnecuhfhrohhmpedfifhrvghgucfj
-    uhhrrhgvlhhlfdcuoehgrhgvgheshhhurhhrvghllhdrnhgvtheqnecuggftrfgrthhtvg
-    hrnhepveeiveeivdduteefueejffeludefteejkefhtddtkeevieegffdvudelffeuvdeh
-    necuffhomhgrihhnpehgihhtrdhiohenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgrhgvgheshhhurhhrvghllhdrnhgvth
-X-ME-Proxy: <xmx:HV0aYZKNqloBHS-VC-TRDvURy8h54sw_vaHtvmsdCcKDTVsioWZ-Ng>
-    <xmx:HV0aYVHfSjm43eIb5EM_swwqiHf3XeodG1oEy4eYex5ENzlkyckLQA>
-    <xmx:HV0aYdWfcwI7wJVqG_Y1hnw6VFiQdGceYqcl_Sj5s9RGkWfOdw_ADg>
-    <xmx:HV0aYVjY3a6rnewQZziKdaczz7-eZRg5lPUzOYZJTllhLlCJBysi2A>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 61F8ECA0061; Mon, 16 Aug 2021 08:42:05 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-1118-g75eff666e5-fm-20210816.002-g75eff666
-Mime-Version: 1.0
-Message-Id: <4e0eff48-4a3e-4f0e-9ed2-d01ec38442a5@www.fastmail.com>
-Date:   Mon, 16 Aug 2021 14:40:27 +0200
-From:   "Greg Hurrell" <greg@hurrell.net>
-To:     git@vger.kernel.org
-Subject: Bad behavior in xhistogram.c in the face of hash collisions?
-Content-Type: text/plain
+        id S235226AbhHPMqb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 08:46:31 -0400
+Received: from mout.gmx.net ([212.227.17.22]:49473 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229972AbhHPMqa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 08:46:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1629117957;
+        bh=e5mkZ5ycjdvURtoAJ7mdzlrCCtLwqzpvpVf9cbBHroM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=QeHtezxkdHhS8EmkgzW4ehu5Kte36fkTiQkSk/ElQ5MbcAGggfCEVAqc/T5lmx8U1
+         yAb2F+EqaUHS+OMqdliarMuHnt3VBzJMcnOwFkTuy0iWe3yglsPzokaTPsU018TQT1
+         dQBIq/5gNNLd2DBdBZH7fL0z1mJWpAAo9xFHkTic=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.86.215] ([213.196.213.229]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEFzx-1mPokS2nUj-00AFGi; Mon, 16
+ Aug 2021 14:45:57 +0200
+Date:   Mon, 16 Aug 2021 14:45:56 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Gerhard Buch <Gerhard.Buch@web.de>
+cc:     git@vger.kernel.org
+Subject: Re: Aw: Re: Git GUI does not start
+In-Reply-To: <trinity-37fd48fb-6205-4e1c-8a76-d2eab6a3dc26-1629093923606@3c-app-webde-bap47>
+Message-ID: <nycvar.QRO.7.76.6.2108161443390.55@tvgsbejvaqbjf.bet>
+References: <trinity-37fd48fb-6205-4e1c-8a76-d2eab6a3dc26-1629093923606@3c-app-webde-bap47>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-359410723-1629117957=:55"
+X-Provags-ID: V03:K1:gXVWa7qW/JhhqabrKjio2TVKd9rSsVNEkZX4M/Vm3VXckgFvwmN
+ D43DagnbEqnJu70ST5uBwAN7YO8BzbxhgUxX5ZGnAqjhG8bj8oIfd3lDZFJsu5BD9iBxMoW
+ 36z90/sicHEvYiyuW9C5EyUVR4KD5lrQ9nQejogkpycTiHoLuVHEMUhNGzlD19TMhOUEZ5Y
+ LsuTAHY9BHTNI7p5q3H3g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:gDBZ9CtYrfU=:1tG0q+Nbr/pNqJiObLwHU0
+ /cfdrxCGkHFyBrz9JBRvSNMxfx9kkj8izh/VeelHoKeLFCeYzsiAh+aKmKoFSOHx//1/+Hx10
+ fNAZMA7orBatGmNxaM0x3ngwMVteRFis9/ZV70UEOkgKzMRh1kAL/GQefwrZXw8mMTLGMH43A
+ +qW44DUJn52tJbCVb/T4YRV7A4ZkQ+AfShD1DmRgDLog+6YQ6CNs2JtswTroncABZtUZKBMv7
+ 3UEucUpTU9sXaJvl0MDgNN2YcfOsk4cHdivxzz98dOldG1v1sRiLP8gj5Jyce4Sp4OkGBp688
+ lCyN6WjEUnXqRo1F7wIpGWMKe4Hp2lgdBqAuq++BMuepVleOv71DhBUnMCROdXWqU7IhupvVc
+ wPr4hEtNTThk0FH5eexbE01EE6UByVFVO78GSW1QuH9CsA2LR2Aez7xqvaf8570I0iRsiofRc
+ rGEVOeFDMHtOUOyQ8msEbbhJfeSptl1eDKQOAzQhDuDwQ6qAj1JshSZzYSSopJspM76uGGaSG
+ 9QAou6LkyNf7QO7NvWs9KHg/c4JiNpKuqpV6RKge8Yi6RN5kaBFG8dWqlBMoVAyk8d4iX2H43
+ T/uDFtoD+zdU22o8pBoBGagwz6LuJ3BQdu64XiDokeDawo1sBCfFHEOhKrVEdFG3f+mLmXZBw
+ Rikzh1TeZgtrvHc0cI08j4HG4AXu+03uMJ4MASRpqp6ATflfDomA/wrIdesU8PdApu6ClUQzU
+ /DPqj05LfWrwBZ4Dp1c14JX9zH156EytmlKMj3jridNuIvrW4hXdJOj1Na6qmoWdxt1Ei3MWq
+ Hj9YGg9uP92ehAJc/Nk2VbE67A0Ik2IYvNTunYA5Gg5Yk9YOwPg2+VDQ9HlSPoaA4iqLAQNKR
+ M6FomZy2UG3295QHyjbrPrXSFZXTsHZ7o5GhMegEzq3imPsR6TEEKgQx5V/yadiZDJQlmfCQO
+ X6zq4fFq0tKqhBH/S0b/PTE8VVzEACJq/ruwI6QllqO94mLZLqUc6fljaIriW5uiDoD0GRd/h
+ bHeu0Nxh1jWXxJF80M0kt4viVdoGM0zVfPNudyf2Jtwy7wHPyy64EZLsloK4dC8ohpe14BJxz
+ 9ZvgIKbbFMGC8+ed3W8Sll+Cl1PzRNGdfDZNkq+qxEzMTchXfGQO8wVpw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I think I may have found a bug in the histogram diff algorithm that
-manifests when there is a hash collision.  This behavior seems to exist
-in the JGit implimentation (https://git.io/J0Ud8) too, and was brought
-across with the port-to-C in 8c912eea94a2.
+--8323328-359410723-1629117957=:55
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-In the following, any line numbers refer to xdiff/xhistogram.c as it
-exists in 5d213e46bb (2.33-rc2), as seen here: https://git.io/J0UHS
+Hi Gerhard,
 
-There are two phases in the algorithm which look up slots in the
-histogram hash table based on the value of a hash function:
+On Mon, 16 Aug 2021, Gerhard Buch wrote:
 
-1. During the backwards scan in `scanA`, each line in the old sequence
-   is considered and hashes are used to assign items to histogram
-   buckets.
-2. During the forwards scan of the new sequence we call `try_lcs` with
-   each line in turn and look up the corresponding histogram bucket.
+> thanks for looking into the topic. Here is the information requested and=
+ results of the test with Git V2.30.2:
+> =C2=A0
+> The problem described could be reproduced with a Notebook with Windows
+> 10 Enterprise (1809, Build 17763.1879) and also with a Citrix
+> Installation with Build 19042.1083. But - as we'll see later, this will
+> be of minor relevance.
+> =C2=A0
+> So, this morning after booting both systems, I checked again the
+> behaviour with Git V2.32 and found the problem as described in the big
+> report.
+> =C2=A0
+> Then I downloaded Git V2.30.2 Portable and could open the repository
+> successfully with Git-gui.
+> =C2=A0
+> After this I tried again with Git-gui V2.32 and could then also open the
+> repository successfully on the Notebook as well as on Citrix.
+> =C2=A0
+> Conclusion: the problem is not on the Git-gui itself, but more on the
+> repository. There seems to be a migration issue when opening a
+> repository with V2.28 formatting with V2.32. Looks like the migration is
+> done automatically from V2.28 to V2.30 to V2.32, but not from V2.28 to
+> V2.32.
 
-Now, the original JGit code comments suggests the intended behavior and
-purpose of the buckets is as follows:
+There is not actually any migration being performed.
 
-> To prevent the algorithm from having an O(N^2) running time, an upper
-> limit on the number of unique elements in a histogram bucket is
-> configured by `setMaxChainLength(int)`. If sequence A has more than
-> this many elements that hash into the same hash bucket, the algorithm
-> passes the region to `setFallbackAlgorithm(DiffAlgorithm)`. If no
-> fallback algorithm is configured, the region is emitted as a replace
-> edit.
+My best guess is that your repository's shape might have been suboptimal,
+and that a warm cache helped.
 
-But when I look at both the JGit and Git implementations, this is what I
-actually see:
+If this is the case, you might want to register regular Git maintenance on
+it, so that future Git GUI starts won't be so slow as to appear to hang:
+`git maintenance start`.
 
-During the backwards scan we select a hash table bucket (at line 115)
-based on the value of the item:
+> I believe you will know whom to contact with this finding.
 
-    tbl_idx = TABLE_HASH(index, 1, ptr);
+You already did: the Git mailing list ;-)
 
-If there is a chain in the corresponding bucket and the values match
-(ie. hash to the same hash code and are equal) we prepend to the front
-of the chain (lines 121-133).
+Ciao,
+Johannes
 
-In the event of a hash collision, we proceed to the next item in the
-chain (line 135):
+> =C2=A0
+> So my problem is solved - thank you for your help-
+> =C2=A0
+> best regards
+> =C2=A0
+> Gerhard
+> =C2=A0
+> =C2=A0
+> =C2=A0
+> > Gesendet: Sonntag, 15. August 2021 um 00:11 Uhr
+> > Von: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+> > An: "Gerhard Buch" <Gerhard.Buch@web.de>
+> > Cc: git@vger.kernel.org
+> > Betreff: Re: Git GUI does not start
+> >
+> > Hi Gerhard,
+> >=C2=A0
+> > On Wed, 11 Aug 2021, Gerhard Buch wrote:
+> >=C2=A0
+> > > Git GUI does not start any more and I'd like to share the bugreport
+> > > below.
+> >=C2=A0
+> > Since bug reports easily get lost on the mailing list, I have a prefer=
+ence
+> > for Git for Windows reports to be opened at
+> > https://github.com/git-for-windows/git/issues/new. That method also
+> > provides a more helpful bug report template.
+> >=C2=A0
+> > I have to admit that I am somewhat surprised by your bug report becaus=
+e I
+> > specifically verify that Git GUI starts whenever releasing a new Git f=
+or
+> > Windows version.
+> >=C2=A0
+> > > Any idea how I can get diagnostic information to find die
+> > > problem?
+> >=C2=A0
+> > Since you reported this for your Windows setup, it would be good to kn=
+ow
+> > what your Windows version is.
+> >=C2=A0
+> > Having said that, the most obvious difference between v2.28.0 and
+> > v2.32.0(2) with regards to Git GUI is that Tcl/Tk was upgraded from
+> > v8.6.10 to v8.6.11.
+> >=C2=A0
+> > If you could test with v2.30.0 (which still has the old Tcl/Tk) and wi=
+th
+> > v2.30.1 (which has the new one), that could help pinpoint the issue.
+> >=C2=A0
+> > Ciao,
+> > Johannes
+> >=C2=A0
+> > >
+> > > best regards
+> > >
+> > > Gerhard
+> > >
+> > >
+> > > --------------------------------------------
+> > > What did you do before the bug happened? (Steps to reproduce your is=
+sue)
+> > > Open Git GUI -> choose open existing projekt
+> > > It worked with the previsous version 2.28 before. Before posting the=
+ bugreport I updated to the most recent version to be at the latest versio=
+n.
+> > >
+> > > What did you expect to happen? (Expected behavior)
+> > > That Git GUI opens...
+> > >
+> > > What happened instead? (Actual behavior)
+> > > Git GUI icon appears in task bar, but not the usual Git GUI window.
+> > > On left click on the task bar icon, the top entry says Wish Applicat=
+ion. On choosing this entry two Windows appear.
+> > > One is empty. The second is titled "Konsole" and has (System32) 1% i=
+n the field below the menu bar.
+> > > What's different between what you expected and what actually happene=
+d?
+> > > Git Gui does not start and there is no indication on possible reason=
+s for this.
+> > >
+> > > Anything else you want to add:
+> > > I've checked the project directory with git cmd:
+> > > git status:
+> > > On branch <branch name>
+> > > nothing to commit, working tree clean
+> > >
+> > >
+> > > [System Info]
+> > > git version:
+> > > git version 2.32.0.windows.2
+> > > cpu: x86_64
+> > > built from commit: 3d45ac813c4adf97fe3733c1f763ab6617d5add5
+> > > sizeof-long: 4
+> > > sizeof-size_t: 8
+> > > shell-path: /bin/sh
+> > > feature: fsmonitor--daemon
+> > > uname: Windows 10.0 17763
+> > > compiler info: gnuc: 10.3
+> > > libc info: no libc information available
+> > > $SHELL (typically, interactive shell): <unset>
+> > > [Enabled Hooks]
+> > >
+> > >
+> >=C2=A0
+>
+>
 
-    rec = rec->next;
-
-and check for a match. By definition, this check is always going
-to fail, because only identical elements ever get prepended onto
-chains. So this chain traversal serves only to measure the count of
-items in the chain, something that we could have done in constant time
-by looking up `rec->cnt` anyway.
-
-After reaching the end of the chain and exiting the loop, provided we
-didn't exceed the maximum chain length, we now create a new chain,
-overwriting the original occupant of the slot:
-
-    *rec_chain = rec;
-
-So, during `scanA` we'll effectively destroy chains whenever there is a
-hash collision, which doesn't seem to be the intent of the original
-algorithm.
-
-In the second half of the algorithm, `try_lcs`, we have the inverse
-problem. On line 165 we again look up the hash table slot:
-
-    struct record *rec = index->records[TABLE_HASH(index, 2, b_ptr)];
-
-On line 169 we start a loop that will consider each record in the chain:
-
-    for (; rec; rec = rec->next) {
-
-Due to the construction of `scanA`, we know that every item in this
-chain must be identical, which in turn means that in the event of a hash
-collision we are doomed to traverse the entire chain without finding a
-match:
-
-    if (!CMP(index, 1, as, 2, b_ptr))
-           continue;
-
-That is at best unnecessary work, but also means that whenever we have
-collisions we will have a set of "orphaned" records that aren't actually
-reachable from any chain in a hash table slot that we will look up, and
-that doesn't seem to match the intended behavior of the algorithm, if I
-understand it correctly.
-
-Is this a big deal in practice? I suspect the reason we haven't noticed
-it is that:
-
-1.  Hash collisions are sufficiently rare (although, via the birthday
-    paradox, not _that_ rare, especially because we use the next power
-    of two to determine the number of slots in our hash table; ie. a
-    200-line file would have a 256-slot hash-table associated with it);
-    and:
-2.  Their consequences tend not to produce obviously broken diffs,
-    because the algorithm is just used to select split points around
-    which to apply itself recursively; we still produce a valid diff
-    even if we don't select the "optimal" split point.
-
-Anyway, I just wanted to gut-check this analysis with the list to see
-whether it sounds right or not. The bug is pretty benign as far as I can
-tell, but still probably worth fixing, if it is a bug.
-
-Cheers,
-Greg
+--8323328-359410723-1629117957=:55--
