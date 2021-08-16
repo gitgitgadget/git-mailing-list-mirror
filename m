@@ -2,118 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF934C4338F
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 14:01:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F09BDC4338F
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 14:32:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B19446113D
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 14:01:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C335460F58
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 14:32:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236476AbhHPOCP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 10:02:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57716 "EHLO
+        id S231445AbhHPOd2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 10:33:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231925AbhHPOBG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 10:01:06 -0400
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE06FC0613A4
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 07:00:34 -0700 (PDT)
-Received: by mail-il1-x129.google.com with SMTP id y3so18652799ilm.6
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 07:00:34 -0700 (PDT)
+        with ESMTP id S229880AbhHPOd2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 10:33:28 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 269B3C061764
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 07:32:56 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id x7so27522948ljn.10
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 07:32:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=TFrTmHpsciDFuT7Oi7tX87e+kqehukqqE0XM6d8smjY=;
-        b=Yl08qLw/5Z37rBdHgW3jBXylr8Df+mJrEE5skIfvHu/05J2EmgG41//XgY1S4Uji8W
-         2vrwoSsmFXnbehWcsKOFm0s6UuwqHH0OGtjB31nqISV78JOYryFYtF3T8JbT/c/l1Pwj
-         EjVKCZoA72Vp0R5dLXddR3wcBi303jnaMaGOkPhYhwQ2WrCKUwLxgCZbkBZ2mo+fYzlu
-         Qoz2UpBdYaDo6oK+9bL6msDqFkm8QuwLngNKvjJpR5Z8BQr3uOFIAXfc5VMyfxwpaX1D
-         F5Z421L6k6SFgwLbdTI+1bkwwDz8MYBfLoIKeqn0kymKYdHFEEIuWJgAP5wraimx0ClJ
-         XySQ==
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Ud9L98uopeXmITveoPDd3hIZZ4u4aXGFVOcbCOqv8hw=;
+        b=htK8pLdInEdOV2l27+5A8jkh9+hnvypQjjn7xh6zwc4Gi39IdvRMimhlyRA2fjqozc
+         nU2UznMryF3s8c4cHti5NPPsYjjw304zzLsmdeqNVgadnJN4rkDAZdEupBkmj0+jiJVM
+         sau7O0pBdTviWnw6X20lTq76kbUaVHhQcWW+fL1yXbeBK4AV4Xm7ASx7G1nQxZSxFo7e
+         UryYDsDi8BsTZ6/NXLr2scq1pevPZnocG4/S7i7RBCjUHcFej6Sd6vmmnZmOYRDU7My9
+         /zruZllTq/6aut1JJi3rnipwfjGUiVYCTy6NWgHyYLsW8QuN49Kj0CtSgPM5yVlaFoCu
+         avhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=TFrTmHpsciDFuT7Oi7tX87e+kqehukqqE0XM6d8smjY=;
-        b=SY2gZwnd3WW2ppmyy/8xEocwUuGJNyIeGCzAZqF1nblPCbPHZNUCrF1ZJDz6TmA16h
-         Z2/1DUbX9tbkqqtWLoWe11StzujnT7PMu4fajCf1vWTaZzTn564GFYGLad6wK6uMJKyI
-         iytTT8CZdRl31JYnfqanovoUMMhFx5dL1nOFcoqDJEFgjJkJYpW1M9ytit722tWYvg3P
-         VqSaX6d7Aq4XFS3UdGor2OgVyT/P2wuJOgjfjoQ9RIxkiQiTrgVIpI0PwyQGLK7M+V8S
-         jIbazR1oHDFSMvTalT9pGM+l50pFdxq9pDhSZrjLqA8iB3PdBeqeRFP8W4+uTRGn+BDs
-         avpA==
-X-Gm-Message-State: AOAM533peOwfHp2ZwBwM56Gv5exG/tiIMugVkmHR3MJ69v1Pzjzhv68a
-        UfiSpVifeikQqs1lgTQog1DfAXXojRWeiGi+J5yW/vPbUHHTaHDG
-X-Google-Smtp-Source: ABdhPJwGu82klNIro3DMePsgloJAlRaHHk3iQky3CX9BiwB5UJO7BDlV5pqUfR+Nd/ZphMoYNd4ajmoyEgJxEBhijqs=
-X-Received: by 2002:a05:6e02:1ca8:: with SMTP id x8mr11403592ill.259.1629122434113;
- Mon, 16 Aug 2021 07:00:34 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Ud9L98uopeXmITveoPDd3hIZZ4u4aXGFVOcbCOqv8hw=;
+        b=E31xf7vO+46+ogI9V1pt/iCWtt5MLcEv4OoQXPpD2aGbDMdaKilgby3NRPZQiqh2iB
+         ymmXvV/wIQcJ/ZJfom4R38qyQux8MsngRjaG/bP+p7HLz7BRLlIreuLLJf3Tj8nTFtNl
+         unF9ofcA1A2U3ELmo6l+E1H+sd84GJ2M7GyY0DfPmWT0X2ObJ2gYzL2Qcn0ecyQF35TE
+         P1tyqJNuAtUfBHjWOpmJsT4F6a4Oqj6K5gzDfH4eBf9LFQTA6DhzZEQGaqYrk0ZpnduK
+         QzZCHOwxD+cMkMs7cY3uBdnprP3C7XOfizHPPs8CPnlvKEln8AXGTzHQc748lFu3/AbN
+         rqpg==
+X-Gm-Message-State: AOAM531bBFAffuZIe981r7B8qQ35Ir0lf5Gt4xXNfPzNVeqQjH0ECtB3
+        EUPVqg5+O52Ep0DJJt/uL5y/Kx688fclQuemJUMbRg==
+X-Google-Smtp-Source: ABdhPJyvw5EDNBBqFMk9IKpTbXzREVjMH2GgCWxDi796Bj1a4gjW9KAR7eWf0u5Kedt0YWoHh62MZlnsWgiJJlbQWOE=
+X-Received: by 2002:a2e:b894:: with SMTP id r20mr2667912ljp.291.1629124374443;
+ Mon, 16 Aug 2021 07:32:54 -0700 (PDT)
 MIME-Version: 1.0
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Mon, 16 Aug 2021 22:00:22 +0800
-Message-ID: <CAOLTT8TJ_VBh8mreExXHdCFb1e6hB1-Exsn6OFdo2sZNkVFJkA@mail.gmail.com>
-Subject: [GSOC] [QUESTION] ref-filter: can %(raw) implement reuse oi.content?
-To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Hariom verma <hariom18599@gmail.com>
+References: <cover.1628618950.git.jonathantanmy@google.com>
+ <cover.1628888668.git.jonathantanmy@google.com> <94db10a4e5943d689113693c64633ddffa5508cc.1628888668.git.jonathantanmy@google.com>
+In-Reply-To: <94db10a4e5943d689113693c64633ddffa5508cc.1628888668.git.jonathantanmy@google.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Mon, 16 Aug 2021 11:32:43 -0300
+Message-ID: <CAHd-oW7nv-Y_QmhA2gcX5GoWxus88inmbcXQ5kPiSRLBdhtoUw@mail.gmail.com>
+Subject: Re: [PATCH v2 7/8] submodule-config: pass repo upon blob config read
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git <git@vger.kernel.org>, Emily Shaffer <emilyshaffer@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>, steadmon@google.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Fri, Aug 13, 2021 at 6:05 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+>
+> When reading the config of a submodule, if reading from a blob, read
+> using an explicitly specified repository instead of by adding the
+> submodule's ODB as an alternate and then reading an object from
+> the_repository.
 
-In the implementation of %(raw) atom
-(bd0708c7 ref-filter: add %(raw) atom), we use xmemdupz()
-to copy the content of the object. But if we can reuse the content
-of the object?
+Great!
 
-Since git cat-file --batch needs to use ref-filter
-as the backend, if the object buffer can be reused correctly here,
-we can save a lot of copies and improve its performance by about 6%.
+At first, I thought this would also allow us to remove another
+NEEDSWORK comment in grep_submodule(), together with a lock
+protection:
 
-Tracing back to the source, the object buffer is allocated from
-oid_object_info_extended(), but in parse_object_buffer() we may lose
-the ownership of the buffer (maybe the buffer is eaten), but I browsed the
-source code of for-each-ref.c or cat-file.c, and I don=E2=80=99t seem to fi=
-nd that the
-buffers which have been eaten are released by the program.
+/*
+ * NEEDSWORK: repo_read_gitmodules() might call
+ * add_to_alternates_memory() via config_from_gitmodules(). This
+ * operation causes a race condition with concurrent object readings
+ * performed by the worker threads. That's why we need obj_read_lock()
+ * here. It should be removed once it's no longer necessary to add the
+ * subrepo's odbs to the in-memory alternates list.
+ */
+obj_read_lock();
+repo_read_gitmodules(subrepo, 0);
 
-So can we reuse it?
+Back when I wrote this comment, my conclusion was that the alternates
+mechanics were the only thread-unsafe object-reading operations in
+repo_read_gitmodules()'s call chains. So once the add-to-alternates
+mechanics were gone, we could also remove the lock.
 
-This is what I want to do:
+But with further inspection now, I see that this is not really the
+case. For example, we have a few global variables in packfile.c
+collecting some statistics (pack_mmap_calls, pack_open_windows, etc.)
+which are updated on obj readings from both the_repository *and*
+submodules. So I no longer think its safe to remove the
+obj_read_lock() protection here, as the NEEDSWORK comment suggests,
+even if we are not using the alternates list anymore.
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 93ce2a6ef2..1f6c1daabd 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1443,7 +1443,7 @@ static void grab_sub_body_contents(struct
-atom_value *val, int deref, struct exp
-                        unsigned long buf_size =3D data->size;
+Do you want to remove this comment in your patchset? I can also send a
+follow-up patch explaining this situation and removing the comment
+(but not the locking), if you prefer.
 
-                        if (atom->u.raw_data.option =3D=3D RAW_BARE) {
--                               v->s =3D xmemdupz(buf, buf_size);
-+                               v->s =3D buf;
-                                v->s_size =3D buf_size;
-                        } else if (atom->u.raw_data.option =3D=3D RAW_LENGT=
-H) {
-                                v->s =3D xstrfmt("%"PRIuMAX, (uintmax_t)buf=
-_size);
-@@ -1768,8 +1768,6 @@ static int get_object(struct ref_array_item
-*ref, int deref, struct object **obj
-        }
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+[...]
+> diff --git a/submodule-config.c b/submodule-config.c
+> index 2026120fb3..f95344028b 100644
+> --- a/submodule-config.c
+> +++ b/submodule-config.c
+> @@ -649,9 +649,10 @@ static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void
+>                         config_source.file = file;
+>                 } else if (repo_get_oid(repo, GITMODULES_INDEX, &oid) >= 0 ||
+>                            repo_get_oid(repo, GITMODULES_HEAD, &oid) >= 0) {
+> +                       config_source.repo = repo;
+>                         config_source.blob = oidstr = xstrdup(oid_to_hex(&oid));
+>                         if (repo != the_repository)
+> -                               add_to_alternates_memory(repo->objects->odb->path);
+> +                               add_submodule_odb_by_path(repo->objects->odb->path);
 
-        grab_common_values(ref->value, deref, oi);
--       if (!eaten)
--               free(oi->content);
-        return 0;
- }
+Ok. Like in grep_submodule(), this should no longer add the submodule
+ODB to the alternates list, so this call is now mostly used as a
+fallback and also for testing.
 
-Thanks.
---
-ZheNing Hu
+To see if we are indeed testing this add-to-alternates case, I
+reverted the change that made the code read from the submodule instead
+of the_repository:
+
+diff --git a/config.c b/config.c
+index a85c12e6cc..cd37a9dcd9 100644
+--- a/config.c
++++ b/config.c
+@@ -1805,7 +1805,7 @@ int git_config_from_blob_oid(config_fn_t fn,
+        unsigned long size;
+        int ret;
+
+-       buf = repo_read_object_file(repo, oid, &type, &size);
++       buf = read_object_file(oid, &type, &size);
+
+Then, I ran t7814-grep-recurse-submodules.sh , where you've added the
+GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1 envvar. This correctly
+produced the following error:
+
+BUG: submodule.c:205: register_all_submodule_odb_as_alternates() called
+[...]
+not ok 23 - grep --recurse-submodules with submodules without
+.gitmodules in the working tree
+
+Nice! So the change made by this patch is covered by test 23. I think
+it would be nice to mention that in this patch's message.
