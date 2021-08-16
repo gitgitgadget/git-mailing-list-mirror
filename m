@@ -2,118 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50EAFC4338F
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 16:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7DBEC4338F
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 16:51:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 300E260F38
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 16:37:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE8EB604DC
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 16:51:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229811AbhHPQhd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 12:37:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48558 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229742AbhHPQhc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 12:37:32 -0400
-Received: (qmail 20359 invoked by uid 109); 16 Aug 2021 16:37:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 16 Aug 2021 16:37:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15931 invoked by uid 111); 16 Aug 2021 16:37:00 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 16 Aug 2021 12:37:00 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 16 Aug 2021 12:36:59 -0400
-From:   Jeff King <peff@peff.net>
-To:     jim.cromie@gmail.com
-Cc:     git@vger.kernel.org
-Subject: Re: git format-patch -s enhancement
-Message-ID: <YRqUK3cRFJmANzDd@coredump.intra.peff.net>
-References: <CAJfuBxxT_7weC8_O=KYScSbDcSeBdb3v5d_gtn-NXzW_fKLrsA@mail.gmail.com>
+        id S230091AbhHPQvl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 12:51:41 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58601 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229587AbhHPQvk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 12:51:40 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 36BB9F3DDC;
+        Mon, 16 Aug 2021 12:51:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Som3DsWgMvz5U1WfbxNlQV3ijxDVImc+QsPay6
+        D/brE=; b=T0UQn7Sjsug0HsTf1mt+bxM8ebLF5PCYqpjAL+NKGOCiZkBgW5Gieh
+        nl41hZgokqkc1082WBJQ9eD2FimPFA2iexiXg0LNQcDmSsoDks6SeWOD1oU5CmBF
+        FFh3j70YFFnjh4VTtTjBGVcLm/BC/1ox/Gt/vem3mRAhC8kgNC4Kk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C636F3DDB;
+        Mon, 16 Aug 2021 12:51:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7B3D1F3DDA;
+        Mon, 16 Aug 2021 12:51:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Ben Goldberg <ben@benaaron.dev>, git@vger.kernel.org
+Subject: Re: send-email issue
+References: <24a88faf-5339-8449-80c4-f6085bd1e098@benaaron.dev>
+        <b4b1dda4-6bf7-f4b1-88c5-9d579a7c56d3@benaaron.dev>
+        <20210813180056.ctzivmakj4bj5apa@nitro.local>
+        <xmqq35rbtx84.fsf@gitster.g>
+        <20210816131143.6ifcbpxp6ilo2nv5@nitro.local>
+        <YRqQJTyBW6j6b2pW@coredump.intra.peff.net>
+Date:   Mon, 16 Aug 2021 09:51:06 -0700
+In-Reply-To: <YRqQJTyBW6j6b2pW@coredump.intra.peff.net> (Jeff King's message
+        of "Mon, 16 Aug 2021 12:19:49 -0400")
+Message-ID: <xmqq4kbps58l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAJfuBxxT_7weC8_O=KYScSbDcSeBdb3v5d_gtn-NXzW_fKLrsA@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 26E8111E-FEB2-11EB-AC95-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 15, 2021 at 05:07:34PM -0600, jim.cromie@gmail.com wrote:
+Jeff King <peff@peff.net> writes:
 
-> git format-patch -s is sub-optimal :
-> it appends the SoB,
-> which falls after the snips
-> ---
-> changelog ...
-> that the commit message may contain
-> 
-> 
-> So it misfires on any maintainer scripts
-> expecting the SoB above the 1st snip.
-> 
-> The workaround is manual SoBs above any snips.
-> 
-> I note this in -s doc,
-> 
->            Add a Signed-off-by trailer to the commit message, using
-> the committer identity of yourself.
->            See the signoff option in git-commit(1) for more information.
-> 
-> "trailer" is really "document current working behavior"
-> (normative docu-speak, so to speak;)
-> 
-> Ideal behavior is to find 1st in-body  --- snip
-> and insert there
+> On Mon, Aug 16, 2021 at 09:11:43AM -0400, Konstantin Ryabitsev wrote:
+>
+>> > I do not think it is feasible to immediately rename the two choices
+>> > to SSL/TLS vs StartTLS without transition period, but the first
+>> > patch in the three-patch series there to update the documentation
+>> > alone may have helped this case.
+>> > 
+>> > We may also want to error out when seeing an unknown option other
+>> > than 'ssl' and 'tls', as the necessary first step to make it
+>> > possible to later safely accept StartTLS as a synonym for 'tls' and
+>> > 'ssl/tls' as a synonym for 'ssl'.
+>> 
+>> Is it easier to just add less ambiguous aliases, eventually phasing out old
+>> terminology?
 
-The big disconnect here is that "---" snip lines are not meant to be
-meaningful within commit messages themselves. They are part of the
-process of sticking a commit message into an email. So format-patch and
-git-am know about them, but "git commit" for example doesn't.
+There is no issue around ambiguity.  The problem is that the code
+does not complain a bogus value in $smtp_encryption---when it is
+'ssl', ssmtp gets used, when it is 'tls', StartTLS gets used,
+otherwise we do not see any errors.
 
-So "git commit --signoff" probably shouldn't take them into account when
-deciding the end of a commit message. The user might or might not have
-meant "---" to be syntactically meaningful, depending on whether they
-plan to send the message with format-patch (and changing the behavior
-now is questionable).
+>> tls -> starttls
+>> ssl -> smtps
+>> 
+>> This way we don't have to change anything, and "smtps" is a valid way to refer
+>> to smtp over ssl (e.g. see /etc/services for 465/tcp).
+>
+> FWIW, those options make quite a bit of sense to me (and I agree the
+> transition to them would be easy).
 
-Doing so with "git format-patch --signoff" is a slightly different
-question.  The current behavior is working as intended, in the sense
-that it signs off just as "commit -s" would, and then separately sticks
-the result into the email. The fact that "---" in the commit message is
-indistinguishable from the ones added by format-patch is mostly an
-accident.
+Back when we had the original discussion in April [*], I think we
+found one small glitch that we need to solve before we can start
+introducing aliases---setting the variable to unknown value (imagine
+you set it to 'starttls' and then run a version of Git that does not
+know it yet) does not make Git barf but silently ignore.  
 
-That said, it's kind of a useful accident for some workflows, exactly
-because you can carry these non-commit-message notes inside the commit
-message. And since we know how any in-commit-message "---" will be
-treated by git-am on the other side, it might be reasonable for
-format-patch to start considering them to be syntactically significant.
+And that needs to be changed to die, and versions of Git with such a
+change, without any alias added, should be allowed to spread to
+eradicate the "silently ignore" version, before we can safely start
+adding aliases.
 
-So I guess I would disagree that it's a bug exactly, in that the
-workflow you're advocating was never meant to be supported. But I don't
-see any reason we couldn't be a little friendlier to it, if somebody
-wanted to teach format-patch to do so.
+Other than that, the transition is not harder than any other
+transition we've done in the past.
 
-An alternative workflow would be to use git-notes to attach the
-changelog data to the commit. Those are shown after the "---" by
-format-patch already. Unfortunately, keeping them up to date is kind of
-annoying. Ages ago, I had a patch to let you modify them while editing
-the commit message, which makes it pretty seamless:
 
-  https://lore.kernel.org/git/20110225133056.GA1026@sigill.intra.peff.net/
+[Reference]
 
-I carried the patch in my local build for a while, but never really
-ended up using it. So I never polished it further. But I think it's
-still fundamentally a reasonable idea, if somebody is interested in
-carrying it forward. If so, here's the version I've been rebasing
-forward over the years:
-
-  https://github.com/peff/git jk/commit-notes-wip
-
-but it doesn't seem to actually pass its own tests anymore (so it may or
-may not be a helpful starting point. ;) ).
-
--Peff
+* https://lore.kernel.org/git/xmqqtuo9kgo0.fsf@gitster.g/
