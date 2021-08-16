@@ -2,125 +2,220 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.1 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27BCEC4338F
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 23:06:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F04FCC432BE
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 23:38:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 100D660F35
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 23:06:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C210F60EE0
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 23:38:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234258AbhHPXHW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 19:07:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43760 "EHLO
+        id S232817AbhHPXit (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 19:38:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234525AbhHPXHA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 19:07:00 -0400
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E806C06129D
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 16:06:24 -0700 (PDT)
-Received: by mail-pl1-x64a.google.com with SMTP id m4-20020a170902db04b029012d5b1d78d5so11664205plx.15
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 16:06:24 -0700 (PDT)
+        with ESMTP id S232678AbhHPXis (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 19:38:48 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D424CC061764
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 16:38:16 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id fa24-20020a17090af0d8b0290178bfa69d97so3026454pjb.0
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 16:38:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=hB8Bha1PZM8xOwTJIZ7RCODtbHr5POuJYe+THbm+qno=;
-        b=nvLy6weYJGAU7yb/TvwBn978N53VF1tr07Oji9NlvuoEKYHDd65DZQy5eO4DZjAG/B
-         CDUJbtkjylIYy/LjaANJdkdl7PjEQWPDsHOF8qzCuiab6CMcROOYJVtPfPV0DLILPYYw
-         oBYC3CszAV14OyWDmPqLiNkmo2h3MbEmv42UqC/Wi31XrLQRKoQzhu7G42USUxdlCDv4
-         EvMl06KQn5iDfe71ILyPw2mRu/HwCbS8IpCdM2aGK1wMk6hw5Ubxh7nD1JaHWWQ1bhvj
-         kjck8IsI47LWT1Vuq+rhJG9nzvHmvekB7c/37YZFbkDKIC6kDHoMJivUvV9nKBmRhIBP
-         ej0g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=uJ3WsqzV88jZeBrtNtbHshX9+SMk4OfQVS0NDAYSk5M=;
+        b=t9dVUR9abYUrPjtlo01fjlTAiMwLsvyI39xGSab8TaSXJzQN8SHgyU0be9y7bylaXG
+         Kn0ec33TNmsR9tvoYoSMRm+oU/uxl2AveX1dYBuWV1uyq2nst+oPFrjLvuvOxrTo/cbM
+         IeUGWy/if8tH/HRXIkfEDxVsIcg0s9B3sm63sraFFuihqdcp/AjFex0CsTKlOtCWFTle
+         de8oPKGCgbirht0i6Rd3G7wU/YpJ3NkWnV50OS560a0i64s5bm45hjCk0TFQ+IOO95Vn
+         iikFZYSnPHK2ol8rrKBuEuSMHWSPTbFgHLeLDLpYw28Uz6OTyIRWVnIZ7xegw8jEPDHu
+         mLdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=hB8Bha1PZM8xOwTJIZ7RCODtbHr5POuJYe+THbm+qno=;
-        b=cVMI/80NnxYQASncvE1LsWUfS6uK/HUVBxQy4uZODvRkavv9VS6F/FDSsazxck4EcS
-         puPrf/lLxu2s1yls307stq54IK4D0xw965cZvSCfFqX1/zu/c9C8zVzzNbD58Gg6DjcR
-         x88usOeI6117djiKQFHyWPx2gCijwhoy3o/5S3RzZ0yqdiaPHtzGLUNEevcUyWeEZfCv
-         P2i5lA2eQrJzok+wBfaBUP/rdO47IG2DNh0ti1+JiivB2G73CrjEi/STXIWcOEHWKAWD
-         Xq+ZGZ3EtmgOWRO9fCSJjph5+565+LMmxUspYYv+adYX4YVddFvbvlY0PCOytrwP7AvL
-         ETCQ==
-X-Gm-Message-State: AOAM530d7J09fUHHLL8dIaqj6+TMbrEyLlo54PB2oy8vVhZqxnUhdZ35
-        qYiV8K3Ev+OVDs43XftvdU4JzOkl8Bgn1gkGxPss
-X-Google-Smtp-Source: ABdhPJyA3esrXlfrM9CO4SFs4KfpXFPHG7HaNshkA0WTqnYdMWmYV6hkQgULLpL/LSrrKmWovrUJPBLLQpm2F+rIZK/n
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:902:6946:b029:12d:55f4:c9bf with
- SMTP id k6-20020a1709026946b029012d55f4c9bfmr487036plt.22.1629155183609; Mon,
- 16 Aug 2021 16:06:23 -0700 (PDT)
-Date:   Mon, 16 Aug 2021 16:06:20 -0700
-In-Reply-To: <xmqq4kbyfkq4.fsf@gitster.g>
-Message-Id: <20210816230620.3507080-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqq4kbyfkq4.fsf@gitster.g>
-X-Mailer: git-send-email 2.33.0.rc1.237.g0d66db33f3-goog
-Subject: Re: [PATCH] transport: no warning if no server wait-for-done
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jrnieder@gmail.com, jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=uJ3WsqzV88jZeBrtNtbHshX9+SMk4OfQVS0NDAYSk5M=;
+        b=hjKyHpDVmiuqGCXIxwAyWkXSF1ywjxc/HS/luXpYt4WsOzu2k9rQIx/KpJKdiXg7TL
+         VvQwmcfq/675DKJ5hxNWkYnnnw9Y5z/Lcd1NBn+akBCgHz8AHzrbc6BgunF+RVhNhnMU
+         kTcBdw3/4H0PAcRuBVVGyRH5APS+A8j3IAqMbdM+Tc4Els6NEqaJssvpYSfJobOIX6Je
+         5/oauoWXlhpjhNXTQxiH9WxMTbQ5Ep0Bu7bSi7Db7Q7Uz65Ym2d9M2qYU3hL4dZ3Er7s
+         eqCCFEjjGYsbZYvipY64pjgxDgK6p9cUtaKagN9Yad8uF0mXzasbI0GmNtY6jWkvQKrw
+         f1pA==
+X-Gm-Message-State: AOAM533T+h1DwGcx0prMdKC2DH8BKwwNUeXIgSvnGEDliLkN+YHCg3h0
+        v3sW/LF60IyohtD3nfKV6/xfGA==
+X-Google-Smtp-Source: ABdhPJwcG6NbCfHGeaI3mvX53n6oDOAWWw7K1e7T49McJk05ziFGVanaFejsdXEhyF34vnSIjT/hfw==
+X-Received: by 2002:a63:1c66:: with SMTP id c38mr545600pgm.286.1629157096078;
+        Mon, 16 Aug 2021 16:38:16 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:aa0c:5f92:878f:e03a])
+        by smtp.gmail.com with ESMTPSA id 26sm284971pgx.72.2021.08.16.16.38.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Aug 2021 16:38:15 -0700 (PDT)
+Date:   Mon, 16 Aug 2021 16:38:08 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/6] hook: run a list of hooks instead
+Message-ID: <YRr24PJHlyFg7n/W@google.com>
+References: <20210812004258.74318-1-emilyshaffer@google.com>
+ <20210812004258.74318-2-emilyshaffer@google.com>
+ <xmqqbl6260eo.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqbl6260eo.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+On Thu, Aug 12, 2021 at 10:25:03AM -0700, Junio C Hamano wrote:
 > 
-> >>> -	if (finish_command(&child)) {
-> >>> -		/*
-> >>> -		 * The information that push negotiation provides is useful but
-> >>> -		 * not mandatory.
-> >>> -		 */
-> >>> -		warning(_("push negotiation failed; proceeding anyway with push"));
-> >>> -	}
-> >>
-> >> Perhaps like "optional ancestry negotiation failed---pushing
-> >> normally" or some phrasing that assures the users that pushing
-> >> without negotiation is perfectly normal?
-> >
-> > The question is what the user will do with this information.
-> >
-> > Will they contact the service provider to ask them to turn on push
-> > negotiation?
-> >
-> > Will they turn off push negotiation because they don't want to waste a
-> > round trip?
-> >
-> > Does what they will do depend on _why_ push negotiation failed?  If it
-> > failed because the server didn't declare the capability and the user
-> > has set push.negotate to true to represent "I want to live in the
-> > future by using push negotiation wherever it's available", then the
-> > message is noise.  If it failed due to a bug, then the message is more
-> > relevant to the user --- e.g., should we use a different exit status
-> > to distinguish between these two cases?
+> Emily Shaffer <emilyshaffer@google.com> writes:
 > 
-> I was hoping that the "child" command being run there gives enough
-> clue before the warning message so that the user would already know
-> (that is where my "assures the users" primarily comes from---even we
-> cannot hide that the negotiation poll has failed, the users would be
-> helped by being told that it is OK).
+> > To prepare for multihook support, teach hook.[hc] to take a list of
+> > hooks at run_hooks and run_found_hooks. Right now the list is always one
+> > entry, but in the future we will allow users to supply more than one
+> > executable for a single hook event.
+> >
+> > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> > ---
+> >  builtin/hook.c |  14 ++++---
+> >  hook.c         | 103 +++++++++++++++++++++++++++++++++++--------------
+> >  hook.h         |  16 +++++++-
+> >  3 files changed, 96 insertions(+), 37 deletions(-)
+> >
+> > diff --git a/builtin/hook.c b/builtin/hook.c
+> > index 5eb7cf73a4..4d39c9e75e 100644
+> > --- a/builtin/hook.c
+> > +++ b/builtin/hook.c
+> > @@ -25,7 +25,8 @@ static int run(int argc, const char **argv, const char *prefix)
+> >  	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+> >  	int ignore_missing = 0;
+> >  	const char *hook_name;
+> > -	const char *hook_path;
+> > +	struct list_head *hooks;
+> > +
 > 
-> If "child" does not give enough clue to this codepath (via the exit
-> code) or to the end user (via error messages), we probably would
-> want to fix that for that approach to work.
+> Natural.  We used to use the path to the hook because we were
+> expecting only one. We now use the name to find a list of hooks.
+> 
+> All the caller sees is just list_head without any direct visibility
+> into it, which feels like a great abstraction.  Presumably everything
+> will go through the API functions taking this opaque "list of hooks"
+> thing (or "the first one in the list" if the API function does not
+> iterate over it, perhaps?).
 
-The idea of this patch is to treat it like a user wanting to use
-protocol v2 - if the remote doesn't support it, then the user is
-perfectly fine falling back, and any extra message would be noise
-because the user wouldn't take action on it anyway.
+Hum, I guess that in a later patch builtin/hook.c does learn to take
+apart the list_head into a 'struct hook' to print the output of 'git
+hook list'. I haven't read your review of that patch yet though.
 
-If we think that the user needs to know when push negotiation fails (for
-example, if we think "the user enabled it so the user expects it to
-happen"), then I agree that we should leave the warning messages in and
-also print a message saying that push is still happening anyway (which
-was the approach in the original patch set), and maybe update the
-message to something like Junio suggested [1] to clarify what's going
-on. But I would think that the user doesn't care - for example, I could
-imagine someone globally enabling it and having pushes become
-automatically faster as more and more remotes support it.
+> > diff --git a/hook.c b/hook.c
+> > index ee20b2e365..80e150548c 100644
+> > --- a/hook.c
+> > +++ b/hook.c
+> > @@ -4,6 +4,28 @@
+> >  #include "hook-list.h"
+> >  #include "config.h"
+> >  
+> > +static void free_hook(struct hook *ptr)
+> > +{
+> > +	if (ptr) {
+> > +		free(ptr->feed_pipe_cb_data);
+> > +	}
+> 
+> Lose the extra {}, as we do not do more than the above free() even
+> at the end of the series?
 
-[1] https://lore.kernel.org/git/xmqqh7fyfrtl.fsf@gitster.g/
+ACK
+
+> 
+> > +struct list_head* hook_list(const char* hookname)
+> 
+> Shift both of the asterisks; our asterisks do not stick to the type
+> but to the identifier.
+
+ACK
+
+> 
+> > +{
+> > +	struct list_head *hook_head = xmalloc(sizeof(struct list_head));
+> > +
+> > +	INIT_LIST_HEAD(hook_head);
+> > +
+> > +	if (!hookname)
+> > +		return NULL;
+> 
+> Checking for invalid hookname first would avoid leaking hook_head,
+> no?  The caller of hook_list() we saw earlier immediately calls
+> list_empty() which will segfault.  The caller need to be tightened,
+> but I wonder if it would be a programmer's error to pass a NULL
+> hookname to this function.  If so, this can simply be a BUG() and
+> the earlier allocation and initialization of hook_head can stay
+> where they are.  Otherwise, the caller should see if this returns a
+> NULL.
+
+Ah, good point. I think this makes sense to BUG().
+
+> 
+> > +	if (have_git_dir()) {
+> > +		const char *hook_path = find_hook(hookname);
+> > +
+> > +		/* Add the hook from the hookdir */
+> > +		if (hook_path) {
+> > +			struct hook *to_add = xmalloc(sizeof(*to_add));
+> > +			to_add->hook_path = hook_path;
+> > +			to_add->feed_pipe_cb_data = NULL;
+> > +			list_add_tail(&to_add->list, hook_head);
+> > +		}
+> > +	}
+> 
+> Calling this function to grab a list of hooks when we are not in any
+> repository is not an error but just we get "there is nothing to
+> run".  Does the design give us a more useful behaviour, compared to
+> alternatives like "you have to be in a repository or calling this
+> function is an error"?
+
+Later we enable calling hook_list without a gitdir, in patch 6
+(https://lore.kernel.org/git/20210812004258.74318-7-emilyshaffer%40google.com).
+So maybe the behavior as it is now is premature?
+
+But leaving the hook list empty means we can behave gracefully if
+anybody is calling a hook without necessarily being sure they have
+gitdir. I would need to audit callsites to check if they are checking
+whether they have one or not. I think in most cases they probably are
+checking that.
+
+> 
+> Not an objection wrapped in a rhetorical question, but a genuine
+> question.  "It would help this and that usecase" would be an ideal
+> answer, "We could do either way, but we happened to have written the
+> code this way first, and at the end of the series we did not see any
+> practical downsides" would also be a great answer.
+
+The main use case, today, for letting this work nicely even outside of
+a gitdir, is sendemail-validate hook. But mostly, I was thinking that
+when we're freed from dependence on .git/hooks/, there's no reason to
+disallow out-of-repo hooks in case someone wants to add a new one in the
+future - for example to 'git maintenance' daemon runs.
+
+> 
+> > +	return hook_head;
+> > +}
+> > +
+> 
+> > +/*
+> > + * Provides a linked list of 'struct hook' detailing commands which should run
+> > + * in response to the 'hookname' event, in execution order.
+> > + */
+> > +struct list_head* hook_list(const char *hookname);
+> 
+> struct list_head *hook_list(const char *hookname);
+ACK
+
+Thanks for the thoughts.
+ - Emily
