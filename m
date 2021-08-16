@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C95BEC4338F
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 20:18:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21121C4320E
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 20:18:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B31E860F22
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 20:18:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0BF5360F35
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 20:18:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232148AbhHPUSl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 16:18:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33116 "EHLO
+        id S231821AbhHPUSm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 16:18:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231931AbhHPUSQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 16:18:16 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E548C0612AD
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 13:17:41 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id g138so12283479wmg.4
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 13:17:41 -0700 (PDT)
+        with ESMTP id S232153AbhHPUS3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 16:18:29 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87BE2C06121D
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 13:17:42 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id c129-20020a1c35870000b02902e6b6135279so743611wma.0
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 13:17:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jj9DwCQIpGbnYzigSuv8p5aLQnNcenzfOzKplhIMnXw=;
-        b=RTggT2TPrxdrNZ99TwYF24sZFQoB7Ja1WStdTXAicG0U7BziR/VFALuhBY/AcU+AoA
-         OPXuLU8ACZId2aXGGEAYzlLEC5KXPJxRyAC2vGz7B82HEdzdErXB4yzxvUtG/iWRTT3p
-         WeyK+mgjWvmX7NgRUCgfau3YeZNgf3FPzTqQTQq0gKDQ99gq7vG8jyZ8R7yNjxErVbDk
-         sF0MiNqboc1tpDqQZth2JFq1k7SdfyuQ/XLKfAGb/+rHJYplSWnldoG6ZMz/bT1WUHrr
-         0QnmCQjHI8DfPt3JI3q4NS6IlFduNRDClHEul6ndw0X5JkT97Nc9qf1oOWfoVYQhhUVL
-         yPUQ==
+        bh=luGuMJDPRMnjXEoCSqhvE+ut/GB0VLXv5Jme/aSENz4=;
+        b=Rnby5vl4y4XDqpzR12rJKDgWg6YNYWkw1/1gJk61wR0Vh8V988800TlV21rWRiWj17
+         0vng1FdXxWbse6WnL1PTMXthcgyVDs66gs8xAqZ95s6dUKI+4chY5XwaXC5xFLsZi8fx
+         bL7Kk/tr9CTIr+YE/spXwqTSBjA1Rg3hAKpzts8ygfzhBknqSLaAw4kYWhFh7f2/85k/
+         hUrfFRKxxmzBYyQ8gXYyk9/3/1JUfs69XAgiBbkJGTNG6m+MU2REhxwjwh1RztkpkoVi
+         2GMAW/hoSz82BWP6PnFhn/dAFUCWV4nNHAFM9GaaHsXom5V3eCTHWulilvi54bIrTAc0
+         /STg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jj9DwCQIpGbnYzigSuv8p5aLQnNcenzfOzKplhIMnXw=;
-        b=XnMJTFSuP1WkmR/LfyB5TearwNonSBIxNasLyQ8LZZ+eu4GKsi9ecQjAXPaslOsl0V
-         P+roPM64Lty76+VIsXF1pBtO1xHqstiVgdbunG8hme6brS5AU+j7Xf2F723M8pyfUJYR
-         cklOlP1ctb3jFR0yPOcf+4owkPVodccEJOtJOfZ3MaC54WYy8G4gtW2ZS6eJvtNHEgBF
-         NHQub4dQ/LWXXeUExFGEdeo+omLOZye/HS1769naWcSv8Uov649SAmgMrpuw/Jw7pSXx
-         ob22n5dNK551KnfbcfK94fsZZNiMn6TG/IvMrtCYA0Ar3UPtLxhVir4ZPIjgC8Ip6fsl
-         Dywg==
-X-Gm-Message-State: AOAM530qL5HHPtYFveUzhyZ7C9bpiZ0Uakw7+Z5aSQXrPN1166hvPyDI
-        5QvbKAgKvHbNMTgAmoroyF/rl1X62xs=
-X-Google-Smtp-Source: ABdhPJwpIqspmO+VK+HAFJAAWViQ+Xy3x+Hxjfmpf9W2aC13rMdtur5ZEFaLOMrxQOZIzHsE9Wdb9g==
-X-Received: by 2002:a1c:a543:: with SMTP id o64mr10646wme.13.1629145060394;
-        Mon, 16 Aug 2021 13:17:40 -0700 (PDT)
+        bh=luGuMJDPRMnjXEoCSqhvE+ut/GB0VLXv5Jme/aSENz4=;
+        b=DXFHq3yOj7Ozd4aAAjz+4zb/sB+LpmwRFY5l0bdCFE8V4d6ZCYWPtXg6z156YWu3yY
+         /DAI2UdygKG+ZCFJ9cLkDWQ3vid6C/rjwsZ3NXu9FNftnjwCtaWk5aEjRwb9D+U6kFCY
+         Oged+DIVkuQvKer36JIbHVfGnLesUoAonZHQx0WanC5JXFSN5VKI84KwcMRfxQIJ0EbG
+         Y12Rs6W8gll+21usgefW/UjlrsaXQF2pXtTydlYSzZ9IMtHcT/orpkVITQ9ao1PN8qLO
+         MFKoTEeNXp6BC/oLxarthjoqB7zhphJ8KkuIsr4zB/bITj6/v3Xubz2b2C+voHDMWkR3
+         RRYA==
+X-Gm-Message-State: AOAM531Ye2m46gWctAPzvBA8ti4FoKqwkbKKQuRu49+vrVIZk4FMifnj
+        4Tp2GRHfpC76icyNLEfY3/SIpo2L76U=
+X-Google-Smtp-Source: ABdhPJx+pF+GjqMVWXIeTfD+C5N495C5Hv8WF4ie9oDQVSGBfIkBQP20gNXj8GsTzGJlMDvsc7/ZiA==
+X-Received: by 2002:a1c:2b04:: with SMTP id r4mr15044wmr.168.1629145061101;
+        Mon, 16 Aug 2021 13:17:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p14sm161629wmi.42.2021.08.16.13.17.39
+        by smtp.gmail.com with ESMTPSA id i10sm178515wmq.21.2021.08.16.13.17.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Aug 2021 13:17:39 -0700 (PDT)
-Message-Id: <1f48091e549d2d6b8c1e0da2c232624ac0fd47b3.1629145037.git.gitgitgadget@gmail.com>
+        Mon, 16 Aug 2021 13:17:40 -0700 (PDT)
+Message-Id: <64dc87746db87b31e741cfa95e9da0fc7836df37.1629145037.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1054.v2.git.git.1629145036.gitgitgadget@gmail.com>
 References: <pull.1054.git.git.1626800686.gitgitgadget@gmail.com>
         <pull.1054.v2.git.git.1629145036.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 16 Aug 2021 20:17:13 +0000
-Subject: [PATCH v2 22/25] Add "test-tool dump-reftable" command.
+Date:   Mon, 16 Aug 2021 20:17:14 +0000
+Subject: [PATCH v2 23/25] t1301: document what needs to be done for reftable
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,83 +76,46 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This command dumps individual tables or a stack of of tables.
-
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- Makefile                 | 1 +
- t/helper/test-reftable.c | 5 +++++
- t/helper/test-tool.c     | 1 +
- t/helper/test-tool.h     | 1 +
- t/t0031-reftable.sh      | 6 ++++++
- 5 files changed, 14 insertions(+)
+ t/t1301-shared-repo.sh | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 6d0074939e5..98b8f1a1f9f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2471,6 +2471,7 @@ REFTABLE_OBJS += reftable/writer.o
+diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+index 84bf1970d8b..a5755b4a434 100755
+--- a/t/t1301-shared-repo.sh
++++ b/t/t1301-shared-repo.sh
+@@ -22,9 +22,10 @@ test_expect_success 'shared = 0400 (faulty permission u-w)' '
+ 	)
+ '
  
- REFTABLE_TEST_OBJS += reftable/basics_test.o
- REFTABLE_TEST_OBJS += reftable/block_test.o
-+REFTABLE_TEST_OBJS += reftable/dump.o
- REFTABLE_TEST_OBJS += reftable/merged_test.o
- REFTABLE_TEST_OBJS += reftable/pq_test.o
- REFTABLE_TEST_OBJS += reftable/record_test.o
-diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
-index 996da85f7b5..26b03d7b789 100644
---- a/t/helper/test-reftable.c
-+++ b/t/helper/test-reftable.c
-@@ -14,3 +14,8 @@ int cmd__reftable(int argc, const char **argv)
- 	tree_test_main(argc, argv);
- 	return 0;
- }
-+
-+int cmd__dump_reftable(int argc, const char **argv)
-+{
-+	return reftable_dump_main(argc, (char *const *)argv);
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index f7c888ffda7..338a57b104d 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -61,6 +61,7 @@ static struct test_cmd cmds[] = {
- 	{ "read-midx", cmd__read_midx },
- 	{ "ref-store", cmd__ref_store },
- 	{ "reftable", cmd__reftable },
-+	{ "dump-reftable", cmd__dump_reftable },
- 	{ "regex", cmd__regex },
- 	{ "repository", cmd__repository },
- 	{ "revision-walking", cmd__revision_walking },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 25f77469146..48cee1f4a2d 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -19,6 +19,7 @@ int cmd__dump_cache_tree(int argc, const char **argv);
- int cmd__dump_fsmonitor(int argc, const char **argv);
- int cmd__dump_split_index(int argc, const char **argv);
- int cmd__dump_untracked_cache(int argc, const char **argv);
-+int cmd__dump_reftable(int argc, const char **argv);
- int cmd__example_decorate(int argc, const char **argv);
- int cmd__fast_rebase(int argc, const char **argv);
- int cmd__genrandom(int argc, const char **argv);
-diff --git a/t/t0031-reftable.sh b/t/t0031-reftable.sh
-index d2b398ba5dc..c76e9042e1d 100755
---- a/t/t0031-reftable.sh
-+++ b/t/t0031-reftable.sh
-@@ -288,6 +288,12 @@ test_expect_success 'FETCH_HEAD' '
++# TODO(hanwen): for REFTABLE should inspect group-readable of .git/reftable/
+ for u in 002 022
+ do
+-	test_expect_success POSIXPERM "shared=1 does not clear bits preset by umask $u" '
++	test_expect_success REFFILES,POSIXPERM "shared=1 does not clear bits preset by umask $u" '
+ 		mkdir sub && (
+ 			cd sub &&
+ 			umask $u &&
+@@ -114,7 +115,8 @@ test_expect_success POSIXPERM 'info/refs respects umask in unshared repo' '
  	test_cmp expect actual
  '
  
-+test_expect_success 'dump reftable' '
-+	initialize &&
-+	hash_id=$(git config extensions.objectformat) &&
-+	test-tool dump-reftable $(test "${hash_id}" = "sha256" && echo "-6") -s .git/reftable
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
+-test_expect_success POSIXPERM 'git reflog expire honors core.sharedRepository' '
++# For reftable, the check on .git/reftable/ is sufficient.
++test_expect_success REFFILES,POSIXPERM 'git reflog expire honors core.sharedRepository' '
+ 	umask 077 &&
+ 	git config core.sharedRepository group &&
+ 	git reflog expire --all &&
+@@ -201,7 +203,7 @@ test_expect_success POSIXPERM 're-init respects core.sharedrepository (remote)'
+ 	test_cmp expect actual
+ '
  
+-test_expect_success POSIXPERM 'template can set core.sharedrepository' '
++test_expect_success REFFILES,POSIXPERM 'template can set core.sharedrepository' '
+ 	rm -rf child.git &&
+ 	umask 0022 &&
+ 	git config core.sharedrepository 0666 &&
 -- 
 gitgitgadget
 
