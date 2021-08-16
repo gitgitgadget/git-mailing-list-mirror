@@ -2,160 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69FD9C4338F
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 21:49:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC8FBC4338F
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 21:51:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3CCAC60EB5
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 21:49:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD06460F41
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 21:51:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232073AbhHPVuV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 17:50:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54486 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229987AbhHPVuV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 17:50:21 -0400
-Received: from mail-ua1-x929.google.com (mail-ua1-x929.google.com [IPv6:2607:f8b0:4864:20::929])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01DC9C061764
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 14:49:49 -0700 (PDT)
-Received: by mail-ua1-x929.google.com with SMTP id 67so8163249uaq.4
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 14:49:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Eo938mqeBMrjQ61pfrqmlh9QpfalM21sS5cv8iupG14=;
-        b=EaeF+5mYJF076VIXFmkuN8amqy2FLMd8y8qmnQKvaKh7wWQsDRNmrPIMrRW8DB6mf9
-         n5lLBO3HWiJQp6dLsfzhyC4HeIO6nMUOWYExiSt1r+97xoH0COtUmI7Y8bz3xwFqCOJN
-         sj/04+fkr5PjX6zf6GCmkp9VGQ1jSrkvsA35FTvEKB1qkc/aNA+VWvM3iyZx1N+NM1qs
-         g31G25KpSd9Wcq90FThQT8V70QPGwEZ5uJWWECMc3e1+ExwFgP3zAelZDRVBt+M+t9+i
-         6VKtW3/AFzbztmSKGa3jls4usoEFpBgPV7JxlG0H6wq7srV1PPZYIzdyiIdmbgE2e6co
-         WAFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Eo938mqeBMrjQ61pfrqmlh9QpfalM21sS5cv8iupG14=;
-        b=LkgVb0TOVp2VXlivkpbt5CGIptDSV25QAxBqTpixVmbQwAVnb83GcV2B5dzvVRJfy2
-         pE6f0EIsajjrvhRB4E6hVP0jTRI+BkdNLx7F3UvM+9I0uYhl/3vL1ko9LTmBgVFa9tiO
-         pvVKjtN+E8I8lkEyJx3jNbd9Ge6DMM22DwA73MqFxqPPBFxRGh/tmARb9tbPmwSw+n1x
-         JHgBnh9P5SEOmelAN0pwq7S/kZcMS+0HbO7SdDoVzCVADfN5verZtZ3IU9iGcNQQqfYZ
-         H97T9bZAG3UWkAcKNxxjWslHSese0D+jtvHGK79lOuTl9TZVqr8UH6qtyerRAE7pyH35
-         wTaw==
-X-Gm-Message-State: AOAM530kvOGfMZOo8Gc/ficoNTt8pSKZPDqAWV4gZmMfCMIPWVDjWxQ2
-        6Kjc83KHS0DxeKMg+/ho0n+/dpXZLP5KeUopqU6VrklA
-X-Google-Smtp-Source: ABdhPJwm7cGKU6hbYGXiIMKtwpcrgXRCQXNVYxn+yMhgAhsQ0wnqwD5FWcJ3O8D47uFWsfM880aLJkaYoD1nj7n+gS0=
-X-Received: by 2002:ab0:695a:: with SMTP id c26mr31710uas.23.1629150588064;
- Mon, 16 Aug 2021 14:49:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAJfuBxxT_7weC8_O=KYScSbDcSeBdb3v5d_gtn-NXzW_fKLrsA@mail.gmail.com>
- <YRqUK3cRFJmANzDd@coredump.intra.peff.net>
-In-Reply-To: <YRqUK3cRFJmANzDd@coredump.intra.peff.net>
-From:   jim.cromie@gmail.com
-Date:   Mon, 16 Aug 2021 15:49:21 -0600
-Message-ID: <CAJfuBxxuGf4aHjD6S0sLHgM0_SkqwY5tgEVBPvTANbak+5DFLA@mail.gmail.com>
-Subject: Re: git format-patch -s enhancement
+        id S232220AbhHPVvm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 17:51:42 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:44350 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229987AbhHPVvl (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 16 Aug 2021 17:51:41 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6F15760752;
+        Mon, 16 Aug 2021 21:50:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1629150639;
+        bh=aHtMuPqug7ML+svk0KVAJR9p8UDwXCSBtV4VtSrInlM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=KRv9ZSkdjk5zGm3jNV0IcWQwR5BNKkaX83KN6eoLWBBaoLewAWPtsvgCmV16ZrEK2
+         Ql3CJYKMxhQwZaOaoSMeT0nCJRsk1jU5cXvlCXJu6C+tL3BFzuH81U/SoWqIynYhHv
+         Zf1ML8WbbllZLBevE8ZKRqeG+7R+QoWXnEZT/udrjcU9QlW/Z2hdBhleVqeHn/UE47
+         Q8jckJr5ZJXrgBvdCrjeNXWjR8d/5vHVcn455wZBYd8D5k9n6wqGN1VvFg41RKc8rA
+         eiSWCvEZXm81IPwsGbd4uMLUUULrctCqvDmzNYWlhmaQ9k2RcrSzPleWKk8QSyjIOc
+         yZsyFBgnAAX87TQzrQvsR2iWGNy4DLCg6Q2iQNApP6cO108jGD8j186LSPUJYA6d9O
+         wSW6D6NilkgXr04PeglVyF9gnUsG/zt2jCb8jXjV2ZRHOdKlMZAbjsFbnJvnhhcPcq
+         Zqsad1ywwhG4ZyoCo7KX/CCYExTmZQfHfIyo3jqkBlhI6kux39s
+Date:   Mon, 16 Aug 2021 21:50:35 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     "Russell, Scott" <Scott.Russell2@ncr.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git clone corrupts file.
+Message-ID: <YRrdq5VAp3o35+Fb@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>,
+        "Russell, Scott" <Scott.Russell2@ncr.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <BN6PR15MB1426E50F03A0530CA9140F98CBFA9@BN6PR15MB1426.namprd15.prod.outlook.com>
+ <BN6PR15MB14261C40E614CC11416388B4CBFA9@BN6PR15MB1426.namprd15.prod.outlook.com>
+ <BN6PR15MB14264C9A96F4B5F6B01FA7FACBFA9@BN6PR15MB1426.namprd15.prod.outlook.com>
+ <YRbya0UO2+PvOjL5@camp.crustytoothpaste.net>
+ <BN6PR15MB1426E99386269CCBDA888D51CBFD9@BN6PR15MB1426.namprd15.prod.outlook.com>
+ <YRqYD+SszvhhySwl@coredump.intra.peff.net>
+ <YRqzmC5ubd0TEWL/@coredump.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="SI0QB7nfVOzc+lBM"
+Content-Disposition: inline
+In-Reply-To: <YRqzmC5ubd0TEWL/@coredump.intra.peff.net>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 16, 2021 at 10:37 AM Jeff King <peff@peff.net> wrote:
->
-> On Sun, Aug 15, 2021 at 05:07:34PM -0600, jim.cromie@gmail.com wrote:
->
-> > git format-patch -s is sub-optimal :
-> > it appends the SoB,
-> > which falls after the snips
-> > ---
-> > changelog ...
-> > that the commit message may contain
-> >
-> >
-> > So it misfires on any maintainer scripts
-> > expecting the SoB above the 1st snip.
-> >
-> > The workaround is manual SoBs above any snips.
-> >
-> > I note this in -s doc,
-> >
-> >            Add a Signed-off-by trailer to the commit message, using
-> > the committer identity of yourself.
-> >            See the signoff option in git-commit(1) for more information.
-> >
-> > "trailer" is really "document current working behavior"
-> > (normative docu-speak, so to speak;)
-> >
-> > Ideal behavior is to find 1st in-body  --- snip
-> > and insert there
->
-> The big disconnect here is that "---" snip lines are not meant to be
-> meaningful within commit messages themselves. They are part of the
-> process of sticking a commit message into an email. So format-patch and
-> git-am know about them, but "git commit" for example doesn't.
->
-> So "git commit --signoff" probably shouldn't take them into account when
-> deciding the end of a commit message. The user might or might not have
-> meant "---" to be syntactically meaningful, depending on whether they
-> plan to send the message with format-patch (and changing the behavior
-> now is questionable).
->
-> Doing so with "git format-patch --signoff" is a slightly different
-> question.  The current behavior is working as intended, in the sense
-> that it signs off just as "commit -s" would, and then separately sticks
-> the result into the email. The fact that "---" in the commit message is
-> indistinguishable from the ones added by format-patch is mostly an
-> accident.
->
-> That said, it's kind of a useful accident for some workflows, exactly
-> because you can carry these non-commit-message notes inside the commit
-> message. And since we know how any in-commit-message "---" will be
-> treated by git-am on the other side, it might be reasonable for
-> format-patch to start considering them to be syntactically significant.
->
-> So I guess I would disagree that it's a bug exactly, in that the
-> workflow you're advocating was never meant to be supported. But I don't
-> see any reason we couldn't be a little friendlier to it, if somebody
-> wanted to teach format-patch to do so.
->
 
-agreed, notabug.
+--SI0QB7nfVOzc+lBM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-but it might fall afoul of others' mail handler scripts,
-Ive had a couple replys implying missed delivery,
-maybe because of details like '---'
+On 2021-08-16 at 18:51:04, Jeff King wrote:
+> On Mon, Aug 16, 2021 at 12:53:36PM -0400, Jeff King wrote:
+>=20
+> > But an alternative workflow, if you really want UTF-16 in the working
+> > tree, is to convert between UTF-8 and UTF-16 as the files go in and out
+> > o the working tree. There's no built-in support for that, but you could
+> > do it with a custom clean/smudge filter. That would let Git store UTF-8
+> > internally, do diffs, etc.
+>=20
+> Oh, by the way, I totally forgot that we added an internal version of
+> this, which is easier to configure and much more efficient. See the
+> "working-tree-encoding" attribute in "git help attributes".
+>=20
+> Just in case you do want to go that route.
 
-Im just gonna add my SoB either at commit time, or manually.
-It will be interesting to see what happens to an SoB in a commit
-when its revised and --- changelogged
+The specific information you need is located in the Git FAQ[0], but
+roughly, you would probably want something like this:
 
-thanks
+*.h text lf=3Dcrlf working-tree-encoding=3DUTF-16LE-BOM
 
+That means that when checked out, the file will be in the format that
+legacy Windows programs prefer (CRLF with little-endian UTF-16 with a
+BOM), but will be stored internally in Git with LF and UTF-8.  That will
+make things like git diff work much better, but still permit things to
+be in the working tree as you wish.
 
-> An alternative workflow would be to use git-notes to attach the
-> changelog data to the commit. Those are shown after the "---" by
-> format-patch already. Unfortunately, keeping them up to date is kind of
-> annoying. Ages ago, I had a patch to let you modify them while editing
-> the commit message, which makes it pretty seamless:
->
->   https://lore.kernel.org/git/20110225133056.GA1026@sigill.intra.peff.net/
->
-> I carried the patch in my local build for a while, but never really
-> ended up using it. So I never polished it further. But I think it's
-> still fundamentally a reasonable idea, if somebody is interested in
-> carrying it forward. If so, here's the version I've been rebasing
-> forward over the years:
->
->   https://github.com/peff/git jk/commit-notes-wip
->
-> but it doesn't seem to actually pass its own tests anymore (so it may or
-> may not be a helpful starting point. ;) ).
->
-> -Peff
+If you really don't want those to be modified at all, then you'd want to
+write this:
+
+*.h -text
+
+However, Git will consider these files to be binary, since they are, and
+git diff won't work on them without a textconv filter.
+
+[0] https://git-scm.com/docs/gitfaq#windows-text-binary
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--SI0QB7nfVOzc+lBM
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYRrdqQAKCRB8DEliiIei
+gdiuAP9hiwQFAuPz7VjtTF/zXWcI9tF3OeJ2oWhycyTKePPW3AEApWlug1umsJGt
+Lvx0TjeFmF0a2SPD5qyiXjUn7t91zwc=
+=9jSu
+-----END PGP SIGNATURE-----
+
+--SI0QB7nfVOzc+lBM--
