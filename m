@@ -2,97 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-23.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9695FC4338F
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 15:51:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90F6FC4338F
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 16:06:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 70A5560F58
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 15:51:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 73CC060F4B
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 16:06:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237183AbhHPPvj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 11:51:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55088 "EHLO
+        id S230012AbhHPQHV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 12:07:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237045AbhHPPtY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 11:49:24 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 654B5C061764
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 08:48:50 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id y34so35357576lfa.8
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 08:48:50 -0700 (PDT)
+        with ESMTP id S229726AbhHPQHU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 12:07:20 -0400
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B83AC061764
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 09:06:49 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id n11so14763271qkk.1
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 09:06:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iwXrXp5DPFpmCNTLCY2sWd6vDRI5bZYLMSwu++z6wm0=;
-        b=mGFq8yU/a3RUybuZ0kbE/kjJnOeTl5MVwH1cwgXyYRg1AyNqSRIcBrJLg31rv5Cvgd
-         KMA9ex6rD+Pc0yUMy624YQwtfqjRq2rnuFGIZIzOHn7UnHNRwRKD3bX1teySEDd+4H1I
-         rkREhoNRVXpkidGqcm8Oid0pwyceKuUlzDCTPyCGIh7jDDMqzTllz9dZilhiX1sP3Pi6
-         ASnUO6Hz/XBjndgrvTls7iOLJlQcakj11rzJvMvmOAj+O87O/Lmo7deF0YxhD4KqXNsH
-         5T+uoXOdCeHCuhNpdlL5GxEr8rJ/9sBDefhVgcntywqaEogqvA3lFmdN5Y81/mFvRnGM
-         77uA==
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=qcluSLUYP0sy5UJIqjebOCPhXp7E1hKV14nggrfo8rI=;
+        b=phck8pBnGSPmv+rNjUuEmTKAGpsDYX6OSA3iESLpZ0gMTFvdMqgpx55TgS9cWWyiFN
+         OtzMGkUztyauurDdW/MmC1y+iHriiEyuc2cYVbptRA8PDYHBCG1Mm2wgwKGeNdxpTBCr
+         WW0wU+hdPzQNO8IjoxN2jGc5fOxXafr3zpkh9wbgryy6/CSfx52Tkm3XZI8jE/OvC672
+         haX9C01GnvuzNV7Mm6os0BM6Z4Nq3aNw0/pJy/xJId4A7jXTIvXCMEnrjYr6MqHE+mXX
+         4WdDwVdHCLIuL0tQcAFpHwboy82RxQi6/6Jvbv0pDojQc0zMMctMEqJz8RUzaXWk3Pj0
+         32NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iwXrXp5DPFpmCNTLCY2sWd6vDRI5bZYLMSwu++z6wm0=;
-        b=f1DtiMSf2jvf11zPA71YIJx1+cgSGRr7qEslwBodPYtxyK2+cYDlpwYnGt2OPsfeAu
-         ainpXzjACCuIfpHBiGw0u/AXQZT2imJZBzwNcpI+Q09HVIlA8gUpQnr44gmaM04ww9/k
-         QzfO4E+k5yBkg+aLbo5NG11bv7Jip7bcZ7B6c56XjFpcEztkw4a6ypcCFsFV4cZLoAPO
-         //Obq4O6KN116yWjKYhYzrQRKNGhQS7hkoHrBfhSA8VTAoiadb/eOoO4ApkZEO67+gON
-         USAZ0MOB4KtlI3qmoNiKCPFK8phuDlmUm6FNMYBSlT+ruSYMTexfvs0aWUd87LO68eom
-         OuDw==
-X-Gm-Message-State: AOAM533/xwywhF6X/6CUwDPCRxUUVqdLToXe/jKEAlukroQVvyqMbg4U
-        W6m8vEqLOA3yw7sNyHciESWD2FzfFxVGu8CzJj0qPA==
-X-Google-Smtp-Source: ABdhPJzarYTdlpZOUBu/++7xqCjCO8kZts2cqscKzM6d+ROMrvoNHZj58vW6v5t9Zv+yISht2eoMnmStOL5PBV34q0M=
-X-Received: by 2002:a05:6512:3f5:: with SMTP id n21mr7574469lfq.359.1629128928761;
- Mon, 16 Aug 2021 08:48:48 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=qcluSLUYP0sy5UJIqjebOCPhXp7E1hKV14nggrfo8rI=;
+        b=ZophD5nhJw5kWaa0sxxYvC1m1asC5/DnZlz+NM1Ck+AnwCEmfxfsZieevmXH+w9C66
+         VVQUJYGpsstN4eyTrK23qtvhPWXC3hoxIr4zo8UzAUQYUFt6MQ4/yj+KOlEs7isht8NE
+         LHbsJ07wG7x2dtUuO6rul5DfZF3H9aARncs8WIHpio2DIsZMjSyurkR/qep58sTD8v9a
+         BDXltFkUTVw7QLYkSmT90/uvh1/czEhBvxNWLVBusBXIeFThdyFA0Zwo8avadWLtwF3u
+         X9HZ9RqtXG8nxqUH1/FTtZpr/DTguPC+2VppjnYNN4AkwKJusaNvnKYVyZ3pFE/kr50m
+         CQIg==
+X-Gm-Message-State: AOAM533svOpCP+mWjn3HT5OwzwkR8PUStqCL3/nl3dYYPMaDZbgUTQRL
+        yOlay5D8XeZ2vp0LL8ns/kqaK8FixR1O8A==
+X-Google-Smtp-Source: ABdhPJz4iWmgpnt9h7g7cwQKespnOPpC0oDpz50+rs99O5NFO6JK0v+ORCaBprCs5l4WSF+P1lvHBg==
+X-Received: by 2002:a37:2cc4:: with SMTP id s187mr16435761qkh.407.1629130007956;
+        Mon, 16 Aug 2021 09:06:47 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:2591:e785:5de6:53be? ([2600:1700:e72:80a0:2591:e785:5de6:53be])
+        by smtp.gmail.com with ESMTPSA id s69sm6374490qka.102.2021.08.16.09.06.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Aug 2021 09:06:47 -0700 (PDT)
+Subject: Re: [PATCH] ci: add job for gcc-4.8 to GitHub Actions
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        git@vger.kernel.org
+References: <20210816045750.36499-1-carenas@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <444e7410-c9c9-1b90-da5f-d6862a35c1fc@gmail.com>
+Date:   Mon, 16 Aug 2021 12:06:46 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-References: <cover.1628618950.git.jonathantanmy@google.com>
- <cover.1628888668.git.jonathantanmy@google.com> <94db10a4e5943d689113693c64633ddffa5508cc.1628888668.git.jonathantanmy@google.com>
-In-Reply-To: <94db10a4e5943d689113693c64633ddffa5508cc.1628888668.git.jonathantanmy@google.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Mon, 16 Aug 2021 12:48:37 -0300
-Message-ID: <CAHd-oW4rd6=9WP-7k-Z9V1Z-4nDXR13-45cjyB6GEczxD3+56g@mail.gmail.com>
-Subject: Re: [PATCH v2 7/8] submodule-config: pass repo upon blob config read
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>, Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Josh Steadmon <steadmon@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210816045750.36499-1-carenas@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 13, 2021 at 6:05 PM Jonathan Tan <jonathantanmy@google.com> wrote:
->
+On 8/16/2021 12:57 AM, Carlo Marcelo Arenas Belón wrote:
+> unlike the other jobs; using an older ubuntu base image that provides
+> that compiler as an option.
+> 
+> note the obsoleted travis job used an image of the OS that is EOL and
+> therefore not available, but the compiler used will be the same, and
+> more importantly will fail in the same (C89 compatibility) issues.
+> 
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> ---
+> based on top of my tip for cb/reftable-fixes, but applies cleanly all
+> the way to maint.
+> 
+> a succesful run can be seen in:
+> 
+>   https://github.com/carenas/git/runs/3336674183
+> 
+> it adds 2m to the current setup, but gcc 4.8 is hard to find in modern
+> developer workstations (or even non EOL enterprise systems)
 
-Oops, I accidentally deleted this part in my previous reply:
+Forgive me, I probably missed a discussion about this
+somewhere else on the list, but...
 
-> diff --git a/config.c b/config.c
-> index f33abeab85..a85c12e6cc 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1820,6 +1821,7 @@ int git_config_from_blob_oid(config_fn_t fn,
->  }
->
->  static int git_config_from_blob_ref(config_fn_t fn,
-> +                                   struct repository *repo,
->                                     const char *name,
->                                     void *data)
->  {
-> @@ -1827,7 +1829,7 @@ static int git_config_from_blob_ref(config_fn_t fn,
->
->         if (get_oid(name, &oid) < 0)
+Could you describe why we want GCC 4.8 in our CI? Is that a
+compiler version that we officially support? What kind of
+syntax triggers a problem on 4.8 versus latest?
 
-This should be `repo_get_oid(repo, ...)` now.
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index 73856bafc9..0f211173fc 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -297,6 +297,9 @@ jobs:
+>            - jobname: linux-gcc-default
+>              cc: gcc
+>              pool: ubuntu-latest
+> +          - jobname: linux-gcc-4.8
+> +            cc: gcc-4.8
+> +            pool: ubuntu-18.04
 
->                 return error(_("unable to resolve config blob '%s'"), name);
-> -       return git_config_from_blob_oid(fn, name, &oid, data);
-> +       return git_config_from_blob_oid(fn, name, repo, &oid, data);
->  }
+Makes sense.
+
+>      env:
+>        CC: ${{matrix.vector.cc}}
+>        jobname: ${{matrix.vector.jobname}}
+> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> index 67852d0d37..950bc39129 100755
+> --- a/ci/install-dependencies.sh
+> +++ b/ci/install-dependencies.sh
+> @@ -72,10 +72,14 @@ Documentation)
+>  	test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
+>  	sudo gem install --version 1.5.8 asciidoctor
+>  	;;
+> -linux-gcc-default|linux-gcc-4.8)
+> +linux-gcc-default)
+>  	sudo apt-get -q update
+>  	sudo apt-get -q -y install $UBUNTU_COMMON_PKGS
+>  	;;
+> +linux-gcc-4.8)
+> +	sudo apt-get -q update
+> +	sudo apt-get -q -y install $UBUNTU_COMMON_PKGS gcc-4.8
+> +	;;
+
+Interesting that we already had a case here. Is there interesting
+history about this prior-existing case that might be illuminating
+to the current need?
+
+Thanks,
+-Stolee
