@@ -2,133 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C81EC4338F
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 04:58:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D007C4338F
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 07:57:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5DEEA613B1
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 04:58:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3D90061AE2
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 07:57:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229873AbhHPE6j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 00:58:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46002 "EHLO
+        id S234564AbhHPH5g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 03:57:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbhHPE6j (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 00:58:39 -0400
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99ABCC061764
-        for <git@vger.kernel.org>; Sun, 15 Aug 2021 21:58:05 -0700 (PDT)
-Received: by mail-qv1-xf2b.google.com with SMTP id db14so8680255qvb.10
-        for <git@vger.kernel.org>; Sun, 15 Aug 2021 21:58:05 -0700 (PDT)
+        with ESMTP id S234476AbhHPH5a (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 03:57:30 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EFF6C061764
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 00:56:59 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id a5so19843139plh.5
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 00:56:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pxoAm1FmNCLPP2lRxljSqN308rt+59wloeMaA4IsYlE=;
-        b=tTPN7f0iGhwdlMuKRSrYNMolMrHdz6fQ6YtYuj16YO+FvjpaXe2hibhZ1bcWeTpvIM
-         tj5+mY4CPe2K7UyE5C5H6Gf9ImC/lBISvOajRKkUVvW3RhdgfQegLB7cpBQUshKHnrv2
-         4cuoAYZB6F0gFpYpC2AHE6rKmXtJqlA4vfuzmSxWwK3nIr3gXf2HYpBu3+RCKZOQ9LZc
-         Ye07NM0XFFL3zLSH2cA+BkG2qwkp8S8WGDj2erbXiqtCKfYrPqc/wihoJHplMROu/F/0
-         HhnlgwtO8/+zI0pOxa4Uc7dqmbPPbrbtuWdUeimm1Bxhl6lwcK6HWPQqDUG6ERTtZSbu
-         TOXQ==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=rsrdApOgaPx2NYqZ7AJD7ELG7km9g09cia/iBhtPdhE=;
+        b=TWrThekLySDqm/Mc2pjPLrEUPtgoadrsQkbPN6g3ufl1RycEzfSCec1rTTWcxJxB8k
+         QGsFLAr3CZSCxrYrda0mpSRzx2HIGRt7GZXW6fpppnvOhmSA6HGun7j0Q5jxEhzhX9a9
+         clshGK7I1OOS2osPyHV7fPngkoVp4h8D4GsHDFct1/+Z4dpjHUGuvxpk6MZCA4VVCPJO
+         WGcgqBKriASnYydVfg9N7Bck7U/BZjACTz/aQsRYdlGhsW7xdYmmtMFVF0fNrHjtvJ9z
+         sBt12NRGVMukD9xvuQIcX61G9E7d7z0ECpvY7fQ35di0vgUugL1gFlAg0CS8CI1Xsemn
+         sjkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=pxoAm1FmNCLPP2lRxljSqN308rt+59wloeMaA4IsYlE=;
-        b=cvP6YVHgfcpyUS6+eT+A+A1P/M2avninNSlwsfiX9SQhYjsXXyizIdafqRO3wITIcX
-         tuTj5PIhTtKiZq38JWZV8aShoGHj+KSljjXD83mg+NrUOxT1KYJrZtQQCnKbdwQmWAP8
-         hIY/GJbG6hLFR9SBq2wRtfv1LTpNXzuufiKF5c2n207r/IXnmZN9R0LDgOrJO4BEarDK
-         e6EOX+b4OsZP3pEnEOTOsNhj9ufR4EDSpZCW2wxmyQGMvIWKlE7ccCfH6E/GKAUbZ5gs
-         SM5LO5E+EvOnTjx6v1c5H8W0fz+94dFXBb1CVt5VuiyI1oXikP9Ugs2EjyA+yHmPk/gJ
-         RREw==
-X-Gm-Message-State: AOAM530Us1EKgOgDlfXQIf+SbH3dwmLTC9pqGb8V5ZWYd8Sdj8loam7U
-        8VriY8CboGKdz5PmiONxU8B/TV/F7+U=
-X-Google-Smtp-Source: ABdhPJwWbtaRQnee9Atni6J8WuSDE72OSi2gn3Hy2LVcxMrGsAl6ZIWaVJ5AdmGH3QG+xlA1JW4pSA==
-X-Received: by 2002:a05:6214:1933:: with SMTP id es19mr14338411qvb.42.1629089882963;
-        Sun, 15 Aug 2021 21:58:02 -0700 (PDT)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id h140sm5968194qke.112.2021.08.15.21.58.02
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 15 Aug 2021 21:58:02 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] ci: add job for gcc-4.8 to GitHub Actions
-Date:   Sun, 15 Aug 2021 21:57:50 -0700
-Message-Id: <20210816045750.36499-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.33.0.rc2.476.g1b09a32a73
+        bh=rsrdApOgaPx2NYqZ7AJD7ELG7km9g09cia/iBhtPdhE=;
+        b=YbAlMav4Gr5cV/NugC3JNDVPFCEym2TqQnJZ0bLM6sfms0TZX6RkcKrlkYhpKI4/3J
+         j3yj/IEw70yLpEsTeSv92f0r+mPUSNKNBOvRY+S9Q/1aA39cBShLSnp1um6KC4NTV84i
+         vY43N3+PpmiZjL/IKL3JEZmic7Ql5Sg59NEGQngVs39w/zlp7uD6yyFILpNptg9lxaWV
+         gPEOwI4gT1KlmOmP+h3gTQjuiBALyIWNM8soB+XN8r4Tca0+rOx33PsAip4dz1JM2no8
+         l3OJVk6bi0nBlGL+WImW9QkfB0TvN/ZL6oEguHXIpYde208xq51JvimQsZi+98LwJJd7
+         a5TA==
+X-Gm-Message-State: AOAM532itxzh0Y0fLk4r3yfc++VszmG8FPFZ5iC6f9MtHY1LKy9ZhOmf
+        RHEsE4bkbRJWEbVzMzG7Nt3QoZVxomY=
+X-Google-Smtp-Source: ABdhPJyrc0xLOC6foPBoMZHuwvqS1MQTUUJgNeY2hOV8hwO37uXFV/kD6n2wF1tCpRimt46pmODFZw==
+X-Received: by 2002:a17:902:bb81:b0:12d:a7ec:3d85 with SMTP id m1-20020a170902bb8100b0012da7ec3d85mr8292307pls.17.1629100618741;
+        Mon, 16 Aug 2021 00:56:58 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-1.three.co.id. [180.214.232.1])
+        by smtp.gmail.com with ESMTPSA id t22sm12074638pgv.35.2021.08.16.00.56.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Aug 2021 00:56:58 -0700 (PDT)
+Subject: Re: git format-patch -s enhancement
+To:     jim.cromie@gmail.com, git@vger.kernel.org
+References: <CAJfuBxxT_7weC8_O=KYScSbDcSeBdb3v5d_gtn-NXzW_fKLrsA@mail.gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <c308b4e5-066e-d0d8-ac14-5769d1a47684@gmail.com>
+Date:   Mon, 16 Aug 2021 14:56:55 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJfuBxxT_7weC8_O=KYScSbDcSeBdb3v5d_gtn-NXzW_fKLrsA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-unlike the other jobs; using an older ubuntu base image that provides
-that compiler as an option.
+On 16/08/21 06.07, jim.cromie@gmail.com wrote:
+> hi all
+> 
+> git format-patch -s is sub-optimal :
+> it appends the SoB,
+> which falls after the snips
+> ---
+> changelog ...
+> that the commit message may contain
+> 
+> 
+> So it misfires on any maintainer scripts
+> expecting the SoB above the 1st snip.
+> 
+> The workaround is manual SoBs above any snips.
+> 
+> I note this in -s doc,
+> 
+>             Add a Signed-off-by trailer to the commit message, using
+> the committer identity of yourself.
+>             See the signoff option in git-commit(1) for more information.
+> 
+> "trailer" is really "document current working behavior"
+> (normative docu-speak, so to speak;)
+> 
+> Ideal behavior is to find 1st in-body  --- snip
+> and insert there
+> 
 
-note the obsoleted travis job used an image of the OS that is EOL and
-therefore not available, but the compiler used will be the same, and
-more importantly will fail in the same (C89 compatibility) issues.
+It seems like you don't tell us what snip means. Can you describe your 
+environment and reproduction steps so that I can reproduce this issue?
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
-based on top of my tip for cb/reftable-fixes, but applies cleanly all
-the way to maint.
+And next time you can use `git bugreport`.
 
-a succesful run can be seen in:
-
-  https://github.com/carenas/git/runs/3336674183
-
-it adds 2m to the current setup, but gcc 4.8 is hard to find in modern
-developer workstations (or even non EOL enterprise systems)
-
- .github/workflows/main.yml | 3 +++
- ci/install-dependencies.sh | 6 +++++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 73856bafc9..0f211173fc 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -297,6 +297,9 @@ jobs:
-           - jobname: linux-gcc-default
-             cc: gcc
-             pool: ubuntu-latest
-+          - jobname: linux-gcc-4.8
-+            cc: gcc-4.8
-+            pool: ubuntu-18.04
-     env:
-       CC: ${{matrix.vector.cc}}
-       jobname: ${{matrix.vector.jobname}}
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 67852d0d37..950bc39129 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -72,10 +72,14 @@ Documentation)
- 	test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
- 	sudo gem install --version 1.5.8 asciidoctor
- 	;;
--linux-gcc-default|linux-gcc-4.8)
-+linux-gcc-default)
- 	sudo apt-get -q update
- 	sudo apt-get -q -y install $UBUNTU_COMMON_PKGS
- 	;;
-+linux-gcc-4.8)
-+	sudo apt-get -q update
-+	sudo apt-get -q -y install $UBUNTU_COMMON_PKGS gcc-4.8
-+	;;
- esac
- 
- if type p4d >/dev/null && type p4 >/dev/null
 -- 
-2.33.0.rc2.476.g1b09a32a73
-
+An old man doll... just what I always wanted! - Clara
