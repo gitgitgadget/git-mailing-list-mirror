@@ -2,79 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13A88C4338F
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 16:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CA23C4338F
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 16:58:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EBBC760F35
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 16:57:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6223160F14
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 16:58:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231578AbhHPQ5i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 12:57:38 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48598 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230351AbhHPQ5h (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 12:57:37 -0400
-Received: (qmail 20710 invoked by uid 109); 16 Aug 2021 16:57:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 16 Aug 2021 16:57:06 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16127 invoked by uid 111); 16 Aug 2021 16:57:05 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 16 Aug 2021 12:57:05 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 16 Aug 2021 12:57:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Ben Goldberg <ben@benaaron.dev>, git@vger.kernel.org
-Subject: Re: send-email issue
-Message-ID: <YRqY4Tw4YxbepuFg@coredump.intra.peff.net>
-References: <24a88faf-5339-8449-80c4-f6085bd1e098@benaaron.dev>
- <b4b1dda4-6bf7-f4b1-88c5-9d579a7c56d3@benaaron.dev>
- <20210813180056.ctzivmakj4bj5apa@nitro.local>
- <xmqq35rbtx84.fsf@gitster.g>
- <20210816131143.6ifcbpxp6ilo2nv5@nitro.local>
- <YRqQJTyBW6j6b2pW@coredump.intra.peff.net>
- <xmqq4kbps58l.fsf@gitster.g>
+        id S230200AbhHPQ6w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 12:58:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43518 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230325AbhHPQ6s (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 12:58:48 -0400
+Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99BC1C061764
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 09:58:16 -0700 (PDT)
+Received: by mail-vs1-xe35.google.com with SMTP id l22so11164044vsi.1
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 09:58:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=v2VQoCJjSt+erG8BkmTkrHgkMFnfhF7EMGqHMZYbUS0=;
+        b=CVd2hE9qe+L0ZmNB5Xs1w1HmhKxYKCdF983NPfUcntv7c2odza2ItAucPtAXEbEHYz
+         QarrhMfPPGMm4H47i1KNOElM8cm3tYvdgCc8gtLBfzNZZ7/h8WSREJluUkGUs6Z64ulA
+         9WLqoPRBNyULljgvoPu3HbUJb6WCVA5HEEevgoDbmoyICVk2Q4ef6Nv7SPOoVfd+NeoS
+         PC8rK5A8kioieHuRC1roz+eE5UAdb2GZkN/fv/pb5umUw5jE+tO6zTrzpEM+GLBCLLLg
+         mZbsNmMExQZusC2y3WA0dCuajETSyf7jjbGZ5EAtYQzLy3ZvhpymAPSZHtLblP2L/CKf
+         7Izg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=v2VQoCJjSt+erG8BkmTkrHgkMFnfhF7EMGqHMZYbUS0=;
+        b=NZDv+N5xIjFALYQWnt6T80OEz1flJ0+1G5C1+GVC9kO0xLziS8TS3kdotwCKsyBSfh
+         gVUk19oQQdmtmLcc3mDp95iO7+y3aM03pYCqpcX4hvHuvaBmmof1wSgh3x+QF5r9QoN9
+         BIWlgTEMIV9yCsHaaknpHL07SyMJalT4posK9BNoPedyUIxIEQIA5Y1nGZtIXRjop83M
+         PoZzkumnamDnqNRjxcbhJ4uX13LusrEGQ6iQoJ+U/XlgS5T9ifsVYJe+Cn3WaqAF9DG9
+         kJIM3mXz2JleXidT5qdu64RskVVj5K/fyh+K2EIaCS7GJeMFR8YNin+lIL1w/v//KAu4
+         Kmsg==
+X-Gm-Message-State: AOAM532uypGiyPUZekcd8rybnLVOd7k+AqqgzDbSLinfr0y/eHaAjBVw
+        z2SYP7QSuOU4Y8XQYN3tL6HyzCTI2EaGvbtMnZ4=
+X-Google-Smtp-Source: ABdhPJzXvWp+yUmjwN1OM5rXeZUb+JPCsXaE1hUTj7/3IJVlv0TAS8Pq29j29zcIc6e7oVpfYe7F1E1lkEnjX/cMgsE=
+X-Received: by 2002:a05:6102:11e3:: with SMTP id e3mr10976216vsg.49.1629133095666;
+ Mon, 16 Aug 2021 09:58:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq4kbps58l.fsf@gitster.g>
+References: <20210816045750.36499-1-carenas@gmail.com> <444e7410-c9c9-1b90-da5f-d6862a35c1fc@gmail.com>
+In-Reply-To: <444e7410-c9c9-1b90-da5f-d6862a35c1fc@gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Mon, 16 Aug 2021 09:58:04 -0700
+Message-ID: <CAPUEsphsyxdjf7WfqQQhBbVYt_URAdj4Cg-OT+dJenO7vpfOJQ@mail.gmail.com>
+Subject: Re: [PATCH] ci: add job for gcc-4.8 to GitHub Actions
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 16, 2021 at 09:51:06AM -0700, Junio C Hamano wrote:
+On Mon, Aug 16, 2021 at 9:06 AM Derrick Stolee <stolee@gmail.com> wrote:
+> On 8/16/2021 12:57 AM, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+> > it adds 2m to the current setup, but gcc 4.8 is hard to find in modern
+> > developer workstations (or even non EOL enterprise systems)
+>
+> Forgive me, I probably missed a discussion about this
+> somewhere else on the list, but...
+>
+> Could you describe why we want GCC 4.8 in our CI? Is that a
+> compiler version that we officially support?
 
-> >> tls -> starttls
-> >> ssl -> smtps
-> >> 
-> >> This way we don't have to change anything, and "smtps" is a valid way to refer
-> >> to smtp over ssl (e.g. see /etc/services for 465/tcp).
-> >
-> > FWIW, those options make quite a bit of sense to me (and I agree the
-> > transition to them would be easy).
-> 
-> Back when we had the original discussion in April [*], I think we
-> found one small glitch that we need to solve before we can start
-> introducing aliases---setting the variable to unknown value (imagine
-> you set it to 'starttls' and then run a version of Git that does not
-> know it yet) does not make Git barf but silently ignore.
-> 
-> And that needs to be changed to die, and versions of Git with such a
-> change, without any alias added, should be allowed to spread to
-> eradicate the "silently ignore" version, before we can safely start
-> adding aliases.
+couldn't find the specific thread I seem to remember, but AFAIK it was
+because it is the compiler from RHEL7
 
-This is certainly unfortunate, but IMHO is not a hard requirement for
-adding new values. This is no different than a case where we add a new
-config option, but old versions of Git quietly ignore it.
-
-In other words, I would suggest to tighten this as the values are added,
-but not worry about having a "spreading" period.
-
--Peff
+Carlo
