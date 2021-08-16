@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F09BDC4338F
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 14:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 154BBC4338F
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 14:48:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C335460F58
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 14:32:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6635601FA
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 14:48:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231445AbhHPOd2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 10:33:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37288 "EHLO
+        id S232391AbhHPOtC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 10:49:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229880AbhHPOd2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 10:33:28 -0400
+        with ESMTP id S232234AbhHPOtC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 10:49:02 -0400
 Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 269B3C061764
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 07:32:56 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id x7so27522948ljn.10
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 07:32:56 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A422C061764
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 07:48:30 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id n6so27570082ljp.9
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 07:48:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Ud9L98uopeXmITveoPDd3hIZZ4u4aXGFVOcbCOqv8hw=;
-        b=htK8pLdInEdOV2l27+5A8jkh9+hnvypQjjn7xh6zwc4Gi39IdvRMimhlyRA2fjqozc
-         nU2UznMryF3s8c4cHti5NPPsYjjw304zzLsmdeqNVgadnJN4rkDAZdEupBkmj0+jiJVM
-         sau7O0pBdTviWnw6X20lTq76kbUaVHhQcWW+fL1yXbeBK4AV4Xm7ASx7G1nQxZSxFo7e
-         UryYDsDi8BsTZ6/NXLr2scq1pevPZnocG4/S7i7RBCjUHcFej6Sd6vmmnZmOYRDU7My9
-         /zruZllTq/6aut1JJi3rnipwfjGUiVYCTy6NWgHyYLsW8QuN49Kj0CtSgPM5yVlaFoCu
-         avhA==
+        bh=V5JumYVPJUGJAfeN4iDlGfVXQMKQDbWWvIm605bA0rE=;
+        b=J/VywDcRoggg/vOv8a0rehZCtZwqNDhF7dS+DNX+EXy2gdX2r9LcRJZ7+ssBRb8QNd
+         p2JlmjCIe0gCr8Kr1SQ8cS5NMILqTjVCVa3tG156sxojQpTTUQHO6j50kAg+C8uO13Xv
+         AQkLsgJXKPi3J4L5DmYcGp+VhaTDhH0qbDFE1Ok85lHnzb1kMr9gPsW2CckDNJPLLE1K
+         WlnzlTlX9RtjXD2+jQfXFfST/oe/ameQQm/QBcEcJXXg6XhVKB9LuGOLF39n0LR6ZI65
+         CC2Kkw+CzkR02FRhrOHTv6TeTB6JPtoAyv+Qofa+mDqMRqfoZ8CovvUaLR74LdGx6Ruq
+         yUOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Ud9L98uopeXmITveoPDd3hIZZ4u4aXGFVOcbCOqv8hw=;
-        b=E31xf7vO+46+ogI9V1pt/iCWtt5MLcEv4OoQXPpD2aGbDMdaKilgby3NRPZQiqh2iB
-         ymmXvV/wIQcJ/ZJfom4R38qyQux8MsngRjaG/bP+p7HLz7BRLlIreuLLJf3Tj8nTFtNl
-         unF9ofcA1A2U3ELmo6l+E1H+sd84GJ2M7GyY0DfPmWT0X2ObJ2gYzL2Qcn0ecyQF35TE
-         P1tyqJNuAtUfBHjWOpmJsT4F6a4Oqj6K5gzDfH4eBf9LFQTA6DhzZEQGaqYrk0ZpnduK
-         QzZCHOwxD+cMkMs7cY3uBdnprP3C7XOfizHPPs8CPnlvKEln8AXGTzHQc748lFu3/AbN
-         rqpg==
-X-Gm-Message-State: AOAM531bBFAffuZIe981r7B8qQ35Ir0lf5Gt4xXNfPzNVeqQjH0ECtB3
-        EUPVqg5+O52Ep0DJJt/uL5y/Kx688fclQuemJUMbRg==
-X-Google-Smtp-Source: ABdhPJyvw5EDNBBqFMk9IKpTbXzREVjMH2GgCWxDi796Bj1a4gjW9KAR7eWf0u5Kedt0YWoHh62MZlnsWgiJJlbQWOE=
-X-Received: by 2002:a2e:b894:: with SMTP id r20mr2667912ljp.291.1629124374443;
- Mon, 16 Aug 2021 07:32:54 -0700 (PDT)
+        bh=V5JumYVPJUGJAfeN4iDlGfVXQMKQDbWWvIm605bA0rE=;
+        b=HTNUWBPeRmxSCtZS4yvlXBwG7Q0ldYKivKXgvQBoxnYKWtNXf4CkuKJBJU1kPlKHoP
+         4Srle2MvKSzX2O/n5oAusSogzVVMaabiAHvdaSdFvNJmB3kmwFCtAozBeAM8yL6KDCfX
+         p7RsQVw7Agp94ssIWlE1hC8OBed8fSMUx4LXiAeMbV4SnGgh3qmPu8RDOJPHQlwSeG5m
+         mWbAheIMz8qbYhhNpiaBtmTeD99hnfA/Z2mukV/j9uRzJ9lnAmKJlnX14WzA/dWRrmvj
+         AwANh8/wqCCxjktXefOrbsEFbXO1Dqdd1+f26oiM0euKbSTQwneaPjT6rHrVQ0wwCW7h
+         v7Lw==
+X-Gm-Message-State: AOAM531c6AVbEX4dMrskl99UCNeYQlk9z32W6ptiebKsW63t1uMOB9W6
+        uwHD7HPo8dk+HJ7fFJ4NkDtjpLpqxrmUW6NBl7PYIg==
+X-Google-Smtp-Source: ABdhPJxlssl1XXH66X2TH3FhfIBihID7S+Lm5y7EO4keArRHgU0iaYIJ/bJJ2GMk/tFg8zNUqhTvgsv6yAGt6lVuHgw=
+X-Received: by 2002:a05:651c:211c:: with SMTP id a28mr4191975ljq.8.1629125308684;
+ Mon, 16 Aug 2021 07:48:28 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1628618950.git.jonathantanmy@google.com>
- <cover.1628888668.git.jonathantanmy@google.com> <94db10a4e5943d689113693c64633ddffa5508cc.1628888668.git.jonathantanmy@google.com>
-In-Reply-To: <94db10a4e5943d689113693c64633ddffa5508cc.1628888668.git.jonathantanmy@google.com>
+ <cover.1628888668.git.jonathantanmy@google.com> <50c69a988b2afca68f06e36949e4a8cc3a93940a.1628888668.git.jonathantanmy@google.com>
+In-Reply-To: <50c69a988b2afca68f06e36949e4a8cc3a93940a.1628888668.git.jonathantanmy@google.com>
 From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Mon, 16 Aug 2021 11:32:43 -0300
-Message-ID: <CAHd-oW7nv-Y_QmhA2gcX5GoWxus88inmbcXQ5kPiSRLBdhtoUw@mail.gmail.com>
-Subject: Re: [PATCH v2 7/8] submodule-config: pass repo upon blob config read
+Date:   Mon, 16 Aug 2021 11:48:17 -0300
+Message-ID: <CAHd-oW7cLgZZhGdvONfujDBpNtG1xXfECE=1hLeUzCm8U-N9QQ@mail.gmail.com>
+Subject: Re: [PATCH v2 6/8] grep: add repository to OID grep sources
 To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git <git@vger.kernel.org>, Emily Shaffer <emilyshaffer@google.com>,
         Junio C Hamano <gitster@pobox.com>,
@@ -70,89 +70,137 @@ X-Mailing-List: git@vger.kernel.org
 
 On Fri, Aug 13, 2021 at 6:05 PM Jonathan Tan <jonathantanmy@google.com> wrote:
 >
-> When reading the config of a submodule, if reading from a blob, read
-> using an explicitly specified repository instead of by adding the
-> submodule's ODB as an alternate and then reading an object from
-> the_repository.
-
-Great!
-
-At first, I thought this would also allow us to remove another
-NEEDSWORK comment in grep_submodule(), together with a lock
-protection:
-
-/*
- * NEEDSWORK: repo_read_gitmodules() might call
- * add_to_alternates_memory() via config_from_gitmodules(). This
- * operation causes a race condition with concurrent object readings
- * performed by the worker threads. That's why we need obj_read_lock()
- * here. It should be removed once it's no longer necessary to add the
- * subrepo's odbs to the in-memory alternates list.
- */
-obj_read_lock();
-repo_read_gitmodules(subrepo, 0);
-
-Back when I wrote this comment, my conclusion was that the alternates
-mechanics were the only thread-unsafe object-reading operations in
-repo_read_gitmodules()'s call chains. So once the add-to-alternates
-mechanics were gone, we could also remove the lock.
-
-But with further inspection now, I see that this is not really the
-case. For example, we have a few global variables in packfile.c
-collecting some statistics (pack_mmap_calls, pack_open_windows, etc.)
-which are updated on obj readings from both the_repository *and*
-submodules. So I no longer think its safe to remove the
-obj_read_lock() protection here, as the NEEDSWORK comment suggests,
-even if we are not using the alternates list anymore.
-
-Do you want to remove this comment in your patchset? I can also send a
-follow-up patch explaining this situation and removing the comment
-(but not the locking), if you prefer.
-
+> Record the repository whenever an OID grep source is created, and teach
+> the worker threads to explicitly provide the repository when accessing
+> objects.
+>
 > Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 > ---
-[...]
-> diff --git a/submodule-config.c b/submodule-config.c
-> index 2026120fb3..f95344028b 100644
-> --- a/submodule-config.c
-> +++ b/submodule-config.c
-> @@ -649,9 +649,10 @@ static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void
->                         config_source.file = file;
->                 } else if (repo_get_oid(repo, GITMODULES_INDEX, &oid) >= 0 ||
->                            repo_get_oid(repo, GITMODULES_HEAD, &oid) >= 0) {
-> +                       config_source.repo = repo;
->                         config_source.blob = oidstr = xstrdup(oid_to_hex(&oid));
->                         if (repo != the_repository)
-> -                               add_to_alternates_memory(repo->objects->odb->path);
-> +                               add_submodule_odb_by_path(repo->objects->odb->path);
+>  builtin/grep.c | 15 ++++++---------
+>  grep.c         |  7 +++++--
+>  grep.h         | 13 ++++++++++++-
+>  3 files changed, 23 insertions(+), 12 deletions(-)
+>
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 69d8ea0808..d27e95e092 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -349,7 +349,7 @@ static int grep_oid(struct grep_opt *opt, const struct object_id *oid,
+>         struct grep_source gs;
+>
+>         grep_source_name(opt, filename, tree_name_len, &pathbuf);
+> -       grep_source_init_oid(&gs, pathbuf.buf, path, oid);
+> +       grep_source_init_oid(&gs, pathbuf.buf, path, oid, opt->repo);
+>         strbuf_release(&pathbuf);
+>
+>         if (num_threads > 1) {
+> @@ -462,14 +462,11 @@ static int grep_submodule(struct grep_opt *opt,
+>         repo_read_gitmodules(subrepo, 0);
+>
+>         /*
+> -        * NEEDSWORK: This adds the submodule's object directory to the list of
+> -        * alternates for the single in-memory object store.  This has some bad
+> -        * consequences for memory (processed objects will never be freed) and
+> -        * performance (this increases the number of pack files git has to pay
+> -        * attention to, to the sum of the number of pack files in all the
+> -        * repositories processed so far).  This can be removed once the object
+> -        * store is no longer global and instead is a member of the repository
+> -        * object.
+> +        * All code paths tested by test code no longer need submodule ODBs to
+> +        * be added as alternates, but add it to the list just in case.
+> +        * Submodule ODBs added through add_submodule_odb_by_path() will be
+> +        * lazily registered as alternates when needed (and except in an
+> +        * unexpected code interaction, it won't be needed).
 
-Ok. Like in grep_submodule(), this should no longer add the submodule
-ODB to the alternates list, so this call is now mostly used as a
-fallback and also for testing.
+Nice.
 
-To see if we are indeed testing this add-to-alternates case, I
-reverted the change that made the code read from the submodule instead
-of the_repository:
+>          */
+>         add_submodule_odb_by_path(subrepo->objects->odb->path);
+>         obj_read_unlock();
+> diff --git a/grep.c b/grep.c
+> index 8a8105c2eb..79598f245f 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -1863,7 +1863,8 @@ void grep_source_init_file(struct grep_source *gs, const char *name,
+>  }
+>
+>  void grep_source_init_oid(struct grep_source *gs, const char *name,
+> -                         const char *path, const struct object_id *oid)
+> +                         const char *path, const struct object_id *oid,
+> +                         struct repository *repo)
+>  {
+>         gs->type = GREP_SOURCE_OID;
+>         gs->name = xstrdup_or_null(name);
+> @@ -1872,6 +1873,7 @@ void grep_source_init_oid(struct grep_source *gs, const char *name,
+>         gs->size = 0;
+>         gs->driver = NULL;
+>         gs->identifier = oiddup(oid);
+> +       gs->repo = repo;
+>  }
+>
+>  void grep_source_clear(struct grep_source *gs)
+> @@ -1900,7 +1902,8 @@ static int grep_source_load_oid(struct grep_source *gs)
+>  {
+>         enum object_type type;
+>
+> -       gs->buf = read_object_file(gs->identifier, &type, &gs->size);
+> +       gs->buf = repo_read_object_file(gs->repo, gs->identifier, &type,
+> +                                       &gs->size);
+>         if (!gs->buf)
+>                 return error(_("'%s': unable to read %s"),
+>                              gs->name,
+> diff --git a/grep.h b/grep.h
+> index 480b3f5bba..24c6b64cea 100644
+> --- a/grep.h
+> +++ b/grep.h
+> @@ -120,7 +120,16 @@ struct grep_opt {
+>         struct grep_pat *header_list;
+>         struct grep_pat **header_tail;
+>         struct grep_expr *pattern_expression;
+> +
+> +       /*
+> +        * NEEDSWORK: See if we can remove this field, because the repository
+> +        * should probably be per-source, not per-repo.
 
-diff --git a/config.c b/config.c
-index a85c12e6cc..cd37a9dcd9 100644
---- a/config.c
-+++ b/config.c
-@@ -1805,7 +1805,7 @@ int git_config_from_blob_oid(config_fn_t fn,
-        unsigned long size;
-        int ret;
+Hmm, I think the "not per-repo" part is a bit confusing, as it refers
+to "the repository" ("the repository should not be per-repo"?) Could
+we remove that part?
 
--       buf = repo_read_object_file(repo, oid, &type, &size);
-+       buf = read_object_file(oid, &type, &size);
+Maybe we could also be a bit more specific regarding the suggested
+conversion:  "See if we can remove this field, because the repository
+should probably be per-source. That is, grep.c functions using
+`grep_opt.repo` should probably start using `grep_source.repo`
+instead." (But that's nitpicking from my part, feel free to ignore
+it.)
 
-Then, I ran t7814-grep-recurse-submodules.sh , where you've added the
-GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1 envvar. This correctly
-produced the following error:
-
-BUG: submodule.c:205: register_all_submodule_odb_as_alternates() called
-[...]
-not ok 23 - grep --recurse-submodules with submodules without
-.gitmodules in the working tree
-
-Nice! So the change made by this patch is covered by test 23. I think
-it would be nice to mention that in this patch's message.
+>             [...] This is potentially the
+> +        * cause of at least one bug - "git grep" ignoring the textconv
+> +        * attributes from submodules. See [1] for more information.
+> +        * [1] https://lore.kernel.org/git/CAHd-oW5iEQarYVxEXoTG-ua2zdoybTrSjCBKtO0YT292fm0NQQ@mail.gmail.com/
+> +        */
+>         struct repository *repo;
+> +
+>         const char *prefix;
+>         int prefix_length;
+>         regex_t regexp;
+> @@ -187,6 +196,7 @@ struct grep_source {
+>                 GREP_SOURCE_BUF,
+>         } type;
+>         void *identifier;
+> +       struct repository *repo; /* if GREP_SOURCE_OID */
+>
+>         char *buf;
+>         unsigned long size;
+> @@ -198,7 +208,8 @@ struct grep_source {
+>  void grep_source_init_file(struct grep_source *gs, const char *name,
+>                            const char *path);
+>  void grep_source_init_oid(struct grep_source *gs, const char *name,
+> -                         const char *path, const struct object_id *oid);
+> +                         const char *path, const struct object_id *oid,
+> +                         struct repository *repo);
+>  void grep_source_clear_data(struct grep_source *gs);
+>  void grep_source_clear(struct grep_source *gs);
+>  void grep_source_load_driver(struct grep_source *gs,
+> --
+> 2.33.0.rc1.237.g0d66db33f3-goog
+>
