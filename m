@@ -8,99 +8,91 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2896C4320A
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 09:10:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DFC1C4338F
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 09:10:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A6496113A
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 09:10:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 018736113A
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 09:10:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235171AbhHPJLB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 05:11:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47122 "EHLO
+        id S235236AbhHPJLE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 05:11:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235091AbhHPJLA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 05:11:00 -0400
+        with ESMTP id S235091AbhHPJLD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 05:11:03 -0400
 Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79F90C061764
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 02:10:29 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id o20so25757949oiw.12
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 02:10:29 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91C9AC061764
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 02:10:32 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id o185so25698103oih.13
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 02:10:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=S0X0QqbgBQoqTrKw0OU/KboIDFkecYk7oQsICFv+w0s=;
-        b=sZBtrQowXNySn9pz8LgvC/wPCv8x64KkI9NSXimnKB3jNk9JX2mC64ZSAWnf+yAV7c
-         Jj/VqGhvmJrPquzcYNBRGxewhGuhQCKn6+3dSck522iwQnmuzLqRu992vfl2ZyoLejVj
-         Djjh4DkdQShJsGhv9WvoDzIwhYsHyStylgV9itA/YLvN4ycI0fo1tsnaQP40Gn4lA4u+
-         PGG1NOf0SV1iVhktfaSgTLk+wKhX+MTUKVYw1JNZJZRnc+7iLD9j2FTOsQrH9lG8Bm7n
-         jkKmUIfdVr+NscPNWgsx+MuDYbaLHQ3686ETMbi+DmyFLp8EBN3NCTXb3LoirszWzo/X
-         rU2A==
+        bh=lmMOjKD2GdJ3kfvxotA5vQuZ/R3UdAVe9/YJgY3VHPw=;
+        b=MFeSYuA0JsA7aDd7KCGMv+FRi5rFTOXzxEqybpnzYfhVBYX9gC0ntCTrbs5y4IQM6r
+         FMRy4E7LbV/lKh7oggRzT7j2gpCmg/tyK919HpLE0Rvxh0IreuO6gIOH8Tpsk4wWVdsR
+         2xJ7XAoGri+UGR0rH/OInR5kZqkvM6CmPOAlEOiAYJ0r2nSP4rKN2jMMx0qdXJLqDnPf
+         0MTWXru1Z33cQZaoL8WuPxiSMR9pn9zLXiPhZPUrYp8bo4EW+NI59mTaGseGSbpjnZJa
+         ofHavBfYymy39qh9QdguzU0FbqX0HDojA/lFPkRFwACnMTzcbvyuK88sSFbhlswIVTIS
+         OWfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=S0X0QqbgBQoqTrKw0OU/KboIDFkecYk7oQsICFv+w0s=;
-        b=fg1Ov8MWZVuU0pOdwNKVy/7F7qDPDQizaXl3Fw6sLG4HfPMtj5lSJ+fnAnXQNsWJT0
-         EB1bx4fyFLoUjqB3y1wsSpdQFhUkN2Urz6oVYWDotMu5Jv4vmd8ULUJzKaAw+U+65QK0
-         R0B7WWO8psbUG5zWYiDUE4ubRKjt0Z1JBVopFzg3isTRpEaejrFvCXx7IQIibmNcDiJt
-         UjYXIbqsJaDwud+JqX+/ky2SQ8MhPGsL1Ving+XA7h5ybpkeHD/8GHGdDNxdetDL6nzB
-         PcCIRult2ZWT2jRQeU3XB18OP2aWUXJrs6XVH06WdxYhofuyGylx8MV9uyD8xBCT+U8z
-         Viqw==
-X-Gm-Message-State: AOAM53228WeoUJ4OFWYo1y+1FTV748yucMdgPtO/eL3w9pim0+LMjhxq
-        5acqS45qXspvWRFMRCg4D/UdUY5iboM=
-X-Google-Smtp-Source: ABdhPJx/KFQD59HKgs4YTd93IFMxTi2n1UFHYcWkV3E2YZpUvHXBi0PUA51Tt7uNAqFqktAdbGG0/w==
-X-Received: by 2002:a54:4182:: with SMTP id 2mr811832oiy.66.1629105028719;
-        Mon, 16 Aug 2021 02:10:28 -0700 (PDT)
+        bh=lmMOjKD2GdJ3kfvxotA5vQuZ/R3UdAVe9/YJgY3VHPw=;
+        b=cSSQ1zF4wb4WFqM365pI19YLgwCVHuVIyAHefdbWNrROJ/4CuNAndNp3jzMIEGX+kU
+         cNhF2wGAZ9zS+QJWQtTXtxGN5XtYTWj/wad1l1J5OjEruUOHVTG69/plWAbtDjyXWUhb
+         maW4wGET3+AgyWNTTsKpC2E0SJh0HCDL6N8KZcZ50ydaJzZW1N79MNCtd02cCZMyGxtL
+         YNR4npL+VHx7QRlb7KdmUF/jva9fgstHaxFSsRWZmCQAUz9UXf8EVHhtZsspNRtVSC36
+         DYsqLojj5iF50Ey/J60QrZCA5+AamPbuNBIswXiNePX4Cw+XDj2jBNtwyAHAW2DG2kip
+         O29w==
+X-Gm-Message-State: AOAM5334SPbuDdvBabcXHKs9DW/ZxVgu3oVpz4MLeA2u2/O5bO3K0gM6
+        NsMw3yQ9fjmTmjGnXGMAlAIpdmYDtyk=
+X-Google-Smtp-Source: ABdhPJyK0/VFAJJciqrcNVa5+Iz/RoQiZnpF+0z62tObX7h3bzCzZE5TrbgjtdRwn17UQzFKIiIuUQ==
+X-Received: by 2002:a05:6808:2208:: with SMTP id bd8mr11244721oib.110.1629105031825;
+        Mon, 16 Aug 2021 02:10:31 -0700 (PDT)
 Received: from localhost (fixed-187-189-69-1.totalplay.net. [187.189.69.1])
-        by smtp.gmail.com with ESMTPSA id m206sm1973603oif.23.2021.08.16.02.10.28
+        by smtp.gmail.com with ESMTPSA id q62sm1985977oih.57.2021.08.16.02.10.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Aug 2021 02:10:28 -0700 (PDT)
+        Mon, 16 Aug 2021 02:10:31 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     David Aguilar <davvid@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 try4 1/4] completion: bash: fix prefix detection in branch.*
-Date:   Mon, 16 Aug 2021 04:10:22 -0500
-Message-Id: <20210816091025.548095-2-felipe.contreras@gmail.com>
+Subject: [PATCH v3 try4 3/4] completion: bash: fix for multiple dash commands
+Date:   Mon, 16 Aug 2021 04:10:24 -0500
+Message-Id: <20210816091025.548095-4-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0.48.g096519100f
 In-Reply-To: <20210816091025.548095-1-felipe.contreras@gmail.com>
 References: <20210816091025.548095-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Otherwise we are completely ignoring the --cur argument.
+Otherwise options of commands like 'for-each-ref' are not completed.
 
-The issue can be tested with:
-
-  git clone --config=branch.<tab>
-
-Reviewed-by: SZEDER Gábor <szeder.dev@gmail.com>
 Tested-by: David Aguilar <davvid@gmail.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 4bdd27ddc8..6bcf97ce79 100644
+index 7aea1abda5..b7988f0485 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -2650,8 +2650,8 @@ __git_complete_config_variable_name ()
- 		return
- 		;;
- 	branch.*)
--		local pfx="${cur%.*}."
--		cur_="${cur#*.}"
-+		local pfx="${cur_%.*}."
-+		cur_="${cur_#*.}"
- 		__gitcomp_direct "$(__git_heads "$pfx" "$cur_" ".")"
- 		__gitcomp_nl_append $'autoSetupMerge\nautoSetupRebase\n' "$pfx" "$cur_" "$sfx"
- 		return
+@@ -421,7 +421,7 @@ __gitcomp_builtin ()
+ 	local incl="${2-}"
+ 	local excl="${3-}"
+ 
+-	local var=__gitcomp_builtin_"${cmd/-/_}"
++	local var=__gitcomp_builtin_"${cmd//-/_}"
+ 	local options
+ 	eval "options=\${$var-}"
+ 
 -- 
 2.32.0.48.g096519100f
 
