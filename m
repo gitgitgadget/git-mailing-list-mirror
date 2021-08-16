@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9695BC4338F
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 21:10:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37871C432BE
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 21:10:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A57A60F39
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 21:10:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1C99E60F11
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 21:10:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233393AbhHPVKm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 17:10:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45358 "EHLO
+        id S233453AbhHPVKn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 17:10:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233451AbhHPVKl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 17:10:41 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C78BC0617AD
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 14:10:08 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id v130-20020a25c5880000b0290593c8c353ffso18145307ybe.7
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 14:10:08 -0700 (PDT)
+        with ESMTP id S233379AbhHPVKm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 17:10:42 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B9D8C061764
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 14:10:10 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id f8-20020a2585480000b02905937897e3daso17999252ybn.2
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 14:10:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=+Vu0e8HWyExKevJfKr8agDTmd134b1/87ePU0sCd1Qw=;
-        b=IiUWQHm/OaiGeRoI2AGHfciFP6qlzmt0NXmbsIoTjCD3DdqotFwd9ED2L22fLfxleB
-         35YftMnni2JNJ9efJM11dmI1JFPGkcju4BlozYIqdP1XVeYjchuaHuhpPTDq3M8Hw11J
-         EwkCooRhEZjD96OHbUD64oNRuBkj3pLNtmBKoy6UiOjdOrhHpVrS+jRa315SpBjTphM1
-         rUZsBUkF5OEiDxmXwpLFa5YQSDNiBPGQ3R3+NtgeOe0F1S8qSdupGnN57VxlY3Lwkxo5
-         oFD+6lBBPo+RgPCfjuTBTLX7dlfSvwhhgOJ6o2XPn2i8iNDP60EYFfaueMSBZKeUmBrC
-         NE2Q==
+        bh=U7yZxbJqMHc1pHxmMU8fL8bNbaBykjpuYGi3VG2SyVM=;
+        b=tUjV6uJu1T05SSz2NF12Dn5gxaSSk5SZgT1Reca77R1ECQZqcfUN6Cu8rjtKrPIMLG
+         PzJs/Vs8WTfRdrVBFbG/ODLNJ8FZbhFJgm2a9AFP/HF9dk1Hgtc5ewARL/of2QVpyzZh
+         zOPFhfxHaMghteY7vEVyYMkq7oSI4RGNxUdRAsVXqRkt51lG+NIgy6ywNWPdbuABUzcj
+         Ur/bsXaMrC3BMKm0COTOugBBoX1aSRk77XMWOZBjiRtmgBYvBjO1xf6AMxu0LX46DMJV
+         MVkOH6tzLtXVqmGhgxKki4LPCasHY592/LITNpGGUj3C/KYJbVow1zW641ij/6La2M4r
+         TDZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=+Vu0e8HWyExKevJfKr8agDTmd134b1/87ePU0sCd1Qw=;
-        b=R05DDCYp4ggJ+M3L54hUV2P56588duVF0TMTPS9VR+Rg+VicoZ9wDJ/hk898gKPurP
-         IT95y5nW0nA+XBBZ0nXJznqKBXhYcuv9QDDjn2SB31mIehgxo9DLpIWfORlrJSXWfnVE
-         9KLdE8WAJkY2wwIWdl5hl20ePSHoW0iihUOAHv0v+zkJXXytqHPxJQOylp8mcUbqRGKT
-         Z9+2cSDSuvsWTZ/nIFASlNjAoSkpwbvKVTlQngRTTn6bqMG/lSP2Puh/t3fZexd7Hups
-         DoPHj6vgc0Xph6lVypdOBAClsgdrExAjv9oIWdV95EvsBztbbRczkKtp2vj5dwtxFNsr
-         o5lA==
-X-Gm-Message-State: AOAM531d9QEYXSX3FdwXKpCqbTvK2XV1pvXdVbSJYviovEaWWNvK6vIT
-        ssTlldk/npLwFfgnflTsJEztyssid7vqOt8AvalvBO9VUYvYjhcJnTJgLUdJMmdG9knSYC5w3nB
-        e32paElpv+O3Ikr6C9HEikCCtLv/svn5Oz8NePPcSCSCHEkadJfaYhFmHcBiMo6EoxTaJPYZaqH
-        Y7
-X-Google-Smtp-Source: ABdhPJz0ewmPCwOEZxoDN257Th/ZYmZCOkYFKL1Yg1OY0LdQa1MzxGE5gNP9VgPAWNKL+/JprVBJDv73LFhbJ0D2VXwg
+        bh=U7yZxbJqMHc1pHxmMU8fL8bNbaBykjpuYGi3VG2SyVM=;
+        b=XATVt4JS7tbKZXdXkQceuaegHIGte6G/iHYDUpff+gov31feLWAVXoRbbqQ9fR3jR+
+         t/GC+aTSIhnSWbhsKci8aXmzLgJMV7TKROcRGqE+JUusCewVnQrsIi7O+i9Zcjl5GChH
+         lYhJBkNR0rryWDeu+4evnI1nzaJGSKgUYGUMPZouH+5WImo/hMAzYStjWZOPllPMo9ZH
+         Ven4+1Qxf8ZEAaI11WUeOeewqGQezIranx1pMZLwX6VDfy0196WPFp9jm+wjOAiNuQM8
+         gm8fYLYxSSFdqf+AQ8026DIDIte5W2RrJ/P+6qsf0BDYS8hrq5gptMpOvqEpwbolL3An
+         9/bw==
+X-Gm-Message-State: AOAM530JYZSskmozxj4vQ8hIENmFYZKNwo6UyZN1l2kmmE4kXetUe1sX
+        7kgkQiajypKJwKhyJWNb7JHa1//0YXz6Ae1CysIaYjIHE4MjodYhxIhycOGINo/PDlDQhpPJFgY
+        qIZESkUVcQ2cVv2zt0iTyOWU20HKm+sEQXiPiPIdnghY11v8lfzeYZbkoFaAg8IzfmQGbmrsJOb
+        39
+X-Google-Smtp-Source: ABdhPJwJVeSDh3TcpAQGENh/Fz4CZ/e3Bi3Ea4zA5ZCwoOmzye4O/shQqkcJ8+B/2Ocevoc60D7D4ctsLRA6gsQ+5dqU
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a25:bb93:: with SMTP id
- y19mr24245ybg.266.1629148207787; Mon, 16 Aug 2021 14:10:07 -0700 (PDT)
-Date:   Mon, 16 Aug 2021 14:09:54 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a25:2c82:: with SMTP id
+ s124mr409ybs.17.1629148209433; Mon, 16 Aug 2021 14:10:09 -0700 (PDT)
+Date:   Mon, 16 Aug 2021 14:09:55 -0700
 In-Reply-To: <cover.1629148153.git.jonathantanmy@google.com>
-Message-Id: <050deacfb7df41192b57ac42c5ea8fb646106d78.1629148153.git.jonathantanmy@google.com>
+Message-Id: <7d1eeac4b50abd46c99f61eaddcc72f8bb1de043.1629148153.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1628618950.git.jonathantanmy@google.com> <cover.1629148153.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.33.0.rc1.237.g0d66db33f3-goog
-Subject: [PATCH v3 4/8] grep: read submodule entry with explicit repo
+Subject: [PATCH v3 5/8] grep: allocate subrepos on heap
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, matheus.bernardino@usp.br,
@@ -71,54 +71,130 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace an existing parse_object_or_die() call (which implicitly works
-on the_repository) with a function call that allows a repository to be
-passed in. There is no such direct equivalent to parse_object_or_die(),
-but we only need the type of the object, so replace with
-oid_object_info().
+Currently, struct repository objects corresponding to submodules are
+allocated on the stack in grep_submodule(). This currently works because
+they will not be used once grep_submodule() exits, but a subsequent
+patch will require these structs to be accessible for longer (perhaps
+even in another thread). Allocate them on the heap and clear them only
+at the very end.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/grep.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ builtin/grep.c | 39 ++++++++++++++++++++++++++++++---------
+ 1 file changed, 30 insertions(+), 9 deletions(-)
 
 diff --git a/builtin/grep.c b/builtin/grep.c
-index e454335e9d..9e61c7c993 100644
+index 9e61c7c993..fa7fd08150 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -457,27 +457,27 @@ static int grep_submodule(struct grep_opt *opt,
- 	subopt.repo = &subrepo;
+@@ -65,6 +65,9 @@ static int todo_done;
+ /* Has all work items been added? */
+ static int all_work_added;
+ 
++static struct repository **repos_to_free;
++static size_t repos_to_free_nr, repos_to_free_alloc;
++
+ /* This lock protects all the variables above. */
+ static pthread_mutex_t grep_mutex;
+ 
+@@ -168,6 +171,19 @@ static void work_done(struct work_item *w)
+ 	grep_unlock();
+ }
+ 
++static void free_repos(void)
++{
++	int i;
++
++	for (i = 0; i < repos_to_free_nr; i++) {
++		repo_clear(repos_to_free[i]);
++		free(repos_to_free[i]);
++	}
++	FREE_AND_NULL(repos_to_free);
++	repos_to_free_nr = 0;
++	repos_to_free_alloc = 0;
++}
++
+ static void *run(void *arg)
+ {
+ 	int hit = 0;
+@@ -415,19 +431,24 @@ static int grep_submodule(struct grep_opt *opt,
+ 			  const struct object_id *oid,
+ 			  const char *filename, const char *path, int cached)
+ {
+-	struct repository subrepo;
++	struct repository *subrepo;
+ 	struct repository *superproject = opt->repo;
+ 	const struct submodule *sub;
+ 	struct grep_opt subopt;
+-	int hit;
++	int hit = 0;
+ 
+ 	sub = submodule_from_path(superproject, null_oid(), path);
+ 
+ 	if (!is_submodule_active(superproject, path))
+ 		return 0;
+ 
+-	if (repo_submodule_init(&subrepo, superproject, sub))
++	subrepo = xmalloc(sizeof(*subrepo));
++	if (repo_submodule_init(subrepo, superproject, sub)) {
++		free(subrepo);
+ 		return 0;
++	}
++	ALLOC_GROW(repos_to_free, repos_to_free_nr + 1, repos_to_free_alloc);
++	repos_to_free[repos_to_free_nr++] = subrepo;
+ 
+ 	/*
+ 	 * NEEDSWORK: repo_read_gitmodules() might call
+@@ -438,7 +459,7 @@ static int grep_submodule(struct grep_opt *opt,
+ 	 * subrepo's odbs to the in-memory alternates list.
+ 	 */
+ 	obj_read_lock();
+-	repo_read_gitmodules(&subrepo, 0);
++	repo_read_gitmodules(subrepo, 0);
+ 
+ 	/*
+ 	 * NEEDSWORK: This adds the submodule's object directory to the list of
+@@ -450,11 +471,11 @@ static int grep_submodule(struct grep_opt *opt,
+ 	 * store is no longer global and instead is a member of the repository
+ 	 * object.
+ 	 */
+-	add_submodule_odb_by_path(subrepo.objects->odb->path);
++	add_submodule_odb_by_path(subrepo->objects->odb->path);
+ 	obj_read_unlock();
+ 
+ 	memcpy(&subopt, opt, sizeof(subopt));
+-	subopt.repo = &subrepo;
++	subopt.repo = subrepo;
  
  	if (oid) {
--		struct object *object;
-+		enum object_type object_type;
- 		struct tree_desc tree;
- 		void *data;
- 		unsigned long size;
+ 		enum object_type object_type;
+@@ -464,9 +485,9 @@ static int grep_submodule(struct grep_opt *opt,
  		struct strbuf base = STRBUF_INIT;
  
  		obj_read_lock();
--		object = parse_object_or_die(oid, NULL);
-+		object_type = oid_object_info(&subrepo, oid, NULL);
+-		object_type = oid_object_info(&subrepo, oid, NULL);
++		object_type = oid_object_info(subrepo, oid, NULL);
  		obj_read_unlock();
- 		data = read_object_with_reference(&subrepo,
--						  &object->oid, tree_type,
-+						  oid, tree_type,
+-		data = read_object_with_reference(&subrepo,
++		data = read_object_with_reference(subrepo,
+ 						  oid, tree_type,
  						  &size, NULL);
  		if (!data)
--			die(_("unable to read tree (%s)"), oid_to_hex(&object->oid));
-+			die(_("unable to read tree (%s)"), oid_to_hex(oid));
+@@ -484,7 +505,6 @@ static int grep_submodule(struct grep_opt *opt,
+ 		hit = grep_cache(&subopt, pathspec, cached);
+ 	}
  
- 		strbuf_addstr(&base, filename);
- 		strbuf_addch(&base, '/');
+-	repo_clear(&subrepo);
+ 	return hit;
+ }
  
- 		init_tree_desc(&tree, data, size);
- 		hit = grep_tree(&subopt, pathspec, &tree, &base, base.len,
--				object->type == OBJ_COMMIT);
-+				object_type == OBJ_COMMIT);
- 		strbuf_release(&base);
- 		free(data);
- 	} else {
+@@ -1182,5 +1202,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		run_pager(&opt, prefix);
+ 	clear_pathspec(&pathspec);
+ 	free_grep_patterns(&opt);
++	free_repos();
+ 	return !hit;
+ }
 -- 
 2.33.0.rc1.237.g0d66db33f3-goog
 
