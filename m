@@ -2,333 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62765C432BE
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 23:06:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27BCEC4338F
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 23:06:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A37360F35
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 23:06:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 100D660F35
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 23:06:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234765AbhHPXHM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 19:07:12 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62920 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234352AbhHPXGw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 19:06:52 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AAB13F6116;
-        Mon, 16 Aug 2021 19:06:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=B
-        BGoxdN1FBcAv6h5fY0Pk1zvhencuPEzUByMEyJtQK0=; b=Gex1oFgS69nJEN8kr
-        8S8RNsOClrvYz59x/sm++IgdsZDMZPLPsGJsm+1/PF5oGbT80DJYxV7w3d2QnRf3
-        6Jg+Decx/nb/ilCjQe6YOvcVs9izaEbZ4P+iygI/Z1AWrEkRQpkP85t9XuXgfkHs
-        c7g64WnWSHKTlri/JPH9wePTHQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A1AACF6115;
-        Mon, 16 Aug 2021 19:06:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 22DF4F6114;
-        Mon, 16 Aug 2021 19:06:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: A note from the maintainer
-Date:   Mon, 16 Aug 2021 16:06:18 -0700
-Message-ID: <xmqqpmudng5x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 90E1EE9E-FEE6-11EB-8D4C-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+        id S234258AbhHPXHW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 19:07:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43760 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234525AbhHPXHA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 19:07:00 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E806C06129D
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 16:06:24 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id m4-20020a170902db04b029012d5b1d78d5so11664205plx.15
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 16:06:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=hB8Bha1PZM8xOwTJIZ7RCODtbHr5POuJYe+THbm+qno=;
+        b=nvLy6weYJGAU7yb/TvwBn978N53VF1tr07Oji9NlvuoEKYHDd65DZQy5eO4DZjAG/B
+         CDUJbtkjylIYy/LjaANJdkdl7PjEQWPDsHOF8qzCuiab6CMcROOYJVtPfPV0DLILPYYw
+         oBYC3CszAV14OyWDmPqLiNkmo2h3MbEmv42UqC/Wi31XrLQRKoQzhu7G42USUxdlCDv4
+         EvMl06KQn5iDfe71ILyPw2mRu/HwCbS8IpCdM2aGK1wMk6hw5Ubxh7nD1JaHWWQ1bhvj
+         kjck8IsI47LWT1Vuq+rhJG9nzvHmvekB7c/37YZFbkDKIC6kDHoMJivUvV9nKBmRhIBP
+         ej0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=hB8Bha1PZM8xOwTJIZ7RCODtbHr5POuJYe+THbm+qno=;
+        b=cVMI/80NnxYQASncvE1LsWUfS6uK/HUVBxQy4uZODvRkavv9VS6F/FDSsazxck4EcS
+         puPrf/lLxu2s1yls307stq54IK4D0xw965cZvSCfFqX1/zu/c9C8zVzzNbD58Gg6DjcR
+         x88usOeI6117djiKQFHyWPx2gCijwhoy3o/5S3RzZ0yqdiaPHtzGLUNEevcUyWeEZfCv
+         P2i5lA2eQrJzok+wBfaBUP/rdO47IG2DNh0ti1+JiivB2G73CrjEi/STXIWcOEHWKAWD
+         Xq+ZGZ3EtmgOWRO9fCSJjph5+565+LMmxUspYYv+adYX4YVddFvbvlY0PCOytrwP7AvL
+         ETCQ==
+X-Gm-Message-State: AOAM530d7J09fUHHLL8dIaqj6+TMbrEyLlo54PB2oy8vVhZqxnUhdZ35
+        qYiV8K3Ev+OVDs43XftvdU4JzOkl8Bgn1gkGxPss
+X-Google-Smtp-Source: ABdhPJyA3esrXlfrM9CO4SFs4KfpXFPHG7HaNshkA0WTqnYdMWmYV6hkQgULLpL/LSrrKmWovrUJPBLLQpm2F+rIZK/n
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:6946:b029:12d:55f4:c9bf with
+ SMTP id k6-20020a1709026946b029012d55f4c9bfmr487036plt.22.1629155183609; Mon,
+ 16 Aug 2021 16:06:23 -0700 (PDT)
+Date:   Mon, 16 Aug 2021 16:06:20 -0700
+In-Reply-To: <xmqq4kbyfkq4.fsf@gitster.g>
+Message-Id: <20210816230620.3507080-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqq4kbyfkq4.fsf@gitster.g>
+X-Mailer: git-send-email 2.33.0.rc1.237.g0d66db33f3-goog
+Subject: Re: [PATCH] transport: no warning if no server wait-for-done
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jrnieder@gmail.com, jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-Welcome to the Git development community.
-
-This message is written by the maintainer and talks about how Git
-project is managed, and how you can work with it.
-
-The current maintainer is Junio C Hamano <gitster@pobox.com>; please
-do not send any private message to this address, because it is likely
-that such a message will not be seen by any human being.  Spam filters
-learned that legitimate messages to the address come only from a very
-few sender addresses that are known to be good, and messages from all
-others are likely to be spam unless they are also sent to the mailing
-list at the same time (i.e. "Reply-all" to the list message would
-reach the mailbox, but "Reply" will likely be thrown into the spam
-folder).
-
-
-* Mailing list and the community
-
-The development is primarily done on the Git mailing list. Help
-requests, feature proposals, bug reports and patches should be sent to
-the list address <git@vger.kernel.org>.  You don't have to be
-subscribed to send messages.  The convention on the list is to keep
-everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
-I am not subscribed".
-
-As an anti-spam measure, the mailing list software rejects messages
-that are not text/plain and drops them on the floor.  If you are a
-GMail user, you'd want to make sure "Plain text mode" is checked.
-
-Before sending patches, please read Documentation/SubmittingPatches
-and Documentation/CodingGuidelines to familiarize yourself with the
-project convention.
-
-If you sent a patch and you did not hear any response from anybody for
-several days, it could be that your patch was totally uninteresting,
-but it also is possible that it was simply lost in the noise.  Please
-do not hesitate to send a reminder message in such a case.  Messages
-getting lost in the noise may be a sign that those who can evaluate
-your patch don't have enough mental/time bandwidth to process them
-right at the moment, and it often helps to wait until the list traffic
-becomes calmer before sending such a reminder.
-
-The list archive is available at a few public sites:
-
-        http://lore.kernel.org/git/
-        http://marc.info/?l=git
-        http://www.spinics.net/lists/git/
-
-For those who prefer to read it over NNTP:
-
-	nntp://nntp.lore.kernel.org/org.kernel.vger.git
-        nntp://news.public-inbox.org/inbox.comp.version-control.git
-
-are available.
-
-When you point at a message in a mailing list archive, using its
-message ID is often the most robust (if not very friendly) way to do
-so, like this:
-
-	http://lore.kernel.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org
-
-Often these web interfaces accept the message ID with enclosing <>
-stripped (like the above example to point at one of the most important
-message in the Git list).
-
-Some members of the development community can sometimes be found on
-the #git and #git-devel IRC channels on FreeNode (historically, but
-the IRC situation is in flux at the moment).  Their logs are available
-at:
-
-        http://colabti.org/irclogger/irclogger_log/git
-        http://colabti.org/irclogger/irclogger_log/git-devel
-
-There is a volunteer-run newsletter to serve our community ("Git Rev
-News" http://git.github.io/rev_news/).
-
-Git is a member project of software freedom conservancy, a non-profit
-organization (https://sfconservancy.org/).  To reach a committee of
-liaisons to the conservancy, contact them at <git@sfconservancy.org>.
-
-For our expectations on the behaviour of the community participants
-towards each other, see CODE_OF_CONDUCT.md at the top level of the source
-tree, or:
-
-    https://github.com/git/git/blob/master/CODE_OF_CONDUCT.md
-
-
-* Reporting bugs
-
-When you think git does not behave as you expect, please do not stop
-your bug report with just "git does not work".  "I used git in this
-way, but it did not work" is not much better, neither is "I used git
-in this way, and X happend, which is broken".  It often is that git is
-correct to cause X happen in such a case, and it is your expectation
-that is broken. People would not know what other result Y you expected
-to see instead of X, if you left it unsaid.
-
-Please remember to always state
-
- - what you wanted to achieve;
-
- - what you did (the version of git and the command sequence to reproduce
-   the behavior);
-
- - what you saw happen (X above);
-
- - what you expected to see (Y above); and
-
- - how the last two are different.
-
-See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
-hints.  Our `git bugreport` tool gives you a handy way you can use to
-make sure you do not forget these points when filing a bug report.
-
-If you think you found a security-sensitive issue and want to disclose
-it to us without announcing it to wider public, please contact us at
-our security mailing list <git-security@googlegroups.com>.  This is
-a closed list that is limited to people who need to know early about
-vulnerabilities, including:
-
-  - people triaging and fixing reported vulnerabilities
-  - people operating major git hosting sites with many users
-  - people packaging and distributing git to large numbers of people
-
-where these issues are discussed without risk of the information
-leaking out before we're ready to make public announcements.
-
-
-* Repositories and documentation.
-
-My public git.git repositories are (mirrored) at:
-
-  https://git.kernel.org/pub/scm/git/git.git/
-  https://kernel.googlesource.com/pub/scm/git/git
-  https://repo.or.cz/alt-git.git/
-  https://github.com/git/git/
-  https://gitlab.com/git-vcs/git/
-
-This one shows not just the main integration branches, but also
-individual topics broken out:
-
-  https://github.com/gitster/git/
-
-A few web interfaces are found at:
-
-  http://git.kernel.org/pub/scm/git/git.git
-  https://kernel.googlesource.com/pub/scm/git/git
-  http://repo.or.cz/w/alt-git.git
-
-Preformatted documentation from the tip of the "master" branch can be
-found in:
-
-  https://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
-  https://repo.or.cz/git-{htmldocs,manpages}.git/
-  https://github.com/gitster/git-{htmldocs,manpages}.git/
-
-The manual pages formatted in HTML for the tip of 'master' can be
-viewed online at:
-
-  https://git.github.io/htmldocs/git.html
-
-
-* How various branches are used.
-
-There are four "integration" branches in git.git repository that track
-the source tree of git: "master", "maint", "next", and "seen".  They
-however almost never get new commits made directly on them.  Instead,
-a branch is forked from either "master" or "maint" for each "topic",
-whether it is a new feature or fix for a bug, and holds a set of
-commits that belong to the same theme, and then such a "topic branch"
-is merged to these integration branches.
-
-The "master" branch is meant to contain what are very well tested and
-ready to be used in a production setting.  Every now and then, a
-"feature release" is cut from the tip of this branch.  They used to be
-named with three dotted decimal digits (e.g. "1.8.5"), but we have
-switched the versioning scheme and "feature releases" are named with
-three-dotted decimal digits that ends with ".0" (e.g. "1.9.0").
-
-The last such release was 2.33 done on August 16th, 2021.  You can
-expect that the tip of the "master" branch is always more stable than
-any of the released versions.
-
-Whenever a feature release is made, "maint" branch is forked off from
-"master" at that point.  Obvious and safe fixes after a feature
-release are merged to this branch and maintenance releases are cut
-from it.  Usually these fixes are merged to the "master" branch first,
-several days before merged to the "maint" branch, to reduce the chance
-of last-minute issues.  The maintenance releases used to be named with
-four dotted decimal, named after the feature release they are updates
-to (e.g. "1.8.5.1" was the first maintenance release for "1.8.5"
-feature release).  These days, maintenance releases are named by
-incrementing the last digit of three-dotted decimal name (e.g.
-"2.29.2" was the second maintenance release for the "2.29" series).
-
-New features never go to the "maint" branch.  It is merged into
-"master" primarily to propagate the description in the release notes
-forward.
-
-A new development does not usually happen on "master". When you send a
-series of patches, after review on the mailing list, a separate topic
-branch is forked from the tip of "master" (or somewhere older, especially
-when the topic is about fixing an earlier bug) and your patches are queued
-there, and kept out of "master" while people test it out. The quality of
-topic branches are judged primarily by the mailing list discussions.
-
-Topic branches that are in good shape are merged to the "next" branch. In
-general, the "next" branch always contains the tip of "master".  It might
-not be quite rock-solid, but is expected to work more or less without major
-breakage. The "next" branch is where new and exciting things take place. A
-topic that is in "next" is expected to be polished to perfection before it
-is merged to "master".  Please help this process by building & using the
-"next" branch for your daily work, and reporting any new bugs you find to
-the mailing list, before the breakage is merged down to the "master".
-
-The "seen" (formerly "pu", proposed updates) branch bundles all the
-remaining topic branches the maintainer happens to have seen.  There
-is no guarantee that the maintainer has enough bandwidth to pick up any
-and all topics that are remotely promising from the list traffic, so
-please do not read too much into a topic being on (or not on) the "seen"
-branch.  This branch is mainly to remind the maintainer that the topics
-in them may turn out to be interesting when they are polished, nothing
-more.  The topics on this branch aren't usually complete, well tested,
-or well documented and they often need further work.  When a topic that
-was in "seen" proves to be in a testable shape, it is merged to "next".
-
-You can run "git log --first-parent master..seen" to see what topics are
-currently in flight.  Sometimes, an idea that looked promising turns out
-to be not so good and the topic can be dropped from "seen" in such a case.
-The output of the above "git log" talks about a "jch" branch, which is an
-early part of the "seen" branch; that branch contains all topics that
-are in "next" and a bit more (but not all of "seen") and is used by the
-maintainer for his daily work.
-
-The two branches "master" and "maint" are never rewound, and "next"
-usually will not be either.  After a feature release is made from
-"master", however, "next" will be rebuilt from the tip of "master"
-using the topics that didn't make the cut in the feature release.
-Some topics that used to be in "next" during the previous cycle may
-get ejected from "next" when this happens.
-
-A natural consequence of how "next" and "seen" bundles topics together
-is that until a topic is merged to "next", updates to it is expected
-by replacing the patch(es) in the topic with an improved version,
-and once a topic is merged to "next", updates to it needs to come as
-incremental patches, pointing out what was wrong in the previous
-patches and how the problem was corrected.
-
-Note that being in "next" is not a guarantee to appear in the next
-release, nor even in any future release.  There were cases that topics
-needed reverting a few commits in them before graduating to "master",
-or a topic that already was in "next" was reverted from "next" because
-fatal flaws were found in it after it was merged to "next".
-
-
-* Other people's trees.
-
-Documentation/SubmittingPatches outlines to whom your proposed changes
-should be sent.  As described in contrib/README, I would delegate fixes
-and enhancements in contrib/ area to the primary contributors of them.
-
-Although the following are included in git.git repository, they have their
-own authoritative repository and maintainers:
-
- - git-gui/ comes from git-gui project, maintained by Pratyush Yadav:
-
-        https://github.com/prati0100/git-gui.git
-
- - gitk-git/ comes from Paul Mackerras's gitk project:
-
-        git://ozlabs.org/~paulus/gitk
-
- - po/ comes from the localization coordinator, Jiang Xin:
-
-	https://github.com/git-l10n/git-po/
-
-When sending proposed updates and fixes to these parts of the system,
-please base your patches on these trees, not git.git (the former two
-even have different directory structures).
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+> >>> -	if (finish_command(&child)) {
+> >>> -		/*
+> >>> -		 * The information that push negotiation provides is useful but
+> >>> -		 * not mandatory.
+> >>> -		 */
+> >>> -		warning(_("push negotiation failed; proceeding anyway with push"));
+> >>> -	}
+> >>
+> >> Perhaps like "optional ancestry negotiation failed---pushing
+> >> normally" or some phrasing that assures the users that pushing
+> >> without negotiation is perfectly normal?
+> >
+> > The question is what the user will do with this information.
+> >
+> > Will they contact the service provider to ask them to turn on push
+> > negotiation?
+> >
+> > Will they turn off push negotiation because they don't want to waste a
+> > round trip?
+> >
+> > Does what they will do depend on _why_ push negotiation failed?  If it
+> > failed because the server didn't declare the capability and the user
+> > has set push.negotate to true to represent "I want to live in the
+> > future by using push negotiation wherever it's available", then the
+> > message is noise.  If it failed due to a bug, then the message is more
+> > relevant to the user --- e.g., should we use a different exit status
+> > to distinguish between these two cases?
+> 
+> I was hoping that the "child" command being run there gives enough
+> clue before the warning message so that the user would already know
+> (that is where my "assures the users" primarily comes from---even we
+> cannot hide that the negotiation poll has failed, the users would be
+> helped by being told that it is OK).
+> 
+> If "child" does not give enough clue to this codepath (via the exit
+> code) or to the end user (via error messages), we probably would
+> want to fix that for that approach to work.
+
+The idea of this patch is to treat it like a user wanting to use
+protocol v2 - if the remote doesn't support it, then the user is
+perfectly fine falling back, and any extra message would be noise
+because the user wouldn't take action on it anyway.
+
+If we think that the user needs to know when push negotiation fails (for
+example, if we think "the user enabled it so the user expects it to
+happen"), then I agree that we should leave the warning messages in and
+also print a message saying that push is still happening anyway (which
+was the approach in the original patch set), and maybe update the
+message to something like Junio suggested [1] to clarify what's going
+on. But I would think that the user doesn't care - for example, I could
+imagine someone globally enabling it and having pushes become
+automatically faster as more and more remotes support it.
+
+[1] https://lore.kernel.org/git/xmqqh7fyfrtl.fsf@gitster.g/
