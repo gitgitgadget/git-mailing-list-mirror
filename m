@@ -6,58 +6,68 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99A8BC4338F
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 16:19:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F425C4338F
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 16:19:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74FA960F58
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 16:19:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DBC1C60F58
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 16:19:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229923AbhHPQTk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 12:19:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48508 "EHLO cloud.peff.net"
+        id S229693AbhHPQUW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 12:20:22 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48518 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231286AbhHPQTe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 12:19:34 -0400
-Received: (qmail 20045 invoked by uid 109); 16 Aug 2021 16:18:52 -0000
+        id S229556AbhHPQUW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 12:20:22 -0400
+Received: (qmail 20071 invoked by uid 109); 16 Aug 2021 16:19:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 16 Aug 2021 16:18:52 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 16 Aug 2021 16:19:50 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15669 invoked by uid 111); 16 Aug 2021 16:18:52 -0000
+Received: (qmail 15691 invoked by uid 111); 16 Aug 2021 16:19:49 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 16 Aug 2021 12:18:52 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 16 Aug 2021 12:19:49 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 16 Aug 2021 12:18:52 -0400
+Date:   Mon, 16 Aug 2021 12:19:49 -0400
 From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] ci: add job for gcc-4.8 to GitHub Actions
-Message-ID: <YRqP7J7Gu0VmB6q2@coredump.intra.peff.net>
-References: <20210816045750.36499-1-carenas@gmail.com>
- <444e7410-c9c9-1b90-da5f-d6862a35c1fc@gmail.com>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Ben Goldberg <ben@benaaron.dev>, git@vger.kernel.org
+Subject: Re: send-email issue
+Message-ID: <YRqQJTyBW6j6b2pW@coredump.intra.peff.net>
+References: <24a88faf-5339-8449-80c4-f6085bd1e098@benaaron.dev>
+ <b4b1dda4-6bf7-f4b1-88c5-9d579a7c56d3@benaaron.dev>
+ <20210813180056.ctzivmakj4bj5apa@nitro.local>
+ <xmqq35rbtx84.fsf@gitster.g>
+ <20210816131143.6ifcbpxp6ilo2nv5@nitro.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <444e7410-c9c9-1b90-da5f-d6862a35c1fc@gmail.com>
+In-Reply-To: <20210816131143.6ifcbpxp6ilo2nv5@nitro.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 16, 2021 at 12:06:46PM -0400, Derrick Stolee wrote:
+On Mon, Aug 16, 2021 at 09:11:43AM -0400, Konstantin Ryabitsev wrote:
 
-> Forgive me, I probably missed a discussion about this
-> somewhere else on the list, but...
+> > I do not think it is feasible to immediately rename the two choices
+> > to SSL/TLS vs StartTLS without transition period, but the first
+> > patch in the three-patch series there to update the documentation
+> > alone may have helped this case.
+> > 
+> > We may also want to error out when seeing an unknown option other
+> > than 'ssl' and 'tls', as the necessary first step to make it
+> > possible to later safely accept StartTLS as a synonym for 'tls' and
+> > 'ssl/tls' as a synonym for 'ssl'.
 > 
-> Could you describe why we want GCC 4.8 in our CI? Is that a
-> compiler version that we officially support? What kind of
-> syntax triggers a problem on 4.8 versus latest?
+> Is it easier to just add less ambiguous aliases, eventually phasing out old
+> terminology?
+> 
+> tls -> starttls
+> ssl -> smtps
+> 
+> This way we don't have to change anything, and "smtps" is a valid way to refer
+> to smtp over ssl (e.g. see /etc/services for 465/tcp).
 
-Try fb9d7431cf (travis-ci: build with GCC 4.8 as well, 2019-07-18).
-(found with "git log -Sgcc-4.8 ci"). The gist of it is to find variable
-declarations in for-loops.
-
-IMHO it may be more trouble than it's worth. If we can't find a compiler
-that complains on this construct, then maybe it is not a construct worth
-worrying too much about.
+FWIW, those options make quite a bit of sense to me (and I agree the
+transition to them would be easy).
 
 -Peff
