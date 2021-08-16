@@ -2,97 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B987C4338F
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 19:43:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B20DC4338F
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 19:44:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5AFB560F4B
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 19:43:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 11D1960F41
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 19:44:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230207AbhHPTne (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Aug 2021 15:43:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53128 "EHLO
+        id S230309AbhHPTpK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 15:45:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229587AbhHPTnc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 15:43:32 -0400
+        with ESMTP id S229587AbhHPTpJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 15:45:09 -0400
 Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9E26C061764
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 12:43:00 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id 2-20020a17090a1742b0290178de0ca331so13264807pjm.1
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 12:43:00 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD35AC061764
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 12:44:37 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id 61-20020a17090a09c3b029017897f47801so182143pjo.8
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 12:44:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=x/rs9Zw54Y7rRXWssPqccgnTUpEGfZF5xkWXAvigKIs=;
-        b=AS6yz+ZTy1dSKmY6t7ykxtQe3KaQ2IIaVPzNWQPQiw7KM8uOw2zpfd3kKpms8tU4xQ
-         RfZPNyjyjxbH8oTDx3MMd6YTXulbvseT/SF3jgmBOvJObe9kDq8rT40mQOLBNbXI7j3m
-         UeG+HWJIOuW189kI8QL3XtEg4qZOSac86dnEpoai3lTkamDigWwSmztmXX2wI7R7l+oc
-         JuLEjRTPJecdZoaI9Drc+C2+FKgMxp0cvo9IhPkP0lf8WDFszq3TvcMxeXK2wwDKR0Qp
-         lozz/9K1oMMZhgOXgjELcMVg2m8IDJ+Q8K0qW41kuPgy0GWs7oCN08/BjjQdmZaWxlZw
-         qPnw==
+        bh=k43MSX3EDxD+GcpqsTMUXpUEIeVlag5RbszEd0IyHi0=;
+        b=YOKH28LxDzXPihWB0ILgjecFJ07GSvTTCDOxYcayVXP8gZdbVd5z1ucUMLGjyyUtWR
+         yV7zKjmlb0JQNP/ADVcaSaVfnxO61XrVP4CA2DkoygfoyrKfMwBK7J0aB3KnLIiGnyXM
+         MZyp2j0l4p4+i9M61o+/yaxc6xowKYpze3buFruEz8zYoQFyC4XbOQelpCUGJC3Q/VdB
+         5FaEyNfkdiqEfkhco2n5SHwB3P1VFK6dXQ4iVQ5U1chPXpoNTmK0kY7RojpQ1FzNa3jd
+         5QlNM8knX6Gkv0NCWrsldSzOrf/1vaya8rdSyOgzPEoAlbR+SYeFDlDYcvXa86HPzsbm
+         HImg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=x/rs9Zw54Y7rRXWssPqccgnTUpEGfZF5xkWXAvigKIs=;
-        b=Hb4cvV9rHC/xz7BjrceFxJenH5mEmJs8xkZapsT+r9z86LcOFqA4A1bRd7E6xhzckB
-         4WvrclMwd1llp6iAT1v79AtJMVCOjXAjOfgqLEFUlK6JAI2iJTBuQv7gMeY88XqvqzPb
-         J6UP/OI9zyKByXB1n3S+FglFoIclcD940GWODxUE16vssNmsL1sII9gcrp9Ozsxxuj6H
-         7teL9nwUraKSKF5vkbjKKVc4P88RIJ8Zxa2GMTfc3STCGsgpJFRszQN6SsOAUXM0Buz0
-         TiSY8gZEG/A8jgBOBjqBz8IBlZjENtca/rL4OpSQFP3jOXrUVOwVangi8AlcCeneAQqo
-         Yyag==
-X-Gm-Message-State: AOAM530CPBZhjkQ179aZ+QOw2sSqjgjPMp+cG2VJ5xd2f19NAc3weBzG
-        YplEb7I8Xd9MT+5b6m3ZALGLN/s65PvWAP8JhIlV
-X-Google-Smtp-Source: ABdhPJyqyo/4/Y3tf5rtzGSF9fVr1iGQmb+nSj7T6c7YvWJ4Lwk4IvVuERT4rULrqlIJY9AKaX4UOgv2O5DrjPdFgTFT
+        bh=k43MSX3EDxD+GcpqsTMUXpUEIeVlag5RbszEd0IyHi0=;
+        b=QmSvOdnDpDF+M/DSF98mixaBf7PhSEF9ZqdtnsLLdwyjaw7p4/i6V0hnWAqAqBD3YC
+         6Vs6yJ1sFphnep1jya4Kj7wcqx5XPb75dOrSssqRBjO8kjE/xYgIi3VR1cpMAKEHEh8H
+         VjTeEGAL6dIstgkhFfZnolXNcDUHHv4rl2l2LiMrmQ4aCUIjfqMYZucVGI5HDEYAIGMH
+         0mIgAV3G8MNQuy8yt3Dp7zFJgY8YOnhj/dDbCbptjOy/aH0rBRuEiRg0KDCclAsKw1Xf
+         E/9m4I0lwLGLJSaZSn8avZh/lw9nq1xQDlwKUII2VxEF0gZZhIAo0uLhwAttoLZ6tCQ+
+         Wavw==
+X-Gm-Message-State: AOAM532F3VIRutJ7NOhKJUDu3l/+imDY2aOdr8ABKU//dRs+r/jMKt1b
+        LoDpY/wUIvJfgeHwfGYeOIjhMOkog3SRmI+efuMT
+X-Google-Smtp-Source: ABdhPJwN6EWcn1jbte3zWh+htUrrKIFuxx6jmPRCS0fpyAIn+MkqRoa1vfaTNFh3BVyHmCLfrGCnlRhPeXTzHWZucbvL
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:aa7:8159:0:b029:3bb:9880:d8e8 with
- SMTP id d25-20020aa781590000b02903bb9880d8e8mr339029pfn.3.1629142980198; Mon,
- 16 Aug 2021 12:43:00 -0700 (PDT)
-Date:   Mon, 16 Aug 2021 12:42:55 -0700
-In-Reply-To: <xmqqh7ftuihx.fsf@gitster.g>
-Message-Id: <20210816194255.1635406-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:2aa:b0:3e1:367:a8b0 with
+ SMTP id q10-20020a056a0002aa00b003e10367a8b0mr237633pfs.37.1629143077411;
+ Mon, 16 Aug 2021 12:44:37 -0700 (PDT)
+Date:   Mon, 16 Aug 2021 12:44:35 -0700
+In-Reply-To: <CAHd-oW7cLgZZhGdvONfujDBpNtG1xXfECE=1hLeUzCm8U-N9QQ@mail.gmail.com>
+Message-Id: <20210816194435.1636117-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <xmqqh7ftuihx.fsf@gitster.g>
+References: <CAHd-oW7cLgZZhGdvONfujDBpNtG1xXfECE=1hLeUzCm8U-N9QQ@mail.gmail.com>
 X-Mailer: git-send-email 2.33.0.rc1.237.g0d66db33f3-goog
-Subject: Re: [PATCH v2 5/8] grep: allocate subrepos on heap
+Subject: Re: [PATCH v2 6/8] grep: add repository to OID grep sources
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
+To:     matheus.bernardino@usp.br
 Cc:     jonathantanmy@google.com, git@vger.kernel.org,
-        matheus.bernardino@usp.br, emilyshaffer@google.com,
+        emilyshaffer@google.com, gitster@pobox.com,
         ramsay@ramsayjones.plus.com, steadmon@google.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> > +static void free_repos(void)
-> > +{
-> > +	int i;
+> > @@ -120,7 +120,16 @@ struct grep_opt {
+> >         struct grep_pat *header_list;
+> >         struct grep_pat **header_tail;
+> >         struct grep_expr *pattern_expression;
 > > +
-> > +	for (i = 0; i < repos_to_free_nr; i++) {
-> > +		repo_clear(repos_to_free[i]);
-> > +		free(repos_to_free[i]);
-> > +	}
-> > +	free(repos_to_free);
-> > +	repos_to_free_nr = 0;
-> > +	repos_to_free_alloc = 0;
+> > +       /*
+> > +        * NEEDSWORK: See if we can remove this field, because the repository
+> > +        * should probably be per-source, not per-repo.
 > 
-> The clearing of nr/alloc is new in this round.
+> Hmm, I think the "not per-repo" part is a bit confusing, as it refers
+> to "the repository" ("the repository should not be per-repo"?) Could
+> we remove that part?
 > 
-> It does not matter if we won't using anything that allocates
-> repositories and accumulates them in repos_to_free after we call
-> free_repos() once, but then clearing the nr/alloc would not matter,
-> either, so it may be more consistent to FREE_AND_NULL(repos_to_free)
-> here, not just free(), to prepare for another call to ALLOC_GROW()
-> on the <repos_to_free, repos_to_free_nr, repos_to_free_alloc> tuple,
-> which eventually will call into REALLOC_ARRAY() on the pointer, I
-> would think.
+> Maybe we could also be a bit more specific regarding the suggested
+> conversion:  "See if we can remove this field, because the repository
+> should probably be per-source. That is, grep.c functions using
+> `grep_opt.repo` should probably start using `grep_source.repo`
+> instead." (But that's nitpicking from my part, feel free to ignore
+> it.)
 
-Yes, FREE_AND_NULL is more consistent. I'll change it.
+Thanks - your suggestion is much clearer, so I'll use it.
