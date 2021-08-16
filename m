@@ -2,101 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A012C432BE
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 21:55:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62659C4338F
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 21:59:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7DB3F601FA
-	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 21:55:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 44D6B601FA
+	for <git@archiver.kernel.org>; Mon, 16 Aug 2021 21:59:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232345AbhHPVzg convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 16 Aug 2021 17:55:36 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:29505 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232280AbhHPVzf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Aug 2021 17:55:35 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 17GLsnnR090583
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 16 Aug 2021 17:54:49 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Jeff King'" <peff@peff.net>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-References: <009101d7904e$a3703e50$ea50baf0$@nexbridge.com> <YRaYnDR6RlgJRr/P@coredump.intra.peff.net> <01b501d792cc$f4071ed0$dc155c70$@nexbridge.com> <YRqwIAL/JgJp+RyI@coredump.intra.peff.net> <01c501d792df$5fcb24b0$1f616e10$@nexbridge.com> <YRrSXhbaZMLMq+1/@coredump.intra.peff.net>
-In-Reply-To: <YRrSXhbaZMLMq+1/@coredump.intra.peff.net>
-Subject: RE: [ANNOUNCE] Git v2.33.0-rc2 (Build/Test Report)
-Date:   Mon, 16 Aug 2021 17:54:44 -0400
-Message-ID: <01d001d792e9$55f45470$01dcfd50$@nexbridge.com>
+        id S232362AbhHPV7i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Aug 2021 17:59:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49186 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232067AbhHPV7i (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Aug 2021 17:59:38 -0400
+Received: (qmail 25625 invoked by uid 109); 16 Aug 2021 21:59:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 16 Aug 2021 21:59:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19514 invoked by uid 111); 16 Aug 2021 21:59:05 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 16 Aug 2021 17:59:05 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 16 Aug 2021 17:59:05 -0400
+From:   Jeff King <peff@peff.net>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     Max Kirillov <max@max630.net>,
+        'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.33.0-rc2 (Build/Test Report)
+Message-ID: <YRrfqfzDibDegxin@coredump.intra.peff.net>
+References: <009101d7904e$a3703e50$ea50baf0$@nexbridge.com>
+ <YRaYnDR6RlgJRr/P@coredump.intra.peff.net>
+ <01b401d792c9$c083e4b0$418bae10$@nexbridge.com>
+ <YRqv30kTZqW9nMN0@coredump.intra.peff.net>
+ <01b901d792d0$1e993950$5bcbabf0$@nexbridge.com>
+ <YRretXfEfiVujSeO@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQMBTs001OO8pWyP/FbVHKiIK4dspwGtgrwqAxbvBFwBEWuByQH2kUqUAce4woio1o3pgA==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YRretXfEfiVujSeO@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On August 16, 2021 5:02 PM, Jeff King wrote:
->To: Randall S. Becker <rsbecker@nexbridge.com>
->Cc: 'Junio C Hamano' <gitster@pobox.com>; git@vger.kernel.org
->Subject: Re: [ANNOUNCE] Git v2.33.0-rc2 (Build/Test Report)
->
->On Mon, Aug 16, 2021 at 04:43:25PM -0400, Randall S. Becker wrote:
->
->> >Oh. Then the notion from my other mail of "if it's die(), then other
->> >tests would presumably see similar failures" might be true. ;)
->>
->> When running
->>
->> /home/git/git/t/trash directory.t9001-send-email: git send-email
->> --from="Example <nobody@example.com>" --to=nobody@example.com
->> --smtp-server="/home/git/git/t/trash
->> directory.t9001-send-email/fake.sendmail" --transfer-encoding=8bit
->> 0001-Second.patch longline.patch
->> fatal: longline.patch:35 is longer than 998 characters
->> warning: no patches were sent
->> /home/git/git/t/trash directory.t9001-send-email: echo $?
->> 162
->
->Well, that's a promising start to finding the source. :)
->
->> So this is strange. Where is perl run? I'd like to catch the completion inside git.
->
->This will all go through execv_dashed_external() in git.c. So we should just be exiting with the status code we got from the child via wait().
->
->You could try:
->
->  - running it as git-send-email (with a dash), which will exec the perl
->    script directly, rather than going through the main git binary
->
->  - instrumenting run-command.c:wait_or_whine() to see how it interprets
->    the value. If perl really is returning 255, then perhaps your
->    platform's WIFSIGNALED() is confused by that.
->
->If the problem does only show when going through the git binary, then I
->suspect:
->
->  git -c alias.foo='!perl -e die' foo
->
->may be an easier reproduction.
+On Mon, Aug 16, 2021 at 05:55:01PM -0400, Jeff King wrote:
 
-Running git-send-email reports completion 162. The code variable is optimized out but looks like it also is 162 when returning. The WIFEXITED(status) code did not appear to execute, although I think that also was optimized out. finish_command ret is 162. So perl looks like it is completing with a bad completion code. This percolates up to git, which also reports the same value.
+> So ideally we'd have some way of atomically checking our flag and then
+> sleeping only if it's not set. But I don't think that exists. The
+> closest we can come is using a series of smaller sleeps and checks. And
+> indeed, digging in the archive shows that Max already proposed such a
+> patch:
+> 
+>   https://lore.kernel.org/git/20190218205028.32486-1-max@max630.net/
+> 
+> It looks like it feel through the cracks, though. Maybe now is a good
+> time to resurrect it.
 
-I went to the perl maintainer on this subject. What I got back was that die is not guaranteed to return a specific value other than 0 for success and non-zero for failure. There are platforms where the return might known and has meaning but that is not portable. According to the current official perl documentation:
+And here it is for convenience. I think this is worth doing, as it
+avoids occasional 60-second hangs in the test suite (and I confirmed
+that with the "fail if it takes more than 5 seconds" hack I showed
+earlier).
 
-"die raises an exception. Inside an eval the exception is stuffed into $@ and the eval is terminated with the undefined value. If the exception is outside of all enclosing evals, then the uncaught exception is printed to STDERR and perl exits with an exit code indicating failure. If you need to exit the process with a specific exit code, see exit."
+-- >8 --
+From: Max Kirillov <max@max630.net>
+Subject: [PATCH] t5562: chunked sleep to avoid lost SIGCHILD
 
-So assuming that a signal occurred because the value is between 129 and 192 is not correct in the case of perl. Could we do something like test_expect_perl_die that does not perform the signal check at line 980 in test-lib-functions.sh so just checks 0 vs. non-zero, which would be semantically correct no matter what the platform? Alternatively, and possibly better, the die could be caught and then exit() called in git-send-email, as in:
+If was found during stress-test run that a test may hang by 60 seconds.
+It supposedly happens because SIGCHILD was received before sleep has
+started.
 
-eval { die "Something bad happened" };
-exit(255) if $@;
+Fix by looping by smaller chunks, checking $exited after each of them.
+Then lost SIGCHILD would not cause longer delay than 1 second.
 
+Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Max Kirillov <max@max630.net>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t5562/invoke-with-content-length.pl | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/t/t5562/invoke-with-content-length.pl b/t/t5562/invoke-with-content-length.pl
+index 0943474af2..257e280e3b 100644
+--- a/t/t5562/invoke-with-content-length.pl
++++ b/t/t5562/invoke-with-content-length.pl
+@@ -29,7 +29,12 @@
+ }
+ print $out $body_data or die "Cannot write data: $!";
+ 
+-sleep 60; # is interrupted by SIGCHLD
++my $counter = 0;
++while (not $exited and $counter < 60) {
++        sleep 1;
++        $counter = $counter + 1;
++}
++
+ if (!$exited) {
+         close($out);
+         die "Command did not exit after reading whole body";
+-- 
+2.33.0.rc2.497.g375df73092
 
