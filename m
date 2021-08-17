@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1F86C4320E
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 06:44:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B8EEC432BE
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 06:44:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C61A260F5C
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 06:44:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 133D460FA0
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 06:44:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238192AbhHQGpX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Aug 2021 02:45:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33812 "EHLO
+        id S238222AbhHQGpZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Aug 2021 02:45:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235915AbhHQGpX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Aug 2021 02:45:23 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70A90C061764
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 23:44:50 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id l3so16310077qtk.10
-        for <git@vger.kernel.org>; Mon, 16 Aug 2021 23:44:50 -0700 (PDT)
+        with ESMTP id S235915AbhHQGpY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Aug 2021 02:45:24 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6162C061764
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 23:44:51 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id o123so16628286qkf.12
+        for <git@vger.kernel.org>; Mon, 16 Aug 2021 23:44:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=M/AmNEqD7zkdjHMOH1UAVuluRJcXK7t6+7F2a/MlVsk=;
-        b=KYKxszV1lU6k16nhVoh9mDth81ossDIhgphPrKX5UbbDYy7YyCUQZs1uP36jUu63Et
-         HBCISXLGV28INS4aQRhBFywOb+yHvat8XPZ0Im7PD+bN8ZaUJJAfJzdxTWL6OkCsNXSL
-         V5PQJ2c38ygpsfcRvvgdQRgyWhR1DSTpMjgBcyxnldGGw0T+ZbJVNpsGRwRmSuMpdOgs
-         5eQ3yr6Prq+NiSCFQD7m867WeocF0Qzzx5rAWbBhyU9Oc3LT6+aehmYRfIzgoRQq85B+
-         io+8KrTjU/hQgy896FVsnJF0ydGvAg8kEl47gCkd4z0sIt9uuOkMs7EdPKJqf82feh5e
-         F5/g==
+        bh=9xh8bytGQpoiCexB47Dx5yDV1zGZC74ZdjqHLY0zeiA=;
+        b=TyeoB8C3da/zdZs0j6OMtFm/W0en2aWal0WvW58QcsTCOsr5ZE3bRFYAtwKHNcX6YP
+         m0xZOt+NTpUj//aQyJVePNhMGQGmTtrAPCEVYqSsFjHEvarR0lz5G1BGJjhpa+RlIkdy
+         +XiMuNsXBnDFi7eAUq2/Pdnca7UGf7BNnSfRw6gKDahyJvmfohCyxV0lxQrN0BKErVBP
+         yN1ezmxcb/wUuQL1U/Y9phvRkxA0D3bms0mdXXRvWXVEAlecD43Tm4CRje9B8az1vAm0
+         NNe0OqVfHuw4ghCaBfLMmJhIhDsw/mBoGnZippJhUM91XNbyblAv5a7IQYg/axw+gzg4
+         85LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=M/AmNEqD7zkdjHMOH1UAVuluRJcXK7t6+7F2a/MlVsk=;
-        b=Z10L/ya2QW5SjVMA17xw3J0QPgcmLzlkaLo6ZElCi5RUbACMqJVpWR2j8UCipMWBm3
-         9XjYIAnlTWdf2Yy+h7jpZp9l/mi8wBTPKCzj6s4OvHR3s1ew0ByqzAGHRh3BsujI4yCO
-         3WkPOgQhIcTOOTP/VzJI4bkIpxFNSd46T6yPINxUsQ/csuZX4llp2RPvlrg+kWmtYYJc
-         916nyP1ehY2nSosulEax1c3cGpL44UVi8FtQMsgUyMiBF94CTODV0cZ9DNjQHOtQ+AK2
-         7A1ykQ5ez0ZhPoI1/Pfpdho5orHz/YNMAgnYgLU+DsPfZ4Temn/LwCMvkRmm4Fmnba3s
-         rIdg==
-X-Gm-Message-State: AOAM531GjOi9JfdTxicwyQY3pXxrCDhieqHthOAAynB4qMYrI3Eee/RX
-        6aedYSP0MGLB+IiALLQh2GslLoIbnw0=
-X-Google-Smtp-Source: ABdhPJwPoD9pGh1+KFcwVI/sDHYpLJNyDYgsJoUndB01KF0L4GamAdU5nME/WV4ghbH6JVkGSv50Ow==
-X-Received: by 2002:a05:622a:144:: with SMTP id v4mr1688075qtw.220.1629182689481;
-        Mon, 16 Aug 2021 23:44:49 -0700 (PDT)
+        bh=9xh8bytGQpoiCexB47Dx5yDV1zGZC74ZdjqHLY0zeiA=;
+        b=QfKfNhh7QZH8tUIos6Zp/ocN10CAoYYGlVXXhPPr+/jbpKWRVJqi8oSEw8uFpaLuNG
+         1gjP8hdthZxVrF5FAfmcQFVFQpniroaLWDLzGGgw1SGtE8TL7MsquJ4BkVY5pnwvTASg
+         b6y+Fpp9MGhaSg1Mn1PV0JVBcruOhVne2ZI52VEII6Y30amoUNcqmH6HLo5ozP+UkmLe
+         zrCNrGe6MifLSqfcBiNRmEbOK/tje+azDjDGyVE+dHVC/n2lYhhGOgHx9T6iIIsuFxqC
+         UVw5msR8V5xYedcgo/fPEkT/vM786JpKoMitbIl2QqNAFuSHKBELVpDctMRZSvZh8ZE2
+         majw==
+X-Gm-Message-State: AOAM531Frhx2AFH4rJ+LW+mXJbiYY3Lo2IU7xJfEh7Eos7BlHQGd4dUA
+        5OztbU9esQLyEWRmtd6U7k4TCHlZk1o=
+X-Google-Smtp-Source: ABdhPJynKi4jZ9MHCzW0jnUCofHr7iKci5+f33j7riFgpk/I1Ci1UhfexR//4ezYtx3mJonYaRGiNg==
+X-Received: by 2002:a05:620a:1999:: with SMTP id bm25mr2276702qkb.329.1629182690857;
+        Mon, 16 Aug 2021 23:44:50 -0700 (PDT)
 Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id q194sm757062qke.83.2021.08.16.23.44.48
+        by smtp.gmail.com with ESMTPSA id q194sm757062qke.83.2021.08.16.23.44.49
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Aug 2021 23:44:49 -0700 (PDT)
+        Mon, 16 Aug 2021 23:44:50 -0700 (PDT)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes.Schindelin@gmx.de,
         =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
-Subject: [PATCH 1/2] builtin/add: remove obsoleted support for legacy stash -p
-Date:   Mon, 16 Aug 2021 23:44:34 -0700
-Message-Id: <20210817064435.97625-2-carenas@gmail.com>
+Subject: [PATCH 2/2] builtin/add: make clear edit and patch/interactive are incompatible
+Date:   Mon, 16 Aug 2021 23:44:35 -0700
+Message-Id: <20210817064435.97625-3-carenas@gmail.com>
 X-Mailer: git-send-email 2.33.0.476.gf000ecbed9
 In-Reply-To: <20210817064435.97625-1-carenas@gmail.com>
 References: <20210817064435.97625-1-carenas@gmail.com>
@@ -75,65 +75,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-90a6bb98d1 (legacy stash -p: respect the add.interactive.usebuiltin
-setting, 2019-12-21) adds a hidden option and its supporting code
-to support the legacy stash script, but that was left behind when
-it was retired.
+c59cb03a8b (git-add: introduce --edit (to edit the diff vs. the index),
+2009-04-08) add the option to add an edited patch directly to the index
+interactively, but was silently ignored if any of the other interactive
+options was also selected.
 
-mostly revert commit.
+report the user there is a conflict instead of silently ignoring -e
+and while at it remove a variable assignment which was never used.
 
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- builtin/add.c | 15 +--------------
- 1 file changed, 1 insertion(+), 14 deletions(-)
+ builtin/add.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/add.c b/builtin/add.c
-index b773b5a499..a15b5be220 100644
+index a15b5be220..be1920ab37 100644
 --- a/builtin/add.c
 +++ b/builtin/add.c
-@@ -31,7 +31,6 @@ static int take_worktree_changes;
- static int add_renormalize;
- static int pathspec_file_nul;
- static const char *pathspec_from_file;
--static int legacy_stash_p; /* support for the scripted `git stash` */
+@@ -308,7 +308,7 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
+ 	repo_init_revisions(the_repository, &rev, prefix);
+ 	rev.diffopt.context = 7;
  
- struct update_callback_data {
- 	int flags;
-@@ -382,8 +381,6 @@ static struct option builtin_add_options[] = {
- 		   N_("override the executable bit of the listed files")),
- 	OPT_HIDDEN_BOOL(0, "warn-embedded-repo", &warn_on_embedded_repo,
- 			N_("warn when adding an embedded repository")),
--	OPT_HIDDEN_BOOL(0, "legacy-stash-p", &legacy_stash_p,
--			N_("backend for `git stash -p`")),
- 	OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
- 	OPT_PATHSPEC_FILE_NUL(&pathspec_file_nul),
- 	OPT_END(),
-@@ -483,6 +480,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 			  builtin_add_usage, PARSE_OPT_KEEP_ARGV0);
- 	if (patch_interactive)
- 		add_interactive = 1;
-+
- 	if (add_interactive) {
- 		if (show_only)
+-	argc = setup_revisions(argc, argv, &rev, NULL);
++	setup_revisions(argc, argv, &rev, NULL);
+ 	rev.diffopt.output_format = DIFF_FORMAT_PATCH;
+ 	rev.diffopt.use_color = 0;
+ 	rev.diffopt.flags.ignore_dirty_submodules = 1;
+@@ -486,6 +486,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
  			die(_("--dry-run is incompatible with --interactive/--patch"));
-@@ -490,17 +488,6 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 		if (pathspec_from_file)
  			die(_("--pathspec-from-file is incompatible with --interactive/--patch"));
++		if (edit_interactive)
++			die(_("--edit-interactive is incompatible with --interactive/--patch"));
  		exit(interactive_add(argv + 1, prefix, patch_interactive));
  	}
--	if (legacy_stash_p) {
--		struct pathspec pathspec;
--
--		parse_pathspec(&pathspec, 0,
--			PATHSPEC_PREFER_FULL |
--			PATHSPEC_SYMLINK_LEADING_PATH |
--			PATHSPEC_PREFIX_ORIGIN,
--			prefix, argv);
--
--		return run_add_interactive(NULL, "--patch=stash", &pathspec);
--	}
  
- 	if (edit_interactive) {
- 		if (pathspec_from_file)
 -- 
 2.33.0.476.gf000ecbed9
 
