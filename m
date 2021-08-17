@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8B81C4338F
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 08:41:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B38BC432BE
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 08:41:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B13B560FA0
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 08:41:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 685C760F39
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 08:41:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239355AbhHQImS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Aug 2021 04:42:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60870 "EHLO
+        id S239373AbhHQImU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Aug 2021 04:42:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239336AbhHQImR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Aug 2021 04:42:17 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD86EC061796
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 01:41:44 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id q10so27424501wro.2
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 01:41:44 -0700 (PDT)
+        with ESMTP id S239296AbhHQImS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Aug 2021 04:42:18 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BD53C0613CF
+        for <git@vger.kernel.org>; Tue, 17 Aug 2021 01:41:45 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id c8-20020a7bc008000000b002e6e462e95fso1291117wmb.2
+        for <git@vger.kernel.org>; Tue, 17 Aug 2021 01:41:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=R8s6iduAzpHv2zHqb74v5m/FmCTqBSmo4RcXr5WjrbM=;
-        b=vdFWcwLaG4UUDFKllIwOQ9K74PD6zq1SATBDWS27+rkn9Hi7oMuxdy0kFk5qFa7guW
-         j66iq7+UDWX/9MM0MbI/1hRdIim0U/9lFcRYUOAy2v/MhSAU61IYqzKd7Mj/uIVBaDT/
-         Yv0HqqDhmFVBOycM4QrzMmcFFk2fyAUvfADwWsQIqS5Vnsh7Bc6WaGD7zd8NMOGmN/c7
-         9HljK8ER2SIWZyJ59v4EsbtRZwVUO3mwwToLsKh/13n3hjo/hg6TNNdJwHOwzuOglZwx
-         jwhtu80NQWOlvpWHDqI7gEWtInB4hDUGKW3RxJHC4puqEppt8DtiCKKgnHH/fnHNtU2x
-         qX9w==
+        bh=tNAa1sosZtO+JcxNmdcFZZbGrGnVZjLto8/IC2MAMQg=;
+        b=jCh5Px79d5hklSrO41yTTwj1DmiSVdB7Yn3K7c5mjmQJeLeoM20L/wzjHVIhaxrqFA
+         qN09BQdE3jCOBxbb2IkkgGOnXBw/We1YlCqsi4m08FvxA4SF45GjZ0D8SfrhEfbJ3INr
+         9cDzDCiMg/EnSkk6WBW10jkTSWrDJ+hGqOoawNToHja4EG7zGDxdOVxU99V/1NXo5Z7l
+         8JOoN5tC65ZsakJH99l3Vd5AHPS075bLW45WSLi51GjvbkAVWTDOx/mm4v5iPlDNMLFO
+         /oytOcbyIRro/aJBARBNZ7Fpn57W4syrnE4Ch19VFbEK4ijpgB3Oanc/58ghsA4z53nM
+         BI+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=R8s6iduAzpHv2zHqb74v5m/FmCTqBSmo4RcXr5WjrbM=;
-        b=g90xo+pjFgG+TjZuvRtRNZznLHdbhAX4ZDOZsUWB6roiKMvpGNZTQxTeemtZAoJvne
-         SyHvAJ5BgGqGV4HtNSPASulhEKBpmB4DzPouy03RjIFwUWwNrlMrVfvOTyRSSvxjK9EQ
-         eyEsWzfyl8BmjjZzGR98mAXy1W/hJgP4juwH8cqWYChoKKxPot28/YevqScL8mU2wzdR
-         qQ5qWU8GscpuJ4gieApEjOQeJFJEJPIKKRS8YT/BYEF5UMhJpZWi1vHXQgneu0a9zDeX
-         8amAc1sc4DZf3ISEVulYD+nIeIQCGGdq7VVsHaka66U4/2HWS90B8L4Kaj+NTajWWXdL
-         DKGQ==
-X-Gm-Message-State: AOAM533Coo3enOQA2pfQCaBqixEkBJvR8sbO03JHJiWI9ELjLzvySeas
-        9c6lUoeuXdzTOXZtgyDh3OPTO8u0GmI=
-X-Google-Smtp-Source: ABdhPJwGnFfvQSN4mWUblp2JUqZbaD+Y/sBuH+QOlPBXkd5pqtrCwf2/RSDhmW3uJpXghDI9Z9O/Lg==
-X-Received: by 2002:adf:9d86:: with SMTP id p6mr2644866wre.156.1629189703459;
-        Tue, 17 Aug 2021 01:41:43 -0700 (PDT)
+        bh=tNAa1sosZtO+JcxNmdcFZZbGrGnVZjLto8/IC2MAMQg=;
+        b=KLQt5HoIrgAx6UFlsDcRLXhc0rvXxtWtziQ2BWONM4NCvxCR05C1yz9A3RmOI0JAa5
+         HIjDz4eEA5a5/akr3/NIRAjDxBdjOmGkc8bGN8yUrT1A204bJIM86RCYqbZjt42/2LjU
+         as78KrfO9Ot8Lmt/OXrl+gthdleCO4rPidR2HRXiyHpqP8g9+GSc3B+SOcn9cFL8IOPC
+         QtcSm5vf/Edf8+1MD01prk8U8FKCsZRSIM4zUNvu5huFIJeKl4YpFRN7Jh62S52XR8kQ
+         35C37ZWTuXc256xf+W65Ipwdus6VqFXK+EHkEgVGt9XNHrDlSXWwG57iqtvdf7l4iBlH
+         NnYQ==
+X-Gm-Message-State: AOAM530SoEnqa2jo/L47d0YSkdsprnXDi4FYnIe2HCcUs/X4JovP0TAs
+        BwB0EvKAB32LnVeMNQB5P1tsJJpP3HU=
+X-Google-Smtp-Source: ABdhPJxUxRlFBqBSaj2U8BG5hLH/5qtcE2TJTscFPq/TFcOGNwgtzGLvz0oyZgQyplXC/LYmtRvHiw==
+X-Received: by 2002:a7b:c1cf:: with SMTP id a15mr2119363wmj.72.1629189704060;
+        Tue, 17 Aug 2021 01:41:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r1sm1652381wrt.24.2021.08.17.01.41.43
+        by smtp.gmail.com with ESMTPSA id k1sm1618946wrz.61.2021.08.17.01.41.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 17 Aug 2021 01:41:43 -0700 (PDT)
-Message-Id: <9ff78d17f3839acd24df5439fac74ba5064579c8.1629189701.git.gitgitgadget@gmail.com>
+Message-Id: <c3a4c858df0d246e06c3e770c5eb2956eeb96538.1629189701.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1021.git.1629189701.gitgitgadget@gmail.com>
 References: <pull.1021.git.1629189701.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 17 Aug 2021 08:41:35 +0000
-Subject: [PATCH 2/8] [GSOC] ref-filter: merge two for loop in grab_person
+Date:   Tue, 17 Aug 2021 08:41:36 +0000
+Subject: [PATCH 3/8] [GSOC] ref-filter: remove strlen from find_subpos
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,128 +83,74 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-grab_person() uses string for atom type comparison, this is very
-inefficient. After the introduction of atom_type, we can use
-atom_type to represent the atom type.
+find_subpos() use strlen() to get the length of the object
+content, but in the caller of find_subpos(), grab_sub_body_contents(),
+we already get the length of the object content through data->size.
+So add a `size_t buf_size` in find_subpos(), and pass data->size to
+it. This can avoid unnecessary strlen() overhead.
 
-So modify the parameter type of grab_person() to atom_type,
-and take use of the characteristics of ATOM_AUTHOR ==
-ATOM_AUTHORNAME - 1 == ATOM_AUTHOREMAIL - 2 ==
-ATOM_AUTHORDATE - 3 to check which author atom type is.
-ATOM_COMMITTER, ATOM_TAGGER are same too.
-
-At the same time, merge the for loop which handles %(creator*) in
-grab_person() into the previous for loop which handles %(author*),
-%(committer*),%(tagger*). This can reduce unnecessary traversal
-of the used_atom list.
-
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Hariom Verma <hariom18599@gmail.com>
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- ref-filter.c | 57 +++++++++++++++++-----------------------------------
- 1 file changed, 18 insertions(+), 39 deletions(-)
+ ref-filter.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index e38046ca141..592b8d9bd0a 100644
+index 592b8d9bd0a..875c2e4c39c 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -1275,63 +1275,42 @@ static void grab_date(const char *buf, struct atom_value *v, const char *atomnam
- }
- 
- /* See grab_values */
--static void grab_person(const char *who, struct atom_value *val, int deref, void *buf)
-+static void grab_person(enum atom_type type, struct atom_value *val, int deref, void *buf)
- {
- 	int i;
-+	const char *who = valid_atom[type].name;
- 	int wholen = strlen(who);
- 	const char *wholine = NULL;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
- 		const char *name = used_atom[i].name;
-+		enum atom_type atom_type = used_atom[i].atom_type;
- 		struct atom_value *v = &val[i];
- 		if (!!deref != (*name == '*'))
- 			continue;
- 		if (deref)
- 			name++;
--		if (strncmp(who, name, wholen))
--			continue;
--		if (name[wholen] != 0 &&
--		    strcmp(name + wholen, "name") &&
--		    !starts_with(name + wholen, "email") &&
--		    !starts_with(name + wholen, "date"))
-+		if ((atom_type < type || atom_type > type + 3) &&
-+		    /*
-+		    * For a tag or a commit object, if "creator" or "creatordate" is
-+		    * requested, do something special.
-+		    */
-+		    ((atom_type != ATOM_CREATOR && atom_type != ATOM_CREATORDATE) ||
-+		     ((atom_type == ATOM_CREATOR || atom_type == ATOM_CREATORDATE) &&
-+		      type != ATOM_TAGGER && type != ATOM_COMMITTER)))
- 			continue;
- 		if (!wholine)
- 			wholine = find_wholine(who, wholen, buf);
- 		if (!wholine)
- 			return; /* no point looking for it */
--		if (name[wholen] == 0)
-+		if (atom_type == type || atom_type == ATOM_CREATOR)
- 			v->s = copy_line(wholine);
--		else if (!strcmp(name + wholen, "name"))
-+		else if (atom_type == type + 1)
- 			v->s = copy_name(wholine);
--		else if (starts_with(name + wholen, "email"))
-+		else if (atom_type == type + 2)
- 			v->s = copy_email(wholine, &used_atom[i]);
--		else if (starts_with(name + wholen, "date"))
--			grab_date(wholine, v, name);
--	}
--
--	/*
--	 * For a tag or a commit object, if "creator" or "creatordate" is
--	 * requested, do something special.
--	 */
--	if (strcmp(who, "tagger") && strcmp(who, "committer"))
--		return; /* "author" for commit object is not wanted */
--	if (!wholine)
--		wholine = find_wholine(who, wholen, buf);
--	if (!wholine)
--		return;
--	for (i = 0; i < used_atom_cnt; i++) {
--		const char *name = used_atom[i].name;
--		enum atom_type atom_type = used_atom[i].atom_type;
--		struct atom_value *v = &val[i];
--		if (!!deref != (*name == '*'))
--			continue;
--		if (deref)
--			name++;
--
--		if (atom_type == ATOM_CREATORDATE)
-+		else if (atom_type == type + 3 || atom_type == ATOM_CREATORDATE)
- 			grab_date(wholine, v, name);
--		else if (atom_type == ATOM_CREATOR)
--			v->s = copy_line(wholine);
+@@ -1314,7 +1314,7 @@ static void grab_person(enum atom_type type, struct atom_value *val, int deref,
  	}
  }
  
-@@ -1520,13 +1499,13 @@ static void grab_values(struct atom_value *val, int deref, struct object *obj, s
- 	case OBJ_TAG:
- 		grab_tag_values(val, deref, obj);
- 		grab_sub_body_contents(val, deref, data);
--		grab_person("tagger", val, deref, buf);
-+		grab_person(ATOM_TAGGER, val, deref, buf);
- 		break;
- 	case OBJ_COMMIT:
- 		grab_commit_values(val, deref, obj);
- 		grab_sub_body_contents(val, deref, data);
--		grab_person("author", val, deref, buf);
--		grab_person("committer", val, deref, buf);
-+		grab_person(ATOM_AUTHOR, val, deref, buf);
-+		grab_person(ATOM_COMMITTER, val, deref, buf);
- 		break;
- 	case OBJ_TREE:
- 		/* grab_tree_values(val, deref, obj, buf, sz); */
+-static void find_subpos(const char *buf,
++static void find_subpos(const char *buf, size_t buf_size,
+ 			const char **sub, size_t *sublen,
+ 			const char **body, size_t *bodylen,
+ 			size_t *nonsiglen,
+@@ -1322,12 +1322,12 @@ static void find_subpos(const char *buf,
+ {
+ 	struct strbuf payload = STRBUF_INIT;
+ 	struct strbuf signature = STRBUF_INIT;
++	const char *begin = buf;
+ 	const char *eol;
+-	const char *end = buf + strlen(buf);
+ 	const char *sigstart;
+ 
+ 	/* parse signature first; we might not even have a subject line */
+-	parse_signature(buf, end - buf, &payload, &signature);
++	parse_signature(buf, buf_size, &payload, &signature);
+ 
+ 	/* skip past header until we hit empty line */
+ 	while (*buf && *buf != '\n') {
+@@ -1340,7 +1340,7 @@ static void find_subpos(const char *buf,
+ 	while (*buf == '\n')
+ 		buf++;
+ 	*sig = strbuf_detach(&signature, siglen);
+-	sigstart = buf + parse_signed_buffer(buf, strlen(buf));
++	sigstart = buf + parse_signed_buffer(buf, buf_size - (buf - begin));
+ 
+ 	/* subject is first non-empty line */
+ 	*sub = buf;
+@@ -1363,7 +1363,7 @@ static void find_subpos(const char *buf,
+ 	while (*buf == '\n' || *buf == '\r')
+ 		buf++;
+ 	*body = buf;
+-	*bodylen = strlen(buf);
++	*bodylen = buf_size - (buf - begin);
+ 	*nonsiglen = sigstart - buf;
+ }
+ 
+@@ -1430,7 +1430,7 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct exp
+ 		     !starts_with(name, "contents")))
+ 			continue;
+ 		if (!subpos)
+-			find_subpos(buf,
++			find_subpos(buf, data->size,
+ 				    &subpos, &sublen,
+ 				    &bodypos, &bodylen, &nonsiglen,
+ 				    &sigpos, &siglen);
 -- 
 gitgitgadget
 
