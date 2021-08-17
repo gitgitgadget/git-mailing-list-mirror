@@ -2,88 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39BACC432BE
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 15:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2208BC4338F
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 16:10:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2069761053
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 15:15:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04CC660FD7
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 16:10:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231894AbhHQPQT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Aug 2021 11:16:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50086 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229545AbhHQPQT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Aug 2021 11:16:19 -0400
-Received: (qmail 945 invoked by uid 109); 17 Aug 2021 15:15:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 17 Aug 2021 15:15:45 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27593 invoked by uid 111); 17 Aug 2021 15:15:44 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 17 Aug 2021 11:15:44 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 17 Aug 2021 11:15:44 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] ci: add job for gcc-4.8 to GitHub Actions
-Message-ID: <YRvSoGodEJB26twE@coredump.intra.peff.net>
-References: <20210816045750.36499-1-carenas@gmail.com>
- <444e7410-c9c9-1b90-da5f-d6862a35c1fc@gmail.com>
- <YRqP7J7Gu0VmB6q2@coredump.intra.peff.net>
- <20210817111512.GA2257957@szeder.dev>
+        id S229625AbhHQQKk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Aug 2021 12:10:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51046 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229460AbhHQQKj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Aug 2021 12:10:39 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1D17C061764
+        for <git@vger.kernel.org>; Tue, 17 Aug 2021 09:10:05 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id cn28so20391431edb.6
+        for <git@vger.kernel.org>; Tue, 17 Aug 2021 09:10:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=X1n14yc0OUiiv/Y0uRj84fcg8hs1/JXguLi73BzebVs=;
+        b=lnqVtbqseNOHguZ+sXHgUIfsbSrpIUrL6ThVvmzQhdgxU8W1379hxzcCEhzRXSbyiy
+         b1j6JdJ5X7NnZFW+APP7MBzM1McJDRiKRGZ9Zlc7/eqr4p2SPRVKHH3U2talHMbMZT6q
+         p3RtG0EHDPyl/ydlV1s+rOd9zPPug4ZDv94q2pXi0TnZAaoxCXN/3Z2yRvP1/ERfzlNQ
+         T0a7FByseAQ/3cGFrzIb5QFaO6phceIj5QNu5R1CFQJcKJ5J9tonB6XDg2ZEZamyIZAt
+         y5+3vHIFibIlkXcvARFDzmAXMSr/EtRLSoiviDjlDPjXKVYzNUxkP7NfXud8n8faHYdi
+         db2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=X1n14yc0OUiiv/Y0uRj84fcg8hs1/JXguLi73BzebVs=;
+        b=iXZXnPj//G3Rn+SzrBU/HU0L8EBzDaLpKu9ZiJPjNStj2C2i4uhiclmsTI/W+07Xdt
+         jTZHwxdPkSqxBsPnjk81X0urrsDeKuWdAPT8YRW9myG9x6FPlMNZiPxOK8KYyBEhIDOm
+         5EFBC3HdJWER2z37LlRCNI/UC4JRzO1Z294rsONp3XVlwV2ZhfZiP1haY1Qllg5ZcskW
+         q39RTnV7usik+Y5aYABZt2x/oYV6hRQ0kdyYkfZkd4UzSivd4A0U59ZiYKX7oBAxRKI0
+         7Ct87dgT7NeF9XM+Jyn4daXIIYx+q0tnrybf1mfYN55VIFR/sSQI9SsZJGXj4+rSndsq
+         bf3g==
+X-Gm-Message-State: AOAM532ABrIIBtEWiE3x2lckZ4cQD2DkUsTr+ywJwa3Nvq81RBK/xGyT
+        KXeqX1dyHdfb2p0REYa4rrxsLGiRUl6WUpk3RH8=
+X-Google-Smtp-Source: ABdhPJy7T323QzcKF9DQMYkLhQN1mIR/McL62adIl+8aN5Gk1lao5MTEWsQtaxCN3/TzzZFqYMH33qwAm3h7/HjCBjA=
+X-Received: by 2002:aa7:cb8a:: with SMTP id r10mr5000138edt.237.1629216604249;
+ Tue, 17 Aug 2021 09:10:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210817111512.GA2257957@szeder.dev>
+References: <CAOLTT8TJ_VBh8mreExXHdCFb1e6hB1-Exsn6OFdo2sZNkVFJkA@mail.gmail.com>
+In-Reply-To: <CAOLTT8TJ_VBh8mreExXHdCFb1e6hB1-Exsn6OFdo2sZNkVFJkA@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 17 Aug 2021 18:09:52 +0200
+Message-ID: <CAP8UFD0AvakWdpJKBDrEZstVvFOGdjVUkWsBXn7geiUdVzAZGQ@mail.gmail.com>
+Subject: Re: [GSOC] [QUESTION] ref-filter: can %(raw) implement reuse oi.content?
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Hariom verma <hariom18599@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 17, 2021 at 01:15:12PM +0200, SZEDER Gábor wrote:
+Hi,
 
-> > Try fb9d7431cf (travis-ci: build with GCC 4.8 as well, 2019-07-18).
-> > (found with "git log -Sgcc-4.8 ci"). The gist of it is to find variable
-> > declarations in for-loops.
-> > 
-> > IMHO it may be more trouble than it's worth. If we can't find a compiler
-> > that complains on this construct, then maybe it is not a construct worth
-> > worrying too much about.
-> 
-> I for one like for loop initial declarations, because they allow us to
-> limit the scope of the loop variable to the loop, and would love to
-> see it used in more places (well, wherever possible, actually, but
-> that'd be a lot of churn).  So I would prefer to just drop this job
-> sooner rather than later, update CodingGuidelines, and, if deemed
-> necessary, launch a weather balloon.
+On Mon, Aug 16, 2021 at 4:00 PM ZheNing Hu <adlternative@gmail.com> wrote:
+>
+> Hi,
+>
+> In the implementation of %(raw) atom
+> (bd0708c7 ref-filter: add %(raw) atom), we use xmemdupz()
+> to copy the content of the object. But if we can reuse the content
+> of the object?
+>
+> Since git cat-file --batch needs to use ref-filter
+> as the backend, if the object buffer can be reused correctly here,
+> we can save a lot of copies and improve its performance by about 6%.
 
-Yeah, I think it would be nice to use that, too, if it works everywhere.
-The last discussion of this was from 2017, where peple likewise seemed
-in favor:
+Yeah, that would be great.
 
-  https://lore.kernel.org/git/xmqqlgnrq9qi.fsf@gitster.mtv.corp.google.com/
+> Tracing back to the source, the object buffer is allocated from
+> oid_object_info_extended(), but in parse_object_buffer() we may lose
+> the ownership of the buffer (maybe the buffer is eaten), but I browsed th=
+e
+> source code of for-each-ref.c or cat-file.c, and I don=E2=80=99t seem to =
+find that the
+> buffers which have been eaten are released by the program.
+>
+> So can we reuse it?
+>
+> This is what I want to do:
+>
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 93ce2a6ef2..1f6c1daabd 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -1443,7 +1443,7 @@ static void grab_sub_body_contents(struct
+> atom_value *val, int deref, struct exp
+>                         unsigned long buf_size =3D data->size;
+>
+>                         if (atom->u.raw_data.option =3D=3D RAW_BARE) {
+> -                               v->s =3D xmemdupz(buf, buf_size);
+> +                               v->s =3D buf;
 
-There was even a weather balloon patch:
+It seems to me that this could work only if 'buf' isn't freed. Have
+you checked that? Did we leak 'buf' before this patch? Otherwise when
+are we freeing it?
 
-  https://lore.kernel.org/git/20170719181956.15845-1-sbeller@google.com/
+>                                 v->s_size =3D buf_size;
+>                         } else if (atom->u.raw_data.option =3D=3D RAW_LEN=
+GTH) {
+>                                 v->s =3D xstrfmt("%"PRIuMAX, (uintmax_t)b=
+uf_size);
+> @@ -1768,8 +1768,6 @@ static int get_object(struct ref_array_item
+> *ref, int deref, struct object **obj
+>         }
+>
+>         grab_common_values(ref->value, deref, oi);
+> -       if (!eaten)
+> -               free(oi->content);
 
-but it got hung up on somebody using gcc 4.8. ;)
+This change might not be needed. 'oi->content' seems to come from the
+'buf' above, either directly or through a copy, but if we can indeed
+own the 'buf' completely, then we should be able to dispose of it how
+we want.
 
-It looks like the default flavor bumped to gnu90 in gcc 5. That came out
-in 2015, but the last 4.x release was in August 2016. Which is getting
-old-ish, but still well within the realm of what people may be using an
-on older distro (e.g., RHEL7, which is still supported).
-
-For gcc, at least, this is trivially fixable with a `-std` flag (though
-it may be tricky to make it work out-of-the-box through the Makefile). I
-don't think we'll know if there problems with other compilers until we
-do the weather balloon.
-
--Peff
+>         return 0;
+>  }
