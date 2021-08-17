@@ -2,242 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA488C4338F
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 14:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4C77C4338F
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 14:29:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82F9260EE4
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 14:09:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4B3760F39
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 14:29:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231359AbhHQOK2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Aug 2021 10:10:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52012 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231172AbhHQOK2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Aug 2021 10:10:28 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2B7DC061764
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 07:09:54 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id bj40so32103628oib.6
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 07:09:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ullrPRBiTudyRpgqNOTzuxIypqpNkI1Nq5qsE9guso0=;
-        b=nlh7FSVy2RKT2mTZcKuE/w/t7f6utOVpwz+Xxo6oQXxaAfF5EtdROwYluelyY5YZWv
-         NN2i+69uVlXdaJ28FrarNPMtqb53udTV8SzO4FD9dA4hRqOu/CRY7hsk3vOq+LzhK3rf
-         V86femzXJdDKTYlo470CD9Eg5gWVr2GGjSD0HIXnwUUe5CW0Rr68Qf7qPmQUDB+ya+vK
-         LAl9yrzq3pa0M1Btr8/RNlUfw/NRn7tWLlWasUE6SwvceN6GBO5JTKiacaNuj7aDpn7d
-         tv0zFVRk0CqkAOReyPQ6R+1y/yVU29Lu/ZUxIrfZoe5e3d7d9NixmEdyox1QK2q7zFxi
-         6m+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ullrPRBiTudyRpgqNOTzuxIypqpNkI1Nq5qsE9guso0=;
-        b=K9Pxi82NwZk3+/9J9WkN91/Ki5YxrLARmqGaFMUHxYj85kbvtgN6ri/4CUT7mBODsY
-         1yGGnWi/xBFGiTDj8aje2mWtbfzxORynEKU8JKJmuHBo32nwO+tZqdfocroDNLJBfzmk
-         72WL0s1w8HJs1iJ7jGp5rdqV/8SOq835eES2iHB+jq5CrKTCNUDLgSpTO4QZTqb5F54a
-         V8fK9r3weY3Gj84p9MZjj3mn3MnnCGILQRPKM25oXnWidHNKf3ny0yjtLModNfH3pADl
-         xVXUzEua/aP+jS3D407kXqRfISNvfV4cxM9rKMjjkDv6zN8/8rYonXgUi3aSy3iDOmZX
-         P+ZQ==
-X-Gm-Message-State: AOAM530H+EWlUsfJZcrmUj1fiygekJ3w05ohJcHcGXPSR5F0w7kxeP8e
-        l8GP+wvYWukOOqn2XO9z/RYWsLH9PkQHVMwiUSc=
-X-Google-Smtp-Source: ABdhPJwh7r6AbYbKnRjUV9MLBhkNjfb6MeNxU7UW0qSVwnQ/S403lyRiq95eX2tvJzCzOE6x/6YHhSyMpzAeq72Oq7o=
-X-Received: by 2002:a05:6808:2084:: with SMTP id s4mr2664306oiw.31.1629209394188;
- Tue, 17 Aug 2021 07:09:54 -0700 (PDT)
+        id S237910AbhHQOaW convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 17 Aug 2021 10:30:22 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:22742 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230412AbhHQOaW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Aug 2021 10:30:22 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 17HETYkv051759
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 17 Aug 2021 10:29:35 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Jeff King'" <peff@peff.net>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
+References: <009101d7904e$a3703e50$ea50baf0$@nexbridge.com> <YRaYnDR6RlgJRr/P@coredump.intra.peff.net> <01b501d792cc$f4071ed0$dc155c70$@nexbridge.com> <YRqwIAL/JgJp+RyI@coredump.intra.peff.net> <01c501d792df$5fcb24b0$1f616e10$@nexbridge.com> <YRrSXhbaZMLMq+1/@coredump.intra.peff.net> <01d001d792e9$55f45470$01dcfd50$@nexbridge.com> <YRrlQwLENaWs8zWm@coredump.intra.peff.net>
+In-Reply-To: <YRrlQwLENaWs8zWm@coredump.intra.peff.net>
+Subject: RE: [ANNOUNCE] Git v2.33.0-rc2 (Build/Test Report)
+Date:   Tue, 17 Aug 2021 10:29:28 -0400
+Message-ID: <01f801d79374$4cca6160$e65f2420$@nexbridge.com>
 MIME-Version: 1.0
-References: <pull.1009.v2.git.1628625013.gitgitgadget@gmail.com> <pull.1009.v3.git.1629206602.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1009.v3.git.1629206602.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 17 Aug 2021 07:09:42 -0700
-Message-ID: <CABPp-BHea67AMvhPAq0SHv_YmM_bV2KoCZW2eHoUm9pxwJEq7A@mail.gmail.com>
-Subject: Re: [PATCH v3 0/8] Sparse index: delete ignored files outside sparse cone
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQMBTs001OO8pWyP/FbVHKiIK4dspwGtgrwqAxbvBFwBEWuByQH2kUqUAce4wogCG03ybQI0aYL9qLUo5bA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 17, 2021 at 6:23 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On August 16, 2021 6:23 PM, Jeff King wrote:
+>On Mon, Aug 16, 2021 at 05:54:44PM -0400, Randall S. Becker wrote:
 >
-> UPDATE: I had to base this version on a merge of ds/add-with-sparse-index
-> and v2.33.0-rc1 because of some changes to dir.h that became important!
+>> Running git-send-email reports completion 162. The code variable is
+>> optimized out but looks like it also is 162 when returning. The
+>> WIFEXITED(status) code did not appear to execute, although I think
+>> that also was optimized out. finish_command ret is 162. So perl looks
+>> like it is completing with a bad completion code. This percolates up
+>> to git, which also reports the same value.
 >
-> We launched an experimental release [1] of the sparse-index feature to our
-> internal users. We immediately discovered a problem due to the isolated way
-> in which we tested the sparse index: we were never building the project and
-> changing our sparse-checkout definition.
->
-> [1] https://github.com/microsoft/git/releases/tag/v2.32.0.vfs.0.102.exp
->
-> Users who ran a build in one project and then moved to another still had
-> build artifacts in their worktree that lived inside the old directories.
-> Since the files are marked by the .gitignore patterns, these files were not
-> removed by the 'git sparse-checkout set' command. However, they make the
-> sparse-index unusable because every 'git status' command needs to expand the
-> sparse-directory entries in order to see if the files are tracked or not.
-> This made the first experimental release actually slower for all users
-> because of this cost.
->
-> The solution we shipped to these customers was to change the way our fork
-> handles these ignored files. Specifically, instead of Git completely
-> ignoring the files, we changed Git to understand that with cone-mode
-> sparse-checkout patterns, the users is asking for entire directories to be
-> removed from the worktree. The link [1] included earlier has this change.
->
-> I believe that this is a reasonable expectation, though I recognize that it
-> might look like breaking the expectations of how .gitignore files work.
->
-> Since feedback demonstrated that this is a desired behavior, v2 includes
-> this behavior for all "cone mode" repositories.
->
-> I'm interested in the community's thoughts about this change, as it seems
-> like one that we should make carefully and intentionally.
->
-> While the rewrite of the t7519 test seems unrelated, it is required to avoid
-> a test failure with this change that deletes files outside of the cone. By
-> moving the test into repositories not at $TRASH_DIRECTORY, we gain more
-> control over the repository structure.
->
->
-> Update in V3
-> ============
->
->  * As promised [2], the helper methods are fixed to work with non-cone-mode
->    patterns. A later series will use them to their fullest potential
->    (changing git add, git rm, and git mv when interacting with sparse
->    entries).
+>OK, at least that absolves git.c. :)
 
-Sorry I didn't review V2.  I'll find some time in the next few days to
-review V3.
+Too right 😊
 
+>> I went to the perl maintainer on this subject. What I got back was
+>> that die is not guaranteed to return a specific value other than 0 for
+>> success and non-zero for failure. There are platforms where the return
+>> might known and has meaning but that is not portable. According to the
+>> current official perl documentation:
+>>
+>> "die raises an exception. Inside an eval the exception is stuffed into
+>> $@ and the eval is terminated with the undefined value. If the
+>> exception is outside of all enclosing evals, then the uncaught
+>> exception is printed to STDERR and perl exits with an exit code
+>> indicating failure. If you need to exit the process with a specific
+>> exit code, see exit."
 >
-> [2]
-> https://lore.kernel.org/git/bac76c72-955d-1ade-4ecf-778ffc45f297@gmail.com/
+>Ouch. I mean, sure, if you need a specific code, I get that die is not a good tool. But getting arbitrary values seems kind of weird and
+>unfriendly. The perldoc for die does say it gives you $! (errno), or $?
+>(the last child exit value) if appropriate. So it's not completely arbitrary, but I think your errno value may just be unlucky.
+
+Very unlucky.
 >
+>> So assuming that a signal occurred because the value is between 129
+>> and 192 is not correct in the case of perl. Could we do something like
+>> test_expect_perl_die that does not perform the signal check at line
+>> 980 in test-lib-functions.sh so just checks 0 vs. non-zero, which
+>> would be semantically correct no matter what the platform?
+>> Alternatively, and possibly better, the die could be caught and then
+>> exit() called in git-send-email, as in:
+>>
+>> eval { die "Something bad happened" };
+>> exit(255) if $@;
 >
-> Updates in V2
-> =============
+>Yeah, I think we are better to get a consistent exit code from perl.
+>There are a few options here:
 >
->  * This version correctly leaves untracked files alone. If untracked files
->    are found, then the directory is left as-is, in case those ignored files
->    are important to the user's work resolving those untracked files.
+> - wrapping in an eval works, as you showed above. It's a little awkward
+>   to wrap the whole script, though.
 >
->  * This behavior is now enabled by core.sparseCheckoutCone=true.
+> - there's $SIG{__DIE__}, but the manpage warns against using it. You
+>   can use it something like this:
 >
->  * To use a sparse index as an in-memory data structure even when
->    index.sparse is disabled, a new patch is included to modify the prototype
->    of convert_to_sparse() to include a flags parameter.
+>     sub catch_top {
+>       CORE::die @_ if $^S; # in an eval; use regular die
+>       CORE::die @_ if !defined $^S; in perl's parser
+>       print STDERR "@_\n";
+>       exit 255; # or whatever we want
+>     }
+>     $SIG{__DIE__} = \&catch_top;
 >
->  * A few cleanup patches that I was collecting based on feedback from the
->    experimental release and intending for my next series were necessary for
->    this implementation.
+> - you can hook die() like this:
 >
->  * Cleaned up the tests (no NEEDSWORK) and the remainders of a previous
->    implementation that used run_subcommand().
+>     BEGIN { *CORE::GLOBAL::die = \&my_die; }
 >
-> Thanks, -Stolee
+>   but I expect would still need to check that you're not in an eval, as
+>   above.
 >
-> Derrick Stolee (8):
->   t7519: rewrite sparse index test
->   sparse-index: silently return when not using cone-mode patterns
->   sparse-index: silently return when cache tree fails
->   unpack-trees: fix nested sparse-dir search
->   sparse-checkout: create helper methods
->   attr: be careful about sparse directories
->   sparse-index: add SPARSE_INDEX_IGNORE_CONFIG flag
->   sparse-checkout: clear tracked sparse dirs
+>  - The SIG{__DIE__} docs mention using an END{} block, but I'm not sure
+>    how you determine if we hit a die or not (at that point, $@ won't
+>    actually be set).
 >
->  Documentation/git-sparse-checkout.txt |  8 +++
->  attr.c                                | 14 ++++
->  builtin/add.c                         |  8 +--
->  builtin/sparse-checkout.c             | 95 +++++++++++++++++++++++++++
->  dir.c                                 | 33 ++++++++++
->  dir.h                                 |  6 ++
->  read-cache.c                          |  4 +-
->  sparse-index.c                        | 70 +++++++++++---------
->  sparse-index.h                        |  3 +-
->  t/t1091-sparse-checkout-builtin.sh    | 59 +++++++++++++++++
->  t/t7519-status-fsmonitor.sh           | 38 ++++++-----
->  unpack-trees.c                        | 18 +++--
->  12 files changed, 294 insertions(+), 62 deletions(-)
+>I've used the catch_top() thing before and it does work (it's just ugly that you have to deal with $^S).
 >
->
-> base-commit: 80b8d6c56b8a5f5db1d5c2a0159fd808e8a7fc4f
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1009%2Fderrickstolee%2Fsparse-index%2Fignored-files-v3
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1009/derrickstolee/sparse-index/ignored-files-v3
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1009
->
-> Range-diff vs v2:
->
->  1:  e66106f7a99 = 1:  e66106f7a99 t7519: rewrite sparse index test
->  2:  fb3ff9108bf = 2:  fb3ff9108bf sparse-index: silently return when not using cone-mode patterns
->  3:  37198535268 = 3:  37198535268 sparse-index: silently return when cache tree fails
->  4:  10bcadb284e = 4:  10bcadb284e unpack-trees: fix nested sparse-dir search
->  5:  e9ed5cd2830 ! 5:  5d28570c82a sparse-checkout: create helper methods
->      @@ dir.c: done:
->
->       +int init_sparse_checkout_patterns(struct index_state *istate)
->       +{
->      -+ if (istate->sparse_checkout_patterns)
->      ++ if (!core_apply_sparse_checkout ||
->      ++     istate->sparse_checkout_patterns)
->       +         return 0;
->       +
->       + CALLOC_ARRAY(istate->sparse_checkout_patterns, 1);
->      @@ dir.c: done:
->       + return 0;
->       +}
->       +
->      -+enum pattern_match_result path_in_sparse_checkout(const char *path,
->      -+                                           struct index_state *istate)
->      ++int path_in_sparse_checkout(const char *path,
->      ++                     struct index_state *istate)
->       +{
->      ++ const char *base;
->       + int dtype = DT_REG;
->       + init_sparse_checkout_patterns(istate);
->       +
->       + if (!istate->sparse_checkout_patterns)
->       +         return MATCHED;
->       +
->      -+ return path_matches_pattern_list(path, strlen(path), NULL, &dtype,
->      ++ base = strrchr(path, '/');
->      ++ return path_matches_pattern_list(path, strlen(path), base ? base + 1 : path,
->      ++                                  &dtype,
->       +                                  istate->sparse_checkout_patterns,
->      -+                                  istate);
->      ++                                  istate) > 0;
->       +}
->       +
->        static struct path_pattern *last_matching_pattern_from_lists(
->      @@ dir.h: enum pattern_match_result path_matches_pattern_list(const char *pathname,
->       +
->       +int init_sparse_checkout_patterns(struct index_state *state);
->       +
->      -+enum pattern_match_result path_in_sparse_checkout(const char *path,
->      -+                                           struct index_state *istate);
->      ++int path_in_sparse_checkout(const char *path,
->      ++                     struct index_state *istate);
->       +
->        struct dir_entry *dir_add_ignored(struct dir_struct *dir,
->                                   struct index_state *istate,
->  6:  5680df62e1c = 6:  c9e100e68f8 attr: be careful about sparse directories
->  7:  1dd73b36eb4 = 7:  b0ece4b7dcc sparse-index: add SPARSE_INDEX_IGNORE_CONFIG flag
->  8:  f74015a2be9 = 8:  febef675f05 sparse-checkout: clear tracked sparse dirs
->
-> --
-> gitgitgadget
+>I guess yet another alternative is that we could avoid using perl's
+>die() in favor of our own custom-named function. It seems like that may confuse folks who come later, though.
+
+I have tried to arrange a more consistent error code from the perl team. There are too many platform mods, and getting this particular change done won't happen - I have already been told something like "Sure, but in an RFE. We'll evaluate it.", which will mean 18 months minimum on x86 if approved (unlikely) and won't happen on the ia64 platform - ever. I think this is ultimately resulting from what is on the stack when the exception is thrown inside perl that is different on the platform. It did change - it was actually 169 two years ago with the same effect. Changing it will mean a custom mod to base perl - not likely going to happen.
+
+What it we left the perl code as is and went with the following, since this seems to happen only above 128:
+
+# Similar to test_must_fail, but just considers pass/fail on completion codes
+test_perl_must_die () {
+        case "$1" in
+        ok=*)
+                _test_ok=${1#ok=}
+                shift
+                ;;
+        *)
+                _test_ok=
+                ;;
+        esac
+        if ! test_must_fail_acceptable "$@"
+        then
+                echo >&7 " test_perl_must_die: only 'git' is allowed: $*"
+                return 1
+        fi
+        "$@" 2>&7
+        exit_code=$?
+        if test $exit_code -eq 0 && ! list_contains "$_test_ok" success
+        then
+                echo >&4 " test_perl_must_die: command succeeded: $*"
+                return 1
+        elif test_match_signal 13 $exit_code && list_contains "$_test_ok" sigpipe
+        then
+                return 0
+        elif test $exit_code -eq 127
+        then
+                echo >&4 " test_perl_must_die: command not found: $*"
+                return 1
+        elif test $exit_code -eq 126
+        then
+                echo >&4 " test_perl_must_die: valgrind error: $*"
+                return 1
+        fi
+        return 0
+} 7>&2 2>&4
+
+Then change t9001 to refer to this function instead of test_must_fail.
+
