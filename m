@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2B68C43214
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 17:50:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B06B5C4338F
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 17:50:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 97ECB60FE6
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 17:50:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9AF2361029
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 17:50:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232504AbhHQRuk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Aug 2021 13:50:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45720 "EHLO
+        id S232256AbhHQRvE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Aug 2021 13:51:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232539AbhHQRuj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Aug 2021 13:50:39 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9791DC0613C1
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 10:50:05 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id b15so40192672ejg.10
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 10:50:05 -0700 (PDT)
+        with ESMTP id S232560AbhHQRvB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Aug 2021 13:51:01 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C92EDC0612A3
+        for <git@vger.kernel.org>; Tue, 17 Aug 2021 10:50:13 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id b10so31749645eju.9
+        for <git@vger.kernel.org>; Tue, 17 Aug 2021 10:50:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8H7d17Xlz7rxX/Abmc48F3/xo3gCQ26PatkHtxy9xbA=;
-        b=U/aRvOgwkr9WCgNZFW9DApHq0LpxM5mS7QwskMul1kFLZV99KY32wL3xe7bo1xYAnq
-         D596Ti+j0pN80BgSW11f/VtBjyotiZktC4prWzH5Ks1mqNy1KLnS5aANRq9oJQO65rpA
-         yXmrIMUP27gGfznXHA/T01RbJ8+yNFtMCL1sTIUuTgSD8423LpxE2XPZrylBOUrrIxW9
-         vCwo6nT5EbX8u5cp9XWTdmMsAS1Ta3bmV0FRaYXqMvJxr/r5XT/3REVQ3z/g3r1liMVM
-         Uub/K6bs7pGer0ZmR3zdNMK8fERTsjoQBQ0tqo2c/sLf5sA7xSz3w85+JfxjuB5LTY9u
-         Q3pw==
+        bh=D7lLB7b9HmvsDCMnHMwFTTABabjUTpmNVn/sekC87mI=;
+        b=laubahN1er3idHXK2uQo35ajFZn+D4wLsSUkDHSPHjshucgvxIuWFygeyRaz1UZTN2
+         8s2XqO1Zza/09oZS6L5bLXqWd7YfNUT7NTmOx5Pv+OCi4ZJnwPuoiMUhOpmqnC1ab7Tt
+         M8Phq2PrTW3A8KM6QJ6hXQcLG/TedfX2Fde9TOUmFdQAgzoGJ6lvh9LmgMMqCj7gUhvS
+         Z9rS5LyPn0XqnZIvh6pMEpz9ea329rprmlteyOmkwzIY9smFAczWczquCWD8s9PH/gCl
+         21ys5e1YgG6/ViYD1sOwGRxQI+5WdN6UqoahHmtcLZ9dkkeUl6rhHz+C0mRapmwo+aD0
+         w2tQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8H7d17Xlz7rxX/Abmc48F3/xo3gCQ26PatkHtxy9xbA=;
-        b=Q1pJ8W7N2DGVrQMZ08+hQ1iWraL+9kRSS+Cca7ux+7prA5tDbiKFfIzlpsVr7I6zpE
-         AVrijEEDm8ZhJZ/ROFxIk8LWWs9R1//qErvCn+t/sPadXb91cVqgwXkuodTVjxG7n+94
-         CFH6xehp0ky2orhlQiTTP7Ipm8oSZZGlen2FHDpopPjTHa8jw5gCyP8/gbt4YOg9y/sd
-         tQpkX5M5YVvj+PwcK5wWW+TrGTLKFEj31KKWCyMtW1hjsOgl5+EnluR+gpQUSv290EMk
-         3ndvga83yRibD6cxzqepRXuo8h2W0NzuOn5d/aY2X6RuuiEMkSO8V6wQcwi6CtlCTaYL
-         zQuQ==
-X-Gm-Message-State: AOAM531J9w9UQSl72M4yDNDcAqoEvtI4sNtSoQpT7ISppL+rpFS7cnGN
-        jfX9x7iTJyOmVwSFbqHiLX5RnrDzI5s=
-X-Google-Smtp-Source: ABdhPJzJIwT0VoSc3TT9ENHwlC7rDqyPxZGQvztB5bwAps3m09NWiblEo6QBKErwPNSI4FYaVXN8Lw==
-X-Received: by 2002:a17:906:858d:: with SMTP id v13mr5185741ejx.424.1629222604222;
-        Tue, 17 Aug 2021 10:50:04 -0700 (PDT)
+        bh=D7lLB7b9HmvsDCMnHMwFTTABabjUTpmNVn/sekC87mI=;
+        b=gpbpBV/F4srG8kYuTy61jcmj/SAT5JNgVMXk0a9xgQy2dWTbJrwNM+lMl7lgVNg0lf
+         lvLRWCyeaSQ7pGa9zVW+oX86ZC9aO9b2eVIO2qgq3MGIWtTUrWaoTmvPV8UPdBMMuJeq
+         nOqCSr3VppoD5iVbKjO4zEg7wRiW6X9SH+EBmmnpoKSzey9HelohDloH/b04J/oTrAQV
+         Hf+lW/4rNatpH4WRroYa3oALWS2dSgpVh16IoDfKBbTciSxbQccPRYgyO0Fv5bFQWtac
+         X4tIibjop2QWqinPchvcBeAvBJKXgD0GtFQ6Ji4tQsBBzzzwusy2isnQRw/N9OHyQNsi
+         5U/A==
+X-Gm-Message-State: AOAM532wp2GJdE0fTI+ynl08yGSMFDRij3WtNZVWUKWIxHRukWZx50zf
+        s+j4N2sdBWp3DEoCcrmZuKqj44Kj9W0=
+X-Google-Smtp-Source: ABdhPJwRFpOqMmHmj1IhF9ZKkutAXWKEWli4lZ7AQ6WX0qUXZlnQpEwFfQw/0s3dkT2iGdvEdHh9kw==
+X-Received: by 2002:a17:907:9604:: with SMTP id gb4mr5385413ejc.142.1629222612375;
+        Tue, 17 Aug 2021 10:50:12 -0700 (PDT)
 Received: from localhost.localdomain (78-131-17-78.pool.digikabel.hu. [78.131.17.78])
-        by smtp.gmail.com with ESMTPSA id p23sm1375240edt.71.2021.08.17.10.50.03
+        by smtp.gmail.com with ESMTPSA id p23sm1375240edt.71.2021.08.17.10.50.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Aug 2021 10:50:04 -0700 (PDT)
+        Tue, 17 Aug 2021 10:50:12 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 4/6] read-cache: look for shared index files next to the index, too
-Date:   Tue, 17 Aug 2021 19:49:36 +0200
-Message-Id: <20210817174938.3009923-5-szeder.dev@gmail.com>
+Subject: [PATCH 6/6] read-cache: fix GIT_TEST_SPLIT_INDEX
+Date:   Tue, 17 Aug 2021 19:49:38 +0200
+Message-Id: <20210817174938.3009923-7-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.33.0.453.gc5e41af357
 In-Reply-To: <20210817174938.3009923-1-szeder.dev@gmail.com>
 References: <20210817174938.3009923-1-szeder.dev@gmail.com>
@@ -75,106 +75,192 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When reading a split index git always looks for its referenced shared
-base index in the gitdir of the current repository, even when reading
-an alternate index specified via GIT_INDEX_FILE, and even when that
-alternate index file is the "main" '.git/index' file of an other
-repository.  However, if that split index and its referenced shared
-index files were written by a git command running entirely in that
-other repository, then, naturally, the shared index file is written to
-that other repository's gitdir.  Consequently, a git command
-attempting to read that shared index file while running in a different
-repository won't be able find it and will error out.
+Running tests with GIT_TEST_SPLIT_INDEX=1 is supposed to turn on the
+split index feature and trigger index splitting (mostly) randomly.
+Alas, this has been broken since 6e37c8ed3c (read-cache.c: fix writing
+"link" index ext with null base oid, 2019-02-13), and
+GIT_TEST_SPLIT_INDEX=1 hasn't triggered any index splitting since
+then.
 
-I'm not sure in what use case it is necessary to read the index of one
-repository by a git command running in a different repository, but it
-is certainly possible to do so, and in fact the test 'bare repository:
-check that --cached honors index' in 't0003-attributes.sh' does
-exactly that.  If GIT_TEST_SPLIT_INDEX=1 were to split the index in
-just the right moment [1], then this test would indeed fail, because
-the referenced shared index file could not be found.
+This patch makes GIT_TEST_SPLIT_INDEX work again, though it doesn't
+restore the pre-6e37c8ed3c behavior.  To understand the bug, the fix,
+and the behavior change we first have to look at how
+GIT_TEST_SPLIT_INDEX used to work before 6e37c8ed3c:
 
-Let's look for the referenced shared index file not only in the gitdir
-of the current directory, but, if the shared index is not there, right
-next to the split index as well.
+  There are two places where we check the value of
+  GIT_TEST_SPLIT_INDEX, and before 6e37c8ed3c they worked like this:
 
-[1] We haven't seen this issue trigger a failure in t0003 yet,
-    because:
+    1) In the lower-level do_write_index(), where, if
+       GIT_TEST_SPLIT_INDEX is enabled, we call init_split_index().
+       This call merely allocates and zero-initializes
+       'istate->split_index', but does nothing else (i.e. doesn't fill
+       the base/shared index with cache entries, doesn't actually
+       write a shared index file, etc.).  Pertinent to this issue, the
+       hash of the base index remains all zeroed out.
 
-      - While GIT_TEST_SPLIT_INDEX=1 is supposed to trigger index
-        splitting randomly, the first index write has always been
-        deterministic and it has never split the index.
+    2) In the higher-level write_locked_index(), but only when
+       'istate->split_index' has already been initialized.  Then, if
+       GIT_TEST_SPLIT_INDEX is enabled, it randomly sets the flag that
+       triggers index splitting later in this function.  This
+       randomness comes from the first byte of the hash of the base
+       index via an 'if ((first_byte & 15) < 6)' condition.
 
-      - That alternate index file in the other repository is written
-        only once in the entire test script, so it's never split.
+       However, if 'istate->split_index' hasn't been initialized (i.e.
+       it is still NULL), then write_locked_index() just calls
+       do_write_locked_index(), which internally calls the above
+       mentioned do_write_index().
 
-    However, the next patch will fix GIT_TEST_SPLIT_INDEX, and while
-    doing so it will slightly change its behavior to always split the
-    index already on the first index write, and t0003 would always
-    fail without this patch.
+  This means that while GIT_TEST_SPLIT_INDEX=1 usually triggered index
+  splitting randomly, the first two index writes were always
+  deterministic (though I suspect this was unintentional):
+
+    - The initial index write never splits the index.
+      During the first index write write_locked_index() is called with
+      'istate->split_index' still uninitialized, so the check in 2) is
+      not executed.  It still calls do_write_index(), though, which
+      then executes the check in 1).  The resulting all zero base
+      index hash then leads to the 'link' extension being written to
+      '.git/index', though a shared index file is not written:
+
+        $ rm .git/index
+        $ GIT_TEST_SPLIT_INDEX=1 git update-index --add file
+        $ test-tool dump-split-index .git/index
+        own c6ef71168597caec8553c83d9d0048f1ef416170
+        base 0000000000000000000000000000000000000000
+        100644 d00491fd7e5bb6fa28c517a0bb32b8b506539d4d 0 file
+        replacements:
+        deletions:
+        $ ls -l .git/sharedindex.*
+        ls: cannot access '.git/sharedindex.*': No such file or directory
+
+    - The second index write always splits the index.
+      When the index written in the previous point is read,
+      'istate->split_index' is initialized because of the presence of
+      the 'link' extension.  So during the second write
+      write_locked_index() does run the check in 2), and the first
+      byte of the all zero base index hash always fulfills the
+      randomness condition, which in turn always triggers the index
+      splitting.
+
+    - Subsequent index writes will find the 'link' extension with a
+      real non-zero base index hash, so from then on the check in 2)
+      is executed and the first byte of the base index hash is as
+      random as it gets (coming from the SHA-1 of index data including
+      timestamps and inodes...).
+
+All this worked until 6e37c8ed3c came along, and stopped writing the
+'link' extension if the hash of the base index was all zero:
+
+  $ rm .git/index
+  $ GIT_TEST_SPLIT_INDEX=1 git update-index --add file
+  $ test-tool dump-split-index .git/index
+  own abbd6f6458d5dee73ae8e210ca15a68a390c6fd7
+  not a split index
+  $ ls -l .git/sharedindex.*
+  ls: cannot access '.git/sharedindex.*': No such file or directory
+
+So, since the first index write with GIT_TEST_SPLIT_INDEX=1 doesn't
+write a 'link' extension, in the second index write
+'istate->split_index' remains uninitialized, and the check in 2) is
+not executed, and ultimately the index is never split.
+
+Fix this by modifying write_locked_index() to make sure to check
+GIT_TEST_SPLIT_INDEX even if 'istate->split_index' is still
+uninitialized, and initialize it if necessary.  The check for
+GIT_TEST_SPLIT_INDEX and separate init_split_index() call in
+do_write_index() thus becomes unnecessary, so remove it.  Furthermore,
+add a test to 't1700-split-index.sh' to make sure that
+GIT_TEST_SPLIT_INDEX=1 will keep working (though only check the
+index splitting on the first index write, because after that it will
+be random).
+
+Note that this change does not restore the pre-6e37c8ed3c behaviour,
+as it will deterministically split the index already on the first
+index write.  Since GIT_TEST_SPLIT_INDEX is purely a developer aid,
+there is no backwards compatibility issue here.  The new behaviour did
+trigger test failures in 't0003-attributes.sh' and 't1600-index.sh',
+though, which have been fixed in preparatory patches in this series.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- read-cache.c           | 14 +++++++++++++-
- t/t1700-split-index.sh | 23 +++++++++++++++++++++++
- 2 files changed, 36 insertions(+), 1 deletion(-)
+ read-cache.c           | 23 ++++++++++++++---------
+ t/t1700-split-index.sh | 11 +++++++++++
+ 2 files changed, 25 insertions(+), 9 deletions(-)
 
 diff --git a/read-cache.c b/read-cache.c
-index 9048ef9e90..fbd59886a3 100644
+index fbd59886a3..335242c1cf 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -2391,9 +2391,21 @@ int read_index_from(struct index_state *istate, const char *path,
- 	base_path = xstrfmt("%s/sharedindex.%s", gitdir, base_oid_hex);
- 	trace2_region_enter_printf("index", "shared/do_read_index",
- 				   the_repository, "%s", base_path);
--	ret = do_read_index(split_index->base, base_path, 1);
-+	ret = do_read_index(split_index->base, base_path, 0);
- 	trace2_region_leave_printf("index", "shared/do_read_index",
- 				   the_repository, "%s", base_path);
-+	if (!ret) {
-+		char *path_copy = xstrdup(path);
-+		const char *base_path2 = xstrfmt("%s/sharedindex.%s",
-+						 dirname(path_copy),
-+						 base_oid_hex);
-+		free(path_copy);
-+		trace2_region_enter_printf("index", "shared/do_read_index",
-+					   the_repository, "%s", base_path2);
-+		ret = do_read_index(split_index->base, base_path2, 1);
-+		trace2_region_leave_printf("index", "shared/do_read_index",
-+					   the_repository, "%s", base_path2);
-+	}
- 	if (!oideq(&split_index->base_oid, &split_index->base->oid))
- 		die(_("broken index, expect %s in %s, got %s"),
- 		    base_oid_hex, base_path,
+@@ -2824,11 +2824,8 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 		}
+ 	}
+ 
+-	if (!istate->version) {
++	if (!istate->version)
+ 		istate->version = get_index_format_default(the_repository);
+-		if (git_env_bool("GIT_TEST_SPLIT_INDEX", 0))
+-			init_split_index(istate);
+-	}
+ 
+ 	/* demote version 3 to version 2 when the latter suffices */
+ 	if (istate->version == 3 || istate->version == 2)
+@@ -3255,7 +3252,7 @@ static int too_many_not_shared_entries(struct index_state *istate)
+ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 		       unsigned flags)
+ {
+-	int new_shared_index, ret;
++	int new_shared_index, ret, test_split_index_env;
+ 	struct split_index *si = istate->split_index;
+ 
+ 	if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0))
+@@ -3270,7 +3267,10 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 	if (istate->fsmonitor_last_update)
+ 		fill_fsmonitor_bitmap(istate);
+ 
+-	if (!si || alternate_index_output ||
++	test_split_index_env = git_env_bool("GIT_TEST_SPLIT_INDEX", 0);
++
++	if ((!si && !test_split_index_env) ||
++	    alternate_index_output ||
+ 	    (istate->cache_changed & ~EXTMASK)) {
+ 		if (si)
+ 			oidclr(&si->base_oid);
+@@ -3278,10 +3278,15 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 		goto out;
+ 	}
+ 
+-	if (git_env_bool("GIT_TEST_SPLIT_INDEX", 0)) {
+-		int v = si->base_oid.hash[0];
+-		if ((v & 15) < 6)
++	if (test_split_index_env) {
++		if (!si) {
++			si = init_split_index(istate);
+ 			istate->cache_changed |= SPLIT_INDEX_ORDERED;
++		} else {
++			int v = si->base_oid.hash[0];
++			if ((v & 15) < 6)
++				istate->cache_changed |= SPLIT_INDEX_ORDERED;
++		}
+ 	}
+ 	if (too_many_not_shared_entries(istate))
+ 		istate->cache_changed |= SPLIT_INDEX_ORDERED;
 diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index 986baa612e..e2aa0bd949 100755
+index e2aa0bd949..decd2527ed 100755
 --- a/t/t1700-split-index.sh
 +++ b/t/t1700-split-index.sh
-@@ -510,4 +510,27 @@ test_expect_success 'do not refresh null base index' '
- 	)
+@@ -533,4 +533,15 @@ test_expect_success 'reading split index at alternate location' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'reading split index at alternate location' '
-+	git init reading-alternate-location &&
++test_expect_success 'GIT_TEST_SPLIT_INDEX works' '
++	git init git-test-split-index &&
 +	(
-+		cd reading-alternate-location &&
-+		>file-in-alternate &&
-+		git update-index --split-index --add file-in-alternate
-+	) &&
-+	echo file-in-alternate >expect &&
-+
-+	# Should be able to find the shared index both right next to
-+	# the specified split index file ...
-+	GIT_INDEX_FILE=./reading-alternate-location/.git/index \
-+	git ls-files --cached >actual &&
-+	test_cmp expect actual &&
-+
-+	# ... and, for backwards compatibility, in the current GIT_DIR
-+	# as well.
-+	mv -v ./reading-alternate-location/.git/sharedindex.* .git &&
-+	GIT_INDEX_FILE=./reading-alternate-location/.git/index \
-+	git ls-files --cached >actual &&
-+	test_cmp expect actual
++		cd git-test-split-index &&
++		>file &&
++		GIT_TEST_SPLIT_INDEX=1 git update-index --add file &&
++		ls -l .git/sharedindex.* >actual &&
++		test_line_count = 1 actual
++	)
 +'
 +
  test_done
