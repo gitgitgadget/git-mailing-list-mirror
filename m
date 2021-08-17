@@ -2,117 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07C69C4338F
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 10:27:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E142FC4338F
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 10:30:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC77F60F41
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 10:27:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B9BE360F58
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 10:30:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236462AbhHQK2a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Aug 2021 06:28:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57448 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234093AbhHQK23 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Aug 2021 06:28:29 -0400
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0080CC061764
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 03:27:56 -0700 (PDT)
-Received: by mail-qt1-x82a.google.com with SMTP id t16so16639301qta.9
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 03:27:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=dbbdoR1T0g8DnoT3IF/hrCkkkuGNyaXJV+C5RBWd2xY=;
-        b=iiqWsPdfSlami5iZ7NdwiwZeSmUIiICOksc6Ni12Tbco2Wftc+kDVpVUHe/y2nJR5c
-         5WZGt2DjMok4ChuTvFgPaSbqfjwUIAfX7FWuRXH4GhyGgFiCh6RNFxpPBdChCXpeXTk4
-         GZAycsUcLR36QK/7tr0KzsmUstPWGcJ9v0Kwx1B50/NA/QH3I//CzyvkB7r+TOjbMIqF
-         QWMGjZogveBFfwFK62zvSmtQn6uY6LnvMSX5fNAUgGaR50lK2CphpfevuuC9HrX8dZBm
-         p0MNltYZifoRtawSYyyVmLpSa6Z37QIVK0MJQSBg0BPAuVflhHTLj97eyT9VLKWExF36
-         WJcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=dbbdoR1T0g8DnoT3IF/hrCkkkuGNyaXJV+C5RBWd2xY=;
-        b=E1IfCZ2KZAI/UHyLgJ9x0DfKsnXSADkHYUAItxHFBx2HmBMAMIRJXdQvLK52MC+fqZ
-         rYCmXClszlPS51lTlpkHm+E5v9KUnWv/03gGztxPxe4bR3j+V5deJz78Tigum+SNJd+w
-         BhB5A7gzznCSPb9vKwSvUkCqu1CIEu+bfTJV/RfAd6aafCsXNQBbdJ9DL1mtdx48quG7
-         mih+rjFvnEh31boDsnNqpkg3Pb4H0bdzrV1xzIKv/d2J34ClrDqeDKE+5M1/ZJNEIhNe
-         n9pf38dafo2ymcPnUJfu4X27vhYYlNjr6m0Sh/ZG5tc9/BFyRE1Ffdh4Q8WWe4lEffWA
-         +Vug==
-X-Gm-Message-State: AOAM530Xlu9FwGtw5CSFGTR+NKPRxiqCnUETlyVVCU4Qh8eH0oBxjCu6
-        w/LjbEuFikx1zLEGP2PajvtjBhunfKg=
-X-Google-Smtp-Source: ABdhPJykKwtvHgl92FI11kjeV8Y23RP6mllb5g8WiZbmyACvFl5Y/M68/eKiHdtGc2rg3LwXBLi4zw==
-X-Received: by 2002:a05:622a:14ce:: with SMTP id u14mr2366650qtx.208.1629196075959;
-        Tue, 17 Aug 2021 03:27:55 -0700 (PDT)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id n124sm1060574qkf.119.2021.08.17.03.27.55
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Aug 2021 03:27:55 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     jeffhost@microsoft.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] builtin/fsmonitor--daemon: use parse-options API fully
-Date:   Tue, 17 Aug 2021 03:27:10 -0700
-Message-Id: <20210817102710.23916-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.33.0.476.gf000ecbed9
-MIME-Version: 1.0
+        id S235203AbhHQKbM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Aug 2021 06:31:12 -0400
+Received: from mout.gmx.net ([212.227.17.22]:48499 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234093AbhHQKbM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Aug 2021 06:31:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1629196237;
+        bh=66dLCtgmHj6LMEzpRxTHo8nqjdrX+X7+AtlBV8yK82k=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=RTzq/qpb2A3KhjQFzWvc1dR4mOdCsyrNOxYVmL9iwJOLs2JIppaRDSAYblxPPeL3o
+         tu3MkSnE+bm91uYe4RVi1IgfW8145B3197S1fvJewI/BrUGtIWePC+DAc1FdfZA0MN
+         +nPHqitx89olQ4WT/jUneusUeumL0xGvYRyAjRbA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az53-998.tt11xfkzbotebkioxoimtk40sh.cx.internal.cloudapp.net
+ ([20.110.14.8]) by mail.gmx.net (mrgmx104 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MNKhm-1mQSs31LCc-00OnhP; Tue, 17 Aug 2021 12:30:37 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.33.0
+Date:   Tue, 17 Aug 2021 10:30:34 +0000
+Message-Id: <20210817103035.5482-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.33.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+Fcc:    Sent
+X-Provags-ID: V03:K1:fxLdh0TIq6T+RhzW0FmOnWAMDYg5QRCEKNni43IjwGy+stkIxVq
+ lX5T5N4rLRptGr9Lw9eROhkgZ02IKI7QncR3DLl66HHneC8CzcpxJ61ToPCHX+JUI8Vxcnc
+ GX5H3XSnFilRkgRTjf/JU6RxhAVGv4rzm2GOhCuWS5eh09X8XIf0Vk3A9aTjHYfIxBVV/Br
+ W/SUtxehkHcbTPoDUGdDQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Sw+tQqAIigA=:fPoxlCsiGav+HYQoFPg2kS
+ PTdgQcdHvkJt7eB4N4yIatxBSG0SbbG5tcVz7MkQJ9fnzbmHxk2vfG/nf04WllBBRtLxXv1ye
+ HZgpkKTO36pf/4Cm0LNPsCfE807GpL6QcF9uhAenIRjdTBZgdlvLSxYYrJWNUGf+6ZvMir1W0
+ MOleP5kkDbG4pjqk3kelUL9mfQNiumtxd/3qBXlYW9d+RzVzLxYk8thv4TPRs+FZAOUPDebMn
+ EaB6hBYmD0RclxxLvkYy7bTRvKntyQznEWiHzcrCsQathM48bhDtqfZ9DzY2RpeHuZImspmJg
+ TIjfd3Ec1qSJZcw/fOLvf9BkJeTY78pBYOYw+72dVckobARfKJpjhOt2ofCPrOpCjRctaOzm1
+ ETzs46YGdMs4vzmsruKEKUHStn6k2nT4EsQ46DRCgCNVJEyhdtJP1RLsaD8l9O00qIuYAUdy5
+ eeIFdNPTFYWJ6fclg69utnLxb/IBlNVTiehcZRn3sX6+nPu1UapF0TYBJ7RqH6iqG+ddo4tLI
+ JFzaH+vbxorgp72bJz57V4YHxm5jq6loRWa3J5JIJ9zwH1dSHmTP4rTCkCXihpxc3LFgJRIsB
+ nkX6xxGd78yBhHZKxSRHkwT0vtDWrtrnydSLKpB6AbQAFp8QisTUSr+aSV6DW/SeqtHiCvvuC
+ gMP7wC4NEmGtvR/rM3UiviqV1X5yOTxmCNAdyCaCyveSwm5jmceTCzbM4IXTtQ584ql4X2t2s
+ X8N9xClck4d1rKBgxu9sr3xqP7S1nj0L52qJjFWVeOQoONEND4Cbi5BJDqLESiWstFVIvjhIc
+ jSgDoUGy620xn7bo2El4f2T8hO5QklEGGPzoqvh9Ozl/RtyfRCDkrJ+akjtnnVuncidAkawYj
+ yORV9zO8ti4QctgpsZNlqZ+ltS8W0MSDFItrjV6VPZRXgqQS5O/oytQbsFF/orZ9wRW+fTkED
+ UGfCzurJFwmtWMrxZTIRFxdNR0/cIyMZ9E/vbKkv9RMl+0gVa38h2IOPsJOiUeAIGRhr3pcNf
+ T6dTNNxSaRpcLK3cOtZ2beKZF1oDNMiwEY7ccvoTWJojX/Q+IZaa4DLVPumTr/Klf5uMv9CmN
+ MP2SrNWoCa9LNfr/4Kko7Qi3YZExY6pPkpDBxKjFX6aCaCk7OZCr4A7SQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---help and -h are already handled internally so just parse_options()
-do the parsing and extract the command from the remaining options.
+Dear Git users,
 
-as a side effect, avoid setting a variable argc to a value that was
-never used.
+I hereby announce that Git for Windows 2.33.0 is available from:
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- builtin/fsmonitor--daemon.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+    https://gitforwindows.org/
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 25f18f2726..d6a6010512 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -1511,20 +1511,13 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
--	if (argc < 2)
--		usage_with_options(builtin_fsmonitor__daemon_usage, options);
--
--	if (argc == 2 && !strcmp(argv[1], "-h"))
-+	argc = parse_options(argc, argv, prefix, options,
-+			     builtin_fsmonitor__daemon_usage, 0);
-+	if (argc != 1)
- 		usage_with_options(builtin_fsmonitor__daemon_usage, options);
-+	subcmd = argv[0];
- 
- 	git_config(fsmonitor_config, NULL);
--
--	subcmd = argv[1];
--	argv--;
--	argc++;
--
--	argc = parse_options(argc, argv, prefix, options,
--			     builtin_fsmonitor__daemon_usage, 0);
- 	if (fsmonitor__ipc_threads < 1)
- 		die(_("invalid 'ipc-threads' value (%d)"),
- 		    fsmonitor__ipc_threads);
--- 
-2.33.0.476.gf000ecbed9
+Changes since Git for Windows v2.32.0(2) (July 6th 2021)
 
+New Features
+
+  * Comes with Git v2.33.0.
+  * Comes with Perl v5.34.0 (and some updated Perl modules).
+  * It is now possible to ask Git for Windows to use an SSH found on
+    the PATH instead of its bundled OpenSSH executable.
+  * Comes with Git Credential Manager Core v2.0.498.54650.
+  * The experimental FSMonitor patches were replaced with a newer
+    version.
+  * Comes with GNU Privacy Guard v2.2.29.
+
+Bug Fixes
+
+  * The installer no longer shows an error dialog when upgrading while
+    the Windows Terminal Profile option is checked.
+  * Interaction with the git repo tool was improved.
+  * The version of GNU Privacy Guard (GPG) bundled in Git for Windows
+    did not work in 64-bit setups, which was fixed.
+
+Git-2.33.0-64-bit.exe | 4e6e0efbb7d35653907175f2735386f55b72d37d442b3a1be9656c26f69c693d
+Git-2.33.0-32-bit.exe | 715cfc104c249fea591ab1fb6ba56f970405cdfcebf11798eb02175a3178d879
+PortableGit-2.33.0-64-bit.7z.exe | 12c10fad2c2db17d9867dbbacff1adc8be50868b793a73d451c2b878914bb32d
+PortableGit-2.33.0-32-bit.7z.exe | c3b6f1a8f8c1b5be2175b7190d35926dce07a58294780291326a437ef0694676
+MinGit-2.33.0-64-bit.zip | 220e4606ec857d44f0ce67610bd8194f1c3779fbf85c801e945842e6f1732bdc
+MinGit-2.33.0-32-bit.zip | 55e15a351dff1ad327dbf82d47bbd08a19ccc42b2d1b21c5fffe48fa4da3a623
+MinGit-2.33.0-busybox-64-bit.zip | 9e2837a0c8225e399e178171c8134f63b38242936cdb51a1400d88b7cfec9d9b
+MinGit-2.33.0-busybox-32-bit.zip | 163da52a7208438cd94b611d36809c084cc941dd9bb3e5f683d9d3513f95465e
+Git-2.33.0-64-bit.tar.bz2 | 9ec6c3f22ff105f572a0f4de7b3273a5fdc463e8b8dd8334bf4d467a3198e53e
+Git-2.33.0-32-bit.tar.bz2 | e50c1e88cd2549aa57137a8ecf8e65b709a35d120a590ff3ac93c415eebe9efd
+
+Ciao,
+Johannes
