@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 845B0C4338F
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 13:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22CF4C432BE
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 13:42:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 697A460249
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 13:42:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0CFCF60FD7
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 13:42:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240222AbhHQNnM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Aug 2021 09:43:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45220 "EHLO
+        id S240244AbhHQNnP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Aug 2021 09:43:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240044AbhHQNmK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Aug 2021 09:42:10 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30213C0612AF
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 06:40:51 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id f5so28640325wrm.13
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 06:40:51 -0700 (PDT)
+        with ESMTP id S240048AbhHQNmL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Aug 2021 09:42:11 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68ADDC0612A4
+        for <git@vger.kernel.org>; Tue, 17 Aug 2021 06:40:43 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id f5so28639713wrm.13
+        for <git@vger.kernel.org>; Tue, 17 Aug 2021 06:40:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=luGuMJDPRMnjXEoCSqhvE+ut/GB0VLXv5Jme/aSENz4=;
-        b=NKvq1NtfhLspST/8yose4kDidR3E5UPk/rHnXT1dX4WbV1Mmnz67d/LSc7GhUJHmKv
-         O3JsKVfJOcRRhhE5YcFwM8F9Vkg+GqGRfR3IVgFab+tzQIdaKqybL+CpFlFNXV8cluad
-         cBMl9JAT+vAxKsspLElAU7mM/lB8n56aWyFuqL8KqCZP2Ktrtgizbsz3O/6iF3HXOH80
-         L2rKaig1qFfsD00VqtsL9OhlUBlM+AkFEwMCeHNF6KsMwJFNuoOyEqTHaQgERt7ECx6E
-         vifj0jJBJPDNmyvMF8S0r5b801Qa4NMHyOmqkgsjxYya6OMD28EOlcBRW35Cqm0H0GR0
-         Oxqg==
+        bh=fiFnXBqEOj6mbjXqYhVd89dLF82gUHAbunh1Tg5pxMQ=;
+        b=t/hlak1bpj/lPT6wsUHKqjHYUHPr7mK0OM0OHJAa0g31FhAUPoCi+T05yyP2Mr4V/g
+         8Stj34++qdD67drSxYHtZrDHFYinVQYfK17bqVCmUOAbUGp2phghHP5xSoQvFfk3YlJd
+         rnZPQH2wBQ9fiWqaf1MCIlSUMOAaPN7FZJyfdZC/ngedcoQ6qe/rVtcZHahf6mfghXch
+         upfy4PoZ9/IOmyiOtaepPkXrIkYCDBoKQ7OF/vHaMYBu4nxm+rrNFtvNBRTqPHaWD+gL
+         TRYaNhyZw59h2nVPbrAHvD+Z5fFOEifJeT6UMxF11qxlXzuAO3v+Yo8rvZRDkR0kma6k
+         //Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=luGuMJDPRMnjXEoCSqhvE+ut/GB0VLXv5Jme/aSENz4=;
-        b=acgOD7PilqgtixszR5/4ZTtPMhzpGOHIHyvzCMRb2m5nzv1BL6QpqoisJOCgPS5x9A
-         uj3b3TxGKr1HXKG3ZJ1nZQgJ43snX63nNrX4u0IdFkpVh1+4lPPo+nM8O5BAKwh04jB4
-         zGrTaBO/U5lJcjROYWn73bJHBru/ePlWS7wlv4DMRqh1RR3hWZobXNytEQh9ddTLbtjz
-         yn/HtyxnXfqfroqUi9fA11UtvNlt2hkPe4SM91bD7NxCnpWrccnAuipWzTHto0+mi4Kj
-         42zPOWIUUfWzjMbDZ0XPnK8KkpLL7jWVFMSmy51JFglY0+yFvRBx2kUYTdw8w4EVYE/8
-         ZGsA==
-X-Gm-Message-State: AOAM530R/dan7Km6p9Cps5LtzGICMlO5eQ0Hj5Vs6rRZ0vst0iohHK/r
-        mXJJEhMod1RLntXLNUtjy5n/Kt2Vzhg=
-X-Google-Smtp-Source: ABdhPJxqHHZ5e2g+1luPkDBg16bvyIXgBkjPxgiIbIZ6KP+CD2re/VYfpcisGhoYOOhV27VwP1yNdA==
-X-Received: by 2002:adf:e746:: with SMTP id c6mr4135942wrn.276.1629207649842;
-        Tue, 17 Aug 2021 06:40:49 -0700 (PDT)
+        bh=fiFnXBqEOj6mbjXqYhVd89dLF82gUHAbunh1Tg5pxMQ=;
+        b=i5jU3Mz8La2UjAuLu/JCOK7/F/q6AYJx1XY+rBHOIYJA3kRe9IhDAsJFPCaDKB9gBH
+         heS0AdZy5ZMeCDIMkA9KeTcDs+mJTHFos08z5M2P/1bL2p5fNoLADHFqaRmBlAtJPMXd
+         XHxv1ECZyZb5lqFvVmrtuVQ3jwNaRvmp9iRjE+9OfxBjbSBhmaI20vsreJmk4NbXmi2C
+         HNIRzh/rngjkXtnCEgT+nMa3JI9JhzFOKVqiGoebGlQoLfgw3Zd0S0k2PaEqMtwNDryV
+         hoBxnxUImFjEMdPddbraAMXTlf93rpwMtI7FxDRlQf6e9jQC2XrSdecq44UG6ERt9aMc
+         ZLmw==
+X-Gm-Message-State: AOAM5305pI4Saqk1H8nIZrBzBomjTjT+PnGAHmCjCT1rAPvHpo8bVGL6
+        hhaW9FgKAvGGqtxNlruzkEThjTgXgyM=
+X-Google-Smtp-Source: ABdhPJy2kIO6TYv/K5fGHJmCYsJlh7gdG1LClcOuXoaNHNTHWulcJCrL6tmqYuIGoPU13AF1taLVnw==
+X-Received: by 2002:adf:f90e:: with SMTP id b14mr4399259wrr.28.1629207641961;
+        Tue, 17 Aug 2021 06:40:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r10sm3119041wrq.32.2021.08.17.06.40.49
+        by smtp.gmail.com with ESMTPSA id w14sm2442139wrt.23.2021.08.17.06.40.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Aug 2021 06:40:49 -0700 (PDT)
-Message-Id: <a44956d7b08c6a7f73d2c6d2cb2e8bc3b4192c32.1629207607.git.gitgitgadget@gmail.com>
+        Tue, 17 Aug 2021 06:40:40 -0700 (PDT)
+Message-Id: <7da9a85c1db8df3962c8e50dabef424dd82fb6c9.1629207607.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1054.v3.git.git.1629207607.gitgitgadget@gmail.com>
 References: <pull.1054.v2.git.git.1629145036.gitgitgadget@gmail.com>
         <pull.1054.v3.git.git.1629207607.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 17 Aug 2021 13:40:05 +0000
-Subject: [PATCH v3 23/25] t1301: document what needs to be done for reftable
+Date:   Tue, 17 Aug 2021 13:39:56 +0000
+Subject: [PATCH v3 14/25] reftable: reftable file level tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,46 +77,716 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
+With support for reading and writing files in place, we can construct files (in
+memory) and attempt to read them back.
+
+Because some sections of the format are optional (eg. indices, log entries), we
+have to exercise this code using multiple sizes of input data
+
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- t/t1301-shared-repo.sh | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ Makefile                  |   1 +
+ reftable/readwrite_test.c | 652 ++++++++++++++++++++++++++++++++++++++
+ reftable/reftable-tests.h |   2 +-
+ t/helper/test-reftable.c  |   1 +
+ 4 files changed, 655 insertions(+), 1 deletion(-)
+ create mode 100644 reftable/readwrite_test.c
 
-diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-index 84bf1970d8b..a5755b4a434 100755
---- a/t/t1301-shared-repo.sh
-+++ b/t/t1301-shared-repo.sh
-@@ -22,9 +22,10 @@ test_expect_success 'shared = 0400 (faulty permission u-w)' '
- 	)
- '
+diff --git a/Makefile b/Makefile
+index 5c857989091..5e2ff446894 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2469,6 +2469,7 @@ REFTABLE_OBJS += reftable/writer.o
+ REFTABLE_TEST_OBJS += reftable/basics_test.o
+ REFTABLE_TEST_OBJS += reftable/block_test.o
+ REFTABLE_TEST_OBJS += reftable/record_test.o
++REFTABLE_TEST_OBJS += reftable/readwrite_test.o
+ REFTABLE_TEST_OBJS += reftable/test_framework.o
+ REFTABLE_TEST_OBJS += reftable/tree_test.o
  
-+# TODO(hanwen): for REFTABLE should inspect group-readable of .git/reftable/
- for u in 002 022
- do
--	test_expect_success POSIXPERM "shared=1 does not clear bits preset by umask $u" '
-+	test_expect_success REFFILES,POSIXPERM "shared=1 does not clear bits preset by umask $u" '
- 		mkdir sub && (
- 			cd sub &&
- 			umask $u &&
-@@ -114,7 +115,8 @@ test_expect_success POSIXPERM 'info/refs respects umask in unshared repo' '
- 	test_cmp expect actual
- '
- 
--test_expect_success POSIXPERM 'git reflog expire honors core.sharedRepository' '
-+# For reftable, the check on .git/reftable/ is sufficient.
-+test_expect_success REFFILES,POSIXPERM 'git reflog expire honors core.sharedRepository' '
- 	umask 077 &&
- 	git config core.sharedRepository group &&
- 	git reflog expire --all &&
-@@ -201,7 +203,7 @@ test_expect_success POSIXPERM 're-init respects core.sharedrepository (remote)'
- 	test_cmp expect actual
- '
- 
--test_expect_success POSIXPERM 'template can set core.sharedrepository' '
-+test_expect_success REFFILES,POSIXPERM 'template can set core.sharedrepository' '
- 	rm -rf child.git &&
- 	umask 0022 &&
- 	git config core.sharedrepository 0666 &&
+diff --git a/reftable/readwrite_test.c b/reftable/readwrite_test.c
+new file mode 100644
+index 00000000000..5f6bcc2f775
+--- /dev/null
++++ b/reftable/readwrite_test.c
+@@ -0,0 +1,652 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#include "system.h"
++
++#include "basics.h"
++#include "block.h"
++#include "blocksource.h"
++#include "constants.h"
++#include "reader.h"
++#include "record.h"
++#include "test_framework.h"
++#include "reftable-tests.h"
++#include "reftable-writer.h"
++
++static const int update_index = 5;
++
++static void test_buffer(void)
++{
++	struct strbuf buf = STRBUF_INIT;
++	struct reftable_block_source source = { NULL };
++	struct reftable_block out = { NULL };
++	int n;
++	uint8_t in[] = "hello";
++	strbuf_add(&buf, in, sizeof(in));
++	block_source_from_strbuf(&source, &buf);
++	EXPECT(block_source_size(&source) == 6);
++	n = block_source_read_block(&source, &out, 0, sizeof(in));
++	EXPECT(n == sizeof(in));
++	EXPECT(!memcmp(in, out.data, n));
++	reftable_block_done(&out);
++
++	n = block_source_read_block(&source, &out, 1, 2);
++	EXPECT(n == 2);
++	EXPECT(!memcmp(out.data, "el", 2));
++
++	reftable_block_done(&out);
++	block_source_close(&source);
++	strbuf_release(&buf);
++}
++
++static void write_table(char ***names, struct strbuf *buf, int N,
++			int block_size, uint32_t hash_id)
++{
++	struct reftable_write_options opts = {
++		.block_size = block_size,
++		.hash_id = hash_id,
++	};
++	struct reftable_writer *w =
++		reftable_new_writer(&strbuf_add_void, buf, &opts);
++	struct reftable_ref_record ref = { NULL };
++	int i = 0, n;
++	struct reftable_log_record log = { NULL };
++	const struct reftable_stats *stats = NULL;
++	*names = reftable_calloc(sizeof(char *) * (N + 1));
++	reftable_writer_set_limits(w, update_index, update_index);
++	for (i = 0; i < N; i++) {
++		uint8_t hash[GIT_SHA256_RAWSZ] = { 0 };
++		char name[100];
++		int n;
++
++		set_test_hash(hash, i);
++
++		snprintf(name, sizeof(name), "refs/heads/branch%02d", i);
++
++		ref.refname = name;
++		ref.update_index = update_index;
++		ref.value_type = REFTABLE_REF_VAL1;
++		ref.value.val1 = hash;
++		(*names)[i] = xstrdup(name);
++
++		n = reftable_writer_add_ref(w, &ref);
++		EXPECT(n == 0);
++	}
++
++	for (i = 0; i < N; i++) {
++		uint8_t hash[GIT_SHA256_RAWSZ] = { 0 };
++		char name[100];
++		int n;
++
++		set_test_hash(hash, i);
++
++		snprintf(name, sizeof(name), "refs/heads/branch%02d", i);
++
++		log.refname = name;
++		log.update_index = update_index;
++		log.value_type = REFTABLE_LOG_UPDATE;
++		log.value.update.new_hash = hash;
++		log.value.update.message = "message";
++
++		n = reftable_writer_add_log(w, &log);
++		EXPECT(n == 0);
++	}
++
++	n = reftable_writer_close(w);
++	EXPECT(n == 0);
++
++	stats = writer_stats(w);
++	for (i = 0; i < stats->ref_stats.blocks; i++) {
++		int off = i * opts.block_size;
++		if (off == 0) {
++			off = header_size(
++				(hash_id == GIT_SHA256_FORMAT_ID) ? 2 : 1);
++		}
++		EXPECT(buf->buf[off] == 'r');
++	}
++
++	EXPECT(stats->log_stats.blocks > 0);
++	reftable_writer_free(w);
++}
++
++static void test_log_buffer_size(void)
++{
++	struct strbuf buf = STRBUF_INIT;
++	struct reftable_write_options opts = {
++		.block_size = 4096,
++	};
++	int err;
++	int i;
++	struct reftable_log_record
++		log = { .refname = "refs/heads/master",
++			.update_index = 0xa,
++			.value_type = REFTABLE_LOG_UPDATE,
++			.value = { .update = {
++					   .name = "Han-Wen Nienhuys",
++					   .email = "hanwen@google.com",
++					   .tz_offset = 100,
++					   .time = 0x5e430672,
++					   .message = "commit: 9\n",
++				   } } };
++	struct reftable_writer *w =
++		reftable_new_writer(&strbuf_add_void, &buf, &opts);
++
++	/* This tests buffer extension for log compression. Must use a random
++	   hash, to ensure that the compressed part is larger than the original.
++	*/
++	uint8_t hash1[GIT_SHA1_RAWSZ], hash2[GIT_SHA1_RAWSZ];
++	for (i = 0; i < GIT_SHA1_RAWSZ; i++) {
++		hash1[i] = (uint8_t)(rand() % 256);
++		hash2[i] = (uint8_t)(rand() % 256);
++	}
++	log.value.update.old_hash = hash1;
++	log.value.update.new_hash = hash2;
++	reftable_writer_set_limits(w, update_index, update_index);
++	err = reftable_writer_add_log(w, &log);
++	EXPECT_ERR(err);
++	err = reftable_writer_close(w);
++	EXPECT_ERR(err);
++	reftable_writer_free(w);
++	strbuf_release(&buf);
++}
++
++static void test_log_write_read(void)
++{
++	int N = 2;
++	char **names = reftable_calloc(sizeof(char *) * (N + 1));
++	int err;
++	struct reftable_write_options opts = {
++		.block_size = 256,
++	};
++	struct reftable_ref_record ref = { NULL };
++	int i = 0;
++	struct reftable_log_record log = { NULL };
++	int n;
++	struct reftable_iterator it = { NULL };
++	struct reftable_reader rd = { NULL };
++	struct reftable_block_source source = { NULL };
++	struct strbuf buf = STRBUF_INIT;
++	struct reftable_writer *w =
++		reftable_new_writer(&strbuf_add_void, &buf, &opts);
++	const struct reftable_stats *stats = NULL;
++	reftable_writer_set_limits(w, 0, N);
++	for (i = 0; i < N; i++) {
++		char name[256];
++		struct reftable_ref_record ref = { NULL };
++		snprintf(name, sizeof(name), "b%02d%0*d", i, 130, 7);
++		names[i] = xstrdup(name);
++		ref.refname = name;
++		ref.update_index = i;
++
++		err = reftable_writer_add_ref(w, &ref);
++		EXPECT_ERR(err);
++	}
++	for (i = 0; i < N; i++) {
++		uint8_t hash1[GIT_SHA1_RAWSZ], hash2[GIT_SHA1_RAWSZ];
++		struct reftable_log_record log = { NULL };
++		set_test_hash(hash1, i);
++		set_test_hash(hash2, i + 1);
++
++		log.refname = names[i];
++		log.update_index = i;
++		log.value_type = REFTABLE_LOG_UPDATE;
++		log.value.update.old_hash = hash1;
++		log.value.update.new_hash = hash2;
++
++		err = reftable_writer_add_log(w, &log);
++		EXPECT_ERR(err);
++	}
++
++	n = reftable_writer_close(w);
++	EXPECT(n == 0);
++
++	stats = writer_stats(w);
++	EXPECT(stats->log_stats.blocks > 0);
++	reftable_writer_free(w);
++	w = NULL;
++
++	block_source_from_strbuf(&source, &buf);
++
++	err = init_reader(&rd, &source, "file.log");
++	EXPECT_ERR(err);
++
++	err = reftable_reader_seek_ref(&rd, &it, names[N - 1]);
++	EXPECT_ERR(err);
++
++	err = reftable_iterator_next_ref(&it, &ref);
++	EXPECT_ERR(err);
++
++	/* end of iteration. */
++	err = reftable_iterator_next_ref(&it, &ref);
++	EXPECT(0 < err);
++
++	reftable_iterator_destroy(&it);
++	reftable_ref_record_release(&ref);
++
++	err = reftable_reader_seek_log(&rd, &it, "");
++	EXPECT_ERR(err);
++
++	i = 0;
++	while (1) {
++		int err = reftable_iterator_next_log(&it, &log);
++		if (err > 0) {
++			break;
++		}
++
++		EXPECT_ERR(err);
++		EXPECT_STREQ(names[i], log.refname);
++		EXPECT(i == log.update_index);
++		i++;
++		reftable_log_record_release(&log);
++	}
++
++	EXPECT(i == N);
++	reftable_iterator_destroy(&it);
++
++	/* cleanup. */
++	strbuf_release(&buf);
++	free_names(names);
++	reader_close(&rd);
++}
++
++static void test_table_read_write_sequential(void)
++{
++	char **names;
++	struct strbuf buf = STRBUF_INIT;
++	int N = 50;
++	struct reftable_iterator it = { NULL };
++	struct reftable_block_source source = { NULL };
++	struct reftable_reader rd = { NULL };
++	int err = 0;
++	int j = 0;
++
++	write_table(&names, &buf, N, 256, GIT_SHA1_FORMAT_ID);
++
++	block_source_from_strbuf(&source, &buf);
++
++	err = init_reader(&rd, &source, "file.ref");
++	EXPECT_ERR(err);
++
++	err = reftable_reader_seek_ref(&rd, &it, "");
++	EXPECT_ERR(err);
++
++	while (1) {
++		struct reftable_ref_record ref = { NULL };
++		int r = reftable_iterator_next_ref(&it, &ref);
++		EXPECT(r >= 0);
++		if (r > 0) {
++			break;
++		}
++		EXPECT(0 == strcmp(names[j], ref.refname));
++		EXPECT(update_index == ref.update_index);
++
++		j++;
++		reftable_ref_record_release(&ref);
++	}
++	EXPECT(j == N);
++	reftable_iterator_destroy(&it);
++	strbuf_release(&buf);
++	free_names(names);
++
++	reader_close(&rd);
++}
++
++static void test_table_write_small_table(void)
++{
++	char **names;
++	struct strbuf buf = STRBUF_INIT;
++	int N = 1;
++	write_table(&names, &buf, N, 4096, GIT_SHA1_FORMAT_ID);
++	EXPECT(buf.len < 200);
++	strbuf_release(&buf);
++	free_names(names);
++}
++
++static void test_table_read_api(void)
++{
++	char **names;
++	struct strbuf buf = STRBUF_INIT;
++	int N = 50;
++	struct reftable_reader rd = { NULL };
++	struct reftable_block_source source = { NULL };
++	int err;
++	int i;
++	struct reftable_log_record log = { NULL };
++	struct reftable_iterator it = { NULL };
++
++	write_table(&names, &buf, N, 256, GIT_SHA1_FORMAT_ID);
++
++	block_source_from_strbuf(&source, &buf);
++
++	err = init_reader(&rd, &source, "file.ref");
++	EXPECT_ERR(err);
++
++	err = reftable_reader_seek_ref(&rd, &it, names[0]);
++	EXPECT_ERR(err);
++
++	err = reftable_iterator_next_log(&it, &log);
++	EXPECT(err == REFTABLE_API_ERROR);
++
++	strbuf_release(&buf);
++	for (i = 0; i < N; i++) {
++		reftable_free(names[i]);
++	}
++	reftable_iterator_destroy(&it);
++	reftable_free(names);
++	reader_close(&rd);
++	strbuf_release(&buf);
++}
++
++static void test_table_read_write_seek(int index, int hash_id)
++{
++	char **names;
++	struct strbuf buf = STRBUF_INIT;
++	int N = 50;
++	struct reftable_reader rd = { NULL };
++	struct reftable_block_source source = { NULL };
++	int err;
++	int i = 0;
++
++	struct reftable_iterator it = { NULL };
++	struct strbuf pastLast = STRBUF_INIT;
++	struct reftable_ref_record ref = { NULL };
++
++	write_table(&names, &buf, N, 256, hash_id);
++
++	block_source_from_strbuf(&source, &buf);
++
++	err = init_reader(&rd, &source, "file.ref");
++	EXPECT_ERR(err);
++	EXPECT(hash_id == reftable_reader_hash_id(&rd));
++
++	if (!index) {
++		rd.ref_offsets.index_offset = 0;
++	} else {
++		EXPECT(rd.ref_offsets.index_offset > 0);
++	}
++
++	for (i = 1; i < N; i++) {
++		int err = reftable_reader_seek_ref(&rd, &it, names[i]);
++		EXPECT_ERR(err);
++		err = reftable_iterator_next_ref(&it, &ref);
++		EXPECT_ERR(err);
++		EXPECT(0 == strcmp(names[i], ref.refname));
++		EXPECT(REFTABLE_REF_VAL1 == ref.value_type);
++		EXPECT(i == ref.value.val1[0]);
++
++		reftable_ref_record_release(&ref);
++		reftable_iterator_destroy(&it);
++	}
++
++	strbuf_addstr(&pastLast, names[N - 1]);
++	strbuf_addstr(&pastLast, "/");
++
++	err = reftable_reader_seek_ref(&rd, &it, pastLast.buf);
++	if (err == 0) {
++		struct reftable_ref_record ref = { NULL };
++		int err = reftable_iterator_next_ref(&it, &ref);
++		EXPECT(err > 0);
++	} else {
++		EXPECT(err > 0);
++	}
++
++	strbuf_release(&pastLast);
++	reftable_iterator_destroy(&it);
++
++	strbuf_release(&buf);
++	for (i = 0; i < N; i++) {
++		reftable_free(names[i]);
++	}
++	reftable_free(names);
++	reader_close(&rd);
++}
++
++static void test_table_read_write_seek_linear(void)
++{
++	test_table_read_write_seek(0, GIT_SHA1_FORMAT_ID);
++}
++
++static void test_table_read_write_seek_linear_sha256(void)
++{
++	test_table_read_write_seek(0, GIT_SHA256_FORMAT_ID);
++}
++
++static void test_table_read_write_seek_index(void)
++{
++	test_table_read_write_seek(1, GIT_SHA1_FORMAT_ID);
++}
++
++static void test_table_refs_for(int indexed)
++{
++	int N = 50;
++	char **want_names = reftable_calloc(sizeof(char *) * (N + 1));
++	int want_names_len = 0;
++	uint8_t want_hash[GIT_SHA1_RAWSZ];
++
++	struct reftable_write_options opts = {
++		.block_size = 256,
++	};
++	struct reftable_ref_record ref = { NULL };
++	int i = 0;
++	int n;
++	int err;
++	struct reftable_reader rd;
++	struct reftable_block_source source = { NULL };
++
++	struct strbuf buf = STRBUF_INIT;
++	struct reftable_writer *w =
++		reftable_new_writer(&strbuf_add_void, &buf, &opts);
++
++	struct reftable_iterator it = { NULL };
++	int j;
++
++	set_test_hash(want_hash, 4);
++
++	for (i = 0; i < N; i++) {
++		uint8_t hash[GIT_SHA1_RAWSZ];
++		char fill[51] = { 0 };
++		char name[100];
++		uint8_t hash1[GIT_SHA1_RAWSZ];
++		uint8_t hash2[GIT_SHA1_RAWSZ];
++		struct reftable_ref_record ref = { NULL };
++
++		memset(hash, i, sizeof(hash));
++		memset(fill, 'x', 50);
++		/* Put the variable part in the start */
++		snprintf(name, sizeof(name), "br%02d%s", i, fill);
++		name[40] = 0;
++		ref.refname = name;
++
++		set_test_hash(hash1, i / 4);
++		set_test_hash(hash2, 3 + i / 4);
++		ref.value_type = REFTABLE_REF_VAL2;
++		ref.value.val2.value = hash1;
++		ref.value.val2.target_value = hash2;
++
++		/* 80 bytes / entry, so 3 entries per block. Yields 17
++		 */
++		/* blocks. */
++		n = reftable_writer_add_ref(w, &ref);
++		EXPECT(n == 0);
++
++		if (!memcmp(hash1, want_hash, GIT_SHA1_RAWSZ) ||
++		    !memcmp(hash2, want_hash, GIT_SHA1_RAWSZ)) {
++			want_names[want_names_len++] = xstrdup(name);
++		}
++	}
++
++	n = reftable_writer_close(w);
++	EXPECT(n == 0);
++
++	reftable_writer_free(w);
++	w = NULL;
++
++	block_source_from_strbuf(&source, &buf);
++
++	err = init_reader(&rd, &source, "file.ref");
++	EXPECT_ERR(err);
++	if (!indexed) {
++		rd.obj_offsets.is_present = 0;
++	}
++
++	err = reftable_reader_seek_ref(&rd, &it, "");
++	EXPECT_ERR(err);
++	reftable_iterator_destroy(&it);
++
++	err = reftable_reader_refs_for(&rd, &it, want_hash);
++	EXPECT_ERR(err);
++
++	j = 0;
++	while (1) {
++		int err = reftable_iterator_next_ref(&it, &ref);
++		EXPECT(err >= 0);
++		if (err > 0) {
++			break;
++		}
++
++		EXPECT(j < want_names_len);
++		EXPECT(0 == strcmp(ref.refname, want_names[j]));
++		j++;
++		reftable_ref_record_release(&ref);
++	}
++	EXPECT(j == want_names_len);
++
++	strbuf_release(&buf);
++	free_names(want_names);
++	reftable_iterator_destroy(&it);
++	reader_close(&rd);
++}
++
++static void test_table_refs_for_no_index(void)
++{
++	test_table_refs_for(0);
++}
++
++static void test_table_refs_for_obj_index(void)
++{
++	test_table_refs_for(1);
++}
++
++static void test_write_empty_table(void)
++{
++	struct reftable_write_options opts = { 0 };
++	struct strbuf buf = STRBUF_INIT;
++	struct reftable_writer *w =
++		reftable_new_writer(&strbuf_add_void, &buf, &opts);
++	struct reftable_block_source source = { NULL };
++	struct reftable_reader *rd = NULL;
++	struct reftable_ref_record rec = { NULL };
++	struct reftable_iterator it = { NULL };
++	int err;
++
++	reftable_writer_set_limits(w, 1, 1);
++
++	err = reftable_writer_close(w);
++	EXPECT(err == REFTABLE_EMPTY_TABLE_ERROR);
++	reftable_writer_free(w);
++
++	EXPECT(buf.len == header_size(1) + footer_size(1));
++
++	block_source_from_strbuf(&source, &buf);
++
++	err = reftable_new_reader(&rd, &source, "filename");
++	EXPECT_ERR(err);
++
++	err = reftable_reader_seek_ref(rd, &it, "");
++	EXPECT_ERR(err);
++
++	err = reftable_iterator_next_ref(&it, &rec);
++	EXPECT(err > 0);
++
++	reftable_iterator_destroy(&it);
++	reftable_reader_free(rd);
++	strbuf_release(&buf);
++}
++
++static void test_write_key_order(void)
++{
++	struct reftable_write_options opts = { 0 };
++	struct strbuf buf = STRBUF_INIT;
++	struct reftable_writer *w =
++		reftable_new_writer(&strbuf_add_void, &buf, &opts);
++	struct reftable_ref_record refs[2] = {
++		{
++			.refname = "b",
++			.update_index = 1,
++			.value_type = REFTABLE_REF_SYMREF,
++			.value = {
++				.symref = "target",
++			},
++		}, {
++			.refname = "a",
++			.update_index = 1,
++			.value_type = REFTABLE_REF_SYMREF,
++			.value = {
++				.symref = "target",
++			},
++		}
++	};
++	int err;
++
++	reftable_writer_set_limits(w, 1, 1);
++	err = reftable_writer_add_ref(w, &refs[0]);
++	EXPECT_ERR(err);
++	err = reftable_writer_add_ref(w, &refs[1]);
++	printf("%d\n", err);
++	EXPECT(err == REFTABLE_API_ERROR);
++	reftable_writer_close(w);
++	reftable_writer_free(w);
++	strbuf_release(&buf);
++}
++
++static void test_corrupt_table_empty(void)
++{
++	struct strbuf buf = STRBUF_INIT;
++	struct reftable_block_source source = { NULL };
++	struct reftable_reader rd = { NULL };
++	int err;
++
++	block_source_from_strbuf(&source, &buf);
++	err = init_reader(&rd, &source, "file.log");
++	EXPECT(err == REFTABLE_FORMAT_ERROR);
++}
++
++static void test_corrupt_table(void)
++{
++	uint8_t zeros[1024] = { 0 };
++	struct strbuf buf = STRBUF_INIT;
++	struct reftable_block_source source = { NULL };
++	struct reftable_reader rd = { NULL };
++	int err;
++	strbuf_add(&buf, zeros, sizeof(zeros));
++
++	block_source_from_strbuf(&source, &buf);
++	err = init_reader(&rd, &source, "file.log");
++	EXPECT(err == REFTABLE_FORMAT_ERROR);
++	strbuf_release(&buf);
++}
++
++int readwrite_test_main(int argc, const char *argv[])
++{
++	RUN_TEST(test_corrupt_table);
++	RUN_TEST(test_corrupt_table_empty);
++	RUN_TEST(test_log_write_read);
++	RUN_TEST(test_write_key_order);
++	RUN_TEST(test_table_read_write_seek_linear_sha256);
++	RUN_TEST(test_log_buffer_size);
++	RUN_TEST(test_table_write_small_table);
++	RUN_TEST(test_buffer);
++	RUN_TEST(test_table_read_api);
++	RUN_TEST(test_table_read_write_sequential);
++	RUN_TEST(test_table_read_write_seek_linear);
++	RUN_TEST(test_table_read_write_seek_index);
++	RUN_TEST(test_table_refs_for_no_index);
++	RUN_TEST(test_table_refs_for_obj_index);
++	RUN_TEST(test_write_empty_table);
++	return 0;
++}
+diff --git a/reftable/reftable-tests.h b/reftable/reftable-tests.h
+index 5e7698ae654..3d541fa5c0c 100644
+--- a/reftable/reftable-tests.h
++++ b/reftable/reftable-tests.h
+@@ -14,7 +14,7 @@ int block_test_main(int argc, const char **argv);
+ int merged_test_main(int argc, const char **argv);
+ int record_test_main(int argc, const char **argv);
+ int refname_test_main(int argc, const char **argv);
+-int reftable_test_main(int argc, const char **argv);
++int readwrite_test_main(int argc, const char **argv);
+ int stack_test_main(int argc, const char **argv);
+ int tree_test_main(int argc, const char **argv);
+ int reftable_dump_main(int argc, char *const *argv);
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+index 050551fa698..898aba836fd 100644
+--- a/t/helper/test-reftable.c
++++ b/t/helper/test-reftable.c
+@@ -6,6 +6,7 @@ int cmd__reftable(int argc, const char **argv)
+ 	basics_test_main(argc, argv);
+ 	block_test_main(argc, argv);
+ 	record_test_main(argc, argv);
++	readwrite_test_main(argc, argv);
+ 	tree_test_main(argc, argv);
+ 	return 0;
+ }
 -- 
 gitgitgadget
 
