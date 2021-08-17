@@ -2,203 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74565C432BE
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 21:32:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BC3BC4338F
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 21:37:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5DFBC600D4
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 21:32:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B28360F11
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 21:37:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234672AbhHQVci (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Aug 2021 17:32:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41150 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231630AbhHQVci (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Aug 2021 17:32:38 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F2BCC061764
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 14:32:04 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id d11so410474eja.8
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 14:32:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=FR5Ix+67bcxyRDsD6kbJ84gllsa2RKfoB/Y7HKYnrus=;
-        b=KP97NQp6WT40C8ugl3nfmvoX3H8s2xgfzafPK6yHjjPBMTcI2hE+huBEtwCk8WgsM6
-         vk/tz3P49o9QmD7doeVaNk2i1D0LBMZJS0hszBMJXgR+GGNj91ICX/jkeW9Lqe4wYXNC
-         OSxedXu1hcWyW0O1YUvVn9DzSJ0frUtW06Eg35FBcnroBIja6gcjuHq2wCwQidJstbhl
-         sNNF0n986Ltjwt43FRbK63B+fr0gg/hfOddQHcvpiRh33ix4KrHEN4ZFSqMy3wKfKUw6
-         cAPexvT60DtoeiqiojysEAVOtfmXGfxPSvprKvmMMkHziuoExwXKcnixuJZFkSvdGlMj
-         hg5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=FR5Ix+67bcxyRDsD6kbJ84gllsa2RKfoB/Y7HKYnrus=;
-        b=opsiNPYoXOGssFK2vHys7gKFNH1RXnWxdFngqBUoFXPQFG043YXkOZwiLiuSeID0sZ
-         UtZ8iLB+Ni9waMxPYQKmSDobYrc8XcFIWkPBz+hhTGXdFukofKt+AyMblIC+S28KxczY
-         2oJrwCni+Ye93VKnh1B/bxhJ0DPN2xckcHA9UPo9laNs6R24ujjUztVdEE1frsLoCVpP
-         0uHiIkuymv3KAfEQP4kzguYOqZZSiuPsBAYlY1R3M5NA6KHoxu9C3NVZRx2LDdB06B0g
-         k6B+ERnhjaKBtGphCkHwdwwyEzqRS+8xKt8axhYfDEejAhbP8+y6F9pqr5zVQ7HJumNp
-         T1Eg==
-X-Gm-Message-State: AOAM532a8OLYr0pJgkFrNy9GKxpBOhgGQGAwr1ImjcXdW8lYLB2yJcTW
-        XiSLYrxPuk0aVtGndALQR5pM+0CkznY=
-X-Google-Smtp-Source: ABdhPJzOFGrj5sPd2ty4Eejl5BSl05ERN6OlVmAe5EenP2Il+9IIuoHRZznpl6MC9dNcuu4DsgXcrw==
-X-Received: by 2002:a17:906:4fd6:: with SMTP id i22mr6118029ejw.92.1629235923071;
-        Tue, 17 Aug 2021 14:32:03 -0700 (PDT)
-Received: from szeder.dev (78-131-17-78.pool.digikabel.hu. [78.131.17.78])
-        by smtp.gmail.com with ESMTPSA id ee29sm1581910edb.63.2021.08.17.14.32.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Aug 2021 14:32:02 -0700 (PDT)
-Date:   Tue, 17 Aug 2021 23:32:01 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 5/6] tests: disable GIT_TEST_SPLIT_INDEX for sparse index
- tests
-Message-ID: <20210817213201.GD2257957@szeder.dev>
-References: <20210817174938.3009923-1-szeder.dev@gmail.com>
- <20210817174938.3009923-6-szeder.dev@gmail.com>
- <6f900a58-19b4-753c-18f5-852eaebc1527@gmail.com>
+        id S235204AbhHQVhd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Aug 2021 17:37:33 -0400
+Received: from mout.gmx.net ([212.227.15.15]:55245 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231630AbhHQVh2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Aug 2021 17:37:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1629236212;
+        bh=xHSGRPkUaylFvoajk3ltZdT8Z7IB2lgLttuQOmWspm0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=FK9QKy6D5aAHdas+he/GdCbv2q1HyEO5nlX1idDiE8kBhy3YEiBDprDZdCKL3ZiBA
+         CqPQbTNxOCoZ8lcwy4BBnraJymDdx+K/TmhFVGCWEmatITGiiMO0o3Yjs4PQMZXPk9
+         NoNjfKPytIygZIu/nNyteO9Bv/WG2UKTC5slgYXs=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.86.215] ([213.196.213.229]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MGz1V-1mLJPr0sYV-00E1cW; Tue, 17
+ Aug 2021 23:36:52 +0200
+Date:   Tue, 17 Aug 2021 23:36:49 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "Miriam R." <mirucam@gmail.com>
+cc:     git <git@vger.kernel.org>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v4 5/6] bisect--helper: reimplement `bisect_run` shell
+ function in C
+In-Reply-To: <CAN7CjDDEv6vGPKZo3sxz8bgfN2Nzqh0HChR-tGrjDGbkhKZo=A@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2108172332050.55@tvgsbejvaqbjf.bet>
+References: <20210817081458.53136-1-mirucam@gmail.com> <20210817081458.53136-6-mirucam@gmail.com> <nycvar.QRO.7.76.6.2108171332370.55@tvgsbejvaqbjf.bet> <CAN7CjDDEv6vGPKZo3sxz8bgfN2Nzqh0HChR-tGrjDGbkhKZo=A@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6f900a58-19b4-753c-18f5-852eaebc1527@gmail.com>
+Content-Type: multipart/mixed; boundary="8323328-1345588739-1629236210=:55"
+X-Provags-ID: V03:K1:SIER+SngnO2Mz2wTwGlEbRIdyfQ2KAMiJr0GMX/eOnagtScAfpQ
+ hA1HdNQ1JKfK6wYrJqob1I0EZV9NAyxnKAgTz+fTzU7g2C00v1yV/ereU3BN+CqSQv+21v6
+ djSS9wODEdK1uFiA2oGmzjFo9taWwtAvUOo2sLo+JdMjl0z2Vu3tHQ/cwtnIK4FvZgjWtaa
+ S1Dr1OT2sxLV4vI9MZ+BA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:MJkdPKu8iMY=:901/tY6NDUB/gvg5uvsKMB
+ 0RkNdSdbn3VWV9m5mUnL9bCi1bhmi7aU2c/P8G8juPGV5XPkSvvYCji1rJFmWIPbO1b+cr8bL
+ lp1WXmS9hF6scQJlsp7Yq1s/mUgONPxbiVK0qCbCbfJIUOkXU0DGms6c4w7I8aZoxKt60T7Kf
+ +oML0IKLpVhWVCZAZqYg4urzzm6jA9MeO46mSoet5rmToz02Y5cu3z/ycTtINZ6uYzpabWC7s
+ QIE9tszEL0II5qDjK7Fq3Z9j67hpdEG1de7J9cOHW3tlqp8EhZ/iRkBapm5goTjOOs4DKrGyY
+ EilT2BXL4FjzYjmKd+/sxrsFFd3HyEA4OS9Nn1yLcQSCrHlhf8LOOfPruLr1FxeXEC/EZt6bu
+ LBILfLLm3HeJf3rjVbAbAAqfedPWIZoZnu/8zlTpL/8v6O09uwcD0Z/kHLCafA7dwQnxguCm1
+ JPASJK8puAK9F7uzz43fz/gmJWUrX0KelpeFKlwCeX1s+hFHf4M3Dr9uR4HKWXVxalyqakYE/
+ L/9bM0aBuaVoRcaxvfJQfuIlPst9VmH9X/rtUnKw66mp4qLODB5NIjaOpHFRjwnL/NkNTKqIc
+ m/DmeKoxmHTZSiMO68cBtGieUXvzvTg0+9s/dlNuQHTcpGGj9yQ5VPxNvL7isu7LVdXaeGa62
+ 6nLMMXYYF7Hb05h2uuRX5y75EKyxORXzeUYK7b+IsXhXVloFMHbEkC/eVZtiPuYoJFy0deMY5
+ lz3FfLn0wYLvyXa2rXrcOtRPp63RAi+4Ip/iPCeiMfDGwoARiOgT4Lmz1Bkr+aigWD5YIKJaC
+ LHgqs7N12tx0gJUejuZLwQcn3hWus2YONuKQJshvTM22N0ZjXBkbq9XXBEDhZOIe1Bk8U0bWA
+ X7KjhV8b/MsEcohy9ii0nvECKNwqkp/WGGHRsDdF1gjzarXAy+Tlc7dWJ4ydJPhyFegaCL42c
+ zynhFgQbH7pf2fqrHXMCMwWjyEu+VhmOECvB3iVf2Ej4ELRvs0T6ziRK3vQMm9QkuJzqgdwhw
+ xseg+5RnE0YcSob24/suxwkRp49RDFqOaWSxPkflOnhC8NRRlqCpqy84UEfopMCYCiRUtBORX
+ lt7nW7yf4ardTD+P4XqJVWK2affzPzCWfRooRfelIgLHvLmzzPKteFKWw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 17, 2021 at 02:26:23PM -0400, Derrick Stolee wrote:
-> On 8/17/2021 1:49 PM, SZEDER Gábor wrote:
-> > The sparse index and split index features are said to be currently
-> > incompatible [1], and consequently GIT_TEST_SPLIT_INDEX=1 might
-> > interfere with the test cases exercising the sparse index feature.
-> > Therefore GIT_TEST_SPLIT_INDEX is already explicitly disabled for the
-> > whole of 't1092-sparse-checkout-compatibility.sh'.  There are,
-> > however, two other test cases exercising sparse index, namely
-> > 'sparse-index enabled and disabled' in
-> > 't1091-sparse-checkout-builtin.sh' and 'status succeeds with sparse
-> > index' in 't7519-status-fsmonitor.sh', and these two could fail with
-> > GIT_TEST_SPLIT_INDEX=1 as well [2].
-> > 
-> > Unset GIT_TEST_SPLIT_INDEX and disable the split index in these two
-> > test cases to avoid such interference.
-> > 
-> > Note that this is the minimal change to merely avoid failures when
-> > these test cases are run with GIT_TEST_SPLIT_INDEX=1.  Interestingly,
-> > though, without these changes the 'git sparse-checkout init --cone
-> > --sparse-index' commands still succeed even with split index, and set
-> > all the necessary configuration variables and create the initial
-> > '$GIT_DIR/info/sparse-checkout' file, but the test failures are caused
-> > by later sanity checks finding that the index is not in fact a sparse
-> > index.  This indicates that 'git sparse-checkout init --sparse-index'
-> > lacks some error checking and its tests lack coverage related to split
-> > index, but fixing those issues (let alone making sparse index
-> > comparible with split index) is beyond the scope of this patch series.
-> 
-> s/comparible/compatible.
-> 
-> I agree that making these two things compatible is not something to
-> solve today. I'm not sure they should _ever_ be solved because of
-> the complexity involved (what if the base index is not sparse but
-> the tip wants to be, or vice-versa?,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I think that this's not an issue, because a shared index file is not
-for forever, but it's expected that a new shared index is written
-every once in a while anyway, see splitIndex.maxPercentChange.  So
-whenever sparse index gets enabled/disabled we could just write a new
-shared index accordingly.  Maybe even when the sparse patterns change,
-if necessary.
+--8323328-1345588739-1629236210=:55
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> or if a directory must be expanded because of a conflict?).
+Hi Miriam,
 
-I'm not quite up-to-date in sparse index terminology, so I'm not sure
-that this means...  but as mentioned above we can just write a new
-shared index when deemed necessary.
+On Tue, 17 Aug 2021, Miriam R. wrote:
 
-> They use very different approaches
-> to solve a similar problem: how to deal with large index files.
-> 
-> * The split index reduces index _write_ time by only editing a diff
->   of the base index.
-> 
-> * The sparse index reduces index _read and write_ time by writing a
->   smaller index, but only if the user is using cone mode sparse-
->   checkout.
+> El mar, 17 ago 2021 a las 13:42, Johannes Schindelin
+> (<Johannes.Schindelin@gmx.de>) escribi=C3=B3:
+> >
+> > On Tue, 17 Aug 2021, Miriam Rubio wrote:
+> >
+> > > From: Tanushree Tumane <tanushreetumane@gmail.com>
+> > >
+> > > [...]
+> > > +
+> > > +             if (res =3D=3D 125)
+> > > +                     strvec_push(&args, "skip");
+> > > +             else if (res > 0)
+> > > +                     strvec_push(&args, terms->term_bad);
+> > > +             else
+> > > +                     strvec_push(&args, terms->term_good);
+> > > +
+> > > +             res =3D bisect_state(terms, args.v, args.nr);
+> >
+> > Since `args.nr` will always be 1, it would probably be better to use
+> > something like this:
+> >
+> >                 const char *new_state;
+> >
+> >                 [...]
+> >                 if (res =3D=3D 125)
+> >                         new_state =3D "skip";
+> >                 else
+> >                         new_state =3D res > 0 ?
+> >                                 terms->term_bad : terms->term_good;
+> >
+> >                 res =3D bisect_state(terms, &new_state, 1);
+> >
+>
+> Yes, indeed. I will change it.
+>
+> > Also: I think at this stage, an equivalent to `cat
+> > "$GIT_DIR/BISECT_RUN"` is missing.
+>
+> In the previous patch series (v3), I implemented the equivalent to the
+> cat command but I understood reviewers wanted to print the output to the
+> user, so I reverted my changes for this version.
+> https://lore.kernel.org/git/20210411095538.34129-4-mirucam@gmail.com/
 
-Yeah, I think that in general there is more to be gained with sparse
-index than with split index, though the split index might further
-reduce the write time of a sparse index, because the amount of data
-written is proportional with the nr of changed files instead of the nr
-of all files in the sparse index.  I'm not sure that it's worth it,
-either.
+I am a bit confused: doesn't `bisect_state()` write to the `BISECT_RUN`
+file? If so, I think we do need to show the contents by opening the file
+and piping it to `stdout`.
 
-My remarks about compatibility primarily stem from your remarks about
-compatibility in response to my sparse vs. split test failure report
-in:
+FWIW I read
+https://lore.kernel.org/git/CAP8UFD3X24F3qgefHpi00PM-KUk+vcqxwy2Dbngbyj7ci=
+avCVQ@mail.gmail.com/
+to mean the same thing, although I have to admit that I am not 100%
+certain.
 
-  https://public-inbox.org/git/48e9c3d6-407a-1843-2d91-22112410e3f8@gmail.com/
+Just to make sure: with this patch, at the end of a `git bisect` run, the
+user is shown the commit message of the first bad commit?
 
-  "the sparse-index is (currently) incompatible with the split-index"
+Ciao,
+Dscho
 
-I assumed that that "(currently)" implies that eventually the two will
-be made compatible.
-
-Anyway, I'm fine with leaving them incompatible, but 'git
-sparse-checkout' should still learn about split index, so it won't
-pretend to succeed after it couldn't do what it was asked to when
-there is a split index.  Maybe vice-versa as well.
-
-> >  test_expect_success 'sparse-index enabled and disabled' '
-> > -	git -C repo sparse-checkout init --cone --sparse-index &&
-> > -	test_cmp_config -C repo true index.sparse &&
-> > -	test-tool -C repo read-cache --table >cache &&
-> > -	grep " tree " cache &&
-> > -
-> > -	git -C repo sparse-checkout disable &&
-> > -	test-tool -C repo read-cache --table >cache &&
-> > -	! grep " tree " cache &&
-> > -	git -C repo config --list >config &&
-> > -	! grep index.sparse config
-> > +	(
-> > +		sane_unset GIT_TEST_SPLIT_INDEX &&
-> > +		git -C repo update-index --no-split-index &&
-> > +
-> > +		git -C repo sparse-checkout init --cone --sparse-index &&
-> > +		test_cmp_config -C repo true index.sparse &&
-> > +		test-tool -C repo read-cache --table >cache &&
-> > +		grep " tree " cache &&
-> > +
-> > +		git -C repo sparse-checkout disable &&
-> > +		test-tool -C repo read-cache --table >cache &&
-> > +		! grep " tree " cache &&
-> > +		git -C repo config --list >config &&
-> > +		! grep index.sparse config
-> > +	)
-> >  '
-> 
-> This test is safe for now.
-> 
-> >  test_expect_success 'status succeeds with sparse index' '
-> 
-> This test is being edited in ds/sparse-index-ignored-files. v3
-> of the relevant patch was just sent today [1].
-> 
-> [1] https://lore.kernel.org/git/e66106f7a99d94145eec983ea5e72b7cf8a8a479.1629206603.git.gitgitgadget@gmail.com/
-> 
-> You might want to rebase on top of that topic. The edits to
-> the test are likely stable now.
-
-Oh, no :)  The test 'cone mode clears ignored subdirectories' added in
-that patch series (as in 'seen', so not the newes version) fails with
-the working GIT_TEST_SPLIT_INDEX=1 as well, and I don't immediately
-see why, as it doesn't seem to use sparse index.
-
+--8323328-1345588739-1629236210=:55--
