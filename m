@@ -2,157 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4BF3C4338F
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 18:50:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58902C4338F
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 19:29:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A646B60F41
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 18:50:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 362D060FD7
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 19:29:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232903AbhHQSvY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Aug 2021 14:51:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:37033 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230373AbhHQSvX (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 17 Aug 2021 14:51:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1629226248;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=bfkCq+NfWN/obMVyar1qwXTPKd3hlWrHoBz9x8DaCIo=;
-        b=S/KqDjKQnM9BlFM5uTFTzESwF1OjIC1ldVK0BsD7ud4Y6b+jR3k/FWsrIncTviRwDG+J9S
-        /9ZgpCrRDOx84IQbydjFlrn7rILvZIQ6trKclUG553mikn1aWJyqu7CruZs7xn4VathmmA
-        w0bJ+AGHVoQSe6Ci47dEWrhnTWu1nAQ=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-335-e6JdjxF7NKaaZZiO8M7dLQ-1; Tue, 17 Aug 2021 14:50:47 -0400
-X-MC-Unique: e6JdjxF7NKaaZZiO8M7dLQ-1
-Received: by mail-pj1-f71.google.com with SMTP id v9-20020a17090a7c09b02901778a2a8fd6so3337664pjf.3
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 11:50:47 -0700 (PDT)
+        id S233318AbhHQTaZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Aug 2021 15:30:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40976 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229640AbhHQTaZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Aug 2021 15:30:25 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96F2FC061764
+        for <git@vger.kernel.org>; Tue, 17 Aug 2021 12:29:51 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id y34so43429704lfa.8
+        for <git@vger.kernel.org>; Tue, 17 Aug 2021 12:29:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rRcF7YJEDACmynDKGJLyydwBzBro17owvnQasMQ0D4k=;
+        b=un88HqGhRe2adQu05iSAnMznsE+fE+YG9RfjwQUmb1X2CocbxgtAAY/VmTV4iZpYmI
+         4XQfNpBLqJEXvkssppmmJ87My+AGKPsAeFzhde10lRslmTl35OxGB2dh2T1WiOLwWTdB
+         JCqPQrF5sCD/sgFlGywW2Ze2Au/mBztTJQJmiDuch3SPKNz56XCqz9k6Ys3b1VsblFLd
+         GSSICwCWk/nYITwlOq742ZihwZq5gelBJX3zAS+bbhg9MMc6bl816M8OwwKjbyraTl5M
+         Bxg5v+I+2LbC74yRHiy5GlGSyt+IJV1FohLRU9RzYBq6dWnLK856AOqJGtYOq9jVL/Ik
+         GoDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=bfkCq+NfWN/obMVyar1qwXTPKd3hlWrHoBz9x8DaCIo=;
-        b=FeqZ42XuArNr7VL70TyUPJjc/SRLUIHCJe8n9o7PqB9JaY/ZXLG0XpjWnCxighoUmE
-         L8r7OGMeyL1c/Dtzw1hf3MhEsT92l39IWB9nnU54f/vZZMJVF/egH4voZy/KmLrpySmj
-         U3pgQygnExF/P5XUrKIvYSQ0EHWKFfIlGN5IZED/8r8BrEMk2VNrV6mJEu1Qg97hBRYg
-         X1BD3NV/YezP/b4USfF6uWQiBfXrfgG/+4XjMwPvyZOs6Ptr+dNTFNQsyfrGuMmWb1HM
-         2quEOsP6aCkyzggKAZ+b92ptP+GDk5cXJfPQ6nnS0L4gfGcr08nhLeHoWpSn0C2py1BI
-         4VRg==
-X-Gm-Message-State: AOAM5327b1CJMZX7fO3KmHguZTBkxIAOnE5w70OIm7oW6OabL07HL/2P
-        tFITXGhc7j/3P7NMWt6b1W2k+vPGxYOTHFOKLyVWehHazRLkpe/l+/UYGwK7F+zPPpqq2EtWCFs
-        1GyDKd9P4wp5HlYnR/KkeVbKbIhFyaOuG/XFP1BFrLuqUGq83zQCNMs1tuJp4yxs=
-X-Received: by 2002:aa7:8484:0:b029:3e0:805e:9f67 with SMTP id u4-20020aa784840000b02903e0805e9f67mr5076465pfn.73.1629226245921;
-        Tue, 17 Aug 2021 11:50:45 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJygybjJ4ev8SHgS1EVIUfJP05exqW6wJNvF9TteGVTRkX7QvcCQ0atWdv9EptmoAdTiT5ysuQ==
-X-Received: by 2002:aa7:8484:0:b029:3e0:805e:9f67 with SMTP id u4-20020aa784840000b02903e0805e9f67mr5076447pfn.73.1629226245586;
-        Tue, 17 Aug 2021 11:50:45 -0700 (PDT)
-Received: from xps13k.happyassassin.net ([184.71.189.90])
-        by smtp.gmail.com with ESMTPSA id p17sm2778994pjg.54.2021.08.17.11.50.44
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Aug 2021 11:50:45 -0700 (PDT)
-Message-ID: <02be6a48411fa100e7d1292fc312f7fcf571f334.camel@redhat.com>
-Subject: git format-patch produces invalid patch if the commit adds an empty
- file?
-From:   Adam Williamson <awilliam@redhat.com>
-To:     git@vger.kernel.org
-Date:   Tue, 17 Aug 2021 11:50:42 -0700
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.41.1 (3.41.1-2.fc35) 
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rRcF7YJEDACmynDKGJLyydwBzBro17owvnQasMQ0D4k=;
+        b=XkIohgEYgt28KmiXSGSsayH61mP9sge8AxV0GtVQm233XqcgibwgMp3Hef4BY3oZwu
+         O8P8wjn0jcZh97g3zlrcdPpP6esYTkbPYwAHDQX+9ckVdCJxNazQ5sZ9zWnAotBIij2a
+         GcSkytn6q6F6wJW0YjlIE4eNTf3ifMuO7Sb7u7xTMjgTLpbwPk5/N9QTNvIJE+oz9znn
+         UrA6nnwPNdjPa1nza+iqU0BgQ7PWPqcQoUKilC8dd0xg9pf3cZkg9JbitrOtNfH+UpbX
+         DQwlKbFQkVDyHAEaxKI3dVGwU1xCe9cBH50VE4oEAu3c5Ri8r0kfDQrvHWnI+9XKpK+p
+         yqsw==
+X-Gm-Message-State: AOAM530UGESOI1+o9jPWKpOBVG4FAq5zkD8CxindK6z00hhyHC0SzF1A
+        HRcyO7yR9RdfndsQ5N2PYEAEbd6bhej+3K85JzXeNg==
+X-Google-Smtp-Source: ABdhPJxYbBqNZEJIUSB8PLjb1N8ag2tBZ4/sSmyUBWGysSKfGLlfqrrgDFyQh/CExEGd66UqL+F5cvrbi1yCKqAMCQs=
+X-Received: by 2002:a05:6512:3f5:: with SMTP id n21mr3632402lfq.359.1629228589950;
+ Tue, 17 Aug 2021 12:29:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+References: <cover.1628618950.git.jonathantanmy@google.com> <cover.1629148153.git.jonathantanmy@google.com>
+In-Reply-To: <cover.1629148153.git.jonathantanmy@google.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Tue, 17 Aug 2021 16:29:38 -0300
+Message-ID: <CAHd-oW6Va31PaTQeoSrwi09wjHk63S-Xd_PYtW1trhSokoKizQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/8] In grep, no adding submodule ODB as alternates
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi folks! So I ran into an odd issue with git today. I'm kinda
-surprised I can't find any prior discussion of it, but oh well. The
-situation is this: I ran git format-patch on a commit that adds three
-empty files to a repository - this commit:
-https://github.com/mesonbuild/meson/commit/5c87167a34c6ed703444af180fffd8a45a7928ee
-the relevant lines from the patch file it produced look like this:
+On Mon, Aug 16, 2021 at 6:10 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+>
+> Thanks for reviewing, everyone. Here are the requested changes.
 
-===
+Thanks. You've addressed all my comments from the previous rounds.
 
-diff --git a/test cases/common/56 array methods/a.txt b/test cases/common/56 array methods/a.txt
-new file mode 100644
-index 000000000..e69de29bb
-diff --git a/test cases/common/56 array methods/b.txt b/test cases/common/56 array methods/b.txt
-new file mode 100644
-index 000000000..e69de29bb
-diff --git a/test cases/common/56 array methods/c.txt b/test cases/common/56 array methods/c.txt
-new file mode 100644
-index 000000000..e69de29bb
+One minor suggestion which is not worth a re-roll on its own:
 
-===
+> Range-diff against v2:
+[...]
+> 7:  94db10a4e5 ! 7:  8b86618531 submodule-config: pass repo upon blob config read
+>     @@ Commit message
+>          When reading the config of a submodule, if reading from a blob, read
+>          using an explicitly specified repository instead of by adding the
+>          submodule's ODB as an alternate and then reading an object from
+>          the_repository.
+>
+>     +    This makes the "grep --recurse-submodules with submodules without
+>     +    .gitmodules in the working tree" test in t7814 work when
+>     +    GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB is true.
 
-but `patch` actually chokes on that (when called in an RPM package build):
+This sounds to me as if the test was previously failing when
+GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB is true, which is not the case.
+I think an alternative could be:
 
-===
+This code path is exercised by the "grep --recurse-submodules with
+submodules without .gitmodules in the working tree" test in t7814. The
+test passes with GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1,
+showing that we indeed are no longer accessing the submodule's ODB
+through the alternates list.
 
-+ /usr/bin/cat /home/adamw/build/meson/0001-interpreter-Fix-list-contains-for-Holders-fixes-9020.patch
-+ /usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
-The text leading up to this was:
---------------------------
-|diff --git a/test cases/common/56 array methods/a.txt b/test cases/common/56 array methods/a.txt
-|new file mode 100644
-|index 000000000..e69de29bb
---------------------------
-No file to patch.  Skipping patch.
-The text leading up to this was:
---------------------------
-|diff --git a/test cases/common/56 array methods/b.txt b/test cases/common/56 array methods/b.txt
-|new file mode 100644
-|index 000000000..e69de29bb
---------------------------
-No file to patch.  Skipping patch.
-The text leading up to this was:
---------------------------
-|diff --git a/test cases/common/56 array methods/c.txt b/test cases/common/56 array methods/c.txt
-|new file mode 100644
-|index 000000000..e69de29bb
---------------------------
-No file to patch.  Skipping patch.
+But it's really a minor thing. With or without this change:
 
-===
-
-To make the patch apply cleanly, I had to hand-edit it to add "---" and
-"+++" lines, like this:
-
-===
-
-diff --git a/test cases/common/56 array methods/a.txt b/test cases/common/56 array methods/a.txt
-new file mode 100644
-index 000000000..e69de29bb
---- /dev/null
-+++ b/test cases/common/56 array methods/a.txt
-diff --git a/test cases/common/56 array methods/b.txt b/test cases/common/56 array methods/b.txt
-new file mode 100644
-index 000000000..e69de29bb
---- /dev/null
-+++ b/test cases/common/56 array methods/b.txt
-diff --git a/test cases/common/56 array methods/c.txt b/test cases/common/56 array methods/c.txt
-new file mode 100644
-index 000000000..e69de29bb
---- /dev/null
-+++ b/test cases/common/56 array methods/c.txt
-
-===
-
-This is with git-2.32.0-1.fc35.1.x86_64 in Fedora Rawhide.
-
-I'm not subscribed to the list, so please CC me directly on any replies. Thanks!
--- 
-Adam Williamson
-Fedora QA
-IRC: adamw | Twitter: adamw_ha
-https://www.happyassassin.net
-
-
+Reviewed-by: Matheus Tavares <matheus.bernardino@usp.br>
