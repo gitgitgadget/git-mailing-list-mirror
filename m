@@ -2,118 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADEFBC432BE
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 17:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F7E5C4338F
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 17:08:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9304460FD9
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 17:08:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C2A660FD9
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 17:08:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231702AbhHQRJW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Aug 2021 13:09:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36304 "EHLO
+        id S231878AbhHQRJY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Aug 2021 13:09:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229700AbhHQRJV (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229723AbhHQRJV (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 17 Aug 2021 13:09:21 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85734C061764
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92A7FC0613C1
         for <git@vger.kernel.org>; Tue, 17 Aug 2021 10:08:47 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id u15so14163290wmj.1
+Received: by mail-wr1-x434.google.com with SMTP id q10so29725844wro.2
         for <git@vger.kernel.org>; Tue, 17 Aug 2021 10:08:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=7ZrN0iJuOk9dEu2SGonTeXjjCQ1khfUo/WCaGmiQP/8=;
-        b=T2/hR8agc5BNSR2gsnrThvpNU3M7QTLAOIuJrvW+jrwftm50bmLrIkH+pjCO0YV61H
-         J/Oe3r5bLN+wkbbtEIy3lrj1idU+kJx84CbSHZlwtIaBYVr0vu03hE3eYDdYiHX98m/9
-         SNbh/nhmQGJYIBtDRjRIZoEQlPEkjzv+rXFD8Va5SqD5RteOWJ+Xz5/zT7lHUT1YPBnr
-         XwsprhkGS3yRFYkQmwwzvQMxuiwhtwycWYqM7CCEJ+uZZox7mxtxVGA1955kFcQuCRPT
-         ouVqIuabW9+JHwpkwZCPIrWk38zkGW7Jl+sufrnqMBzjzDuw+Zk/H5a05Tx+s4gYNjUz
-         MoBA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=EFox4U+F6W40H0/eDGnPhGlIzsTg6u9PPbEaj/R3UH0=;
+        b=gYHusIUOgNXb8QBFipQT3twQUto7q/PUOY7+WRSMYIW/C5ilXvYpY/cp/mN8vVJVtc
+         1JpbN0dRwZJQv1LkRy4LdqKcH6eD31gkaQ8EPzFsq73IidwO7+sz6ylGG5Z7W0j+dWce
+         QW57zcbGIng5E0Q9ItK+yrbO6mR2vaxUwb4kGrODU4iKGZ28oOOoBxq/DZeucKKAW5el
+         LzJn+HZ45Jj9ZNOFiFRZcoZtudcq8lNCk8ceKCSLaJQWc/EETRtBXptNKPpWJF//vC5+
+         1UXx98Epn5tkXLMpNjbnACPf4m4W8Mrpqr4X9QOEuPQ/DnFdoHAASQMP1ya8Jo3ekUW8
+         sK8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=7ZrN0iJuOk9dEu2SGonTeXjjCQ1khfUo/WCaGmiQP/8=;
-        b=c4Zzt7hOB/TcmkZjcZoer8GY75aHU8xVVtyoBF8g2avvZ96Z2PsVcqeb83SBgvv/jt
-         /zfJ4SdNEVgl8Zotp0apZ8wtW5tmORPcu5wANE9T8jf2YLEfczPkSVSyWLJYtzX5X/Ku
-         bRuHoTVEKhzuX4wa3d0C3zowfLtbfQzL0poHLhJKzMGwl9VaCT+dHIZ6vV8bnaNpkvY9
-         kAuFLkJrsmq5wHp9zEznzvsepenD96l3yb72CnBB10YE+YpvrYz2rTH/BO1nZvbRLF1Q
-         4OHBVEJq3E74Z7NePr0C8ZnAUQHhZmnDR/yvismKHCxrbEdQRuHuAQKcc4/Ye2mJb31E
-         Rs/A==
-X-Gm-Message-State: AOAM5332oSwC9jxm3NHW4oZ6GDn+dXK/zhtRucmIkNb3VoSWFGFPzoNh
-        HPllaUzZ/8j2ovMHCtw5B2gz8bL8g00=
-X-Google-Smtp-Source: ABdhPJwB9ehERH9GmCtRrSV39lqFiiml1F6EDNW2F3mzTHJkLokkF3g8P+Bu1mB/HafmJSTX0tL4fQ==
-X-Received: by 2002:a1c:3c8b:: with SMTP id j133mr4482208wma.9.1629220125745;
-        Tue, 17 Aug 2021 10:08:45 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=EFox4U+F6W40H0/eDGnPhGlIzsTg6u9PPbEaj/R3UH0=;
+        b=Awi1Zx6GsNk1FWo3f2laRAHxi8x6+QWtZNdxSps/L0WYPYceBFaWnAIJlyGM7MJF5h
+         +oS2M8AjnYrrYRc0UmpkZ9wgdg8jicjBAImQUmok/C4kXxPIF4Fz6zl3Azctq6+n5YQ3
+         tu9AdN+aDkYtQvXVvXGIblN3lvPC0IQutQ8Nd7jcGoW2aFcPjhfw7polWsmxyudJh9cU
+         YQl8l+tea6zWpYX0a16P1o8AkrCVLQLcndyoKFfVdHWmTbbAyBsTSg7Q/QJPPZS62Xon
+         CnpcTHUhf99dVfxamTYcjvfuPWQmBundnYYICkeEGreUnJ42D7yNR/l6svR52pc5DocB
+         T0Ww==
+X-Gm-Message-State: AOAM530tchMSbYMQSZ9yByNj89LEmODUBkb5aZeui1x4APgez/pW51XN
+        YL3fknx71rPs8dmhXVds+6qlhe+LmCE=
+X-Google-Smtp-Source: ABdhPJxQIw9q7eSqsFEnXHChPQ7NcYBBLSAwoo0iwdvsIbVlkv6EV3y4iIrk2otqkCaWsQZIdlCjaQ==
+X-Received: by 2002:adf:f40d:: with SMTP id g13mr5460357wro.69.1629220126277;
+        Tue, 17 Aug 2021 10:08:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a9sm3179507wrv.37.2021.08.17.10.08.45
+        by smtp.gmail.com with ESMTPSA id e6sm3214745wrx.87.2021.08.17.10.08.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Aug 2021 10:08:45 -0700 (PDT)
-Message-Id: <pull.1019.git.1629220124.gitgitgadget@gmail.com>
+        Tue, 17 Aug 2021 10:08:46 -0700 (PDT)
+Message-Id: <7cad9eee90bcee3cb98be5c7a2edaca5e855c157.1629220124.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1019.git.1629220124.gitgitgadget@gmail.com>
+References: <pull.1019.git.1629220124.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 17 Aug 2021 17:08:38 +0000
-Subject: [PATCH 0/6] Sparse Index: Integrate with merge, cherry-pick, rebase, and revert
+Date:   Tue, 17 Aug 2021 17:08:39 +0000
+Subject: [PATCH 1/6] t1092: use ORT merge strategy
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     newren@gmail.com, stolee@gmail.com, gitster@pobox.com,
-        Derrick Stolee <derrickstolee@github.com>
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series integrates the sparse index with commands that perform merges
-such as 'git merge', 'git cherry-pick', 'git revert' (free with
-cherry-pick), and 'git rebase'.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-When the ORT merge strategy is enabled, this allows most merges to succeed
-without expanding the sparse index, leading to significant performance
-gains. I tested these changes against an internal monorepo with over 2
-million paths at HEAD but with a sparse-checkout that only has ~60,000 files
-within the sparse-checkout cone. 'git merge' commands went from 5-6 seconds
-to 0.750-1.250s.
+The sparse index will be compatible with the ORT merge strategy, so
+let's use it explicitly in our tests.
 
-In the case of the recursive merge strategy, the sparse index is expanded
-before the recursive algorithm proceeds. We expect that this is as good as
-we can get with that strategy. When the strategy shifts to ORT as the
-default, then this will not be a problem except for users who decide to
-change the behavior.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ t/t1092-sparse-checkout-compatibility.sh | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-Most of the hard work was done by previous series, such as
-ds/sparse-index-ignored-files (which this series is based on).
-
-Thanks, -Stolee
-
-Derrick Stolee (6):
-  t1092: use ORT merge strategy
-  diff: ignore sparse paths in diffstat
-  merge: make sparse-aware with ORT
-  merge-ort: expand only for out-of-cone conflicts
-  t1092: add cherry-pick, rebase tests
-  sparse-index: integrate with cherry-pick and rebase
-
- builtin/merge.c                          |  3 +
- builtin/rebase.c                         |  6 ++
- builtin/revert.c                         |  3 +
- diff.c                                   |  8 ++
- merge-ort.c                              | 16 ++++
- merge-recursive.c                        |  3 +
- t/t1092-sparse-checkout-compatibility.sh | 97 +++++++++++++++++++++---
- 7 files changed, 124 insertions(+), 12 deletions(-)
-
-
-base-commit: febef675f051eb08896751bb5661b6deb5579ead
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1019%2Fderrickstolee%2Fsparse-index%2Fmerge-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1019/derrickstolee/sparse-index/merge-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1019
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index ddc86bb4152..3e01e70fa0b 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -7,6 +7,11 @@ GIT_TEST_SPARSE_INDEX=
+ 
+ . ./test-lib.sh
+ 
++# Force the use of the ORT merge algorithm until testing with the
++# recursive strategy. We expect ORT to be used with sparse-index.
++GIT_TEST_MERGE_ALGORITHM=ort
++export GIT_TEST_MERGE_ALGORITHM
++
+ test_expect_success 'setup' '
+ 	git init initial-repo &&
+ 	(
+@@ -501,7 +506,7 @@ test_expect_success 'merge with conflict outside cone' '
+ 
+ 	test_all_match git checkout -b merge-tip merge-left &&
+ 	test_all_match git status --porcelain=v2 &&
+-	test_all_match test_must_fail git merge -m merge merge-right &&
++	test_all_match test_must_fail git merge -sort -m merge merge-right &&
+ 	test_all_match git status --porcelain=v2 &&
+ 
+ 	# Resolve the conflict in different ways:
+@@ -531,7 +536,7 @@ test_expect_success 'merge with outside renames' '
+ 	do
+ 		test_all_match git reset --hard &&
+ 		test_all_match git checkout -f -b merge-$type update-deep &&
+-		test_all_match git merge -m "$type" rename-$type &&
++		test_all_match git merge -sort -m "$type" rename-$type &&
+ 		test_all_match git rev-parse HEAD^{tree} || return 1
+ 	done
+ '
 -- 
 gitgitgadget
+
