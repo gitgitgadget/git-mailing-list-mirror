@@ -2,90 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 552B8C4338F
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 13:35:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F672C4320A
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 13:41:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3156A60F39
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 13:35:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1696960FA0
+	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 13:41:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237835AbhHQNfu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Aug 2021 09:35:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43782 "EHLO
+        id S239998AbhHQNmV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Aug 2021 09:42:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236040AbhHQNfs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Aug 2021 09:35:48 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0E21C061764
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 06:35:14 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id v4so21526226wro.12
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 06:35:14 -0700 (PDT)
+        with ESMTP id S239950AbhHQNmE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Aug 2021 09:42:04 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC83BC061796
+        for <git@vger.kernel.org>; Tue, 17 Aug 2021 06:40:12 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id j12-20020a05600c1c0c00b002e6d80c902dso2169574wms.4
+        for <git@vger.kernel.org>; Tue, 17 Aug 2021 06:40:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=bu5hQIt9s+vhcfQ1D9rq2GNSTNF07YVdtFjHVpljsrE=;
-        b=e3b/baZLA1OJkYsxTnK/uQQQQPy9nzHrFtg2m3HVHZqUh4NsxElIb9C0bCtm3/Rv+x
-         2JQPQnoMKFBor6SsHIa9n68J0RGKCfDDReChs44u2/YroGW3Boa1Rt0ZovuL5ZdiLVk7
-         tU7KdyBomORwtcMNeQ9TcTRPsdWY3r1HvdRb93xtBWAO0/4JPKk6xivTdhestJhl8RKT
-         VdXWW9Al9BGxol0O+3QHeAaysRvW+/jlYtIen0TAYimeQZ1PNc4aDBy1R/96EBpGS5RA
-         WWWiLyOgppwcoYMTKkhgFDOs4nsdNEnxmBZkBfisL4ClSghG22Yx2aC0PvsYwcCRE9VF
-         7XtA==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=6nw2gGbgLgD/ItZe7r3+xcBp3zrwfuUcf5x285TXfC0=;
+        b=okL0uHKl4GtWN4hEBgDqziARz3wZeRH+QDuACXUJ4GGVIlkozunoJSNVdVDLVljqnr
+         u3FmO+A1Zbp1d0OGrEQPBnEslko2DBZw+qsZlYjiG3NOwJdgcdSmJX06fIDTjrcpXYsQ
+         Lygas0kQyGwO3vISSc1Lq+uzcbbEJullMva9qSTqqWo7wLcwFkXHQXGCcSmpQiRpQvW+
+         nDDNsf9l5aCVp8J7Boqk53e9G9lDd9Iy4QPD6VT8FIsGJLOmd6A/RTs6KzUzNHjBiO17
+         vGiNHpE2i26yetyjXizoG+YsutXF4tomH5EHcFu9z/hvYemoLyxRmvHDMzuuUAk1yc6F
+         KABg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=bu5hQIt9s+vhcfQ1D9rq2GNSTNF07YVdtFjHVpljsrE=;
-        b=N70/WIl7YJwi3cYI5JpfM/EGXYw0JO8ySRqdtPfHNZU1hld2cm0PJizuHnAQ0HQjQ4
-         l2h7FXceKffAi3ceNsMauCpIUvjmr06bOLWT0lixOt7QbBg92ZGcfZaWTlLXHqS2a8NF
-         /d8dduyLzzWkTinAJoGs3fwU/Jq2zc6LDLY+8lr31VHOlTLt+4jJODPsxAhS+rSNzt+H
-         6Iw/x625aXTpnfK8Gp/0jgPedSaIQWo2ejjkfddyPKQCg31bvm6FhFekgjjFnhDJ4Imu
-         3hqvAe2aG1+hDaElzrDm9anBWMJgb5vmStdZCXNIR7Be8O3oUqrCF3nLAx6nWuc9Wke3
-         oPyQ==
-X-Gm-Message-State: AOAM531tUAED6fyQUuVI5pdCJ0KvuRV3MyjcJKrsu36NXMEcTYQa+np+
-        Q2MpP9Ji0RSMONABN8K9Dx4n1QQTnYATxqCRFAhplQ==
-X-Google-Smtp-Source: ABdhPJx+owcCWyuHAvedIqcJG/iCjnANliXYL/Ja09rahEzAiMMs8uPbQU18ccRZoG5oEQCjCw7gTl+Qqhq3LF7Y430=
-X-Received: by 2002:a5d:674c:: with SMTP id l12mr4184061wrw.112.1629207313356;
- Tue, 17 Aug 2021 06:35:13 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=6nw2gGbgLgD/ItZe7r3+xcBp3zrwfuUcf5x285TXfC0=;
+        b=pwvPujq9erQ1ISq5NhZcm9+eIgjoALTK7FcPh+EvdfjwyaemwjZfRxj7JBSJ4qB6yU
+         PEzuYUkNOEeF3UL6nI3de9Uy9q3hzZP5G3T8xfMJL8isHBca/xeQ7g5bopu1M1sFGAV+
+         O+hr49uI0A6HXINKfkDsLdRL5jUMHLxoA7VIcmSgvLpbsX9mBaj6i/DfKo53IXd1Wl3N
+         vxCifPgI782APgyenEGZMNLdWM1VVObRRni2HwHLct3w4+cvKkeuvxg/17csHU92fZyV
+         MCuCPMkU9qdtZIJDw+2uIFJ0hzo4xNZ0TcqUQZkn0LXU02C1roWe8pgrvkkkKIR132Ll
+         DKqQ==
+X-Gm-Message-State: AOAM533sShhr7uER6bGXDKNtn08SKZ2kUf7106yvoB1TroN8ZpNAlMX4
+        7wFmK/acW7DmCyRqnOHWRkLW4XQToWk=
+X-Google-Smtp-Source: ABdhPJw0qMop5usupbOXL1vMiUb2rypPdclFEID0HfLcVnztIaOw2ZaZMK4isO5SDXFDN96rLP+VFA==
+X-Received: by 2002:a1c:2904:: with SMTP id p4mr3346825wmp.178.1629207611460;
+        Tue, 17 Aug 2021 06:40:11 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j6sm2037065wms.44.2021.08.17.06.40.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Aug 2021 06:40:10 -0700 (PDT)
+Message-Id: <cad3c4835a2945cfecc66da161fefa53d9c19574.1629207607.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1054.v3.git.git.1629207607.gitgitgadget@gmail.com>
+References: <pull.1054.v2.git.git.1629145036.gitgitgadget@gmail.com>
+        <pull.1054.v3.git.git.1629207607.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 17 Aug 2021 13:39:43 +0000
+Subject: [PATCH v3 01/25] hash.h: provide constants for the hash IDs
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <patch-1.1-de0838fe99-20210714T111351Z-avarab@gmail.com>
- <cover-00.11-00000000000-20210716T140631Z-avarab@gmail.com> <patch-09.11-60d6cf342fc-20210716T140631Z-avarab@gmail.com>
-In-Reply-To: <patch-09.11-60d6cf342fc-20210716T140631Z-avarab@gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 17 Aug 2021 15:35:01 +0200
-Message-ID: <CAFQ2z_MhNgimn=7qcu-G823X=yTRT3xXrDP7qRiELShXY9A3AA@mail.gmail.com>
-Subject: Re: [PATCH v2 09/11] reflog expire: don't lock reflogs using
- previously seen OID
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Carlo Marcelo Arenas =?UTF-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 16, 2021 at 4:13 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> -                       status |=3D reflog_expire(e->reflog, &e->oid, fla=
-gs,
-> +                       status |=3D reflog_expire(e->reflog, NULL, flags,
->                                                 reflog_expiry_prepare,
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-this causes reflog_expiry_prepare() to be called with a NULL oid. I'm
-seeing a crash in do_lookup_replace_object() because of this in
-t0031-reftable.sh.
+This will simplify referencing them from code that is not deeply integrated with
+Git, in particular, the reftable library.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+ hash.h        | 6 ++++++
+ object-file.c | 7 ++-----
+ 2 files changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/hash.h b/hash.h
+index 9e25c40e9ac..5d40368f18a 100644
+--- a/hash.h
++++ b/hash.h
+@@ -95,12 +95,18 @@ static inline void git_SHA256_Clone(git_SHA256_CTX *dst, const git_SHA256_CTX *s
+ /* Number of algorithms supported (including unknown). */
+ #define GIT_HASH_NALGOS (GIT_HASH_SHA256 + 1)
+ 
++/* "sha1", big-endian */
++#define GIT_SHA1_FORMAT_ID 0x73686131
++
+ /* The length in bytes and in hex digits of an object name (SHA-1 value). */
+ #define GIT_SHA1_RAWSZ 20
+ #define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
+ /* The block size of SHA-1. */
+ #define GIT_SHA1_BLKSZ 64
+ 
++/* "s256", big-endian */
++#define GIT_SHA256_FORMAT_ID 0x73323536
++
+ /* The length in bytes and in hex digits of an object name (SHA-256 value). */
+ #define GIT_SHA256_RAWSZ 32
+ #define GIT_SHA256_HEXSZ (2 * GIT_SHA256_RAWSZ)
+diff --git a/object-file.c b/object-file.c
+index a8be8994814..7bfd5e6e2e9 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -164,7 +164,6 @@ static void git_hash_unknown_final_oid(struct object_id *oid, git_hash_ctx *ctx)
+ 	BUG("trying to finalize unknown hash");
+ }
+ 
+-
+ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
+ 	{
+ 		NULL,
+@@ -183,8 +182,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
+ 	},
+ 	{
+ 		"sha1",
+-		/* "sha1", big-endian */
+-		0x73686131,
++		GIT_SHA1_FORMAT_ID,
+ 		GIT_SHA1_RAWSZ,
+ 		GIT_SHA1_HEXSZ,
+ 		GIT_SHA1_BLKSZ,
+@@ -199,8 +197,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
+ 	},
+ 	{
+ 		"sha256",
+-		/* "s256", big-endian */
+-		0x73323536,
++		GIT_SHA256_FORMAT_ID,
+ 		GIT_SHA256_RAWSZ,
+ 		GIT_SHA256_HEXSZ,
+ 		GIT_SHA256_BLKSZ,
+-- 
+gitgitgadget
+
