@@ -2,154 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1761AC4338F
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 09:25:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CE3AC4338F
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 09:43:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F05F7600D4
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 09:25:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA73261029
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 09:43:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232138AbhHRJZs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Aug 2021 05:25:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35172 "EHLO
+        id S232173AbhHRJoP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Aug 2021 05:44:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232030AbhHRJZi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Aug 2021 05:25:38 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD8EAC0613CF
-        for <git@vger.kernel.org>; Wed, 18 Aug 2021 02:25:01 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id d6so2092998edt.7
-        for <git@vger.kernel.org>; Wed, 18 Aug 2021 02:25:01 -0700 (PDT)
+        with ESMTP id S233281AbhHRJoM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Aug 2021 05:44:12 -0400
+Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A2BCC061764
+        for <git@vger.kernel.org>; Wed, 18 Aug 2021 02:43:38 -0700 (PDT)
+Received: by mail-il1-x131.google.com with SMTP id j18so1557474ile.8
+        for <git@vger.kernel.org>; Wed, 18 Aug 2021 02:43:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=t0cKBq0cO0WjKJtF/MOifGlhwEeOSHikty6oGkruHtI=;
-        b=nPIXaGJRtKpdNf9Vr2AuGUk1zET5LdpOXWCTS6+3iHAoU5ZbH1p5mOCyycsiDegUix
-         w/e3s495VSty3OdybpGMZqEXi6uYRW5b537+I+h0EDv8bePzb0IIfqc4nH0BeHwYnUfz
-         GXmPjR2VU9UCRCG+RKR9PO0f5w4D2OKsRe5Mb9Un3Ix/ew1ooDNXAV2Q0kBdqfva2m9D
-         McItH4bouekpcWd7HyoTgd+h1yJr5ppTawdzaf+tQCEj5OwnIU3iB409fXv6210ikTZW
-         6YPLjZqRD4JnwyuQDne2OlMnVzaJOgQ03uqXdoR1z5xfRhnMh8kAUIwPnWIojvp1FYGq
-         OAJA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ePIsCRC6lKMhPCeWyMomDXWX2DzT8DErkJ1XSotWoWs=;
+        b=bY4t/lRcitbUNIT0487RjacWQCWr4ZBSNarAdKdbvDdI72efenHTVJUA+EsK2Ajw45
+         ISBo5Velyx5ulY1YsgOvwM+913rDe2mP4hSYPvVP14wt8o317jfoKEdqC4t+gKZQA1e1
+         v4vZqjfb/CKFNn9wDdI5hABu25y5riSaLbMQJLYC8gjC4LNDjAjp7G/8CXxHCAGVQ3fu
+         KJLhXaBLbivaW3RtplU9PJHpVNaxusSY0rfgCnNxlQQ0VUJxHXClTPBb5cxsglBDWns6
+         zwkjUHKlTfuCUHb3p9nEihGPIatlCkO5olPVqAhNlgTCP8O63r75KL3Wq7DiLlFX6Ibw
+         NcRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=t0cKBq0cO0WjKJtF/MOifGlhwEeOSHikty6oGkruHtI=;
-        b=fLASg5JHWR5atc45hboh53oH8n61QseLux18xsa3BXpkN8Z53lxx9T+jIY4jsGtY7T
-         uCFrDsolLsiqnMqkh0JJttKNufXjFNOA2FuRFepHWCjhDpjUJvi3RHPPatwcGQHDyy+/
-         0bkBSpAA7nABmfpAFOQYc8QkKxQzFZKfdvbh1yO4M9kKwpDjxx71TCjthTxo06ftK13w
-         Jzts5ZHak1Q1uZ/za/7Ck6GSThAi0l7wfuhcd2C/Fnb1yVomElRpb/P2GYRfwkyGRwOF
-         Lk9FfsveuvUNsP56UIomItvBHmUYTEi+sLUqXxQGIiGxI4g4dU7h8aXRlr2CGG8aVLLG
-         v6eQ==
-X-Gm-Message-State: AOAM532cGyeqBZb2v6tYgXnOD445oqb9O3MNcfEfT830vqkKJ9nFM7uI
-        bHFaEyYIn5nxQ0bxFkwY/3LtQpdNaro=
-X-Google-Smtp-Source: ABdhPJytzy8nbf9D/0cE3qoGMmTb+5Hnw+fTHCiYscYwO04eR0TK9nHW6au1e/gNCGszmURufLzDKw==
-X-Received: by 2002:a05:6402:152:: with SMTP id s18mr8899904edu.221.1629278700390;
-        Wed, 18 Aug 2021 02:25:00 -0700 (PDT)
-Received: from localhost.localdomain (78-131-17-78.pool.digikabel.hu. [78.131.17.78])
-        by smtp.gmail.com with ESMTPSA id q5sm2326760edt.50.2021.08.18.02.24.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Aug 2021 02:25:00 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] column: fix parsing of the '--nl' option
-Date:   Wed, 18 Aug 2021 11:24:56 +0200
-Message-Id: <20210818092456.3045808-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.33.0.453.gc5e41af357
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ePIsCRC6lKMhPCeWyMomDXWX2DzT8DErkJ1XSotWoWs=;
+        b=sIT17T6rCzEFt/aOwu5PDy1YFtk7Yx7YpXDAM6aGSCDNHSzUsPn+LDzmz55J/kHmTp
+         8uuRHO57sj+oMs+2HHh5/TL8NpKNuxr0EI3d8+egKTavZVtNuqwJ+ONwFofSeY4ArfOv
+         FPBrB6joyM9TyKn/TxofA9lpYg87YHMXOium4mTkdYxokL7GHnftMY+qayDI0AeBK/xP
+         ok2uGA3qemcF3Y6SSn69fcWrIgGMiozc+UO7+TY9wi78WVXPD3zHgPbuGUrbdbwExHMM
+         ABzgdIRHRGrIMeR2yq8KgIjhIgFqlZ1MAzBUfS5SUYt2SOSfo6SiTfmrmq+hOTdvygTK
+         QCJg==
+X-Gm-Message-State: AOAM533fCQsmJVV8zMUFjA7w+YBVV2AESfeOYiw5zn4knETCzbirQkmG
+        MyYymJNQL1QgWjWpUlWl51wr1ueI+bWuzbRDNN19gq4T9uk=
+X-Google-Smtp-Source: ABdhPJxJMyPvg691vQs7j3RLX/66iYeImdpIFwaYfnG8eiAHZl7gkLuGC66jnL9Y7G2+/3G8sB5cZm/JgCAOJlxzXQQ=
+X-Received: by 2002:a05:6e02:2184:: with SMTP id j4mr5742147ila.30.1629279817661;
+ Wed, 18 Aug 2021 02:43:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20210817081458.53136-1-mirucam@gmail.com> <20210817081458.53136-6-mirucam@gmail.com>
+ <nycvar.QRO.7.76.6.2108171332370.55@tvgsbejvaqbjf.bet> <CAN7CjDDEv6vGPKZo3sxz8bgfN2Nzqh0HChR-tGrjDGbkhKZo=A@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2108172332050.55@tvgsbejvaqbjf.bet> <CAP8UFD2PE0-8AH7-RH1Xv_cZ5s2bOfR3_KYEhBTdNqYc-Zs5-Q@mail.gmail.com>
+In-Reply-To: <CAP8UFD2PE0-8AH7-RH1Xv_cZ5s2bOfR3_KYEhBTdNqYc-Zs5-Q@mail.gmail.com>
+From:   "Miriam R." <mirucam@gmail.com>
+Date:   Wed, 18 Aug 2021 11:43:26 +0200
+Message-ID: <CAN7CjDBfHrH_BPfNpwyAn6LSeSu_o2C5v7rR-_SnpMf-=UUeow@mail.gmail.com>
+Subject: Re: [PATCH v4 5/6] bisect--helper: reimplement `bisect_run` shell
+ function in C
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'git column's '--nl' option can be used to specify a "string to be
-printed at the end of each line" (quoting the man page), but this
-option and its mandatory argument has been parsed as OPT_INTEGER since
-the introduction of the command in 7e29b8254f (Add column layout
-skeleton and git-column, 2012-04-21).  Consequently, any non-number
-argument is rejected by parse-options, and any number other than 0
-leads to segfault:
+Hi,
 
-  $ printf "%s\n" one two |git column --mode=plain --nl=foo
-  error: option `nl' expects a numerical value
-  $ printf "%s\n" one two |git column --mode=plain --nl=42
-  Segmentation fault (core dumped)
-  $ printf "%s\n" one two |git column --mode=plain --nl=0
-  one
-  two
+El mi=C3=A9, 18 ago 2021 a las 10:33, Christian Couder
+(<christian.couder@gmail.com>) escribi=C3=B3:
+>
+> On Tue, Aug 17, 2021 at 11:36 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > Hi Miriam,
+> >
+> > On Tue, 17 Aug 2021, Miriam R. wrote:
+> >
+> > > El mar, 17 ago 2021 a las 13:42, Johannes Schindelin
+>
+> > > > Also: I think at this stage, an equivalent to `cat
+> > > > "$GIT_DIR/BISECT_RUN"` is missing.
+> > >
+> > > In the previous patch series (v3), I implemented the equivalent to th=
+e
+> > > cat command but I understood reviewers wanted to print the output to =
+the
+> > > user, so I reverted my changes for this version.
+> > > https://lore.kernel.org/git/20210411095538.34129-4-mirucam@gmail.com/
+> >
+> > I am a bit confused: doesn't `bisect_state()` write to the `BISECT_RUN`
+> > file? If so, I think we do need to show the contents by opening the fil=
+e
+> > and piping it to `stdout`.
+> >
+> > FWIW I read
+> > https://lore.kernel.org/git/CAP8UFD3X24F3qgefHpi00PM-KUk+vcqxwy2Dbngbyj=
+7ciavCVQ@mail.gmail.com/
+> > to mean the same thing, although I have to admit that I am not 100%
+> > certain.
+>
+> I agree that, after `bisect_state()` has written into the `BISECT_RUN`
+> file, we should indeed be opening it and piping it to `stdout`. That's
+> what I meant in the above message.
 
-Parse this option as OPT_STRING.
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- Documentation/git-column.txt |  2 +-
- builtin/column.c             |  2 +-
- t/t9002-column.sh            | 18 ++++++++++++++++++
- 3 files changed, 20 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-column.txt b/Documentation/git-column.txt
-index f58e9c43e6..6cea9ab463 100644
---- a/Documentation/git-column.txt
-+++ b/Documentation/git-column.txt
-@@ -39,7 +39,7 @@ OPTIONS
- --indent=<string>::
- 	String to be printed at the beginning of each line.
- 
----nl=<N>::
-+--nl=<string>::
- 	String to be printed at the end of each line,
- 	including newline character.
- 
-diff --git a/builtin/column.c b/builtin/column.c
-index 40d4b3bee2..158fdf53d9 100644
---- a/builtin/column.c
-+++ b/builtin/column.c
-@@ -29,7 +29,7 @@ int cmd_column(int argc, const char **argv, const char *prefix)
- 		OPT_INTEGER(0, "raw-mode", &colopts, N_("layout to use")),
- 		OPT_INTEGER(0, "width", &copts.width, N_("maximum width")),
- 		OPT_STRING(0, "indent", &copts.indent, N_("string"), N_("padding space on left border")),
--		OPT_INTEGER(0, "nl", &copts.nl, N_("padding space on right border")),
-+		OPT_STRING(0, "nl", &copts.nl, N_("string"), N_("padding space on right border")),
- 		OPT_INTEGER(0, "padding", &copts.padding, N_("padding space between columns")),
- 		OPT_END()
- 	};
-diff --git a/t/t9002-column.sh b/t/t9002-column.sh
-index 89983527b6..6d3dbde3fe 100755
---- a/t/t9002-column.sh
-+++ b/t/t9002-column.sh
-@@ -42,6 +42,24 @@ EOF
- 	test_cmp expected actual
- '
- 
-+test_expect_success '--nl' '
-+	cat >expected <<\EOF &&
-+oneZ
-+twoZ
-+threeZ
-+fourZ
-+fiveZ
-+sixZ
-+sevenZ
-+eightZ
-+nineZ
-+tenZ
-+elevenZ
-+EOF
-+	git column --nl="Z$LF" --mode=plain <lista >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success '80 columns' '
- 	cat >expected <<\EOF &&
- one    two    three  four   five   six    seven  eight  nine   ten    eleven
--- 
-2.33.0.453.gc5e41af357
-
+Sorry for the confusion, I was understanding that reviewers wanted a
+different approach, one thing or the other, not both.
+I will do both then.
+Thank you for the clarification!
+Best,
+Miriam.
