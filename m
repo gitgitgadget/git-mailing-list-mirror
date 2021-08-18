@@ -2,107 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 456A2C4338F
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 06:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07834C4338F
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 08:34:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2ECAE6108F
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 06:08:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D4AC560C3E
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 08:34:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238013AbhHRGIt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Aug 2021 02:08:49 -0400
-Received: from 82-64-198-250.subs.proxad.net ([82.64.198.250]:37842 "EHLO
-        mail.lhuard.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238923AbhHRGHr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Aug 2021 02:07:47 -0400
-X-Greylist: delayed 613 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Aug 2021 02:07:46 EDT
-Received: from coruscant.lhuard.fr (unknown [IPv6:2a01:e0a:465:5440:65a7:ebe4:f40e:e0b])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mail.lhuard.fr (Postfix) with ESMTPSA id CA2EE4DF2FD;
-        Wed, 18 Aug 2021 07:56:45 +0200 (CEST)
-Authentication-Results: mail.lhuard.fr; dmarc=fail (p=quarantine dis=none) header.from=lhuard.fr
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lhuard.fr; s=rpi3;
-        t=1629266205; bh=dhEXjIHE1jn9HYa1ITfMK8WBhw+1Mc7ceF0YzCGVB1I=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=1D/vGiWtmgi3zdQ4oEBsyrMYC14FO58iA+589h3coV898s38zrDQefbnCYt4zcGgs
-         N+6663HIun986YpukYQO0PwhjqEvaJQnTUXCUhlgkk7BbBvAdgVUIVITiShN8tdKcC
-         auWFei7elRCE/YC+FZQDMKGpswADAOZW5sX6nfk4=
-From:   =?ISO-8859-1?Q?L=E9na=EFc?= Huard <lenaic@lhuard.fr>
-To:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Martin =?ISO-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v5 0/3] add support for systemd timers on Linux
-Date:   Wed, 18 Aug 2021 07:56:35 +0200
-Message-ID: <1931213.f5cRXtTDAC@coruscant.lhuard.fr>
-In-Reply-To: <8eb18679-f6d5-b97e-f417-3747bb8309c3@gmail.com>
-References: <20210524071538.46862-1-lenaic@lhuard.fr> <20210608134000.663398-1-lenaic@lhuard.fr> <8eb18679-f6d5-b97e-f417-3747bb8309c3@gmail.com>
+        id S238405AbhHRIei (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Aug 2021 04:34:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51080 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238324AbhHRIef (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Aug 2021 04:34:35 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B69C5C061764
+        for <git@vger.kernel.org>; Wed, 18 Aug 2021 01:33:57 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id cn28so1895848edb.6
+        for <git@vger.kernel.org>; Wed, 18 Aug 2021 01:33:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=oPRG9TpefNIbPtbAOh96UqTENoFq17FLI+9667GW5Vw=;
+        b=BiGIorPxYKHDvR22EHDP+C8pmv9yDwMaituCrWrpmhvL7G0eqoOyIONIwsOfFecRZq
+         AntZhSvHspvp9hQ99GsuL9u20Ey4it/8h95f1nfohGylTY0oFNOGDj9krU0MTlXpZFUe
+         HvCIuHAp0TvKEpU3gE3URxLU7YrZUA8oJFvjxpbZXGiT8RfJJ0ZlCnTQVcAhep2RVFMJ
+         9hkjIImNh50LkHq+60ZhRk4vU7gAUegdLVT7ODjQkM1DQoaKDHWXv9zv+I5yUy+qb4ob
+         SvmzAZFk0SfCJ8zoffCVgOTXCavdSdne+Z1fJwaY79lMSrL3cAESlUmX/SYIpf1nF2JI
+         3i3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oPRG9TpefNIbPtbAOh96UqTENoFq17FLI+9667GW5Vw=;
+        b=eFRFB4MfidWVFNBAtdjqzzTVfiaf/rKJu68YE0oSIgguLs8uzGj38Qto6p+N6HCxVV
+         cFH1PPRd0qEL22z75hohF7WuK+ZOcv8EaL9D3uz1eZiHw/OiZh8sfTY2cPfz3w+byQ3C
+         6XTJwLPaZawqIODp6vH1t4DzzhC8nJS4gh/8Cze99JURVYlJzoKIGXL/yUmfjX/B/G4B
+         GLUaLkAeBRAZpQBE8+/MmSP6dD9KbdLYX0glD0QrhTxmVSNiJr/wq88r2RIUMXVM1elh
+         pwirqLulKReZ4m3hD+pK3x6dvb2OOJ6OU8OgohOL79zRtoh7cdZZNfG6lMgL6M55+mpz
+         HGtg==
+X-Gm-Message-State: AOAM531ssDnu1FbhkgbaZu8HaTOst4bDh4fDerx1JMIx7LroDqw6+3GD
+        KqOQll52AW2yWhjTgYwRS5dXqHoCX5jpj//oYKg=
+X-Google-Smtp-Source: ABdhPJzDWpdOVnv0rV9PBYzpfXwELWswSkaCNtD3CBrmouYdXx81dWps8bsxFS0VXq6aqgIgh/Se1IV8zKbPS/uwPxI=
+X-Received: by 2002:aa7:ce07:: with SMTP id d7mr8960281edv.127.1629275636242;
+ Wed, 18 Aug 2021 01:33:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+References: <20210817081458.53136-1-mirucam@gmail.com> <20210817081458.53136-6-mirucam@gmail.com>
+ <nycvar.QRO.7.76.6.2108171332370.55@tvgsbejvaqbjf.bet> <CAN7CjDDEv6vGPKZo3sxz8bgfN2Nzqh0HChR-tGrjDGbkhKZo=A@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2108172332050.55@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2108172332050.55@tvgsbejvaqbjf.bet>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 18 Aug 2021 10:33:44 +0200
+Message-ID: <CAP8UFD2PE0-8AH7-RH1Xv_cZ5s2bOfR3_KYEhBTdNqYc-Zs5-Q@mail.gmail.com>
+Subject: Re: [PATCH v4 5/6] bisect--helper: reimplement `bisect_run` shell
+ function in C
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     "Miriam R." <mirucam@gmail.com>, git <git@vger.kernel.org>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le mardi 17 ao=C3=BBt 2021, 19:22:05 CEST Derrick Stolee a =C3=A9crit :
-> On 6/8/2021 9:39 AM, L=C3=A9na=C3=AFc Huard wrote:
-> > Hello,
-> >=20
-> > I=E2=80=99ve reworked this submission based on the valuable feedback I=
-=E2=80=99ve
-> > received.
-> > Thanks again for it!
->=20
-> Hi L=C3=A9na=C3=AFc!
->=20
-> I'm replying to your series because it appears you did not see our
-> discussion of this topic in the What's Cooking thread a couple weeks ago
-> [1] and might miss the discussion that began today [2].
->=20
-> [1]
-> https://lore.kernel.org/git/4aed0293-6a48-d370-3b72-496b7c631cb5@gmail.co=
-m/
-> [2]
-> https://lore.kernel.org/git/7a4b1238-5c3b-4c08-0e9d-511f857f9c38@gmail.co=
-m/
->=20
-> The proposal I give in [2] is that I can forward-fix the remaining commen=
-ts
-> OR re-submit the patches with a new patch and some edits to your current
-> patches. (You would remain author of the patches you wrote.)
->=20
-> None of that is important if you plan to submit a v6 that responds to the
-> remaining feedback (summarized in [1]).
->=20
-> I'll hold off for a couple days to give you a chance to read and respond.
->=20
-> Thanks,
-> -Stolee
+On Tue, Aug 17, 2021 at 11:36 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Miriam,
+>
+> On Tue, 17 Aug 2021, Miriam R. wrote:
+>
+> > El mar, 17 ago 2021 a las 13:42, Johannes Schindelin
 
-Hello,
+> > > Also: I think at this stage, an equivalent to `cat
+> > > "$GIT_DIR/BISECT_RUN"` is missing.
+> >
+> > In the previous patch series (v3), I implemented the equivalent to the
+> > cat command but I understood reviewers wanted to print the output to the
+> > user, so I reverted my changes for this version.
+> > https://lore.kernel.org/git/20210411095538.34129-4-mirucam@gmail.com/
+>
+> I am a bit confused: doesn't `bisect_state()` write to the `BISECT_RUN`
+> file? If so, I think we do need to show the contents by opening the file
+> and piping it to `stdout`.
+>
+> FWIW I read
+> https://lore.kernel.org/git/CAP8UFD3X24F3qgefHpi00PM-KUk+vcqxwy2Dbngbyj7ciavCVQ@mail.gmail.com/
+> to mean the same thing, although I have to admit that I am not 100%
+> certain.
 
-Sorry for the silence. I just happened to be in holiday for the past few we=
-eks=20
-and did not have access to my mails.
-I can catch up the discussions I missed and try to address the remaining=20
-concerns in a new re-roll.
-
-Cheers,
-L=C3=A9na=C3=AFc.
-
-
-
+I agree that, after `bisect_state()` has written into the `BISECT_RUN`
+file, we should indeed be opening it and piping it to `stdout`. That's
+what I meant in the above message.
