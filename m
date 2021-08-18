@@ -2,100 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07834C4338F
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 08:34:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E940C4338F
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 08:42:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D4AC560C3E
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 08:34:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2049860E09
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 08:42:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238405AbhHRIei (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Aug 2021 04:34:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51080 "EHLO
+        id S238168AbhHRInY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Aug 2021 04:43:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238324AbhHRIef (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Aug 2021 04:34:35 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B69C5C061764
-        for <git@vger.kernel.org>; Wed, 18 Aug 2021 01:33:57 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id cn28so1895848edb.6
-        for <git@vger.kernel.org>; Wed, 18 Aug 2021 01:33:57 -0700 (PDT)
+        with ESMTP id S237883AbhHRInY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Aug 2021 04:43:24 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67453C061764
+        for <git@vger.kernel.org>; Wed, 18 Aug 2021 01:42:48 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id cq23so1897844edb.12
+        for <git@vger.kernel.org>; Wed, 18 Aug 2021 01:42:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=oPRG9TpefNIbPtbAOh96UqTENoFq17FLI+9667GW5Vw=;
-        b=BiGIorPxYKHDvR22EHDP+C8pmv9yDwMaituCrWrpmhvL7G0eqoOyIONIwsOfFecRZq
-         AntZhSvHspvp9hQ99GsuL9u20Ey4it/8h95f1nfohGylTY0oFNOGDj9krU0MTlXpZFUe
-         HvCIuHAp0TvKEpU3gE3URxLU7YrZUA8oJFvjxpbZXGiT8RfJJ0ZlCnTQVcAhep2RVFMJ
-         9hkjIImNh50LkHq+60ZhRk4vU7gAUegdLVT7ODjQkM1DQoaKDHWXv9zv+I5yUy+qb4ob
-         SvmzAZFk0SfCJ8zoffCVgOTXCavdSdne+Z1fJwaY79lMSrL3cAESlUmX/SYIpf1nF2JI
-         3i3g==
+        d=slight.dev; s=google;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=OP/cDseKnij4lUgbTM/XgNPzP4r57ofu1dqf9a6HV44=;
+        b=Odtiw5aQAKVKJO2gOYYXRIHN2jg0ZWt2b40qimUR6RY6ZjIPs9GFX3+dhaT8iVX828
+         m3IqClgQ+3dP8q6FYweLEmbp8TL56JpXX7s5wvfmLcHfQY1GitXF+g1JXEg0ZYZYfmYF
+         oEOayo7tlKhXu79PFnUemTbldlMSx+9zlqsNJU2U88CenZ+Quc970IYkx+T7Ck91ovSn
+         64U3a8X4vEWW6pOgVer9EoFzscxRgwnpT/gEtKHeokXCUPefRvF4nq4NdFEUyCLmFQHe
+         Wqi8ysDn9d+dYz97QYUNiEP4GKl9eyIUBuX/0G1XnwMN6oRb8WCExr/BPOA+TGZshOgi
+         kZXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=oPRG9TpefNIbPtbAOh96UqTENoFq17FLI+9667GW5Vw=;
-        b=eFRFB4MfidWVFNBAtdjqzzTVfiaf/rKJu68YE0oSIgguLs8uzGj38Qto6p+N6HCxVV
-         cFH1PPRd0qEL22z75hohF7WuK+ZOcv8EaL9D3uz1eZiHw/OiZh8sfTY2cPfz3w+byQ3C
-         6XTJwLPaZawqIODp6vH1t4DzzhC8nJS4gh/8Cze99JURVYlJzoKIGXL/yUmfjX/B/G4B
-         GLUaLkAeBRAZpQBE8+/MmSP6dD9KbdLYX0glD0QrhTxmVSNiJr/wq88r2RIUMXVM1elh
-         pwirqLulKReZ4m3hD+pK3x6dvb2OOJ6OU8OgohOL79zRtoh7cdZZNfG6lMgL6M55+mpz
-         HGtg==
-X-Gm-Message-State: AOAM531ssDnu1FbhkgbaZu8HaTOst4bDh4fDerx1JMIx7LroDqw6+3GD
-        KqOQll52AW2yWhjTgYwRS5dXqHoCX5jpj//oYKg=
-X-Google-Smtp-Source: ABdhPJzDWpdOVnv0rV9PBYzpfXwELWswSkaCNtD3CBrmouYdXx81dWps8bsxFS0VXq6aqgIgh/Se1IV8zKbPS/uwPxI=
-X-Received: by 2002:aa7:ce07:: with SMTP id d7mr8960281edv.127.1629275636242;
- Wed, 18 Aug 2021 01:33:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210817081458.53136-1-mirucam@gmail.com> <20210817081458.53136-6-mirucam@gmail.com>
- <nycvar.QRO.7.76.6.2108171332370.55@tvgsbejvaqbjf.bet> <CAN7CjDDEv6vGPKZo3sxz8bgfN2Nzqh0HChR-tGrjDGbkhKZo=A@mail.gmail.com>
- <nycvar.QRO.7.76.6.2108172332050.55@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2108172332050.55@tvgsbejvaqbjf.bet>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 18 Aug 2021 10:33:44 +0200
-Message-ID: <CAP8UFD2PE0-8AH7-RH1Xv_cZ5s2bOfR3_KYEhBTdNqYc-Zs5-Q@mail.gmail.com>
-Subject: Re: [PATCH v4 5/6] bisect--helper: reimplement `bisect_run` shell
- function in C
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     "Miriam R." <mirucam@gmail.com>, git <git@vger.kernel.org>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=OP/cDseKnij4lUgbTM/XgNPzP4r57ofu1dqf9a6HV44=;
+        b=bqVqS8YmO+YUVLXoU5hdHWKvfNJ8OJMQsO+oqQis+rtRiI4DJnS8FJEdTZldBynniV
+         V9uOPDI3CuVIpwN9rnUX6T/dcmPU/f20KHT8CP5emqrosSVUuFcKCv+gUo1mSfaI0pWv
+         iy79lsHDN/Yw8VeZxAvna5w05M61bi9R38rbh9+9DBWekzHQ2pU4U5jUPeD8rcj18Hh5
+         lzWqarZ+XpqdoaH/Ppf2nWKdXmRRI0JCKoTu8bP6B0WaSfqi5M8oFsf7AAYqEEfdrf3W
+         lIFvA5Fw6RP5yPRSl7JBLEWS8ZUNe5FprclB7F54T2dn5LA/oBtOgXWJ2pG4GSPMe6Wz
+         wJvA==
+X-Gm-Message-State: AOAM5301DaeQY0ZoEEnL4Qa6YjFosSuIKdTr3oEjtnLEnIbTPTfpogu9
+        fx+kCu/nwEPr/1cjMyChTISLZRun/SeF6Vwu
+X-Google-Smtp-Source: ABdhPJxt2Yvb6D7v/KMy9jniPwieAIJSIuonNBK1LHqYyBwZXF+wpMHL804FdUaZRk0m3CGVb5og1w==
+X-Received: by 2002:a50:d509:: with SMTP id u9mr8950929edi.35.1629276166359;
+        Wed, 18 Aug 2021 01:42:46 -0700 (PDT)
+Received: from smtpclient.apple (82-217-163-254.cable.dynamic.v4.ziggo.nl. [82.217.163.254])
+        by smtp.gmail.com with ESMTPSA id g10sm1709412ejj.44.2021.08.18.01.42.45
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Aug 2021 01:42:45 -0700 (PDT)
+From:   Thomas De Zeeuw <thomas@slight.dev>
+Content-Type: text/plain;
+        charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
+Subject: Bug: Segmentation fault in git diff
+Message-Id: <40BE2EF2-0AF3-45BA-9880-8A6011B38D03@slight.dev>
+Date:   Wed, 18 Aug 2021 10:42:45 +0200
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3654.100.0.2.22)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 17, 2021 at 11:36 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Miriam,
->
-> On Tue, 17 Aug 2021, Miriam R. wrote:
->
-> > El mar, 17 ago 2021 a las 13:42, Johannes Schindelin
+Hello,
 
-> > > Also: I think at this stage, an equivalent to `cat
-> > > "$GIT_DIR/BISECT_RUN"` is missing.
-> >
-> > In the previous patch series (v3), I implemented the equivalent to the
-> > cat command but I understood reviewers wanted to print the output to the
-> > user, so I reverted my changes for this version.
-> > https://lore.kernel.org/git/20210411095538.34129-4-mirucam@gmail.com/
->
-> I am a bit confused: doesn't `bisect_state()` write to the `BISECT_RUN`
-> file? If so, I think we do need to show the contents by opening the file
-> and piping it to `stdout`.
->
-> FWIW I read
-> https://lore.kernel.org/git/CAP8UFD3X24F3qgefHpi00PM-KUk+vcqxwy2Dbngbyj7ciavCVQ@mail.gmail.com/
-> to mean the same thing, although I have to admit that I am not 100%
-> certain.
+This is my first bug report to Git mailing list so let me know if more =
+information is needed.
 
-I agree that, after `bisect_state()` has written into the `BISECT_RUN`
-file, we should indeed be opening it and piping it to `stdout`. That's
-what I meant in the above message.
+Running the following command results in a segmentation fault on macOS =
+arm64
+$ git diff --name-only --diff-filter=3DU =E2=80=94relative
+Segmentation fault: 11
+
+I was rebasing while it happened, trying to resolve merge conflicts. =
+This is roughly how the status of the repo looked (I changed the file =
+names, but keep them relative the to output, i.e. ../actual-file.txt I =
+change to ../some-file.txt).
+
+$ git status
+interactive rebase in progress; onto a4aabaa
+Last command done (1 command done):
+   pick ad0e02e WIP
+No commands remaining.
+You are currently rebasing branch 'my_branch' on 'a4aabaa'.
+  (fix conflicts and then run "git rebase --continue")
+  (use "git rebase --skip" to skip this patch)
+  (use "git rebase --abort" to check out the original branch)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   ../dir1/Makefile
+        modified:   ../dir1/http_spec.yaml
+        modified:   ../dir1/tests/api/file1.rs
+        modified:   file2.proto
+
+Unmerged paths:
+  (use "git restore --staged <file>..." to unstage)
+  (use "git add <file>..." to mark resolution)
+        both modified:   ../dir1/build.rs
+        both modified:   ../dir1/tests/data/file3.sql
+        both modified:   file4.go
+
+Running it through lldb doesn=E2=80=99t give too much information, but =
+just in case it helps:
+
+$ lldb -- git diff --name-only --diff-filter=3DU --relative
+(lldb) target create "git"
+Current executable set to 'git' (arm64).
+(lldb) settings set -- target.run-args  "diff" "--name-only" =
+"--diff-filter=3DU" "--relative"
+(lldb) r
+Process 10619 launched: '/opt/homebrew/bin/git' (arm64)
+Process 10619 stopped
+* thread #1, queue =3D 'com.apple.main-thread', stop reason =3D =
+EXC_BAD_ACCESS (code=3D1, address=3D0x8)
+    frame #0: 0x00000001000ea2ac git`run_diff_files + 864
+git`run_diff_files:
+->  0x1000ea2ac <+864>: ldr    x8, [x0, #0x8]
+    0x1000ea2b0 <+868>: strh   w19, [x8, #0x50]
+    0x1000ea2b4 <+872>: ldr    w8, [x28, #0x38]
+    0x1000ea2b8 <+876>: ubfx   w8, w8, #12, #2
+Target 0: (git) stopped.
+(lldb) bt
+* thread #1, queue =3D 'com.apple.main-thread', stop reason =3D =
+EXC_BAD_ACCESS (code=3D1, address=3D0x8)
+  * frame #0: 0x00000001000ea2ac git`run_diff_files + 864
+    frame #1: 0x000000010002a65c git`cmd_diff + 1820
+    frame #2: 0x00000001000043e4 git`run_builtin + 420
+    frame #3: 0x0000000100003948 git`handle_builtin + 272
+    frame #4: 0x000000010000322c git`cmd_main + 812
+    frame #5: 0x00000001000a6ec4 git`main + 140
+    frame #6: 0x00000001a19e9450 libdyld.dylib`start + 4
+
+I got my Git binary from Homebrew, tried version 2.32.0 and 2.33.0 =
+(currently the latest on Homebrew).
+
+OS information:
+macOS Big Sur Version 11.4
+$ uname -a
+Darwin MacBook-Pro.local 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 =
+05:10:31 PDT 2021; root:xnu-7195.121.3~9/RELEASE_ARM64_T8101 arm64
+
+=E2=80=94
+
+Regards,
+
+Thomas de Zeeuw
+thomas@slight.dev
+
+
+
