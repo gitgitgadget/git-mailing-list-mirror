@@ -2,146 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19A28C4338F
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 08:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE626C4338F
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 09:00:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E167C60E09
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 08:56:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 87D366108E
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 09:00:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230137AbhHRI4x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Aug 2021 04:56:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56574 "EHLO
+        id S230287AbhHRJBZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Aug 2021 05:01:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229549AbhHRI4w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Aug 2021 04:56:52 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15929C061764
-        for <git@vger.kernel.org>; Wed, 18 Aug 2021 01:56:18 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id h11so3703147ljo.12
-        for <git@vger.kernel.org>; Wed, 18 Aug 2021 01:56:17 -0700 (PDT)
+        with ESMTP id S229574AbhHRJBX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Aug 2021 05:01:23 -0400
+Received: from mail-vs1-xe2b.google.com (mail-vs1-xe2b.google.com [IPv6:2607:f8b0:4864:20::e2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34947C061764
+        for <git@vger.kernel.org>; Wed, 18 Aug 2021 02:00:49 -0700 (PDT)
+Received: by mail-vs1-xe2b.google.com with SMTP id v26so1364352vsa.0
+        for <git@vger.kernel.org>; Wed, 18 Aug 2021 02:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=iD+k0Fi8Mbh1JFUSPQtUZrN+VK1xO4qT9r0ew8rrvxQ=;
-        b=WI43BvxugkaijvDSUgZydDOFqU02NXB4wdOAkwHcATzUWsFmbypoUCINYzL3Gw3XBQ
-         Jz76+FWGSXDxCc2Gx24oNnAEgerTfbSuUTAP6U5qCin4mj5nnNI2QpHPbwdVDs2rHBwl
-         vO0YFcyywbbVEO5iB8lDpSW0FZT8aHBmQqfpa8x8K2Eiy77+9dr2DoMYGb9qvhc2gVfO
-         1qIYtRcEo27OSIpm12Z3AHpld6mLpG+Hv9E+OgY/iMnbINbvWPWKvES3DJyu4FoE5fhA
-         HXRbS5tBeleqcSwiKK6khoPDy9ERmsU6Iz8PkI8ar1XdMXeNs4+kgUWS9Acu7ydGIaWp
-         oDmQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=yjcDv9zsENwodx+2hgFEXlKPLuUUNyEY43MgZ4W2kzs=;
+        b=kepHrdw2H2KC0UVRK74ly0NgysK0BsktjnlqvkZdBPCeSMV2MP96hzEEa4k+/E9+x0
+         hvPCjvKi7qYkjOiVWxt4s8DCWlHmeRQ3rOMCRjLOJONsXvbqnF5rSDXTOxkdC003kAtG
+         fDx19m6YZheIbSDAR44M7jIEk87wAfU6QceJ4D/tg2f3DS/w5ix7tisr5rTnILBG7qmJ
+         YhwV8fOoQMEAdrLsEZ+q7masEdTLpiL2WMN3aKORvK9aMhZD5oNjPiAy++TliC0o0R9y
+         K29NRxCK9gcGgpgShvQE3+QqkMsAun1QcKgPBtyouurCPG1Ig71BxAI7TipRQH0E+o4e
+         QktQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=iD+k0Fi8Mbh1JFUSPQtUZrN+VK1xO4qT9r0ew8rrvxQ=;
-        b=o9kO4nYWj86Zwf5EkosI3BARua8LK0O4b/p5hJLVQc+uh3pYpVHdCp6dUVDD7Iz9Om
-         OYxYjjVhAcfR0zUS9LiFepr2TBy9Dj3GlAMKhqrQ/DiPUdwpSEjZSzSSOUm2Ch/6OZ94
-         ey4XoQ6wnWyUHa4Kb/2iUn4RnnUEL11NToNUHUUOpkJLVasuN+x7vFDzCe9FN63XsBQp
-         RdkNdizXGYh2g2q/w+caLtjkhW6iHKbyVSoFsUknoW0c/yCS+EfcEMGc6FmVfBuYTm4V
-         j8TBJ6jhdkfFm0swnJ+cb32Jp/vgbSKdVSvM4ZBuLBZscTUxoMWy0K8RIDkXogEz+Ql4
-         blpg==
-X-Gm-Message-State: AOAM532tIaSEdpnO+bUz/veqiszdv5uqsS8JoTT8GrmGrmjdF+uP+uvK
-        dKH6uTxR7A3YVZVyB433tck=
-X-Google-Smtp-Source: ABdhPJz0OFxgbQHPVPTd1Ao9X3eQDES+I3lGQiBarhkaOkAgT8u9RTp4OLiTS3/XEjcEA0waH0L3oA==
-X-Received: by 2002:a2e:3c01:: with SMTP id j1mr6862582lja.230.1629276976502;
-        Wed, 18 Aug 2021 01:56:16 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id d21sm518470ljo.70.2021.08.18.01.56.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Aug 2021 01:56:15 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        huang guanlong <gl041188@gmail.com>, git@vger.kernel.org,
-        Hudson Ayers <hudsonayers@google.com>,
-        Taylor Yu <tlyu@mit.edu>, Joshua Nelson <jyn514@gmail.com>
-Subject: Re: [PATCH] Revert 'diff-merges: let "-m" imply "-p"'
-References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
-        <20210520214703.27323-1-sorganov@gmail.com>
-        <20210520214703.27323-11-sorganov@gmail.com>
-        <YQtYEftByY8cNMml@google.com> <YQyUM2uZdFBX8G0r@google.com>
-        <xmqqh7g2ij5q.fsf@gitster.g> <xmqqczqqihkk.fsf@gitster.g>
-        <YQ2UFmCxRKNMOtrD@google.com> <xmqqeeb3hlcq.fsf@gitster.g>
-        <87a6lgl9gq.fsf@osv.gnss.ru> <xmqqczqb7mds.fsf@gitster.g>
-Date:   Wed, 18 Aug 2021 11:56:14 +0300
-In-Reply-To: <xmqqczqb7mds.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        17 Aug 2021 15:10:55 -0700")
-Message-ID: <87fsv7f7wx.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=yjcDv9zsENwodx+2hgFEXlKPLuUUNyEY43MgZ4W2kzs=;
+        b=SvJTaKfAyO34S0Zw3t63Cg2Ud9yuZTyGIq/pMeR8KnxuWvtEZLPRvcej/3Umky3lJd
+         g/xbO7eu+pDOIAPq4lK5tAAMSTctIWAwWOXDWwxRRw3V5THc/4ba7T84KeUct9HQPcjl
+         peTqg0bRgfu4XNk26ZVgNdYYXusV3P3IHCkqRLUJOn9ZI47RwuXiqQn+JTpSRpOVdDC+
+         QHKmJE5LY3i3GD9fPFZalvimltIzfmVOn1qgVQeFOEyo5cSy5wgquAwafpXNz86JieAB
+         wVMWDIs7itx7SjfJaN8tA97EKPBPi5B1JdluUSSgQUylUJbdrIDEEEkSulG22MzRDt93
+         67Eg==
+X-Gm-Message-State: AOAM533BmHKf7NvYLC8nKb9DdwxSGLbTKInpBtzvE7nCm1TvM5hT5z4g
+        4rAG78OXtEw+cOoJMyZuiPqgDAvb6Fll3lV7MiON9w==
+X-Google-Smtp-Source: ABdhPJw/b/A6AZ+osEceXzmHj6sAfpQSHkUliM8h3hWHZBCdkkQB2BwvIptDdHT0dyVStJA9ze8wNbpa77YoNJt8Ync=
+X-Received: by 2002:a67:e989:: with SMTP id b9mr6582331vso.2.1629277248166;
+ Wed, 18 Aug 2021 02:00:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1068.git.git.1629203489546.gitgitgadget@gmail.com> <xmqq4kbn7l3l.fsf@gitster.g>
+In-Reply-To: <xmqq4kbn7l3l.fsf@gitster.g>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Wed, 18 Aug 2021 11:00:36 +0200
+Message-ID: <CAFQ2z_Ni1bvj0Skgp_3p9htQfjn_M=3uF06pyZm_hkXgT_L61g@mail.gmail.com>
+Subject: Re: [PATCH] fixup! propagate errno from failing read
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Sergey Organov <sorganov@gmail.com> writes:
+On Wed, Aug 18, 2021 at 12:38 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
->> So, do I get it right that there is actually no reason to use "log
->> --first-parent -m" anymore, since the time the much older commit made
->> --first-parent imply -m?
+> "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> It was necessary for scripts to say
+> > From: Han-Wen Nienhuys <hanwen@google.com>
+> >
+> > This fixes a crash triggered by the BUG() statement.
+> >
+> > This can occur with symlinked .git/refs. To check availability,
+> > refs_verify_refname_available will run refs_read_raw_ref() on each pref=
+ix,
+> > leading to a read() from .git/refs (which is a directory).
+> >
+> > When handling the symlink case, it is probably more robust to re-issue =
+the
+> > lstat() as a normal stat(), in which case, we would fall back to the di=
+rectory
+> > case.
+> >
+> > For now, propagating errno from strbuf_read() is simpler and avoids the=
+ crash.
+> >
+> > Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+> > ---
+> >     fixup! propagate errno from failing read
 >
->     git log --first-parent -m "$@"
+> Hmph, I do not see a commit with "propagate errno from failing read"
+> in its title anywhere in 'seen'.
+
+> I think the convention to assign errno to myerr in this codepath
+> originates in a0731250 (refs: explicitly return failure_errno from
+> parse_loose_ref_contents, 2021-07-20), and it forgot the part of the
+> code being fixed with this patch.  The commit being fixed is already
+> is in 'next' as part of the hn/refs-errno-cleanup topic.
 >
-> if they wanted to optionally show a first-parent diff for a merge
-> when the user of the script passes "-p" in "$@" (and not to show
-> patch if the user does not pass "-p").  
+> Usually, a flaw in a topic that is already in 'next' is corrected by
+> a follow-up patch, but then they won't say "fixup!" (none of our
+> bugfix patches do).  But a post-release is a special time, as we
+> will soon be rewinding 'next', restarting it from the latest release
+> and we have a choice to tentatively eject a topic, fix it up or
+> even replace it, before merging the corrected topic to 'next'.
 >
-> That changed with 9ab89a24 (log: enable "-m" automatically with
-> "--first-parent", 2020-07-29).
+> Do you mean that you want me to squash this change into that commit
+> before the topic graduates to 'master' during the new development
+> cycle?  If so please be a bit more explicit next time.  Using the
+> title of the commit after "fixup!" would be a good starting point.
 
-Yes, and since then it's no more needed to say "--first-parent -m" in
-this case, as "--fist-parent" will do.
+The problem fixed here affects anyone who uses git-repo (ie. does
+Android development) and runs "git-branch -m", which is a large group
+of people, so I think it should not be allowed to get into a release.
 
->
-> After that commit, it no longer was needed, but it still was correct
-> to expect that no patch will be shown with "--first-parent -m",
-> unless you give "-p" at the same time.  The original change that the
-> patch under discussion reverted broke that expectation.
+So it could be squashed into commit a0731250, or put on top of next as
+a separate commit (probably with 'fixup!' removed).
 
->
-> We need to note that the "-m" implied by "--first-parent" is "if we
-> were to show some comparison, do so also for merge commits", not the
-> "if the user says '-m', it must mean that the user wants to see
-> comparison, period, so make it imply '-p'".  The latter is what was
-> reverted.
+Note that, even though commit a0731250 originates from a branch called
+"hn/XXX" and has me as Author, the BUG() call causing the crash was
+actually introduced by AEvar when he reworked the series.
 
-Yes, there is minor backward incompatibility indeed, and that was
-expected. This could be seen from the patch in the same series that
-fixes "git stash" by removing unneeded -m.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-The fix for the scripts is as simple as removing -m from "--first-parent
--m". It's a one-time change.
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
->
->> If so, I'd object against this particular patch as the pros of patch
->> being reverted outweighs its cons, and the original patch never meant to
->> be entirely backward compatible in the first place, when it was
->> accepted.
->
-> I agree that we both (and if there were other reviewers, they too)
-> mistakenly thought that the change in behaviour was innocuous enough
-> when we queued the patch, but our mistakes were caught while the
-> topic was still cooking in 'next', and I have Jonathan to thank for
-> being extra careful.
+Registergericht und -nummer: Hamburg, HRB 86891
 
-So, what would be the procedure to get this change back, as this minor
-backward incompatibility shouldn't be the show-stopper for the change
-that otherwise is an improvement?
+Sitz der Gesellschaft: Hamburg
 
-Thanks,
--- Sergey Organov
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
