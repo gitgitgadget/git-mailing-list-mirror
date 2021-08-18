@@ -2,260 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 115F0C4338F
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 10:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8599C432BE
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 10:26:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DB0F461053
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 10:14:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A5A4660BD3
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 10:26:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233518AbhHRKOv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Aug 2021 06:14:51 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:44001 "EHLO smtp.hosts.co.uk"
+        id S233424AbhHRK0d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Aug 2021 06:26:33 -0400
+Received: from mout.gmx.net ([212.227.17.21]:56633 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232421AbhHRKOt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Aug 2021 06:14:49 -0400
-Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1mGIaG-0009Kv-8g; Wed, 18 Aug 2021 11:14:12 +0100
-Subject: Re: [PATCH v3 08/25] Provide zlib's uncompress2 from
- compat/zlib-compat.c
-To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-References: <pull.1054.v2.git.git.1629145036.gitgitgadget@gmail.com>
- <pull.1054.v3.git.git.1629207607.gitgitgadget@gmail.com>
- <d92338467d66fcfedd57f209c97a798e9920d1e5.1629207607.git.gitgitgadget@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <e1959ed9-beed-f110-c9a8-da8ed352dcda@iee.email>
-Date:   Wed, 18 Aug 2021 11:14:08 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        id S230435AbhHRK0a (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Aug 2021 06:26:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1629282338;
+        bh=0EQ4IU0yIF2FeTI/oox5uJFnTl5bQ32xVkV6vVK5hNI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=bZpQKbVwJhwgkTkboenoGM5QhLLLTBJtnD20fOavJNJ1DX142uUD3L1ptOG1n+d5r
+         aMAvfGOxiV0Iy3VBTiTS5iCyYApeJgaqoA24z2aBG/MkxcJqxJHIH5mq6J3/fddX8R
+         mlf1xh+aMB0Qat4jUikO8NfmadM7auOdEETxs7X0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.86.215] ([213.196.213.229]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZktj-1mbwmL2yZT-00Wjzp; Wed, 18
+ Aug 2021 12:25:38 +0200
+Date:   Wed, 18 Aug 2021 12:25:35 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        ak@linux.intel.com, Jeff Hostetler <git@jeffhostetler.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Subject: Re: [PATCH] make: add install-strip target
+In-Reply-To: <CAPig+cT5nPJ7NKFKXRQJwTzL13oEwzMBBpAa+P+XoZxO9SEKKQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2108181222120.55@tvgsbejvaqbjf.bet>
+References: <20210817110728.55842-1-bagasdotme@gmail.com> <nycvar.QRO.7.76.6.2108172327290.55@tvgsbejvaqbjf.bet> <CAPig+cT5nPJ7NKFKXRQJwTzL13oEwzMBBpAa+P+XoZxO9SEKKQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <d92338467d66fcfedd57f209c97a798e9920d1e5.1629207607.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:wZ11e8DIY6Ia/PQOAdHhYjFyBwnAM7tmnaKl0Vr3y4GjehMXwK0
+ NU15DuFWudAMeCDNAnhOjr+5a2jTd8qBDRA79YdlatFnFC8em71qLrnas57AhO8fKLmZ7a/
+ B1v0QN8Hs4mw/P2TyxunlQ/JX1Ws1gGkG+a7aSffjoJUDce0kqvPBqWNlExrOgB8rCIh5kI
+ 0AuX4Brl+vy/8vCmG8BmA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:NKdahLtrNts=:CP9oAa5Eozabtv7nonYFJ8
+ PRWHscQ2LwEqSgj6axhmOLhLL97T+aehS7qB3N4ShavvzAjB0qrHQMAtu6ufPkfJgjPHPTv5b
+ wKqRTy+jOy7vqN9d5HOsECTBE9ziIotOYfzZamrQR+K+o9iHmxbZ8DsbUaVPeZyjtEf+hRuAy
+ rZYK/7GgMCeLV0urJN8gaeQzUU8yyH6/hx3nz2ksXTxzIkucgEGCcewV1OGnlNEBhYmyNEQR7
+ wczXaLDUxyuIxp0+etCfSWCt5o2CgxbfY3AAJVGrIfhnVWtQao24uB9aYGP6GizEriDkq27TF
+ +oLY/iuets2ws8PBIXHU0nUPqn1aIVk6tJzCzOvvOfHkMf8rMvWZtDKHEC4WyUBovjiLDflUn
+ B2MWCrWOerPhHv8cI22dKUh2Fo3+V9zYUrme9Hi1FLuDOU3hSu0VrfS/nfFH4KnCPeXvrdgWT
+ 1Jx6QQBmUpMZH0kNj0qmgK72a1tXpHw/Mu1apgfc7GMwFS7HiwBSADNUJJhCa4CJSGRKc04cx
+ 9rNMKkU4peSM26KgMtC64P9lMQobYJJHbIpCgQq1VWmv/0sUnSiSSQ0wJcwFcJfvkBVsSaSv+
+ bibVOc554Y7wS6KkeX+tjRU4QZckmeXbDU75/QuUpVwpvGdIc9VmlVJXxBDqVlKTVbGOZyZL2
+ Q15L3jvzkxLNjkRQWcTLISzWTGvlxAa01EIjMjeWzAaq8nUmNPNDMI4GPDrC+9lN5NRTuyqfx
+ E0YWV+JFuUwhfsbzzF6xUM4cLiP8s8t0PAPEj15FyJW1qCvaJ51TrrBlkGx3APPivUx8qsril
+ yshUEa63gB/R216Q6LEQxWi/xIgNqtB4lgg/2UCPaTo7sJfY2+sEYJAWdfzcmJMriSiYcsJ9S
+ 8ItPW5rK65dcmh/CEYzxbcmcENdj4qCW9mXxdKkOGZbynpYdN/kcPCDIk1MoIE6B4wW1v4MtN
+ nAeVITjn+HjlbL7gzB2rQzz6TJkmBnIocSVflOGBW4V/nvuNiexDV5gWSuZyCugfA3AP78ijk
+ Z83dS4SJjmR/Q+g0D8b/Nv/Oxu1MZe/tyjx+sFWblOJm292YqSX/CJd4WIhHioZh0fofIlmX8
+ T48gdH9iWWV+E8/VK2OqWdq+wmw38hnz//OG0ojOGWd7P1jRwHO4Ac6Qg==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17/08/2021 14:39, Han-Wen Nienhuys via GitGitGadget wrote:
-> From: Han-Wen Nienhuys <hanwen@google.com>
+Hi Eric,
+
+On Tue, 17 Aug 2021, Eric Sunshine wrote:
+
+> On Tue, Aug 17, 2021 at 5:29 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > On Tue, 17 Aug 2021, Bagas Sanjaya wrote:
+> > > diff --git a/Makefile b/Makefile
+> > > @@ -3093,6 +3093,9 @@ endif
+> > > +install-strip: all strip
+> >
+> > Would those `all` and `strip` targets interfere with one another if `m=
+ake
+> > -j2` was called? If not, wouldn't it be sufficient to let `install-str=
+ip`
+> > depend on `strip` alone?
 >
-> This will be needed for reading reflog blocks in reftable.
+> A more pertinent question, perhaps, is why would we need
+> `install-strip` at all? What benefit does it provide over simply
+> typing `make strip install`?
 
-How large might the reftable become? In particular will it exceed the
-32bit Long limit on Windows?
+That would require an order-only prerequisite (see
+https://www.gnu.org/software/make/manual/html_node/Prerequisite-Types.html=
+)
+for `make -j2 strip install` to work correctly, i.e. something like this:
 
-I ask as the Zlib library is one of (among many) the constraints on
-beating the 4GB [backward compatibility] size limit from 32 bit Windows.
+=2D- snip --
+diff --git a/Makefile b/Makefile
+index 2d5c822f7a8..9987f3b2c13 100644
+=2D-- a/Makefile
++++ b/Makefile
+@@ -2990,7 +2990,7 @@ profile-install: profile
+ profile-fast-install: profile-fast
+ 	$(MAKE) install
 
->
-> Helped-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-> ---
->  Makefile                  |  7 +++
->  ci/lib.sh                 |  1 +
->  compat/.gitattributes     |  1 +
->  compat/zlib-uncompress2.c | 92 +++++++++++++++++++++++++++++++++++++++
->  config.mak.uname          |  1 +
->  configure.ac              | 13 ++++++
->  6 files changed, 115 insertions(+)
->  create mode 100644 compat/.gitattributes
->  create mode 100644 compat/zlib-uncompress2.c
->
-> diff --git a/Makefile b/Makefile
-> index e98d8ed17cf..16c883978d4 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -256,6 +256,8 @@ all::
->  #
->  # Define NO_DEFLATE_BOUND if your zlib does not have deflateBound.
->  #
-> +# Define NO_UNCOMPRESS2 if your zlib does not have uncompress2.
-> +#
->  # Define NO_NORETURN if using buggy versions of gcc 4.6+ and profile feedback,
->  # as the compiler can crash (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=49299)
->  #
-> @@ -1738,6 +1740,11 @@ ifdef NO_DEFLATE_BOUND
->  	BASIC_CFLAGS += -DNO_DEFLATE_BOUND
->  endif
->  
-> +ifdef NO_UNCOMPRESS2
-> +	BASIC_CFLAGS += -DNO_UNCOMPRESS2
-> +	REFTABLE_OBJS += compat/zlib-uncompress2.o
-> +endif
-> +
->  ifdef NO_POSIX_GOODIES
->  	BASIC_CFLAGS += -DNO_POSIX_GOODIES
->  endif
-> diff --git a/ci/lib.sh b/ci/lib.sh
-> index 476c3f369f5..5711c63979d 100755
-> --- a/ci/lib.sh
-> +++ b/ci/lib.sh
-> @@ -224,6 +224,7 @@ linux-gcc-default)
->  	;;
->  Linux32)
->  	CC=gcc
-> +	MAKEFLAGS="$MAKEFLAGS NO_UNCOMPRESS2=1"
->  	;;
->  linux-musl)
->  	CC=gcc
-> diff --git a/compat/.gitattributes b/compat/.gitattributes
-> new file mode 100644
-> index 00000000000..40dbfb170da
-> --- /dev/null
-> +++ b/compat/.gitattributes
-> @@ -0,0 +1 @@
-> +/zlib-uncompress2.c	whitespace=-indent-with-non-tab,-trailing-space
-> diff --git a/compat/zlib-uncompress2.c b/compat/zlib-uncompress2.c
-> new file mode 100644
-> index 00000000000..6893bb469ce
-> --- /dev/null
-> +++ b/compat/zlib-uncompress2.c
-> @@ -0,0 +1,92 @@
-> +/* taken from zlib's uncompr.c
-> +
-> +   commit cacf7f1d4e3d44d871b605da3b647f07d718623f
-> +   Author: Mark Adler <madler@alumni.caltech.edu>
-> +   Date:   Sun Jan 15 09:18:46 2017 -0800
-> +
-> +       zlib 1.2.11
-> +
-> +*/
-> +
-> +/*
-> + * Copyright (C) 1995-2003, 2010, 2014, 2016 Jean-loup Gailly, Mark Adler
-> + * For conditions of distribution and use, see copyright notice in zlib.h
-> + */
-> +
-> +#include <zlib.h>
-> +
-> +/* clang-format off */
-> +
-> +/* ===========================================================================
-> +     Decompresses the source buffer into the destination buffer.  *sourceLen is
-> +   the byte length of the source buffer. Upon entry, *destLen is the total size
-> +   of the destination buffer, which must be large enough to hold the entire
-> +   uncompressed data. (The size of the uncompressed data must have been saved
-> +   previously by the compressor and transmitted to the decompressor by some
-> +   mechanism outside the scope of this compression library.) Upon exit,
-> +   *destLen is the size of the decompressed data and *sourceLen is the number
-> +   of source bytes consumed. Upon return, source + *sourceLen points to the
-> +   first unused input byte.
-> +
-> +     uncompress returns Z_OK if success, Z_MEM_ERROR if there was not enough
-> +   memory, Z_BUF_ERROR if there was not enough room in the output buffer, or
-> +   Z_DATA_ERROR if the input data was corrupted, including if the input data is
-> +   an incomplete zlib stream.
-> +*/
-> +int ZEXPORT uncompress2 (
-> +    Bytef *dest,
-> +    uLongf *destLen,
-> +    const Bytef *source,
-> +    uLong *sourceLen) {
+-install: all
++install: all | strip
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+=2D- snap --
 
-Length is limited to 4GB on Windows (the pointer itself will be
-implicitly size_t, but ...)
+I am not quite certain that this is compatible with other `make`
+implementations we still might support (if there are any, I remember that
+we often have to rely on `gmake` because the native `make` does not
+understand our `Makefile`?), so that might need to be conditional on GNU
+Make.
 
-> +    z_stream stream;
-> +    int err;
-> +    const uInt max = (uInt)-1;
-> +    uLong len, left;
-> +    Byte buf[1];    /* for detection of incomplete stream when *destLen == 0 */
-> +
-> +    len = *sourceLen;
-> +    if (*destLen) {
-> +        left = *destLen;
-> +        *destLen = 0;
-> +    }
-> +    else {
-> +        left = 1;
-> +        dest = buf;
-> +    }
-> +
-> +    stream.next_in = (z_const Bytef *)source;
-> +    stream.avail_in = 0;
-> +    stream.zalloc = (alloc_func)0;
-> +    stream.zfree = (free_func)0;
-> +    stream.opaque = (voidpf)0;
-> +
-> +    err = inflateInit(&stream);
-> +    if (err != Z_OK) return err;
-> +
-> +    stream.next_out = dest;
-> +    stream.avail_out = 0;
-> +
-> +    do {
-> +        if (stream.avail_out == 0) {
-> +            stream.avail_out = left > (uLong)max ? max : (uInt)left;
-> +            left -= stream.avail_out;
-> +        }
-> +        if (stream.avail_in == 0) {
-> +            stream.avail_in = len > (uLong)max ? max : (uInt)len;
-> +            len -= stream.avail_in;
-> +        }
-> +        err = inflate(&stream, Z_NO_FLUSH);
-> +    } while (err == Z_OK);
-> +
-> +    *sourceLen -= len + stream.avail_in;
-> +    if (dest != buf)
-> +        *destLen = stream.total_out;
-> +    else if (stream.total_out && err == Z_BUF_ERROR)
-> +        left = 1;
-> +
-> +    inflateEnd(&stream);
-> +    return err == Z_STREAM_END ? Z_OK :
-> +           err == Z_NEED_DICT ? Z_DATA_ERROR  :
-> +           err == Z_BUF_ERROR && left + stream.avail_out ? Z_DATA_ERROR :
-> +           err;
-> +}
-> diff --git a/config.mak.uname b/config.mak.uname
-> index 69413fb3dc0..61e11550b1f 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -256,6 +256,7 @@ ifeq ($(uname_S),FreeBSD)
->  	FILENO_IS_A_MACRO = UnfortunatelyYes
->  endif
->  ifeq ($(uname_S),OpenBSD)
-> +	NO_UNCOMPRESS2 = YesPlease
->  	NO_STRCASESTR = YesPlease
->  	NO_MEMMEM = YesPlease
->  	USE_ST_TIMESPEC = YesPlease
-> diff --git a/configure.ac b/configure.ac
-> index 031e8d3fee8..c3a913103d0 100644
-> --- a/configure.ac
-> +++ b/configure.ac
-> @@ -672,9 +672,22 @@ AC_LINK_IFELSE([ZLIBTEST_SRC],
->  	NO_DEFLATE_BOUND=yes])
->  LIBS="$old_LIBS"
->  
-> +AC_DEFUN([ZLIBTEST_UNCOMPRESS2_SRC], [
-> +AC_LANG_PROGRAM([#include <zlib.h>],
-> + [uncompress2(NULL,NULL,NULL,NULL);])])
-> +AC_MSG_CHECKING([for uncompress2 in -lz])
-> +old_LIBS="$LIBS"
-> +LIBS="$LIBS -lz"
-> +AC_LINK_IFELSE([ZLIBTEST_UNCOMPRESS2_SRC],
-> +	[AC_MSG_RESULT([yes])],
-> +	[AC_MSG_RESULT([no])
-> +	NO_UNCOMPRESS2=yes])
-> +LIBS="$old_LIBS"
-> +
->  GIT_UNSTASH_FLAGS($ZLIB_PATH)
->  
->  GIT_CONF_SUBST([NO_DEFLATE_BOUND])
-> +GIT_CONF_SUBST([NO_UNCOMPRESS2])
->  
->  #
->  # Define NEEDS_SOCKET if linking with libc is not enough (SunOS,
---
-Philip
+Ciao,
+Dscho
