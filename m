@@ -2,107 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FF2EC4338F
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 18:30:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C23D7C4338F
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 18:42:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E3B6610A6
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 18:30:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 98C8F610FD
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 18:42:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230021AbhHRSbU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Aug 2021 14:31:20 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60387 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbhHRSbT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Aug 2021 14:31:19 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 313C014F99D;
-        Wed, 18 Aug 2021 14:30:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=281J+tWt3lyJQOQHAcJH8B7Y84uq8jA58nCpQl
-        wBnbE=; b=d3ZGLpeJ7sGszt64gT7x+IMoZgXlDxlLkVK1uKKExDuvVOM1TTp5Uh
-        8cHcz3hNczD/7QgVK8D9J0Iey7j1zt2UJCDG5hJMKoLtHJcA0DOg5Q2sLSdxWpad
-        Mg0UuRWkkKi5DLfIzbUvTcRh3LPnXFmPOeSoobqedEsErJRV8tQ64=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2993114F99C;
-        Wed, 18 Aug 2021 14:30:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 663DE14F99B;
-        Wed, 18 Aug 2021 14:30:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH] fixup! propagate errno from failing read
-References: <pull.1068.git.git.1629203489546.gitgitgadget@gmail.com>
-        <xmqq4kbn7l3l.fsf@gitster.g>
-        <CAFQ2z_Ni1bvj0Skgp_3p9htQfjn_M=3uF06pyZm_hkXgT_L61g@mail.gmail.com>
-Date:   Wed, 18 Aug 2021 11:30:39 -0700
-In-Reply-To: <CAFQ2z_Ni1bvj0Skgp_3p9htQfjn_M=3uF06pyZm_hkXgT_L61g@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Wed, 18 Aug 2021 11:00:36 +0200")
-Message-ID: <xmqqo89u61ww.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230316AbhHRSms (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Aug 2021 14:42:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52978 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229468AbhHRSmr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Aug 2021 14:42:47 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65229C061764
+        for <git@vger.kernel.org>; Wed, 18 Aug 2021 11:42:12 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id w6so4676411oiv.11
+        for <git@vger.kernel.org>; Wed, 18 Aug 2021 11:42:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=yFIW5pAxERiVbRut27SstwnkJJ+GpiDPShQjVOvtezE=;
+        b=K59XSBg6Rqd5KOtOTf9ohgwL0fX+9hAppON1MzxvpGKVWD+EjZ7b9gxsLq6dr1P2H0
+         xr3FA9WX+bm1m0Wv+rB/Yc9gUDoANnEjC+hlyBxEIpSxTAVcbXVyHKHVLIoLmfpp00A+
+         ovPGYrG0hMUPOsnd5yas75ayu0ZRuD5M2U7fpELB4unwqrKGistKmGI19KcluAM89Ktn
+         Ioa474dIaPw5J2FcWgSoMwqkY3stG1LwzY34OEuYMqjUhJS2GDX4XkAuUp/sqX/tJCkb
+         tfM55pVHCHhX249Iuc39n+5C0/oMLhqYFSKEInldzBOMzlmpRhEcC61uoISZXcBf7Dai
+         3Mrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=yFIW5pAxERiVbRut27SstwnkJJ+GpiDPShQjVOvtezE=;
+        b=cE1kfrgi0/+4HQaXx+pyRBrjHKoQac2ZM5WvjXCnWS/AmfmoZrhCQaMsRRyIK/Z2Ha
+         MNUgtSkrH8lFqim/nGcOGVotxq/7VNC6XRqUPUrXixvBQ2jPGU0FOVlxCOiqxeiVN0q4
+         9Fm30d1Ju22UXt4+u4HAyQc30j/AoW77AbJmnUj0GJ8nfiCqEEijWPZe6YGcCiN3htb6
+         Gzph5+ZeJyX96U9DrCvMdAmvci/g5Hw++T4XpNmBjgzl7/9INmdxXr7pPGReGy7z5U/y
+         +Pcg/oSc8W7QuG0Vkr2RAanLba/rY2wqE4H1mtcKmFc1ABIUHVbrpPAFP4lyYGtmg45C
+         Pq/A==
+X-Gm-Message-State: AOAM532Gs/d2tt2n56dT8s/t0+dQC7QCHnI2I5kFECHkpU5vwaVSlS9z
+        HmtMumPSCOUzMNFJ5IptubI=
+X-Google-Smtp-Source: ABdhPJwZNgNYLHt1Ulm/IdURuNrGp3cuxDQkxqbJjzxTOi6cy6Do45mc8ox/nabwjvWPZjRXBkGdMw==
+X-Received: by 2002:a05:6808:6:: with SMTP id u6mr8480711oic.150.1629312131758;
+        Wed, 18 Aug 2021 11:42:11 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:581d:96e0:cdbb:9c3d? ([2600:1700:e72:80a0:581d:96e0:cdbb:9c3d])
+        by smtp.gmail.com with ESMTPSA id c7sm163161otl.30.2021.08.18.11.42.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Aug 2021 11:42:11 -0700 (PDT)
+Subject: Re: [PATCH 1/6] t1092: use ORT merge strategy
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1019.git.1629220124.gitgitgadget@gmail.com>
+ <7cad9eee90bcee3cb98be5c7a2edaca5e855c157.1629220124.git.gitgitgadget@gmail.com>
+ <xmqqzgte62ud.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <b3c7e700-f36c-d58f-0c49-450444df8c63@gmail.com>
+Date:   Wed, 18 Aug 2021 14:42:09 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6474E2A4-0052-11EC-89C5-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+In-Reply-To: <xmqqzgte62ud.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
-
->> I think the convention to assign errno to myerr in this codepath
->> originates in a0731250 (refs: explicitly return failure_errno from
->> parse_loose_ref_contents, 2021-07-20), and it forgot the part of the
->> code being fixed with this patch.  The commit being fixed is already
->> is in 'next' as part of the hn/refs-errno-cleanup topic.
+On 8/18/2021 2:10 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Derrick Stolee <dstolee@microsoft.com>
 >>
->> Usually, a flaw in a topic that is already in 'next' is corrected by
->> a follow-up patch, but then they won't say "fixup!" (none of our
->> bugfix patches do).  But a post-release is a special time, as we
->> will soon be rewinding 'next', restarting it from the latest release
->> and we have a choice to tentatively eject a topic, fix it up or
->> even replace it, before merging the corrected topic to 'next'.
->>
->> Do you mean that you want me to squash this change into that commit
->> before the topic graduates to 'master' during the new development
->> cycle?  If so please be a bit more explicit next time.  Using the
->> title of the commit after "fixup!" would be a good starting point.
->
-> The problem fixed here affects anyone who uses git-repo (ie. does
-> Android development) and runs "git-branch -m", which is a large group
-> of people, so I think it should not be allowed to get into a release.
+>> The sparse index will be compatible with the ORT merge strategy, so
+>> let's use it explicitly in our tests.
+> 
+> Unless you mean that the sparse index will only be compatible with
+> ort, but will never be with recursive, I do not quite see why this
+> is taking us into a good direction.  Is this because we want to gain
+> test coverage for ort early, before we flip the default to ort [*1*]?
 
-OK.  The problem already is in 'next' and we want to make sure it
-won't graduate to 'master' for the next release as-is.  I agree with
-that ;-)
+The sparse index will _work_ with the recursive merge strategy, it will
+just continue to be slow, and likely slower than if we had a full index.
+This is because the recursive merge algorithm will expand a sparse index
+into a full one before doing any of its logic (hence my confidence that
+it will work).
 
-> So it could be squashed into commit a0731250, or put on top of next as
-> a separate commit (probably with 'fixup!' removed).
+The main point why ORT is the focus is that the ORT strategy is required
+so the sparse index can get the intended performance gains (i.e. it does
+not expand in most cases). The ORT algorithm can resolve conflicts
+outside the sparse-checkout cone without needing the index as a data
+structure and instead the resulting tree is recorded in the correct
+sparse directory entry.
 
-I'd try the former first and will fall back on the latter, then.
+> [Footnote]
+> 
+> *1* If the answer is "no, it is because sparse index will not work
+>     with recursive", the please disregard the rest, but just in
+>     case it is not...
+> 
+>     It seems to me that it would let us live in the future in a more
+>     comprehensive way if we tweaked merge_recursive() and/or
+>     merge_recursive_generic() so that all internal callers, not just
+>     builtin/merge.c, would redirect to the ort machinery when say
+>     GIT_TEST_REPLACE_RECURSIVE_WITH_ORT environment exists, and
+>     doing it that way we do not need to sprinkle "-srecursive" and
+>     "-sort" everywhere in our tests at randomly chosen places to
+>     give test coverage to both strategies.
 
-> Note that, even though commit a0731250 originates from a branch called
-> "hn/XXX" and has me as Author, the BUG() call causing the crash was
-> actually introduced by AEvar when he reworked the series.
+I could also change this patch to stop using ORT _all the time_ and
+instead let the GIT_TEST_MERGE_ALGORITHM decide which is tested.
 
-Yup, I see his Sob after yours and it is quite understandable if a
-new bug was introduced by his changes. It also would be
-understandable if his change was only to add a call to BUG() in
-order to assert that the original patch used myerr consistently, and
-it uncovered a bug in the original version he took from you.
+That is, except for the final tests that check that the index is not
+expanded. Those tests must specify the ORT strategy explicitly.
 
-I do not care too much about how exactly the bug was introduced and
-uncovered---it matters more that the end result has one fewer bug
-thanks to the team effort.
+I think I started playing with the GIT_TEST_MERGE_ALGORITHM because
+it appears to override the command-line option, but I will need to
+double-check that.
+
+Thanks,
+-Stolee
