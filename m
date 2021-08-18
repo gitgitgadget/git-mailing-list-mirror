@@ -2,156 +2,243 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87A4EC4338F
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 23:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E900CC4338F
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 04:38:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6722A60F5E
-	for <git@archiver.kernel.org>; Tue, 17 Aug 2021 23:02:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C446E61053
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 04:38:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234804AbhHQXCy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Aug 2021 19:02:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33480 "EHLO
+        id S237522AbhHREjb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Aug 2021 00:39:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229466AbhHQXCx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Aug 2021 19:02:53 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33BD1C061764
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 16:02:20 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id om1-20020a17090b3a8100b0017941c44ce4so7629641pjb.3
-        for <git@vger.kernel.org>; Tue, 17 Aug 2021 16:02:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=NFDYYZfc1Jb+2KBJrg7HxDfkt/S8UXBuEm3iZfudpW8=;
-        b=Iq1ZrbGVyg7KC0YXzf3HTMQ++P5j0dbzT8HhGxR17s5JF11THnDuESwUIvhduQEKch
-         8Y8hOt9dbFbkC28vI0ctsKkcj4Ir2+yfEKxRXdS/G5MUFBibcy9x60inHzWpKTYUek7L
-         2M2CaqL367sdI/QtsTrs05m207yi3bK2C79TMCSyt6HtJtEHwUNwaz6UNXDyKiIhk7Ez
-         b53//TGBcixxetqhkEBwP2XJgxBegtmX58C1IL5vSPvgc2uSgMz6/LVIIOQsor3Pwgqs
-         g4/FeWQjXelQLcwCKjhHBvIJO4W3dKZ9uVxD1ZITnOb1thfZD0z1eaBYhZUa7uNfo5dn
-         qZIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=NFDYYZfc1Jb+2KBJrg7HxDfkt/S8UXBuEm3iZfudpW8=;
-        b=Dts+w4xuyWOeN7GQ+F158oE17C1RSe0JPWRaXELneeqT9x1E4IsRt9FrOkBYvvQnci
-         k1Y198UDVw26f3bawa8SgJLTrA2M1YT3zBMEH13IjMUXTkp9qnOt6JF6CSGDqnr2oAU3
-         02L2jn4HxoYwCqaL43Nmh4Ogj6d/ScwwVYJG+d/zz1cG7kEtg+xKkJcJEtH0AEUSZ1C7
-         hPD2+KvuoYBUk9F+Ow3qu6enqJPqvL/7pN6DGgHScaK1avKh+Yk6fLhums+yOd6IkCvO
-         P/M3aHz/AbuGu1zZuFQgsIuZ0/rlSJQSAJP/dxoSGvnsziW0XJmbXr3pqPaPFbYE48o0
-         dr9g==
-X-Gm-Message-State: AOAM533duDn+xqGiWW0HvOPpPA6tRIyjRS3ZsaJPgU/B2hH4yQmmZIAq
-        cDQfprv+VZ8mq9b7YAad6Yj5RA==
-X-Google-Smtp-Source: ABdhPJwi1RrlOAQQAhOqvycVVC7bdIBqk8tr6BMs5LkHYUpvludCGCM/nuV77XlLVp+GuluKMlgcdw==
-X-Received: by 2002:a17:90a:e641:: with SMTP id ep1mr5870682pjb.209.1629241339577;
-        Tue, 17 Aug 2021 16:02:19 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:69dd:f5ad:cd83:910c])
-        by smtp.gmail.com with ESMTPSA id ca12sm2999021pjb.45.2021.08.17.16.02.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Aug 2021 16:02:18 -0700 (PDT)
-Date:   Tue, 17 Aug 2021 16:02:10 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Mahi Kolla via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Mahi Kolla <mahikolla@google.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Mahi Kolla <mkolla2@illinois.edu>
-Subject: Re: [PATCH v6] clone: set submodule.recurse=true if
- submodule.stickyRecursiveClone enabled
-Message-ID: <YRw/8tThN7djNE+E@google.com>
-References: <pull.1006.v5.git.1628736366133.gitgitgadget@gmail.com>
- <pull.1006.v6.git.1628903396783.gitgitgadget@gmail.com>
- <xmqqy293ucju.fsf@gitster.g>
+        with ESMTP id S237210AbhHREja (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Aug 2021 00:39:30 -0400
+Received: from tilde.club (unknown [IPv6:2607:5300:61:c67::196])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D800C061764
+        for <git@vger.kernel.org>; Tue, 17 Aug 2021 21:38:56 -0700 (PDT)
+Received: from tilde.club (exit-1.zerolo.gs [217.182.76.127])
+        by tilde.club (Postfix) with ESMTPSA id 12E8622047772;
+        Wed, 18 Aug 2021 04:38:51 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 tilde.club 12E8622047772
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tilde.club; s=mail;
+        t=1629261534; bh=9Ub7KutXcIJfNiy+USu8DEDmQ9QP9VDlrGu6pgp+D2Q=;
+        h=From:To:Cc:Subject:Date:From;
+        b=bFa4ey3PLlnGVCDwuySzWZLqNX0CO2E2IoupatY5pjCPupO33+6LU3DS/sqcUJO0M
+         9vnZShFfpwUKwXMEKXcTT+thwClmkK9xYsNqZvmmpkNOhibkbh6qCRLtE929kg0BYZ
+         b/6Q5rSz2Tn61cERDkKlMY1bAmZwNz9lTai6m+Qo=
+From:   Gwyneth Morgan <gwymor@tilde.club>
+To:     git@vger.kernel.org
+Cc:     Gwyneth Morgan <gwymor@tilde.club>,
+        Elijah Newren <newren@gmail.com>
+Subject: [filter-repo PATCH] filter-repo: add new --replace-message option
+Date:   Wed, 18 Aug 2021 04:37:49 +0000
+Message-Id: <20210818043749.85274-1-gwymor@tilde.club>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqy293ucju.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 14, 2021 at 11:05:41AM -0700, Junio C Hamano wrote:
-> 
-> "Mahi Kolla via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-> > diff --git a/builtin/clone.c b/builtin/clone.c
-> > index 66fe66679c8..a08d9012243 100644
-> > --- a/builtin/clone.c
-> > +++ b/builtin/clone.c
-> > @@ -986,6 +986,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
-> >  	struct remote *remote;
-> >  	int err = 0, complete_refs_before_fetch = 1;
-> >  	int submodule_progress;
-> > +	int sticky_recursive_clone;
-> 
-> This variable does not have to be in such a wider scope, I think.
-> 
-> 
-> >  	struct transport_ls_refs_options transport_ls_refs_options =
-> >  		TRANSPORT_LS_REFS_OPTIONS_INIT;
-> > @@ -1130,6 +1131,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
-> >  					   strbuf_detach(&sb, NULL));
-> >  		}
-> 
-> Just in this scope, where "struct string_list_item *item" and
-> "struct strbuf sb" are declared, is where an extra int variable,
-> which receives the configuration value, needs to exist.
-> 
-> Also, for a variable that is used only to receive value from
-> git_config_get_bool(), immediately to be used and then never used
-> again, we do not need such a long and descriptive name.
-> 
-> > +		if (!git_config_get_bool("submodule.stickyRecursiveClone", &sticky_recursive_clone)
-> > +		    && sticky_recursive_clone) {
-> > +		    string_list_append(&option_config, "submodule.recurse=true");
-> > +		}
-> 
-> We do not need {} around a single statement block.
-> 
-> Taken together, perhaps like the attached.
-> 
-> I'll queue the patch posted as-is for now.
-> 
-> Thanks.
-> 
-> diff --git c/builtin/clone.c w/builtin/clone.c
-> index 66fe66679c..c4e02d2f78 100644
-> --- c/builtin/clone.c
-> +++ w/builtin/clone.c
-> @@ -1114,6 +1114,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  	if (option_recurse_submodules.nr > 0) {
->  		struct string_list_item *item;
->  		struct strbuf sb = STRBUF_INIT;
-> +		int val;
->  
->  		/* remove duplicates */
->  		string_list_sort(&option_recurse_submodules);
-> @@ -1130,6 +1131,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  					   strbuf_detach(&sb, NULL));
->  		}
->  
-> +		if (!git_config_get_bool("submodule.stickyRecursiveClone", &val) &&
-> +		    val)
-> +		    string_list_append(&option_config, "submodule.recurse=true");
-> +
->  		if (option_required_reference.nr &&
->  		    option_optional_reference.nr)
->  			die(_("clone --recursive is not compatible with "
+Like --replace-text, add an option --replace-message which replaces text
+in commit message bodies, so that users can easily replace text without
+constructing a --message-callback.
+---
+ Documentation/git-filter-repo.txt | 19 +++++++-
+ git-filter-repo                   | 12 ++++-
+ t/t9390-filter-repo.sh            |  1 +
+ t/t9390/basic-message             | 78 +++++++++++++++++++++++++++++++
+ t/t9390/sample-message            |  2 +
+ 5 files changed, 110 insertions(+), 2 deletions(-)
+ create mode 100644 t/t9390/basic-message
+ create mode 100644 t/t9390/sample-message
 
-I like the changes you propose here. It also looks to me like you wanted
-to wait for Mahi to send the updates herself, which I appreciate.
+diff --git a/Documentation/git-filter-repo.txt b/Documentation/git-filter-repo.txt
+index 2798378..7a71375 100644
+--- a/Documentation/git-filter-repo.txt
++++ b/Documentation/git-filter-repo.txt
+@@ -181,6 +181,10 @@ Renaming of refs (see also --refname-callback)
+ Filtering of commit messages (see also --message-callback)
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
++--replace-message <expressions_file>::
++	A file with expressions that, if found in commit messages, will
++	be replaced. This file uses the same syntax as --replace-text.
++
+ --preserve-commit-hashes::
+ 	By default, since commits are rewritten and thus gain new
+ 	hashes, references to old commit hashes in commit messages are
+@@ -894,7 +898,20 @@ YYYY-MM-DD.  In the expressions file, there are a few things to note:
+     beginning and ends of lines rather than the beginning and end of file.
+     See https://docs.python.org/3/library/re.html for details.
+ 
+-See also the `--blob-callback` from <<CALLBACKS>>.
++See also the `--blob-callback` from <<CALLBACKS>>.  Similarly, if you
++want to modify commit messages, you can do so with the same syntax.  For
++example, with a file named expressions.txt containing
++
++--------------------------------------------------
++foo==>bar
++--------------------------------------------------
++
++then running
++--------------------------------------------------
++git filter-repo --replace-message expressions.txt
++--------------------------------------------------
++
++will replace `foo` in commit messages with `bar`.
+ 
+ Refname based filtering
+ ~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/git-filter-repo b/git-filter-repo
+index b91bd96..5fe0f91 100755
+--- a/git-filter-repo
++++ b/git-filter-repo
+@@ -1843,6 +1843,10 @@ EXAMPLES
+ 
+     messages = parser.add_argument_group(title=_("Filtering of commit messages "
+                                                "(see also --message-callback)"))
++    messages.add_argument('--replace-message', metavar='EXPRESSIONS_FILE',
++        help=_("A file with expressions that, if found in commit messages, "
++               "will be replaced. This file uses the same syntax as "
++               "--replace-text."))
+     messages.add_argument('--preserve-commit-hashes', action='store_true',
+         help=_("By default, since commits are rewritten and thus gain new "
+                "hashes, references to old commit hashes in commit messages "
+@@ -2189,6 +2193,8 @@ EXAMPLES
+       args.mailmap = MailmapInfo(args.mailmap)
+     if args.replace_text:
+       args.replace_text = FilteringOptions.get_replace_text(args.replace_text)
++    if args.replace_message:
++      args.replace_message = FilteringOptions.get_replace_text(args.replace_message)
+     if args.strip_blobs_with_ids:
+       with open(args.strip_blobs_with_ids, 'br') as f:
+         args.strip_blobs_with_ids = set(f.read().split())
+@@ -3374,9 +3380,13 @@ class RepoFilter(object):
+     if not self._args.preserve_commit_hashes:
+       commit.message = self._hash_re.sub(self._translate_commit_hash,
+                                          commit.message)
++    if self._args.replace_message:
++      for literal, replacement in self._args.replace_message['literals']:
++        commit.message = commit.message.replace(literal, replacement)
++      for regex,   replacement in self._args.replace_message['regexes']:
++        commit.message = regex.sub(replacement, commit.message)
+     if self._message_callback:
+       commit.message = self._message_callback(commit.message)
+-
+     # Change the author & committer according to mailmap rules
+     args = self._args
+     if args.mailmap:
+diff --git a/t/t9390-filter-repo.sh b/t/t9390-filter-repo.sh
+index 3f567e7..6d2d985 100755
+--- a/t/t9390-filter-repo.sh
++++ b/t/t9390-filter-repo.sh
+@@ -39,6 +39,7 @@ filter_testcase basic basic-filename --invert-paths --path-glob 't*en*'
+ filter_testcase basic basic-numbers  --invert-paths --path-regex 'f.*e.*e'
+ filter_testcase basic basic-mailmap  --mailmap ../t9390/sample-mailmap
+ filter_testcase basic basic-replace  --replace-text ../t9390/sample-replace
++filter_testcase basic basic-message  --replace-message ../t9390/sample-message
+ filter_testcase empty empty-keepme   --path keepme
+ filter_testcase empty more-empty-keepme --path keepme --prune-empty=always \
+ 		                                   --prune-degenerate=always
+diff --git a/t/t9390/basic-message b/t/t9390/basic-message
+new file mode 100644
+index 0000000..4ac1968
+--- /dev/null
++++ b/t/t9390/basic-message
+@@ -0,0 +1,78 @@
++feature done
++blob
++mark :1
++data 8
++initial
++
++reset refs/heads/B
++commit refs/heads/B
++mark :2
++author Little O. Me <me@little.net> 1535228562 -0700
++committer Little O. Me <me@little.net> 1535228562 -0700
++data 9
++Modified
++M 100644 :1 filename
++M 100644 :1 ten
++M 100644 :1 twenty
++
++blob
++mark :3
++data 11
++twenty-mod
++
++commit refs/heads/B
++mark :4
++author Little 'ol Me <me@laptop.(none)> 1535229544 -0700
++committer Little 'ol Me <me@laptop.(none)> 1535229544 -0700
++data 18
++add the number 20
++from :2
++M 100644 :3 twenty
++
++blob
++mark :5
++data 8
++ten-mod
++
++commit refs/heads/A
++mark :6
++author Little O. Me <me@machine52.little.net> 1535229523 -0700
++committer Little O. Me <me@machine52.little.net> 1535229523 -0700
++data 8
++add ten
++from :2
++M 100644 :5 ten
++
++commit refs/heads/master
++mark :7
++author Lit.e Me <me@fire.com> 1535229559 -0700
++committer Lit.e Me <me@fire.com> 1535229580 -0700
++data 24
++Merge branch 'A' into B
++from :4
++merge :6
++M 100644 :5 ten
++
++blob
++mark :8
++data 6
++final
++
++commit refs/heads/master
++mark :9
++author Little Me <me@bigcompany.com> 1535229601 -0700
++committer Little Me <me@bigcompany.com> 1535229601 -0700
++data 9
++whatever
++from :7
++M 100644 :8 filename
++M 100644 :8 ten
++M 100644 :8 twenty
++
++tag v1.0
++from :9
++tagger Little John <second@merry.men> 1535229618 -0700
++data 5
++v1.0
++
++done
+diff --git a/t/t9390/sample-message b/t/t9390/sample-message
+new file mode 100644
+index 0000000..a374d61
+--- /dev/null
++++ b/t/t9390/sample-message
+@@ -0,0 +1,2 @@
++Initial==>Modified
++regex:tw.nty==>the number 20
+-- 
+2.32.0
 
-Mahi's internship ended last week and I believe she told me she's
-planning to be very busy this week; so if we don't hear from her by this
-time next week, I'll send a reroll with these changes (unless you want
-to just take them yourself without the list churn).
-
- - Emily
