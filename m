@@ -2,128 +2,185 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64A10C4338F
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 11:11:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28722C4338F
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 11:49:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 351AB606A5
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 11:11:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 033D16109E
+	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 11:49:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234962AbhHRLMK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Aug 2021 07:12:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60228 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233722AbhHRLMJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Aug 2021 07:12:09 -0400
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 870A1C061764
-        for <git@vger.kernel.org>; Wed, 18 Aug 2021 04:11:34 -0700 (PDT)
-Received: by mail-io1-xd30.google.com with SMTP id z1so2215878ioh.7
-        for <git@vger.kernel.org>; Wed, 18 Aug 2021 04:11:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=KiUFc5dArVWQr1XzA3Y22Cpc5n3zaJvwbDr8sszSqbM=;
-        b=KGxyIntVRshCCV0uKXTIjKTob3tD8X1uBSkejvYTz1pS1ku8VAZlBqxejm/qTkYqWG
-         COUSdUIchlCCuaJcy9e1qNdNnsbPrui2t1bLH5FJ3046+s0HF3kYRdQXN426HlX0Eplo
-         wpl2Zs0skwpoVtc95JGB6X6pbHAeomMg63MayNhwLVB0DaZa1JFNErn/hUZOoHB+KF9J
-         OAodUW7OpKYSW1/cq78/ZGSDlBLK2ZUxzMyKrhnhzj3Xy4ML5HWDvoD31aUSp+Ks4Nce
-         YO7KfVo014erEM2QWYpXL18eUCsTZRo+9DcI9xEgZtn2xqGFy1xgrBlwVy9/LOvHmHsa
-         zcIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=KiUFc5dArVWQr1XzA3Y22Cpc5n3zaJvwbDr8sszSqbM=;
-        b=C03r351XgKhSyLArqk1OX7kERxm26or7oGDZju1gTy6BqF7x5Aa8EOJgXYHkDeyEeV
-         D2PbLxweK/jMKtw0IHwgf08wg6jc4BWCJ6MhCYQh5okczNV0PhNaHXsV/Ctq6PHmd0z4
-         6T49ZtZLMBRH4asI/64PQBr54m54MgPk5FET8A+tGYfQaRpeJ3BWEqsPxiNGLQ5wSjKT
-         2XxJKdW8i4MxkMJS34ZdcdUM/fHX+aU3+NPUy36aEDsk06+wC1hnWvDAZywuKh3db/jm
-         34LEsOgjhmv2PkzvWj5dtAB0xMrUXF1URKtsTOfEXXYnTZQxOxWQM+fIqmHT4dlBtiRz
-         rQVQ==
-X-Gm-Message-State: AOAM531GQAy3SgSlscIN+PD/pn2ORKVGuz6G5rpiFEf+F8axLZgd0pLe
-        scZf9xbCExLKzQVnDnS4FywFdJIKlUVJIXHtviw=
-X-Google-Smtp-Source: ABdhPJzrJWYKSuUkZL1d3hbWI5n5taCs1ajf8MUxy468u+U212l6QkyEPpglxiBnKB5NUNDEOmh5DCUGG5fYCG26aDc=
-X-Received: by 2002:a5d:8b03:: with SMTP id k3mr6467127ion.203.1629285094066;
- Wed, 18 Aug 2021 04:11:34 -0700 (PDT)
+        id S232280AbhHRLtq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Aug 2021 07:49:46 -0400
+Received: from mout.gmx.net ([212.227.15.18]:42757 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229876AbhHRLtg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Aug 2021 07:49:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1629287340;
+        bh=IqAMYpM2zAtZ0xY4csx+EuFjiRuOvQb8n7u9SW9cClk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ZcN8BCeGqRDe0I27Hi9Re3PYYUk+rmdbRqdZayVF/uA9yCsbLBtyqBm4JIOhE0lpM
+         jPcX87bz68S3wjrvJpoew52zE4TGTyjlV5tq3HBt1bULvq+LwtQ+8BFaLUBkZ5VU4X
+         CrwWgPjAlW7PPnsHF42AHIrkjHbjrjskxkjGG0mg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.86.215] ([213.196.213.229]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MI5UD-1mKOfE3zgl-00F8AF; Wed, 18
+ Aug 2021 13:49:00 +0200
+Date:   Wed, 18 Aug 2021 13:48:58 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] column: fix parsing of the '--nl' option
+In-Reply-To: <20210818092456.3045808-1-szeder.dev@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2108181347010.55@tvgsbejvaqbjf.bet>
+References: <20210818092456.3045808-1-szeder.dev@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CAOLTT8TJ_VBh8mreExXHdCFb1e6hB1-Exsn6OFdo2sZNkVFJkA@mail.gmail.com>
- <CAP8UFD0AvakWdpJKBDrEZstVvFOGdjVUkWsBXn7geiUdVzAZGQ@mail.gmail.com>
- <CAOLTT8TB0HUBnYc1U7o36wBp=qxKDOLA6D9K19niNt_y_W==ag@mail.gmail.com>
- <CAP8UFD15vZ4B3dxPamaxqySZgLwffHU1Rx21bHRLY9zndjvAew@mail.gmail.com> <CAOLTT8SjLPXT7ows-MZQLmDwzPN5pUrqj26+PHVbTevkBn3Tug@mail.gmail.com>
-In-Reply-To: <CAOLTT8SjLPXT7ows-MZQLmDwzPN5pUrqj26+PHVbTevkBn3Tug@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Wed, 18 Aug 2021 19:11:22 +0800
-Message-ID: <CAOLTT8RY213BMTq+wx8yS=0QjY55L1BnCgPHQph1uos2oX03gw@mail.gmail.com>
-Subject: Re: [GSOC] [QUESTION] ref-filter: can %(raw) implement reuse oi.content?
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Hariom verma <hariom18599@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-400978424-1629287340=:55"
+X-Provags-ID: V03:K1:FTvwSDDZyHmanTRqbqSTzz9BHFsOolrXMtrgq1pm0gYFgFuhYCe
+ 0MGJxf5KXczyW810McyCX4yc9UDTuF4fZPL2IqCk9F6bqmiJqtbcmyljLpIDuTWm8SEDXhk
+ Z3H5giIPPxyhjAze7Hq+afFkvz++wXccmOOah/jufTks4WR4RmdPeSWzD4x2y/21b8cYIUq
+ +9vR5Tf27zEebH5uOwW1A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:1iJzySNYgw0=:1GUhZB+fCzRC4R19kZXZdA
+ PyEQ0jGGuBD0Mx6Cn48C0ftSduGF+1fF/msRbRK8RAaYEwAj8KR9sY71+eGd82QPegKBr/GDU
+ ODDgY0mfbBy2NJzvXGUwBtZpbwGFEpv+tZSVS/zdf4JaGtTpqbc2SP/JoNsML8ZsoJle7fmBm
+ DxBcRtFIrTnYtogbtbbVCCTiEWWXwQqM66PgSlRj5bVVruxqnMqko4Ud3vF3nTgM4HSgfYiLM
+ WKTuwTJTCMydkZCDYMDwYVG9Ea4VVZMWjPS+4jzxlWQ/NL7ZMoyaFAds5qXrLX8vs4H2Pri2q
+ UfVCSBtStW4cjMzZoSHsxefFqmVJJ6MHp0Bwk8n8o+F5REAOc4MHMGz6gzWFDoYdzpMSFfz9G
+ RwgCCvtUGOYitA5KiqHAQ+/frh8eP/1JGd6PUr+i99ZeqrN7yYwf7k4ywGOHW1f4AdBexOoiF
+ WUf+Rh+2QcazPOVu6tQ5ZVR/E91kfKZ8pIY41SEGWI0F9XQ4rH/YfKkj8fEvWGQQDZR171K9i
+ jr79MwV2ftjF1zCR69xAAeCUBQRw0SmY1IOhJ8pS6Use8zZE9eEjpGmGtT+dVvCdLewQNHUI1
+ Q6CC72dOZjFFwNnzSOE6TXQqtVLgwYXG88r6buMOXrDUXsvBfqm3Y0LN0vBK7aznRIKW5RFei
+ WWo7bZWWlvlDZfPdpvfs3jN6m9YsRixloX5R/6lYtBy9OG1umpNnkfi0zck+O90SoR98j/VUt
+ Ka3Pizh0w67vBK8XaIbiuIphuKPVJo8aSyBlrZJzZBHVRe82N0S3vNacO4gmftqsTr5YfgpbE
+ wq9Ey5JkQzD9CMwPElFPrfkF9NCZlBf9935tKIRqkJ+Xu/9WKn3l9NC9R5G29RXn3GpLaV/tQ
+ Dy91NJJQ4THQ3QfiZlezGzfnzs8gRwJ7MD2EAORDwPA3BdK4Yk0BotEgNCGpzM9yK+KMC4xcz
+ S+czUaI27SbqlImSjDjlrJMPuL3SUlNyeSZrnA6SCGAplri86DvWdwmfyiAfE4pPf7cU53mIH
+ EkGZ3jtHznMGASz4rMzu0Yk2eqkS3tezc+nZiX/un/od7wAXD4FoqIWAu77BmAIIofs3opN9n
+ R0DQv90gAQtq2gSUYTiMTc3rXewf6Rb34/kFEUZ3Nmks5jWfHfVBzUJ1Q==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ZheNing Hu <adlternative@gmail.com> =E4=BA=8E2021=E5=B9=B48=E6=9C=8818=E6=
-=97=A5=E5=91=A8=E4=B8=89 =E4=B8=8B=E5=8D=885:07=E5=86=99=E9=81=93=EF=BC=9A
-> I think the 'buf' is not freed in ref-filter logic.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-400978424-1629287340=:55
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi G=C3=A1bor,
+
+On Wed, 18 Aug 2021, SZEDER G=C3=A1bor wrote:
+
+> 'git column's '--nl' option can be used to specify a "string to be
+> printed at the end of each line" (quoting the man page), but this
+> option and its mandatory argument has been parsed as OPT_INTEGER since
+> the introduction of the command in 7e29b8254f (Add column layout
+> skeleton and git-column, 2012-04-21).  Consequently, any non-number
+> argument is rejected by parse-options, and any number other than 0
+> leads to segfault:
 >
-> But one thing worth noting is:
+>   $ printf "%s\n" one two |git column --mode=3Dplain --nl=3Dfoo
+>   error: option `nl' expects a numerical value
+>   $ printf "%s\n" one two |git column --mode=3Dplain --nl=3D42
+>   Segmentation fault (core dumped)
+>   $ printf "%s\n" one two |git column --mode=3Dplain --nl=3D0
+>   one
+>   two
 >
-> parse_object_buffer() may take this buffer away, and store it in
-> tree->buffer or use set_commit_buffer() to store it in commit_slab.
+> Parse this option as OPT_STRING.
+
+Whoa. Nice catch. I have just one suggestion about the patch, below.
+
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> ---
+>  Documentation/git-column.txt |  2 +-
+>  builtin/column.c             |  2 +-
+>  t/t9002-column.sh            | 18 ++++++++++++++++++
+>  3 files changed, 20 insertions(+), 2 deletions(-)
 >
-> So in theory, as long as we don=E2=80=99t use parse_object_buffer(), this
-> dynamically allocated memory can be used freely for us. If we use
-> parse_object_buffer() and free the buffer, there seems to be a risk,
-> but it does not appear so far.
+> diff --git a/Documentation/git-column.txt b/Documentation/git-column.txt
+> index f58e9c43e6..6cea9ab463 100644
+> --- a/Documentation/git-column.txt
+> +++ b/Documentation/git-column.txt
+> @@ -39,7 +39,7 @@ OPTIONS
+>  --indent=3D<string>::
+>  	String to be printed at the beginning of each line.
+>
+> ---nl=3D<N>::
+> +--nl=3D<string>::
+>  	String to be printed at the end of each line,
+>  	including newline character.
+>
+> diff --git a/builtin/column.c b/builtin/column.c
+> index 40d4b3bee2..158fdf53d9 100644
+> --- a/builtin/column.c
+> +++ b/builtin/column.c
+> @@ -29,7 +29,7 @@ int cmd_column(int argc, const char **argv, const char=
+ *prefix)
+>  		OPT_INTEGER(0, "raw-mode", &colopts, N_("layout to use")),
+>  		OPT_INTEGER(0, "width", &copts.width, N_("maximum width")),
+>  		OPT_STRING(0, "indent", &copts.indent, N_("string"), N_("padding spac=
+e on left border")),
+> -		OPT_INTEGER(0, "nl", &copts.nl, N_("padding space on right border")),
+> +		OPT_STRING(0, "nl", &copts.nl, N_("string"), N_("padding space on rig=
+ht border")),
+>  		OPT_INTEGER(0, "padding", &copts.padding, N_("padding space between c=
+olumns")),
+>  		OPT_END()
+>  	};
+> diff --git a/t/t9002-column.sh b/t/t9002-column.sh
+> index 89983527b6..6d3dbde3fe 100755
+> --- a/t/t9002-column.sh
+> +++ b/t/t9002-column.sh
+> @@ -42,6 +42,24 @@ EOF
+>  	test_cmp expected actual
+>  '
+>
+> +test_expect_success '--nl' '
+> +	cat >expected <<\EOF &&
+> +oneZ
+> +twoZ
+> +threeZ
+> +fourZ
+> +fiveZ
+> +sixZ
+> +sevenZ
+> +eightZ
+> +nineZ
+> +tenZ
+> +elevenZ
+> +EOF
+
+Or maybe we can do this instead?
+
+	sed "s/\$/Z" <lista >expected &&
+
+Much shorter, and less error-prone (in case any `--run=3D[...]` option wou=
+ld
+change what is in `lista` in the future).
+
+Ciao,
+Dscho
+
+> +	git column --nl=3D"Z$LF" --mode=3Dplain <lista >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+>  test_expect_success '80 columns' '
+>  	cat >expected <<\EOF &&
+>  one    two    three  four   five   six    seven  eight  nine   ten    e=
+leven
+> --
+> 2.33.0.453.gc5e41af357
+>
 >
 
-When parse_object_buffer() hints that we don=E2=80=99t free the buffer when
-eaten =3D=3D 1, I have a better idea, If the buffer is "eaten", we copy it,
-otherwise we use the originally allocated space.
-
--static void grab_sub_body_contents(struct atom_value *val, int deref,
-struct expand_data *data)
-+static void grab_sub_body_contents(struct atom_value *val, int deref,
-struct expand_data *data, int eaten)
- {
-        int i;
-        const char *subpos =3D NULL, *bodypos =3D NULL, *sigpos =3D NULL;
-@@ -1499,7 +1499,10 @@ static void grab_sub_body_contents(struct
-atom_value *val, int deref, struct exp
-                        unsigned long buf_size =3D data->size;
-
-                        if (atom->u.raw_data.option =3D=3D RAW_BARE) {
--                               v->s =3D buf;
-+                               if (eaten)
-+                                       v->s =3D xmemdupz(buf, buf_size);
-+                               else
-+                                       v->s =3D buf;
-                                v->s_size =3D buf_size;
-                        } else if (atom->u.raw_data.option =3D=3D RAW_LENGT=
-H) {
-                                v->s =3D xstrfmt_len(&v->s_size,
-"%"PRIuMAX, (uintmax_t)buf_size);
-
-As parse_object_buffer() does internally: the buffer of commit/tree objects
-needs to be copied, but blob/tag not. You said that the number of commits
-is generally significantly greater than the others. It seems that we cannot
-make full use of this idea. But remember the "skip_parse_buffer" before?
-If we skip the parse_object_buffer(), this buffer is also "!eaten".
-
-In other words, those default paths of git cat-file --batch are included in=
- it!
-So from the perspective of performance regression, this patch will be
-beneficial.
-
-Thanks.
---
-ZheNing Hu
+--8323328-400978424-1629287340=:55--
