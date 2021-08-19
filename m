@@ -2,98 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 182FBC432BE
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 18:37:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3118CC4338F
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 18:50:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED685610A0
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 18:37:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 09ECF61042
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 18:50:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231561AbhHSSiB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Aug 2021 14:38:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45546 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbhHSSiA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Aug 2021 14:38:00 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 299A7C061575
-        for <git@vger.kernel.org>; Thu, 19 Aug 2021 11:37:24 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id o123so8150178qkf.12
-        for <git@vger.kernel.org>; Thu, 19 Aug 2021 11:37:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=IjlkBZhOF2hIHWZY7yHp+edyh9wBdMwocnjVBThR6KU=;
-        b=fFi2bL/XhkumuX9rd8k3GPQsKn2hZr9Hul78xjikxBR2ZQssbEGoPNhpHu3d6f1j64
-         jmWT4tSCZRcnULq8Kp1+9Qa2hFNSBMvmo/7XBxCb9vnKDfDTMv/AAjRQxqK3U7dBAsjw
-         KQCsD3Bv+LgHlVSJar/BJgw52OSby08aagAKdAVwzuwA2sg2IkkDHhuh7W8FGUrzZGPj
-         xMUIvYT4Isp72r+AzOJmRPRtUdEHsy8mELMCC0hCdxmnyhfTidyTBxop4jdMEf1TbvwR
-         KCqMUYB/UxnpO/llhyGMejFCz9OcsBd4zq5C3DMlXCGCg/uLku3/iwfqirilUgaQgrOu
-         59tQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=IjlkBZhOF2hIHWZY7yHp+edyh9wBdMwocnjVBThR6KU=;
-        b=IrmIZrksSf/kpVtogpPES9NXXjCmhrFovn83E5uGcyFvhiX/FvBLuFBoCxgCCR+Dkr
-         6+RA+dsqCEVWB0tlPuwUx/6DQSjEUhzDewfUemNworV4OP6qkIM6iFgkwhI+wtAj/v6m
-         RLaqSzru6yagsVohpPEOqIpUnNhRBGxNIdJDADzyeCEPySltac0cBJ5yye3MRSkYXaLd
-         BA3P7/BUha0NWSq1SGaYf1ZOdevv3eqGSvaeXMqTJvb9j+ghjtCMNhN4m2qU1tczRWfe
-         s+PaePLyTjWrxL3Ge/7MvAyg7WdjgkdP2ofh+2Iomw6KkJe18EYLWKOLo8QhO16GPMjS
-         /s1Q==
-X-Gm-Message-State: AOAM5318OBJcaJKKx+DXMWB4rvhorLiMSgYbrrkWtxzJCsh+KiMga8Am
-        LT62PPRQZ+voS17+3acb54DmkIssZdA=
-X-Google-Smtp-Source: ABdhPJzimtnEWBf29WdwyzzdvnTx2HhjyixB4vtLKt5SkkTyEmna5RTPsBc54BaB3FQ8Uf3wuhBbmA==
-X-Received: by 2002:a37:6451:: with SMTP id y78mr5169092qkb.427.1629398241953;
-        Thu, 19 Aug 2021 11:37:21 -0700 (PDT)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id g12sm1555566qtq.92.2021.08.19.11.37.21
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Aug 2021 11:37:21 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     jeffhost@microsoft.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] fixup! fsmonitor-fs-listen-macos: implement FSEvent listener on MacOS
-Date:   Thu, 19 Aug 2021 11:36:52 -0700
-Message-Id: <20210819183652.7750-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.33.0.481.g26d3bed244
+        id S233896AbhHSSvX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Aug 2021 14:51:23 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62571 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230058AbhHSSvW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Aug 2021 14:51:22 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1F7AB15762A;
+        Thu, 19 Aug 2021 14:50:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bUqwHMiID8VloQtrdyn2uWvcHY5EXs1RUQ24e1
+        usOns=; b=UejPsYoq+LV6HEhUEq0JP7/lea6lbCg1OKQlkvGvSYWrCB+7fHWKcu
+        R2rQVt2RhwPfPziajQEqA1ZNADB2jl9bUJ8AJJ8wEJmsh7ZBjro22AitpQMpTe+7
+        eKMVzJc9lHG7u2um7Ga1Aigb/fWbOWNsRtqw3qXo9IhBrw8MZ7lxQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 178B4157629;
+        Thu, 19 Aug 2021 14:50:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 539EE157628;
+        Thu, 19 Aug 2021 14:50:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        huang guanlong <gl041188@gmail.com>, git@vger.kernel.org,
+        Hudson Ayers <hudsonayers@google.com>,
+        Taylor Yu <tlyu@mit.edu>, Joshua Nelson <jyn514@gmail.com>
+Subject: Re: [PATCH] Revert 'diff-merges: let "-m" imply "-p"'
+References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
+        <20210520214703.27323-1-sorganov@gmail.com>
+        <20210520214703.27323-11-sorganov@gmail.com>
+        <YQtYEftByY8cNMml@google.com> <YQyUM2uZdFBX8G0r@google.com>
+        <xmqqh7g2ij5q.fsf@gitster.g> <xmqqczqqihkk.fsf@gitster.g>
+        <YQ2UFmCxRKNMOtrD@google.com> <xmqqeeb3hlcq.fsf@gitster.g>
+        <87a6lgl9gq.fsf@osv.gnss.ru> <xmqqczqb7mds.fsf@gitster.g>
+        <87fsv7f7wx.fsf@osv.gnss.ru>
+Date:   Thu, 19 Aug 2021 11:50:41 -0700
+In-Reply-To: <87fsv7f7wx.fsf@osv.gnss.ru> (Sergey Organov's message of "Wed,
+        18 Aug 2021 11:56:14 +0300")
+Message-ID: <xmqqim011d6m.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5B45D522-011E-11EC-AE94-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-clang defines __GNUC__ for compatibility with gcc (indeed it misrepresents
-itself as gcc 4.2.1), so instead use the __clang__ specific macro to
-distinguish between them.
+Sergey Organov <sorganov@gmail.com> writes:
 
-tested with Apple clang 12.0.5, clang 14 and gcc 11.2.0
+>> We need to note that the "-m" implied by "--first-parent" is "if we
+>> were to show some comparison, do so also for merge commits", not the
+>> "if the user says '-m', it must mean that the user wants to see
+>> comparison, period, so make it imply '-p'".  The latter is what was
+>> reverted.
+>
+> Yes, there is minor backward incompatibility indeed, and that was
+> expected. This could be seen from the patch in the same series that
+> fixes "git stash" by removing unneeded -m.
+>
+> The fix for the scripts is as simple as removing -m from "--first-parent
+> -m". It's a one-time change.
+> ...
+>> I agree that we both (and if there were other reviewers, they too)
+>> mistakenly thought that the change in behaviour was innocuous enough
+>> when we queued the patch, but our mistakes were caught while the
+>> topic was still cooking in 'next', and I have Jonathan to thank for
+>> being extra careful.
+>
+> So, what would be the procedure to get this change back, as this minor
+> backward incompatibility shouldn't be the show-stopper for the change
+> that otherwise is an improvement?
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- compat/fsmonitor/fsmonitor-fs-listen-macos.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Your repeating "minor" does not make it minor.  Anything you force
+existing users and scripts to change is "fixing the scripts", but
+"working around the breakage you brought to them", which is closer
+to being a show-stopper.  I understand that you like this feature a
+lot, but you'd need to be a bit more considerate to your users and
+other people.
 
-diff --git a/compat/fsmonitor/fsmonitor-fs-listen-macos.c b/compat/fsmonitor/fsmonitor-fs-listen-macos.c
-index 02f89de216..c55ec35b5d 100644
---- a/compat/fsmonitor/fsmonitor-fs-listen-macos.c
-+++ b/compat/fsmonitor/fsmonitor-fs-listen-macos.c
-@@ -1,4 +1,4 @@
--#if defined(__GNUC__)
-+#ifndef __clang__
- /*
-  * It is possible to #include CoreFoundation/CoreFoundation.h when compiling
-  * with clang, but not with GCC as of time of writing.
--- 
-2.33.0.481.g26d3bed244
+I think it is a design mistake to make a plain vanilla "-m" to imply
+"-p" (or any "output of result of comparison"), simply because the
+implication goes in the other direction, so there will never be "get
+this change back", period, but see below.
+
+"git log" when showing a commit and asked to "output result of
+comparison" like patch, combined diff, raw diff, etc. would:
+
+ - show the comparison for non-merge commits and when
+   "--first-parent" is specified (the latter is natural since it
+   makes us consistently pretend that the merges were squash
+   merges).
+
+ - shows the comparison for merge commits when -m is given.
+
+but because "--cc" and "-c" (which are used to specify how the
+result of comparison is shown; they are not about specifying if
+"normally we show only non-merges" is disabled) do not make sense in
+the context of non-merge commits (in other words, the user is better
+off giving "-p" if merges are not to be shown), they are made to
+imply "-m".  And that is a sensible design choice.  On the other
+hand, "--raw" (which is used to specify how the result of comparison
+is shown; it not about specifying if "normally we show only
+non-merges" is disabled) does make sense in the context of non-merge
+commits, so unlike "--cc"/"-c", it does not imply "-m".  And that
+also is a sensible design choice.  "-p" falls into the same bucket
+as "--raw", so it should not imply "-m".
+
+But some folks may not like "log -p" to be silent about comparison
+for merge commits (like you are).  To accomodate them, it might make
+sense to have a configuration that says "I like -m, so when -p or
+--raw or any 'how to show comparison result' option is given, please
+make it imply '-m'", but it should not be the default.
+
+Thanks.
 
