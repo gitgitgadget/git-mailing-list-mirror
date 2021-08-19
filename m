@@ -2,92 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5976C4338F
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 17:58:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6692DC4338F
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 18:02:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A00FF610A1
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 17:58:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30ED66044F
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 18:02:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233719AbhHSR7V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Aug 2021 13:59:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36558 "EHLO
+        id S234004AbhHSSDD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Aug 2021 14:03:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229549AbhHSR7U (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Aug 2021 13:59:20 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C02C1C061575
-        for <git@vger.kernel.org>; Thu, 19 Aug 2021 10:58:43 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id n6so12864476ljp.9
-        for <git@vger.kernel.org>; Thu, 19 Aug 2021 10:58:43 -0700 (PDT)
+        with ESMTP id S233794AbhHSSDC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Aug 2021 14:03:02 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B706C061575
+        for <git@vger.kernel.org>; Thu, 19 Aug 2021 11:02:26 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id e15so4366989plh.8
+        for <git@vger.kernel.org>; Thu, 19 Aug 2021 11:02:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=acesquality.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=g7xK//Udkuqn6w99FN8sjjJm+Gcav1fkpzSziOIDpsw=;
-        b=Y7qVqG6zdDY5HSZXmjUoqGkuGNpzgCWHKkRQKOpuTWuLEbm0tzYfFqWZ377YnyQmGO
-         vTwEiNMZVA8LJ6dhKRqsf1lqwi9r4sOZ9ERwelrN4BIkXtPfprDVXwgrny/Wh5DBI1Kz
-         Acgu51ZNDqoqHjUQCluULp/sl/AjCBXsL8iDpnCJlVyh2o06huzCzBm1hzYRbibUA18Z
-         Zw3tTUDoeLdkwZPfZAYnm7ifcYhnOawjSmpCGIkVLDpGjIk90Sbmwh9dAR9WUX5iTTx7
-         nnuJyaiRTwao1vB3nQhbf4M1K4K3wCkSKEd2xvKjqmy6Hj1wWEPM7gEZ6x/LaFq8TdL+
-         j1SA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=65gQPFWUNB4lGwFlkCbkfG0+E44qQ98B0RdTAGYyXao=;
+        b=s6/8Zc/Vz3yIOLGTdSPtNWYSwDXbBDvILXsrbRb47OecD80KzWrKdy/zKX9Ej2fiYH
+         mzECBmaRo5LzO7v6Ra190fOiLEDpra+6kVJlkjcKbiqjeJF+VxH2jirXqZch9Fq+Jjr2
+         8jpmXpCrcXDALSdnshHFXlsjakOnqjL6e2u9uHzDx5IY7DxEMazivJYd1U5U6PS6KTl6
+         eIBIJwM9E3+RVNghJt+oMt4B25UvcVbSskgxXwTOx4u0t1qkmOiJkLVVGOvmVPlP5fF9
+         CzpF9TsfASWE6/0zJSomWDKixSW+WKP/S/rc/jGXaFVUV+Y+GNYMa3ELt/Vn0CIwfbsq
+         KgxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=g7xK//Udkuqn6w99FN8sjjJm+Gcav1fkpzSziOIDpsw=;
-        b=qhfs1F37PcG7Ky0vKxZ2cRfzd+G18MsjYHf0jPuNVU5S2QtksAbhGOKHecBl9mVlAI
-         /aMPMmPhdfnOu5PhlUPJ7usF2AaSsDuw4vv4Vs4UyPgLPO/ZUruAvD0rBetfreDH1ljR
-         f2ow+DegymcZ5MRIc2jEcXUeXRct3eBY1AXAQPWBS/g1uyzzdjJJWKXmluqYuXgVQ9Z4
-         V6CGgNOQGrsAP5Hb4Xy7owEBW1mejdOGitkDbaWH6OO+BJcIVg4UH1NrhHWKsNQOo9YO
-         49Vcz92pHVBAoyOI8rgXolgMZaTmSwi7TCjZLhX4Khz5QLRSzrdTuNjhRJfoWmH5B7oe
-         hKRw==
-X-Gm-Message-State: AOAM531u/gWyZIqiADmwXoccmxJ6KC5Ff8YXshtDQzH+5LrCdIcP/OhU
-        H4inAAc5BcXCtFvZ1bmDYx+yyGW6CNq3CbnMRbuHk2W2jmqNAA==
-X-Google-Smtp-Source: ABdhPJy6ir0bSkN5njtRTBoFKsYLlKfhn9ukjrxOKvUDyiPRlRLkefnIxSGgcfZACG3S/YNPp7LAcxo2wAbHIEwWD/U=
-X-Received: by 2002:a2e:b4a5:: with SMTP id q5mr12852863ljm.11.1629395922087;
- Thu, 19 Aug 2021 10:58:42 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=65gQPFWUNB4lGwFlkCbkfG0+E44qQ98B0RdTAGYyXao=;
+        b=n0pTVxSDIEQbsKUZL8pr6ZSUR9O3blis+oJyKAfT2SP1IEYBB/ic0bI9ZknokSEe/r
+         RwrRS2wGpe6xbCVrYJvOvGKqj3Xu2xSbmPm12W1Lb6DdNoviwHpGqdjn+ua4Cis/NWn2
+         dq9+cZyYjlZA0QAlswYA2lG8LBaLC9NLl+OBvS4WhXZ0WYN6zM6b/+7DQtMNRf7/edUe
+         Ngupl9jrpAf+N/M1wUjTk7bPa1awNARZdpZuR1cpJjBbhIibMnilMGVEB81TWXlFubh9
+         qqWjw6gUFl7RE5ee/sSwFE0YWC1ShqLPjq4hqbmnY2rUianKg1Ntt1MtfxDCsTzAHJ3q
+         nX2w==
+X-Gm-Message-State: AOAM533jRa57D4/huxbFLrTEGj/VlSgyEzXjJbeRN8fw8HTVyAB60ckP
+        /w09RdWb7irdNTqKrlFf5Y5bzQ==
+X-Google-Smtp-Source: ABdhPJzvktesBhYkrdhwSmw7AxKtmX05EGhn/0GiM10p22+dJFFCMp8q+VaXhhkg4sPiDk+lh+tUsg==
+X-Received: by 2002:a17:90a:420c:: with SMTP id o12mr16107786pjg.101.1629396145530;
+        Thu, 19 Aug 2021 11:02:25 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:a999:9b6d:55c3:b66c])
+        by smtp.gmail.com with ESMTPSA id o13sm99998pjq.7.2021.08.19.11.02.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Aug 2021 11:02:24 -0700 (PDT)
+Date:   Thu, 19 Aug 2021 11:02:17 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 4/4] submodule: cache superproject gitdir during
+ 'update'
+Message-ID: <YR6cqbGiPRXZ9GxU@google.com>
+References: <20210616004508.87186-5-emilyshaffer@google.com>
+ <20210727175151.2462983-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-From:   Jonathon Anderson <janderson@acesquality.com>
-Date:   Thu, 19 Aug 2021 12:58:30 -0500
-Message-ID: <CAG83euoGmVUUBh00wAEX1muZogNPOQUV6+ppL8x8qCaDnzTbDw@mail.gmail.com>
-Subject: Git Modifying DLL
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210727175151.2462983-1-jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm having an issue with git modifying a DLL file and corrupting it.
-When I download the original working file, it has a hash starting with
-8FE400... I then commit the DLL and push it to our repo. When I
-download the file from the repo, the DLL can't be loaded, and it has a
-hash starting with E004FB...
+On Tue, Jul 27, 2021 at 10:51:51AM -0700, Jonathan Tan wrote:
+> 
+> > A cached path to the superproject's gitdir might be added during 'git
+> 
+> [snip]
+> 
+> > +		# Cache a pointer to the superproject's gitdir. This may have
+> 
+> Patches 3 and 4 look good to me except that for me, a cache is something
+> that lets us avoid an expensive computation. But as far as I know, we're
+> not planning to perform the expensive computation in the absence of a
+> cache. Maybe the word "record" would fit better.
+> 
+> This is nit-picky, though, and if others think that the word "cache"
+> fits here, that's fine by me too.
 
-Opening the DLL in a hex editor and using the compare feature, there's
-a single change to the file. In the original, the byte code starting
-at 0x0074 is 2E 0D 0D 0A 24.
-In the git file, the byte code starting at 0x0074 is 2E 0D 0A 24
+Thanks. I switched the commit messages around to use 'record' and 'hint'
+when appropriate instead. I'll send a reroll with those nits as soon as
+it passes CI.
 
-A single carriage return character (0x0D) has been removed, and the
-file size has changed from 260,608 bytes to 260,607 bytes.
-
-I ruled out the possibility that the repo server was doing anything to
-the file because I deleted the file in my local repository then ran
-"git reset --hard HEAD" to restore the file, and the hash had once
-again changed to E004FB...
-
-OS: Windows 10.0.19043 pro
-git: 2.32.0.windows.1
-
-I have no settings configured for git behavior handling line endings.
-
-The original DLL can be found here:
-https://www.powershellgallery.com/packages/PSWindowsUpdate/2.1.1.2
-
-Navigate to "Manual Download", download the nuget package and unzip
-it. The file is PSWindowsUpdate.dll
-
-Thank you,
-Jonathon
+ - Emily
