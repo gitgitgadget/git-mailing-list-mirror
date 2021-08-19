@@ -2,153 +2,230 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4346C4338F
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 10:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B345C4338F
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 10:06:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9650A61130
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 10:04:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 751C661101
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 10:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237736AbhHSKEl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Aug 2021 06:04:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37628 "EHLO
+        id S237857AbhHSKGx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Aug 2021 06:06:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237700AbhHSKEj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Aug 2021 06:04:39 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F0C3C061575
-        for <git@vger.kernel.org>; Thu, 19 Aug 2021 03:04:03 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id f13-20020a1c6a0d000000b002e6fd0b0b3fso4782107wmc.3
-        for <git@vger.kernel.org>; Thu, 19 Aug 2021 03:04:03 -0700 (PDT)
+        with ESMTP id S237746AbhHSKGw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Aug 2021 06:06:52 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 361C1C061575
+        for <git@vger.kernel.org>; Thu, 19 Aug 2021 03:06:16 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id 61-20020a9d0d430000b02903eabfc221a9so8116910oti.0
+        for <git@vger.kernel.org>; Thu, 19 Aug 2021 03:06:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Wmg781ZdLO2kEYiQ3RbS1/4uZyIzBAAkm+XotX3Txuw=;
-        b=FfvTq7JZR0jWmjui6C0rkkv8PxII4MHZ0fxXLn7JJ49D+8a/37+ui0AsjPZRRDbon+
-         zSlT3vDIzImtDRxm+vipW0fZr40Qblhr7czyZGhezo6pfGocK6VCpaf4mJwEssqMGVq2
-         vb0NnY2wO01E/LhB2urN6FIEpleXQDkZ4gLUkMlJLN3IzXFsu+06nHWXAhokx7kRikop
-         NK2aF7fxDRWtJVQah93+w3/JdDrDQUaKidnN+reeKdsyDKfq2fsHtfclvmUWxRVDNzHa
-         i9vfHZrAzQrWzLP94pMeh0Ll90yyJIjFY1ATrDYWOtyMh6Voyb7edPvEskwUDjcAuVCW
-         WsAw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=ZJLXuX0ObDBh73sgqCvIvgUyLQ522Lf57GzLSss+Qs0=;
+        b=Owbu7djIv9IkGOyzLsjZ9/6Ulq7nvltDKZOhf3W7qEmax1hhiQGjgDsbL1k3mRlEog
+         qjq6egaiarcRIPBpS8weeWnhm2kot3crgzqceGMePxEYZT4IqEdj3PgrAs1hzqj9Maeg
+         3++2zZXTeJnBmyweK/jG8EIk2x6kl2PbZd5nIjtaLm03rxrxp6OLRzwMVpf7pB3DD42M
+         hBZy/IiKnGK1nu1g+fTPPME2uXYVSG10gF3VhQkwuy+FGWGlDKgQijY0/1H9iAeSxfmg
+         0/FTHEAboN35UOu1toEjH/2CDhtjBMveq102mNKCRa0WmHEEhJQocGOTliaJDh20Qgh0
+         ZJtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=Wmg781ZdLO2kEYiQ3RbS1/4uZyIzBAAkm+XotX3Txuw=;
-        b=mp8OD+agrazHRCPVOnMOTtAPiQ6uMDMEysYXle0cv5hktKzLutrTduH7NExIUZJLaK
-         tF3dVVQ4LviPxdXpJvmny0J2JOkeKJE9Lrl+QLfAGkqWHSt6cWHxHAExVEqUFYf+5aPC
-         8qipwgCE21t5Aor1COZEFbcHsXWsmaAXg+5sNbTE6o+Ob669rFhixa3UzJYW5zGYrI44
-         j/7BbU3PmXe4ddFMx1Vq8i2Z1rYyrFsWNvlXmOeKR5Wf1uNNL/jIb0VrwLOgsJ914kxA
-         /ZYV8C8iFd96nYiUbRUPJWNHBge7XFSsjFrLjlVu5o36O6+mFQDODJBtqAPYcL3IrKuD
-         BEWA==
-X-Gm-Message-State: AOAM532FrjVhOihhXrFTrY3S2jDw/Y2xyeOwe9fPMTCcsTuXsbvsyugF
-        OlgLe10oI2kuQOMt3PiCvfEaQmX9tEM=
-X-Google-Smtp-Source: ABdhPJylJXiQGYJze7kagU/qeTIm4W5o4jpe9f/S6SuirxDNLZ2tmgon4g5Yyr4p58TbaZavOw+oOQ==
-X-Received: by 2002:a05:600c:3b98:: with SMTP id n24mr12705158wms.11.1629367441629;
-        Thu, 19 Aug 2021 03:04:01 -0700 (PDT)
-Received: from [192.168.1.201] ([31.185.185.144])
-        by smtp.googlemail.com with ESMTPSA id k17sm2657732wrn.8.2021.08.19.03.04.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Aug 2021 03:04:01 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] sequencer: advise if skipping cherry-picked commit
-To:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        phillip.wood@dunelm.org.uk, Josh Steadmon <steadmon@google.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com
-References: <4d83766ab3425a5f4b361df2ac505d07fefd7899.1628109852.git.steadmon@google.com>
- <496da0b17476011b4ef4dde31593afc7572246eb.1628623058.git.steadmon@google.com>
- <c185a396-c498-b2ef-1c86-cec7d5751f3d@gmail.com>
- <e363df27-a99e-1a43-f493-ed90de7b6363@gmail.com>
- <cc044079-c40d-ab79-8afa-8a1dfa66f279@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <b1a1b548-4fe2-9043-a19c-db9c04be7bb7@gmail.com>
-Date:   Thu, 19 Aug 2021 11:04:00 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=ZJLXuX0ObDBh73sgqCvIvgUyLQ522Lf57GzLSss+Qs0=;
+        b=XjNnfvawA0p9kYLZ7I0v6W7cfuMx/B/qetX+D8JoR9+xXppczrz6sZbXcWM1VEAMLi
+         dAShh1Hf1AzrbLzReyMyWmPUZfLo9uTT2ZsJ3Enrh0rM6evx7RQ1Ugw7tL6VgbH+8ePS
+         cQ0szYC+93i72ESyAnvsHBDKzK31Y4U9g4znmwUYfU6kzzHwTbj6p/4p16opLXRwsZY4
+         pkY0sh/GjWKLclLLxtHEyTJ3zLo8zsrRgN3jlFcagS+HCDxjw9E7VBYZl2QGStLUHp55
+         dZB6TXjttiO0sj24PIgngValQJBQ/7aP6sXvjnqnTVZW2scnjgxUmugMHjDN75FU1nid
+         f3Zw==
+X-Gm-Message-State: AOAM5327mP5Kl0HS+lyARKDO2kCspzGVKljRkm4t9XBCwtgujr1OBrcd
+        kXupuphv8c8hH6tkMVpwvC4=
+X-Google-Smtp-Source: ABdhPJzY6GiN9AwJIXrTOULXf8Gg+uyR6uO2Th9OhWlYtzTT592rajnpxYEiRy6H0ap6dAFqvavVfA==
+X-Received: by 2002:a9d:d61:: with SMTP id 88mr10779758oti.40.1629367575489;
+        Thu, 19 Aug 2021 03:06:15 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id g8sm7301otk.34.2021.08.19.03.06.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Aug 2021 03:06:15 -0700 (PDT)
+Date:   Thu, 19 Aug 2021 03:06:12 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys <hanwen@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 09/11] reflog expire: don't lock reflogs using
+ previously seen OID
+Message-ID: <YR4tFHW7oVDjgOJC@carlos-mbp.lan>
+References: <patch-1.1-de0838fe99-20210714T111351Z-avarab@gmail.com>
+ <cover-00.11-00000000000-20210716T140631Z-avarab@gmail.com>
+ <patch-09.11-60d6cf342fc-20210716T140631Z-avarab@gmail.com>
+ <CAFQ2z_MhNgimn=7qcu-G823X=yTRT3xXrDP7qRiELShXY9A3AA@mail.gmail.com>
+ <xmqqlf4y4g6v.fsf@gitster.g>
 MIME-Version: 1.0
-In-Reply-To: <cc044079-c40d-ab79-8afa-8a1dfa66f279@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqlf4y4g6v.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philippe
-On 18/08/2021 23:45, Philippe Blain wrote:
-> Hi Phillip,
-> [...]
->>> For interactive rebase, an alternate implementation, that I suggested 
->>> in [1] last summer, would be to keep
->>> the cherry-picks in the todo list, but mark them as 'drop' and add a 
->>> comment at the
->>> end of their line, like '# already applied' or something like this, 
->>> similar
->>> to how empty commits have '# empty' appended. I think that for 
->>> interactive rebase, I
->>> would prefer this, since it is easier for the user to notice it and 
->>> change the 'drop'
->>> to 'pick' right away if they realise they do not want to drop those 
->>> commits (easier
->>> than seeing the warning, realising they did not want to drop them, 
->>> aborting the rebase
->>> and redoing it with '--reapply-cherry-picks').
->>
->> That would be nice, but we could always add it in the future if Josh 
->> does not want to implement it now. At the moment the function that 
->> creates the todo list does not know if it is going to be edited, I'm 
->> not sure how easy it would be to pass that information down.
+On Wed, Aug 18, 2021 at 02:05:12PM -0700, Junio C Hamano wrote:
+> Han-Wen Nienhuys <hanwen@google.com> writes:
 > 
-> Well, I'm not sure we need to ? If we change the 'pick' to 'drop', 
-> instead of
-> not writing these lines to the todo list, the cherry-picked commits will 
-> get dropped
-> either way, no? Unless I'm missing something - I think you are way more 
-> well-versed in
-> the sequencer code than me :)
-
-I think I read your suggestion as meaning we would not print the warning 
-if the user was going to edit the list - hence the need for the 
-distinction. I've just had a closer look at the code and I think it 
-would be fairly easy to tell sequencer_make_script() if the todo list is 
-going to be edited, there is only one caller in builtin/rebase.c which 
-could easily pass a flag for this. Thinking about the 'print warning' vs 
-'add drop command' issue if the user is using a terminal based editor 
-such as vim or nano then they will barely have time to see the warnings 
-being printed let alone read them before the editor is opened and hides 
-them so having some indication in the todo list would probably be a good 
-idea.
-
-Best Wishes
-
-Phillip
-
->>>
->>> Like Junio remarked, it is a little unfortunate that some logic is 
->>> duplicated between
->>> 'sequencer_make_script' and 'make_script_with_merges', such that your 
->>> patch has to do
->>> the same thing at two different code locations. Maybe a preparatory 
->>> cleanup could add
->>> a new function that takes care of the duplicated logic and call if 
->>> from both ? I'm
->>> just thinking out loud here, I did not analyze in details if this 
->>> would be easy/feasible...
->>
->> I think feasible but not easy (or required for this change), it would 
->> also complicate the code in a different way as I think we'd have to 
->> add some conditionals for whether we are recreating merges or not.
+> > On Fri, Jul 16, 2021 at 4:13 PM Ævar Arnfjörð Bjarmason
+> > <avarab@gmail.com> wrote:
+> >> -                       status |= reflog_expire(e->reflog, &e->oid, flags,
+> >> +                       status |= reflog_expire(e->reflog, NULL, flags,
+> >>                                                 reflog_expiry_prepare,
+> >
+> > this causes reflog_expiry_prepare() to be called with a NULL oid. I'm
+> > seeing a crash in do_lookup_replace_object() because of this in
+> > t0031-reftable.sh.
 > 
-> Yes, I agree it's not required for this change.
+> Yeah, given that reflog_expire() is documented to take "oid is the
+> old value of the reference", the change looks bogus to me too.
 > 
-> Cheers,
-> 
-> Philippe.
+> Ævar, what is going on here?
+
+FWIW the crude revert of this commit (cut below for easy access)  does
+almost (except for the pedantic fixes[1] that are expected with the next
+fsmonitor rollup) allow a CI run[2] for "seen" to go fully to green.
+
+Carlo
+
+[1] https://lore.kernel.org/git/20210809063004.73736-1-carenas@gmail.com/
+[2] https://github.com/carenas/git/runs/3370161764
+
+--- >8 ---
+Subject: [PATCH] Revert "reflog expire: don't lock reflogs using previously
+ seen OID"
+
+This reverts commit 8bb2a971949c50787809f14ccf1d2a5d5324f4e4.
+---
+ builtin/reflog.c     | 13 +++++++------
+ refs.h               |  2 +-
+ refs/files-backend.c |  5 +----
+ 3 files changed, 9 insertions(+), 11 deletions(-)
+
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 61795f22d5..09541d1c80 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -629,9 +629,8 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 		free_worktrees(worktrees);
+ 		for (i = 0; i < collected.nr; i++) {
+ 			struct collected_reflog *e = collected.e[i];
+-
+ 			set_reflog_expiry_param(&cb.cmd, explicit_expiry, e->reflog);
+-			status |= reflog_expire(e->reflog, NULL, flags,
++			status |= reflog_expire(e->reflog, &e->oid, flags,
+ 						reflog_expiry_prepare,
+ 						should_expire_reflog_ent,
+ 						reflog_expiry_cleanup,
+@@ -643,12 +642,13 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 
+ 	for (; i < argc; i++) {
+ 		char *ref;
+-		if (!dwim_log(argv[i], strlen(argv[i]), NULL, &ref)) {
++		struct object_id oid;
++		if (!dwim_log(argv[i], strlen(argv[i]), &oid, &ref)) {
+ 			status |= error(_("%s points nowhere!"), argv[i]);
+ 			continue;
+ 		}
+ 		set_reflog_expiry_param(&cb.cmd, explicit_expiry, ref);
+-		status |= reflog_expire(ref, NULL, flags,
++		status |= reflog_expire(ref, &oid, flags,
+ 					reflog_expiry_prepare,
+ 					should_expire_reflog_ent,
+ 					reflog_expiry_cleanup,
+@@ -700,6 +700,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ 
+ 	for ( ; i < argc; i++) {
+ 		const char *spec = strstr(argv[i], "@{");
++		struct object_id oid;
+ 		char *ep, *ref;
+ 		int recno;
+ 
+@@ -708,7 +709,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 
+-		if (!dwim_log(argv[i], spec - argv[i], NULL, &ref)) {
++		if (!dwim_log(argv[i], spec - argv[i], &oid, &ref)) {
+ 			status |= error(_("no reflog for '%s'"), argv[i]);
+ 			continue;
+ 		}
+@@ -723,7 +724,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ 			cb.cmd.expire_total = 0;
+ 		}
+ 
+-		status |= reflog_expire(ref, NULL, flags,
++		status |= reflog_expire(ref, &oid, flags,
+ 					reflog_expiry_prepare,
+ 					should_expire_reflog_ent,
+ 					reflog_expiry_cleanup,
+diff --git a/refs.h b/refs.h
+index 3e4ee01f8f..38773f3229 100644
+--- a/refs.h
++++ b/refs.h
+@@ -810,7 +810,7 @@ enum expire_reflog_flags {
+  * expiration policy that is desired.
+  *
+  * reflog_expiry_prepare_fn -- Called once after the reference is
+- *     locked. Called with the OID of the locked reference.
++ *     locked.
+  *
+  * reflog_expiry_should_prune_fn -- Called once for each entry in the
+  *     existing reflog. It should return true iff that entry should be
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index f546cc3cc3..e72cb0e43f 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3078,7 +3078,7 @@ static int expire_reflog_ent(struct object_id *ooid, struct object_id *noid,
+ }
+ 
+ static int files_reflog_expire(struct ref_store *ref_store,
+-			       const char *refname, const struct object_id *unused_oid,
++			       const char *refname, const struct object_id *oid,
+ 			       unsigned int flags,
+ 			       reflog_expiry_prepare_fn prepare_fn,
+ 			       reflog_expiry_should_prune_fn should_prune_fn,
+@@ -3095,7 +3095,6 @@ static int files_reflog_expire(struct ref_store *ref_store,
+ 	int status = 0;
+ 	int type;
+ 	struct strbuf err = STRBUF_INIT;
+-	const struct object_id *oid;
+ 
+ 	memset(&cb, 0, sizeof(cb));
+ 	cb.flags = flags;
+@@ -3113,7 +3112,6 @@ static int files_reflog_expire(struct ref_store *ref_store,
+ 		strbuf_release(&err);
+ 		return -1;
+ 	}
+-	oid = &lock->old_oid;
+ 
+ 	/*
+ 	 * When refs are deleted, their reflog is deleted before the
+@@ -3157,7 +3155,6 @@ static int files_reflog_expire(struct ref_store *ref_store,
+ 		}
+ 	}
+ 
+-	assert(!unused_oid);
+ 	(*prepare_fn)(refname, oid, cb.policy_cb);
+ 	refs_for_each_reflog_ent(ref_store, refname, expire_reflog_ent, &cb);
+ 	(*cleanup_fn)(cb.policy_cb);
+-- 
+2.33.0.476.gf000ecbed9
 
