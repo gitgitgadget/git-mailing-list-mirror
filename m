@@ -6,84 +6,75 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22E4EC4338F
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 19:54:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA356C4338F
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 19:58:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CE12610A5
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 19:54:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89376610CF
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 19:58:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234866AbhHSTzS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Aug 2021 15:55:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52126 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234638AbhHSTzS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Aug 2021 15:55:18 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 292B3D15F3;
-        Thu, 19 Aug 2021 15:54:41 -0400 (EDT)
+        id S232297AbhHST6r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Aug 2021 15:58:47 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52037 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235112AbhHST6l (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Aug 2021 15:58:41 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8DD88157C56;
+        Thu, 19 Aug 2021 15:58:03 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3ksP/T2UV7g+sFeq7mT9zt5xLrKccJ/utyqAfj
-        /Z/c0=; b=YhOurr5IAueOtRgbJATdLAW6jUq5RFZFpifu7L2GLhELCirEDSMFoq
-        vvqtqzb0xCY3f/UAD27E7E4ED+wulrC6csPnR9jVZPhwiUKVqXhpAinkF284p6Ka
-        BXIOKVzHLSz/viQsG5YccKPehOn0ZVfBWqLH6+jY1zB81MA59KBjE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 21F05D15F2;
-        Thu, 19 Aug 2021 15:54:41 -0400 (EDT)
+        :content-type; s=sasl; bh=Mntp82oxYkzOwLeUjz+VhgUm6xhNZgF6w027fo
+        ulA+E=; b=sPI46fOHBNRFXW0VfaaQdg809FbhEE0lJPzcrrHUIWsHa5MK6ZwA9b
+        ePFOnJXAAjTBSrS0d13CPONDri3rwngE0cn2xSkbrKfmamRsf7aZOKVu0jb/kttQ
+        p54N15SIgsvl2pov3ZAbBGv1Z7JWfBNDZViZpmrRwn1jywsy0XA0k=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 85F39157C55;
+        Thu, 19 Aug 2021 15:58:03 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.116.162])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A6862D15F1;
-        Thu, 19 Aug 2021 15:54:40 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 50C58157C51;
+        Thu, 19 Aug 2021 15:58:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
         SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        ak@linux.intel.com, Jeff Hostetler <git@jeffhostetler.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] make: add install-strip target
-References: <20210817110728.55842-1-bagasdotme@gmail.com>
-        <nycvar.QRO.7.76.6.2108172327290.55@tvgsbejvaqbjf.bet>
-        <CAPig+cT5nPJ7NKFKXRQJwTzL13oEwzMBBpAa+P+XoZxO9SEKKQ@mail.gmail.com>
-        <nycvar.QRO.7.76.6.2108181222120.55@tvgsbejvaqbjf.bet>
-Date:   Thu, 19 Aug 2021 12:54:39 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2108181222120.55@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 18 Aug 2021 12:25:35 +0200 (CEST)")
-Message-ID: <xmqqwnohyzuo.fsf@gitster.g>
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jens Lehmann <Jens.Lehmann@web.de>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH 0/2] test-lib-functions.sh: keep user's HOME, TERM and
+ SHELL for 'test_pause' and 'debug'
+References: <pull.1022.git.1629393395.gitgitgadget@gmail.com>
+        <CAPig+cT2FfaYBbsRMy7vxXkvsxn4BcFTn4bGJjgvJKznXg1OYg@mail.gmail.com>
+Date:   Thu, 19 Aug 2021 12:57:58 -0700
+In-Reply-To: <CAPig+cT2FfaYBbsRMy7vxXkvsxn4BcFTn4bGJjgvJKznXg1OYg@mail.gmail.com>
+        (Eric Sunshine's message of "Thu, 19 Aug 2021 14:10:05 -0400")
+Message-ID: <xmqqsfz5yzp5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 4A815528-0127-11EC-A659-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: C18144A8-0127-11EC-9534-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> -install: all
-> +install: all | strip
->  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
->  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
->  	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
-> -- snap --
->
-> I am not quite certain that this is compatible with other `make`
-> implementations we still might support (if there are any, I remember that
-> we often have to rely on `gmake` because the native `make` does not
-> understand our `Makefile`?), so that might need to be conditional on GNU
-> Make.
+> I also find the test_pause() user-experience suboptimal and appreciate
+> the idea of improving it. However, this approach seems fatally flawed.
+> In particular, setting HOME to the user's real home directory could
+> lead to undesirable results. When I'm using test_pause() to debug a
+> problem with a test, I'm not just inspecting the test state, but I
+> quite often interact with the state using the same Git commands as the
+> test itself would use.
 
-I think we are pretty-much dependent on GNU make already (it is
-possible to raise a weather balloon to confirm by renaming Makefile
-to GNUmakefile and observing if anybody complains, I think).
+Yes, I do agree with you that it is a valid concern.
 
-But I am not sure what such a rule does for a .PHONY target like
-'strip'.  Does it do the right thing, i.e. "install recipe is run
-after 'strip' recipe has run, iff 'strip' is also asked for"?
-
-Thanks.
+I wonder if the developers can configure tools used during debugging
+session with XDG so that HOME can be kept for the "fake user that
+ran the test suite, with the fake user's configuration"?
