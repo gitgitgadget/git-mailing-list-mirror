@@ -2,98 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA86CC4338F
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 17:10:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E950AC4338F
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 17:16:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A8BA960FE6
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 17:10:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C6AD361075
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 17:16:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231237AbhHSRK6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Aug 2021 13:10:58 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64879 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230202AbhHSRK5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Aug 2021 13:10:57 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 98353136F73;
-        Thu, 19 Aug 2021 13:10:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cEZHpY4mP+KbBksDjLQctP6bg0afHpLEgr1nGu
-        LcEWE=; b=gon863u6KDAeX4wpcYJvOz3Q/4OqGA4s/YL7hw+8lBYOP9B7p9NoCA
-        50Pjr4sYDuiAgnqMzRMbTfcKqGXQTcvDd1f34zBS5xDjeZd57kIUA/IlE5hdhE/I
-        bUBpQPF72oXmKJm0dmwwyNKMP+g3HhWZ8vD7AiY22PjXEt6Y3DI9E=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8FEEF136F71;
-        Thu, 19 Aug 2021 13:10:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8B0B9136F70;
-        Thu, 19 Aug 2021 13:10:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
-        <avarab@gmail.com>, Han-Wen Nienhuys <hanwen@google.com>,
-        Ramkumar Ramachandra <artagnon@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH v6] [GSOC] cherry-pick: use better advice message
-References: <pull.1010.v5.git.1629075306706.gitgitgadget@gmail.com>
-        <pull.1010.v6.git.1629352277151.gitgitgadget@gmail.com>
-Date:   Thu, 19 Aug 2021 10:10:14 -0700
-In-Reply-To: <pull.1010.v6.git.1629352277151.gitgitgadget@gmail.com> (ZheNing
-        Hu via GitGitGadget's message of "Thu, 19 Aug 2021 05:51:16 +0000")
-Message-ID: <xmqqlf4x2weh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230202AbhHSRRV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Aug 2021 13:17:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54880 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230393AbhHSRRP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Aug 2021 13:17:15 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 497A2C061756
+        for <git@vger.kernel.org>; Thu, 19 Aug 2021 10:16:38 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id j12-20020a05600c1c0c00b002e6d80c902dso4438448wms.4
+        for <git@vger.kernel.org>; Thu, 19 Aug 2021 10:16:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=0Q9+gG05vetHt/0pJ4fpO85vlegLx3/gvuvTzMatPHk=;
+        b=gv5XpKmJ/aa9SOOP4E/vOiwLVou3qmslUYw8cWRlBtfqZHcZbaCAKtlcgzdHqJlLCv
+         HA1JH5assNmCQPHks8lNHGuG9ARpVnFU+BWTkf8qE/Ksl+aczivqjH2VIkvOdc+L5kAF
+         cKQr48iMniCYmWkBMNe4IwCYNmVyxrD5XzVkHePoXUiQCJYk/rfefpI8BuR0reIA3Wmn
+         TCBrmz/HSwpklhT77G+N5BVbNu8i43l9vLy1EuySJqHhlypGlc7vTrE1c0hNhJQFD5tk
+         aIUpQF6xDiU2IIk2tHUDiAwewtErUUUAujE7LZKCbpMvnzhfIOF5re+4plYWJQqh+cv5
+         dKTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=0Q9+gG05vetHt/0pJ4fpO85vlegLx3/gvuvTzMatPHk=;
+        b=X1SOw2V7x+y4W7kPot2CmiMo08dw8Hc5BBIfsFWrwKEw58Iu1xE6PinMEmQmxtr5Mj
+         dYowFW6L9RhQyXdysttoGVFUmk6XJ5I0+fwhhwLnSoKV3w9E9+W3p6tARquXmWTJSJXU
+         W4YVCfhDkQPOqDerH66Hj5bt+DZLsY5Z0IuvPmPHRwGPWxUdyyW0DCVnn85mR1piySkl
+         VDnODOb9fKMgBgtlRZmHUPQpz6ez6DezevJDwzIUywxlGEczKhf6spUoZPoVPpvs2P5G
+         DgOZHNJQ4/agK3qsIAvle9AHI1TFIhGxjuLKOFM/U1CIXiyOiAtlYxiyWdmcs39dvM2p
+         JLqg==
+X-Gm-Message-State: AOAM532vrpW5wA8u5bgi0LJUMSUZK7st65/A15N3gQYHOIZg4NQBkgKa
+        /dS/vr6TyoXOoIterSwjjBUXcdiACpE=
+X-Google-Smtp-Source: ABdhPJxy/QWy5ybdBPAjKX5T+PRds4U7YfbI4eXVOlJRrGSyE/Xp2lXWi4cq8kmvVn61Qv5P1RdIhw==
+X-Received: by 2002:a1c:2042:: with SMTP id g63mr14951443wmg.27.1629393396873;
+        Thu, 19 Aug 2021 10:16:36 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t1sm8449658wma.25.2021.08.19.10.16.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Aug 2021 10:16:36 -0700 (PDT)
+Message-Id: <pull.1022.git.1629393395.gitgitgadget@gmail.com>
+From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 19 Aug 2021 17:16:33 +0000
+Subject: [PATCH 0/2] test-lib-functions.sh: keep user's HOME, TERM and SHELL for 'test_pause' and
+ 'debug'
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 53092444-0110-11EC-A4BD-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+To:     git@vger.kernel.org
+Cc:     SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jens Lehmann <Jens.Lehmann@web.de>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+This series proposes two small quality-of-life improvements (in my opinion)
+to the 'test_pause' and 'debug' test functions: using the original values of
+HOME and TERM (before they are changed by the test framework) and using
+SHELL instead of SHELL_PATH.
 
->           Mentored-by: Christian Couder <christian.couder@gmail.com>
->      -    Mentored-by Hariom Verma <hariom18599@gmail.com>:
->      +    Mentored-by Hariom Verma <hariom18599@gmail.com>
+The later might be too big of a change, but I think it makes sense. We could
+add a new GIT_TEST_* to conditionnaly change the behaviour, but I kept it
+simple for v1.
 
-I think you meant to move ':' not remove it.
+Cheers, Philippe.
 
-> +		else if (opts->action == REPLAY_PICK)
-> +			advise(_("Resolve all conflicts manually, mark them as resolved with\n"
+Philippe Blain (2):
+  test-lib-functions: use user's SHELL, HOME and TERM for 'test_pause'
+  test-lib-functions: use user's TERM and HOME for 'debug'
 
-Do we need to say "manually"?  Dropping the word would make the
-message more concise.  Not repeating the word "resolve" by saying
-something like "after resolving the conflicts, mark them with ..."
-would probably be a much better phrasing, too.
+ t/test-lib-functions.sh | 4 ++--
+ t/test-lib.sh           | 6 ++++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-> +				 "\"git add/rm <conflicted_files>\", then run\n"
 
-<paths> (or <pathspec>) not <conflicted_files>; you can resolve many
-files in a directory and give the pathspec to match the directory to
-mark all the files in there as resolved.
-
-> +				 "\"git cherry-pick --continue\".\n"
-> +				 "You can instead skip this commit: run \"git cherry-pick --skip\".\n"
-
-Inconsistent use of prose in the above and ": run" here.
-
-        You can instead skip this commit with "git cherry-pick --skip"
-
-> +		else if (opts->action == REPLAY_REVERT)
-
-Likewise.
-
-Thanks.
+base-commit: 225bc32a989d7a22fa6addafd4ce7dcd04675dbf
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1022%2Fphil-blain%2Ftest-pause-and-debug-easier-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1022/phil-blain/test-pause-and-debug-easier-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1022
+-- 
+gitgitgadget
