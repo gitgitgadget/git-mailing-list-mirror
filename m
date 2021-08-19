@@ -2,127 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A290C432BE
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 20:10:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 374BAC4320A
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 20:11:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 359E6610D2
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 20:10:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0FAD26109E
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 20:11:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234903AbhHSUKu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Aug 2021 16:10:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38846 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234838AbhHSUKs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Aug 2021 16:10:48 -0400
-Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71D87C061756
-        for <git@vger.kernel.org>; Thu, 19 Aug 2021 13:10:11 -0700 (PDT)
-Received: by mail-qt1-x849.google.com with SMTP id x10-20020a05622a000ab02902982df43057so3415346qtw.9
-        for <git@vger.kernel.org>; Thu, 19 Aug 2021 13:10:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=1qdRTQjSkrijWEztupM+Dn+VxpuMQu76dkre4l8ppG8=;
-        b=jiYdA8ypaeCPY+slT7QEgywvndhS9xpzyq4Cc+EQxHRnIxZX0PYnOfrRKw7cF5u8OV
-         u5WCKLSMEg2MztBZeimudWIMgIyDWadSnP2TfrbwM9PZO+EPJxbwzQsFJ4mIjUEjaq4y
-         xM+8g4aa6guFtYQYjXniJk88rEZ2fYkQgUiYq0L9xymYQVG4b+7ubggWEXOV7Et27XZX
-         hDlBFTX83UVjBfMGlPgoh5pp+oIua0L+CrjVyPJg2l7zikha60Qm4qBMvEu2bwoSwe6M
-         u6hdWyh7Xp61DA7blRvQi/Hp1qrqE5MO3It7GT6qSq9sp3iM+VMlswKuccf3cTSek8PN
-         fSIw==
+        id S235037AbhHSUL7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Aug 2021 16:11:59 -0400
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:41876 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229853AbhHSUL7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Aug 2021 16:11:59 -0400
+Received: by mail-ed1-f52.google.com with SMTP id n12so10560748edx.8
+        for <git@vger.kernel.org>; Thu, 19 Aug 2021 13:11:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=1qdRTQjSkrijWEztupM+Dn+VxpuMQu76dkre4l8ppG8=;
-        b=CXvhZRabSHZ3iz2+siC4Mx9rM72H14GS1ZqjaBtbPU45+WWpua23mAqxkr+o6mMYyZ
-         xTRkGwbzAXTdnVfx5SFkJyy1Wu2aTG96whFo7OgvfYgBEUJeTJZK8cGUNVFj7yDipORM
-         q+d8WuP0C2y3hZr+ErnKVGaOrWEmtvIGr7qcMoiXyKppatWidxgxYLsCez7BJeWasBEW
-         X+7r9y6n+hcHEULRMs+3PBOAD5zeOZKIzNRaJYXQZXbAdH3h32ox5246zXOTDWNyziXp
-         vx2a+SPSAbBx46YGWyYhg0lrMJrWkroRgnBHQzINZu4hSKlUaordciJ9+Bt3TVLe7ppf
-         6Whg==
-X-Gm-Message-State: AOAM532KHltAktkMCI8euTNWMctt1hkuDuo6P3mJkqkNA60tSjFVgIuS
-        FCd9qC9xJj6JeYWiKG5HuLsb+wAYbNOl8663AzezXwEP/vMSk6hI63DbEDf7yxJEpn6RE7CbAoo
-        ai42m7rbb67uDUlzJIwo//sN7rVy/zoajExJhipOToh6OsH+St4ZuHzwz4omFZopfyufDCnwQwg
-        ==
-X-Google-Smtp-Source: ABdhPJwhJYk9fK6bf0M/Y7ZW4oLEYQufnHBMtcPjxbsetea9eBOHeSbvwRq0i+yO4tFqpwLbbi/oZ4XFG1t/enn/ejM=
-X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:200:5c:aa12:af53:acbb])
- (user=emilyshaffer job=sendgmr) by 2002:a05:6214:126:: with SMTP id
- w6mr16377166qvs.61.1629403810601; Thu, 19 Aug 2021 13:10:10 -0700 (PDT)
-Date:   Thu, 19 Aug 2021 13:09:53 -0700
-In-Reply-To: <20210819200953.2105230-1-emilyshaffer@google.com>
-Message-Id: <20210819200953.2105230-5-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20210819200953.2105230-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.33.0.rc2.250.ged5fa647cd-goog
-Subject: [PATCH v3 4/4] submodule: record superproject gitdir during 'update'
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QytasVQY535f0OheaGmyTbNZM2DlZ4/ii9r6yB9NtoY=;
+        b=eI2ZcRpuHneN8jKgVsoVlNOGAt+lcurYbQYOhFZ2PCi6lm/Ag3BiW0thirZ8L71b7R
+         8Nf5Bh17U0o8AVYG6qhQwJDoWlVgbsKhTz+xuaTsArsLayytZiS6P+EroZOgDQkDsfdm
+         taCZLf8XYSKEsDc5rKDw5GWIuot8unEhMH9OMK9r8qlW1cMNKXhF4/7jfr0N/E80Wm+M
+         4+ROfiDHkz0JVnFaEBFz39YHwpWYpkgmmLD9btes0nB4QdF0ahd1eCb8A6+8kHuVzjlu
+         HAaYhmppG0/RMJswY2fm7UAi67pdyKM1yE9JUVVWgEqcF9WMt/lJWyjaPxyLYogKa/Lc
+         QJig==
+X-Gm-Message-State: AOAM533UAINZSx7p0RXPiAQepy9ZV+2x3USMvww6OtBGCsgjohT2GOBw
+        Wpk7+nW5wXmseZPrFUsZZ3dZtLPTd96CS8JY8i00zk2OKdE=
+X-Google-Smtp-Source: ABdhPJydt4gcjZXY9T6WheUR5zO33M+K1JEaxW0cFikeYYczdwECqktS5Nt3AjUUfZWTmcWfme7RxSjgKw7eoalZtNw=
+X-Received: by 2002:a50:ef11:: with SMTP id m17mr18080896eds.233.1629403881630;
+ Thu, 19 Aug 2021 13:11:21 -0700 (PDT)
+MIME-Version: 1.0
+References: <pull.1022.git.1629393395.gitgitgadget@gmail.com>
+ <CAPig+cT2FfaYBbsRMy7vxXkvsxn4BcFTn4bGJjgvJKznXg1OYg@mail.gmail.com> <CABPp-BFKEoHTgdSnUO86zSPYR0mLHv-vUB+Z-SoTtYQbUY4H=Q@mail.gmail.com>
+In-Reply-To: <CABPp-BFKEoHTgdSnUO86zSPYR0mLHv-vUB+Z-SoTtYQbUY4H=Q@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 19 Aug 2021 16:11:10 -0400
+Message-ID: <CAPig+cRk-BB79+pO83A6Qov9W75_91gzaHY4Le1MYKDUWagugg@mail.gmail.com>
+Subject: Re: [PATCH 0/2] test-lib-functions.sh: keep user's HOME, TERM and
+ SHELL for 'test_pause' and 'debug'
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jens Lehmann <Jens.Lehmann@web.de>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A recorded hint path to the superproject's gitdir might be added during
-'git submodule add', but in some cases - like submodules which were
-created before 'git submodule add' learned to record that info - it might
-be useful to update the hint. Let's do it during 'git submodule
-update', when we already have a handle to the superproject while calling
-operations on the submodules.
+On Thu, Aug 19, 2021 at 4:03 PM Elijah Newren <newren@gmail.com> wrote:
+> On Thu, Aug 19, 2021 at 11:10 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > I also find the test_pause() user-experience suboptimal and appreciate
+> > the idea of improving it. However, this approach seems fatally flawed.
+> > In particular, setting HOME to the user's real home directory could
+> > lead to undesirable results. When I'm using test_pause() to debug a
+> > problem with a test, I'm not just inspecting the test state, but I
+> > quite often interact with the state using the same Git commands as the
+> > test itself would use. Hence, it is very common for me to pause the
+> > test just before the suspect commands and then run those commands
+> > manually (instead of allowing the test script to do so). In such a
+> > scenario, HOME must be pointing at the test's home directory, not at
+> > my real home directory.
+>
+> I agree, but I worry that it's not just HOME.  I'd think the point of
+> test_pause is to let you interact with the repository state while
+> getting the same results that the test framework would, and I think
+> some tests could be affected by TERM and SHELL too (e.g. perhaps the
+> recent issues with COLUMNS).  Granted, I suspect far fewer tests would
+> be affected by those, but I'm not sure I like the idea of inability to
+> reproduce the same issues.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
- git-submodule.sh            | 10 ++++++++++
- t/t7406-submodule-update.sh | 10 ++++++++++
- 2 files changed, 20 insertions(+)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 4678378424..f98dcc16ae 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -648,6 +648,16 @@ cmd_update()
- 			fi
- 		fi
- 
-+		# Cache a pointer to the superproject's gitdir. This may have
-+		# changed, so rewrite it unconditionally. Writes it to worktree
-+		# if applicable, otherwise to local.
-+		relative_gitdir="$(git rev-parse --path-format=relative \
-+						 --prefix "${sm_path}" \
-+						 --git-dir)"
-+
-+		git -C "$sm_path" config --worktree \
-+			submodule.superprojectgitdir "$relative_gitdir"
-+
- 		if test -n "$recursive"
- 		then
- 			(
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index f4f61fe554..c39821ba8e 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -1061,4 +1061,14 @@ test_expect_success 'submodule update --quiet passes quietness to fetch with a s
- 	)
- '
- 
-+test_expect_success 'submodule update adds superproject gitdir to older repos' '
-+	(cd super &&
-+	 git -C submodule config --unset submodule.superprojectGitdir &&
-+	 git submodule update &&
-+	 echo "../.git" >expect &&
-+	 git -C submodule config submodule.superprojectGitdir >actual &&
-+	 test_cmp expect actual
-+	)
-+'
-+
- test_done
--- 
-2.33.0.rc2.250.ged5fa647cd-goog
-
+Oh, indeed. I didn't mean to imply that HOME is the only problematic
+one; they all are since, as you say, they can impact correctness and
+reproducibility of the tests themselves. I called out HOME specially
+because of the potential danger involved with pointing it at the
+user's real home directory since it could very well lead to clobbering
+of precious files and other settings belonging to the user.
