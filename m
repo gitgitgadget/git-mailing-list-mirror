@@ -2,135 +2,205 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC2DBC4338F
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 08:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82554C432BE
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 08:29:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE41861139
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 08:11:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C8A66113C
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 08:29:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236924AbhHSIMQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Aug 2021 04:12:16 -0400
-Received: from mout.gmx.net ([212.227.15.15]:55095 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236854AbhHSIMP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Aug 2021 04:12:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1629360690;
-        bh=2opkJoqTxQq+cigeOzULeiPWFYqM01sZiiquwr1Vnn0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HdB/7a7PWnlY2Q/ZyGYtYK9s3+r5sLE0/cqkmuPwAvU4Jo46wZ5NEqHgbuNh2DcTp
-         fE5TRtUjnqlQaAJFNhpapMx1h8lDH2KiiUBuVvHst4Y2LVyUQymszVzAvyF0bQFyQt
-         j9U3pO1VRw7vGoijk1rzYg5ez9/TIjLOtJOFwaks=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.86.215] ([213.196.213.229]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N17Ye-1nDiyR3c9y-012biL; Thu, 19
- Aug 2021 10:11:29 +0200
-Date:   Thu, 19 Aug 2021 10:11:27 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
-        matheus.bernardino@usp.br, stolee@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 6/8] attr: be careful about sparse directories
-In-Reply-To: <c9e100e68f80196a35a37b5d0aad74e8e1174766.1629206603.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2108191008160.55@tvgsbejvaqbjf.bet>
-References: <pull.1009.v2.git.1628625013.gitgitgadget@gmail.com>        <pull.1009.v3.git.1629206602.gitgitgadget@gmail.com> <c9e100e68f80196a35a37b5d0aad74e8e1174766.1629206603.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S237433AbhHSIaD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Aug 2021 04:30:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43662 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237407AbhHSIaB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Aug 2021 04:30:01 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA594C061575
+        for <git@vger.kernel.org>; Thu, 19 Aug 2021 01:29:25 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id o2so5190792pgr.9
+        for <git@vger.kernel.org>; Thu, 19 Aug 2021 01:29:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ewlaK7KfwfeQA8a2+RRVtJNZTxO5Fg9rROGsXcCNq9g=;
+        b=i9KQ8I91W4zCKtCduF68QxxkmTZcgY65JSaEJWi20AABDLkQENlbwJ6nGrSrht0GWt
+         eTk4rlAAnvavzSqYNcgkfFbeoB6Ej4BKFLUzuuIqDDEfG/dIRZuQB10SPqTB9Ot733Bl
+         bm7Z+ICJlMDJQPudYzET+ayjPHs4C+VVx9qEeIw/yk3dMYaUssZAuzH7mU/0i8vrlcMb
+         +oZboXiiOcDUQWKGJkjvEnoLd6LkiAtQiiJv/tq58qlBWRSOAfjsS04+32q+Uyc3b48V
+         Xp1jESP5/rFxDCVUZ+wqm4XfUCLO2Krh8ldEQ32xf55c/VqyIxiDd0UcN79spfyA7MoW
+         o1bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ewlaK7KfwfeQA8a2+RRVtJNZTxO5Fg9rROGsXcCNq9g=;
+        b=kCkWx/R9q1O6NlvGC+YSo2EB6NHCnsKzYd8gVX+hfNvgR7X18SwnAF3QnrnaHAiFxp
+         6oqtlubw9Rh3J+ZS7OgXgoecLnIWG/Mp0inQhUszrHhjUHAlsInAY38SgmW7OKEHhSIn
+         tTiUDRYh93Z8ee9BI8LtjoOb93LggDQBCtyaiR2NG3iGjq8ov5Er7Mc1EUWNJo5/yLbr
+         T63zujDQjpnDRaZ3J0jVtEQyULYnlSD48e2+5ZS2W5NlvICm4Rc4a46viIqDBvYyjbtW
+         8e79pQwywZJo6zBeG5OH0+CRlE2+OVWziXZ/QNTkpZxOP23Shhs1tSrAUL9IaIpBSj2t
+         NkUw==
+X-Gm-Message-State: AOAM533ml7vyYoaiueZXkZGS5sKpgR9xzXuzGk8ydeWt1F/aVdAe2yw/
+        /JMRTe0LE03l3OhuMohTIfKkV4ow1Vs=
+X-Google-Smtp-Source: ABdhPJyNyKetz092AJN4H6Nk981bgC0O8A53FFX9ap0EMDXYHVLsM0mPt2JcsyWIMS0koTvZU+N0kA==
+X-Received: by 2002:a63:682:: with SMTP id 124mr12958959pgg.299.1629361765197;
+        Thu, 19 Aug 2021 01:29:25 -0700 (PDT)
+Received: from athena.localdomain ([2402:800:63ed:4478:964c:2b9b:388e:4b0])
+        by smtp.gmail.com with ESMTPSA id 143sm2428880pfz.13.2021.08.19.01.29.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Aug 2021 01:29:24 -0700 (PDT)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>, Thomas De Zeeuw <thomas@slight.dev>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] diff-lib: ignore all outsider if --relative asked
+Date:   Thu, 19 Aug 2021 15:29:09 +0700
+Message-Id: <bc7eda4ed8d52072b929a4af6e4e4ed7478ef9d6.1629361733.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.33.0.254.g68ee769121
+In-Reply-To: <40BE2EF2-0AF3-45BA-9880-8A6011B38D03@slight.dev>
+References: <40BE2EF2-0AF3-45BA-9880-8A6011B38D03@slight.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:eAZ04gLdylaRLDSf91uQ8YqtpIfFET5WGsFplw+z71SGfOP5mvS
- b2TZzOuHtIm5hm7RLJ1h9ytdj1Bi3Na1+EzShmy7MQvxvFEqMr+B6eavVZt/7+nuUjB+yTf
- lIaO/PFMQD3rfE0Hs+rklRutemJhAf/vo85KEC1BBxD87Ms0V/4/CBkR9GFTqOoOMy58CDU
- ei5S/WOzUFOIqKKUSFHZQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:T918aALJ8jY=:0W/vN6akuzbqQ04G1l0dJF
- HBzKhPtDbgkpNMa6lgnXmsQAalmcZlU2jnIIcsnkcbadzxv4krEqSwYjSMzwl68ZYVIhMg+vA
- niWb9w7ueb32oVW4U5a/T9IfLyCyjJ+kPuyi1zhBi1jtNzB71ZsliIMds7W6ZHWHVUyo1uIBE
- V5m9Hg5ApKVwfhMXfLzZVeB2kdaHwD2UrWZAq24U6K+FQMjo/pEXOxmWV7bEaHmmB2u3HcYEv
- pCpf5dXDsTHsl/kC7DzoVr+Lc6HsMikDT4iseRnrGOdIBMavutCbAx2KGt338Q+YxDxD14kj/
- AMnhNacSKNYo6hdbVtI7+IjWitU2awyp0JZdvATlgl5k4NzJqQ3ykqFlxg/HZsiRjxpFMfDcw
- QhEIcke6fc8oYR8uP2LFWUdDWaYJUpq8+2O9R3icmF0cj3hW6KOHCaF5Nmn+TXYTrLpQGx33+
- esrriyvOhnbIXQV20fRYcZWzFv2fyrPUXIxvl6N7dhAQyQmKeXFLa57bfVzXrXQ70ChJLxziO
- I1GDSGPCJtMV0IbIDhffuw05DzFhmLMlHz+la1PxlFpf1SLMFe/1+cCS821KPoUURYB0aPhgK
- DUGiDXs9KJsGKgAqLSBgx1OraguOoWQ4LobdXclWWOZJMxPKcd4vUV46/TchiCxR11+T5e3B9
- w6VrOusE5fC4I6bTqTr8QH0d2t3r6+p813DXpXe1rHKbWqnPaJuxhrhkw8SzW4x6+iSqrJaWA
- nWYJobcRR9rmKmlFd2WUNIijMAN2Rhf+We5m7RuBUO4LiLiRQ/mjJs1iIZY+IGeLJlZ83Jpch
- XRMtKSD7JGsVl5mQ7COav4N+R+Vr2VnF6eSQOk2UZzf7J+7WNoKpmgYAcJriTAQ1pnQaMCyu2
- WGpcJsdSbVY6Xcdd5O/ei4CzsTmAY9ToWC9k3sWPV1rylflb7KlfGx0mTZx7RaQImyPv3734Z
- TLmQs/NHn4yHmeJZDiFxkslVIs1kfsaPFf1mr6xYtARL6wUr/VR/4yUriWxAq0N1uCeSk661V
- v4TfZtVd5FaeP9K8XUCr90T8xR02cxrJn7jVtAf1KUI28Rd9K8GiFDNYBtRKtDRrt07pOA7UY
- tO/q0VIhoojM3LyfOkvm0vUU7Iub+NsDbSJ2E2blkFN5nuGnX2blnyowQ==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stolee,
+For diff family commands, we can tell them to exclude changes outside
+of some directories if --relative is requested.
 
-On Tue, 17 Aug 2021, Derrick Stolee via GitGitGadget wrote:
+In diff_unmerge(), NULL will be returned if the requested path is
+outside of the interesting directories, thus we'll run into NULL
+pointer dereference in run_diff_files when trying to dereference
+its return value.
 
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  attr.c | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
->
-> diff --git a/attr.c b/attr.c
-> index d029e681f28..a1009f78029 100644
-> --- a/attr.c
-> +++ b/attr.c
-> @@ -14,6 +14,7 @@
->  #include "utf8.h"
->  #include "quote.h"
->  #include "thread-utils.h"
-> +#include "dir.h"
->
->  const char git_attr__true[] =3D "(builtin)true";
->  const char git_attr__false[] =3D "\0(builtin)false";
-> @@ -744,6 +745,19 @@ static struct attr_stack *read_attr_from_index(stru=
-ct index_state *istate,
->  	if (!istate)
->  		return NULL;
->
-> +	/*
-> +	 * In the case of cone-mode sparse-checkout, getting the
-> +	 * .gitattributes file from a directory is meaningless: all
-> +	 * contained paths will be sparse if the .gitattributes is also
-> +	 * sparse. In the case of a sparse index, it is critical that we
-> +	 * don't go looking for one as it will expand the index.
-> +	 */
-> +	init_sparse_checkout_patterns(istate);
-At first I thought that `init_sparse_checkout_patterns()` is called by
-`path_in_sparse_checkout()` below, and therefore would not be necessary.
+We can simply check for NULL there before dereferencing said
+return value.  However, we can do better by not running diff
+on those unintesting entries.  Let's do that instead.
 
-But it is! Without it, we have no way to test whether `use_cone_patterns`
-is set, because, well, it gets set by `init_sparse_checkout_patterns()`.
+Reported-by: Thomas De Zeeuw <thomas@slight.dev>
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
 
-Would it therefore make sense to refactor the code to have a
-`path_in_sparse_checkout_cone()` function? Or add a flag
-`only_in_cone_mode` as function parameter to `path_in_sparse_checkout()`?
+Cc: Junio C Hamano <gitster@pobox.com>
 
-Ciao,
-Dscho
+Notes:
+    Check for return value of diff_unmerge is not enough.
+    
+    Yes, it works with --name-only, however, with only --relative,
+    git-diff shows unmerged entries outside of subdir, too.
+    
+    Furthermore, the filename in "diff --cc" ignores the relative prefix.
+    Fixing this requires touching all over places, at least from my study.
+    Let's fix the crash, first.
+    
+    We have two choices here:
+    
+    * Check pair, aka return value of diff_unmerge, like my original
+      suggestion, and the unmerged entries from outside will be shown, too.
+      Some inconsistent will be observed, --name-only won't list files
+      outside of subdir, while the patch shows them.  At least, it doesn't
+      create false impression of no change outside of subdir.
+    
+    * Skip all outsiders, like this patch.
+    
+    While I prefer this approach, I don't know all ramifications of this change,
+    let's say an entry moved to outside of subdir in one side, and modified in
+    other side.
+    
+    Because, I pick the different approach, Junio's ack isn't included here.
+    
 
-> +	if (istate->sparse_checkout_patterns &&
-> +	    istate->sparse_checkout_patterns->use_cone_patterns &&
-> +	    path_in_sparse_checkout(path, istate) =3D=3D NOT_MATCHED)
+ diff-lib.c               |  4 +++
+ t/t4045-diff-relative.sh | 53 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 57 insertions(+)
 
-> +		return NULL;
-> +
->  	buf =3D read_blob_data_from_index(istate, path, NULL);
->  	if (!buf)
->  		return NULL;
-> --
-> gitgitgadget
->
->
+diff --git a/diff-lib.c b/diff-lib.c
+index f9eadc4fc1..ca085a03ef 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -117,6 +117,10 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 		if (!ce_path_match(istate, ce, &revs->prune_data, NULL))
+ 			continue;
+ 
++		if (revs->diffopt.prefix &&
++		    strncmp(ce->name, revs->diffopt.prefix, revs->diffopt.prefix_length))
++			continue;
++
+ 		if (ce_stage(ce)) {
+ 			struct combine_diff_path *dpath;
+ 			struct diff_filepair *pair;
+diff --git a/t/t4045-diff-relative.sh b/t/t4045-diff-relative.sh
+index 61ba5f707f..8cbbe53262 100755
+--- a/t/t4045-diff-relative.sh
++++ b/t/t4045-diff-relative.sh
+@@ -162,4 +162,57 @@ check_diff_relative_option subdir file2 true --no-relative --relative
+ check_diff_relative_option . file2 false --no-relative --relative=subdir
+ check_diff_relative_option . file2 true --no-relative --relative=subdir
+ 
++test_expect_success 'setup diff --relative unmerged' '
++	test_commit zero file0 &&
++	test_commit base subdir/file0 &&
++	git switch -c br1 &&
++	test_commit one file0 &&
++	test_commit sub1 subdir/file0 &&
++	git switch -c br2 base &&
++	test_commit two file0 &&
++	git switch -c br3 &&
++	test_commit sub3 subdir/file0
++'
++
++test_expect_success 'diff --relative without change in subdir' '
++	git switch br2 &&
++	test_when_finished "git merge --abort" &&
++	test_must_fail git merge one &&
++	git -C subdir diff --relative >out &&
++	test_must_be_empty out &&
++	git -C subdir diff --relative --name-only >out &&
++	test_must_be_empty out
++'
++
++test_expect_success 'diff --relative --name-only with change in subdir' '
++	git switch br3 &&
++	test_when_finished "git merge --abort" &&
++	test_must_fail git merge sub1 &&
++	test_write_lines file0 file0 >expected &&
++	git -C subdir diff --relative --name-only >out &&
++	test_cmp expected out
++'
++
++test_expect_failure 'diff --relative with change in subdir' '
++	git switch br3 &&
++	br1_blob=$(git rev-parse --short --verify br1:subdir/file0) &&
++	br3_blob=$(git rev-parse --short --verify br3:subdir/file0) &&
++	test_when_finished "git merge --abort" &&
++	test_must_fail git merge br1 &&
++	cat >expected <<-EOF &&
++	diff --cc file0
++	index $br3_blob,$br1_blob..0000000
++	--- a/file0
++	+++ b/file0
++	@@@ -1,1 -1,1 +1,5 @@@
++	++<<<<<<< HEAD
++	 +sub3
++	++=======
++	+ sub1
++	++>>>>>>> sub1
++	EOF
++	git -C subdir diff --relative >out &&
++	test_cmp expected out
++'
++
+ test_done
+-- 
+2.33.0.254.g68ee769121
+
