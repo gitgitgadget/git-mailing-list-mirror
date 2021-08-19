@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BCA0C432BE
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 03:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22CFDC4338F
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 03:35:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF9E86044F
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 03:35:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D2E96044F
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 03:35:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236257AbhHSDfk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Aug 2021 23:35:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33608 "EHLO
+        id S236365AbhHSDfm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Aug 2021 23:35:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236268AbhHSDfh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Aug 2021 23:35:37 -0400
-Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDA34C06179A
-        for <git@vger.kernel.org>; Wed, 18 Aug 2021 20:35:01 -0700 (PDT)
-Received: by mail-qv1-xf49.google.com with SMTP id u6-20020ad448660000b02903500bf28866so3624337qvy.23
-        for <git@vger.kernel.org>; Wed, 18 Aug 2021 20:35:01 -0700 (PDT)
+        with ESMTP id S236232AbhHSDfj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Aug 2021 23:35:39 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6F0AC061764
+        for <git@vger.kernel.org>; Wed, 18 Aug 2021 20:35:03 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id w200-20020a25c7d10000b02905585436b530so5170984ybe.21
+        for <git@vger.kernel.org>; Wed, 18 Aug 2021 20:35:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=nGUuP5ePDBgJW4EyGrxuJF6GJyeiI/jzzY2/gZmO2XY=;
-        b=kgfnShVtu9qJh1cCXnTWOhuNh3xIslyMDtP9rzs4O+EKjdMaSsFjk/AE7eWHUoJaCS
-         zLqNKYEDxq5dmCC9j8mX/4q/XJQkmlCyYHazrYkrnwBqYEnJMf73ft+idkE/YKafg32D
-         YHan3m6zZYFM+yGgtXEcmcjqswrM8XkaCt42jdjWtWzUW1JFRXcHFLypHO3J3piVpDsw
-         Tb48w5UY9rxGUQNa9P2V1NwpzfPXUninp1eK4E21bFNu+4qg9qdsXZcKzJ/gvNDPp9dj
-         PHmw8/K/MFCjHGiYYZ+QS4uIwiBPEHymfkQk4KBIzTUfWFNAZdoSQmNzcAD2fekGYjHL
-         xScA==
+        bh=MhcElDgVfxqxQXJUv/XWqEOJuiEDABBTKckPBWruKLs=;
+        b=fWM2d8Uhkm94TzPlKA9RCffKogIsOe3sKnOqiKiXxckuDwiHAHbZPSe8Xq9aDWE1yJ
+         04k5aMYbD3kNa7daZTokhUPrVQep1mXNLxPbPW+aEhBzlhRCudlBge4J2wHnxQUHFcEz
+         EUT8/Q45j48m/CEvcxRcjQKT0AxdTiDJUYmghVb9nUWWMpjuNGlv9Sj6WnJe4OVL2F8A
+         SK1Nrgofcc72+gQoLmXLHfg++m3Bpbp3gvdAefNGTXaqbWcl5kMszIoSbp6TeMcbkfAz
+         QK0gyRfBLx/QAihwZW7Qx/1Cmrxe52JaRR7lhpHd2BkH+5CLb3qf/N38F0bzRzUHR7Jp
+         Spvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=nGUuP5ePDBgJW4EyGrxuJF6GJyeiI/jzzY2/gZmO2XY=;
-        b=ajuNhhF6YMawTBOdqwX0lVEEpn5gu3QbfgAzseTs/31UTs5/S4hkIV0Bew/uoxVSbW
-         0Wr59lV8Ld1cbFanI7AHNhGLlPgVIMu3M/hqFQOm2fayPJJC1Ylk92m5q0fZMYdTClFu
-         DmrZJf5GTzltm/14RsaYz2fXYWltep8pzGxmYNL0qK/5C0QHzSPGGYyvFBEofYNM76tg
-         UIPEHD9bUHrCYFWa5Q6lV5cIohOSx3K365iAHVRAZhm3VFWUdUBjx+jqVrkG7db9MK8h
-         erhvkcdAJu5jBf1yTh7wcEIENSyGHkxPRFu67zP5qtiyrLi71khpQ0L0mhpmI3T1PrI3
-         7//A==
-X-Gm-Message-State: AOAM5325CQhg7BtOZRdlztS47D9TUANI6W+pZr952r1hQ/S/p0n3vB+9
-        N1A7gL2o1iV25lxO00UhrchhM5zojAltskUtoeUkV7cgsT3AP1Oef9lU+HMHM/q5Z2ezt5uGEdU
-        wmsajwRdwE272A1jCSz8PDeWW2jNEaDNzKvAwl2TRSaxtG7Y6Kw6tgW5NdRgAw1eWpiDYJfXbpg
+        bh=MhcElDgVfxqxQXJUv/XWqEOJuiEDABBTKckPBWruKLs=;
+        b=k8sp9+cnnpLKIe3Lo2yPsnXG7uy0gJMIws/YSB0AU1Yw7x63vZHNn0FzgjNo11b/3u
+         ibjxZAYzy1imv/5z6XF3Nt6koXFwZd/57G3O1xJY4A8ahnfESZrWw2YseXIm5/saVkCN
+         fdFHXY4TY3GfQjtJIuHn/zeB4o0RSux10eIrJcy2io9zVVHXdQfEndF+iJyNUUIsXgZl
+         kxkddAg1zVFbL0nBTPbZfZiVDj0Ba04ZbOQKBPWjS6+kyS4PPuyqcw4QzYLK5tP9raEs
+         b6yGlI9ifXgEahdOW2q2H0Cb6biZ7gyTLtZrrXZJb5hTgYNEN/Li59ups+95kw33t88I
+         1arg==
+X-Gm-Message-State: AOAM532gSTsyQ8zXLrut1epMFV1leLeIQFt91nkv3WiraKVXms9y7cZu
+        JrKzi47Hus2vxfxCHPE9ypaeUTTzJ5hYOLs1/AF8bEjHvcGcyD+TvkvqAYyzctUQqQ+ZbzILJBI
+        /Z3jK2kGTYhIM09QOpJbvxJnOSaY9p5gOENUaO/ZQKOFyahG6umcGgmO6AsMsGwM6q3c/56s9Jw
         ==
-X-Google-Smtp-Source: ABdhPJwct/bvXRcjrSJ0WLLW4UiRIaUwO6w7iqEQRbOeT7dPE3pbcWSgKrTlUrHkDJAdq8I1/rNBPMtaBvTdnTgAsyg=
+X-Google-Smtp-Source: ABdhPJxnJT/xc4ShgNTd+GZHVzinUwT7y/mgnUM5f7UTdd40iJhgqGgF4yeNSgJdVXUdZdtwzVezE6oDXE2db6oYDwo=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:200:a999:9b6d:55c3:b66c])
- (user=emilyshaffer job=sendgmr) by 2002:a05:6214:3b1:: with SMTP id
- m17mr12679002qvy.60.1629344100919; Wed, 18 Aug 2021 20:35:00 -0700 (PDT)
-Date:   Wed, 18 Aug 2021 20:34:47 -0700
+ (user=emilyshaffer job=sendgmr) by 2002:a25:824b:: with SMTP id
+ d11mr16210214ybn.361.1629344103032; Wed, 18 Aug 2021 20:35:03 -0700 (PDT)
+Date:   Wed, 18 Aug 2021 20:34:48 -0700
 In-Reply-To: <20210819033450.3382652-1-emilyshaffer@google.com>
-Message-Id: <20210819033450.3382652-4-emilyshaffer@google.com>
+Message-Id: <20210819033450.3382652-5-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20210819033450.3382652-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.33.0.rc2.250.ged5fa647cd-goog
-Subject: [PATCH v3 3/6] hook: introduce "git hook list"
+Subject: [PATCH v3 4/6] hook: allow running non-native hooks
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -70,138 +70,176 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If more than one hook will be run, it may be useful to see a list of
-which hooks should be run. At very least, it will be useful for us to
-test the semantics of multihooks ourselves.
+As the hook architecture and 'git hook run' become more featureful, we
+may find wrappers wanting to use the hook architecture to run their own
+hooks, thereby getting nice things like parallelism and idiomatic Git
+configuration for free. Enable this by letting 'git hook run' bypass the
+known_hooks() check.
 
-For now, only list the hooks which will run in the order they will run
-in; later, it might be useful to include more information like where the
-hooks were configured and whether or not they will run.
+We do still want to keep known_hooks() around, though - by die()ing when
+an internal Git call asks for run_hooks("my-new-hook"), we can remind
+Git developers to update Documentation/githooks.txt with their new hook,
+which in turn helps Git users discover this new hook.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/git-hook.txt |  5 +++++
- builtin/hook.c             | 46 ++++++++++++++++++++++++++++++++++++++
- hook.c                     |  3 +--
- 3 files changed, 52 insertions(+), 2 deletions(-)
+ Documentation/git-hook.txt |  8 ++++++++
+ builtin/hook.c             |  4 ++--
+ hook.c                     | 35 +++++++++++++++++++++++++++++++----
+ hook.h                     | 14 ++++++++++++++
+ 4 files changed, 55 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
-index 8bf82b5dd4..701ada9fc0 100644
+index 701ada9fc0..d1db084e4f 100644
 --- a/Documentation/git-hook.txt
 +++ b/Documentation/git-hook.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- [verse]
- 'git hook' run [--to-stdin=<path>] [--ignore-missing] [(-j|--jobs) <n>]
- 	<hook-name> [-- <hook-args>]
-+'git hook' list <hook-name>
+@@ -19,6 +19,14 @@ This command is an interface to git hooks (see linkgit:githooks[5]).
+ Currently it only provides a convenience wrapper for running hooks for
+ use by git itself. In the future it might gain other functionality.
  
- DESCRIPTION
- -----------
-@@ -30,6 +31,10 @@ optional `--` (or `--end-of-options`, see linkgit:gitcli[7]). The
- arguments (if any) differ by hook name, see linkgit:githooks[5] for
- what those are.
- 
-+list::
-+	Print a list of hooks which will be run on `<hook-name>` event. If no
-+	hooks are configured for that event, print nothing and return 1.
++It's possible to use this command to refer to hooks which are not native to Git,
++for example if a wrapper around Git wishes to expose hooks into its own
++operation in a way which is already familiar to Git users. However, wrappers
++invoking such hooks should be careful to name their hook events something which
++Git is unlikely to use for a native hook later on. For example, Git is much less
++likely to create a `mytool-validate-commit` hook than it is to create a
++`validate-commit` hook.
 +
- OPTIONS
- -------
+ SUBCOMMANDS
+ -----------
  
 diff --git a/builtin/hook.c b/builtin/hook.c
-index 4dd3617876..d21f303eca 100644
+index d21f303eca..80397d39f5 100644
 --- a/builtin/hook.c
 +++ b/builtin/hook.c
-@@ -8,8 +8,11 @@
+@@ -46,7 +46,7 @@ static int list(int argc, const char **argv, const char *prefix)
  
- #define BUILTIN_HOOK_RUN_USAGE \
- 	N_("git hook run [--ignore-missing] [--to-stdin=<path>] <hook-name> [-- <hook-args>]")
-+#define BUILTIN_HOOK_LIST_USAGE \
-+	N_("git hook list <hook-name>")
+ 	hookname = argv[0];
  
- static const char * const builtin_hook_usage[] = {
-+	BUILTIN_HOOK_LIST_USAGE,
- 	BUILTIN_HOOK_RUN_USAGE,
- 	NULL
- };
-@@ -19,6 +22,47 @@ static const char * const builtin_hook_run_usage[] = {
- 	NULL
- };
+-	head = hook_list(hookname);
++	head = list_hooks_gently(hookname);
  
-+static const char *const builtin_hook_list_usage[] = {
-+	BUILTIN_HOOK_LIST_USAGE,
-+	NULL
-+};
-+
-+static int list(int argc, const char **argv, const char *prefix)
-+{
-+	struct list_head *head, *pos;
-+	const char *hookname = NULL;
-+	struct strbuf hookdir_annotation = STRBUF_INIT;
-+
-+	struct option list_options[] = {
-+		OPT_END(),
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, list_options,
-+			     builtin_hook_list_usage, 0);
-+
-+	if (argc < 1)
-+		usage_msg_opt(_("You must specify a hook event name to list."),
-+			      builtin_hook_list_usage, list_options);
-+
-+	hookname = argv[0];
-+
-+	head = hook_list(hookname);
-+
-+	if (list_empty(head))
-+		return 1;
-+
-+	list_for_each(pos, head) {
-+		struct hook *item = list_entry(pos, struct hook, list);
-+		item = list_entry(pos, struct hook, list);
-+		if (item)
-+			printf("%s\n", item->hook_path);
-+	}
-+
-+	clear_hook_list(head);
-+	strbuf_release(&hookdir_annotation);
-+
-+	return 0;
-+}
- static int run(int argc, const char **argv, const char *prefix)
- {
- 	int i;
-@@ -88,6 +132,8 @@ int cmd_hook(int argc, const char **argv, const char *prefix)
- 	if (!argc)
- 		goto usage;
+ 	if (list_empty(head))
+ 		return 1;
+@@ -105,7 +105,7 @@ static int run(int argc, const char **argv, const char *prefix)
+ 	git_config(git_default_config, NULL);
  
-+	if (!strcmp(argv[0], "list"))
-+		return list(argc, argv, prefix);
- 	if (!strcmp(argv[0], "run"))
- 		return run(argc, argv, prefix);
- 
+ 	hook_name = argv[0];
+-	hooks = list_hooks(hook_name);
++	hooks = list_hooks_gently(hook_name);
+ 	if (list_empty(hooks)) {
+ 		/* ... act like run_hooks_oneshot() under --ignore-missing */
+ 		if (ignore_missing)
 diff --git a/hook.c b/hook.c
-index b8420353fa..b1ea372e15 100644
+index b1ea372e15..ab1e86ddcf 100644
 --- a/hook.c
 +++ b/hook.c
-@@ -96,6 +96,7 @@ struct list_head *list_hooks(const char *hookname)
- {
- 	struct list_head *hook_head = xmalloc(sizeof(struct list_head));
+@@ -51,12 +51,21 @@ static int known_hook(const char *name)
  
+ const char *find_hook(const char *name)
+ {
+-	static struct strbuf path = STRBUF_INIT;
++	const char *hook_path;
+ 
+ 	if (!known_hook(name))
+-		die(_("the hook '%s' is not known to git, should be in hook-list.h via githooks(5)"),
++		BUG(_("the hook '%s' is not known to git, should be in hook-list.h via githooks(5)"),
+ 		    name);
+ 
++	hook_path = find_hook_gently(name);
 +
++	return hook_path;
++}
++
++const char *find_hook_gently(const char *name)
++{
++	static struct strbuf path = STRBUF_INIT;
++
+ 	strbuf_reset(&path);
+ 	strbuf_git_path(&path, "hooks/%s", name);
+ 	if (access(path.buf, X_OK) < 0) {
+@@ -92,10 +101,24 @@ int hook_exists(const char *name)
+ 	return !list_empty(list_hooks(name));
+ }
+ 
++struct hook_config_cb
++{
++	struct strbuf *hook_key;
++	struct list_head *list;
++};
++
+ struct list_head *list_hooks(const char *hookname)
+ {
+-	struct list_head *hook_head = xmalloc(sizeof(struct list_head));
++	if (!known_hook(hookname))
++		BUG("Don't recognize hook event '%s'! "
++		    "Is it documented in Documentation/githooks.txt?",
++		    hookname);
++	return list_hooks_gently(hookname);
++}
+ 
++struct list_head *list_hooks_gently(const char *hookname)
++{
++	struct list_head *hook_head = xmalloc(sizeof(struct list_head));
+ 
  	INIT_LIST_HEAD(hook_head);
  
- 	if (!hookname)
-@@ -103,8 +104,6 @@ struct list_head *list_hooks(const char *hookname)
+@@ -103,7 +126,7 @@ struct list_head *list_hooks(const char *hookname)
+ 		BUG("null hookname was provided to hook_list()!");
  
  	if (have_git_dir()) {
- 		const char *hook_path = find_hook(hookname);
--
--		/* Add the hook from the hookdir */
+-		const char *hook_path = find_hook(hookname);
++		const char *hook_path = find_hook_gently(hookname);
  		if (hook_path) {
  			struct hook *to_add = xmalloc(sizeof(*to_add));
  			to_add->hook_path = hook_path;
+@@ -299,6 +322,10 @@ int run_hooks_oneshot(const char *hook_name, struct run_hooks_opt *options)
+ 	if (options->path_to_stdin && options->feed_pipe)
+ 		BUG("choose only one method to populate stdin");
+ 
++	/*
++	 * 'git hooks run <hookname>' uses run_hooks, so we don't need to
++	 * allow unknown hooknames here.
++	 */
+ 	hooks = list_hooks(hook_name);
+ 
+ 	/*
+diff --git a/hook.h b/hook.h
+index cd3123d290..6b7b2d14d2 100644
+--- a/hook.h
++++ b/hook.h
+@@ -9,8 +9,16 @@
+  * Returns the path to the hook file, or NULL if the hook is missing
+  * or disabled. Note that this points to static storage that will be
+  * overwritten by further calls to find_hook and run_hook_*.
++ *
++ * If the hook is not a native hook (e.g. present in Documentation/githooks.txt)
++ * find_hook() will BUG(). find_hook_gently() does not consult the native hook
++ * list and will check for any hook name in the hooks directory regardless of
++ * whether it is known. find_hook() should be used by internal calls to hooks,
++ * and find_hook_gently() should only be used when the hookname was provided by
++ * the user, such as by 'git hook run my-wrapper-hook'.
+  */
+ const char *find_hook(const char *name);
++const char *find_hook_gently(const char *name);
+ 
+ /*
+  * A boolean version of find_hook()
+@@ -32,8 +40,14 @@ struct hook {
+ /*
+  * Provides a linked list of 'struct hook' detailing commands which should run
+  * in response to the 'hookname' event, in execution order.
++ *
++ * list_hooks() checks the provided hookname against Documentation/githooks.txt
++ * and BUG()s if it is not found.  list_hooks_gently() allows any hookname. The
++ * latter should only be used when the hook name is provided by the user, and
++ * the former should be used by internal callers.
+  */
+ struct list_head *list_hooks(const char *hookname);
++struct list_head *list_hooks_gently(const char *hookname);
+ 
+ struct run_hooks_opt
+ {
 -- 
 2.33.0.rc2.250.ged5fa647cd-goog
 
