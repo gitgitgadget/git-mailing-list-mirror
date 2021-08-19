@@ -2,142 +2,227 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26A1BC4338F
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 22:45:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77433C4338F
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 00:09:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9BFF6108F
-	for <git@archiver.kernel.org>; Wed, 18 Aug 2021 22:45:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 59BF2610D2
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 00:09:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234570AbhHRWqW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Aug 2021 18:46:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52766 "EHLO
+        id S234252AbhHSAKV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Aug 2021 20:10:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232456AbhHRWqV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Aug 2021 18:46:21 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28B9AC061764
-        for <git@vger.kernel.org>; Wed, 18 Aug 2021 15:45:46 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id n11so5025389qkk.1
-        for <git@vger.kernel.org>; Wed, 18 Aug 2021 15:45:46 -0700 (PDT)
+        with ESMTP id S233866AbhHSAKV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Aug 2021 20:10:21 -0400
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0277CC061764
+        for <git@vger.kernel.org>; Wed, 18 Aug 2021 17:09:46 -0700 (PDT)
+Received: by mail-pj1-x1043.google.com with SMTP id w13-20020a17090aea0db029017897a5f7bcso3535137pjy.5
+        for <git@vger.kernel.org>; Wed, 18 Aug 2021 17:09:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=GChFKv293xcFr4LLsbT+ASNwhMl7Rlzn02KhIje/lIw=;
-        b=GRc+dc8E2DZO9hvYUbjSf/d9H8b8whEUvLtqeOqD6as4umqJzcrLRoAafeScmwPeA+
-         zb5IlSpJ5QTdxnw5Jf+okKzNZJpP4Ez62d/wzgj2rcKpvuN75iHca/KZsP0TZfM8GLnm
-         5KP3AbEwsp8dMykYA8IBqCXjf01IO+4Un0EOEnnqDoCUCuOOYjT4GZ/vi3S/kpdOWNIU
-         7p5KAOqfMlQEZJb2sKox98yMwxduza5RSqehurMcuSxNDC1ty/58dV0AkSU3XG+5BEhk
-         IDYJf1VRCuOyZOBkLcPms/ILPlOC5JblmTdVLay3/fg9GQvjzbcAI/iamiVd2tBUSdZd
-         nciA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=6HcZd+uNQux8v7Ei0icbjQbmF0o4xAkRUzVtRf9w82w=;
+        b=PYgr7cH1UGP3o4PDgW5zSlB8hWWSaKYzF59V2dJRyvY0fHZHTa/emv3AFwYk1GLrMu
+         mTwtnZTqaJLTIDG9jGmOkdujcttS6KJk2+CiCRrQkf/gctQ3vzEJ55NSerggwgjiY8FW
+         XHR8U2wUmpRpW1h52buhuqmjSVSs178Pq5W/FtlXypb0zdPJLQKC+jcQ2FAaQqX0iVxL
+         HbON29uYE4FnhEgpfMYXE4fIybRIzvApwQO03junz07iTP12H6GCObcQ7wMqiw7nBLHh
+         Ig9NTG+ok3R86iznmZBNpitLACRE4uSMdV4/cjxBnnewjHHfkYXqlif6bUdTtSJqNta7
+         DvwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=GChFKv293xcFr4LLsbT+ASNwhMl7Rlzn02KhIje/lIw=;
-        b=e19B1ZE6RPdUgnFjKbkIMH0dU5wFStB/zbh2bQwbn/mTbwzSts6RTM+LkNo+jCpcFs
-         IGL6Yyqrk6yBMlTrcUiCiKS2BvZoV0fxFgA9sRowTpTp2H4Nf7D0DUdPd1j0iLvsOg1/
-         V/wSMjxbc1nWV4s+msrpaV7pC+qFBybLGe3ZiIQjjnx6yY4D4J5+edkc3+/pSz4QScJI
-         9RpOD9tr0+w+eD2PVw35B6kPzqBvRoMGyid0GwU+WTQ7U7Z6pqCSLVXMDdh1SkQOAomA
-         IQ42mF2iuM93U/b928hc7IK6/grZnRf++4tZCHKVzQtAYihkLV4W9sxlNq8nbDnkkUT0
-         bj1g==
-X-Gm-Message-State: AOAM530XgirQYOhXn3UPS/0LnVeQapGoASRF11eEaBZCXMwATxKozXeI
-        wJBNqQqf0GJLjinOMOM/WI8=
-X-Google-Smtp-Source: ABdhPJxXO8ONbR/Zw+C0rNLB99sITKk/6MYhr1QKWLc4CKCH+25fWZQ6CFDZOFUzGsuuEUu2cfabpw==
-X-Received: by 2002:a37:a905:: with SMTP id s5mr628748qke.63.1629326745169;
-        Wed, 18 Aug 2021 15:45:45 -0700 (PDT)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id g1sm617350qti.56.2021.08.18.15.45.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Aug 2021 15:45:44 -0700 (PDT)
-Subject: Re: [PATCH v2] sequencer: advise if skipping cherry-picked commit
-To:     phillip.wood@dunelm.org.uk, Josh Steadmon <steadmon@google.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com
-References: <4d83766ab3425a5f4b361df2ac505d07fefd7899.1628109852.git.steadmon@google.com>
- <496da0b17476011b4ef4dde31593afc7572246eb.1628623058.git.steadmon@google.com>
- <c185a396-c498-b2ef-1c86-cec7d5751f3d@gmail.com>
- <e363df27-a99e-1a43-f493-ed90de7b6363@gmail.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <cc044079-c40d-ab79-8afa-8a1dfa66f279@gmail.com>
-Date:   Wed, 18 Aug 2021 18:45:43 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.13.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=6HcZd+uNQux8v7Ei0icbjQbmF0o4xAkRUzVtRf9w82w=;
+        b=lfiPNcRYqqRvdqgYJmcBEUuJgO9mztoBar7eA6/uRBwehr5enK4jx2cVEBEtW/mYmL
+         eG8SDEO/S0aMIqLAzNGHvdHdjlSoVDxxXiVAsXpeEPLUxQivlqid3wsVTPnGrCF1scnT
+         H0qfraA+4eNGwmxSJMYTpL7i5gjw2c33QXddbtRG1Pg4YwDC9unxe0rt9Q0R7KwiZVTG
+         FceuXrWIYNaa+gkMDtTVfxrB+zsBQbULE+GmvMzsTxGFCRKC/KcCrt7z/gO6ESTDVuoO
+         Nsgx1JF69Ju8JTvzxm1AZL4p7h2dKI82BaC0nLmRw8bjkHuKlJgX+ZGoINI94xjCf2n0
+         oMeQ==
+X-Gm-Message-State: AOAM530dimZkIfnjZvzJaemjvLZOLIRJbGkUazXjIwRo380WokKdB71M
+        Zlz+dQkZBfVw044HhuNcipPwFQ==
+X-Google-Smtp-Source: ABdhPJykj0OhQ1Hzr9pbgTAQowVlbylcItBKYEnwAq8/ALcRNPuL6E0WfBAySgUNCX7kcpOyFjMSqg==
+X-Received: by 2002:a17:90a:35e:: with SMTP id 30mr12112028pjf.160.1629331785283;
+        Wed, 18 Aug 2021 17:09:45 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:a999:9b6d:55c3:b66c])
+        by smtp.gmail.com with ESMTPSA id i6sm932856pfa.44.2021.08.18.17.09.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Aug 2021 17:09:44 -0700 (PDT)
+Date:   Wed, 18 Aug 2021 17:09:36 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 5/6] hook: include hooks from the config
+Message-ID: <YR2hQBtZTX5oHdQg@google.com>
+References: <20210812004258.74318-1-emilyshaffer@google.com>
+ <20210812004258.74318-6-emilyshaffer@google.com>
+ <xmqqsfze1jb3.fsf@gitster.g>
 MIME-Version: 1.0
-In-Reply-To: <e363df27-a99e-1a43-f493-ed90de7b6363@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqsfze1jb3.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
-
-Le 2021-08-18 à 06:02, Phillip Wood a écrit :
-> On 12/08/2021 18:45, Philippe Blain wrote:
->> Hi Josh,
->> [...]
->>> diff --git a/sequencer.c b/sequencer.c
->>> index 7f07cd00f3..1235f61c9d 100644
->>> --- a/sequencer.c
->>> +++ b/sequencer.c
->>> @@ -5099,6 +5099,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
->>>       int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
->>>       int rebase_cousins = flags & TODO_LIST_REBASE_COUSINS;
->>>       int root_with_onto = flags & TODO_LIST_ROOT_WITH_ONTO;
->>> +    int skipped_commit = 0;
->>>       struct strbuf buf = STRBUF_INIT, oneline = STRBUF_INIT;
->>>       struct strbuf label = STRBUF_INIT;
->>>       struct commit_list *commits = NULL, **tail = &commits, *iter;
->>> @@ -5149,8 +5150,13 @@ static int make_script_with_merges(struct pretty_print_context *pp,
->>>           oidset_insert(&interesting, &commit->object.oid);
->>>           is_empty = is_original_commit_empty(commit);
->>> -        if (!is_empty && (commit->object.flags & PATCHSAME))
->>> +        if (!is_empty && (commit->object.flags & PATCHSAME)) {
->>> +            advise_if_enabled(ADVICE_SKIPPED_CHERRY_PICKS,
->>> +                    _("skipped previously applied commit %s"),
->>> +                    short_commit_name(commit));
->>> +            skipped_commit = 1;
->>>               continue;
->>> +        }
->>>           if (is_empty && !keep_empty)
->>>               continue;
->>
->> For interactive rebase, an alternate implementation, that I suggested in [1] last summer, would be to keep
->> the cherry-picks in the todo list, but mark them as 'drop' and add a comment at the
->> end of their line, like '# already applied' or something like this, similar
->> to how empty commits have '# empty' appended. I think that for interactive rebase, I
->> would prefer this, since it is easier for the user to notice it and change the 'drop'
->> to 'pick' right away if they realise they do not want to drop those commits (easier
->> than seeing the warning, realising they did not want to drop them, aborting the rebase
->> and redoing it with '--reapply-cherry-picks').
+On Thu, Aug 12, 2021 at 01:48:00PM -0700, Junio C Hamano wrote:
 > 
-> That would be nice, but we could always add it in the future if Josh does not want to implement it now. At the moment the function that creates the todo list does not know if it is going to be edited, I'm not sure how easy it would be to pass that information down.
-
-Well, I'm not sure we need to ? If we change the 'pick' to 'drop', instead of
-not writing these lines to the todo list, the cherry-picked commits will get dropped
-either way, no? Unless I'm missing something - I think you are way more well-versed in
-the sequencer code than me :)
-
->>
->> Like Junio remarked, it is a little unfortunate that some logic is duplicated between
->> 'sequencer_make_script' and 'make_script_with_merges', such that your patch has to do
->> the same thing at two different code locations. Maybe a preparatory cleanup could add
->> a new function that takes care of the duplicated logic and call if from both ? I'm
->> just thinking out loud here, I did not analyze in details if this would be easy/feasible...
+> Emily Shaffer <emilyshaffer@google.com> writes:
 > 
-> I think feasible but not easy (or required for this change), it would also complicate the code in a different way as I think we'd have to add some conditionals for whether we are recreating merges or not.
+> > Teach the hook.[hc] library to parse configs to populare the list of
+> > hooks to run for a given event.
+> >
+> > Multiple commands can be specified for a given hook by providing
+> > multiple "hook.<friendly-name>.command = <path-to-hook>" and
+> > "hook.<friendly-name>.event = <hook-event>" lines. Hooks will be run in
+> > config order of the "hook.<name>.event" lines.
+> >
+> > For example:
+> >
+> >   $ git config --list | grep ^hook
+> >   hook.bar.command=~/bar.sh
+> >   hook.bar.event=pre-commit
+> 
+> Your answer might be "read the design doc", but it is unclear to me
+> why "bar" (friendly-name) is needed in this picture at all.  Is it
+> because you may want to fire more than one command for pre-commit
+> event?  IOW,
+> 
+> 	[hook "bar"]
+> 		command = bar1.sh
+> 		command = bar2.sh
+> 		event = pre-commit
+> 
+> is easier to manage with an extra level of redirection?  I doubt it
+> as 
+> 
+> 	[hook "pre-commit"]
+> 		command = bar1.sh
+> 		command = bar2.sh
+> 
+> would be equally expressive and shorter.  Or would it help use case
+> for multiple "friendly-name" to refer to the same "event", e.g.
+> 
+> 	[hook "xyzzy"]
+> 		event = pre-commit
+> 		command = xyzzy1
+> 
+> 	[hook "frotz"]
+> 		event = pre-commit
+>                 command = frotz1
+>                 command = frotz2
+> 
+> or something?  I am not sure if this gives us useful extra
+> flexibility, and if so, the extra flexibility helps us more than it
+> confuses us.
+> 
+> And moving the "event" to the second level in the configuration
+> hierarchy, getting rid of "friendly-name" from the design, would not
+> make this example unworkable, either:
+> 
+> >   $ git hook run
+> >   # Runs ~/bar.sh
+> >   # Runs .git/hooks/pre-commit
+> 
+> Again, this is not an objection wrapped in a rhetorical question.
+> It just is that I do not see how the extra level of redirection
+> helps us.
 
-Yes, I agree it's not required for this change.
+Please have a look at
+https://lore.kernel.org/git/87fswey5wd.fsf%40evledraar.gmail.com and
+replies, where �var and I discussed the schema change at length. I know
+it is a lot of back and forth but I think it is useful to understand why
+I ended up changing the schema this way.
 
-Cheers,
+> 
+> > diff --git a/Documentation/config/hook.txt b/Documentation/config/hook.txt
+> > index 96d3d6572c..a97b980cca 100644
+> > --- a/Documentation/config/hook.txt
+> > +++ b/Documentation/config/hook.txt
+> > @@ -1,3 +1,8 @@
+> > +hook.<command>.command::
+> > +	A command to execute during the <command> hook event. This can be an
+> > +	executable on your device, a oneliner for your shell, or the name of a
+> > +	hookcmd. See linkgit:git-hook[1].
+> 
+> Please make sure you use the terminology consistently.  If the
+> second level is "friendly name", hook.<name>.command should be
+> described, instead of hook.<command>.command.
 
-Philippe.
+Thanks, this is an oversight. Will update the config/hook.txt doc in
+next reroll.
+
+> 
+> Also, to help those who are familiar with the current Git from their
+> use in the past 10 years or so, giving an example name from the
+> current system may help, e.g. when describing hook.<name>.event,
+> you may want to say the values are things like "pre-commit",
+> "receive", etc.
+
+Sure.
+
+> 
+> > +This command parses the default configuration files for pairs of configs like
+> > +so:
+> > +
+> > +  [hook "linter"]
+> > +    event = pre-commit
+> > +    command = ~/bin/linter --c
+> 
+> The above addition of .command should also have hook.<name>.event
+> next to it, no?
+
+I don't understand the question. Doesn't this config snippet equate to
+"""
+  hook.linter.event=pre-commit
+  hook.linter.command=~/bin/linter --c
+"""
+? So in this case, '<name>' is 'linter', as that's not a native Git hook.
+
+> 
+> > +Conmmands are run in the order Git encounters their associated
+> 
+> "Conmmands -> Commands", I would think.
+ACK
+> 
+> > +`hook.<name>.event` configs during the configuration parse (see
+> > +linkgit:git-config[1]).
+> 
+> Here you use <name>, which should be matched by the description in
+> the first hunk of the patch to this file.
+Yep.
+> 
+> > +In general, when instructions suggest adding a script to
+> > +`.git/hooks/<hook-event>`, you can specify it in the config instead by running
+> > +`git config --add hook.<some-name>.command <path-to-script> && git config --add
+> > +hook.<some-name>.event <hook-event>` - this way you can share the script between
+> > +multiple repos. That is, `cp ~/my-script.sh ~/project/.git/hooks/pre-commit`
+> > +would become `git config --add hook.my-script.command ~/my-script.sh && git
+> > +config --add hook.my-script.event pre-commit`.
+> 
+> One repository may use a friendly name "xyzzy" while the other may
+> use "frotz" to group the hooks that trigger upon "pre-commit" event,
+> but unless one of the repositories change the friendly name to
+> match, they cannot share these configurations, no?  It seems that an
+> extra level of indirection is hindering sharing, rather than
+> helping.
+
+Ah, I think this means the documentation isn't sufficient, if you are
+asking that. Instead of explaining it in ephemeral email, I think it is
+better for me to explain it in documentation reroll, and for you to then
+tell me how you interpret it. I expect to send the reroll before I go
+home today, since I didn't receive comments from anybody besides you so
+far.
+
+Thanks very much for the feedback on the doc - this is very useful.
+
+ - Emily
