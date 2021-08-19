@@ -3,103 +3,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B586C4338F
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 13:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5269C4338F
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 16:55:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2339260F4C
-	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 13:20:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B9651610A6
+	for <git@archiver.kernel.org>; Thu, 19 Aug 2021 16:55:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239939AbhHSNVb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Aug 2021 09:21:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55486 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239300AbhHSNV0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Aug 2021 09:21:26 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D579C061575
-        for <git@vger.kernel.org>; Thu, 19 Aug 2021 06:20:50 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id o10so3960881plg.0
-        for <git@vger.kernel.org>; Thu, 19 Aug 2021 06:20:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=TW2SUmCz1BT+jBZILpsYTqfdcEeKOL5Hnss/SbsWeFg=;
-        b=Ri1f3oJCBlIib2/t7xruZqZ4PYZslHeDBADK3PTCLOztHWg/JMVMAuTK5vCumPXygl
-         qR8oO77DdHroC49QC2blPfrClhwIh29JPrJOKHlzHf9+mB47WMdGpTyVXDQ0V9rp3p7u
-         y1wsnaHfp80E5wB5bi4W4BSrG90x2iZdUNSCMsoMJpU1CQ2BZNJiTGgyS1IELCU5I2cj
-         KoLbym+10fdnXPHQ2Od/Cjr4SPxltRv8crFodscjzseLfuC2oohFGDjGEhwHzyCKLty0
-         6R7JY/YK5XQXGpuTlD+KE3wCI7bDe7isRI36BV6/WGug5UY2b37+gmTTYbON9Gm3G1Br
-         o+xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=TW2SUmCz1BT+jBZILpsYTqfdcEeKOL5Hnss/SbsWeFg=;
-        b=MT7tDyvMl09K3Ru6pRGWDa94w8zEKThe7RE0Sn7s6FtuEtb27kL/+x1b31l/ZCJUU2
-         DuaaPxJ7vnEPc7U1cMJ+LNu5y1/ZiO9QPtE4QKPGu3n+Gjsj77tfufkS41Da8+mATYoH
-         vIBhlHG6vN+a30SJHUMpjGKrSqoNp4zNXJch6hKwRVW7Joz4QQSNDV+5Y0O1ZnSaMShM
-         mSMrTcYs58d8v5RGUnjctwyTNB3fBMnK2+hF8Rwjty7Oh9U94msM7FWZXURqEwdUbU4o
-         WqP5g8uq5DFjbpUhfQ5qDtjgQ93SyMqVnuPN0iv7syx9y2kDlfmsyoI6VFyt1TClmbEh
-         6PSA==
-X-Gm-Message-State: AOAM530lKycc3eW1LS0Zl7EMHOMAylYvyZUC6QcLnIlt0ahXwQTpuHTl
-        2AFmY9TaOHJ/iwVS/YBtR6MDniVX2a2g1smN
-X-Google-Smtp-Source: ABdhPJxRzYvzm1dd6u5F821zzgelvp7lyL2AImxCrRQZrR0dM7ymjcDRuM1Y0Z4ILgIoGTTMmuiu2w==
-X-Received: by 2002:a17:90a:9a8a:: with SMTP id e10mr15181278pjp.125.1629379249854;
-        Thu, 19 Aug 2021 06:20:49 -0700 (PDT)
-Received: from localhost.localdomain ([47.246.98.145])
-        by smtp.gmail.com with ESMTPSA id j187sm3403853pfb.132.2021.08.19.06.20.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Aug 2021 06:20:49 -0700 (PDT)
-From:   Xia XiaoWen <haoyurenzhuxia@gmail.com>
-X-Google-Original-From: Xia XiaoWen <chenan.xxw@alibaba-inc.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, worldhello.net@gmail.com,
-        Xia XiaoWen <chenan.xxw@alibaba-inc.com>
-Subject: [PATCH 2/2] negative values are ignored for http.maxreceivespeed
-Date:   Thu, 19 Aug 2021 21:18:08 +0800
-Message-Id: <20210819131808.40759-2-chenan.xxw@alibaba-inc.com>
-X-Mailer: git-send-email 2.28.1.49.gafcb914ae4.dirty.agit.6.3.1
-In-Reply-To: <20210819131808.40759-1-chenan.xxw@alibaba-inc.com>
-References: <20210819131808.40759-1-chenan.xxw@alibaba-inc.com>
+        id S229870AbhHSQ42 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Aug 2021 12:56:28 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54494 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229548AbhHSQ42 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Aug 2021 12:56:28 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 73DE0DEA62;
+        Thu, 19 Aug 2021 12:55:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=twPREencjLmz
+        JVgCaxYxXqNYKqnSAaDNsm2XikMRp98=; b=NuVqT2EwvdJ1zDx+jThxvpaEcs7P
+        UW8v4gqGhVAV1L5YlHcU8KJp5QXEtmczpDzDG44Q6Y5vncwv7bq1mFeZoUHwdt+W
+        TzPWnTyy8DS7PtIY4qeITXXH5IajJPMAi6vemKwh2UJUY4Nk+nGoIZySYVBLuY1x
+        wlDgbN/FBmbofno=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6B27ADEA61;
+        Thu, 19 Aug 2021 12:55:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E0A54DEA60;
+        Thu, 19 Aug 2021 12:55:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org, Thomas De Zeeuw <thomas@slight.dev>
+Subject: Re: [PATCH] diff-lib: ignore all outsider if --relative asked
+References: <40BE2EF2-0AF3-45BA-9880-8A6011B38D03@slight.dev>
+        <bc7eda4ed8d52072b929a4af6e4e4ed7478ef9d6.1629361733.git.congdanhqx@gmail.com>
+Date:   Thu, 19 Aug 2021 09:55:49 -0700
+In-Reply-To: <bc7eda4ed8d52072b929a4af6e4e4ed7478ef9d6.1629361733.git.congdanhqx@gmail.com>
+        (=?utf-8?B?IsSQb8OgbiBUcuG6p24gQ8O0bmc=?= Danh"'s message of "Thu, 19 Aug
+ 2021 15:29:09 +0700")
+Message-ID: <xmqqwnoh2x2i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 4E79138C-010E-11EC-AC6B-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
----
- http.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
+:
 
-diff --git a/http.c b/http.c
-index 12030cf3bc..2e01ebf559 100644
---- a/http.c
-+++ b/http.c
-@@ -84,7 +84,7 @@ static const char *ssl_cainfo;
- static long curl_low_speed_limit = -1;
- static long curl_low_speed_time = -1;
- #if LIBCURL_VERSION_NUM >= 0x070f05
--static ssize_t curl_max_receive_speed = -1;
-+static ssize_t curl_max_receive_speed = 0;
- #endif
- static int curl_ftp_no_epsv;
- static const char *curl_http_proxy;
-@@ -983,7 +983,9 @@ static CURL *get_curl_handle(void)
- 	}
- 
- #if LIBCURL_VERSION_NUM >= 0x070f05
--	if (curl_max_receive_speed > 0)
-+	if (curl_max_receive_speed < 0)
-+		warning("negative values are ignored for http.maxreceivespeed");
-+	else if (curl_max_receive_speed > 0)
- 		curl_easy_setopt(result, CURLOPT_MAX_RECV_SPEED_LARGE,
- 				 curl_max_receive_speed);
- #endif
--- 
-2.28.1.49.gafcb914ae4.dirty.agit.6.3.1
+> For diff family commands, we can tell them to exclude changes outside
+> of some directories if --relative is requested.
+>
+> In diff_unmerge(), NULL will be returned if the requested path is
+> outside of the interesting directories, thus we'll run into NULL
+> pointer dereference in run_diff_files when trying to dereference
+> its return value.
+>
+> We can simply check for NULL there before dereferencing said
+> return value.  However, we can do better by not running diff
+> on those unintesting entries.  Let's do that instead.
+>
+> Reported-by: Thomas De Zeeuw <thomas@slight.dev>
+> Signed-off-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@g=
+mail.com>
+> ---
 
+Nicely done.
+
+If we look at cd676a51 (diff --relative: output paths as relative to
+the current subdirectory, 2008-02-12) where the "--relative" feature
+was introduced a bit more carefully, we notice that it wanted to
+implement "anything outside the .prefix gets discarded" at
+diff_addremove(), diff_change(), and diff_unmerge() level, instead
+of the side that enumerates the paths and calls these helpers, and
+that way, the "--relative" feature would consistently work across
+diff-files, diff-tree, and diff-index, as they all share these three
+helpers.
+
+But filtering upfront before the codepath even has to decide if it
+needs to call diff_addremove() or diff_change(), like this patch
+does, makes sense, especially in the context of diff-files where the
+enumeration of paths is just to walk a single flat array that is the
+in-core index.
+
+The proposed log message needs a bit more work, though.  It would be
+an 80% OK explanation if the "check diff_unmerge()'s return value"
+approach was sufficient to correct bugs and we took the approach,
+but that is not the case.  As you found out, it is not sufficient,
+and it is not the approach you took.  The only part in the proposed
+log that explains the approach that was actually taken was "we can
+do better by ...".
+
+Until/unless we do similar "filter with diffopt.prefix upfront" in
+diff-index and diff-tree codepaths, we unfortunately cannot lose the
+filter added to diff_addremove() and diff_change(), but I think this
+is a good first step towards such a longer-term clean-up.
+
+Thanks.
