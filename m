@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-23.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5FBFC4338F
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 00:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B25F8C4338F
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 00:10:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8460160ED3
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 00:09:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B45160F91
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 00:10:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234330AbhHTAKN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Aug 2021 20:10:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36864 "EHLO
+        id S237057AbhHTAL3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Aug 2021 20:11:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234058AbhHTAKN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Aug 2021 20:10:13 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30AD4C061575
-        for <git@vger.kernel.org>; Thu, 19 Aug 2021 17:09:36 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id x1so2376547plg.10
-        for <git@vger.kernel.org>; Thu, 19 Aug 2021 17:09:36 -0700 (PDT)
+        with ESMTP id S234058AbhHTAL3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Aug 2021 20:11:29 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F33AC061575
+        for <git@vger.kernel.org>; Thu, 19 Aug 2021 17:10:52 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id w68so7049714pfd.0
+        for <git@vger.kernel.org>; Thu, 19 Aug 2021 17:10:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=2NAQM/CQCLYTXANU9ireuhD2ivEaLSnx/yEP4rO+FNM=;
-        b=o0NTlizoFblsYY1OkWC/Al2rp4eSzk68VC+eqVKsGTsoNERCrHR9tmE3KX9C9TT80y
-         17Dg5FxUSykX5j8gG+RYZtQIhtvQO+MpGsJRrG/8hDeNsVDAqBlHr597r5BNSpDpvbK7
-         Wnxhi6v4XCRQXyqXXc6PNcExddlYmX831I1B8gY1+LRv4EE+rtCYKTdzACP/co0Wk4pE
-         ZO2lbwMGDKQBxV9wk15a+tnqGjjdBbQ2xQ8Nxo1T1y8S8HT3ooT2E7Eu3mrPzL8HziM9
-         LsQw48tr2tfvYQ6JtFtctgHLZ+QNcVkRj4C019plVzzMObtG6cRemYEe0OVOXxBCoH7a
-         GMXA==
+        bh=Tvh/LuvKfV3NNf2GeZYHq2rweCHyAQrpi6w/X5ZpPQ4=;
+        b=Pdf6yT2RnZvo5ZQKJe07KO0zzDHj/JjPfCUoRqaKPH3Qlt4DV27njH1psc8hcuQmtu
+         mrJZ4vR8qSurIF5qan86OieO8206nI54wBNOzI0KStGf9M7ZAE1jMQbnzU/dRk7Bx+Z6
+         wAbawZJUjgcJzPvAVghMDD3DYIBBjxA19qxJAqo3V1soP7ZSrgYsp0xa965gXzd0GTGK
+         wVo5ml206UJWnII9gGxrN6vf/xOaRtxE9ADaY3u4+Gd30grcwlo2LRPDOlMGlL0Ojk6+
+         uwjk6Y5RYckm9yuCSgvv+7AYJ1/Tu09wgnqI3+5Vj3415z4zUBDTE7n2gvG+cCXDDbpE
+         EnLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=2NAQM/CQCLYTXANU9ireuhD2ivEaLSnx/yEP4rO+FNM=;
-        b=FQM6gtAS8mKOy5jzEb3Or4Ns9MWnCuBvzGFiU5+gs38WP7KBiWa1QdYJeQ6QE/YvTX
-         uBv/60sm9VGjfB95MzqPNE6Iqz0ipmcdSoWZLy0XXZqf+sCuKGr3xJndwsZT10wJWrpr
-         gPATQM+WOyIWCtKM4Gy7oo+5mJWMOeh+t4AaV+KNilWt2tv4trtczVrhgRXid3Fk34kX
-         usUiSUXkJTbDEJau6VdzozXyLnJe1EYTC5F7gUmRPaXA4gKO4XFjTIlb+U3Rue4M3ZcX
-         N9IOddVDeV3CKVWOx9Nscxm6EC2WXMC7u9kIomAqEWqCMZLITU6w9FM3QCIxZkn9VheM
-         Lflg==
-X-Gm-Message-State: AOAM532M9bRzm3El1ihYAc6ohx/WGIf098dQKMEN3lAigMqDUXSIy03H
-        QFrUjkkX6aiEiiBgtUadgm/cZYUzQ9w17SmJCAhyLA==
-X-Google-Smtp-Source: ABdhPJzuJBCHO2HG/Y0oUD9RDO9JF1rrGvkANcGy1wPybhfPWmQVzahcIcOlTMk5iLhfpGSe4kydmA==
-X-Received: by 2002:a17:902:e04e:b029:12c:def4:56a3 with SMTP id x14-20020a170902e04eb029012cdef456a3mr13911657plx.76.1629418175451;
-        Thu, 19 Aug 2021 17:09:35 -0700 (PDT)
+        bh=Tvh/LuvKfV3NNf2GeZYHq2rweCHyAQrpi6w/X5ZpPQ4=;
+        b=EGXEWXALIPEAi/K3tvWi+fksi4kt81zPE4LVTu2m45F8rS+3gLhlKFZv7hB+Sy1HUQ
+         XXuwW4+8V/O4jPNfCU40EV8tp7R5+eg0+h0Ju8TvupiQkPB9qMkBHfAs6n94yMfR/VsZ
+         aQFj7D7eWE+om0ViZfVGF9iKiuuhppKfUPlE4+GmQkAZ2FRhbwRE4BJpCeYoaK7jIswN
+         29ZPLu/ZFp/uvTr01aKzHdS76zUfwYVxqfLI3WfAIaNR9/0tbkmv5f7TCwrer16NfW08
+         q5YhaBMcQsIIIAgMB8z3n1ws8eCGo081oENyHcXvi0CFNWLOfK8g06yTr1bS7rX+8Wnb
+         yaGw==
+X-Gm-Message-State: AOAM531Z0Npc7znogrg+NNYh93Kkdt0dRemfWNEC38mQWq3KobpOB0mt
+        mGjRSLG0FhwBSvgTCmtWWV+aRA==
+X-Google-Smtp-Source: ABdhPJwbkiMObZI3bZGw5y39GCIe4DS/z90uiC4Idd9iqz2KO6QDN95UrA0oou8r7aixERx2Mf5ELQ==
+X-Received: by 2002:a63:790b:: with SMTP id u11mr16044359pgc.71.1629418251622;
+        Thu, 19 Aug 2021 17:10:51 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:200:5c:aa12:af53:acbb])
-        by smtp.gmail.com with ESMTPSA id c12sm4346136pfl.56.2021.08.19.17.09.33
+        by smtp.gmail.com with ESMTPSA id s46sm4751002pfw.89.2021.08.19.17.10.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Aug 2021 17:09:34 -0700 (PDT)
-Date:   Thu, 19 Aug 2021 17:09:28 -0700
+        Thu, 19 Aug 2021 17:10:50 -0700 (PDT)
+Date:   Thu, 19 Aug 2021 17:10:43 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -67,83 +67,94 @@ Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Josh Steadmon <steadmon@google.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v4 05/36] hook.c: add a hook_exists() wrapper and use it
- in bugreport.c
-Message-ID: <YR7yuCAaQScM6zvD@google.com>
+Subject: Re: [PATCH v4 06/36] hook.c users: use "hook_exists()" insted of
+ "find_hook()"
+Message-ID: <YR7zAyUOgCTQquuK@google.com>
 References: <cover-00.27-0000000000-20210617T101216Z-avarab@gmail.com>
  <cover-v4-00.36-00000000000-20210803T191505Z-avarab@gmail.com>
- <patch-v4-05.36-3514e0c0251-20210803T191505Z-avarab@gmail.com>
+ <patch-v4-06.36-d5ef40f77dc-20210803T191505Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v4-05.36-3514e0c0251-20210803T191505Z-avarab@gmail.com>
+In-Reply-To: <patch-v4-06.36-d5ef40f77dc-20210803T191505Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 03, 2021 at 09:38:31PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Tue, Aug 03, 2021 at 09:38:32PM +0200, Ævar Arnfjörð Bjarmason wrote:
 > 
+> Use the new hook_exists() function instead of find_hook() where the
+> latter was called in boolean contexts. This make subsequent changes in
+> a series where we further refactor the hook API clearer, as we won't
+> conflate wanting to get the path of the hook with checking for its
+> existence.
 > 
-> Add a boolean version of the find_hook() function for those callers
-> who are only interested in checking whether the hook exists, not what
-> the path to it is.
 
-Seems fine.
+None of these callsites capture the return string from find_hook(), so
+this looks fine.
 
-> 
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
 > ---
->  builtin/bugreport.c | 2 +-
->  hook.c              | 5 +++++
->  hook.h              | 5 +++++
->  3 files changed, 11 insertions(+), 1 deletion(-)
+>  builtin/commit.c       | 2 +-
+>  builtin/merge.c        | 2 +-
+>  builtin/receive-pack.c | 2 +-
+>  sequencer.c            | 2 +-
+>  4 files changed, 4 insertions(+), 4 deletions(-)
 > 
-> diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-> index 596f079a7f9..941c8d5e270 100644
-> --- a/builtin/bugreport.c
-> +++ b/builtin/bugreport.c
-> @@ -82,7 +82,7 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 51b07ee02ea..aa3c741efa9 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1052,7 +1052,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>  		return 0;
 >  	}
 >  
->  	for (i = 0; i < ARRAY_SIZE(hook); i++)
-> -		if (find_hook(hook[i]))
-> +		if (hook_exists(hook[i]))
->  			strbuf_addf(hook_info, "%s\n", hook[i]);
->  }
+> -	if (!no_verify && find_hook("pre-commit")) {
+> +	if (!no_verify && hook_exists("pre-commit")) {
+>  		/*
+>  		 * Re-read the index as pre-commit hook could have updated it,
+>  		 * and write it out as a tree.  We must do this before we invoke
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index be98d66b0a8..03f244dd5a0 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -849,7 +849,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+>  	 * and write it out as a tree.  We must do this before we invoke
+>  	 * the editor and after we invoke run_status above.
+>  	 */
+> -	if (find_hook("pre-merge-commit"))
+> +	if (hook_exists("pre-merge-commit"))
+>  		discard_cache();
+>  	read_cache_from(index_file);
+>  	strbuf_addbuf(&msg, &merge_msg);
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index 97aebdc15bd..91fa799b66e 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -1464,7 +1464,7 @@ static const char *update_worktree(unsigned char *sha1, const struct worktree *w
 >  
-> diff --git a/hook.c b/hook.c
-> index c4dbef1d0ef..97cd799a320 100644
-> --- a/hook.c
-> +++ b/hook.c
-> @@ -35,3 +35,8 @@ const char *find_hook(const char *name)
+>  	strvec_pushf(&env, "GIT_DIR=%s", absolute_path(git_dir));
+>  
+> -	if (!find_hook(push_to_checkout_hook))
+> +	if (!hook_exists(push_to_checkout_hook))
+>  		retval = push_to_deploy(sha1, &env, work_tree);
+>  	else
+>  		retval = push_to_checkout(sha1, &env, work_tree);
+> diff --git a/sequencer.c b/sequencer.c
+> index ea4199d65a4..9aac08c1545 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -1446,7 +1446,7 @@ static int try_to_commit(struct repository *r,
+>  		}
 >  	}
->  	return path.buf;
->  }
-> +
-> +int hook_exists(const char *name)
-> +{
-> +	return !!find_hook(name);
-
-Later on I'll change this to refer to the output of list_hooks()
-instead.
-
-> +}
-> diff --git a/hook.h b/hook.h
-> index 68624f16059..4c547ac15e5 100644
-> --- a/hook.h
-> +++ b/hook.h
-> @@ -8,4 +8,9 @@
->   */
->  const char *find_hook(const char *name);
 >  
-> +/*
-> + * A boolean version of find_hook()
-> + */
-> +int hook_exists(const char *hookname);
-> +
->  #endif
+> -	if (find_hook("prepare-commit-msg")) {
+> +	if (hook_exists("prepare-commit-msg")) {
+>  		res = run_prepare_commit_msg_hook(r, msg, hook_commit);
+>  		if (res)
+>  			goto out;
 > -- 
 > 2.33.0.rc0.595.ge31e012651d
 > 
