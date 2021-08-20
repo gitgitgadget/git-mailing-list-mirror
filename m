@@ -7,71 +7,69 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 817BCC4338F
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 14:47:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E001C4338F
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 14:50:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 58C5961102
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 14:47:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA45461102
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 14:50:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240898AbhHTOrx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Aug 2021 10:47:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38898 "EHLO
+        id S240921AbhHTOvL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Aug 2021 10:51:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240879AbhHTOrw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Aug 2021 10:47:52 -0400
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C8BC061575
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 07:47:14 -0700 (PDT)
-Received: by mail-qv1-xf2a.google.com with SMTP id g11so5641316qvd.2
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 07:47:14 -0700 (PDT)
+        with ESMTP id S240879AbhHTOvK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Aug 2021 10:51:10 -0400
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AEDFC061575
+        for <git@vger.kernel.org>; Fri, 20 Aug 2021 07:50:32 -0700 (PDT)
+Received: by mail-qt1-x831.google.com with SMTP id l24so7656540qtj.4
+        for <git@vger.kernel.org>; Fri, 20 Aug 2021 07:50:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Kh3Bs1OymDUGPemyjNHNfZcdB3DypigT8rcVJZEYctw=;
-        b=uSegw7hxZlc5DstdydJlqt2M4/PV3Alz46ZWdXPQUNpgdlI1a8C0a4rMUwYzfwIEzv
-         k7ul90hxa1YoDTUABM+Ks0fToqa1o1lLYHv//Fq520c8BreVlnBLRMrMq+9MhLtJ+aS0
-         uAf/cRWlZ5VzVlt2aVM/l3pbiD1BcdBQNLLV+Ie1gHuNZVKEfl+blQRyO8QiTT3PZpBl
-         e78+zGVzWA7ggwHmJ1L+k04WIpugbYs204yeP86qEXSH6olAFNwN2IZhPNlQ9sbrgjHX
-         2Skq1yQ98woM5hc9NTyusAYLVfSnN8/h1zq+Yfgu0nCvLqx8XllnipKtZSImD0APonIL
-         mavQ==
+        bh=04WcK7hjDuzm6EgD1Fv11UE4led2akAdZIqSjlI7xYc=;
+        b=joeqpog98ruPsLZNRd8MV3RFHotOqqKV3nD3HnwGDM0eygRI1BuqsOnOiSZDDy6Uyp
+         L1nV1Fjpf9Jdpj2nPC+qTC+MuANgyoMZvidYrt+ljbj9WuNy9wUdQEFMeqsQ8J2HNBAw
+         /5C85YrXeR6EvOVkTBp/EisonSBw0AqyPwlyO2y3sVD4UNTi4zYlLMRUsCwU8WvLZFw3
+         5/wiqT0qaXiK0fHF/P48Xl4WPFWMDk/ocKqUMOaK+MIhpU9hmjOHoTvh+8T8hJWZTe/W
+         AqPEFgJ2Reico7QoWi+n1QoaFOLO4QKlXmrFztTiU/DcaOweNdXDkwtqWaOpVWWNrU6a
+         KuEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=Kh3Bs1OymDUGPemyjNHNfZcdB3DypigT8rcVJZEYctw=;
-        b=bGM7dStTd+63BwOcFcdhjizpRxW0u8WyNNAVJE8PgACWygIwmKJege487XYJ6JlNc2
-         Wzivqw99xNSSa4n5iiIVHiUNpG4F7hr289S6XyI0TUuYDisfgYUKbwovwWngckVzR6CZ
-         m9JgOY5txKl73akonPNziqp17mSDPR11DHePlqkK/mzofkG8j5ZqmCzvYJWGPybZ/Jn3
-         jTttCSqPNYPyFbp67IxSUw0xwwRV0QGxP3LLDZqNL+tDSVWx15hsOmGxkJbMZUklHHl3
-         XD2l6xwcHIgYb/DPp8i857WsE9JYps0Jg4RCIWbdtBx94L36f/N3btBYM66lSWqFplhV
-         C2OQ==
-X-Gm-Message-State: AOAM530j81HJH6b1vFgegN+5PwLJDgEfATAW5OlL3201kD8sxifN+CfQ
-        Y3AUPqEdJfeV8NtgBLlh8ok=
-X-Google-Smtp-Source: ABdhPJxwoB1Azt8qj2ol0MmX+7SrQLkNw0J9J8MSg3Bo89jF7GhBBZZ4nyRRFWYWm7/5sF6qOB22jw==
-X-Received: by 2002:ad4:51c7:: with SMTP id p7mr20561616qvq.15.1629470833420;
-        Fri, 20 Aug 2021 07:47:13 -0700 (PDT)
+        bh=04WcK7hjDuzm6EgD1Fv11UE4led2akAdZIqSjlI7xYc=;
+        b=umGS12FjBY8Ttmt0hsGsaC+7vj0XogvOKjENfNEaryNLzWhCEY8/gsS77yN9+62/OX
+         SaM4RJEGe/wH2lCS3MmRbFtR3tyHgMLciElew3DpMFvXvQwnz1HRcxoC2FcfyS7xIZxx
+         074NPO6IX5lnCsGgMG3G9P5P2/KibpUakyUWtbcldY7BGYRmbK0Afsf+MvZ+JRF3dATR
+         A3i5Zm5KZ9u5gFgqctgaQKq6qBocxXKZsV1T53WXCWZDQVYFXF91I5bYMDrsP4/eQT17
+         MC2kWMCbiUJ0cj4xujlatjenuvIdACfhBwlGuoDmPcqqIs3U4hc8R7JTYxm7iub2LUey
+         CpbQ==
+X-Gm-Message-State: AOAM530wDRgA63UGubnARrxj8aQfGpgVXoS88y74MxfKYfwm3z7VcLwP
+        4yvICPTrdNDZOSb02+skqqk=
+X-Google-Smtp-Source: ABdhPJwqi+ed1OoWkRKX/0zQk5wkvo9fy8IWFncbH8wTD6PW/CSMjjxqHKhoLQyDPnBzMy1bfxjopw==
+X-Received: by 2002:ac8:4c89:: with SMTP id j9mr3954663qtv.78.1629471031342;
+        Fri, 20 Aug 2021 07:50:31 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:f436:fc6f:2dd3:d49? ([2600:1700:e72:80a0:f436:fc6f:2dd3:d49])
-        by smtp.gmail.com with ESMTPSA id 9sm2539162qtz.83.2021.08.20.07.47.12
+        by smtp.gmail.com with ESMTPSA id o10sm2582823qtv.31.2021.08.20.07.50.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Aug 2021 07:47:13 -0700 (PDT)
-Subject: Re: [PATCH 6/6] fetch: avoid second connectivity check if we already
- have all objects
+        Fri, 20 Aug 2021 07:50:30 -0700 (PDT)
+Subject: Re: [PATCH 0/6] Speed up mirror-fetches with many refs
 To:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
         <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>
 References: <cover.1629452412.git.ps@pks.im>
- <646ac90e62aab4e4aec595d6848b60233bbe8c77.1629452412.git.ps@pks.im>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <1d5ae688-fa08-6c8c-345f-9b0389e21dd7@gmail.com>
-Date:   Fri, 20 Aug 2021 10:47:11 -0400
+Message-ID: <857d18a1-97b2-b7a6-64d4-4b31daf79e64@gmail.com>
+Date:   Fri, 20 Aug 2021 10:50:29 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <646ac90e62aab4e4aec595d6848b60233bbe8c77.1629452412.git.ps@pks.im>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <cover.1629452412.git.ps@pks.im>
+Content-Type: text/plain; charset=windows-1252
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -79,28 +77,23 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 8/20/2021 6:08 AM, Patrick Steinhardt wrote:
-> When fetching refs, we are doing two connectivity checks:
-> 
->     - The first one in `fetch_refs()` is done such that we can
->       short-circuit the case where we already have all objects
->       referenced by the updated set of refs.
-> 
->     - The second one in `store_updated_refs()` does a sanity check that
->       we have all objects after we have fetched the packfile.
-> 
-> We always execute both connectivity checks, but this is wasteful in case
-> the first connectivity check already notices that we have all objects
-> locally available.
-> 
-> Refactor the code to do both connectivity checks in `fetch_refs()`,
-> which allows us to easily skip the second connectivity check if we
-> already have all objects available. This refactoring is safe to do given
-> that we always call `fetch_refs()` followed by `consume_refs()`, which
-> is the only caller of `store_updated_refs()`.
+...
+> As it turns out, many of the issues are again caused by loading and
+> dereferencing refs. This patch series thus mostly focusses on optimizing
+> the patterns there, where the biggest win is to opportunistically load
+> refs via commit-graphs.
 
-Should we try to make it more clear that fetch_refs() must be followed
-by consume_refs() via a comment above the fetch_refs(), or possibly even
-its call sites?
+You caught my attention at "commit-graph" and I found your use of them
+to be interesting. You strike a balance in checking the commit-graph
+when it is likely to be helpful, and skip the commit-graph when it is
+not. (For example, PATCH 2 is unlikely to benefit from checking the
+commit-graph at that point, because we are looking for objects that
+were just downloaded.)
+
+I read all the patches and checked the full context of the functions
+to see if there were any issues, but found none. My only comments are
+about the case of many annotated tags (do we slow down?) and some
+nitpicks.
 
 Thanks,
 -Stolee
