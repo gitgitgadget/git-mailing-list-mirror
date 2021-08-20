@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0506BC4338F
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 15:18:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05BF1C4338F
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 15:30:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D5114610FF
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 15:18:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D3F1161214
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 15:30:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237968AbhHTPTC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Aug 2021 11:19:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46018 "EHLO
+        id S240994AbhHTPbW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Aug 2021 11:31:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234323AbhHTPTA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Aug 2021 11:19:00 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C389EC061575
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 08:18:20 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id w22-20020a056830411600b0048bcf4c6bd9so14411202ott.8
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 08:18:20 -0700 (PDT)
+        with ESMTP id S235928AbhHTPbV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Aug 2021 11:31:21 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75476C061575
+        for <git@vger.kernel.org>; Fri, 20 Aug 2021 08:30:43 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id g66-20020a9d12c8000000b0051aeba607f1so6041408otg.11
+        for <git@vger.kernel.org>; Fri, 20 Aug 2021 08:30:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=icA4brZqtgLbdGw90B+TAGrxqXxsY94rnbHy2i531Ew=;
-        b=OIMmcPyxcaDYVG5ta66TUbB/QQ/j7s+m5jFYs+OzNepMfNme8QuVn7MUKsaK0RW2gN
-         UBHSXmO2UDAqgZZCA7dUdFMschvqr2q5izFJJ4IEJ/vmVpk/uW18BnlnPOiZ2xXabt/h
-         sfgE0K+JLgmYnWgg0SkOBOVkYjn+b3it0t8xIYbomZ2ZdRXJPpBNfASowaa9fPn892Ng
-         chxqQnCD/C52xkbQwzAKpbxDbYLh9NDTcd57WIQgBog3/BEWexjPTsG1KeF/o6iDoIAN
-         aN4ivlQhvnIt1Krbk+zSx1SAsdidhCkCqi6vMIDNWVNElm8B9xHkV5xwxJO9s8B3Wcir
-         opNw==
+        bh=1nByDzUliSnVZuWAqOrjnhI6KnedkqnEPmcY2L/mu5w=;
+        b=jkwTuYlSEWikPBUwrDcw5xbKKWzDkB/cMDDXTt0SxnrTpg567tu3++eBvilIKjAeDr
+         RS3Ah520kZ3gAFvOXq1QW9eAkYWhFBYrKg8nCO3vzp1XlcRnYuEzAvLlM3/vQLTN4XCh
+         QRx7SbE4xmQ+o4zeCfxgy1/pEi7urw47VRkERB2EVYSW9MlkDC5NeHuWUuVaXIVk4ke+
+         SnX29Wy8Mn0BZHNhsZLpeM0YRK2McNVM635ZK4B8m0m2Cne+3ix3t5X30f5wEX4iqjRa
+         0ohhRYqZF8BDEtTBsyCo7g1K8SMNNh6GGfJ+t6Q/hMOI1pLwEiDrLsbO/4W8ZaniIpZV
+         iivQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=icA4brZqtgLbdGw90B+TAGrxqXxsY94rnbHy2i531Ew=;
-        b=iuNPBaVjlcz75CSB7wAyM4GrJ9XuNyTLS2k4zvp32AieODqzgPNywPHcqNEvL0xNk2
-         TdX8eXyAfcpe/WfUelUjWjdElSE7ERlGOYtBaQY0B+PcoNiUREag53PJGx1u848q4zeM
-         kjq4gviNp5wgE4iOIs/DuIB91P9E6pkl4gjX3PAdiVZBoGvxzHQmBjeiBNySr+5Bu0N1
-         oZL6vnFLIvPo6hDVm9M7UqKEbAPxy8I7SUqKeFL9zmQmdWl5E8mdDI7EAPMCNoT+U7aU
-         pMRpCTHa/91+tZ79RrdULIPGljwhI6x96JDJX9c0+8tmZMrnK0hcEycJMS1JmpRkcUq/
-         i0dw==
-X-Gm-Message-State: AOAM531v/Qk5Qf/cbkKFGDmtmSU9OTLRMjgi8N2Df5YSbxGjcpsBpEbU
-        GFQRs2KgOdbfNs2QzBKUR8g=
-X-Google-Smtp-Source: ABdhPJyvih8HrJqTAQERU/CDQ4EHyniCH2pxpmcQFITxi0P0NuX9ySPV132wQHudscY5Oj4XhL+XOA==
-X-Received: by 2002:aca:320b:: with SMTP id y11mr3432451oiy.63.1629472700019;
-        Fri, 20 Aug 2021 08:18:20 -0700 (PDT)
+        bh=1nByDzUliSnVZuWAqOrjnhI6KnedkqnEPmcY2L/mu5w=;
+        b=VyzNvH1fTU0bvDvxOxSuKnm+ywvRG7USLpZJcjwbDlclr1TVHdzaSoSbPd0pEKGA4G
+         mHeLYiS5YPD1VvWnUjcGwFBA/hkl/SIl79rnjXUstzgLLHyO6l/hZQ9FYKG+g74Le31T
+         GPm2VeD9l/eNJy4yBStysD8+tzCtYtDxqc6t6v+4MbgHVeCcXH1GuQEjKFebM/85MBv6
+         Iyv1p0ui+ospPXb/Xg1B2uEXw5ODqH+5YlyBSHB+Twu5Qatc5wDEvvtwGZ6cwMJivZ/W
+         ezg8h3vfkspfMesQRjuFkhkg44W9+bHTLhuW+eMiRygj+MTenXw298S83rFfJ4dBTgPA
+         +dOA==
+X-Gm-Message-State: AOAM531W+CNZ1R145qUDFupmdDsi4R+rSFNLvlF5xPxBFJAmWVmBX6fA
+        qK8mQDo2JXB/kpYjRLQW+WA=
+X-Google-Smtp-Source: ABdhPJzl/c4BrmIVgYNnw8qicb1oJrIUZPR/kH/CDES75y06m6DRaZ4HaNH+7S66Prh7T1RIAYr5Bw==
+X-Received: by 2002:a9d:798f:: with SMTP id h15mr17360955otm.227.1629473442572;
+        Fri, 20 Aug 2021 08:30:42 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:f436:fc6f:2dd3:d49? ([2600:1700:e72:80a0:f436:fc6f:2dd3:d49])
-        by smtp.gmail.com with ESMTPSA id o133sm1458588oia.10.2021.08.20.08.18.19
+        by smtp.gmail.com with ESMTPSA id s35sm1486275otv.44.2021.08.20.08.30.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Aug 2021 08:18:19 -0700 (PDT)
-Subject: Re: [PATCH v3 4/8] unpack-trees: fix nested sparse-dir search
+        Fri, 20 Aug 2021 08:30:42 -0700 (PDT)
+Subject: Re: [PATCH v3 5/8] sparse-checkout: create helper methods
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
@@ -65,15 +65,15 @@ Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>
 References: <pull.1009.v2.git.1628625013.gitgitgadget@gmail.com>
  <pull.1009.v3.git.1629206602.gitgitgadget@gmail.com>
- <10bcadb284e49419f9b4baf75e05f719ec395d98.1629206603.git.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.2108190950540.55@tvgsbejvaqbjf.bet>
+ <5d28570c82af19b4bda4253e72ace3760dfe2606.1629206603.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.2108191005560.55@tvgsbejvaqbjf.bet>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b7bd8e73-de86-c563-8b7d-405310ce6c57@gmail.com>
-Date:   Fri, 20 Aug 2021 11:18:18 -0400
+Message-ID: <f9c451e4-c1b2-1680-944a-e3355248cc44@gmail.com>
+Date:   Fri, 20 Aug 2021 11:30:40 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2108190950540.55@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2108191005560.55@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -81,79 +81,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/19/2021 4:01 AM, Johannes Schindelin wrote:
-> Hi Stolee,
+On 8/19/2021 4:07 AM, Johannes Schindelin wrote:
+...
+>>  			if (matches_skip_worktree(pathspec, i, &skip_worktree_seen) ||
+>> -			    (sparse_checkout_enabled &&
+>> -			     !path_matches_pattern_list(path, strlen(path), NULL,
+>> -							&dtype, &pl, &the_index))) {
+>> +			    (core_apply_sparse_checkout &&
 > 
-> On Tue, 17 Aug 2021, Derrick Stolee via GitGitGadget wrote:
+> Do we need to test for `core_apply_sparse_checkout` here? Or does the `if
+> (!istate->sparse_checkout_patterns) return MATCHED;` early return in
+> `path_in_sparse_checkout()` suffice to catch this?
 > 
->> From: Derrick Stolee <dstolee@microsoft.com>
->>
->> The iterated search in find_cache_entry() was recently modified to
->> include a loop that searches backwards for a sparse directory entry that
->> matches the given traverse_info and name_entry. However, the string
->> comparison failed to actually concatenate those two strings, so this
->> failed to find a sparse directory when it was not a top-level directory.
->>
->> This caused some errors in rare cases where a 'git checkout' spanned a
->> diff that modified files within the sparse directory entry, but we could
->> not correctly find the entry.
+> The remainder of the patch looks good to me.
 > 
-> Good explanation.
+> Thank you,
+> Dscho
 > 
-> I wonder a bit about the performance impact. How "hot" is this function?
-> I.e. how often is it called, on average?
-> 
-> I ask because I see opportunities to optimize in both directions: it could
-> be written more concisely (if speed does not matter as much), and it could
-> be made faster (if speed matters a lot). See below for more.
+>> +			     path_in_sparse_checkout(path, &the_index) == NOT_MATCHED)) {
 
-I would definitely optimize for speed here. This can be a very hot path,
-I believe.
+Thank you for pointing out this. This is actually a stale change from an earlier
+version where path_in_sparse_checkout returned an 'enum pattern_match_result'
+but now casts down to an 'int', meaning '0' is not in the sparse-checkout and '1'
+is that it _is_ in the sparse-checkout.
 
->> +	strbuf_addstr(&full_path, info->traverse_path);
->> +	strbuf_add(&full_path, p->path, p->pathlen);
->> +	strbuf_addch(&full_path, '/');
-> 
-> This could be reduced to:
-> 
-> 	strbuf_addf(&full_path, "%s%.*s/",
-> 		    info->traverse_path, (int)p->pathlen, p->path);
+>> +int path_in_sparse_checkout(const char *path,
+>> +			    struct index_state *istate)
+>> +{
+>> +	const char *base;
+>> +	int dtype = DT_REG;
+>> +	init_sparse_checkout_patterns(istate);
+>> +
+>> +	if (!istate->sparse_checkout_patterns)
+>> +		return MATCHED;
 
-We should definitely avoid formatted strings here, if possible.
+So here, if we do not have sparse-checkout patterns (for example, if
+core_apply_sparse_checkout is false), then this returns MATCHED (== 1).
 
-> But if speed matters, we probably need something more like this:
-> 
-> 	size_t full_path_len;
-> 	const char *full_path;
-> 	char *full_path_1 = NULL;
-> 
-> 	if (!*info->traverse_path) {
-> 		full_path = p->path;
-> 		full_path_len = p->pathlen;
-> 	} else {
-> 		size_t len = strlen(info->traverse_path);
-> 
-> 		full_path_len = len + p->pathlen + 1;
-> 		full_path = full_path_1 = xmalloc(full_path_len + 1);
-> 		memcpy(full_path_1, info->traverse_path, len);
-> 		memcpy(full_path_1 + len, p->path, p->pathlen);
-> 		full_path_1[full_path_len - 1] = '/';
-> 		full_path_1[full_path_len] = '\0';
-> 	}
+To be extra clear, this should just be 'return 1;'.
 
-The critical benefit here is that we do not need to allocate a
-buffer if the traverse_path does not exist. That might be a
-worthwhile investment. That leads to justifying the use of
-bare 'char *'s instead of 'struct strbuf'.
+>> +	base = strrchr(path, '/');
+>> +	return path_matches_pattern_list(path, strlen(path), base ? base + 1 : path,
+>> +					 &dtype,
+>> +					 istate->sparse_checkout_patterns,
+>> +					 istate) > 0;
 
-If the traverse_path is usually non-null, then we could continue using
-strbufs as a helper and get the planned performance gains by using
-strbuf_grow(&full_path, full_path_len + 1) followed by strbuf_add()
-(instead of strbuf_addstr()). That would make this code a bit less
-ugly with the only real overhead being the extra insertions of '\0'
-characters as we add the strings to the strbuf().
-
-I will need to investigate so see which one is the best.
+Here, we are selecting the portion of 'enum pattern_match_result' that
+we care about (MATCHED and MATCHED_RECURSIVE). The UNMATCHED (0) and
+UNDECIDED (-1) are the other possibilities, but file paths will not
+return UNDECIDED, that is instead for directories in non-cone mode
+patterns.
 
 Thanks,
 -Stolee
