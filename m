@@ -2,147 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 174A5C4338F
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 15:38:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71964C4338F
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 15:39:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F2B9860BD3
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 15:38:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4CBD8610E6
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 15:39:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241175AbhHTPix (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Aug 2021 11:38:53 -0400
-Received: from mout.web.de ([212.227.17.11]:54199 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241129AbhHTPit (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Aug 2021 11:38:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1629473877;
-        bh=8GWJ/jQZISgDkYArZzYN2AXPeORkREvCyiA/yMRMaIA=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=BvU1+puLSfZALQdf1TkDjIVQfwDM5/+aOeBNYDqcBr32IvBYlrl2QV1g4aRieVOeg
-         X9ODzgkrdculJHg+HWViOESNzttmnUnpKKARJ1JaScmD62GsV8OVTRthIEiuRAda9Q
-         oN2P3cSSD10XQN1dDz9hi5/A5zI3GtByebU/AbiI=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MtyA2-1n4NpJ2vGO-00uKwY; Fri, 20
- Aug 2021 17:37:57 +0200
-Date:   Fri, 20 Aug 2021 17:37:56 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Jonathon Anderson <janderson@acesquality.com>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org
-Subject: Re: Git Modifying DLL
-Message-ID: <20210820153756.c7b2d5zju7mkf4w5@tb-raspi4>
-References: <CAG83euoGmVUUBh00wAEX1muZogNPOQUV6+ppL8x8qCaDnzTbDw@mail.gmail.com>
- <010f01d79525$f10a1f60$d31e5e20$@nexbridge.com>
- <CAG83euo2B4QFU_S6Yqd3UACWq63p=L+T30CwzT52D8H=S5pRVg@mail.gmail.com>
+        id S241138AbhHTPjw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Aug 2021 11:39:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51208 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241070AbhHTPjw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Aug 2021 11:39:52 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3560AC061575
+        for <git@vger.kernel.org>; Fri, 20 Aug 2021 08:39:13 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id r38-20020a05683044a600b0051a2c6dd421so14602441otv.3
+        for <git@vger.kernel.org>; Fri, 20 Aug 2021 08:39:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=28AcPAQo5w9Fv0oUP/rUEIISL4omaa/S3/kTA2IOoPs=;
+        b=k+JiZNAkzl0W3WS3g1vGbv5MiBZP2CE82G0jO2RLAlyoM3OqXf8kEaKLJ6IATkFwlC
+         vIxbk3d14CPU0K28wTeKzW8p6/GbMYihoLmHSDshZRDFuzUn+sl0hREu/LnwihzK8EBQ
+         6/Kz8PgBLBUhcvGsC/HZWOfiZrQXZD6pM3wq06tlTYqsvF4yFknvurOaD9z/Ob4n8Cv+
+         kPp5y8iRS5OfFxp+Xz/VV7sLMOezlqlvrLdmdqLlUw4Rkf4gFsVYsGn5xA/vJAZn/V1h
+         ayHOn2Tt3MoKjvrjrplMqY57kAH6hKvlcL+JTk/dyxiwbK7HzpYtFiHX6gttla5eHDQG
+         kYNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=28AcPAQo5w9Fv0oUP/rUEIISL4omaa/S3/kTA2IOoPs=;
+        b=N0IDz9miajmgq8sDo5RQkM35uvGDAB2BS/oqxC/y1Y2va5snK37JoVGeAi/Bra/Tnl
+         C1rhWXRqqgXwAQCWoXbN/rdTbHTbMvsWBhm/LLJzg9h7zZQ5FGVV+zA/i0cNyj0EZjWO
+         3BO6mktmn8SjSKu323TLS6dHwrV6o06I7ti1BwFYjbULyuqeYayfqseLc1n6FrnsYvqA
+         XvM4W0NEYDGrl/9iqvoHJAEGsb7uHNR4Bp/JWdzN6D/OEMM0jrbbesEqM+FuoTut6COt
+         4XytNanJ1OrxCn3F3oMUHuOo02IzyCWsHB4C77OhgnY3japMJ33IKafOToC0Req93aT8
+         b5GA==
+X-Gm-Message-State: AOAM532kbD4j2JbYExSiH6Eoi/bKUi5kbTs0CdmKyoUeKd/tfoDZVfde
+        xckUWB2UmRUKwmbxDAhp0+Q=
+X-Google-Smtp-Source: ABdhPJxEH+HV+AD9/myRMW8ATVGkvIipyX2DleS+0s/bDx0NZS2qY5sOvUpJkX/4JHiMMXHnCb/HvQ==
+X-Received: by 2002:a05:6830:10:: with SMTP id c16mr16301382otp.63.1629473952526;
+        Fri, 20 Aug 2021 08:39:12 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:f436:fc6f:2dd3:d49? ([2600:1700:e72:80a0:f436:fc6f:2dd3:d49])
+        by smtp.gmail.com with ESMTPSA id j17sm1527193ots.10.2021.08.20.08.39.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Aug 2021 08:39:12 -0700 (PDT)
+Subject: Re: [PATCH v3 6/8] attr: be careful about sparse directories
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1009.v2.git.1628625013.gitgitgadget@gmail.com>
+ <pull.1009.v3.git.1629206602.gitgitgadget@gmail.com>
+ <c9e100e68f80196a35a37b5d0aad74e8e1174766.1629206603.git.gitgitgadget@gmail.com>
+ <CABPp-BHqTSv7MkS8-nq3Qg3CA3pLxSD9TOVvL_8R1-eF3Rn7pQ@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <07cc5a17-024a-910c-35c5-0dc468172f5e@gmail.com>
+Date:   Fri, 20 Aug 2021 11:39:10 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAG83euo2B4QFU_S6Yqd3UACWq63p=L+T30CwzT52D8H=S5pRVg@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:iBSLyxUSPcRDEw78/y+c0TAhWNjIL+/+zeW6tkdIaUMaPQ+D+mb
- I01mXs7cAZ3sVEs1Vx1miPW1/v9Lq8f/qPlYIAsJ46ex4WzCdWZ9upt+MZ/ANE7nKdUCpSd
- /pOC/KU4yern/rxQT/KE00W8YRvDmltDoNvkvQJckDVe/aBvf9bORVqGlLHYFiIsQbKif1N
- 4IEY8+FSiwn7XltkFf1Hg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:iwAd8VNWDGs=:jfyA7l4+fngLTNGhp7jc3b
- yjTb6A6ubh8sn38fx+q0DrVeP6i3ljJbaLgYT2AQRYE5828fK0M1recC4jHjRiDWvKzRnkyCD
- pC2/4ZyvqcSg0fov+USom0ZyvAyGQZ5IxySYl9E3MmVMFrJuV4+qSLLZm+uAQkU47c/tUpsG/
- zoVaoBerwbAzayNJb4RedLEoNQGHdoNzAWwHEt2Y7hoPG8w4Sh4/miSlke4ctgg4NN6aPCJ94
- YtrANH8D8fSed2qA3lwM/ZSaY1IqkzXQVJMA86F+Sw1uL9AdD8cURcKk5s4Ii9Aw3FcOyPUh/
- p+O4ZoqHOeewUibXWtOnCX1WiLYS+IhERJgMaKPTK0rr8t83hSNTalaDtOYLrAExLA6Vts5s3
- rh7egS7QsfOfuUVUIpaV3NcGJUA3eCvnkgaGeJqZgmyslCSLWoyhOOMqZ4ET2axVJCVZtM9IT
- M0W/yN49SWZVkMzapAeQi5SWVsGNe4JtD1IdEuCUP1mhoZjF5ngI96azPmSz3P51/KYHBIjFV
- 9jSPTczS2cMaNpSaYpWtZWSsuutfDACEfRwOZ3A6gUvZgpsoefp5w5vQmGT/eTUvkwojxS9ip
- PC82iMled/pizhyAkFaW7rVFu+ycKCPUjTvQJCpg5S+C4J1QnuB8YwYdZ2t5Y6+Qzvupew3Tl
- isfPy0l7PJn0I28Bp8aCX5ZA4/6F8fiXnO/qaR1fifqLYI+yaN6AVYBIXFK126sSbfEXYFPbx
- BqqzX+lZkCF+B+hsSCkpq/xaykojhvx8WVpyO79/EpkTdpbO0lUZedyGDaNX3iGDfnKi6m0c/
- DWj+2312nHcHhFwFfNPFIjxong4+6TsXSoYm04eM262gvFCfL+NqXoUhbGlgojrKu7bzwH8e0
- 2cwiZgl9JWK7bCb8o7v5+xE4uTIaiamT0grU80NdSOa/SqHRMpSL0nTzrG1usroeQt2AeJ1Sb
- 6+yHGfTYfE4jBAI9xM/cC4myf+G1G60mSP39L5mhELHPyXXXHQGM1yHRNb+NewoqbLYuJzRVN
- cQkMA0f+j6bNg0RpYnL+kL5D5v6yYIGBqkS0TVQRRgVwhIh94hh+ZK8IBVwl900I5ghuK77Aq
- WZoeLzz4OfcsofG/796Zco7OIQSRm1Bq9D2
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CABPp-BHqTSv7MkS8-nq3Qg3CA3pLxSD9TOVvL_8R1-eF3Rn7pQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-First of all, thanks for the report.
-(And please, no top-posting in this list, see my comments at the end)
+On 8/19/2021 4:53 PM, Elijah Newren wrote:
+> On Tue, Aug 17, 2021 at 6:23 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> +       /*
+>> +        * In the case of cone-mode sparse-checkout, getting the
+>> +        * .gitattributes file from a directory is meaningless: all
+>> +        * contained paths will be sparse if the .gitattributes is also
+>> +        * sparse. In the case of a sparse index, it is critical that we
+>> +        * don't go looking for one as it will expand the index.
+>> +        */
+> 
+> "all contained paths will be sparse if the .gitattributes is also sparse"?
+> 
+> Do you mean something more like "the .gitattributes only applies for
+> files under the given directory, and if the directory is sparse, then
+> neither the .gitattributes file or any other file under that directory
+> will be present" ?
 
-On Thu, Aug 19, 2021 at 01:21:03PM -0500, Jonathon Anderson wrote:
-> I had not. I tested that and it worked. I assumed that git would
-> automatically treat dll files as binary. Thanks for the help!
->
-> On Thu, Aug 19, 2021 at 1:13 PM Randall S. Becker
-> <rsbecker@nexbridge.com> wrote:
-> >
-> > On August 19, 2021 1:59 PM, Jonathon Anderson wrote:
-> > >
-> > >I'm having an issue with git modifying a DLL file and corrupting it.
-> > >When I download the original working file, it has a hash starting wit=
-h 8FE400... I then commit the DLL and push it to our repo. When I
-> > >download the file from the repo, the DLL can't be loaded, and it has =
-a hash starting with E004FB...
-> > >
-> > >Opening the DLL in a hex editor and using the compare feature, there'=
-s a single change to the file. In the original, the byte code starting
-> > >at 0x0074 is 2E 0D 0D 0A 24.
-> > >In the git file, the byte code starting at 0x0074 is 2E 0D 0A 24
-> > >
-> > >A single carriage return character (0x0D) has been removed, and the f=
-ile size has changed from 260,608 bytes to 260,607 bytes.
-> > >
-> > >I ruled out the possibility that the repo server was doing anything t=
-o the file because I deleted the file in my local repository then ran "git
-> > >reset --hard HEAD" to restore the file, and the hash had once again c=
-hanged to E004FB...
-> > >
-> > >OS: Windows 10.0.19043 pro
-> > >git: 2.32.0.windows.1
-> > >
-> > >I have no settings configured for git behavior handling line endings.
-> > >
-> > >The original DLL can be found here:
-> > >https://www.powershellgallery.com/packages/PSWindowsUpdate/2.1.1.2
-> > >
-> > >Navigate to "Manual Download", download the nuget package and unzip i=
-t. The file is PSWindowsUpdate.dll
-> >
-> > Have you set up an entry for *.dll as binary in your .gitattributes fi=
-le?
-> >
-> > -Randall
-> >
+Yes, you understand correctly and explain it better. Thanks.
+ 
+> Also, out of curiosity, I was suggesting in the past we do something
+> like this for .gitignore files, for the same reason.  Do we have such
+> logic in place, or is that another area of the code that hasn't been
+> handled yet?
 
-I downloaded the dll.
+I don't believe this has been handled. It definitely is less obvious
+what to do there, because the point of .gitignore is to skip files that
+exist in the working tree even if Git didn't put them there. Meanwhile,
+.gitattributes is about how Git writes tracked files, but Git doesn't
+write sparse tracked files.
 
-I can not reproduce the issue here - so I wonder, what is going on.
-
-Could you run the following experiment, please ?
-(in git bash or so)
-
-mkdir  dlltest
-cd dlltest
-git init
-cp whereveritis/PSWindowsUpdate.dll .
-
-git ls-files -o --eol
-
-# I get
-git ls-files --eol -o PSWindowsUpdate.dll
-i/      w/-text attr/			PSWindowsUpdate.dll
-
-This means, that the file is "classified" as "-text" in the working tree.
-"-text" means the same as binary.
-And git should not change CRLF at all.
-
-Do you have any more .gitattributes in you repo?
-Of course, you can run the command inside your repo.
-Omit the "-o" for other and simply run
-git ls-files --eol
-
-
+> Though the code appears correct, I too am curious about the questions
+> Dscho asked about the code in this patch.
+ 
+Thanks,
+-Stolee
