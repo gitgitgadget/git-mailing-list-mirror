@@ -3,110 +3,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDC51C4338F
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 06:09:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CA9FC4338F
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 06:15:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D2D660FDC
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 06:09:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C1256108F
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 06:15:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238240AbhHTGJy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Aug 2021 02:09:54 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58908 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232732AbhHTGJx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Aug 2021 02:09:53 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id ED6AD13BCFC;
-        Fri, 20 Aug 2021 02:09:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DsYsDkjFiq83ZJtm68sXy/pssd9I47Ad4j4Pvg
-        Zqs3Q=; b=FLa8f4jlUw9mfoolYMDBl8S2MgDuDg6GRYfUUrtiPZ7951ye2Af+Kr
-        BoR/AVH/vgglF+ryD9AF/A+mTOTAYmG68F0rnRC1FAXJJHcFleuw7L9DGSTEMSCs
-        0P2yhHHJV7ao/UUtT1tDSgdPjzuqWSx6FHDKac7zQBVV1NeM591Jk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E535D13BCFA;
-        Fri, 20 Aug 2021 02:09:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3202C13BCF7;
-        Fri, 20 Aug 2021 02:09:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Giving priority to the reftable topic
-    (was Re: What's cooking in git.git (Aug 2021, #06; Mon, 16))
-References: <xmqqv945ng61.fsf@gitster.g>
-Date:   Thu, 19 Aug 2021 23:09:11 -0700
-In-Reply-To: <xmqqv945ng61.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        16 Aug 2021 16:06:14 -0700")
-Message-ID: <xmqqtujkwsu0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S238436AbhHTGQC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Aug 2021 02:16:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33726 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238196AbhHTGQB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Aug 2021 02:16:01 -0400
+Received: from tilde.club (unknown [IPv6:2607:5300:61:c67::196])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDE57C061575
+        for <git@vger.kernel.org>; Thu, 19 Aug 2021 23:15:24 -0700 (PDT)
+Received: from tilde.club (unknown [89.163.252.12])
+        by tilde.club (Postfix) with ESMTPSA id E7B8422047799;
+        Fri, 20 Aug 2021 06:15:18 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 tilde.club E7B8422047799
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tilde.club; s=mail;
+        t=1629440120; bh=ekK5OQxWsFlcVWNtEvXywNKxpCGBxqjtigWB5p3Nw9g=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=DUyR1uB4C0gOT1UzNXrJUMASfJSgmciQduoQKfPIjYfScf2YdMifjHcCkB0c8F7dA
+         LD4A8p293+oGSm0SNz35bauqQjRbLTWVVprZ/0Je9YPr5YW4I76FNTunm1MeEqZ8kV
+         pE3RrocKZd44skYfmOfAe9IWfml+oZYTPgF8veOE=
+Date:   Fri, 20 Aug 2021 06:15:06 +0000
+From:   Gwyneth Morgan <gwymor@tilde.club>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Adam Williamson <awilliam@redhat.com>, git@vger.kernel.org
+Subject: Re: git format-patch produces invalid patch if the commit adds an
+ empty file?
+Message-ID: <YR9Iaj/FqAyCMade@tilde.club>
+References: <02be6a48411fa100e7d1292fc312f7fcf571f334.camel@redhat.com>
+ <xmqq5yw1ywdk.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 243DBCFC-017D-11EC-B09A-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq5yw1ywdk.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 2021-08-19 14:09:43-0700, Junio C Hamano wrote:
+> I do not think our patch injestion machinery in "git apply" minds if
+> we added the "--- /dev/null" + "+++ b/<path>" headers (and the
+> reverse for removal of an empty file) to the current output, and I
+> am not fundamentally opposed to such a change.
+> 
+> But because it is such a rare event (and a discouraged practice) to
+> record a completely empty file, I wouldn't place a high priority on
+> doing so myself.
 
-> * hn/reftable (2021-08-16) 25 commits
->  - t1404: annotate test cases with REFFILES
->  ...
->  - hash.h: provide constants for the hash IDs
->
->  The "reftable" backend for the refs API.
+GNU patch chokes in this case with an unquoted filename with spaces.
+However if we output
 
-As discussed in the thread that leads to [*1*], this topic has been
-blocked by the "clean-up errno use in the refs subsystem" topic for
-too long.  I think it deserves to have its own chance to be looked
-at by more eyes.
+	diff --git "a/test cases/common/56 array methods/a.txt" "b/test cases/common/56 array methods/a.txt"
 
-I've reverted the three topics around "errno" out of 'next', while
-rebasing them into a single strand of pearls, and queued them near
-the tip of 'seen'.  The hn/reftable topic is merged into 'seen' 
-earlier then these "errno" topics.
+instead of
 
-'seen' that has this topic, without merging known CI breakers (the
-three "errno" topics are known to break when they are with the
-hn/reftable topic, and the "builtin fsmonitor" also breaks CI),
-passes the usual tests [*2*], except for the "pedantic" test we
-recently added [*3*].
+	diff --git a/test cases/common/56 array methods/a.txt b/test cases/common/56 array methods/a.txt
 
-The breakage flagged by the compiler are all:
-
-	char *fn = get_tmp_template(__FUNCTION__);
-
-where the code expects that __FUNCTION__ is unconditionally
-available.
-
-With that problem fixed (which I would imagine should be easier than
-brain surgery), we should be able to move the topic lower in 'seen',
-hopefully touching 'next' soon to give it a wider exposure.
-
-And when hn/reftable gets stable enough, the "errno clean-up" topic
-can perhaps be rebased on top of it to work better together.
-
-Thanks.
-
-
-[Reference]
-
-*1* https://lore.kernel.org/git/xmqqbl5syhiu.fsf@gitster.g/
-
-*2* https://github.com/git/git/actions/runs/1148914175
-
-*3* https://github.com/git/git/runs/3377289487?check_suite_focus=true#step:5:639
+GNU patch (and Git) will read it correctly. Rather than adding the "---"
+"+++" lines, could we instead quote filenames in the "diff --git" line
+when they contain spaces?
