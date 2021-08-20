@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BFF2C4338F
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 15:09:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0506BC4338F
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 15:18:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 557A060FDA
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 15:09:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D5114610FF
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 15:18:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240809AbhHTPKU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Aug 2021 11:10:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44046 "EHLO
+        id S237968AbhHTPTC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Aug 2021 11:19:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235928AbhHTPKT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Aug 2021 11:10:19 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B269C061575
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 08:09:42 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id k12-20020a056830150c00b0051abe7f680bso9314308otp.1
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 08:09:42 -0700 (PDT)
+        with ESMTP id S234323AbhHTPTA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Aug 2021 11:19:00 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C389EC061575
+        for <git@vger.kernel.org>; Fri, 20 Aug 2021 08:18:20 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id w22-20020a056830411600b0048bcf4c6bd9so14411202ott.8
+        for <git@vger.kernel.org>; Fri, 20 Aug 2021 08:18:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=OsNSZLAS0GBkL2sCSnCYkBgDLLYA9kycYx4ykEYkhZc=;
-        b=ghgGGYt6/5fS1RkKa09bqaxjFRcoZwEn+4L4ciLX1yVq4+ofppoGga9G+nAA6p0+3I
-         G+M8qphbrVNHYCH14OTMYJm1DRWEhLNulPCbbBnTjq+DTzJylQqvHbKDclfZ0MmsT/aN
-         zwYwJ4eSXabbWRcbu78HPq8elXwooeIJjUuramqOT9xMr5jobzTPzXljlb0cr4szW4yB
-         xKs77gnA0c6B82puoxw/kS6nfLwPIf3pcwvx9yVY/krzL8RgDUcQnq3slE+bIGEwODuK
-         svGx4XpKYwthBF4IDtyoZHvOINPOCukfG5wZmjpacXYku/JO7iLOwRUQpdDvDR/i02IY
-         pCzQ==
+        bh=icA4brZqtgLbdGw90B+TAGrxqXxsY94rnbHy2i531Ew=;
+        b=OIMmcPyxcaDYVG5ta66TUbB/QQ/j7s+m5jFYs+OzNepMfNme8QuVn7MUKsaK0RW2gN
+         UBHSXmO2UDAqgZZCA7dUdFMschvqr2q5izFJJ4IEJ/vmVpk/uW18BnlnPOiZ2xXabt/h
+         sfgE0K+JLgmYnWgg0SkOBOVkYjn+b3it0t8xIYbomZ2ZdRXJPpBNfASowaa9fPn892Ng
+         chxqQnCD/C52xkbQwzAKpbxDbYLh9NDTcd57WIQgBog3/BEWexjPTsG1KeF/o6iDoIAN
+         aN4ivlQhvnIt1Krbk+zSx1SAsdidhCkCqi6vMIDNWVNElm8B9xHkV5xwxJO9s8B3Wcir
+         opNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=OsNSZLAS0GBkL2sCSnCYkBgDLLYA9kycYx4ykEYkhZc=;
-        b=aVFObufD49EaxQqZGPcnhODR6teYTbQzYS3A/DV6T3mYt8zv2dOGA5tzI0O8Dw/VTu
-         N23N5Wl667rFk8WpvpNNdcYmdIJ5fAGpFXIpEp8yfVRQ2zgnS2FIytWxhrtHNJle0O1Y
-         s775qmA7AsIoUUXPaAT7LZN561d0ReY/VPS8IIlkMaA5e6HmiZWpGUUN15zObBz812ig
-         GUr6JW9wU1Q0f+bSNG5AeBaeg11c9d2BnwdnZTcw+uITECqct/UuNaHWn5j9LukL54IC
-         3dxHEaWtQ5HUVV+tBbSWpJiJHsKGVu3Pn20jRT3djX2tumpEobC5C6+qTtMMSJFIII5L
-         XyfQ==
-X-Gm-Message-State: AOAM533vJHAKpHPHvmcf239ouZOHQ+79J0OvFjAwCACm+feHo6NI1s+Y
-        TY7uyGtS+3RLdEpEKqxvp0k=
-X-Google-Smtp-Source: ABdhPJz/ZfpGaQZjr8gMfnKZfo0vwm4wpdUFm6tVYcg77vRTaUZDG4LkjYTQGzmB2mFrV1j9xcp/YQ==
-X-Received: by 2002:a05:6830:236d:: with SMTP id r13mr17428440oth.130.1629472181325;
-        Fri, 20 Aug 2021 08:09:41 -0700 (PDT)
+        bh=icA4brZqtgLbdGw90B+TAGrxqXxsY94rnbHy2i531Ew=;
+        b=iuNPBaVjlcz75CSB7wAyM4GrJ9XuNyTLS2k4zvp32AieODqzgPNywPHcqNEvL0xNk2
+         TdX8eXyAfcpe/WfUelUjWjdElSE7ERlGOYtBaQY0B+PcoNiUREag53PJGx1u848q4zeM
+         kjq4gviNp5wgE4iOIs/DuIB91P9E6pkl4gjX3PAdiVZBoGvxzHQmBjeiBNySr+5Bu0N1
+         oZL6vnFLIvPo6hDVm9M7UqKEbAPxy8I7SUqKeFL9zmQmdWl5E8mdDI7EAPMCNoT+U7aU
+         pMRpCTHa/91+tZ79RrdULIPGljwhI6x96JDJX9c0+8tmZMrnK0hcEycJMS1JmpRkcUq/
+         i0dw==
+X-Gm-Message-State: AOAM531v/Qk5Qf/cbkKFGDmtmSU9OTLRMjgi8N2Df5YSbxGjcpsBpEbU
+        GFQRs2KgOdbfNs2QzBKUR8g=
+X-Google-Smtp-Source: ABdhPJyvih8HrJqTAQERU/CDQ4EHyniCH2pxpmcQFITxi0P0NuX9ySPV132wQHudscY5Oj4XhL+XOA==
+X-Received: by 2002:aca:320b:: with SMTP id y11mr3432451oiy.63.1629472700019;
+        Fri, 20 Aug 2021 08:18:20 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:f436:fc6f:2dd3:d49? ([2600:1700:e72:80a0:f436:fc6f:2dd3:d49])
-        by smtp.gmail.com with ESMTPSA id t1sm1524215otp.9.2021.08.20.08.09.39
+        by smtp.gmail.com with ESMTPSA id o133sm1458588oia.10.2021.08.20.08.18.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Aug 2021 08:09:40 -0700 (PDT)
-Subject: Re: [PATCH v3 1/8] t7519: rewrite sparse index test
+        Fri, 20 Aug 2021 08:18:19 -0700 (PDT)
+Subject: Re: [PATCH v3 4/8] unpack-trees: fix nested sparse-dir search
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
@@ -65,15 +65,15 @@ Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>
 References: <pull.1009.v2.git.1628625013.gitgitgadget@gmail.com>
  <pull.1009.v3.git.1629206602.gitgitgadget@gmail.com>
- <e66106f7a99d94145eec983ea5e72b7cf8a8a479.1629206603.git.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.2108190933210.55@tvgsbejvaqbjf.bet>
+ <10bcadb284e49419f9b4baf75e05f719ec395d98.1629206603.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.2108190950540.55@tvgsbejvaqbjf.bet>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <24b1b932-caf9-b709-baf4-a2f8669deb88@gmail.com>
-Date:   Fri, 20 Aug 2021 11:09:38 -0400
+Message-ID: <b7bd8e73-de86-c563-8b7d-405310ce6c57@gmail.com>
+Date:   Fri, 20 Aug 2021 11:18:18 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2108190933210.55@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2108190950540.55@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -81,50 +81,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/19/2021 3:45 AM, Johannes Schindelin wrote:> On Tue, 17 Aug 2021, Derrick Stolee via GitGitGadget wrote:
->>  test_expect_success 'status succeeds with sparse index' '
->> -	git reset --hard &&
->> +	git clone . full &&
->> +	git clone . sparse &&
->> +	git -C sparse sparse-checkout init --cone --sparse-index &&
+On 8/19/2021 4:01 AM, Johannes Schindelin wrote:
+> Hi Stolee,
 > 
-> Would it make sense to call `git clone --sparse . sparse`? I see that
-> there is no support for `--sparse=cone`, which makes me wonder whether we
-> want that at some stage. In any case, cloning with `--sparse` and then
-> setting up the cone mode should result in a little less work, right?
-
-The amount of work saved is miniscule, but I can understand wanting to
-shave what we can from the cost of tests.
-
->> +	git -C sparse sparse-checkout set dir1 dir2 &&
+> On Tue, 17 Aug 2021, Derrick Stolee via GitGitGadget wrote:
+> 
+>> From: Derrick Stolee <dstolee@microsoft.com>
 >>
->> -	test_config core.fsmonitor "$TEST_DIRECTORY/t7519/fsmonitor-all" &&
->> -	check_sparse_index_behavior ! &&
->> -
->> -	write_script .git/hooks/fsmonitor-test<<-\EOF &&
->> +	write_script .git/hooks/fsmonitor-test <<-\EOF &&
->>  		printf "last_update_token\0"
+>> The iterated search in find_cache_entry() was recently modified to
+>> include a loop that searches backwards for a sparse directory entry that
+>> matches the given traverse_info and name_entry. However, the string
+>> comparison failed to actually concatenate those two strings, so this
+>> failed to find a sparse directory when it was not a top-level directory.
+>>
+>> This caused some errors in rare cases where a 'git checkout' spanned a
+>> diff that modified files within the sparse directory entry, but we could
+>> not correctly find the entry.
 > 
-> Technically, the backslash needs to be escaped because it is within double
-> quotes and we do not want the shell to interpolate the `\0`, but `printf`.
-> Practically, all the shells I tried handle this as expected.
+> Good explanation.
 > 
-> Also, I have a slight preference for:
+> I wonder a bit about the performance impact. How "hot" is this function?
+> I.e. how often is it called, on average?
 > 
-> 		printf "%s\\0" last_update_token
-> 
-> and later
-> 
-> 		printf "%s\\0" last_update_token dir1/modified
-> 
-> What do your taste buds say about this?
+> I ask because I see opportunities to optimize in both directions: it could
+> be written more concisely (if speed does not matter as much), and it could
+> be made faster (if speed matters a lot). See below for more.
 
-I have no opinions on this one way or another. I will just point out that
-the pattern used in this test is also used throughout the test script, so
-any change to that format should be applied universally. The test has been
-operating without complaint since it was introduced in 5c8cdcf (fsmonitor:
-add test cases for fsmonitor extension, 2017-09-22), so compatibility is
-likely not a problem.
+I would definitely optimize for speed here. This can be a very hot path,
+I believe.
+
+>> +	strbuf_addstr(&full_path, info->traverse_path);
+>> +	strbuf_add(&full_path, p->path, p->pathlen);
+>> +	strbuf_addch(&full_path, '/');
+> 
+> This could be reduced to:
+> 
+> 	strbuf_addf(&full_path, "%s%.*s/",
+> 		    info->traverse_path, (int)p->pathlen, p->path);
+
+We should definitely avoid formatted strings here, if possible.
+
+> But if speed matters, we probably need something more like this:
+> 
+> 	size_t full_path_len;
+> 	const char *full_path;
+> 	char *full_path_1 = NULL;
+> 
+> 	if (!*info->traverse_path) {
+> 		full_path = p->path;
+> 		full_path_len = p->pathlen;
+> 	} else {
+> 		size_t len = strlen(info->traverse_path);
+> 
+> 		full_path_len = len + p->pathlen + 1;
+> 		full_path = full_path_1 = xmalloc(full_path_len + 1);
+> 		memcpy(full_path_1, info->traverse_path, len);
+> 		memcpy(full_path_1 + len, p->path, p->pathlen);
+> 		full_path_1[full_path_len - 1] = '/';
+> 		full_path_1[full_path_len] = '\0';
+> 	}
+
+The critical benefit here is that we do not need to allocate a
+buffer if the traverse_path does not exist. That might be a
+worthwhile investment. That leads to justifying the use of
+bare 'char *'s instead of 'struct strbuf'.
+
+If the traverse_path is usually non-null, then we could continue using
+strbufs as a helper and get the planned performance gains by using
+strbuf_grow(&full_path, full_path_len + 1) followed by strbuf_add()
+(instead of strbuf_addstr()). That would make this code a bit less
+ugly with the only real overhead being the extra insertions of '\0'
+characters as we add the strings to the strbuf().
+
+I will need to investigate so see which one is the best.
 
 Thanks,
 -Stolee
