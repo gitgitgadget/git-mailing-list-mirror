@@ -2,111 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F8C0C4320A
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 17:23:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4703C4338F
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 17:40:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3836B61101
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 17:23:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9BC6D61101
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 17:40:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233951AbhHTRXw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Aug 2021 13:23:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47726 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233702AbhHTRXm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Aug 2021 13:23:42 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 870C0C061756
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 10:23:04 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id q6so15261463wrv.6
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 10:23:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=SQdUT9oL8l2cZy0O1q3jtU4MPIlqqu+yIOQk9cEGs6U=;
-        b=GWg5uy0WxQi/z6Hp9D7rTAonZ6MXbMprnQiM3LpneCzChGHJGsZ08uXUEZ7KRWyt1r
-         9i8dfr8XFU4Nx0GEbUosHyCZ2rMnc8R/rVbrbRppGWTvxacVfAam6z+OI/3P0Kgc2L4g
-         ITfDQSZVPgtmiYBzgdmjusvYrQYvK1iQkg6N9vwXc5kCHulj5id/R8FJiBCo+c8Fh1FX
-         rc/cSLMPPQRRInk+0i9bOFUuhIpju8DRd07fr1ZGObbwUNFQy2VM8SJwwJi9OrkGdRBB
-         E6YhEKPipyGytwG6rIli3Gsw9nyUqU4WQ84gu7pPIOHlTHeZ7mGhnmtTFB6Chp60INfu
-         bszA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=SQdUT9oL8l2cZy0O1q3jtU4MPIlqqu+yIOQk9cEGs6U=;
-        b=QroJx8IUpwUJaT6TKeWimZIRYs/wXy/Tf/5AklJCBoat5Z0AZ2+AyxWTRdv4yAe8L1
-         GVg0iciCNVc7ddeLOFZQ8vfUqQ3Mn8YWiQE/zqCT4fFmUm8SMUeVW0BbmyMlpjBx8ZK6
-         AOpLNaFBCQ6w3mKIQmyi/vGAVg32k9WaFZIY6s0EL9V8Lw8EOjOH8SpqhGPAdIKOcZwE
-         Zt4Tvc0fSO1iLA+HOrX11iWzHZZbCVckzkGPjKPHsZDetBex1owBFCvb4930N3t/FylW
-         hq6v2hTMoMvMVn0TkUQ4MdSTaO8h34nftYHLqgz2YQ0YAAy3Q15GluaXhBMMkczaN7Ac
-         3ojQ==
-X-Gm-Message-State: AOAM531Av/6s1xdSzfmKrneaP/AiVqNh1jjHZVKB7BHRTM+vFcCbMUFk
-        gvy8+Zovfmo7/E+xfnQrIqsW0NZgt5k=
-X-Google-Smtp-Source: ABdhPJx4xe5mXkKObVj4WYce6Pt7xmi5dtU2/1shJ7pPUN9NFtbC2CxKyYN2C+5wVDZ5iXu/iB1Y4g==
-X-Received: by 2002:a5d:4143:: with SMTP id c3mr11725828wrq.29.1629480183206;
-        Fri, 20 Aug 2021 10:23:03 -0700 (PDT)
-Received: from localhost.localdomain ([178.237.232.111])
-        by smtp.gmail.com with ESMTPSA id x13sm6623278wrq.44.2021.08.20.10.23.02
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Aug 2021 10:23:02 -0700 (PDT)
-From:   Miriam Rubio <mirucam@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v5 6/6] bisect--helper: retire `--bisect-next-check` subcommand
-Date:   Fri, 20 Aug 2021 19:21:48 +0200
-Message-Id: <20210820172148.2249-7-mirucam@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210820172148.2249-1-mirucam@gmail.com>
-References: <20210820172148.2249-1-mirucam@gmail.com>
+        id S233925AbhHTRlA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Aug 2021 13:41:00 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56085 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233320AbhHTRky (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Aug 2021 13:40:54 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9DD85140721;
+        Fri, 20 Aug 2021 13:40:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=5RppaBnzPjwVfH4uK34LGjpubOyma2cb8f0W/B
+        RJTHc=; b=BP2N+a92vLHyZusgvMMsaKnWxqu/wpDrkTd+8zsQ1xfpY4ZHWel3z6
+        7DtvK3N990q20IBEZoSfyt24G646hLyuNkifgnmOtTtd5Mdu/53D/Ei7vLRCCFDK
+        +/jvLlRs+bPwLo4VkjjEGDOHPjt9VHKMytV1uqxpKeNVE5lcVEjUo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9668C140720;
+        Fri, 20 Aug 2021 13:40:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DA31D14071E;
+        Fri, 20 Aug 2021 13:40:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Jan Kratochvil <jan@jankratochvil.net>, git@vger.kernel.org
+Subject: Re: bugreport: git apply -3 confusing "lacks the necessary blob"
+References: <YR1OszUm08BMAE1N@host1.jankratochvil.net>
+        <73a31988-d298-0168-43d5-849f91366d7d@gmail.com>
+Date:   Fri, 20 Aug 2021 10:40:12 -0700
+In-Reply-To: <73a31988-d298-0168-43d5-849f91366d7d@gmail.com> (Bagas Sanjaya's
+        message of "Fri, 20 Aug 2021 16:19:39 +0700")
+Message-ID: <xmqqtujkui9v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: ACBCBA5A-01DD-11EC-95ED-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After reimplementation of `git bisect run` in C,
-`--bisect-next-check` subcommand is not needed anymore.
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
-Let's remove it from options list and code.
+> On 19/08/21 01.17, Jan Kratochvil wrote:
+>> reproducer:
+>> (set -ex;: rm -rf gitgit;mkdir gitgit;cd gitgit;git init;echo a >x;git add x;git commit -am.;git checkout -b b;echo b >x;git commit -am.;git checkout master;echo c >x;git commit -am.;git diff master^..b|grep -v ^index >b.diff;git apply -3 b.diff || cat b.diff)
+>
+> I can reproduce your issue on latest Git (2.33.0).
+>
+> It seems like you remove `index` line, which **may** contain blob hash
+> information required for three-way merge with git apply -3.
+>
+> But if you don't remove it when generating patch that way, you will
+> get expected conflict when git applying.
 
-Mentored by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Miriam Rubio <mirucam@gmail.com>
----
- builtin/bisect--helper.c | 7 -------
- 1 file changed, 7 deletions(-)
+You make it sound like an "it hurts when I do this, doctor. ---do
+not do it, then" exchange ;-).
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 8d33c809aa..6e1e7c243d 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -22,7 +22,6 @@ static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
- 
- static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-reset [<commit>]"),
--	N_("git bisect--helper --bisect-next-check <good_term> <bad_term> [<term>]"),
- 	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
- 	N_("git bisect--helper --bisect-start [--term-{new,bad}=<term> --term-{old,good}=<term>]"
- 					    " [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]"),
-@@ -1227,12 +1226,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			return error(_("--bisect-reset requires either no argument or a commit"));
- 		res = bisect_reset(argc ? argv[0] : NULL);
- 		break;
--	case BISECT_NEXT_CHECK:
--		if (argc != 2 && argc != 3)
--			return error(_("--bisect-next-check requires 2 or 3 arguments"));
--		set_terms(&terms, argv[1], argv[0]);
--		res = bisect_next_check(&terms, argc == 3 ? argv[2] : NULL);
--		break;
- 	case BISECT_TERMS:
- 		if (argc > 1)
- 			return error(_("--bisect-terms requires 0 or 1 argument"));
--- 
-2.29.2
+But I think Jan is talking about the case where users get a patch
+that lacks the "index" information out of other people's "diff"
+implementation and try to "apply -3" without realizing that it is
+not Git's "diff" output.
+
+Perhaps something like the attached patch would be a good start.
+
+There is another place that relies on the index line (application of
+binary patch), but the code rejects any patch that does not have the
+full-length object name with "... without full index line".  This
+message was originally meant to reject patches with abbreviated
+object names on the index line, but it would equally apply to one
+without the index line (perhaps by accident), so there is no need to
+touch that one.
+
+
+ apply.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git i/apply.c w/apply.c
+index 44bc31d6eb..9972ada57e 100644
+--- i/apply.c
++++ w/apply.c
+@@ -3566,6 +3566,8 @@ static int try_threeway(struct apply_state *state,
+ 	/* Preimage the patch was prepared for */
+ 	if (patch->is_new)
+ 		write_object_file("", 0, blob_type, &pre_oid);
++	else if (!*patch->old_oid_prefix && !*patch->new_oid_prefix)
++		return error(_("cannot 'apply -3' a patch without the index line"));
+ 	else if (get_oid(patch->old_oid_prefix, &pre_oid) ||
+ 		 read_blob_object(&buf, &pre_oid, patch->old_mode))
+ 		return error(_("repository lacks the necessary blob to perform 3-way merge."));
 
