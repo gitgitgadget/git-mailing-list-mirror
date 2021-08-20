@@ -2,131 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4785C4338F
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 21:58:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 304C0C4338F
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 22:08:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B3EF261165
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 21:58:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 13EC861181
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 22:08:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233429AbhHTV7N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Aug 2021 17:59:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54326 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229760AbhHTV7K (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Aug 2021 17:59:10 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44045C061575
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 14:58:32 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id v33-20020a0568300921b0290517cd06302dso17229169ott.13
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 14:58:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cUIU1KvGpg0dUugZFpn93eopGwfY9NRzQ8to9FR3iow=;
-        b=IpqRRCyz+vMxkAZk1COG8+2f5S+cXLRjm4engZBDM0Q6BRSXUu93C1kADpkZiy3wlU
-         dQuPPeoCz/yElNTgc6cKVps/fjM4+OyYEBGEHni8SdX5yy8X3DDZWnzdC1hcv1Eg4Lsk
-         r5Jwv98wO49PY/HhHZ031U10bW/zkZIBGqOx/hc2rPSWYekva4jD3yhXFoZFAbYjJJus
-         l/n/oG2LAJNvd+5FMk/P8ld3FEhJQ8vf2FBjIdT6h7EpMIQZ020BYKzhf1ZxFpyWA+Cm
-         8UVrXATjdTdwCYZAUJFfqYE1Zn15Tn8EXMUWlV5yqDRiB3uuQU5j5z4l85e65JNFI1fW
-         S10A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cUIU1KvGpg0dUugZFpn93eopGwfY9NRzQ8to9FR3iow=;
-        b=GYZYzRN36C3NL8fH+nMCOe/O+PlhrwALWta2nlEA2+8LM/Bo7JtgnxKwIwEDVQAsY9
-         Voqo+C1EC6b3NqKyRt8O0i1+Etpe9Q7/qGqQis5b9GQypP89KamvyT+b7Hkkhrsi6JAC
-         WslsfQaDFIZdAcTzeBdC6CJXgLvULAOmhymIVEyw2UBMI8crvuAMPHgbIYmc/Uw8I3OD
-         WZcT8fhGYSFBAP8gQdiADtyjkTBzbgtokyEeIW+zoyCfLoRD0IGJcR9BpJr9uMRTFGhF
-         +T3skUVKEtSxPG6V212Eok59sxZTlGAb0osuD3lKVUIwjuAgTbassjrEsqv5rZ67IFX+
-         efgg==
-X-Gm-Message-State: AOAM531fF0kapYTwcAEY6FOVyIdo6xnguMFq2ksrKjEU+OA5guTWP1yB
-        0LwzXaac49NjkvJdzqTOdCKQfLqPNsExbm9Pdrw=
-X-Google-Smtp-Source: ABdhPJwixO517H68VXO4gUVj85sswxmIDiYQRdv6rV2CThC0Q2bsdflt/5sHAdwV08tAzPUOVEtNrjPk4P6RshiLc+U=
-X-Received: by 2002:a05:6808:1787:: with SMTP id bg7mr4553902oib.39.1629496711722;
- Fri, 20 Aug 2021 14:58:31 -0700 (PDT)
+        id S231597AbhHTWJC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Aug 2021 18:09:02 -0400
+Received: from avasout04.plus.net ([212.159.14.19]:55119 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229760AbhHTWJB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Aug 2021 18:09:01 -0400
+Received: from [10.0.2.15] ([195.213.6.54])
+        by smtp with ESMTPA
+        id HCgWmPk1aOQhvHCgXmZwSX; Fri, 20 Aug 2021 23:08:22 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1629497302; bh=J7ro1yP212T3vpmZrEhlU0Etci6gE6Odbri94BnoQgA=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=kUHMbmIKobd1x8FV8dQzM2aS+kJjAj/Rxqx4SzK3Vj1w7mmt14EI3hUVxhN4Qoaw6
+         YAlBdiHwZsJPZlM+rcWIELdh8DQMMCYvI4p5ceR8YRIgLsT2qBVw4a+n1bNKyHqoiz
+         WvvOPhd2lnaonR8f4jTQCBDGDe8OW3+frjrSBARgUg31yhB5ivWqci4OQWoMyPV8W5
+         BLwmSdQ/Ca5tPSbrnnR5pmJdOBvCamRQA2MOJpT5ozXU9yphZEJme74LBOipU6zZ0y
+         d3vpvySG8IjCxwouN7O1SjdrGKm4+Se2pCsL8Ho+nz5Kog7t4gCQ7flHGqXsd7O54T
+         DaDd/4shcRpeA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=IvmFjI3g c=1 sm=1 tr=0
+ a=thHlcjYJ4SvUC+rIXd59ow==:117 a=thHlcjYJ4SvUC+rIXd59ow==:17
+ a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=eGMXq8pU8n6ExDZEWk8A:9 a=QEXdDO2ut3YA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: Giving priority to the reftable topic (was Re: What's cooking in
+ git.git (Aug 2021, #06; Mon, 16))
+To:     Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org
+References: <xmqqv945ng61.fsf@gitster.g> <xmqqtujkwsu0.fsf@gitster.g>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <bc387e32-321e-4726-2a02-2e6cf6ed5250@ramsayjones.plus.com>
+Date:   Fri, 20 Aug 2021 23:08:20 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <pull.1019.git.1629220124.gitgitgadget@gmail.com> <ca23bf38bd9a88c6ab8461e703165c550cf7b955.1629220124.git.gitgitgadget@gmail.com>
-In-Reply-To: <ca23bf38bd9a88c6ab8461e703165c550cf7b955.1629220124.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 20 Aug 2021 14:58:20 -0700
-Message-ID: <CABPp-BHGP5aARirfuS8xZspTk1Fkgq310=MrPiJcXe782LjgHQ@mail.gmail.com>
-Subject: Re: [PATCH 5/6] t1092: add cherry-pick, rebase tests
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqtujkwsu0.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfLVj2gGLm9bZx1UalQth7J6i4LjhSiP5k0NbKkRc5QQoYsQSmArOsT81ipAV6kosAwqjtVBbXAEdsH4Ycd5eCQN0M/92wulIhLido/CY69YjUBvrCduk
+ k0amY/8xw+IBW6Hf/gInR9a2WrOI+jJRAeVjq98TITFRTibWPRc+WOI6n6kJu82w/U9PAAwIP1tasQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 17, 2021 at 10:08 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> Add tests to check that cherry-pick and rebase behave the same in the
-> sparse-index case as in the full index cases.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  t/t1092-sparse-checkout-compatibility.sh | 15 +++++++++------
->  1 file changed, 9 insertions(+), 6 deletions(-)
->
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index a0ed2bec574..a52d2edda54 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -486,14 +486,17 @@ test_expect_success 'checkout and reset (mixed) [sparse]' '
->         test_sparse_match git reset update-folder2
->  '
->
-> -test_expect_success 'merge' '
-> +test_expect_success 'merge, cherry-pick, and rebase' '
->         init_repos &&
->
-> -       test_all_match git checkout -b merge update-deep &&
-> -       test_all_match git merge -m "folder1" update-folder1 &&
-> -       test_all_match git rev-parse HEAD^{tree} &&
-> -       test_all_match git merge -m "folder2" update-folder2 &&
-> -       test_all_match git rev-parse HEAD^{tree}
-> +       for OPERATION in "merge -s ort -m merge" cherry-pick rebase
-
-You're explicitly testing the ort strategy with merge, but relying on
-GIT_TEST_MERGE_ALGORITHM for cherry-pick and rebase?
-
-It'd probably be better to set GIT_TEST_MERGE_ALGORITHM=ort at the
-beginning of the file and leave out the `-s ort` references.
-
-Or, if you really wanted to test both algorithms, then in addition to
-leaving out the `-s ort`, don't bother setting
-GIT_TEST_MERGE_ALGORITHM.  (That works because automated test suites
-will set GIT_TEST_MERGE_ALGORITHM=recursive on linux-gcc, and
-GIT_TEST_MERGE_ALGORITHM=ort elsewhere).
 
 
-> +       do
-> +               test_all_match git checkout -B temp update-deep &&
-> +               test_all_match git $OPERATION update-folder1 &&
-> +               test_all_match git rev-parse HEAD^{tree} &&
-> +               test_all_match git $OPERATION update-folder2 &&
-> +               test_all_match git rev-parse HEAD^{tree} || return 1
-> +       done
+On 20/08/2021 07:09, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> * hn/reftable (2021-08-16) 25 commits
+>>  - t1404: annotate test cases with REFFILES
+>>  ...
+>>  - hash.h: provide constants for the hash IDs
+>>
+>>  The "reftable" backend for the refs API.
+> 
+> As discussed in the thread that leads to [*1*], this topic has been
+> blocked by the "clean-up errno use in the refs subsystem" topic for
+> too long.  I think it deserves to have its own chance to be looked
+> at by more eyes.
+> 
+> I've reverted the three topics around "errno" out of 'next', while
+> rebasing them into a single strand of pearls, and queued them near
+> the tip of 'seen'.  The hn/reftable topic is merged into 'seen' 
+> earlier then these "errno" topics.
+
+Just a gentle reminder that this topic tickles my 'static-check.pl'
+script, like so:
+
+  $ diff nsc ssc
+  ...
+  88a91,98
+  > reftable/generic.o	- reftable_table_seek_log
+  > reftable/merged.o	- reftable_merged_table_hash_id
+  > reftable/merged.o	- reftable_merged_table_min_update_index
+  > reftable/merged.o	- reftable_merged_table_seek_log_at
+  > reftable/publicbasics.o	- reftable_set_alloc
+  > reftable/reader.o	- reader_seek
+  > reftable/reader.o	- reftable_reader_seek_log_at
+  > reftable/stack.o	- reftable_stack_auto_compact
+  ...
+  $ 
+
+Which is to say, all of the above symbols are defined (and called) in
+the '.c' file corresponding to the given object file, but not called
+anywhere outside that file. I have not even looked at those functions,
+but (with the possible exception of reftable_set_alloc()) they don't
+strike me as 'public API functions'. So, maybe they should be marked
+as 'static'?
+
+ATB,
+Ramsay Jones
 
 
->  '
->
->  # NEEDSWORK: This test is documenting current behavior, but that
-> --
-> gitgitgadget
->
