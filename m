@@ -2,134 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CDC4C4338F
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 19:14:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19BF2C4338F
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 19:35:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 18AE461102
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 19:14:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F318B6113E
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 19:35:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236054AbhHTTPY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Aug 2021 15:15:24 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47118 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229927AbhHTTPX (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 20 Aug 2021 15:15:23 -0400
-Received: from camp.crustytoothpaste.net (unknown [72.12.180.34])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E37B46076A;
-        Fri, 20 Aug 2021 19:14:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1629486885;
-        bh=xe4Qu9aHnEYTc7O5/7cLCItN9f4LuBto7LI1hjk56kY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=NQ3CXym8HbcYBRKllPiwAxkuNEqKG38XaGKOYNv5kkbP/hzirMYktROSXz3+AhMJU
-         JRKvGNuK4U73DOieCHWM6b6AuSpAWw+jOsaKPCfQnwyE8XAz84MoObHVWNAcg0Ok8w
-         rUdaaAeEUz+6RBthMmb0lfRU6uj0AL5X5IHxasvB44dDaMlYIZn3/5gfQv7UhSpBAf
-         iVKD0DTMBODwQEbTiyXQYfc9iwdfIH329yMg25x/uPJT8OQ8OYh3U2L82dMWemBc+j
-         aXJik0NicM6Ii0OcdpI4lVTI8EDXSvM+EBFq0vJIbbg0AjYR8ePjvaACoFoSVNvqyE
-         VLEATPvKeVA5dt7JQIbxUROE1CV+BDxqxtoIQ2rXc2xtmHSFI7+QOyMkuB6gNEoo3J
-         1tkidPYvSYJrn8ODezv1c0NyYfoIErYR+u4PbhthRAQ3DbxLuUDOW48kvLX8LSdgJV
-         2llca3mRnG3JielOPoyqlt43jzNXDqNAOdHq5OGBsOrgmJM11+G
-Date:   Fri, 20 Aug 2021 19:14:40 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jonathon Anderson <janderson@acesquality.com>
-Cc:     Jeff King <peff@peff.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org
-Subject: Re: Git Modifying DLL
-Message-ID: <YR//IDB9ml5RO2H6@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathon Anderson <janderson@acesquality.com>,
-        Jeff King <peff@peff.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org
-References: <CAG83euoGmVUUBh00wAEX1muZogNPOQUV6+ppL8x8qCaDnzTbDw@mail.gmail.com>
- <010f01d79525$f10a1f60$d31e5e20$@nexbridge.com>
- <CAG83euo2B4QFU_S6Yqd3UACWq63p=L+T30CwzT52D8H=S5pRVg@mail.gmail.com>
- <YR/tyHWQ6+2sP2iA@coredump.intra.peff.net>
- <CAG83euofNXHx8-=7Obj-Ju5U_fjwNBuLVJjmccVhe9bqRFyBiw@mail.gmail.com>
+        id S238100AbhHTTfz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Aug 2021 15:35:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50124 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238135AbhHTTfr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Aug 2021 15:35:47 -0400
+Received: from sipsolutions.net (s3.sipsolutions.net [IPv6:2a01:4f8:191:4433::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4AADC061756
+        for <git@vger.kernel.org>; Fri, 20 Aug 2021 12:35:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sipsolutions.net; s=mail; h=Content-Transfer-Encoding:MIME-Version:
+        Message-Id:Date:Subject:Cc:To:From:Content-Type:Sender:Reply-To:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+        Resent-Message-ID:In-Reply-To:References;
+        bh=nEq3rMyZ4qLpOe+9odWiOSe4HKSfrIUDYQMZk2Jm5iU=; t=1629488108; x=1630697708; 
+        b=FLxBI8+sW7oh8J3j6AIWupw9mSwMnwLkdNUEzPpmUIR/oJEwSRnHaJJQgFzWsFpsDouxhIBoTiZ
+        CWyukrL0BSVaRsOYZt8G8nl1lzKdzR+RQE4FKb9vRugaT1SDe2ko791dabTe8tSAmiwKAaCWmP111
+        +4s9tLB1DsYWMD9dSgILRbuP0QXH6vmeMDChMk28P1LnwwE3kx8y5EqeEcHTjoc37aZSHlvv1pTH9
+        Z7dOjfcku9n4zN2UfBnu+xWgmObWTIy8UwQGrybo00ODTjZ7fUqjOgTvS35tjmfaVRvm87t7BFbHM
+        HHEr38OvFcT4dfmvol4nzxfCWsPrQw57jlpw==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+        (Exim 4.94.2)
+        (envelope-from <johannes@sipsolutions.net>)
+        id 1mHAIE-00Dj7n-Bb; Fri, 20 Aug 2021 21:35:06 +0200
+From:   Johannes Berg <johannes@sipsolutions.net>
+To:     git@vger.kernel.org
+Cc:     "Signed-off-by : Taylor Blau" <me@ttaylorr.com>
+Subject: [PATCH] multi-pack-index: fix --object-dir from outside repo
+Date:   Fri, 20 Aug 2021 21:35:04 +0200
+Message-Id: <20210820193504.37044-1-johannes@sipsolutions.net>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="EhA+EZh23EjLip+f"
-Content-Disposition: inline
-In-Reply-To: <CAG83euofNXHx8-=7Obj-Ju5U_fjwNBuLVJjmccVhe9bqRFyBiw@mail.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+If using --object-dir to point into a repo, 'write' will
+segfault trying to access the object-dir via the repo it
+found, but that's not fully initialized. Fix it to use
+the object_dir properly.
 
---EhA+EZh23EjLip+f
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Fixes: 38ff7cabb6b8 ("pack-revindex: write multi-pack reverse indexes")
+Signed-off-by: Johannes Berg <johannes@sipsolutions.net>
+---
+ midx.c                      | 10 +++++-----
+ t/t5319-multi-pack-index.sh |  8 ++++++++
+ 2 files changed, 13 insertions(+), 5 deletions(-)
 
-On 2021-08-20 at 18:47:02, Jonathon Anderson wrote:
-> On Fri, Aug 20, 2021 at 1:00 PM Jeff King <peff@peff.net> wrote:
-> >
-> > On Thu, Aug 19, 2021 at 01:21:03PM -0500, Jonathon Anderson wrote:
-> >
-> > > I had not. I tested that and it worked. I assumed that git would
-> > > automatically treat dll files as binary. Thanks for the help!
-> >
-> > Git doesn't know about any file extensions by default. Its default "is
-> > it binary" test looks for NUL bytes in the first 8k or so of the file.
-> > I'd expect your DLL would probably have such a NUL byte.
-> >
-> > Is it possible you have other .gitattributes set which are confusing
-> > things?
-> >
-> > You might try:
-> >
-> >   git check-attr --all <path>
-> >
-> > or:
-> >
-> >   git ls-files --stdin | git check-attr --stdin --all
-> >
-> > -Peff
->=20
-> When I remove '*.dll binary" from .gitattributes, I get this:
->=20
-> $ git check-attr --all ./PSWindowsUpdate.dll
-> ./PSWindowsUpdate.dll: text: set
-> ./PSWindowsUpdate.dll: eol: lf
+diff --git a/midx.c b/midx.c
+index 321c6fdd2f18..902e1a7a7d9d 100644
+--- a/midx.c
++++ b/midx.c
+@@ -882,7 +882,7 @@ static void write_midx_reverse_index(char *midx_name, unsigned char *midx_hash,
+ 	strbuf_release(&buf);
+ }
+ 
+-static void clear_midx_files_ext(struct repository *r, const char *ext,
++static void clear_midx_files_ext(const char *object_dir, const char *ext,
+ 				 unsigned char *keep_hash);
+ 
+ static int midx_checksum_valid(struct multi_pack_index *m)
+@@ -1086,7 +1086,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 
+ 	if (flags & MIDX_WRITE_REV_INDEX)
+ 		write_midx_reverse_index(midx_name, midx_hash, &ctx);
+-	clear_midx_files_ext(the_repository, ".rev", midx_hash);
++	clear_midx_files_ext(object_dir, ".rev", midx_hash);
+ 
+ 	commit_lock_file(&lk);
+ 
+@@ -1135,7 +1135,7 @@ static void clear_midx_file_ext(const char *full_path, size_t full_path_len,
+ 		die_errno(_("failed to remove %s"), full_path);
+ }
+ 
+-static void clear_midx_files_ext(struct repository *r, const char *ext,
++static void clear_midx_files_ext(const char *object_dir, const char *ext,
+ 				 unsigned char *keep_hash)
+ {
+ 	struct clear_midx_data data;
+@@ -1146,7 +1146,7 @@ static void clear_midx_files_ext(struct repository *r, const char *ext,
+ 				    hash_to_hex(keep_hash), ext);
+ 	data.ext = ext;
+ 
+-	for_each_file_in_pack_dir(r->objects->odb->path,
++	for_each_file_in_pack_dir(object_dir,
+ 				  clear_midx_file_ext,
+ 				  &data);
+ 
+@@ -1165,7 +1165,7 @@ void clear_midx_file(struct repository *r)
+ 	if (remove_path(midx))
+ 		die(_("failed to clear multi-pack-index at %s"), midx);
+ 
+-	clear_midx_files_ext(r, ".rev", NULL);
++	clear_midx_files_ext(r->objects->odb->path, ".rev", NULL);
+ 
+ 	free(midx);
+ }
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 3d4d9f10c31b..7f393e52409d 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -201,6 +201,14 @@ test_expect_success 'write midx with twelve packs' '
+ 
+ compare_results_with_midx "twelve packs"
+ 
++test_expect_success 'multi-pack-index with --object-dir need not be in repo' '
++	p="$(pwd)" &&
++	rm -f $objdir/multi-pack-index &&
++	cd / &&
++	git multi-pack-index --object-dir="$p/$objdir" write &&
++	cd "$p"
++'
++
+ test_expect_success 'warn on improper hash version' '
+ 	git init --object-format=sha1 sha1 &&
+ 	(
+-- 
+2.31.1
 
-Yes, this is definitely not correct.  The flag "text" being set tells
-Git to do line-ending conversion and "eol=3Dlf" says to convert line
-endings into LF.
-
-You should look for things in your .gitattributes file that say
-something like "* text", which you probably don't want.  You could use
-"* text=3Dauto", which should be fine for most cases, though.  It's also
-possible those aren't in a .gitattributes file in your repository but
-one elsewhere on your system.  You can check gitattributes(5) for the
-locations of other files that can affect it.
-
-As a note, it is best practice not to check binary dependencies or build
-artifacts into the repo.  Those are best stored elsewhere, such as an
-artifact server.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---EhA+EZh23EjLip+f
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYR//HwAKCRB8DEliiIei
-gc10AQCwitNxMD4CHzqFwfVT37g9FFJwmaXdx0loheM1cD0xGAEA/pvnLQspPsAh
-DI9fvC9CRRIl8qL5Hm2OqmRqliia5g8=
-=6cb6
------END PGP SIGNATURE-----
-
---EhA+EZh23EjLip+f--
