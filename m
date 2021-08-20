@@ -2,241 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C82A2C4338F
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 19:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1ADBC4338F
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 20:17:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 91D6C60F8F
-	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 19:56:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C35CD61179
+	for <git@archiver.kernel.org>; Fri, 20 Aug 2021 20:17:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231173AbhHTT4m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Aug 2021 15:56:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54742 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229812AbhHTT4m (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Aug 2021 15:56:42 -0400
-Received: from sipsolutions.net (s3.sipsolutions.net [IPv6:2a01:4f8:191:4433::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFCD6C061575
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 12:56:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sipsolutions.net; s=mail; h=Content-Transfer-Encoding:MIME-Version:
-        Message-Id:Date:Subject:Cc:To:From:Content-Type:Sender:Reply-To:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-        Resent-Message-ID:In-Reply-To:References;
-        bh=GcwvdgC0vjGblusXhLO5J4EuJlVkvc/Fha3HKddio+g=; t=1629489363; x=1630698963; 
-        b=KYlXBfkx4yP+gJ5ThYAvfx6tI08k76GvPt0yIXrNDEg36mVK0KrJFMWEzlwUVAb3Bjzw1UcAAmo
-        wgf3Byy6EQZrkXjKehk7MhAaQue9uVncfDPdUR0Wbm4LofDP1qAzkayACLymWnVGYvJdoLZGnT9V9
-        9bI2Kk2kqKToug/sn/3Rn5TK7XHH7mLEyMwHyXKIMrXPwFnjoqmNTK9A+6jN0yPsv/aXLRAya3wsh
-        V8wUPhDhAKbCOS901e1M1z7GKV9aiEYP+0AzZ2f3o3r3La4XXlyAuXiwyloF2QlXBtWabaaazsiWa
-        kwIEi8zWhft0Ee4EskTK3dpdea1LIk9L82OA==;
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-        (Exim 4.94.2)
-        (envelope-from <johannes@sipsolutions.net>)
-        id 1mHAcT-00DjRb-Tc; Fri, 20 Aug 2021 21:56:02 +0200
-From:   Johannes Berg <johannes@sipsolutions.net>
-To:     git@vger.kernel.org
-Cc:     bup-list@googlegroups.com
-Subject: [RFC PATCH] multi-pack-index: allow operating without pack files
-Date:   Fri, 20 Aug 2021 21:55:58 +0200
-Message-Id: <20210820195558.44275-1-johannes@sipsolutions.net>
-X-Mailer: git-send-email 2.31.1
+        id S238208AbhHTURx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Aug 2021 16:17:53 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57155 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230266AbhHTURw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Aug 2021 16:17:52 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E524ADA68E;
+        Fri, 20 Aug 2021 16:17:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9l4US17568HTdXJ/OmJ2NlKvA029gBReGltmnm
+        sIsn0=; b=UEpDmJ12S4+yQvUvFrX3EWEV9W0uj1w7DXZecddyR9rmhcoXp4KHwz
+        E6meXuvucqn8K45FFFPvdz4rb6PA4he99T17hjgjD1d9AaCiJddCHE4/+M78cFD1
+        SLgCF1r9kc4Wfjc8BDN3aLkj5y+FpY8nFzsghRTiHQIDl6eSYSM24=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD9FDDA68D;
+        Fri, 20 Aug 2021 16:17:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 653AEDA68C;
+        Fri, 20 Aug 2021 16:17:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thiago Perrotta <tbperrotta@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] send-email: print newline for
+ --git-completion-helper
+References: <20210820004604.9948-1-tbperrotta@gmail.com>
+        <20210820004604.9948-2-tbperrotta@gmail.com>
+Date:   Fri, 20 Aug 2021 13:17:12 -0700
+In-Reply-To: <20210820004604.9948-2-tbperrotta@gmail.com> (Thiago Perrotta's
+        message of "Thu, 19 Aug 2021 20:46:02 -0400")
+Message-ID: <xmqqmtpbub07.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9B35CF5E-01F3-11EC-89C4-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Technically, multi-pack-index doesn't need pack files to exist,
-but add_packed_git() today checks whether it exists or not.
+Thiago Perrotta <tbperrotta@gmail.com> writes:
 
-In bup, a git pack format based backup tool, we'd really like
-to take advantage of the multi-pack-index, since bup needs it
-to save new objects to the repository efficiently (to check if
-something already exists), and uses git to access the repo, so
-the multi-pack-index can make more efficient.
+> Rationale: Currently all git built-in commands print a newline upon upon git
+> <cmd> --git-completion-helper. Therefore git-send-email should follow suit for
+> consistency.
 
-Alternatively, bup has its own 'midx' format, of which multiple
-can exist in a repository, predating the multi-pack-index.
+"upon upon".
 
-All of this works well as long as the bup repository is just a
-normal git repository. However, I've been adding encrypted and
-encrypted remote repositories to bup, where the pack files are
-not local, similar to promisor remotes, but not really done in
-the same way.
+You do not need to start with "Rationale", because one of the things
+you need to have in any proposed log message is a justification for
+the change.  You also do not need "Currently" in our log message, as
+the convention here is to state the status quo in the present tense,
+point out what's wrong there (or leave it unsaid and implied by the
+description of the current state, if it is obvious), state the
+approach to correct what's wrong, and finally give an order to the
+codebase to "become like so".
 
-In this case, the local storage is only the idx files, no pack
-files (it's just a cache), and we access the pack files and
-objects within in different ways. Unfortunately, in this case
-we also cannot reuse bup's midx format very well: it only has
-information on which objects exists, not where to find them,
-and so reading from the repository requires reading all of the
-idx files, something that git's multi-pack-index solves.
+	Unlike other Git subcommands, "git send-email" leaves its
+	output an incomplete line when "--git-completion-helper" is
+	asked.  Be consistent by terminating the message with LF
+	here.
 
-While we'll need to add read access to git's multi-pack-index
-to bup, having a call to 'git multi-pack-index' write it would
-be nice and save some duplication. However, in the case of the
-remote/encrypted repositories, git currently cannot do that as
-it requires the pack files to exist.
+or something like that.
 
-Add a command-line option to be able to not require pack files
-to exist, to make that easier (rather than requiring writing
-some dummy pack files, git even accepts empty files.)
+I do not know which style is preferred among
 
-Signed-off-by: Johannes Berg <johannes@sipsolutions.net>
----
- Documentation/git-multi-pack-index.txt |  6 +++++-
- builtin/multi-pack-index.c             |  5 ++++-
- midx.c                                 |  9 ++++++---
- midx.h                                 |  1 +
- packfile.c                             | 10 ++++++++--
- packfile.h                             |  2 ++
- 6 files changed, 26 insertions(+), 7 deletions(-)
+ (1)	print something;
+	print "\n";
 
-diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-index ffd601bc17b4..23db70fbebc2 100644
---- a/Documentation/git-multi-pack-index.txt
-+++ b/Documentation/git-multi-pack-index.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git multi-pack-index' [--object-dir=<dir>] [--[no-]progress]
--	[--preferred-pack=<pack>] <subcommand>
-+	<subcommand> [<subcommand options>]
- 
- DESCRIPTION
- -----------
-@@ -40,6 +40,10 @@ write::
- 		multiple packs contain the same object. If not given,
- 		ties are broken in favor of the pack with the lowest
- 		mtime.
-+
-+	--no-require-packs::
-+		Don't require pack files to exist, useful only for
-+		certain non-repository caches.
- --
- 
- verify::
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 8ff0dee2ecbb..2c9293b20c49 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -7,7 +7,7 @@
- #include "object-store.h"
- 
- #define BUILTIN_MIDX_WRITE_USAGE \
--	N_("git multi-pack-index [<options>] write [--preferred-pack=<pack>]")
-+	N_("git multi-pack-index [<options>] write [--preferred-pack=<pack>] [--no-require-packs]")
- 
- #define BUILTIN_MIDX_VERIFY_USAGE \
- 	N_("git multi-pack-index [<options>] verify")
-@@ -68,6 +68,9 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
- 		OPT_STRING(0, "preferred-pack", &opts.preferred_pack,
- 			   N_("preferred-pack"),
- 			   N_("pack for reuse when computing a multi-pack bitmap")),
-+		OPT_BIT(0, "no-require-packs", &opts.flags,
-+			N_("don't require pack files to exist"),
-+			MIDX_DONT_REQUIRE_PACKS),
- 		OPT_END(),
- 	};
- 
-diff --git a/midx.c b/midx.c
-index 902e1a7a7d9d..98b3cb33201f 100644
---- a/midx.c
-+++ b/midx.c
-@@ -468,6 +468,7 @@ struct write_midx_context {
- 	uint32_t num_large_offsets;
- 
- 	int preferred_pack_idx;
-+	unsigned flags;
- };
- 
- static void add_pack_to_midx(const char *full_path, size_t full_path_len,
-@@ -482,9 +483,10 @@ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
- 
- 		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
- 
--		ctx->info[ctx->nr].p = add_packed_git(full_path,
--						      full_path_len,
--						      0);
-+		ctx->info[ctx->nr].p = _add_packed_git(full_path,
-+						       full_path_len,
-+						       0,
-+						       !(ctx->flags & MIDX_DONT_REQUIRE_PACKS));
- 
- 		if (!ctx->info[ctx->nr].p) {
- 			warning(_("failed to add packfile '%s'"),
-@@ -924,6 +926,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 	ctx.nr = 0;
- 	ctx.alloc = ctx.m ? ctx.m->num_packs : 16;
- 	ctx.info = NULL;
-+	ctx.flags = flags;
- 	ALLOC_ARRAY(ctx.info, ctx.alloc);
- 
- 	if (ctx.m) {
-diff --git a/midx.h b/midx.h
-index 8684cf0fefe8..aa6382d99386 100644
---- a/midx.h
-+++ b/midx.h
-@@ -41,6 +41,7 @@ struct multi_pack_index {
- 
- #define MIDX_PROGRESS     (1 << 0)
- #define MIDX_WRITE_REV_INDEX (1 << 1)
-+#define MIDX_DONT_REQUIRE_PACKS (1 << 2)
- 
- char *get_midx_rev_filename(struct multi_pack_index *m);
- 
-diff --git a/packfile.c b/packfile.c
-index 9ef6d9829280..dfe994205914 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -687,7 +687,8 @@ void unuse_pack(struct pack_window **w_cursor)
- 	}
- }
- 
--struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
-+struct packed_git *_add_packed_git(const char *path, size_t path_len, int local,
-+				   int require_pack)
- {
- 	struct stat st;
- 	size_t alloc;
-@@ -717,7 +718,7 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
- 		p->pack_promisor = 1;
- 
- 	xsnprintf(p->pack_name + path_len, alloc - path_len, ".pack");
--	if (stat(p->pack_name, &st) || !S_ISREG(st.st_mode)) {
-+	if (require_pack && (stat(p->pack_name, &st) || !S_ISREG(st.st_mode))) {
- 		free(p);
- 		return NULL;
- 	}
-@@ -734,6 +735,11 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
- 	return p;
- }
- 
-+struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
-+{
-+	return _add_packed_git(path, path_len, local, 1);
-+}
-+
- void install_packed_git(struct repository *r, struct packed_git *pack)
- {
- 	if (pack->pack_fd != -1)
-diff --git a/packfile.h b/packfile.h
-index 3ae117a8aef0..a921077a05ef 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -96,6 +96,8 @@ void close_object_store(struct raw_object_store *o);
- void unuse_pack(struct pack_window **);
- void clear_delta_base_cache(void);
- struct packed_git *add_packed_git(const char *path, size_t path_len, int local);
-+struct packed_git *_add_packed_git(const char *path, size_t path_len, int local,
-+				   int require_pack);
- 
- /*
-  * Unlink the .pack and associated extension files.
--- 
-2.31.1
+ (2)	print something, "\n";
 
+ (3)	print something . "\n";
+
+but other than that, the goal and the implementation both sound
+sensible (the second one is what I'd be writing if I were doing this
+change myself, FWIW).
+
+Thanks.
+
+> Signed-off-by: Thiago Perrotta <tbperrotta@gmail.com>
+> ---
+>  git-send-email.perl | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index e65d969d0b..e991bf333d 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -115,6 +115,7 @@ sub usage {
+>  
+>  sub completion_helper {
+>      print Git::command('format-patch', '--git-completion-helper');
+> +    print "\n";
+>      exit(0);
+>  }
