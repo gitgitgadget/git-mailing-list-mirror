@@ -2,105 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD8CFC4338F
-	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 08:24:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08947C4338F
+	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 10:35:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8266B611C8
-	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 08:24:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D73F860E9B
+	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 10:35:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233098AbhHUIZJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Aug 2021 04:25:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50294 "EHLO
+        id S233723AbhHUKgH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Aug 2021 06:36:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232802AbhHUIZF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Aug 2021 04:25:05 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51FC1C061575
-        for <git@vger.kernel.org>; Sat, 21 Aug 2021 01:24:26 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id hv22-20020a17090ae416b0290178c579e424so8832474pjb.3
-        for <git@vger.kernel.org>; Sat, 21 Aug 2021 01:24:26 -0700 (PDT)
+        with ESMTP id S229968AbhHUKgG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Aug 2021 06:36:06 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E8F5C061575
+        for <git@vger.kernel.org>; Sat, 21 Aug 2021 03:35:27 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id i21so10901498pfd.8
+        for <git@vger.kernel.org>; Sat, 21 Aug 2021 03:35:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+bux4OOWLVZOsAvBqejYAbutCjCZivdr+s2j33yNboE=;
-        b=YKPO+qDDVoe/G1QdCi2fwyNtRb9S+aI7quoW5MzDHlKE4QvOB74o+tutHGy6TF6+Z9
-         +oZHILLFFLsJsqiOTEJJI/hXBK9rR2t7Uvj181BrbhQdaHJoOxANUBXPthC6Z1NT1OwN
-         9oPmjsSX1VfEeosP3OYxrKUANEdM3CqzdbVP3tZcFaApyl1OlWr89ic/lB8MNlrWvjsR
-         hPNj3kz/u9mh8BIW3L1Nj6tLxE7B90WVKnLxDU8a9dyXqUBTZMDn4RNUhhh+RrytCi9C
-         E34P2zFKW9BVl7ku0Td7u933fEmdS8qtlTVuV2q/anGAqlh/vL5dix83M/99lVHNPl3a
-         ROlw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=3LPQ18ZHHw+dz9sLLeoy08Zkjcbv71ZcY1TJ1wIv/Bg=;
+        b=Mp1oPsQqeTk75Vy3Y3JwQiE6sKqXYpkoVANM0Cwe4XAZ3QO/Qd0NoL43JNcKFJ4RdL
+         m1tTkIawIP7bUKwdtecDmKNPIGzqY+cfZb600XZUXxrawlonndlF6sAU+r2cd54o22yZ
+         aDrTklwZWHQETlVDIHC8rAAmqOZ5ctdlENDBrFJ5PDPqcQ76Kbb0t3GM+id+fwP8SafZ
+         lpPbEz7W6dih4ufYibQ0kw6MHAnT8Q6oju09H9pXnGfVDoN+ijxiNh4PPeCIO2kpsQh3
+         Srw3z1h1nHRwR96RBUxW+krRPpufDv2/HMByB5t7ef0gdbXiHS5gRnT36GfmJglJ5Qa5
+         LQEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+bux4OOWLVZOsAvBqejYAbutCjCZivdr+s2j33yNboE=;
-        b=QhtzoQ4rLRxxivSlMbxyNfvqgjw0BnuNtb0Jnr/0b/pCIqnG2ZNNax+oy6Ewu7VmAZ
-         vEIB4UUoIElCVZBZI+ZWqUTTDQ5rE1KGHzQox+Qim4Bt+ZySJhqyk3bdW9LqgutxWFLP
-         ZQXjVPRzstGAvEJVBTTgZCNJXWajL3jRZTQ+ho7uTsFkGsW62oqphT/T3kcJcrAlOxTB
-         JKx0Uh+2I0go6qbY9w5LKbu9NaR3MhdqwEUbP0SLWBOkWg9PrGWm1J6/3ARFR40/4Rud
-         wXAZwqRshoD6OanM8I77vYgfQBQXKxXGuDeYcsyxWtXU/IlMzudycJPtRCg8uP05oy7l
-         LN7w==
-X-Gm-Message-State: AOAM53233pwlRpLfRxNrLZLwh+bjfoYU70Ia+TWan+oB4iNou6lnC7SY
-        XS4rCeT7NOHwDSkB+94lY78=
-X-Google-Smtp-Source: ABdhPJywinlYXL36T9TFJybPtQxFS2JpNH1b+hEb4/TgKCz9c/tI0Q5aq5vzsgba33Z1TkEtgm/r8Q==
-X-Received: by 2002:a17:902:e8c2:b029:123:25ba:e443 with SMTP id v2-20020a170902e8c2b029012325bae443mr20302585plg.29.1629534265887;
-        Sat, 21 Aug 2021 01:24:25 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-6.three.co.id. [180.214.233.6])
-        by smtp.gmail.com with ESMTPSA id r13sm11474944pgl.90.2021.08.21.01.24.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 21 Aug 2021 01:24:25 -0700 (PDT)
-Subject: Re: [PATCH] make: add INSTALL_STRIP variable
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=3LPQ18ZHHw+dz9sLLeoy08Zkjcbv71ZcY1TJ1wIv/Bg=;
+        b=YitYNRWVDdRlODuGffMuqvfDfw9vuN4n9NXRU+lPz7QaSuwBQzMj89sbhQLQ6K0e+7
+         4MhBMwyR9wvybYJNzFdNYsiCMEiABqsRxH/46isgcrSSU9QqaRq+OdS3eXjsWK6Ep1G7
+         zJZsB+PH0hRyg2O+M5j8WjkTvNuzWNw/OJDivx5isSNndRZe3ULA606D5+yNgCf7zyJl
+         xgyj6yztXXLgzH2U78LO7eUvbT1tzZqrCH5FlssBPILscmwj/9As0pVVm9ZFgpGZWbak
+         xPeg9Mkp9GwRPmTb7jPqsJB6ZE+4787XxMnx5ck/AtE1h6zyTozm11qOhH9S9uo9yrZD
+         /O9g==
+X-Gm-Message-State: AOAM532EINDgvYMse2D4FrDt7GrgBvpIuIsgdR6kpSkHSBQFft5fRGm/
+        cISNJFoNFN1ct+JnSeXp2Ys=
+X-Google-Smtp-Source: ABdhPJzNrwHB47ZUeb1+Sbsn3T+f646t0Q3AxIzZ9w+8K3v9OB9pfhuypedYN9aORw6XIw7dirw72w==
+X-Received: by 2002:aa7:8d0c:0:b029:3e0:2e32:3148 with SMTP id j12-20020aa78d0c0000b02903e02e323148mr24168746pfe.23.1629542126687;
+        Sat, 21 Aug 2021 03:35:26 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:c1e5:7ba1:cab2:978b:f7f6])
+        by smtp.gmail.com with ESMTPSA id t20sm11458927pgb.16.2021.08.21.03.35.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Aug 2021 03:35:26 -0700 (PDT)
+Date:   Sat, 21 Aug 2021 17:35:24 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] make: add INSTALL_STRIP variable
+Message-ID: <YSDW3nsG2iWPGakF@danh.dev>
 References: <20210820105052.30631-1-bagasdotme@gmail.com>
  <YR+Tp2AGeeKyRKoC@danh.dev>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <70e609f5-bf40-658a-a021-ab7a0ad4baa1@gmail.com>
-Date:   Sat, 21 Aug 2021 15:24:22 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+ <70e609f5-bf40-658a-a021-ab7a0ad4baa1@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <YR+Tp2AGeeKyRKoC@danh.dev>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <70e609f5-bf40-658a-a021-ab7a0ad4baa1@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20/08/21 18.36, Đoàn Trần Công Danh wrote:
-> I believe it's better to write like this:
+On 2021-08-21 15:24:22+0700, Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+> On 20/08/21 18.36, Đoàn Trần Công Danh wrote:
+> > I believe it's better to write like this:
+> > 
+> > ----- 8< ------
+> > ifdef INSTALL_STRIP
+> > install: strip
+> > endif
+> > 
+> > install: all
+> > 	....
+> > ---- >8-------
+> > 
+> > IOW, install depends on strip, not install invoke strip.
 > 
-> ----- 8< ------
-> ifdef INSTALL_STRIP
-> install: strip
-> endif
+> Oh, I missed that.
 > 
-> install: all
-> 	....
-> ---- >8-------
+> > I think it would work better for:
+> > 
+> > 	make install strip
+> > 
 > 
-> IOW, install depends on strip, not install invoke strip.
+> Wouldn't it install unstripped binaries to the prefix then stripping them in
+> the build directory?
 
-Oh, I missed that.
+No, with:
 
-> I think it would work better for:
-> 
-> 	make install strip
-> 
+	install: strip
 
-Wouldn't it install unstripped binaries to the prefix then stripping 
-them in the build directory?
+strip is one of install's dependencies, then strip will be executed
+before install.
 
 -- 
-An old man doll... just what I always wanted! - Clara
+Danh
