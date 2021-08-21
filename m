@@ -6,78 +6,64 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F74AC4338F
-	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 04:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D9BBC4338F
+	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 04:21:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1590F611C4
-	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 04:20:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 720D1611C4
+	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 04:21:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229898AbhHUEVY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Aug 2021 00:21:24 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52519 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229789AbhHUEVW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Aug 2021 00:21:22 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E63F1144D83;
-        Sat, 21 Aug 2021 00:20:39 -0400 (EDT)
+        id S229816AbhHUEWP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Aug 2021 00:22:15 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62241 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229657AbhHUEWO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Aug 2021 00:22:14 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CA9BC131C38;
+        Sat, 21 Aug 2021 00:21:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FVyoXsndrPEX4+q29kTyQEPOStUsi20uUYA10Y
-        joXCE=; b=o6MOmG9E0Y24qi4awTq39+UxJGS5t4wFryXgnpFgXn0NS6M1x3YZ/g
-        3l/KOsbcVabJU05MDy0lX+2YRtmPCsaGt0QcnRXFVDhJAdpqjoLzvlyg9fkh2c7F
-        hmqk0ZTBPeYmbFOi7wk9YvV3im0S+4dEHrYLgkqhJAhQBp5RyzQGg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DE71C144D81;
-        Sat, 21 Aug 2021 00:20:39 -0400 (EDT)
+        :content-type; s=sasl; bh=ZbwB1Jb+XAbAddupY2NSXzbpFj3cGK0PaiXAWo
+        oYcbM=; b=ul+mB1x8l/y3nuBf71TlVgLJiI+WmgnaB4M+9bEQnR5ArKdHvot0Q5
+        Dwba3ZzHF+bdij4RfVh8Uu0z/Y4NP3AzGYEW7MwxS7ZYMqiZ+8TqUUEe8q2BmYFC
+        8Oonz+/QXEztMVr4tIDgL0R7VjexBcBZhLyN1KaO4rCHykl/FJ3J8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A57E6131C37;
+        Sat, 21 Aug 2021 00:21:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.116.162])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 24C5E144D80;
-        Sat, 21 Aug 2021 00:20:37 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 89317131C36;
+        Sat, 21 Aug 2021 00:21:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/6] t1092: use ORT merge strategy
-References: <pull.1019.git.1629220124.gitgitgadget@gmail.com>
-        <7cad9eee90bcee3cb98be5c7a2edaca5e855c157.1629220124.git.gitgitgadget@gmail.com>
-        <xmqqzgte62ud.fsf@gitster.g>
-        <b3c7e700-f36c-d58f-0c49-450444df8c63@gmail.com>
-        <CABPp-BEtOWUGCcn3B0On80=tMZ_Re9ScHnBiwPPPFY=x2TwG5Q@mail.gmail.com>
-        <xmqq7dgfu1zb.fsf@gitster.g>
-        <CABPp-BHLw-h0oQLNwT+DAXeHZZfJRaiyoM+kDuqx_aT80-zM3w@mail.gmail.com>
-Date:   Fri, 20 Aug 2021 21:20:35 -0700
-In-Reply-To: <CABPp-BHLw-h0oQLNwT+DAXeHZZfJRaiyoM+kDuqx_aT80-zM3w@mail.gmail.com>
-        (Elijah Newren's message of "Fri, 20 Aug 2021 17:20:34 -0700")
-Message-ID: <xmqqwnofsa24.fsf@gitster.g>
+To:     Xiaowen Xia <haoyurenzhuxia@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, worldhello.net@gmail.com,
+        Xia XiaoWen <chenan.xxw@alibaba-inc.com>
+Subject: Re: [PATCH] add http.maxReceiveSpeed to limit git-receive-pack
+ receiving speed
+References: <20210819091433.348-1-chenan.xxw@alibaba-inc.com>
+        <xmqq4kbl2sre.fsf@gitster.g>
+        <CAHLXgnYsQcfgddNHdH+geoczq8isgLaf-b3oLzjNS+m96N5ESg@mail.gmail.com>
+Date:   Fri, 20 Aug 2021 21:21:29 -0700
+In-Reply-To: <CAHLXgnYsQcfgddNHdH+geoczq8isgLaf-b3oLzjNS+m96N5ESg@mail.gmail.com>
+        (Xiaowen Xia's message of "Sat, 21 Aug 2021 11:19:00 +0800")
+Message-ID: <xmqqsfz3sa0m.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 22C84DD2-0237-11EC-A373-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 43370766-0237-11EC-93D2-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Xiaowen Xia <haoyurenzhuxia@gmail.com> writes:
 
->> It seems that merge_recursive() and merge_ort_recursive() are
->> interface compatible and the latter can serve as a drop-in
->> replacement for the former?
->
-> Yes, merge_ort_recursive() and merge_ort_nonrecursive() were meant as
-> interface compatible drop-in replacements for merge_recursive() and
-> merge_trees(), to make it easy to switch callers over.
->
-> There is no such replacement for merge_recursive_generic(), though,
-> and builtin/{am, merge-recursive, stash}.c will all need to be
-> modified to work with merge-ort.
+> But this patch is similar to the `http.lowspeedlimit` and `http.lowspeedtime`.
+> And `http.lowspeedlimit` will not error out the negative values:
 
-But merge_recursive_generic() eveantually calls into merge_recursive();
-as long as you hook into the latter, you're covered, no?
+An earlier mistake by others does not make it OK to make the same
+mistake knowingly, though.
+
