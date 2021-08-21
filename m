@@ -2,294 +2,231 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ED1DC4338F
-	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 03:19:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 070F6C4338F
+	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 04:04:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6AD4860560
-	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 03:19:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CFFDA61155
+	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 04:04:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231860AbhHUDTw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Aug 2021 23:19:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40312 "EHLO
+        id S229890AbhHUEEt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Aug 2021 00:04:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231401AbhHUDTv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Aug 2021 23:19:51 -0400
-Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 788E6C061575
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 20:19:12 -0700 (PDT)
-Received: by mail-il1-x12f.google.com with SMTP id h18so11450963ilc.5
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 20:19:12 -0700 (PDT)
+        with ESMTP id S229498AbhHUEEs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Aug 2021 00:04:48 -0400
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44A30C061575
+        for <git@vger.kernel.org>; Fri, 20 Aug 2021 21:04:09 -0700 (PDT)
+Received: by mail-pl1-x633.google.com with SMTP id a5so7088895plh.5
+        for <git@vger.kernel.org>; Fri, 20 Aug 2021 21:04:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ebkUM6WkYcboylT0xYhO4Un6oKNv1DcabMRinFCE2LQ=;
-        b=PJB1Gf7u76aDeUgYJ5PAHIIRJMSBE7Pdiue3dOi/WKLx3lJUDe+48jHmXG6ZafHVTL
-         WbbrUxgXPk+q8ueS2IL6Y6niwCEGXAoed3ykoIX7eRxTV+hWSiH/KEexjExyaVBp4KmV
-         Rs1UKBDzL95IDYHBIQg8EdgFCaSFJwYqLsL6N76QjjftQ9JN3OqQrLjcPQAWdkS1zox3
-         DkAGPRXOO3BRGegqhRQ+1/c1+jRexS8O+K5ioqA4R2z49qF0iRN9zXkln4E/+hf1fQbX
-         U5D0EQpbtR3AWEdILkmCkoZykdlCJ2ANj0zPxmkXTo0zfLPN/+ktV4ZgkCwheQDxkIvs
-         GznQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=L6qJ5HL1xbyNtPh6XAe/GhGjv8pNlrOJktQ3W/FmQl4=;
+        b=FSW0NMdzVu7cyWVdBYPpksZzC6G48N6yMcFp29Y9C7SQxXY0+rflil7i9r/fxOaPDe
+         6PLt2N6zyKRJtrVJOvXKncrw4+uWc6mcJSK8WWr7kyK0Tq/gzFw9eWngi8/yvGnk8SS7
+         aK1PBrNKxEtzazuYXJ3JBvCUe33w85yRVj/tFkvLq2hLe1a8vjhru91UW3INgOjCaIKH
+         5mSQ6FibBSXLKwfIdfWxmaR+bEYTtKZhOwpv6Zfjc5QFke3HYS0ZTZD3v6Gy2RjzOEQB
+         P6/guZFMBXNnV3Bl0uMJiLTTFpPuGg3Dm4/Pp2/vXLL5fMjTlxhmKEgobO24krSVS/lV
+         3a9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ebkUM6WkYcboylT0xYhO4Un6oKNv1DcabMRinFCE2LQ=;
-        b=njOuX+3QLMd+KvBASu/7c8hfCrFP0ef+IdtD0eB8YjDGusGG+dEcQFEHuRl/TtOYnJ
-         SobmMTsXMf5VkfCp8CaMxKtIvO3OtMZNq5vzAkHv3dGizvMo8FsE/BBKloWBqKSfEf36
-         9Yf+7FDmp4mPo7XDmpC3DzcJaziiDzMcTzvm4Tob4GkvxDO7GXxNxGqHkf8PaTA0ukBJ
-         jJxYVrFjpaXeQv0dRi0uxAFP01Yhyh+8vN+cCYMbP5irY+n3GqzMv/M/q/PUFEPn4t33
-         WDRp32ezMnjUvJWXMBU+AlqQ+Y4Je3PImfXjQyNZ0dzk3Mw0kjfLrRoCnljrDBrpgE52
-         us3Q==
-X-Gm-Message-State: AOAM531FAibU2xijFovoBJbRpET3CQExSrQ8r4izVub9mEqHKWDmTa1B
-        Nx4NXghdyR81v8VLvUlvd+hWTeGKYGl6rxkC45Y=
-X-Google-Smtp-Source: ABdhPJzODIcm67HHvbjwmw4lYaLyoTse4AgGco3Wr6DUpbqR9l0DrNiBES7ijHlxjC4Ii5ltg4m9/n4jXPdWvgjBa8E=
-X-Received: by 2002:a92:d7c1:: with SMTP id g1mr16188226ilq.24.1629515951866;
- Fri, 20 Aug 2021 20:19:11 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=L6qJ5HL1xbyNtPh6XAe/GhGjv8pNlrOJktQ3W/FmQl4=;
+        b=HfdWjZVMVYBeBNxxZCMB2SLkWjkgVco4fhkGD/VG0SMfIdfBwjcEvBzTcZaTZwTU80
+         iersgQdOEWUZ8NY6KdN+x4qlyUsrwn4HoAcCgxV8IWrymtU8tMTcOxJWUK6QnFwx4om7
+         fYuZRsAGVsEtnBnlX1nwFiPPftsWjRAAMGKNEJ359CgArF8+fV2TLDPbPDaxFuRoAA1E
+         2Bl/97KV8yxFV5dnrUNSfxQzvwuCVQT6mK8bZ0d09+yXMUiNxruX2Pfe/sgNN19d/HP0
+         fpS5xIJH41cZmv+6EYpsCOEXvU9JsrsWOpBuWJRfTSpoXxeK1hOhnVnjtuSQrumya3Jr
+         DoZw==
+X-Gm-Message-State: AOAM530T4fMl22pwlULFi92jVk4EIvYCwr0plWbTcTCQe/pXQiDKnya1
+        lVBKAIuEcocApxmu6OUBIhOVTvl6B7s=
+X-Google-Smtp-Source: ABdhPJzUUlygBqYR/qQm/jF+9TU386dk7V/9LziqoInpOjh3WJAMdH+pcmKmpLFAsEXh2POpdfvaag==
+X-Received: by 2002:a17:90a:d595:: with SMTP id v21mr8289738pju.50.1629518648540;
+        Fri, 20 Aug 2021 21:04:08 -0700 (PDT)
+Received: from localhost.localdomain ([2402:800:63b8:c1e5:7ba1:cab2:978b:f7f6])
+        by smtp.gmail.com with ESMTPSA id m18sm7893776pjq.32.2021.08.20.21.04.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Aug 2021 21:04:08 -0700 (PDT)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Thomas De Zeeuw <thomas@slight.dev>,
+        Carlo Arenas <carenas@gmail.com>
+Subject: [PATCH v2] diff-lib: ignore all outsider if --relative asked
+Date:   Sat, 21 Aug 2021 11:03:54 +0700
+Message-Id: <0d73c7181969d2916d71d7aeb6d788324a0db68b.1629514355.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.33.0.254.g68ee769121
 MIME-Version: 1.0
-References: <20210819091433.348-1-chenan.xxw@alibaba-inc.com> <xmqq4kbl2sre.fsf@gitster.g>
-In-Reply-To: <xmqq4kbl2sre.fsf@gitster.g>
-From:   Xiaowen Xia <haoyurenzhuxia@gmail.com>
-Date:   Sat, 21 Aug 2021 11:19:00 +0800
-Message-ID: <CAHLXgnYsQcfgddNHdH+geoczq8isgLaf-b3oLzjNS+m96N5ESg@mail.gmail.com>
-Subject: Re: [PATCH] add http.maxReceiveSpeed to limit git-receive-pack
- receiving speed
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net, worldhello.net@gmail.com,
-        Xia XiaoWen <chenan.xxw@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio:
+For diff family commands, we can tell them to exclude changes outside
+of some directories if --relative is requested.
 
-Thank You so much for your reply!!
+In diff_unmerge(), NULL will be returned if the requested path is
+outside of the interesting directories, thus we'll run into NULL
+pointer dereference in run_diff_files when trying to dereference
+its return value.
 
-> > The default is unlimited, same if the value is 0 or negative.
-> Let's error it out when the configuration gives a value that does
-> not make sense instead. That way, we could in the future use some
-> of these invalid values to signal special behaviour if we wanted to.
-But this patch is similar to the `http.lowspeedlimit` and `http.lowspeedtim=
-e`.
-And `http.lowspeedlimit` will not error out the negative values:
+Checking for return value of diff_unmerge before dereferencing
+is not sufficient, though. Since, diff engine will try to work on such
+pathspec later.
 
-        if (curl_low_speed_limit > 0 && curl_low_speed_time > 0) {
-            curl_easy_setopt(result, CURLOPT_LOW_SPEED_LIMIT,
-                 curl_low_speed_limit);
-            curl_easy_setopt(result, CURLOPT_LOW_SPEED_TIME,
-                 curl_low_speed_time);
-        }
+Let's not run diff on those unintesting entries, instead.
+As a side effect, by skipping like that, we can save some CPU cycles.
 
-> We are likely be raising the floor versions of libcURL to 7.16.0 or
-> even 7.19.4 soonish.
-OK, I will remove the #if #endif block for libcurl 7.15.5.
+Reported-by: Thomas De Zeeuw <thomas@slight.dev>
+Tested-by: Carlo Arenas <carenas@gmail.com>
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
+Range-diff against v1:
+1:  57a9edc3af ! 1:  0d73c71819 diff-lib: ignore all outsider if --relative asked
+    @@ Commit message
+         pointer dereference in run_diff_files when trying to dereference
+         its return value.
+     
+    -    We can simply check for NULL there before dereferencing said
+    -    return value.  However, we can do better by not running diff
+    -    on those unintesting entries.  Let's do that instead.
+    +    Checking for return value of diff_unmerge before dereferencing
+    +    is not sufficient, though. Since, diff engine will try to work on such
+    +    pathspec later.
+    +
+    +    Let's not run diff on those unintesting entries, instead.
+    +    As a side effect, by skipping like that, we can save some CPU cycles.
+     
+         Reported-by: Thomas De Zeeuw <thomas@slight.dev>
+    +    Tested-by: Carlo Arenas <carenas@gmail.com>
+         Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+     
+    -
+    - ## Notes ##
+    -    Check for return value of diff_unmerge is not enough.
+    -
+    -    Yes, it works with --name-only, however, with only --relative,
+    -    git-diff shows unmerged entries outside of subdir, too.
+    -
+    -    Furthermore, the filename in "diff --cc" ignores the relative prefix.
+    -    Fixing this requires touching all over places, at least from my study.
+    -    Let's fix the crash, first.
+    -
+    -    We have two choices here:
+    -
+    -    * Check pair, aka return value of diff_unmerge, like my original
+    -      suggestion, and the unmerged entries from outside will be shown, too.
+    -      Some inconsistent will be observed, --name-only won't list files
+    -      outside of subdir, while the patch shows them.  At least, it doesn't
+    -      create false impression of no change outside of subdir.
+    -
+    -    * Skip all outsiders, like this patch.
+    -
+    -    While I prefer this approach, I don't know all ramifications of this change,
+    -    let's say an entry moved to outside of subdir in one side, and modified in
+    -    other side.
+    -
+    -    Because, I pick the different approach, Junio's ack isn't included here.
+    -
+    -    Cc: Junio C Hamano <gitster@pobox.com>
+    -
+      ## diff-lib.c ##
+     @@ diff-lib.c: int run_diff_files(struct rev_info *revs, unsigned int option)
+      		if (!ce_path_match(istate, ce, &revs->prune_data, NULL))
 
-> Let's error it out when the configuration gives a value that does
-> not make sense instead.
-The same as above.
+ diff-lib.c               |  4 +++
+ t/t4045-diff-relative.sh | 53 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 57 insertions(+)
 
-> I wonder if ssize_t is overkill for our purpose, though.
-You are right, I will change it to long type.
+diff --git a/diff-lib.c b/diff-lib.c
+index f9eadc4fc1..ca085a03ef 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -117,6 +117,10 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 		if (!ce_path_match(istate, ce, &revs->prune_data, NULL))
+ 			continue;
+ 
++		if (revs->diffopt.prefix &&
++		    strncmp(ce->name, revs->diffopt.prefix, revs->diffopt.prefix_length))
++			continue;
++
+ 		if (ce_stage(ce)) {
+ 			struct combine_diff_path *dpath;
+ 			struct diff_filepair *pair;
+diff --git a/t/t4045-diff-relative.sh b/t/t4045-diff-relative.sh
+index 61ba5f707f..8cbbe53262 100755
+--- a/t/t4045-diff-relative.sh
++++ b/t/t4045-diff-relative.sh
+@@ -162,4 +162,57 @@ check_diff_relative_option subdir file2 true --no-relative --relative
+ check_diff_relative_option . file2 false --no-relative --relative=subdir
+ check_diff_relative_option . file2 true --no-relative --relative=subdir
+ 
++test_expect_success 'setup diff --relative unmerged' '
++	test_commit zero file0 &&
++	test_commit base subdir/file0 &&
++	git switch -c br1 &&
++	test_commit one file0 &&
++	test_commit sub1 subdir/file0 &&
++	git switch -c br2 base &&
++	test_commit two file0 &&
++	git switch -c br3 &&
++	test_commit sub3 subdir/file0
++'
++
++test_expect_success 'diff --relative without change in subdir' '
++	git switch br2 &&
++	test_when_finished "git merge --abort" &&
++	test_must_fail git merge one &&
++	git -C subdir diff --relative >out &&
++	test_must_be_empty out &&
++	git -C subdir diff --relative --name-only >out &&
++	test_must_be_empty out
++'
++
++test_expect_success 'diff --relative --name-only with change in subdir' '
++	git switch br3 &&
++	test_when_finished "git merge --abort" &&
++	test_must_fail git merge sub1 &&
++	test_write_lines file0 file0 >expected &&
++	git -C subdir diff --relative --name-only >out &&
++	test_cmp expected out
++'
++
++test_expect_failure 'diff --relative with change in subdir' '
++	git switch br3 &&
++	br1_blob=$(git rev-parse --short --verify br1:subdir/file0) &&
++	br3_blob=$(git rev-parse --short --verify br3:subdir/file0) &&
++	test_when_finished "git merge --abort" &&
++	test_must_fail git merge br1 &&
++	cat >expected <<-EOF &&
++	diff --cc file0
++	index $br3_blob,$br1_blob..0000000
++	--- a/file0
++	+++ b/file0
++	@@@ -1,1 -1,1 +1,5 @@@
++	++<<<<<<< HEAD
++	 +sub3
++	++=======
++	+ sub1
++	++>>>>>>> sub1
++	EOF
++	git -C subdir diff --relative >out &&
++	test_cmp expected out
++'
++
+ test_done
+-- 
+2.33.0.254.g68ee769121
 
-> This call, if you use anything but curl_off_t as the type for
-> curl_max_receive_speed variable where it is declared, needs a cast,
-You are right.
-
-> Unlike curl_max_receive_speed that must be visible and
-> understandable long haul in this file, the temporary string variable
-> lives only during these handful of lines and shortened name is
-> easier to see and understand what is going on.
-OK.
-
-
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B48=E6=9C=8820=E6=97=
-=A5=E5=91=A8=E4=BA=94 =E4=B8=8A=E5=8D=882:28=E5=86=99=E9=81=93=EF=BC=9A
->
-> Xia XiaoWen <haoyurenzhuxia@gmail.com> writes:
->
-> > Sometimes need to limit the receive speed of git `clone/fetch`
-> > because of the limited network bandwidth, otherwise will prevent
-> > other applications from using the network normally.
->
-> No subject in these two half-sentences.
->
->     In order to avoid hogging all the available bandwidth, users may
->     want to limit the speed to receive traffic for "git clone" or
->     "git fetch".
->
-> perhaps.
->
-> > Add `http.maxReceiveSpeed` to limit `git-receive-pack` receiving
->
-> "limit `git-receive-pack`'s" or "limit receiving speedk of ..."
->
-> > speed, Can be overridden by `GIT_HTTP_MAX_RECEIVE_SPEED` eivironment
-> > variable.
-> >
-> > The default is unlimited, same if the value is 0 or negative. The
->
-> Let's error it out when the configuration gives a value that does
-> not make sense instead.  That way, we could in the future use some
-> of these invalid values to signal special behaviour if we wanted to.
->
-> > default unit is Bytes/s, common unit suffixes of k, m, or g are support=
-ed.
->
-> OK.
->
-> > this configuration is valid for `clone`, `fetch`, `pull` commands of th=
-e
->
-> s/this/This/
->
-> > https protocol, and only supports libcurl 7.15.5 and above.
->
-> We are likely be raising the floor versions of libcURL to 7.16.0 or
-> even 7.19.4 soonish.  It probably would make it easier to allow it
-> unconditionally (otherwise you'd probably need to implement error or
-> warning messages when configuration is given but the libcURL version
-> used is too old, etc.).
->
-> > ---
-> >  http.c | 24 +++++++++++++++++++++++-
-> >  1 file changed, 23 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/http.c b/http.c
-> > index 8119247149..12030cf3bc 100644
-> > --- a/http.c
-> > +++ b/http.c
-> > @@ -83,6 +83,9 @@ static const char *ssl_pinnedkey;
-> >  static const char *ssl_cainfo;
-> >  static long curl_low_speed_limit =3D -1;
-> >  static long curl_low_speed_time =3D -1;
-> > +#if LIBCURL_VERSION_NUM >=3D 0x070f05
-> > +static ssize_t curl_max_receive_speed =3D -1;
->
-> On cURL side, CURLOPT_MAX_RECV_SPEED_LARGE takes curl_off_t, which
-> is typically off_t (which is signed).
->
-> I wonder if ssize_t is overkill for our purpose, though.  Can't this
-> be a plain vanilla "int" or perhaps "long", just like the variable
-> defined above uses "long" for "speed"?  Or is 2gb/s too low to be
-> practical and we must use a 64-bit type?
->
-> > +#endif
-> >  static int curl_ftp_no_epsv;
-> >  static const char *curl_http_proxy;
-> >  static const char *http_proxy_authmethod;
-> > @@ -361,7 +364,12 @@ static int http_options(const char *var, const cha=
-r *value, void *cb)
-> >               curl_low_speed_time =3D (long)git_config_int(var, value);
-> >               return 0;
-> >       }
-> > -
-> > +#if LIBCURL_VERSION_NUM >=3D 0x070f05
-> > +     if (!strcmp("http.maxreceivespeed", var)) {
-> > +             curl_max_receive_speed =3D git_config_ssize_t(var, value)=
-;
->
-> Check for nonsense values, so that we can later use them to mean
-> something special.  It is good to remember is that you can always
-> loosen the rules after you give your software to your users, but it
-> is very hard to tighten the rules.  As you never need more than one
-> way to specify "the default" (aka "unlimited"), reserving any
-> non-positive value to mean the default is a design that is
-> extensible poorly.
->
-> I.e. insert something like
->
->                 if (curl_max_receive_speed < 0)
->                         die("negatigve number for %s: %s", var, value);
->
-> here.
->
-> > +             return 0;
-> > +     }
-> > +#endif
-> >       if (!strcmp("http.noepsv", var)) {
-> >               curl_ftp_no_epsv =3D git_config_bool(var, value);
-> >               return 0;
-> > @@ -974,6 +982,12 @@ static CURL *get_curl_handle(void)
-> >                                curl_low_speed_time);
-> >       }
-> >
-> > +#if LIBCURL_VERSION_NUM >=3D 0x070f05
-> > +     if (curl_max_receive_speed > 0)
->
-> The "result" handle was created anew in this function, so the
-> distinction does not really matter in practrice, but since you are
-> carefully initializing the variable to "-1" so that we can
-> differentiate the case where it is unconfigured (hence we want to
-> use the default) and it is set to zero (hence we want to use the
-> default), it would be more consistent and future-proof if you also
-> allowed 0 to be passed here, i.e.
->
->         if (curl_max_receive_speed >=3D 0)
->
-> > +             curl_easy_setopt(result, CURLOPT_MAX_RECV_SPEED_LARGE,
-> > +                              curl_max_receive_speed);
->
-> This call, if you use anything but curl_off_t as the type for
-> curl_max_receive_speed variable where it is declared, needs a cast,
-> like in the example https://curl.se/libcurl/c/CURLOPT_MAX_RECV_SPEED_LARG=
-E.html
->
-> > +#endif
-> > +
-> >       curl_easy_setopt(result, CURLOPT_MAXREDIRS, 20);
-> >  #if LIBCURL_VERSION_NUM >=3D 0x071301
-> >       curl_easy_setopt(result, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
-> > @@ -1105,6 +1119,9 @@ void http_init(struct remote *remote, const char =
-*url, int proactive_auth)
-> >  {
-> >       char *low_speed_limit;
-> >       char *low_speed_time;
-> > +#if LIBCURL_VERSION_NUM >=3D 0x070f05
-> > +     char *max_receive_speed;
-> > +#endif
-> >       char *normalized_url;
-> >       struct urlmatch_config config =3D { STRING_LIST_INIT_DUP };
-> >
-> > @@ -1196,6 +1213,11 @@ void http_init(struct remote *remote, const char=
- *url, int proactive_auth)
-> >       low_speed_time =3D getenv("GIT_HTTP_LOW_SPEED_TIME");
-> >       if (low_speed_time !=3D NULL)
-> >               curl_low_speed_time =3D strtol(low_speed_time, NULL, 10);
-> > +#if LIBCURL_VERSION_NUM >=3D 0x070f05
-> > +     max_receive_speed =3D getenv("GIT_HTTP_MAX_RECEIVE_SPEED");
-> > +     if (max_receive_speed && !git_parse_ssize_t(max_receive_speed, &c=
-url_max_receive_speed))
->
-> Overlong line.
->
-> Unlike curl_max_receive_speed that must be visible and
-> understandable long haul in this file, the temporary string variable
-> lives only during these handful of lines and shortened name is
-> easier to see and understand what is going on.  Also, you can avoid
-> repeated spelling out of the environment variable name by giving a
-> constant for it near the top of this function, e.g.
->
->         static const char mrs_env[] =3D "GIT_HTTP_MAX_RECEIVE_SPEED";
->
-> Then this part would become:
->
->         if (mrs) {
->                 if (!git_parse_ssize_t(mrs, &curl_max_receive_speed))
->                         die(_("invalid number for %s: %s", mrs_env, mrs);
->                 if (curl_max_receive_speed < 0)
->                         die(_("negative number for %s: %s", mrs_env, mrs)=
-;
->         }
->
-> > +             warning("failed to parse GIT_HTTP_MAX_RECEIVE_SPEED: %s",=
- max_receive_speed);
->
->
-> Thanks.
