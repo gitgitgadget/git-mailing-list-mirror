@@ -7,114 +7,165 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFF7FC4338F
-	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 01:40:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60449C4338F
+	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 02:13:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 888F76115A
-	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 01:40:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 433ED6108F
+	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 02:13:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231920AbhHUBlR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Aug 2021 21:41:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47038 "EHLO
+        id S240990AbhHUCN7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Aug 2021 22:13:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229783AbhHUBlQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Aug 2021 21:41:16 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F036FC061575
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 18:40:37 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id b7so14532025iob.4
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 18:40:37 -0700 (PDT)
+        with ESMTP id S230455AbhHUCN7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Aug 2021 22:13:59 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E35E8C061575
+        for <git@vger.kernel.org>; Fri, 20 Aug 2021 19:13:20 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id j10-20020a17090a94ca00b00181f17b7ef7so2236906pjw.2
+        for <git@vger.kernel.org>; Fri, 20 Aug 2021 19:13:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=b3ddLDpAJCc2Fj356e5BvvP4s+vZzxwaBPRbz15kEdI=;
-        b=Cr2ZJpaNa7BgTEVSXZsQxLm11/1mhhREgJ3n6d69sTtKTKzjOhs1/Ve+W+hdtzFPpc
-         UywEeZZyx2+Z2Tj/0joWc7E+JdhOXxW5cpK7+cPSavl4FKiKBUnAm8KOJkXKpEctl2Y3
-         Z93badODCc8hoaB96qHKqOy9mXAahGynKk7XbEyCFZCbvEylELETauGPzb2FqDuxvHxW
-         S1Zfzonula8Wq9USRG5Cf1yc5gaEDuAJNumx6g5xan3wXYBGR8PayIy6W88PhdZKq89a
-         ewj62P2Usy1pNGZfNfQAI3wInbeJZ/Zc2M3e27oJ1j9BxJutXtZC9DMCxcuo+J19dZAm
-         2XuQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=Dr6TWwFsVA2gRQtlWC8zDfv3+2+ypnat1kV9oXaphds=;
+        b=g6P8+aos5wBliK8NpZ7WrtzLJiFRUSegUzkSPLZdlOhXLzQTg6LGP2etTg/pI+EIme
+         Ce1vpo9+voFPflhcW06YRmvghx2JMi77VCJqjo9U1QpThQJAmZJ4Y8WvqyX1SxETRFXp
+         9Gg6ijKNsFKSlfuNcNeeN5mI0iGHKyvklsQOwMDobJc+dfeS9mLjK0JwBwEbdcz9FKkM
+         /Me7sM0KpPQTGLg5Vto6X/lFeZHdSZozVT0DzVv+P6uPNoCL9oqBQZ4gWyDSPRE9oijQ
+         TR4pM9MtsHJmd8QhTPn7FWa/1cLV+OyBmZyhKXYm3ydVJfQb6di0/w2WmmsCCGS8ZCN3
+         tx5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=b3ddLDpAJCc2Fj356e5BvvP4s+vZzxwaBPRbz15kEdI=;
-        b=rIUm9AebHs7FoSKIggvygRBS2PcMkXHBds7l7CVa1JSGS1LB+xYZ+83JtcqkSZsxLc
-         T5Ok+nEFHJqX4vukPxmqVEgb0ZPQpUO1UHEyo/o/yqaRzUHFUklJLjQAjOwwwKfBKBfu
-         kNREqTXWDS6yAPQKlfud6G95UXoo3DzVnX3kOKpb2RGsk6IkC7LHLatDyEbM3EHogvhP
-         BksyOTMJo7xpQDCBBg5VVCUozVCyusZOmDiKvxtMCbof4F53ouS52k8bGldTXSw9NpOG
-         mRp+DjyjQGhI7uCOmppRfdo3WoRukVSRJ+qu+2pNJsRFrnpqWEc3E71hQRmzXf5UzXU9
-         417w==
-X-Gm-Message-State: AOAM5331H2ZFkozws8j0L5tc9zrdpjd4hfmcdWe5rYwuKhdATsegLsjb
-        GqvxIfwOi7+tAjw2/B5WB92dsL2xgigYW0rva4E=
-X-Google-Smtp-Source: ABdhPJw6v6P48MxxTCdMGiBbDG8E1V0pJtEnh2rkHL76xQLdNAQQP8xigvYpwBU5PcGNKIt7sQuL3GU70Ovw4tnasH8=
-X-Received: by 2002:a05:6638:974:: with SMTP id o20mr20134169jaj.10.1629510037369;
- Fri, 20 Aug 2021 18:40:37 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1010.v5.git.1629075306706.gitgitgadget@gmail.com>
- <pull.1010.v6.git.1629352277151.gitgitgadget@gmail.com> <xmqqlf4x2weh.fsf@gitster.g>
-In-Reply-To: <xmqqlf4x2weh.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sat, 21 Aug 2021 09:40:27 +0800
-Message-ID: <CAOLTT8T3=GCvkdiXvO9wprXRoDJ58P_CZBjJ2YDQVHv_eCiXqw@mail.gmail.com>
-Subject: Re: [PATCH v6] [GSOC] cherry-pick: use better advice message
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=Dr6TWwFsVA2gRQtlWC8zDfv3+2+ypnat1kV9oXaphds=;
+        b=igFsLTkNsE/bFNY+Yza6D6g6YSZgUHXwpBOZpA6XuMUuHTtY2yluyVArzyM0PpKb/Y
+         JyaBS1a7zyDqgRw1LNd4IWJU0H01wtHk4G9LpLBx6rLllX2PG00s8Zjc1D/G31YpZKVM
+         qYelYFBQTgKS/ZG7bLApO/GOv8PeEIKWaPBRUEiWo4A9xvrCpMPkxQTtuaeXG++HaFGB
+         YABBJG1NLgKr5fUDL04EMTc+ZtGCDesClYdFSnvSeas2puU6o02jr2Sd/pnr0XQWyQW8
+         3I+XFg+vO5GPYOkFLp2G1mL8ZSmpbbjy5dGhE44b7kGSqUNd0lGuzsYJ0fEPoqSILAcG
+         4dPg==
+X-Gm-Message-State: AOAM532QVpbbZ7Xhr503qHTNph6fxUEcefIhbUSCnK5oBD8f3mB6NmHq
+        Pi46xjPvvh0NSAwaZVTKHZY=
+X-Google-Smtp-Source: ABdhPJyx9MgRHQfHI+pVHE6iqeUIO04TzGR4W3I+mw/GFInXgFQ0deJljWFTgc5u5+85pwP574KSbA==
+X-Received: by 2002:a17:903:32c3:b0:12d:cdc8:9460 with SMTP id i3-20020a17090332c300b0012dcdc89460mr18985389plr.28.1629512000411;
+        Fri, 20 Aug 2021 19:13:20 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:c1e5:7ba1:cab2:978b:f7f6])
+        by smtp.gmail.com with ESMTPSA id d15sm6914520pfh.34.2021.08.20.19.13.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Aug 2021 19:13:20 -0700 (PDT)
+Date:   Sat, 21 Aug 2021 09:13:17 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Ramkumar Ramachandra <artagnon@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] make: add INSTALL_STRIP variable
+Message-ID: <YSBhPdK8jYIQUNhP@danh.dev>
+References: <20210820105052.30631-1-bagasdotme@gmail.com>
+ <YR+Tp2AGeeKyRKoC@danh.dev>
+ <xmqqwnogt20q.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqwnogt20q.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B48=E6=9C=8820=E6=97=
-=A5=E5=91=A8=E4=BA=94 =E4=B8=8A=E5=8D=881:10=E5=86=99=E9=81=93=EF=BC=9A
->
-> > +             else if (opts->action =3D=3D REPLAY_PICK)
-> > +                     advise(_("Resolve all conflicts manually, mark th=
-em as resolved with\n"
->
-> Do we need to say "manually"?  Dropping the word would make the
-> message more concise.  Not repeating the word "resolve" by saying
-> something like "after resolving the conflicts, mark them with ..."
-> would probably be a much better phrasing, too.
->
+On 2021-08-20 11:16:37-0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Đoàn Trần Công Danh  <congdanhqx@gmail.com> writes:
+> 
+> >>  install: all
+> >> +ifdef INSTALL_STRIP
+> >> +	$(MAKE) strip
+> >> +endif
+> >
+> > I believe it's better to write like this:
+> >
+> > ----- 8< ------
+> > ifdef INSTALL_STRIP
+> > install: strip
+> > endif
+> >
+> > install: all
+> > 	....
+> > ---- >8-------
+> >
+> > IOW, install depends on strip, not install invoke strip.
+> > I think it would work better for:
+> >
+> > 	make install strip
+> 
+> I think you meant "it would work better than 'make install strip'",
+> and if so, I tend to agree.  With
+> 
+> 	echo INSTALL_STRIP=YesPlease >>config.mak
+> 
+> either Bagas's or your "before installing, make sure we strip"
+> change lets
+> 
+> 	make install
+> 
+> just work without "strip" given on the command line.
+> 
+> If users with such a config.mak type "make install strip", it will
+> make the recipe for "install" wait until "strip" is done, which is
+> what we want, but "strip" on the command line for them is redundant,
+> and there is no way for them to install unstripped binaries, which
+> may be a bit of downside.
+> 
+> But for those who do not always want to use INSTALL_STRIP, as Dscho
+> said after I mentioned the "make variable" thing, we probably a
+> wrong thing when they say "make -j strip install", as there is
+> nothing to make recipe for "install" to wait for "strip", so it is
+> not a fully satisfactory solution.
 
-Yeah. Note the $reslovemsg in git-rebase--preserve-merges.sh, I copied
-it from here. Perhaps it is also worth modifying?
+In that case, we can use this construct (since we depends on GNU Make,
+anyway).
 
-> > +                              "\"git add/rm <conflicted_files>\", then=
- run\n"
->
-> <paths> (or <pathspec>) not <conflicted_files>; you can resolve many
-> files in a directory and give the pathspec to match the directory to
-> mark all the files in there as resolved.
->
+---- 8< ------
+ifneq ($(filter install,$(MAKECMDGOALS)),)
+ifneq ($(filter strip,$(MAKECMDGOALS)),)
+install: strip
+endif
+endif
+---- >8 -----
 
-Indeed so.
+MAKECMDGOALS is available from at least GNU Make 3.75.1 in 1997.
 
-> > +                              "\"git cherry-pick --continue\".\n"
-> > +                              "You can instead skip this commit: run \=
-"git cherry-pick --skip\".\n"
->
-> Inconsistent use of prose in the above and ": run" here.
->
->         You can instead skip this commit with "git cherry-pick --skip"
->
-> > +             else if (opts->action =3D=3D REPLAY_REVERT)
->
-> Likewise.
->
+Anyway, maybe it's only me, but I think people may want to install
+first, then strip later for debug mapping.
+
+> 
+> I think we want two things:
+> 
+>  (1) if a user says "make [-j] strip install", make sure "install"
+>      won't start before "strip" finishes;
+> 
+>  (2) if a user wants to always install stripped binary, allow some
+>      make variable in config.mak so that "make install" would do
+>      that without an explicit "strip".
+> 
+> Of course, if a user does not have (2) configured, "make install"
+> should install unstripped binaries, but that goes without saying.
+> 
+> And after thinking it like this, perhaps a new "install-stripped"
+> target that runs "strip" and then "install" as originally proposed
+> in the thread that triggered this discussion may be the simplest
+> approach.  We can control the optional dependency between "strip"
+> and "install", those who want to install stripped binary can use
+> "install-stripped" instead of "install", and they can on-demand
+> choose to install unstripped binary (which was a potential downside
+> of the "make variable" approach under discussion here).
+> 
 > Thanks.
+> 
 
-Thanks.
---
-ZheNing Hu
+-- 
+Danh
