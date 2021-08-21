@@ -2,103 +2,274 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A915C4338F
-	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 12:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 724F5C4338F
+	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 20:00:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2611161165
-	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 12:52:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 46B4B6121F
+	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 20:00:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231406AbhHUMxY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Aug 2021 08:53:24 -0400
-Received: from mout.web.de ([212.227.15.4]:57751 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229722AbhHUMxX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Aug 2021 08:53:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1629550360;
-        bh=YrPsVq8IE+Lxkg+PtLncyXKMG9uKVXKyatvnwrZPRtg=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=Pu+P4ypGt4NQY48/NgtAySF5AlTTBLkxSsB8ghPYqRDFNhJv53893f6BtdsdFNjgf
-         vyHRtBe5i59wAAG5ISh6mxyjV8gLM4w7w+qa9h8VY9mdKdUNcV1ym+p13FKwW/TGAd
-         SKzXrRxNUWzwjwwGie3oD2WZDhxYLCdVpCUYGiN0=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.27.185]) by smtp.web.de
- (mrweb001 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0MDgPG-1mGpKY305W-00H43u; Sat, 21 Aug 2021 14:52:40 +0200
-X-Mozilla-News-Host: news://public-inbox.org:119
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] compat: let git_mmap use malloc(3) directly
-Message-ID: <9c2fe5de-be23-3e66-6edf-3c2edfb804f3@web.de>
-Date:   Sat, 21 Aug 2021 14:52:40 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.13.0
+        id S230170AbhHUUAv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Aug 2021 16:00:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60856 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229556AbhHUUAu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Aug 2021 16:00:50 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8138C061575
+        for <git@vger.kernel.org>; Sat, 21 Aug 2021 13:00:10 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id l6so1740768wmq.5
+        for <git@vger.kernel.org>; Sat, 21 Aug 2021 13:00:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=IKyI8QHzbJHtkeqr8kexFGucLHTGqynFWLVA6FWy8lo=;
+        b=gpgvdfNKYKCbiNBTecJ95sg3LCX679EnrQ6N26zH3Iy5mIsaJtox+rLcSuTJ5MkgIa
+         dCUnEZPYht3J/eo+zu2I8C5YEuu38hSeMOWpB/tTiuyyWMKyZuflQF7zjtkmseiwGCmY
+         X0SZPT6QF2jYhzbL19oaDnr423grULU1mil0AiF11803icV9co5+y1Qo2qWYmAuz6bSI
+         kSQlpwZCu5Hdqg+s5Uophw4Mgd/PdpH3uvcHFOAuLyOr93HNvw2R5Kx/o3tspokkrYhW
+         o40VHn054XgcHY9TawjDKLh1033klQl7xG7KSnbioLTr/PIBPn6skULBHRHj382GyFhX
+         Yu0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=IKyI8QHzbJHtkeqr8kexFGucLHTGqynFWLVA6FWy8lo=;
+        b=TN4YiNusADInKccsJ3QXGaFGPuMg5xlxnfsF4A2lHyfExCQhx5e4oHyI10zgmtANPd
+         RWuyx1cTILjmDuiO6dgoijzfPUd/DYrp0l++cLGjB1kvtJIYcASzrLHXK/WsR2nGjZKE
+         LxO07GYqOjVnbXvO17r2rOOExhvhyU+AqGhkRMB9pfLazMe3mtKJMF8z07AQ4xdNqYLR
+         jn7Aq/5EEGZfoIILEWwg3NYd2ezKRW/ZciPN+dcAg14V2AuOrj9KX3wdmvBBZWxifsL+
+         L6hcqwmyrYo9XryegAN5n55QoURFpb5+4b6HL3/DVKXo9YaW/G5gNO8Xbn3RupKkkSOP
+         MnkQ==
+X-Gm-Message-State: AOAM5338b5q7GlJDzL+3ZCjfXqMs6RligxtTI1P52Z/e4w00xmwVo5Nu
+        v+FEufCk/cnAVocHsn/tquHwqsWo6Vo=
+X-Google-Smtp-Source: ABdhPJwh+rsCOoLp/S8jONXBUJyP0uri+Ifm5tbFdhhILN7HUSka8vsYg5unBn3UR4euc6kMlR1zAg==
+X-Received: by 2002:a05:600c:198a:: with SMTP id t10mr9468988wmq.181.1629576008995;
+        Sat, 21 Aug 2021 13:00:08 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h9sm9875885wrv.84.2021.08.21.13.00.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Aug 2021 13:00:08 -0700 (PDT)
+Message-Id: <pull.1069.git.git.1629576007891.gitgitgadget@gmail.com>
+From:   "Rafael Santiago via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 21 Aug 2021 20:00:07 +0000
+Subject: [PATCH] Give support for hooks based on platform
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:jVA0om7UFB07gLRwo+6nepwbsQKBwyGmeTXOKMfBFrwEDAM6L0M
- KZ1GZFs84XKcdpdx9s2DJGo9kbcnI+CWhZEYTGFUqmhLkq9xmiyK9Ek9Vu8PbbVDsbO8jFo
- Vo8MJmjZpXk9lu5Kxe9d5F9TO9poCS5VQe0l1TQNteBR5pP/Qj7gW2qpZBWWcTrNmhBzd2y
- kEFblT9yBDBt+/ADsFmtQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ElyS6/oavkI=:fQ+uXO6vmV3Nsn1jdoSWYb
- uXHFMkVlmFU+4ePDdwlnm54IbiovM7Zn6J08higwcCmeZ9z6Mzhhz5hhfhHgvWJAdl990cDTM
- SI8eUNT1wvDAQ1KT0YMDZcMaj9slaBwoNVtCwrUjHaOMrFFu3deiV1vIz4OiFKKQ+04JQ/dmR
- modi9Mfox3ROLJ+7s5+wthQQJR+GnYjE/bb38Dm8o9MZm7aml8asbJV/OF22mU4V7lA4JwnaF
- +KXdB+BXp9r2whnsYvro/uW314yYNy3czkbge9RGOzxB0pEUzcwBWnOa1PaKU5MjkvfEkBXaU
- vJ/rGUXx3vIMF/GaU7KL5qIgJ/4fnszP9E1vrVLFsNKmmZtAurjwJUyWHz9S9ceuYbOcX/DQd
- UQQ1Y1sHse2QJilaFiR8xCNUni0jgBpJWVCSJrW2I1tEMTaUKuaDs3FjN0C3y80BOxmjBX0kF
- yeC6d40nVqbaDFFhhMqzpmLUWuwPUtdClXq2ofw2CaZqHXDimyH7r3adaDtrAJwKpe3QnzVTJ
- Rhfd6RFeyeLwH8NEKslkmWYIkGqimXsgwIFXSedckH3NVnYOGXQgIX3Jc0XFP4sWoMVrPfyFM
- OAq9AqV4/ROJEbhwQk+M4kBsls3ZjwQ91GKt5e7PYGa1sZEoMit+Ev1Pt8Ddxh4N+X0WhrrcP
- YuyyV2x25xO96TAoxBaxSYJcXmEC9ZcPWXRPe+8A5UWh+PfLLqssQEYNUbvz/Wxc6f0JsCaUd
- M8NISaJkdRJy7xCUNQaNPoZBz2Zi+f6PaYuou/88NYRTtSTfz7KsgmZtkvCAFxDE9345i0vlY
- l3YVVcsYmKC/eKu6ppP5/dlkL0Z8WkqM9/fskiBfCDPME08Ic1/5LmZUfPlazPQ9SbbNAtHZR
- JijzGPz/Gc/JzG310dKo5vsVZPr4G3LPImZLu/H6ZB9/1xIpBRMDYmF+PwJkVL/3ioMO6N2qG
- hiRRW+8Vg5/kA9ocbITxDRVhxIAK9HtvWSI+vknnBaE03ORK2rra18YFOI5O1lMiaSjnuJ13m
- 5iVyD7fAgyAVzIBFADRJNYPL6lGjHRCTQH0hund4VR+AoL1cDvme4w+IKc2aVcnJi5iBa5lZv
- jBhc9p02gkgl9XF00yU/1rEnWSif1bX2llN
+To:     git@vger.kernel.org
+Cc:     Rafael Santiago <voidbrainvoid@tutanota.com>,
+        rafael-santiago <voidbrainvoid@tutanota.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-xmalloc() dies on error, allows zero-sized allocations and enforces
-GIT_ALLOC_LIMIT for testing.  Our mmap replacement doesn't need any of
-that.  Let's cut out the wrapper, reject zero-sized requests as required
-by POSIX and use malloc(3) directly.  Allocation errors were needlessly
-handled by git_mmap() before; this code becomes reachable now.
+From: rafael-santiago <voidbrainvoid@tutanota.com>
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- compat/mmap.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+The idea behind this commit can be useful for teams
+that share git-hooks into a custom directory and
+dealing with projects that must be developed,
+built, maintained on several different platforms.
 
-diff --git a/compat/mmap.c b/compat/mmap.c
-index 14d31010df..8d6c02d4bc 100644
-=2D-- a/compat/mmap.c
-+++ b/compat/mmap.c
-@@ -7,7 +7,12 @@ void *git_mmap(void *start, size_t length, int prot, int =
-flags, int fd, off_t of
- 	if (start !=3D NULL || flags !=3D MAP_PRIVATE || prot !=3D PROT_READ)
- 		die("Invalid usage of mmap when built with NO_MMAP");
+This commit allows the execution of git hooks
+based on the current operating system.
+A "native hook" is defined in the form:
+    hooks/hook-name_platform
+Where platform must be equivalent to the
+content returned in sysname field in utsname
+struct when calling uname() [but all normalized
+in lowercase].
 
--	start =3D xmalloc(length);
-+	if (length =3D=3D 0) {
-+		errno =3D EINVAL;
-+		return MAP_FAILED;
-+	}
+On Windows, independent of version, flavor, SP,
+whatever it is simply "windows".
+
+When a native hook is not found the standard
+hook (.git/hook/hook-name), if found is executed,
+of course. In other words, the hook without a
+platform postfix (_yyz) is the standard hook.
+When native hook is not set as executable but
+standard is set, the standard will be executed.
+
+The main motivation of this extension is to
+reduce dependency of scripting languages,
+logical trinkets etc just to execute minor
+tasks during scm events that could be done
+natively but differently from a platform
+to another. Less dependencies, cleaner
+repos: a small step for a better world
+for any software developer.
+
+Signed-off-by: Rafael Santiago <voidbrainvoid@tutanota.com>
+---
+    Give support for hooks based on platform
+    
+    The idea behind this commit can be useful for teams that share git-hooks
+    into a custom directory and dealing with projects that must be
+    developed, built, maintained on several different platforms.
+    
+    This commit allows the execution of git hooks based on the current
+    operating system. A "native hook" is defined in the form:
+    hooks/hook-name_platform
+    
+    Where platform must be equivalent to the content returned in sysname
+    field in utsname struct when calling uname() [but all normalized in
+    lowercase].
+    
+    On Windows, independent of version, flavor, SP, whatever it is simply
+    "windows".
+    
+    When a native hook is not found the standard hook (.git/hook/hook-name),
+    if found is executed, of course. In other words, the hook without a
+    platform postfix (_yyz) is the standard hook. When native hook is not
+    set as executable but standard is set, the standard will be executed.
+    
+    The main motivation of this extension is to reduce dependency of
+    scripting languages, logical trinkets etc just to execute minor tasks
+    during scm events that could be done natively but differently from a
+    platform to another. Less dependencies, cleaner repos: a small step for
+    a better world for any software developer.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1069%2Frafael-santiago%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1069/rafael-santiago/master-v1
+Pull-Request: https://github.com/git/git/pull/1069
+
+ run-command.c                     | 41 ++++++++++++++++++++
+ t/t7527-pre-commit-native-hook.sh | 63 +++++++++++++++++++++++++++++++
+ 2 files changed, 104 insertions(+)
+ create mode 100755 t/t7527-pre-commit-native-hook.sh
+
+diff --git a/run-command.c b/run-command.c
+index f72e72cce73..973c1a3434b 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1319,9 +1319,50 @@ int async_with_fork(void)
+ #endif
+ }
+ 
++static inline const char *platform_name(void)
++{
++	static const char *platform = NULL;
++#ifndef GIT_WINDOWS_NATIVE
++	static struct utsname un = { 0 };
++#endif
++	if (platform != NULL)
++		return platform;
 +
-+	start =3D malloc(length);
- 	if (start =3D=3D NULL) {
- 		errno =3D ENOMEM;
- 		return MAP_FAILED;
-=2D-
-2.33.0
++#ifndef GIT_WINDOWS_NATIVE
++	if (uname(&un) == 0) {
++		for (size_t s = 0; un.sysname[s] != 0; s++)
++			un.sysname[s] = tolower(un.sysname[s]);
++		platform = un.sysname;
++	}
++#else
++    platform = "windows";
++#endif
++
++    return platform;
++}
++
++static const char *find_native_hook(const char *name)
++{
++	char native_name[64] = "";
++	const char *platform = NULL;
++	if (name == NULL || strstr(name, "_") != NULL)
++		return NULL;
++
++	platform = platform_name();
++	if (platform == NULL)
++		return NULL;
++
++	if (snprintf(native_name, sizeof(native_name) - 1, "%s_%s", name, platform) >= sizeof(native_name) - 1)
++		return NULL;
++	return find_hook(native_name);
++}
++
+ const char *find_hook(const char *name)
+ {
++	const char *native_hook = find_native_hook(name);
+ 	static struct strbuf path = STRBUF_INIT;
++	if (native_hook != NULL)
++		return native_hook;
+ 
+ 	strbuf_reset(&path);
+ 	strbuf_git_path(&path, "hooks/%s", name);
+diff --git a/t/t7527-pre-commit-native-hook.sh b/t/t7527-pre-commit-native-hook.sh
+new file mode 100755
+index 00000000000..f3835f943af
+--- /dev/null
++++ b/t/t7527-pre-commit-native-hook.sh
+@@ -0,0 +1,63 @@
++#!/bin/sh
++
++test_description='Test native hooks extension'
++
++. ./test-lib.sh
++
++expected_platform=$(uname -s | tr A-Z a-z)
++
++if [ $(expr substr $(uname -s | tr A-Z a-z) 1 5) == "mingw" ] ; then
++    expected_platform="windows"
++fi
++
++test_expect_success 'set standard and native pre-commit hooks' '
++	mkdir -p test-repo &&
++	cd test-repo &&
++	git init &&
++	mkdir -p .git/hooks &&
++	echo \#!/bin/sh > .git/hooks/pre-commit &&
++	echo echo Hello generic. >> .git/hooks/pre-commit &&
++	chmod u+x .git/hooks/pre-commit &&
++	echo \#!/bin/sh > .git/hooks/pre-commit_${expected_platform} &&
++	echo echo Hello ${expected_platform} >> .git/hooks/pre-commit_${expected_platform} &&
++	chmod u+x .git/hooks/pre-commit_${expected_platform} &&
++	echo test > README &&
++	git add README &&
++	git commit -am "1-2-3 this is a test." 2>out.txt &&
++	cat out.txt | grep Hello\ ${expected_platform}
++'
++
++if [ ${expected_platform} != "windows" ] ; then
++	# chmod does not work well on Windows.
++	test_expect_success 'set standard and native pre-commit hooks but let the native one not executable' '
++		mkdir -p test-repo &&
++		cd test-repo &&
++		git init &&
++		mkdir -p .git/hooks &&
++		echo \#!/bin/sh > .git/hooks/pre-commit &&
++		echo echo Hello generic. >> .git/hooks/pre-commit &&
++		chmod u+x .git/hooks/pre-commit &&
++		echo \#!/bin/sh > .git/hooks/pre-commit_${expected_platform} &&
++		echo echo Hello ${expected_platform} >> .git/hooks/pre-commit_${expected_platform} &&
++		echo test > README &&
++		git add README &&
++		git commit -am "1-2-3 this is a test." 2>out.txt &&
++		cat out.txt | grep Hello\ generic
++	'
++
++	test_expect_success 'set standard pre-commit hook only' '
++		mkdir -p test-repo &&
++		cd test-repo &&
++		git init &&
++		mkdir -p .git/hooks &&
++		echo \#!/bin/sh > .git/hooks/pre-commit &&
++		echo echo Hello standard hook. >> .git/hooks/pre-commit &&
++		chmod u+x .git/hooks/pre-commit &&
++		echo test > README &&
++		git add README &&
++		git commit -am "1-2-3 this is a test." 2>out.txt &&
++		cat out.txt | grep Hello\ standard\ hook
++	'
++fi
++
++test_done
+
+base-commit: 225bc32a989d7a22fa6addafd4ce7dcd04675dbf
+-- 
+gitgitgadget
