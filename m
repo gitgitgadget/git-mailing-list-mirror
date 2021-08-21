@@ -2,125 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3032C432BE
-	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 00:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 901DDC4338F
+	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 01:36:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9722860231
-	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 00:20:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 619E761154
+	for <git@archiver.kernel.org>; Sat, 21 Aug 2021 01:36:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235827AbhHUAVb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Aug 2021 20:21:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57914 "EHLO
+        id S240527AbhHUBh3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Aug 2021 21:37:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240999AbhHUAVY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Aug 2021 20:21:24 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE9C1C06179A
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 17:20:45 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id k12-20020a056830150c00b0051abe7f680bso13022536otp.1
-        for <git@vger.kernel.org>; Fri, 20 Aug 2021 17:20:45 -0700 (PDT)
+        with ESMTP id S230172AbhHUBh2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Aug 2021 21:37:28 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 739B5C061575
+        for <git@vger.kernel.org>; Fri, 20 Aug 2021 18:36:50 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id t1so10937646pgv.3
+        for <git@vger.kernel.org>; Fri, 20 Aug 2021 18:36:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=XkVK7Uhi1eoCZi4xoJzNvlZhQ1g/UUU2fgZogdcPuGg=;
-        b=ubd537egWsa8fTkFeipcfgIxfCA2jsL4NB2bqr4glaHz7FC1+QbpneOBIR9y2j66If
-         bHIif/sse0FOTX8IGIjZ2xB+x7r3vbcAEFM9rB8AMlU+bNGAsQj9MruojkelU8DQz5rx
-         cCYfmh47koZtXi2GswntBjv3qbzOy9I+s/q83FGVqiYYD7ktKUBGIa/yE9hK9aFQay+y
-         nRHoLLqXjNIo4BZ9D59uSYtvE0JNqoSGgfQ/s9Qm/co43TtiTPRe6I+8KHHX2embdziU
-         W9znIB4zL9bYl1wmidZtWORuihGjQm7F4rZrqkeDUQvj4Wc52VTMWYdn24b0R3wQ5oYc
-         0c/g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ZbhIuLPnDbNgjo3H2S1aS5YjvQdmsPfZcYR8jjmSM4U=;
+        b=npsPTdMm/qmU+NECHU8XDnG2FGOSxCyaqni+h6gp2866/Bppq8zCGKDWiyZ5Si02BL
+         uruYvho2z4GbcbKIg38Ytg5sJXR8l0MDqF6Lm0JF2hCZg0URseJH1nG7zBN2B3bHh7ny
+         iUd6LMhjeVi/vCcmTpeCgJbVvrEZ1TKf2BlphUCuGWEWXOk7EgmDABaw9fmuU+dq9T23
+         5EQIpw063CdksjoU0xtmQh1xVrOGp1fUBYMIbbrZjXWEKdM/QZiUHRGITXxUKmk/ynJ1
+         I87knuHyxb5GrpegMg+t6KOZfPwFMjrF7oCa4+FLKDCbbwhFHNYp1neMLlCio/IugPN2
+         Jztg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XkVK7Uhi1eoCZi4xoJzNvlZhQ1g/UUU2fgZogdcPuGg=;
-        b=FYUMXQiC0pC+z7nNDgzWqDkGDJPPwrtWpP7wSMMIXXK0eTnzTMcnY1BPAAzZqauU5t
-         cht7uH3/sbCjQ7vuCTwBrScPOD+yQk+hdyIMyfbyfeLGiItOMWcjUnrR78r7ADXI+Xyw
-         JO4IzpCYNLqpXo1OufgUC7cJqdMR2inTbL6XI0v07Ks7yztS9H/WtpqIuaQrFfuqEPlK
-         q0cSFl/HJ22QN8dJEs9yMUsOGweyt861Yi9JgaKuZdrdswSoPi8g4R6Aeux28tlbrMPy
-         XcdyGXwTCfKrCd/4vHeYe5OBF1xGZ7OJAwbRe/vOratCuaZ4fNTLmq+mVZZwcJbinZZo
-         ydcQ==
-X-Gm-Message-State: AOAM532inEMTFqqaIaWus0pQJQt9SY1wSQ9UqpT1KlzBQzdGjQBwpqRu
-        u+pQtKNhKJZ5VdRHJ6KzPRrLm4NwN/Y2U9lbhe0=
-X-Google-Smtp-Source: ABdhPJxFYzC7p7DmmxQMggPNr+wQ6UCH7sT/iXy75sdWWs6A1Yx1u2qDvtkq5rgQfB2hiUnuZYRdCduM0g0I/0uPNYQ=
-X-Received: by 2002:a9d:448:: with SMTP id 66mr19088238otc.345.1629505245179;
- Fri, 20 Aug 2021 17:20:45 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ZbhIuLPnDbNgjo3H2S1aS5YjvQdmsPfZcYR8jjmSM4U=;
+        b=DElKNmWzOub/p0dD1GqY10bDJipejcQOKbpnpQJolCpqVxxhu/FGhps1ngTmk+RxBn
+         9YuKb/gLYa/tvZk+krdYkIZTkcF4S+jxsvNPZ/ZfRBpcJqrULvrKxloUuvPW3ijxYo2B
+         7czsg7ytEaZRjXoJb85yNouTcj6hfT2NKO3715kLJav2ABA9xt+x/7mY+D2/6cHBvEFw
+         n9GrqVak6tt81wuo3mo0o1HiBldrbKTaaM3UMztBHN46d89/bAak4myEol9560sagLCT
+         B361H4C3l9aumiNmu9YQ3p+m3Hcl1UZWXAa14brvjkxYnwTu1V9K/X0uLVra1BWBQKx4
+         ApFQ==
+X-Gm-Message-State: AOAM532lQEMrdSy/A98VMnRIjNrxENg0F5zeItK9T8qdw48rYAUj3OjM
+        I9C/m/zb17dOR+S7DBbMMzWTi7TSHtfNZg==
+X-Google-Smtp-Source: ABdhPJwI6XStVNpeu9bQhysUrXvdfAMKrQ88TRsmpmr973sUsqGtkSir0E0CctLApx0l+ERSotXyBA==
+X-Received: by 2002:aa7:9117:0:b029:35c:4791:ff52 with SMTP id 23-20020aa791170000b029035c4791ff52mr21987091pfh.76.1629509809860;
+        Fri, 20 Aug 2021 18:36:49 -0700 (PDT)
+Received: from localhost.localdomain ([2402:800:63b8:c1e5:7ba1:cab2:978b:f7f6])
+        by smtp.gmail.com with ESMTPSA id j7sm4132257pjf.39.2021.08.20.18.36.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Aug 2021 18:36:49 -0700 (PDT)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/2] t6300: clear warning when running without gpg
+Date:   Sat, 21 Aug 2021 08:36:32 +0700
+Message-Id: <cover.1629509530.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.33.0.254.g68ee769121
+In-Reply-To: <bcbde2e7364865ac16702447b863b8a725670428.1629200841.git.congdanhqx@gmail.com>
+References: <bcbde2e7364865ac16702447b863b8a725670428.1629200841.git.congdanhqx@gmail.com>, <cover.1629263759.git.congdanhqx@gmail.com>
 MIME-Version: 1.0
-References: <pull.1019.git.1629220124.gitgitgadget@gmail.com>
- <7cad9eee90bcee3cb98be5c7a2edaca5e855c157.1629220124.git.gitgitgadget@gmail.com>
- <xmqqzgte62ud.fsf@gitster.g> <b3c7e700-f36c-d58f-0c49-450444df8c63@gmail.com>
- <CABPp-BEtOWUGCcn3B0On80=tMZ_Re9ScHnBiwPPPFY=x2TwG5Q@mail.gmail.com> <xmqq7dgfu1zb.fsf@gitster.g>
-In-Reply-To: <xmqq7dgfu1zb.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 20 Aug 2021 17:20:34 -0700
-Message-ID: <CABPp-BHLw-h0oQLNwT+DAXeHZZfJRaiyoM+kDuqx_aT80-zM3w@mail.gmail.com>
-Subject: Re: [PATCH 1/6] t1092: use ORT merge strategy
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 20, 2021 at 4:32 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > On Wed, Aug 18, 2021 at 11:42 AM Derrick Stolee <stolee@gmail.com> wrote:
-> >>
-> >> >     It seems to me that it would let us live in the future in a more
-> >> >     comprehensive way if we tweaked merge_recursive() and/or
-> >> >     merge_recursive_generic() so that all internal callers, not just
-> >> >     builtin/merge.c, would redirect to the ort machinery when say
-> >> >     GIT_TEST_REPLACE_RECURSIVE_WITH_ORT environment exists, and
-> >> >     doing it that way we do not need to sprinkle "-srecursive" and
-> >> >     "-sort" everywhere in our tests at randomly chosen places to
-> >> >     give test coverage to both strategies.
-> >
-> > GIT_TEST_MERGE_ALGORITHM already does this; the testsuite already had
-> > `-s recursive` sprinkled everywhere (due to contrast with `-s
-> > resolve`), but since I wanted to use all existing recursive tests as
-> > ort tests, then rather than tweaking all the test files and copying
-> > tests and whatnot, we decided to just have GIT_TEST_MERGE_ALGORITHM
-> > reinterpret "recursive" to whatever GIT_TEST_MERGE_ALGORITHM says.
->
-> I somehow thought that direct calls to merge_recursive() and
-> merge_recursive_generic() are not affected with that environment
-> variable, so you cannot influence what happens during "git am -3"
-> and "git stash apply" with that, but perhaps I was not reading the
-> code correctly.
+Running t6300 in an environment without gpg(1),
+we'll see those warnings:
 
-Sorry for being unclear.  I was responding to the "sprinkling" portion
-of the quote; GIT_TEST_MERGE_ALGORITHM allows us to avoid sprinkling
--srecursive and -sort in various places.
+	fatal: Not a valid object name refs/tags/signed-empty
+	fatal: Not a valid object name refs/tags/signed-short
+	fatal: Not a valid object name refs/tags/signed-long
 
-You are correct that merge_recursive() and merge_recursive_generic()
-are unaffected by the environment variable; the environment variable
-operates at a higher level in the code to choose whether to call e.g.
-merge_recursive() vs. merge_incore_recursive().
+Because, those objects will be created only when GPG is satistified.
+This series try to clean those errors.
 
-> It seems that merge_recursive() and merge_ort_recursive() are
-> interface compatible and the latter can serve as a drop-in
-> replacement for the former?
+Change in v3 from v2:
+* Fix grammar in 1/2 commit's message
+* Let tail open input file instead of using shell redirection.
 
-Yes, merge_ort_recursive() and merge_ort_nonrecursive() were meant as
-interface compatible drop-in replacements for merge_recursive() and
-merge_trees(), to make it easy to switch callers over.
+Change in v2 from v1:
+* Make 1/2 as near pure-code-move; and
+* Use 2/2 as a code change to preserve status code for cat-file
+* Mention reasons that 1/2 couldn't be pure-code-move.
 
-There is no such replacement for merge_recursive_generic(), though,
-and builtin/{am, merge-recursive, stash}.c will all need to be
-modified to work with merge-ort.  IIRC, when last we discussed that
-interface, we realized that the three were using it a bit differently
-and it had some hardcoded am-specific assumptions that were not
-appropriate for the other two, so it's not clear to me we should port
-that interface.
+
+Đoàn Trần Công Danh (2):
+  t6300: don't run cat-file on non-existent object
+  t6300: check for cat-file exit status code
+
+ t/t6300-for-each-ref.sh | 29 ++++++++++++++++++-----------
+ 1 file changed, 18 insertions(+), 11 deletions(-)
+
+Range-diff against v2:
+1:  b813d6f2ad ! 1:  b1b9771913 t6300: don't run cat-file on non-existent object
+    @@ Commit message
+     
+         In t6300, some tests are guarded behind some prerequisites.
+         Thus, objects created by those tests ain't available if those
+    -    prerequisites is unsatistified.  Attempting to run "cat-file"
+    +    prerequisites are unsatistified.  Attempting to run "cat-file"
+         on those objects will run into failure.
+     
+         In fact, running t6300 in an environment without gpg(1),
+    @@ Commit message
+         * check their exit status code
+     
+         The expected value for objects with type: commit needs to be
+    -    computed outside the test because we can't relies on "$3" there.
+    +    computed outside the test because we can't rely on "$3" there.
+         Furthermore, to prevent the accidental usage of that computed
+         expected value, BUG out on unknown object's type.
+     
+2:  68ee769121 ! 2:  83d532528b t6300: check for cat-file exit status code
+    @@ t/t6300-for-each-ref.sh: test_atom() {
+      				# We cannot use $3 as it expects sanitize_pgp to run
+     -				expect=$(git cat-file tag $ref | tail -n +6 | wc -c) ;;
+     +				git cat-file tag $ref >out &&
+    -+				expect=$(tail -n +6 <out | wc -c) &&
+    ++				expect=$(tail -n +6 out | wc -c) &&
+     +				rm -f out ;;
+      			tree | blob)
+      				expect="" ;;
+-- 
+2.33.0.254.g68ee769121
+
