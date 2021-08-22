@@ -2,81 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.3 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8864CC4338F
-	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 14:19:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA2C0C432BE
+	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 14:37:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A065611AF
-	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 14:19:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B1BD16023E
+	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 14:37:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232398AbhHVOU3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Aug 2021 10:20:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44242 "EHLO
+        id S234503AbhHVOi0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Aug 2021 10:38:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231327AbhHVOU2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Aug 2021 10:20:28 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 925BCC061575
-        for <git@vger.kernel.org>; Sun, 22 Aug 2021 07:19:47 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id s3so26316439ljp.11
-        for <git@vger.kernel.org>; Sun, 22 Aug 2021 07:19:47 -0700 (PDT)
+        with ESMTP id S234391AbhHVOiZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Aug 2021 10:38:25 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10CAFC061575
+        for <git@vger.kernel.org>; Sun, 22 Aug 2021 07:37:44 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id m24-20020a17090a7f98b0290178b1a81700so10380596pjl.4
+        for <git@vger.kernel.org>; Sun, 22 Aug 2021 07:37:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=bdU/pF9nELlGne8urTm2u3eB8QqqBzKlvB0+iIssvJ8=;
-        b=RjV7kjeXMdU/7uygU5QLcDdjyhdu52Ovjwuc7JUAy7m3qfheVS2sMl92+5Zhmo+6vH
-         3sAbNJ4hkQt9lPvNa/XwtIbbX2Jp1KfxmRRtQdQqyJafw5d7bgCEndti0Q1H8NYRl2q2
-         z+b/sBa/l2ZiEewvMf1yHvgZjkitHjswazlxRNT7OcK8PReiGzuBIWmtf9OW3qYe/kAt
-         Ucm+FTJeWFohdDZoAfVSlsDOJ/SH/WycYp5J76R4z24Bl1vxFTeixfLjUd9o6Ru/FLoN
-         pfukGduLrhkyXo5Daxcx1WGas4M/JZNNfoX4IE5v5al7HbiyE5vyP3fKLPL4Chn0qhMd
-         8hDg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=LUbv4XuYsfT+1EwY1MMCx9XEJlawuM7CeYB1hfz61As=;
+        b=BgZm+DT/D88hC8/cSUj97/e9TPlQsD6lzxjl8Lw9+WGpSSrjWD+sp56UI78htGcWkU
+         nNAqlBVknTPIHch1Xz3r+rFvB1SA7zuJEWnM2od12UW9a3BSK/GYiUE2jtDX/wt5AWgE
+         US1GV+fhsAnoJDCidVhhobzGa4DwrL3LPLRUMJrK4phMDmDb7fDG0FdDDqSbV0eZnRb/
+         ebHVSC/v+ZoT0Rw5jpleVBA3rIhLTeZlAwf6mN0KAFYoQoFs///CV9Qp5q7FcuAt5B17
+         n3AT4SFHOjMwzAm3eVM0QKa2JZDrVNa39/gzbvI3owvZhybR7ykSTx8Y61C5JCyFZGM/
+         brtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=bdU/pF9nELlGne8urTm2u3eB8QqqBzKlvB0+iIssvJ8=;
-        b=L4+Nald+ueqOUyj8ElxBY32jYfCtmS458Ja9Dnj80b2yhFrE/xROPBfPzOsF5BWRwn
-         ILFcXkeGXYO2J4jz9bMuCp5WB3NhClqwDy3BAPB5eOzuz7JQwxOUSc5Ej+zt5mU6SdJi
-         lV1a2ppq1iEv5nVcWlBbjVSH1KxZ7LWxsiuBBc/y1cfVh0gcGrwVAAcGDxKS2y2VEn80
-         iqtFf1rVXJXSdyxZOYsoleo5zhhvjLDWntMurARkoYfqO0KpxePliddwoQ6y+qDAyUqm
-         CE92+pG5GjgPynBA4Z4s2GnmISSrkx601r/4BQUhx2Nct5t/iC2TJ5oCV+2woj8iYHV/
-         X3dA==
-X-Gm-Message-State: AOAM533Th65PFpsFyOrNq9ZWIhBlIaVDiDRlKbUWX6Viz2hn9GSf6DKb
-        +urKAIdxTT/qX4hH/PWeyi7zBhq/Nt+sfPIBO8tZQ7orgCk=
-X-Google-Smtp-Source: ABdhPJwO5gWco2lFvkeOM44iy7yxeR4h8UgJlcMvo2VH+278qiC9zluJ7mnIJ7USZeG4IYs/WjN5LE4d57k1BzqfMuk=
-X-Received: by 2002:a05:651c:1143:: with SMTP id h3mr23496445ljo.300.1629641985684;
- Sun, 22 Aug 2021 07:19:45 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=LUbv4XuYsfT+1EwY1MMCx9XEJlawuM7CeYB1hfz61As=;
+        b=ggQB6lXvEfuIpsFKjmXBLd3hBHIzOfrGN4RrA5Tt9Rm/J/IM4nyz+6w28dnIajIUxG
+         yaerOVUCwrk83qoYccV7DjwaKPV8BpU1cBx00TndxA7bi+eJt3htYJ8KSLAoSR0DfvnP
+         mgMca3eBRp/9aj2NtLbRao3uyDmhT6kBPuoHad24rLQ4hYdNXEpmWJD1XKRFvOS9EgMr
+         fw/6fADl6z1w+1YW5l19ukCF0B/Dafuciz9MzwfWwZHcY4ZsVf7ZeTWROh6AJCbzDbw7
+         6UB9ycUfhckKco001gcZilQmcauTuNsRcfOrls2dgzbdxO1WEVAKSODwPfXScV3YNtvS
+         xU3g==
+X-Gm-Message-State: AOAM532kAV3jDbjqUZBfaAh6Afsr+cFYK2mtKuvyKRRT1Tfl6cLLKaoj
+        zTtOIvr8LWp2tNa+yPwSCk4=
+X-Google-Smtp-Source: ABdhPJweeV0yRiOVLG2Bcb3r+yTwWVv/C1MMe22v+WjyvnMXqFGqutG11SSmFwBESA13CC0Qx+Fp/A==
+X-Received: by 2002:a17:903:310e:b0:12d:c3e7:a8d9 with SMTP id w14-20020a170903310e00b0012dc3e7a8d9mr24503323plc.35.1629643063614;
+        Sun, 22 Aug 2021 07:37:43 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:c1e5:7ba1:cab2:978b:f7f6])
+        by smtp.gmail.com with ESMTPSA id g20sm12821639pfo.20.2021.08.22.07.37.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Aug 2021 07:37:43 -0700 (PDT)
+Date:   Sun, 22 Aug 2021 21:37:39 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] make: add INSTALL_STRIP variable
+Message-ID: <YSJhM2x82c7ardUm@danh.dev>
+References: <20210821112510.50468-1-bagasdotme@gmail.com>
 MIME-Version: 1.0
-From:   "Daniel P." <danpltile@gmail.com>
-Date:   Sun, 22 Aug 2021 20:19:33 +0600
-Message-ID: <CAL-s8C7makcRT_ufsv4THSrKeDkXfhFoAXSBKSiK5w0anMvZag@mail.gmail.com>
-Subject: Git is removing . from the last part of user.name
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210821112510.50468-1-bagasdotme@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If user.name's  value has a . as the last character of the last part
-of the name, git is removing it from commit operations. But git-config
-shows the .
+On 2021-08-21 18:25:11+0700, Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+> In some environments (most notably embedded systems and small production
+> servers), it is often desirable to have stripped Git binaries due to
+> tight disk space constraint.
+> 
+> Until now stripped Git can be built wih `make strip install`. Add
+> INSTALL_STRIP make variable so that they can install stripped Git
+> binaries with `make INSTALL_STRIP=yes install`.
+> 
+> Also document stripping and using INSTALL_STRIP in INSTALL.
+> 
+> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+> ---
+>  Changes from v1 [1]:
+> 
+>    - install target depends on strip when INSTALL_STRIP is defined
+>      (sugested by Đoàn)
+> 
+>  [1]: https://lore.kernel.org/git/YSDW3nsG2iWPGakF@danh.dev/T/#t
 
-example:
+We may want to see this discussion[2] settled first, I think.
 
-in .gitconfig:
+2: https://lore.kernel.org/git/YSBhPdK8jYIQUNhP@danh.dev/
 
-[user]
-    name = Daniel P.
+-- Danh
 
+> 
+>  INSTALL  | 8 ++++++++
+>  Makefile | 5 +++++
+>  2 files changed, 13 insertions(+)
+> 
+> diff --git a/INSTALL b/INSTALL
+> index 66389ce059..98e541ee4d 100644
+> --- a/INSTALL
+> +++ b/INSTALL
+> @@ -58,6 +58,14 @@ suite has to be run using only a single CPU.  In addition, the profile
+>  feedback build stage currently generates a lot of additional compiler
+>  warnings.
+>  
+> +You can also strip debug info from built binaries by:
+> +
+> +	$ make strip
+> +
+> +or for stripping and installing together:
+> +
+> +	$ make INSTALL_STRIP=yes install
+> +
+>  Issues of note:
+>  
+>   - Ancient versions of GNU Interactive Tools (pre-4.9.2) installed a
+> diff --git a/Makefile b/Makefile
+> index 9573190f1d..43c47f5560 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -8,6 +8,8 @@ all::
+>  # Define SANE_TOOL_PATH to a colon-separated list of paths to prepend
+>  # to PATH if your tools in /usr/bin are broken.
+>  #
+> +# Define INSTALL_STRIP if you want to install with stripped binaries.
+> +#
+>  # Define SOCKLEN_T to a suitable type (such as 'size_t') if your
+>  # system headers do not define a socklen_t type.
+>  #
+> @@ -3004,6 +3006,9 @@ profile-install: profile
+>  profile-fast-install: profile-fast
+>  	$(MAKE) install
+>  
+> +ifdef INSTALL_STRIP
+> +install: strip
+> +endif
+>  install: all
+>  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
+>  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+> 
+> base-commit: 225bc32a989d7a22fa6addafd4ce7dcd04675dbf
+> -- 
+> 2.25.1
+> 
 
-`git config user.name`:
-
-user.name=Daniel P.
-
-
-from `git show`:
-
-Author: Daniel P <danpltile@gmail.com>
+-- 
+Danh
