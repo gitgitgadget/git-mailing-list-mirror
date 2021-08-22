@@ -2,97 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 479E4C4338F
-	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 19:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19B2FC4338F
+	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 19:29:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2699961262
-	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 19:28:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E68E461266
+	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 19:29:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232456AbhHVT3j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Aug 2021 15:29:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55626 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229549AbhHVT3j (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Aug 2021 15:29:39 -0400
-Received: (qmail 4499 invoked by uid 109); 22 Aug 2021 19:28:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 22 Aug 2021 19:28:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22662 invoked by uid 111); 22 Aug 2021 19:28:57 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 22 Aug 2021 15:28:57 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sun, 22 Aug 2021 15:28:56 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     "Daniel P." <danpltile@gmail.com>, git@vger.kernel.org
-Subject: Re: Git is removing . from the last part of user.name
-Message-ID: <YSKleNynVrWWyyML@coredump.intra.peff.net>
-References: <CAL-s8C7makcRT_ufsv4THSrKeDkXfhFoAXSBKSiK5w0anMvZag@mail.gmail.com>
- <YSJuS1OoYsqgpF3j@camp.crustytoothpaste.net>
+        id S232495AbhHVTaL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Aug 2021 15:30:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55490 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229549AbhHVTaL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Aug 2021 15:30:11 -0400
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF62CC061575
+        for <git@vger.kernel.org>; Sun, 22 Aug 2021 12:29:29 -0700 (PDT)
+Received: by mail-yb1-xb36.google.com with SMTP id f15so1576882ybg.3
+        for <git@vger.kernel.org>; Sun, 22 Aug 2021 12:29:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=lbpwQIK+jhAAuSWxkE+Utclsdy4FH+5f4bJ5+5rrvsc=;
+        b=oa8EjsRVBRo0OVW6UbF8tLeeEv+Xt/+dcjq5eiQU7TVLeNJguGcmNt9nfrM1GKrM5+
+         g203Z1DxCmDD9gI4RfTjb6JMpcG7U8vEmKxs72xXTe8BiXk+g5nLUvpyJ8rXozhhM+6s
+         V+ZN8GiG8e6QpYqziVMNahtRqz0CDoODO5KAluZ20e0+zM1iLBKd28M9BiQKxS/SZ3xK
+         3tYW/nOZbkiQ8oLZzbKkVEQouKLCuUPeb1NQGNZHk4cXMmJdmdi+DNeARjwEEr1JdeZB
+         wTzdQDlnAGiqX2AjcfnUkkixzSWpW5JUlvVhpdO7iC+X/nzbiqdyv/andrkXy76dpH8a
+         2Hjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=lbpwQIK+jhAAuSWxkE+Utclsdy4FH+5f4bJ5+5rrvsc=;
+        b=rZgtow+am3Qqwcku0U0zNU7DWEnAmfPKnWWlFFensgvddxdEnEfYxXWoH+DqTedjeD
+         2EBlp5ixRlvoEWrxgJx/Mzu84u4zVBUX9iujd+pCrczfAf9T8TWDUP8cKRNtVEahoY4g
+         xZ4y7yo/gMs1ai+okVaonpzyRgjpHk/D1KZOolY/MLrx7piq9g9du8lskScAemFGOFc6
+         9xngwkQ0ncGj00niLEtEVApiEvw80ul70Eeo+Cur6L35lhr8s/ebCYbUGJYAJQqtznCh
+         XZCAoQbXobRov3Tsyn1O3lD6HT9OxzveSWxi1xOytv+4QdPJHbDKovjFX6mR+T73ew+o
+         ho5A==
+X-Gm-Message-State: AOAM5338807amPeJyq5PLemlyFl32Qe5lKPMxhDiIM0QqrxreCg92hf1
+        NkAWn/IZmdkZVgXljBEBkLYVHMI9N36EIzkFISsiD9I6hntkFQ==
+X-Google-Smtp-Source: ABdhPJx/dLADT29iADDPwROfyhgZq37bA/c4V9dCqv4pfIqISMD5OGyz0SbW7dGHP7Pzzrtohs7vN7XoKv0gkxCYav8=
+X-Received: by 2002:a25:16c6:: with SMTP id 189mr4037307ybw.27.1629660568835;
+ Sun, 22 Aug 2021 12:29:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YSJuS1OoYsqgpF3j@camp.crustytoothpaste.net>
+From:   Pavel Rogovoy <p.rogovoy@gmail.com>
+Date:   Sun, 22 Aug 2021 22:28:53 +0300
+Message-ID: <CA+NVOTBjgQ60hUZyRcK=igEP5=PSJqUFKf4Z-wYr=7+ESp3Ziw@mail.gmail.com>
+Subject: Feature Idea: Expanding git to support automatic Semver stamping
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 22, 2021 at 03:33:31PM +0000, brian m. carlson wrote:
+Hi all,
 
-> On 2021-08-22 at 14:19:33, Daniel P. wrote:
-> > If user.name's  value has a . as the last character of the last part
-> > of the name, git is removing it from commit operations. But git-config
-> > shows the .
-> > 
-> > example:
-> > 
-> > in .gitconfig:
-> > 
-> > [user]
-> >     name = Daniel P.
-> > 
-> > 
-> > `git config user.name`:
-> > 
-> > user.name=Daniel P.
-> > 
-> > 
-> > from `git show`:
-> > 
-> > Author: Daniel P <danpltile@gmail.com>
-> 
-> Yes, it does appear we do that.  We consider a period to be "crud" and
-> strip off trailing crud.  I think we should probably change that, since
-> in some places people write their family name first, and so a name like
-> “carlson brian m.” might be a thing people might want to write, in
-> addition to this particular case.
-> 
-> In any event, it's not very polite to "correct" people's names for them.
-> I myself have certainly run into that often enough.
+My name is Pavel Rogovoy and I am a git enthusiast. I have developed a
+git-based generic version stamping system that is compliant with the
+Semver standard and I believe it can be integrated into git as a
+sub-command such as git stamp in the form of an external plugin or a
+complete rewrite into git=E2=80=99s source code.
 
-A lot of this name-cleanup code came from an era where we were inferring
-names from gecos fields or from hacky email parsing.
+I welcome you to take a look at the stamping utility:
+https://github.com/final-israel/vmn
 
-I agree that if somebody has given us a definite name via config, we
-should mostly leave it intact (the exception being syntactic elements
-like <>). But we may still want to keep some of the "crud" cleanup when
-we are pulling from those other sources.
+I will be happy to discuss the main benefits of such a move with you.
+Here are just some:
 
-OTOH, this crud stuff goes all the way back to 5e5128ed1c (Remove
-extraneous ',' ';' and '.' characters from the full name gecos field.,
-2005-04-17). We warn in pretty big letters these days about pulling an
-ident from gecos, and our rfc822 parsing is more robust than it once
-was. So it may be time to just retire most of it. The unfortunate thing
-is we won't know how many people complain until it's released.
+- Effortless version management and state recovery for single or
+multiple  repositories.
+- Can be used as a convenient git submodule alternative.
+- Way for storing metadata about a version such as: release notes and
+build metadata.
 
-On a somewhat lesser note, I'm tempted to say that "." probably was
-never that useful (compared to say, comma, which is the gecos
-separator), and we could probably just drop it from the crud list.
+Please let me know if such a feature is of interest to be integrated
+into git. I personally am willing to contribute and maintain this
+feature in case you will find it useful for expanding git=E2=80=99s
+capabilities.
 
--Peff
+Best,
+Pavel Rogovoy
