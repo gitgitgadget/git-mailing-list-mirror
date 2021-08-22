@@ -2,113 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1661AC4338F
-	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 15:34:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A267C4338F
+	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 16:13:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D9C3D61206
-	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 15:34:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1CD660231
+	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 16:13:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233898AbhHVPes (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Aug 2021 11:34:48 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:48434 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230462AbhHVPer (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 22 Aug 2021 11:34:47 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3B7A560448;
-        Sun, 22 Aug 2021 15:33:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1629646416;
-        bh=eCz8iGvxrcZAo7fFL7n9VY61mdrDJlYi2FSdyX2EoDU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=bJDw+pAKYQaoe9MDrStmWiaEuN7mdwxcwQGSrUBO+Bq5x89oul0UdJpmKloow1AL/
-         5zXWpGT3hEorlG1umvRgSU6FFSxzrFqxlqASx4o3EmlfF1U+wJQe3EbaESA9LPmGin
-         vFbaXQRNEd4dywHL41Hm0+E1NEJ6t/gdEsmC8nQIWzoR5ND8PGdp+jLnVmO/txgJ3S
-         NxPkqbKvcT+i47s3mzm7dGa40lyzg4kYZch2dZxwuK2iuqE7CgWH2aDDQRiUu8HnVD
-         Wy+HqdSxx2tZUwRNI66iap45Gqc3FDhbIYv8+DoOAg0apiX53lZDJeGOhVL5VFfj/o
-         e9kfB71VdWWng2WmC93ECRi85wyZFanEuYbQM38YypC0xQZDUWvYj68gMGtyQuRx9S
-         SRZcx9sjVXvT2gug8eUWw0yPwNWAQL149m8ySyYuqtD5wWN0DjQMEpffjlnwLacvKJ
-         O0YdHeUN6g7DhTYYOvQOc+IHBQqfptw2kMcmSkOi5rK8hFUEyfO
-Date:   Sun, 22 Aug 2021 15:33:31 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Daniel P." <danpltile@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git is removing . from the last part of user.name
-Message-ID: <YSJuS1OoYsqgpF3j@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Daniel P." <danpltile@gmail.com>, git@vger.kernel.org
-References: <CAL-s8C7makcRT_ufsv4THSrKeDkXfhFoAXSBKSiK5w0anMvZag@mail.gmail.com>
+        id S233100AbhHVQOO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Aug 2021 12:14:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40964 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230230AbhHVQOK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Aug 2021 12:14:10 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9342DC061575
+        for <git@vger.kernel.org>; Sun, 22 Aug 2021 09:13:29 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id w8so14295612pgf.5
+        for <git@vger.kernel.org>; Sun, 22 Aug 2021 09:13:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=26LqyJlJepYbFt89KKo+bc9M1qmBSb/U7Ga3vpmtEWE=;
+        b=bP6AQOEmO2dZHURCZdAEXo94aqFhTB/bqlKtxloAzQkl1iKZHMYDEPoT9PonRoeVhi
+         mg4aYQ4K5o3KmDU/PN2aTrhIw1nOuP0gEwBQFpjXWWwqfz1c0fK3WMICFSbY2m86/kHm
+         wJaQ3brzzTLcrDVRf9NSbBUjV+xbkbcCzUl/o2YtEtrYv9W1ZgeWn8ZXitORi8/Ce7Zx
+         QnZG2SnZ/9VwJT5uH7Aj6/GPRJf7LtDo2SeyVnKR3vaqAeHK8sKSmX5lc5vFNalyG0IY
+         jkFGU3keYg0E0IMk1ZYfE0KWqzVUtHS61PIMcbHOL5c+wGDcCsqXjFb+B2VXnim12/Gl
+         Rf8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=26LqyJlJepYbFt89KKo+bc9M1qmBSb/U7Ga3vpmtEWE=;
+        b=lehnbXGAPBNSRHYAItnx+8hIQBNaFNAzr5hildCeJyR5JWfBYPMHCSJS5ti3DPA6xd
+         4b9O7Rga56K9sayJObvBl/hwo+rap/nzzlL+gba3k77Enb2qtyIryYJfXUPsAeF5qve1
+         DsFvJfgy22u7KW5suKXM14f5v6YP6DgpSLBt9MsTLbZV+mpgE8Pd6Xu2X3CmVxmpPTVo
+         zZ7aUvjAhCmFuaJFE0FTHh+5ymwXLCknuZzvy8M1T8xY6c5Nmw5KEMzH3FiONJgmklG0
+         1PFGqnnkJiIMQKLTMX8pvW8FI7+RCVZeJiBpeWoGWaQZqJv+RZxj5f/l9jodGoT6aGZv
+         XASA==
+X-Gm-Message-State: AOAM533YgTXYcIst+C8Gb43ztNLBaFPwVO3y2Pzarwat2RihnNO2YzCV
+        I4J+Ipr3Otu9SEykxYOq5fRrnpa5aWU65Mpo
+X-Google-Smtp-Source: ABdhPJwOcJuVq8kH/ifs5MhgPZAs/UVupxTeBbD+mTKi51zWCkW/yFcx05JbthzjDsEO1SPTopd6Lg==
+X-Received: by 2002:a63:1358:: with SMTP id 24mr23627229pgt.327.1629648808927;
+        Sun, 22 Aug 2021 09:13:28 -0700 (PDT)
+Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id n31sm12957480pfv.22.2021.08.22.09.13.27
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 22 Aug 2021 09:13:28 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <hello@brighterdan.com>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
+        Yi-Jyun Pan <pan93412@gmail.com>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH 0/1] ci: new github-action for git-l10n code review
+Date:   Mon, 23 Aug 2021 00:13:24 +0800
+Message-Id: <20210822161325.22038-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="G+W8Thq4CVNvzsEa"
-Content-Disposition: inline
-In-Reply-To: <CAL-s8C7makcRT_ufsv4THSrKeDkXfhFoAXSBKSiK5w0anMvZag@mail.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
---G+W8Thq4CVNvzsEa
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Git l10n uses github pull request for code review. A helper program
+"git-po-helper" can be used to check typos in ".po" files, validate
+syntax, and check commit message. It would be convenient to integrate
+this helper program to CI and add comments in pull request.
 
-On 2021-08-22 at 14:19:33, Daniel P. wrote:
-> If user.name's  value has a . as the last character of the last part
-> of the name, git is removing it from commit operations. But git-config
-> shows the .
->=20
-> example:
->=20
-> in .gitconfig:
->=20
-> [user]
->     name =3D Daniel P.
->=20
->=20
-> `git config user.name`:
->=20
-> user.name=3DDaniel P.
->=20
->=20
-> from `git show`:
->=20
-> Author: Daniel P <danpltile@gmail.com>
+A repository is created for testing git-l10n CI workflow. L10n
+contributors can fork and try.
 
-Yes, it does appear we do that.  We consider a period to be "crud" and
-strip off trailing crud.  I think we should probably change that, since
-in some places people write their family name first, and so a name like
-=E2=80=9Ccarlson brian m.=E2=80=9D might be a thing people might want to wr=
-ite, in
-addition to this particular case.
+- https://github.com/jiangxin/github-action-test
 
-In any event, it's not very polite to "correct" people's names for them.
-I myself have certainly run into that often enough.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
 
---G+W8Thq4CVNvzsEa
-Content-Type: application/pgp-signature; name="signature.asc"
+Jiang Xin (1):
+  ci: new github-action for git-l10n code review
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+ .github/workflows/l10n.yml | 143 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 143 insertions(+)
+ create mode 100644 .github/workflows/l10n.yml
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYSJuSwAKCRB8DEliiIei
-gS3bAP4prp3RK5GI7h4H6XcbHHFj8VjDkUuofBlIJnxsR3MkmQEAh07AZvxNnftM
-4CCcZgVFMFLW7zyr2LGDJ7IaGNpU7A0=
-=pp5R
------END PGP SIGNATURE-----
+-- 
+2.33.0
 
---G+W8Thq4CVNvzsEa--
