@@ -2,103 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61D49C4338F
-	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 09:24:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EDA0C4338F
+	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 11:37:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 43A1F61242
-	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 09:24:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 633E261267
+	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 11:37:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232775AbhHVJY4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Aug 2021 05:24:56 -0400
-Received: from mout02.posteo.de ([185.67.36.66]:57063 "EHLO mout02.posteo.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231147AbhHVJY4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Aug 2021 05:24:56 -0400
-Received: from submission (posteo.de [89.146.220.130]) 
-        by mout02.posteo.de (Postfix) with ESMTPS id 819CC240105
-        for <git@vger.kernel.org>; Sun, 22 Aug 2021 11:24:13 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
-        t=1629624253; bh=FTHTI0niNH3QVVKlHq5Jiu+d0jDoW3J7KhBT9uRs/KM=;
-        h=To:From:Subject:Date:From;
-        b=lEuaJVyok0J6nYTFhgbfZKuV01k8fXS1Q5POrBzgRfYnpedT7ghRkTXC7MVuuFNZu
-         82skJc8BSVXdxstwOw4jgVhfpp2kikUhYQo5XpHqz5Q2ueX6hruTYb162XmDrkCmCJ
-         VhKDslQGpBnSvhqCGt6wa2Yx2VEL7oNeBYiXDv6uRN2zOTiLQnPwi4S3+/4rRPpnS1
-         YNsn2E5lc7AcP3BMv8NbmmENMTwaw592Wi98rmW6eck0biO9fEC4rc8xu1f+PYVLHq
-         KdvLbHuSaN84/j7ZVB60www/osxDJ5Y9Q8VedVb0q1MPK65oehtg+PZLpZyRMrUrzQ
-         54kNTIrIhYRzw==
-Received: from customer (localhost [127.0.0.1])
-        by submission (posteo.de) with ESMTPSA id 4Gsqgx0C1Cz6tmQ
-        for <git@vger.kernel.org>; Sun, 22 Aug 2021 11:24:12 +0200 (CEST)
-To:     git@vger.kernel.org
-From:   =?UTF-8?Q?Marvin_H=c3=a4user?= <mhaeuser@posteo.de>
-Subject: [BUG] send-email propagates "In-Reply-To"
-Message-ID: <4db7759c-2123-533b-9f89-954c07f5832a@posteo.de>
-Date:   Sun, 22 Aug 2021 09:24:12 +0000
+        id S233472AbhHVLhn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Aug 2021 07:37:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36822 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233453AbhHVLhm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Aug 2021 07:37:42 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24581C061575
+        for <git@vger.kernel.org>; Sun, 22 Aug 2021 04:37:02 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id g14so12848541pfm.1
+        for <git@vger.kernel.org>; Sun, 22 Aug 2021 04:37:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=oiLHrr6r95EdQjX2TlStoU4lADzNV8VX/WyKEvOfiOk=;
+        b=eUxtfhVCwmCutO8sjpXOl5ujqasXPT/GmmLlLcLkwxDCtO3WqmeNazHLCJp7zogi6r
+         FyoeiuWfhBvNc1CrkJKhJnffej1/dcQfi46VchHa8joEFAv0EoVA4Aw6LfBfIVaYMYiK
+         5BUSsJpgAX1RFuFroZrrEDmu5CNY5Cf7JiaxUtKF3YxXSQl5m8W+KYxi7o57vedIDbOg
+         dmB/7P5v8kCl4NVz3Dr+U9oH/yf2pBAf/1kJqxqzSN8uTeOXSH5PHJVlCog3ldD6k+hU
+         ezRqwHoJIf1SQxfwiPEoJPVUBWZRYqqJxSjzbL2exI6BHqSVrZ7HE7qgOvfMyiF/eAaW
+         WaRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=oiLHrr6r95EdQjX2TlStoU4lADzNV8VX/WyKEvOfiOk=;
+        b=jy8tW/4qiNezqxzUdi+J+8AgKXQTLVPWMW6nZxs4LAYPE284ai0ibVR7Cv4RvrX6Ml
+         g0eucSPkzr6M0hZU8strYpTSNhihHbIVY3gLno06qr9+Dvk9EaxfnvlUkVzqOErJ+elJ
+         g3fZx0RPZX8XTXF67b08YqrurAFmVIyP1QW+utwJnlQO1xE6gMMXB6XguiAJ/cUaFooG
+         Vjf8Et11NEGddI36sqD9dvMAXPMhXMhg2uM8Iq44SLX0nCHvvV9YpXIqAtblQz5442y7
+         rXk/y/h0Rc7AXO60ySAHV8PFX0KMO3Zw5K95c954PBQIB4R8HGGbRZWdFT5V7eeyP1Bo
+         F3RQ==
+X-Gm-Message-State: AOAM533fB2IdqCNnnPP9bvATRmlK+4UN0c99dpB1ZyRN9OWjoyBhisny
+        n0k0yF9+bR4NuvIhddgxGepezqgkPmWuCPYk
+X-Google-Smtp-Source: ABdhPJyh82EGTO+gE0qCd7nBEF01K16gG33Za8H1J0x3VxCjhxlAuRaoFVQXMk/JEeyGMumUTf6YVw==
+X-Received: by 2002:a05:6a00:986:b0:3e1:3174:b05a with SMTP id u6-20020a056a00098600b003e13174b05amr29004354pfg.1.1629632221601;
+        Sun, 22 Aug 2021 04:37:01 -0700 (PDT)
+Received: from [192.168.208.38] ([183.82.188.255])
+        by smtp.gmail.com with ESMTPSA id y4sm11075288pjw.57.2021.08.22.04.36.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 22 Aug 2021 04:37:01 -0700 (PDT)
+Subject: Re: [GSoC] The Final Git Dev Blog(s)
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>, Jeff King <peff@peff.net>,
+        Shourya Shukla <periperidip@gmail.com>, git@vger.kernel.org
+References: <m2lf4wys5o.fsf@gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <a834f42e-e92a-ed2c-66db-971ea25bf1bf@gmail.com>
+Date:   Sun, 22 Aug 2021 17:06:51 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
+In-Reply-To: <m2lf4wys5o.fsf@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Good day everyone,
+On 20/08/21 8:05 pm, Atharva Raykar wrote:
+> Hello Git Developers,
+> 
+> This is my last week with Git under the Google Summer of Code banner.
+> This week's update will be different from usual, as I have split it into
+> two separate posts.
+> 
+> These are:
+> 
+> 1. The Technical Report: https://atharvaraykar.me/gitnotes/final-report
+> 
+>     This is a largely impersonal report that describes the current status
+>     of my work.
+>     Mentors: this is what I will be submitting to Google as my final work
+>     product. 
+> 
 
-"git send-email" propagates the "In-Reply-To" header of the last prior 
-patch with such defined to subsequent patches which do not define such 
-explicitly. I suspect this behaviour is incorrect as I could not find 
-any documentation on this. I'm sorry if this behaviour is actually 
-expected, and would be happy if someone could point me to the 
-appropriate documentation. This was reproduced on Fedora 34 with git 
-2.33.0 and "--no-thread".
+Thanks for the report! It's well written. Some comments:
 
-Steps to reproduce:
-1. Create two patches, one of which has an "In-Reply-To" field 
-("patch-in-reply.patch") and one of which does not 
-("patch-no-in-reply.patch").
-2. Run "git send-email --dry-run --no-thread patch-in-reply.patch 
-patch-no-in-reply.patch"
-2.1. Observe the emission of an "In-Reply-To" header for 
-"patch-no-in-reply.patch" with no such header.
-3. Run "git send-email --dry-run --no-thread patch-no-in-reply.patch 
-patch-in-reply.patch"
-3.1. Observe the omission of an "In-Reply-To" header for 
-"patch-no-in-reply.patch" with no such header.
+> Portability: Non-POSIX systems like Windows don’t play nice with shell
+> script commands like grep, cd and printf, to name a few, and these
+> commands have to be reimplemented for the system. There are also
+> POSIX to Windows path conversion issues.
 
-Expected behaviour:
-With no threading and no other sorts of explicitly defining the 
-"In-Reply-To" header, I expect to always observe the behaviour of 3.1., 
-and to not observe the behaviour of 2.1.
+I wonder if that's a valid claim. The shell script version of the
+commands use a lot of *nix utilities to achieve their goal. This comes
+as a hindrance to run the corresponding commands on other platforms such
+as Windows which don't have these utilities. That doesn't mean those
+platforms implement those utilities for their platforms. From what
+I know,They just use an emulation layer in which the *nix commands would
+be available. Using an emulation layer is costly and not an ideal solution.
 
-The "issue" is "in_reply_to" is overwritten here [1], which is the main 
-loop worker to process all files passed to send-email [2], but it is not 
-restored for subsequent patches. Unless required otherwise (e.g. 
-send-email threading), it should be restored to its default value for 
-each patch I believe.
+> Miscellaneous
 
-I wrote a quick patch to adjust 2.1. to 3.1. [3]. I have no time right 
-now to review the submission guidelines (and thus did not submit the 
-patch "properly" yet), but I will try to get to that tonight or some 
-time next week. If in the mean time you could provide any feedback on 
-the behaviour or the patch, so that I can get things right the first 
-time, that would be great!
+You could consider mentioning that the first two changes have been merged
+to the 'master' and possibly also link to the corresponding commits.
 
-Thank you for your time, I am looking forward to your feedback.
+> Structuring Patches
 
-Best regards,
-Marvin
+Structuring was indeed an overarching theme your work.
+  
+> This taught me how effective communication makes software scale—your
+> changes should tell a story that’s easy to follow, so that the code
+> can easily be picked up by others by a mere examination of its
+> commit and list history.
 
+Good point.
 
-[1] 
-https://github.com/git/git/blob/225bc32a989d7a22fa6addafd4ce7dcd04675dbf/git-send-email.perl#L1800
+Speaking about structuring, I must mentioned that the structuring approach
+has paid off very well till now. I'm inferring this from the fact that
+the reviewers haven't expressed any concerns about patches being too
+long-ish to review. Having taken a look at the patches that aren't on
+list yet, they seem to be structured well for ease of review too.
+So, good job!
 
-[2] 
-https://github.com/git/git/blob/225bc32a989d7a22fa6addafd4ce7dcd04675dbf/git-send-email.perl#L1952-L1956
+> What I learned over the course of this project
 
-[3] 
-https://github.com/mhaeuser/git/commit/d87f49a02c0efa3084ae6c70bbf583b865744e43
+Good to see that you had some good learnings from the project. :-)
+
+> Do let me know if it is missing anything.
+
+I don't think you missed anything. There's one thing which might
+be worth including in the report, though. You could have a section
+called "Organization of the work" or something like that which
+gives some details about the branches that contain your work and
+clarify which ones are still relevant at this point. This could
+help future readers (including you!) to quickly get an idea of
+the branches and code in your fork.
+
+-- 
+Sivaraam
