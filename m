@@ -2,91 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_20,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19B2FC4338F
-	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 19:29:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D34A1C4338F
+	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 19:35:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E68E461266
-	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 19:29:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A7BAF61266
+	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 19:35:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232495AbhHVTaL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Aug 2021 15:30:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55490 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229549AbhHVTaL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Aug 2021 15:30:11 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF62CC061575
-        for <git@vger.kernel.org>; Sun, 22 Aug 2021 12:29:29 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id f15so1576882ybg.3
-        for <git@vger.kernel.org>; Sun, 22 Aug 2021 12:29:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=lbpwQIK+jhAAuSWxkE+Utclsdy4FH+5f4bJ5+5rrvsc=;
-        b=oa8EjsRVBRo0OVW6UbF8tLeeEv+Xt/+dcjq5eiQU7TVLeNJguGcmNt9nfrM1GKrM5+
-         g203Z1DxCmDD9gI4RfTjb6JMpcG7U8vEmKxs72xXTe8BiXk+g5nLUvpyJ8rXozhhM+6s
-         V+ZN8GiG8e6QpYqziVMNahtRqz0CDoODO5KAluZ20e0+zM1iLBKd28M9BiQKxS/SZ3xK
-         3tYW/nOZbkiQ8oLZzbKkVEQouKLCuUPeb1NQGNZHk4cXMmJdmdi+DNeARjwEEr1JdeZB
-         wTzdQDlnAGiqX2AjcfnUkkixzSWpW5JUlvVhpdO7iC+X/nzbiqdyv/andrkXy76dpH8a
-         2Hjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=lbpwQIK+jhAAuSWxkE+Utclsdy4FH+5f4bJ5+5rrvsc=;
-        b=rZgtow+am3Qqwcku0U0zNU7DWEnAmfPKnWWlFFensgvddxdEnEfYxXWoH+DqTedjeD
-         2EBlp5ixRlvoEWrxgJx/Mzu84u4zVBUX9iujd+pCrczfAf9T8TWDUP8cKRNtVEahoY4g
-         xZ4y7yo/gMs1ai+okVaonpzyRgjpHk/D1KZOolY/MLrx7piq9g9du8lskScAemFGOFc6
-         9xngwkQ0ncGj00niLEtEVApiEvw80ul70Eeo+Cur6L35lhr8s/ebCYbUGJYAJQqtznCh
-         XZCAoQbXobRov3Tsyn1O3lD6HT9OxzveSWxi1xOytv+4QdPJHbDKovjFX6mR+T73ew+o
-         ho5A==
-X-Gm-Message-State: AOAM5338807amPeJyq5PLemlyFl32Qe5lKPMxhDiIM0QqrxreCg92hf1
-        NkAWn/IZmdkZVgXljBEBkLYVHMI9N36EIzkFISsiD9I6hntkFQ==
-X-Google-Smtp-Source: ABdhPJx/dLADT29iADDPwROfyhgZq37bA/c4V9dCqv4pfIqISMD5OGyz0SbW7dGHP7Pzzrtohs7vN7XoKv0gkxCYav8=
-X-Received: by 2002:a25:16c6:: with SMTP id 189mr4037307ybw.27.1629660568835;
- Sun, 22 Aug 2021 12:29:28 -0700 (PDT)
+        id S232675AbhHVTgD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Aug 2021 15:36:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55648 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231149AbhHVTgC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Aug 2021 15:36:02 -0400
+Received: (qmail 4541 invoked by uid 109); 22 Aug 2021 19:35:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 22 Aug 2021 19:35:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22714 invoked by uid 111); 22 Aug 2021 19:35:13 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 22 Aug 2021 15:35:13 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sun, 22 Aug 2021 15:35:13 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     "Daniel P." <danpltile@gmail.com>, git@vger.kernel.org
+Subject: Re: Git is removing . from the last part of user.name
+Message-ID: <YSKm8Q8nyTavQaox@coredump.intra.peff.net>
+References: <CAL-s8C7makcRT_ufsv4THSrKeDkXfhFoAXSBKSiK5w0anMvZag@mail.gmail.com>
+ <YSJuS1OoYsqgpF3j@camp.crustytoothpaste.net>
+ <YSKleNynVrWWyyML@coredump.intra.peff.net>
 MIME-Version: 1.0
-From:   Pavel Rogovoy <p.rogovoy@gmail.com>
-Date:   Sun, 22 Aug 2021 22:28:53 +0300
-Message-ID: <CA+NVOTBjgQ60hUZyRcK=igEP5=PSJqUFKf4Z-wYr=7+ESp3Ziw@mail.gmail.com>
-Subject: Feature Idea: Expanding git to support automatic Semver stamping
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YSKleNynVrWWyyML@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+On Sun, Aug 22, 2021 at 03:28:57PM -0400, Jeff King wrote:
 
-My name is Pavel Rogovoy and I am a git enthusiast. I have developed a
-git-based generic version stamping system that is compliant with the
-Semver standard and I believe it can be integrated into git as a
-sub-command such as git stamp in the form of an external plugin or a
-complete rewrite into git=E2=80=99s source code.
+> On a somewhat lesser note, I'm tempted to say that "." probably was
+> never that useful (compared to say, comma, which is the gecos
+> separator), and we could probably just drop it from the crud list.
 
-I welcome you to take a look at the stamping utility:
-https://github.com/final-israel/vmn
+This does break a few tests, but none that I think explicitly were
+arguing for keeping the dot. One was just a general crud test, and the
+other was just documenting the current behavior while testing something
+else (and perhaps even argues _for_ the change, as somebody bothered to
+write --author='Jane D.' in the first place).
 
-I will be happy to discuss the main benefits of such a move with you.
-Here are just some:
-
-- Effortless version management and state recovery for single or
-multiple  repositories.
-- Can be used as a convenient git submodule alternative.
-- Way for storing metadata about a version such as: release notes and
-build metadata.
-
-Please let me know if such a feature is of interest to be integrated
-into git. I personally am willing to contribute and maintain this
-feature in case you will find it useful for expanding git=E2=80=99s
-capabilities.
-
-Best,
-Pavel Rogovoy
+---
+diff --git a/ident.c b/ident.c
+index 85d9ba7120..2d136d27c8 100644
+--- a/ident.c
++++ b/ident.c
+@@ -198,7 +198,6 @@ void reset_ident_date(void)
+ static int crud(unsigned char c)
+ {
+ 	return  c <= 32  ||
+-		c == '.' ||
+ 		c == ',' ||
+ 		c == ':' ||
+ 		c == ';' ||
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index 0b2d21ec55..a1cdc2905f 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -466,7 +466,7 @@ test_expect_success 'gitmailmap(5) example output: example #1' '
+ 	Author Jane Doe <jane@laptop.(none)> maps to Jane Doe <jane@laptop.(none)>
+ 	Committer C O Mitter <committer@example.com> maps to C O Mitter <committer@example.com>
+ 
+-	Author Jane D <jane@desktop.(none)> maps to Jane Doe <jane@desktop.(none)>
++	Author Jane D. <jane@desktop.(none)> maps to Jane Doe <jane@desktop.(none)>
+ 	Committer C O Mitter <committer@example.com> maps to C O Mitter <committer@example.com>
+ 	EOF
+ 	git -C doc log --reverse --pretty=format:"Author %an <%ae> maps to %aN <%aE>%nCommitter %cn <%ce> maps to %cN <%cE>%n" >actual &&
+@@ -494,7 +494,7 @@ test_expect_success 'gitmailmap(5) example output: example #2' '
+ 	Author Jane Doe <jane@laptop.(none)> maps to Jane Doe <jane@example.com>
+ 	Committer C O Mitter <committer@example.com> maps to C O Mitter <committer@example.com>
+ 
+-	Author Jane D <jane@desktop.(none)> maps to Jane Doe <jane@example.com>
++	Author Jane D. <jane@desktop.(none)> maps to Jane Doe <jane@example.com>
+ 	Committer C O Mitter <committer@example.com> maps to C O Mitter <committer@example.com>
+ 	EOF
+ 	git -C doc log --reverse --pretty=format:"Author %an <%ae> maps to %aN <%aE>%nCommitter %cn <%ce> maps to %cN <%cE>%n" >actual &&
+diff --git a/t/t7518-ident-corner-cases.sh b/t/t7518-ident-corner-cases.sh
+index 905957bd0a..738c723861 100755
+--- a/t/t7518-ident-corner-cases.sh
++++ b/t/t7518-ident-corner-cases.sh
+@@ -18,7 +18,7 @@ test_expect_success 'empty name and missing email' '
+ '
+ 
+ test_expect_success 'commit rejects all-crud name' '
+-	test_must_fail env GIT_AUTHOR_NAME=" .;<>" \
++	test_must_fail env GIT_AUTHOR_NAME=" ,;<>" \
+ 		git commit --allow-empty -m foo
+ '
+ 
