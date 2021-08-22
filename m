@@ -2,149 +2,314 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40317C4338F
-	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 12:16:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4C90C4338F
+	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 13:09:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0F1A2610A3
-	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 12:16:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B22F061206
+	for <git@archiver.kernel.org>; Sun, 22 Aug 2021 13:09:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230442AbhHVMQt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Aug 2021 08:16:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45486 "EHLO
+        id S232120AbhHVNJ0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Aug 2021 09:09:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229961AbhHVMQt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Aug 2021 08:16:49 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66093C061575
-        for <git@vger.kernel.org>; Sun, 22 Aug 2021 05:16:08 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id mq2-20020a17090b3802b0290178911d298bso10294810pjb.1
-        for <git@vger.kernel.org>; Sun, 22 Aug 2021 05:16:08 -0700 (PDT)
+        with ESMTP id S230495AbhHVNJZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Aug 2021 09:09:25 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EA08C061575
+        for <git@vger.kernel.org>; Sun, 22 Aug 2021 06:08:44 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id q10so21862529wro.2
+        for <git@vger.kernel.org>; Sun, 22 Aug 2021 06:08:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:subject:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=fFxixbIWYKZkfjN4lf9PcAzLR22c2/sk95dfUIPElq8=;
-        b=rZDEhuT4I/R1kyltuoHIslQ+vDFBd5pw7ouxVNc9YDvpDrXJUIb0SON9d8oaVUZVCe
-         mR+1aiZrI0DErr5I0eAy5ZzJLYQNxO/RqBe9RXtVtecMq5KrlHhCey+ZlgdvBAPOj35C
-         EqLNgorMk4sv7uV/F6tX7Ifw97tXfGnKRZJ0Nyl5atnxQZoxuM8x7UtzSMRAbbrOIUrv
-         zELUbWUkGPxQ/mn5hoPbK+L/Mijloxdd4ombNtcX+v4SwudwzinNay0QbluqDSUEzEiq
-         hl2qSiqM6jEjoAUgBUDQBiZoCj3JRPgjul5pwlGI+Stfl786k23MnTb3iIiofslNa17Z
-         6/NQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=xCAsOZe8SZ1bHR8Wq7SqUgirlxsQ2CvKtQ0bCRWUy2E=;
+        b=ZY8y38tlf5fKAfvggiy5dbV/y84L60QMtdw/Ys2oTjAKfVux79iSTzkJtimRF70hbh
+         koLbLl60Ts+nvmGrJXUnnwTHwKf/0Hs6G3TGEv0OVPcdxjZ/+tNXIUE6L5Qv+arq2zku
+         d+Ul0FF1zXw2eCOjd+8KV+cJixacUvFvRo4PCiH/pz1iqSn9aph97WuhdpGrIYXaxD9L
+         I5v9lz/qnx79YApKLSkeBu3AECC/MMuPP7fQSlcLNWwuC0laqg1aayX1KONc9GBqcPLi
+         2/XAi6JL1rsIKNP18sJBLBsev7WBg6jwi7l+/cMs8ZHLR+gGcO5SL55lFdUxZXnjFYJ1
+         l3Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:subject:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=fFxixbIWYKZkfjN4lf9PcAzLR22c2/sk95dfUIPElq8=;
-        b=iS52YYMt4YqwkHF858SoGxUaUON+dWrJLl8rO5nWXGBiOWlNqzHCflBgV8p4tryj7Y
-         0Tq6qajIX+DGViiV5XqGLEZjPZw3Ab/oX5WszCTKEn1eq1AXUGqpiY90KoB+NBSAQJSR
-         TqdGgjQTtwRz++gy0PrvREWOylScK7e3udk/9h5MNRkLJqqvy4+xV8ptVS+pSMtWM/MH
-         TYKFwvE08fRPtDlnXGINmNnkpHXqbCm91qWEqgLG70Yor+dBf/EGDrvSZRs2LFPojpFR
-         D9q0+IFqoEedm19lEO+4KpSbXIzaVxY33YEJaYaQXYHjFxCuXW1YO0t/HQbrPO3Q6HcR
-         xOUA==
-X-Gm-Message-State: AOAM531vxtRxVlexf6NXO0hclkvrM6TjVzACPyhRYhTUipr80MV7tGv+
-        c6FRkKTjrDfGqDnCvWfa4uE=
-X-Google-Smtp-Source: ABdhPJyyPnBH7+t0VzKIS1JgF+HThjhMGIm89U3fNj26UVRSVBaHrBxuaKDDv8NydSmXKnpAk6jvSg==
-X-Received: by 2002:a17:90a:384b:: with SMTP id l11mr14758146pjf.208.1629634567906;
-        Sun, 22 Aug 2021 05:16:07 -0700 (PDT)
-Received: from [192.168.208.38] ([183.82.188.255])
-        by smtp.gmail.com with ESMTPSA id pc6sm10747186pjb.29.2021.08.22.05.16.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 Aug 2021 05:16:07 -0700 (PDT)
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC] The Final Git Dev Blog(s)
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, Shourya Shukla <periperidip@gmail.com>
-References: <m2lf4wys5o.fsf@gmail.com>
-Message-ID: <b6ba6b44-c5f5-63f4-7fd1-19a1acd34770@gmail.com>
-Date:   Sun, 22 Aug 2021 17:45:57 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <m2lf4wys5o.fsf@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=xCAsOZe8SZ1bHR8Wq7SqUgirlxsQ2CvKtQ0bCRWUy2E=;
+        b=ZL7SiDYNnFHiwlI/9yyBkCJwQyRqlA1egb0OqHHmwa2K6xcIO+KFaecK6LFYFiAbj/
+         hKu9gNqH0soJy4WM80CNVxwlH4Ra76/4NsxdcHnR1fL27prJFk2aIIKjfciuZXqxb94V
+         zosB7OSD3nJdTCYQVLQcPV8uGSyZXic5ufKsymdeWhUUZ82gWmq4sbHGgvBZEj8db6V0
+         ZWbfFdEr/BOBwNFbMI5MZLkfs46Mbe0Jrt4tZZqPuRMm790pWaFCkRxpGD4E6Hc0zdGM
+         Kii2Hho9KIXw2w9qzjXrcEIxQdRnj3e4iWWcLnw6qBMMd8FAXoRA275x4Hu9s8J2u32P
+         lngw==
+X-Gm-Message-State: AOAM533oGOF0YAiJN513WeP7Wz7762tWgThWbBYW4GbHf4HqZtdXDAtQ
+        1Br9UmtmnQy6hWCtoyb+j5UrEAvSf/Q=
+X-Google-Smtp-Source: ABdhPJyLU4cF16g/H927Lm3T8fyax0c0tfBQ3kZjP+yjkP5sYlg18CP4Imq2n4aPQtU2JFUaLhI42g==
+X-Received: by 2002:a5d:474d:: with SMTP id o13mr8542991wrs.256.1629637722807;
+        Sun, 22 Aug 2021 06:08:42 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c25sm10434782wmr.15.2021.08.22.06.08.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Aug 2021 06:08:42 -0700 (PDT)
+Message-Id: <pull.1010.v7.git.1629637721426.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1010.v6.git.1629352277151.gitgitgadget@gmail.com>
+References: <pull.1010.v6.git.1629352277151.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 22 Aug 2021 13:08:41 +0000
+Subject: [PATCH v7] [GSOC] cherry-pick: use better advice message
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Han-Wen Nienhuys <hanwen@google.com>,
+        Ramkumar Ramachandra <artagnon@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20/08/21 8:05 pm, Atharva Raykar wrote:
-> 
-> 2. Reflections on Working With the Git Community:
->     https://atharvaraykar.me/gitnotes/final-reflection
-> 
->     This is a blog post that I wrote mostly for myself, and other people
->     interested in contributing to Git. It covers my personal experience
->     with my time here with the many ups and downs. I also wanted to thank
->     all the people who helped and collaborated with me in these 14 weeks.
-> 
+From: ZheNing Hu <adlternative@gmail.com>
 
-Good idea on trying to separate the reflection part of the blog from the
-actual final report blog. This way, you didn't have to worry about the
-report getting too long due to the reflections ;-)
+"git cherry-pick", upon seeing a conflict, says:
 
-You could consider linking each of these to the other ones, though. That
-would help tie things up.
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add <paths>' or 'git rm <paths>'
+hint: and commit the result with 'git commit'
 
-Some other thoughts:
+as if running "git commit" to conclude the resolution of
+this single step were the end of the story.  This stems from
+the fact that the command originally was to pick a single
+commit and not a range of commits, and the message was
+written back then and has not been adjusted.
 
-> This mild dogfooding went a long way into making my work feel far more
-> enjoyable and meaningful (if working on a project used my millions was
-> already not meaningful enough).
+When picking a range of commits and the command stops with a
+conflict in the middle of the range, however, after
+resolving the conflict and (optionally) recording the result
+with "git commit", the user has to run "git cherry-pick
+--continue" to have the rest of the range dealt with,
+"--skip" to drop the current commit, or "--abort" to discard
+the series.
 
-Dogfooding is one of those thing that's surprisingly effective at all times :-)
+Suggest use of "git cherry-pick --continue/--skip/--abort"
+so that the message also covers the case where a range of
+commits are being picked.
 
-BTW, s/my millions/by millions/
+Similarly, this optimization can be applied to git revert,
+suggest use of "git revert --continue/--skip/--abort" so
+that the message also covers the case where a range of
+commits are being reverted.
 
-> CoViD.
+It is worth mentioning that now we use advice() to print
+the content of GIT_CHERRY_PICK_HELP in print_advice(), each
+line of output will start with "hint: ".
 
-Good to know that all are well. I resonate with what Zheing Hu says. Let's
-hope we get through COVID-19 smoothly.
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Hariom Verma <hariom18599@gmail.com>
+Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+    [GSOC] cherry-pick: use better advice message
+    
+    The cherry-pick and revert advice message are only suitable for picking
+    one commit or reverting one commit, but not for multiple commits. So
+    correct the advice message to have the rest of the range dealt with.
+    
+    v9:
+    https://lore.kernel.org/git/pull.1010.v6.git.1629352277151.gitgitgadget@gmail.com/
+    
+    v9-->v10:
+    
+     1. Correct the wording of the advice message.
 
-> This blog will continue, with a renewed purpose. I will be writing down
-> important things I learnt in my time and bugs that new contributors
-> could work on. I believe that writing guides and making contributions
-> easier has some of the best effort-to-impact characteristics that
-> I am looking for.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1010%2Fadlternative%2Fcherry-pick-help-fix-3-v7
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1010/adlternative/cherry-pick-help-fix-3-v7
+Pull-Request: https://github.com/gitgitgadget/git/pull/1010
 
-Very true. They are always helpful. I believe MyFirstContribution is
-a testimony for this. It's glad to know you would like to help
-contributors in that way :-)
+Range-diff vs v6:
 
-> This won't be the last time you will see me on the list, of course. I
-> still have patches waiting to make it to the list, and other work
-> undergoing review—the only difference now is that it won't be under the
-> GSoC banner anymore.
-> 
+ 1:  84676c475ee ! 1:  07440ea5ffe [GSOC] cherry-pick: use better advice message
+     @@ Commit message
+          line of output will start with "hint: ".
+      
+          Mentored-by: Christian Couder <christian.couder@gmail.com>
+     -    Mentored-by Hariom Verma <hariom18599@gmail.com>
+     +    Mentored-by: Hariom Verma <hariom18599@gmail.com>
+          Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+          Helped-by: Junio C Hamano <gitster@pobox.com>
+          Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+     @@ sequencer.c: static void print_advice(struct repository *r, int show_hint,
+       			advise(_("after resolving the conflicts, mark the corrected paths\n"
+       				 "with 'git add <paths>' or 'git rm <paths>'"));
+      +		else if (opts->action == REPLAY_PICK)
+     -+			advise(_("Resolve all conflicts manually, mark them as resolved with\n"
+     -+				 "\"git add/rm <conflicted_files>\", then run\n"
+     ++			advise(_("After resolving the conflicts, mark them with\n"
+     ++				 "\"git add/rm <pathspec>\", then run\n"
+      +				 "\"git cherry-pick --continue\".\n"
+     -+				 "You can instead skip this commit: run \"git cherry-pick --skip\".\n"
+     ++				 "You can instead skip this commit with \"git cherry-pick --skip\".\n"
+      +				 "To abort and get back to the state before \"git cherry-pick\",\n"
+      +				 "run \"git cherry-pick --abort\"."));
+      +		else if (opts->action == REPLAY_REVERT)
+     -+			advise(_("Resolve all conflicts manually, mark them as resolved with\n"
+     -+				 "\"git add/rm <conflicted_files>\", then run\n"
+     ++			advise(_("After resolving the conflicts, mark them with\n"
+     ++				 "\"git add/rm <pathspec>\", then run\n"
+      +				 "\"git revert --continue\".\n"
+     -+				 "You can instead skip this commit: run \"git revert --skip\".\n"
+     ++				 "You can instead skip this commit with \"git revert --skip\".\n"
+      +				 "To abort and get back to the state before \"git revert\",\n"
+      +				 "run \"git revert --abort\"."));
+       		else
+     @@ t/t3501-revert-cherry-pick.sh: test_expect_success 'cherry-pick works with dirty
+      +	dream_oid=$(git rev-parse --short HEAD) &&
+      +	cat <<-EOF >expected &&
+      +	error: could not revert $dream_oid... add dream
+     -+	hint: Resolve all conflicts manually, mark them as resolved with
+     -+	hint: "git add/rm <conflicted_files>", then run
+     ++	hint: After resolving the conflicts, mark them with
+     ++	hint: "git add/rm <pathspec>", then run
+      +	hint: "git revert --continue".
+     -+	hint: You can instead skip this commit: run "git revert --skip".
+     ++	hint: You can instead skip this commit with "git revert --skip".
+      +	hint: To abort and get back to the state before "git revert",
+      +	hint: run "git revert --abort".
+      +	EOF
+     @@ t/t3507-cherry-pick-conflict.sh: test_expect_success 'failed cherry-pick does no
+      -	hint: with 'git add <paths>' or 'git rm <paths>'
+      -	hint: and commit the result with 'git commit'
+      +	error: could not apply $picked... picked
+     -+	hint: Resolve all conflicts manually, mark them as resolved with
+     -+	hint: "git add/rm <conflicted_files>", then run
+     ++	hint: After resolving the conflicts, mark them with
+     ++	hint: "git add/rm <pathspec>", then run
+      +	hint: "git cherry-pick --continue".
+     -+	hint: You can instead skip this commit: run "git cherry-pick --skip".
+     ++	hint: You can instead skip this commit with "git cherry-pick --skip".
+      +	hint: To abort and get back to the state before "git cherry-pick",
+      +	hint: run "git cherry-pick --abort".
+       	EOF
 
-Great!
 
-> Have a great weekend!
->
+ sequencer.c                     | 20 ++++++++++++++++----
+ t/t3501-revert-cherry-pick.sh   | 16 ++++++++++++++++
+ t/t3507-cherry-pick-conflict.sh | 17 ++++++++++-------
+ 3 files changed, 42 insertions(+), 11 deletions(-)
 
-Thanks and hope you have a good weekend too! Also, thanks for all
-your contributions so far! Hoping to see more patches from you on
-the list :-)
+diff --git a/sequencer.c b/sequencer.c
+index 0bec01cf38e..03c7b3dcadc 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -403,7 +403,7 @@ static void print_advice(struct repository *r, int show_hint,
+ 	char *msg = getenv("GIT_CHERRY_PICK_HELP");
+ 
+ 	if (msg) {
+-		fprintf(stderr, "%s\n", msg);
++		advise("%s\n", msg);
+ 		/*
+ 		 * A conflict has occurred but the porcelain
+ 		 * (typically rebase --interactive) wants to take care
+@@ -418,10 +418,22 @@ static void print_advice(struct repository *r, int show_hint,
+ 		if (opts->no_commit)
+ 			advise(_("after resolving the conflicts, mark the corrected paths\n"
+ 				 "with 'git add <paths>' or 'git rm <paths>'"));
++		else if (opts->action == REPLAY_PICK)
++			advise(_("After resolving the conflicts, mark them with\n"
++				 "\"git add/rm <pathspec>\", then run\n"
++				 "\"git cherry-pick --continue\".\n"
++				 "You can instead skip this commit with \"git cherry-pick --skip\".\n"
++				 "To abort and get back to the state before \"git cherry-pick\",\n"
++				 "run \"git cherry-pick --abort\"."));
++		else if (opts->action == REPLAY_REVERT)
++			advise(_("After resolving the conflicts, mark them with\n"
++				 "\"git add/rm <pathspec>\", then run\n"
++				 "\"git revert --continue\".\n"
++				 "You can instead skip this commit with \"git revert --skip\".\n"
++				 "To abort and get back to the state before \"git revert\",\n"
++				 "run \"git revert --abort\"."));
+ 		else
+-			advise(_("after resolving the conflicts, mark the corrected paths\n"
+-				 "with 'git add <paths>' or 'git rm <paths>'\n"
+-				 "and commit the result with 'git commit'"));
++			BUG("unexpected pick action in print_advice()");
+ 	}
+ }
+ 
+diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+index 9d100cd1884..4b5b6076733 100755
+--- a/t/t3501-revert-cherry-pick.sh
++++ b/t/t3501-revert-cherry-pick.sh
+@@ -158,4 +158,20 @@ test_expect_success 'cherry-pick works with dirty renamed file' '
+ 	grep -q "^modified$" renamed
+ '
+ 
++test_expect_success 'advice from failed revert' '
++	test_commit --no-tag "add dream" dream dream &&
++	dream_oid=$(git rev-parse --short HEAD) &&
++	cat <<-EOF >expected &&
++	error: could not revert $dream_oid... add dream
++	hint: After resolving the conflicts, mark them with
++	hint: "git add/rm <pathspec>", then run
++	hint: "git revert --continue".
++	hint: You can instead skip this commit with "git revert --skip".
++	hint: To abort and get back to the state before "git revert",
++	hint: run "git revert --abort".
++	EOF
++	test_commit --append --no-tag "double-add dream" dream dream &&
++	test_must_fail git revert HEAD^ 2>actual &&
++	test_cmp expected actual
++'
+ test_done
+diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
+index 014001b8f32..979e843c65a 100755
+--- a/t/t3507-cherry-pick-conflict.sh
++++ b/t/t3507-cherry-pick-conflict.sh
+@@ -47,20 +47,23 @@ test_expect_success 'failed cherry-pick does not advance HEAD' '
+ 	test "$head" = "$newhead"
+ '
+ 
+-test_expect_success 'advice from failed cherry-pick' "
++test_expect_success 'advice from failed cherry-pick' '
+ 	pristine_detach initial &&
+ 
+-	picked=\$(git rev-parse --short picked) &&
++	picked=$(git rev-parse --short picked) &&
+ 	cat <<-EOF >expected &&
+-	error: could not apply \$picked... picked
+-	hint: after resolving the conflicts, mark the corrected paths
+-	hint: with 'git add <paths>' or 'git rm <paths>'
+-	hint: and commit the result with 'git commit'
++	error: could not apply $picked... picked
++	hint: After resolving the conflicts, mark them with
++	hint: "git add/rm <pathspec>", then run
++	hint: "git cherry-pick --continue".
++	hint: You can instead skip this commit with "git cherry-pick --skip".
++	hint: To abort and get back to the state before "git cherry-pick",
++	hint: run "git cherry-pick --abort".
+ 	EOF
+ 	test_must_fail git cherry-pick picked 2>actual &&
+ 
+ 	test_cmp expected actual
+-"
++'
+ 
+ test_expect_success 'advice from failed cherry-pick --no-commit' "
+ 	pristine_detach initial &&
 
+base-commit: daab8a564f8bbac55f70f8bf86c070e001a9b006
 -- 
-Sivaraam
+gitgitgadget
