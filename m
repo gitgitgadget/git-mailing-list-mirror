@@ -2,79 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 896BAC4338F
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 17:05:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0086C4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 17:09:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 65BF6613B1
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 17:05:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 82E7260EE0
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 17:09:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230354AbhHWRGS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 13:06:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38154 "EHLO
+        id S231157AbhHWRKI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 13:10:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229471AbhHWRGR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 13:06:17 -0400
-Received: from sipsolutions.net (s3.sipsolutions.net [IPv6:2a01:4f8:191:4433::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C68F0C061575
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 10:05:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sipsolutions.net; s=mail; h=Content-Transfer-Encoding:MIME-Version:
-        Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
-        Resent-Cc:Resent-Message-ID; bh=ofXIbYSlrdjuqKClndGdEZVzz4p/z/1HNFfCiGUAYww=;
-        t=1629738334; x=1630947934; b=mX2z5X7TvpY8lXyuhFhx47Mpf4iMqlp9dojUZvukfIizlZw
-        VhbGsinIcEU/sxtfj5drbrLzgErQn6vw1hiwlIW2xZ9V7T6fhtFqvBL0fE8BXu+j4VtjwnCIe5cY+
-        lDNtEBRKzACo72SGAlydZgbptG9DbKWyD8nQJJgOH6Cnkrfa57DivZaNTor+aTFYPW6rA3PRWVs5t
-        hvIM5rLXkYyQp3zPLLiqHeGSlIVOhflfLMcX6xsEJb4qvcIyD9jzpH1iQPmlheg2OhHWH1zAya5hi
-        cTOX5VQKkaFbAqwq2EHhRA7bgSkOvpI2RGuayWyZlONDk42FZGfrtbgLIdSsbpjg==;
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-        (Exim 4.94.2)
-        (envelope-from <johannes@sipsolutions.net>)
-        id 1mIDO7-00Ew4a-Vr; Mon, 23 Aug 2021 19:05:32 +0200
-Message-ID: <be882704d7cf2a96a78c5c745c0bca2c53150a28.camel@sipsolutions.net>
-Subject: Re: [PATCH v2] multi-pack-index: fix *.rev cleanups with
- --object-dir
-From:   Johannes Berg <johannes@sipsolutions.net>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Date:   Mon, 23 Aug 2021 19:05:31 +0200
-In-Reply-To: <YSPHdofrDOQk3xmy@coredump.intra.peff.net>
+        with ESMTP id S229479AbhHWRKH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 13:10:07 -0400
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54BC5C061575
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 10:09:24 -0700 (PDT)
+Received: by mail-io1-xd29.google.com with SMTP id b7so22720758iob.4
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 10:09:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=gkDRLvDHXv/bsxIhcN/rXLP32h0DYZSvDISzgChCQ6Y=;
+        b=ITZlQFX0tk83rspefl2v00wky1INLk7LgarXRDCG56v8Yk5FuILGAZzY/07QNUtUuv
+         KSqxhxZX8IFFOjNm07bXy+EpMdHje52LZszFQtD3UY7wEyYnxgnV/MaNjqI9VwLN8kr2
+         CQQTCV3ls8DIjwN1R8lpTnukkkZ9HbRKzyaA0G7sFeNJLywvfaRnlUqv/36jej+61/s3
+         Mj5cUShWcj+Me6D0+Pwe6Kp/Id1bSIlfvK79UcB/ILNzoh1SeIr8BS9KeMKGRW+bT2hM
+         PEHtwjfRRlk313ZmkgeAbm+hSOEExdJfPi05PHY3xuwa4x25QAhheSUD1+ndQXwp0mff
+         Pjdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=gkDRLvDHXv/bsxIhcN/rXLP32h0DYZSvDISzgChCQ6Y=;
+        b=uksEFspP2N+Cb+gWES3pWd/Kcmht8SXni2p9I7TR4UuTZK1tI+OmlKH51Az7byXpHm
+         XtGEZIXK2nYw3vPXnRjh0LdRKDiabmCb0I2gID3KkLVpCMrYodVV6T6DopjZQUP+xIGm
+         tlYV3YdGgicYAHrc5dfmb0twb0iIk/X27YVi6L0clH2ndlA1u4CQ8ee5EEbLUdUSSi9O
+         l6T8eocMpjIxjniIIC7lPUQr0mQJvkjvQukgHzpUtU4Ofdoc0TYH29nfN4K201dSKrIy
+         I0lD1noGGnWIHn2O8Ku8C+AgeQbTAlSUcfxJkQ7vgvU4lRfjSLat14aDngESIJI23Gs/
+         Pvvw==
+X-Gm-Message-State: AOAM532L7sA8hdnrDR4W4CVHXPHgcK0EVPij87ROM8L9DzqpFIz3m7ue
+        SA9DqlP0VO/TpRIjrVJnOgyTBg==
+X-Google-Smtp-Source: ABdhPJxOOZZ6tW6IS+pXJo3oP9klwZDb/KyQF78JLOl5MHB/dxBoI0BRjnv7AVtJ925ylFwfbR4/LQ==
+X-Received: by 2002:a5d:8a05:: with SMTP id w5mr18866901iod.155.1629738563742;
+        Mon, 23 Aug 2021 10:09:23 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id z8sm4905342ilm.29.2021.08.23.10.09.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Aug 2021 10:09:23 -0700 (PDT)
+Date:   Mon, 23 Aug 2021 13:09:22 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Johannes Berg <johannes@sipsolutions.net>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH v2] multi-pack-index: fix *.rev cleanups with --object-dir
+Message-ID: <YSPWQtOjKVgIKqsd@nand.local>
 References: <20210823094049.44136-1-johannes@sipsolutions.net>
-         <YSPHdofrDOQk3xmy@coredump.intra.peff.net>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
+ <YSPHdofrDOQk3xmy@coredump.intra.peff.net>
+ <be882704d7cf2a96a78c5c745c0bca2c53150a28.camel@sipsolutions.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-malware-bazaar: not-scanned
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <be882704d7cf2a96a78c5c745c0bca2c53150a28.camel@sipsolutions.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2021-08-23 at 12:06 -0400, Jeff King wrote:
-> On Mon, Aug 23, 2021 at 11:40:49AM +0200, Johannes Berg wrote:
-> 
-> > If using --object-dir to point into a repo while the current
-> > working dir is outside, such as
-> > 
-> >   git init /repo
-> >   git -C /repo ... # add some objects
-> >   cd /non-repo
-> >   git multi-pack-index --object-dir /repo/.git/objects/ write
-> > 
-> > the binary will segfault trying to access the object-dir via
-> > the repo it found, but that's not fully initialized. Fix it
-> > to use the object_dir properly to clean up the *.rev files,
-> > this avoids the crash and cleans up the *.rev files for the
-> > now rewritten multi-pack-index properly.
-> 
-> I'm not entirely convinced that writing a midx when not "inside" a repo
-> is something that we want to support. But if we do, then...
+On Mon, Aug 23, 2021 at 07:05:31PM +0200, Johannes Berg wrote:
+> On Mon, 2021-08-23 at 12:06 -0400, Jeff King wrote:
+> > I'm not entirely convinced that writing a midx when not "inside" a repo
+> > is something that we want to support. But if we do, then...
+>
+> Seemed like that was the point of --object-dir?
 
-Seemed like that was the point of --object-dir?
+Stolee (cc'd) would know more as the original author, but as I recall
+the point of `--object-dir` was to be able to write a midx in
+directories which were acting as Git repositories, but didn't contain a
+`.git` directory.
 
-johannes
+It's kind of a strange use-case, but I recall that it was important at
+the time. Maybe he could shed more light on why. (Either way, we're
+stuck with it ;)).
 
+Thanks,
+Taylor
