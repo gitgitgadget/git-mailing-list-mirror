@@ -2,124 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B00EDC4320A
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC3DAC4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:40:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 900F5613A7
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:28:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B6D2961374
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236716AbhHWN3S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 09:29:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44548 "EHLO
+        id S229659AbhHWNk6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 09:40:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237478AbhHWN3Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 09:29:16 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68DFEC061575
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 06:28:33 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a25so10351192ejv.6
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 06:28:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=jl9Lv6F8LNJnQ0j37KmhWCN1mJZHA6NksK1tyDU45KE=;
-        b=cPBxDTy/bUXrudI4JH+BoCxsi6qLycspP+zwoE/BuL4YMsCKqLTuloeXdM4j+VJ5F7
-         CTLe1nV15ube7nhQMi+H8aKZtfh4S+aSJwW10yTRfxq6D333VfmQp3r57Q6PTZRiskIX
-         6xjeUX+ZJOCzPhTvg8XhNBFv4UCQs7mKhMBqonEwqmReGW8ptB7cc2msq2prr+gCUWJU
-         N0zp7meUde0IXxO5sMSTZC6aaySbzQRNL/DjnrecCEVbWcQZ8tnxsseC8eLpr0vpmEcA
-         mvbIajT9gub/ohre93azI7APoixZebRP0HLmPpwTWgn38MkhUfbzsaANGQkq7nFH+n/b
-         85qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=jl9Lv6F8LNJnQ0j37KmhWCN1mJZHA6NksK1tyDU45KE=;
-        b=s/l3nFWu0mKceckFxcHJThpBoFwsCa4HGTL3INnlKyBZFJnAdITWOrBPBExqLKDaB1
-         9NzLpiKnJkOYziN6R7PdU2tcalLIKisE6cxwnXtrb8gkY3UOUUvc29g7ThLt62xg0Dtc
-         8IjSNWm29u9pK54QvEkQ0qFYjTfEd93XIBjWCsYzVi6/zWBc6TZu8Cwz7g8cLMMUyif6
-         8x3T7psOEAT7FnCCaWAVJVVFkNEAWTiF1Uay0qDwIWpWRvwwXkYhyHgG9fxClEPuJ/42
-         WtERXJd/INS5eELS7nRwvp/ho64smfVJS35i0s4xcxZmqK3Ft3+EPF/HLlOROwy6Ncv1
-         VW9A==
-X-Gm-Message-State: AOAM531YqrTNPE/8YXf+Nyhltpp8vJUhRwmDMZyhIA9i8zJlBoiF9/jm
-        RDLgqtpDj7I31ThqA/RM4k+tD7HHQaHyMLu3
-X-Google-Smtp-Source: ABdhPJwjLJRCkscdD8MkdjtSt6j0tSaQekdcaRo5+f1vTjo78Q4zFu3eL75hja3yTBr7GMbxzMHsIw==
-X-Received: by 2002:a17:907:1b06:: with SMTP id mp6mr36170426ejc.188.1629725311775;
-        Mon, 23 Aug 2021 06:28:31 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id o15sm4287686ejj.10.2021.08.23.06.28.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Aug 2021 06:28:31 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <christian.couder@gmail.com>,
-        Albert Cui <albertqcui@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [RFC PATCH 01/13] serve: add command to advertise bundle URIs
-Date:   Mon, 23 Aug 2021 15:25:08 +0200
-References: <RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com>
- <RFC-patch-01.13-4e1a0dbef5-20210805T150534Z-avarab@gmail.com>
- <c7ba048f-86a9-6f29-476a-7d546e477285@gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <c7ba048f-86a9-6f29-476a-7d546e477285@gmail.com>
-Message-ID: <87mtp8ffy9.fsf@evledraar.gmail.com>
+        with ESMTP id S229477AbhHWNk6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 09:40:58 -0400
+Received: from sipsolutions.net (s3.sipsolutions.net [IPv6:2a01:4f8:191:4433::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 946B8C061575
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 06:40:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sipsolutions.net; s=mail; h=Content-Transfer-Encoding:MIME-Version:
+        Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
+        Resent-Cc:Resent-Message-ID; bh=wLYsh3viXTxanvYuETI5ZqV9E9ZIUQVDLhvgiy1hx5c=;
+        t=1629726015; x=1630935615; b=GBI/7eQ+Lbnw7iU0dTaT9W3J/XSCHfJd0jE5zpvWErIv+xp
+        a9d3xmyerFzpWaeR6B/ZYwzCD97zVIhgo+Yu/gqbVh25EmELwNzVJqvj4IMgSBaf0iH0jJj3znZzn
+        C68sciTHZ/OkTqAGFJLpx7LG975mT8nAkKWeO0oT7dBBB0rOhzT1FHDae2UUpq6w5wi2S+nH5ZUkc
+        heWKmEHeZhS7rg1xFv63emcOp5lENSAn8CqsIXN3nsvgg4fjXWrcASgWtXYM/zCY+f5eGjJOXWV2h
+        QyOz4rZrcxLWHr37BX5fJ1Rs0qruMDxyrWR23ZVK4ShQrwtylXv+HDG+UZIGB91g==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+        (Exim 4.94.2)
+        (envelope-from <johannes@sipsolutions.net>)
+        id 1mIABO-00ErUt-US; Mon, 23 Aug 2021 15:40:11 +0200
+Message-ID: <746f574d20c54b5f7d1eaae74f54a624573ad6bc.camel@sipsolutions.net>
+Subject: Re: [PATCH] multi-pack-index: fix --object-dir from outside repo
+From:   Johannes Berg <johannes@sipsolutions.net>
+To:     Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Date:   Mon, 23 Aug 2021 15:40:10 +0200
+In-Reply-To: <414ed641-2bd3-1316-8189-ad542988d091@gmail.com>
+References: <20210820193504.37044-1-johannes@sipsolutions.net>
+         <04ed58aa-94fa-010e-f4db-f41cd51876a5@gmail.com>
+         <4d65ef5b0a9e4104d763facc42d10a20557d054d.camel@sipsolutions.net>
+         <xmqqo89osi0b.fsf@gitster.g>
+         <caafaf945ec43ba606b054bf4c4faa42e35a8db1.camel@sipsolutions.net>
+         <414ed641-2bd3-1316-8189-ad542988d091@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+X-malware-bazaar: not-scanned
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, 2021-08-23 at 09:19 -0400, Derrick Stolee wrote:
+> 
+> We just add subshells this way:
+> 
+> test_expect_success 'test name' '
+> 	prep_step &&
+> 	(
+> 		# now in a subshell
+> 		cd wherever &&
+> 		do things
+> 		# don't need to cd again
+> 	) &&
+> 	continue test
+> '
 
-On Tue, Aug 10 2021, Derrick Stolee wrote:
+Sure. I know how to do subshells :)
 
-> On 8/5/2021 11:07 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> ...
->> +bundle-uri CLIENT AND SERVER EXPECTATIONS
->> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->> +
->> +The advertised bundles MUST contain one or more reference tips for use
->> +by the client. Bundles that are not self-contained MUST use the
->> +standard "-" prefixes in the bundle format to indicate their
->> +prerequisites. I.e. they must be in the standard format "git bundle
->> +create" would create.
->> +
->> +If after an `ls-refs` the client finds that the ref tips it wants can
->> +be retrieved entirety from advertised bundle(s), it MAY
->> +disconnect. The results of such a "clone" or "fetch" should be
->> +indistinguishable from the state attained without using bundle-uri.
->> +
->> +The client MAY also keep the connection open pending download of the
->> +bundle-uris, e.g. should on or more downloads (or their validation)
->> +fail.
->
-> The only technical thought I had (so far) about this proposal was that
-> leaving the connection open while downloading the bundle would leave
-> unnecessary load on the servers when no communication is happening.
-> There is a cost to keeping an open SSH connection, so here it would be
-> good to at least have the Git client close the connection after
-> getting a 200 response from the bundle (but not waiting for all of its
-> contents).
+My point was that inside the subshell you cannot do test_path_is_file
+and similar, because the subshell didn't import the libs.
 
-Thanks. Yes it's something I'll have to fix. I was hoping that I'd get
-away with it for an initial implementation, but e.g. using
-transfer.injectBundleURI to bootstrap chromium.git's repo from a bundle
-will take so long that Google's server will give up and hang up on you.
+> > More importantly, how do you feel about the "cd /"?
+> > 
+> > The tests are always run in a place where there's a parent git folder
+> > (even if it's git itself), so you cannot reproduce the segfault in a
+> > test without the "cd /", though I guess "cd /tmp" would also work or
+> > something, but "cd /" felt pretty safe, hopefully not many people have
+> > "/.git" on their system.
+> 
+> Don't leave the directory your test is set up to run in.
 
-I wonder if it's something the transport layer should be doing in
-general to resume connections if they go stale if it's at a point of
-clean separation in the dialog, but in any case I'll need it for
-bundle-uri.
+I was specifically asking Junio ;-)
 
-Closing the connection is also going to be more expensive in some cases,
-e.g. if the bundle takes 1s we'll open/close/download
-bundle-uri/open/close the connection, instead of of open/download
-bundle-uri/close. I wonder if anyone cares though, we can always apply
-some heuristic later I guess...
+But realistically, if this is the requirement you want to impose, then
+you _cannot_ test for the segfault within git's test suite. Your loss.
+
+johannes
+
+
