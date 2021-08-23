@@ -6,143 +6,127 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 978F2C4338F
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 06:53:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7CC0C4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 07:21:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75FCD611C8
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 06:53:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A72CD61184
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 07:21:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234980AbhHWGxm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 02:53:42 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:51025 "EHLO
-        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231779AbhHWGxl (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 23 Aug 2021 02:53:41 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id 89D825C00CD;
-        Mon, 23 Aug 2021 02:52:59 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Mon, 23 Aug 2021 02:52:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=lK1n/69cwVyJwCY7qruFYOiVYn0
-        1ivTDl6UdGX9x/U4=; b=JJAgrvviv+xlrKGnd960kymgadkYvSuMTSpjUOT9WK2
-        hIoWbesc4HSADvzTrLWVMzOg48gzngns03bpKcqB+cOcsBzM1zHsM6s/EFjmweeU
-        ERBGjvQhKcHr53rzWihtohjpfxlsmYy4+JnGfKNXYGXTYzKBCZIW8Ryu1SoWXiGG
-        QzhYPBYNvxik1cY2mLnBQJNatoHcqenkD88zhvJHgfkxF2eYz5F8RZV5c42iTqn3
-        CyOWBz88umXAEenwmOh/aC4KuB1v7AvzW05xpFshPurb09c8FSC3oSeVKpsHHCQM
-        8WFoe4q+9CkZMARt5DRg5sd62uA5bW1nINgyiojV3+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=lK1n/6
-        9cwVyJwCY7qruFYOiVYn01ivTDl6UdGX9x/U4=; b=XFMV3IVdYdULLFAShQLeO7
-        tE9dMQRwRk7W6uMzZM109bk0rWYhYaZjb8FFCl3zy1O7JCHBl6aQQ+rPc6iV+S35
-        77RK58Sh+PoNqpkjvzY17AcmMpSs3j1Bm9Esj1jIT31HtEb7rW8JSnBZqeWCT4qP
-        qRPbO9KWasqwxvXK/4doHuPIMvn6XjiXK1fQnw3aDey2DEOUh+DiXQLX1Z6b/0gJ
-        ORTiPmxK8b0ho4ndYNp696lMqYKUijdJEsOMLZRO+KBCX+WRG0t+iZfmpR5PcO0v
-        aI0upS9jR5ddzUBMJhm8BB24ZmPtvAFdLvf4CyRIa1YHd9v31aq1jGGi3COQ1Xfg
-        ==
-X-ME-Sender: <xms:ykUjYQTdwkte3Ppy0sBOJB9LRBmBOFQf3BGd0qf2iD-Sn8laxrV5xQ>
-    <xme:ykUjYdzOL9TnBJS4pDuEalqEsXluTvtZH8TEmaocWj5fqBvhhBYczal7F1iw4PJRN
-    9OegPDUtOumtW35mw>
-X-ME-Received: <xmr:ykUjYd0TZb6JpbbOkdpSvXYprGM-QsctyOl4F2OKCaKxWsWC0gvIAzh9G5xvptDvsiOOs4-nuG1x0Imb37GEyK21szEU8-kQzmcJXPwnvptyPzH4xxP-iI4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddruddtgedgudduvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfh
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:ykUjYUBvgRuPrMHcj-tK0SHpOf9aZn9uB941f8etc_lJuYO-RUM-8Q>
-    <xmx:ykUjYZiiU0uUY1e7ELqvEKC-7cxO7p6nAd2XXIJLcS5uSRx0HhO_DA>
-    <xmx:ykUjYQpnt2vUQB1oK_XbkwjjxtqZ5LKTpHTacTQdZK2K2HWePl1bSg>
-    <xmx:y0UjYevjvcskw_LaN8YNARM2yVM5blL2s_bP9htRymeOV-ZfWIQM3A>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Aug 2021 02:52:57 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id db1ff874 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 23 Aug 2021 06:52:56 +0000 (UTC)
-Date:   Mon, 23 Aug 2021 08:52:55 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] fetch: avoid second connectivity check if we already
- have all objects
-Message-ID: <YSNFx9FdSWOy6b45@ncase>
-References: <cover.1629452412.git.ps@pks.im>
- <646ac90e62aab4e4aec595d6848b60233bbe8c77.1629452412.git.ps@pks.im>
- <1d5ae688-fa08-6c8c-345f-9b0389e21dd7@gmail.com>
+        id S235087AbhHWHV5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 03:21:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43092 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235038AbhHWHV4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 03:21:56 -0400
+Received: from sipsolutions.net (s3.sipsolutions.net [IPv6:2a01:4f8:191:4433::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AD11C061575
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 00:21:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sipsolutions.net; s=mail; h=Content-Transfer-Encoding:MIME-Version:
+        Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
+        Resent-Cc:Resent-Message-ID; bh=OpHMPlkkRFvFuyShNpo7SkIL80ub85YcnY03DUGDHSE=;
+        t=1629703274; x=1630912874; b=XAm6ZaxImYiCmc29H9HW11+5q8j3hSmju7nJmvGu0RFbKPO
+        UHwvPcuZj+WpIaRleCUgi147bL7qLD/1hqonyXVaFvkBWy0a2LJ8P3Fw4yME8JoDTe0Q/MYT8YlUj
+        BDY5I83ZwQ7GqxelulpU8GWO0DJBkvI4FI5gaJFaHFulDmPFqGZMScWKFS+U+gyEPzj2Z2l1+6C6a
+        mF/uomL58tpYWTrKwn2jW3y6Xnh4yJgNxysVIevsGJjzGm/qowP9h2N2izuUE4bP4W7LXiPa0waR9
+        bHG4mW53p2K+sPfvqb8dACfpIcp2KyreOTElpYeoLE95GIVS4VeiWRBtjPSCZvrQ==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+        (Exim 4.94.2)
+        (envelope-from <johannes@sipsolutions.net>)
+        id 1mI4Gd-00EkWD-Ot; Mon, 23 Aug 2021 09:21:11 +0200
+Message-ID: <4d65ef5b0a9e4104d763facc42d10a20557d054d.camel@sipsolutions.net>
+Subject: Re: [PATCH] multi-pack-index: fix --object-dir from outside repo
+From:   Johannes Berg <johannes@sipsolutions.net>
+To:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>
+Date:   Mon, 23 Aug 2021 09:21:10 +0200
+In-Reply-To: <04ed58aa-94fa-010e-f4db-f41cd51876a5@gmail.com>
+References: <20210820193504.37044-1-johannes@sipsolutions.net>
+         <04ed58aa-94fa-010e-f4db-f41cd51876a5@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ravmerzpDfwPWUQj"
-Content-Disposition: inline
-In-Reply-To: <1d5ae688-fa08-6c8c-345f-9b0389e21dd7@gmail.com>
+Content-Transfer-Encoding: 8bit
+X-malware-bazaar: not-scanned
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Derrick,
 
---ravmerzpDfwPWUQj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > +test_expect_success 'multi-pack-index with --object-dir need not be in repo' '
+> > +	p="$(pwd)" &&
+> > +	rm -f $objdir/multi-pack-index &&
+> > +	cd / &&
+> > +	git multi-pack-index --object-dir="$p/$objdir" write &&
+> > +	cd "$p"
+> 
+> Why are you using "cd /" here? 
+> 
 
-On Fri, Aug 20, 2021 at 10:47:11AM -0400, Derrick Stolee wrote:
-> On 8/20/2021 6:08 AM, Patrick Steinhardt wrote:
-> > When fetching refs, we are doing two connectivity checks:
-> >=20
-> >     - The first one in `fetch_refs()` is done such that we can
-> >       short-circuit the case where we already have all objects
-> >       referenced by the updated set of refs.
-> >=20
-> >     - The second one in `store_updated_refs()` does a sanity check that
-> >       we have all objects after we have fetched the packfile.
-> >=20
-> > We always execute both connectivity checks, but this is wasteful in case
-> > the first connectivity check already notices that we have all objects
-> > locally available.
-> >=20
-> > Refactor the code to do both connectivity checks in `fetch_refs()`,
-> > which allows us to easily skip the second connectivity check if we
-> > already have all objects available. This refactoring is safe to do given
-> > that we always call `fetch_refs()` followed by `consume_refs()`, which
-> > is the only caller of `store_updated_refs()`.
->=20
-> Should we try to make it more clear that fetch_refs() must be followed
-> by consume_refs() via a comment above the fetch_refs(), or possibly even
-> its call sites?
+I just needed to go outside the current test git directory, the tests
+are running in a way that the current working directory is already the
+git tree I'm operating in.
 
-I wasn't quite happy with this outcome, either. How about we instead
-merge both functions into `fetch_and_consume_refs()`? Both are quite
-short, and that makes sure we always call them together to make the
-requirement explicit.
+> Even if you mean to use "cd",
+> please do so within a sub-shell.
 
-I'll add another patch to do this refactoring.
+I thought about it, but clearly all the tests are run in a sub-shell, so
+it didn't seem necessary? But happy to change, I don't really care
+either way.
 
-Patrick
+Could you instead init a new repo within the current directory
+and point the object-dir to that location?
 
---ravmerzpDfwPWUQj
-Content-Type: application/pgp-signature; name="signature.asc"
+I guess I could, but all the other stuff in here is already making a new
+repo in the current working dir, and already initializing it with
+objects, etc.
 
------BEGIN PGP SIGNATURE-----
+Doing it all over again seemed like a waste of time?
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEjRcYACgkQVbJhu7ck
-PpQ8IA/+IkFw46FbeiV0jC6N0sdF1mgO7R2R/Jci1zY9Qlk7cb34KckhokFDcEo4
-tPZGD9OUadmXyk5UeG36kcfLAzf5AYWzve13pViANtRQlB+gAkrldePDhbbt89JH
-0hQOyRKbQu/Tt/9udvOYCSya6Pi3Mg9VrRM7A2bcM8sqcrq1IQpIoHZs1N9aFgCS
-+CNDq3/G5c25/RWMQojtjiJ3r27YyIWlncy9QYfReoFpOzsHAU9FSuufnaDbBJ9V
-bwGVPbuZB3wph7xR48Ycyv6h10/vDWPKGPB/ngBmTU3mALCjM0tzR6ErLrqVs1xy
-o6ChjOECxsTgrs1YpGj2mOcFsTF2oha7Wi4esBI+X9qQZm9o5uqbsfg5M444aVAr
-74fbj0aVp1SFFHxhKHaVsxs4Lkr7NNaZWmmZSvK7VOR12u0LhX/Z4I9xstcNCMQD
-93oRJzR54wNX/LYaNuAe+uE3irdwRt7PyaVUx/vBZPc3QpE52rtXeVeBXIY9AN7S
-Of9YOVlDSfIwo154lm5u7Y0s5dlco3jGe3p6t5G1pkMM6eppiQhMpAq9YGq//1B3
-rznQZV8Zjz6fwc+nepBEwsqN/+TEFjkrJqu9mXTiZRLUD8lXj2kPl7WfZ/mZWKc1
-lX73KJ/WiaSJsWCYn7LdswzN80/fzkLMZQx+Nr2hSBeVODvftt4=
-=YPZI
------END PGP SIGNATURE-----
+It could look something like this, (warning: I did not test this)
 
---ravmerzpDfwPWUQj--
+	git init other &&
+	test_commit -C other first &&
+	git multi-pack-index --object-dir=other/.git/objects write
+
+Sure.
+
+Actually, this won't work to test for the crash, I'd have to do
+something like
+
+git init other
+test_commit -C other first &&
+(
+mkdir non-git &&
+cd non-git &&
+git multi-pack-index --object-dir=../other/.git/objects write
+)
+
+or so.
+
+And is the only post-condition you are checking that we do not
+crash?
+
+Yes, I was assuming that it'd actually work at that point - maybe not
+the best assumption, it could (erroneously) exit with a 0 exit status
+but have done nothing.
+
+> Or is there a specific result you are looking for? For
+instance, we can double check that the MIDX was written:
+
+	test_path_is_file other/.git/objects/pack/multi-pack-index
+
+So I guess that would be a good idea.
+
+but also you seem to be touching areas that delete files. Could
+we 'touch' some of those and then see them get deleted?
+
+Ah, well, that's the underlying issue but I'm not sure we even ever get
+to that code? Then again, yes, the *.rev files should get removed, I'll
+see - not even sure I know how to get them to be generated in the first
+place, is that even supported already?
+
+johannes
+
