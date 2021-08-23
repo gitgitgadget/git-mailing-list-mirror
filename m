@@ -8,50 +8,50 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 257FAC4338F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B949DC4320A
 	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:36:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0B3A261361
+	by mail.kernel.org (Postfix) with ESMTP id A0FD66124B
 	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:36:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236459AbhHWLhL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 07:37:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46578 "EHLO
+        id S236527AbhHWLhN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 07:37:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236520AbhHWLhI (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236551AbhHWLhI (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 23 Aug 2021 07:37:08 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A119C061796
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:36:24 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id o15so10301139wmr.3
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:36:24 -0700 (PDT)
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 269B5C0617AF
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:36:25 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id q11-20020a7bce8b0000b02902e6880d0accso13845996wmj.0
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:36:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tW26Fcp2CGQ4f1SMeqyp+VsGDGG5nOLyFn6hYbLR0eo=;
-        b=p2VwxYt7Ogs13/9kfuW6qoTQPvmrL64PXbiGwO5svFpBlwIS5WUMKSoZo2ZseTgFUw
-         9Kt+y5FXmlFAXFuU+2WYij49wy9Zf6uRNSfayx1Ofeh5QtxsLQjBK8U8BYgLqUogsOwY
-         9zzHSMYskjIehD2fn3bTK97zmICF/s/TN36Fdz3lm8YPnv+zB27WIafDJLlAXShjwBxW
-         CCAX5NhzJwNPVw7Azf6OuYCYv+jyi9NQhQD9lAeLcu9kcQtCmbkCtBCvaMZ9vATqInKC
-         2fejfCWk/3OoP+ch49/vlPC5Q1RVtDUKr+XiFK2hLhIHroHLaTt4uB8gLFoqJdpcQhGX
-         PxYQ==
+        bh=80KTX3V2r9szeWBOA+8iBUpO+6nDYEI6IfW++wZejF8=;
+        b=euhuCkzOZJsyau45aQrv+o0jNm4W354zkOHJ79/8Vp0Nvr0KzgDSdBHC63Hpbo+/Rd
+         ng+DBTmTu372TQ+ibhDDoUUawc+6y3uyKSxmwhLDmUck/eTeizAJIuukMHPOZO1ObBQU
+         fUfiUA2YZVqIdguBG02oLwZPZUr3t7sbKkTBPv/mc4sdvqkNOPvzbBUBfJ1K0hTal5A2
+         yKjzx1u9JHWM0eEYfT/PEO4ILWnz7n5GWQvf6ac5aAh/kq4i5HyureHlU+FqLbOeGNQV
+         w18nSUgOGsuL4k9F8xaHI1i74jIep8K59+UKEDDBv06bkr9ftq1YJZcKNRStYMjPRemA
+         Qjpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tW26Fcp2CGQ4f1SMeqyp+VsGDGG5nOLyFn6hYbLR0eo=;
-        b=OK8FwXYLq1vPhZaews260/njMPWUAsKvfFD8C0hbzc5E7olVNInGeRmtJvYrIc9ybN
-         3uo3h91xZlw+H1N6grC3VwDhDbBPyP63vEQq4SIZ17OueUYn2uS6OFbByWze+6fIOm0B
-         j+VQFivwU0iwuscVuehNXESnWelSVmEPx6FEE2ZjgfvGdkgC94yCXjbw46PCPdEIa64Z
-         ZTZuiFT7cxIThwyo8/VUK2+jyPcrIWs8hnpTLlvXB95IKAM3dU8sNSTe31aXZBgbnmvk
-         1/9UupW0ndK2GHn+Kwwq2RuxhbpOfxEHVLTqLVuc1y8tAQ8HTKoEFcSaa5gFlHRzTXMt
-         CUuA==
-X-Gm-Message-State: AOAM533c/5lW6NiGeeuqHWz5zAHTfMMlqCAJ/FecmQatpsfb8+yRrctQ
-        TUSyCYZlSAIOdpz+Vv6O4txFQz5ijUoky7Fp
-X-Google-Smtp-Source: ABdhPJzb/3adTYqWNNzB0A1yR4MPzPBjYFj3LOfhMZBrbMdJ4MpH2C8YvnPRpkIHXStBwfDwVwFVTQ==
-X-Received: by 2002:a05:600c:26c4:: with SMTP id 4mr4938597wmv.111.1629718582712;
-        Mon, 23 Aug 2021 04:36:22 -0700 (PDT)
+        bh=80KTX3V2r9szeWBOA+8iBUpO+6nDYEI6IfW++wZejF8=;
+        b=JV5P/cYuXPsjnusoImTaVRD6mhTdgI83bJwu5HGLH9/cOE3xqf91CriY8YcOTsm7zE
+         +/x74hkLngBSsV+JScA2Cz0JaYcpxRP0s3RGcw5J7WBBJ7RzRoai1RWotvOTFeLH60kY
+         bfQAzDxHmE8CxWcn0bO0JfqNqzGNnNlNAioWUd8tBuTRnR1EPBTHeC4jb3pDTmaPBoGz
+         BOzP6iIlzQBnYs05OrUxpWW9U7jC7XwsdqN3C8aqonxJV/wdJfCMXwXNjnTpntGZMwEL
+         9S9f1BNAEooeZL06cnON7H1PSQH1HAOInhJAqzIhFII3uS0g9HN9G8pP2HLyI7Q38Ife
+         sfdA==
+X-Gm-Message-State: AOAM532Z9APlEsJ33vXuaZehww5w0NqRmF+8OR8qHLn6NrZpbCfIQSt3
+        IPaXesbIv6cAtK7T0nag+/6GxNTQy00sZqMJ
+X-Google-Smtp-Source: ABdhPJwa7h7HXgGD/V5IuvZsZeWfrNyKvqhQjBdJs3T8IRHjjlMmhJJMp6mWLU+TVepGRyMFyvErcA==
+X-Received: by 2002:a1c:4686:: with SMTP id t128mr8119437wma.183.1629718583526;
+        Mon, 23 Aug 2021 04:36:23 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id g35sm20555313wmp.9.2021.08.23.04.36.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Michael Haggerty <mhagger@alum.mit.edu>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 07/13] refs: make repo_dwim_log() accept a NULL oid
-Date:   Mon, 23 Aug 2021 13:36:08 +0200
-Message-Id: <patch-v5-07.13-3b7daf03e5a-20210823T113115Z-avarab@gmail.com>
+Subject: [PATCH v5 08/13] refs/files: add a comment about refs_reflog_exists() call
+Date:   Mon, 23 Aug 2021 13:36:09 +0200
+Message-Id: <patch-v5-08.13-51abe459e70-20210823T113115Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.662.g438caf9576d
 In-Reply-To: <cover-v5-00.13-00000000000-20210823T113115Z-avarab@gmail.com>
 References: <cover-00.11-0000000000-20210726T234237Z-avarab@gmail.com> <cover-v5-00.13-00000000000-20210823T113115Z-avarab@gmail.com>
@@ -77,61 +77,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the repo_dwim_log() function initially added as dwim_log() in
-eb3a48221fd (log --reflog: use dwim_log, 2007-02-09) to accept a NULL
-oid parameter. The refs_resolve_ref_unsafe() function it invokes
-already deals with it, but it didn't.
+Add a comment about why it is that we need to check for the the
+existence of a reflog we're deleting after we've successfully acquired
+the lock in files_reflog_expire(). As noted in [1] the lock protocol
+for reflogs is somewhat intuitive.
 
-This allows for a bit more clarity in a reflog-walk.c codepath added
-in f2eba66d4d1 (Enable HEAD@{...} and make it independent from the
-current branch, 2007-02-03). We'll shortly use this in
-builtin/reflog.c as well.
+This early exit code the comment applies to dates all the way back to
+4264dc15e19 (git reflog expire, 2006-12-19).
+
+1. https://lore.kernel.org/git/54DCDA42.2060800@alum.mit.edu/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- reflog-walk.c | 3 +--
- refs.c        | 5 +++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ refs/files-backend.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/reflog-walk.c b/reflog-walk.c
-index e9cd3283694..8ac4b284b6b 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -158,10 +158,9 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
- 		}
- 		reflogs = read_complete_reflog(branch);
- 		if (!reflogs || reflogs->nr == 0) {
--			struct object_id oid;
- 			char *b;
- 			int ret = dwim_log(branch, strlen(branch),
--					   &oid, &b);
-+					   NULL, &b);
- 			if (ret > 1)
- 				free(b);
- 			else if (ret == 1) {
-diff --git a/refs.c b/refs.c
-index 8b9f7c3a80a..d9635436759 100644
---- a/refs.c
-+++ b/refs.c
-@@ -698,7 +698,7 @@ int repo_dwim_log(struct repository *r, const char *str, int len,
- 		strbuf_addf(&path, *p, len, str);
- 		ref = refs_resolve_ref_unsafe(refs, path.buf,
- 					      RESOLVE_REF_READING,
--					      &hash, NULL);
-+					      oid ? &hash : NULL, NULL);
- 		if (!ref)
- 			continue;
- 		if (refs_reflog_exists(refs, path.buf))
-@@ -710,7 +710,8 @@ int repo_dwim_log(struct repository *r, const char *str, int len,
- 			continue;
- 		if (!logs_found++) {
- 			*log = xstrdup(it);
--			oidcpy(oid, &hash);
-+			if (oid)
-+				oidcpy(oid, &hash);
- 		}
- 		if (!warn_ambiguous_refs)
- 			break;
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 997e021c1c4..fbcd0c790bc 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3061,6 +3061,19 @@ static int files_reflog_expire(struct ref_store *ref_store,
+ 		strbuf_release(&err);
+ 		return -1;
+ 	}
++
++	/*
++	 * When refs are deleted, their reflog is deleted before the
++	 * ref itself is deleted. This is because there is no separate
++	 * lock for reflog; instead we take a lock on the ref with
++	 * lock_ref_oid_basic().
++	 *
++	 * If a race happens and the reflog doesn't exist after we've
++	 * acquired the lock that's OK. We've got nothing more to do;
++	 * We were asked to delete the reflog, but someone else
++	 * deleted it! The caller doesn't care that we deleted it,
++	 * just that it is deleted. So we can return successfully.
++	 */
+ 	if (!refs_reflog_exists(ref_store, refname)) {
+ 		unlock_ref(lock);
+ 		return 0;
 -- 
 2.33.0.662.g438caf9576d
 
