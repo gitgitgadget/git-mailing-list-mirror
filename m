@@ -2,100 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8CCCC4338F
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7388C4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:14:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CEA456126A
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:07:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AADAF6126A
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:14:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237206AbhHWNI1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 09:08:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39612 "EHLO
+        id S237192AbhHWNOp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 09:14:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236025AbhHWNI1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 09:08:27 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AA31C061575
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 06:07:44 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id u16so26213373wrn.5
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 06:07:44 -0700 (PDT)
+        with ESMTP id S235813AbhHWNOo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 09:14:44 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 420C5C061575
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 06:14:02 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id m21so19008160qkm.13
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 06:14:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ABMnPUr50zuLwRK1Xx6T6XxXfA/buxrz0LNC0QRd0SA=;
-        b=k0yx1rbgTayLXg+ByTu0SV3NWFHXvALcsFbgsnJZZNgec4QoDXEdgx23vpjqPcjwjp
-         7LLEPUIHMSXHQ3kBGH/1eCU5wRyzF3dUSgxPmNbRSWQpq8RwxR4pBPJ5p2dbJuTVAyJ9
-         GV8r8AWhM3djQIrUT/hmEQ8cWbU9W2Dci8wev36y/fjzGPI2/yxRawP9z8uAINZKBsO0
-         942gNqN3GQGlQe+QoG+BUQGM9MZHLhfupR9dWTuB+hmCkZ/qZP6sdONa7N1MSEs48xBL
-         Vy5mOXQ3WGaKo1M7h350NSA8tGUU4QKDCFQWytOQD8m1ArzpHubXwe4vLIxMf+aU7kP5
-         8vPA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=io/GTDu4C1mkSAHP0/diWc08XZkrh5CTS49lVIkbo7g=;
+        b=ohNkORfLOqZAXmCkLIZNOtILc0PjpL/k/23vc42Pop9SJzFM7BMnNlpaTfz/9xONgK
+         DLIMd4FIRTSLndma5lBi+L3eMdKOtURPXp9xNX4oIUSBsQ3f40453Caxlni4uAdS6N3Y
+         fhjFfhzFMt9Ru9PFKEbCyn3PxuVBra8ih3gvAB6HGt0+zTCDOJt9htfEp2VR1IVnUo9K
+         x0FupGoEQWvSH6rqhnPnHlzOQPw7RPrsAO5cGC9yheB8NAHSRhtLYX8aCueBqJzzgsag
+         q1UiG1YUiL3PlL/G3Kit3yfQjkEGXDWbqavw8Mva+u5Q9ZlSsRQ5yVGOPTyo/p1UrJLE
+         udlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=ABMnPUr50zuLwRK1Xx6T6XxXfA/buxrz0LNC0QRd0SA=;
-        b=mFr+MWEnZtBWaQN9OfcbrlbhjtVGdfMK8QZ8FoqwDunNbdlLY6955tVPUCzjcLC68l
-         BvFumGf53yhf76naAnHgcLfXNlNAgwCylX4HwF08VytcckpdrscDEcxTFduzQEQBvC6F
-         4B8CRGzkknX0svxgwRTjPkP8tbLRCS3dgivPNuPhIhVtmhweQ+rx9lrI9T7aajVX/W1X
-         7/4mFEfUUX7itvxeJ+XXH7F2OPwg5P7u4zJImoPnw82VBQ0dMA7VOuL9ybvKLduto5sG
-         dr5i5s428eGkWlh4uZmBoWGay4AYwhPnhS9y3prN+479rJPE+rQAUih/bUCzZdAgkWkS
-         Xc7w==
-X-Gm-Message-State: AOAM530u5eCXanJ8tLMr0datPoIqj9o8fE9iKFZoceWlMrOg6VclD1ky
-        iOBAyZAnrBuKv/Jp2bx/+prn3yXzJ6jaencE
-X-Google-Smtp-Source: ABdhPJzGS2x+Y8WLD/nR4pGpc6caUjdUCQDbfJ/GK3mw/cOkRyS3VlMVcDnCTpnzUVNCu0ChhOKRDA==
-X-Received: by 2002:adf:ed8d:: with SMTP id c13mr13549401wro.405.1629724062877;
-        Mon, 23 Aug 2021 06:07:42 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n13sm13035687wmc.18.2021.08.23.06.07.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Aug 2021 06:07:42 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] rebase: emit one "fatal" in "fatal: fatal: <error>"
-Date:   Mon, 23 Aug 2021 15:07:41 +0200
-Message-Id: <patch-1.1-54eb94f6e7a-20210823T130724Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.662.gbc81f8cbdca
+        bh=io/GTDu4C1mkSAHP0/diWc08XZkrh5CTS49lVIkbo7g=;
+        b=jJ74Skv7nX6AoVTRthQTNcrWFUHkWpSFgCJ/w+grb4R+csZNWoWYdhtFlmXR/lc+iB
+         j9pjdEjUJjfjBfUJ5PeBuw8L6FwlmVTLBQ1OEnuStPonsUC6URzesZ9Ej+lve4a/UDdm
+         7k5bcczNG+5Yv7t8TORy6jW7l8GIMJLNB8UUMPvjh2AYq2tttpdjyBByL6nXtOwEHKM/
+         mLaI+lSYw0MJbLYoeaXYEp6yskth2CL8AoA4Gnk003e5ulzP2yJrIAzahHo99lfuWAwX
+         fPFf0eodC5TO+Ho+3wYmu1D6IAw4q+obSKSqeodRDyDTFuC59KW3kv737Dp1u8bUsob3
+         tkAA==
+X-Gm-Message-State: AOAM530IP/bKA3oRUUxahd7H+PEG0SEVU3fU/o5qSTHF/lJ5Aa82PqPA
+        4gDGY+iItEt03RHHWPKZqrk=
+X-Google-Smtp-Source: ABdhPJwTrbmnE6+3P1wCfNNXRGQiT66IN2qgDeiVt4QCNE0jUMnQ/VH6rmDy53h6KTuJjgE0GuXmHQ==
+X-Received: by 2002:a05:620a:c92:: with SMTP id q18mr20487740qki.331.1629724441370;
+        Mon, 23 Aug 2021 06:14:01 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:48bd:24c0:4055:3255? ([2600:1700:e72:80a0:48bd:24c0:4055:3255])
+        by smtp.gmail.com with ESMTPSA id c67sm8394125qke.113.2021.08.23.06.14.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Aug 2021 06:14:00 -0700 (PDT)
+Subject: Re: [PATCH] sparse-index: copy dir_hash in ensure_full_index()
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     git@jeffhostetler.com, gitster@pobox.com, newren@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1017.git.1629136135286.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <5c0f41fb-e8d2-0aa5-66a3-6a61a98e8381@gmail.com>
+Date:   Mon, 23 Aug 2021 09:13:59 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <pull.1017.git.1629136135286.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The die() routine adds a "fatal: " prefix, there is no reason to add
-another one. Fixes code added in e65123a71d0 (builtin rebase: support
-`git rebase <upstream> <switch-to>`, 2018-09-04).
+On 8/16/2021 1:48 PM, Derrick Stolee via GitGitGadget wrote:
+> From: Jeff Hostetler <jeffhost@microsoft.com>
+> 
+> Copy the 'index_state->dir_hash' back to the real istate after expanding
+> a sparse index.
+> 
+> A crash was observed in 'git status' during some hashmap lookups with
+> corrupted hashmap entries.  During an index expansion, new cache-entries
+> are added to the 'index_state->name_hash' and the 'dir_hash' in a
+> temporary 'index_state' variable 'full'.  However, only the 'name_hash'
+> hashmap from this temp variable was copied back into the real 'istate'
+> variable.  The original copy of the 'dir_hash' was incorrectly
+> preserved.  If the table in the 'full->dir_hash' hashmap were realloced,
+> the stale version (in 'istate') would be corrupted.
+> 
+> The test suite does not operate on index sizes sufficiently large to
+> trigger this reallocation, so they do not cover this behavior.
+> Increasing the test suite to cover such scale is fragile and likely
+> wasteful.
+> 
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>     sparse-index: copy dir_hash in ensure_full_index()
+>     
+>     This fix is an issue we discovered in our first experimental release of
+>     the sparse index in the microsoft/git fork. We fixed it in the latest
+>     experimental release [1] and then I almost forgot about it until we
+>     started rebasing sparse-index work on top of the 2.33.0 release
+>     candidates.
+>     
+>     [1] https://github.com/microsoft/git/releases/tag/v2.32.0.vfs.0.102.exp
+>     
+>     This is a change that can be taken anywhere since 4300f8 (sparse-index:
+>     implement ensure_full_index(), 2021-03-30), but this version is based on
+>     v2.33.0-rc2.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/rebase.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I sent this patch on the day of v2.33.0, so I'm not surprised that it
+got lost in the shuffle. Could someone please take a look?
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 33e09619005..66a0a0f0d03 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1918,7 +1918,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 						   &options.orig_head))
- 			options.head_name = NULL;
- 		else
--			die(_("fatal: no such branch/commit '%s'"),
-+			die(_("no such branch/commit '%s'"),
- 			    branch_name);
- 	} else if (argc == 0) {
- 		/* Do not need to switch branches, we are already on it. */
--- 
-2.33.0.662.gbc81f8cbdca
+It also has not been picked up for the What's Cooking email.
 
+Thanks,
+-Stolee
