@@ -7,100 +7,122 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FBDCC4338F
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 14:50:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 034F7C4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 15:42:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 04F8761247
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 14:50:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D72616135F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 15:42:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230272AbhHWOuu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 10:50:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35072 "EHLO
+        id S231726AbhHWPnk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 11:43:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229726AbhHWOuu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 10:50:50 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FC23C061575
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 07:50:07 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id bt14so37621078ejb.3
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 07:50:07 -0700 (PDT)
+        with ESMTP id S231586AbhHWPnk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 11:43:40 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5470AC061575
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 08:42:57 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id lc21so5529254ejc.7
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 08:42:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=JagnwFio1IzGes00PjHTAHrYNs7MYlZnhFbmMZHyrEI=;
-        b=Gpusx96PqdWwWucldjxUVWEmX+oytvgA77rFVxGnKysOftjxRitO+fRMYL3vffFcfa
-         o6IboxiwDiGJjO7FWwDjFTKW1tRTByRkM2YZ1XNWymmU6XKzGNWVXgOpRQvDTn2uNoAD
-         wTXIsomRIdt35+N/filDMBbjApYGUzPUfAKcljALrwFaWtSquMIIweCZ4VA/vuLRaXDV
-         b4rORCuUJE1MmCwFU3aeT618mbjsryzp+uG13LXAlxnL2wKnw0N/R/cXBO/OUpM7nqSK
-         sBOM5aei/k8+nivYamDR7bPgJHHs86Lxow+qFtAyozNOVTlqomGOa4b1Mu+pbsYPaIJQ
-         OmoQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=qgjiO1IUFmdlrCvWHUJQSYhzVaRcO/reqhKRBXXqGaw=;
+        b=LzDivpGuOPpaoGTFdLfX1BqtSx7+OeEcihfVrfxVs1MV5B7Xtl/b23yHQ/Bpe0Dajh
+         OTiptf/QjdSIN6eFuSZfMe51saElY8U2jJMeVqqMq2sH+p14fZDPtMsGBHgDlrsqndXg
+         CBewwMGeURu8bjsm3bSTslgpNTBtBF55egmXrE/JBP5MLjS6ybbx3vIAemPHcJkhB0hQ
+         E1uA+J2mX2A1biler07WpXJ9xq3Fi6bWCjJ5vVe8wPZ00VDHqOhuZOeKgSqONUQ2cePm
+         3JMs0Iza9hxYKuZXp0bKK6WBLHnadIcfa5ooOX3lZZ/H8tqUVd+rWNXBM3tV3V33Hcmr
+         O3uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=JagnwFio1IzGes00PjHTAHrYNs7MYlZnhFbmMZHyrEI=;
-        b=OJDJI0JhFr4yumhgGMDAYO1p3jmp76sCev2jmMnTz3n4iGabhfPmcvPG3NoaquJDnB
-         I8K0FFmh9vfmS5hqMKBL2TPEw+5zT2l6J07iYsu+aK5bLJXrcyCrmD2ENhihyymXkpz+
-         zB6RJUJRRS80AzYDxzUjMW0WEE/a12/AiRre+avTYjjkiHLflAMIWowWnwtBAHbxT+k/
-         S3/Olta1Q1CfqSdD2zX+fsoLpbDgt9aB//ARsgqGGXxscgJk/MDYEz4MCqQMibBhOAR+
-         xbDXewpFFQgBV1kuB468eoovLS9XDQCsqzaetV9xk+iD+SzpSCEKB3ich/B3m4HexzAt
-         RV6w==
-X-Gm-Message-State: AOAM532LG563v6YVJDJBkC2u8B+/0Ubqn3i2pSfQRl7SGLPDursovTjS
-        9wRmfGkEB7AOHXB7DV2ONpE=
-X-Google-Smtp-Source: ABdhPJxtZyUKaLStTpzgvJd+JEHqQQAlLeAMubDPcc9MHAb8xQVm/SQzQpPrpO+dh/z7cqEzsSDKVQ==
-X-Received: by 2002:a17:906:3a98:: with SMTP id y24mr35553593ejd.198.1629730205983;
-        Mon, 23 Aug 2021 07:50:05 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id u9sm9577500edt.60.2021.08.23.07.50.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Aug 2021 07:50:05 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Ben Goldberg <ben@benaaron.dev>, git@vger.kernel.org
-Subject: Re: send-email issue
-Date:   Mon, 23 Aug 2021 16:49:08 +0200
-References: <24a88faf-5339-8449-80c4-f6085bd1e098@benaaron.dev>
- <b4b1dda4-6bf7-f4b1-88c5-9d579a7c56d3@benaaron.dev>
- <20210813180056.ctzivmakj4bj5apa@nitro.local> <xmqq35rbtx84.fsf@gitster.g>
- <20210816131143.6ifcbpxp6ilo2nv5@nitro.local>
- <YRqQJTyBW6j6b2pW@coredump.intra.peff.net> <xmqq4kbps58l.fsf@gitster.g>
- <YRqY4Tw4YxbepuFg@coredump.intra.peff.net> <xmqqzgthql1h.fsf@gitster.g>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <xmqqzgthql1h.fsf@gitster.g>
-Message-ID: <87eeakfc6b.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=qgjiO1IUFmdlrCvWHUJQSYhzVaRcO/reqhKRBXXqGaw=;
+        b=oiX9nJIXXr0ZUbK7QLtLnX/w4Uoqb73uryffRhxQ9EZo2681+argpf74onaRXjLn01
+         EywygBmjizuvyUUiAylhfgTAf6NjQ3SR7cf4uj+QfIdpLX/1JyFgi8ee+4gBDR0/nllL
+         Iy3bECxrP6nfZs+T93Gzo4Ggc8qiuwfTh6xFMBE5yYa8fBUq53hr2fQ7liNxRN43WKP+
+         ue1rAnYTfrXmPlKzVH0WfXbjxshP/J68G2dKRr/3BnAatN2NHAx06x4oFc1PJr/kj5jv
+         RpWImfQNjIqGDPM1OipZ3p2ydBlUP0tFYXdwkrLft+fg1kqGOYzKALBt8z5vfUXw0a9L
+         ltOA==
+X-Gm-Message-State: AOAM533BWrYz49n5z7aRiXNI8mRMucStZBVzHX4YcezaeccGioKk9yeV
+        5Gr8HTLNrs/jZbleLaKv+6bjgLwjAr8qE0ZW0ZM=
+X-Google-Smtp-Source: ABdhPJyomuNYHeksQcqz5jxJPTB1ZXEqjLeQrcwO1r2tfgGbvK6jplXaFw5Dfc6dqa1YYE8HQN6naj1BnssZK/OVBsk=
+X-Received: by 2002:a17:907:7f29:: with SMTP id qf41mr3170208ejc.211.1629733375941;
+ Mon, 23 Aug 2021 08:42:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <m2lf4wys5o.fsf@gmail.com>
+In-Reply-To: <m2lf4wys5o.fsf@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 23 Aug 2021 17:42:44 +0200
+Message-ID: <CAP8UFD3J-ODOAYDX9GLUUF=V81Kz99CdFQuQ9uF0B_sVYCU40w@mail.gmail.com>
+Subject: Re: [GSoC] The Final Git Dev Blog(s)
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     git <git@vger.kernel.org>, Shourya Shukla <periperidip@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Atharva,
 
-On Mon, Aug 16 2021, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+On Fri, Aug 20, 2021 at 6:53 PM Atharva Raykar <raykar.ath@gmail.com> wrote=
+:
 >
->> This is certainly unfortunate, but IMHO is not a hard requirement for
->> adding new values. This is no different than a case where we add a new
->> config option, but old versions of Git quietly ignore it.
->>
->> In other words, I would suggest to tighten this as the values are added,
->> but not worry about having a "spreading" period.
+> Hello Git Developers,
 >
-> I would have agreed with you even in April if this knob were not
-> about security.  Thinking that the user is asking for an encrypted
-> connection and silently getting an unencrypted connection is not
-> such a good thing, and advertising "we now improved the distinction
-> between smtps and starttls easier to express" to users would not
-> work well in that context.
+> This is my last week with Git under the Google Summer of Code banner.
+> This week's update will be different from usual, as I have split it into
+> two separate posts.
+>
+> These are:
+>
+> 1. The Technical Report: https://atharvaraykar.me/gitnotes/final-report
 
-I think per
-https://lore.kernel.org/git/87o8ejej8m.fsf@evledraar.gmail.com/ that
-this may not be much of an issue in practice, i.e. assuming that most
-modern servers only accept auth over the encrypted channel the user will
-get an error anyway.
+[...]
 
-But how true that is in the wild beyond just the GMail example, I don't
-know...
+> 2. Reflections on Working With the Git Community:
+>    https://atharvaraykar.me/gitnotes/final-reflection
+
+[...]
+
+Great posts, thanks!
+
+> This won't be the last time you will see me on the list, of course. I
+> still have patches waiting to make it to the list, and other work
+> undergoing review=E2=80=94the only difference now is that it won't be und=
+er the
+> GSoC banner anymore.
+
+We are looking forward to it!
+
+> ### Concluding remarks
+>
+> This summer vacation, I have gained a lot, also made a lot of friends.
+>
+> Thanks to Google and Git.
+>
+> Thanks to those people who have helped me!
+
+Thanks for all the work you did, and for your enthusiasm, dedication
+and involvement with the community!
+
+Best,
+Christian.
+
+(Sorry for the late answer due to a vacation.)
