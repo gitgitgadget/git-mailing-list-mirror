@@ -2,90 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0086C4338F
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 17:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88F06C4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 17:10:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82E7260EE0
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 17:09:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6752861391
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 17:10:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231157AbhHWRKI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 13:10:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39000 "EHLO
+        id S229912AbhHWRLC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 13:11:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229479AbhHWRKH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 13:10:07 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54BC5C061575
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 10:09:24 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id b7so22720758iob.4
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 10:09:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=gkDRLvDHXv/bsxIhcN/rXLP32h0DYZSvDISzgChCQ6Y=;
-        b=ITZlQFX0tk83rspefl2v00wky1INLk7LgarXRDCG56v8Yk5FuILGAZzY/07QNUtUuv
-         KSqxhxZX8IFFOjNm07bXy+EpMdHje52LZszFQtD3UY7wEyYnxgnV/MaNjqI9VwLN8kr2
-         CQQTCV3ls8DIjwN1R8lpTnukkkZ9HbRKzyaA0G7sFeNJLywvfaRnlUqv/36jej+61/s3
-         Mj5cUShWcj+Me6D0+Pwe6Kp/Id1bSIlfvK79UcB/ILNzoh1SeIr8BS9KeMKGRW+bT2hM
-         PEHtwjfRRlk313ZmkgeAbm+hSOEExdJfPi05PHY3xuwa4x25QAhheSUD1+ndQXwp0mff
-         Pjdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=gkDRLvDHXv/bsxIhcN/rXLP32h0DYZSvDISzgChCQ6Y=;
-        b=uksEFspP2N+Cb+gWES3pWd/Kcmht8SXni2p9I7TR4UuTZK1tI+OmlKH51Az7byXpHm
-         XtGEZIXK2nYw3vPXnRjh0LdRKDiabmCb0I2gID3KkLVpCMrYodVV6T6DopjZQUP+xIGm
-         tlYV3YdGgicYAHrc5dfmb0twb0iIk/X27YVi6L0clH2ndlA1u4CQ8ee5EEbLUdUSSi9O
-         l6T8eocMpjIxjniIIC7lPUQr0mQJvkjvQukgHzpUtU4Ofdoc0TYH29nfN4K201dSKrIy
-         I0lD1noGGnWIHn2O8Ku8C+AgeQbTAlSUcfxJkQ7vgvU4lRfjSLat14aDngESIJI23Gs/
-         Pvvw==
-X-Gm-Message-State: AOAM532L7sA8hdnrDR4W4CVHXPHgcK0EVPij87ROM8L9DzqpFIz3m7ue
-        SA9DqlP0VO/TpRIjrVJnOgyTBg==
-X-Google-Smtp-Source: ABdhPJxOOZZ6tW6IS+pXJo3oP9klwZDb/KyQF78JLOl5MHB/dxBoI0BRjnv7AVtJ925ylFwfbR4/LQ==
-X-Received: by 2002:a5d:8a05:: with SMTP id w5mr18866901iod.155.1629738563742;
-        Mon, 23 Aug 2021 10:09:23 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id z8sm4905342ilm.29.2021.08.23.10.09.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Aug 2021 10:09:23 -0700 (PDT)
-Date:   Mon, 23 Aug 2021 13:09:22 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Johannes Berg <johannes@sipsolutions.net>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH v2] multi-pack-index: fix *.rev cleanups with --object-dir
-Message-ID: <YSPWQtOjKVgIKqsd@nand.local>
-References: <20210823094049.44136-1-johannes@sipsolutions.net>
- <YSPHdofrDOQk3xmy@coredump.intra.peff.net>
- <be882704d7cf2a96a78c5c745c0bca2c53150a28.camel@sipsolutions.net>
+        with ESMTP id S229479AbhHWRLB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 13:11:01 -0400
+Received: from sipsolutions.net (s3.sipsolutions.net [IPv6:2a01:4f8:191:4433::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FAB8C061575
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 10:10:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=sipsolutions.net; s=mail; h=Content-Transfer-Encoding:MIME-Version:
+        Message-Id:Date:Subject:Cc:To:From:Content-Type:Sender:Reply-To:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+        Resent-Message-ID:In-Reply-To:References;
+        bh=+i2s1j0MIegajbHbK8PdQKJjpdkntfynQh2vymUN3hs=; t=1629738619; x=1630948219; 
+        b=wq6jm1m/SUVeAWVAprm++iKhky99k3/4VY8cGOzx81pKFQT4gpEYoTAhKqIbr5LD9EQ+SQ7WOge
+        6fnLY9WTbinH109ot8BiJnRBXP8rw8gDADeNYQuFxg8Hd3GxH9T+cgQnoE82liE7kKwYyCDFbieDd
+        yPNpqZWzxpRU7BOa6ttgKYb3dvTVTBrohgqG8fAGoIVXUwvdkF4ELL8J4XGQnCUncmb2qead6GN9d
+        f/3XEn9i6eHJ7BcOlFj6GoT/xDGQG/ONgLMJhvcvj3UajUKZoXvreUBov7Kx7d6LTdEAWq+B5Xp0T
+        M0J8hA6ZpCZ9/gR2/TBVgbS8BWhl0xsij7qQ==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+        (Exim 4.94.2)
+        (envelope-from <johannes@sipsolutions.net>)
+        id 1mIDSj-00EwDT-0I; Mon, 23 Aug 2021 19:10:17 +0200
+From:   Johannes Berg <johannes@sipsolutions.net>
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: [PATCH v3] multi-pack-index: fix *.rev cleanups with --object-dir
+Date:   Mon, 23 Aug 2021 19:10:11 +0200
+Message-Id: <20210823171011.80588-1-johannes@sipsolutions.net>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <be882704d7cf2a96a78c5c745c0bca2c53150a28.camel@sipsolutions.net>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 23, 2021 at 07:05:31PM +0200, Johannes Berg wrote:
-> On Mon, 2021-08-23 at 12:06 -0400, Jeff King wrote:
-> > I'm not entirely convinced that writing a midx when not "inside" a repo
-> > is something that we want to support. But if we do, then...
->
-> Seemed like that was the point of --object-dir?
+If using --object-dir to point into a repo while the current
+working dir is outside, such as
 
-Stolee (cc'd) would know more as the original author, but as I recall
-the point of `--object-dir` was to be able to write a midx in
-directories which were acting as Git repositories, but didn't contain a
-`.git` directory.
+  git init /repo
+  git -C /repo ... # add some objects
+  cd /non-repo
+  git multi-pack-index --object-dir /repo/.git/objects/ write
 
-It's kind of a strange use-case, but I recall that it was important at
-the time. Maybe he could shed more light on why. (Either way, we're
-stuck with it ;)).
+the binary will segfault trying to access the object-dir via
+the repo it found, but that's not fully initialized. Fix it
+to use the object_dir properly to clean up the *.rev files,
+this avoids the crash and cleans up the *.rev files for the
+now rewritten multi-pack-index properly.
 
-Thanks,
-Taylor
+Fixes: 38ff7cabb6b8 ("pack-revindex: write multi-pack reverse indexes")
+Cc: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Johannes Berg <johannes@sipsolutions.net>
+---
+v3:
+ - use nongit
+---
+ midx.c                      | 10 +++++-----
+ t/t5319-multi-pack-index.sh | 15 +++++++++++++++
+ 2 files changed, 20 insertions(+), 5 deletions(-)
+
+diff --git a/midx.c b/midx.c
+index 321c6fdd2f18..902e1a7a7d9d 100644
+--- a/midx.c
++++ b/midx.c
+@@ -882,7 +882,7 @@ static void write_midx_reverse_index(char *midx_name, unsigned char *midx_hash,
+ 	strbuf_release(&buf);
+ }
+ 
+-static void clear_midx_files_ext(struct repository *r, const char *ext,
++static void clear_midx_files_ext(const char *object_dir, const char *ext,
+ 				 unsigned char *keep_hash);
+ 
+ static int midx_checksum_valid(struct multi_pack_index *m)
+@@ -1086,7 +1086,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 
+ 	if (flags & MIDX_WRITE_REV_INDEX)
+ 		write_midx_reverse_index(midx_name, midx_hash, &ctx);
+-	clear_midx_files_ext(the_repository, ".rev", midx_hash);
++	clear_midx_files_ext(object_dir, ".rev", midx_hash);
+ 
+ 	commit_lock_file(&lk);
+ 
+@@ -1135,7 +1135,7 @@ static void clear_midx_file_ext(const char *full_path, size_t full_path_len,
+ 		die_errno(_("failed to remove %s"), full_path);
+ }
+ 
+-static void clear_midx_files_ext(struct repository *r, const char *ext,
++static void clear_midx_files_ext(const char *object_dir, const char *ext,
+ 				 unsigned char *keep_hash)
+ {
+ 	struct clear_midx_data data;
+@@ -1146,7 +1146,7 @@ static void clear_midx_files_ext(struct repository *r, const char *ext,
+ 				    hash_to_hex(keep_hash), ext);
+ 	data.ext = ext;
+ 
+-	for_each_file_in_pack_dir(r->objects->odb->path,
++	for_each_file_in_pack_dir(object_dir,
+ 				  clear_midx_file_ext,
+ 				  &data);
+ 
+@@ -1165,7 +1165,7 @@ void clear_midx_file(struct repository *r)
+ 	if (remove_path(midx))
+ 		die(_("failed to clear multi-pack-index at %s"), midx);
+ 
+-	clear_midx_files_ext(r, ".rev", NULL);
++	clear_midx_files_ext(r->objects->odb->path, ".rev", NULL);
+ 
+ 	free(midx);
+ }
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 3d4d9f10c31b..665c6d64a0ab 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -201,6 +201,21 @@ test_expect_success 'write midx with twelve packs' '
+ 
+ compare_results_with_midx "twelve packs"
+ 
++test_expect_success 'multi-pack-index *.rev cleanup with --object-dir' '
++	git init objdir-test-repo &&
++	test_when_finished "rm -rf objdir-test-repo" &&
++	(
++		cd objdir-test-repo &&
++		test_commit base &&
++		git repack -d
++	) &&
++	rev="objdir-test-repo/$objdir/pack/multi-pack-index-abcdef123456.rev" &&
++	touch $rev &&
++	nongit git multi-pack-index --object-dir="$(pwd)/objdir-test-repo/$objdir" write &&
++	test_path_is_file objdir-test-repo/$objdir/pack/multi-pack-index &&
++	test_path_is_missing $rev
++'
++
+ test_expect_success 'warn on improper hash version' '
+ 	git init --object-format=sha1 sha1 &&
+ 	(
+-- 
+2.31.1
+
