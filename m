@@ -8,179 +8,242 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75DC3C432BE
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 12:13:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5CC3C4320A
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 12:13:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CE1C61391
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 12:13:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90C2B6137B
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 12:13:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236987AbhHWMOe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 08:14:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55140 "EHLO
+        id S237129AbhHWMOg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 08:14:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236928AbhHWMOS (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236907AbhHWMOS (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 23 Aug 2021 08:14:18 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B54BC061757
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 05:13:19 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id j17-20020a05600c1c1100b002e754875260so766695wms.4
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 05:13:19 -0700 (PDT)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 844FDC061575
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 05:13:18 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id j17-20020a05600c1c1100b002e754875260so766669wms.4
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 05:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OIK+TCdRX34KNMiBA3GyxA9wV+XjF+28nZnkSCYejt0=;
-        b=I1J0mPlOGzo4qtEgXFeBoUi7zZM8GRYY3dl5R84XxexQQ9X2/VrGw9vT1nXa/GS8JB
-         RSNK74tWkrvGFVF8JG7Whb4CD6rKnmQ86BHkOdkZS+s9azSYoN33uqf3V+W73nI/yFR/
-         ichcICkt8d571rKPfgFvMKccDSaWIqXQVMOio4lfmVBu+JPe5bYYfItmgQwwH14Q+Dh+
-         qg7q2R0T/UHyt0KsEysKhlKIVH82woOkxleAIxzZW7fnc0o2aZTE79POXaF0PlFtxFbl
-         2WjiiYl0tVFbBgeJafmVL3TdwGdOYTuSTlv6i2aXlZ2MVgH6i5W2TUrY1hukjC7gxStv
-         SJ9w==
+        bh=gMBzCRb2lJcY83Rf3gXJ3lcRFccz+H2Bl2MJKU3ZqPo=;
+        b=eVIq4nhK0QSaFcuTEMl7hHBF1UTXOON77oSPoypzfxTKWdujk9Ud5zUUA/mGjFhvcT
+         W1MGb9Kcpr+D9y48sMKaNjmvG87tJGTNMzF4TH5iw6cigW7V7rfO1EXCvpbY7LtajRG8
+         rRhoNtrJ4KvFj2nsw6L74REmQdBDliiu5+yjOXA/Rc6gA3z/xIn0RLOdmrwCXmXEFQgO
+         SB2Qs1j+NUqtBLDoyoNC6rvQRI3baISktj3E+CH4AXpmR31N726/BhWbih2ukjGgv6dJ
+         qnztWz6km9N3kqV8LED2t23OsQK4dgAEO7WPPBvVW9R3p/uUno3u+8oUTF9CEE2y/dgn
+         N3bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OIK+TCdRX34KNMiBA3GyxA9wV+XjF+28nZnkSCYejt0=;
-        b=ZJsiwEgg2cy5kXRuSjTW6dADSpbNcRVr7MeKgkCa8zfbEDce8PhmouQMxsHqLwneOg
-         hCgsjPeMILdx4T7gDa94qcDfnwMVYZ+RW3C5jyC9RU3YwwKhk/rarHeYQTVdTv0OWl4E
-         k88/g6Oh+dm+xoHcWcaoMDHe9XjaGcfTgQgktOZ2uzlJYfSTnSxJNqbVeF1w3dVi2jeP
-         ejODkX7m7YcOxw+IG7sQIMWF4VDJUHX92Vpf1S5JQEN8NBifknf/ayHqtfaahz4u+VPu
-         G09I9UQY8vYWgkWachwZTqcEOXcCBXIDfFBATbqeUw9nNHwBdPe7zQnHAbI3lszLki4n
-         3c4Q==
-X-Gm-Message-State: AOAM532qd6W7g5dZ7B0Tb6trWPN55ZAWu8Xw4CbIeNnkBlBFnnnwffHd
-        CiRLdUG7qzOOdnRde6XSfm8GUr+2KCQBC6RF
-X-Google-Smtp-Source: ABdhPJwYm6E6u3gcmL9HmAqrOtaQBzpc829dnOWK2LViM02w+SvTdgGkhlE/qSBGnXJwAF2CFCALEA==
-X-Received: by 2002:a1c:8002:: with SMTP id b2mr13250250wmd.187.1629720797681;
-        Mon, 23 Aug 2021 05:13:17 -0700 (PDT)
+        bh=gMBzCRb2lJcY83Rf3gXJ3lcRFccz+H2Bl2MJKU3ZqPo=;
+        b=ON8f/CZINtiqp/gwybsuOjaSZOIc7XTnTqUZCI7bbqo99SeB+AY1Yxf0YXiPQx/Q+O
+         v5uDYzJbifK8ZnToGXZJMiVyEXooCEYVd7CFKEPY3xbjX6SpAUt3m8k8is2pOdUW22s1
+         MCRyGr9ZcveMbc2UFCeEM7JkIBPWhvt0dOKZcb8zC7Mq8WKz/UMBrhp19QG7JBBWSn2y
+         BtgujwkNEINgpq3GKC1D0kr0Z3GD/JJuRQAYOFhAoPP0t+vl/+vOEcF6cdS2cMn/YlwG
+         q4VIYL3B5PL9y7G+xQWM9xA/M0N67t8Wviy4ztai1e8s9aidsGTHKNCnwvoLOt4V+0Ju
+         SmUw==
+X-Gm-Message-State: AOAM530/l2fINsIfHSEJ6VTgcdrqkX0JJ+iAnqakW1cbZapYPEZ1y3GC
+        6RVjOG6QXkWm+55H9dZ83dpbzzbl2LasK3Fs
+X-Google-Smtp-Source: ABdhPJzUIQP+hr1Q+V585hRpA2xUTu/2lCGf5F2NLv9wvXZO9hsDBUaW4XNyXBUszdVwbFJ1G2+QbA==
+X-Received: by 2002:a1c:19c1:: with SMTP id 184mr16267873wmz.98.1629720796830;
+        Mon, 23 Aug 2021 05:13:16 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id u10sm14824952wrt.14.2021.08.23.05.13.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Aug 2021 05:13:17 -0700 (PDT)
+        Mon, 23 Aug 2021 05:13:16 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>, Han-Wen Nienhuys <hanwen@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 26/28] reftable: fixup for new base topic 1/3
-Date:   Mon, 23 Aug 2021 14:12:37 +0200
-Message-Id: <patch-v4-26.28-dde80a982c1-20210823T120208Z-avarab@gmail.com>
+        <carenas@gmail.com>, Han-Wen Nienhuys <hanwen@google.com>
+Subject: [PATCH v4 25/28] t1404: annotate test cases with REFFILES
+Date:   Mon, 23 Aug 2021 14:12:36 +0200
+Message-Id: <patch-v4-25.28-0b3db9fc2d6-20210823T120208Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.662.gbaddc25a55e
 In-Reply-To: <cover-v4-00.28-00000000000-20210823T120208Z-avarab@gmail.com>
 References: <pull.1054.v3.git.git.1629207607.gitgitgadget@gmail.com> <cover-v4-00.28-00000000000-20210823T120208Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lifted from Han-Wen's [1], with the addition of the removal of the
-reftable_error_to_errno() which is now unused. I also changed the:
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-    if err < 0
-    if err > 1
+* Reftable for now lacks detailed error messages for directory/file conflicts.
+  Skip message comparisons.
 
-to just:
-
-    if err < 0
-    else if err
-
-Which is clearer in this context, i.e. the reader doesn't need to
-squint to see that the two if's are related, but different only in "<"
-v.s. ">".
-
-1. https://lore.kernel.org/git/pull.1054.v3.git.git.1629207607.gitgitgadget@gmail.com/
+* Mark tests that muck with .git directly as REFFILES.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- refs/reftable-backend.c | 38 ++++++++------------------------------
- 1 file changed, 8 insertions(+), 30 deletions(-)
+ t/t1404-update-ref-errors.sh | 56 +++++++++++++++++++++++++++---------
+ 1 file changed, 42 insertions(+), 14 deletions(-)
 
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index d972910bf21..dcc792e5e87 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -108,7 +108,7 @@ static const char *bare_ref_name(const char *ref)
- static int git_reftable_read_raw_ref(struct ref_store *ref_store,
- 				     const char *refname, struct object_id *oid,
- 				     struct strbuf *referent,
--				     unsigned int *type);
-+				     unsigned int *type, int *failure_errno);
- 
- static void clear_reftable_log_record(struct reftable_log_record *log)
- {
-@@ -424,6 +424,7 @@ static int fixup_symrefs(struct ref_store *ref_store,
- 	struct strbuf referent = STRBUF_INIT;
- 	int i = 0;
- 	int err = 0;
-+	int failure_errno;
- 
- 	for (i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = transaction->updates[i];
-@@ -433,8 +434,8 @@ static int fixup_symrefs(struct ref_store *ref_store,
- 						&old_oid, &referent,
- 						/* mutate input, like
- 						   files-backend.c */
--						&update->type);
--		if (err < 0 && errno == ENOENT &&
-+						&update->type, &failure_errno);
-+		if (err < 0 && failure_errno == ENOENT &&
- 		    is_null_oid(&update->old_oid)) {
- 			err = 0;
- 		}
-@@ -1587,30 +1588,10 @@ git_reftable_reflog_expire(struct ref_store *ref_store, const char *refname,
- 	return err;
+diff --git a/t/t1404-update-ref-errors.sh b/t/t1404-update-ref-errors.sh
+index b729c1f4803..811d5bb56d4 100755
+--- a/t/t1404-update-ref-errors.sh
++++ b/t/t1404-update-ref-errors.sh
+@@ -27,7 +27,9 @@ test_update_rejected () {
+ 	fi &&
+ 	printf "create $prefix/%s $C\n" $create >input &&
+ 	test_must_fail git update-ref --stdin <input 2>output.err &&
+-	test_i18ngrep -F "$error" output.err &&
++	if test_have_prereq REFFILES ; then
++		test_i18ngrep -F "$error" output.err
++	fi &&
+ 	git for-each-ref $prefix >actual &&
+ 	test_cmp unchanged actual
  }
+@@ -101,7 +103,9 @@ df_test() {
+ 		printf "%s\n" "delete $delname" "create $addname $D"
+ 	fi >commands &&
+ 	test_must_fail git update-ref --stdin <commands 2>output.err &&
+-	test_cmp expected-err output.err &&
++	if test_have_prereq REFFILES ; then
++		test_cmp expected-err output.err
++	fi &&
+ 	printf "%s\n" "$C $delref" >expected-refs &&
+ 	git for-each-ref --format="%(objectname) %(refname)" $prefix/r >actual-refs &&
+ 	test_cmp expected-refs actual-refs
+@@ -336,7 +340,9 @@ test_expect_success 'missing old value blocks update' '
+ 	EOF
+ 	printf "%s\n" "update $prefix/foo $E $D" |
+ 	test_must_fail git update-ref --stdin 2>output.err &&
+-	test_cmp expected output.err
++	if test_have_prereq REFFILES ; then
++		test_cmp expected output.err
++	fi
+ '
  
--static int reftable_error_to_errno(int err)
--{
--	switch (err) {
--	case REFTABLE_IO_ERROR:
--		return EIO;
--	case REFTABLE_FORMAT_ERROR:
--		return EFAULT;
--	case REFTABLE_NOT_EXIST_ERROR:
--		return ENOENT;
--	case REFTABLE_LOCK_ERROR:
--		return EBUSY;
--	case REFTABLE_API_ERROR:
--		return EINVAL;
--	case REFTABLE_ZLIB_ERROR:
--		return EDOM;
--	default:
--		return ERANGE;
--	}
--}
--
- static int git_reftable_read_raw_ref(struct ref_store *ref_store,
- 				     const char *refname, struct object_id *oid,
- 				     struct strbuf *referent,
--				     unsigned int *type)
-+				     unsigned int *type, int *failure_errno)
- {
- 	struct git_reftable_ref_store *refs =
- 		(struct git_reftable_ref_store *)ref_store;
-@@ -1633,13 +1614,10 @@ static int git_reftable_read_raw_ref(struct ref_store *ref_store,
- 	}
+ test_expect_success 'incorrect old value blocks update' '
+@@ -347,7 +353,9 @@ test_expect_success 'incorrect old value blocks update' '
+ 	EOF
+ 	printf "%s\n" "update $prefix/foo $E $D" |
+ 	test_must_fail git update-ref --stdin 2>output.err &&
+-	test_cmp expected output.err
++	if test_have_prereq REFFILES ; then
++		test_cmp expected output.err
++	fi
+ '
  
- 	err = reftable_stack_read_ref(stack, refname, &ref);
--	if (err > 0) {
--		errno = ENOENT;
--		err = -1;
--		goto done;
--	}
- 	if (err < 0) {
--		errno = reftable_error_to_errno(err);
-+		goto done;
-+	} else if (err) {
-+		*failure_errno = ENOENT;
- 		err = -1;
- 		goto done;
- 	}
+ test_expect_success 'existing old value blocks create' '
+@@ -358,7 +366,9 @@ test_expect_success 'existing old value blocks create' '
+ 	EOF
+ 	printf "%s\n" "create $prefix/foo $E" |
+ 	test_must_fail git update-ref --stdin 2>output.err &&
+-	test_cmp expected output.err
++	if test_have_prereq REFFILES ; then
++		test_cmp expected output.err
++	fi
+ '
+ 
+ test_expect_success 'incorrect old value blocks delete' '
+@@ -369,7 +379,9 @@ test_expect_success 'incorrect old value blocks delete' '
+ 	EOF
+ 	printf "%s\n" "delete $prefix/foo $D" |
+ 	test_must_fail git update-ref --stdin 2>output.err &&
+-	test_cmp expected output.err
++	if test_have_prereq REFFILES ; then
++		test_cmp expected output.err
++	fi
+ '
+ 
+ test_expect_success 'missing old value blocks indirect update' '
+@@ -380,7 +392,9 @@ test_expect_success 'missing old value blocks indirect update' '
+ 	EOF
+ 	printf "%s\n" "update $prefix/symref $E $D" |
+ 	test_must_fail git update-ref --stdin 2>output.err &&
+-	test_cmp expected output.err
++	if test_have_prereq REFFILES ; then
++		test_cmp expected output.err
++	fi
+ '
+ 
+ test_expect_success 'incorrect old value blocks indirect update' '
+@@ -392,7 +406,9 @@ test_expect_success 'incorrect old value blocks indirect update' '
+ 	EOF
+ 	printf "%s\n" "update $prefix/symref $E $D" |
+ 	test_must_fail git update-ref --stdin 2>output.err &&
+-	test_cmp expected output.err
++	if test_have_prereq REFFILES ; then
++		test_cmp expected output.err
++	fi
+ '
+ 
+ test_expect_success 'existing old value blocks indirect create' '
+@@ -404,7 +420,9 @@ test_expect_success 'existing old value blocks indirect create' '
+ 	EOF
+ 	printf "%s\n" "create $prefix/symref $E" |
+ 	test_must_fail git update-ref --stdin 2>output.err &&
+-	test_cmp expected output.err
++	if test_have_prereq REFFILES ; then
++		test_cmp expected output.err
++	fi
+ '
+ 
+ test_expect_success 'incorrect old value blocks indirect delete' '
+@@ -416,7 +434,9 @@ test_expect_success 'incorrect old value blocks indirect delete' '
+ 	EOF
+ 	printf "%s\n" "delete $prefix/symref $D" |
+ 	test_must_fail git update-ref --stdin 2>output.err &&
+-	test_cmp expected output.err
++	if test_have_prereq REFFILES ; then
++		test_cmp expected output.err
++	fi
+ '
+ 
+ test_expect_success 'missing old value blocks indirect no-deref update' '
+@@ -427,7 +447,9 @@ test_expect_success 'missing old value blocks indirect no-deref update' '
+ 	EOF
+ 	printf "%s\n" "option no-deref" "update $prefix/symref $E $D" |
+ 	test_must_fail git update-ref --stdin 2>output.err &&
+-	test_cmp expected output.err
++	if test_have_prereq REFFILES ; then
++		test_cmp expected output.err
++	fi
+ '
+ 
+ test_expect_success 'incorrect old value blocks indirect no-deref update' '
+@@ -439,7 +461,9 @@ test_expect_success 'incorrect old value blocks indirect no-deref update' '
+ 	EOF
+ 	printf "%s\n" "option no-deref" "update $prefix/symref $E $D" |
+ 	test_must_fail git update-ref --stdin 2>output.err &&
+-	test_cmp expected output.err
++	if test_have_prereq REFFILES ; then
++		test_cmp expected output.err
++	fi
+ '
+ 
+ test_expect_success 'existing old value blocks indirect no-deref create' '
+@@ -451,7 +475,9 @@ test_expect_success 'existing old value blocks indirect no-deref create' '
+ 	EOF
+ 	printf "%s\n" "option no-deref" "create $prefix/symref $E" |
+ 	test_must_fail git update-ref --stdin 2>output.err &&
+-	test_cmp expected output.err
++	if test_have_prereq REFFILES ; then
++		test_cmp expected output.err
++	fi
+ '
+ 
+ test_expect_success 'incorrect old value blocks indirect no-deref delete' '
+@@ -463,7 +489,9 @@ test_expect_success 'incorrect old value blocks indirect no-deref delete' '
+ 	EOF
+ 	printf "%s\n" "option no-deref" "delete $prefix/symref $D" |
+ 	test_must_fail git update-ref --stdin 2>output.err &&
+-	test_cmp expected output.err
++	if test_have_prereq REFFILES ; then
++		test_cmp expected output.err
++	fi
+ '
+ 
+ test_expect_success REFFILES 'non-empty directory blocks create' '
 -- 
 2.33.0.662.gbaddc25a55e
 
