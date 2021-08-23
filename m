@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 792C2C432BE
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:53:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E06AC4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:53:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BFA96138B
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:53:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F1A026138B
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:53:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236777AbhHWLxt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 07:53:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50486 "EHLO
+        id S236788AbhHWLxu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 07:53:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235953AbhHWLxk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 07:53:40 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5F7EC061757
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:52:57 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id i6so2117556wrv.2
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:52:57 -0700 (PDT)
+        with ESMTP id S236735AbhHWLxl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 07:53:41 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A54BFC0613C1
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:52:58 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id c129-20020a1c35870000b02902e6b6135279so10583700wma.0
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:52:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lf7zgcG9atqJliFE2QfHCXLCjkFtyRS61xXO/OaXndg=;
-        b=uLhYpz/jbEueKebQDPJSxMapuun6Qq6aNiI+3dGLD5dLwD2fqI5SsxwepRNb/t3qzl
-         PYyPUIFf1pRCPVIrIRlXyS1BxkkUPI6ECOwO2paUpmwD+Uca4QWY4hOEa/OdCq7L7c1x
-         6+B43us9l4dOsay0FqC+POyyysMsGFj5elMtSnfNt4bCYYGxPBj4Zumo4cM0segNkyMy
-         44PZFy1rUzFGA18feoOrJVeIO0l11Ppv0q0lZ3GLC5fB3UUNbBG17fvzPnT3IUevXtw0
-         A0scaKQRbliOpD+jZGEdkd0KeHBznKHCgkXWnwasU4MfkuCI2Ae6XRl3i8Mz2hDkDj1A
-         G9Aw==
+        bh=S4gcPPuG2g0togwK1CRtX5RPklILwP9gyGXZqErg0iA=;
+        b=J1z5gv34icqM7Gb8iDaLoEwrmv5Z1va3bZTgTpe/wy6glyxaxsXkhlHxn/3MMfQqjl
+         mO+IiyT1UpybZy/Yds/D9RPaOLAlY/dtAME87P2Jcl3tNvNDP8kALkELFbqKZmuE7TEG
+         RQrrHtwbb5adIoSKTawgIM4lPilmG7srcPYwuXvvyvzPkUKpGr8aT0wCZIS5c7je2cJ6
+         zl3KJDrzBKqRgg1m1kHHqVrPmP8WVTVjIgrBHtH5fKu/DAhBEIvLy/4ZceQQnDv6Oki4
+         wMqFWKrpX0K3I29uMcTEGbGaewgks7WUPNUMxnl+P3oTSDu/XCl01jCrYX/h7rYb2cRs
+         BEIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lf7zgcG9atqJliFE2QfHCXLCjkFtyRS61xXO/OaXndg=;
-        b=hYAJ5iwnrEOjEGD0wBRhUJQu/bERChfIL7/5Z+zYzbYFEl5zmO3zZuSFTFnY+LYwFe
-         kzJd+s36FloFmFXtH2SRbwYCIPt6LY/edXG8VjGEdq6tOY48rst5aBaWCfmSz5v7Lq+v
-         dOBcIa71/TqPcGYISPhFwbrRmH7kE+yzsPpTlznkP/hZBgnn00yYg9pYwFYs5cwMbWxv
-         KjtIPErJDCXuqgWbhXGLDm+YXCcGpFEQXxR7EdaomhQWd4VKmj5PuUl8CPsBPftnqoeJ
-         /VllIaw6mdVB8MuS/0lZanEzwhY/9gC92vFzDeFS3/nBlEXqYFm6G1Kd7NG4yP5GG3hF
-         Rq0Q==
-X-Gm-Message-State: AOAM532BpB/bYQYudIE5T+u3o9Pp81+f2d4Y+U70EBWJXUvbhbZsUjM6
-        bWPEgyO8RwiFzule+FT09zxuuJf80PS/KVJ/
-X-Google-Smtp-Source: ABdhPJwfwqtczHEcUdneVw8YbTJ270ChcZtoH6zp6xw8S1J8VfqW41p+/ySKaSUm/2VyCuvv6qX14Q==
-X-Received: by 2002:adf:dd11:: with SMTP id a17mr13054960wrm.132.1629719576230;
+        bh=S4gcPPuG2g0togwK1CRtX5RPklILwP9gyGXZqErg0iA=;
+        b=SQAaoMaTXupTFBR/gsxrI3+yxPZRKNyBZ/TmZbypcjsZkjxxx1wDhcP4cqqPqX+dpx
+         EDDBFCvm0xb/YJH3QVtzzDcOcSWZKgPz+Q2jwviUKmQrC/1Lyibrunqz/1Ct5e1w+xRq
+         izvbvAHxUagjA26EUhqsj3Gka/0OWiQXHjP3iOckIkDouTRYVvTtN9QGNTSHW5StpRhd
+         zXsYS108IwB6qvIGCOllG5e/NkYjgwgDrmI9YkIWYY7OM7GhKmJb7doVKyU2QVBxjol1
+         7brjoq1onftrLEv2pDSZZhKmodRyR5qtAkLzJpY4bZleWUyhz06/qobwwScgk5POqXUb
+         FX4w==
+X-Gm-Message-State: AOAM5339xQ7+GeUIrq0IUI1mjVTh3dSljUJly4wStBZHdTx4AO5aZgIa
+        3bDFosU+TevThyOOSvU/7ii8Kq6VVyUYZCQ0
+X-Google-Smtp-Source: ABdhPJy3j1I5YB1jSwvp2wKyVNN+f7cI9ismnR5cKlnXhJb7HIGjhbR3CZJqprCgTy7HjWC50AxhrA==
+X-Received: by 2002:a05:600c:2e48:: with SMTP id q8mr15466031wmf.38.1629719576979;
         Mon, 23 Aug 2021 04:52:56 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l2sm12350713wmi.1.2021.08.23.04.52.55
+        by smtp.gmail.com with ESMTPSA id l2sm12350713wmi.1.2021.08.23.04.52.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Aug 2021 04:52:55 -0700 (PDT)
+        Mon, 23 Aug 2021 04:52:56 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v10 5/8] refs: add failure_errno to refs_read_raw_ref() signature
-Date:   Mon, 23 Aug 2021 13:52:41 +0200
-Message-Id: <patch-v10-5.8-fa9260f25fa-20210823T114712Z-avarab@gmail.com>
+Subject: [PATCH v10 6/8] branch tests: test for errno propagating on failing read
+Date:   Mon, 23 Aug 2021 13:52:42 +0200
+Message-Id: <patch-v10-6.8-6dae8b643ad-20210823T114712Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.662.g438caf9576d
 In-Reply-To: <cover-v10-0.8-00000000000-20210823T114712Z-avarab@gmail.com>
 References: <cover-0.7-00000000000-20210720T102644Z-avarab@gmail.com> <cover-v10-0.8-00000000000-20210823T114712Z-avarab@gmail.com>
@@ -80,253 +80,56 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This lets us use the explicit errno output parameter in refs_resolve_ref_unsafe.
+Add a test for "git branch" to cover the case where .git/refs is
+symlinked. To check availability, refs_verify_refname_available() will
+run refs_read_raw_ref() on each prefix, leading to a read() from
+.git/refs (which is a directory).
 
-Some of our callers explicitly do not care about the errno, rather
-than understanding NULL let's have them declare that they don't care
-by passing in an "ignore_errno". There's only three of them, and using
-that pattern will make it more obvious that they want to throw away
-data, let's also add a comment to one of the callers about why we'd
-like to ignore the errno.
+It would probably be more robust to re-issue the lstat() as a normal
+stat(), in which case, we would fall back to the directory case, but
+for now let's just test for the existing behavior as-is. This test
+covers a regression in a commit that only ever made it to "next", see
+[1].
 
-Let's not extend that to refs_resolve_ref_unsafe() itself for now, it
-has a large set of legacy callers, so we're faking up the old "errno"
-behavior for it. We can convert those callers to
-refs_resolve_ref_unsafe_with_errno() later.
-
-We are leaving out out the refs_read_special_head() in
-refs_read_raw_ref() for now, as noted in the next commit moving it to
-"failure_errno" will require some special consideration.
-
-We're intentionally mis-indenting the argument list of the new
-refs_resolve_ref_unsafe_with_errno(), it will be non-static in a
-subsequent commit, doing it this way makes that diff smaller.
+1. http://lore.kernel.org/git/pull.1068.git.git.1629203489546.gitgitgadget@gmail.com
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- refs.c                | 61 ++++++++++++++++++++++++++++++-------------
- refs/files-backend.c  | 10 ++++---
- refs/packed-backend.c |  7 ++---
- refs/refs-internal.h  |  6 ++---
- 4 files changed, 56 insertions(+), 28 deletions(-)
+ t/t3200-branch.sh | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/refs.c b/refs.c
-index da0cc82ca66..4c782fa2978 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1672,30 +1672,33 @@ static int refs_read_special_head(struct ref_store *ref_store,
- 	return result;
- }
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index cc4b10236e2..9fae13c2dea 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -731,6 +731,26 @@ test_expect_success SYMLINKS 'git branch -m u v should fail when the reflog for
+ 	test_must_fail git branch -m u v
+ '
  
--int refs_read_raw_ref(struct ref_store *ref_store,
--		      const char *refname, struct object_id *oid,
--		      struct strbuf *referent, unsigned int *type)
-+int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
-+		      struct object_id *oid, struct strbuf *referent,
-+		      unsigned int *type, int *failure_errno)
- {
-+	assert(failure_errno);
- 	if (!strcmp(refname, "FETCH_HEAD") || !strcmp(refname, "MERGE_HEAD")) {
- 		return refs_read_special_head(ref_store, refname, oid, referent,
- 					      type);
- 	}
- 
- 	return ref_store->be->read_raw_ref(ref_store, refname, oid, referent,
--					   type, &errno);
-+					   type, failure_errno);
- }
- 
--/* This function needs to return a meaningful errno on failure */
--const char *refs_resolve_ref_unsafe(struct ref_store *refs,
--				    const char *refname,
--				    int resolve_flags,
--				    struct object_id *oid, int *flags)
-+static const char *refs_resolve_ref_unsafe_with_errno(struct ref_store *refs,
-+					       const char *refname,
-+					       int resolve_flags,
-+					       struct object_id *oid,
-+					       int *flags, int *failure_errno)
- {
- 	static struct strbuf sb_refname = STRBUF_INIT;
- 	struct object_id unused_oid;
- 	int unused_flags;
- 	int symref_count;
- 
-+	assert(failure_errno);
++test_expect_success SYMLINKS 'git branch -m with symlinked .git/refs' '
++	test_when_finished "rm -rf subdir" &&
++	git init subdir &&
 +
- 	if (!oid)
- 		oid = &unused_oid;
- 	if (!flags)
-@@ -1706,7 +1709,7 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
- 		if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
- 		    !refname_is_safe(refname)) {
--			errno = EINVAL;
-+			*failure_errno = EINVAL;
- 			return NULL;
- 		}
- 
-@@ -1724,8 +1727,8 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 	for (symref_count = 0; symref_count < SYMREF_MAXDEPTH; symref_count++) {
- 		unsigned int read_flags = 0;
- 
--		if (refs_read_raw_ref(refs, refname,
--				      oid, &sb_refname, &read_flags)) {
-+		if (refs_read_raw_ref(refs, refname, oid, &sb_refname,
-+				      &read_flags, failure_errno)) {
- 			*flags |= read_flags;
- 
- 			/* In reading mode, refs must eventually resolve */
-@@ -1737,9 +1740,9 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 			 * may show errors besides ENOENT if there are
- 			 * similarly-named refs.
- 			 */
--			if (errno != ENOENT &&
--			    errno != EISDIR &&
--			    errno != ENOTDIR)
-+			if (*failure_errno != ENOENT &&
-+			    *failure_errno != EISDIR &&
-+			    *failure_errno != ENOTDIR)
- 				return NULL;
- 
- 			oidclr(oid);
-@@ -1766,7 +1769,7 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 		if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
- 			if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
- 			    !refname_is_safe(refname)) {
--				errno = EINVAL;
-+				*failure_errno = EINVAL;
- 				return NULL;
- 			}
- 
-@@ -1774,10 +1777,24 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 		}
- 	}
- 
--	errno = ELOOP;
-+	*failure_errno = ELOOP;
- 	return NULL;
- }
- 
-+const char *refs_resolve_ref_unsafe(struct ref_store *refs, const char *refname,
-+				    int resolve_flags, struct object_id *oid,
-+				    int *flags)
-+{
-+	int failure_errno = 0;
-+	const char *refn;
-+	refn = refs_resolve_ref_unsafe_with_errno(refs, refname, resolve_flags,
-+						  oid, flags, &failure_errno);
-+	if (!refn)
-+		/* For unmigrated legacy callers */
-+		errno = failure_errno;
-+	return refn;
-+}
++	(
++		cd subdir &&
++		for d in refs objects packed-refs
++		do
++			rm -rf .git/$d &&
++			ln -s ../../.git/$d .git/$d
++		done
++	) &&
++	git --git-dir subdir/.git/ branch rename-src &&
++	git rev-parse rename-src >expect &&
++	git --git-dir subdir/.git/ branch -m rename-src rename-dest &&
++	git rev-parse rename-dest >actual &&
++	test_cmp expect actual &&
++	git branch -D rename-dest
++'
 +
- /* backend functions */
- int refs_init_db(struct strbuf *err)
- {
-@@ -2228,6 +2245,13 @@ int refs_verify_refname_available(struct ref_store *refs,
- 
- 	strbuf_grow(&dirname, strlen(refname) + 1);
- 	for (slash = strchr(refname, '/'); slash; slash = strchr(slash + 1, '/')) {
-+		/*
-+		 * Just saying "Is a directory" when we e.g. can't
-+		 * lock some multi-level ref isn't very informative,
-+		 * the user won't be told *what* is a directory, so
-+		 * let's not use strerror() below.
-+		 */
-+		int ignore_errno;
- 		/* Expand dirname to the new prefix, not including the trailing slash: */
- 		strbuf_add(&dirname, refname + dirname.len, slash - refname - dirname.len);
- 
-@@ -2239,7 +2263,8 @@ int refs_verify_refname_available(struct ref_store *refs,
- 		if (skip && string_list_has_string(skip, dirname.buf))
- 			continue;
- 
--		if (!refs_read_raw_ref(refs, dirname.buf, &oid, &referent, &type)) {
-+		if (!refs_read_raw_ref(refs, dirname.buf, &oid, &referent,
-+				       &type, &ignore_errno)) {
- 			strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
- 				    dirname.buf, refname);
- 			goto cleanup;
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index b3de3633969..f962495e456 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -381,10 +381,11 @@ static int files_read_raw_ref(struct ref_store *ref_store, const char *refname,
- 		goto out;
- 
- 	if (lstat(path, &st) < 0) {
-+		int ignore_errno;
- 		if (errno != ENOENT)
- 			goto out;
--		if (refs_read_raw_ref(refs->packed_ref_store, refname,
--				      oid, referent, type)) {
-+		if (refs_read_raw_ref(refs->packed_ref_store, refname, oid,
-+				      referent, type, &ignore_errno)) {
- 			errno = ENOENT;
- 			goto out;
- 		}
-@@ -418,13 +419,14 @@ static int files_read_raw_ref(struct ref_store *ref_store, const char *refname,
- 
- 	/* Is it a directory? */
- 	if (S_ISDIR(st.st_mode)) {
-+		int ignore_errno;
- 		/*
- 		 * Even though there is a directory where the loose
- 		 * ref is supposed to be, there could still be a
- 		 * packed ref:
- 		 */
--		if (refs_read_raw_ref(refs->packed_ref_store, refname,
--				      oid, referent, type)) {
-+		if (refs_read_raw_ref(refs->packed_ref_store, refname, oid,
-+				      referent, type, &ignore_errno)) {
- 			errno = EISDIR;
- 			goto out;
- 		}
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 47247a14917..52cdc94a26e 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1347,6 +1347,7 @@ int is_packed_transaction_needed(struct ref_store *ref_store,
- 	ret = 0;
- 	for (i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = transaction->updates[i];
-+		int failure_errno;
- 		unsigned int type;
- 		struct object_id oid;
- 
-@@ -1357,9 +1358,9 @@ int is_packed_transaction_needed(struct ref_store *ref_store,
- 			 */
- 			continue;
- 
--		if (!refs_read_raw_ref(ref_store, update->refname,
--				       &oid, &referent, &type) ||
--		    errno != ENOENT) {
-+		if (!refs_read_raw_ref(ref_store, update->refname, &oid,
-+				       &referent, &type, &failure_errno) ||
-+		    failure_errno != ENOENT) {
- 			/*
- 			 * We have to actually delete that reference
- 			 * -> this transaction is needed.
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index ddd6d7f8ebd..7ade286260c 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -149,9 +149,9 @@ struct ref_update {
- 	const char refname[FLEX_ARRAY];
- };
- 
--int refs_read_raw_ref(struct ref_store *ref_store,
--		      const char *refname, struct object_id *oid,
--		      struct strbuf *referent, unsigned int *type);
-+int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
-+		      struct object_id *oid, struct strbuf *referent,
-+		      unsigned int *type, int *failure_errno);
- 
- /*
-  * Write an error to `err` and return a nonzero value iff the same
+ test_expect_success 'test tracking setup via --track' '
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
 -- 
 2.33.0.662.g438caf9576d
 
