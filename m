@@ -2,116 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15BA5C4338F
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 06:45:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A42E0C4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 06:46:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EBBC36103D
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 06:45:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B329611EF
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 06:46:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234172AbhHWGp7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 02:45:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34896 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231779AbhHWGp6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 02:45:58 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 397F1C061575
-        for <git@vger.kernel.org>; Sun, 22 Aug 2021 23:45:16 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id h1so5441765pjs.2
-        for <git@vger.kernel.org>; Sun, 22 Aug 2021 23:45:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=396vv6VDeycU0FCBXqkTC6S0Y8IG0UVz3KhsY+Y45A4=;
-        b=u67zbgstTEq1p4f8e8OL9kFURl1So3vRcGj0VxDh5qsgXJ/6+0z+AraBT6YIDE5vEz
-         LUHfzfbt0n808Ur6O6SRo0lbpOy9fHQl6Xa+eOZ299xaVngNV7UBlo7oN/km0iMmlBxn
-         zA4qdPxTG2MRmUN+sjUcgiNyMJOyFMd2bj1Vt1KzF2KMCy8552NzNrBcKEP+FCJSZA/+
-         5x2DwjvSHC0zly+mSbQUkqYQsixO1W6nepk6KFEB2y3SrWgjTwsmQ2KizMDbD3U8ohJg
-         CKMmpN931vjOTpNx0luDHTjWd0+N4JNXz8NuqJYGPxlndNmlzOYbZ1QVpIHhaH8PPITY
-         HhMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=396vv6VDeycU0FCBXqkTC6S0Y8IG0UVz3KhsY+Y45A4=;
-        b=M7Yk2a6+V+ruEyHbtQrrRWr/oPxrqvwKFz6b46pOH7nhXTnZmopYe9ZtRDHGFYxCm0
-         7mtfOlwahWqrcB5aWbK4myVYRrJzVAxk4TXmvGi1/IcMiHLU/Mgq32h4jEQy3ukWOgsT
-         qAJhEeHzDYURtYL4iRio29iEwwKMb8DVoNE40GcOfVHqCuOy6YGdRNHQA2xxCA0SSpts
-         Q8Hfr6s9hdEU7D2yFFemCodyaly+ZF/MhMl3E/qAML2cqWAsU9jc6qjWWaWEusLP9Ny2
-         g7HEY+DSIbEHItexNqFx+TgFtwb+lkbnjd3n/IYuoJFa1tsKUpWfwvAFJh36ATf+Cyk4
-         Xi6Q==
-X-Gm-Message-State: AOAM5324E7WDNm+59Baxo8gmvjlrChDMb31rmimNbPlY0bRvff3lQf47
-        Tq4JjTWaDIRWwAjF3E2qDreEjpgmsNA=
-X-Google-Smtp-Source: ABdhPJzD/Mwaj/r04qmVXwD6tQ4+gUBqLKx9L/VSVF1zZIN4CgtQvZagP3HZUWTOrVGuH1H4VU4L+w==
-X-Received: by 2002:a17:90b:1246:: with SMTP id gx6mr10463283pjb.94.1629701115562;
-        Sun, 22 Aug 2021 23:45:15 -0700 (PDT)
-Received: from [192.168.43.80] (subs28-116-206-12-47.three.co.id. [116.206.12.47])
-        by smtp.gmail.com with ESMTPSA id v1sm14772183pfn.93.2021.08.22.23.45.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 Aug 2021 23:45:15 -0700 (PDT)
-Subject: Re: Feature Idea: Expanding git to support automatic Semver stamping
-To:     Pavel Rogovoy <p.rogovoy@gmail.com>, git@vger.kernel.org
-References: <CA+NVOTBjgQ60hUZyRcK=igEP5=PSJqUFKf4Z-wYr=7+ESp3Ziw@mail.gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <e478d313-e773-6d83-7d7e-ffce2a4fa0b9@gmail.com>
-Date:   Mon, 23 Aug 2021 13:45:12 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        id S232885AbhHWGrQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 02:47:16 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:52683 "EHLO
+        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231715AbhHWGrQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 23 Aug 2021 02:47:16 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id D49CA5C013E;
+        Mon, 23 Aug 2021 02:46:33 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Mon, 23 Aug 2021 02:46:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm1; bh=ZVXWlGu8WZrS2ohcu+bR2MYWczr
+        gMNl3Ed5xZtNwl5g=; b=XhYVqRWRrZFPgJX1rhKPRHwLenIEN0fE6EHH1qAw/7X
+        1RR68F5efQAtc+bUFdK7Y7+se1Vg427ocEWq97BjwoBPzbE502Jvbm2Lxk83+1EC
+        lk0A2QSq/DKUsBNOJ2mk5lVWpCE7m7gN6B+jDr1T3RQRQPmPmJv9xGCeo3pghIav
+        A2FAjqjVgiY4Bqr2mdZPfrXW5i6+kSZcJCahGMiJYVmEQE+ZfWcf/ZpfZX86iMns
+        hFN470LUFFO0x7lt9q7k7BCgDhk6Jrc1dvbtYZZ+iLSQAe99fwG4sTPRkE9kvfz4
+        bayK8ulYr/W+7361Y3IxAYkLPwUSPIHFvNkkctmEyUg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=ZVXWlG
+        u8WZrS2ohcu+bR2MYWczrgMNl3Ed5xZtNwl5g=; b=NkoDCyAO/JxobC6ZszeCoX
+        C/MVW6Jcc+hNEWIhJDSEi6wGp5XR6yDzXmMJNa6SEJ0+N+xpgM+7grJdw43eYuxw
+        umndmxziPd/M+7z3Wv/V4gRsu49zOSyLaUs3ciRaCyaVQ8Fy7s/LU/JkJdRz1c5r
+        2eGJ9xpapW65R9DXpRH+i7Y8wQ5+rGmbSauzQvgI4+SuhY6uIV26Vna8Bd2Zl15Z
+        2CuwqMsij8/SFbjtPCQ0iJk2ilrf1s9/tTmJokPRSZF9qBQNT1+l0qEMh5CSF3Kg
+        m3jnUmj86eY6q07Ba54N5B4XgRsByfZ76yelZ/sOJPGN0KHqv9N1GeBDfONS2NBw
+        ==
+X-ME-Sender: <xms:SUQjYYBMXsGWkEeEedD0X5btjaOZHNmIKjN5lZ7InoYaxg9Fmd4W3A>
+    <xme:SUQjYaiu19vsc7tybZNZLd3jBhFYLhOLKYZJ5Wluf-oFMFDrA4Z3actz3FKroTPnk
+    ZkUgs6hFbNTsPp_mg>
+X-ME-Received: <xmr:SUQjYbmlAAxffemiWt0LSNL7FsoxwzUHoe5dB4NsGy6UJyeB8L77M0brrQUHOwfV-xgFmcga83sVlCU321lmzMaE8FXprEKVPPP_k9alALsrU2bxW3g4A_8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddruddtgedgudduudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvuffkfhggtggujgesghdtggertddtjeenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepudettedugfevtdehkedttedtteduvefgveeluefhudejieefueetueegueeffefh
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:SUQjYewxmioIX_XEORfCa1A10uvBLiG_FK9-5PTWddbI7JNIgNYaPA>
+    <xmx:SUQjYdQNVZZvP_6Amm9rGLYageCAmUNaWXtPkoMV20JP5fu3BnLWvg>
+    <xmx:SUQjYZb3-YRlBXhzPnMAaBbHK_gohIJ4Q81ysusIZJW1MX4MhowCmQ>
+    <xmx:SUQjYfd5VT1FT2RPyh_BjHrlo-IFL3kIG9RDL4sRW2ul3qVhdGEr9A>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Aug 2021 02:46:32 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 067c8ef7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 23 Aug 2021 06:46:28 +0000 (UTC)
+Date:   Mon, 23 Aug 2021 08:46:27 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 1/6] fetch: speed up lookup of want refs via commit-graph
+Message-ID: <YSNEQ9R0TDUNPZPM@ncase>
+References: <cover.1629452412.git.ps@pks.im>
+ <6872979c4557204821d788dc3f5e1c8bef0a773c.1629452412.git.ps@pks.im>
+ <fce98460-eed6-c874-8c42-bf3a6f5f93a8@gmail.com>
+ <xmqq7dggvxup.fsf@gitster.g>
 MIME-Version: 1.0
-In-Reply-To: <CA+NVOTBjgQ60hUZyRcK=igEP5=PSJqUFKf4Z-wYr=7+ESp3Ziw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="RbDWKrgXzmEV0mkL"
+Content-Disposition: inline
+In-Reply-To: <xmqq7dggvxup.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/08/21 02.28, Pavel Rogovoy wrote:
-> Hi all,
-> 
-> My name is Pavel Rogovoy and I am a git enthusiast. I have developed a
-> git-based generic version stamping system that is compliant with the
-> Semver standard and I believe it can be integrated into git as a
-> sub-command such as git stamp in the form of an external plugin or a
-> complete rewrite into git’s source code.
-> 
 
-I like the idea of automatic semver tagging, especially on case when 
-developers do releases quickly (with manual tagging, they must know last 
-tag version in order for the new tag version to be correctly greater 
-than previous).
+--RbDWKrgXzmEV0mkL
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I welcome you to take a look at the stamping utility:
-> https://github.com/final-israel/vmn
-> 
-> I will be happy to discuss the main benefits of such a move with you.
-> Here are just some:
-> 
-> - Effortless version management and state recovery for single or
-> multiple  repositories.
+On Fri, Aug 20, 2021 at 10:18:22AM -0700, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+>=20
+> > I do worry about the case where annotated tags greatly outnumber
+> > branches, so this binary search is extra overhead and the performance
+> > may degrade. Would it be worth checking the ref to see if it lies
+> > within "refs/heads/" (or even _not_ in "refs/tags/") before doing
+> > this commit-graph check?
+>=20
+> Ah, clever.
 
-If you `git checkout <something>`, you get whatever your code in 
-<something>'s commit; no need for external tools.
+Good idea. Benchmarks for my test repository (which definitely isn't
+representative, but it's at least some numbers) show that restricting to
+"refs/heads/" diminishes almost all the gains, while restricting to
+everything but "refs/tags/" performs almost the same (it's a tiny bit
+slower, probably because of the added string comparisons):
 
-> - Can be used as a convenient git submodule alternative.
-I saw "root app" concept [1] in vmn, which is roughly superproject in 
-git-submodule. But looking at resulting `vmn show`, it more like 
-metadata for CI job.
+    Benchmark #1: all refs: git-fetch
+      Time (mean =C2=B1 =CF=83):     32.959 s =C2=B1  0.282 s    [User: 29.=
+801 s, System: 5.137 s]
+      Range (min =E2=80=A6 max):   32.760 s =E2=80=A6 33.158 s    2 runs
 
-When developers clone vmn-ed root app repo, they only get code for root 
-app only, whereas when they clone normal git repo with submodule, they 
-can initialize any submodules used and have all history of them on their 
-fingers.
+    Benchmark #2: refs/heads: git-fetch
+      Time (mean =C2=B1 =CF=83):     56.955 s =C2=B1  0.002 s    [User: 53.=
+447 s, System: 5.362 s]
+      Range (min =E2=80=A6 max):   56.953 s =E2=80=A6 56.957 s    2 runs
 
-[1]: https://github.com/final-israel/vmn#root-apps
+    Benchmark #3: !refs/tags: git-fetch
+      Time (mean =C2=B1 =CF=83):     33.447 s =C2=B1  0.003 s    [User: 30.=
+160 s, System: 5.027 s]
+      Range (min =E2=80=A6 max):   33.444 s =E2=80=A6 33.449 s    2 runs
 
--- 
-An old man doll... just what I always wanted! - Clara
+    Summary
+      'all refs: git-fetch' ran
+        1.01 =C2=B1 0.01 times faster than '!refs/tags: git-fetch'
+        1.73 =C2=B1 0.01 times faster than 'refs/heads: git-fetch'
+
+This is easily explained by the fact that the test repo has most of its
+refs neither in "refs/tags/" nor in "refs/heads/", but rather in special
+namespaces like "refs/merge-requests/", "refs/environments/" or
+"refs/keep-around/".
+
+I like the idea of excluding "refs/tags/" though: as you point out,
+chances are high that these don't point to commits but to annotated tags
+instead. So I'll go with that, thanks!
+
+Patrick
+
+--RbDWKrgXzmEV0mkL
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEjREIACgkQVbJhu7ck
+PpTmIQ/9HqL53x4mZPSVnjVEL3xVQukbrFcfLroPwVc9DeTfZmOFIQaT/V+9+y+M
+ZcPsnYCUsdMUXcoAcipoJ3LHanM61dYf3wuQi1hUFV1JDA8fmx4p37+RYUuRXU2/
+72Te9pZzsH9p8Fl11AZnZ9njidntYyJnghhI1uR/7Sfoqy83QHRjBMx9LzpzCxwt
+TmVOT0NQAE4pwIeT/EJwww6sjt+9mh+GyvbQzD7KSfVakOOy9WcdzgqRDu5XXhbN
+kuR4Hvj7u6GAXrKsgE7/vuShfBw0d1o44kqu6k76q499v5ANx9gNMMLK6CZ3Vi8s
+c4EKMlAEmlRdJeYau5O0k6lF3CcKAjdJgrOVsgIkAiUdM8RzXYuSoomcO/mDa4PZ
+2FDg+l33FVWfMXMcDRrd7gycGYgBeAsNEgWXyMZucqi+2hzkZ3TLaPrBwJoscaaQ
+Kz9m/L1WnJnWhZ2MQFcsmVwGEl3qG0zGk9hbrJOiXF60gbXtdbkUZUyNo9DoYqtI
+YCY4qtuRhAfblPmwBcRd157dwlBO51zPeZwNxJyygguug+JetHl6CbRv6GJlzU40
+ezWAD7f5izU9BipJIhQA4rxPy5fV050jlUMZMX9Kg7rO6AX5BMoSxXhedKQMzYlz
+tp+3g9kvgrPS+25xR24tWeBv5SZoyalRcXDZBWRpk2o+0veKuWA=
+=+6zZ
+-----END PGP SIGNATURE-----
+
+--RbDWKrgXzmEV0mkL--
