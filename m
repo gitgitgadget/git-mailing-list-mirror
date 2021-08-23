@@ -2,90 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F661C4338F
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 21:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9C48C4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 22:30:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DCF966103A
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 21:47:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B969261368
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 22:30:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232970AbhHWVsQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 17:48:16 -0400
-Received: from mout02.posteo.de ([185.67.36.66]:56899 "EHLO mout02.posteo.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232503AbhHWVsO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 17:48:14 -0400
-Received: from submission (posteo.de [89.146.220.130]) 
-        by mout02.posteo.de (Postfix) with ESMTPS id 703E7240103
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 23:47:29 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
-        t=1629755249; bh=Z9/bA358mtvLvr4yugxkVaGaPOLj+psXgwOT+Eq5BQE=;
-        h=Subject:To:Cc:From:Date:From;
-        b=q8N8XipnMkc5QVipuh+CziIBBaZQqqeReWL/8XpI+bwwGxfMoK6yo5mUyed9VENjx
-         tQGphswDWRaVUA1pnE1w+bCDK32ANJcbB/qrpkI5Yv3s6sFJx2JrvbTTlb4T3XFkH4
-         8CH59hPFTO6lWMcQwaQAcuWteizlizZjrYnFcOfsm/7KC7Tjwf0Twd1jtlYnVkcJZn
-         aq3Q2Mu2QmrpAkFZ3FTvd8+3AO0ml3O2GfSTKtcmzhmfTj3mPs0BDvkoG3LNfk5v2X
-         UDxhfkPw7dgucMoEHyUWT91GDVDj+DfXsdwUYS1YTcUFyleN5Wp6oDdCTD5IQ7vPZP
-         2YK2/dMLeLxOQ==
-Received: from customer (localhost [127.0.0.1])
-        by submission (posteo.de) with ESMTPSA id 4Gtm746RkSz6tmN;
-        Mon, 23 Aug 2021 23:47:28 +0200 (CEST)
-Subject: Re: [BUG] send-email propagates "In-Reply-To"
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-References: <4db7759c-2123-533b-9f89-954c07f5832a@posteo.de>
- <YSPOOGxTMEgStdjJ@coredump.intra.peff.net>
- <5cd5a58b-ac9e-4628-a8d3-836b1f795732@posteo.de>
- <YSPomC95hxZZTHRe@coredump.intra.peff.net>
-From:   =?UTF-8?Q?Marvin_H=c3=a4user?= <mhaeuser@posteo.de>
-Message-ID: <2412df60-f8ee-ab0f-08b2-20a0b6b641fa@posteo.de>
-Date:   Mon, 23 Aug 2021 21:47:28 +0000
+        id S233038AbhHWWbA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 18:31:00 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53681 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230245AbhHWWa7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 18:30:59 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 695DB149226;
+        Mon, 23 Aug 2021 18:30:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Q1QWfVvAKweQ
+        jC/+KtwpWmIPlmtajCvGJMDJNGQsx/Q=; b=H5VHVQBWXLeFYeB8J7XAZP3pYPMM
+        bxZ+3djzaZyEc5seSXz3c1uRIXHC+og5D5ND8wukv7/DUWk6zPjMa9kalvx9gnY7
+        b5WfBxwTKp4AmIBTQBC+gf24u+63JeFxl6OH3BrrJpXyiNDvr6aCkmqdc8LTg0jl
+        0epLaSTQHVAEVIs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5FE2E149225;
+        Mon, 23 Aug 2021 18:30:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A1D2D149224;
+        Mon, 23 Aug 2021 18:30:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v7 2/3] maintenance: `git maintenance run` learned
+ `--scheduler=<scheduler>`
+References: <20210612165043.165579-1-lenaic@lhuard.fr>
+        <20210702142556.99864-3-lenaic@lhuard.fr>
+        <87h7h75hzz.fsf@evledraar.gmail.com>
+        <3218082.ccbTtk1zYS@coruscant.lhuard.fr>
+Date:   Mon, 23 Aug 2021 15:30:11 -0700
+In-Reply-To: <3218082.ccbTtk1zYS@coruscant.lhuard.fr> (=?utf-8?B?IkzDqW5h?=
+ =?utf-8?B?w69j?= Huard"'s
+        message of "Mon, 23 Aug 2021 22:06:15 +0200")
+Message-ID: <xmqqk0kbpzf0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <YSPomC95hxZZTHRe@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: AF0C951A-0461-11EC-87D0-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/08/2021 20:27, Jeff King wrote:
-> But either that should go into its own patch, or the commit message
-> should be modified to explain that it is covering not just
-> in-reply-to/references, but we think this fixes all similar variables.
+L=C3=A9na=C3=AFc Huard <lenaic@lhuard.fr> writes:
 
-Fixed, opted for latter [1].
-
-> You'd want something like the patch below (and possibly something
-> similar for the $subject handling).
-
-Thanks a lot! my last question for the patch would now be, how do I use 
-your snippet? Do I add you to S-o-b of the single patch, do I split the 
-patches with the second S-o-b being yours, or do I submit only the first 
-and you will submit the second?
-
-> Both of the new tests fail without your patch and pass with it, but:
+> Is the suggestion to replace
 >
->    - note the weird behavior I found with --in-reply-to; this is
->      something we might want to address at the same time
+> +#ifdef __APPLE__
+> +	return 1;
+> +#else
+> +	return 0;
+> +#endif
+> +}
+>
+> by
+>
+> + return IS_LAUNCHCTL_AVAILABLE;
+>
+> and to add
+>
+> #ifdef __APPLE__
+> #define IS_LAUNCHCTL_AVAILABLE 1
+> #else
+> #define IS_LAUNCHCTL_AVAILABLE 0
+> #endif
+>
+> somewhere else like at the top of builtin/gc.c ?
 
-I think this case must error? The definition of the "--in-reply-to" does 
-not declare it as a default, so it must be enforced (and it is), but 
-it's also very unintuitive the file value is discarded. Who would decide 
-the behaviour spec?
+I wasn't the one who suggested it, but the suggestion reads as such
+to me.
 
->    - applying your patch fails the earlier t9001.52 ("In-Reply-To without
->      --chain-reply-to"). I didn't dig into what's going on there.
+> Also, do we agree this shouldn=E2=80=99t be defined in cache.h=E2=80=AF=
+? I=E2=80=99m a little bit=20
+> confused.
 
-Fixed [1].
+The audience of "cache.h" (or more precisely, "git-compat-util.h" is
+where these come from by including system headers) is much wider
+than those narrow users who care about launchtrl or cron, so
+limiting it in builtin/gc.c would make more sense, I would think.
 
-Best regards,
-Marvin
+Thanks.
 
 
-[1] 
-https://github.com/mhaeuser/git/commit/5f2ff790cc0d0d779bc252b08f9c9c632c4ff01c
+
