@@ -2,86 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 340CBC4320E
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 18:41:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB9A8C4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 18:53:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 028B5613A5
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 18:41:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AED72613AD
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 18:53:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230335AbhHWSmQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 14:42:16 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:62076 "EHLO smtp.hosts.co.uk"
+        id S231272AbhHWSyQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 14:54:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56996 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230021AbhHWSmP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 14:42:15 -0400
-Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1mIEss-0005Wi-4A; Mon, 23 Aug 2021 19:41:27 +0100
-Subject: Re: [PATCH] Make ident dynamic, not just a hardcoded value of "$Id".
-To:     Maksym Sobolyev via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Maksym Sobolyev <sobomax@gmail.com>,
-        Maksym Sobolyev <sobomax@sippysoft.com>
-References: <pull.1074.git.git.1629736918861.gitgitgadget@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <da4e66ec-0613-a8ba-0b69-cd247fcd457b@iee.email>
-Date:   Mon, 23 Aug 2021 19:41:22 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        id S230192AbhHWSyO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 14:54:14 -0400
+Received: (qmail 13031 invoked by uid 109); 23 Aug 2021 18:53:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 23 Aug 2021 18:53:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31471 invoked by uid 111); 23 Aug 2021 18:53:31 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Aug 2021 14:53:31 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 23 Aug 2021 14:53:31 -0400
+From:   Jeff King <peff@peff.net>
+To:     Nikita Bobko <nikitabobko@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git read-tree doesn't accept tree-ish
+Message-ID: <YSPuq/HmF3tnYHCA@coredump.intra.peff.net>
+References: <CAMJzOtxMjEuAy2B3oJqOZEnipmC4OBWxhQLx_baXDHcQ1C7-+g@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <pull.1074.git.git.1629736918861.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Disposition: inline
+In-Reply-To: <CAMJzOtxMjEuAy2B3oJqOZEnipmC4OBWxhQLx_baXDHcQ1C7-+g@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/08/2021 17:41, Maksym Sobolyev via GitGitGadget wrote:
-> From: Maksym Sobolyev <sobomax@sippysoft.com>
->
-> This allows ident to be something like $FreeBSD$ so it provides matching
-> functionality for repos migrated from CVS / SVN.
->
-> This works by allowing ident to have a parameter, i.e.:
->
-> * ident=MyCustomId
->
-> In .gitattributes.
->
-> Signed-off-by: Maksym Sobolyev <sobomax@sippysoft.com>
-> ---
->     Make ident dynamic, not just a hardcoded value of "$Id".
->     
->     This allows ident to be something like $FreeBSD$ so it provides matching
->     functionality for repos migrated from CVS / SVN.
->     
->     This works by allowing ident to have a parameter, i.e.:
->     
->     * ident=MyCustomId
->     
->     In .gitattributes.
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1074%2Fsobomax%2Fpr-custom_ident-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1074/sobomax/pr-custom_ident-v1
-> Pull-Request: https://github.com/git/git/pull/1074
->
->  builtin/checkout--worker.c              |  17 +++-
->  convert.c                               | 114 +++++++++++++++---------
->  convert.h                               |   7 +-
->  parallel-checkout.c                     |  11 ++-
->  parallel-checkout.h                     |   8 +-
->  t/t2082-parallel-checkout-attributes.sh |   7 +-
->  6 files changed, 108 insertions(+), 56 deletions(-)
->
-> diff --git a/builtin/checkout--worker.c b/builtin/checkout--worker.c
+On Mon, Aug 23, 2021 at 07:31:29PM +0200, Nikita Bobko wrote:
 
-Should this also include some documentation updates?
--- 
-Philip
+> ```
+> git init
+> echo foo > foo
+> git add --all
+> git commit -m 'foo'
+> 
+> echo bar > foo
+> git add --all
+> git commit -m 'bar'
+> 
+> git read-tree HEAD~:foo
+> ```
+> EXP: Read information about file `foo` into index
+> ACT: `fatal: failed to unpack tree object HEAD~:foo`
+> 
+> I expect it to work because manpage says that `git-read-tree` accepts
+> `<tree-ish>`
+
+In your example, "foo" is a blob, not a tree. And thus HEAD~:foo
+is not a tree-ish. Just "HEAD~" would be.
+
+What are you trying to do?
+
+-Peff
