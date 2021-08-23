@@ -2,140 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9A04C4338F
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:19:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1219CC4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:22:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C61661373
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:19:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ECBD06126A
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:22:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237302AbhHWNUK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 09:20:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42400 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237338AbhHWNUI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 09:20:08 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6962FC061757
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 06:19:26 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id 61-20020a9d0d430000b02903eabfc221a9so36280385oti.0
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 06:19:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=iGVpZ4mx/KQF2+7SKdfAtlDX02ElHvJ4ESMTucnzpq0=;
-        b=vUmJvqQMhBoMY+ayYHq4BhWzPWr8pFpKrRS8/vWzCwmegZBuJM8P5V2mqI/tgEud2Q
-         JJBM5Q4rXZqypg6tJQeTOpCVwEI3TUHTvE+QDVWzpqh2j2CmAlnUUo5lzJFiNjGjLIv9
-         iX+YwM2TZEWqll8ZJVwgvrxiGLD+T47N2hR5kGVbSXvFcRUrb0e4/8HISLWqBzJpxD2b
-         hvoOSPUSfvo3dnQBsb8q6l9+Fpjkj01VRqIedjXSh5Qxw+jnSdSinHfB3g/sR5YUYlKu
-         Ehlrxexlc1zGlcwKoGEWrju+Ef4hATdV5svFaSu7aBBLTjvJSgGBlhu9Sb6PMluCZX0p
-         otfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=iGVpZ4mx/KQF2+7SKdfAtlDX02ElHvJ4ESMTucnzpq0=;
-        b=W1SbsZk/eCP5tAVtIGtCN/2bfh/pjBe9lXTwBqXiqJQvYUIp/ho3AN3kmv2NX2CsL+
-         ppk4a4jG3yAcWM2zx5y+RCNWIWocoax+HSPDwGfr+KD72XdAV6NUZ43bS2zdNzj3qxaF
-         GHOpEvIQXD9KIv8o+CAbIE5gGTUY4sN2h3p/QuoK7hkVYG8dgwh3ZxF/YxyuYwKkVAQ0
-         HJ2NnqrNLJwrX0Vwtb7oB7pXraGc45cdHhRwQg8yd4cIiFKX5UTr/KM9NhN4zZsD1MiA
-         q70avWtsABG4HrK6dpFwd2Dec/5sp4dmwGl/Y+/OsfswQTt9BFU9zFU/hNfM2/g7AVX6
-         hLtg==
-X-Gm-Message-State: AOAM530iAdCV2wIJ6PX0T3C9G5iC8OSHhPVhlbIgmbW6LT/6tPIvfx6d
-        UUVO8UsRKBlOnADOnYn3Uco=
-X-Google-Smtp-Source: ABdhPJyPFRiwKgZh4d5nueqVuqV2Kl9EsK5aGvpZQArCIWGwNyUlNvxukLvftHNjY62rsp+5Na78rg==
-X-Received: by 2002:aca:c005:: with SMTP id q5mr11414994oif.153.1629724765625;
-        Mon, 23 Aug 2021 06:19:25 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:48bd:24c0:4055:3255? ([2600:1700:e72:80a0:48bd:24c0:4055:3255])
-        by smtp.gmail.com with ESMTPSA id 33sm3686079ott.19.2021.08.23.06.19.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Aug 2021 06:19:25 -0700 (PDT)
-Subject: Re: [PATCH] multi-pack-index: fix --object-dir from outside repo
-To:     Johannes Berg <johannes@sipsolutions.net>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-References: <20210820193504.37044-1-johannes@sipsolutions.net>
- <04ed58aa-94fa-010e-f4db-f41cd51876a5@gmail.com>
- <4d65ef5b0a9e4104d763facc42d10a20557d054d.camel@sipsolutions.net>
- <xmqqo89osi0b.fsf@gitster.g>
- <caafaf945ec43ba606b054bf4c4faa42e35a8db1.camel@sipsolutions.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <414ed641-2bd3-1316-8189-ad542988d091@gmail.com>
-Date:   Mon, 23 Aug 2021 09:19:23 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        id S237245AbhHWNXR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 09:23:17 -0400
+Received: from mout.gmx.net ([212.227.15.19]:53769 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235813AbhHWNXQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 09:23:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1629724944;
+        bh=vjF0MZU4fybLc066XPNk4kqzQpoPbdTc0cInBOWiY1Y=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=F1POi+g36sRrasMgFZcqDZ1eTRBEfSXUP54UnU8VukeSLxJoEXH6Mva5tf2bx5k4e
+         fGg4QtrcIRzyR6itZIs54DZnORvXrYVfSVBJ6kSPx9OGCd42XaKIo56xqcFlIFodmP
+         J3ACWLzoXuhGEd8oSUZ0ND9YqBe+WFI8RHGgS1qM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.86.215] ([89.1.214.7]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N9MpS-1n5Zhc2E3I-015KMY; Mon, 23
+ Aug 2021 15:22:24 +0200
+Date:   Mon, 23 Aug 2021 15:22:22 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, git@jeffhostetler.com, gitster@pobox.com,
+        newren@gmail.com, stolee@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH] sparse-index: copy dir_hash in ensure_full_index()
+In-Reply-To: <pull.1017.git.1629136135286.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2108231521320.55@tvgsbejvaqbjf.bet>
+References: <pull.1017.git.1629136135286.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <caafaf945ec43ba606b054bf4c4faa42e35a8db1.camel@sipsolutions.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:4089dmfTfok4bFBxJwYJL6kqmmUi4Ez+4ABhoBY7tEZ0FzT0vdn
+ hwW5fy26zF9Fh7jAm+ObMqTM1cg7wKaw8SBz+mRh0RrIakGSdMYoG+gz25rzKLPwCipJTVb
+ sgOWpbMZx/9D/3J1CI/0LjCjv5K7qj8z7ZCFRwXZTzO58vSHh8fqq+sXRg0ZPbaTy1xdlSs
+ UubBgxT9MtqZiGKBEw7wA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:MXUbpLv1itQ=:hAI0JD80Is7U0qs8peFtTJ
+ 1grKGJVBRpmj6yvKs8k0EnTjHhmPSIicRN3u4zsxRHmKGIkuSdb/axnnWPsDjleioGpvyRN6R
+ bYVrVhPq2moeWTfJjPL9qhB2Vs+pa1jVvlxi6B9goywzhoSoZHWy9EA2uE6225F8st4RLnz3P
+ KTk/nbFc50HxfTdhYCgiFDFyzpFZlemUhbEGqCu+S0nMHswp8bVAuNuFKoAa/fauBEZ4k/GLU
+ DkgunoOU5Z1hJ55iqKTIojnzS5vRO3BESKOnWeTg5waPGoxkyhxl9Bgn496rkYT7P1MrlgPPx
+ TwtUaWBt3GP/66/rgou3PztovWCb+cndPp/cfybr830excTrrVUixHJ5R6szJEtsFOi4nXuWh
+ jR2I6+jFexUHGV60QaaAI9ztAF+oxzRCwxkqeyMfPXDD3Sbi/jvhH2WJyRPxIgbnlMjlv8ptC
+ R89XxALnJgGYqvaoSGLB2XKHsFbrORsfxkJSGJQbKSPIaJOjhUs1EoVWgS97QY4VGzJvgfPXd
+ QY4jG+KQimx3UH7Qi+D5a4maZJ8aNtCESu9bvZ2JkI0aJ1luEAZRbf1QoZwPbkuF6gF5h4UAV
+ Bt31J0mW8N7NJSwo6jad17iCeFoIDflv5qn2lhnJnI8lVzgT46psmBr0PQIp7C/+ZoyHJQIMV
+ kvVF02gucOloRI3wkx5hX2Pqg5U7tlfdTy5YgRE+Z87hDq/YU3PIgJMT3Rwu1jyE9HrJsaShN
+ jNkpIBCQWBhJQaPiWI3MugDmYp+gT6JQF4pEFJmUM0V9EAiU8Xi6UI0tAyO7PyWlfFsR1ZTSe
+ rnkwMrCGocLtBPxAa7eu1pHZKCNnuP9vXi9qsSD4sUcKzeDtualxVvHdXTia4BLSdvEb2ba1I
+ DIxtCVEVuvR5gGbGQ6GVxuwoDXNakckkFwaUvPThPgK2rq96I62PWkqInEg83JPiqXAADw1kS
+ 3sOAbUI94JscBmq13dBPoHkSfpurfZLsjWpJErycgGlIwf50yL1ly/mVURzQ4tXDSO1CPY4gd
+ vFC9h2DX9UIgXa23hTXe4oXUrPOX+wm8NQtr/Idze77O59mzj5cXSCZmKt0sTdF3D1Lroa4Uv
+ dEFYcB6T1W2dCBAtu1ep27KxLUMrDyWVzIs+XveMnqslpNHLRAYGLqcRA==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/23/2021 4:10 AM, Johannes Berg wrote:
-> On Mon, 2021-08-23 at 01:05 -0700, Junio C Hamano wrote:
->> Johannes Berg <johannes@sipsolutions.net> writes:
->>
->>> I just needed to go outside the current test git directory, the tests
->>> are running in a way that the current working directory is already the
->>> git tree I'm operating in.
->>>
->>>> Even if you mean to use "cd",
->>>> please do so within a sub-shell.
->>>
->>> I thought about it, but clearly all the tests are run in a sub-shell, so
->>> it didn't seem necessary? But happy to change, I don't really care
->>> either way.
->>
->> Please learn to care before you write your next test, then ;-)
-> 
-> Hey now, I'm fixing your segfaults ;-)
-> 
->> These tests are not run in a sub-shell; they are eval'ed, so that
->> the assignment they make to variables can persist and affect the
->> next test piece.
-> 
-> Makes sense. FWIW, the test *did* restore the CWD so things worked,
+Hi Stolee,
 
-This assumes that your test completes to run the second "cd".
+On Mon, 16 Aug 2021, Derrick Stolee via GitGitGadget wrote:
 
-> and
-> subshells are actually ugly (need to import test-lib-functions.sh again
-> if you want to use those), but I'll make it work somehow.
-
-We just add subshells this way:
-
-test_expect_success 'test name' '
-	prep_step &&
-	(
-		# now in a subshell
-		cd wherever &&
-		do things
-		# don't need to cd again
-	) &&
-	continue test
-'
-
-> More importantly, how do you feel about the "cd /"?
+> From: Jeff Hostetler <jeffhost@microsoft.com>
 >
-> The tests are always run in a place where there's a parent git folder
-> (even if it's git itself), so you cannot reproduce the segfault in a
-> test without the "cd /", though I guess "cd /tmp" would also work or
-> something, but "cd /" felt pretty safe, hopefully not many people have
-> "/.git" on their system.
+> Copy the 'index_state->dir_hash' back to the real istate after expanding
+> a sparse index.
+>
+> A crash was observed in 'git status' during some hashmap lookups with
+> corrupted hashmap entries.  During an index expansion, new cache-entries
+> are added to the 'index_state->name_hash' and the 'dir_hash' in a
+> temporary 'index_state' variable 'full'.  However, only the 'name_hash'
+> hashmap from this temp variable was copied back into the real 'istate'
+> variable.  The original copy of the 'dir_hash' was incorrectly
+> preserved.  If the table in the 'full->dir_hash' hashmap were realloced,
+> the stale version (in 'istate') would be corrupted.
+>
+> The test suite does not operate on index sizes sufficiently large to
+> trigger this reallocation, so they do not cover this behavior.
+> Increasing the test suite to cover such scale is fragile and likely
+> wasteful.
 
-Don't leave the directory your test is set up to run in.
+That explanation makes sense. And as the finder of the symptom, I can
+confirm that it fixed the issue. So here is my `Reviewed-by:` ;-)
 
-Git has a very large test suite full of examples to use for inspiration.
-If you do not see a pattern used within the test suite, then there is
-probably good reason to avoid that pattern.
+Ciao,
+Dscho
 
-Thanks,
--Stolee
+>
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>     sparse-index: copy dir_hash in ensure_full_index()
+>
+>     This fix is an issue we discovered in our first experimental release=
+ of
+>     the sparse index in the microsoft/git fork. We fixed it in the lates=
+t
+>     experimental release [1] and then I almost forgot about it until we
+>     started rebasing sparse-index work on top of the 2.33.0 release
+>     candidates.
+>
+>     [1] https://github.com/microsoft/git/releases/tag/v2.32.0.vfs.0.102.=
+exp
+>
+>     This is a change that can be taken anywhere since 4300f8 (sparse-ind=
+ex:
+>     implement ensure_full_index(), 2021-03-30), but this version is base=
+d on
+>     v2.33.0-rc2.
+>
+>     While the bug is alarming for users who hit it (seg fault) it requir=
+es
+>     sufficient scale and use of the optional sparse index feature. We ar=
+e
+>     not recommending wide adoption of the sparse index yet because we do=
+n't
+>     have a sufficient density of integrated commands. For that reason, I
+>     don't think this should halt progress towards the full v2.33.0 relea=
+se.
+>     I did want to send this as soon as possible so that could be at the
+>     discretion of the maintainer.
+>
+>     Thanks, -Stolee
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1017%2=
+Fderrickstolee%2Fsparse-index%2Ffix-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1017/derr=
+ickstolee/sparse-index/fix-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1017
+>
+>  sparse-index.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/sparse-index.c b/sparse-index.c
+> index c6b4feec413..56eb65dc349 100644
+> --- a/sparse-index.c
+> +++ b/sparse-index.c
+> @@ -283,6 +283,7 @@ void ensure_full_index(struct index_state *istate)
+>
+>  	/* Copy back into original index. */
+>  	memcpy(&istate->name_hash, &full->name_hash, sizeof(full->name_hash));
+> +	memcpy(&istate->dir_hash, &full->dir_hash, sizeof(full->dir_hash));
+>  	istate->sparse_index =3D 0;
+>  	free(istate->cache);
+>  	istate->cache =3D full->cache;
+>
+> base-commit: 5d213e46bb7b880238ff5ea3914e940a50ae9369
+> --
+> gitgitgadget
+>
+>
