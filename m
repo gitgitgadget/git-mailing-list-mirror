@@ -2,150 +2,290 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-20.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,TRACKER_ID
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBDC5C432BE
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 14:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51527C4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 14:28:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA6DD61073
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 14:26:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2895B613AD
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 14:28:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229961AbhHWO0r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 10:26:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57804 "EHLO
+        id S230092AbhHWO3W (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 10:29:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbhHWO0n (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 10:26:43 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7FF8C061575
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 07:26:00 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id u14so12608909ejf.13
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 07:26:00 -0700 (PDT)
+        with ESMTP id S230009AbhHWO3R (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 10:29:17 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5C98C061757
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 07:28:31 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id g14so15521503pfm.1
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 07:28:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=yWQ1cMhgGUAMzzcSZzD/ZJNovDm8fKK6Yrn5YfweRkM=;
-        b=d5wDt2wauzjvszDlyfeSxWeekF4JAMyPebvCjCluxDVGTHgbd3dNXFIi2MU5ZQSoOQ
-         v5ex7HZBkzdDSL2YEyrILVyWXzSQNDcyANYALmXUmwOdopVB8WXT98EYzkyAKyLEkYYd
-         mwxbKB32VS9zKalTjh7WX5lb2/K79cFwi63BTMxH+a+1sKqmA+kH58dupY+KKA1Km1ai
-         4Xktu3y44T5QlKL3XEwAtZqQFQNXSx4F/wlF8FwEP+WFHruL69VHkI0/5YQD2dEsn5tT
-         l5kuteUX0hyDUc2t8XatLVmwoToanb2ZcoIK2gaxn0AvWGNcBMp22YVRxxnWJUZUiKcs
-         Z7lQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=2juwDmjgEYjWJJr/tonKvDKgIotHHAiJ2jNy0O2vhhI=;
+        b=LgG203RCCIeKj4q7AMi8J6o7eq2i/VRnDxWr6K8N47vXOk2+/F4MNK4rJ7QuvU9pR7
+         Lo/5C2Wgn6RShh29Ywqp80yHnvaH4jc+HmhWM5QYRs5wQWao8t3zGL8zASps1sAVdvKs
+         Oxl+YL/TAbTl3AJQPF52jsYRg57Xz9++RD+F+W/i+WldG2DImwsrgIZ8EIfgspuIGTqx
+         1l+O5aQiDOuut1YMeiUeWoHYUMGVrJQuErGAdeeqjrdK3I0mmXqOzvBxThhnYVokvQgm
+         vrqyM5XuhcygzoicotDzEuV9JTlylB+cxjeaRVw/Ra6DzUGUZ3AE0Bzbdsiv4IGQqfjv
+         Vf6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=yWQ1cMhgGUAMzzcSZzD/ZJNovDm8fKK6Yrn5YfweRkM=;
-        b=Qg8XN3DYLAX3ejujrCHyXp3whwLAfLpsa3kBcBY5IfTjRQxgdr68v1TIhaghvCTTIk
-         aQqdvGfPQQUlJleyPayjWEFNKpxbTVPuPbjiX4yXhmkuEx3s2RE7AWx3HJH5G9jxr1cG
-         e4DgI9OFxKSCSVRT86A00Fi7+kSuq/4/nfFSrRRAQgfZbAdsR9eGSdC+sVhRcXnqaKDM
-         tVN/LgIV33NM2vFuNd9gLUYiLq2psFcmglTena18GSQy/D7Vif7I3pr0/9coLKSu/0tE
-         5fFWpwPCwtdQiR8zfzTqCRQFi3dfnrxKDWKhsG/189LDuaKde34hwYDyBYLMaLZdlIU3
-         c1Fg==
-X-Gm-Message-State: AOAM5323Gh+CFNDxqI7G6x20AZBkYD69mPdeCoGs6DE0fcODBlgnAPMh
-        dV1c5rMKP+7f46PkDmvZl7X8POE3344lY89j
-X-Google-Smtp-Source: ABdhPJxzFPB32aEK+qxg2E9wXZtsAwraqIZGvuEZ74lpkrWeQEvcL36oD6jfEWpd6hzhJx1Bo6Q1Gw==
-X-Received: by 2002:a17:906:9b53:: with SMTP id ep19mr11155478ejc.86.1629728759163;
-        Mon, 23 Aug 2021 07:25:59 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id c6sm7526429eje.105.2021.08.23.07.25.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Aug 2021 07:25:58 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, gitster@pobox.com,
-        newren@gmail.com, stolee@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] sparse-index: copy dir_hash in ensure_full_index()
-Date:   Mon, 23 Aug 2021 16:25:15 +0200
-References: <pull.1017.git.1629136135286.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <pull.1017.git.1629136135286.gitgitgadget@gmail.com>
-Message-ID: <87h7fgfdah.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=2juwDmjgEYjWJJr/tonKvDKgIotHHAiJ2jNy0O2vhhI=;
+        b=QcSgW4wGRxyMBsKgTVW7MqIOA5UFYUwayRhZZLHk4jfHPz9nLZl6I4vpNnUqCSWhTA
+         Z6akLnzSBC7jS5mEX3ktsVrf8tGoNVVlMqxn14z9abKAb15iUY4YLUr+lDsQEyHMRWBM
+         Cm8WU387/eg0Uer0R3geJwJAuQZO9ZXqlfQn8DTvDrPlECS9shUilRbQAup6cYVgBcX/
+         skM8gq7X+2QhMHspv9786EFxJbx3MlYtYNCREMy3HgaazE8MTgmil7YEtfAXCUFF7bfI
+         750G9ZrXnqg5C+AQCpAsOs0eTUb9DSk0p/FYhk/p+EjkLHDCwK3zTVzeSKstMGNLUxk0
+         aLdA==
+X-Gm-Message-State: AOAM531WPh0Ac+nq9cqiMgxu+Y09NH4L5qAiVRMSFhFwqpeorcZ+Ig3N
+        /lFwwRVfu5qen9mxK2OpyI0=
+X-Google-Smtp-Source: ABdhPJzD8f0meaaJDPn+mHe9C7T+rBmYQ3/Zy646QPkE/SUarnIIS+2rfyGKa/8nNSyLATYocCB+Zg==
+X-Received: by 2002:aa7:8802:0:b0:3e2:bb03:4560 with SMTP id c2-20020aa78802000000b003e2bb034560mr30825729pfo.62.1629728911233;
+        Mon, 23 Aug 2021 07:28:31 -0700 (PDT)
+Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id 143sm16125703pfx.1.2021.08.23.07.28.29
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 23 Aug 2021 07:28:30 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <daniel@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
+        Yi-Jyun Pan <pan93412@gmail.com>
+Subject: [PATCH v2 1/1] ci: new github-action for git-l10n code review
+Date:   Mon, 23 Aug 2021 22:28:21 +0800
+Message-Id: <20210823142821.26658-2-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
+In-Reply-To: <20210822161325.22038-1-worldhello.net@gmail.com>
+References: <20210822161325.22038-1-worldhello.net@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-On Mon, Aug 16 2021, Derrick Stolee via GitGitGadget wrote:
+Git l10n uses github pull request for code review. A helper program
+"git-po-helper" can be used to check typos in ".po" files, validate
+syntax, and check commit message. It would be convenient to integrate
+this helper program to CI and add comments in pull request.
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
->
-> Copy the 'index_state->dir_hash' back to the real istate after expanding
-> a sparse index.
->
-> A crash was observed in 'git status' during some hashmap lookups with
-> corrupted hashmap entries.  During an index expansion, new cache-entries
-> are added to the 'index_state->name_hash' and the 'dir_hash' in a
-> temporary 'index_state' variable 'full'.  However, only the 'name_hash'
-> hashmap from this temp variable was copied back into the real 'istate'
-> variable.  The original copy of the 'dir_hash' was incorrectly
-> preserved.  If the table in the 'full->dir_hash' hashmap were realloced,
-> the stale version (in 'istate') would be corrupted.
->
-> The test suite does not operate on index sizes sufficiently large to
-> trigger this reallocation, so they do not cover this behavior.
-> Increasing the test suite to cover such scale is fragile and likely
-> wasteful.
+The new github-action workflow is added in ".github/workflows/l10n.yml",
+which is disabled by default. To turn it on for the git-l10n related
+repositories, such as "git-l10n/git-po", we can add a new branch named
+"ci-config" and create a simple shell script at "ci/config/allow-l10n"
+in this branch.
 
-How large does the index need to be to trigger this? I don't know if a
-test here is useful, but FWIW if we had such a test then the EXPENSIVE
-prereq + GIT_TEST_LONG=true might be a good fit for it.
+The new l10n workflow listens to two types of github events: "push" and
+"pull_request_target". The "pull_request_target" event is just like the
+"pull_request" event, but provides write permission to create comments
+for pull request.
 
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->     sparse-index: copy dir_hash in ensure_full_index()
->     
->     This fix is an issue we discovered in our first experimental release of
->     the sparse index in the microsoft/git fork. We fixed it in the latest
->     experimental release [1] and then I almost forgot about it until we
->     started rebasing sparse-index work on top of the 2.33.0 release
->     candidates.
->     
->     [1] https://github.com/microsoft/git/releases/tag/v2.32.0.vfs.0.102.exp
->     
->     This is a change that can be taken anywhere since 4300f8 (sparse-index:
->     implement ensure_full_index(), 2021-03-30), but this version is based on
->     v2.33.0-rc2.
->     
->     While the bug is alarming for users who hit it (seg fault) it requires
->     sufficient scale and use of the optional sparse index feature. We are
->     not recommending wide adoption of the sparse index yet because we don't
->     have a sufficient density of integrated commands. For that reason, I
->     don't think this should halt progress towards the full v2.33.0 release.
->     I did want to send this as soon as possible so that could be at the
->     discretion of the maintainer.
->     
->     Thanks, -Stolee
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1017%2Fderrickstolee%2Fsparse-index%2Ffix-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1017/derrickstolee/sparse-index/fix-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1017
->
->  sparse-index.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/sparse-index.c b/sparse-index.c
-> index c6b4feec413..56eb65dc349 100644
-> --- a/sparse-index.c
-> +++ b/sparse-index.c
-> @@ -283,6 +283,7 @@ void ensure_full_index(struct index_state *istate)
->  
->  	/* Copy back into original index. */
->  	memcpy(&istate->name_hash, &full->name_hash, sizeof(full->name_hash));
-> +	memcpy(&istate->dir_hash, &full->dir_hash, sizeof(full->dir_hash));
->  	istate->sparse_index = 0;
->  	free(istate->cache);
->  	istate->cache = full->cache;
->
-> base-commit: 5d213e46bb7b880238ff5ea3914e940a50ae9369
+For a "push" event, it will scan commits one by one. If a commit does
+not look like a l10n commit (no file in "po/" has been changed), it
+will immediately fail without checking for further commits. While for a
+"pull_request_target" event, all new introduced commits will be scanned.
+
+"git-po-helper" will generate two kinds of suggestions, errors and
+warnings. A l10n contributor should try to fix all the errors, and
+should pay attention to the warnings. All the errors and warnings will
+be reported in the last step of the l10n workflow with two message
+groups. For a "pull_request_target" event, will create additional
+comments in the pull request to report the result.
+
+Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+---
+ .github/workflows/l10n.yml | 156 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 156 insertions(+)
+ create mode 100644 .github/workflows/l10n.yml
+
+diff --git a/.github/workflows/l10n.yml b/.github/workflows/l10n.yml
+new file mode 100644
+index 0000000..bb4d8b3
+--- /dev/null
++++ b/.github/workflows/l10n.yml
+@@ -0,0 +1,156 @@
++name: git-l10n
++
++on: [push, pull_request_target]
++
++jobs:
++  ci-config:
++    runs-on: ubuntu-latest
++    outputs:
++      enabled: ${{ steps.check-l10n.outputs.enabled }}
++    steps:
++      - name: try to clone ci-config branch
++        run: |
++          git -c protocol.version=2 clone \
++            --no-tags \
++            --single-branch \
++            -b ci-config \
++            --depth 1 \
++            --no-checkout \
++            --filter=blob:none \
++            https://github.com/${{ github.repository }} \
++            config-repo &&
++          cd config-repo &&
++          git checkout HEAD -- ci/config || : ignore
++      - id: check-l10n
++        name: check whether CI is enabled for l10n
++        run: |
++          enabled=no
++          if test -x config-repo/ci/config/allow-l10n &&
++             config-repo/ci/config/allow-l10n '${{ github.ref }}'
++          then
++            enabled=yes
++          fi
++          echo "::set-output name=enabled::$enabled"
++
++  git-po-helper:
++    needs: ci-config
++    if: needs.ci-config.outputs.enabled == 'yes'
++    runs-on: ubuntu-latest
++    steps:
++    - uses: actions/checkout@v2
++      with:
++        fetch-depth: '0'
++    - name: Fetch missing commits
++      id: fetch-commits
++      run: |
++        if test "${{ github.event_name }}" = "pull_request_target"
++        then
++          base=${{ github.event.pull_request.base.sha }}
++          head=${{ github.event.pull_request.head.sha }}
++        else
++          base=${{ github.event.before }}
++          head=${{ github.event.after }}
++        fi
++        for commit in $base $head
++        do
++          if echo $commit | grep -q "^00*$"
++          then
++            continue
++          fi
++          if ! git rev-parse --verify --end-of-options "$commit^{commit}" --
++          then
++            git fetch origin $commit
++          fi
++        done
++        echo "::set-output name=base::$base"
++        echo "::set-output name=head::$head"
++
++    - uses: actions/setup-go@v2
++      with:
++        go-version: ">=1.16"
++    - name: Install git-po-helper
++      run: |
++        go install github.com/git-l10n/git-po-helper@main
++    - name: Install other dependencies
++      run: |
++        sudo apt-get update -q &&
++        sudo apt-get install -q -y gettext
++    - name: Run git-po-helper
++      id: check-commits
++      run: |
++        exit_code=0
++        git-po-helper check-commits \
++            --github-action \
++            --github-action-event "${{ github.event_name }}" -- \
++            ${{ steps.fetch-commits.outputs.base }}..${{ steps.fetch-commits.outputs.head }} \
++            >git-po-helper.out 2>&1 ||
++          exit_code=$?
++        echo "::set-output name=exit_code::$exit_code"
++        has_error_msg=
++        has_warning_msg=
++        if test $exit_code -ne 0
++        then
++          has_error_msg=yes
++          if test "${{ github.event_name }}" = "pull_request_target"
++          then
++            echo "ERROR_MSG<<EOF" >>$GITHUB_ENV
++            grep -v -e "^level=warning" -e WARNING git-po-helper.out |
++              perl -pe 's/\e\[[0-9;]*m//g' >>$GITHUB_ENV
++            echo "EOF" >>$GITHUB_ENV
++          fi
++        fi
++        if grep -q -e "^level=warning" -e WARNING git-po-helper.out
++        then
++          has_warning_msg=yes
++          if test "${{ github.event_name }}" = "pull_request_target"
++          then
++            echo "WARNING_MSG<<EOF" >>$GITHUB_ENV
++            grep -v -e "^level=error" -e ERROR git-po-helper.out |
++              perl -pe 's/\e\[[0-9;]*m//g' >>$GITHUB_ENV
++            echo "EOF" >>$GITHUB_ENV
++          fi
++        fi
++        echo "::set-output name=has_error_msg::$has_error_msg"
++        echo "::set-output name=has_warning_msg::$has_warning_msg"
++    - name: Report errors in comment for pull request
++      uses: mshick/add-pr-comment@v1
++      if: steps.check-commits.outputs.has_error_msg == 'yes' && github.event_name == 'pull_request_target'
++      continue-on-error: true
++      with:
++        repo-token: ${{ secrets.GITHUB_TOKEN }}
++        repo-token-user-login: 'github-actions[bot]'
++        message: |
++          Errors found by git-po-helper in workflow ${{ github.workflow }}:
++          ```
++          ${{ env.ERROR_MSG }}
++          ```
++    - name: Report warnings in comment for pull request
++      uses: mshick/add-pr-comment@v1
++      if: steps.check-commits.outputs.has_warning_msg == 'yes' && github.event_name == 'pull_request_target'
++      continue-on-error: true
++      with:
++        repo-token: ${{ secrets.GITHUB_TOKEN }}
++        repo-token-user-login: 'github-actions[bot]'
++        message: |
++          Warnings found by git-po-helper in workflow ${{ github.workflow }}:
++          ```
++          ${{ env.WARNING_MSG }}
++          ```
++    - name: Final report
++      run: |
++        if test "${{ steps.check-commits.outputs.has_error_msg }}" = "yes"
++        then
++          echo "::group::Errors found by git-po-helper"
++          grep -v -e "^level=warning" -e WARNING git-po-helper.out
++          echo "::endgroup::"
++        fi
++        if test "${{ steps.check-commits.outputs.has_warning_msg }}" = "yes"
++        then
++          echo "::group::Warnings found by git-po-helper"
++          grep -v -e "^level=error" -e ERROR git-po-helper.out
++          echo "::endgroup::"
++        fi
++        if test ${{ steps.check-commits.outputs.exit_code }} -ne 0
++        then
++          exit ${{ steps.check-commits.outputs.exit_code }}
++        fi
+-- 
+2.33.0
 
