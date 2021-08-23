@@ -2,139 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-4.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D63CDC4338F
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 01:07:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7377CC4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 01:11:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B54B061262
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 01:07:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4D8F361185
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 01:11:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234409AbhHWBId (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Aug 2021 21:08:33 -0400
-Received: from w1.tutanota.de ([81.3.6.162]:51298 "EHLO w1.tutanota.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231807AbhHWBIc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Aug 2021 21:08:32 -0400
-Received: from w3.tutanota.de (unknown [192.168.1.164])
-        by w1.tutanota.de (Postfix) with ESMTP id 0504EFBF5CB;
-        Mon, 23 Aug 2021 01:07:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1629680869;
-        s=s1; d=tutanota.com;
-        h=From:From:To:To:Subject:Subject:Content-Description:Content-ID:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Cc:Cc:Date:Date:In-Reply-To:In-Reply-To:MIME-Version:MIME-Version:Message-ID:Message-ID:Reply-To:References:References:Sender;
-        bh=X2JMCyR6yAP6ppZDsebjgz2KIcTkQkd+6Oe0EDbO5a0=;
-        b=Rzcicd1P0Ja4+FyQPuLBM1t1J4TbVrQdolD7qa7C61hW1IusHMtf3miuHadgAnUD
-        NR6KUKiTakAergmZFDocMtIzfaCla5uyYvf+MKlCdkGQKwW//v0oO1zEHubpjaSO8yJ
-        8C6aVBtaO8S/XTQH3wJyffbH6KZ7RkZ9N+P2tm1Jjvi3BL8aaD/kRb7VWMRFt6XkzRM
-        Ju+BPQyGQC5mwFe7/Fbk+noH+qVqlrwhQTBxCjxecxPEOpwn0U1rW5cRoh4fL4Ft/KN
-        Xa5NX04znTbOeuiA/ESocZkBUNxsQ1L790JX9CE951ana9zXWTyi8QC67fVlX8slBFP
-        QBTTScFaeA==
-Date:   Mon, 23 Aug 2021 03:07:49 +0200 (CEST)
-From:   Rafael Santiago <voidbrainvoid@tutanota.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Rafael Santiago via GitGitGadget <gitgitgadget@gmail.com>,
-        Git <git@vger.kernel.org>
-Message-ID: <MhkY8ud--3-2@tutanota.com>
-In-Reply-To: <YSLKrX/QTZtxBGDz@camp.crustytoothpaste.net>
-References: <pull.1069.git.git.1629576007891.gitgitgadget@gmail.com> <YSF1GfpHXRrXebsB@camp.crustytoothpaste.net> <Mheyv1D--3-2@tutanota.com> <YSLKrX/QTZtxBGDz@camp.crustytoothpaste.net>
-Subject: Re: [PATCH] Give support for hooks based on platform
+        id S234555AbhHWBL6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Aug 2021 21:11:58 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:17321 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234476AbhHWBL5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Aug 2021 21:11:57 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1629681075; h=Content-Type: Content-Transfer-Encoding:
+ MIME-Version: References: In-Reply-To: Message-ID: Date: Subject: Cc:
+ To: From: Sender; bh=9Z6G7olkS6uE1EoeQBk2swtZ0Ns1VFDQzo5gPEkS2fE=; b=KrdOsFZmGGwoUIATe9T1sHnurGsfQTLYyVWxjlXLhUAzT3PFMsovr8LoLEKE7nIiVjRGXaPq
+ fEg5CpXNS7EpFcs12v2qtsQSj2g0IvAW1N/TedcKU2voce2hegUFJV05ziLFbNPpIaPl730v
+ LzTpTXn30RPyNv6gSj4zjy0t/Kk=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyJjNzk3NCIsICJnaXRAdmdlci5rZXJuZWwub3JnIiwgImJlOWU0YSJd
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 6122f5b089fbdf3ffeecb640 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 23 Aug 2021 01:11:12
+ GMT
+Sender: mfick=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CDEC8C4360D; Mon, 23 Aug 2021 01:11:11 +0000 (UTC)
+Received: from mfick-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: mfick)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CFDA0C43460;
+        Mon, 23 Aug 2021 01:11:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org CFDA0C43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Martin Fick <mfick@codeaurora.org>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Johannes Berg <johannes@sipsolutions.net>, git@vger.kernel.org,
+        bup-list@googlegroups.com
+Subject: Re: [RFC PATCH] multi-pack-index: allow operating without pack files
+Date:   Sun, 22 Aug 2021 19:11:09 -0600
+Message-ID: <3649958.14eQuSAvaI@mfick-lnx>
+User-Agent: KMail/5.2.3 (Linux/4.4.0-210-generic; KDE/5.36.0; x86_64; ; )
+In-Reply-To: <edb9c412-70c8-4fc6-04ab-417eca05ee15@gmail.com>
+References: <20210820195558.44275-1-johannes@sipsolutions.net> <edb9c412-70c8-4fc6-04ab-417eca05ee15@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Well, you are taking into consideration that every git user that needs to
-automate some stuff during a scm event will do it from a shell
-(I meant true shell or a mocked up one such as cygwin, msys, etc)
-and it is true, by design.
+On Sunday, August 22, 2021 8:34:43 PM MDT Derrick Stolee wrote:
+> On 8/20/2021 3:55 PM, Johannes Berg wrote:
+> > Technically, multi-pack-index doesn't need pack files to exist,
+> > but add_packed_git() today checks whether it exists or not.
+> 
+> Having a multi-pack-index is supposed to indicate that we have
+> these objects in the objects/pack directory within the specified
+> pack-files.
 
-However, not all git users (out unix) uses git from "bash-like"
-environments. I know people that prefers using it from a well-cooked
-IDE by clicking and dragging things or even from command prompt when
-on Windows. Those people are not able to handle some scm event
-automation as unix users because git hook in its essence presupposes
-the existence/necessity of a powerful shell (okay, it is possible to
-put a shebang and call a batch file on windows, maybe, but it is a
-little clumsy, in my opinion). On Windows, users can do a bunch of stuff
-just by using the ready to go powershell, but open an if/else on a bash
-script to run a cygwin instance by calling powershell from there is not a
-good and clean solution for this type of user. Presupposing shell for git,
-limitates the idea behind the scm event handling with hooks, because
-currently it is strongly dependent from shell to work on every git
-supported platform.
+Hmm, isn't it a normal supported use case for repacking to potentially delete 
+packfiles which are in the MIDX (I'm specifically thinking about when someone 
+runs git gc with an older git version which knows nothing about MIDX files)?
 
-The idea of having hooks being executed by platform would be the first
-step to give support to execute commands on scm events without
-obligating users out of a unix have a shell interpreter to access
-native stuff. Currently, this commit does not implement it but would be
-possible to do and in a=C2=A0 less noisy way for all unix-like stuff. I am =
-not sure
-but currently a _windows hook out from cygwin would result on a spawn
-error, would not?
+ -Martin
 
-Git hooks are useful features but would be more useful if it breaked up
-the shell jail. It could make git much more integrated with the current
-platform.=C2=A0 Being possible to make it powerful as it is on a unix even =
-on
-a total different platform as Windows, let's say.
-
-For sure, this commit are not a "panacea" but intends to start making
-git-hooks more independent from 3rd party software to work on as expected,
-on every platform that a git-repo is expected to be handled.
-
-I hope I was clearer from this time.
-
-Rafael Santiago
---
-22 de ago. de 2021 19:07 por sandals@crustytoothpaste.net:
-
-> On 2021-08-21 at 23:11:27, Rafael Santiago wrote:
->
->> In my opinion "binary hooks" (hooks that execute specific binaries not
->> present in the system as a default tool) should be versioned and built
->> as a support tool into the repository or in the worst case downloaded
->> from somewhere, even because versioning binaries into git repos is
->> considered a bad practice that could make bloated repos.
->>
->
-> Yes, I agree binary hooks should not be checked into the repository.
->
->> The point is that in many cases a dependency with a script language is
->> created only to make the hook actions portable from a platform to
->> other, but what this script in its essence does is a thing that could
->> be done with basic tools delivered with the current operating system.
->>
->
-> Then, in general, it can be done in a shell script containing an if-then
-> statement per platform using the native tools, so I'm not seeing the
-> particular reason that this series is necessary if the hooks being
-> executed aren't binaries.  All systems on which Git runs must contain a
-> POSIX-compatible shell.
->
-> Can you explain the rationale for your proposal in more detail so that
-> we can understand why this change is necessary?  Typically this is done
-> in the commit message, but I don't think I understand why you want to do
-> this.
->
->> There is no problem on using cygwin on windows, you should use
->> standard hook and do all the effort to make it unique for cygwin
->> environments and true unix boxes (in other words: you would continue
->> doing what you are doing, because it attends yours requirements).
->> Notice that everything that have been working will stay working as
->> before. Anyway, if cygwin becomes a point of incompatibility at some
->> point, you could use the "_windows" version by coding your "cygwin
->> script" there.
->>
->
-> Right, my point is that your commit message proposes using "windows" for
-> Cygwin.  The patch doesn't, but your commit message says that every
-> version of Windows is considered "windows".
-> --=20
-> brian m. carlson (he/him or they/them)
-> Toronto, Ontario, CA
->
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code 
+Aurora Forum, hosted by The Linux Foundation
 
