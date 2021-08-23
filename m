@@ -8,66 +8,66 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B4D0C4338F
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:03:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B83AC432BE
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:03:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1564861008
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:03:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EE8C61008
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:03:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236234AbhHWLDv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 07:03:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38672 "EHLO
+        id S236299AbhHWLDw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 07:03:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234997AbhHWLDt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 07:03:49 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CE6EC061575
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:03:06 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id u15so10242334wmj.1
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:03:06 -0700 (PDT)
+        with ESMTP id S236197AbhHWLDu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 07:03:50 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DB84C061760
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:03:08 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id f5so25603656wrm.13
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:03:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1WtZtkqG3InMIqhzIDlQ7xvd08LY3B6ZEGXcYKecVq4=;
-        b=HjJyw22EXoS8o1Yqi2Zzc0P+0e+olgPRjiqDZsdfjlg1FkS/NQBwGNhbuFH1Y+ae3p
-         e0unFYY01BeqSdfrdaTwolePgxIDI5139GkzkCw0vnbz+xG9UxOVccSc4caZGcKN6Uxz
-         vG6x8/NUOA950OPY4HMyMgefOgKWhiOZ2MngT8b8Gwu+XYFJHNiqnVIB+xr6G+N5fzTZ
-         00l7dG3kdmN8+FNYuZXCj4OGpeQhcnZ6ELGBBHNbKLco8XGzLxku7g0UUlN19IRr5rj9
-         8MQg7cewq7UR9tuHDC0p159xBuIM/UKo5NUx/v/NlMcWTsWl4+qe1r+WcOvs7+SZhybz
-         WTmw==
+        bh=ISXoiK5WzcZ/eeZfVh17mCi0hGY8BpVQTieO3Zfoq9I=;
+        b=f6AaVEIzlYzSvw10Uj3KSkh64PppWhFWpHC5+bw+wa0R4pC3KqSS3wVtxUG79jjeyV
+         Q3hFqBy5XU9g3xGafjjCNndZQJzAQex26YfzLNRUD5HL+JwOhvH0tKQHjAcvkmybvxXc
+         Ir1HAQ9HKlpk9Vygzszc6r84JlvDp69n7dhv9uHNaopy1agz/+NzHhoplxL8vfMpQxFf
+         yAkPExRtYu4UmysyJzZGF0spvVbVYFY+/mKvt4Yke9rgvwuSKz5Z+vbAkHOdOvAzKe89
+         /20IuOxAgxm6pG+Gkp6h6d5zg9rlRa8oMPwTlRc6/Fp3/IjXAXLdYZInjjz6VkXGx3mc
+         Q9gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1WtZtkqG3InMIqhzIDlQ7xvd08LY3B6ZEGXcYKecVq4=;
-        b=Hu6RfntTY5rlpkbROCSS0zZBqtdxh+/efnwRh5aPYJoUhBvKFhAJyvmYwLojaMAtUQ
-         JILQtnnrAyeihOq1f6o3vma0QVUSW5CnqVAsBj+7ymuTPDWHnBzVocJQVEOg96zQQYd2
-         Og4FcpFZiHuT+uSUPXGZWoVSSElg8vt7jMhHjFNGlazq5tDVAx3jNVVHEStZuy3DTmNZ
-         0m3i1yrqrTTtaexgTauXC4If2FcP+cq7R9fTexcuKUwd/Phqe5tUMviTjW8Nuh5yj8y3
-         fLtD20nG/6Xn+GE4SWPJ2A0v47cNb7na0kifokJPVSnMa0BFV4urGmEteO8GpnCAotus
-         Dy0w==
-X-Gm-Message-State: AOAM533SFvJZoaACTK1rRDfpmZcANMfCz1FsA2h7/WbGFHMt8R90XzmT
-        9L/WOtaT5LO1sB4JhU4WbOjCTVNttQKKFlKf
-X-Google-Smtp-Source: ABdhPJxUCJPAs6qAEZlQstp7tmUjqTajA3TH7rweMCiYbLyc6vykAuYERA9D43QOMvOPlZnO2sLPFw==
-X-Received: by 2002:a1c:f206:: with SMTP id s6mr15292974wmc.102.1629716585015;
-        Mon, 23 Aug 2021 04:03:05 -0700 (PDT)
+        bh=ISXoiK5WzcZ/eeZfVh17mCi0hGY8BpVQTieO3Zfoq9I=;
+        b=V8EIZSAyEePDoKCQAoKTIP7Ejmqj/k72CfD4NJC5LVxEYZbHshzi63Z/KjIcNgXWDX
+         ubWoHx3FHBSu0plZGPSnOf3iIWidJa54orRpvjFxg4SLdCBsCzfAuauwfpkEyfPsra4+
+         0DcYDE/zGStEn/4MqlnLIc3sDEZbicPzksBXyN8P738UEcbkUIKX0FoEsrDNeqXYjpOD
+         2LaLhSqmVpsEOxvLGWX/j/r9LhIqtPou2UrVpXs6N33qmbTGdtWIRQqL6wmvYHGXASKj
+         p23uvswj7foYktjCt1MTJrl81psialLuhlpAdnuN5xpvrcs2WncT0AIcZf5d/akx90Dp
+         fG0A==
+X-Gm-Message-State: AOAM533my+D6PIzOOkrXWXeWtje3dYThdOat9R11rDgVcWXhwvQ5qI2G
+        HK0pt0p21WwQsYMd6kyknQOL1mUZMo7DbzmD
+X-Google-Smtp-Source: ABdhPJwpjFO+aZ2eLJXonoM2HCzOPPEk+3ysSpPJNoUwYsIcf8ENK0ERgRQnAO5bzK/QMGEqK1n5uQ==
+X-Received: by 2002:adf:e9c3:: with SMTP id l3mr13051933wrn.300.1629716586576;
+        Mon, 23 Aug 2021 04:03:06 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l19sm13255493wmi.4.2021.08.23.04.03.04
+        by smtp.gmail.com with ESMTPSA id l19sm13255493wmi.4.2021.08.23.04.03.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Aug 2021 04:03:04 -0700 (PDT)
+        Mon, 23 Aug 2021 04:03:05 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 0/4] bundle: show progress on "unbundle"
-Date:   Mon, 23 Aug 2021 13:02:55 +0200
-Message-Id: <cover-v2-0.4-00000000000-20210823T110136Z-avarab@gmail.com>
+Subject: [PATCH v2 2/4] bundle API: change "flags" to be "extra_index_pack_args"
+Date:   Mon, 23 Aug 2021 13:02:57 +0200
+Message-Id: <patch-v2-2.4-3d7bd9c33be-20210823T110136Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.662.g438caf9576d
-In-Reply-To: <cover-0.4-0000000000-20210727T004015Z-avarab@gmail.com>
-References: <cover-0.4-0000000000-20210727T004015Z-avarab@gmail.com>
+In-Reply-To: <cover-v2-0.4-00000000000-20210823T110136Z-avarab@gmail.com>
+References: <cover-0.4-0000000000-20210727T004015Z-avarab@gmail.com> <cover-v2-0.4-00000000000-20210823T110136Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,52 +75,132 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This straightforward series addr progress output on "git bundle
-unbundle", we already had progress output if bundles were fetched from
-via the transport.c (i.e. "git clone/fetch" etc.), but not from "git
-bundle unbundle" directly.
+Since the "flags" parameter was added in be042aff24c (Teach progress
+eye-candy to fetch_refs_from_bundle(), 2011-09-18) there's never been
+more than the one flag: BUNDLE_VERBOSE.
 
-This was submitted as
-https://lore.kernel.org/git/cover-0.4-0000000000-20210727T004015Z-avarab@gmail.com/
-before v2.33, hopefully now with the release out these rather trivial
-patches can be queued up. The only change since v1 is an extended
-commit message in 3/4 discussing the initial motivation for this change.
+Let's have the only caller who cares about that pass "-v" itself
+instead through new "extra_index_pack_args" parameter. The flexibility
+of being able to pass arbitrary arguments to "unbundle" will be used
+in a subsequent commit.
 
-Ævar Arnfjörð Bjarmason (4):
-  bundle API: start writing API documentation
-  bundle API: change "flags" to be "extra_index_pack_args"
-  index-pack: add --progress-title option
-  bundle: show progress on "unbundle"
+We could pass NULL explicitly in cmd_bundle_unbundle(), but let's
+instead initialize an empty strvec and pass it, in anticipation of a
+subsequent commit wanting to add arguments to it.
 
- Documentation/git-index-pack.txt |  6 ++++++
- builtin/bundle.c                 | 16 ++++++++++++++--
- builtin/index-pack.c             |  6 ++++++
- bundle.c                         | 17 +++++++++++------
- bundle.h                         | 15 +++++++++++++--
- transport.c                      |  5 ++++-
- 6 files changed, 54 insertions(+), 11 deletions(-)
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/bundle.c |  5 +++--
+ bundle.c         | 17 +++++++++++------
+ bundle.h         |  8 ++++++--
+ transport.c      |  5 ++++-
+ 4 files changed, 24 insertions(+), 11 deletions(-)
 
-Range-diff against v1:
-1:  70865046bea = 1:  dc8591f6d0b bundle API: start writing API documentation
-2:  f19af15c9da = 2:  3d7bd9c33be bundle API: change "flags" to be "extra_index_pack_args"
-3:  98262f4cb89 ! 3:  67197064a8b index-pack: add --progress-title option
-    @@ Commit message
-     
-         Add a --progress-title option to index-pack, when data is piped into
-         index-pack its progress is a proxy for whatever's feeding it
-    -    data. This option will allow us to set a more relevant progress bar
-    -    title.
-    +    data.
-    +
-    +    This option will allow us to set a more relevant progress bar title in
-    +    "git bundle unbundle", and is also used in my "bundle-uri" RFC
-    +    patches[1] by a new caller in fetch-pack.c.
-    +
-    +    1. https://lore.kernel.org/git/RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com/
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-4:  853d72848a0 = 4:  e4ca8b26962 bundle: show progress on "unbundle"
+diff --git a/builtin/bundle.c b/builtin/bundle.c
+index 053a51bea1b..10f6f45770a 100644
+--- a/builtin/bundle.c
++++ b/builtin/bundle.c
+@@ -165,7 +165,8 @@ static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix)
+ 	struct option options[] = {
+ 		OPT_END()
+ 	};
+-	char *bundle_file;
++	char* bundle_file;
++	struct strvec extra_args = STRVEC_INIT;
+ 
+ 	argc = parse_options_cmd_bundle(argc, argv, prefix,
+ 			builtin_bundle_unbundle_usage, options, &bundle_file);
+@@ -177,7 +178,7 @@ static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix)
+ 	}
+ 	if (!startup_info->have_repository)
+ 		die(_("Need a repository to unbundle."));
+-	ret = !!unbundle(the_repository, &header, bundle_fd, 0) ||
++	ret = !!unbundle(the_repository, &header, bundle_fd, &extra_args) ||
+ 		list_bundle_refs(&header, argc, argv);
+ 	bundle_header_release(&header);
+ cleanup:
+diff --git a/bundle.c b/bundle.c
+index ab63f402261..16d7e7f86f8 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -569,18 +569,23 @@ int create_bundle(struct repository *r, const char *path,
+ }
+ 
+ int unbundle(struct repository *r, struct bundle_header *header,
+-	     int bundle_fd, int flags)
++	     int bundle_fd, struct strvec *extra_index_pack_args)
+ {
+-	const char *argv_index_pack[] = {"index-pack",
+-					 "--fix-thin", "--stdin", NULL, NULL};
+ 	struct child_process ip = CHILD_PROCESS_INIT;
++	int i;
+ 
+-	if (flags & BUNDLE_VERBOSE)
+-		argv_index_pack[3] = "-v";
++	strvec_push(&ip.args, "index-pack");
++	strvec_push(&ip.args, "--fix-thin");
++	strvec_push(&ip.args, "--stdin");
++	if (extra_index_pack_args) {
++		struct strvec *extra = extra_index_pack_args;
++		for (i = 0; i < extra->nr; i++)
++			strvec_push(&ip.args, extra->v[i]);
++		strvec_clear(extra_index_pack_args);
++	}
+ 
+ 	if (verify_bundle(r, header, 0))
+ 		return -1;
+-	ip.argv = argv_index_pack;
+ 	ip.in = bundle_fd;
+ 	ip.no_stdout = 1;
+ 	ip.git_cmd = 1;
+diff --git a/bundle.h b/bundle.h
+index 84a6df1b65d..d47a7a3c69c 100644
+--- a/bundle.h
++++ b/bundle.h
+@@ -26,16 +26,20 @@ int create_bundle(struct repository *r, const char *path,
+ 		  int argc, const char **argv, struct strvec *pack_options,
+ 		  int version);
+ int verify_bundle(struct repository *r, struct bundle_header *header, int verbose);
+-#define BUNDLE_VERBOSE 1
+ 
+ /**
+  * Unbundle after reading the header with read_bundle_header().
+  *
+  * We'll invoke "git index-pack --stdin --fix-thin" for you on the
+  * provided `bundle_fd` from read_bundle_header().
++ *
++ * Provide extra_index_pack_args to pass any extra arguments
++ * (e.g. "-v" for verbose/progress), NULL otherwise. The provided
++ * extra_index_pack_args (if any) will be strvec_clear()'d for you
++ * (like the run-command.h API itself does).
+  */
+ int unbundle(struct repository *r, struct bundle_header *header,
+-	     int bundle_fd, int flags);
++	     int bundle_fd, struct strvec *extra_index_pack_args);
+ int list_bundle_refs(struct bundle_header *header,
+ 		int argc, const char **argv);
+ 
+diff --git a/transport.c b/transport.c
+index 17e9629710a..8bc4b5fcd3c 100644
+--- a/transport.c
++++ b/transport.c
+@@ -162,12 +162,15 @@ static int fetch_refs_from_bundle(struct transport *transport,
+ 			       int nr_heads, struct ref **to_fetch)
+ {
+ 	struct bundle_transport_data *data = transport->data;
++	struct strvec extra_index_pack_args = STRVEC_INIT;
+ 	int ret;
+ 
++	strvec_push(&extra_index_pack_args, "-v");
++
+ 	if (!data->get_refs_from_bundle_called)
+ 		get_refs_from_bundle(transport, 0, NULL);
+ 	ret = unbundle(the_repository, &data->header, data->fd,
+-			   transport->progress ? BUNDLE_VERBOSE : 0);
++		       &extra_index_pack_args);
+ 	transport->hash_algo = data->header.hash_algo;
+ 	return ret;
+ }
 -- 
 2.33.0.662.g438caf9576d
 
