@@ -2,264 +2,402 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLACK,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8018C43214
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 20:58:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97930C4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 21:03:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE6AD611EF
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 20:58:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 709B261391
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 21:03:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232701AbhHWU6q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 16:58:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35626 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232719AbhHWU6p (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 16:58:45 -0400
-Received: from tilde.club (unknown [IPv6:2607:5300:61:c67::196])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 457FEC061575
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 13:58:02 -0700 (PDT)
-Received: from tilde.club (unknown [185.220.101.20])
-        by tilde.club (Postfix) with ESMTPSA id 367C5220477A7;
-        Mon, 23 Aug 2021 20:57:49 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 tilde.club 367C5220477A7
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tilde.club; s=mail;
-        t=1629752281; bh=O08aInmRbiRZkkARapHssKNTKCkT8u3wnq9bu4Pa1p0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=CNfeQoZ99/SwtE5W69tqujtFG+Mt3LBCouVtrlciWHnImCJTR/plvgBMf3g75e1DS
-         +RGVJ3DySS13/h/f0J6x+Q4AEitOBzVVfbj9Aaas1eaeeyGDc6/2IaKpzIXJV5C2FI
-         8Wra1A9lSc8QICkSEeW/MaHxWDBwGiesT2e3QTWE=
-From:   Gwyneth Morgan <gwymor@tilde.club>
-To:     git@vger.kernel.org
-Cc:     Gwyneth Morgan <gwymor@tilde.club>,
-        Elijah Newren <newren@gmail.com>
-Subject: [filter-repo PATCH v2] filter-repo: add new --replace-message option
-Date:   Mon, 23 Aug 2021 20:55:51 +0000
-Message-Id: <20210823205549.18566-1-gwymor@tilde.club>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210818043749.85274-1-gwymor@tilde.club>
-References: <20210818043749.85274-1-gwymor@tilde.club>
+        id S232609AbhHWVER (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 17:04:17 -0400
+Received: from mout.gmx.net ([212.227.15.15]:52603 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232503AbhHWVEN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 17:04:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1629752574;
+        bh=xoe1llePkN8LheKYtyRWxuuGOcmm9tTQZ1q4UHe2L94=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=C9d1CoVDwI+DV7qhHPVY0rJgv/I+AXmIjtZwLST9LNG60HD7AiZk6h9jsDqnypxfg
+         mVmnEXJ26PU16Nhk+Yvq3NNnQpD+71qhfvXJzVkQs2EtuKlVQ8tq5Aqy8DdEi6j/h0
+         l06Tdg9FJaRks/0wZmuwbRoIpTOaWOVQJvQNWrp4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.86.215] ([89.1.214.7]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MKbkM-1mb1rW1Ejs-00L19X; Mon, 23
+ Aug 2021 23:02:54 +0200
+Date:   Mon, 23 Aug 2021 23:02:50 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jiang Xin <worldhello.net@gmail.com>
+cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <hello@brighterdan.com>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?UTF-8?Q?Tr=E1=BA=A7n_Ng=E1=BB=8Dc_Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
+        Yi-Jyun Pan <pan93412@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH 1/1] ci: new github-action for git-l10n code review
+In-Reply-To: <20210822161325.22038-2-worldhello.net@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2108232232460.55@tvgsbejvaqbjf.bet>
+References: <20210822161325.22038-1-worldhello.net@gmail.com> <20210822161325.22038-2-worldhello.net@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:R2BwvCfLutSCIRmhnFdSbt0qbMY+Ry4HaDedWq1Ni+xCBARGNFj
+ qMf2tkBNs0TtauZva1tw+5YyqDJ52yd3N3asOMsbjeI9PI+8H9J5tSYJisIeQ42J9lexABR
+ l+SHH95eodiYV1u0mk8af7xwug8S+PrBAzm9rsT+NCeDLMuALTuR0E0QqzHU/Ho7QP5kp0t
+ zdG7nR6KLDt5+wEriT0UA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:JHihqEmLccM=:es4EqH7yBjw5qdmCKzC052
+ voSuvoUUDHtxUDg0DvJWAlrcsxEVvkVYNLufWH1+ntTI2SEfkKGrO7kOe2/wDXM5zg3ZXt2Mh
+ Ds6Mn7A1f8N7sfEA4KuqWXqRwR0YQjzyAyOHofdqxkhVzaLh2MFPBTXiGnAADWu9aDsWPx8ax
+ i/RSs/9TLzP8NfACv7+j9UWgXm11j6nBvXgHXHmbNohej4VocxI3yKbtPrhCsMuXB3RK2Pu+n
+ Xqf5CjKF1FYZTlHo1asn3QL/hezqL5pVsT/A1E4v2E3Ji8v3/bNvIHGrHbJQ3229vb4BXwaKw
+ cR5mOm11V/NMjex7p5zHqmnbgwI5M9QVnnSOgp13oWZmWhdFNpCnfAxI9UdBqfyvC8FVrl9Ac
+ O87HtWh8lCp5IUnUNI8uJNGIAydK23/X+Xt/RIWOGCnGR2cK6PI1nSUQUK3JO1cr4e483Xhod
+ 9jt9EEzTJAjmD3+jGRG/NtPCNXtmpgGGU9Ll2odSCX7yRNcy2ksQK+BgPIH3NNqJ/coUEgBM/
+ HF5NUDQCRGeZl8cJ/Z89r0CjHx4vBjPSMDmxdCRTv8cwlci8uZJnrKVNTnPJVFH85sAPLYbQj
+ /s9Pwhyr+a3lkEIMHisfyIcP/CycoOeH7pCjs+7J4mkVqCJ0+vQbpmw/oqu+sOqsDNszPpweV
+ +n2xzbsnZK0UYmbw6E2C7iQ1+5g2Uldy5/fEhh0TjebXAO0cOEou81fd8Br3/vqQgUhld0juW
+ eodBWyDTJX4GXpZ6WQlu8i6mrVJik4Z0oN80ZMphnGsyb3sPhhSFiMiEpeMGHXmhsUCo7Tzg4
+ VkmaE/4zDPIPgmRO4MpJZ4NXdpI0vMUXTftpx2Tl69wV1XwrL+b0tlObgI9I1Tpyojp96HnVh
+ ++Jfl3Dai5y80KhqVjzYE/tkfTVWRRhgBti4SOYovlI/EK7igpFXisJyUdEGD5keqcFKeW8GC
+ QmKM3Dnz4TArBSvuXe9AiOCs9Hv3WTBNAmA1NOgAOVQEuVSWvhoF6e/l1Ng8TYELkbxfUlcWX
+ 7RLWpVybsmAnBs5lAH6Dcjv5XlCcWc7urs4Hhpafe4Pu1iNO6kjapzdsd2oTqPVLDgtr5zxbg
+ PFW0+XyNBE0mCkN9njZW5hQQHw5ZXveBXVH0ke/VFyp2ozQw2xdMyzRbg==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Like --replace-text, add an option --replace-message which replaces text
-in commit/tag message bodies, so that users can easily replace text
-without constructing a --message-callback.
+Hi,
 
-Signed-off-by: Gwyneth Morgan <gwymor@tilde.club>
----
- Documentation/git-filter-repo.txt | 25 ++++++++++
- git-filter-repo                   | 16 +++++++
- t/t9390-filter-repo.sh            |  1 +
- t/t9390/basic-message             | 78 +++++++++++++++++++++++++++++++
- t/t9390/sample-message            |  4 ++
- 5 files changed, 124 insertions(+)
- create mode 100644 t/t9390/basic-message
- create mode 100644 t/t9390/sample-message
+On Mon, 23 Aug 2021, Jiang Xin wrote:
 
-diff --git a/Documentation/git-filter-repo.txt b/Documentation/git-filter-repo.txt
-index 2798378..1e590c7 100644
---- a/Documentation/git-filter-repo.txt
-+++ b/Documentation/git-filter-repo.txt
-@@ -181,6 +181,11 @@ Renaming of refs (see also --refname-callback)
- Filtering of commit messages (see also --message-callback)
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-+--replace-message <expressions_file>::
-+	A file with expressions that, if found in commit or tag
-+	messages, will be replaced. This file uses the same syntax as
-+	--replace-text.
-+
- --preserve-commit-hashes::
- 	By default, since commits are rewritten and thus gain new
- 	hashes, references to old commit hashes in commit messages are
-@@ -896,6 +901,26 @@ YYYY-MM-DD.  In the expressions file, there are a few things to note:
- 
- See also the `--blob-callback` from <<CALLBACKS>>.
- 
-+Updating commit/tag messages
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+If you want to modify commit or tag messages, you can do so with the
-+same syntax as `--replace-text`, explained above.  For example, with a
-+file named expressions.txt containing
-+
-+--------------------------------------------------
-+foo==>bar
-+--------------------------------------------------
-+
-+then running
-+--------------------------------------------------
-+git filter-repo --replace-message expressions.txt
-+--------------------------------------------------
-+
-+will replace `foo` in commit or tag messages with `bar`.
-+
-+See also the `--message-callback` from <<CALLBACKS>>.
-+
- Refname based filtering
- ~~~~~~~~~~~~~~~~~~~~~~~
- 
-diff --git a/git-filter-repo b/git-filter-repo
-index b91bd96..5e726c9 100755
---- a/git-filter-repo
-+++ b/git-filter-repo
-@@ -1843,6 +1843,10 @@ EXAMPLES
- 
-     messages = parser.add_argument_group(title=_("Filtering of commit messages "
-                                                "(see also --message-callback)"))
-+    messages.add_argument('--replace-message', metavar='EXPRESSIONS_FILE',
-+        help=_("A file with expressions that, if found in commit messages, "
-+               "will be replaced. This file uses the same syntax as "
-+               "--replace-text."))
-     messages.add_argument('--preserve-commit-hashes', action='store_true',
-         help=_("By default, since commits are rewritten and thus gain new "
-                "hashes, references to old commit hashes in commit messages "
-@@ -2189,6 +2193,8 @@ EXAMPLES
-       args.mailmap = MailmapInfo(args.mailmap)
-     if args.replace_text:
-       args.replace_text = FilteringOptions.get_replace_text(args.replace_text)
-+    if args.replace_message:
-+      args.replace_message = FilteringOptions.get_replace_text(args.replace_message)
-     if args.strip_blobs_with_ids:
-       with open(args.strip_blobs_with_ids, 'br') as f:
-         args.strip_blobs_with_ids = set(f.read().split())
-@@ -3374,6 +3380,11 @@ class RepoFilter(object):
-     if not self._args.preserve_commit_hashes:
-       commit.message = self._hash_re.sub(self._translate_commit_hash,
-                                          commit.message)
-+    if self._args.replace_message:
-+      for literal, replacement in self._args.replace_message['literals']:
-+        commit.message = commit.message.replace(literal, replacement)
-+      for regex,   replacement in self._args.replace_message['regexes']:
-+        commit.message = regex.sub(replacement, commit.message)
-     if self._message_callback:
-       commit.message = self._message_callback(commit.message)
- 
-@@ -3474,6 +3485,11 @@ class RepoFilter(object):
- 
-   def _tweak_tag(self, tag):
-     # Tweak the tag message according to callbacks
-+    if self._args.replace_message:
-+      for literal, replacement in self._args.replace_message['literals']:
-+        tag.message = tag.message.replace(literal, replacement)
-+      for regex,   replacement in self._args.replace_message['regexes']:
-+        tag.message = regex.sub(replacement, tag.message)
-     if self._message_callback:
-       tag.message = self._message_callback(tag.message)
- 
-diff --git a/t/t9390-filter-repo.sh b/t/t9390-filter-repo.sh
-index 3f567e7..6d2d985 100755
---- a/t/t9390-filter-repo.sh
-+++ b/t/t9390-filter-repo.sh
-@@ -39,6 +39,7 @@ filter_testcase basic basic-filename --invert-paths --path-glob 't*en*'
- filter_testcase basic basic-numbers  --invert-paths --path-regex 'f.*e.*e'
- filter_testcase basic basic-mailmap  --mailmap ../t9390/sample-mailmap
- filter_testcase basic basic-replace  --replace-text ../t9390/sample-replace
-+filter_testcase basic basic-message  --replace-message ../t9390/sample-message
- filter_testcase empty empty-keepme   --path keepme
- filter_testcase empty more-empty-keepme --path keepme --prune-empty=always \
- 		                                   --prune-degenerate=always
-diff --git a/t/t9390/basic-message b/t/t9390/basic-message
-new file mode 100644
-index 0000000..5b6b41b
---- /dev/null
-+++ b/t/t9390/basic-message
-@@ -0,0 +1,78 @@
-+feature done
-+blob
-+mark :1
-+data 8
-+initial
-+
-+reset refs/heads/B
-+commit refs/heads/B
-+mark :2
-+author Little O. Me <me@little.net> 1535228562 -0700
-+committer Little O. Me <me@little.net> 1535228562 -0700
-+data 9
-+Modified
-+M 100644 :1 filename
-+M 100644 :1 ten
-+M 100644 :1 twenty
-+
-+blob
-+mark :3
-+data 11
-+twenty-mod
-+
-+commit refs/heads/B
-+mark :4
-+author Little 'ol Me <me@laptop.(none)> 1535229544 -0700
-+committer Little 'ol Me <me@laptop.(none)> 1535229544 -0700
-+data 18
-+add the number 20
-+from :2
-+M 100644 :3 twenty
-+
-+blob
-+mark :5
-+data 8
-+ten-mod
-+
-+commit refs/heads/A
-+mark :6
-+author Little O. Me <me@machine52.little.net> 1535229523 -0700
-+committer Little O. Me <me@machine52.little.net> 1535229523 -0700
-+data 8
-+add ten
-+from :2
-+M 100644 :5 ten
-+
-+commit refs/heads/master
-+mark :7
-+author Lit.e Me <me@fire.com> 1535229559 -0700
-+committer Lit.e Me <me@fire.com> 1535229580 -0700
-+data 24
-+Merge branch 'A' into B
-+from :4
-+merge :6
-+M 100644 :5 ten
-+
-+blob
-+mark :8
-+data 6
-+final
-+
-+commit refs/heads/master
-+mark :9
-+author Little Me <me@bigcompany.com> 1535229601 -0700
-+committer Little Me <me@bigcompany.com> 1535229601 -0700
-+data 9
-+whatever
-+from :7
-+M 100644 :8 filename
-+M 100644 :8 ten
-+M 100644 :8 twenty
-+
-+tag v1.0
-+from :9
-+tagger Little John <second@merry.men> 1535229618 -0700
-+data 15
-+version one :)
-+
-+done
-diff --git a/t/t9390/sample-message b/t/t9390/sample-message
-new file mode 100644
-index 0000000..0412c3c
---- /dev/null
-+++ b/t/t9390/sample-message
-@@ -0,0 +1,4 @@
-+Initial==>Modified
-+regex:tw.nty==>the number 20
-+v1.0==>version one!
-+regex:!$==> :)
--- 
-2.33.0
+> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+>
+> Git l10n uses github pull request for code review. A helper program
+> "git-po-helper" can be used to check typos in ".po" files, validate
+> syntax, and check commit message. It would be convenient to integrate
+> this helper program to CI and add comments in pull request.
+>
+> The new github-action workflow is added in ".github/workflows/l10n.yml",
+> which is disabled by default. To turn it on for the git-l10n related
+> repositories, such as "git-l10n/git-po", we can add a new branch named
+> "ci-config" and create a simple shell script at "ci/config/allow-l10n"
+> in this branch.
+>
+> The new l10n workflow listens to two types of github events: push and
+> pull_request.
+>
+> For a push event, it will scan commits one by one. If a commit does not
+> look like a l10n commit (no file in "po/" has been changed), it will
+> immediately fail without checking for further commits. While for a
+> pull_request event, all new introduced commits will be scanned.
+>
+> "git-po-helper" will generate two kinds of suggestions, errors and
+> warnings. A l10n contributor should try to fix all the errors, and
+> should pay attention to the warnings. All the errors and warnings will
+> be reported in the last step of the l10n workflow as two message groups.
+> For a pull_request event, will create additional comments in pull
+> request to report the result.
 
+It is a good idea to automate this.
+
+I am a bit concerned that the `ci-config` approach, even if we use it in
+the Git project itself, is quite cumbersome to use, though. So I hope that
+we can find an alternative solution.
+
+One such solution could be to make the `git-po-helper` job contingent on
+part of the repository name. For example:
+
+  git-po-helper:
+    if: endsWith(github.repository, '/git-po')
+    [...]
+
+would skip the job unless the target repository's name is `git-po`.
+
+A couple more questions/suggestions are below:
+
+> Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> ---
+>  .github/workflows/l10n.yml | 143 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 143 insertions(+)
+>  create mode 100644 .github/workflows/l10n.yml
+>
+> diff --git a/.github/workflows/l10n.yml b/.github/workflows/l10n.yml
+> new file mode 100644
+> index 0000000000..60f162c121
+> --- /dev/null
+> +++ b/.github/workflows/l10n.yml
+> @@ -0,0 +1,143 @@
+> +name: git-l10n
+> +
+> +on: [push, pull_request]
+> +
+> +jobs:
+> +  ci-config:
+> +    runs-on: ubuntu-latest
+> +    outputs:
+> +      enabled: ${{ steps.check-l10n.outputs.enabled }}
+> +    steps:
+> +      - name: try to clone ci-config branch
+> +        run: |
+> +          git -c protocol.version=3D2 clone \
+> +            --no-tags \
+> +            --single-branch \
+> +            -b ci-config \
+> +            --depth 1 \
+> +            --no-checkout \
+> +            --filter=3Dblob:none \
+> +            https://github.com/${{ github.repository }} \
+> +            config-repo &&
+> +          cd config-repo &&
+> +          git checkout HEAD -- ci/config || : ignore
+> +      - id: check-l10n
+> +        name: check whether CI is enabled for l10n
+> +        run: |
+> +          enabled=3Dno
+> +          if test -x config-repo/ci/config/allow-l10n &&
+> +             config-repo/ci/config/allow-l10n '${{ github.ref }}'
+> +          then
+> +            enabled=3Dyes
+> +          fi
+> +          echo "::set-output name=3Denabled::$enabled"
+> +
+> +  git-po-helper:
+> +    needs: ci-config
+> +    if: needs.ci-config.outputs.enabled =3D=3D 'yes'
+> +    runs-on: ubuntu-latest
+> +    steps:
+> +    - uses: actions/checkout@v2
+> +      with:
+> +        fetch-depth: '0'
+
+There is code below to specifically fetch the base commit, but setting the
+`fetch-depth` to zero means to do a full clone anyway.
+
+So maybe the `git fetch` code below should be dropped, or the
+`fetch-depth` override?
+
+Since we cannot know how deep we need to fetch, though, I figure that it
+would be indeed better to have a non-shallow clone (and a code comment
+would help clarify this).
+
+An even better alternative would be a partial clone, of course, but I fear
+that there is no convenient way yet to configure `actions/checkout` to do
+so.
+
+> +    - uses: actions/setup-go@v2
+> +      with:
+> +        go-version: ">=3D1.16"
+> +    - name: Install git-po-helper
+> +      run: |
+
+Since this is a one-liner, it would probably make sense to avoid that `|`
+continuation.
+
+> +        go install github.com/git-l10n/git-po-helper@main
+> +    - name: Install other dependencies
+> +      run: |
+> +        sudo apt-get update -q &&
+> +        sudo apt-get install -q -y gettext
+> +    - id: check-commits
+> +      name: Run git-po-helper
+> +      run: |
+> +        if test "${{ github.event_name }}" =3D "pull_request"
+> +        then
+> +          commit_from=3D${{ github.event.pull_request.base.sha }}
+> +          commit_to=3D${{ github.event.pull_request.head.sha }}
+> +        else
+> +          commit_from=3D${{ github.event.before }}
+> +          commit_to=3D${{ github.event.after }}
+> +          if ! echo $commit_from | grep -q "^00*$"
+
+This would probably read better as:
+
+		case "$commit_from" in
+		*[^0]*|'') ;; # not all zeros
+		*)
+			[...]
+			;;
+		esac
+
+But we might not need it anyway. See the comment on the `git fetch`
+command below.
+
+> +          then
+> +            if ! git rev-parse "$commit_from^{commit}"
+> +            then
+> +              git fetch origin $commit_from
+
+As pointed out above, we cannot know how many commits we need to fetch.
+Therefore, I would suggest to simply drop this `git fetch`.
+
+> +            fi
+> +          fi
+> +        fi
+> +        exit_code=3D0
+> +        git-po-helper check-commits --github-action -- \
+> +          $commit_from..$commit_to >git-po-helper.out 2>&1 ||
+
+What does the `--github-action` option do? Might be good to document this
+here.
+
+> +        exit_code=3D$?
+> +        echo "::set-output name=3Dexit_code::$exit_code"
+> +        has_error_msg=3D
+> +        has_warning_msg=3D
+> +        if test $exit_code -ne 0
+> +        then
+> +          has_error_msg=3Dyes
+
+Do we really need this `has_error_msg` variable? It would be much easier
+to test the condition `env.ERROR_MSG !=3D ''` in subsequent steps, and tha=
+t
+would already do the job, without having to go through output variables.
+
+> +          if test "${{ github.event_name }}" =3D "pull_request"
+> +          then
+> +            echo "ERROR_MSG<<EOF" >>$GITHUB_ENV
+> +            grep -v -e "^level=3Dwarning" -e WARNING git-po-helper.out =
+|
+> +              perl -pe 's/\e\[[0-9;]*m//g' >>$GITHUB_ENV
+
+This is a bit dangerous. First of all, how can you be sure that
+`git-po-helper.out` does not contain lines that consist of the letters
+`EOF` (and would therefore interfere with the here-doc)?
+
+Second, isn't it conceivable to have an `error:` line which contains the
+characters `WARNING` too? That line would be filtered out...
+
+Third, can `git-po-helper` be convinced _not_ to print color codes? The
+output was redirected into a file, after all, and it does not go to a
+terminal...
+
+> +            echo "EOF" >>$GITHUB_ENV
+> +          fi
+> +        fi
+> +        if grep -q -e "^level=3Dwarning" -e WARNING git-po-helper.out
+> +        then
+> +          has_warning_msg=3Dyes
+> +          if test "${{ github.event_name }}" =3D "pull_request"
+> +          then
+> +            echo "WARNING_MSG<<EOF" >>$GITHUB_ENV
+> +            grep -v -e "^level=3Derror" -e ERROR git-po-helper.out |
+> +              perl -pe 's/\e\[[0-9;]*m//g' >>$GITHUB_ENV
+> +            echo "EOF" >>$GITHUB_ENV
+> +          fi
+> +        fi
+> +        echo "::set-output name=3Dhas_error_msg::$has_error_msg"
+> +        echo "::set-output name=3Dhas_warning_msg::$has_warning_msg"
+> +    - name: Report errors in comment for pull request
+> +      uses: mshick/add-pr-comment@v1
+> +      if: steps.check-commits.outputs.has_error_msg =3D=3D 'yes' && git=
+hub.event_name =3D=3D 'pull_request'
+> +      continue-on-error: true
+> +      with:
+> +        repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+This requires the `GITHUB_TOKEN` to have write permissions, which I would
+highly recommend not to require.
+
+Instead, it would probably make more sense to keep the output in the logs
+of the workflow run.
+
+> +        repo-token-user-login: 'github-actions[bot]'
+> +        message: |
+> +          Errors found by git-po-helper in workflow ${{ github.workflow=
+ }}:
+> +          ```
+> +          ${{ env.ERROR_MSG }}
+> +          ```
+> +    - name: Report warnings in comment for pull request
+> +      uses: mshick/add-pr-comment@v1
+> +      if: steps.check-commits.outputs.has_warning_msg =3D=3D 'yes' && g=
+ithub.event_name =3D=3D 'pull_request'
+> +      continue-on-error: true
+> +      with:
+> +        repo-token: ${{ secrets.GITHUB_TOKEN }}
+> +        repo-token-user-login: 'github-actions[bot]'
+> +        message: |
+> +          Warnings found by git-po-helper in workflow ${{ github.workfl=
+ow }}:
+> +          ```
+> +          ${{ env.WARNING_MSG }}
+> +          ```
+> +    - name: Report and quit
+> +      run: |
+> +        if test "${{ steps.check-commits.outputs.has_error_msg }}" =3D =
+"yes"
+
+This would be easier to read and maintain if it was upgraded to an `if:`
+condition:
+
+    - name: Report errors
+      if: step.check-commits.outputs.has_error_msg =3D "yes"
+      run: |
+        [...]
+
+And then do the same for warnings.
+
+Also, it would be more natural if the `Run git-po-helper` step was allowed
+to fail when `git-po-helper` outputs errors. You would then have to use
+this conditional in the `Report errors` step:
+
+      if: failure() && step.check-commits.outputs.has_error_msg =3D "yes"
+
+(compare to how Git's `CI/PR` workflow prints errors:
+https://github.com/git/git/blob/v2.33.0/.github/workflows/main.yml#L120).
+
+For the `Report warnings` step, you would however have to use something
+slightly less intuitive:
+
+      if: (success() || failure()) && step.check-commits.outputs.has_warni=
+ng_msg =3D "yes"
+
+Finally, I _do_ think that this line would be easier to read like this,
+while basically doing the same thing but with less effort (because the
+outputs would no longer have to be set):
+
+      if: (success() || failure()) && env.WARNING_MSG !=3D ""
+
+Ciao,
+Dscho
+
+> +        then
+> +          echo "::group::Errors found by git-po-helper"
+> +          grep -v -e "^level=3Dwarning" -e WARNING git-po-helper.out
+> +          echo "::endgroup::"
+> +        fi
+> +        if test "${{ steps.check-commits.outputs.has_warning_msg }}" =
+=3D "yes"
+> +        then
+> +          echo "::group::Warnings found by git-po-helper"
+> +          grep -v -e "^level=3Derror" -e ERROR git-po-helper.out
+> +          echo "::endgroup::"
+> +        fi
+> +        if test ${{ steps.check-commits.outputs.exit_code }} -ne 0
+> +        then
+> +          exit ${{ steps.check-commits.outputs.exit_code }}
+> +        fi
+> --
+> 2.33.0
+>
+>
