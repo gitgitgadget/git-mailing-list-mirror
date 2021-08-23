@@ -2,79 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AE37C4338F
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 16:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48AF5C4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 16:25:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E316D613D1
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 16:23:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 274F1613D1
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 16:25:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229738AbhHWQYm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 12:24:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56690 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229477AbhHWQYl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 12:24:41 -0400
-Received: (qmail 11986 invoked by uid 109); 23 Aug 2021 16:23:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 23 Aug 2021 16:23:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30159 invoked by uid 111); 23 Aug 2021 16:23:57 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Aug 2021 12:23:57 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 23 Aug 2021 12:23:57 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Rafael Santiago <voidbrainvoid@tutanota.com>,
-        Rafael Santiago via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] Give support for hooks based on platform
-Message-ID: <YSPLnWshLsWlXwUn@coredump.intra.peff.net>
-References: <pull.1069.git.git.1629576007891.gitgitgadget@gmail.com>
- <YSF1GfpHXRrXebsB@camp.crustytoothpaste.net>
- <Mheyv1D--3-2@tutanota.com>
- <YSLKrX/QTZtxBGDz@camp.crustytoothpaste.net>
+        id S229774AbhHWQZ6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 12:25:58 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53967 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229477AbhHWQZ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 12:25:57 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EFBBA15787C;
+        Mon, 23 Aug 2021 12:25:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WkDR4cIJ6My8kLkE80q9POJKMwZL9gGxM2imv8
+        S5EJY=; b=TzMDwe0zo3ezRqFK+41h+IBecwdCM2vlWVGIWs+wjOph0c6uP0HlEZ
+        ffvdUbbEtFWIqNxGD8vAFqPUHSUiZlIRYr38agABmSrYY1aq/M1n08IoINHJ4ZBF
+        z1ZF9/xqECr8no+xG9xDFgxPNUrEVXPolcQJ3/zV0/1nbAoFkeC9Y=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E8BB515787B;
+        Mon, 23 Aug 2021 12:25:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3DE40157879;
+        Mon, 23 Aug 2021 12:25:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Daniel P." <danpltile@gmail.com>, git@vger.kernel.org
+Subject: Re: Git is removing . from the last part of user.name
+References: <CAL-s8C7makcRT_ufsv4THSrKeDkXfhFoAXSBKSiK5w0anMvZag@mail.gmail.com>
+        <YSJuS1OoYsqgpF3j@camp.crustytoothpaste.net>
+        <YSKleNynVrWWyyML@coredump.intra.peff.net>
+Date:   Mon, 23 Aug 2021 09:25:10 -0700
+In-Reply-To: <YSKleNynVrWWyyML@coredump.intra.peff.net> (Jeff King's message
+        of "Sun, 22 Aug 2021 15:28:56 -0400")
+Message-ID: <xmqqsfz0qgbd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YSLKrX/QTZtxBGDz@camp.crustytoothpaste.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: B0CA3B42-042E-11EC-AA5F-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 22, 2021 at 10:07:41PM +0000, brian m. carlson wrote:
+Jeff King <peff@peff.net> writes:
 
-> > The point is that in many cases a dependency with a script language is
-> > created only to make the hook actions portable from a platform to
-> > other, but what this script in its essence does is a thing that could
-> > be done with basic tools delivered with the current operating system.
-> 
-> Then, in general, it can be done in a shell script containing an if-then
-> statement per platform using the native tools, so I'm not seeing the
-> particular reason that this series is necessary if the hooks being
-> executed aren't binaries.  All systems on which Git runs must contain a
-> POSIX-compatible shell.
+> On a somewhat lesser note, I'm tempted to say that "." probably was
+> never that useful (compared to say, comma, which is the gecos
+> separator), and we could probably just drop it from the crud list.
 
-This is my gut feeling, too (whether users know it or not, even on
-Windows most programs specified by config are being run by the shell).
+Yeah, the only excuse I can think of using to justify treating "."
+any specially can be seen in the contrast between the To: and Cc:
+header of this message, where the human-readable part of brian and
+daniel must be inside a pair of double-quotes while your name needs
+no such quoting.
 
-However, I do think there is room for Git to make this case a bit
-easier: conditional config includes. Once we are able to specify hooks
-via config (which is being worked on elsewhere), then we ought to be
-able to implement an includeIf like:
+But we do not remove "crud()" crud from the middle, so that's not
+even it (the only crud we remvoe from the middle are newlines and
+'<' and '>').
 
-  [includeIf "uname_s:linux"]
-  path = linux-hooks.config
-  [includeIf "uname_s:windows"]
-  path = windows-hooks.config
 
-The advantage being that this could apply to _all_ config, and not just
-hooks.
 
-It may still require fighting over which values should match on cygwin. ;)
-
--Peff
