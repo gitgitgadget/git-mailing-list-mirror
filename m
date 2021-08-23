@@ -2,77 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5898C4320A
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 20:12:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03B65C4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 20:24:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A53EB60F21
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 20:12:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E09CC60C51
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 20:24:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232382AbhHWUNc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 16:13:32 -0400
-Received: from mail-0201.mail-europe.com ([51.77.79.158]:36106 "EHLO
-        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232237AbhHWUNc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 16:13:32 -0400
-Date:   Mon, 23 Aug 2021 20:12:40 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1629749566;
-        bh=HwRzXe0LfhjNV1eGoTstBZlB4BRthmdTYAxt7o1bn0I=;
-        h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=GHmm7JbpA46yxB6arG+WL7zR0sFHSwQcH/GvXaVLtj3RVMhLo8nyYCbwo5pZ3y9Jq
-         EmZjoD0VWzVGcNW2QPe/xrdW8PPq9r/tqOa5noGRheqIgjdub2zhC+Y+wdV14oBEu8
-         +9EVKJouveFZJEKEsmXjo6lqNh7COl1yJ91s9PWA=
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   Mickey Endito <mickey.endito.2323@protonmail.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>
-Reply-To: Mickey Endito <mickey.endito.2323@protonmail.com>
-Subject: [PATCH] t5582: remove spurious 'cd "$D"' line
-Message-ID: <tV8xl8isDPhmGxCNmN06tTwhJTve0PsrkakKwLMcFQJybDZO2SGHHbDLZFrcLp1Yda1_KRygSm7-lVDSZSaG-antdalcPnhSqYqcK5Fpifk=@protonmail.com>
+        id S232375AbhHWUZF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 16:25:05 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59178 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232404AbhHWUZE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 16:25:04 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 556A6139C6A;
+        Mon, 23 Aug 2021 16:24:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=wTcncueAVoAX
+        JmCqfG5OU/R0LM+3nFW6Ydxn5JeKgHA=; b=egUBYCYVlkViOPU5TTnEPu4RnwcN
+        kUSmHZJh5vZH8lx8bJAYQNYGMkl0A4CX2vqCSB6AfudfF9VNImsVnN+0NRweQu/j
+        igUVIwA2+pJUfIbfI6kNRa0uw5qYX44g0ufhyziktPD1INUtGCGPr0NTBHTaJ5Of
+        7hS30njGSsEmDqY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4D26A139C67;
+        Mon, 23 Aug 2021 16:24:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 94239139C64;
+        Mon, 23 Aug 2021 16:24:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org, ZheNing Hu <adlternative@gmail.com>,
+        Fabian Stelzer <fabian.stelzer@campoint.net>
+Subject: Re: [PATCH] test: fix for COLUMNS and bash 5
+References: <20210805194825.1796765-1-felipe.contreras@gmail.com>
+        <20210806144911.GA1388237@szeder.dev> <xmqqmtpuik5m.fsf@gitster.g>
+        <87sfz0fh8o.fsf@evledraar.gmail.com>
+Date:   Mon, 23 Aug 2021 13:24:13 -0700
+In-Reply-To: <87sfz0fh8o.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Mon, 23 Aug 2021 14:59:10 +0200")
+Message-ID: <xmqqwnobq58y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 16188B36-0450-11EC-85BF-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The variable D is never defined in test t5582, more severely the test
-fails if D is defined by something outside the test suite, so remove
-this spurious line.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Signed-off-by: Mickey Endito <mickey.endito.2323@protonmail.com>
----
-To reproduce a failure do
-D=3D/some/path/which/does/not/exist t/t5582-fetch-negative-refspec.sh
+> Now that we're post-release are you interested in a re-roll of
+> https://lore.kernel.org/git/cover-v3-0.3-00000000000-20210804T230335Z-a=
+varab@gmail.com/
+> + removal of the bash-specific checkwinsize added here, or would you
 
-Note: The variable D seems to be a reminiscent similar to t/t5510-fetch.sh,
-which defines "D=3D$(pwd)". If you want to adopt that way, then you have
-to code a fix yourself. ;-)
+Let's wait until we see a concrete breakage report that shows that
+checkwinsize is insufficient.  Even if such a second shell calls its
+facility differently, as long as it works in a similar way and
+another single liner like
 
- t/t5582-fetch-negative-refspec.sh | 1 -
- 1 file changed, 1 deletion(-)
+    test -n "$BASH_VERSION" && shopt -u checkwinsize 2>/dev/null
 
-diff --git a/t/t5582-fetch-negative-refspec.sh b/t/t5582-fetch-negative-ref=
-spec.sh
-index e5d2e79ad3..7a80e47c2b 100755
---- a/t/t5582-fetch-negative-refspec.sh
-+++ b/t/t5582-fetch-negative-refspec.sh
-@@ -105,7 +105,6 @@ test_expect_success "fetch with negative pattern refspe=
-c does not expand prefix"
- '
+we can keep piling such a single-liner next to each other, as the
+number of shells we need to cater to would be less than a handful
+anyway.
 
- test_expect_success "fetch with negative refspec avoids duplicate conflict=
-" '
--=09cd "$D" &&
- =09(
- =09=09cd one &&
- =09=09git branch dups/a &&
---
-2.30.2
-
-
+Thanks.
