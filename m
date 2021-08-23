@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB8D3C432BE
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:36:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ED87C4320E
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:36:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D990D61212
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:36:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A78D6138E
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:36:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236235AbhHWLhQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 07:37:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46580 "EHLO
+        id S236649AbhHWLhS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 07:37:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236475AbhHWLhJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 07:37:09 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C58BEC0613C1
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:36:26 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id f5so25741588wrm.13
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:36:26 -0700 (PDT)
+        with ESMTP id S236558AbhHWLhL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 07:37:11 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BBC8C061575
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:36:28 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id i6so2049351wrv.2
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:36:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wghmPfL5lBgMi4V/ythx4RZuCQ0GO5ckah/zFELQ3jA=;
-        b=HbSZk2s4how15bE0jtMQdpjDfSojKW6LKu2K+yYvAmtm0FgYqWtX1KR3i+0J0zJ6aw
-         fIqAsmKf2jaNjhzxqEmTy6RG1qk0IIO7I0TIuG0BzHp9pdrum4SCPgfoSSCV17mZefEp
-         ExPkfhUXiPsqcFQLDeFKWz4OT4gegrqMd58BFmLa6xODmxHFCF0ChH5mPXIv2BxbZcPU
-         Eux/N3scDjyE3Tf17BcvCHclKTYsE0StFNyymw+4aJkMjD8jHvhhBaFWhqo5EWohfmM6
-         QXX3+lKlxV8eLBfiDKvjdaBmNL8lgxs5hXJmZvJ766B9lHiXiTVFaYLId8iAI289z1WI
-         aCag==
+        bh=V8xBeAg97XsG0kqjzEUpFtk396VwEkbYjV78tfKCaLU=;
+        b=h4Mq+wttFBs5oVItjGxXj532p8PtIfZZmronMCXWCykWNMbOqcz/p0tSr0i/UiHKlB
+         XmRtxVGm2MYFT7GnTdH47+vbLAVrQTyAla47Kvutkp3ZqNNn8y0sR0vIiskCSUdNGcve
+         iFsN6nJYP7QXha/OITewUtpDlfQyMf3EDCm/8Cr65hpSCPJR6nmVFskOieD+GQGIAC8B
+         TNXCbzev5eAyHwH2XRZvGAcePxACDbhBg4qPxRIbJMvUfxcT86Jac2RhDNjZcOmvrJ0h
+         hQo9WArwkSXAjcpJNuZ3qnu+MPaHhsPkfdRUQRq6XF2pJ0Z8j5TPTDiew/MJKsLB888s
+         80Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wghmPfL5lBgMi4V/ythx4RZuCQ0GO5ckah/zFELQ3jA=;
-        b=iUJGDyxhhPHqXyUxYxgR8PBoAdP+or/9Ley6Q6JbbwTsd/x8AjbPO7DKbBiffmIX//
-         /DjFk4KMpzqQABXKVAedSJps6J4Cm9Nq1K1bJfPccBtVbQFZYkbqktnLdfhgu9H3W8FA
-         LoItP1d0ue72EjCSUddMW2n1k6eFT114te6KT4wXbtmVnmnrHmKubgZfjylaBgfzPLPz
-         jJllB/OdZgbPex53UpheHogzDhF7xUrM/HAKhyVEnHyCAsrDDTk7p5zsdm39knc1IRh0
-         /bpD+coHcsWHlgv+ETcca2dh3P4wdP8x6IgBcoAfHJS01JiJKWFJLVizxXqzqtjhtPzd
-         Y9/Q==
-X-Gm-Message-State: AOAM533rYpuJ1M2uOP4FVAFDV1nqbLuhfMSol4uzb3hSCvuotV/Z+5Ct
-        S8OmHLbCdiJu/yb+vH/LzkPIsyekndINy3hX
-X-Google-Smtp-Source: ABdhPJyI09C+Sc0wwvJWjrBG0rVOy/jjsyVbhbbKWUEPUiryscQoblzfqG7N4MS57DvqbR56PYfSvQ==
-X-Received: by 2002:a5d:548e:: with SMTP id h14mr7865256wrv.7.1629718585158;
-        Mon, 23 Aug 2021 04:36:25 -0700 (PDT)
+        bh=V8xBeAg97XsG0kqjzEUpFtk396VwEkbYjV78tfKCaLU=;
+        b=G080jgux2ARu8ADDzJqqrHRrJck7jMRGSgBx68DSWheMhFoJ96GnyMWWsik9VTTywO
+         RxoPqti6gUqKgjk5pCSqqmoj6YAFpU0Vc8FQKjs3yzx/7CPcYGDJGpNdyoZjxJakscIf
+         RCsqYtmMSX/EgwHcs2rLQ3C4Wp9bZNN9su6jTMeH9SIXoh7+DndE6DY+DHIZBVddxuYA
+         l1fOqhmbttCwIHPwNZ5k2foI+bCodHkXHME0PP0ugHz9gteXhK0B4EqKUTuCqE5R17Tn
+         r4K205yxw1t1DtPDSX2VPFOmWkEuopy8xX2+zMRqJXagNx7P/eSrYN0PEqLlN2V5wPUl
+         ZtZg==
+X-Gm-Message-State: AOAM532rZfDkaOw2jh9QwTjwm2527x4HExgykO03konBgJVq/hQOhfGm
+        ZI0zrndaSCMFKMKREEk4lOAUTJ7eJZrrONMD
+X-Google-Smtp-Source: ABdhPJxfukKjbjDZokyX/oVir7jYHon9cpZXwfQf6L2XUYCGtMfytiwhyCoPNmF9p3g/xXwHi5qZsw==
+X-Received: by 2002:a5d:58e9:: with SMTP id f9mr7463306wrd.154.1629718586830;
+        Mon, 23 Aug 2021 04:36:26 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g35sm20555313wmp.9.2021.08.23.04.36.24
+        by smtp.gmail.com with ESMTPSA id g35sm20555313wmp.9.2021.08.23.04.36.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Aug 2021 04:36:24 -0700 (PDT)
+        Mon, 23 Aug 2021 04:36:26 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Michael Haggerty <mhagger@alum.mit.edu>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 10/13] refs API: remove OID argument to reflog_expire()
-Date:   Mon, 23 Aug 2021 13:36:11 +0200
-Message-Id: <patch-v5-10.13-5afa8f1be29-20210823T113115Z-avarab@gmail.com>
+Subject: [PATCH v5 12/13] refs/files: remove unused "errno == EISDIR" code
+Date:   Mon, 23 Aug 2021 13:36:13 +0200
+Message-Id: <patch-v5-12.13-f746939a27a-20210823T113115Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.662.g438caf9576d
 In-Reply-To: <cover-v5-00.13-00000000000-20210823T113115Z-avarab@gmail.com>
 References: <cover-00.11-0000000000-20210726T234237Z-avarab@gmail.com> <cover-v5-00.13-00000000000-20210823T113115Z-avarab@gmail.com>
@@ -77,185 +77,136 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since the the preceding commit the "oid" parameter to reflog_expire()
-is always NULL, but it was not cleaned up to reduce the size of the
-diff. Let's do that subsequent API and documentation cleanup now.
+When we lock a reference like "foo" we need to handle the case where
+"foo" exists, but is an empty directory. That's what this code added
+in bc7127ef0f (ref locking: allow 'foo' when 'foo/bar' used to exist
+but not anymore., 2006-09-30) seems like it should be dealing with.
+
+Except it doesn't, and we never take this branch. The reason is that
+when bc7127ef0f was written this looked like:
+
+	ref = resolve_ref([...]);
+	if (!ref && errno == EISDIR) {
+	[...]
+
+And in resolve_ref() we had this code:
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return NULL;
+
+I.e. we would attempt to read "foo" with open(), which would fail with
+EISDIR and we'd return NULL. We'd then take this branch, call
+remove_empty_directories() and continue.
+
+Since a1c1d8170d (refs_resolve_ref_unsafe: handle d/f conflicts for
+writes, 2017-10-06) we don't. E.g. in the case of
+files_copy_or_rename_ref() our callstack will look something like:
+
+	[...] ->
+	files_copy_or_rename_ref() ->
+	lock_ref_oid_basic() ->
+	refs_resolve_ref_unsafe()
+
+At that point the first (now only) refs_resolve_ref_unsafe() call in
+lock_ref_oid_basic() would do the equivalent of this in the resulting
+call to refs_read_raw_ref() in refs_resolve_ref_unsafe():
+
+	/* Via refs_read_raw_ref() */
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		/* get errno == EISDIR */
+	/* later, in refs_resolve_ref_unsafe() */
+	if ([...] && errno != EISDIR)
+		return NULL;
+	[...]
+	/* returns the refs/heads/foo to the caller, even though it's a directory */
+	return refname;
+
+I.e. even though we got an "errno == EISDIR" we won't take this
+branch, since in cases of EISDIR "resolved" is always
+non-NULL. I.e. we pretend at this point as though everything's OK and
+there is no "foo" directory.
+
+We then proceed with the entire ref update and don't call
+remove_empty_directories() until we call commit_ref_update(). See
+5387c0d883 (commit_ref(): if there is an empty dir in the way, delete
+it, 2016-05-05) for the addition of that code, and
+a1c1d8170db (refs_resolve_ref_unsafe: handle d/f conflicts for writes,
+2017-10-06) for the commit that changed the original codepath added in
+bc7127ef0f to use this "EISDIR" handling.
+
+Further historical commentary:
+
+Before the two preceding commits the caller in files_reflog_expire()
+was the only one out of our 4 callers that would pass non-NULL as an
+oid. We would then set a (now gone) "resolve_flags" to
+"RESOLVE_REF_READING" and just before that "errno != EISDIR" check do:
+
+	if (resolve_flags & RESOLVE_REF_READING)
+		return NULL;
+
+There may have been some case where this ended up mattering and we
+couldn't safely make this change before we removed the "oid"
+parameter, but I don't think there was, see [1] for some discussion on
+that.
+
+In any case, now that we've removed the "oid" parameter in a preceding
+commit we can be sure that this code is redundant, so let's remove it.
+
+1. http://lore.kernel.org/git/871r801yp6.fsf@evledraar.gmail.com
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/reflog.c      | 6 +++---
- refs.c                | 8 ++++----
- refs.h                | 7 +++----
- refs/debug.c          | 4 ++--
- refs/files-backend.c  | 3 +--
- refs/packed-backend.c | 2 +-
- refs/refs-internal.h  | 2 +-
- 7 files changed, 15 insertions(+), 17 deletions(-)
+ refs/files-backend.c | 28 +++-------------------------
+ 1 file changed, 3 insertions(+), 25 deletions(-)
 
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 61795f22d53..bd4c669918d 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -631,7 +631,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 			struct collected_reflog *e = collected.e[i];
- 
- 			set_reflog_expiry_param(&cb.cmd, explicit_expiry, e->reflog);
--			status |= reflog_expire(e->reflog, NULL, flags,
-+			status |= reflog_expire(e->reflog, flags,
- 						reflog_expiry_prepare,
- 						should_expire_reflog_ent,
- 						reflog_expiry_cleanup,
-@@ -648,7 +648,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 			continue;
- 		}
- 		set_reflog_expiry_param(&cb.cmd, explicit_expiry, ref);
--		status |= reflog_expire(ref, NULL, flags,
-+		status |= reflog_expire(ref, flags,
- 					reflog_expiry_prepare,
- 					should_expire_reflog_ent,
- 					reflog_expiry_cleanup,
-@@ -723,7 +723,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
- 			cb.cmd.expire_total = 0;
- 		}
- 
--		status |= reflog_expire(ref, NULL, flags,
-+		status |= reflog_expire(ref, flags,
- 					reflog_expiry_prepare,
- 					should_expire_reflog_ent,
- 					reflog_expiry_cleanup,
-diff --git a/refs.c b/refs.c
-index d9635436759..05944d8e725 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2371,19 +2371,19 @@ int delete_reflog(const char *refname)
- }
- 
- int refs_reflog_expire(struct ref_store *refs,
--		       const char *refname, const struct object_id *oid,
-+		       const char *refname,
- 		       unsigned int flags,
- 		       reflog_expiry_prepare_fn prepare_fn,
- 		       reflog_expiry_should_prune_fn should_prune_fn,
- 		       reflog_expiry_cleanup_fn cleanup_fn,
- 		       void *policy_cb_data)
- {
--	return refs->be->reflog_expire(refs, refname, oid, flags,
-+	return refs->be->reflog_expire(refs, refname, flags,
- 				       prepare_fn, should_prune_fn,
- 				       cleanup_fn, policy_cb_data);
- }
- 
--int reflog_expire(const char *refname, const struct object_id *oid,
-+int reflog_expire(const char *refname,
- 		  unsigned int flags,
- 		  reflog_expiry_prepare_fn prepare_fn,
- 		  reflog_expiry_should_prune_fn should_prune_fn,
-@@ -2391,7 +2391,7 @@ int reflog_expire(const char *refname, const struct object_id *oid,
- 		  void *policy_cb_data)
- {
- 	return refs_reflog_expire(get_main_ref_store(the_repository),
--				  refname, oid, flags,
-+				  refname, flags,
- 				  prepare_fn, should_prune_fn,
- 				  cleanup_fn, policy_cb_data);
- }
-diff --git a/refs.h b/refs.h
-index ddbf15f1c21..fda8aef1547 100644
---- a/refs.h
-+++ b/refs.h
-@@ -816,20 +816,19 @@ typedef int reflog_expiry_should_prune_fn(struct object_id *ooid,
- typedef void reflog_expiry_cleanup_fn(void *cb_data);
- 
- /*
-- * Expire reflog entries for the specified reference. oid is the old
-- * value of the reference. flags is a combination of the constants in
-+ * Expire reflog entries for the specified reference.
-+ * flags is a combination of the constants in
-  * enum expire_reflog_flags. The three function pointers are described
-  * above. On success, return zero.
-  */
- int refs_reflog_expire(struct ref_store *refs,
- 		       const char *refname,
--		       const struct object_id *oid,
- 		       unsigned int flags,
- 		       reflog_expiry_prepare_fn prepare_fn,
- 		       reflog_expiry_should_prune_fn should_prune_fn,
- 		       reflog_expiry_cleanup_fn cleanup_fn,
- 		       void *policy_cb_data);
--int reflog_expire(const char *refname, const struct object_id *oid,
-+int reflog_expire(const char *refname,
- 		  unsigned int flags,
- 		  reflog_expiry_prepare_fn prepare_fn,
- 		  reflog_expiry_should_prune_fn should_prune_fn,
-diff --git a/refs/debug.c b/refs/debug.c
-index 3f1455db2df..bf4a82bccb6 100644
---- a/refs/debug.c
-+++ b/refs/debug.c
-@@ -392,7 +392,7 @@ static void debug_reflog_expiry_cleanup(void *cb_data)
- }
- 
- static int debug_reflog_expire(struct ref_store *ref_store, const char *refname,
--			       const struct object_id *oid, unsigned int flags,
-+			       unsigned int flags,
- 			       reflog_expiry_prepare_fn prepare_fn,
- 			       reflog_expiry_should_prune_fn should_prune_fn,
- 			       reflog_expiry_cleanup_fn cleanup_fn,
-@@ -405,7 +405,7 @@ static int debug_reflog_expire(struct ref_store *ref_store, const char *refname,
- 		.should_prune = should_prune_fn,
- 		.cb_data = policy_cb_data,
- 	};
--	int res = drefs->refs->be->reflog_expire(drefs->refs, refname, oid,
-+	int res = drefs->refs->be->reflog_expire(drefs->refs, refname,
- 						 flags, &debug_reflog_expiry_prepare,
- 						 &debug_reflog_expiry_should_prune_fn,
- 						 &debug_reflog_expiry_cleanup,
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index d81bda8bc25..a4adac46443 100644
+index 4f2d907597a..bed2ab25c3a 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -3027,7 +3027,7 @@ static int expire_reflog_ent(struct object_id *ooid, struct object_id *noid,
- }
+@@ -882,7 +882,6 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+ 	struct strbuf ref_file = STRBUF_INIT;
+ 	struct ref_lock *lock;
+ 	int last_errno = 0;
+-	int resolved;
  
- static int files_reflog_expire(struct ref_store *ref_store,
--			       const char *refname, const struct object_id *unused_oid,
-+			       const char *refname,
- 			       unsigned int flags,
- 			       reflog_expiry_prepare_fn prepare_fn,
- 			       reflog_expiry_should_prune_fn should_prune_fn,
-@@ -3106,7 +3106,6 @@ static int files_reflog_expire(struct ref_store *ref_store,
- 		}
- 	}
+ 	files_assert_main_repository(refs, "lock_ref_oid_basic");
+ 	assert(err);
+@@ -890,30 +889,9 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+ 	CALLOC_ARRAY(lock, 1);
  
--	assert(!unused_oid);
- 	(*prepare_fn)(refname, oid, cb.policy_cb);
- 	refs_for_each_reflog_ent(ref_store, refname, expire_reflog_ent, &cb);
- 	(*cleanup_fn)(cb.policy_cb);
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 24a360b719f..65ba4214b8d 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1635,7 +1635,7 @@ static int packed_delete_reflog(struct ref_store *ref_store,
- }
- 
- static int packed_reflog_expire(struct ref_store *ref_store,
--				const char *refname, const struct object_id *oid,
-+				const char *refname,
- 				unsigned int flags,
- 				reflog_expiry_prepare_fn prepare_fn,
- 				reflog_expiry_should_prune_fn should_prune_fn,
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 3155708345f..d496c5ed52d 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -593,7 +593,7 @@ typedef int create_reflog_fn(struct ref_store *ref_store, const char *refname,
- 			     int force_create, struct strbuf *err);
- typedef int delete_reflog_fn(struct ref_store *ref_store, const char *refname);
- typedef int reflog_expire_fn(struct ref_store *ref_store,
--			     const char *refname, const struct object_id *oid,
-+			     const char *refname,
- 			     unsigned int flags,
- 			     reflog_expiry_prepare_fn prepare_fn,
- 			     reflog_expiry_should_prune_fn should_prune_fn,
+ 	files_ref_path(refs, &ref_file, refname);
+-	resolved = !!refs_resolve_ref_unsafe(&refs->base, refname,
+-					     RESOLVE_REF_NO_RECURSE,
+-					     &lock->old_oid, type);
+-	if (!resolved && errno == EISDIR) {
+-		/*
+-		 * we are trying to lock foo but we used to
+-		 * have foo/bar which now does not exist;
+-		 * it is normal for the empty directory 'foo'
+-		 * to remain.
+-		 */
+-		if (remove_empty_directories(&ref_file)) {
+-			last_errno = errno;
+-			if (!refs_verify_refname_available(
+-					    &refs->base,
+-					    refname, NULL, NULL, err))
+-				strbuf_addf(err, "there are still refs under '%s'",
+-					    refname);
+-			goto error_return;
+-		}
+-		resolved = !!refs_resolve_ref_unsafe(&refs->base, refname,
+-						     RESOLVE_REF_NO_RECURSE,
+-						     &lock->old_oid, type);
+-	}
+-	if (!resolved) {
++	if (!refs_resolve_ref_unsafe(&refs->base, refname,
++				     RESOLVE_REF_NO_RECURSE,
++				     &lock->old_oid, type)) {
+ 		last_errno = errno;
+ 		if (last_errno != ENOTDIR ||
+ 		    !refs_verify_refname_available(&refs->base, refname,
 -- 
 2.33.0.662.g438caf9576d
 
