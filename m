@@ -2,89 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28DA5C4338F
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8CCCC4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:07:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0267661373
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:05:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CEA456126A
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 13:07:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237188AbhHWNF7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 09:05:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38998 "EHLO
+        id S237206AbhHWNI1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 09:08:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237098AbhHWNFx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 09:05:53 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F451C061575
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 06:05:11 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id n27so4922414eja.5
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 06:05:10 -0700 (PDT)
+        with ESMTP id S236025AbhHWNI1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 09:08:27 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AA31C061575
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 06:07:44 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id u16so26213373wrn.5
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 06:07:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=e1TTc4mej7+g+FkaJlOyXcw+4FQuI+dwz0gJgSpQjTk=;
-        b=py18YAl4i2g/LGrJo+ARwOf3cjBW3jdKFBAzvS7wh8EOYg5REy+28y9YLi5ENZ4+bq
-         EgDud8c7hgv7NqKAHIkwSjK9OOHBchadWoTvEItksYtioANi+Q0Akskvgw7x/phlkuxn
-         1uGdeL3yhRQUVF9UyjNJYA9+Xmv2khcDgjqeW7YzlQJuHvqkEJXl5Cr/fDiqhn9eZx7m
-         PJF5mChzxnnCsq5rLllnIjwxqu8QJC6LWU/U1wU1iyxM58NCRl609d/Jz6xv6urtaRo+
-         Q+0xlG0+nbHkEs/JmPSDDs3WzOmQQaFqDZaWASFo3OnWA5FAU3zQq8G3P1E8O4WF0LcT
-         pyAQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ABMnPUr50zuLwRK1Xx6T6XxXfA/buxrz0LNC0QRd0SA=;
+        b=k0yx1rbgTayLXg+ByTu0SV3NWFHXvALcsFbgsnJZZNgec4QoDXEdgx23vpjqPcjwjp
+         7LLEPUIHMSXHQ3kBGH/1eCU5wRyzF3dUSgxPmNbRSWQpq8RwxR4pBPJ5p2dbJuTVAyJ9
+         GV8r8AWhM3djQIrUT/hmEQ8cWbU9W2Dci8wev36y/fjzGPI2/yxRawP9z8uAINZKBsO0
+         942gNqN3GQGlQe+QoG+BUQGM9MZHLhfupR9dWTuB+hmCkZ/qZP6sdONa7N1MSEs48xBL
+         Vy5mOXQ3WGaKo1M7h350NSA8tGUU4QKDCFQWytOQD8m1ArzpHubXwe4vLIxMf+aU7kP5
+         8vPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=e1TTc4mej7+g+FkaJlOyXcw+4FQuI+dwz0gJgSpQjTk=;
-        b=hjD6moIEGG9yzsnwqg0QR7nrU5EheNoNgMyC4aOcE2ypYOoCdRWt8nsdYBO8tWEL+F
-         +y1zqIzC/txgVnK4Tr59kep3VM1CaGsMFDcqqiQSTwuEJTDFJEuq1etqvheuRpxgZIa8
-         vItzVmkyjhqauiv/JGgYmcN1mq6GyWCBfwajauIT7Q58Y995iTwULpmEheDX/zy6HFh+
-         Z8wtYEspimjv/et9EFpPDw8PWMkOurtQmOFY6A+sIQQWhkYqKqQ0gpVJ0Cpj1vqeDnis
-         2ov7bOdrDU653sjkektJjPhTktlAAXI80m6YgrYocsKonC9ZJEFvDVMux+DL8kWUdxpQ
-         q04A==
-X-Gm-Message-State: AOAM530IkzhM8K0bNEiaRb3gYr4o/EWUB6eIUesvKUrf5JXLmZ255vmw
-        OWb/ghu2nR+VUC0JqRQFIUo=
-X-Google-Smtp-Source: ABdhPJz5tUZKoRW1HUzvMc3qIRYQ8aoROWvg9SqfvkqdlkQkfvL3eI2HqrL5bJKi/GnfRpLLGFZ++A==
-X-Received: by 2002:a17:907:1199:: with SMTP id uz25mr35682943ejb.448.1629723909422;
-        Mon, 23 Aug 2021 06:05:09 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id sa21sm7383921ejb.108.2021.08.23.06.05.08
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ABMnPUr50zuLwRK1Xx6T6XxXfA/buxrz0LNC0QRd0SA=;
+        b=mFr+MWEnZtBWaQN9OfcbrlbhjtVGdfMK8QZ8FoqwDunNbdlLY6955tVPUCzjcLC68l
+         BvFumGf53yhf76naAnHgcLfXNlNAgwCylX4HwF08VytcckpdrscDEcxTFduzQEQBvC6F
+         4B8CRGzkknX0svxgwRTjPkP8tbLRCS3dgivPNuPhIhVtmhweQ+rx9lrI9T7aajVX/W1X
+         7/4mFEfUUX7itvxeJ+XXH7F2OPwg5P7u4zJImoPnw82VBQ0dMA7VOuL9ybvKLduto5sG
+         dr5i5s428eGkWlh4uZmBoWGay4AYwhPnhS9y3prN+479rJPE+rQAUih/bUCzZdAgkWkS
+         Xc7w==
+X-Gm-Message-State: AOAM530u5eCXanJ8tLMr0datPoIqj9o8fE9iKFZoceWlMrOg6VclD1ky
+        iOBAyZAnrBuKv/Jp2bx/+prn3yXzJ6jaencE
+X-Google-Smtp-Source: ABdhPJzGS2x+Y8WLD/nR4pGpc6caUjdUCQDbfJ/GK3mw/cOkRyS3VlMVcDnCTpnzUVNCu0ChhOKRDA==
+X-Received: by 2002:adf:ed8d:: with SMTP id c13mr13549401wro.405.1629724062877;
+        Mon, 23 Aug 2021 06:07:42 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id n13sm13035687wmc.18.2021.08.23.06.07.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Aug 2021 06:05:08 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2021, #07; Fri, 20)
-Date:   Mon, 23 Aug 2021 15:03:36 +0200
-References: <xmqqh7fkuhyx.fsf@gitster.g> <87v93wflm0.fsf@evledraar.gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <87v93wflm0.fsf@evledraar.gmail.com>
-Message-ID: <87pmu4fh17.fsf@evledraar.gmail.com>
+        Mon, 23 Aug 2021 06:07:42 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] rebase: emit one "fatal" in "fatal: fatal: <error>"
+Date:   Mon, 23 Aug 2021 15:07:41 +0200
+Message-Id: <patch-1.1-54eb94f6e7a-20210823T130724Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.662.gbc81f8cbdca
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The die() routine adds a "fatal: " prefix, there is no reason to add
+another one. Fixes code added in e65123a71d0 (builtin rebase: support
+`git rebase <upstream> <switch-to>`, 2018-09-04).
 
-On Mon, Aug 23 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/rebase.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> On Fri, Aug 20 2021, Junio C Hamano wrote:
->
-> Updates on my topics:
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 33e09619005..66a0a0f0d03 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1918,7 +1918,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 						   &options.orig_head))
+ 			options.head_name = NULL;
+ 		else
+-			die(_("fatal: no such branch/commit '%s'"),
++			die(_("no such branch/commit '%s'"),
+ 			    branch_name);
+ 	} else if (argc == 0) {
+ 		/* Do not need to switch branches, we are already on it. */
+-- 
+2.33.0.662.gbc81f8cbdca
 
-I've got these two trivial patches that weren't picked up, presumably
-due to not being spotted or it being too close to the v2.33 release:
-
-https://lore.kernel.org/git/patch-1.1-f1da49de63-20210727T000203Z-avarab@gm=
-ail.com/
-https://lore.kernel.org/git/patch-1.1-ad71faa6da-20210727T000657Z-avarab@gm=
-ail.com/
-
-It would be great if you could pick them up, but are rather trivial
-fixes, especially the latter one doing s/error/error_errno/g.
