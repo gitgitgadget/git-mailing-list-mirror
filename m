@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93C97C432BE
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:52:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13952C4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:53:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7E1756138E
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:52:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E849661357
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 11:53:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236722AbhHWLxj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 07:53:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50468 "EHLO
+        id S236723AbhHWLxr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 07:53:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235953AbhHWLxi (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236719AbhHWLxi (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 23 Aug 2021 07:53:38 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91299C061575
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:52:55 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id k8so25870988wrn.3
-        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:52:55 -0700 (PDT)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54F8AC061764
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:52:56 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id k8so25871050wrn.3
+        for <git@vger.kernel.org>; Mon, 23 Aug 2021 04:52:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Use2JGkvk4kFUYGomJpJTzQpUhppHR9ErwMc67NdoP4=;
-        b=Xtvb73rQvEs/Hy/SvR4F10JTvRp4q3BgXLvqNBqeYHNuawpk3JUYH9SPgYFwXla/9+
-         CD+TJuKRa0bBNhBv5xqBkPVsGjURd4gWBoUcjpsZl1+z6ZKwbp04kdwfXWJbOR7xHydj
-         3aKnisN8wT28gjvnsqAgLD4SZH4DKfUjRw5JKqwnkpUh8wQkwnQUh6Ig1psiv2K22y0L
-         5Ilwjl4HlCqKNgD8I9MbP/sa9KA2VFCe6Q4Wju44xjPWSQ8NJqJlIz0SNCUfug1OmW4E
-         5UYYBAZdNUHAPAiNQY6gJE64Lyg5n9QQAADQH2Foe0y9Tt+/8mbzvCERysMEX6v1JnDW
-         Ovdg==
+        bh=AZY23QlS7LS9bzKtlJLI+hejPzLCrRa8/I1X5G/vTR0=;
+        b=E56p82gTam7vEQYu46EkS6m+5M2toFZh0Tt4x8WSoMln5WQUQu8HclI4c9MNZpnvWT
+         HSUA312aSaWLqpUoCsIvVmdV7jPI3U4z4v0SJofEQItHGg2L/8SL/URr8xBpDYI7tvNS
+         52f1OSRt2dOkKxjoRDg5lNjr8XNO4Os4s70Xt3wAwf1drlzEcrhJKLMHUNyNhYzxEuqF
+         AVhTJibiQNv8JdZhtqdclnd9qps9repomaWMs6JV7fk7q3JKJAcw5JrJCsAURWXoUVQJ
+         QS549gVaU0ECob69sBkbB764xOraH+wrDzfUZD2ixvfm1XRKMNuYtYx2C0up9d62Yhm+
+         aCxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Use2JGkvk4kFUYGomJpJTzQpUhppHR9ErwMc67NdoP4=;
-        b=lLMaxv2/Y1d+WiQJYZ0UX7+YHmqypODaik48ZpODeYSSFUnv1hKfrTdulkUEURo/Na
-         TYe0rPYzfVVox42fvEldN1DtbWwNllEyzH4f022W0moRptnPunbdWrS/AOMpWqAKAzYw
-         r3OhjCVRxQl3EAbNdzRPBISSXs+2etShhpfw3WFMZs6GGeKXs3HUIaRM0J/DI7vlcile
-         kKH1nqVLX3iecaX1B4xrHgskHoJ498udPxEsctLhxDRvGI6/dhzsa4WyROHgDxeC0EY2
-         x+OjcmjNQV1VEiRxLRBRbEe0cxtfeIUJsSzb9IeG+pFq0FjGB7oiJgjfU77jqqSxiXHs
-         qFiA==
-X-Gm-Message-State: AOAM531QDIGXyoSsuwnWVWKEx3N+iceIMIvPCNzK3cHf9+BGUl9Uj+5k
-        Mdp0O4d7tCp1/IMyH3tPq8k/Y7CJ7BTSCjNe
-X-Google-Smtp-Source: ABdhPJzDgsNqaF+/thd4dt9jlCcZhIZnwosNqMCr34hEpLqy+38DZfk1m+vF6Rdgdh6e7A3ZzkDEfA==
-X-Received: by 2002:adf:f0c2:: with SMTP id x2mr12874579wro.107.1629719574005;
+        bh=AZY23QlS7LS9bzKtlJLI+hejPzLCrRa8/I1X5G/vTR0=;
+        b=klwKV098uf+Rt0pi6UzZmAbEVccT8US5EqTRPkGzZDbi1zpb5ZTz/hudt5epXS5O5H
+         nud0xSGdDTA4igVC9huwDtuphjNHQQAMVdKOilLgLUtwUGnIQ74irrUX73p1teS1EFM8
+         buHO1CftpXkN2tPgzKSfLNvd56mTuRuoNNuiQo08MbF0588prO750m8o2wiUUzTcUj5K
+         ZrrdGNBzyG2Ua/OHSuftMf9ATnzlbonXx0vNnM2iZUuiRqFkhwNboS6yFjq9EbRfLOEA
+         pk/7rcnvLWuzaGMSiAcs9H2UWjtgLqFEOtGa46kY+tlYZEFy+lkQDpDL5Co/uaxotN/o
+         kDeQ==
+X-Gm-Message-State: AOAM5312/VyyUauVK38h77Cim1jGadbJIg6Zx8ZFJ0L3BoMGvJpNW7Ab
+        FF23KNLMBi1dazZA0NoCE1q131fOYT801nh5
+X-Google-Smtp-Source: ABdhPJwDP/fvSjb/ZpuAt3jAEpaqPEwesRVLhfG0z40q4/m5WsYWo/KvIkz5auCyN7dGLcssblZIMQ==
+X-Received: by 2002:a05:6000:1091:: with SMTP id y17mr12834725wrw.202.1629719574705;
         Mon, 23 Aug 2021 04:52:54 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l2sm12350713wmi.1.2021.08.23.04.52.53
+        by smtp.gmail.com with ESMTPSA id l2sm12350713wmi.1.2021.08.23.04.52.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Aug 2021 04:52:53 -0700 (PDT)
+        Mon, 23 Aug 2021 04:52:54 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v10 2/8] refs: remove EINVAL errno output from specification of read_raw_ref_fn
-Date:   Mon, 23 Aug 2021 13:52:38 +0200
-Message-Id: <patch-v10-2.8-ba0f5f5fb0a-20210823T114712Z-avarab@gmail.com>
+Subject: [PATCH v10 3/8] refs/files-backend: stop setting errno from lock_ref_oid_basic
+Date:   Mon, 23 Aug 2021 13:52:39 +0200
+Message-Id: <patch-v10-3.8-2c4c30e8e06-20210823T114712Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.662.g438caf9576d
 In-Reply-To: <cover-v10-0.8-00000000000-20210823T114712Z-avarab@gmail.com>
 References: <cover-0.7-00000000000-20210720T102644Z-avarab@gmail.com> <cover-v10-0.8-00000000000-20210823T114712Z-avarab@gmail.com>
@@ -80,63 +80,97 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This commit does not change code; it documents the fact that an alternate ref
-backend does not need to return EINVAL from read_raw_ref_fn to function
-properly.
+refs/files-backend.c::lock_ref_oid_basic() tries to signal how it failed
+to its callers using errno.
 
-This is correct, because refs_read_raw_ref is only called from;
+It is safe to stop setting errno here, because the callers of this
+file-scope static function are
 
-* resolve_ref_unsafe(), which does not care for the EINVAL errno result.
+* files_copy_or_rename_ref()
+* files_create_symref()
+* files_reflog_expire()
 
-* refs_verify_refname_available(), which does not inspect errno.
+None of them looks at errno after seeing a negative return from
+lock_ref_oid_basic() to make any decision, and no caller of these three
+functions looks at errno after they signal a failure by returning a
+negative value. In particular,
 
-* files-backend.c, where errno is overwritten on failure.
+* files_copy_or_rename_ref() - here, calls are followed by error()
+(which performs I/O) or write_ref_to_lockfile() (which calls
+parse_object() which may perform I/O)
 
-* packed-backend.c (is_packed_transaction_needed), which calls it for the
-  packed ref backend, which never emits EINVAL.
+* files_create_symref() - here, calls are followed by error() or
+create_symref_locked() (which performs I/O and does not inspect
+errno)
 
-A grep for EINVAL */*c reveals that no code checks errno against EINVAL after
-reading references. In addition, the refs.h file does not mention errno at all.
-
-A grep over resolve_ref_unsafe() turned up the following callers that inspect
-errno:
-
-* sequencer.c::print_commit_summary, which uses it for die_errno
-
-* lock_ref_oid_basic(), which only treats EISDIR and ENOTDIR specially.
-
-The files ref backend does use EINVAL. The files backend does not call into
-the generic API (refs_read_raw), but into the files-specific function
-(files_read_raw_ref), which we are not changing in this commit.
-
-As the errno sideband is unintuitive and error-prone, remove EINVAL
-value, as a step towards getting rid of the errno sideband altogether.
-
-Spotted by Ævar Arnfjörð Bjarmason <avarab@gmail.com>.
+* files_reflog_expire() - here, calls are followed by error() or
+refs_reflog_exists() (which calls a function in a vtable that is not
+documented to use and/or preserve errno)
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- refs/refs-internal.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ refs/files-backend.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index d496c5ed52d..1c6e5ab51d7 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -622,9 +622,9 @@ typedef int reflog_expire_fn(struct ref_store *ref_store,
-  *
-  * Return 0 on success. If the ref doesn't exist, set errno to ENOENT
-  * and return -1. If the ref exists but is neither a symbolic ref nor
-- * an object ID, it is broken; set REF_ISBROKEN in type, set errno to
-- * EINVAL, and return -1. If there is another error reading the ref,
-- * set errno appropriately and return -1.
-+ * an object ID, it is broken; set REF_ISBROKEN in type, and return -1
-+ * (errno should not be ENOENT) If there is another error reading the
-+ * ref, set errno appropriately and return -1.
-  *
-  * Backend-specific flags might be set in type as well, regardless of
-  * outcome.
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 950f9738ae0..c1794dcd295 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -982,7 +982,6 @@ static int create_reflock(const char *path, void *cb)
+ 
+ /*
+  * Locks a ref returning the lock on success and NULL on failure.
+- * On failure errno is set to something meaningful.
+  */
+ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+ 					   const char *refname, int *type,
+@@ -990,7 +989,6 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+ {
+ 	struct strbuf ref_file = STRBUF_INIT;
+ 	struct ref_lock *lock;
+-	int last_errno = 0;
+ 
+ 	files_assert_main_repository(refs, "lock_ref_oid_basic");
+ 	assert(err);
+@@ -1001,11 +999,10 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+ 	if (!refs_resolve_ref_unsafe(&refs->base, refname,
+ 				     RESOLVE_REF_NO_RECURSE,
+ 				     &lock->old_oid, type)) {
+-		last_errno = errno;
+ 		if (!refs_verify_refname_available(&refs->base, refname,
+ 						   NULL, NULL, err))
+ 			strbuf_addf(err, "unable to resolve reference '%s': %s",
+-				    refname, strerror(last_errno));
++				    refname, strerror(errno));
+ 
+ 		goto error_return;
+ 	}
+@@ -1018,15 +1015,12 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+ 	 */
+ 	if (is_null_oid(&lock->old_oid) &&
+ 	    refs_verify_refname_available(refs->packed_ref_store, refname,
+-					  NULL, NULL, err)) {
+-		last_errno = ENOTDIR;
++					  NULL, NULL, err))
+ 		goto error_return;
+-	}
+ 
+ 	lock->ref_name = xstrdup(refname);
+ 
+ 	if (raceproof_create_file(ref_file.buf, create_reflock, &lock->lk)) {
+-		last_errno = errno;
+ 		unable_to_lock_message(ref_file.buf, errno, err);
+ 		goto error_return;
+ 	}
+@@ -1043,7 +1037,6 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+ 
+  out:
+ 	strbuf_release(&ref_file);
+-	errno = last_errno;
+ 	return lock;
+ }
+ 
 -- 
 2.33.0.662.g438caf9576d
 
