@@ -2,121 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7493C4338F
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 20:00:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76E14C4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 20:07:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B562661378
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 20:00:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A91360EAF
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 20:07:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231311AbhHWUAy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 16:00:54 -0400
-Received: from mout.gmx.net ([212.227.17.20]:39973 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229622AbhHWUAy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 16:00:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1629748803;
-        bh=AcCGQ5loyvVEkgKfo+tJMPaO/Bm79DdRHoKS+tWPmrE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=bRza1ota2bf+Lsbxel1sBekgdDYEjlEQRhlSiX2gP50cPacHQg/OjO2yw+Qj/oR9p
-         uHDQLw0Yy7/k9T/m7al6zC0l8IJoNDCvJlktnf8G5PNRqp8QrpK5j9MMu1X8QooBhO
-         UWc253l/H7sefqvKAmMsNAN8T/B5lcJy+XC9JanE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.86.215] ([89.1.214.7]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MVvPJ-1mRmDv3Qfd-00RmqJ; Mon, 23
- Aug 2021 22:00:02 +0200
-Date:   Mon, 23 Aug 2021 22:00:00 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        id S232242AbhHWUHq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 16:07:46 -0400
+Received: from 82-64-198-250.subs.proxad.net ([82.64.198.250]:50454 "EHLO
+        mail.lhuard.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231377AbhHWUHp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 16:07:45 -0400
+Received: from coruscant.lhuard.fr (unknown [IPv6:2a0d:e487:16f:faad:4075:735b:619a:fb95])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mail.lhuard.fr (Postfix) with ESMTPSA id CB5844E61E4;
+        Mon, 23 Aug 2021 22:06:26 +0200 (CEST)
+Authentication-Results: mail.lhuard.fr; dmarc=fail (p=quarantine dis=none) header.from=lhuard.fr
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lhuard.fr; s=rpi3;
+        t=1629749189; bh=hEzYbksvSMd6LFZK8kiYdwyt1Xzk46kTlo0JxQNoPsE=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=7PNIj/Ay6Jlo6/LnSjNE0uKV71zUVPNVflfO0VM1UhOB9Rkb0c+eMO4tKHZUTeWpz
+         eBURMlFX6cf3JMDgCv9oZnb7mEmCt/YxkS1+Sw+7WpwRqSJQX37nA2rwYq7oOFIT6n
+         GtPcaSR17KcQH8G41uHuIXUS7pFqwDffu/disX4Y=
+From:   =?ISO-8859-1?Q?L=E9na=EFc?= Huard <lenaic@lhuard.fr>
+To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
         Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 8/8] sparse-checkout: clear tracked sparse dirs
-In-Reply-To: <CABPp-BFUoPQUQDRaRj3Rq2gShOD8WPv6Oh-Wdj4m-7sf=okY6Q@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2108232158420.55@tvgsbejvaqbjf.bet>
-References: <pull.1009.v2.git.1628625013.gitgitgadget@gmail.com> <pull.1009.v3.git.1629206602.gitgitgadget@gmail.com> <febef675f051eb08896751bb5661b6deb5579ead.1629206603.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2108191015260.55@tvgsbejvaqbjf.bet>
- <CABPp-BFUoPQUQDRaRj3Rq2gShOD8WPv6Oh-Wdj4m-7sf=okY6Q@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Martin =?ISO-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v7 2/3] maintenance: `git maintenance run` learned `--scheduler=<scheduler>`
+Date:   Mon, 23 Aug 2021 22:06:15 +0200
+Message-ID: <3218082.ccbTtk1zYS@coruscant.lhuard.fr>
+In-Reply-To: <87h7h75hzz.fsf@evledraar.gmail.com>
+References: <20210612165043.165579-1-lenaic@lhuard.fr> <20210702142556.99864-3-lenaic@lhuard.fr> <87h7h75hzz.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:YsJwi05QWo+VR6EAWtv07LIBLzhInwQIOttw6HQ63aJLX9I39Xh
- kiWyXX/v+Lm2f3oZJ8Wco2zO9R2NU7CJNuqsujWDbWTxvhov3x4eky0z6wQXIgFAsTf94zs
- M4pk4Uf0jQxp75wcBf1h3jHh80Fki4/YjTF1gFJFq2g84Ve3pb8ioJvdjoyChesZr2kiRrd
- Uzx4DayOYETDVVvw442rw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6GMWYI3z7mA=:5BNg2Y33udHjbrLDZ0k3JM
- oeh9eEsY/FdURE2yb3q9y9nowAbXrxnTDdiHs/Ob17uon2RwoAYElnHpZbKS2mrgzVSWy6wsL
- yYuo6q2U94hpy4Gbpbo55tZcuWhmcngt9mutRdUjCucihcifu1spicdhmN96B6KBwLqLOP0CP
- u3V0A3IuHEHJx46JSqXfZfuhBwFgSYF23Ni5X55r4YOyS2XTfrPBXQ6u309+4iFwKIuCvEper
- TUhDM6y61CxYOdm0W1IIYgNOfJN9QWK9s9nXtbd2apmerF1nrIS0Ko57ntsTYcU+gHvNQDUTj
- KDLRb3rAsezCqlMZFFHJn8SPqFz2PBw2aELmHkvc3YNy0LOkUZFa9Avj7WDKW/WN5EYf9FC87
- S6pXYfihAB3wcXyVCNJiROYaWe/loioL9mNgryqTWp9GSQIfSX6ewBPbfVtAkQezVYIyAZU9R
- VmTMGmw+/F2xiWSouWGBU5euGHVGaMktFYIyYFmeeAc3vsn9Y2VIYhCO9jF573Fs3MIatxzgF
- y2QFpMCB1zaucorK4DcWP0SdddgxEmU5s7l0avE0/jT+lhnyGImBuwPuLR8hO8kf5LAYcSy4j
- eB8+oTQE2qig7qmVsK7g29DLH9iMMbJHRQhV0f3/E5ywgl8P2NHD0B1et+KFqA/KxQBvDKYnu
- XPU5rRO8o7lkk8sK9AWEfHH53bPf6hDgsJzbfSLueeMjjlVjfm4giVGet4T+GDsWEETsOVucK
- nMgAXaWR+NJ2dywx1DcuPms1oL5ti0WzJiCKyFl27TVGYV4QyLoEx1Vv0/zIIcfCoKHnKGTA4
- T+qvqjWMst/Xkm5MPiK4pbwwOH0i16mlHRd/s2KszaYKWxyXHydJqCmOcBdvNDCmgA6Eh+Q8K
- mn4efgWPw6/1lBdxlwuuxZL9z6O2l9v5GDe0yT1Tu6d9IdldcW4Yn6zxmnohsfXfpAYn71ju6
- Z84mmbtd2mHtL+ucKN9yBC28l+zsz/A4hFWcfK/2NCTqNbP1tUkOKNt/Yuom3HTHeyqtIXXir
- MbEYbsO9YlPTn2TvKp76wml5LH2F+G7gMBu0W63SIXiVvR0IHBlvFELO8/kX5hthA+zmAq0vd
- f/1HY8QZ4PsUxtsBkMIzJkOnVqhik1Rve96jogorTJStjuHhDMkr9Jhlg==
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Hello,
 
-On Fri, 20 Aug 2021, Elijah Newren wrote:
+Sorry to come back after such a long time. I just resumed working on that=20
+series and would have a question about a review comment.
 
-> On Thu, Aug 19, 2021 at 1:48 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > Having said that, even after mulling over this behavior and sleeping
-> > over it, I am unsure what the best way forward would be. Just because
-> > it is easy to explain does not make it right.
-> >
-> > It is tricky to decide mostly because "ignored" files are definitely
-> > not always build output. Apart from VIM's temporary files, users like
-> > me frequently write other files and/or directories that we simply do
-> > not want to see tracked in Git. For example, I often test things in an
-> > `a1.c` file that -- for convenience -- lives in the current worktree.
-> > Obviously I don't want Git to track it, but I also don't want it to be
-> > deleted, so I often add corresponding lines to `.git/info/exclude`.
-> > Likewise, I sometimes download additional information related to what
-> > I am implementing, and that also lives in the current worktree (but
-> > then, I usually am too lazy to add an entry to `.git/info/exclude` in
-> > those cases).
->
-> I do the same thing, and I know other users that do as well...but I
-> don't put such files in directories that are irrelevant to me.  I create
-> cruft files near other files that I'm working on, or in a special
-> directory of its own, but not under some directory that is irrelevant to
-> the areas I'm working on.
->
-> For reference, we implemented something like this in our `sparsify`
-> wrapper we have internally, where 'git clean -fdX <all sparse
-> directories>` is executed whenever folks sparsify.  (We have our own
-> tool and don't have users use sparse-checkout directly, because our tool
-> computes dependencies to determine which directories are needed.) I was
-> really hesitant to add that cleaning behavior by default, and just made
-> it an option.  My colleagues tired of all the bug reports about
-> left-around directories and made it the default, waiting to hear
-> complaints.  We never got one.  It's been over a year.
+Le mardi 6 juillet 2021, 21:56:38 CEST =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
+on a =C3=A9crit :
+> On Fri, Jul 02 2021, L=C3=A9na=C3=AFc Huard wrote:
 
-It is really nice to hear that you have evidence from users using this in
-practice. I find that very convincing, and it weighs much more than all of
-my (very theoretical) considerations.
+> > +#ifdef __APPLE__
+> > +	return 1;
+> > +#else
+> > +	return 0;
+> > +#endif
+> > +}
+>=20
+>=20
+> I see this is partially a pre-existing thing in the file, but we have an
+> __APPLE__ already in cache.h. Perhaps define a iLAUNCHCTL_AVAILABLE
+> there. See e.g. 62e5ee81a39 (read-cache.c: remove #ifdef NO_PTHREADS,
+> 2018-11-03).
 
-Thank you,
-Dscho
+Is the suggestion to replace
+
++#ifdef __APPLE__
++	return 1;
++#else
++	return 0;
++#endif
++}
+
+by
+
++ return IS_LAUNCHCTL_AVAILABLE;
+
+and to add
+
+#ifdef __APPLE__
+#define IS_LAUNCHCTL_AVAILABLE 1
+#else
+#define IS_LAUNCHCTL_AVAILABLE 0
+#endif
+
+somewhere else like at the top of builtin/gc.c ?
+
+Also, do we agree this shouldn=E2=80=99t be defined in cache.h=E2=80=AF? I=
+=E2=80=99m a little bit=20
+confused.
+
+Kind regards,
+L=C3=A9na=C3=AFc.
+
+
+
+
