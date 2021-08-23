@@ -2,206 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0867C4338F
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 00:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D63CDC4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 01:07:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7DF7D61354
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 00:54:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B54B061262
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 01:07:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231835AbhHWAyr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Aug 2021 20:54:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41882 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230174AbhHWAyq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Aug 2021 20:54:46 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A0CC061575
-        for <git@vger.kernel.org>; Sun, 22 Aug 2021 17:54:04 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id n24so19766206ion.10
-        for <git@vger.kernel.org>; Sun, 22 Aug 2021 17:54:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/01mFwfrN/PFx1K7Qe5mprBBS2tGDT/NeG7cDHdkvWg=;
-        b=vqRGmX6LYkBuniSzyb04gqOL1fmbRzzqQRjmtTDzBp8XxaMsOC5L+s1S5SeNh6aGy5
-         jfGDXuzVpyJZmp/L+Zfpp+rGCqQF4/asB+6MqOo6/Z76awbamKjMdApII4cv/US17/a8
-         RT8VPNKJ920tkl3ZS5eif90gGILDwQCHbdiVo+vDdjQefwwsM35xuRGjL03wyZ1crz48
-         AZduv/L94dwyCtJBV7JMEcCwvFzNba8kSslZsTvyrvI5Z05bnA3I02PNVfD+fTmwHWk+
-         picIF0EyNRGIV6WBMNQnJu4zYhC/J6i4gWdGvWBtBXuiWN4ViOQzP8EFaRqvbgkI6CVU
-         1+Pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/01mFwfrN/PFx1K7Qe5mprBBS2tGDT/NeG7cDHdkvWg=;
-        b=ez5rOqJxZpD6/RdNMtGHn1qUdB0sgCZUsJafVv/qHxsrgxMVtyaRM4ftFiQ4F1oY5G
-         LJ0QJlcuN4mvH4RQnt5euOvD10RudPwKEV329ox9xzit1Toxl/KAB2l6Z3qdLvxSj0Gr
-         ZnriBVmoGHFKLWwjXz4UVN6DwAjIFwdFMgrWMJHGKGl7+vV30uTSjYWk5pf8gRvQ6K57
-         f0UnQMU4eeo4pURCuc/FBHe4jGNGkPXHLWY1umee2mKOzXhlRVKkJKlDxpW9T3rG/09J
-         1net0cvUwg+oTDfc9Prl0t09Xhn6GrmVG3OjrUscCW4BmzB+Agkljz0hUBqldRvidwV+
-         chQQ==
-X-Gm-Message-State: AOAM532h9R9t1shg+sesrJHjfWihxG0DAYLJ5hmrodBKWT6ramHe1Drk
-        4IqJtLC0zqQkZsyFJQ43dPVHBA==
-X-Google-Smtp-Source: ABdhPJwIEdvrOBzcSmxxQTJ6FDLeSGvirQcdpmhcCJe0SS5x3gRYjYVnGRKz6u8bmZyN3q/w1EiN7w==
-X-Received: by 2002:a02:cd2c:: with SMTP id h12mr27216424jaq.84.1629680043613;
-        Sun, 22 Aug 2021 17:54:03 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id q14sm7563778ilj.34.2021.08.22.17.54.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Aug 2021 17:54:03 -0700 (PDT)
-Date:   Sun, 22 Aug 2021 20:54:02 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Johannes Berg <johannes@sipsolutions.net>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH] multi-pack-index: fix --object-dir from outside repo
-Message-ID: <YSLxqnxlyEUQ+ljJ@nand.local>
-References: <20210820193504.37044-1-johannes@sipsolutions.net>
+        id S234409AbhHWBId (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Aug 2021 21:08:33 -0400
+Received: from w1.tutanota.de ([81.3.6.162]:51298 "EHLO w1.tutanota.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231807AbhHWBIc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Aug 2021 21:08:32 -0400
+Received: from w3.tutanota.de (unknown [192.168.1.164])
+        by w1.tutanota.de (Postfix) with ESMTP id 0504EFBF5CB;
+        Mon, 23 Aug 2021 01:07:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1629680869;
+        s=s1; d=tutanota.com;
+        h=From:From:To:To:Subject:Subject:Content-Description:Content-ID:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Cc:Cc:Date:Date:In-Reply-To:In-Reply-To:MIME-Version:MIME-Version:Message-ID:Message-ID:Reply-To:References:References:Sender;
+        bh=X2JMCyR6yAP6ppZDsebjgz2KIcTkQkd+6Oe0EDbO5a0=;
+        b=Rzcicd1P0Ja4+FyQPuLBM1t1J4TbVrQdolD7qa7C61hW1IusHMtf3miuHadgAnUD
+        NR6KUKiTakAergmZFDocMtIzfaCla5uyYvf+MKlCdkGQKwW//v0oO1zEHubpjaSO8yJ
+        8C6aVBtaO8S/XTQH3wJyffbH6KZ7RkZ9N+P2tm1Jjvi3BL8aaD/kRb7VWMRFt6XkzRM
+        Ju+BPQyGQC5mwFe7/Fbk+noH+qVqlrwhQTBxCjxecxPEOpwn0U1rW5cRoh4fL4Ft/KN
+        Xa5NX04znTbOeuiA/ESocZkBUNxsQ1L790JX9CE951ana9zXWTyi8QC67fVlX8slBFP
+        QBTTScFaeA==
+Date:   Mon, 23 Aug 2021 03:07:49 +0200 (CEST)
+From:   Rafael Santiago <voidbrainvoid@tutanota.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Rafael Santiago via GitGitGadget <gitgitgadget@gmail.com>,
+        Git <git@vger.kernel.org>
+Message-ID: <MhkY8ud--3-2@tutanota.com>
+In-Reply-To: <YSLKrX/QTZtxBGDz@camp.crustytoothpaste.net>
+References: <pull.1069.git.git.1629576007891.gitgitgadget@gmail.com> <YSF1GfpHXRrXebsB@camp.crustytoothpaste.net> <Mheyv1D--3-2@tutanota.com> <YSLKrX/QTZtxBGDz@camp.crustytoothpaste.net>
+Subject: Re: [PATCH] Give support for hooks based on platform
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210820193504.37044-1-johannes@sipsolutions.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 20, 2021 at 09:35:04PM +0200, Johannes Berg wrote:
-> If using --object-dir to point into a repo, 'write' will
-> segfault trying to access the object-dir via the repo it
-> found, but that's not fully initialized. Fix it to use
-> the object_dir properly.
+Well, you are taking into consideration that every git user that needs to
+automate some stuff during a scm event will do it from a shell
+(I meant true shell or a mocked up one such as cygwin, msys, etc)
+and it is true, by design.
 
-Thanks for CC'ing me; I have definitely been wondering about the
-intended behavior of `--object-dir` on the list recently [1].
+However, not all git users (out unix) uses git from "bash-like"
+environments. I know people that prefers using it from a well-cooked
+IDE by clicking and dragging things or even from command prompt when
+on Windows. Those people are not able to handle some scm event
+automation as unix users because git hook in its essence presupposes
+the existence/necessity of a powerful shell (okay, it is possible to
+put a shebang and call a batch file on windows, maybe, but it is a
+little clumsy, in my opinion). On Windows, users can do a bunch of stuff
+just by using the ready to go powershell, but open an if/else on a bash
+script to run a cygwin instance by calling powershell from there is not a
+good and clean solution for this type of user. Presupposing shell for git,
+limitates the idea behind the scm event handling with hooks, because
+currently it is strongly dependent from shell to work on every git
+supported platform.
 
-I think your patch message could use some clarifying, though.  Invoking
+The idea of having hooks being executed by platform would be the first
+step to give support to execute commands on scm events without
+obligating users out of a unix have a shell interpreter to access
+native stuff. Currently, this commit does not implement it but would be
+possible to do and in a=C2=A0 less noisy way for all unix-like stuff. I am =
+not sure
+but currently a _windows hook out from cygwin would result on a spawn
+error, would not?
 
-    cd $REPO/..
-    git multi-pack-index write --object-dir=$REPO/.git/objects
+Git hooks are useful features but would be more useful if it breaked up
+the shell jail. It could make git much more integrated with the current
+platform.=C2=A0 Being possible to make it powerful as it is on a unix even =
+on
+a total different platform as Windows, let's say.
 
-has... different behavior depending on which side of the "write"
-argument you put `--object-dir". On the left-hand side (i.e.,
-"--object-dir=... write", you get something like:
+For sure, this commit are not a "panacea" but intends to start making
+git-hooks more independent from 3rd party software to work on as expected,
+on every platform that a git-repo is expected to be handled.
 
-    cd $REPO/..
-    git multi-pack-index --object-dir=$REPO/.git/objects write
+I hope I was clearer from this time.
 
-    zsh: segmentation fault  git.compile multi-pack-index ...
+Rafael Santiago
+--
+22 de ago. de 2021 19:07 por sandals@crustytoothpaste.net:
 
-because the_repository->objects->odb isn't initialized (so reading
-`path` in `clear_midx_files_ext` crashes). But in the opposite order
-(i.e., "write --object-dir=...") you get:
-
-    BUG: environment.c:280: git environment hasn't been setup
-    zsh: abort      git.compile multi-pack-index write
-
-because we catch that case much earlier in get_object_directory(). Why?
-Because cmd_multi_pack_index() fills in the value of object_dir with
-get_object_directory() if it isn't filled in already, but seeing "write"
-causes us to stop parsing and dispatch to the sub-command
-cmd_multi_pack_index_write().
-
-I discussed this a little in [1] also (see the part about using
-RUN_SETUP instead). There are definitely different ways to handle that;
-you could equally imagine only dying if we were both outside of a Git
-repository and didn't point at one via `--object-dir`.
-
-But that's separate from another issue which is fixed by your patch
-which is that we don't respect the value of `--object-dir` when cleaning
-up MIDX .rev files via clear_midx_files_ext().
-
-Your fix there (to use the path of an object_dir instead of a repository
-struct) makes sense (since we don't ever fill in a repository struct
-corresponding to the `--object-dir` parameter from the MIDX code).
-
-But I think that's a separate issue than the RUN_SETUP thing I mentioned
-earlier, so I would probably consider breaking this into two patches,
-the first which addresses the RUN_SETUP thing, and the second which is
-this fix.
-
->  static int midx_checksum_valid(struct multi_pack_index *m)
-> @@ -1086,7 +1086,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+> On 2021-08-21 at 23:11:27, Rafael Santiago wrote:
 >
->  	if (flags & MIDX_WRITE_REV_INDEX)
->  		write_midx_reverse_index(midx_name, midx_hash, &ctx);
-> -	clear_midx_files_ext(the_repository, ".rev", midx_hash);
-> +	clear_midx_files_ext(object_dir, ".rev", midx_hash);
-
-We can rely on this value always being non-NULL, so this is good.
-
-> -static void clear_midx_files_ext(struct repository *r, const char *ext,
-> +static void clear_midx_files_ext(const char *object_dir, const char *ext,
->  				 unsigned char *keep_hash)
->  {
->  	struct clear_midx_data data;
-> @@ -1146,7 +1146,7 @@ static void clear_midx_files_ext(struct repository *r, const char *ext,
->  				    hash_to_hex(keep_hash), ext);
->  	data.ext = ext;
+>> In my opinion "binary hooks" (hooks that execute specific binaries not
+>> present in the system as a default tool) should be versioned and built
+>> as a support tool into the repository or in the worst case downloaded
+>> from somewhere, even because versioning binaries into git repos is
+>> considered a bad practice that could make bloated repos.
+>>
 >
-> -	for_each_file_in_pack_dir(r->objects->odb->path,
-> +	for_each_file_in_pack_dir(object_dir,
->  				  clear_midx_file_ext,
->  				  &data);
+> Yes, I agree binary hooks should not be checked into the repository.
+>
+>> The point is that in many cases a dependency with a script language is
+>> created only to make the hook actions portable from a platform to
+>> other, but what this script in its essence does is a thing that could
+>> be done with basic tools delivered with the current operating system.
+>>
+>
+> Then, in general, it can be done in a shell script containing an if-then
+> statement per platform using the native tools, so I'm not seeing the
+> particular reason that this series is necessary if the hooks being
+> executed aren't binaries.  All systems on which Git runs must contain a
+> POSIX-compatible shell.
+>
+> Can you explain the rationale for your proposal in more detail so that
+> we can understand why this change is necessary?  Typically this is done
+> in the commit message, but I don't think I understand why you want to do
+> this.
+>
+>> There is no problem on using cygwin on windows, you should use
+>> standard hook and do all the effort to make it unique for cygwin
+>> environments and true unix boxes (in other words: you would continue
+>> doing what you are doing, because it attends yours requirements).
+>> Notice that everything that have been working will stay working as
+>> before. Anyway, if cygwin becomes a point of incompatibility at some
+>> point, you could use the "_windows" version by coding your "cygwin
+>> script" there.
+>>
+>
+> Right, my point is that your commit message proposes using "windows" for
+> Cygwin.  The patch doesn't, but your commit message says that every
+> version of Windows is considered "windows".
+> --=20
+> brian m. carlson (he/him or they/them)
+> Toronto, Ontario, CA
+>
 
-And here's the most important part of the change, which is obviously
-correct. But note to other reviewers that this has nothing to do with
-the RUN_SETUP issue I mentioned earlier, since
-for_each_file_in_pack_dir() doesn't care about that.
-
-> +test_expect_success 'multi-pack-index with --object-dir need not be in repo' '
-> +	p="$(pwd)" &&
-> +	rm -f $objdir/multi-pack-index &&
-> +	cd / &&
-> +	git multi-pack-index --object-dir="$p/$objdir" write &&
-> +	cd "$p"
-> +'
-> +
-
-I agree with Stolee that there should be a new repo created within the
-current working directory, that way you can "cd .." and be both outside
-of the repo you just created, but not outside of the test environment.
-
-But let's make sure that we're not deleting any files that we should be
-leaving alone. So it might be good to do something like:
-
-    git init repo &&
-    test_when_finished "rm -fr repo" &&
-    (
-      cd repo &&
-
-      test_commit base &&
-      git repack -d &&
-    ) &&
-
-    rev="$objdir/pack/multi-pack-index-$(midx_checksum $objdir).rev" &&
-    touch $rev &&
-
-    git multi-pack-index write --object-dir=repo/.git/objects &&
-
-    test_path_is_file repo/.git/objects/pack/multi-pack-index &&
-    test_path_is_file repo/.git/objects/multi-pack-index &&
-    test_path_is_file $objdir/pack/multi-pack-index &&
-    test_path_is_file $rev
-
-That isn't testing the "invoked from a non-repo, but --object-dir" is
-given case, but I think that's fine since they really are separate
-things.
-
-Note also that midx_checksum doesn't exist, but it is merely a wrapper
-over a test-tool that prints out (for a multi_pack_index "m") `m->data +
-m->data_len - the_hash_algo->rawsz`.
-
-So between splitting the patch, clarifying the patch message, and
-implementing support for this new test helper, this may be more of a
-project than you were bargaining for ;). Let me know if you want any
-help. I also don't mind taking care of it myself, since I promised in
-[1] that I'd fix this issue anyway.
-
-Thanks,
-Taylor
-
-[1]: https://lore.kernel.org/git/YQMFIljXl7sAAA%2FL@nand.local/
