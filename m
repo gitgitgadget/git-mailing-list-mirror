@@ -2,83 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03B65C4338F
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 20:24:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6115AC4338F
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 20:27:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E09CC60C51
-	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 20:24:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4321C60E97
+	for <git@archiver.kernel.org>; Mon, 23 Aug 2021 20:27:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232375AbhHWUZF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Aug 2021 16:25:05 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59178 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232404AbhHWUZE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Aug 2021 16:25:04 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 556A6139C6A;
-        Mon, 23 Aug 2021 16:24:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=wTcncueAVoAX
-        JmCqfG5OU/R0LM+3nFW6Ydxn5JeKgHA=; b=egUBYCYVlkViOPU5TTnEPu4RnwcN
-        kUSmHZJh5vZH8lx8bJAYQNYGMkl0A4CX2vqCSB6AfudfF9VNImsVnN+0NRweQu/j
-        igUVIwA2+pJUfIbfI6kNRa0uw5qYX44g0ufhyziktPD1INUtGCGPr0NTBHTaJ5Of
-        7hS30njGSsEmDqY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4D26A139C67;
-        Mon, 23 Aug 2021 16:24:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 94239139C64;
-        Mon, 23 Aug 2021 16:24:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org, ZheNing Hu <adlternative@gmail.com>,
-        Fabian Stelzer <fabian.stelzer@campoint.net>
-Subject: Re: [PATCH] test: fix for COLUMNS and bash 5
-References: <20210805194825.1796765-1-felipe.contreras@gmail.com>
-        <20210806144911.GA1388237@szeder.dev> <xmqqmtpuik5m.fsf@gitster.g>
-        <87sfz0fh8o.fsf@evledraar.gmail.com>
-Date:   Mon, 23 Aug 2021 13:24:13 -0700
-In-Reply-To: <87sfz0fh8o.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Mon, 23 Aug 2021 14:59:10 +0200")
-Message-ID: <xmqqwnobq58y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232563AbhHWU2g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Aug 2021 16:28:36 -0400
+Received: from mout.gmx.net ([212.227.15.18]:53245 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231569AbhHWU2f (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Aug 2021 16:28:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1629750467;
+        bh=hPXSS8Qvi+NbpX0TYmeb/Z0i2MNIbF7k53HiseksmiY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=WEbVMbrRgLvZy5WT+h1Lu2siDqXspWATwAblPTOYByfV/pmSNVfwLkm0GeMn//Djb
+         WJcT1dOuU4S+7RdcR81bs+EG+t0PIXMosovswpy0LQPAZRi0gLUKLlOu0NuZ4Fbwdr
+         4fRe1bUoxWjcCmDRiEb9UDM8bOHSAFvXm+QwRfSw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.86.215] ([89.1.214.7]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MwwZd-1nGinQ187H-00yQpu; Mon, 23
+ Aug 2021 22:27:47 +0200
+Date:   Mon, 23 Aug 2021 22:27:45 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] compat: let git_mmap use malloc(3) directly
+In-Reply-To: <9c2fe5de-be23-3e66-6edf-3c2edfb804f3@web.de>
+Message-ID: <nycvar.QRO.7.76.6.2108232227140.55@tvgsbejvaqbjf.bet>
+References: <9c2fe5de-be23-3e66-6edf-3c2edfb804f3@web.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 16188B36-0450-11EC-85BF-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-2027710095-1629750467=:55"
+X-Provags-ID: V03:K1:tRPIXpDE1hjtfdxaXDlmcynKmp5BR6BvyvgonsaXuFP4GtfCkDq
+ 1bLfQyaig4iBhbAKjl52ZOjgw2VkMV06XN4yXiRbkJDNuV90mBArciwHWe6qUaPLpJ1IA1g
+ CiqigSmee/JtUAoMjIKD9YrBRfRHFxmmmCf70SnMz7v3gSC4ncPf55DeNuijmE9o2dEzLtE
+ aHRnp7WsHQ999G5TYU0oA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:dei9FGgCq90=:LI32MWWbTo5NL4fvahPOpo
+ hIeeN4vvRwNecPvzCUasE/915eaX/DmdW0H4KujwSL0+jRX7kteD4yZY11DXIHPJL/wjPrz26
+ Zx3wkGp/MnLiiJf/mGiDdrZ8qZHDXGYdHy5BNHHS6yKiBhE9sLaynomade1vdza34+1Uegnhb
+ HHxEMf0M7kwPOJdZLvINlNj22CNbCzFIMmoD1NV4fCQSt3fVtc5tjmFtVdUMmy0P2imANchpg
+ +z+djHLPgHXgdzoisqk5QW0VNJO7uFIocrJJUk7auERyMmFuL7Rty/Qaqs+9nmKI4Nf3dZrqz
+ eInMXFkZSOif0b1jIb57ROUBwM2Agr7T/n9imP79FkQZiR1sVqmFRCALr442cmmaWJZLccGOM
+ a/9gfex7xPX2xa0T826o2DcCtcdnWwy/4u1AWmzue14jLhPnfU9ZX4cwswoJ1jveGxHq0ZK+l
+ LrE5+sd4v386BGO+97ZOECIMpf8sAbTjE8Mm6d8Xl9OYo4fK5S8OSovaj3KQMhHnOjPvlkc6E
+ fFxP17kwyBPPiT3lsOLZ7VSe5Z+285H6QjLiXUvjK4Ph42+Wzi12E2vHsUODZfx5Lx3Xs7Gsb
+ LOPGr118txO1RO28rB07TiFkC3KKo/0UjC3RtZBhifqwL8C2C08Io37pj79EInTrdUXv3PtHV
+ gEYfHx9XgbUUdkCTyTy+ugx7NPTW/4cy2w0DkMsWdVeF+7iZsTw/+r8vKP2Fi5H+FIm/nLVC8
+ bq6sYZ4h1PqCB8AGYiKD4PHNkkYO6nhDO5lOk3ecQjVUPrCcRN5FBX5JbljBLqcU4rjkSoLEa
+ JBzpaLfSVdroF+q3C+CyVaC6w2oGc/dpRjIURV5Z8jVOH9BYviK6Bg8YcIoXE5TiEM5lvwBGQ
+ Cvb/CBMyRmh92Yze3Zh+weeRvFFwAjamjXE5NzJ5l/IU9MMH9DPcjnKEjmvGOHAnptsy0nlqZ
+ /D8VFWjzoO12y9sbY+r1YXPOBedhL5XSEik77iTaSS30LEhUAfeCJdJdEiUjs6RrO7Vbd5cci
+ jgIAv6rqgiu5UoYx9osvgbXPxuDqNzEapbYO61t2iDF8rl8IohO9dartYVDTU1gbM1Ffa4pxU
+ 90pCuCiyZS15u/laD43qyZCMlsRJ9pxS0SR33owNFU+Raw0a3NV2tCyrA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Now that we're post-release are you interested in a re-roll of
-> https://lore.kernel.org/git/cover-v3-0.3-00000000000-20210804T230335Z-a=
-varab@gmail.com/
-> + removal of the bash-specific checkwinsize added here, or would you
+--8323328-2027710095-1629750467=:55
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Let's wait until we see a concrete breakage report that shows that
-checkwinsize is insufficient.  Even if such a second shell calls its
-facility differently, as long as it works in a similar way and
-another single liner like
+Hi Ren=C3=A9,
 
-    test -n "$BASH_VERSION" && shopt -u checkwinsize 2>/dev/null
+On Sat, 21 Aug 2021, Ren=C3=A9 Scharfe wrote:
 
-we can keep piling such a single-liner next to each other, as the
-number of shells we need to cater to would be less than a handful
-anyway.
+> xmalloc() dies on error, allows zero-sized allocations and enforces
+> GIT_ALLOC_LIMIT for testing.  Our mmap replacement doesn't need any of
+> that.  Let's cut out the wrapper, reject zero-sized requests as required
+> by POSIX and use malloc(3) directly.  Allocation errors were needlessly
+> handled by git_mmap() before; this code becomes reachable now.
 
-Thanks.
+Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+Thanks!
+Dscho
+
+>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+>  compat/mmap.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/compat/mmap.c b/compat/mmap.c
+> index 14d31010df..8d6c02d4bc 100644
+> --- a/compat/mmap.c
+> +++ b/compat/mmap.c
+> @@ -7,7 +7,12 @@ void *git_mmap(void *start, size_t length, int prot, in=
+t flags, int fd, off_t of
+>  	if (start !=3D NULL || flags !=3D MAP_PRIVATE || prot !=3D PROT_READ)
+>  		die("Invalid usage of mmap when built with NO_MMAP");
+>
+> -	start =3D xmalloc(length);
+> +	if (length =3D=3D 0) {
+> +		errno =3D EINVAL;
+> +		return MAP_FAILED;
+> +	}
+> +
+> +	start =3D malloc(length);
+>  	if (start =3D=3D NULL) {
+>  		errno =3D ENOMEM;
+>  		return MAP_FAILED;
+> --
+> 2.33.0
+>
+
+--8323328-2027710095-1629750467=:55--
