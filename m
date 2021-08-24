@@ -2,182 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE5EAC4338F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA009C4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:48:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9420661247
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:39:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9364F61357
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:48:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230198AbhHXWk0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 18:40:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50172 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229605AbhHXWk0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 18:40:26 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00DD5C061757
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 15:39:41 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id y5so3168944edp.8
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 15:39:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=yGMkGP0ysVMgF+NsRirzf+HNEDi5txPs87Mq04TbOIE=;
-        b=b26qM4JecXWVJU626HRVxjXo3tJaup7sUChIQYDAYGFnGFyYNHseAvvT+35qhn67JZ
-         FygCEd6yxQyDTX1G6g8XVUw7zmMrzaVi9F9/RE5pSionCE28k5x1f0XdnaZI6hTKSPWo
-         NNCpGSItBxdVCQd0zILFfBGk5t2l90y0ZQkvVJ0d4dcG8w+K+7WEy1X5wwI7R118a8CU
-         M9wqGwqaS/s5ykXTuzQcNOphHw/SWpF/a00E5a43hNzYcvAhWcze5hAM9bAYnGL52Hs7
-         NaA/Y6pJammYLUhIRS4We76xNttR8nRVTXMgfvlKyG0bydI3b98VysMGgTkWJo2ICdxl
-         DgLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=yGMkGP0ysVMgF+NsRirzf+HNEDi5txPs87Mq04TbOIE=;
-        b=cKotqiXr7aqHEK9inNesFxifr3Zg5tPuCFnuXer3lLIlC7LVaBxSH+uj5h6tZTm7gZ
-         DABGvOU8jdNfoTD//PV9Yz8AIe26aeEENXIzdbLTGyAZQFWJtYh0t2RBoetpGuFAUl8K
-         j7d0uyteq4lmUfBXdBxHqP2wO8xGRMQmNwWdU/fppy9oo/nnVGwCmZCMkQD82ZSuuH9A
-         /r/mP8GjT+9HM/tTLET/IaVbWnuz+PeCEGf1G9cqwxUk+RuQ9u5VxcvPNa+dVmpwbEEA
-         9NyFVzwRT8W7dqxiRepFDo+fA6tyqNyRFuiINnkHGmGf01I5AT/qAJRlrx3hxljxgzRY
-         n+Dg==
-X-Gm-Message-State: AOAM533D1xwyp4OrPYqSKe67SxQuI3LWRrW10STMNL/82tFAI28/nOq4
-        W+9Uq5hRH89QGK5UowK/Q/s=
-X-Google-Smtp-Source: ABdhPJwnh5rQR5UrQnOGBweKbGxTJhAikBumAJs9yOuof1CsuBF4Od0vO02+zEBlzljpR23+fUX7oA==
-X-Received: by 2002:a05:6402:34c8:: with SMTP id w8mr38428853edc.330.1629844779254;
-        Tue, 24 Aug 2021 15:39:39 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id b3sm9989278ejb.7.2021.08.24.15.39.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 15:39:38 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+        id S230239AbhHXWtK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 18:49:10 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55491 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230293AbhHXWtI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 18:49:08 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D72741525D2;
+        Tue, 24 Aug 2021 18:48:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=QboxzvNvD5ZZR5qkcbeq2opGLkB4x4s140BPLnC8vQA=; b=YMZE
+        aL/NyMCT1GfwuI2Ik6X+zcPgkjVDSgvqZv7tdVO1w+5hPjPegjAP863G90EyNjNm
+        LEy8i6iKTjHKVnPvQrmM6cAc6xeIi3dyNOJqdknsu3njl7qDXD9y52w/kxnv6YUc
+        Cj74R712Pz2MJKaa4mfLis6grnlUbyPvywqw4IQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CF5661525D0;
+        Tue, 24 Aug 2021 18:48:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E85F91525CE;
+        Tue, 24 Aug 2021 18:48:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Steinhardt <ps@pks.im>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <christian.couder@gmail.com>,
-        Albert Cui <albertqcui@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [RFC PATCH 13/13] bundle-uri docs: add design notes
-Date:   Wed, 25 Aug 2021 00:33:04 +0200
-References: <RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com>
- <RFC-patch-13.13-1e657ed27a-20210805T150534Z-avarab@gmail.com>
- <YSVpLjAhhS8v2dR7@camp.crustytoothpaste.net>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <YSVpLjAhhS8v2dR7@camp.crustytoothpaste.net>
-Message-ID: <87y28qcvrp.fsf@evledraar.gmail.com>
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, Derrick Stolee <stolee@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v2 0/7] Speed up mirror-fetches with many refs
+References: <cover.1629452412.git.ps@pks.im> <cover.1629800774.git.ps@pks.im>
+Date:   Tue, 24 Aug 2021 15:48:19 -0700
+Message-ID: <xmqqfsuylarw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6188BAAE-052D-11EC-9589-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Patrick Steinhardt <ps@pks.im> writes:
 
-On Tue, Aug 24 2021, brian m. carlson wrote:
+> this is the second version of my patch series to speed up mirror-fetches
+> with many refs. This topic applies on top of Junio's 9d5700f60b (Merge
+> branch 'ps/connectivity-optim' into jch, 2021-08-23).
 
-> [[PGP Signed Part:Undecided]]
-> On 2021-08-05 at 15:07:29, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Add a design doc for the bundle-uri protocol extension to go along
->> with the packfile-uri extension added in cd8402e0fd8 (Documentation:
->> add Packfile URIs design doc, 2020-06-10).
->>=20
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  Documentation/technical/bundle-uri.txt  | 119 ++++++++++++++++++++++++
->>  Documentation/technical/protocol-v2.txt |   5 +
->>  2 files changed, 124 insertions(+)
->>  create mode 100644 Documentation/technical/bundle-uri.txt
->>=20
->> diff --git a/Documentation/technical/bundle-uri.txt b/Documentation/tech=
-nical/bundle-uri.txt
->> new file mode 100644
->> index 0000000000..5ae9a15eaf
->> --- /dev/null
->> +++ b/Documentation/technical/bundle-uri.txt
->> @@ -0,0 +1,119 @@
->> +Bundle URI Design Notes
->> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->> +
->> +Protocol
->> +--------
->> +
->> +See `bundle-uri` in the link:protocol-v2.html[protocol-v2]
->> +documentation for a discussion of the bundle-uri command, and the
->> +expectations of clients and servers.
->> +
->> +This document is a a more general discussion of how the `bundle-uri`
->> +command fits in with the rest of the git ecosystem, its design goals
->> +and non-goals, comparison to alternatives etc.
->> +
->> +Comparison with Packfile URIs
->> +-----------------------------
->> +
->> +There is a similar "Packfile URIs" facility, see the
->> +link:packfile-uri.html[packfile-uri] documentation for details.
->> +
->> +The Packfile URIs facility requires a much closer cooperation between
->> +CDN and server than the bundle URI facility.
->> +
->> +I.e. the server MUST know what objects exist in the packfile URI it's
->> +pointing to, as well as its pack checksum. Failure to do so will not
->> +only result in a client error (the packfile hash won't match), but
->> +even if it got past that would likely result in a corrupt repository
->> +with tips pointing to unreachable objects.
->> +
->> +By comparison the bundle URIs are meant to be a "dumb" solution
->> +friendly to e.g. having a weekly cronjob take a snapshot of a git
->> +repository, that snapshot being uploaded to a network of FTP mirrors
->> +(which may be inconsistent or out of date).
->> +
->> +The server does not need to know what state the side-channel download
->> +is at, because the client will first validate it, and then optionally
->> +negotiate with the server using what it discovers there.
->> +
->> +Using the local `transfer.injectBundleURI` configuration variable (see
->> +linkgit:git-config[1]) the `bundle-uri` mechanism doesn't even need
->> +the server to support it.
->
-> One thing I'm not seeing with this doc that I brought up during the
-> packfile URI discussion is that HTTPS is broken for a decent number of
-> Git users, and for them SSH is the only viable option.  This is true for
-> users of certain antivirus programs on Windows, as well as people who
-> have certain corporate proxies in their workplace.  For those people, as
-> soon as the server offers a bundle URI, their connection will stop
-> working.
->
-> I know that you're probably thinking, "Gee, how often does that happen?"
-> but judging by the number of people on StackOverflow, this is actually
-> very common.  The antivirus programs that break Git are actually not
-> uncommon and they are widely deployed on corporate machines, plus the
-> fact that lots of companies sell TLS intercepting proxies, which are
-> almost always broken in this way.  Many of these users don't even know
-> what's going on, so they simply lack the knowledge to take any action or
-> ask their network administrator for a fix.  For them, HTTPS just doesn't
-> work with Git, while it does for a web browser.
->
-> So we will probably want to make this behavior opt-in with a config
-> option for SSH, or just not available for SSH at all, so that we don't
-> magically break users on upgrade who are relying on the SSH protocol not
-> using HTTPS under the hood[0], especially the users who won't even know
-> what's wrong.
+It is a horrible commit to base anything on.  You are taking your
+patches hostage to all of these other topics.
 
-Good point, I think this sort of thing will be a non-issue with
-bundle-uri, because in general it handles any sort of network / fetching
-/ validation failures gracefully. I.e. with these patches you can point
-at a bad URI, broken non-bundle etc. We'll just move on to a full clone.
+    9d5700f60b Merge branch 'ps/connectivity-optim' into jch
+    7ad315de2f Merge branch 'js/log-protocol-version' into jch
+    1726f748f5 Merge branch 'en/ort-becomes-the-default' into jch
+    23aeecb099 Merge branch 'en/merge-strategy-docs' into jch
+    568277d458 Merge branch 'en/pull-conflicting-options' into jch
+    2b316bb006 ### match next
+    4efa9ea0b6 Merge branch 'ps/fetch-pack-load-refs-optim' into jch
+    b305842ee8 Merge branch 'jt/push-negotiation-fixes' into jch
+    83b45616f1 Merge branch 'es/trace2-log-parent-process-name' into jch
+    be89aa8c38 Merge branch 'hn/refs-test-cleanup' into jch
+    256d56ed32 Merge branch 'en/ort-perf-batch-15' into jch
+    7477fbf53a Merge branch 'js/expand-runtime-prefix' into jch
+    b1453dfd30 Merge branch 'ab/bundle-doc' into jch
+    1b66e8e89d Merge branch 'zh/ref-filter-raw-data' into jch
+    1fbf27ddcd Merge branch 'ab/pack-stdin-packs-fix' into jch
+    dcf57bfebb Merge branch 'ab/http-drop-old-curl' into jch
+    93041f7c57 Merge branch 'ds/add-with-sparse-index' into jch
+    814a016195 Merge branch 'jc/bisect-sans-show-branch' into jch
 
-Whereas with packfile-uri the inline PACK and the URI are things you
-MUST both get, as the provided packfile-uri completes the incomplete
-inline PACK. So once you say that you're willing to accept things over
-https, you MUST be able to get that thing.
+A better way to handle a situation like this is to limit your
+dependencies more explicitly.  If you look at what I did to the last
+round of this topic, you'll see that there is a merge of the
+'ps/connectivity-optim' topic into v2.33 followed by application of
+the patches, like this:
 
-We'll still waste a bit of time trying though with bundle-uri. But I
-think for the common case of bundle-uri helping more than not (which
-presumably, the server operator has tested), it's a better default to
-try https:// even if the main dialog is over ssh://.
+    1d576ca7b2 fetch: avoid second connectivity check if we already have all objects
+    6768595f10 fetch: refactor fetch refs to be more extendable
+    a615d7cf87 fetch-pack: optimize loading of refs via commit graph
+    bfd04fc24c connected: refactor iterator to return next object ID directly
+    1a387c9f3a fetch: avoid unpacking headers in object existence check
+    f1a4367ec4 fetch: speed up lookup of want refs via commit-graph
+    3628199d4d Merge branch 'ps/connectivity-optim' into ps/fetch-optim
+
+What I did to your last round was to merge 'ps/connectivity-optim'
+on top of v2.33 and then queue them.  You can do the same for this
+round (you can tell people "apply these on top of the result of
+merging topic X, Y and Z on tag V").
+
+    df52ef2c3a fetch: avoid second connectivity check if we already have all objects
+    c1721680e4 fetch: merge fetching and consuming refs
+    5470cbe1be fetch: refactor fetch refs to be more extendable
+    016a510428 fetch-pack: optimize loading of refs via commit graph
+    f6c7e63cc7 connected: refactor iterator to return next object ID directly
+    17c8e90df3 fetch: avoid unpacking headers in object existence check
+    a54c245004 fetch: speed up lookup of want refs via commit-graph
+    3628199d4d Merge branch 'ps/connectivity-optim' into ps/fetch-optim
+
+I had to adjust [4/7] while applying them on top of the same
+3628199d4d I created for queuing the previous round, and it would be
+appreciated if you can double-check the result.
+
+Thanks.
