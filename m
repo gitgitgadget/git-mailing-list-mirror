@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 730FEC432BE
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 16:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65BD2C4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 16:16:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 61EAB610A3
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 16:16:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 519CC60F4C
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 16:16:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230235AbhHXQQ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 12:16:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46634 "EHLO
+        id S229792AbhHXQQ7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 12:16:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229709AbhHXQQu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 12:16:50 -0400
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69882C0613D9
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 09:16:06 -0700 (PDT)
-Received: by mail-il1-x12d.google.com with SMTP id u7so21064276ilk.7
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 09:16:06 -0700 (PDT)
+        with ESMTP id S229908AbhHXQQx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 12:16:53 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FA14C0617A8
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 09:16:09 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id b7so27064991iob.4
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 09:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=2XzWdz7EESNopwj6BDpfpE36HwWK9E1PabZFQ1q7w1I=;
-        b=YTmpn2Y4Jxd9yjy3dY/yc05aRc7xg/zQQUS8bgI9l2dBhZQ0u3t6tJJYnMRssXsicv
-         W1irpJuAHu3B1Ue7IjlJC2zHlj8xvCltB2WCcfxVq5purNjs119AhCkNHYUK5hRHusGW
-         2y+04tPCtqkJp9NyoFS74H0T5Csll80Skmn8jQVAMoHchuMmtgpElWon341t5NseK7Z5
-         5d65QTpz53U7Ex+NhaX51zz32TMeLXE6Y+KC8RbDL/gTLGT/CRSaDAV2Rz49WlGV4tw/
-         DxfqzPxu3wHZWqaUX/2Eq96rFIcM4Pet7TGVEdLM+22R82nmgK3YMN6Va319rSifzycV
-         ddoQ==
+        bh=ujhAxRiA3uR6dx4f9FN/eiaLsee3JfsYFqVjz5Ahhtc=;
+        b=KkoVR0Ja92i+6UbBvbgd9fP470bLd+oSxpT8hXcZBzgwt3ziTyC2RVLRswzBTUpSv+
+         QXi/y72ZSS1pLWcY8drvZ7bNlDQ6VFaV3cbKdbP4WwlhX0Az+ae7AA5vI5BFw/Zgu1MY
+         mhQ6UVU5cWD5t/nWAPFMJRqLMw/ynTfJVeEhFOtQsU9O/c5n6BCcstxzqHLCq8svdy9+
+         6zjykoCveSpp+f7hKD56fhyZfP4T1zARitliFWSFTg3+LR7z45EQUiZ5RsiacUpwyHIw
+         0b/owSl2J3TyhCk1A9jyku6Rxy5GJ7iFzrRIfVga7YUG3FZPZE+Qq715Tp4dVG6PtLOJ
+         6prQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=2XzWdz7EESNopwj6BDpfpE36HwWK9E1PabZFQ1q7w1I=;
-        b=kME4stxkubt0bcSO8s6v5SoyQWXjwTWp8QxeeDYSpSvJ0ahYxm7GEZxxflq9TITut6
-         wv8npxFAwaidq5N6cibgcWKR8Y419C2t3HmQh8ALLdigqPrh3VHCnTF/EuSj00sb33aT
-         wGgMXrTMfPMRiT3RtHLjYCyeRJNrNx7hd8QsKTHDoLwqrW2n/8XhwU5oVutAUie95FWI
-         MZmyXy7iYdkdgNsOM3SP0ovkYqVEwj+6L1PqWlNjQYD23T3ci8jZMjGUiID0vddMxuDK
-         GUOuINoIzFjNqoGAfhUv+j5tTx9CCSufNLbDaZn7XN1PPeSZcN2bLWSkx/kcOLJHmvr4
-         /RRg==
-X-Gm-Message-State: AOAM531pYzJwKKRRddN4ywvg6EBIOhySerLEDs6gnIzseOhfeWobWZWp
-        17phKtJDnLInkIbQ4WO0Vu3nh/bnfqQ0Yfhj
-X-Google-Smtp-Source: ABdhPJwdOWQtA3Sxw68DYBgHR3AGtdtxImnFkOVl8MffiJ/dDrsBAAQHesjX0F+vWhPBuBRQAV7jmg==
-X-Received: by 2002:a92:194c:: with SMTP id e12mr25776402ilm.199.1629821765704;
-        Tue, 24 Aug 2021 09:16:05 -0700 (PDT)
+        bh=ujhAxRiA3uR6dx4f9FN/eiaLsee3JfsYFqVjz5Ahhtc=;
+        b=couFXQ9RBYLRAa8sPjE23ZbKpuB01rfoA4NouGAfGDOaVOBtmnTsrMTafm/ikeQGfQ
+         HSMuyH2IvR0XrSnumgZQScDXfovEuXtgdFODb/p5xQqQpGVOPE9H7UrOqUmp6tYBKuKQ
+         Ztcfl77JGN7MScDLxV4KT1G63C6s5VhB9bC16552F2PD5SZnsXDSxTowx05Qn3r/TSnC
+         j/3wuDeuSwJfn1lglqV9GBy00NE09GJyF3+BKZCp2Ljnmdd1tPvZeG4+OB/z3jIOzmhN
+         wq+pZ/86dEM1RWzlocyq+1QuNxjEJEA+UqYJ1BD7cU9C5vqkkC7WFEpJR/fz21jOqKjW
+         GAMA==
+X-Gm-Message-State: AOAM533ECFyDfdMf4DGVp0K3I0mirWiRu9FqYb7uAtkrj9fm63Nb4kKX
+        03Yk31On0hojM1ZUu5d1N/32ynFO9gH69mOS
+X-Google-Smtp-Source: ABdhPJyvQGTq/CUE8ogVu7JinTu3z0iIfRwM86ovT8d+Da6fuFXw2HM0AYTJnHWOQmpFUJCqqmh9Bg==
+X-Received: by 2002:a02:1cc5:: with SMTP id c188mr35617959jac.46.1629821768316;
+        Tue, 24 Aug 2021 09:16:08 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id r18sm10170701ilo.38.2021.08.24.09.16.05
+        by smtp.gmail.com with ESMTPSA id s7sm10263867ioc.42.2021.08.24.09.16.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 09:16:05 -0700 (PDT)
-Date:   Tue, 24 Aug 2021 12:16:04 -0400
+        Tue, 24 Aug 2021 09:16:07 -0700 (PDT)
+Date:   Tue, 24 Aug 2021 12:16:07 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         jonathantanmy@google.com
-Subject: [PATCH v4 06/25] midx: reject empty `--preferred-pack`'s
-Message-ID: <dab5dbf228a5e6d698d28e643e99f6b5492d40b6.1629821743.git.me@ttaylorr.com>
+Subject: [PATCH v4 07/25] midx: infer preferred pack when not given one
+Message-ID: <31f4517de0bc188a7b0d53e6092dde82c4b2855a.1629821743.git.me@ttaylorr.com>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1629821743.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -72,126 +72,144 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The soon-to-be-implemented multi-pack bitmap treats object in the first
-bit position specially by assuming that all objects in the pack it was
-selected from are also represented from that pack in the MIDX. In other
-words, the pack from which the first object was selected must also have
-all of its other objects selected from that same pack in the MIDX in
-case of any duplicates.
+In 9218c6a40c (midx: allow marking a pack as preferred, 2021-03-30), the
+multi-pack index code learned how to select a pack which all duplicate
+objects are selected from. That is, if an object appears in multiple
+packs, select the copy in the preferred pack before breaking ties
+according to the other rules like pack mtime and readdir() order.
 
-But this assumption relies on the fact that there is at least one object
-in that pack to begin with; otherwise the object in the first bit
-position isn't from a preferred pack, in which case we can no longer
-assume that all objects in that pack were also selected from the same
-pack.
+Not specifying a preferred pack can cause serious problems with
+multi-pack reachability bitmaps, because these bitmaps rely on having at
+least one pack from which all duplicates are selected. Not having such a
+pack causes problems with the code in pack-objects to reuse packs
+verbatim (e.g., that code assumes that a delta object in a chunk of pack
+sent verbatim will have its base object sent from the same pack).
 
-Guard this assumption by checking the number of objects in the given
-preferred pack, and failing if the given pack is empty.
+So why does not marking a pack preferred cause problems here? The reason
+is roughly as follows:
 
-To make sure we can safely perform this check, open any packs which are
-contained in an existing MIDX via prepare_midx_pack(). The same is done
-for new packs via the add_pack_to_midx() callback, but packs picked up
-from a previous MIDX will not yet have these opened.
+  - Ties are broken (when handling duplicate objects) by sorting
+    according to midx_oid_compare(), which sorts objects by OID,
+    preferred-ness, pack mtime, and finally pack ID (more on that
+    later).
+
+  - The psuedo pack-order (described in
+    Documentation/technical/pack-format.txt under the section
+    "multi-pack-index reverse indexes") is computed by
+    midx_pack_order(), and sorts by pack ID and pack offset, with
+    preferred packs sorting first.
+
+  - But! Pack IDs come from incrementing the pack count in
+    add_pack_to_midx(), which is a callback to
+    for_each_file_in_pack_dir(), meaning that pack IDs are assigned in
+    readdir() order.
+
+When specifying a preferred pack, all of that works fine, because
+duplicate objects are correctly resolved in favor of the copy in the
+preferred pack, and the preferred pack sorts first in the object order.
+
+"Sorting first" is critical, because the bitmap code relies on finding
+out which pack holds the first object in the MIDX's pseudo pack-order to
+determine which pack is preferred.
+
+But if we didn't specify a preferred pack, and the pack which comes
+first in readdir() order does not also have the lowest timestamp, then
+it's possible that that pack (the one that sorts first in pseudo-pack
+order, which the bitmap code will treat as the preferred one) did *not*
+have all duplicate objects resolved in its favor, resulting in breakage.
+
+The fix is simple: pick a (semi-arbitrary, non-empty) preferred pack
+when none was specified. This forces that pack to have duplicates
+resolved in its favor, and (critically) to sort first in pseudo-pack
+order.  Unfortunately, testing this behavior portably isn't possible,
+since it depends on readdir() order which isn't guaranteed by POSIX.
+
+(Note that multi-pack reachability bitmaps have yet to be implemented;
+so in that sense this patch is fixing a bug which does not yet exist.
+But by having this patch beforehand, we can prevent the bug from ever
+materializing.)
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-multi-pack-index.txt |  6 +++---
- midx.c                                 | 29 ++++++++++++++++++++++++++
- t/t5319-multi-pack-index.sh            | 17 +++++++++++++++
- 3 files changed, 49 insertions(+), 3 deletions(-)
+ midx.c | 50 ++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 44 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-index ffd601bc17..c9b063d31e 100644
---- a/Documentation/git-multi-pack-index.txt
-+++ b/Documentation/git-multi-pack-index.txt
-@@ -37,9 +37,9 @@ write::
- --
- 	--preferred-pack=<pack>::
- 		Optionally specify the tie-breaking pack used when
--		multiple packs contain the same object. If not given,
--		ties are broken in favor of the pack with the lowest
--		mtime.
-+		multiple packs contain the same object. `<pack>` must
-+		contain at least one object. If not given, ties are
-+		broken in favor of the pack with the lowest mtime.
- --
- 
- verify::
 diff --git a/midx.c b/midx.c
-index 73b199ca49..551e5c2ee5 100644
+index 551e5c2ee5..e5b17483af 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -934,6 +934,25 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 			ctx.info[ctx.nr].pack_name = xstrdup(ctx.m->pack_names[i]);
- 			ctx.info[ctx.nr].p = NULL;
- 			ctx.info[ctx.nr].expired = 0;
+@@ -969,15 +969,57 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 	if (ctx.m && ctx.nr == ctx.m->num_packs && !packs_to_drop)
+ 		goto cleanup;
+ 
+-	ctx.preferred_pack_idx = -1;
+ 	if (preferred_pack_name) {
++		int found = 0;
+ 		for (i = 0; i < ctx.nr; i++) {
+ 			if (!cmp_idx_or_pack_name(preferred_pack_name,
+ 						  ctx.info[i].pack_name)) {
+ 				ctx.preferred_pack_idx = i;
++				found = 1;
+ 				break;
+ 			}
+ 		}
 +
-+			if (flags & MIDX_WRITE_REV_INDEX) {
-+				/*
-+				 * If generating a reverse index, need to have
-+				 * packed_git's loaded to compare their
-+				 * mtimes and object count.
-+				 */
-+				if (prepare_midx_pack(the_repository, ctx.m, i)) {
-+					error(_("could not load pack"));
-+					result = 1;
-+					goto cleanup;
-+				}
++		if (!found)
++			warning(_("unknown preferred pack: '%s'"),
++				preferred_pack_name);
++	} else if (ctx.nr && (flags & MIDX_WRITE_REV_INDEX)) {
++		struct packed_git *oldest = ctx.info[ctx.preferred_pack_idx].p;
++		ctx.preferred_pack_idx = 0;
 +
-+				if (open_pack_index(ctx.m->packs[i]))
-+					die(_("could not open index for %s"),
-+					    ctx.m->packs[i]->pack_name);
-+				ctx.info[ctx.nr].p = ctx.m->packs[i];
++		if (packs_to_drop && packs_to_drop->nr)
++			BUG("cannot write a MIDX bitmap during expiration");
++
++		/*
++		 * set a preferred pack when writing a bitmap to ensure that
++		 * the pack from which the first object is selected in pseudo
++		 * pack-order has all of its objects selected from that pack
++		 * (and not another pack containing a duplicate)
++		 */
++		for (i = 1; i < ctx.nr; i++) {
++			struct packed_git *p = ctx.info[i].p;
++
++			if (!oldest->num_objects || p->mtime < oldest->mtime) {
++				oldest = p;
++				ctx.preferred_pack_idx = i;
 +			}
-+
- 			ctx.nr++;
- 		}
- 	}
-@@ -961,6 +980,16 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 		}
- 	}
- 
-+	if (ctx.preferred_pack_idx > -1) {
-+		struct packed_git *preferred = ctx.info[ctx.preferred_pack_idx].p;
-+		if (!preferred->num_objects) {
-+			error(_("cannot select preferred pack %s with no objects"),
-+			      preferred->pack_name);
-+			result = 1;
-+			goto cleanup;
 +		}
-+	}
 +
- 	ctx.entries = get_sorted_entries(ctx.m, ctx.info, ctx.nr, &ctx.entries_nr,
- 					 ctx.preferred_pack_idx);
++		if (!oldest->num_objects) {
++			/*
++			 * If all packs are empty; unset the preferred index.
++			 * This is acceptable since there will be no duplicate
++			 * objects to resolve, so the preferred value doesn't
++			 * matter.
++			 */
++			ctx.preferred_pack_idx = -1;
++		}
++	} else {
++		/*
++		 * otherwise don't mark any pack as preferred to avoid
++		 * interfering with expiration logic below
++		 */
++		ctx.preferred_pack_idx = -1;
+ 	}
  
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 3d4d9f10c3..9b184bd45e 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -277,6 +277,23 @@ test_expect_success 'midx picks objects from preferred pack' '
- 	)
- '
- 
-+test_expect_success 'preferred packs must be non-empty' '
-+	test_when_finished rm -rf preferred.git &&
-+	git init preferred.git &&
-+	(
-+		cd preferred.git &&
-+
-+		test_commit base &&
-+		git repack -ad &&
-+
-+		empty="$(git pack-objects $objdir/pack/pack </dev/null)" &&
-+
-+		test_must_fail git multi-pack-index write \
-+			--preferred-pack=pack-$empty.pack 2>err &&
-+		grep "with no objects" err
-+	)
-+'
-+
- test_expect_success 'verify multi-pack-index success' '
- 	git multi-pack-index verify --object-dir=$objdir
- '
+ 	if (ctx.preferred_pack_idx > -1) {
+@@ -1058,11 +1100,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 						      ctx.info, ctx.nr,
+ 						      sizeof(*ctx.info),
+ 						      idx_or_pack_name_cmp);
+-
+-		if (!preferred)
+-			warning(_("unknown preferred pack: '%s'"),
+-				preferred_pack_name);
+-		else {
++		if (preferred) {
+ 			uint32_t perm = ctx.pack_perm[preferred->orig_pack_int_id];
+ 			if (perm == PACK_EXPIRED)
+ 				warning(_("preferred pack '%s' is expired"),
 -- 
 2.31.1.163.ga65ce7f831
 
