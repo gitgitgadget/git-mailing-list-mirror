@@ -2,125 +2,205 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AE45C4338F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:36:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15226C4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:37:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 620E761265
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:36:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E8A1761008
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:37:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236191AbhHXKhb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 06:37:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51148 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236068AbhHXKh2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 06:37:28 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5465EC061757
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 03:36:42 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id n11so1734832edv.11
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 03:36:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=WiyL42byUzGq6G056ULdA+SPrxUopMzkqREinNdH3hs=;
-        b=udfcsVFEFdT7wlcrX7WA2/+jtdXaOOFYs3EqsJKiFoVGCkO9DjEqtjCokRAwRw6I5x
-         h8ccyJBVCuV4reepqVGCGXekdNYYDlvZsVPk/8yVphxzE1hffQ9q5HLjsX9/auebykJH
-         lcxjbPQ1YRr+n3m8aQDE/q7eUVi83JDDf4x0iyqyyUvHg9qStz6SdseZ98zTgqK2E34o
-         WoDWwVXlDgHAJM0szOpvF/B3dZW4K/3t6khwzBYvaAYs5hEEz5oYA6V6XeHV5/VNUs0P
-         70TUbQey3g5JGHY0swI0k0xe9HkC7mZIW/vJx+S9SXMn6qvGrPpMUXzlZV9VWNV4Emgc
-         Unfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=WiyL42byUzGq6G056ULdA+SPrxUopMzkqREinNdH3hs=;
-        b=FFBT4goPxqEx1N0mWzZRqg/5W1Atd8esf2luHL3/4CxlikRXUY90IFhPzFibSVg3DA
-         CcNNTkqb86gLpDlXV5nnExV8YbMrXsA5zcfsMsDKF/4WGeKdaBrBINZEgWfLA7m6WJ0s
-         bzg/SfR3NyRYj/dKzORTAMDYCLIvVkREegmTTGroaRpJbZckkVb9J79WfRDzSp/7j6WR
-         PqZmQA3a/LqabS19mu7gS1Oaq/IBV/LvPHrW1DBo1zYS7M/OXu7CaWphjz+OkZhI1ygq
-         8FbzqNTPcPgAsiY/VpL2ZZFIr0zTj7BVfgR0VghJTzS+US4yCU+/7xPbsTb+iorQJnqW
-         hWWA==
-X-Gm-Message-State: AOAM531p8hxiOQyNjHU0gAYniX9OjvhBSYPwtOobSynu0/yJlXlkasGe
-        9KjF9env6RhX2FbSsA1NM38ula+ksDjJaw==
-X-Google-Smtp-Source: ABdhPJzWaUpmaLmcJ1Ik/rvB10hwGDSgjqPUgXGUT0L+PT8eats0Dn7eD5fA+lApo7gq5ALjOxV6cg==
-X-Received: by 2002:a05:6402:1601:: with SMTP id f1mr42238286edv.388.1629801400692;
-        Tue, 24 Aug 2021 03:36:40 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id bx11sm9057964ejb.107.2021.08.24.03.36.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 03:36:40 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        id S236188AbhHXKhx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 06:37:53 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:56303 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S236175AbhHXKhm (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 24 Aug 2021 06:37:42 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.nyi.internal (Postfix) with ESMTP id 8970B5C014D;
+        Tue, 24 Aug 2021 06:36:58 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Tue, 24 Aug 2021 06:36:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm1; bh=MVoPtfxc8OADHhfUfTIB5cKU4jF
+        DTPrEfIRAf/D+U5c=; b=atJlw8Kd5PeodWHqki3FqCJwTJSQ0U0t9lH9qu4LUNF
+        evS1P6SlhsZsbi2sPRm3UbNxbZOqYs/JdzobhAhREbBuL28mEF9pdBRq6AouZ4Kj
+        N6gGKY7BUZPjUDYCjFGfOraJCV4RGGcDXn4DACNMkuNxyvJViaF0vuSq5ba93vIX
+        BxqhTnOXqgHJ9LOBqM8gzeCQeOA5pZoKRactjxOs98JM+hOGscgNLp/o1N3MZY8m
+        jTZ7wi3vGh24ibsxO5llms8O7Dw35OYWGD5FgIBtobvnUi/AE0lhybDRDDOiW7iq
+        4p92EJCYbLE1HDS0QfauKZpkCmgqrcKQPEp5C8LW3qg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=MVoPtf
+        xc8OADHhfUfTIB5cKU4jFDTPrEfIRAf/D+U5c=; b=iyswFxxJZ4g8+FyhSJylBe
+        nRmbrWzNXfLeK2p3wGJ/kOuEumCVbdj5QDSPeG+CArmtbYj0O03Oj8TJmzDKkKj0
+        2axuAsxQkQM9CB6Wgx5KXHcdbwgYpxnP3YPXJg+80ylJWY3SPAMWABTJghf47u6W
+        L0b8NKUOdvzvNNudU+bfIlWUk42AFx+o8lWzd9ZMD2VYMO2x/bKFwmr/+RS9UPqS
+        qBW5t+nLAK8Bhc+tzyFv4xK0XAHwa+NxGxnRSxjLLCBXJZ43bTJXX/3sj9ZNstf7
+        Mny+zH4nsl6Lwp8srZY8uxepKv/X2TTEU0uIsk/Od67G2JrUtm1LDwYGdSNoxWSQ
+        ==
+X-ME-Sender: <xms:ysskYTbvYtgURx0Ub_rakvT0Xs0dihOm2Nxpbj0XWgSp4tA_GVtYLQ>
+    <xme:ysskYSZ6yKb-TbUJlm4uQRpz_Iq8TlkPRgArUri3Jt5NOfTv8rWeOHQh-ZPrrjs-K
+    pvWsRyEgcodiRlz0Q>
+X-ME-Received: <xmr:ysskYV9-gqcA7JrXeILLPZC9gHD8KD5zUtUelTdraUsxhQi8YHdfu3cI_PdAHljRfztlmMiJ_upIfOoyjhxxdZ8uRw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddruddtjedgfedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeehgfejueevjeetudehgffffeffvdejfeejiedvkeffgfekuefgheevteeufeelkeen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:ysskYZqUkLZh-hnG0oChJf-F46J1x4N8LzxpAVNBm8E51jkgTdSNYw>
+    <xmx:ysskYeplTWe7FHn7QAXzSlcO6snB9AnBgfUOdf1hWN19Hug-Dr2AJw>
+    <xmx:ysskYfQ8I-YV1EGFfvC_t9VX3g8gjhBpdVklnIffpKet0Co4mkmPMw>
+    <xmx:ysskYXnPcVs0CmnwWrhManaAtlOwflyvm-lbVTsGawv1UVivz0KaWw>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Aug 2021 06:36:57 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 13460ce9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 24 Aug 2021 10:36:56 +0000 (UTC)
+Date:   Tue, 24 Aug 2021 12:36:55 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Rafael Silva <rafaeloliveira.cs@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [GSoC] The Final Git Dev Blog(s)
-Date:   Tue, 24 Aug 2021 12:22:06 +0200
-References: <m2lf4wys5o.fsf@gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <m2lf4wys5o.fsf@gmail.com>
-Message-ID: <875yvvf7t4.fsf@evledraar.gmail.com>
+        Derrick Stolee <stolee@gmail.com>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Subject: [PATCH v2 1/7] fetch: speed up lookup of want refs via commit-graph
+Message-ID: <4a819a68309bf03db2d9a5e5be070e52c3542af8.1629800774.git.ps@pks.im>
+References: <cover.1629452412.git.ps@pks.im>
+ <cover.1629800774.git.ps@pks.im>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="rqKR8XC64N1qYJqd"
+Content-Disposition: inline
+In-Reply-To: <cover.1629800774.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Aug 20 2021, Atharva Raykar wrote:
+--rqKR8XC64N1qYJqd
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 2. Reflections on Working With the Git Community:
->    https://atharvaraykar.me/gitnotes/final-reflection
->
->    This is a blog post that I wrote mostly for myself, and other people
->    interested in contributing to Git. It covers my personal experience
->    with my time here with the many ups and downs. I also wanted to thank
->    all the people who helped and collaborated with me in these 14 weeks.
+When updating our local refs based on the refs fetched from the remote,
+we need to iterate through all requested refs and load their respective
+commits such that we can determine whether they need to be appended to
+FETCH_HEAD or not. In cases where we're fetching from a remote with
+exceedingly many refs, resolving these refs can be quite expensive given
+that we repeatedly need to unpack object headers for each of the
+referenced objects.
 
-Thanks a lot for the kind words there, I'm glad I could be of help to
-you an others.
+Speed this up by opportunistcally trying to resolve object IDs via the
+commit graph. We only do so for any refs which are not in "refs/tags":
+more likely than not, these are going to be a commit anyway, and this
+lets us avoid having to unpack object headers completely in case the
+object is a commit that is part of the commit-graph. This significantly
+speeds up mirror-fetches in a real-world repository with
+2.3M refs:
 
-Just on the comment about 10x developers (on-list regulars) v.s. 0.1x
-developers (GSOC students) that you had: I think everyone realizes that
-getting students to work on git isn't going to result in developers that
-are instantly productive, especially with the inherent time-boxing of
-the GSOC project.
+    Benchmark #1: HEAD~: git-fetch
+      Time (mean =C2=B1 =CF=83):     56.482 s =C2=B1  0.384 s    [User: 53.=
+340 s, System: 5.365 s]
+      Range (min =E2=80=A6 max):   56.050 s =E2=80=A6 57.045 s    5 runs
 
-On a personal note I think it's very pleasing to work with people who
-are smart but just unfamiliar with the project itself, and in many cases
-with tooling that some of us "graybeards" have gotten used to. It helps
-to get a fresh perspective of things.
+    Benchmark #2: HEAD: git-fetch
+      Time (mean =C2=B1 =CF=83):     33.727 s =C2=B1  0.170 s    [User: 30.=
+252 s, System: 5.194 s]
+      Range (min =E2=80=A6 max):   33.452 s =E2=80=A6 33.871 s    5 runs
 
-I also think that the main value of a program like GSOC is not the
-patches anyone comes up with while participating in the project, but to
-hopefully give what are usually young people hopefully at the the start
-of a long career in software development a good experience in working
-with the free software community.
+    Summary
+      'HEAD: git-fetch' ran
+        1.67 =C2=B1 0.01 times faster than 'HEAD~: git-fetch'
 
-I never participated in GSOC myself (it didn't exist at the time), but
-my first real experience with software development was in trying to
-participate in public free software projects. I'm really grateful for
-the patience and mentoring I got from various people at the time, and
-hope I can do my part to pay that forward. To me that outcome is much
-more important than the "success" of any given GSOC project, or the
-patches that result from it.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ builtin/fetch.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index e064687dbd..91d1301613 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1074,7 +1074,6 @@ static int store_updated_refs(const char *raw_url, co=
+nst char *remote_name,
+ 			      int connectivity_checked, struct ref *ref_map)
+ {
+ 	struct fetch_head fetch_head;
+-	struct commit *commit;
+ 	int url_len, i, rc =3D 0;
+ 	struct strbuf note =3D STRBUF_INIT, err =3D STRBUF_INIT;
+ 	struct ref_transaction *transaction =3D NULL;
+@@ -1122,6 +1121,7 @@ static int store_updated_refs(const char *raw_url, co=
+nst char *remote_name,
+ 	     want_status <=3D FETCH_HEAD_IGNORE;
+ 	     want_status++) {
+ 		for (rm =3D ref_map; rm; rm =3D rm->next) {
++			struct commit *commit =3D NULL;
+ 			struct ref *ref =3D NULL;
+=20
+ 			if (rm->status =3D=3D REF_STATUS_REJECT_SHALLOW) {
+@@ -1131,11 +1131,23 @@ static int store_updated_refs(const char *raw_url, =
+const char *remote_name,
+ 				continue;
+ 			}
+=20
+-			commit =3D lookup_commit_reference_gently(the_repository,
+-								&rm->old_oid,
+-								1);
+-			if (!commit)
+-				rm->fetch_head_status =3D FETCH_HEAD_NOT_FOR_MERGE;
++			/*
++			 * References in "refs/tags/" are often going to point
++			 * to annotated tags, which are not part of the
++			 * commit-graph. We thus only try to look up refs in
++			 * the graph which are not in that namespace to not
++			 * regress performance in repositories with many
++			 * annotated tags.
++			 */
++			if (!starts_with(rm->name, "refs/tags/"))
++				commit =3D lookup_commit_in_graph(the_repository, &rm->old_oid);
++			if (!commit) {
++				commit =3D lookup_commit_reference_gently(the_repository,
++									&rm->old_oid,
++									1);
++				if (!commit)
++					rm->fetch_head_status =3D FETCH_HEAD_NOT_FOR_MERGE;
++			}
+=20
+ 			if (rm->fetch_head_status !=3D want_status)
+ 				continue;
+--=20
+2.33.0
 
 
+--rqKR8XC64N1qYJqd
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEky8YACgkQVbJhu7ck
+PpSM0A//WggCYrmeM/WeD8ygmfcmDHPCgnzaJ1KyXmMkH4IQoBGikDFhSTo+FGtJ
+EJRsucl5G7K31SSiZRrRNpZyrHfl4FC5O27id1Y4TgChFTQRkYco/+DQfQJjDxfB
+C4rqFllb5RA34F4HVh08iTWbNOamgJ7PCw36RPeA+HRTR7QmUBAh7MuNjlfL4Tjg
+tdjk4YW18lb5fM8Xd0+i4jhdomsTZQ0m9DIz+MzMfcVP5D/4R3aWB0XMngU8ahKv
+LrcuDNr9uJz57VOZ7fyjktWMG/VoslOVpMOjnFD9TPUuGNzUYbayCtK6c6WSWCws
+oxMugGT1LkOVlzBdAcLj7FtnVOMDKCL3AvhUZ3fl8iptX0K1yUK9w/cFUCkRWm//
+3yZL2HBIR1QH4FyV9f9x+KoQzlHKN5vthSHQFtsPVBgJ3O9u09CtTBe+79uV9mHR
+BsB7wUqcx2RKpBVp1LlsKsoCXn5yIFieo6+qz5Y+xTCT+FtuL0bEytVByQcVCjnd
+MenJuQDrWV213LuvjnMpXpRBAj3EcSOp/YlJdZYw7pVQqEjG3fhzMYmSSSCbGpgV
+yXoq0hZINVlgk7Mc/RNDLDcihj3+KQnZBMSQpQG3zlrIkMItf+KC6CivcIFHzOz/
+ppMx4+J1GtT9noMXLiiiZRpbudQ18QK1PeAdVhdMa499cKp97vI=
+=Kb8u
+-----END PGP SIGNATURE-----
+
+--rqKR8XC64N1qYJqd--
