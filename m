@@ -4,144 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A80CC4338F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:54:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8E76C4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:54:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 205FD613B1
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:54:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C1748613B1
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:54:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237910AbhHXVzd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 17:55:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39946 "EHLO
+        id S238467AbhHXVzi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 17:55:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235622AbhHXVzc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 17:55:32 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6CB9C061757
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:54:47 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id u15so13670461wmj.1
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:54:47 -0700 (PDT)
+        with ESMTP id S237940AbhHXVzd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 17:55:33 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD431C061757
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:54:48 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id z4so17725884wrr.6
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:54:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=Pd8w+/Ucvd18VCxXVzwMpUFbKHbLetNkGKRWaLyZ6pw=;
-        b=HIKQB7OJfwhdQZjP/ZIeBQiPIhbvlnXoE7gmtYX2ei1DNQh0alQDUyeLdCzq5iASr6
-         dm8UDH4YWsBz4xpx3ujDW6IejGZjCr8LmVRmFB8AFFNVDn+x9O/DHHQyuHMBYGy03ahe
-         Qt2osQCsJNhP0YstVqKyvQ/G1JWI1uLEpM074v95Ok5gEjhqli3cWTQBQVLTAQEU7i+O
-         9Xo4v9vD7qsoheSU0x4ww948n/zIP2TWTqvWfQSoRC5to+AAXvNSFm43TGIYOPEJUbev
-         OXJ9YXYIoTnwPECvrUKxyFTVl5m5Buqt20WBLpBE5Ixly6XpzavuPqaksyjwpM5XF3f7
-         jmXQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=2zkseZDCrX5eQCOfTAj1pziuYCUVx8n+RzgjO8cPYiw=;
+        b=XKUxZZ3boSP7/jEAM+CghcKg56NKPV5nW0JhdHpMakUjlO3dH7GUrg6SrrxTdoSMmi
+         MdxFJb3Go1rhDywe+frjHoE4ysL19DffrhTN11Gg/zKUsAzy4W16hF1M/wo+vRT+G5MF
+         EJsjLi6/W0E7b1ghQHKYavO3c5z2c8+kws2j84DIkzrbvNxkBoCWXlDRMBwu24MK+3N0
+         OqgU8MIQePH2y5zvtAkV57PaqKynqsgL7b/WcYFedo2J6K035Fj/G4e+qmiw5EzeAt0/
+         s3ezhJofQio+EcnjGSbtMQ1f0TymkSBNrtRR43R+tVWkgz8sNgQY8EfjrTVq51OE3KO1
+         tf+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Pd8w+/Ucvd18VCxXVzwMpUFbKHbLetNkGKRWaLyZ6pw=;
-        b=JYtcvtzpxh+yJi9Py3Maf1thJ8IusJ5jJLDMm+oEYRPYehDRxeNgU+kdr7vVQsQJNg
-         7J6wrotJG3CC1l6a2Rit0VKZ8n7ZQ6sejK9Zxag9wl3y/CrhelIwll4Diyz5KZU6IX1g
-         mR64dkobwZYJ0+b9IsiU3H0OLfChi3wp8RH/zgOtT2p169/uWW1npWGJXKrt2g0RnSw0
-         J3Pl50fo97HYjeQ8vCMvflzGH/xTaUAxwQw6OC7ycBIHEcs8MBbzOC3YB9GBguh0fvux
-         toa0U5FseqwGnNjMpvjSpmRJEZjeESKMJP4G+uuLSBXcHUtGTU7BimMin5YUNlYecJJk
-         LaeA==
-X-Gm-Message-State: AOAM531XwOHD6ilPBKdhDQFnNNSvJbdMMeLxIPeCxhgYHYwnSOmKBo1n
-        ZzbC1ZB2hCxBGvxvWd4a1A4eZOlzJgI=
-X-Google-Smtp-Source: ABdhPJxq1s7lPu6HCn5ngcEVBWQ1tnDRaUPPL70IEkN/yKXoWAp08FypAvMoPzEUGF2x13Fwg6QZBQ==
-X-Received: by 2002:a1c:202:: with SMTP id 2mr6031729wmc.122.1629842086348;
-        Tue, 24 Aug 2021 14:54:46 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=2zkseZDCrX5eQCOfTAj1pziuYCUVx8n+RzgjO8cPYiw=;
+        b=WHeXs+c+eU1nBxXP7KqstsdhOzo39iiOMop2Krd0cwhB/DMkFBr5bmi+Z/HRknLYPY
+         VImF3UE0WhAfAVh1Y3WvFT1h4pyj90zrLR2u/wNfhYhK6HwfQHThDm+B1mnxwOFgwxE9
+         g3DwWODPI8vQuEj4zHEwd6EOjDpRFSOgcj10V9CrSu3gQth0tsobEdyKs/B+3WRBh/cR
+         4F7clePXtIz7qBvlw/WJEJZYti/d3+hN6Hi4SY0J21MKn+jr778QgGfa6GUxQjQ/dNpr
+         jD8Bt99hscioOIjZEf2rJVDO4M39X7MtZMZNPtY5KqgnmiXR2sCyI6ix1TpDoHUH265a
+         A4IQ==
+X-Gm-Message-State: AOAM533bW2woSkgTqnaUnDKKJ81P8zjR5/f7ajnRiVni2TE63uJNKf5z
+        L0vfs9lSNIixzQQr4B8Z3iTnPZsPflw=
+X-Google-Smtp-Source: ABdhPJyDH7iW0WDMEABL3GOIQAfwyrmQ/LFITuOoI5hVu04Sz35jNfzTEgOCDTmIqmlacnQBYAoXag==
+X-Received: by 2002:a5d:460a:: with SMTP id t10mr16685919wrq.147.1629842087570;
+        Tue, 24 Aug 2021 14:54:47 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g21sm3492010wmk.8.2021.08.24.14.54.45
+        by smtp.gmail.com with ESMTPSA id m4sm3512530wml.28.2021.08.24.14.54.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 14:54:46 -0700 (PDT)
-Message-Id: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
+        Tue, 24 Aug 2021 14:54:47 -0700 (PDT)
+Message-Id: <8cca5bcf405f220ef899ec44d01fee4d588c7a38.1629842085.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
+References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 24 Aug 2021 21:54:32 +0000
-Subject: [PATCH 00/13] [RFC] Sparse-checkout: modify 'git add', 'git rm', and 'git add' behavior
+Date:   Tue, 24 Aug 2021 21:54:34 +0000
+Subject: [PATCH 02/13] dir: extract directory-matching logic
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     newren@gmail.com, gitster@pobox.com, matheus.bernardino@usp.br,
-        stolee@gmail.com, Derrick Stolee <derrickstolee@github.com>
+        stolee@gmail.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As requested, this series looks to update the behavior of git add, git rm,
-and git mv when they attempt to modify paths outside of the sparse-checkout
-cone. In particular, this care is expanded to not just cache entries with
-the SKIP_WORKTREE bit, but also paths that do not match the sparse-checkout
-definition.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-This means that commands that worked before this series can now fail. In
-particular, if 'git merge' results in a conflict outside of the
-sparse-checkout cone, then 'git add ' will now fail.
+The last_matching_pattern_from_list() logic performs some checks on the
+filetype of a path within the index when the PATTERN_FLAG_MUSTBEDIR flag
+is set. This works great when setting SKIP_WORKTREE bits within
+unpack_trees(), but doesn't work well when passing an arbitrary path
+such as a file within a matching directory.
 
-In order to allow users to circumvent these protections, a new '--sparse'
-option is added that ignores the sparse-checkout patterns and the
-SKIP_WORKTREE bit. The message for advice.updateSparsePath is adjusted to
-assist with discovery of this option.
+This change only rearranges the logic but does not change its
+functionality.
 
-There is a subtle issue with git mv in that it does not check the index
-until it discovers a directory and then uses the index to find the contained
-entries. This means that in non-cone-mode patterns, a pattern such as
-"sub/dir" will not match the path "sub" and this can cause an issue.
+We will expand the path_matches_dir_pattern() method in a following
+change.
 
-In order to allow for checking arbitrary paths against the sparse-checkout
-patterns, some changes to the underlying pattern matching code is required.
-It turns out that there are some bugs in the methods as advertised, but
-these bugs were never discovered because of the way methods like
-unpack_trees() will check a directory for a pattern match before checking
-its contained paths. Our new "check patterns on-demand" approach pokes holes
-in that approach, specifically with patterns that match entire directories.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ dir.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-I'm open to alternative designs here, too.
-
-The patches are based on v2 of the integration with merge, cherry-pick, and
-rebase. I'm sending the RFC really early in case it needs to be
-significantly reworked.
-
-Thanks, -Stolee
-
-Derrick Stolee (13):
-  t1092: behavior for adding sparse files
-  dir: extract directory-matching logic
-  dir: select directories correctly
-  dir: fix pattern matching on dirs
-  add: fail when adding an untracked sparse file
-  add: skip paths that are outside sparse-checkout cone
-  add: implement the --sparse option
-  add: prevent adding sparse conflict files
-  rm: add --sparse option
-  rm: skip sparse paths with missing SKIP_WORKTREE
-  mv: refuse to move sparse paths
-  mv: add '--sparse' option to ignore sparse-checkout
-  advice: update message to suggest '--sparse'
-
- Documentation/git-add.txt                |   9 +-
- Documentation/git-rm.txt                 |   6 ++
- advice.c                                 |   3 +-
- builtin/add.c                            |  22 ++++-
- builtin/mv.c                             |  39 ++++++--
- builtin/rm.c                             |  10 +-
- dir.c                                    |  54 ++++++++--
- pathspec.c                               |   5 +-
- t/t1091-sparse-checkout-builtin.sh       |   4 +-
- t/t1092-sparse-checkout-compatibility.sh |  47 ++++++---
- t/t3602-rm-sparse-checkout.sh            |  27 ++++-
- t/t3705-add-sparse-checkout.sh           |  10 +-
- t/t7002-mv-sparse-checkout.sh            | 121 +++++++++++++++++++++++
- 13 files changed, 316 insertions(+), 41 deletions(-)
- create mode 100755 t/t7002-mv-sparse-checkout.sh
-
-
-base-commit: df4bbec744f5cd4a060082212d95a36b812fa50b
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1018%2Fderrickstolee%2Fsparse-index%2Fadd-rm-mv-behavior-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1018/derrickstolee/sparse-index/add-rm-mv-behavior-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1018
+diff --git a/dir.c b/dir.c
+index 86afa2eae00..652135df896 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1303,6 +1303,19 @@ int match_pathname(const char *pathname, int pathlen,
+ 				 WM_PATHNAME) == 0;
+ }
+ 
++static int path_matches_dir_pattern(const char *pathname,
++				    int pathlen,
++				    int *dtype,
++				    struct path_pattern *pattern,
++				    struct index_state *istate)
++{
++	*dtype = resolve_dtype(*dtype, istate, pathname, pathlen);
++	if (*dtype != DT_DIR)
++		return 0;
++
++	return 1;
++}
++
+ /*
+  * Scan the given exclude list in reverse to see whether pathname
+  * should be ignored.  The first match (i.e. the last on the list), if
+@@ -1327,11 +1340,10 @@ static struct path_pattern *last_matching_pattern_from_list(const char *pathname
+ 		const char *exclude = pattern->pattern;
+ 		int prefix = pattern->nowildcardlen;
+ 
+-		if (pattern->flags & PATTERN_FLAG_MUSTBEDIR) {
+-			*dtype = resolve_dtype(*dtype, istate, pathname, pathlen);
+-			if (*dtype != DT_DIR)
+-				continue;
+-		}
++		if ((pattern->flags & PATTERN_FLAG_MUSTBEDIR) &&
++		    !path_matches_dir_pattern(pathname, pathlen,
++					      dtype, pattern, istate))
++			continue;
+ 
+ 		if (pattern->flags & PATTERN_FLAG_NODIR) {
+ 			if (match_basename(basename,
 -- 
 gitgitgadget
+
