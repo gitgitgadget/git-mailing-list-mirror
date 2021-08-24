@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15226C4338F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:37:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BAF7C4320A
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:37:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8A1761008
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:37:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01D8B61008
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:37:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236188AbhHXKhx (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S236207AbhHXKhx (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 24 Aug 2021 06:37:53 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:56303 "EHLO
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:55497 "EHLO
         out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S236175AbhHXKhm (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 24 Aug 2021 06:37:42 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.nyi.internal (Postfix) with ESMTP id 8970B5C014D;
-        Tue, 24 Aug 2021 06:36:58 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 24 Aug 2021 06:36:58 -0400
+        by vger.kernel.org with ESMTP id S236261AbhHXKhu (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 24 Aug 2021 06:37:50 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id F39065C0121;
+        Tue, 24 Aug 2021 06:37:05 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Tue, 24 Aug 2021 06:37:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=MVoPtfxc8OADHhfUfTIB5cKU4jF
-        DTPrEfIRAf/D+U5c=; b=atJlw8Kd5PeodWHqki3FqCJwTJSQ0U0t9lH9qu4LUNF
-        evS1P6SlhsZsbi2sPRm3UbNxbZOqYs/JdzobhAhREbBuL28mEF9pdBRq6AouZ4Kj
-        N6gGKY7BUZPjUDYCjFGfOraJCV4RGGcDXn4DACNMkuNxyvJViaF0vuSq5ba93vIX
-        BxqhTnOXqgHJ9LOBqM8gzeCQeOA5pZoKRactjxOs98JM+hOGscgNLp/o1N3MZY8m
-        jTZ7wi3vGh24ibsxO5llms8O7Dw35OYWGD5FgIBtobvnUi/AE0lhybDRDDOiW7iq
-        4p92EJCYbLE1HDS0QfauKZpkCmgqrcKQPEp5C8LW3qg==
+        :content-type:in-reply-to; s=fm1; bh=VfWBHeI3sZurx+ImAqL6erq3gkM
+        r4MWLfUx7+IjLUPY=; b=PMJeRYFx5Z78vn3LwVF39sgrynHmuLSDe+GeEr+3KT2
+        CUYNAcQVs3I9cybQFYjmM4+657JDgjAWjZVHUU9r+kegbB1A1uWTVxMHGBnq1S4s
+        Dy55DX8Br1WrPqJqFg87EZhLX8F2kNW/hZ1TlzbY9C5Vx8d+8XCM1RC0BnWMRalL
+        pGnMawCelqsncZO3JIx761O+Vuz/8b/kskXD2y75UVsYXPnLdCW/EH42V7cJCBNn
+        uJNcwYjgC9iaaFnDlTz3S+gmsy2PKCIKN9M01wZej/xUHSS/uHzqQrbTMkCUyvJ8
+        8yhxtJnh8+ndY3KAI2lkmH4s0B/KyYg66qsJnM2yfOQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=MVoPtf
-        xc8OADHhfUfTIB5cKU4jFDTPrEfIRAf/D+U5c=; b=iyswFxxJZ4g8+FyhSJylBe
-        nRmbrWzNXfLeK2p3wGJ/kOuEumCVbdj5QDSPeG+CArmtbYj0O03Oj8TJmzDKkKj0
-        2axuAsxQkQM9CB6Wgx5KXHcdbwgYpxnP3YPXJg+80ylJWY3SPAMWABTJghf47u6W
-        L0b8NKUOdvzvNNudU+bfIlWUk42AFx+o8lWzd9ZMD2VYMO2x/bKFwmr/+RS9UPqS
-        qBW5t+nLAK8Bhc+tzyFv4xK0XAHwa+NxGxnRSxjLLCBXJZ43bTJXX/3sj9ZNstf7
-        Mny+zH4nsl6Lwp8srZY8uxepKv/X2TTEU0uIsk/Od67G2JrUtm1LDwYGdSNoxWSQ
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=VfWBHe
+        I3sZurx+ImAqL6erq3gkMr4MWLfUx7+IjLUPY=; b=S6KVIun9c0pp1BxvBcb2Od
+        2LHfOnMustrO+RZwxovV4K6evEA06fVC4u8+0/J3XisID5jcJaMxfigz3dlJ4zIn
+        s0VEzKWjGM/hTAZ3uZlj6gm4PJZRS9ennEoeGLc3TthrYqbQXQxpWmY8CfIwTdIe
+        RUXGOeJeGJVsZJI7uvLKfYu2pLqyq6Wl6UvXVbkc9lD0CpQBVevX4oS6Q/LTj+/T
+        ap9vsFCVS6QVTrMuseRkyfNdx3hUCWXGE1RKsHKfEdIONUg3RbAyRv9baYZ4XpGI
+        VLfddlw6a/mNB0YA3zF1sEi2PCoqniB2ftiYIS86hBri55xZ1Klzc7EDM+c1dHAw
         ==
-X-ME-Sender: <xms:ysskYTbvYtgURx0Ub_rakvT0Xs0dihOm2Nxpbj0XWgSp4tA_GVtYLQ>
-    <xme:ysskYSZ6yKb-TbUJlm4uQRpz_Iq8TlkPRgArUri3Jt5NOfTv8rWeOHQh-ZPrrjs-K
-    pvWsRyEgcodiRlz0Q>
-X-ME-Received: <xmr:ysskYV9-gqcA7JrXeILLPZC9gHD8KD5zUtUelTdraUsxhQi8YHdfu3cI_PdAHljRfztlmMiJ_upIfOoyjhxxdZ8uRw>
+X-ME-Sender: <xms:0cskYSlsYLEUNc62aXsKyuwGQEh76v0V0mTWOawX3swmqwRoIN6KjA>
+    <xme:0cskYZ3__LLN16yGIvK3MYsnXGupD0kitAGX3vsLos1A5TUvJzWHG6-4j7k7rjGLN
+    GovAQev2GIq0G0wyA>
+X-ME-Received: <xmr:0cskYQo8fEVoPInkjrysjEhEua_Yes2SgK1ul-Xjt5ZWJ_Fs56PbegMw-ofrrzev2CYpuU3gc5_2HWWzaVqqJyCIpw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddruddtjedgfedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -56,16 +56,16 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddruddtjedgfedtucetufdoteggod
     hnpeehgfejueevjeetudehgffffeffvdejfeejiedvkeffgfekuefgheevteeufeelkeen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:ysskYZqUkLZh-hnG0oChJf-F46J1x4N8LzxpAVNBm8E51jkgTdSNYw>
-    <xmx:ysskYeplTWe7FHn7QAXzSlcO6snB9AnBgfUOdf1hWN19Hug-Dr2AJw>
-    <xmx:ysskYfQ8I-YV1EGFfvC_t9VX3g8gjhBpdVklnIffpKet0Co4mkmPMw>
-    <xmx:ysskYXnPcVs0CmnwWrhManaAtlOwflyvm-lbVTsGawv1UVivz0KaWw>
+X-ME-Proxy: <xmx:0cskYWn48X0IqxTa-c4wko38YkH-aE9APzvRRIVyfWcm7BfBC-frJQ>
+    <xmx:0cskYQ3fRFDref56bW-dWv4On8jv1HPr-SNVU2B4akVFAev2BD4-EQ>
+    <xmx:0cskYdtCm3TV4UC55kksjuA-r7RrhWtRjcy2c2ZjjzRWuv9HUvIFfA>
+    <xmx:0cskYTQNwmdueqmYmnD_tbQnjJUbI-Csgn2TkQbsIu6CZoAeaEHXUg>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Aug 2021 06:36:57 -0400 (EDT)
+ 24 Aug 2021 06:37:04 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 13460ce9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 24 Aug 2021 10:36:56 +0000 (UTC)
-Date:   Tue, 24 Aug 2021 12:36:55 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id af769317 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 24 Aug 2021 10:37:01 +0000 (UTC)
+Date:   Tue, 24 Aug 2021 12:37:00 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
@@ -73,13 +73,14 @@ Cc:     Jeff King <peff@peff.net>,
         Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Subject: [PATCH v2 1/7] fetch: speed up lookup of want refs via commit-graph
-Message-ID: <4a819a68309bf03db2d9a5e5be070e52c3542af8.1629800774.git.ps@pks.im>
+Subject: [PATCH v2 2/7] fetch: avoid unpacking headers in object existence
+ check
+Message-ID: <81ebadabe8e861269336f6446f87acac88371042.1629800774.git.ps@pks.im>
 References: <cover.1629452412.git.ps@pks.im>
  <cover.1629800774.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="rqKR8XC64N1qYJqd"
+        protocol="application/pgp-signature"; boundary="UUk1l9UmfmCy6szs"
 Content-Disposition: inline
 In-Reply-To: <cover.1629800774.git.ps@pks.im>
 Precedence: bulk
@@ -87,120 +88,86 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---rqKR8XC64N1qYJqd
+--UUk1l9UmfmCy6szs
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When updating our local refs based on the refs fetched from the remote,
-we need to iterate through all requested refs and load their respective
-commits such that we can determine whether they need to be appended to
-FETCH_HEAD or not. In cases where we're fetching from a remote with
-exceedingly many refs, resolving these refs can be quite expensive given
-that we repeatedly need to unpack object headers for each of the
-referenced objects.
+When updating local refs after the fetch has transferred all objects, we
+do an object existence test as a safety guard to avoid updating a ref to
+an object which we don't have. We do so via `oid_object_info()`: if it
+returns an error, then we know the object does not exist.
 
-Speed this up by opportunistcally trying to resolve object IDs via the
-commit graph. We only do so for any refs which are not in "refs/tags":
-more likely than not, these are going to be a commit anyway, and this
-lets us avoid having to unpack object headers completely in case the
-object is a commit that is part of the commit-graph. This significantly
-speeds up mirror-fetches in a real-world repository with
-2.3M refs:
+One side effect of `oid_object_info()` is that it parses the object's
+type, and to do so it must unpack the object header. This is completely
+pointless: we don't care for the type, but only want to assert that the
+object exists.
+
+Refactor the code to use `repo_has_object_file()`, which both makes the
+code's intent clearer and is also faster because it does not unpack
+object headers. In a real-world repo with 2.3M refs, this results in a
+small speedup when doing a mirror-fetch:
 
     Benchmark #1: HEAD~: git-fetch
-      Time (mean =C2=B1 =CF=83):     56.482 s =C2=B1  0.384 s    [User: 53.=
-340 s, System: 5.365 s]
-      Range (min =E2=80=A6 max):   56.050 s =E2=80=A6 57.045 s    5 runs
+      Time (mean =C2=B1 =CF=83):     33.686 s =C2=B1  0.176 s    [User: 30.=
+119 s, System: 5.262 s]
+      Range (min =E2=80=A6 max):   33.512 s =E2=80=A6 33.944 s    5 runs
 
     Benchmark #2: HEAD: git-fetch
-      Time (mean =C2=B1 =CF=83):     33.727 s =C2=B1  0.170 s    [User: 30.=
-252 s, System: 5.194 s]
-      Range (min =E2=80=A6 max):   33.452 s =E2=80=A6 33.871 s    5 runs
+      Time (mean =C2=B1 =CF=83):     31.247 s =C2=B1  0.195 s    [User: 28.=
+135 s, System: 5.066 s]
+      Range (min =E2=80=A6 max):   30.948 s =E2=80=A6 31.472 s    5 runs
 
     Summary
       'HEAD: git-fetch' ran
-        1.67 =C2=B1 0.01 times faster than 'HEAD~: git-fetch'
+        1.08 =C2=B1 0.01 times faster than 'HEAD~: git-fetch'
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fetch.c | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ builtin/fetch.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index e064687dbd..91d1301613 100644
+index 91d1301613..01513e6aea 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -1074,7 +1074,6 @@ static int store_updated_refs(const char *raw_url, co=
-nst char *remote_name,
- 			      int connectivity_checked, struct ref *ref_map)
+@@ -846,13 +846,11 @@ static int update_local_ref(struct ref *ref,
+ 			    int summary_width)
  {
- 	struct fetch_head fetch_head;
--	struct commit *commit;
- 	int url_len, i, rc =3D 0;
- 	struct strbuf note =3D STRBUF_INIT, err =3D STRBUF_INIT;
- 	struct ref_transaction *transaction =3D NULL;
-@@ -1122,6 +1121,7 @@ static int store_updated_refs(const char *raw_url, co=
-nst char *remote_name,
- 	     want_status <=3D FETCH_HEAD_IGNORE;
- 	     want_status++) {
- 		for (rm =3D ref_map; rm; rm =3D rm->next) {
-+			struct commit *commit =3D NULL;
- 			struct ref *ref =3D NULL;
+ 	struct commit *current =3D NULL, *updated;
+-	enum object_type type;
+ 	struct branch *current_branch =3D branch_get(NULL);
+ 	const char *pretty_ref =3D prettify_refname(ref->name);
+ 	int fast_forward =3D 0;
 =20
- 			if (rm->status =3D=3D REF_STATUS_REJECT_SHALLOW) {
-@@ -1131,11 +1131,23 @@ static int store_updated_refs(const char *raw_url, =
-const char *remote_name,
- 				continue;
- 			}
+-	type =3D oid_object_info(the_repository, &ref->new_oid, NULL);
+-	if (type < 0)
++	if (!repo_has_object_file(the_repository, &ref->new_oid))
+ 		die(_("object %s not found"), oid_to_hex(&ref->new_oid));
 =20
--			commit =3D lookup_commit_reference_gently(the_repository,
--								&rm->old_oid,
--								1);
--			if (!commit)
--				rm->fetch_head_status =3D FETCH_HEAD_NOT_FOR_MERGE;
-+			/*
-+			 * References in "refs/tags/" are often going to point
-+			 * to annotated tags, which are not part of the
-+			 * commit-graph. We thus only try to look up refs in
-+			 * the graph which are not in that namespace to not
-+			 * regress performance in repositories with many
-+			 * annotated tags.
-+			 */
-+			if (!starts_with(rm->name, "refs/tags/"))
-+				commit =3D lookup_commit_in_graph(the_repository, &rm->old_oid);
-+			if (!commit) {
-+				commit =3D lookup_commit_reference_gently(the_repository,
-+									&rm->old_oid,
-+									1);
-+				if (!commit)
-+					rm->fetch_head_status =3D FETCH_HEAD_NOT_FOR_MERGE;
-+			}
-=20
- 			if (rm->fetch_head_status !=3D want_status)
- 				continue;
+ 	if (oideq(&ref->old_oid, &ref->new_oid)) {
 --=20
 2.33.0
 
 
---rqKR8XC64N1qYJqd
+--UUk1l9UmfmCy6szs
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEky8YACgkQVbJhu7ck
-PpSM0A//WggCYrmeM/WeD8ygmfcmDHPCgnzaJ1KyXmMkH4IQoBGikDFhSTo+FGtJ
-EJRsucl5G7K31SSiZRrRNpZyrHfl4FC5O27id1Y4TgChFTQRkYco/+DQfQJjDxfB
-C4rqFllb5RA34F4HVh08iTWbNOamgJ7PCw36RPeA+HRTR7QmUBAh7MuNjlfL4Tjg
-tdjk4YW18lb5fM8Xd0+i4jhdomsTZQ0m9DIz+MzMfcVP5D/4R3aWB0XMngU8ahKv
-LrcuDNr9uJz57VOZ7fyjktWMG/VoslOVpMOjnFD9TPUuGNzUYbayCtK6c6WSWCws
-oxMugGT1LkOVlzBdAcLj7FtnVOMDKCL3AvhUZ3fl8iptX0K1yUK9w/cFUCkRWm//
-3yZL2HBIR1QH4FyV9f9x+KoQzlHKN5vthSHQFtsPVBgJ3O9u09CtTBe+79uV9mHR
-BsB7wUqcx2RKpBVp1LlsKsoCXn5yIFieo6+qz5Y+xTCT+FtuL0bEytVByQcVCjnd
-MenJuQDrWV213LuvjnMpXpRBAj3EcSOp/YlJdZYw7pVQqEjG3fhzMYmSSSCbGpgV
-yXoq0hZINVlgk7Mc/RNDLDcihj3+KQnZBMSQpQG3zlrIkMItf+KC6CivcIFHzOz/
-ppMx4+J1GtT9noMXLiiiZRpbudQ18QK1PeAdVhdMa499cKp97vI=
-=Kb8u
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEky8sACgkQVbJhu7ck
+PpRirw/6Aun1cLdhsmRRX78doKMO8Iou/r9O+PBaS+9R5BT4PFDENBEBuxW6Ae0g
+7A12cNdWiin2FZVay5QUJs/l4lJqe7/sPMO3zEUMzBkweV8B7oyEA1LZijJ21ZNP
+fy2NwizwDUJDFhLfm+gOmJKecF/PgZ90Faga9Yk+Ynrrd81ZYuL9tRvyrJK101rP
+pU2RrCW6vNQqBAIBqTt7kVsWsu4HfmJnkvqXcslIr5U6Ejk5yfr4wvj5blchotph
+GMjfVc1QlV7z4LQwJrBmZsVhjHFnCP9E3/Q/UPAN6rcybTw+oUUs5CPkMsrb5D8q
+tEGKvujSNraxboJSVCm2o113+IAccKW9bACdPEMeKVjuQc9jVgeTxdRNevwjNZzi
+raCWkEvSWpdcFOCQFvPzm0ytKq3RVbKu7VpWu9QfUO3PdHMgQiHzuR84Cm/yvui7
+tZvhOP0CczK5pLhmNZyztHiRF9CYiVSnCjjY4rsa+h936OurcV8w8/HUJze7mweP
+QevqJv7j0M9gwFMed1U3mwXR7WevFEkULd4knJ7eT3iH3Ad/z66GlxjCUCa4tIE9
+Efw/9JCKBLW8p8bSbKn4Z6oAV6xRr3fQwZLdzaxIJBVQEHaX75VsAlXtEJS/8WNI
+UamDEDzHqYTWOwwYIbZizod+dSwGJNSEMNLuhqYACIWj7BqVBIc=
+=dzZO
 -----END PGP SIGNATURE-----
 
---rqKR8XC64N1qYJqd--
+--UUk1l9UmfmCy6szs--
