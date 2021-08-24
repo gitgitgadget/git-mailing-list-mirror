@@ -2,77 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17E1AC4338F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:31:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE5EAC4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:39:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E76456101A
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:31:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9420661247
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:39:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229584AbhHXWcB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 18:32:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48298 "EHLO
+        id S230198AbhHXWk0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 18:40:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbhHXWcA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 18:32:00 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B9D1C061757
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 15:31:15 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id r19so33939147eds.13
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 15:31:15 -0700 (PDT)
+        with ESMTP id S229605AbhHXWk0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 18:40:26 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00DD5C061757
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 15:39:41 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id y5so3168944edp.8
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 15:39:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=wSRh8WwKQ3bQ1wBU9jal43XQokr9XjFLy5eHPqOlSdQ=;
-        b=IuIT+mPNPvMByE9jUHePbBVC0SW/x+eFo0uYMM91Y0PPfQtV/l7ExI/brveNkJBhSe
-         X5pLzUy2eFmWV4FsBIN7ZXuFgdHkw7CpbprSir9VdasoD19xno7Tn5TD0V7dmkuMutdG
-         u+EEzHk3Owupia18xOF8sqW+zKngEQAKtgUXyqvyLQpNK/Q35ZQIi1P+UjZz/mYKNB1J
-         nwkVLjxtkNGxAL9dT/TRtdlGuyMktYKjTXj3HpP2HsY829E03hLI8nLFbyifEYLbbvKZ
-         Xyyu0HBNs4Rf0aMEXLLbsZY1kArX0stFTmYMQHaPnoBzzNGv7I0j52+gFSvyApMO1TbL
-         8EZQ==
+        bh=yGMkGP0ysVMgF+NsRirzf+HNEDi5txPs87Mq04TbOIE=;
+        b=b26qM4JecXWVJU626HRVxjXo3tJaup7sUChIQYDAYGFnGFyYNHseAvvT+35qhn67JZ
+         FygCEd6yxQyDTX1G6g8XVUw7zmMrzaVi9F9/RE5pSionCE28k5x1f0XdnaZI6hTKSPWo
+         NNCpGSItBxdVCQd0zILFfBGk5t2l90y0ZQkvVJ0d4dcG8w+K+7WEy1X5wwI7R118a8CU
+         M9wqGwqaS/s5ykXTuzQcNOphHw/SWpF/a00E5a43hNzYcvAhWcze5hAM9bAYnGL52Hs7
+         NaA/Y6pJammYLUhIRS4We76xNttR8nRVTXMgfvlKyG0bydI3b98VysMGgTkWJo2ICdxl
+         DgLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=wSRh8WwKQ3bQ1wBU9jal43XQokr9XjFLy5eHPqOlSdQ=;
-        b=QvAI+5FZyf/uvCM8VwxRG8T7662VoNJ2/e1PXXJtXz6Gyw1Y9gTQU2PHG9S6fBovHZ
-         m9nXKjHJqKC5iTAxaCqlZeV594PY9HsD16Hr7VFG6yw1nzoiqQIRglDJoikflKv1O8DI
-         IVF6VHeIEZI759pnx+VIbovOlJMUvztgGVtN3J+PPsqK8LxpWlpnOtxy9mBTRYr9WwN+
-         L7issgtdqSqnIUG5cYV3w8an8WHeSfYlNJKrxxRN4qwmEp1t9eBMmLJ4ZW3UVvBHnusW
-         oG4glsYNBztx5BgdGCwt3LWaYY7Ytrqg1iNzPK9tsV0SJfLW2HAE9A/nDUf73upvE1CG
-         sMbg==
-X-Gm-Message-State: AOAM530KWpTXhoDSd7C8iYgeDEN/j4mnpkcOgw/btHKyIAKJtmlkWP3o
-        neqx5+xSjnY3igbENRLQspiV+Vhmn+yjIg==
-X-Google-Smtp-Source: ABdhPJxLWMyWKpjUskopfQ7ipP1ovk3T5099xWlj4J1CrVmeqrPqtqtAVWq2aVQhwExoQhRP8SA37w==
-X-Received: by 2002:a05:6402:1d1b:: with SMTP id dg27mr4109865edb.59.1629844273885;
-        Tue, 24 Aug 2021 15:31:13 -0700 (PDT)
+        bh=yGMkGP0ysVMgF+NsRirzf+HNEDi5txPs87Mq04TbOIE=;
+        b=cKotqiXr7aqHEK9inNesFxifr3Zg5tPuCFnuXer3lLIlC7LVaBxSH+uj5h6tZTm7gZ
+         DABGvOU8jdNfoTD//PV9Yz8AIe26aeEENXIzdbLTGyAZQFWJtYh0t2RBoetpGuFAUl8K
+         j7d0uyteq4lmUfBXdBxHqP2wO8xGRMQmNwWdU/fppy9oo/nnVGwCmZCMkQD82ZSuuH9A
+         /r/mP8GjT+9HM/tTLET/IaVbWnuz+PeCEGf1G9cqwxUk+RuQ9u5VxcvPNa+dVmpwbEEA
+         9NyFVzwRT8W7dqxiRepFDo+fA6tyqNyRFuiINnkHGmGf01I5AT/qAJRlrx3hxljxgzRY
+         n+Dg==
+X-Gm-Message-State: AOAM533D1xwyp4OrPYqSKe67SxQuI3LWRrW10STMNL/82tFAI28/nOq4
+        W+9Uq5hRH89QGK5UowK/Q/s=
+X-Google-Smtp-Source: ABdhPJwnh5rQR5UrQnOGBweKbGxTJhAikBumAJs9yOuof1CsuBF4Od0vO02+zEBlzljpR23+fUX7oA==
+X-Received: by 2002:a05:6402:34c8:: with SMTP id w8mr38428853edc.330.1629844779254;
+        Tue, 24 Aug 2021 15:39:39 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id i23sm8427057edr.72.2021.08.24.15.31.13
+        by smtp.gmail.com with ESMTPSA id b3sm9989278ejb.7.2021.08.24.15.39.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 15:31:13 -0700 (PDT)
+        Tue, 24 Aug 2021 15:39:38 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Patrick Steinhardt <ps@pks.im>,
         Christian Couder <christian.couder@gmail.com>,
         Albert Cui <albertqcui@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC PATCH 00/13] Add bundle-uri: resumably clones, static
- "dumb" CDN etc.
-Date:   Wed, 25 Aug 2021 00:00:22 +0200
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [RFC PATCH 13/13] bundle-uri docs: add design notes
+Date:   Wed, 25 Aug 2021 00:33:04 +0200
 References: <RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com>
-        <e7fe220b-2877-107e-8f7e-ea507a65feff@gmail.com>
-        <87k0kcfdg0.fsf@evledraar.gmail.com>
-        <c56bec68-bf00-f3b0-74b4-fd3e47319000@gmail.com>
+ <RFC-patch-13.13-1e657ed27a-20210805T150534Z-avarab@gmail.com>
+ <YSVpLjAhhS8v2dR7@camp.crustytoothpaste.net>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <c56bec68-bf00-f3b0-74b4-fd3e47319000@gmail.com>
-Message-ID: <871r6ieaq7.fsf@evledraar.gmail.com>
+In-reply-to: <YSVpLjAhhS8v2dR7@camp.crustytoothpaste.net>
+Message-ID: <87y28qcvrp.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -81,254 +79,105 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Aug 23 2021, Derrick Stolee wrote:
+On Tue, Aug 24 2021, brian m. carlson wrote:
 
-> On 8/23/2021 9:28 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> [[PGP Signed Part:Undecided]]
+> On 2021-08-05 at 15:07:29, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Add a design doc for the bundle-uri protocol extension to go along
+>> with the packfile-uri extension added in cd8402e0fd8 (Documentation:
+>> add Packfile URIs design doc, 2020-06-10).
 >>=20
->> On Tue, Aug 10 2021, Derrick Stolee wrote:
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  Documentation/technical/bundle-uri.txt  | 119 ++++++++++++++++++++++++
+>>  Documentation/technical/protocol-v2.txt |   5 +
+>>  2 files changed, 124 insertions(+)
+>>  create mode 100644 Documentation/technical/bundle-uri.txt
 >>=20
->>> On 8/5/2021 11:07 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:> We=
-'re in the 2.33.0 rc cycle, and I'd hoped to have some more prep
+>> diff --git a/Documentation/technical/bundle-uri.txt b/Documentation/tech=
+nical/bundle-uri.txt
+>> new file mode 100644
+>> index 0000000000..5ae9a15eaf
+>> --- /dev/null
+>> +++ b/Documentation/technical/bundle-uri.txt
+>> @@ -0,0 +1,119 @@
+>> +Bundle URI Design Notes
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> +
+>> +Protocol
+>> +--------
+>> +
+>> +See `bundle-uri` in the link:protocol-v2.html[protocol-v2]
+>> +documentation for a discussion of the bundle-uri command, and the
+>> +expectations of clients and servers.
+>> +
+>> +This document is a a more general discussion of how the `bundle-uri`
+>> +command fits in with the rest of the git ecosystem, its design goals
+>> +and non-goals, comparison to alternatives etc.
+>> +
+>> +Comparison with Packfile URIs
+>> +-----------------------------
+>> +
+>> +There is a similar "Packfile URIs" facility, see the
+>> +link:packfile-uri.html[packfile-uri] documentation for details.
+>> +
+>> +The Packfile URIs facility requires a much closer cooperation between
+>> +CDN and server than the bundle URI facility.
+>> +
+>> +I.e. the server MUST know what objects exist in the packfile URI it's
+>> +pointing to, as well as its pack checksum. Failure to do so will not
+>> +only result in a client error (the packfile hash won't match), but
+>> +even if it got past that would likely result in a corrupt repository
+>> +with tips pointing to unreachable objects.
+>> +
+>> +By comparison the bundle URIs are meant to be a "dumb" solution
+>> +friendly to e.g. having a weekly cronjob take a snapshot of a git
+>> +repository, that snapshot being uploaded to a network of FTP mirrors
+>> +(which may be inconsistent or out of date).
+>> +
+>> +The server does not need to know what state the side-channel download
+>> +is at, because the client will first validate it, and then optionally
+>> +negotiate with the server using what it discovers there.
+>> +
+>> +Using the local `transfer.injectBundleURI` configuration variable (see
+>> +linkgit:git-config[1]) the `bundle-uri` mechanism doesn't even need
+>> +the server to support it.
 >
-> (I'll skip the parts where you agree with me.)
+> One thing I'm not seeing with this doc that I brought up during the
+> packfile URI discussion is that HTTPS is broken for a decent number of
+> Git users, and for them SSH is the only viable option.  This is true for
+> users of certain antivirus programs on Windows, as well as people who
+> have certain corporate proxies in their workplace.  For those people, as
+> soon as the server offers a bundle URI, their connection will stop
+> working.
 >
->>> 3. The bundle-uri feature is focused on "clone" scenarios, and I don't =
-see
->>>    how it could be used to help "fetch" scenarios. To be fair, I also h=
-ave
->>>    been vocal about how the packfile-uri feature is very hard to make
->>>    helpful for the "fetch" scenario. The benefits to "clone" seem to be
->>>    worth the effort alone. I think the bundle-api doubles-down on that
->>>    being the core functionality that matters, and that is fine by me. It
->>>    sacrifices the flexibility of the packfile-uri with a lower maintena=
-nce
->>>    burden for servers that want to implement it.
->>=20
->> Not correct, I'm going to have it handle incremental fetches.
->>=20
->> What *is* correct is that the initial RFC patches here entirely punt on
->> it (I only hook them into clone.c, no fetch.c).
->>=20
->> I focused on the "clone" case to get to a MVP earlier, and as you note I
->> think in practice most users of this will want to only use it for clone
->> bootstrapping, and won't care so much about the incremental case.
->>=20
->> But for the "fetch" case we'd simply start fetching the N bundles in
->> parallel, and read their headers, then abort fetching any whose header
->> declares tips that we already have.
+> I know that you're probably thinking, "Gee, how often does that happen?"
+> but judging by the number of people on StackOverflow, this is actually
+> very common.  The antivirus programs that break Git are actually not
+> uncommon and they are widely deployed on corporate machines, plus the
+> fact that lots of companies sell TLS intercepting proxies, which are
+> almost always broken in this way.  Many of these users don't even know
+> what's going on, so they simply lack the knowledge to take any action or
+> ask their network administrator for a fix.  For them, HTTPS just doesn't
+> work with Git, while it does for a web browser.
 >
-> To save network time, we would need to read data as it is streaming
-> from the network and stop the download when we realize we don't need
-> the bundle? This seems wasteful, but I'm willing to see it work in
-> reality before judging it too harshly.
+> So we will probably want to make this behavior opt-in with a config
+> option for SSH, or just not available for SSH at all, so that we don't
+> magically break users on upgrade who are relying on the SSH protocol not
+> using HTTPS under the hood[0], especially the users who won't even know
+> what's wrong.
 
-The common case would be making a Range request to get (what's most
-likely to contain) the header, so not deciding on the fly while we're
-redundantly getting data we may not use from the server.
+Good point, I think this sort of thing will be a non-issue with
+bundle-uri, because in general it handles any sort of network / fetching
+/ validation failures gracefully. I.e. with these patches you can point
+at a bad URI, broken non-bundle etc. We'll just move on to a full clone.
 
-But yes, I think for that incremental case it's likely to be better to
-skip it entirely for small-ish fetches, both for client & server.
+Whereas with packfile-uri the inline PACK and the URI are things you
+MUST both get, as the provided packfile-uri completes the incomplete
+inline PACK. So once you say that you're willing to accept things over
+https, you MUST be able to get that thing.
 
-An out by default here is that a server operator would be unlikely to
-configure this if they don't suspect that it's helping their use-case.
-
-I also wonder if I shouldn't make it explicit from day 1 in the spec
-that either the first listed bundle is always one without prereqs, so we
-could short-circuit this on "fetch" for what's likely to be the common
-case of a server operator who's only interested in this for "clone",
-i.e. without any incremental bundles.
-
-It would mostly close the door (or rather, result in redundant requests
-for) someone who wants incremental-only bundles, but I can't imagine
-anyone using this at all would want that, but maybe...
-
-> It would be better if the origin Git server could see the tips that
-> the user has and then only recommend bundles that serve new data.
-> That requires a closer awareness of which bundles contain which
-> content.
-
-Once we're imagining this happening after the user sends over the tips
-they have we're really starting to talk about something that's pretty
-much indistinguishable from packfile-uri.
-
-I.e. that happen after ls-refs & fetch negotiation, whereas bundle-uri
-happens after ls-refs, but pre-negotiation.
-
-"Pretty much" because we can imagine that instead of the server sending
-the packfile-uri they'd send some hybrid of bundle-uri and packfile-uri
-where instead of sending a PACK they say "oh if you want these tips
-here's a bundle that has most/all of it, fetch that and get back to me".
-
-Except the "get back to me" probably can't happen, the client would
-either need to keep the server waiting as they fetch that
-hybrid-bundle-uri, or disconnect, fetch it, and then re-do the
-negotiation.
-
-I can see how it might be useful if you're generating incremental
-bundles anyway, but I think mostly I'd just say "well, use packfile-uri
-then", but maybe I'm not being imaginative enough ... :)
-
->> So e.g. for a repo with a "big" bundle that's 1 week old, and 7
->> incremental bundles for the last 7 days of updates we'd quickly find
->> that we only need the last 3 if we updated 4 days ago, based on only
->> fetching their headers.
->
-> I can attest that using time-based packs can be a good way to catch
-> up based on pre-computed pack-files instead of generating one on
-> demand. The GVFS protocol has a "prefetch" endpoint that gives all
-> pre-computed pack-files since a given timestamp. (One big difference
-> is that those pack-files contain only commits and trees, not blobs.
-> We should ensure that your proposal can extend to bundles that serve
-> filtered repos such as --filter=3Dblob:none.)
-
-I may be wrong, and I'm at all familiar with the guts of these filtering
-mechanisms, but would that even be possible? Doesn't that now involve
-the server sending over a filtered PACK payload without the blobs per
-client request?
-
-Whereas a bundle per my understanding must always be complete as far as
-a commit range goes, i.e. it can have prereqs, but those prereqs are
-commits, not arbitrary OIDs. But maybe arbitrary OIDs (i.e. the OIDs of
-the missing blob/trees etc.) would work, I haven't tried to manually
-craft such a thing...
-
-> The thing that works especially well with the GVFS protocol is that
-> if we are missing a reachable object from one of those pack-files,
-> then it is downloaded as a one-off request _when needed_. This allows
-> the pack-files to be computed by independent cache servers that have
-> their own clocks and compute their own timestamps and generate these
-> pack-files as "new objects I fetched since the last timestamp".
-
-I *think* that's covered by the above, but not sure, i.e. we're still
-discussing these filtered PACKs I think...
-
-> This is all to say that your timestamp-based approach will work as
-> long as you are very careful in how the incremental bundles are
-> constructed. There can really only be one list of bundles at a time,
-> and somehow we need those servers to atomically swap their list of
-> bundles when they are reorganized.
-
-The current implementation theoretically racy in that we could have
-bundle uris on the server defined in different parts of config (e.g. via
-includes), and have a A..F "big", bundle, then F..G, G..H etc, but in
-the middle of a swap-out a client might see A..E, F..G.
-
-I think in practice the general way we read/write config in one location
-should alleviate that, and for any remaining races the client will
-handle it gracefully, i.e. we'll fetch that A..E try to apply (or
-rather, read fail on reading the prereqs in the header) F..G on top of
-it, fail and just fall back on a negotiation from E, rather than the
-expected G.
-
->> The client spec is very liberal on "MAY" instead of "MUST" for
->> supporting clients. E.g. a client might sensibly conclude that their
->> most recent commits are recent enough, and that it would probably be a
->> waste of time to fetch the headers of the pointed-to bundles, and just
->> do a normal fetch instead.
->
-> Sensible. I wouldn't expect anything less.
-
-*Nod*, but it's useful to note that by comparison with packfile-uri, the
-plan here is to have the server and its CDN not have a hard dependency
-on one another. I.e. with packfile-uri if your server and CDN have a 99%
-availability, your total availability is .99^2 =3D~ 98.01%.
-
-So it's inherently a softer and more optimistic way to handle failures,
-and allows server operators who aren't 100% sure of their CDN never
-failing them (least clones start failing) to experiment with using one.
-
->> The response format is also currently:
->>=20
->>     <URI>[ <optional key-value>*]
->>=20
->> And nothing uses the "optional key-value". One of the main things I had
->> in mind was to support something like (none of these key-values are
->> specified currently):
->>=20
->>     https://example.com/big.bundle tip=3Ddeadbeef1
->>     https://example.com/incremental-1.bundle prereq=3Ddeadbeef1 tip=3Dde=
-adbeef2
->>     https://example.com/incremental-2.bundle prereq=3Ddeadbeef2 tip=3Dde=
-adbeef3
->>=20
->> Or:
->>=20
->>     https://example.com/big.bundle type=3Dcomplete
->>     https://example.com/incremental-1.bundle type=3Dincremental
->>     https://example.com/incremental-2.bundle type=3Dincremental
->>=20
->> I.e. allow the server to up-front to optionally specify some details
->> about the pointed-to-bundles, purely so the client can avoid the work
->> and roundtrip of trying to fetch the headers of N pointed-to bundles
->> just to see which if any it needs for a clone/fetch.
->
-> Ok, this seems like a reasonable way forward. If the bundles are
-> truly focused on data within a core "trunk" (say, the reflog of
-> the default branch) then this works. It gets more complicated for
-> repos with many long-lived branches that merge together over the
-> span of weeks. I'm talking about extreme outliers like the Windows
-> OS repository, so take this concern with a grain of salt. The
-> point is that in that world, a single tip isn't enough sometimes.
-
-*Nod*, but note that this would just be a shortcut over using the Range
-request to get the header discussed above.
-
-For the Windows repository you could presumably (using git.git as an
-example) have bundles for:
-
-    ..master (the big bundle, no prereqs)
-    master..next
-    next..ds/add-with-sparse-index
-    next..ab/serve-cleanup
-
-I.e. ds/add-with-sparse-index are two divergent branches from "next"
-that we'd like to get.
-
-A bundle header could of course have N branches and N prereqs, but for
-the prereq/tip suggested above we'd handle the common case of a small
-number of "big topics" that are likely to diverge quite a bit, which I
-imagine the use-case you're noting is like.
-
->>> One question I saw Jonathan ask was "can we modify the packfile-uri
->>> capability to be better?" I think this feature has enough different goa=
-ls
->>> that they could co-exist. That's the point of protocol v2, right? Serve=
-rs
->>> can implement and advertise the subset of functionality that they think=
- is
->>> best for their needs.
->>=20
->> *Nod*, I also think as shown with these patches the overall complexity
->> after setting up the scaffolding for a new feature isn't very high, and
->> much of it is going away in some generally useful prep patches I'm
->> trying to get in...
->>=20
->>> I hope my ramblings provide some amount of clarity to the discussion, b=
-ut
->>> also I intend to show support of the idea. If I was given the choice of
->>> which feature to support (I mostly work on the client experience, so ta=
-ke
->>> my choice with a grain of salt), then I would focus on implementing the
->>> bundle-uri capability _before_ the packfile-uri capability. And that's =
-the
->>> best part: more options present more flexibility for different hosts to
->>> make different decisions.
->>=20
->> Thanks again. I'll keep you CC'd on future submissions if that's OK.
->
-> Sounds good. I'll try to prioritize review.
->
->> One thing I could really use to move this forward is code review of some
->> of the outstanding serieses I've got, in particular these two are
->> immediately applicable to this one. It's based on the former, and I
->> needed to steal one patch from the latter:
->>=20
->> https://lore.kernel.org/git/cover-v4-00.10-00000000000-20210805T011823Z-=
-avarab@gmail.com/
->> https://lore.kernel.org/git/cover-v2-0.4-00000000000-20210823T110136Z-av=
-arab@gmail.com/
->
-> I'll see what I can contribute here.
-
-Thanks, the reviews on the "unbundle progress" are already very
-useful...
+We'll still waste a bit of time trying though with bundle-uri. But I
+think for the common case of bundle-uri helping more than not (which
+presumably, the server operator has tested), it's a better default to
+try https:// even if the main dialog is over ssh://.
