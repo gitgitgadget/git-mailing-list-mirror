@@ -4,109 +4,187 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03D84C4338F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 15:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61F53C4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 15:44:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE5D5611C8
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 15:44:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 35B1161265
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 15:44:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238419AbhHXPos (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 11:44:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39060 "EHLO
+        id S238388AbhHXPou (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 11:44:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238297AbhHXPor (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238304AbhHXPor (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 24 Aug 2021 11:44:47 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8C17C061757
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 08:44:02 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id o39-20020a05600c512700b002e74638b567so2618116wms.2
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 08:44:02 -0700 (PDT)
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28645C061764
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 08:44:03 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id f9-20020a05600c1549b029025b0f5d8c6cso2181222wmg.4
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 08:44:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=FCfvMt3mK/OhvZi20GIPtm8JUpAIiMlrM6Z3YIuWNm8=;
-        b=ejin7IODomPJlWQkgef9mNGciIUbQMr0/SD2S8bjlcogFUEmFlwTCy/wTCWpC5WgIz
-         UTnD7MX/RP9QVrsVlBaxUHM1OEgayjEkRpvmpDIEGfDfn0ugFcZyCPzP3nV/c5BRjITV
-         3UsUy6qJ14I0m4bbyz7Vi/rzJ77/wCqWP3aeUlQFy+6x/r/jAXitUMRNOo5/tGNeWQ5G
-         mJsfwWB+cmJbQk/i33Epb1F2b3DwLlqZ1g1O6y6Gdy6b/rjNYJyWcF95SdNUD5+Pdm4Z
-         YoxN99dL7I2HSTxmqUxzzb1xVKIgbWPPPA4gZra8AgNTQaOy/Mq3ujuOkNj/ZYp14Mch
-         KbWw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=ujN0FQRr+FWLAy19xPfFIpJYT0D+RlRUwgm3kFpZHBA=;
+        b=K4aaUgNK8RmpkZRl9Rhm7+MOqH4mS0VZTWm8Z+DAwCJ93YOIRtyyJvouS44c5lMmgX
+         dQ1lyljzrX+jP2pQhqimR+37oKTKsCOYJsJ74f76Jfza+bs3ZZSngBZ3NxEm49NSjIwx
+         PIJ2qE69Op62m6C/GVvwB3sYSWWMIwoMi5B/t8RjXqU/20vWkehvOVaMRw18Kdfohsek
+         wG5WtTSZe+fdJPgNITsiWwXs3jV/fQZ2etSLWuTUveckbGo4jYREkmhL6K6cNZDFOUDz
+         A4J1vFX2Ng5UgNYOxJhIjD3S0YqPn8ZAsUS85g5BSa9cq4g/84eyJsBSX6w1bkVfZrl1
+         xuEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=FCfvMt3mK/OhvZi20GIPtm8JUpAIiMlrM6Z3YIuWNm8=;
-        b=gFNPpv10LKl8zjKZLkVsZYPpVR/qkcBqRV96cLbrsAnNKDfnFbWSTYvQXj83ueQCLb
-         4oja+PMuTnjKE7jRT9hH1mOtSg8MUhAPLnsRVMVEWqzXIk32/p20gqycpMlzYGxkDlMM
-         H8VwEvFFu/JUC51J6MzL2uX5BRbPUXcDc0AMx6AwRxPwHVu4hiBL2hltc5AocCJpUYuE
-         DdJbunLMGG/w3egILhCeI/xWhpMUo14irgKEvQkWptMOqqXBwc4KrqHzAj1BJhMyJr3e
-         z2HdgiQQ7LqFnYGhyJuzxlrv5EzavXVdMlzcxlZEFNcbPpfrE+cH4vdJP+5Ii2tqc5OQ
-         bDZg==
-X-Gm-Message-State: AOAM532R3Y53OmdxxdcvUAEE77pzkZjs+mpRIhYfaHR/KvwwVWvyddQ4
-        AwNbtMA6uU1zfpp+Sx7be+WrSZiEzh8=
-X-Google-Smtp-Source: ABdhPJxtMNFP2KO0nDlUd1v4hSmvvKAKqQXmwMOPaFZu5yJs+2XECHV0eQ2ubvXvWA9D0Mvs5owOmA==
-X-Received: by 2002:a05:600c:3b91:: with SMTP id n17mr4712941wms.72.1629819841269;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=ujN0FQRr+FWLAy19xPfFIpJYT0D+RlRUwgm3kFpZHBA=;
+        b=Qr9c+Eqhsfzljz9jCTAwRdPsffwSJAJDepe0i8gIt/0Cvt9k28iCq8+FAIjG0jqshv
+         iE0REqX7wF0AhNAz7K0rpM0/8+jWTmJwAlB0/ng+5akWaSi6Ek2sl4ZSEPAe0wEBQnxQ
+         97GrooBl/GlVjZCubk4JhuNOGiBkcGz75tqAtdRX2PvRkWCyYv6G+9AYaaivvoShiuzq
+         eGm9sTEjbuYjvydhxnVgAKSbeE54D0vASFJ1PchVEC3KoWjDR1Kx9b/sWPGUbdvRPsNx
+         2H8daPcRnSJM228GHvq+/ir/oaB3xIW4bEj3vFiqDqTlwQkOm5+yAoLhvri4s6NjjKNZ
+         ElqQ==
+X-Gm-Message-State: AOAM532q2558CFJaDgRH349Z+K0gZLWCpx4MYjrFemqU0qUk4kV8lAcB
+        7YwOJIyDbH6ddXxUNZ7vahC/CLb/CLI=
+X-Google-Smtp-Source: ABdhPJxZQko7FGgyqSzXbsYDkHw49QeTqpvnZteCfm0dVROi8tunlzaf0/FvXNUBtEM1F5uqaqXdxw==
+X-Received: by 2002:a7b:c935:: with SMTP id h21mr4688431wml.143.1629819841845;
         Tue, 24 Aug 2021 08:44:01 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n8sm2374766wmq.18.2021.08.24.08.44.00
+        by smtp.gmail.com with ESMTPSA id k12sm19368302wrd.75.2021.08.24.08.44.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 08:44:00 -0700 (PDT)
-Message-Id: <pull.1024.git.1629819840.gitgitgadget@gmail.com>
+        Tue, 24 Aug 2021 08:44:01 -0700 (PDT)
+Message-Id: <62ad2255e6eb0a6aa0995a96a80e40d3342eb394.1629819840.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1024.git.1629819840.gitgitgadget@gmail.com>
+References: <pull.1024.git.1629819840.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 24 Aug 2021 15:43:58 +0000
-Subject: [PATCH 0/2] macos: safeguard git maintenance against highly concurrent operations
+Date:   Tue, 24 Aug 2021 15:43:59 +0000
+Subject: [PATCH 1/2] maintenance: create `launchctl` configuration using a
+ lock file
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we started porting Scalar to C, one of the first things we did was to
-run Scalar's quite extensive set of functional tests. And there, we ran into
-immediate problems in the macOS job because git maintenance was registering
-a large number of repositories concurrently, and our code could be more
-robust in such scenarios.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The culprit lies not with Scalar, of course, but with the way git
-maintenance wants to write the plist for use by launchctl and register it,
-every time, and if two concurrent processes try to do that, they stumble
-over each other.
+When two `git maintenance` processes try to write the `.plist` file, we
+need to help them with serializing their efforts.
 
-This pair of patches makes git maintenance much less fragile in those
-situations.
+The 150ms time-out value was determined from thin air.
 
-Please note that this patch series conflicts with lh/systemd-timers,
-although in a trivial way: the latter changes the signature of
-launchctl_schedule_plist() to lose its cmd parameter. The resolution is to
-adjust the conflicting code to lose the cmd parameter, and also drop it from
-launchctl_list_contains_plist() (and define it in the same way as
-launchctl_boot_plist() does). I assume that lh/systemd-timers will advance
-to next pretty soon; I plan on rebasing this patch series on top of it at
-that stage.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/gc.c | 47 ++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 30 insertions(+), 17 deletions(-)
 
-Derrick Stolee (1):
-  maintenance: skip bootout/bootstrap when plist is registered
-
-Johannes Schindelin (1):
-  maintenance: create `launchctl` configuration using a lock file
-
- builtin/gc.c           | 91 ++++++++++++++++++++++++++++++++----------
- t/t7900-maintenance.sh | 17 ++++++++
- 2 files changed, 87 insertions(+), 21 deletions(-)
-
-
-base-commit: 48bf2fa8bad054d66bd79c6ba903c89c704201f7
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1024%2Fdscho%2Fmaintenance%2Flaunchctl-concurrent-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1024/dscho/maintenance/launchctl-concurrent-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1024
+diff --git a/builtin/gc.c b/builtin/gc.c
+index ef7226d7bca..4a78b497d0e 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1617,16 +1617,14 @@ static int launchctl_remove_plists(const char *cmd)
+ 
+ static int launchctl_schedule_plist(const char *exec_path, enum schedule_priority schedule, const char *cmd)
+ {
+-	FILE *plist;
+-	int i;
++	int i, fd;
+ 	const char *preamble, *repeat;
+ 	const char *frequency = get_frequency(schedule);
+ 	char *name = launchctl_service_name(frequency);
+ 	char *filename = launchctl_service_filename(name);
+-
+-	if (safe_create_leading_directories(filename))
+-		die(_("failed to create directories for '%s'"), filename);
+-	plist = xfopen(filename, "w");
++	struct lock_file lk = LOCK_INIT;
++	static unsigned long lock_file_timeout_ms = ULONG_MAX;
++	struct strbuf plist = STRBUF_INIT;
+ 
+ 	preamble = "<?xml version=\"1.0\"?>\n"
+ 		   "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
+@@ -1645,7 +1643,7 @@ static int launchctl_schedule_plist(const char *exec_path, enum schedule_priorit
+ 		   "</array>\n"
+ 		   "<key>StartCalendarInterval</key>\n"
+ 		   "<array>\n";
+-	fprintf(plist, preamble, name, exec_path, exec_path, frequency);
++	strbuf_addf(&plist, preamble, name, exec_path, exec_path, frequency);
+ 
+ 	switch (schedule) {
+ 	case SCHEDULE_HOURLY:
+@@ -1654,7 +1652,7 @@ static int launchctl_schedule_plist(const char *exec_path, enum schedule_priorit
+ 			 "<key>Minute</key><integer>0</integer>\n"
+ 			 "</dict>\n";
+ 		for (i = 1; i <= 23; i++)
+-			fprintf(plist, repeat, i);
++			strbuf_addf(&plist, repeat, i);
+ 		break;
+ 
+ 	case SCHEDULE_DAILY:
+@@ -1664,24 +1662,38 @@ static int launchctl_schedule_plist(const char *exec_path, enum schedule_priorit
+ 			 "<key>Minute</key><integer>0</integer>\n"
+ 			 "</dict>\n";
+ 		for (i = 1; i <= 6; i++)
+-			fprintf(plist, repeat, i);
++			strbuf_addf(&plist, repeat, i);
+ 		break;
+ 
+ 	case SCHEDULE_WEEKLY:
+-		fprintf(plist,
+-			"<dict>\n"
+-			"<key>Day</key><integer>0</integer>\n"
+-			"<key>Hour</key><integer>0</integer>\n"
+-			"<key>Minute</key><integer>0</integer>\n"
+-			"</dict>\n");
++		strbuf_addstr(&plist,
++			      "<dict>\n"
++			      "<key>Day</key><integer>0</integer>\n"
++			      "<key>Hour</key><integer>0</integer>\n"
++			      "<key>Minute</key><integer>0</integer>\n"
++			      "</dict>\n");
+ 		break;
+ 
+ 	default:
+ 		/* unreachable */
+ 		break;
+ 	}
+-	fprintf(plist, "</array>\n</dict>\n</plist>\n");
+-	fclose(plist);
++	strbuf_addstr(&plist, "</array>\n</dict>\n</plist>\n");
++
++	if (safe_create_leading_directories(filename))
++		die(_("failed to create directories for '%s'"), filename);
++
++	if ((long)lock_file_timeout_ms < 0 &&
++	    git_config_get_ulong("gc.launchctlplistlocktimeoutms",
++				 &lock_file_timeout_ms))
++		lock_file_timeout_ms = 150;
++
++	fd = hold_lock_file_for_update_timeout(&lk, filename, LOCK_DIE_ON_ERROR,
++					       lock_file_timeout_ms);
++
++	if (write_in_full(fd, plist.buf, plist.len) < 0 ||
++	    commit_lock_file(&lk))
++		die_errno(_("could not write '%s'"), filename);
+ 
+ 	/* bootout might fail if not already running, so ignore */
+ 	launchctl_boot_plist(0, filename, cmd);
+@@ -1690,6 +1702,7 @@ static int launchctl_schedule_plist(const char *exec_path, enum schedule_priorit
+ 
+ 	free(filename);
+ 	free(name);
++	strbuf_release(&plist);
+ 	return 0;
+ }
+ 
 -- 
 gitgitgadget
+
