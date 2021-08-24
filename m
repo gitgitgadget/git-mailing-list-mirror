@@ -4,150 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E27FDC4338F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:03:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1744C4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:21:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B8827613A7
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:03:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD3E061357
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:21:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235931AbhHXKD6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 06:03:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43318 "EHLO
+        id S236073AbhHXKWc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 06:22:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235808AbhHXKD5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 06:03:57 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3CDDC061757
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 03:03:13 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id j10-20020a17090a94ca00b00181f17b7ef7so1431799pjw.2
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 03:03:13 -0700 (PDT)
+        with ESMTP id S236035AbhHXKWb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 06:22:31 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78AD0C061757
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 03:21:47 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id u3so43290780ejz.1
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 03:21:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=references:user-agent:from:to:cc:subject:date:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Bqy0fN7m9Xn9BhVrbRUJ2YcmOfca2Xa2bJxcx1eLULk=;
-        b=PGkki+21Ahdc4EDHG5j95ZBFSKsdA7iyLNYR9LmqFQOaVSkS4rLQ5AtP/HoCJ9Fls6
-         OolAlWOci3c0GNLH+j0Ru5vZgVaeDkYEpdbfy8TWOHKe4JNbe7YrR/P0QO/9EyET9Nur
-         ZaSlkJcWXUDbToFELBgD3LOa0GzkJ3GFHOojfociWZ98sDaA1uZmkR6lQjl73rXFPqd5
-         Qo45ldetPA9AIoQY37asvQ3FwUA4qoX1nrPiSZ3ViaCTLs2mOg25FMgavGcBDnoG6+H4
-         1hNUFZmC+zgMYIQW7VkM0ljJfvdNuc8KAsx5xKWcdG9Q3Ef/zuj1//JbXmBdIw57+zwB
-         nMNQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=XvZXchfZVaW7UCBFx4LJ39BfPI6M+dwgIg5qgAgmCX4=;
+        b=G6M0P9JOA7agKUc0Fki6ZBL00ycbdALt8mXZ0oCb7vpG/EuB6Jece6kzw6fXQ4n24z
+         hhcgA0f+aC6RVsWu4j7Gfr37hvow5oWHs9BidXMvuylZ9zwtAibWb0i+jXHrDsy1gXMB
+         tPZaIe0A2yKYE4ass5VeaS/UB/1Fb3WLzqutZbL6McwYLt1201dhwhanTls8DMUXMfhO
+         WDHlT1z7ZixqSKf6BddD57FaT59Zj2NBqjWyLt/xS88BGqrGUTZFktwfcoitbpz5ooMU
+         VRKAKrnH58g6sf1FwIV6Yhi58Gl7nQm0sgfM9Zz9Kji58QfwJ5UDxTood8Z9ihUXUyQZ
+         ktsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject:date
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=Bqy0fN7m9Xn9BhVrbRUJ2YcmOfca2Xa2bJxcx1eLULk=;
-        b=Ex/xpZ/W5VDzBzd6W5NsgtqGJ9B/LOGRGujQ76FI+j+goCharw45rDk0Yc31/ywqI9
-         JOd6xy+n/h1ISMlwygNNh13rGrLIVR+3mIimlL8YbTy9+6ppe26E1P+ecRPYVRO3GjRr
-         mTzvjx5UxiCspdMmIriEgbO+aHIsUA/jWxe181GT0yxBSUJmIdXacgEaUsOiL9PH28g+
-         xN4uQJepZNuXjLF69SCBkc0cNzEvGrDM2hq6IAhpuRn3jqNotTEByDJeAkNi4SnGkfkb
-         wjH3xPN6+5xbfnXXxZ0778GdrIO0yyIZ0Xa7inRW0zxLE6crUabtkXFenhHDtrul5lWf
-         T6yA==
-X-Gm-Message-State: AOAM530/BFT+fk4SxU571jf4GIqkOeW0QnyhTatQMudasjyJ8NeOSJ7C
-        p0F0nDPV9leNCIKjctEjt/8=
-X-Google-Smtp-Source: ABdhPJwmQzpdX/x1ei+641bPz9nz0VScH1hU/NRnmZ2AfXztFqQ5dw2RylQ/UW/wnwOQPvtSbJTRVg==
-X-Received: by 2002:a17:90a:680c:: with SMTP id p12mr1101294pjj.33.1629799393276;
-        Tue, 24 Aug 2021 03:03:13 -0700 (PDT)
-Received: from atharva-on-air ([119.82.121.210])
-        by smtp.gmail.com with ESMTPSA id e11sm1928915pfn.49.2021.08.24.03.03.07
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=XvZXchfZVaW7UCBFx4LJ39BfPI6M+dwgIg5qgAgmCX4=;
+        b=SIfLF+1/K0cvAwQ97Mz00J1rkFmORpihKb8ADNR1h7mTqlSx/egsJF82cFfiSiHdm3
+         nY3i9d9sXC2jx/3cMScnzFQFvk49KfhhynSLKClvwirWBOgr3OmEgz1PwBEkAAlWNlcp
+         gXOn03+/eM7VQsfAu3R1QcPtaA6mVjCgm1VaG8xdTjXRY/htGAGn+O1nQE7q01zppn1+
+         lCAs469BzRmH9asyebK2w1eZ2iml0c7fkGkk0foDUuPWaUtzJF8Dz8J1+hWBvZ+S8f4h
+         9cicf7ObNVtHwcZ8eV1hR5pIasZ9dQGuGlbNh30WqRBzvZVM5bexvV3nOEgY7o5XV2Fp
+         aw7Q==
+X-Gm-Message-State: AOAM531vGSr2DnPUA6Sz9xRTiu9V5JT5/47Bleh5fwnRR50d9wXY9R5G
+        RWu9UjpBLq3PD0+3pDwIn2A=
+X-Google-Smtp-Source: ABdhPJwNJWheCxx+A3Gi2Vo9QMsr7iTjHiUhon87+8u6WJvqMKK44vOW4agsGljbVEq0b9uAfxVIPg==
+X-Received: by 2002:a17:906:b18e:: with SMTP id w14mr40305260ejy.63.1629800505981;
+        Tue, 24 Aug 2021 03:21:45 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id ay20sm11362094edb.91.2021.08.24.03.21.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 03:03:13 -0700 (PDT)
-References: <m2lf4wys5o.fsf@gmail.com>
- <b6ba6b44-c5f5-63f4-7fd1-19a1acd34770@gmail.com>
-User-agent: mu4e 1.6.3; emacs 27.2
-From:   Atharva Raykar <raykar.ath@gmail.com>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Rafael Silva <rafaeloliveira.cs@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, Shourya Shukla <periperidip@gmail.com>
-Subject: Re: [GSoC] The Final Git Dev Blog(s)
-Date:   Tue, 24 Aug 2021 15:30:46 +0530
-In-reply-to: <b6ba6b44-c5f5-63f4-7fd1-19a1acd34770@gmail.com>
-Message-ID: <m2h7ffdusm.fsf@gmail.com>
+        Tue, 24 Aug 2021 03:21:45 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        "Ben Boeckel" <mathstuf@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2021, #08; Mon, 23)
+Date:   Tue, 24 Aug 2021 12:08:02 +0200
+References: <xmqqo89nq1sa.fsf@gitster.g>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <xmqqo89nq1sa.fsf@gitster.g>
+Message-ID: <878s0rf8i0.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+On Mon, Aug 23 2021, Junio C Hamano wrote:
 
-> On 20/08/21 8:05 pm, Atharva Raykar wrote:
->> 2. Reflections on Working With the Git Community:
->>     https://atharvaraykar.me/gitnotes/final-reflection
->>     This is a blog post that I wrote mostly for myself, and other people
->>     interested in contributing to Git. It covers my personal experience
->>     with my time here with the many ups and downs. I also wanted to thank
->>     all the people who helped and collaborated with me in these 14 weeks.
->>
->
-> Good idea on trying to separate the reflection part of the blog from the
-> actual final report blog. This way, you didn't have to worry about the
-> report getting too long due to the reflections ;-)
->
-> You could consider linking each of these to the other ones, though. That
-> would help tie things up.
+Our E-Mails crossed, but on the "update on my topics" front everything I
+noted in the reply to the last What's Cooking is stil current, except as
+noted below:
+https://lore.kernel.org/git/87v93wflm0.fsf@evledraar.gmail.com/
 
-Okay, that's a good suggestion.
+Also this request to pick up 2x missed topics from me:
+https://lore.kernel.org/git/87pmu4fh17.fsf@evledraar.gmail.com/
 
-> Some other thoughts:
->
->> This mild dogfooding went a long way into making my work feel far more
->> enjoyable and meaningful (if working on a project used my millions was
->> already not meaningful enough).
->
-> Dogfooding is one of those thing that's surprisingly effective at all tim=
-es :-)
->
-> BTW, s/my millions/by millions/
+Oh, and a 3rd one I forgot about, Ben Boeckel's advice.c work which I
+fixed failures in and re-rolled at:
+https://lore.kernel.org/git/cover-v4-0.4-00000000000-20210823T103719Z-avarab@gmail.com/
 
-Right.
+> The tip of 'next' has been rewound, and the first batch of this
+> cycle should be in 'master' in a few days.  As discussed, let's make
+> 'ort' the default early in this cycle.
 
->> CoViD.
->
-> Good to know that all are well. I resonate with what Zheing Hu says. Let's
-> hope we get through COVID-19 smoothly.
->
->> This blog will continue, with a renewed purpose. I will be writing down
->> important things I learnt in my time and bugs that new contributors
->> could work on. I believe that writing guides and making contributions
->> easier has some of the best effort-to-impact characteristics that
->> I am looking for.
->
-> Very true. They are always helpful. I believe MyFirstContribution is
-> a testimony for this. It's glad to know you would like to help
-> contributors in that way :-)
->
->> This won't be the last time you will see me on the list, of course. I
->> still have patches waiting to make it to the list, and other work
->> undergoing review=E2=80=94the only difference now is that it won't be un=
-der the
->> GSoC banner anymore.
->>
->
-> Great!
->
->> Have a great weekend!
->>
->
-> Thanks and hope you have a good weekend too! Also, thanks for all
-> your contributions so far! Hoping to see more patches from you on
-> the list :-)
+Yay ORT!
 
-Thanks for the time you set aside to help me as well!
+> Most notably, since the "errno cleanup around refs API" topics have
+> been blocking the "reftable backend" topic, I've reverted the former
+> out of 'next' and moved them to near the tip of 'seen', essentially
+> giving priority to the latter.  In other words, I'd expect to see
+> that the "reftable" topic to move before the "errno cleanup" topic,
+> and also expect that any breakage, when both are merged to 'seen',
+> would be resolved by adjusting the "errno cleanup" topic.
+
+Per discussion at
+https://lore.kernel.org/git/877dgch4rn.fsf@evledraar.gmail.com/ and
+https://lore.kernel.org/git/87y28sfokk.fsf@evledraar.gmail.com/ I think
+"errno first" makes sense. I re-rolled my two topics, and submitted a
+re-rolled hn/reftable at
+https://lore.kernel.org/git/cover-v4-00.28-00000000000-20210823T120208Z-avarab@gmail.com/;
+which in combination with the earlier two fixes the issues on "seen".
+
+I.e. it's just hn/reftable with 3x fixup patches at the end, will need
+to be rolled/squashed into a re-rolled reftable topic, but for now....
+
+> [...]
+> * ab/http-drop-old-curl (2021-07-30) 5 commits
+> * ab/bundle-doc (2021-08-02) 4 commits
+> * ab/pack-stdin-packs-fix (2021-07-09) 2 commits
+> * es/config-based-hooks (2021-08-19) 7 commits
+> [...]
+>  - Merge branch 'ab/config-based-hooks-base' into es/config-based-hooks
+>  (this branch uses ab/config-based-hooks-base.)
+> [...]
+> * ab/lib-subtest (2021-08-05) 11 commits
+> * ab/only-single-progress-at-once (2021-07-23) 8 commits
+> * ab/progress-users-adjust-counters (2021-08-05) 3 commits
+> * ab/make-tags-cleanup (2021-08-05) 5 commits
+> * ab/config-based-hooks-base (2021-08-03) 36 commits
+> * ab/serve-cleanup (2021-08-05) 10 commits
+> * ab/pack-objects-stdin (2021-07-09) 5 commits
+> * ab/refs-files-cleanup (2021-08-19) 11 commits
+
+As noted above please see
+https://lore.kernel.org/git/87v93wflm0.fsf@evledraar.gmail.com/ for the
+up-to-date summary on these.
+
+> * ab/test-tool-cache-cleanup (2021-06-08) 4 commits
+>  - read-cache perf: add a perf test for refresh_index()
+>  - test-tool: migrate read-cache-again to parse_options()
+>  - test-tool: migrate read-cache-perf to parse_options()
+>  - test-tool: split up test-tool read-cache
+>
+>  Test code shuffling.
+>
+>  Expecting a reroll.
+
+I finally re-rolled this, sorry about the delay:
+https://lore.kernel.org/git/cover-v2-0.4-00000000000-20210824T091204Z-avarab@gmail.com/
