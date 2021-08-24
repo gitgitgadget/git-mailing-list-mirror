@@ -2,780 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 171A1C4338F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 14:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4847C4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 14:07:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F3EAF6054F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 14:06:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CDBAC6103E
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 14:07:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237751AbhHXOHJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 10:07:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43888 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237606AbhHXOHI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 10:07:08 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFEBCC061757
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 07:06:23 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id n12so875004plk.10
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 07:06:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=d0A7fK7ncYVGLKTRy8YNYBpCHX1hQ2hoencWoO0sTpg=;
-        b=nuw2mJfR/qhHaSacp16J+XF4koWNEUPre5b4uvOJhDfs7IVtQIuJgwTsPkAhemXj5B
-         6Td5/olPhfKWeMMiL/Cja+0LChPHpIqjl+oln/0IQF9fgvxUijtr/mA3iS3AzkfgvxAf
-         B08+B3RpqDuH5GJrXaxJauPp7101fyMxc3o6Q91B+LZaeV4V/VZbG4NRGkR7+5icaU0X
-         4nzL+AkXSwC2NVuukK9MU1lZCok9t/9+WM5kW8MPUtfz9g8Mlga/ihwzQax0uGJGOMJZ
-         PqksH//a6qsUBj+3PhPQ51ik6eMdeGvV0StITTd0TuKPypxv+ewCyrGGGcMxMwL5P7s/
-         SFXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=d0A7fK7ncYVGLKTRy8YNYBpCHX1hQ2hoencWoO0sTpg=;
-        b=E1iOHT70tIFwI5EBewMobPmJywRn0hdpD1J2eGDNpkVseQgRizdHQD651dr6HYTaRi
-         Vg5O1EGU0gfSafd1azNtjEyQqikhcrD+WZKAUXhYhDXdra9z24hadAPdMufR1nhmHlX7
-         WKQTVx2i0sPDU7206bNlfbKIzojoa1sxwy49eZ1sRwLfMdI9IYETOwSqdXLd//qCVzTK
-         nZbPR9mZRWDieErurAdoOmJJ0W3iAIx7VwU5xnXLfks45xy3y6VV12tAl/5squgjByTr
-         ekwN6K/LC7qDPplvgvt48W5IRtTIoE2doB2ZJA92R/cLc0xOsmOLyDz3oE48KhIsR9UI
-         oQcA==
-X-Gm-Message-State: AOAM531AN9d8xAIJab67Y0+iJ9/0P4q4tFdoe4fTKbnKB2XXlmx7pH/o
-        10Yyychm3F5K0M4XYFDACbQjbN/+HKEanQ==
-X-Google-Smtp-Source: ABdhPJxLjJT3Af9BVOvR/U0H1RxK7S49ndg78pDdSEA+sNH9OQh3iuZTKUkyOIxtix4U5WXefO1EQw==
-X-Received: by 2002:a17:902:9b95:b0:130:6a7b:4570 with SMTP id y21-20020a1709029b9500b001306a7b4570mr21597471plp.27.1629813983021;
-        Tue, 24 Aug 2021 07:06:23 -0700 (PDT)
-Received: from atharva-on-air.Dlink ([119.82.121.210])
-        by smtp.gmail.com with ESMTPSA id f9sm2709403pjq.36.2021.08.24.07.06.19
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Aug 2021 07:06:22 -0700 (PDT)
-From:   Atharva Raykar <raykar.ath@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Atharva Raykar <raykar.ath@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Subject: [PATCH v4] submodule--helper: run update procedures from C
-Date:   Tue, 24 Aug 2021 19:36:09 +0530
-Message-Id: <20210824140609.1496-1-raykar.ath@gmail.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210813075653.56817-1-raykar.ath@gmail.com>
-References: <20210813075653.56817-1-raykar.ath@gmail.com>
+        id S237503AbhHXOIE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 10:08:04 -0400
+Received: from mx0a-00209e01.pphosted.com ([148.163.148.55]:40430 "EHLO
+        mx0a-00209e01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234695AbhHXOID (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 24 Aug 2021 10:08:03 -0400
+X-Greylist: delayed 3452 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Aug 2021 10:08:03 EDT
+Received: from pps.filterd (m0131213.ppops.net [127.0.0.1])
+        by mx0b-00209e01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 17OD8FUl023302
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 09:09:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ncr.com; h=from : to : subject :
+ date : message-id : content-type : content-transfer-encoding :
+ mime-version; s=pod1119; bh=HLbwAyrQfbRtHbcpqw4dZ25lJMqtHpRmXgoOC2SPdIc=;
+ b=qKILrhoR1UXBaDnkRwsFj1jX43g3rcwKPQ0C21v6NjOWPcQ71BEOrDDTH1+snHzGAFFz
+ 2tHZSR2Tvpnt+Lg9efy0PVwQ1yLfV8jfqBnYgdd4gWIPd0GvaOXAtAa+hNy/0GGOPmPw
+ xj5d+0UVwc7JFfXWqtAHIhZ9zDP7uh4mKp8NS0LHheGFhsHEKc4Vf1JU+d9NYh87B9Tq
+ IBgfm8yOlEAT+hl8aJ/ZpEMwIzzvBMI+UUVZ7uRENp0Eh5t5yMtDkPd8JK7A1+Ddpghd
+ E6KPAxOlQU91w4t74k+p1T3HG5ObIxEVJ35T6jfoz0x990Flk94IHCbWnNOZesEgBsaQ Rw== 
+Received: from nam11-bn8-obe.outbound.protection.outlook.com (mail-bn8nam11lp2177.outbound.protection.outlook.com [104.47.58.177])
+        by mx0b-00209e01.pphosted.com with ESMTP id 3ambkpey5u-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 09:09:47 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=IZU3AgLYKJGM8EOWr6rvDyOHRhv+UV2OxMk3u3pI+LkzsymzwEadZKAZnCQQ11DEZHFqUGm5Oj1nNKaGF8pSt+sJj5FqqAAg583+QEQqA0VKBsJlZXiKFUHdxonASEQvg9oIi4RYXKo/ZLDLXf7u8gqL2UBIAfTOUD3OzMY3D2gwYVvoAHM7hz7FgH8qJ8ITi6c/LwImA9Vp6ZKEE+LH5FR5XDbyAUNkGcJMK9Rp1qIbP5KPo2aoMhdPVKqS7W4+u+G1iyAw/LAqOQJZOh9idIhvPGz20ArO5PsDPlPBN+NuGFM+hPxqbv2mEHfKbByR+QYFQx9BP+8fAD0Vt6zK5w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HLbwAyrQfbRtHbcpqw4dZ25lJMqtHpRmXgoOC2SPdIc=;
+ b=nLCx1FhS8o+5lYTiG2ZLcgr6DC/to1NmZGdu80sxdUl24bLFdMSgOS3uMeZsK5XRJ4WWhRFSbJRbCpLw7m4pGLhlA3iI8Tj1olHV1PPTKnYQ6h+IDu6xq4kqnn2wxMIroTKmbsn7z26luU1u2sGC1uMw9PNw5+C9iVvRF0HTZnEKiv5Zmi7uDg4xGk0xPh6M8R0tlDEmsOOdGfeHRFSmqodsOKozPTLZBew6nD28mY5K7VDSA9Joo7B2aTipYTu1WIkakNZy2//cAx6S2XuccYDw/PZq/WRyiPqi12tWdFZ7qOzyCs8+vrMXYaIhfxQupDq8dKAvB03Iwgh2rf0qPg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=ncr.com; dmarc=pass action=none header.from=ncr.com; dkim=pass
+ header.d=ncr.com; arc=none
+Received: from BN6PR15MB1426.namprd15.prod.outlook.com (2603:10b6:404:c4::18)
+ by BN8PR15MB3123.namprd15.prod.outlook.com (2603:10b6:408:91::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4436.22; Tue, 24 Aug
+ 2021 13:09:46 +0000
+Received: from BN6PR15MB1426.namprd15.prod.outlook.com
+ ([fe80::21ab:b879:3cff:87c3]) by BN6PR15MB1426.namprd15.prod.outlook.com
+ ([fe80::21ab:b879:3cff:87c3%6]) with mapi id 15.20.4436.025; Tue, 24 Aug 2021
+ 13:09:46 +0000
+From:   "Russell, Scott" <Scott.Russell2@ncr.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Need pull to delete files.  
+Thread-Topic: Need pull to delete files.  
+Thread-Index: AdeY6H8ipR6+xSVMSMWKMlGGseJenQ==
+Date:   Tue, 24 Aug 2021 13:09:45 +0000
+Message-ID: <BN6PR15MB1426E3B4145523DB98774C56CBC59@BN6PR15MB1426.namprd15.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_Enabled=true;
+ MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_SetDate=2021-08-24T13:04:08Z;
+ MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_Method=Privileged;
+ MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_Name=dc233488-06c6-4c2b-96ac-e256c4376f84;
+ MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_SiteId=ae4df1f7-611e-444f-897e-f964e1205171;
+ MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_ActionId=147c5417-26d6-4a1e-b51f-a8b439b6d957;
+ MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_ContentBits=0
+dlp-product: dlpe-windows
+dlp-version: 11.3.0.17
+dlp-reaction: no-action
+authentication-results: vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=none action=none header.from=ncr.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 219296e0-7cba-46fc-7131-08d96700721b
+x-ms-traffictypediagnostic: BN8PR15MB3123:
+x-microsoft-antispam-prvs: <BN8PR15MB31234574845A84566DE37529CBC59@BN8PR15MB3123.namprd15.prod.outlook.com>
+x-from-ncr-tenant: Processed
+x-ms-oob-tlc-oobclassifiers: OLM:8882;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: Gs2Piuif+6SR9OKSO3HfXIB+dlJrIzgN94ZsZMxGPjlLQcYIeITFTTaX+xNy9g4ctxre4WBbHTXIzGdqzPF8V8wradtXhg9dALh9zmPdU2XRaFS7GhWHeQIUAXoi/f5wk+RoKDxnp6XOkelGKpKyhCiO5SnzfQaBMWV6HN29vPg5xMJ4L7pxqNUwma4M6lrz6/5dYuQ/fdgpAeRCny8qZ0bLx13cXxR8I9Wu/Xg83cgASIZCAtSptXS3Hrz1V8CEayIXUXkgDjxp7lDdFr0IPblHoYoHyCFLyDZDznsQqpXI1Z3hTq2iLws4RqJtfJIRqIKuiWJvHgHhwZQPS6Kdqvp201QIxkvbw8cIufK4tEiQrbDUM1QVVXwR4jDVZF8zfm3zFJoN81N7YEEZy1z/h4v0LMVz4XmFFJYFa+Yq60zcXY0KsoXuul7SyJ0D7q9Rik8APPt9y1wREuH5ppsFbe3Ywn2yGG5ztjEE7Gq9F4HZXcbQ/0G8KxrXayzpwObV/tzgqymE5yJFcBm7XlSvRuPqHTtLTlogoEc7LA47glaGYhUf2SsHun3v0VtA5qVxgRNMqwYaibjXKYE8VgKb2gB3yzkZWrEziNJI3T355ZZYAQofoDLS9GHP4xhiafz2T3wLRmAyqLwi5AJ4jixv1pIO9ov/BxuPagaV3gLohgo0oxsKTPvNk6khDBwQjyoPWtn8xLc+xWuCwXTjVPX9pQ==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN6PR15MB1426.namprd15.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(376002)(136003)(346002)(366004)(396003)(39860400002)(55016002)(4744005)(6506007)(122000001)(5660300002)(83380400001)(52536014)(38070700005)(186003)(26005)(86362001)(316002)(71200400001)(66476007)(76116006)(66556008)(6916009)(66946007)(478600001)(7696005)(38100700002)(8936002)(2906002)(9686003)(64756008)(66446008)(8676002)(33656002);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?eaczhv6znJRvq2qXzBojzLK0VEOMf72tYDJzTtG9jWN3Mvt9nBqok+tDtR?=
+ =?iso-8859-1?Q?cT5efh4SV4t5R7E44qpEayLWQAjUdyhBlBpvLbW9eSo4wiY7ATaFLe+nb7?=
+ =?iso-8859-1?Q?Ng6oCKpeGT55mnl3H1qPqq18+Zc2MLJB2hokn5+nnMa4bTHE6WBipc10Zf?=
+ =?iso-8859-1?Q?pOwrPrnfqK7UTMprvLXjwmOX4wJglQ1qeT756unYJH2gyz/WgKT3XLs9fM?=
+ =?iso-8859-1?Q?syY68hXmqPFAPDfx5uIF5HKhZOfmWgmCB4OywuBOUytH2Sw7KR2GX+N2h6?=
+ =?iso-8859-1?Q?H1rwPyuU8FCemezvdHWwQGWgJ5nZ+uNDHFZstPGauItyFqlO/Ni/OK2kEL?=
+ =?iso-8859-1?Q?hh5PgJDV2ZNawbaUk2MSwArJ7Fu3GV6FjgYK43zTMslDz13E0mn1He3Mog?=
+ =?iso-8859-1?Q?F+B+C+1ZInXuxlx9OVM5/J2sm6TLlb1VjcS28D+5WRUUo4w/bTb++wBGuY?=
+ =?iso-8859-1?Q?RWJJdgXO8fcwLnTq/0xQnEDUBoTKNiVtXMHQyzseo48/zVt61leWy5FBB6?=
+ =?iso-8859-1?Q?z9FDMewArZCZAjGX+Hyw/tx3dH8j6V5iIlViYDvsYis5PqP5FSfPx1PhGH?=
+ =?iso-8859-1?Q?qV1B/3BL7MGpri9XhIYqClOSjHnj9xTNWAXUEK7D1Dtzwrx3mzqoEqX26V?=
+ =?iso-8859-1?Q?sShYLc+yg9Pae+kqLrg5xobqNMVDRZMrkecJXAFxQsPAsC0L3X7MyRTGBC?=
+ =?iso-8859-1?Q?UAkgx2DlwDtZnCAHOP+HBoJzJrHYIk2QWoECSKecZCA6Z9NZ1OYuvRE6lT?=
+ =?iso-8859-1?Q?Bc7nMZLlEqLlL4/1RtkWcLwLr15SnIpRlJN47fVUeylv3Zc0mO2Qhvp5KA?=
+ =?iso-8859-1?Q?ARmAO0Xw1em6YkNHDrNsrYVz3CskfMO8TK3y00vny3dvzCk5/OL2Tl7Bjs?=
+ =?iso-8859-1?Q?S9OUsjM277rzF3VMi0wS3OUludf7QuVrzQJXC7t+ath7LIt+ozIBzKfdkh?=
+ =?iso-8859-1?Q?L2VYWx1qyn2+H+WtiWsKrzh0zk71dKkj6ansyLrgEE2+VLTcViernX4Tfc?=
+ =?iso-8859-1?Q?eRjQniRXRFi9c68Sf8p6slLbczYOP2FGaR2OcJHqXMU+ap73VGV5alm9t8?=
+ =?iso-8859-1?Q?d4pqEdZlnS2NGa6jrjUbaO+x31vR49wNR0qguP+fh3/SWQosDzrFwLoZPX?=
+ =?iso-8859-1?Q?A7rm/kvQek9POc4/FO7AMMCWp4mtLKXFBKEjc+tZnvdgHbSHm5TIx+dV4n?=
+ =?iso-8859-1?Q?30i4X8vXjgxhQvW8t02XoNG4jDu1pL8XarSbSx5RSGzrUmDisN3C6sS5An?=
+ =?iso-8859-1?Q?CT6ca+/JYtJ7X3BQBhZHbS9PpJApx9yE+/tnzEITbf4sJ6Qx/Dg7UbIOWc?=
+ =?iso-8859-1?Q?uU8kNW4nIRJjBZcM+xTtiIdRDNmAFl6VdTJHWKGsHJnC/0cAlb3Z18fAAC?=
+ =?iso-8859-1?Q?Z+FqMNQq95?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: ncr.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN6PR15MB1426.namprd15.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 219296e0-7cba-46fc-7131-08d96700721b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Aug 2021 13:09:45.9918
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: ae4df1f7-611e-444f-897e-f964e1205171
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: t5OS5lQtAZ4AN8p8yodM3qzcz6U4DYepIaBpL1SaAi/o4/74dX5xO4Og1soKhS1l1wbOLFFBaoD2mOY08JHn9A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN8PR15MB3123
+X-Proofpoint-ORIG-GUID: doNOCAUSW_XA6IgFwYnnFMl5dbrpzIkU
+X-Proofpoint-GUID: doNOCAUSW_XA6IgFwYnnFMl5dbrpzIkU
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391,18.0.790
+ definitions=2021-08-24_02:2021-08-24,2021-08-24 signatures=0
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new submodule--helper subcommand `run-update-procedure` that runs
-the update procedure if the SHA1 of the submodule does not match what
-the superproject expects.
+Yesterday, when running get pull, I got the message. =20
 
-This is an intermediate change that works towards total conversion of
-`submodule update` from shell to C.
+Stopping, untracked file in the working tree would be overwritten by the me=
+rge.   Please delete fileX before continuing merge.=20
 
-Specific error codes are returned so that the shell script calling the
-subcommand can take a decision on the control flow, and preserve the
-error messages across subsequent recursive calls of `cmd_update`.
+As part of our regular process, we are continually deleting files.  =20
+We will have:
+File1=20
+File2. =20
 
-This change is more focused on doing a faithful conversion, so for now we
-are not too concerned with trying to reduce subprocess spawns.
+Then we will add=20
+File3=20
+And delete File1. =20
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Shourya Shukla <periperidip@gmail.com>
-Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
----
+We do not want to get a message saying untracked file ...   If the file is =
+untracked, then why is git checking it?=20
 
-This patch addresses the concerns raised by Junio. The important changes are:
+During pull ( for build ) we need the pull to delete the deleted file.   Us=
+ing -ff did not work. =20
+On our build machine, the remote ( github ) is the master.   Local working =
+tree is expendable.   We want to always pull and merge the remote regardles=
+s. =20
 
-* Fix error message handling of the output of 'run-update-procedure'. While at
-  it, ensure the "checkout" mode error message is stored and printed
-  appropriately.
 
-* In 'run_update_command()' switch from 'run_command()' to
-  'run_command_v_opt_cd_env()' to ensure quoted command update modes are handled
-  correctly.
+Thanks,=20
 
-* Code style and hygiene changes.
-
-* Introduce a NEEDSWORK comment, because the printf() and error return is
-  correct only because the shell caller in the other end redirects it to the
-  correct output stream. Once we switch this completely to C (ie, in the
-  follow-up series), I need to remember to die() instead (or print to stderr) to
-  reproduce the original behaviour.
-
-Range-diff against v3:
-1:  2ff48f8790 ! 1:  2729834e43 submodule--helper: run update procedures from C
-    @@ Commit message
-         This change is more focused on doing a faithful conversion, so for now we
-         are not too concerned with trying to reduce subprocess spawns.
-     
-    -    Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
-         Mentored-by: Christian Couder <christian.couder@gmail.com>
-         Mentored-by: Shourya Shukla <periperidip@gmail.com>
-    +    Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
-     
-      ## builtin/submodule--helper.c ##
-     @@ builtin/submodule--helper.c: struct submodule_update_clone {
-    @@ builtin/submodule--helper.c: static int git_update_clone_config(const char *var,
-     +
-     +static int run_update_command(struct update_data *ud, int subforce)
-     +{
-    -+	struct child_process cp = CHILD_PROCESS_INIT;
-    ++	struct strvec args = STRVEC_INIT;
-    ++	struct strvec child_env = STRVEC_INIT;
-     +	char *oid = oid_to_hex(&ud->oid);
-     +	int must_die_on_failure = 0;
-    ++	int git_cmd;
-     +
-    -+	cp.dir = xstrdup(ud->sm_path);
-     +	switch (ud->update_strategy.type) {
-     +	case SM_UPDATE_CHECKOUT:
-    -+		cp.git_cmd = 1;
-    -+		strvec_pushl(&cp.args, "checkout", "-q", NULL);
-    ++		git_cmd = 1;
-    ++		strvec_pushl(&args, "checkout", "-q", NULL);
-     +		if (subforce)
-    -+			strvec_push(&cp.args, "-f");
-    ++			strvec_push(&args, "-f");
-     +		break;
-     +	case SM_UPDATE_REBASE:
-    -+		cp.git_cmd = 1;
-    -+		strvec_push(&cp.args, "rebase");
-    ++		git_cmd = 1;
-    ++		strvec_push(&args, "rebase");
-     +		if (ud->quiet)
-    -+			strvec_push(&cp.args, "--quiet");
-    ++			strvec_push(&args, "--quiet");
-     +		must_die_on_failure = 1;
-     +		break;
-     +	case SM_UPDATE_MERGE:
-    -+		cp.git_cmd = 1;
-    -+		strvec_push(&cp.args, "merge");
-    ++		git_cmd = 1;
-    ++		strvec_push(&args, "merge");
-     +		if (ud->quiet)
-    -+			strvec_push(&cp.args, "--quiet");
-    ++			strvec_push(&args, "--quiet");
-     +		must_die_on_failure = 1;
-     +		break;
-     +	case SM_UPDATE_COMMAND:
-    -+		/* NOTE: this does not handle quoted arguments */
-    -+		strvec_split(&cp.args, ud->update_strategy.command);
-    ++		git_cmd = 0;
-    ++		strvec_push(&args, ud->update_strategy.command);
-     +		must_die_on_failure = 1;
-     +		break;
-    -+	case SM_UPDATE_NONE:
-    -+		BUG("this should have been handled before. How did we reach here?");
-    -+		break;
-    -+	case SM_UPDATE_UNSPECIFIED:
-    -+		BUG("update strategy should have been specified");
-    ++	default:
-    ++		BUG("unexpected update strategy type: %s",
-    ++		    submodule_strategy_to_string(&ud->update_strategy));
-     +	}
-    -+
-    -+	strvec_push(&cp.args, oid);
-    -+
-    -+	prepare_submodule_repo_env(&cp.env_array);
-    -+
-    -+	if (run_command(&cp)) {
-    -+		if (must_die_on_failure) {
-    -+			switch (ud->update_strategy.type) {
-    -+			case SM_UPDATE_CHECKOUT:
-    -+				die(_("Unable to checkout '%s' in submodule path '%s'"),
-    -+				      oid, ud->displaypath);
-    -+				break;
-    -+			case SM_UPDATE_REBASE:
-    -+				die(_("Unable to rebase '%s' in submodule path '%s'"),
-    -+				      oid, ud->displaypath);
-    -+				break;
-    -+			case SM_UPDATE_MERGE:
-    -+				die(_("Unable to merge '%s' in submodule path '%s'"),
-    -+				      oid, ud->displaypath);
-    -+				break;
-    -+			case SM_UPDATE_COMMAND:
-    -+				die(_("Execution of '%s %s' failed in submodule path '%s'"),
-    -+				      ud->update_strategy.command, oid, ud->displaypath);
-    -+				break;
-    -+			case SM_UPDATE_NONE:
-    -+				BUG("this should have been handled before. How did we reach here?");
-    -+				break;
-    -+			case SM_UPDATE_UNSPECIFIED:
-    -+				BUG("update strategy should have been specified");
-    -+			}
-    ++	strvec_push(&args, oid);
-    ++
-    ++	prepare_submodule_repo_env(&child_env);
-    ++	if (run_command_v_opt_cd_env(args.v, git_cmd ? RUN_GIT_CMD : RUN_USING_SHELL,
-    ++				     ud->sm_path, child_env.v)) {
-    ++		switch (ud->update_strategy.type) {
-    ++		case SM_UPDATE_CHECKOUT:
-    ++			printf(_("Unable to checkout '%s' in submodule path '%s'"),
-    ++			       oid, ud->displaypath);
-    ++			break;
-    ++		case SM_UPDATE_REBASE:
-    ++			printf(_("Unable to rebase '%s' in submodule path '%s'"),
-    ++			       oid, ud->displaypath);
-    ++			break;
-    ++		case SM_UPDATE_MERGE:
-    ++			printf(_("Unable to merge '%s' in submodule path '%s'"),
-    ++			       oid, ud->displaypath);
-    ++			break;
-    ++		case SM_UPDATE_COMMAND:
-    ++			printf(_("Execution of '%s %s' failed in submodule path '%s'"),
-    ++			       ud->update_strategy.command, oid, ud->displaypath);
-    ++			break;
-    ++		default:
-    ++			BUG("unexpected update strategy type: %s",
-    ++			    submodule_strategy_to_string(&ud->update_strategy));
-     +		}
-     +		/*
-    -+		 * This signifies to the caller in shell that
-    -+		 * the command failed without dying
-    ++		 * NEEDSWORK: We are currently printing to stdout with error
-    ++		 * return so that the shell caller handles the error output
-    ++		 * properly. Once we start handling the error messages within
-    ++		 * C, we should use die() instead.
-    ++		 */
-    ++		if (must_die_on_failure)
-    ++			return 2;
-    ++		/*
-    ++		 * This signifies to the caller in shell that the command
-    ++		 * failed without dying
-     +		 */
-     +		return 1;
-     +	}
-    @@ builtin/submodule--helper.c: static int git_update_clone_config(const char *var,
-     +		printf(_("Submodule path '%s': '%s %s'\n"),
-     +		       ud->displaypath, ud->update_strategy.command, oid);
-     +		break;
-    -+	case SM_UPDATE_NONE:
-    -+		BUG("this should have been handled before. How did we reach here?");
-    -+		break;
-    -+	case SM_UPDATE_UNSPECIFIED:
-    -+		BUG("update strategy should have been specified");
-    ++	default:
-    ++		BUG("unexpected update strategy type: %s",
-    ++		    submodule_strategy_to_string(&ud->update_strategy));
-     +	}
-     +
-     +	return 0;
-    @@ builtin/submodule--helper.c: static int git_update_clone_config(const char *var,
-     +		 * Run fetch only if `oid` isn't present or it
-     +		 * is not reachable from a ref.
-     +		 */
-    -+		if (!is_tip_reachable(ud->sm_path, &ud->oid))
-    -+			if (fetch_in_submodule(ud->sm_path, ud->depth, ud->quiet, NULL) &&
-    -+			    !ud->quiet)
-    -+				fprintf_ln(stderr,
-    -+					   _("Unable to fetch in submodule path '%s'; "
-    -+					     "trying to directly fetch %s:"),
-    -+					   ud->displaypath, oid_to_hex(&ud->oid));
-    ++		if (!is_tip_reachable(ud->sm_path, &ud->oid) &&
-    ++		    fetch_in_submodule(ud->sm_path, ud->depth, ud->quiet, NULL) &&
-    ++		    !ud->quiet)
-    ++			fprintf_ln(stderr,
-    ++				   _("Unable to fetch in submodule path '%s'; "
-    ++				     "trying to directly fetch %s:"),
-    ++				   ud->displaypath, oid_to_hex(&ud->oid));
-     +		/*
-     +		 * Now we tried the usual fetch, but `oid` may
-     +		 * not be reachable from any of the refs.
-     +		 */
-    -+		if (!is_tip_reachable(ud->sm_path, &ud->oid))
-    -+			if (fetch_in_submodule(ud->sm_path, ud->depth, ud->quiet, &ud->oid))
-    -+				die(_("Fetched in submodule path '%s', but it did not "
-    -+				      "contain %s. Direct fetching of that commit failed."),
-    -+				    ud->displaypath, oid_to_hex(&ud->oid));
-    ++		if (!is_tip_reachable(ud->sm_path, &ud->oid) &&
-    ++		    fetch_in_submodule(ud->sm_path, ud->depth, ud->quiet, &ud->oid))
-    ++			die(_("Fetched in submodule path '%s', but it did not "
-    ++			      "contain %s. Direct fetching of that commit failed."),
-    ++			    ud->displaypath, oid_to_hex(&ud->oid));
-     +	}
-     +
-     +	return run_update_command(ud, subforce);
-    @@ builtin/submodule--helper.c: static int update_clone(int argc, const char **argv
-     +
-     +	free(prefixed_path);
-     +
-    -+	if ((!is_null_oid(&update_data.oid) && !is_null_oid(&update_data.suboid) &&
-    -+	     !oideq(&update_data.oid, &update_data.suboid)) ||
-    -+	    is_null_oid(&update_data.suboid) || update_data.force)
-    ++	if (!oideq(&update_data.oid, &update_data.suboid) || update_data.force)
-     +		return do_run_update_procedure(&update_data);
-     +
-     +	return 3;
-    @@ git-submodule.sh: cmd_update()
-     +
-     +		# exit codes for run-update-procedure:
-     +		# 0: update was successful, say command output
-    -+		# 128: subcommand died during execution
-     +		# 1: update procedure failed, but should not die
-    ++		# 2 or 128: subcommand died during execution
-     +		# 3: no update procedure was run
-     +		res="$?"
-     +		case $res in
-     +		0)
-     +			say "$out"
-     +			;;
-    -+		128)
-    -+			exit $res
-    -+			;;
-     +		1)
-    -+			err="${err};$out"
-    ++			err="${err};fatal: $out"
-     +			continue
-     +			;;
-    ++		2|128)
-    ++			die_with_status $res "fatal: $out"
-    ++			;;
-     +		esac
-      
-      		if test -n "$recursive"
-
- builtin/submodule--helper.c | 257 ++++++++++++++++++++++++++++++++++++
- git-submodule.sh            | 104 +++++----------
- 2 files changed, 289 insertions(+), 72 deletions(-)
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index ef2776a9e4..80619361fc 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2045,6 +2045,20 @@ struct submodule_update_clone {
- 	.max_jobs = 1, \
- }
- 
-+struct update_data {
-+	const char *recursive_prefix;
-+	const char *sm_path;
-+	const char *displaypath;
-+	struct object_id oid;
-+	struct object_id suboid;
-+	struct submodule_update_strategy update_strategy;
-+	int depth;
-+	unsigned int force: 1;
-+	unsigned int quiet: 1;
-+	unsigned int nofetch: 1;
-+	unsigned int just_cloned: 1;
-+};
-+#define UPDATE_DATA_INIT { .update_strategy = SUBMODULE_UPDATE_STRATEGY_INIT }
- 
- static void next_submodule_warn_missing(struct submodule_update_clone *suc,
- 		struct strbuf *out, const char *displaypath)
-@@ -2298,6 +2312,181 @@ static int git_update_clone_config(const char *var, const char *value,
- 	return 0;
- }
- 
-+static int is_tip_reachable(const char *path, struct object_id *oid)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct strbuf rev = STRBUF_INIT;
-+	char *hex = oid_to_hex(oid);
-+
-+	cp.git_cmd = 1;
-+	cp.dir = xstrdup(path);
-+	cp.no_stderr = 1;
-+	strvec_pushl(&cp.args, "rev-list", "-n", "1", hex, "--not", "--all", NULL);
-+
-+	prepare_submodule_repo_env(&cp.env_array);
-+
-+	if (capture_command(&cp, &rev, GIT_MAX_HEXSZ + 1) || rev.len)
-+		return 0;
-+
-+	return 1;
-+}
-+
-+static int fetch_in_submodule(const char *module_path, int depth, int quiet, struct object_id *oid)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+
-+	prepare_submodule_repo_env(&cp.env_array);
-+	cp.git_cmd = 1;
-+	cp.dir = xstrdup(module_path);
-+
-+	strvec_push(&cp.args, "fetch");
-+	if (quiet)
-+		strvec_push(&cp.args, "--quiet");
-+	if (depth)
-+		strvec_pushf(&cp.args, "--depth=%d", depth);
-+	if (oid) {
-+		char *hex = oid_to_hex(oid);
-+		char *remote = get_default_remote();
-+		strvec_pushl(&cp.args, remote, hex, NULL);
-+	}
-+
-+	return run_command(&cp);
-+}
-+
-+static int run_update_command(struct update_data *ud, int subforce)
-+{
-+	struct strvec args = STRVEC_INIT;
-+	struct strvec child_env = STRVEC_INIT;
-+	char *oid = oid_to_hex(&ud->oid);
-+	int must_die_on_failure = 0;
-+	int git_cmd;
-+
-+	switch (ud->update_strategy.type) {
-+	case SM_UPDATE_CHECKOUT:
-+		git_cmd = 1;
-+		strvec_pushl(&args, "checkout", "-q", NULL);
-+		if (subforce)
-+			strvec_push(&args, "-f");
-+		break;
-+	case SM_UPDATE_REBASE:
-+		git_cmd = 1;
-+		strvec_push(&args, "rebase");
-+		if (ud->quiet)
-+			strvec_push(&args, "--quiet");
-+		must_die_on_failure = 1;
-+		break;
-+	case SM_UPDATE_MERGE:
-+		git_cmd = 1;
-+		strvec_push(&args, "merge");
-+		if (ud->quiet)
-+			strvec_push(&args, "--quiet");
-+		must_die_on_failure = 1;
-+		break;
-+	case SM_UPDATE_COMMAND:
-+		git_cmd = 0;
-+		strvec_push(&args, ud->update_strategy.command);
-+		must_die_on_failure = 1;
-+		break;
-+	default:
-+		BUG("unexpected update strategy type: %s",
-+		    submodule_strategy_to_string(&ud->update_strategy));
-+	}
-+	strvec_push(&args, oid);
-+
-+	prepare_submodule_repo_env(&child_env);
-+	if (run_command_v_opt_cd_env(args.v, git_cmd ? RUN_GIT_CMD : RUN_USING_SHELL,
-+				     ud->sm_path, child_env.v)) {
-+		switch (ud->update_strategy.type) {
-+		case SM_UPDATE_CHECKOUT:
-+			printf(_("Unable to checkout '%s' in submodule path '%s'"),
-+			       oid, ud->displaypath);
-+			break;
-+		case SM_UPDATE_REBASE:
-+			printf(_("Unable to rebase '%s' in submodule path '%s'"),
-+			       oid, ud->displaypath);
-+			break;
-+		case SM_UPDATE_MERGE:
-+			printf(_("Unable to merge '%s' in submodule path '%s'"),
-+			       oid, ud->displaypath);
-+			break;
-+		case SM_UPDATE_COMMAND:
-+			printf(_("Execution of '%s %s' failed in submodule path '%s'"),
-+			       ud->update_strategy.command, oid, ud->displaypath);
-+			break;
-+		default:
-+			BUG("unexpected update strategy type: %s",
-+			    submodule_strategy_to_string(&ud->update_strategy));
-+		}
-+		/*
-+		 * NEEDSWORK: We are currently printing to stdout with error
-+		 * return so that the shell caller handles the error output
-+		 * properly. Once we start handling the error messages within
-+		 * C, we should use die() instead.
-+		 */
-+		if (must_die_on_failure)
-+			return 2;
-+		/*
-+		 * This signifies to the caller in shell that the command
-+		 * failed without dying
-+		 */
-+		return 1;
-+	}
-+
-+	switch (ud->update_strategy.type) {
-+	case SM_UPDATE_CHECKOUT:
-+		printf(_("Submodule path '%s': checked out '%s'\n"),
-+		       ud->displaypath, oid);
-+		break;
-+	case SM_UPDATE_REBASE:
-+		printf(_("Submodule path '%s': rebased into '%s'\n"),
-+		       ud->displaypath, oid);
-+		break;
-+	case SM_UPDATE_MERGE:
-+		printf(_("Submodule path '%s': merged in '%s'\n"),
-+		       ud->displaypath, oid);
-+		break;
-+	case SM_UPDATE_COMMAND:
-+		printf(_("Submodule path '%s': '%s %s'\n"),
-+		       ud->displaypath, ud->update_strategy.command, oid);
-+		break;
-+	default:
-+		BUG("unexpected update strategy type: %s",
-+		    submodule_strategy_to_string(&ud->update_strategy));
-+	}
-+
-+	return 0;
-+}
-+
-+static int do_run_update_procedure(struct update_data *ud)
-+{
-+	int subforce = is_null_oid(&ud->suboid) || ud->force;
-+
-+	if (!ud->nofetch) {
-+		/*
-+		 * Run fetch only if `oid` isn't present or it
-+		 * is not reachable from a ref.
-+		 */
-+		if (!is_tip_reachable(ud->sm_path, &ud->oid) &&
-+		    fetch_in_submodule(ud->sm_path, ud->depth, ud->quiet, NULL) &&
-+		    !ud->quiet)
-+			fprintf_ln(stderr,
-+				   _("Unable to fetch in submodule path '%s'; "
-+				     "trying to directly fetch %s:"),
-+				   ud->displaypath, oid_to_hex(&ud->oid));
-+		/*
-+		 * Now we tried the usual fetch, but `oid` may
-+		 * not be reachable from any of the refs.
-+		 */
-+		if (!is_tip_reachable(ud->sm_path, &ud->oid) &&
-+		    fetch_in_submodule(ud->sm_path, ud->depth, ud->quiet, &ud->oid))
-+			die(_("Fetched in submodule path '%s', but it did not "
-+			      "contain %s. Direct fetching of that commit failed."),
-+			    ud->displaypath, oid_to_hex(&ud->oid));
-+	}
-+
-+	return run_update_command(ud, subforce);
-+}
-+
- static void update_submodule(struct update_clone_data *ucd)
- {
- 	fprintf(stdout, "dummy %s %d\t%s\n",
-@@ -2395,6 +2584,73 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	return update_submodules(&suc);
- }
- 
-+static int run_update_procedure(int argc, const char **argv, const char *prefix)
-+{
-+	int force = 0, quiet = 0, nofetch = 0, just_cloned = 0;
-+	char *prefixed_path, *update = NULL;
-+	struct update_data update_data = UPDATE_DATA_INIT;
-+
-+	struct option options[] = {
-+		OPT__QUIET(&quiet, N_("suppress output for update by rebase or merge")),
-+		OPT__FORCE(&force, N_("force checkout updates"), 0),
-+		OPT_BOOL('N', "no-fetch", &nofetch,
-+			 N_("don't fetch new objects from the remote site")),
-+		OPT_BOOL(0, "just-cloned", &just_cloned,
-+			 N_("overrides update mode in case the repository is a fresh clone")),
-+		OPT_INTEGER(0, "depth", &update_data.depth, N_("depth for shallow fetch")),
-+		OPT_STRING(0, "prefix", &prefix,
-+			   N_("path"),
-+			   N_("path into the working tree")),
-+		OPT_STRING(0, "update", &update,
-+			   N_("string"),
-+			   N_("rebase, merge, checkout or none")),
-+		OPT_STRING(0, "recursive-prefix", &update_data.recursive_prefix, N_("path"),
-+			   N_("path into the working tree, across nested "
-+			      "submodule boundaries")),
-+		OPT_CALLBACK_F(0, "oid", &update_data.oid, N_("sha1"),
-+			       N_("SHA1 expected by superproject"), PARSE_OPT_NONEG,
-+			       parse_opt_object_id),
-+		OPT_CALLBACK_F(0, "suboid", &update_data.suboid, N_("subsha1"),
-+			       N_("SHA1 of submodule's HEAD"), PARSE_OPT_NONEG,
-+			       parse_opt_object_id),
-+		OPT_END()
-+	};
-+
-+	const char *const usage[] = {
-+		N_("git submodule--helper run-update-procedure [<options>] <path>"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options, usage, 0);
-+
-+	if (argc != 1)
-+		usage_with_options(usage, options);
-+
-+	update_data.force = !!force;
-+	update_data.quiet = !!quiet;
-+	update_data.nofetch = !!nofetch;
-+	update_data.just_cloned = !!just_cloned;
-+	update_data.sm_path = argv[0];
-+
-+	if (update_data.recursive_prefix)
-+		prefixed_path = xstrfmt("%s%s", update_data.recursive_prefix, update_data.sm_path);
-+	else
-+		prefixed_path = xstrdup(update_data.sm_path);
-+
-+	update_data.displaypath = get_submodule_displaypath(prefixed_path, prefix);
-+
-+	determine_submodule_update_strategy(the_repository, update_data.just_cloned,
-+					    update_data.sm_path, update,
-+					    &update_data.update_strategy);
-+
-+	free(prefixed_path);
-+
-+	if (!oideq(&update_data.oid, &update_data.suboid) || update_data.force)
-+		return do_run_update_procedure(&update_data);
-+
-+	return 3;
-+}
-+
- static int resolve_relative_path(int argc, const char **argv, const char *prefix)
- {
- 	struct strbuf sb = STRBUF_INIT;
-@@ -2951,6 +3207,7 @@ static struct cmd_struct commands[] = {
- 	{"add-clone", add_clone, 0},
- 	{"update-module-mode", module_update_module_mode, 0},
- 	{"update-clone", update_clone, 0},
-+	{"run-update-procedure", run_update_procedure, 0},
- 	{"ensure-core-worktree", ensure_core_worktree, 0},
- 	{"relative-path", resolve_relative_path, 0},
- 	{"resolve-relative-url", resolve_relative_url, 0},
-diff --git a/git-submodule.sh b/git-submodule.sh
-index dbd2ec2050..f703cddce8 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -369,13 +369,6 @@ cmd_deinit()
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper deinit ${GIT_QUIET:+--quiet} ${force:+--force} ${deinit_all:+--all} -- "$@"
- }
- 
--is_tip_reachable () (
--	sanitize_submodule_env &&
--	cd "$1" &&
--	rev=$(git rev-list -n 1 "$2" --not --all 2>/dev/null) &&
--	test -z "$rev"
--)
--
- # usage: fetch_in_submodule <module_path> [<depth>] [<sha1>]
- # Because arguments are positional, use an empty string to omit <depth>
- # but include <sha1>.
-@@ -519,14 +512,13 @@ cmd_update()
- 
- 		git submodule--helper ensure-core-worktree "$sm_path" || exit 1
- 
--		update_module=$(git submodule--helper update-module-mode $just_cloned "$sm_path" $update)
--
- 		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
- 
- 		if test $just_cloned -eq 1
- 		then
- 			subsha1=
- 		else
-+			just_cloned=
- 			subsha1=$(sanitize_submodule_env; cd "$sm_path" &&
- 				git rev-parse --verify HEAD) ||
- 			die "fatal: $(eval_gettext "Unable to find current revision in submodule path '\$displaypath'")"
-@@ -547,70 +539,38 @@ cmd_update()
- 			die "fatal: $(eval_gettext "Unable to find current \${remote_name}/\${branch} revision in submodule path '\$sm_path'")"
- 		fi
- 
--		if test "$subsha1" != "$sha1" || test -n "$force"
--		then
--			subforce=$force
--			# If we don't already have a -f flag and the submodule has never been checked out
--			if test -z "$subsha1" && test -z "$force"
--			then
--				subforce="-f"
--			fi
-+		out=$(git submodule--helper run-update-procedure \
-+			  ${wt_prefix:+--prefix "$wt_prefix"} \
-+			  ${GIT_QUIET:+--quiet} \
-+			  ${force:+--force} \
-+			  ${just_cloned:+--just-cloned} \
-+			  ${nofetch:+--no-fetch} \
-+			  ${depth:+"$depth"} \
-+			  ${update:+--update "$update"} \
-+			  ${prefix:+--recursive-prefix "$prefix"} \
-+			  ${sha1:+--oid "$sha1"} \
-+			  ${subsha1:+--suboid "$subsha1"} \
-+			  "--" \
-+			  "$sm_path")
- 
--			if test -z "$nofetch"
--			then
--				# Run fetch only if $sha1 isn't present or it
--				# is not reachable from a ref.
--				is_tip_reachable "$sm_path" "$sha1" ||
--				fetch_in_submodule "$sm_path" $depth ||
--				say "$(eval_gettext "Unable to fetch in submodule path '\$displaypath'; trying to directly fetch \$sha1:")"
--
--				# Now we tried the usual fetch, but $sha1 may
--				# not be reachable from any of the refs
--				is_tip_reachable "$sm_path" "$sha1" ||
--				fetch_in_submodule "$sm_path" "$depth" "$sha1" ||
--				die "fatal: $(eval_gettext "Fetched in submodule path '\$displaypath', but it did not contain \$sha1. Direct fetching of that commit failed.")"
--			fi
--
--			must_die_on_failure=
--			case "$update_module" in
--			checkout)
--				command="git checkout $subforce -q"
--				die_msg="fatal: $(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$displaypath'")"
--				say_msg="$(eval_gettext "Submodule path '\$displaypath': checked out '\$sha1'")"
--				;;
--			rebase)
--				command="git rebase ${GIT_QUIET:+--quiet}"
--				die_msg="fatal: $(eval_gettext "Unable to rebase '\$sha1' in submodule path '\$displaypath'")"
--				say_msg="$(eval_gettext "Submodule path '\$displaypath': rebased into '\$sha1'")"
--				must_die_on_failure=yes
--				;;
--			merge)
--				command="git merge ${GIT_QUIET:+--quiet}"
--				die_msg="fatal: $(eval_gettext "Unable to merge '\$sha1' in submodule path '\$displaypath'")"
--				say_msg="$(eval_gettext "Submodule path '\$displaypath': merged in '\$sha1'")"
--				must_die_on_failure=yes
--				;;
--			!*)
--				command="${update_module#!}"
--				die_msg="fatal: $(eval_gettext "Execution of '\$command \$sha1' failed in submodule path '\$displaypath'")"
--				say_msg="$(eval_gettext "Submodule path '\$displaypath': '\$command \$sha1'")"
--				must_die_on_failure=yes
--				;;
--			*)
--				die "fatal: $(eval_gettext "Invalid update mode '$update_module' for submodule path '$path'")"
--			esac
--
--			if (sanitize_submodule_env; cd "$sm_path" && $command "$sha1")
--			then
--				say "$say_msg"
--			elif test -n "$must_die_on_failure"
--			then
--				die_with_status 2 "$die_msg"
--			else
--				err="${err};$die_msg"
--				continue
--			fi
--		fi
-+		# exit codes for run-update-procedure:
-+		# 0: update was successful, say command output
-+		# 1: update procedure failed, but should not die
-+		# 2 or 128: subcommand died during execution
-+		# 3: no update procedure was run
-+		res="$?"
-+		case $res in
-+		0)
-+			say "$out"
-+			;;
-+		1)
-+			err="${err};fatal: $out"
-+			continue
-+			;;
-+		2|128)
-+			die_with_status $res "fatal: $out"
-+			;;
-+		esac
- 
- 		if test -n "$recursive"
- 		then
--- 
-2.32.0
+Scott Russell
+Staff SW Engineer=A0
+NCR Corporation=A0
+Phone: +17706237512
+Scott.Russell2@ncr.com  |  ncr.com
+      =20
 
