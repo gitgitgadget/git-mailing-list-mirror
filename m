@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A5B3C4320E
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72AFDC4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:52:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54A86611C8
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:52:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 57D826127B
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:52:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236674AbhHXVwq (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S235659AbhHXVwq (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 24 Aug 2021 17:52:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39162 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236318AbhHXVwj (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236374AbhHXVwj (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 24 Aug 2021 17:52:39 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EF0AC0617AD
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:51:51 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id j17-20020a05600c1c1100b002e754875260so3220619wms.4
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:51:51 -0700 (PDT)
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CEE1C0617AE
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:51:52 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id z9so33286433wrh.10
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:51:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=i9HtyxcyL/rFpqLzUK1JHZNiZLF1vUp90EnsiHFgFOg=;
-        b=nw7A4dwpQi1pz+4s6K++BF9XvLrgP6iYten5Jd4c3Jh/sLtwIgzvxPcM8jHOPS9Tn2
-         ogF0MOi5dqF8/TijbOnSXukBl7buw0N3ukKXkgu5ivByTofKJz4VI6EMFDJimMM7vIlZ
-         F5wIT3NWZBHvMrXRhUpGtVVGenf74SfNk45SzYASrOZoEY89L7tdQguru0wjMEXSe8ro
-         ro6AsX82XQsX7L+2qyRkUNAVN1iZJ8iU7QYnJG3jpSyuCwqHexFVYbmdgs7d1aRud7E3
-         HFawKUEE4+lYeaxMycJX5Dz94hTxlLb+Qh8FUQ7PSKBgDh9bd/A0XFOalpEo5gm5S3FB
-         /Niw==
+        bh=M+K0Z9WIqh5h1pKa505Bywi5J0nM3YeVcKgYGu5P63g=;
+        b=AMYHVr6NQj08noxdS7ORl6QxRGWCBfqJ++ZdkX+i31WK8q9clWjysa1/C5NxTAsN6W
+         yAmU4RJAkDk7zYobyDbJlaH72TOzZ59sOsOvchhIxGrtOF+8CbxKN24eMoqhkBKxjItI
+         MfQ7xUKu9ztclNY4Mq9TUeebvghh3zRWbw/Z20UmRMtEow7AK98JcXe3GuCrz7HpLzBZ
+         S6vA9Qddxg/tLlBoDc33/UqhS2S3YAr6w+OnW3yxVtGcLPVORRdka8pLI5BUkfhNpqnc
+         8e33HMJpL4VtDA5DnRxOlNQ4z6elZXJ0D6PnReabje67KkmHbAzB3pagnZRRCjmDRj5V
+         UCEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=i9HtyxcyL/rFpqLzUK1JHZNiZLF1vUp90EnsiHFgFOg=;
-        b=EmUeUTX1m2Fb/9bWxzkCStazqswPO+CpYOn3sM3xAUZrUkEgyGh5p+gPUD2CSUyzVo
-         4dABa1ZADhd/BQS4yriexT5pDBGHaL8mr3oWEFOu3G15KCbGNQhvhqF+2oUyoJlFGiBW
-         stSnRU/Nca2SjzI8MLZn1CVR0QtRSFwbZMHa34JKDx1HA91mvMHWvCDmUtLKOUKOSGkx
-         tc0mKAUqjWgWr7SIM1qQDexsfDx9jdoupo4vKNQQ8z0FmEVQzKYFDQeoLO3Vz/u9/8qV
-         wd+AcUhyD77mjJhDKXCV/h60pIYkjaUQHbOXxUDFswuiTZaPTwslkPGYgVbK0P1iMIMh
-         1TGQ==
-X-Gm-Message-State: AOAM5327VOTJ07PY4KsWQka1gauHknZKjYEc7sTee8FiIB86s7IbgUmH
-        JxU7a2TOcpSixOlN7/iZP0UipzryLS4=
-X-Google-Smtp-Source: ABdhPJySd0Zb0VTyEvHCs7X0OZJLbnHJY1NKTmfNnusOS0m3eAjVS4w2awOwaiADkREBKBJz9Le6ZA==
-X-Received: by 2002:a05:600c:3b98:: with SMTP id n24mr5879707wms.11.1629841910172;
+        bh=M+K0Z9WIqh5h1pKa505Bywi5J0nM3YeVcKgYGu5P63g=;
+        b=eUNR7qeTcrLTJRMyRieHJGdcmXu2UG8PmCgrZ252aIU75xG6lGX271Jr445IqMDdDo
+         Hki8UX+kTZS2tejizZ6jXlbV2yUm+tOHGn9md4ExTETt0Wf38uc3S7wOMuMEu5Q+K8uS
+         IzEoXUpi95yI4FMe2RvKp1BxdINyyLcchJghKwhobohb7+/qCPfDVuQ239EczEaDBXpR
+         uYz/dlWrusrL82q3y3GM8K/F+/vchjulajHgUtXIDd12lanPQOhB7+c4cOrZPouXFiPG
+         MSxYY5I+z14BTsKnVobld77eZ0Gtl52HFQQQTLSB7Ere2U45CrnV2UuBDf8MuIem9qYb
+         PGmw==
+X-Gm-Message-State: AOAM533ceCJcgtrj2J2GdJ/wz73Ye8PRjpLNjzDnm8oQaGFbaVZCq9kU
+        QsfLvfpv8wZnL1iEm9oP/Zw2/FCD7w0=
+X-Google-Smtp-Source: ABdhPJwui8AS9RqXkQaCy487J36LCxhz3v4dHdJKcCZSCivie6jClOTMFozfLoQZOLMWDivAdX8FlQ==
+X-Received: by 2002:adf:e604:: with SMTP id p4mr5290708wrm.37.1629841910913;
         Tue, 24 Aug 2021 14:51:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s14sm3355989wmc.25.2021.08.24.14.51.49
+        by smtp.gmail.com with ESMTPSA id s13sm3507246wmc.47.2021.08.24.14.51.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 14:51:49 -0700 (PDT)
-Message-Id: <e496f3cee66d176a8776a3bde5d04716a4b52f26.1629841904.git.gitgitgadget@gmail.com>
+        Tue, 24 Aug 2021 14:51:50 -0700 (PDT)
+Message-Id: <cab9360b1e9405e62482e3ccf417a8f8d5b2c7d1.1629841904.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1009.v4.git.1629841904.gitgitgadget@gmail.com>
 References: <pull.1009.v3.git.1629206602.gitgitgadget@gmail.com>
         <pull.1009.v4.git.1629841904.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 24 Aug 2021 21:51:41 +0000
-Subject: [PATCH v4 07/10] attr: be careful about sparse directories
+Date:   Tue, 24 Aug 2021 21:51:42 +0000
+Subject: [PATCH v4 08/10] sparse-index: add SPARSE_INDEX_MEMORY_ONLY flag
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,43 +80,121 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
+The convert_to_sparse() method checks for the GIT_TEST_SPARSE_INDEX
+environment variable or the "index.sparse" config setting before
+converting the index to a sparse one. This is for ease of use since all
+current consumers are preparing to compress the index before writing it
+to disk. If these settings are not enabled, then convert_to_sparse()
+silently returns without doing anything.
+
+We will add a consumer in the next change that wants to use the sparse
+index as an in-memory data structure, regardless of whether the on-disk
+format should be sparse.
+
+To that end, create the SPARSE_INDEX_MEMORY_ONLY flag that will skip
+these config checks when enabled. All current consumers are modified to
+pass '0' in the new 'flags' parameter.
+
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- attr.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ read-cache.c   |  4 ++--
+ sparse-index.c | 37 ++++++++++++++++++++++---------------
+ sparse-index.h |  3 ++-
+ 3 files changed, 26 insertions(+), 18 deletions(-)
 
-diff --git a/attr.c b/attr.c
-index d029e681f28..62db4aed443 100644
---- a/attr.c
-+++ b/attr.c
-@@ -14,6 +14,7 @@
- #include "utf8.h"
- #include "quote.h"
- #include "thread-utils.h"
-+#include "dir.h"
+diff --git a/read-cache.c b/read-cache.c
+index 9048ef9e905..f5d4385c408 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3069,7 +3069,7 @@ static int do_write_locked_index(struct index_state *istate, struct lock_file *l
+ 	int ret;
+ 	int was_full = !istate->sparse_index;
  
- const char git_attr__true[] = "(builtin)true";
- const char git_attr__false[] = "\0(builtin)false";
-@@ -744,6 +745,19 @@ static struct attr_stack *read_attr_from_index(struct index_state *istate,
- 	if (!istate)
- 		return NULL;
+-	ret = convert_to_sparse(istate);
++	ret = convert_to_sparse(istate, 0);
  
-+	/*
-+	 * The .gitattributes file only applies to files within its
-+	 * parent directory. In the case of cone-mode sparse-checkout,
-+	 * the .gitattributes file is sparse if and only if all paths
-+	 * within that directory are also sparse. Thus, don't load the
-+	 * .gitattributes file since it will not matter.
-+	 *
-+	 * In the case of a sparse index, it is critical that we don't go
-+	 * looking for a .gitattributes file, as the index will expand.
-+	 */
-+	if (!path_in_cone_mode_sparse_checkout(path, istate))
-+		return NULL;
-+
- 	buf = read_blob_data_from_index(istate, path, NULL);
- 	if (!buf)
- 		return NULL;
+ 	if (ret) {
+ 		warning(_("failed to convert to a sparse-index"));
+@@ -3182,7 +3182,7 @@ static int write_shared_index(struct index_state *istate,
+ 	int ret, was_full = !istate->sparse_index;
+ 
+ 	move_cache_to_base_index(istate);
+-	convert_to_sparse(istate);
++	convert_to_sparse(istate, 0);
+ 
+ 	trace2_region_enter_printf("index", "shared/do_write_index",
+ 				   the_repository, "%s", get_tempfile_path(*temp));
+diff --git a/sparse-index.c b/sparse-index.c
+index 23f7c3bd361..0bc45f60ac5 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -122,30 +122,37 @@ static int index_has_unmerged_entries(struct index_state *istate)
+ 	return 0;
+ }
+ 
+-int convert_to_sparse(struct index_state *istate)
++int convert_to_sparse(struct index_state *istate, int flags)
+ {
+ 	int test_env;
+-	if (istate->split_index || istate->sparse_index || !istate->cache_nr ||
++	if (istate->sparse_index || !istate->cache_nr ||
+ 	    !core_apply_sparse_checkout || !core_sparse_checkout_cone)
+ 		return 0;
+ 
+ 	if (!istate->repo)
+ 		istate->repo = the_repository;
+ 
+-	/*
+-	 * The GIT_TEST_SPARSE_INDEX environment variable triggers the
+-	 * index.sparse config variable to be on.
+-	 */
+-	test_env = git_env_bool("GIT_TEST_SPARSE_INDEX", -1);
+-	if (test_env >= 0)
+-		set_sparse_index_config(istate->repo, test_env);
++	if (!(flags & SPARSE_INDEX_MEMORY_ONLY)) {
++		/*
++		 * The sparse index is not (yet) integrated with a split index.
++		 */
++		if (istate->split_index)
++			return 0;
++		/*
++		 * The GIT_TEST_SPARSE_INDEX environment variable triggers the
++		 * index.sparse config variable to be on.
++		 */
++		test_env = git_env_bool("GIT_TEST_SPARSE_INDEX", -1);
++		if (test_env >= 0)
++			set_sparse_index_config(istate->repo, test_env);
+ 
+-	/*
+-	 * Only convert to sparse if index.sparse is set.
+-	 */
+-	prepare_repo_settings(istate->repo);
+-	if (!istate->repo->settings.sparse_index)
+-		return 0;
++		/*
++		 * Only convert to sparse if index.sparse is set.
++		 */
++		prepare_repo_settings(istate->repo);
++		if (!istate->repo->settings.sparse_index)
++			return 0;
++	}
+ 
+ 	if (init_sparse_checkout_patterns(istate))
+ 		return 0;
+diff --git a/sparse-index.h b/sparse-index.h
+index 1115a0d7dd9..9f3d7bc7faf 100644
+--- a/sparse-index.h
++++ b/sparse-index.h
+@@ -2,7 +2,8 @@
+ #define SPARSE_INDEX_H__
+ 
+ struct index_state;
+-int convert_to_sparse(struct index_state *istate);
++#define SPARSE_INDEX_MEMORY_ONLY (1 << 0)
++int convert_to_sparse(struct index_state *istate, int flags);
+ 
+ /*
+  * Some places in the codebase expect to search for a specific path.
 -- 
 gitgitgadget
 
