@@ -5,128 +5,110 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB0DFC4338F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:54:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03CBAC4320A
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:54:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B1ED16138B
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:54:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E2524613CD
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:54:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237016AbhHXVzB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 17:55:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39816 "EHLO
+        id S237947AbhHXVzd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 17:55:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236670AbhHXVzB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 17:55:01 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AFD5C061757
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:54:16 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id d11so47195187eja.8
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:54:16 -0700 (PDT)
+        with ESMTP id S237295AbhHXVzd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 17:55:33 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42905C061764
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:54:48 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id m25-20020a7bcb99000000b002e751bcb5dbso3214938wmi.5
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:54:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=ABxbFZUktIqmhVS8cNOi5RC/tP6oGPhR39d/r+QS2WY=;
-        b=Zm/m2Hrc6A5h74kR+jK7Tm6yedgCUJrASH8rqC7iIT31ffocO2Pl8mO9s/il4bkO0i
-         w+zmgiTDKWGKFU9IlBLbgOO+OY/x4dLz9m2kflZuToK2wWAwCawHAQ7HqWIXTPSOHesO
-         s4zf6rBnuHuIkqQ920rFSt2vCh2Tbdfm+3uzzDL2gc7hhGD35U1HB7A8qgWg8N8ptpYB
-         ChejUYedd9EZem2g0mD9a0OyQcGQCZNFiAGcbH532L20sIzbrPi7NYc682uaAV2qsfsa
-         8zG1X10YcP9grDMJB7ekmXCv3nh7p7rqFnrakrgVGQWjej8gCVvbt+krKjDLNPrBHsYM
-         IQfg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=svIO42vGlZwIuflOGzN7ll+SM7YSJGkuU6Z4a3rxGeY=;
+        b=oNMIFh3gOXyRMvAaijnTqjQikaDOIaqwwiTZGnJveeGoQyq638BGBtBIiVSsOybLjX
+         2Dsg8pCJPclQ4nE73WxUba52pP/7Q6+6lN/ePCplWKV24oTfn1r/ygcWCd3f6RRqC+RY
+         mhIgw+G087b6ocDtVE+Dwff3d7UYyiHBZZRR/lH7Y8+woUxJQXk6oCLgycGQ7Gx3uB1B
+         udfZLWDXbml4XApUia5utJe9g8MDffAdlG1yA6QSNgtjuRnbHoY3JW6DNbmQo/qci+s3
+         t5RhuL4Gl6c3eRSEUoTC4tWJKVclanFCeqMPOXWU3vR3vJdkxI1hhkdyY9sx8YaB6nH1
+         4fEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=ABxbFZUktIqmhVS8cNOi5RC/tP6oGPhR39d/r+QS2WY=;
-        b=n2ZV85Gz2Q83PiZDhuUa97Gc3ivRTaBXNcCZwkHtdvyNqLxBDb7+zufbNG5DHVb1nL
-         fy68EV2AtiMRv6ZFbPOaYj9+BlC1H96qym+7nXOBRGDJzMvITEsurWrCFmgW+8Gk9eBw
-         I4hgOYSqmsQrccJhA4brAWgCZ9Gxj8BqqrUQQIx+Z0uupCHpsjnU983xR9mLt5bntSWs
-         FAdAFT60O73+xExdTYZKtIdmTZY2cIWwFc2UVTaQNmy1cZZKCEyD74XwgrMgiD0Nq54J
-         mQOYCOBTcXC6I3JgUhrwkrVXmdTw8Dl61NAkaFHxYMDa16L/jzM5t8j4f3eV0ty/ztXU
-         AQIg==
-X-Gm-Message-State: AOAM532KicnV5+9lJr4SwCesp6J1eqxvWIFStthpsO+qMs9s1UhyZGD6
-        TRpl28juyS4WeixiyLfMoZ8=
-X-Google-Smtp-Source: ABdhPJzL3y+5bsAydU7PqDmxR+1DsLPuBp53Ny8M9F4DceQZ8Basouzby0TciYyDFAoPvGFEaREHKA==
-X-Received: by 2002:a17:906:248e:: with SMTP id e14mr832671ejb.343.1629842054741;
-        Tue, 24 Aug 2021 14:54:14 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id q14sm1777034ejc.93.2021.08.24.14.54.14
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=svIO42vGlZwIuflOGzN7ll+SM7YSJGkuU6Z4a3rxGeY=;
+        b=HhOkndsofOvxIrVwAHneUX/R6nR1uXTodaBNrXM+03oZLxTG/DH7PHmd/qe2eHMAfY
+         e6lR65iDBFmX/C9s0ZocH9KEYc7/yim1T3vJ+674O4KaQrXOFyGqPSxAyHjXezQcYo58
+         gkDsd/RVXBI9BQRiCnoOjVEYFffLPLP/+F5cm1JveWyJax6HT6KJQbnHdMfSTeNllWt0
+         Dlbfirdq4KGYNWzf6gFJQ4n5H2hUFkMQA82hxyLk6VAOiX00yV/Wp9vpBU14P/Y+2o1b
+         BJ55ntjXbqslDsvUgDJQl1F0On+NijFz8LrjXja6FURIE2fLEWCRzLYowelGfggMIKP/
+         h3fA==
+X-Gm-Message-State: AOAM531LZQmGzPcBzhntXeXbEDiKkuxcidtOsOujb9Jh9I7OsE4bAmb/
+        EvcVFlbtOZe0zAfmfiB3tZ3Ulgyl4aI=
+X-Google-Smtp-Source: ABdhPJzXhrUEemVMLYi7m7emKL1VgchmiiY1UAwUVRGghmAdw4Uu7xt5UokSCJm9/NGwEEtC/eZKEg==
+X-Received: by 2002:a1c:2b04:: with SMTP id r4mr6116091wmr.168.1629842086915;
+        Tue, 24 Aug 2021 14:54:46 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r4sm3188703wmq.34.2021.08.24.14.54.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 14:54:14 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/4] bundle API: start writing API documentation
-Date:   Tue, 24 Aug 2021 23:48:32 +0200
-References: <cover-0.4-0000000000-20210727T004015Z-avarab@gmail.com>
- <cover-v2-0.4-00000000000-20210823T110136Z-avarab@gmail.com>
- <patch-v2-1.4-dc8591f6d0b-20210823T110136Z-avarab@gmail.com>
- <1193fbe3-f4f6-d8e7-3730-770d2932655d@gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <1193fbe3-f4f6-d8e7-3730-770d2932655d@gmail.com>
-Message-ID: <874kbeecfu.fsf@evledraar.gmail.com>
+        Tue, 24 Aug 2021 14:54:46 -0700 (PDT)
+Message-Id: <69ca54877b4eac5c85195a1061f0d72ba6fca313.1629842085.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
+References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 24 Aug 2021 21:54:33 +0000
+Subject: [PATCH 01/13] t1092: behavior for adding sparse files
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     newren@gmail.com, gitster@pobox.com, matheus.bernardino@usp.br,
+        stolee@gmail.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Derrick Stolee <dstolee@microsoft.com>
 
-On Tue, Aug 24 2021, Derrick Stolee wrote:
+Add some tests to demonstrate the current behavior around adding files
+outside of the sparse-checkout cone. Currently, untracked files are
+handled differently from tracked files. A futuer change will make these
+cases be handled the same way.
 
-> On 8/23/2021 7:02 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> There are no other API docs in bundle.h, but this is at least a
->> start. We'll add a parameter to this function in a subsequent commit,
->> but let's start by documenting it.
->>=20
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  bundle.h | 7 +++++++
->>  1 file changed, 7 insertions(+)
->>=20
->> diff --git a/bundle.h b/bundle.h
->> index 1927d8cd6a4..84a6df1b65d 100644
->> --- a/bundle.h
->> +++ b/bundle.h
->> @@ -27,6 +27,13 @@ int create_bundle(struct repository *r, const char *p=
-ath,
->>  		  int version);
->>  int verify_bundle(struct repository *r, struct bundle_header *header, i=
-nt verbose);
->>  #define BUNDLE_VERBOSE 1
->> +
->> +/**
->
-> nit: what's the use of the "/**" start to these doc comments?
->
-> I see examples in the codebase of both, but we are not consistent even
-> within a single file. Here is how I counted instances of each:
->
-> $ git grep "^/\\*\\*\$" -- *.h | wc -l
-> 266
-> $ git grep "^/\\*\$" -- *.h | wc -l
-> 775
->
-> So we use "/*" three times as often as "/**". Should we attempt to
-> be more consistent in the future?
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ t/t1092-sparse-checkout-compatibility.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-They're not the same thing. "/*\n" is a normal comment, "/**\n" is an
-API documentation comment.
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index bbc6de712c4..23bee918260 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -291,6 +291,18 @@ test_expect_success 'add, commit, checkout' '
+ 	test_all_match git checkout -
+ '
+ 
++# NEEDSWORK: This documents current behavior, but is not a desirable
++# behavior (untracked files are handled differently than tracked).
++test_expect_success 'add outside sparse cone' '
++	init_repos &&
++
++	run_on_sparse mkdir folder1 &&
++	run_on_sparse ../edit-contents folder1/a &&
++	run_on_sparse ../edit-contents folder1/newfile &&
++	test_sparse_match test_must_fail git add folder1/a &&
++	test_sparse_match git add folder1/newfile
++'
++
+ test_expect_success 'commit including unstaged changes' '
+ 	init_repos &&
+ 
+-- 
+gitgitgadget
 
-Looking around I don't think this was documented in CodingGuidelines,
-but see bdfdaa4978d (strbuf.h: integrate api-strbuf.txt documentation,
-2015-01-16) and 6afbbdda333 (strbuf.h: unify documentation comments
-beginnings, 2015-01-16).
-
-This is commonly supported by various tooling, e.g. in GNU Emacs a "/**"
-comment is highlighted differently than a "/*" comment
-(font-lock-doc-face v.s. font-lock-comment-face).
-
-So e.g. something_followed_by_open_close_parens() in a comment in C code
-will be highlighted as a function name with a "/**" comment, but not
-with a "/*" comment. I imagine that the same is true of various other
-editors/tooling.
