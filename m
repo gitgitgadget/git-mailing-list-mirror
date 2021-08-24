@@ -2,139 +2,229 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+X-Spam-Status: No, score=-14.5 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33539C432BE
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 14:00:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2A43C4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 14:03:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0C2DC61176
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 14:00:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8DAD56125F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 14:03:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237631AbhHXOA6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 10:00:58 -0400
-Received: from mout.gmx.net ([212.227.15.18]:35543 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237593AbhHXOA5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 10:00:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1629813612;
-        bh=v4RkXi73hRERku8J3ug5pWfqDw1jFrPUZ12GG+3MToc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=dsWwU+tVvlRRV+T9riAjq+tOCOdsTtWsxw070J4u9c8ewTLAYjexXXHOwiF6cn6Me
-         B8qbHdNUDibggEMCC8G6uKLqlyjHzgPB4FD53MsUs0Dp0zK/qw9ExlvHYHzeZaIpwr
-         lbJIX0e0WZZCuNkPDVFjXFlC1XBFDf/1mTlBj9oA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.86.215] ([89.1.214.7]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MV67o-1mQg9a0TCA-00SB5B; Tue, 24
- Aug 2021 16:00:12 +0200
-Date:   Tue, 24 Aug 2021 16:00:10 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Miriam Rubio <mirucam@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH v5 0/6] Finish converting git bisect to C part 4
-In-Reply-To: <20210820172148.2249-1-mirucam@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2108241559350.55@tvgsbejvaqbjf.bet>
-References: <20210820172148.2249-1-mirucam@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S237688AbhHXOER (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 10:04:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43130 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237934AbhHXOEK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 10:04:10 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 042E1C0613D9
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 07:03:26 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id e21so28687056ejz.12
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 07:03:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gitlab.com; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eOV8/WzEzTszNwRDQvfxP8dMQDutsUcCswXHCd7Zh1Q=;
+        b=Gy8g+8fJ+cQVKevFUPkJuqH/AJwIh6Jl9lDgPiAXaRt2+DM2XdZWGvqXBBjJYXckjj
+         30Xkq/2aLZnkEZwGaMu17JIcSCM4lY87pMxYQ+K8C5VDtdn4tsAWojPJ0NaCfjZl3f56
+         1GbHuoQtTYy7YDFK1lCRvIS6cdGK5BcJi+n6U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eOV8/WzEzTszNwRDQvfxP8dMQDutsUcCswXHCd7Zh1Q=;
+        b=I/dwX98nAUlrDmsfW7SZZIW/GzzVDqdDOeSUM+va3Icz83fGTOTks6602M3tS+zCJz
+         6SxNKjkey+ZkaFDV80N60dNLo8n6cz7QW5xAetKe+v3LKprr2mLjCI2ga1t2igT5lvB0
+         M0odRWWjT2PjoLH1rDPGirIBndvZgn8Gj43RGG7yRTn9MtdvKjsyh8zAgGYyjRHJK3nt
+         SSQsbzIY9jy7Q/AZtoXrsN56CjaowGlDKXR/cmTRWKinRswUPg9kw6pajZ/aB2BdXA2g
+         lobHKwNnKNLBQ83lO5wXRaM11iTIetru1kpH+/z/73yXAyl/Tz931SOtx2BDf2Bty3xa
+         N/gA==
+X-Gm-Message-State: AOAM5303kdIHm0Tu8+sms8uQIT4ld2mYBGfdzrowovdF9Bci+k6fzAaQ
+        BxRcbKeaC0TmI0BFESXBGN18RP1VytUXBQ==
+X-Google-Smtp-Source: ABdhPJwuJPHkewjqs9MJhTGr24itoeKVotouANmejQiaBdOKqt3Pubca71GJAWu6gl8juKfgBs41Dg==
+X-Received: by 2002:a17:906:24c1:: with SMTP id f1mr40587083ejb.314.1629813804115;
+        Tue, 24 Aug 2021 07:03:24 -0700 (PDT)
+Received: from localhost.localdomain (e93008.upc-e.chello.nl. [213.93.93.8])
+        by smtp.gmail.com with ESMTPSA id ca4sm9341400ejb.1.2021.08.24.07.03.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Aug 2021 07:03:23 -0700 (PDT)
+From:   Jacob Vosmaer <jacob@gitlab.com>
+To:     git@vger.kernel.org
+Cc:     Jacob Vosmaer <jacob@gitlab.com>
+Subject: [PATCH 1/1] upload-pack: buffer ref advertisement writes
+Date:   Tue, 24 Aug 2021 16:02:59 +0200
+Message-Id: <20210824140259.89332-1-jacob@gitlab.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:W+JEQiczRC/Mr1MHuMZBre6nd/cyfx5N39K2TNlVm4FxVu/2e2m
- Uv9w6Q4HSadvU50ZrAmGiFbc9eoEAzvMzw7r2mzk0Wfl/SvwXkp0+3VRkEsnxGMjypGyG65
- on+U4deN5t5orL/CsTbrOM0Q5QgsAmO9FXq1wqwLKw8iSiT0x9e6RcpBEh7+F0Og0S1ef9m
- fDYK1fvvSijzSUrXEVV1w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:IReG+8KTGrY=:e+YmMw365ItqvYLkPZBO11
- qLpzlO8kRrbn6e4AzVmYLpHaX/JdiBHaWaV2hwsGFK9WHK5Bqt6ZeflK5Cyu5CtnEHiqJlA+u
- LJnZTHa+DYMMmNCLSIqTX3VOOvedbSbU5o+8woVRKpDXJ54Q7Q6IzyigHugOha9x6WOxWSkQX
- 3MPek1ejUNfZanb+cmJgfWl4wK6xYsYMsACQcBhVjc/Z99oMRdAH5SZHgZlVvi2nXa4JMXNCy
- H3zzqMT7t3xtx73nalarxyLPrp+jwZViR7/JB+SKu4MyF4OlLgfwl2+sHc0pOc7k7DYM6P3me
- 8H/LPckBiep7Cwtp3PSS9DcPy+8sKyzEVF9rwb4yb+oZ1g0sZueJPjEIkHrzKeltvXOgzu9Uc
- luEzd0ANnzV/YDeAP8LahCP8XXsXHVoxm/lKYCpcytHPLYVCq9WflQ3ISryqo31Br+lo/rkxn
- qJJaSzKRGPz1soBh92RA0SyLUxXZRN1HPHxXG2WHjuP0tgQy2xEVUK9fu0aMVLDv4irEZ6Sep
- 64k94bU6v8pcYiuHvSLgZTCOYKNF15IpM+5rbBAFsJmXkwL0gbwRaN2Xc/wUZnlyWM5ZTHIje
- +2S4fVtDx0KOhaG3K66q3YMKMJOWAtsztEtJ6y1xHKlyqPhqwEOd6CNHsLHYvRLu+XbWZxkfF
- 1iECsbUdfSNwQlDniCMICHgulvOB3fDUievOiixDZxWLxJKRwzRhoFstkTzmWs7DQuLjkNJcp
- zrliDfvQPilY8a/YtLUtyb/Q0YDaUeNBbAImvxJUMOG4z6yLzoSssA3hGxdy/G28pPfNZ+efN
- 0tAeMj9lzIAPEUZ5kIpGCaZsLn9E38Vg0hA0E1r/nihlxe5a4w+RuhoXSVxnCm5v4T8xNWNTj
- RuHzwZA2FMXHdvofC2G6JU1vdevDCZnKrpGV9dDbbSIkAn9AjyVVC6LJObUmQAxu0SGbHltqX
- +TwkEkm4YEJP1R/sKyddcB4YN02NZiY22ibaPRwK85Gm6LFPV6gENk54qVFpmebW8BSoTJk41
- aktZ/g73EfWJgFUaKppXek8WXS7ZQR+oKgfE66F1oa/YmmFA//sd4D++8yAuot3Glp8lJvR9e
- 2QXmnfYgTYTkHIVfUE3hvi5SZT68BCZprsgZTa3qilN8pWM2VcH+Qmy2Q==
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Miriam,
+In both protocol v0 and v2, upload-pack writes one pktline packet per
+advertised ref to stdout. That means one or two write(2) syscalls per
+ref. This is problematic if these writes become network sends with
+high overhead.
 
-On Fri, 20 Aug 2021, Miriam Rubio wrote:
+This change adds a strbuf buffer to the send_ref callbacks of the v0
+ref advertisement and v2's ls-refs. Instead of writing directly to
+stdout, send_ref now writes into the buffer, and then checks if there
+are more than 32768 bytes in the buffer. If so we flush the buffer to
+stdout.
 
-> These patches correspond to a fourth part of patch series
-> of Outreachy project "Finish converting `git bisect` from shell to C"
-> started by Pranit Bauva and Tanushree Tumane
-> (https://public-inbox.org/git/pull.117.git.gitgitgadget@gmail.com) and
-> continued by me.
->
-> This fourth part is formed by reimplementations of some `git bisect`
-> subcommands, addition of tests and removal of some temporary subcommands=
-.
->
-> These patch series emails were generated from:
-> https://gitlab.com/mirucam/git/commits/git-bisect-work-part4-v5.
+To give an example: I set up a single-threaded loop that calls
+ls-remote (with HTTP and protocol v2) on a local GitLab instance, on a
+repository with 11K refs. When I switch from Git v2.32.0 to this
+patch, I see a 50% reduction in CPU time for Git, and 75% for Gitaly
+(GitLab's Git RPC service).
 
-Apart from the stdout redirection in 5/6, the patches look really stable
-to me.
+So having these buffers not only saves syscalls in upload-pack, it
+also saves time in things that consume upload-pack's output.
+---
+ ls-refs.c     | 13 ++++++++++++-
+ upload-pack.c | 18 +++++++++++++++---
+ 2 files changed, 27 insertions(+), 4 deletions(-)
 
-Thanks,
-Dscho
+diff --git a/ls-refs.c b/ls-refs.c
+index 88f6c3f60d..7b9d5813bf 100644
+--- a/ls-refs.c
++++ b/ls-refs.c
+@@ -7,6 +7,8 @@
+ #include "pkt-line.h"
+ #include "config.h"
+ 
++#define OUT_WRITE_SIZE 32768
++
+ static int config_read;
+ static int advertise_unborn;
+ static int allow_unborn;
+@@ -65,6 +67,7 @@ struct ls_refs_data {
+ 	unsigned peel;
+ 	unsigned symrefs;
+ 	struct strvec prefixes;
++	struct strbuf out;
+ 	unsigned unborn : 1;
+ };
+ 
+@@ -105,7 +108,12 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 	}
+ 
+ 	strbuf_addch(&refline, '\n');
+-	packet_write(1, refline.buf, refline.len);
++
++	packet_buf_write_len(&data->out, refline.buf, refline.len);
++	if (data->out.len >= OUT_WRITE_SIZE) {
++		write_or_die(1, data->out.buf, data->out.len);
++		strbuf_reset(&data->out);
++	}
+ 
+ 	strbuf_release(&refline);
+ 	return 0;
+@@ -145,6 +153,7 @@ int ls_refs(struct repository *r, struct strvec *keys,
+ 
+ 	memset(&data, 0, sizeof(data));
+ 	strvec_init(&data.prefixes);
++	strbuf_init(&data.out, OUT_WRITE_SIZE);
+ 
+ 	ensure_config_read();
+ 	git_config(ls_refs_config, NULL);
+@@ -171,7 +180,9 @@ int ls_refs(struct repository *r, struct strvec *keys,
+ 		strvec_push(&data.prefixes, "");
+ 	for_each_fullref_in_prefixes(get_git_namespace(), data.prefixes.v,
+ 				     send_ref, &data, 0);
++	write_or_die(1, data.out.buf, data.out.len);
+ 	packet_flush(1);
++	strbuf_release(&data.out);
+ 	strvec_clear(&data.prefixes);
+ 	return 0;
+ }
+diff --git a/upload-pack.c b/upload-pack.c
+index 297b76fcb4..15f9aab4f6 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -42,6 +42,8 @@
+ #define ALL_FLAGS (THEY_HAVE | OUR_REF | WANTED | COMMON_KNOWN | SHALLOW | \
+ 		NOT_SHALLOW | CLIENT_SHALLOW | HIDDEN_REF)
+ 
++#define SEND_REF_OUT_WRITE_SIZE 32768
++
+ /* Enum for allowed unadvertised object request (UOR) */
+ enum allow_uor {
+ 	/* Allow specifying sha1 if it is a ref tip. */
+@@ -58,6 +60,7 @@ enum allow_uor {
+  */
+ struct upload_pack_data {
+ 	struct string_list symref;				/* v0 only */
++	struct strbuf send_ref_out;				/* v0 only */
+ 	struct object_array want_obj;
+ 	struct object_array have_obj;
+ 	struct oid_array haves;					/* v2 only */
+@@ -126,6 +129,7 @@ static void upload_pack_data_init(struct upload_pack_data *data)
+ 	struct string_list uri_protocols = STRING_LIST_INIT_DUP;
+ 	struct object_array extra_edge_obj = OBJECT_ARRAY_INIT;
+ 	struct string_list allowed_filters = STRING_LIST_INIT_DUP;
++	struct strbuf send_ref_out = STRBUF_INIT;
+ 
+ 	memset(data, 0, sizeof(*data));
+ 	data->symref = symref;
+@@ -141,6 +145,7 @@ static void upload_pack_data_init(struct upload_pack_data *data)
+ 	data->allow_filter_fallback = 1;
+ 	data->tree_filter_max_depth = ULONG_MAX;
+ 	packet_writer_init(&data->writer, 1);
++	data->send_ref_out = send_ref_out;
+ 
+ 	data->keepalive = 5;
+ 	data->advertise_sid = 0;
+@@ -158,6 +163,7 @@ static void upload_pack_data_clear(struct upload_pack_data *data)
+ 	object_array_clear(&data->extra_edge_obj);
+ 	list_objects_filter_release(&data->filter_options);
+ 	string_list_clear(&data->allowed_filters, 0);
++	strbuf_release(&data->send_ref_out);
+ 
+ 	free((char *)data->pack_objects_hook);
+ }
+@@ -1207,7 +1213,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 
+ 		format_symref_info(&symref_info, &data->symref);
+ 		format_session_id(&session_id, data);
+-		packet_write_fmt(1, "%s %s%c%s%s%s%s%s%s%s object-format=%s agent=%s\n",
++		packet_buf_write(&data->send_ref_out, "%s %s%c%s%s%s%s%s%s%s object-format=%s agent=%s\n",
+ 			     oid_to_hex(oid), refname_nons,
+ 			     0, capabilities,
+ 			     (data->allow_uor & ALLOW_TIP_SHA1) ?
+@@ -1223,11 +1229,15 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 		strbuf_release(&symref_info);
+ 		strbuf_release(&session_id);
+ 	} else {
+-		packet_write_fmt(1, "%s %s\n", oid_to_hex(oid), refname_nons);
++		packet_buf_write(&data->send_ref_out, "%s %s\n", oid_to_hex(oid), refname_nons);
+ 	}
+ 	capabilities = NULL;
+ 	if (!peel_iterated_oid(oid, &peeled))
+-		packet_write_fmt(1, "%s %s^{}\n", oid_to_hex(&peeled), refname_nons);
++		packet_buf_write(&data->send_ref_out, "%s %s^{}\n", oid_to_hex(&peeled), refname_nons);
++	if (data->send_ref_out.len >= SEND_REF_OUT_WRITE_SIZE) {
++		write_or_die(1, data->send_ref_out.buf, data->send_ref_out.len);
++		strbuf_reset(&data->send_ref_out);
++	}
+ 	return 0;
+ }
+ 
+@@ -1346,8 +1356,10 @@ void upload_pack(struct upload_pack_options *options)
+ 
+ 	if (options->advertise_refs || !data.stateless_rpc) {
+ 		reset_timeout(data.timeout);
++		strbuf_grow(&data.send_ref_out, SEND_REF_OUT_WRITE_SIZE);
+ 		head_ref_namespaced(send_ref, &data);
+ 		for_each_namespaced_ref(send_ref, &data);
++		write_or_die(1, data.send_ref_out.buf, data.send_ref_out.len);
+ 		advertise_shallow_grafts(1);
+ 		packet_flush(1);
+ 	} else {
+-- 
+2.32.0
 
->
-> I would like to thank Johannes Schindelin, Bagas Sanjaya and
-> Christian Couder for reviewing this patch series.
->
-> Specific changes
-> ----------------
-> [1/6] t6030-bisect-porcelain: add tests to control bisect run exit cases
-> * Add evaluation of error code 255 in test 'bisect run fails with exit
-> code equals or greater than 128'.
-> * Remove test with error code smaller than 0.
-> ---
->
-> [4/6] bisect--helper: reimplement `bisect_visualize()`shell function in =
-C
-> * Use strvec_push() instead of strvec_pushl().
-> ---
->
-> [5/6] bisect--helper: reimplement `bisect_run` shell function in C
-> * Add error message.
-> * Remove exit variable.
-> * Write contents of bisect_state() in BISECT_RUN file and show to user.
-> ---
->
-> Miriam Rubio (3):
->   t6030-bisect-porcelain: add tests to control bisect run exit cases
->   t6030-bisect-porcelain: add test for bisect visualize
->   bisect--helper: retire `--bisect-next-check` subcommand
->
-> Pranit Bauva (2):
->   run-command: make `exists_in_PATH()` non-static
->   bisect--helper: reimplement `bisect_visualize()`shell function in C
->
-> Tanushree Tumane (1):
->   bisect--helper: reimplement `bisect_run` shell function in C
->
->  builtin/bisect--helper.c    | 157 ++++++++++++++++++++++++++++++++++--
->  git-bisect.sh               |  87 +-------------------
->  run-command.c               |   2 +-
->  run-command.h               |  12 +++
->  t/t6030-bisect-porcelain.sh |  18 +++++
->  5 files changed, 182 insertions(+), 94 deletions(-)
->
-> --
-> 2.29.2
->
->
