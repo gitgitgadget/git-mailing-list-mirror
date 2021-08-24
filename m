@@ -1,74 +1,113 @@
 Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Level: **
+X-Spam-Status: No, score=2.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_96_XX,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F463C432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:49:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0141C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:49:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 49D7160ED6
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:49:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A683C60ED6
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:49:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235375AbhH3UuV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 16:50:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34260 "EHLO cloud.peff.net"
+        id S236294AbhH3Uuq convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 30 Aug 2021 16:50:46 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:4584 "EHLO smtp5-g21.free.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229708AbhH3UuV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 16:50:21 -0400
-Received: (qmail 1474 invoked by uid 109); 30 Aug 2021 20:49:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 30 Aug 2021 20:49:27 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10287 invoked by uid 111); 30 Aug 2021 20:49:27 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Aug 2021 16:49:27 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 30 Aug 2021 16:49:26 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] merge-recursive: use fspathcmp() in path_hashmap_cmp()
-Message-ID: <YS1EVq2Gz+sPhw3c@coredump.intra.peff.net>
-References: <512abaef-d71c-9308-6a62-f37b4de69e60@web.de>
- <YSvsQcGNpCMZwS8o@nand.local>
- <xmqqeeaa6fey.fsf@gitster.g>
- <8d2e0876-9441-9665-ebb1-8cb28902014b@web.de>
+        id S236459AbhH3Uum (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 16:50:42 -0400
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:d787:42d5:3b3a:1b26])
+        by smtp5-g21.free.fr (Postfix) with ESMTP id C1A4C5FF67;
+        Mon, 30 Aug 2021 22:48:54 +0200 (CEST)
+From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Matthias =?ISO-8859-1?Q?R=FCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Christopher =?ISO-8859-1?Q?D=EDaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <hello@brighterdan.com>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH 1/1] ci: new github-action for git-l10n code review
+Date:   Tue, 24 Aug 2021 23:34:42 +0200
+Message-ID: <3020682.V8qLCztWNM@cayenne>
+In-Reply-To: <nycvar.QRO.7.76.6.2108241126190.55@tvgsbejvaqbjf.bet>
+References: <20210822161325.22038-1-worldhello.net@gmail.com> <xmqqsfyzq1wq.fsf@gitster.g> <nycvar.QRO.7.76.6.2108241126190.55@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8d2e0876-9441-9665-ebb1-8cb28902014b@web.de>
+Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="iso-8859-1"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 30, 2021 at 08:22:25PM +0200, RenÃ© Scharfe wrote:
-
-> > It however may not be a bad idea to catch these code paths where a
-> > local variable masks 'ignore_case' (and possibly other globals) and
-> > rename these local ones to avoid a mistake like this.
+Le mardi 24 août 2021, 11:27:44 CEST Johannes Schindelin a écrit :
+> Hi Junio,
 > 
-> The name itself is OK, I think, but using it at global scope is
-> confusing.  -Wshadow can help find such cases, but not this one, as
-> test-hashmap.c doesn't include the global declaration.  Moving the
-> global into a struct to provide a poor man's namespace would fix this
-> for all namesakes, assisted by the compiler.  We'd then access it as
-> the_config.ignore_case or even the_config.core.ignore_case.
+> On Mon, 23 Aug 2021, Junio C Hamano wrote:
 > 
-> Moving all config-related variables would be quite noisy, I guess,
-> and probably conflict with lots of in-flight patches, but might be
-> worth it.
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >
+> > >> For a push event, it will scan commits one by one. If a commit does not
+> > >> look like a l10n commit (no file in "po/" has been changed), it will
+> > >> immediately fail without checking for further commits. While for a
+> > >> pull_request event, all new introduced commits will be scanned.
+> > >>
+> > >> "git-po-helper" will generate two kinds of suggestions, errors and
+> > >> warnings. A l10n contributor should try to fix all the errors, and
+> > >> should pay attention to the warnings. All the errors and warnings will
+> > >> be reported in the last step of the l10n workflow as two message groups.
+> > >> For a pull_request event, will create additional comments in pull
+> > >> request to report the result.
+> > >
+> > > It is a good idea to automate this.
+> > >
+> > > I am a bit concerned that the `ci-config` approach, even if we use it in
+> > > the Git project itself, is quite cumbersome to use, though. So I hope that
+> > > we can find an alternative solution.
+> > >
+> > > One such solution could be to make the `git-po-helper` job contingent on
+> > > part of the repository name. For example:
+> > >
+> > >   git-po-helper:
+> > >     if: endsWith(github.repository, '/git-po')
+> > >     [...]
+> > >
+> > > would skip the job unless the target repository's name is `git-po`.
+> >
+> > Nice.
+> >
+> > Can this be made into a matter purely local to git-l10n/git-po
+> > repository and not git/git repository? I am wondering if we can ee if
+> > the current repository is git-l10n/git-po or its fork and run it only if
+> > that is true.
+> 
+> The biggest problem is that there are forks of `git-l10n/git-po` that
+> accept PRs in their own right. That is what I tried to address by using
+> just the repository name, without the org/user prefix.
+> 
+> Ciao,
+> Dscho
+> 
 
-Really most of these ought to be in the repository struct anyway, I
-would think. The value of ignore_case comes from core.ignorecase, which
-is going to be repository-specific. We are probably doing the wrong
-thing already by looking at the parent core.ignorecase value when
-operating in an in-process submodule, but nobody noticed because it's
-quite unlikely for a submodule to have a different setting than the
-parent.
+Well, I'm in this case, plus my repo is a fork of git/git. 
 
--Peff
+Would it not possible to formally require the presence of a "dumb" secret to run this rule? 
+
+JN
+
+
