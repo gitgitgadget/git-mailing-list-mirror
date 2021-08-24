@@ -2,90 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 091AFC4338F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 15:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EB9FC4320A
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 15:54:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DEA6060725
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 15:49:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC7F7611C9
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 15:54:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238415AbhHXPul (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 11:50:41 -0400
-Received: from mail.ispras.ru ([83.149.199.84]:46806 "EHLO mail.ispras.ru"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238287AbhHXPuk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 11:50:40 -0400
-Received: from mail.ispras.ru (unknown [83.149.199.84])
-        by mail.ispras.ru (Postfix) with ESMTPSA id 0BC3040D3BFF;
-        Tue, 24 Aug 2021 15:49:47 +0000 (UTC)
+        id S238455AbhHXPzI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 11:55:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41476 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238423AbhHXPzG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 11:55:06 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4FBCC061757
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 08:54:21 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id dm15so7407657edb.10
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 08:54:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=YoJzAU+9HQT06dSJt/CLQfNXf5GvMm/NOP1AKisyKps=;
+        b=jbhY8vBZnW1TvRAIeymcENtwulH+ZC6vKIp7KEanc3wYAh+0U/sBPzZGq9y9OXv65/
+         uuzo4cLDKB4slxwqDgnqv8AswqBnCWm6uYhy2XsvqWPaP4dysF16KHKuWQWSP850QyM0
+         FBwz/XO2otteqF2o8QOhaTBSmr8MmGaJ+dTB9sGULD7aHts460snS1Z2GnX5QPobe7Fs
+         O3tT+gc2SGTUv7xLFT2sdGp8IknNGXVYklSzzbh+IQVHCS2NoNcgeouM4gjMqtmAjSAV
+         EKXAIPk+JJWtS/6wqemPy0OwCBMTYS1g/7Y/U2wn7Ys2xUUyb/+pxjPlQ2TRmUjLgBr6
+         Lh/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=YoJzAU+9HQT06dSJt/CLQfNXf5GvMm/NOP1AKisyKps=;
+        b=lKch+BfImVa92mEpxI1MguN4/JlYGSzsgUfHkQiN4RrahO3iqJgnMJSMuOvQnn/InD
+         F2NSFiXQ0oYwX59jCNHaxAoXUXuyF6sxCtp1Bxr4KFgq+UATsQC1vl3JQ9HbwBP6J/kO
+         tjagTraxLRMiNCVyR3iIuMOJTShfKqqnTShQlAyBlBDrvTXLkT+bpJJkUcPUfzt0yF9L
+         oU5ywYYmPHPWGS/aUywDEVaSm4EDoY59MyO/p4tFYxlQP3anFTOj5X6aJ+GWMV57bFH1
+         HUKTyM+TCzYeRaN7yIWM96j3uQyFSAbSao61B4IpByhMt9Zz5t5h+TmPo0gheKaWgSMD
+         tNig==
+X-Gm-Message-State: AOAM532a1SuiZ+FLdmfGglYRox00XTaKamzwMIBke4do5KmBBmZbUHbB
+        Y7y6mM6TwP8mMlddyDKW0YBu2ORN8l85GA==
+X-Google-Smtp-Source: ABdhPJx0xxs96jAtYTp4lzxnLFDZydSKCfinBGVHxsCOXhbI4UdEa70tjfnx51n80kuaRH1tK7empw==
+X-Received: by 2002:a05:6402:b47:: with SMTP id bx7mr12713117edb.319.1629820460496;
+        Tue, 24 Aug 2021 08:54:20 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id b18sm3411449ejl.90.2021.08.24.08.54.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Aug 2021 08:54:20 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 3/6] hook: introduce "git hook list"
+Date:   Tue, 24 Aug 2021 17:53:48 +0200
+References: <20210819033450.3382652-1-emilyshaffer@google.com>
+ <20210819033450.3382652-4-emilyshaffer@google.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <20210819033450.3382652-4-emilyshaffer@google.com>
+Message-ID: <87r1eiet3o.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Date:   Tue, 24 Aug 2021 18:49:46 +0300
-From:   Alexey Izbyshev <izbyshev@ispras.ru>
-To:     git@vger.kernel.org
-Cc:     bwilliamseng@gmail.com
-Subject: Re: [BUG] git commit -a doesn't ignore inactive/ignore-all submodules
-In-Reply-To: <1be1e064559578a190f32dddb8ad39a0@ispras.ru>
-References: <1be1e064559578a190f32dddb8ad39a0@ispras.ru>
-User-Agent: Roundcube Webmail/1.4.4
-Message-ID: <128d535af65ec58af9a26b9d0e13de8e@ispras.ru>
-X-Sender: izbyshev@ispras.ru
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-08-20 20:02, Alexey Izbyshev wrote:
-> Reproduced on 2.33 and 2.17.1. Does not reproduce on 2.7.4 (Ubuntu
-> 16.04).
 
-Bisected to:
+On Wed, Aug 18 2021, Emily Shaffer wrote:
 
-commit 5556808690ea245708fb80383be5c1afee2fb3eb
-Author: Brandon Williams <bmwill@google.com>
-Date:   Tue Jul 25 14:39:16 2017 -0700
+> +	head = hook_list(hookname);
 
-     add, reset: ensure submodules can be added or reset
-
-     Commit aee9c7d65 (Submodules: Add the new "ignore" config option for
-     diff and status) introduced the ignore configuration option for
-     submodules so that configured submodules could be omitted from the
-     status and diff commands.  Because this flag is respected in the 
-diff
-     machinery it has the unintended consequence of potentially 
-prohibiting
-     users from adding or resetting a submodule, even when a path to the
-     submodule is explicitly given.
-
-     Ensure that submodules can be added or set, even if they are 
-configured
-     to be ignored, by setting the `DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG` 
-diff
-     flag.
-
-Was the change of "git commit -a" behavior intended?
-
-To be clear, I don't understand what problem this patch solves exactly. 
-The commit message mentions issues with "adding or resetting a 
-submodule", but with git 2.7.4 (older than this patch) I can explicitly 
-"git add" and "git commit" a submodule which has "ignore = all" set 
-without problems, though "git status" and "git commit -a" ignore it, as 
-I would expect.
-
-I've also performed another test uncovering that "submodule.active" 
-appears to have never been honored by "git commit -a" at all. Is this 
-intended behavior?
-
- From my perspective, it's surprising that "git status" and "git commit 
--a" take inactive submodules into account. Given that "git help config" 
-says that "submodule.active" is a "Boolean value indicating if the 
-submodule is of interest to git commands", it would seem to me that 
-"active = false" should beat everything else, making git behave as if 
-submodule were not initialized. Is there a way to keep a submodule 
-checked out but make "git commit -a" ignore it?
-
-Alexey
+This doesn't compile, as hook_list() is added in a later
+commit. Something something earlier suggestion of "git rebase -i --exec
+'make test'" :)
