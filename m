@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28967C432BE
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 09:15:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10804C4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 09:15:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1208361165
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 09:15:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5C8461165
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 09:15:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235690AbhHXJQ0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 05:16:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60426 "EHLO
+        id S229990AbhHXJQ2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 05:16:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235820AbhHXJQT (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235652AbhHXJQT (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 24 Aug 2021 05:16:19 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07369C061757
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDC70C061760
         for <git@vger.kernel.org>; Tue, 24 Aug 2021 02:15:35 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id q11so3246900wrr.9
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 02:15:34 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id f9-20020a05600c1549b029025b0f5d8c6cso1331608wmg.4
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 02:15:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cEH/Y2Fj28mOc6KhxS95liyo07g/nVNTIYC4DIb4Vaw=;
-        b=Poz6m9EAFCQkMZxDTOz6hYwShD+BZFEpq9Zr+q9Q/WGoPc/inyU06CpJOhWsEWGAYi
-         MLde0imuXMG5/tSimLAsTHmBT5Ow/sqaPGYwzy3o3RKKrjN5aSF4pZE7OopyASpHrWms
-         5pykGmTzUa/J7F3yLK5ZgnlPSpz3oYkWDmH7IuliwYUQArp/K60z6GkWPcwStQzHxb/P
-         BLEuLK/XXul8XF2gEq0MsXlA0I+UAnreYTk4vuBnWIDO5VqNx+JLHfCtzehzlmDCmTTo
-         YXAEZJi2j7bVM4+Ia5pTrNsmaJEGSzZW9UV6Du46b7j5zYu1+OpbrLUrGkZWqNmGTD6l
-         uiqw==
+        bh=sWGIxOrcSa7Vn/di+6qSQSu9BiHtTe5SOwI3VUYeoKc=;
+        b=L7PhgRoGW1t+EWAHsYxrR3uFoMom/xbPuu2BabF+pKuSuDeF7usqC7pl6gdrZvGmlj
+         NtnSrNVFDH6FQesHeKlzjPD7JBambp0/7ioVxlqWTVjkqG60AMdUq1QoW24UfFhbE57y
+         lKHjGPhCymRYOSfc8uH5swO4uhNooEizd3ElrkzvH8rubj1X2e0dpCJv1MEVLn1A2k5e
+         PSFSZg/5nmmgV3xZdQdle+eNxoM+31r2Ff+xnAr9hOy0847QpMPBJ6sdeVZfbRTHEmGk
+         svjdps4vWSQUjYRwMV74IciSKvQ0qgYrXVvw2Nn5iWbgX3GPL4y0bwKMNIPXc94D6tCT
+         Bmvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cEH/Y2Fj28mOc6KhxS95liyo07g/nVNTIYC4DIb4Vaw=;
-        b=a6IE+m9bB0BYK2/S1wjQbmp5JrdXl8f9b+TFE3oztCTY3Ef/k4sOiOrSg4Ldx37i0r
-         sdzv1Wk3W0nMlJyds83vA/dGMSZ23lAtzfXg4CgRv0zOG6XEPWgpDktIi0yEuG/uqemp
-         5zOyY0CNhNZ8R1v15fJxt8OQu5Au+EOsZCN3OLkdSvO8YGQMfkqylypb91WQoCkCcJZ6
-         9V7raySUZbe7ozNHyeKhrYaRshtuUQiBw8XG10jTIVDNZweNxDIsF3+LzbVGREvNwR83
-         ax6Ra3VrPGUNU8GKnkxrJbSBX4TkiDBCTs30wRRwsILVqWvH/LgIFQZWDLA1Bso/Ai2W
-         Ov1A==
-X-Gm-Message-State: AOAM531UH3f9nG65b3riH6xnH3HA4zcsqCfgIeBWOCn8PQy+6AY11OZa
-        qO4rMWlAIad7lO1IN6RLLk/erXSC3qmKsQ==
-X-Google-Smtp-Source: ABdhPJyCnuv8nGEuqaHc8vstefq1D2M5lsPXG0Egd1tusj8FRr5D7kuMgUzsfcCBDkMj9Vku4J/lUg==
-X-Received: by 2002:adf:edcf:: with SMTP id v15mr16500971wro.61.1629796533408;
-        Tue, 24 Aug 2021 02:15:33 -0700 (PDT)
+        bh=sWGIxOrcSa7Vn/di+6qSQSu9BiHtTe5SOwI3VUYeoKc=;
+        b=GT6dyeR7Ro52S+KtjZbTKir+O2VMv5dW3PhsA83AqMPkLrVwq12F2H/NRLTAbglaoO
+         jFyI8bzAOgzhfv4xuHPykI4PcvGpQMm6Q2IK574lUA4G/JWMC49MtGKpyGsiCT7BVy/U
+         vkKZhKqQCtzOq7cZE7DuHnMyF0WV/ejjiJ+ohUc5voXTeVNGIISggOkuM60WQrUAZ6YB
+         a6fJPg2LlfCAibncynWEODmlW8wtEW0stVWwH63jlH8MzOZTIbkopU3jggFnMEbeu+TV
+         qB0TfZmhKBp53WETbndOT/2r5r081Zc/QOIv6JEFGRNc9F1+UXrxgudETDt1tUH1r9ND
+         iFRQ==
+X-Gm-Message-State: AOAM531uaZTiEGXDHt7ij623RzTnN6KEMftWVapepPIsMS/3GHBTUqSs
+        i69EHeYYChVKH+w2ZqTih1jRKjYHidxJ9g==
+X-Google-Smtp-Source: ABdhPJw0PcOAVn469evGmoAdRx0ZI6jmUUlmvOKZhJA5dv38BivoISrQVpo1zEXtn+vnzUdTqzUB5g==
+X-Received: by 2002:a05:600c:350d:: with SMTP id h13mr3024238wmq.38.1629796534161;
+        Tue, 24 Aug 2021 02:15:34 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u8sm1853104wmq.45.2021.08.24.02.15.32
+        by smtp.gmail.com with ESMTPSA id u8sm1853104wmq.45.2021.08.24.02.15.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 02:15:32 -0700 (PDT)
+        Tue, 24 Aug 2021 02:15:33 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 3/4] test-tool: migrate read-cache-again to parse_options()
-Date:   Tue, 24 Aug 2021 11:15:24 +0200
-Message-Id: <patch-v2-3.4-a34e69eaa48-20210824T091204Z-avarab@gmail.com>
+Subject: [PATCH v2 4/4] read-cache perf: add a perf test for refresh_index()
+Date:   Tue, 24 Aug 2021 11:15:25 +0200
+Message-Id: <patch-v2-4.4-e3648bf78c7-20210824T091204Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.663.gbaff4edb973
 In-Reply-To: <cover-v2-0.4-00000000000-20210824T091204Z-avarab@gmail.com>
 References: <cover-0.4-0000000000-20210607T115454Z-avarab@gmail.com> <cover-v2-0.4-00000000000-20210824T091204Z-avarab@gmail.com>
@@ -78,79 +78,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the newly added (but then mostly copy/pasted) read-cache-perf
-to use the parse_options() API. I have no plans to further modify
-read-cache-again, but making these commands consistent has a value in
-and of itself.
+Add a perf test for the refresh_index() function to compliment the
+existing read()/discard() in a loop perf test added in
+1ecb5ff141f (read-cache: add simple performance test, 2013-06-09).
 
-Since we check the "cnt = < 1" case now via more idiomatic
-post-parse_options() assertions we can move from the for-loop to a
-while-loop and ditch the "i" variable.
+Since this test is much slower (around 10x) than the previous
+read()/discard() test let's run it 100 times instead of the 1000 time
+the first one runs.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/helper/test-read-cache-again.c | 26 ++++++++++++++++++++------
- t/t7519-status-fsmonitor.sh      |  2 +-
- 2 files changed, 21 insertions(+), 7 deletions(-)
+ t/helper/test-read-cache-perf.c | 12 ++++++++++++
+ t/perf/p0002-read-cache.sh      |  5 +++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/t/helper/test-read-cache-again.c b/t/helper/test-read-cache-again.c
-index 707db036cb1..fa456ca229e 100644
---- a/t/helper/test-read-cache-again.c
-+++ b/t/helper/test-read-cache-again.c
-@@ -1,20 +1,34 @@
- #include "test-tool.h"
- #include "cache.h"
-+#include "parse-options.h"
-+
-+static const char *read_cache_again_usage[] = {
-+	"test-tool read-cache-again [<options>...] <file>",
-+	NULL
-+};
- 
- int cmd__read_cache_again(int argc, const char **argv)
+diff --git a/t/helper/test-read-cache-perf.c b/t/helper/test-read-cache-perf.c
+index 301e98797b4..630c126fbf3 100644
+--- a/t/helper/test-read-cache-perf.c
++++ b/t/helper/test-read-cache-perf.c
+@@ -11,8 +11,11 @@ int cmd__read_cache_perf(int argc, const char **argv)
  {
  	struct repository *r = the_repository;
--	int i, cnt;
-+	int cnt = 2;
- 	const char *name;
-+	struct option options[] = {
-+		OPT_INTEGER(0, "count", &cnt, "number of passes"),
-+		OPT_END()
-+	};
+ 	int cnt = -1;
++	int refresh = 0;
+ 	struct option options[] = {
+ 		OPT_INTEGER(0, "count", &cnt, "number of passes"),
++		OPT_BOOL(0, "refresh", &refresh,
++			 "call refresh_index() in a loop, not read()/discard()"),
+ 		OPT_END()
+ 	};
  
--	if (argc != 2)
--		die("usage: test-tool read-cache-again <count> <file>");
--
--	cnt = strtol(argv[0], NULL, 0);
-+	argc = parse_options(argc, argv, "test-tools", options,
-+			     read_cache_again_usage, 0);
-+	if (argc != 1)
-+		usage_msg_opt("Too many arguments.", read_cache_again_usage,
-+			      options);
-+	if (cnt < 1)
-+		usage_msg_opt("Need at least one pass.", read_cache_again_usage,
-+			      options);
- 	name = argv[2];
+@@ -26,10 +29,19 @@ int cmd__read_cache_perf(int argc, const char **argv)
+ 			      options);
  
  	setup_git_directory();
--	for (i = 0; i < cnt; i++) {
-+	while (cnt--) {
- 		int pos;
++	if (refresh)
++		repo_read_index(r);
+ 	while (cnt--) {
++		if (refresh) {
++			unsigned int flags = REFRESH_QUIET|REFRESH_PROGRESS;
++			refresh_index(r->index, flags, NULL, NULL, NULL);
++			continue;
++		}
  		repo_read_index(r);
- 		refresh_index(r->index, REFRESH_QUIET,
-diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-index 7de5fcb1bd7..817e642f58e 100755
---- a/t/t7519-status-fsmonitor.sh
-+++ b/t/t7519-status-fsmonitor.sh
-@@ -360,7 +360,7 @@ test_expect_success UNTRACKED_CACHE 'ignore .git changes when invalidating UNTR'
- test_expect_success 'discard_index() also discards fsmonitor info' '
- 	test_config core.fsmonitor "$TEST_DIRECTORY/t7519/fsmonitor-all" &&
- 	test_might_fail git update-index --refresh &&
--	test-tool read-cache-again 2 tracked >actual &&
-+	test-tool read-cache-again --count=2 tracked >actual &&
- 	printf "tracked is%s up to date\n" "" " not" >expect &&
- 	test_cmp expect actual
- '
+ 		discard_index(r->index);
+ 	}
++	if (refresh)
++		discard_index(r->index);
+ 
+ 	return 0;
+ }
+diff --git a/t/perf/p0002-read-cache.sh b/t/perf/p0002-read-cache.sh
+index 1762b648654..cbccc5ace95 100755
+--- a/t/perf/p0002-read-cache.sh
++++ b/t/perf/p0002-read-cache.sh
+@@ -11,4 +11,9 @@ test_perf "read_cache/discard_cache $count times" "
+ 	test-tool read-cache-perf --count=$count
+ "
+ 
++count=100
++test_perf "refresh_index() $count times" "
++	test-tool read-cache-perf --count=$count --refresh
++"
++
+ test_done
 -- 
 2.33.0.663.gbaff4edb973
 
