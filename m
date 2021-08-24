@@ -7,91 +7,67 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 755EFC4338F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B89AC4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:12:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 528E361212
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:10:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7CDA06135F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:12:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232989AbhHXVKv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 17:10:51 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60651 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231474AbhHXVKu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 17:10:50 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8D5AD144A23;
-        Tue, 24 Aug 2021 17:10:05 -0400 (EDT)
+        id S235080AbhHXVNc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 17:13:32 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50708 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234442AbhHXVNb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 17:13:31 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9E7F9151C7F;
+        Tue, 24 Aug 2021 17:12:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=3DT4rq8hgpDl
-        66aXsCAuYmMvGxmsnX31IMLQbpZfvOk=; b=OdRUPBsVV1OhObyVaYVeT5H5IFGP
-        Mx6j2db658mZnKQgk2hKmIUb+9HZIo6ScKb9idXL7Y0Ly5kZVhhXZCB8FUQuxRRf
-        pgR4mXH8PrE3LZBWd+50QA+NeUNcspgq4giG+wmvzgKG2ayJaZIEsTLdVuv+ruL5
-        29640wFcnBS/V3I=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 85357144A20;
-        Tue, 24 Aug 2021 17:10:05 -0400 (EDT)
+        :content-type; s=sasl; bh=QhR0OT8MRbd95swFL4GRJZfrSphkM0+n+OBnmi
+        dLpAU=; b=NGOr6EPJIIw7HhzaLWBiGi9rKGVHf5wYaFSI1t7A4I5bFn39qRifCT
+        tyNl10TM4gcart0DfDokihy469PgQV/EmhKAT+YEMsgPZ8Zh+Du8S1OGja+Y/+HB
+        H+Rw8fvm9Vhm2nIMh9ghFDvVXmSV9Cwim1sXyPsztWV0z4Nu1wA88=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 891A5151C7E;
+        Tue, 24 Aug 2021 17:12:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.116.162])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4CAE8144A1E;
-        Tue, 24 Aug 2021 17:10:02 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C493F151C7D;
+        Tue, 24 Aug 2021 17:12:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Mickey Endito <mickey.endito.2323@protonmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] t5582: remove spurious 'cd "$D"' line
-References: <tV8xl8isDPhmGxCNmN06tTwhJTve0PsrkakKwLMcFQJybDZO2SGHHbDLZFrcLp1Yda1_KRygSm7-lVDSZSaG-antdalcPnhSqYqcK5Fpifk=@protonmail.com>
-        <xmqq8s0rpwiw.fsf@gitster.g> <20210824185942.GE2257957@szeder.dev>
-Date:   Tue, 24 Aug 2021 14:10:00 -0700
-In-Reply-To: <20210824185942.GE2257957@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message
-        of "Tue, 24 Aug 2021 20:59:42 +0200")
-Message-ID: <xmqqv93umtw7.fsf@gitster.g>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH v4 05/25] midx: clear auxiliary .rev after replacing the
+ MIDX
+References: <cover.1617991824.git.me@ttaylorr.com>
+        <cover.1629821743.git.me@ttaylorr.com>
+        <771741844be3570395abfda813ed5ef2fa78332e.1629821743.git.me@ttaylorr.com>
+        <xmqqa6l6oafd.fsf@gitster.g> <YSVX18UXh9vX+Zhp@nand.local>
+Date:   Tue, 24 Aug 2021 14:12:42 -0700
+In-Reply-To: <YSVX18UXh9vX+Zhp@nand.local> (Taylor Blau's message of "Tue, 24
+        Aug 2021 16:34:31 -0400")
+Message-ID: <xmqqr1eimtrp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A5AC78DC-051F-11EC-B81F-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 05EDDB64-0520-11EC-899B-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> On Mon, Aug 23, 2021 at 04:32:39PM -0700, Junio C Hamano wrote:
->> Mickey Endito <mickey.endito.2323@protonmail.com> writes:
->>=20
->> > The variable D is never defined in test t5582, more severely the tes=
-t
->> > fails if D is defined by something outside the test suite, so remove
->> > this spurious line.
->>=20
->> Wow.  Well spotted.
->>=20
->> When D is left unset, we end up executing
->>=20
->> 	cd "" && ...
->>=20
->> and it explains why nobody noticed the breakage for nearly a year
->> since c0192df6 (refspec: add support for negative refspecs,
->> 2020-09-30) was written.
->>=20
->>=20
->> Unlike the apparent
->> copy-and-paste source, this is a more modern script that limits the
->> chdir inside subshells to avoid moving around in the main flow of
->> the test, and the fix proposed here looks the most sensible. =20
+>> This needs to take object_dir into account, no?
 >
-> 'grep " cd $" test-results/*.out' shows that there is a similar case
-> in 't5323-pack-redundant.sh' as well, in test 'master: pack-redundant
-> works with no packfile'.
+> Yes and no; clear_midx_files_ext() still takes a pointer to a 'struct
+> repository' until we pick up [1].
 
-OK.  A candidate for a separate patch, which would be a low-hanging
-fruit, I guess.
+I was hoping that [1] will become part of this series as a trivial
+clean-up and bugfix, perhaps in its early part.
 
