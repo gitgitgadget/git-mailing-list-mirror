@@ -2,101 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA693C432BE
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:10:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BCE4C4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:19:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0CB961206
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:10:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDCA76127B
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:19:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238705AbhHXWLM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 18:11:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43628 "EHLO
+        id S236353AbhHXWUl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 18:20:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238699AbhHXWLL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 18:11:11 -0400
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 523E3C061757
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 15:10:27 -0700 (PDT)
-Received: by mail-io1-xd2e.google.com with SMTP id j18so28236412ioj.8
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 15:10:27 -0700 (PDT)
+        with ESMTP id S229605AbhHXWUl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 18:20:41 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E7E9C061757
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 15:19:56 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id b7so28346597iob.4
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 15:19:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=XmdFsDSt9v0UH51iG7dBDi27CF4ApgRuH1vOlkgga84=;
-        b=1izLwmJRwihGu6PKfxXS942YODpPT1P972APjqL6VCffoBnefZt0BQFLSkWM9iJnvh
-         64sPLWMoE4WnS3LbywsaogAedj1T8iXYXEd/fM2fiMtHdMMXJL2by29iBM7i7Kg5Fd2P
-         Q7WwjZNViib+vBwV7tEldpsjQMmYt6+e7d74vksJYHo9zzeU91GxLHaM1dHT9TnhDvEd
-         yRCFi0HRseCPG06T8uL3q0oPY2Yk6gN6t8HhinM/z3Hr6T/G/qbUomAgBOiHRThfBtpa
-         HBft6YoyPtUVZo/GmFgnypyrVFcXEhSKzGa4AdDULJ3CgeWAA2ZhnpkS08AMfDOX4Qhs
-         XMTg==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=51P7K7Q3n8HOTvBWr0B/zKspau7nL+N8B+kpQ9GwVuQ=;
+        b=gwQqQR34lbm/yFF/EK0zOADdouSpVUSTlKJggaBEuQTVn6yyiDdGebGLxm/n1iU0/E
+         CvoBMmsFjbyaKUGfVqtiRYiqn9rWqTPRHQVYrBMiJezh64s8H/3fPF+rryf5Bhg+c4rk
+         wh5sQC6ELmDdNzU4ZY7NP6h7wqkTedkJse2+YzP0NG5dwPp0AeF4m7fQlwsIEC85/wFv
+         imPFDKPeuqXeKS/VTSncga2Mutr4Gdkpw/IShYObz8tjW6by/gd0LeSEpZEpBtGv8Po4
+         Yx7EEJpo2jT+QorZEQGoZiR5NxnnpV8WRXGiOomFgcvsEVOtrvNb4D5M5rM6xwYD173M
+         O03Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=XmdFsDSt9v0UH51iG7dBDi27CF4ApgRuH1vOlkgga84=;
-        b=pJrZI/o4ttc/nUTM1WxO2UMXhYSKn3ENk11xjLY7dWBdbj2ZWxogTi+4uarfQZlkk9
-         bH1orymInG4a4TLQpQerwlWVGFq1f6eM14wNQjKl9JbTqnznW2wV6HrYiyK0J9d2J+ym
-         mPHspUX5OEK5D1eNGyFlJ4zm08NzEKtM+E7xBkBoQfzCtXDrlovkAggD/1ED+DHjJdsf
-         hHyR1XHDWe5aEF5bx50/Fo2aPoP+r9vM9W03Y8QAChSsDOpGJg/2NF0woYXUP/0wCatK
-         QqjORzijj4BM2/VaTTPcYa3kRoriYb5h057B6a8JYZyidKT6UgXbcfE5QTvFF44YbOuT
-         7Sag==
-X-Gm-Message-State: AOAM5314GX+/ZBthKsE3HVSN/QYAot63z2qsx8QG18l9LI5u/4CG5hDC
-        ZOmxX+DlUHcdFQQPyGyCpiA9rg==
-X-Google-Smtp-Source: ABdhPJy4I8dOSSlAUcwj9mNlFJz0yAmRjV4yUJgTYRMCJE7YbRJrtWbjBMZfbPTFzkCg1lTM3bdCnA==
-X-Received: by 2002:a05:6638:5ae:: with SMTP id b14mr36809608jar.80.1629843026808;
-        Tue, 24 Aug 2021 15:10:26 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=51P7K7Q3n8HOTvBWr0B/zKspau7nL+N8B+kpQ9GwVuQ=;
+        b=n2lSktui9cTz8fDJEnZMV0WrzkP+B+vm6ERLgurH3an709AYDTdhCfABvst2sOyaoV
+         3IZwZk7neKqfbt4MMat5xhoisyUVFKvyh3a6XBXozWa3yn8SW1xZjmi4QZr8xcKvnlqP
+         1yi5m9A34mer8xB6rMf88Fka5jxGQK4D/0S+GqxpghILeExbkWFntF1CqlZ8sVSPvAIk
+         uKE1IAKA4Zz0CqGuh7fzWgXAKtmWAnBR2Bb2KoEa3dIG0f4aSozY5ND6z3ahcPUrgpAz
+         PvLoLLqcqdij2WYhe9blfTlya37p+dJ65qjN2oVeJM42obcSKKWpB170d3YOJaH4x27n
+         EKlA==
+X-Gm-Message-State: AOAM531bY/c+o2fJ9OLseC5GRf/AgIiZ1Bwm64X8muBsdR1xH73m5LTF
+        FQusCPEJgfY8VLZk4ktMlX9YRw==
+X-Google-Smtp-Source: ABdhPJyGuquVRsxrMCCVY2KOCL9/lBg3fWhJuKRon2f9H3gnTwpgvRbO+ab5mGVyMey/UlIFPKgxBA==
+X-Received: by 2002:a6b:710f:: with SMTP id q15mr26742751iog.77.1629843595902;
+        Tue, 24 Aug 2021 15:19:55 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id c23sm10719882ioi.31.2021.08.24.15.10.26
+        by smtp.gmail.com with ESMTPSA id o15sm10971894ilo.73.2021.08.24.15.19.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 15:10:26 -0700 (PDT)
-Date:   Tue, 24 Aug 2021 18:10:25 -0400
+        Tue, 24 Aug 2021 15:19:55 -0700 (PDT)
+Date:   Tue, 24 Aug 2021 18:19:54 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
-        jonathantanmy@google.com
-Subject: Re: [PATCH v4 05/25] midx: clear auxiliary .rev after replacing the
- MIDX
-Message-ID: <YSVuUYFh7lmhNlEy@nand.local>
-References: <cover.1617991824.git.me@ttaylorr.com>
- <cover.1629821743.git.me@ttaylorr.com>
- <771741844be3570395abfda813ed5ef2fa78332e.1629821743.git.me@ttaylorr.com>
- <xmqqa6l6oafd.fsf@gitster.g>
- <YSVX18UXh9vX+Zhp@nand.local>
- <xmqqr1eimtrp.fsf@gitster.g>
- <YSVjnSDaBXgXvT9W@nand.local>
- <xmqq35qymrcn.fsf@gitster.g>
- <xmqqy28qlcow.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH v2 0/4] test-tool: split up "read-cache" tool
+Message-ID: <YSVwioizjGKVSXQA@nand.local>
+References: <cover-0.4-0000000000-20210607T115454Z-avarab@gmail.com>
+ <cover-v2-0.4-00000000000-20210824T091204Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqy28qlcow.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover-v2-0.4-00000000000-20210824T091204Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 24, 2021 at 03:06:55PM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Aug 24, 2021 at 11:15:21AM +0200, Ævar Arnfjörð Bjarmason wrote:
+> A re-roll addressing the feedback v1 got, see
+> https://lore.kernel.org/git/cover-0.4-0000000000-20210607T115454Z-avarab@gmail.com
 >
-> > FWIW, here is what I have somewhere in 'seen' where two topics meet.
+> I think the gist of that feedback from Emily was that v1 could be
+> understood as aiming to optimize the perf test, but the main reason
+> I'm doing this split up is to make the code easier to read. The
+> changed commit message summarizes both goals.
 >
-> Oops, one change missed.
+> I also changed some nits in the code I spotted myself, e.g. "argc > 0"
+> checks to just "argc", and a simpler way of providing the "cnt"
+> default.
 
-Thanks; that matches my own resolution. I noticed that it does fail the
-new test in t5319, since writing a MIDX wants to make sure that we are
-only touching an alternate's object directory (which will fail if we are
-running `git multi-pack-index` from outside of a repository).
+Playing devil's advocate for a moment: I think that the current
+implementation is somewhat easier to read as it lives in a single file,
+and makes clear that each option implies different behavior through the
+body of the loop.
 
-My opinion is that we should require being inside of a repository to run
-the MIDX builtin. Otherwise we're allowing that command to modify any
-old MIDX, which doesn't make sense.
+If we're looking for things to clean up, I do like the conversion to the
+parse-options API instead of reading argv ourselves, but probably
+otherwise prefer the code as-is instead of split across many files.
 
-I think we probably need a single unifying topic, so I'm happy if you
-want to discard one of our two topics from seen in the meantime.
+But I may be in the minority, and there may be others who do find the
+split-up version easier to grok.
 
 Thanks,
 Taylor
