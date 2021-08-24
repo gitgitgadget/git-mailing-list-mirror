@@ -2,154 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74434C432BE
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 13:34:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86D67C4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 13:36:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 51B3A613B1
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 13:34:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C5C660F91
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 13:36:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237569AbhHXNes (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 09:34:48 -0400
-Received: from mout.gmx.net ([212.227.17.21]:40969 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234881AbhHXNeo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 09:34:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1629812035;
-        bh=mDNkB99EE5DvIJsqkGKrZUPBt8UByik3HH9anys95/k=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=W6gFQrgJCg8t9ngzBPmKKiSLIPl03aPdwTW9Tr12zNDWUg761bhJpKJIKSa9mfaOc
-         Se1BJq7OBUCEWMemPR7dXBLWWa48QoEZtG8ongCxk2rAyQ3Iio2PonV4/ImNBtjm6j
-         fKOJcEp+I/z+1KklUG2IHuxj8nngursxeraWvgpk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.86.215] ([89.1.214.7]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mzyuc-1nCwfl1i4s-00x2QP; Tue, 24
- Aug 2021 15:33:55 +0200
-Date:   Tue, 24 Aug 2021 15:33:53 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 0/4] rebase -r: some merge related fixes
-In-Reply-To: <pull.1015.v2.git.1629474038.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2108241533270.55@tvgsbejvaqbjf.bet>
-References: <pull.1015.git.1628860053.gitgitgadget@gmail.com> <pull.1015.v2.git.1629474038.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S237443AbhHXNg6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 09:36:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36600 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236661AbhHXNg6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 09:36:58 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1227C061757
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 06:36:13 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id q70so24915439ybg.11
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 06:36:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=WH2mRgS4o5c1io6h3qSvZealccfbwJMsgKrtGfwtHg0=;
+        b=f6b79GTaV8hOc94DgNRt4VhLldbdrNMEu0WoDiz3YTAIhLwcfSbLqg8dFhMR83n2k0
+         vMYG/K9kf5vD49N9DWzLSgN0ajhXsn4GSMUquLaY6HNCJUitERpOOVS0AD3ELLrV2Mer
+         wmdDmrWuK0nqG+NlFnQdg9m4Ih4eKJvwrvAoIJx81ln2jJr2UpOYajtED7k6tA4Aix2d
+         4d5BJnWQ1atnYa2kRSqu9qoT95J5uZFN+rnHzE2yP5fwYaVYsVZniYWpX6h1+M+VRuYz
+         P5H8uYbE9TT/Wy8L2rgWmfgJMCIMn8SQLXPdO5z3T+4Ueu6Vl/UfcGW+uPz3ZjVTs099
+         07kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=WH2mRgS4o5c1io6h3qSvZealccfbwJMsgKrtGfwtHg0=;
+        b=lY0wa9Z8lRpnx9lmp8tEQHHFtDiAeXB1yYyMqF569ZVQsU5n6PjOIomXxu7y7aUqCi
+         MuTO0ckWsnn1ut0WUIbH4emWVQS8kyTZG2jeqannhJDraw1G8uW6BdlFeJV3Y+F0oASH
+         LR3aJiHtZiVEK88Fb/EQMVrdfk9c/D0VeLyIC1DBdyfeb6Pp02uL1nNQEoqW0tkYiQUt
+         kumNvo8Pbxi9+Hb82h63agQB2VRBgMNVUTUS+J+YAlFEWYeCPveXNH0tGMXoaRHJwkB7
+         eUGyxoILt0TQTL2Fdi8VzK43Fcp1OLckWNcLCojyZ+zwK2nixynhfjt5P26kjKO4pEOu
+         mT4A==
+X-Gm-Message-State: AOAM531aB9mc1OOxCKgvFxzifMSi8UDw04CtJYaboD9H68aRl/PARog9
+        V7Ent0gI1lHe54KF9fE4a8s2NPZTxoaqCCPnuEg=
+X-Google-Smtp-Source: ABdhPJwaH3r52C2GWrnkHAMnS8wVOnJqBVn9OstCXHvzMBnwjmWu62oz9btERm286G4J4FK2VNcuWFl6g39/m8TjpUM=
+X-Received: by 2002:a25:444:: with SMTP id 65mr8856788ybe.520.1629812173274;
+ Tue, 24 Aug 2021 06:36:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-396644810-1629812035=:55"
-X-Provags-ID: V03:K1:cP9NxP4mJ++QsuQBzx+W6cAQZvqrCfJJpaCt3UNvf/rYa83Wn6S
- u6vxsnjNTVsA42JrV3DZjCMZd4Zn2iYBAmRnACwcYZGTkiVvn9lbWqf/WZvDWQIyUtRfI67
- 7w+RtWmfcBwmat+786R/jELuo0HaaeoQKEkzYj/QLneNqQ9u8kY3/FVnOFMpJQhoa1lO/df
- fw/xuubs7auTH7NYJ0iow==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:lrdfAxsmuQ0=:nMJaXqXgV+CjUy8Ja2tVw6
- VurSt9O0tIEfugWVPOktlZW8jR7qPUSsFMQanJtmgUe/oJZuBaLJBoAYmBaa2UtrDP2RWNLfj
- b0kTarwlN4bZRGar7YF01JEzskN6n/diV2ICWKjiSWPYmEnsJcpDHJHhZIE5HbkkmvPT61OyA
- G37dfay/ya7t3DFsRs78Y2MWvuni0V2gi3wzSsypuXbq7tR8/xKZhHVXj3GjOn0W7sR5Xg2pu
- oGNS6SzXGji8FGuAC6Ay7Gek5ejY8TZFkkx3pJyasyVYwxuuV/Zaq3WbTFdi07s4ZriMfx3T5
- +DXbfS7+NJLeGuhsP1kbW+djn5RBssv2ULzSB0rn2kbDxEILIu0hZSKB4tooGdcliFo4cTM1a
- dwLctFl+9CdZM1i39AiTHQWtcG2GAuX+M96fdrEZK5zNom4ampNXq6Ry3ezbFxH914x7SoSfb
- 3eotBhn4iZv3s8kFedi4sVwJRPSrOZHbW4Ry4iCgEGY2XtYajnErdDfKavgQjHPCwP+z1LSh6
- 7Snt/oVwBiBkh/H65FfbPqR4ifWwucNnIsfBn4g28Wykof+HA+LMFm8q3bI/PuZ8Hqp0J9lkr
- wZIpusuhUYXXYhGzy9IV5W3ii/O3g+dW//DScKZKGl+atdyEC0wr2X/T+BXRWajRfub7xE/yz
- U8MvNn5D9GXti4HF4AsVeuzYC2CYmM5UPxjraPxgAnL4Jmc7uA6LPDDJa9NZfgu2lV6sLz5L3
- jEIujFGI8dT93nu3G/IC4x+jUfybldH7vfO70acqld+4sWAQdN8nZTzrrtHgpwNo+eDryBtc+
- +ve/vv62JwbOVwUnb8xj6WPhhNPPuXoLx/lJ7KWuzgsx8ovztvvsRVRvwB0zk8aziCwEiwYaZ
- uUXb+1w3YdFV6TPu2IykWLfEjPFKWo/xu7gBKaH/7uX6ytYGAzvf5qUDE0qKx8O7l+v+053Pv
- lI2CR6hU11jhAFGWI7sfViikup8DEvcWc9VU4oT3D63vW7n+K+e9Z2hvbXZ7eDkv6tLg23nTP
- uTlxZYG8Ec5yCKw6ba3WcVkvd0qhd99ZJ7/edzfqeSf2GRuQ+jiz32xniW7QJd4vJzbuhS24f
- F81ogqLRyKPqH5rIfc4kuDdzus33SZgWU520gT99UrvcCA5qEt88xeNcg==
+References: <20210822161325.22038-1-worldhello.net@gmail.com>
+ <20210822161325.22038-2-worldhello.net@gmail.com> <nycvar.QRO.7.76.6.2108232232460.55@tvgsbejvaqbjf.bet>
+ <xmqqsfyzq1wq.fsf@gitster.g>
+In-Reply-To: <xmqqsfyzq1wq.fsf@gitster.g>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Tue, 24 Aug 2021 21:36:02 +0800
+Message-ID: <CANYiYbHUB-1LTyqCU2eFdYB7rHYq8v-ZBtL7ZR2wERfZry8TqQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] ci: new github-action for git-l10n code review
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git List <git@vger.kernel.org>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <hello@brighterdan.com>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Tue, Aug 24, 2021 at 5:36 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> >> For a push event, it will scan commits one by one. If a commit does no=
+t
+> >> look like a l10n commit (no file in "po/" has been changed), it will
+> >> immediately fail without checking for further commits. While for a
+> >> pull_request event, all new introduced commits will be scanned.
+> >>
+> >> "git-po-helper" will generate two kinds of suggestions, errors and
+> >> warnings. A l10n contributor should try to fix all the errors, and
+> >> should pay attention to the warnings. All the errors and warnings will
+> >> be reported in the last step of the l10n workflow as two message group=
+s.
+> >> For a pull_request event, will create additional comments in pull
+> >> request to report the result.
+> >
+> > It is a good idea to automate this.
+> >
+> > I am a bit concerned that the `ci-config` approach, even if we use it i=
+n
+> > the Git project itself, is quite cumbersome to use, though. So I hope t=
+hat
+> > we can find an alternative solution.
+> >
+> > One such solution could be to make the `git-po-helper` job contingent o=
+n
+> > part of the repository name. For example:
+> >
+> >   git-po-helper:
+> >     if: endsWith(github.repository, '/git-po')
+> >     [...]
+> >
+> > would skip the job unless the target repository's name is `git-po`.
+>
+> Nice.
+>
+> Can this be made into a matter purely local to git-l10n/git-po
+> repository and not git/git repository?  I am wondering if we can ee
+> if the current repository is git-l10n/git-po or its fork and run it
+> only if that is true.
 
---8323328-396644810-1629812035=:55
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+I have read almost all the github documents on github actions, and
+tried to find if I can use a local branch, such as "github-action" to
+hold local github-actions, but no locky.
 
-Hi Phillip,
+That is to say, the workflow file must be introduced to the master
+branch of =E2=80=9Cgit-l10n/git-po=E2=80=9D. As "git-l10n/git-po" is a fork=
+ of
+"git/git", the new workflow should be part of "git/git", and provide a
+way to disable it by default.
 
-On Fri, 20 Aug 2021, Phillip Wood via GitGitGadget wrote:
-
-> Thanks for the feedback on V1. I have added a sentence to the commit mes=
-sage
-> of the third patch to make it clear that the fast-forward code is just
-> moved, not changed
->
-> Cover letter from V1: This is a collection of merge related fixes for re=
-base
-> -r
->
->  * Make merge -c behave like reword.
->  * When fast-forwarding a merge don't leave .git/MERGE_MSG around (repor=
-ted
->    by G=C3=A1bor)
->  * Make merge -c work when with --strategy
->
-> Phillip Wood (4):
->   rebase -r: make 'merge -c' behave like reword
->   rebase -i: Add another reword test
->   rebase -r: don't write .git/MERGE_MSG when fast-forwarding
->   rebase -r: fix merge -c with a merge strategy
->
->  sequencer.c                   | 106 ++++++++++++++++++----------------
->  t/lib-rebase.sh               |  56 ++++++++++++++++++
->  t/t3404-rebase-interactive.sh |  13 +++++
->  t/t3430-rebase-merges.sh      |  38 +++++++++---
->  4 files changed, 155 insertions(+), 58 deletions(-)
->
->
-> base-commit: 66262451ec94d30ac4b80eb3123549cf7a788afd
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1015%2=
-Fphillipwood%2Fwip%2Fsequencer-merge-c-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1015/phil=
-lipwood/wip/sequencer-merge-c-v2
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1015
->
-> Range-diff vs v1:
->
->  1:  b514dbdf928 =3D 1:  b514dbdf928 rebase -r: make 'merge -c' behave l=
-ike reword
->  2:  511cf9204ad =3D 2:  511cf9204ad rebase -i: Add another reword test
->  3:  01d5ed4cba0 ! 3:  080e580e11c rebase -r: don't write .git/MERGE_MSG=
- when fast-forwarding
->      @@ Commit message
->           is not removed and can end up seeding the message of a commit =
-made
->           after the rebase has finished. Avoid writing .git/MERGE_MSG wh=
-en we
->           are fast-forwarding by writing the file after the fast-forward
->      -    checks.
->      +    checks. Note that there are no changes to the fast-forward cod=
-e, it is
->      +    simply moved.
-
-The result still looks fine to me.
-
-Thank you,
-Dscho
-
->
->           Note that the way this change is implemented means we no longe=
-r write
->           the author script when fast-forwarding either. I believe this =
-is safe
->  4:  f2a2e3531a1 =3D 4:  b6981ea5439 rebase -r: fix merge -c with a merg=
-e strategy
->
-> --
-> gitgitgadget
->
-
---8323328-396644810-1629812035=:55--
+--
+Jiang Xin
