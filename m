@@ -2,131 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89580C4338F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA693C432BE
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:10:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5B6AC6127B
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:07:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0CB961206
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 22:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235760AbhHXWHp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 18:07:45 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63027 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235507AbhHXWHo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 18:07:44 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B9D0A144F1A;
-        Tue, 24 Aug 2021 18:06:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vIkxg7AVtMrAkhNMUOhjPvZiZAsXcdZioiz6hZ
-        EoAzA=; b=Fs1ackj5dL+ID9CQ/KBRlFj/GIHiIMaxqPmLRRszyTtpTB9JYiUHat
-        wBuDn6Tn4eD9M4grmPnZ8U0BkYngdO0zI46VLlQUFR15b8eERxdiGsVSqqqqhO2f
-        XiwfPspBk5G74Ow8ODts1MZYHfFVBafPavMGjWzfP03Tq2YnwZ+WI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9EA97144F19;
-        Tue, 24 Aug 2021 18:06:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CFDA0144F15;
-        Tue, 24 Aug 2021 18:06:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
+        id S238705AbhHXWLM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 18:11:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43628 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238699AbhHXWLL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 18:11:11 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 523E3C061757
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 15:10:27 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id j18so28236412ioj.8
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 15:10:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=XmdFsDSt9v0UH51iG7dBDi27CF4ApgRuH1vOlkgga84=;
+        b=1izLwmJRwihGu6PKfxXS942YODpPT1P972APjqL6VCffoBnefZt0BQFLSkWM9iJnvh
+         64sPLWMoE4WnS3LbywsaogAedj1T8iXYXEd/fM2fiMtHdMMXJL2by29iBM7i7Kg5Fd2P
+         Q7WwjZNViib+vBwV7tEldpsjQMmYt6+e7d74vksJYHo9zzeU91GxLHaM1dHT9TnhDvEd
+         yRCFi0HRseCPG06T8uL3q0oPY2Yk6gN6t8HhinM/z3Hr6T/G/qbUomAgBOiHRThfBtpa
+         HBft6YoyPtUVZo/GmFgnypyrVFcXEhSKzGa4AdDULJ3CgeWAA2ZhnpkS08AMfDOX4Qhs
+         XMTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=XmdFsDSt9v0UH51iG7dBDi27CF4ApgRuH1vOlkgga84=;
+        b=pJrZI/o4ttc/nUTM1WxO2UMXhYSKn3ENk11xjLY7dWBdbj2ZWxogTi+4uarfQZlkk9
+         bH1orymInG4a4TLQpQerwlWVGFq1f6eM14wNQjKl9JbTqnznW2wV6HrYiyK0J9d2J+ym
+         mPHspUX5OEK5D1eNGyFlJ4zm08NzEKtM+E7xBkBoQfzCtXDrlovkAggD/1ED+DHjJdsf
+         hHyR1XHDWe5aEF5bx50/Fo2aPoP+r9vM9W03Y8QAChSsDOpGJg/2NF0woYXUP/0wCatK
+         QqjORzijj4BM2/VaTTPcYa3kRoriYb5h057B6a8JYZyidKT6UgXbcfE5QTvFF44YbOuT
+         7Sag==
+X-Gm-Message-State: AOAM5314GX+/ZBthKsE3HVSN/QYAot63z2qsx8QG18l9LI5u/4CG5hDC
+        ZOmxX+DlUHcdFQQPyGyCpiA9rg==
+X-Google-Smtp-Source: ABdhPJy4I8dOSSlAUcwj9mNlFJz0yAmRjV4yUJgTYRMCJE7YbRJrtWbjBMZfbPTFzkCg1lTM3bdCnA==
+X-Received: by 2002:a05:6638:5ae:: with SMTP id b14mr36809608jar.80.1629843026808;
+        Tue, 24 Aug 2021 15:10:26 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id c23sm10719882ioi.31.2021.08.24.15.10.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Aug 2021 15:10:26 -0700 (PDT)
+Date:   Tue, 24 Aug 2021 18:10:25 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
         jonathantanmy@google.com
 Subject: Re: [PATCH v4 05/25] midx: clear auxiliary .rev after replacing the
  MIDX
+Message-ID: <YSVuUYFh7lmhNlEy@nand.local>
 References: <cover.1617991824.git.me@ttaylorr.com>
-        <cover.1629821743.git.me@ttaylorr.com>
-        <771741844be3570395abfda813ed5ef2fa78332e.1629821743.git.me@ttaylorr.com>
-        <xmqqa6l6oafd.fsf@gitster.g> <YSVX18UXh9vX+Zhp@nand.local>
-        <xmqqr1eimtrp.fsf@gitster.g> <YSVjnSDaBXgXvT9W@nand.local>
-        <xmqq35qymrcn.fsf@gitster.g>
-Date:   Tue, 24 Aug 2021 15:06:55 -0700
-In-Reply-To: <xmqq35qymrcn.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        24 Aug 2021 15:04:56 -0700")
-Message-ID: <xmqqy28qlcow.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+ <cover.1629821743.git.me@ttaylorr.com>
+ <771741844be3570395abfda813ed5ef2fa78332e.1629821743.git.me@ttaylorr.com>
+ <xmqqa6l6oafd.fsf@gitster.g>
+ <YSVX18UXh9vX+Zhp@nand.local>
+ <xmqqr1eimtrp.fsf@gitster.g>
+ <YSVjnSDaBXgXvT9W@nand.local>
+ <xmqq35qymrcn.fsf@gitster.g>
+ <xmqqy28qlcow.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 98E54072-0527-11EC-BAE5-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqy28qlcow.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Aug 24, 2021 at 03:06:55PM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > FWIW, here is what I have somewhere in 'seen' where two topics meet.
+>
+> Oops, one change missed.
 
-> FWIW, here is what I have somewhere in 'seen' where two topics meet.
+Thanks; that matches my own resolution. I noticed that it does fail the
+new test in t5319, since writing a MIDX wants to make sure that we are
+only touching an alternate's object directory (which will fail if we are
+running `git multi-pack-index` from outside of a repository).
 
-Oops, one change missed.
+My opinion is that we should require being inside of a repository to run
+the MIDX builtin. Otherwise we're allowing that command to modify any
+old MIDX, which doesn't make sense.
 
-diff --cc midx.c
-index c0209751b5,4574e6d411..0000000000
---- i/midx.c
-+++ w/midx.c
-@@@ -947,11 -1136,29 +1136,29 @@@ static int write_midx_internal(const ch
-  	for_each_file_in_pack_dir(object_dir, add_pack_to_midx, &ctx);
-  	stop_progress(&ctx.progress);
-  
-- 	if (ctx.m && ctx.nr == ctx.m->num_packs && !packs_to_drop)
-- 		goto cleanup;
-+ 	if (ctx.m && ctx.nr == ctx.m->num_packs && !packs_to_drop) {
-+ 		struct bitmap_index *bitmap_git;
-+ 		int bitmap_exists;
-+ 		int want_bitmap = flags & MIDX_WRITE_BITMAP;
-+ 
-+ 		bitmap_git = prepare_midx_bitmap_git(the_repository, ctx.m);
-+ 		bitmap_exists = bitmap_git && bitmap_is_midx(bitmap_git);
-+ 		free_bitmap_index(bitmap_git);
-+ 
-+ 		if (bitmap_exists || !want_bitmap) {
-+ 			/*
-+ 			 * The correct MIDX already exists, and so does a
-+ 			 * corresponding bitmap (or one wasn't requested).
-+ 			 */
-+ 			if (!want_bitmap)
- -				clear_midx_files_ext(the_repository, ".bitmap",
-++				clear_midx_files_ext(object_dir, ".bitmap",
-+ 						     NULL);
-+ 			goto cleanup;
-+ 		}
-+ 	}
-  
-- 	ctx.preferred_pack_idx = -1;
-  	if (preferred_pack_name) {
-+ 		int found = 0;
-  		for (i = 0; i < ctx.nr; i++) {
-  			if (!cmp_idx_or_pack_name(preferred_pack_name,
-  						  ctx.info[i].pack_name)) {
-@@@ -1090,6 -1351,9 +1351,9 @@@
-  
-  	commit_lock_file(&lk);
-  
- -	clear_midx_files_ext(the_repository, ".bitmap", midx_hash);
- -	clear_midx_files_ext(the_repository, ".rev", midx_hash);
-++	clear_midx_files_ext(object_dir, ".bitmap", midx_hash);
-++	clear_midx_files_ext(object_dir, ".rev", midx_hash);
-+ 
-  cleanup:
-  	for (i = 0; i < ctx.nr; i++) {
-  		if (ctx.info[i].p) {
-@@@ -1165,7 -1429,8 +1429,8 @@@ void clear_midx_file(struct repository 
-  	if (remove_path(midx))
-  		die(_("failed to clear multi-pack-index at %s"), midx);
-  
- -	clear_midx_files_ext(r, ".bitmap", NULL);
- -	clear_midx_files_ext(r, ".rev", NULL);
-++	clear_midx_files_ext(r->objects->odb->path, ".bitmap", NULL);
- +	clear_midx_files_ext(r->objects->odb->path, ".rev", NULL);
-  
-  	free(midx);
-  }
+I think we probably need a single unifying topic, so I'm happy if you
+want to discard one of our two topics from seen in the meantime.
+
+Thanks,
+Taylor
