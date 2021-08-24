@@ -8,70 +8,68 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F14D5C4338F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B466C4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:53:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DDA346127B
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:52:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00AB36138B
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 21:53:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236828AbhHXVwt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 17:52:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39174 "EHLO
+        id S235895AbhHXVxz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 17:53:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236513AbhHXVwk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 17:52:40 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32C69C0612E7
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:51:54 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id d22-20020a1c1d16000000b002e7777970f0so2848194wmd.3
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:51:54 -0700 (PDT)
+        with ESMTP id S236513AbhHXVxe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 17:53:34 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8335AC061796
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:52:49 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id i6so9605456wrv.2
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 14:52:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=uirt+/Fd9vyJ7GknotIoX/RPYOmGJD0KnjJarGrZ0yQ=;
-        b=V9lhlbwBjJ/x2bBL7TW9vTa+7sWTlgz4oag0sDK1UEjrq9qn4BZ5d2tzdVntKaWAIJ
-         X164Xq3jYrC0QN4eRX3h2zyxFm6ndxm3bRzE94HuK1vppmdRiXkT6H0A4vxqZ4gt1HY4
-         qKq/uugdzLC72MzRMo7yJvcnVQVT8NMOQ15bBPwrGIQZu21Wj1oaFDwH8/I/3Xvz7cVJ
-         6sluToZJ3JIZmVBBpaftuiPYaiUcToVxGqEbLYRRZBABhjZezIcc2C1NCbkiqeEy8Vdg
-         R2eKs7oj22V7Oh93+jEnxn5kDlUAi69UPxzWkUy2Mz19NLEAlTwsUCtnBJGlW+uHvSJ/
-         qJ3w==
+        bh=EanV4q9h6+26esLEkg3TaW0nVQ2fALRpqsJISy3dnr0=;
+        b=YwN5NwLEf2JEiM2JjUxhy2njex41rlR3hXZww2w+t9FSvI4LOg9fFfU4kFUxphyQO3
+         kmUF0c5Z5L1JLuzcKmPFYYlrG1H6RSp0d8FaTvlkD9gsA1is3bdOxeNgboe4oG1/AmR6
+         56N/b7pybA+d/V/14qWrMZvBwVj5feYBJSSpxGN9sAdeQMpmHppsk0wGoYwMZEbCmat4
+         FZqdIRtJqUF5a8vS/Oc3EVhell67sg3zyMOvjnjugB6ZDVF31hTeQBc6tFR7nz1FDmSJ
+         Xjcr6UQ0BCatXgEIYGYAh4IabDXtf49k8XCT12wHZtt31amSmrqPgWKGf/qjKSCtBHCa
+         K1CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=uirt+/Fd9vyJ7GknotIoX/RPYOmGJD0KnjJarGrZ0yQ=;
-        b=BnnbgF391cfIZr/Mi4PFxD18Vi0QTI5p24NKWgWSHnT1luBpATaKusA+pG73Oe9h9M
-         QTS6S0BTmV9O1qPl6iN9dBD8tHbKBzGk+Gg0/26P5AMg2ftzDhr1sIoaOH+X6yi5RQ0R
-         eas2G0Dexemf8Ms8k3ijhAPf1Zrzwj7MRpWnBBOzQOQGTSvqb+KuLv2oq55GWWyB5cRE
-         6zhSfBUhOvgR+d9PoWXGRmLJaOeWcfb6f0XBliA7vmzgxry/tKopoP1XlQGcJuTvOGYA
-         SaBKdycoD6dBkGFRUuX7C18H/8W0pibVfR/uKwSHI2lPlMovyODWUrCS5W9x+mS/SsqS
-         nClw==
-X-Gm-Message-State: AOAM531jCxmRdLngK9KEm5/3c93hDi/wRRChL+CsC72XoOEUUyFd8X1I
-        3UbU58T4OgZDtPC6MTud+PU+JtY9yPA=
-X-Google-Smtp-Source: ABdhPJwR/2OCx5+XmycwRbTDKbn8xK2F9s7T7jNOIyCz5rCdQchvo0WGYAiqLEO+CO4eSy3K61c6mA==
-X-Received: by 2002:a05:600c:1911:: with SMTP id j17mr5966958wmq.164.1629841912813;
-        Tue, 24 Aug 2021 14:51:52 -0700 (PDT)
+        bh=EanV4q9h6+26esLEkg3TaW0nVQ2fALRpqsJISy3dnr0=;
+        b=P/VOAWbBtfs5usuPQJX0W/HL1ximtSI2LuXjd77lvoIFkda3S1hqBzPjnWR+Ipetme
+         xKCsc9HgwgbSly702hpGDKypnt07EqZYqifLsAPpuwPJe4uM/7GarvjA4pb2lye/vmas
+         698bjKsmSKqEB4DXyNXinkOsXEIse9Kug1+/6hDXxHwpmZqrU3F2qU3ecaowMry+3Ft0
+         UMBz1gDp/QNGwZujrcT85/10RHy9PdKiceXdffR0zONohDD6UzknR8PZvr1jjqgl7KEQ
+         o2eDaLA+fGQq1xifNdqaX367KjY07Zn0L8B1jWN7q/jc/NtaYRUSZWeI2HUvkxiUhUjR
+         7EdA==
+X-Gm-Message-State: AOAM5336nxnfsfgGxzrpJYNvHyhUrvPoYZjb0aYOmNftjFk5vuDTsrl8
+        T4tcasJpajydG8YdszdqFVfNvtgcTOM=
+X-Google-Smtp-Source: ABdhPJzaWBAoNvaoxs+dqRRT9BrDqhOcYoWQn3WF9xuAOqwO9aE0Q9v1lqh2OzOSvOPfNj9CR0o7kQ==
+X-Received: by 2002:a5d:590b:: with SMTP id v11mr16447901wrd.125.1629841968191;
+        Tue, 24 Aug 2021 14:52:48 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p12sm3098607wmq.44.2021.08.24.14.51.52
+        by smtp.gmail.com with ESMTPSA id l2sm3475222wme.28.2021.08.24.14.52.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 14:51:52 -0700 (PDT)
-Message-Id: <8d55a6ba2fdf64cee4eb51f3cb6f9808bd0b7505.1629841904.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1009.v4.git.1629841904.gitgitgadget@gmail.com>
-References: <pull.1009.v3.git.1629206602.gitgitgadget@gmail.com>
-        <pull.1009.v4.git.1629841904.gitgitgadget@gmail.com>
+        Tue, 24 Aug 2021 14:52:47 -0700 (PDT)
+Message-Id: <bb150483bcfd0469cd88bab735bc1178fb6628f5.1629841966.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1019.v2.git.1629841965.gitgitgadget@gmail.com>
+References: <pull.1019.git.1629220124.gitgitgadget@gmail.com>
+        <pull.1019.v2.git.1629841965.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 24 Aug 2021 21:51:44 +0000
-Subject: [PATCH v4 10/10] sparse-checkout: add config to disable deleting dirs
+Date:   Tue, 24 Aug 2021 21:52:41 +0000
+Subject: [PATCH v2 2/6] merge: make sparse-aware with ORT
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, newren@gmail.com, matheus.bernardino@usp.br,
-        stolee@gmail.com, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+Cc:     newren@gmail.com, stolee@gmail.com, gitster@pobox.com,
+        Taylor Blau <me@ttaylorr.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
@@ -80,81 +78,116 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The clean_tracked_sparse_directories() method deletes the tracked
-directories that go out of scope when the sparse-checkout cone changes,
-at least in cone mode. This is new behavior, but is recommended based on
-our understanding of how users are interacting with the feature in most
-cases.
+Allow 'git merge' to operate without expanding a sparse index, at least
+not immediately. The index still will be expanded in a few cases:
 
-It is possible that some users will object to the new behavior, so
-create a new configuration option 'index.deleteSparseDirectories' that
-can be set to 'false' to make clean_tracked_sparse_directories() do
-nothing. This will keep all untracked files in the working tree and
-cause performance problems with the sparse index, but those trade-offs
-are for the user to decide.
+1. If the merge strategy is 'recursive', then we enable
+   command_requires_full_index at the start of the merge_recursive()
+   method. We expect sparse-index users to also have the 'ort' strategy
+   enabled.
+
+2. With the 'ort' strategy, if the merge results in a conflicted file,
+   then we expand the index before updating the working tree. The loop
+   that iterates over the worktree replaces index entries and tracks
+   'origintal_cache_nr' which can become completely wrong if the index
+   expands in the middle of the operation. This safety valve is
+   important before that loop starts. A later change will focus this
+   to only expand if we indeed have a conflict outside of the
+   sparse-checkout cone.
+
+3. Other merge strategies are executed as a 'git merge-X' subcommand,
+   and those strategies are currently protected with the
+   'command_requires_full_index' guard.
+
+Some test updates are required, including a mistaken 'git checkout -b'
+that did not specify the base branch, causing merges to be fast-forward
+merges.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config/index.txt     | 6 ++++++
- builtin/sparse-checkout.c          | 9 ++++++++-
- t/t1091-sparse-checkout-builtin.sh | 4 ++++
- 3 files changed, 18 insertions(+), 1 deletion(-)
+ builtin/merge.c                          |  3 +++
+ merge-ort.c                              |  8 ++++++++
+ merge-recursive.c                        |  3 +++
+ t/t1092-sparse-checkout-compatibility.sh | 12 ++++++++++--
+ 4 files changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config/index.txt b/Documentation/config/index.txt
-index 75f3a2d1054..c65da20a931 100644
---- a/Documentation/config/index.txt
-+++ b/Documentation/config/index.txt
-@@ -1,3 +1,9 @@
-+index.deleteSparseDirectories::
-+	When enabled, the cone mode sparse-checkout feature will delete
-+	directories that are outside of the sparse-checkout cone, unless
-+	such a directory contains an untracked, non-ignored file. Defaults
-+	to true.
-+
- index.recordEndOfIndexEntries::
- 	Specifies whether the index file should include an "End Of Index
- 	Entry" section. This reduces index load time on multiprocessor
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index d0f5c4702be..33ec729d9de 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -102,7 +102,7 @@ static int sparse_checkout_list(int argc, const char **argv)
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 22f23990b37..926de328fbb 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1276,6 +1276,9 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	if (argc == 2 && !strcmp(argv[1], "-h"))
+ 		usage_with_options(builtin_merge_usage, builtin_merge_options);
  
- static void clean_tracked_sparse_directories(struct repository *r)
- {
--	int i, was_full = 0;
-+	int i, value, was_full = 0;
- 	struct strbuf path = STRBUF_INIT;
- 	size_t pathlen;
- 	struct string_list_item *item;
-@@ -118,6 +118,13 @@ static void clean_tracked_sparse_directories(struct repository *r)
- 	    !r->index->sparse_checkout_patterns->use_cone_patterns)
- 		return;
- 
-+	/*
-+	 * Users can disable this behavior.
-+	 */
-+	if (!repo_config_get_bool(r, "index.deletesparsedirectories", &value) &&
-+	    !value)
-+		return;
++	prepare_repo_settings(the_repository);
++	the_repository->settings.command_requires_full_index = 0;
 +
  	/*
- 	 * Use the sparse index as a data structure to assist finding
- 	 * directories that are safe to delete. This conversion to a
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 71236981e64..e0f31186d89 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -666,6 +666,10 @@ test_expect_success 'cone mode clears ignored subdirectories' '
- 	git -C repo status --porcelain=v2 >out &&
- 	test_must_be_empty out &&
+ 	 * Check if we are _not_ on a detached HEAD, i.e. if there is a
+ 	 * current branch.
+diff --git a/merge-ort.c b/merge-ort.c
+index 6eb910d6f0c..8e754b769e1 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -4058,6 +4058,14 @@ static int record_conflicted_index_entries(struct merge_options *opt)
+ 	if (strmap_empty(&opt->priv->conflicted))
+ 		return 0;
  
-+	git -C repo -c index.deleteSparseDirectories=false sparse-checkout reapply &&
-+	test_path_is_dir repo/folder1 &&
-+	test_path_is_dir repo/deep/deeper2 &&
++	/*
++	 * We are in a conflicted state. These conflicts might be inside
++	 * sparse-directory entries, so expand the index preemtively.
++	 * Also, we set original_cache_nr below, but that might change if
++	 * index_name_pos() calls ask for paths within sparse directories.
++	 */
++	ensure_full_index(index);
 +
- 	git -C repo sparse-checkout reapply &&
- 	test_path_is_missing repo/folder1 &&
- 	test_path_is_missing repo/deep/deeper2 &&
+ 	/* If any entries have skip_worktree set, we'll have to check 'em out */
+ 	state.force = 1;
+ 	state.quiet = 1;
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 3355d50e8ad..1f563cd6874 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -3750,6 +3750,9 @@ int merge_recursive(struct merge_options *opt,
+ 	assert(opt->ancestor == NULL ||
+ 	       !strcmp(opt->ancestor, "constructed merge base"));
+ 
++	prepare_repo_settings(opt->repo);
++	opt->repo->settings.command_requires_full_index = 1;
++
+ 	if (merge_start(opt, repo_get_commit_tree(opt->repo, h1)))
+ 		return -1;
+ 	clean = merge_recursive_internal(opt, h1, h2, merge_bases, result);
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index ddc86bb4152..dc56252865c 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -47,7 +47,7 @@ test_expect_success 'setup' '
+ 		git checkout -b base &&
+ 		for dir in folder1 folder2 deep
+ 		do
+-			git checkout -b update-$dir &&
++			git checkout -b update-$dir base &&
+ 			echo "updated $dir" >$dir/a &&
+ 			git commit -a -m "update $dir" || return 1
+ 		done &&
+@@ -647,7 +647,15 @@ test_expect_success 'sparse-index is not expanded' '
+ 	echo >>sparse-index/extra.txt &&
+ 	ensure_not_expanded add extra.txt &&
+ 	echo >>sparse-index/untracked.txt &&
+-	ensure_not_expanded add .
++	ensure_not_expanded add . &&
++
++	ensure_not_expanded checkout -f update-deep &&
++	(
++		sane_unset GIT_TEST_MERGE_ALGORITHM &&
++		git -C sparse-index config pull.twohead ort &&
++		ensure_not_expanded merge -m merge update-folder1 &&
++		ensure_not_expanded merge -m merge update-folder2
++	)
+ '
+ 
+ # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
 -- 
 gitgitgadget
+
