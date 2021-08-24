@@ -2,75 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC023C432BE
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 17:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83138C4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 17:49:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8516610CD
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 17:37:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 62D79613D2
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 17:49:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241705AbhHXRih (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 13:38:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36952 "EHLO
+        id S238457AbhHXRuR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 13:50:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241606AbhHXRgh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 13:36:37 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C0F4C08ED3F
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 10:01:41 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id y14-20020a0568302a0e00b0051acbdb2869so41100699otu.2
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 10:01:41 -0700 (PDT)
+        with ESMTP id S241973AbhHXRt0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 13:49:26 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B30C6C014AFB
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 10:09:05 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id x10-20020a056830408a00b004f26cead745so47963565ott.10
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 10:09:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=rCdb59S4ASWULvz1ZznZ+vW8Fmky2IKIk40eVojds2o=;
-        b=TTHz1eChT+4wU3nniy+ie7E6FdGH6sO4wEE11Q3Q2AN22KOQl93+OIlTzvMLK7vlI5
-         GSubmmudwR3NjIzFBJ5FqwTYy5+ethhAyWl6oOaNZBPUctmu0eNo1XhwwCwBpz9Kbwok
-         8C2c/l8xJu/hXTL2e/lZh/7CWwOI3Lan/+d7FIt0E+i6+xwGC6S1pJqIWJf1XzRsjVjp
-         EmdCT3nZXs/G+xHIPvpCZDwm95QLwrO/3Zbdf6pwUDTeOoV2j6h2m1PsjHM30IhD5yPX
-         UUK+vrauEhOkkFVPO+UkeONpwvOpM8xJ10AtR9zW+xokZjRSGxk7Getr8QsnwT+TrEUC
-         ePlA==
+        bh=ajTzH7El8R1fBEkpVfeJ7hjiJkuqZFLZf1wlvkm3gqU=;
+        b=hhcYi6F4EwiL9Gc55HEVDc0bWyEVa2WpOGBEy3iODftRRyXsoL3582W0kTenXLpi8D
+         zZbi5LajoivnfvuiW7C3D1ag8UyhM7Qwgvbaiy0V8Nn7uVKKtarySuMzPzxLWW5BhbSJ
+         9H+jjQFhp9p30t9hqxd0vw8MnFglp2gmLn5p3d41dSmYXHOnJodeOKXhK9LpfWh8/C5r
+         oRfJfGWSdOuTAkrKYRhsfTui34vEJm7FgEaS26gSEANopfrpHOzILOxINwBpHRm/JqxW
+         ZwmvGm+9yS/flKLgNaIAGM1fjaCh7+oMJicupYfzRfEoAmiI6t2Lmp/M+XCdx5dYoNXO
+         8zLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=rCdb59S4ASWULvz1ZznZ+vW8Fmky2IKIk40eVojds2o=;
-        b=lkKUG0CMVsYrqZ/ELVMJpr9RIhIKLhFIUcRQa/1Gy1Eizy0UyTawBKDPSAjxu0QwLu
-         LM7hkdMnWtigNWwu9I6tOydgJ5P1G+rbEeKF4PexX312yWDWEgKl4DwtyknmNS2TUdAJ
-         +yXRhz9i71OdNsiQjZQnu3pIZSj8OviJljoCovwWGAkSunglthxuh6EO5ciqX4GT+OG3
-         50MSIHNyi5210uBtFHgbC08HlN8wQfK2uMwh30O38spQTr4qXAGwNfK/6ZDh89BgOwfN
-         /2rQdNaTG3l+G2NAD2YuhneYu+wB7oHlKMJjFwSr/6ufHzYzASadYwEDh+yZnCs5WjFE
-         ZzMQ==
-X-Gm-Message-State: AOAM532ml/hFoDqtsLLXwCjw/NkivJDySwGXCpB+XNgg/1Av5rlKkCYG
-        Jnbe8zJtkD7LgdEm0nJv+fHex3swl88=
-X-Google-Smtp-Source: ABdhPJyIHpfubvrRnJTkhK50mVwSnR2N3HdSiPNHkSEI5J33Ts3VNG0/gyIl3rwPi5EThr1dxCI5iQ==
-X-Received: by 2002:a05:6808:2193:: with SMTP id be19mr3646853oib.102.1629824500392;
-        Tue, 24 Aug 2021 10:01:40 -0700 (PDT)
+        bh=ajTzH7El8R1fBEkpVfeJ7hjiJkuqZFLZf1wlvkm3gqU=;
+        b=CHi8MnBsPDTSbDPFTC4KLt01LxC0fYwPHrYS+Sr++seiUowDnRHG3TMQRad6FcSxRU
+         NITFu66z3nlgFo6SLi1ftCWKliVEFomo2qlDwg9g03qny9kfXIE6ji0hwb4zKMXyzbO+
+         ZkXxTpzjXkeomD4HnNFDB/8vmuHaTxLSkq3WeHK3KTsGLrz2t5Lpjuuhx26vPvxP5BJk
+         /OlJL87y6DC7kGZoat4xFJHwtzwM3awHnLnNV3vQBMbEROq/2wpQOvL/hxFRrtWjnLPh
+         K7ORcWBjuYXQmC8JXK1VJiguTuoxRP534uzM6vRkQSUcPyR53ifIi0v4cFPm0uv1fgi5
+         YLuw==
+X-Gm-Message-State: AOAM531yR1FKAEVurcHHR2w6u49z4SsccDnq8UjR1LBvQQeI3nyZ/X6X
+        Nm2asZMQWh55vNLCTNPWhLI=
+X-Google-Smtp-Source: ABdhPJx5p2WHvk2XZfT0OAN6byFTfL0vmH12CLff3aKAq4szYHL+8lkNQaDYz7ypAx79hauOGBdl/g==
+X-Received: by 2002:aca:af0d:: with SMTP id y13mr3546223oie.161.1629824944845;
+        Tue, 24 Aug 2021 10:09:04 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:3cc8:64de:6d4:4ca6? ([2600:1700:e72:80a0:3cc8:64de:6d4:4ca6])
-        by smtp.gmail.com with ESMTPSA id w12sm979505oor.23.2021.08.24.10.01.39
+        by smtp.gmail.com with ESMTPSA id 7sm4608438oth.69.2021.08.24.10.09.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Aug 2021 10:01:39 -0700 (PDT)
-Subject: Re: [PATCH v2 1/4] bundle API: start writing API documentation
+        Tue, 24 Aug 2021 10:09:04 -0700 (PDT)
+Subject: Re: [PATCH v2 2/4] bundle API: change "flags" to be
+ "extra_index_pack_args"
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
 References: <cover-0.4-0000000000-20210727T004015Z-avarab@gmail.com>
  <cover-v2-0.4-00000000000-20210823T110136Z-avarab@gmail.com>
- <patch-v2-1.4-dc8591f6d0b-20210823T110136Z-avarab@gmail.com>
+ <patch-v2-2.4-3d7bd9c33be-20210823T110136Z-avarab@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <1193fbe3-f4f6-d8e7-3730-770d2932655d@gmail.com>
-Date:   Tue, 24 Aug 2021 13:01:38 -0400
+Message-ID: <30620e13-4509-1905-7644-9962b6adf9c5@gmail.com>
+Date:   Tue, 24 Aug 2021 13:09:02 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <patch-v2-1.4-dc8591f6d0b-20210823T110136Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-2.4-3d7bd9c33be-20210823T110136Z-avarab@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -79,38 +80,96 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 8/23/2021 7:02 AM, Ævar Arnfjörð Bjarmason wrote:
-> There are no other API docs in bundle.h, but this is at least a
-> start. We'll add a parameter to this function in a subsequent commit,
-> but let's start by documenting it.
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  bundle.h | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/bundle.h b/bundle.h
-> index 1927d8cd6a4..84a6df1b65d 100644
-> --- a/bundle.h
-> +++ b/bundle.h
-> @@ -27,6 +27,13 @@ int create_bundle(struct repository *r, const char *path,
->  		  int version);
->  int verify_bundle(struct repository *r, struct bundle_header *header, int verbose);
->  #define BUNDLE_VERBOSE 1
+...
+> --- a/builtin/bundle.c
+> +++ b/builtin/bundle.c
+> @@ -165,7 +165,8 @@ static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix)
+>  	struct option options[] = {
+>  		OPT_END()
+>  	};
+> -	char *bundle_file;
+> +	char* bundle_file;
+
+nit: errant movement of "*" here.
+
+> +	struct strvec extra_args = STRVEC_INIT;
+...
+> -	ret = !!unbundle(the_repository, &header, bundle_fd, 0) ||
+> +	ret = !!unbundle(the_repository, &header, bundle_fd, &extra_args) ||
+
+I'm assuming that you will be adding something that adds to extra_args
+in a future commit. It might be better to just convert the "0" to "NULL"
+here and add extra_args when you actually use it.
+
+>  int unbundle(struct repository *r, struct bundle_header *header,
+> -	     int bundle_fd, int flags)
+> +	     int bundle_fd, struct strvec *extra_index_pack_args)
+>  {
+> -	const char *argv_index_pack[] = {"index-pack",
+> -					 "--fix-thin", "--stdin", NULL, NULL};
+>  	struct child_process ip = CHILD_PROCESS_INIT;
+> +	int i;
+>  
+> -	if (flags & BUNDLE_VERBOSE)
+> -		argv_index_pack[3] = "-v";
+> +	strvec_push(&ip.args, "index-pack");
+> +	strvec_push(&ip.args, "--fix-thin");
+> +	strvec_push(&ip.args, "--stdin");
+> +	if (extra_index_pack_args) {
+> +		struct strvec *extra = extra_index_pack_args;
+
+Creating a shorter variable name seems unnecessary.
+
+> +		for (i = 0; i < extra->nr; i++)
+> +			strvec_push(&ip.args, extra->v[i]);
+
+This seems like a good opportunity to create and use a
+strvec_concat() method.
+
+> +		strvec_clear(extra_index_pack_args);
+
+Why is it the responsibility of this method to clear these args?
+I suppose it is convenient. It just seems a bit wrong to me.
+
+>  /**
+>   * Unbundle after reading the header with read_bundle_header().
+>   *
+>   * We'll invoke "git index-pack --stdin --fix-thin" for you on the
+>   * provided `bundle_fd` from read_bundle_header().
+> + *
+> + * Provide extra_index_pack_args to pass any extra arguments
+> + * (e.g. "-v" for verbose/progress), NULL otherwise. The provided
+> + * extra_index_pack_args (if any) will be strvec_clear()'d for you
+> + * (like the run-command.h API itself does).
+>   */
+>  int unbundle(struct repository *r, struct bundle_header *header,
+> -	     int bundle_fd, int flags);
+> +	     int bundle_fd, struct strvec *extra_index_pack_args);
+>  int list_bundle_refs(struct bundle_header *header,
+>  		int argc, const char **argv);
+>  
+> diff --git a/transport.c b/transport.c
+> index 17e9629710a..8bc4b5fcd3c 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -162,12 +162,15 @@ static int fetch_refs_from_bundle(struct transport *transport,
+>  			       int nr_heads, struct ref **to_fetch)
+>  {
+>  	struct bundle_transport_data *data = transport->data;
+> +	struct strvec extra_index_pack_args = STRVEC_INIT;
+>  	int ret;
+>  
+> +	strvec_push(&extra_index_pack_args, "-v");
 > +
-> +/**
+>  	if (!data->get_refs_from_bundle_called)
+>  		get_refs_from_bundle(transport, 0, NULL);
+>  	ret = unbundle(the_repository, &data->header, data->fd,
+> -			   transport->progress ? BUNDLE_VERBOSE : 0);
 
-nit: what's the use of the "/**" start to these doc comments?
+Previously, this was conditioned on 'transport->progress', but above
+you unconditionally add the "-v" option. Seems like a bug.
 
-I see examples in the codebase of both, but we are not consistent even
-within a single file. Here is how I counted instances of each:
-
-$ git grep "^/\\*\\*\$" -- *.h | wc -l
-266
-$ git grep "^/\\*\$" -- *.h | wc -l
-775
-
-So we use "/*" three times as often as "/**". Should we attempt to
-be more consistent in the future?
+> +		       &extra_index_pack_args);
 
 Thanks,
 -Stolee
