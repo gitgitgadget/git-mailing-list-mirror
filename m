@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 318F8C4338F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 16:16:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27251C4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 16:16:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0D41760F4C
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 16:16:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0390B61212
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 16:16:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229543AbhHXQQk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 12:16:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46576 "EHLO
+        id S229723AbhHXQQv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 12:16:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229584AbhHXQQh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 12:16:37 -0400
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E5B3C061764
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 09:15:53 -0700 (PDT)
-Received: by mail-io1-xd30.google.com with SMTP id n24so27064490ion.10
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 09:15:53 -0700 (PDT)
+        with ESMTP id S229604AbhHXQQl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 12:16:41 -0400
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C482CC061757
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 09:15:55 -0700 (PDT)
+Received: by mail-il1-x12b.google.com with SMTP id s16so21030280ilo.9
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 09:15:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=JToHhdtVTn4etFI7xctZBFCHT+B0WOr0FcUxXLnQ+cw=;
-        b=mxseS81UxeLaW1Fn5av4iuALFYcKrvwESqXo+L3TbsUtMDGrSLtsl5DZV0mTxz8eFE
-         nv219+5kZq73VdnsStq5mDfTuJJcdvTZ3WSVSEYsgY6ifUTGsM7skPv+CSXteBg41W+k
-         /c65F8A0h0hSxy7rkXmkuso31pzg7/j4eBXEd3KBNkNgO+6A4d0zKuk6vJiPSBC7343w
-         GYc0wxZ09wKWsHm7ykoL5kVZoGompYHvNRAjMrQkXgQTQCINaN37g39npJbRVtmCvP6k
-         MQSKt9QIeQprYslayqm4A7Mca20LLYVf3TJZfdAEoGHZHRM+LrmqE/P8kfLviVGDaTpj
-         37FA==
+        bh=w02MQkrlLL8g6njXtmUYSgp+9uoMaT+bjGJFefhDnDk=;
+        b=K1jA9xgoX7KBCgij45V1h73pQixXEzuP+h75f4lxbrYAAL0+Icy3ogWVUFjTEmXWpv
+         0X9dKxR3M2b48QO5Z4nQ9nHRlknK2p2rj45NfO9zJbEKQ0DfWzA+/m02Nb9VqmeQBQFG
+         znDj7MyKsGBcNsVcu51MRLK3td2TRH8w2931P5/p4idlPh1WIrj5MCW0LphAqwrgnI4H
+         SY+F1SyTaD5nl2lsdmlhcZQm70lmdjF+yRt9N/gQ7iuOIVtvPh3Q70Os3BqiWoUL480g
+         07L7Kdq6PP1ogeKCuOEvSj1Xo3jNP/fWpKUE13FI0ccN+mqll7us7rTQ5NeUTcLb++WT
+         TdTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=JToHhdtVTn4etFI7xctZBFCHT+B0WOr0FcUxXLnQ+cw=;
-        b=g/83tkkLZGFAUH3sgX0aXMvCJM4SWnmTaBmjCNYZiOTWQqvaWErNE/dPq1TDT8L/2R
-         +73nCJPk9JwKdKvPijg2+jIROODp9+zPE90fUwWNlhJNSjNwjJiAG7xtKVxyiUHV3JLY
-         GWjnB2MH5B/gx5VElim3TYdORcvvG7Mxgp/aV2oKHqiCW+fe1dBfIJsLWl1srSNggGvo
-         X07aqk1PgTPmMaikuQTilKB9j19CPgpJ7ILBvjrX9xukQYCl2yo99s/D24jzme3T6/9o
-         T37WA+n+GYhCDHrXFX0WaHjKPLMK/4mAFsQDkIGcvBSZQS4kxzo/XwChR/Rg6L2VTi1e
-         pIfw==
-X-Gm-Message-State: AOAM533VShFR/suMLKVjKc+D8bqY5KYL39vu3B4PakoSJAA5PglukAR2
-        sOQKeq/Qa+UCQIWv/9S10fX80rWi9el39KWO
-X-Google-Smtp-Source: ABdhPJzsHe5U8/YqXizHisR8tKmVN7rZ3WQBeWfWn56VxH1mLRWp1rsnUMUf2FF00ub+js/ECbmgpg==
-X-Received: by 2002:a02:958e:: with SMTP id b14mr34917317jai.123.1629821752586;
-        Tue, 24 Aug 2021 09:15:52 -0700 (PDT)
+        bh=w02MQkrlLL8g6njXtmUYSgp+9uoMaT+bjGJFefhDnDk=;
+        b=JMoNgaKu9PmDHsEuky3pqIg0ghInyN30y+Ttu2OkkS31/+bWBk74VAIMu2evr9mHh+
+         xBAoUHaVb3Ca/ysWm2ZEmSPQE3VpsfIRgyL7xVPeIiRfHQi7elnaZkkdPpzjKKst6KfE
+         novjf6cBCDVWHipjgbPugp2vMfHFf5A1cLKlrKl1IjmHwX9CqCWSbR38iH91q7bF04By
+         j2x3d7wQK4QkfVvIp6OkBH/mU/3arPNaK/yAzlJZO8hcD2HQMkdb0YQH3v4ZXcQfrmEK
+         HIfOVfAzqUkj3+rR9h1+yaQ4lEEKefg9hhsIzbY3rlyi+M+JPavFaL0u4vr1Ekkk1CKi
+         ghdg==
+X-Gm-Message-State: AOAM533JuwzsR7SK4Gf3UU7AMctP3Kh/LyutL/7mtVBvSrW6apGGU2/U
+        r1eDbP79grSoD6IYFachNjx8xHxkvxYJXiJZ
+X-Google-Smtp-Source: ABdhPJzmlgcMBzHtdLnFXEp0bi6Y9pyWrtBZyOhZsQMWkGkifuiIq36uM7rPpDGHbN3VBJuiQdJ5Sg==
+X-Received: by 2002:a05:6e02:d03:: with SMTP id g3mr27699922ilj.127.1629821755109;
+        Tue, 24 Aug 2021 09:15:55 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id q15sm10059303ilm.60.2021.08.24.09.15.51
+        by smtp.gmail.com with ESMTPSA id c13sm10657154iod.25.2021.08.24.09.15.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 09:15:51 -0700 (PDT)
-Date:   Tue, 24 Aug 2021 12:15:51 -0400
+        Tue, 24 Aug 2021 09:15:54 -0700 (PDT)
+Date:   Tue, 24 Aug 2021 12:15:54 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         jonathantanmy@google.com
-Subject: [PATCH v4 01/25] pack-bitmap.c: harden 'test_bitmap_walk()' to check
- type bitmaps
-Message-ID: <92dc0bbc0d0e3297f9eb6f51e8d6f40b367a77ca.1629821743.git.me@ttaylorr.com>
+Subject: [PATCH v4 02/25] pack-bitmap-write.c: gracefully fail to write
+ non-closed bitmaps
+Message-ID: <979276bc74a9e703da844d461503f6720663ae31.1629821743.git.me@ttaylorr.com>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1629821743.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -73,106 +73,264 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The special `--test-bitmap` mode of `git rev-list` is used to compare
-the result of an object traversal with a bitmap to check its integrity.
-This mode does not, however, assert that the types of reachable objects
-are stored correctly.
+The set of objects covered by a bitmap must be closed under
+reachability, since it must be the case that there is a valid bit
+position assigned for every possible reachable object (otherwise the
+bitmaps would be incomplete).
 
-Harden this mode by teaching it to also check that each time an object's
-bit is marked, the corresponding bit should be set in exactly one of the
-type bitmaps (whose type matches the object's true type).
+Pack bitmaps are never written from 'git repack' unless repacking
+all-into-one, and so we never write non-closed bitmaps (except in the
+case of partial clones where we aren't guaranteed to have all objects).
 
-Co-authored-by: Jeff King <peff@peff.net>
-Signed-off-by: Jeff King <peff@peff.net>
+But multi-pack bitmaps change this, since it isn't known whether the
+set of objects in the MIDX is closed under reachability until walking
+them. Plumb through a bit that is set when a reachable object isn't
+found.
+
+As soon as a reachable object isn't found in the set of objects to
+include in the bitmap, bitmap_writer_build() knows that the set is not
+closed, and so it now fails gracefully.
+
+A test is added in t0410 to trigger a bitmap write without full
+reachability closure by removing local copies of some reachable objects
+from a promisor remote.
+
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+ builtin/pack-objects.c   |  3 +-
+ pack-bitmap-write.c      | 76 ++++++++++++++++++++++++++++------------
+ pack-bitmap.h            |  2 +-
+ t/t0410-partial-clone.sh |  9 ++++-
+ 4 files changed, 64 insertions(+), 26 deletions(-)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index d999616c9e..9b11af87aa 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -1325,10 +1325,52 @@ void count_bitmap_commit_list(struct bitmap_index *bitmap_git,
- struct bitmap_test_data {
- 	struct bitmap_index *bitmap_git;
- 	struct bitmap *base;
-+	struct bitmap *commits;
-+	struct bitmap *trees;
-+	struct bitmap *blobs;
-+	struct bitmap *tags;
- 	struct progress *prg;
- 	size_t seen;
- };
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index de00adbb9e..8a523624a1 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1256,7 +1256,8 @@ static void write_pack_file(void)
  
-+static void test_bitmap_type(struct bitmap_test_data *tdata,
-+			     struct object *obj, int pos)
-+{
-+	enum object_type bitmap_type = OBJ_NONE;
-+	int bitmaps_nr = 0;
-+
-+	if (bitmap_get(tdata->commits, pos)) {
-+		bitmap_type = OBJ_COMMIT;
-+		bitmaps_nr++;
-+	}
-+	if (bitmap_get(tdata->trees, pos)) {
-+		bitmap_type = OBJ_TREE;
-+		bitmaps_nr++;
-+	}
-+	if (bitmap_get(tdata->blobs, pos)) {
-+		bitmap_type = OBJ_BLOB;
-+		bitmaps_nr++;
-+	}
-+	if (bitmap_get(tdata->tags, pos)) {
-+		bitmap_type = OBJ_TAG;
-+		bitmaps_nr++;
-+	}
-+
-+	if (bitmap_type == OBJ_NONE)
-+		die("object %s not found in type bitmaps",
-+		    oid_to_hex(&obj->oid));
-+
-+	if (bitmaps_nr > 1)
-+		die("object %s does not have a unique type",
-+		    oid_to_hex(&obj->oid));
-+
-+	if (bitmap_type != obj->type)
-+		die("object %s: real type %s, expected: %s",
-+		    oid_to_hex(&obj->oid),
-+		    type_name(obj->type),
-+		    type_name(bitmap_type));
-+}
-+
- static void test_show_object(struct object *object, const char *name,
- 			     void *data)
+ 				bitmap_writer_show_progress(progress);
+ 				bitmap_writer_select_commits(indexed_commits, indexed_commits_nr, -1);
+-				bitmap_writer_build(&to_pack);
++				if (bitmap_writer_build(&to_pack) < 0)
++					die(_("failed to write bitmap index"));
+ 				bitmap_writer_finish(written_list, nr_written,
+ 						     tmpname.buf, write_bitmap_options);
+ 				write_bitmap_index = 0;
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 88d9e696a5..d374f7884b 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -125,15 +125,20 @@ static inline void push_bitmapped_commit(struct commit *commit)
+ 	writer.selected_nr++;
+ }
+ 
+-static uint32_t find_object_pos(const struct object_id *oid)
++static uint32_t find_object_pos(const struct object_id *oid, int *found)
  {
-@@ -1338,6 +1380,7 @@ static void test_show_object(struct object *object, const char *name,
- 	bitmap_pos = bitmap_position(tdata->bitmap_git, &object->oid);
- 	if (bitmap_pos < 0)
- 		die("Object not in bitmap: %s\n", oid_to_hex(&object->oid));
-+	test_bitmap_type(tdata, object, bitmap_pos);
+ 	struct object_entry *entry = packlist_find(writer.to_pack, oid);
  
- 	bitmap_set(tdata->base, bitmap_pos);
- 	display_progress(tdata->prg, ++tdata->seen);
-@@ -1352,6 +1395,7 @@ static void test_show_commit(struct commit *commit, void *data)
- 				     &commit->object.oid);
- 	if (bitmap_pos < 0)
- 		die("Object not in bitmap: %s\n", oid_to_hex(&commit->object.oid));
-+	test_bitmap_type(tdata, &commit->object, bitmap_pos);
+ 	if (!entry) {
+-		die("Failed to write bitmap index. Packfile doesn't have full closure "
++		if (found)
++			*found = 0;
++		warning("Failed to write bitmap index. Packfile doesn't have full closure "
+ 			"(object %s is missing)", oid_to_hex(oid));
++		return 0;
+ 	}
  
- 	bitmap_set(tdata->base, bitmap_pos);
- 	display_progress(tdata->prg, ++tdata->seen);
-@@ -1399,6 +1443,10 @@ void test_bitmap_walk(struct rev_info *revs)
++	if (found)
++		*found = 1;
+ 	return oe_in_pack_pos(writer.to_pack, entry);
+ }
  
- 	tdata.bitmap_git = bitmap_git;
- 	tdata.base = bitmap_new();
-+	tdata.commits = ewah_to_bitmap(bitmap_git->commits);
-+	tdata.trees = ewah_to_bitmap(bitmap_git->trees);
-+	tdata.blobs = ewah_to_bitmap(bitmap_git->blobs);
-+	tdata.tags = ewah_to_bitmap(bitmap_git->tags);
- 	tdata.prg = start_progress("Verifying bitmap entries", result_popcnt);
- 	tdata.seen = 0;
+@@ -331,9 +336,10 @@ static void bitmap_builder_clear(struct bitmap_builder *bb)
+ 	bb->commits_nr = bb->commits_alloc = 0;
+ }
  
+-static void fill_bitmap_tree(struct bitmap *bitmap,
+-			     struct tree *tree)
++static int fill_bitmap_tree(struct bitmap *bitmap,
++			    struct tree *tree)
+ {
++	int found;
+ 	uint32_t pos;
+ 	struct tree_desc desc;
+ 	struct name_entry entry;
+@@ -342,9 +348,11 @@ static void fill_bitmap_tree(struct bitmap *bitmap,
+ 	 * If our bit is already set, then there is nothing to do. Both this
+ 	 * tree and all of its children will be set.
+ 	 */
+-	pos = find_object_pos(&tree->object.oid);
++	pos = find_object_pos(&tree->object.oid, &found);
++	if (!found)
++		return -1;
+ 	if (bitmap_get(bitmap, pos))
+-		return;
++		return 0;
+ 	bitmap_set(bitmap, pos);
+ 
+ 	if (parse_tree(tree) < 0)
+@@ -355,11 +363,15 @@ static void fill_bitmap_tree(struct bitmap *bitmap,
+ 	while (tree_entry(&desc, &entry)) {
+ 		switch (object_type(entry.mode)) {
+ 		case OBJ_TREE:
+-			fill_bitmap_tree(bitmap,
+-					 lookup_tree(the_repository, &entry.oid));
++			if (fill_bitmap_tree(bitmap,
++					     lookup_tree(the_repository, &entry.oid)) < 0)
++				return -1;
+ 			break;
+ 		case OBJ_BLOB:
+-			bitmap_set(bitmap, find_object_pos(&entry.oid));
++			pos = find_object_pos(&entry.oid, &found);
++			if (!found)
++				return -1;
++			bitmap_set(bitmap, pos);
+ 			break;
+ 		default:
+ 			/* Gitlink, etc; not reachable */
+@@ -368,15 +380,18 @@ static void fill_bitmap_tree(struct bitmap *bitmap,
+ 	}
+ 
+ 	free_tree_buffer(tree);
++	return 0;
+ }
+ 
+-static void fill_bitmap_commit(struct bb_commit *ent,
+-			       struct commit *commit,
+-			       struct prio_queue *queue,
+-			       struct prio_queue *tree_queue,
+-			       struct bitmap_index *old_bitmap,
+-			       const uint32_t *mapping)
++static int fill_bitmap_commit(struct bb_commit *ent,
++			      struct commit *commit,
++			      struct prio_queue *queue,
++			      struct prio_queue *tree_queue,
++			      struct bitmap_index *old_bitmap,
++			      const uint32_t *mapping)
+ {
++	int found;
++	uint32_t pos;
+ 	if (!ent->bitmap)
+ 		ent->bitmap = bitmap_new();
+ 
+@@ -401,11 +416,16 @@ static void fill_bitmap_commit(struct bb_commit *ent,
+ 		 * Mark ourselves and queue our tree. The commit
+ 		 * walk ensures we cover all parents.
+ 		 */
+-		bitmap_set(ent->bitmap, find_object_pos(&c->object.oid));
++		pos = find_object_pos(&c->object.oid, &found);
++		if (!found)
++			return -1;
++		bitmap_set(ent->bitmap, pos);
+ 		prio_queue_put(tree_queue, get_commit_tree(c));
+ 
+ 		for (p = c->parents; p; p = p->next) {
+-			int pos = find_object_pos(&p->item->object.oid);
++			pos = find_object_pos(&p->item->object.oid, &found);
++			if (!found)
++				return -1;
+ 			if (!bitmap_get(ent->bitmap, pos)) {
+ 				bitmap_set(ent->bitmap, pos);
+ 				prio_queue_put(queue, p->item);
+@@ -413,8 +433,12 @@ static void fill_bitmap_commit(struct bb_commit *ent,
+ 		}
+ 	}
+ 
+-	while (tree_queue->nr)
+-		fill_bitmap_tree(ent->bitmap, prio_queue_get(tree_queue));
++	while (tree_queue->nr) {
++		if (fill_bitmap_tree(ent->bitmap,
++				     prio_queue_get(tree_queue)) < 0)
++			return -1;
++	}
++	return 0;
+ }
+ 
+ static void store_selected(struct bb_commit *ent, struct commit *commit)
+@@ -432,7 +456,7 @@ static void store_selected(struct bb_commit *ent, struct commit *commit)
+ 	kh_value(writer.bitmaps, hash_pos) = stored;
+ }
+ 
+-void bitmap_writer_build(struct packing_data *to_pack)
++int bitmap_writer_build(struct packing_data *to_pack)
+ {
+ 	struct bitmap_builder bb;
+ 	size_t i;
+@@ -441,6 +465,7 @@ void bitmap_writer_build(struct packing_data *to_pack)
+ 	struct prio_queue tree_queue = { NULL };
+ 	struct bitmap_index *old_bitmap;
+ 	uint32_t *mapping;
++	int closed = 1; /* until proven otherwise */
+ 
+ 	writer.bitmaps = kh_init_oid_map();
+ 	writer.to_pack = to_pack;
+@@ -463,8 +488,11 @@ void bitmap_writer_build(struct packing_data *to_pack)
+ 		struct commit *child;
+ 		int reused = 0;
+ 
+-		fill_bitmap_commit(ent, commit, &queue, &tree_queue,
+-				   old_bitmap, mapping);
++		if (fill_bitmap_commit(ent, commit, &queue, &tree_queue,
++				       old_bitmap, mapping) < 0) {
++			closed = 0;
++			break;
++		}
+ 
+ 		if (ent->selected) {
+ 			store_selected(ent, commit);
+@@ -499,7 +527,9 @@ void bitmap_writer_build(struct packing_data *to_pack)
+ 
+ 	stop_progress(&writer.progress);
+ 
+-	compute_xor_offsets();
++	if (closed)
++		compute_xor_offsets();
++	return closed ? 0 : -1;
+ }
+ 
+ /**
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 99d733eb26..020cd8d868 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -87,7 +87,7 @@ struct ewah_bitmap *bitmap_for_commit(struct bitmap_index *bitmap_git,
+ 				      struct commit *commit);
+ void bitmap_writer_select_commits(struct commit **indexed_commits,
+ 		unsigned int indexed_commits_nr, int max_bitmaps);
+-void bitmap_writer_build(struct packing_data *to_pack);
++int bitmap_writer_build(struct packing_data *to_pack);
+ void bitmap_writer_finish(struct pack_idx_entry **index,
+ 			  uint32_t index_nr,
+ 			  const char *filename,
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index a211a66c67..bbcc51ee8e 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -536,7 +536,13 @@ test_expect_success 'gc does not repack promisor objects if there are none' '
+ repack_and_check () {
+ 	rm -rf repo2 &&
+ 	cp -r repo repo2 &&
+-	git -C repo2 repack $1 -d &&
++	if test x"$1" = "x--must-fail"
++	then
++		shift
++		test_must_fail git -C repo2 repack $1 -d
++	else
++		git -C repo2 repack $1 -d
++	fi &&
+ 	git -C repo2 fsck &&
+ 
+ 	git -C repo2 cat-file -e $2 &&
+@@ -561,6 +567,7 @@ test_expect_success 'repack -d does not irreversibly delete promisor objects' '
+ 	printf "$THREE\n" | pack_as_from_promisor &&
+ 	delete_object repo "$ONE" &&
+ 
++	repack_and_check --must-fail -ab "$TWO" "$THREE" &&
+ 	repack_and_check -a "$TWO" "$THREE" &&
+ 	repack_and_check -A "$TWO" "$THREE" &&
+ 	repack_and_check -l "$TWO" "$THREE"
 -- 
 2.31.1.163.ga65ce7f831
 
