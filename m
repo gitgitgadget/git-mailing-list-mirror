@@ -2,91 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37771C4338F
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:39:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EFCDC4338F
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:46:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14B5361265
-	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:39:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 07B2361242
+	for <git@archiver.kernel.org>; Tue, 24 Aug 2021 10:46:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236248AbhHXKk0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 06:40:26 -0400
-Received: from mail2.odoo.com ([149.202.180.44]:56296 "EHLO mail2.odoo.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235905AbhHXKkZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Aug 2021 06:40:25 -0400
-Received: from [10.10.10.121] (host-109-88-121-142.dynamic.voo.be [109.88.121.142])
-        (Authenticated sender: xmo)
-        by mail2.odoo.com (Postfix) with ESMTPSA id 16988A28EE
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 12:23:24 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=odoo.com; s=mail;
-        t=1629800604; bh=BnxNJPIYA6bLXPMpuuYF0eouDb7ZL5bYVNNEnZAOGKA=;
-        h=To:References:Subject:In-Reply-To:From:Date:From;
-        z=To:=20git@vger.kernel.org|References:=20<xmqqim68lp20.fsf@gitster
-         .c.googlers.com>|Subject:=20=3D?UTF-8?Q?Re=3D3a_Proposal=3Dc3=3Db6
-         _git_push_-F?=3D|In-Reply-To:=20<xmqqim68lp20.fsf@gitster.c.google
-         rs.com>|From:=20Xavier=20Morel=20<xmo@odoo.com>|Date:=20Tue,=2024=
-         20Aug=202021=2012:23:23=20+0200;
-        b=h1vXsLk1f4gOA7LtxoOtN7bLpiUHQaIUJksGC+m0Qg4BQfWrcYAjLiXuSxM82e7j6
-         /htKT/BNNM/AvBfBHKbGRXi/dZoXHGVu4KXmN9r7VMxWmOiRygsV6Mnk8PvOzKLcp9
-         UrCAjJLIsOQwb4A0CyEoyeqn8hBysQatcEoznAgI=
-To:     git@vger.kernel.org
-References: <xmqqim68lp20.fsf@gitster.c.googlers.com>
-Subject: =?UTF-8?Q?Re=3a_Proposal=c3=b6_git_push_-F?=
-In-Reply-To: <xmqqim68lp20.fsf@gitster.c.googlers.com>
-From:   Xavier Morel <xmo@odoo.com>
-Organization: Odoo
-Message-ID: <c49da491-f8a3-440f-54e2-295be8dbcfd7@odoo.com>
-Date:   Tue, 24 Aug 2021 12:23:23 +0200
+        id S236142AbhHXKrQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 06:47:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53444 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235905AbhHXKrP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Aug 2021 06:47:15 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 708B4C061757
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 03:46:31 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id u13-20020a17090abb0db0290177e1d9b3f7so1505644pjr.1
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 03:46:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=IPickOJqZicCbXw0Z/YT9LexmmOLUjuC4WTn0DZqY0c=;
+        b=fB5qf0j3k+SnlEUslljNo+ODOb6gST7wWdbR8SgqiJDgN73Kff9wUGEgRLgnVGk7Qw
+         a30VHK9MsHkGqUGIQbODh3fEDfdL/9VCWrmv2NSyiBUMLi+Phgc/7gn7e+uvhYQWFEVR
+         6vPzVTTzAhhs6rCG4ZEZ0OUjEUpGMoH79dD9/ZFpClygzroAer2EGDcQUZyJ6CH0+vMT
+         gB/mrAE39+hnouQJ9Uu7g9VBORUxjPiyx4ILT16JlOV3OX4SXcidP6s8gmp36PHLskaK
+         U9Dson73b9FyffcLQvt48mXxM/ZY+SoHuUgke+78VWB5Ux+O2FDTuzdsSXaoAzm2K35x
+         G5pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=IPickOJqZicCbXw0Z/YT9LexmmOLUjuC4WTn0DZqY0c=;
+        b=soPYvXZUC8+5WUngZYJeHeWXa63Dcsc+wU/4dX+EsbpJh2WYdk7C02raLbuWdNjjFi
+         wUsCeAcSrU6W7IMiB4kIvMFnQEmKOLCgkhHOinBuqslfEFFCokCFf5MYnsorJBx2/vKf
+         3TWOtzpLkodLAbNfWwALkDjNU94dEHbDpCh/bsEqwiiMD3GZh4sQ8YVPT1fJb0KmFTgZ
+         pwJ/upTXrkEVN7f8GDfE4jp6Pc1OinvMOfD7/OUPbiGcgiO2cAMdMomUFHWktjxpZwT4
+         J1yFekLZJPbtoLbZX6Db+USb/do18FaHiAb26OIaCQQPzwHmMIia8yNY6z2gZV+G2AbL
+         pCwQ==
+X-Gm-Message-State: AOAM531hJo91/GKzyNYdBMdCzyUnDpat+Q1J/mbAWD2C4RLnNbHkQzET
+        gGCBY0rEgdwldjBcj0rNLRztKB1tlRc=
+X-Google-Smtp-Source: ABdhPJzd11yHekf+bw9jjeEIui3qnhhkUGmJDfe0jijWsKsXR7k/KmxrzRD0LgsMEN4GMdFmvFuzzg==
+X-Received: by 2002:a17:902:e850:b0:12d:91c6:1cd with SMTP id t16-20020a170902e85000b0012d91c601cdmr33142360plg.16.1629801990693;
+        Tue, 24 Aug 2021 03:46:30 -0700 (PDT)
+Received: from [192.168.43.80] (subs28-116-206-12-43.three.co.id. [116.206.12.43])
+        by smtp.gmail.com with ESMTPSA id y12sm22906939pgk.7.2021.08.24.03.46.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Aug 2021 03:46:30 -0700 (PDT)
+Subject: Re: git log --encoding=HTML is not supported
+To:     =?UTF-8?Q?Krzysztof_=c5=bbelechowski?= <giecrilj@stegny.2a.pl>,
+        git@vger.kernel.org
+References: <9896630.2IqcCWsCYL@localhost.localdomain>
+ <22496693-cf63-a278-c85e-d9e4376e2a59@gmail.com>
+ <2197959.ZqlxZjeC1n@localhost.localdomain>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <05ffcc36-f473-14f3-d7df-1efa0dcfcade@gmail.com>
+Date:   Tue, 24 Aug 2021 17:46:28 +0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+ Thunderbird/78.13.0
 MIME-Version: 1.0
+In-Reply-To: <2197959.ZqlxZjeC1n@localhost.localdomain>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
- > Because the form "--force-with-lease=<this-exact-commit>" is a
- > strict improvement over "--force", but the lazy "guess where the
- > other end should be" form, i.e. "--force-with-lease" alone, is worse
- > than "--force" in that it gives users false sense of security
- > without offering the safety the "lease" mechanism gives.
+On 24/08/21 17.33, Krzysztof Żelechowski wrote:
+> Dnia wtorek, 24 sierpnia 2021 12:31:14 CEST Bagas Sanjaya pisze:
+> 
+>> Please speak English here (in other words, re-submit git-bugreport
+>> without l10n).
+> 
+> How do I do that?
 
-That seems like a case of the perfect being the enemy of the good.
+You need to set locale to English when executing `git bugreport`:
 
-Generaly, "force with lease" is a better behaviour than "force". It will 
-not catch all usage errors, but it will catch lots: again last week 
-colleagues had issues which would had been caught by caught by using 
-"--force-with-lease" instead" of "-f", but of course "-f" is "the 
-default" in rebase-based workflows, what with being so short and sweet.
+```
+LANGUAGE=en_US.UTF-8 LC_ALL=en_US.UTF-8 /path/to/git bugreport
+```
 
-I found XonqNopp's proposal as I was planning to post a similar message, 
-though stricter: I don't think `--force` deserves a short form at all, I 
-  believe `-f` should be progressively migrated over to alias to 
-`force-with-lease` as it's a significantly better default behaviour, and 
-the odd *need* for `--force` (of which I can't personnally remember one) 
-can be typed out in its entirety.
-
-For the vast majority of users, all it will do is catch genuine errors. 
-For a small minority it will have no effect[0]. And for an infinitesimal 
-number it will be unhelpful as `--force` without lease or inclusion is 
-genuinely what they were looking for.
-
-I genuinely do not understand what `force-if-includes` does from reading 
-the manpage and just learned that it exists from Johannes Schindelin's 
-message, it might be an even better default behaviour for `-f`.
-
-Either way I think `-f` should not, ultimately, alias to `--force`.
-
-My idea there was to introduce a setting initially defaulting to `false` 
-and a warning about the migration (triggered on `-f` when that setting 
-is unset), then a few versions later flip the default to `true`.
-
-[0] and I would expect users of tools which helpfully fetch in the 
-background to not be using the CLI, and thus not be impacted by this change.
+-- 
+An old man doll... just what I always wanted! - Clara
