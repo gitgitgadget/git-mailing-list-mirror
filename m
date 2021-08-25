@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6D75C432BE
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 02:22:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92372C4320A
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 02:22:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9ECDD61184
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 02:22:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7CC2D61184
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 02:22:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237494AbhHYCXW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Aug 2021 22:23:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43532 "EHLO
+        id S237542AbhHYCXY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Aug 2021 22:23:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237542AbhHYCXU (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S237594AbhHYCXU (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 24 Aug 2021 22:23:20 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B0A9C0617A8
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 19:22:33 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id qe12-20020a17090b4f8c00b00179321cbae7so3698774pjb.2
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 19:22:33 -0700 (PDT)
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9795AC0617AE
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 19:22:35 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id mw10-20020a17090b4d0a00b0017b59213831so3145621pjb.0
+        for <git@vger.kernel.org>; Tue, 24 Aug 2021 19:22:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=IdJsBBXPrKP6PQNZtIraFQqIN5D48duU1jn8S4lBxJk=;
-        b=pEhhM75i+OfOG2Z1zIi6HWgVCu+sNdbUlQi+Bs5bBNV3lHmR7nTiwa5rT5SEHY0TgX
-         siCOz8NRaJZLlN0j0fL0AeyragmfRHWzQKk4yZktWS8ci8YyZ4RXASpMcOUyWcX0i0J3
-         wIBYkBBODZ1uo61oPBe1gzhPgKyeiWe7YQSjabK/1LGC5uB9UKBa4xMkIZs0na7wxvvR
-         esBwJ3rpGFW4BU4nq7TYODX5+ytMVccFfL38JZxM2IDxAf9qA1KCwHOHsj9B5XrDWfIU
-         9GMbYhvo19+Y7AhdG1Yky4yA9wA0MOcKSF6HmNbfmOoMnfvV5b6TSrnSJBG7KJP1rY86
-         BLDA==
+        bh=0qQjliPr0/s7baFkmaMyhWgWFFttSbuWmEbFgxprA7E=;
+        b=LtjozlB4Fl71ep91cPQctdebOIU0mEIaUClMMUVUP5pyk5jjSV+v5t39ZSZVmErzjK
+         gu4dF5UwgNoSWi6G2qNI2dZmSZZsqQ1NbkPexhmzxYPhK4kW0jY8GO8k8qn2z+c/5Rgn
+         5No7StXgmKT+V95h+iJzftXBF3FZG0ec++Huxbv8/TZAfsNWEmRh0NXJ4NYVbFFVHRcj
+         jHy/rn+0QSn5KgEX4GV+Noin7wLgbLpnqdQ9Q5wBsIxlF8SDHmmqsM8lgct41osor7o/
+         oX4PaEttPagoRGz7wmmu15D8xWK0uYlTn37vh4Rx0Hyq7AfzqBiui78/+49tKaBV7Tzw
+         xrrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=IdJsBBXPrKP6PQNZtIraFQqIN5D48duU1jn8S4lBxJk=;
-        b=QzKKw5F8gLhHao9gDSkGEorlS13/9V9lNq4/IK6swtPSz1WW6cY1frLwmvQlfAEg3h
-         bqJYSin3eEKosOckYsqVCnzri155cmZv2RFu7sMrdQMUXpAK12qoXqbRzyivuBamOBKi
-         BEboKaMV91Zm4FYMiFrEcpKN1S2Pcgjhnc8iAKtuO9l9w5PQVu5M+ewSBrlnd++4fSmP
-         yGVUhb2SowQ3pdmEP/R87BGPJUDrCYrmPsFRrBPk/yVEG77j9YuyaCxbDatg5LjfiLZv
-         h1Z00dlmEiAlce7z6fnO8GAgZy61+8ZwPWS11xxcjpIa+7zaml8N+oKrJHGH5gpdvBPw
-         EGJw==
-X-Gm-Message-State: AOAM532BQdxRKl1q0r/szgD9mLmAlxee0tvMUopyJ+IeKbrqFaoxxf4D
-        XBb0POoEt7nrfnalTELJ2Kg=
-X-Google-Smtp-Source: ABdhPJwmk4YIorLS6RZhQOuu2QYjmGuForKf7+vaWbIWxmKhBruuUNXu1OLSrj0fzWZWozGKV3M9iw==
-X-Received: by 2002:a17:902:d2c3:b0:136:3916:c936 with SMTP id n3-20020a170902d2c300b001363916c936mr5889418plc.85.1629858153224;
-        Tue, 24 Aug 2021 19:22:33 -0700 (PDT)
+        bh=0qQjliPr0/s7baFkmaMyhWgWFFttSbuWmEbFgxprA7E=;
+        b=uJGO8RIXlwa0xOqHbeWv75Zo10EkmFtAyhciGgnPD7EwUGfLXNvikj/PPCDdJYONLI
+         Wmuhv3qZoQ+P6A0gMMPjfbipyPUIJq2nNKos3vlpgX91jerEo6mNdCDOH+kOoKqUxWaR
+         4TCh5c58cGeu86RzbQIj0ToqmwiYLJ8lDiTSDTKdpPJ8iUahte1Q1qfZ9W/7y3IEZo8z
+         fFwJotHM2iO+9CtOPIwYuA6ebyU8TRiC87ZYG3D9CKXlXYfOj9gzRWJlptj4CYJUjxqi
+         DFpUwNHpFbODc50d3qUT7sd4sU4y5HyA1wIr4EN4EvbVGFR1r2JcSPOBeVLS7kzDKCBO
+         u55w==
+X-Gm-Message-State: AOAM530SQq9upEg8j4Stmk5wzHQpXZ1KcxeuZEGGWRHhwFeWFoExApyJ
+        BDe4T2WFYrIT1WKOWQ3nvQg=
+X-Google-Smtp-Source: ABdhPJxX0IEu8JqQVV6ouwcMXu5T/SiZcCV3GjJpDRkxecJhDWTIGmZTmwN5wqjerZ/S6hEp1Ojf6Q==
+X-Received: by 2002:a17:90a:db96:: with SMTP id h22mr7957354pjv.212.1629858155174;
+        Tue, 24 Aug 2021 19:22:35 -0700 (PDT)
 Received: from localhost.localdomain ([47.246.98.155])
-        by smtp.gmail.com with ESMTPSA id e14sm3628683pjg.40.2021.08.24.19.22.31
+        by smtp.gmail.com with ESMTPSA id e14sm3628683pjg.40.2021.08.24.19.22.33
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Aug 2021 19:22:32 -0700 (PDT)
+        Tue, 24 Aug 2021 19:22:34 -0700 (PDT)
 From:   Teng Long <dyroneteng@gmail.com>
 To:     gitster@pobox.com, dyroneteng@gmail.com
 Cc:     avarab@gmail.com, git@vger.kernel.org, jonathantanmy@google.com
-Subject: [PATCH v5 09/14] commit.h: add wrapped tags in commit struct
-Date:   Wed, 25 Aug 2021 10:21:53 +0800
-Message-Id: <011e5eaea3f48eeacac1614f769e8fd809e0c093.1629805396.git.dyroneteng@gmail.com>
+Subject: [PATCH v5 10/14] object.h: add referred tags in `referred_objects` struct
+Date:   Wed, 25 Aug 2021 10:21:54 +0800
+Message-Id: <824844499f3761b9bdc7952a5ace3721f3c92432.1629805396.git.dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.31.1.456.gec51e24953
 In-Reply-To: <cover.1629805395.git.dyroneteng@gmail.com>
 References: <cover.1629805395.git.dyroneteng@gmail.com>
@@ -73,58 +73,45 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Teng Long <dyroneteng@gmail.com>
 ---
- commit.h   | 5 +++++
- revision.c | 8 ++++++--
- 2 files changed, 11 insertions(+), 2 deletions(-)
+ object.c | 1 +
+ object.h | 5 +++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/commit.h b/commit.h
-index df42eb434f..1e99e9ae8a 100644
---- a/commit.h
-+++ b/commit.h
-@@ -38,6 +38,11 @@ struct commit {
- 	 */
- 	struct tree *maybe_tree;
- 	unsigned int index;
-+	/*
-+	* wrapped tags or NULL.  If the commit is peeled from tag(s),
-+	* then save the wraps, otherwise will be NULL.
-+	*/
-+	struct object_list *wraps;
+diff --git a/object.c b/object.c
+index 69ba0baf95..b25b2e2919 100644
+--- a/object.c
++++ b/object.c
+@@ -341,6 +341,7 @@ void add_object_array_with_path_and_referred_commit(struct object *obj, const ch
+ 	}
+ 	referred_objs->commit = referred_commit;
+ 	referred_objs->trees = NULL;
++	referred_objs->tags = NULL;
+ 	entry = &objects[nr];
+ 	entry->item = obj;
+ 	entry->referred_objects = referred_objs;
+diff --git a/object.h b/object.h
+index 3785546adf..bd59eaa6d9 100644
+--- a/object.h
++++ b/object.h
+@@ -54,8 +54,8 @@ struct object_array {
+ 		unsigned mode;
+ 		 /*
+ 		 * referred_objects or NULL.  If non-NULL, it will
+-		 * temporary storage the referred commit and trees when
+-		 * traversing the specified object. Space for time,
++		 * temporary storage the referred commit, trees and tags
++		 * when traversing the specified object. Space for time,
+ 		 * reduce related computing costs (such as packfile-uri
+ 		 * exclusion), clean up when the traversal is over.
+ 		 */
+@@ -68,6 +68,7 @@ struct object_array {
+ struct referred_objects{
+     struct object *commit;
+     struct object_list *trees;
++    struct object_list *tags;
  };
- 
- extern int save_commit_buffer;
-diff --git a/revision.c b/revision.c
-index 65e0926d25..aecf493f46 100644
---- a/revision.c
-+++ b/revision.c
-@@ -416,14 +416,17 @@ static struct commit *handle_commit(struct rev_info *revs,
- 	const char *path = entry->path;
- 	unsigned int mode = entry->mode;
- 	unsigned long flags = object->flags;
--
-+	struct object_list *wraps = NULL;
- 	/*
- 	 * Tag object? Look what it points to..
- 	 */
- 	while (object->type == OBJ_TAG) {
- 		struct tag *tag = (struct tag *) object;
--		if (revs->tag_objects && !(flags & UNINTERESTING))
-+		if (revs->tag_objects && !(flags & UNINTERESTING)) {
-+			object_list_insert(object, &wraps);
- 			add_pending_object(revs, object, tag->tag);
-+		}
-+
- 		object = parse_object(revs->repo, get_tagged_oid(tag));
- 		if (!object) {
- 			if (revs->ignore_missing_links || (flags & UNINTERESTING))
-@@ -449,6 +452,7 @@ static struct commit *handle_commit(struct rev_info *revs,
- 	 */
- 	if (object->type == OBJ_COMMIT) {
- 		struct commit *commit = (struct commit *)object;
-+		commit->wraps = wraps;
- 
- 		if (repo_parse_commit(revs->repo, commit) < 0)
- 			die("unable to parse commit %s", name);
+ /*
+  * object flag allocation:
 -- 
 2.31.1.456.gec51e24953
 
