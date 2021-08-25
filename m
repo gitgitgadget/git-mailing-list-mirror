@@ -2,94 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6813DC4338F
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 06:54:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D238C4338F
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 07:36:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 422A9611AF
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 06:54:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 593A860E78
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 07:36:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238574AbhHYGzU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Aug 2021 02:55:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48074 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232273AbhHYGzU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Aug 2021 02:55:20 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 041CEC061757
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 23:54:35 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id w68so20431882pfd.0
-        for <git@vger.kernel.org>; Tue, 24 Aug 2021 23:54:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=nWWryFHEuJVruxWJymTc0cV5eAP0Q/OKLKq9fTo6+jg=;
-        b=dTVknbsRgUU2LD/arfqCw4bc8Y2sXsT5ubCILB+PO3eU+PEEQGO4+9Iak7wxRa9NIU
-         4A5W3YWIUu4m7JKolFoWhfKRSzzdIKCeXokGRujDNIxAUecF6txYbRr1WczrIbNERkC6
-         4a4a0mH1WNHDSBJJg4NPV7xwp2coUgiI5YAxRT7CwGuknr1Hgr5MijT9ncTPcgjN+Zkr
-         2Z5YmhYe5hSs3DU5T/+nKTW5A2fFUWK5LOE5FKwx9OshutPGzPAxZqcw0qfLv3bYjKmj
-         fVDRkT1TXW1pHPn9SISOCJPeDHB13ltAKXFk0lav5EUU0qmB1FeByexWfv7wFPyVTOut
-         DqKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=nWWryFHEuJVruxWJymTc0cV5eAP0Q/OKLKq9fTo6+jg=;
-        b=iSdndzp1lS+ewo98tqbPNO05yUDphiSJyhxdSQcOvRP35B+XSie7HfeJhJP74hn2zb
-         Tsns7HJAPYPjfq8lpzLM5W1pYq1Ayy+uKp2iDKI8Cqtb6uFge55MDobt4MQetCLJhE3B
-         gJPRRW9nREqfb1EWPZflLZ47M2ZmX0UMuLeQSJ1jz2I1wuT2EelapdOT7tQSC1BIu89B
-         cn4EaPTWi7rOWzNNrHLs5254FcbwwYCR5SP3GMfzs4pR/tS30AKmuw9GRXt/v5is725w
-         sh+wJvw/fcOW/6tlD/H37XNFk7OC5O/B/5LauDIIALlo8VZ9YzEttxxMrj49YgPKAMWq
-         GsXQ==
-X-Gm-Message-State: AOAM530l4r5kVipWizWVGHksVNKkatzQRHFro7qnc8PSNA0yfWhuIULP
-        Yb34LvYbq/jJ7gCrH3mG7WglvPsuXJ+X+UtBtQ==
-X-Google-Smtp-Source: ABdhPJyNiP8+bAlHUZc/fLJqm8ZuFX97q0BPca3ks42JcVhKMJp+pYxd37sKDNmH93w2KKr3PTuWRklNUqQoSa5VASk=
-X-Received: by 2002:a63:2214:: with SMTP id i20mr40156965pgi.131.1629874474564;
- Tue, 24 Aug 2021 23:54:34 -0700 (PDT)
+        id S239285AbhHYHhC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Aug 2021 03:37:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58636 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238790AbhHYHhB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Aug 2021 03:37:01 -0400
+Received: (qmail 24129 invoked by uid 109); 25 Aug 2021 07:36:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 25 Aug 2021 07:36:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6853 invoked by uid 111); 25 Aug 2021 07:36:17 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 25 Aug 2021 03:36:17 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 25 Aug 2021 03:36:15 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Johannes Berg <johannes@sipsolutions.net>, git@vger.kernel.org,
+        dstolee@microsoft.com, gitster@pobox.com, jonathantanmy@google.com
+Subject: Re: [PATCH v4 00/25] multi-pack reachability bitmaps
+Message-ID: <YSXy73lWKteiuY6s@coredump.intra.peff.net>
+References: <cover.1617991824.git.me@ttaylorr.com>
+ <cover.1629821743.git.me@ttaylorr.com>
+ <YSWOtNoxirDdmBXG@coredump.intra.peff.net>
+ <YSWmhMID1hGs7Yp1@nand.local>
 MIME-Version: 1.0
-References: <CANXojcyX2uqAp5gLtfH8ffQFQBKkMoPqSzpDUnbFe0QBd5nJqg@mail.gmail.com>
- <YSXY4WoB+Z1aayz4@alpha>
-In-Reply-To: <YSXY4WoB+Z1aayz4@alpha>
-From:   Stef Bon <stefbon@gmail.com>
-Date:   Wed, 25 Aug 2021 08:54:22 +0200
-Message-ID: <CANXojcyVGp0aXySZswzFtmWL=q17bP5Zz4Si-Gxb0rgx4TNjAg@mail.gmail.com>
-Subject: Re: Get tree of remote repository using custom ssh library.
-To:     Kevin Daudt <me@ikke.info>, Stef Bon <stefbon@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YSWmhMID1hGs7Yp1@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Op wo 25 aug. 2021 om 07:45 schreef Kevin Daudt <me@ikke.info>:
->
+On Tue, Aug 24, 2021 at 10:10:12PM -0400, Taylor Blau wrote:
 
-Hello Kevin,
+> > It's not clear to me that we have a resolution on whether calling "cd ..
+> > && git multi-pack-index write --object-dir repo.git" is supposed to
+> > work.
+> 
+> My recommendation would be to do the following things, all in a reroll
+> of this series:
+> 
+>   - Fix the bug by which we would delete a .rev or .bitmap file out of a
+>     different object store than we were working in (when the caller
+>     passes `--object-dir`).
+> 
+>   - Disallow running `git multi-pack-index` outside of a Git repository.
+> 
+>   - Restrict `--object-dir` to only work with alternates of the
+>     repository in the current working directory.
+> 
+> To me, that seems like both the least-surprising behavior, and what
+> would lend itself to the easiest implementation. I would probably argue
+> that the existing behavior (where `--object-dir` would work against
+> arbitrary repositories) is a bug, and shouldn't continue to be
+> supported.
 
-> >
->
-> Hello Stef,
->
-> Git has no way of knowing what repositories might exist on a
-> given server. They might live everywhere, and git does not keep track of
-> what repositories are created on a central location, so there is not
-> central directory to query.
->
+All of those seem reasonable to me, and are what I would suggest if we
+were starting from scratch. My only hesitation is whether people are
+using the weird behavior of --object-dir in the wild (e.g., are bup
+folks relying on it).
 
-Ok.
+Johannes, is this something you're using _now_, and it works, or
+something you hoped to use in the future?
 
-> Besides that, services like github do not let you remotely browse
-> repositories over SSH, they only allow you to run git-upload-pack /
-> git-receive-pack or equivalent to handle the git protocol.
->
-That is exactly what I want. I know git works with the git-upload-pack
-and git-receive-pack methods. I think I had to be more precisely.
-Now my issue is how do I have to call these, with what parameters to
-achieve the listing of entries?
-(git_tree and git_tree_entry for example?? I do not know)
+In a sense, "hope to use" does not make you any less disappointed. ;)
+But what I'm wondering is whether using --object-dir from outside a repo
+entirely is actually something that even works. I.e., would we be
+disabling a behavior that was not intended, but does happen to work? Or
+are we closing off a possibly buggy and half-working part of the system?
 
-Stef
+-Peff
