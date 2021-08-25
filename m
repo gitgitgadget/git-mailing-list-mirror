@@ -2,105 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D58BC4338F
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 17:23:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C04BCC432BE
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 17:41:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5695E610A0
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 17:23:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 95EC8610E5
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 17:41:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242238AbhHYRYm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Aug 2021 13:24:42 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58590 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231685AbhHYRYl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Aug 2021 13:24:41 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E611BDC74E;
-        Wed, 25 Aug 2021 13:23:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KAhfsq36j5kBNbl6vshh1PjZ4VFXxVuB8VCr/f
-        BeEa8=; b=PNb+wnj9125sutJg6rzgyPgMrv8+8ly3xisAN6fbp8ZCdXvEJkTtpj
-        Xs+9oUopDNeTnSPXGGHq3q4odj8wjJPKPCNOjfErN/wV09l4/HD40X9V8G3GKG9x
-        X9i6IYm2rs9DlSdPx7DvceD/m1we8/xXpag/ShX9txL0Oye6N/C9w=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD5ECDC749;
-        Wed, 25 Aug 2021 13:23:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 63220DC740;
-        Wed, 25 Aug 2021 13:23:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] ls-refs: reuse buffer when sending refs
-References: <ccd03e685af0f5cf25c68272a758fc88d115e37a.1629899211.git.ps@pks.im>
-        <705fee2c-7711-ac99-f692-ab08cd7b4e26@gmail.com>
-        <YSZlK2y74wmYQcSd@ncase>
-Date:   Wed, 25 Aug 2021 10:23:53 -0700
-In-Reply-To: <YSZlK2y74wmYQcSd@ncase> (Patrick Steinhardt's message of "Wed,
-        25 Aug 2021 17:43:39 +0200")
-Message-ID: <xmqqzgt5igk6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S234267AbhHYRlv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Aug 2021 13:41:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58350 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231602AbhHYRlu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Aug 2021 13:41:50 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D279CC061757
+        for <git@vger.kernel.org>; Wed, 25 Aug 2021 10:41:04 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id j4so567366lfg.9
+        for <git@vger.kernel.org>; Wed, 25 Aug 2021 10:41:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NX76AUPfEO2a1l2zmU5IjT1ElAO65i+0HPNrA4wIKNk=;
+        b=FDYlbGlH7UwxV2Q+9qzlajo7vXqkKdu2lhza80d9WABXLjd9CJQTBJ/0czn9mqEblJ
+         SUx38DKnpKQU/hJHLFjAu2Sf3rm1zknGpNkwUnZEgVSFUgrC48HNOFZFikYzmpx/iJyj
+         hQzaqks4EbKOnryZBkYtD55a8HFkufl6Ye44/TyVp8Y1v9yfsHX0gI40t3p/JIog2VwF
+         XZfY5Xyv79nkI1jPJQiCNBhF0lihR7qOYp6ujbZfODxoPsl8z6qJ/GCeE5OCgDTRhfe3
+         sftfmB32okw4RhHAbIxNCAhnQFPy7HSVnIspheUSDgHAU8VU1SZlTjGOQIDntHhmSlOx
+         DJJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NX76AUPfEO2a1l2zmU5IjT1ElAO65i+0HPNrA4wIKNk=;
+        b=jN0pD+xmaGvcEC8rtAIa5p6FchvFkJO3jqM+JjrHNqh9erOy71wWVGBVnuIHYU9EhT
+         e7UqMElu4Owmj5D7ifl3rSipkcBy+COTce4kdo4DHbn6oH6t52yBZ7DXOOkWjuEdROyu
+         98hlYwMUhIEXreb4qa2KmlHaRNw4Y1fpSdFrRKm49LI4Z+Fziu+5PlOfti21k818jDXw
+         xAKHESBbJyAjlwU9WEPXlQKZOSvDJgbPtnnzhZvst8ymn1h9MWyIiioV6IOm8gmTVQzT
+         LtyWyKwv0ebcqtcPcpA8vHegcNGMNS2SH26ZdQvv3xL1ZK+FpWDxz6QAApagbM82I2nv
+         JmJw==
+X-Gm-Message-State: AOAM532u/LOfMyZOt9L/bn52bo53HbCGwFzYhLtAkErn3zMij6YL+M9z
+        vlx9Y4BNxZKi4FNnAIeyG85NhIDaU8vRKB9tdqc=
+X-Google-Smtp-Source: ABdhPJxXyKjkop5L5kdSosP9g9Eq0qKw3dAcEm43RRbf0UyodgTO+KCj6n1cq/mOdyrAuL1rqTws7c2+03QbhUQgncs=
+X-Received: by 2002:a05:6512:2342:: with SMTP id p2mr33099831lfu.516.1629913262441;
+ Wed, 25 Aug 2021 10:41:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 38FB7526-05C9-11EC-A8C4-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
+References: <pull.1076.git.git.1629856292.gitgitgadget@gmail.com>
+ <d1e68d4a2afc1d0ba74af64680bea09f412f21cc.1629856293.git.gitgitgadget@gmail.com>
+ <20210825053839.GA27037@lst.de>
+In-Reply-To: <20210825053839.GA27037@lst.de>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Wed, 25 Aug 2021 10:40:53 -0700
+Message-ID: <CANQDOdf7rMyT4Swriw9=Ei7KN1iLv_dGDWSSck22Zu6AztOyjg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] core.fsyncobjectfiles: batch disk flushes
+To:     Christoph Hellwig <hch@lst.de>
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> I don't know. I just happen to revisit this topic every few days, and
-> every time I stumble upon some more performance improvements. It would
-> feel wrong to shift the goalposts of the other series every time I find
-> something new, so I instead opt for separate patch series.
+On Tue, Aug 24, 2021 at 10:38 PM Christoph Hellwig <hch@lst.de> wrote:
 >
-> If this proves to be annoying for reviewers, then feel free to shout at
-> me and I'll change my approach.
+> On Wed, Aug 25, 2021 at 01:51:32AM +0000, Neeraj Singh via GitGitGadget wrote:
+> > From: Neeraj Singh <neerajsi@microsoft.com>
+> >
+> > When adding many objects to a repo with core.fsyncObjectFiles set to
+> > true, the cost of fsync'ing each object file can become prohibitive.
+> >
+> > One major source of the cost of fsync is the implied flush of the
+> > hardware writeback cache within the disk drive. Fortunately, Windows,
+> > MacOS, and Linux each offer mechanisms to write data from the filesystem
+> > page cache without initiating a hardware flush.
+> >
+> > This patch introduces a new 'core.fsyncObjectFiles = 2' option that
+> > takes advantage of the bulk-checkin infrastructure to batch up hardware
+> > flushes.
+>
+> Another interesting way to flush on linux would be the syncfs call,
+> which syncs all files on a file system.  Once you write more than
+> handful or two of files that tends to win out over a batch of fsync
+> calls.
 
-The easiest would be to keep them independent and to justify them
-independently.  There is no shifting the goalposts involved if you
-did so.  Of course, you wouldn't be able to include the improvements
-the follow-on topics make as part of the "advertising material" to
-sell the benefit of the base series, though.  It can only work when
-the follow-on topic is truly independent and is a good idea by
-itself.  Another is to keep these follow-on topics unpublished
-before the base topic graduates, and pretend that you came up with
-them much later than you originally did.  Nobody would notice and
-mind, as the base topic would be cast in stone by that time.
+I'd expect syncfs to suffer from the noisy-neighbor problem that Linus
+alluded to on the big
+thread you kicked off.  The equivalent call on Windows currently
+requires administrative
+privileges (I'm really not sure exactly why, perhaps we should change that).
 
-At the receiving end, what is most irritating is a series of topics
-that pretends to be about different things but depend on each other
-to function well [*].  I would imagine that it would be a lot more
-trivial and pleasant to handle if any of the patches involved did
-not come before these follow-on topics are all already thought of by
-the author and instead came in a well-structured single topic, but
-we do not live in a perfect world ;-).
-
-In the case of this particular patch, I think the logic behind the
-change makes sense by itself, so if I were doing it, I'd probably
-choose to sell it as an independent change unrelated to the other
-topic.
-
-Thanks.
-
-
-[Footnote]
-
-* Any time the base topic gets rerolled, I'd be the one who ends up
-  having to remember which other topics that did not rerolled depend
-  on it in what order and rebase them correctly, and then I have to
-  replace the follow-on topics that have been rerolled.  Even a
-  single missed subtopic will cause the day's integration work
-  redone, and all that robs time and concentration that the topics
-  by other contributors needs from me, which would make me grumpy
-  X-<.
+If someone adds a more targeted bulk sync interface to the Linux
+kernel, I'm sure Git could be
+changed to use it. Maybe an fcntl(2) interface that initiates
+writeback and registers completion with an
+eventfd.
