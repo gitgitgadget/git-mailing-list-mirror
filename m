@@ -2,136 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D43CCC432BE
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 20:43:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18CACC432BE
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 21:19:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B596161058
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 20:43:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F11A1610CA
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 21:19:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242658AbhHYUoa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Aug 2021 16:44:30 -0400
-Received: from mout.web.de ([212.227.17.11]:42481 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231873AbhHYUo3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Aug 2021 16:44:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1629924218;
-        bh=Gdv77WtyOmYIPR8+uPqFkLyOPAVuBzH2gtZctYd0RNc=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=q8HGbCI5KqTdz27CKGIkWwww21JkpuiIQi82uhRq66vGVfmeVa3zBoOdBEUAjmdQf
-         A0UiZWhrY2viCVjoTbbIp3hijsVE4reWVf7PjMNF+gGGes4QB+UvLrXk7t/xF7Qe1H
-         +3+qDrQkAApwhbqPYLIPzPdjr8sw3Gye5rAVw9VY=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.27.185]) by smtp.web.de
- (mrweb105 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 1MIc7b-1mDkwJ2zcT-00EhlP; Wed, 25 Aug 2021 22:43:38 +0200
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH RESEND] branch: allow deleting dangling branches with --force
-Message-ID: <7894f736-4681-7656-e2d4-5945d2c71d31@web.de>
-Date:   Wed, 25 Aug 2021 22:43:38 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.13.0
+        id S234330AbhHYVUK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Aug 2021 17:20:10 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52302 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234483AbhHYVUJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Aug 2021 17:20:09 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 66E6B142C69;
+        Wed, 25 Aug 2021 17:19:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rSL0njTd4lvtACAQeppNM201lk17MItye84wER
+        dE8IE=; b=rylHfzOhpK2+v8tOSaHWFt5MelUUGoGnTYBp8ycmP7su6GAC7hk6v1
+        j0M9jVySod5xTbjC9JUWWn6oJo6Xw+RiUbUYXm2kNF8zMUTyR6mM5yIqFBBn0KLE
+        6O+9ZOf9MoKICVzEeKCVvCZZck9faVXbSIaovet0uDn5feiK/fWjU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5EE0D142C68;
+        Wed, 25 Aug 2021 17:19:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 503A4142C65;
+        Wed, 25 Aug 2021 17:19:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Yuri <yuri@rawbw.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: 'git pull' complains that a locally resurrected directory would
+ be overwritten by merge when no pulled changes are affecting that
+ directory
+References: <01514401-78f6-3fdc-aa74-c519fb6ab427@rawbw.com>
+        <YSWXSWiDWNU93lhC@coredump.intra.peff.net>
+        <CABPp-BEMXW3EOdT4jt1g63uPyZ5YuKUPfBE9BL=E66QcT5uXXA@mail.gmail.com>
+Date:   Wed, 25 Aug 2021 14:19:15 -0700
+In-Reply-To: <CABPp-BEMXW3EOdT4jt1g63uPyZ5YuKUPfBE9BL=E66QcT5uXXA@mail.gmail.com>
+        (Elijah Newren's message of "Wed, 25 Aug 2021 08:42:09 -0700")
+Message-ID: <xmqqzgt5gr3g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ukUp3+vfKiwfoLQ8fXW/OVQ9ryQODZM/mqH8Xg9mt8ck0rB/UnK
- T/NWuDWILswClLWI4IOmpOXhGdaOKj5AgzLjGi8bf23UsJQjaddpih+zHO2KIaSTXuWyq66
- FnjKkW0z3NMAogKjdUUaVLNOa5df+1nB/LxN/R7J7jC69/LR40nP/MIBQ1up05iDrLn7pLG
- 34vLV2EVPrq4zWVGEVFmQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:UlZcA5vZiMo=:ssOkxUwdhep83Qp8BiU3Q1
- 5HHbJP3t2v5a0RvM9MtX3GTHIieRS9J2mLOzOSsV3pItaJ5n3hTEn/au03bSu8eQv9w1US10f
- woArs6n53+NELNeL/ZIngdhRoWfpmKC7bUslxFaWdcweOkmf+dSmP9aPYrZ2UBabiV3hcgxbF
- uxjyIpWPOjchCP2xmmksW+tFUgKiswrgF13dA3tFiXiMGvrKdGARQrQ3Il1rWF/xh+8jvL712
- dRhSf5mWU9CH6EJAM01B4dboa+98+7uUJwya3v+i85wRwG5l/OMqQ9Re4B9ylEKXHGxaUCKrJ
- xkKRAKa6RY5tcuWAsevpe7AttdtofkRixjicSP3nAKQh/QNVOql6MCgU5odq7uwlmiU/2IfyS
- clMzqRyTlKUQ1DPdbUtZuHT8vAG06Kn/8ufFiUYjtgOkFFHQInOmNUxsGPtgQtID3Z36b2N3V
- YeKnOG5zghthqINaT5MUQJJBMrQph730GsG+qZ6T9OCQkZ0S9+nfF5lZmEwagyN+he6LZYjlc
- 1Mw0ad2opbygsRG8uJY+TZvt8wzbP1nU7sComi73jw8/AmYyfAW1iFgHuEkJ+2mVJWXTKHCu7
- e6ofL3EjVR6farl7XCxe4sScBTj4uCyIHgs4lusqs6Utwxeh0R0BkbYymDUyLZ8SnySxLtRLy
- ffMg1cqcKx1XGPwzxds9QM6oXaAuTGA/61NUj0H90mwBm09r+KTTAdNeOdj37bydMiojphw/H
- zGqokCUhUCV6qp/LWfG/EbU2HCOC96RqXlhq6aL7p/qsgetpyIT9jdBRZk/O9T5nCYejQUX6e
- NZoUrEDzKJ605GMB134GRZJ7ppIODsiPIGmizkYmDbT7kEekN7hU1G/aM4E2ximcfKVz6lsVx
- 0oWsglGVxxoWmovc0Ld/m9iPwg2nDs/6Q9xI1NM7aOeq13aKBI4lXv3eDCCmVjnmRvTtopnxh
- SrVX7YTljpmCRRYP0v6CshLNxgMXz7JxbZN2/a5LDTHhwz/Su1ofD5AjfpxzjjfdjO3RIhOJ3
- +WRZOcn4KhYid4+ovR3mcW1fE+jEd8baUyxYqUHjpA1dZRalBzvb6D2B9kzdXH/J4e+hNZszK
- j5v+lm7sDfJtvowbPkGhOsnpFZwLsSiBlLl
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1AE6BF34-05EA-11EC-BB46-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git branch only allows deleting branches that point to valid commits.
-Skip that check if --force is given, as the caller is indicating with
-it that they know what they are doing and accept the consequences.
-This allows deleting dangling branches, which previously had to be
-reset to a valid start-point using --force first.
+Elijah Newren <newren@gmail.com> writes:
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-Original submission:
-http://public-inbox.org/git/52847a99-db7c-9634-b3b1-fd9b1342bc32@web.de/
+> ... allow if the incoming changes don't touch the same files), but
+> local *staged* changes.  As per the merge manpage:
+>
+> """
+> To avoid recording unrelated changes in the merge commit, git pull and
+> git merge will also abort if there are any changes registered in the
+> index relative to the HEAD commit.
+> """
+>
+> While this particular example could theoretically be handled by the
+> merge machinery without requiring the index match HEAD,...
 
- Documentation/git-branch.txt | 3 ++-
- builtin/branch.c             | 2 +-
- t/t3200-branch.sh            | 7 +++++++
- 3 files changed, 10 insertions(+), 2 deletions(-)
+While I do not mind seeing a patch that loosens the condition ONLY
+when the merge will cleanly auto-resolve without end-user
+interaction, when any paths conflict and require editing by the
+end-user, it is pretty much essential to require that the index
+matches HEAD to keep "git merge" usable. 
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 94dc9a54f2..5449767121 100644
-=2D-- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -118,7 +118,8 @@ OPTIONS
- 	Reset <branchname> to <startpoint>, even if <branchname> exists
- 	already. Without `-f`, 'git branch' refuses to change an existing branch=
-.
- 	In combination with `-d` (or `--delete`), allow deleting the
--	branch irrespective of its merged status. In combination with
-+	branch irrespective of its merged status, or whether it even
-+	points to a valid commit. In combination with
- 	`-m` (or `--move`), allow renaming the branch even if the new
- 	branch name already exists, the same applies for `-c` (or `--copy`).
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index b23b1d1752..03c7b7253a 100644
-=2D-- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -168,7 +168,7 @@ static int check_branch_commit(const char *branchname,=
- const char *refname,
- 			       int kinds, int force)
- {
- 	struct commit *rev =3D lookup_commit_reference(the_repository, oid);
--	if (!rev) {
-+	if (!force && !rev) {
- 		error(_("Couldn't look up commit object for '%s'"), refname);
- 		return -1;
- 	}
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index cc4b10236e..ec61a10c29 100755
-=2D-- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -1272,6 +1272,13 @@ test_expect_success 'attempt to delete a branch mer=
-ged to its base' '
- 	test_must_fail git branch -d my10
- '
-
-+test_expect_success 'branch --delete --force removes dangling branch' '
-+	test_when_finished "rm -f .git/refs/heads/dangling" &&
-+	echo $ZERO_OID >.git/refs/heads/dangling &&
-+	git branch --delete --force dangling &&
-+	test_path_is_missing .git/refs/heads/dangling
-+'
-+
- test_expect_success 'use --edit-description' '
- 	write_script editor <<-\EOF &&
- 		echo "New contents" >"$1"
-=2D-
-2.32.0
+This is because the final step to conclude such an "automated
+procedure cannot cleanly resolve, so the end user helps resolving
+with the editor and mark the resolved paths with 'git add' or 'git
+rm'" session will become very error prone if we did not have the
+requirement.  Not just the user MUST remember not to use "commit -a"
+or "git add" a path that was already dirty in the working tree
+before the merge started (which is the consequence of the current
+requirement, which allows local changes to the unrelated working
+tree files), they must MUST remember to somehow EXCLUDE the changes
+already registered for unrelted paths from the concluded merge.
