@@ -2,56 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83A8EC4338F
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 05:47:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8BB9C4338F
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 05:53:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F50361368
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 05:47:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8CD2161357
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 05:53:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232445AbhHYFsA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Aug 2021 01:48:00 -0400
-Received: from shell1.rawbw.com ([198.144.192.42]:44228 "EHLO shell1.rawbw.com"
+        id S237795AbhHYFyX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Aug 2021 01:54:23 -0400
+Received: from ikke.info ([178.21.113.177]:42084 "EHLO vps892.directvps.nl"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232420AbhHYFsA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Aug 2021 01:48:00 -0400
-Received: from yv.noip.me (c-73-189-35-76.hsd1.ca.comcast.net [73.189.35.76])
-        (authenticated bits=0)
-        by shell1.rawbw.com (8.15.1/8.15.1) with ESMTPSA id 17P5lE8g052488
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
-        Tue, 24 Aug 2021 22:47:14 -0700 (PDT)
-        (envelope-from yuri@rawbw.com)
-X-Authentication-Warning: shell1.rawbw.com: Host c-73-189-35-76.hsd1.ca.comcast.net [73.189.35.76] claimed to be yv.noip.me
-Subject: Re: 'git pull' complains that a locally resurrected directory would
- be overwritten by merge when no pulled changes are affecting that directory
-To:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <01514401-78f6-3fdc-aa74-c519fb6ab427@rawbw.com>
- <2fe5e6c2-3887-6d7d-7240-2aa9f0e70873@gmail.com>
-From:   Yuri <yuri@rawbw.com>
-Message-ID: <acbc5ec8-fe21-3c8e-8f4f-e3be3126c2ed@rawbw.com>
-Date:   Tue, 24 Aug 2021 22:47:12 -0700
-User-Agent: Mozilla/5.0 (X11; FreeBSD amd64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S232420AbhHYFyV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Aug 2021 01:54:21 -0400
+X-Greylist: delayed 502 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Aug 2021 01:54:21 EDT
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id 951D244010B; Wed, 25 Aug 2021 07:45:05 +0200 (CEST)
+Date:   Wed, 25 Aug 2021 07:45:05 +0200
+From:   Kevin Daudt <me@ikke.info>
+To:     Stef Bon <stefbon@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>
+Subject: Re: Get tree of remote repository using custom ssh library.
+Message-ID: <YSXY4WoB+Z1aayz4@alpha>
+Mail-Followup-To: Kevin Daudt <me@ikke.info>, Stef Bon <stefbon@gmail.com>,
+        Git Users <git@vger.kernel.org>
+References: <CANXojcyX2uqAp5gLtfH8ffQFQBKkMoPqSzpDUnbFe0QBd5nJqg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <2fe5e6c2-3887-6d7d-7240-2aa9f0e70873@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANXojcyX2uqAp5gLtfH8ffQFQBKkMoPqSzpDUnbFe0QBd5nJqg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/24/21 10:43 PM, Bagas Sanjaya wrote:
-> Have you committed or stashed such changes? 
+On Sun, Aug 22, 2021 at 08:47:18PM +0200, Stef Bon wrote:
+> Hi,
+> 
+> I want to add git support to my fuse workspace, enable browsing of the
+> users repositories.
+> I've got a custom ssh library:
+> 
+> struct ssh_channel_s *channel=create_channel(session, _CHANNEL_TYPE_SESSION);
+> if (channel==NULL) return -1;
+> set_channel_exec(channel, command);
+> 
+> if (add_channel(channel, CHANNEL_FLAG_OPEN)==-1) goto free;
+> 
+> if (send_channel_start_command_message(channel, 1, &seq)>0) {
+>      struct ssh_payload_s *payload=NULL;
+> 
+>       payload=get_ssh_payload_channel(channel, &expire, &seq, &error);
+> 
+>       if (payload && payload->type==SSH_MSG_CHANNEL_DATA) {
+> 
+> .... process the received data
+>       }
+>       free_payload(&payload);
+> }
+> 
+> Now I read:
+> 
+> https://git-scm.com/book/en/v2/Git-Internals-Transfer-Protocols
+> and
+> https://www.git-scm.com/docs/protocol-v2
+> 
+> How can I get remote repositories of a user on a server (say
+> github.com, user stefbon) and browse each HEAD repository and the
+> source tree?
+> 
+> Stef Bon
 
+Hello Stef,
 
-No, they were uncommitted and unstashed.
+Git has no way of knowing what repositories might exist on a
+given server. They might live everywhere, and git does not keep track of
+what repositories are created on a central location, so there is not
+central directory to query.
 
+Besides that, services like github do not let you remotely browse
+repositories over SSH, they only allow you to run git-upload-pack /
+git-receive-pack or equivalent to handle the git protocol.
 
-Yuri
+The only way to programatically explore what is available remotely is to
+use an API that exposes this information (most public git forges provide
+one).
 
-
+Hope this helps, Kevin
