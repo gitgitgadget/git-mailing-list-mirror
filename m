@@ -2,172 +2,222 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DE44C4338F
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 12:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BA4BC4320A
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 13:50:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52234610CD
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 12:51:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FC95610D2
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 13:50:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240342AbhHYMwo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Aug 2021 08:52:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46388 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229759AbhHYMwn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Aug 2021 08:52:43 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3C48C061757
-        for <git@vger.kernel.org>; Wed, 25 Aug 2021 05:51:57 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id lc21so18958626ejc.7
-        for <git@vger.kernel.org>; Wed, 25 Aug 2021 05:51:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=p19a9UuiRUKRixnjD9X4WOwNV8NZOCafSJu3TtBM6QU=;
-        b=sPIMAmsv+foEnMhpB/EbmCtiaQUsc0biMAi9FXkD+mfeZ9HWuzpqeOUeNgvL5DS0q5
-         thA30/4c/LAXoyLHP/6pbpO5cyqsjVAMbxRYiDafbK7lWuwPzHvUYZk2QNj/mOI4mMYt
-         2Ofn0tz7d4Brfyfy8mf8k8lWWJuYlTC/azUaWL+rGKWUeJ7UlNAxI9rOMqdjsP8JfEd5
-         w2rvMatjJAk9FUKFAQSTbeN0QjpbZo8XLsxINsyw15qaV0rYxt5hQbVpvyxS/C57G6wB
-         yKyho4IsipWOQ2eWhJEj0fOH7zDBWK6yYrLwVrcLkkF3dWOCGAUQ6ag43/IXmQj1duR7
-         9RKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=p19a9UuiRUKRixnjD9X4WOwNV8NZOCafSJu3TtBM6QU=;
-        b=hfMtrZaqytbbegyYaNnL7yvkRdxkvsOhU/f/7g8eCS/uEHGn07c2YNh9AfC6YL3TWC
-         eK4WwXWJgm1Yvis6FEyxdeQO7aBFVp7H91IjUh9nDJlnsJnLlvgcGeYPHe9UbCnJ8Gch
-         BF+dQeXobQEYR9q6MJIDGNd0dAyY11OHuHK6jyRJgNIBiOpsFgcUOClg/i14c8S3hZvK
-         lmgKmadRJUXXQoV9Xi63JX4HH40qGT4sWc9FQd0DTvanLRmRB0P1iFqIsgt6QFOkhnA/
-         NV3SaxPgq7xCc2GlfKD6pVzaUc99/ZLuXNHfj5qgL5aTJ8q0jEYMInisARo3L1iIdt3C
-         0M2g==
-X-Gm-Message-State: AOAM533cGvbuzjMN8cvOOKJTJ9qFFKCH/2SLkN5FvpkcvhNPKE8UQHLA
-        nTwaBJW/qkvkdozSxeT5ctg=
-X-Google-Smtp-Source: ABdhPJzmNT/P2vtpGj4Eq+mr0h36pehmhDgWL/x450OEPeKSrlck55WqN1OMdtM1L4J/qoTg59qWPw==
-X-Received: by 2002:a17:906:9742:: with SMTP id o2mr47103849ejy.532.1629895916100;
-        Wed, 25 Aug 2021 05:51:56 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ay3sm11184358ejb.0.2021.08.25.05.51.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Aug 2021 05:51:55 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Konstantin Kharlamov <hi-angel@yandex.ru>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [BUG] git-rebase unnecessarily change mtime of files
-Date:   Wed, 25 Aug 2021 14:45:30 +0200
-References: <7d29b582ef44785015e631251da8499b197ff4bc.camel@yandex.ru>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <7d29b582ef44785015e631251da8499b197ff4bc.camel@yandex.ru>
-Message-ID: <87sfyxd6vo.fsf@evledraar.gmail.com>
+        id S237039AbhHYNus (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Aug 2021 09:50:48 -0400
+Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:47943 "EHLO
+        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233490AbhHYNur (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 25 Aug 2021 09:50:47 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id 884513200A11
+        for <git@vger.kernel.org>; Wed, 25 Aug 2021 09:50:01 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Wed, 25 Aug 2021 09:50:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:subject:message-id:mime-version:content-type; s=fm1;
+         bh=j30bBLoSbHF9o+qm//Dklb+2jQcFzP+3fYS8JGrpkqE=; b=s1YUx31vdrVb
+        Y3IWPM8Y4khwsqyatCcYyRzMIzjSbjjMIVvVtV05hw4dWAP+f4vJcB5ZsoloqUoA
+        2De/9+t6/VNTQhFhb7LOGf68mQE927oUQNWSK7C6SbwFfXNj9r1O/R5fwPLR4XO5
+        eJjhP5m3jRIGW6p+jzorXjz1FzFMxWM3YkQhIlzHtVEFTXL4WbFT0F2TD7VJdQBd
+        MzNkh5eVw0ioGmxgOVm0m3vkam7pflnb5hLDCoiGN7HWOvNFDL6GKC/cPRS67/L/
+        6hS6/ihbGjREChrFHB4p8gS3zxqwKO3+uKpC8FW/+D+df7VeJW1BUICDnHfEO8zK
+        1kx7JQ7WbQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:message-id
+        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm3; bh=j30bBLoSbHF9o+qm//Dklb+2jQcFz
+        P+3fYS8JGrpkqE=; b=EjVOLRUenbPSKKGd8wp+9WDSEF3WeaHjjA6wcSxcKMAUT
+        lvvysTorXGG3PzIZkX+X1tFcbMKEtnZMjEePx6Kbq3yYg/L5QzO6uUjKBksH+sTL
+        A3W61CYvFjeZNav0FxJ6u5RC6FOe7rCwR1kWqOXyCmE59c+awFhoC2AkzGCjAkco
+        x5ClhFCm7HUksXXRvd2ecgriMx2benmoVgOFOfa+jYSBNgRPDyfe95lx6Ns+FQvC
+        HHLNPukCXt7FDncgrI7i9oc3zgj8UHSgeWIwRiRkPGa32DKYdJDvfe8ui4PTYinS
+        1gX9KiTVEMbCcuEczq/qe7G+KZA7wtdE89bw/79FA==
+X-ME-Sender: <xms:iEomYXmCsOYsueHL7ppSVH43TemLd1xKi5LK7w8o2MCmz17m-6D7vg>
+    <xme:iEomYa1f4kuzDTR9HcggIEcCvtXTH1AfefGPulXtZy7XSCjdnFG42Q5BwbCu79xS5
+    HrL-t80vUe39s-xvw>
+X-ME-Received: <xmr:iEomYdqCNOJknFjDa0UbVhKhKDu-8_Vb9ER9oIjkh-Tc7yx1fZa_qIXTSJgWqDdH03rCoUcvTIWoRRLrESBMneakhigvFPXD1MLPjzo9Qrb2NPzR_-F9FBw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddruddtledgjedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepjedtfefftedugfevvdejtdehjefgtddvvdethe
+    eiteduuedtteeileetkefhfeeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:iEomYfn-xm9vR6SI9WY6__tBNz8ItsdjnX9aOXISHMUHcNnMpdCNvA>
+    <xmx:iEomYV0KnphCWhCrpbOQLBsNCn0ta-DNGZC1ADxkvfN3xcRUjdc0XA>
+    <xmx:iEomYeuTPK13BbJAtxo82GHuOsrc4xqmKUmONepT4SR09v9-eIii3A>
+    <xmx:iUomYSj7Xxj39ZIvuL64P0EDy6b4suViwyEu0GSa_JiEu9AWxu1yyA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Wed, 25 Aug 2021 09:49:59 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id b841d9be (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        for <git@vger.kernel.org>;
+        Wed, 25 Aug 2021 13:49:52 +0000 (UTC)
+Date:   Wed, 25 Aug 2021 15:49:51 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Subject: [PATCH] ls-refs: reuse buffer when sending refs
+Message-ID: <ccd03e685af0f5cf25c68272a758fc88d115e37a.1629899211.git.ps@pks.im>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="PKXEDhSIIysWFZaW"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Aug 25 2021, Konstantin Kharlamov wrote:
+--PKXEDhSIIysWFZaW
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Suppose your branch has *one* commit that modified file `myfile`. When you
-> interactively-rebase to that commit, mtime of that file will change even =
-if
-> though you did not change the file (i.e. commit you are on has changed th=
-e file,
-> but since you're *at* this commit, not before this, there shouldn't have =
-been
-> any change to the file).
->
-> This might be bad for performance; however what concerns me personally th=
-e most
-> is that my editor keeps asking me "file was changed on the disk, are you =
-sure
-> you wanna modify the file?", which is confusing and annoying.
->
-> I am also not completely sure, but it might be a regression, because I do=
-n't
-> seem to remember having that before.
->
-> # Steps to reproduce
->
->  =CE=BB mkdir foo
->  =CE=BB cd foo
->  =CE=BB git init
-> hint: Using 'master' as the name for the initial branch. This default bra=
-nch
-> name
-> hint: is subject to change. To configure the initial branch name to use i=
-n all
-> hint: of your new repositories, which will suppress this warning, call:
-> hint:
-> hint:   git config --global init.defaultBranch <name>
-> hint:
-> hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
-> hint: 'development'. The just-created branch can be renamed via this comm=
-and:
-> hint:
-> hint:   git branch -m <name>
-> Initialized empty Git repository in /tmp/foo/.git/
->  =CE=BB echo hello1 > file1 && git add file1 && git commit -m "1st commit"
-> [master (root-commit) f1cc312] 1st commit
->  1 file changed, 1 insertion(+)
->  create mode 100644 file1
->  =CE=BB echo hello2 > file2 && git add file2 && git commit -m "2nd commit"
-> [master 8bed9e1] 2nd commit
->  1 file changed, 1 insertion(+)
->  create mode 100644 file2
->  =CE=BB echo hello3 > file3 && git add file3 && git commit -m "3rd commit"
-> [master e6d5aab] 3rd commit
->  1 file changed, 1 insertion(+)
->  create mode 100644 file3
->  =CE=BB stat -c %y file2
-> 2021-08-25 12:37:19.008378563 +0300
->  =CE=BB rebase-at e HEAD~2     # that is `git rebase -i HEAD~2`, then [e]=
-dit the
-> commit
-> Stopped at 8bed9e1...  2nd commit
-> You can amend the commit now, with
->
->   git commit --amend
->
-> Once you are satisfied with your changes, run
->
->   git rebase --continue
->  =CE=BB stat -c %y file2
-> 2021-08-25 12:37:37.375537063 +0300
->
->
-> ## Expected
->
-> The mtime of the file did not change
->
-> ## Actual
->
-> The mtime of the file changed by 18 seconds
+In the initial reference advertisement, the Git server will first
+announce all of its references to the client. The logic is handled in
+`send_ref()`, which will allocate a new buffer for each refline it is
+about to send. This is quite wasteful: instead of allocating a new
+buffer each time, we can just reuse a buffer.
 
-I don't know if this is a bug or feature, I suspect the latter.
+Improve this by passing in a buffer via the `ls_refs_data` struct which
+is then reused on each reference. In a repository with about 2.3M refs,
+this speeds up local mirror fetches by about 2%:
 
-I think you'll find that if you use a TODO list like:
+    Benchmark #1: HEAD~: git-fetch
+      Time (mean =C2=B1 =CF=83):     25.415 s =C2=B1  0.131 s    [User: 22.=
+722 s, System: 4.740 s]
+      Range (min =E2=80=A6 max):   25.240 s =E2=80=A6 25.543 s    5 runs
 
-    pick X <commit changes 'foo'>
-    break
-    pick Y <commit changes 'bar'>
+    Benchmark #2: HEAD: git-fetch
+      Time (mean =C2=B1 =CF=83):     24.922 s =C2=B1  0.110 s    [User: 22.=
+404 s, System: 4.476 s]
+      Range (min =E2=80=A6 max):   24.825 s =E2=80=A6 25.081 s    5 runs
 
-You'll find that if your "foo" won't be changed, but it would with:
+    Summary
+      'HEAD: git-fetch' ran
+        1.02 =C2=B1 0.01 times faster than 'HEAD~: git-fetch'
 
-    edit X <commit changes 'foo'>
-    pick Y <commit changes 'bar'>
+Signed-off-by: Patrick Steinhardt <ps@kps.im>
+---
 
-This is because, as you'll see with GIT_TRACE=3D1 we actually check out X~
-and then apply it with "edit", but with "break" we'll check out X
-itself.
+Note that while this topic applies on top of "master", I've done the
+benchmark on top of my other optimizations for fetches. It's cheating a
+bit, but it's easier to see that the optimization does something when
+the remaining constant part is lower.
 
-I didn't dig further than that, maybe it's a bug, maybe not. The code in
-d87d48b2e03 (sequencer: learn about the special "fake root commit"
-handling, 2018-05-04) may or may not be involved, I didn't dig much.
+ ls-refs.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
+
+diff --git a/ls-refs.c b/ls-refs.c
+index 88f6c3f60d..84021416ca 100644
+--- a/ls-refs.c
++++ b/ls-refs.c
+@@ -65,6 +65,7 @@ struct ls_refs_data {
+ 	unsigned peel;
+ 	unsigned symrefs;
+ 	struct strvec prefixes;
++	struct strbuf buf;
+ 	unsigned unborn : 1;
+ };
+=20
+@@ -73,7 +74,8 @@ static int send_ref(const char *refname, const struct obj=
+ect_id *oid,
+ {
+ 	struct ls_refs_data *data =3D cb_data;
+ 	const char *refname_nons =3D strip_namespace(refname);
+-	struct strbuf refline =3D STRBUF_INIT;
++
++	strbuf_reset(&data->buf);
+=20
+ 	if (ref_is_hidden(refname_nons, refname))
+ 		return 0;
+@@ -82,9 +84,9 @@ static int send_ref(const char *refname, const struct obj=
+ect_id *oid,
+ 		return 0;
+=20
+ 	if (oid)
+-		strbuf_addf(&refline, "%s %s", oid_to_hex(oid), refname_nons);
++		strbuf_addf(&data->buf, "%s %s", oid_to_hex(oid), refname_nons);
+ 	else
+-		strbuf_addf(&refline, "unborn %s", refname_nons);
++		strbuf_addf(&data->buf, "unborn %s", refname_nons);
+ 	if (data->symrefs && flag & REF_ISSYMREF) {
+ 		struct object_id unused;
+ 		const char *symref_target =3D resolve_ref_unsafe(refname, 0,
+@@ -94,20 +96,19 @@ static int send_ref(const char *refname, const struct o=
+bject_id *oid,
+ 		if (!symref_target)
+ 			die("'%s' is a symref but it is not?", refname);
+=20
+-		strbuf_addf(&refline, " symref-target:%s",
++		strbuf_addf(&data->buf, " symref-target:%s",
+ 			    strip_namespace(symref_target));
+ 	}
+=20
+ 	if (data->peel && oid) {
+ 		struct object_id peeled;
+ 		if (!peel_iterated_oid(oid, &peeled))
+-			strbuf_addf(&refline, " peeled:%s", oid_to_hex(&peeled));
++			strbuf_addf(&data->buf, " peeled:%s", oid_to_hex(&peeled));
+ 	}
+=20
+-	strbuf_addch(&refline, '\n');
+-	packet_write(1, refline.buf, refline.len);
++	strbuf_addch(&data->buf, '\n');
++	packet_write(1, data->buf.buf, data->buf.len);
+=20
+-	strbuf_release(&refline);
+ 	return 0;
+ }
+=20
+@@ -145,6 +146,7 @@ int ls_refs(struct repository *r, struct strvec *keys,
+=20
+ 	memset(&data, 0, sizeof(data));
+ 	strvec_init(&data.prefixes);
++	strbuf_init(&data.buf, 0);
+=20
+ 	ensure_config_read();
+ 	git_config(ls_refs_config, NULL);
+@@ -173,6 +175,7 @@ int ls_refs(struct repository *r, struct strvec *keys,
+ 				     send_ref, &data, 0);
+ 	packet_flush(1);
+ 	strvec_clear(&data.prefixes);
++	strbuf_release(&data.buf);
+ 	return 0;
+ }
+=20
+--=20
+2.33.0
+
+
+--PKXEDhSIIysWFZaW
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEmSn4ACgkQVbJhu7ck
+PpTDVQ//UH4t4A0z8iixtusmqzwl7vOgYylggaJX6NT2Y7FgJKIngIfHkJU8RVX0
+e2QMXBx3LKcwNGgxQAf0bAB8Nkw+vfzqY6pH6geCGF1OCKGvnz27mDujbHguPug4
+8oIXWPXiqkpJ+qngrB+hjGrUG52zIdmdpl5AOIQZ2wTNs8ajANrlnpJKJ/vV0r7r
+LWzwAHayoxeneDxqcJg59ZoZrDHUy752RarogdH4JPZ6YqklC96zfRu5NQ3ucw1T
+CL0bcAMxMvFG2QL1SsD5LPrWJBqowJKay1xuUiB2lal+Qkfm628dchxM2xFq0yht
+CNLriMMKs/aD9XrUt73OYkGrnlo7GWBdL703FBsWnoThDJUzw88Ib7uGIb5ntNlq
+oCrmUHlxupA+wKejhccddkdXqGP41lcVyBoGVSWMZkvWOSDRT300qZur4sfta9/P
+HrcOA0dHjXiVKyFe1StsKG8bOX1N3wZ+1LV9WCMQt31K6MDPVpscV/PjjslcoNvB
+TVkAdentvQPrTwPh2mLe4V1oWRT8uBxzzR6uU1WltZubyJVPcVfFQIi0bC/QA5F3
+QA87nEmVouCqu6D3k1zGdV+p4sKeqSZ7A2smu/QAt7K9QRYjNa4vIBmpSUbX35Ka
+LKGHM2rGFyF5jkZMAgkBAEhwpOTBHzelqjE2VxlNYFD8pHdXgmg=
+=kLJb
+-----END PGP SIGNATURE-----
+
+--PKXEDhSIIysWFZaW--
