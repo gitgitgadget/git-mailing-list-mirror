@@ -7,78 +7,90 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64E57C4338F
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 16:39:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67194C4338F
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 16:58:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4B94B61026
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 16:39:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4D08761056
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 16:58:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239647AbhHYQkA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Aug 2021 12:40:00 -0400
-Received: from forward103o.mail.yandex.net ([37.140.190.177]:56154 "EHLO
-        forward103o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S242148AbhHYQj5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 25 Aug 2021 12:39:57 -0400
-X-Greylist: delayed 404 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Aug 2021 12:39:56 EDT
-Received: from myt6-d4eda2ca0046.qloud-c.yandex.net (myt6-d4eda2ca0046.qloud-c.yandex.net [IPv6:2a02:6b8:c12:4e0f:0:640:d4ed:a2ca])
-        by forward103o.mail.yandex.net (Yandex) with ESMTP id 517E510A9B2F;
-        Wed, 25 Aug 2021 19:32:25 +0300 (MSK)
-Received: from myt3-07a4bd8655f2.qloud-c.yandex.net (myt3-07a4bd8655f2.qloud-c.yandex.net [2a02:6b8:c12:693:0:640:7a4:bd86])
-        by myt6-d4eda2ca0046.qloud-c.yandex.net (mxback/Yandex) with ESMTP id IKbWZ4H0Hz-WPHmKlOQ;
-        Wed, 25 Aug 2021 19:32:25 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1629909145;
-        bh=awLJcM8VWBMyy4p+fiDoodF4dGW/9sK6GESNZbRgCfk=;
-        h=In-Reply-To:References:Date:To:From:Subject:Message-ID:Cc;
-        b=dPdKFaSzCWZRX8I4v4s9IxpucXwLmpJVWK6iKiZix2xs794MbP9eYKnUGXdSryPWR
-         AqDK6nVVDNp1nn+GnPxmpS2kTegmEry/ov2Ify1qBXrVVIBsC3tGaZNioyeswyV+F2
-         NM6y6yd65D2O4qVX0eH/OOduGnSM3G6YycEw2AN8=
-Authentication-Results: myt6-d4eda2ca0046.qloud-c.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by myt3-07a4bd8655f2.qloud-c.yandex.net (smtp/Yandex) with ESMTPSA id AgGAM83b3l-WOZuZb13;
-        Wed, 25 Aug 2021 19:32:24 +0300
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client certificate not present)
-Message-ID: <b1c62f6aa1eb06b64ee095dff23709a42d25cb16.camel@yandex.ru>
-Subject: Re: How to interactively rebase-and-reword nth commit?
-From:   Konstantin Kharlamov <hi-angel@yandex.ru>
-To:     Martin =?ISO-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Date:   Wed, 25 Aug 2021 19:32:24 +0300
-In-Reply-To: <CAN0heSoxE8zjzbYqRY6zvva=GEXEWx1k8FGhJMCf6N=pEcpZFw@mail.gmail.com>
-References: <eda317b080a2e75a170c051c339a76115cce5ad7.camel@yandex.ru>
-         <CAN0heSoxE8zjzbYqRY6zvva=GEXEWx1k8FGhJMCf6N=pEcpZFw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.40.3 
+        id S231631AbhHYQ66 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Aug 2021 12:58:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48324 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229791AbhHYQ65 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Aug 2021 12:58:57 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1E3DC061757
+        for <git@vger.kernel.org>; Wed, 25 Aug 2021 09:58:11 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id o10so284363lfr.11
+        for <git@vger.kernel.org>; Wed, 25 Aug 2021 09:58:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZAffB7/g4FtxL6wVVB02etGZX7Fyn+MjkmlCWZuq7eg=;
+        b=JtqKvULdq+NgsQdfdlYTQReaA9TwKG9CHhu+/ZcLTTY776vXv125FC192wEB9HTSPa
+         ZebGQXM6raQuKxlVxPjOSkSRBc7oqsJmtH4IWVx09dG8h19/6JdBhO5h2nEaKsmqNWJ2
+         +l7/8vqg+LeUaQWP0cM5tw3OnNJV7v8tLNWNbvRDUh+q94xUCibEbIJsXA0NtVudvlBf
+         DyTLF+QaRl/50+cPbu7GqE4e5bLDfI7vTEcmYlNg2NA8jsN9n5KmcDsypk33Nk6PdSen
+         2UKPLPgqYWBz4gpenHN2j2I4PlPCZ+o2GGSMZdgvroXPNSDlRo5OR94NO93tA+PjYADU
+         vusA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZAffB7/g4FtxL6wVVB02etGZX7Fyn+MjkmlCWZuq7eg=;
+        b=KY071fThxbylcLyVt8VGFT5+prlqv/APNtjv9lZ3mI0X3DdEq5UaDWQn+3VBGUUimj
+         ADAgfFS60gmHqN+0HqjEsbKmcf3rM6ULbMO2zpKD44eL2k6rvN/V399WNTwe2gqFp463
+         mGdnfHVULJBaG50hJQew065r+07/dLE6rvf6vN2GjOQXRt3TMmR0Asjn6B/6EtYBT0nk
+         SlUa4rHP8yiBc9hrS5WhfQTPUNTzkAGyyPtSu7XRdoIqs2ARNXVGI/q0w345sxxALm26
+         YAEJrHvQ8lDX6ehFJWRgBHk5KEUOZAXqLMlXNGscL9bpgxfyB887E+jdezjVPXq7A60f
+         eWhA==
+X-Gm-Message-State: AOAM532JY5vXpVon2jdibFer6blGHsxl1fkwQKMzR64SX1xNEj/TgtHy
+        wVKtac8FBwFmHtDAuje73dGWt64OnmUtfz97/vU=
+X-Google-Smtp-Source: ABdhPJwRzPvXtO+fhBBu5hNnjH37vFKZQ4WUfpfxknWa5SYTmIv5OwArKN2RUR1M320rrVuB/OYAmaWYTGv8i22/u5Q=
+X-Received: by 2002:a05:6512:214f:: with SMTP id s15mr2256718lfr.56.1629910690219;
+ Wed, 25 Aug 2021 09:58:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.1076.git.git.1629856292.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1076.git.git.1629856292.gitgitgadget@gmail.com>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Wed, 25 Aug 2021 09:58:00 -0700
+Message-ID: <CANQDOdcxsR4n9SCtueRBUO4Ea98NBoT17m5srurpvg=CVft51g@mail.gmail.com>
+Subject: Re: [PATCH 0/2] [RFC] Implement a bulk-checkin option for core.fsyncObjectFiles
+To:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Christoph Hellwig <hch@lst.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amazing, thank you, simple replacing EDITOR with GIT_SEQUENCE_EDITOR worked for
-me!
+On Tue, Aug 24, 2021 at 6:51 PM Neeraj K. Singh via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> Hardware:
+>
+>  * Mac - Mac Mini 2018 running MacOS 11.5.1, APFS with a 1TB Apple NMVE SSD,
+>  * Linux - Ubuntu 20.04 - ext4 running on a Hyper-V VM with a fixed VHDX
+>    backed by a Samsung PM981.
+>  * Win - Windows NTFS - Same Hyper-V host as Linux. Operation | Mac | Linux
+>    | Windows
+>
+> ---------------- |---------|-------|---------- git fsync | 40.6 s | 7.8 s |
+> 6.9s git fsync_defer | 6.5 s | 2.1 s | 3.8s git no_fsync | 1.7 s | 1.0 s |
+> 2.6s
+>
+I just wanted to fix this performance test table so that it is readable.
+Operation       | Mac     | Linux | Windows
+----------------|---------|-------|----------
+git fsync       | 40.6 s  | 7.8 s | 6.9 s
+git fsync_defer | 6.5 s   | 2.1 s | 3.8 s
+git no_fsync    | 1.7 s   | 1.0 s | 2.6 s
 
-On Wed, 2021-08-25 at 17:54 +0200, Martin Ågren wrote:
-> Hi Konstantin,
-> 
-> On Wed, 25 Aug 2021 at 16:07, Konstantin Kharlamov <hi-angel@yandex.ru> wrote:
-> > I'm almost happy with `rebase-at`, except I don't know of any way to make it
-> > work
-> > with `reword` git action. You see, "rewording a commit" requires to run
-> > EDITOR twice:
-> > first to substitute `pick` with `reword`, and then to actually edit the
-> > commit
-> > message. But since EDITOR was substituted with sed, the 2nd run won't give
-> > you an
-> > actual editor to change the commit message.
-> 
-> I think GIT_SEQUENCE_EDITOR is for pretty much exactly such a use-case:
-> 
->   This environment variable overrides the configured Git editor when
->   editing the todo list of an interactive rebase. See also git-
->   rebase(1) and the sequence.editor option in git-config(1).
-> 
-> Does that help, by not stomping on EDITOR/GIT_EDITOR?
-> 
-> Martin
-
-
+Here's the graphical version:
+https://docs.google.com/spreadsheets/d/18HWXSUVAVqqKATsuVvgxDF6ftX_5qG1UGgNjGtwOuu8/edit?usp=sharing
