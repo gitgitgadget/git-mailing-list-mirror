@@ -2,158 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6535CC4338F
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 15:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93E57C4338F
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 15:45:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 444B56108F
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 15:43:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6D5D46108F
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 15:45:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240836AbhHYPoc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Aug 2021 11:44:32 -0400
-Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:60043 "EHLO
+        id S240889AbhHYPp7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Aug 2021 11:45:59 -0400
+Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:53139 "EHLO
         wout2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S240408AbhHYPob (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 25 Aug 2021 11:44:31 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id D48643200B54;
-        Wed, 25 Aug 2021 11:43:45 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Wed, 25 Aug 2021 11:43:46 -0400
+        by vger.kernel.org with ESMTP id S240408AbhHYPp6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 25 Aug 2021 11:45:58 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.west.internal (Postfix) with ESMTP id 0D1F03200B7C
+        for <git@vger.kernel.org>; Wed, 25 Aug 2021 11:45:12 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Wed, 25 Aug 2021 11:45:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=47u7Wd8Ipsuqb5SVqGrjyKj0ueq
-        lwxyEFR1GK2nS+AI=; b=K0JBWqbsDwZslL5G5GFqcmFrEunplcJZLnNrcUcHTWL
-        3vYjpKEsM1YlHgR6odH7kNAQM7Xm4cmYUgoJPdFpNjNWPUN7JyH2WE5dME37g1F4
-        /ZAshyNGBw4tIkuEL7Q9gpE5EloEjp4UlMKYwWv13X3eDwV5mIeSazonrXMvMskC
-        LpY8ejgF+NX6PQSl8rn8uu0tlP1aTFHARyU3bgTtBjoDbpK5aJaHZTmAWZzShXgV
-        4iXZvgB78S3MYpSRgc9vnlHw9hAHQAjzyKGwyDxSHJL6R+2yWkYTmPUEL4lgJqGF
-        o65vaCjsuYISfYPYgevygJQ+sZBOMeikwMOtHSxd0ag==
+        :from:to:subject:message-id:mime-version:content-type; s=fm1;
+         bh=AAg+6W8KKEZRHCPOnA6Nk2a3KzLS3gplUtQOz2GxKG8=; b=RCjmhgDCM7Bj
+        MhSC1tHTJCmfHMKwhfMCm2VqnKSZqY0izbYCFCMEq4+vjEwnQ4VT21aXss090Bg/
+        FiP5+BdV3nop7dl6tueGqrH5g1A3ItD9ECe279AsgriYNB7IClKmG0sMz8F5iCU4
+        vvQzLN2UPB9h+9977xhykkAuyAyZwCOlfv2uH9+2iF3NHJaUwgGm+5YkzyrkZC4R
+        ZecmfiDIFzm3REv3VF0C6mL1vLt9UlWzQ5QylFb08TLNYhS/sISGtA+htCGozz1j
+        TBxjRmcawM8cq/cnuYQ+CHznP/1SRKW0Ia+ZvoWkd3217k8/cdnD7R6cqJKz4/k5
+        nhnqlKUzxQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=47u7Wd
-        8Ipsuqb5SVqGrjyKj0ueqlwxyEFR1GK2nS+AI=; b=dpaQS+3kxBOUoi39Mx5W7w
-        liFQhFLWMD7Gv05q+TmEaobXrXaMTMCU4VVtBIhT3J+mwcio8dpoNUbUIgKqEqM/
-        bfErlX0zfTXKaNJ/f+xVvnHGEKv6tdGco/EDRtxrenFTXbeTy14y4DiK7e+ETqqo
-        J+f56qKglfRAI9JTrdI004ll+AdHyRDnsMmHWQRYPQkjRIneSextsqRkT1Gvf5eP
-        sCRs5BuWA3Lix/2rvS+xfXf/z/dOKU2zm1dkA2spJ3lg76f6jHE2RGTGGwRCxpvM
-        gZh6ZKHjeunMbQ61pvitHtkFHPqb8i0S38G99P2WKCyPvDl9nVjIUEdzapUSoOkg
-        ==
-X-ME-Sender: <xms:MGUmYQqDx-tDN91guofpFQ2yTdN9w_7bSfvrLX-ljZ2qOIHhpnE3iQ>
-    <xme:MGUmYWrj22RF5zD97LUhtHQNhkwfHnY-eWVrP47oUBD2cvkummb-Naf2Mv0AW2kq9
-    C3WKP_UcA1MvD2UMA>
-X-ME-Received: <xmr:MGUmYVNoCQklJW9WsxeEepSs6yT-N9WddueWwX-SU7iKmZILKeHXxxhLo3XGMB2jfNYhTAnrxa9X0d5k7AGJVjp9FZTiIUJg-TEqqNVVUUrQUHQwAXaMJv8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddruddtledgleegucetufdoteggodetrfdotf
+        messagingengine.com; h=content-type:date:from:message-id
+        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm3; bh=AAg+6W8KKEZRHCPOnA6Nk2a3KzLS3
+        gplUtQOz2GxKG8=; b=YEgNZ1Fau92vgdNy9PUFV5h2Rs17qUiYo6d2Wdd3wyLqC
+        S4BeSMl2P9ocAg2UVByzWrB5BA0CbQRDAmUH3oQxS95Ld04/R1PiBT4+dExm+0Ly
+        ssP6aR16JuX6AK8TaimksPvBxzhXuvD0nQj598sGok349i57oQriBUxFEHPPTNKG
+        1CQs859gCMbrQk8R4p90WRpkoOdg8RRySjee4+06sSr/xM7AjJOQEEo0u43WXGUU
+        DtrUJW3XX7O0nIvwcAErlie6UXxaD5jgOwVoQebS78aGSHYpeP1WNrMN7VGv66Sg
+        u3na2es8HYNEdcaxyWK/oDdMvA7+bTEFn1SUgRW2w==
+X-ME-Sender: <xms:h2UmYSXH4jiiYzqt9_QzDAPm3DHgI1BYZZ2XyV6_jBcPX1DMwufQEQ>
+    <xme:h2UmYekkjOvdlyJX8FQe3qkFeJBS_lv8BH3HSjojis05hZqWS7AsIcNdrOQnAiG62
+    TezmRppXU186NZ4fw>
+X-ME-Received: <xmr:h2UmYWZlAUBaReWFHII3XozH623M3qiO7wXtEXqZux-7zbtU6zsZKhPtaH7bOslffIOXnGsz0NraGf4yfgUsY0hkSV6JdQ_J5rZRpiR54o-I38rTKyyW8xE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddruddtledgleefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgfejueevjeetudehgffffeffvdejfeejiedvkeffgfekuefgheevteeufeelkeen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:MGUmYX5pI7g0fr-CoHjBFfZhZg-eSKmnn9zLkUUp4mRST8z4j82i0Q>
-    <xmx:MGUmYf7iRvjYIx67PweQbyi5KDSnRwTYUxkMsiee0r1SSMR4YZIaPA>
-    <xmx:MGUmYXh2LW1tc6_8D5YdN3-0p1_Ha4rFVN8wq_JepjLjAqTonUKTyA>
-    <xmx:MWUmYcgcTsutJqkTXdz447BaRdJrmuIpS2C_hWLMV0CEC5UhxPAfcw>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Aug 2021 11:43:43 -0400 (EDT)
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepjedtfefftedugfevvdejtdehjefgtddvvdethe
+    eiteduuedtteeileetkefhfeeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:h2UmYZU8nbTayfIJC5lsy_Gq2aoOwkPZ4zO5xel1ja0GSdvtmQJpXA>
+    <xmx:h2UmYcltAHeN36H4XYpVtJdJX6dxpM_PnaH9tfM5CPXMLG5o5W_NYA>
+    <xmx:h2UmYefwAxKnUZY9WbHlqE081A8MFVeh9wLej7bNSH7fVYGk4RYvdg>
+    <xmx:iGUmYeSrbuR8F0D4bJsKkJ9Ty4JGWed_G1b0nLlKZL96YPU_3b6iLQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Wed, 25 Aug 2021 11:45:11 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id e4146c4b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 25 Aug 2021 15:43:40 +0000 (UTC)
-Date:   Wed, 25 Aug 2021 17:43:39 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 1ff9c773 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        for <git@vger.kernel.org>;
+        Wed, 25 Aug 2021 15:45:10 +0000 (UTC)
+Date:   Wed, 25 Aug 2021 17:45:09 +0200
 From:   Patrick Steinhardt <ps@pks.im>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] ls-refs: reuse buffer when sending refs
-Message-ID: <YSZlK2y74wmYQcSd@ncase>
-References: <ccd03e685af0f5cf25c68272a758fc88d115e37a.1629899211.git.ps@pks.im>
- <705fee2c-7711-ac99-f692-ab08cd7b4e26@gmail.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] fetch: skip formatting updated refs with `--quiet`
+Message-ID: <40c385048a023dbd447c5f0b4c95ff32485e1e23.1629906005.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="CLn4Jj3MiyO8ejmy"
+        protocol="application/pgp-signature"; boundary="wTUceE8tDtlFR7eX"
 Content-Disposition: inline
-In-Reply-To: <705fee2c-7711-ac99-f692-ab08cd7b4e26@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---CLn4Jj3MiyO8ejmy
+--wTUceE8tDtlFR7eX
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 25, 2021 at 10:50:30AM -0400, Derrick Stolee wrote:
-> On 8/25/2021 9:49 AM, Patrick Steinhardt wrote:
-> > Improve this by passing in a buffer via the `ls_refs_data` struct which
-> > is then reused on each reference. In a repository with about 2.3M refs,
-> > this speeds up local mirror fetches by about 2%:
-> >=20
-> >     Benchmark #1: HEAD~: git-fetch
-> >       Time (mean =C2=B1 =CF=83):     25.415 s =C2=B1  0.131 s    [User:=
- 22.722 s, System: 4.740 s]
-> >       Range (min =E2=80=A6 max):   25.240 s =E2=80=A6 25.543 s    5 runs
-> >=20
-> >     Benchmark #2: HEAD: git-fetch
-> >       Time (mean =C2=B1 =CF=83):     24.922 s =C2=B1  0.110 s    [User:=
- 22.404 s, System: 4.476 s]
-> >       Range (min =E2=80=A6 max):   24.825 s =E2=80=A6 25.081 s    5 runs
-> >=20
-> >     Summary
-> >       'HEAD: git-fetch' ran
-> >         1.02 =C2=B1 0.01 times faster than 'HEAD~: git-fetch'
-> >=20
-> > Signed-off-by: Patrick Steinhardt <ps@kps.im>
-> > ---
-> >=20
-> > Note that while this topic applies on top of "master", I've done the
-> > benchmark on top of my other optimizations for fetches. It's cheating a
-> > bit, but it's easier to see that the optimization does something when
-> > the remaining constant part is lower.
->=20
-> I don't mind demonstrating an optimization using the other work.
->=20
-> Perhaps this would be better grouped with those other changes?
-> I know that the text is independent and merges cleanly without it,
-> but it can be helpful to think about the effort as one unified
-> topic instead of juggling multiple, especially because I don't
-> see the other one needing many revisions.
+When fetching, Git will by default print a list of all updated refs in a
+nicely formatted table. In order to come up with this table, Git needs
+to iterate refs twice: first to determine the maximum column width, and
+a second time to actually format these changed refs.
 
-I don't know. I just happen to revisit this topic every few days, and
-every time I stumble upon some more performance improvements. It would
-feel wrong to shift the goalposts of the other series every time I find
-something new, so I instead opt for separate patch series.
+While this table will not be printed in case the user passes `--quiet`,
+we still go out of our way and do all these steps. In fact, we even do
+more work compared to not passing `--quiet`: without the flag, we will
+skip all references in the column width computation which have not been
+updated, but if it is set we will now compute widths for all refs.
 
-If this proves to be annoying for reviewers, then feel free to shout at
-me and I'll change my approach.
+Fix this issue by completely skipping both preparation of the format and
+formatting data for display in case the user passes `--quiet`, improving
+performance especially with many refs. The following benchmark shows a
+nice speedup for a quiet mirror-fetch in a repository with 2.3M refs:
 
-Thanks for your review!
+    Benchmark #1: HEAD~: git-fetch
+      Time (mean =C2=B1 =CF=83):     26.929 s =C2=B1  0.145 s    [User: 24.=
+194 s, System: 4.656 s]
+      Range (min =E2=80=A6 max):   26.692 s =E2=80=A6 27.068 s    5 runs
 
-Patrick
+    Benchmark #2: HEAD: git-fetch
+      Time (mean =C2=B1 =CF=83):     25.189 s =C2=B1  0.094 s    [User: 22.=
+556 s, System: 4.606 s]
+      Range (min =E2=80=A6 max):   25.070 s =E2=80=A6 25.314 s    5 runs
 
---CLn4Jj3MiyO8ejmy
+    Summary
+      'HEAD: git-fetch' ran
+        1.07 =C2=B1 0.01 times faster than 'HEAD~: git-fetch'
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ builtin/fetch.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index e064687dbd..d064b66512 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -757,6 +757,9 @@ static void prepare_format_display(struct ref *ref_map)
+ 		die(_("configuration fetch.output contains invalid value %s"),
+ 		    format);
+=20
++	if (verbosity < 0)
++		return;
++
+ 	for (rm =3D ref_map; rm; rm =3D rm->next) {
+ 		if (rm->status =3D=3D REF_STATUS_REJECT_SHALLOW ||
+ 		    !rm->peer_ref ||
+@@ -827,7 +830,12 @@ static void format_display(struct strbuf *display, cha=
+r code,
+ 			   const char *remote, const char *local,
+ 			   int summary_width)
+ {
+-	int width =3D (summary_width + strlen(summary) - gettext_width(summary));
++	int width;
++
++	if (verbosity < 0)
++		return;
++
++	width =3D (summary_width + strlen(summary) - gettext_width(summary));
+=20
+ 	strbuf_addf(display, "%c %-*s ", code, width, summary);
+ 	if (!compact_format)
+--=20
+2.33.0
+
+
+--wTUceE8tDtlFR7eX
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEmZSoACgkQVbJhu7ck
-PpTXKw/7BJLThpK4HpVb63S8NQm9nE7CbAlMCdY044jUJHlmnhr1SwKYgauX6l+m
-8cJ4Im9CjIl0x8hm0WcMz/bU9K288s7VXRhF4Z/OizSXQHhDtzPs1bgl2Wz4CZNQ
-SFNS7Nhkdi5ticc9HXjM9kRxiIxaBMB1Io9qBDWWcZI/Wx9dRam+bUCCT7lJNHRg
-Ll9w5aUK4KOt/SehSOT0wdEHLgVQUrdjpDXzZsl/HV/qFnugI07zwL0krwxWW/O1
-N8yo0Go8af+2e4czp51UXFAGjqZlhHAQ595aFTYYXLwu8HG6croO6BMjQGfI+jpg
-XtKE1CcIUi8jpVTAin32J5T74+n3aadBOQiCC4jeoI0D1v52N8MzTKUaoGsnDUH7
-UZNkZkfjyYVwDy62GDjxrM5ZBIXQUGvDLOUsow7z5LpJP3hTEVG/SOCrz4e8A7BT
-tAzp453DQ6X/yFcmJ4XpO8DGa0PQLgxoOfvjlpTfHqluW343NbzWfFYphHU/QvVT
-0tQqqDaHXnx6YwnltTMbuoRscqZjwHL9GW4CbUvbo9uj3uhKWvhPhDQsXlENb3yx
-KxI16S00Faw8oOdQcAB2DGrdfqOBFT4HJYGa+swcxuYY9BGB4bEPjWpLc0z0Z5ma
-uE6Ry2gnAqQEQV21M2/OGVWR6t1K1WiT7WDNPFoqGyAnOuy6UVk=
-=EO00
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEmZYQACgkQVbJhu7ck
+PpQWqxAAlJzCe+tGQgUn0ah7Md+DYSA3L5+cVN8rUP/c2LCjEeTrhrAhfk9bPVAm
+QrcET31341A3YoF8k/W+y3HPTbCRoJQW6yA/vvVo6wo2XhksZnp75hPICmclZqWk
+hS13Nnn8K61Hwx42KXP6RoDezu9239jmjlIX0pI0IDEq4Il+oL+0KNamheSsWK0/
+ToP9xsYLRm0VrHZ6bPdYCSbgT8zh2ymxjWbevLcuOdvFtb1tiQ0qOp4CGrx1d7xA
+uq7oTo99mh30poK2fG4B7aYR4TOC3ic4cbc0UUCmYcx4vlnRQZ5DZqURh2sm4zSr
+1rXxhbEFgztxf4FkIydCjkLL3YUJ9ah+hi24JgsDttNm2gml8M4KPhSNtmIVbVsC
+a0uuRn6m7IMPAav8qhXwc0uJtw5sA5n78T5yeiS0zJfGNvz7BayfxLZCya97fuy6
+9yeiqAADmUq/8gWabiEaxew9hp1H1gQTvOGpndCwTAbADCuJUggSmFY1Y6xfZFc6
+rW3cGmhPLPEE/EQ/zXsu6EzSQUsXlRbInOTiW44Vqv7qJorFDUUBoEB4PDMRA7YW
+lki7KkiIcvPAUAlHEhAFKQGotputgzZzinHZ8UhSPfhLCrATbdt8KEpBgv06xV55
+ctKqlIN2rxVdlhNCPiLTXNTYVHJ7hnBeRNAc9eRH9ewvWi6rR/0=
+=DrOW
 -----END PGP SIGNATURE-----
 
---CLn4Jj3MiyO8ejmy--
+--wTUceE8tDtlFR7eX--
