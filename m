@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58586C43214
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 23:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F30EC432BE
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 23:20:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 39049610C8
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 23:19:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7187F60EBC
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 23:20:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233943AbhHYXUo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Aug 2021 19:20:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50482 "EHLO
+        id S233969AbhHYXUp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Aug 2021 19:20:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233361AbhHYXUk (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230176AbhHYXUk (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 25 Aug 2021 19:20:40 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B208BC061757
-        for <git@vger.kernel.org>; Wed, 25 Aug 2021 16:19:53 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id i3so609267wmq.3
-        for <git@vger.kernel.org>; Wed, 25 Aug 2021 16:19:53 -0700 (PDT)
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57DF2C0613C1
+        for <git@vger.kernel.org>; Wed, 25 Aug 2021 16:19:54 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id n5so1818404wro.12
+        for <git@vger.kernel.org>; Wed, 25 Aug 2021 16:19:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rER/T7vWiDjs7HDuaPNNLB9+cgOXtIJCrKDBo7eCxsM=;
-        b=m6zG87/d5bDl9wUFZERUbaxE0ugG86u5Moa8lzA9Mx8mO94KF0dmOoYfVmbZh6xDPM
-         WC0zH7ONdsnndvE19bZOw3lCrB7iPfFzEQtphEgAuEe9ev4TBCgxce1wtoGNpay+MNDp
-         ZRFFmmgHsZ7gNorwuL/EvwT5wnXUbtAg1LXeDmg+syl+0ZiyBXUYHfQL4kVz6snI3iV+
-         A3QJayHdobo4tBWmqvtadQ+n+Wc813UigCC6ja34rV5y+xCJtwSUyC3kH5ICPt8OoNL+
-         zdFXoirctfoWXP6o3IEcrmcATmTJOnLuKOyTDJQCki+3WV22cMoMxGlRWXe0DiJdsAPn
-         jKYQ==
+        bh=pQA7pFi0QoPZQ7MB004K+GNcMwx/aOtDVw/UWgSk9s8=;
+        b=oAUwRDvsSpJcK9EBuvaBnWuSJC8UG+mU5lma/m9oIw5664k/ujGnfeBsmxd+uMchm+
+         G0n7W4sm3TzQCCCVWzqO4vaQsVrAGbFdg0rmrfMpKFgAAs4pCa9krz1nS8mKuy5V6syG
+         WjBkIxbL/4svrIcIsGFKdNaVyGXyOFXYpLo2471xZLgRE75mThXIhbLt3NK+JhFWgTxh
+         hq1CFAupA0jynNmYFSGv0DLU2OjdICPk0+uavBCDYnvZt0ztGDsTYFfjeKZecawh081R
+         Nc0mp9ChTjvGezXfBKodvtNjakypMpPqbaaNc5TLzALgRS63S1uWVOOtfuY3cNBy53P1
+         hohg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rER/T7vWiDjs7HDuaPNNLB9+cgOXtIJCrKDBo7eCxsM=;
-        b=MCv8T8epFABNY6Hnkf4Hsvq3JFPOnrw9ABk0axtNySpj45MvsoMRovsHnRDdEKjDK9
-         t9JEDsTvUhmQcZHovxX6VBf3CBiAoyjtpt3+aOzmJXwK6ajZn5FZ/TvAr1ER6S1yT9Q3
-         PkPRaVddcPZlhKKnm5V0xzpJZVZAm1Du1vhOy1CabHLJaOg4y0kq2HnkR1IX4+jmEF5F
-         m04KyH/r4wqfjBZom5JtlmFAiDvF0SG8EHrnvVZghkhn5kXWpBOIvvho8UfYPNvorax+
-         3QdA+5GhKpGi001deuEpF7+U5QfWvbBlGUqxphYisS+vA4Gw+SaGrgyD52ZwDOmD3DCN
-         /qPg==
-X-Gm-Message-State: AOAM533ECAXS3bc9PdJCFAxSXRyIRSutm6vjtApULkFVOzGCVpP96cJ8
-        o3LHNmJu8eVjOf1ghpkQRkfxaDQK2wpmhQ==
-X-Google-Smtp-Source: ABdhPJzRxWKYmQFEf9xPF8bD9tB/WzqlSF7Z71QKe6R2Tyxi2DKoYfRDNi/cSC+1UQ3y5t2HPIEb0w==
-X-Received: by 2002:a1c:9d4e:: with SMTP id g75mr766807wme.72.1629933592085;
+        bh=pQA7pFi0QoPZQ7MB004K+GNcMwx/aOtDVw/UWgSk9s8=;
+        b=mIWBjN+Iq/1sh//Xlub2AoLT35q6uIqEOPzkiwqoJIe8a6Xw9ja98Ys72zIugaT2G8
+         h26anqusCZR0QgZRxKOqfZ0fmwJfXkAaiSf4CFc8WJRbY75R1aROY0vu2g9Q3pksxZL/
+         khj6oPBU5S37oV3OLqmnRiKG0n0zcrTK/0jgFPPfAWc1bg/fQ9AMDXPACcChjPpNTwcf
+         NezPhY3zChczpcRNUxqD42H2nX7dLO3q4IKsRFxyNSlZlG4MSBcZu9J8BkSsY9jmoSoy
+         yDBha1Og8LnkoCvh4okEmG1sdJk5ZegaO2OpdLVhdx9ImLHZettVMLNfk4msQNyHKc2T
+         yc8w==
+X-Gm-Message-State: AOAM531+alZjKCNoY2BRXtxfs85+ipiqSUkzFbp6ObUGSO/sy0Mtvt4b
+        ETlIwOeH4FScP4wt0i1iKBIyVNpyxfM57g==
+X-Google-Smtp-Source: ABdhPJzKZaDUU5iBExEtuRJoTco9zwmJ3o9KD4XRggPWLY6iSdYhUVVMoZoy6O4LWtP4Pbk5eAvEFw==
+X-Received: by 2002:adf:ec8b:: with SMTP id z11mr570036wrn.122.1629933592802;
         Wed, 25 Aug 2021 16:19:52 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u23sm6327166wmc.24.2021.08.25.16.19.51
+        by smtp.gmail.com with ESMTPSA id u23sm6327166wmc.24.2021.08.25.16.19.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Aug 2021 16:19:51 -0700 (PDT)
+        Wed, 25 Aug 2021 16:19:52 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 4/6] tr2: fix memory leak & logic error in 2f732bf15e6
-Date:   Thu, 26 Aug 2021 01:19:22 +0200
-Message-Id: <patch-4.6-73e7d4eb6ac-20210825T231400Z-avarab@gmail.com>
+Subject: [PATCH 5/6] tr2: do compiler enum check in trace2_collect_process_info()
+Date:   Thu, 26 Aug 2021 01:19:23 +0200
+Message-Id: <patch-5.6-4e378da2cce-20210825T231400Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.733.ga72a4f1c2e1
 In-Reply-To: <cover-0.6-00000000000-20210825T231400Z-avarab@gmail.com>
 References: <87o8agp29o.fsf@evledraar.gmail.com> <cover-0.6-00000000000-20210825T231400Z-avarab@gmail.com>
@@ -76,54 +76,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a subsequent commit I'll be replacing most of this code to log N
-parents, but let's first fix bugs introduced in the recent
-2f732bf15e6 (tr2: log parent process name, 2021-07-21).
-
-It was using the strbuf_read_file() in the wrong way, its return value
-is either a length or a negative value on error. If we didn't have a
-procfs, or otherwise couldn't access it we'd end up pushing an empty
-string to the trace2 ancestry array.
-
-It was also using the strvec_push() API the wrong way. That API always
-does an xstrdup(), so by detaching the strbuf here we'd leak
-memory. Let's instead pass in our pointer for strvec_push() to
-xstrdup(), and then free our own strbuf.
-
-Furthermore we need to free that "procfs_path" strbuf whether or not
-strbuf_read_file() succeeds, which was another source of memory leaks
-in 2f732bf15e6, i.e. we'd leak that memory as well if we weren't on a
-system where we could read the file from procfs.
-
-In combination with the preceding commit this makes all of
-t[0-9]*trace2*.sh pass under SANITIZE=leak on Linux.
+Change code added in 2f732bf15e6 (tr2: log parent process name,
+2021-07-21) to use a switch statement without a "default" branch to
+have the compiler error if this code ever drifts out of sync with the
+members of the "enum trace2_process_info_reason".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- compat/linux/procinfo.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ compat/linux/procinfo.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/compat/linux/procinfo.c b/compat/linux/procinfo.c
-index 62f8aaed4cc..c86daff2b26 100644
+index c86daff2b26..46a751c9a1d 100644
 --- a/compat/linux/procinfo.c
 +++ b/compat/linux/procinfo.c
-@@ -18,12 +18,13 @@ static void get_ancestry_names(struct strvec *names)
+@@ -30,29 +30,30 @@ static void get_ancestry_names(struct strvec *names)
  
- 	/* try to use procfs if it's present. */
- 	strbuf_addf(&procfs_path, "/proc/%d/comm", getppid());
--	if (strbuf_read_file(&name, procfs_path.buf, 0)) {
--		strbuf_release(&procfs_path);
-+	if (strbuf_read_file(&name, procfs_path.buf, 0) > 0) {
- 		strbuf_trim_trailing_newline(&name);
--		strvec_push(names, strbuf_detach(&name, NULL));
-+		strvec_push(names, name.buf);
-+		strbuf_release(&name);
+ void trace2_collect_process_info(enum trace2_process_info_reason reason)
+ {
++	struct strvec names = STRVEC_INIT;
++
+ 	if (!trace2_is_enabled())
+ 		return;
+ 
+-	if (reason == TRACE2_PROCESS_INFO_EXIT)
++	switch (reason) {
++	case TRACE2_PROCESS_INFO_EXIT:
+ 		/*
+ 		 * The Windows version of this calls its
+ 		 * get_peak_memory_info() here. We may want to insert
+ 		 * similar process-end statistics here in the future.
+ 		 */
+-		return;
+-
+-	if (reason == TRACE2_PROCESS_INFO_STARTUP) {
++		break;
++	case TRACE2_PROCESS_INFO_STARTUP:
+ 		/*
+ 		 * NEEDSWORK: we could do the entire ptree in an array instead,
+ 		 * see compat/win32/trace2_win32_process_info.c.
+ 		 */
+-		struct strvec names = STRVEC_INIT;
+-
+ 		get_ancestry_names(&names);
+ 
+ 		if (names.nr)
+ 			trace2_cmd_ancestry(names.v);
+ 		strvec_clear(&names);
++		break;
  	}
  
-+	strbuf_release(&procfs_path);
  	return;
- }
- 
 -- 
 2.33.0.733.ga72a4f1c2e1
 
