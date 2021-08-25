@@ -7,128 +7,103 @@ X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48461C4338F
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 14:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB309C4338F
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 14:16:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 229DF61073
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 14:13:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB23761002
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 14:16:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240704AbhHYONq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Aug 2021 10:13:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37340 "EHLO
+        id S240817AbhHYOQz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Aug 2021 10:16:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239399AbhHYONn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Aug 2021 10:13:43 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7A3EC061757
-        for <git@vger.kernel.org>; Wed, 25 Aug 2021 07:12:57 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id bk29so21479648qkb.8
-        for <git@vger.kernel.org>; Wed, 25 Aug 2021 07:12:57 -0700 (PDT)
+        with ESMTP id S229760AbhHYOQy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Aug 2021 10:16:54 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C21C061757
+        for <git@vger.kernel.org>; Wed, 25 Aug 2021 07:16:09 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id l4so1204193qvl.12
+        for <git@vger.kernel.org>; Wed, 25 Aug 2021 07:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Bvq9bqG5/MzIJ2QN1KH3JWNM2+VwRARtKcotL1n9M7A=;
-        b=cE7zFQuoZHFZ9eM+kChKo4uN0pSkhfG7VVc0hGqgTb+BC5ZwE+c41JhcniqQjxTwMF
-         rtqnfzQRaMZLivTi3npDqaiCfSk9QdiCjV7DHwj8GS9xyZTSWJ+I7qi3zLmp25oZAm05
-         i+BYbKW48j64EHK03sbXAcRD7OTo13OMEhJ9mHVi2G3AYOZCtB1viQ/mpDQeERvUamP6
-         lCNZKUn1FTL2hy61kzurpEOT40G7sjyE42Ky/oPa0fZNXa6bBOu7GWbyI53tjfsZ2Sp6
-         NaVRxcpxk0hsM8jt8aQyD5hW9YRi+RGC/lecnXd/GTwIocR0a2L16hcq+rBR5xr2vf6N
-         vkXA==
+        bh=m6sjE1klxAf/YyVq9CeVrjyRnOUDiyADtGM4Gw8ygX4=;
+        b=RWNnSP2B2UA2MlHQW+c25pEOun+aiuH7gP4XX+zNmLzAAnSkcPBGDiQgadcbmw0WX1
+         puUWSmir61pihFGxdSFlosFiuxoVeR4zS1627CGhCGMJyE+J3YRAlnTKRTdZ5AEy6LW9
+         3uYwueLVyEhUZpRiewJ/TClQ+SI4yr+yAkFIxOSzhj6yrk5QmShHyaX2p76fW0fTmMFg
+         6ekIhztq3RcyQUbX3/4vXu+S1sdc5aR45074TfV6+5Tu6qlQTechBWqnd3PaF+5uyllZ
+         XounFBMfF5CKxZ6cuWAXXLubIdlaMLeFkXimTdxlrLErT1NBwmw/OB1k3eBamli8CEZz
+         f2aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=Bvq9bqG5/MzIJ2QN1KH3JWNM2+VwRARtKcotL1n9M7A=;
-        b=bOB4bIkp39iJOzDClv1FQ6iPtjeGM+KtR2ExtbI53SI/TLo1qCsrzqGR78f1xSa4Eu
-         OyEFUPwvz+mDU4YtMy5WFTTB7h5Tgz479v8w1f05qPXKrjRWetrQfBPq6o4I9hqryXz5
-         yaZ2qrp6eXupYxRgn/E6zNPYWg/q0bWoI/XQL0peO86ykJUZsxZXSVbiKBQ1ozqG55Il
-         tGfXC1z8XPgAoopxuavQgKqr98MOLxXK3jlWBdk819CXSRx0S6d1nfo1TCCRc7bkSLwU
-         izScoEPrz8c+09icJSPQDU+Mlbo7lxjH5hm7TccD0iIr6m+BLeZPhGqfjujojkpVxequ
-         xihA==
-X-Gm-Message-State: AOAM531vLQ11CBm1KnTSy9T1Qs6hD/kMsCUKltB37K++vWBqHfnMOhca
-        0ESEDn5A2pA8jTkK3zFD1IU=
-X-Google-Smtp-Source: ABdhPJxlcUxk10nJb8HbBYZGjsu+jGZW9RbQWez3HpEoYj1HegL4iJoeRygCSPO2y5gJVfnK5PvjFA==
-X-Received: by 2002:a05:620a:799:: with SMTP id 25mr31493844qka.119.1629900776810;
-        Wed, 25 Aug 2021 07:12:56 -0700 (PDT)
+        bh=m6sjE1klxAf/YyVq9CeVrjyRnOUDiyADtGM4Gw8ygX4=;
+        b=AgmcQEsiQ42Y7p7INtw0kZ3umYlwvBN84FxewEo6pg9Qo9ARYq/c/s/hpptrXqYKzM
+         Uc/XIy6AxU+o9UdCfyJqH1qJb4DSlBjr5351k92GhRzGSApnRXje2vcHd3ShZRlQfjir
+         Be2ZmZBuROHY0G9xw8JpEr3AlFAmJAnosxxUmzx1WExdRtHco4fw/eHaJgnqazGy5h9/
+         nKQhSiWN4okgFj+LPqHBqIlXroIXjd+humca0FbqqogGMSSywSDm0l2+t7zNRZLbpwoJ
+         UVX/tV+LTA+z/vNzarRZrzGmrKBWpSjEO6p+Xpalwatd/PfBb1PEfB+168JPyfD/BYqp
+         9cbw==
+X-Gm-Message-State: AOAM5309w5arjmVjEzkz1TvQA2yUhuDU7Xd9pU7gdQSfd+LpAyChwPVU
+        T07cDtc9c4C35kr/Cev8EfQ=
+X-Google-Smtp-Source: ABdhPJzopARNc83AIf9YYL0wE7czV1tg9APuQ1/uPegwuf/VFV6GUe9vhK7Gz0P72Z5BZ0J8UQ2XeQ==
+X-Received: by 2002:a05:6214:240b:: with SMTP id fv11mr43059201qvb.28.1629900968392;
+        Wed, 25 Aug 2021 07:16:08 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:6d81:bb65:3870:d879? ([2600:1700:e72:80a0:6d81:bb65:3870:d879])
-        by smtp.gmail.com with ESMTPSA id g8sm72238qkm.25.2021.08.25.07.12.55
+        by smtp.gmail.com with ESMTPSA id f12sm4178975qte.66.2021.08.25.07.16.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Aug 2021 07:12:56 -0700 (PDT)
-Subject: Re: [PATCH 1/6] fetch: speed up lookup of want refs via commit-graph
-To:     Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <cover.1629452412.git.ps@pks.im>
- <6872979c4557204821d788dc3f5e1c8bef0a773c.1629452412.git.ps@pks.im>
- <fce98460-eed6-c874-8c42-bf3a6f5f93a8@gmail.com> <xmqq7dggvxup.fsf@gitster.g>
- <YSNEQ9R0TDUNPZPM@ncase>
+        Wed, 25 Aug 2021 07:16:07 -0700 (PDT)
+Subject: Re: [PATCH v2 1/7] fetch: speed up lookup of want refs via
+ commit-graph
+To:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+References: <cover.1629452412.git.ps@pks.im> <cover.1629800774.git.ps@pks.im>
+ <4a819a68309bf03db2d9a5e5be070e52c3542af8.1629800774.git.ps@pks.im>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b2b2316e-3d2c-4561-3da8-2d3a5ca243e0@gmail.com>
-Date:   Wed, 25 Aug 2021 10:12:55 -0400
+Message-ID: <50329e98-862b-5240-cf6c-cfe4cd7e248c@gmail.com>
+Date:   Wed, 25 Aug 2021 10:16:06 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <YSNEQ9R0TDUNPZPM@ncase>
+In-Reply-To: <4a819a68309bf03db2d9a5e5be070e52c3542af8.1629800774.git.ps@pks.im>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/23/2021 2:46 AM, Patrick Steinhardt wrote:
-> On Fri, Aug 20, 2021 at 10:18:22AM -0700, Junio C Hamano wrote:
->> Derrick Stolee <stolee@gmail.com> writes:
->>
->>> I do worry about the case where annotated tags greatly outnumber
->>> branches, so this binary search is extra overhead and the performance
->>> may degrade. Would it be worth checking the ref to see if it lies
->>> within "refs/heads/" (or even _not_ in "refs/tags/") before doing
->>> this commit-graph check?
->>
->> Ah, clever.
-> 
-> Good idea. Benchmarks for my test repository (which definitely isn't
-> representative, but it's at least some numbers) show that restricting to
-> "refs/heads/" diminishes almost all the gains, while restricting to
-> everything but "refs/tags/" performs almost the same (it's a tiny bit
-> slower, probably because of the added string comparisons):
-> 
->     Benchmark #1: all refs: git-fetch
->       Time (mean ± σ):     32.959 s ±  0.282 s    [User: 29.801 s, System: 5.137 s]
->       Range (min … max):   32.760 s … 33.158 s    2 runs
-> 
->     Benchmark #2: refs/heads: git-fetch
->       Time (mean ± σ):     56.955 s ±  0.002 s    [User: 53.447 s, System: 5.362 s]
->       Range (min … max):   56.953 s … 56.957 s    2 runs
-> 
->     Benchmark #3: !refs/tags: git-fetch
->       Time (mean ± σ):     33.447 s ±  0.003 s    [User: 30.160 s, System: 5.027 s]
->       Range (min … max):   33.444 s … 33.449 s    2 runs
-> 
->     Summary
->       'all refs: git-fetch' ran
->         1.01 ± 0.01 times faster than '!refs/tags: git-fetch'
->         1.73 ± 0.01 times faster than 'refs/heads: git-fetch'
+On 8/24/2021 6:36 AM, Patrick Steinhardt wrote:
+> Speed this up by opportunistcally trying to resolve object IDs via the
 
-Thanks for testing both options.
+s/opportunistcally/opportunistically/ 
 
-> This is easily explained by the fact that the test repo has most of its
-> refs neither in "refs/tags/" nor in "refs/heads/", but rather in special
-> namespaces like "refs/merge-requests/", "refs/environments/" or
-> "refs/keep-around/".
+> +			/*
+> +			 * References in "refs/tags/" are often going to point
+> +			 * to annotated tags, which are not part of the
+> +			 * commit-graph. We thus only try to look up refs in
+> +			 * the graph which are not in that namespace to not
+> +			 * regress performance in repositories with many
+> +			 * annotated tags.
+> +			 */
+> +			if (!starts_with(rm->name, "refs/tags/"))
+> +				commit = lookup_commit_in_graph(the_repository, &rm->old_oid);
 
-That makes sense to me. GitHub also stores refs like refs/pull/ so I can
-understand not wanting to restrict to refs/heads/.
+This new logic looks good.
 
-> I like the idea of excluding "refs/tags/" though: as you point out,
-> chances are high that these don't point to commits but to annotated tags
-> instead. So I'll go with that, thanks!
-
-Yeah, that makes sense as a good way forward.
+> +			if (!commit) {
+> +				commit = lookup_commit_reference_gently(the_repository,
+> +									&rm->old_oid,
+> +									1);
+> +				if (!commit)
+> +					rm->fetch_head_status = FETCH_HEAD_NOT_FOR_MERGE;
+> +			}
 
 Thanks,
 -Stolee
-
