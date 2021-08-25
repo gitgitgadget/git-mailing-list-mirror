@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A6C3C4320E
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 23:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8D0EC432BE
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 23:19:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 50A03610CB
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 23:19:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B97EE610CE
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 23:19:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233787AbhHYXUl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Aug 2021 19:20:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50472 "EHLO
+        id S233825AbhHYXUm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Aug 2021 19:20:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232789AbhHYXUj (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232935AbhHYXUj (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 25 Aug 2021 19:20:39 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFEFDC0613C1
-        for <git@vger.kernel.org>; Wed, 25 Aug 2021 16:19:51 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id x2-20020a1c7c02000000b002e6f1f69a1eso5482509wmc.5
-        for <git@vger.kernel.org>; Wed, 25 Aug 2021 16:19:51 -0700 (PDT)
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 599A3C0613CF
+        for <git@vger.kernel.org>; Wed, 25 Aug 2021 16:19:52 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id f5so1809267wrm.13
+        for <git@vger.kernel.org>; Wed, 25 Aug 2021 16:19:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ykrDvlTosMAM0/o9ae8k+S+F6gOG7Zpz4IBbaGqbQ30=;
-        b=G/HFUZWDHOYfz7nFI6wARS2qv8YOANIteJ3Wd/FdtYcVRt6VtNq/oO1d7xnkdMTuD7
-         FfAAIh7UF2C1qPafQynZqVp50uZegduYFTf/EbwG4QMn+1COyL8QPs6N/H7hhGTYZkN+
-         B9nRE9J3pOZMWzsiHxOqY3LQdNNUNeg5+q/IBuR5xY9/mldwOIhhWEk73GsHA+p9qH+k
-         pH9k06MrfdGWzq3oW7qswqBWQvMjSdxrjZ+mdxHtQpNcJl3ddSpU6ATBHDLUlh3aEiV6
-         1LimwBIhg2ImydYeOifOrldKlvW4o102Ws9lXoESZuTptKi2BTJkMS8G6/iO6vuabJlT
-         n9Lg==
+        bh=vHdxbCA+/hsBmu/T36KjN3tcQ7jEN6auW1UJeeywmm8=;
+        b=odyciXMAixI6pefjiO08mFapbTgi7qYPvxYj/ACfFw7uWB4BgEkHvqDEptJjspz+eR
+         fRQRYd4SbJ5BVLG31F0NkspLhJOWC4aOO6W9Ap8pAoIr/P0N74tfjaWSpdvPj+ed6GVT
+         FoNEbRxGONawuHxbSpFeYirC3KcJRAC+GQ1hDg+TUP/aNYbn9MdKoyZKpD5kUdih8r8M
+         uFtOBwciq8fBDam7pGzi7O9wCHFf+Fv6aBrrf4Lgwb04sjAotcbuL1ebKX9xaWG67vg2
+         qthg8FOL3I5TX1Z3RAVjXnX6hyDlNVg+l8+yhvmif/IGqNfWuqc3Ki2oY21Iy5T/00JZ
+         VPNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ykrDvlTosMAM0/o9ae8k+S+F6gOG7Zpz4IBbaGqbQ30=;
-        b=P7HFzHzUPQsT1lcAgvejsz2F9J/83HQY3l+JNiRIGZcT9GhzqeG1lM0JvtCCLHTmYS
-         GQNyftD+CLTJgJRpRqcHYyeaxkyxcfZz0KMH9mxph6rsyqfcbRFR8YPmrYDUkFsU8+OF
-         dUNuIefsJAEujG4lQrp7hExxuEiRgBH7Lp0Dii1QZSL1qWUs7ZYNYcnMHR4Qo7XFG925
-         kGV6HM/WRfOOZSRww97+y/XiZooOeSg6ascWiZKImBlIE+2R6k/qoFDu6kyRTKdr6WKA
-         r3uccM5CfTwyc6a+Gt6tzxvZZUsOz9Kf7W8yPtmlDUllJ5KzbQ/MmbPBzjLOQRXm77aM
-         J//g==
-X-Gm-Message-State: AOAM530DQwFcZymYFqUkSaKOf/gGGEtlFhmaHAQKbF2z3pv7Hh6r3Ka6
-        +wKU6edoJlEoqRi6SNJPj/eEY37mNZ0=
-X-Google-Smtp-Source: ABdhPJzfwep0SX0iiWmG/9nh9j0pYzjanufonl50l88vsFwM2GyDwcpm/QbqpYqYpoTgaxeYBMVzsA==
-X-Received: by 2002:a7b:c441:: with SMTP id l1mr743246wmi.69.1629933590071;
+        bh=vHdxbCA+/hsBmu/T36KjN3tcQ7jEN6auW1UJeeywmm8=;
+        b=QOGnYa6rzsGW2pDJ8qwBUtKnxE7QKqUi5pbsWgx1/j6TjlKy6agTDYQf4zyLM55lHJ
+         l7e7zW0i40c19zQ+svRLDTrACyW+ZrS1bI9PeE5hdHC76Gsug35Dl27lP4EXB5m2F03c
+         aYuvZuBb57fRkERU4e1tsDvY7dimjqro39ZL35PdqCr476dws0+y/M4JLq6rm3qZfOKT
+         hb2X3O4fa1QFHUR9jgAurOGdmQIuRp3qmbytZDOifKC0r/l1gbEtEFjBMXucuUnf/4/K
+         vIVhjOkNCOBxpkukZwUVPlYA2rdFZnFISy9hEk6ejoNWauizt1l7N0jvxlzflULWpqao
+         vFoQ==
+X-Gm-Message-State: AOAM530eTg1hJF27a3EfjNVbDDKlEQ6t5yLSiU1Vy5xkFRJXw/y4yT9Y
+        9eIjbIRtVmKBcYh55nvIfQxieM8H4y3dYA==
+X-Google-Smtp-Source: ABdhPJy5rJw5w0pPyj3+kZ+jvfryV5VDPFUQqS0JitrjOVu1azQxLkzDS5Va2b7LSHcpGmV985wPyw==
+X-Received: by 2002:adf:90cc:: with SMTP id i70mr553988wri.408.1629933590764;
         Wed, 25 Aug 2021 16:19:50 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u23sm6327166wmc.24.2021.08.25.16.19.49
+        by smtp.gmail.com with ESMTPSA id u23sm6327166wmc.24.2021.08.25.16.19.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Aug 2021 16:19:49 -0700 (PDT)
+        Wed, 25 Aug 2021 16:19:50 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/6] tr2: remove NEEDSWORK comment for "non-procfs" implementations
-Date:   Thu, 26 Aug 2021 01:19:19 +0200
-Message-Id: <patch-1.6-8c649ce3b49-20210825T231400Z-avarab@gmail.com>
+Subject: [PATCH 2/6] tr2: clarify TRACE2_PROCESS_INFO_EXIT comment under Linux
+Date:   Thu, 26 Aug 2021 01:19:20 +0200
+Message-Id: <patch-2.6-0150e3402a7-20210825T231400Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.733.ga72a4f1c2e1
 In-Reply-To: <cover-0.6-00000000000-20210825T231400Z-avarab@gmail.com>
 References: <87o8agp29o.fsf@evledraar.gmail.com> <cover-0.6-00000000000-20210825T231400Z-avarab@gmail.com>
@@ -76,31 +76,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm fairly sure that there is no way on Linux to inspect the process
-tree without using procfs, any tool such as ps(1), top(1) etc. that
-shows this sort of information ultimately looks the information up in
-procfs.
-
-So let's remove this comment added in 2f732bf15e6 (tr2: log parent
-process name, 2021-07-21), it's setting us up for an impossible task.
+Rewrite a comment added in 2f732bf15e6 (tr2: log parent process name,
+2021-07-21) to describe what we might do under
+TRACE2_PROCESS_INFO_EXIT in the future, instead of vaguely referring
+to "something extra".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- compat/linux/procinfo.c | 1 -
- 1 file changed, 1 deletion(-)
+ compat/linux/procinfo.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/compat/linux/procinfo.c b/compat/linux/procinfo.c
-index 578fed4cd31..15a89676c7a 100644
+index 15a89676c7a..62f8aaed4cc 100644
 --- a/compat/linux/procinfo.c
 +++ b/compat/linux/procinfo.c
-@@ -25,7 +25,6 @@ static void get_ancestry_names(struct strvec *names)
- 	}
+@@ -32,8 +32,12 @@ void trace2_collect_process_info(enum trace2_process_info_reason reason)
+ 	if (!trace2_is_enabled())
+ 		return;
  
- 	return;
--	/* NEEDSWORK: add non-procfs-linux implementations here */
- }
+-	/* someday we may want to write something extra here, but not today */
+ 	if (reason == TRACE2_PROCESS_INFO_EXIT)
++		/*
++		 * The Windows version of this calls its
++		 * get_peak_memory_info() here. We may want to insert
++		 * similar process-end statistics here in the future.
++		 */
+ 		return;
  
- void trace2_collect_process_info(enum trace2_process_info_reason reason)
+ 	if (reason == TRACE2_PROCESS_INFO_STARTUP) {
 -- 
 2.33.0.733.ga72a4f1c2e1
 
