@@ -2,222 +2,289 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BA4BC4320A
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 13:50:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4547DC4338F
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 13:51:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4FC95610D2
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 13:50:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 20B9B61040
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 13:51:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237039AbhHYNus (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Aug 2021 09:50:48 -0400
-Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:47943 "EHLO
-        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233490AbhHYNur (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 25 Aug 2021 09:50:47 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id 884513200A11
-        for <git@vger.kernel.org>; Wed, 25 Aug 2021 09:50:01 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Wed, 25 Aug 2021 09:50:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:subject:message-id:mime-version:content-type; s=fm1;
-         bh=j30bBLoSbHF9o+qm//Dklb+2jQcFzP+3fYS8JGrpkqE=; b=s1YUx31vdrVb
-        Y3IWPM8Y4khwsqyatCcYyRzMIzjSbjjMIVvVtV05hw4dWAP+f4vJcB5ZsoloqUoA
-        2De/9+t6/VNTQhFhb7LOGf68mQE927oUQNWSK7C6SbwFfXNj9r1O/R5fwPLR4XO5
-        eJjhP5m3jRIGW6p+jzorXjz1FzFMxWM3YkQhIlzHtVEFTXL4WbFT0F2TD7VJdQBd
-        MzNkh5eVw0ioGmxgOVm0m3vkam7pflnb5hLDCoiGN7HWOvNFDL6GKC/cPRS67/L/
-        6hS6/ihbGjREChrFHB4p8gS3zxqwKO3+uKpC8FW/+D+df7VeJW1BUICDnHfEO8zK
-        1kx7JQ7WbQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-type:date:from:message-id
-        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm3; bh=j30bBLoSbHF9o+qm//Dklb+2jQcFz
-        P+3fYS8JGrpkqE=; b=EjVOLRUenbPSKKGd8wp+9WDSEF3WeaHjjA6wcSxcKMAUT
-        lvvysTorXGG3PzIZkX+X1tFcbMKEtnZMjEePx6Kbq3yYg/L5QzO6uUjKBksH+sTL
-        A3W61CYvFjeZNav0FxJ6u5RC6FOe7rCwR1kWqOXyCmE59c+awFhoC2AkzGCjAkco
-        x5ClhFCm7HUksXXRvd2ecgriMx2benmoVgOFOfa+jYSBNgRPDyfe95lx6Ns+FQvC
-        HHLNPukCXt7FDncgrI7i9oc3zgj8UHSgeWIwRiRkPGa32DKYdJDvfe8ui4PTYinS
-        1gX9KiTVEMbCcuEczq/qe7G+KZA7wtdE89bw/79FA==
-X-ME-Sender: <xms:iEomYXmCsOYsueHL7ppSVH43TemLd1xKi5LK7w8o2MCmz17m-6D7vg>
-    <xme:iEomYa1f4kuzDTR9HcggIEcCvtXTH1AfefGPulXtZy7XSCjdnFG42Q5BwbCu79xS5
-    HrL-t80vUe39s-xvw>
-X-ME-Received: <xmr:iEomYdqCNOJknFjDa0UbVhKhKDu-8_Vb9ER9oIjkh-Tc7yx1fZa_qIXTSJgWqDdH03rCoUcvTIWoRRLrESBMneakhigvFPXD1MLPjzo9Qrb2NPzR_-F9FBw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddruddtledgjedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
-    dtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepjedtfefftedugfevvdejtdehjefgtddvvdethe
-    eiteduuedtteeileetkefhfeeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:iEomYfn-xm9vR6SI9WY6__tBNz8ItsdjnX9aOXISHMUHcNnMpdCNvA>
-    <xmx:iEomYV0KnphCWhCrpbOQLBsNCn0ta-DNGZC1ADxkvfN3xcRUjdc0XA>
-    <xmx:iEomYeuTPK13BbJAtxo82GHuOsrc4xqmKUmONepT4SR09v9-eIii3A>
-    <xmx:iUomYSj7Xxj39ZIvuL64P0EDy6b4suViwyEu0GSa_JiEu9AWxu1yyA>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 25 Aug 2021 09:49:59 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id b841d9be (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-        for <git@vger.kernel.org>;
-        Wed, 25 Aug 2021 13:49:52 +0000 (UTC)
-Date:   Wed, 25 Aug 2021 15:49:51 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Subject: [PATCH] ls-refs: reuse buffer when sending refs
-Message-ID: <ccd03e685af0f5cf25c68272a758fc88d115e37a.1629899211.git.ps@pks.im>
+        id S240774AbhHYNv5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Aug 2021 09:51:57 -0400
+Received: from mout.gmx.net ([212.227.15.19]:35785 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240646AbhHYNv4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Aug 2021 09:51:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1629899463;
+        bh=auzpibZaznDgjQIlO1JiqV4Zdgi0HSZFkFOVBGB5SBQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=dD80xCZe74ZW+wyTgkqHJuJr0wPAJT5FMDX1D7y5G55h/HTRCF1gnp69DXdg3LyAN
+         9dIWRN6lBZoSBEd37Oqou49OKedQyTvHQCHE3FXEdhvno6X3ezrGJGk0DXWFKwdKFC
+         sT0Z5vPy5o88uMVBdG8Yb3BBWYUtTk6ZQkn6QVLg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.86.215] ([89.1.214.7]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M89Kr-1mN22e2LFj-005GGT; Wed, 25
+ Aug 2021 15:51:03 +0200
+Date:   Wed, 25 Aug 2021 15:51:01 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Neeraj-Personal <nksingh85@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Christoph Hellwig <hch@lst.de>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, "Neeraj K. Singh" <neerajsi@microsoft.com>,
+        Neeraj Singh <neerajsi@microsoft.com>
+Subject: Re: [PATCH 1/2] object-file: use futimes rather than utime
+In-Reply-To: <2c1ddef6057157d85da74a7274e03eacf0374e45.1629856293.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2108251530210.55@tvgsbejvaqbjf.bet>
+References: <pull.1076.git.git.1629856292.gitgitgadget@gmail.com> <2c1ddef6057157d85da74a7274e03eacf0374e45.1629856293.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="PKXEDhSIIysWFZaW"
-Content-Disposition: inline
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:czM8n/cAc68d3o2MuaeY6hDppUKhYotBKxmOBcPVlLvinKb9iEx
+ vC90GlzyaU5IZrdVzRexgxQ9KdDdyiZFR8I6V9YPBBAXHO+TJF//DrxWhEDT0AGGSL6fPcn
+ ZLTHuUzWuFm/wjvTskVXPoZkxEaoho2Fck7gy66ho83fIVBfpoyQbWCte1OwBzcro3CSnv9
+ VsKtZr0IMdl89Bp1x5Kww==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/skkJcffujY=:VOaFtlazKaPEBqk2ToC6Mr
+ ySugULM8jMxCngDYkI0H4EP3qowogJpLAqBIJR70HwFZor5kvweRaQ6Dyuak4yvfepkPcmLsK
+ nhuB7iF92tKujjlm0pY8HISbdgcr1x2eF63viQ/wJ+YqdVVMzOJv9Bc7KFJvNYCAltqOVoGmd
+ HFl+wqvHEthXUlszec9uYZt9MhZu+/PZsCQYSZ93hD7x3g9TB2PsJK18Tdhu1+PX/EhtzKFoz
+ uJ3pJFXOX1XhcH63wEi28rkJ/jw2B6Dbk7I7OYjutgKkwvVqs7+ijNZHziK602nBEq2M0IlZl
+ fjsQsZCB1sjpqMIBfNt2wuaKOU5WruBHvQRXjC1DtqDJU5BybQs5L2v23QfoeLbOorSp1NTB3
+ fnxipFwmT0lFciBVdN6deNAc9Ss6urav49b/8V9pDAqj8SeQxr/pCDa5+VpB9yHHlNgE4b4AO
+ VhqVrp6ImghAfCeeJgxgG2/yrIms9PMzukpZxam8KIgwGktyqICVs53oP+zmTfOCHZWV4hkaC
+ 9BASysHd5cw9xs8kXbMhfvKA+aXRL4rMfrUPIQRpPlpiNm/wwR04dexHc0YYR331Z8z98js1H
+ MQqPig7GBYbZ6jO4OsLTzI9exNl1v2yOp2FelWmgY9/mxeHn0tmgGTPMIp7eaB/bZZCy1/qG3
+ YH/ByPOqBkVJ57xHp+rb2p+BBTa7BCmTD/JAmIqk6qRL+J5H7lvg9MSyQoaF733hVK495xdEJ
+ x0+oty0JzcdtvvxzuHLFWnIO3S4Y0uBsFqSjRTkPEXPQuI7jt90JcLn4+XZbD8O107QR+Yd0o
+ AadhmuZrTt3GCKHJQ4BaPZAozQ+7jA/fF6Wi4eYUoO0RDGXf7D1CvARXwLesLQ/O0SQsugVka
+ 5O0pF7nAZqOPOaHbhJqJgCzF4N713ayY4zCzPpJNPWaDL5k+saGwOVC1K6Qx2wHW20/Rc7D+o
+ Kw7mlZFx+dSVuqCHh2V4ZNF8u7pZC7uiNTct/liRTZVSEkFOr5XMz+B6TqTmJWLhkZ/JROFO2
+ V0Sk/NgrmOWoraNGdbeV7cJ44lPqqKAV760ZV/MoffxIYDTgpGQ1xxcCOSlUZhl8xGSF7oFK8
+ VZWo5LVtvjdU8Kz9FxAR5j0dNjjK2CJScRJYbjZARgB8WVFamwMYcr2Rg==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Neeraj,
 
---PKXEDhSIIysWFZaW
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thank you so much for this patch series! Overall, I am very happy with the
+direction this is going.
 
-In the initial reference advertisement, the Git server will first
-announce all of its references to the client. The logic is handled in
-`send_ref()`, which will allocate a new buffer for each refline it is
-about to send. This is quite wasteful: instead of allocating a new
-buffer each time, we can just reuse a buffer.
+I will offer a couple of suggestions below, inlined.
 
-Improve this by passing in a buffer via the `ls_refs_data` struct which
-is then reused on each reference. In a repository with about 2.3M refs,
-this speeds up local mirror fetches by about 2%:
+On Wed, 25 Aug 2021, Neeraj Singh via GitGitGadget wrote:
 
-    Benchmark #1: HEAD~: git-fetch
-      Time (mean =C2=B1 =CF=83):     25.415 s =C2=B1  0.131 s    [User: 22.=
-722 s, System: 4.740 s]
-      Range (min =E2=80=A6 max):   25.240 s =E2=80=A6 25.543 s    5 runs
+> From: Neeraj Singh <neerajsi@microsoft.com>
+>
+> Refactor the loose object file creation code and use the futimes(2) API
+> rather than utime. This should be slightly faster given that we already
+> have an FD to work with.
 
-    Benchmark #2: HEAD: git-fetch
-      Time (mean =C2=B1 =CF=83):     24.922 s =C2=B1  0.110 s    [User: 22.=
-404 s, System: 4.476 s]
-      Range (min =E2=80=A6 max):   24.825 s =E2=80=A6 25.081 s    5 runs
+If I were you, I would spell out "file descriptor" here.
 
-    Summary
-      'HEAD: git-fetch' ran
-        1.02 =C2=B1 0.01 times faster than 'HEAD~: git-fetch'
+>
+> Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+> ---
+>  compat/mingw.c | 42 +++++++++++++++++++++++++++++-------------
+>  compat/mingw.h |  2 ++
+>  object-file.c  | 17 ++++++++---------
+>  3 files changed, 39 insertions(+), 22 deletions(-)
+>
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 9e0cd1e097f..948f4c3428b 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -949,19 +949,40 @@ int mingw_fstat(int fd, struct stat *buf)
+>  	}
+>  }
+>
+> -static inline void time_t_to_filetime(time_t t, FILETIME *ft)
+> +static inline void timeval_to_filetime(const struct timeval *t, FILETIM=
+E *ft)
+>  {
+> -	long long winTime =3D t * 10000000LL + 116444736000000000LL;
+> +	long long winTime =3D t->tv_sec * 10000000LL + t->tv_usec * 10 + 11644=
+4736000000000LL;
 
-Signed-off-by: Patrick Steinhardt <ps@kps.im>
----
+Technically, this is a change in behavior, right? We did not use to use
+nanosecond precision. But I don't think that we actually make use of this
+in this patch.
 
-Note that while this topic applies on top of "master", I've done the
-benchmark on top of my other optimizations for fetches. It's cheating a
-bit, but it's easier to see that the optimization does something when
-the remaining constant part is lower.
+>  	ft->dwLowDateTime =3D winTime;
+>  	ft->dwHighDateTime =3D winTime >> 32;
+>  }
+>
+> -int mingw_utime (const char *file_name, const struct utimbuf *times)
+> +int mingw_futimes(int fd, const struct timeval times[2])
 
- ls-refs.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+At first, I wondered whether it would make sense to pass the access time
+and the modified time separately, as pointers. I don't think that we pass
+around arrays as function parameters in Git anywhere else.
 
-diff --git a/ls-refs.c b/ls-refs.c
-index 88f6c3f60d..84021416ca 100644
---- a/ls-refs.c
-+++ b/ls-refs.c
-@@ -65,6 +65,7 @@ struct ls_refs_data {
- 	unsigned peel;
- 	unsigned symrefs;
- 	struct strvec prefixes;
-+	struct strbuf buf;
- 	unsigned unborn : 1;
- };
-=20
-@@ -73,7 +74,8 @@ static int send_ref(const char *refname, const struct obj=
-ect_id *oid,
- {
- 	struct ls_refs_data *data =3D cb_data;
- 	const char *refname_nons =3D strip_namespace(refname);
--	struct strbuf refline =3D STRBUF_INIT;
-+
-+	strbuf_reset(&data->buf);
-=20
- 	if (ref_is_hidden(refname_nons, refname))
- 		return 0;
-@@ -82,9 +84,9 @@ static int send_ref(const char *refname, const struct obj=
-ect_id *oid,
- 		return 0;
-=20
- 	if (oid)
--		strbuf_addf(&refline, "%s %s", oid_to_hex(oid), refname_nons);
-+		strbuf_addf(&data->buf, "%s %s", oid_to_hex(oid), refname_nons);
- 	else
--		strbuf_addf(&refline, "unborn %s", refname_nons);
-+		strbuf_addf(&data->buf, "unborn %s", refname_nons);
- 	if (data->symrefs && flag & REF_ISSYMREF) {
- 		struct object_id unused;
- 		const char *symref_target =3D resolve_ref_unsafe(refname, 0,
-@@ -94,20 +96,19 @@ static int send_ref(const char *refname, const struct o=
-bject_id *oid,
- 		if (!symref_target)
- 			die("'%s' is a symref but it is not?", refname);
-=20
--		strbuf_addf(&refline, " symref-target:%s",
-+		strbuf_addf(&data->buf, " symref-target:%s",
- 			    strip_namespace(symref_target));
- 	}
-=20
- 	if (data->peel && oid) {
- 		struct object_id peeled;
- 		if (!peel_iterated_oid(oid, &peeled))
--			strbuf_addf(&refline, " peeled:%s", oid_to_hex(&peeled));
-+			strbuf_addf(&data->buf, " peeled:%s", oid_to_hex(&peeled));
- 	}
-=20
--	strbuf_addch(&refline, '\n');
--	packet_write(1, refline.buf, refline.len);
-+	strbuf_addch(&data->buf, '\n');
-+	packet_write(1, data->buf.buf, data->buf.len);
-=20
--	strbuf_release(&refline);
- 	return 0;
- }
-=20
-@@ -145,6 +146,7 @@ int ls_refs(struct repository *r, struct strvec *keys,
-=20
- 	memset(&data, 0, sizeof(data));
- 	strvec_init(&data.prefixes);
-+	strbuf_init(&data.buf, 0);
-=20
- 	ensure_config_read();
- 	git_config(ls_refs_config, NULL);
-@@ -173,6 +175,7 @@ int ls_refs(struct repository *r, struct strvec *keys,
- 				     send_ref, &data, 0);
- 	packet_flush(1);
- 	strvec_clear(&data.prefixes);
-+	strbuf_release(&data.buf);
- 	return 0;
- }
-=20
---=20
-2.33.0
+But then I realized that `futimes()` is available in this precise form on
+Linux and on the BSDs. Therefore, it is not up to us to decide the
+function's signature.
 
+However, now that I looked at the manual page, I noticed that this
+function is not part of any POSIX standard.
 
---PKXEDhSIIysWFZaW
-Content-Type: application/pgp-signature; name="signature.asc"
+Which makes me think that we will have to do a bit more than just define
+it on Windows: we will have to introduce a `Makefile` knob (just like you
+did with `HAVE_SYNC_FILE_RANGE` in patch 2/2) and set that specifically
+for Linux and the BSDs, and use `futimes()` only if it is available
+(otherwise fall back to `utime()`).
 
------BEGIN PGP SIGNATURE-----
+Then, as a separate patch, we should introduce this Windows-specific shim
+and declare that it is available via `config.mak.uname`.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEmSn4ACgkQVbJhu7ck
-PpTDVQ//UH4t4A0z8iixtusmqzwl7vOgYylggaJX6NT2Y7FgJKIngIfHkJU8RVX0
-e2QMXBx3LKcwNGgxQAf0bAB8Nkw+vfzqY6pH6geCGF1OCKGvnz27mDujbHguPug4
-8oIXWPXiqkpJ+qngrB+hjGrUG52zIdmdpl5AOIQZ2wTNs8ajANrlnpJKJ/vV0r7r
-LWzwAHayoxeneDxqcJg59ZoZrDHUy752RarogdH4JPZ6YqklC96zfRu5NQ3ucw1T
-CL0bcAMxMvFG2QL1SsD5LPrWJBqowJKay1xuUiB2lal+Qkfm628dchxM2xFq0yht
-CNLriMMKs/aD9XrUt73OYkGrnlo7GWBdL703FBsWnoThDJUzw88Ib7uGIb5ntNlq
-oCrmUHlxupA+wKejhccddkdXqGP41lcVyBoGVSWMZkvWOSDRT300qZur4sfta9/P
-HrcOA0dHjXiVKyFe1StsKG8bOX1N3wZ+1LV9WCMQt31K6MDPVpscV/PjjslcoNvB
-TVkAdentvQPrTwPh2mLe4V1oWRT8uBxzzR6uU1WltZubyJVPcVfFQIi0bC/QA5F3
-QA87nEmVouCqu6D3k1zGdV+p4sKeqSZ7A2smu/QAt7K9QRYjNa4vIBmpSUbX35Ka
-LKGHM2rGFyF5jkZMAgkBAEhwpOTBHzelqjE2VxlNYFD8pHdXgmg=
-=kLJb
------END PGP SIGNATURE-----
+I am a _huge_ fan of patches that are so clear and obvious that bugs have
+a hard time creeping in without being spotted immediately. And I think
+that this organization would help achieve this goal.
 
---PKXEDhSIIysWFZaW--
+>  {
+>  	FILETIME mft, aft;
+> +
+> +	if (times) {
+> +		timeval_to_filetime(&times[0], &aft);
+> +		timeval_to_filetime(&times[1], &mft);
+> +	} else {
+> +		GetSystemTimeAsFileTime(&mft);
+> +		aft =3D mft;
+> +	}
+> +
+> +	if (!SetFileTime((HANDLE)_get_osfhandle(fd), NULL, &aft, &mft)) {
+> +		errno =3D EINVAL;
+> +		return -1;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +int mingw_utime (const char *file_name, const struct utimbuf *times)
+
+Please lose the space between the function name and the opening
+parenthesis. I know, the preimage of this diff has it, but that was an
+oversight and definitely disagrees with our current coding style.
+
+> +{
+>  	int fh, rc;
+>  	DWORD attrs;
+>  	wchar_t wfilename[MAX_PATH];
+> +	struct timeval tvs[2];
+> +
+>  	if (xutftowcs_path(wfilename, file_name) < 0)
+>  		return -1;
+>
+> @@ -979,17 +1000,12 @@ int mingw_utime (const char *file_name, const str=
+uct utimbuf *times)
+>  	}
+>
+>  	if (times) {
+> -		time_t_to_filetime(times->modtime, &mft);
+> -		time_t_to_filetime(times->actime, &aft);
+> -	} else {
+> -		GetSystemTimeAsFileTime(&mft);
+> -		aft =3D mft;
+> +		memset(tvs, 0, sizeof(tvs));
+> +		tvs[0].tv_sec =3D times->actime;
+> +		tvs[1].tv_sec =3D times->modtime;
+
+It is too bad that we have to copy around those values just to convert
+them, but I cannot think of any better way, either. And it's not like
+we're in a hot loop: this code will be dominated by I/O anyways.
+
+>  	}
+> -	if (!SetFileTime((HANDLE)_get_osfhandle(fh), NULL, &aft, &mft)) {
+> -		errno =3D EINVAL;
+> -		rc =3D -1;
+> -	} else
+> -		rc =3D 0;
+> +
+> +	rc =3D mingw_futimes(fh, times ? tvs : NULL);
+>  	close(fh);
+>
+>  revert_attrs:
+> diff --git a/compat/mingw.h b/compat/mingw.h
+> index c9a52ad64a6..1eb14edb2ed 100644
+> --- a/compat/mingw.h
+> +++ b/compat/mingw.h
+> @@ -398,6 +398,8 @@ int mingw_fstat(int fd, struct stat *buf);
+>
+>  int mingw_utime(const char *file_name, const struct utimbuf *times);
+>  #define utime mingw_utime
+> +int mingw_futimes(int fd, const struct timeval times[2]);
+> +#define futimes mingw_futimes
+>  size_t mingw_strftime(char *s, size_t max,
+>  		   const char *format, const struct tm *tm);
+>  #define strftime mingw_strftime
+> diff --git a/object-file.c b/object-file.c
+> index a8be8994814..607e9e2f80b 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1860,12 +1860,13 @@ int hash_object_file(const struct git_hash_algo =
+*algo, const void *buf,
+>  }
+>
+>  /* Finalize a file on disk, and close it. */
+> -static void close_loose_object(int fd)
+> +static int close_loose_object(int fd, const char *tmpfile, const char *=
+filename)
+>  {
+>  	if (fsync_object_files)
+>  		fsync_or_die(fd, "loose object file");
+>  	if (close(fd) !=3D 0)
+>  		die_errno(_("error when closing loose object file"));
+> +	return finalize_object_file(tmpfile, filename);
+
+While this is a clear change of behavior, this function has only one
+caller, and that caller is adjusted accordingly.
+
+Could you add this clarification of context to the commit message? I know
+it will help me in the future, when I have to get up to speed again by
+reading the commit history.
+
+Thank you,
+Johannes
+
+>  }
+>
+>  /* Size of directory component, including the ending '/' */
+> @@ -1973,17 +1974,15 @@ static int write_loose_object(const struct objec=
+t_id *oid, char *hdr,
+>  		die(_("confused by unstable object source data for %s"),
+>  		    oid_to_hex(oid));
+>
+> -	close_loose_object(fd);
+> -
+>  	if (mtime) {
+> -		struct utimbuf utb;
+> -		utb.actime =3D mtime;
+> -		utb.modtime =3D mtime;
+> -		if (utime(tmp_file.buf, &utb) < 0)
+> -			warning_errno(_("failed utime() on %s"), tmp_file.buf);
+> +		struct timeval tvs[2] =3D {0};
+> +		tvs[0].tv_sec =3D mtime;
+> +		tvs[1].tv_sec =3D mtime;
+> +		if (futimes(fd, tvs) < 0)
+> +			warning_errno(_("failed futimes() on %s"), tmp_file.buf);
+>  	}
+>
+> -	return finalize_object_file(tmp_file.buf, filename.buf);
+> +	return close_loose_object(fd, tmp_file.buf, filename.buf);
+>  }
+>
+>  static int freshen_loose_object(const struct object_id *oid)
+> --
+> gitgitgadget
+>
+>
