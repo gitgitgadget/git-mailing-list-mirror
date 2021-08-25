@@ -2,134 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7159DC4338F
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 09:56:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A831EC4338F
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 11:16:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 533CF6054F
-	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 09:56:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 853416108E
+	for <git@archiver.kernel.org>; Wed, 25 Aug 2021 11:16:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239706AbhHYJ4p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Aug 2021 05:56:45 -0400
-Received: from forward108j.mail.yandex.net ([5.45.198.253]:46248 "EHLO
-        forward108j.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S239735AbhHYJ4n (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 25 Aug 2021 05:56:43 -0400
-X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Aug 2021 05:56:43 EDT
-Received: from myt3-cee5d581c61e.qloud-c.yandex.net (myt3-cee5d581c61e.qloud-c.yandex.net [IPv6:2a02:6b8:c00:321e:0:640:cee5:d581])
-        by forward108j.mail.yandex.net (Yandex) with ESMTP id 77AA93F22D03
-        for <git@vger.kernel.org>; Wed, 25 Aug 2021 12:49:11 +0300 (MSK)
-Received: from myt3-5a0d70690205.qloud-c.yandex.net (myt3-5a0d70690205.qloud-c.yandex.net [2a02:6b8:c12:4f2b:0:640:5a0d:7069])
-        by myt3-cee5d581c61e.qloud-c.yandex.net (mxback/Yandex) with ESMTP id RWARSS0AQK-nBHaCqoh;
-        Wed, 25 Aug 2021 12:49:11 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1629884951;
-        bh=a3pLnNgWbjtXL6sugUFafaT4EE9AjGDNLlGqHrA3RZI=;
-        h=Date:To:From:Subject:Message-ID;
-        b=rR8gn5BUgYOUzs+xhI2q7otV88YpwR0U9geu2RNXsR1uIBmID+aVzRa1V5hkhCy3y
-         7ebXLjW2f/Q6tWIRy9kovJx+a/clOC1jMyGgO7eYcXXAEWFozEL2IUm8Cd/djJNc9H
-         fuPDZts/an44AgMeBdZ8QGTnzPhsMHD4An8gV0xQ=
-Authentication-Results: myt3-cee5d581c61e.qloud-c.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by myt3-5a0d70690205.qloud-c.yandex.net (smtp/Yandex) with ESMTPSA id JysJx66B9Q-nB3KEa60;
-        Wed, 25 Aug 2021 12:49:11 +0300
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client certificate not present)
-Message-ID: <7d29b582ef44785015e631251da8499b197ff4bc.camel@yandex.ru>
-Subject: [BUG] git-rebase unnecessarily change mtime of files
-From:   Konstantin Kharlamov <hi-angel@yandex.ru>
-To:     git@vger.kernel.org
-Date:   Wed, 25 Aug 2021 12:49:10 +0300
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.40.3 
+        id S240316AbhHYLRH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Aug 2021 07:17:07 -0400
+Received: from mout.gmx.net ([212.227.15.15]:48277 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236038AbhHYLRG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Aug 2021 07:17:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1629890177;
+        bh=LltSt5hujiU0FNHEBH9SG2Z96c5ebYyRYpG0y2fezPo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=FwuJIf/MsH34sMFBf77TLuy/hUH7FzYWTVdsFU+LNH48GvFKBKmOsJWkHyCavhiRH
+         FfmTF3u9vnDlDLsYZEvfLTw/kLBkD4kfA0ZKWNkBTcV+OExkIlRTfF3XFJuZmWsHkT
+         nRiLLAZLCyiYA0r2yr/JMkOK3R3+TqV6sQFjGzy4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.86.215] ([89.1.214.7]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1McYCl-1mtZDp3EIH-00cyWS; Wed, 25
+ Aug 2021 13:16:16 +0200
+Date:   Wed, 25 Aug 2021 13:16:14 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] whats-cooking: fix a couple of typos
+In-Reply-To: <xmqqzgt6oet6.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2108251310430.55@tvgsbejvaqbjf.bet>
+References: <pull.1075.git.git.1629810383934.gitgitgadget@gmail.com> <xmqqzgt6oet6.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:q4T8Mpk0d1ri5awdgueJCZYstAf8c8jX6FLF3lh6cHEHxWr+fdh
+ CAdnLD/gYdjcJuqu/ANSmTdhJbEOvLo1K6qxgCB5e+TwhRpxiYiS/j8Hmj6UUiMCgSHs6ls
+ pve7E1/jYxy2l/YFi3lfnS9dvvV+D3HB3OXaYwARnY1ybSHcXo4fvZYPFf41vhG97J9h+O8
+ w1fnWl0QYlW++r01XLxNQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:owHdJEa2twQ=:cfCwJ2LuBLQJCJh7pZVhIA
+ gyK9A/EajNACOpLA2SAQP5P7DTIj/3SG23V1OJK6PaJhs1g1MG43a5i0jk8n//hJZEo2bgi4M
+ TSwuqLhDcgR9VxLfEKOt3ygMfqI+CIl1+r80sTamK7z+5PqUmPGFfVKlGBsY21JKDoTZaOClf
+ vfYi48vnGglvV6nts7StiLu6eLjtc+uVCsDcDlWBlLTKHWelUbF7JFgfmupW3Blg3l/QIj/L0
+ aRZU0sMKWK1AFDW604ZX6viXmOSECNNIOKpwP94iDGLrewMalj2wKYk9+pRxkxMGi9c1OioZj
+ WgfItPVvx7xE7/PJfXvpZeLw9YdNfLrBPY5t0TY2FFuguEjk4SyVuBMsWQMRCvgOVmkNWd0/p
+ jdl1heHPfBq/Dav+Y/zMbFzrVqqJUBGOE12TNK6D/iG4hNX9PIjLQ+PW8eZn0Y+qKA7sRkMLO
+ omvE4Vy8Q/qwXQaZVOdUV/rjlx1/wT6i7WRsDHxJhwREdi2gk1xfwP7loeUvmwRyyJZCGK5nq
+ k+5kCwlH0BJU/Wsgz65RnCN0OTlqjpHbASl2DkGGj8kd1flPEA+EnuCVbshRLkLdOB/fApJbH
+ 5rW0Iu77ewbX4f4BLKIq5ipFx1qctEgkOmNzyRiFHgGKxN6RVznbvgEx1RQnOIso89bhaKoMA
+ lFVAk829J9RgsxL4eEQjoe94pJAaVjOwPqkyojygUsNAIpLXehzty42Sf7ErxoNLWrdUby1wL
+ JkLltqXpoj81r491WtSwrGDIFS/0pI/DH7YDKFyt9cMiPg7/uWsFaOt0GV7EqdKW9Bos7gmIp
+ Iug/KM93P20kDt9zYd3as7/0r1JLhEV4fulkG6yRI2/qImvVnrV2HQ4zRhMZY3fhx0PAgYLon
+ ZrvCACmffS95fD1/fh5b6AJupKKr4zPJyZVjG7xS0lV4/eMIGMjE6wfeyGAV0vQ6QXGZdUNTm
+ utp81qOD+ZLfdsjAKw8ortwQ/5p875bZ6fbk0hT382NgeJ87jfh3wVForXxxxx4IvHxZ6pvij
+ ecpzvKUe6g8QLuJ9xJ/k2Pbhg73ULON1Co5uKgOtBOn+eQuE/9Ox860MRV03Ll4arHL/9/CAT
+ gvCfWTrCddTAp1qJITzDZ0cXKO902Bs+R0STZCpxm/F/qL6/8zaKcBRog==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Suppose your branch has *one* commit that modified file `myfile`. When you
-interactively-rebase to that commit, mtime of that file will change even if
-though you did not change the file (i.e. commit you are on has changed the file,
-but since you're *at* this commit, not before this, there shouldn't have been
-any change to the file).
+Hi Junio,
 
-This might be bad for performance; however what concerns me personally the most
-is that my editor keeps asking me "file was changed on the disk, are you sure
-you wanna modify the file?", which is confusing and annoying.
+On Tue, 24 Aug 2021, Junio C Hamano wrote:
 
-I am also not completely sure, but it might be a regression, because I don't
-seem to remember having that before.
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >     whats-cooking: fix a couple of typos
+> >
+> >     I noticed a couple of typos while reading the most recent "What's
+> >     cooking" mail.
+>
+> Thanks.
+>
+> https://trends.google.com/trends/explore?q=3Dcodepath,code%20path
+> makes it clear that "code path" is how the phrase is typically
+> written, but we have 233 instances of 'codepath' in our tree vs only
+> 39 of 'code path', according to "git grep" X-<.
 
-# Steps to reproduce
+Right. Where coding style is concerned, I prefer to go by what I find in
+Git's source code, if only to avoid disrupting readers unnecessarily.
 
- λ mkdir foo
- λ cd foo
- λ git init
-hint: Using 'master' as the name for the initial branch. This default branch
-name
-hint: is subject to change. To configure the initial branch name to use in all
-hint: of your new repositories, which will suppress this warning, call:
-hint:
-hint:   git config --global init.defaultBranch <name>
-hint:
-hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
-hint: 'development'. The just-created branch can be renamed via this command:
-hint:
-hint:   git branch -m <name>
-Initialized empty Git repository in /tmp/foo/.git/
- λ echo hello1 > file1 && git add file1 && git commit -m "1st commit"
-[master (root-commit) f1cc312] 1st commit
- 1 file changed, 1 insertion(+)
- create mode 100644 file1
- λ echo hello2 > file2 && git add file2 && git commit -m "2nd commit"
-[master 8bed9e1] 2nd commit
- 1 file changed, 1 insertion(+)
- create mode 100644 file2
- λ echo hello3 > file3 && git add file3 && git commit -m "3rd commit"
-[master e6d5aab] 3rd commit
- 1 file changed, 1 insertion(+)
- create mode 100644 file3
- λ stat -c %y file2
-2021-08-25 12:37:19.008378563 +0300
- λ rebase-at e HEAD~2     # that is `git rebase -i HEAD~2`, then [e]dit the
-commit
-Stopped at 8bed9e1...  2nd commit
-You can amend the commit now, with
+However, when it comes to English grammar and customs, I am fully aware
+that many contributors aren't native speakers. Myself included. Therefore,
+I trust spell checkers more than our source code on those matters (except
+when it comes to those Git-isms like "submodule", "reftable", or
+"superproject").
 
-  git commit --amend
+If you feel strongly, please feel free to drop everything except the
+"submoudle" -> "submodule" fix.
 
-Once you are satisfied with your changes, run
-
-  git rebase --continue
- λ stat -c %y file2
-2021-08-25 12:37:37.375537063 +0300
-
-
-## Expected
-
-The mtime of the file did not change
-
-## Actual
-
-The mtime of the file changed by 18 seconds
-
-# Additional information
-
-[System Info]
-git version:
-git version 2.33.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.13.5-zen1-1-zen #1 ZEN SMP PREEMPT Sun, 25 Jul 2021 18:03:00
-+0000 x86_64
-compiler info: gnuc: 11.1
-libc info: glibc: 2.33
-$SHELL (typically, interactive shell): /usr/bin/zsh
-
-
+Ciao,
+Dscho
