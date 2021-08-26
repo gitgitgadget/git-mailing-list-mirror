@@ -2,99 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 331E1C432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 19:16:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C1BFC432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 19:21:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0900061037
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 19:16:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 425EA60F58
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 19:21:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243444AbhHZTRQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 15:17:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42054 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243360AbhHZTRP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 15:17:15 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 522A1C061757
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 12:16:27 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id c129-20020a1c35870000b02902e6b6135279so2882864wma.0
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 12:16:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=fhDnwZjUSttlyqoEwZLT6cWqLdr2lF2pbnM2NxANCuw=;
-        b=ie6dFG7NfJsyQ55isUmudbi3yqs7M8YdqRRRZRuxPr293UjHDTdSet4yAQZLco2vyb
-         RlMi3q8T4cqiWE9xVGd2+WI6WSRoboY0v87VuO8Ai1GDIjO8FjcKuHWIB+8BojHFPv96
-         VJXPUziU6RtQ9Kpot5Sxf2usS0PMdyTuQ5AJYQ2NNdMf1vBdQicXLaO4AzGltvNovx+1
-         UmBP4MGW0n4hairei7pFUc7VmBJmG9tv5szhytcYSpyF/XUFwrSKoFesKWik9ezgw1vX
-         pulrcYN744HpFveSBIptpJua+7MtNrcFwUs6DLVkGGdw7Dm2O8UFWWucNpb3qSsxZxZ8
-         ZEHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=fhDnwZjUSttlyqoEwZLT6cWqLdr2lF2pbnM2NxANCuw=;
-        b=RRzCU80EPOucP1BxLVCj7C+flsToeI8Qlx0S/gpXnlfuk+L4fc2iwxtKEr9CEXq6mC
-         8LXZcONym4pTSXhgydoAVpun1W9eJ/jPvmYbZ2begQHzuyGeBT0bCdse65F/AYUdkrG8
-         j2UdwfLSvBI3Lc9bzdvtzWwdUtp/mKHTA8ag0ECtT8Hz+ndC+Ae3MWLAJx8JaUjnUnyB
-         AwdA/jSskETYfTyDfaC8BuDwtVMPrWpKO/O3nlAWM8vTBlD9vHGpsQvi+AfOC8oPuUiY
-         zXPQK1DN3fXweDKdSQ2VrabsCo4ZuKeQezmdFMNlRQQ2zvAxVFK3rjW1cNnNU6jeQ/7C
-         8ymA==
-X-Gm-Message-State: AOAM533wxj1AB5R7dO59AQqWN4N8K3bTMCKLLCtZYuGis0340dpHHLrJ
-        FtbeQ8cbaBEQo92zakmfuAI=
-X-Google-Smtp-Source: ABdhPJy3MypakL5Fg6i1WLa4Ow5zwH4nsOFRlA+40OxEi+nrMAonXvmlGjeBlu4vPNym4K8lNzjkhg==
-X-Received: by 2002:a7b:c2fa:: with SMTP id e26mr15900703wmk.102.1630005385830;
-        Thu, 26 Aug 2021 12:16:25 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id z6sm3356801wmp.1.2021.08.26.12.16.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Aug 2021 12:16:25 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v2] branch: allow deleting dangling branches with --force
-Date:   Thu, 26 Aug 2021 21:12:24 +0200
-References: <7894f736-4681-7656-e2d4-5945d2c71d31@web.de>
- <325d64e9-8a31-6ba0-73f2-5e9d67b8682f@web.de>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <325d64e9-8a31-6ba0-73f2-5e9d67b8682f@web.de>
-Message-ID: <87eeagyq2f.fsf@evledraar.gmail.com>
+        id S233147AbhHZTWM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 15:22:12 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64881 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230024AbhHZTWL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 15:22:11 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B6B4AE6B8A;
+        Thu, 26 Aug 2021 15:21:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=RT7w+j6VtU+uk1+xcaXAALvjLZti3i0URt4Yma
+        EtQ4A=; b=RuEBA94bqm8GXntSB14a3gTLffh6Cgat01A9eht91r9vjrOwJJ411B
+        3DhyTZ8wuVXZL7fMngAByarndPKXGQ1ol2aBE/nqnVeHmSE0L5CQ3glCOkPIy49Z
+        +KalVczhtQGyrjMIHBwVkx4UlCtyDEJyVDvr5FNBfpm6IMvoEDDTk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AED2EE6B89;
+        Thu, 26 Aug 2021 15:21:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 36DE5E6B87;
+        Thu, 26 Aug 2021 15:21:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Jens.Lehmann@web.de
+Subject: Re: [PATCH] test-lib-functions: avoid non POSIX ERE in
+ test_dir_is_empty()
+References: <20210826031710.32980-1-carenas@gmail.com>
+        <YScXboC0M1IPNFon@nand.local>
+        <CAPUEspjGkHhFNgTe3HnnUvkzwHfKqb9dYO3aCXDh_fRyFMRN6A@mail.gmail.com>
+Date:   Thu, 26 Aug 2021 12:21:19 -0700
+In-Reply-To: <CAPUEspjGkHhFNgTe3HnnUvkzwHfKqb9dYO3aCXDh_fRyFMRN6A@mail.gmail.com>
+        (Carlo Arenas's message of "Wed, 25 Aug 2021 23:28:40 -0700")
+Message-ID: <xmqqfsuwdnbk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: CB0876CE-06A2-11EC-9027-ECFD1DBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Carlo Arenas <carenas@gmail.com> writes:
 
-On Thu, Aug 26 2021, Ren=C3=A9 Scharfe wrote:
+> egrep (and also fgrep, which we intentionally support because it is
+> missing from some ancient AIX system[1]) will be removed in the
+> next[2] release of GNU grep.
 
-> - Added Reported-by and Helped-by.
+It is not a reason not to nudge us to prepare for the eventual
+removal of these two commands, but we need to keep the facts
+straight in our log messages.  
 
-Thanks, this whole thing looks good to me.
+The way I read [2], they will only start giving a warning message
+nudging the users to use "grep -[EF]", and for them to be able to
+warn, I would imagine they have to stay in the release without
+getting removed.
 
-> - Made test independent of ref store.
+> [1] 87539416fd (tests: grep portability fixes, 2008-09-30)
+> [2] https://git.savannah.gnu.org/cgit/grep.git/commit/?id=a9515624709865d480e3142fd959bccd1c9372d1
 
-Also thanks. Just my 0.02: I think even with v1 this patch is fine to go
-in (but thanks for the re-roll!). I.e. under a full run of the testsuite
-with reftable a bunch of things are broken currently.
+There are about 35 places in t/ we call egrep or fgrep; if we can
+add a pair of replacement shell functions in t/test-lib.sh for them
+to use whatever command GIT_TEST_EGREP and GIT_TEST_FGREP
+environment variables specify and fall back on "grep -E/-F"
+otherwise, we can prepare for the change without too much code
+churning.
 
-It's not really that much more effort to just fix up code like in the v1
-of this patch when we get to fixing those with the reftable integration,
-and putting the onus on patch authors on testing that topic in "seen"
-with their tests is probably not a good time investment overall
-v.s. just fixing them in bulk later.
+Something along the lines of
 
-Particularly since in this case we can make it refstore independent,
-since it's about a disappearing loose object, but in some other cases
-it's either the whole test that needs to be skipped, or we'd be better
-off with some helpers to produce the corruption in one way under
-REFFILES, and in another way under !REFFILES....
+	# in test-lib-functions.sh
+        : ${GIT_TEST_EGREP:=grep -E} ${GIT_TEST_FGREP:=grep -F}
+        egrep () { $GIT_TEST_EGREP "$@" }
+        fgrep () { $GIT_TEST_FGREP "$@" }
+
+where people could do something silly like
+
+	GIT_TEST_FGREP='command fgrep' \
+	GIT_TEST_EGREP='command egrep' \
+	make test
+
+perhaps?
