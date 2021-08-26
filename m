@@ -2,104 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CD3FC4320A
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 18:40:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16FBBC432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 18:42:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0881A6101A
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 18:40:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDEE661027
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 18:42:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243345AbhHZSlC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 14:41:02 -0400
-Received: from mail.z3ntu.xyz ([128.199.32.197]:48414 "EHLO mail.z3ntu.xyz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243343AbhHZSlC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 14:41:02 -0400
-X-Greylist: delayed 429 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Aug 2021 14:41:02 EDT
-Received: by mail.z3ntu.xyz (Postfix, from userid 182)
-        id 9A6AFCB07C; Thu, 26 Aug 2021 18:33:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1630002783; bh=OT3klwc8yzPyq0iH0DwHKUOJhl+h9/LADmW2iBbYPWo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=LoPYkzoWExf7c/dPNXR6gg65W0y5+z35yk4eooAD5mYAe9veEA25uZQeUeDK6zx9N
-         VwL71HstW3XWsKcSy2/iprqZwSxVqXo6sK909uFlUhvcVAWfbJbT352xHU2yXgCuVy
-         eFw/577jhS198pUsz9EVm/Bim+aCXky4G94G185E=
-Received: from g550jk.localnet (ip-213-127-63-121.ip.prioritytelecom.net [213.127.63.121])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id A7E99CB079;
-        Thu, 26 Aug 2021 18:32:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1630002778; bh=OT3klwc8yzPyq0iH0DwHKUOJhl+h9/LADmW2iBbYPWo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=kgd1HwPSLiKKdTxdyWWIS/HDfkCEpGqR0EjyESBiu4f6IICqxCl97S8nQ79Sl5uTk
-         gr2Qpq22C5oIrtXswcL4kMA/IZ/KI04t1y87n0aL+SofsQLRzNpaiKtqhfKPePreF1
-         iuHvczO/zxM8dUVWOXmlHmwmNExAwNwbgB5D4Jb8=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     phillip.wood@dunelm.org.uk, Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Luca Weiss via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH 2/2] merge: make sure to terminate message with newline
-Date:   Thu, 26 Aug 2021 20:32:57 +0200
-Message-ID: <2333170.ZUCfCSpfzX@g550jk>
-In-Reply-To: <YPMXqLESKApq2uPI@coredump.intra.peff.net>
-References: <pull.1048.git.git.1626421416.gitgitgadget@gmail.com> <693954a7-af64-67c5-41b9-b648a9fe3ef2@gmail.com> <YPMXqLESKApq2uPI@coredump.intra.peff.net>
+        id S243372AbhHZSnX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 14:43:23 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63507 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243371AbhHZSnX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 14:43:23 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 076EE156BEA;
+        Thu, 26 Aug 2021 14:42:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=lW5jZf8xpAumgHED1QQ66X9yeEUEH5YDXAzIB/
+        J62qk=; b=cbFAEVQZAptNra36fZokIDyTNk8XSQARTFkJNh7KR1Q1aMUkIpQ+9Z
+        cs3/H7B2lVw0+uc/W4NUraWAfsSEvdD7BzCDtJLp/dSMXRlquJLZx+uzcLkNcMt5
+        hNQDUTy0Ze6extOhe7XFcmJWMq3YlbZf0mMPaJ0k60ulKTYf/MX8k=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F3EB6156BE9;
+        Thu, 26 Aug 2021 14:42:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4DAD4156BE8;
+        Thu, 26 Aug 2021 14:42:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Hoffmeister <stefan.hoffmeister@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: BUG: git diff --name-only ignores --ignore-*
+References: <CALhB_QNZJtUoSEE==xBoX3cTxE4duB+QqsSzuyeY7JFMh7sKhQ@mail.gmail.com>
+Date:   Thu, 26 Aug 2021 11:42:28 -0700
+In-Reply-To: <CALhB_QNZJtUoSEE==xBoX3cTxE4duB+QqsSzuyeY7JFMh7sKhQ@mail.gmail.com>
+        (Stefan Hoffmeister's message of "Thu, 26 Aug 2021 08:53:31 +0200")
+Message-ID: <xmqqwno8dp4b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5E4C2648-069D-11EC-8750-9BA3EF469F85-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff and others,
+Stefan Hoffmeister <stefan.hoffmeister@gmail.com> writes:
 
-On Samstag, 17. Juli 2021 19:47:20 CEST Jeff King wrote:
-> [cut]
-> So I think we'd probably want to see a 3-patch series:
-> 
->   1. Make interpret-trailers handle input missing the final newline.
->      This isn't strictly necessary after patches 2 and 3, but it makes
->      sense to be more robust with unexpected input.
-> 
->   2. Drop the newline-stripping from prepare_merge_message(). The
->      examples above show some ways we could cover this in the tests.
->      This will help --no-edit case, but also using merge.log with "-m"
->      or "-F".
-> 
->   3. Teach prepare_to_commit() to add the extra newline before letting
->      hooks see the message. This should probably be done only when
->      cleanup_mode != COMMIT_MSG_CLEANUP_NONE.
-> 
-> Luca, do you want to try revising your series in that direction?
-> 
-> -Peff
+> When using the --name-only option on git diff (git 2.33.0),
+> command-line parameters such as  --ignore-blank-lines are not
+> respected.
 
-I haven't found time to revisit the patches yet but I have found another 
-unexpected behavior with git merge that is shown with these commands:
+I think I've seen something related this one at around
 
-# git needs to be set up to sign commits with gpg
-mkdir /tmp/test
-cd /tmp/test
-git init
-git commit --allow-empty -m "Foo1"
-git commit --allow-empty -m "Foo2"
-git tag -s tag_foo -m "foooo!"
-git checkout HEAD~1
-git merge --no-ff --no-edit --log -m "Merge tag_foo" tag_foo
-# git show
+  https://lore.kernel.org/git/xmqq4kkl1atq.fsf@gitster.c.googlers.com/
 
-There are two problems with the resulting commit message:
-* The newline between -m message and tag message is missing
-* There's a big pgp signature (BEGIN PGP SIGNATURE) block included in the 
-commit message. When using an editor this would be removed because the text 
-starts with comments.
+(look for mention of --name-only in the message).
 
-I don't think I have enough insight into where to fix this so I'd appreciate if 
-somebody else could fix it :)
-
-Regards
-Luca
-
+It would make things more expensive to make --name-only inspect
+changes when these options are in effect (iow, the --name-only
+currently is about "are these the same blob object?  if not, show
+the path" and nothing else) but it would probably be OK, as the user
+expresses their willingness to spend extra cycles by explicitly
+giving --ignore-* options.
 
