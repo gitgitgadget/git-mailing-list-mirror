@@ -2,188 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC962C432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 21:43:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D988EC432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 22:24:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 95E6760FD8
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 21:43:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B851A60E93
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 22:24:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243657AbhHZVnz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 17:43:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47178 "EHLO
+        id S243748AbhHZWZc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 18:25:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232675AbhHZVnz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 17:43:55 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D565C061757
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 14:43:07 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id e16so3450706pfc.6
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 14:43:07 -0700 (PDT)
+        with ESMTP id S230397AbhHZWZc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 18:25:32 -0400
+Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77D3AC061757
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 15:24:44 -0700 (PDT)
+Received: by mail-qt1-x84a.google.com with SMTP id t35-20020a05622a1823b02902647b518455so3035396qtc.3
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 15:24:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=23dmMNpgdG6WOBdJ86ef01GQEFTNBTff26VEXzsaqSY=;
-        b=YpdGZ+NzSFOmoiPswQKErQfAJh5ZSG/Fz0hOiTpSoAAeWoFQM9lM8TMUkbgydR2hx9
-         eqRAOBZL/WP11VQ0thwT8zgRXRIwwDqn0dymkvAsXl6WxF1sjm+Prmy6r/L+mGDoKjoL
-         Ua/j0TX7koN8mItFjsmEpUEcGoYjQUIcsv73ov6Kk+B/k3PXl8ckhE+38R77ffHdmt1I
-         d6hbC8C+7vU/YxUwF9JvvNUc2KzIcdm7DqND00xPMkF+za6f9iGBZ5+wWRw+eCYVc2xG
-         d0Dg6wPYdHMfS0YLbaLCULat8KmRIoz7QhCoB9UKC8NxH1VKvmk55c75vexzg3e0eodB
-         rUeg==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=8IagBg7Xmj7kfOV5x9isrqPI7rznhmutdeCGFJk5Pmk=;
+        b=P1hJT8u17IeHMRFWJ8sngWLrRsSXws084uS1dO8p+YPpzJiG11ZOUGnZkFMwXZxjOe
+         MJvl/mkcVbuTdDE3j9Lk6y/snFQNHaZps5/je7bkMtM/RsCJ+EvliFCJjUEYy/ZvJcG2
+         cBbLLj0Ai0Ad/jrdMciWh65L4Brzq5ZA8Mn+GqhaadB4icBn2mvm5kgsmIupFrKsAU0f
+         6lYNcp3yjmIfSzb1GboowEofxdjR6ADwbj1wP8RB2JdbOCFIgLxr/1IKEv/y0TmQ8zEY
+         mpV7uDy/lxCpcC5w3Gru7Cvliyv0z1CCQPHa6VTtnkucn31stX1j5TtNztrvTBPGFJ/F
+         30bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=23dmMNpgdG6WOBdJ86ef01GQEFTNBTff26VEXzsaqSY=;
-        b=iNROChQ5PSINii463C9GFiex3tI+hb9kFf+2UO1q5aQJoTqH2NC5gnC+VtDlNDXp9U
-         aKF40k2dUGsQLeOA3y7mprx57keQA/Q+v8b7oJRzWXGvKeNOHI49kJN27B7peDrevCU1
-         McNSUz/wQTh2hoVwsoSUdNomXdqTvY+LAyWI771mquKCcmTULzBrYKjqyfTXRaa4/bCl
-         0o+tJ5YpzzNRt7dPZDGnTaox7U8RLHRxkgl8J7kKh09IouO7yQzVGT0KZ5AbNe6CIgVr
-         HESnht1MUs2K0eEgPyjAE3c4Ia7fG0tgxH9zVIPGFr2wgZgrLDcDTpMVF9sBsMxsksAV
-         A6GA==
-X-Gm-Message-State: AOAM531UCw2z049lIq6Hp2iKSQj9DVEjTWMUOCF0rEHzYqDVnR7+d4tg
-        ZpjIQUgXS0eXcW4szySZ14Sus6f2rVcQyg==
-X-Google-Smtp-Source: ABdhPJz+crj+jKIMdw4KjyPCJ9BX/wwo/Y/dhQZaboMa4lhXk+1T0h1ktts8qQwzYIuiTGFFVVV22g==
-X-Received: by 2002:a62:1c84:0:b029:39a:87b9:91e with SMTP id c126-20020a621c840000b029039a87b9091emr5542048pfc.7.1630014186606;
-        Thu, 26 Aug 2021 14:43:06 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:c1d9:3a1d:fe59:b07a])
-        by smtp.gmail.com with ESMTPSA id q7sm9644457pja.11.2021.08.26.14.43.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Aug 2021 14:43:05 -0700 (PDT)
-Date:   Thu, 26 Aug 2021 14:43:01 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 3/6] hook: introduce "git hook list"
-Message-ID: <YSgK5Q4uqX8RPXXZ@google.com>
-References: <20210819033450.3382652-1-emilyshaffer@google.com>
- <20210819033450.3382652-4-emilyshaffer@google.com>
- <87tujeev1h.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87tujeev1h.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=8IagBg7Xmj7kfOV5x9isrqPI7rznhmutdeCGFJk5Pmk=;
+        b=hApaa50PN5BWlaw9MSur1ktxXcokdMHeRmeVgNyk/KaBTqRK5/2snfF9qlQ49EnzqJ
+         jFKdAFcI91LVgGfRsmdqkNuHkvp4CwXXk20MPipaSDrHcziqzwYxQl/vgXIV+U6dG2+X
+         Zyg26Mx/uskWcF27grdjkB5SH0eeYrrnTDH0S2wLaOsdQJVSaglMyKb8+hWIqeqIiZ4u
+         HqpIftd+s1gcuPhCeFXcNj9w6Fk/kk2yqj1iK+LtXFLv1wqfGlB8fyBCFoDjJHAukXJw
+         QOaVkBfFFB1dC6yk2cKqQeXoJzlRmHRtpPGWQrSDiP0S5k0in/9UMbr8YCkC94HENukM
+         dygg==
+X-Gm-Message-State: AOAM531fldq5Ahb9M8vzANlkkOZlLiIq3Zg1Bc88CIvbk0wD0NJFDzSh
+        cXaLYSnuoR24slGl/3U9fd/1OLhebY/pG5ibqyav
+X-Google-Smtp-Source: ABdhPJyzjQcS2Rlm8Z6d4f55/4+IMJNUgmDE/hM57sa0TzTxQjFpX/GlIJkc5qaiCL1vu2a6e1oes+/8l9y7tSXO2xtc
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6214:c23:: with SMTP id
+ a3mr6666658qvd.34.1630016683640; Thu, 26 Aug 2021 15:24:43 -0700 (PDT)
+Date:   Thu, 26 Aug 2021 15:24:39 -0700
+In-Reply-To: <CAFQ2z_PKKZJY1kC1QJo8Zwq_yNh5QNGc3S5bq1jBfSfK3vQwRQ@mail.gmail.com>
+Message-Id: <20210826222439.3915402-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <CAFQ2z_PKKZJY1kC1QJo8Zwq_yNh5QNGc3S5bq1jBfSfK3vQwRQ@mail.gmail.com>
+X-Mailer: git-send-email 2.33.0.259.gc128427fd7-goog
+Subject: Re: [RFC PATCH 1/2] refs: make _advance() check struct repo, not flag
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     hanwen@google.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 24, 2021 at 05:08:25PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
-> 
-> On Wed, Aug 18 2021, Emily Shaffer wrote:
-> 
-> > +static int list(int argc, const char **argv, const char *prefix)
-> > +{
-> > +	struct list_head *head, *pos;
-> > +	const char *hookname = NULL;
-> > +	struct strbuf hookdir_annotation = STRBUF_INIT;
-> > +
-> > +	struct option list_options[] = {
-> > +		OPT_END(),
-> > +	};
-> > +
-> > +	argc = parse_options(argc, argv, prefix, list_options,
-> > +			     builtin_hook_list_usage, 0);
-> > +
-> > +	if (argc < 1)
-> > +		usage_msg_opt(_("You must specify a hook event name to list."),
-> > +			      builtin_hook_list_usage, list_options);
-> 
-> Untested, but aren't we silently ignoring:
-> 
->     git hook list pre-receive some extra gar bage here
-> 
-> I.e. shouldn't this be an "argc != 1" check?
+> from a design perspective, it would be nice if the ref backend
+> wouldn't need to know about the object store. Can't this be hidden in
+> the layer in refs.c that calls into the backends?
 
-Yeah, I think you are right. Will switch.
+Thanks for taking a look.
 
-> 
-> > +
-> > +	hookname = argv[0];
-> > +
-> > +	head = hook_list(hookname);
-> > +
-> > +	if (list_empty(head))
-> > +		return 1;
-> > +
-> > +	list_for_each(pos, head) {
-> > +		struct hook *item = list_entry(pos, struct hook, list);
-> > +		item = list_entry(pos, struct hook, list);
-> > +		if (item)
-> > +			printf("%s\n", item->hook_path);
-> 
-> Nit/suggestion: use puts(x) instead of printf("%s\n", x), but that's
-> also a bikeshedding/style preference, so ignore if you disagree...
+The answer requires additional context, so I'll answer this at the end
+of this email.
 
-I was curious, because today I learned about puts() ;), so I checked
-(sorry for escape gore):
+> If they have to know about the object store, have you considered
+> passing the repository pointer
+> in xxx_ref_store_create() ? Then there is no possibliity to mismatch
+> the repository pointers and with the ref store.
 
-  $ gg puts\( | wc -l
-  217
-  $ gg "printf(\"%s\(\\\\n\)\?\"" | wc -l
-  96
+I thought about that, but didn't want to make things worse - the effort
+in this patch set is, after all, to attempt to increase the dissociation
+between the ref stores and a certain object store (that is,
+the_repository's object store), and I thought that reintroducing an
+association (albeit to arbitrary object stores instead of a hardcoded
+object store) would be a step back.
 
-So looks like it is indeed more idiomatic by about 2x to just use
-puts(). Will switch.
+But this may be the way to go - the ref stores already have a gitdir
+field that we could replace with a struct repository field.
 
+> > - Making all ref stores not access the object store during their
+> >   _advance() callbacks, and making ref_iterator_advance() be responsible
+> >   for checking the object store - thus, simplifying the code in that the
+> >   logic of checking for the flag (current) or the pointer (after the
+> >   equivalent of this commit) is only in one place instead of in every
+> >   ref store's callback. However, the ref stores already make use of this
+> >   flag for another reason - for determining if refs are resolvable when
+> >   writing (search for "REF_STORE_ODB"). Thus, I decided to retain each
 > 
-> > +	}
-> > +
-> > +	clear_hook_list(head);
-> 
-> Nit/API suggestion: Maybe s/list_for_each/list_for_each_safe/ and
-> remove_hook() in the loop would make more sense for this one-shot caller
-> than iterating over the list twice?
-> 
-> Anyway, currently remove_hook() is static, and it's probably good to not
-> peek behind the curtain here, so on second thought clear_hook_list() is
-> probably best...
+> I looked, but I couldn't figure out how this flag is used.
 
-Sounds like you talked yourself out of it before I could. Noop ;)
+I was thinking of files_ref_iterator_begin() setting a local variable
+required_flags. Somehow I thought that files_pack_refs() relied on
+files_ref_iterator_begin() setting that variable, but now I see that
+that's not true - both functions are independently checking that the
+underlying ref store supports ODB access, so I can remove ODB from
+files_ref_iterator_begin() if I want to.
 
-> 
-> > +	strbuf_release(&hookdir_annotation);
-> 
-> This function did nothing with hookdir_annotation. Looks like leftover
-> WIP code, but maybe it's used in (and should be moved to) a later
-> commit, let's keep reading...
+To go back to the question at the top, now I agree that hiding the ODB
+access in _advance() in the layer in refs.c is possible. The last part
+still accessing the ODB is files_pack_refs(), I think. Refactoring that
+is possible, but I'll leave that to another patch set.
 
-Ah, leftover WIP code indeed. Will drop it. I do think, though, that
-"hook from hookdir" is an ugly thing to say in list(), so any better
-suggestions welcome.
-
-> 
-> > [...]
-> >  	struct list_head *hook_head = xmalloc(sizeof(struct list_head));
-> >  
-> > +
-> >  	INIT_LIST_HEAD(hook_head);
-> 
-> ..ditto...
-ACK
-
-> >  
-> >  	if (!hookname)
-> > @@ -103,8 +104,6 @@ struct list_head *list_hooks(const char *hookname)
-> >  
-> >  	if (have_git_dir()) {
-> >  		const char *hook_path = find_hook(hookname);
-> > -
-> 
-> ... earlier notes about whitespace churn...
-> 
-> > -		/* Add the hook from the hookdir */
-> >  		if (hook_path) {
-> >  			struct hook *to_add = xmalloc(sizeof(*to_add));
-> >  			to_add->hook_path = hook_path;
-> 
-
-Thanks.
- - Emily
+If you or anyone else has more questions or comments, please reply - and
+in the meantime, I'll update this patch set to move the ODB access in
+_advance() to the layer in refs.c.
