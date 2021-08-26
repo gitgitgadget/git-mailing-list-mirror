@@ -8,96 +8,101 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED658C432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 11:38:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 686CFC432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 12:22:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D1149610A6
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 11:38:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F77D61076
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 12:22:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242235AbhHZLjk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 07:39:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47968 "EHLO
+        id S240663AbhHZMXT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 08:23:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242114AbhHZLjj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 07:39:39 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84B38C0613CF
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 04:38:52 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id m26so2541914pff.3
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 04:38:52 -0700 (PDT)
+        with ESMTP id S242524AbhHZMXQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 08:23:16 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BAB8C0613D9
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 05:22:29 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id h13so4793778wrp.1
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 05:22:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cr6lroyXKW/STe/COYa/HwfoyoYCKxub6N2zgbSLfJo=;
-        b=PGUKMvA26kAkkCJePAjYqknftoBdQNPcdRVsSGA26YJTMreSa1wKSyqCMkjz/07QiU
-         8iP1tOG1k9hVWj+ej1h7UiYSLffuWrAHynRpoONGvv5mr7OYcJo6vjkbtcFWGxve9oEL
-         I45oOeIzfOnk5vOt+aVsi99D2OJeuZfNLmEm3jttEIhHtMfZ0QzlnQZKZiXS15ANN994
-         ezlt+esB+hVOJOFfkJIdi5lYd/g1jGNAYsNQRiinWUPt9tuz0StVvW2QLzYWvLOB9Ats
-         YzzyzK+5KrbgCG4rCiqIySn9PdTyiMDuh0g6et6T+H8dbQfjk7RGd1jdwXdEBmhbkZNF
-         5Kng==
+        bh=ykrDvlTosMAM0/o9ae8k+S+F6gOG7Zpz4IBbaGqbQ30=;
+        b=jk7ZMh0faR2mwoTXQ4uJjMSW1vaWr7iyYPPSvvvyQW8Fxe7XIwKzfGzryncb/1eFlP
+         hNx1Zb8j40Ww7J9miAdtSLCMP1u3CIdK1Ey6NrXhClpjU80NfyoS4al3tcSfOg6KUXh7
+         8PxbpzlnxNn4iKZwEgz1psr4LMpDFISEbaGk5d4wg07vfqAqc4+nDhKMVhqQL2YPGE2I
+         TaK1aywXDKOCiBltrrxWoIu49DD0/zvY4VcaCCvTy7DfW7GyAszdrW0129g3E27BSdR1
+         86zFAEEHg7LprWWWRLLyE/5i6LlU2Dn5r6VyfIDJfX500rX8k9BUx313QprOr5yO1pXq
+         N7iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cr6lroyXKW/STe/COYa/HwfoyoYCKxub6N2zgbSLfJo=;
-        b=gKxr4aXt4KI/I+Oms3sOe3u+BXjwrCsWrQsInxyGb2eSE4dEnyhoPFJ4RopMqLBYQw
-         S7i4LIGWpEyLUdul1PopRA5kxKjNXUfAgQdlT+Wz70EjNbti1aoszy+q0wSunRc42/Tt
-         smAgVw5qbKK8pBiXPiQA/lmfnbLdgIfOryFTRttHIQuPfG8TDLXLmtS1CU8gkiz5MBG+
-         NLA8wlHBQg9ZR8k2H1eGfXCpvscafPZN/eNb/yXbLm3qQd+tXVERotVwm0buKsSri6PE
-         3Lx/ThBUp12zw+0jy/+Q3HrOGiMymSdWR1WV5D7YCeGh9T6VwY9Q93AVo5WZj4c4cPDC
-         HbAg==
-X-Gm-Message-State: AOAM531uP2KDx2vzNmeFtz22Nt5vqxgj0DawyhoCmxLqnl0CgBtEqu72
-        yA5nBoHfOItToMT088U5i+kK1TY6R290tA==
-X-Google-Smtp-Source: ABdhPJxwYqtUBT/5wozghvaoxKC2mLCSfzBkTRWHWPaK4uDIXM/h+gmUnI4I8OPd+TiRBEjLqBIPLQ==
-X-Received: by 2002:a63:d057:: with SMTP id s23mr2953977pgi.431.1629977931948;
-        Thu, 26 Aug 2021 04:38:51 -0700 (PDT)
-Received: from ubuntu.mate (subs02-180-214-232-8.three.co.id. [180.214.232.8])
-        by smtp.gmail.com with ESMTPSA id gm5sm2414717pjb.32.2021.08.26.04.38.49
+        bh=ykrDvlTosMAM0/o9ae8k+S+F6gOG7Zpz4IBbaGqbQ30=;
+        b=RAbPHjG0RFqN8sZYNeL9YMnQYpbOVWcsY7A3wuk2Lpo7fGHt77wjboq/FAopTnW9Py
+         YYL2BCFqPgyPg4xj9Iadqum4lLIwLnci7AWGQ4rvX/nd2hccrzkhcikicb86fMAQ2Cvq
+         6ny9pM5Ek0ntv1DL9o/OULbOguYx1ooqun2qtDawDuY8AbmL6CYDxIcSAh1ckgIp6pq7
+         FLMCnQI76ClZ1nz1wllZwt2nNOnflMSN5ZEsPvFiG7C7397Cp35g1XzLtJqeO+/M9X9h
+         W/KcuqtXrrhZ4g44GVQLKwEMrUJJBY8KrRNnXtGAZe8KXyYSDGu9PeN152htoYWtMzyr
+         pK7g==
+X-Gm-Message-State: AOAM530kenN3kuKZNJ3HUvMOJ2YLZo1ffs76ST8EYg7nRyTx6EhNz9sh
+        VvHwzJ40dhFibK32clz8hWGgDnXec4FQlg==
+X-Google-Smtp-Source: ABdhPJz9JuKm9Cf/qCBJEwTPJA3rLWEwZXHb7Ujgf0XfxgeRDpzLviur9BXQXvhrafYXZLH1WnsYuw==
+X-Received: by 2002:a5d:4142:: with SMTP id c2mr3711198wrq.340.1629980547800;
+        Thu, 26 Aug 2021 05:22:27 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id z17sm2969885wrr.66.2021.08.26.05.22.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Aug 2021 04:38:51 -0700 (PDT)
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
+        Thu, 26 Aug 2021 05:22:27 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, felipe.contreras@gmail.com,
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Emily Shaffer <emilyshaffer@google.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH 2/2] make: delete strip target
-Date:   Thu, 26 Aug 2021 18:38:24 +0700
-Message-Id: <20210826113824.50078-3-bagasdotme@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210826113824.50078-1-bagasdotme@gmail.com>
-References: <20210826113824.50078-1-bagasdotme@gmail.com>
+        <avarab@gmail.com>
+Subject: [PATCH v2 1/6] tr2: remove NEEDSWORK comment for "non-procfs" implementations
+Date:   Thu, 26 Aug 2021 14:22:19 +0200
+Message-Id: <patch-v2-1.6-8c649ce3b49-20210826T121820Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.733.ga72a4f1c2e1
+In-Reply-To: <cover-v2-0.6-00000000000-20210826T121820Z-avarab@gmail.com>
+References: <cover-0.6-00000000000-20210825T231400Z-avarab@gmail.com> <cover-v2-0.6-00000000000-20210826T121820Z-avarab@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The target isn't needed anymore since stripping is done in install-strip
-target (in previous patch).
+I'm fairly sure that there is no way on Linux to inspect the process
+tree without using procfs, any tool such as ps(1), top(1) etc. that
+shows this sort of information ultimately looks the information up in
+procfs.
 
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+So let's remove this comment added in 2f732bf15e6 (tr2: log parent
+process name, 2021-07-21), it's setting us up for an impossible task.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 2 --
- 1 file changed, 2 deletions(-)
+ compat/linux/procinfo.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/Makefile b/Makefile
-index b8a3a64422..027b052a0c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2170,8 +2170,6 @@ please_set_SHELL_PATH_to_a_more_modern_shell:
+diff --git a/compat/linux/procinfo.c b/compat/linux/procinfo.c
+index 578fed4cd31..15a89676c7a 100644
+--- a/compat/linux/procinfo.c
++++ b/compat/linux/procinfo.c
+@@ -25,7 +25,6 @@ static void get_ancestry_names(struct strvec *names)
+ 	}
  
- shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shell
+ 	return;
+-	/* NEEDSWORK: add non-procfs-linux implementations here */
+ }
  
--strip: $(PROGRAMS) git$X
--	$(STRIP) $(STRIP_OPTS) $^
- 
- ### Flags affecting all rules
- 
+ void trace2_collect_process_info(enum trace2_process_info_reason reason)
 -- 
-2.25.1
+2.33.0.733.ga72a4f1c2e1
 
