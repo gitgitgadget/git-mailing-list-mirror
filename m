@@ -2,109 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 326BEC432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 07:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13546C432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 08:39:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10649610E9
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 07:48:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E214A6103A
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 08:39:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240043AbhHZHtl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 03:49:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51300 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239817AbhHZHtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 03:49:40 -0400
-Received: from mail-vs1-xe2d.google.com (mail-vs1-xe2d.google.com [IPv6:2607:f8b0:4864:20::e2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FC3FC061757
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 00:48:53 -0700 (PDT)
-Received: by mail-vs1-xe2d.google.com with SMTP id k24so1411331vsg.9
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 00:48:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=aIRmUJHHvnC+UHeCYv+oHPe8gxiAMUilRBr28tAUCTQ=;
-        b=aDuLKPqTAOC8ha4Vbx+dtHrdYangdiMF78gj/XwETNRPnE9zyH9lLJpQFwsq3KWJhU
-         OD6V8undu/qJrY8xw/h/1kMgjYgjNiU4qt7OOr8vKk0SHg+HJtNY6oEn7a5cL10D/A1x
-         Lf5ouhkKjVNHRaF8rvqqYwxT2MYqr8q69qFfA1s+O38CH3qj44xunTLOtPNrTb3swyZk
-         u15DKjh6rZDH0l6f8rME4SIt8M8+IT2SHFwn9RBQGZitvkfvZDQ8odJiUU0NXhyV3dbh
-         8Z1JYbpJ9iTQPY/oy34h5nyERyjAAIIlk/LeA0CCFqFy81oz9vHeRoouQ/Z10/kjrmhZ
-         kpew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aIRmUJHHvnC+UHeCYv+oHPe8gxiAMUilRBr28tAUCTQ=;
-        b=CWfzzXH2Cy3JnYN5a544xKzO4/r5bko0W8zi2Uyh2mgXb+jqCeRtW61eAw9eqEnXvi
-         GnhFon8u3jCcgzi74wFp80MNb0nnU2LYTlwYPgUFjZsWwNgoVp+mV4d9Sb3VfSuhuYiI
-         2cNNZ/hUN0Q0LHyZVgX83AtWdlkD08sFe20ldnkqFSlPrsVnmHctAgruNz//edGvQESY
-         APkbpJbEBRd3VHmehRKiug4PILT2TcZDRiBjW5gNTVbhdnosbVrkWPyoABj2WwMqxgJX
-         1RXKQrFRC5+Sawnlg66Yoy4G7vv+cQHb7u2o8IV1BA7KKxAIrcv+MlU5NI05KrJoK1zb
-         200A==
-X-Gm-Message-State: AOAM533h5/bmIk4ynBvvvGvUUV07T/8d5NmnmRMtivpilPEuB2CexjOc
-        6ElGYT/OR+v7Eg1ODKTT7fujzQOaXTeGqobqVOeR7VSI
-X-Google-Smtp-Source: ABdhPJzS9ErEu0phDCOHVcQnYRe9LUTqNK6GFhgzj6DBKahK1nojcRyG8u6sNKUlWbiUsOhn1MrY5nDlpkZse/Zkj2U=
-X-Received: by 2002:a05:6102:11e3:: with SMTP id e3mr1239207vsg.49.1629964132441;
- Thu, 26 Aug 2021 00:48:52 -0700 (PDT)
+        id S240492AbhHZIki (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 04:40:38 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63912 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229652AbhHZIki (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 04:40:38 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D889A147641;
+        Thu, 26 Aug 2021 04:39:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=mVu5SD9LSl+cULF4PA3rTEqZe
+        UcL1nWxiksy7Fkc3ZA=; b=q2JcL7l1bHRAaah5NtNVHkcjD5ZSJxwmLa+7tKYuc
+        fSrOSsjcZt7e7KONRekjlJ/NcttRREI0VYmzmyAnQz6pD6/DWGGq0ivOlUpHbEYB
+        GjszM3uBaHQKOTidqJb2ZX4DSP05Tp6ZdILY2P4X7NetQjwJVJb0r2HWC+xA4OOC
+        XE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CD48F14763F;
+        Thu, 26 Aug 2021 04:39:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1744614763E;
+        Thu, 26 Aug 2021 04:39:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>, Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v4 00/28] Support reftable ref backend for Git
+References: <pull.1054.v3.git.git.1629207607.gitgitgadget@gmail.com>
+        <cover-v4-00.28-00000000000-20210823T120208Z-avarab@gmail.com>
+Date:   Thu, 26 Aug 2021 01:39:46 -0700
+Message-ID: <xmqqfsuwha5p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20210826031710.32980-1-carenas@gmail.com> <YScXboC0M1IPNFon@nand.local>
- <xmqqlf4ohgdv.fsf@gitster.g>
-In-Reply-To: <xmqqlf4ohgdv.fsf@gitster.g>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Thu, 26 Aug 2021 00:48:41 -0700
-Message-ID: <CAPUEspj4F6=c_WPnb==enx6n1wY6LgOXbRm_kZCSnoOf5qcNsg@mail.gmail.com>
-Subject: Re: [PATCH] test-lib-functions: avoid non POSIX ERE in test_dir_is_empty()
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Jens.Lehmann@web.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2BEF4BCA-0649-11EC-B165-FA11AF6C5138-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 25, 2021 at 11:25 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
-> >> -    if test -n "$(ls -a1 "$1" | egrep -v '^\.\.?$')"
-> >> +    if test -n "$(ls -a1 "$1" | grep -v '^\.$' | grep -v '^\.\.$')"
-> >
-> > This replacement is correct, but I'm not sure that I necessarily find it
-> > simpler. If we really are concerned about egrep usage, then
-> >
-> >     if test -n "$(find "$1" | grep -v '^\.$')"
-> >
-> > would suffice. But it looks like we are fairly OK with egrep in t (`git
-> > grep 'egrep' -- t | wc -l` turns up 19 matches), so I'm not sure the
-> > change is necessary in the first place.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+
+> This is a version of the reftable series queued on top of my
+> just-re-rolled fixes to the refs APIs, which it can make use of. For
+> the base topics see:
 >
-> It is true that we have been OK with egrep.
-
-note that will be an issue at least in a future release of GNU grep
-where the deprecated {e,f}grep commands won't be available.
-
-> "grep -E" is in POSIX (so is "grep -F") and that you might be able
-> to make an argument to use them instead of "egrep" and "fgrep".
-
-I misread the POSIX specification, and had confirmed that the ?
-operator works fine in BSD and busybox grep so apologies and
-will see to resubmit this change together with the others that will
-be required to deal with the deprecated binaries.
-
-> at least at one point in the past, 87539416 (tests: grep portability
-> fixes, 2008-09-30) favoured "fgrep" over "grep -F", claiming that
-> the former was more widely available than the latter.
+>     https://lore.kernel.org/git/cover-v5-00.13-00000000000-20210823T113=
+115Z-avarab@gmail.com/
+>     https://lore.kernel.org/git/cover-v10-0.8-00000000000-20210823T1147=
+12Z-avarab@gmail.com/
 >
-> The world may have changed since then, though.  IIRC, the 2008's
-> topic was mostly about portability to Solaris and AIX, and their
-> peculiarity (or their relevance) may have waned.
+> For Han-Wen's v3 of this see:
+> https://lore.kernel.org/git/pull.1054.v3.git.git.1629207607.gitgitgadge=
+t@gmail.com/
+>
+> I've got no desire to take over the reftable topic in its entirety,
+> but think given the rationale in
+> https://lore.kernel.org/git/877dgch4rn.fsf@evledraar.gmail.com/
+> (summarized in
+> https://lore.kernel.org/git/87y28sfokk.fsf@evledraar.gmail.com/) that
+> having the refs API fixes I noted above wait on the still-unstable
+> reftable doesn't make sense.
 
-was hoping to deal with fgrep using a function (just like is done with
-perl), but was also hoping that a compatibility layer wouldn't be
-needed.
-testing on AIX (that seems to stick around) will definitely be needed.
+Of course, you and Han-Wen are in much better position to judge the
+relative merit to decide which one should go first than I am, but I
+had an impression that the errno thing was even less stable, with
+API churn that deliberately broke the other topic in flight, which
+appeared to be just irresponsible.
 
-Carlo
+> I'll let Han-Wen deal with that squashing in a presumed future v5 of
+> this, assuming of course that Junio's happy with the plan of basing
+> hn/reftable on the refs API fixes above.
+>
+> I'm not sure that the fix I have in 27/28 is the right one, perhaps
+> we've already got information about what the tip OID of the refname is
+> at that point in git_reftable_reflog_expire() via some API I missed,
+> but that fix works, and is clearly more correct than the outstanding
+> segfault.
