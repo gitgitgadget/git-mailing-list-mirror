@@ -2,181 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 670F7C432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 21:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40627C432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 21:34:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C57560EBA
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 21:25:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 180CC60F6F
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 21:34:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243694AbhHZV0V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 17:26:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43250 "EHLO
+        id S243398AbhHZVfU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 17:35:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230182AbhHZV0U (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 17:26:20 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D97AC061757
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 14:25:32 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id j13so1379970edv.13
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 14:25:32 -0700 (PDT)
+        with ESMTP id S230095AbhHZVfT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 17:35:19 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48AADC061757
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 14:34:31 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id t15so987782wrg.7
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 14:34:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=4mWOg6jwdDYXzc1NAB9X/PkeXDFG6rMJ3lw/25ji5OE=;
-        b=vTNDI2XT/cxesowyHjQpncFK14NnHhnyjr4xt+1DxFchvG0x2kMt0lhFODZGYmfCie
-         MpveZvsycxqgtKWDObN0wY2hlh3/GXjpZerU6Ubd7oLBboZpa2QhmtU9rieTskE6JBjo
-         teSKljbQE+96cl+jmib1Oxi5frsu9/pjOBRrujtMSUkBGbDv4ee1SFKIklqIksRKNSJJ
-         jYBowoPLMuFs8M5QH+ovU5dXlXG4SLs9G/twlOwbPU9v5pt0R7anYaK7m6bRX6xp59jj
-         DLHm6fynZFFhGv62Ef2lGlayVlVVcr3F2NcU0LXnPBH8CR35zPbFMOkvSEzcl2HhZFnx
-         NXAQ==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=mG7ZrKJPLxc5s4+q1vl1eQ9cTyzuNLNUc7JF5+pWql8=;
+        b=NOWaWNDOXe6w2BjkHg7nLNaO32c6xwlfHD8clYOorSpeTPyVeNGzszy4NUB+epD2fj
+         Ow900OcMjDArL47/2tndBfhAEz8I72J85zsUCtPQTavF2DuaBo82uxs1nBOa8pkERAnL
+         yWUeZgg86+yHyjd4xADODEUQyWRUejJj263sBRhwsQOXl7SUMb7nJrZn18pzDkbe9eSH
+         eLT46lGjF/iXMWq9TeJ1RXYfksPrFvjnUlQFpXLqqnZpQcEN2jAiGWjbHD+b5vQcpJGK
+         focLWdvMEual85hJ5mDPQft+/zAtBb+eN0wUwlqnyntw1076BZtcOmpSiPYgXmmX3G0v
+         V8Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=4mWOg6jwdDYXzc1NAB9X/PkeXDFG6rMJ3lw/25ji5OE=;
-        b=JkxbBhF4g4+F6vTRITdILFl38d+lcQyPD5a2ScZu4AI8GIaGlcWaQ+sfY1qGJGBA+W
-         kGmosdHt4VEjHp4ZwLjyJhK2Ig+2Ib1qDWRYdNAo+evFFsFEy29Ip+Hli6ZJy2OqsQwN
-         VOEgxIGuZOC3E4zSSVklKFBcBIT9nL0Xopw/uVzyVAFWt4eRsGdrR5SnhPDLBUh/Vws3
-         GEGOVE7UPG9xe9y5hDSbcJ/UvrdN9Iz/iqHu14zwPBZg/IehokCfwaHtheE6KfkPhIn0
-         +jXaYn708u3i5Hln4hZwbNmSFkaK/2FTdDcOPQjieoyaElyoDYO8d3Wgr6BOsVjjVvCc
-         CS3w==
-X-Gm-Message-State: AOAM531UpjSpL3kehXUhohnd+2HNoJcpnz+nOUtfwj6b/kWN7bKzZiFc
-        WG+OX0xh+dmnO8q73UJAj0boPc6yk/Y=
-X-Google-Smtp-Source: ABdhPJxoc0xUOzUrzK18Yi65poZOd1lapHjeTFAXa69kkGMfIvM5IlJQAbxsl+017qmqDai9UnKwFw==
-X-Received: by 2002:a05:6402:366:: with SMTP id s6mr6186535edw.329.1630013130976;
-        Thu, 26 Aug 2021 14:25:30 -0700 (PDT)
-Received: from szeder.dev (84-236-78-211.pool.digikabel.hu. [84.236.78.211])
-        by smtp.gmail.com with ESMTPSA id s20sm1821795ejx.82.2021.08.26.14.25.30
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=mG7ZrKJPLxc5s4+q1vl1eQ9cTyzuNLNUc7JF5+pWql8=;
+        b=IrOVo+K1WFRHJ1DfYUsoBptu312sQ9wDt5MnN/cP9loTMtO7d/hrbuxdbWw+sKTfaZ
+         UvcOs4KHMt43M3Bno6f0GVrb7wXW9ZlQrS1KoGMSlvtbylg+wv/WHf/vf4kK9Y1idMZV
+         SSEfIU+BgVmwUHH7NXKwDKFF7845ukJZYjOMNo42kfmR/R5Ir5VOFtgEkrTIyE9M/MC0
+         dkSYNd15HKYKlxLgbrfahtYWO9gpuIedl7bSDxtgmG3F7XU8M0KRnZu+gRaGSlxGVkKD
+         b5V9CtwMPmU5G+i/00n+Ogt0sX9qxh10c3BdgSemNPjxmsr7r1lAnJbHj/2F3uvxOntz
+         fv2g==
+X-Gm-Message-State: AOAM532l/EmVcuzRq+cVjE0gejv50KKfYqS/9VcaMChtNW5KfVfGNjC2
+        5je04UA5aYqsWI2Hp27aTUvSunTxczU=
+X-Google-Smtp-Source: ABdhPJzp/Tax/T8ZiGM5u28OcyAVvcRt8Y66YqnB9pt/OxqRGPxcVLsOLt8ypkV4xaK9IGekq6hUdg==
+X-Received: by 2002:adf:8070:: with SMTP id 103mr6412020wrk.74.1630013669797;
+        Thu, 26 Aug 2021 14:34:29 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o7sm3639347wmc.46.2021.08.26.14.34.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Aug 2021 14:25:30 -0700 (PDT)
-Date:   Thu, 26 Aug 2021 23:25:29 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] column: fix parsing of the '--nl' option
-Message-ID: <20210826212529.GF2257957@szeder.dev>
-References: <20210818092456.3045808-1-szeder.dev@gmail.com>
- <xmqqy28y4gqt.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        Thu, 26 Aug 2021 14:34:29 -0700 (PDT)
+Message-Id: <pull.1079.git.git.1630013668862.gitgitgadget@gmail.com>
+From:   "Christopher Yeleighton via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 26 Aug 2021 21:34:28 +0000
+Subject: [PATCH] pretty-options.txt: describe supported encoding
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqy28y4gqt.fsf@gitster.g>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Christopher Yeleighton <giecrilj@stegny.2a.pl>,
+        Christopher Yeleighton <ne01026@shark.2a.pl>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 18, 2021 at 01:53:14PM -0700, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
-> > 'git column's '--nl' option can be used to specify a "string to be
-> > printed at the end of each line" (quoting the man page), but this
-> > option and its mandatory argument has been parsed as OPT_INTEGER since
-> > the introduction of the command in 7e29b8254f (Add column layout
-> > skeleton and git-column, 2012-04-21).  Consequently, any non-number
-> > argument is rejected by parse-options, and any number other than 0
-> > leads to segfault:
-> >
-> >   $ printf "%s\n" one two |git column --mode=plain --nl=foo
-> >   error: option `nl' expects a numerical value
-> >   $ printf "%s\n" one two |git column --mode=plain --nl=42
-> >   Segmentation fault (core dumped)
-> >   $ printf "%s\n" one two |git column --mode=plain --nl=0
-> >   one
-> >   two
-> 
-> ... and another thing to notice is that number 0 would have meant
-> "use LF" due to columns.c::print_columns()
-> 
-> 	nopts.nl = opts && opts->nl ? opts->nl : "\n";
-> 
-> which is the same as the default, so it is not likely that people
-> have (mistakenly) used to trigger NUL terminated records, or
-> anything fancy like that.
-> 
-> > Parse this option as OPT_STRING.
-> 
-> So a possible "regression" by this fix could be that those who took
-> advantage of the fact that --nl=0 is an absolute no-op would
-> suddenly start seeing their output terminated with a digit "0".  I
-> would have to say that it is not all that likely ;-)
+From: Christopher Yeleighton <ne01026@shark.2a.pl>
 
-Yeah, I doubt that it's worth worrying about.
+Please fix the manual for git log.  It should say what encoding is recognised
+(namely if supported by iconv(1), except that POSIX character maps of
+iconv(1p) are not supported), and that an unrecognised encoding is ignored.
 
-> I agree with Dscho's comment on the test script addition, but other
-> than that this looks good to me.
+Signed-off-by:  <ne01026@shark.2a.pl>
+---
+    log: describe supported encoding
 
-Eleven other tests look just like the one I added.  I really don't
-think that doing it in some other way would gain us anything, but it
-would be inconsistent with the rest.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1079%2Fyecril71pl%2Fpatch-1-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1079/yecril71pl/patch-1-v1
+Pull-Request: https://github.com/git/git/pull/1079
 
-> > Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> > ---
-> >  Documentation/git-column.txt |  2 +-
-> >  builtin/column.c             |  2 +-
-> >  t/t9002-column.sh            | 18 ++++++++++++++++++
-> >  3 files changed, 20 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/Documentation/git-column.txt b/Documentation/git-column.txt
-> > index f58e9c43e6..6cea9ab463 100644
-> > --- a/Documentation/git-column.txt
-> > +++ b/Documentation/git-column.txt
-> > @@ -39,7 +39,7 @@ OPTIONS
-> >  --indent=<string>::
-> >  	String to be printed at the beginning of each line.
-> >  
-> > ---nl=<N>::
-> > +--nl=<string>::
-> >  	String to be printed at the end of each line,
-> >  	including newline character.
-> >  
-> > diff --git a/builtin/column.c b/builtin/column.c
-> > index 40d4b3bee2..158fdf53d9 100644
-> > --- a/builtin/column.c
-> > +++ b/builtin/column.c
-> > @@ -29,7 +29,7 @@ int cmd_column(int argc, const char **argv, const char *prefix)
-> >  		OPT_INTEGER(0, "raw-mode", &colopts, N_("layout to use")),
-> >  		OPT_INTEGER(0, "width", &copts.width, N_("maximum width")),
-> >  		OPT_STRING(0, "indent", &copts.indent, N_("string"), N_("padding space on left border")),
-> > -		OPT_INTEGER(0, "nl", &copts.nl, N_("padding space on right border")),
-> > +		OPT_STRING(0, "nl", &copts.nl, N_("string"), N_("padding space on right border")),
-> >  		OPT_INTEGER(0, "padding", &copts.padding, N_("padding space between columns")),
-> >  		OPT_END()
-> >  	};
-> > diff --git a/t/t9002-column.sh b/t/t9002-column.sh
-> > index 89983527b6..6d3dbde3fe 100755
-> > --- a/t/t9002-column.sh
-> > +++ b/t/t9002-column.sh
-> > @@ -42,6 +42,24 @@ EOF
-> >  	test_cmp expected actual
-> >  '
-> >  
-> > +test_expect_success '--nl' '
-> > +	cat >expected <<\EOF &&
-> > +oneZ
-> > +twoZ
-> > +threeZ
-> > +fourZ
-> > +fiveZ
-> > +sixZ
-> > +sevenZ
-> > +eightZ
-> > +nineZ
-> > +tenZ
-> > +elevenZ
-> > +EOF
-> > +	git column --nl="Z$LF" --mode=plain <lista >actual &&
-> > +	test_cmp expected actual
-> > +'
-> > +
-> >  test_expect_success '80 columns' '
-> >  	cat >expected <<\EOF &&
-> >  one    two    three  four   five   six    seven  eight  nine   ten    eleven
+ Documentation/pretty-options.txt | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
+index 27ddaf84a19..4f8376d681b 100644
+--- a/Documentation/pretty-options.txt
++++ b/Documentation/pretty-options.txt
+@@ -36,9 +36,13 @@ people using 80-column terminals.
+ 	The commit objects record the encoding used for the log message
+ 	in their encoding header; this option can be used to tell the
+ 	command to re-code the commit log message in the encoding
+-	preferred by the user.  For non plumbing commands this
+-	defaults to UTF-8. Note that if an object claims to be encoded
+-	in `X` and we are outputting in `X`, we will output the object
++	preferred by the user.
++	The encoding must be a system encoding supported by iconv(1),
++	otherwise this option will be ignored.
++	POSIX character maps used by iconv(1p) are not supported.
++	For non-plumbing commands this defaults to UTF-8.
++	Note that if an object claims to be encoded in `X`
++	and we are outputting in `X`, we shall output the object
+ 	verbatim; this means that invalid sequences in the original
+ 	commit may be copied to the output.
+ 
+
+base-commit: c4203212e360b25a1c69467b5a8437d45a373cac
+-- 
+gitgitgadget
