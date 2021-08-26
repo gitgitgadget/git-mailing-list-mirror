@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7577AC432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 14:06:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA3C9C432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 14:06:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 557D160E0B
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 14:06:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6D8A60E0B
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 14:06:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242846AbhHZOGt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 10:06:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54746 "EHLO
+        id S242837AbhHZOGx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 10:06:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242838AbhHZOGq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 10:06:46 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79745C061757
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 07:05:58 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id k20-20020a05600c0b5400b002e87ad6956eso2323217wmr.1
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 07:05:58 -0700 (PDT)
+        with ESMTP id S242843AbhHZOGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 10:06:47 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08152C061757
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 07:06:00 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id u16so5293889wrn.5
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 07:05:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bjNUgIYblg+sK68bz8yXT3BAS/9Dv0yaeblduHUUInw=;
-        b=B6Qga7sE+EBtsoo4ljE0i5tf54VuUlquOojTkTqd8VnV4EtimAmizE19kbiQRBBshZ
-         K+S/OomrcGcGBTUHsE13qRl87wf2fLDm2vNotgzWDGvuNjUPdhjMDezRgzrgzcSduO2U
-         U4CSM/tU00Q6jV/0DITfttqRdr6e1aOmMpX5R6YOdiQLp6g27xLmpLcB54lDLUnCMhup
-         O9iOmmlE03f1lUYcEwh9Pp6eny/CP3wuDNrjPNzSzIpXfCr19NoLZ4vo+I5RUo2/IWpO
-         PHKRwxP+IcyFg2HwO6MdNCX8XCVXFvKTI8VTZ4KkROf9n1J7FaQBxTXwX4LR1drSJF7v
-         7OUA==
+        bh=pwXtiWsoBT3/ETQ8XHJLKtZU/HCggU775XJY5RyTI3c=;
+        b=fr5eXCIcDpbBA1Ng8hzxQoBd6edVNR8S10tTqL3/lGCZf02x1JZvo/OvBDBvsZHLOe
+         zNiiK1MBCmx/2rvs1+BQcjF2X2CoKXVqrYb3GUr+/TeICTZWLuVkuelom0AOeiOK0Gsb
+         Qr7cQSSxB2cPNK3hdmfdtZd4U+Ea4HUIfG5wFxIE6ay/6Kc/f0qxrEZCoo2p14tF8qAg
+         oTwVPjvdnmudGgEjiqyJSGbL1oRDyPTxfd1VINLuGSS8Kx2BvQjR+9b+mBSIMB420Vjs
+         CmaVHaWsv1+plliQRhLkb8avwU0xewJtFJbR7dsvMAfGvspUdXsKjNOMV8vgZeZXCPXK
+         eRug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bjNUgIYblg+sK68bz8yXT3BAS/9Dv0yaeblduHUUInw=;
-        b=KGfTHv/HprBBy9WJaFyP2fKNOSLIEltIGjGqZIP9G05l2yF+k1wNdetIlCy/QjJeVo
-         ursjG82vt3J0ka0vBsJtIjN0C335Lxq9u5xGnC3xLARef4RaG8OQJu8kSKW14+wo0iLD
-         e8PC3DT30PgJAH3JIMKVcdGhliIfF6CswILElWSlfXVBA1cjzXeBQ5C6XgwYxGhMSvkC
-         neMavjwsfKKRl59+4wPLI6V2SO/p+rDDsC5jwhQtoYI3U57XvS2xAYx14UbFI130TJO+
-         1zh15oF0iqA0e2JwtuH2f4uq2Y+U42UaB2olU8nqATUR/4MEYxIiLJc9tha/39hsJcSK
-         8ykQ==
-X-Gm-Message-State: AOAM531hUssWa0pvKlcYaql7FUTNB8zGvUxawQMekYXjAuWTm2Zxe6ji
-        E3qLO5Ur2gUT34ozzfcPjloQWM3haWPE9A==
-X-Google-Smtp-Source: ABdhPJwZRAMMxWay48znTn70bOlvP3FjKobGquQetOpk6pE353ZOMuGKMxaNnOSvlPBtZBTD0f+IJg==
-X-Received: by 2002:a05:600c:a41:: with SMTP id c1mr3775948wmq.109.1629986756771;
-        Thu, 26 Aug 2021 07:05:56 -0700 (PDT)
+        bh=pwXtiWsoBT3/ETQ8XHJLKtZU/HCggU775XJY5RyTI3c=;
+        b=mac3LtTMvhldlH0HjiVoEk+d7HJOdrDUqexEIn+7dF8JViZCMt9X/4mcx/RPU9vc+x
+         NpfiZmA+BAhbP7bTk5adPIY0O3ISspNUkQkZBOVONCSvvA8Iy3lOe62g/5bHrt3keSEZ
+         pwzEvNX0mxC1izJjW4jVoUJCu2cDt1zrNBcYL8H+/AP00c14/4HguWchaAJzRnuB37Aa
+         QVEx+U8OrcwnJwldd9eyTzjaiOPSxxXlxCQ+gYOaLkEKSrPvv769rDNezS6rFx5txiDZ
+         nZVOZ2lwaeNwsLzoqgvFKuM51PVwjmy83SBYQP4VkvM5X/1CPOGca9cCzq/zCRaeki/J
+         tJiw==
+X-Gm-Message-State: AOAM5335ipPYieZSdFvDqjZQrB65U6hl3vZMY1z1jEhR5x7bY62HHId/
+        fDhOcRBl7gdmTsao3SgDoO1ISFHqRWC4uQ==
+X-Google-Smtp-Source: ABdhPJytEOeMI3SWt27LOduc26SMeQD43HuA2wVOftReOt8tT/WJGxCjlO1cSu+Trng95Lb21FmUXQ==
+X-Received: by 2002:adf:eb83:: with SMTP id t3mr4185765wrn.365.1629986758423;
+        Thu, 26 Aug 2021 07:05:58 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k13sm2471987wms.33.2021.08.26.07.05.56
+        by smtp.gmail.com with ESMTPSA id k13sm2471987wms.33.2021.08.26.07.05.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Aug 2021 07:05:56 -0700 (PDT)
+        Thu, 26 Aug 2021 07:05:57 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 2/5] strvec: add a strvec_pushvec()
-Date:   Thu, 26 Aug 2021 16:05:48 +0200
-Message-Id: <patch-v3-2.5-321b8ba3f0e-20210826T140414Z-avarab@gmail.com>
+Subject: [PATCH v3 4/5] index-pack: add --progress-title option
+Date:   Thu, 26 Aug 2021 16:05:50 +0200
+Message-Id: <patch-v3-4.5-e44d825e5df-20210826T140414Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.733.ga72a4f1c2e1
 In-Reply-To: <cover-v3-0.5-00000000000-20210826T140414Z-avarab@gmail.com>
 References: <cover-0.4-0000000000-20210727T004015Z-avarab@gmail.com> <cover-v3-0.5-00000000000-20210826T140414Z-avarab@gmail.com>
@@ -77,84 +77,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a strvec_pushvec() function to concatenate two "struct strvec *"
-together, and modify code added in 50d89ad6542 (submodule: use
-argv_array instead of hand-building arrays, 2012-09-01) to use it. In
-a subsequent commit we'll gain another API user.
+Add a --progress-title option to index-pack, when data is piped into
+index-pack its progress is a proxy for whatever's feeding it data.
 
-This could also have been named strvec_concat()[1], but I opted to
-make its name consistent with the strbuf_addbuf() function instead. We
-only name these sorts of functions *_concat() in one instance:
-parse_options_concat().
+This option will allow us to set a more relevant progress bar title in
+"git bundle unbundle", and is also used in my "bundle-uri" RFC
+patches[1] by a new caller in fetch-pack.c.
 
-1. http://lore.kernel.org/git/30620e13-4509-1905-7644-9962b6adf9c5@gmail.com
+The code change in cmd_index_pack() won't handle
+"--progress-title=xyz", only "--progress-title xyz", and the "(i+1)"
+style (as opposed to "i + 1") is a bit odd.
+
+Not using the "--long-option=value" style is inconsistent with
+existing long options handled by cmd_index_pack(), but makes the code
+that needs to call it better (two strvec_push(), instead of needing a
+strvec_pushf()).
+
+Since the option is internal-only the inconsistency shouldn't
+matter. I'm copying the pattern to handle it as-is from the handling
+of the existing "-o" option in the same function, see 9cf6d3357aa (Add
+git-index-pack utility, 2005-10-12) for its addition.
+
+Eventually we'd like to migrate all of this this to parse_options(),
+which would make these differences in behavior go away.
+
+1. https://lore.kernel.org/git/RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- strvec.c    | 8 ++++++++
- strvec.h    | 7 +++++++
- submodule.c | 4 +---
- 3 files changed, 16 insertions(+), 3 deletions(-)
+ Documentation/git-index-pack.txt | 6 ++++++
+ builtin/index-pack.c             | 6 ++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/strvec.c b/strvec.c
-index 61a76ce6cb9..54ed8427c13 100644
---- a/strvec.c
-+++ b/strvec.c
-@@ -56,6 +56,14 @@ void strvec_pushv(struct strvec *array, const char **items)
- 		strvec_push(array, *items);
- }
+diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
+index 7fa74b9e798..1f1e3592251 100644
+--- a/Documentation/git-index-pack.txt
++++ b/Documentation/git-index-pack.txt
+@@ -82,6 +82,12 @@ OPTIONS
+ --strict::
+ 	Die, if the pack contains broken objects or links.
  
-+void strvec_pushvec(struct strvec *array, const struct strvec *items)
-+{
-+	int i;
++--progress-title::
++	For internal use only.
+++
++Set the title of the progress bar. The title is "Receiving objects" by
++default and "Indexing objects" when `--stdin` is specified.
 +
-+	for (i = 0; i < items->nr; i++)
-+		strvec_push(array, items->v[i]);
-+}
-+
- void strvec_pop(struct strvec *array)
- {
- 	if (!array->nr)
-diff --git a/strvec.h b/strvec.h
-index fdcad75b45b..9003bde2b7d 100644
---- a/strvec.h
-+++ b/strvec.h
-@@ -62,6 +62,13 @@ void strvec_pushl(struct strvec *, ...);
- /* Push a null-terminated array of strings onto the end of the array. */
- void strvec_pushv(struct strvec *, const char **);
+ --check-self-contained-and-connected::
+ 	Die if the pack contains broken links. For internal use only.
  
-+/**
-+ * Push the contents of another "struct strvec *" onto the end of the
-+ * array. Like strvec_pushv(), this is a convenience wrapper that
-+ * calls strvec_push() in a loop.
-+ */
-+void strvec_pushvec(struct strvec *, const struct strvec *);
-+
- /**
-  * Remove the final element from the array. If there are no
-  * elements in the array, do nothing.
-diff --git a/submodule.c b/submodule.c
-index 8e611fe1dbf..84b5f5dc0e0 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1606,7 +1606,6 @@ int fetch_populated_submodules(struct repository *r,
- 			       int default_option,
- 			       int quiet, int max_parallel_jobs)
- {
--	int i;
- 	struct submodule_parallel_fetch spf = SPF_INIT;
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 8336466865c..0841c039ae2 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -122,6 +122,7 @@ static int strict;
+ static int do_fsck_object;
+ static struct fsck_options fsck_options = FSCK_OPTIONS_MISSING_GITMODULES;
+ static int verbose;
++static const char *progress_title;
+ static int show_resolving_progress;
+ static int show_stat;
+ static int check_self_contained_and_connected;
+@@ -1157,6 +1158,7 @@ static void parse_pack_objects(unsigned char *hash)
  
- 	spf.r = r;
-@@ -1622,8 +1621,7 @@ int fetch_populated_submodules(struct repository *r,
- 		die(_("index file corrupt"));
- 
- 	strvec_push(&spf.args, "fetch");
--	for (i = 0; i < options->nr; i++)
--		strvec_push(&spf.args, options->v[i]);
-+	strvec_pushvec(&spf.args, options);
- 	strvec_push(&spf.args, "--recurse-submodules-default");
- 	/* default value, "--submodule-prefix" and its value are added later */
- 
+ 	if (verbose)
+ 		progress = start_progress(
++				progress_title ? progress_title :
+ 				from_stdin ? _("Receiving objects") : _("Indexing objects"),
+ 				nr_objects);
+ 	for (i = 0; i < nr_objects; i++) {
+@@ -1806,6 +1808,10 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 				input_len = sizeof(*hdr);
+ 			} else if (!strcmp(arg, "-v")) {
+ 				verbose = 1;
++			} else if (!strcmp(arg, "--progress-title")) {
++				if (progress_title || (i+1) >= argc)
++					usage(index_pack_usage);
++				progress_title = argv[++i];
+ 			} else if (!strcmp(arg, "--show-resolving-progress")) {
+ 				show_resolving_progress = 1;
+ 			} else if (!strcmp(arg, "--report-end-of-input")) {
 -- 
 2.33.0.733.ga72a4f1c2e1
 
