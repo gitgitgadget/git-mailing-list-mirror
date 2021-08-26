@@ -2,117 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEC67C4320A
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 15:23:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7EDFC432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 15:37:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A0D326102A
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 15:23:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B8D0B60F4A
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 15:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242886AbhHZPYW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 11:24:22 -0400
-Received: from mout.web.de ([212.227.15.3]:46327 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231732AbhHZPYV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 11:24:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1629991408;
-        bh=6SHEsOb1MMSuxXwXcoWEc56DQcbyWsEhxJ7vTABMB04=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=ftwlynCiSBpvlUQzHjL30q0zey2vtuQtmbHEvUlULaoYCtmUtSJmX2SRRpZsb7whx
-         w5Za+BwqGN3yAFNWUNpsO0T5LYE826Us/kkz8DmGzXBrHhidKMxFpXs7Wf/lJPPyKQ
-         fQEsi7F2GTFqQ3LuiL/Z4phK/ga2PejqdwPipUtU=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.27.185]) by smtp.web.de
- (mrweb002 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0LcPm2-1mhrKY1Uwg-00jqgP; Thu, 26 Aug 2021 17:23:28 +0200
-Subject: Re: [PATCH 1/2] xopen: explicitly report creation failures
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <6a5c3e8e-0216-8b63-38fa-b7b19331d752@web.de>
- <CAPUEspjkcV1_R5DNXCkL5wQpZCW+K4As2nGuEGu6fyeFrr15KQ@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <f44bf316-efae-34ce-33e0-0161c3bb78a0@web.de>
-Date:   Thu, 26 Aug 2021 17:23:27 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.13.0
+        id S242998AbhHZPid (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 11:38:33 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58340 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232374AbhHZPic (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 11:38:32 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4FEA9149DD0;
+        Thu, 26 Aug 2021 11:37:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=bUOZCdMiyzzd
+        pkjmJ85hGIhJ6C7t/rN9/PlKkCs78sA=; b=o+ZUDp4LyBXe45WFsp18NiK6+6gL
+        QDaNASTGub8O28N5cvbhXMBe6agQqyb6NHSeTQWtt7K0eYbQisv8jKbjcVx7nc2W
+        6gr0j0MUqTjd7HGo4N8AweCtp+KKTWqxikcN40hBvVop7Xe1HSar/8yUrTTzUH4t
+        Emj3DBhkcwKnCQ4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 495D3149DCD;
+        Thu, 26 Aug 2021 11:37:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6AC76149DCA;
+        Thu, 26 Aug 2021 11:37:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     Krzysztof =?utf-8?Q?=C5=BBelechowski?= <giecrilj@stegny.2a.pl>,
+        Jeff King <peff@peff.net>, Git Users <git@vger.kernel.org>
+Subject: Re: git log --encoding=HTML is not supported
+References: <9896630.2IqcCWsCYL@localhost.localdomain>
+        <YSWVi8uLHZCTtG0l@coredump.intra.peff.net>
+        <24330338.EZKKyuarjD@localhost.localdomain>
+        <CAGyf7-FhLQKQyCOishyrZHg0J+jk6=aszE3hMoH=L0j+0+TP7Q@mail.gmail.com>
+Date:   Thu, 26 Aug 2021 08:37:40 -0700
+In-Reply-To: <CAGyf7-FhLQKQyCOishyrZHg0J+jk6=aszE3hMoH=L0j+0+TP7Q@mail.gmail.com>
+        (Bryan Turner's message of "Wed, 25 Aug 2021 16:47:49 -0700")
+Message-ID: <xmqq5yvsgqt7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAPUEspjkcV1_R5DNXCkL5wQpZCW+K4As2nGuEGu6fyeFrr15KQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+X-Pobox-Relay-ID: 8D680DDA-0683-11EC-BE4F-FA11AF6C5138-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:CZU/A2djsZ+aA5BB0Kjco816TCH3yOLqw3NU332oejfXvBwuGt9
- qdIcI3+C//mjqYjs1N189AP5vklJQE3zTIdRy0UDghP/DCz4Z6gZou02zMFw3bfSe00teDw
- umZROxqHbK0gCeddgHUU9bUcFGVKfzJmANSoelNYx3kOCKyV7IQ+df+CnfW/ehbREBF7CcI
- rdGs8XBNdv8GVUeWY5ANw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:j1SQuf6YMKI=:16pr4YAcmpOOh7M+rplZck
- UoEfr9dnZp8oFaDG0QI2aEfVQE4EEZKROyNZreC5+tgh4Bv5uhkWdb2+g5AUcWKI0uT8ltaKT
- Y8VmJOO/vJZVpu6DdWwJUiuWK+rcdR45cqdwFePRImtCdkljxErEfDO+kYtLXqsIFo/RhrUrm
- YaiE8itu+lEXojVkYRDZ9SyYAy3cNVD/8ho0bZhbbtbSumMczsKyhkxavM/mFGDEzUlsObcEC
- dxdT0StjSTneltE7VWGLVryy6E5L4GIrASbE7W8ssRAo7dWrEsg20MoUhebmTlPPVYaeYweRP
- gNTOemm2jcxrHtG0P5yO4zUEIFBZOnzT/69+tzF1Y6YrVgQ0CbE/f0w0yK8ojTEb0UmhbSl3G
- WYS1t9ndnohH35w7UQ3c9IYleXQZvXJZgV3Rgg5b3gSJYL0dG3KC+f08AM4iTkbDjlm/n9ci3
- yC9OO+AN1lv+6FXUx8n4UZ6aeYJ/dLsRQxGI3+WU8qmLeG0PwR4qPffP/W2zfsVjLV8Y1+IL1
- iD0mCp9V9iUZ8O3vEGgDFlAp5nEBbIrzOl7E4PGvP02uLdxcl8DQxiBpDRjTj7cEJwfq1kvH+
- 7xEFVPhGphO6tcEhdOYN5elFd/NtjU3RV4rb4/7Cfzofwa/itYIxnWJLwt+rYUUSi+7J0cGA0
- +1Eowbl998kPCwKWk9WTxeOAR9ZHCDk2epQScH0pY5n7ppVFoB+yyDwyCP8h98LeG3rQVRzXX
- Jq3LNL4ec7Qk9Ma87myUcqmvN7go+VeDdCJUaAxilOsCQTviYjwOKmnarzovIGqMJb+to8z0p
- oJxcIEhG/2uN8lCDhFrFSlHkIq55wvXr9WDXvlgskG4a+qcJp68GPx22zqFMC9+DnAvPbQPLE
- pmRapBScOIOjtYe3qQyg7vbWxHAdjnuejSi9hZIT9bp2NyT1EtHr1w3eCkNtpokTqFX/8YtYh
- ztweqwZP3VCa9thi+u35lgFHPlBc8nJ3Ft/olDNS/3G6QffdkiKC0rnfDPd1WsN4AhhwEE+7h
- qEaY+RYBGxaJioQ3q7aqMquSDxCS9GCd0/NjiAOveT7Wnf3tSWiEZxJA5b2OLP1/NRKT8E7MI
- 47uRnpL2lR5yEGhmNp8E5xolFsXjokcv1Rs
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 26.08.21 um 01:46 schrieb Carlo Arenas:
-> On Wed, Aug 25, 2021 at 2:11 PM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+Bryan Turner <bturner@atlassian.com> writes:
+
+> On Wed, Aug 25, 2021 at 4:29 PM Krzysztof =C5=BBelechowski
+> <giecrilj@stegny.2a.pl> wrote:
 >>
->> diff --git a/wrapper.c b/wrapper.c
->> index 563ad590df..7c6586af32 100644
->> --- a/wrapper.c
->> +++ b/wrapper.c
->> @@ -193,7 +193,9 @@ int xopen(const char *path, int oflag, ...)
->>                 if (errno =3D=3D EINTR)
->>                         continue;
+>> Dnia =C5=9Broda, 25 sierpnia 2021 02:57:47 CEST Jeff King pisze:
+>> > diff --git a/pretty.c b/pretty.c
 >>
->> -               if ((oflag & O_RDWR) =3D=3D O_RDWR)
->> +               if ((oflag & (O_CREAT | O_EXCL)) =3D=3D (O_CREAT | O_EX=
-CL))
->> +                       die_errno(_("unable to create '%s'"), path);
+>> Please fix the manual for git log.  It should say what encoding is rec=
+ognised
+>> (namely if supported by iconv(1), except that POSIX character maps of
+>> iconv(1p) are not supported), and that an unrecognised encoding is ign=
+ored.
+>>
+>> I would also like to see the HTML encoding supported independently of =
+iconv,
+>> which seems like a pretty easy thing to do.  Dream on, I guess?
 >
-> probably over conservative, but && errno =3D=3D EEXIST?
+> I suspect the answer is less "Dream on" and more "Patches welcome."
 
-No matter what error we got, if O_CREAT and O_EXCL were both given then
-we tried to create a file, so this message applies.
+Patches are welcomed but not before a proposed design is freshed
+out.  I am sure people do welcome the design discussion.
 
->
->> +               else if ((oflag & O_RDWR) =3D=3D O_RDWR)
->>                         die_errno(_("could not open '%s' for reading an=
-d writing"), path);
->>                 else if ((oflag & O_WRONLY) =3D=3D O_WRONLY)
->>                         die_errno(_("could not open '%s' for writing"),=
- path);
->
-> Since you are already changing this code, why not take the opportunity
-> to refactor it
-> and remove the " =3D=3D FLAG" part of these conditionals which is
-> otherwise redundant?
+Pieces taken from the contents stored in Git (like "the title of the
+commit", "the name of the author of the commit") may need quoting
+and/or escaping when they are incorporated into a string to become
+parts of "output", and the way the quoting/escaping must be done
+would depend on the "host" language/format.  HTML has its own
+requirements for how these pieces coming from Git contents are
+quoted, but it will not be the only "host" language that needs
+quoting.
 
-The repetition is unsightly, but it's a different issue that should be
-addressed separately.  Simply removing the comparison feels iffy,
-though.  POSIX doesn't seem to forbid e.g. O_RDONLY to be 1, O_WRONLY
-to be 2 and O_RDWR to be 3, and then you need to check all masked bits.
-I can't think of simpler alternative to the comparison.
+The requirement for the feature we are "Dreaming on" may be much
+closer to the "host language" options (e.g. --tcl, --perl ...) the
+"git for-each-ref" command has.  These options tells us to format
+each piece of information (e.g. "%(subject)") taken from Git as a
+natural 'string' constant in the host language, so that
 
-> Either way "Reviewed-by", and indeed a nice cleanup.
+	git for-each-ref --shell \
+	    --format=3D'do_something %(authorname) %(authoremail)'
 
-Thank you!
+would write a shell script that calls "do_something" command with
+two arguments for each ref enumerated by the command, without having
+to worry about whitespaces and quote characters that may appear in
+the interpolated pieces.  It is immediately obvious that within the
+context of the for-each-ref command, the follwoing would equally be
+useful (note: this is already "dreaming on" and does not exist yet):
 
-Ren=C3=A9
+	echo "<ul>"
+	git for-each-ref --html \
+		--format=3D'<li>%(authoremail)</li>'
+	echo "</ul>"
+
+As we have been seeing efforts to port features around the --format
+option between the for-each-ref family of commands and the log
+family of commands, I would also imagine that it would be natural
+future direction to extend it to the latter and eventually allow
+
+	git log --html \
+		--format=3D'<tr><td>%h</td><td>%s</td>...</tr>'
+
+to format each commit into a single row in HTML table, and things
+like that.
+
