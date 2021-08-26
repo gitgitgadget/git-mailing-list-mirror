@@ -2,115 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC888C432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 16:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92A96C432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 16:49:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8CB4960FC0
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 16:47:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76A0D60F6F
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 16:49:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242595AbhHZQry (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 12:47:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35642 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232835AbhHZQrx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 12:47:53 -0400
-Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B717C061757
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 09:47:06 -0700 (PDT)
-Received: by mail-vs1-xe29.google.com with SMTP id m19so2488189vsj.10
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 09:47:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ArZmPaYZ2j6chi2VGjREYX4AYxiEnYRg2VVulqUBoWQ=;
-        b=tGaisUAnpLjIVeeidPJ9kFE+71L0mimmbwys84QuJeT8rFpe3KPoxUBeatAo78tSE/
-         +V8bszCe56tUJ9lwFmbducfqs++8fMQsEMRNwvyUEA4s3BVAY1WfljVa46hUqSQn/VM6
-         t4A0RdN6S/xx8rqDTf3vnFtUswyfJVy0vtT9QpDNeMbySmU+LowbtC9JQGLzlwAvdRgS
-         gx47W0NSw5P1scGv1SREGR6jtBOfrrEVnuPLnviw2+NxPG52jGL2CNiwRXc4zerp1TMP
-         rMMcm/zhEjdmfgeOQfwIXd16YEimgUKj5w+5yKpDF9kj/JOfQtiEDYzeM/dPxgvLBuZy
-         xzww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ArZmPaYZ2j6chi2VGjREYX4AYxiEnYRg2VVulqUBoWQ=;
-        b=eC4MQ1r7dcPQfkWNRvxStISGZRJE7PYsXcdrNP4K6Bm6yML+GiMbJRagtnaL+w01HF
-         2Xq0qBjp0VNsyBnadw88v1c1s3sbgsx2eO7aoNxDMcTdFbMfnTtU9WPoDcPT5l76/rLt
-         EdAvkxnVg6RFkfZjeCGef6ukXqn71WBKbbhxkVIg/NrgkBDackto5wVJ0BSbERvxos7m
-         A/GMmaumRRuuLboJYE/xR6chGZYEhu61dBA9NIpDMcjQBGMM8xQvUcM7J/fLYO/cZ4fb
-         yt/Qr1DZUDlvMD76go7iFw07mDA/aoYU9U+G0VaLNwZAfxW6CdGcfcUNS6zbJS0E+7Zc
-         MaNQ==
-X-Gm-Message-State: AOAM530t5obW1Lv+UV0L2iElzHBDijbj5fTJEfpkbk2qzq0W4nZBp95d
-        rzwEUXiCYJ8CniGqm1x/7guuKmK3CHzh+QTbsKKjXzdV0isgQQ==
-X-Google-Smtp-Source: ABdhPJy2JBSn/bkAGXzS6Njywh3hCwOxC0rJbvP1pT7zCEHM2M7XbyJzDj83IKoqrmJg6jnXk+N1ZPttewN/uf43yMQ=
-X-Received: by 2002:a67:f70d:: with SMTP id m13mr3395050vso.32.1629996425120;
- Thu, 26 Aug 2021 09:47:05 -0700 (PDT)
+        id S229880AbhHZQuU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 12:50:20 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52436 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232711AbhHZQuT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 12:50:19 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CCEB714A506;
+        Thu, 26 Aug 2021 12:49:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=hBqZAvYFIJfy
+        ZbNcJYnJqH+e10h2fum0qmyIm4ZYNZI=; b=VlahiUkXCveF4vdh4GWZZNrAZSTf
+        iC1nuQrq62VF0zZyhB+Xe7dJtePXrn4csSROxXJMvnJpSehflJGLuRHBBDFHblyd
+        4dJ4BJeJ6RDJUWSVSLQwlyspRnYuMGzfNeqzoEpEM3SD+yVtQ6WWSiOlQ/m8LvGd
+        rLGQcdyFl5KVIJw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B1BA014A505;
+        Thu, 26 Aug 2021 12:49:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DEBC414A504;
+        Thu, 26 Aug 2021 12:49:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Carlo Arenas <carenas@gmail.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] xopen: explicitly report creation failures
+References: <6a5c3e8e-0216-8b63-38fa-b7b19331d752@web.de>
+        <CAPUEspjkcV1_R5DNXCkL5wQpZCW+K4As2nGuEGu6fyeFrr15KQ@mail.gmail.com>
+        <f44bf316-efae-34ce-33e0-0161c3bb78a0@web.de>
+Date:   Thu, 26 Aug 2021 09:49:27 -0700
+In-Reply-To: <f44bf316-efae-34ce-33e0-0161c3bb78a0@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Thu, 26 Aug 2021 17:23:27 +0200")
+Message-ID: <xmqqa6l4f8x4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1629933380.git.jonathantanmy@google.com> <9187eab52552630863285ef5743a107ccc555495.1629933380.git.jonathantanmy@google.com>
-In-Reply-To: <9187eab52552630863285ef5743a107ccc555495.1629933380.git.jonathantanmy@google.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 26 Aug 2021 18:39:41 +0200
-Message-ID: <CAFQ2z_PKKZJY1kC1QJo8Zwq_yNh5QNGc3S5bq1jBfSfK3vQwRQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/2] refs: make _advance() check struct repo, not flag
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 94440E56-068D-11EC-B806-FA11AF6C5138-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 26, 2021 at 1:23 AM Jonathan Tan <jonathantanmy@google.com> wrote:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+
+> Am 26.08.21 um 01:46 schrieb Carlo Arenas:
+>> On Wed, Aug 25, 2021 at 2:11 PM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote=
+:
+>>>
+>>> diff --git a/wrapper.c b/wrapper.c
+>>> index 563ad590df..7c6586af32 100644
+>>> --- a/wrapper.c
+>>> +++ b/wrapper.c
+>>> @@ -193,7 +193,9 @@ int xopen(const char *path, int oflag, ...)
+>>>                 if (errno =3D=3D EINTR)
+>>>                         continue;
+>>>
+>>> -               if ((oflag & O_RDWR) =3D=3D O_RDWR)
+>>> +               if ((oflag & (O_CREAT | O_EXCL)) =3D=3D (O_CREAT | O_=
+EXCL))
+>>> +                       die_errno(_("unable to create '%s'"), path);
+>>
+>> probably over conservative, but && errno =3D=3D EEXIST?
 >
-> Currently, ref iterators access the object store each time they advance
-> if and only if the boolean flag DO_FOR_EACH_INCLUDE_BROKEN is unset.
-> (The iterators access the object store because, if
-> DO_FOR_EACH_INCLUDE_BROKEN is unset, they need to attempt to resolve
-> each ref to determine that it is not broken.)
+> No matter what error we got, if O_CREAT and O_EXCL were both given then
+> we tried to create a file, so this message applies.
+
+100% agreed.
+
+>>> +               else if ((oflag & O_RDWR) =3D=3D O_RDWR)
+>>>                         die_errno(_("could not open '%s' for reading =
+and writing"), path);
+>>>                 else if ((oflag & O_WRONLY) =3D=3D O_WRONLY)
+>>>                         die_errno(_("could not open '%s' for writing"=
+), path);
+>>
+>> Since you are already changing this code, why not take the opportunity
+>> to refactor it
+>> and remove the " =3D=3D FLAG" part of these conditionals which is
+>> otherwise redundant?
 >
-> Also, the object store accessed is always that of the_repository, making
-> it impossible to iterate over a submodule's refs without
-> DO_FOR_EACH_INCLUDE_BROKEN (unless add_submodule_odb() is used).
+> The repetition is unsightly, but it's a different issue that should be
+> addressed separately.  Simply removing the comparison feels iffy,
+> though.  POSIX doesn't seem to forbid e.g. O_RDONLY to be 1, O_WRONLY
+> to be 2 and O_RDWR to be 3, and then you need to check all masked bits.
+> I can't think of simpler alternative to the comparison.
+
+I fully agree that such a change, if done, must be done in an
+unrelated patch. =20
+
+It is funny that the code is already prepared for such a case where
+RDWR is defined as RDONLY|WRONLY.  I wonder if we wrote the series
+of comparisons in this order on purpose, or we were just lucky, when
+we did 3ff53df7 (wrapper: implement xopen(), 2015-08-04) ;-)
+
+
 >
-> As a first step in resolving both these problems, replace the
-> DO_FOR_EACH_INCLUDE_BROKEN flag with a struct repository pointer. This
-> commit is a mechanical conversion - whenever DO_FOR_EACH_INCLUDE_BROKEN
-> is set, a NULL repository (representing access to no object store) is
-> used instead, and whenever DO_FOR_EACH_INCLUDE_BROKEN is unset, a
-> non-NULL repository (representing access to that repository's object
-> store) is used instead. Right now, the locations in which
-> non-the_repository support needs to be added are marked with BUG()
-> statements - in a future patch, these will be replaced. (NEEDSWORK: in
-> this RFC patch set, this has not been done)
+>> Either way "Reviewed-by", and indeed a nice cleanup.
+>
+> Thank you!
 
-from a design perspective, it would be nice if the ref backend
-wouldn't need to know about the object store. Can't this be hidden in
-the layer in refs.c that calls into the backends?
-
-If they have to know about the object store, have you considered
-passing the repository pointer
-in xxx_ref_store_create() ? Then there is no possibliity to mismatch
-the repository pointers and with the ref store.
-
-> - Making all ref stores not access the object store during their
->   _advance() callbacks, and making ref_iterator_advance() be responsible
->   for checking the object store - thus, simplifying the code in that the
->   logic of checking for the flag (current) or the pointer (after the
->   equivalent of this commit) is only in one place instead of in every
->   ref store's callback. However, the ref stores already make use of this
->   flag for another reason - for determining if refs are resolvable when
->   writing (search for "REF_STORE_ODB"). Thus, I decided to retain each
-
-I looked, but I couldn't figure out how this flag is used.
--- 
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-Han-Wen Nienhuys
-Google Munich
-hanwen@google.com
+Yes, indeed, this is nicely done.
