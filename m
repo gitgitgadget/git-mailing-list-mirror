@@ -2,106 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53C2BC432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 22:35:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A738AC4320E
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 22:36:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 36F2D60FE6
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 22:35:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8BB7D60FE6
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 22:36:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234110AbhHZWgM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 18:36:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58970 "EHLO
+        id S243764AbhHZWhV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 18:37:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231159AbhHZWgL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 18:36:11 -0400
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBA00C061757
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 15:35:23 -0700 (PDT)
-Received: by mail-il1-x130.google.com with SMTP id u7so4969823ilk.7
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 15:35:23 -0700 (PDT)
+        with ESMTP id S231159AbhHZWhU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 18:37:20 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34F89C061757
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 15:36:33 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id y11so3954606pfl.13
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 15:36:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=pUAcWXLKqLtYyLRUCTkq2QIPDp7uxqJ/F8kFJqP1CyU=;
-        b=a3pnI0PvbLeuXYph3IDVqPlptvllkeTMT8sir0V2RuBCjwooRndrzJp8bNjA1pAEvO
-         1cc7F/31Q29pyT/Da1EnJHFAxsdkN0cukK5FQbY/8ef6vL7obOI57jVUQQwD63drIGwY
-         7oLiDk25jJpMzrs6ZzZ1UFPrdjQKy1jmZXgD6NB+llJVzlBTn+yew4/QvUaVcKjyGKCq
-         rb9mydclsddm+LwIoWXWqS5ErScJsfuC5DnSJe3+kbSqoQ76J/ahUeIVjwTKa8XQ/QFE
-         OpvYqADv0IOp5u9W/u78OmbxFR1PT2m9l9aLPN2JRR5WFm0iu26/hYBVE5UZM4KKHJyS
-         bt3Q==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=OxSYkSq5nyJv+qzRmcR/bmLsIFQq3PgfqHuwLYdodqM=;
+        b=tixss+S4fyeIcL5tkWPY/Kx0r5EXXz7oP+kZYspM8CPV9ilqCG6H26k2uHrmdFXXaA
+         QMpeqVIf+fbiDstxlBo4Jdsm8b/okUcNexBjV8IHeghZpzYdsCzlVWVYFBQnFuIARMSG
+         scMyCkpiCHvq0k6cHu+2/T6dL3jMIC4QCNin8NsqQT18Xx7qqkdPZJqS0HGihzNYGKFQ
+         N9lx0tHjMmgkKydRT6x/Qj+9i33MkcLsKPqPh7dsYxRtL2kXRC9I5cOME/Sjd2Zno+3+
+         qPR1lKF7jHHxh7Bw5Pk5IkE5Uh1Hm4tQhekTtgfEVDnNBjtS+jSKUpkmAQryr83RYX14
+         V87w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=pUAcWXLKqLtYyLRUCTkq2QIPDp7uxqJ/F8kFJqP1CyU=;
-        b=jmyW6Q/8Itfcv73LkegF6XZ7WaCxUCpPj+ndgwNgCoR/hSFmIaLz6yikRIq0W8qmqL
-         6EuPpFjDvyFRejgfT/4jUN7UTmaolvGF8H6L7IImuKLtmQe0fClDO1rrI6zefVccpUaH
-         NDxvfKT597i70e4aZiqWXdsNmiHFjwNfpuhpHKD260j/nuaiLrYiFKg1/P1Pb6LSXL8j
-         9ZGDj4SNpuJT8AJPodNYjNiArY5xN9LZhev98zmwFHkEo0kxcvPvN1aJNdRdrfgUNjOr
-         YSHNcMnuxncZOHv/+v34WDdtuEF50yT4FLD5o7gjld5G1XuNgjpNzPNDDdYWGHtFQIxW
-         qoeQ==
-X-Gm-Message-State: AOAM533vVrDs3e48vJyflcVGHPPkbe8OVwUNEV4sqHdL+KOzTHp0NCrt
-        GnpKAHBwGjw2PX5ZGF0o7aJFXZh1jSp9Rx1L
-X-Google-Smtp-Source: ABdhPJwP+Q4+NRkF+X8qv6gy6sZOydvVxAN0l2DURsO2wfyylCrqWOFLJC+cO5xT8tgQLRC6qrFgGQ==
-X-Received: by 2002:a92:3207:: with SMTP id z7mr4148296ile.260.1630017323266;
-        Thu, 26 Aug 2021 15:35:23 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g14sm2388465ila.28.2021.08.26.15.35.22
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=OxSYkSq5nyJv+qzRmcR/bmLsIFQq3PgfqHuwLYdodqM=;
+        b=cN2h9Zx/cRKBn8UqaLKSyICaVlTHKW703siDblX26E5biGdbsaMkD6NefswHC5AeI5
+         dasOFviahAy9KLf0ZrU9J4eWgdlZY3UaDNIE1n/49dG+MpKdWUsitPYBZ+CIWUS1E5n+
+         qJ5ixUUm0ozaEqjFrhSgv7VAbrqv1D+CTirMPrLX5IGREN7QniaW+V27AwEyIFqBId6H
+         cx5f+ppdtklZeZOeYv9uCdkneHmmzwAKIUrdq5oWkEsCjBwhEktvRPcCPEAyRLSMnPIH
+         hvjxJLVqUZzYMA+LrxB+ZmQ/bMQcuABf+Gt0UXE6MbdUH9lgF+PXHSDY1Mkx8R2ZGrkC
+         OH+A==
+X-Gm-Message-State: AOAM53202DNuawgaSiL4JTWk9qKkrO0u3fZ66WHC7jnHElcamqU55mCr
+        eZzoroak1wvWi8uqNi8PdXLQg39JtuRIQQ==
+X-Google-Smtp-Source: ABdhPJx+02Od5WdJE8ib52CFY8ju/B4sYkce4P7MtfVkjQrJKt2+gKuBE0sa0uN/GVrXgWYuvi5scA==
+X-Received: by 2002:a63:4614:: with SMTP id t20mr5227944pga.372.1630017392418;
+        Thu, 26 Aug 2021 15:36:32 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:c1d9:3a1d:fe59:b07a])
+        by smtp.gmail.com with ESMTPSA id q4sm3619399pjd.52.2021.08.26.15.36.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Aug 2021 15:35:22 -0700 (PDT)
-Date:   Thu, 26 Aug 2021 18:35:22 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Vosmaer <jacob@gitlab.com>, peff@peff.net,
-        git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH 2/2] upload-pack: use stdio in send_ref callbacks
-Message-ID: <YSgXKgHgPwo/8aUW@nand.local>
-References: <CADMWQoMpURczcnZne=0cr2vavoLm_VT5eEMg4FCu3VeSg_UJaQ@mail.gmail.com>
- <20210826100648.10333-1-jacob@gitlab.com>
- <20210826100648.10333-2-jacob@gitlab.com>
- <xmqqpmu0f9ob.fsf@gitster.g>
+        Thu, 26 Aug 2021 15:36:31 -0700 (PDT)
+Date:   Thu, 26 Aug 2021 15:36:26 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 2/6] hook: allow parallel hook execution
+Message-ID: <YSgXarfqwQVmO8Af@google.com>
+References: <20210819033450.3382652-1-emilyshaffer@google.com>
+ <20210819033450.3382652-3-emilyshaffer@google.com>
+ <87wnoaevbe.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <xmqqpmu0f9ob.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87wnoaevbe.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 26, 2021 at 09:33:08AM -0700, Junio C Hamano wrote:
-> > @@ -171,6 +171,9 @@ int ls_refs(struct repository *r, struct strvec *keys,
-> >  		strvec_push(&data.prefixes, "");
-> >  	for_each_fullref_in_prefixes(get_git_namespace(), data.prefixes.v,
-> >  				     send_ref, &data, 0);
-> > +	/* Call fflush because send_ref uses stdio. */
-> > +	if (fflush(stdout))
-> > +		die_errno(_("write failure on standard output"));
->
-> There is maybe_flush_or_die() helper that does a bit too much (I do
-> not think this code path needs to worry about GIT_FLUSH) but does
-> call check_pipe(errno) like packet_write_fmt() does upon seeing a
-> write failure.
->
-> >  	packet_flush(1);
+On Tue, Aug 24, 2021 at 05:01:09PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> 
+> 
+> On Wed, Aug 18 2021, Emily Shaffer wrote:
+> 
+> > -'git hook' run [--to-stdin=<path>] [--ignore-missing] <hook-name> [-- <hook-args>]
+> > +'git hook' run [--to-stdin=<path>] [--ignore-missing] [(-j|--jobs) <n>]
+> > +	<hook-name> [-- <hook-args>]
+> 
+> As an aside I wondered if it shouldn't be [[-j|--jobs] <n>], but grepped
+> around and found that (x|y|z) means a mandatory pick of x, y or z, but
+> [x|y|z] means that, plus possibly picking none, I think.
+> 
+> So this is fine, just something I wondered about...
 
-I was somewhat surprised to see the fflush call here and not in a
-companion to the existing packet_flush (when working with stdio instead
-of file descriptors, of course).
+Hm, I guess I hadn't see [x|y|z] (or paid attention to it). Anyway, yes,
+I think [(-j|--jobs) <n>] is probably most correct here: "entirely
+optionally you can provide a jobs arg; but if you do it must start with
+-j or --jobs and it must contain a number". I guess you could also say
+[-j <n> | --jobs <n>] but that might leave the reader to consider
+whether <n> has a different meaning in each? Anyway, doesn't matter
+really, and thanks for completely nerd-sniping me ;)
 
-What Jacob wrote is not wrong, of course, but I think having
-packet_fflush() or similar would be less error-prone.
+> 
+> > +-j::
+> > +--jobs::
+> > +	Only valid for `run`.
+> > ++
+> > +Specify how many hooks to run simultaneously. If this flag is not specified, use
+> > +the value of the `hook.jobs` config. If the config is not specified, use the
+> 
+> s/use the value/uses the value/
+> 
+> Also we usually say "of the XYZ config, see linkgit:git-config[1]", or
+> something to that effect when we mention config variables. Perhaps we
+> should do the same here.
 
-> OK.  This step looks quite sensible, other than the same "do we want
-> check_pipe() before dying upon fflush() failure?" we see in the last
-> hunk below.  I didn't mention this in the review of 1/2, but the new
-> fwrite_or_die() helper function may also have the same issue.
+Done, thanks.
 
-Agreed.
+> 
+> > +number of CPUs on the current system. Some hooks may be ineligible for
+> > +parallelization: for example, 'commit-msg' intends hooks modify the commit
+> > +message body and cannot be parallelized.
+> 
+> Not something that *needs* to happen in this series, but I wonder if we
+> shouldn't have per-type config here too, so users could force it even
+> for those hook types if they want.
 
-Thanks,
-Taylor
+Yeah, I'm happy to implement that later when someone complains... ;)
+
+> 
+> > -#define RUN_HOOKS_OPT_INIT { \
+> > -	.env = STRVEC_INIT, \
+> > -	.args = STRVEC_INIT, \
+> > -}
+> > -
+> >  /*
+> >   * To specify a 'struct string_list', set 'run_hooks_opt.feed_pipe_ctx' to the
+> >   * string_list and set 'run_hooks_opt.feed_pipe' to 'pipe_from_string_list()'.
+> > @@ -111,6 +113,18 @@ struct hook_cb_data {
+> >  	int *invoked_hook;
+> >  };
+> >  
+> > +#define RUN_HOOKS_OPT_INIT_SERIAL { \
+> > +	.jobs = 1, \
+> > +	.env = STRVEC_INIT, \
+> > +	.args = STRVEC_INIT, \
+> > +}
+> > +
+> > +#define RUN_HOOKS_OPT_INIT_PARALLEL { \
+> > +	.jobs = 0, \
+> > +	.env = STRVEC_INIT, \
+> > +	.args = STRVEC_INIT, \
+> > +}
+> > +
+> 
+> Ditto earlier comments about whitespace churn, i.e. I can just move this
+> around in the base topic, so the diff here is the change/addition, not
+> also moving things around.
+
+Nah, I think I just wasn't paying much attention to where it goes. It
+makes more sense to put this by the 'struct run_hooks_opt' decl, I'll
+move mine instead.
+
+ - Emily
