@@ -2,118 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D988EC432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 22:24:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53C2BC432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 22:35:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B851A60E93
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 22:24:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36F2D60FE6
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 22:35:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243748AbhHZWZc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 18:25:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56492 "EHLO
+        id S234110AbhHZWgM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 18:36:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230397AbhHZWZc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 18:25:32 -0400
-Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77D3AC061757
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 15:24:44 -0700 (PDT)
-Received: by mail-qt1-x84a.google.com with SMTP id t35-20020a05622a1823b02902647b518455so3035396qtc.3
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 15:24:44 -0700 (PDT)
+        with ESMTP id S231159AbhHZWgL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 18:36:11 -0400
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBA00C061757
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 15:35:23 -0700 (PDT)
+Received: by mail-il1-x130.google.com with SMTP id u7so4969823ilk.7
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 15:35:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=8IagBg7Xmj7kfOV5x9isrqPI7rznhmutdeCGFJk5Pmk=;
-        b=P1hJT8u17IeHMRFWJ8sngWLrRsSXws084uS1dO8p+YPpzJiG11ZOUGnZkFMwXZxjOe
-         MJvl/mkcVbuTdDE3j9Lk6y/snFQNHaZps5/je7bkMtM/RsCJ+EvliFCJjUEYy/ZvJcG2
-         cBbLLj0Ai0Ad/jrdMciWh65L4Brzq5ZA8Mn+GqhaadB4icBn2mvm5kgsmIupFrKsAU0f
-         6lYNcp3yjmIfSzb1GboowEofxdjR6ADwbj1wP8RB2JdbOCFIgLxr/1IKEv/y0TmQ8zEY
-         mpV7uDy/lxCpcC5w3Gru7Cvliyv0z1CCQPHa6VTtnkucn31stX1j5TtNztrvTBPGFJ/F
-         30bw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=pUAcWXLKqLtYyLRUCTkq2QIPDp7uxqJ/F8kFJqP1CyU=;
+        b=a3pnI0PvbLeuXYph3IDVqPlptvllkeTMT8sir0V2RuBCjwooRndrzJp8bNjA1pAEvO
+         1cc7F/31Q29pyT/Da1EnJHFAxsdkN0cukK5FQbY/8ef6vL7obOI57jVUQQwD63drIGwY
+         7oLiDk25jJpMzrs6ZzZ1UFPrdjQKy1jmZXgD6NB+llJVzlBTn+yew4/QvUaVcKjyGKCq
+         rb9mydclsddm+LwIoWXWqS5ErScJsfuC5DnSJe3+kbSqoQ76J/ahUeIVjwTKa8XQ/QFE
+         OpvYqADv0IOp5u9W/u78OmbxFR1PT2m9l9aLPN2JRR5WFm0iu26/hYBVE5UZM4KKHJyS
+         bt3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=8IagBg7Xmj7kfOV5x9isrqPI7rznhmutdeCGFJk5Pmk=;
-        b=hApaa50PN5BWlaw9MSur1ktxXcokdMHeRmeVgNyk/KaBTqRK5/2snfF9qlQ49EnzqJ
-         jFKdAFcI91LVgGfRsmdqkNuHkvp4CwXXk20MPipaSDrHcziqzwYxQl/vgXIV+U6dG2+X
-         Zyg26Mx/uskWcF27grdjkB5SH0eeYrrnTDH0S2wLaOsdQJVSaglMyKb8+hWIqeqIiZ4u
-         HqpIftd+s1gcuPhCeFXcNj9w6Fk/kk2yqj1iK+LtXFLv1wqfGlB8fyBCFoDjJHAukXJw
-         QOaVkBfFFB1dC6yk2cKqQeXoJzlRmHRtpPGWQrSDiP0S5k0in/9UMbr8YCkC94HENukM
-         dygg==
-X-Gm-Message-State: AOAM531fldq5Ahb9M8vzANlkkOZlLiIq3Zg1Bc88CIvbk0wD0NJFDzSh
-        cXaLYSnuoR24slGl/3U9fd/1OLhebY/pG5ibqyav
-X-Google-Smtp-Source: ABdhPJyzjQcS2Rlm8Z6d4f55/4+IMJNUgmDE/hM57sa0TzTxQjFpX/GlIJkc5qaiCL1vu2a6e1oes+/8l9y7tSXO2xtc
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6214:c23:: with SMTP id
- a3mr6666658qvd.34.1630016683640; Thu, 26 Aug 2021 15:24:43 -0700 (PDT)
-Date:   Thu, 26 Aug 2021 15:24:39 -0700
-In-Reply-To: <CAFQ2z_PKKZJY1kC1QJo8Zwq_yNh5QNGc3S5bq1jBfSfK3vQwRQ@mail.gmail.com>
-Message-Id: <20210826222439.3915402-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <CAFQ2z_PKKZJY1kC1QJo8Zwq_yNh5QNGc3S5bq1jBfSfK3vQwRQ@mail.gmail.com>
-X-Mailer: git-send-email 2.33.0.259.gc128427fd7-goog
-Subject: Re: [RFC PATCH 1/2] refs: make _advance() check struct repo, not flag
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     hanwen@google.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=pUAcWXLKqLtYyLRUCTkq2QIPDp7uxqJ/F8kFJqP1CyU=;
+        b=jmyW6Q/8Itfcv73LkegF6XZ7WaCxUCpPj+ndgwNgCoR/hSFmIaLz6yikRIq0W8qmqL
+         6EuPpFjDvyFRejgfT/4jUN7UTmaolvGF8H6L7IImuKLtmQe0fClDO1rrI6zefVccpUaH
+         NDxvfKT597i70e4aZiqWXdsNmiHFjwNfpuhpHKD260j/nuaiLrYiFKg1/P1Pb6LSXL8j
+         9ZGDj4SNpuJT8AJPodNYjNiArY5xN9LZhev98zmwFHkEo0kxcvPvN1aJNdRdrfgUNjOr
+         YSHNcMnuxncZOHv/+v34WDdtuEF50yT4FLD5o7gjld5G1XuNgjpNzPNDDdYWGHtFQIxW
+         qoeQ==
+X-Gm-Message-State: AOAM533vVrDs3e48vJyflcVGHPPkbe8OVwUNEV4sqHdL+KOzTHp0NCrt
+        GnpKAHBwGjw2PX5ZGF0o7aJFXZh1jSp9Rx1L
+X-Google-Smtp-Source: ABdhPJwP+Q4+NRkF+X8qv6gy6sZOydvVxAN0l2DURsO2wfyylCrqWOFLJC+cO5xT8tgQLRC6qrFgGQ==
+X-Received: by 2002:a92:3207:: with SMTP id z7mr4148296ile.260.1630017323266;
+        Thu, 26 Aug 2021 15:35:23 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id g14sm2388465ila.28.2021.08.26.15.35.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Aug 2021 15:35:22 -0700 (PDT)
+Date:   Thu, 26 Aug 2021 18:35:22 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Vosmaer <jacob@gitlab.com>, peff@peff.net,
+        git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH 2/2] upload-pack: use stdio in send_ref callbacks
+Message-ID: <YSgXKgHgPwo/8aUW@nand.local>
+References: <CADMWQoMpURczcnZne=0cr2vavoLm_VT5eEMg4FCu3VeSg_UJaQ@mail.gmail.com>
+ <20210826100648.10333-1-jacob@gitlab.com>
+ <20210826100648.10333-2-jacob@gitlab.com>
+ <xmqqpmu0f9ob.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqpmu0f9ob.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> from a design perspective, it would be nice if the ref backend
-> wouldn't need to know about the object store. Can't this be hidden in
-> the layer in refs.c that calls into the backends?
+On Thu, Aug 26, 2021 at 09:33:08AM -0700, Junio C Hamano wrote:
+> > @@ -171,6 +171,9 @@ int ls_refs(struct repository *r, struct strvec *keys,
+> >  		strvec_push(&data.prefixes, "");
+> >  	for_each_fullref_in_prefixes(get_git_namespace(), data.prefixes.v,
+> >  				     send_ref, &data, 0);
+> > +	/* Call fflush because send_ref uses stdio. */
+> > +	if (fflush(stdout))
+> > +		die_errno(_("write failure on standard output"));
+>
+> There is maybe_flush_or_die() helper that does a bit too much (I do
+> not think this code path needs to worry about GIT_FLUSH) but does
+> call check_pipe(errno) like packet_write_fmt() does upon seeing a
+> write failure.
+>
+> >  	packet_flush(1);
 
-Thanks for taking a look.
+I was somewhat surprised to see the fflush call here and not in a
+companion to the existing packet_flush (when working with stdio instead
+of file descriptors, of course).
 
-The answer requires additional context, so I'll answer this at the end
-of this email.
+What Jacob wrote is not wrong, of course, but I think having
+packet_fflush() or similar would be less error-prone.
 
-> If they have to know about the object store, have you considered
-> passing the repository pointer
-> in xxx_ref_store_create() ? Then there is no possibliity to mismatch
-> the repository pointers and with the ref store.
+> OK.  This step looks quite sensible, other than the same "do we want
+> check_pipe() before dying upon fflush() failure?" we see in the last
+> hunk below.  I didn't mention this in the review of 1/2, but the new
+> fwrite_or_die() helper function may also have the same issue.
 
-I thought about that, but didn't want to make things worse - the effort
-in this patch set is, after all, to attempt to increase the dissociation
-between the ref stores and a certain object store (that is,
-the_repository's object store), and I thought that reintroducing an
-association (albeit to arbitrary object stores instead of a hardcoded
-object store) would be a step back.
+Agreed.
 
-But this may be the way to go - the ref stores already have a gitdir
-field that we could replace with a struct repository field.
-
-> > - Making all ref stores not access the object store during their
-> >   _advance() callbacks, and making ref_iterator_advance() be responsible
-> >   for checking the object store - thus, simplifying the code in that the
-> >   logic of checking for the flag (current) or the pointer (after the
-> >   equivalent of this commit) is only in one place instead of in every
-> >   ref store's callback. However, the ref stores already make use of this
-> >   flag for another reason - for determining if refs are resolvable when
-> >   writing (search for "REF_STORE_ODB"). Thus, I decided to retain each
-> 
-> I looked, but I couldn't figure out how this flag is used.
-
-I was thinking of files_ref_iterator_begin() setting a local variable
-required_flags. Somehow I thought that files_pack_refs() relied on
-files_ref_iterator_begin() setting that variable, but now I see that
-that's not true - both functions are independently checking that the
-underlying ref store supports ODB access, so I can remove ODB from
-files_ref_iterator_begin() if I want to.
-
-To go back to the question at the top, now I agree that hiding the ODB
-access in _advance() in the layer in refs.c is possible. The last part
-still accessing the ODB is files_pack_refs(), I think. Refactoring that
-is possible, but I'll leave that to another patch set.
-
-If you or anyone else has more questions or comments, please reply - and
-in the meantime, I'll update this patch set to move the ODB access in
-_advance() to the layer in refs.c.
+Thanks,
+Taylor
