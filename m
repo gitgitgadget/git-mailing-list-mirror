@@ -2,84 +2,251 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E04BDC432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 19:05:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FCAEC432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 19:10:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BB05760E0B
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 19:05:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25DEF60F5B
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 19:10:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243319AbhHZTGK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 15:06:10 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59739 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233147AbhHZTGK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 15:06:10 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 04EEBD494C;
-        Thu, 26 Aug 2021 15:05:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=jMZOEkyMM+We
-        lMl1CNLXGRJYk3uLx/rS80UcoCmMXxU=; b=gddXGrSPoKFyNDd6LFAAFmJ+e6Am
-        zYBllOVuEGeqD6xygPTmsTHyCTu3BccV4UHI6l8kWwV8acVs8XTE2foclvWmFLBE
-        7UZVNo7u6z8T7nfDoad+kRbKYpcr1fc+WnhyvOlWFbdm8W5eEpI0BgtSawGYq1hv
-        r/Dy3ZiORvo/EDo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F09D9D494B;
-        Thu, 26 Aug 2021 15:05:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 82083D494A;
-        Thu, 26 Aug 2021 15:05:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>,
-        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v2] branch: allow deleting dangling branches with --force
-References: <7894f736-4681-7656-e2d4-5945d2c71d31@web.de>
-        <325d64e9-8a31-6ba0-73f2-5e9d67b8682f@web.de>
-Date:   Thu, 26 Aug 2021 12:05:20 -0700
-In-Reply-To: <325d64e9-8a31-6ba0-73f2-5e9d67b8682f@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Thu, 26 Aug 2021 20:19:15 +0200")
-Message-ID: <xmqqk0k8do27.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S243386AbhHZTLE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 15:11:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40592 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230442AbhHZTLD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 15:11:03 -0400
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7773C061757
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 12:10:15 -0700 (PDT)
+Received: by mail-qt1-x842.google.com with SMTP id r21so3372724qtw.11
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 12:10:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp.br; s=usp-google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=84y4i0I5iEgtw/rf+l8IrH5i/6huzGsOz3eFR6sddbo=;
+        b=h9yfAl0APNpXC/dRzpByK25pINqkfvOSTIhgw5B/ggj+w6d/8oHzE4od1cgSQ0axea
+         bDMkLc0xSnPU04QehlAeHYQtEh1ivRUsT7ijuPT9be7YE7HpII0Q5GOyGy5/zH8gpqv7
+         br6JVsMji4wMBr1OJNUxWfS/FdMTNnhr79a8vqEyCR6l7R7+bTzZuYSaof4870r6l9oZ
+         x8HWUXoARfKoqk3iq7tcWHS13yej/+gc82ZdhglLGEJ3RGh+9kmmOXHOtxFcipEBZPeO
+         OQRnVdMN3Umle5w7lVdeWKAgujZRgMJZRb2s5ebwcV6WkDyL7n4N70oXtc52VAbcdPO4
+         0Fhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=84y4i0I5iEgtw/rf+l8IrH5i/6huzGsOz3eFR6sddbo=;
+        b=qisrVcR0cN2k2qvEPt2CvWyJnSVB1zv3QDya/flE4/G510WlCcSReX4SbE4fTUajap
+         iqqk8D5y0BW04eav/bLka82knxRku689SJy13m5sGVAiqQ34aUDqGp1RRARMwHbAhzzn
+         CLTLQN+l4YadY/A0UfSmtVnnIngGS7Cv38SFLdlmV92i4fZiS7XNGWm0xO6iM9tosumO
+         QzdXTNmVhDMosu4xMqxlZSvtAFwSemRXlryzGR+2h5MAEGg1Y8kzBs7Y/ZYXEXmaNxDE
+         jbmpYO3Z1Qs/MT2frGGNdsF0l/ogtQ9puw58JWAPNRPYPraU5Q2U+Ia+h5mogB1RBojW
+         7KlQ==
+X-Gm-Message-State: AOAM533EGF6/qe8GT0YwIedRHhgL+daXQZNJO9b6BXFAfxgzht8RAaOq
+        mY4Ay8kFqFdPgBlIoNMyON6Q0g==
+X-Google-Smtp-Source: ABdhPJxTbLpyfzU5ux+nCkGqUJ8GYKqgKWkA9rO0KQWHRQWJXbwjbsMYk7bsPZV+KHVIS0b6XoxuGg==
+X-Received: by 2002:ac8:6bcc:: with SMTP id b12mr4672750qtt.243.1630005014938;
+        Thu, 26 Aug 2021 12:10:14 -0700 (PDT)
+Received: from mango.meuintelbras.local ([177.32.116.19])
+        by smtp.gmail.com with ESMTPSA id r128sm3108551qke.98.2021.08.26.12.10.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Aug 2021 12:10:14 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+To:     matheus.bernardino@usp.br
+Cc:     allred.sean@gmail.com, git@vger.kernel.org,
+        larsxschneider@gmail.com, peff@peff.net, avarab@gmail.com
+Subject: [PATCH v2] checkout: make delayed checkout respect --quiet and --no-progress
+Date:   Thu, 26 Aug 2021 16:10:06 -0300
+Message-Id: <f3ac3246254c99e6ecb4a4578022d04324691c63.1630004263.git.matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <d1405b781915c085ac8a8965dadf3efbe1b0f6aa.1629915330.git.matheus.bernardino@usp.br>
+References: <d1405b781915c085ac8a8965dadf3efbe1b0f6aa.1629915330.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 8F9B1B5C-06A0-11EC-8026-D601C7D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+The 'Filtering contents...' progress report from delayed checkout is
+displayed even when checkout and clone are invoked with --quiet or
+--no-progress. Furthermore, it is displayed unconditionally, without
+first checking whether stdout is a tty. Let's fix these issues and also
+add some regression tests for the two code paths that currently use
+delayed checkout: unpack_trees.c:check_updates() and
+builtin/checkout.c:checkout_worktree().
 
-> +	hash=3D$(git rev-parse HEAD) &&
-> +	objpath=3D$(echo $hash | sed -e "s|^..|.git/objects/&/|") &&
-> +	git branch --no-track dangling &&
-> +	test_when_finished "test -f $objpath.x && mv $objpath.x $objpath" &&
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+---
 
-Do we need test -f here?
+Changes since v1:
 
-> +	mv $objpath $objpath.x &&
-> +	git branch --delete --force dangling &&
+- Exctract duplicated code from the different test cases into an
+  auxiliary function.
+- Split test that do not depend on TTY. 
 
-> +	test -z "$(git for-each-ref refs/heads/dangling)"
+ builtin/checkout.c    |  2 +-
+ entry.c               |  7 +++--
+ entry.h               |  3 +-
+ t/t0021-conversion.sh | 71 +++++++++++++++++++++++++++++++++++++++++++
+ unpack-trees.c        |  2 +-
+ 5 files changed, 80 insertions(+), 5 deletions(-)
 
-It is not wrong per-se, but maybe
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index b5d477919a..b23bc149d1 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -404,7 +404,7 @@ static int checkout_worktree(const struct checkout_opts *opts,
+ 	mem_pool_discard(&ce_mem_pool, should_validate_cache_entries());
+ 	remove_marked_cache_entries(&the_index, 1);
+ 	remove_scheduled_dirs();
+-	errs |= finish_delayed_checkout(&state, &nr_checkouts);
++	errs |= finish_delayed_checkout(&state, &nr_checkouts, opts->show_progress);
+ 
+ 	if (opts->count_checkout_paths) {
+ 		if (nr_unmerged)
+diff --git a/entry.c b/entry.c
+index 125fabdbd5..044e8ec92c 100644
+--- a/entry.c
++++ b/entry.c
+@@ -159,7 +159,8 @@ static int remove_available_paths(struct string_list_item *item, void *cb_data)
+ 	return !available;
+ }
+ 
+-int finish_delayed_checkout(struct checkout *state, int *nr_checkouts)
++int finish_delayed_checkout(struct checkout *state, int *nr_checkouts,
++			    int show_progress)
+ {
+ 	int errs = 0;
+ 	unsigned delayed_object_count;
+@@ -173,7 +174,9 @@ int finish_delayed_checkout(struct checkout *state, int *nr_checkouts)
+ 
+ 	dco->state = CE_RETRY;
+ 	delayed_object_count = dco->paths.nr;
+-	progress = start_delayed_progress(_("Filtering content"), delayed_object_count);
++	progress = show_progress
++		? start_delayed_progress(_("Filtering content"), delayed_object_count)
++		: NULL;
+ 	while (dco->filters.nr > 0) {
+ 		for_each_string_list_item(filter, &dco->filters) {
+ 			struct string_list available_paths = STRING_LIST_INIT_NODUP;
+diff --git a/entry.h b/entry.h
+index b8c0e170dc..7c889e58fd 100644
+--- a/entry.h
++++ b/entry.h
+@@ -43,7 +43,8 @@ static inline int checkout_entry(struct cache_entry *ce,
+ }
+ 
+ void enable_delayed_checkout(struct checkout *state);
+-int finish_delayed_checkout(struct checkout *state, int *nr_checkouts);
++int finish_delayed_checkout(struct checkout *state, int *nr_checkouts,
++			    int show_progress);
+ 
+ /*
+  * Unlink the last component and schedule the leading directories for
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index b5749f327d..33dfc9cd56 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -6,6 +6,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-terminal.sh
+ 
+ TEST_ROOT="$PWD"
+ PATH=$TEST_ROOT:$PATH
+@@ -1061,4 +1062,74 @@ test_expect_success PERL,SYMLINKS,CASE_INSENSITIVE_FS \
+ 	)
+ '
+ 
++test_expect_success PERL 'setup for progress tests' '
++	git init progress &&
++	(
++		cd progress &&
++		git config filter.delay.process "rot13-filter.pl delay-progress.log clean smudge delay" &&
++		git config filter.delay.required true &&
++
++		echo "*.a filter=delay" >.gitattributes &&
++		touch test-delay10.a &&
++		git add . &&
++		git commit -m files
++	)
++'
++
++test_delayed_checkout_progress () {
++	if test "$1" = "!"
++	then
++		local expect_progress=N &&
++		shift
++	else
++		local expect_progress=
++	fi &&
++
++	if test $# -lt 1
++	then
++		BUG "no command given to test_delayed_checkout_progress"
++	fi &&
++
++	(
++		cd progress &&
++		GIT_PROGRESS_DELAY=0 &&
++		export GIT_PROGRESS_DELAY &&
++		rm -f *.a delay-progress.log &&
++
++		"$@" 2>err &&
++		grep "IN: smudge test-delay10.a .* \\[DELAYED\\]" delay-progress.log &&
++		if test "$expect_progress" = N
++		then
++			! grep "Filtering content" err
++		else
++			grep "Filtering content" err
++		fi
++	)
++}
++
++for mode in pathspec branch
++do
++	case "$mode" in
++	pathspec) opt='.' ;;
++	branch) opt='-f HEAD' ;;
++	esac
++
++	test_expect_success PERL,TTY "delayed checkout shows progress by default on tty ($mode checkout)" '
++		test_delayed_checkout_progress test_terminal git checkout $opt
++	'
++
++	test_expect_success PERL "delayed checkout ommits progress on non-tty ($mode checkout)" '
++		test_delayed_checkout_progress ! git checkout $opt
++	'
++
++	test_expect_success PERL,TTY "delayed checkout ommits progress with --quiet ($mode checkout)" '
++		test_delayed_checkout_progress ! test_terminal git checkout --quiet $opt
++	'
++
++	test_expect_success PERL,TTY "delayed checkout honors --[no]-progress ($mode checkout)" '
++		test_delayed_checkout_progress ! test_terminal git checkout --no-progress $opt &&
++		test_delayed_checkout_progress test_terminal git checkout --quiet --progress $opt
++	'
++done
++
+ test_done
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 5786645f31..f07304f1b7 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -479,7 +479,7 @@ static int check_updates(struct unpack_trees_options *o,
+ 		errs |= run_parallel_checkout(&state, pc_workers, pc_threshold,
+ 					      progress, &cnt);
+ 	stop_progress(&progress);
+-	errs |= finish_delayed_checkout(&state, NULL);
++	errs |= finish_delayed_checkout(&state, NULL, o->verbose_update);
+ 	git_attr_set_direction(GIT_ATTR_CHECKIN);
+ 
+ 	if (o->clone)
+-- 
+2.32.0
 
-	git show-ref --quiet refs/heads/dangling
-
-is more straight-forward.
-
-Thanks.
