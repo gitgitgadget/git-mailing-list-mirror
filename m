@@ -2,105 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF7F9C432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 06:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D018EC432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 06:53:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0E00610A1
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 06:28:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B0C28610CB
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 06:53:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239331AbhHZG3j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 02:29:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33260 "EHLO
+        id S239112AbhHZGyb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 02:54:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239338AbhHZG3j (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 02:29:39 -0400
-Received: from mail-ua1-x935.google.com (mail-ua1-x935.google.com [IPv6:2607:f8b0:4864:20::935])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67A54C0613CF
-        for <git@vger.kernel.org>; Wed, 25 Aug 2021 23:28:52 -0700 (PDT)
-Received: by mail-ua1-x935.google.com with SMTP id 75so1053376uav.8
-        for <git@vger.kernel.org>; Wed, 25 Aug 2021 23:28:52 -0700 (PDT)
+        with ESMTP id S230375AbhHZGyb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 02:54:31 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1597EC061757
+        for <git@vger.kernel.org>; Wed, 25 Aug 2021 23:53:44 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id i28so4632975lfl.2
+        for <git@vger.kernel.org>; Wed, 25 Aug 2021 23:53:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=G46WU4wruuDNdR/0GvTOBYJzy1xmy7zHWOFFIcWULTE=;
-        b=nxBpWEhYXYL7Y17FJq9M6Lx0vCLd1apk0rFBbzzBW3eTmhNkH4gieDJPbKioehyJvL
-         0kVnCWZb39ct4jQEqqzPaZxp+zEvedIncbYP/ZHo5qZvD0wmWF8RZ9apdvmYIcTWylNS
-         x3ToFTlPAjyKbClgmnSeuglfaXMaXhQyMaYnY6MeMzboPsmU6k02spBmmoe+kz4WH+l8
-         h8Q9DYDyFbk0Ivf3mS1E96Y833lFucYWprKd+rVu8aZPepkNhVm/UhUynO4/hrrCoSIL
-         ll1X3UseFkPzsY3XJ8TzAY40nU51p1AjuT8Qq5VXc6iX71aByNAPHAmIVRJPpx6RR8jQ
-         Y2Nw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=WMUsriBZT4M91ahPnTrj/ducYdct4VY9kbMaxTvy3AQ=;
+        b=LSJREv3dYkY2vtNKAb3jTMWO7iVxe4voWueCWi3p8/Tl9GvrKMOWyYfnYVWt8+rIfc
+         JLzuv2/J0yhnvdCyo5LwfqhXgWceBSXonbxVQ6Pzpy0yH5S/PUx3c9/z6FN8AVoSUKg0
+         ltgL0UfVmqFkJolhFhqNQoUIwf8rbdjcapm3Csf2j7b8j8x9/jX8oImM519mTgnCbEKq
+         RvfomA/w13KvMx9igakbr/0KdaA8MHumooD+bGyMiz6zEpQXNBOFidHuOVTzJRsmdL0s
+         Kjfb7MozLz25A7dCfpf+Lh7JhQtxnchSE2iuC8p6IdjKD0zjHKHDiGAjOnNcn76da23M
+         rVwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=G46WU4wruuDNdR/0GvTOBYJzy1xmy7zHWOFFIcWULTE=;
-        b=KmlDi3MBnXnYpTul26RQlKfkFUhvNKc/2UXSdkDueRiEsRj47g0mLzgCDc5WN6xw23
-         euItVNpRdOM3Kh3WVlVYQ3Xl7ltTgwfm304nYdu4u5TlFiC8WmFDZK/0OtNW7Ug9pB7m
-         74sLEvGCA8ZGcv/5H1k5PtVI+Q7F4o1V0npDV+wZCKoeVxXhf3/MqnC3OtBtM+B6g3ET
-         kHE8drdlm0NjYUjUQviPvv/osS2Hjckht+qpjjy8Y6hHu0ITtaqS35I7RLbwQtSJ6LX0
-         ZxKYTivhw9h5QNtmE+KH5ZtcumZsOQZk8yhocIEvF9RxHKp74BLdDqQgGOdcRAPhI76A
-         +/iQ==
-X-Gm-Message-State: AOAM530pFZg+1fXkSvDgCSE3lYvrt77CGsh3Y9BeSKEJ8pWDUSB8rYgS
-        CMmBSGmgLrvbCcZNpC1C0vxqd+gEa+hutksHIbkz3aVp5xo=
-X-Google-Smtp-Source: ABdhPJwwr0yyb7ooIR3zvNbPB8z2R6yAMXhgrLd2s8XiaPcdPIc/ss3rN81Ke/DKnOH1gAqWfyHDH7W+7vDD7LltmIk=
-X-Received: by 2002:ab0:3418:: with SMTP id z24mr1064309uap.96.1629959331397;
- Wed, 25 Aug 2021 23:28:51 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=WMUsriBZT4M91ahPnTrj/ducYdct4VY9kbMaxTvy3AQ=;
+        b=BtLELD698Aiwjl5Hf5u71A7uvljcpptvVzQuzrzJCmcSIC7cYi+jGdTMN1Ae37wWCk
+         df0cElN8p8UuOttVQvzY7RropVGV7Dr9JIc2kVqegmZLT9quJtTgFUs0pOtUbW+BUVhb
+         stUX2D+EKZ+19pkMTjOELnUUqj9tG54ERTQSXyQlF+CEni1SOaHeP+C+yC1mr37Po8A5
+         n70BT3yc9wC6FsdtzGYxAz3AQRXwF2vIyKrldiN1O53LT1UZGwQs/GTzpDpa6bvnLTen
+         9KDm0Ewld9NCGI85NiRpC0N/BmM4grlUsHlhPYOxPSL2kWYrW/08XIR97ryPG2+9mwgR
+         7yPA==
+X-Gm-Message-State: AOAM531lZEf929aytYY1U4ht8pWF3PxlGRuOV98s6NvNe8bCTNbbMHTc
+        s6/CDm8LZp8CEjT8C/MYbo3Sh7Ao12qm4hf59Hblhj7i26EWrg==
+X-Google-Smtp-Source: ABdhPJyOgJNpUjs78J1vRlLSbadEpR8vGLKifnW6o6WhkVHNdQRPpPeuei+DuBM7YMjtLhp+/w7Czt7H4JACChOQUHo=
+X-Received: by 2002:a05:6512:314b:: with SMTP id s11mr1683394lfi.442.1629960822058;
+ Wed, 25 Aug 2021 23:53:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210826031710.32980-1-carenas@gmail.com> <YScXboC0M1IPNFon@nand.local>
-In-Reply-To: <YScXboC0M1IPNFon@nand.local>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Wed, 25 Aug 2021 23:28:40 -0700
-Message-ID: <CAPUEspjGkHhFNgTe3HnnUvkzwHfKqb9dYO3aCXDh_fRyFMRN6A@mail.gmail.com>
-Subject: Re: [PATCH] test-lib-functions: avoid non POSIX ERE in test_dir_is_empty()
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Jens.Lehmann@web.de
+From:   Stefan Hoffmeister <stefan.hoffmeister@gmail.com>
+Date:   Thu, 26 Aug 2021 08:53:31 +0200
+Message-ID: <CALhB_QNZJtUoSEE==xBoX3cTxE4duB+QqsSzuyeY7JFMh7sKhQ@mail.gmail.com>
+Subject: BUG: git diff --name-only ignores --ignore-*
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 25, 2021 at 9:24 PM Taylor Blau <me@ttaylorr.com> wrote:
-> On Wed, Aug 25, 2021 at 08:17:10PM -0700, Carlo Marcelo Arenas Bel=C3=B3n=
- wrote:
-> > diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> > index e28411bb75..2803c97df3 100644
-> > --- a/t/test-lib-functions.sh
-> > +++ b/t/test-lib-functions.sh
-> > @@ -790,7 +790,7 @@ test_path_exists () {
-> >  test_dir_is_empty () {
-> >       test "$#" -ne 1 && BUG "1 param"
-> >       test_path_is_dir "$1" &&
-> > -     if test -n "$(ls -a1 "$1" | egrep -v '^\.\.?$')"
-> > +     if test -n "$(ls -a1 "$1" | grep -v '^\.$' | grep -v '^\.\.$')"
->
-> This replacement is correct, but I'm not sure that I necessarily find it
-> simpler. If we really are concerned about egrep usage, then
->
->     if test -n "$(find "$1" | grep -v '^\.$')"
+When using the --name-only option on git diff (git 2.33.0),
+command-line parameters such as  --ignore-blank-lines are not
+respected.
 
-Interesting idea; if having a much simpler expression is so important
-then we could do instead [^.], since all use cases will be covered
-(nobody is going to create a three dotted file to workaround a test
-IMHO)
+Instead, git diff behaves as if these options were not specified at all.
 
-> But it looks like we are fairly OK with egrep in t (`git
-> grep 'egrep' -- t | wc -l` turns up 19 matches), so I'm not sure the
-> change is necessary in the first place.
+This is either an implementation defect, or a documentation defect,
+because that (IMHO surprising) behaviour is not spelled out in
+https://git-scm.com/docs/git-diff.
 
-egrep (and also fgrep, which we intentionally support because it is
-missing from some ancient AIX system[1]) will be removed in the
-next[2] release of GNU grep.
+IMHO, this is an implementation defect, as --ignore-* is orthogonal to
+--name-only. I would like to use --name-only to identify the set of
+files which have only(!) --ignore-* changes (by intersecting the set
+of files returned by git diff with, and without --ignore-*).
 
-Carlo
+The bash script below reproduces this for --ignore-blank-lines; the
+same would extend to the other --ignore-* options as well.
 
-[1] 87539416fd (tests: grep portability fixes, 2008-09-30)
-[2] https://git.savannah.gnu.org/cgit/grep.git/commit/?id=3Da9515624709865d=
-480e3142fd959bccd1c9372d1
+****************************
+#!/usr/bin/env bash
+
+set -e
+
+GIT_REPO=repo
+TEST_FILE=the_file.txt
+
+rm -rf ./${GIT_REPO}
+mkdir ${GIT_REPO}
+pushd ${GIT_REPO}
+
+git init --initial-branch=main
+git config user.name "myuser"
+git config user.email "myuser@example.com"
+
+cat << EOF > ${TEST_FILE}
+Hello world.
+EOF
+
+git add -A
+git commit -m"Initial commit"
+
+# add empty lines
+cat << EOF >> ${TEST_FILE}
+
+
+EOF
+
+without_name_only=$(git diff --ignore-blank-lines)
+echo "----
+Without --name-only:
+${without_name_only}"
+
+with_name_only=$(git diff --ignore-blank-lines --name-only)
+echo "----
+With --name-only:
+${with_name_only}"
+
+if [[ ${without_name_only} != ${with_name_only} ]] ; then
+    echo "
+fail: expected same data returned
+"
+    exit 1
+else
+    echo "
+pass: all good
+"
+    exit 0
+fi
