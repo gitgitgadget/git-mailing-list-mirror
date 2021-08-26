@@ -2,127 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7EDFC432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 15:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 592F2C432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 15:58:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B8D0B60F4A
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 15:37:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2CA806103C
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 15:58:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242998AbhHZPid (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 11:38:33 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58340 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232374AbhHZPic (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 11:38:32 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4FEA9149DD0;
-        Thu, 26 Aug 2021 11:37:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=bUOZCdMiyzzd
-        pkjmJ85hGIhJ6C7t/rN9/PlKkCs78sA=; b=o+ZUDp4LyBXe45WFsp18NiK6+6gL
-        QDaNASTGub8O28N5cvbhXMBe6agQqyb6NHSeTQWtt7K0eYbQisv8jKbjcVx7nc2W
-        6gr0j0MUqTjd7HGo4N8AweCtp+KKTWqxikcN40hBvVop7Xe1HSar/8yUrTTzUH4t
-        Emj3DBhkcwKnCQ4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 495D3149DCD;
-        Thu, 26 Aug 2021 11:37:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6AC76149DCA;
-        Thu, 26 Aug 2021 11:37:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     Krzysztof =?utf-8?Q?=C5=BBelechowski?= <giecrilj@stegny.2a.pl>,
-        Jeff King <peff@peff.net>, Git Users <git@vger.kernel.org>
-Subject: Re: git log --encoding=HTML is not supported
-References: <9896630.2IqcCWsCYL@localhost.localdomain>
-        <YSWVi8uLHZCTtG0l@coredump.intra.peff.net>
-        <24330338.EZKKyuarjD@localhost.localdomain>
-        <CAGyf7-FhLQKQyCOishyrZHg0J+jk6=aszE3hMoH=L0j+0+TP7Q@mail.gmail.com>
-Date:   Thu, 26 Aug 2021 08:37:40 -0700
-In-Reply-To: <CAGyf7-FhLQKQyCOishyrZHg0J+jk6=aszE3hMoH=L0j+0+TP7Q@mail.gmail.com>
-        (Bryan Turner's message of "Wed, 25 Aug 2021 16:47:49 -0700")
-Message-ID: <xmqq5yvsgqt7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S234972AbhHZP7Z convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 26 Aug 2021 11:59:25 -0400
+Received: from mail-ej1-f52.google.com ([209.85.218.52]:41960 "EHLO
+        mail-ej1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230203AbhHZP7Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 11:59:24 -0400
+Received: by mail-ej1-f52.google.com with SMTP id t19so7335068ejr.8
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 08:58:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=xNKejcRZTFTKdjJjAAXqi8TAI/WB4zVod1CoTHJjfs4=;
+        b=PtIJTO0xWwHjg92HliQUaZM4//XhEfSCYVfuSJVmvuO0Flnlwr4Kq9XxTKQAWPrr14
+         8xC2zH8kv9bO7jL3FE6CirZ/6XuP4AfNsWzYYEj/mRbftHenixrgftKzx/i5GQJTzp6T
+         O6+YH87tikdj3I9auCA5HOZxsNIw5fvRXo9o6pqv5TKYBA2Qa2dmXRsBgYyRR3HS16S4
+         9k8YV/wyt6IM+dvjn8HCmfjzKDka7lqvOIiJyl3SFnVPH+Yhild3J/nHJkU6FtlKE0SB
+         R17VlpZ+k2PmHKJ696boVr5jM3jX3pnHY9GAPL244genarFzjwke8XshYHwNy8qf09L2
+         MMBg==
+X-Gm-Message-State: AOAM532V78BmG/xPhkzEHfzrObCLWmo968OTbAtLaDrEcKE8HB9nxYzB
+        Q5EbOVcsHnGO9gNZ1OkyhIjbL34HovP5GGoZhAA=
+X-Google-Smtp-Source: ABdhPJwNVendHznzMYRdjsSGwUpJnWc+zlBWYQSYootq2sAX3GDDMGv84g1NO9cC1izwjum258PZS6Y5PQEs/btEbik=
+X-Received: by 2002:a17:906:2acc:: with SMTP id m12mr5218480eje.231.1629993516354;
+ Thu, 26 Aug 2021 08:58:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 8D680DDA-0683-11EC-BE4F-FA11AF6C5138-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <cover-0.6-00000000000-20210825T231400Z-avarab@gmail.com>
+ <cover-v2-0.6-00000000000-20210826T121820Z-avarab@gmail.com> <patch-v2-4.6-1aa0dbc394e-20210826T121820Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-4.6-1aa0dbc394e-20210826T121820Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 26 Aug 2021 11:58:25 -0400
+Message-ID: <CAPig+cSXQGbOMCNNF84aMA4MDFMbRc0z5xuKVoVJUQou6c1GkA@mail.gmail.com>
+Subject: Re: [PATCH v2 4/6] tr2: fix memory leak & logic error in 2f732bf15e6
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bryan Turner <bturner@atlassian.com> writes:
+On Thu, Aug 26, 2021 at 8:22 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> [...]
+> Let's move all the freeing of the memory to the end of the
+> function. If we're still at STRBUF_INIT with "name" due to not haven
 
-> On Wed, Aug 25, 2021 at 4:29 PM Krzysztof =C5=BBelechowski
-> <giecrilj@stegny.2a.pl> wrote:
->>
->> Dnia =C5=9Broda, 25 sierpnia 2021 02:57:47 CEST Jeff King pisze:
->> > diff --git a/pretty.c b/pretty.c
->>
->> Please fix the manual for git log.  It should say what encoding is rec=
-ognised
->> (namely if supported by iconv(1), except that POSIX character maps of
->> iconv(1p) are not supported), and that an unrecognised encoding is ign=
-ored.
->>
->> I would also like to see the HTML encoding supported independently of =
-iconv,
->> which seems like a pretty easy thing to do.  Dream on, I guess?
->
-> I suspect the answer is less "Dream on" and more "Patches welcome."
+s/haven/having/
 
-Patches are welcomed but not before a proposed design is freshed
-out.  I am sure people do welcome the design discussion.
-
-Pieces taken from the contents stored in Git (like "the title of the
-commit", "the name of the author of the commit") may need quoting
-and/or escaping when they are incorporated into a string to become
-parts of "output", and the way the quoting/escaping must be done
-would depend on the "host" language/format.  HTML has its own
-requirements for how these pieces coming from Git contents are
-quoted, but it will not be the only "host" language that needs
-quoting.
-
-The requirement for the feature we are "Dreaming on" may be much
-closer to the "host language" options (e.g. --tcl, --perl ...) the
-"git for-each-ref" command has.  These options tells us to format
-each piece of information (e.g. "%(subject)") taken from Git as a
-natural 'string' constant in the host language, so that
-
-	git for-each-ref --shell \
-	    --format=3D'do_something %(authorname) %(authoremail)'
-
-would write a shell script that calls "do_something" command with
-two arguments for each ref enumerated by the command, without having
-to worry about whitespaces and quote characters that may appear in
-the interpolated pieces.  It is immediately obvious that within the
-context of the for-each-ref command, the follwoing would equally be
-useful (note: this is already "dreaming on" and does not exist yet):
-
-	echo "<ul>"
-	git for-each-ref --html \
-		--format=3D'<li>%(authoremail)</li>'
-	echo "</ul>"
-
-As we have been seeing efforts to port features around the --format
-option between the for-each-ref family of commands and the log
-family of commands, I would also imagine that it would be natural
-future direction to extend it to the latter and eventually allow
-
-	git log --html \
-		--format=3D'<tr><td>%h</td><td>%s</td>...</tr>'
-
-to format each commit into a single row in HTML table, and things
-like that.
-
+> taken the branch where the strbuf_read_file() succeeds freeing it is
+> redundant, so we could move it into the body of the "if", but just
+> handling freeing the same way for all branches of the function makes
+> it more readable.
+> [...]
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
