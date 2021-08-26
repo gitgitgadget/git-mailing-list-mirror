@@ -4,189 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 728CCC432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 14:27:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA740C432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 15:05:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5737960F58
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 14:27:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BAA9D61026
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 15:05:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242860AbhHZO1r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 10:27:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59686 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242737AbhHZO1r (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 10:27:47 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6652FC061757
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 07:26:59 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id m28so7241595lfj.6
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 07:26:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=JpdBCOJo7tdfgXtu9BZtdw/NRG2rBB6CnFow3h1lazY=;
-        b=h/Z0FaoWoNDJf+1xqpD+ruJBzF6T2umMzLNAb+uPFzs2TLGpqgHLkF01BHgzxQueqY
-         +yQp9TWoi/WVVxs3aRz06aYgUhPLdOA51pZW3XyE8rJfMqy46kKoEg8OPaIyG+CP4ggL
-         Bs8dDTmdbnF2wDZojch088lsnVA0H12phaM5+xgiyDkQaUOGQDB65PaV8thaquGKVh8s
-         6F1ZWYylSu8q1oLd0Zq5aEBi4qu3fQmL9PngVuVt6NUMu5kfI24RLbSNOb+Fb+f1VnEU
-         rNvrH9aTwUVdUObT9+DOdiFgwhd1q6KqRS6mQ2hNwPoQMZzF1CtzVqQb8EKfltfSADCE
-         Yzvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JpdBCOJo7tdfgXtu9BZtdw/NRG2rBB6CnFow3h1lazY=;
-        b=eJkF4Yp8hRuoXGqkc8D/AJodQnsikMTm4yqwvdLZHNWxzlMM1zGMjB/jsBEPIAK0EY
-         lg94KF6X+zzBRxBWmwjpkoYHOosFstpfirrdPp+1sQ39zWCZD3QBQ13ZZ5ihhpP84z41
-         Q0jW3z27jIiMf/MTA6yhe69YQ1gK49iy81usbmJrZh0AXCQzkjUXB0yfdakF6yMLQ0eG
-         ycyuD5Q2fMXdnREB28XCV727meaXr4MCQQ+Axp/DYSA/2niGl1W5jGMMhIDMXpi17ly6
-         mVVEXGtIiaMpH9+GVcGSPVppEwcE0PUrIdnHMa3Poii8ojiY4Duu53O/NLUVJjl02KNi
-         D26g==
-X-Gm-Message-State: AOAM533/zsk2VVlNjRcU3g3SK+ZklBuUyGzlnZ9mKL7wPZshDSWF0Oh9
-        MadrH1PQyU1SRw9uZ4XVCP7/+lpoJUoiKxFYfTffmQ==
-X-Google-Smtp-Source: ABdhPJwJqFofqhhDZ/Q9DfP5M1+4f2ym8m/wywrrRoXZkmraZP7ud/u/5gQ3GvJKRJtaA6McJANgQnYmT4JWin0NowI=
-X-Received: by 2002:a05:6512:304b:: with SMTP id b11mr174066lfb.502.1629988017734;
- Thu, 26 Aug 2021 07:26:57 -0700 (PDT)
+        id S242909AbhHZPGW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 11:06:22 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54886 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231793AbhHZPGV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 11:06:21 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3BA30149A83;
+        Thu, 26 Aug 2021 11:05:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=KE1bfVB9/+j1
+        2spJf/AfWK9VPyH09wThE+qe3EY+KQc=; b=PoeQFGdAny0QlbWz1ccVHq2iniv1
+        8LuXGS788aLfohhBYrSEaB/Hm1jAQOPgBfh5EBGj/h7o8iY1eeKX+IJMEnbAToab
+        /vhghUGi4k8Llqi3j9L28zb7Ynds1TIUB8KGHB/H7hQMqDxPR7lfdzxx5gD2iMhT
+        cSCWCgGsOpk3KEk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3289B149A82;
+        Thu, 26 Aug 2021 11:05:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 07542149A7E;
+        Thu, 26 Aug 2021 11:05:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: Re: [PATCH v4 00/28] Support reftable ref backend for Git
+References: <pull.1054.v3.git.git.1629207607.gitgitgadget@gmail.com>
+        <cover-v4-00.28-00000000000-20210823T120208Z-avarab@gmail.com>
+        <xmqqfsuwha5p.fsf@gitster.g>
+        <CAFQ2z_NBmKrVMeuTb=qeG_VSBWC7287-gGB9GhpokLZrmNiC0A@mail.gmail.com>
+Date:   Thu, 26 Aug 2021 08:05:28 -0700
+In-Reply-To: <CAFQ2z_NBmKrVMeuTb=qeG_VSBWC7287-gGB9GhpokLZrmNiC0A@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Thu, 26 Aug 2021 10:56:28 +0200")
+Message-ID: <xmqqbl5kgsav.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <YF2b8LLhE0vjc7mg@coredump.intra.peff.net> <d1405b781915c085ac8a8965dadf3efbe1b0f6aa.1629915330.git.matheus.bernardino@usp.br>
- <87bl5lccx0.fsf@evledraar.gmail.com>
-In-Reply-To: <87bl5lccx0.fsf@evledraar.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Thu, 26 Aug 2021 11:26:46 -0300
-Message-ID: <CAHd-oW7Z8TXZTRmSN0FkCpqEzz7-chJwYbDqyJaQ_ETW8xoG+Q@mail.gmail.com>
-Subject: Re: [PATCH] checkout: make delayed checkout respect --quiet and --no-progress
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, allred.sean@gmail.com,
-        git <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 0D99D934-067F-11EC-BA17-FA11AF6C5138-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, =C3=86var
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
-Thanks for the comments!
+> The bottom part of the errno series that I contributed has had ample
+> scrutiny. It's a cleanup, and all-in-all much less experimental than
+> the reftable work.  However, because it changes a calling convention
+> in the ref backend API, it causes difficulty with other topics
+> (notably: reftable). I would be in favor of graduating the series upto
+> "refs: make errno output explicit for read_raw_ref_fn" early to
+> provide a stable basis for other patches.
 
-On Wed, Aug 25, 2021 at 8:39 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Wed, Aug 25 2021, Matheus Tavares wrote:
->
-> > +test_expect_success PERL 'setup for progress tests' '
-> > +     git init progress &&
-> > +     (
-> > +             cd progress &&
-> > +             git config filter.delay.process "rot13-filter.pl delay-pr=
-ogress.log clean smudge delay" &&
-> > +             git config filter.delay.required true &&
-> > +
-> > +             echo "*.a filter=3Ddelay" >.gitattributes &&
-> > +             touch test-delay10.a &&
-> > +             git add . &&
-> > +             git commit -m files
-> > +     )
-> > +'
->
-> This doesn't seem to depend on PERL,
+Very glad to see that the two of you are in agreement of the order
+and the approach.  Let me replace the topics that have been queued
+on 'seen' with the latest ones from =C3=86var, and we can go from there.
 
-It actually depends on PERL because `git add .` will run the clean
-filter for `test-delay10.a`.
+Thanks for a quick response. =20
 
-> should this really be a skip_all at
-> the top if we don't have the TTY prereq, i.e. we shouldn't bother?
-
-Yeah, I think it could be a skip_all. But as you pointed out below,
-one of the tests doesn't really depend on TTY, so I guess we could
-leave the independent prereqs for each test.
-
-> > +
-> > +for mode in pathspec branch
-> > +do
-> > +     case "$mode" in
-> > +     pathspec) opt=3D'.' ;;
-> > +     branch) opt=3D'-f HEAD' ;;
-> > +     esac
-> > +
-> > +     test_expect_success PERL,TTY "delayed checkout shows progress by =
-default only on tty ($mode checkout)" '
->
-> All of the PERL,TTY can just be TTY, since TTY itself checks PERL.
-
-I don't mind changing that, but isn't it a bit clearer for readers to
-have both dependencies explicitly?
-
-> > +             (
-> > +                     cd progress &&
-> > +                     rm -f *.a delay-progress.log &&
-> > +                     test_terminal env GIT_PROGRESS_DELAY=3D0 git chec=
-kout $opt 2>err &&
-> > +                     grep "IN: smudge test-delay10.a .* \\[DELAYED\\]"=
- delay-progress.log &&
-> > +                     grep "Filtering content" err &&
->
-> This seems to need TTY...
->
-> > +                     rm -f *.a delay-progress.log &&
-> > +                     GIT_PROGRESS_DELAY=3D0 git checkout $opt 2>err &&
-> > +                     grep "IN: smudge test-delay10.a .* \\[DELAYED\\]"=
- delay-progress.log &&
-> > +                     ! grep "Filtering content" err
->
-> But this one doesn't, perhaps it could be a non-TTY test?
-
-Good catch, I'll split this test in two.
-
-> > +             )
-> > +     '
-> > +
-> > +     test_expect_success PERL,TTY "delayed checkout ommits progress wi=
-th --quiet ($mode checkout)" '
-> > +             (
-> > +                     cd progress &&
-> > +                     rm -f *.a delay-progress.log &&
-> > +                     test_terminal env GIT_PROGRESS_DELAY=3D0 git chec=
-kout --quiet $opt 2>err &&
-> > +                     grep "IN: smudge test-delay10.a .* \\[DELAYED\\]"=
- delay-progress.log &&
-> > +                     ! grep "Filtering content" err
-> > +             )
-> > +     '
-> > +
-> > +     test_expect_success PERL,TTY "delayed checkout honors --[no]-prog=
-ress ($mode checkout)" '
-> > +             (
-> > +                     cd progress &&
-> > +                     rm -f *.a delay-progress.log &&
-> > +                     test_terminal env GIT_PROGRESS_DELAY=3D0 git chec=
-kout --no-progress $opt 2>err &&
-> > +                     grep "IN: smudge test-delay10.a .* \\[DELAYED\\]"=
- delay-progress.log &&
-> > +                     ! grep "Filtering content" err &&
-> > +
-> > +                     rm -f *.a delay-progress.log &&
-> > +                     test_terminal env GIT_PROGRESS_DELAY=3D0 git chec=
-kout --quiet --progress $opt 2>err &&
-> > +                     grep "IN: smudge test-delay10.a .* \\[DELAYED\\]"=
- delay-progress.log &&
-> > +                     grep "Filtering content" err
-> > +             )
-> > +     '
->
-> It looks like these tests could be split into one helper function which
-> just passed params for e.g. whether the "Filtering content" grep was
-> negated, and what command should be run.
-
-Makes sense, I'll do that.
-
-> Also if possible the two sections of the test could be split up, and
-> then the "rm -rf" could just be a "test_when_finished" at the top...
-
-Hmm, as we are removing the `test-delay10.a` file in order to check it
-out again with custom options, I think it's a bit clearer to remove it
-right before the actual git checkout invocation.
