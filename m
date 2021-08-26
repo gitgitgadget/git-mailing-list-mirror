@@ -2,100 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C1BFC432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 19:21:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DBF4C432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 19:31:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 425EA60F58
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 19:21:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B67161037
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 19:31:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233147AbhHZTWM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 15:22:12 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64881 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230024AbhHZTWL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 15:22:11 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B6B4AE6B8A;
-        Thu, 26 Aug 2021 15:21:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RT7w+j6VtU+uk1+xcaXAALvjLZti3i0URt4Yma
-        EtQ4A=; b=RuEBA94bqm8GXntSB14a3gTLffh6Cgat01A9eht91r9vjrOwJJ411B
-        3DhyTZ8wuVXZL7fMngAByarndPKXGQ1ol2aBE/nqnVeHmSE0L5CQ3glCOkPIy49Z
-        +KalVczhtQGyrjMIHBwVkx4UlCtyDEJyVDvr5FNBfpm6IMvoEDDTk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AED2EE6B89;
-        Thu, 26 Aug 2021 15:21:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 36DE5E6B87;
-        Thu, 26 Aug 2021 15:21:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S243411AbhHZTcq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 15:32:46 -0400
+Received: from mout02.posteo.de ([185.67.36.66]:33867 "EHLO mout02.posteo.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230008AbhHZTcp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 15:32:45 -0400
+Received: from submission (posteo.de [89.146.220.130]) 
+        by mout02.posteo.de (Postfix) with ESMTPS id 0D8EE240101
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 21:31:55 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
+        t=1630006316; bh=6VSovNJkLEmynybZ9tmicBFv7U+yTsYA7EDPy2kARbQ=;
+        h=Subject:To:Cc:From:Date:From;
+        b=NJ8xOTrQemqJHQpMT2Ih651g3NJynKjlHSWxH3lHrsPo/HkZfhNNYHyVJ4k3vuafx
+         vHOeixdV3pV6dMPqR73oP2guAkX37SWlmgNen4uu3vz47hVqrokf56goDPSeHhThSU
+         OL4uKRwkrdJO4XV9b/Kzd1XiwWt9cLanDabWkYP4Kd8/y89nFFuxJPV42N7akklusW
+         acct3hstAqG0WVAPvhtm83Nz8Vhb9AGb3TZybgMXlIinNDJpYrK7NNog9KQ8PIMkB0
+         aJJ1uzCKUGH7+UlVwFd1SlTKSo7tRmAgvxVSIz0NW2GyL4CQCe/ftnKbOCH/u0+xuk
+         JtzHxT2RCUZzA==
+Received: from customer (localhost [127.0.0.1])
+        by submission (posteo.de) with ESMTPSA id 4GwXzH0CdLz6tmB;
+        Thu, 26 Aug 2021 21:31:54 +0200 (CEST)
+Subject: Re: [RFC PATCH] send-email: allow fixing the cover letter subject
 To:     Carlo Arenas <carenas@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Jens.Lehmann@web.de
-Subject: Re: [PATCH] test-lib-functions: avoid non POSIX ERE in
- test_dir_is_empty()
-References: <20210826031710.32980-1-carenas@gmail.com>
-        <YScXboC0M1IPNFon@nand.local>
-        <CAPUEspjGkHhFNgTe3HnnUvkzwHfKqb9dYO3aCXDh_fRyFMRN6A@mail.gmail.com>
-Date:   Thu, 26 Aug 2021 12:21:19 -0700
-In-Reply-To: <CAPUEspjGkHhFNgTe3HnnUvkzwHfKqb9dYO3aCXDh_fRyFMRN6A@mail.gmail.com>
-        (Carlo Arenas's message of "Wed, 25 Aug 2021 23:28:40 -0700")
-Message-ID: <xmqqfsuwdnbk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Cc:     git@vger.kernel.org, tr@thomasrast.ch
+References: <20210824114135.54810-1-carenas@gmail.com>
+ <5a38e420-eea3-a5f2-38c5-64682bd1ba2e@posteo.de>
+ <CAPUEspgmKPhbPGs+ujy7KVJCyNxS95ph2Dwvd7A7cH2J0em20g@mail.gmail.com>
+ <e781b15c-8c59-9827-b052-ebe971b01cad@posteo.de>
+ <CAPUEspga0yGn-u-7poRQZomJPAH43AHyegd=chR_z+3gxRxVdw@mail.gmail.com>
+From:   =?UTF-8?Q?Marvin_H=c3=a4user?= <mhaeuser@posteo.de>
+Message-ID: <a048cc56-2bf4-ee7b-5478-d4bd80dd5380@posteo.de>
+Date:   Thu, 26 Aug 2021 19:31:54 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CB0876CE-06A2-11EC-9027-ECFD1DBA3BAF-77302942!pb-smtp2.pobox.com
+In-Reply-To: <CAPUEspga0yGn-u-7poRQZomJPAH43AHyegd=chR_z+3gxRxVdw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Arenas <carenas@gmail.com> writes:
+On 26/08/2021 12:58, Carlo Arenas wrote:
+> I think you are correct, and from a flow point of view it should be
+> reset there with the rest.
+> Adding something to the commit message to explain it might help, and
+> the documentation path
+> I suggested (or something better) might be worth squashing to better
+> explain why the last test case that resets in-reply-to headers is
+> correct.
 
-> egrep (and also fgrep, which we intentionally support because it is
-> missing from some ancient AIX system[1]) will be removed in the
-> next[2] release of GNU grep.
+Squashing, you mean from your patch into mine? If that is what you mean, 
+can you maybe do that and add SOB Peff for the other tests? It could 
+just be one patch set really. If that is not what you mean, I will 
+submit our (Peff's and my changes) patch as-is tomorrow.
 
-It is not a reason not to nudge us to prepare for the eventual
-removal of these two commands, but we need to keep the facts
-straight in our log messages.  
+Best regards,
+Marvin
 
-The way I read [2], they will only start giving a warning message
-nudging the users to use "grep -[EF]", and for them to be able to
-warn, I would imagine they have to stay in the release without
-getting removed.
+>
+> Carlo
 
-> [1] 87539416fd (tests: grep portability fixes, 2008-09-30)
-> [2] https://git.savannah.gnu.org/cgit/grep.git/commit/?id=a9515624709865d480e3142fd959bccd1c9372d1
-
-There are about 35 places in t/ we call egrep or fgrep; if we can
-add a pair of replacement shell functions in t/test-lib.sh for them
-to use whatever command GIT_TEST_EGREP and GIT_TEST_FGREP
-environment variables specify and fall back on "grep -E/-F"
-otherwise, we can prepare for the change without too much code
-churning.
-
-Something along the lines of
-
-	# in test-lib-functions.sh
-        : ${GIT_TEST_EGREP:=grep -E} ${GIT_TEST_FGREP:=grep -F}
-        egrep () { $GIT_TEST_EGREP "$@" }
-        fgrep () { $GIT_TEST_FGREP "$@" }
-
-where people could do something silly like
-
-	GIT_TEST_FGREP='command fgrep' \
-	GIT_TEST_EGREP='command egrep' \
-	make test
-
-perhaps?
