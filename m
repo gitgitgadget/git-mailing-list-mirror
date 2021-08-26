@@ -2,161 +2,191 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98905C4320E
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 14:06:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 728CCC432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 14:27:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8294C60E0B
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 14:06:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5737960F58
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 14:27:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242854AbhHZOG5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 10:06:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54760 "EHLO
+        id S242860AbhHZO1r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 10:27:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242798AbhHZOGs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 10:06:48 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C175FC061757
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 07:06:00 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id h13so5321296wrp.1
-        for <git@vger.kernel.org>; Thu, 26 Aug 2021 07:06:00 -0700 (PDT)
+        with ESMTP id S242737AbhHZO1r (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 10:27:47 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6652FC061757
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 07:26:59 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id m28so7241595lfj.6
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 07:26:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=RyAcrN9MRvHtfPfkXyWg6sEvHQJZNU5V/0uNpUlL1vY=;
-        b=Fnt8aSYu/G2IANzIzxWHfQN7k8W8x+4EP53ULBXxspuAMpNR+lN4zJzBDEDajTC52b
-         HqknnGot3rFFFX4Ypc9sfKb4bOuNpW16teudooHqMkR1xeDvxiOEUed3DFGcCS2+eexe
-         S4gnzknGHk/ZAD3/1m7UDkqDDCNVpxnDMbB2ycY8GdeA4J6XWKZXIYEGc/ATcumxciXG
-         ILSOuUSo7gWvvJa4auUoHu44ZW/FraqE6SHUS6vc6c4jS/0zIRnhplU6ZSeGKu8uz8mZ
-         dawKgKtl7HwX9M0GU2egR7revDkMCejS/OuGdzyJ1tUCr7BxufEJEjQjcQG7rbuvQBX7
-         ymuQ==
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=JpdBCOJo7tdfgXtu9BZtdw/NRG2rBB6CnFow3h1lazY=;
+        b=h/Z0FaoWoNDJf+1xqpD+ruJBzF6T2umMzLNAb+uPFzs2TLGpqgHLkF01BHgzxQueqY
+         +yQp9TWoi/WVVxs3aRz06aYgUhPLdOA51pZW3XyE8rJfMqy46kKoEg8OPaIyG+CP4ggL
+         Bs8dDTmdbnF2wDZojch088lsnVA0H12phaM5+xgiyDkQaUOGQDB65PaV8thaquGKVh8s
+         6F1ZWYylSu8q1oLd0Zq5aEBi4qu3fQmL9PngVuVt6NUMu5kfI24RLbSNOb+Fb+f1VnEU
+         rNvrH9aTwUVdUObT9+DOdiFgwhd1q6KqRS6mQ2hNwPoQMZzF1CtzVqQb8EKfltfSADCE
+         Yzvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=RyAcrN9MRvHtfPfkXyWg6sEvHQJZNU5V/0uNpUlL1vY=;
-        b=KjFftFkrMMNHrAbC5jAMxGYZkUBZOsPmtHI82Tf3NXr8JL35i2uaJMQVUo46XS18Ws
-         zyn1ZPDgvUYu7IvCkXxHWJG+5tJJq9J4TZmVSkmnJExhaRUjo62g6TAWqcBGiZ8faml0
-         L6fWdcg4m4q+juSw5ReT8zt6DjRaf9RBir0Ot2+aF1inyN25a03VVg6RUL+6pVcwfXJq
-         NvjdkKuvekNOFtrTotSvm40Xz4dCT7GeW3jMqBOuHY7n0wqTUnLKorQDIwMQz8784duc
-         GS2G26+ssP7dLNUmVj+ByID8AnKom1+miae3eshIXkSkBbCvOoQ57P2KHcds/F2j5KOc
-         pdKw==
-X-Gm-Message-State: AOAM530jP577mh3gvdwho3tGXuA1MOOO+4aEoMlE38K8w00RahckmEVa
-        VSrYBqQCGJq5WBeWEKFDdoQNZa2OSdYbaw==
-X-Google-Smtp-Source: ABdhPJzjewECe1uKZnrdiaiP0Zd+NXn2JqqhwDvMyC3++eRtWh+UGOswnW5PSdB+W97K5OpD93O9pg==
-X-Received: by 2002:a05:6000:1864:: with SMTP id d4mr4415390wri.250.1629986759181;
-        Thu, 26 Aug 2021 07:05:59 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k13sm2471987wms.33.2021.08.26.07.05.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Aug 2021 07:05:58 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 5/5] bundle: show progress on "unbundle"
-Date:   Thu, 26 Aug 2021 16:05:51 +0200
-Message-Id: <patch-v3-5.5-cd38b0f0fed-20210826T140414Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.733.ga72a4f1c2e1
-In-Reply-To: <cover-v3-0.5-00000000000-20210826T140414Z-avarab@gmail.com>
-References: <cover-0.4-0000000000-20210727T004015Z-avarab@gmail.com> <cover-v3-0.5-00000000000-20210826T140414Z-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=JpdBCOJo7tdfgXtu9BZtdw/NRG2rBB6CnFow3h1lazY=;
+        b=eJkF4Yp8hRuoXGqkc8D/AJodQnsikMTm4yqwvdLZHNWxzlMM1zGMjB/jsBEPIAK0EY
+         lg94KF6X+zzBRxBWmwjpkoYHOosFstpfirrdPp+1sQ39zWCZD3QBQ13ZZ5ihhpP84z41
+         Q0jW3z27jIiMf/MTA6yhe69YQ1gK49iy81usbmJrZh0AXCQzkjUXB0yfdakF6yMLQ0eG
+         ycyuD5Q2fMXdnREB28XCV727meaXr4MCQQ+Axp/DYSA/2niGl1W5jGMMhIDMXpi17ly6
+         mVVEXGtIiaMpH9+GVcGSPVppEwcE0PUrIdnHMa3Poii8ojiY4Duu53O/NLUVJjl02KNi
+         D26g==
+X-Gm-Message-State: AOAM533/zsk2VVlNjRcU3g3SK+ZklBuUyGzlnZ9mKL7wPZshDSWF0Oh9
+        MadrH1PQyU1SRw9uZ4XVCP7/+lpoJUoiKxFYfTffmQ==
+X-Google-Smtp-Source: ABdhPJwJqFofqhhDZ/Q9DfP5M1+4f2ym8m/wywrrRoXZkmraZP7ud/u/5gQ3GvJKRJtaA6McJANgQnYmT4JWin0NowI=
+X-Received: by 2002:a05:6512:304b:: with SMTP id b11mr174066lfb.502.1629988017734;
+ Thu, 26 Aug 2021 07:26:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <YF2b8LLhE0vjc7mg@coredump.intra.peff.net> <d1405b781915c085ac8a8965dadf3efbe1b0f6aa.1629915330.git.matheus.bernardino@usp.br>
+ <87bl5lccx0.fsf@evledraar.gmail.com>
+In-Reply-To: <87bl5lccx0.fsf@evledraar.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Thu, 26 Aug 2021 11:26:46 -0300
+Message-ID: <CAHd-oW7Z8TXZTRmSN0FkCpqEzz7-chJwYbDqyJaQ_ETW8xoG+Q@mail.gmail.com>
+Subject: Re: [PATCH] checkout: make delayed checkout respect --quiet and --no-progress
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, allred.sean@gmail.com,
+        git <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "unbundle" command added in 2e0afafebd8 (Add git-bundle: move
-objects and references by archive, 2007-02-22) did not show progress
-output, even though the underlying API learned how to show progress in
-be042aff24c (Teach progress eye-candy to fetch_refs_from_bundle(),
-2011-09-18).
+Hi, =C3=86var
 
-Now we'll show "Unbundling objects" using the new --progress-title
-option to "git index-pack", to go with its existing "Receiving
-objects" and "Indexing objects" (which it shows when invoked with
-"--stdin", and with a pack file, respectively).
+Thanks for the comments!
 
-Unlike "git bundle create" we don't handle "--quiet" here, nor
-"--all-progress" and "--all-progress-implied". Those are all specific
-to "create" (and "verify", in the case of "--quiet").
+On Wed, Aug 25, 2021 at 8:39 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> On Wed, Aug 25 2021, Matheus Tavares wrote:
+>
+> > +test_expect_success PERL 'setup for progress tests' '
+> > +     git init progress &&
+> > +     (
+> > +             cd progress &&
+> > +             git config filter.delay.process "rot13-filter.pl delay-pr=
+ogress.log clean smudge delay" &&
+> > +             git config filter.delay.required true &&
+> > +
+> > +             echo "*.a filter=3Ddelay" >.gitattributes &&
+> > +             touch test-delay10.a &&
+> > +             git add . &&
+> > +             git commit -m files
+> > +     )
+> > +'
+>
+> This doesn't seem to depend on PERL,
 
-The structure of the existing documentation is a bit unclear, e.g. the
-documentation for the "--quiet" option added in
-79862b6b77c (bundle-create: progress output control, 2019-11-10) only
-describes how it works for "create", and not for "verify". That and
-other issues in it should be fixed, but I'd like to avoid untangling
-that mess right now. Let's just support the standard "--no-progress"
-implicitly here, and leave cleaning up the general behavior of "git
-bundle" for a later change.
+It actually depends on PERL because `git add .` will run the clean
+filter for `test-delay10.a`.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/git-bundle.txt |  2 +-
- builtin/bundle.c             | 15 ++++++++++++++-
- 2 files changed, 15 insertions(+), 2 deletions(-)
+> should this really be a skip_all at
+> the top if we don't have the TTY prereq, i.e. we shouldn't bother?
 
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index ac0d0038350..71b5ecabd1f 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 		    [--version=<version>] <file> <git-rev-list-args>
- 'git bundle' verify [-q | --quiet] <file>
- 'git bundle' list-heads <file> [<refname>...]
--'git bundle' unbundle <file> [<refname>...]
-+'git bundle' unbundle [--progress] <file> [<refname>...]
- 
- DESCRIPTION
- -----------
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index f9360c32c6c..1fbfe280c57 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -162,10 +162,15 @@ static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix)
- 	struct bundle_header header = BUNDLE_HEADER_INIT;
- 	int bundle_fd = -1;
- 	int ret;
-+	int progress = isatty(2);
-+
- 	struct option options[] = {
-+		OPT_BOOL(0, "progress", &progress,
-+			 N_("show progress meter")),
- 		OPT_END()
- 	};
- 	char *bundle_file;
-+	struct strvec extra_args = STRVEC_INIT;
- 
- 	argc = parse_options_cmd_bundle(argc, argv, prefix,
- 			builtin_bundle_unbundle_usage, options, &bundle_file);
-@@ -177,7 +182,15 @@ static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix)
- 	}
- 	if (!startup_info->have_repository)
- 		die(_("Need a repository to unbundle."));
--	ret = !!unbundle(the_repository, &header, bundle_fd, NULL) ||
-+
-+	if (progress) {
-+		strvec_push(&extra_args, "-v");
-+		strvec_push(&extra_args, "--progress-title");
-+		strvec_push(&extra_args, _("Unbundling objects"));
-+	}
-+
-+	ret = !!unbundle(the_repository, &header, bundle_fd, progress ?
-+			 &extra_args : NULL) ||
- 		list_bundle_refs(&header, argc, argv);
- 	bundle_header_release(&header);
- cleanup:
--- 
-2.33.0.733.ga72a4f1c2e1
+Yeah, I think it could be a skip_all. But as you pointed out below,
+one of the tests doesn't really depend on TTY, so I guess we could
+leave the independent prereqs for each test.
 
+> > +
+> > +for mode in pathspec branch
+> > +do
+> > +     case "$mode" in
+> > +     pathspec) opt=3D'.' ;;
+> > +     branch) opt=3D'-f HEAD' ;;
+> > +     esac
+> > +
+> > +     test_expect_success PERL,TTY "delayed checkout shows progress by =
+default only on tty ($mode checkout)" '
+>
+> All of the PERL,TTY can just be TTY, since TTY itself checks PERL.
+
+I don't mind changing that, but isn't it a bit clearer for readers to
+have both dependencies explicitly?
+
+> > +             (
+> > +                     cd progress &&
+> > +                     rm -f *.a delay-progress.log &&
+> > +                     test_terminal env GIT_PROGRESS_DELAY=3D0 git chec=
+kout $opt 2>err &&
+> > +                     grep "IN: smudge test-delay10.a .* \\[DELAYED\\]"=
+ delay-progress.log &&
+> > +                     grep "Filtering content" err &&
+>
+> This seems to need TTY...
+>
+> > +                     rm -f *.a delay-progress.log &&
+> > +                     GIT_PROGRESS_DELAY=3D0 git checkout $opt 2>err &&
+> > +                     grep "IN: smudge test-delay10.a .* \\[DELAYED\\]"=
+ delay-progress.log &&
+> > +                     ! grep "Filtering content" err
+>
+> But this one doesn't, perhaps it could be a non-TTY test?
+
+Good catch, I'll split this test in two.
+
+> > +             )
+> > +     '
+> > +
+> > +     test_expect_success PERL,TTY "delayed checkout ommits progress wi=
+th --quiet ($mode checkout)" '
+> > +             (
+> > +                     cd progress &&
+> > +                     rm -f *.a delay-progress.log &&
+> > +                     test_terminal env GIT_PROGRESS_DELAY=3D0 git chec=
+kout --quiet $opt 2>err &&
+> > +                     grep "IN: smudge test-delay10.a .* \\[DELAYED\\]"=
+ delay-progress.log &&
+> > +                     ! grep "Filtering content" err
+> > +             )
+> > +     '
+> > +
+> > +     test_expect_success PERL,TTY "delayed checkout honors --[no]-prog=
+ress ($mode checkout)" '
+> > +             (
+> > +                     cd progress &&
+> > +                     rm -f *.a delay-progress.log &&
+> > +                     test_terminal env GIT_PROGRESS_DELAY=3D0 git chec=
+kout --no-progress $opt 2>err &&
+> > +                     grep "IN: smudge test-delay10.a .* \\[DELAYED\\]"=
+ delay-progress.log &&
+> > +                     ! grep "Filtering content" err &&
+> > +
+> > +                     rm -f *.a delay-progress.log &&
+> > +                     test_terminal env GIT_PROGRESS_DELAY=3D0 git chec=
+kout --quiet --progress $opt 2>err &&
+> > +                     grep "IN: smudge test-delay10.a .* \\[DELAYED\\]"=
+ delay-progress.log &&
+> > +                     grep "Filtering content" err
+> > +             )
+> > +     '
+>
+> It looks like these tests could be split into one helper function which
+> just passed params for e.g. whether the "Filtering content" grep was
+> negated, and what command should be run.
+
+Makes sense, I'll do that.
+
+> Also if possible the two sections of the test could be split up, and
+> then the "rm -rf" could just be a "test_when_finished" at the top...
+
+Hmm, as we are removing the `test-delay10.a` file in order to check it
+out again with custom options, I think it's a bit clearer to remove it
+right before the actual git checkout invocation.
