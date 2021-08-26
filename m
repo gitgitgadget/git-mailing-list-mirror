@@ -2,41 +2,42 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91EA8C432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 20:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF4DFC432BE
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 20:11:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74A2661002
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 20:08:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE75160E75
+	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 20:11:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242313AbhHZUJD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 16:09:03 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52850 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240039AbhHZUI4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 16:08:56 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7911BE6FCD;
-        Thu, 26 Aug 2021 16:08:08 -0400 (EDT)
+        id S232698AbhHZULw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 16:11:52 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58006 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230463AbhHZULw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 16:11:52 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 33A021574CD;
+        Thu, 26 Aug 2021 16:11:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/AfML5dZfi4M1Y+W0n2IjP2lGWbaAILRRkDdPm
-        taph4=; b=GK+vylyLfqLmLdH6qf9vrEg31gB3i8iSOPF4anYA1wxSPIH9koolmo
-        Vl9vggc6lO6STBqGCIYBG1R6/vcTEPjLITr35y64N4Kh0YhExLLv9nZOxLoOAkbE
-        koyf6AmCyuUF1PjKNHwzH/319BldhlPe4iosnddeDK6h7BEuiWObo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 70780E6FCC;
-        Thu, 26 Aug 2021 16:08:08 -0400 (EDT)
+        :content-type; s=sasl; bh=faFJso6OkUw8eaJKTVF6h0Yy5alHKCPG5fPcUa
+        yeOvU=; b=VjxZ12Xtn6LwgxhQBY/3wlKkjiY+e3x+w2IDC9FFo8hmM+oK34/ZjZ
+        uJx0RXgCP1pb+lGIfN/zUUhDVaoFramheytkBwDR8m5c9RLhjQWMca8LF55wrBc+
+        YCPMkEGl7/gDoC43UTddaAZSx4EGX1YwIWsmiMBqSA0+EEMi3/Pp4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2C54D1574CC;
+        Thu, 26 Aug 2021 16:11:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.116.162])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D29F5E6FCB;
-        Thu, 26 Aug 2021 16:08:07 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5EC9A1574C9;
+        Thu, 26 Aug 2021 16:11:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Bagas Sanjaya <bagasdotme@gmail.com>
@@ -46,61 +47,56 @@ Cc:     git@vger.kernel.org, felipe.contreras@gmail.com,
         =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
         <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] make: add install-stripped target
+Subject: Re: [PATCH 2/2] make: delete strip target
 References: <20210826113824.50078-1-bagasdotme@gmail.com>
-        <20210826113824.50078-2-bagasdotme@gmail.com>
-Date:   Thu, 26 Aug 2021 13:08:06 -0700
-In-Reply-To: <20210826113824.50078-2-bagasdotme@gmail.com> (Bagas Sanjaya's
-        message of "Thu, 26 Aug 2021 18:38:23 +0700")
-Message-ID: <xmqq8s0odl5l.fsf@gitster.g>
+        <20210826113824.50078-3-bagasdotme@gmail.com>
+Date:   Thu, 26 Aug 2021 13:10:58 -0700
+In-Reply-To: <20210826113824.50078-3-bagasdotme@gmail.com> (Bagas Sanjaya's
+        message of "Thu, 26 Aug 2021 18:38:24 +0700")
+Message-ID: <xmqq4kbcdl0t.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 54844F9E-06A9-11EC-8907-ECFD1DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: BB58FAB2-06A9-11EC-87A3-9BA3EF469F85-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
-> +install-stripped: install
-> +	for f in $(PROGRAMS) git$X; do \
-> +		find $$prefix -type f -name $$f -exec $(STRIP) $(STRIP_OPTS) {} \; ; \
-> +	done
-> +
+> The target isn't needed anymore since stripping is done in install-strip
+> target (in previous patch).
 
-This sounds awfully wasteful.
+That is not a valid justification.  
 
-The recipe for the install target knows exactly each of these
-programs are installed, but yet the above is running around inside
-$prefix to find them after the fact.
+People's automation may have been using a perfectly valid
 
-It also looks incorrect, too.
+	#!/bin/sh
+	make test &&
+	make doc &&
+	make strip &&
+	make install install-doc
 
-It is not guaranteed that $prefix does not contain any $IFS
-whitespace in it, and worse yet, $prefix may not contain $bindir or
-$libexecdir in it, so find may never reach these binaries.
+and this patch will break them for no good reason.
 
-It also depends on "strip" not to break handlinks to the same
-binary.  "git" is linked to many built-in command binary like
-"git-cat-file" and "git-remote-$curl" for various protocols are
-installed by creating links to "git-remote-http".  It seems that the
-"strip" command from GNU binutils package strips such a binary
-in-place, but I do not think there is no fundamental reason to
-believe that everybody else's "strip" would behave that way.
+We need to remember that just because we (think we) came up with a
+better way does not necessarily mean that we can immediately force
+our users to adopt the new way.
 
-I would have expected that 'install-stripped' and 'install' targets
-would run the same recipe, and when $(install_bindir_programs) are
-installed in $(bindir) using $(INSTALL), we would optionally pass
-the '--strip' option to the $(INSTALL) program when the recipe is
-run for the install-stripped target.  All the tricky symlinking,
-hardlinking and copying happens only on the result of that step, and
-the strip step should happen before that, I would think.
-
-> +.PHONY: install-gitweb install-doc install-man install-man-perl install-html install-info install-pdf install-stripped
-
-Split the overly long line like this into two or more.
-
->  .PHONY: quick-install-doc quick-install-man quick-install-html
->  install-gitweb:
->  	$(MAKE) -C gitweb install
+> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+> ---
+>  Makefile | 2 --
+>  1 file changed, 2 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index b8a3a64422..027b052a0c 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2170,8 +2170,6 @@ please_set_SHELL_PATH_to_a_more_modern_shell:
+>  
+>  shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shell
+>  
+> -strip: $(PROGRAMS) git$X
+> -	$(STRIP) $(STRIP_OPTS) $^
+>  
+>  ### Flags affecting all rules
