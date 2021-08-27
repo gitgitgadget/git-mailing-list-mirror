@@ -2,94 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33944C432BE
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 22:50:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 457B8C432BE
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 22:56:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A2B460FE6
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 22:50:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1278F60FC4
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 22:56:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232414AbhH0Wvd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 18:51:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51040 "EHLO
+        id S232340AbhH0W5q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 18:57:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232289AbhH0Wvd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 18:51:33 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35218C0613D9
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 15:50:43 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id k5so17491186lfu.4
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 15:50:43 -0700 (PDT)
+        with ESMTP id S232289AbhH0W5o (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 18:57:44 -0400
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2EAEC0613D9
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 15:56:54 -0700 (PDT)
+Received: by mail-oo1-xc35.google.com with SMTP id m11-20020a056820034b00b0028bb60b551fso2474756ooe.5
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 15:56:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=fRscHGYgaA4YrdSn7ERAG9Qtn9lJwn5sN7zmnJ04ghY=;
-        b=iM/EuNpafyebhvyFBgCKEhMS7ZLpMmS4FgulGTYevskREqEWjwol3kDp8SP2rBypmE
-         76y1RQLLrS8TZ5WLzPcE1QDyiYJn/qIjvw0aEyvwJEvmkuYR0UR2Bg6hEs6iALWfAfDQ
-         tL8YjW2TtfrcC9eX2pT4m+6KcJaR+yWuC7Bifvz17KYpRamEUZN9Ih+PNF1adIiOI2y/
-         fzihH5UBRtAns5b4/sHZvhD+KCKQoluW4Ok+S907Yo1fOP9vZYENEuFTNOzkRxEoz23X
-         OuLDdZSXqm6QO56+C1Flg071GskOkRP6biaOw5y+9RXyeGgPoYcN1AZx0FxqTua+yXj+
-         RsNw==
+        bh=sZFakbNTwk6ssmcgRfjGg5Rhjb/Qk+QPyPvq4c3f6Tg=;
+        b=K5akhsdJsyAZtNdUwhnUeT69cQ9mfjSC2u3i+3gz/gqVDPVb1QhEq055lR2RRHBnpe
+         1XUvyL3/AhLyCEfCht86iBXke2AL7/VR7SUrgy0iHYLRcRumMLP2LRKWOm2UYF67t7m7
+         AwkJccl34EjzW+kyjY5JbKEVFmug2TYeC8v0XpKdZ5VJv2zba2mPe+TZnOvu0ExsDqyE
+         kdH0JOkPbhZUQ1uHmeBdMQDnv67Fm8oQVF+8gDXXbUITVRWIfMiArJa1QBntFXtVZZwd
+         JkLE+cT3ISyMpH+SDf+rWDyye7fuHC7tBvxk24T8YjhhXWQ4mE5sF0IhNVf1feSQVg69
+         LKjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=fRscHGYgaA4YrdSn7ERAG9Qtn9lJwn5sN7zmnJ04ghY=;
-        b=S6A7Fd26R9j8mkMT+NHasbFEe3rLaZNzdxN1C1LRVjgF3872Po1TCQ+4vcC5BLoCH9
-         BSHpIM9NJuYeg0dEQHmPjenNzTIalL+vTQ2iA87kVK5oed4BsAeXHb18mEel6I+DiAbD
-         CHVtcrsGi4p3ofE2FxasYL16kqNBlWJF7XuR5zam2TrmP9YK+Mg+DG9/5GdythD6TjsB
-         y/xG2FED3vDkwhiduNXzLLGUZEeUacRx8hZVKyUDdiInmv1kREoo61zw7Tt2q46b9U6d
-         RXEZW3BbXPB5pmy3ZBKiqT9hOleywc3wP4NthOxgnZLVauXaSfBepghDPhfIlnUZzBMk
-         IZvA==
-X-Gm-Message-State: AOAM531b7SYUgrFwHVmgeJM8x8rPGc8IWB04vph+RLXSzK1rdyjDADU/
-        k6GuOGiRgbNHfd5x28KeuV8KFl/SHJFXuZzBhmzYRvQkmdJ2daRU
-X-Google-Smtp-Source: ABdhPJyaxBX5qmWNqwkhzbpKp+WMAHhy4vpKIamhdHRVwVIHrn2zttErrxdKBtBpFOJxnudiPVoBBHJeXmUz9w5GZQc=
-X-Received: by 2002:ac2:4e68:: with SMTP id y8mr8229584lfs.527.1630104641550;
- Fri, 27 Aug 2021 15:50:41 -0700 (PDT)
+        bh=sZFakbNTwk6ssmcgRfjGg5Rhjb/Qk+QPyPvq4c3f6Tg=;
+        b=tGeklL0iWSWKZPYyQQdUyhw6UQNkuKBfe4UMLlMO+b6Rf+4meDQxyG2ubArg7qPtQH
+         CZxuTuPvJuLXyT2TzFbqg7l2qNeyjnnKFvE/i2SxoPSMN8iECQkzfe+pH6olWxjBJy1/
+         rZTeg8SKOWqLtgCZjuzk8cVsfA5kn6r/02gT01lGmPgrcYcW7dlF8+LE4C4Vk/eCn6iE
+         oETYvzEZ4ngwNn0hJgRfEf7lQlTP/e4RpIyzzKLotEMbAD5j3P4Z2ryDASYAQiabwgGk
+         McxfomkYauT4yUEJ+39egGRRbh3Asp1ZK/cAxD2SYNVr5vGlyi66ITYn61MY4gJ5yaU7
+         wD9A==
+X-Gm-Message-State: AOAM5321yHVdHNBUWkVi/1OWAdNKVdq8wZGuZ3WVXTrWjQC+uiAtX6Cd
+        pXC0WSvx6Y+K+xdKEfnQl7S4zLl7gvmgplZyIJM=
+X-Google-Smtp-Source: ABdhPJzH1oy0htCBhkW4R35yJsOV7tv4IjwvYoP9FklCedcFFr2RKSjF3pih1E01xNagMeJjR+SdP1vMSXs1G7s1UHU=
+X-Received: by 2002:a4a:11c6:: with SMTP id 189mr928295ooc.32.1630105013428;
+ Fri, 27 Aug 2021 15:56:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
- <e80fcfa932cca394c5c8b349cafadb0754a594dd.1629842085.git.gitgitgadget@gmail.com>
- <CAHd-oW7D1jikE5ByS36AjACfSJoZeekLCKzX2MRRfayKwKv=qQ@mail.gmail.com>
-In-Reply-To: <CAHd-oW7D1jikE5ByS36AjACfSJoZeekLCKzX2MRRfayKwKv=qQ@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Fri, 27 Aug 2021 19:50:30 -0300
-Message-ID: <CAHd-oW5uzek9Ewdw+jXdw6L9WiwC-xz3O3tRr38HRruB8puDkg@mail.gmail.com>
-Subject: Re: [PATCH 05/13] add: fail when adding an untracked sparse file
+References: <pull.1019.git.1629220124.gitgitgadget@gmail.com> <pull.1019.v2.git.1629841965.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1019.v2.git.1629841965.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 27 Aug 2021 15:56:42 -0700
+Message-ID: <CABPp-BFXk++dktLnaTTuCe+keqkNuPzGyVi4uFsOpE4VxqAUdw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] Sparse Index: Integrate with merge, cherry-pick,
+ rebase, and revert
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 27, 2021 at 6:06 PM Matheus Tavares Bernardino
-<matheus.bernardino@usp.br> wrote:
+On Tue, Aug 24, 2021 at 2:52 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> While I was playing with this patch, I did the following:
+> This series integrates the sparse index with commands that perform merges
+> such as 'git merge', 'git cherry-pick', 'git revert' (free with
+> cherry-pick), and 'git rebase'.
 >
-> echo a >a
-> echo b >b
-> git add .
-> git commit -m files
-> git sparse-checkout set a
-> echo c >c
-> git add c
+> When the ORT merge strategy is enabled, this allows most merges to succeed
+> without expanding the sparse index, leading to significant performance
+> gains. I tested these changes against an internal monorepo with over 2
+> million paths at HEAD but with a sparse-checkout that only has ~60,000 files
+> within the sparse-checkout cone. 'git merge' commands went from 5-6 seconds
+> to 0.750-1.250s.
 >
-> And the last `git add` was successful in adding the untracked `c` file
-> which is outside the sparse checkout. I'm not sure if I'm doing
-> something wrong, but it seems that `path_in_sparse_checkout()` returns
-> UNDECIDED for `c`. Is it because there was no pattern in the list
-> explicitly excluding it? And if so, should we consider UNDECIDED as
-> NOT_MATCHED for `path_in_sparse_checkout()`?
+> In the case of the recursive merge strategy, the sparse index is expanded
+> before the recursive algorithm proceeds. We expect that this is as good as
+> we can get with that strategy. When the strategy shifts to ORT as the
+> default, then this will not be a problem except for users who decide to
+> change the behavior.
+>
+> Most of the hard work was done by previous series, such as
+> ds/sparse-index-ignored-files (which this series is based on).
+>
+>
+> Updates in V2
+> =============
+>
+>  * The tests no longer specify GIT_TEST_MERGE_ALGORITHM or directly
+>    reference "-s ort". By relaxing this condition, I found an issue with
+>    'git cherry-pick' and 'git rebase' when using the 'recursive' algorithm
+>    which is fixed in a new patch.
+>
+>  * Use the pul.twohead config to specify the ORT merge algorithm to avoid
+>    expanding the sparse index when that is what we are testing.
 
-Please disconsider this, It was my fault indeed. I had applied the
-patches onto the wrong base. Now I fetched them again but from the GGG
-tag, and my manual test worked as expected.
+pull.twohead, not pul.twohead.
+
+I'm curious, though, why use it instead of just setting
+GIT_TEST_MERGE_ALGORITHM=ort?  That'd seem to avoid the need for the
+explicit subshells and the sane_unset calls.
+
+>
+>  * Corrected some misstatements in my commit messages.
+
+I read over v2.  Other than some minor questions about whether using
+GIT_TEST_MERGE_ALGORITHM=ort would be easier, and a typo still present
+from v1, the series looks good to me.
