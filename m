@@ -6,74 +6,112 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F8A0C432BE
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 16:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7326C432BE
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 16:15:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF7AD60F42
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 16:03:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B4D7960E78
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 16:15:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244479AbhH0QE0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 12:04:26 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54002 "EHLO
+        id S245579AbhH0QQI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 12:16:08 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57087 "EHLO
         pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234297AbhH0QEZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 12:04:25 -0400
+        with ESMTP id S245490AbhH0QQE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 12:16:04 -0400
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 20A731525AF;
-        Fri, 27 Aug 2021 12:03:36 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 370D3152651;
+        Fri, 27 Aug 2021 12:15:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hbEa0HQutSypWUMXEKEc39LyDc6AlWgHZzWlVb
-        kVuew=; b=AxQXMm0L13xB5foS8EY2BaDt/ZWBKMs4WfliuNKWcilm3CUXeA3lzy
-        v9+VYOaGxqRw7UdELwbuaPYVUJKX5UYV2y1wgufph3V+8rfhGSaJ33lzUULSIH/D
-        aDchvb3/8/mI7TtbR6e+HK8GSMK06WFNaCqPBqnS35Z9fQkvC2zC0=
+        :content-type; s=sasl; bh=TU+IJPQfjDywtyLJ79S7Jtrrg3AaW7zzE/+lps
+        nssig=; b=doSlgqeyhnu2z4DawD3whBwawn2xcerhKUBZCe9vBFCx/Pgt5HI5Nh
+        g+s+sthFmgI90D2O0qusT2o2Qs3BGJ4LRcl0XZcCyKyZOsE5orfXk2KaMNYenKFf
+        HGCHHwuXdBC8CJoobolOnHx9kuLiZDNoFUiO2UMZvAaLsKXTZOWwc=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 037B21525AE;
-        Fri, 27 Aug 2021 12:03:36 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 30230152650;
+        Fri, 27 Aug 2021 12:15:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.116.162])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 37B6D1525AD;
-        Fri, 27 Aug 2021 12:03:33 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6B76915264D;
+        Fri, 27 Aug 2021 12:15:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     lilinchao@oschina.cn
-Cc:     git <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Aug 2021, #08; Mon, 23)
-References: <xmqqo89nq1sa.fsf@gitster.g>
-        <1690c9c8072211ecb75c0026b95c99cc@oschina.cn>
-Date:   Fri, 27 Aug 2021 09:03:31 -0700
-In-Reply-To: <1690c9c8072211ecb75c0026b95c99cc@oschina.cn>
-        (lilinchao@oschina.cn's message of "Fri, 27 Aug 2021 18:32:32 +0800")
-Message-ID: <xmqqfsuuc1t8.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>
+Cc:     Jacob Vosmaer <jacob@gitlab.com>, me@ttaylorr.com,
+        git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH 2/2] upload-pack: use stdio in send_ref callbacks
+References: <CADMWQoMpURczcnZne=0cr2vavoLm_VT5eEMg4FCu3VeSg_UJaQ@mail.gmail.com>
+        <20210826100648.10333-1-jacob@gitlab.com>
+        <20210826100648.10333-2-jacob@gitlab.com> <xmqqpmu0f9ob.fsf@gitster.g>
+        <YSgiwXFnLrLy6pH3@coredump.intra.peff.net>
+Date:   Fri, 27 Aug 2021 09:15:10 -0700
+In-Reply-To: <YSgiwXFnLrLy6pH3@coredump.intra.peff.net> (Jeff King's message
+        of "Thu, 26 Aug 2021 19:24:49 -0400")
+Message-ID: <xmqqbl5ic19t.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5429AE7A-0750-11EC-B7AB-FA11AF6C5138-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: F4ECE722-0751-11EC-8635-FA11AF6C5138-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"lilinchao@oschina.cn" <lilinchao@oschina.cn> writes:
+Jeff King <peff@peff.net> writes:
 
->>* jc/trivial-threeway-binary-merge (2021-07-28) 1 commit
->> - ll-merge: teach ll_binary_merge() a trivial three-way merge
->>
->> The built-in merge driver for binary files learned to resolve
->> trivial three-way merges (e.g. apply change, which turns A into B,
->> to content A) by itself, which would help "git apply --3way" used
->> when there is no need to use "--3way".
->>
->> Will discard.
->> Replace with a trivial-merge logic in apply.c::try_treeway() or
->> apply.c::three_way_merge().
->>
-> This patch seems to have missed several merge cycles, hope it can go to next stage as soon as possible.
+> On Thu, Aug 26, 2021 at 09:33:08AM -0700, Junio C Hamano wrote:
+>
+>> > +	/*
+>> > +	 * Increase the stdio buffer size for stdout, for the benefit of ref
+>> > +	 * advertisement writes. We are only allowed to call setvbuf(3) "after
+>> > +	 * opening a stream and before any other operations have been performed
+>> > +	 * on it", so let's call it before we have written anything to stdout.
+>> > +	 */
+>> > +	if (setvbuf(stdout, xmalloc(LARGE_PACKET_MAX), _IOFBF,
+>> > +			LARGE_PACKET_MAX))
+>> > +		die_errno("failed to grow stdout buffer");
+>> 
+>> Nice to see a comment on the tricky part.  I do not think we mind if
+>> we rounded up the allocation size to the next power of two here, but
+>> there probably won't be any measurable benefit for doing so.
+>
+> I'm a little negative on this part, actually. The commit message claims
+> it's for consistency across platforms. But I would argue that if your
+> libc buffer size is sub-optimal, then we shouldn't be sprinkling these
+> adjustments through the code. Either:
+>
+>  - we should consider it a quality-of-implementation issue, and people
+>    using that libc should push back on their platform to change the
+>    default size; or
+>
+>  - we should fix it consistently and transparently throughout Git by
+>    adjusting std{in,out,err} in common-main, and using fopen()/fdopen()
+>    wrappers to adjust to something more sensible
 
-The posted patch that is queued will not go to any stage as-is.  The
-basic idea in it may be sound but it needs to happen at a different
-layer, but no such updated patch exists and I never had time to do
-so myself.
+I agree that it would be ideal if we didn't do setvbuf() at all, the
+second best would be to do so at a central place.  My "Nice" applied
+only to the comment ;-)
 
+> I also find the use of LARGE_PACKET_MAX weird here. Is that really the
+> optimal stdio buffer size? The whole point of this is coalescing _small_
+> packets into a single write() syscall. So how many small packets fit
+> into LARGE_PACKET_MAX is comparing apples and oranges.
+
+The sizing is all my fault.  The original used 32k threashold and
+implemented manual buffering by flushing whenever the accumulated
+data exceeded the threashold, as opposed to "if we buffer this new
+piece, it would exceed, so let's flush first what we got so far,
+which is smaller than the threashold", which I found indefensible in
+two ways.  The "flush _after_ we go over it" semantics looked iffy,
+and 32k was totally out of thin air.  As LARGE_PACKET_MAX is the
+hard upper limit of each packet that has been with us forever, it
+was more defensible than 32k ;-)
+
+But if we are using stdio, I agree that it is much better not to
+worry about sizing at all by not doing setvbuf() and leaving it to
+libc implementation.  They ought to know what works on their
+platform the best.
+
+Thanks.
