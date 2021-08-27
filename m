@@ -2,75 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=0.2 required=3.0 tests=BAYES_40,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DA41C432BE
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 11:51:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2114BC432BE
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 11:56:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 07F6960FD8
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 11:51:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EAE0860EAF
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 11:56:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233603AbhH0Lwa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 07:52:30 -0400
-Received: from shark2.2a.pl ([213.77.90.2]:52414 "EHLO shark.2a.pl"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S233376AbhH0Lwa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 07:52:30 -0400
-Received: from wrasse.2a.pl (wrasse.2a.pl [213.77.90.7])
-        by shark.2a.pl (Postfix) with ESMTP id 392E21750840;
-        Fri, 27 Aug 2021 13:51:40 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 2a.pl
-Received: from shark.2a.pl ([213.77.90.2])
-        by wrasse.2a.pl (wrasse.2a.pl [213.77.90.7]) (amavisd-new, port 10024)
-        with ESMTP id qjQXZNCcBxRb; Fri, 27 Aug 2021 13:51:34 +0200 (CEST)
-Received: from localhost.localdomain (unknown [10.8.1.26])
-        by shark.2a.pl (Postfix) with ESMTPSA id 083391750827;
-        Fri, 27 Aug 2021 13:51:35 +0200 (CEST)
-From:   Krzysztof =?utf-8?B?xbtlbGVjaG93c2tp?= <giecrilj@stegny.2a.pl>
-To:     Christopher Yeleighton via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Christopher Yeleighton <ne01026@shark.2a.pl>
-Subject: [PATCH v2] pretty-options.txt: describe supported encoding
-Date:   Fri, 27 Aug 2021 13:51:34 +0200
-Message-ID: <2247912.lYO0ccLKhl@localhost.localdomain>
-In-Reply-To: <0877bb5d-da4b-125d-7beb-c3138903f468@gmail.com>
-References: <pull.1079.git.git.1630013668862.gitgitgadget@gmail.com> <0877bb5d-da4b-125d-7beb-c3138903f468@gmail.com>
+        id S245050AbhH0L5F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 07:57:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42164 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244780AbhH0L5F (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 07:57:05 -0400
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56041C061757
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 04:56:16 -0700 (PDT)
+Received: by mail-io1-xd29.google.com with SMTP id a13so8090421iol.5
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 04:56:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=fKDxdx95Ww9D4GvrUE6cu7U8hkJU6pHmHXw0Wr9My8o=;
+        b=SuLR8hQRklV0NhCVoYUciDySn/IcpTLOpB8VomRiQvckTV2k5i5PfLRlEDB5A3bZRl
+         aiKI5ukqkd8Cfamv1UWxD67uokMKqP7mRTFifYDbtGP3CDKrRtXLUD48yTUvf5bhoVTP
+         2faBVHqHm/3dvbN9gj6Y2Fea79ZkPQQx3XW7objpuAjOHMji1aFFrN42uBTMWTpVEuZJ
+         A85zJzIp2vInigypnEvYUdqEH2s0wLD8acAftnFJzBuYXRpmZ1MARJ/X9c+T22r8UWrK
+         iAS4Suy8oBHn6H5oNaVFByY+jYijgLBKI/hd/jl3cRpSGBEyLm41q+/AUttcDw5YUAt4
+         lB0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=fKDxdx95Ww9D4GvrUE6cu7U8hkJU6pHmHXw0Wr9My8o=;
+        b=TzyZJWYiYedNqNE07sb/3bkyNUvSz9TAkXlEHBMmX4E42Iq1ilb6msn0zkg2+EMqv5
+         3v2cqpI3S+NeyjOTgb8vf4zNllw50SKZ0c/S+bH9i/MrHAMSX8REXw2yYU6wspebCPu1
+         r/x0a06cqwf06nUDPWvnQn4rystX3iMiF6RFKx1FPeA3hrN/pCXODF1fonLvKC1FEnf/
+         /65gRuBinNDnlR7XrGzTJ/TnrQBwRDeVBsbOLAU0TfmuYFQjBMuY/SUngON9vMmb028Y
+         5uXrXY7N7hHp5BeUtgFbZOVSAA29RKX5/9bGygjJ0Gjn5h4HZ2KLkvImuSdWSiHkz/JB
+         H5gQ==
+X-Gm-Message-State: AOAM532OFSi3Cw5D/PpLRVp0McMqEUr86EOHzV5gzVVW0CHAxD9sssxN
+        TTjuO5t+JKOpvuI1SH9YAWAFjMkhgJm6MRbdWY6IE9Wwf9r0Azjn3jw=
+X-Google-Smtp-Source: ABdhPJxvDNM4ETcIQrQFsUk2Wmyxq2byLSU4v96NBQ4bMZVTKLJvVLRDIQGHPnk8bqmrH6Ac7X46hR+82qNVT3mVZlI=
+X-Received: by 2002:a05:6602:25da:: with SMTP id d26mr7076094iop.106.1630065375628;
+ Fri, 27 Aug 2021 04:56:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Fri, 27 Aug 2021 19:56:04 +0800
+Message-ID: <CAOLTT8SvackzHLni_3NBM2Wxi4xBEUV1v-LjD9RhbXikjkr=qg@mail.gmail.com>
+Subject: [GSOC] ref-filter code clean
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jeff King <peff@peff.net>, Hariom verma <hariom18599@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git log recognises only system encodings supported by iconv(1), but not 
-POSIX character maps used by iconv(1p). Document it.
+Hey,
+Due to the existence of dummy ref_format in ref-filter will hinder some
+subsequent improvements, I hope this patch [1] gets attention, thanks.
 
-Signed-off-by:  <ne01026@shark.2a.pl>
+--
+ZheNing Hu
 
-diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-
-options.txt
-index 27ddaf84a19..4f8376d681b 100644
---- a/Documentation/pretty-options.txt
-+++ b/Documentation/pretty-options.txt
-@@ -36,9 +36,13 @@ people using 80-column terminals.
-        The commit objects record the encoding used for the log message
-        in their encoding header; this option can be used to tell the
-        command to re-code the commit log message in the encoding
--       preferred by the user.  For non plumbing commands this
--       defaults to UTF-8. Note that if an object claims to be encoded
--       in `X` and we are outputting in `X`, we will output the object
-+       preferred by the user.
-+       The encoding must be a system encoding supported by iconv(1),
-+       otherwise this option will be ignored.
-+       POSIX character maps used by iconv(1p) are not supported.
-+       For non-plumbing commands this defaults to UTF-8.
-+       Note that if an object claims to be encoded in `X`
-+       and we are outputting in `X`, we shall output the object
-        verbatim; this means that invalid sequences in the original
-        commit may be copied to the output.
- 
-
-
+[1] https://lore.kernel.org/git/pull.1025.git.1629882532.gitgitgadget@gmail.com/
