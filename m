@@ -2,114 +2,259 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC4D8C432BE
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 23:44:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0D9EC4320E
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 23:49:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C2F960EAF
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 23:44:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C780160EBA
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 23:49:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232473AbhH0Xpr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 19:45:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34762 "EHLO
+        id S232600AbhH0Xub (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 19:50:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232354AbhH0Xpq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 19:45:46 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D14A3C0613D9
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 16:44:56 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id c12so14259113ljr.5
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 16:44:56 -0700 (PDT)
+        with ESMTP id S232547AbhH0Xua (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 19:50:30 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D058C061796
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 16:49:40 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id y195so1974861wmc.2
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 16:49:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qzDzRWimi/58yvXUr/WA98EieANPASkxEZbROdKCTJQ=;
-        b=Mrz0dPcEZ5+C46w7jFd4SKSCAG/lUO5lt+g2WICVHqpd/ZWAMiY7t+6wUaoF5tJc4C
-         kmUnfU9VnXVtVIsXT0f/eEQOr6Vzcemhix9ohkOhSTxInEThPby9zCsvAvS3XyyjjgkJ
-         Y64X42CvSBmHUj1KbAEoNb4qxMunnnb3K9UQbpTflWhk4+xzuTNYDXUKR6J4L3rd2lhx
-         RiLSBCZaZlkN875PtY+WuGMobIigrXE7GLt+cf69vyqnVyqmSZB2Hqw1Acy9uzz6y6ai
-         C1jExfs29af64BKSu1npLElXVGXgrPoDm0qPGOm+L+OkaaJr7zMWn3CfhsSVXJL6wKeD
-         cjZg==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=vnlYrcMPlZV7jn+Lh11sIHW9c4SJp4J6AKtj4Z4AN0M=;
+        b=hPSy3PTiyJIQx+RD7TYCyRwCXCvwYExuJ1YG/9d22YlnJelBUd51kwJh4f/HXkqlYn
+         j2ZUchkCr01Q4JEXh6pdjmCjXrCyCAfp9Ucne0oTdjwyCw2OcJG/bXNLdJ+iWPBCpprh
+         eXQd/meoPeMOEk2LJ5Ey/P7g38HFAMSEfel/MSzCbkBbdJw2Oo3B0HclcuGVzAKsr+3f
+         trovRZAKv+BqMm7A7xCfLL7uDi4aic/YeZxEBDW8GIdX8J2JBb+yJlUCOtx20uJ8/RmE
+         swaK7mvJsb8cGXVSWepJOEyl9MBjqK9W3c4bhAx5zY13QpYM6RFhC/jTl5Nmvho/9W1P
+         GP1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qzDzRWimi/58yvXUr/WA98EieANPASkxEZbROdKCTJQ=;
-        b=FgCXKgdi0T1OWJav94/IQuj0N3RC1w3TobE7yt+82tuaBVVEzM+AK+RuPCxmoQQwir
-         mz3PgtWTErN3Iw4h0E1CrYg94bMwKAEnFXFI9FuOYOwAE2+i36YAFLPObkobZX2D2zJD
-         64OEnaen4HnNZ+7E/JYfzBJcDLjZGRh/veUUrP3OsfGQlIwEEwg5AWYG7s8hStcyt3SC
-         UQ6MPujxiNC02AI6Yj/IbH/8f7ck5eD+YG1nf6Ll5yXt+NBMwZOafnKxKDy+sZHSD0rJ
-         ggSft0GZ5pmtR3Q6gXmmvYkElQ86SLwZlOsaBpxV6n/yypbpqQTRjtFR/Rdfy64NaJOg
-         oVnQ==
-X-Gm-Message-State: AOAM5319P+ZF4i98r+1B3pnIqnv64zPtpDFKx9YsQvBrY7KhmM6pUptX
-        TEHKNRgLnLAyYlI5c++bNbDorsJdRN0EGAb0H35a/Q==
-X-Google-Smtp-Source: ABdhPJxGEFa7Q1FqLiK+8i8Gyy1UQxZLkk1ThWt2TjJR8wm5Kz6ZS+eaGMCfTNqueFd5IoEhlVMkwnx7sbSAfbZWKTM=
-X-Received: by 2002:a2e:a591:: with SMTP id m17mr9585213ljp.113.1630107895133;
- Fri, 27 Aug 2021 16:44:55 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=vnlYrcMPlZV7jn+Lh11sIHW9c4SJp4J6AKtj4Z4AN0M=;
+        b=l6r3SK/i7I+M0akyBnQJ7ZO++hCVAXb6Wi7bCh5g22743VpcEOE8OHVlgRQzKHnuAo
+         HkoSFbIrqJeu+UGJOeDLIkJfhrWy/x2eiM7UePvPLg9j6FVF28FwI6dJGptW7JHkwE0L
+         l2D5wmykX/++FgsF0VPx8OrFjVVYk1H0SNCw8okrW6RzklkCCO66pTBUmSNWGi12GYxl
+         GyGBf79VNoOn0A0ynWX4XFxWgMTOvcjxg0AJf5A5hFPnv2bG95B8F77+QNtkajDk7X+d
+         0s07if4PR/vIfyBYHK6XmZtgBPihQpNs5EUqKsQoszMxJp2xpRWmbGlLximIrlR06vhR
+         MRGA==
+X-Gm-Message-State: AOAM530yf8Kx4FGMKEzkYFo4cHJHzq2tWJxifAjrIfxiD635Ov/jfycf
+        oFzBw5YmQ3fEgbvJTfWNcz8bDxeGsZc=
+X-Google-Smtp-Source: ABdhPJxzwRd3M0pfxtvirRAbKYxBKhQLnYp1E1On/QKhg4/NCIFVsop10LVOOaO1ZE/3fkBMRbV9tQ==
+X-Received: by 2002:a1c:f315:: with SMTP id q21mr11130015wmq.76.1630108178952;
+        Fri, 27 Aug 2021 16:49:38 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k1sm8022099wrz.61.2021.08.27.16.49.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Aug 2021 16:49:38 -0700 (PDT)
+Message-Id: <fc3d5a7b63524647c4a0de53e41772a7eede4f2d.1630108177.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1076.v2.git.git.1630108177.gitgitgadget@gmail.com>
+References: <pull.1076.git.git.1629856292.gitgitgadget@gmail.com>
+        <pull.1076.v2.git.git.1630108177.gitgitgadget@gmail.com>
+From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 27 Aug 2021 23:49:32 +0000
+Subject: [PATCH v2 1/6] object-file: use futimens rather than utime
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
- <d31c641180645ee4059aab9230841ad90f9244fe.1629842085.git.gitgitgadget@gmail.com>
- <CAHd-oW5-f2Kb5DR-UTfu1qB1fm63oHf62WYsbGd5ajZueOWHtA@mail.gmail.com>
-In-Reply-To: <CAHd-oW5-f2Kb5DR-UTfu1qB1fm63oHf62WYsbGd5ajZueOWHtA@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Fri, 27 Aug 2021 20:44:44 -0300
-Message-ID: <CAHd-oW55fWkjf5494OJPsJGtRh59SDJFbfhw=nt2q=To1DQJqA@mail.gmail.com>
-Subject: Re: [PATCH 11/13] mv: refuse to move sparse paths
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Neeraj-Personal <nksingh85@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Christoph Hellwig <hch@lst.de>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, "Neeraj K. Singh" <neerajsi@microsoft.com>,
+        Neeraj Singh <neerajsi@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 27, 2021 at 6:20 PM Matheus Tavares Bernardino
-<matheus.bernardino@usp.br> wrote:
->
-> On Tue, Aug 24, 2021 at 6:54 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
-> > diff --git a/builtin/mv.c b/builtin/mv.c
-> > index c2f96c8e895..b58fd4ce5ba 100644
-> > --- a/builtin/mv.c
-> > +++ b/builtin/mv.c
-> > @@ -176,10 +177,22 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
-> >                 const char *src = source[i], *dst = destination[i];
-> >                 int length, src_is_dir;
-> >                 const char *bad = NULL;
-> > +               int skip_sparse = 0;
-> >
-> >                 if (show_only)
-> >                         printf(_("Checking rename of '%s' to '%s'\n"), src, dst);
-> >
-> > +               if (!path_in_sparse_checkout(src, &the_index)) {
->
-> `git mv` can only move/rename tracked paths, but since we check
-> whether `src` is sparse before checking if it is in the index, the
-> user will get the sparse error message instead. This is OK, but the
-> advice might be misleading, as it says they can use `--sparse` if they
-> really want to move the file, but repeating the command with
-> `--sparse` will now fail for another reason. I wonder if we should
-> check whether `src` is tracked before checking if it is sparse, or if
-> that is not really an issue we should bother with.
+From: Neeraj Singh <neerajsi@microsoft.com>
 
-Another problem is that the displayed message will say that the
-pathspecs "match index entries outside sparse checkout" even when the
-path given to mv doesn't really exist:
+Make close_loose_object do all of the steps for syncing and correctly
+naming a new loose object so that it can be reimplemented in the
+upcoming bulk-fsync mode.
 
-git sparse-checkout set some/dir/
-git mv nonexistent-file foo
+Use futimens, which is available in POSIX.1-2008 to update the file
+timestamps. This should be slightly faster than utime, since we have
+a file descriptor already available. This change allows us to update
+the time before closing, renaming, and potentially fsyincing the file
+being refreshed. This code is currently only invoked by git-pack-objects
+via force_object_loose.
 
-The following pathspecs didn't match any eligible path, but they do match index
-entries outside the current sparse checkout:
-nonexistent-file
-hint: Disable or modify the sparsity rules if you intend to update such entries.
-hint: Disable this message with "git config advice.updateSparsePath false"
+Implement a futimens shim for the Windows port of Git.
+
+Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+---
+ compat/mingw.c | 53 ++++++++++++++++++++++++++++++++++----------------
+ compat/mingw.h |  2 ++
+ object-file.c  | 17 ++++++++--------
+ 3 files changed, 46 insertions(+), 26 deletions(-)
+
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 9e0cd1e097f..ce14b21c182 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -734,11 +734,14 @@ int mingw_chmod(const char *filename, int mode)
+  * The unit of FILETIME is 100-nanoseconds since January 1, 1601, UTC.
+  * Returns the 100-nanoseconds ("hekto nanoseconds") since the epoch.
+  */
++
++#define UNIX_EPOCH_FILETIME 116444736000000000LL
++
+ static inline long long filetime_to_hnsec(const FILETIME *ft)
+ {
+ 	long long winTime = ((long long)ft->dwHighDateTime << 32) + ft->dwLowDateTime;
+ 	/* Windows to Unix Epoch conversion */
+-	return winTime - 116444736000000000LL;
++	return winTime - UNIX_EPOCH_FILETIME;
+ }
+ 
+ static inline void filetime_to_timespec(const FILETIME *ft, struct timespec *ts)
+@@ -748,6 +751,13 @@ static inline void filetime_to_timespec(const FILETIME *ft, struct timespec *ts)
+ 	ts->tv_nsec = (hnsec % 10000000) * 100;
+ }
+ 
++static inline void timespec_to_filetime(const struct timespec *t, FILETIME *ft)
++{
++	long long winTime = t->tv_sec * 10000000LL + t->tv_nsec / 100 + UNIX_EPOCH_FILETIME;
++	ft->dwLowDateTime = winTime;
++	ft->dwHighDateTime = winTime >> 32;
++}
++
+ /**
+  * Verifies that safe_create_leading_directories() would succeed.
+  */
+@@ -949,19 +959,33 @@ int mingw_fstat(int fd, struct stat *buf)
+ 	}
+ }
+ 
+-static inline void time_t_to_filetime(time_t t, FILETIME *ft)
++int mingw_futimens(int fd, const struct timespec times[2])
+ {
+-	long long winTime = t * 10000000LL + 116444736000000000LL;
+-	ft->dwLowDateTime = winTime;
+-	ft->dwHighDateTime = winTime >> 32;
++	FILETIME mft, aft;
++
++	if (times) {
++		timespec_to_filetime(&times[0], &aft);
++		timespec_to_filetime(&times[1], &mft);
++	} else {
++		GetSystemTimeAsFileTime(&mft);
++		aft = mft;
++	}
++
++	if (!SetFileTime((HANDLE)_get_osfhandle(fd), NULL, &aft, &mft)) {
++		errno = EINVAL;
++		return -1;
++	}
++
++	return 0;
+ }
+ 
+-int mingw_utime (const char *file_name, const struct utimbuf *times)
++int mingw_utime(const char *file_name, const struct utimbuf *times)
+ {
+-	FILETIME mft, aft;
+ 	int fh, rc;
+ 	DWORD attrs;
+ 	wchar_t wfilename[MAX_PATH];
++	struct timespec ts[2];
++
+ 	if (xutftowcs_path(wfilename, file_name) < 0)
+ 		return -1;
+ 
+@@ -979,17 +1003,12 @@ int mingw_utime (const char *file_name, const struct utimbuf *times)
+ 	}
+ 
+ 	if (times) {
+-		time_t_to_filetime(times->modtime, &mft);
+-		time_t_to_filetime(times->actime, &aft);
+-	} else {
+-		GetSystemTimeAsFileTime(&mft);
+-		aft = mft;
++		memset(ts, 0, sizeof(ts));
++		ts[0].tv_sec = times->actime;
++		ts[1].tv_sec = times->modtime;
+ 	}
+-	if (!SetFileTime((HANDLE)_get_osfhandle(fh), NULL, &aft, &mft)) {
+-		errno = EINVAL;
+-		rc = -1;
+-	} else
+-		rc = 0;
++
++	rc = mingw_futimens(fh, times ? ts : NULL);
+ 	close(fh);
+ 
+ revert_attrs:
+diff --git a/compat/mingw.h b/compat/mingw.h
+index c9a52ad64a6..87944dfec72 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -398,6 +398,8 @@ int mingw_fstat(int fd, struct stat *buf);
+ 
+ int mingw_utime(const char *file_name, const struct utimbuf *times);
+ #define utime mingw_utime
++int mingw_futimens(int fd, const struct timespec times[2]);
++#define futimens mingw_futimens
+ size_t mingw_strftime(char *s, size_t max,
+ 		   const char *format, const struct tm *tm);
+ #define strftime mingw_strftime
+diff --git a/object-file.c b/object-file.c
+index a8be8994814..5421811273e 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1860,12 +1860,13 @@ int hash_object_file(const struct git_hash_algo *algo, const void *buf,
+ }
+ 
+ /* Finalize a file on disk, and close it. */
+-static void close_loose_object(int fd)
++static int close_loose_object(int fd, const char *tmpfile, const char *filename)
+ {
+ 	if (fsync_object_files)
+ 		fsync_or_die(fd, "loose object file");
+ 	if (close(fd) != 0)
+ 		die_errno(_("error when closing loose object file"));
++	return finalize_object_file(tmpfile, filename);
+ }
+ 
+ /* Size of directory component, including the ending '/' */
+@@ -1973,17 +1974,15 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+ 		die(_("confused by unstable object source data for %s"),
+ 		    oid_to_hex(oid));
+ 
+-	close_loose_object(fd);
+-
+ 	if (mtime) {
+-		struct utimbuf utb;
+-		utb.actime = mtime;
+-		utb.modtime = mtime;
+-		if (utime(tmp_file.buf, &utb) < 0)
+-			warning_errno(_("failed utime() on %s"), tmp_file.buf);
++		struct timespec ts[2] = {0};
++		ts[0].tv_sec = mtime;
++		ts[1].tv_sec = mtime;
++		if (futimens(fd, ts) < 0)
++			warning_errno(_("failed futimes() on %s"), tmp_file.buf);
+ 	}
+ 
+-	return finalize_object_file(tmp_file.buf, filename.buf);
++	return close_loose_object(fd, tmp_file.buf, filename.buf);
+ }
+ 
+ static int freshen_loose_object(const struct object_id *oid)
+-- 
+gitgitgadget
+
