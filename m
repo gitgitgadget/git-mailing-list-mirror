@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF69AC432BE
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 21:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD2F4C432BE
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 21:18:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D2E0660F5B
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 21:18:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A747860F4C
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 21:18:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231735AbhH0VSv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 17:18:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58470 "EHLO
+        id S231857AbhH0VTX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 17:19:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231823AbhH0VSu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 17:18:50 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB81BC0613D9
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 14:17:58 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id y6so13771289lje.2
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 14:17:58 -0700 (PDT)
+        with ESMTP id S231570AbhH0VTX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 17:19:23 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99611C0613D9
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 14:18:33 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id y34so17026714lfa.8
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 14:18:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=qJR5Y+P85lspAmUkRO77x5PSUa+5RBUD3qQTd++g0pE=;
-        b=yRbS74LEyliKk/tMnhGsJoljPhZXkxsjLOMVlREexJ4Y4V7kflM1nA64rLR+ZpFXNL
-         XxbdDRmYkXZqikJBKeE1P4JTqudUbYej+J4rtoFeH2w8TApBQHrYcM/LhwBMoUa8msjr
-         ywF7VcMg6veA8MAS+f7gywMpNinwO+ektR7bCEo1sMw9J4clfPdTkxu2q18SYGPDDK7D
-         YPKqU7H6Eov1cyVli9sTmanW1iMUS1TXx+X4ThVElMNrmXt+WcEprFlz7kJUuP2/vd29
-         wJla69WmXXvb5WKK40ipt+V7B5hgiueylsTs7x06kChfS2B6+mnDx6Emc+9bXUsQGWlm
-         EHzQ==
+        bh=8ipqnrTLkUMnbWhwb8q3IEKvMhywwEJquTBiyLhzCdo=;
+        b=fldeA4MlH5GEJ9tgGvccXMwl2Oa3FPra0WR6cCMgmux1ZhfWQUXXUANqrquU8xgT+D
+         WGOe+vKcMxCExtSN9h9GSPtAt8Cn/ApbjvMjELokT8xgFr3hzMG9OM9aNIDD9hJxXzjq
+         ocp5IqJ/HoQCqp7WJDknIE/mDbt9uVmPwmiYAN1YPtn3yTTKs5qXiMoUJREnnonKEp3q
+         H4g3VnmAIOoHmTNHB07KxvUyib3K1NgH3BiIj5VkmYdDMUdaNEfJXcYWst3D4YPslHZe
+         0UQUox2kkUQCO0M7YDtf1sAS9N6jgpy3uySdrREieerdQvaNyyrCzjBM60YSCpyuj8RY
+         ObYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=qJR5Y+P85lspAmUkRO77x5PSUa+5RBUD3qQTd++g0pE=;
-        b=XxkNLh1KL4DEiavzOu+OTCo4Hnfx+UNB9J8TZmACKE5P6agz8Lw7lQp11FtXqSd/wt
-         oYNPxkzl0/4RoQL7idRHA/p9w0P0yc7l+uopgaiMTMzhtMHbiO3EuYTOlHn4/sMBLHMA
-         yoh8pRrk7Zo8jkSyowesEoil6sA3oxunydSK860mr5UYKry4pFqz831ILF0LwMPNFjqy
-         6Yq7xca4/YR0lapIzANYaBQrSb2Xint7ePTIiB87y8cVGo6fVdB+gxVuwUm2Ncop9puk
-         7J1D7g/1dwM3KoY0u1VkGuPDsuJ/k8XQ6wJpwsfN9pF+tODnLIrwom83ufcN0wYIMwvC
-         fRBw==
-X-Gm-Message-State: AOAM531YEhXCIqrn+i/Ty9sZHQXdyjq3Ic6nnliT64lq797cKlgIt9gd
-        TTKJZtTNrqHZ/YF7LtbyF+POBQZfcGyAlnWvL6Wa1A==
-X-Google-Smtp-Source: ABdhPJyqBaIslDtybFR3Y3NdkcaWVg5cA7JUK7nqi1Jq/syQ6KxMED/8wYAZT20WlwlFjZKlJ+u9ZRw/hQpqhCpx0Ic=
-X-Received: by 2002:a2e:9dcb:: with SMTP id x11mr364288ljj.137.1630099076967;
- Fri, 27 Aug 2021 14:17:56 -0700 (PDT)
+        bh=8ipqnrTLkUMnbWhwb8q3IEKvMhywwEJquTBiyLhzCdo=;
+        b=CqjTYBEr94uY/lMej0NOt1JSrtqbHvt1QXA3ubLWleHuUwBCspPzxOHRr6WLbUHwVq
+         wriKwgXZMA9l9zTBNZgI03y/INA/TpOukp+UdWwuFSveMqw4MXD0aFngYvrnMYqkjwXT
+         aqGxkAhiQWuo6MqWUaZycskajIExpjPCn+svhusYPLvWD5vwrwckM/EUOwhqFOR9DrFy
+         SA2JYtWjy1wBkUOyJ8QrKZMVRr0Mn46Glm0li0xB/GBLM0lfRQpWTK69TLIhTXJ9qn9s
+         b/5G5QAjkukBhHtvF8yhpFi1x3sR013VZuH2j2UE94ev+/TVyAkW2ja5oejRJHRVUGJe
+         +ukQ==
+X-Gm-Message-State: AOAM531bs38Vu2TG+/IyGlytULfwYsjkc5IuL1boPX9psgl3pOjk9Evh
+        7o71crEcdvyA+iE/zNeHVYoiy5rSJF7P15UpOzQ7Rg==
+X-Google-Smtp-Source: ABdhPJxRDAlzZ2Lf7N3TVAWIPdZmyziCxf4HhQyNQkxJioLXltzYai/MSWoapy/3Umx0fWLecm39yXrh5AEedYyPajs=
+X-Received: by 2002:ac2:4e68:: with SMTP id y8mr7995787lfs.527.1630099111986;
+ Fri, 27 Aug 2021 14:18:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1018.git.1629842085.gitgitgadget@gmail.com> <6c9c986ff43fe7f065c27e61468534007e70d2a7.1629842085.git.gitgitgadget@gmail.com>
-In-Reply-To: <6c9c986ff43fe7f065c27e61468534007e70d2a7.1629842085.git.gitgitgadget@gmail.com>
+References: <pull.1018.git.1629842085.gitgitgadget@gmail.com> <5153accded46c8ced8784ec135dbc77d5bc1a306.1629842085.git.gitgitgadget@gmail.com>
+In-Reply-To: <5153accded46c8ced8784ec135dbc77d5bc1a306.1629842085.git.gitgitgadget@gmail.com>
 From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Fri, 27 Aug 2021 18:17:46 -0300
-Message-ID: <CAHd-oW5JD56UerW6N18Ap9Dmt9eVyd7dZKUhJR6-hSjzzM0s5A@mail.gmail.com>
-Subject: Re: [PATCH 09/13] rm: add --sparse option
+Date:   Fri, 27 Aug 2021 18:18:20 -0300
+Message-ID: <CAHd-oW50QSBmtdNhwur=OcgcPnMBgszCp7aPbmwvz7qMPFj0iQ@mail.gmail.com>
+Subject: Re: [PATCH 10/13] rm: skip sparse paths with missing SKIP_WORKTREE
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
@@ -72,70 +72,45 @@ X-Mailing-List: git@vger.kernel.org
 On Tue, Aug 24, 2021 at 6:54 PM Derrick Stolee via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
 >
-> Subject: [PATCH 09/12] rm: add --sparse option
-
-Maybe mention in the commit message that, for now, rm's --sparse only
-affects entries with the skip_worktree bit set? (Which will be changed
-in the following patch.)
-
+> diff --git a/builtin/rm.c b/builtin/rm.c
+> index 4208f3f9a5f..a6da03da2be 100644
 > --- a/builtin/rm.c
 > +++ b/builtin/rm.c
-> @@ -298,7 +300,8 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
->         ensure_full_index(&the_index);
+> @@ -301,7 +301,9 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
 >         for (i = 0; i < active_nr; i++) {
 >                 const struct cache_entry *ce = active_cache[i];
-> -               if (ce_skip_worktree(ce))
-> +
-> +               if (!include_sparse && ce_skip_worktree(ce))
+>
+> -               if (!include_sparse && ce_skip_worktree(ce))
+> +               if (!include_sparse &&
+> +                   (ce_skip_worktree(ce) ||
+> +                    !path_in_sparse_checkout(ce->name, &the_index)))
 >                         continue;
 
-OK, we no longer ignore the skip_worktree entry if --sparse is given ...
+OK. And we don't need to update the advice reporting code below,
+because `matches_skip_worktree()` already uses the
+`(ce_skip_worktree(ce) || !path_in_sparse_checkout())`  logic.
+
+> +                    !path_in_sparse_checkout"
 
 >                 if (!ce_path_match(&the_index, ce, &pathspec, seen))
 >                         continue;
-> @@ -322,7 +325,8 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
->                                 seen_any = 1;
->                         else if (ignore_unmatch)
->                                 continue;
-> -                       else if (matches_skip_worktree(&pathspec, i, &skip_worktree_seen))
-> +                       else if (!include_sparse &&
-> +                                matches_skip_worktree(&pathspec, i, &skip_worktree_seen))
->                                 string_list_append(&only_match_skip_worktree, original);
-
-... and we also don't need to look for matches here as we won't
-display the error/advice match.
-
->                         else
->                                 die(_("pathspec '%s' did not match any files"), original);
 > diff --git a/t/t3602-rm-sparse-checkout.sh b/t/t3602-rm-sparse-checkout.sh
-> index e9e9a15c74c..a34b978bfd8 100755
+> index a34b978bfd8..44f3e923164 100755
 > --- a/t/t3602-rm-sparse-checkout.sh
 > +++ b/t/t3602-rm-sparse-checkout.sh
-> @@ -36,13 +36,25 @@ done
->
->  test_expect_success 'recursive rm does not remove sparse entries' '
->         git reset --hard &&
-> -       git sparse-checkout set sub/dir &&
-> +       git sparse-checkout set sub/dir/ &&
-
-Is this change necessary?
-
->         git rm -r sub &&
->         git status --porcelain -uno >actual &&
->         echo "D  sub/dir/e" >expected &&
->         test_cmp expected actual
+> @@ -87,4 +87,15 @@ test_expect_success 'do not warn about sparse entries with --ignore-unmatch' '
+>         git ls-files --error-unmatch b
 >  '
 >
-> +test_expect_success 'recursive rm --sparse removes sparse entries' '
+> +test_expect_success 'refuse to rm a non-skip-worktree path outside sparse cone' '
 > +       git reset --hard &&
-> +       git sparse-checkout set "sub/dir" &&
-> +       git rm --sparse -r sub &&
-> +       git status --porcelain -uno >actual &&
-> +       cat >expected <<-\EOF &&
-> +       D  sub/d
-> +       D  sub/dir/e
-> +       EOF
-> +       test_cmp expected actual
+> +       git sparse-checkout set a &&
+> +       git update-index --no-skip-worktree b &&
+> +       test_must_fail git rm b 2>stderr &&
+> +       test_cmp b_error_and_hint stderr &&
+> +       git rm --sparse b 2>stderr &&
+> +       test_must_be_empty stderr &&
+> +       test_path_is_missing b
 > +'
 
-Nice!
+OK.
