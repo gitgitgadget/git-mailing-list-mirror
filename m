@@ -2,78 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8739EC432BE
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 23:32:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 488E7C432BE
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 00:22:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A87B60FD8
-	for <git@archiver.kernel.org>; Thu, 26 Aug 2021 23:32:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E19560F5C
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 00:22:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243789AbhHZXdH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Aug 2021 19:33:07 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60250 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231251AbhHZXdG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Aug 2021 19:33:06 -0400
-Received: (qmail 4922 invoked by uid 109); 26 Aug 2021 23:32:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 26 Aug 2021 23:32:18 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10212 invoked by uid 111); 26 Aug 2021 23:32:17 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Aug 2021 19:32:17 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 26 Aug 2021 19:32:17 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jacob Vosmaer <jacob@gitlab.com>
-Cc:     me@ttaylorr.com, git@vger.kernel.org, gitster@pobox.com, ps@pks.im
-Subject: Re: [PATCH 2/2] upload-pack: use stdio in send_ref callbacks
-Message-ID: <YSgkgfCr6/kIGzWX@coredump.intra.peff.net>
-References: <CADMWQoMpURczcnZne=0cr2vavoLm_VT5eEMg4FCu3VeSg_UJaQ@mail.gmail.com>
- <20210826100648.10333-1-jacob@gitlab.com>
- <20210826100648.10333-2-jacob@gitlab.com>
+        id S230333AbhH0AX3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Aug 2021 20:23:29 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51868 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229563AbhH0AX2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Aug 2021 20:23:28 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5D3CFD6BB3;
+        Thu, 26 Aug 2021 20:22:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=TSV1vPtThRMgTmxcZjGU09IIeGaFMUFh5XU9nk
+        0BTOc=; b=LUhkMpurbVt07gflxOJDYCXlJte8VfqIRghDF+GrZo7521NrJ3lmxC
+        Xgfkb2251q2zXQla6ooB6wLIYFOEFHQYWQkDqH3pCNuz7ef9C1zZ5o5Low9wvPvt
+        d0W54M15GZL/r5SOgakuaCCoCUPAq3mfQip7P2hvssmhFiavsy9iI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 54E33D6BB2;
+        Thu, 26 Aug 2021 20:22:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D418CD6BB1;
+        Thu, 26 Aug 2021 20:22:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v3 4/6] hook: allow running non-native hooks
+References: <20210819033450.3382652-1-emilyshaffer@google.com>
+        <20210819033450.3382652-5-emilyshaffer@google.com>
+        <87o89mej3y.fsf@evledraar.gmail.com> <YSgatN5kYwLJtDMQ@google.com>
+Date:   Thu, 26 Aug 2021 17:22:39 -0700
+In-Reply-To: <YSgatN5kYwLJtDMQ@google.com> (Emily Shaffer's message of "Thu,
+        26 Aug 2021 15:50:28 -0700")
+Message-ID: <xmqq7dg7d9dc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210826100648.10333-2-jacob@gitlab.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: E356E218-06CC-11EC-B074-D601C7D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 26, 2021 at 12:06:48PM +0200, Jacob Vosmaer wrote:
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-> @@ -126,6 +127,7 @@ static void upload_pack_data_init(struct upload_pack_data *data)
->  	struct string_list uri_protocols = STRING_LIST_INIT_DUP;
->  	struct object_array extra_edge_obj = OBJECT_ARRAY_INIT;
->  	struct string_list allowed_filters = STRING_LIST_INIT_DUP;
-> +	struct strbuf send_ref_buf = STRBUF_INIT;
->  
->  	memset(data, 0, sizeof(*data));
->  	data->symref = symref;
-> @@ -141,6 +143,7 @@ static void upload_pack_data_init(struct upload_pack_data *data)
->  	data->allow_filter_fallback = 1;
->  	data->tree_filter_max_depth = ULONG_MAX;
->  	packet_writer_init(&data->writer, 1);
-> +	data->send_ref_buf = send_ref_buf;
+> I think it's A) pretty important to make it easy for users to run
+> whatever not-necessarily-git-native hook they want, and B) useful for
+> script Git commands to take advantage of the typo check. So, I'll add a
+> `--enforce-known-hookname` (or maybe a better named one, this isn't my
+> strong suit) and switch git-send-email and friends to use it.
 
-This does a struct copy of the strbuf, which is usually a bad thing
-(both copies think they own the pointer). It works here because the
-original immediately goes out of scope. The usual thing would be to do
-this instead:
+I somehow feel this is backwards.  
 
-  strbuf_init(&data->send_ref_buf, 0);
+Once you write the invocation of "git hook run <hookname>" into your
+script and tested it, there is no further need for typo checking.
 
-but I notice this whole function is somewhat odd that way (lots of
-static initializers followed by struct assignment, rather than using
-initialization functions).
+What's the use case you are trying to help with typo checking?  When
+a script takes a hookname from the user and runs "git hook run $1",
+then passing --this-must-be-a-known-hook option that errors out when
+the named hook does not exist and unrecognised (there is no need to
+error out if a hook with unusual name the user gave us does
+exist---the user asked us to run it, so we just can run it) might
+make sense.  But I am somehow not getting the sense that it is the
+expected use case you are worried about.
 
-I'm not sure if it's worth changing or not. Again, I don't think it's
-doing the wrong thing, but just sort of unusual for our code base. A few
-of the data structures in use here don't have _init() functions
-(object_array and oid_array), but that probably means we ought to add
-them.
+If the reason why you are making the typo-checking an opt-in feature
+is because you want to allow users to run "git hook run" with
+minimum typing, I suspect that you may be optimizing for a wrong
+case.  Interactive users are the ones that benefit from
+typo-checking the most, and if they are interactive (as opposed to
+being a script), they are flexible enough not to say "git hook run
+foobar" when they know foobar does not exist and they know foobar is
+not a generally accepted hook, no?  So, I think it makes more sense
+to by default allow a hook with a recognizable name to be missing,
+but complain when a randomly named hook is missing, and to have an
+option that permits a hook to be unrecognised and missing.
 
--Peff
+
+
