@@ -2,184 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C8E7C432BE
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 21:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26487C432BE
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 21:13:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A9F760F58
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 21:07:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 020D760F58
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 21:13:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231796AbhH0VHz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 17:07:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55992 "EHLO
+        id S231786AbhH0VOI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 17:14:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231570AbhH0VHy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 17:07:54 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 427A2C0613D9
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 14:07:05 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id p15so13695070ljn.3
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 14:07:05 -0700 (PDT)
+        with ESMTP id S231572AbhH0VOH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 17:14:07 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 925B7C0613D9
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 14:13:18 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id s16so2923784qvt.13
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 14:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eO+xkYN7wCTO2roMfbx5ska1TMsAVRW48YFdAf1g+tY=;
-        b=Ojxvr9v6MfLOft1/bKMH9Y6glsYyxHAyyN/34vb9QhcSGejRFcCDdX909zTXfFt/1O
-         q5vhl0CHO/M4EEb8aRphVScTgNc6JI/CCOzVvW/81ChXvrWW0vikqfMEBGoQD5b7cneG
-         gIidn38ztHu5DT5F9rA93WLlvpsQmnotO8vL9OmGD2AC7JlAwnYOBckq7bXBk6Mae93B
-         mmKN6GMzRchyt4AUsTrntJLSG+6tTyHosGnr8GhoLW8izLALAh/cIphCVO+zaGMQetpq
-         juDgqi1+qDt4LNzuaJPu9ZsNhKeZaXkmP+dkTdWtgZbnB/UEUZ3+3IBtaqXirulMb/SH
-         o7DQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=tOJ2HAt0NDqnAR2UvsetwSdZJ+dfqqQIQ8ZMeRzEI3A=;
+        b=SOSoRRmIcuhB8+A4Rm4YR5swrGPVvJ8s7Kmrvm2g6ugSkW55YeYkSC+ClHM5QgkreH
+         2TF4wvH5fvb44skrlOkYA3Lrq/xUXNw7UXYLqReKo6N9MIKbGgIhTTzvW7w1U90l1CZz
+         9+7+M7h3zHjO9yb9i/scgAayHDaN1kPYMYSCLfLLHV8ILJNAJA/pkgzEJSWI4m/awE5S
+         H9GcvMj2SYdE4Y/YJfbkgFRPsTLNsEnWCr9a7Y7dD+hK55Lsu5P0PglUuTJfqk77YUpv
+         0MlfONzejvX0UtB9kEKzRFXWjzvut5/eCVXN/1OItvDiskNHWtayXcwF5Tnhb02wnqIl
+         xdag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eO+xkYN7wCTO2roMfbx5ska1TMsAVRW48YFdAf1g+tY=;
-        b=jwT5PbJlIhhc5cKuqtMzfuHLn/L4SC/xv98wmLMdd6BHApUGbI6cfmq7ooba4pbMCL
-         DYPVPJG95cCa5bYsBKEP1g4P9saHPO6FwBqZWpU5QhcBdheKWhN1DxP+828jvrKcxSAS
-         Ok9pgArGhEERD3L31RnxzTaG70Ns0r6ySeMy62jzk9OdQTAo8Y3VqREXgLbfaJQNa/VF
-         h0f+U+m3OT0iCn1gFO9Ij8cuxsASkqqe1kN6wxT7tO/2YqsN3HZvHJYp2Jx5FoE2MGz/
-         uI7GSXnLrEcXZ87EQWbd++DXn4LYNirkiX3iyhqryvdIFLCBv2Qco+zuJPt4yc9tdY94
-         /0Og==
-X-Gm-Message-State: AOAM532cPBIUzHwBbpqKdWCAqNyA4rCH70cjwpa+kOaVD6RXIyUZ7+bJ
-        49UdkfjALWwnIQK8TT/wKTeWg3cAFMGaiU45fAA5hA==
-X-Google-Smtp-Source: ABdhPJwRHNnj5M0at06SV1nogoIW2JwykkUIvJTTNo0NuytHItIM5zCkrvcn/WEkWLlZvPSfNEG14qxmJcvNDEQWQAA=
-X-Received: by 2002:a05:651c:211c:: with SMTP id a28mr9643598ljq.8.1630098423565;
- Fri, 27 Aug 2021 14:07:03 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=tOJ2HAt0NDqnAR2UvsetwSdZJ+dfqqQIQ8ZMeRzEI3A=;
+        b=YmamqxZdbsKbzvF1iQ5D5tzMDILreToBZuiQGTHkVabRhK1x1kPIa+ITAODzJ3NSHr
+         /z8v3suA1HLRuz/qqqfXL/79NobNkFHVs5jlKo9Vd4ftk866uWImIng3GvM6fNJZowyO
+         Ww7HQNONLbEu6ZfVMzRP3IklIFhHCcOM4dtmqlsWsIxH9Ptk0FflY5B50UhQeJP3TeZy
+         e4EBoB5+UnRAoVgOnCtM7/ekxCQrojpg7AxNM16fV37YeViK58l/tRIEnVTvLwGQ/8cT
+         ZEcEVBqVljnP49BxJNet/Ej2cRr0VPs2S68jBM6RGzIiz2iqvAWg5HFctUEdQbaRkeXW
+         I6zQ==
+X-Gm-Message-State: AOAM532vo0dewXWU/RqbUjKEXqBH+LK8GZB8sh3eY8krPbgvtJZkLKXb
+        Pd7IUPOYtkSK+VeTczOufefACw==
+X-Google-Smtp-Source: ABdhPJztIRZnRf6oKVP9io85jA2hS/5NYWjGLQ9CYIj+pKnQ6SRr+T+u1BRWem+VOaSWLL6p6N4BUg==
+X-Received: by 2002:a05:6214:2b4:: with SMTP id m20mr4154806qvv.35.1630098797768;
+        Fri, 27 Aug 2021 14:13:17 -0700 (PDT)
+Received: from mango.meuintelbras.local ([177.32.116.19])
+        by smtp.gmail.com with ESMTPSA id y19sm4118468qtv.21.2021.08.27.14.13.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Aug 2021 14:13:17 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+To:     gitgitgadget@gmail.com
+Cc:     derrickstolee@github.com, dstolee@microsoft.com,
+        git@vger.kernel.org, gitster@pobox.com, matheus.bernardino@usp.br,
+        newren@gmail.com, stolee@gmail.com
+Subject: Re: [PATCH 06/13] add: skip paths that are outside sparse-checkout cone
+Date:   Fri, 27 Aug 2021 18:13:10 -0300
+Message-Id: <20210827211310.108999-1-matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <eeba97ad492307302637faf33f6bf6ae8965faa3.1629842085.git.gitgitgadget@gmail.com>
+References: <eeba97ad492307302637faf33f6bf6ae8965faa3.1629842085.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <pull.1018.git.1629842085.gitgitgadget@gmail.com> <e80fcfa932cca394c5c8b349cafadb0754a594dd.1629842085.git.gitgitgadget@gmail.com>
-In-Reply-To: <e80fcfa932cca394c5c8b349cafadb0754a594dd.1629842085.git.gitgitgadget@gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Fri, 27 Aug 2021 18:06:52 -0300
-Message-ID: <CAHd-oW7D1jikE5ByS36AjACfSJoZeekLCKzX2MRRfayKwKv=qQ@mail.gmail.com>
-Subject: Re: [PATCH 05/13] add: fail when adding an untracked sparse file
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 24, 2021 at 6:54 PM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Tue, Aug 24, 2021 at 6:54 PM Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com> wrote:
 >
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> The add_files() method in builtin/add.c takes a set of untracked files
-> that are being added by the input pathspec and inserts them into the
-> index. If these files are outside of the sparse-checkout cone, then they
-> gain the SKIP_WORKTREE bit at some point. However, this was not checked
-> before inserting into the index, so these files are added even though we
-> want to avoid modifying the index outside of the sparse-checkout cone.
->
-> Add a check within add_files() for these files and write the advice
-> about files outside of the sprase-checkout cone.
+> Subject: [PATCH 06/13] add: skip paths that are outside sparse-checkout cone
 
-s/sprase/sparse/
+Perhaps this could be "skip _tracked_ paths that ..." (to help
+differentiate the end goal of this patch from the previous one).
 
-> This behavior change modifies some existing tests within t1092. These
-> tests intended to document how a user could interact with the existing
-> behavior in place. Many of these tests need to be marked as expecting
-> failure. A future change will allow these tests to pass by adding a flag
-> to 'git add' that allows users to modify index entries outside of the
-> sparse-checkout cone.
->
-> The 'submodule handling' test is intended to document what happens to
-> directories that contain a submodule when the sparse index is enabled.
-> It is not trying to say that users should be able to add submodules
-> outside of the sparse-checkout cone, so that test can be modified to
-> avoid that operation.
+> diff --git a/pathspec.c b/pathspec.c
+> index 44306fdaca2..0e6e60fdc5a 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
+> @@ -39,7 +39,8 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
+>                 return;
+>         for (i = 0; i < istate->cache_nr; i++) {
+>                 const struct cache_entry *ce = istate->cache[i];
+> -               if (sw_action == PS_IGNORE_SKIP_WORKTREE && ce_skip_worktree(ce))
+> +               if (sw_action == PS_IGNORE_SKIP_WORKTREE &&
+> +                   (ce_skip_worktree(ce) || !path_in_sparse_checkout(ce->name, istate)))
 
-While I was playing with this patch, I did the following:
+Hmm, even though we skip the sparse paths here, cmd_add() will call
+add_files_to_cache() at the end and still update these paths in the
+index. I think there are two ways to fix this. We could either change
+run_diff_files() to skip these paths (but I don't know how other callers
+of this functions want to handle this, so maybe this needs to hide
+behind an option flag):
 
-echo a >a
-echo b >b
-git add .
-git commit -m files
-git sparse-checkout set a
-echo c >c
-git add c
+diff --git a/diff-lib.c b/diff-lib.c
+index f9eadc4fc1..4245d7ead5 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -198,7 +198,8 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 				continue;
+ 		}
+ 
+-		if (ce_uptodate(ce) || ce_skip_worktree(ce))
++		if (ce_uptodate(ce) || ce_skip_worktree(ce) ||
++		    !path_in_sparse_checkout(ce->name, istate))
+ 			continue;
+ 
+ 		/*
 
-And the last `git add` was successful in adding the untracked `c` file
-which is outside the sparse checkout. I'm not sure if I'm doing
-something wrong, but it seems that `path_in_sparse_checkout()` returns
-UNDECIDED for `c`. Is it because there was no pattern in the list
-explicitly excluding it? And if so, should we consider UNDECIDED as
-NOT_MATCHED for `path_in_sparse_checkout()`?
+Or we could change the callback in add itself:
 
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  builtin/add.c                            | 14 ++++++++++
->  t/t1092-sparse-checkout-compatibility.sh | 33 +++++++++++++++++-------
->  2 files changed, 38 insertions(+), 9 deletions(-)
->
-> diff --git a/builtin/add.c b/builtin/add.c
-> index 88a6c0c69fb..3a109276b74 100644
-> --- a/builtin/add.c
-> +++ b/builtin/add.c
-> @@ -443,6 +443,7 @@ static void check_embedded_repo(const char *path)
->  static int add_files(struct dir_struct *dir, int flags)
->  {
->         int i, exit_status = 0;
-> +       struct string_list only_match_skip_worktree = STRING_LIST_INIT_NODUP;
+diff --git a/builtin/add.c b/builtin/add.c
+index f675bdeae4..3d7762aac2 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -94,6 +94,10 @@ static void update_callback(struct diff_queue_struct *q,
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filepair *p = q->queue[i];
+ 		const char *path = p->one->path;
++
++		if (!path_in_sparse_checkout(path, &the_index))
++			continue;
++
+ 		switch (fix_unmerged_status(p, data)) {
+ 		default:
+ 			die(_("unexpected diff status %c"), p->status);
 
-I see this reuses the logic from cmd_add() and refresh(). But since we
-are operating on untracked files here, perhaps we could replace
-"skip_worktree" by "sparse_paths" or something similar?
+I believe we also need to update a few other places to use the
+`(ce_skip_worktree(ce) || !path_in_sparse_checkout())` logic in order to
+avoid updating tracked sparse paths: chmod_pathspec() for add's --chmod
+option, renormalize_tracked_files() for --renormalize, and
+read-cache.c:refresh_index() for --refresh.
 
->         if (dir->ignored_nr) {
->                 fprintf(stderr, _(ignore_error));
-> @@ -456,6 +457,11 @@ static int add_files(struct dir_struct *dir, int flags)
+>                         continue;
+>                 ce_path_match(istate, ce, pathspec, seen);
 >         }
->
->         for (i = 0; i < dir->nr; i++) {
-> +               if (!path_in_sparse_checkout(dir->entries[i]->name, &the_index)) {
-> +                       string_list_append(&only_match_skip_worktree,
-> +                                          dir->entries[i]->name);
-> +                       continue;
-> +               }
->                 if (add_file_to_index(&the_index, dir->entries[i]->name, flags)) {
->                         if (!ignore_add_errors)
->                                 die(_("adding files failed"));
-> @@ -464,6 +470,14 @@ static int add_files(struct dir_struct *dir, int flags)
->                         check_embedded_repo(dir->entries[i]->name);
->                 }
->         }
-> +
-> +       if (only_match_skip_worktree.nr) {
-> +               advise_on_updating_sparse_paths(&only_match_skip_worktree);
 
-
-Hmm, advise_on_updating_sparse_paths() takes a list of pathspecs that
-only matched sparse paths, but here we are passing a list of actual
-pathnames... Well, these are technically pathspecs too, but the advice
-message may be confusing.
-
-For example, if we ran `git add *.c` on a repo with the untracked
-files `d1/file.c` and `d2/file.c`, we will get:
-
-The following pathspecs didn't match any eligible path, but they do match index
-entries outside the current sparse checkout:
-d1/file.c
-d2/file.c
-
-However, `d1/file.c` and `d2/file.c` are neither index entries nor the
-pathspecs that the user has given to `git add`. So perhaps we need to
-change the error/advice message?
-
-
-> +               exit_status = 1;
-> +       }
-> +       string_list_clear(&only_match_skip_worktree, 0);
-> +
->         return exit_status;
->  }
+Hmm, don't we also want to update
+find_pathspecs_matching_skip_worktree() in this patch to use
+path_in_sparse_checkout()? I see you did that in patch 8, but I think
+this should be together with this current patch as, without it, we stop
+adding tracked sparse paths but we print no error/advice message about
+it.
