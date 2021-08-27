@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26316C4320E
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 08:04:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12318C19F37
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 08:04:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 07E6C61002
+	by mail.kernel.org (Postfix) with ESMTP id E8B3661008
 	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 08:04:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244467AbhH0IEs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 04:04:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44802 "EHLO
+        id S244539AbhH0IEw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 04:04:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244547AbhH0IDc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 04:03:32 -0400
+        with ESMTP id S244550AbhH0IET (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 04:04:19 -0400
 Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6379AC0613D9
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 01:02:25 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id d26so9158232wrc.0
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 01:02:25 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E43E4C06179A
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 01:02:26 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id u16so9073250wrn.5
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 01:02:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8pfuCCAQFFXiFIOeZnyKNFXFe57v83TKVFlSA+4p9R8=;
-        b=i8ZjN7YmRt5U6ww/OIG93eXiIM2PWdZTcrT+BTr/iIsRWfOioemCaOFucRNZEQ+oRO
-         k7qcxJP7rdMckMU3xHx058a0UY4TtLjUur25UATT2Wh27s8OYE8Ck67HLQ+S713g+fqE
-         5gyFBYRsutW1Tkai/gw9Reh4WOpmeTa2iKoleT/YzB+lctSjVjQ2A5auDpKdCNubZ3kl
-         qMwc1T0hrhJNytT73MeZX4hr1xTmXusU1OesGildCDbzKHh17ARi6o4MOyaDDY+JrU5E
-         r+QuDE2PM0gm8GSgWtbfW55vQuhszDCGg0CPjcDExUULnFAr3swg22taAqXX2mXrN4F6
-         chVQ==
+        bh=v/hdB7WJTMXDmJeG+jWOAlJnqvqhIc3wD9Xu4oc5bLQ=;
+        b=oRw7d4AQkUwu+9x6Ktzw/qZmzo6rCzKAGmiImaz8zHhng5i1ojJFbRP1pZzthWH6rI
+         Gi6XMgbxRQ1F0QU2TRuZ9iZiErb4p+N1JNcRX8dqLHhI3qtAIwkL8/z2/i0BTWzWB5+u
+         KteXrBJYgFsoJkMCegj7lCdP06Us4ybag99IUe2dieitQ9hT2ewx3D34c0QcxDKB4bmM
+         aZXAQx0cNNb1u1HkrstbSNQdw8uV7FGi8uoFTbj87yKjddcmzZjRYUUEyx6uQnmkBO9a
+         mfr3/VH994Ti5PlcMx4x1+0TuWMueofYav3AtNThVMMFa02CNiVjv5+5NJuueNSLMjCS
+         INjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8pfuCCAQFFXiFIOeZnyKNFXFe57v83TKVFlSA+4p9R8=;
-        b=hRgJYvXOdlyPnj3qFUdQjjO5Oe0ABhtWFLMmZ7gXpFuQPFzswxSzNc2CEAIR86gjZC
-         IhBqx2a/Zo/tg7K1slLFaQbPyBISj+GWYA0UYeuJDC8Yj6+nMTJYsMeYH2fDh2mU2MDA
-         G2pIZKQ3nbpvYukUWxd8d9RzwZk8oO0QpmQW4uxBQ99rn6OX/AY0XR2CXJzpizB4nLtF
-         wREP+HGy2LXgiFRCuzxzlOtOLPiu7hwqNwLqcoiJaY+NTEJO9nhcg7GQJHaXhPj2/DbI
-         ajdd2XmmwRoUd9sVcuLen78YN0ltJ4vfoZsRCvw/n0BfMtpi4qUCqxENNMa6bJQCiTe7
-         rfAA==
-X-Gm-Message-State: AOAM532et3LeVHdPYXj5bqEJoBUPBIDTKHlCLkJk5p+YiridqIxPz+W3
-        PKyy3fLEUX/utQuuQ9Qf40+aqAcuCsxU/w==
-X-Google-Smtp-Source: ABdhPJzeL7cHqtbBT67E8aBUHL5/QfGONyEkXQJCFD6NLQR4nYKFjX13iqG1U6uog+gmrQUsVbV/Cg==
-X-Received: by 2002:adf:c390:: with SMTP id p16mr9054647wrf.105.1630051343732;
-        Fri, 27 Aug 2021 01:02:23 -0700 (PDT)
+        bh=v/hdB7WJTMXDmJeG+jWOAlJnqvqhIc3wD9Xu4oc5bLQ=;
+        b=Dtd2Qam6h+W2x4QwSPxRX9ia8iFSy62DcT7p7mUqSEZgQSDBeaQ+tCXqk91oyLlsO9
+         20TyORSwD4n+o3oaAKVb9oOzbSXGOFaKvKIotOWZbJoZaLiOjw94EJWui5HalEGLuN6g
+         cSA+ncXt7SmgdLrrblfsgMfQ0gN0w9q0ZikDoCPYkEd/aFKie1pn1jeGU8WpmjcRf9eq
+         SMxFrxn2Nu5j6IBN0muuPljMZZVNM3OODvSWlMGocP2ZJQaKcJ3dXSoJWWZGQeQPqRt8
+         FeQ1aWrV4tUfJXiburqW0ANyHkUdQa/m1gbpYASkONIiez8ArgIoi+gzRYY653ZbPyj2
+         od/A==
+X-Gm-Message-State: AOAM5335zI/iOMSCm/jvIYrjkBAaag1bE4kmyYuaBnAmlnbHbYiANOj6
+        MQ/N+VDMsaO6c2izLT/2+WH2QHlz2mQAfg==
+X-Google-Smtp-Source: ABdhPJxjyqrEx/Y4SOjiteH9ycLzD2P1FgqGbL5M+0stf9J/jWajwV7DL3UhXrPSx6OfK6plvfbVqA==
+X-Received: by 2002:a5d:4285:: with SMTP id k5mr8821892wrq.131.1630051345266;
+        Fri, 27 Aug 2021 01:02:25 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z137sm10922636wmc.14.2021.08.27.01.02.23
+        by smtp.gmail.com with ESMTPSA id z137sm10922636wmc.14.2021.08.27.01.02.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Aug 2021 01:02:23 -0700 (PDT)
+        Fri, 27 Aug 2021 01:02:24 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 1/6] tr2: remove NEEDSWORK comment for "non-procfs" implementations
-Date:   Fri, 27 Aug 2021 10:02:13 +0200
-Message-Id: <patch-v3-1.6-306f14a0f7-20210827T080054Z-avarab@gmail.com>
+Subject: [PATCH v3 3/6] tr2: stop leaking "thread_name" memory
+Date:   Fri, 27 Aug 2021 10:02:15 +0200
+Message-Id: <patch-v3-3.6-45769da953-20210827T080054Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.736.g68690aaec9a
 In-Reply-To: <cover-v3-0.6-0000000000-20210827T080054Z-avarab@gmail.com>
 References: <cover-v2-0.6-00000000000-20210826T121820Z-avarab@gmail.com> <cover-v3-0.6-0000000000-20210827T080054Z-avarab@gmail.com>
@@ -78,31 +78,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm fairly sure that there is no way on Linux to inspect the process
-tree without using procfs, any tool such as ps(1), top(1) etc. that
-shows this sort of information ultimately looks the information up in
-procfs.
-
-So let's remove this comment added in 2f732bf15e6 (tr2: log parent
-process name, 2021-07-21), it's setting us up for an impossible task.
+Fix a memory leak introduced in ee4512ed481 (trace2: create new
+combined trace facility, 2019-02-22), we were doing a free() of other
+memory allocated in tr2tls_create_self(), but not the "thread_name"
+"struct strbuf".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- compat/linux/procinfo.c | 1 -
- 1 file changed, 1 deletion(-)
+ trace2/tr2_tls.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/compat/linux/procinfo.c b/compat/linux/procinfo.c
-index 578fed4cd3..15a89676c7 100644
---- a/compat/linux/procinfo.c
-+++ b/compat/linux/procinfo.c
-@@ -25,7 +25,6 @@ static void get_ancestry_names(struct strvec *names)
- 	}
+diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
+index 067c23755f..7da94aba52 100644
+--- a/trace2/tr2_tls.c
++++ b/trace2/tr2_tls.c
+@@ -95,6 +95,7 @@ void tr2tls_unset_self(void)
  
- 	return;
--	/* NEEDSWORK: add non-procfs-linux implementations here */
+ 	pthread_setspecific(tr2tls_key, NULL);
+ 
++	strbuf_release(&ctx->thread_name);
+ 	free(ctx->array_us_start);
+ 	free(ctx);
  }
- 
- void trace2_collect_process_info(enum trace2_process_info_reason reason)
 -- 
 2.33.0.736.g68690aaec9a
 
