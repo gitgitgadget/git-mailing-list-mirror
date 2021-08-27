@@ -2,86 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB798C432BE
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 17:11:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2674C432BE
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 17:14:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ADC5360F4C
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 17:11:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8701860F5B
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 17:14:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234001AbhH0RMQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 13:12:16 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58924 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232649AbhH0RMP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 13:12:15 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 768DC152C46;
-        Fri, 27 Aug 2021 13:11:26 -0400 (EDT)
+        id S235318AbhH0RPh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 13:15:37 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56118 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230021AbhH0RPh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 13:15:37 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7595FED9EF;
+        Fri, 27 Aug 2021 13:14:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wGeWFPcnNZ/9EWEKRqWq9uKvKJa26QBtf5AdB6
-        H0JT0=; b=lQuP2I8xLOa3+fquT0ZJKughgdJrBvopL3FKo9aBNcEBdi9yxSMuX4
-        IkVUPQlyHHX6P0EQV6PpKbvlePJLTY2exsBKr6gFMaca1JBzUEEF/nLO9mn1rn25
-        sGGdVa/4ewUicf+pOiUqZu3rz0FOqPhoCscWV52LejoKFAXc16yE4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6E2CA152C45;
-        Fri, 27 Aug 2021 13:11:26 -0400 (EDT)
+        :content-type; s=sasl; bh=642Ij28XIYG1oDMcoFuSomm0Z0yCheDyPAARbk
+        vgGVw=; b=K9X0xlMl238rXrWPtQFDUUWG9Z59BjOBCtX/2KTd9EH13WKxrpMuAS
+        qxAv+Jmn5V5qcfjODf/cA5fqvojg3o56qx3PAsH28jN/Nbx09JmN1DxyVjOpnJjC
+        rSf2E/YDmsEChUWXkzb5XkyWjzcaKZCfEzaZc5zD4y3JuT+U9f8lg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6BF7AED9EE;
+        Fri, 27 Aug 2021 13:14:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.116.162])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AA077152C44;
-        Fri, 27 Aug 2021 13:11:23 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E1DB2ED9ED;
+        Fri, 27 Aug 2021 13:14:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
-        jeffhost@microsoft.com
-Subject: Re: [PATCH 0/2] fsmonitor: fixup to avoid warnings from pedantic
-References: <20210809063004.73736-1-carenas@gmail.com>
-        <42dce285-9599-4c7c-d351-44c1e338337e@jeffhostetler.com>
-        <xmqqpmumftry.fsf@gitster.g>
-        <b554c82a-4da1-9676-4d93-b769ab6bbcbd@jeffhostetler.com>
-        <xmqqsfyvbg8m.fsf@gitster.g>
-        <CAPUEsphe0N6w_qCTAp46YPH7vBj2dkJa9kOm2HaixkFkVuk3GA@mail.gmail.com>
-Date:   Fri, 27 Aug 2021 10:11:22 -0700
-In-Reply-To: <CAPUEsphe0N6w_qCTAp46YPH7vBj2dkJa9kOm2HaixkFkVuk3GA@mail.gmail.com>
-        (Carlo Arenas's message of "Thu, 26 Aug 2021 23:04:09 -0700")
-Message-ID: <xmqq1r6ebyo5.fsf@gitster.g>
+To:     Jan Kratochvil <jan@jankratochvil.net>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org
+Subject: Re: bugreport: git apply -3 confusing "lacks the necessary blob"
+References: <YR1OszUm08BMAE1N@host1.jankratochvil.net>
+        <73a31988-d298-0168-43d5-849f91366d7d@gmail.com>
+        <xmqqtujkui9v.fsf@gitster.g>
+        <YSkBg3lBAZ2pxCP2@host1.jankratochvil.net>
+Date:   Fri, 27 Aug 2021 10:14:46 -0700
+In-Reply-To: <YSkBg3lBAZ2pxCP2@host1.jankratochvil.net> (Jan Kratochvil's
+        message of "Fri, 27 Aug 2021 17:15:15 +0200")
+Message-ID: <xmqqwno6ajy1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: CE5A4976-0759-11EC-B471-FA11AF6C5138-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 477C1866-075A-11EC-A067-ECFD1DBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Arenas <carenas@gmail.com> writes:
+Jan Kratochvil <jan@jankratochvil.net> writes:
 
-> On Thu, Aug 26, 2021 at 10:37 PM Junio C Hamano <gitster@pobox.com> wrote:
->> Here is what I had to do to work around
->>
->>  https://github.com/git/git/runs/3438543601?check_suite_focus=true#step:5:136
+> On Fri, 20 Aug 2021 19:40:12 +0200, Junio C Hamano wrote:
+>> But I think Jan is talking about the case where users get a patch
+>> that lacks the "index" information out of other people's "diff"
+>> implementation and try to "apply -3" without realizing that it is
+>> not Git's "diff" output.
 >
-> correct; that was 1/2 of the fixups I proposed and were waiting for the reroll.
+> For example from Phabricator:
+> 	https://reviews.llvm.org/file/data/3ceoc32b3yv43vk3nw4q/PHID-FILE-lfeeh2qu4vrngdcwwudo/D107456.diff
 >
-> interesting that the job was able to build without 2/2[1] but it might
-> be because clang is even more pedantic.
 >
-> Carlo
+>> Perhaps something like the attached patch would be a good start.
 >
-> [1] https://lore.kernel.org/git/20210809063004.73736-3-carenas@gmail.com/
+> Do you plan to check it in?
 
-One thing I noticed is that simple-ipc.h can disable itself
-altogether with "#ifdef SUPPORTS_SIMPLE_IPC", so the unconditional
-use of "enum ipc_active_state" by fsmonitor-ipc.h would still be a
-problem.  fsmonitor-ipc.h is included even in help.c so it seems
-that with this topic, you practically will not get a working Git at
-all with -pedantic when SUPPORTS_SIMPLE_IPC is not true.
+Maybe eventually but not yet.  When I say "a good start", it is
+because it is known to be insufficient.  I haven't had a chance to
+revisit the issue.
 
