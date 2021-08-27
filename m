@@ -2,98 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C55B1C432BE
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 23:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC4D8C432BE
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 23:44:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D51A60C3E
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 23:21:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9C2F960EAF
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 23:44:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232427AbhH0XVu convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 27 Aug 2021 19:21:50 -0400
-Received: from shark2.2a.pl ([213.77.90.2]:60559 "EHLO shark.2a.pl"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S232365AbhH0XVu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 19:21:50 -0400
-Received: from wrasse.2a.pl (wrasse.2a.pl [213.77.90.7])
-        by shark.2a.pl (Postfix) with ESMTP id 99663175083A;
-        Sat, 28 Aug 2021 01:20:56 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 2a.pl
-Received: from shark.2a.pl ([213.77.90.2])
-        by wrasse.2a.pl (wrasse.2a.pl [213.77.90.7]) (amavisd-new, port 10024)
-        with ESMTP id fW74I2cbQ_Ul; Sat, 28 Aug 2021 01:20:53 +0200 (CEST)
-Received: from localhost.localdomain (unknown [10.8.1.26])
-        by shark.2a.pl (Postfix) with ESMTPSA id 5BF3A1750828;
-        Sat, 28 Aug 2021 01:20:54 +0200 (CEST)
-From:   Krzysztof =?utf-8?B?xbtlbGVjaG93c2tp?= <giecrilj@stegny.2a.pl>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christopher Yeleighton via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Christopher Yeleighton <ne01026@shark.2a.pl>
-Subject: Re: [PATCH v2] pretty-options.txt: describe supported encoding
-Date:   Sat, 28 Aug 2021 01:20:53 +0200
-Message-ID: <1659256.Cefek1SpHl@localhost.localdomain>
-In-Reply-To: <xmqq5yvqbz0j.fsf@gitster.g>
-References: <pull.1079.git.git.1630013668862.gitgitgadget@gmail.com> <2247912.lYO0ccLKhl@localhost.localdomain> <xmqq5yvqbz0j.fsf@gitster.g>
+        id S232473AbhH0Xpr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 19:45:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34762 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232354AbhH0Xpq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 19:45:46 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D14A3C0613D9
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 16:44:56 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id c12so14259113ljr.5
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 16:44:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qzDzRWimi/58yvXUr/WA98EieANPASkxEZbROdKCTJQ=;
+        b=Mrz0dPcEZ5+C46w7jFd4SKSCAG/lUO5lt+g2WICVHqpd/ZWAMiY7t+6wUaoF5tJc4C
+         kmUnfU9VnXVtVIsXT0f/eEQOr6Vzcemhix9ohkOhSTxInEThPby9zCsvAvS3XyyjjgkJ
+         Y64X42CvSBmHUj1KbAEoNb4qxMunnnb3K9UQbpTflWhk4+xzuTNYDXUKR6J4L3rd2lhx
+         RiLSBCZaZlkN875PtY+WuGMobIigrXE7GLt+cf69vyqnVyqmSZB2Hqw1Acy9uzz6y6ai
+         C1jExfs29af64BKSu1npLElXVGXgrPoDm0qPGOm+L+OkaaJr7zMWn3CfhsSVXJL6wKeD
+         cjZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qzDzRWimi/58yvXUr/WA98EieANPASkxEZbROdKCTJQ=;
+        b=FgCXKgdi0T1OWJav94/IQuj0N3RC1w3TobE7yt+82tuaBVVEzM+AK+RuPCxmoQQwir
+         mz3PgtWTErN3Iw4h0E1CrYg94bMwKAEnFXFI9FuOYOwAE2+i36YAFLPObkobZX2D2zJD
+         64OEnaen4HnNZ+7E/JYfzBJcDLjZGRh/veUUrP3OsfGQlIwEEwg5AWYG7s8hStcyt3SC
+         UQ6MPujxiNC02AI6Yj/IbH/8f7ck5eD+YG1nf6Ll5yXt+NBMwZOafnKxKDy+sZHSD0rJ
+         ggSft0GZ5pmtR3Q6gXmmvYkElQ86SLwZlOsaBpxV6n/yypbpqQTRjtFR/Rdfy64NaJOg
+         oVnQ==
+X-Gm-Message-State: AOAM5319P+ZF4i98r+1B3pnIqnv64zPtpDFKx9YsQvBrY7KhmM6pUptX
+        TEHKNRgLnLAyYlI5c++bNbDorsJdRN0EGAb0H35a/Q==
+X-Google-Smtp-Source: ABdhPJxGEFa7Q1FqLiK+8i8Gyy1UQxZLkk1ThWt2TjJR8wm5Kz6ZS+eaGMCfTNqueFd5IoEhlVMkwnx7sbSAfbZWKTM=
+X-Received: by 2002:a2e:a591:: with SMTP id m17mr9585213ljp.113.1630107895133;
+ Fri, 27 Aug 2021 16:44:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
+References: <pull.1018.git.1629842085.gitgitgadget@gmail.com>
+ <d31c641180645ee4059aab9230841ad90f9244fe.1629842085.git.gitgitgadget@gmail.com>
+ <CAHd-oW5-f2Kb5DR-UTfu1qB1fm63oHf62WYsbGd5ajZueOWHtA@mail.gmail.com>
+In-Reply-To: <CAHd-oW5-f2Kb5DR-UTfu1qB1fm63oHf62WYsbGd5ajZueOWHtA@mail.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Fri, 27 Aug 2021 20:44:44 -0300
+Message-ID: <CAHd-oW55fWkjf5494OJPsJGtRh59SDJFbfhw=nt2q=To1DQJqA@mail.gmail.com>
+Subject: Re: [PATCH 11/13] mv: refuse to move sparse paths
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dnia piątek, 27 sierpnia 2021 19:03:56 CEST Junio C Hamano pisze:
-> > +       The encoding must be a system encoding supported by iconv(1),
-> > +       otherwise this option will be ignored.
-> > +       POSIX character maps used by iconv(1p) are not supported.
-> 
-> This paragraph is a bit hard to grok.
-> 
-> I think it is saying that the "-f frommap -t tomap" form in [*1*]
-> that can use arbitrary character set description file is not
-> supported, but "-f fromcode -t tocode" form, which also is what
-> iconv_open() takes [*2*], is supported.  Am I reading it correctly?
+On Fri, Aug 27, 2021 at 6:20 PM Matheus Tavares Bernardino
+<matheus.bernardino@usp.br> wrote:
+>
+> On Tue, Aug 24, 2021 at 6:54 PM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > diff --git a/builtin/mv.c b/builtin/mv.c
+> > index c2f96c8e895..b58fd4ce5ba 100644
+> > --- a/builtin/mv.c
+> > +++ b/builtin/mv.c
+> > @@ -176,10 +177,22 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+> >                 const char *src = source[i], *dst = destination[i];
+> >                 int length, src_is_dir;
+> >                 const char *bad = NULL;
+> > +               int skip_sparse = 0;
+> >
+> >                 if (show_only)
+> >                         printf(_("Checking rename of '%s' to '%s'\n"), src, dst);
+> >
+> > +               if (!path_in_sparse_checkout(src, &the_index)) {
+>
+> `git mv` can only move/rename tracked paths, but since we check
+> whether `src` is sparse before checking if it is in the index, the
+> user will get the sparse error message instead. This is OK, but the
+> advice might be misleading, as it says they can use `--sparse` if they
+> really want to move the file, but repeating the command with
+> `--sparse` will now fail for another reason. I wonder if we should
+> check whether `src` is tracked before checking if it is sparse, or if
+> that is not really an issue we should bother with.
 
-Yes
+Another problem is that the displayed message will say that the
+pathspecs "match index entries outside sparse checkout" even when the
+path given to mv doesn't really exist:
 
-> 
-> Is there an easier-to-read way to explain the distinction to our
-> average reader?
+git sparse-checkout set some/dir/
+git mv nonexistent-file foo
 
-It is not our job to explain what POSIX character maps are.  The takeaway is 
-they are unsupported; if you do not know what they are, why should you bother?
-
-> 
-> What I am getting at is this.  Imagine average users who need to see
-> their commits recoded to iso-8859-2.  They see "git log" has
-> "--encoding=<encoding>" option, read the above paragraph and wonder
-> if they are on the supported side or unsupported side of the above
-> paragraph.  I want to make it easy for them to stop wondering.
-> 
-> For that purpose, "iconv(1) vs iconv(1p)" would not help them very
-> much, especially considering that not all Git users are UNIX users
-> (they probably do not even know what (1) and (1p) means).
-
-I am sorry, as a UNIX user I have no idea what iconv, being part of the GNU C 
-library, means and how it works on a non-UNIX system that does not contain 
-one.  If you know, could you enlighten us please?
-
-> I think our end-user facing manual pages tend to avoid the latter.
-> We do use "shall" in the RFC2119/BCP14 sense on the technical side
-> of our documentation where we give requirements to the third-party
-> implementations so that they can interoperate with us, but this is
-> not such a description.
-> 
-> Thanks.
-
-I shall revert it after we have come to an agreement about the POSIX stuff.
-
-BR,
-Chris
-
-
-
-
+The following pathspecs didn't match any eligible path, but they do match index
+entries outside the current sparse checkout:
+nonexistent-file
+hint: Disable or modify the sparsity rules if you intend to update such entries.
+hint: Disable this message with "git config advice.updateSparsePath false"
