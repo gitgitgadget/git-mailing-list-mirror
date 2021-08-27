@@ -2,100 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08DFDC432BE
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 21:30:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F84CC432BE
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 21:34:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D15F060F58
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 21:30:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED02C60F91
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 21:34:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231829AbhH0Vbr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 17:31:47 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60958 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231696AbhH0Vbq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 17:31:46 -0400
-Received: (qmail 10064 invoked by uid 109); 27 Aug 2021 21:30:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 27 Aug 2021 21:30:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16367 invoked by uid 111); 27 Aug 2021 21:30:56 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 27 Aug 2021 17:30:56 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 27 Aug 2021 17:30:56 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Johannes Berg <johannes@sipsolutions.net>, git@vger.kernel.org,
-        dstolee@microsoft.com, gitster@pobox.com, jonathantanmy@google.com
-Subject: Re: [PATCH v4 00/25] multi-pack reachability bitmaps
-Message-ID: <YSlZkMhD1vlc/48i@coredump.intra.peff.net>
-References: <cover.1617991824.git.me@ttaylorr.com>
- <cover.1629821743.git.me@ttaylorr.com>
- <YSWOtNoxirDdmBXG@coredump.intra.peff.net>
- <YSWmhMID1hGs7Yp1@nand.local>
- <YSXy73lWKteiuY6s@coredump.intra.peff.net>
- <YSfiJmYMPPyEueUG@nand.local>
- <YSgGBxh24UAZR5X3@nand.local>
+        id S231913AbhH0Veu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 17:34:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33948 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231937AbhH0Vet (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 17:34:49 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6552CC0617A8
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 14:34:00 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id k12-20020a056830150c00b0051abe7f680bso9675649otp.1
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 14:34:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=l+UfqFgwfvfTaJ7RnbFBX2veCA6r+mcLXbk/CMameFQ=;
+        b=kbvCPeFbfh91gCkXqu5EHgzjTg44v+vOjQKkcbI0H2iKObP98I9VHuiEFCtgkPoBNJ
+         dd4Grt1IRG203bUEtRL9uhQ+hgq8VcNax3Yj7bmUWS/kTO8F4XiNpEHZFrCOdmTwoyni
+         i35huVK77E+4miI0xp/5cHlB9r8zZ5AAQj1cxhjbLHOBHErsJDmW2zW95TgL9jxCt+7y
+         9k+jZ9fUKUO2DEj8uRCyeBFRaKQNXqEDc1B+BITC6XeafJxEz2+DRzDzXny7poNvCCP5
+         K/3pG7smEN7LkTnE+g5U2JsWEWpTy77d97xgB9Y18MDmOnvNqLtptzJAsOQ64NqJGFkk
+         scew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=l+UfqFgwfvfTaJ7RnbFBX2veCA6r+mcLXbk/CMameFQ=;
+        b=pU+pSHnamuMIGzqnCZrEHT8Fgr6ynQtyUgA3fU2G1ba9GqXed0pBhHohsh0ztX1pEU
+         HV9bgMrCNC6KDMJpkeFGsYf1xoJZUgdnzKEpnxMHvX75Wmeh509i7fR7T4AG5u21iqb/
+         vcXRqV7M18HfeVCa4ssY0Ezdtsogy0LnRGga+e2FxXwtiFI0s3XmkcDnPw4XbWk6OtOi
+         mJDF3l7V2fIQPg88VikHdOOdVT23T6GMI/REmPaN8lgm+gJ28c2CE1V0CcPrywEgClJe
+         BR5NSLOXcEWZdhaW+qrb5CJmS62S3YXaRr3+bOHWdOHSebtJt+2d0jg9Sxm2cnjh+N0o
+         47tw==
+X-Gm-Message-State: AOAM531DRjSdIxDnt4NxhdSWwx6QMIHNUhfLPYC/h0LbiNZ/ibeJ5r+e
+        YCXcdmHEcHBE23F3vlI31jJOFZor1SE4ms+ozE4=
+X-Google-Smtp-Source: ABdhPJxHghmPY5AEQWYT9XndWgoeqFTbJx/QqlE6f7+UH+1SkmVcIYqxQo/weJwqxQKsIpSu1j/q8UfiGE6WU3DXVFw=
+X-Received: by 2002:a9d:630e:: with SMTP id q14mr9641664otk.316.1630100039668;
+ Fri, 27 Aug 2021 14:33:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YSgGBxh24UAZR5X3@nand.local>
+References: <pull.1009.v3.git.1629206602.gitgitgadget@gmail.com>
+ <pull.1009.v4.git.1629841904.gitgitgadget@gmail.com> <b379b8fc61af8a8c39ff8b73aae03ad4999a456c.1629841904.git.gitgitgadget@gmail.com>
+In-Reply-To: <b379b8fc61af8a8c39ff8b73aae03ad4999a456c.1629841904.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 27 Aug 2021 14:33:48 -0700
+Message-ID: <CABPp-BFcySug2kSvxT7YdJ1Oorza5AfxKPJgMBE2wN8qOw+=Eg@mail.gmail.com>
+Subject: Re: [PATCH v4 04/10] sparse-index: use WRITE_TREE_MISSING_OK
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <stolee@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 26, 2021 at 05:22:15PM -0400, Taylor Blau wrote:
+On Tue, Aug 24, 2021 at 2:51 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> When updating the cache tree in convert_to_sparse(), the
+> WRITE_TREE_MISSING_OK flag indicates that trees might be computed that
+> do not already exist within the object database.
 
-> > I did some research[1] on what parts of `--object-dir` have worked (and not
-> > worked) in the past, and came to the conclusion that although this
-> > behavior is surprising, we do bear the responsibility of continuing to
-> > maintain it.
-> 
-> Hmm. Upon thinking on in more, here is some evidence to the contrary.
-> The new test, specifically this snippet:
-> 
->     git init repo &&
->     test_when_finished "rm -fr repo" &&
->     (
->       cd repo &&
->       test_commit base &&
->       git repack -d
->     ) &&
-> 
->     nongit git multi-pack-index --object-dir=$(pwd)/repo/.git/objects write
-> 
-> will fail with GIT_TEST_DEFAULT_HASH=sha256, since the MIDX internals
-> settle on the hash size via `the_hash_algo` which doesn't respect the
-> hash algorithm used by the target repository.
+Okay.
 
-Yeah, I think this is a good example of the class of things that might
-fail: anything that requires the repo config to behave correctly.
+> This happens in cases
+> such as 'git add' creating new trees that it wants to store in
+> anticipation of a following 'git commit'.
 
-I do think the hash format is somewhat unusual here. Most of the changes
-to the on-disk files are reflected in the files themselves (e.g., pack
-index v2 is chosen by config at _write_ time, but readers can interpret
-the file stand-alone).
+This doesn't make any sense to me.  Does 'git add' call
+convert_to_sparse()?  I don't see why it would; wouldn't the calls to
+convert_to_sparse() come via sparse-checkout init/set commands?  If
+I'm correct on that, and 'git add' wants to create new trees, then by
+the time convert_to_sparse() is called in some subsequent git
+operation, then convert_to_sparse would already have the trees it
+needs.
 
-There may be other config that could influence the writing of the midx,
-and we'd skip it in this kind of non-repo setup. An example here is
-repack.usedeltabaseoffset, which midx_repack() tries to respect.
-Ignoring that doesn't produce a nonsense result, but it doesn't follow
-what would happen if run from inside the repo.
 
-The other class of problems I'd expect is where part of the midx
-operation needs to look at other parts of the repo. Bitmap generation is
-an obvious one there, since we'd want to look at refs to find the
-reachable tips. Now obviously that's a new feature we're trying to
-introduce here, so it can't be an existing breakage. But it does make me
-wonder what other problems might be lurking.
+I thought the reason you would need this is someone modified and
+staged a change to a file underneath a directory that will be
+sparsified away; at the time of convert_to_sparse(), a tree object may
+not have yet been written for the new tree with the newly modified
+file (because those tend to be written at commit time), but you'd need
+it at the time you sparsified.
 
-So I dunno. Even if it mostly works now, I'm not sure it's something
-that I'm all that happy about supporting going forward. It seems like a
-recipe for subtle bugs where the midx code calls into other library code
-that assumes that it can look at the repository struct.
+> If this flag is not specified,
+> then it might trigger a promisor fetch or a failure due to the object
+> not existing locally.
 
--Peff
+Good point.
+
+> Use WRITE_TREE_MISSING_OK during convert_to_sparse() to avoid these
+> possible reasons for the cache_tree_update() to fail.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  sparse-index.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/sparse-index.c b/sparse-index.c
+> index d9b07695953..880c5f72338 100644
+> --- a/sparse-index.c
+> +++ b/sparse-index.c
+> @@ -181,8 +181,11 @@ int convert_to_sparse(struct index_state *istate)
+>         /*
+>          * Silently return if there is a problem with the cache tree update,
+>          * which might just be due to a conflict state in some entry.
+> +        *
+> +        * This might create new tree objects, so be sure to use
+> +        * WRITE_TREE_MISSING_OK.
+>          */
+> -       if (cache_tree_update(istate, 0))
+> +       if (cache_tree_update(istate, WRITE_TREE_MISSING_OK))
+>                 return 0;
+>
+>         remove_fsmonitor(istate);
+> --
+> gitgitgadget
