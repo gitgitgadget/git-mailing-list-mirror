@@ -2,114 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2D32C432BE
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 19:59:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9145FC432BE
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 20:40:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A4FB960EE7
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 19:59:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F67860551
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 20:40:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231324AbhH0UAL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 16:00:11 -0400
-Received: from mout.web.de ([212.227.15.3]:52589 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231296AbhH0UAK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 16:00:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1630094357;
-        bh=WFhw8flEkGxGC9IZqWZFhSBu72G7Cf6tBzrtVeXSov0=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=SMCgKVdckmklIakq45No6INXuBZW3yGSyx+qit1oArm3xVhcBCpf4oV82jvo0/QQa
-         Br94Y/FvTOXaEsOIUaKNzPq85Ax3kWb3ZSU+hB2YpI2vdfqL8Bfh3LBmA+K4XU8fWv
-         2jCCbnyVC2MJiSqCjBQie+tqyvWIKVM31u7mBM3g=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.27.185]) by smtp.web.de
- (mrweb004 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0MBY4U-1mCajz0jYs-00AXc5; Fri, 27 Aug 2021 21:59:17 +0200
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] archive: convert queue_directory to struct object_id
-Message-ID: <bfdb36fc-3b92-fe62-e928-dc235cede31d@web.de>
-Date:   Fri, 27 Aug 2021 21:59:16 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.13.0
+        id S231770AbhH0Ulr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 16:41:47 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52098 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231664AbhH0Ulr (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 27 Aug 2021 16:41:47 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4D92C6044D;
+        Fri, 27 Aug 2021 20:40:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1630096857;
+        bh=gg+pGAOCupJwhehBYiK+xBMzgXGrGW6mBHFY97XQ0ag=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=RGGjXVN95dlqRMlOKaFY4kMc5A/zMC81sS/PlTblK0K/PMuAGMLoIEufzMHi+ar/B
+         xcH4WObvajXENIuf1syLtNjaqiu3W7Nd9/sJp381Lab9aOnDtZojfY1ULa2mcrXJVH
+         jPEcr79PFKrrUAmb7DsoBJFDKQ3JrPekjLdr+GC6J/luIUfQTu+ki3kalSMq+teKka
+         Ip5mxZUjNDTWjC8/awixDUO+03Gl5AUfejtD04na9kqu7biV3wmZ8epEICfgJcwSjC
+         v9hZNLu6Rtaf/jsX7i8g728Pui0oJ/NBiId0i+HiTPh3Fy2IHYxXBNCheJQCMrsPqx
+         k4FVURl8HTI0j8swR+Y5NR04SF0Ai+PV4otFL2IZp1eQB0vagJ+MLxy32vvfYZxkTt
+         JMS+ef6iYpaNsj54gDBW2zt/vmFiW9Pb1DVZHOtBwWrhsnVnARV+gHdQbGQvjTSv30
+         NR9u41RymoUwSGRHROPOBc+cRoVTtxFBqQgo7HbNpGZAsoTVC7X
+Date:   Fri, 27 Aug 2021 20:40:51 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] archive: convert queue_directory to struct object_id
+Message-ID: <YSlN0+ZCpDqoem9J@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <bfdb36fc-3b92-fe62-e928-dc235cede31d@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:haifkSdhFEXItN04h95TBwvin02KVtYOPEG0bIVZ5O8vnxwx3X0
- 8an7CGDnTIE6yK3k+W45ibZIzbxX+eZCbwGq1TUuiVj9S9H2lvhJZx1YkBPdMsjJkTSiCj0
- qoMkzZ80cu+zLes9H0WMpC0IR+f1TaQYjym5wR64SMyCaow+fbHUcOMOm14OMJia95WOHya
- KUjs5ddB9BiCJbG3En0LA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:9skXwlbWU1U=:us/ru37PQf9ATQL3KaveCO
- BlBieAs24XaBteqHxsIs9RiVWcjOLvNWfTvMDGAaBDmEde322esQe4x7PiJFeLDbdDSr8zSLm
- YWZSGNOCP3X3slGMQv9wxfCC/wob+zD6rTh6KRwuc4k2RHKsEdEEGYOuJ7YA5+k2j6xM10Xnj
- Y5LRq4v5qXP0lSGKDuN2AjQ8I0X6Uwc7pe6cKA9vBqMAmkfbeUlYVZAx04+zIB46ATyCNj6je
- 13tQ5hxnazLFV2rAis0pAKF63W5KurhcApy3shpCiM64Suj2PeA9UxVIAY/m4+uZpbH/87Qjd
- mg66TWXYz2FXkHiaHn0ikdplvQm5mrhFas0IyeeDKGcOpdMlqBuIfBSKVVVeftYEecZ6WV6EY
- TOV8idUAeqrf+KMSW03ctflq5C/UtRXv5pV4bf7Px4h2mnU7aOvvTq9/iDoonu7gbFOX1wQpU
- aXPk9FUB0alMalMDL/xK3k3D8NKoBDQFKb2h2VhwxbxkkgQhYLduiua7xff5leJn7/8SnDrd8
- hRSVR0OAXxHlUA4kpbH8fyBCA+UHvnxqx9UqUQKs2kVw4hbc5hdYEAhDxMnNxOGK3qE/zL2hh
- mprrfTjTmK8MFDe5D1La6mqVBKmnMhXMdNMCj0C4BWLbF6fK5fVmGpjICYav7v4YGe5rP6vSV
- tIqM8EfBuNRp1iAJfzCIuBxzIEPNyDi404ZERHqAElG45cQZirLqxzzlAJ1/O7D8Ubxx8Jizi
- JG8FozLJHYuhEXQUbg+sIGI5dTi3aM5x4GxX8WrpDGyVyQTGGNXwPDTvU0xR/W6WzDvHEUgdd
- 8cSX4XuPJsdw5L0v6CONKG57P9kllp5lJzCzYtq1KTOp0sE6oVLjycEQ9ESYX5VfFIxtK8fck
- wmjcRdkG3HOfWFCljQW2qukRunJI5hPFuwRgI3xH0dDXwDswMuu0b7nv8aZwxDwN43sS2yGQi
- BVR8DWJ45BV08wLp0SlMHcvUt9VLA2Mi7AKh2kYTy2hjCaqxjBg8YH92qyZbPEuNU/EMXK9gZ
- iyAt6KL2B6MQzyms5Kq7UGTuBRq7JGcLimbBDCzDux1i7OnH8tJa+Mjz6jRV7L5dMmVnzjd5a
- fu7sHfkCswL5vUruDd4GaByaSUQvCrio5lG
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="iyLLRQe5DX3Na2Gi"
+Content-Disposition: inline
+In-Reply-To: <bfdb36fc-3b92-fe62-e928-dc235cede31d@web.de>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pass the struct object_id on instead of just its hash member.
-This is simpler and avoids the need to guess the algorithm.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- archive.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+--iyLLRQe5DX3Na2Gi
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/archive.c b/archive.c
-index 3c266d1d7b..a3bbb09125 100644
-=2D-- a/archive.c
-+++ b/archive.c
-@@ -191,7 +191,7 @@ static int write_archive_entry(const struct object_id =
-*oid, const char *base,
- 	return err;
- }
+On 2021-08-27 at 19:59:16, Ren=C3=A9 Scharfe wrote:
+> Pass the struct object_id on instead of just its hash member.
+> This is simpler and avoids the need to guess the algorithm.
 
--static void queue_directory(const unsigned char *sha1,
-+static void queue_directory(const struct object_id *oid,
- 		struct strbuf *base, const char *filename,
- 		unsigned mode, struct archiver_context *c)
- {
-@@ -203,7 +203,7 @@ static void queue_directory(const unsigned char *sha1,
- 	d->mode	   =3D mode;
- 	c->bottom  =3D d;
- 	d->len =3D xsnprintf(d->path, len, "%.*s%s/", (int)base->len, base->buf,=
- filename);
--	oidread(&d->oid, sha1);
-+	oidcpy(&d->oid, oid);
- }
+Seems reasonable.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
- static int write_directory(struct archiver_context *c)
-@@ -250,8 +250,7 @@ static int queue_or_write_archive_entry(const struct o=
-bject_id *oid,
+--iyLLRQe5DX3Na2Gi
+Content-Type: application/pgp-signature; name="signature.asc"
 
- 		if (check_attr_export_ignore(check))
- 			return 0;
--		queue_directory(oid->hash, base, filename,
--				mode, c);
-+		queue_directory(oid, base, filename, mode, c);
- 		return READ_TREE_RECURSIVE;
- 	}
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
-=2D-
-2.33.0
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYSlN0gAKCRB8DEliiIei
+gQqJAP9SR7KhZ6Cg7Gd+caXdfIayCECwgZK2kX5MaF6kwPvscAD/SRfGGAfRngGE
+kELK6E07Wv6DODqG0o8Jc/wtYtk83gI=
+=f7vJ
+-----END PGP SIGNATURE-----
+
+--iyLLRQe5DX3Na2Gi--
