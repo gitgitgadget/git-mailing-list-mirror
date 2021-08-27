@@ -2,95 +2,312 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4962C432BE
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 06:01:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F43BC432BE
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 06:01:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9AADC6023F
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 06:01:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED0C260FD8
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 06:01:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231501AbhH0GCR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 02:02:17 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55871 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229611AbhH0GCQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 02:02:16 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A8C0ED8A79;
-        Fri, 27 Aug 2021 02:01:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=kE4yJuBHn+3l1O3jOH261Yp+oDCBY+oye+w6TL
-        GOdBg=; b=g5DLIKfy+96PR1R4ihmvczM4AWhM/txL6f3Z0CBI98UI8kFiStEwOk
-        mX3TiTd8fzSzib4qLh3xPfgYOP7SIiwXzYhvvbzy0WEo2/8/2h2PGkIi1/b6/HQE
-        qT9vYrhrwXkD9e0ltoYnrBjGFTZ943SXwQueuiqVbvDRKV5I9lwBg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A0876D8A77;
-        Fri, 27 Aug 2021 02:01:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D85BD8A76;
-        Fri, 27 Aug 2021 02:01:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
-        jonathantanmy@google.com
-Subject: Re: [PATCH v4 05/25] midx: clear auxiliary .rev after replacing the
- MIDX
-References: <cover.1617991824.git.me@ttaylorr.com>
-        <cover.1629821743.git.me@ttaylorr.com>
-        <771741844be3570395abfda813ed5ef2fa78332e.1629821743.git.me@ttaylorr.com>
-        <xmqqa6l6oafd.fsf@gitster.g> <YSVX18UXh9vX+Zhp@nand.local>
-        <xmqqr1eimtrp.fsf@gitster.g> <YSVjnSDaBXgXvT9W@nand.local>
-        <xmqq35qymrcn.fsf@gitster.g> <xmqqy28qlcow.fsf@gitster.g>
-        <YSVuUYFh7lmhNlEy@nand.local>
-Date:   Thu, 26 Aug 2021 23:01:26 -0700
-In-Reply-To: <YSVuUYFh7lmhNlEy@nand.local> (Taylor Blau's message of "Tue, 24
-        Aug 2021 18:10:25 -0400")
-Message-ID: <xmqqo89jbf49.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S244124AbhH0GCU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 02:02:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45554 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229611AbhH0GCT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 02:02:19 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09209C061757
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 23:01:31 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id u16so8635494wrn.5
+        for <git@vger.kernel.org>; Thu, 26 Aug 2021 23:01:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=8WW8hYtYUVA8iKnvz/iKM31nEmMr4hxuKiswvHyo8V0=;
+        b=A3c+H9VhuDW+KP2W6re1CdoojQ34Wok4iLKdUStTlvMXu/3QEARwuoyZlAa9wJHdnU
+         4NC4o1wUbkFGVh0rMzs+4QdUj6RNGiwZber2jln0dJfO7vKLi0TKydDCY7sCI4OyVVQS
+         2nwzD6h5wXSPWiWaMadtoRZDrYHNWHQ9FDj7Dhpi7HtfCIP2T+JO8t8wDqRwULw8oXB9
+         Wizd5Rskb93YlgzqVWcn+DHtrLra+mVpoMYYFIx+VNP012rpHNn4jwzRAjNMpbfVf4Iz
+         Ebc7ndVb9P1IQLDxkakgKlSG89oqlPE54IHzFo0H0hqBWbiU3RH1TDLjjQQQ+e7UZoAX
+         pmWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=8WW8hYtYUVA8iKnvz/iKM31nEmMr4hxuKiswvHyo8V0=;
+        b=a678vdI12C7AuhScrsRO6/RSYgrImyVHWTae5nQoYc300vmNcdzr8+fuLP6X56cBbf
+         7dJEmdZaeOP5HrDdJLz2Fchp9MqKCNR8e/HCXxLYyB7ihEohzsAbqVo90zf+Mr4CF8jQ
+         bnJzLsyFGZarPx6xOPzmVqG6RxoHS5DZH+5DGR5IS2YsyCRSoh95NTHxexFY0jU5V78l
+         Gnch8XCopXbeVDvAUwH0jLNc99uJ9V05l2dixRYwyD9iYhnMB6mU5+mzD2hJu+ZNjjj1
+         OhqGSkAhZWOMewWg1tWfYxOPfHVgns73TqRyy5lvB4w7WbXAIvtHuSUs3pj1ezagutSQ
+         uP4w==
+X-Gm-Message-State: AOAM5324ykMDy9zp04y4iQN22roMAzdCzDUGnJJehDqUtL3M2wEj86yi
+        qLKPQh+31zQeiUUO/qz9B1gesywvH4HzbQ==
+X-Google-Smtp-Source: ABdhPJxfS0bZZyJ9vyzTxHNbwy3MEFmcpWth5mAPfv//uSrYdT0cHdtK+4uX1nhS6C0bbOWS+um2XA==
+X-Received: by 2002:adf:9151:: with SMTP id j75mr8243311wrj.68.1630044089073;
+        Thu, 26 Aug 2021 23:01:29 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id y15sm11909520wmi.18.2021.08.26.23.01.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Aug 2021 23:01:28 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [RFC PATCH] reftable: fixup for broken __FUNCTION__ use
+Date:   Fri, 27 Aug 2021 08:01:21 +0200
+Message-Id: <patch-1.1-f7d9c8af0c-20210827T055608Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.736.g68690aaec9a
+In-Reply-To: <xmqqwno7bgeo.fsf@gitster.g>
+References: <xmqqwno7bgeo.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 375D1E20-06FC-11EC-8773-D601C7D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+The use of the __FUNCTION__ macro is non-standard, in this case all
+we're doing with it is generating a prettier unique filename based on
+the name of the function that makes it, presumably to make ad-hoc
+debugging easier.
 
-> On Tue, Aug 24, 2021 at 03:06:55PM -0700, Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->> > FWIW, here is what I have somewhere in 'seen' where two topics meet.
->>
->> Oops, one change missed.
+For mkdtemp() and mkstemp() we don't need to pass anything like this
+in, since the "XXXXXX" part of the template will ensure that we get a
+unique filename, but to make finding what function created what
+tempfile easy let's just use __LINE__ here, it's not *as easy*, but at
+least this one uses standard behavior.
+
+This can be tested under DEVOPTS=pedantic, i.e. before this change
+we'd emit errors like:
+
+    reftable/stack_test.c: In function ‘test_read_file’:
+    reftable/stack_test.c:67:30: error: ISO C does not support ‘__FUNCTION__’ predefined identifier [-Werror=pedantic]
+      char *fn = get_tmp_template(__FUNCTION__);
+
+The current tip of "seen" is broken as a result, see
+https://github.com/git/git/runs/3439941236
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+On Thu, Aug 26 2021, Junio C Hamano wrote:
+
+> This step does not compile under -pedantic because it assumes that
+> __FUNCTION__ is available unconditionally (unlike trace.h where it
+> allows __FUNCTION__ to be used iff compiler supports it).
 >
-> Thanks; that matches my own resolution. I noticed that it does fail the
-> new test in t5319, since writing a MIDX wants to make sure that we are
-> only touching an alternate's object directory (which will fail if we are
-> running `git multi-pack-index` from outside of a repository).
+> Here is a workaround that needs to be split and squashed into the
+> steps that introduce these test source files.
 >
-> My opinion is that we should require being inside of a repository to run
-> the MIDX builtin. Otherwise we're allowing that command to modify any
-> old MIDX, which doesn't make sense.
->
-> I think we probably need a single unifying topic, so I'm happy if you
-> want to discard one of our two topics from seen in the meantime.
+> Subject: [PATCH] SQUASH???
+>  https://github.com/git/git/runs/3439941236?check_suite_focus=true#step:5:700
 
-It seems that the *.rev test (probably added by the other topic that
-is a single patch fix) fails under sha256 hash.  I am not going to
-dig it any further myself, but for the interested, CI breakage is
-here:
+First, thanks for the re-re-arrangement of the errno+reftable
+topics. It looks like the "seen" integration is good, except for this
+issue under -pedantic.
 
-  https://github.com/git/git/runs/3440068613?check_suite_focus=true#step:5:1219
+I can confirm your fix works, for what it's worth I came up with this
+alternate approach that I was about to send before I saw your proposed
+fixup.
 
-Thanks.
+It's smaller because it punts on the whole notion of adding the
+function name to the filename, as argued above I think __LINE__ should
+be sufficient here (and is probably already overkill). The only reason
+to add __FUNCTION__ or __LINE__ to the filename is presumably for
+one-off ad-hoc debugging.
+
+I see you pushed out seen a few minutes ago as bce8679d69 with your
+proposed squash. Let's leave that in and not have the churn of
+re-replacing that fixup. I'm submitting this more for Han-Wen's
+consideration at this point.
+
+ reftable/stack_test.c | 43 ++++++++++++++++++++++---------------------
+ 1 file changed, 22 insertions(+), 21 deletions(-)
+
+diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+index 890a5c0199..f6b542b259 100644
+--- a/reftable/stack_test.c
++++ b/reftable/stack_test.c
+@@ -46,25 +46,26 @@ static int count_dir_entries(const char *dirname)
+ 	return len;
+ }
+ 
+-static char *get_tmp_template(const char *prefix)
++static char *get_tmp_template(const int line)
+ {
+ 	const char *tmp = getenv("TMPDIR");
+ 	static char template[1024];
+-	snprintf(template, sizeof(template) - 1, "%s/%s.XXXXXX",
+-		 tmp ? tmp : "/tmp", prefix);
++	snprintf(template, sizeof(template) - 1, "%s/stack-test.c-%d.XXXXXX",
++		 tmp ? tmp : "/tmp", line);
++	fprintf(stderr, "have template %s\n", template);
+ 	return template;
+ }
+ 
+-static char *get_tmp_dir(const char *prefix)
++static char *get_tmp_dir(const int line)
+ {
+-	char *dir = get_tmp_template(prefix);
++	char *dir = get_tmp_template(line);
+ 	EXPECT(mkdtemp(dir));
+ 	return dir;
+ }
+ 
+ static void test_read_file(void)
+ {
+-	char *fn = get_tmp_template(__FUNCTION__);
++	char *fn = get_tmp_template(__LINE__);
+ 	int fd = mkstemp(fn);
+ 	char out[1024] = "line1\n\nline2\nline3";
+ 	int n, err;
+@@ -133,7 +134,7 @@ static int write_test_log(struct reftable_writer *wr, void *arg)
+ 
+ static void test_reftable_stack_add_one(void)
+ {
+-	char *dir = get_tmp_dir(__FUNCTION__);
++	char *dir = get_tmp_dir(__LINE__);
+ 
+ 	struct reftable_write_options cfg = { 0 };
+ 	struct reftable_stack *st = NULL;
+@@ -174,7 +175,7 @@ static void test_reftable_stack_uptodate(void)
+ 	struct reftable_write_options cfg = { 0 };
+ 	struct reftable_stack *st1 = NULL;
+ 	struct reftable_stack *st2 = NULL;
+-	char *dir = get_tmp_dir(__FUNCTION__);
++	char *dir = get_tmp_dir(__LINE__);
+ 
+ 	int err;
+ 	struct reftable_ref_record ref1 = {
+@@ -218,7 +219,7 @@ static void test_reftable_stack_uptodate(void)
+ 
+ static void test_reftable_stack_transaction_api(void)
+ {
+-	char *dir = get_tmp_dir(__FUNCTION__);
++	char *dir = get_tmp_dir(__LINE__);
+ 
+ 	struct reftable_write_options cfg = { 0 };
+ 	struct reftable_stack *st = NULL;
+@@ -265,7 +266,7 @@ static void test_reftable_stack_validate_refname(void)
+ 	struct reftable_write_options cfg = { 0 };
+ 	struct reftable_stack *st = NULL;
+ 	int err;
+-	char *dir = get_tmp_dir(__FUNCTION__);
++	char *dir = get_tmp_dir(__LINE__);
+ 
+ 	int i;
+ 	struct reftable_ref_record ref = {
+@@ -305,7 +306,7 @@ static int write_error(struct reftable_writer *wr, void *arg)
+ 
+ static void test_reftable_stack_update_index_check(void)
+ {
+-	char *dir = get_tmp_dir(__FUNCTION__);
++	char *dir = get_tmp_dir(__LINE__);
+ 
+ 	struct reftable_write_options cfg = { 0 };
+ 	struct reftable_stack *st = NULL;
+@@ -337,7 +338,7 @@ static void test_reftable_stack_update_index_check(void)
+ 
+ static void test_reftable_stack_lock_failure(void)
+ {
+-	char *dir = get_tmp_dir(__FUNCTION__);
++	char *dir = get_tmp_dir(__LINE__);
+ 
+ 	struct reftable_write_options cfg = { 0 };
+ 	struct reftable_stack *st = NULL;
+@@ -362,7 +363,7 @@ static void test_reftable_stack_add(void)
+ 		.exact_log_message = 1,
+ 	};
+ 	struct reftable_stack *st = NULL;
+-	char *dir = get_tmp_dir(__FUNCTION__);
++	char *dir = get_tmp_dir(__LINE__);
+ 
+ 	struct reftable_ref_record refs[2] = { { NULL } };
+ 	struct reftable_log_record logs[2] = { { NULL } };
+@@ -443,7 +444,7 @@ static void test_reftable_stack_log_normalize(void)
+ 		0,
+ 	};
+ 	struct reftable_stack *st = NULL;
+-	char *dir = get_tmp_dir(__FUNCTION__);
++	char *dir = get_tmp_dir(__LINE__);
+ 
+ 
+ 	uint8_t h1[GIT_SHA1_RAWSZ] = { 0x01 }, h2[GIT_SHA1_RAWSZ] = { 0x02 };
+@@ -495,7 +496,7 @@ static void test_reftable_stack_log_normalize(void)
+ static void test_reftable_stack_tombstone(void)
+ {
+ 	int i = 0;
+-	char *dir = get_tmp_dir(__FUNCTION__);
++	char *dir = get_tmp_dir(__LINE__);
+ 
+ 	struct reftable_write_options cfg = { 0 };
+ 	struct reftable_stack *st = NULL;
+@@ -577,7 +578,7 @@ static void test_reftable_stack_tombstone(void)
+ 
+ static void test_reftable_stack_hash_id(void)
+ {
+-	char *dir = get_tmp_dir(__FUNCTION__);
++	char *dir = get_tmp_dir(__LINE__);
+ 
+ 	struct reftable_write_options cfg = { 0 };
+ 	struct reftable_stack *st = NULL;
+@@ -685,7 +686,7 @@ static void test_suggest_compaction_segment_nothing(void)
+ 
+ static void test_reflog_expire(void)
+ {
+-	char *dir = get_tmp_dir(__FUNCTION__);
++	char *dir = get_tmp_dir(__LINE__);
+ 
+ 	struct reftable_write_options cfg = { 0 };
+ 	struct reftable_stack *st = NULL;
+@@ -766,7 +767,7 @@ static void test_empty_add(void)
+ 	struct reftable_write_options cfg = { 0 };
+ 	struct reftable_stack *st = NULL;
+ 	int err;
+-	char *dir = get_tmp_dir(__FUNCTION__);
++	char *dir = get_tmp_dir(__LINE__);
+ 
+ 	struct reftable_stack *st2 = NULL;
+ 
+@@ -788,7 +789,7 @@ static void test_reftable_stack_auto_compaction(void)
+ {
+ 	struct reftable_write_options cfg = { 0 };
+ 	struct reftable_stack *st = NULL;
+-	char *dir = get_tmp_dir(__FUNCTION__);
++	char *dir = get_tmp_dir(__LINE__);
+ 
+ 	int err, i;
+ 	int N = 100;
+@@ -823,7 +824,7 @@ static void test_reftable_stack_compaction_concurrent(void)
+ {
+ 	struct reftable_write_options cfg = { 0 };
+ 	struct reftable_stack *st1 = NULL, *st2 = NULL;
+-	char *dir = get_tmp_dir(__FUNCTION__);
++	char *dir = get_tmp_dir(__LINE__);
+ 
+ 	int err, i;
+ 	int N = 3;
+@@ -873,7 +874,7 @@ static void test_reftable_stack_compaction_concurrent_clean(void)
+ {
+ 	struct reftable_write_options cfg = { 0 };
+ 	struct reftable_stack *st1 = NULL, *st2 = NULL, *st3 = NULL;
+-	char *dir = get_tmp_dir(__FUNCTION__);
++	char *dir = get_tmp_dir(__LINE__);
+ 
+ 	int err, i;
+ 	int N = 3;
+-- 
+2.33.0.736.g68690aaec9a
 
