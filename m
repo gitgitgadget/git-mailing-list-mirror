@@ -2,118 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 457B8C432BE
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 22:56:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C55B1C432BE
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 23:21:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1278F60FC4
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 22:56:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D51A60C3E
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 23:21:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232340AbhH0W5q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 18:57:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52368 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232289AbhH0W5o (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 18:57:44 -0400
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2EAEC0613D9
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 15:56:54 -0700 (PDT)
-Received: by mail-oo1-xc35.google.com with SMTP id m11-20020a056820034b00b0028bb60b551fso2474756ooe.5
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 15:56:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sZFakbNTwk6ssmcgRfjGg5Rhjb/Qk+QPyPvq4c3f6Tg=;
-        b=K5akhsdJsyAZtNdUwhnUeT69cQ9mfjSC2u3i+3gz/gqVDPVb1QhEq055lR2RRHBnpe
-         1XUvyL3/AhLyCEfCht86iBXke2AL7/VR7SUrgy0iHYLRcRumMLP2LRKWOm2UYF67t7m7
-         AwkJccl34EjzW+kyjY5JbKEVFmug2TYeC8v0XpKdZ5VJv2zba2mPe+TZnOvu0ExsDqyE
-         kdH0JOkPbhZUQ1uHmeBdMQDnv67Fm8oQVF+8gDXXbUITVRWIfMiArJa1QBntFXtVZZwd
-         JkLE+cT3ISyMpH+SDf+rWDyye7fuHC7tBvxk24T8YjhhXWQ4mE5sF0IhNVf1feSQVg69
-         LKjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sZFakbNTwk6ssmcgRfjGg5Rhjb/Qk+QPyPvq4c3f6Tg=;
-        b=tGeklL0iWSWKZPYyQQdUyhw6UQNkuKBfe4UMLlMO+b6Rf+4meDQxyG2ubArg7qPtQH
-         CZxuTuPvJuLXyT2TzFbqg7l2qNeyjnnKFvE/i2SxoPSMN8iECQkzfe+pH6olWxjBJy1/
-         rZTeg8SKOWqLtgCZjuzk8cVsfA5kn6r/02gT01lGmPgrcYcW7dlF8+LE4C4Vk/eCn6iE
-         oETYvzEZ4ngwNn0hJgRfEf7lQlTP/e4RpIyzzKLotEMbAD5j3P4Z2ryDASYAQiabwgGk
-         McxfomkYauT4yUEJ+39egGRRbh3Asp1ZK/cAxD2SYNVr5vGlyi66ITYn61MY4gJ5yaU7
-         wD9A==
-X-Gm-Message-State: AOAM5321yHVdHNBUWkVi/1OWAdNKVdq8wZGuZ3WVXTrWjQC+uiAtX6Cd
-        pXC0WSvx6Y+K+xdKEfnQl7S4zLl7gvmgplZyIJM=
-X-Google-Smtp-Source: ABdhPJzH1oy0htCBhkW4R35yJsOV7tv4IjwvYoP9FklCedcFFr2RKSjF3pih1E01xNagMeJjR+SdP1vMSXs1G7s1UHU=
-X-Received: by 2002:a4a:11c6:: with SMTP id 189mr928295ooc.32.1630105013428;
- Fri, 27 Aug 2021 15:56:53 -0700 (PDT)
+        id S232427AbhH0XVu convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 27 Aug 2021 19:21:50 -0400
+Received: from shark2.2a.pl ([213.77.90.2]:60559 "EHLO shark.2a.pl"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S232365AbhH0XVu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 19:21:50 -0400
+Received: from wrasse.2a.pl (wrasse.2a.pl [213.77.90.7])
+        by shark.2a.pl (Postfix) with ESMTP id 99663175083A;
+        Sat, 28 Aug 2021 01:20:56 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 2a.pl
+Received: from shark.2a.pl ([213.77.90.2])
+        by wrasse.2a.pl (wrasse.2a.pl [213.77.90.7]) (amavisd-new, port 10024)
+        with ESMTP id fW74I2cbQ_Ul; Sat, 28 Aug 2021 01:20:53 +0200 (CEST)
+Received: from localhost.localdomain (unknown [10.8.1.26])
+        by shark.2a.pl (Postfix) with ESMTPSA id 5BF3A1750828;
+        Sat, 28 Aug 2021 01:20:54 +0200 (CEST)
+From:   Krzysztof =?utf-8?B?xbtlbGVjaG93c2tp?= <giecrilj@stegny.2a.pl>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christopher Yeleighton via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Christopher Yeleighton <ne01026@shark.2a.pl>
+Subject: Re: [PATCH v2] pretty-options.txt: describe supported encoding
+Date:   Sat, 28 Aug 2021 01:20:53 +0200
+Message-ID: <1659256.Cefek1SpHl@localhost.localdomain>
+In-Reply-To: <xmqq5yvqbz0j.fsf@gitster.g>
+References: <pull.1079.git.git.1630013668862.gitgitgadget@gmail.com> <2247912.lYO0ccLKhl@localhost.localdomain> <xmqq5yvqbz0j.fsf@gitster.g>
 MIME-Version: 1.0
-References: <pull.1019.git.1629220124.gitgitgadget@gmail.com> <pull.1019.v2.git.1629841965.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1019.v2.git.1629841965.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 27 Aug 2021 15:56:42 -0700
-Message-ID: <CABPp-BFXk++dktLnaTTuCe+keqkNuPzGyVi4uFsOpE4VxqAUdw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] Sparse Index: Integrate with merge, cherry-pick,
- rebase, and revert
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>
+Content-Transfer-Encoding: 8BIT
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 24, 2021 at 2:52 PM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> This series integrates the sparse index with commands that perform merges
-> such as 'git merge', 'git cherry-pick', 'git revert' (free with
-> cherry-pick), and 'git rebase'.
->
-> When the ORT merge strategy is enabled, this allows most merges to succeed
-> without expanding the sparse index, leading to significant performance
-> gains. I tested these changes against an internal monorepo with over 2
-> million paths at HEAD but with a sparse-checkout that only has ~60,000 files
-> within the sparse-checkout cone. 'git merge' commands went from 5-6 seconds
-> to 0.750-1.250s.
->
-> In the case of the recursive merge strategy, the sparse index is expanded
-> before the recursive algorithm proceeds. We expect that this is as good as
-> we can get with that strategy. When the strategy shifts to ORT as the
-> default, then this will not be a problem except for users who decide to
-> change the behavior.
->
-> Most of the hard work was done by previous series, such as
-> ds/sparse-index-ignored-files (which this series is based on).
->
->
-> Updates in V2
-> =============
->
->  * The tests no longer specify GIT_TEST_MERGE_ALGORITHM or directly
->    reference "-s ort". By relaxing this condition, I found an issue with
->    'git cherry-pick' and 'git rebase' when using the 'recursive' algorithm
->    which is fixed in a new patch.
->
->  * Use the pul.twohead config to specify the ORT merge algorithm to avoid
->    expanding the sparse index when that is what we are testing.
+Dnia piątek, 27 sierpnia 2021 19:03:56 CEST Junio C Hamano pisze:
+> > +       The encoding must be a system encoding supported by iconv(1),
+> > +       otherwise this option will be ignored.
+> > +       POSIX character maps used by iconv(1p) are not supported.
+> 
+> This paragraph is a bit hard to grok.
+> 
+> I think it is saying that the "-f frommap -t tomap" form in [*1*]
+> that can use arbitrary character set description file is not
+> supported, but "-f fromcode -t tocode" form, which also is what
+> iconv_open() takes [*2*], is supported.  Am I reading it correctly?
 
-pull.twohead, not pul.twohead.
+Yes
 
-I'm curious, though, why use it instead of just setting
-GIT_TEST_MERGE_ALGORITHM=ort?  That'd seem to avoid the need for the
-explicit subshells and the sane_unset calls.
+> 
+> Is there an easier-to-read way to explain the distinction to our
+> average reader?
 
->
->  * Corrected some misstatements in my commit messages.
+It is not our job to explain what POSIX character maps are.  The takeaway is 
+they are unsupported; if you do not know what they are, why should you bother?
 
-I read over v2.  Other than some minor questions about whether using
-GIT_TEST_MERGE_ALGORITHM=ort would be easier, and a typo still present
-from v1, the series looks good to me.
+> 
+> What I am getting at is this.  Imagine average users who need to see
+> their commits recoded to iso-8859-2.  They see "git log" has
+> "--encoding=<encoding>" option, read the above paragraph and wonder
+> if they are on the supported side or unsupported side of the above
+> paragraph.  I want to make it easy for them to stop wondering.
+> 
+> For that purpose, "iconv(1) vs iconv(1p)" would not help them very
+> much, especially considering that not all Git users are UNIX users
+> (they probably do not even know what (1) and (1p) means).
+
+I am sorry, as a UNIX user I have no idea what iconv, being part of the GNU C 
+library, means and how it works on a non-UNIX system that does not contain 
+one.  If you know, could you enlighten us please?
+
+> I think our end-user facing manual pages tend to avoid the latter.
+> We do use "shall" in the RFC2119/BCP14 sense on the technical side
+> of our documentation where we give requirements to the third-party
+> implementations so that they can interoperate with us, but this is
+> not such a description.
+> 
+> Thanks.
+
+I shall revert it after we have come to an agreement about the POSIX stuff.
+
+BR,
+Chris
+
+
+
+
