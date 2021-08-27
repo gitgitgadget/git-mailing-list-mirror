@@ -2,116 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7326C432BE
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 16:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A6F0C432BE
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 17:04:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B4D7960E78
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 16:15:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D54AA61002
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 17:04:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245579AbhH0QQI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 12:16:08 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57087 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245490AbhH0QQE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 12:16:04 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 370D3152651;
-        Fri, 27 Aug 2021 12:15:15 -0400 (EDT)
+        id S232598AbhH0REu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 13:04:50 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65393 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233094AbhH0REu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 13:04:50 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C864315D7A6;
+        Fri, 27 Aug 2021 13:04:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TU+IJPQfjDywtyLJ79S7Jtrrg3AaW7zzE/+lps
-        nssig=; b=doSlgqeyhnu2z4DawD3whBwawn2xcerhKUBZCe9vBFCx/Pgt5HI5Nh
-        g+s+sthFmgI90D2O0qusT2o2Qs3BGJ4LRcl0XZcCyKyZOsE5orfXk2KaMNYenKFf
-        HGCHHwuXdBC8CJoobolOnHx9kuLiZDNoFUiO2UMZvAaLsKXTZOWwc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 30230152650;
-        Fri, 27 Aug 2021 12:15:15 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=t60xL5nQwyWF
+        99BRVPXHZdeLVj5Aia5mxiZBIS89xcA=; b=cj7p1riQr2liKKpaYHbP4rR6UJph
+        1mQ6ThMduk4Jd/Oa1Kv6AI2B4tVAkK0T+fxRXfaXJYXYFd9j30xAkkvpU5/FqL5Q
+        2AaZq7ezTKFSVcRFt1o3nKRVk4Wix4F9ayqCl61RFW3pyVbJf93oNJ8OrWoG7P4X
+        2EeoRm3FL5me3Yg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BB58815D7A5;
+        Fri, 27 Aug 2021 13:04:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.116.162])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6B76915264D;
-        Fri, 27 Aug 2021 12:15:12 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0E92915D7A2;
+        Fri, 27 Aug 2021 13:03:57 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jacob Vosmaer <jacob@gitlab.com>, me@ttaylorr.com,
-        git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH 2/2] upload-pack: use stdio in send_ref callbacks
-References: <CADMWQoMpURczcnZne=0cr2vavoLm_VT5eEMg4FCu3VeSg_UJaQ@mail.gmail.com>
-        <20210826100648.10333-1-jacob@gitlab.com>
-        <20210826100648.10333-2-jacob@gitlab.com> <xmqqpmu0f9ob.fsf@gitster.g>
-        <YSgiwXFnLrLy6pH3@coredump.intra.peff.net>
-Date:   Fri, 27 Aug 2021 09:15:10 -0700
-In-Reply-To: <YSgiwXFnLrLy6pH3@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 26 Aug 2021 19:24:49 -0400")
-Message-ID: <xmqqbl5ic19t.fsf@gitster.g>
+To:     Krzysztof =?utf-8?Q?=C5=BBelechowski?= <giecrilj@stegny.2a.pl>
+Cc:     Christopher Yeleighton via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Christopher Yeleighton <ne01026@shark.2a.pl>
+Subject: Re: [PATCH v2] pretty-options.txt: describe supported encoding
+References: <pull.1079.git.git.1630013668862.gitgitgadget@gmail.com>
+        <0877bb5d-da4b-125d-7beb-c3138903f468@gmail.com>
+        <2247912.lYO0ccLKhl@localhost.localdomain>
+Date:   Fri, 27 Aug 2021 10:03:56 -0700
+In-Reply-To: <2247912.lYO0ccLKhl@localhost.localdomain> ("Krzysztof
+        =?utf-8?Q?=C5=BBelechowski=22's?= message of "Fri, 27 Aug 2021 13:51:34
+ +0200")
+Message-ID: <xmqq5yvqbz0j.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F4ECE722-0751-11EC-8635-FA11AF6C5138-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C4BAB8C0-0758-11EC-AF76-9BA3EF469F85-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Krzysztof =C5=BBelechowski <giecrilj@stegny.2a.pl> writes:
 
-> On Thu, Aug 26, 2021 at 09:33:08AM -0700, Junio C Hamano wrote:
+> git log recognises only system encodings supported by iconv(1), but not=
+=20
+> POSIX character maps used by iconv(1p). Document it.
 >
->> > +	/*
->> > +	 * Increase the stdio buffer size for stdout, for the benefit of ref
->> > +	 * advertisement writes. We are only allowed to call setvbuf(3) "after
->> > +	 * opening a stream and before any other operations have been performed
->> > +	 * on it", so let's call it before we have written anything to stdout.
->> > +	 */
->> > +	if (setvbuf(stdout, xmalloc(LARGE_PACKET_MAX), _IOFBF,
->> > +			LARGE_PACKET_MAX))
->> > +		die_errno("failed to grow stdout buffer");
->> 
->> Nice to see a comment on the tricky part.  I do not think we mind if
->> we rounded up the allocation size to the next power of two here, but
->> there probably won't be any measurable benefit for doing so.
->
-> I'm a little negative on this part, actually. The commit message claims
-> it's for consistency across platforms. But I would argue that if your
-> libc buffer size is sub-optimal, then we shouldn't be sprinkling these
-> adjustments through the code. Either:
->
->  - we should consider it a quality-of-implementation issue, and people
->    using that libc should push back on their platform to change the
->    default size; or
->
->  - we should fix it consistently and transparently throughout Git by
->    adjusting std{in,out,err} in common-main, and using fopen()/fdopen()
->    wrappers to adjust to something more sensible
+> Signed-off-by:  <ne01026@shark.2a.pl>
 
-I agree that it would be ideal if we didn't do setvbuf() at all, the
-second best would be to do so at a central place.  My "Nice" applied
-only to the comment ;-)
+The "Human Readable Name <email@add.re.ss>" on this line must match
+the one on the "From: " line that records the author of the patch.
 
-> I also find the use of LARGE_PACKET_MAX weird here. Is that really the
-> optimal stdio buffer size? The whole point of this is coalescing _small_
-> packets into a single write() syscall. So how many small packets fit
-> into LARGE_PACKET_MAX is comparing apples and oranges.
+If you are forwarding somebody else's patch (with or without
+improvement), we also need your sign off.
 
-The sizing is all my fault.  The original used 32k threashold and
-implemented manual buffering by flushing whenever the accumulated
-data exceeded the threashold, as opposed to "if we buffer this new
-piece, it would exceed, so let's flush first what we got so far,
-which is smaller than the threashold", which I found indefensible in
-two ways.  The "flush _after_ we go over it" semantics looked iffy,
-and 32k was totally out of thin air.  As LARGE_PACKET_MAX is the
-hard upper limit of each packet that has been with us forever, it
-was more defensible than 32k ;-)
+> diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-
+> options.txt
+> index 27ddaf84a19..4f8376d681b 100644
+> --- a/Documentation/pretty-options.txt
+> +++ b/Documentation/pretty-options.txt
+> @@ -36,9 +36,13 @@ people using 80-column terminals.
+>         The commit objects record the encoding used for the log message
+>         in their encoding header; this option can be used to tell the
+>         command to re-code the commit log message in the encoding
+> -       preferred by the user.  For non plumbing commands this
+> -       defaults to UTF-8. Note that if an object claims to be encoded
+> -       in `X` and we are outputting in `X`, we will output the object
+> +       preferred by the user.
 
-But if we are using stdio, I agree that it is much better not to
-worry about sizing at all by not doing setvbuf() and leaving it to
-libc implementation.  They ought to know what works on their
-platform the best.
+
+> +       The encoding must be a system encoding supported by iconv(1),
+> +       otherwise this option will be ignored.
+> +       POSIX character maps used by iconv(1p) are not supported.
+
+This paragraph is a bit hard to grok.
+
+I think it is saying that the "-f frommap -t tomap" form in [*1*]
+that can use arbitrary character set description file is not
+supported, but "-f fromcode -t tocode" form, which also is what
+iconv_open() takes [*2*], is supported.  Am I reading it correctly?
+
+Is there an easier-to-read way to explain the distinction to our
+average reader?
+
+What I am getting at is this.  Imagine average users who need to see
+their commits recoded to iso-8859-2.  They see "git log" has
+"--encoding=3D<encoding>" option, read the above paragraph and wonder
+if they are on the supported side or unsupported side of the above
+paragraph.  I want to make it easy for them to stop wondering.
+
+For that purpose, "iconv(1) vs iconv(1p)" would not help them very
+much, especially considering that not all Git users are UNIX users
+(they probably do not even know what (1) and (1p) means).
+
+> +       For non-plumbing commands this defaults to UTF-8.
+
+I think I can guess why the patch wants to change "non plumbing" to
+"non-plumbing" (I do not strongly care either way, so I'd take the
+patch without complaint about that particular change).  It would
+have been nicer to mention this change in the proposed commit log
+message, though, but that is minor.
+
+> +       Note that if an object claims to be encoded in `X`
+> +       and we are outputting in `X`, we shall output the object
+>         verbatim; this means that invalid sequences in the original
+>         commit may be copied to the output.
+
+I probably wouldn't have noticed this if a new manual page used
+"shall" consistently, but since the original deliberately used
+"will" and the patch changes it to "shall", I have to ask: why?
+
+I think our end-user facing manual pages tend to avoid the latter.
+We do use "shall" in the RFC2119/BCP14 sense on the technical side
+of our documentation where we give requirements to the third-party
+implementations so that they can interoperate with us, but this is
+not such a description.
 
 Thanks.
+
+
+[References]
+
+*1* https://pubs.opengroup.org/onlinepubs/9699919799/utilities/iconv.html=
+=20
+*2* https://pubs.opengroup.org/onlinepubs/9699919799/functions/iconv_open=
+.html
