@@ -2,149 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A6F0C432BE
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 17:04:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB798C432BE
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 17:11:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D54AA61002
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 17:04:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ADC5360F4C
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 17:11:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232598AbhH0REu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 13:04:50 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:65393 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233094AbhH0REu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 13:04:50 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C864315D7A6;
-        Fri, 27 Aug 2021 13:04:00 -0400 (EDT)
+        id S234001AbhH0RMQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 13:12:16 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58924 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232649AbhH0RMP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 13:12:15 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 768DC152C46;
+        Fri, 27 Aug 2021 13:11:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=t60xL5nQwyWF
-        99BRVPXHZdeLVj5Aia5mxiZBIS89xcA=; b=cj7p1riQr2liKKpaYHbP4rR6UJph
-        1mQ6ThMduk4Jd/Oa1Kv6AI2B4tVAkK0T+fxRXfaXJYXYFd9j30xAkkvpU5/FqL5Q
-        2AaZq7ezTKFSVcRFt1o3nKRVk4Wix4F9ayqCl61RFW3pyVbJf93oNJ8OrWoG7P4X
-        2EeoRm3FL5me3Yg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BB58815D7A5;
-        Fri, 27 Aug 2021 13:04:00 -0400 (EDT)
+        :content-type; s=sasl; bh=wGeWFPcnNZ/9EWEKRqWq9uKvKJa26QBtf5AdB6
+        H0JT0=; b=lQuP2I8xLOa3+fquT0ZJKughgdJrBvopL3FKo9aBNcEBdi9yxSMuX4
+        IkVUPQlyHHX6P0EQV6PpKbvlePJLTY2exsBKr6gFMaca1JBzUEEF/nLO9mn1rn25
+        sGGdVa/4ewUicf+pOiUqZu3rz0FOqPhoCscWV52LejoKFAXc16yE4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6E2CA152C45;
+        Fri, 27 Aug 2021 13:11:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.116.162])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0E92915D7A2;
-        Fri, 27 Aug 2021 13:03:57 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AA077152C44;
+        Fri, 27 Aug 2021 13:11:23 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Krzysztof =?utf-8?Q?=C5=BBelechowski?= <giecrilj@stegny.2a.pl>
-Cc:     Christopher Yeleighton via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Christopher Yeleighton <ne01026@shark.2a.pl>
-Subject: Re: [PATCH v2] pretty-options.txt: describe supported encoding
-References: <pull.1079.git.git.1630013668862.gitgitgadget@gmail.com>
-        <0877bb5d-da4b-125d-7beb-c3138903f468@gmail.com>
-        <2247912.lYO0ccLKhl@localhost.localdomain>
-Date:   Fri, 27 Aug 2021 10:03:56 -0700
-In-Reply-To: <2247912.lYO0ccLKhl@localhost.localdomain> ("Krzysztof
-        =?utf-8?Q?=C5=BBelechowski=22's?= message of "Fri, 27 Aug 2021 13:51:34
- +0200")
-Message-ID: <xmqq5yvqbz0j.fsf@gitster.g>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        jeffhost@microsoft.com
+Subject: Re: [PATCH 0/2] fsmonitor: fixup to avoid warnings from pedantic
+References: <20210809063004.73736-1-carenas@gmail.com>
+        <42dce285-9599-4c7c-d351-44c1e338337e@jeffhostetler.com>
+        <xmqqpmumftry.fsf@gitster.g>
+        <b554c82a-4da1-9676-4d93-b769ab6bbcbd@jeffhostetler.com>
+        <xmqqsfyvbg8m.fsf@gitster.g>
+        <CAPUEsphe0N6w_qCTAp46YPH7vBj2dkJa9kOm2HaixkFkVuk3GA@mail.gmail.com>
+Date:   Fri, 27 Aug 2021 10:11:22 -0700
+In-Reply-To: <CAPUEsphe0N6w_qCTAp46YPH7vBj2dkJa9kOm2HaixkFkVuk3GA@mail.gmail.com>
+        (Carlo Arenas's message of "Thu, 26 Aug 2021 23:04:09 -0700")
+Message-ID: <xmqq1r6ebyo5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C4BAB8C0-0758-11EC-AF76-9BA3EF469F85-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: CE5A4976-0759-11EC-B471-FA11AF6C5138-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Krzysztof =C5=BBelechowski <giecrilj@stegny.2a.pl> writes:
+Carlo Arenas <carenas@gmail.com> writes:
 
-> git log recognises only system encodings supported by iconv(1), but not=
-=20
-> POSIX character maps used by iconv(1p). Document it.
+> On Thu, Aug 26, 2021 at 10:37 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> Here is what I had to do to work around
+>>
+>>  https://github.com/git/git/runs/3438543601?check_suite_focus=true#step:5:136
 >
-> Signed-off-by:  <ne01026@shark.2a.pl>
+> correct; that was 1/2 of the fixups I proposed and were waiting for the reroll.
+>
+> interesting that the job was able to build without 2/2[1] but it might
+> be because clang is even more pedantic.
+>
+> Carlo
+>
+> [1] https://lore.kernel.org/git/20210809063004.73736-3-carenas@gmail.com/
 
-The "Human Readable Name <email@add.re.ss>" on this line must match
-the one on the "From: " line that records the author of the patch.
+One thing I noticed is that simple-ipc.h can disable itself
+altogether with "#ifdef SUPPORTS_SIMPLE_IPC", so the unconditional
+use of "enum ipc_active_state" by fsmonitor-ipc.h would still be a
+problem.  fsmonitor-ipc.h is included even in help.c so it seems
+that with this topic, you practically will not get a working Git at
+all with -pedantic when SUPPORTS_SIMPLE_IPC is not true.
 
-If you are forwarding somebody else's patch (with or without
-improvement), we also need your sign off.
-
-> diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-
-> options.txt
-> index 27ddaf84a19..4f8376d681b 100644
-> --- a/Documentation/pretty-options.txt
-> +++ b/Documentation/pretty-options.txt
-> @@ -36,9 +36,13 @@ people using 80-column terminals.
->         The commit objects record the encoding used for the log message
->         in their encoding header; this option can be used to tell the
->         command to re-code the commit log message in the encoding
-> -       preferred by the user.  For non plumbing commands this
-> -       defaults to UTF-8. Note that if an object claims to be encoded
-> -       in `X` and we are outputting in `X`, we will output the object
-> +       preferred by the user.
-
-
-> +       The encoding must be a system encoding supported by iconv(1),
-> +       otherwise this option will be ignored.
-> +       POSIX character maps used by iconv(1p) are not supported.
-
-This paragraph is a bit hard to grok.
-
-I think it is saying that the "-f frommap -t tomap" form in [*1*]
-that can use arbitrary character set description file is not
-supported, but "-f fromcode -t tocode" form, which also is what
-iconv_open() takes [*2*], is supported.  Am I reading it correctly?
-
-Is there an easier-to-read way to explain the distinction to our
-average reader?
-
-What I am getting at is this.  Imagine average users who need to see
-their commits recoded to iso-8859-2.  They see "git log" has
-"--encoding=3D<encoding>" option, read the above paragraph and wonder
-if they are on the supported side or unsupported side of the above
-paragraph.  I want to make it easy for them to stop wondering.
-
-For that purpose, "iconv(1) vs iconv(1p)" would not help them very
-much, especially considering that not all Git users are UNIX users
-(they probably do not even know what (1) and (1p) means).
-
-> +       For non-plumbing commands this defaults to UTF-8.
-
-I think I can guess why the patch wants to change "non plumbing" to
-"non-plumbing" (I do not strongly care either way, so I'd take the
-patch without complaint about that particular change).  It would
-have been nicer to mention this change in the proposed commit log
-message, though, but that is minor.
-
-> +       Note that if an object claims to be encoded in `X`
-> +       and we are outputting in `X`, we shall output the object
->         verbatim; this means that invalid sequences in the original
->         commit may be copied to the output.
-
-I probably wouldn't have noticed this if a new manual page used
-"shall" consistently, but since the original deliberately used
-"will" and the patch changes it to "shall", I have to ask: why?
-
-I think our end-user facing manual pages tend to avoid the latter.
-We do use "shall" in the RFC2119/BCP14 sense on the technical side
-of our documentation where we give requirements to the third-party
-implementations so that they can interoperate with us, but this is
-not such a description.
-
-Thanks.
-
-
-[References]
-
-*1* https://pubs.opengroup.org/onlinepubs/9699919799/utilities/iconv.html=
-=20
-*2* https://pubs.opengroup.org/onlinepubs/9699919799/functions/iconv_open=
-.html
