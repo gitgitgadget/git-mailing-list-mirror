@@ -2,68 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF87AC4320E
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 22:27:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5AADC432BE
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 22:43:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9942E60FF2
-	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 22:27:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B370060FD8
+	for <git@archiver.kernel.org>; Fri, 27 Aug 2021 22:43:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232215AbhH0W2Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 18:28:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45886 "EHLO
+        id S232318AbhH0WoC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 18:44:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232126AbhH0W2Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 18:28:24 -0400
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53D86C0613D9
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 15:27:35 -0700 (PDT)
-Received: by mail-oi1-x236.google.com with SMTP id bi4so7743673oib.9
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 15:27:35 -0700 (PDT)
+        with ESMTP id S232126AbhH0WoB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 18:44:01 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40560C0613D9
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 15:43:12 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id p2so11891983oif.1
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 15:43:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=v5CKS2YKp+aHA9WOj63NHLsVsU1qERD0pyQj8rReN/Y=;
-        b=d4I1yViC7fkCt7BewJQXoLQKv92Pp2nXnE+kGLKnJhqmu/AXLYagoSUnpA3YJkfKkI
-         1v05UXRSkjaeGl7kVpFvtuT5S77lWjxp/h+VvKL14hRAm4S2xLsOvlGLLuisPVp6GcUc
-         RkCb4B53OSdUNWhrTWyhbRWzxNWT0ddxX8miuTgYCdbe8uBDn1aelyMV1TXSI1xLTSQb
-         ngS1N9759f24vTh6FQ1x4rWqHAHzWh84Q8bSfg/f4zkoGr6TmIDhKoAFUZVP5Cf9iHyM
-         7PaMaAbXOof/tPg2mBp1jkb9Hf+iZsy2gcZt/T8EcypXIWzmvFIGuYUCGof6D9H7O2Ub
-         MtSA==
+        bh=QTDfTrgWPR6yX7opNlpxai2tw0tn3k+LaIZcpBXPLHg=;
+        b=TQu6YyBU+MZwoB8rMIIcnGYNzXVUsg+6oy217j2xQEtdQnpjFomVuNuxVcdM33XYM6
+         QWy7mvZffKyC+kmhKYcmrzAqDxhxTfeqiQkkFZuKSgV3IF3PegiAeStUYaNwbedcaniH
+         2im8dhNwDzn9X+A234BF1krQZNBrCjjXiE3i9dn4/CgljhBYf3eu8SCbjyIvxDtcmhGQ
+         /bn3OiG5O4tdxQbFCdWhxFplwKaOgsjy+7VVXdOZsftG0mB9tzeNve+0B5Sm7M1aCa4J
+         tXpIoRdHiqH1FchfUoAoXazaXfIUrb9vnkECmeW4lk7MkqrFpw/ijBxhsNjp6bIQgkrm
+         pJDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=v5CKS2YKp+aHA9WOj63NHLsVsU1qERD0pyQj8rReN/Y=;
-        b=cLbYGMpM5/AU65NdUFf6r9pbnIWZEMW0eX4MU7TodPhFlrFDKCklhDLvnvr92VDSiH
-         6FukYO0TqzGr2QyEL4cnDuQymEcgy2WCmG/2sgXe6f9FI7wLsdyJ2N7hrm2ugzgXGBWn
-         IMb8ysoQG+oAF6jh4V/X+BIsb0IF4jJloiXwgZXcvYXbmjE2tB4PCycluh+35Usf9KE3
-         CgZu/c3F0FDROEkSlBGNjEbm40Yr1fmlr86BZMCeOPLPyiAlRFZPEuY9WmgVIdE9xUUR
-         pGmd9BJnOmqLFPjglY8QR3d3o9Cg+Hirv+LAX7Cd2CCNYoruw2q1NNXn4JLhuxy225gy
-         FRbA==
-X-Gm-Message-State: AOAM533HRmLoD+PhzACtLssODPGf7diVtGqq6K/DxBbLQypc9SoDIG/s
-        0tQuHEuU05MGdtTpgHSHN7wsSk15zyjkGExtwSc=
-X-Google-Smtp-Source: ABdhPJx6pZApsP3ZQgVgl7gMqAAfubuclfZlij5AsatH0BZeW4AAlCW0OCwTWA8o/imP894gcR8HzruThN2b84juGCw=
-X-Received: by 2002:aca:bfc6:: with SMTP id p189mr16293695oif.167.1630103254135;
- Fri, 27 Aug 2021 15:27:34 -0700 (PDT)
+        bh=QTDfTrgWPR6yX7opNlpxai2tw0tn3k+LaIZcpBXPLHg=;
+        b=VSv1WFsSzGesUzsEpYk35eM46y/RDyGFtaro2R3Zdsf/6+Mj9oM2Ch+zUjFxJfrJxk
+         emgRgRm8mOH1gNV6C75vNc58AuSWEb0shKndWfdqO3YTT358Q6Yf0CxxBCeG1I3ox9+t
+         H68mT/ivB2i7LrSLaEYJmh62Bo63on2ZJBjjwm65gEDatq6JmvpY+ZksTZqFtH8d/ha+
+         Vv/fjtpLVuwpkV2se0522zhldvvctkwXGKH9uCXYX100eu9BnBg/SSsDcEwrENxrU76B
+         JlF1h5TDYakbsRrWDx5i0ObZbaLhqlmZ07QnmpQPoR5rzDAsTIVVXrkbIiiwLzSW4Nm6
+         yPZA==
+X-Gm-Message-State: AOAM532wZT84ew8+EXkxCIYnOhltiuSGYkTr3tiiRW91AiKBTMWyEICn
+        /48bRNMcdhXLvlEJYw2oFIK4ROMXmvX/9aFN5PQ=
+X-Google-Smtp-Source: ABdhPJxtvjJiwCcBWKfxKB9XMy2qbFIz6F9Rm9bHq1tGAL5ed4FA9gn22GyIdEKb/ET5azBNX6NZhGzCWPBjdp8DuXU=
+X-Received: by 2002:a05:6808:2084:: with SMTP id s4mr8351533oiw.31.1630104191571;
+ Fri, 27 Aug 2021 15:43:11 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1019.git.1629220124.gitgitgadget@gmail.com>
- <9f50f11d394e46ffbe348a579792c2b683096452.1629220124.git.gitgitgadget@gmail.com>
- <CABPp-BFu29JHkoBERcVnV_NooSaVDrFEiR-NQRu-ehTC4iRHiQ@mail.gmail.com> <d77ae8ce-977a-82d9-f28c-f57271fbf923@gmail.com>
-In-Reply-To: <d77ae8ce-977a-82d9-f28c-f57271fbf923@gmail.com>
+ <pull.1019.v2.git.1629841965.gitgitgadget@gmail.com> <bb150483bcfd0469cd88bab735bc1178fb6628f5.1629841966.git.gitgitgadget@gmail.com>
+In-Reply-To: <bb150483bcfd0469cd88bab735bc1178fb6628f5.1629841966.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 27 Aug 2021 15:27:23 -0700
-Message-ID: <CABPp-BHR5Zf23yVXJ9NTbo05Ck+kpZ7tH3qBEvnPjV42PzyOcg@mail.gmail.com>
-Subject: Re: [PATCH 2/6] diff: ignore sparse paths in diffstat
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
+Date:   Fri, 27 Aug 2021 15:43:00 -0700
+Message-ID: <CABPp-BEF0htk-Q-+wiF+XgTWRRtDc5FPJKauWZAivLGuMgWeAQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/6] merge: make sparse-aware with ORT
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -71,74 +72,132 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 24, 2021 at 11:30 AM Derrick Stolee <stolee@gmail.com> wrote:
+On Tue, Aug 24, 2021 at 2:52 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> On 8/20/2021 5:32 PM, Elijah Newren wrote:
-> > On Tue, Aug 17, 2021 at 10:08 AM Derrick Stolee via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> >>
-> >> From: Derrick Stolee <dstolee@microsoft.com>
-> >>
-> >> The diff_populate_filespec() method is used to describe the diff after a
-> >> merge operation is complete, especially when a conflict appears. In
-> >> order to avoid expanding a sparse index, the reuse_worktree_file() needs
-> >> to be adapted to ignore files that are outside of the sparse-checkout
-> >> cone. The file names and OIDs used for this check come from the merged
-> >> tree in the case of the ORT strategy, not the index, hence the ability
-> >> to look into these paths without having already expanded the index.
-> >
-> > I'm confused; I thought the diffstat was only shown if the merge was
-> > successful, in which case there would be no conflicts appearing.
+> From: Derrick Stolee <dstolee@microsoft.com>
 >
-> That's my mistake. I'll edit the message accordingly.
+> Allow 'git merge' to operate without expanding a sparse index, at least
+> not immediately. The index still will be expanded in a few cases:
 >
-> > Also, I'm not that familiar with the general diff machinery (just the
-> > rename detection parts), but...if the diffstat only shows when the
-> > merge is successful, wouldn't we be comparing two REVS (ORIG_HEAD to
-> > HEAD)?  Why would we make use of the working tree at all in such a
-> > case?  And, wouldn't using the working tree be dangerous...what if
-> > there was a merge performed with a dirty working tree?
-> >
-> > On a bit of a tangent, I know diffcore-rename.c calls into
-> > diff_populate_filespec() as well, and I have some code doing merges in
-> > a bare repository (where there obviously is no index).  It seemed to
-> > be working, but given this commit message, now I'm wondering if I've
-> > missed something fundamental either in that implementation or there's
-> > something amiss in this patch.  Or both.  Maybe I need to dig into
-> > diff_populate_filespec() more, but it seems you already have.  Any
-> > pointers to orient me on why your changes are right here (and, if you
-> > know, why diffcore-rename.c should or shouldn't be using
-> > diff_populate_filespec() in a bare repo)?
+> 1. If the merge strategy is 'recursive', then we enable
+>    command_requires_full_index at the start of the merge_recursive()
+>    method. We expect sparse-index users to also have the 'ort' strategy
+>    enabled.
 >
-> I think the cases you are thinking about are covered by this
-> condition before the one I'm inserting:
+> 2. With the 'ort' strategy, if the merge results in a conflicted file,
+>    then we expand the index before updating the working tree. The loop
+>    that iterates over the worktree replaces index entries and tracks
+>    'origintal_cache_nr' which can become completely wrong if the index
+>    expands in the middle of the operation. This safety valve is
+>    important before that loop starts. A later change will focus this
+>    to only expand if we indeed have a conflict outside of the
+>    sparse-checkout cone.
 >
->         /* We want to avoid the working directory if our caller
->          * doesn't need the data in a normal file, this system
->          * is rather slow with its stat/open/mmap/close syscalls,
->          * and the object is contained in a pack file.  The pack
->          * is probably already open and will be faster to obtain
->          * the data through than the working directory.  Loose
->          * objects however would tend to be slower as they need
->          * to be individually opened and inflated.
->          */
->         if (!FAST_WORKING_DIRECTORY && !want_file && has_object_pack(oid))
->                 return 0;
->
-> or after:
->
->         /*
->          * Similarly, if we'd have to convert the file contents anyway, that
->          * makes the optimization not worthwhile.
->          */
->         if (!want_file && would_convert_to_git(istate, name))
->                 return 0;
->
-> (This makes me think that I should move my new condition further down
-> so these two can be linked by context.)
->
-> Sounds like this is just an optimization, so it is fine to opt out of it
-> if we think the optimization isn't necessary. Outside of the sparse-checkout
-> cone qualifies.
+> 3. Other merge strategies are executed as a 'git merge-X' subcommand,
+>    and those strategies are currently protected with the
+>    'command_requires_full_index' guard.
 
-Ah, this is very helpful.  Thanks for digging up these details.
+Oh, indeed, it appears ag/merge-strategies-in-c didn't complete but
+was discarded, as per the July 6 "What's cooking in git.git" email.
+Well, that certainly makes things easier for you; thanks for
+mentioning them in this item #3.
+
+>
+> Some test updates are required, including a mistaken 'git checkout -b'
+> that did not specify the base branch, causing merges to be fast-forward
+> merges.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  builtin/merge.c                          |  3 +++
+>  merge-ort.c                              |  8 ++++++++
+>  merge-recursive.c                        |  3 +++
+>  t/t1092-sparse-checkout-compatibility.sh | 12 ++++++++++--
+>  4 files changed, 24 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 22f23990b37..926de328fbb 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -1276,6 +1276,9 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>         if (argc == 2 && !strcmp(argv[1], "-h"))
+>                 usage_with_options(builtin_merge_usage, builtin_merge_options);
+>
+> +       prepare_repo_settings(the_repository);
+> +       the_repository->settings.command_requires_full_index = 0;
+> +
+>         /*
+>          * Check if we are _not_ on a detached HEAD, i.e. if there is a
+>          * current branch.
+> diff --git a/merge-ort.c b/merge-ort.c
+> index 6eb910d6f0c..8e754b769e1 100644
+> --- a/merge-ort.c
+> +++ b/merge-ort.c
+> @@ -4058,6 +4058,14 @@ static int record_conflicted_index_entries(struct merge_options *opt)
+>         if (strmap_empty(&opt->priv->conflicted))
+>                 return 0;
+>
+> +       /*
+> +        * We are in a conflicted state. These conflicts might be inside
+> +        * sparse-directory entries, so expand the index preemtively.
+
+Same typo I pointed out in v1.
+
+> +        * Also, we set original_cache_nr below, but that might change if
+> +        * index_name_pos() calls ask for paths within sparse directories.
+> +        */
+> +       ensure_full_index(index);
+> +
+>         /* If any entries have skip_worktree set, we'll have to check 'em out */
+>         state.force = 1;
+>         state.quiet = 1;
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 3355d50e8ad..1f563cd6874 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -3750,6 +3750,9 @@ int merge_recursive(struct merge_options *opt,
+>         assert(opt->ancestor == NULL ||
+>                !strcmp(opt->ancestor, "constructed merge base"));
+>
+> +       prepare_repo_settings(opt->repo);
+> +       opt->repo->settings.command_requires_full_index = 1;
+> +
+>         if (merge_start(opt, repo_get_commit_tree(opt->repo, h1)))
+>                 return -1;
+>         clean = merge_recursive_internal(opt, h1, h2, merge_bases, result);
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index ddc86bb4152..dc56252865c 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -47,7 +47,7 @@ test_expect_success 'setup' '
+>                 git checkout -b base &&
+>                 for dir in folder1 folder2 deep
+>                 do
+> -                       git checkout -b update-$dir &&
+> +                       git checkout -b update-$dir base &&
+>                         echo "updated $dir" >$dir/a &&
+>                         git commit -a -m "update $dir" || return 1
+>                 done &&
+> @@ -647,7 +647,15 @@ test_expect_success 'sparse-index is not expanded' '
+>         echo >>sparse-index/extra.txt &&
+>         ensure_not_expanded add extra.txt &&
+>         echo >>sparse-index/untracked.txt &&
+> -       ensure_not_expanded add .
+> +       ensure_not_expanded add . &&
+> +
+> +       ensure_not_expanded checkout -f update-deep &&
+> +       (
+> +               sane_unset GIT_TEST_MERGE_ALGORITHM &&
+> +               git -C sparse-index config pull.twohead ort &&
+> +               ensure_not_expanded merge -m merge update-folder1 &&
+> +               ensure_not_expanded merge -m merge update-folder2
+> +       )
+>  '
+
+Should you use test_config rather than git config here?
+
+More importantly, why the subshell and unsetting of
+GIT_TEST_MERGE_ALGORITHM and the special worrying about pull.twohead?
+Wouldn't it be simpler to just set GIT_TEST_MERGE_ALGORITHM=ort,
+perhaps at the beginning of the file?
