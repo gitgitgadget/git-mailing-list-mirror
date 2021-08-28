@@ -2,119 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83598C432BE
-	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 12:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36552C432BE
+	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 12:22:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 58ED860EE4
-	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 12:13:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0AE3860EAF
+	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 12:22:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234130AbhH1MOZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Aug 2021 08:14:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58270 "EHLO
+        id S234115AbhH1MW5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 Aug 2021 08:22:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233949AbhH1MOY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Aug 2021 08:14:24 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59830C061756
-        for <git@vger.kernel.org>; Sat, 28 Aug 2021 05:13:34 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id g18so7158678wrc.11
-        for <git@vger.kernel.org>; Sat, 28 Aug 2021 05:13:34 -0700 (PDT)
+        with ESMTP id S234012AbhH1MW4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Aug 2021 08:22:56 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 139FEC061756
+        for <git@vger.kernel.org>; Sat, 28 Aug 2021 05:22:06 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id v123so8145482pfb.11
+        for <git@vger.kernel.org>; Sat, 28 Aug 2021 05:22:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=TtFpnCqMy3qARFYHHA6bJsFhQA/4Tzf7VLboqbaRWYQ=;
-        b=u1qhfXTixykuFNJ+5V7phfxsJVAQFMihlsk1Vp5NYwaQHfgqOUwG3NlqorPQ4tOTW5
-         wALDNnHHtJrTr/HCOfyE/QIQ6hwu/kByyDOz70PH9KrxYeUilZ8MtCipX/c6mLkAB3L8
-         Z0NBaT8wfDGJFstly6t+EmZbISDZJR1+1eZpKGpWCvpE5kO1kY6lrP7w+VRCCDO4rer0
-         7b3ZoqqVnIr+iSmeIjIXEfbER7zu3+ksyEdVi5YIMnd9m58YNPEhf1wP4+rAXhxkWU3m
-         VcZowqtZ4IdIhVWsxlXUvHqKKnmQXfMkgUikJjiSvyQ9LZGeBEOPPfsloE2U2q5IMX2+
-         jbvQ==
+        bh=g+Ev408EwTlFT4C3RKMK1/47GpEKHPPZ4+wRZDOWzGw=;
+        b=lrIIC1oHcnebREirnL+qiXu8JqJK2goBULUeTZO9JF6a/SkihsTmk8+M1gSXFl51OE
+         dKifpNE37a0sDv1blzbjckWTxtTi/ciayvgGTA2hJcVflydkNY2ZmhnchFsoC3QTvwA1
+         ywUMorkZZRYnYYxS4Hb81zeGbzKM6AE7X/iYghH5Nn7YQluZ6cTz4h6xPqvwkt9eR2HB
+         22n0YOf1Hfb8OH35l91eZGbaklCDx/GTiz7+vQj1jbEUYue+hd7oV0aoqJ30naes57MN
+         NU+qv8gZWpawVVfNF0TA8VpVK87qB0a6UCW6+8dYW/aNBVr+mF9oMVCEgjZSqW5rK8kk
+         TCAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=TtFpnCqMy3qARFYHHA6bJsFhQA/4Tzf7VLboqbaRWYQ=;
-        b=HIRVs/fd7nR/NBAQ9VcyhwVbSMerJOLOFQNlUy0f26cXyxuhRfVmM+fai+ODbx6n0I
-         p35jU51/Ky1C42oRE00rlEdFSHJya7GU2FREt7oB2DSavJTNV9EuzeKIXQT+g3r7lF5a
-         sfTBgnp+PCenmq1MZNV+pIyUQV7coLmitEx2puzknLG+uH0Gf5j15zmLsvbte65Hk3Ba
-         Fe4dTDGCjF7ibP/iu7S6s1Ow6Rj+FspQMgCtV/4vgBCBgpdJvXdO15Gg203FaydyQ2t5
-         72V25NyNlkbd66OgXX4PUmTa9N3WeWiGTC61dLpbP070osOVJPeUYDk/I7v5NRC2xXZb
-         58/A==
-X-Gm-Message-State: AOAM531fWKdRAU0rzwQClUtn3m3D+qQ/XOLkWGDMhf8BzkYRFw+bPHsi
-        ++58NJK9fNKNtw6iTiLaEJNa6nYh9r8=
-X-Google-Smtp-Source: ABdhPJzKTDd58pP3LhQmXZABzQ4HlJvrp75Z7QgDv4rnh5qzHSboKvyYfHZ6osiPqNUkoIek1ZIzig==
-X-Received: by 2002:adf:e30c:: with SMTP id b12mr15518651wrj.347.1630152812920;
-        Sat, 28 Aug 2021 05:13:32 -0700 (PDT)
-Received: from localhost.localdomain (84-236-78-211.pool.digikabel.hu. [84.236.78.211])
-        by smtp.gmail.com with ESMTPSA id l15sm9298377wrv.84.2021.08.28.05.13.31
+        bh=g+Ev408EwTlFT4C3RKMK1/47GpEKHPPZ4+wRZDOWzGw=;
+        b=FTiat2ldFfUCeECDctRB2OZg5XmDvmz31/ryDNWwiB5a2BKMAI8mlpySPlrDR//249
+         KMIeZ+92sclFpHCso1vlMzRkf3SKEy2cGzzzahrlc7Pw87Ex/sRjVQ//4oyFvbzRSqj3
+         Zj5NCcvMvsBP6ibqQolCxMWe7lLNhFJwt7M/VDFi/07sbwnvk7JuofTkkfHogun6TaEt
+         B2mCtwuWiu+3XpJqycqIoCMLFkCX83RkppzZ2aHio7FHoRJZnd9hCwBmBay0+Hcsuorh
+         LviKYpvFZXou2LsBeUQpTEjFYm2M06OQk5DVb8eqMToi68/ITIOnwJF9RC3lpvYqMcMK
+         Sqdw==
+X-Gm-Message-State: AOAM531kvo8viyEDSU2qxUj46E/c3TENU18Koa+CgIA9zuB4i7nDqC70
+        +ForNVdLGdsJDjSLW6RsWNbx5l4GkgE=
+X-Google-Smtp-Source: ABdhPJwFR8czGOXt8ECuM4peEPZkodUx8E3/E2/mpHtu5cmLaoglusqB3kUY5gQDWmdoQZfZZvStVA==
+X-Received: by 2002:a63:1b60:: with SMTP id b32mr12159123pgm.422.1630153325287;
+        Sat, 28 Aug 2021 05:22:05 -0700 (PDT)
+Received: from ubuntu.mate (subs03-180-214-233-66.three.co.id. [180.214.233.66])
+        by smtp.gmail.com with ESMTPSA id s16sm8855972pfk.185.2021.08.28.05.22.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Aug 2021 05:13:32 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+        Sat, 28 Aug 2021 05:22:04 -0700 (PDT)
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] test-lib: set GIT_CEILING_DIRECTORIES to protect the surrounding repository
-Date:   Sat, 28 Aug 2021 14:13:29 +0200
-Message-Id: <20210828121329.1971762-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.33.0.358.g803110d36e
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, felipe.contreras@gmail.com,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: [PATCH v2] make: add install-stripped target
+Date:   Sat, 28 Aug 2021 19:21:19 +0700
+Message-Id: <20210828122118.56283-1-bagasdotme@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Every once in a while a test somehow manages to escape from its trash
-directory and modifies the surrounding repository, whether because of
-a bug in git itself, a bug in a test [1], or e.g. when trying to run
-tests with a shell that is, in general, unable to run our tests [2].
+Add the target that install Git with stripped executables.
 
-Set GIT_CEILING_DIRECTORIES="$GIT_BUILD_DIR" as an additional safety
-measure to protect the surrounding repository at least from
-modifications by git commands executed in the tests (though it won't
-save us from regular shell commands, e.g. 'cd .. && rm -f ...').
+install and install-stripped share the almost-same recipe, with the
+difference only on passing arguments to $(INSTALL). In order for this to
+work properly, installing all programs ($(ALL_PROGRAMS) and
+$(install_bindir_programs)) must be splitted into compiled programs and
+scripts install portion. For compiled programs, pass $(INSTALL_OPTS),
+since stripping is only meaningful for them and not scripts.
 
-[1] e.g. https://public-inbox.org/git/20210423051255.GD2947267@szeder.dev
-[2] $ git symbolic-ref HEAD
-    refs/heads/master
-    $ ksh ./t2011-checkout-invalid-head.sh
-    [... a lot of "not ok" ...]
-    $ git symbolic-ref HEAD
-    refs/heads/other
-
-    (In short: 'ksh' doesn't support the 'local' builtin command,
-    which is used by 'test_oid', causing it to return with error
-    whenever called, leaving ZERO_OID set to empty, so when 'checkout
-    main from invalid HEAD' runs 'echo $ZERO_OID >.git/HEAD' writes a
-    corrupt (not invalid) HEAD, and subsequent git commands don't
-    recognize the repository in the trash directory anymore, but
-    operate on the surrounding repo.)
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
- t/test-lib.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index abcfbed6d6..a1e0182c2f 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1343,7 +1343,8 @@ fi
- GIT_TEMPLATE_DIR="$GIT_BUILD_DIR"/templates/blt
- GIT_CONFIG_NOSYSTEM=1
- GIT_ATTR_NOSYSTEM=1
--export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG_NOSYSTEM GIT_ATTR_NOSYSTEM
-+GIT_CEILING_DIRECTORIES="$GIT_BUILD_DIR"
-+export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG_NOSYSTEM GIT_ATTR_NOSYSTEM GIT_CEILING_DIRECTORIES
+ Changes from v1:
+ - Share recipes between install-stripped and install targets (suggested
+   by Junio)
+ - Don't delete 'strip' target. There may exist scripts that depend on
+   that target. Once this patch is integrated, deprecation notice can
+   be displayed when running the target, but it is done in separate
+   patch.
+
+ [1]:
+https://lore.kernel.org/git/20210826113824.50078-1-bagasdotme@gmail.com/T/#t
+
+ Makefile | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index d1feab008f..73a97d952c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3004,7 +3004,8 @@ mergetools_instdir = $(prefix)/$(mergetoolsdir)
+ endif
+ mergetools_instdir_SQ = $(subst ','\'',$(mergetools_instdir))
  
- if test -z "$GIT_TEST_CMP"
- then
+-install_bindir_programs := $(patsubst %,%$X,$(BINDIR_PROGRAMS_NEED_X)) $(BINDIR_PROGRAMS_NO_X)
++install_bindir_xprograms := $(patsubst %,%$X,$(BINDIR_PROGRAMS_NEED_X))
++install_bindir_programs := $(install_bindir_xprograms) $(BINDIR_PROGRAMS_NO_X)
+ 
+ .PHONY: profile-install profile-fast-install
+ profile-install: profile
+@@ -3013,12 +3014,21 @@ profile-install: profile
+ profile-fast-install: profile-fast
+ 	$(MAKE) install
+ 
+-install: all
++INSTALL_OPTS :=
++
++.PHONY: install-stripped
++
++install-stripped: INSTALL_OPTS = -s --strip-program=$(STRIP)
++
++install-stripped install: all
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+-	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
++	$(INSTALL) $(INSTALL_OPTS) $(PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
++	$(INSTALL) $(SCRIPTS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ 	$(INSTALL) -m 644 $(SCRIPT_LIB) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+-	$(INSTALL) $(install_bindir_programs) '$(DESTDIR_SQ)$(bindir_SQ)'
++	$(INSTALL) $(INSTALL_OPTS) $(install_bindir_xprograms) '$(DESTDIR_SQ)$(bindir_SQ)'
++	$(INSTALL) $(BINDIR_PROGRAMS_NO_X) '$(DESTDIR_SQ)$(bindir_SQ)'
++
+ ifdef MSVC
+ 	# We DO NOT install the individual foo.o.pdb files because they
+ 	# have already been rolled up into the exe's pdb file.
+
+base-commit: c4203212e360b25a1c69467b5a8437d45a373cac
 -- 
-2.33.0.358.g803110d36e
+2.25.1
 
