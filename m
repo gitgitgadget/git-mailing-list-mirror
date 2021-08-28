@@ -8,66 +8,66 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54B9BC432BE
-	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 00:47:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0708FC4320E
+	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 00:47:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 38C0161002
-	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 00:47:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E2CB461002
+	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 00:47:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232816AbhH1As1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 20:48:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49024 "EHLO
+        id S232860AbhH1As3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 20:48:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232693AbhH1As0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 20:48:26 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B27DC061796
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 17:47:36 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id x6so4667494wrv.13
-        for <git@vger.kernel.org>; Fri, 27 Aug 2021 17:47:36 -0700 (PDT)
+        with ESMTP id S232693AbhH1As1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 20:48:27 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1190C061796
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 17:47:37 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id d22-20020a1c1d16000000b002e7777970f0so10348508wmd.3
+        for <git@vger.kernel.org>; Fri, 27 Aug 2021 17:47:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=X72Y2JXlkRf06MadaeInEifKFENsLmUYZCAf8FbSmSA=;
-        b=XJAvMfg0rsNlIY6S+2FBcPXPAz3Z98SgNC9xufuTSQE3uDdFAJOqiuhoi0oVftaNC0
-         Y/maPFwxmq8ujmGI5ot0TgxkMfztA3G6y149/yYRkR8LSrBAGnYxB9MNcF2+mg+HFlZi
-         y2HD4qp0TLNJmtD3kM7agM1+71gh08O9CHrP9uNW6or84pIaeciwaDf4NA4Yi4H4/c9x
-         UuXJo/nh6YliHVJQ01oNeEogySIlO0VmFx3fxlHuMjHdVuWIZI5F9S9Nr1vxS4UF/L56
-         vy8kb+1A62cUeK9QSME16GEwbRApEESAizG6aK/9ukuzdYniz6oZpylHdKQ3vjucC8Jv
-         4LMA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=4L5UsfibSptli36PytIpsRTnIvEs40sWKfzuSCFDId4=;
+        b=ucpxjxjSe1ajOjt8dfoAZK+u/uBnPA4C7YzRyDoxOhlNiSXV+qSnkd0boBFc5MkdUK
+         uSjreoivljTOAQ0khOQE3BJDale11jIvH2RKRGKiW0p18/fr7tczZ3hARW74byu5DLfq
+         d0f4wxLOUiGjFQYmovLdnPL9N/u4wG8r+Xz9eXYX9pmoSa7CovTlVpKz9UEdg5DRBP1s
+         HD4hRQHvs79M8NJ89hHJAn7/PzuoU2TCsZl31f0LJqvmPWIcto/ibgNABeRWHLOVOI/k
+         Dzz7NEZFAqWsSUCbEOTwmEY4Hx4DPzpO6s//knawawZXKjN4H9aovpfphYf1D62MILJo
+         2LNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=X72Y2JXlkRf06MadaeInEifKFENsLmUYZCAf8FbSmSA=;
-        b=dbGAkSlNGcSm9ZIpA6I4pfDMw8kDdpYRSOcVI9H7ON0Td/Fu3/fi/5xSUtMElzShkf
-         OjUEVweD22e/sAOuw4OPPWSVmTkHApjuI+q3Z1sxibshXAWDKP3orZ4zZugla/ivuFjj
-         D1E8oZFxLqk74cZKof3ouONHWinMqsdsUZmdFHeK0oT8IARCx8+WAXTi9mJqfobviB7d
-         Parnr+UEBynkAWdNE3Gt+O5QiNiceOO2PboyzVWo8J+CLJ/jerste9TCh64kbCivS4Ia
-         ShXS1wf1GCe6vkNTrhNvfKxmfq5XDPhjFPeTxlYx2MG+alsy+KT0O2I4Nys8CiQ3Z2ih
-         BH+A==
-X-Gm-Message-State: AOAM533QppctvZ4yrJ7itUDsY0m7XXz1DysSCQ5myUMY81nZUSPEkFCO
-        k8ouNmQ7gUmB94klyUCfswX9Jj2s4vM=
-X-Google-Smtp-Source: ABdhPJzn9zQOgMWNy372UOPNpmNZoa1ZjtYT9llmrBkqS8sJd/9MZo+I97/1i4GDLKKNPadjV40CTQ==
-X-Received: by 2002:a05:6000:1808:: with SMTP id m8mr12936820wrh.272.1630111655036;
-        Fri, 27 Aug 2021 17:47:35 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=4L5UsfibSptli36PytIpsRTnIvEs40sWKfzuSCFDId4=;
+        b=E0UxOaxY/Z3b8pBIVc8ilTYVHYoQQgJ8mw7l6pDPNeI5/K/DGq9IT3sMg8IUe2SRR9
+         N6vjaO9NfhAOCkLfWdENVsUKIxaVhnIoKgmLC4DOC2snTSaFja6Etu41YMLJvbaNHKzt
+         XnhE1WNrVCfvpjJPSL7sf+DTu1dxAcM1Ep8lKwl6o5d4g9VAz5kU+WSZS6nVPSDk9kLB
+         8Xe/zSPDfwUlcpSvCWAAshvKIzPVod6bHyMHZh9KHksdazgO3toLp0tphXU8ljHBij81
+         tOyEa66ib8xi7M4UBsIfwAmOKZ1VodmoETItZ3fAEgkJG3Ma9sxikjArN/YHCd+8Xn1i
+         Ic+Q==
+X-Gm-Message-State: AOAM533m1MaU3yeyiBzdZE+PWqyGzzNrVi5SPuW6OQynCZ02HxSYMJqc
+        kYUzIhpNQ/7J4wUKXjM0W8eIdIIJSJo=
+X-Google-Smtp-Source: ABdhPJxOmFZFVhkYyhWzRyGN6AKdSiZ6s+teeA2EQI9BU3PuIaqRKtwvvuOLDcDwJtX982Hg6KwikA==
+X-Received: by 2002:a1c:e904:: with SMTP id q4mr11499105wmc.26.1630111656272;
+        Fri, 27 Aug 2021 17:47:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u5sm7679469wrr.94.2021.08.27.17.47.34
+        by smtp.gmail.com with ESMTPSA id b2sm7009227wmd.3.2021.08.27.17.47.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Aug 2021 17:47:34 -0700 (PDT)
-Message-Id: <2f566f330e01ed4249edad54671e98301dbeec5a.1630111653.git.gitgitgadget@gmail.com>
+        Fri, 27 Aug 2021 17:47:35 -0700 (PDT)
+Message-Id: <1fac9baec1d5b9d42d925c1e6d0005a396c64164.1630111653.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1022.v2.git.1630111653.gitgitgadget@gmail.com>
 References: <pull.1022.git.1629393395.gitgitgadget@gmail.com>
         <pull.1022.v2.git.1630111653.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 28 Aug 2021 00:47:31 +0000
-Subject: [PATCH v2 1/3] test-lib-functions: use 'TEST_SHELL_PATH' in
- 'test_pause'
-MIME-Version: 1.0
+Date:   Sat, 28 Aug 2021 00:47:33 +0000
+Subject: [PATCH v2 3/3] test-lib-functions: optionally keep HOME and TERM in
+ 'debug'
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         Elijah Newren <newren@gmail.com>,
@@ -84,32 +84,98 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-3f824e91c8 (t/Makefile: introduce TEST_SHELL_PATH, 2017-12-08)
-made it easy to use a different shell for the tests than 'SHELL_PATH'
-used at compile time. But 'test_pause' still invokes 'SHELL_PATH'.
+The 'debug' function in test-lib-functions.sh is used to invoke a
+debugger at a specific line in a test. It inherits the value of HOME and
+TERM set by 'test-lib.sh': HOME="$TRASH_DIRECTORY" and TERM=dumb.
 
-If TEST_SHELL_PATH is set, invoke that shell in 'test_pause' for
-consistency.
+Changing the value of HOME means that any customization configured in a
+developers' debugger configuration file (like $HOME/.gdbinit or
+$HOME/.lldbinit) are not available in the debugger invoked by
+'test_pause'.
 
-Suggested-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+Changing the value of TERM to 'dumb' means that colored output
+is disabled in the debugger.
+
+To make the debugging experience with 'debug' more pleasant, leverage
+the variables USER_HOME and USER_TERM, added in the previous commit, to
+optionally set HOME and TERM before invoking the debugger.
+
+Add the same warnings as for 'test_pause' in the "Usage" section.
+
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- t/test-lib-functions.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/test-lib-functions.sh | 54 ++++++++++++++++++++++++++++++-----------
+ 1 file changed, 40 insertions(+), 14 deletions(-)
 
 diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index e28411bb75a..1884177e293 100644
+index 1b775343adc..0f6d30e2b3f 100644
 --- a/t/test-lib-functions.sh
 +++ b/t/test-lib-functions.sh
-@@ -139,7 +139,7 @@ test_tick () {
- # Be sure to remove all invocations of this command before submitting.
- 
- test_pause () {
--	"$SHELL_PATH" <&6 >&5 2>&7
-+	"$TEST_SHELL_PATH" <&6 >&5 2>&7
+@@ -180,25 +180,51 @@ test_pause () {
+ # Wrap git with a debugger. Adding this to a command can make it easier
+ # to understand what is going on in a failing test.
+ #
++# Usage: debug [options] [git command]
++#   -d <debugger>
++#   --debugger=<debugger>
++#	Use <debugger> instead of GDB
++#   -t
++#	Use your original TERM instead of test-lib.sh's "dumb".
++#	This usually restores color output in the debugger.
++#	WARNING: this can break test reproducibility.
++#   -h
++#	Use your original HOME instead of test-lib.sh's "$TRASH_DIRECTORY".
++#	This allows your debugger to find its config file in your home.
++#	WARNING: this can break test reproducibility.
++#	CAUTION: this can overwrite files in your HOME.
++#
+ # Examples:
+ #     debug git checkout master
+ #     debug --debugger=nemiver git $ARGS
+ #     debug -d "valgrind --tool=memcheck --track-origins=yes" git $ARGS
+ debug () {
+-	case "$1" in
+-	-d)
+-		GIT_DEBUGGER="$2" &&
+-		shift 2
+-		;;
+-	--debugger=*)
+-		GIT_DEBUGGER="${1#*=}" &&
+-		shift 1
+-		;;
+-	*)
+-		GIT_DEBUGGER=1
+-		;;
+-	esac &&
+-	GIT_DEBUGGER="${GIT_DEBUGGER}" "$@" <&6 >&5 2>&7
++	GIT_DEBUGGER=1 &&
++	DEBUG_TERM=$TERM &&
++	DEBUG_HOME=$HOME &&
++	while test $# != 0
++	do
++		case "$1" in
++		-t)
++			DEBUG_TERM="$USER_TERM"
++			;;
++		-h)
++			DEBUG_HOME="$USER_HOME"
++			;;
++		-d)
++			GIT_DEBUGGER="$2" &&
++			shift
++			;;
++		--debugger=*)
++			GIT_DEBUGGER="${1#*=}"
++			;;
++		*)
++			break
++			;;
++		esac
++		shift
++	done &&
++	TERM="$DEBUG_TERM" HOME="$DEBUG_HOME" GIT_DEBUGGER="${GIT_DEBUGGER}" "$@" <&6 >&5 2>&7
  }
  
- # Wrap git with a debugger. Adding this to a command can make it easier
+ # Usage: test_commit [options] <message> [<file> [<contents> [<tag>]]]
 -- 
 gitgitgadget
-
