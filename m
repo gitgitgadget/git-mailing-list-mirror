@@ -2,115 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28DEDC432BE
-	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 09:02:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E429C432BE
+	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 09:46:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 02BC06115B
-	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 09:02:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C84D6054E
+	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 09:46:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233658AbhH1JDG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Aug 2021 05:03:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44058 "EHLO
+        id S233714AbhH1JrA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 Aug 2021 05:47:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233643AbhH1JDE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Aug 2021 05:03:04 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C595C061756
-        for <git@vger.kernel.org>; Sat, 28 Aug 2021 02:02:14 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id u16so14128627wrn.5
-        for <git@vger.kernel.org>; Sat, 28 Aug 2021 02:02:14 -0700 (PDT)
+        with ESMTP id S233573AbhH1Jq7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Aug 2021 05:46:59 -0400
+Received: from mail-ua1-x92c.google.com (mail-ua1-x92c.google.com [IPv6:2607:f8b0:4864:20::92c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACAE3C061756
+        for <git@vger.kernel.org>; Sat, 28 Aug 2021 02:46:09 -0700 (PDT)
+Received: by mail-ua1-x92c.google.com with SMTP id m39so4870817uad.9
+        for <git@vger.kernel.org>; Sat, 28 Aug 2021 02:46:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=qEYoQVL6GPmPt6D+/Uk47Rw+wWQ335N9RrHR7M0KxW8=;
-        b=VRT1Kd4xN8yYRJSEOiYIpG8LaOW2Mc6nBSoRXdcHVv8xCUk4DxGqPXppeypMJQwOrz
-         0JH/ARRZ/KbRDiz7LaYmE8usJbRs4m2H4cc9NerVVvBi63T9uJfG7czei4fPMDH5YRaD
-         SlR6sfb4EHbpgy+hdtqBEjlqlFVN2Unq+coAtP8bW7wcblTXsd98zL9ioN6oHp6/LWC6
-         zNwDdy/YdhucZVim36Bdig/kug0AMoyhmyQ1ODyL+usYj5jrLh3XzH5PIO4lbnWWzofG
-         O5jKoeD3EeynOPw4F97UZ/efld3PnI/2dghAcPuKT3tQnlXGwtJqN/oYJAfqzAqWHCjh
-         ASwQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CPrc6/vH5A4Xci3aUvOYhtT+sXX6DdCiAUfZYOzuocE=;
+        b=sj8swvZVP8XMfEsgLECcXVH4P7nCp2nT1DWnVKFqTTFecoIUDyCx5ptdl12H45oemE
+         0b/gh6d26wZZT8+metkzpQWH4/EFjuhAM9TXIbOfRwvdHlZW2vaiDtknAHCD0TFly3xC
+         S15ugcilQB4DqEH3E13fBixMXt9zuSZwTAMB7J1fXDNIZJ4Jq5BAoucQsTXA/CL8V2SJ
+         ZQQvZSoCOrTEFo6JCgVTw6nEFH7vFATCpc61N4prbTAJY+wRPGl0vpLGeX43ApoKUx7b
+         687DcMKUT9BDt6XbrmLoYndD10foABN5Nqv60FAmulUjX9YuG23cQIVikVHLcDZXQsOB
+         d2VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=qEYoQVL6GPmPt6D+/Uk47Rw+wWQ335N9RrHR7M0KxW8=;
-        b=GWOxnE5x/jMW0ElRNlLWIUTE3A2RZsCfVPsDu75Ep4FEPfK/URpi/w4qo5hEnEXmxq
-         eQctE9szdNVBTSHgnkoDKHZXODy+LDdsjTbfHWNRDcsqtI9QT8xaGMxH8WVGb/uwuP13
-         5hDsT9LJaw8+RcuibhwZFwiJO5ajUfVbhRuk8aWrzFhJnr5KzOAcW3I6BMvKlLqJCX/D
-         As+gOy3ayVVwfGMlxSIzPJ8YNfLUaxwVDqE6GmClZJYRXzVfbgwlkWP/SYqRpNnoRKoR
-         lwXKzkG73xLCU1ARm7Rwyjrv02/vcCHqVFXq8ememqO1j/WBY46knPKcbnmB38ge0BUX
-         0WZA==
-X-Gm-Message-State: AOAM532K+iECPdgbXtj208oipq34NoOuc/R8No2HwHuU3A8XEhb40pgO
-        NlLE71YYpjoUcDr2JrgI1SiUiHNcMxo=
-X-Google-Smtp-Source: ABdhPJwMwwKIhis+OoVp9DjwILoFGoFcb5DkMRKmNsrrH92rItcfOvBO1QO8oVUX7StdtsR3BJ0SJw==
-X-Received: by 2002:adf:82b0:: with SMTP id 45mr15401842wrc.161.1630141333007;
-        Sat, 28 Aug 2021 02:02:13 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k4sm8940447wrm.74.2021.08.28.02.02.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Aug 2021 02:02:12 -0700 (PDT)
-Message-Id: <pull.1029.git.1630141332149.gitgitgadget@gmail.com>
-From:   "Zoker via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 28 Aug 2021 09:02:12 +0000
-Subject: [PATCH] doc: fix syntax error and the format of printf
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CPrc6/vH5A4Xci3aUvOYhtT+sXX6DdCiAUfZYOzuocE=;
+        b=apeDv/K2LUMxRYby9UbJXZNZl7Eo891+RcirBwEa1dZnV62ZCZ2NsWrqrAh/AZmcoO
+         k/62uPFAjsgDaUfiasO0WOtTKkqYG4bNZpBgGF32KjBRdQQ62lfVEEJb7m9FSj08VzRI
+         wZvoxNXqDON+u7wsf78AbRtP3IR/heV1rn5jy6abCE4TxRi1OoTMf4Sn8WF0UXlRNdYv
+         ig6K1948a47xIlJcbdQtBN/uR7XDsrA48qpvEOE49l4iPG7NreW24VmOV1451bghyLf2
+         iptohZuj6rChp6PPH03hKFh3jVkmQaQl8oiRf+/8acMjDNFfizRzu/dVZfIs0gsjedjG
+         UtWg==
+X-Gm-Message-State: AOAM532S0iXVLKUmQ8h3UA3LnyURB5AOD/mzsrfFcDYDVTaJpuzxGp3a
+        5qW9V8ikFJ+vxMOgtXc5+e8OYk1vedoC/56UjfixnjLsd6w=
+X-Google-Smtp-Source: ABdhPJyYL4UHnrV622C24AZXJtwy1HlBh4fD8OvCyi2L3mlhnWWZJXbmt9TNdd9bTjMXFp8c7lU2xsJDWS+8yvX2VYw=
+X-Received: by 2002:ab0:76d0:: with SMTP id w16mr10583772uaq.15.1630143968703;
+ Sat, 28 Aug 2021 02:46:08 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Zoker <kaixuanguiqu@gmail.com>, Zoker <kaixuanguiqu@gmail.com>
+References: <20210809063004.73736-1-carenas@gmail.com> <42dce285-9599-4c7c-d351-44c1e338337e@jeffhostetler.com>
+ <xmqqpmumftry.fsf@gitster.g> <b554c82a-4da1-9676-4d93-b769ab6bbcbd@jeffhostetler.com>
+ <xmqqsfyvbg8m.fsf@gitster.g> <CAPUEsphe0N6w_qCTAp46YPH7vBj2dkJa9kOm2HaixkFkVuk3GA@mail.gmail.com>
+ <xmqq1r6ebyo5.fsf@gitster.g>
+In-Reply-To: <xmqq1r6ebyo5.fsf@gitster.g>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Sat, 28 Aug 2021 02:45:57 -0700
+Message-ID: <CAPUEspgDbi1v32p+H=afZSDVOo_VpJzKn7bU8_s+fPJxm=mtBQ@mail.gmail.com>
+Subject: Re: [PATCH 0/2] fsmonitor: fixup to avoid warnings from pedantic
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        jeffhost@microsoft.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Zoker <kaixuanguiqu@gmail.com>
+On Fri, Aug 27, 2021 at 10:11 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> One thing I noticed is that simple-ipc.h can disable itself
+> altogether with "#ifdef SUPPORTS_SIMPLE_IPC", so the unconditional
+> use of "enum ipc_active_state" by fsmonitor-ipc.h would still be a
+> problem.
 
-Fix syntax and correct the format of printf in MyFirstObjectWalk.txt
+That is why we also need an additional patch[1] to be able to build
+(at least in macOS).
 
-Signed-off-by: Zoker <kaixuanguiqu@gmail.com>
----
-    MyFirstObjectWalk: fix syntax error and the format of printf
-    
-    Fix the syntax of code hint and correct the format of printf in
-    MyFirstObjectWalk.txt
+in windows additional changes are required, but I suspect that
+configuration is probably not expected.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1029%2Fkesin%2Fcorrect-my-first-object-walk-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1029/kesin/correct-my-first-object-walk-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1029
+> fsmonitor-ipc.h is included even in help.c so it seems
+> that with this topic, you practically will not get a working Git at
+> all with -pedantic when SUPPORTS_SIMPLE_IPC is not true.
 
- Documentation/MyFirstObjectWalk.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+not sure if I understand the logic here, but there is a "mock" daemon
+that is used in the platforms that don't have support that will be
+available then (even if it just refuses to start), and that is still
+IMHO a working git configuration.
 
-diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-index 2d10eea7a9f..45eb84d8b48 100644
---- a/Documentation/MyFirstObjectWalk.txt
-+++ b/Documentation/MyFirstObjectWalk.txt
-@@ -691,7 +691,7 @@ help understand. In our case, that means we omit trees and blobs not directly
- referenced by `HEAD` or `HEAD`'s history, because we begin the walk with only
- `HEAD` in the `pending` list.)
- 
--First, we'll need to `#include "list-objects-filter-options.h`" and set up the
-+First, we'll need to `#include "list-objects-filter-options.h"` and set up the
- `struct list_objects_filter_options` at the top of the function.
- 
- ----
-@@ -779,7 +779,7 @@ Count all the objects within and modify the print statement:
- 	while ((oid = oidset_iter_next(&oit)))
- 		omitted_count++;
- 
--	printf("commits %d\nblobs %d\ntags %d\ntrees%d\nomitted %d\n",
-+	printf("commits %d\nblobs %d\ntags %d\ntrees %d\nomitted %d\n",
- 		commit_count, blob_count, tag_count, tree_count, omitted_count);
- ----
- 
+Carlo
 
-base-commit: c4203212e360b25a1c69467b5a8437d45a373cac
--- 
-gitgitgadget
+[1] https://lore.kernel.org/git/20210817082310.2157-1-carenas@gmail.com/
