@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0708FC4320E
-	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 00:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EBD8C43214
+	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 00:47:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E2CB461002
+	by mail.kernel.org (Postfix) with ESMTP id 3867561004
 	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 00:47:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232860AbhH1As3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Aug 2021 20:48:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49030 "EHLO
+        id S232854AbhH1As2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Aug 2021 20:48:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232693AbhH1As1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Aug 2021 20:48:27 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1190C061796
+        with ESMTP id S232682AbhH1As0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Aug 2021 20:48:26 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15C4AC0613D9
         for <git@vger.kernel.org>; Fri, 27 Aug 2021 17:47:37 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id d22-20020a1c1d16000000b002e7777970f0so10348508wmd.3
+Received: by mail-wr1-x436.google.com with SMTP id g18so5372850wrc.11
         for <git@vger.kernel.org>; Fri, 27 Aug 2021 17:47:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4L5UsfibSptli36PytIpsRTnIvEs40sWKfzuSCFDId4=;
-        b=ucpxjxjSe1ajOjt8dfoAZK+u/uBnPA4C7YzRyDoxOhlNiSXV+qSnkd0boBFc5MkdUK
-         uSjreoivljTOAQ0khOQE3BJDale11jIvH2RKRGKiW0p18/fr7tczZ3hARW74byu5DLfq
-         d0f4wxLOUiGjFQYmovLdnPL9N/u4wG8r+Xz9eXYX9pmoSa7CovTlVpKz9UEdg5DRBP1s
-         HD4hRQHvs79M8NJ89hHJAn7/PzuoU2TCsZl31f0LJqvmPWIcto/ibgNABeRWHLOVOI/k
-         Dzz7NEZFAqWsSUCbEOTwmEY4Hx4DPzpO6s//knawawZXKjN4H9aovpfphYf1D62MILJo
-         2LNQ==
+        bh=TSti6QvsNvq4fq52i3K8wOb0+NrFe3jtllan9L1q47s=;
+        b=IiaAfDrsr6uJd8mTVOv3LJsOtKDYaWRg6Z2CPVQeJ9XHrLRtJa/fllJX1+70OvJPf/
+         3TWeAsGcaJod2CXK8yazrlWX8+haE0YGY3VyiJBKCendpvMCIb8U5NBwrjRf8WtRse7S
+         5m/053EbsZMZhPgQ72/bu8ebFD7w6cD+QGfrgDgNg7DxJODvS+fB70+K97YWXWBcpG/o
+         NeUxfSGlbpxyIaXUhjoUwgBFsjmMHk9xgG4G8f9k2JghIKDYmvjVbfanpatqCmtUdgGS
+         5PtfMLAh7VRYTVU/Hs0M1kepln2mzDHYXFvmnAuPLlT+QB33Z80BDlVlGVMFSuOw8ARY
+         MWpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4L5UsfibSptli36PytIpsRTnIvEs40sWKfzuSCFDId4=;
-        b=E0UxOaxY/Z3b8pBIVc8ilTYVHYoQQgJ8mw7l6pDPNeI5/K/DGq9IT3sMg8IUe2SRR9
-         N6vjaO9NfhAOCkLfWdENVsUKIxaVhnIoKgmLC4DOC2snTSaFja6Etu41YMLJvbaNHKzt
-         XnhE1WNrVCfvpjJPSL7sf+DTu1dxAcM1Ep8lKwl6o5d4g9VAz5kU+WSZS6nVPSDk9kLB
-         8Xe/zSPDfwUlcpSvCWAAshvKIzPVod6bHyMHZh9KHksdazgO3toLp0tphXU8ljHBij81
-         tOyEa66ib8xi7M4UBsIfwAmOKZ1VodmoETItZ3fAEgkJG3Ma9sxikjArN/YHCd+8Xn1i
-         Ic+Q==
-X-Gm-Message-State: AOAM533m1MaU3yeyiBzdZE+PWqyGzzNrVi5SPuW6OQynCZ02HxSYMJqc
-        kYUzIhpNQ/7J4wUKXjM0W8eIdIIJSJo=
-X-Google-Smtp-Source: ABdhPJxOmFZFVhkYyhWzRyGN6AKdSiZ6s+teeA2EQI9BU3PuIaqRKtwvvuOLDcDwJtX982Hg6KwikA==
-X-Received: by 2002:a1c:e904:: with SMTP id q4mr11499105wmc.26.1630111656272;
-        Fri, 27 Aug 2021 17:47:36 -0700 (PDT)
+        bh=TSti6QvsNvq4fq52i3K8wOb0+NrFe3jtllan9L1q47s=;
+        b=NgEt2bQkvPSU2diaGGlcyc8UvxbS++xqw5N1J+mH/5Tz0DoiQNbu6nIanqAlnS58b+
+         hZhCPPcK3Hf9P0fQVOabSMk/iierKdxbbkzO8kcCSkEBGUuzII58UWjB1lp/VAZdhUlO
+         xNQpTmYyRPPJBarzNWwJ4T8Jb+l4QtB7sS8sKCrB+f4+hyU6Wsyq1f13hrKm5cgJ92Jq
+         4V/s2WyYXiGy9fpOgagwD745TWaYYlrLQtJ/jRtOWAqAkylzCRN2Gf5Q6UOGpXhixgXs
+         ZhCvDb3YbdseZoe3izvD6stK+F+SEZsW+Vixe/yTWq0WDoio7cw8fLCCQHul7dM3kx5W
+         srCw==
+X-Gm-Message-State: AOAM531ZyPT8OZGaxeq5os7QEKkChyII45IaLQWK9rYCoiiDwwdqszNP
+        pfM3AYmwPHU/VJG5y8yH0jiYb4ZLy78=
+X-Google-Smtp-Source: ABdhPJyf9t+buR9Xz157uSuUk4TTO1I/WdwEnRZVGj4DQ9UmALi/yD893oyJiBOI1AiDTahKbWT1WQ==
+X-Received: by 2002:adf:f90e:: with SMTP id b14mr13769247wrr.28.1630111655683;
+        Fri, 27 Aug 2021 17:47:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b2sm7009227wmd.3.2021.08.27.17.47.35
+        by smtp.gmail.com with ESMTPSA id y15sm7641759wrw.64.2021.08.27.17.47.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 27 Aug 2021 17:47:35 -0700 (PDT)
-Message-Id: <1fac9baec1d5b9d42d925c1e6d0005a396c64164.1630111653.git.gitgitgadget@gmail.com>
+Message-Id: <00211457eceab756528abf0ca296af866cda00e7.1630111653.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1022.v2.git.1630111653.gitgitgadget@gmail.com>
 References: <pull.1022.git.1629393395.gitgitgadget@gmail.com>
         <pull.1022.v2.git.1630111653.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 28 Aug 2021 00:47:33 +0000
-Subject: [PATCH v2 3/3] test-lib-functions: optionally keep HOME and TERM in
- 'debug'
+Date:   Sat, 28 Aug 2021 00:47:32 +0000
+Subject: [PATCH v2 2/3] test-lib-functions: optionally keep HOME, TERM and
+ SHELL in 'test_pause'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,88 +84,83 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-The 'debug' function in test-lib-functions.sh is used to invoke a
-debugger at a specific line in a test. It inherits the value of HOME and
-TERM set by 'test-lib.sh': HOME="$TRASH_DIRECTORY" and TERM=dumb.
+The 'test_pause' function, which is designed to help interactive
+debugging and exploration of tests, currently inherits the value of HOME
+and TERM set by 'test-lib.sh': HOME="$TRASH_DIRECTORY" and TERM=dumb. It
+also invokes the shell defined by TEST_SHELL_PATH, which defaults to
+/bin/sh (through SHELL_PATH).
 
 Changing the value of HOME means that any customization configured in a
-developers' debugger configuration file (like $HOME/.gdbinit or
-$HOME/.lldbinit) are not available in the debugger invoked by
+developers' shell startup files and any Git aliases defined in their
+global Git configuration file are not available in the shell invoked by
 'test_pause'.
 
 Changing the value of TERM to 'dumb' means that colored output
-is disabled in the debugger.
+is disabled for all commands in that shell.
 
-To make the debugging experience with 'debug' more pleasant, leverage
-the variables USER_HOME and USER_TERM, added in the previous commit, to
-optionally set HOME and TERM before invoking the debugger.
+Using /bin/sh as the shell invoked by 'test_pause' is not ideal since
+some platforms (i.e. Debian and derivatives) use Dash as /bin/sh, and
+this shell is usually compiled without readline support, which makes for
+a poor interactive command line experience.
 
-Add the same warnings as for 'test_pause' in the "Usage" section.
+To make the interactive command line experience in the shell invoked by
+'test_pause' more pleasant, save the values of HOME and TERM in
+USER_HOME and USER_TERM before changing them in test-lib.sh, and add
+options to 'test_pause' to optionally use these variables to invoke the
+shell. Also add an option to invoke SHELL instead of TEST_SHELL_PATH, so
+that developer's interactive shell is used.
+
+We use options instead of changing the behaviour unconditionally since
+these three variables can break test reproducibility. Moreover, using the
+original HOME means tests could overwrite files in a user's home
+directory. Be explicit about these caveats in the new 'Usage' section in
+test-lib-functions.sh.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- t/test-lib-functions.sh | 54 ++++++++++++++++++++++++++++++-----------
- 1 file changed, 40 insertions(+), 14 deletions(-)
+ t/test-lib-functions.sh | 37 ++++++++++++++++++++++++++++++++++++-
+ t/test-lib.sh           |  6 ++++--
+ 2 files changed, 40 insertions(+), 3 deletions(-)
 
 diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 1b775343adc..0f6d30e2b3f 100644
+index 1884177e293..1b775343adc 100644
 --- a/t/test-lib-functions.sh
 +++ b/t/test-lib-functions.sh
-@@ -180,25 +180,51 @@ test_pause () {
- # Wrap git with a debugger. Adding this to a command can make it easier
- # to understand what is going on in a failing test.
+@@ -137,9 +137,44 @@ test_tick () {
+ # Stop execution and start a shell. This is useful for debugging tests.
  #
-+# Usage: debug [options] [git command]
-+#   -d <debugger>
-+#   --debugger=<debugger>
-+#	Use <debugger> instead of GDB
+ # Be sure to remove all invocations of this command before submitting.
++#
++# Usage: test_pause [options]
 +#   -t
 +#	Use your original TERM instead of test-lib.sh's "dumb".
-+#	This usually restores color output in the debugger.
++#	This usually restores color output in the invoked shell.
++#	WARNING: this can break test reproducibility.
++#   -s
++#	Invoke $SHELL instead of $TEST_SHELL_PATH
 +#	WARNING: this can break test reproducibility.
 +#   -h
 +#	Use your original HOME instead of test-lib.sh's "$TRASH_DIRECTORY".
-+#	This allows your debugger to find its config file in your home.
++#	This allows you to use your regular shell environment and Git aliases.
 +#	WARNING: this can break test reproducibility.
 +#	CAUTION: this can overwrite files in your HOME.
-+#
- # Examples:
- #     debug git checkout master
- #     debug --debugger=nemiver git $ARGS
- #     debug -d "valgrind --tool=memcheck --track-origins=yes" git $ARGS
- debug () {
--	case "$1" in
--	-d)
--		GIT_DEBUGGER="$2" &&
--		shift 2
--		;;
--	--debugger=*)
--		GIT_DEBUGGER="${1#*=}" &&
--		shift 1
--		;;
--	*)
--		GIT_DEBUGGER=1
--		;;
--	esac &&
--	GIT_DEBUGGER="${GIT_DEBUGGER}" "$@" <&6 >&5 2>&7
-+	GIT_DEBUGGER=1 &&
-+	DEBUG_TERM=$TERM &&
-+	DEBUG_HOME=$HOME &&
+ 
+ test_pause () {
+-	"$TEST_SHELL_PATH" <&6 >&5 2>&7
++	PAUSE_TERM=$TERM &&
++	PAUSE_SHELL=$TEST_SHELL_PATH &&
++	PAUSE_HOME=$HOME &&
 +	while test $# != 0
 +	do
 +		case "$1" in
 +		-t)
-+			DEBUG_TERM="$USER_TERM"
++			PAUSE_TERM="$USER_TERM"
++			;;
++		-s)
++			PAUSE_SHELL="$SHELL"
 +			;;
 +		-h)
-+			DEBUG_HOME="$USER_HOME"
-+			;;
-+		-d)
-+			GIT_DEBUGGER="$2" &&
-+			shift
-+			;;
-+		--debugger=*)
-+			GIT_DEBUGGER="${1#*=}"
++			PAUSE_HOME="$USER_HOME"
 +			;;
 +		*)
 +			break
@@ -173,9 +168,37 @@ index 1b775343adc..0f6d30e2b3f 100644
 +		esac
 +		shift
 +	done &&
-+	TERM="$DEBUG_TERM" HOME="$DEBUG_HOME" GIT_DEBUGGER="${GIT_DEBUGGER}" "$@" <&6 >&5 2>&7
++	TERM="$PAUSE_TERM" HOME="$PAUSE_HOME" "$PAUSE_SHELL" <&6 >&5 2>&7
  }
  
- # Usage: test_commit [options] <message> [<file> [<contents> [<tag>]]]
+ # Wrap git with a debugger. Adding this to a command can make it easier
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index abcfbed6d61..132618991e2 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -585,8 +585,9 @@ else
+ 	}
+ fi
+ 
++USER_TERM="$TERM"
+ TERM=dumb
+-export TERM
++export TERM USER_TERM
+ 
+ error () {
+ 	say_color error "error: $*"
+@@ -1380,9 +1381,10 @@ then
+ fi
+ 
+ # Last-minute variable setup
++USER_HOME="$HOME"
+ HOME="$TRASH_DIRECTORY"
+ GNUPGHOME="$HOME/gnupg-home-not-used"
+-export HOME GNUPGHOME
++export HOME GNUPGHOME USER_HOME
+ 
+ # Test repository
+ rm -fr "$TRASH_DIRECTORY" || {
 -- 
 gitgitgadget
+
