@@ -2,95 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E429C432BE
-	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 09:46:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65E74C432BE
+	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 09:47:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C84D6054E
-	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 09:46:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 451CB6054E
+	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 09:47:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233714AbhH1JrA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Aug 2021 05:47:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53654 "EHLO
+        id S233724AbhH1JsV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 Aug 2021 05:48:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233573AbhH1Jq7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Aug 2021 05:46:59 -0400
-Received: from mail-ua1-x92c.google.com (mail-ua1-x92c.google.com [IPv6:2607:f8b0:4864:20::92c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACAE3C061756
-        for <git@vger.kernel.org>; Sat, 28 Aug 2021 02:46:09 -0700 (PDT)
-Received: by mail-ua1-x92c.google.com with SMTP id m39so4870817uad.9
-        for <git@vger.kernel.org>; Sat, 28 Aug 2021 02:46:09 -0700 (PDT)
+        with ESMTP id S230444AbhH1JsU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Aug 2021 05:48:20 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66D17C061756
+        for <git@vger.kernel.org>; Sat, 28 Aug 2021 02:47:30 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id x2-20020a1c7c02000000b002e6f1f69a1eso10894788wmc.5
+        for <git@vger.kernel.org>; Sat, 28 Aug 2021 02:47:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=CPrc6/vH5A4Xci3aUvOYhtT+sXX6DdCiAUfZYOzuocE=;
-        b=sj8swvZVP8XMfEsgLECcXVH4P7nCp2nT1DWnVKFqTTFecoIUDyCx5ptdl12H45oemE
-         0b/gh6d26wZZT8+metkzpQWH4/EFjuhAM9TXIbOfRwvdHlZW2vaiDtknAHCD0TFly3xC
-         S15ugcilQB4DqEH3E13fBixMXt9zuSZwTAMB7J1fXDNIZJ4Jq5BAoucQsTXA/CL8V2SJ
-         ZQQvZSoCOrTEFo6JCgVTw6nEFH7vFATCpc61N4prbTAJY+wRPGl0vpLGeX43ApoKUx7b
-         687DcMKUT9BDt6XbrmLoYndD10foABN5Nqv60FAmulUjX9YuG23cQIVikVHLcDZXQsOB
-         d2VQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=xKCfkNTAoD9lwQpmZaejw2gyx4NDWPwa67LImHKX0og=;
+        b=G+MY6Xv5Ta98mWtofInBJmUYYS0VRkrQNRt9wl9Szvm8QWXiO31+2LjCHKsriBbx6A
+         m1BvfiA5YjZuV+NhkDl75nUZ7zJ9LKk7NYd013R88X0liP5GOd+jO17x/q5VogYuspkL
+         j4gULiQFLpQ8xy1y/5THHBJTcY4JQygGGsObNR0CN8p3xqVavVDjJdqyQMMCCKGWECC3
+         6TB1Rs0Ptf1MrokfcDuUwAMcgFYr7XhZM0Rtl2azxlNFw5ko5lKHXlRx1qToSoalTUc7
+         +umiAKIb7s3mN5oB4fX76rQ+FIbGb1651kg98vHxMg7JtmIcpz10scc8LubwPUks0Rnp
+         DY/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=CPrc6/vH5A4Xci3aUvOYhtT+sXX6DdCiAUfZYOzuocE=;
-        b=apeDv/K2LUMxRYby9UbJXZNZl7Eo891+RcirBwEa1dZnV62ZCZ2NsWrqrAh/AZmcoO
-         k/62uPFAjsgDaUfiasO0WOtTKkqYG4bNZpBgGF32KjBRdQQ62lfVEEJb7m9FSj08VzRI
-         wZvoxNXqDON+u7wsf78AbRtP3IR/heV1rn5jy6abCE4TxRi1OoTMf4Sn8WF0UXlRNdYv
-         ig6K1948a47xIlJcbdQtBN/uR7XDsrA48qpvEOE49l4iPG7NreW24VmOV1451bghyLf2
-         iptohZuj6rChp6PPH03hKFh3jVkmQaQl8oiRf+/8acMjDNFfizRzu/dVZfIs0gsjedjG
-         UtWg==
-X-Gm-Message-State: AOAM532S0iXVLKUmQ8h3UA3LnyURB5AOD/mzsrfFcDYDVTaJpuzxGp3a
-        5qW9V8ikFJ+vxMOgtXc5+e8OYk1vedoC/56UjfixnjLsd6w=
-X-Google-Smtp-Source: ABdhPJyYL4UHnrV622C24AZXJtwy1HlBh4fD8OvCyi2L3mlhnWWZJXbmt9TNdd9bTjMXFp8c7lU2xsJDWS+8yvX2VYw=
-X-Received: by 2002:ab0:76d0:: with SMTP id w16mr10583772uaq.15.1630143968703;
- Sat, 28 Aug 2021 02:46:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210809063004.73736-1-carenas@gmail.com> <42dce285-9599-4c7c-d351-44c1e338337e@jeffhostetler.com>
- <xmqqpmumftry.fsf@gitster.g> <b554c82a-4da1-9676-4d93-b769ab6bbcbd@jeffhostetler.com>
- <xmqqsfyvbg8m.fsf@gitster.g> <CAPUEsphe0N6w_qCTAp46YPH7vBj2dkJa9kOm2HaixkFkVuk3GA@mail.gmail.com>
- <xmqq1r6ebyo5.fsf@gitster.g>
-In-Reply-To: <xmqq1r6ebyo5.fsf@gitster.g>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Sat, 28 Aug 2021 02:45:57 -0700
-Message-ID: <CAPUEspgDbi1v32p+H=afZSDVOo_VpJzKn7bU8_s+fPJxm=mtBQ@mail.gmail.com>
-Subject: Re: [PATCH 0/2] fsmonitor: fixup to avoid warnings from pedantic
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=xKCfkNTAoD9lwQpmZaejw2gyx4NDWPwa67LImHKX0og=;
+        b=Yj0NVaLHVfX2+mYtzixEqh+5Z6i7fazr0PUw3hf/9z6QcgrFwgqxRLCbyk/hgeUPNS
+         qmqkUCMX2/vfiEJ+PI5O4K2VYw3BqqB7/oI0q6AfXh9WXlCOZzvNWxgIl3GL58r+O/0b
+         6QrxV9+POcdpk0gLB7ykPSDddtB5HXX2zqE/W9Df4hNSfBEB53py3y0qmmqIh+Wt1Xwn
+         KpXcYETQXfcPWVyIhO71wl9D7JQ6tiaE0zP0LKgw3i0azAQA5KqgrdOebFIyqCCoh1Qw
+         nJs3acl5ReAs4dLpM6SeAI0KF98sNCBafkubPhnzbU+1ggbW5fZWbq3JAhdGgK1wRIM8
+         KUEQ==
+X-Gm-Message-State: AOAM5301l/t6QaCTGDjjxFPhleIVo+Jlj/l3p7W38s2KeqUIAvCjY51l
+        vA2ej2O5YbalQ8pPywN1RIs=
+X-Google-Smtp-Source: ABdhPJz1Tih1xH53Z5orZw5HgpgdUuGbAW8+Dzw0QoE5sv8UcGo8r0XgTnASHizmt6GhLc9zh5c7kw==
+X-Received: by 2002:a05:600c:3384:: with SMTP id o4mr21402785wmp.12.1630144049034;
+        Sat, 28 Aug 2021 02:47:29 -0700 (PDT)
+Received: from szeder.dev (84-236-78-211.pool.digikabel.hu. [84.236.78.211])
+        by smtp.gmail.com with ESMTPSA id i14sm7454295wmq.40.2021.08.28.02.47.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 28 Aug 2021 02:47:28 -0700 (PDT)
+Date:   Sat, 28 Aug 2021 11:47:26 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
-        jeffhost@microsoft.com
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Jeff King <peff@peff.net>, Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Mickey Endito <mickey.endito.2323@protonmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] t5582: remove spurious 'cd "$D"' line
+Message-ID: <20210828094726.GG2257957@szeder.dev>
+References: <tV8xl8isDPhmGxCNmN06tTwhJTve0PsrkakKwLMcFQJybDZO2SGHHbDLZFrcLp1Yda1_KRygSm7-lVDSZSaG-antdalcPnhSqYqcK5Fpifk=@protonmail.com>
+ <xmqq8s0rpwiw.fsf@gitster.g>
+ <20210824185942.GE2257957@szeder.dev>
+ <YSWeeEgzCCT/3kxR@coredump.intra.peff.net>
+ <xmqqsfyxjyfe.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqsfyxjyfe.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 27, 2021 at 10:11 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> One thing I noticed is that simple-ipc.h can disable itself
-> altogether with "#ifdef SUPPORTS_SIMPLE_IPC", so the unconditional
-> use of "enum ipc_active_state" by fsmonitor-ipc.h would still be a
-> problem.
+On Wed, Aug 25, 2021 at 09:12:37AM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > Hmm. I think that one is different, in that the "cd" is not redundant,
+> > but wrong. But it turns out not to matter to the test. ;)
+> 
+> Funny. 
+> 
+> We are lucky because 'cd ""' stays in the same repository as the
+> current one and not to a random place,
 
-That is why we also need an additional patch[1] to be able to build
-(at least in macOS).
+Actually, the results of 'cd ""' are unspecified, though most shells
+do as you said.  Do we want something like this?
 
-in windows additional changes are required, but I suspect that
-configuration is probably not expected.
+  ---  >8  ---
 
-> fsmonitor-ipc.h is included even in help.c so it seems
-> that with this topic, you practically will not get a working Git at
-> all with -pedantic when SUPPORTS_SIMPLE_IPC is not true.
+Subject: [PATCH] test-lib: catch 'cd "$dir"' with unset variable
 
-not sure if I understand the logic here, but there is a "mock" daemon
-that is used in the platforms that don't have support that will be
-available then (even if it just refuses to start), and that is still
-IMHO a working git configuration.
+We just had to fix two test cases [1] that invoked 'cd "$dir"' while
+the given variable was accidentally unset.  While POSIX states that if
+'cd's directory parameter "is an empty string, the results are
+unspecified" [2], most shells treat this as a no-op [3], i.e. they
+neither change directory nor return error, that's why both of those
+tests happened to succeed on common shells, and thus these issues
+remained hidden for a while.
 
-Carlo
+Catch 'cd ""' by adding a thin wrapper function overriding the
+shell's 'cd' command to verify the non-emptiness of its parameters and
+call BUG if necessary.
 
-[1] https://lore.kernel.org/git/20210817082310.2157-1-carenas@gmail.com/
+[1] bd72824c60 (t5582: remove spurious 'cd "$D"' line, 2021-08-23)
+    c21b2511c2 (t5323: drop mentions of "master", 2021-08-24)
+[2] https://pubs.opengroup.org/onlinepubs/9699919799/utilities/cd.html
+[3] 'ksh' and 'ksh93' are the only shells I found that error out on
+    'cd ""' with "cd: bad directory" (though these shells are unable
+    to run significant portion of our test sute anyway).
+
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ t/test-lib.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index abcfbed6d6..06b75d8430 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1436,6 +1436,14 @@ EMPTY_TREE=$(test_oid empty_tree)
+ EMPTY_BLOB=$(test_oid empty_blob)
+ _z40=$ZERO_OID
+ 
++cd () {
++	if test -z "$@"
++	then
++		BUG "cd invoked with empty parameter"
++	fi
++	command cd "$@"
++}
++
+ # Provide an implementation of the 'yes' utility; the upper bound
+ # limit is there to help Windows that cannot stop this loop from
+ # wasting cycles when the downstream stops reading, so do not be
+-- 
+2.33.0.358.g803110d36e
+
