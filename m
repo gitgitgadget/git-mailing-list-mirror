@@ -2,96 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F026C432BE
-	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 21:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 754F4C432BE
+	for <git@archiver.kernel.org>; Sun, 29 Aug 2021 09:15:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 33791604AC
-	for <git@archiver.kernel.org>; Sat, 28 Aug 2021 21:30:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4075B60F38
+	for <git@archiver.kernel.org>; Sun, 29 Aug 2021 09:15:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231773AbhH1Vbq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Aug 2021 17:31:46 -0400
-Received: from mout.web.de ([212.227.15.4]:51269 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231280AbhH1Vbq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Aug 2021 17:31:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1630186250;
-        bh=N26JBwBZwRkt4QXL+WBj6HHFLfKFV3/G6mQ/9pwPgMA=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=B0fjQaIaz6clFXgK8hd/Qv4Sc1vI1gw0qG+ODo0vRu4NGLRg3XQFA3wj7K3UsE3CF
-         rbi4x80j1VxTU3Zq1gncdopKbH009djRgcEn4Ng4/4tEl4ddt9qDYNI6c2DZHSPc1P
-         F/GVQw/rPESCL0veZoteLPohgIswOcHME0S4JywA=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.27.185]) by smtp.web.de
- (mrweb003 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0M5x4z-1nDIzw3hsn-00xrqt; Sat, 28 Aug 2021 23:30:49 +0200
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] merge-recursive: use fspathcmp() in path_hashmap_cmp()
-Message-ID: <512abaef-d71c-9308-6a62-f37b4de69e60@web.de>
-Date:   Sat, 28 Aug 2021 23:30:49 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.13.0
+        id S234858AbhH2JQm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Aug 2021 05:16:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50776 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234584AbhH2JQm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Aug 2021 05:16:42 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C76C061575
+        for <git@vger.kernel.org>; Sun, 29 Aug 2021 02:15:50 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id u9so17601350wrg.8
+        for <git@vger.kernel.org>; Sun, 29 Aug 2021 02:15:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=tOPCkHxgCD2Y/xQNxgy4umc1NE8uqH/6Zha7OIqm4sY=;
+        b=B2ilS05FssEllXuK7zKEGTVlJFKtLSoqi9AhADoTlmcwZ0eeWv/28hT+Fb0q893Hn8
+         UcQpiz6PBBjaHPYgwO+EryfjCB10ZJcy9oXHFJnJV5LpgTOCC+LYa/82CB04p7j5mdkt
+         m/mi1ZkhPu8IvyIxmCxKnv6WSnpMc8qcLM67SG+w7+mtsWHmuMOB4edMQJUf/9rJzefb
+         XBKDIbLEH5yMwCceH7r2ZbxVkFxK3lPNMBm6NW8CditupBjayzBboxSxjqA0wU9r+0K/
+         ckRY72PG0G7IT0FZKGtNPX31SYolpH4NZbcliqs1gp+0IEqRHTizHkt0+hBc4t+5sG0R
+         LeNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=tOPCkHxgCD2Y/xQNxgy4umc1NE8uqH/6Zha7OIqm4sY=;
+        b=eL3Mio4a1XlwQBAhzjStKolsUuQZ6EG8RD1Cwz6jLjHW+Hwxc53CvkJ+v8imDPxMo7
+         Ml0IbGKcZap6KjrkLeI0Pd0MSnqWwBn3whvFw2ahG/EIexQOGZus0XNDwhfCcxiiW4wD
+         s78u7TwlMVNjCHbzyAWUVGBFAPji7fs4mvE02brBuSjeUg3/QVZGylpE1htfazhos7HT
+         ZOt/+iWZn1R8BEd+9041uOTF6M+8dsUwnlXN3nZj1CzMf5u4UGN74H2m824zYF0DPylW
+         W8+GlgT45L7mIZ1FAUpKpqyWCPJQF44yi075ppeEuCJC0m1GrmlFGfsLai4nuBNJxqEu
+         bOBw==
+X-Gm-Message-State: AOAM532I9U75cwHg35hZ+X+8eJr1rHmUYT6cszOPPKkpXOUc/ZXAUlu8
+        5JMy37wSqbo3k+7X4G1eDOQ=
+X-Google-Smtp-Source: ABdhPJzmcwLsMYPHTpWhN/II/587mKT5iSnAWUXdtRR7vB2Zc43l4mBOlxPtMsVQRFasJJDCsnDYaQ==
+X-Received: by 2002:adf:e809:: with SMTP id o9mr20032439wrm.425.1630228548713;
+        Sun, 29 Aug 2021 02:15:48 -0700 (PDT)
+Received: from szeder.dev (84-236-78-211.pool.digikabel.hu. [84.236.78.211])
+        by smtp.gmail.com with ESMTPSA id q195sm10740167wme.37.2021.08.29.02.15.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 29 Aug 2021 02:15:48 -0700 (PDT)
+Date:   Sun, 29 Aug 2021 11:15:46 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] test-lib: set GIT_CEILING_DIRECTORIES to protect the
+ surrounding repository
+Message-ID: <20210829091546.GH2257957@szeder.dev>
+References: <20210828121329.1971762-1-szeder.dev@gmail.com>
+ <CAPUEspg43gxRiVydtaYdM06ObQGYUVn6oThjg1VTR+EfsxRVjA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:3Pd2iYNROSK9+K9MBeiGXJsHaPRup9kl0CpM88MOVKiXHWPQSO+
- DQWa+SgBgXmv3eRnzbe5YCIpLBGOGfQ1WVp+IBWsO+bKDVsEaddWMWo6phI35eQGRW3tRoJ
- po5BtKPSYbzRKx7wwk43ccWgQd1Gd9GJuvn4UQcd48fywxNgyB0SOaicwIsGjEaEvDvTA4a
- OrJ7mR+WJK26jhwGxiCAA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:eWd0G1A6qWE=:nyYxgerLU46N7sTT4LJP6Y
- QNuVBBrd1mM7ppdWF/XZwl8TuNcEVov0aF7IFcae+OBj7CO9cyueuhdiugqyp7fV52pKLIXEE
- eaL/g3x8kfMvjXkP0Oa6n7XoXcYyK8p8HbM/MMBJ7KlwNlvkDNDWQJCy4F9SyIBmeUfl3ftg1
- HDiz8xhfihGGHoWbTW2yZ0EHW/+MQ6gPoWE1cc76KzJDDpVRaa3o2UCegqWy+5CQO7fDMQv8A
- vVN0CzJblkK3xdUo3yMR7j8YZq1MhIMA6Ax/Nx/S/L1eZLhACqFjYux3fAncNowaID8hwJMNE
- Sb36sJUrs7bD63F8dXW3mi05kvSs4lS+Gn2f0hWz74YRxajKgmNQtWbhmqkAj4wwc3eH8eIF1
- w7Eh4NkE6UetVQYujXgi25HmpOLQJQ/ZraiptMR1PxqIDAoIc9KYIv5Q8nmi4LMwNCZ4YW+50
- lG+iL71QOFG9p+zyN+HzMIF1uFcbf9rFDwyw9SkAyll7dAJQQ+lxa/A+9uk3e8mNZdxFIJ/7b
- oxo5g9Jvm0bAbARsVWHRvsRcTE1GW8Kil7FIokPLM9RJy1aMJQKB7rI7KdRWoDAWPClCZIh2R
- uVyk+zD/j50gbHhDT7Nd08eSey8GTJClJdLvuRYAeWffZdwX/hNiM6Ndr0T8Tz6YLDUDOJ+Sk
- r9L9uY7QaTvyAAc9iDbvLtAof7NsEJioaA2WDDsbrnBcQtwvFLwkcR3FJiOTgPFErvdKi49ih
- pahjL7SYjWGRRpoZn/pTbcIynolKvrwB9p0ohvyV1ffn3wod1582TsDCq7lcDjrewRT3vUCLE
- +z+Rk6jfXluRhh1mKjkzjQCUKEb6NBoOkoOmQK5AoQdgxDk+mDeEGa3hTRfrhw4Snv+JOHE38
- 4jMDL+ohOVVIMqp8BrYSjsyrWipMe8FL0yIm2ttUM+E67phOqo90VCrknHny1ItEQz+/Z0rd1
- liO84cz8RHfdRLdIntqgptWvu8f36Wj4lCwFyyUrexJQ7ns/T/eDGD01wqiKvjoeQSDIAz40i
- I/3UFSzrr6cM9/bhn7w/zD7Bncu33NgaEHlk67yKsCmQ5qZYI2K4O8VqjQnlzeiE606wK/0Gn
- 6TMfgu5I+sTTOAjgy+0J6CN+VnMt9vpjT6a
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPUEspg43gxRiVydtaYdM06ObQGYUVn6oThjg1VTR+EfsxRVjA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Call fspathcmp() instead of open-coding it.  This shortens the code and
-makes it less repetitive.
+On Sat, Aug 28, 2021 at 12:56:24PM -0700, Carlo Arenas wrote:
+> On Sat, Aug 28, 2021 at 5:15 AM SZEDER Gábor <szeder.dev@gmail.com> wrote:
+> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+> > index abcfbed6d6..a1e0182c2f 100644
+> > --- a/t/test-lib.sh
+> > +++ b/t/test-lib.sh
+> > @@ -1343,7 +1343,8 @@ fi
+> >  GIT_TEMPLATE_DIR="$GIT_BUILD_DIR"/templates/blt
+> >  GIT_CONFIG_NOSYSTEM=1
+> >  GIT_ATTR_NOSYSTEM=1
+> > -export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG_NOSYSTEM GIT_ATTR_NOSYSTEM
+> > +GIT_CEILING_DIRECTORIES="$GIT_BUILD_DIR"
+> 
+> this wouldn't work as expected with --root and would be IMHO safer
+> anyway if using instead
+> 
+>   GIT_CEILING_DIRECTORIES="$TRASH_DIRECTORY/.."
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- merge-recursive.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 3355d50e8a..840599fd53 100644
-=2D-- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -55,10 +55,7 @@ static int path_hashmap_cmp(const void *cmp_data,
- 	a =3D container_of(eptr, const struct path_hashmap_entry, e);
- 	b =3D container_of(entry_or_key, const struct path_hashmap_entry, e);
-
--	if (ignore_case)
--		return strcasecmp(a->path, key ? key : b->path);
--	else
--		return strcmp(a->path, key ? key : b->path);
-+	return fspathcmp(a->path, key ? key : b->path);
- }
-
- /*
-=2D-
-2.33.0
+Thanks, I completely forgot about '--root'.
 
