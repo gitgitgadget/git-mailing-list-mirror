@@ -2,289 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9D90C432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 10:54:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 995A5C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 11:40:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B12B8610FD
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 10:54:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 799A661131
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 11:40:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236365AbhH3Kz3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 06:55:29 -0400
-Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:59513 "EHLO
-        wout1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S235818AbhH3Kz2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 30 Aug 2021 06:55:28 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.west.internal (Postfix) with ESMTP id 6DB6532007D7;
-        Mon, 30 Aug 2021 06:54:34 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Mon, 30 Aug 2021 06:54:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=Y6eMxXdqnmdzMQaPnP/Zbe4v2n9
-        oCTT7o+goI34gEzY=; b=UO9Ig7ehA1DVlMZjoW9VOuZ7hrldGJFpbUgoDnCO/s1
-        GRPabAU2mUk1yCQ06Rb/8Dswf00Ka9KiQ/O8EPUNwVHxmImy584q6OCB5DO0HEGc
-        dBJUEiMIrm39YZZbTBIKeqftfSDUw39HI7gzR1798JO7tNs9Pgjz6DzM9NzUKyeq
-        Z7rmsbmR4YijoyLGl/QHye68oFIh5uKDsZrbJUH1UPVvzZJ1p1Hj8f0TxT3b1d1K
-        xp3q3gx6m/9+MGgqrTO0WOgV/1+eWbp1XpYuwL3vCH4+0oCiyI4FyWUx/ekFmuxT
-        mfpAlEyBwLi2zUTQHqjuk3g5KAby7sdsaBkc68a45Uw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=Y6eMxX
-        dqnmdzMQaPnP/Zbe4v2n9oCTT7o+goI34gEzY=; b=ljPLJvxcOKk4F83I4w5xOA
-        Eyp3GGJVz05F8N4meDEg1rdxTbnONqFSTm8Seawo4U5c/sNTo1XcwUcvUV7PYj0d
-        6BiCGJqNh+eA42F5NGilC9a78bQAaA6oPOpH+dyUZXJwfJje6KJp6tMu0V+F5AWY
-        Sqm+bioGaj+QJGpT+Wy9+HeITvSYqeHy5B7IC90T01CaYU4USFYXQsnK/K2qQlE1
-        AsbWeTglj8Hmgi0lMaX31U8UZfLMQNoqMyYkTqDk0Vba/uqJe/34ljwBnXfKQHvR
-        cGjr8/B4DZSbzkvnfJFlA5N8KHmXReZB8ua7LN/YeOTSBrcR7fPuTAYP80PRVX2w
-        ==
-X-ME-Sender: <xms:6bgsYSf9DCHkMqkt8DbulIa1n5PbGykHr5Tw4uiANhMAFNxenqAadQ>
-    <xme:6bgsYcPv4jdQsErB9P3Rgys6OlerlWSgW30hKmtzTV76LFSZC_PvxIObSbQbDiPNl
-    XvmcOq-CEpMLINdIQ>
-X-ME-Received: <xmr:6bgsYTigLchjAdiZfWqXxs3HM2qlzdu0v3zwp9X4yUtclzyg7xq4MwKY_RulUt7X7K9SL6NP9dtYcYf3xK_UraET3v8BKkyel5Zm6U4rCFDqNLD7SPRG3Mc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudduledgfeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhephefgjeeuveejteduhefgffefffdvjeefje
-    eivdekfffgkeeugfehveetueefleeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:6bgsYf_z4sH9dOY8G4HcRPsF_8ifSxXkzVLee5Z6mq3Q4BKusScyLw>
-    <xmx:6bgsYevBMMKQbna1QhiHwBqXaq-XM0IOlLCVlCbXNosQDsLGMzJueQ>
-    <xmx:6bgsYWFPhow-6_-2KVZqR71O9kGUFxbAykhQWRkE0lUoFB5fVN7aqg>
-    <xmx:6rgsYTXg_rMfJfAFwZY1lZ1HMiYCuyq9G41dYxKU5kOm51Ru4Fq1Gg>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Aug 2021 06:54:32 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 8deab7d7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 30 Aug 2021 10:54:27 +0000 (UTC)
-Date:   Mon, 30 Aug 2021 12:54:26 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH v2] fetch: skip formatting updated refs with `--quiet`
-Message-ID: <e5ffa17753d4aca57d486d500a2d114290361ea7.1630320848.git.ps@pks.im>
-References: <40c385048a023dbd447c5f0b4c95ff32485e1e23.1629906005.git.ps@pks.im>
+        id S236552AbhH3Llm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 07:41:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36732 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236539AbhH3Lll (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 07:41:41 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BA7BC061575
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 04:40:47 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id n11so21079820edv.11
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 04:40:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=belE30osVpuhclec1p/lE/lyzmBrzuXzTlVeqz6RwnE=;
+        b=CDNchm0NZ26bHPtj1l55zZiN4PC7+JlKJir8NLu6XMrmoGKgom779WV6QkH+R44yjT
+         nqoBTXCMjOLGQUaju3jZgZsh76m8sh6vkHGVkHl33Fa3n0WoMu1kMJ26MI2akO4kYEjp
+         Oik5kQxXpl0UocAr+tTEYHn2e7E9wfAi6rDGEWefuT/34Sj/FnWJwK8X0xO8ucgeCZ84
+         3Fk0e1sJx723lTbRZOnOFPZfqwOVooCt9Jxm+q/scwSDzBib9AldP8OVOTl6CMP7XltD
+         yi9lG5oOThXfxZF5PN3tO5uf9FcjyTbrxzErOrEtu/YLhuNW5YgVEq5nayGe6/dQ+scl
+         roHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=belE30osVpuhclec1p/lE/lyzmBrzuXzTlVeqz6RwnE=;
+        b=k5pJYosvStU3p2+HY1DiMYFTG4rwOZhS3RK1Dh4CUAM2hNV5syMMiFT3zCViIt2ufX
+         ttSpOBJ5jTK4vm0XKygfPAfkGEYx1XjlWAGql8dEm/aFy/OeV0bKf4PaOpt8vcVvF87V
+         pMM9SdG9tjNiiE8VhA0uQ4oQGy2kWozPOh+EJjkdAkUElCXuxhesbRKF4hQwHp1R8jdU
+         RTDi3lsBojDkVa7TsPUwSduWQTBM0gBW5W0uBvgcSZAARwe9OcIapfSqwjtIh6nAPnRW
+         LNX8lHdW7xFComogLFb80w7c0p0zB5j+o5GpVaCeZuXhw47EG/rrB2nD8kLxYJE3IycZ
+         0u5A==
+X-Gm-Message-State: AOAM532NkEHebww2T5K2hb3l7S2yF9gXu0TIq2lCTboZSXIsbuwh65gM
+        JzpJusxeYdxT/YPW3u15LtM=
+X-Google-Smtp-Source: ABdhPJzBqnJejdQhKZeNfK7lBxoTFybzhpHD2o8x7TrI3kdEqdM3inpEXld3Teo7bDBHONDrA+ZWqA==
+X-Received: by 2002:a05:6402:3107:: with SMTP id dc7mr23970207edb.341.1630323645980;
+        Mon, 30 Aug 2021 04:40:45 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id v10sm7510410edt.25.2021.08.30.04.40.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Aug 2021 04:40:45 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+        git@vger.kernel.org, e@80x24.org
+Subject: Re: [PATCH/RFC 3/3] ci: run a pedantic build as part of the GitHub
+ workflow
+Date:   Mon, 30 Aug 2021 13:36:50 +0200
+References: <CAPUEsphf9F1+=zOMKx3j=jH8xqDwQX99+9uHiYUpXhFE1nervg@mail.gmail.com>
+ <20210809013833.58110-1-carenas@gmail.com>
+ <20210809013833.58110-4-carenas@gmail.com>
+ <1b096830-3e01-efbe-25dc-c0505c8bac7b@gmail.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <1b096830-3e01-efbe-25dc-c0505c8bac7b@gmail.com>
+Message-ID: <87zgszxirn.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="v5GcIfGv84ocCkQg"
-Content-Disposition: inline
-In-Reply-To: <40c385048a023dbd447c5f0b4c95ff32485e1e23.1629906005.git.ps@pks.im>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---v5GcIfGv84ocCkQg
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, Aug 09 2021, Phillip Wood wrote:
 
-When fetching, Git will by default print a list of all updated refs in a
-nicely formatted table. In order to come up with this table, Git needs
-to iterate refs twice: first to determine the maximum column width, and
-a second time to actually format these changed refs.
+> Hi Carlo
+>
+> On 09/08/2021 02:38, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+>> similar to the recently added sparse task, it is nice to know as early
+>> as possible.
+>> add a dockerized build using fedora (that usually has the latest
+>> gcc)
+>> to be ahead of the curve and avoid older ISO C issues at the same time.
+>
+> If we want to be able to compile with -Wpedantic then it might be
+> better just to turn it on unconditionally in config.mak.dev. Then
+> developers will see any errors before they push and the ci builds will
+> all use it rather than having to run an extra job. I had a quick scan
+> of the mail archive threads starting at [1,2] and it's not clear to me
+> why -Wpedaintic was added as an optional extra.
 
-While this table will not be printed in case the user passes `--quiet`,
-we still go out of our way and do all these steps. In fact, we even do
-more work compared to not passing `--quiet`: without the flag, we will
-skip all references in the column width computation which have not been
-updated, but if it is set we will now compute widths for all refs.
+This is from wetware memory, so maybe it's wrong: But I recall that with
+DEVOPTS=3Dpedantic we used to have a giant wall of warnings not too long
+ago (i.e. 1-3 years), and not just that referenced
+USE_PARENS_AROUND_GETTEXT_N issue.
 
-Fix this issue by completely skipping both preparation of the format and
-formatting data for display in case the user passes `--quiet`, improving
-performance especially with many refs. The following benchmark shows a
-nice speedup for a quiet mirror-fetch in a repository with 2.3M refs:
+So yeah, I take and agree with your point that perhaps we should turn
+this on by default for DEVELOPER if that's not the case.
 
-    Benchmark #1: HEAD~: git-fetch
-      Time (mean =C2=B1 =CF=83):     26.929 s =C2=B1  0.145 s    [User: 24.=
-194 s, System: 4.656 s]
-      Range (min =E2=80=A6 max):   26.692 s =E2=80=A6 27.068 s    5 runs
+On the other hand we can't combine that with
+USE_PARENS_AROUND_GETTEXT_N, and to the extent that we think DEVELOPER
+is useful, the entire point of having USE_PARENS_AROUND_GETTEXT_N seems
+to be to catch exactly that sort of in-development issue.
 
-    Benchmark #2: HEAD: git-fetch
-      Time (mean =C2=B1 =CF=83):     25.189 s =C2=B1  0.094 s    [User: 22.=
-556 s, System: 4.606 s]
-      Range (min =E2=80=A6 max):   25.070 s =E2=80=A6 25.314 s    5 runs
+So if we turn pedantic on in DEVOPTS by default, wouldn't it make sense
+to at least have a CI job where we test that we compile with
+USE_PARENS_AROUND_GETTEXT_N (which at that point would no be the default
+anymore).
 
-    Summary
-      'HEAD: git-fetch' ran
-        1.07 =C2=B1 0.01 times faster than 'HEAD~: git-fetch'
-
-While at it, this patch also fixes `adjust_refcol_width()` such that it
-skips unchanged refs in case the user passed `--quiet`, where verbosity
-will be negative. While this function won't be called anymore if so,
-this brings the comment in line with actual code. Furthermore, needless
-`verbosity >=3D 0` checks are now removed in `store_updated_refs()`: we
-never print to the `note` buffer anymore in case `verbosity < 0`, so we
-won't end up in that code block anyway.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-Range-diff against v1:
-1:  40c385048a ! 1:  e5ffa17753 fetch: skip formatting updated refs with `-=
--quiet`
-    @@ Commit message
-               'HEAD: git-fetch' ran
-                 1.07 =C2=B1 0.01 times faster than 'HEAD~: git-fetch'
-    =20
-    +    While at it, this patch also fixes `adjust_refcol_width()` such th=
-at it
-    +    skips unchanged refs in case the user passed `--quiet`, where verb=
-osity
-    +    will be negative. While this function won't be called anymore if s=
-o,
-    +    this brings the comment in line with actual code. Furthermore, nee=
-dless
-    +    `verbosity >=3D 0` checks are now removed in `store_updated_refs()=
-`: we
-    +    never print to the `note` buffer anymore in case `verbosity < 0`, =
-so we
-    +    won't end up in that code block anyway.
-    +
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    =20
-      ## builtin/fetch.c ##
-    +@@ builtin/fetch.c: static void adjust_refcol_width(const struct ref *=
-ref)
-    + 	int max, rlen, llen, len;
-    +=20
-    + 	/* uptodate lines are only shown on high verbosity level */
-    +-	if (!verbosity && oideq(&ref->peer_ref->old_oid, &ref->old_oid))
-    ++	if (verbosity <=3D 0 && oideq(&ref->peer_ref->old_oid, &ref->old_oid=
-))
-    + 		return;
-    +=20
-    + 	max    =3D term_columns();
-     @@ builtin/fetch.c: static void prepare_format_display(struct ref *ref=
-_map)
-    - 		die(_("configuration fetch.output contains invalid value %s"),
-    - 		    format);
-    + 	struct ref *rm;
-    + 	const char *format =3D "full";
-     =20
-     +	if (verbosity < 0)
-     +		return;
-     +
-    - 	for (rm =3D ref_map; rm; rm =3D rm->next) {
-    - 		if (rm->status =3D=3D REF_STATUS_REJECT_SHALLOW ||
-    - 		    !rm->peer_ref ||
-    + 	git_config_get_string_tmp("fetch.output", &format);
-    + 	if (!strcasecmp(format, "full"))
-    + 		compact_format =3D 0;
-     @@ builtin/fetch.c: static void format_display(struct strbuf *display,=
- char code,
-      			   const char *remote, const char *local,
-      			   int summary_width)
-    @@ builtin/fetch.c: static void format_display(struct strbuf *display, =
-char code,
-     =20
-      	strbuf_addf(display, "%c %-*s ", code, width, summary);
-      	if (!compact_format)
-    +@@ builtin/fetch.c: static int store_updated_refs(const char *raw_url,=
- const char *remote_name,
-    + 					       "FETCH_HEAD", summary_width);
-    + 			}
-    + 			if (note.len) {
-    +-				if (verbosity >=3D 0 && !shown_url) {
-    ++				if (!shown_url) {
-    + 					fprintf(stderr, _("From %.*s\n"),
-    + 							url_len, url);
-    + 					shown_url =3D 1;
-    + 				}
-    +-				if (verbosity >=3D 0)
-    +-					fprintf(stderr, " %s\n", note.buf);
-    ++				fprintf(stderr, " %s\n", note.buf);
-    + 			}
-    + 		}
-    + 	}
-
- builtin/fetch.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index e064687dbd..fc7b6bb84e 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -712,7 +712,7 @@ static void adjust_refcol_width(const struct ref *ref)
- 	int max, rlen, llen, len;
-=20
- 	/* uptodate lines are only shown on high verbosity level */
--	if (!verbosity && oideq(&ref->peer_ref->old_oid, &ref->old_oid))
-+	if (verbosity <=3D 0 && oideq(&ref->peer_ref->old_oid, &ref->old_oid))
- 		return;
-=20
- 	max    =3D term_columns();
-@@ -748,6 +748,9 @@ static void prepare_format_display(struct ref *ref_map)
- 	struct ref *rm;
- 	const char *format =3D "full";
-=20
-+	if (verbosity < 0)
-+		return;
-+
- 	git_config_get_string_tmp("fetch.output", &format);
- 	if (!strcasecmp(format, "full"))
- 		compact_format =3D 0;
-@@ -827,7 +830,12 @@ static void format_display(struct strbuf *display, cha=
-r code,
- 			   const char *remote, const char *local,
- 			   int summary_width)
- {
--	int width =3D (summary_width + strlen(summary) - gettext_width(summary));
-+	int width;
-+
-+	if (verbosity < 0)
-+		return;
-+
-+	width =3D (summary_width + strlen(summary) - gettext_width(summary));
-=20
- 	strbuf_addf(display, "%c %-*s ", code, width, summary);
- 	if (!compact_format)
-@@ -1202,13 +1210,12 @@ static int store_updated_refs(const char *raw_url, =
-const char *remote_name,
- 					       "FETCH_HEAD", summary_width);
- 			}
- 			if (note.len) {
--				if (verbosity >=3D 0 && !shown_url) {
-+				if (!shown_url) {
- 					fprintf(stderr, _("From %.*s\n"),
- 							url_len, url);
- 					shown_url =3D 1;
- 				}
--				if (verbosity >=3D 0)
--					fprintf(stderr, " %s\n", note.buf);
-+				fprintf(stderr, " %s\n", note.buf);
- 			}
- 		}
- 	}
---=20
-2.33.0
-
-
---v5GcIfGv84ocCkQg
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEsuOEACgkQVbJhu7ck
-PpQDbg//Uh27hzS4kuyi1U5TvBhL35ROrjDwSE3TGZ/Iz9ZpPzfgvKDuhp6Uv/Y3
-VW+UyS5CvHQBDghBCFenSd6KmkoTd9xJCctLCtzGXD7maS+x9aImDidnRUe2oZU9
-YA0GCIpMWwj5Uv+JzZuP8YYbXrNXtP9OYvmIDzwtbKzcFP0Dkf9qmKt6DDJolHCe
-ieNeIbHT6YXnDBNLg8zOQ6NR1+p6FHInRbduJf4ZCy4npIe0+QV1lI5/fLvzS69x
-Fyc4qSn5vzfoeihydMp0N3jDdzxeywTYd2XXCQW+9jNgVIJs02/3l3EG41dmxN1w
-0nMA7Ps7n610FwLl6MYwO1oIqDlvIOpu3Y6hCUsiU+8ope2XwIdTCztvWcIOpRV3
-29maoYWO1NmV8YQIGic+ZCVbJKOl4TdPj5Vi8aaBfhb27GE62N5Bg1J5L+j54RNq
-gcsIBW+yXPtUVFkeeUKdB8tRZamFgDdRGzhCi94osNAw9pFhFXot73LFQx0j2lD/
-Y5DcqLkWOw32aS2tI7DWUJmzfVleAdw+rZVqr0KxwYZQ7ePPrqaHJaHmZG6D3omv
-g4hsBMXCzupaccY60jlSn/ln3hUWAt1vf1TbkVKKz/YLY7Nna6bAE1Gt9t/gx8cW
-xa0jZ6yqDU1thWepAvn8z7r0vs4aucnXx0HCpxO/mBlWC4mH/PA=
-=eka4
------END PGP SIGNATURE-----
-
---v5GcIfGv84ocCkQg--
+Or maybe the existing CI config matrix would already cover that,
+i.e. we've got some entry point to it that doesn't go through
+ci/lib.sh's DEVELOPER=3D1 that I've missed, if so nevermind the last two
+paragraphs (three, including this one).
