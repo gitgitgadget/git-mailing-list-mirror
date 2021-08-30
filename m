@@ -2,111 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E262C432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 13:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0153C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 13:19:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2CDAF60FD9
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 13:05:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8287E6023F
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 13:19:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236694AbhH3NGs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 09:06:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57478 "EHLO
+        id S236622AbhH3NUL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 09:20:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbhH3NGr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 09:06:47 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF06EC061575
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 06:05:53 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id s3so25774243ljp.11
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 06:05:53 -0700 (PDT)
+        with ESMTP id S229446AbhH3NUK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 09:20:10 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0B6BC061575
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 06:19:16 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id bk29so15506450qkb.8
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 06:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ntnN5I1gz7vzCorNYJ2ihGRprns5P/ED0p5C2qaPDM8=;
-        b=TcCxsoUZbkLeTsEJM2v4JQJFzXLd9RLpxOInfvns1yKdzLMuGzyR1UzuC7j4hS7Bm2
-         JiNEnXdesK1YEp1HMkb7+XRLFqdI6K0JfTgMOim7VEAKhz1Glyf6RJBpcOcWZu8hbeWT
-         F1xb9hahDs394R2BmvbGYObuIVaDeVoLi1ccHFIvC/VmmMyB0IBTjr1xUQadUN3ThdYh
-         DhAeEPry1yOKtSGOnIzTvO0iin+ujdfxx3w8ZBHSfpCmENA37xHHdzqbRGE2XrBSvjO1
-         m2nJxmPCEEeSqmO33L+g1HT7JKf9/uxDcfwsY1L9c6GOEDh/oOQTvl4/6r3/RblJDix4
-         ojxw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=91YSpiKeABasp2Rvx3H4Wmb5VOcSNV2TA3A1FNLh1So=;
+        b=GML2KMij9cv7ej6hXAVknPndXRn2ubuRMcluWXYxdW4Q19u58ad9g9waLwaokUtdVV
+         PJYG6yn0WcxmE1bptto1aCICSynrVVYkgYmt5UwK7n9hN6EI4VaUjHPCEuukDnZAuJ4p
+         EkUeIhAHlGaX0K851VFwc3lqhIwdgkfkl7qquORNQAy/Wwwun/w939o8a2aae9/pmpax
+         V87DT+WgtHg/bNBhRsLuu9aIWfu5fGzO9nCK50cHpNQMNFa2WqB8kU10EXj6H4Fy5Zx0
+         mnugcybiqTEsVJiInEjR9mJZ0marw9XyVFANqEEj/6H4wkG8NuR7mhRGSdXlGvVrvuH4
+         ZXRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=ntnN5I1gz7vzCorNYJ2ihGRprns5P/ED0p5C2qaPDM8=;
-        b=lVC6OzDeyR+sL3z4P/waAtK9snR9/pS2dofPBClxF9LMzapEvTmG/l4qdl9X26Otkb
-         KJS0edNZ/gV9t60yMUSBELBHpzB1SppcD7BB/KsH+MzF7X8ArVUuwwLvn6Nx+hP0F8FD
-         YSTgXt6HSgn4r6FhIiYGJCs3TpToWwRRYjtT5PbR7eeE/L46p0LEQaPX88Dvd6QkJHFz
-         vbes/kJf3sV5pRso23RVgEmER/3C53+GrZCtTAZTpY3KwuBUiwKC001o4T2nL3aWjENy
-         ftbpmujfKaHtQArAGWq9a2DfWcn4AZkJE6u9faIz41VMXazNbHhjUPYnM8v9tOwA2bjt
-         5pfA==
-X-Gm-Message-State: AOAM5319JpTZvxSdz2WKOWYryzZr0bcWXL/32mg2UeiOAde/SDnopBNC
-        kl2nvct4NfbPydHE5bFltQlZpwcUz1s=
-X-Google-Smtp-Source: ABdhPJzPuT/bdJBsL65gjTPbtpH0RY1shBaTffJRV+qE4HmDpmRl8dwOjO+YfIMtJjb9EE/YBrN8fA==
-X-Received: by 2002:a2e:a801:: with SMTP id l1mr20955719ljq.41.1630328752051;
-        Mon, 30 Aug 2021 06:05:52 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id d4sm1385263lfg.127.2021.08.30.06.05.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Aug 2021 06:05:50 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=91YSpiKeABasp2Rvx3H4Wmb5VOcSNV2TA3A1FNLh1So=;
+        b=lZIQ6rZFFZLHnXmmzU9Sss/H1YcK717HhWBrwjMBhlpRsSJ71MHe5x4aF1GfqHwjlD
+         JqR1LSNuzJ9LJsopXdV4lLpWEWiwLrrWxMkr0VLSDrXlqVmkZhL9OKq7JJvB05/NHoEr
+         fvtRpeqV6fURgo/hBtBCHYQK6vOH7kbSQqTr6cXVYUeoiU9bZBcLlIKEh/npc/Gpk0tE
+         8io+B+UQhRI5OF4SS9CJPdBL5KshswFhSKOhtNxBXT61pBEOi+kgCQIraNHTLilwqt9m
+         0HryIgjXum5c/QsoQNPRegzACBtz//JB3GSO0isEkPkQ7+4lPm8OrE777PfdGKepQ/hf
+         k10g==
+X-Gm-Message-State: AOAM533xpVwmvX9q8AtaE+nlHtJZ2YwbobRzmZZZlsBEDCRXUCpt8uVR
+        e2eic5wZHLvK+9fCgd6b14Y=
+X-Google-Smtp-Source: ABdhPJyXV/7FVJ8r+9VBO/eK/l6Mw9+vNxsq+2nRWli3oX1lseDiwiS0OLFyNkEOqzFeWmhfK7iKPA==
+X-Received: by 2002:a05:620a:79b:: with SMTP id 27mr22168641qka.248.1630329556003;
+        Mon, 30 Aug 2021 06:19:16 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:f479:1655:2af5:7e8e? ([2600:1700:e72:80a0:f479:1655:2af5:7e8e])
+        by smtp.gmail.com with ESMTPSA id x83sm11273325qkb.118.2021.08.30.06.19.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Aug 2021 06:19:15 -0700 (PDT)
+Subject: Re: [PATCH v4 04/10] sparse-index: use WRITE_TREE_MISSING_OK
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Paul Mackerras <paulus@ozlabs.org>
-Subject: Re: diff-index --cc no longer permitted, gitk is now broken (slightly)
-References: <e6bd4cf7-ec8b-5d22-70f6-07089794df0c@kdbg.org>
-Date:   Mon, 30 Aug 2021 16:05:50 +0300
-In-Reply-To: <e6bd4cf7-ec8b-5d22-70f6-07089794df0c@kdbg.org> (Johannes Sixt's
-        message of "Mon, 30 Aug 2021 10:03:18 +0200")
-Message-ID: <875yvn9j69.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1009.v3.git.1629206602.gitgitgadget@gmail.com>
+ <pull.1009.v4.git.1629841904.gitgitgadget@gmail.com>
+ <b379b8fc61af8a8c39ff8b73aae03ad4999a456c.1629841904.git.gitgitgadget@gmail.com>
+ <CABPp-BFcySug2kSvxT7YdJ1Oorza5AfxKPJgMBE2wN8qOw+=Eg@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <2870fcb8-a356-c2c2-d084-b560326e1ad4@gmail.com>
+Date:   Mon, 30 Aug 2021 09:19:15 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CABPp-BFcySug2kSvxT7YdJ1Oorza5AfxKPJgMBE2wN8qOw+=Eg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On 8/27/2021 5:33 PM, Elijah Newren wrote:
+> On Tue, Aug 24, 2021 at 2:51 PM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> When updating the cache tree in convert_to_sparse(), the
+>> WRITE_TREE_MISSING_OK flag indicates that trees might be computed that
+>> do not already exist within the object database.
+> 
+> Okay.
+> 
+>> This happens in cases
+>> such as 'git add' creating new trees that it wants to store in
+>> anticipation of a following 'git commit'.
+> 
+> This doesn't make any sense to me.  Does 'git add' call
+> convert_to_sparse()?  I don't see why it would; wouldn't the calls to
+> convert_to_sparse() come via sparse-checkout init/set commands?  If
+> I'm correct on that, and 'git add' wants to create new trees, then by
+> the time convert_to_sparse() is called in some subsequent git
+> operation, then convert_to_sparse would already have the trees it
+> needs.
 
-> Since 19b2517f95a0 (diff-merges: move specific diff-index "-m" handling
-> to diff-index, 2021-05-21) git diff-index no longer accepts --cc.
+If someone adds a change outside the sparse-checkout cone, then the
+index is expanded in-memory, then is converted to sparse when the
+index is written again.
 
-Yep, this is expected, and I even put corresponding comment in the
-source:
+> I thought the reason you would need this is someone modified and
+> staged a change to a file underneath a directory that will be
+> sparsified away; at the time of convert_to_sparse(), a tree object may
+> not have yet been written for the new tree with the newly modified
+> file (because those tend to be written at commit time), but you'd need
+> it at the time you sparsified.
 
-	/*
-	 * We need no diff for merges options, and we need to avoid conflict
-	 * with our own meaning of "-m".
-	 */
-
-
-> This breaks gitk: it invokes
->
->    git diff-index --cached -p -C --cc --no-commit-id -U3 HEAD
->
-> to show the staged changes (when the line "Local changes checked in to
-> index but not committed" is selected).
->
-> The man page of git diff-index does not mention --cc as an option. I
-> haven't fully grokked the meaning of --cc, so I cannot tell whether this
-> absence has any significance (is deliberate or an omission).
->
-> Is gitk wrong to add --cc unconditionally? Should it do so only when
-> there are conflicts? Or not at all?
-
-As far as I can tell, --cc had no effect on diff-index, it was just
-silently consumed. If I'm right, this line in gitk never needed --cc.
-Then either gitk is to be fixed, or we can "fix" diff-index to silently
-consume --cc/-c again, for backward compatibility.
-
-If --cc did affect diff-index, then my commit in question is wrong and
-should be fixed.
+Yes. I think we are trying to say the same thing.
 
 Thanks,
--- Sergey Organov
+-Stolee
