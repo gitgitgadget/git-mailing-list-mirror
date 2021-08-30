@@ -2,122 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0129BC432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 18:22:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F563C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 18:28:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE8B760243
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 18:22:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 60CCA60E98
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 18:28:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238457AbhH3SXc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 14:23:32 -0400
-Received: from mout.web.de ([212.227.17.11]:41477 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229839AbhH3SXc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 14:23:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1630347746;
-        bh=IcCJnkef4y9wjkKDONb/40VbpAml+3g3WZUeEEjQoRo=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=OONsz393YKdWzAsJQwrh7qoCvzBPipbPYuL5+QqpUfab+taRM4S5Fi/oqejIj8TWg
-         nM5ljQso+N5W0kunOxQztl31p8kXt6ULw5sRift7WwqV795zlsU8UYqYnM7A3e42fn
-         3a3R00084lHbGHFCrfDFMxfYEVPVqMI5EeK7etJQ=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.27.185]) by smtp.web.de
- (mrweb101 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 0Lx7Ab-1n4tEB1sfx-016d27; Mon, 30 Aug 2021 20:22:26 +0200
-Subject: Re: [PATCH] merge-recursive: use fspathcmp() in path_hashmap_cmp()
-To:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-References: <512abaef-d71c-9308-6a62-f37b4de69e60@web.de>
- <YSvsQcGNpCMZwS8o@nand.local> <xmqqeeaa6fey.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <8d2e0876-9441-9665-ebb1-8cb28902014b@web.de>
-Date:   Mon, 30 Aug 2021 20:22:25 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.13.0
+        id S238709AbhH3S3n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 14:29:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48948 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238591AbhH3S3m (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 14:29:42 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AE20C061575
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 11:28:48 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id d16so27495888ljq.4
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 11:28:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=shutemov-name.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=dyrQ/rgfpi6D0hLsf6hcjHgBTojaT3wzb9QM4rKGcdI=;
+        b=mk1nSWWcSmWx2NHbUuhr5qDSduUBppPkkAQGhEzgUnFceyiabjx84f0mSbn3ayPrIY
+         Wqi5gRqDoXB8u5u8bzuKR00SL+GDpgKoiZm8H2m7MirlhqSBEVtWDFU+yN75OmeEVtS5
+         foIVZq0q5mfeCtT5izy7831LVA5ZQDJ20DhxYykE2OSpJs5c/PqVf+4kZ/ASQYKvOcqO
+         hQtIpptJVLc64NrHVOxnrV2tAmlfN/bIEvZxi2lma5jHtwIoQpAqFxeBZJR5Fa97lAPt
+         x5hsFANN/ph7zrI6t9ukgzR1SHJxVxPwtZzxJfXKjHOgPf44TITRkZ8a0fQokCHVVFji
+         ZldQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=dyrQ/rgfpi6D0hLsf6hcjHgBTojaT3wzb9QM4rKGcdI=;
+        b=qr6Kjn/6Q+CXGI2gewmAEWR0Z33MqOjjLLEWCOrCct+M9L3hj3BU33arwVMw6i8SoA
+         rHYb2ioEKKf7b1D+Mt4DrrQcob6ZXIKSQ0SBQmnydiUbGAMcBN0XiQecLN0UirxDPF+J
+         1FdXXHcU2Ja3bV5CW2hT5lOpVWCBb9siHP6ZyasbZYO1eFut8CN6RK8NkcNaUGCic/et
+         lnARZLFrmrEebL4adQFdSceS6D7IEoTQCzXjYuid1WXqr8BqSW571ADkd09TzOjBIsgF
+         dTJa6ZTgczglcIis6Xrt1PGW7LO5KcQ0aGCaY3tY1TjmqtHneXSXRLbkxR3ECC6o+L5G
+         5RVQ==
+X-Gm-Message-State: AOAM533M0oR6dr0qKZo31KXYrmT7eS7vBtqReGMQAP9V3U1+04RglHTz
+        YDPDe0q+YWt98Xhhk8/sNbT9bQ==
+X-Google-Smtp-Source: ABdhPJyWlkehRIM/tMUyAa4KXzD2cZcZUlp10JyyUDX1cs8W5ku9mgEWgizvq14baSj5VhJa5gQMSw==
+X-Received: by 2002:a05:651c:2125:: with SMTP id a37mr20790557ljq.317.1630348126854;
+        Mon, 30 Aug 2021 11:28:46 -0700 (PDT)
+Received: from box.localdomain ([86.57.175.117])
+        by smtp.gmail.com with ESMTPSA id a28sm568787lfr.51.2021.08.30.11.28.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Aug 2021 11:28:46 -0700 (PDT)
+Received: by box.localdomain (Postfix, from userid 1000)
+        id 89AE3102EF9; Mon, 30 Aug 2021 21:28:45 +0300 (+03)
+Date:   Mon, 30 Aug 2021 21:28:45 +0300
+From:   "Kirill A. Shutemov" <kirill@shutemov.name>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Subject: Re: Problem accessing git.kernel.org with git v2.33 plus gitproxy
+Message-ID: <20210830182845.pnv7ywnc364jnblt@box>
+References: <20210830161149.xggfosjthnjxcoxp@box.shutemov.name>
+ <YS0gZNRqz72hs/a5@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <xmqqeeaa6fey.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:EimsZEit2ryqLeuGDLi5pHRT4LXg0HWuFO78gsRcxuMsb7O56S1
- joGgWCE3OOmI3SGwDxpVLcioRxQL58jSCfLWK+hiPKgJNncm6snUhboamHkG43YWPwDYP39
- Ix9vXFDqMbAIgTHedM6AkAu8dqmnTbFuelMuLkw2jIbq7BLcbS0+B1i99inkDXYOJa83uhw
- 8VjfzsqTKnbsvxPGvboGw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:2xfFS7IVzuU=:/uzrEIKPQZDlEFKyToq0yU
- IRP/nIBmi9BepD4YnC6sKTnVjuk5vjuM5Y+n6jKcj7J1JMfzFcdDzj0IUwgcksS46m4jAmM3M
- UHEE0LJhCsC9HExFbGfqPm1t+QopMAhmprsDHCktE0jrpn6yMeDouqEwuFsT7JooEP5gxWbFk
- sVI4Tej3mKv4WomNUIc5WJQR4bNiz//16FV8JVzWvueyjHZ8Fw7w3v+5MjXui9rHBKmIjDhcD
- 0tO3btb/gSTQX8hkwBHsUE2EwVeGUo1+8hX8TPO5S7iywB8t/YeJgiy/oPgN/gLI6tsh5a321
- F97ZgAdBCofgxxC9lZT1S7j3QV7wSlOmLbjs5sAYaOWSpnshaJ7Vo4PgF1PnMm5fReD4TssYQ
- F4bLTyqV4KLifs7TDOO9Tez4zCvK6i1Q5wuswmRJ2lgNvS6sczMBFg1noXAFy3ypzrkIOieJd
- cDuaf1efMuLOALOWoXHwWKvrDgPHJXcqd9K9jCxULweiMm/RwngFeRgs6ovZnMLhvh+cOPsCQ
- znV2AD2t79+YZ66wbcL+MPl5++F3HH7XLXqZCMSAjUcK7mMMnMe6JLAjYjfKQYEjtlvntHvLH
- 1tKHAOTlDAleWofo3bMxZyJX2dQKKejSM34VmX+LDhBGdMFIcXQN1uG2EhoaFoktyWCrf+o8m
- jjTkHTcBCH9AmTfd8A8Oj4AVnpjTkGv8kYvfs1Fvpnyd5nQ43lXiDGazqTp3e45HEqBKEXu+P
- fnGPovDZ0EB8BmrdAowsRGQujN4wTOSfPsqOsI8taoAmmVhxlkhvF0xbMw4qm+Nw0w07rXS8A
- 6IYoSFrys4tcnLDqENksqnblSA+qZgOeaGEZTzZx5SJ1qe5mEDihfL8vqUSnXofCCrbvb5ZRe
- n0mlhMCp3MUmxK+kuFp5Xto1IrPgptttkpryNxE2TudEZwxZ19XEVqT/7U45Y1VGtjLXMroy9
- GVAJyKUff1YOffVRwlHXLqUixaZm9W1/EAljA4BwjM0erlpVT0AWpdWa2B/gQ8QvSI6DgMlE1
- 2WfLaSFSwkfiZdkmSfVgPODCQCLVIXNYFmsMDiIS7OwBtp8pYocInZOc1Lg34v1rjtN6TuHtN
- mzha3w/F4muNDt1EPIQD1KCy3RPLhLq7WkF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YS0gZNRqz72hs/a5@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.08.21 um 18:55 schrieb Junio C Hamano:
-> Taylor Blau <me@ttaylorr.com> writes:
->
->> Looks obviously right to me. I found another spot in
->> t/helper/test-hashmap.c:test_entry_cmp() that could be cleaned up in th=
-e
->> same way. But this looks fine with or without the following diff:
->
->> diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
->> index 36ff07bd4b..ab34bdfecd 100644
->> --- a/t/helper/test-hashmap.c
->> +++ b/t/helper/test-hashmap.c
->> @@ -28,10 +28,7 @@ static int test_entry_cmp(const void *cmp_data,
->>         e1 =3D container_of(eptr, const struct test_entry, ent);
->>         e2 =3D container_of(entry_or_key, const struct test_entry, ent)=
-;
->>
->> -       if (ignore_case)
->> -               return strcasecmp(e1->key, key ? key : e2->key);
->> -       else
->> -               return strcmp(e1->key, key ? key : e2->key);
->> +       return fspathcmp(e1->key, key ? key : e2->key);
->
-> Sorry but I think this patch is wrong.  Before the precontext of the
-> patch, there is a local variable decl for ignore_case---the existing
-> code looks at ignore_case that is different from the global
-> ignore_case fspathcmp() looks at.
->
-> Admittedly, it was probably not an excellent idea to give a name so
-> bland and unremarkable, 'ignore_case', to a global that affects so
-> many code paths in the system.  But the variable is already very
-> established that renaming it would not contribute to improving the
-> code at all.
->
-> It however may not be a bad idea to catch these code paths where a
-> local variable masks 'ignore_case' (and possibly other globals) and
-> rename these local ones to avoid a mistake like this.
+On Mon, Aug 30, 2021 at 02:16:04PM -0400, Jeff King wrote:
+> On Mon, Aug 30, 2021 at 07:11:49PM +0300, Kirill A. Shutemov wrote:
+> 
+> > I've stepped on a problem after upgrading git to v2.33.0. git fetch-pack
+> > fails with an error:
+> > 
+> >         fetch-pack: unexpected disconnect while reading sideband packet
+> > 
+> > It only happens when I access git.kernel.org over git:// (github over
+> > git:// works fine) and if there's a gitproxy configured.
+> > 
+> > For test I used a dummy gitproxy:
+> > 
+> >         #!/bin/sh -efu
+> >         socat - "TCP:$1:$2"
+> > 
+> > It is enough to trigger the issue.
+> > 
+> > I'm not sure if it's kernel.org problem or git problem.
+> > 
+> > Has anybody else stepped on the issue? Any clues?
+> 
+> I can't reproduce the problem here, using core.gitproxy with a script
+> identical to what you showed above. I tried both cloning, and fetching
+> via both git-fetch and git-fetch-pack.
 
-The name itself is OK, I think, but using it at global scope is
-confusing.  -Wshadow can help find such cases, but not this one, as
-test-hashmap.c doesn't include the global declaration.  Moving the
-global into a struct to provide a poor man's namespace would fix this
-for all namesakes, assisted by the compiler.  We'd then access it as
-the_config.ignore_case or even the_config.core.ignore_case.
+Could you try with a kernel repo?
 
-Moving all config-related variables would be quite noisy, I guess,
-and probably conflict with lots of in-flight patches, but might be
-worth it.
+git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
 
-Ren=C3=A9
+I found that not all repos on kernel.org trigger the issue.
+
+> Can you show us a more complete example? What does the command that
+> fails look like? What's the repo state before you run it? At what part
+> of the conversation does it fail (before a pack is sent, during, or
+> after)?
+
+The last I see sent to the server is "packfile". It is consistent with the
+bisected commit. Removing close() in do_fetch_pack_v2() helps.
+
+> If you can reproduce it at will and it fails on 2.33 but not earlier,
+> then bisecting might be helpful.
+
+I did. See my other mail.
+
+-- 
+ Kirill A. Shutemov
