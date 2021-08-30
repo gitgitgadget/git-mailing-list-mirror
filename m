@@ -2,82 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43C9DC4320A
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 17:41:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFBB9C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 17:46:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2C25460240
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 17:41:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AA81960F42
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 17:46:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238232AbhH3RmK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 13:42:10 -0400
-Received: from mail-ej1-f53.google.com ([209.85.218.53]:34515 "EHLO
-        mail-ej1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238161AbhH3RmJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 13:42:09 -0400
-Received: by mail-ej1-f53.google.com with SMTP id u3so32756522ejz.1
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 10:41:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OLt29Z6UM6/Zf23Wiwyl2dHP9Xx6PJ7Kru6j8szoF2M=;
-        b=YqIxfuCksItpKJp27BYqq0wDCfc2p6CIfmDH/UXPCfPTGJEfAn7JHmubVEJyweoBIz
-         HQIykCnHUCmPX2nrcTKPavPdTB2Zk/zEt+4pKhyLX//Iefibpv3/BYV94W0qRBUITVtc
-         l82tiKT5zHIMWRlnSlPEiZwIjX8fESWJ6o8o3ldMUaZXjKQ53z5zXWXigqVuhp1PPA6z
-         G9+tKndTgqYmhBvfjJDDIzb97E55qaFUwQv29rclWANabkJNards9R4g8BK6IxR44Q7O
-         iiLv8dbxCnx0zA51P9PupTRsVtjCY8Aq75wCX1AI+P7J+YQI25v0mi613kZvpaz3ELtP
-         pSPA==
-X-Gm-Message-State: AOAM530WE5+zdRzzC+HSyASR3Wuhp8eZcTaxEPKmB/LaTOieppn7ExDE
-        qdGtrBOhXn3UHZnK2fh0CkFCcrY+8ueNrahtWQk=
-X-Google-Smtp-Source: ABdhPJzPWcOBo/mkX46h/snZ7O42xA2v9wo7NyZDgM3PQNXlBSulfpRV1utfL0U1Ec0xHgUZg1QLK9im6EhCyU8hi9A=
-X-Received: by 2002:a17:906:6808:: with SMTP id k8mr26833742ejr.138.1630345274930;
- Mon, 30 Aug 2021 10:41:14 -0700 (PDT)
+        id S238125AbhH3Rrp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 13:47:45 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61989 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234054AbhH3Rro (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 13:47:44 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D4CB2D3158;
+        Mon, 30 Aug 2021 13:46:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=FsJ7BnTM2XAH
+        qfEoOk0Sj4E2feeHby/mTKURV+aEDrc=; b=PA9iCe8DrirWX5AwPGQNd1f3rFhM
+        YU5XpBj6r0A4oXySgfaj0d79e2PpbrMoa2m1HTIuPEwBbxb7kEvWAL4DGTQAGA6V
+        4WMD3Y/VeYOcgIuUYSOzc+CieGPvrxZ2dAkDRJtD/JZ4CIjMrgpgO7BkSLvWXVmD
+        gD86w+A7QEFgIZc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CD5C3D3157;
+        Mon, 30 Aug 2021 13:46:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5AA63D3156;
+        Mon, 30 Aug 2021 13:46:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Clemens Fruhwirth <clemens@endorphin.org>,
+        Jan =?utf-8?Q?Pokorn=C3=BD?= <poki@fnusa.cz>,
+        Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>
+Subject: Re: [PATCH v3] pull, fetch: fix segfault in --set-upstream option
+References: <patch-v2-1.1-9e846b76959-20210823T125434Z-avarab@gmail.com>
+        <patch-v3-1.1-68899471206-20210830T144020Z-avarab@gmail.com>
+Date:   Mon, 30 Aug 2021 10:46:48 -0700
+In-Reply-To: <patch-v3-1.1-68899471206-20210830T144020Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 30 Aug
+ 2021 16:41:18
+        +0200")
+Message-ID: <xmqqilzm4ygn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20210830072118.91921-1-sunshine@sunshineco.com>
- <20210830072118.91921-4-sunshine@sunshineco.com> <xmqqwno2505w.fsf@gitster.g>
-In-Reply-To: <xmqqwno2505w.fsf@gitster.g>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 30 Aug 2021 13:41:03 -0400
-Message-ID: <CAPig+cQ6FA0rUnkkTDRUD5vAD3cDXW9vtR1oX0pUJK5eJB9CHg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] notes: don't indent empty lines
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 40974A04-09BA-11EC-B53B-D601C7D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 30, 2021 at 1:10 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > Like other Git commands, `git notes` takes care to call `stripspace` on
-> > the user-supplied note content, thereby ensuring that it has no trailing
-> > whitespace, among other cleanups. However, when notes are inserted into
-> > a patch via `git format-patch --notes`, all lines of the note are
-> > indented unconditionally, including empty lines, which leaves trailing
-> > whitespace on lines which previously were empty, thus negating the
-> > normalization done earlier. Fix this shortcoming.
->
-> Playing the devil's advocate, it can be argued that using the same
-> leading whitespace on a paragraph break line is actually a good
-> thing.  Leaving them in would give the consumer an easy way to see
-> which part was inserted from a note.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-The, um, angel's response: `git format-patch --notes` is a convenience
-for the _submitter_ of a series. It is difficult to imagine a
-scenario[1] in which the _consumer_ of a series would care or need to
-know whether patch commentary was written by hand, inserted
-mechanically (by `--notes`), or inserted mechanically and then
-hand-edited.
+> There was an earlier submitted alternate way of fixing this in [1],
+> due to that patch breaking threading with the original report at [2] I
+> didn't notice it before authoring this version. I think the more
+> detailed warning message here is better, and we should also have tests
+> for this behavior.
 
-The trailing whitespace is unusual within the Git sphere, as well as
-unsightly if you happen to have your editor configured to highlight
-trailing whitespace, and just "feels" sloppy.
+I do not think it is necessarily an improvement to give more info,
+if it is irrelevant to explain what the error is.  And the point of
+the error message here is that we cannot set the upstream of
+detached HEAD, no matter what the value of old source ref or new
+source ref are.
 
-[1]: I suppose mechanical extraction of notes may be one such
-scenario, allowing for simple-minded (not necessarily robust)
-extraction mechanics; i.e. start extracting after the /^Notes:$/ line
-and stop at the first line not indented with four blanks.
+The original from Clemens gives a warning message that omits the
+piece of information that does not contribute to the error.
+
+Testing the new behaviour is a good idea.  I also agree with you
+that die() would be more appropriate and does not risk regression,
+if the original behaviour was to segfault.
+
+Thanks.
