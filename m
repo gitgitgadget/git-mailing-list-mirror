@@ -2,56 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E41BC432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 08:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BEBEC4320E
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 08:56:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 333FF60FE8
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 08:03:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF92B61077
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 08:56:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234487AbhH3IEQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 04:04:16 -0400
-Received: from bsmtp2.bon.at ([213.33.87.16]:37248 "EHLO bsmtp2.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234371AbhH3IEO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 04:04:14 -0400
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4GyjVv18YQz5tlD;
-        Mon, 30 Aug 2021 10:03:18 +0200 (CEST)
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Paul Mackerras <paulus@ozlabs.org>
-From:   Johannes Sixt <j6t@kdbg.org>
-Subject: diff-index --cc no longer permitted, gitk is now broken (slightly)
-Message-ID: <e6bd4cf7-ec8b-5d22-70f6-07089794df0c@kdbg.org>
-Date:   Mon, 30 Aug 2021 10:03:18 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S235180AbhH3I5L convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 30 Aug 2021 04:57:11 -0400
+Received: from mx4.uni-regensburg.de ([194.94.157.149]:43792 "EHLO
+        mx4.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234695AbhH3I5K (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 04:57:10 -0400
+Received: from mx4.uni-regensburg.de (localhost [127.0.0.1])
+        by localhost (Postfix) with SMTP id E4CA96000055
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 10:56:14 +0200 (CEST)
+Received: from gwsmtp.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
+        by mx4.uni-regensburg.de (Postfix) with ESMTP id D16696000050
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 10:56:14 +0200 (CEST)
+Received: from uni-regensburg-smtp1-MTA by gwsmtp.uni-regensburg.de
+        with Novell_GroupWise; Mon, 30 Aug 2021 10:56:15 +0200
+Message-Id: <612C9D2D020000A100043924@gwsmtp.uni-regensburg.de>
+X-Mailer: Novell GroupWise Internet Agent 18.3.1 
+Date:   Mon, 30 Aug 2021 10:56:13 +0200
+From:   "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
+To:     <git@vger.kernel.org>
+Subject: Q: Should "submodule set-url" add .gitmodules to index?
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8BIT
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 19b2517f95a0 (diff-merges: move specific diff-index "-m" handling
-to diff-index, 2021-05-21) git diff-index no longer accepts --cc. This
-breaks gitk: it invokes
+Hi!
 
-   git diff-index --cached -p -C --cc --no-commit-id -U3 HEAD
+Realizing that some of my git submodule repositories were at the wrong path, I moved the repositories and updated a workspace using "git submodule set-url ...".
+Checking the status I noticed that .gitmodules was not added to index (as opposed to a "git mv ...").
+Is that intentional?
+Seen in git 2.26.2.
 
-to show the staged changes (when the line "Local changes checked in to
-index but not committed" is selected).
+Regards,
+Ulrich Windl
 
-The man page of git diff-index does not mention --cc as an option. I
-haven't fully grokked the meaning of --cc, so I cannot tell whether this
-absence has any significance (is deliberate or an omission).
 
-Is gitk wrong to add --cc unconditionally? Should it do so only when
-there are conflicts? Or not at all?
 
--- Hannes
