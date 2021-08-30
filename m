@@ -2,117 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A3FEC4320A
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:23:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEF88C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:23:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F0A760F5B
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:23:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9596C60F42
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:23:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235418AbhH3UYM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 16:24:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46688 "EHLO
+        id S235781AbhH3UYu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 16:24:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236157AbhH3UYJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 16:24:09 -0400
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EABBDC061575
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 13:23:13 -0700 (PDT)
-Received: by mail-il1-x135.google.com with SMTP id b4so17513459ilr.11
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 13:23:13 -0700 (PDT)
+        with ESMTP id S235743AbhH3UYt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 16:24:49 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8BAAC06175F
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 13:23:55 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id r26so21785605oij.2
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 13:23:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=L1qkgsrdSPYRB33uOdtqM8UAknqwZLw2Ztpn0ekHy58=;
-        b=TOlA2jZyTzZ2Q4r80NGFPiBJ4oTfbX45hPV27oJ1d3R79hTLXYtGmpW6pXsAkK+pJg
-         bYBkkNUbYAp2g+nwRbsGjOTZnG25iF/Jz407yiOsIPn7xi0Ut1z4HInO7/EK0oXni+DD
-         1852EmDe3q11u/jOekKraeo6S6Wt21Goeywj1LNmlhERFYSFh22u/qnRXqwIZli2qEhm
-         QltvLnDyQw5TiosbOBLvZkGOuLEKh+BWDiCeZw8bnAEh/DNQ03NovEhJ4bX6bunOxez7
-         5pvnEsBeSsrjTYImUaeIZbrEwtabb3zUA6tRUtoTKq4okGpWAzbGDYdPIYdYpLeaBksW
-         GO8w==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9OgPSCpvZ2h7g5Es2Y8YhIlMHRKyXugd8eZK278m8Fk=;
+        b=RCpEnS95Qxe6mvG74zcd6L0/kce9b0rDJaUufh8HhvFVvm2OaqbzUNVdPJLMbdHSKH
+         3kx/kCiAPWntUblAWdykMhWMfeV4jfJdoZdJKlaGXnqKF0J4G1mj5DhOfQ7h1WcwMwE0
+         RWmXpcG8qfoJ1MMtxzRqHfw8BfwWAoLqVA5Q9qscfpJ2kegtKB9ZfAKc1H4twJzxZCQ2
+         s1BjHQ4F/7KzeQiEwcg31Z0d9G3lxE7d1tofX5jUSMvIk1bNaPTTiuBWUUj6KHkeo1Ae
+         qsmEmXZRKBdWs88uYp9XGNDWdYDpbY+AtPWX17P27Av+9XYAlFwREp4OrWi4bng5WGml
+         zF/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=L1qkgsrdSPYRB33uOdtqM8UAknqwZLw2Ztpn0ekHy58=;
-        b=aD61rIQxA4ZEIMz0eWyOOokO5G383GyGTH4JktOsnhONWkuEJFGwPkgtxUsKeH+Zin
-         z4xWp7stZIo+apYaax/aGaY81ffX5x0x0IPBsBqM2hxfOmiFeY1OAh/7NThwpVU3X9JO
-         44ChRkFZpGrFGzwT7ZUyPVJBK2/Iz4qq6z3KZBb7BLuDHs4Fw1imESYXeyiYTb58AbqS
-         Ui+CbsPXdoZvEHb2IsANUVpIvLL3aHSoUZVBX66kALL5BollJANmhuznOhGd9X0rHg4R
-         XrjsRArB+0sgee6HFC1TtmFRrXgIKEAlTpp2hFRFdyuavXgidF/OoFgbe7bUp811tbJ9
-         Q9sg==
-X-Gm-Message-State: AOAM5308x0M3G9CFfJ/8ZOD6a47zM8TcfG5AhrT9f9OJdO+J8OmZpHV8
-        v+rCdjWU4eWKaQHC/oKOggy/mD7UztLbrcV/
-X-Google-Smtp-Source: ABdhPJzeccTv5vuEGn2h8xXX370c83z12cly6qx+1LRfq7fFvqQ5doLh6qfH6N0ZqwqXIJIiercMwQ==
-X-Received: by 2002:a92:a04c:: with SMTP id b12mr17655829ilm.80.1630354993288;
-        Mon, 30 Aug 2021 13:23:13 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x15sm8986559ilp.23.2021.08.30.13.23.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Aug 2021 13:23:12 -0700 (PDT)
-Date:   Mon, 30 Aug 2021 16:23:12 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 1/4] test-ref-store: tweaks to for-each-reflog-ent format
-Message-ID: <YS0+MHk3svGr7d4n@nand.local>
-References: <pull.1067.git.git.1630334929.gitgitgadget@gmail.com>
- <d48207d6858502f04fd501a24ff7c2a80062dfbe.1630334929.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9OgPSCpvZ2h7g5Es2Y8YhIlMHRKyXugd8eZK278m8Fk=;
+        b=LPQ5neHYMm8lIvURlvLF+E4jAPBqV2xURU63hoFDVPgZITY/PX8/rkvGr+OquTR7Ro
+         QYFznJ860gwRvIXpA1we/0p6AMaVk9IxW7UC9TssXtX3eryAOSCrfI0mQNPpxiCRX1iB
+         Vkc9+5OviKQf3hiPqKlI3zrXoRayaRO3PE5MyZwP5Ir7qREk+Zdlu53r79FjEahxzLuh
+         4hHhtDNBPVWDAnzsNtzgE1iCDHgDEe3sDyfm93XeFUe/kSe/ifwNLwKL7m4jO5fF2Zyl
+         hymNsdc9zYrcy1Eeb+9RFVTZsOtlFhz+3m+RZMWVULcshTFvRtR+DOfsocQRxtsW9MJL
+         FQSQ==
+X-Gm-Message-State: AOAM533eX+zT+UPD3aMU6GWNM8QkkmxJE4EOsLn2YiWaj6xkkyQAVzFc
+        2Ru0EzI4Mk5ABq5qY3S6+fp1JMCIhDLbSfQAW+s=
+X-Google-Smtp-Source: ABdhPJyUQevOxVPzrQGUroF0x4syH86kCRYPItuUn+dIou+sMHm6J2C98D9GC43TYhyG/lpglKEIvvWg/tsY2kLsiIM=
+X-Received: by 2002:aca:bfc6:: with SMTP id p189mr696561oif.167.1630355035273;
+ Mon, 30 Aug 2021 13:23:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <d48207d6858502f04fd501a24ff7c2a80062dfbe.1630334929.git.gitgitgadget@gmail.com>
+References: <pull.1009.v3.git.1629206602.gitgitgadget@gmail.com>
+ <pull.1009.v4.git.1629841904.gitgitgadget@gmail.com> <CABPp-BG01tXnd_UhYJDX4Tm_EcXGju9CkB8BXU0XS-YAWEuaeQ@mail.gmail.com>
+ <d55363df-c2e9-3847-d98c-3d07e22d8a5d@gmail.com>
+In-Reply-To: <d55363df-c2e9-3847-d98c-3d07e22d8a5d@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 30 Aug 2021 13:23:44 -0700
+Message-ID: <CABPp-BFUnxp3sCOQWRa8C_gda5B19duFiOvHKCRCppS2Git_jg@mail.gmail.com>
+Subject: Re: [PATCH v4 00/10] Sparse index: delete ignored files outside
+ sparse cone
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 30, 2021 at 02:48:45PM +0000, Han-Wen Nienhuys via GitGitGadget wrote:
-> From: Han-Wen Nienhuys <hanwen@google.com>
+On Mon, Aug 30, 2021 at 6:54 AM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> Follow the reflog format more closely, so it can be used for comparing
-> reflogs in tests without using inspecting files under .git/logs/
->
-> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-> ---
->  t/helper/test-ref-store.c      | 6 +++---
->  t/t1405-main-ref-store.sh      | 5 +++--
->  t/t1406-submodule-ref-store.sh | 4 ++--
->  3 files changed, 8 insertions(+), 7 deletions(-)
->
-> diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-> index b314b81a45b..d7bbb20e614 100644
-> --- a/t/helper/test-ref-store.c
-> +++ b/t/helper/test-ref-store.c
-> @@ -151,9 +151,9 @@ static int each_reflog(struct object_id *old_oid, struct object_id *new_oid,
->  		       const char *committer, timestamp_t timestamp,
->  		       int tz, const char *msg, void *cb_data)
->  {
-> -	printf("%s %s %s %"PRItime" %d %s\n",
-> -	       oid_to_hex(old_oid), oid_to_hex(new_oid),
-> -	       committer, timestamp, tz, msg);
-> +	const char *newline = strchr(msg, '\n') ? "" : "\n";
-> +	printf("%s %s %s %" PRItime " %+05d\t%s%s", oid_to_hex(old_oid),
-> +	       oid_to_hex(new_oid), committer, timestamp, tz, msg, newline);
+> On 8/27/2021 5:56 PM, Elijah Newren wrote:
+> > On Tue, Aug 24, 2021 at 2:51 PM Derrick Stolee via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> >>
+...
+> >>   8:  febef675f05 !  9:  c19d93ec5d7 sparse-checkout: clear tracked sparse dirs
+> >>      @@ Commit message
+> >>           the sparse directory. This depends on the indexed version of the file,
+> >>           so the sparse directory must be expanded.
+> >>
+> >>      +    We must take special care to look for untracked, non-ignored files in
+> >>      +    these directories before deleting them. We do not want to delete any
+> >>      +    meaningful work that the users were doing in those directories and
+> >>      +    perhaps forgot to add and commit before switching sparse-checkout
+> >>      +    definitions. Since those untracked files might be code files that
+> >>      +    generated ignored build output, also do not delete any ignored files
+> >>      +    from these directories in that case. The users can recover their state
+> >>      +    by resetting their sparse-checkout definition to include that directory
+> >>      +    and continue. Alternatively, they can see the warning that is presented
+> >>      +    and delete the directory themselves to regain the performance they
+> >>      +    expect.
+> >>      +
+> ...
+> >>      ++When changing the sparse-checkout patterns in cone mode, Git will inspect each
+> >>      ++tracked directory that is not within the sparse-checkout cone to see if it
+> >>      ++contains any untracked files. If all of those files are ignored due to the
+> >>      ++`.gitignore` patterns, then the directory will be deleted. If any of the
+> >>      ++untracked files within that directory is not ignored, then no deletions will
+> >>      ++occur within that directory and a warning message will appear. If these files
+> >>      ++are important, then reset your sparse-checkout definition so they are included,
+> >>      ++use `git add` and `git commit` to store them, then remove any remaining files
+> >>      ++manually to ensure Git can behave optimally.
+> ...
+> > Thanks for the extra explanations; those help.
+> >
+> > You haven't yet addressed how this choice will interact with
+> > .gitignore files, though (as I commented on v3).
+...
+> The difference between the .gitattributes and .gitignore files is that
+> we don't need to do anything with the .gitignore files to prevent Git
+> from accessing them with their contained directories don't exist. The
+> .gitattributes change in attr.c is reachable from some code path even
+> when the directory doesn't exist, so it needs special logic to avoid
+> that expansion.
 
-Having read the rest of the series, I did scratch my head quite a bit
-here, but I think the change is actually quite simple. In the files
-backend, show_one_reflog_ent is parsing line-wise, and each line ends
-with the LF.
+Ah, this is what I was looking for and couldn't quite work out --
+whether .gitignore files might need to be loaded (and whether our
+other UI decisions were affecting that).  Sounds like you have it
+covered.
 
-Of course, we don't expect the reflog to have messages that actually
-contain a newline because we cleanse them with copy_reflog_message()
-before writing.
-
-So really it seems like the files-backend should be calling rstrip on
-the message before handing it to the callback. Either that, or we could
-call rstrip ourselves (since the generic strchr() makes me think that
-the LF could appear anywhere in the string, at least on first read).
-
-Thanks,
-Taylor
+Thanks for patiently explaining these various items I was not
+understanding or missing.  Sorry I missed a couple key things despite
+reading the earlier rounds.  Anyway, looks like we're in pretty good
+shape and there's only a few minor things left, mostly stuff you
+brought up yourself that you wanted to tweak for v5.
