@@ -2,128 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C771C432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 13:34:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAEC8C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 13:42:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 144276056B
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 13:34:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0272604D7
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 13:42:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236537AbhH3NfI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 09:35:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35702 "EHLO
+        id S236827AbhH3Nm4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 09:42:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236797AbhH3NfE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 09:35:04 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 086C3C061575
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 06:34:11 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id o16-20020a9d2210000000b0051b1e56c98fso18348936ota.8
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 06:34:11 -0700 (PDT)
+        with ESMTP id S231669AbhH3Nmz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 09:42:55 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC975C061575
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 06:42:01 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id m25-20020a7bcb99000000b002e751bcb5dbso8206wmi.5
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 06:42:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=0piPsEsXiHY3QPkE690o6A7X2iBTjs1KIQloTQ5BIwg=;
-        b=BbLzx6jotYQ1irTKtGWC8zaiPpMloKmmNtblpZEh0ZzfPJu08wrgsHGarWMo4e3P4s
-         pwf7uaJxH0b/jeo8iBRZMHxq6jEaaha4EZQ1DDl2bV2l5aIGp7vdhKRwK2t5gfxDFZd9
-         oKPDu5EFSn8qnESpfkLZkkKkcHU6iC2NvzTKGoQNN9Nzg8LxqKL1HuLaVgdRkf2JQbcp
-         7e+rKdcYs5vbbZxDdilrrVFRGUbdVLaQcshEAryKjld6v4Q+ev6qfLgLp77cp9gLTvfo
-         Q0ez72VABjB7QregKxOp/zWQoezFNP4NySjEdy8xTdU5amG1zqLJvsNUMfNukr0pImim
-         yONA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=xcCu3gZbxG6HFYESt3Tpl3SDLmsTj+/SZJiM7FTIe/Y=;
+        b=cZVdkVcALGilwiWhcQm20jxBc7RCiWU/5JuOPnZ/QljP49OpjGm1aR264M7TXQ7Pq0
+         z4LbLFEA2aJvdlY1nCz1V10nRXKgtweAAHIKzlvZWucgfo72ppdLzVWNxNij+7SaDWQB
+         SXpjJhhiNx6UDqX54w6xMH1DxP7sTd4WoaWwefGK4serQZPg22L0tWlpIgpHqJXQ33x9
+         tafwHz13Q0sQnf7SzHC2e78eegpQKynYMJwiWCmGMVL9EpLh8oKLuHO91ZmbnhIrD4J5
+         yPR9EwsQ5XVI/1fcSXVNVP9oAoOQxxMxUqgGfi4x5knQkxduCxL9E7iUAPvxov2y9LSi
+         Xbcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=0piPsEsXiHY3QPkE690o6A7X2iBTjs1KIQloTQ5BIwg=;
-        b=Q1AVRKygbho9MPJLQ47c6KM2BpXJSXwPcM+ouPZV3Cv415iFjFcdA2yCeeR5KEon/1
-         fcLPUcHRMUHNReb465JHTO3mTqpcRxkn+suLL2FDypGlBep/05ztEYmkme51z7Z1WAk+
-         ZnaC/mAabjtPbVV/Z4OKqBNmC6+mmy8/d6x6pbt942ZXL9VE+1+L30coRYpnptbkLaE0
-         eAyPTDJjQrYWICtmvdZ47bLipl5N5iH3HsI7wvlHvO6VV2Rz9sqtPVUJ8kkm3SwooHgM
-         eDCGmA8nzo7rUX+FK6p8n9PIsgyTbXYtemNJc26sxaluFFJCRqLVwSafAbdXI9wXgZVg
-         Oimg==
-X-Gm-Message-State: AOAM533rnZEVXLWFrFqDiPdwL50+BsXRcwCQWF3GnT+jgHJVKQburTlF
-        gtV9+J1MJFpNL1nZ+2/Fry/xOVQYd4s=
-X-Google-Smtp-Source: ABdhPJwsEJ8JiVS8yA8UiMIaiTyXvw7jkqgzsvdOTcE6f4lHYVEI/WT63DDU/6dyEOuwqjMvB16x7Q==
-X-Received: by 2002:a9d:72c1:: with SMTP id d1mr13258722otk.290.1630330450294;
-        Mon, 30 Aug 2021 06:34:10 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:f479:1655:2af5:7e8e? ([2600:1700:e72:80a0:f479:1655:2af5:7e8e])
-        by smtp.gmail.com with ESMTPSA id d10sm2998124ooj.24.2021.08.30.06.34.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Aug 2021 06:34:09 -0700 (PDT)
-Subject: Re: [PATCH v4 00/10] Sparse index: delete ignored files outside
- sparse cone
-To:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.1009.v3.git.1629206602.gitgitgadget@gmail.com>
- <pull.1009.v4.git.1629841904.gitgitgadget@gmail.com>
- <CABPp-BG01tXnd_UhYJDX4Tm_EcXGju9CkB8BXU0XS-YAWEuaeQ@mail.gmail.com>
- <CABPp-BH2+Vq4gLnOyRg4AdNhZgZuFf5+XBW6JMmSzGxoppEctA@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <9b4adc13-d362-455f-60f6-fe7d16608ae6@gmail.com>
-Date:   Mon, 30 Aug 2021 09:34:10 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=xcCu3gZbxG6HFYESt3Tpl3SDLmsTj+/SZJiM7FTIe/Y=;
+        b=K4j2y18qUmWNgCOcKsvqYqZ8OPpBBC5KlXgwtDtigaYQ9nn5rG1wIrTMDe+jkAYVSs
+         eB60AazSY4mhVKcWdxQ99pvb3XHDWOtzBPmNXtmG3R6KtehgdxmlmI5LWiSB3MdPGjTi
+         DbYPFG71zfMJSRJ7/Bd4XtaO5f9KTNaUYodMC5lY8znwPovRSbYlYBO/xy3WcqUXF6o5
+         +fTSt1IVXULTX/NK6CrevEqDG+y2DrfQlCTDVonUa+n1pyHtLkDxFCFpM/09FhxIvFSq
+         YtBG6mQkWvHJOuvla1QCd0RDJHRC19nzyrHAnSWqTu7CpHcNdXVglPrqGymRB1qZyfxY
+         r06Q==
+X-Gm-Message-State: AOAM5327DDGL7R+0RrpnUMo8LswufOS30Z1a1k+jOMcfW+u1DZHjtAUI
+        33ZwHZozx9YdM8f5XkFL0c8=
+X-Google-Smtp-Source: ABdhPJyixUD8S7L9rWKYWYCOaquKzz2UtTRwBJ01dmTDzDV6+w3D1r3p4alHb4LgmRJCYvukWmZfyw==
+X-Received: by 2002:a1c:9acc:: with SMTP id c195mr33397699wme.69.1630330920481;
+        Mon, 30 Aug 2021 06:42:00 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id o5sm15279161wrw.17.2021.08.30.06.41.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Aug 2021 06:41:59 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Clemens Fruhwirth <clemens@endorphin.org>
+Subject: Re: What's cooking in git.git (Aug 2021, #09; Sun, 29)
+Date:   Mon, 30 Aug 2021 15:27:03 +0200
+References: <xmqq35qr7mq5.fsf@gitster.g>
+ <87tuj7xhqo.fsf@evledraar.gmail.com>
+ <CAFQ2z_PCUr3D0H-fzfHcFFayzdDJc64=JgVM5_2kuLJn-G9awA@mail.gmail.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <CAFQ2z_PCUr3D0H-fzfHcFFayzdDJc64=JgVM5_2kuLJn-G9awA@mail.gmail.com>
+Message-ID: <87o89fxd5l.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BH2+Vq4gLnOyRg4AdNhZgZuFf5+XBW6JMmSzGxoppEctA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/27/2021 6:01 PM, Elijah Newren wrote:
-> Sorry, one more thing...
-> 
-> On Fri, Aug 27, 2021 at 2:56 PM Elijah Newren <newren@gmail.com> wrote:
->>
->> On Tue, Aug 24, 2021 at 2:51 PM Derrick Stolee via GitGitGadget
->> <gitgitgadget@gmail.com> wrote:
-> 
->>>   8:  febef675f05 !  9:  c19d93ec5d7 sparse-checkout: clear tracked sparse dirs
->>>      @@ Commit message
->>>           the sparse directory. This depends on the indexed version of the file,
->>>           so the sparse directory must be expanded.
->>>
->>>      +    We must take special care to look for untracked, non-ignored files in
->>>      +    these directories before deleting them. We do not want to delete any
->>>      +    meaningful work that the users were doing in those directories and
->>>      +    perhaps forgot to add and commit before switching sparse-checkout
->>>      +    definitions. Since those untracked files might be code files that
->>>      +    generated ignored build output, also do not delete any ignored files
->>>      +    from these directories in that case. The users can recover their state
->>>      +    by resetting their sparse-checkout definition to include that directory
->>>      +    and continue. Alternatively, they can see the warning that is presented
->>>      +    and delete the directory themselves to regain the performance they
->>>      +    expect.
-> 
-> Will deleting the directory regain the performance they expect, or is
-> another step needed?  In other worse, will the sparsification of the
-> paths under the no-longer-needed directory into a sparse directory
-> entry just happen automatically as part of some other command like
-> commit/add, or do they need to manually run `git sparse-checkout
-> reapply`?
 
-If the directory is gone, then their performance returns to as they
-expect, since the next Git command will not need to expand the index
-to detect the difference between tracked, untracked, and ignored files
-within the sparse directory.
+On Mon, Aug 30 2021, Han-Wen Nienhuys wrote:
 
-(Recall that the index is stored as sparse even if it expands to a
-full one in-memory during execution.)
+> On Mon, Aug 30, 2021 at 2:03 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>
+>> Han-Wen: It would be really nice to have this re-rolled sooner than
+>> later, my and Junio's "fixup" commits at the end are a band-aid, but I
+>> already ran into wanting to bisect something between master..seen that
+>> was unnecessarily painful due to the series now not compiling without
+>> the "fixup" commits at the end.
+>
+> I am folding in the __FUNCTION__ fix.
+>
+> However, I thought patches should be sent against the master branch
+> and not against some intermediate  version of 'seen' ?
 
-Thanks,
--Stolee
+No, per "Decide what to base your work on" in
+Documentation/SubmittingPatches. See the part about "A new feature
+should be based on `master` in general[...]".
+
+In this case the topic on Junio's side isn't based on "master", hence
+the bisect breakages noted above.
+
+I don't know per the upthread what Junio's intended pace of merging down
+ab/refs-files-cleanup and hn/refs-errno-cleanup is, depending on the
+answer to that perhaps it would be best to wait and re-roll on a new
+master.
+
+Also for any re-roll of hn/refable, see my
+<877dgch4rn.fsf@evledraar.gmail.com> for notes of other breakages in
+it. I also had the impression based on my
+<87h7jqz7k5.fsf@evledraar.gmail.com> and your reply in
+<CAFQ2z_P8vgY0RRT+XSH9K3VDQt39FLqXx6qfeZqaZPkwhq1w+A@mail.gmail.com>
+back in April/May that the intent was to re-roll this topic in a way
+that would be more split-up as described there.
+
+I don't care much about the exact end-state there, other than:
+
+ 1. Trying to land reftable/ in some shape where we're not constantly
+    re-reviewing the "add upstream library" part of it.
+
+ 2. Not have something like hn/reftable in-tree which per my above is in
+    a demonstrably broken/experimental state, but our docs are in state
+    of noting it like it's just another ref backend. Hence the
+    suggestion of first landing the library with its own tests, getting
+    the integration and GIT_TEST_REFABLE passing, and finally updating
+    docs etc. to advertise the thing to users.
