@@ -5,119 +5,122 @@ X-Spam-Level:
 X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38EB5C432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 17:26:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AAF1C43214
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 17:30:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2192360F56
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 17:26:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 229E060F5C
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 17:30:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238224AbhH3R1s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 13:27:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34286 "EHLO
+        id S238016AbhH3Rbo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 13:31:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238160AbhH3R1m (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 13:27:42 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8569C061575
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 10:26:48 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id i3-20020a056830210300b0051af5666070so19343060otc.4
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 10:26:48 -0700 (PDT)
+        with ESMTP id S229709AbhH3Rbn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 13:31:43 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A49CBC061575
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 10:30:49 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id c42-20020a05683034aa00b0051f4b99c40cso9077466otu.0
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 10:30:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=lc2Yp8Eh/mZJpyzNwPn1dhOJZmFcXt7UdCFg8o03NNE=;
-        b=ZnJGtrN5T3Y+vk3rommi3meCMbZnXc4IgK3Z9qE1rfUU/5HPv2v2rTNPhzuv456PVX
-         vP5EqhkEONf0RMkGEWlvX3mLA5Xskt8dG+SmHLL8JlF5L9Q+XJ+2IDRCzdcyWitfEkQT
-         PFjM95ggM6+069XvOF48sXkmMVF77AK7sqL+fAOqiPHrXmCF1RbkCjtBv3KMrszJ+JHY
-         hsnXp25EWnRHJtO8vM6HesUoEZu3468nikJwaHxFek99kcUcXkOIlLfxlxa+yNIgIX+y
-         2EbsvQIN9mO1zRJGXZYCKh/b/dGMKIeeZ2k9VU4fyWpYw9+IpbiPrRXTi2lURiBIO8+w
-         mUDQ==
+        bh=RSqGbFRLVJkFVNhOwYFzAq4+msVkaIqK8Ed425s42kE=;
+        b=R6wdxmcLlUrqe0YlAM/OVzbP7TVDHB06QJSFFF7vkT3wFx60GjSfEzCuAjTNrqjO66
+         CU3Y5L+tiSVYWFCYhdHRmviVNJ5QZ90cZ8bNqOfcgs4oAEs0NLbCfpkyurysXYjCew95
+         bF6+JTSTNqJXR0CwCHBu7bt1RSGH5eRDXJO+ZtqAeqICe19IBnpreeXpQm5tv+LYkLPt
+         QCGkXH84d9RvXQG5zsrKpBGeimn8SVgSxbrpYcxwM8m/AJBzw9zUE/4vcbjhuvx1RFv0
+         Bdj6K9ooacBYFF7z45SBoUfh6E0yeoqDqsuC2rHM0Yeca4SB3fZIlJFdTAMLcUgPd9GC
+         U2Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=lc2Yp8Eh/mZJpyzNwPn1dhOJZmFcXt7UdCFg8o03NNE=;
-        b=BotUwU3EQLuFqgquK7YL0NLHQMysYvsX+0kvCzCdZvrEUn6MmpKf2DzjBCZxcXCEYS
-         pPna3tYK7wHEdiB99QkhJvnYUq3E8nQUuGtBm9jiQ4faEPV9Uu32mOMKJW3W1nC37Wu6
-         SQa9pgY0SGFt6Qlbuao7Bywh3T+SzQvysBaShxcGNjMlCwoGPv3gDQrVHJtouhbXCpie
-         yjKcYWmts9pCCZEP8oh0nX/ZFabdpRKoIJmHnWIvY4URej4AyvCFwuKZJC55CZ1YRudV
-         GKcWSheUBkJRqr/DO28e23leN7IugcVD2YUrSxGJu4C8cxmcP80MTUxtvgcGZAzWzqnQ
-         pi8w==
-X-Gm-Message-State: AOAM5329ZHVjhFvaESc9vgiKvy0q+0Q7K3zD2AOZFfMS4xZnja1wtfSI
-        v3HzDZehgolH3C2FT+nyLx0=
-X-Google-Smtp-Source: ABdhPJygXBbM6Pb9SNOgVjeClhLeg6LAUSrv51Waene1ALoNf1PeBB9cjxFwS74Pn8u1Qwz00jgUOw==
-X-Received: by 2002:a05:6830:154a:: with SMTP id l10mr20597841otp.97.1630344406744;
-        Mon, 30 Aug 2021 10:26:46 -0700 (PDT)
+        bh=RSqGbFRLVJkFVNhOwYFzAq4+msVkaIqK8Ed425s42kE=;
+        b=ebylECUMlHZsFxLdwP+Wy62EJnxUx12R/65TgrWmm/3jcPSk5I2VCoAdwMaVni+x9q
+         48RoRPpt5s+Rh5+zmjLVnqx+Xz2xC3MT2TntPoefFz0LE79VnVUVMeOgaEi2iOBiiu25
+         5KVhvhgsxqGsDUwnBiWtdVqCIndcIb4ROt71qY0XYZnnvS+2ZoNtheerj/IAVa6m0OpF
+         Xh335bYsnvdLj08+AbIfRzlbFaYK1kMWbgUwlT0Rp35iWElSqpwX7asvbZdiuFcCCKDQ
+         uxSeefYlgVzjRDLPWcWvaz7ZsD1iCHNPbZKLfTN/DqHN58KfyDwmRjOW5CcwRDG6vZvA
+         s5+Q==
+X-Gm-Message-State: AOAM530CKytQuS7xscH7TlaW1MJPmoAcTIAH7ueWFvN/U8tJVnJFIiqz
+        jXti1Se+M3HjmZ2/BMxQkWw=
+X-Google-Smtp-Source: ABdhPJy8gC8Er+NwqkxhMkKc6GJugdoBSwPJIlQ+umrJTP3XoxgiW8eDK21/IZT+imW8jUuOZTWU+g==
+X-Received: by 2002:a9d:6055:: with SMTP id v21mr19742807otj.265.1630344648994;
+        Mon, 30 Aug 2021 10:30:48 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:e4d6:1362:a8d2:be4e? ([2600:1700:e72:80a0:e4d6:1362:a8d2:be4e])
-        by smtp.gmail.com with ESMTPSA id o68sm3342950ota.33.2021.08.30.10.26.45
+        by smtp.gmail.com with ESMTPSA id 186sm3088051ood.39.2021.08.30.10.30.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Aug 2021 10:26:46 -0700 (PDT)
-Subject: Re: [PATCH v2 0/6] Sparse Index: Integrate with merge, cherry-pick,
- rebase, and revert
-To:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.1019.git.1629220124.gitgitgadget@gmail.com>
- <pull.1019.v2.git.1629841965.gitgitgadget@gmail.com>
- <CABPp-BFXk++dktLnaTTuCe+keqkNuPzGyVi4uFsOpE4VxqAUdw@mail.gmail.com>
+        Mon, 30 Aug 2021 10:30:48 -0700 (PDT)
+Subject: Re: [PATCH v3 2/5] strvec: add a strvec_pushvec()
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
+References: <cover-0.4-0000000000-20210727T004015Z-avarab@gmail.com>
+ <cover-v3-0.5-00000000000-20210826T140414Z-avarab@gmail.com>
+ <patch-v3-2.5-321b8ba3f0e-20210826T140414Z-avarab@gmail.com>
+ <xmqq8s0m9xbl.fsf@gitster.g> <xmqq4kba9x1h.fsf@gitster.g>
+ <YSm3ofxlRB1ViBf5@coredump.intra.peff.net> <xmqqzgsz7qnq.fsf@gitster.g>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <cac6803c-b66b-e3b5-b31f-e20695c8b5e6@gmail.com>
-Date:   Mon, 30 Aug 2021 13:26:46 -0400
+Message-ID: <85e539bc-7af5-595e-bcf4-bf577eb3bdfd@gmail.com>
+Date:   Mon, 30 Aug 2021 13:30:48 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BFXk++dktLnaTTuCe+keqkNuPzGyVi4uFsOpE4VxqAUdw@mail.gmail.com>
+In-Reply-To: <xmqqzgsz7qnq.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/27/2021 6:56 PM, Elijah Newren wrote:
-> On Tue, Aug 24, 2021 at 2:52 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
+On 8/29/2021 7:54 PM, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+>> I think we'd want the patch below. It can be applied independently
+>> (though if we do take the index-iterating version of Ævar's patch, I
+>> think it should switch to size_t).
+> 
+> Yeah, I do not see a strong need for _pushvec(), especially the
+> variant that does not preallocate, when we have _pushv().  But the
+> type fix below does make sense.
+
+Thanks for chiming in. I was not aware of _pushv() when I asked
+about the _pushvec() variant. Sorry, Ævar, for sending you down
+an unnecessary direction.
+ 
+>> -- >8 --
+>> Subject: [PATCH] strvec: use size_t to store nr and alloc
 >>
+>> We converted argv_array (which later became strvec) to use size_t in
+>> 819f0e76b1 (argv-array: use size_t for count and alloc, 2020-07-28) in
+>> order to avoid the possibility of integer overflow. But later, commit
+>> d70a9eb611 (strvec: rename struct fields, 2020-07-28) accidentally
+>> converted these back to ints!
+>>
+>> Those two commits were part of the same patch series. I'm pretty sure
+>> what happened is that they were originally written in the opposite order
+>> and then cleaned up and re-ordered during an interactive rebase. And
+>> when resolving the inevitable conflict, I mistakenly took the "rename"
+>> patch completely, accidentally dropping the type change.
+>>
+>> We can correct it now; better late than never.
 ...
->> Updates in V2
->> =============
->>
->>  * The tests no longer specify GIT_TEST_MERGE_ALGORITHM or directly
->>    reference "-s ort". By relaxing this condition, I found an issue with
->>    'git cherry-pick' and 'git rebase' when using the 'recursive' algorithm
->>    which is fixed in a new patch.
+>>  struct strvec {
+>>  	const char **v;
+>> -	int nr;
+>> -	int alloc;
+>> +	size_t nr;
+>> +	size_t alloc;
+>>  };
 
-This describes why the tests no longer use GIT_TEST_MERGE_ALGORITHM at
-the top. It improves coverage in case users opt-out of ORT. Instead,
-
->>  * Use the pul.twohead config to specify the ORT merge algorithm to avoid
->>    expanding the sparse index when that is what we are testing.
-> 
-> pull.twohead, not pul.twohead.
-
-We use this config option to specify when we _really care_ about the ORT
-strategy as it is necessary to avoid expanding the full index.
-
-> I'm curious, though, why use it instead of just setting
-> GIT_TEST_MERGE_ALGORITHM=ort?  That'd seem to avoid the need for the
-> explicit subshells and the sane_unset calls.
-> 
->>
->>  * Corrected some misstatements in my commit messages.
-> 
-> I read over v2.  Other than some minor questions about whether using
-> GIT_TEST_MERGE_ALGORITHM=ort would be easier, and a typo still present
-> from v1, the series looks good to me.
-
-Sorry about the typo, as I fixed it in Patch 3 but not Patch 2. I will
-fix these in v3 after I send a v5 of the ignored files series.
+This is also a good change to take.
 
 Thanks,
 -Stolee
