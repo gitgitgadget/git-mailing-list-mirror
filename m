@@ -8,60 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47E2FC4320E
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 14:48:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10A65C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 14:48:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2B0F160E73
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 14:48:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E7C1660E77
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 14:48:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237125AbhH3Otr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 10:49:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53376 "EHLO
+        id S237140AbhH3Ots (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 10:49:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236609AbhH3Otp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 10:49:45 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F417CC061575
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 07:48:51 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id q14so22854014wrp.3
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 07:48:51 -0700 (PDT)
+        with ESMTP id S237061AbhH3Otq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 10:49:46 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77574C061575
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 07:48:52 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id e26so3588119wmk.2
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 07:48:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=9wEFCiyqZ+7d0TJ/o6WMRvjIVsMZmjxTyc3Mwm3+qus=;
-        b=eTjck3vqdJjPsuAn3lxJ9rIwVVwrdTD490/zUKtsrPIwi14wSRltuJJsikUBSXR9iL
-         JSGOS9y8yx5cWtjeN3qbxhgJl9kmmYfInncT1Lr01p0ZREFaGcZBWiPl5DfxmNVe2551
-         1kVxEJz/dnaIrBedoRrKv/hICXBSUcSLRbh5oEzG4Y2e8ZnTy0mYIEz8LvfalWmfl5Iu
-         9DkqkCgKU1/ICgCDngNTLID6/Wx/sRzbHCt1k9H3YgM6GsLvCPWrO+KtVkcdQ2iKBYsq
-         DkmPC23jospPp8Ow7JWfPznrx+cPJylYcKxF9aQUeXrtelGReKrVsw58U7TvYdyd6LVw
-         /pSA==
+        bh=7gxx5uuHGSeO97xa3hjgVqyUX5ZZzAI/LQQTQWSrlRw=;
+        b=iv49usGRd8tfV9zqBFY+pW3UPiakrE41vTUtPTPbFJgDnoA+mmQuNKevtnbmvYYsIO
+         YuWK2iPRNTVW9jANQhWj1XlRM9++ETtUiYFSYOBYs541bhQazM7aDB5Bxw/umkSDCKQs
+         hoA39ENE6hZAehuwxVwjSnHL2ffX28TZ2z/05Bk9/+lv4djCLoL/DSpOoAKzrVQg04R4
+         cBBGBRXEbhMCuoTRF98a789Kf/m+BV6+xEafOxlJcNKq5jOqfdaWp0o3CgxAu2mA9Y0o
+         9H9onYQAXMdFKPyMDUmEFyt4bA/Ar93pjORhEt5e+YGITd/4NP/fbRAGRTboZ/l98H7g
+         ocsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=9wEFCiyqZ+7d0TJ/o6WMRvjIVsMZmjxTyc3Mwm3+qus=;
-        b=IzzlyILBkZvAXW4CS8Urv1elapYJIJBvX8D4mynzQ1BrCb73EjZ6JF0M9U8tUm7K9t
-         +gQ3WHViGr9bu8XDDLm7CWwmL0fUXyfTEfR2e93S1PuBcaYuEKX9ozrZTA5HC7bTTaLR
-         oWSNanPqAiA9gXan4DvMXsyjpmAJgGO4EFJ3b5CvFO+alxmFtyrR7YXeehq0zYrMBWy+
-         TBKynDYMoEaqfiU47hkC8gzjLBTiKiSYahA0VlhojXcMiLdAtH+0R96Az5WxRPk5QAtq
-         8mjn7axigArqMgBZ7E27KyxCXMjf1sBjDeyE9OTHgtWe+bS1vLIRtuOOr4r0ydsc3BKZ
-         B+9w==
-X-Gm-Message-State: AOAM530xiuQ1J0nZVyYcf6icpA30KR92EwKv+JRrYBU/9Z0fgrUw78iV
-        CChYBE+h7mI+WUYFAGg28dZ1bxOGdTQ=
-X-Google-Smtp-Source: ABdhPJw42VEPjB4QOtTbCTsjqRtCB13sqFDv8IUiZBgITt13hlU7yamS1+NWoqh3eB9t2VCXj4u9Jw==
-X-Received: by 2002:a05:6000:350:: with SMTP id e16mr5285473wre.197.1630334930593;
-        Mon, 30 Aug 2021 07:48:50 -0700 (PDT)
+        bh=7gxx5uuHGSeO97xa3hjgVqyUX5ZZzAI/LQQTQWSrlRw=;
+        b=YkdXYOQC7+StsJZ5s+7tgtSpW187GpiW6ibD0DWC/tXkmjTPMfsv9ZmUxYxAsjtKeW
+         fCCo4d2k42cGKtC1+6KaH7t9/x+64e5ETYl9yjHDOHOWGcGhO3zy5urP3K+hMKP5qdLF
+         SanEXIjKEABYI/9spuUB6fgm/4DqN/qm8SmRDJB849HD5i2wYNLghp8t9+oz7z4mlSTE
+         ny7RyPA3NyVoH40FOciNI8nSivh838mzwpycO8D68RcW3K1uNrDowGn7UsshRZaHjUWv
+         90cTdvZUYMYcH49iIWR55BW8kfbuo9ku5dkOhejmcItO54ZkVZg/AiNN2ZC3bThg/ger
+         zCBg==
+X-Gm-Message-State: AOAM530dTY8qF1EytFcN/sQhOevzt4uFx/2Zbn4kPq/HcdoydzMIzh+8
+        WbvxyLH4Xzsnc7iJeqQ4k7QjeKiwviw=
+X-Google-Smtp-Source: ABdhPJyYWMmgwkw+JvHlHrSqrq6e/moZrE2WUPb+kvDBgPVChx+EStzfzGVzYLgQg5VnRhI4UQNk+Q==
+X-Received: by 2002:a05:600c:2256:: with SMTP id a22mr33474097wmm.16.1630334931137;
+        Mon, 30 Aug 2021 07:48:51 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l187sm14057377wml.39.2021.08.30.07.48.50
+        by smtp.gmail.com with ESMTPSA id i20sm4273648wml.37.2021.08.30.07.48.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 30 Aug 2021 07:48:50 -0700 (PDT)
-Message-Id: <d48207d6858502f04fd501a24ff7c2a80062dfbe.1630334929.git.gitgitgadget@gmail.com>
+Message-Id: <dab8e115faf35529b086f102662ff86ca57a9748.1630334929.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1067.git.git.1630334929.gitgitgadget@gmail.com>
 References: <pull.1067.git.git.1630334929.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 30 Aug 2021 14:48:45 +0000
-Subject: [PATCH 1/4] test-ref-store: tweaks to for-each-reflog-ent format
+Date:   Mon, 30 Aug 2021 14:48:46 +0000
+Subject: [PATCH 2/4] t1400: use test-helper ref-store to inspect reflog
+ contents
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,75 +76,61 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-Follow the reflog format more closely, so it can be used for comparing
-reflogs in tests without using inspecting files under .git/logs/
-
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- t/helper/test-ref-store.c      | 6 +++---
- t/t1405-main-ref-store.sh      | 5 +++--
- t/t1406-submodule-ref-store.sh | 4 ++--
- 3 files changed, 8 insertions(+), 7 deletions(-)
+ t/t1400-update-ref.sh | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-index b314b81a45b..d7bbb20e614 100644
---- a/t/helper/test-ref-store.c
-+++ b/t/helper/test-ref-store.c
-@@ -151,9 +151,9 @@ static int each_reflog(struct object_id *old_oid, struct object_id *new_oid,
- 		       const char *committer, timestamp_t timestamp,
- 		       int tz, const char *msg, void *cb_data)
- {
--	printf("%s %s %s %"PRItime" %d %s\n",
--	       oid_to_hex(old_oid), oid_to_hex(new_oid),
--	       committer, timestamp, tz, msg);
-+	const char *newline = strchr(msg, '\n') ? "" : "\n";
-+	printf("%s %s %s %" PRItime " %+05d\t%s%s", oid_to_hex(old_oid),
-+	       oid_to_hex(new_oid), committer, timestamp, tz, msg, newline);
- 	return 0;
- }
- 
-diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
-index 49718b7ea7f..16a99382770 100755
---- a/t/t1405-main-ref-store.sh
-+++ b/t/t1405-main-ref-store.sh
-@@ -88,14 +88,15 @@ test_expect_success 'for_each_reflog()' '
- 
- test_expect_success 'for_each_reflog_ent()' '
- 	$RUN for-each-reflog-ent HEAD >actual &&
-+	cat actual &&
- 	head -n1 actual | grep one &&
--	tail -n2 actual | head -n1 | grep recreate-main
-+	tail -n1 actual | grep recreate-main
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 4506cd435b0..de0cf678f8e 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -315,14 +315,16 @@ test_expect_success 'symref empty directory removal' '
+ 	test_path_is_file .git/logs/HEAD
  '
  
- test_expect_success 'for_each_reflog_ent_reverse()' '
- 	$RUN for-each-reflog-ent-reverse HEAD >actual &&
- 	head -n1 actual | grep recreate-main &&
--	tail -n2 actual | head -n1 | grep one
-+	tail -n1 actual | grep one
++TAB='	'
+ cat >expect <<EOF
+ $Z $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	Initial Creation
+ $A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150260 +0000	Switch
+-$B $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150860 +0000
++$B $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150860 +0000$TAB
+ EOF
+ test_expect_success "verifying $m's log (logged by touch)" '
+-	test_when_finished "rm -rf .git/$m .git/logs expect" &&
+-	test_cmp expect .git/logs/$m
++	test_when_finished "git update-ref -d $m && rm -rf .git/logs actual expect" &&
++	test-tool ref-store main for-each-reflog-ent $m > actual &&
++	test_cmp actual expect
  '
  
- test_expect_success 'reflog_exists(HEAD)' '
-diff --git a/t/t1406-submodule-ref-store.sh b/t/t1406-submodule-ref-store.sh
-index 0a87058971e..b0365c1fee0 100755
---- a/t/t1406-submodule-ref-store.sh
-+++ b/t/t1406-submodule-ref-store.sh
-@@ -74,13 +74,13 @@ test_expect_success 'for_each_reflog()' '
- test_expect_success 'for_each_reflog_ent()' '
- 	$RUN for-each-reflog-ent HEAD >actual &&
- 	head -n1 actual | grep first &&
--	tail -n2 actual | head -n1 | grep main.to.new
-+	tail -n1 actual | grep main.to.new
+ test_expect_success "create $m (logged by config)" '
+@@ -347,11 +349,12 @@ test_expect_success "set $m (logged by config)" '
+ cat >expect <<EOF
+ $Z $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150320 +0000	Initial Creation
+ $A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150380 +0000	Switch
+-$B $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150980 +0000
++$B $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150980 +0000$TAB
+ EOF
+ test_expect_success "verifying $m's log (logged by config)" '
+-	test_when_finished "rm -f .git/$m .git/logs/$m expect" &&
+-	test_cmp expect .git/logs/$m
++	test_when_finished "git update-ref -d $m && rm -rf .git/logs actual expect" &&
++	test-tool ref-store main for-each-reflog-ent $m > actual &&
++	test_cmp actual expect
  '
  
- test_expect_success 'for_each_reflog_ent_reverse()' '
- 	$RUN for-each-reflog-ent-reverse HEAD >actual &&
- 	head -n1 actual | grep main.to.new &&
--	tail -n2 actual | head -n1 | grep first
-+	tail -n1 actual | grep first
+ test_expect_success 'set up for querying the reflog' '
+@@ -467,7 +470,8 @@ $h_OTHER $h_FIXED $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117151040 +0000	co
+ $h_FIXED $h_MERGED $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117151100 +0000	commit (merge): Merged initial commit and a later commit.
+ EOF
+ test_expect_success 'git commit logged updates' '
+-	test_cmp expect .git/logs/$m
++	test-tool ref-store main for-each-reflog-ent $m >actual &&
++	test_cmp expect actual
  '
+ unset h_TEST h_OTHER h_FIXED h_MERGED
  
- test_expect_success 'reflog_exists(HEAD)' '
 -- 
 gitgitgadget
 
