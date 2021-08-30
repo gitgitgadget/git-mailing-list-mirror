@@ -2,125 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AAF1C43214
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 17:30:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42327C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 17:40:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 229E060F5C
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 17:30:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C59560F3A
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 17:40:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238016AbhH3Rbo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 13:31:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35248 "EHLO
+        id S238225AbhH3Rl2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 13:41:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229709AbhH3Rbn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 13:31:43 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A49CBC061575
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 10:30:49 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id c42-20020a05683034aa00b0051f4b99c40cso9077466otu.0
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 10:30:49 -0700 (PDT)
+        with ESMTP id S238247AbhH3RlZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 13:41:25 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29119C061575
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 10:40:31 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id i28so27267642ljm.7
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 10:40:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=RSqGbFRLVJkFVNhOwYFzAq4+msVkaIqK8Ed425s42kE=;
-        b=R6wdxmcLlUrqe0YlAM/OVzbP7TVDHB06QJSFFF7vkT3wFx60GjSfEzCuAjTNrqjO66
-         CU3Y5L+tiSVYWFCYhdHRmviVNJ5QZ90cZ8bNqOfcgs4oAEs0NLbCfpkyurysXYjCew95
-         bF6+JTSTNqJXR0CwCHBu7bt1RSGH5eRDXJO+ZtqAeqICe19IBnpreeXpQm5tv+LYkLPt
-         QCGkXH84d9RvXQG5zsrKpBGeimn8SVgSxbrpYcxwM8m/AJBzw9zUE/4vcbjhuvx1RFv0
-         Bdj6K9ooacBYFF7z45SBoUfh6E0yeoqDqsuC2rHM0Yeca4SB3fZIlJFdTAMLcUgPd9GC
-         U2Hg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=9gjJw/Zg4ujw6Qn8IGacr9Y86b61V440vxiFr3aBxMo=;
+        b=o3STPM0XXFYXh6c+mUB0Wy+KMLd5yL4g/NqlYbdMYDagJiSnRFazpXF5+v98vYWu8t
+         qUCLs+a+Ky6v/ltSIL+CfY5h2kbMjrSa8bguPDnlPxw0+fVKZvV8I4RXSWsA9j1X/9bU
+         ZMSjOdzWuB5tW3Y4VwxN2shj6Vo3cyk4yY2n948+I57UShbIhGYPWw3W6FriEAcyqaTa
+         YMq2R23hvHn5LDTLyEhm53PbzqlhWsL4dvqTsVcQCrCTvuogOzSHu+WtHxxYlLPgWXdv
+         kGl+/p0Q3T3lx+3XbSQnMTvo9eseJCFm8OWWG+CzYlZYEYbv9vFhWUmonbR0OP5RKeJH
+         iBlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=RSqGbFRLVJkFVNhOwYFzAq4+msVkaIqK8Ed425s42kE=;
-        b=ebylECUMlHZsFxLdwP+Wy62EJnxUx12R/65TgrWmm/3jcPSk5I2VCoAdwMaVni+x9q
-         48RoRPpt5s+Rh5+zmjLVnqx+Xz2xC3MT2TntPoefFz0LE79VnVUVMeOgaEi2iOBiiu25
-         5KVhvhgsxqGsDUwnBiWtdVqCIndcIb4ROt71qY0XYZnnvS+2ZoNtheerj/IAVa6m0OpF
-         Xh335bYsnvdLj08+AbIfRzlbFaYK1kMWbgUwlT0Rp35iWElSqpwX7asvbZdiuFcCCKDQ
-         uxSeefYlgVzjRDLPWcWvaz7ZsD1iCHNPbZKLfTN/DqHN58KfyDwmRjOW5CcwRDG6vZvA
-         s5+Q==
-X-Gm-Message-State: AOAM530CKytQuS7xscH7TlaW1MJPmoAcTIAH7ueWFvN/U8tJVnJFIiqz
-        jXti1Se+M3HjmZ2/BMxQkWw=
-X-Google-Smtp-Source: ABdhPJy8gC8Er+NwqkxhMkKc6GJugdoBSwPJIlQ+umrJTP3XoxgiW8eDK21/IZT+imW8jUuOZTWU+g==
-X-Received: by 2002:a9d:6055:: with SMTP id v21mr19742807otj.265.1630344648994;
-        Mon, 30 Aug 2021 10:30:48 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:e4d6:1362:a8d2:be4e? ([2600:1700:e72:80a0:e4d6:1362:a8d2:be4e])
-        by smtp.gmail.com with ESMTPSA id 186sm3088051ood.39.2021.08.30.10.30.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Aug 2021 10:30:48 -0700 (PDT)
-Subject: Re: [PATCH v3 2/5] strvec: add a strvec_pushvec()
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
-References: <cover-0.4-0000000000-20210727T004015Z-avarab@gmail.com>
- <cover-v3-0.5-00000000000-20210826T140414Z-avarab@gmail.com>
- <patch-v3-2.5-321b8ba3f0e-20210826T140414Z-avarab@gmail.com>
- <xmqq8s0m9xbl.fsf@gitster.g> <xmqq4kba9x1h.fsf@gitster.g>
- <YSm3ofxlRB1ViBf5@coredump.intra.peff.net> <xmqqzgsz7qnq.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <85e539bc-7af5-595e-bcf4-bf577eb3bdfd@gmail.com>
-Date:   Mon, 30 Aug 2021 13:30:48 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=9gjJw/Zg4ujw6Qn8IGacr9Y86b61V440vxiFr3aBxMo=;
+        b=AVeqaj+agPO/YtB1P7HYCLdXGvW8wDATu6MTWrKwuEhYb/mUuuI0IBqD7jkVKLW7jn
+         qAFScI7x0eKGLgayPrx8ab7ZS/WQgmr0RRUerFnpRUqK/+tqEKwoRKAu2UQfd2dP9r6Z
+         xAoApVHws/kTiXH/lU05MVFcYu4A14b/hkdvYsgR+KtGEEtZ0+yMzLERR8s+KOxWnS72
+         A2lI5VWpNlI+XwNU2dI3gjhH+QhqFTsyt61xcWgQS0BBqdSRR0TYhgFLA/VtUBxsmssj
+         7Y47COb5FrKua17M8DvwwF3kXTK/Ozc8FfXN2ea8ciH7c+7mm21Y7BCo4QL21j6IMp10
+         z4Ww==
+X-Gm-Message-State: AOAM532Bm8RXXngrSw0IT9NTQBB+MJxWzg51ThEyp0g2to60YsmSyRBs
+        Lm7PtJNXWZLehmZuw9h0tL8=
+X-Google-Smtp-Source: ABdhPJzuRI6QGuRz3OjMYoAYl9pDLdZsrKURxuGqv9yslkOPiNGxt44v1II/cX7gIa28aN6/oZNNAQ==
+X-Received: by 2002:a2e:b7c8:: with SMTP id p8mr20786793ljo.32.1630345229123;
+        Mon, 30 Aug 2021 10:40:29 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id j22sm874751lfh.101.2021.08.30.10.40.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Aug 2021 10:40:28 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Paul Mackerras <paulus@ozlabs.org>
+Subject: Re: diff-index --cc no longer permitted, gitk is now broken (slightly)
+References: <e6bd4cf7-ec8b-5d22-70f6-07089794df0c@kdbg.org>
+        <xmqqsfyq501v.fsf@gitster.g>
+Date:   Mon, 30 Aug 2021 20:40:27 +0300
+In-Reply-To: <xmqqsfyq501v.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        30 Aug 2021 10:12:28 -0700")
+Message-ID: <87o89e3k6s.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqzgsz7qnq.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/29/2021 7:54 PM, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
->> I think we'd want the patch below. It can be applied independently
->> (though if we do take the index-iterating version of Ævar's patch, I
->> think it should switch to size_t).
-> 
-> Yeah, I do not see a strong need for _pushvec(), especially the
-> variant that does not preallocate, when we have _pushv().  But the
-> type fix below does make sense.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks for chiming in. I was not aware of _pushv() when I asked
-about the _pushvec() variant. Sorry, Ævar, for sending you down
-an unnecessary direction.
- 
->> -- >8 --
->> Subject: [PATCH] strvec: use size_t to store nr and alloc
+> Johannes Sixt <j6t@kdbg.org> writes:
+>
+>> Since 19b2517f95a0 (diff-merges: move specific diff-index "-m" handling
+>> to diff-index, 2021-05-21) git diff-index no longer accepts --cc. This
+>> breaks gitk: it invokes
 >>
->> We converted argv_array (which later became strvec) to use size_t in
->> 819f0e76b1 (argv-array: use size_t for count and alloc, 2020-07-28) in
->> order to avoid the possibility of integer overflow. But later, commit
->> d70a9eb611 (strvec: rename struct fields, 2020-07-28) accidentally
->> converted these back to ints!
+>>    git diff-index --cached -p -C --cc --no-commit-id -U3 HEAD
 >>
->> Those two commits were part of the same patch series. I'm pretty sure
->> what happened is that they were originally written in the opposite order
->> and then cleaned up and re-ordered during an interactive rebase. And
->> when resolving the inevitable conflict, I mistakenly took the "rename"
->> patch completely, accidentally dropping the type change.
+>> to show the staged changes (when the line "Local changes checked in to
+>> index but not committed" is selected).
 >>
->> We can correct it now; better late than never.
-...
->>  struct strvec {
->>  	const char **v;
->> -	int nr;
->> -	int alloc;
->> +	size_t nr;
->> +	size_t alloc;
->>  };
+>> The man page of git diff-index does not mention --cc as an option. I
+>> haven't fully grokked the meaning of --cc, so I cannot tell whether this
+>> absence has any significance (is deliberate or an omission).
+>>
+>> Is gitk wrong to add --cc unconditionally? Should it do so only when
+>> there are conflicts? Or not at all?
+>
+> I think --cc is designed to naturally fall back to -p when there is
+> only one parent.  Use of both -p and --cc has also long been an
+> acceptable combination, and even if we say the later --cc overrides
+> -p, there is no reason not to show single parent patch here with
+> --cc.
 
-This is also a good change to take.
+I'm pretty sure I've checked diff-index doesn't use the flag that --cc
+sets when I wrote the patch, so the only incompatibility this patch
+introduced is denying the command when --cc is given, i.e., it now
+behaves as if diff-index doesn't support --cc *option*, that makes sense
+to me and matches diff-index documentation.
+
+Irrespective to chosen solution, it still looks to me like gitk
+shouldn't had --cc in that command in the first place. I that correct,
+or do I miss something essential?
+
+That said, if you think that diff-index should silently accept --cc (and
+-c ?), for whatever reason, it's fine with me, provided it's properly
+documented and there are proper test-cases in place.
 
 Thanks,
--Stolee
+-- Sergey Organov
