@@ -2,143 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF8B4C432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD45AC432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:15:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D256E60F44
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:14:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83A2C60FA0
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:15:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236305AbhH3VPr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 17:15:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60195 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234509AbhH3VPq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 17:15:46 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D1D62E6B78;
-        Mon, 30 Aug 2021 17:14:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xmHqtdoCDlW1HBEqGNCDbvEDP8fwsQ6knTFKti
-        tydaE=; b=m6N5bs4rF6wByv7zJHhBe6YrNRV5KbEqRy2QEVqAzrt0WwZ7xz+x9H
-        AxYja7ly28BIYZxWE6/oZnYMS0FuKJ8gw6B6lqWK/0rVKX4aw/h84RgH/x3Rq/ny
-        ebXxYy5F7BHM8XkJ/+mKxGsM/f2Uh8/T+t85WyEWOa8dqIhZkIj+g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C922BE6B77;
-        Mon, 30 Aug 2021 17:14:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 52E8AE6B76;
-        Mon, 30 Aug 2021 17:14:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 4/4] RFC: refs: reflog entries aren't written based on
- reflog existence.
-References: <pull.1067.git.git.1630334929.gitgitgadget@gmail.com>
-        <2f11fd7718005d1e94b3139f086134896da202f1.1630334929.git.gitgitgadget@gmail.com>
-Date:   Mon, 30 Aug 2021 14:14:50 -0700
-In-Reply-To: <2f11fd7718005d1e94b3139f086134896da202f1.1630334929.git.gitgitgadget@gmail.com>
-        (Han-Wen Nienhuys via GitGitGadget's message of "Mon, 30 Aug 2021
-        14:48:48 +0000")
-Message-ID: <xmqqbl5e3a9h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S236566AbhH3VQ0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 17:16:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58920 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234509AbhH3VQ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 17:16:26 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DED15C061575
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 14:15:31 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id z4so24320667wrr.6
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 14:15:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=rji5lEShrzsOOMeBq2TLKgTVmvszofUAtr4u48KHYhA=;
+        b=N0kBYWRcmNrT6n3VmmG2aH5NvEDHmcy7dWvrBoUXzsD2uDSMT2Kqhfty5xtxG2lMfO
+         Gmvf7GO/z3w0sQmZXKoEOozjDTkNzFpboyQGsjKSIa/1M8hsiqFZ4uft9VD+kUzJRf7z
+         icgCGFJ5LGfxAEbsMieCEo+fuKLJs5GLyUqyimHz4COf0jigDaRJM37x1hhXGma5Gami
+         aoQJ1xXr1Owm/OVgYpchL9sHYG2JW68ynOb1xG1SRLJ/FTdmUA7irMD1RR1t5tGBZwhD
+         sOaVUMAFtKxwUAKXZzN08XmECnE5n2rZ/r3SM5I1v0pimyRd/6Qk2Tj5OmJ6fNQrKKwX
+         qWoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=rji5lEShrzsOOMeBq2TLKgTVmvszofUAtr4u48KHYhA=;
+        b=CCjT+r58mrv7KTyC5Mjih5xULKQlEjgZgV93aP9tZRayhhiSt85MDDsgL7rii7IlM+
+         390gOevTR08TdYf9bCexc/7s0InOfVcKFtWb/EuGpInKp9+ZPK2F47ktyWg9hqI9GMhm
+         DBuQcgTfeW1kC8EZSvpnm3AOvbtpW4R57NzCRm/FAENK+rS66d7HQOAPb+awMdMIS5LD
+         IZB7Gitl5JfloNBok3rQENpe/z4L+EI3qoLvdras8gBJJQrVHVYekApwzKlGEHKLY8rh
+         DGdHmQ5P3wD4Brt8OCQy9VbjvhC1plyLwPmqNFJv6Z2gc1ekEaL1vyhURYSk0Gu9v2M9
+         +CUw==
+X-Gm-Message-State: AOAM532VvdrOTSRuWiDLbc8tutvxTUpFMKCE3GA5jueoQDC3TQOmb9Ex
+        FBKnqzImvhP8ZgGot2ESa7BHpSbj/Fg=
+X-Google-Smtp-Source: ABdhPJxRoKu5FO1b+BRWjVV3II0P8EVIbrHFP7VWhgteY4rdpHuHml4YQHbEVtMqs5dDRJd+xHCRmg==
+X-Received: by 2002:a5d:55cd:: with SMTP id i13mr27824747wrw.366.1630358130558;
+        Mon, 30 Aug 2021 14:15:30 -0700 (PDT)
+Received: from szeder.dev (84-236-78-211.pool.digikabel.hu. [84.236.78.211])
+        by smtp.gmail.com with ESMTPSA id n4sm19506118wro.81.2021.08.30.14.15.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Aug 2021 14:15:30 -0700 (PDT)
+Date:   Mon, 30 Aug 2021 23:15:28 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 2/7] progress: catch nested/overlapping progresses with
+ GIT_TEST_CHECK_PROGRESS
+Message-ID: <20210830211528.GK23408@szeder.dev>
+References: <20210620200303.2328957-1-szeder.dev@gmail.com>
+ <20210620200303.2328957-3-szeder.dev@gmail.com>
+ <YNIJB8uYp7gzLC6v@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 506CB884-09D7-11EC-AEC2-ECFD1DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YNIJB8uYp7gzLC6v@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Jun 22, 2021 at 12:00:07PM -0400, Taylor Blau wrote:
+> On Sun, Jun 20, 2021 at 10:02:58PM +0200, SZEDER Gábor wrote:
+> > Note that this will trigger even in cases where the output is not
+> > visibly wrong, e.g. consider this simplified sequence of calls:
+> >
+> >   progress1 = start_delayed_progress();
+> >   progress2 = start_delayed_progress();
+> >   for (i = 0; ...)
+> >       display_progress(progress2, i + 1);
+> >   stop_progres(&progress2);
+> >   for (j = 0; ...)
+> >       display_progress(progress1, j + 1);
+> >   stop_progres(&progress1);
+> 
+> s/stop_progres/&s, but no big deal. Everything else here looks good.
 
-> From: Han-Wen Nienhuys <hanwen@google.com>
->
-> Before, if we aren't supposed to update reflogs (eg.
-> core.logallrefupdates=NONE), we would still write reflog entries if the
-> reflog file (.git/logs/REFNAME) existed.
->
-> The reftable storage backend cannot distinguish between a non-existing
-> reflog, and an empty one. Therefore it cannot mimick this functionality.
->
-> In CAFQ2z_Ps3YxycA+NJ9VKt_PEXb+m83JdNB7ujzWw1fTPKyZ=fg@mail.gmail.com,
-> we came to the conclusion that this feature is probably a remnant from
-> the time that reflogs weren't enabled by default, and it does not need
-> to be kept.
->
-> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-> ---
->  refs/files-backend.c  | 20 +-------------------
->  t/t1400-update-ref.sh |  7 +++----
->  2 files changed, 4 insertions(+), 23 deletions(-)
+Well, at least I was consistent :)
 
-While I like the loss of lines and reduced complexity...
+> > diff --git a/progress.c b/progress.c
+> > index 255995406f..549e8d1fe7 100644
+> > --- a/progress.c
+> > +++ b/progress.c
+> > @@ -48,6 +48,8 @@ struct progress {
+> >  static volatile sig_atomic_t progress_update;
+> >
+> >  static int test_check_progress;
+> > +/* Used to catch nested/overlapping progresses with GIT_TEST_CHECK_PROGRESS. */
+> > +static struct progress *current_progress = NULL;
+> >
+> >  /*
+> >   * These are only intended for testing the progress output, i.e. exclusively
+> > @@ -258,8 +260,12 @@ static struct progress *start_progress_delay(const char *title, uint64_t total,
+> >  	struct progress *progress;
+> >
+> >  	test_check_progress = git_env_bool("GIT_TEST_CHECK_PROGRESS", 0);
+> > +	if (test_check_progress && current_progress)
+> > +		BUG("progress \"%s\" is still active when starting new progress \"%s\"",
+> > +		    current_progress->title, title);
+> >
+> >  	progress = xmalloc(sizeof(*progress));
+> 
+> Ah. This is why you moved the allocation down further, since we don't
+> have to free anything up when calling BUG() if it wasn't allocated in
+> the first place (and we had no such conditional that would cause us to
+> abort early before).
+> 
+> For what it's worth, I probably would have preferred to see that change
+> from the previous patch included in this one rather than in the first of
+> the series, since it's much clearer here than it is in the first patch.
 
-One potential harm this change will bring to us is what happens to
-people who disable core.logAllRefUpdates manually after using the
-repository for a while.  Their @{4} will point at the same commit no
-matter how many operations are done on the current branch after they
-do so.  I wouldn't mind if "git reflog disable" command is given to
-the users prominently and core.logAllRefUpdates becomes a mere
-implementation detail nobody has to care about---in such a world, we
-could set the configuration and drop the existing reflog records at
-the same time and nobody will be hurt.
+Yeah.  It must have been a rebase mishap.  (I started working on this
+after I reported yet another commit-graph related progress bug around
+v2.31.0-rc0, and I had the first two checks on the same evening.  But
+then some time later Peff came along and found a backwards counting
+progress line, so I decided to add a check for that as well, which
+necessitated a bit of refactoring in the other two checks, and then a
+hunk somehow ended up in the wrong patch.)
 
-If we keep the current behaviour, what are we harming instead?
-Growth of diskspace usage is an obvious one, but disks are cheaper
-compared to human brainwave cycles cost.
-
-> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-> index de0cf678f8e..52433f6d0d2 100755
-> --- a/t/t1400-update-ref.sh
-> +++ b/t/t1400-update-ref.sh
-> @@ -269,7 +269,7 @@ test_expect_success "(not) changed .git/$m" '
->  '
->  
->  rm -f .git/logs/refs/heads/main
-> -test_expect_success "create $m (logged by touch)" '
-> +test_expect_success "create $m" '
->  	test_config core.logAllRefUpdates false &&
->  	GIT_COMMITTER_DATE="2005-05-26 23:30" \
->  	git update-ref --create-reflog HEAD $A -m "Initial Creation" &&
-> @@ -315,12 +315,10 @@ test_expect_success 'symref empty directory removal' '
->  	test_path_is_file .git/logs/HEAD
->  '
->  
-> -TAB='	'
->  cat >expect <<EOF
->  $Z $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	Initial Creation
-> -$A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150260 +0000	Switch
-> -$B $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150860 +0000$TAB
->  EOF
-> +
->  test_expect_success "verifying $m's log (logged by touch)" '
->  	test_when_finished "git update-ref -d $m && rm -rf .git/logs actual expect" &&
->  	test-tool ref-store main for-each-reflog-ent $m > actual &&
-> @@ -346,6 +344,7 @@ test_expect_success "set $m (logged by config)" '
->  	test $A = $(git show-ref -s --verify $m)
->  '
->  
-> +TAB='	'
->  cat >expect <<EOF
->  $Z $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150320 +0000	Initial Creation
->  $A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150380 +0000	Switch
-
-Moving the definition of TAB= around in the test is not all that
-welcome.  If anything, I'd suggest doing so nearer to the beginning
-of the test sequence, before the first test that uses the ref-store
-test-tool, because it is just like $GIT_COMMITTER_EMAIL and $RUN
-that define constants used throughout the remainder of the test
-script.
-
-THanks.
