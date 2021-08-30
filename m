@@ -2,80 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C929C4320A
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 18:16:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9159C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 18:20:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 67CD460F3A
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 18:16:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D265360FD9
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 18:20:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238646AbhH3SRV convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 30 Aug 2021 14:17:21 -0400
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:41494 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238578AbhH3SRP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 14:17:15 -0400
-Received: by mail-ed1-f49.google.com with SMTP id eb14so13749313edb.8
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 11:16:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=pbFNqlWIkgtovbdc8dRbSqbDCxAyeHYI5s+hPGvjcag=;
-        b=lZ1xQpCoLtPcZ4BCSKi96zI2vXFmtu8o2e261QAPVlEeSHy98ZZo4/F85cvRhJeb0v
-         6/9Sj7GI+Ry24YV9t33ymNfW7q04u2D98NPb3p5MyqwY2CdpTY28P4/0oy2fOftQ6SCA
-         MYT4Kx+F+JeIaP3xggI0HRq/rNWN8GwO7ymm1ppWSPIjhCcdOAALmfCBaIpEwqao9EDv
-         0CUm40gR9jRD4arZVPJDVgRot+DXT87KXNsJ2rmBG6mZmFm67ajkGzsJKMm6Mw2jCE0Q
-         rUnlOZFCFossM22gpxAnX91Z4O0N25Y/Fg4oAZRrGmtlXUG4bipVyOXsXQpFLPnev9KI
-         J/jw==
-X-Gm-Message-State: AOAM533k1GF3BhhW172IwdqGzVIDu64GP3IYBZqIPJJTIure0E0I+d7i
-        6LjgGiJK8fmuxmEfTf4cavRrf/syNa7S4jto4gY=
-X-Google-Smtp-Source: ABdhPJxiUsF8Ksuc4PCOTJACg6uNHgYEhphF9iIVUq3pbutGtatNWIxnAoWCXIdnUUSuXe8mVzkGEnYzT+LFWWTghCc=
-X-Received: by 2002:aa7:da56:: with SMTP id w22mr25243145eds.89.1630347380062;
- Mon, 30 Aug 2021 11:16:20 -0700 (PDT)
+        id S238576AbhH3SVK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 14:21:10 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34060 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238553AbhH3SUX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 14:20:23 -0400
+Received: (qmail 510 invoked by uid 109); 30 Aug 2021 18:19:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 30 Aug 2021 18:19:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8896 invoked by uid 111); 30 Aug 2021 18:19:29 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Aug 2021 14:19:29 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 30 Aug 2021 14:19:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] merge-recursive: use fspathcmp() in path_hashmap_cmp()
+Message-ID: <YS0hMILaN2ODfM3y@coredump.intra.peff.net>
+References: <512abaef-d71c-9308-6a62-f37b4de69e60@web.de>
+ <YSvsQcGNpCMZwS8o@nand.local>
+ <60e9baf4-4e76-71a8-e6bb-1af87486994d@web.de>
 MIME-Version: 1.0
-References: <20210830072118.91921-1-sunshine@sunshineco.com>
- <20210830072118.91921-2-sunshine@sunshineco.com> <xmqq4kb66er7.fsf@gitster.g>
-In-Reply-To: <xmqq4kb66er7.fsf@gitster.g>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 30 Aug 2021 14:16:09 -0400
-Message-ID: <CAPig+cRqMjaujwfwzrqNyxaMN9y4r7RP2W6kOcP-kKcnvrjYxQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] t3301: tolerate minor notes-related presentation changes
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <60e9baf4-4e76-71a8-e6bb-1af87486994d@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 30, 2021 at 1:09 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > These tests care about whether intended notes-related functionality
-> > occurred and that `git log` presents the notes in the expected fashion
-> > (or, in some cases, that `git log` suppresses the notes). However, the
-> > tests hard-code the precise indentation of notes by the default `git
-> > log` output, which makes them somewhat brittle since they won't be able
-> > to tolerate even minor changes to the presentation. Make the tests a bit
-> > more robust by ignoring indentation.
->
-> Isn't this losing too much information?  If we lose all, or gain
-> random number of, leading whitespaces, the test won't notice.
+On Mon, Aug 30, 2021 at 05:09:34PM +0200, René Scharfe wrote:
 
-That was the idea. The precise amount of indentation -- whether four
-spaces or one TAB or whatever -- seems pretty much immaterial in the
-wide view [1], and it is not inconceivable that the exact amount of
-indentation might change in the future, thus this future-proofs the
-tests against minor indentation changes.
+> > diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
+> > index 36ff07bd4b..ab34bdfecd 100644
+> > --- a/t/helper/test-hashmap.c
+> > +++ b/t/helper/test-hashmap.c
+> > @@ -28,10 +28,7 @@ static int test_entry_cmp(const void *cmp_data,
+> >         e1 = container_of(eptr, const struct test_entry, ent);
+> >         e2 = container_of(entry_or_key, const struct test_entry, ent);
+> >
+> > -       if (ignore_case)
+> > -               return strcasecmp(e1->key, key ? key : e2->key);
+> > -       else
+> > -               return strcmp(e1->key, key ? key : e2->key);
+> > +       return fspathcmp(e1->key, key ? key : e2->key);
+> >  }
+> >
+> >  static struct test_entry *alloc_test_entry(unsigned int hash,
+> >
+> 
+> That's a local variable named "ignore_case", not the one declared in
+> environment.c that fspathcmp() uses, so this would change the behavior.
+> The helper code does not include cache.h, so this is not even a case of
+> variable shadowing, just two different variables for similar purposes
+> in different places having the same name.
 
-However, as mentioned in my response to Ævar, I wavered quite a bit on
-whether or not to make this change since, although the justification
-of "future-proofing" the tests isn't exactly hand-wavy, we don't need
-the change either. It may be a case of YAGNI. So, as I also mentioned
-in that response, I don't mind at all dropping this patch and going
-with Ævar's version.
+Yikes, good catch. Perhaps it's overkill, but I wonder if a comment
+like:
 
-[1]: mechanical extraction aside...
+  /*
+   * Do not use fspathcmp() here; our behavior depends on the local
+   * ignore_case variable, not the usual Git-wide global.
+   */
+
+would help.
+
+I double-checked the spot I suggested. I think it is actually using the
+global (though I got it right through sheer luck).
+
+-Peff
