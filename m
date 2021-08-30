@@ -2,92 +2,183 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02B95C432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 15:22:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41F6CC432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 15:30:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C346B60E98
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 15:22:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A48760ED4
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 15:30:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237421AbhH3PXZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 11:23:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33202 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237416AbhH3PXY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 11:23:24 -0400
-Received: from mail-vs1-xe2c.google.com (mail-vs1-xe2c.google.com [IPv6:2607:f8b0:4864:20::e2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EC4AC061575
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 08:22:31 -0700 (PDT)
-Received: by mail-vs1-xe2c.google.com with SMTP id e9so10812396vst.6
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 08:22:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=e/GICpi+owM2h0eL2SKaXgsIzcoOihPFVQrqvFOES3Q=;
-        b=bVVMCJCfvIch15JZVmdOxtqGHzVMbbO3LyYmhajtRVjAPBsGzfZyAleBs55XgOu0bU
-         I1ljcOC9SXZ0bhzWwjsI6UILGi8bG8kqi+3TF/by25L+YOmkVAhuc3HORkoBLvZtOpPx
-         deYS5Zx1n7k7va/ZFEut4aXXqKONnZOAhiaYEG9mjZ79wdpJsMZzEl5+YcUTsVdgsbrP
-         WjWnlseAeT1ZcC5gT+q1h4TLhT0d2PXpY15+WSPHHiMTuhvTCbHF4X49ZESMdWFxj4Vy
-         3SC13vAI3cn6YvOF1MA2qOvzJ13DSF+fAF6dKo2mCad2mTHSU9eEfltqYzSH1JzZOtb5
-         F2Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=e/GICpi+owM2h0eL2SKaXgsIzcoOihPFVQrqvFOES3Q=;
-        b=d1YoiH5IPVunMBsPYdia8Q6ZiGSqGHf7dPn9USWAoXwNVe8MYiVzC95QWJJjrdcQoA
-         ww9ldgd521/Bzpwg/gNmsw1g/1zn3/CF/5ssRau2TeGocoTxEM3chBlCQ+uyFea1GnAp
-         XIBKMbQraahcgAN5+aL6Qg7n8Y+IB1fJAlr065/ELemOt6EVGAEHQVV4cCkoa4KTIPYs
-         qB08e7kIC8N/pEKjZnOZwsHWCenlUM+e7bBuVbOkw0kg/DO5dLJC9CO9YjPvVtLPGhNw
-         N/UuYCpSi+MnMvSsPXNR3jy1RmL1PVWgilmJBX7X/rwyDEZMu4vyv+2UUy5m80Gj44O2
-         QU+Q==
-X-Gm-Message-State: AOAM531gFhXMiII3Q+LitKsBblzORlL1uXP2i7NPe2nk8P285Y/XsghJ
-        ATw8GG4I4SRdd2e85xu16XBaCRl8IxPck0uFQTsBHA==
-X-Google-Smtp-Source: ABdhPJx0pZsj2XlADWwC5cAW5ENbbgLqLK640qFhUJyB4hzOCg7OkMCSYpfsCB7M+AcdXl7B3Jr/UsVJX0XTJdOewB0=
-X-Received: by 2002:a67:ef51:: with SMTP id k17mr7771500vsr.2.1630336949964;
- Mon, 30 Aug 2021 08:22:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1081.git.git.1630335476.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1081.git.git.1630335476.gitgitgadget@gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 30 Aug 2021 17:22:18 +0200
-Message-ID: <CAFQ2z_P-AE9weWbu-p-ivw1OgSk_hU0j8bFWOU-SZX510_n42w@mail.gmail.com>
-Subject: Re: [PATCH 00/19] Adds reftable library code from https://github.com/hanwen/reftable.
-To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        id S237266AbhH3Pbi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 11:31:38 -0400
+Received: from mout02.posteo.de ([185.67.36.66]:46363 "EHLO mout02.posteo.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237085AbhH3Pbi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 11:31:38 -0400
+Received: from submission (posteo.de [89.146.220.130]) 
+        by mout02.posteo.de (Postfix) with ESMTPS id 2A037240107
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 17:30:42 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
+        t=1630337442; bh=opAvIpUgW2baVJipIPk3YmsoptbVKJ2am1Bf4Aq89aw=;
+        h=From:To:Cc:Subject:Date:From;
+        b=JhGsJNz/aDjbpcX3eJuFc9SkL3aJMNWlaX5qQZ/Cux9fNAkkKLqIJOnBAIwW33X9+
+         8BzcmMZlh/uNE4hDMBdyR7IoGok/wu7FzV2BLT2DbXcy7OBrPvCl9xwn3lmCV7O8tY
+         RBh7Ehk6uE5UDuBiwWZH7dB1YGJxCNRqQZbU9XbVqv8qxSASdwYOgZrr5Sf/yRhqfq
+         k8BJPYybevCK+IljcFRvqDExAtnvgl7lb/DglSUNvLmIlC04G4oJyuLOUjTrixqQ1T
+         VTJU7+NFWH5fLZEgzmK80Wx5XtLSaEIk+vCsiY9sZzNZ0lHvCHWVfvzrkZAMxCR0Sw
+         cq0jrVCgzrf7Q==
+Received: from customer (localhost [127.0.0.1])
+        by submission (posteo.de) with ESMTPSA id 4GyvR36SrMz9rxR;
+        Mon, 30 Aug 2021 17:30:39 +0200 (CEST)
+From:   =?UTF-8?q?Marvin=20H=C3=A4user?= <mhaeuser@posteo.de>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?Marvin=20H=C3=A4user?= <mhaeuser@posteo.de>,
         Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Drew DeVault <sir@cmpwn.com>, Simon Ser <contact@emersion.fr>,
+        xiaoqiang zhao <zxq_yx_007@163.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Christian Ludwig <chrissicool@gmail.com>
+Subject: [PATCH] send-email: Avoid incorrect header propagation
+Date:   Mon, 30 Aug 2021 15:30:01 +0000
+Message-Id: <20210830153001.29961-1-mhaeuser@posteo.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 30, 2021 at 5:05 PM Han-Wen Nienhuys via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> The reftable format is described in Documentation/technical/reftable.txt.
->
-> This is a fully reentrant implementation of reading and writing the refta=
-ble
-> file format, and should be suitable for embedding in libgit2 too. It does
-> not hook the code up to git to function as a ref storage backend yet.
+If multiple independent patches are sent with send-email, even if the
+"In-Reply-To" and "References" headers are not managed by --thread or
+--in-reply-to, their values may be propagated from prior patches to
+subsequent patches with no such headers defined.
 
-Junio, per discussion with AEvar, let's kick out the full reftable
-topic from next, and put in this topic. This is unlikely to have
-conflicts with any other efforts, and is necessary for the full
-reftable support anyway.
+To mitigate this and potential future issues, make sure all global
+patch-specific variables are always either handled by
+command-specific code (e.g. threading), or are reset to their default
+values for every iteration.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Marvin Häuser <mhaeuser@posteo.de>
+---
+ git-send-email.perl   | 26 ++++++++++++++++---------
+ t/t9001-send-email.sh | 45 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 62 insertions(+), 9 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 25be2ebd2a..e411860b18 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1625,7 +1625,6 @@ sub send_message {
+ 
+ $in_reply_to = $initial_in_reply_to;
+ $references = $initial_in_reply_to || '';
+-$subject = $initial_subject;
+ $message_num = 0;
+ 
+ # Prepares the email, prompts the user, sends it out
+@@ -1648,6 +1647,7 @@ sub process_file {
+ 	@xh = ();
+ 	my $input_format = undef;
+ 	my @header = ();
++	$subject = $initial_subject;
+ 	$message = "";
+ 	$message_num++;
+ 	# First unfold multiline header fields
+@@ -1854,15 +1854,23 @@ sub process_file {
+ 	}
+ 
+ 	# set up for the next message
+-	if ($thread && $message_was_sent &&
+-		($chain_reply_to || !defined $in_reply_to || length($in_reply_to) == 0 ||
+-		$message_num == 1)) {
+-		$in_reply_to = $message_id;
+-		if (length $references > 0) {
+-			$references .= "\n $message_id";
+-		} else {
+-			$references = "$message_id";
++	if ($thread) {
++		if ($message_was_sent &&
++		  ($chain_reply_to || !defined $in_reply_to || length($in_reply_to) == 0 ||
++		  $message_num == 1)) {
++			$in_reply_to = $message_id;
++			if (length $references > 0) {
++				$references .= "\n $message_id";
++			} else {
++				$references = "$message_id";
++			}
+ 		}
++	} elsif (!defined $initial_in_reply_to) {
++		# --thread and --in-reply-to manage the "In-Reply-To" header and by
++		# extension the "References" header. If these commands are not used, reset
++		# the header values to their defaults.
++		$in_reply_to = undef;
++		$references = '';
+ 	}
+ 	$message_id = undef;
+ 	$num_sent++;
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 3b7540050c..f95177af39 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -2167,6 +2167,51 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
+ 	test_cmp expected-list actual-list
+ '
+ 
++test_expect_success $PREREQ 'set up in-reply-to/references patches' '
++	cat >has-reply.patch <<-\EOF &&
++	From: A U Thor <author@example.com>
++	Subject: patch with in-reply-to
++	Message-ID: <patch.with.in.reply.to@example.com>
++	In-Reply-To: <replied.to@example.com>
++	References: <replied.to@example.com>
++
++	This is the body.
++	EOF
++	cat >no-reply.patch <<-\EOF
++	From: A U Thor <author@example.com>
++	Subject: patch without in-reply-to
++	Message-ID: <patch.without.in.reply.to@example.com>
++
++	This is the body.
++	EOF
++'
++
++test_expect_success $PREREQ 'patch reply headers correct with --no-thread' '
++	clean_fake_sendmail &&
++	git send-email \
++		--no-thread \
++		--to=nobody@example.com \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		has-reply.patch no-reply.patch &&
++	grep "In-Reply-To: <replied.to@example.com>" msgtxt1 &&
++	grep "References: <replied.to@example.com>" msgtxt1 &&
++	! grep replied.to@example.com msgtxt2
++'
++
++test_expect_success $PREREQ 'cmdline in-reply-to used with --no-thread' '
++	clean_fake_sendmail &&
++	git send-email \
++		--no-thread \
++		--in-reply-to="<cmdline.reply@example.com>" \
++		--to=nobody@example.com \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		has-reply.patch no-reply.patch &&
++	grep "In-Reply-To: <cmdline.reply@example.com>" msgtxt1 &&
++	grep "References: <cmdline.reply@example.com>" msgtxt1 &&
++	grep "In-Reply-To: <cmdline.reply@example.com>" msgtxt2 &&
++	grep "References: <cmdline.reply@example.com>" msgtxt2
++'
++
+ test_expect_success $PREREQ 'invoke hook' '
+ 	mkdir -p .git/hooks &&
+ 
+-- 
+2.31.1
+
