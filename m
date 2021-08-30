@@ -7,77 +7,85 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14DF0C432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 19:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E54F4C4320E
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 19:52:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED36160F12
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 19:43:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CCF5E60F5B
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 19:52:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232964AbhH3Toe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 15:44:34 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57474 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230114AbhH3Toe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 15:44:34 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9A74CE61FF;
-        Mon, 30 Aug 2021 15:43:39 -0400 (EDT)
+        id S231185AbhH3Tw5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 15:52:57 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63452 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234111AbhH3Tw4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 15:52:56 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 84B2F14E8FA;
+        Mon, 30 Aug 2021 15:52:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iNJUmc0g/PpXuYeT/D93TKt4QgUTbfLpizhywV
-        nULFM=; b=GkWv6lYnNXvKTVUN7FdQzL+gzr54WyDr/iOdpIHQo08aQ4ifAiDDfs
-        w2BXMmQ9S9xfMvNCGfZiPaUY8ZR+u9ebz1KAJw5FRgbwFRmsOJLLVQFnMLC2wPLk
-        030U9kobFVsD89H9r0+H0XsmnHRJrQgJ00zIipu6vDW7Ahx9JcKV4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 91BCEE61FE;
-        Mon, 30 Aug 2021 15:43:39 -0400 (EDT)
+        :content-type; s=sasl; bh=/WETRBzE+9OzrY5oRZrBIj1F7th8odOM+i064D
+        zJH0w=; b=R1B7PsP/YKMlztSQL/rLkZ/FACuSbdeNtPYSJqxon7v7DZuS6ipswq
+        htR8enLcKyEYpQEoyiFyYsPiQWMm6FsoVDkQ6gKFDFepDtFAVoip4E8DAbjqiv/V
+        rcVylJiCMGrVIxv8oCkKTwC3tkCDyEZnv+qC+E9zdkMevGQ3Wluy8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7D7C814E8F9;
+        Mon, 30 Aug 2021 15:52:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.116.162])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1C671E61FD;
-        Mon, 30 Aug 2021 15:43:39 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BEF1D14E8F4;
+        Mon, 30 Aug 2021 15:51:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Stef Bon <stefbon@gmail.com>, Git Users <git@vger.kernel.org>
-Subject: Re: Exec upload-pack on remote with what parameters to get direntries.
-References: <CANXojcyWnFY60bXG6MDS9WAYkcFQHf+Oef0VREBkvgsuX9e=Kg@mail.gmail.com>
-        <YS0tNoAa/0VQe1OW@coredump.intra.peff.net>
-Date:   Mon, 30 Aug 2021 12:43:38 -0700
-In-Reply-To: <YS0tNoAa/0VQe1OW@coredump.intra.peff.net> (Jeff King's message
-        of "Mon, 30 Aug 2021 15:10:46 -0400")
-Message-ID: <xmqq35qq4t1x.fsf@gitster.g>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Mickey Endito <mickey.endito.2323@protonmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] t5582: remove spurious 'cd "$D"' line
+References: <tV8xl8isDPhmGxCNmN06tTwhJTve0PsrkakKwLMcFQJybDZO2SGHHbDLZFrcLp1Yda1_KRygSm7-lVDSZSaG-antdalcPnhSqYqcK5Fpifk=@protonmail.com>
+        <xmqq8s0rpwiw.fsf@gitster.g> <20210824185942.GE2257957@szeder.dev>
+        <YSWeeEgzCCT/3kxR@coredump.intra.peff.net>
+        <xmqqsfyxjyfe.fsf@gitster.g> <20210828094726.GG2257957@szeder.dev>
+        <xmqqilzm6g10.fsf@gitster.g>
+        <YS0qbgQhRP6XI7aj@coredump.intra.peff.net>
+Date:   Mon, 30 Aug 2021 12:51:58 -0700
+In-Reply-To: <YS0qbgQhRP6XI7aj@coredump.intra.peff.net> (Jeff King's message
+        of "Mon, 30 Aug 2021 14:58:54 -0400")
+Message-ID: <xmqqwno23e3l.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 92B9AF06-09CA-11EC-816B-ECFD1DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: BD248A62-09CB-11EC-B5DE-9BA3EF469F85-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> There is no operation to list the tree contents, for example, nor really
-> even a good way to fetch a single object. The protocol is geared around
-> efficiently transferring slices of history, so it is looking at sets of
-> reachable objects (what the client is asking for, and what it claims to
-> have).
+> Just throwing "set -u" at the top of test-lib.sh shows many issues:
 >
-> You might be able to cobble something together with shallow and partial
-> fetches. E.g., something like:
+>   - we don't initialize some known variables, like say, verbose_only. It
+>     might be reasonable to have a big list of:
 >
->   git clone --depth 1 --filter=blob:none --single-branch -b $branch
+>       verbose_only=
+>       verbose=
+>
+>     etc. That would probably be an improvement, though a slight
+>     maintenance burden.
+>
+>       : ${GIT_TEST_CMP:=}
+>
+>     near the top of the script to pre-declare all such variables.
 
-I was hoping that our support for fetching a single object (not
-necessarily a commit) at the protocol level was good enough, so that
-Stef's fuse/nfs daemon can fetch the tree object it is interested
-in.
+These two are sensible clean-up, I would think, whether we aim to
+achieve "set -u" cleanness.  The original issue triggered this
+thread was about $D that can be confused by a leaked environment
+variable, but these "known variables" that are not assigned to in
+the early part of the tests are inviting similar troubles.
 
-There also is an effort, slowly moving to add verbs like object-info
-to the protocol to help the vfs usecase, but primitives at too low a
-level would be killed by latency, so it is somewhat unknown how
-effective it would be.
-
-
+Thanks.
