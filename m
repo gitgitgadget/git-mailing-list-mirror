@@ -2,227 +2,289 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00DD8C432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 10:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9D90C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 10:54:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DDECB610FA
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 10:47:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B12B8610FD
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 10:54:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236400AbhH3KsT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 06:48:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52592 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236394AbhH3KsS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 06:48:18 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A518C061575
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 03:47:25 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id j17-20020a05600c1c1100b002e754875260so9099584wms.4
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 03:47:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Tb3K0B9fXmpdmer/jL6HhNEuTtLZWweNmunar3TfWPk=;
-        b=C73ybQbd7vRlwXwe1tqXDWfc5hJdMDTR+JCZCC1faQGhiOFIaUpdUMePvh/foIhA7o
-         +Uef50qn4Vm8C5bmEXDlVeJJm9825ZHvnXwaTV5t9yr1SQdULsfQF6zRERytEOtBZyLe
-         iTqOUTUjR/YqZptDaeIpNId9TozROUBrI8HTQxrybj8poIx7hxoqdCW6RNpKpvybISMX
-         VZa2dk+RcX96N2pf2ssLhBEdmmxyfn0nAj1ib5WQOCVq8UgQK2/c0p/D9zPuwN2hwlsQ
-         4bhtkM9CdX8t+T1i5nF0oS9+iPk5CB5el+jfXmQw6jbo7uhQGMuy39//ZWwsBUImq9Yb
-         xkew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Tb3K0B9fXmpdmer/jL6HhNEuTtLZWweNmunar3TfWPk=;
-        b=kEKzthAG11z9r0azA1m7fk/BXOXgCuIuw7Orj8ro1ynnGnvsA3K3M0N/gjKPk3JlwK
-         ItwOKUajgEYIZNbulJL8aZAb7C4sMWWGZVxkjWg5hmESyMjX879aLBOYzrMc7Oaq9/wR
-         c9pmvQFp12fuGN13tgSBdYXBjRWCg0k2ZK4BpRi8/t6ew+oDQ7ReG2b1x/oI+EHPPJbr
-         4vzo+fI85FjetU5f+b96gxUcR1cAxc0AWcnSJMy7Ays5zM4S0WeVPXu8Mno52twRm7XY
-         wl66SUg1rmwgBGYEHw3oGuKxfv9DNSiYm1j0+yprZ6j8Ph0WeTSD+6T6I02zW7eCdFIG
-         nN8Q==
-X-Gm-Message-State: AOAM533wZ30Tdz4wb4RK3nI8xzQSVBSj6zDQN8yhGkKIUJgMwsgD+Z9L
-        qP1592Jvy2AAkO95tJoo1xYSHjgDpHGe/mWS
-X-Google-Smtp-Source: ABdhPJxgYKrvmc6cSDwZl30e4FdW5B9CPKuKzbaA+X9HJn7zDq21G/yZf+Jg9P3Qp5aEQseZiuwvZQ==
-X-Received: by 2002:a7b:c048:: with SMTP id u8mr21592183wmc.113.1630320443397;
-        Mon, 30 Aug 2021 03:47:23 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v13sm15509057wrf.55.2021.08.30.03.47.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Aug 2021 03:47:22 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        id S236365AbhH3Kz3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 06:55:29 -0400
+Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:59513 "EHLO
+        wout1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S235818AbhH3Kz2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 30 Aug 2021 06:55:28 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id 6DB6532007D7;
+        Mon, 30 Aug 2021 06:54:34 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Mon, 30 Aug 2021 06:54:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm1; bh=Y6eMxXdqnmdzMQaPnP/Zbe4v2n9
+        oCTT7o+goI34gEzY=; b=UO9Ig7ehA1DVlMZjoW9VOuZ7hrldGJFpbUgoDnCO/s1
+        GRPabAU2mUk1yCQ06Rb/8Dswf00Ka9KiQ/O8EPUNwVHxmImy584q6OCB5DO0HEGc
+        dBJUEiMIrm39YZZbTBIKeqftfSDUw39HI7gzR1798JO7tNs9Pgjz6DzM9NzUKyeq
+        Z7rmsbmR4YijoyLGl/QHye68oFIh5uKDsZrbJUH1UPVvzZJ1p1Hj8f0TxT3b1d1K
+        xp3q3gx6m/9+MGgqrTO0WOgV/1+eWbp1XpYuwL3vCH4+0oCiyI4FyWUx/ekFmuxT
+        mfpAlEyBwLi2zUTQHqjuk3g5KAby7sdsaBkc68a45Uw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=Y6eMxX
+        dqnmdzMQaPnP/Zbe4v2n9oCTT7o+goI34gEzY=; b=ljPLJvxcOKk4F83I4w5xOA
+        Eyp3GGJVz05F8N4meDEg1rdxTbnONqFSTm8Seawo4U5c/sNTo1XcwUcvUV7PYj0d
+        6BiCGJqNh+eA42F5NGilC9a78bQAaA6oPOpH+dyUZXJwfJje6KJp6tMu0V+F5AWY
+        Sqm+bioGaj+QJGpT+Wy9+HeITvSYqeHy5B7IC90T01CaYU4USFYXQsnK/K2qQlE1
+        AsbWeTglj8Hmgi0lMaX31U8UZfLMQNoqMyYkTqDk0Vba/uqJe/34ljwBnXfKQHvR
+        cGjr8/B4DZSbzkvnfJFlA5N8KHmXReZB8ua7LN/YeOTSBrcR7fPuTAYP80PRVX2w
+        ==
+X-ME-Sender: <xms:6bgsYSf9DCHkMqkt8DbulIa1n5PbGykHr5Tw4uiANhMAFNxenqAadQ>
+    <xme:6bgsYcPv4jdQsErB9P3Rgys6OlerlWSgW30hKmtzTV76LFSZC_PvxIObSbQbDiPNl
+    XvmcOq-CEpMLINdIQ>
+X-ME-Received: <xmr:6bgsYTigLchjAdiZfWqXxs3HM2qlzdu0v3zwp9X4yUtclzyg7xq4MwKY_RulUt7X7K9SL6NP9dtYcYf3xK_UraET3v8BKkyel5Zm6U4rCFDqNLD7SPRG3Mc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudduledgfeehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhephefgjeeuveejteduhefgffefffdvjeefje
+    eivdekfffgkeeugfehveetueefleeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:6bgsYf_z4sH9dOY8G4HcRPsF_8ifSxXkzVLee5Z6mq3Q4BKusScyLw>
+    <xmx:6bgsYevBMMKQbna1QhiHwBqXaq-XM0IOlLCVlCbXNosQDsLGMzJueQ>
+    <xmx:6bgsYWFPhow-6_-2KVZqR71O9kGUFxbAykhQWRkE0lUoFB5fVN7aqg>
+    <xmx:6rgsYTXg_rMfJfAFwZY1lZ1HMiYCuyq9G41dYxKU5kOm51Ru4Fq1Gg>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 30 Aug 2021 06:54:32 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 8deab7d7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 30 Aug 2021 10:54:27 +0000 (UTC)
+Date:   Mon, 30 Aug 2021 12:54:26 +0200
+From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [RFC PATCH v2 2/2] notes: don't indent empty lines
-Date:   Mon, 30 Aug 2021 12:47:14 +0200
-Message-Id: <RFC-patch-v2-2.2-4b546b83fd7-20210830T103913Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.737.g0eefde7d76
-In-Reply-To: <RFC-cover-v2-0.2-00000000000-20210830T103913Z-avarab@gmail.com>
-References: <20210830072118.91921-1-sunshine@sunshineco.com> <RFC-cover-v2-0.2-00000000000-20210830T103913Z-avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: [PATCH v2] fetch: skip formatting updated refs with `--quiet`
+Message-ID: <e5ffa17753d4aca57d486d500a2d114290361ea7.1630320848.git.ps@pks.im>
+References: <40c385048a023dbd447c5f0b4c95ff32485e1e23.1629906005.git.ps@pks.im>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="v5GcIfGv84ocCkQg"
+Content-Disposition: inline
+In-Reply-To: <40c385048a023dbd447c5f0b4c95ff32485e1e23.1629906005.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Eric Sunshine <sunshine@sunshineco.com>
 
-Like other Git commands, `git notes` takes care to call `stripspace` on
-the user-supplied note content, thereby ensuring that it has no trailing
-whitespace, among other cleanups. However, when notes are inserted into
-a patch via `git format-patch --notes`, all lines of the note are
-indented unconditionally, including empty lines, which leaves trailing
-whitespace on lines which previously were empty, thus negating the
-normalization done earlier. Fix this shortcoming.
+--v5GcIfGv84ocCkQg
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+When fetching, Git will by default print a list of all updated refs in a
+nicely formatted table. In order to come up with this table, Git needs
+to iterate refs twice: first to determine the maximum column width, and
+a second time to actually format these changed refs.
+
+While this table will not be printed in case the user passes `--quiet`,
+we still go out of our way and do all these steps. In fact, we even do
+more work compared to not passing `--quiet`: without the flag, we will
+skip all references in the column width computation which have not been
+updated, but if it is set we will now compute widths for all refs.
+
+Fix this issue by completely skipping both preparation of the format and
+formatting data for display in case the user passes `--quiet`, improving
+performance especially with many refs. The following benchmark shows a
+nice speedup for a quiet mirror-fetch in a repository with 2.3M refs:
+
+    Benchmark #1: HEAD~: git-fetch
+      Time (mean =C2=B1 =CF=83):     26.929 s =C2=B1  0.145 s    [User: 24.=
+194 s, System: 4.656 s]
+      Range (min =E2=80=A6 max):   26.692 s =E2=80=A6 27.068 s    5 runs
+
+    Benchmark #2: HEAD: git-fetch
+      Time (mean =C2=B1 =CF=83):     25.189 s =C2=B1  0.094 s    [User: 22.=
+556 s, System: 4.606 s]
+      Range (min =E2=80=A6 max):   25.070 s =E2=80=A6 25.314 s    5 runs
+
+    Summary
+      'HEAD: git-fetch' ran
+        1.07 =C2=B1 0.01 times faster than 'HEAD~: git-fetch'
+
+While at it, this patch also fixes `adjust_refcol_width()` such that it
+skips unchanged refs in case the user passed `--quiet`, where verbosity
+will be negative. While this function won't be called anymore if so,
+this brings the comment in line with actual code. Furthermore, needless
+`verbosity >=3D 0` checks are now removed in `store_updated_refs()`: we
+never print to the `note` buffer anymore in case `verbosity < 0`, so we
+won't end up in that code block anyway.
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- notes.c          |  2 +-
- t/t3301-notes.sh | 28 ++++++++++++++--------------
- 2 files changed, 15 insertions(+), 15 deletions(-)
+Range-diff against v1:
+1:  40c385048a ! 1:  e5ffa17753 fetch: skip formatting updated refs with `-=
+-quiet`
+    @@ Commit message
+               'HEAD: git-fetch' ran
+                 1.07 =C2=B1 0.01 times faster than 'HEAD~: git-fetch'
+    =20
+    +    While at it, this patch also fixes `adjust_refcol_width()` such th=
+at it
+    +    skips unchanged refs in case the user passed `--quiet`, where verb=
+osity
+    +    will be negative. While this function won't be called anymore if s=
+o,
+    +    this brings the comment in line with actual code. Furthermore, nee=
+dless
+    +    `verbosity >=3D 0` checks are now removed in `store_updated_refs()=
+`: we
+    +    never print to the `note` buffer anymore in case `verbosity < 0`, =
+so we
+    +    won't end up in that code block anyway.
+    +
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+    =20
+      ## builtin/fetch.c ##
+    +@@ builtin/fetch.c: static void adjust_refcol_width(const struct ref *=
+ref)
+    + 	int max, rlen, llen, len;
+    +=20
+    + 	/* uptodate lines are only shown on high verbosity level */
+    +-	if (!verbosity && oideq(&ref->peer_ref->old_oid, &ref->old_oid))
+    ++	if (verbosity <=3D 0 && oideq(&ref->peer_ref->old_oid, &ref->old_oid=
+))
+    + 		return;
+    +=20
+    + 	max    =3D term_columns();
+     @@ builtin/fetch.c: static void prepare_format_display(struct ref *ref=
+_map)
+    - 		die(_("configuration fetch.output contains invalid value %s"),
+    - 		    format);
+    + 	struct ref *rm;
+    + 	const char *format =3D "full";
+     =20
+     +	if (verbosity < 0)
+     +		return;
+     +
+    - 	for (rm =3D ref_map; rm; rm =3D rm->next) {
+    - 		if (rm->status =3D=3D REF_STATUS_REJECT_SHALLOW ||
+    - 		    !rm->peer_ref ||
+    + 	git_config_get_string_tmp("fetch.output", &format);
+    + 	if (!strcasecmp(format, "full"))
+    + 		compact_format =3D 0;
+     @@ builtin/fetch.c: static void format_display(struct strbuf *display,=
+ char code,
+      			   const char *remote, const char *local,
+      			   int summary_width)
+    @@ builtin/fetch.c: static void format_display(struct strbuf *display, =
+char code,
+     =20
+      	strbuf_addf(display, "%c %-*s ", code, width, summary);
+      	if (!compact_format)
+    +@@ builtin/fetch.c: static int store_updated_refs(const char *raw_url,=
+ const char *remote_name,
+    + 					       "FETCH_HEAD", summary_width);
+    + 			}
+    + 			if (note.len) {
+    +-				if (verbosity >=3D 0 && !shown_url) {
+    ++				if (!shown_url) {
+    + 					fprintf(stderr, _("From %.*s\n"),
+    + 							url_len, url);
+    + 					shown_url =3D 1;
+    + 				}
+    +-				if (verbosity >=3D 0)
+    +-					fprintf(stderr, " %s\n", note.buf);
+    ++				fprintf(stderr, " %s\n", note.buf);
+    + 			}
+    + 		}
+    + 	}
 
-diff --git a/notes.c b/notes.c
-index f87dac40684..25e0a598996 100644
---- a/notes.c
-+++ b/notes.c
-@@ -1295,7 +1295,7 @@ static void format_note(struct notes_tree *t, const struct object_id *object_oid
- 	for (msg_p = msg; msg_p < msg + msglen; msg_p += linelen + 1) {
- 		linelen = strchrnul(msg_p, '\n') - msg_p;
- 
--		if (!raw)
-+		if (!raw && linelen)
- 			strbuf_addstr(sb, "    ");
- 		strbuf_add(sb, msg_p, linelen);
- 		strbuf_addch(sb, '\n');
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index d742be88402..74e5bfbc863 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -326,7 +326,7 @@ test_expect_success 'show -m notes' '
- 
- 		Notes:
- 		${indent}spam
--		${indent}
-+
- 		${indent}foo
- 		${indent}bar
- 		${indent}baz
-@@ -849,7 +849,7 @@ test_expect_success 'append to note from other note with "git notes append -C"'
- 
- 		Notes:
- 		${indent}yet another note
--		${indent}
-+
- 		${indent}yet another note
- 	EOF
- 	note=$(git notes list HEAD^) &&
-@@ -887,7 +887,7 @@ test_expect_success 'append to note from other note with "git notes append -c"'
- 
- 		Notes:
- 		${indent}other note
--		${indent}
-+
- 		${indent}yet another note
- 	EOF
- 	note=$(git notes list HEAD) &&
-@@ -928,7 +928,7 @@ test_expect_success 'copy note with "git notes copy" with default' '
- 
- 		Notes:
- 		${indent}other note
--		${indent}
-+
- 		${indent}yet another note
- 	EOF
- 	git notes copy HEAD^ &&
-@@ -950,7 +950,7 @@ test_expect_success 'prevent overwrite with "git notes copy"' '
- 
- 		Notes:
- 		${indent}other note
--		${indent}
-+
- 		${indent}yet another note
- 	EOF
- 	git log -1 >actual &&
-@@ -991,7 +991,7 @@ test_expect_success 'allow overwrite with "git notes copy -f" with default' '
- 
- 		Notes:
- 		${indent}yet another note
--		${indent}
-+
- 		${indent}yet another note
- 	EOF
- 	git notes copy -f HEAD~2 &&
-@@ -1020,7 +1020,7 @@ test_expect_success 'git notes copy --stdin' '
- 
- 		Notes:
- 		${indent}yet another note
--		${indent}
-+
- 		${indent}yet another note
- 
- 		commit $parent
-@@ -1031,7 +1031,7 @@ test_expect_success 'git notes copy --stdin' '
- 
- 		Notes:
- 		${indent}other note
--		${indent}
-+
- 		${indent}yet another note
- 	EOF
- 	from=$(git rev-parse HEAD~3) &&
-@@ -1092,7 +1092,7 @@ test_expect_success 'git notes copy --for-rewrite (enabled)' '
- 
- 		Notes:
- 		${indent}yet another note
--		${indent}
-+
- 		${indent}yet another note
- 
- 		commit $parent
-@@ -1103,7 +1103,7 @@ test_expect_success 'git notes copy --for-rewrite (enabled)' '
- 
- 		Notes:
- 		${indent}other note
--		${indent}
-+
- 		${indent}yet another note
- 	EOF
- 	test_config notes.rewriteMode overwrite &&
-@@ -1174,7 +1174,7 @@ test_expect_success 'git notes copy --for-rewrite (append)' '
- 
- 		Notes:
- 		${indent}a fresh note
--		${indent}
-+
- 		${indent}another fresh note
- 	EOF
- 	git notes add -f -m"another fresh note" HEAD^ &&
-@@ -1199,11 +1199,11 @@ test_expect_success 'git notes copy --for-rewrite (append two to one)' '
- 
- 		Notes:
- 		${indent}a fresh note
--		${indent}
-+
- 		${indent}another fresh note
--		${indent}
-+
- 		${indent}append 1
--		${indent}
-+
- 		${indent}append 2
- 	EOF
- 	git notes add -f -m"append 1" HEAD^ &&
--- 
-2.33.0.737.g0eefde7d76
+ builtin/fetch.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index e064687dbd..fc7b6bb84e 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -712,7 +712,7 @@ static void adjust_refcol_width(const struct ref *ref)
+ 	int max, rlen, llen, len;
+=20
+ 	/* uptodate lines are only shown on high verbosity level */
+-	if (!verbosity && oideq(&ref->peer_ref->old_oid, &ref->old_oid))
++	if (verbosity <=3D 0 && oideq(&ref->peer_ref->old_oid, &ref->old_oid))
+ 		return;
+=20
+ 	max    =3D term_columns();
+@@ -748,6 +748,9 @@ static void prepare_format_display(struct ref *ref_map)
+ 	struct ref *rm;
+ 	const char *format =3D "full";
+=20
++	if (verbosity < 0)
++		return;
++
+ 	git_config_get_string_tmp("fetch.output", &format);
+ 	if (!strcasecmp(format, "full"))
+ 		compact_format =3D 0;
+@@ -827,7 +830,12 @@ static void format_display(struct strbuf *display, cha=
+r code,
+ 			   const char *remote, const char *local,
+ 			   int summary_width)
+ {
+-	int width =3D (summary_width + strlen(summary) - gettext_width(summary));
++	int width;
++
++	if (verbosity < 0)
++		return;
++
++	width =3D (summary_width + strlen(summary) - gettext_width(summary));
+=20
+ 	strbuf_addf(display, "%c %-*s ", code, width, summary);
+ 	if (!compact_format)
+@@ -1202,13 +1210,12 @@ static int store_updated_refs(const char *raw_url, =
+const char *remote_name,
+ 					       "FETCH_HEAD", summary_width);
+ 			}
+ 			if (note.len) {
+-				if (verbosity >=3D 0 && !shown_url) {
++				if (!shown_url) {
+ 					fprintf(stderr, _("From %.*s\n"),
+ 							url_len, url);
+ 					shown_url =3D 1;
+ 				}
+-				if (verbosity >=3D 0)
+-					fprintf(stderr, " %s\n", note.buf);
++				fprintf(stderr, " %s\n", note.buf);
+ 			}
+ 		}
+ 	}
+--=20
+2.33.0
+
+
+--v5GcIfGv84ocCkQg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEsuOEACgkQVbJhu7ck
+PpQDbg//Uh27hzS4kuyi1U5TvBhL35ROrjDwSE3TGZ/Iz9ZpPzfgvKDuhp6Uv/Y3
+VW+UyS5CvHQBDghBCFenSd6KmkoTd9xJCctLCtzGXD7maS+x9aImDidnRUe2oZU9
+YA0GCIpMWwj5Uv+JzZuP8YYbXrNXtP9OYvmIDzwtbKzcFP0Dkf9qmKt6DDJolHCe
+ieNeIbHT6YXnDBNLg8zOQ6NR1+p6FHInRbduJf4ZCy4npIe0+QV1lI5/fLvzS69x
+Fyc4qSn5vzfoeihydMp0N3jDdzxeywTYd2XXCQW+9jNgVIJs02/3l3EG41dmxN1w
+0nMA7Ps7n610FwLl6MYwO1oIqDlvIOpu3Y6hCUsiU+8ope2XwIdTCztvWcIOpRV3
+29maoYWO1NmV8YQIGic+ZCVbJKOl4TdPj5Vi8aaBfhb27GE62N5Bg1J5L+j54RNq
+gcsIBW+yXPtUVFkeeUKdB8tRZamFgDdRGzhCi94osNAw9pFhFXot73LFQx0j2lD/
+Y5DcqLkWOw32aS2tI7DWUJmzfVleAdw+rZVqr0KxwYZQ7ePPrqaHJaHmZG6D3omv
+g4hsBMXCzupaccY60jlSn/ln3hUWAt1vf1TbkVKKz/YLY7Nna6bAE1Gt9t/gx8cW
+xa0jZ6yqDU1thWepAvn8z7r0vs4aucnXx0HCpxO/mBlWC4mH/PA=
+=eka4
+-----END PGP SIGNATURE-----
+
+--v5GcIfGv84ocCkQg--
