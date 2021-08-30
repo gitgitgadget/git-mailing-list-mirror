@@ -7,178 +7,107 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41F6CC432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 15:30:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0227C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 16:03:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0A48760ED4
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 15:30:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9804460FED
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 16:03:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237266AbhH3Pbi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 11:31:38 -0400
-Received: from mout02.posteo.de ([185.67.36.66]:46363 "EHLO mout02.posteo.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237085AbhH3Pbi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 11:31:38 -0400
-Received: from submission (posteo.de [89.146.220.130]) 
-        by mout02.posteo.de (Postfix) with ESMTPS id 2A037240107
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 17:30:42 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
-        t=1630337442; bh=opAvIpUgW2baVJipIPk3YmsoptbVKJ2am1Bf4Aq89aw=;
-        h=From:To:Cc:Subject:Date:From;
-        b=JhGsJNz/aDjbpcX3eJuFc9SkL3aJMNWlaX5qQZ/Cux9fNAkkKLqIJOnBAIwW33X9+
-         8BzcmMZlh/uNE4hDMBdyR7IoGok/wu7FzV2BLT2DbXcy7OBrPvCl9xwn3lmCV7O8tY
-         RBh7Ehk6uE5UDuBiwWZH7dB1YGJxCNRqQZbU9XbVqv8qxSASdwYOgZrr5Sf/yRhqfq
-         k8BJPYybevCK+IljcFRvqDExAtnvgl7lb/DglSUNvLmIlC04G4oJyuLOUjTrixqQ1T
-         VTJU7+NFWH5fLZEgzmK80Wx5XtLSaEIk+vCsiY9sZzNZ0lHvCHWVfvzrkZAMxCR0Sw
-         cq0jrVCgzrf7Q==
-Received: from customer (localhost [127.0.0.1])
-        by submission (posteo.de) with ESMTPSA id 4GyvR36SrMz9rxR;
-        Mon, 30 Aug 2021 17:30:39 +0200 (CEST)
-From:   =?UTF-8?q?Marvin=20H=C3=A4user?= <mhaeuser@posteo.de>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Marvin=20H=C3=A4user?= <mhaeuser@posteo.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Drew DeVault <sir@cmpwn.com>, Simon Ser <contact@emersion.fr>,
-        xiaoqiang zhao <zxq_yx_007@163.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Christian Ludwig <chrissicool@gmail.com>
-Subject: [PATCH] send-email: Avoid incorrect header propagation
-Date:   Mon, 30 Aug 2021 15:30:01 +0000
-Message-Id: <20210830153001.29961-1-mhaeuser@posteo.de>
+        id S237915AbhH3QD6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 12:03:58 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59377 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237779AbhH3QD5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 12:03:57 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9B75714CE60;
+        Mon, 30 Aug 2021 12:03:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=feUGbaIL5o9r
+        AOQzEUXcXBGGL3BUK3OZYOP9VJYIt14=; b=ZxFQAqglrihFNiBjZDAZN6E3n9ZC
+        NCXb94cL+QiU6dSK65SWKfDp9U6TbtnGi85F7p0cKE17WkJLzHLNAxg+SFR7pjMZ
+        4dtUdqje/5URZ1BoebOZc9RAmwssAMXeqz6J8nz9jRePak3zfN7uLBdbLI/DHOR4
+        WqjTaIP91JNw4W8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9317A14CE5F;
+        Mon, 30 Aug 2021 12:03:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D64BB14CE5D;
+        Mon, 30 Aug 2021 12:03:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Cc:     =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] t7900: add '--scheduler=launchctl' parameter to fix test
+References: <17313607-7ae8-c37a-7931-7712c7bfdb88@ramsayjones.plus.com>
+Date:   Mon, 30 Aug 2021 09:02:58 -0700
+In-Reply-To: <17313607-7ae8-c37a-7931-7712c7bfdb88@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Sat, 28 Aug 2021 00:59:53 +0100")
+Message-ID: <xmqqtuj66hu5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C01E97E6-09AB-11EC-9937-9BA3EF469F85-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If multiple independent patches are sent with send-email, even if the
-"In-Reply-To" and "References" headers are not managed by --thread or
---in-reply-to, their values may be propagated from prior patches to
-subsequent patches with no such headers defined.
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-To mitigate this and potential future issues, make sure all global
-patch-specific variables are always either handled by
-command-specific code (e.g. threading), or are reset to their default
-values for every iteration.
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>
+> Hi L=C3=A9na=C3=AFc,
+>
+> As I said, I had a test failure from your previous series (Linux Mint)
+> which was solved with this patch.
+>
+> ATB,
+> Ramsay Jones
+>
+>  t/t7900-maintenance.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Marvin Häuser <mhaeuser@posteo.de>
----
- git-send-email.perl   | 26 ++++++++++++++++---------
- t/t9001-send-email.sh | 45 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 62 insertions(+), 9 deletions(-)
+This test comes from outside L=C3=A9na=C3=AFc's series.  I guess I am see=
+ing a
+botched semantic merge conflict resolution of mine where the two
+topics met.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 25be2ebd2a..e411860b18 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1625,7 +1625,6 @@ sub send_message {
- 
- $in_reply_to = $initial_in_reply_to;
- $references = $initial_in_reply_to || '';
--$subject = $initial_subject;
- $message_num = 0;
- 
- # Prepares the email, prompts the user, sends it out
-@@ -1648,6 +1647,7 @@ sub process_file {
- 	@xh = ();
- 	my $input_format = undef;
- 	my @header = ();
-+	$subject = $initial_subject;
- 	$message = "";
- 	$message_num++;
- 	# First unfold multiline header fields
-@@ -1854,15 +1854,23 @@ sub process_file {
- 	}
- 
- 	# set up for the next message
--	if ($thread && $message_was_sent &&
--		($chain_reply_to || !defined $in_reply_to || length($in_reply_to) == 0 ||
--		$message_num == 1)) {
--		$in_reply_to = $message_id;
--		if (length $references > 0) {
--			$references .= "\n $message_id";
--		} else {
--			$references = "$message_id";
-+	if ($thread) {
-+		if ($message_was_sent &&
-+		  ($chain_reply_to || !defined $in_reply_to || length($in_reply_to) == 0 ||
-+		  $message_num == 1)) {
-+			$in_reply_to = $message_id;
-+			if (length $references > 0) {
-+				$references .= "\n $message_id";
-+			} else {
-+				$references = "$message_id";
-+			}
- 		}
-+	} elsif (!defined $initial_in_reply_to) {
-+		# --thread and --in-reply-to manage the "In-Reply-To" header and by
-+		# extension the "References" header. If these commands are not used, reset
-+		# the header values to their defaults.
-+		$in_reply_to = undef;
-+		$references = '';
- 	}
- 	$message_id = undef;
- 	$num_sent++;
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 3b7540050c..f95177af39 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -2167,6 +2167,51 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
- 	test_cmp expected-list actual-list
- '
- 
-+test_expect_success $PREREQ 'set up in-reply-to/references patches' '
-+	cat >has-reply.patch <<-\EOF &&
-+	From: A U Thor <author@example.com>
-+	Subject: patch with in-reply-to
-+	Message-ID: <patch.with.in.reply.to@example.com>
-+	In-Reply-To: <replied.to@example.com>
-+	References: <replied.to@example.com>
-+
-+	This is the body.
-+	EOF
-+	cat >no-reply.patch <<-\EOF
-+	From: A U Thor <author@example.com>
-+	Subject: patch without in-reply-to
-+	Message-ID: <patch.without.in.reply.to@example.com>
-+
-+	This is the body.
-+	EOF
-+'
-+
-+test_expect_success $PREREQ 'patch reply headers correct with --no-thread' '
-+	clean_fake_sendmail &&
-+	git send-email \
-+		--no-thread \
-+		--to=nobody@example.com \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		has-reply.patch no-reply.patch &&
-+	grep "In-Reply-To: <replied.to@example.com>" msgtxt1 &&
-+	grep "References: <replied.to@example.com>" msgtxt1 &&
-+	! grep replied.to@example.com msgtxt2
-+'
-+
-+test_expect_success $PREREQ 'cmdline in-reply-to used with --no-thread' '
-+	clean_fake_sendmail &&
-+	git send-email \
-+		--no-thread \
-+		--in-reply-to="<cmdline.reply@example.com>" \
-+		--to=nobody@example.com \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		has-reply.patch no-reply.patch &&
-+	grep "In-Reply-To: <cmdline.reply@example.com>" msgtxt1 &&
-+	grep "References: <cmdline.reply@example.com>" msgtxt1 &&
-+	grep "In-Reply-To: <cmdline.reply@example.com>" msgtxt2 &&
-+	grep "References: <cmdline.reply@example.com>" msgtxt2
-+'
-+
- test_expect_success $PREREQ 'invoke hook' '
- 	mkdir -p .git/hooks &&
- 
--- 
-2.31.1
+The need for this fix made me a bit worried that the behaviour of
+resolve_scheduler(SCHEDULER_AUTO) forces us to always name the
+scheduler or risk a similar breakage, but in real life, nobody needs
+to "force" use of, say, launchctl on a platform where launchctl is
+not available so it is OK.
 
+
+> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> index 8955aea9c8..36a4218745 100755
+> --- a/t/t7900-maintenance.sh
+> +++ b/t/t7900-maintenance.sh
+> @@ -609,11 +609,11 @@ test_expect_success 'start and stop macOS mainten=
+ance' '
+> =20
+>  test_expect_success 'use launchctl list to prevent extra work' '
+>  	# ensure we are registered
+> -	GIT_TEST_MAINT_SCHEDULER=3Dlaunchctl:./print-args git maintenance sta=
+rt &&
+> +	GIT_TEST_MAINT_SCHEDULER=3Dlaunchctl:./print-args git maintenance sta=
+rt --scheduler=3Dlaunchctl &&
+> =20
+>  	# do it again on a fresh args file
+>  	rm -f args &&
+> -	GIT_TEST_MAINT_SCHEDULER=3Dlaunchctl:./print-args git maintenance sta=
+rt &&
+> +	GIT_TEST_MAINT_SCHEDULER=3Dlaunchctl:./print-args git maintenance sta=
+rt --scheduler=3Dlaunchctl &&
+> =20
+>  	ls "$HOME/Library/LaunchAgents" >actual &&
+>  	cat >expect <<-\EOF &&
