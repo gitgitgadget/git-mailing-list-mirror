@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A471C432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2A6BC432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:11:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A31960F9E
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:08:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F14E60F5B
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:11:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234794AbhH3UJp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 16:09:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43346 "EHLO
+        id S234648AbhH3UMe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 16:12:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234204AbhH3UJo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 16:09:44 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4125C061575
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 13:08:50 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id o16-20020a9d2210000000b0051b1e56c98fso19901624ota.8
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 13:08:50 -0700 (PDT)
+        with ESMTP id S231499AbhH3UMd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 16:12:33 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6EC2C061575
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 13:11:39 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id 6so21441782oiy.8
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 13:11:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=IwEtU9UhtAsEvLTxJTWAAAdLZmJ27Z2vtWXQ6LTAyz4=;
-        b=gGD45qJKJ2d6Wn+3r8mBQDYXMMFABjS7Jcx/pfeGF+51bZMVZgqMNz7FOby9qzppsc
-         DSw4Xgq+pjowVmDje8cfrPWFAybJvRsU+pKDishz4jtjvYnh32eYUZi9icEoExYdBRtX
-         g8c7djz0wY9vdvgpfkA/k1S3qyqGYwIfmu34BsahFXlOxgs5vN2xHJ6OcwVQFEmzL/L0
-         ox5p8UJhmRMgArAT2+7N6e4Y8qtD3ioLkOK8fdVHhZlv44TOKJRraokW7TJwu/aQlMNF
-         SHS3BiFVNM6GqCx/3QCFTIh0PbUdr+KTbQZrcDJRQgt1FXwVCYDoQo5APlQSqCf/ZLpF
-         5Ggw==
+        bh=LwYpebgrGS+wZbriQAy3mCcJIygagAk/LqF9R33TdRE=;
+        b=V6JYVjUmzfCAyc67mZbXC+fAgW4h5etTyxeSE4kcurLFbUjg5Q3LMYk85NWvxhWfz1
+         uZanMoGKg9B1r0BznCGdDHBsUiT+wFnKM87Lihc8PtK+nxieRDa9y2AouLEYYw6cS87n
+         s27doiBdLIbIm+4l3Wm5r0AmlONRtNPzQM4lHDjIsrmMXxk6+HnnH1UNRsW6eWm2blUl
+         7tz5nmpsfWKAWy1kMySWkI7FL2zRn8HfAi4KtbM/GcKTOU76xf2SyNJz+2Uf9tjCZ36J
+         /1/cVVxg8pjbHZjjWAeE7HOWsCUWlECVHdVcMp4MDcoNAwKcmV1g5fXy7jKSoih6eij3
+         CprA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=IwEtU9UhtAsEvLTxJTWAAAdLZmJ27Z2vtWXQ6LTAyz4=;
-        b=Hd/mpbiVhaB9Ul2TRcgVdhnP+rJ5A/e7Re5d3MfIXd5UahqugA3n71l3a3QCCmwZe/
-         lp4CwMtVygh0FS6EZSXCVwGXSdY4crv4wbnCL0/pRq0CzdruHlu1LlXjB8g7Js3vKJkt
-         8Qkab27vCnxRFZeyS+gW2B2NZF2AUL+o3jU94YdIXKTp9WSnMtsjWK+CVjwQctHGwOOG
-         Wc0AtDgf42mYtNF8YiPpfv+z5eifVTPqzNr09MJkX3rE0ZctiA8vdhHVDe3Bd5G1LEhG
-         QMiYv74teLXRD4WHFIKDITpl9fm/M+IFbt+D8Cy/VXILgMOfR2yBvDvAz41iVXkmwvtS
-         0tsg==
-X-Gm-Message-State: AOAM531V6Mc8KG2musxCpiWJsrHi7eWgjTFL1AqKyrFlPKBJlD7Zh0Wl
-        QsOlfDuqQkTS6IunkEWSLiEkHq54iH2pQD1Q/pCsd2XYm0M=
-X-Google-Smtp-Source: ABdhPJx+rUYS/c/+3UapD2Vk0wGp6BDe5/1fhjZDz3VV1pdw1f49+BQL+ERmBPOx+3BJG6NGQMX5mdgabXDig2bNSYY=
-X-Received: by 2002:a05:6830:b8e:: with SMTP id a14mr20854629otv.162.1630354130122;
- Mon, 30 Aug 2021 13:08:50 -0700 (PDT)
+        bh=LwYpebgrGS+wZbriQAy3mCcJIygagAk/LqF9R33TdRE=;
+        b=bcSrOl9DjHasE7y7sjtcplEEV2NwEJZE49XgocilB/R/5I1UHUqfjMtXiESjwJakRt
+         NIy4QvTpCl6FoPY/8xAjQlnQ9s2/yCRcgZQddoTk/Ov3Mwf+nPUfWjsYgjPqbq35a1Yt
+         7qbH68qtHC3CkrwS0CsX21x/B1EQjN7ckNNG+LaUxHb49O6XHlC6txgJ/4QuLlR0T3+y
+         Do04PiavFLm8nR53HC5fPCSSq0R6dtaWC+TRQGV/ar5jQsVtKTccj9nqtRCU5lPLlpdL
+         VACMBOhJ6QOMlwmOw/2lQDnm8RTtdlQjwrgZ+DEJYv9R6r9mNU6MfId7zA1JGritRx9B
+         yjOw==
+X-Gm-Message-State: AOAM5306u7uP2nj8IJbs7sxdFNg2HJMgLymKfSZDUNnrGZUnky39l8/Y
+        TlOoh5/lxiAYiQ/qJL6A3zE94/JeZVso0N2lzi4=
+X-Google-Smtp-Source: ABdhPJy7ldytSu1b3M/mBJFzGY/qj0CSIXiDEHnTMZxByZoQ2JdJxLJkKWCN4QOs9a+9hx7GXDgjedyyaj6SLZ+72oA=
+X-Received: by 2002:a05:6808:2084:: with SMTP id s4mr700705oiw.31.1630354299137;
+ Mon, 30 Aug 2021 13:11:39 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1009.v3.git.1629206602.gitgitgadget@gmail.com>
- <pull.1009.v4.git.1629841904.gitgitgadget@gmail.com> <b379b8fc61af8a8c39ff8b73aae03ad4999a456c.1629841904.git.gitgitgadget@gmail.com>
- <CABPp-BFcySug2kSvxT7YdJ1Oorza5AfxKPJgMBE2wN8qOw+=Eg@mail.gmail.com> <2870fcb8-a356-c2c2-d084-b560326e1ad4@gmail.com>
-In-Reply-To: <2870fcb8-a356-c2c2-d084-b560326e1ad4@gmail.com>
+ <pull.1009.v4.git.1629841904.gitgitgadget@gmail.com> <8d55a6ba2fdf64cee4eb51f3cb6f9808bd0b7505.1629841904.git.gitgitgadget@gmail.com>
+ <CABPp-BGeJJBF0ZmS7ZHcqFmXwXmgVH1Uox_6gNHzcacG2vRjVw@mail.gmail.com> <d63d5d18-bdb3-e13b-ae36-e7e6cf10be39@gmail.com>
+In-Reply-To: <d63d5d18-bdb3-e13b-ae36-e7e6cf10be39@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 30 Aug 2021 13:08:39 -0700
-Message-ID: <CABPp-BF6-1_AVmuT9bE4wRqqh1p4RAjfK1EqyyRW98sQPYNDyw@mail.gmail.com>
-Subject: Re: [PATCH v4 04/10] sparse-index: use WRITE_TREE_MISSING_OK
+Date:   Mon, 30 Aug 2021 13:11:28 -0700
+Message-ID: <CABPp-BFT31Gj3WkhYQzaT2_efzr2c2viReLNq63_MAQiWAc4Fw@mail.gmail.com>
+Subject: Re: [PATCH v4 10/10] sparse-checkout: add config to disable deleting dirs
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
@@ -75,54 +75,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 30, 2021 at 6:19 AM Derrick Stolee <stolee@gmail.com> wrote:
+On Mon, Aug 30, 2021 at 6:30 AM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> On 8/27/2021 5:33 PM, Elijah Newren wrote:
+> On 8/27/2021 4:58 PM, Elijah Newren wrote:
 > > On Tue, Aug 24, 2021 at 2:51 PM Derrick Stolee via GitGitGadget
 > > <gitgitgadget@gmail.com> wrote:
 > >>
 > >> From: Derrick Stolee <dstolee@microsoft.com>
 > >>
-> >> When updating the cache tree in convert_to_sparse(), the
-> >> WRITE_TREE_MISSING_OK flag indicates that trees might be computed that
-> >> do not already exist within the object database.
+> >> The clean_tracked_sparse_directories() method deletes the tracked
+> >> directories that go out of scope when the sparse-checkout cone changes,
+> >> at least in cone mode. This is new behavior, but is recommended based on
+> >> our understanding of how users are interacting with the feature in most
+> >> cases.
+> >>
+> >> It is possible that some users will object to the new behavior, so
+> >> create a new configuration option 'index.deleteSparseDirectories' that
+> >> can be set to 'false' to make clean_tracked_sparse_directories() do
+> >> nothing. This will keep all untracked files in the working tree and
+> >> cause performance problems with the sparse index, but those trade-offs
+> >> are for the user to decide.
 > >
-> > Okay.
+> > I'm not sold that we need anything here, and it sounds like this is
+> > all being added based on a theoretical concern.  I might not object
+> > too much normally to trying to address theoretical conerns with new
+> > features, but:
 > >
-> >> This happens in cases
-> >> such as 'git add' creating new trees that it wants to store in
-> >> anticipation of a following 'git commit'.
-> >
-> > This doesn't make any sense to me.  Does 'git add' call
-> > convert_to_sparse()?  I don't see why it would; wouldn't the calls to
-> > convert_to_sparse() come via sparse-checkout init/set commands?  If
-> > I'm correct on that, and 'git add' wants to create new trees, then by
-> > the time convert_to_sparse() is called in some subsequent git
-> > operation, then convert_to_sparse would already have the trees it
-> > needs.
+> > * I'm a little concerned that we're adding a configuration option
+> > (which live forever and are harder to work with
+> > backward-compatibility-wise) rather than a command line flag.
 >
-> If someone adds a change outside the sparse-checkout cone, then the
-> index is expanded in-memory, then is converted to sparse when the
-> index is written again.
-
-Ah, I missed that convert_to_sparse() is called from write_index(),
-and that we are dealing with a single operation that does a
-sparse->full (in memory)->sparse roundtrip.
-
-Thanks for clearing that up.
-
-> > I thought the reason you would need this is someone modified and
-> > staged a change to a file underneath a directory that will be
-> > sparsified away; at the time of convert_to_sparse(), a tree object may
-> > not have yet been written for the new tree with the newly modified
-> > file (because those tend to be written at commit time), but you'd need
-> > it at the time you sparsified.
+> The issue with a command-line flag is that it would need to be added
+> to all the commands that reapply the sparse-checkout definition.
+> Maybe that's just the 'git sparse-checkout (init|set|add|reapply)'
+> and 'git read-tree' commands, but are there other places where this
+> logic might be applied in the future?
 >
-> Yes. I think we are trying to say the same thing.
+> Also, as more third-party tools integrate with sparse-checkout, I
+> don't expect users to be directly involved in changing their cone,
+> so any use of a command-line flag would need to be integrated into
+> those tools. A config option applies this logic universally, when
+> needed.
+>
+> > * It's not clear to me that the option name is what we want.  For
+> > example, git checkout has a --[no-]overwrite-ignored for overwriting
+> > ignored files (or not) when switching to a different branch.  git
+> > merge has the same flags (though only the fast-forwarding backend
+> > heeds it currently).  This behavior is quite similar to that flag, and
+> > has the same default of treating ignored files as expendable.  Should
+> > the naming be more similar?
+>
+> I'm open to changing the name to more closely match existing naming
+> conventions, once we've decided if this should be included at all.
+>
+> > * It's not clear to me that the option has the right level of
+> > implementation granularity.  If someone wants ignored files to be
+> > treated as important, should they need to set a
+> > merge.no_overwrite_ignored AND a checkout.no_overwrite_ignored AND a
+> > index.deleteSparseDirectories AND other names, or have one high-level
+> > option that sets all of these behaviors?
+>
+> These cases have different meanings for why an ignored file is
+> important. For merge and checkout, the argument is saying "don't
+> overwrite ignored files if they are to be replaced by a tracked
+> file". For sparse-checkout, the config is saying "don't delete
+> ignored files that are leaving the sparse-checkout scope". I think
+> it is meaningful to say that files that match the .gitignore
+> patterns but are still tracked are deleted, because sparse-checkout
+> removes all tracked files.
+>
+> I'm less convinced that there needs to be a meta-setting that covers
+> all of these cases simultaneously.
+>
+> ---
+>
+> As for moving forward, I'm fine skipping this patch if there is no
+> support for it. I just wanted to demonstrate that it could be done.
 
-While writing this, I was thinking in terms of the `git add` being
-done when the index was full (both in memory and on disk), and then a
-later `git sparse-checkout ...` command would invoke the
-convert_to_sparse().  I didn't fully catch the nuances here.
+That's fair, and you certainly achieved that.
 
-Thanks for bringing me up to speed.
+> Perhaps we wait for the theoretical concern to be a real one, as
+> requested by a user with a legitimate reason to care?
+
+Sounds good to me.  Then we'll have a better frame of reference for
+judging how the feature should be tailored as well.
