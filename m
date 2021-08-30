@@ -2,136 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24803C4320E
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 22:11:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17DF1C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 22:21:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0D55260241
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 22:11:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD86D604AC
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 22:21:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238878AbhH3WMK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 18:12:10 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54244 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S238896AbhH3WLb (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 30 Aug 2021 18:11:31 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S238440AbhH3WWQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 18:22:16 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56400 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230140AbhH3WWP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 18:22:15 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3B7F8E7302;
+        Mon, 30 Aug 2021 18:21:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=NXx0geCbp0bT2kS5ylY9l0FTrt7ElshRchEc/A
+        7deZc=; b=aCKm9M0bwXO1BbeD5tt+g8urYsU9gbhTR/HkYG/u0QIl9PwFZFJ9WV
+        1Rl6jBj6edgjYasKARe2wkYIIz/o2Nb/spwMg+djlJBzAG8BPV/hMWe9R3E5Lzn0
+        QFIPYqLSOTwl+ebayjJTfBIqRgkNq6C5Q4++SzHqvTVTs8RWaSJQE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 32859E7300;
+        Mon, 30 Aug 2021 18:21:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D5E3260448;
-        Mon, 30 Aug 2021 22:10:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1630361407;
-        bh=E+q5ZKLEeL1XctPP0VQ7GDFOhm5cfGhk7y74Hzwz7B8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=pRYHS0N4QYNCpJpLt/sMb876kBK59D9uB79DOKAFK6zq+hJ+O1gDo65uoSehDvYFJ
-         CyoeAhsoku093tAe3FEqbmvoaDOsEWP0IL2jSw93e94gTnzHKHnbIjpY2y9p4laatR
-         52+iVWuOZ5zs8MjvQe/ESqW3nY1Oqhkg0YSba/U1lF9gM9obAw13qGcbwOgDh9D3TR
-         8UR3rrDtYXT+iT0zUsMSr0xxov2C/eRDnycjdd2q2U3Nek0+sH0Z6vAmZU17r9hnDn
-         LxEZ6+CxOanwPF2kqAgtR4RacwafWM+iB+UL8fy77BG9bl1aiONp4FpkZQ01aKrPIh
-         96r6CCUWv9M8gwhec6VIbRYIr4P6JDJF445OYwlXh+5boPYf73q4a5lWg//u9//rl7
-         Dw4YlCliZzGjURybv57eifshQDY6KpeFLTaS0RvsQLawjXfA7/457eD6Kf4Uya1AAf
-         fsjrmdN7ttHqkABykj+yEzXuyFbr8zFZmhLmvxeDi8W1x/iF8yv
-Date:   Mon, 30 Aug 2021 22:10:00 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        peff@peff.net, dstolee@microsoft.com, jonathantanmy@google.com
-Subject: Re: [PATCH v4 05/25] midx: clear auxiliary .rev after replacing the
- MIDX
-Message-ID: <YS1XOMtj94BcI9HM@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
-        jonathantanmy@google.com
-References: <YSVjnSDaBXgXvT9W@nand.local>
- <xmqq35qymrcn.fsf@gitster.g>
- <xmqqy28qlcow.fsf@gitster.g>
- <YSVuUYFh7lmhNlEy@nand.local>
- <xmqqo89jbf49.fsf@gitster.g>
- <YSko4OwwPb7MwEMa@nand.local>
- <xmqq4kb797xc.fsf@gitster.g>
- <YSwhNxqAS8JajA7p@nand.local>
- <xmqqfsur7otx.fsf@gitster.g>
- <YSwpsp/hQsPFnj+I@nand.local>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AD452E72FE;
+        Mon, 30 Aug 2021 18:21:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org, levraiphilippeblain@gmail.com,
+        phillip.wood123@gmail.com
+Subject: Re: [PATCH v3] sequencer: advise if skipping cherry-picked commit
+References: <4d83766ab3425a5f4b361df2ac505d07fefd7899.1628109852.git.steadmon@google.com>
+        <691c660422676c92180feb1c2a88049afe7536b9.1630359271.git.steadmon@google.com>
+Date:   Mon, 30 Aug 2021 15:21:20 -0700
+In-Reply-To: <691c660422676c92180feb1c2a88049afe7536b9.1630359271.git.steadmon@google.com>
+        (Josh Steadmon's message of "Mon, 30 Aug 2021 14:46:02 -0700")
+Message-ID: <xmqqr1ea1sm7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="BGUjUQqBJpCa8E4c"
-Content-Disposition: inline
-In-Reply-To: <YSwpsp/hQsPFnj+I@nand.local>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9A463EEA-09E0-11EC-BA17-ECFD1DBA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Josh Steadmon <steadmon@google.com> writes:
 
---BGUjUQqBJpCa8E4c
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Silently skipping commits when rebasing with --no-reapply-cherry-picks
+> (currently the default behavior) can cause user confusion. Issue
+> warnings when this happens, as well as advice on how to preserve the
+> skipped commits.
+>
+> These warnings and advice are displayed only when using the (default)
+> "merge" rebase backend.
+>
+> Update the git-rebase docs to mention the warnings and advice.
+>
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> ---
 
-On 2021-08-30 at 00:43:30, Taylor Blau wrote:
-> On Sun, Aug 29, 2021 at 05:34:18PM -0700, Junio C Hamano wrote:
-> > Taylor Blau <me@ttaylorr.com> writes:
-> >
-> > > now or later would affect this series. Even if we just disallow
-> > > --object-dir pointing at a non-alternate repository, we would still h=
-ave
-> > > the issue of having alternate chains which don't all have the same
-> > > object format.
-> >
-> > Exactly.  That is why I feel that it probably needs to be dealt with
-> > before doing anything else.  The alternate mechanism pulling in an
-> > object store that uses incompatible hash algo would break not just
-> > the multi-pack-index but probably the basic object access layer as
-> > well, which would be more grave problem, no?
->=20
-> Yeah; it does. Maybe I'm holding it wrong (and brian, cc'd, can help
-> me), but this is an easy way to see the problem:
->=20
->   git init repo
->   git init alternate
->=20
->   git -C repo commit --allow-empty -m foo
->   ( cd repo/.git/objects && pwd ) >alternate/.git/objects/info/alternates
->   git -C alternate rev-list --objects --alternate-refs
->=20
-> which will produce:
->=20
->     $ git rev-list --objects --alternate-refs
->     warning: invalid line while parsing alternate refs: <sha256 id>
->=20
-> But I don't know if I quite understand your "probably needs to be dealt
-> with before doing anything else". I think we can proceed with this
-> series and deal with the alternate object-format thing separately, no?
+Looks sensible.
 
-Yeah, this is a possible problem.  You can also see it when using git
-index-pack outside of a repository with an incorrect --object-format
-option.
+Will queue.  Let's merge it down to 'next' in a few days and leave
+the follow-on work to later.
 
-I'm not sure how folks want to deal with that; I'm just fine saying,
-"Well, don't do that," but other folks may have different opinions.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---BGUjUQqBJpCa8E4c
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYS1XNwAKCRB8DEliiIei
-gb/bAQCYvCPD07G1+Pp6rbV0HWQyAezeg83sqEzWlOk4/IgbsgEAl88IJqFz3Lah
-LOiUQRZQX7OGVR4lyyflVbs4dxbbLA8=
-=yHHe
------END PGP SIGNATURE-----
-
---BGUjUQqBJpCa8E4c--
+Thanks.
