@@ -2,107 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBE9EC432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 12:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E262C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 13:05:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D503B60724
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 12:32:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2CDAF60FD9
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 13:05:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233910AbhH3MdS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 08:33:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49224 "EHLO
+        id S236694AbhH3NGs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 09:06:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233703AbhH3MdQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 08:33:16 -0400
-Received: from mail-vk1-xa2c.google.com (mail-vk1-xa2c.google.com [IPv6:2607:f8b0:4864:20::a2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6D8EC061575
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 05:32:22 -0700 (PDT)
-Received: by mail-vk1-xa2c.google.com with SMTP id k124so4276496vke.5
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 05:32:22 -0700 (PDT)
+        with ESMTP id S229446AbhH3NGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 09:06:47 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF06EC061575
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 06:05:53 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id s3so25774243ljp.11
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 06:05:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=+KlIczEzcK4dkLXhxMi0d4MGXMBQea00vYCQButKerw=;
-        b=pMvPulpou9vV79F2s0JJZHq2/x07E7JVeA8oiIGAwm17Cd/+LjySYoIitfiCc0VKJ+
-         TneoQhkrfnJ91ezjpO+24Fv6J6dEtCpWCQBIQzZ2RKZ9gT17TP6GXKoHUw6klyeQAwqg
-         TQZF1ry+5J3qWY+VyCKvZLEf+fmX6VzRiqRF2UvFUASs56HY4EMOXh98zmzE/Zyqsz1b
-         O8uKVmAKulSQgG+d0slUXbhkO5oKvBxk4vz/Mwuz01zi7puElB9g6g4dmfio/m9DJNch
-         UwWueyzRfN392ncd3sJ/KQpdk3jyJA9KzBmpR1lE24RlkpkLnrnW00HyG3Bfo0dl7QVi
-         c3Gw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ntnN5I1gz7vzCorNYJ2ihGRprns5P/ED0p5C2qaPDM8=;
+        b=TcCxsoUZbkLeTsEJM2v4JQJFzXLd9RLpxOInfvns1yKdzLMuGzyR1UzuC7j4hS7Bm2
+         JiNEnXdesK1YEp1HMkb7+XRLFqdI6K0JfTgMOim7VEAKhz1Glyf6RJBpcOcWZu8hbeWT
+         F1xb9hahDs394R2BmvbGYObuIVaDeVoLi1ccHFIvC/VmmMyB0IBTjr1xUQadUN3ThdYh
+         DhAeEPry1yOKtSGOnIzTvO0iin+ujdfxx3w8ZBHSfpCmENA37xHHdzqbRGE2XrBSvjO1
+         m2nJxmPCEEeSqmO33L+g1HT7JKf9/uxDcfwsY1L9c6GOEDh/oOQTvl4/6r3/RblJDix4
+         ojxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+KlIczEzcK4dkLXhxMi0d4MGXMBQea00vYCQButKerw=;
-        b=BKQlLKaAqFXw0WQ2WLEqm1ipzcZsOLKIWMsLTUDcy9mh4XZ7eAFoau9jMoua3hyUUE
-         nLeotDjTKK92ME6nuwjlKi11Cmna1Ju+qHklKvnaaCZU2E4hJskiNEAhDWSnBoGkh25x
-         4kWmxoGgNsgyJG7ki/flb7KieS+eo7rgfoys5S4NAhE0S4995N5UqrKJ3CbYenl0NmoI
-         pTohu/9KMvXazRbz90HPo0sz4oVXx7uy7ohcaNb8n3gAhnytkjVGJTbaAW34bg+AZemh
-         XpyCmScQPDcMyoNVdZrK2VgEMwrGNK3uPfcWcBQ6Q1ARzgdHA8IcD6zAjM9kAHDBqdxq
-         K3Qg==
-X-Gm-Message-State: AOAM530qMk+3psYg/1AxemGKC0krt2AwYFeX7C6iyoAslmvlgt5/63N5
-        JaRiRf8aiY3lEItTmLkwMmdsFJGgTOcuP5hmZqlgsLfBysQ=
-X-Google-Smtp-Source: ABdhPJzLI/nVRbrms6ajNyWgvk0VCi1e0H/1vRh01Y4Jt7tSNKYxLUKrT1gkI3dn46hi+ZTWZbD9WMuPLnctgQO1va0=
-X-Received: by 2002:a1f:a2d1:: with SMTP id l200mr13242707vke.1.1630326741471;
- Mon, 30 Aug 2021 05:32:21 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=ntnN5I1gz7vzCorNYJ2ihGRprns5P/ED0p5C2qaPDM8=;
+        b=lVC6OzDeyR+sL3z4P/waAtK9snR9/pS2dofPBClxF9LMzapEvTmG/l4qdl9X26Otkb
+         KJS0edNZ/gV9t60yMUSBELBHpzB1SppcD7BB/KsH+MzF7X8ArVUuwwLvn6Nx+hP0F8FD
+         YSTgXt6HSgn4r6FhIiYGJCs3TpToWwRRYjtT5PbR7eeE/L46p0LEQaPX88Dvd6QkJHFz
+         vbes/kJf3sV5pRso23RVgEmER/3C53+GrZCtTAZTpY3KwuBUiwKC001o4T2nL3aWjENy
+         ftbpmujfKaHtQArAGWq9a2DfWcn4AZkJE6u9faIz41VMXazNbHhjUPYnM8v9tOwA2bjt
+         5pfA==
+X-Gm-Message-State: AOAM5319JpTZvxSdz2WKOWYryzZr0bcWXL/32mg2UeiOAde/SDnopBNC
+        kl2nvct4NfbPydHE5bFltQlZpwcUz1s=
+X-Google-Smtp-Source: ABdhPJzPuT/bdJBsL65gjTPbtpH0RY1shBaTffJRV+qE4HmDpmRl8dwOjO+YfIMtJjb9EE/YBrN8fA==
+X-Received: by 2002:a2e:a801:: with SMTP id l1mr20955719ljq.41.1630328752051;
+        Mon, 30 Aug 2021 06:05:52 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id d4sm1385263lfg.127.2021.08.30.06.05.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Aug 2021 06:05:50 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Paul Mackerras <paulus@ozlabs.org>
+Subject: Re: diff-index --cc no longer permitted, gitk is now broken (slightly)
+References: <e6bd4cf7-ec8b-5d22-70f6-07089794df0c@kdbg.org>
+Date:   Mon, 30 Aug 2021 16:05:50 +0300
+In-Reply-To: <e6bd4cf7-ec8b-5d22-70f6-07089794df0c@kdbg.org> (Johannes Sixt's
+        message of "Mon, 30 Aug 2021 10:03:18 +0200")
+Message-ID: <875yvn9j69.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1054.v3.git.git.1629207607.gitgitgadget@gmail.com>
- <cover-v4-00.28-00000000000-20210823T120208Z-avarab@gmail.com> <patch-v4-27.28-c4f9fb42d9e-20210823T120208Z-avarab@gmail.com>
-In-Reply-To: <patch-v4-27.28-c4f9fb42d9e-20210823T120208Z-avarab@gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 30 Aug 2021 14:32:10 +0200
-Message-ID: <CAFQ2z_MnJr58Cu970Be7SXE1jFkgOGThQ0Geq2+kNihJE3_BvQ@mail.gmail.com>
-Subject: Re: [PATCH v4 27/28] reftable: fixup for new base topic 2/3
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 23, 2021 at 2:13 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+Johannes Sixt <j6t@kdbg.org> writes:
+
+> Since 19b2517f95a0 (diff-merges: move specific diff-index "-m" handling
+> to diff-index, 2021-05-21) git diff-index no longer accepts --cc.
+
+Yep, this is expected, and I even put corresponding comment in the
+source:
+
+	/*
+	 * We need no diff for merges options, and we need to avoid conflict
+	 * with our own meaning of "-m".
+	 */
+
+
+> This breaks gitk: it invokes
 >
-> Since my "refs API: remove OID argument to reflog_expire()" we don't
-> have the "oid" as part of the reflog_expire() signature. Instead the
-> reflog_expire() should pass the OID of the tip of the "locked" ref to
-> the prepare_fn().
+>    git diff-index --cached -p -C --cc --no-commit-id -U3 HEAD
 >
-> In files_reflog_expire() we do that by getting the OID from
-> lock_ref_oid_basic(). I'm assuming (but am not familiar enough with
-> reftable...) that by the time we get here we've got a locked ref
-> already in some way, so let's just use
-> refs_resolve_ref_unsafe_with_errno() to lookup the current OID of that
-> presumably-locked ref.
+> to show the staged changes (when the line "Local changes checked in to
+> index but not committed" is selected).
+>
+> The man page of git diff-index does not mention --cc as an option. I
+> haven't fully grokked the meaning of --cc, so I cannot tell whether this
+> absence has any significance (is deliberate or an omission).
+>
+> Is gitk wrong to add --cc unconditionally? Should it do so only when
+> there are conflicts? Or not at all?
 
-I quickly looked at the files code, but I don't understand why the OID
-needs to be passed-in (before your refactoring): in builtin/reflog.c
-(before), the current OID is read, with any protection. This means
-that its value can't be trusted.
+As far as I can tell, --cc had no effect on diff-index, it was just
+silently consumed. If I'm right, this line in gitk never needed --cc.
+Then either gitk is to be fixed, or we can "fix" diff-index to silently
+consume --cc/-c again, for backward compatibility.
 
-After your refactoring, you lock the ref. I guess in the files backend
-this protects against non-atomic update of (ref, reflog) racing with a
-concurrent reflog expiry? In reftable, the (ref,reflog) update is
-atomic, so there is no need for locking to properly sequence
-operations.
+If --cc did affect diff-index, then my commit in question is wrong and
+should be fixed.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Thanks,
+-- Sergey Organov
