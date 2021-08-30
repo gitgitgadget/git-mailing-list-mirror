@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8470BC432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 02:49:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C67A3C4320E
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 02:49:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60D4660F57
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 02:49:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A6BD3601FD
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 02:49:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236188AbhH3Ctx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Aug 2021 22:49:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58280 "EHLO
+        id S236148AbhH3Ct5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Aug 2021 22:49:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235013AbhH3Ctt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Aug 2021 22:49:49 -0400
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57222C061756
-        for <git@vger.kernel.org>; Sun, 29 Aug 2021 19:48:56 -0700 (PDT)
-Received: by mail-il1-x130.google.com with SMTP id h29so14530127ila.2
-        for <git@vger.kernel.org>; Sun, 29 Aug 2021 19:48:56 -0700 (PDT)
+        with ESMTP id S235877AbhH3Ctv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Aug 2021 22:49:51 -0400
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95828C061575
+        for <git@vger.kernel.org>; Sun, 29 Aug 2021 19:48:58 -0700 (PDT)
+Received: by mail-il1-x12e.google.com with SMTP id y3so14512365ilm.6
+        for <git@vger.kernel.org>; Sun, 29 Aug 2021 19:48:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=YXWjraey6WqTcKlYhb7P08QcqlXeqECjIfWJ94dANdA=;
-        b=jjY908ZoXtsMa50pIkBJ0Ol6XjVEJ2naRkmB0q+6RlZjzEQY873jFnaQBNeWKcguoB
-         gDG4RKQiQqwWO7FN51KqkMvbAiXD2vyB5NaW8IloTANtG5hidGHKez+lACHYyZF7Slq0
-         +0p0xn4TFVL+zmzS90I5U04e84UU+rx0ik4hEUddHsf7DUn3aJVzf2BWQUIPVF3xe/8O
-         mJLOrkOucccGr1yEzKOg0WUkRMe9o++4uM5ob3/nQMy3VrBgXrBQK+IWonwUEhsd2klZ
-         fa2O19eUQXre/TKEDCwU0NJLMZP+bHmBPpRURbzztrUBmUNVoo8VUee7c8SuHJ5b9PE+
-         JZZQ==
+        bh=3x5oi3PJu/bG/PA3zBC4mOdQqOOWyQeUhcGSt/ozz5Y=;
+        b=1yNh0Vk7DB4cCfzw+lAe6xgPZjP2cUow2LsNzWemqq7cAn4dD9SrFD4uSHHOhl2ZU1
+         3reypRs5qvlKr7uVbAmYbCUEtuEwFJtpnhP5EeDDJb+y8uyh5/PZjMma6AltiYM7fhJI
+         WEJoAUCJyAD8IOzAMoLN/g6BfGXRGIlmJRBI2XctYpwyyDShnzS7BCOaBjc3fkQ0CM5L
+         vfNjUyIbY+/vrFut0kKrPr0+3g22Y9tm604zIc3XiMsPGASGqXv/riWYNjkOicXk43XJ
+         RSTO+6gt6xMaXzGv6SARYjkfbgyF2Psm0+eupJzSPKgQp6J4sqhTaXxUaaGrAdyyuV6Y
+         +EMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=YXWjraey6WqTcKlYhb7P08QcqlXeqECjIfWJ94dANdA=;
-        b=lgzCrQrpOMYU6ul1YieTb+az0Cp8XzTBah9KGmv8sec7Yb2dTCatXZo1xT5PElSZoo
-         Lhi3sJVTE6+v/vYDOOr+EhKSsqCdtM1REhOzMrbckaiZ4ez8LFwmpalU+JTRzwD0ALmi
-         J0+kteLHI73yfhgN56pPaCyjFlZRKYIOxuQi0Q9u1STww6U2TdVAdYtlaB58K3Df2pQJ
-         D9IbghTjHazUUyb/9R+lqTipPJg3Wl9RMqFQPNAYjQhYfpcACjMzz890/v2B/Pz0EiZz
-         pC7M2kiBwztksHaT1tRSJ+RXphJBrTeQf3cQ/cQKRXoBeGUlJ5HirkNoRa7wRKX6vfqS
-         Pwdg==
-X-Gm-Message-State: AOAM533jq1ZSZIvMoR4rwzhtSiCMRz8QXwkx48Gl+CdNyT26MpZezi+J
-        WrtJV2kpBx5yee2qWncqZ2hj8gV1YSfjdZXJ
-X-Google-Smtp-Source: ABdhPJx8uofLgwoZu78HNOncxi8kcaU2GBzh6L1hgg8K8dkLm4q+A0+pHsol7I0MFh8WVlUjMEwfMg==
-X-Received: by 2002:a92:c702:: with SMTP id a2mr14835748ilp.210.1630291735659;
-        Sun, 29 Aug 2021 19:48:55 -0700 (PDT)
+        bh=3x5oi3PJu/bG/PA3zBC4mOdQqOOWyQeUhcGSt/ozz5Y=;
+        b=fxuMYDchR2aScJzUjzmEcZyI4kdqjxYExfcu+T7Fy1Y/jlIodVwG8oURZ+xapUwrbz
+         y+NDJT4cPJDfh/tQmtxFzl31ir6xjeZOTAK7to0ZrAg29lb3fS2BzTpxYbsmwL+fpV3k
+         a2DL4aDYTrLMbGzVNftisfnhH5j1d9Eg+cI6soKAdZxxyXpSSN+Ftez4dD8cCGuv7Ls7
+         AyAfjpFR5iItPRSA6V+NOJcdMpwJo0JZmeViVpuOjFwZHd6zbEBPDoMFwV+XsgsUGbZW
+         mjqZf3ROKr0zFO+9eBmkUyp+AZBp76wbkKZ6qpKNi0vWI++rd2aeH9OMUJCAr9UNlJ7t
+         9pTg==
+X-Gm-Message-State: AOAM533FyIARMUJaPxl0GbqByUEOLj9xPgfun7WEpCggWGXMktiIKOZB
+        WwK5XW4AO06NtfvBpNLt5gv8SxTAZ09fEbBi
+X-Google-Smtp-Source: ABdhPJwMpgUe3f/EvwL+2O+cl4a6tW/s+clbfJZadqfPFacHuNyfqM6e+ouYbn4FfjzytFii6LY0Tw==
+X-Received: by 2002:a92:d5d1:: with SMTP id d17mr14421169ilq.106.1630291737923;
+        Sun, 29 Aug 2021 19:48:57 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id f5sm7846211ils.3.2021.08.29.19.48.55
+        by smtp.gmail.com with ESMTPSA id k21sm7434369ioh.38.2021.08.29.19.48.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Aug 2021 19:48:55 -0700 (PDT)
-Date:   Sun, 29 Aug 2021 22:48:54 -0400
+        Sun, 29 Aug 2021 19:48:57 -0700 (PDT)
+Date:   Sun, 29 Aug 2021 22:48:57 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net
-Subject: [PATCH 2/3] builtin/pack-objects.c: simplify
- add_objects_in_unpacked_packs()
-Message-ID: <c857e12a032f197626cd6a5eb0eafc66afbb5bed.1630291682.git.me@ttaylorr.com>
+Subject: [PATCH 3/3] builtin/pack-objects.c: remove duplicate hash lookup
+Message-ID: <5f7f88ac1dc022de2ae5108828a1f61f7150686b.1630291682.git.me@ttaylorr.com>
 References: <cover.1630291682.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -71,139 +70,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function is used to implement `pack-objects`'s `--keep-unreachable`
-option, but can be simplified in a couple of ways:
+In the original code from 08cdfb1337 (pack-objects --keep-unreachable,
+2007-09-16), we add each object to the packing list with type
+`obj->type`, where `obj` comes from `lookup_unknown_object()`. Unless we
+had already looked up and parsed the object, this will be `OBJ_NONE`.
+That's fine, since oe_set_type() sets the type_valid bit to '0', and we
+determine the real type later on.
 
-  - add_objects_in_unpacked_packs() iterates over all packs (and then
-    all packed objects) itself, but could use for_each_packed_object()
-    instead since the missing flags necessary were added in the previous
-    commit
+So the only thing we need from the object lookup is access to the
+`flags` field so that we can mark that we've added the object with
+`OBJECT_ADDED` to avoid adding it again (we can just pass `OBJ_NONE`
+directly instead of grabbing it from the object).
 
-  - objects are added to an in_pack array which store (off_t, object)
-    tuples, and then sorted in offset order when we could iterate
-    objects in offset order.
+But add_object_entry() already rejects duplicates! This has been the
+behavior since 7a979d99ba (Thin pack - create packfile with missing
+delta base., 2006-02-19), but 08cdfb1337 didn't take advantage of it.
+Moreover, to do the OBJECT_ADDED check, we have to do a hash lookup in
+`obj_hash`.
 
-    There is a slight behavior change here: before we would have added
-    objects in sorted offset order among _all_ packs. Handing objects to
-    create_object_entry() in pack order for each pack (instead of
-    feeding objects from all packs simultaneously their offset relative
-    to different packs) is much more reasonable, if different than how
-    the code currently works.
+So we can drop the lookup_unknown_object() call completely, *and* the
+OBJECT_ADDED flag, too, since the spot we're touching here is the only
+location that checks it.
 
-  - objects in a single pack are iterated in index order and searched
-    for in order to discover their offsets, which is much less efficient
-    than using the on-disk reverse index
-
-Simplify the function by addressing each of the above and moving the
-core of the loop into a callback function that we then pass to
-for_each_packed_object() instead of open-coding the latter function
-ourselves.
+In the end, we perform the same number of hash lookups, but with the
+added bonus that we don't waste memory allocating an OBJ_NONE object (if
+we were traversing, we'd need it eventually, but the whole point of this
+code path is not to traverse).
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/pack-objects.c | 84 ++++++++----------------------------------
- 1 file changed, 16 insertions(+), 68 deletions(-)
+ builtin/pack-objects.c | 11 +----------
+ object.h               |  1 -
+ 2 files changed, 1 insertion(+), 11 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index df49f656b9..87ddbd5553 100644
+index 87ddbd5553..ec8503563a 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -3505,79 +3505,27 @@ static void show_edge(struct commit *commit)
- 	add_preferred_base(&commit->object.oid);
+@@ -3405,13 +3405,9 @@ static void read_object_list_from_stdin(void)
+ 	}
  }
  
--struct in_pack_object {
--	off_t offset;
--	struct object *object;
--};
+-/* Remember to update object flag allocation in object.h */
+-#define OBJECT_ADDED (1u<<20)
 -
--struct in_pack {
--	unsigned int alloc;
--	unsigned int nr;
--	struct in_pack_object *array;
--};
--
--static void mark_in_pack_object(struct object *object, struct packed_git *p, struct in_pack *in_pack)
-+static int add_object_in_unpacked_pack(const struct object_id *oid,
-+				       struct packed_git *pack,
-+				       uint32_t pos,
-+				       void *_data)
+ static void show_commit(struct commit *commit, void *data)
  {
--	in_pack->array[in_pack->nr].offset = find_pack_entry_one(object->oid.hash, p);
--	in_pack->array[in_pack->nr].object = object;
--	in_pack->nr++;
--}
--
--/*
-- * Compare the objects in the offset order, in order to emulate the
-- * "git rev-list --objects" output that produced the pack originally.
-- */
--static int ofscmp(const void *a_, const void *b_)
--{
--	struct in_pack_object *a = (struct in_pack_object *)a_;
--	struct in_pack_object *b = (struct in_pack_object *)b_;
--
--	if (a->offset < b->offset)
--		return -1;
--	else if (a->offset > b->offset)
--		return 1;
--	else
--		return oidcmp(&a->object->oid, &b->object->oid);
-+	struct object *obj = lookup_unknown_object(the_repository, oid);
-+	if (obj->flags & OBJECT_ADDED)
-+		return 0;
-+	add_object_entry(oid, obj->type, "", 0);
-+	obj->flags |= OBJECT_ADDED;
-+	return 0;
- }
+ 	add_object_entry(&commit->object.oid, OBJ_COMMIT, NULL, 0);
+-	commit->object.flags |= OBJECT_ADDED;
  
- static void add_objects_in_unpacked_packs(void)
+ 	if (write_bitmap_index)
+ 		index_commit_for_bitmap(commit);
+@@ -3424,7 +3420,6 @@ static void show_object(struct object *obj, const char *name, void *data)
  {
--	struct packed_git *p;
--	struct in_pack in_pack;
--	uint32_t i;
--
--	memset(&in_pack, 0, sizeof(in_pack));
--
--	for (p = get_all_packs(the_repository); p; p = p->next) {
--		struct object_id oid;
--		struct object *o;
--
--		if (!p->pack_local || p->pack_keep || p->pack_keep_in_core)
--			continue;
--		if (open_pack_index(p))
--			die(_("cannot open pack index"));
--
--		ALLOC_GROW(in_pack.array,
--			   in_pack.nr + p->num_objects,
--			   in_pack.alloc);
--
--		for (i = 0; i < p->num_objects; i++) {
--			nth_packed_object_id(&oid, p, i);
--			o = lookup_unknown_object(the_repository, &oid);
--			if (!(o->flags & OBJECT_ADDED))
--				mark_in_pack_object(o, p, &in_pack);
--			o->flags |= OBJECT_ADDED;
--		}
--	}
--
--	if (in_pack.nr) {
--		QSORT(in_pack.array, in_pack.nr, ofscmp);
--		for (i = 0; i < in_pack.nr; i++) {
--			struct object *o = in_pack.array[i].object;
--			add_object_entry(&o->oid, o->type, "", 0);
--		}
--	}
--	free(in_pack.array);
-+	if (for_each_packed_object(add_object_in_unpacked_pack, NULL,
-+				   FOR_EACH_OBJECT_PACK_ORDER |
-+				   FOR_EACH_OBJECT_LOCAL_ONLY |
-+				   FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS |
-+				   FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS))
-+		die(_("cannot open pack index"));
+ 	add_preferred_base_object(name);
+ 	add_object_entry(&obj->oid, obj->type, name, 0);
+-	obj->flags |= OBJECT_ADDED;
+ 
+ 	if (use_delta_islands) {
+ 		const char *p;
+@@ -3510,11 +3505,7 @@ static int add_object_in_unpacked_pack(const struct object_id *oid,
+ 				       uint32_t pos,
+ 				       void *_data)
+ {
+-	struct object *obj = lookup_unknown_object(the_repository, oid);
+-	if (obj->flags & OBJECT_ADDED)
+-		return 0;
+-	add_object_entry(oid, obj->type, "", 0);
+-	obj->flags |= OBJECT_ADDED;
++	add_object_entry(oid, OBJ_NONE, "", 0);
+ 	return 0;
  }
  
- static int add_loose_object(const struct object_id *oid, const char *path,
+diff --git a/object.h b/object.h
+index 3b38c9cc98..549f2d256b 100644
+--- a/object.h
++++ b/object.h
+@@ -75,7 +75,6 @@ struct object_array {
+  * builtin/fsck.c:           0--3
+  * builtin/gc.c:             0
+  * builtin/index-pack.c:                                     2021
+- * builtin/pack-objects.c:                                   20
+  * builtin/reflog.c:                   10--12
+  * builtin/show-branch.c:    0-------------------------------------------26
+  * builtin/unpack-objects.c:                                 2021
 -- 
 2.33.0.96.g73915697e6
-
