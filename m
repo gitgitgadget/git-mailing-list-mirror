@@ -2,92 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE3A1C432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 06:39:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29A45C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 07:22:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BEF2460FD8
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 06:39:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 027C260FA0
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 07:22:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233108AbhH3Gk0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 02:40:26 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58787 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232358AbhH3GkZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 02:40:25 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 99E7CE1932;
-        Mon, 30 Aug 2021 02:39:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=MtuKy1qV/AyYdNcykMzHq6tU3OAbvpaCij3+Vg
-        CyI0g=; b=kZNvEtR/PnsDUIj6AQ74KCyPzL6SZbaSEO5XeBMFm/IvVehKbttQVt
-        gpiF4TAhF35cs0tc9iXN7EwZrqOt3iNxKkfwdhjrfxVFBIoQU5Njm9SntF1C8tWk
-        BUkpaVOXNgi6XUOoJVuewMXR0f1oxIC7+v+4wruJpdxBwXMQVHI6o=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 92A0CE1931;
-        Mon, 30 Aug 2021 02:39:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1A3DCE1930;
-        Mon, 30 Aug 2021 02:39:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH 0/3] pack-objects: simplify add_objects_in_unpacked_packs()
-References: <cover.1630291682.git.me@ttaylorr.com>
-Date:   Sun, 29 Aug 2021 23:39:30 -0700
-In-Reply-To: <cover.1630291682.git.me@ttaylorr.com> (Taylor Blau's message of
-        "Sun, 29 Aug 2021 22:48:43 -0400")
-Message-ID: <xmqqy28j5tct.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233921AbhH3HXp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 03:23:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34278 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233598AbhH3HXo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 03:23:44 -0400
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D96FC061575
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 00:22:51 -0700 (PDT)
+Received: by mail-il1-x12b.google.com with SMTP id x5so14997918ill.3
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 00:22:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/tJKC3EGRfiObSqyf2wNkwJWMSuIFUIKLPajWkV0tBQ=;
+        b=Akl5218gShcwa5RHDslMwkMNU4jpcXToAJA5e9qAYJKntQqK21TA/mVIGS+FrcL2by
+         CSGCrfBBx5pQxRQcoN6yVvCmU9SzTqO/LN5cIG0vF0Wq+4j6PIiWYW5r0Uy2zDpcdZ6u
+         SN5dFvsuNPWvO4niEmzvR+NVjHZzFDwDRqDaPs450wXFnJujVAip4EJKJ4EpBmcQx6aX
+         CG3Zms2xD1UjsYrZUphS/0r+qdHx4mHBuVjN6/IvAnemNfPLNMWy3dWnxzRbMpRZeJi7
+         k//rQjS/Su1E4PPu5SnOTSfGOwReIcWBMy82EYKqgPMdss/FMoOlamR+UhyQRRY0rMLH
+         vcJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=/tJKC3EGRfiObSqyf2wNkwJWMSuIFUIKLPajWkV0tBQ=;
+        b=n6diNwSJUtG0J3EvYe84/0TFQwngAeyU5fiLtZfx74wxchFLqRA+M8lbkk/MfjobaS
+         gtVOSiFD5ysEIhuZrxi2Q1KSIoaNy7Rjm1Xaemnds3PsLcYl7rCtS8DOC3IeSUmNaa/h
+         6RUzt4XFwnMu/70yFz1+8Mk9oQyF4yGHqjFKKVQcERKiJEFIKELRh4faoXI8JakDs8iQ
+         xJVl1J5i1rYTlP1yhWUDi3qCAiIBovOhp7P+HUkhF2UAQ2BKf5QjMkweZw5GKiIsp9SQ
+         Sl6arA74HLQ+YTv4LD0Q1/yH/1K6vVHddgWg3OCU4Vp80ucUZ6wX2wAy5Cd35J1/+wiI
+         toug==
+X-Gm-Message-State: AOAM533uEi85DkGpR9Cg7FlQqIylphN4whevzc87CXxfp/qqPxmmc2C4
+        UO/HyiJ9sU/GPF+bljDwoiteWUsXxwo=
+X-Google-Smtp-Source: ABdhPJxjQehhnjXW1/cqxnUGVyfe3u7bifwjnjvvghovbdBWRwN9Z3lq8A5qSq/uDcipgCKL3CcU2w==
+X-Received: by 2002:a92:d94c:: with SMTP id l12mr15038467ilq.101.1630308170425;
+        Mon, 30 Aug 2021 00:22:50 -0700 (PDT)
+Received: from localhost.localdomain (097-069-216-153.res.spectrum.com. [97.69.216.153])
+        by smtp.gmail.com with ESMTPSA id a6sm7903840ilb.59.2021.08.30.00.22.49
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 30 Aug 2021 00:22:49 -0700 (PDT)
+Sender: Eric Sunshine <ericsunshine@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 0/3] suppress trailing whitespace on empty "notes" lines
+Date:   Mon, 30 Aug 2021 03:21:15 -0400
+Message-Id: <20210830072118.91921-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.33.0.153.gba50c8fa24
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 07ED8FC2-095D-11EC-90E6-ECFD1DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+This patch series fixes a problem in which `git format-patch --notes`
+and `git log` unconditionally indent _all_ "notes" lines, including
+those which are empty, which ends up leaving (unwanted) trailing
+whitespace on the previously empty lines. The first couple patches
+adjust some existing notes-related tests -- which undesirably hard-code
+those indented blank notes lines -- to be less brittle since they would
+otherwise break by the change made in the final patch which fixes the
+actual problem.
 
-> This short series is extracted from mine and Peff's work on cruft packs. These
-> three patches focus on cleaning up add_objects_in_unpacked_packs(), which is
-> used to implement `git repack -k`.
->
-> The pay-off for this clean-up is significant, though: we net -50 lines of code,
-> and the result is much more readable, at least in my opinion.
->
-> The changes are described in detail in the patch messages, but essentially we
-> are replacing a loop over get_all_packs() with for_each_packed_object() after
-> adding a couple of new flags necessary to make the switch. And once we are done
-> with that, the third patch removes a bit from the object flag allocation table.
+Eric Sunshine (3):
+  t3301: tolerate minor notes-related presentation changes
+  t3303/t9301: make `notes` tests less brittle
+  notes: don't indent empty lines
 
-A quite pleasant read.  
+ notes.c                      |   2 +-
+ t/t3301-notes.sh             | 321 ++++++++++++++++++-----------------
+ t/t3303-notes-subtrees.sh    |  13 +-
+ t/t4014-format-patch.sh      |  17 ++
+ t/t9301-fast-import-notes.sh |  36 ++--
+ 5 files changed, 207 insertions(+), 182 deletions(-)
 
-Each step looked nicely done and well explained.
+-- 
+2.33.0.153.gba50c8fa24
 
-Will queue.
-
-Thanks.
-
->
-> Thanks in advance for your review.
->
-> Taylor Blau (3):
->   object-store.h: teach for_each_packed_object to ignore kept packs
->   builtin/pack-objects.c: simplify add_objects_in_unpacked_packs()
->   builtin/pack-objects.c: remove duplicate hash lookup
->
->  builtin/pack-objects.c | 85 ++++++------------------------------------
->  object-store.h         |  6 +++
->  object.h               |  1 -
->  packfile.c             |  6 +++
->  4 files changed, 24 insertions(+), 74 deletions(-)
