@@ -2,105 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58216C432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0E3FC432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:19:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3CE7160F4B
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:17:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4E4460E77
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:19:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237145AbhH3VS2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 17:18:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59362 "EHLO
+        id S236702AbhH3VUl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 17:20:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236811AbhH3VS1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 17:18:27 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 709DDC061575
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 14:17:33 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id x2-20020a1c7c02000000b002e6f1f69a1eso387928wmc.5
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 14:17:33 -0700 (PDT)
+        with ESMTP id S230025AbhH3VUk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 17:20:40 -0400
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE032C061575
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 14:19:46 -0700 (PDT)
+Received: by mail-pl1-x62b.google.com with SMTP id m4so9354319pll.0
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 14:19:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=i0Va3DqPJ4fKnBXcFLxaeYsYLhVA5jxWGN2mecSRvKY=;
-        b=E/nIrEPFD64MKn3VTufuryDKlMKyzNiNFZkENwZVnhzBQXWB1Eb1gyDvXKPW5lS1qx
-         ovIY936X3N+lIQj/REGc95TrVYLBcnJB7xIArGPyMg5+u+QtWUD90auQUElXHH56FVCS
-         O+woY27hzVkOGT8VbJ2lVQBWj3j3f0z4Eb6CxBeLzOImoeFnxwLlTI32g7TwCLeS8OKN
-         3KvorYomzJ5QRbr7yZv6CtpS9NdSEjMZf71tZ75sZwgtTuzK0+OJlAF1GUo9tvmItDUO
-         h0THHF76kNjv6xr0nZXZ6OJPka7euFIDN/Lokod8xN28W1sXsQBzXdc/AX4R/TvgjqUf
-         C8rQ==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=cyAUMExy+e1/oYeElnCiJzQQnO3ai6nE6qZwfCtF9Yw=;
+        b=F3vTw127oUf3axk9VpfGiGF9RUKADmle0JG71WbOnkbXyWkYnJXLGRYoGJvVytnIzU
+         LUiiB9SgJANAuP77sP751ENlyZw9gqgcvvyMXUO+ch5c2SDz+RIClctXI3WHITWkY8oM
+         LYkxb63EA/FIzWrwKjD69AYOu0K6NK9Enhsx25mcKbKkNpZqApjj2HzQ95y5PXeIJ5Hj
+         4r6WMQpThflK79qaTwY/jWzgkFinRmMFNXrQAo+bBlNCKkC36AuI8V5ukDbQyhMFak3U
+         3Q4G92k8Ij1viXm1d0sz6HJfMOhXzNxRtaVUOieSPYGvYs5AH9iqu4D+n1J1JIbI/eMO
+         8R2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
          :in-reply-to;
-        bh=i0Va3DqPJ4fKnBXcFLxaeYsYLhVA5jxWGN2mecSRvKY=;
-        b=h4wtP9YUqKvdG2r+a5g1hprN8x3f47z6enSLQSTwx//5B8V1JYgBnBHPg+r3DAY1e2
-         QbTsrnHQ/hRRVy2vaO+2Fm17xGoad1WO60zm2uWxnYFxEXPcFBIixASwC+5arNlCvvi1
-         WL/68UiO8J964+G9sipUUFSy0JhL1NNp+mxhLsysHgUIUT2Gg5CY0fC3s3JTcTwOrGM1
-         o5GZhevaNbNAZ/3GR4TYWF0EKs71km29tc+k4CnflhBVbboDQhCbynQWAXPEx4DGqXdO
-         0xJjtZ77ahrSP/al7RnIKyeWUvyykCyJy742DvM2ot6FIvM/77lHR2CO5E8W+seIq8/x
-         Gjfw==
-X-Gm-Message-State: AOAM530t0pweXi4d/UCqPiS1C47jbmhXRODRA7Qa0DDXOLpiQ9F/Kuep
-        FHwUi/KuWvy7uXh4MZ3J2bM=
-X-Google-Smtp-Source: ABdhPJzpeNsjF2oibY/Bj0YeVm8jN0qOxZvMtWGIKddex6ID73BQhq3CSM1yYKQ/JYn/IIt4Su43aQ==
-X-Received: by 2002:a7b:cb89:: with SMTP id m9mr907968wmi.123.1630358252149;
-        Mon, 30 Aug 2021 14:17:32 -0700 (PDT)
-Received: from szeder.dev (84-236-78-211.pool.digikabel.hu. [84.236.78.211])
-        by smtp.gmail.com with ESMTPSA id k1sm16778032wrz.61.2021.08.30.14.17.31
+        bh=cyAUMExy+e1/oYeElnCiJzQQnO3ai6nE6qZwfCtF9Yw=;
+        b=QlKClesunhPIL6473aBvfTUiKwdFJTK3rA2o5mswcLX5cva4aAz6xkkHIH4eZ3FykB
+         zI0xcwHS3wNTIMwF29CGfmEMlW4j+CSM1RNMJctKlu1NS4TYxUFFDvzqcXpKQyH6KjME
+         VQ1vOHTewCHBTg8K5E0MYEkvImdKr+VXzeLTylFfqDm1CPU3ud2jiMFLlXzA6sRx78SK
+         lR19T2shva4huKE9mZY0yjXmePbWE3Y+/zguEjvhDYim2/LfRZUyCD2OUO8mT/dTshVQ
+         3cO0vUjKJOLqE81NIGUvQF4iUNg0lvvq7WtVFN0CtTd5K0jos4e0jaO6cMMmh4DhwTUJ
+         s7JA==
+X-Gm-Message-State: AOAM533lfTS9AIXxe9G/n3wHCdlgh1mm5T5+Gvt5h6dlIpcljIu+vcfR
+        n70WSaF6FIcjcaEtFiQAP25nSKJzZln8Tw==
+X-Google-Smtp-Source: ABdhPJxoIbE0Duzrwld8aK5haYzF288yfgd+qOPOPL7FYzPj+Z4DnRc88Kr69QVX+wvgbi3VzPfthw==
+X-Received: by 2002:a17:90b:1d02:: with SMTP id on2mr1163564pjb.21.1630358386142;
+        Mon, 30 Aug 2021 14:19:46 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:16fe:83fb:786f:9778])
+        by smtp.gmail.com with ESMTPSA id 5sm4797379pfl.135.2021.08.30.14.19.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Aug 2021 14:17:31 -0700 (PDT)
-Date:   Mon, 30 Aug 2021 23:17:30 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 6/7] [RFC] entry: don't show "Filtering content: ...
- done." line in case of errors
-Message-ID: <20210830211730.GL23408@szeder.dev>
-References: <20210620200303.2328957-1-szeder.dev@gmail.com>
- <20210620200303.2328957-7-szeder.dev@gmail.com>
- <85ff4cb1-f3e3-4fcb-d9d8-fd294e0df451@web.de>
- <YNKT4Fr/LOGnx9/o@nand.local>
+        Mon, 30 Aug 2021 14:19:45 -0700 (PDT)
+Date:   Mon, 30 Aug 2021 14:19:39 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, phillip.wood123@gmail.com
+Subject: Re: [PATCH v2] sequencer: advise if skipping cherry-picked commit
+Message-ID: <YS1La6YYAnJk4Sg8@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        phillip.wood123@gmail.com
+References: <4d83766ab3425a5f4b361df2ac505d07fefd7899.1628109852.git.steadmon@google.com>
+ <496da0b17476011b4ef4dde31593afc7572246eb.1628623058.git.steadmon@google.com>
+ <xmqqwnotaq0e.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YNKT4Fr/LOGnx9/o@nand.local>
+In-Reply-To: <xmqqwnotaq0e.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 22, 2021 at 09:52:32PM -0400, Taylor Blau wrote:
-> On Mon, Jun 21, 2021 at 08:32:56PM +0200, René Scharfe wrote:
-> > Am 20.06.21 um 22:03 schrieb SZEDER Gábor:
-> > > RFC!!  Alas, not calling stop_progress() on error has drawbacks:
-> > >
-> > >   - All memory allocated for the progress bar is leaked.
-> > >   - This progress line remains "active", in the sense that if we were
-> > >     to start a new progress later in the same git process, then with
-> > >     GIT_TEST_CHECK_PROGRESS it would trigger the other BUG() catching
-> > >     nested/overlapping progresses.
-> > >
-> > > Do we care?!  TBH I don't :)
-> > > Anyway, if we do, then we might need some sort of an abort_progress()
-> > > function...
-> >
-> > I think the abort_progress() idea makes sense; to clean up allocations,
-> > tell the user what happened and avoid the BUG().  Showing just
-> > "aborted" instead of "done" should suffice here -- the explanation is
-> > given a few lines later ("'foo' was not filtered properly").
+On 2021.08.10 15:33, Junio C Hamano wrote:
+> Josh Steadmon <steadmon@google.com> writes:
 > 
-> Very well put. I concur that having an abort_progress() API makes sense
-> for all of the reasons that you suggest, but also because we shouldn't
-> encourage not using what seems like an appropriate API in order to not
-> fail tests when GIT_TEST_CHECK_PROGRESS is set.
+> > +	[ADVICE_SKIPPED_CHERRY_PICKS]			= { "skippedCherryPicks", 1},
+> 
+> No need to resend to only fix this, but I'll add SP after "1" to
+> match surrounding lines while queuing the patch.
 
-Ah, damn, I was hoping that I can get away with it :)
+Ack. Fixed in V3. Do you also want me to rebase this on
+ab/retire-advice-config?
 
+> > @@ -5149,8 +5150,13 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+> >  		oidset_insert(&interesting, &commit->object.oid);
+> >  
+> >  		is_empty = is_original_commit_empty(commit);
+> > -		if (!is_empty && (commit->object.flags & PATCHSAME))
+> > +		if (!is_empty && (commit->object.flags & PATCHSAME)) {
+> > +			advise_if_enabled(ADVICE_SKIPPED_CHERRY_PICKS,
+> > +					_("skipped previously applied commit %s"),
+> > +					short_commit_name(commit));
+> > +			skipped_commit = 1;
+> >  			continue;
+> > +		}
+> >  		if (is_empty && !keep_empty)
+> >  			continue;
+> >  
+> > @@ -5214,6 +5220,9 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+> >  		oidcpy(&entry->entry.oid, &commit->object.oid);
+> >  		oidmap_put(&commit2todo, entry);
+> >  	}
+> > +	if (skipped_commit)
+> > +		advise_if_enabled(ADVICE_SKIPPED_CHERRY_PICKS,
+> > +				  _("use --reapply-cherry-picks to include skipped commits"));
+> 
+> I agree with the change in this hunk that advanced users may want to
+> squelch this "what to do" hint.
+> 
+> I am not sure about the earlier hunk that reports when some commits
+> have actually been skipped.  When --no-reapply-cherry-picks is in
+> effect, the user is expecting that some commits are cherry-picks
+> among other (hopefully the majority of) commits, and even those
+> users who do not want to be taught how to use the command would want
+> to learn the fact that some commits were skipped (and which ones).
+> 
+> Using two separate advice configuration variables feel way overkill
+> for this.  I wonder if the previous hunk should use warning(), i.e.
+
+Switched these to warnings, squelched by "--quiet" as suggested below.
+
+
+> > +		if (!is_empty && (commit->object.flags & PATCHSAME)) {
+> > +			warning(_("skipped previously applied commit %s"),
+> > +				short_commit_name(commit));
+> > +			skipped_commit = 1;
+> >  			continue;
+> > +		}
+> 
+> possibly squelched by "git rebase --quiet".
+> 
