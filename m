@@ -2,92 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B6CAC432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 16:42:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 582F9C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 16:45:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8B4660E97
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 16:42:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23F9F60E90
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 16:45:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237710AbhH3QnC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 12:43:02 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56410 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237049AbhH3QnC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 12:43:02 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 538311666A9;
-        Mon, 30 Aug 2021 12:42:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ZQG7tXaOU4/C
-        8M+Z2dyAL0H1unELYaW/CAL1qoR6LsA=; b=RN1Hcq+20AcPtzTt2/3eQLcPo76Q
-        tLaWU1ar6KZvTxyUHpSDSWSqSpBbFp2wWddzSwofvvQYwIIWVys5Buu/Nbs3rZWU
-        K8tZKFQOxHl1yB0F8sFaD2aDpVZssRf0cSjxqLVYYw0PfShy9LBLc1AwCNTiYV+i
-        +vyHjwv78BG+EgM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4C0691666A8;
-        Mon, 30 Aug 2021 12:42:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 969CF1666A7;
-        Mon, 30 Aug 2021 12:42:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Mickey Endito <mickey.endito.2323@protonmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] t5582: remove spurious 'cd "$D"' line
-References: <tV8xl8isDPhmGxCNmN06tTwhJTve0PsrkakKwLMcFQJybDZO2SGHHbDLZFrcLp1Yda1_KRygSm7-lVDSZSaG-antdalcPnhSqYqcK5Fpifk=@protonmail.com>
-        <xmqq8s0rpwiw.fsf@gitster.g> <20210824185942.GE2257957@szeder.dev>
-        <YSWeeEgzCCT/3kxR@coredump.intra.peff.net>
-        <xmqqsfyxjyfe.fsf@gitster.g> <20210828094726.GG2257957@szeder.dev>
-Date:   Mon, 30 Aug 2021 09:42:03 -0700
-In-Reply-To: <20210828094726.GG2257957@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message
-        of "Sat, 28 Aug 2021 11:47:26 +0200")
-Message-ID: <xmqqilzm6g10.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237708AbhH3QqO convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 30 Aug 2021 12:46:14 -0400
+Received: from mail-lf1-f51.google.com ([209.85.167.51]:35674 "EHLO
+        mail-lf1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233446AbhH3QqO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 12:46:14 -0400
+Received: by mail-lf1-f51.google.com with SMTP id l2so24392322lfp.2
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 09:45:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=TzyOWNuiKAolZjWlClUUFD7itXXmDpETBIPFE4GbihM=;
+        b=gj/VlCMDIaJ5TOL1KUzsM5FitT+gNgd02P5yYBGsHO8SWILYknHqCitjaTksWq12eM
+         aBasgCPmXikg+vMDQHMrID2hrBVEGxpAAkV3J/bpfYYiNCXWDYWjej924SwwcpPTwOW5
+         al5KGwiAPIEKgkSbMGjdEg7AJiGB++qyAOnr/+eOFnM1+OqnbNcx+NCLOsNaKIGl9X7z
+         UK/zplIjVRCGXZwSmevu+Tc1sLX9XwkpHCCFb6czcpyt64JtEeXeefz2dNLmaIUp4UJG
+         8zqkmqm4KJ/zgocgcjiVLpmZQ6x09HaDw9f+zHQkoYAt/uO/wuwfjWGAg62VT0a3FGh+
+         r6UA==
+X-Gm-Message-State: AOAM532hEBbhLa4kXPCu9K3RryZH2zhkkZtZqoyw2TtpBk9akx/QVM6T
+        vWac1te103AoM/OR7YnflvhGFPvxknYkhkrgWDSvjgS6
+X-Google-Smtp-Source: ABdhPJwynwOhKJKvuvSBHB09rI7AJUPOCxFm2tJfHHiPpwrLCIigrSPWvoce6hb3mgZJQjPrLmKTRi6QlqfQHGrUcJ8=
+X-Received: by 2002:ac2:4e45:: with SMTP id f5mr18243331lfr.628.1630341919378;
+ Mon, 30 Aug 2021 09:45:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 35B1794C-09B1-11EC-8719-FA11AF6C5138-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20210830072118.91921-1-sunshine@sunshineco.com> <RFC-cover-v2-0.2-00000000000-20210830T103913Z-avarab@gmail.com>
+In-Reply-To: <RFC-cover-v2-0.2-00000000000-20210830T103913Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 30 Aug 2021 12:45:07 -0400
+Message-ID: <CAPig+cRFCtVPoBfMswiO1i6bMw_BUess9q2pto_v4dzHp9X2RA@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 0/2] suppress trailing whitespace on empty "notes" lines
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
-
-> On Wed, Aug 25, 2021 at 09:12:37AM -0700, Junio C Hamano wrote:
->> Jeff King <peff@peff.net> writes:
->>=20
->> > Hmm. I think that one is different, in that the "cd" is not redundan=
-t,
->> > but wrong. But it turns out not to matter to the test. ;)
->>=20
->> Funny.=20
->>=20
->> We are lucky because 'cd ""' stays in the same repository as the
->> current one and not to a random place,
+On Mon, Aug 30, 2021 at 6:47 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> Side note:
 >
-> Actually, the results of 'cd ""' are unspecified, though most shells
-> do as you said.  Do we want something like this?
+>     I'm generally trying to see if just sending a "proposed vX" is
+>     more productive for everyone than patch feedback effectively
+>     describing it in prose. I don't mean for this thing to be picked
+>     up as-is by Junio without the consent of the submitter, and don't
+>     have any desire to "pick up" the series myself.
+>
+> I really like the end goal of
+> <20210830072118.91921-1-sunshine@sunshineco.com> series, but this
+> seems like a more straightforward way to get to that goal.
+>
+> I.e. the original 1/3 and 2/3 starts out by making the tests
+> whitespace-independent. If we just skip that 1/3, and then in 3/3
+> tweak the relevant failing tests for the code change we won't even
+> need a new test, all the existing tests previously made
+> whitespace-independent in 1/3 will assert this new behavior.
 
-I doubt it, as the root issue is not "cd" but "$D" and other
-variables that we use before setting.
+It probably won't surprise you that this fix to `notes` started out as
+a single patch which made the change to `notes.c` and adjusted the
+existing tests to account for it. In particular, my original changes
+to t3301 were exactly the same changes you made (i.e. merely dropping
+the empty-line `${indent}` from the few necessary places). I wasn't
+happy about the additional complexity I had to add to t3303 and t9301
+to continue plucking the notes out of the default git-log output, thus
+simplified by making those tests less brittle. That, of course,
+deserved its own patch. I wavered quite a bit about whether to make
+t3301 less brittle too, or to simply apply the minimal changes which I
+had already made (and which you made independently). Eventually, I
+decided to split that out as a brittle-fixing patch, as well, to
+better future-proof it, but perhaps that's terribly important.
 
-I wonder how close our test suite is for being "set -u" clean.
-Running our tests under "set -u" may not be a bad endpoint, but
-only if we can get there without too much pain.
-
-Thanks.
-
+I don't have strong feelings between my v1 and your v2 of this series,
+and would be happy to see Junio pick up either version.
