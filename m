@@ -7,67 +7,66 @@ X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBFD2C432BE
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:01:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4BA7C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:03:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CBC3060F12
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:01:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A6B8460F5E
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 20:03:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234067AbhH3UCG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 16:02:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41608 "EHLO
+        id S234533AbhH3UEE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 16:04:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233986AbhH3UCF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 16:02:05 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96971C061575
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 13:01:10 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id y34so33589079lfa.8
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 13:01:10 -0700 (PDT)
+        with ESMTP id S233986AbhH3UED (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 16:04:03 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51C09C061575
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 13:03:09 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id m4so27893541ljq.8
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 13:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=ww2D7Wm3P7BIwE+lO56VEliE+HI2012P1uJjgJU2Wh0=;
-        b=IiagW/j7Bkd1997toP00dtEklUkfWfyfqCkFOmxhnOo/bZGbgbB5qbCeSZTuHVffG/
-         aG9iXvT2FJxHbIkwwAVBCj+awAm9K4kqpNNqa/h6IXnxYSyC6MEq/4iZadxJajjPsBKW
-         g5pUdYi0cn1gaXS1qEW+zcoG1CtjGVprOpl3SanzsncKXW76gJAFf6wn72lizg61Sg3Y
-         vsDfdWP+UbmhGfNOHGwmuDsx5/SMyLUyiBsgnC9+M3xN677vxgQA9oG0dtDYGDSB6AZ0
-         C8YdOdgqbgKxdcCjuICEw0G8d9BoDJfaq0Q0YYPN3ZQTWkvgI4OjPl+r2gs48TTilNr2
-         yBew==
+        bh=E4n2eopjeScUTDwpGS09f3YHy8S6NtojvqK0Xw0UiFE=;
+        b=ny9ncbYF6AwBqPjR6b7O8cZoidFPo+7LiHKjqcQ9jvlvlEqzFYi5MUgiBFB2w7bY3Z
+         tEmlbHeycGVtb+AX0DFeDQTfQevmmCqyUL6cLNr1Yn8rmD6A1HRIB8ftORjWOAl0yOhu
+         u0Xjb3vuBlLu4M4k0C6CPT04Lp/4Y2HS2L4KTLsY8D6fCNe4/9hKKtqPg9wJTBF3sWQh
+         ecno3NmodZJY4SO6mucXjuGEJ7Eu5ZcbgfdNYR1RdaxtbuxkuCBqnugH0TqumB9yEfRl
+         z3O7INdt+Bfya6qSLJRFouDhXkBZJ9RRGLE59mx3aNJzX3Tv0FnyTYEQl4intq+UIVaD
+         fhTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
          :message-id:user-agent:mime-version;
-        bh=ww2D7Wm3P7BIwE+lO56VEliE+HI2012P1uJjgJU2Wh0=;
-        b=BH+bBZYbcc+gOG8UVH0MO8DswimVPUvdNIMxVf5dUWMOY0MiPdYiRXPm3gNEokBD+3
-         NgMOaUbNdOrGo5JtY5sopbG8wwDPU5ccs2kUniYd0YNM4Gm9FPrGQm7QhAmpt0W25l+9
-         l4prNIy0FxRAfwLEG+WWCZ05pK4GrEu7EjkZfLhVvtIxXrTcxFmcU1iDIDzr3gY8MSUT
-         QO3KVV6Zl8SP8bDwjq0ALhzcGu0wb9SB4ZR2Is7gNsH/bvo3uPG0rxjILiutsSqh4zFO
-         IVF4zZFBDX3psZ0T2hBjE0aa6ENeGXBX+U/3M2Wd/gfhnG7EKdCxt2icKO75CN+9TPuM
-         k6lA==
-X-Gm-Message-State: AOAM530OB5qFNVjZZhJrktkIIq7+STbgMuxadtSqDXmARj7CzrgiqjJP
-        eyLPnZRdIri63xADmAv0UN4GMiWHvEg=
-X-Google-Smtp-Source: ABdhPJxiD+1eQ7oFdf8IP/n7/iWuK4oACD4/esbfF2ci1v1A8PHc1QcL0Lba3r5EudH5QgVLXNSmpQ==
-X-Received: by 2002:a05:6512:234d:: with SMTP id p13mr18241933lfu.461.1630353668056;
-        Mon, 30 Aug 2021 13:01:08 -0700 (PDT)
+        bh=E4n2eopjeScUTDwpGS09f3YHy8S6NtojvqK0Xw0UiFE=;
+        b=p9uV959KX/Sn4hC92HMN05EEvXJWr5GGnMAHtygae8Od4RSC2w8//Vrld5x93qBkhM
+         dIP4BkbrkBZomidyPy7Alo4Fy4OrM7gyJk0pklC/L0rdDPfPm8Goh31QQ1clgNXmizus
+         1WSUMpMdVNTuHP7ZnR0bAo/UUkSZT/ml0JFOBcCS/r6aRa4ynJsrAMJnGIVRsgQeQvgz
+         hNhcQnuqjwewn3/8ZmRrK+cJq0QFGWhDGBRapyWUmcGfAJyYtiHpWZTAv77xgZsjLGIZ
+         BqVlaPR4td58AtDNG/zhvvs/lTIY0oDf5F09iwwW8u9FZ8Ue67gkcqewcdygpag08nbU
+         S+6Q==
+X-Gm-Message-State: AOAM532pb8XdhlUOmghaZk9rkUiA9AWZXjizMPpRTMGPLeJFs3hUFnni
+        qTb23sqaGatyseMeixO8MOcuHHioltc=
+X-Google-Smtp-Source: ABdhPJyXsoYoGLsEzmavCQywRji3GjRLIdUAie073AyvkcGlDjxFhI+S2K3tou/je6VnC72c0FxyPw==
+X-Received: by 2002:a2e:b44f:: with SMTP id o15mr22266126ljm.430.1630353787696;
+        Mon, 30 Aug 2021 13:03:07 -0700 (PDT)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id z6sm1478720lfb.251.2021.08.30.13.01.06
+        by smtp.gmail.com with ESMTPSA id m16sm1487095lfh.243.2021.08.30.13.03.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Aug 2021 13:01:07 -0700 (PDT)
+        Mon, 30 Aug 2021 13:03:07 -0700 (PDT)
 From:   Sergey Organov <sorganov@gmail.com>
-To:     Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Johannes Sixt <j6t@kdbg.org>,
         Git Mailing List <git@vger.kernel.org>,
         Paul Mackerras <paulus@ozlabs.org>
 Subject: Re: diff-index --cc no longer permitted, gitk is now broken (slightly)
 References: <e6bd4cf7-ec8b-5d22-70f6-07089794df0c@kdbg.org>
-        <875yvn9j69.fsf@osv.gnss.ru>
-        <YS0f37xPKOHCDHr1@coredump.intra.peff.net>
-Date:   Mon, 30 Aug 2021 23:01:06 +0300
-In-Reply-To: <YS0f37xPKOHCDHr1@coredump.intra.peff.net> (Jeff King's message
-        of "Mon, 30 Aug 2021 14:13:51 -0400")
-Message-ID: <87pmtuzoql.fsf@osv.gnss.ru>
+        <xmqqsfyq501v.fsf@gitster.g> <xmqq7dg24xff.fsf@gitster.g>
+Date:   Mon, 30 Aug 2021 23:03:06 +0300
+In-Reply-To: <xmqq7dg24xff.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        30 Aug 2021 11:09:08 -0700")
+Message-ID: <87lf4izon9.fsf@osv.gnss.ru>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -75,79 +74,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Mon, Aug 30, 2021 at 04:05:50PM +0300, Sergey Organov wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> > Is gitk wrong to add --cc unconditionally? Should it do so only when
->> > there are conflicts? Or not at all?
->> 
->> As far as I can tell, --cc had no effect on diff-index, it was just
->> silently consumed. If I'm right, this line in gitk never needed --cc.
->> Then either gitk is to be fixed, or we can "fix" diff-index to silently
->> consume --cc/-c again, for backward compatibility.
+>> Johannes Sixt <j6t@kdbg.org> writes:
+>>
+>>> Since 19b2517f95a0 (diff-merges: move specific diff-index "-m" handling
+>>> to diff-index, 2021-05-21) git diff-index no longer accepts --cc. This
+>>> breaks gitk: it invokes
+>>>
+>>>    git diff-index --cached -p -C --cc --no-commit-id -U3 HEAD
+>>>
+>>> to show the staged changes (when the line "Local changes checked in to
+>>> index but not committed" is selected).
+>>>
+>>> The man page of git diff-index does not mention --cc as an option. I
+>>> haven't fully grokked the meaning of --cc, so I cannot tell whether this
+>>> absence has any significance (is deliberate or an omission).
+>>>
+>>> Is gitk wrong to add --cc unconditionally? Should it do so only when
+>>> there are conflicts? Or not at all?
+>>
+>> I think --cc is designed to naturally fall back to -p when there is
+>> only one parent.  Use of both -p and --cc has also long been an
+>> acceptable combination, and even if we say the later --cc overrides
+>> -p, there is no reason not to show single parent patch here with
+>> --cc.
 >
-> I think it does have an effect. Try this to generate a simple merge
-> conflict:
+> Another tangent.
 >
->   git init repo
->   cd repo
+> I think the use of --cc with diff-index can make sense in another
+> way.
 >
->   echo base >file
->   git add file
->   git commit -m base
+>     $ echo "# both" >>COPYING
+>     $ git add COPYING
+>     $ echo "# work" >>COPYING
 >
->   echo main >file
->   git commit -am main
+> Now we have one extra line at the end in both the index and the
+> working tree file, with yet another at the end of the latter.
 >
->   git checkout -b side HEAD^
->   echo side >file
->   git commit -am side
+>     $ git diff-index --cc HEAD
 >
->   git merge main ;# maybe master here depending on your config
+> is a way to show combined diff to go to the working tree version
+> starting from HEAD and starting from the index (I needed to use an
+> old version because the 'maint' and upwards are broken as reported).
 >
-> And then with pre-v2.33 Git, --cc does a combined diff:
+>     $ rungit v1.5.3 diff-index --cc HEAD
+>     diff --cc COPYING
+>     index 8b9c100,536e555..0000000
+>     --- a/COPYING
+>     +++ b/COPYING
+>     @@@ -358,4 -358,3 +358,5 @@@ proprietary programs.  If your program 
+>       consider it more useful to permit linking proprietary applications with the
+>       library.  If this is what you want to do, use the GNU Lesser General
+>       Public License instead of this License.
+>      +# both
+>     ++# work
 >
->   $ git.v2.32.0 diff-index -p  HEAD
->   diff --git a/file b/file
->   index 2299c37..81768df 100644
->   --- a/file
->   +++ b/file
->   @@ -1 +1,5 @@
->   +<<<<<<< HEAD
->    side
->   +=======
->   +main
->   +>>>>>>> main
->
->   $ git.v2.32.0 diff-index --cc HEAD
->   diff --cc file
->   index df967b9,2299c37..0000000
->   --- a/file
->   +++ b/file
->   @@@ -1,1 -1,1 +1,5 @@@
->   - base
->   ++<<<<<<< HEAD
->   + side
->   ++=======
->   ++main
->   ++>>>>>>> main
->
-> Likewise, --raw will show a combined diff, though it's a bit less useful
-> because the unmerged entry has a null sha1:
->
->   $ git.v2.32.0 diff-index HEAD
->   :100644 100644 2299c37978265a95cbe835a4b0f0bbf15aad5549 0000000000000000000000000000000000000000 M	file
->
->   $ git.v2.32.0 diff-index --cc --raw HEAD
->   ::100644 100644 100644 df967b96a579e45a18b8251732d16804b2e56a55 2299c37978265a95cbe835a4b0f0bbf15aad5549 0000000000000000000000000000000000000000 MM	file
->
-> -Peff
+> Now the way "gitk" used is with "--cached", so there is no multi-way
+> comparisons to be combined, and it is natural to fall back to "-p",
+> so it is a different issue, but since we invented "--cc" to
+> originally emulate, and to later improve, the output from gitk,
+> I am reasonably sure that its use of "--cc" should be supported.
 
-Well, thanks! As it does make a difference, it's a pity it's neither
-documented nor being tested.
-
-I need to review the issue more closely to give a fix then.
+If the patch breaks essential (even if undocumented and untested)
+behavior, as Jeff pointed, it should obviously be fixed. I'll look at it
+more closely to suggest a fix.
 
 Thanks,
 -- Sergey Organov
