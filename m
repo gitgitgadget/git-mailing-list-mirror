@@ -2,84 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2E7AC4320A
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:23:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4A2BC432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:30:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9644060FC0
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:23:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 84B2360FA0
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:30:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237457AbhH3VYT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 17:24:19 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53199 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236603AbhH3VYT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 17:24:19 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E6B90E6D50;
-        Mon, 30 Aug 2021 17:23:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=R/aJTwgU6fRqPczvzJcJLcwoHZ8O4smDHP51Na
-        hdDIk=; b=By+mmArQH1KZ87hxPUO6579+o5ddoR4OdmuzEAil2G1dLyLu87iDBr
-        3Ux1ardx+DT0dacPoQTSA2S0rHozKWq1JklW4Alw/xErhViCHX71enNafzAP7r2R
-        m4ZcrPU4jrXWu0NYLOM7u4HSnHpPXfoEU/T7S4Z9u/H4rV6QrzDeU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DE8E5E6D4F;
-        Mon, 30 Aug 2021 17:23:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 613AFE6D4E;
-        Mon, 30 Aug 2021 17:23:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Mahi Kolla via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] fixup! clone: set submodule.recurse=true if
- submodule.stickyRecursiveClone enabled
-References: <pull.1006.v5.git.1628736366133.gitgitgadget@gmail.com>
-        <pull.1006.v6.git.1628903396783.gitgitgadget@gmail.com>
-        <xmqqy293ucju.fsf@gitster.g> <YRw/8tThN7djNE+E@google.com>
-        <xmqqk0ki5xwk.fsf@gitster.g> <xmqqa6le5x1f.fsf_-_@gitster.g>
-        <YR6Xr3SMZjlJ1ZaK@google.com> <YS1Glp/U4WPu6XCp@google.com>
-Date:   Mon, 30 Aug 2021 14:23:23 -0700
-In-Reply-To: <YS1Glp/U4WPu6XCp@google.com> (Emily Shaffer's message of "Mon,
-        30 Aug 2021 13:59:02 -0700")
-Message-ID: <xmqqzgsy1vas.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S238465AbhH3VbA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 17:31:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34128 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238472AbhH3Va7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 17:30:59 -0400
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4311BC061760
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 14:30:05 -0700 (PDT)
+Received: by mail-il1-x12f.google.com with SMTP id s16so17842550ilo.9
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 14:30:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=QhDg/pOMA/0CbsY0QOVuUSe5PIiOaSsF3nu8zfv2gxA=;
+        b=oTDyTB7NTqcuZYAzirsSwsWJEyQ8CqFTkyPO5i6KrUxHjxCPogS6MjFjS76iE5Loaz
+         bL94NaUZuMcCYkEsnGUYzAPx4A+QiIHAYtBN8pzQtWbHEVcK0inGJxQxieyBOL/hzRh0
+         wIhOpOserPFWmKjuKJ6x3d3TYQIb9XflPCYHuXMeBkivbkOxxN7ReY5SINk1tBcXaLhA
+         DJYU1jXohNH/cZxj2fiU2Q8nUyRkmKt+pd5H3Az0lRG5a5QvhKYWaVoBldGw8MYfCfcS
+         MqpcQhig2DTUm2QSX2oNaCCsDUKsJ10inzhu9bMTcC4yrdsG9gy3Vwv/csipRAqqlnvZ
+         Dxew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=QhDg/pOMA/0CbsY0QOVuUSe5PIiOaSsF3nu8zfv2gxA=;
+        b=OFJIOmd8DR+nlWJtZksptnr58zu2WB5PJq2f4zugAQ6g2YtgIbvxHAqF33ZPCNBvyq
+         VOZ0u0NjmRoywm6ifDUhQblEvLZsRbdoikprQYjFHyuh/2V0b8F1JJetynHANVovLap5
+         SFCXi4E9BkXrhjqO8Z1oj9VrnFbw6vp+cL1T7IRBrV0lO3iIw6voxAadCiCZ89jyT/lW
+         E79ew2WlRrsMvZHmmaEAgKonAYFZSmrPJgbW3j7XNSpwofc4ZplFBhO9DRzUBqmIwhwf
+         aOeYVybnXqKLMLej5tjscWMTS/vONno6a1YTtJOD2Ub0piApD0ie3WLk/YmjkGUlf82n
+         DX9A==
+X-Gm-Message-State: AOAM533cpscmO2iu6PBbPArnDkwcVYqIGyO8qN2t1uCX488grMzWX+Ak
+        /5Od5wRm7sTQxREMbGq3I63r82353HbZBtnf
+X-Google-Smtp-Source: ABdhPJyR5WmaKVR/TLedt0O07g5h/ZrHlreaUH3gn+OuKq4ot4+rtXK35LTtYrKKAVl7rNtJ/oaq3w==
+X-Received: by 2002:a92:c6d1:: with SMTP id v17mr18209729ilm.302.1630359004649;
+        Mon, 30 Aug 2021 14:30:04 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id a4sm8710312ioe.19.2021.08.30.14.30.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Aug 2021 14:30:04 -0700 (PDT)
+Date:   Mon, 30 Aug 2021 17:30:02 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/3] pack-objects: simplify
+ add_objects_in_unpacked_packs()
+Message-ID: <YS1N2moWMnd5nq83@nand.local>
+References: <cover.1630291682.git.me@ttaylorr.com>
+ <YS1GemF3aKTe//Tn@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 823AFF0A-09D8-11EC-A416-ECFD1DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YS1GemF3aKTe//Tn@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+On Mon, Aug 30, 2021 at 04:58:34PM -0400, Jeff King wrote:
+> Those unknown objects cost 72 bytes of heap each (the same size as a
+> commit, since it's the biggest struct and the unknown object is a
+> union). We've seen some real-world cases where there are 40M+
+> unreachable objects. So that's almost 3GB of wasted RAM during
+> pack-objects just to store those "did I see it already" bits. :)
 
-> On Thu, Aug 19, 2021 at 10:41:03AM -0700, Emily Shaffer wrote:
->> 
->> On Wed, Aug 18, 2021 at 01:15:56PM -0700, Junio C Hamano wrote:
->> > 
->> > Narrow the scope of a temporary variable used only once and
->> > immediately die, and rename it to a shorter, throw-away name.
->> > 
->> > Also lose a {} around a single statement block.
->> > 
->> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> Acked-by: Emily Shaffer <emilyshaffer@google.com>
->> 
->> Thanks.
->
-> Having not heard from Mahi last week, if you are happy with the
-> patch+squash, I think it would be OK to take this without waiting longer
-> for her. Up to you of course.
+I wondered if you could see the drop-off represented in GitHub's overall
+"total heap allocated by Git" metrics, but they get drowned out in the
+noise of other processes we're running.
 
-Thanks for a nudge.
+But not wasting memory there is obviously good, even if it isn't
+noticeable in the overall metrics.
+
+Thanks,
+Taylor
