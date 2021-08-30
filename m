@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 278C9C4320A
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 10:47:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00DD8C432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 10:47:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E5C8610F9
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 10:47:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DDECB610FA
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 10:47:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236392AbhH3KsS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 06:48:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52584 "EHLO
+        id S236400AbhH3KsT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 06:48:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236367AbhH3KsR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Aug 2021 06:48:17 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 297AEC061575
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 03:47:24 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id v10so21777228wrd.4
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 03:47:24 -0700 (PDT)
+        with ESMTP id S236394AbhH3KsS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Aug 2021 06:48:18 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A518C061575
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 03:47:25 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id j17-20020a05600c1c1100b002e754875260so9099584wms.4
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 03:47:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ee6C527tRpJVQ+uEy84krbvGXn5SUsspleN+3gUQp20=;
-        b=M11rK+UgEjJab5re8cYicz0SqKfKekM1DWHIhsDsHQwBHKF+GMN0MS+0jJv07kpHMB
-         RzIc1ve2v8uHFb7kJ0XFHefC7wQmd1Q0YSsFP1pJg5PH96k0slwqxPNakHi6Xjry5E1E
-         Hw+ImpjzekSl9LZkz8Tq5lzyEhnyKjzBQGXWFxUwmW4ff2qCfhy86C6+U2HlrZesxmZS
-         PuqiX89IiXYTagzUI/KqbEC1eE4Dlu9C3q23GJD9VFTslap7F2Dd/RStVWoQQZgcn24B
-         n1JC18E3RhI1t5KwUoDNk1/Gz3qssZpuT3lLVMcftd2+krB+XnzaY6kyi/T6+naoEQa8
-         Nd8g==
+        bh=Tb3K0B9fXmpdmer/jL6HhNEuTtLZWweNmunar3TfWPk=;
+        b=C73ybQbd7vRlwXwe1tqXDWfc5hJdMDTR+JCZCC1faQGhiOFIaUpdUMePvh/foIhA7o
+         +Uef50qn4Vm8C5bmEXDlVeJJm9825ZHvnXwaTV5t9yr1SQdULsfQF6zRERytEOtBZyLe
+         iTqOUTUjR/YqZptDaeIpNId9TozROUBrI8HTQxrybj8poIx7hxoqdCW6RNpKpvybISMX
+         VZa2dk+RcX96N2pf2ssLhBEdmmxyfn0nAj1ib5WQOCVq8UgQK2/c0p/D9zPuwN2hwlsQ
+         4bhtkM9CdX8t+T1i5nF0oS9+iPk5CB5el+jfXmQw6jbo7uhQGMuy39//ZWwsBUImq9Yb
+         xkew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ee6C527tRpJVQ+uEy84krbvGXn5SUsspleN+3gUQp20=;
-        b=IVgvlbX3ipMHxyleVQ3lY/gsfqpVg085il4cQLWn1aMvODfw/Hn7Nh3bDj3P5tDZGY
-         wHIQYAOjZoiCwDmwUnD1hdgUH/jjhCLEWNrpDKSPjqna4k5TcOmrtK+vCkWKGSh4AtJL
-         BtFyq5xzXy9nHKFDqJnkQ4mPWhsIdAG8cFOXSfgusQM4j4wgB0bjoTKgUhHzqHTdUm5k
-         ElkVy9eygokdr45qnr9wsl0+aE+GpCjZ8abfACWKtNfuVZtuOrqCeaGtezLAwchJifVx
-         3eUKOeRyPsvwtcYycp3JEGbOCOVzLDZ64tzpsAs1ILDbTFc2oyH5qA5X9s19CCPAzj4P
-         5RDg==
-X-Gm-Message-State: AOAM5319JG5+JxsJNYr1aCMoVibbhH1oeLUjPqDnI204+qf3Uoq28ihG
-        a76m4syZkikWh3Of4/d910IX2ZDJbtMFJL0A
-X-Google-Smtp-Source: ABdhPJyM+iFvV0cpN6e8XLDbuGS+W0mV7UyK3KhkCCll8TKrKOPQcVqaVjJnBFTC3GI2BHaHvusEoQ==
-X-Received: by 2002:adf:f4ca:: with SMTP id h10mr25145222wrp.351.1630320442483;
-        Mon, 30 Aug 2021 03:47:22 -0700 (PDT)
+        bh=Tb3K0B9fXmpdmer/jL6HhNEuTtLZWweNmunar3TfWPk=;
+        b=kEKzthAG11z9r0azA1m7fk/BXOXgCuIuw7Orj8ro1ynnGnvsA3K3M0N/gjKPk3JlwK
+         ItwOKUajgEYIZNbulJL8aZAb7C4sMWWGZVxkjWg5hmESyMjX879aLBOYzrMc7Oaq9/wR
+         c9pmvQFp12fuGN13tgSBdYXBjRWCg0k2ZK4BpRi8/t6ew+oDQ7ReG2b1x/oI+EHPPJbr
+         4vzo+fI85FjetU5f+b96gxUcR1cAxc0AWcnSJMy7Ays5zM4S0WeVPXu8Mno52twRm7XY
+         wl66SUg1rmwgBGYEHw3oGuKxfv9DNSiYm1j0+yprZ6j8Ph0WeTSD+6T6I02zW7eCdFIG
+         nN8Q==
+X-Gm-Message-State: AOAM533wZ30Tdz4wb4RK3nI8xzQSVBSj6zDQN8yhGkKIUJgMwsgD+Z9L
+        qP1592Jvy2AAkO95tJoo1xYSHjgDpHGe/mWS
+X-Google-Smtp-Source: ABdhPJxgYKrvmc6cSDwZl30e4FdW5B9CPKuKzbaA+X9HJn7zDq21G/yZf+Jg9P3Qp5aEQseZiuwvZQ==
+X-Received: by 2002:a7b:c048:: with SMTP id u8mr21592183wmc.113.1630320443397;
+        Mon, 30 Aug 2021 03:47:23 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v13sm15509057wrf.55.2021.08.30.03.47.21
+        by smtp.gmail.com with ESMTPSA id v13sm15509057wrf.55.2021.08.30.03.47.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Aug 2021 03:47:21 -0700 (PDT)
+        Mon, 30 Aug 2021 03:47:22 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC PATCH v2 1/2] t3303/t9301: make `notes` tests less brittle
-Date:   Mon, 30 Aug 2021 12:47:13 +0200
-Message-Id: <RFC-patch-v2-1.2-5a1ddd30859-20210830T103913Z-avarab@gmail.com>
+Subject: [RFC PATCH v2 2/2] notes: don't indent empty lines
+Date:   Mon, 30 Aug 2021 12:47:14 +0200
+Message-Id: <RFC-patch-v2-2.2-4b546b83fd7-20210830T103913Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.737.g0eefde7d76
 In-Reply-To: <RFC-cover-v2-0.2-00000000000-20210830T103913Z-avarab@gmail.com>
 References: <20210830072118.91921-1-sunshine@sunshineco.com> <RFC-cover-v2-0.2-00000000000-20210830T103913Z-avarab@gmail.com>
@@ -77,98 +77,152 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Eric Sunshine <sunshine@sunshineco.com>
 
-These tests care about whether intended notes-related functionality
-occurred, but they check for the expected result in a brittle way by
-consulting the default output of `git log` which is intended for human,
-not machine, consumption. Make the tests more robust by requesting the
-desired information in a stable machine-consumable format.
+Like other Git commands, `git notes` takes care to call `stripspace` on
+the user-supplied note content, thereby ensuring that it has no trailing
+whitespace, among other cleanups. However, when notes are inserted into
+a patch via `git format-patch --notes`, all lines of the note are
+indented unconditionally, including empty lines, which leaves trailing
+whitespace on lines which previously were empty, thus negating the
+normalization done earlier. Fix this shortcoming.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t3303-notes-subtrees.sh    | 13 ++++++++-----
- t/t9301-fast-import-notes.sh | 36 +++++++++++++++++++-----------------
- 2 files changed, 27 insertions(+), 22 deletions(-)
+ notes.c          |  2 +-
+ t/t3301-notes.sh | 28 ++++++++++++++--------------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/t/t3303-notes-subtrees.sh b/t/t3303-notes-subtrees.sh
-index d47ce00f694..abffa105645 100755
---- a/t/t3303-notes-subtrees.sh
-+++ b/t/t3303-notes-subtrees.sh
-@@ -171,13 +171,16 @@ INPUT_END
- }
+diff --git a/notes.c b/notes.c
+index f87dac40684..25e0a598996 100644
+--- a/notes.c
++++ b/notes.c
+@@ -1295,7 +1295,7 @@ static void format_note(struct notes_tree *t, const struct object_id *object_oid
+ 	for (msg_p = msg; msg_p < msg + msglen; msg_p += linelen + 1) {
+ 		linelen = strchrnul(msg_p, '\n') - msg_p;
  
- verify_concatenated_notes () {
--	git log | grep "^    " > output &&
-+	git log --format="tformat:%B%N" >output &&
- 	i=$number_of_commits &&
- 	while [ $i -gt 0 ]; do
--		echo "    commit #$i" &&
--		echo "    first note for commit #$i" &&
--		echo "    " &&
--		echo "    second note for commit #$i" &&
-+		cat <<-EOF &&
-+		commit #$i
-+		first note for commit #$i
-+
-+		second note for commit #$i
-+
-+		EOF
- 		i=$(($i-1));
- 	done > expect &&
- 	test_cmp expect output
-diff --git a/t/t9301-fast-import-notes.sh b/t/t9301-fast-import-notes.sh
-index 1ae4d7c0d37..123323b2bbb 100755
---- a/t/t9301-fast-import-notes.sh
-+++ b/t/t9301-fast-import-notes.sh
-@@ -259,29 +259,31 @@ EOF
+-		if (!raw)
++		if (!raw && linelen)
+ 			strbuf_addstr(sb, "    ");
+ 		strbuf_add(sb, msg_p, linelen);
+ 		strbuf_addch(sb, '\n');
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index d742be88402..74e5bfbc863 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -326,7 +326,7 @@ test_expect_success 'show -m notes' '
  
- INPUT_END
+ 		Notes:
+ 		${indent}spam
+-		${indent}
++
+ 		${indent}foo
+ 		${indent}bar
+ 		${indent}baz
+@@ -849,7 +849,7 @@ test_expect_success 'append to note from other note with "git notes append -C"'
  
--whitespace="    "
--
- cat >expect <<EXPECT_END
--    fourth commit
--    pre-prefix of note for fourth commit
--$whitespace
--    prefix of note for fourth commit
--$whitespace
--    third note for fourth commit
--    third commit
--    prefix of note for third commit
--$whitespace
--    third note for third commit
--    second commit
--    third note for second commit
--    first commit
--    third note for first commit
-+fourth commit
-+pre-prefix of note for fourth commit
+ 		Notes:
+ 		${indent}yet another note
+-		${indent}
 +
-+prefix of note for fourth commit
-+
-+third note for fourth commit
-+
-+third commit
-+prefix of note for third commit
-+
-+third note for third commit
-+
-+second commit
-+third note for second commit
-+
-+first commit
-+third note for first commit
-+
- EXPECT_END
+ 		${indent}yet another note
+ 	EOF
+ 	note=$(git notes list HEAD^) &&
+@@ -887,7 +887,7 @@ test_expect_success 'append to note from other note with "git notes append -c"'
  
- test_expect_success 'add concatenation notes with M command' '
+ 		Notes:
+ 		${indent}other note
+-		${indent}
++
+ 		${indent}yet another note
+ 	EOF
+ 	note=$(git notes list HEAD) &&
+@@ -928,7 +928,7 @@ test_expect_success 'copy note with "git notes copy" with default' '
  
- 	git fast-import <input &&
--	GIT_NOTES_REF=refs/notes/test git log | grep "^    " > actual &&
-+	GIT_NOTES_REF=refs/notes/test git log --format="tformat:%B%N" >actual &&
- 	test_cmp expect actual
+ 		Notes:
+ 		${indent}other note
+-		${indent}
++
+ 		${indent}yet another note
+ 	EOF
+ 	git notes copy HEAD^ &&
+@@ -950,7 +950,7 @@ test_expect_success 'prevent overwrite with "git notes copy"' '
  
- '
+ 		Notes:
+ 		${indent}other note
+-		${indent}
++
+ 		${indent}yet another note
+ 	EOF
+ 	git log -1 >actual &&
+@@ -991,7 +991,7 @@ test_expect_success 'allow overwrite with "git notes copy -f" with default' '
+ 
+ 		Notes:
+ 		${indent}yet another note
+-		${indent}
++
+ 		${indent}yet another note
+ 	EOF
+ 	git notes copy -f HEAD~2 &&
+@@ -1020,7 +1020,7 @@ test_expect_success 'git notes copy --stdin' '
+ 
+ 		Notes:
+ 		${indent}yet another note
+-		${indent}
++
+ 		${indent}yet another note
+ 
+ 		commit $parent
+@@ -1031,7 +1031,7 @@ test_expect_success 'git notes copy --stdin' '
+ 
+ 		Notes:
+ 		${indent}other note
+-		${indent}
++
+ 		${indent}yet another note
+ 	EOF
+ 	from=$(git rev-parse HEAD~3) &&
+@@ -1092,7 +1092,7 @@ test_expect_success 'git notes copy --for-rewrite (enabled)' '
+ 
+ 		Notes:
+ 		${indent}yet another note
+-		${indent}
++
+ 		${indent}yet another note
+ 
+ 		commit $parent
+@@ -1103,7 +1103,7 @@ test_expect_success 'git notes copy --for-rewrite (enabled)' '
+ 
+ 		Notes:
+ 		${indent}other note
+-		${indent}
++
+ 		${indent}yet another note
+ 	EOF
+ 	test_config notes.rewriteMode overwrite &&
+@@ -1174,7 +1174,7 @@ test_expect_success 'git notes copy --for-rewrite (append)' '
+ 
+ 		Notes:
+ 		${indent}a fresh note
+-		${indent}
++
+ 		${indent}another fresh note
+ 	EOF
+ 	git notes add -f -m"another fresh note" HEAD^ &&
+@@ -1199,11 +1199,11 @@ test_expect_success 'git notes copy --for-rewrite (append two to one)' '
+ 
+ 		Notes:
+ 		${indent}a fresh note
+-		${indent}
++
+ 		${indent}another fresh note
+-		${indent}
++
+ 		${indent}append 1
+-		${indent}
++
+ 		${indent}append 2
+ 	EOF
+ 	git notes add -f -m"append 1" HEAD^ &&
 -- 
 2.33.0.737.g0eefde7d76
 
