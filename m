@@ -8,169 +8,210 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9CB6C4320A
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:35:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC40EC432BE
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:35:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D413460FA0
-	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:35:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D899B60E77
+	for <git@archiver.kernel.org>; Mon, 30 Aug 2021 21:35:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238461AbhH3VgA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Aug 2021 17:36:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35308 "EHLO
+        id S238185AbhH3VgD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Aug 2021 17:36:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237869AbhH3Vfw (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S237903AbhH3Vfw (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 30 Aug 2021 17:35:52 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFEABC061575
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 14:34:57 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id b6so24349038wrh.10
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 14:34:57 -0700 (PDT)
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B88AC061760
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 14:34:58 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id o39-20020a05600c512700b002e74638b567so939964wms.2
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 14:34:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+Qa3XTFOfDZ3LXiRJgrvog5lC/X+p4vAfXQw6nc+d2U=;
-        b=b1K453pLxs7TFkCh5evxBbxnRnwU3RU8Rr06pZYeqeC6fXVXgeBF9sTdiXqKXyreqs
-         brZi/rAxRbQMFZDyB+/UGbpAPJZJlBWx1SG5DQsmQAvb2i/F9CBjffMxVK+hXcob8nyU
-         pWG+FAqUAhq89OJTvUMPCwzZrMYXY+sNRnODhp/yZDyUeYpDxng+e2ZfEkOxSfyCt0tD
-         fkrCImp3A4UpFb2lvMOtLnI4jrg6+cS/nBBHkG3Ktn378XPdXjRCzoS1VR9A7gSdYzTl
-         ct0Hao0gxzb8gmOYOdqp2tXyRDDcy9RpBIvjVlg0R4rLCuJQh3+cpyUT4C5HhlOPYNI3
-         SmYQ==
+        bh=xAXU9tESuQK7OAufC124BYhDDnjltfzIBsprw3bAanE=;
+        b=FR7YI6yANoyGdPBPmP9MzA5vGeaHoZZGp6p89OMF0OucRu9NeTAknQtlVzAPuB9v0C
+         MlfQ0Z8dtN2s+bZVFO/jvZ7DHwMAioAWDJEBecBrwQorLZz0levSTtUxSYffECb21ZEh
+         RpYWM0JNgSh2btvvLcu9ZToeyFphWCPpas5KyXXBrsEOgMAP955gjQ5yIDuqCWpAUjHz
+         okbI6maSl3NK1zyte8Fy47g7vuAJdcHmCDQG0umblAfPMrl7mtUuCVd7UWImt/le9uK5
+         Z+Bn7UHXCmQLA4Lvg0SeyDlXRXWxNH2yl4IV2N1dPQzz5Z5rPPac6YN/fhI4QVmptxk8
+         NnJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+Qa3XTFOfDZ3LXiRJgrvog5lC/X+p4vAfXQw6nc+d2U=;
-        b=STdO9O/vPKKGWpgcJ9/be5FyYQm5i6+yfOjFFR0G8MTs1okK7ph4PDUpWo0r/DPTL9
-         JojQA746Hzyn0FgFDoBmsAXuNIdl+uJl9pFVENTW9V1vIC3JAmke0kB3852qnPnky0k8
-         q71cabneOZiFiVPlpPEaUP/rIP/U45i43/no06dQyyn7Yx54tCzkYcgLyI4YX32bgOzD
-         552WhB5a1Nc7NAFFHCkAJIvA5QoaP05Y5lwdQ2EtLDuB2OJTJvIC6yR1l2P4kbo0TyJ9
-         P0mn9ra9xmJdWMO9nGQaI6rvg6TcsD6lwwbB3XNTLW4kN2OGNQfg//RsmipUfhfWrxiJ
-         oNMw==
-X-Gm-Message-State: AOAM530xwY47fTKEFjxk8amNCHbiTqgB8vKQOJe7PlwivpduCsUbIyte
-        EbEahKMoaoEUHSJj1BKwffYWrUhVEd0=
-X-Google-Smtp-Source: ABdhPJxzq2a1Ay1UMBDY2zlNOtlRHgGmqUp6c4eJBpaV9ulUAr4E8BN6Pqtg1si5GePVrMydObHlCw==
-X-Received: by 2002:adf:f84d:: with SMTP id d13mr28239016wrq.292.1630359296389;
+        bh=xAXU9tESuQK7OAufC124BYhDDnjltfzIBsprw3bAanE=;
+        b=djTBsBZirA1mKfS941Nygylwshvmk3/nGEs0fHrTBfm3wW0iY4ZiG1DsYGc1eUZ2Fk
+         t3gdWtfSrh6elj6/Pb7bP/NWmjdkhcGHC1GxgCnI3qaht0N/WeXB9DJZuTpiXvZJsyKG
+         xyIIv+XSKv8nmG4VWhmrtERmIrkPjG4cWaKtnj+nTSa/FZHbq+2UwAM6en9qPG+VoEPB
+         8DeVrjvaXY6pGcxy0OaKc4lf5fftMWI8qcJLz++UoLJaXqQfUwqrvNWRWpsW5hOOnQBT
+         ggguzjNElq+dS4ID7xN0rI95ilCkcs2GRJwMkAZ3AiFY9Nr9NDZSqN5EVX/ue9ZAauvm
+         I5QQ==
+X-Gm-Message-State: AOAM530TU4aWd8qVC8egG4npRNBzq9c2rWGMXMuqwqEPiEYEqGswboUb
+        AJrM+ha5qjskKSqDq1APeM+OzReOsng=
+X-Google-Smtp-Source: ABdhPJz3nWsGpFBizecS9yDweR9YgO+Ra6Pd+BXx6CmWjLHRZzw1feYTJTQgTK6DJJFMLAk8UMiFhw==
+X-Received: by 2002:a1c:f405:: with SMTP id z5mr974131wma.33.1630359296915;
         Mon, 30 Aug 2021 14:34:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n14sm16101156wrx.10.2021.08.30.14.34.56
+        by smtp.gmail.com with ESMTPSA id h11sm734502wmc.23.2021.08.30.14.34.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 30 Aug 2021 14:34:56 -0700 (PDT)
-Message-Id: <9af1c37c2ea8b51cb2941b0b62460925eb76dfe4.1630359290.git.gitgitgadget@gmail.com>
+Message-Id: <c3f16bccd023601bb1d041c36cf5f49011abcb76.1630359290.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1005.git.1630359290.gitgitgadget@gmail.com>
 References: <pull.1005.git.1630359290.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 30 Aug 2021 21:34:44 +0000
-Subject: [PATCH 09/15] scalar: teach 'clone' to support the --single-branch
- option
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 30 Aug 2021 21:34:45 +0000
+Subject: [PATCH 10/15] scalar: implement the `run` command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Derrick Stolee <dstolee@microsoft.com>
 
-Just like `git clone`, the `scalar clone` command now also offers to
-restrict the clone to a single branch.
+Note: this subcommand is provided primarily for backwards-compatibility,
+for existing Scalar uses. It is mostly just a shim for `git
+maintenance`, mapping task names from the way Scalar called them to the
+way Git calls them.
 
+The reason why those names differ? The background maintenance was first
+implemented in Scalar, and when it was contributed as a patch series
+implementing the `git maintenance` command, reviewers suggested better
+names, those suggestions were accepted before the patches were
+integrated into core Git.
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/scalar.c          |  9 +++++++--
- contrib/scalar/scalar.txt        | 12 +++++++++++-
- contrib/scalar/t/t9099-scalar.sh |  6 +++++-
- 3 files changed, 23 insertions(+), 4 deletions(-)
+ contrib/scalar/scalar.c   | 64 +++++++++++++++++++++++++++++++++++++++
+ contrib/scalar/scalar.txt | 19 ++++++++++++
+ 2 files changed, 83 insertions(+)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index 13cdfa94d16..908eaa84df1 100644
+index 908eaa84df1..d5d38a1afeb 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -333,12 +333,15 @@ static char *remote_default_branch(const char *url)
- static int cmd_clone(int argc, const char **argv)
- {
- 	const char *branch = NULL;
--	int full_clone = 0;
-+	int full_clone = 0, single_branch = 0;
- 	struct option clone_options[] = {
- 		OPT_STRING('b', "branch", &branch, N_("<branch>"),
- 			   N_("branch to checkout after clone")),
- 		OPT_BOOL(0, "full-clone", &full_clone,
- 			 N_("when cloning, create full working directory")),
-+		OPT_BOOL(0, "single-branch", &single_branch,
-+			 N_("only download metadata for the branch that will "
-+			    "be checked out")),
- 		OPT_END(),
- 	};
- 	const char * const clone_usage[] = {
-@@ -409,7 +412,9 @@ static int cmd_clone(int argc, const char **argv)
+@@ -490,6 +490,69 @@ static int cmd_register(int argc, const char **argv)
+ 	return register_dir();
+ }
  
- 	if (set_config("remote.origin.url=%s", url) ||
- 	    set_config("remote.origin.fetch="
--		       "+refs/heads/*:refs/remotes/origin/*") ||
-+		       "+refs/heads/%s:refs/remotes/origin/%s",
-+		       single_branch ? branch : "*",
-+		       single_branch ? branch : "*") ||
- 	    set_config("remote.origin.promisor=true") ||
- 	    set_config("remote.origin.partialCloneFilter=blob:none")) {
- 		res = error(_("could not configure remote in '%s'"), dir);
++static int cmd_run(int argc, const char **argv)
++{
++	struct option options[] = {
++		OPT_END(),
++	};
++	struct {
++		const char *arg, *task;
++	} tasks[] = {
++		{ "config", NULL },
++		{ "commit-graph", "commit-graph" },
++		{ "fetch", "prefetch" },
++		{ "loose-objects", "loose-objects" },
++		{ "pack-files", "incremental-repack" },
++		{ NULL, NULL }
++	};
++	struct strbuf buf = STRBUF_INIT;
++	const char *usagestr[] = { NULL, NULL };
++	int i;
++
++	strbuf_addstr(&buf, N_("scalar run <task> [<enlistment>]\nTasks:\n"));
++	for (i = 0; tasks[i].arg; i++)
++		strbuf_addf(&buf, "\t%s\n", tasks[i].arg);
++	usagestr[0] = buf.buf;
++
++	argc = parse_options(argc, argv, NULL, options,
++			     usagestr, 0);
++
++	if (argc == 0)
++		usage_with_options(usagestr, options);
++
++	if (!strcmp("all", argv[0]))
++		i = -1;
++	else {
++		for (i = 0; tasks[i].arg && strcmp(tasks[i].arg, argv[0]); i++)
++			; /* keep looking for the task */
++
++		if (i > 0 && !tasks[i].arg) {
++			error(_("no such task: '%s'"), argv[0]);
++			usage_with_options(usagestr, options);
++		}
++	}
++
++	argc--;
++	argv++;
++	setup_enlistment_directory(argc, argv, usagestr, options, NULL);
++	strbuf_release(&buf);
++
++	if (i == 0)
++		return register_dir();
++
++	if (i > 0)
++		return run_git("maintenance", "run",
++			       "--task", tasks[i].task, NULL);
++
++	if (register_dir())
++		return -1;
++	for (i = 1; tasks[i].arg; i++)
++		if (run_git("maintenance", "run",
++			    "--task", tasks[i].task, NULL))
++			return -1;
++	return 0;
++}
++
+ static int remove_deleted_enlistment(struct strbuf *path)
+ {
+ 	int res = 0;
+@@ -562,6 +625,7 @@ static struct {
+ 	{ "list", cmd_list },
+ 	{ "register", cmd_register },
+ 	{ "unregister", cmd_unregister },
++	{ "run", cmd_run },
+ 	{ NULL, NULL},
+ };
+ 
 diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
-index 90d59f1d79f..bb9411b38cb 100644
+index bb9411b38cb..9aadaf6323f 100644
 --- a/contrib/scalar/scalar.txt
 +++ b/contrib/scalar/scalar.txt
-@@ -8,7 +8,7 @@ scalar - an opinionated repository management tool
- SYNOPSIS
- --------
- [verse]
--scalar clone [--branch <main-branch>] [--full-clone] <url> [<enlistment>]
-+scalar clone [--single-branch] [--branch <main-branch>] [--full-clone] <url> [<enlistment>]
+@@ -12,6 +12,7 @@ scalar clone [--single-branch] [--branch <main-branch>] [--full-clone] <url> [<e
  scalar list
  scalar register [<enlistment>]
  scalar unregister [<enlistment>]
-@@ -56,6 +56,16 @@ subdirectories outside your sparse-checkout by using `git ls-tree HEAD`.
-     Instead of checking out the branch pointed to by the cloned repository's
-     HEAD, check out the `<name>` branch instead.
++scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files ) [<enlistment>]
  
-+--[no-]single-branch::
-+    Clone only the history leading to the tip of a single branch,
-+    either specified by the `--branch` option or the primary
-+    branch remote's `HEAD` points at.
+ DESCRIPTION
+ -----------
+@@ -94,6 +95,24 @@ unregister [<enlistment>]::
+     Remove the specified repository from the list of repositories
+     registered with Scalar and stop the scheduled background maintenance.
+ 
++Run
++~~~
++
++scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files ) [<enlistment>]::
++    Run the given maintenance task (or all tasks, if `all` was specified).
++    Except for `all` and `config`, this subcommand simply hands off to
++    linkgit:git-maintenance[1] (mapping `fetch` to `prefetch` and
++    `pack-files` to `incremental-repack`).
 ++
-+Further fetches into the resulting repository will only update the
-+remote-tracking branch for the branch this option was used for the initial
-+cloning. If the HEAD at the remote did not point at any branch when
-+`--single-branch` clone was made, no remote-tracking branch is created.
++These tasks are run automatically as part of the scheduled maintenance,
++as soon as the repository is registered with Scalar. It should therefore
++not be necessary to run this subcommand manually.
+++
++The `config` task is specific to Scalar and configures all those
++opinionated default settings that make Git work more efficiently with
++large repositories. As this task is run as part of `scalar clone`
++automatically, explicit invocations of this task are rarely needed.
 +
- --[no-]full-clone::
-     A sparse-checkout is initialized by default. This behavior can be turned
-     off via `--full-clone`.
-diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
-index 295398f62cc..9a35ab4fde6 100755
---- a/contrib/scalar/t/t9099-scalar.sh
-+++ b/contrib/scalar/t/t9099-scalar.sh
-@@ -45,13 +45,17 @@ test_expect_success 'set up repository to clone' '
- 
- test_expect_success 'scalar clone' '
- 	second=$(git rev-parse --verify second:second.t) &&
--	scalar clone "file://$(pwd)" cloned &&
-+	scalar clone "file://$(pwd)" cloned --single-branch &&
- 	(
- 		cd cloned/src &&
- 
- 		git config --get --global --fixed-value maintenance.repo \
- 			"$(pwd)" &&
- 
-+		git for-each-ref --format="%(refname)" refs/remotes/origin/ >actual &&
-+		echo "refs/remotes/origin/parallel" >expect &&
-+		test_cmp expect actual &&
-+
- 		test_path_is_missing 1/2 &&
- 		test_must_fail git rev-list --missing=print $second &&
- 		git rev-list $second &&
+ SEE ALSO
+ --------
+ linkgit:git-clone[1], linkgit:git-maintenance[1].
 -- 
 gitgitgadget
 
