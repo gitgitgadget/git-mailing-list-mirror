@@ -2,152 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1CA6C432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 19:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DC16C432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:03:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E5F961059
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 19:59:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 75440600CC
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:03:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239893AbhHaUAW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 16:00:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57948 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229946AbhHaUAV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 16:00:21 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5DD6C061575
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 12:59:25 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id y6so802281lje.2
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 12:59:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/ZSiwzMBbmIJarLe34gmF5l/isjgllM9GdEm5cyjKbY=;
-        b=O7XfHxh5PgK6nhXWd/ICz/U+XnlHinqxbugqa+Q5v6+9p4HXVCa8rFuY7ssPHkNWXz
-         wq1ldZabZHnqDOIaR5VIxRUBJFDuHcxCPTCNx8AEGejOIRu1QHaAhpJHnJqD+AXPmCd0
-         6vh3UTDoZ7JMA7PhIPt/Xk7NMwVBIpxHEPo4Mr0gkBEHplG6TSMWzWIySQI2UloHbYjL
-         I+OIBNCBZ4XXHknGC5bPZLiwh++HSeq8ilZav4DfwGccH64smdwJ+pGxQMT3ILpQf8Kn
-         HRNP3pCzlDwRQcvJQS8578mLLopDMMkd9PwQm4UQXC7UoQeBwXDSJTY9e3yxn6KwKjHM
-         EUsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/ZSiwzMBbmIJarLe34gmF5l/isjgllM9GdEm5cyjKbY=;
-        b=RQNtW6v9FfR1UmKNEXuM6YO4tCq6wJ8teKrVDF8cc/IikCORLWJl2iHtHZ0YefP/rj
-         3nAKNdI3lLzI5vopf5dw87fZuA3oQB9rkplXuO4pd46m41mYi3tKAEfp3JOMx/9NAlKd
-         6GdQVhP069iij2T7vbC9RAnKacsMk/ofCFRmYWfyAESojHaW/7CN/T1p1lB9ueh8RhUa
-         lzT3lfuP8RrdaWkQedrmzaH8yPA1tA9ldpEcJDg/D8k2OWC5wHH5pt7BbTyKVKldArrm
-         HERyjAAjImPuTEmVJHZGgcCDFg/DP4ArYBnLNqght0HGSxXNrPlO/VimD7IZdFJ26f/+
-         tsog==
-X-Gm-Message-State: AOAM530XF1Vcg3Cni45z8zRLVD8+dZdnh0V9un2SWoI3Qh0a34CnI879
-        oO8bHcW4yQ1y/wyeaIvIWa7GbV0iyA/4OKJmLAE=
-X-Google-Smtp-Source: ABdhPJwzc3ppsWli7uA9qNNkKVuq5T+W3rOd+YgWcPdhpqqPM3JhIn6jvLcjjyMc11fL7MSniMTzzUEHFDiP6zskTv4=
-X-Received: by 2002:a2e:9b12:: with SMTP id u18mr26122969lji.350.1630439962466;
- Tue, 31 Aug 2021 12:59:22 -0700 (PDT)
+        id S238539AbhHaUEZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 16:04:25 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65303 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230326AbhHaUEY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 16:04:24 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 78C36156F56;
+        Tue, 31 Aug 2021 16:03:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=evIkqgWx0QTG/eOu1TJiw5sN7gQx9jqixVgSIK
+        UrO7w=; b=qt6etvf5wXRRGbgD9VGUaCPxgayHjYjVCBVwBd21Cxu9C7JZ7YvWu2
+        42LNOsu9LW1wPUIGFTFgdPK1iu7gwdplY+65I6s6jFsgJ8O4sIuATjt78KP1XrHt
+        CeWHofCziOx0wcRr/bDVLQ/ydUU5ytVBXZ5cHFRjAYWA7ToSZriSs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 71322156F55;
+        Tue, 31 Aug 2021 16:03:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E54E9156F54;
+        Tue, 31 Aug 2021 16:03:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 0/7] Add a new --remerge-diff capability to show & log
+References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
+Date:   Tue, 31 Aug 2021 13:03:24 -0700
+In-Reply-To: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com> (Elijah
+        Newren via GitGitGadget's message of "Tue, 31 Aug 2021 02:26:33
+        +0000")
+Message-ID: <xmqq4kb5tm9f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1076.git.git.1629856292.gitgitgadget@gmail.com>
- <d1e68d4a2afc1d0ba74af64680bea09f412f21cc.1629856293.git.gitgitgadget@gmail.com>
- <87mtp5cwpn.fsf@evledraar.gmail.com> <CANQDOdd2FDNXnXLdm2FSmxUTk3oi+mQtiW2rf3YG7MJayrexPQ@mail.gmail.com>
- <20210826055024.GA17178@lst.de> <CANQDOdcr0gXsdXtqfN+FFRkAumNfYmr2C3qAcdzFxY26bDPWCQ@mail.gmail.com>
- <20210828065700.GA31211@lst.de>
-In-Reply-To: <20210828065700.GA31211@lst.de>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Tue, 31 Aug 2021 12:59:14 -0700
-Message-ID: <CANQDOdfV3omEBHOAq1b2P4Wb5=FCtrtsy22VvRu+FneFx9o9Gw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] core.fsyncobjectfiles: batch disk flushes
-To:     Christoph Hellwig <hch@lst.de>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Neeraj Singh <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 808A4030-0A96-11EC-B97C-9BA3EF469F85-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 27, 2021 at 11:57 PM Christoph Hellwig <hch@lst.de> wrote:
->
-> On Fri, Aug 27, 2021 at 05:20:44PM -0700, Neeraj Singh wrote:
-> > You're right. On re-read of the man page, sync_file_range is listed as
-> > an "extremely dangerous"
-> > system call.  The opportunity in the linux kernel is to offer an
-> > alternative set of flags or separate
-> > API that allows for an application like Git to separate a metadata
-> > writeback request from the disk flush.
->
-> How do you want to do that?  I metadata writeback without a cache flush
-> is worse than useless, in fact it is generally actively harmful.
->
-> To take XFS as an example:  fsync and fdatasync do the following thing:
->
->  1) writeback all dirty data for file to the data device
->  2) flush the write cache of the data device to ensure they are really
->     on disk before writing back the metadata referring to them
->  3) write out the log up until the log sequence that contained the last
->     modifications to the file
->  4) flush the cache for the log device.
->     If the data device and the log device are the same (they usually are
->     for common setups) and the log device support the FUA bit that writes
->     through the cache, the log writes use that bit and this step can
->     be skipped.
->
-> So in general there are very few metadata writes, and it is absolutely
-> essential to flush the cache before that, because otherwise your metadata
-> could point to data that might not actually have made it to disk.
->
-> The best way to optimize such a workload is by first batching all the
-> data writeout for multiple fils in step one, then only doing one cache
-> flush and one log force (as we call it) to cover all the files.  syncfs
-> will do that, but without a good way to pick individual files.
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Yes, I think we want to do step (1) of your sequence for all of the files, then
-issue steps (2-4) for all files as a group.  Of course, if the log
-fills up then we
-can flush the intermediate steps.  The unfortunate thing is that
-there's no Linux interface
-to do step (1) and to also ensure that the relevant data is in the log
-stream or is
-otherwise available to be part of the durable metadata.
+> Here are some patches to add a --remerge-diff capability to show & log,
+> which works by comparing merge commits to an automatic remerge (note that
+> the automatic remerge tree can contain files with conflict markers).
 
-It seems to me that XFS would be compatible with this sequence if the
-appropriate
-kernel API exists.
+Excited ;-)
 
->
-> > Separately, I'm hoping I can push from the Windows filesystem side to
-> > get a barrier primitive put into
-> > the NVME standard so that we can offer more useful behavior to
-> > applications rather than these painful
-> > hardware flushes.
->
-> I'm not sure what you mean with barriers, but if you mean the concept
-> of implying a global ordering on I/Os as we did in Linux back in the
-> bad old days the barrier bio flag, or badly reinvented by this paper:
->
->   https://www.usenix.org/conference/fast18/presentation/won
->
-> they might help a little bit with single threaded operations, but will
-> heavily degrade I/O performance for multithreaded workloads.  As an
-> active member of (but not speaking for) the NVMe technical working group
-> with a bit of knowledge of SSD internals I also doubt it will be very
-> well received there.
+>  * This new option does not (currently) work for octopus merges, since
+>    merge-ort is specific to two-parent merges[1].
 
-I looked at that paper and definitely agree with you about the questionable
-implementation strategy they picked. I don't (yet) have detailed knowledge of
-SSD internals, but it's surprising to me that there is little value to
-barrier semantics
-within the drive as opposed to a full durability sync. At least for
-Windows, we have
-a database (the Registry) for which any single-threaded latency
-improvement would
-be welcome.
+Unless you do so manually, the native "octopus" backend does not let
+you create non-trivial merges anyway, so punting on them should not
+be a big loss.  Falling back to --cc might be a usable alternative.
+
+>  * This option will not work on a read-only or full filesystem[2].
+
+OK.  I am not sure if it is worth doing the "temporary objects"
+trick, though---would it risk repository corruption if somebody is
+creating a new blob that happens to be identical to the one that is
+involved in the remerge operation at the same time, or there is no
+visibility of the temporary area to these "somebody" outside so
+there is no risk?
