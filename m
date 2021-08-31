@@ -2,95 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75AADC432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 04:41:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF6A6C432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 05:19:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 431F9601FD
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 04:41:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A31B960FE8
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 05:19:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230076AbhHaEmL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 00:42:11 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50492 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229579AbhHaEmL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 00:42:11 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 72BF5151C9A;
-        Tue, 31 Aug 2021 00:41:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zfP/qH/qLre0GiuVR2cWbfXLwOsJDUqouOFg0n
-        ZT9OY=; b=THr4e2JAaJtswUvxKRw3hL+BXgo+4s+4JbZ8K6bGFMYCvclV/URHxc
-        Z30eTHrOqTtEFX3OTT79B9ePKBQ4IvuIMZx4WhemUzX8uAlZk196nIpGUvKlkmB3
-        MociXp9xGMkdmMRU6ezL0fYKvGWx2jlfFLwjv2qrm4gX5zKYchyo8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6B0FE151C99;
-        Tue, 31 Aug 2021 00:41:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B44E1151C98;
-        Tue, 31 Aug 2021 00:41:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Yuri <yuri@rawbw.com>, Git Mailing List <git@vger.kernel.org>
-Subject: Re: Git re-creates newly added directory when it is pushed
-References: <c0557284-8f82-76cc-8c47-0b1bc9f2ce5a@rawbw.com>
-        <CABPp-BFwvDY6-6pQ2MSPzAGafONjTEMNUkLwuRuQCJ_wx2ns2w@mail.gmail.com>
-        <xmqqv93n7q1v.fsf@gitster.g>
-        <CABPp-BFE_LB=MYcJ80g=6OjvcXh-SjR_9_ynVdX5i9ruGBqh2Q@mail.gmail.com>
-Date:   Mon, 30 Aug 2021 21:41:12 -0700
-In-Reply-To: <CABPp-BFE_LB=MYcJ80g=6OjvcXh-SjR_9_ynVdX5i9ruGBqh2Q@mail.gmail.com>
-        (Elijah Newren's message of "Mon, 30 Aug 2021 19:15:58 -0700")
-Message-ID: <xmqq4kb6z0nr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232310AbhHaFUO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 01:20:14 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34666 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231530AbhHaFUO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 01:20:14 -0400
+Received: (qmail 3649 invoked by uid 109); 31 Aug 2021 05:19:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 31 Aug 2021 05:19:19 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17238 invoked by uid 111); 31 Aug 2021 05:19:20 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 31 Aug 2021 01:19:20 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 31 Aug 2021 01:19:17 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, dstolee@microsoft.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH v4 05/25] midx: clear auxiliary .rev after replacing the
+ MIDX
+Message-ID: <YS271RmGhwne0iTm@coredump.intra.peff.net>
+References: <YSVuUYFh7lmhNlEy@nand.local>
+ <xmqqo89jbf49.fsf@gitster.g>
+ <YSko4OwwPb7MwEMa@nand.local>
+ <xmqq4kb797xc.fsf@gitster.g>
+ <YSwhNxqAS8JajA7p@nand.local>
+ <xmqqfsur7otx.fsf@gitster.g>
+ <YSwpsp/hQsPFnj+I@nand.local>
+ <YS1XOMtj94BcI9HM@camp.crustytoothpaste.net>
+ <xmqqmtoy1s9s.fsf@gitster.g>
+ <YS1croR3etCfMQhR@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: ABFA2AEA-0A15-11EC-923A-9BA3EF469F85-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YS1croR3etCfMQhR@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Mon, Aug 30, 2021 at 06:33:18PM -0400, Taylor Blau wrote:
 
->> This is one of the reasons why "rebase" (especially "rebase -i") may
->> want to insist starting at the top-level of the working tree, like
->> "git bisect" does.  Because running the command from a subdirectory
->> works most of the time until it doesn't, people tend to complain why
->> they should go up to the top-level before they can run the command.
->>
->> And this is why---it causes end-user confusion.
->
-> Makes sense to me; I'll submit a patch.
+> On Mon, Aug 30, 2021 at 03:28:47PM -0700, Junio C Hamano wrote:
+> > "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> >
+> > > Yeah, this is a possible problem.  You can also see it when using git
+> > > index-pack outside of a repository with an incorrect --object-format
+> > > option.
+> > >
+> > > I'm not sure how folks want to deal with that; I'm just fine saying,
+> > > "Well, don't do that," but other folks may have different opinions.
+> >
+> > OK, so if we go back to the original breakage of the test script
+> > that triggered this discussion, the right solution would be to make
+> > sure both test repositories/object stores are prepared with the
+> > algorithm specified with GIT_TEST_DEFAULT_HASH?
+> 
+> Just to make sure do you still see this as a separate issue from running
+> the midx builtin outside of a repository?
 
-Well, but not too hastily.
+Adding my two cents: yes, I think it most definitely should be a
+separate issue. As you demonstrated, differing config between alternates
+and repos that point to them is not specific to the midx code. I agree
+with brian's "well, don't do that". But _if_ we want to try to behave
+better in such a case, whatever we changes we make would then naturally
+apply to the midx code as well.
 
-It is one thing to be firm and resist those who want to loosen "git
-bisect" to allow it to start in a subdirectory, in order to keep
-protecting the innocent who are already protected with the current
-safeguard from confusion.
+The two midx-specific things we have to care about are:
 
-It is entirely a different thing to tighten "git rebase"
-retroactively to break those who are used to see the command start
-in a subdirectory.
+  - is it OK for the midx command to refuse to operate when we are not
+    in a repository at all? I think yes; we can't even know which hash
+    is being used, along with who knows what other lurking
+    complications.
 
-The potential confusion that is caused may be the same between
-commands, but either change can potentially hurt existing users.
+  - is it OK to restrict the midx command's --object-dir to only operate
+    on a directory which is an alternate of the current repo? I think
+    yes again. If it _isn't_ related, we have all the lurking problems
+    from the first point, but even worse (because we use config, refs,
+    and other information from our current repo with the _totally
+    unrelated_ object dir).
 
-I hope your patch would serve as a good discussion starter.  We may
-end up loosening "git bisect" to expose our users to possible
-confusion, the same one that already exists for users of "git
-rebase", in the name of consistency, and it might even turn out to
-be a good change.  Or not.
+So I'm all in favor of locking those down now before things get any more
+complicated. If we later want to make the object store more aware of of
+differences between alternates and the main store (like say, the object
+hash in use), then we could consider loosening using the same mechanism.
 
-In any case, it would be a good opportunity to force people
-thoroughly think things through.
-
-Thanks.
+-Peff
