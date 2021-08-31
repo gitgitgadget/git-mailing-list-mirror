@@ -2,144 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AA65C432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 19:46:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1CA6C432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 19:59:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 50D1B60FE6
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 19:46:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E5F961059
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 19:59:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239115AbhHaTrI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 15:47:08 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58563 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232016AbhHaTrI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 15:47:08 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DAA5ADD2AF;
-        Tue, 31 Aug 2021 15:46:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=/RjvLOnuovxg
-        PLDIQotP5I2nUjZ1oaDtRUsnf1vmlE8=; b=L0o5JquS3QS56zGeAVVlQuevyO6A
-        wVWt5VxSVbky6LbCYfEcznPuXGnd5zx4/9ReMuBeN+xEBaIXrkrmWBJdbud3OzQR
-        g/frmRal7314y6/z/2UQ+0UHMuOhBCSXcRiNurccrXQRzh+QttylmmcVRxwvtCOw
-        KPfng5snDo8cw1Y=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C76DCDD2AC;
-        Tue, 31 Aug 2021 15:46:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2E8F0DD2AA;
-        Tue, 31 Aug 2021 15:46:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Marius Storm-Olsen <marius@storm-olsen.com>
-Subject: Re: [PATCH] mailmap.c: fix a memory leak in free_mailap_{info,entry}()
-References: <patch-4.4-ad8680f529-20210714T172251Z-avarab@gmail.com>
-        <patch-1.1-f11eb44e4c5-20210831T134023Z-avarab@gmail.com>
-        <YS6FKEApva30sKgl@coredump.intra.peff.net>
-Date:   Tue, 31 Aug 2021 12:46:10 -0700
-In-Reply-To: <YS6FKEApva30sKgl@coredump.intra.peff.net> (Jeff King's message
-        of "Tue, 31 Aug 2021 15:38:16 -0400")
-Message-ID: <xmqq8s0htn25.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S239893AbhHaUAW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 16:00:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57948 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229946AbhHaUAV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 16:00:21 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5DD6C061575
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 12:59:25 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id y6so802281lje.2
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 12:59:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/ZSiwzMBbmIJarLe34gmF5l/isjgllM9GdEm5cyjKbY=;
+        b=O7XfHxh5PgK6nhXWd/ICz/U+XnlHinqxbugqa+Q5v6+9p4HXVCa8rFuY7ssPHkNWXz
+         wq1ldZabZHnqDOIaR5VIxRUBJFDuHcxCPTCNx8AEGejOIRu1QHaAhpJHnJqD+AXPmCd0
+         6vh3UTDoZ7JMA7PhIPt/Xk7NMwVBIpxHEPo4Mr0gkBEHplG6TSMWzWIySQI2UloHbYjL
+         I+OIBNCBZ4XXHknGC5bPZLiwh++HSeq8ilZav4DfwGccH64smdwJ+pGxQMT3ILpQf8Kn
+         HRNP3pCzlDwRQcvJQS8578mLLopDMMkd9PwQm4UQXC7UoQeBwXDSJTY9e3yxn6KwKjHM
+         EUsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/ZSiwzMBbmIJarLe34gmF5l/isjgllM9GdEm5cyjKbY=;
+        b=RQNtW6v9FfR1UmKNEXuM6YO4tCq6wJ8teKrVDF8cc/IikCORLWJl2iHtHZ0YefP/rj
+         3nAKNdI3lLzI5vopf5dw87fZuA3oQB9rkplXuO4pd46m41mYi3tKAEfp3JOMx/9NAlKd
+         6GdQVhP069iij2T7vbC9RAnKacsMk/ofCFRmYWfyAESojHaW/7CN/T1p1lB9ueh8RhUa
+         lzT3lfuP8RrdaWkQedrmzaH8yPA1tA9ldpEcJDg/D8k2OWC5wHH5pt7BbTyKVKldArrm
+         HERyjAAjImPuTEmVJHZGgcCDFg/DP4ArYBnLNqght0HGSxXNrPlO/VimD7IZdFJ26f/+
+         tsog==
+X-Gm-Message-State: AOAM530XF1Vcg3Cni45z8zRLVD8+dZdnh0V9un2SWoI3Qh0a34CnI879
+        oO8bHcW4yQ1y/wyeaIvIWa7GbV0iyA/4OKJmLAE=
+X-Google-Smtp-Source: ABdhPJwzc3ppsWli7uA9qNNkKVuq5T+W3rOd+YgWcPdhpqqPM3JhIn6jvLcjjyMc11fL7MSniMTzzUEHFDiP6zskTv4=
+X-Received: by 2002:a2e:9b12:: with SMTP id u18mr26122969lji.350.1630439962466;
+ Tue, 31 Aug 2021 12:59:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 17C84A08-0A94-11EC-857E-D601C7D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1076.git.git.1629856292.gitgitgadget@gmail.com>
+ <d1e68d4a2afc1d0ba74af64680bea09f412f21cc.1629856293.git.gitgitgadget@gmail.com>
+ <87mtp5cwpn.fsf@evledraar.gmail.com> <CANQDOdd2FDNXnXLdm2FSmxUTk3oi+mQtiW2rf3YG7MJayrexPQ@mail.gmail.com>
+ <20210826055024.GA17178@lst.de> <CANQDOdcr0gXsdXtqfN+FFRkAumNfYmr2C3qAcdzFxY26bDPWCQ@mail.gmail.com>
+ <20210828065700.GA31211@lst.de>
+In-Reply-To: <20210828065700.GA31211@lst.de>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Tue, 31 Aug 2021 12:59:14 -0700
+Message-ID: <CANQDOdfV3omEBHOAq1b2P4Wb5=FCtrtsy22VvRu+FneFx9o9Gw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] core.fsyncobjectfiles: batch disk flushes
+To:     Christoph Hellwig <hch@lst.de>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Neeraj Singh <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> On Tue, Aug 31, 2021 at 03:42:52PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
+On Fri, Aug 27, 2021 at 11:57 PM Christoph Hellwig <hch@lst.de> wrote:
 >
->> In the free_mailmap_entry() code added in 0925ce4d49 (Add map_user()
->> and clear_mailmap() to mailmap, 2009-02-08) the intent was clearly to
->> clear the "me" structure, but while we freed parts of the
->> mailmap_entry structure, we didn't free the structure itself. The same
->> goes for the "mailmap_info" structure.
->>=20
->> This brings us from 50 failures when running t4203-mailmap.sh to
->> 49. Not really progress as far as the number of failures is concerned,
->> but as far as I can tell this fixes all leaks in mailmap.c
->> itself. There's still users of it such as builtin/log.c that call
->> read_mailmap() without a clear_mailmap(), but that's on them.
->>=20
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
-m>
->> ---
+> On Fri, Aug 27, 2021 at 05:20:44PM -0700, Neeraj Singh wrote:
+> > You're right. On re-read of the man page, sync_file_range is listed as
+> > an "extremely dangerous"
+> > system call.  The opportunity in the linux kernel is to offer an
+> > alternative set of flags or separate
+> > API that allows for an application like Git to separate a metadata
+> > writeback request from the disk flush.
 >
-> Thanks, the patch looks good to me. I agree with Eric that mentioning
-> "leak failures" in the second paragraph would make it less confusing. :=
-)
+> How do you want to do that?  I metadata writeback without a cache flush
+> is worse than useless, in fact it is generally actively harmful.
+>
+> To take XFS as an example:  fsync and fdatasync do the following thing:
+>
+>  1) writeback all dirty data for file to the data device
+>  2) flush the write cache of the data device to ensure they are really
+>     on disk before writing back the metadata referring to them
+>  3) write out the log up until the log sequence that contained the last
+>     modifications to the file
+>  4) flush the cache for the log device.
+>     If the data device and the log device are the same (they usually are
+>     for common setups) and the log device support the FUA bit that writes
+>     through the cache, the log writes use that bit and this step can
+>     be skipped.
+>
+> So in general there are very few metadata writes, and it is absolutely
+> essential to flush the cache before that, because otherwise your metadata
+> could point to data that might not actually have made it to disk.
+>
+> The best way to optimize such a workload is by first batching all the
+> data writeout for multiple fils in step one, then only doing one cache
+> flush and one log force (as we call it) to cover all the files.  syncfs
+> will do that, but without a good way to pick individual files.
 
-Here is what I queued.
+Yes, I think we want to do step (1) of your sequence for all of the files, then
+issue steps (2-4) for all files as a group.  Of course, if the log
+fills up then we
+can flush the intermediate steps.  The unfortunate thing is that
+there's no Linux interface
+to do step (1) and to also ensure that the relevant data is in the log
+stream or is
+otherwise available to be part of the durable metadata.
 
-Thanks, all.
+It seems to me that XFS would be compatible with this sequence if the
+appropriate
+kernel API exists.
 
-From ccdd5d1eb14a6735c34428e856c0de33f1055520 Mon Sep 17 00:00:00 2001
-From: =3D?UTF-8?q?=3DC3=3D86var=3D20Arnfj=3DC3=3DB6r=3DC3=3DB0=3D20Bjarma=
-son?=3D
- <avarab@gmail.com>
-Date: Tue, 31 Aug 2021 15:42:52 +0200
-Subject: [PATCH] mailmap.c: fix a memory leak in free_mailap_{info,entry}=
-()
-MIME-Version: 1.0
-Content-Type: text/plain; charset=3DUTF-8
-Content-Transfer-Encoding: 8bit
+>
+> > Separately, I'm hoping I can push from the Windows filesystem side to
+> > get a barrier primitive put into
+> > the NVME standard so that we can offer more useful behavior to
+> > applications rather than these painful
+> > hardware flushes.
+>
+> I'm not sure what you mean with barriers, but if you mean the concept
+> of implying a global ordering on I/Os as we did in Linux back in the
+> bad old days the barrier bio flag, or badly reinvented by this paper:
+>
+>   https://www.usenix.org/conference/fast18/presentation/won
+>
+> they might help a little bit with single threaded operations, but will
+> heavily degrade I/O performance for multithreaded workloads.  As an
+> active member of (but not speaking for) the NVMe technical working group
+> with a bit of knowledge of SSD internals I also doubt it will be very
+> well received there.
 
-In the free_mailmap_entry() code added in 0925ce4d49 (Add map_user()
-and clear_mailmap() to mailmap, 2009-02-08) the intent was clearly to
-clear the "me" structure, but while we freed parts of the
-mailmap_entry structure, we didn't free the structure itself. The same
-goes for the "mailmap_info" structure.
-
-This brings the number of SANITIZE=3Dleak failures in t4203-mailmap.sh
-down from 50 to 49. Not really progress as far as the number of
-failures is concerned, but as far as I can tell this fixes all leaks
-in mailmap.c itself. There's still users of it such as builtin/log.c
-that call read_mailmap() without a clear_mailmap(), but that's on
-them.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- mailmap.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/mailmap.c b/mailmap.c
-index d1f7c0d272..e1c8736093 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -36,6 +36,7 @@ static void free_mailmap_info(void *p, const char *s)
- 		 s, debug_str(mi->name), debug_str(mi->email));
- 	free(mi->name);
- 	free(mi->email);
-+	free(mi);
- }
-=20
- static void free_mailmap_entry(void *p, const char *s)
-@@ -51,6 +52,7 @@ static void free_mailmap_entry(void *p, const char *s)
-=20
- 	me->namemap.strdup_strings =3D 1;
- 	string_list_clear_func(&me->namemap, free_mailmap_info);
-+	free(me);
- }
-=20
- /*
---=20
-2.33.0-323-g897a01baa9
-
+I looked at that paper and definitely agree with you about the questionable
+implementation strategy they picked. I don't (yet) have detailed knowledge of
+SSD internals, but it's surprising to me that there is little value to
+barrier semantics
+within the drive as opposed to a full durability sync. At least for
+Windows, we have
+a database (the Registry) for which any single-threaded latency
+improvement would
+be welcome.
