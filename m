@@ -2,119 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F3C0C432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 18:13:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CD3FC432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 18:15:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2E9A460F12
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 18:13:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2500761104
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 18:15:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236730AbhHaSOq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 14:14:46 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50419 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234154AbhHaSOp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 14:14:45 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 53A2915652B;
-        Tue, 31 Aug 2021 14:13:50 -0400 (EDT)
+        id S240400AbhHaSQb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 14:16:31 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52483 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238911AbhHaSQa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 14:16:30 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 45FBDEDB1F;
+        Tue, 31 Aug 2021 14:15:34 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/Us3bbT8puCulBXnuKeXUWpSLXSc7qqf3krv1v
-        ZpvD4=; b=WQUpoyoUuvdYG7FapUDx2uWSLZ5i8OY7DzOwL2J8XVHRA3LAZGmlla
-        u5zjQDSCHNt23Jso0uKV8hbMloA9OIwaHA8RO57nz/MQU1Mg5zHBYncQTDS9uLAK
-        H880FV0qWpW6ilPz59Z+sXi8DWRBnY54QYhODkRmMw/Noy6HRgCRg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4C7D115652A;
-        Tue, 31 Aug 2021 14:13:50 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=qQutO+s+M/dk
+        Vt1SSxUVsRDXXV4MT07A6uv8jNUFLEA=; b=w1HC1aUYTpfueDKOj1Aqjeov0QiU
+        aaYIEtDHFbDETrY3022e60wGBobjSFGHwYlXxlTTWHs9z1qkVJDj4pqPWelYciIG
+        2zhSyuACoxOVHvD3Oe4xwnNrqoTcf5W5+FvU+sefIRUGHVpquMLa6ZUN+e4cHfU6
+        khuNWxvQ1GXAhI0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3CF7BEDB1E;
+        Tue, 31 Aug 2021 14:15:34 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.116.162])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 26C8D156529;
-        Tue, 31 Aug 2021 14:13:47 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B2ACDEDB1D;
+        Tue, 31 Aug 2021 14:15:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Vosmaer <jacob@gitlab.com>
-Cc:     peff@peff.net, me@ttaylorr.com, git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH v3 1/2] pkt-line: add stdio packet write functions
-References: <xmqqbl5ic19t.fsf@gitster.g>
-        <20210831093444.28199-1-jacob@gitlab.com>
-        <20210831093444.28199-2-jacob@gitlab.com>
-Date:   Tue, 31 Aug 2021 11:13:45 -0700
-In-Reply-To: <20210831093444.28199-2-jacob@gitlab.com> (Jacob Vosmaer's
-        message of "Tue, 31 Aug 2021 11:34:43 +0200")
-Message-ID: <xmqqy28htrc6.fsf@gitster.g>
+To:     Bruno Albuquerque <bga@google.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Andrzej Hunt <andrzej@ahunt.org>
+Subject: Re: [PATCH] protocol-caps.c: fix memory leak in send_info()
+References: <patch-3.4-b7fb5d5a56-20210714T172251Z-avarab@gmail.com>
+        <patch-1.1-9acbc21cdd3-20210831T134632Z-avarab@gmail.com>
+        <CAPeR6H6g_VM3SUyjfYfc+mQa27af7AJE9wbKN_TUdG6m5rAUow@mail.gmail.com>
+Date:   Tue, 31 Aug 2021 11:15:33 -0700
+In-Reply-To: <CAPeR6H6g_VM3SUyjfYfc+mQa27af7AJE9wbKN_TUdG6m5rAUow@mail.gmail.com>
+        (Bruno Albuquerque's message of "Tue, 31 Aug 2021 08:32:36 -0700")
+Message-ID: <xmqqtuj5tr96.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2F47B37E-0A87-11EC-93E0-9BA3EF469F85-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 6ECE0480-0A87-11EC-B9FE-ECFD1DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Vosmaer <jacob@gitlab.com> writes:
+Bruno Albuquerque <bga@google.com> writes:
 
-> +/*
-> + * Stdio versions of packet_write functions. When mixing these with fd
-> + * based functions, take care to call fflush or packet_fflush before
-> + * doing fd writes or closing the fd.
-> + */
+> On Tue, Aug 31, 2021 at 6:46 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>
+> [Replying again as I used HTML mail by mistake. Sorry.]
+>
+>> Fix a memory leak in a2ba162cda (object-info: support for retrieving
+>> object info, 2021-04-20) which appears to have been based on a
+>> misunderstanding of how the pkt-line.c API works. There is no need to
+>> strdup() input to packet_writer_write(), it's just a printf()-like
+>> format function.
+>>
+>> This fixes a potentially large memory leak, since the number of OID
+>> lines the "object-info" call can be arbitrarily large (or a small one
+>> if the request is small).
+>>
+>> This makes t5701-git-serve.sh pass again under SANITIZE=3Dleak, as it
+>> did before a2ba162cda2.
+>
+>
+> Thanks for cleaning up after me. Yes, this was my lack of knowledge on
+> how the internals of Git works. I was also not aware of SANITIZE=3Dleak
+> so thanks for the heads up. This looks good to me.
 
-You may have wanted to say that fflush() is not needed immediately
-after packet_fflush() (because the latter calls fflush()), but I
-find the "or packet_fflush" in the above comment highly misleading.
+Thanks, both.
 
-It's not like you can randomly call packet_fflush() where you would
-call fflush(), as the former will insert a FLUSH packet to the
-output stream.  "... take care to call fflush(3) before doihng fd
-writes or closing the fd" would be more appropriate.  After all, if
-you make fflush() even after calling packet_fflush(), nothing will
-break.
-
-> +void packet_fwrite(FILE *f, const char *buf, size_t size);
-> +void packet_fwrite_fmt(FILE *f, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
-> +
-> +/* packet_fflush writes a flush packet and flushes the stdio buffer of f */
-> +void packet_fflush(FILE *f);
-> +
->  /*
->   * Read a packetized line into the buffer, which must be at least size bytes
->   * long. The return value specifies the number of bytes read into the buffer.
-> diff --git a/write-or-die.c b/write-or-die.c
-> index d33e68f6ab..7a2f84e2ee 100644
-> --- a/write-or-die.c
-> +++ b/write-or-die.c
-> @@ -70,3 +70,15 @@ void write_or_die(int fd, const void *buf, size_t count)
->  		die_errno("write error");
->  	}
->  }
-> +
-> +void fwrite_or_die(FILE *f, const void *buf, size_t count)
-> +{
-> +	if (fwrite(buf, count, 1, f) != 1)
-
-This counts the size of the buffer the wrong way.
-
-fwrite() gives the size of each element to be written out first, and
-then number of elements that are written, which is the same as
-fread() but unfortunately the other way around from calloc() where
-count comes first X-<.
-
-Other than that, nicely done.
-
-Thanks.
-
-> +		die_errno("fwrite error");
-> +}
-> +
-> +void fflush_or_die(FILE *f)
-> +{
-> +	if (fflush(f))
-> +		die_errno("fflush error");
-> +}
+Will apply.
