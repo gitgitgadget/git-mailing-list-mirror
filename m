@@ -7,66 +7,65 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DE3EC432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 08:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A384C432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 08:31:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2FD0F60FED
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 08:29:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E3AE60FE8
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 08:31:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240266AbhHaI34 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 04:29:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39276 "EHLO
+        id S240302AbhHaIcg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 04:32:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240255AbhHaI3z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 04:29:55 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1E50C061575
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 01:29:00 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id b6so26308371wrh.10
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 01:29:00 -0700 (PDT)
+        with ESMTP id S240190AbhHaIcg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 04:32:36 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05F51C061575
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 01:31:41 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id v10so26368967wrd.4
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 01:31:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=p0AUSpB6V+43l0g8nzFB59A5UKRNvGmF3KylpaJkycg=;
-        b=SWC9kzr3f6+YWafkmPkuxB3mqtKpx9x3zO/vMVsbOU4j1lr/PPn/NL/x5090J6xZch
-         7VWwZ8VYyDA7tAA5yKqbo8tpwZuTPK0t4omqQsebTlwjYs/OG6FFHU0OuCQ5jhsAWn87
-         Ct06wybWbx/vDgtnfq6hMry20QF5s7SKiZekI4uMA6DFNJdqSJje7/zmuLldhixahRlN
-         et/XlVU5zoiYxk3y4MiPjg5o0+jqi6QdCYCrGyXTivQoVpuc33Wz0mgGQeSefgEN8wf3
-         4JzHDMfVOTli3VbxUv7yGpckt207FbmQFQktRl7mrvUBo/uuPEsycEo1SYsoHv0t83+3
-         neNw==
+        bh=8RWn5YKZzRY9+d6tmnM99XTiD0AUcecqqmsLWpQaZuo=;
+        b=dmYWZeVHRdCkud471i3umftzztCBx1cZc7DHqbimqQYJLf+j0TMzD2RbK5SjT0nhvg
+         dqn1OpdDf+GyWOC2qxrKfQ08kw9UijaS6avsE7KoMejtq6bIiSYWJ8EWySAizWm5TN7o
+         rB+yAGGkuN4R6ix3QB1v96Rj7ZAm2HFDrm1CsBF3wv0/wtf4xHdRySKIxVFmYTGRYI2R
+         iEWY6lj+F8ignWJpyBByywhy35BAQXrDaBgG1Rng0Ort/I4Itim0cyMYoUJrXe2t4tYb
+         qn+EvJ4WWL3exSfybPP0g9S3LkghEgd+JpxTH5H372t/MMUhflCq56mS28h++2HDBd6+
+         1SfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=p0AUSpB6V+43l0g8nzFB59A5UKRNvGmF3KylpaJkycg=;
-        b=T7wjkeXv0zdvSyiKoMZhrqHAtv4gB7i4F8QNmD8AMQltHP6n1nUB886sgaTXizD28i
-         BaylJUIHmhB4+Pu/fVq9b2wQIwIwlQTyW1g1U7rOtGwnes5BDKaAp3Kuuk/EJLx9+/ux
-         uWEO9rGZY6M3QaF0UD7AF8Isood6eo0bZgz2ak3wl+x1F6SxzLjXvzt/D+Uu1RplPBU1
-         Qz2muXR6JVg45cpGhSFfNjXZh39Uc0Ern+VTe8RRV7BPxalV5bxa/vnUmiSkybFJHyrj
-         7UJnp8kAV3TrXix9pGHkFXvWBMQ0Ogj/1rlT3q9t/b8d9qoxjq8FIsH+D3KVFjqmmj5i
-         ZJ4g==
-X-Gm-Message-State: AOAM533is9o0Cv63wkX0EJ1OgWWbuektMXi0teyZJdNsZdmFIzN1Bf4p
-        CIWpwaKyaxLVwqD/s92BLfM=
-X-Google-Smtp-Source: ABdhPJwW66Ax0R7VUYFe28PcM2RpB4Bs6y5bs8YDluU0NnB/mS/FQK5pdNJan/wkH3qVfmnggU/TgQ==
-X-Received: by 2002:adf:e68b:: with SMTP id r11mr30153260wrm.394.1630398539244;
-        Tue, 31 Aug 2021 01:28:59 -0700 (PDT)
+        bh=8RWn5YKZzRY9+d6tmnM99XTiD0AUcecqqmsLWpQaZuo=;
+        b=uNrCQusmq1EaX9+JTZgNvv6b4hPpYj9ZUd9+V1RlZwlxJUyS0l8xyD6xaY0x+l/APS
+         swONG3ILvT2QlTg2rsf313Qy7vahv1ZiDDwMRis5lQnFrdfIIaBCJfDnuKy4IFYnuTsI
+         tLCYL+EK1AQGSgyc17LiNRuPbR9RIEuJtvF0qfHCfSHYA3HJRq0bqRIVMJ9B+k1nRa+6
+         tPLH1orw06+iDF1sgPsWDyeMSaemXDfYUKpIzZuHscf+lTUfTy/vk2tDYe4XWY+orrOs
+         aju7CyiwK1P1lSzonCv/Cr8e3gShDvg1WJV7EfOTXitjrl2IdhM9AuCCO5VGNqznhM7b
+         kWMA==
+X-Gm-Message-State: AOAM532ekMls5M5r2mHSRvJ1ywaaUcMyAk3gD5GEV+IKPqeOBV940gDZ
+        8M3x8u90Dsws+bhitWZJZ9epbOEYu4uFMQ==
+X-Google-Smtp-Source: ABdhPJyw3ZYVRq1pDMGLBREM9oTEDKJrbzaYUSHyo73wdushIO/LdiT2i1vjuUbczWEp5QOjAN4SvQ==
+X-Received: by 2002:adf:9783:: with SMTP id s3mr30583061wrb.349.1630398699605;
+        Tue, 31 Aug 2021 01:31:39 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id z5sm1772570wmp.26.2021.08.31.01.28.58
+        by smtp.gmail.com with ESMTPSA id m5sm1789323wmi.1.2021.08.31.01.31.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Aug 2021 01:28:58 -0700 (PDT)
+        Tue, 31 Aug 2021 01:31:39 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 10/15] scalar: implement the `run` command
-Date:   Tue, 31 Aug 2021 10:27:30 +0200
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 11/15] scalar: allow reconfiguring an existing enlistment
+Date:   Tue, 31 Aug 2021 10:29:44 +0200
 References: <pull.1005.git.1630359290.gitgitgadget@gmail.com>
- <c3f16bccd023601bb1d041c36cf5f49011abcb76.1630359290.git.gitgitgadget@gmail.com>
+ <13056f02018542f8143e4933fbe180a0a9f77004.1630359290.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <c3f16bccd023601bb1d041c36cf5f49011abcb76.1630359290.git.gitgitgadget@gmail.com>
-Message-ID: <877dg2xbjp.fsf@evledraar.gmail.com>
+In-reply-to: <13056f02018542f8143e4933fbe180a0a9f77004.1630359290.git.gitgitgadget@gmail.com>
+Message-ID: <874kb6xbf9.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -74,20 +73,35 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Aug 30 2021, Derrick Stolee via GitGitGadget wrote:
+On Mon, Aug 30 2021, Johannes Schindelin via GitGitGadget wrote:
 
-> +	const char *usagestr[] = { NULL, NULL };
+> This comes in handy during Scalar upgrades, or when config settings were
+> messed up by mistake.
 
-Missing usage strings?
+> [...]
+>  		const char *key;
+>  		const char *value;
+> +		int overwrite_on_reconfigure;
 
-> +	if (argc == 0)
+If you make this a "keep_on_reconfigure", then ...
 
-Style nit (per style guide): s/argc == 0/!argc/g.
+>  	} config[] = {
+> -		{ "am.keepCR", "true" },
+> -		{ "core.FSCache", "true" },
+> -		{ "core.multiPackIndex", "true" },
+> -		{ "core.preloadIndex", "true" },
+> +		/* Required */
+> +		{ "am.keepCR", "true", 1 },
+> +		{ "core.FSCache", "true", 1 },
+> +		{ "core.multiPackIndex", "true", 1 },
+> +		{ "core.preloadIndex", "true", 1 },
 
-> +	if (!strcmp("all", argv[0]))
-> +		i = -1;
+You won't need the churn/boilerplate of adding "1" to everything here,
+but can just change the initial patch to use designated initializers.
 
-Style nit (per style guide): missing braces here.
+That along with a throwaway macro like:
 
-(Just noting the style nits once, but more in this patch, and presumably
-the rest of the series...)
+#define SCALAR_CFG_TRUE(k) (.key = k, .value = "true")
+#define SCALAR_CFG_FALSE(k) (.key = k, .value = "false")
+
+Might (or might not) make this even easier to eyeball...
