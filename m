@@ -7,102 +7,138 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 039D1C432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B837EC432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:15:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C5F026109E
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:09:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 92E9361053
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:15:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240004AbhHaUK0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 16:10:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60268 "EHLO
+        id S240578AbhHaUQE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 16:16:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232434AbhHaUK0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 16:10:26 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D308C061575
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:09:30 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id i6so1014472wrv.2
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:09:30 -0700 (PDT)
+        with ESMTP id S230085AbhHaUQD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 16:16:03 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07885C061575
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:15:07 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id u25so763138oiv.5
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:15:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=gRB9XlvF8bwiwl/Sup0ubk6ua4j0xBxZBNhVmH5jfjU=;
-        b=kdUyAMWPbsyYA5B0lhalt7DAcglJb9mMKD+jB+D1Q813ljwu7R0k5U6ZwUjUWm9oog
-         tNRyi2oPTfhfDSLvaAwBufA+fnlVQL824UqkFNruH/e5Hjw6+4NwoeYaZdh0QnXjfRwC
-         LSwYSh94yA6RudaC/w4T7NW8tGYhtU+zXpai6lca3hcmiQ4usSKALeiIQhfYlc4bgaeA
-         1d6wKIUY+QHIjWcojOTmUfB1BahVzGRRqXuZyweMDGP8IAgJ0YXWsXICk5PGUEykl5E6
-         KVuZdWgkS9aL+KbFqP0Z4q/R2gTnHbbhwIDkB7BUoiL9JhDgdlzSzoiNb1BshjN29n9l
-         Zjvw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SUM6e/i4v2PFuGpwooxzMMNBox9VTyAQzQhc4fsvi20=;
+        b=oSA9jUj+SfSKZwjPwNpnIT4qwWcDpsXMuUbYI2I1aBivQkjppLTcwqotxPEVssK0w4
+         H/OC4yiMvX9YFu4HGwAJvuPSKw4N3EwyQHgdxqT4Vu0wPwmrYV9vymHtRmn4iZ8vvI+3
+         9UHXfpuBc9vlHKBLZCTDVoGfJSyNdjCs63PDZ7bMh+Xj4d/e8K2rQrLwHYEuAHPHXXVJ
+         YqpsLVV829Uyd+rRCBmf5usCB+VNjHKPNZemzM7Ugj4dIzeZVxO95Y7DKqZ5jfaBeE+/
+         1PazEw/r1xqgFWYXHzz4/aRJOVLFG8MCRe07hYA09dWUvNKZg8klqC7sgJwqZqGId+ab
+         Kzyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=gRB9XlvF8bwiwl/Sup0ubk6ua4j0xBxZBNhVmH5jfjU=;
-        b=SBL6aq/gxo5rWA/y80OFElx+cYbda76IMG6h3yWQBbv1OE4KS46YBN7Wwgi5iVRZx9
-         M9cPFFyPu6EWZpPgVC4RxZOksacP3RODzdta5LIFDpyvHQjpLoeRq9jjUQpQqsGuPblO
-         l8IM69h98U/D8n+MCJi1oUy2RI5CpK2lg13lor2FuLc7jDVXWKx43px+ZNcTMKi8Gyry
-         ezobgR96eCii1tpKvFu/fYuJYO8ZecbSePrQyeCOJxdbQkcDRxCbNDn+11S0ypOrMFSF
-         O7v8g76HxJ6+OuLNz6f7NCNoA4lqOhNU0qjBJaNij+pJ8f4tdCjeXtUjHdHgIR4IvyFO
-         8XsA==
-X-Gm-Message-State: AOAM532Ew9VNkju+rtN8QnBB31HoCAfSOqTu3M7847UmEhiP/UYI0NX8
-        v4UuAecC3bCMBgz4nzPps1RAunRcbNt/VA==
-X-Google-Smtp-Source: ABdhPJxYFRICwMIWKQe6fRjXy5g+KPS3xpofudaY3Y+BORpMKrSeNkRlnufqPrhwAIRfdozO2NCODA==
-X-Received: by 2002:adf:c3c9:: with SMTP id d9mr32074102wrg.339.1630440568841;
-        Tue, 31 Aug 2021 13:09:28 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id b10sm20438396wrt.43.2021.08.31.13.09.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Aug 2021 13:09:28 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Bruno Albuquerque <bga@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Andrzej Hunt <andrzej@ahunt.org>
-Subject: Re: [PATCH] protocol-caps.c: fix memory leak in send_info()
-Date:   Tue, 31 Aug 2021 22:08:43 +0200
-References: <patch-3.4-b7fb5d5a56-20210714T172251Z-avarab@gmail.com>
- <patch-1.1-9acbc21cdd3-20210831T134632Z-avarab@gmail.com>
- <CAPeR6H69a_HMwWnpHzssaCm_ow=ic7AnzMdZVQJQ2ECRDaWzaA@mail.gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <CAPeR6H69a_HMwWnpHzssaCm_ow=ic7AnzMdZVQJQ2ECRDaWzaA@mail.gmail.com>
-Message-ID: <87k0k1wf48.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SUM6e/i4v2PFuGpwooxzMMNBox9VTyAQzQhc4fsvi20=;
+        b=AHpVZt2c7HYnRG/QN9nLAA1uArKRheDQPvF3bvoOB27shz7NtB1lcOvba+I+9ADuv8
+         nhQ4xODHtCaKDOOq+3M7E40XsQGivoRJdpkO5RV1och7TTKmMZshqHhb8vch/dwliZ+T
+         6wQFRQLBtNpr5npEo0fVUG6dG+JRF0s7xhbE4Q9h6m8lFIzseQQcw1cdpwkXNLvj8yi7
+         oamkn3bPpfG1iXsLAynu6fOk5rwZbxjog8pjJM6WdgEu4HsocG0VwykGPpbdopm7+gN3
+         ZVMMry4iShgxufbrpNJvlUkesuIyOBmwaPulReTUFIdzPeXo1D6s9X9e00sEvCSCwXpP
+         TPDw==
+X-Gm-Message-State: AOAM531HhZUFnYv+tOSFNO7iIhkas+iT6A+n61NumxkmdVN6ax2rJxsD
+        Y/Qt8lKG9F9TeCbMxzlcHqidwkbKxxDZuR+JJUs=
+X-Google-Smtp-Source: ABdhPJz7lBHVHTBD70s0DfYyRJJRiAbC9t/r2Tsqaiy7MM4OD3sZRIPstVUsn7x5YGD8G/f6uvrOHIihMWHmBtgtmx0=
+X-Received: by 2002:aca:bfc6:: with SMTP id p189mr4494847oif.167.1630440906364;
+ Tue, 31 Aug 2021 13:15:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1083.git.git.1630379030665.gitgitgadget@gmail.com> <YS3Tv7UfNkF+adry@coredump.intra.peff.net>
+In-Reply-To: <YS3Tv7UfNkF+adry@coredump.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 31 Aug 2021 13:14:55 -0700
+Message-ID: <CABPp-BFmU+RaAjq4_0-PSfRgH1Jc63nN0fMuDWk2+iDbdz7CCA@mail.gmail.com>
+Subject: Re: [PATCH] rebase, cherry-pick, revert: only run from toplevel
+To:     Jeff King <peff@peff.net>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Aug 31 2021, Bruno Albuquerque wrote:
-
-> On Tue, Aug 31, 2021 at 6:46 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
-varab@gmail.com> wrote:
+On Tue, Aug 31, 2021 at 12:01 AM Jeff King <peff@peff.net> wrote:
 >
->  Fix a memory leak in a2ba162cda (object-info: support for retrieving
->  object info, 2021-04-20) which appears to have been based on a
->  misunderstanding of how the pkt-line.c API works. There is no need to
->  strdup() input to packet_writer_write(), it's just a printf()-like
->  format function.
+> On Tue, Aug 31, 2021 at 03:03:50AM +0000, Elijah Newren via GitGitGadget wrote:
 >
->  This fixes a potentially large memory leak, since the number of OID
->  lines the "object-info" call can be arbitrarily large (or a small one
->  if the request is small).
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > Allowing rebase, cherry-pick and revert to run from subdirectories
+> > inevitably leads to eventual user confusion.  For example, if they
+> > are within a directory that was created by one of the patches being
+> > rebased, then the rebase operation could hit a conflict before the
+> > directory is restored leading the user to be running from a directory
+> > that no longer exists.  Similarly with cherry-pick and revert, those
+> > operations could result in the directory being removed.
+> >
+> > Similar to bisect, simply require that these commands be run from the
+> > toplevel to avoid such problems.
 >
->  This makes t5701-git-serve.sh pass again under SANITIZE=3Dleak, as it
->  did before a2ba162cda2.
+> IMHO this is too draconian. You are occasionally helping people who are
+> in a directory which goes away over the course of the operation. But you
+> are hurting everyone who _isn't_ in that situation, and who needlessly
+> has to re-issue their command after doing a "cd".
 >
-> Thanks for cleaning up after me. Yes, this was my lack of knowledge on ho=
-w the internals of Git works. I was also not aware of SANITIZE=3Dleak so th=
-anks for
-> the heads up. This looks good to me.
+> I think we'd be much better served to do even a rudimentary analysis of
+> whether the operation will be a problem. E.g., if we taught the checkout
+> code to error out when the cwd is going to disappear, then:
+>
+>   - we'd protect the user from confusion during regular sight-seeing via
+>     "git checkout v0.99" and so forth
+>
+>   - we'd protect the most common cases for git-rebase (your patches
+>     introduce "subdir/", but it is not yet in the parent directory). We
+>     wouldn't preemptively avoid a rebase where subdir/ disappears and
+>     then reappears in the middle of the series. We could find such a
+>     case by iterating over the patches, but IMHO it's not worth the
+>     computation.
+>
+>   - we could likewise protect git-bisect, making it more reasonable to
+>     loosen its current restriction
+>
+>   - we might want to teach similar logic to sequencer operations, so
+>     that applying a patch would likewise error-out. That would protect
+>     cherry-pick and revert, but also make the "subdir/ disappears
+>     mid-patch-series" case pretty nice: the specific patch that deletes
+>     it would fail to apply, and then you could "cd .. && git rebase
+>     --continue".
+>
+>     I suspect that the "oops, we're going to delete cwd" code would end
+>     up in unpack-trees anyway, which means that both checkout and all of
+>     this sequencer operations would use the same code.
 
-Thanks, for what it's worth the series I submitted in parallel to this
-to add a SANITIZE=3Dleak CI mode at
-https://lore.kernel.org/git/cover-v3-0.8-00000000000-20210831T132546Z-avara=
-b@gmail.com
-could use reviewers :)
+Well, sequencer uses the merge machinery, and merge-ort creates a
+toplevel merge tree that includes conflict markers in files and
+whatnot, and then only updates the working tree via checkout().  So,
+yeah, it really should be the same codepath.
 
-I.e. having some real tests for this sort of thing and running them in
-CI will help to catch any such issues earlier.
+> Now I have spent zero time looking into actually coding this, so it may
+> turn out to be much trickier than I am suggesting. But this seems like a
+> much more fruitful direction, where we can protect users in cases where
+> they benefit (and give them sensible and actionable error messages),
+> without bothering people in the majority of cases where their cwd
+> doesn't go away.
+
+Ooh, this sounds intriguing to me...but what if we changed that rule
+slightly and just decided to never make the cwd go away?  Currently,
+the checkout code removes directories if they have no tracked or
+untracked or ignored files left, i.e. if they're empty.  What if we
+decide to only have remove_scheduled_dirs() remove directories that
+are empty AND they are not the current working directory?
+
+Granted, that could leave a directory in the way of files from other
+revisions, but the same was already true in the analogous situation
+where there were leftover untracked files in some directory.  Since
+all our code paths already have to handle directories leftover due to
+untracked files, perhaps avoiding removing the current working
+directory would just automatically work for us?  (I think it'd handle
+all of checkout, bisect, rebase, cherry-pick, revert, and merge.)
