@@ -2,73 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34BDDC432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 05:55:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D11D3C432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 06:01:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0BAAA6101C
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 05:55:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A902560462
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 06:01:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238657AbhHaF4r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 01:56:47 -0400
-Received: from bsmtp2.bon.at ([213.33.87.16]:50526 "EHLO bsmtp2.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229759AbhHaF4q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 01:56:46 -0400
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4GzGdL53Fdz5tlF;
-        Tue, 31 Aug 2021 07:55:50 +0200 (CEST)
-Subject: Re: [PATCH] rebase, cherry-pick, revert: only run from toplevel
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-References: <pull.1083.git.git.1630379030665.gitgitgadget@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <38fef2e3-a78a-c83b-85f8-dae064931703@kdbg.org>
-Date:   Tue, 31 Aug 2021 07:55:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S239603AbhHaGC3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 02:02:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35186 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238470AbhHaGCX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 02:02:23 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34017C061575
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 23:01:28 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id o39-20020a05600c512700b002e74638b567so1503861wms.2
+        for <git@vger.kernel.org>; Mon, 30 Aug 2021 23:01:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=fLdUWFIUqcAzNRZnomLFkqun7sZ6/IHEQwAB/zmYz5I=;
+        b=nGrlCkjgJoeEHs0gYelEzCVvnkQCM7UpH1QqPERxfRMwW/jHAV7KOdJqwSG+uprrv+
+         /IgQMbGs/T0PRuszZ8XNqljTH7H7YStTaqqtrhVA7ASDR42y1Gbm4+FFsegMpZ0/UdpU
+         KWDnEf96p6LCsOengjA46ygrQ+eHCdpreEVlRUwna90ZDJsZjoWprQD8zcE9xXarHYPx
+         ldyCWwK3ms1d9yV3HlHjhbB72Yo991GhXqVBLMwLzJjhdFX0hAPTAG8v+6Qd0FJASeGB
+         ytacI+E9HZwDQIOiIEYF1wL8iy/DLd/Rmk0CmRmQSSjrze7J7jhfPCpViVQiNFTp+H5Q
+         0RVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=fLdUWFIUqcAzNRZnomLFkqun7sZ6/IHEQwAB/zmYz5I=;
+        b=Mu5gQJhq7MJR9vx3MZG/vvfs6YjNMZzifBxkQb/oGAJKIB86d/tLSrP+bi6+usgOVA
+         5jHrudA6RGl7PSW2KZV1LFxCZuUC41fU71r/ZtPT3Bh1njiOurK6mD+o9Sg8Yd3Tvx6Q
+         lspEGPIj7RKn6v4Y/q5JEtVH+FC1J6cyWoGV00Mtyc8tn7esV5aqOCK7Ex12OvUEBfYi
+         OJz6ZGxAja2hmbe7zX1HsXK2dH9Ycj0qgFuEhSt2YClyJAdvigFbkAhQEBCySIP/lD3O
+         +J6gu1iX44wUA6khAGqytHvi5f07BiLWZv1o6JZmvd1GkMmDJbq/+xt4MKLnXJ9FZ/JY
+         v+UQ==
+X-Gm-Message-State: AOAM530sDC3YPEsFwaeV4DfhbWBuAuEzy0qw54cmbDD6Fxww80tdV5qV
+        DDHQxei/tbG+30RtOqdqUFD3+mJW98A=
+X-Google-Smtp-Source: ABdhPJwt7iVBJNcOFLLjHsp58plkwI/Y17Ii0TBG2qxU6f9e/QtmzDxxMQn5Et/44mdU+p5Z4Fi/eA==
+X-Received: by 2002:a1c:f214:: with SMTP id s20mr2344486wmc.14.1630389686891;
+        Mon, 30 Aug 2021 23:01:26 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a129sm1611270wme.14.2021.08.30.23.01.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Aug 2021 23:01:26 -0700 (PDT)
+Message-Id: <pull.1082.git.git.1630389685997.gitgitgadget@gmail.com>
+From:   "USAMI Kenta via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 31 Aug 2021 06:01:25 +0000
+Subject: [PATCH] userdiff: support enum keyword in PHP hunk header
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <pull.1083.git.git.1630379030665.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     USAMI Kenta <tadsan@zonu.me>, USAMI Kenta <tadsan@zonu.me>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 31.08.21 um 05:03 schrieb Elijah Newren via GitGitGadget:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> Allowing rebase, cherry-pick and revert to run from subdirectories
-> inevitably leads to eventual user confusion.  For example, if they
-> are within a directory that was created by one of the patches being
-> rebased, then the rebase operation could hit a conflict before the
-> directory is restored leading the user to be running from a directory
-> that no longer exists.  Similarly with cherry-pick and revert, those
-> operations could result in the directory being removed.
-> 
-> Similar to bisect, simply require that these commands be run from the
-> toplevel to avoid such problems.
+From: USAMI Kenta <tadsan@zonu.me>
 
-I am not a friend of this change. I understand the motivation behind it.
-But most of the time, rebase and cherry-pick are operated on own code,
-where directories do not disappear and appear at random, and this new
-enforced condition becomes awkward.
+"enum" keyword will be introduced in PHP 8.1.
+https://wiki.php.net/rfc/enumerations
 
-One of my use-cases is that I operate git-rebase from an untracked build
-directory inside the repository. Having to pass -C .. all the time
-strikes the wrong balance, IMO.
+Signed-off-by: USAMI Kenta <tadsan@zonu.me>
+---
+    userdiff: support enum keyword in PHP hunk header
+    
+    "enum" keyword will be introduced in PHP 8.1.
+    https://wiki.php.net/rfc/enumerations
 
-Things are slightly different for git-bisect (at least for me), because
-oftentimes it is operated on foreign code, where you may not know which
-directories come and go. But even that is a weak argument to force the
-command to the top-level of the repository.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1082%2Fzonuexe%2Ffeature%2Fuserdiff-php-enum-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1082/zonuexe/feature/userdiff-php-enum-v1
+Pull-Request: https://github.com/git/git/pull/1082
 
-Perhaps it is sufficient to force git-pull to the top-level (if it isn't
-already).
+ t/t4018/php-enum | 4 ++++
+ userdiff.c       | 2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+ create mode 100644 t/t4018/php-enum
 
--- Hannes
+diff --git a/t/t4018/php-enum b/t/t4018/php-enum
+new file mode 100644
+index 00000000000..91a69c1a2bc
+--- /dev/null
++++ b/t/t4018/php-enum
+@@ -0,0 +1,4 @@
++enum RIGHT: string
++{
++    case Foo = 'ChangeMe';
++}
+diff --git a/userdiff.c b/userdiff.c
+index d9b2ba752f0..d9ec484d535 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -214,7 +214,7 @@ PATTERNS("perl",
+ 	 "|<<|<>|<=>|>>"),
+ PATTERNS("php",
+ 	 "^[\t ]*(((public|protected|private|static|abstract|final)[\t ]+)*function.*)$\n"
+-	 "^[\t ]*((((final|abstract)[\t ]+)?class|interface|trait).*)$",
++	 "^[\t ]*((((final|abstract)[\t ]+)?class|enum|interface|trait).*)$",
+ 	 /* -- */
+ 	 "[a-zA-Z_][a-zA-Z0-9_]*"
+ 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+"
+
+base-commit: c4203212e360b25a1c69467b5a8437d45a373cac
+-- 
+gitgitgadget
