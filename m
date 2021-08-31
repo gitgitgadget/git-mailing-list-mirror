@@ -2,87 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CEB3C432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 11:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15007C432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 11:06:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7725E60FD8
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 11:01:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E697960FD8
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 11:06:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241087AbhHaLCu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 07:02:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44460 "EHLO
+        id S241349AbhHaLGz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 07:06:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231304AbhHaLCt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 07:02:49 -0400
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9C3CC061575
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 04:01:54 -0700 (PDT)
-Received: by mail-yb1-xb2a.google.com with SMTP id z18so34006324ybg.8
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 04:01:54 -0700 (PDT)
+        with ESMTP id S241296AbhHaLGy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 07:06:54 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F8E5C061575
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 04:05:59 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id u6so14028459pfi.0
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 04:05:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2KIStqNAy2HNE4sMh1FwjSwhtUaXENcyhISXshy0b/k=;
-        b=OhaGX57hIh4s11KZytGgUlRg9udHsKKgKTZ08TsaSJ1A9hvaW60+SRlJq4iFdEHpYt
-         +oRTmsU8E0mvAQU2g2fGCwWk3qRhAsUqfUgO3PYLnSj0/gLXlz9em3aFGamwAiXTDTKF
-         yD6FCxBufJ8ZGI0jzUwW5/oyry7Y4PJKgJCy8=
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=SD4i/FaqEY02MVYxm3R0ln4sGW893PWcaf7Ry/D33bo=;
+        b=fMIJUknrah5TB0YLRWv5b9bqCaPvOtzRd2IPG3EKTbVn0H7BhRG9ZZo7/VCYxnengw
+         8mV5LyrvGJBS/Xvr+b/xmuiEWZlzMceb6RS4Z5fsHQw/5h0dvLcYnYjhyPd5VA6F8knJ
+         9Nb/m+8Lg57Dd84IUl1FvtVgb56Q7JRQzbuRBTpU4FHLcMchv1pIKBT6mb9xM/lTekyE
+         T6s8FsJHfRH0xyhJhsQy3LdJ/lnXbNmhEhyJKp/yw497BGu/YIBg2jwfx/dD/mWbPr5Q
+         lCjJNzzSEHYRvVaydXDS9INpJ2uQcGNjfo0Y4gUHV3OwzL3Te2ehXLwr8IRfOUMoos0a
+         Zd0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2KIStqNAy2HNE4sMh1FwjSwhtUaXENcyhISXshy0b/k=;
-        b=t0cSvNYe/BtZGUc7XRMSEO5zEbV+h7rYmRwFYcp76RdmTm70/1hhnzTTbHNVxXGeqt
-         apJLq5zyy9z1+/fo/4MbP1pONzdGSTAFCWN8QC/n77tz0CxqC5ShlqwNybH7B0jB0RqX
-         sBeZpYMb04T0tCyjEz+6IC8xuDwrsTWqirvA+CFCALsMrFqoXIw+MInjGyvs37QR4679
-         iukyahprI56vs9Orsedzke8QUaxaMvjV2W0ttniHg4USxvJ3fm12clNCLY1jqtik2FRI
-         6qOOshh19xcnsMIJZwU5+2n9cO1NSwL9qmWPYQH0jXGA5V9XbmBmQQEyYCUPfGLW03QH
-         sOuw==
-X-Gm-Message-State: AOAM532T1elSpeMQaYXpdbYYSzQmlL9mjQJbj4Q49+ZF3kVoiHx1j0We
-        p2CCwRlhGi80+V3IaDOv15ShAtuXM80BfQtcCU1dc5tiAdI=
-X-Google-Smtp-Source: ABdhPJyG0bdWN0uoUdzDnt6Ntqn0u7F8HFDnpaHEcjKRPhgnmL+HrL4X+W4tEVc7nQnPDJ6K52N3SDGJoFSm2Y3D46w=
-X-Received: by 2002:a25:e013:: with SMTP id x19mr30434614ybg.366.1630407714018;
- Tue, 31 Aug 2021 04:01:54 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=SD4i/FaqEY02MVYxm3R0ln4sGW893PWcaf7Ry/D33bo=;
+        b=edJthOm5C9JoWCP5bt/Waok6pWBrJtgdTd0U3axA22huY9643gJMz4Rwblt6HRP/D6
+         RgGeDIdf7KcjyL2QynywYjGoG6Z6RCJSgdH/+7I0YkC7x7CryAdcgkULUqj1F0H0XQCF
+         dbXsetjEVg+PvMtOGNpaD+by/NQdz45pb5Q73W/rBLYiwAHI/84sfs4/pl+OQ0iIQKxt
+         oBoSZt+miB14noTWQz9C3G7VsbSlq1Jl6W9Jtw1RrnUtGXOoCHFBQu8mvwR2Qvy0fbsF
+         t6LF8QsUAU+pkj/1fLVbVv4BI6f32H8SGhj7eIHe6ZY7oBwdSiuZZnOZRiW2QMSXbM6O
+         pwkQ==
+X-Gm-Message-State: AOAM533+PeGfe8UDkjE6KKwVU4ycVUHcJvH1LPfKfM5GBbFxOt4ss3E+
+        T/Ey+se8GWv9SKy5FU5DZGU=
+X-Google-Smtp-Source: ABdhPJzPxhwzyXmJfp71kauMqryebHWVLgwCockRbGg+surVt2UYT9s1CVA1uKIqXPxd/RFRiDpdAA==
+X-Received: by 2002:aa7:9196:0:b0:3f2:a23f:3d70 with SMTP id x22-20020aa79196000000b003f2a23f3d70mr22276244pfa.69.1630407959049;
+        Tue, 31 Aug 2021 04:05:59 -0700 (PDT)
+Received: from [192.168.43.80] (subs28-116-206-12-57.three.co.id. [116.206.12.57])
+        by smtp.gmail.com with ESMTPSA id 130sm7312004pfy.175.2021.08.31.04.05.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 31 Aug 2021 04:05:58 -0700 (PDT)
+Subject: Re: [PATCH 0/7] Add a new --remerge-diff capability to show & log
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <665c48f7-b597-154f-6ac7-8d0471f14869@gmail.com>
+Date:   Tue, 31 Aug 2021 18:05:55 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-References: <pull.1032.git.git.1623098845733.gitgitgadget@gmail.com> <CAJDDKr4rXEZDH4ZNU1ieUcfpOseikOVVfFQ=1tG9YNr2nibLCQ@mail.gmail.com>
-In-Reply-To: <CAJDDKr4rXEZDH4ZNU1ieUcfpOseikOVVfFQ=1tG9YNr2nibLCQ@mail.gmail.com>
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-Date:   Tue, 31 Aug 2021 12:01:23 +0100
-Message-ID: <CA+kUOamRLtsArhjMpo7A28=6vPabry8KsjM022gZ4nxDj0wU-Q@mail.gmail.com>
-Subject: Re: [PATCH] use get_merge_tool_path() also in is_available() to honor settings
-To:     David Aguilar <davvid@gmail.com>
-Cc:     Michael Schindler via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Michael Schindler <michael@compressconsult.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 30 Aug 2021 at 01:09, David Aguilar <davvid@gmail.com> wrote:
-> I'd like to extend 47eb4c6890 (mergetools/kdiff3: make kdiff3 work on
-> Windows too, 2021-06-07)
-> but in order to do so I need a reliable way to special-case Windows so
-> that we only do the x -> x.exe translation there.
->
-> What's the best way to detect Windows? t/test-lib.sh seems to detect
-> Windows using "uname -s" and
-> checking for matches against *MINGW* or *CYGWIN*. Is that reliable /
-> recommended?
+On 31/08/21 09.26, Elijah Newren via GitGitGadget wrote:
+> Here are some patches to add a --remerge-diff capability to show & log,
+> which works by comparing merge commits to an automatic remerge (note that
+> the automatic remerge tree can contain files with conflict markers).
+> 
+> Here are some example commits you can try this out on (with git show
+> --remerge-diff $COMMIT):
+> 
+>   * git.git conflicted merge: 07601b5b36
+>   * git.git non-conflicted change: bf04590ecd
+>   * linux.git conflicted merge: eab3540562fb
+>   * linux.git non-conflicted change: 223cea6a4f05
+> 
+<snip>...
+> In regards to the performance point above, the timing for running the
+> following command:
+> 
+> time git log --min-parents=2 --max-parents=2 $DIFF_FLAG | wc -l
+> 
+> 
+> in linux.git (with v5.4 checked out, since my copy of linux is very out of
+> date) is as follows:
+> 
+> DIFF_FLAG=--cc:            71m 31.536s
+> DIFF_FLAG=--remerge-diff:  31m  3.170s
+> 
+> 
+> Note that there are 62476 merges in this history. Also, output size is:
+> 
+> DIFF_FLAG=--cc:            2169111 lines
+> DIFF_FLAG=--remerge-diff:  2458020 lines
+> 
 
-I don't think there's a single canonical way to do this, but that's
-certainly an effective way.
+Which repo did you mean by linux.git? Kernel developers often work 
+against Linus' mainline tree [1], while end-users (including myself) 
+prefer stable tree (which is mainline + stable release branches and 
+tags) [2].
 
-However I'd suggest not adding special-case code for Cygwin here, only
-for MinGW: the general design principles for Cygwin are such that
-*nix-native code should require minimal changes to work on Cygwin, and
-in particular the Cygwin compatibility layer should look after adding
-that extension, rather than requiring the application code to handle
-the special case. Both approaches would work, but I think it makes
-sense to follow the general Cygwin design principle here of not adding
-unnecessary special casing to handle it, and to leave it to the Cygwin
-compatibility layer instead.
+[1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+[2]: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+
+-- 
+An old man doll... just what I always wanted! - Clara
