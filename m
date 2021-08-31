@@ -2,119 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B977C432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 05:37:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34BDDC432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 05:55:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 323826101B
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 05:37:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0BAAA6101C
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 05:55:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236695AbhHaFim (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 01:38:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34678 "EHLO cloud.peff.net"
+        id S238657AbhHaF4r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 01:56:47 -0400
+Received: from bsmtp2.bon.at ([213.33.87.16]:50526 "EHLO bsmtp2.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231704AbhHaFim (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 01:38:42 -0400
-Received: (qmail 3719 invoked by uid 109); 31 Aug 2021 05:37:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 31 Aug 2021 05:37:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17292 invoked by uid 111); 31 Aug 2021 05:37:49 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 31 Aug 2021 01:37:49 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 31 Aug 2021 01:37:46 -0400
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org, dstolee@microsoft.com,
-        jonathantanmy@google.com
-Subject: Re: [PATCH v4 05/25] midx: clear auxiliary .rev after replacing the
- MIDX
-Message-ID: <YS3AKhQJjMrFm1JO@coredump.intra.peff.net>
-References: <xmqqr1eimtrp.fsf@gitster.g>
- <YSVjnSDaBXgXvT9W@nand.local>
- <xmqq35qymrcn.fsf@gitster.g>
- <xmqqy28qlcow.fsf@gitster.g>
- <YSVuUYFh7lmhNlEy@nand.local>
- <xmqqo89jbf49.fsf@gitster.g>
- <YSko4OwwPb7MwEMa@nand.local>
- <xmqq4kb797xc.fsf@gitster.g>
- <YSwhNxqAS8JajA7p@nand.local>
- <22366f81-65a6-55d1-706c-59f877127be0@gmail.com>
+        id S229759AbhHaF4q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 01:56:46 -0400
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4GzGdL53Fdz5tlF;
+        Tue, 31 Aug 2021 07:55:50 +0200 (CEST)
+Subject: Re: [PATCH] rebase, cherry-pick, revert: only run from toplevel
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.1083.git.git.1630379030665.gitgitgadget@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <38fef2e3-a78a-c83b-85f8-dae064931703@kdbg.org>
+Date:   Tue, 31 Aug 2021 07:55:50 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
+In-Reply-To: <pull.1083.git.git.1630379030665.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <22366f81-65a6-55d1-706c-59f877127be0@gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 30, 2021 at 09:21:31PM -0400, Derrick Stolee wrote:
-
-> Yes, supporting non-alternates is a historical accident. Supporting
-> alternates that are not actually the core object database of a full
-> repository is on purpose.
+Am 31.08.21 um 05:03 schrieb Elijah Newren via GitGitGadget:
+> From: Elijah Newren <newren@gmail.com>
 > 
-> So, hopefully the remaining discussion that I am seeing can be
-> solved by a decision such as:
+> Allowing rebase, cherry-pick and revert to run from subdirectories
+> inevitably leads to eventual user confusion.  For example, if they
+> are within a directory that was created by one of the patches being
+> rebased, then the rebase operation could hit a conflict before the
+> directory is restored leading the user to be running from a directory
+> that no longer exists.  Similarly with cherry-pick and revert, those
+> operations could result in the directory being removed.
 > 
->   "If we add the restriction that the builtin always runs with a
->    repository and --object-dir always points to its objects dir
->    or one of its registered alternates, then we have access to a
->    local config file to learn how to interpret that object directory."
+> Similar to bisect, simply require that these commands be run from the
+> toplevel to avoid such problems.
 
-I left a similar comment in the other part of the thread. :)
+I am not a friend of this change. I understand the motivation behind it.
+But most of the time, rebase and cherry-pick are operated on own code,
+where directories do not disappear and appear at random, and this new
+enforced condition becomes awkward.
 
-> >> I wonder if it is safe to assume that in practice a directory given
-> >> to the "--object-dir" option is always the "objects" subdirectory in
-> >> a repository, and it is an error if there is no "config" file next
-> >> to the directory.  Then, we could check ../config relative to the
-> >> given directory and error out if they use different hash.
-> 
-> I would say that is not always the case, and we should not error out.
-> 
-> I think taking a look to see if ../config exists to use the data
-> might be helpful for some cases, but should not be a blocker for
-> completing the requested operation. The config from the non-alternate
-> repo should be sufficient for this (somewhat strange) case.
+One of my use-cases is that I operate git-rebase from an untracked build
+directory inside the repository. Having to pass -C .. all the time
+strikes the wrong balance, IMO.
 
-Yes, agreed. We have long supported these kind of "bare" alternates, and
-I wouldn't be surprised if they are in wide use (though I do wonder how
-folks actually modify them, since most commands that touch objects
-really do want to be in a repository).
+Things are slightly different for git-bisect (at least for me), because
+oftentimes it is operated on foreign code, where you may not know which
+directories come and go. But even that is a weak argument to force the
+command to the top-level of the repository.
 
-In other cases where we may benefit from their being a containing repo
-(e.g., accessing the ref tips of the alternate), we speculatively look
-at ".." and see if there are any refs. See refs_from_alternate_cb()[0].
+Perhaps it is sufficient to force git-pull to the top-level (if it isn't
+already).
 
-The natural extension for the hash-format problem would probably be to
-call check_repository_format_gently() on the parent directory of the
-alternate-objects dir. If it succeeds, then we can pull out the
-hash_algo parameter from its repository_format struct. And if not, then
-we just assume it matches the main repo.
-
-But I suspect all of this is moot for now, beyond being able to return a
-nicer error message. The rest of the code is not at all ready to handle
-packs with two different hashes in the same process. And I suspect it
-would take a reasonable amount of refactoring to make it so. If somebody
-wants to work on that, I won't stop them, but I kind of doubt it is
-worth anybody's time.
-
-[0] Looking at refs_from_alternate_cb(), I did wonder if it would work
-    at all with a reftable alternate, but I suspect it would. I think we
-    ended up still having a "refs/" directory in that case, so we'd
-    recognize it as a repo (though really, it ought to be using
-    is_git_directory() instead of its hacky check). And then we farm out
-    the actual ref iteration to a separate for-each-ref process, passing
-    along --git-dir, which will read that alternate repo's config. So it
-    should Just Work, even with a different ref backend. It's almost
-    certainly broken if the hash algorithms don't match, though, because
-    we'd get oddly sized results from for-each-ref's output.
-
-    That's all just interesting tangent, though. :)
-
--Peff
+-- Hannes
