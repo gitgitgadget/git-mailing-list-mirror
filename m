@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DECBC43216
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 13:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18461C432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 13:35:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7660E60462
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 13:35:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEBF760462
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 13:35:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236733AbhHaNgs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 09:36:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52694 "EHLO
+        id S237306AbhHaNgt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 09:36:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237006AbhHaNgq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 09:36:46 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87BCEC061760
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 06:35:51 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id n5so27676253wro.12
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 06:35:51 -0700 (PDT)
+        with ESMTP id S237099AbhHaNgr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 09:36:47 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 601BCC061760
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 06:35:52 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id j14-20020a1c230e000000b002e748b9a48bso1918719wmj.0
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 06:35:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EOlWBdgIKEQxY/5QvMOqnYoNQ8ncU74Zf5cam8TkHCw=;
-        b=n2MXbPwg31eXlQrRKJCYMs9S6b7KE92pBkSdR7r6xBw236vPfLzcnzeZWfruGTkk1K
-         WzU90uCDVLRQuXjdiNjnhRYx3RRvVvp1lCQ2UFTVdpwOHbzVoqoL2drhDQgEEqe+ZP37
-         yxkxkI3zd42sYGa6bTSITGIDqa/5HsqWelSWt3ytBERsx+fw/6lvondQHYApAHw5Xunw
-         iDBcjrzrwiyMw9eA7wcQcqZzezdQawMyftkYZSVqeySzO540OrBTJ9NRxvJ3pPQIgrKt
-         AMqtWBJWqPrI3cCqWhImE9Lcyp6fcV3/UZQ54McQ+lld2rYiTolwmlKvBZCrch4gGnwM
-         LiMQ==
+        bh=fMIUUqpRmcOIVsAmoPZUiQSn77rxtiKG7esDDCKFh4U=;
+        b=aaof8rew+9gMVlY97agn7BZ31Wcl/SWE2YEtQjZ+XSw6AFADJJRdDKlPbbsFvf8hQS
+         JxWGY6DRiI8bL/5rZYP3UEMF9rX+B7Sr2MZwkucfBv3pE0nhTo2+kIyWbqMdSd32TVwV
+         9GyWqY5WEqaE6bl+KqqZDHoZC57icQe2xHDNkRs5+y9+4YdUtCxAp1eRZPBiyZwbaKUN
+         4rH4tL3cezxOcwOhbk+vkntaqY2CmD2d0RNwEHStxTNt+IIXkSX4Tnd5QgdK4enT6J1e
+         h/q4X9dhk8UaTHtJvi7Ba5i5ML0GM4e5tHXfRVvUV04xuX3e8N4UC5xohG9gRktikkvA
+         aPGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EOlWBdgIKEQxY/5QvMOqnYoNQ8ncU74Zf5cam8TkHCw=;
-        b=nPnHmGEpkF9Q6TH2Q8dBs4RYz5m+Uhimk3JqpHlwb82gyuVrcDnfUTgeHjRx0Sq5Vn
-         bhgx+Sf1cLkZ1h4s5BEhNp++D1TLv5REnWhFVKC6FKHpoQAjzhrwpmup7vSM5xLzU9NI
-         6BcstdacPH6QRrfih6KAIRo6WQRVCh7fs4CR449qMhE1Z9PBgbGDvutqIku2tGmAtgFw
-         F3npYhWzEK1VAa8XEvmu9GWZUWG8fgxyXKfMfQs0DM67/+fM4oosxkn6DpTJwkn/FyAU
-         Gxy9sG/mA5LLk1pQT5bIOA55lI3TCm5lYokp9IWvrSN0BSN75tByTzkcDctxy2Fp58Ix
-         bdOg==
-X-Gm-Message-State: AOAM533RriBnEsuh+XCY7zfpYkWuwJeQFpyS96BIioql2QzN43vrCLI+
-        VEJQffeTr6K9uDljMPA9NGi08UNNv/jyUg==
-X-Google-Smtp-Source: ABdhPJwmI5etsKLDAGCvYItQo5brVj0At83oweUhokSNKMQ/aKff29+67y5AXFotbTptW5mpl2sUnQ==
-X-Received: by 2002:adf:9e48:: with SMTP id v8mr14973209wre.141.1630416949767;
-        Tue, 31 Aug 2021 06:35:49 -0700 (PDT)
+        bh=fMIUUqpRmcOIVsAmoPZUiQSn77rxtiKG7esDDCKFh4U=;
+        b=XDmQVrMM4vV2VDVqYbV6vOSVjV6x6SNfobv1OsQ8Y1Xbo5TCahz75YysNgAMb/+d+W
+         mJBoPVz7ZLZYam8wAi90m/z83P5DTAZLVst/MjoJ8X9k0lUeBldKpGYAC1eCfww6+9lS
+         xDtSM6OVfUbD93tyd8Rg1SgHdvhk0JigugOsaF/WmuMwGHgvpn0MHJabEP+/reARuc6F
+         3Z3jFmqevX+C5Lm84B2B1g6aH92wWlTRyU7+u2egs5Q9fZCcY/7U0Xt8sNRa4Y7f7nlI
+         8SUqaDeGoma22mnOUJY3VzywCErfdgsBVrNMJ4VhwwWuVa+5H6RKuZ6+309PEdLDYr/v
+         Xhvg==
+X-Gm-Message-State: AOAM532OwHIEMy03CnxtY3yE81TFlfdav16LsOlXhYiOKjsW0aMBc0E0
+        6QBPNnvhmjdl5ugqWqham6AFL3eVMuUDWQ==
+X-Google-Smtp-Source: ABdhPJzR3BznlUSWfDle/Vkxz1YIXY8lrBMA32Q3QPXTk18Nz4gKt2TJ/X1b8ukKy8G5g7rSOY3GXQ==
+X-Received: by 2002:a05:600c:a05:: with SMTP id z5mr4404677wmp.73.1630416950702;
+        Tue, 31 Aug 2021 06:35:50 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u27sm19073451wru.2.2021.08.31.06.35.48
+        by smtp.gmail.com with ESMTPSA id u27sm19073451wru.2.2021.08.31.06.35.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Aug 2021 06:35:49 -0700 (PDT)
+        Tue, 31 Aug 2021 06:35:50 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 3/8] tests: add a test mode for SANITIZE=leak, run it in CI
-Date:   Tue, 31 Aug 2021 15:35:37 +0200
-Message-Id: <patch-v3-3.8-7e3577e4e3c-20210831T132607Z-avarab@gmail.com>
+Subject: [PATCH v3 4/8] tests: annotate t000*.sh with TEST_PASSES_SANITIZE_LEAK=true
+Date:   Tue, 31 Aug 2021 15:35:38 +0200
+Message-Id: <patch-v3-4.8-0cd14d64165-20210831T132607Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.805.g739b16c2189
 In-Reply-To: <cover-v3-0.8-00000000000-20210831T132607Z-avarab@gmail.com>
 References: <cover-0.4-0000000000-20210714T172251Z-avarab@gmail.com> <cover-v3-0.8-00000000000-20210831T132607Z-avarab@gmail.com>
@@ -82,226 +82,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While git can be compiled with SANITIZE=leak there has been no
-corresponding GIT_TEST_* mode for it, i.e. memory leaks have been
-fixed as one-offs without structured regression testing.
-
-This change add such a mode, and a new linux-SANITIZE=leak CI
-target. The test mode and CI target only runs a whitelist of
-known-good tests using a mechanism discussed below, to ensure that we
-won't add regressions to code that's had its memory leaks fixed.
-
-The CI target uses a new GIT_TEST_PASSING_SANITIZE_LEAK=true test
-mode. When running in that mode all tests except those that have opted
-themselves in to running by setting and exporting
-TEST_PASSES_SANITIZE_LEAK=true before sourcing test-lib.sh.
-
-I'm adding a "test-pragma-SANITIZE=leak-ok.sh" wrapper for setting and
-exporting that variable, as the assignment/export boilerplate would
-otherwise get quite verbose and repetitive in subsequent commits.
-
-The tests using the "test-pragma-SANITIZE=leak-ok.sh" pragma can in
-turn make use of the "SANITIZE_LEAK" prerequisite added in a preceding
-commit, should they wish to selectively skip tests even under
-"GIT_TEST_PASSING_SANITIZE_LEAK=true".
-
-Now tests that don't set the "test-pragma-SANITIZE=leak-ok.sh" pragma
-will be skipped under GIT_TEST_PASSING_SANITIZE_LEAK=true:
-
-    $ GIT_TEST_PASSING_SANITIZE_LEAK=true ./t0001-init.sh
-    1..0 # SKIP skip all tests in t0001 under SANITIZE=leak, TEST_PASSES_SANITIZE_LEAK not set
-
-In subsequents commit we'll conservatively add more
-TEST_PASSES_SANITIZE_LEAK=true annotations. The idea is that as memory
-leaks are fixed we can add more known-good tests to this CI target, to
-ensure that we won't have regressions.
-
-As of writing this we've got major regressions between master..seen,
-i.e. the t000*.sh tests and more fixed since 31f9acf9ce2 (Merge branch
-'ah/plugleaks', 2021-08-04) have regressed recently.
-
-See the discussion at <87czsv2idy.fsf@evledraar.gmail.com> about the
-lack of this sort of test mode, and 0e5bba53af (add UNLEAK annotation
-for reducing leak false positives, 2017-09-08) for the initial
-addition of SANITIZE=leak.
-
-See also 09595ab381 (Merge branch 'jk/leak-checkers', 2017-09-19),
-7782066f67 (Merge branch 'jk/apache-lsan', 2019-05-19) and the recent
-936e58851a (Merge branch 'ah/plugleaks', 2021-05-07) for some of the
-past history of "one-off" SANITIZE=leak (and more) fixes.
+Annotate the t000*.sh tests that pass under SANITIZE=leak, these tests
+now pass under GIT_TEST_PASSING_SANITIZE_LEAK=true. We skip
+t0006-date.sh and t0009-prio-queue.sh due to outstanding memory leaks.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .github/workflows/main.yml        |  2 ++
- ci/install-dependencies.sh        |  4 ++--
- ci/lib.sh                         | 11 +++++++++--
- ci/run-build-and-tests.sh         |  4 ++--
- t/README                          |  7 +++++++
- t/t0000-basic.sh                  |  1 +
- t/test-lib.sh                     | 21 +++++++++++++++++++++
- t/test-pragma-SANITIZE=leak-ok.sh |  8 ++++++++
- 8 files changed, 52 insertions(+), 6 deletions(-)
- create mode 100644 t/test-pragma-SANITIZE=leak-ok.sh
+ t/t0001-init.sh       | 1 +
+ t/t0002-gitfile.sh    | 1 +
+ t/t0003-attributes.sh | 1 +
+ t/t0004-unwritable.sh | 1 +
+ t/t0005-signals.sh    | 2 ++
+ t/t0007-git-var.sh    | 2 ++
+ t/t0008-ignores.sh    | 1 +
+ 7 files changed, 9 insertions(+)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 47876a4f02e..d11b971f970 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -232,6 +232,8 @@ jobs:
-           - jobname: linux-gcc-default
-             cc: gcc
-             pool: ubuntu-latest
-+          - jobname: linux-SANITIZE=leak
-+            pool: ubuntu-latest
-     env:
-       CC: ${{matrix.vector.cc}}
-       jobname: ${{matrix.vector.jobname}}
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 5772081b6e5..30276ae1e00 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -12,13 +12,13 @@ UBUNTU_COMMON_PKGS="make libssl-dev libcurl4-openssl-dev libexpat-dev
-  libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl"
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index df544bb321f..8ce04bcabd2 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -2,6 +2,7 @@
  
- case "$jobname" in
--linux-clang|linux-gcc)
-+linux-clang|linux-gcc|linux-SANITIZE=leak)
- 	sudo apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
- 	sudo apt-get -q update
- 	sudo apt-get -q -y install language-pack-is libsvn-perl apache2 \
- 		$UBUNTU_COMMON_PKGS
- 	case "$jobname" in
--	linux-gcc)
-+	linux-gcc|linux-SANITIZE=leak)
- 		sudo apt-get -q -y install gcc-8
- 		;;
- 	esac
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 33b9777ab7e..d86b83ed203 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -183,9 +183,9 @@ export GIT_TEST_CLONE_2GB=true
- export SKIP_DASHED_BUILT_INS=YesPlease
- 
- case "$jobname" in
--linux-clang|linux-gcc)
-+linux-clang|linux-gcc|linux-SANITIZE=leak)
- 	case "$jobname" in
--	linux-gcc)
-+	linux-gcc|linux-SANITIZE=leak)
- 		export CC=gcc-8
- 		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/python3"
- 		;;
-@@ -237,4 +237,11 @@ linux-musl)
- 	;;
- esac
- 
-+case "$jobname" in
-+linux-SANITIZE=leak)
-+	export SANITIZE=leak
-+	export GIT_TEST_PASSING_SANITIZE_LEAK=true
-+	;;
-+esac
-+
- MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 3ce81ffee94..f0b9775b6c7 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -12,7 +12,7 @@ esac
- 
- make
- case "$jobname" in
--linux-gcc)
-+linux-gcc|linux-SANITIZE=leak)
- 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- 	make test
- 	export GIT_TEST_SPLIT_INDEX=yes
-@@ -29,7 +29,7 @@ linux-gcc)
- 	export GIT_TEST_CHECKOUT_WORKERS=2
- 	make test
- 	;;
--linux-clang)
-+linux-clang|linux-SANITIZE=leak)
- 	export GIT_TEST_DEFAULT_HASH=sha1
- 	make test
- 	export GIT_TEST_DEFAULT_HASH=sha256
-diff --git a/t/README b/t/README
-index 9e701223020..f5dfac568d1 100644
---- a/t/README
-+++ b/t/README
-@@ -448,6 +448,13 @@ GIT_TEST_CHECKOUT_WORKERS=<n> overrides the 'checkout.workers' setting
- to <n> and 'checkout.thresholdForParallelism' to 0, forcing the
- execution of the parallel-checkout code.
- 
-+GIT_TEST_PASSING_SANITIZE_LEAK=<boolean> when compiled with
-+SANITIZE=leak will run only those tests that have whitelisted
-+themselves as passing with no memory leaks. Do this by sourcing
-+"test-pragma-SANITIZE=leak-ok.sh" before sourcing "test-lib.sh" itself
-+at the top of the test script. This test mode is used by the
-+"linux-SANITIZE=leak" CI target.
-+
- Naming Tests
- ------------
- 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index cb87768513c..14836c97cc6 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -18,6 +18,7 @@ swapping compression and hashing order, the person who is making the
- modification *should* take notice and update the test vectors here.
- '
+ test_description='git init'
  
 +. ./test-pragma-SANITIZE=leak-ok.sh
  . ./test-lib.sh
  
- try_local_xy () {
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 4ab18914a3d..332dd59257d 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1379,6 +1379,27 @@ then
- 	test_done
- fi
+ check_config () {
+diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
+index 8440e6add12..3dcb3d16944 100755
+--- a/t/t0002-gitfile.sh
++++ b/t/t0002-gitfile.sh
+@@ -7,6 +7,7 @@ Verify that plumbing commands work when .git is a file
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
-+# Aggressively skip non-whitelisted tests when compiled with
-+# SANITIZE=leak
-+if test -n "$SANITIZE_LEAK"
-+then
-+	if test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
-+	then
-+		# We need to see it in "git env--helper" (via
-+		# test_bool_env)
-+		export TEST_PASSES_SANITIZE_LEAK
++. ./test-pragma-SANITIZE=leak-ok.sh
+ . ./test-lib.sh
+ 
+ objpath() {
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index 1e4c672b84a..4ef24a35ab5 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description=gitattributes
+ 
++. ./test-pragma-SANITIZE=leak-ok.sh
+ . ./test-lib.sh
+ 
+ attr_check_basic () {
+diff --git a/t/t0004-unwritable.sh b/t/t0004-unwritable.sh
+index fbdcb926b3a..35571947ec5 100755
+--- a/t/t0004-unwritable.sh
++++ b/t/t0004-unwritable.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='detect unwritable repository and fail correctly'
+ 
++. ./test-pragma-SANITIZE=leak-ok.sh
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
+diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
+index 4c214bd11c4..cd3ecf403e0 100755
+--- a/t/t0005-signals.sh
++++ b/t/t0005-signals.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='signals work as we expect'
 +
-+		if ! test_bool_env TEST_PASSES_SANITIZE_LEAK false
-+		then
-+			skip_all="skipping $this_test under GIT_TEST_PASSING_SANITIZE_LEAK=true"
-+			test_done
-+		fi
-+	fi
-+elif test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
-+then
-+	error "GIT_TEST_PASSING_SANITIZE_LEAK=true has no effect except when compiled with SANITIZE=leak"
-+fi
++. ./test-pragma-SANITIZE=leak-ok.sh
+ . ./test-lib.sh
+ 
+ cat >expect <<EOF
+diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
+index 88b9ae81588..bb8353e6d32 100755
+--- a/t/t0007-git-var.sh
++++ b/t/t0007-git-var.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='basic sanity checks for git var'
 +
- # Last-minute variable setup
- HOME="$TRASH_DIRECTORY"
- GNUPGHOME="$HOME/gnupg-home-not-used"
-diff --git a/t/test-pragma-SANITIZE=leak-ok.sh b/t/test-pragma-SANITIZE=leak-ok.sh
-new file mode 100644
-index 00000000000..5f03397075d
---- /dev/null
-+++ b/t/test-pragma-SANITIZE=leak-ok.sh
-@@ -0,0 +1,8 @@
-+#!/bin/sh
-+
-+## This "pragma" (as in "perldoc perlpragma") declares that the test
-+## will pass under GIT_TEST_PASSING_SANITIZE_LEAK=true. Source this
-+## before sourcing test-lib.sh
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+export TEST_PASSES_SANITIZE_LEAK
++. ./test-pragma-SANITIZE=leak-ok.sh
+ . ./test-lib.sh
+ 
+ test_expect_success 'get GIT_AUTHOR_IDENT' '
+diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+index a594b4aa7d0..6daa7ce529e 100755
+--- a/t/t0008-ignores.sh
++++ b/t/t0008-ignores.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description=check-ignore
+ 
++. ./test-pragma-SANITIZE=leak-ok.sh
+ . ./test-lib.sh
+ 
+ init_vars () {
 -- 
 2.33.0.805.g739b16c2189
 
