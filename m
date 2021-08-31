@@ -2,84 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E55DBC432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 09:44:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 809C3C432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 10:25:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B5CDB60F6B
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 09:44:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5277B60F42
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 10:25:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238112AbhHaJpu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 05:45:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55694 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232992AbhHaJpt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 05:45:49 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6457C061575
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 02:44:54 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id c6so1155811pjv.1
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 02:44:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5wz0EhXWbd+Brqg+5P+9epurNZ8iEV4V4KmstkZpED4=;
-        b=FEE/dO3dot6RfAQ8/yu/k/cqQu0UeByD5R77JX3P4hsrn1ZCXW8YVuPzDu82pOR0Sv
-         3doSMvG8bTdd9QO5pgxLrkzbHR0K8qb5sCDJ79wlv2QwFkLZ6GWJyQUl5xkPf423BFvx
-         XfhSlc6D3/ZXQ7kZCBczwRnFQh/N8mdFTMdQUDNNTdINSUbrLBum5pqh+l0JSBoogfSJ
-         qMZeHDZO6AqpCemnmke9oo7bQTOn3QKiFt+/mBJktOYhHm1+lQ39msUAB4Zyy1k37PAB
-         pgt3SmqDWAHiSswnimEaqd9T6vOAYiY8KnfaLeyIiR7LCchos/JuzntjoPNIU2h5vE4e
-         eyuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5wz0EhXWbd+Brqg+5P+9epurNZ8iEV4V4KmstkZpED4=;
-        b=NwrRR12MMxC9ECTW3dVtWVv/uiz9MvKTgYBcyfids7aNI5U7qOLGjuyD1VFL/ky2Am
-         IKBCjajOBC0inGSyxxs65wE4tzkmkc2ZcKZ7hyKtGvuId57KXhx12dqzNOzDqZZiPfNd
-         uoAc1g+gFZgoYPGuPjIkLX0+2UctcDc+sxN1e5hfuAsHGNqY7viv/c2J0NmOqIYxJjRY
-         ZoXcqWwwSGFQT7Rgh6xAMlUSvEX5Lop2PTDBqCKnBEUtuJ677iAvcB17WFgsa9i0jmNm
-         UF48rbX4+RXP87/x6Y373TYOOzWcJdWgfwlGnXnlwYM2QwzZxs/BwUARcsHbzhqRbNC6
-         SO+Q==
-X-Gm-Message-State: AOAM530ZPFRGSBHRJPxLRzoALzCQZSjg2OH4dZmggAWfxwlDR6i9DTAl
-        +nnufUx4DG1vNue5n0rikT4o3y8X0DqX4zLRsXS52Air9A==
-X-Google-Smtp-Source: ABdhPJzrYtJaCqJDSGEcWbxcmKm4ZdPGL2RHEngAYSt1vmnYB/rNxfXiM5WUGDGVI9oziWzSKJNfJXbBrYCrAi/N8DQ=
-X-Received: by 2002:a17:90a:31b:: with SMTP id 27mr3647807pje.6.1630403094126;
- Tue, 31 Aug 2021 02:44:54 -0700 (PDT)
+        id S240978AbhHaK02 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 06:26:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34806 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240831AbhHaK01 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 06:26:27 -0400
+Received: (qmail 5750 invoked by uid 109); 31 Aug 2021 10:25:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 31 Aug 2021 10:25:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22438 invoked by uid 111); 31 Aug 2021 10:25:33 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 31 Aug 2021 06:25:33 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 31 Aug 2021 06:25:30 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jacob Vosmaer <jacob@gitlab.com>
+Cc:     gitster@pobox.com, me@ttaylorr.com, git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH v3 0/2] send_ref buffering
+Message-ID: <YS4DmlJdjxeo+QI0@coredump.intra.peff.net>
+References: <xmqqbl5ic19t.fsf@gitster.g>
+ <20210831093444.28199-1-jacob@gitlab.com>
 MIME-Version: 1.0
-References: <CANXojcyWnFY60bXG6MDS9WAYkcFQHf+Oef0VREBkvgsuX9e=Kg@mail.gmail.com>
- <YS0tNoAa/0VQe1OW@coredump.intra.peff.net> <CANXojczR1hMrzz7t0P6AkqL3kjdk+NzBKyCQnm-9cWFbULifow@mail.gmail.com>
- <YS3VLh8SFvpDZy84@coredump.intra.peff.net>
-In-Reply-To: <YS3VLh8SFvpDZy84@coredump.intra.peff.net>
-From:   Stef Bon <stefbon@gmail.com>
-Date:   Tue, 31 Aug 2021 11:44:43 +0200
-Message-ID: <CANXojcxF8V2RR=xMLrwcpwa=R8fvhsn2Wj=pnthXNnvxX7YLxQ@mail.gmail.com>
-Subject: Re: Exec upload-pack on remote with what parameters to get direntries.
-To:     Jeff King <peff@peff.net>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210831093444.28199-1-jacob@gitlab.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Op di 31 aug. 2021 om 09:07 schreef Jeff King <peff@peff.net>:
->
-> On Tue, Aug 31, 2021 at 08:38:39AM +0200, Stef Bon wrote:
->
+On Tue, Aug 31, 2021 at 11:34:42AM +0200, Jacob Vosmaer wrote:
 
-> You might also set GIT_TRACE_PACKET=1 in your environment and try
-> running some Git commands. They will show you what's being said on the
-> wire, up until the packfile is sent (decoding the packfile itself is a
-> whole other story).
->
+> Thanks for the reactions everyone. I agree that packet_fwrite_fmt
+> simplifies the patch nicely. Jeff, I hope I have given you credit
+> in an appropriate way, let me know if you want me to change something
+> there.
 
-Yes that will give me the insight I need.
-I will come back when it comes to decoding the packfile.
+What you did looks fine.
 
-Thanks,
-Stef
+Overall the series looks much nicer, and I don't have any real
+complaints. I do think it would be nice to take the packet_writer
+interface further (letting it replace the static buf, and use stdio
+handles, and using it throughout upload-pack). But this is a strict
+improvement, so we can do that other refactoring later.
+
+> Regarding setvbuf: I have found out that GNU coreutils has a utility
+> called stdbuf that lets you modify the stdout buffer size at runtime
+> using some LD_PRELOAD hack so we can use that in Gitaly. I don't
+> think this is the best outcome for users, we ought to give them a
+> good default instead of expecting them to invoke git-upload-pack
+> as 'stdbuf -o 64K git-upload-pack'. But I can't judge the impact
+> of globally changing the stdout buffer size for Git so I'll settle
+> for having to use stdbuf.
+
+Does the 64k buffer actually improve things? Here are the timings I get
+on a repo with ~1M refs (it's linux.git with one ref per commit). "git"
+is current unbuffered version, and "git.compile" is master with your
+patches on top:
+
+  $ hyperfine -i 'git upload-pack .' 'git.compile upload-pack .' 'stdbuf -o 64K git.compile upload-pack .'
+  Benchmark #1: git upload-pack .
+    Time (mean ± σ):     948.6 ms ±   7.3 ms    [User: 840.8 ms, System: 107.8 ms]
+    Range (min … max):   937.7 ms … 961.1 ms    10 runs
+   
+    Warning: Ignoring non-zero exit code.
+   
+  Benchmark #2: git.compile upload-pack .
+    Time (mean ± σ):     867.3 ms ±   6.8 ms    [User: 821.5 ms, System: 45.7 ms]
+    Range (min … max):   859.7 ms … 883.0 ms    10 runs
+   
+    Warning: Ignoring non-zero exit code.
+   
+  Benchmark #3: stdbuf -o 64K git.compile upload-pack .
+    Time (mean ± σ):     861.1 ms ±   8.2 ms    [User: 815.5 ms, System: 45.6 ms]
+    Range (min … max):   846.1 ms … 872.0 ms    10 runs
+   
+    Warning: Ignoring non-zero exit code.
+   
+  Summary
+    'stdbuf -o 64K git.compile upload-pack .' ran
+      1.01 ± 0.01 times faster than 'git.compile upload-pack .'
+      1.10 ± 0.01 times faster than 'git upload-pack .'
+
+This is on a glibc system, so the default buffers should be 4k. It
+doesn't appear to make any difference (there's a slight improvement, but
+well within the noise, and I had other runs where it did worse).
+
+By the way, if you really want to speed things up, try this:
+
+  $ hyperfine -i 'git.compile upload-pack .' 'GIT_REF_PARANOIA=1 git.compile upload-pack .'
+  Benchmark #1: git.compile upload-pack .
+    Time (mean ± σ):     855.4 ms ±   5.8 ms    [User: 803.4 ms, System: 52.0 ms]
+    Range (min … max):   848.7 ms … 869.5 ms    10 runs
+   
+    Warning: Ignoring non-zero exit code.
+   
+  Benchmark #2: GIT_REF_PARANOIA=1 git.compile upload-pack .
+    Time (mean ± σ):     394.4 ms ±   3.0 ms    [User: 357.9 ms, System: 36.4 ms]
+    Range (min … max):   390.6 ms … 400.3 ms    10 runs
+   
+    Warning: Ignoring non-zero exit code.
+   
+  Summary
+    'GIT_REF_PARANOIA=1 git.compile upload-pack .' ran
+      2.17 ± 0.02 times faster than 'git.compile upload-pack .'
+
+It's not exactly the intended use of that environment variable, but its
+side effect is that we do not call has_object_file() on each ref tip.
+
+-Peff
