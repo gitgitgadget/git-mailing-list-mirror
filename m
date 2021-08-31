@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18461C432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 13:35:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7CB3C432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 13:35:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EEBF760462
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 13:35:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F58760F6B
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 13:35:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237306AbhHaNgt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 09:36:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52702 "EHLO
+        id S237622AbhHaNgx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 09:36:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237099AbhHaNgr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 09:36:47 -0400
+        with ESMTP id S237238AbhHaNgs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 09:36:48 -0400
 Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 601BCC061760
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 06:35:52 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id j14-20020a1c230e000000b002e748b9a48bso1918719wmj.0
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 06:35:52 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69C11C061760
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 06:35:53 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id m25-20020a7bcb99000000b002e751bcb5dbso2586110wmi.5
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 06:35:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fMIUUqpRmcOIVsAmoPZUiQSn77rxtiKG7esDDCKFh4U=;
-        b=aaof8rew+9gMVlY97agn7BZ31Wcl/SWE2YEtQjZ+XSw6AFADJJRdDKlPbbsFvf8hQS
-         JxWGY6DRiI8bL/5rZYP3UEMF9rX+B7Sr2MZwkucfBv3pE0nhTo2+kIyWbqMdSd32TVwV
-         9GyWqY5WEqaE6bl+KqqZDHoZC57icQe2xHDNkRs5+y9+4YdUtCxAp1eRZPBiyZwbaKUN
-         4rH4tL3cezxOcwOhbk+vkntaqY2CmD2d0RNwEHStxTNt+IIXkSX4Tnd5QgdK4enT6J1e
-         h/q4X9dhk8UaTHtJvi7Ba5i5ML0GM4e5tHXfRVvUV04xuX3e8N4UC5xohG9gRktikkvA
-         aPGA==
+        bh=NkaMF66/gxPvxQklQ1iRKnwee5Pfa5Lmuwpu9cV8T/4=;
+        b=a1bDW0b8peV7P78p8LbLTmFjHpmX2P1WarTxD8rNupudD1P1vp11yaZGgsY+xvIbEr
+         6BxBy8FDjoPRJr3UetVBk2ps1dZOV43rJFxeWdP9dNyWEQtDONg9/K7bZ0BYCYM1QKnc
+         MpRCHWJo2qjGes0hmnyghCnSn9GIa12/0TryMTst9oBviqGT8Ct/UOg6fjisII85j3vA
+         aOuDaV/fXVSCShkPzxy7jqaKelP6fu4COyN6yreryjuxiyJ0oCvYyYKl2OSkqgRmBw3o
+         DOrpVcIIQPD+p1yV0Vn8wwQZttiJUbbclYq1xFgtvkY9Q5Vlj2hE8zn92q7HCZROt/2+
+         ci9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fMIUUqpRmcOIVsAmoPZUiQSn77rxtiKG7esDDCKFh4U=;
-        b=XDmQVrMM4vV2VDVqYbV6vOSVjV6x6SNfobv1OsQ8Y1Xbo5TCahz75YysNgAMb/+d+W
-         mJBoPVz7ZLZYam8wAi90m/z83P5DTAZLVst/MjoJ8X9k0lUeBldKpGYAC1eCfww6+9lS
-         xDtSM6OVfUbD93tyd8Rg1SgHdvhk0JigugOsaF/WmuMwGHgvpn0MHJabEP+/reARuc6F
-         3Z3jFmqevX+C5Lm84B2B1g6aH92wWlTRyU7+u2egs5Q9fZCcY/7U0Xt8sNRa4Y7f7nlI
-         8SUqaDeGoma22mnOUJY3VzywCErfdgsBVrNMJ4VhwwWuVa+5H6RKuZ6+309PEdLDYr/v
-         Xhvg==
-X-Gm-Message-State: AOAM532OwHIEMy03CnxtY3yE81TFlfdav16LsOlXhYiOKjsW0aMBc0E0
-        6QBPNnvhmjdl5ugqWqham6AFL3eVMuUDWQ==
-X-Google-Smtp-Source: ABdhPJzR3BznlUSWfDle/Vkxz1YIXY8lrBMA32Q3QPXTk18Nz4gKt2TJ/X1b8ukKy8G5g7rSOY3GXQ==
-X-Received: by 2002:a05:600c:a05:: with SMTP id z5mr4404677wmp.73.1630416950702;
-        Tue, 31 Aug 2021 06:35:50 -0700 (PDT)
+        bh=NkaMF66/gxPvxQklQ1iRKnwee5Pfa5Lmuwpu9cV8T/4=;
+        b=rF/gOn9srr0g5yfOQNVQ31+8AknhWe+VGadxl89ttizBtiN8hqcicNFrTAXN07nL8P
+         KYs4NCyIjLqj4cx1I0GdbRq3LmWkuO9gFXCIYGSV3QbCBRJ1zuZ3HLJMHCprToc1PFhQ
+         zowj46JEL84iOP/HURDVX707CR1z75MnGCL1gZGdoruC0LOWXTGX0iqZMZtfAHdJYb7n
+         thztn6ZnczLaNYInN4bNC4mVKyfcpIdkDyq8aIzKwujqpC14uBavWmaX2AvfOOV9WyH/
+         i8R5pe9qliEYsINMTKhKVu10jz6kkZ0Xcavh79RE3P35u2mLNazjOd5f0ow0Kk9Le/ye
+         zHRQ==
+X-Gm-Message-State: AOAM5312gU/7+TwmJNa//gSAZTzdGXdbBbKSGpgaWAG1iVVSQsbTOObA
+        uvgfCSHzlCGzDBsIWUy7UsmcJONAXwi7Ow==
+X-Google-Smtp-Source: ABdhPJwFOeFYs3dY0xOCF7MEzAo6C5SQAvtdeD7IurciLbJLcZHLeIbXpWWGL2tb9hXMkuiNH+hfWw==
+X-Received: by 2002:a05:600c:1912:: with SMTP id j18mr4362120wmq.29.1630416951755;
+        Tue, 31 Aug 2021 06:35:51 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u27sm19073451wru.2.2021.08.31.06.35.49
+        by smtp.gmail.com with ESMTPSA id u27sm19073451wru.2.2021.08.31.06.35.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Aug 2021 06:35:50 -0700 (PDT)
+        Tue, 31 Aug 2021 06:35:51 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 4/8] tests: annotate t000*.sh with TEST_PASSES_SANITIZE_LEAK=true
-Date:   Tue, 31 Aug 2021 15:35:38 +0200
-Message-Id: <patch-v3-4.8-0cd14d64165-20210831T132607Z-avarab@gmail.com>
+Subject: [PATCH v3 5/8] tests: annotate t001*.sh with TEST_PASSES_SANITIZE_LEAK=true
+Date:   Tue, 31 Aug 2021 15:35:39 +0200
+Message-Id: <patch-v3-5.8-ed5f5705755-20210831T132607Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.805.g739b16c2189
 In-Reply-To: <cover-v3-0.8-00000000000-20210831T132607Z-avarab@gmail.com>
 References: <cover-0.4-0000000000-20210714T172251Z-avarab@gmail.com> <cover-v3-0.8-00000000000-20210831T132607Z-avarab@gmail.com>
@@ -82,107 +82,93 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Annotate the t000*.sh tests that pass under SANITIZE=leak, these tests
+Annotate the t001*.sh tests that pass under SANITIZE=leak, these tests
 now pass under GIT_TEST_PASSING_SANITIZE_LEAK=true. We skip
-t0006-date.sh and t0009-prio-queue.sh due to outstanding memory leaks.
+t0012-help.sh, t0014-alias.sh, t0015-hash.sh and t0019-json-writer.sh
+due to outstanding memory leaks.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t0001-init.sh       | 1 +
- t/t0002-gitfile.sh    | 1 +
- t/t0003-attributes.sh | 1 +
- t/t0004-unwritable.sh | 1 +
- t/t0005-signals.sh    | 2 ++
- t/t0007-git-var.sh    | 2 ++
- t/t0008-ignores.sh    | 1 +
- 7 files changed, 9 insertions(+)
+ t/t0010-racy-git.sh   | 1 +
+ t/t0011-hashmap.sh    | 1 +
+ t/t0013-sha1dc.sh     | 1 +
+ t/t0016-oidmap.sh     | 1 +
+ t/t0017-env-helper.sh | 1 +
+ t/t0018-advice.sh     | 1 +
+ 6 files changed, 6 insertions(+)
 
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index df544bb321f..8ce04bcabd2 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
+diff --git a/t/t0010-racy-git.sh b/t/t0010-racy-git.sh
+index 5657c5a87b6..9a627077be4 100755
+--- a/t/t0010-racy-git.sh
++++ b/t/t0010-racy-git.sh
 @@ -2,6 +2,7 @@
  
- test_description='git init'
+ test_description='racy GIT'
  
 +. ./test-pragma-SANITIZE=leak-ok.sh
  . ./test-lib.sh
  
- check_config () {
-diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
-index 8440e6add12..3dcb3d16944 100755
---- a/t/t0002-gitfile.sh
-+++ b/t/t0002-gitfile.sh
-@@ -7,6 +7,7 @@ Verify that plumbing commands work when .git is a file
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+. ./test-pragma-SANITIZE=leak-ok.sh
- . ./test-lib.sh
- 
- objpath() {
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index 1e4c672b84a..4ef24a35ab5 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -2,6 +2,7 @@
- 
- test_description=gitattributes
- 
-+. ./test-pragma-SANITIZE=leak-ok.sh
- . ./test-lib.sh
- 
- attr_check_basic () {
-diff --git a/t/t0004-unwritable.sh b/t/t0004-unwritable.sh
-index fbdcb926b3a..35571947ec5 100755
---- a/t/t0004-unwritable.sh
-+++ b/t/t0004-unwritable.sh
-@@ -2,6 +2,7 @@
- 
- test_description='detect unwritable repository and fail correctly'
- 
-+. ./test-pragma-SANITIZE=leak-ok.sh
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
-index 4c214bd11c4..cd3ecf403e0 100755
---- a/t/t0005-signals.sh
-+++ b/t/t0005-signals.sh
-@@ -1,6 +1,8 @@
+ # This test can give false success if your machine is sufficiently
+diff --git a/t/t0011-hashmap.sh b/t/t0011-hashmap.sh
+index 5343ffd3f92..02b07ffa75c 100755
+--- a/t/t0011-hashmap.sh
++++ b/t/t0011-hashmap.sh
+@@ -1,6 +1,7 @@
  #!/bin/sh
  
- test_description='signals work as we expect'
-+
+ test_description='test hashmap and string hash functions'
 +. ./test-pragma-SANITIZE=leak-ok.sh
  . ./test-lib.sh
  
- cat >expect <<EOF
-diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
-index 88b9ae81588..bb8353e6d32 100755
---- a/t/t0007-git-var.sh
-+++ b/t/t0007-git-var.sh
-@@ -1,6 +1,8 @@
+ test_hashmap() {
+diff --git a/t/t0013-sha1dc.sh b/t/t0013-sha1dc.sh
+index 419f31a8f7d..812b5fcaff3 100755
+--- a/t/t0013-sha1dc.sh
++++ b/t/t0013-sha1dc.sh
+@@ -1,6 +1,7 @@
  #!/bin/sh
  
- test_description='basic sanity checks for git var'
-+
+ test_description='test sha1 collision detection'
++. ./test-pragma-SANITIZE=leak-ok.sh
+ . ./test-lib.sh
+ TEST_DATA="$TEST_DIRECTORY/t0013"
+ 
+diff --git a/t/t0016-oidmap.sh b/t/t0016-oidmap.sh
+index 31f8276ba82..a9e135d859b 100755
+--- a/t/t0016-oidmap.sh
++++ b/t/t0016-oidmap.sh
+@@ -1,6 +1,7 @@
+ #!/bin/sh
+ 
+ test_description='test oidmap'
 +. ./test-pragma-SANITIZE=leak-ok.sh
  . ./test-lib.sh
  
- test_expect_success 'get GIT_AUTHOR_IDENT' '
-diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-index a594b4aa7d0..6daa7ce529e 100755
---- a/t/t0008-ignores.sh
-+++ b/t/t0008-ignores.sh
+ # This purposefully is very similar to t0011-hashmap.sh
+diff --git a/t/t0017-env-helper.sh b/t/t0017-env-helper.sh
+index 4a159f99e44..14bb6797b30 100755
+--- a/t/t0017-env-helper.sh
++++ b/t/t0017-env-helper.sh
 @@ -2,6 +2,7 @@
  
- test_description=check-ignore
+ test_description='test env--helper'
  
 +. ./test-pragma-SANITIZE=leak-ok.sh
  . ./test-lib.sh
  
- init_vars () {
+ 
+diff --git a/t/t0018-advice.sh b/t/t0018-advice.sh
+index 39e5e4b34f8..326752a9711 100755
+--- a/t/t0018-advice.sh
++++ b/t/t0018-advice.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='Test advise_if_enabled functionality'
+ 
++. ./test-pragma-SANITIZE=leak-ok.sh
+ . ./test-lib.sh
+ 
+ test_expect_success 'advice should be printed when config variable is unset' '
 -- 
 2.33.0.805.g739b16c2189
 
