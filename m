@@ -7,62 +7,61 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA9CDC432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:51:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A7F8C432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:51:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A4CC60ED4
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:51:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1D1B760ED4
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:51:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241159AbhHaUwn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 16:52:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41830 "EHLO
+        id S241218AbhHaUwr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 16:52:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241217AbhHaUwj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 16:52:39 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04DAEC061796
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:51:44 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id b10so760904ioq.9
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:51:43 -0700 (PDT)
+        with ESMTP id S229916AbhHaUwo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 16:52:44 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FCC1C061575
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:51:49 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id g9so740090ioq.11
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:51:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=+P3lStOCr1PeSqvaQjnYzB0LEBCnLp1CL09lxHtH7a0=;
-        b=B751DgvX/R3rNY9COXWG1C9LPpWw0K+HjZUi3w2E6ueD2tohgLOtM6Qv5SE9mTISsm
-         YqjKD5oVH+0f3mVJWwAEg/rtkm85mEptiSKCffUijND7aMgdEfrlCvCxYbXknBv9vc2v
-         4UgJ1wHi5dhb5QPvJaD/d9XXh5RzgpRxD6XQeipE+mVQDi8vSeiNkafMoCIKAIlbMDBw
-         xdVtNciB1/qMDhpKMAaL2zz4sZmNgnLlV1gS64Ripsu2BSzIHZVG+P3tJJA1HE7bs3JT
-         x4CYZJ04EwoOz6d5PHz9LGke9cyFM+6MH2cwsmKb8tkrv8toE417b/HHbIwrEg6Ri2n4
-         MRKw==
+        bh=+DRaLVOHAM1ShuPqp6HHxzma3WXLZmd+bPW51wq5EsU=;
+        b=bqGI1MkN/yglEu/bxZ5gJD8TdIKVQiNemHDC0EsSQ4HI94ZXf0Ors+/7JMiCIC9gMI
+         QXA7olHsQd5lKfH31A6IICXjo0Y/tqmDqoZruw8WAO5Y4U6ZXroNo4WlhP5ju+NoLEfn
+         xwzhsmz4KQtlxCZfi0kZinDg1+l5bIB1EXUucPaIGNepieDt9H5KeGqOjXyJI+oylOG8
+         INB6v5B9LN19L1615nI1yUv+SeP8e+yUR3iBWKymK7hb/g4oZCzglHd9sB8jqHX9wAjK
+         KJz+uxMES3DZ14fJq0WPIbMrLSBGw3l0vQmz0r4D6XE6fEt1aEeVL02gmNHR3zdreL6c
+         67dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=+P3lStOCr1PeSqvaQjnYzB0LEBCnLp1CL09lxHtH7a0=;
-        b=my60ooouvr7+Z+TARZOfzujVSUHu3/AlDfRVw176yG18+fpU4mXCToUGtxp52p4CEC
-         m5zvfwKzBUyT2ekPGyCgqeHJg9hH25XEs3DeiZIOp6byU4P+4eRIPtf0erCW43kL6llN
-         EqMEQWiUhmSNlKRqbjgAbd5hdLcSuxLGcLVn3kBPIpiS9qNV+OBDdX/ldAu1f0qshLE0
-         fC1y/dbyF/VXm/+758MQXb4ePaUcH6JmWGnSCNJUbCGqily3uprQoQdBwxFoG0pyANa+
-         NNe14DrGden2Fo6OT9/ZyQqYWt66RlegKqoub5dWWYy1WQugr4W4bF3HPkA0YlSezVNw
-         8POg==
-X-Gm-Message-State: AOAM531SZvImf9UPeI8xdnl3IJ2KE5OF0xav9NGNtXhLLvF+I5x8RO9L
-        7LvGEuM3elHiH/Wg2JeCT1mMh93Ndbyl2mgR
-X-Google-Smtp-Source: ABdhPJzS95jrCmJJPL9qZcttQW/MCLoAJkxy8LvVfUJ4CnJJWGDo/NkPaM3UGJS8Gz4X2G1C4d7kGw==
-X-Received: by 2002:a02:850a:: with SMTP id g10mr4597136jai.134.1630443103316;
-        Tue, 31 Aug 2021 13:51:43 -0700 (PDT)
+        bh=+DRaLVOHAM1ShuPqp6HHxzma3WXLZmd+bPW51wq5EsU=;
+        b=SrQSPwSpGHo6WzlWMIPOSUv0W6c2DphWtWZZG49SHi5HNNpsPiSu8utD9OrAsu34z2
+         LXKXXBPLEHVgF51IVpIwwvgf92MZ1dwZva0MW+XIwf85pX5TuaJqm0GnULtzHTmphbP6
+         PvO2pD+J2vd0ja7nWKFKJxiPY1/5slpywC0IA+CNi7J7CZ8W70de+AppSJtXdAAlCtg/
+         q/Wnw4wFRIzST1LULQoH+2OeknsR3u7E/cPu/HfQOgI6gAqJfwzmx1c5YhIl1+WGjm76
+         mXZvEHxEiWrTEQPwZ8ZWFDB5t4pbRFM60yM3bkX/SvYgCtojhPoM0peOacFqzwfGMzFq
+         S89A==
+X-Gm-Message-State: AOAM531ZpDSreTc1BssGfr0ziKcbcbrZeic2TdoUN21B252i6lzBd9Ts
+        KS9oDdezv8fMRBpL2EI7kagTnrbmuX0TUsTA
+X-Google-Smtp-Source: ABdhPJzArW0PGFl9atkVEDpUeuH88fB6n5WaPrzGdD+nooZcfPuSdS/eMTmTIEJs1+EMfp5VbaCk1Q==
+X-Received: by 2002:a5d:9284:: with SMTP id s4mr24270427iom.131.1630443108545;
+        Tue, 31 Aug 2021 13:51:48 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id l18sm1900817ilj.82.2021.08.31.13.51.42
+        by smtp.gmail.com with ESMTPSA id q12sm10119559ioh.20.2021.08.31.13.51.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Aug 2021 13:51:42 -0700 (PDT)
-Date:   Tue, 31 Aug 2021 16:51:42 -0400
+        Tue, 31 Aug 2021 13:51:48 -0700 (PDT)
+Date:   Tue, 31 Aug 2021 16:51:47 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         jonathantanmy@google.com
-Subject: [PATCH v5 01/27] pack-bitmap.c: harden 'test_bitmap_walk()' to check
- type bitmaps
-Message-ID: <7815d9929d7b34f566b9748e03818c37d22a6808.1630443072.git.me@ttaylorr.com>
+Subject: [PATCH v5 03/27] pack-bitmap-write.c: free existing bitmaps
+Message-ID: <d469c1d8f6ae521621c72fc15d8c4b3a0d7e57cb.1630443072.git.me@ttaylorr.com>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1630443072.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -73,106 +72,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The special `--test-bitmap` mode of `git rev-list` is used to compare
-the result of an object traversal with a bitmap to check its integrity.
-This mode does not, however, assert that the types of reachable objects
-are stored correctly.
+When writing a new bitmap, the bitmap writer code attempts to read the
+existing bitmap (if one is present). This is done in order to quickly
+permute the bits of any bitmaps for commits which appear in the existing
+bitmap, and were also selected for the new bitmap.
 
-Harden this mode by teaching it to also check that each time an object's
-bit is marked, the corresponding bit should be set in exactly one of the
-type bitmaps (whose type matches the object's true type).
+But since this code was added in 341fa34887 (pack-bitmap-write: use
+existing bitmaps, 2020-12-08), the resources associated with opening an
+existing bitmap were never released.
 
-Co-authored-by: Jeff King <peff@peff.net>
-Signed-off-by: Jeff King <peff@peff.net>
+It's fine to ignore this, but it's bad hygiene. It will also cause a
+problem for the multi-pack-index builtin, which will be responsible not
+only for writing bitmaps, but also for expiring any old multi-pack
+bitmaps.
+
+If an existing bitmap was reused here, it will also be expired. That
+will cause a problem on platforms which require file resources to be
+closed before unlinking them, like Windows. Avoid this by ensuring we
+close reused bitmaps with free_bitmap_index() before removing them.
+
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+ pack-bitmap-write.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index d999616c9e..9b11af87aa 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -1325,10 +1325,52 @@ void count_bitmap_commit_list(struct bitmap_index *bitmap_git,
- struct bitmap_test_data {
- 	struct bitmap_index *bitmap_git;
- 	struct bitmap *base;
-+	struct bitmap *commits;
-+	struct bitmap *trees;
-+	struct bitmap *blobs;
-+	struct bitmap *tags;
- 	struct progress *prg;
- 	size_t seen;
- };
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index d374f7884b..142fd0adb8 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -520,6 +520,7 @@ int bitmap_writer_build(struct packing_data *to_pack)
+ 	clear_prio_queue(&queue);
+ 	clear_prio_queue(&tree_queue);
+ 	bitmap_builder_clear(&bb);
++	free_bitmap_index(old_bitmap);
+ 	free(mapping);
  
-+static void test_bitmap_type(struct bitmap_test_data *tdata,
-+			     struct object *obj, int pos)
-+{
-+	enum object_type bitmap_type = OBJ_NONE;
-+	int bitmaps_nr = 0;
-+
-+	if (bitmap_get(tdata->commits, pos)) {
-+		bitmap_type = OBJ_COMMIT;
-+		bitmaps_nr++;
-+	}
-+	if (bitmap_get(tdata->trees, pos)) {
-+		bitmap_type = OBJ_TREE;
-+		bitmaps_nr++;
-+	}
-+	if (bitmap_get(tdata->blobs, pos)) {
-+		bitmap_type = OBJ_BLOB;
-+		bitmaps_nr++;
-+	}
-+	if (bitmap_get(tdata->tags, pos)) {
-+		bitmap_type = OBJ_TAG;
-+		bitmaps_nr++;
-+	}
-+
-+	if (bitmap_type == OBJ_NONE)
-+		die("object %s not found in type bitmaps",
-+		    oid_to_hex(&obj->oid));
-+
-+	if (bitmaps_nr > 1)
-+		die("object %s does not have a unique type",
-+		    oid_to_hex(&obj->oid));
-+
-+	if (bitmap_type != obj->type)
-+		die("object %s: real type %s, expected: %s",
-+		    oid_to_hex(&obj->oid),
-+		    type_name(obj->type),
-+		    type_name(bitmap_type));
-+}
-+
- static void test_show_object(struct object *object, const char *name,
- 			     void *data)
- {
-@@ -1338,6 +1380,7 @@ static void test_show_object(struct object *object, const char *name,
- 	bitmap_pos = bitmap_position(tdata->bitmap_git, &object->oid);
- 	if (bitmap_pos < 0)
- 		die("Object not in bitmap: %s\n", oid_to_hex(&object->oid));
-+	test_bitmap_type(tdata, object, bitmap_pos);
- 
- 	bitmap_set(tdata->base, bitmap_pos);
- 	display_progress(tdata->prg, ++tdata->seen);
-@@ -1352,6 +1395,7 @@ static void test_show_commit(struct commit *commit, void *data)
- 				     &commit->object.oid);
- 	if (bitmap_pos < 0)
- 		die("Object not in bitmap: %s\n", oid_to_hex(&commit->object.oid));
-+	test_bitmap_type(tdata, &commit->object, bitmap_pos);
- 
- 	bitmap_set(tdata->base, bitmap_pos);
- 	display_progress(tdata->prg, ++tdata->seen);
-@@ -1399,6 +1443,10 @@ void test_bitmap_walk(struct rev_info *revs)
- 
- 	tdata.bitmap_git = bitmap_git;
- 	tdata.base = bitmap_new();
-+	tdata.commits = ewah_to_bitmap(bitmap_git->commits);
-+	tdata.trees = ewah_to_bitmap(bitmap_git->trees);
-+	tdata.blobs = ewah_to_bitmap(bitmap_git->blobs);
-+	tdata.tags = ewah_to_bitmap(bitmap_git->tags);
- 	tdata.prg = start_progress("Verifying bitmap entries", result_popcnt);
- 	tdata.seen = 0;
- 
+ 	trace2_region_leave("pack-bitmap-write", "building_bitmaps_total",
 -- 
 2.33.0.96.g73915697e6
 
