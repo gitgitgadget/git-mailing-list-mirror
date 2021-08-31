@@ -2,69 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4FC4C432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 06:19:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F27BC4320A
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 06:19:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 95D0760FD8
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 06:19:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 656026101C
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 06:19:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232380AbhHaGUK (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S232537AbhHaGUL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 02:20:11 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53783 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231847AbhHaGUK (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 31 Aug 2021 02:20:10 -0400
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:41654 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231210AbhHaGUJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 02:20:09 -0400
-Received: by mail-ed1-f49.google.com with SMTP id eb14so15906467edb.8
-        for <git@vger.kernel.org>; Mon, 30 Aug 2021 23:19:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4qK7ZFkElSOkvpTuTXTAJDZkJDstQMLbsf5cvDETkXc=;
-        b=WBtzbYD6Xiuy3oNpYV0roJynJtggdQy1Erv9BqAswQqBNTTfPPqrYCjLh+vee1v9LT
-         EnaehIBqbOVDgpcO/2e52kw4q24JaXzkS7eYXlchOA/8DEWwj8TjMSy9HPGpzBYDLIJR
-         b1u3pk9MgGqM6O2Mtq7ZpHbJIB6g8d4z5ykPXh3k5iLS3bbMpsiIt0tkrCd0nktpMe9c
-         BMCiFVXZIgWYO+93piBvQOG1IxRTDBvSBr2MF4GvsNIpAaAfHP4yeZNd2dmr44TESyaN
-         i6njHAmKVAEN6u1wm04/5CzGaJSWIGs0u5JHee+GHIzj/AYGF0jwKxVOBpB25M5VNQtP
-         s0nA==
-X-Gm-Message-State: AOAM531ys3150qYoSNGgqkDxH3VVXbqJvCyoy+ANFDws8i84PaN45oO6
-        K8nbairPmIE14tsD+71kBc9K3BqEcSaudEQ6dH7FIw05
-X-Google-Smtp-Source: ABdhPJxSMI5XHorDZpXXkQ1tGzeZ3r2izwYJYzJlP3r/w9BQOGEh5JBFPIXeV7bmhh+Gg+Gi8Ic9RV+cZTSr/Wl4N3U=
-X-Received: by 2002:a05:6402:152:: with SMTP id s18mr27764569edu.221.1630390753859;
- Mon, 30 Aug 2021 23:19:13 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AC8C113B74D;
+        Tue, 31 Aug 2021 02:19:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fWgotW4D5Qrpw5eWOLm2j5zuI6RGBS4rU//smt
+        LXs2Q=; b=sc+KZwBD58/OYKS1Z6Pa9GOFyN3ccHF/jHPiXMPGleq0K5d/uhX+Zz
+        E9X0+swiY2fq1LR20kzhUSDNWMKkezGsaFzhlGGiC1IhZOsSTKN5hQEpI6SgySjb
+        QII45B87FM+KjSniSyn2k4V/pecuzxEuMmBdTCPooqsFSCLb+c0nc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A52C313B74C;
+        Tue, 31 Aug 2021 02:19:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id ED74F13B74B;
+        Tue, 31 Aug 2021 02:19:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     David Turner <dturner@twosigma.com>
+Cc:     git@vger.kernel.org, novalis@novalis.org
+Subject: Re: [PATCH v2 2/3] diff --submodule=diff: do not fail on
+ ever-initialied deleted submodules
+References: <20210802170004.4103535-1-dturner@twosigma.com>
+        <20210802170004.4103535-2-dturner@twosigma.com>
+Date:   Mon, 30 Aug 2021 23:19:11 -0700
+In-Reply-To: <20210802170004.4103535-2-dturner@twosigma.com> (David Turner's
+        message of "Mon, 2 Aug 2021 13:00:03 -0400")
+Message-ID: <xmqqsfyqxhk0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1005.git.1630359290.gitgitgadget@gmail.com> <732a28c22fcecafa308cd9444efe9158800b94e5.1630359290.git.gitgitgadget@gmail.com>
-In-Reply-To: <732a28c22fcecafa308cd9444efe9158800b94e5.1630359290.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 31 Aug 2021 02:19:02 -0400
-Message-ID: <CAPig+cTG2+A0auFYdu-PHBVa1w2A5neS+6JQ5m+ADaOBq8vzUA@mail.gmail.com>
-Subject: Re: [PATCH 12/15] scalar: teach 'reconfigure' to optionally handle
- all registered enlistments
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5C46135C-0A23-11EC-8FD1-FA11AF6C5138-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 30, 2021 at 5:35 PM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> After a Scalar upgrade, it can come in really handy if there is an easy
-> way to reconfigure all Scalar enlistments. This new option offers this
-> functionality.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
-> @@ -121,6 +121,10 @@ After a Scalar upgrade, or when the configuration of a Scalar enlistment
-> +With the `--all` option, all enlistments currently registered with Scalar
-> +will be reconfigured. This option is meant to to be run every time Scalar
-> +was upgraded.
+David Turner <dturner@twosigma.com> writes:
 
-s/was/is/
+> If you have ever initialized a submodule, open_submodule will open it.
+> If you then delete the submodule's worktree directory (but don't
+> remove it from .gitmodules), git diff --submodule=diff would error out
+> as it attempted to chdir into the now-deleted working tree directory.
+>
+> Instead, we chdir into the submodule's git directory and run the diff
+> from there.
+>
+> Signed-off-by: David Turner <dturner@twosigma.com>
+> ---
+>  submodule.c                                  |  10 ++
+>  t/t4060-diff-submodule-option-diff-format.sh | 157 +++++++++++++++++++++++++--
+>  2 files changed, 160 insertions(+), 7 deletions(-)
+>
+> diff --git a/submodule.c b/submodule.c
+> index 0b1d9c1dde..d13d103975 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -710,6 +710,16 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
+>  		strvec_push(&cp.args, oid_to_hex(new_oid));
+>  
+>  	prepare_submodule_repo_env(&cp.env_array);
+> +
+> +	if (!is_directory(path)) {
+> +		// fall back to absorbed git dir, if any
+
+I'll locally amend this comment style.  If there is no other
+comments, that would be sufficient.
+
+> +		if (!sub)
+> +			goto done;
+> +		cp.dir = sub->gitdir;
+> +		strvec_push(&cp.env_array, GIT_DIR_ENVIRONMENT "=.");
+> +		strvec_push(&cp.env_array, GIT_WORK_TREE_ENVIRONMENT "=.");
+> +	}
+> +
+>  	if (start_command(&cp))
+>  		diff_emit_submodule_error(o, "(diff failed)\n");
