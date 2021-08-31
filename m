@@ -2,147 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AC2CC432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 14:30:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98D0EC432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 14:37:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E208060FF2
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 14:30:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 720E56103D
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 14:37:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235924AbhHaObL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 10:31:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38106 "EHLO
+        id S235048AbhHaOia (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 10:38:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232774AbhHaObF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 10:31:05 -0400
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A75AC061575
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 07:30:09 -0700 (PDT)
-Received: by mail-qk1-x72c.google.com with SMTP id 22so19803135qkg.2
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 07:30:09 -0700 (PDT)
+        with ESMTP id S232016AbhHaOi3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 10:38:29 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C4CC061575
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 07:37:33 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id u16so28112619wrn.5
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 07:37:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=4gtrdYI/D+H0O790yyPhzpZKTtbm0CdFMV7prdyIPO4=;
-        b=hgyyxO661i+QOsdghh3e5/gJCcgex5IWNw0RFoKZmiHIsO+qF8AOIhHhG9ZFx7dwBm
-         NiRP0YS8HcvHCtum22ptF4tMazkurrKrIL6/PJbayuiptjfKvm9ZsmAwYuwpVRcTmCjo
-         rYY7lsO26qOOZy5OmT2mH/AdcDYLk5tdyJolQViq1xxNTx2tH6N9YACdlP8SJyb16TU7
-         QmRMhaE1kXHnKP9F0PsHA8ws6xkzSk+awfnDANtm/J8mfYft+yu4hE64kY04b5D6f0/6
-         ciS2uBYFeoNbY72AxRSZuYeBCSuNYB5HYDhpzS16ppsOkiqRI+q3VUWFWOzgZrmtX9rd
-         tnIA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=aZyqQmxoBy8U4M6ph23mnVlkUXSK25UoNvB4S786zdQ=;
+        b=Yfn5c3g7OiNPR0bYb9k2MYFVYwxFPJSZ73Pubj1V43GPOF4E8LKxJ6bng+djA5RD+e
+         qBqKYScxYEhikg6GxQ2PwPNLEq2R6/gUVIZMAL5CJP6dNrgbwoyNOQVz2WusCB8Q0tvy
+         qjlk62a1PrSr8ZVSWzlbGEj3pA3PUyBVkw0C3Zd82RRv6ryIcXIERNabg6FGfncO1swB
+         ddWlqFf5oklFj+iq3t0Z0hNvgugRHG0Fb8BstSxengueH9HrU1Vhd/pSPzoDaoiGkIFY
+         O2p5y2psO7RUKdTsdULj2gNM5mNNEKA/9dyMDjgkEdigWptTUskA9YmdDElS9/LSoRJs
+         FGxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=4gtrdYI/D+H0O790yyPhzpZKTtbm0CdFMV7prdyIPO4=;
-        b=e97J36noQt3QYp5Uxw9OUEuFeBjRWVy8d3OJtzpv/12Rl+pYJvb+VHQrmRNSjI2keT
-         dMhD1LXg55B/pT4zZ0IAnYXU/PZWuI/Lu6eu3J1sGQD32JhEZxXX934qGDXiyJwKqlYH
-         /M0bO++i2MnSi/3XUTZ/FNZrisaewGxh7QSGbqV10ai8Z8Ne9lJYZS976e2WI4U5cWZx
-         hY/6+vxRTsfukG/fJIy1/fjL7mdTt3Cp4nDiB72hZPjAE3IJnDkyqProphLj3DHP4BDo
-         0YI6qZQnau9UbO31uTeEinc61RtgkASEMAdkcxPSnfUbIBwDlObqFLYQfo+bxOePEznd
-         Gs+w==
-X-Gm-Message-State: AOAM531+1VaZ6hNMoqpSTaawM3wUx7G+XeexnK7Rf9UZFxa8M1PrcI8P
-        +oNZcG3/jQfICijALAIpQKg=
-X-Google-Smtp-Source: ABdhPJzzr3tF0msm9M9me6iwBbk4xw6xmyd3m8ysjYTJenRq9RMXCaRqEnSbSUtFThwmifsjkh4nlw==
-X-Received: by 2002:a05:620a:110d:: with SMTP id o13mr3324760qkk.108.1630420208421;
-        Tue, 31 Aug 2021 07:30:08 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:7821:7d0e:d840:aa7e? ([2600:1700:e72:80a0:7821:7d0e:d840:aa7e])
-        by smtp.gmail.com with ESMTPSA id e22sm10059894qte.57.2021.08.31.07.30.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Aug 2021 07:30:07 -0700 (PDT)
-Subject: Re: [PATCH 15/15] scalar: accept -C and -c options before the
- subcommand
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1005.git.1630359290.gitgitgadget@gmail.com>
- <6455b18f1b623032b9066c1730dee045fbe7a3f3.1630359290.git.gitgitgadget@gmail.com>
- <871r6axban.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <8a96c097-2261-7cc3-839c-b388b595f2d1@gmail.com>
-Date:   Tue, 31 Aug 2021 10:30:07 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=aZyqQmxoBy8U4M6ph23mnVlkUXSK25UoNvB4S786zdQ=;
+        b=Pr2UR931X7X+svekvoV+7O4YIN92foODzwtl3Kpt0SbaysBi0i20cichTxWFLUxap5
+         u2AjyzExo+NZwBwGzVe4NbWg6Gi0UTydX4WfjJsRke5CNaXc263N2WhWgG4iZU5GWsDu
+         hYoml+QmEqZ9ZmpU+BAVTyAK9iFgor5/hgm9DDsalzL2iqGj8ehPrH2v5LSfr+DWuLhh
+         MVJgV4nSXZrVK7WkWFz5fMmjhcboPsZpNZti4IWuG4szBaWvk5c6Rl0MGwQmRJ0dCcc6
+         WdJV8insJNCqWMZ9bU/kS/0+Uz0uGXdZeSuyfW4ryw7AYTpkFpH7fQ7R2gLJzgois11F
+         25Dw==
+X-Gm-Message-State: AOAM532brupm9xzdyE8OuJAbdMsHBC3s4bQN8J+ceZctAMeIK8gY3SO9
+        4qhEH5ZbqAKuy4wSCoNwUQq5NkmlNBkS0Q==
+X-Google-Smtp-Source: ABdhPJzXY2wuNMaOlx2vAaQ9+eOeVDD/rOM1kai4ZHwNCPquK8k8Lyioj3xzVBu24ZiP8V1+AbCI+w==
+X-Received: by 2002:adf:f50a:: with SMTP id q10mr31678769wro.271.1630420651678;
+        Tue, 31 Aug 2021 07:37:31 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id y15sm2976746wmi.18.2021.08.31.07.37.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Aug 2021 07:37:31 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jan Judas <snugar.i@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] gc: remove trailing dot from "gc.log" line
+Date:   Tue, 31 Aug 2021 16:37:29 +0200
+Message-Id: <patch-1.1-27f00a664e6-20210831T143536Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.33.0.805.g739b16c2189
+In-Reply-To: <CAO=eiXzPaRpEV_nsudvvCUbNab+oMxR8b9rsehjdyc4WMHe3OA@mail.gmail.com>
+References: <CAO=eiXzPaRpEV_nsudvvCUbNab+oMxR8b9rsehjdyc4WMHe3OA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <871r6axban.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/31/2021 4:32 AM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Aug 30 2021, Johannes Schindelin via GitGitGadget wrote:
-> 
->> The `git` executable has these two very useful options:
->>
->> -C <directory>:
->> 	switch to the specified directory before performing any actions
->>
->> -c <key>=<value>:
->> 	temporarily configure this setting for the duration of the
->> 	specified scalar subcommand
->>
->> With this commit, we teach the `scalar` executable the same trick.
->> [...]
->> +	while (argc > 1 && *argv[1] == '-') {
->> +		if (!strcmp(argv[1], "-C")) {
->> +			if (argc < 3)
->> +				die(_("-C requires a <directory>"));
->> +			if (chdir(argv[2]) < 0)
->> +				die_errno(_("could not change to '%s'"),
->> +					  argv[2]);
->> +			argc -= 2;
->> +			argv += 2;
->> +		} else if (!strcmp(argv[1], "-c")) {
->> +			if (argc < 3)
->> +				die(_("-c requires a <key>=<value> argument"));
->> +			git_config_push_parameter(argv[2]);
->> +			argc -= 2;
->> +			argv += 2;
->> +		} else
->> +			break;
->> +	}
-> 
-> This along with my earlier comment about the Makefile copy/pasting makes
-> me wonder if an easier way to integrate this wouldn't be to refactor
-> git.c a bit to have it understand either "git" or "scalar", then instead
-> of "ls-tree" etc. as "git" the subcommands would become "built-ins".
-> 
-> Which would give us both "[git|scalar] [-c ...] <cmd>" for free, and
-> elimante the need for the inevetable future divergence of wanting -p,
-> -P, --exec-path etc. in both.
- 
-Such a change would likely eliminate the ability to not include Scalar
-when building the Git codebase, which we tried to avoid by keeping it
-within contrib and have it be compiled via an opt-in flag.
+Remove the trailing dot from the warning we emit about gc.log. It's
+common for various terminal UX's to allow the user to select "words",
+and by including the trailing dot a user wanting to select the path to
+gc.log will need to manually remove the trailing dot.
 
-If we want to talk about integrating Scalar into Git in a deeper way,
-then that is an interesting discussion to have, but it lives at a much
-higher level than Makefile details.
+Such a user would also probably need to adjust the path if it e.g. had
+spaces in it, but this should address this very common case.
 
-The questions we are really looking to answer in this RFC are:
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Suggested-by: Jan Judas <snugar.i@gmail.com>
+---
 
-1. Will the Git project accept Scalar into its codebase?
+On Tue, Aug 31 2021, Jan Judas wrote:
 
-2. What is the best place for Scalar to live in the Git codebase?
+> Hello,
+>
+> first time posting here, I hope I'm doing it right.
+> I'd like to suggest a very minor UX improvement regarding the message:
 
-We erred on the side of keeping Scalar as optional as possible. If
-the community is more interested in a deeper integration, then that
-could be an interesting direction.
+This is the right place for this request. Thanks!
 
-In my opinion, I think the current tactic is safest. We could always
-decide on a deeper integration later by moving the code around. It
-seems harder to do the reverse.
+> error: The last gc run reported the following. Please correct the root cause
+> and remove /path/to/repo/.git/gc.log.
+>
+> Currently, there is a dot after the file path, so it's impossible to
+> select just the path using double-click. If the dot was removed, or
+> separated from the path by a space, it would be slightly more
+> convenient :-)
+>
+> Thank you
+>
+> Jan Judas   
 
-Thanks,
--Stolee
+Yes that's annoying, here's a proposed patch to fix this.
+
+As an aside I've also noticed that if you have multiple worktrees
+we'll trigger "git gc --auto" in each one, and then litter various
+per-worktree gc.log, even though the issues being noted are usually
+repository-global, e.g. too many loose objects.
+
+That's per-se unrelated to the issue you're noting, but is usually why
+I end up having to manually remove gc.log files...
+
+ builtin/gc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 6ce5ca45126..69c058533ea 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -502,7 +502,7 @@ static int report_last_gc_error(void)
+ 		 */
+ 		warning(_("The last gc run reported the following. "
+ 			       "Please correct the root cause\n"
+-			       "and remove %s.\n"
++			       "and remove %s\n"
+ 			       "Automatic cleanup will not be performed "
+ 			       "until the file is removed.\n\n"
+ 			       "%s"),
+-- 
+2.33.0.805.g739b16c2189
+
