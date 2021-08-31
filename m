@@ -7,62 +7,61 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4620C432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:52:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C68ECC4320A
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:52:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD2B46103A
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:52:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A909D61026
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:52:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241326AbhHaUxf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 16:53:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42036 "EHLO
+        id S241283AbhHaUxk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 16:53:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241322AbhHaUxV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 16:53:21 -0400
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAA1AC061575
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:52:20 -0700 (PDT)
-Received: by mail-il1-x12c.google.com with SMTP id s16so676642ilo.9
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:52:20 -0700 (PDT)
+        with ESMTP id S241288AbhHaUx2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 16:53:28 -0400
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5064EC06179A
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:52:28 -0700 (PDT)
+Received: by mail-il1-x129.google.com with SMTP id y3so697282ilm.6
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:52:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=zVk2Sv4JxjtOV0AzqifItb828qzQjqxuFrEIv8yMvE8=;
-        b=TQwNsEQEtjzmIg/cLUXvmqUtT9DNNZ1e0ZM60fOf4XjeprJwq8JQYYX67UIVW3Ildn
-         N901mv29ekdPbtua19nXb35WeZEA02Gza8EHo29rXg9Nq/SD8ckuo6tikJQGbQPE+2hm
-         scbE7Qj458bRERbnQIL+vYy9/YFE5r53om9GsyQPB7Si4L3iwniS63gjxq8wJp7kRh2c
-         yyCA7L7eqN4bOnxkkR+X9/D3Gx8f/NJDWiQd0FADBT4RHJYYqE1V24FJ9vn1PeVlEr50
-         9WkAeunQ6/ijIrfmcIh6uAikLy/hNw6Jp/QdfSuzv/wjSQXiFppHedubiGoM8uzexIwy
-         XCIw==
+        bh=Zdw/SkdDOqw8Qpj695y7K2joDOIde56MzCyVtDdtkAM=;
+        b=jL0lXiXUpg7LG2i9j75P50BJP+52+UZBecYVHPEWvhFQLVu0c+fVy39wooO9YuLwn+
+         naxIIvpQFauskqCKZcICBMgMy2yc/syPw9tg6AinzDSBKpY5khV5abOK8f225LvHuK47
+         qFm5U/fuBM1oHOeRszJ/ombrLu+OMXjohbAygszwJVA5nL+NVd3ityDEFDhyhOIfrUUC
+         LmIF/SoBh3THB2+0jsiHyoctZxJPdJm3+7r1Eg2LuMAPvqBP6l0dnSlfCyQKAUtz+5Lq
+         KDL3JDrjAgEmJmW5Rp0eE69vVDAaylTCZuZu3ka1gZe4BMKsQKeONEIxZJDNSJq9dPRa
+         KnEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=zVk2Sv4JxjtOV0AzqifItb828qzQjqxuFrEIv8yMvE8=;
-        b=M5wy7Mti0qtAsLqPiSMfABF/dfAiVHHadvtye2Esy2S9K8wci0qUdFfzHHN7JoWOQR
-         ni1d+ijK9ReJqYzk+O1hccRnDqk7OJKA7bD3wYYWNvuESjKPF0RZK/FQOrJZJZMz0fU5
-         36rIAZ/P71pYl/EC4HLF/oEyq8Cry4E2hOmiV+gzH4LUtRruvpChN+dfkSMd6JIwjbmb
-         ebJZgdj+N0KbwSd9Ry1pKh+WxgkbxzEJCd+ZC7WGX3QRdGpgwB/kWPSd2Uv+D5MtAnqF
-         umKMxCwZUxEyzOFpxTrNaP7FDt56wqLRyzQed8yTbdRlWMS5JJ2x9W+l7rTUpzu/s5LY
-         YuKg==
-X-Gm-Message-State: AOAM5334Gat4VvXtqhkRwrq1HJXc6Q3fPdqql7LMlv0WOTx1//QUt39s
-        DxOoJcHBKXoxGfSio9J2ouvt7jgc3RvFlhY/
-X-Google-Smtp-Source: ABdhPJzWb5HxLJOn+aqiBsF+sh3+7y5R+bdqKsRgzB5xY+S6y28XK/19lV94Xz3VSByO2zuRvEI+gA==
-X-Received: by 2002:a92:cb4d:: with SMTP id f13mr22090863ilq.220.1630443140075;
-        Tue, 31 Aug 2021 13:52:20 -0700 (PDT)
+        bh=Zdw/SkdDOqw8Qpj695y7K2joDOIde56MzCyVtDdtkAM=;
+        b=eVt5jMHn0wiFmxWa/T8V5s/CxrMpp+wmNGT6vx6Rp06/XDOdtiqAegJFXL5MigODHb
+         AieDF9/61n9G+ZyaIlB/56L3WQZxCpECaWTWlum5l7pR8QZSQ7D+BOMYIk+bDU3fJ9jj
+         J9kG9BUCED6WjvWPJ1bb3HHhKO42Yb118688sv96pnSge0yrabGBmwNdiSy4ncBU1KE9
+         D1E2EDXGXDN05TKiMsPvJQASVPETAC+ejanHyowTS2nl65qLfSrvr98+XLtnDVjy1pIr
+         gS2eXAMUhHQrLZcCTTQWBTp747gWd0BdbAGjZI/vhsvp3U8ERMHb3mel1wj66NHxZw+M
+         PzWg==
+X-Gm-Message-State: AOAM532uqzwWkicfvzvgWGNsnCgkGbmaCgKFgih5bO4yN9NqT+NQEJW8
+        Ags6muEBRyMV9xtqJxvWWVMYtC6dD2AsIjXc
+X-Google-Smtp-Source: ABdhPJxlqhBJXENQSR1aj386rKTGD/jU5Knj/qVEZ5DxN3K1pUXemge3WP0o8ylscPACd5b+grH2oA==
+X-Received: by 2002:a92:cb4d:: with SMTP id f13mr22091215ilq.220.1630443147394;
+        Tue, 31 Aug 2021 13:52:27 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id s5sm10472581iol.33.2021.08.31.13.52.19
+        by smtp.gmail.com with ESMTPSA id l15sm10259377iow.4.2021.08.31.13.52.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Aug 2021 13:52:19 -0700 (PDT)
-Date:   Tue, 31 Aug 2021 16:52:19 -0400
+        Tue, 31 Aug 2021 13:52:27 -0700 (PDT)
+Date:   Tue, 31 Aug 2021 16:52:26 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         jonathantanmy@google.com
-Subject: [PATCH v5 15/27] pack-bitmap.c: avoid redundant calls to
- try_partial_reuse
-Message-ID: <06db8dbbc163ac41f0bd6e45b83e684660ca2746.1630443072.git.me@ttaylorr.com>
+Subject: [PATCH v5 18/27] t5310: move some tests to lib-bitmap.sh
+Message-ID: <5d60b07e2e0631eaaefe21cc94d3d1c7d9f7cfe3.1630443072.git.me@ttaylorr.com>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1630443072.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -73,125 +72,520 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-try_partial_reuse() is used to mark any bits in the beginning of a
-bitmap whose objects can be reused verbatim from the pack they came
-from.
+We'll soon be adding a test script that will cover many of the same
+bitmap concepts as t5310, but for MIDX bitmaps. Let's pull out as many
+of the applicable tests as we can so we don't have to rewrite them.
 
-Currently this function returns void, and signals nothing to the caller
-when bits could not be reused. But multi-pack bitmaps would benefit from
-having such a signal, because they may try to pass objects which are in
-bounds, but from a pack other than the preferred one.
+There should be no functional change to t5310; we still run the same
+operations in the same order.
 
-Any extra calls are noops because of a conditional in
-reuse_partial_packfile_from_bitmap(), but those loop iterations can be
-avoided by letting try_partial_reuse() indicate when it can't accept any
-more bits for reuse, and then listening to that signal.
-
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 40 +++++++++++++++++++++++++++++-----------
- 1 file changed, 29 insertions(+), 11 deletions(-)
+ t/lib-bitmap.sh         | 236 ++++++++++++++++++++++++++++++++++++++++
+ t/t5310-pack-bitmaps.sh | 227 +-------------------------------------
+ 2 files changed, 240 insertions(+), 223 deletions(-)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index d5296750eb..4e37f5d574 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -1140,22 +1140,26 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 	return NULL;
+diff --git a/t/lib-bitmap.sh b/t/lib-bitmap.sh
+index fe3f98be24..77464da6fd 100644
+--- a/t/lib-bitmap.sh
++++ b/t/lib-bitmap.sh
+@@ -1,3 +1,6 @@
++# Helpers for scripts testing bitmap functionality; see t5310 for
++# example usage.
++
+ # Compare a file containing rev-list bitmap traversal output to its non-bitmap
+ # counterpart. You can't just use test_cmp for this, because the two produce
+ # subtly different output:
+@@ -24,3 +27,236 @@ test_bitmap_traversal () {
+ 	test_cmp "$1.normalized" "$2.normalized" &&
+ 	rm -f "$1.normalized" "$2.normalized"
+ }
++
++# To ensure the logic for "maximal commits" is exercised, make
++# the repository a bit more complicated.
++#
++#    other                         second
++#      *                             *
++# (99 commits)                  (99 commits)
++#      *                             *
++#      |\                           /|
++#      | * octo-other  octo-second * |
++#      |/|\_________  ____________/|\|
++#      | \          \/  __________/  |
++#      |  | ________/\ /             |
++#      *  |/          * merge-right  *
++#      | _|__________/ \____________ |
++#      |/ |                         \|
++# (l1) *  * merge-left               * (r1)
++#      | / \________________________ |
++#      |/                           \|
++# (l2) *                             * (r2)
++#       \___________________________ |
++#                                   \|
++#                                    * (base)
++#
++# We only push bits down the first-parent history, which
++# makes some of these commits unimportant!
++#
++# The important part for the maximal commit algorithm is how
++# the bitmasks are extended. Assuming starting bit positions
++# for second (bit 0) and other (bit 1), the bitmasks at the
++# end should be:
++#
++#      second: 1       (maximal, selected)
++#       other: 01      (maximal, selected)
++#      (base): 11 (maximal)
++#
++# This complicated history was important for a previous
++# version of the walk that guarantees never walking a
++# commit multiple times. That goal might be important
++# again, so preserve this complicated case. For now, this
++# test will guarantee that the bitmaps are computed
++# correctly, even with the repeat calculations.
++setup_bitmap_history() {
++	test_expect_success 'setup repo with moderate-sized history' '
++		test_commit_bulk --id=file 10 &&
++		git branch -M second &&
++		git checkout -b other HEAD~5 &&
++		test_commit_bulk --id=side 10 &&
++
++		# add complicated history setup, including merges and
++		# ambiguous merge-bases
++
++		git checkout -b merge-left other~2 &&
++		git merge second~2 -m "merge-left" &&
++
++		git checkout -b merge-right second~1 &&
++		git merge other~1 -m "merge-right" &&
++
++		git checkout -b octo-second second &&
++		git merge merge-left merge-right -m "octopus-second" &&
++
++		git checkout -b octo-other other &&
++		git merge merge-left merge-right -m "octopus-other" &&
++
++		git checkout other &&
++		git merge octo-other -m "pull octopus" &&
++
++		git checkout second &&
++		git merge octo-second -m "pull octopus" &&
++
++		# Remove these branches so they are not selected
++		# as bitmap tips
++		git branch -D merge-left &&
++		git branch -D merge-right &&
++		git branch -D octo-other &&
++		git branch -D octo-second &&
++
++		# add padding to make these merges less interesting
++		# and avoid having them selected for bitmaps
++		test_commit_bulk --id=file 100 &&
++		git checkout other &&
++		test_commit_bulk --id=side 100 &&
++		git checkout second &&
++
++		bitmaptip=$(git rev-parse second) &&
++		blob=$(echo tagged-blob | git hash-object -w --stdin) &&
++		git tag tagged-blob $blob
++	'
++}
++
++rev_list_tests_head () {
++	test_expect_success "counting commits via bitmap ($state, $branch)" '
++		git rev-list --count $branch >expect &&
++		git rev-list --use-bitmap-index --count $branch >actual &&
++		test_cmp expect actual
++	'
++
++	test_expect_success "counting partial commits via bitmap ($state, $branch)" '
++		git rev-list --count $branch~5..$branch >expect &&
++		git rev-list --use-bitmap-index --count $branch~5..$branch >actual &&
++		test_cmp expect actual
++	'
++
++	test_expect_success "counting commits with limit ($state, $branch)" '
++		git rev-list --count -n 1 $branch >expect &&
++		git rev-list --use-bitmap-index --count -n 1 $branch >actual &&
++		test_cmp expect actual
++	'
++
++	test_expect_success "counting non-linear history ($state, $branch)" '
++		git rev-list --count other...second >expect &&
++		git rev-list --use-bitmap-index --count other...second >actual &&
++		test_cmp expect actual
++	'
++
++	test_expect_success "counting commits with limiting ($state, $branch)" '
++		git rev-list --count $branch -- 1.t >expect &&
++		git rev-list --use-bitmap-index --count $branch -- 1.t >actual &&
++		test_cmp expect actual
++	'
++
++	test_expect_success "counting objects via bitmap ($state, $branch)" '
++		git rev-list --count --objects $branch >expect &&
++		git rev-list --use-bitmap-index --count --objects $branch >actual &&
++		test_cmp expect actual
++	'
++
++	test_expect_success "enumerate commits ($state, $branch)" '
++		git rev-list --use-bitmap-index $branch >actual &&
++		git rev-list $branch >expect &&
++		test_bitmap_traversal --no-confirm-bitmaps expect actual
++	'
++
++	test_expect_success "enumerate --objects ($state, $branch)" '
++		git rev-list --objects --use-bitmap-index $branch >actual &&
++		git rev-list --objects $branch >expect &&
++		test_bitmap_traversal expect actual
++	'
++
++	test_expect_success "bitmap --objects handles non-commit objects ($state, $branch)" '
++		git rev-list --objects --use-bitmap-index $branch tagged-blob >actual &&
++		grep $blob actual
++	'
++}
++
++rev_list_tests () {
++	state=$1
++
++	for branch in "second" "other"
++	do
++		rev_list_tests_head
++	done
++}
++
++basic_bitmap_tests () {
++	tip="$1"
++	test_expect_success 'rev-list --test-bitmap verifies bitmaps' "
++		git rev-list --test-bitmap "${tip:-HEAD}"
++	"
++
++	rev_list_tests 'full bitmap'
++
++	test_expect_success 'clone from bitmapped repository' '
++		rm -fr clone.git &&
++		git clone --no-local --bare . clone.git &&
++		git rev-parse HEAD >expect &&
++		git --git-dir=clone.git rev-parse HEAD >actual &&
++		test_cmp expect actual
++	'
++
++	test_expect_success 'partial clone from bitmapped repository' '
++		test_config uploadpack.allowfilter true &&
++		rm -fr partial-clone.git &&
++		git clone --no-local --bare --filter=blob:none . partial-clone.git &&
++		(
++			cd partial-clone.git &&
++			pack=$(echo objects/pack/*.pack) &&
++			git verify-pack -v "$pack" >have &&
++			awk "/blob/ { print \$1 }" <have >blobs &&
++			# we expect this single blob because of the direct ref
++			git rev-parse refs/tags/tagged-blob >expect &&
++			test_cmp expect blobs
++		)
++	'
++
++	test_expect_success 'setup further non-bitmapped commits' '
++		test_commit_bulk --id=further 10
++	'
++
++	rev_list_tests 'partial bitmap'
++
++	test_expect_success 'fetch (partial bitmap)' '
++		git --git-dir=clone.git fetch origin second:second &&
++		git rev-parse HEAD >expect &&
++		git --git-dir=clone.git rev-parse HEAD >actual &&
++		test_cmp expect actual
++	'
++
++	test_expect_success 'enumerating progress counts pack-reused objects' '
++		count=$(git rev-list --objects --all --count) &&
++		git repack -adb &&
++
++		# check first with only reused objects; confirm that our
++		# progress showed the right number, and also that we did
++		# pack-reuse as expected.  Check only the final "done"
++		# line of the meter (there may be an arbitrary number of
++		# intermediate lines ending with CR).
++		GIT_PROGRESS_DELAY=0 \
++			git pack-objects --all --stdout --progress \
++			</dev/null >/dev/null 2>stderr &&
++		grep "Enumerating objects: $count, done" stderr &&
++		grep "pack-reused $count" stderr &&
++
++		# now the same but with one non-reused object
++		git commit --allow-empty -m "an extra commit object" &&
++		GIT_PROGRESS_DELAY=0 \
++			git pack-objects --all --stdout --progress \
++			</dev/null >/dev/null 2>stderr &&
++		grep "Enumerating objects: $((count+1)), done" stderr &&
++		grep "pack-reused $count" stderr
++	'
++}
++
++# have_delta <obj> <expected_base>
++#
++# Note that because this relies on cat-file, it might find _any_ copy of an
++# object in the repository. The caller is responsible for making sure
++# there's only one (e.g., via "repack -ad", or having just fetched a copy).
++have_delta () {
++	echo $2 >expect &&
++	echo $1 | git cat-file --batch-check="%(deltabase)" >actual &&
++	test_cmp expect actual
++}
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index b02838750e..4318f84d53 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -25,93 +25,10 @@ has_any () {
+ 	grep -Ff "$1" "$2"
  }
  
--static void try_partial_reuse(struct bitmap_index *bitmap_git,
--			      size_t pos,
--			      struct bitmap *reuse,
--			      struct pack_window **w_curs)
-+/*
-+ * -1 means "stop trying further objects"; 0 means we may or may not have
-+ * reused, but you can keep feeding bits.
-+ */
-+static int try_partial_reuse(struct bitmap_index *bitmap_git,
-+			     size_t pos,
-+			     struct bitmap *reuse,
-+			     struct pack_window **w_curs)
- {
- 	off_t offset, header;
- 	enum object_type type;
- 	unsigned long size;
+-# To ensure the logic for "maximal commits" is exercised, make
+-# the repository a bit more complicated.
+-#
+-#    other                         second
+-#      *                             *
+-# (99 commits)                  (99 commits)
+-#      *                             *
+-#      |\                           /|
+-#      | * octo-other  octo-second * |
+-#      |/|\_________  ____________/|\|
+-#      | \          \/  __________/  |
+-#      |  | ________/\ /             |
+-#      *  |/          * merge-right  *
+-#      | _|__________/ \____________ |
+-#      |/ |                         \|
+-# (l1) *  * merge-left               * (r1)
+-#      | / \________________________ |
+-#      |/                           \|
+-# (l2) *                             * (r2)
+-#       \___________________________ |
+-#                                   \|
+-#                                    * (base)
+-#
+-# We only push bits down the first-parent history, which
+-# makes some of these commits unimportant!
+-#
+-# The important part for the maximal commit algorithm is how
+-# the bitmasks are extended. Assuming starting bit positions
+-# for second (bit 0) and other (bit 1), the bitmasks at the
+-# end should be:
+-#
+-#      second: 1       (maximal, selected)
+-#       other: 01      (maximal, selected)
+-#      (base): 11 (maximal)
+-#
+-# This complicated history was important for a previous
+-# version of the walk that guarantees never walking a
+-# commit multiple times. That goal might be important
+-# again, so preserve this complicated case. For now, this
+-# test will guarantee that the bitmaps are computed
+-# correctly, even with the repeat calculations.
++setup_bitmap_history
  
- 	if (pos >= bitmap_num_objects(bitmap_git))
--		return; /* not actually in the pack or MIDX */
-+		return -1; /* not actually in the pack or MIDX */
+-test_expect_success 'setup repo with moderate-sized history' '
+-	test_commit_bulk --id=file 10 &&
+-	git branch -M second &&
+-	git checkout -b other HEAD~5 &&
+-	test_commit_bulk --id=side 10 &&
+-
+-	# add complicated history setup, including merges and
+-	# ambiguous merge-bases
+-
+-	git checkout -b merge-left other~2 &&
+-	git merge second~2 -m "merge-left" &&
+-
+-	git checkout -b merge-right second~1 &&
+-	git merge other~1 -m "merge-right" &&
+-
+-	git checkout -b octo-second second &&
+-	git merge merge-left merge-right -m "octopus-second" &&
+-
+-	git checkout -b octo-other other &&
+-	git merge merge-left merge-right -m "octopus-other" &&
+-
+-	git checkout other &&
+-	git merge octo-other -m "pull octopus" &&
+-
+-	git checkout second &&
+-	git merge octo-second -m "pull octopus" &&
+-
+-	# Remove these branches so they are not selected
+-	# as bitmap tips
+-	git branch -D merge-left &&
+-	git branch -D merge-right &&
+-	git branch -D octo-other &&
+-	git branch -D octo-second &&
+-
+-	# add padding to make these merges less interesting
+-	# and avoid having them selected for bitmaps
+-	test_commit_bulk --id=file 100 &&
+-	git checkout other &&
+-	test_commit_bulk --id=side 100 &&
+-	git checkout second &&
+-
+-	bitmaptip=$(git rev-parse second) &&
+-	blob=$(echo tagged-blob | git hash-object -w --stdin) &&
+-	git tag tagged-blob $blob &&
+-	git config repack.writebitmaps true
++test_expect_success 'setup writing bitmaps during repack' '
++	git config repack.writeBitmaps true
+ '
  
- 	offset = header = pack_pos_to_offset(bitmap_git->pack, pos);
- 	type = unpack_object_header(bitmap_git->pack, w_curs, &offset, &size);
- 	if (type < 0)
--		return; /* broken packfile, punt */
-+		return -1; /* broken packfile, punt */
+ test_expect_success 'full repack creates bitmaps' '
+@@ -123,109 +40,7 @@ test_expect_success 'full repack creates bitmaps' '
+ 	grep "\"key\":\"num_maximal_commits\",\"value\":\"107\"" trace
+ '
  
- 	if (type == OBJ_REF_DELTA || type == OBJ_OFS_DELTA) {
- 		off_t base_offset;
-@@ -1172,9 +1176,9 @@ static void try_partial_reuse(struct bitmap_index *bitmap_git,
- 		base_offset = get_delta_base(bitmap_git->pack, w_curs,
- 					     &offset, type, header);
- 		if (!base_offset)
--			return;
-+			return 0;
- 		if (offset_to_pack_pos(bitmap_git->pack, base_offset, &base_pos) < 0)
--			return;
-+			return 0;
+-test_expect_success 'rev-list --test-bitmap verifies bitmaps' '
+-	git rev-list --test-bitmap HEAD
+-'
+-
+-rev_list_tests_head () {
+-	test_expect_success "counting commits via bitmap ($state, $branch)" '
+-		git rev-list --count $branch >expect &&
+-		git rev-list --use-bitmap-index --count $branch >actual &&
+-		test_cmp expect actual
+-	'
+-
+-	test_expect_success "counting partial commits via bitmap ($state, $branch)" '
+-		git rev-list --count $branch~5..$branch >expect &&
+-		git rev-list --use-bitmap-index --count $branch~5..$branch >actual &&
+-		test_cmp expect actual
+-	'
+-
+-	test_expect_success "counting commits with limit ($state, $branch)" '
+-		git rev-list --count -n 1 $branch >expect &&
+-		git rev-list --use-bitmap-index --count -n 1 $branch >actual &&
+-		test_cmp expect actual
+-	'
+-
+-	test_expect_success "counting non-linear history ($state, $branch)" '
+-		git rev-list --count other...second >expect &&
+-		git rev-list --use-bitmap-index --count other...second >actual &&
+-		test_cmp expect actual
+-	'
+-
+-	test_expect_success "counting commits with limiting ($state, $branch)" '
+-		git rev-list --count $branch -- 1.t >expect &&
+-		git rev-list --use-bitmap-index --count $branch -- 1.t >actual &&
+-		test_cmp expect actual
+-	'
+-
+-	test_expect_success "counting objects via bitmap ($state, $branch)" '
+-		git rev-list --count --objects $branch >expect &&
+-		git rev-list --use-bitmap-index --count --objects $branch >actual &&
+-		test_cmp expect actual
+-	'
+-
+-	test_expect_success "enumerate commits ($state, $branch)" '
+-		git rev-list --use-bitmap-index $branch >actual &&
+-		git rev-list $branch >expect &&
+-		test_bitmap_traversal --no-confirm-bitmaps expect actual
+-	'
+-
+-	test_expect_success "enumerate --objects ($state, $branch)" '
+-		git rev-list --objects --use-bitmap-index $branch >actual &&
+-		git rev-list --objects $branch >expect &&
+-		test_bitmap_traversal expect actual
+-	'
+-
+-	test_expect_success "bitmap --objects handles non-commit objects ($state, $branch)" '
+-		git rev-list --objects --use-bitmap-index $branch tagged-blob >actual &&
+-		grep $blob actual
+-	'
+-}
+-
+-rev_list_tests () {
+-	state=$1
+-
+-	for branch in "second" "other"
+-	do
+-		rev_list_tests_head
+-	done
+-}
+-
+-rev_list_tests 'full bitmap'
+-
+-test_expect_success 'clone from bitmapped repository' '
+-	git clone --no-local --bare . clone.git &&
+-	git rev-parse HEAD >expect &&
+-	git --git-dir=clone.git rev-parse HEAD >actual &&
+-	test_cmp expect actual
+-'
+-
+-test_expect_success 'partial clone from bitmapped repository' '
+-	test_config uploadpack.allowfilter true &&
+-	git clone --no-local --bare --filter=blob:none . partial-clone.git &&
+-	(
+-		cd partial-clone.git &&
+-		pack=$(echo objects/pack/*.pack) &&
+-		git verify-pack -v "$pack" >have &&
+-		awk "/blob/ { print \$1 }" <have >blobs &&
+-		# we expect this single blob because of the direct ref
+-		git rev-parse refs/tags/tagged-blob >expect &&
+-		test_cmp expect blobs
+-	)
+-'
+-
+-test_expect_success 'setup further non-bitmapped commits' '
+-	test_commit_bulk --id=further 10
+-'
+-
+-rev_list_tests 'partial bitmap'
+-
+-test_expect_success 'fetch (partial bitmap)' '
+-	git --git-dir=clone.git fetch origin second:second &&
+-	git rev-parse HEAD >expect &&
+-	git --git-dir=clone.git rev-parse HEAD >actual &&
+-	test_cmp expect actual
+-'
++basic_bitmap_tests
  
- 		/*
- 		 * We assume delta dependencies always point backwards. This
-@@ -1186,7 +1190,7 @@ static void try_partial_reuse(struct bitmap_index *bitmap_git,
- 		 * odd parameters.
- 		 */
- 		if (base_pos >= pos)
--			return;
-+			return 0;
+ test_expect_success 'incremental repack fails when bitmaps are requested' '
+ 	test_commit more-1 &&
+@@ -461,40 +276,6 @@ test_expect_success 'truncated bitmap fails gracefully (cache)' '
+ 	test_i18ngrep corrupted.bitmap.index stderr
+ '
  
- 		/*
- 		 * And finally, if we're not sending the base as part of our
-@@ -1197,13 +1201,14 @@ static void try_partial_reuse(struct bitmap_index *bitmap_git,
- 		 * object_entry code path handle it.
- 		 */
- 		if (!bitmap_get(reuse, base_pos))
--			return;
-+			return 0;
- 	}
- 
- 	/*
- 	 * If we got here, then the object is OK to reuse. Mark it.
- 	 */
- 	bitmap_set(reuse, pos);
-+	return 0;
- }
- 
- int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
-@@ -1239,10 +1244,23 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 				break;
- 
- 			offset += ewah_bit_ctz64(word >> offset);
--			try_partial_reuse(bitmap_git, pos + offset, reuse, &w_curs);
-+			if (try_partial_reuse(bitmap_git, pos + offset, reuse,
-+					      &w_curs) < 0) {
-+				/*
-+				 * try_partial_reuse indicated we couldn't reuse
-+				 * any bits, so there is no point in trying more
-+				 * bits in the current word, or any other words
-+				 * in result.
-+				 *
-+				 * Jump out of both loops to avoid future
-+				 * unnecessary calls to try_partial_reuse.
-+				 */
-+				goto done;
-+			}
- 		}
- 	}
- 
-+done:
- 	unuse_pack(&w_curs);
- 
- 	*entries = bitmap_popcount(reuse);
+-test_expect_success 'enumerating progress counts pack-reused objects' '
+-	count=$(git rev-list --objects --all --count) &&
+-	git repack -adb &&
+-
+-	# check first with only reused objects; confirm that our progress
+-	# showed the right number, and also that we did pack-reuse as expected.
+-	# Check only the final "done" line of the meter (there may be an
+-	# arbitrary number of intermediate lines ending with CR).
+-	GIT_PROGRESS_DELAY=0 \
+-		git pack-objects --all --stdout --progress \
+-		</dev/null >/dev/null 2>stderr &&
+-	grep "Enumerating objects: $count, done" stderr &&
+-	grep "pack-reused $count" stderr &&
+-
+-	# now the same but with one non-reused object
+-	git commit --allow-empty -m "an extra commit object" &&
+-	GIT_PROGRESS_DELAY=0 \
+-		git pack-objects --all --stdout --progress \
+-		</dev/null >/dev/null 2>stderr &&
+-	grep "Enumerating objects: $((count+1)), done" stderr &&
+-	grep "pack-reused $count" stderr
+-'
+-
+-# have_delta <obj> <expected_base>
+-#
+-# Note that because this relies on cat-file, it might find _any_ copy of an
+-# object in the repository. The caller is responsible for making sure
+-# there's only one (e.g., via "repack -ad", or having just fetched a copy).
+-have_delta () {
+-	echo $2 >expect &&
+-	echo $1 | git cat-file --batch-check="%(deltabase)" >actual &&
+-	test_cmp expect actual
+-}
+-
+ # Create a state of history with these properties:
+ #
+ #  - refs that allow a client to fetch some new history, while sharing some old
 -- 
 2.33.0.96.g73915697e6
 
