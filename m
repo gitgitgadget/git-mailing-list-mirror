@@ -7,61 +7,62 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DBD4C4320E
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:52:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4620C432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:52:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 573D860F9E
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:52:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AD2B46103A
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:52:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241296AbhHaUxh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 16:53:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42114 "EHLO
+        id S241326AbhHaUxf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 16:53:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241329AbhHaUxV (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S241322AbhHaUxV (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 31 Aug 2021 16:53:21 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA363C0612A8
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:52:25 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id m11so787893ioo.6
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:52:25 -0700 (PDT)
+Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAA1AC061575
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:52:20 -0700 (PDT)
+Received: by mail-il1-x12c.google.com with SMTP id s16so676642ilo.9
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:52:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Muvs/cJJzdr3kmctCFncuxuPrh8XRR1dmMQhkYttInM=;
-        b=K6JCA7oSERmb5GIm7mwLPI17NbvFvQ1DkuFDUFfxuuSVMjGhwzG5hk6fRoQ172lHvA
-         pnE2KNjtIhjj68ELpAhqvr7FnPmCmRNcXNYzDJEQdEbvquvM/kfWwvInH6XngM/TtP+p
-         JrZ8J5cYzkTOsNcPzjREdHn5teaRc53GGKDk4U3NmOtJXmvmWjXiNniUelCwRifHt4Dh
-         AmGfNHLQQyY53QrxmGgPX0/9ahxIR0cTebW1WAKd4p82cfjZjADVQUlDveB5yfi7su4l
-         ig+3fgUcYaEp9dpsujYPlEZyDI0KSLTIo7Nf0OTYWVA5/1gpjQWvcp0jX9HXOtHcqVrK
-         +iuQ==
+        bh=zVk2Sv4JxjtOV0AzqifItb828qzQjqxuFrEIv8yMvE8=;
+        b=TQwNsEQEtjzmIg/cLUXvmqUtT9DNNZ1e0ZM60fOf4XjeprJwq8JQYYX67UIVW3Ildn
+         N901mv29ekdPbtua19nXb35WeZEA02Gza8EHo29rXg9Nq/SD8ckuo6tikJQGbQPE+2hm
+         scbE7Qj458bRERbnQIL+vYy9/YFE5r53om9GsyQPB7Si4L3iwniS63gjxq8wJp7kRh2c
+         yyCA7L7eqN4bOnxkkR+X9/D3Gx8f/NJDWiQd0FADBT4RHJYYqE1V24FJ9vn1PeVlEr50
+         9WkAeunQ6/ijIrfmcIh6uAikLy/hNw6Jp/QdfSuzv/wjSQXiFppHedubiGoM8uzexIwy
+         XCIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Muvs/cJJzdr3kmctCFncuxuPrh8XRR1dmMQhkYttInM=;
-        b=Xbd7F2p7Qye7CBS+T4+c39T3BGmkzXhSOIBdzmGnE93yA2w3SzmFToCoepmbIJCmNm
-         xXRqQM4YvWWB8ZyDUF6DoZtGmmpCgRVbdaxnGKQ11GG0loDKyWVtoA12/dEUq8SGybi5
-         TG/vCYGuDgY6iMR+XcEInRp8lYlxAyuGOia/SMoXsEP2ih6sgJpAJRmoWYXyFKzqWVvE
-         GrU0iTYrfxjM+FsorNjuLDv5sN/ou3c2KmjMg/afcWb8562MvCL+TiB1RkIsSuKKi4pY
-         Lbn45EacIajKmW51aLxwLmnU5rxWCOp8Prtldujx5YKPF9faTG+ssQiukojb/dBESaTD
-         /Lpg==
-X-Gm-Message-State: AOAM5311vsP1xvByrHmL2li/1sk4f/Wn3Kb5dE5l7wNxT691U+FQrUn2
-        RClk5ckUQW6WiXgwFgUHFFtas/4PD6ywPkYu
-X-Google-Smtp-Source: ABdhPJx0GsFAEUpEG5SuDofx/cS7gHi1rBZGa0ztl0gtzgxupWNTRHCHv6LYGHBJ5LIU4e2zfsWyFg==
-X-Received: by 2002:a05:6602:2219:: with SMTP id n25mr23769292ion.185.1630443144968;
-        Tue, 31 Aug 2021 13:52:24 -0700 (PDT)
+        bh=zVk2Sv4JxjtOV0AzqifItb828qzQjqxuFrEIv8yMvE8=;
+        b=M5wy7Mti0qtAsLqPiSMfABF/dfAiVHHadvtye2Esy2S9K8wci0qUdFfzHHN7JoWOQR
+         ni1d+ijK9ReJqYzk+O1hccRnDqk7OJKA7bD3wYYWNvuESjKPF0RZK/FQOrJZJZMz0fU5
+         36rIAZ/P71pYl/EC4HLF/oEyq8Cry4E2hOmiV+gzH4LUtRruvpChN+dfkSMd6JIwjbmb
+         ebJZgdj+N0KbwSd9Ry1pKh+WxgkbxzEJCd+ZC7WGX3QRdGpgwB/kWPSd2Uv+D5MtAnqF
+         umKMxCwZUxEyzOFpxTrNaP7FDt56wqLRyzQed8yTbdRlWMS5JJ2x9W+l7rTUpzu/s5LY
+         YuKg==
+X-Gm-Message-State: AOAM5334Gat4VvXtqhkRwrq1HJXc6Q3fPdqql7LMlv0WOTx1//QUt39s
+        DxOoJcHBKXoxGfSio9J2ouvt7jgc3RvFlhY/
+X-Google-Smtp-Source: ABdhPJzWb5HxLJOn+aqiBsF+sh3+7y5R+bdqKsRgzB5xY+S6y28XK/19lV94Xz3VSByO2zuRvEI+gA==
+X-Received: by 2002:a92:cb4d:: with SMTP id f13mr22090863ilq.220.1630443140075;
+        Tue, 31 Aug 2021 13:52:20 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id s16sm10778226iln.5.2021.08.31.13.52.24
+        by smtp.gmail.com with ESMTPSA id s5sm10472581iol.33.2021.08.31.13.52.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Aug 2021 13:52:24 -0700 (PDT)
-Date:   Tue, 31 Aug 2021 16:52:24 -0400
+        Tue, 31 Aug 2021 13:52:19 -0700 (PDT)
+Date:   Tue, 31 Aug 2021 16:52:19 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         jonathantanmy@google.com
-Subject: [PATCH v5 17/27] pack-bitmap: write multi-pack bitmaps
-Message-ID: <4968229663ae98588b70e46f43540cb346f47455.1630443072.git.me@ttaylorr.com>
+Subject: [PATCH v5 15/27] pack-bitmap.c: avoid redundant calls to
+ try_partial_reuse
+Message-ID: <06db8dbbc163ac41f0bd6e45b83e684660ca2746.1630443072.git.me@ttaylorr.com>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1630443072.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -72,369 +73,125 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Write multi-pack bitmaps in the format described by
-Documentation/technical/bitmap-format.txt, inferring their presence with
-the absence of '--bitmap'.
+try_partial_reuse() is used to mark any bits in the beginning of a
+bitmap whose objects can be reused verbatim from the pack they came
+from.
 
-To write a multi-pack bitmap, this patch attempts to reuse as much of
-the existing machinery from pack-objects as possible. Specifically, the
-MIDX code prepares a packing_data struct that pretends as if a single
-packfile has been generated containing all of the objects contained
-within the MIDX.
+Currently this function returns void, and signals nothing to the caller
+when bits could not be reused. But multi-pack bitmaps would benefit from
+having such a signal, because they may try to pass objects which are in
+bounds, but from a pack other than the preferred one.
 
+Any extra calls are noops because of a conditional in
+reuse_partial_packfile_from_bitmap(), but those loop iterations can be
+avoided by letting try_partial_reuse() indicate when it can't accept any
+more bits for reuse, and then listening to that signal.
+
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-multi-pack-index.txt |  12 +-
- builtin/multi-pack-index.c             |   2 +
- midx.c                                 | 209 ++++++++++++++++++++++++-
- midx.h                                 |   1 +
- 4 files changed, 215 insertions(+), 9 deletions(-)
+ pack-bitmap.c | 40 +++++++++++++++++++++++++++++-----------
+ 1 file changed, 29 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-index 0af6beb2dd..a9df3dbd32 100644
---- a/Documentation/git-multi-pack-index.txt
-+++ b/Documentation/git-multi-pack-index.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git multi-pack-index' [--object-dir=<dir>] [--[no-]progress]
--	[--preferred-pack=<pack>] <subcommand>
-+	[--preferred-pack=<pack>] [--[no-]bitmap] <subcommand>
- 
- DESCRIPTION
- -----------
-@@ -42,6 +42,9 @@ write::
- 		multiple packs contain the same object. `<pack>` must
- 		contain at least one object. If not given, ties are
- 		broken in favor of the pack with the lowest mtime.
-+
-+	--[no-]bitmap::
-+		Control whether or not a multi-pack bitmap is written.
- --
- 
- verify::
-@@ -83,6 +86,13 @@ EXAMPLES
- $ git multi-pack-index write
- -----------------------------------------------
- 
-+* Write a MIDX file for the packfiles in the current .git folder with a
-+corresponding bitmap.
-++
-+-------------------------------------------------------------
-+$ git multi-pack-index write --preferred-pack=<pack> --bitmap
-+-------------------------------------------------------------
-+
- * Write a MIDX file for the packfiles in an alternate object store.
- +
- -----------------------------------------------
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 8ff0dee2ec..73c0113b48 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -68,6 +68,8 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
- 		OPT_STRING(0, "preferred-pack", &opts.preferred_pack,
- 			   N_("preferred-pack"),
- 			   N_("pack for reuse when computing a multi-pack bitmap")),
-+		OPT_BIT(0, "bitmap", &opts.flags, N_("write multi-pack bitmap"),
-+			MIDX_WRITE_BITMAP | MIDX_WRITE_REV_INDEX),
- 		OPT_END(),
- 	};
- 
-diff --git a/midx.c b/midx.c
-index 6a10f7a042..284221ae62 100644
---- a/midx.c
-+++ b/midx.c
-@@ -13,6 +13,10 @@
- #include "repository.h"
- #include "chunk-format.h"
- #include "pack.h"
-+#include "pack-bitmap.h"
-+#include "refs.h"
-+#include "revision.h"
-+#include "list-objects.h"
- 
- #define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
- #define MIDX_VERSION 1
-@@ -893,6 +897,166 @@ static int midx_checksum_valid(struct multi_pack_index *m)
- 	return hashfile_checksum_valid(m->data, m->data_len);
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index d5296750eb..4e37f5d574 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1140,22 +1140,26 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+ 	return NULL;
  }
  
-+static void prepare_midx_packing_data(struct packing_data *pdata,
-+				      struct write_midx_context *ctx)
-+{
-+	uint32_t i;
-+
-+	memset(pdata, 0, sizeof(struct packing_data));
-+	prepare_packing_data(the_repository, pdata);
-+
-+	for (i = 0; i < ctx->entries_nr; i++) {
-+		struct pack_midx_entry *from = &ctx->entries[ctx->pack_order[i]];
-+		struct object_entry *to = packlist_alloc(pdata, &from->oid);
-+
-+		oe_set_in_pack(pdata, to,
-+			       ctx->info[ctx->pack_perm[from->pack_int_id]].p);
-+	}
-+}
-+
-+static int add_ref_to_pending(const char *refname,
-+			      const struct object_id *oid,
-+			      int flag, void *cb_data)
-+{
-+	struct rev_info *revs = (struct rev_info*)cb_data;
-+	struct object *object;
-+
-+	if ((flag & REF_ISSYMREF) && (flag & REF_ISBROKEN)) {
-+		warning("symbolic ref is dangling: %s", refname);
-+		return 0;
-+	}
-+
-+	object = parse_object_or_die(oid, refname);
-+	if (object->type != OBJ_COMMIT)
-+		return 0;
-+
-+	add_pending_object(revs, object, "");
-+	if (bitmap_is_preferred_refname(revs->repo, refname))
-+		object->flags |= NEEDS_BITMAP;
+-static void try_partial_reuse(struct bitmap_index *bitmap_git,
+-			      size_t pos,
+-			      struct bitmap *reuse,
+-			      struct pack_window **w_curs)
++/*
++ * -1 means "stop trying further objects"; 0 means we may or may not have
++ * reused, but you can keep feeding bits.
++ */
++static int try_partial_reuse(struct bitmap_index *bitmap_git,
++			     size_t pos,
++			     struct bitmap *reuse,
++			     struct pack_window **w_curs)
+ {
+ 	off_t offset, header;
+ 	enum object_type type;
+ 	unsigned long size;
+ 
+ 	if (pos >= bitmap_num_objects(bitmap_git))
+-		return; /* not actually in the pack or MIDX */
++		return -1; /* not actually in the pack or MIDX */
+ 
+ 	offset = header = pack_pos_to_offset(bitmap_git->pack, pos);
+ 	type = unpack_object_header(bitmap_git->pack, w_curs, &offset, &size);
+ 	if (type < 0)
+-		return; /* broken packfile, punt */
++		return -1; /* broken packfile, punt */
+ 
+ 	if (type == OBJ_REF_DELTA || type == OBJ_OFS_DELTA) {
+ 		off_t base_offset;
+@@ -1172,9 +1176,9 @@ static void try_partial_reuse(struct bitmap_index *bitmap_git,
+ 		base_offset = get_delta_base(bitmap_git->pack, w_curs,
+ 					     &offset, type, header);
+ 		if (!base_offset)
+-			return;
++			return 0;
+ 		if (offset_to_pack_pos(bitmap_git->pack, base_offset, &base_pos) < 0)
+-			return;
++			return 0;
+ 
+ 		/*
+ 		 * We assume delta dependencies always point backwards. This
+@@ -1186,7 +1190,7 @@ static void try_partial_reuse(struct bitmap_index *bitmap_git,
+ 		 * odd parameters.
+ 		 */
+ 		if (base_pos >= pos)
+-			return;
++			return 0;
+ 
+ 		/*
+ 		 * And finally, if we're not sending the base as part of our
+@@ -1197,13 +1201,14 @@ static void try_partial_reuse(struct bitmap_index *bitmap_git,
+ 		 * object_entry code path handle it.
+ 		 */
+ 		if (!bitmap_get(reuse, base_pos))
+-			return;
++			return 0;
+ 	}
+ 
+ 	/*
+ 	 * If we got here, then the object is OK to reuse. Mark it.
+ 	 */
+ 	bitmap_set(reuse, pos);
 +	return 0;
-+}
-+
-+struct bitmap_commit_cb {
-+	struct commit **commits;
-+	size_t commits_nr, commits_alloc;
-+
-+	struct write_midx_context *ctx;
-+};
-+
-+static const struct object_id *bitmap_oid_access(size_t index,
-+						 const void *_entries)
-+{
-+	const struct pack_midx_entry *entries = _entries;
-+	return &entries[index].oid;
-+}
-+
-+static void bitmap_show_commit(struct commit *commit, void *_data)
-+{
-+	struct bitmap_commit_cb *data = _data;
-+	int pos = oid_pos(&commit->object.oid, data->ctx->entries,
-+			  data->ctx->entries_nr,
-+			  bitmap_oid_access);
-+	if (pos < 0)
-+		return;
-+
-+	ALLOC_GROW(data->commits, data->commits_nr + 1, data->commits_alloc);
-+	data->commits[data->commits_nr++] = commit;
-+}
-+
-+static struct commit **find_commits_for_midx_bitmap(uint32_t *indexed_commits_nr_p,
-+						    struct write_midx_context *ctx)
-+{
-+	struct rev_info revs;
-+	struct bitmap_commit_cb cb = {0};
-+
-+	cb.ctx = ctx;
-+
-+	repo_init_revisions(the_repository, &revs, NULL);
-+	setup_revisions(0, NULL, &revs, NULL);
-+	for_each_ref(add_ref_to_pending, &revs);
-+
-+	/*
-+	 * Skipping promisor objects here is intentional, since it only excludes
-+	 * them from the list of reachable commits that we want to select from
-+	 * when computing the selection of MIDX'd commits to receive bitmaps.
-+	 *
-+	 * Reachability bitmaps do require that their objects be closed under
-+	 * reachability, but fetching any objects missing from promisors at this
-+	 * point is too late. But, if one of those objects can be reached from
-+	 * an another object that is included in the bitmap, then we will
-+	 * complain later that we don't have reachability closure (and fail
-+	 * appropriately).
-+	 */
-+	fetch_if_missing = 0;
-+	revs.exclude_promisor_objects = 1;
-+
-+	if (prepare_revision_walk(&revs))
-+		die(_("revision walk setup failed"));
-+
-+	traverse_commit_list(&revs, bitmap_show_commit, NULL, &cb);
-+	if (indexed_commits_nr_p)
-+		*indexed_commits_nr_p = cb.commits_nr;
-+
-+	return cb.commits;
-+}
-+
-+static int write_midx_bitmap(char *midx_name, unsigned char *midx_hash,
-+			     struct write_midx_context *ctx,
-+			     unsigned flags)
-+{
-+	struct packing_data pdata;
-+	struct pack_idx_entry **index;
-+	struct commit **commits = NULL;
-+	uint32_t i, commits_nr;
-+	char *bitmap_name = xstrfmt("%s-%s.bitmap", midx_name, hash_to_hex(midx_hash));
-+	int ret;
-+
-+	prepare_midx_packing_data(&pdata, ctx);
-+
-+	commits = find_commits_for_midx_bitmap(&commits_nr, ctx);
-+
-+	/*
-+	 * Build the MIDX-order index based on pdata.objects (which is already
-+	 * in MIDX order; c.f., 'midx_pack_order_cmp()' for the definition of
-+	 * this order).
-+	 */
-+	ALLOC_ARRAY(index, pdata.nr_objects);
-+	for (i = 0; i < pdata.nr_objects; i++)
-+		index[i] = &pdata.objects[i].idx;
-+
-+	bitmap_writer_show_progress(flags & MIDX_PROGRESS);
-+	bitmap_writer_build_type_index(&pdata, index, pdata.nr_objects);
-+
-+	/*
-+	 * bitmap_writer_finish expects objects in lex order, but pack_order
-+	 * gives us exactly that. use it directly instead of re-sorting the
-+	 * array.
-+	 *
-+	 * This changes the order of objects in 'index' between
-+	 * bitmap_writer_build_type_index and bitmap_writer_finish.
-+	 *
-+	 * The same re-ordering takes place in the single-pack bitmap code via
-+	 * write_idx_file(), which is called by finish_tmp_packfile(), which
-+	 * happens between bitmap_writer_build_type_index() and
-+	 * bitmap_writer_finish().
-+	 */
-+	for (i = 0; i < pdata.nr_objects; i++)
-+		index[ctx->pack_order[i]] = &pdata.objects[i].idx;
-+
-+	bitmap_writer_select_commits(commits, commits_nr, -1);
-+	ret = bitmap_writer_build(&pdata);
-+	if (ret < 0)
-+		goto cleanup;
-+
-+	bitmap_writer_set_checksum(midx_hash);
-+	bitmap_writer_finish(index, pdata.nr_objects, bitmap_name, 0);
-+
-+cleanup:
-+	free(index);
-+	free(bitmap_name);
-+	return ret;
-+}
-+
- static int write_midx_internal(const char *object_dir,
- 			       struct string_list *packs_to_drop,
- 			       const char *preferred_pack_name,
-@@ -938,7 +1102,7 @@ static int write_midx_internal(const char *object_dir,
- 
- 			ctx.info[ctx.nr].orig_pack_int_id = i;
- 			ctx.info[ctx.nr].pack_name = xstrdup(ctx.m->pack_names[i]);
--			ctx.info[ctx.nr].p = NULL;
-+			ctx.info[ctx.nr].p = ctx.m->packs[i];
- 			ctx.info[ctx.nr].expired = 0;
- 
- 			if (flags & MIDX_WRITE_REV_INDEX) {
-@@ -972,8 +1136,26 @@ static int write_midx_internal(const char *object_dir,
- 	for_each_file_in_pack_dir(object_dir, add_pack_to_midx, &ctx);
- 	stop_progress(&ctx.progress);
- 
--	if (ctx.m && ctx.nr == ctx.m->num_packs && !packs_to_drop)
--		goto cleanup;
-+	if (ctx.m && ctx.nr == ctx.m->num_packs && !packs_to_drop) {
-+		struct bitmap_index *bitmap_git;
-+		int bitmap_exists;
-+		int want_bitmap = flags & MIDX_WRITE_BITMAP;
-+
-+		bitmap_git = prepare_midx_bitmap_git(the_repository, ctx.m);
-+		bitmap_exists = bitmap_git && bitmap_is_midx(bitmap_git);
-+		free_bitmap_index(bitmap_git);
-+
-+		if (bitmap_exists || !want_bitmap) {
-+			/*
-+			 * The correct MIDX already exists, and so does a
-+			 * corresponding bitmap (or one wasn't requested).
-+			 */
-+			if (!want_bitmap)
-+				clear_midx_files_ext(object_dir, ".bitmap",
-+						     NULL);
-+			goto cleanup;
-+		}
-+	}
- 
- 	if (preferred_pack_name) {
- 		int found = 0;
-@@ -989,7 +1171,8 @@ static int write_midx_internal(const char *object_dir,
- 		if (!found)
- 			warning(_("unknown preferred pack: '%s'"),
- 				preferred_pack_name);
--	} else if (ctx.nr && (flags & MIDX_WRITE_REV_INDEX)) {
-+	} else if (ctx.nr &&
-+		   (flags & (MIDX_WRITE_REV_INDEX | MIDX_WRITE_BITMAP))) {
- 		struct packed_git *oldest = ctx.info[ctx.preferred_pack_idx].p;
- 		ctx.preferred_pack_idx = 0;
- 
-@@ -1121,9 +1304,6 @@ static int write_midx_internal(const char *object_dir,
- 	hold_lock_file_for_update(&lk, midx_name, LOCK_DIE_ON_ERROR);
- 	f = hashfd(get_lock_file_fd(&lk), get_lock_file_path(&lk));
- 
--	if (ctx.m)
--		close_object_store(the_repository->objects);
--
- 	if (ctx.nr - dropped_packs == 0) {
- 		error(_("no pack files to index."));
- 		result = 1;
-@@ -1154,14 +1334,25 @@ static int write_midx_internal(const char *object_dir,
- 	finalize_hashfile(f, midx_hash, CSUM_FSYNC | CSUM_HASH_IN_STREAM);
- 	free_chunkfile(cf);
- 
--	if (flags & MIDX_WRITE_REV_INDEX)
-+	if (flags & (MIDX_WRITE_REV_INDEX | MIDX_WRITE_BITMAP))
- 		ctx.pack_order = midx_pack_order(&ctx);
- 
- 	if (flags & MIDX_WRITE_REV_INDEX)
- 		write_midx_reverse_index(midx_name, midx_hash, &ctx);
-+	if (flags & MIDX_WRITE_BITMAP) {
-+		if (write_midx_bitmap(midx_name, midx_hash, &ctx, flags) < 0) {
-+			error(_("could not write multi-pack bitmap"));
-+			result = 1;
-+			goto cleanup;
-+		}
-+	}
-+
-+	if (ctx.m)
-+		close_object_store(the_repository->objects);
- 
- 	commit_lock_file(&lk);
- 
-+	clear_midx_files_ext(object_dir, ".bitmap", midx_hash);
- 	clear_midx_files_ext(object_dir, ".rev", midx_hash);
- 
- cleanup:
-@@ -1178,6 +1369,7 @@ static int write_midx_internal(const char *object_dir,
- 	free(ctx.pack_perm);
- 	free(ctx.pack_order);
- 	free(midx_name);
-+
- 	return result;
  }
  
-@@ -1238,6 +1430,7 @@ void clear_midx_file(struct repository *r)
- 	if (remove_path(midx))
- 		die(_("failed to clear multi-pack-index at %s"), midx);
+ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+@@ -1239,10 +1244,23 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 				break;
  
-+	clear_midx_files_ext(r->objects->odb->path, ".bitmap", NULL);
- 	clear_midx_files_ext(r->objects->odb->path, ".rev", NULL);
+ 			offset += ewah_bit_ctz64(word >> offset);
+-			try_partial_reuse(bitmap_git, pos + offset, reuse, &w_curs);
++			if (try_partial_reuse(bitmap_git, pos + offset, reuse,
++					      &w_curs) < 0) {
++				/*
++				 * try_partial_reuse indicated we couldn't reuse
++				 * any bits, so there is no point in trying more
++				 * bits in the current word, or any other words
++				 * in result.
++				 *
++				 * Jump out of both loops to avoid future
++				 * unnecessary calls to try_partial_reuse.
++				 */
++				goto done;
++			}
+ 		}
+ 	}
  
- 	free(midx);
-diff --git a/midx.h b/midx.h
-index 1172df1a71..350f4d0a7b 100644
---- a/midx.h
-+++ b/midx.h
-@@ -41,6 +41,7 @@ struct multi_pack_index {
++done:
+ 	unuse_pack(&w_curs);
  
- #define MIDX_PROGRESS     (1 << 0)
- #define MIDX_WRITE_REV_INDEX (1 << 1)
-+#define MIDX_WRITE_BITMAP (1 << 2)
- 
- const unsigned char *get_midx_checksum(struct multi_pack_index *m);
- char *get_midx_filename(const char *object_dir);
+ 	*entries = bitmap_popcount(reuse);
 -- 
 2.33.0.96.g73915697e6
 
