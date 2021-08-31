@@ -7,65 +7,66 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A384C432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 08:31:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69B2EC432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 08:34:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E3AE60FE8
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 08:31:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 401536101B
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 08:34:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240302AbhHaIcg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 04:32:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39856 "EHLO
+        id S240279AbhHaIfX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 04:35:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240190AbhHaIcg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 04:32:36 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05F51C061575
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 01:31:41 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id v10so26368967wrd.4
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 01:31:40 -0700 (PDT)
+        with ESMTP id S240268AbhHaIfW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 04:35:22 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A29D5C061575
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 01:34:27 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id o39-20020a05600c512700b002e74638b567so1898817wms.2
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 01:34:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=8RWn5YKZzRY9+d6tmnM99XTiD0AUcecqqmsLWpQaZuo=;
-        b=dmYWZeVHRdCkud471i3umftzztCBx1cZc7DHqbimqQYJLf+j0TMzD2RbK5SjT0nhvg
-         dqn1OpdDf+GyWOC2qxrKfQ08kw9UijaS6avsE7KoMejtq6bIiSYWJ8EWySAizWm5TN7o
-         rB+yAGGkuN4R6ix3QB1v96Rj7ZAm2HFDrm1CsBF3wv0/wtf4xHdRySKIxVFmYTGRYI2R
-         iEWY6lj+F8ignWJpyBByywhy35BAQXrDaBgG1Rng0Ort/I4Itim0cyMYoUJrXe2t4tYb
-         qn+EvJ4WWL3exSfybPP0g9S3LkghEgd+JpxTH5H372t/MMUhflCq56mS28h++2HDBd6+
-         1SfA==
+        bh=GF+HRO5h9/V01ooHsb1RDclhgEsKYzTirS7y9LlfXj8=;
+        b=DsEhpNaL18LB3C3/+DA5AUsFR5syEFAbdHdrlXe34fxsKqvDiqrdAJn6I2ju9wiLuC
+         UhG9K4pMQPmcritWA8dWJY7mPHxr1eg4vHQC4EVZPbGwSnyQp3fao48T+W34WcP0POg5
+         I0C6vzAmLvUoBGg8uDsV++wSwfKsl0dZYYjkZXHIDwwqmF+Ga3A5saq4+uOqBxFHZmmY
+         zgaquAj3x/p7x0XkSzVjKBFC57OhSLnkAEoxkZm19jYhY5DmWczskY5IWtmTJ3rCbNu+
+         W7pzyT6Ii+Pax9Y4ZG0C+B8rORttABp53JTkTYx7C0L+a1N9BVNWaZ9JTHs5RUlyR4uK
+         YWog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=8RWn5YKZzRY9+d6tmnM99XTiD0AUcecqqmsLWpQaZuo=;
-        b=uNrCQusmq1EaX9+JTZgNvv6b4hPpYj9ZUd9+V1RlZwlxJUyS0l8xyD6xaY0x+l/APS
-         swONG3ILvT2QlTg2rsf313Qy7vahv1ZiDDwMRis5lQnFrdfIIaBCJfDnuKy4IFYnuTsI
-         tLCYL+EK1AQGSgyc17LiNRuPbR9RIEuJtvF0qfHCfSHYA3HJRq0bqRIVMJ9B+k1nRa+6
-         tPLH1orw06+iDF1sgPsWDyeMSaemXDfYUKpIzZuHscf+lTUfTy/vk2tDYe4XWY+orrOs
-         aju7CyiwK1P1lSzonCv/Cr8e3gShDvg1WJV7EfOTXitjrl2IdhM9AuCCO5VGNqznhM7b
-         kWMA==
-X-Gm-Message-State: AOAM532ekMls5M5r2mHSRvJ1ywaaUcMyAk3gD5GEV+IKPqeOBV940gDZ
-        8M3x8u90Dsws+bhitWZJZ9epbOEYu4uFMQ==
-X-Google-Smtp-Source: ABdhPJyw3ZYVRq1pDMGLBREM9oTEDKJrbzaYUSHyo73wdushIO/LdiT2i1vjuUbczWEp5QOjAN4SvQ==
-X-Received: by 2002:adf:9783:: with SMTP id s3mr30583061wrb.349.1630398699605;
-        Tue, 31 Aug 2021 01:31:39 -0700 (PDT)
+        bh=GF+HRO5h9/V01ooHsb1RDclhgEsKYzTirS7y9LlfXj8=;
+        b=PpIbHBaW/MBtANiQHRbf6CaOGHNwfG6Cbu9e0a7bGYb0lhz3F+R1EJO3zaVHIS2r1r
+         s4y6R9cgtaFOA3Z7Kk5COAFTTHbPnkf4rnEiv8Tqf8f/DKAASh12xSC7a4dWxttwf74W
+         qX696AONOFg8pCwOHuyU4FcTymUEG46xq/Y7FZkYgXrBXVgh2xnpSdEqo+QpKXt0G50p
+         b4PEa0moO/mSLWPvAoSpiDWSdTSEv5QYrS0ilJekuEvj6gUhuJ4Np9kQnfdj3plO+9WK
+         +n8V35VuXVBOglvd4WZXEPtmlF7MC4YQGBW3t5DXlNFCJP9ihluIZ4pkMKwhSZtqVglO
+         52Gg==
+X-Gm-Message-State: AOAM530lcxZxWHYwNzR0OeUxWb8bbgnMv49aiOG3+4JhKdJlsN/qYYNM
+        Y73iBxscPjsxBtitFajNoIxmn8euyCXkZA==
+X-Google-Smtp-Source: ABdhPJzKo1AT7imWBTWImCT9vhCx+m3ZuHTQS9EAftC8+21liaA0ZAd7UuPrPtJhdSwhir+5AjPlLQ==
+X-Received: by 2002:a1c:29c3:: with SMTP id p186mr2995666wmp.22.1630398866162;
+        Tue, 31 Aug 2021 01:34:26 -0700 (PDT)
 Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id m5sm1789323wmi.1.2021.08.31.01.31.39
+        by smtp.gmail.com with ESMTPSA id m3sm22354279wrg.45.2021.08.31.01.34.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Aug 2021 01:31:39 -0700 (PDT)
+        Tue, 31 Aug 2021 01:34:25 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 11/15] scalar: allow reconfiguring an existing enlistment
-Date:   Tue, 31 Aug 2021 10:29:44 +0200
+Subject: Re: [PATCH 15/15] scalar: accept -C and -c options before the
+ subcommand
+Date:   Tue, 31 Aug 2021 10:32:48 +0200
 References: <pull.1005.git.1630359290.gitgitgadget@gmail.com>
- <13056f02018542f8143e4933fbe180a0a9f77004.1630359290.git.gitgitgadget@gmail.com>
+ <6455b18f1b623032b9066c1730dee045fbe7a3f3.1630359290.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <13056f02018542f8143e4933fbe180a0a9f77004.1630359290.git.gitgitgadget@gmail.com>
-Message-ID: <874kb6xbf9.fsf@evledraar.gmail.com>
+In-reply-to: <6455b18f1b623032b9066c1730dee045fbe7a3f3.1630359290.git.gitgitgadget@gmail.com>
+Message-ID: <871r6axban.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -75,33 +76,41 @@ X-Mailing-List: git@vger.kernel.org
 
 On Mon, Aug 30 2021, Johannes Schindelin via GitGitGadget wrote:
 
-> This comes in handy during Scalar upgrades, or when config settings were
-> messed up by mistake.
-
+> The `git` executable has these two very useful options:
+>
+> -C <directory>:
+> 	switch to the specified directory before performing any actions
+>
+> -c <key>=<value>:
+> 	temporarily configure this setting for the duration of the
+> 	specified scalar subcommand
+>
+> With this commit, we teach the `scalar` executable the same trick.
 > [...]
->  		const char *key;
->  		const char *value;
-> +		int overwrite_on_reconfigure;
+> +	while (argc > 1 && *argv[1] == '-') {
+> +		if (!strcmp(argv[1], "-C")) {
+> +			if (argc < 3)
+> +				die(_("-C requires a <directory>"));
+> +			if (chdir(argv[2]) < 0)
+> +				die_errno(_("could not change to '%s'"),
+> +					  argv[2]);
+> +			argc -= 2;
+> +			argv += 2;
+> +		} else if (!strcmp(argv[1], "-c")) {
+> +			if (argc < 3)
+> +				die(_("-c requires a <key>=<value> argument"));
+> +			git_config_push_parameter(argv[2]);
+> +			argc -= 2;
+> +			argv += 2;
+> +		} else
+> +			break;
+> +	}
 
-If you make this a "keep_on_reconfigure", then ...
+This along with my earlier comment about the Makefile copy/pasting makes
+me wonder if an easier way to integrate this wouldn't be to refactor
+git.c a bit to have it understand either "git" or "scalar", then instead
+of "ls-tree" etc. as "git" the subcommands would become "built-ins".
 
->  	} config[] = {
-> -		{ "am.keepCR", "true" },
-> -		{ "core.FSCache", "true" },
-> -		{ "core.multiPackIndex", "true" },
-> -		{ "core.preloadIndex", "true" },
-> +		/* Required */
-> +		{ "am.keepCR", "true", 1 },
-> +		{ "core.FSCache", "true", 1 },
-> +		{ "core.multiPackIndex", "true", 1 },
-> +		{ "core.preloadIndex", "true", 1 },
-
-You won't need the churn/boilerplate of adding "1" to everything here,
-but can just change the initial patch to use designated initializers.
-
-That along with a throwaway macro like:
-
-#define SCALAR_CFG_TRUE(k) (.key = k, .value = "true")
-#define SCALAR_CFG_FALSE(k) (.key = k, .value = "false")
-
-Might (or might not) make this even easier to eyeball...
+Which would give us both "[git|scalar] [-c ...] <cmd>" for free, and
+elimante the need for the inevetable future divergence of wanting -p,
+-P, --exec-path etc. in both.
