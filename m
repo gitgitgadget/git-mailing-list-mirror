@@ -2,110 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,UNWANTED_LANGUAGE_BODY autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44C25C4320E
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 08:47:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7798DC432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 09:19:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1F48160FED
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 08:47:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5060660724
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 09:19:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240407AbhHaIr4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 04:47:56 -0400
-Received: from mga11.intel.com ([192.55.52.93]:52631 "EHLO mga11.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236028AbhHaIrz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 04:47:55 -0400
-X-IronPort-AV: E=McAfee;i="6200,9189,10092"; a="215303409"
-X-IronPort-AV: E=Sophos;i="5.84,365,1620716400"; 
-   d="scan'208";a="215303409"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2021 01:47:00 -0700
-X-IronPort-AV: E=Sophos;i="5.84,365,1620716400"; 
-   d="scan'208";a="519551366"
-Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
-  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2021 01:46:59 -0700
-Received: from andy by smile with local (Exim 4.95-RC2)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1mKzPz-00FyKN-D2;
-        Tue, 31 Aug 2021 11:46:55 +0300
-Date:   Tue, 31 Aug 2021 11:46:55 +0300
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "Kirill A. Shutemov" <kirill@shutemov.name>, git@vger.kernel.org,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: Re: Problem accessing git.kernel.org with git v2.33 plus gitproxy
-Message-ID: <YS3sfzlkTjFXTWVh@smile.fi.intel.com>
-References: <20210830161149.xggfosjthnjxcoxp@box.shutemov.name>
- <YS0gZNRqz72hs/a5@coredump.intra.peff.net>
- <20210830182845.pnv7ywnc364jnblt@box>
- <YS1Bni+QuZBOgkUI@coredump.intra.peff.net>
- <20210830224215.hay6rjbt3vk26nk5@box>
- <YS3GMqz4WHUS0Cjt@coredump.intra.peff.net>
+        id S240631AbhHaJUZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 05:20:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50148 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240579AbhHaJUY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 05:20:24 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 660B9C061575
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 02:19:29 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id q21so30505695ljj.6
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 02:19:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=qluoBmoqu3e0Fz8h5w3upfzIgBDF9MUqc5Tf2xLdJ9w=;
+        b=kMG9Zvz1RJVxGPLiFQUGB9oRyr1/azb+zo0NrNGuHU2y7nQJAkOfnYOSHjvh90iGb3
+         WsmHz8t25dNwscZ/rdREypma2/IkvIr2uc+770v4mDofyADjc8mzEl8rPgvT/1mq8Otf
+         C8tNqyhNJ0IqSeiIYdUL8+23h6LmwdfEll6k5czcOA16uHMGrSLLgb6+uTQqmNeA8J/4
+         I9ACWIZ62iVHO+qNnElel0qQaxfVaE4DlXRBXLZicAq12/RF537LlmlT6lczPcR7F7Q8
+         zMAVSOCsD3dnO2XqqZ1Q4k5/xNHGKxBBo5kk7nOWAHFWkPVJIFpnGBvBN8rxqTHIg61t
+         MpHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=qluoBmoqu3e0Fz8h5w3upfzIgBDF9MUqc5Tf2xLdJ9w=;
+        b=Nv6EWdfvoUGlcsBJ7gF6XBCwcw63Dx0sKNzkcqgsRB/clSJWgTv2H3dK3l0HFjUi+y
+         0fxwZ/G92iRiwqD/TX69CUtyf0e4xXsuuOO5+vxXWOty2y1hgLBIUEWsKD+9sOj6T1wK
+         v3/qiUvrNc16fEARkGVh0fxAjSqmG0hz9SVYgW450iOb0ocoT1tQA7Xe9F+PAqP/29vM
+         e0hsCnzRM7yqBU4LI5khBJWFdEdciyzWYeVh7qfrX5vKwOJi2kanlbcihrSlfBtvbZMx
+         nA4/BmN8V+bwrSHaAOD0ebVQLhUUPldX4Pu+AVa0GXXZ5X00jync0StyGXX4MwL56jhT
+         re6g==
+X-Gm-Message-State: AOAM530qyo4QvdojAHU84Xady1n00eMVY4ixCNmtF/CNGvomt37ra55k
+        GSj66g1d5G9R04w5snm3Ct9ZYwmrOqg=
+X-Google-Smtp-Source: ABdhPJxSzI7CUs+TzXo97opLjgpTzOPcvhag9qaivLm3hw74nkipMCW7SYxn6D21HwPZV1KNbvdHbg==
+X-Received: by 2002:a2e:b5dc:: with SMTP id g28mr24219292ljn.96.1630401567835;
+        Tue, 31 Aug 2021 02:19:27 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id v3sm998304lfr.44.2021.08.31.02.19.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Aug 2021 02:19:27 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 6/7] show, log: provide a --remerge-diff capability
+References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
+        <b75e73384fde4f23296bd02eb40455263f805706.1630376800.git.gitgitgadget@gmail.com>
+Date:   Tue, 31 Aug 2021 12:19:26 +0300
+In-Reply-To: <b75e73384fde4f23296bd02eb40455263f805706.1630376800.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Tue, 31 Aug 2021
+        02:26:39 +0000")
+Message-ID: <875yvmgee9.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YS3GMqz4WHUS0Cjt@coredump.intra.peff.net>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 31, 2021 at 02:03:30AM -0400, Jeff King wrote:
-> On Tue, Aug 31, 2021 at 01:42:15AM +0300, Kirill A. Shutemov wrote:
-> > On Mon, Aug 30, 2021 at 04:37:50PM -0400, Jeff King wrote:
-> > > I am sympathetic that this used to work, and now doesn't. But this proxy
-> > > case is affected by the problem that ae1a7eefff was solving. The root of
-> > > the issue is just that "socat" in its default form is not doing the
-> > > right thing. So I'd prefer not to try to make any change to Git's
-> > > behavior here.
-> > 
-> > As a kernel developer I learned hard way that breaking user experience by
-> > kernel changes considered a kernel regression, even if userspace "does it
-> > wrong"™. I'm not sure what standard of care for Git users is.
-> > 
-> > I'm fine adjusting the proxy script and make my colleagues aware about the
-> > issue, but the approach doesn't scale.
-> 
-> I think we're a little less extreme there than the kernel. Like I said,
-> my preference is to leave Git as-is, but if somebody feels strongly, I
-> don't think it would be that hard to leave core.gitproxy untouched here.
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-So far the massive (annoying) Git breakage happened second time to me (*).
-I would agree with you if it's rare to happen, to me it's like once per
-~2 years. So, can you define what the tolerable period of time is when
-I have to expect a Git breakage next time?
+> From: Elijah Newren <newren@gmail.com>
 
-(*) First time it was a few years ago when out of a sudden Git started to pull
-gigabytes of repositories without any need. It was annoying, but tolerable to
-some extent. Current situation is not better form my user perspective.
+[...]
 
-> I agree it doesn't scale, but my suspicion is that we're talking about
-> an extremely small population here. IMHO we should be considering
-> deprecating git:// entirely (from Git itself, and kernel.org should
-> consider turning it off). In the v2 protocol, there's no advantage to
-> using it over HTTP.
+> diff --git a/diff-merges.c b/diff-merges.c
+> index d897fd8a293..3a24c45b8e5 100644
+> --- a/diff-merges.c
+> +++ b/diff-merges.c
+> @@ -17,6 +17,7 @@ static void suppress(struct rev_info *revs)
+>  	revs->combined_all_paths = 0;
+>  	revs->merges_imply_patch = 0;
+>  	revs->merges_need_diff = 0;
+> +	revs->remerge_diff = 0;
+>  }
+>  
+>  static void set_separate(struct rev_info *revs)
+> @@ -45,6 +46,12 @@ static void set_dense_combined(struct rev_info *revs)
+>  	revs->dense_combined_merges = 1;
+>  }
+>  
+> +static void set_remerge_diff(struct rev_info *revs)
+> +{
+> +	suppress(revs);
+> +	revs->remerge_diff = 1;
+> +}
+> +
+>  static diff_merges_setup_func_t func_by_opt(const char *optarg)
+>  {
+>  	if (!strcmp(optarg, "off") || !strcmp(optarg, "none"))
+> @@ -57,6 +64,8 @@ static diff_merges_setup_func_t func_by_opt(const char *optarg)
+>  		return set_combined;
+>  	else if (!strcmp(optarg, "cc") || !strcmp(optarg, "dense-combined"))
+>  		return set_dense_combined;
+> +	else if (!strcmp(optarg, "r") || !strcmp(optarg, "remerge"))
+> +		return set_remerge_diff;
+>  	else if (!strcmp(optarg, "m") || !strcmp(optarg, "on"))
+>  		return set_to_default;
+>  	return NULL;
+> @@ -113,6 +122,9 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
+>  	} else if (!strcmp(arg, "--cc")) {
+>  		set_dense_combined(revs);
+>  		revs->merges_imply_patch = 1;
+> +	} else if (!strcmp(arg, "--remerge-diff")) {
+> +		set_remerge_diff(revs);
+> +		revs->merges_imply_patch = 1;
+>  	} else if (!strcmp(arg, "--no-diff-merges")) {
+>  		suppress(revs);
+>  	} else if (!strcmp(arg, "--combined-all-paths")) {
 
-So far don't you need to support current use cases?
+The diff-merges options handling looks fine to me.
 
-(Here of course a philosophical question: is a driver moves a car, or the car moves the driver)
-
-> > > But one option would be to limit it only to ssh, and not
-> > > git:// proxies (we already don't do that half-duplex shutdown for raw
-> > > TCP git://, for reasons discussed in that commit message).
-> > 
-> > I wounder if it's possible to detect the situation, warn the user that
-> > gitproxy has to be fixed and retry fetching pack without closing fd[1].
-> 
-> I don't think it can be easily distinguished from an actual network
-> hangup (or proxy command failure, etc). I would much rather stop doing
-> the close() entirely than add any kind of heuristic retry.
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+Thanks,
+-- Sergey Organov
