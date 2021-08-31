@@ -2,159 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-24.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56A51C4320A
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 09:35:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E55DBC432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 09:44:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4183E60F46
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 09:35:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5CDB60F6B
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 09:44:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238379AbhHaJgY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 05:36:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53662 "EHLO
+        id S238112AbhHaJpu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 05:45:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236099AbhHaJgW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 05:36:22 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7A64C06175F
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 02:35:27 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id e21so37145736ejz.12
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 02:35:27 -0700 (PDT)
+        with ESMTP id S232992AbhHaJpt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 05:45:49 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6457C061575
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 02:44:54 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id c6so1155811pjv.1
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 02:44:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gitlab.com; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bY1Wp4oNwBRZhj4THnTnAs92eRU8Aba+EnS1qIF6CDI=;
-        b=Cdun/Ohts3ZlR1hMnhJ+kirrHKNbVnBQKgvjrtHKGxJVRj8a3ZlUe9sMiJGft9Mf45
-         /pAz8SanO9SbNknlvL0zNgzJTTebOX42bCy4Yg3H4Ml+6a7X3ld1MOHDy6/uxtFqnNWA
-         HMtIWXHNrScaXxhL1UXjLcQWob/ljwRSPUq6w=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5wz0EhXWbd+Brqg+5P+9epurNZ8iEV4V4KmstkZpED4=;
+        b=FEE/dO3dot6RfAQ8/yu/k/cqQu0UeByD5R77JX3P4hsrn1ZCXW8YVuPzDu82pOR0Sv
+         3doSMvG8bTdd9QO5pgxLrkzbHR0K8qb5sCDJ79wlv2QwFkLZ6GWJyQUl5xkPf423BFvx
+         XfhSlc6D3/ZXQ7kZCBczwRnFQh/N8mdFTMdQUDNNTdINSUbrLBum5pqh+l0JSBoogfSJ
+         qMZeHDZO6AqpCemnmke9oo7bQTOn3QKiFt+/mBJktOYhHm1+lQ39msUAB4Zyy1k37PAB
+         pgt3SmqDWAHiSswnimEaqd9T6vOAYiY8KnfaLeyIiR7LCchos/JuzntjoPNIU2h5vE4e
+         eyuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bY1Wp4oNwBRZhj4THnTnAs92eRU8Aba+EnS1qIF6CDI=;
-        b=bt2gLZLVL2kDfrN0uh+fEBHGLHLRajmUkhKHPli7Au+lSr/7EZhK5fL/cr21+HAe3d
-         /Iezlm4N2RJbJtLRv52sbJevIl6EScs130O7KkbuAXMkOHqB7rLBhYsMuyk69TF/e8xU
-         e4990RkA+t0LhYqaowCb63HUkLkhy3u2vT1x09tyjoeRJHff+1/iAk08FAnNIvY9x5vl
-         vi7rL1/uhScneVS2i7O5Qt+tu3pnMlsnLC4e2o1ybUXbjvcPXRXIMrqxjE3LyZJIDgWG
-         /wATdqMenIb9lrXCrAYdCtbQTSmn0LKRpgvNfHbK8o4jXnePowgVX/MCB21SgJE+FyBS
-         LfKw==
-X-Gm-Message-State: AOAM533wzShAFmey0NmoF6b1BbkDLxc/yi5UDihl8OAzaJq40czEKxv2
-        LrOKFyK1Jj/hTkAoteJLmkH6Zg==
-X-Google-Smtp-Source: ABdhPJy29oS7QG3p5ZcRhCvt/fpiffO9tONEf890Bq+/Rk/CMOLkUKiq3gYtkdpfIcZEwSnN2+pccA==
-X-Received: by 2002:a17:906:8802:: with SMTP id zh2mr31099897ejb.344.1630402526334;
-        Tue, 31 Aug 2021 02:35:26 -0700 (PDT)
-Received: from localhost.localdomain (e93008.upc-e.chello.nl. [213.93.93.8])
-        by smtp.gmail.com with ESMTPSA id n15sm9000318edw.70.2021.08.31.02.35.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Aug 2021 02:35:25 -0700 (PDT)
-From:   Jacob Vosmaer <jacob@gitlab.com>
-To:     gitster@pobox.com, peff@peff.net, me@ttaylorr.com,
-        git@vger.kernel.org, ps@pks.im
-Cc:     Jacob Vosmaer <jacob@gitlab.com>
-Subject: [PATCH v3 2/2] upload-pack: use stdio in send_ref callbacks
-Date:   Tue, 31 Aug 2021 11:34:44 +0200
-Message-Id: <20210831093444.28199-3-jacob@gitlab.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210831093444.28199-1-jacob@gitlab.com>
-References: <xmqqbl5ic19t.fsf@gitster.g>
- <20210831093444.28199-1-jacob@gitlab.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5wz0EhXWbd+Brqg+5P+9epurNZ8iEV4V4KmstkZpED4=;
+        b=NwrRR12MMxC9ECTW3dVtWVv/uiz9MvKTgYBcyfids7aNI5U7qOLGjuyD1VFL/ky2Am
+         IKBCjajOBC0inGSyxxs65wE4tzkmkc2ZcKZ7hyKtGvuId57KXhx12dqzNOzDqZZiPfNd
+         uoAc1g+gFZgoYPGuPjIkLX0+2UctcDc+sxN1e5hfuAsHGNqY7viv/c2J0NmOqIYxJjRY
+         ZoXcqWwwSGFQT7Rgh6xAMlUSvEX5Lop2PTDBqCKnBEUtuJ677iAvcB17WFgsa9i0jmNm
+         UF48rbX4+RXP87/x6Y373TYOOzWcJdWgfwlGnXnlwYM2QwzZxs/BwUARcsHbzhqRbNC6
+         SO+Q==
+X-Gm-Message-State: AOAM530ZPFRGSBHRJPxLRzoALzCQZSjg2OH4dZmggAWfxwlDR6i9DTAl
+        +nnufUx4DG1vNue5n0rikT4o3y8X0DqX4zLRsXS52Air9A==
+X-Google-Smtp-Source: ABdhPJzrYtJaCqJDSGEcWbxcmKm4ZdPGL2RHEngAYSt1vmnYB/rNxfXiM5WUGDGVI9oziWzSKJNfJXbBrYCrAi/N8DQ=
+X-Received: by 2002:a17:90a:31b:: with SMTP id 27mr3647807pje.6.1630403094126;
+ Tue, 31 Aug 2021 02:44:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CANXojcyWnFY60bXG6MDS9WAYkcFQHf+Oef0VREBkvgsuX9e=Kg@mail.gmail.com>
+ <YS0tNoAa/0VQe1OW@coredump.intra.peff.net> <CANXojczR1hMrzz7t0P6AkqL3kjdk+NzBKyCQnm-9cWFbULifow@mail.gmail.com>
+ <YS3VLh8SFvpDZy84@coredump.intra.peff.net>
+In-Reply-To: <YS3VLh8SFvpDZy84@coredump.intra.peff.net>
+From:   Stef Bon <stefbon@gmail.com>
+Date:   Tue, 31 Aug 2021 11:44:43 +0200
+Message-ID: <CANXojcxF8V2RR=xMLrwcpwa=R8fvhsn2Wj=pnthXNnvxX7YLxQ@mail.gmail.com>
+Subject: Re: Exec upload-pack on remote with what parameters to get direntries.
+To:     Jeff King <peff@peff.net>
+Cc:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In both protocol v0 and v2, upload-pack writes one pktline packet per
-advertised ref to stdout. That means one or two write(2) syscalls per
-ref. This is problematic if these writes become network sends with
-high overhead.
+Op di 31 aug. 2021 om 09:07 schreef Jeff King <peff@peff.net>:
+>
+> On Tue, Aug 31, 2021 at 08:38:39AM +0200, Stef Bon wrote:
+>
 
-This commit changes both send_ref callbacks to use buffered IO using
-stdio.
+> You might also set GIT_TRACE_PACKET=1 in your environment and try
+> running some Git commands. They will show you what's being said on the
+> wire, up until the packfile is sent (decoding the packfile itself is a
+> whole other story).
+>
 
-To give an example of the impact: I set up a single-threaded loop that
-calls ls-remote (with HTTP and protocol v2) on a local GitLab
-instance, on a repository with 11K refs. When I switch from Git
-v2.32.0 to this patch, I see a 40% reduction in CPU time for Git, and
-65% for Gitaly (GitLab's Git RPC service).
+Yes that will give me the insight I need.
+I will come back when it comes to decoding the packfile.
 
-So using buffered IO not only saves syscalls in upload-pack, it also
-saves time in things that consume upload-pack's output.
-
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Jacob Vosmaer <jacob@gitlab.com>
----
- ls-refs.c     |  4 ++--
- upload-pack.c | 11 ++++++++---
- 2 files changed, 10 insertions(+), 5 deletions(-)
-
-diff --git a/ls-refs.c b/ls-refs.c
-index 88f6c3f60d..e6a2dbd962 100644
---- a/ls-refs.c
-+++ b/ls-refs.c
-@@ -105,7 +105,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 	}
- 
- 	strbuf_addch(&refline, '\n');
--	packet_write(1, refline.buf, refline.len);
-+	packet_fwrite(stdout, refline.buf, refline.len);
- 
- 	strbuf_release(&refline);
- 	return 0;
-@@ -171,7 +171,7 @@ int ls_refs(struct repository *r, struct strvec *keys,
- 		strvec_push(&data.prefixes, "");
- 	for_each_fullref_in_prefixes(get_git_namespace(), data.prefixes.v,
- 				     send_ref, &data, 0);
--	packet_flush(1);
-+	packet_fflush(stdout);
- 	strvec_clear(&data.prefixes);
- 	return 0;
- }
-diff --git a/upload-pack.c b/upload-pack.c
-index 297b76fcb4..2fdd73dfcb 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1207,7 +1207,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 
- 		format_symref_info(&symref_info, &data->symref);
- 		format_session_id(&session_id, data);
--		packet_write_fmt(1, "%s %s%c%s%s%s%s%s%s%s object-format=%s agent=%s\n",
-+		packet_fwrite_fmt(stdout, "%s %s%c%s%s%s%s%s%s%s object-format=%s agent=%s\n",
- 			     oid_to_hex(oid), refname_nons,
- 			     0, capabilities,
- 			     (data->allow_uor & ALLOW_TIP_SHA1) ?
-@@ -1223,11 +1223,11 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 		strbuf_release(&symref_info);
- 		strbuf_release(&session_id);
- 	} else {
--		packet_write_fmt(1, "%s %s\n", oid_to_hex(oid), refname_nons);
-+		packet_fwrite_fmt(stdout, "%s %s\n", oid_to_hex(oid), refname_nons);
- 	}
- 	capabilities = NULL;
- 	if (!peel_iterated_oid(oid, &peeled))
--		packet_write_fmt(1, "%s %s^{}\n", oid_to_hex(&peeled), refname_nons);
-+		packet_fwrite_fmt(stdout, "%s %s^{}\n", oid_to_hex(&peeled), refname_nons);
- 	return 0;
- }
- 
-@@ -1348,6 +1348,11 @@ void upload_pack(struct upload_pack_options *options)
- 		reset_timeout(data.timeout);
- 		head_ref_namespaced(send_ref, &data);
- 		for_each_namespaced_ref(send_ref, &data);
-+		/* 
-+		 * fflush stdout before calling advertise_shallow_grafts because send_ref
-+		 * uses stdio.
-+		 */
-+		fflush_or_die(stdout);
- 		advertise_shallow_grafts(1);
- 		packet_flush(1);
- 	} else {
--- 
-2.32.0
-
+Thanks,
+Stef
