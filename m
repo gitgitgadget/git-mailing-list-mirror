@@ -7,106 +7,117 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0449DC432BE
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AF1BC432BE
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:29:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE29A60F12
-	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:28:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC8D060F12
+	for <git@archiver.kernel.org>; Tue, 31 Aug 2021 20:29:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241040AbhHaU32 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 16:29:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36494 "EHLO
+        id S241108AbhHaUab (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 16:30:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229887AbhHaU31 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 16:29:27 -0400
-Received: from mail-vs1-xe32.google.com (mail-vs1-xe32.google.com [IPv6:2607:f8b0:4864:20::e32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49C75C061575
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:28:32 -0700 (PDT)
-Received: by mail-vs1-xe32.google.com with SMTP id i23so628496vsj.4
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:28:32 -0700 (PDT)
+        with ESMTP id S241069AbhHaUab (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 16:30:31 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 639DFC061575
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:29:35 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id i6so1095711wrv.2
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 13:29:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=gwDqZJaCGNB9VPvqhCwdC6AMgul6wOyAJ3DFJ7bybqQ=;
-        b=FrMaZeMQ45e16FHrb7iOKjkQw6t8tTn1GX4Pqk3kujc5PjU3mymaUkw/6kZhclxbA2
-         rk8eL7y573Bi7+gxISkEzHRAtnXuhe8VZxUZ6A/80UkIBu/5xpa6gIhBgxcyNYEF0+IG
-         TBrRcgB3S2e+KvyJKoFXoIA364ZYAiNsgdeg52jnQ2J0ajwQzkS1/3Q+RXyiUlGh7oDd
-         jJ3vO4seK5SAemg3Fe4MT1NwIglvutRMD1JqyAZP7D9GdIyort3siP+MmxzoX+v15uNJ
-         VUXYI+Nmhi805bSnQwfBSKkYeFxYEiqwSbP+cFBz6MjjHqqDxrVfLtWvN6osTAa0t+w8
-         redw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Ib+lGCA/I2QNmnxo+EcDS2R5HjDlk8iXuQ9bwJJAOD8=;
+        b=kH8trj1kcYCW+DAufgFCBaEHRSQ8BgwQAmMg6VlJXv9orWITlMEjUnmBJuzoUHBbB9
+         S5SWp+omsLHnUgI5ptIxwIOi8i4pJXlM1BE70pyZ/msHBlKAnNeah3pavH1hXSldmo3+
+         iJXEyp6DY69h+CFfnP2CQ5lQyieV+ur3U4mbYhtqiN21XYsWvr0APyjzbQAZHI2jnBFd
+         RkE98htKk872D/uNKjQBFcLlHsAKaBlJxlJVTuzCBS95+Dful+uZ/pMnzSbGhg7kSW2G
+         3OL66PXEfkEN7e26SQee6pVbKcexoaex3afGaLZOtjlNRdyqN4O8a7omub5j2tv1SHna
+         6I+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=gwDqZJaCGNB9VPvqhCwdC6AMgul6wOyAJ3DFJ7bybqQ=;
-        b=es0W1StSwdcjY7YzUzyTEty59eXhw14rwVuJUP790xqGnN7fT0g1qoD2NQQ8tyq4vj
-         k5m8fOOCy15S6/fXEw3DtqM7emANbLI4+uN+v0u6j8d1zN8zwsxDWzYikb7dF/ymssxQ
-         K6U+HeKVFaJgPKnRnAzxyv0aVGNQBrISN0i3RZT/b9v78APi9CwPq0JQqQBp5rzp+sbP
-         5LDK40J24VkP6q1abW3ngm/6Mf+OrTvl/dE3pyXmrq3Wpt8ATm4GumpCaNoE3gz+HtGz
-         Uahu4MaGJxFORi6XiG+RqSInAs1spjdRbRcQ2MNJaT1u4GugYtWBQjnd6L1mTM4xFQKT
-         E/4w==
-X-Gm-Message-State: AOAM531UXWm7BqLnmvYp86XdLaPY+lwD0mrn5Fo9//1tCQRvzOZ1w1p9
-        3WqG4Haey9H119pV0iJo63Yot0VePR6ICbvOv6bAdbyP
-X-Google-Smtp-Source: ABdhPJwvydcudRyBEwQ/k+qBd2utqGK4Ze+znR70Umj7RFaJB9rxJn/mk7QtZEspRwQWXFHyVkJbl2F2NhCTD5jZfik=
-X-Received: by 2002:a05:6102:10c7:: with SMTP id t7mr20325340vsr.44.1630441710634;
- Tue, 31 Aug 2021 13:28:30 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=Ib+lGCA/I2QNmnxo+EcDS2R5HjDlk8iXuQ9bwJJAOD8=;
+        b=SZQAgA1eJ7yJUQOlRFNoNUp0LxpwRBW2CWJK3YvByHGaYJBz7lHBziOhJ9D1Y6BQnq
+         kb3RmoxsPAq9OA7hXhkCwoeLVrHAqjRvCuxPJDAfelM2PLvelIAEvtnaAZuMB0M+JCk+
+         s5FoLGYKK3XFlJOktMklSgnd6PxxSzaY01kJRI1mi6TWNTSA5/hwUJItgvlXqg7GgfYs
+         lEja8RaWukAtytw2fX2mKUQRLbORU+SJIyGIqn1/UES+gd75CPh37yz+h3RP4o7VGuHw
+         q/vXsWop1C5D331jQEqQqAS1XI6cdjrA5emxxKg5xi6H0x+q8zvtX+rXUVcI7ect1Pvn
+         WahA==
+X-Gm-Message-State: AOAM533DmDeWv0BCkWjRRWhdyqBT/9d4E1b/e0a8+ue3oTyuOqUUE5Ep
+        u8VhhNFAEnw838uhiLzNQWI=
+X-Google-Smtp-Source: ABdhPJwLmRwVGWcfhpSlDWZFSETjD9seFtXh+x6j51dlUeXNX7nAzwNCfADmIAvOk9AyOIK7dbCwNQ==
+X-Received: by 2002:adf:f9cb:: with SMTP id w11mr34727283wrr.382.1630441774006;
+        Tue, 31 Aug 2021 13:29:34 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id o7sm3347763wmq.36.2021.08.31.13.29.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Aug 2021 13:29:33 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Clemens Fruhwirth <clemens@endorphin.org>,
+        Jan =?utf-8?Q?Pokorn=C3=BD?= <poki@fnusa.cz>,
+        Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>
+Subject: Re: [PATCH v4] pull, fetch: fix segfault in --set-upstream option
+Date:   Tue, 31 Aug 2021 22:20:46 +0200
+References: <patch-v3-1.1-68899471206-20210830T144020Z-avarab@gmail.com>
+        <patch-v4-1.1-0caa9a89a86-20210831T135212Z-avarab@gmail.com>
+        <xmqqfsupwose.fsf@gitster.g>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <xmqqfsupwose.fsf@gitster.g>
+Message-ID: <87h7f5we6q.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAPUEsphf9F1+=zOMKx3j=jH8xqDwQX99+9uHiYUpXhFE1nervg@mail.gmail.com>
- <20210809013833.58110-1-carenas@gmail.com> <20210809013833.58110-4-carenas@gmail.com>
- <1b096830-3e01-efbe-25dc-c0505c8bac7b@gmail.com> <87zgszxirn.fsf@evledraar.gmail.com>
-In-Reply-To: <87zgszxirn.fsf@evledraar.gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Tue, 31 Aug 2021 13:28:19 -0700
-Message-ID: <CAPUEspj43=z8nSdh8UAiqZ+UR8UAZkSsQr1WviGtasQ7d-fHTQ@mail.gmail.com>
-Subject: Re: [PATCH/RFC 3/3] ci: run a pedantic build as part of the GitHub workflow
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org, e@80x24.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 30, 2021 at 4:40 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Mon, Aug 09 2021, Phillip Wood wrote:
-> > On 09/08/2021 02:38, Carlo Marcelo Arenas Bel=C3=B3n wrote:
-> >> similar to the recently added sparse task, it is nice to know as early
-> >> as possible.
-> >> add a dockerized build using fedora (that usually has the latest
-> >> gcc)
-> >> to be ahead of the curve and avoid older ISO C issues at the same time=
-.
-> >
-> > If we want to be able to compile with -Wpedantic then it might be
-> > better just to turn it on unconditionally in config.mak.dev. Then
-> > developers will see any errors before they push and the ci builds will
-> > all use it rather than having to run an extra job. I had a quick scan
-> > of the mail archive threads starting at [1,2] and it's not clear to me
-> > why -Wpedaintic was added as an optional extra.
+
+On Tue, Aug 31 2021, Junio C Hamano wrote:
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
-> This is from wetware memory, so maybe it's wrong: But I recall that with
-> DEVOPTS=3Dpedantic we used to have a giant wall of warnings not too long
-> ago (i.e. 1-3 years), and not just that referenced
-> USE_PARENS_AROUND_GETTEXT_N issue.
+>>> Testing the new behaviour is a good idea.  I also agree with you
+>>> that die() would be more appropriate and does not risk regression,
+>>> if the original behaviour was to segfault.
+>>
+>> Indeed. I changed it due to your upthread
+>> <xmqqsg0anxix.fsf@gitster.g>.
+>>
+>> I think doing s/warning/die/ here makes sense, but similarly to the
+>> above comment: Let's punt on that and do it separately from this
+>> narrow segfault fix. If and when we change that we should change
+>> various other "warning()" around this codepath to "die()" as well.
+>
+> I do not think that can be thrown into the same bin as "should UI
+> give irrelevant details?" issue.  If you make it not to segfault and
+> give just a warning(), it becomes impossible to make it die() later.
+>
+> If we all agree that die() is a better action, that must be done
+> now, or it will become never once the change is released to the
+> field.
 
-when gcc (and clang) moved to target C99 by default (after version 5)
-then that wall of errors went away.  Indeed git can build cleanly in a
-strict C99 compiler and until reftable was able to build even with gcc
-2.95.3
+Because someone might have been relying on the current behavior of
+segfaulting to stop their script? And a mere warning() would break
+things for them by having the script "work" if this patch were to make
+it into a release?
 
-the nostalgic can get it back with `CC=3Dgcc -std=3Dgnu89`, and indeed I
-was considering this might be a good alternative to the defunct
-gcc-4.8 job, where the weather balloons breaking with strict C89
-compatibility could be explicitly coded.
+I think it's unlikely that anyone's running into this in the wild as
+anything but a one-off, and in any case whether or not we segfault, warn
+or die the behavior of fetch at this point is to have already finished
+the fetch itself.
 
-> So if we turn pedantic on in DEVOPTS by default, wouldn't it make sense
-> to at least have a CI job where we test that we compile with
-> USE_PARENS_AROUND_GETTEXT_N (which at that point would not be the default
-> anymore).
+We're merely doing some post-fetch work of setting config etc. Both
+before and after this patch we won't be setting the upstream config. But
+yes, the exit code will change from a segfault to successful exit.
 
-agree, and indeed was thinking it might be worth combining this job
-with the SANITIZE one for efficiency.
+I think the first priority should be to just narrowly fix the segfault &
+leave refactoring of e.g. having fetch do sanity checking on all options
+before doing work for later, especially as we're almost 2 months into no
+fix for the segfault landing on "master" after the first working patch
+to fix it, so if we have that all wait on agreeing on the perfect
+behavior for fetch error handling...
 
-Carlo
