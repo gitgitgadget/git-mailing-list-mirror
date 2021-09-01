@@ -2,122 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40B47C432BE
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 14:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4F6FC432BE
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 14:55:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE8C260F11
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 14:03:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A94D860ED4
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 14:55:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244833AbhIAOEn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Sep 2021 10:04:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52058 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244101AbhIAOEn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Sep 2021 10:04:43 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4104BC061575
-        for <git@vger.kernel.org>; Wed,  1 Sep 2021 07:03:46 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id m21so3028923qkm.13
-        for <git@vger.kernel.org>; Wed, 01 Sep 2021 07:03:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=wCG6Bir0BytTsVcsraPc4WUBBWMVARmzsklczcTU8jk=;
-        b=DlkOrOmemoGfXUQkGGCe6rfwr8lAcGbI6CFHpyaU099DqDnfrXMGFufdth5Un2AVKY
-         TgUhGlGtCvarbHvPtNe4kechKwe/KaksejC8o3uk8VuU80ePEz/rXHxAy2kesdg1Q1dY
-         +Ab/MTxxyRQUpFV6czoWAs+UnBkjzc58ntJhr7FXwB6M5Yr7E5e+yl7aAlif0IlhyrG2
-         dKzHAzEeoPnFH93VC5eg79jxmrKg40v1Fo4JHWIMCU6XIXGE+x7cvK3HLjp6oxkgaIbu
-         yzCH1/gSVAcXDfFMUfX5LqQu8SLk0WSA6Gk4MuCyUF8e0EuF5X7+HoY8sUYytCcOdhY/
-         aI0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=wCG6Bir0BytTsVcsraPc4WUBBWMVARmzsklczcTU8jk=;
-        b=lqqVVqY21zvvU0PKlqXnnae1CJg6AQ1908SZ9aPfyRJjiElqhojc9bKUuW97EUFlMf
-         /kptnn15IgFY28wBD7Z/wIXSNvpu81vj2ssvzZkajw+4Bvaa0/ohVPg1LsF1M4gDWXqA
-         GSed3NWRxcW1YaZDpKxvF5Sub5KQa95l4bHbORxnffVvzBrauxi0begbqYhy/gtlfpf7
-         BWFij/DxbCThY0tkoaSR9Zn9IwccQseJfjk3uh6plrZ4eRXBRQDTKBtLuUF0/dsbQPu/
-         z1OyHkiIhW9NFS1XK7f0AkCObMOGlzhD5VmNOqIwtBueCtUbSgnJp2H70qNitquYZnOf
-         RgUQ==
-X-Gm-Message-State: AOAM532T0gsy4h2LVolEJFBnuS616je1Qd5YSh0/Q7YTxCwOu1coAKeH
-        cnSwNvAH3bR1Pf/AVAXhtZg=
-X-Google-Smtp-Source: ABdhPJwgmkszpwuI/yKbUwqEldHAJ8kRUIL0s5iPYHGN6Fh+w5RWvHw5lNze8efun80aqfD1z1VwJw==
-X-Received: by 2002:a37:9b93:: with SMTP id d141mr8578450qke.236.1630505025419;
-        Wed, 01 Sep 2021 07:03:45 -0700 (PDT)
-Received: from [192.168.66.137] ([142.46.68.231])
-        by smtp.gmail.com with ESMTPSA id x8sm12254976qts.69.2021.09.01.07.03.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Sep 2021 07:03:44 -0700 (PDT)
-Subject: Re: BUG: `git commit` adding unstaged chunks of files to commits on
- 2.33.0
-To:     Andrew Thorp <andrew.thorp.dev@gmail.com>, git@vger.kernel.org
-References: <CAHBARKezrkKAs0ACbJ_fnxR-qWacQ5KKuVLwn0WyT7aR+4++pQ@mail.gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <b1c3a0ce-dc27-9e3d-f1c5-7fe1e0ae2e53@gmail.com>
-Date:   Wed, 1 Sep 2021 10:03:49 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.13.0
+        id S244981AbhIAO4I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Sep 2021 10:56:08 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58309 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239646AbhIAO4I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Sep 2021 10:56:08 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 21DCE147B8B;
+        Wed,  1 Sep 2021 10:55:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qtZkBZLh7JafiGApfiStQECY4ISwVIdBhXDhYi
+        mHkAo=; b=K+p2skYHI46KfeufxVXkWXcWf+V5mdpu1J+scE1W/VK9/r7Y0lvBKE
+        oTdF3karc9aMwIZPKJM0xwwR2RTBDHFa/xw6bzuMFlazYPkICoNcth3+LfFxLIWa
+        cQJimCpZM+sYn8JZJkOIbnUzXRJC9z5VC0OglWUKCRd6HcdvDbNt4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1A60A147B8A;
+        Wed,  1 Sep 2021 10:55:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2CF60147B89;
+        Wed,  1 Sep 2021 10:55:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, kim@eagain.st
+Subject: Re: What's cooking in git.git (Aug 2021, #09; Sun, 29)
+References: <xmqq35qr7mq5.fsf@gitster.g>
+        <20210831220208.3924051-1-jonathantanmy@google.com>
+Date:   Wed, 01 Sep 2021 07:55:06 -0700
+In-Reply-To: <20210831220208.3924051-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Tue, 31 Aug 2021 15:02:08 -0700")
+Message-ID: <xmqqbl5cs5v9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAHBARKezrkKAs0ACbJ_fnxR-qWacQ5KKuVLwn0WyT7aR+4++pQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 996E208C-0B34-11EC-ABE2-FA11AF6C5138-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Andrew,
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Le 2021-08-31 à 13:15, Andrew Thorp a écrit :
-> Hello all,
-> 
+>> * ka/want-ref-in-namespace (2021-08-13) 3 commits
+>>  - docs: clarify the interaction of transfer.hideRefs and namespaces
+>>  - upload-pack.c: treat want-ref relative to namespace
+>>  - t5730: introduce fetch command helper
+>> 
+>>  "git upload-pack" which runs on the other side of "git fetch"
+>>  forgot to take the ref namespaces into account when handling
+>>  want-ref requests.
 >
-> 
-> [System Info]
-> git version:
-> git version 2.33.0
-> cpu: x86_64
-> no commit associated with this build
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> uname: Darwin 20.4.0 Darwin Kernel Version 20.4.0: Thu Apr 22 21:46:47
-> PDT 2021; root:xnu-7195.101.2~1/RELEASE_X86_64 x86_64
-> compiler info: clang: 12.0.5 (clang-1205.0.22.9)
-> libc info: no libc information available
-> $SHELL (typically, interactive shell): /bin/zsh
-> 
+> Sorry for not being able to look at this until now, but:
+>
+> Reviewed-by: Jonathan Tan <jonathantanmy@google.com>
+>
+> Thanks for addressing my comment about the failing tests to be written
+> in success/failure pairs [1] - I see that that has been done in patch 2.
+>
+> [1] https://lore.kernel.org/git/20210802210644.3432544-1-jonathantanmy@google.com/
 
-As I read downthread, the behaviour was due to your pre-commit hook.
+Thanks.  Will "rebase -i (reword)" your Reviewed-by in and then
+advance the topic to 'next'.
 
-Normally below the "System Info" section in the 'git bugreport' template
-there should be an "Enabled Hooks" section, which does not appear above.
-I would be curious to know why; I'm guessing you ran 'git bugreport' from
-outside your repo and so it said:
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
-
-and you deleted that section ?
-
-I'm thinking that maybe if the 'git bugreport' template mentioned upfront that the
-command should be run in the repo where you observed a bug, maybe it would lead to
-fewer back and forth like in this thread ? (CC'ing Emily who implemented 'git bugreport').
-
-I've sent a PR [1] for the web site so that this is also mentioned at https://git-scm.com/community.
-
-Cheers,
-Philippe.
-
-[1] https://github.com/git/git-scm.com/pull/1629
