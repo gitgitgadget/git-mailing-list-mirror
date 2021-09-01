@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5656C43214
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 11:57:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB313C4320E
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 11:57:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8DAFA60F6C
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 11:57:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C618E61054
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 11:57:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243947AbhIAL6U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Sep 2021 07:58:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50230 "EHLO
+        id S243943AbhIAL6Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Sep 2021 07:58:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243927AbhIAL6S (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Sep 2021 07:58:18 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 093E8C061760
-        for <git@vger.kernel.org>; Wed,  1 Sep 2021 04:57:21 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id q11so4064318wrr.9
-        for <git@vger.kernel.org>; Wed, 01 Sep 2021 04:57:20 -0700 (PDT)
+        with ESMTP id S243946AbhIAL6U (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Sep 2021 07:58:20 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0E3DC0617AE
+        for <git@vger.kernel.org>; Wed,  1 Sep 2021 04:57:22 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id b6so4055486wrh.10
+        for <git@vger.kernel.org>; Wed, 01 Sep 2021 04:57:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QV2NH/ueGnG2UZscbLTUIc7Ecyk1FKUygP0zfzxTiQg=;
-        b=iFRihvRY//8O2zZiZReH1wEcrOatR/EWEbAR4aEHoAXxM49BLVWWPiA8PIJJotmLwc
-         2yYKzYGxpJFZ8Ts5zPdFq/L7xouu3dGs9sLuvSUUvca1Z11UyNkxeajtXPfM5EqXoBl/
-         0SnQx8KBSwDPyVOn8wBet2CswBLzp6Y6dCPVDT7Y96RShlIvDi1AxQ1aqyXhPu0nKSEa
-         t1YpCiLZkSGVo8jGWRiY+/YkVCnuvM+eXZu0SGxbLjxU2GaILOfqI9qn7W6QAOEhLG1O
-         5Jb8ZctRfESNn0QXueeIsNouSGa7essjNgWIlWCl+Vl4OjvC4f3mQcfx2/yb/N+9K1BJ
-         rJHw==
+        bh=0D6S7Mg4AdwRCPb0tR3pz3eD36ZM79v/M8YYS316wK8=;
+        b=cO6Wm24UaYCgGCAw6Jh3GPP7waDoQ9G0mhJiIIN+34PEKD5+icMh35ugkZj+x05ILl
+         ux7aoBHPsDzTn3KfHF1OdykK0a6VzYRwFlcVyaNYL5Wp4Jmt/cWuzhOcyRJ7bm7aDTUC
+         EAvh/62oqRZ+fQt/L9op4kUXJDxuiCdmCIOPqOB/1Y2tdcyAtjCtW5c79KXItS63KhOC
+         niiUzBts9SnmRlzowF0b8Rp3w/dLPR11m/PA5c4sB+ucCWkYs/zJzKHjcVtvl4Ae8KiU
+         OgzI0fzm/m/NNoPN0FDvoswXLOccb0WUw2f08hejKb3rsSCAMgpRe2U56yeKRsz3tOKV
+         sEGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QV2NH/ueGnG2UZscbLTUIc7Ecyk1FKUygP0zfzxTiQg=;
-        b=SPwtmj08ZwdMA+5hcVuahqvXB3ozTiKDIX55uyxupHhM8PFkZ/6m19BmiVmsf6By1v
-         ocj4QT9NGu4CuQlhZyZXSDXMRZjV/bBO4Rjc/xF8PCq94TcCP0UWakoPLBZc2qg6jI4U
-         cHuxlCmprkAuvy5J5eL+S6QyfzPhqQlIZgGFyo7VcIC7TUPCr8HjqL4ieQup0rZ/ymI6
-         jjDdsocPEB09mTbFzMdn6NiGMswGPqvL90cStXlagYpV8Xz1heRmf1Nq/LOm7z4TONey
-         kAAe8FBL8CNR2qAC6K+qHJGnvDAuhA2GV4sefiKD7urxYURl+5G1H8GVCX5bO7BypyJk
-         zl7Q==
-X-Gm-Message-State: AOAM530/VXsyadmnfh0ggBGimWP1SIlLaq3fuWkCM2foxC1+xmqMZJoj
-        AmYvf/yOuF4HdZgRwgTYM55et2P1U34=
-X-Google-Smtp-Source: ABdhPJznlsqCN69YNd/eLzUuuj4tfqwnDCg7kSQUv7X9g1y7nRE0qly5wb7Db7ljSXMHlCpJcX2Wkw==
-X-Received: by 2002:a5d:6cca:: with SMTP id c10mr18137458wrc.224.1630497439679;
-        Wed, 01 Sep 2021 04:57:19 -0700 (PDT)
+        bh=0D6S7Mg4AdwRCPb0tR3pz3eD36ZM79v/M8YYS316wK8=;
+        b=bBEkBhsHM+HyTbJHNF20+lU8D3F1EkmrTaI/ABXEtWsOeS12Q03G1oHCnsDLZaf/5F
+         yiwAaw1oRI8qXe66m0rPGJRFXjjTn9CZ7y38t3U22KLT+7tAsF7eemr9KhbnMoO/CKRK
+         cugR4Pi6F3YRfM5VaT+tasZFTsRF4ZaibwVjUcHNypLZin5/wsLp/nm8wamTewOHvg3b
+         ffM616FX2nHrEPDrqrF0YgBXnwAYNIBZTtphX42TKg8RsfTxW1bTisEyx8bVUfA+Wte0
+         t4znLW6BTF1S70QOfwdt+gb2D1oRb9hh9NNe/QJiDerOcHt177qSZaPEu/Fmg0ZB9WUd
+         7rqA==
+X-Gm-Message-State: AOAM530lTHD83GHH16unjqkvJr0rtcTsGpAR6Z05V+NCS7pDK60cyKDj
+        Of/eQK1+pWH+rVIDA7anPRn+sb2aCVo=
+X-Google-Smtp-Source: ABdhPJwBxFg6JyVa/huCbGDlol/R/gv5dOZuf2bfd7Py7czcvpngCHnvk2ja4CT7LpQ0CQOJRDm8yA==
+X-Received: by 2002:adf:c449:: with SMTP id a9mr36397321wrg.256.1630497441597;
+        Wed, 01 Sep 2021 04:57:21 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x11sm2110411wmk.21.2021.09.01.04.57.19
+        by smtp.gmail.com with ESMTPSA id p3sm20815396wrx.82.2021.09.01.04.57.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Sep 2021 04:57:19 -0700 (PDT)
-Message-Id: <b493046134d2e593df689ede62d037eaac8ac8e0.1630497435.git.gitgitgadget@gmail.com>
+        Wed, 01 Sep 2021 04:57:21 -0700 (PDT)
+Message-Id: <4492cca369cdc0c8cd39b3dafab86d798cfbaa8f.1630497435.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.195.v2.git.1630497435.gitgitgadget@gmail.com>
 References: <pull.195.git.1574542242.gitgitgadget@gmail.com>
         <pull.195.v2.git.1630497435.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 01 Sep 2021 11:57:11 +0000
-Subject: [PATCH v2 4/7] pull: remove support for `--rebase=preserve`
+Date:   Wed, 01 Sep 2021 11:57:14 +0000
+Subject: [PATCH v2 7/7] rebase: drop the internal `rebase--interactive`
+ command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,146 +78,236 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In preparation for `git-rebase--preserve-merges.sh` entering its after
-life, we remove this (deprecated) option that would still rely on it.
+It was only used by the `--preserve-merges` backend, which we just
+removed.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/config/branch.txt        | 4 ----
- Documentation/config/pull.txt          | 4 ----
- Documentation/git-pull.txt             | 6 +-----
- builtin/pull.c                         | 9 +++------
- contrib/completion/git-completion.bash | 2 +-
- rebase.c                               | 2 --
- rebase.h                               | 1 -
- 7 files changed, 5 insertions(+), 23 deletions(-)
+ builtin/rebase.c | 185 -----------------------------------------------
+ git.c            |   1 -
+ 2 files changed, 186 deletions(-)
 
-diff --git a/Documentation/config/branch.txt b/Documentation/config/branch.txt
-index cc5f3249fc5..d323d7327f6 100644
---- a/Documentation/config/branch.txt
-+++ b/Documentation/config/branch.txt
-@@ -85,10 +85,6 @@ When `merges` (or just 'm'), pass the `--rebase-merges` option to 'git rebase'
- so that the local merge commits are included in the rebase (see
- linkgit:git-rebase[1] for details).
- +
--When `preserve` (or just 'p', deprecated in favor of `merges`), also pass
--`--preserve-merges` along to 'git rebase' so that locally committed merge
--commits will not be flattened by running 'git pull'.
--+
- When the value is `interactive` (or just 'i'), the rebase is run in interactive
- mode.
- +
-diff --git a/Documentation/config/pull.txt b/Documentation/config/pull.txt
-index 54048306095..9349e09261b 100644
---- a/Documentation/config/pull.txt
-+++ b/Documentation/config/pull.txt
-@@ -18,10 +18,6 @@ When `merges` (or just 'm'), pass the `--rebase-merges` option to 'git rebase'
- so that the local merge commits are included in the rebase (see
- linkgit:git-rebase[1] for details).
- +
--When `preserve` (or just 'p', deprecated in favor of `merges`), also pass
--`--preserve-merges` along to 'git rebase' so that locally committed merge
--commits will not be flattened by running 'git pull'.
--+
- When the value is `interactive` (or just 'i'), the rebase is run in interactive
- mode.
- +
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index 7f4b2d1982e..7144690a0cb 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -102,7 +102,7 @@ Options related to merging
- include::merge-options.txt[]
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 5af6aff9c5e..d707e3604e7 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -178,81 +178,6 @@ static const char *action_names[] = { "undefined",
+ 				      "edit_todo",
+ 				      "show_current_patch" };
  
- -r::
----rebase[=false|true|merges|preserve|interactive]::
-+--rebase[=false|true|merges|interactive]::
- 	When true, rebase the current branch on top of the upstream
- 	branch after fetching. If there is a remote-tracking branch
- 	corresponding to the upstream branch and the upstream branch
-@@ -113,10 +113,6 @@ When set to `merges`, rebase using `git rebase --rebase-merges` so that
- the local merge commits are included in the rebase (see
- linkgit:git-rebase[1] for details).
- +
--When set to `preserve` (deprecated in favor of `merges`), rebase with the
--`--preserve-merges` option passed to `git rebase` so that locally created
--merge commits will not be flattened.
--+
- When false, merge the upstream branch into the current branch.
- +
- When `interactive`, enable the interactive mode of rebase.
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 3e13f810843..bda5c32ab6f 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -30,9 +30,8 @@
- /**
-  * Parses the value of --rebase. If value is a false value, returns
-  * REBASE_FALSE. If value is a true value, returns REBASE_TRUE. If value is
-- * "merges", returns REBASE_MERGES. If value is "preserve", returns
-- * REBASE_PRESERVE. If value is a invalid value, dies with a fatal error if
-- * fatal is true, otherwise returns REBASE_INVALID.
-+ * "merges", returns REBASE_MERGES. If value is a invalid value, dies with
-+ * a fatal error if fatal is true, otherwise returns REBASE_INVALID.
-  */
- static enum rebase_type parse_config_rebase(const char *key, const char *value,
- 		int fatal)
-@@ -126,7 +125,7 @@ static struct option pull_options[] = {
- 	/* Options passed to git-merge or git-rebase */
- 	OPT_GROUP(N_("Options related to merging")),
- 	OPT_CALLBACK_F('r', "rebase", &opt_rebase,
--		"(false|true|merges|preserve|interactive)",
-+		"(false|true|merges|interactive)",
- 		N_("incorporate changes by rebasing rather than merging"),
- 		PARSE_OPT_OPTARG, parse_opt_rebase),
- 	OPT_PASSTHRU('n', NULL, &opt_diffstat, NULL,
-@@ -883,8 +882,6 @@ static int run_rebase(const struct object_id *newbase,
- 	/* Options passed to git-rebase */
- 	if (opt_rebase == REBASE_MERGES)
- 		strvec_push(&args, "--rebase-merges");
--	else if (opt_rebase == REBASE_PRESERVE)
--		strvec_push(&args, "--preserve-merges");
- 	else if (opt_rebase == REBASE_INTERACTIVE)
- 		strvec_push(&args, "--interactive");
- 	if (opt_diffstat)
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 4bdd27ddc87..5dab8bd579e 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2543,7 +2543,7 @@ __git_complete_config_variable_value ()
- 		return
- 		;;
- 	branch.*.rebase)
--		__gitcomp "false true merges preserve interactive" "" "$cur_"
-+		__gitcomp "false true merges interactive" "" "$cur_"
- 		return
- 		;;
- 	remote.pushdefault)
-diff --git a/rebase.c b/rebase.c
-index f8137d859b5..877c068687c 100644
---- a/rebase.c
-+++ b/rebase.c
-@@ -20,8 +20,6 @@ enum rebase_type rebase_parse_value(const char *value)
- 		return REBASE_FALSE;
- 	else if (v > 0)
- 		return REBASE_TRUE;
--	else if (!strcmp(value, "preserve") || !strcmp(value, "p"))
--		return REBASE_PRESERVE;
- 	else if (!strcmp(value, "merges") || !strcmp(value, "m"))
- 		return REBASE_MERGES;
- 	else if (!strcmp(value, "interactive") || !strcmp(value, "i"))
-diff --git a/rebase.h b/rebase.h
-index cc723d47489..203b4372823 100644
---- a/rebase.h
-+++ b/rebase.h
-@@ -5,7 +5,6 @@ enum rebase_type {
- 	REBASE_INVALID = -1,
- 	REBASE_FALSE = 0,
- 	REBASE_TRUE,
--	REBASE_PRESERVE,
- 	REBASE_MERGES,
- 	REBASE_INTERACTIVE
- };
+-static int add_exec_commands(struct string_list *commands)
+-{
+-	const char *todo_file = rebase_path_todo();
+-	struct todo_list todo_list = TODO_LIST_INIT;
+-	int res;
+-
+-	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+-		return error_errno(_("could not read '%s'."), todo_file);
+-
+-	if (todo_list_parse_insn_buffer(the_repository, todo_list.buf.buf,
+-					&todo_list)) {
+-		todo_list_release(&todo_list);
+-		return error(_("unusable todo list: '%s'"), todo_file);
+-	}
+-
+-	todo_list_add_exec_commands(&todo_list, commands);
+-	res = todo_list_write_to_file(the_repository, &todo_list,
+-				      todo_file, NULL, NULL, -1, 0);
+-	todo_list_release(&todo_list);
+-
+-	if (res)
+-		return error_errno(_("could not write '%s'."), todo_file);
+-	return 0;
+-}
+-
+-static int rearrange_squash_in_todo_file(void)
+-{
+-	const char *todo_file = rebase_path_todo();
+-	struct todo_list todo_list = TODO_LIST_INIT;
+-	int res = 0;
+-
+-	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+-		return error_errno(_("could not read '%s'."), todo_file);
+-	if (todo_list_parse_insn_buffer(the_repository, todo_list.buf.buf,
+-					&todo_list)) {
+-		todo_list_release(&todo_list);
+-		return error(_("unusable todo list: '%s'"), todo_file);
+-	}
+-
+-	res = todo_list_rearrange_squash(&todo_list);
+-	if (!res)
+-		res = todo_list_write_to_file(the_repository, &todo_list,
+-					      todo_file, NULL, NULL, -1, 0);
+-
+-	todo_list_release(&todo_list);
+-
+-	if (res)
+-		return error_errno(_("could not write '%s'."), todo_file);
+-	return 0;
+-}
+-
+-static int transform_todo_file(unsigned flags)
+-{
+-	const char *todo_file = rebase_path_todo();
+-	struct todo_list todo_list = TODO_LIST_INIT;
+-	int res;
+-
+-	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+-		return error_errno(_("could not read '%s'."), todo_file);
+-
+-	if (todo_list_parse_insn_buffer(the_repository, todo_list.buf.buf,
+-					&todo_list)) {
+-		todo_list_release(&todo_list);
+-		return error(_("unusable todo list: '%s'"), todo_file);
+-	}
+-
+-	res = todo_list_write_to_file(the_repository, &todo_list, todo_file,
+-				      NULL, NULL, -1, flags);
+-	todo_list_release(&todo_list);
+-
+-	if (res)
+-		return error_errno(_("could not write '%s'."), todo_file);
+-	return 0;
+-}
+-
+ static int edit_todo_file(unsigned flags)
+ {
+ 	const char *todo_file = rebase_path_todo();
+@@ -437,24 +362,6 @@ static int run_sequencer_rebase(struct rebase_options *opts,
+ 
+ 		break;
+ 	}
+-	case ACTION_SHORTEN_OIDS:
+-	case ACTION_EXPAND_OIDS:
+-		ret = transform_todo_file(flags);
+-		break;
+-	case ACTION_CHECK_TODO_LIST:
+-		ret = check_todo_list_from_file(the_repository);
+-		break;
+-	case ACTION_REARRANGE_SQUASH:
+-		ret = rearrange_squash_in_todo_file();
+-		break;
+-	case ACTION_ADD_EXEC: {
+-		struct string_list commands = STRING_LIST_INIT_DUP;
+-
+-		split_exec_commands(opts->cmd, &commands);
+-		ret = add_exec_commands(&commands);
+-		string_list_clear(&commands, 0);
+-		break;
+-	}
+ 	default:
+ 		BUG("invalid command '%d'", command);
+ 	}
+@@ -476,98 +383,6 @@ static int parse_opt_keep_empty(const struct option *opt, const char *arg,
+ 	return 0;
+ }
+ 
+-static const char * const builtin_rebase_interactive_usage[] = {
+-	N_("git rebase--interactive [<options>]"),
+-	NULL
+-};
+-
+-int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+-{
+-	struct rebase_options opts = REBASE_OPTIONS_INIT;
+-	struct object_id squash_onto = *null_oid();
+-	enum action command = ACTION_NONE;
+-	struct option options[] = {
+-		OPT_NEGBIT(0, "ff", &opts.flags, N_("allow fast-forward"),
+-			   REBASE_FORCE),
+-		OPT_CALLBACK_F('k', "keep-empty", &options, NULL,
+-			N_("keep commits which start empty"),
+-			PARSE_OPT_NOARG | PARSE_OPT_HIDDEN,
+-			parse_opt_keep_empty),
+-		OPT_BOOL_F(0, "allow-empty-message", &opts.allow_empty_message,
+-			   N_("allow commits with empty messages"),
+-			   PARSE_OPT_HIDDEN),
+-		OPT_BOOL(0, "rebase-merges", &opts.rebase_merges, N_("rebase merge commits")),
+-		OPT_BOOL(0, "rebase-cousins", &opts.rebase_cousins,
+-			 N_("keep original branch points of cousins")),
+-		OPT_BOOL(0, "autosquash", &opts.autosquash,
+-			 N_("move commits that begin with squash!/fixup!")),
+-		OPT_BOOL(0, "signoff", &opts.signoff, N_("sign commits")),
+-		OPT_BIT('v', "verbose", &opts.flags,
+-			N_("display a diffstat of what changed upstream"),
+-			REBASE_NO_QUIET | REBASE_VERBOSE | REBASE_DIFFSTAT),
+-		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
+-			    ACTION_CONTINUE),
+-		OPT_CMDMODE(0, "skip", &command, N_("skip commit"), ACTION_SKIP),
+-		OPT_CMDMODE(0, "edit-todo", &command, N_("edit the todo list"),
+-			    ACTION_EDIT_TODO),
+-		OPT_CMDMODE(0, "show-current-patch", &command, N_("show the current patch"),
+-			    ACTION_SHOW_CURRENT_PATCH),
+-		OPT_CMDMODE(0, "shorten-ids", &command,
+-			N_("shorten commit ids in the todo list"), ACTION_SHORTEN_OIDS),
+-		OPT_CMDMODE(0, "expand-ids", &command,
+-			N_("expand commit ids in the todo list"), ACTION_EXPAND_OIDS),
+-		OPT_CMDMODE(0, "check-todo-list", &command,
+-			N_("check the todo list"), ACTION_CHECK_TODO_LIST),
+-		OPT_CMDMODE(0, "rearrange-squash", &command,
+-			N_("rearrange fixup/squash lines"), ACTION_REARRANGE_SQUASH),
+-		OPT_CMDMODE(0, "add-exec-commands", &command,
+-			N_("insert exec commands in todo list"), ACTION_ADD_EXEC),
+-		{ OPTION_CALLBACK, 0, "onto", &opts.onto, N_("onto"), N_("onto"),
+-		  PARSE_OPT_NONEG, parse_opt_commit, 0 },
+-		{ OPTION_CALLBACK, 0, "restrict-revision", &opts.restrict_revision,
+-		  N_("restrict-revision"), N_("restrict revision"),
+-		  PARSE_OPT_NONEG, parse_opt_commit, 0 },
+-		{ OPTION_CALLBACK, 0, "squash-onto", &squash_onto, N_("squash-onto"),
+-		  N_("squash onto"), PARSE_OPT_NONEG, parse_opt_object_id, 0 },
+-		{ OPTION_CALLBACK, 0, "upstream", &opts.upstream, N_("upstream"),
+-		  N_("the upstream commit"), PARSE_OPT_NONEG, parse_opt_commit,
+-		  0 },
+-		OPT_STRING(0, "head-name", &opts.head_name, N_("head-name"), N_("head name")),
+-		{ OPTION_STRING, 'S', "gpg-sign", &opts.gpg_sign_opt, N_("key-id"),
+-			N_("GPG-sign commits"),
+-			PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+-		OPT_STRING(0, "strategy", &opts.strategy, N_("strategy"),
+-			   N_("rebase strategy")),
+-		OPT_STRING(0, "strategy-opts", &opts.strategy_opts, N_("strategy-opts"),
+-			   N_("strategy options")),
+-		OPT_STRING(0, "switch-to", &opts.switch_to, N_("switch-to"),
+-			   N_("the branch or commit to checkout")),
+-		OPT_STRING(0, "onto-name", &opts.onto_name, N_("onto-name"), N_("onto name")),
+-		OPT_STRING(0, "cmd", &opts.cmd, N_("cmd"), N_("the command to run")),
+-		OPT_RERERE_AUTOUPDATE(&opts.allow_rerere_autoupdate),
+-		OPT_BOOL(0, "reschedule-failed-exec", &opts.reschedule_failed_exec,
+-			 N_("automatically re-schedule any `exec` that fails")),
+-		OPT_END()
+-	};
+-
+-	opts.rebase_cousins = -1;
+-
+-	if (argc == 1)
+-		usage_with_options(builtin_rebase_interactive_usage, options);
+-
+-	argc = parse_options(argc, argv, prefix, options,
+-			builtin_rebase_interactive_usage, PARSE_OPT_KEEP_ARGV0);
+-
+-	if (!is_null_oid(&squash_onto))
+-		opts.squash_onto = &squash_onto;
+-
+-	if (opts.rebase_cousins >= 0 && !opts.rebase_merges)
+-		warning(_("--[no-]rebase-cousins has no effect without "
+-			  "--rebase-merges"));
+-
+-	return !!run_sequencer_rebase(&opts, command);
+-}
+-
+ static int is_merge(struct rebase_options *opts)
+ {
+ 	return opts->type == REBASE_MERGE;
+diff --git a/git.c b/git.c
+index 18bed9a9964..268cdd82cfc 100644
+--- a/git.c
++++ b/git.c
+@@ -577,7 +577,6 @@ static struct cmd_struct commands[] = {
+ 	{ "range-diff", cmd_range_diff, RUN_SETUP | USE_PAGER },
+ 	{ "read-tree", cmd_read_tree, RUN_SETUP | SUPPORT_SUPER_PREFIX},
+ 	{ "rebase", cmd_rebase, RUN_SETUP | NEED_WORK_TREE },
+-	{ "rebase--interactive", cmd_rebase__interactive, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "receive-pack", cmd_receive_pack },
+ 	{ "reflog", cmd_reflog, RUN_SETUP },
+ 	{ "remote", cmd_remote, RUN_SETUP },
 -- 
 gitgitgadget
-
