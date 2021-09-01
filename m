@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0ECAC432BE
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 13:31:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92260C4320A
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 13:31:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E9B460200
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 13:31:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 720E660200
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 13:31:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244156AbhIANco (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Sep 2021 09:32:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44372 "EHLO
+        id S244157AbhIANcp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Sep 2021 09:32:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243187AbhIANcn (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S244108AbhIANcn (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 1 Sep 2021 09:32:43 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90BE2C061760
-        for <git@vger.kernel.org>; Wed,  1 Sep 2021 06:31:45 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id q11so4518333wrr.9
-        for <git@vger.kernel.org>; Wed, 01 Sep 2021 06:31:45 -0700 (PDT)
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01B50C0613D9
+        for <git@vger.kernel.org>; Wed,  1 Sep 2021 06:31:46 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id m2so1933728wmm.0
+        for <git@vger.kernel.org>; Wed, 01 Sep 2021 06:31:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=65fW0JupRUc5GH5pVTzBG1P+SGEtv/XF5CQ0Tx1iHPY=;
-        b=M7iAhas9rxE/fWQr+HPFNAe6UDaKHVXIQvCw3zOTC9Uk02HimVBfjIxzWDjhYWUBzI
-         R3tM62142LbIqU1bVhZ043CZN8v/9yO0y2n+m8hTAMqu5tq03/nGHm9ikrN940KEvWDR
-         zdOMBK5sPeDjWahQlU7YtW3QmYh07me8RiFcoLgJFBS85+gUKwldGGnfwdE5FXLHhmj0
-         zRFNcQ+r0Ke1oaAv3nm9WDgosMYFO/DkMN6GbQDfBKTxMeuxMd6wy7g6ryA/Sb5QnF4I
-         UnwlB5lO01Wa/0oMg/rHKq5B0un8RIIfROAbpdUZ5kksmRHCycuOIHs3M/UeV6n5kebj
-         VNZw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Cm8pZ9Fk7ZioC6j3NFEsg2wMeo+xZMkXXYHQC2E0/eA=;
+        b=E8UFg4LDaDm6dUkCLSc0aw0vqnHlAKK0HlBKT6sE2mwbjwnqWXrbWh822eYhyvgHiM
+         Y33bdow7XmFcj1fz78hw1JgKD7Whszb2uBqBrpVGytwGFreLxXFsMrXcXy4z+/UXI6dE
+         gE3khMiSaLEQtuIBC/JnRKWj9ZKBYNdGJ5UHUc9YK5xTsg1X1W7TIjRuQMU1/gKK5jFO
+         jFVuBVq2NFdjcmqSijrdVY1kDs2fFdb9/fPdVYov9vUooeYmUUdsWcXQp+/bkNqtG2RP
+         jeI+SkwSGUwmv9TQrFGtZPH7bZGLcPGusD8p4uKChkcpk0KER9fa6EVA3nYr/mPyr3XJ
+         UEbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=65fW0JupRUc5GH5pVTzBG1P+SGEtv/XF5CQ0Tx1iHPY=;
-        b=Zwmjd/iiIp7R816Px40OE1cGRLjr2F71kYUVknUIwPiDgGVrDIJxy3ob1XuQStNcHW
-         RVl75fH+eVKw4m00JZENP6OzWpApJ01u9a0YwvUdCo6E+dfEMrbNEYDrfGdj2m3LkZYj
-         T4MCqktnAZY+9vofIGD404KJ9tfGJY2G9i8MZSHiiA/2V4TzrjDHnP9iUErxkIHAlBVN
-         YRPPKUuUfIXJiHD5JEbhTQ3ldNU9SWbmEOXc/h3aZb/nEVOCBhH4nukRpVbiXhiXzLxd
-         9X00JGRF1tcXSoUUp0SpPwYuxWDIJMqZl2ERU43DyWR1h3qxwh0SYN9PSu3ev6CpQY77
-         YReQ==
-X-Gm-Message-State: AOAM532cYyYgf52IEmJJ1qBvRAQ1scO88WfvL31aTL2zVElSYe6a30XB
-        3VMx73CeJ/h0pKbwFheKdK0m/lrEqwo=
-X-Google-Smtp-Source: ABdhPJyGgNwXL3rynpQWYhrUgayXrJPz0n3M7SOZCoCnjTjCblGkysl/WSRyfVRxdqdtfgX6tGz+6g==
-X-Received: by 2002:adf:c442:: with SMTP id a2mr38377942wrg.228.1630503104096;
-        Wed, 01 Sep 2021 06:31:44 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Cm8pZ9Fk7ZioC6j3NFEsg2wMeo+xZMkXXYHQC2E0/eA=;
+        b=O6rDupppyMtcAF8ToVzzz1deOrAiNsRAoKwyzJ8g7xQFJRnYN0/6otCJnuf469tY4l
+         cQkm8IsAU2ZsE3tDc+LvSNoxgINo0SrsIIrJbHssxonjjT7RRpQ7XhDd7W/JxHNOank7
+         kpeE7mJmHJIqq0f5rMKZo2NWzbuUxib2tzni3G7tFH0a263wYHsaLlL2+rkIjVTsvnk5
+         BhtPpaEAhi149szgBjl84HKYw+CNuC/64ajJd30/SbL1SUW4FNltwhWn2gnoSxVaZA4c
+         UYfSeZD1nh6tK1yC10sxKdhnHW2pHThfiAU9Gb2GM0aWeeRKYDNyaoXbzUDy2BWu4MJ+
+         8Yxg==
+X-Gm-Message-State: AOAM532vGhrVQtYXHnLytcAyBM6qxLJb06S8iKu4qP4SIgSPCoefpoZv
+        BfvpcCsnlG1iZ+27YhDc5lCn4HN6GFk=
+X-Google-Smtp-Source: ABdhPJwuWJyIUpWaFUkSmgETpNqPxNM+1fBIjVocJjexGFLsPIF8L9jdKX0aIQb3zPCGXmvVMF6m2Q==
+X-Received: by 2002:a7b:cc0a:: with SMTP id f10mr9929538wmh.32.1630503105378;
+        Wed, 01 Sep 2021 06:31:45 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s12sm21723345wru.41.2021.09.01.06.31.43
+        by smtp.gmail.com with ESMTPSA id d24sm5315720wmb.35.2021.09.01.06.31.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Sep 2021 06:31:43 -0700 (PDT)
-Message-Id: <pull.1022.v3.git.1630503102.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1022.v2.git.1630111653.gitgitgadget@gmail.com>
+        Wed, 01 Sep 2021 06:31:45 -0700 (PDT)
+Message-Id: <328b5d6e76f598590d24b35ec23b5fd854c6cf05.1630503102.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1022.v3.git.1630503102.gitgitgadget@gmail.com>
 References: <pull.1022.v2.git.1630111653.gitgitgadget@gmail.com>
+        <pull.1022.v3.git.1630503102.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 01 Sep 2021 13:31:39 +0000
-Subject: [PATCH v3 0/3] test-lib-functions.sh: keep user's HOME, TERM and SHELL for 'test_pause' and
- 'debug'
-MIME-Version: 1.0
+Date:   Wed, 01 Sep 2021 13:31:41 +0000
+Subject: [PATCH v3 2/3] test-lib-functions: optionally keep HOME, TERM and
+ SHELL in 'test_pause'
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         Elijah Newren <newren@gmail.com>,
@@ -75,97 +76,136 @@ Cc:     SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Taylor Blau <me@ttaylorr.com>,
         Carlo Arenas <carenas@gmail.com>, Jeff King <peff@peff.net>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
         Philippe Blain <levraiphilippeblain@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes since v2:
+From: Philippe Blain <levraiphilippeblain@gmail.com>
 
- * Added '-a' flag as suggested by Elijah, equivalent to '-t -s -h' for
-   'test_pause' and to '-t -h' for 'debug'
+The 'test_pause' function, which is designed to help interactive
+debugging and exploration of tests, currently inherits the value of HOME
+and TERM set by 'test-lib.sh': HOME="$TRASH_DIRECTORY" and TERM=dumb. It
+also invokes the shell defined by TEST_SHELL_PATH, which defaults to
+/bin/sh (through SHELL_PATH).
 
-v2:
+Changing the value of HOME means that any customization configured in a
+developers' shell startup files and any Git aliases defined in their
+global Git configuration file are not available in the shell invoked by
+'test_pause'.
 
- * added 1/3 as a preliminary step to use TEST_SHELL_PATH in test_pause
-   instead of SHELL_PATH, as suggested by Carlo
- * implemented the change in behaviour through optional flags in both
-   test_pause and debug. This seemed to be the simplest way to keep the
-   current behaviour but also provide a way to improve the UX.
+Changing the value of TERM to 'dumb' means that colored output
+is disabled for all commands in that shell.
 
-v1: This series proposes two small quality-of-life improvements (in my
-opinion) to the 'test_pause' and 'debug' test functions: using the original
-values of HOME and TERM (before they are changed by the test framework) and
-using SHELL instead of SHELL_PATH.
+Using /bin/sh as the shell invoked by 'test_pause' is not ideal since
+some platforms (i.e. Debian and derivatives) use Dash as /bin/sh, and
+this shell is usually compiled without readline support, which makes for
+a poor interactive command line experience.
 
-The later might be too big of a change, but I think it makes sense. We could
-add a new GIT_TEST_* to conditionnaly change the behaviour, but I kept it
-simple for v1.
+To make the interactive command line experience in the shell invoked by
+'test_pause' more pleasant, save the values of HOME and TERM in
+USER_HOME and USER_TERM before changing them in test-lib.sh, and add
+options to 'test_pause' to optionally use these variables to invoke the
+shell. Also add an option to invoke SHELL instead of TEST_SHELL_PATH, so
+that developer's interactive shell is used.
 
-Cheers, Philippe.
+We use options instead of changing the behaviour unconditionally since
+these three variables can break test reproducibility. Moreover, using the
+original HOME means tests could overwrite files in a user's home
+directory. Be explicit about these caveats in the new 'Usage' section in
+test-lib-functions.sh.
 
-Philippe Blain (3):
-  test-lib-functions: use 'TEST_SHELL_PATH' in 'test_pause'
-  test-lib-functions: optionally keep HOME, TERM and SHELL in
-    'test_pause'
-  test-lib-functions: optionally keep HOME and TERM in 'debug'
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+ t/test-lib-functions.sh | 44 ++++++++++++++++++++++++++++++++++++++++-
+ t/test-lib.sh           |  6 ++++--
+ 2 files changed, 47 insertions(+), 3 deletions(-)
 
- t/test-lib-functions.sh | 104 ++++++++++++++++++++++++++++++++++------
- t/test-lib.sh           |   6 ++-
- 2 files changed, 93 insertions(+), 17 deletions(-)
-
-
-base-commit: 225bc32a989d7a22fa6addafd4ce7dcd04675dbf
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1022%2Fphil-blain%2Ftest-pause-and-debug-easier-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1022/phil-blain/test-pause-and-debug-easier-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1022
-
-Range-diff vs v2:
-
- 1:  2f566f330e0 = 1:  2f566f330e0 test-lib-functions: use 'TEST_SHELL_PATH' in 'test_pause'
- 2:  00211457ece ! 2:  328b5d6e76f test-lib-functions: optionally keep HOME, TERM and SHELL in 'test_pause'
-     @@ t/test-lib-functions.sh: test_tick () {
-      +#	This allows you to use your regular shell environment and Git aliases.
-      +#	WARNING: this can break test reproducibility.
-      +#	CAUTION: this can overwrite files in your HOME.
-     ++#   -a
-     ++#	Shortcut for -t -s -h
-       
-       test_pause () {
-      -	"$TEST_SHELL_PATH" <&6 >&5 2>&7
-     @@ t/test-lib-functions.sh: test_tick () {
-      +		-h)
-      +			PAUSE_HOME="$USER_HOME"
-      +			;;
-     ++		-a)
-     ++			PAUSE_TERM="$USER_TERM"
-     ++			PAUSE_SHELL="$SHELL"
-     ++			PAUSE_HOME="$USER_HOME"
-     ++			;;
-      +		*)
-      +			break
-      +			;;
- 3:  1fac9baec1d ! 3:  4e43bd086b5 test-lib-functions: optionally keep HOME and TERM in 'debug'
-     @@ t/test-lib-functions.sh: test_pause () {
-      +#	This allows your debugger to find its config file in your home.
-      +#	WARNING: this can break test reproducibility.
-      +#	CAUTION: this can overwrite files in your HOME.
-     ++#   -a
-     ++#	Shortcut for -t -h
-      +#
-       # Examples:
-       #     debug git checkout master
-     @@ t/test-lib-functions.sh: test_pause () {
-      +		-h)
-      +			DEBUG_HOME="$USER_HOME"
-      +			;;
-     ++		-a)
-     ++			DEBUG_TERM="$USER_TERM"
-     ++			DEBUG_HOME="$USER_HOME"
-     ++			;;
-      +		-d)
-      +			GIT_DEBUGGER="$2" &&
-      +			shift
-
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 1884177e293..4b667dc7e76 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -137,9 +137,51 @@ test_tick () {
+ # Stop execution and start a shell. This is useful for debugging tests.
+ #
+ # Be sure to remove all invocations of this command before submitting.
++#
++# Usage: test_pause [options]
++#   -t
++#	Use your original TERM instead of test-lib.sh's "dumb".
++#	This usually restores color output in the invoked shell.
++#	WARNING: this can break test reproducibility.
++#   -s
++#	Invoke $SHELL instead of $TEST_SHELL_PATH
++#	WARNING: this can break test reproducibility.
++#   -h
++#	Use your original HOME instead of test-lib.sh's "$TRASH_DIRECTORY".
++#	This allows you to use your regular shell environment and Git aliases.
++#	WARNING: this can break test reproducibility.
++#	CAUTION: this can overwrite files in your HOME.
++#   -a
++#	Shortcut for -t -s -h
+ 
+ test_pause () {
+-	"$TEST_SHELL_PATH" <&6 >&5 2>&7
++	PAUSE_TERM=$TERM &&
++	PAUSE_SHELL=$TEST_SHELL_PATH &&
++	PAUSE_HOME=$HOME &&
++	while test $# != 0
++	do
++		case "$1" in
++		-t)
++			PAUSE_TERM="$USER_TERM"
++			;;
++		-s)
++			PAUSE_SHELL="$SHELL"
++			;;
++		-h)
++			PAUSE_HOME="$USER_HOME"
++			;;
++		-a)
++			PAUSE_TERM="$USER_TERM"
++			PAUSE_SHELL="$SHELL"
++			PAUSE_HOME="$USER_HOME"
++			;;
++		*)
++			break
++			;;
++		esac
++		shift
++	done &&
++	TERM="$PAUSE_TERM" HOME="$PAUSE_HOME" "$PAUSE_SHELL" <&6 >&5 2>&7
+ }
+ 
+ # Wrap git with a debugger. Adding this to a command can make it easier
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index abcfbed6d61..132618991e2 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -585,8 +585,9 @@ else
+ 	}
+ fi
+ 
++USER_TERM="$TERM"
+ TERM=dumb
+-export TERM
++export TERM USER_TERM
+ 
+ error () {
+ 	say_color error "error: $*"
+@@ -1380,9 +1381,10 @@ then
+ fi
+ 
+ # Last-minute variable setup
++USER_HOME="$HOME"
+ HOME="$TRASH_DIRECTORY"
+ GNUPGHOME="$HOME/gnupg-home-not-used"
+-export HOME GNUPGHOME
++export HOME GNUPGHOME USER_HOME
+ 
+ # Test repository
+ rm -fr "$TRASH_DIRECTORY" || {
 -- 
 gitgitgadget
+
