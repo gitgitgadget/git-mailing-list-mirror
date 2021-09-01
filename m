@@ -2,256 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCEF9C432BE
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 12:16:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 287B6C4320A
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 12:22:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A686760BD3
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 12:16:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED7BB6101B
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 12:22:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244019AbhIAMRd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Sep 2021 08:17:33 -0400
-Received: from h2.fbrelay.privateemail.com ([131.153.2.43]:40735 "EHLO
-        h2.fbrelay.privateemail.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S244028AbhIAMRc (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 1 Sep 2021 08:17:32 -0400
-Received: from MTA-15-3.privateemail.com (MTA-15-1.privateemail.com [198.54.118.208])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by h1.fbrelay.privateemail.com (Postfix) with ESMTPS id 280A780AFA
-        for <git@vger.kernel.org>; Wed,  1 Sep 2021 08:16:34 -0400 (EDT)
-Received: from mta-15.privateemail.com (localhost [127.0.0.1])
-        by mta-15.privateemail.com (Postfix) with ESMTP id 278B71800190;
-        Wed,  1 Sep 2021 08:16:32 -0400 (EDT)
-Received: from hal-station.. (unknown [10.20.151.229])
-        by mta-15.privateemail.com (Postfix) with ESMTPA id 7AF1F18000A1;
-        Wed,  1 Sep 2021 08:16:31 -0400 (EDT)
-From:   Hamza Mahfooz <someguy@effective-light.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Hamza Mahfooz <someguy@effective-light.com>
-Subject: [PATCH] pretty: colorize pattern matches in commit messages
-Date:   Wed,  1 Sep 2021 08:16:16 -0400
-Message-Id: <20210901121616.2109658-1-someguy@effective-light.com>
-X-Mailer: git-send-email 2.33.0
+        id S243981AbhIAMW4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Sep 2021 08:22:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55972 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233448AbhIAMW4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Sep 2021 08:22:56 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63B95C061575
+        for <git@vger.kernel.org>; Wed,  1 Sep 2021 05:21:59 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id v10so4207249wrd.4
+        for <git@vger.kernel.org>; Wed, 01 Sep 2021 05:21:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=iNqF6X6LtXgQMThQkrgtgRXK9DoKih4397e9xkdWpPA=;
+        b=CHeuUdnKdZDI7vbY3T79OkXa3f2d6CvXIDW1VRkIvyLS7WiGQvRT89MHHY5O29BSYG
+         fyqHDtPRHR2pwxvgXJyIUgYDqALp5Jjy64T7rXz1AjzEFyzMVIQruTPx+TV6v5GdvSio
+         czhJDwvOsKdw8B6rCv0G4MuF1VHb5eHlrjZJuYcaLXNZo/p3bS0l1N94XMHOqB2mdmHP
+         Wdd0gMXth4oHgcz6nhsPeqIB49majx3yo8UTzf0/o2ZkdZ7hW4UXHhMC1rxpN0BmycC5
+         UcstdYhmqtnUYbQ47LEW7EuKLFBL5CLhYfTJJ7IB4oyfadaeux7H0W/1Vm+ZCMVaM5Rz
+         AlCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=iNqF6X6LtXgQMThQkrgtgRXK9DoKih4397e9xkdWpPA=;
+        b=oWNJzsKquQmB3XzYHz0vw3RO9swRBHlWlD67PUdaG73Gp+lCpjIgQVc66ihICAlkNn
+         EKGn8UbaB7LXNWMOkrhHv9o0ZNaEZacOFpeC2i2pSFNIpIPOArBN/WWtDNXtX4Pok2K9
+         23PMlmVspPzGmwI/9j9I0t0Wvn6Hqlcd7DXPYOxvfJdTIt8CNZtrn5SL5Rhh54scxWUD
+         svc4UAH+PZRLLvsuFhpP81zP1TKBjRf9pkBO1Lcf5VyU3MdLEkhCm/+nXLKK9yuoElRP
+         Sk6pr7O8AjAEMS0es5jxMTt4FFbHkmRzccH6jebu5qgbqP/15Jm/VoB1jBWzv/5Fntmu
+         nelw==
+X-Gm-Message-State: AOAM532XhSNAz4ChaZ6EnXcy5OjexxFLHOIYd1TnqZHCkMm96XfKUws7
+        f5phR/7Lw170crOQeBpLjvL2LRqJ6lQqmQ==
+X-Google-Smtp-Source: ABdhPJyXIAskbWpKz+JYtxEz7o0Kbo5WIvF/VjNFik+wmwa2LNm0lsheLZ+PqBQADz9+HLgRYcFz6A==
+X-Received: by 2002:adf:ed0c:: with SMTP id a12mr37187009wro.102.1630498917924;
+        Wed, 01 Sep 2021 05:21:57 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id t14sm21197578wrw.59.2021.09.01.05.21.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Sep 2021 05:21:57 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 5/7] rebase: drop support for `--preserve-merges`
+Date:   Wed, 01 Sep 2021 14:21:30 +0200
+References: <pull.195.git.1574542242.gitgitgadget@gmail.com>
+ <pull.195.v2.git.1630497435.gitgitgadget@gmail.com>
+ <eb738b1bf05dceb1d119e3adcd732d968407c757.1630497435.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <eb738b1bf05dceb1d119e3adcd732d968407c757.1630497435.git.gitgitgadget@gmail.com>
+Message-ID: <8735qowknu.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, for example when
 
-  git log --grep=pattern
+On Wed, Sep 01 2021, Johannes Schindelin via GitGitGadget wrote:
 
-is executed, the outputted commits that are matched by the pattern do not
-have the relevant substring matches highlighted.
+> -	struct strbuf script_snippet = STRBUF_INIT, buf = STRBUF_INIT;
+> +	struct strbuf script_snippet = STRBUF_INIT;
 
-Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
----
- pretty.c | 109 +++++++++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 98 insertions(+), 11 deletions(-)
-
-diff --git a/pretty.c b/pretty.c
-index 9631529c10..2886916ae6 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -431,15 +431,80 @@ const char *show_ident_date(const struct ident_split *ident,
- 	return show_date(date, tz, mode);
- }
- 
-+static void append_matched_line(struct grep_opt *opt, const char *line,
-+				size_t linelen, enum grep_pat_token token,
-+				int field, struct strbuf *sb)
-+{
-+	struct grep_pat *pat;
-+	struct strbuf tmp_sb;
-+	regmatch_t tmp_match, match;
-+	char *buf, *eol, *color;
-+	int cflags = 0;
-+
-+	strbuf_init(&tmp_sb, linelen + 1);
-+	strbuf_add(&tmp_sb, line, linelen);
-+	buf = tmp_sb.buf;
-+	eol = buf + linelen;
-+
-+	if (!opt || !want_color(opt->color))
-+		goto skip;
-+
-+	color = opt->colors[GREP_COLOR_MATCH_CONTEXT];
-+
-+	for (;;) {
-+		match.rm_so = match.rm_eo = -1;
-+
-+		for (pat = (token == GREP_PATTERN_HEAD ?
-+			    opt->header_list : opt->pattern_list);
-+		     pat; pat = pat->next) {
-+			if (pat->token == token &&
-+			    (field == -1 || pat->field == field) &&
-+			    !regexec(&pat->regexp, buf, 1, &tmp_match,
-+				     cflags)) {
-+
-+				if ((match.rm_so >= 0 && match.rm_eo >= 0) &&
-+				    (tmp_match.rm_so > match.rm_so ||
-+				     (tmp_match.rm_so == match.rm_so &&
-+				      tmp_match.rm_eo < match.rm_eo)))
-+					continue;
-+
-+				match.rm_so = tmp_match.rm_so;
-+				match.rm_eo = tmp_match.rm_eo;
-+			}
-+		}
-+
-+		if (match.rm_so == match.rm_eo)
-+			break;
-+
-+		strbuf_grow(sb, strlen(color) + strlen(GIT_COLOR_RESET));
-+		strbuf_add(sb, buf, match.rm_so);
-+		strbuf_add(sb, color, strlen(color));
-+		strbuf_add(sb, buf + match.rm_so,
-+			   match.rm_eo - match.rm_so);
-+		strbuf_add(sb, GIT_COLOR_RESET,
-+			   strlen(GIT_COLOR_RESET));
-+		buf += match.rm_eo;
-+		cflags = REG_NOTBOL;
-+	}
-+
-+skip:
-+	strbuf_add(sb, buf, eol - buf);
-+
-+	strbuf_release(&tmp_sb);
-+}
-+
- void pp_user_info(struct pretty_print_context *pp,
- 		  const char *what, struct strbuf *sb,
- 		  const char *line, const char *encoding)
- {
-+	struct strbuf id;
- 	struct ident_split ident;
- 	char *line_end;
- 	const char *mailbuf, *namebuf;
- 	size_t namelen, maillen;
- 	int max_length = 78; /* per rfc2822 */
-+	int field = -1;
-+	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
- 
- 	if (pp->fmt == CMIT_FMT_ONELINE)
- 		return;
-@@ -496,9 +561,22 @@ void pp_user_info(struct pretty_print_context *pp,
- 			strbuf_addch(sb, '\n');
- 		strbuf_addf(sb, " <%.*s>\n", (int)maillen, mailbuf);
- 	} else {
--		strbuf_addf(sb, "%s: %.*s%.*s <%.*s>\n", what,
--			    (pp->fmt == CMIT_FMT_FULLER) ? 4 : 0, "    ",
--			    (int)namelen, namebuf, (int)maillen, mailbuf);
-+		strbuf_init(&id, namelen + maillen + 4);
-+
-+		if (!strcmp(what, "Author"))
-+			field = GREP_HEADER_AUTHOR;
-+		else if (!strcmp(what, "Commit"))
-+			field = GREP_HEADER_COMMITTER;
-+
-+		strbuf_addf(sb, "%s: %.*s", what,
-+			    (pp->fmt == CMIT_FMT_FULLER) ? 4 : 0, "    ");
-+		strbuf_addf(&id, "%.*s <%.*s>", (int)namelen, namebuf,
-+			    (int)maillen, mailbuf);
-+
-+		append_matched_line(opt, id.buf, id.len,
-+				    GREP_PATTERN_HEAD, field, sb);
-+		strbuf_addch(sb, '\n');
-+		strbuf_release(&id);
- 	}
- 
- 	switch (pp->fmt) {
-@@ -1855,6 +1933,7 @@ static void pp_header(struct pretty_print_context *pp,
- 	}
- }
- 
-+
- void pp_title_line(struct pretty_print_context *pp,
- 		   const char **msg_p,
- 		   struct strbuf *sb,
-@@ -1935,8 +2014,8 @@ static int pp_utf8_width(const char *start, const char *end)
- 	return width;
- }
- 
--static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
--				 const char *line, int linelen)
-+static void strbuf_add_tabexpand(struct grep_opt *opt, struct strbuf *sb,
-+				 int tabwidth, const char *line, int linelen)
- {
- 	const char *tab;
- 
-@@ -1953,7 +2032,8 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
- 			break;
- 
- 		/* Output the data .. */
--		strbuf_add(sb, line, tab - line);
-+		append_matched_line(opt, line, tab - line, GREP_PATTERN_BODY,
-+				    -1, sb);
- 
- 		/* .. and the de-tabified tab */
- 		strbuf_addchars(sb, ' ', tabwidth - (width % tabwidth));
-@@ -1968,7 +2048,8 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
- 	 * worrying about width - there's nothing more to
- 	 * align.
- 	 */
--	strbuf_add(sb, line, linelen);
-+	append_matched_line(opt, line, linelen,
-+			    GREP_PATTERN_BODY, -1, sb);
- }
- 
- /*
-@@ -1980,11 +2061,14 @@ static void pp_handle_indent(struct pretty_print_context *pp,
- 			     struct strbuf *sb, int indent,
- 			     const char *line, int linelen)
- {
-+	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
-+
- 	strbuf_addchars(sb, ' ', indent);
- 	if (pp->expand_tabs_in_log)
--		strbuf_add_tabexpand(sb, pp->expand_tabs_in_log, line, linelen);
-+		strbuf_add_tabexpand(opt, sb, pp->expand_tabs_in_log, line, linelen);
- 	else
--		strbuf_add(sb, line, linelen);
-+		append_matched_line(opt, line, linelen, GREP_PATTERN_BODY, -1,
-+				    sb);
- }
- 
- static int is_mboxrd_from(const char *line, int len)
-@@ -2002,7 +2086,9 @@ void pp_remainder(struct pretty_print_context *pp,
- 		  struct strbuf *sb,
- 		  int indent)
- {
-+	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
- 	int first = 1;
-+
- 	for (;;) {
- 		const char *line = *msg_p;
- 		int linelen = get_one_line(line);
-@@ -2023,14 +2109,15 @@ void pp_remainder(struct pretty_print_context *pp,
- 		if (indent)
- 			pp_handle_indent(pp, sb, indent, line, linelen);
- 		else if (pp->expand_tabs_in_log)
--			strbuf_add_tabexpand(sb, pp->expand_tabs_in_log,
-+			strbuf_add_tabexpand(opt, sb, pp->expand_tabs_in_log,
- 					     line, linelen);
- 		else {
- 			if (pp->fmt == CMIT_FMT_MBOXRD &&
- 					is_mboxrd_from(line, linelen))
- 				strbuf_addch(sb, '>');
- 
--			strbuf_add(sb, line, linelen);
-+			append_matched_line(opt, line, linelen,
-+					    GREP_PATTERN_BODY, -1, sb);
- 		}
- 		strbuf_addch(sb, '\n');
- 	}
--- 
-2.33.0
-
+You end up removing all uses of script_snippet except the
+strbuf_release() for it, so this & that can be removed too.
