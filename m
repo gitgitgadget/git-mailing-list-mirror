@@ -2,182 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0996EC432BE
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 01:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98297C432BE
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 02:05:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D856361057
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 01:52:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C03961059
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 02:05:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241695AbhIABx3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 21:53:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35906 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231396AbhIABx2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 21:53:28 -0400
-Received: (qmail 14907 invoked by uid 109); 1 Sep 2021 01:52:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Sep 2021 01:52:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1173 invoked by uid 111); 1 Sep 2021 01:52:33 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 31 Aug 2021 21:52:33 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 31 Aug 2021 21:52:31 -0400
-From:   Jeff King <peff@peff.net>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        phillip.wood@dunelm.org.uk, git@vger.kernel.org, e@80x24.org
-Subject: Re: [PATCH/RFC 3/3] ci: run a pedantic build as part of the GitHub
- workflow
-Message-ID: <YS7c3169x5Wk4PlA@coredump.intra.peff.net>
-References: <CAPUEsphf9F1+=zOMKx3j=jH8xqDwQX99+9uHiYUpXhFE1nervg@mail.gmail.com>
- <20210809013833.58110-1-carenas@gmail.com>
- <20210809013833.58110-4-carenas@gmail.com>
- <1b096830-3e01-efbe-25dc-c0505c8bac7b@gmail.com>
- <87zgszxirn.fsf@evledraar.gmail.com>
- <CAPUEspj43=z8nSdh8UAiqZ+UR8UAZkSsQr1WviGtasQ7d-fHTQ@mail.gmail.com>
- <87bl5dwcx0.fsf@evledraar.gmail.com>
- <CAPUEsphbUHgt09A2qdy-5U0L1y13pkeNjBEUbjkE6JOPeqDVMA@mail.gmail.com>
+        id S241003AbhIACGt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 22:06:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55370 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230333AbhIACGt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 22:06:49 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28504C061575
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 19:05:53 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id z1so2100044ioh.7
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 19:05:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=XnJYc9A7kujWoCARuwlYtyyFpdZ5lQWTG8N/4KCm0/U=;
+        b=QvC9sTVoXKfvKIsKAsNjlt+2mKDohAS3rIutmidEEsT9a9Cp4sVDWmPZAo7EfS5lt8
+         oGCIDRVbGiT65VLPOk4OlCqRBdBZhwOP0ZqhNi2A/PxMKL0b0Yct48Gi1ZeEcLES2j30
+         3fUcjysGNw5ZOSfBsO0KvonqoDtneTn3DGSo5QiqLh2fLiVIzoLiBcujTQS+U6BxQIo/
+         WMYVMBdyjvUDG0SV7fh1ovN814xSq1mJVXybQxwDVgrBg8ffnOhkTswxQ2Jxo04wJ8UL
+         /n9f0QR8RaulKniwqj3iHESHujvGF59a/xZmgF5DjT5grTG6oXbrreE5uoPiudDxncKi
+         leXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=XnJYc9A7kujWoCARuwlYtyyFpdZ5lQWTG8N/4KCm0/U=;
+        b=hzWToBCfSrOoOmyu9ANalKBCtKFUql4lVZWJ3Z+z0/UajPKnkhPwELL04h6qlVys2d
+         fvR2ZyS2zHmv9T4v4D3SgBkOjsPHv79jaVJeEuFiKcYax6po8fBkmyygSUndV9ScUmAB
+         vz6FrpK4yfB+xtWOKW5gSYtlo5ZmSZFWsLdRKDeuaOKJzgMmnMGYikz1a+Bmgx56td9s
+         RW+eFJM+8RQy4mL9i2HjWi3nbsLp2PXMa5E/2sb/qF06LRg3PQ671NlVJ2HWhW9X1lv3
+         mm4L7pQCN3fat9DitCpZts9NtBUkl1eCXV3ppLlUcVpKS5pqve+caof3x+qogmcIcCrW
+         Cndw==
+X-Gm-Message-State: AOAM533E9a759oxqUsMDGNdKAWZ70dD/bSYHsoSBpp8OlmfYVhSs8wIN
+        OqrMmjv+GpMqgGSfyWO3zLwyEShbsx/+rGmU
+X-Google-Smtp-Source: ABdhPJy/JmDoAzPRsOfYa26dkQ4xspI74XThPiL2EEm/eg8ChLvThxmajM2DBiK8WGgolip4QWUCIw==
+X-Received: by 2002:a02:a1c3:: with SMTP id o3mr5648523jah.59.1630461952424;
+        Tue, 31 Aug 2021 19:05:52 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id a17sm11273572ilp.75.2021.08.31.19.05.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Aug 2021 19:05:52 -0700 (PDT)
+Date:   Tue, 31 Aug 2021 22:05:46 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net
+Subject: [PATCH 0/2] pack-write,repack: prevent opening packs too early
+Message-ID: <cover.1630461918.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPUEsphbUHgt09A2qdy-5U0L1y13pkeNjBEUbjkE6JOPeqDVMA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 31, 2021 at 04:54:52PM -0700, Carlo Arenas wrote:
+This pair of patches fixes a race where the .idx is moved into place
+before the .rev file, allowing the pack to be in a state where it
+appears a .rev file wasn't generated.
 
-> On Tue, Aug 31, 2021 at 1:57 PM Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
-> >
-> > On the other hand maybe we should just remove
-> > USE_PARENS_AROUND_GETTEXT_N entirely, i.e. always use the parens.
-> 
-> that would break pedantic in all versions of gcc since it is a GNU
-> extension and is not valid in any C standard.
-> (unlike the ones we are using with weather balloons and that are valid C99)
+This can cause Git to inadvertently take the slow "generate the
+reverse index on-the-fly", which does not impact correctness, but is
+unnecessarily slow when compared to reading the .rev file.
 
-I think Ævar might have mis-spoke there. It would make sense to get rid
-of the feature and _never_ use parens, which is always valid C (and does
-not tickle pedantic, but also does not catch any accidental string
-concatenation).
+The race is fixed by moving the .idx into place only after all other
+pack-related files have already been written. The first patch fixes
+the direct `pack-objects` case, and the second patch fixes `repack`
+(which also renames pack files around).
 
-That actually seems quite reasonable to me.
+Thanks in advance for your review.
 
-Something like this, I guess?
+Taylor Blau (2):
+  pack-write.c: rename `.idx` file into place last
+  builtin/repack.c: move `.idx` files into place last
 
-diff --git a/Makefile b/Makefile
-index d1feab008f..4936e234bc 100644
---- a/Makefile
-+++ b/Makefile
-@@ -409,15 +409,6 @@ all::
- # Define NEEDS_LIBRT if your platform requires linking with librt (glibc version
- # before 2.17) for clock_gettime and CLOCK_MONOTONIC.
- #
--# Define USE_PARENS_AROUND_GETTEXT_N to "yes" if your compiler happily
--# compiles the following initialization:
--#
--#   static const char s[] = ("FOO");
--#
--# and define it to "no" if you need to remove the parentheses () around the
--# constant.  The default is "auto", which means to use parentheses if your
--# compiler is detected to support it.
--#
- # Define HAVE_BSD_SYSCTL if your platform has a BSD-compatible sysctl function.
- #
- # Define HAVE_GETDELIM if your system has the getdelim() function.
-@@ -497,8 +488,7 @@ all::
- #
- #    pedantic:
- #
--#        Enable -pedantic compilation. This also disables
--#        USE_PARENS_AROUND_GETTEXT_N to produce only relevant warnings.
-+#        Enable -pedantic compilation.
- 
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -1347,14 +1337,6 @@ ifneq (,$(SOCKLEN_T))
- 	BASIC_CFLAGS += -Dsocklen_t=$(SOCKLEN_T)
- endif
- 
--ifeq (yes,$(USE_PARENS_AROUND_GETTEXT_N))
--	BASIC_CFLAGS += -DUSE_PARENS_AROUND_GETTEXT_N=1
--else
--ifeq (no,$(USE_PARENS_AROUND_GETTEXT_N))
--	BASIC_CFLAGS += -DUSE_PARENS_AROUND_GETTEXT_N=0
--endif
--endif
--
- ifeq ($(uname_S),Darwin)
- 	ifndef NO_FINK
- 		ifeq ($(shell test -d /sw/lib && echo y),y)
-diff --git a/config.mak.dev b/config.mak.dev
-index 022fb58218..41d6345bc0 100644
---- a/config.mak.dev
-+++ b/config.mak.dev
-@@ -4,8 +4,6 @@ SPARSE_FLAGS += -Wsparse-error
- endif
- ifneq ($(filter pedantic,$(DEVOPTS)),)
- DEVELOPER_CFLAGS += -pedantic
--# don't warn for each N_ use
--DEVELOPER_CFLAGS += -DUSE_PARENS_AROUND_GETTEXT_N=0
- endif
- DEVELOPER_CFLAGS += -Wall
- DEVELOPER_CFLAGS += -Wdeclaration-after-statement
-diff --git a/gettext.h b/gettext.h
-index c8b34fd612..d209911ebb 100644
---- a/gettext.h
-+++ b/gettext.h
-@@ -55,31 +55,7 @@ const char *Q_(const char *msgid, const char *plu, unsigned long n)
- }
- 
- /* Mark msgid for translation but do not translate it. */
--#if !USE_PARENS_AROUND_GETTEXT_N
- #define N_(msgid) msgid
--#else
--/*
-- * Strictly speaking, this will lead to invalid C when
-- * used this way:
-- *	static const char s[] = N_("FOO");
-- * which will expand to
-- *	static const char s[] = ("FOO");
-- * and in valid C, the initializer on the right hand side must
-- * be without the parentheses.  But many compilers do accept it
-- * as a language extension and it will allow us to catch mistakes
-- * like:
-- *	static const char *msgs[] = {
-- *		N_("one")
-- *		N_("two"),
-- *		N_("three"),
-- *		NULL
-- *	};
-- * (notice the missing comma on one of the lines) by forcing
-- * a compilation error, because parenthesised ("one") ("two")
-- * will not get silently turned into ("onetwo").
-- */
--#define N_(msgid) (msgid)
--#endif
- 
- const char *get_preferred_languages(void);
- int is_utf8_locale(void);
-diff --git a/git-compat-util.h b/git-compat-util.h
-index b46605300a..ddc65ff61d 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1253,10 +1253,6 @@ int warn_on_fopen_errors(const char *path);
-  */
- int open_nofollow(const char *path, int flags);
- 
--#if !defined(USE_PARENS_AROUND_GETTEXT_N) && defined(__GNUC__)
--#define USE_PARENS_AROUND_GETTEXT_N 1
--#endif
--
- #ifndef SHELL_PATH
- # define SHELL_PATH "/bin/sh"
- #endif
+ builtin/repack.c |  2 +-
+ pack-write.c     | 12 ++++++------
+ 2 files changed, 7 insertions(+), 7 deletions(-)
+
+-- 
+2.33.0.96.g73915697e6
