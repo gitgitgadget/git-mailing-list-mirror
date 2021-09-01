@@ -2,80 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB950C432BE
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 07:44:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37DE8C432BE
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 07:53:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8755761056
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 07:44:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A83D6103A
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 07:53:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242651AbhIAHp0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Sep 2021 03:45:26 -0400
-Received: from mout02.posteo.de ([185.67.36.66]:39551 "EHLO mout02.posteo.de"
+        id S242839AbhIAHyu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Sep 2021 03:54:50 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36126 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242640AbhIAHpV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Sep 2021 03:45:21 -0400
-Received: from submission (posteo.de [89.146.220.130]) 
-        by mout02.posteo.de (Postfix) with ESMTPS id 0384E240101
-        for <git@vger.kernel.org>; Wed,  1 Sep 2021 09:44:24 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.jp; s=2017;
-        t=1630482264; bh=zEHlV3JrppGGNjl1AmtR7tMeCxdjIf5NW7Yfx0WyLPU=;
-        h=Date:From:To:Subject:From;
-        b=a4nwNBcYaUEpgzVTwnIj0CeiuzwTkLA4stwnINxrF7hpAzTl/4JwbKEVUziooaGid
-         zCaK2RvfN4gtSvp/hj98VscLnte5NZEZiXQK04oRv0HsBASO+UdC8AGRlwyKnko0Vz
-         oqCIVRcc+G0VACZn1oPzBeCr//uATw103uscfBxddn9j5/cj5Rr0vH29WtHtTIo0MS
-         ssLfTHJMEn3kBXN08Xzd8A2qZBE0GDd526c91lZ7/h4NwX1+LjbOhR+sjn9KEJpU0t
-         4PUhoID8L8e1xQmG7SN5OlzL/ZdMfrMrfhngbc/UJ7I5fCFShO3qqixCgNxekGElpB
-         GCJlqqbqlMmLQ==
-Received: from customer (localhost [127.0.0.1])
-        by submission (posteo.de) with ESMTPSA id 4Gzx0758F1z9rxb
-        for <git@vger.kernel.org>; Wed,  1 Sep 2021 09:44:23 +0200 (CEST)
+        id S230161AbhIAHys (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Sep 2021 03:54:48 -0400
+Received: (qmail 15783 invoked by uid 109); 1 Sep 2021 07:53:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Sep 2021 07:53:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4575 invoked by uid 111); 1 Sep 2021 07:53:53 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Sep 2021 03:53:53 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 1 Sep 2021 03:53:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Andrzej Hunt <andrzej@ahunt.org>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 2/4] SANITIZE tests: fix memory leaks in t13*config*,
+ add to whitelist
+Message-ID: <YS8xj9XtKqEEy/Bb@coredump.intra.peff.net>
+References: <cover-0.4-0000000000-20210714T001007Z-avarab@gmail.com>
+ <cover-0.4-0000000000-20210714T172251Z-avarab@gmail.com>
+ <patch-2.4-867e8e9a6c-20210714T172251Z-avarab@gmail.com>
+ <871ea493-e108-e748-0234-f929690ad2fd@ahunt.org>
+ <YPCrvOce5qRWk6Rq@coredump.intra.peff.net>
+ <87wnpqy8zd.fsf@evledraar.gmail.com>
+ <YPH3OOOfK9RVebqZ@coredump.intra.peff.net>
+ <87y28hwylq.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 01 Sep 2021 07:44:23 +0000
-From:   c.buhtz@posteo.jp
-To:     git@vger.kernel.org
-Subject: Concept question about push/pull stashes
-Reply-To: git@vger.kernel.org
-Mail-Reply-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Message-ID: <8d2f05e6f4ff9855460402e8cdafd7e7@posteo.de>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87y28hwylq.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-my question has to goals. I want to understand the design decisions 
-behind a (missing) feature and and wan't to explore the needs of other 
-users before I start to implement something.
+On Tue, Aug 31, 2021 at 02:47:01PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-There is no usual way to exchange stashes with other repos/users. 
-Stashes are code snippets that are unfinished and not clean enough to 
-commit them anywhere not even in another branch.
+> > That works, but now "util" is not available for all the _other_ uses for
+> > which it was intended. And if we're not using it for those other uses,
+> > then why does it need to exist at all? If we are only using it to hold
+> > the allocated string pointer, then shouldn't it be "char *to_free"?
+> 
+> Because having it be "char *" doesn't cover the common case of
+> e.g. getting an already allocated "struct something *" which contains
+> your string, setting the "string" in "struct string_list_item" to some
+> string in that struct, and the "util" to the struct itself, as we now
+> own it and want to free() it later in its entirety.
 
-Why? What is the concept behind this? I am sure this was well thought. I 
-just try to understand.
+OK. I buy that storing a void pointer makes it more flexible. I'm not
+altogether convinced this pattern is especially common, but it's not any
+harder to work with than a "need_to_free" flag, so there's no reason not
+to do that (and to be fair, I didn't look around for possible uses of
+the pattern; it's just not one I think of as common off the top of my
+head).
 
-A feature like this is often asked by users when you asked the search 
-engine of your trust.
+> That and the even more common case I mentioned upthread of wanting to
+> ferry around the truncated version of some char *, but still wanting to
+> account for the original for an eventual free().
+> 
+> But yes, if you want to account for freeing that data *and* have util
+> set to something else you'll need to have e.g. your own wrapper struct
+> and your own string_list_clear_func() callback.
 
-One workaround is to simply commit the stashed code, push/pull it, 
-checkoutit into the other repo and delete the last commit.
+But stuffing it into the util field of string_list really feels like a
+stretch, and something that would make existing string_list use painful.
+There are tons of cases where util points to some totally unrelated (in
+terms of memory ownership) item. I'd venture to say most cases where
+string_list_clear() is called without free_util would count here.
 
-The other workaround is to create a patch-file from a stash. But then 
-the question is how to exchange this file?
+> > I don't think most interfaces take a string_list_item now, so wouldn't
+> > they similarly need to be changed? Though the point is that all of these
+> > degrade to a regular C-string, so when you are just passing the value
+> > (and not ownership), you would just dereference at that point.
+> 
+> Sure, just like things would need to be changed to handle your proposed
+> "struct def_string".
+> 
+> By piggy-backing on an already used struct in our codebase we can get a
+> lot of that memory management pretty much for free without much
+> churn.
+> 
+> If you squint and pretend that "struct string_list_item" isn't called
+> something to do with that particular collections API (but it would make
+> use of it) then we've already set up most of the scaffolding and
+> management for this.
 
-Why not use the git infrastructure itself?
+It's that squinting that bothers me. Sure, it's _kinda_ similar. And I
+don't have any problem with some kind of struct that says "this is a
+string, and when you are done with it, this is how you free it". And I
+don't have any problem with building the "dup" version of string_list
+with that struct as a primitive. But it seems to me to be orthogonal
+from the "util" pointer of a string_list, which is about creating a
+mapping from the string to some other thing (which may or may not
+contain the string, and may or may not be owned).
 
-I have workaround in my mind. I couuld use a script wich creates patch 
-files for each existing stash and commit them into the repo. Thats all. 
-To keep the repo "clean" the path files could be archived into a hidden 
-(dotted filed) tar file. Or the tar file could be stored inside the 
-".git" folder if there is a way.
+TBH, I have always found the "util" field of string_list a bit ugly (and
+really most of string_list). I think most cases would be better off with
+a different data structure (a set or a hash table), but we didn't have
+convenient versions of those for a long time. I don't mind seeing
+conversions of string_list to other data structures. But that seems to
+be working against using string_list's string struct in more places.
 
-I am interested in your thoughts about this.
+-Peff
