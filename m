@@ -2,85 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1F1AC432BE
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 17:19:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AADFAC432BE
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 17:31:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A16CE6108B
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 17:19:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91876603E9
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 17:31:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344965AbhIARUE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Sep 2021 13:20:04 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54117 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236315AbhIARUD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Sep 2021 13:20:03 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 274DBCE97F;
-        Wed,  1 Sep 2021 13:19:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VhUkx7UdUDH9iKYWY233HHvp4xfCHTYRl8NuAk
-        BGXI8=; b=F8CPdJaK+EG6shgCXkI0RTyTgvk7xdBPMjzCFtNTzHogw+ce7H8sCJ
-        AMV0nKbrEEue2FTPg5dCYcYornigFxTvBB9dhGkFM7n4NDr2DZEbvkDBJKREiboO
-        YZ95PWO2rffLWpuE1Kg7BpIT+CXCm81+RzS6YMyG3MoYoxu4mYjf4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 09CC0CE97E;
-        Wed,  1 Sep 2021 13:19:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.116.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 29B7BCE97B;
-        Wed,  1 Sep 2021 13:19:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>
-Subject: Re: [PATCH 1/7] merge-ort: mark a few more conflict messages as
- omittable
-References: <pull.1080.git.git.1630376800.gitgitgadget@gmail.com>
-        <df6e2774f1a5560a598dd8b46131bc6b0a261d4a.1630376800.git.gitgitgadget@gmail.com>
-        <xmqqzgsxs4rk.fsf@gitster.g>
-        <CABPp-BEZjMLGFxSsTfRnAffom9CKRU4if4PsdTh+85L6D=FseA@mail.gmail.com>
-Date:   Wed, 01 Sep 2021 10:19:04 -0700
-In-Reply-To: <CABPp-BEZjMLGFxSsTfRnAffom9CKRU4if4PsdTh+85L6D=FseA@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 31 Aug 2021 17:03:07 -0700")
-Message-ID: <xmqqk0k0qkmv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1344927AbhIARcX convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 1 Sep 2021 13:32:23 -0400
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:33545 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344985AbhIARcV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Sep 2021 13:32:21 -0400
+Received: by mail-ed1-f49.google.com with SMTP id s25so94623edw.0
+        for <git@vger.kernel.org>; Wed, 01 Sep 2021 10:31:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=9vCxH3W4HbJSTqF8Ahr2Qpp0YM2WcFWt/wfQMWuBPEs=;
+        b=CA7yBbIgizN4K4x1CyWmBtkb/UjjViDvlNChXLWQ502u6p3ZDmOxQqqpfNYHf4SIUl
+         UtgBe8kBrkwXWf5YO1PDrpugZ4YNDKKQIvsJKEwaiU6PF+FvrSdUz+1J73q9hvVKAnLZ
+         VKUG96fnHarMKinYwep+CWEjtqrmAhU2We2l80lUR4gjZk9RMO++c6cakTwYWwurkG+W
+         wP7CQDqWKheiGZkkj7bE+7KinQxpeTiqMuEGOKNZH7BC8Hkpd5dPgJ2LCaOKjSULTGII
+         8dLPppD2h3CqC/xQnjTjTMoBFtUXXYzpESOj+znzgqtw1RuLvnJ/cze5jtdKhRAYhu3y
+         MatA==
+X-Gm-Message-State: AOAM533uvArSWdNFyGC6eNUVw4Gc1heAOWYwr68tAfWmg0jI0aowiX9k
+        g1+5USSPX001FXugWSRIbOOm0K23Q9ilLFUa7hgs5iKw
+X-Google-Smtp-Source: ABdhPJwADeEaO/b9b8rwT9GQkEoxi1W/y2L6opjpOjP+FWwig2luUZE8ePOo+ElGnjjTT+obCx4Hi2NkMFKx3JeD8Dw=
+X-Received: by 2002:a05:6402:152:: with SMTP id s18mr697776edu.221.1630517483781;
+ Wed, 01 Sep 2021 10:31:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B57A3DB0-0B48-11EC-96B8-ECFD1DBA3BAF-77302942!pb-smtp2.pobox.com
+References: <YS9RieTeJSFmd6M7@coredump.intra.peff.net> <patch-1.1-d24f1df5d49-20210901T112248Z-avarab@gmail.com>
+In-Reply-To: <patch-1.1-d24f1df5d49-20210901T112248Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 1 Sep 2021 13:31:12 -0400
+Message-ID: <CAPig+cRHwK=m0jpuTgsTG+cNVpGASHJP6v3kEQrJFS6Qt=biwQ@mail.gmail.com>
+Subject: Re: [PATCH] gettext: remove optional non-standard parens in N_() definition
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Carlo Arenas <carenas@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        "Kyle J. McKay" <mackyle@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Wed, Sep 1, 2021 at 7:26 AM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+> [...]
+> Then in e62cd35a3e8 (i18n: log: mark parseopt strings for translation,
+> 2012-08-20) when "builtin_log_usage" was marked for translation the
+> string concatenation the string concatenation for passing to usage()
+> added in 1c370ea4e51 (Show usage string for 'git log -h', 'git show
+> -h' and 'git diff -h', 2009-08-06) was faithfully preserved:
 
-> Creating this file means you see something like this in the
-> remerge-diff (note there are diffs for two files, with the synthetic
-> file appearing just before the file it has messages about):
->
-> diff --git a/dir/my.fil e.conflict_msg b/dir/my.fil e.conflict_msg
-> deleted file mode 100644
-> index 2bd215a32f06..000000000000
-> --- a/dir/my.fil e.conflict_msg
-> +++ /dev/null
-> @@ -1,2 +0,0 @@
-> -== Conflict notices for my.file ==
-> -CONFLICT (modify/delete): dir/my.file deleted in HASH1 (SHORT
-> SUMMARY1) and modified in HASH2 (SHORT SUMMARY 2).  Version HASH2
-> (SHORT SUMMARY2) of  dir/my.file left in tree.
-
-I do not know if my reaction should be "Cute" or "Yuck" ;-)
-
-Hopefully nobody uses .conflict_msg as a suffix for their files.
+"...the string concatenation the string concatenation..."
