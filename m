@@ -2,104 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C81ABC432BE
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 04:59:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39C4EC432BE
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 04:59:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A539C61058
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 04:59:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1AED861058
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 04:59:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241905AbhIAFAV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Sep 2021 01:00:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36040 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230483AbhIAFAV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Sep 2021 01:00:21 -0400
-Received: (qmail 15301 invoked by uid 109); 1 Sep 2021 04:59:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Sep 2021 04:59:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3363 invoked by uid 111); 1 Sep 2021 04:59:26 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Sep 2021 00:59:26 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 1 Sep 2021 00:59:23 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/2] pack-write,repack: prevent opening packs too early
-Message-ID: <YS8IqxNbxy0YrXSe@coredump.intra.peff.net>
-References: <cover.1630461918.git.me@ttaylorr.com>
- <YS75P7r33NIBmFh2@coredump.intra.peff.net>
- <YS8BwgfurPzhT4xh@nand.local>
+        id S241906AbhIAFAf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Sep 2021 01:00:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37664 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230483AbhIAFAe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Sep 2021 01:00:34 -0400
+Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8737C061575
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 21:59:38 -0700 (PDT)
+Received: by mail-il1-x12c.google.com with SMTP id r6so2038836ilt.13
+        for <git@vger.kernel.org>; Tue, 31 Aug 2021 21:59:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ViACqXk7SMj7VliHIhIXmpn/y1NYXbdz4JuLknmaWZA=;
+        b=kYTDG0EJnHONCJhJZGpSbDKXirAEdcGk+5F0erDL2sB5QATc8/jjD+P/9BEFLzivP3
+         Gl4XFQwron+8lxoiK1Vh68NHTM/oJSRnCqEvlHGrDQibp4j8Rzyj6pxpRF6MqJjypUkW
+         W8ggci1r1m/aMfCsEZnET9ROGJtdYvyD5mUorbhCKQAu/ts4+mZKeqCGHsP2ip1Fz0ph
+         tXJwRd4X+7U2DhHx7TDQTJx0io5BImpI7lO4S6AbgpDoHslK1q8fgwaUbKqVM72aXRP2
+         BXo15LMm0sm97p2Gmx/ATWSNkmMzJkiuJqwv++RQZiK0ay71PyunLqLoFGJHFQgcfmzw
+         YqYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ViACqXk7SMj7VliHIhIXmpn/y1NYXbdz4JuLknmaWZA=;
+        b=KETdpLp8LJPHhHwN5ivzXyNryf76qea4AuANjtYzylEGJaU4G3qvFxc2mUXWijQxZ/
+         QQzcj2py6zYXwdCyZB/i1FOckx3s134kyNUgvl08eeqcBrKxTb5OEzqxcTwMpKQ7II7V
+         /wPwDwhZnGgjTiLJLvyb7QciqBOiqRx4LsISyPWDVqQ1pTygUhdS3KvnGlIRxehpa/FJ
+         8XwF5FuF9DVZbwNz3ZQR+JAfyCwgC9e3gd7i0t8W1byMheVnef6vf0vKyEHO369ZCjRy
+         g0BA0br1kOjgySz9m1VFthdSI9LAtVmZQLu1ge6HmyiO7rDK6d4dQ91hfuLt31/oHKeI
+         LxLA==
+X-Gm-Message-State: AOAM530/7COhJ279jjZySNGECxDCW4mFWsJWSUws4ieFlJheHCPkpREH
+        xqgidDeg0hr15mwqW2E6sffIFbPu7uYSP8G1
+X-Google-Smtp-Source: ABdhPJwdd0S5kagXzuvnGt8ys858K/gxcuNEskklP+yuQHJSvuGGPFPVoC/QcVhWj6hdiBg17F/SLQ==
+X-Received: by 2002:a05:6e02:1ca6:: with SMTP id x6mr22097279ill.86.1630472378241;
+        Tue, 31 Aug 2021 21:59:38 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id u20sm11280431ilj.17.2021.08.31.21.59.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Aug 2021 21:59:37 -0700 (PDT)
+Date:   Wed, 1 Sep 2021 00:59:37 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] rebase, cherry-pick, revert: only run from toplevel
+Message-ID: <YS8IucBBDX61QdFB@nand.local>
+References: <pull.1083.git.git.1630379030665.gitgitgadget@gmail.com>
+ <YS3Tv7UfNkF+adry@coredump.intra.peff.net>
+ <CABPp-BFmU+RaAjq4_0-PSfRgH1Jc63nN0fMuDWk2+iDbdz7CCA@mail.gmail.com>
+ <YS7rl8ynKD0fAerG@nand.local>
+ <CABPp-BGkQTBBR_D-3EJPY-ONVYY4jjbEE4zA40n_oiz2DCrHgA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YS8BwgfurPzhT4xh@nand.local>
+In-Reply-To: <CABPp-BGkQTBBR_D-3EJPY-ONVYY4jjbEE4zA40n_oiz2DCrHgA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 01, 2021 at 12:29:54AM -0400, Taylor Blau wrote:
+On Tue, Aug 31, 2021 at 09:43:15PM -0700, Elijah Newren wrote:
+> On Tue, Aug 31, 2021 at 7:55 PM Taylor Blau <me@ttaylorr.com> wrote:
+> >
+> > On Tue, Aug 31, 2021 at 01:14:55PM -0700, Elijah Newren wrote:
+> > > > Now I have spent zero time looking into actually coding this, so it may
+> > > > turn out to be much trickier than I am suggesting. But this seems like a
+> > > > much more fruitful direction, where we can protect users in cases where
+> > > > they benefit (and give them sensible and actionable error messages),
+> > > > without bothering people in the majority of cases where their cwd
+> > > > doesn't go away.
+> > >
+> > > Ooh, this sounds intriguing to me...but what if we changed that rule
+> > > slightly and just decided to never make the cwd go away?  Currently,
+> > > the checkout code removes directories if they have no tracked or
+> > > untracked or ignored files left, i.e. if they're empty.  What if we
+> > > decide to only have remove_scheduled_dirs() remove directories that
+> > > are empty AND they are not the current working directory?
+> >
+> > Hmm. My first thought after reading this is that it would cause
+> > surprising behavior for anybody who had 'git add --all' in their 'rebase
+> > -x' script. But would it?
+> >
+> > I.e., imagine somebody doing an in-place sed in a rebase and then `git
+> > add --all`-ing the result at each point in history. If the directory
+> > they were in ever went away, then the *next* revision would add that
+> > directory right back.
+> >
+> > That behavior seems somewhat surprising to me, or at least I could
+> > imagine it being surprising to users.
+>
+> I'm not following.  `git add --all` doesn't add empty directories, so
+> I don't see how my proposed change would cause any problems in such a
+> case; nothing would be added back.
 
-> > We _might_ also want to re-order the calls to write_idx_file() and
-> > write_rev_file() in its caller, given that simultaneous readers are
-> > happy to read our tmp_pack_* files. I guess the same might apply to the
-> > actual file write order pack-objects, too? I'm not sure if that's even
-> > possible, though; do we rely on side effects of generating the .idx when
-> > generating the other meta files?
-> 
-> These are a little trickier. write_idx_file() is also responsible for
-> rearranging the objects array into index (name) order on the way out,
-> which write_rev_file() depends on in order to build up its mapping.
-> 
-> So you could sort the array at the call-site before calling either
-> function, but it gets awkward since there are a handful of other callers
-> of write_idx_file() besides the two we're discussing.
+Ahh, it was I who wasn't following. You were proposing to leave the
+directories in place but empty. Agreed that there wouldn't be any
+problems with that.
 
-Yeah, I had in the back of my mind that there was some dependency there.
-I definitely prefer the "readers should not pick up tmp-packs" approach
-if that is workable.
+> > Another thought is what should happen when the current directory goes
+> > away and then comes back as a file? We wouldn't be able to checkout that
+> > file, I don't think, so it might be a dead end.
+>
+> I'm not following this either.  Peff's original suggestion was to
+> error out only when we knew it could cause problems, in particular
+> when the working directory would be removed.  Here I've shifted the
+> way the problem is viewed by just not removing the working directory,
+> but the end result is the same -- it errors out when the removal was
+> needed.  Given that erroring out is exactly what we wanted for a case
+> like this, why does that make it a dead end?
 
-> > I think it might be more sensible if the reading side was taught to
-> > ignore ".tmp-*" and "tmp_*" (and possibly even ".*", though it's
-> > possible somebody is relying on that).
-> 
-> ...this seems like the much-better way to go. Git shouldn't have to
-> worry about what order it writes the temporary files in, only what order
-> those temporary files are made non-temporary.
-> 
-> But I need to do some more investigation to make sure there aren't any
-> other implications. So I'm happy to wait on that, or send a new version
-> of this series with a patch to fix the race in
-> builtin/index-pack.c:final(), too.
+The way you shifted the problem makes it possible for us to discover
+that only right before we're about to fail, right? In other words, if
+you're doing a rebase then you're potentially leaving a lot of wasted
+work on the table if you realize halfway through the operation that you
+couldn't complete it.
 
-I think if we kept it restricted to ".tmp-*" and "tmp_*", it should be
-pretty safe. The absolute worst case is that somebody trying to recover
-a corrupted repository might have to rename the files manually, I would
-think.
+Even though I think that's *not* what you want for rebase, it ironically
+*is* what you might want for bisect, since the path we'll take isn't
+known ahead of time. So even if there are some paths that would result
+in a directory -> file conversion in the cwd, we don't need to fail the
+operation ahead of time if the bisection doesn't actually take that
+path.
 
-Blocking ".*" is a harder sell. If we were starting from scratch, I'd
-probably do that, but now we don't know what weird things people might
-be doing. So unless there's a huge gain, it's hard to justify. (If we
-were starting from scratch, I'd actually probably insist they be named
-pack-$checksum.pack, etc, but it's much too late for that now).
+On the other hand, it does still leave a lot of work on the table if the
+bisection does eventually want to change the current working directory
+into a file, depending on where that change happens.
 
-So anyway. I think we definitely want the index-pack.c change. We
-_could_ stop there and change the read side as a separate series, but I
-think that until we do, the ordering changes on the write side aren't
-really doing that much. They're shrinking the race a little, I guess,
-but it's still very much there.
+Maybe those cases are pretty niche in practice. I have to imagine that
+they are. If my guess is right, then I think your approach makes sense.
 
-> (Unrelated to your suggestions above) another consideration for "stuff
-> to do later" would be to flip the default of pack.writeReverseIndex. I
-> had intentions to do that in the 2.32 cycle, but I forgot about it.
-
-Oh, yeah. We should definitely do that (in its own series). The .rev
-files have been a huge performance win, and I don't think there's any
-reason we wouldn't want to always use them.
-
--Peff
+Thanks,
+Taylor
