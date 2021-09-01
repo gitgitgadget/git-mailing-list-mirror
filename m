@@ -2,116 +2,178 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14928C432BE
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 09:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBEA8C432BE
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 09:56:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E7ADD60243
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 09:23:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB4D260462
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 09:56:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243472AbhIAJYe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Sep 2021 05:24:34 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:8357 "EHLO smtp.hosts.co.uk"
+        id S231258AbhIAJ5g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Sep 2021 05:57:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36192 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243420AbhIAJYd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Sep 2021 05:24:33 -0400
-Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1mLMT1-000Agj-4t
-        for git@vger.kernel.org; Wed, 01 Sep 2021 10:23:35 +0100
-Subject: Re: Concept question about push/pull stashes
-To:     git@vger.kernel.org
-References: <8d2f05e6f4ff9855460402e8cdafd7e7@posteo.de>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <204f8fdb-2e98-f1d2-b01b-d1e0fb0cf8b2@iee.email>
-Date:   Wed, 1 Sep 2021 10:23:35 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        id S229662AbhIAJ53 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Sep 2021 05:57:29 -0400
+Received: (qmail 16397 invoked by uid 109); 1 Sep 2021 09:56:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Sep 2021 09:56:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5447 invoked by uid 111); 1 Sep 2021 09:56:34 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Sep 2021 05:56:34 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 1 Sep 2021 05:56:31 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Andrzej Hunt <andrzej@ahunt.org>,
+        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 0/8] add a test mode for SANITIZE=leak, run it in CI
+Message-ID: <YS9OT/pn5rRK9cGB@coredump.intra.peff.net>
+References: <cover-0.4-0000000000-20210714T172251Z-avarab@gmail.com>
+ <cover-v3-0.8-00000000000-20210831T132546Z-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <8d2f05e6f4ff9855460402e8cdafd7e7@posteo.de>
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+In-Reply-To: <cover-v3-0.8-00000000000-20210831T132546Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a bit of 30,000ft thinko.
+On Tue, Aug 31, 2021 at 03:35:34PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-On 01/09/2021 08:44, c.buhtz@posteo.jp wrote:
-> Hello,
-> my question has to goals. I want to understand the design decisions
-> behind a (missing) feature and and wan't to explore the needs of other
-> users before I start to implement something.
->
-> There is no usual way to exchange stashes with other repos/users.
-> Stashes are code snippets that are unfinished and not clean enough to
-> commit them anywhere not even in another branch.
+>  * In v2 compiling with SANITIZE=leak would change things so only
+>    known-good passing tests were run by default, everything else would
+>    pass as a dummy. Now the default running of tests is unchanged, but
+>    if we run with GIT_TEST_PASSING_SANITIZE_LEAK=true only those tests
+>    are run which set and export TEST_PASSES_SANITIZE_LEAK=true.
+> 
+>  * The facility for declaring known-good tests in test-lib.sh based on
+>    wildcards is gone, instead individual tests need to declare if
+>    they're OK under SANITIZE=leak.[...]
 
-I suspect that this "not even in another branch" is where the confusion
-may arise. I've always understood git branches to be lightweight and
-ephemeral. We usually fail to take that mental model to its rightful
-conclusion.
+Hmm. This still seems more complicated than we need. If we just want a
+flag in each script, then test-lib.sh can use that flag to tweak
+LSAN_OPTIONS. See the patch below.
 
-While some branches are rock solid release branches, that does not
-preclude their use for whimsical, unfinished snippets of code. There can
-be reticence to create local wip branches (a trap I often fall into)
-when we should be far more free with our branches - they take up no space!
+That has two drawbacks:
 
-Ultimately stashes are branches, their _extra_ capability is that they
-can handle un-staged changes and other _local_ changes to allow for
-interruptions.
+  - it doesn't have any way to switch the flag per-test. But IMHO it is
+    a mistake to go in that direction. This is all temporary scaffolding
+    while we have leaks, and the script-level of granularity is fine.
 
->
-> Why? What is the concept behind this? I am sure this was well thought.
-> I just try to understand.
->
-> A feature like this is often asked by users when you asked the search
-> engine of your trust.
->
-> One workaround is to simply commit the stashed code, push/pull it,
-> checkoutit into the other repo and delete the last commit.
+  - it runs the tests not marked as LSAN-OK, just without leak checking,
+    which is redundant in CI where we're already running them. But we
+    could still be collecting leak stats (and just not failing the
+    tests). See the patch below.
 
-If the commit was on a new [wip] branch then a later branch deletion and
-`gc` will clear it.
+    If we do care about not running them, then I think it makes more
+    sense to extend the run/skip mechanisms and build on that.
 
-Isn't this an XYproblem for how to exchange snippets? And how to
-decide/indicate what should be in the snippet?
+    (I also think I prefer the central list of "mark these scripts as OK
+    for leak-checking", rather than annotating individuals. Because
+    again, this is temporary, and it's nice to keep it in a sandbox that
+    only people working on leak-checking would look at or touch).
 
->
-> The other workaround is to create a patch-file from a stash. But then
-> the question is how to exchange this file?
+I realize this is kind-of bikeshedding, and I'm not vehemently opposed
+to what you have here. It just seems like fewer moving parts would be
+less likely to confuse folks who want to poke at it.
 
-`send-email` ?
->
-> Why not use the git infrastructure itself?
->
-> I have workaround in my mind. I couuld use a script wich creates patch
-> files for each existing stash and commit them into the repo. Thats
-> all. To keep the repo "clean" the path files could be archived into a
-> hidden (dotted filed) tar file. Or the tar file could be stored inside
-> the ".git" folder if there is a way.
+>    This is done via "export
+>    TEST_PASSES_SANITIZE_LEAK=true", there's a handy import of
+>    "./test-pragma-SANITIZE=leak-ok.sh" before sourcing "./test-lib.sh"
+>    itself to set this.
 
-The stash does manage to combine the selection of the code change files
-and creation of a branch [aka stash]. Maybe `commit` needs a --wip
-option that will create the branch while adding the selected files.  The
-'transmission' method would also need resolving as there are too many
-ways folk interact these days - we already have patches, tar files,
-remote push/fetch, then there will be web browsing methods..
+I found the extra level of indirection added by this pragma confusing.
+We just need to set a variable, which is also a one-liner, and one that
+is more obvious about what it's doing. In your code you also export it,
+but that's not necessary for something that test-lib.sh is going to look
+at. Or if it's really necessary at some point, then test-lib.sh can do
+the export itself.
 
->
-> I am interested in your thoughts about this.
+> Ævar Arnfjörð Bjarmason (8):
+>   Makefile: add SANITIZE=leak flag to GIT-BUILD-OPTIONS
+>   CI: refactor "if" to "case" statement
+>   tests: add a test mode for SANITIZE=leak, run it in CI
+>   tests: annotate t000*.sh with TEST_PASSES_SANITIZE_LEAK=true
+>   tests: annotate t001*.sh with TEST_PASSES_SANITIZE_LEAK=true
+>   tests: annotate t002*.sh with TEST_PASSES_SANITIZE_LEAK=true
+>   tests: annotate select t0*.sh with TEST_PASSES_SANITIZE_LEAK=true
+>   tests: annotate select t*.sh with TEST_PASSES_SANITIZE_LEAK=true
 
-There is always (after checking the manual) `git stash branch
-<branchname> [<stash>]`  - not used it myself, so it may not do what I
-think I read.. Sounds like it needs combining with an initial `stash
-push` to allow the new branch (containing the stash snippet) to be
-exchanged using the regular methods for on-branch code.
+Sort of a meta-question, but what's the plan for folks who add a new
+test to say t0000, and it reveals a leak in code they didn't touch?
 
--- 
-Philip
+They'll get a CI failure (as will Junio if he picks up the patch), so
+somebody is going to have to deal with it. Do they fix it? Do they unset
+the "this script is OK" flag? Do they mark the individual test as
+non-lsan-ok?
+
+I do like the idea of finding real regressions. But while the state of
+leak-checking is still so immature, I'm worried about this adding extra
+friction for developers. Especially if they get some spooky action at a
+distance caused by a leak in far-away code.
+
+Anyway, here's LSAN_OPTIONS thing I was thinking of.
+
+---
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index df544bb321..b1da18955d 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='git init'
+ 
++TEST_LSAN_OK=1
+ . ./test-lib.sh
+ 
+ check_config () {
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index abcfbed6d6..62627afeaf 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -44,9 +44,30 @@ GIT_BUILD_DIR="$TEST_DIRECTORY"/..
+ : ${ASAN_OPTIONS=detect_leaks=0:abort_on_error=1}
+ export ASAN_OPTIONS
+ 
+-# If LSAN is in effect we _do_ want leak checking, but we still
+-# want to abort so that we notice the problems.
+-: ${LSAN_OPTIONS=abort_on_error=1}
++if test -n "$LSAN_OPTIONS"
++then
++	# Leave user-provided options alone.
++	:
++elif test -n "$TEST_LSAN_OK"
++then
++	# The test script has declared itself as LSAN-clean; turn on full leak
++	# checking.
++	LSAN_OPTIONS=abort_on_error=1
++else
++	# The test script has possible LSAN failures. Just disable
++	# leak-checking entirely. Another option would be to log the failures
++	# with:
++	#
++	#   LSAN_OPTIONS=exitcode=0:log_path=$TEST_DIRECTORY/lsan/out
++	#
++	# The results are rather confusing, though, as the logs are
++	# per-process; you have no idea which one came from which test script.
++	# Ideally we'd send them to descriptor 4 along with the rest of the
++	# script log, but there's no LSAN_OPTION for that (recent versions of
++	# libsanitizer do have a public function to do so, so we could hook it
++	# ourselves via common-main).
++	LSAN_OPTIONS=detect_leaks=0
++fi
+ export LSAN_OPTIONS
+ 
+ if test ! -f "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
