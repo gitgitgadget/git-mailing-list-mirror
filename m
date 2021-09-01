@@ -2,107 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05A35C4320A
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 02:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B936C432BE
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 03:53:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA3C260F12
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 02:55:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 116A960295
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 03:53:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241594AbhIAC4R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Aug 2021 22:56:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38242 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231588AbhIAC4Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Aug 2021 22:56:16 -0400
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBD52C061575
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 19:55:20 -0700 (PDT)
-Received: by mail-il1-x130.google.com with SMTP id x5so1894705ill.3
-        for <git@vger.kernel.org>; Tue, 31 Aug 2021 19:55:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=WpHtluw7PP0JPCZSHCoUPKGKe9ankQD47mT0JXq7HJY=;
-        b=EkQxTGJLtvqmzqzUIjw+0PoaHr04DTds+WDQpSjYhUiOfyXAmB7tuh2D8zTajgzzhg
-         qNXeKROyf0bCgOzwijEVt0TdpwwT9dowEYqF6o7aIYDJv7wPtl2jqKSAnCuBJELzCw8K
-         /IuILevXVVOiHudjpNvF4Qp9jAgXwlnreylSWf3zIeKA0Xd/pijziKWb6zGmRMLe4sNv
-         rnzdOt7qcSfA+86SkcjPG0wacHRjmJp+B5qMTb6gWaZP1hFtuEFH3Sl0ceBRKQC+i55w
-         o+zwOKq7ccFHVqXUWksruV1QU1/FGofZPKib1Gcrc/42w7mcB5+NvP6GxKujnLzt052Y
-         lGvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=WpHtluw7PP0JPCZSHCoUPKGKe9ankQD47mT0JXq7HJY=;
-        b=sAnlDEZuMlLSIMpY5dTgP72Tr2o1cA/nijw+bOLKLAjyfakdFealsP/+EXnibU3nTt
-         CLfdnqZCmfy1Zo0Dk8frluZ9O0Kz3fvTkOy/NjbFcFCmuXD7aYFxGqJafYoBVEMjsVo1
-         5y1K4RhsQWRTdDQ5K+HSJvTt3owkKNUI2BEz+ZWsJnQogGlm1wlbgrSaE21moDiFhhDJ
-         5r0qjkfFNhCaunrAdj5K9XwFTnuupIcnb/O5I06KcKzLq7hG3qry1pkf0+VIx8Ihnzwh
-         cIEF2djOxGfpoc9ZX43PF5wPc/+GseA+y3YMTs9D25XcezG24nby4Nokd05ggP6+d9II
-         2i0w==
-X-Gm-Message-State: AOAM530uWXn8FXt5djHZA8MK6WuSpjo/x2UEmVjSEGg8lBDbuk+z1VRk
-        ZTMxulKLfr6sPS7GxJmC7meULn22F6WTNaVH
-X-Google-Smtp-Source: ABdhPJzWY72o0Nvg4N5GzdYLlhevAqpIUNI4h8V5vmeK4EhpDZdYx6gxy8x986n1JKQILuBXq34gHg==
-X-Received: by 2002:a92:6a06:: with SMTP id f6mr21584735ilc.16.1630464920318;
-        Tue, 31 Aug 2021 19:55:20 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id p7sm11144654iln.70.2021.08.31.19.55.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Aug 2021 19:55:20 -0700 (PDT)
-Date:   Tue, 31 Aug 2021 22:55:19 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] rebase, cherry-pick, revert: only run from toplevel
-Message-ID: <YS7rl8ynKD0fAerG@nand.local>
-References: <pull.1083.git.git.1630379030665.gitgitgadget@gmail.com>
- <YS3Tv7UfNkF+adry@coredump.intra.peff.net>
- <CABPp-BFmU+RaAjq4_0-PSfRgH1Jc63nN0fMuDWk2+iDbdz7CCA@mail.gmail.com>
+        id S241838AbhIADyg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Aug 2021 23:54:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36020 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232298AbhIADyc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Aug 2021 23:54:32 -0400
+Received: (qmail 15199 invoked by uid 109); 1 Sep 2021 03:53:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Sep 2021 03:53:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2957 invoked by uid 111); 1 Sep 2021 03:53:38 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 31 Aug 2021 23:53:38 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 31 Aug 2021 23:53:35 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/2] pack-write,repack: prevent opening packs too early
+Message-ID: <YS75P7r33NIBmFh2@coredump.intra.peff.net>
+References: <cover.1630461918.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABPp-BFmU+RaAjq4_0-PSfRgH1Jc63nN0fMuDWk2+iDbdz7CCA@mail.gmail.com>
+In-Reply-To: <cover.1630461918.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 31, 2021 at 01:14:55PM -0700, Elijah Newren wrote:
-> > Now I have spent zero time looking into actually coding this, so it may
-> > turn out to be much trickier than I am suggesting. But this seems like a
-> > much more fruitful direction, where we can protect users in cases where
-> > they benefit (and give them sensible and actionable error messages),
-> > without bothering people in the majority of cases where their cwd
-> > doesn't go away.
->
-> Ooh, this sounds intriguing to me...but what if we changed that rule
-> slightly and just decided to never make the cwd go away?  Currently,
-> the checkout code removes directories if they have no tracked or
-> untracked or ignored files left, i.e. if they're empty.  What if we
-> decide to only have remove_scheduled_dirs() remove directories that
-> are empty AND they are not the current working directory?
+On Tue, Aug 31, 2021 at 10:05:46PM -0400, Taylor Blau wrote:
 
-Hmm. My first thought after reading this is that it would cause
-surprising behavior for anybody who had 'git add --all' in their 'rebase
--x' script. But would it?
+> This pair of patches fixes a race where the .idx is moved into place
+> before the .rev file, allowing the pack to be in a state where it
+> appears a .rev file wasn't generated.
+> 
+> This can cause Git to inadvertently take the slow "generate the
+> reverse index on-the-fly", which does not impact correctness, but is
+> unnecessarily slow when compared to reading the .rev file.
+> 
+> The race is fixed by moving the .idx into place only after all other
+> pack-related files have already been written. The first patch fixes
+> the direct `pack-objects` case, and the second patch fixes `repack`
+> (which also renames pack files around).
 
-I.e., imagine somebody doing an in-place sed in a rebase and then `git
-add --all`-ing the result at each point in history. If the directory
-they were in ever went away, then the *next* revision would add that
-directory right back.
+These both look good to me, but I think we're missing one more spot.
 
-That behavior seems somewhat surprising to me, or at least I could
-imagine it being surprising to users.
+The first patch covers git-pack-objects directly, like:
 
-Another thought is what should happen when the current directory goes
-away and then comes back as a file? We wouldn't be able to checkout that
-file, I don't think, so it might be a dead end.
+  git pack-objects .git/objects/pack/pack
 
-Thanks,
-Taylor
+In practice, though, we never do that. On-disk repacks happen via
+git-repack, which always writes to temporary files. So I thought the
+case in git-pack-objects wouldn't matter, but it does look like
+prepare_packed_git() will actually read .tmp-$$-pack-1234abcd files, and
+so might load our temporary pack. Unexpected, but we are covered by your
+first patch. And then the second patch covers us as we move those
+temporary files into place.
+
+So far so good. But the other obvious way to get a pack idx is via
+index-pack (especially "--stdin").
+
+It looks like we'd want the same re-ordering to happen in
+builtin/index-pack.c:final(), which is where we rename the temporary
+files into place.
+
+We _might_ also want to re-order the calls to write_idx_file() and
+write_rev_file() in its caller, given that simultaneous readers are
+happy to read our tmp_pack_* files. I guess the same might apply to the
+actual file write order pack-objects, too? I'm not sure if that's even
+possible, though; do we rely on side effects of generating the .idx when
+generating the other meta files?
+
+I think it might be more sensible if the reading side was taught to
+ignore ".tmp-*" and "tmp_*" (and possibly even ".*", though it's
+possible somebody is relying on that).
+
+-Peff
