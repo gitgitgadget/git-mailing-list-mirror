@@ -2,191 +2,262 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-24.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 258D0C43214
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 13:06:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26566C4320E
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 13:09:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0087261008
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 13:06:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0AECD60231
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 13:09:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346616AbhIANHi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Sep 2021 09:07:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37806 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346577AbhIANHc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Sep 2021 09:07:32 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05124C061760
-        for <git@vger.kernel.org>; Wed,  1 Sep 2021 05:55:02 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id h9so6443188ejs.4
-        for <git@vger.kernel.org>; Wed, 01 Sep 2021 05:55:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gitlab.com; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cbI6HwR/AEMc08nEBugpuAqmGth57yg+igLTNqLWK4E=;
-        b=OItRgth0cOFoe1FwiyhmT1mdFu1wm1xg/wsEDn7WyUE34l7biWAShTNbJYZ/IGaVHb
-         Y6x2oZHnDVz+Lej3lYyclIsYjDRkSxxt3pHIVdvMC4L9/P+YMTWo5BwvNvRuVCuvAAyp
-         ikLj0X/kAEz7BpB+ImEwLhNkPXp59sRz4UkqU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cbI6HwR/AEMc08nEBugpuAqmGth57yg+igLTNqLWK4E=;
-        b=MtTTdM48VIayrtS38gfTrGzaJwI0xmKJHEITb7ZYPgH+FXF/B1uMdsc7H95lmGNPMl
-         fz42FutGbo5Xo7YDUB/temIXzGQaJcwUneXG8M46YNzWtApTSjGgsmDVO7399DCsELGb
-         Hbd3G7oJJhgVcarKFBmJN1g/l1iKcBD4Vd4na3Ibvk7W459O1AD5uvZ6AC+4Pbrv+zXX
-         h1+OVSz08jAc63Z7j8PfaxTBBxsUWlmxyLcgmzysrB+hK6jc3zfULwOiUzfh/1ilhNqI
-         WzzGx5a2W03+uyCi7ntxjfV1qpElNfTOAZCsJcxGWuYcBpg25G+LlJMZcKCJZ/KLpKiD
-         rQEA==
-X-Gm-Message-State: AOAM532CBxiRMrGRP4FTwrZigqM2TVnz9Xw58b9WNCPZgTH30sZEYNZ4
-        BO0Up3BJfPJYbZK00rH0OmrqNyN+cS+Arg==
-X-Google-Smtp-Source: ABdhPJxPl2eCLteuVTt+rukp5n8DsfSN7ck7vrx8F0uk23LvU8YVPt3VhJdg5IOvFJ6hD0e8KWngkQ==
-X-Received: by 2002:a17:906:3699:: with SMTP id a25mr35929878ejc.452.1630500900603;
-        Wed, 01 Sep 2021 05:55:00 -0700 (PDT)
-Received: from localhost.localdomain (e93008.upc-e.chello.nl. [213.93.93.8])
-        by smtp.gmail.com with ESMTPSA id r8sm723207eds.39.2021.09.01.05.54.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Sep 2021 05:55:00 -0700 (PDT)
-From:   Jacob Vosmaer <jacob@gitlab.com>
-To:     gitster@pobox.com, peff@peff.net, me@ttaylorr.com,
-        git@vger.kernel.org, ps@pks.im
-Cc:     Jacob Vosmaer <jacob@gitlab.com>
-Subject: [PATCH v4 1/2] pkt-line: add stdio packet write functions
-Date:   Wed,  1 Sep 2021 14:54:41 +0200
-Message-Id: <20210901125442.34446-2-jacob@gitlab.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210901125442.34446-1-jacob@gitlab.com>
-References: <xmqqy28htrc6.fsf@gitster.g>
- <20210901125442.34446-1-jacob@gitlab.com>
+        id S1344262AbhIANKj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Sep 2021 09:10:39 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:41391 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S244182AbhIANKi (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 1 Sep 2021 09:10:38 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id E12F35C0200;
+        Wed,  1 Sep 2021 09:09:40 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Wed, 01 Sep 2021 09:09:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm1; bh=/1RpOEwJMrWz1nb/3Eg9Z84/a4I
+        iIz+XEbkRA4d+bMg=; b=czcMyoa9L28fciqBG8uYLwNGfbeCQd7PkSAe2RApgJM
+        fIdJE4XgdATv0fmx0tOKMyPdFakZc+j1PRCCoMYimDzNMvCt72OrySN8qBXhIAGf
+        dYEg8eScnWQ7sm50eJYuXvNI8Mr8xHN/y48jj0RG4OlGAiPV4ipadrn4WWruNGka
+        XPMwv2veipWps6RM2zVEbesxxg9LZmTPIrkimJFu1ddMkqQUEYV6sD93Bj+9Ga93
+        1KwGYFP9KxuwmXj2vEu8YZ08JObeYKY6z6ecQJm1fV6i11RXnU0SyVJiOr/q2xZw
+        1ehwrzsSiQogw1qNokvIKuRQtjqpVq1qHdKTSRCqEAw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=/1RpOE
+        wJMrWz1nb/3Eg9Z84/a4IiIz+XEbkRA4d+bMg=; b=Nx0rp0eF3foSyNXSMM/9k0
+        gbgp6utxmFWB8hnBrA72JtTjMRQRZbl6QZU+K32WfnY6qouyecums8Ub+C/RHY/4
+        59HeAuc5Wh1At590bOnidm6+6qJaSs7/0Cj96djWWPJ5DX0SACGC32OD9W1Bw+e6
+        F74GmhrPHNhGcE1byU1pBFgkYkvjdhL2LdTnQPdF3vn+ufC8JM2cU8mVDqBNlydN
+        WRb2Kw1WK7phWyMC94jAvv9MP9CvEicIYQfZSxZ4sGflrbNUTC/r8rpC3za6shWr
+        LPvGPsSD2A5v20Mv0QZRppAwzWhmESKUvsqff0IeJCXkW1FaeV4TVqUZRNvXJEZQ
+        ==
+X-ME-Sender: <xms:k3svYaSGglLNhnsiV86-6Oeg_EQJi_n4_iiHRkcRiPfKVCWNLQsdqw>
+    <xme:k3svYfzHsAUll6VqBhZryVs1-uFSha9bwkCJuakRZC4zLo4tZIdrbBzaHQk2ULaP_
+    7Xv4t5VOkvH7OCUjA>
+X-ME-Received: <xmr:k3svYX3moRu9SjYUzbXD1YN3zXbXWyRydwAaa9q4PqGkP0zwqPxfp1cz7fEIDHpp8dxoFAllEWrCHSPTzeSBz-YA2oc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddruddvfedgieduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:k3svYWDdIl98czuNftA-7vgOJWIKcYOqNeRs3XW9bIzTdaGU9hGgaw>
+    <xmx:k3svYThGgGUXZkH9CrdMds4VHJTMgWosLIlqwDkjTokTS4ahMKPC5Q>
+    <xmx:k3svYSrSOkPhn5WZ8hQUUTVM0bpJffLNeulUIcECiqh8ZLRPYU3lDg>
+    <xmx:lHsvYTcdnXDmKGqeZEXhWGXnNPyk0b7zGxmrOvIo1XXv7ruGpeLigg>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 1 Sep 2021 09:09:38 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id d65b90a2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 1 Sep 2021 13:09:37 +0000 (UTC)
+Date:   Wed, 1 Sep 2021 15:09:36 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Subject: [PATCH v3 0/7] Speed up mirror-fetches with many refs
+Message-ID: <cover.1630501732.git.ps@pks.im>
+References: <cover.1629452412.git.ps@pks.im>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="e6k0fQn6RnDIkAjJ"
+Content-Disposition: inline
+In-Reply-To: <cover.1629452412.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This adds three new functions to pkt-line.c: packet_fwrite,
-packet_fwrite_fmt and packet_fflush. Besides writing a pktline flush
-packet, packet_fflush also flushes the stdio buffer of the stream.
 
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Jacob Vosmaer <jacob@gitlab.com>
----
- cache.h        |  2 ++
- pkt-line.c     | 37 +++++++++++++++++++++++++++++++++++++
- pkt-line.h     | 11 +++++++++++
- write-or-die.c | 12 ++++++++++++
- 4 files changed, 62 insertions(+)
+--e6k0fQn6RnDIkAjJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/cache.h b/cache.h
-index bd4869beee..dcf2454c3b 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1736,6 +1736,8 @@ extern const char *git_mailmap_blob;
- void maybe_flush_or_die(FILE *, const char *);
- __attribute__((format (printf, 2, 3)))
- void fprintf_or_die(FILE *, const char *fmt, ...);
-+void fwrite_or_die(FILE *f, const void *buf, size_t count);
-+void fflush_or_die(FILE *f);
- 
- #define COPY_READ_ERROR (-2)
- #define COPY_WRITE_ERROR (-3)
-diff --git a/pkt-line.c b/pkt-line.c
-index 9f63eae2e6..de4a94b437 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -243,6 +243,43 @@ void packet_write(int fd_out, const char *buf, size_t size)
- 		die("%s", err.buf);
- }
- 
-+void packet_fwrite(FILE *f, const char *buf, size_t size)
-+{
-+	size_t packet_size;
-+	char header[4];
-+
-+	if (size > LARGE_PACKET_DATA_MAX)
-+		die(_("packet write failed - data exceeds max packet size"));
-+
-+	packet_trace(buf, size, 1);
-+	packet_size = size + 4;
-+
-+	set_packet_header(header, packet_size);
-+	fwrite_or_die(f, header, 4);
-+	fwrite_or_die(f, buf, size);
-+}
-+
-+void packet_fwrite_fmt(FILE *fh, const char *fmt, ...)
-+{
-+       static struct strbuf buf = STRBUF_INIT;
-+       va_list args;
-+
-+       strbuf_reset(&buf);
-+
-+       va_start(args, fmt);
-+       format_packet(&buf, "", fmt, args);
-+       va_end(args);
-+
-+       fwrite_or_die(fh, buf.buf, buf.len);
-+}
-+
-+void packet_fflush(FILE *f)
-+{
-+	packet_trace("0000", 4, 1);
-+	fwrite_or_die(f, "0000", 4);
-+	fflush_or_die(f);
-+}
-+
- void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
- {
- 	va_list args;
-diff --git a/pkt-line.h b/pkt-line.h
-index 5af5f45687..82b95e4bdd 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -35,6 +35,17 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format
- int write_packetized_from_fd_no_flush(int fd_in, int fd_out);
- int write_packetized_from_buf_no_flush(const char *src_in, size_t len, int fd_out);
- 
-+/*
-+ * Stdio versions of packet_write functions. When mixing these with fd
-+ * based functions, take care to call fflush(3) before doing fd writes or
-+ * closing the fd.
-+ */
-+void packet_fwrite(FILE *f, const char *buf, size_t size);
-+void packet_fwrite_fmt(FILE *f, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
-+
-+/* packet_fflush writes a flush packet and flushes the stdio buffer of f */
-+void packet_fflush(FILE *f);
-+
- /*
-  * Read a packetized line into the buffer, which must be at least size bytes
-  * long. The return value specifies the number of bytes read into the buffer.
-diff --git a/write-or-die.c b/write-or-die.c
-index d33e68f6ab..0b1ec8190b 100644
---- a/write-or-die.c
-+++ b/write-or-die.c
-@@ -70,3 +70,15 @@ void write_or_die(int fd, const void *buf, size_t count)
- 		die_errno("write error");
- 	}
- }
-+
-+void fwrite_or_die(FILE *f, const void *buf, size_t count)
-+{
-+	if (fwrite(buf, 1, count, f) != count)
-+		die_errno("fwrite error");
-+}
-+
-+void fflush_or_die(FILE *f)
-+{
-+	if (fflush(f))
-+		die_errno("fflush error");
-+}
--- 
-2.32.0
+Hi,
 
+this is the third version of my patch series to speed up mirror-fetches
+with many refs. This patch series applies on top of master with
+ps/connectivity-optim merged into it.
+
+There's only some smallish changes based on Stolee's feedback (thanks
+for that!):
+
+    - A small typo in 1/7.
+
+    - A confict fix in 4/7 required now because it's based on master
+      instead of directly on my merged topic.
+
+    - I've adjusted patch 5/7 such that I don't have to re-touch the
+      logic in 6/7.
+
+Patrick
+
+Patrick Steinhardt (7):
+  fetch: speed up lookup of want refs via commit-graph
+  fetch: avoid unpacking headers in object existence check
+  connected: refactor iterator to return next object ID directly
+  fetch-pack: optimize loading of refs via commit graph
+  fetch: refactor fetch refs to be more extendable
+  fetch: merge fetching and consuming refs
+  fetch: avoid second connectivity check if we already have all objects
+
+ builtin/clone.c        |  8 ++---
+ builtin/fetch.c        | 74 +++++++++++++++++++++++-------------------
+ builtin/receive-pack.c | 17 ++++------
+ connected.c            | 15 +++++----
+ connected.h            |  2 +-
+ fetch-pack.c           | 12 ++++---
+ 6 files changed, 67 insertions(+), 61 deletions(-)
+
+Range-diff against v2:
+1:  4a819a6830 ! 1:  8214f04971 fetch: speed up lookup of want refs via com=
+mit-graph
+    @@ Commit message
+         that we repeatedly need to unpack object headers for each of the
+         referenced objects.
+    =20
+    -    Speed this up by opportunistcally trying to resolve object IDs via=
+ the
+    +    Speed this up by opportunistically trying to resolve object IDs vi=
+a the
+         commit graph. We only do so for any refs which are not in "refs/ta=
+gs":
+         more likely than not, these are going to be a commit anyway, and t=
+his
+         lets us avoid having to unpack object headers completely in case t=
+he
+2:  81ebadabe8 =3D 2:  991a27cb82 fetch: avoid unpacking headers in object =
+existence check
+3:  98e981ced9 =3D 3:  ba834803ab connected: refactor iterator to return ne=
+xt object ID directly
+4:  6311203f08 ! 4:  99d3316d48 fetch-pack: optimize loading of refs via co=
+mmit graph
+    @@ fetch-pack.c: static struct commit *deref_without_lazy_fetch(const s=
+truct object
+     =20
+      	while (1) {
+      		if (oid_object_info_extended(the_repository, oid, &info,
+    -@@ fetch-pack.c: static struct commit *deref_without_lazy_fetch(const =
+struct object_id *oid,
+    - 	}
+    -=20
+    - 	if (type =3D=3D OBJ_COMMIT) {
+    --		struct commit *commit =3D lookup_commit(the_repository, oid);
+    -+		commit =3D lookup_commit(the_repository, oid);
+    - 		if (!commit || repo_parse_commit(the_repository, commit))
+    - 			return NULL;
+    - 		return commit;
+5:  56a9158ac3 ! 5:  d64888e072 fetch: refactor fetch refs to be more exten=
+dable
+    @@ builtin/fetch.c: static int check_exist_and_connected(struct ref *re=
+f_map)
+      		trace2_region_enter("fetch", "fetch_refs", the_repository);
+      		ret =3D transport_fetch_refs(transport, ref_map);
+      		trace2_region_leave("fetch", "fetch_refs", the_repository);
+    -+		if (ret) {
+    -+			transport_unlock_pack(transport);
+    -+			return ret;
+    -+		}
+    ++		if (ret)
+    ++			goto out;
+      	}
+     -	if (!ret)
+     -		/*
+    @@ builtin/fetch.c: static int check_exist_and_connected(struct ref *re=
+f_map)
+     -		 * time to update refs to reference the new objects.
+     -		 */
+     -		return 0;
+    --	transport_unlock_pack(transport);
+    --	return ret;
+     +
+     +	/*
+     +	 * Keep the new pack's ".keep" file around to allow the caller
+     +	 * time to update refs to reference the new objects.
+     +	 */
+    -+	return 0;
+    ++	return ret;
+    ++
+    ++out:
+    + 	transport_unlock_pack(transport);
+    + 	return ret;
+      }
+    -=20
+    - /* Update local refs based on the ref values fetched from a remote */
+6:  31d9f72edf ! 6:  56ecbfc9c3 fetch: merge fetching and consuming refs
+    @@ builtin/fetch.c: static int check_exist_and_connected(struct ref *re=
+f_map)
+     =20
+      	/*
+     @@ builtin/fetch.c: static int fetch_refs(struct transport *transport,=
+ struct ref *ref_map)
+    - 		trace2_region_enter("fetch", "fetch_refs", the_repository);
+    - 		ret =3D transport_fetch_refs(transport, ref_map);
+    - 		trace2_region_leave("fetch", "fetch_refs", the_repository);
+    --		if (ret) {
+    --			transport_unlock_pack(transport);
+    --			return ret;
+    --		}
+    -+		if (ret)
+    -+			goto out;
+    + 			goto out;
+      	}
+     =20
+     -	/*
+     -	 * Keep the new pack's ".keep" file around to allow the caller
+     -	 * time to update refs to reference the new objects.
+     -	 */
+    --	return 0;
+    +-	return ret;
+    +-
+    +-out:
+    +-	transport_unlock_pack(transport);
+    +-	return ret;
+     -}
+     -
+     -/* Update local refs based on the ref values fetched from a remote */
+7:  84e39c847f =3D 7:  c342fc0c69 fetch: avoid second connectivity check if=
+ we already have all objects
+--=20
+2.33.0
+
+
+--e6k0fQn6RnDIkAjJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEve48ACgkQVbJhu7ck
+PpTfjA//WeUqcfClwMvfERLI3NCXr052EVEY0misFj8pE/Xg9PiVIrhRRbvoiOPz
+zIjquEo+ZFjlBrmS0E5nJ37fQ/ubPjzhz5G1uqFI6NEFl2qWXnPTG5Gy1bMvniis
+fjg0eqSY58taZf5kg/eRIY0VLS+tO+jn1PqMkx3skj9UsyUBtgf6GAXxk3CemXPq
+ISYg1I5LsGWYsoF2VbQNPAf8eNLtgHcVs2WXi8YwnQp0k4mFC1zOrpwlGEMryulf
+3EIT1UuDXBRwn+UemB3siu5ZDTgRTOd/V1I83Lalj9Ife1dNlBn/+u6FLWFY/IA+
+eyNpk650RVXK1prv+uR+Bzvh6oXmCWulRKsBQxZr0VE0/hn417tI9eNaS/3WE2f/
+M/sPEIlmNFt6luDKjg8+vzLZUBXa5l9ZWoOhXVusKPikfr/BVwCzuOIcetTdPbZK
+L+AdKjj9upLH8OQcQoVY+Qh4g/W+QLC3piuI7+a5OOpJ/O+fQLYWCW6E9Dhria0n
+JwNoUAPEfR6Gvuzs/3p4OkbLs7Ip8L+WmqBrrd5xJw+BtMSzJVH5UK1wa0m+d6R+
+1J/CbVFEoWh4n6Ol7pd69ZCo9JPnsrm+q//eNKCr/wA4N3VgYTYPidtpkB0lrilT
+X4yfBAH+TJsYXMM+pLqI3nua89dlrUciQlj0Hm8uDjHLdikiH7U=
+=R2UF
+-----END PGP SIGNATURE-----
+
+--e6k0fQn6RnDIkAjJ--
