@@ -2,43 +2,41 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB4A1C432BE
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 20:05:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1818C432BE
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 20:26:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A3EB360FDC
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 20:05:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 973F86101B
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 20:26:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231463AbhIAUF7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Sep 2021 16:05:59 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52696 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231246AbhIAUF6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Sep 2021 16:05:58 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 942B2149D94;
-        Wed,  1 Sep 2021 16:05:00 -0400 (EDT)
+        id S231146AbhIAU1p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Sep 2021 16:27:45 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62567 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230231AbhIAU1p (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Sep 2021 16:27:45 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CCDDE6AF0;
+        Wed,  1 Sep 2021 16:26:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=53S7nV2vXlt0
-        dIH+4UNAN/EoRdJYVz88sBojZ7IQ2Zg=; b=fV1onf2iS7466fw6x7X95xyrPeLG
-        3F01Hflb+RnO4t4kse/KUg4AlDRVIn4nn5iJU4LfNfid6neIuYFYX53SUYUOfWPL
-        EH/B0OpdsWw4odw6B187mWFeTcflcsvF/V4K7+sGbib6OVDw/Evm7Ey+RiBm8Z5T
-        G5QeTEhtkdbJHtg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8C523149D93;
-        Wed,  1 Sep 2021 16:05:00 -0400 (EDT)
+        :content-type; s=sasl; bh=3l8KQdYJgjuaUTtAj8JFa1RWH8QZchF9hdUSdB
+        yVsSc=; b=lV5CBSRcUZM+JTePa7p3E3xla2fUYlqORpCqRONbqpiC/M86Ycr2FA
+        QOfEBaaoBSSIapcBTinnwOKyc62MfxO6h2wk0fFn7qiMg07/gPwyfIOAs1kGyCLZ
+        xh34OXQmgq5cpcU/7cGonQHiVQk2gcF1lGMl/HX28ncaM8EM6JqsA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 93F4EE6AEE;
+        Wed,  1 Sep 2021 16:26:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.116.162])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BFE51149D92;
-        Wed,  1 Sep 2021 16:04:57 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 21B6EE6AED;
+        Wed,  1 Sep 2021 16:26:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
@@ -51,55 +49,78 @@ Cc:     git@vger.kernel.org,
         Taylor Blau <me@ttaylorr.com>,
         Carlo Arenas <carenas@gmail.com>, Jeff King <peff@peff.net>,
         Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v3 1/3] test-lib-functions: use 'TEST_SHELL_PATH' in
- 'test_pause'
+Subject: Re: [PATCH v3 2/3] test-lib-functions: optionally keep HOME, TERM
+ and SHELL in 'test_pause'
 References: <pull.1022.v2.git.1630111653.gitgitgadget@gmail.com>
         <pull.1022.v3.git.1630503102.gitgitgadget@gmail.com>
-        <2f566f330e01ed4249edad54671e98301dbeec5a.1630503102.git.gitgitgadget@gmail.com>
-Date:   Wed, 01 Sep 2021 13:04:56 -0700
-In-Reply-To: <2f566f330e01ed4249edad54671e98301dbeec5a.1630503102.git.gitgitgadget@gmail.com>
+        <328b5d6e76f598590d24b35ec23b5fd854c6cf05.1630503102.git.gitgitgadget@gmail.com>
+Date:   Wed, 01 Sep 2021 13:26:45 -0700
+In-Reply-To: <328b5d6e76f598590d24b35ec23b5fd854c6cf05.1630503102.git.gitgitgadget@gmail.com>
         (Philippe Blain via GitGitGadget's message of "Wed, 01 Sep 2021
-        13:31:40 +0000")
-Message-ID: <xmqqsfyooydz.fsf@gitster.g>
+        13:31:41 +0000")
+Message-ID: <xmqq7dg0oxdm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E1B2BCC4-0B5F-11EC-88A6-FA11AF6C5138-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: ED89F21C-0B62-11EC-BEE2-D601C7D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
->
-> 3f824e91c8 (t/Makefile: introduce TEST_SHELL_PATH, 2017-12-08)
-> made it easy to use a different shell for the tests than 'SHELL_PATH'
-> used at compile time. But 'test_pause' still invokes 'SHELL_PATH'.
->
-> If TEST_SHELL_PATH is set, invoke that shell in 'test_pause' for
-> consistency.
->
-> Suggested-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> ---
->  t/test-lib-functions.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index e28411bb75a..1884177e293 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -139,7 +139,7 @@ test_tick () {
->  # Be sure to remove all invocations of this command before submitting.
-> =20
->  test_pause () {
-> -	"$SHELL_PATH" <&6 >&5 2>&7
-> +	"$TEST_SHELL_PATH" <&6 >&5 2>&7
->  }
-> =20
->  # Wrap git with a debugger. Adding this to a command can make it easie=
-r
+> +# Usage: test_pause [options]
+> +#   -t
+> +#	Use your original TERM instead of test-lib.sh's "dumb".
+> +#	This usually restores color output in the invoked shell.
+> +#	WARNING: this can break test reproducibility.
+> +#   -s
+> +#	Invoke $SHELL instead of $TEST_SHELL_PATH
+> +#	WARNING: this can break test reproducibility.
+> +#   -h
+> +#	Use your original HOME instead of test-lib.sh's "$TRASH_DIRECTORY".
+> +#	This allows you to use your regular shell environment and Git aliases.
+> +#	WARNING: this can break test reproducibility.
+> +#	CAUTION: this can overwrite files in your HOME.
+> +#   -a
+> +#	Shortcut for -t -s -h
 
-Sensible.
+As this is not end-user facing but facing our developer, I do not
+deeply care, but I find the warnings in this help text problematic.
+
+Because a new process instance of $PAUSE_SHELL is run, the options
+you add when inserting test_pause does not affect what happens in
+the tests after you exit the $PAUSE_SHELL [*], right?
+
+Of course, you can modify the repository or the working tree files
+used in the test in the $PAUSE_SHELL, and that can break "test
+reproducibility"---if you run "git ls-files -s" and take its output
+in a temporary file, a step later in the test that runs "git status"
+will see an extra untracked file, for example, and such a change may
+(or may not) unnecessarily break the tests.
+
+But it is not anything new introduced by these options.  It is
+inherent to test_pause itself.
+
+If we want to add a warning to the help text here, I think it should
+be written in such a way that it is clear that the warning applies
+to any use of the test_pause helper, not just to the form with the
+options.
+
+Thanks.
+
+
+[Footnote]
+
+* If we had an alternative implementation of test_pause that does
+  not use a separate $PAUSE_SHELL process, but instead like
+  inserting a read-eval-print loop, that would be far more powerful
+  and useful debugging aid.  You can not just stop the execution of
+  the test, and observe the files in the test repository and the
+  environment variables---you can also access shell variables and
+  functions.
+
+  Such a test_pause from another world would deserve a "if you touch
+  anything, the damage is permanent" warning even more than the
+  current one, because you can modify even a shell variable to
+  affect the execution of the test after you leave the paused state.
