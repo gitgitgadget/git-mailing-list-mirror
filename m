@@ -2,148 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 876ADC432BE
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 15:00:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 475E4C432BE
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 16:17:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D0AE60BD3
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 15:00:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31DC661027
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 16:17:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245442AbhIAPBT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Sep 2021 11:01:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36532 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243971AbhIAPBR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Sep 2021 11:01:17 -0400
-Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FC64C061575
-        for <git@vger.kernel.org>; Wed,  1 Sep 2021 08:00:21 -0700 (PDT)
-Received: by mail-oo1-xc33.google.com with SMTP id y3-20020a4ab403000000b00290e2a52c71so918962oon.2
-        for <git@vger.kernel.org>; Wed, 01 Sep 2021 08:00:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UHrouVynzbTMB6LlUqay9S+zjy4YJ9Xg7eVwnAbc/bA=;
-        b=gwypPHJGjrXZLxS1odXrqdEXted1+U8Dsz5Iw6UTIxc4IO4FXupcRL3oXn7iu/GOJ3
-         OKK1gXOYC6b0OXWHmbP0cQ3+aghhfJ4QfwMH8JD4gYLvjYGlBz1+VoDeYfirDmTlwDqN
-         JhYuowxRNAbxHee1bBqSge+lisCH2/2yH1e16ZuqfY4lg3otaTb0ttQiBH+TJYtWNqov
-         PnMG/HTFOGutLJEMX0kupZoQveMA1GlO9BWJe2AqAHbiY8+UdCF/a2g9sIzDDEco0Gpb
-         qN2JlftZlQPNdF0mvJS2Mc/8crG3OsbfYv2vdPuDYEbw/5HwIhyB0Ty+4hYsXRmEeAxW
-         ziGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UHrouVynzbTMB6LlUqay9S+zjy4YJ9Xg7eVwnAbc/bA=;
-        b=JdviR5JSBtnrDH1ziBpG5NmCF0R5/J8H/akoptLniinxO5eF07ijh9+d/SKX+Ur4K1
-         JLrX5673Jv0vj799DS5WeIa+0iTso0ey2L+7ZIWy7rjsUCQbIUz0ZrBeZ9VkW2LgWFBv
-         IYsmo+WfG7MAp5OepAGxJ4baYxjZl64ok+xPFjZOjxJZ/aatFVTPpTyI5VDgpZI1r+eW
-         0qkgj2GxQWBCZBwkixJhMh1p1YfKnVrEuKAvZJikYZoNt5Z3g4x2GVNm/WnW5txRKhbt
-         z3//PXHRSmBkV1wVNDs5EkX6jiyRY9XJ9Yuc/EJ0qoJ+sPWyf01fL9vuATS6R6/hqdZx
-         UfYQ==
-X-Gm-Message-State: AOAM532ef69IMsDWPWqWc8qY3ROvagzXD3himHNAD20vGzS1LrlLkiSM
-        M72q7007MBr8G9L896Hdj9mkTgEFYVZRUpxGfnhwWGRU3qc=
-X-Google-Smtp-Source: ABdhPJwf/p3bOE15pr2jcejJ/kT2mD6rQFsdtdQ+u0P2qcguG2UY49cXmGuQI4Yu8RjJ2U/Kt3xXsOTqklVDJhuehyc=
-X-Received: by 2002:a4a:9b8d:: with SMTP id x13mr19236273ooj.7.1630508420338;
- Wed, 01 Sep 2021 08:00:20 -0700 (PDT)
+        id S245236AbhIAQSE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Sep 2021 12:18:04 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54816 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245202AbhIAQSB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Sep 2021 12:18:01 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B194214E8FF;
+        Wed,  1 Sep 2021 12:17:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=biWmlO2ycWoFGr0ckko5jE73XcGg6IIl+emV7A
+        A5No8=; b=CWyjvtXOUxWt7PoFIt2GZXQBOBTcONqYglbsXfuVTBHiHsEq4xg8dq
+        lLi1J/oBKyz8FOW7G7CHMGigi2K5DOYHK6lbRqU5wxJtacGzQFGOwsB9Uw0LRMIs
+        Jcna+liN/Ieve+FqJatKwXVPHBbdQtFvMBJXY0yl13Jpu4KYtVBqQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AA6C514E8FE;
+        Wed,  1 Sep 2021 12:17:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.116.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id F1B6D14E8FB;
+        Wed,  1 Sep 2021 12:17:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 04/15] scalar: 'register' sets recommended config and
+ starts maintenance
+References: <pull.1005.git.1630359290.gitgitgadget@gmail.com>
+        <3786f4c597fffc13f638efd26875dcb257d54ab4.1630359290.git.gitgitgadget@gmail.com>
+Date:   Wed, 01 Sep 2021 09:16:59 -0700
+In-Reply-To: <3786f4c597fffc13f638efd26875dcb257d54ab4.1630359290.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Mon, 30 Aug 2021
+        21:34:39 +0000")
+Message-ID: <xmqq5yvks22s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1005.git.1630359290.gitgitgadget@gmail.com> <0d1ce3c0-2a19-e97a-bf0f-5f8893c806ea@gmail.com>
-In-Reply-To: <0d1ce3c0-2a19-e97a-bf0f-5f8893c806ea@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 1 Sep 2021 08:00:08 -0700
-Message-ID: <CABPp-BGEDdpb9QFBQux2-_3BJZAcBo30svRF+hfV-KjOcQPojA@mail.gmail.com>
-Subject: Re: [PATCH 00/15] [RFC] Upstreaming the Scalar command
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 09B13496-0B40-11EC-8A18-9BA3EF469F85-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 30, 2021 at 5:52 PM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 8/30/21 5:34 PM, Johannes Schindelin via GitGitGadget wrote:
-> > tl;dr: This series contributes the Scalar command to the Git project. This
-> > command provides an opinionated way to create and configure repositories
-> > with a focus on very large repositories.
->
-> I want to give Johannes a big thanks for organizing this RFC. As you
-> can see from the authorship of the patches, this was an amazingly
-> collaborative effort, but Johannes led the way by creating a base that
-> the rest of us could work with, then finally he brought in all of the
-> gritty details to finish the effort.
->
-> > Background
-> > ==========
->
-> ...
->
-> > The Scalar project
-> > was created to make that separation, refine the key concepts, and then
-> > extract those features into the new Scalar command.
->
-> When people have asked me how Scalar fits with the core Git client, I
-> point them to our "Philosophy of Scalar" document [1]. The most concise
-> summary of our goals since starting Scalar has been that Scalar aligns
-> with features already within Git that enable scale. I've said several
-> times that we are constantly making Scalar do less by making Git do more.
->
-> [1] https://github.com/microsoft/git/blob/HEAD/contrib/scalar/docs/philosophy.md
->
-> Here is an example: when our large, internal customer told us that they
-> required Linux support for Scalar, we looked at what it would take. We
-> could have done the necessary platform-specific things to convince .NET
-> Core to create a long-running process that launched Git maintenance tasks
-> at different intervals, creating a similar mechanism to the Windows and
-> macOS services that did those operations. But we also knew that the
-> existing system was stuck with architectural decisions from VFS for Git
-> that were not actually in service of how Scalar worked. Instead, we
-> decided to build background maintenance into Git itself and had our Linux
-> port of Scalar run "git maintenance start".
->
-> Once the Linux port was proven out with Git's background maintenance, we
-> realized that the window where a user actually interacts with Scalar instead
-> of Git is extremely narrow: users run "scalar clone" or "scalar register"
-> and otherwise only run Git commands. The Scalar process does not need to
-> exist outside of that. (There are some other helpers that can be used in
-> a pinch to diagnose and fix problems, but they are rarely used. These
-> commands, such as 'scalar diagnose' can be contributed separately.)
->
-> It became clear that for our own needs it would be easier to ship one
-> installer that included the microsoft/git fork and the Scalar CLI, and
-> it would be simple to rewrite the Scalar CLI with all of the Git helper
-> APIs. We organized the code in a way that we thought would be amenable
-> to an upstream contribution (by placing in contrib/ and using Git code
-> style).
->
-> The thing about these commands is that they are _opinionated_. We rely
-> on these opinions for important internal users, but we realize that they
-> are not necessarily optimal for all users. Hence, we did not think it
-> wise to push those opinions onto the 'git' executable. Having 'scalar'
-> continue to live as a separate executable made sense to us.
->
-> I believe that by contributing Scalar to the full community, that we
-> create opportunities for Git in the future. For one, users and Git
-> distributors can opt into compiling Scalar so it is more available
-> to users who are interested. Another hopeful idea is that maybe this
-> reinvigorates ideas of how to streamline Git clones for large repos
-> without users needing to learn each and every knob to twist to get
-> things working. Since the Scalar CLI is contributed in the full
-> license of the Git project, pieces of it can be adapted into Git
-> proper as needed.
->
-> I look forward to hearing your thoughts.
->
-> Thanks,
-> -Stolee
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Looks like exciting stuff, you two.  I'm behind on review as it is; I
-still need to get back to Stolee's sparse-index add/rm/mv series, but
-I'll try to circle back and take a look.
+> +static void setup_enlistment_directory(int argc, const char **argv,
+> +				       const char * const *usagestr,
+> +				       const struct option *options,
+> +				       struct strbuf *enlistment_root)
+> +{
+> +	struct strbuf path = STRBUF_INIT;
+> +	char *root;
+> +	int enlistment_found = 0;
+> +
+> +	if (startup_info->have_repository)
+> +		BUG("gitdir already set up?!?");
+> +
+> +	if (argc > 1)
+> +		usage_with_options(usagestr, options);
+> +
+> +	/* find the worktree, determine its corresponding root */
+> +	if (argc == 1)
+> +		strbuf_add_absolute_path(&path, argv[0]);
+> +	else if (strbuf_getcwd(&path) < 0)
+> +		die(_("need a working directory"));
+> +
+> +	strbuf_trim_trailing_dir_sep(&path);
+> +	do {
+> +		const size_t len = path.len;
+> +
+> +		/* check if currently in enlistment root with src/ workdir */
+> +		strbuf_addstr(&path, "/src/.git");
+> +		if (is_git_directory(path.buf)) {
+> +			strbuf_strip_suffix(&path, "/.git");
+> +
+> +			if (enlistment_root)
+> +				strbuf_add(enlistment_root, path.buf, len);
+> +
+> +			enlistment_found = 1;
+> +			break;
+> +		}
+
+This special casing of "normally the top of the working tree is
+enlisted, but if the repository is called src/, then we enslist
+one level up" is a bit of eyesore because
+
+ (1) it is unclear why such a directory with 'src/' subdirectory is
+     so special, and
+
+ (2) it fails to serve those who has the same need but named their
+     source subdirectory differently (like 'source/').
+
+"The design decisions we made are all part of being opinionated" can
+all explain it away, but at least we should let the users know where
+the opinionated choices scalar makes want to lead them to, and this
+"src/" stuff needs a bit of clarification.  Perhaps a documentation
+will be added in later steps?
+
+> +	for (i = 0; config[i].key; i++) {
+> +		if (git_config_get_string(config[i].key, &value)) {
+> +			trace2_data_string("scalar", the_repository, config[i].key, "created");
+> +			if (git_config_set_gently(config[i].key,
+> +						  config[i].value) < 0)
+> +				return error(_("could not configure %s=%s"),
+> +					     config[i].key, config[i].value);
+> +		} else {
+> +			trace2_data_string("scalar", the_repository, config[i].key, "exists");
+> +			free(value);
+> +		}
+
+I wonder if we should have a table of configuration variables and
+their default values.  The above code implements a skewed "we only
+avoid overriding what is explicitly configured".  A variable that
+the user left unconfigured because the user found its default
+satisfactory will be overridden, and if the value scalar wants to
+use happens to be the default value, we leave an explicit
+configuration to that default value in the resulting configuration
+file.
+
+But I think the above is the best we can do without such a central
+registry of configuration variables.
