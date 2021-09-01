@@ -2,196 +2,256 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DDF8C432BE
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 12:13:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCEF9C432BE
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 12:16:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1BC5A60FE6
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 12:13:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A686760BD3
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 12:16:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243901AbhIAMOo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Sep 2021 08:14:44 -0400
-Received: from mail.vivaldi.com ([31.209.137.20]:54770 "EHLO mail.vivaldi.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241021AbhIAMOn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Sep 2021 08:14:43 -0400
-X-Greylist: delayed 526 seconds by postgrey-1.27 at vger.kernel.org; Wed, 01 Sep 2021 08:14:43 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by mail.vivaldi.com (Postfix) with ESMTP id 6EB361F823C
-        for <git@vger.kernel.org>; Wed,  1 Sep 2021 12:04:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=vivaldi.com; h=
-        mime-version:content-transfer-encoding:references:in-reply-to
-        :date:date:subject:subject:from:from:message-id:content-type
-        :content-type:received:received; s=2019; t=1630497898; bh=fmBQnB
-        qHDuXviHoH8MgvmlVD7GgMBynay6fPv5+FK4Y=; b=laPeqSiX5MDgcM3DUBucqc
-        dAm/HAOIVILfYIS47hg7PBP6JvVxw55eSiJi/Tkwts6EN7npoRxyLdIzkzNyPSJo
-        NrFScS02aTDgt+hJv7qWbtcJP9XOwRd0t7bcXHLJd2EApK2y4gaXdwhJi9DYGY/l
-        qx5as5LMLTqMvGycnhLQp8jKpUNxc1m1aDxBTuOnLJkt6bEAqxgbq9ELCAvuJ18d
-        5cqscvGUeEYKvMTZeSaJXwcbpmHBS7ADFAJUCjiVg5FDnRb2xVS5Fb8sHTXBUQIZ
-        lKsEh8+wr9tjxeJjfUTqnEDiDItEPKYhI8rqlxuhaz9q8uBYlOiDRGBqb8vLHKMw
-        ==
-X-Virus-Scanned: Debian amavisd-new at vivaldi.com
-Received: from mail.vivaldi.com ([127.0.0.1])
-        by localhost (mail.vivaldi.com [127.0.0.1]) (amavisd-new, port 10023)
-        with ESMTP id gD1WIywhN9BG for <git@vger.kernel.org>;
-        Wed,  1 Sep 2021 12:04:58 +0000 (UTC)
-Received: from localhost (ti0182q160-1614.bb.online.no [212.251.169.97])
-        by mail.vivaldi.com (Postfix) with ESMTPSA id 1EEF41F8270
-        for <git@vger.kernel.org>; Wed,  1 Sep 2021 12:04:58 +0000 (UTC)
-Content-Type: text/plain; charset=utf-8; format=flowed
-Message-Id: <1630496467881.2030439049.4247253551@vivaldi.com>
-From:   "Yngve N. Pettersen" <yngve@vivaldi.com>
+        id S244019AbhIAMRd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Sep 2021 08:17:33 -0400
+Received: from h2.fbrelay.privateemail.com ([131.153.2.43]:40735 "EHLO
+        h2.fbrelay.privateemail.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S244028AbhIAMRc (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 1 Sep 2021 08:17:32 -0400
+Received: from MTA-15-3.privateemail.com (MTA-15-1.privateemail.com [198.54.118.208])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by h1.fbrelay.privateemail.com (Postfix) with ESMTPS id 280A780AFA
+        for <git@vger.kernel.org>; Wed,  1 Sep 2021 08:16:34 -0400 (EDT)
+Received: from mta-15.privateemail.com (localhost [127.0.0.1])
+        by mta-15.privateemail.com (Postfix) with ESMTP id 278B71800190;
+        Wed,  1 Sep 2021 08:16:32 -0400 (EDT)
+Received: from hal-station.. (unknown [10.20.151.229])
+        by mta-15.privateemail.com (Postfix) with ESMTPA id 7AF1F18000A1;
+        Wed,  1 Sep 2021 08:16:31 -0400 (EDT)
+From:   Hamza Mahfooz <someguy@effective-light.com>
 To:     git@vger.kernel.org
-Subject: Re: Git error message "Server does not allow request for
- unadvertised object"
-Date:   Wed, 01 Sep 2021 12:04:56 +0000
-In-Reply-To: <op.0qiwhxykpvqxoc@rowan.vivaldi>
-References: <op.0qiwhxykpvqxoc@rowan.vivaldi>
-Content-Transfer-Encoding: 7bit
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Hamza Mahfooz <someguy@effective-light.com>
+Subject: [PATCH] pretty: colorize pattern matches in commit messages
+Date:   Wed,  1 Sep 2021 08:16:16 -0400
+Message-Id: <20210901121616.2109658-1-someguy@effective-light.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: ClamAV using ClamSMTP
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello again,
+Currently, for example when
 
-AFAICT I have not seen any updates about this problem since my previous 
-email a year ago.
+  git log --grep=pattern
 
- From my side, I've just noticed a separate aspect of this issue.
+is executed, the outputted commits that are matched by the pattern do not
+have the relevant substring matches highlighted.
 
-I have noticed a lot of failures related to a specific commit that was a 
-unadvertised, and on one of the machines throwing this error, Git did 
-report the repos and paths involved in triggering the error.
+Signed-off-by: Hamza Mahfooz <someguy@effective-light.com>
+---
+ pretty.c | 109 +++++++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 98 insertions(+), 11 deletions(-)
 
-In this case, the commit DO exists in the repo specified by gitmodules on 
-the branch where the submodule commit is referenced. However, it does NOT 
-exist in the repo referenced by the currently checked out branch!
-
-In more detail, for a currently checked out branch "foo", a submodule with 
-URL "repo1.git" is specified for path "submodule/mysub" and commit 
-"f0012345".
-
-On branch "bar" of this top repo, the "submodule/mysub" is specified with 
-the URL "repo2.git", which is a fork of "repo1.git", and is specifying 
-commit "ba598765", which does not exist in "repo1.git"
-
-When a fetch is done in the checkout of the "foo" branch, the new branch 
-"bar" is fetched, and Git sees the submodule commit "ba598765" specified 
-for "submodule/mysub", and decides to fetch it. However, it tries to fetch 
-it from "repo1.git", NOT "repo2.git", which is what is specified for that 
-path on the "bar" branch.
-
-The result is a fatal error for the fetch, causing the automatic build job 
-to fail, even if the "ba598765" commit is not necessary for the current 
-build job's checkout.
-
-I've also added a server-side git hook to validate the primary submodule's 
-commit references, where most errors are likely to occur, but that is not 
-able to prevent the kind of fetch failures described above, since the 
-reference IS correct on the branch for which it is committed.
-
-As mentioned earlier, IMO this should not be a fatal error when fetching, 
-at most it should be a warning. Additionally, as illustrated by the above 
-example, when performing fetches for submodules the fetch operation should 
-use the URL specified on the branch, not the one specified in the local 
-checkout.
-
-
-
-On Sunday, 6 September, 2020 14:47:47 (+02:00), Yngve N. Pettersen wrote:
-
- > Hello again,
- >
- > I wondered what is happening about this issue?
- >
- > This continues to cause problems, especially now that Mac is using Git 
-2.21 (without AFAICT any way to revert to 2.17).
- >
- > The most recent case was last night, after a Work In Progress branch 
-(that is, it was not used by any production code) in a submodule was 
-pushed, but updates for at least one of the submodules wasn't pushed. Three 
-different Mac autobuild jobs broke because of this error and had to be 
-restarted.
- >
- >
- > On Mon, 18 May 2020 11:20:57 +0200, Yngve N. Pettersen 
-<yngve@vivaldi.com> wrote:
- >
- > > Hello all,
- > >
- > > A while back I reported an issue to the Windows Git project 
-<https://github.com/git-for-windows/git/issues/2218> that I observed in Git 
-for Windows 2.21.
- > >
- > > The error message "Server does not allow request for unadvertised 
-object" is reported when a commit updating a submodule pointer points to a 
-commit that does not exist in the repository for that submodule, even if 
-later commits in the branch points to a commit that do exist in the 
-submodule repo.
- > >
- > > This circumstance can easily occur if a developer (e.g)
- > >
- > > * interactively rebases a branch "foo" in the submodule (e.g to 
-integrate commits from another branch before a larger rebase)
- > > * commits the resulting submodule pointer "A" in the branch to the 
-parent repo
- > > * then do further rebasing in the submodule, e.g to move up on top of 
-the "bar" branch
- > > * commits that pointer "B" to the parent repo
- > > * forgets to squash the history in the parent repo
- > > * pushes the updated submodule "foo" branch to the online repo. (NOTE: 
-"B" is pushed, not "A")
- > > * pushes the parent module branch to its online repo
- > >
- > > When the parent repo is pulled by another developer, or an autobuild 
-system, the fetch operation fails with the message "Server does not allow 
-request for unadvertised object". A second fetch will complete 
-successfully.
- > >
- > > IMO this kind of check should only happen if a commit with pointer to 
-a missing submodule is actively checked out. At most the above message 
-should be a warning, not a fatal error.
- > >
- > > For manual fetch operations this is mostly a nuisance, but for 
-autobuilders this breaks the update operation, and the entire build 
-operation fails. That is unacceptable behavior in an automatic system 
-(errors if it breaks the checkout, yes; issues that are not relevant to the 
-actual checkout, no).
- > >
- > > This issue prevents upgrading past 2.17 (since 2.18 and 2.19 had other 
-blocking issues, and 2.20 apparently introduced this issue). I have not 
-tested 2.22+ since I have not noticed any changelog messages that seem 
-related.
- > >
- > > A test case can be found in issue 2218, linked above.
- > >
- > > For reference, we do have a server-side git hook that verifies that 
-submodule pointers for the production branch is correct and exists in the 
-submodule's repo, and also is on branches that follows certain naming 
-conventions.
- > >
- > >
- > > As an aside, I think this kind of error message would be have been 
-better suited as either a client-side push check, to prevent pushes of 
-references to such missing commits (Smartgit seems to have something like 
-it, but I think it only checks for the current branch in the submodule, not 
-all submodule reference commits). Alternatively, there could be a check of 
-this server-side.
- > >
- > >
- > > Related to this, but not as problematic, just irritating, and also 
-seen in 2.17, is a message "warning: Submodule in commit deadbee at path: 
-'(NULL)' collides with a submodule named the same. Skipping it." I think it 
-is related to recreating a git modules file on a different branch.
- > >
- >
- >
+diff --git a/pretty.c b/pretty.c
+index 9631529c10..2886916ae6 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -431,15 +431,80 @@ const char *show_ident_date(const struct ident_split *ident,
+ 	return show_date(date, tz, mode);
+ }
+ 
++static void append_matched_line(struct grep_opt *opt, const char *line,
++				size_t linelen, enum grep_pat_token token,
++				int field, struct strbuf *sb)
++{
++	struct grep_pat *pat;
++	struct strbuf tmp_sb;
++	regmatch_t tmp_match, match;
++	char *buf, *eol, *color;
++	int cflags = 0;
++
++	strbuf_init(&tmp_sb, linelen + 1);
++	strbuf_add(&tmp_sb, line, linelen);
++	buf = tmp_sb.buf;
++	eol = buf + linelen;
++
++	if (!opt || !want_color(opt->color))
++		goto skip;
++
++	color = opt->colors[GREP_COLOR_MATCH_CONTEXT];
++
++	for (;;) {
++		match.rm_so = match.rm_eo = -1;
++
++		for (pat = (token == GREP_PATTERN_HEAD ?
++			    opt->header_list : opt->pattern_list);
++		     pat; pat = pat->next) {
++			if (pat->token == token &&
++			    (field == -1 || pat->field == field) &&
++			    !regexec(&pat->regexp, buf, 1, &tmp_match,
++				     cflags)) {
++
++				if ((match.rm_so >= 0 && match.rm_eo >= 0) &&
++				    (tmp_match.rm_so > match.rm_so ||
++				     (tmp_match.rm_so == match.rm_so &&
++				      tmp_match.rm_eo < match.rm_eo)))
++					continue;
++
++				match.rm_so = tmp_match.rm_so;
++				match.rm_eo = tmp_match.rm_eo;
++			}
++		}
++
++		if (match.rm_so == match.rm_eo)
++			break;
++
++		strbuf_grow(sb, strlen(color) + strlen(GIT_COLOR_RESET));
++		strbuf_add(sb, buf, match.rm_so);
++		strbuf_add(sb, color, strlen(color));
++		strbuf_add(sb, buf + match.rm_so,
++			   match.rm_eo - match.rm_so);
++		strbuf_add(sb, GIT_COLOR_RESET,
++			   strlen(GIT_COLOR_RESET));
++		buf += match.rm_eo;
++		cflags = REG_NOTBOL;
++	}
++
++skip:
++	strbuf_add(sb, buf, eol - buf);
++
++	strbuf_release(&tmp_sb);
++}
++
+ void pp_user_info(struct pretty_print_context *pp,
+ 		  const char *what, struct strbuf *sb,
+ 		  const char *line, const char *encoding)
+ {
++	struct strbuf id;
+ 	struct ident_split ident;
+ 	char *line_end;
+ 	const char *mailbuf, *namebuf;
+ 	size_t namelen, maillen;
+ 	int max_length = 78; /* per rfc2822 */
++	int field = -1;
++	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
+ 
+ 	if (pp->fmt == CMIT_FMT_ONELINE)
+ 		return;
+@@ -496,9 +561,22 @@ void pp_user_info(struct pretty_print_context *pp,
+ 			strbuf_addch(sb, '\n');
+ 		strbuf_addf(sb, " <%.*s>\n", (int)maillen, mailbuf);
+ 	} else {
+-		strbuf_addf(sb, "%s: %.*s%.*s <%.*s>\n", what,
+-			    (pp->fmt == CMIT_FMT_FULLER) ? 4 : 0, "    ",
+-			    (int)namelen, namebuf, (int)maillen, mailbuf);
++		strbuf_init(&id, namelen + maillen + 4);
++
++		if (!strcmp(what, "Author"))
++			field = GREP_HEADER_AUTHOR;
++		else if (!strcmp(what, "Commit"))
++			field = GREP_HEADER_COMMITTER;
++
++		strbuf_addf(sb, "%s: %.*s", what,
++			    (pp->fmt == CMIT_FMT_FULLER) ? 4 : 0, "    ");
++		strbuf_addf(&id, "%.*s <%.*s>", (int)namelen, namebuf,
++			    (int)maillen, mailbuf);
++
++		append_matched_line(opt, id.buf, id.len,
++				    GREP_PATTERN_HEAD, field, sb);
++		strbuf_addch(sb, '\n');
++		strbuf_release(&id);
+ 	}
+ 
+ 	switch (pp->fmt) {
+@@ -1855,6 +1933,7 @@ static void pp_header(struct pretty_print_context *pp,
+ 	}
+ }
+ 
++
+ void pp_title_line(struct pretty_print_context *pp,
+ 		   const char **msg_p,
+ 		   struct strbuf *sb,
+@@ -1935,8 +2014,8 @@ static int pp_utf8_width(const char *start, const char *end)
+ 	return width;
+ }
+ 
+-static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
+-				 const char *line, int linelen)
++static void strbuf_add_tabexpand(struct grep_opt *opt, struct strbuf *sb,
++				 int tabwidth, const char *line, int linelen)
+ {
+ 	const char *tab;
+ 
+@@ -1953,7 +2032,8 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
+ 			break;
+ 
+ 		/* Output the data .. */
+-		strbuf_add(sb, line, tab - line);
++		append_matched_line(opt, line, tab - line, GREP_PATTERN_BODY,
++				    -1, sb);
+ 
+ 		/* .. and the de-tabified tab */
+ 		strbuf_addchars(sb, ' ', tabwidth - (width % tabwidth));
+@@ -1968,7 +2048,8 @@ static void strbuf_add_tabexpand(struct strbuf *sb, int tabwidth,
+ 	 * worrying about width - there's nothing more to
+ 	 * align.
+ 	 */
+-	strbuf_add(sb, line, linelen);
++	append_matched_line(opt, line, linelen,
++			    GREP_PATTERN_BODY, -1, sb);
+ }
+ 
+ /*
+@@ -1980,11 +2061,14 @@ static void pp_handle_indent(struct pretty_print_context *pp,
+ 			     struct strbuf *sb, int indent,
+ 			     const char *line, int linelen)
+ {
++	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
++
+ 	strbuf_addchars(sb, ' ', indent);
+ 	if (pp->expand_tabs_in_log)
+-		strbuf_add_tabexpand(sb, pp->expand_tabs_in_log, line, linelen);
++		strbuf_add_tabexpand(opt, sb, pp->expand_tabs_in_log, line, linelen);
+ 	else
+-		strbuf_add(sb, line, linelen);
++		append_matched_line(opt, line, linelen, GREP_PATTERN_BODY, -1,
++				    sb);
+ }
+ 
+ static int is_mboxrd_from(const char *line, int len)
+@@ -2002,7 +2086,9 @@ void pp_remainder(struct pretty_print_context *pp,
+ 		  struct strbuf *sb,
+ 		  int indent)
+ {
++	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
+ 	int first = 1;
++
+ 	for (;;) {
+ 		const char *line = *msg_p;
+ 		int linelen = get_one_line(line);
+@@ -2023,14 +2109,15 @@ void pp_remainder(struct pretty_print_context *pp,
+ 		if (indent)
+ 			pp_handle_indent(pp, sb, indent, line, linelen);
+ 		else if (pp->expand_tabs_in_log)
+-			strbuf_add_tabexpand(sb, pp->expand_tabs_in_log,
++			strbuf_add_tabexpand(opt, sb, pp->expand_tabs_in_log,
+ 					     line, linelen);
+ 		else {
+ 			if (pp->fmt == CMIT_FMT_MBOXRD &&
+ 					is_mboxrd_from(line, linelen))
+ 				strbuf_addch(sb, '>');
+ 
+-			strbuf_add(sb, line, linelen);
++			append_matched_line(opt, line, linelen,
++					    GREP_PATTERN_BODY, -1, sb);
+ 		}
+ 		strbuf_addch(sb, '\n');
+ 	}
 -- 
-Sincerely,
-Yngve N. Pettersen
-Vivaldi Technologies AS
+2.33.0
+
