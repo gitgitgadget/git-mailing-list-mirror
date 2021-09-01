@@ -2,127 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37DE8C432BE
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 07:53:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33FC7C43216
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 09:20:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0A83D6103A
-	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 07:53:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19B7961053
+	for <git@archiver.kernel.org>; Wed,  1 Sep 2021 09:20:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242839AbhIAHyu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Sep 2021 03:54:50 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36126 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230161AbhIAHys (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Sep 2021 03:54:48 -0400
-Received: (qmail 15783 invoked by uid 109); 1 Sep 2021 07:53:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Sep 2021 07:53:51 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4575 invoked by uid 111); 1 Sep 2021 07:53:53 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Sep 2021 03:53:53 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 1 Sep 2021 03:53:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Andrzej Hunt <andrzej@ahunt.org>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 2/4] SANITIZE tests: fix memory leaks in t13*config*,
- add to whitelist
-Message-ID: <YS8xj9XtKqEEy/Bb@coredump.intra.peff.net>
-References: <cover-0.4-0000000000-20210714T001007Z-avarab@gmail.com>
- <cover-0.4-0000000000-20210714T172251Z-avarab@gmail.com>
- <patch-2.4-867e8e9a6c-20210714T172251Z-avarab@gmail.com>
- <871ea493-e108-e748-0234-f929690ad2fd@ahunt.org>
- <YPCrvOce5qRWk6Rq@coredump.intra.peff.net>
- <87wnpqy8zd.fsf@evledraar.gmail.com>
- <YPH3OOOfK9RVebqZ@coredump.intra.peff.net>
- <87y28hwylq.fsf@evledraar.gmail.com>
+        id S243551AbhIAJVD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Sep 2021 05:21:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41806 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243578AbhIAJVA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Sep 2021 05:21:00 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 371A1C061760
+        for <git@vger.kernel.org>; Wed,  1 Sep 2021 02:20:04 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id p2so2983134oif.1
+        for <git@vger.kernel.org>; Wed, 01 Sep 2021 02:20:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=SlKUDLfoH4z/bLGF2rRhDcu69U+sWQn3YUqA0ft8t18=;
+        b=JIpp2hNxFmbWwFXAsRiZnGc7armM5btRH43CDy2Ck2zOQCSH5PodfMI7DqTZpcy7Va
+         W/tz8p1TbW88vy6vtE4CakOxW6FWNcwMB4QSwnZt3nYz65wnigssv9yPvp7OTjkRkyOU
+         hRYzY5nXzh0UxRUNGkhC4FcyPjaynltvhc+98sZSXKz+WDVJ/Ll4oFBFJy+r774sM6ot
+         bJ/9UpCAn8U2YuugE6WCDzoamsYAUCPt2wEgPnirAYKe1qT/5K++alMD7DpSQ+oErdSe
+         9fxcV1HVZULsR2l6Qb34PnOg8/ueWrccYJrOvF/s6Px+g6cbi3QmixRaHJ/dUx+/WWvz
+         /wjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=SlKUDLfoH4z/bLGF2rRhDcu69U+sWQn3YUqA0ft8t18=;
+        b=dPadCKuXVBpjI4BBKpqbWaUG+nM6FNTzwRAzt/WPZt+Ocu0u0IvPtNYAcxRVzxNszb
+         PxuuZC7iPP657jawDbUOBp5nHoMe50g27Xd8ktuxdyC8GrLtX8w3oVXlgOZpQ4RqZRHj
+         5hMe3QQh5USLCS+VQ/xT3BFLSDCCgKyyVJSFDc3II7pL2ZxQex2DYZ8w8C4Hhnb9a5Ei
+         7Ev6O+SyfdE/mUFG/X9OqNubkfChTrJFfm+SlIoKt6AmlOWTRFc9DH9NHe8vdBcB93P+
+         Mn3+F6OaUJRew8aJxm9zgbJLmZUhepB+EYVg8tauAvVvcKMHoh8bXnVPXMKiZl+iGfb3
+         0djw==
+X-Gm-Message-State: AOAM531P6iN2Cq53anLo8H9uJD02uEONWa7ae39t+p6zM382yD6lBkql
+        4aE80+mZWtGBxx3ujgNRkk4+9/+FLN8=
+X-Google-Smtp-Source: ABdhPJyvBE+H+Iim9X6mpU+nwtu5UJd5unooSPqMfhBFubc+gb23EgQ4/Uhne9BQTw10ZA28zo6pSA==
+X-Received: by 2002:a54:4f8a:: with SMTP id g10mr6479176oiy.81.1630488003155;
+        Wed, 01 Sep 2021 02:20:03 -0700 (PDT)
+Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
+        by smtp.gmail.com with ESMTPSA id s206sm4161597oif.44.2021.09.01.02.20.02
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Sep 2021 02:20:02 -0700 (PDT)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, avarab@gmail.com, phillip.wood@dunelm.org.uk,
+        gitster@pobox.com, mackyle@gmail.com, sunshine@sunshineco.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [RFC PATCH v2 0/4] developer: support pedantic
+Date:   Wed,  1 Sep 2021 02:19:37 -0700
+Message-Id: <20210901091941.34886-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.33.0.481.g26d3bed244
+In-Reply-To: <20210809013833.58110-4-carenas@gmail.com>
+References: <20210809013833.58110-4-carenas@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87y28hwylq.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 31, 2021 at 02:47:01PM +0200, Ævar Arnfjörð Bjarmason wrote:
+WARNING: this will break CI with seen when merged and unless the
+kwown pedantic issue still remaining from fsmonitor[0] is merged
+first (expected to come in a reroll)
 
-> > That works, but now "util" is not available for all the _other_ uses for
-> > which it was intended. And if we're not using it for those other uses,
-> > then why does it need to exist at all? If we are only using it to hold
-> > the allocated string pointer, then shouldn't it be "char *to_free"?
-> 
-> Because having it be "char *" doesn't cover the common case of
-> e.g. getting an already allocated "struct something *" which contains
-> your string, setting the "string" in "struct string_list_item" to some
-> string in that struct, and the "util" to the struct itself, as we now
-> own it and want to free() it later in its entirety.
+this series has a different subject than v1 and that is currently
+tracked as cb/ci-build-pedantic, but is a reroll (even if it discards
+all changes from v1) and was originally suggested by Phillip as an
+alternative.
 
-OK. I buy that storing a void pointer makes it more flexible. I'm not
-altogether convinced this pattern is especially common, but it's not any
-harder to work with than a "need_to_free" flag, so there's no reason not
-to do that (and to be fair, I didn't look around for possible uses of
-the pattern; it's just not one I think of as common off the top of my
-head).
+because of that, it might conflict with changes proposed by Ævar[2]
+but that are still not in "seen" AFAIK and merges cleanly otherwise.
 
-> That and the even more common case I mentioned upthread of wanting to
-> ferry around the truncated version of some char *, but still wanting to
-> account for the original for an eventual free().
-> 
-> But yes, if you want to account for freeing that data *and* have util
-> set to something else you'll need to have e.g. your own wrapper struct
-> and your own string_list_clear_func() callback.
+first patch was suggested[1] by Peff, so hopefully my commit message
+and his assumed SoB are still worth not mixing it with patch 2 (which
+has a slight different but related focus and touches the same files)
+but since it is no longer a single patch, lets go wild.
 
-But stuffing it into the util field of string_list really feels like a
-stretch, and something that would make existing string_list use painful.
-There are tons of cases where util points to some totally unrelated (in
-terms of memory ownership) item. I'd venture to say most cases where
-string_list_clear() is called without free_util would count here.
+patches 3 and 4 are optional and mostly for RFC, so that a solution
+to any possible issue that the retiring of USE_PARENS_AROUND_GETTEXT_N
+are addressed.
 
-> > I don't think most interfaces take a string_list_item now, so wouldn't
-> > they similarly need to be changed? Though the point is that all of these
-> > degrade to a regular C-string, so when you are just passing the value
-> > (and not ownership), you would just dereference at that point.
-> 
-> Sure, just like things would need to be changed to handle your proposed
-> "struct def_string".
-> 
-> By piggy-backing on an already used struct in our codebase we can get a
-> lot of that memory management pretty much for free without much
-> churn.
-> 
-> If you squint and pretend that "struct string_list_item" isn't called
-> something to do with that particular collections API (but it would make
-> use of it) then we've already set up most of the scaffolding and
-> management for this.
+Carlo Marcelo Arenas Belón (3):
+  developer: enable pedantic by default
+  developer: add an alternative script for detecting broken N_()
+  developer: move detect-compiler out of the main directory
 
-It's that squinting that bothers me. Sure, it's _kinda_ similar. And I
-don't have any problem with some kind of struct that says "this is a
-string, and when you are done with it, this is how you free it". And I
-don't have any problem with building the "dup" version of string_list
-with that struct as a primitive. But it seems to me to be orthogonal
-from the "util" pointer of a string_list, which is about creating a
-mapping from the string to some other thing (which may or may not
-contain the string, and may or may not be owned).
+Jeff King (1):
+  developer: retire USE_PARENS_AROUND_GETTEXT_N support
 
-TBH, I have always found the "util" field of string_list a bit ugly (and
-really most of string_list). I think most cases would be better off with
-a different data structure (a set or a hash table), but we didn't have
-convenient versions of those for a long time. I don't mind seeing
-conversions of string_list to other data structures. But that seems to
-be working against using string_list's string struct in more places.
+ Makefile                                      | 22 +-----
+ config.mak.dev                                |  7 +-
+ detect-compiler => devtools/detect-compiler   |  0
+ .../find_accidentally_concat_i18n_strings.pl  | 69 +++++++++++++++++++
+ gettext.h                                     | 24 -------
+ git-compat-util.h                             |  4 --
+ 6 files changed, 74 insertions(+), 52 deletions(-)
+ rename detect-compiler => devtools/detect-compiler (100%)
+ create mode 100755 devtools/find_accidentally_concat_i18n_strings.pl
 
--Peff
+[0] https://lore.kernel.org/git/20210809063004.73736-3-carenas@gmail.com/
+[1] https://lore.kernel.org/git/YS7c3169x5Wk4PlA@coredump.intra.peff.net/
+[2] https://lore.kernel.org/git/cover-v3-0.8-00000000000-20210831T132546Z-avarab@gmail.com/
+-- 
+2.33.0.481.g26d3bed244
+
