@@ -2,151 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3670EC432BE
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 15:32:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4EE2C432BE
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 15:35:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0FC1A610CD
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 15:32:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9146A61074
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 15:35:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345798AbhIBPdg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Sep 2021 11:33:36 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52207 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229941AbhIBPde (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Sep 2021 11:33:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1630596752;
-        bh=deAj79mayMgAGEniIW7+itDGD53DbkFV5FPY+ryWtYg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=YAecuLVr9rmRJk2pjbsLBvYUNH9+bZq6cchYgRopZ4XfViJGthUo3u/DELz9qjCDd
-         C1sTHQzdQ6Sv9B4hodQhbhtiiyvPUTI6rsd1W+MF4ujtadzWVJa/ke+s8+fr6THvZC
-         CD1p957TXPqHtN+8cN8jYqL+nhA7A31/JZfA2400=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.86.215] ([213.196.213.44]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MRmjq-1mXFj003QI-00TAyU; Thu, 02
- Sep 2021 17:32:32 +0200
-Date:   Thu, 2 Sep 2021 17:32:40 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] makefile: teach git about NO_MSGFMT (as supported in
- GUI and gitk)
-In-Reply-To: <20210902085438.54121-1-carenas@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2109021730040.55@tvgsbejvaqbjf.bet>
-References: <20210902085438.54121-1-carenas@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1345731AbhIBPgq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Sep 2021 11:36:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35272 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234465AbhIBPgp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Sep 2021 11:36:45 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6F71C061575
+        for <git@vger.kernel.org>; Thu,  2 Sep 2021 08:35:46 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id jg16so2213282ejc.1
+        for <git@vger.kernel.org>; Thu, 02 Sep 2021 08:35:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=J+fEEJctmzc/+/WwZLNMZ6kqb0JPyNJf4lJqavhRbgI=;
+        b=AYzb+2Ls1CRfyMbYnWhVF4KjPLAqvi+wJ6W+BEAyh/0KIP0L9VJerP9pZsJWD/6ofc
+         iOCuykqObaoC9MY5TThqJ8xbvQ4mb7KlyVZYz9rB4Rwpzv4/FHW1yOgmu2dBnmXRTmFP
+         SfkgqaC6wqib4Kq4f12A2+jtbO+8TeocCJ5fRsovr09aXo7rxumgbvJmWm2wGJFbehrX
+         BJ/KT9GTXMg4/eRgxWYkmPdNRjHLdD1iphIdrwIBl0BdOvHldTofJLW/D2EYhdG/P+n5
+         7w9b/LZRJwtsy1t82BrM/ZB7Gl+s3vQHP3I39e11gNDmF3Ec/6JyU+EDgpL+2PW8oXlk
+         F13w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=J+fEEJctmzc/+/WwZLNMZ6kqb0JPyNJf4lJqavhRbgI=;
+        b=b+NbOFrYMCM22nk32QUiZ4Meww620fZ+BfQKYSL1MVQGMI8TtTGFrM2/TxDRLks2UB
+         WRCPQt3Ck6b+Ylis9aZYCo+wWQYVUOhnq3h2demqgJsFgMYgGWvvHyqF0iHLn07P93fD
+         WHBwuIIT4RgAuKpL0eQJmNynVDX3WF3y8asrM4cfZf/uQYINGk6IhEZ1hAhzMTT5vG34
+         ZOIRTrfJti7a0QKmB+ezHbKLrzLxnDRhPD3D+KslzGq3N4Qx0Kb14u0tRxtZBBZ8U+9r
+         K45LJ48DIirXxgYmRQ+3wA5s3aSOqcIt6ad4uAhHGrjMeObc+CU4MxP75VKiq+aQ3hwm
+         mjnQ==
+X-Gm-Message-State: AOAM530el5Im+B+Gq3zuBXRwemxOYiJEry4ToVaOXMxTFWEX9/Q57gFe
+        /ThzG13ovc47RQ9qV27p9x0=
+X-Google-Smtp-Source: ABdhPJxtK/wVNc9DFxQxDSlH46LcSSMz7ZYGrE0T/0WALQN0rX24MR0HCNvJfTXRRkUamunZFbBx8A==
+X-Received: by 2002:a17:907:2d8b:: with SMTP id gt11mr4509989ejc.432.1630596945189;
+        Thu, 02 Sep 2021 08:35:45 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id m23sm1353119eje.105.2021.09.02.08.35.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Sep 2021 08:35:44 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 5/7] rebase: drop support for `--preserve-merges`
+Date:   Thu, 02 Sep 2021 17:34:56 +0200
+References: <pull.195.git.1574542242.gitgitgadget@gmail.com>
+ <pull.195.v2.git.1630497435.gitgitgadget@gmail.com>
+ <eb738b1bf05dceb1d119e3adcd732d968407c757.1630497435.git.gitgitgadget@gmail.com>
+ <87lf4f9gre.fsf@evledraar.gmail.com> <87czpr9fwz.fsf@evledraar.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <87czpr9fwz.fsf@evledraar.gmail.com>
+Message-ID: <878s0f9ei8.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1212006726-1630596762=:55"
-X-Provags-ID: V03:K1:r/uxWdaOBq57Ud6gaOapDSK0sHnbYJh8tDN4EHKGQUOllohDdDw
- 6K1wbVHSkhDNl0+9kfRKPwxmCu2XOsKGzW+U8D5yff7Bbof2dYCjJEMnNH4+q85WMXP/Fis
- L8IHQb8JSOpgV1pioxNcDcgf8FE7CTUJQZZdAGNQ12ebl7USZNux36Olf7ep3RMiWVORKvY
- Uoo+v2PyO3fUtGUeJseXw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:l19ztx5PGIs=:bvnCs6ux06kjakHkxMTtIx
- 14Lpn628eOxz6Tz884eUivyp1WpygaivvQtVmwLskKAGsIdjsmNSbHJRPEhVTiIj9YRrEBzcH
- KCsZ36sYmvW+Dp+tOipdxkyTo/5ewW/hGDAAk6ODrpc6YrXWIRws9+x7THtjflosWPWKzvko5
- O5yv2Mua0+CWDQL7wG0ONBAFIxICCyhw88hfwPC0bvW0oXlxm3LuOPnt+rirXTXFvoheJy5A4
- o8FtoOPWPyq8ypSuEa2RGrP8ZiW2PdJJIMI6B0I6IRtlaqZ4ldzdO6xBihgsfFkjpZY77cMkR
- dDPp2zJyqPyQHSHDdNduL0bLY/k62TlXnz2OBOyWvhDxodrSg0e5VBO5MQ79OyEJuPn11+30b
- GgOIZGn/XH/axcZAgolY3B4c4/z4dedCjvDgr6figamsba5cw6CSC1CK7FW4/BGGq2bJUFMiK
- bMCw7eiASRhN65rbE0yGGI5+lj2trG/pTEWl40X8c/5qRVYgQXPaH4mw/XHmTHQHILkdd0sye
- YpAV/H/I7noFMF/3Y9BBf8TOks+eEh/9DWnwcJn1CNXefvBxiO9CqutLrsM0ruZRjd/LYgo7q
- Bp64ew6IulOk57RTLDQYeRLL6nF20+EV+3qPXGCMiYlzt7KvKPFa/XBVBgpfF4CDl1glLVsjR
- Fthd9xqVNuXPGnsfeKHVtB8IpJdkWkqqjL1WXxhGj0CplMAuJpwOtKfFhWT5uwLC0rI1bU5AL
- kJpzu5idVvwNIzNuoJ2LSD5HlqtoRTnL3J5u/7R6/9Mr3DITQaFiEeDlFHrpfXeKtDa58wKeu
- I9Sdhzv/8WM8M1B/8zvCT4a7UK+1W5uzKHA/Leh64bMm0FWCeAkobY0u2PJVYDVAZq6qMZ7JP
- /q59lygqzcO6B1PkYN85FpVIUBNeG2xd/yaShDe97hymYJioo+qfhjT3zjnFP8SZrUzhgUXQ+
- N4cmMzCrtapanOVB692mzV+XhPr0AnqRRPMlY6X62fMEXYbXS0Q/W1718KoKAnD7885K/LYLV
- 28WggoyJbUj20B5bp0j6scVOWlbxFMH738DVcm+jL6RQuz3nkacevrzgm+utdIKtHgHsqdkaa
- bJ66OpUVQHIbHIor5Voq2jHnSgjVjpv4CJFLSAx6a7wCquVVC+Hg4lVqQ==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1212006726-1630596762=:55
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Thu, Sep 02 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Hi Carlo,
-
-On Thu, 2 Sep 2021, Carlo Marcelo Arenas Bel=C3=B3n wrote:
-
-> NO_MSGFMT can be used to indicate there is no msgfmt available, so
-> make git recognize that and avoid failing to build while trying to
-> generate i18n files.
+> On Thu, Sep 02 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >
-> while at it, refactor the change introduced in 4348824059
-> (artifacts-tar: respect NO_GETTEXT, 2021-07-04) with something as
-> functional but shorter.
+>> On Wed, Sep 01 2021, Johannes Schindelin via GitGitGadget wrote:
+>>
+>>>  git-rebase--preserve-merges.sh | 1057 --------------------------------
+>>
+>> You could, but certainly don't have to, squash in the below. I.e. this
+>> is the last user of eval_ngettext!
+>
+> Also get_author_ident_from_commit() in git-sh-setup.sh and
+> Documentation/git-sh-setup.txt can be removed,
+> git-rebase--preserve-merges.sh is the last user of it.
+>
+> I looked over the other git-sh-setup functions, it seems that's the only
+> one that could be removed along with git-rebase--preserve-merges.sh.
 
-To me, this commit message is not really related to the diff, which
-essentially only adds a code comment and then has the only functional
-change that _prevents_ `POFILES` and `MOFILES` from being set to empty
-values when `NO_MSGFMT` is set.
-
-I am therefore quite puzzled how that diff is supposed to achieve anything
-that is described in the commit message (how does this "make git recognize
-that"?).
-
-Could you maybe clarify that?
-
-Thanks,
-Dscho
-
->
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
-> ---
->  Makefile | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 9573190f1d..9f09a75801 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -86,6 +86,8 @@ all::
->  # Define LIBC_CONTAINS_LIBINTL if your gettext implementation doesn't
->  # need -lintl when linking.
->  #
-> +# Define NO_MSGFMT if you don't have msgfmt
-> +#
->  # Define NO_MSGFMT_EXTENDED_OPTIONS if your implementation of msgfmt
->  # doesn't support GNU extensions like --check and --statistics
->  #
-> @@ -2691,10 +2693,8 @@ po/git.pot: $(GENERATED_H) FORCE
->  .PHONY: pot
->  pot: po/git.pot
->
-> -ifdef NO_GETTEXT
-> -POFILES :=3D
-> -MOFILES :=3D
-> -else
-> +ifndef NO_MSGFMT
-> +ifndef NO_GETTEXT
->  POFILES :=3D $(wildcard po/*.po)
->  MOFILES :=3D $(patsubst po/%.po,po/build/locale/%/LC_MESSAGES/git.mo,$(=
-POFILES))
->
-> @@ -2703,6 +2703,7 @@ endif
->
->  po/build/locale/%/LC_MESSAGES/git.mo: po/%.po
->  	$(QUIET_MSGFMT)mkdir -p $(dir $@) && $(MSGFMT) -o $@ $<
-> +endif
->
->  LIB_PERL :=3D $(wildcard perl/Git.pm perl/Git/*.pm perl/Git/*/*.pm perl=
-/Git/*/*/*.pm)
->  LIB_PERL_GEN :=3D $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL))
-> --
-> 2.33.0.481.g26d3bed244
->
->
-
---8323328-1212006726-1630596762=:55--
+Although with git-rebase--preserve-merges.sh gone the
+get_author_ident_from_commit(), parse_ident_from_commit() and
+pick_ident_script() can all be moved to its last user:
+git-filter-branch.sh
