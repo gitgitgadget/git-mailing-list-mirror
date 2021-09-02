@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34967C432BE
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 13:12:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47774C432BE
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 13:12:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E9BD6108E
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 13:12:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B1D16108E
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 13:12:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345177AbhIBNNW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Sep 2021 09:13:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58868 "EHLO
+        id S1345193AbhIBNNg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Sep 2021 09:13:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345126AbhIBNND (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1345134AbhIBNND (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 2 Sep 2021 09:13:03 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 320C7C061796
-        for <git@vger.kernel.org>; Thu,  2 Sep 2021 06:12:01 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id z4so2847229wrr.6
-        for <git@vger.kernel.org>; Thu, 02 Sep 2021 06:12:01 -0700 (PDT)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D987C0612A7
+        for <git@vger.kernel.org>; Thu,  2 Sep 2021 06:12:02 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id b10so2915216wru.0
+        for <git@vger.kernel.org>; Thu, 02 Sep 2021 06:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=sAUDjTwIMDtKGi+zJ2dRl4kFDwzwtB7YeDDf17yCEdI=;
-        b=XZxy/7/8QcQf5W9SG4xnRz5mmzw6K/m1mxL+MCljfp5mI0J+AoTBRkGjK7VrHhGTNc
-         VKJS8GZXBlUHFeBB9C9tYRJExE3MSgM4ZuJenvQkw0OBJfv3rEqyRyWs8F7m4/oSj8L3
-         VB5dvVsNKESEI9cVVESjTKtL7x0LpXaR0zAtixybXSe14Sxu84WlNJcF1xEsH9TodQk8
-         KpIsfocK1+JYUlflQnAZlNuY3dn1KbB6wfyj672m8dDS1c/gJNPTzBl3DzrPeI1HJIsI
-         WAkZXkvbGxkz63hKV5ejdtYIjWVRbiGJpjTPkqxUxY2F23WcBMvGFBOm+hR7Alp8emaD
-         nZ7Q==
+        bh=Xo+rXtd5NZVQ5e01Rdl5+TrwkeWvb51b+GFIkIRqKBo=;
+        b=Ar33kEKW5yj+d2sIl7QvcBqzGmz7tQfbzCz7RWM5kjmQ/zNaj0EynYWvZQy+A+Re9C
+         ZPfUzfWC2yswXSz3S/a7XNWCVxnfJn7mOyBmd2q8efGK3zq/ATgU9xzFR8fIfI2bFlEL
+         yKjLB1anguBT8bWtkbBaoi9wcGUIJWqiOzFH7Ow3/FvBB3QxnTVwEeyqJF3YghLdcgbF
+         d6cmaT6HerObIrLU0D6l9m5SUEqxNLatJNw1ZIcMoYdWAJqYOBk9sLWJhtgmhHTIikcK
+         rw6QTVDYMngTpRnxGtiBKVwfGRiMpcOiAjcBOSnPFSd3cotwKmqdA1BwfahMYpYswK4s
+         C+XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=sAUDjTwIMDtKGi+zJ2dRl4kFDwzwtB7YeDDf17yCEdI=;
-        b=IyB4NfNkgs75GnjLPNW2l8HFwlvLxRixtwAHM1aEKjCXrYCU78N5wFHDEyGl8HTVIL
-         yq7zYflOFDt7Z4mITGTp4ElzxE2ZaOOrFa7RYDz743e2ZlBF74hOF5xlh1buwHd1rbH8
-         bVEGvCc8vwIgLUOjH6BBv1jS3IZn52f/xU0Y9q9ocTtm/IGc8bgMREc7nPtS+H8Debkl
-         Q6EVd2Ps8qGledcM0fPtSKQtXCCuaiSavE0QdK3TbKdWaw6fh79s2hCZXs+NStSMLBdg
-         ULoWvW/XTGLrnXriRSC6GxEOVN++74gbKp9pAVCmTgoq2uTANW9P19S6o0QbN0/vojBu
-         F5wQ==
-X-Gm-Message-State: AOAM533JKidRyRqXUS3hTPN7qWK5mzg7BFluyx3ZBn2QMVPxWHa5HjmG
-        bg6OjUSTZljp+aC6d01vFGg1MTOkt+Edsw==
-X-Google-Smtp-Source: ABdhPJzs8vgJPpUImKtXIIl1y48JoEXwZeMtsjDWfrsI0/PvBWFLhkEAx7Dm3lDi4EuSKpbLh5ntng==
-X-Received: by 2002:adf:fd8c:: with SMTP id d12mr3641720wrr.21.1630588319532;
-        Thu, 02 Sep 2021 06:11:59 -0700 (PDT)
+        bh=Xo+rXtd5NZVQ5e01Rdl5+TrwkeWvb51b+GFIkIRqKBo=;
+        b=Dd5ed/GEIQGZfSVNk1YsW7tFXt2Hoh8uPF6+i1XvVhZJvfnakJ4/CA3cCuFDPVGEy1
+         rj4IpGU9skR0OdBb10Ue8BaOV0UWO0J/iLw2aAUIWsBBpTBuIkWyF5PgyJ1+UPwkelXh
+         qdAnrpPy/a8r3r46XyUfBBNMs3MEr9N2NiK18SrCms+WVvz5E5mo5/y7irq59tbz/gJT
+         Z/GrlcSkJ6UfKSQUsGb0kKznAlMuOMWZT00Pr3PpZ8nmF5zLwS6uDrstOuci6CZ8Q16S
+         LYMGNbnq34BDQ54CApOEAb2hJU6QwoMDzdqyhfxHqL7El+l/4sw0jjUgbIyC7Kedsst6
+         todw==
+X-Gm-Message-State: AOAM530DE/hEk3ONzCsH78YSeGfKXiNNoKPy/iZBK0tYAAgE4peDk80I
+        HwQ5zECIhrt7of+pUgnmnpLuX9HYH8aAQg==
+X-Google-Smtp-Source: ABdhPJzDVbZSnhhAzLLXzull2Vm995SPNmjshJ7/CpPMoB+/v2QjaE6pKbv+EVbkrnVXXmjHEODNhQ==
+X-Received: by 2002:adf:804a:: with SMTP id 68mr3692580wrk.236.1630588320483;
+        Thu, 02 Sep 2021 06:12:00 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o7sm1479635wmq.36.2021.09.02.06.11.58
+        by smtp.gmail.com with ESMTPSA id o7sm1479635wmq.36.2021.09.02.06.11.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Sep 2021 06:11:58 -0700 (PDT)
+        Thu, 02 Sep 2021 06:12:00 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -70,9 +70,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 16/36] git-p4: use 'git hook' to run hooks
-Date:   Thu,  2 Sep 2021 15:11:16 +0200
-Message-Id: <patch-v5-16.36-99f3dcd1945-20210902T125110Z-avarab@gmail.com>
+Subject: [PATCH v5 17/36] commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
+Date:   Thu,  2 Sep 2021 15:11:17 +0200
+Message-Id: <patch-v5-17.36-509761454e6-20210902T125110Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.816.g1ba32acadee
 In-Reply-To: <cover-v5-00.36-00000000000-20210902T125110Z-avarab@gmail.com>
 References: <cover-v4-00.36-00000000000-20210803T191505Z-avarab@gmail.com> <cover-v5-00.36-00000000000-20210902T125110Z-avarab@gmail.com>
@@ -85,104 +85,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Instead of duplicating the behavior of run-command.h:run_hook_le() in
-Python, we can directly call 'git hook run'. We emulate the existence
-check with the --ignore-missing flag.
-
-As this is the last hook execution in git.git to not go through "git
-hook run" or the hook.[ch] library we can now be absolutely sure that
-our assertion in hook.c that only hooks known by the generated (from
-githooks(5)) hook-list.h are permitted.
+Move these hooks hook away from run-command.h to and over to the new
+hook.h library.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-p4.py | 72 ++++++-------------------------------------------------
- 1 file changed, 7 insertions(+), 65 deletions(-)
+ commit.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/git-p4.py b/git-p4.py
-index 2b4500226aa..1f24cbf0bca 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -207,71 +207,13 @@ def decode_path(path):
-         return path
+diff --git a/commit.c b/commit.c
+index 143f472c0f2..63d7943a86d 100644
+--- a/commit.c
++++ b/commit.c
+@@ -21,6 +21,7 @@
+ #include "commit-reach.h"
+ #include "run-command.h"
+ #include "shallow.h"
++#include "hook.h"
  
- def run_git_hook(cmd, param=[]):
--    """Execute a hook if the hook exists."""
--    if verbose:
--        sys.stderr.write("Looking for hook: %s\n" % cmd)
--        sys.stderr.flush()
--
--    hooks_path = gitConfig("core.hooksPath")
--    if len(hooks_path) <= 0:
--        hooks_path = os.path.join(os.environ["GIT_DIR"], "hooks")
--
--    if not isinstance(param, list):
--        param=[param]
--
--    # resolve hook file name, OS depdenent
--    hook_file = os.path.join(hooks_path, cmd)
--    if platform.system() == 'Windows':
--        if not os.path.isfile(hook_file):
--            # look for the file with an extension
--            files = glob.glob(hook_file + ".*")
--            if not files:
--                return True
--            files.sort()
--            hook_file = files.pop()
--            while hook_file.upper().endswith(".SAMPLE"):
--                # The file is a sample hook. We don't want it
--                if len(files) > 0:
--                    hook_file = files.pop()
--                else:
--                    return True
--
--    if not os.path.isfile(hook_file) or not os.access(hook_file, os.X_OK):
--        return True
--
--    return run_hook_command(hook_file, param) == 0
--
--def run_hook_command(cmd, param):
--    """Executes a git hook command
--       cmd = the command line file to be executed. This can be
--       a file that is run by OS association.
--
--       param = a list of parameters to pass to the cmd command
--
--       On windows, the extension is checked to see if it should
--       be run with the Git for Windows Bash shell.  If there
--       is no file extension, the file is deemed a bash shell
--       and will be handed off to sh.exe. Otherwise, Windows
--       will be called with the shell to handle the file assocation.
--
--       For non Windows operating systems, the file is called
--       as an executable.
--    """
--    cli = [cmd] + param
--    use_shell = False
--    if platform.system() == 'Windows':
--        (root,ext) = os.path.splitext(cmd)
--        if ext == "":
--            exe_path = os.environ.get("EXEPATH")
--            if exe_path is None:
--                exe_path = ""
--            else:
--                exe_path = os.path.join(exe_path, "bin")
--            cli = [os.path.join(exe_path, "SH.EXE")] + cli
--        else:
--            use_shell = True
--    return subprocess.call(cli, shell=use_shell)
--
-+    """args are specified with -a <arg> -a <arg> -a <arg>"""
-+    args = ['git', 'hook', 'run', '--ignore-missing', cmd]
-+    if param:
-+        args.append("--")
-+        for p in param:
-+            args.append(p)
-+    return subprocess.call(args) == 0
+ static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
  
- def write_pipe(c, stdin):
-     if verbose:
+@@ -1698,22 +1699,22 @@ size_t ignore_non_trailer(const char *buf, size_t len)
+ int run_commit_hook(int editor_is_used, const char *index_file,
+ 		    const char *name, ...)
+ {
+-	struct strvec hook_env = STRVEC_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+ 	va_list args;
+-	int ret;
++	const char *arg;
+ 
+-	strvec_pushf(&hook_env, "GIT_INDEX_FILE=%s", index_file);
++	strvec_pushf(&opt.env, "GIT_INDEX_FILE=%s", index_file);
+ 
+ 	/*
+ 	 * Let the hook know that no editor will be launched.
+ 	 */
+ 	if (!editor_is_used)
+-		strvec_push(&hook_env, "GIT_EDITOR=:");
++		strvec_push(&opt.env, "GIT_EDITOR=:");
+ 
+ 	va_start(args, name);
+-	ret = run_hook_ve(hook_env.v, name, args);
++	while ((arg = va_arg(args, const char *)))
++		strvec_push(&opt.args, arg);
+ 	va_end(args);
+-	strvec_clear(&hook_env);
+ 
+-	return ret;
++	return run_hooks_oneshot(name, &opt);
+ }
 -- 
 2.33.0.816.g1ba32acadee
 
