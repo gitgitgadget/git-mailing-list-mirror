@@ -2,107 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04153C432BE
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 12:51:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8725EC432BE
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 13:01:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE5A7610CD
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 12:51:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D35761058
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 13:01:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344668AbhIBMwK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Sep 2021 08:52:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54026 "EHLO
+        id S1344807AbhIBNCs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Sep 2021 09:02:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234290AbhIBMwI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Sep 2021 08:52:08 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2451DC061575
-        for <git@vger.kernel.org>; Thu,  2 Sep 2021 05:51:10 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id 2so1559227pfo.8
-        for <git@vger.kernel.org>; Thu, 02 Sep 2021 05:51:10 -0700 (PDT)
+        with ESMTP id S1344741AbhIBNCq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Sep 2021 09:02:46 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31FEBC061575
+        for <git@vger.kernel.org>; Thu,  2 Sep 2021 06:01:48 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id g13-20020a17090a3c8d00b00196286963b9so1391429pjc.3
+        for <git@vger.kernel.org>; Thu, 02 Sep 2021 06:01:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DixOuvj6e4uffYD7Y71zRF7I1YAcI0/uJuatbO+zbnk=;
-        b=gEnTMlruhEGvRenmH/YbsP0IgzHb6sBRATEmy+aRKKlcazhIYdAN6gE0NVx/4JwdNk
-         6EkPz78uKebHPm4AGs40jLWp+1hWnqFFr4Bq2bFNJJx5ASqTfff2z4z9Tc4jfFFN/b7J
-         B1Jsjn05bW9jwNfayKnXSkmjPjEdiUHNFaoeYt3nk9R78IQOuxtc0Y+jNyreFoLBfZoE
-         8Jn9cJ79udgjLQ9rFCh4sYgaAT8Z2x9uRDvzZzjASMsrkGgIOToL3s5uUUBtSREU6AtQ
-         BeFDOJkXLkZBzWcw6JPhcoj9s8yq/bftdSelzzAWW9+lNEpq1BvAuYEKEGG0SwLzmTUl
-         Fbvw==
+        bh=kFN+7fxvFEC0LCQIdmroJass0zB6sbXhrQEJYlr4HqY=;
+        b=M+9ph2ToHrI4FwAwZkr2MFomNRadJz3SFEqSXNdW0+nBT6bEAuYd4fBziRhHoDrgc7
+         WTT5JezTmKeIv1hCvs2gK77Zsk6RvfDw6xbPGdsqDzydpvMvd5rofhc29eEpXsYHTZFk
+         gt9Unw3cvtQRkMscqbV2sn9OocAC+P7pN1kFUfzCocm1/z56VcDN9mlbOlkHF0dR62RZ
+         g9q8qFIGnHVFmUHYb2aV9eaXzyS713FCZ829lCxcjScKHEPkx+ndqEDrJIy1jAvULbBA
+         IhyhvJCcGNdJnz74WNYigcuvYaKO6nzUB0/hWXXDPieqFUcatgwJuvDFCFkMgQEFMhbe
+         uu2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DixOuvj6e4uffYD7Y71zRF7I1YAcI0/uJuatbO+zbnk=;
-        b=TnoHRQO0tMy87aTcHiElVnJ94pLXBggebseOfwNPo4AowtQSiKWIrUN9SCMqVfup+l
-         PUxxJLHofDnkJYdoxGlt8AHW3GoqmNcig2pEQcV87D6qNRIIff6c3OzbnhDk/36vJ/mI
-         ffi+NAVTHT5Gj8nHSvJP37RNs2xaNZfcUa9/8vENkRZr6hyFBbIqqyYIwOAENghOZjmn
-         Ze9rfPdgB0abh8tX9Vu9+GWiiULwKJ2ZhlFiEUzGDG6S0D29gbZvbIJnyZOe4NiIfx1y
-         tje6HpSCDNZmlKwVyfH1MK7d63OLi2q9FTwcSilVF/Mao66vHzWyalsx++hCcrxkWxTn
-         h6/A==
-X-Gm-Message-State: AOAM531Vefp+lVLlOkObARr84qCdot4fmIaHuvxF5dCdR9QBssHm4VHH
-        mdg8jnA0UAuYiTyXP0SFuBs=
-X-Google-Smtp-Source: ABdhPJyufWZx12w5o/AECuLXOz3p4Dv876OshIBq+f4aeZ4SJjtu+GkgaUZvNvcpz17H+mneSHNWEg==
-X-Received: by 2002:aa7:9a06:0:b0:3f4:1f0a:4fc6 with SMTP id w6-20020aa79a06000000b003f41f0a4fc6mr3253516pfj.58.1630587069587;
-        Thu, 02 Sep 2021 05:51:09 -0700 (PDT)
+        bh=kFN+7fxvFEC0LCQIdmroJass0zB6sbXhrQEJYlr4HqY=;
+        b=kW/mNp10zdok8sxELxJp+wpLpHMN4mnRmXWPBqGT3mbtHp9sQRiWUMWiiI890RVBaC
+         GmAaYQeNG45C4+JqRLCbVUuicWRY3rOD9sVaIL4SScYh5QoR+jNF1W7r2BK6w3fN6fgu
+         B5NycO7F6pleRU75H8mFPhz7KUNRVJbQOdif+5L3ECYEoQQdhCv5oChQGLD++lzB61Dd
+         hyNkNcv6TvMuz7z9xHpqUvO4ij1PTiwwqyWtF33BBblj+SlcSz8yM6McZE1yOKiAkudj
+         JOyYWkcYSsIuGoNR/QcFK6x6YbOrKRGq3JSTsKbAD7RPJQd4ZwMv1071yaCfnx3bC18a
+         fkig==
+X-Gm-Message-State: AOAM5316kinBQ4DwL9qdHavMIBaLyE9ZaSQH+izTkGQDG5CuPOMJ8JL5
+        Ud/+3HW8hgSIb5RlDsFK/lA=
+X-Google-Smtp-Source: ABdhPJyOuZdPbVtHbX55lXL2klsn4llrGVEkBE1qr3M6/gCFIjW7s5/lERvbnCnMWh5qaizG+erRIA==
+X-Received: by 2002:a17:902:e74e:b0:133:7a42:90ce with SMTP id p14-20020a170902e74e00b001337a4290cemr2791238plf.83.1630587707278;
+        Thu, 02 Sep 2021 06:01:47 -0700 (PDT)
 Received: from localhost.localdomain ([47.246.98.145])
-        by smtp.gmail.com with ESMTPSA id d8sm2336558pjr.17.2021.09.02.05.51.08
+        by smtp.gmail.com with ESMTPSA id 17sm2390414pjd.3.2021.09.02.06.01.45
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 02 Sep 2021 05:51:09 -0700 (PDT)
+        Thu, 02 Sep 2021 06:01:46 -0700 (PDT)
 From:   Teng Long <dyroneteng@gmail.com>
-To:     gitster@pobox.com
+To:     adlternative@gmail.com
 Cc:     avarab@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
-        jonathantanmy@google.com
-Subject: Re: [PATCH v5 03/14] packfile-uri: support for excluding commit objects
-Date:   Thu,  2 Sep 2021 20:51:02 +0800
-Message-Id: <20210902125102.78016-1-dyroneteng@gmail.com>
+        gitster@pobox.com, jonathantanmy@google.com
+Subject: Re: [PATCH v5 09/14] commit.h: add wrapped tags in commit struct
+Date:   Thu,  2 Sep 2021 21:01:39 +0800
+Message-Id: <20210902130139.78316-1-dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.31.1.456.g1a7c4c5894.dirty
-In-Reply-To: <xmqqfsuwc4cl.fsf@gitster.g>
-References: <xmqqfsuwc4cl.fsf@gitster.g>
+In-Reply-To: <CAOLTT8Qm2wGMU0RuX+OrzZt78zSmzxHNoh0NYUFuVKJSAZJ1Ng@mail.gmail.com>
+References: <CAOLTT8Qm2wGMU0RuX+OrzZt78zSmzxHNoh0NYUFuVKJSAZJ1Ng@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Junio C Hamano wrote:
+ZheNing Hu wrote:
 
-> Whenever you say "which means", e.g. "We do X, which means we do Y",
-> think twice to see if you do not even have to say X.  In this
-> particular sentence, I think you can simplify the description
-> greatly and you do not even have to use the word "recursive".  
-
-Forgive my English for another accident.
-
-Will be fixed in the next patch.
-
-> Also, because this "exclusion by a commit" does not work like the
-> usual "reachability" relationship Git users are familiar with, it
-> would help to highlight what is special that is done here to the
-> readers.
+> /*
+>  * The size of this struct matters in full repo walk operations like
+>  * 'git clone' or 'git gc'. Consider using commit-slab to attach data
+>  * to a commit instead of adding new fields here.
+>  */
+> struct commit {
+>         struct object object;
+>         timestamp_t date;
+>         struct commit_list *parents;
 > 
-> Taking the above together, along the lines of ...
+>         /*
+>          * If the commit is loaded from the commit-graph file, then this
+>          * member may be NULL. Only access it through repo_get_commit_tree()
+>          * or get_commit_tree_oid().
+>          */
+>         struct tree *maybe_tree;
+>         unsigned int index;
+> };
 > 
->     When a commit is specified to be excluded as packfile-uri,
->     exclude all trees and blobs contained in its top-level tree, as
->     well as the commit itself, but not the ancestors of the commit
->     and objects that are reachable by them.
+> According to the instructions above, I wonder if you should use "commit_slab" to
+> store part of the data related to the commit object instead of
+> modifying the member
+> of struct commit itself?
 > 
-> or something like that, perhaps.
+> See:
+> https://github.com/git/git/blob/master/commit-slab.h
+> https://github.com/git/git/blob/master/commit-slab-impl.h
+> https://github.com/git/git/blob/master/commit-slab-decl.h
+> https://lore.kernel.org/git/CAOLTT8Q8BEKCVwPDypW1w66P9_xP7QC0T-CnLqamqAL4haGzwA@mail.gmail.com/
 
-Agree.
+Awesome!
 
-I will use your suggestion in the next patch (may be slightly modified).
+Maybe it's what I really need now, I will make a try.
 
-In the next patch, I originally planned to introduce the exclusion of the
-commit and with all it's ancestor objects. The problems in the current patch
-will also be fixed in the next patch.
-
-Thanks.
+Thanks(比心).
