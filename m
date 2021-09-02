@@ -2,174 +2,238 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1EB6C433F5
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 23:23:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E1C5C433EF
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 23:43:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9054B60F21
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 23:23:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F2CD2610E8
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 23:43:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347952AbhIBXYE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Sep 2021 19:24:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60248 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232902AbhIBXYD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Sep 2021 19:24:03 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97D2EC061575
-        for <git@vger.kernel.org>; Thu,  2 Sep 2021 16:23:04 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id i6so5360940edu.1
-        for <git@vger.kernel.org>; Thu, 02 Sep 2021 16:23:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=SE+rA12ie5ucxol6d8MjxvjyLOg/H81Om6p1XFbLTzE=;
-        b=QosqfXb6/6ENCZ/wgkdgdzwpQirm3Su60wp5SquTUbS0lq6ZtJcU9U4dUxjF8L83p9
-         oZ1x6yhYKk7p6v5AkWFViCVfYbJEf2RTHw71q1vbuLKt863LpMbUWs4oHcNHIDhp4Fqj
-         r+xig0CD/61oukQAn7B4qTMtT5MrTffHRlwsc4Qrv7ugq9Zsh/lCyB1ewhuiYbhpsOlY
-         Qb9h6pqyGvcQwFSXBs0/WzQlKju19fOCwjUxZQV+HVyXWeHN8c7xyszN2o5nfpEJTY5Q
-         bTDUy28vZfZQyuHXwMpGw3OWfWAQQ8q9AHsnJlfmeE1NM6GiMpJkD00vVb29kpbR/eKu
-         6BVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=SE+rA12ie5ucxol6d8MjxvjyLOg/H81Om6p1XFbLTzE=;
-        b=hifYNo6ssNM/Is7e+e4BLf1BKvbr7pdORW5uvBt/LN12fZVw++GZoCpwiFqLtQcoVz
-         fofamqEoqVzKfgDiHQUW1uGCMhppuC9qltb75YWwIZmn+AglrT/KY9fxcL1TESXHiZeo
-         yiyjzkXBk08Ym7xIZJTTxD47PCMDay6JEfm11anHJ3/s+Q0zowLAUAQplgzSXE6K3hHH
-         2PsuJhvDx5W29i4p23YBNttZGT64YECzIKMSNjhNsxzPAcN6wFsJ5twPFL8n/NxREnWd
-         RresK0Mf8aD278cPjAH9j7OcN0VoQGYI3WFdJe42+nDzgKqiQvnzrp/qU54dVmERlQFL
-         2XVg==
-X-Gm-Message-State: AOAM532WAPZS9IF74r6q4+cvm8R/uM2zUt/xOxiInIVAVuGVhp7iEUgM
-        fNL5ewKw4gFFJAisO7pSFmLTcFQpmOwlsA==
-X-Google-Smtp-Source: ABdhPJxi73+hBytX+WfVh+Tj5VFIwZbZa323Mssf9c3OMrWwv9hCacLUIQM6V80GD+O4evj8QZpWnA==
-X-Received: by 2002:a05:6402:14d6:: with SMTP id f22mr822545edx.274.1630624983174;
-        Thu, 02 Sep 2021 16:23:03 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id o21sm1858996eji.29.2021.09.02.16.23.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Sep 2021 16:23:02 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 2/5] strvec: add a strvec_pushvec()
-Date:   Fri, 03 Sep 2021 01:19:33 +0200
-References: <cover-0.4-0000000000-20210727T004015Z-avarab@gmail.com>
- <cover-v3-0.5-00000000000-20210826T140414Z-avarab@gmail.com>
- <patch-v3-2.5-321b8ba3f0e-20210826T140414Z-avarab@gmail.com>
- <xmqq8s0m9xbl.fsf@gitster.g> <xmqq4kba9x1h.fsf@gitster.g>
- <YSm3ofxlRB1ViBf5@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
-In-reply-to: <YSm3ofxlRB1ViBf5@coredump.intra.peff.net>
-Message-ID: <87v93i8svd.fsf@evledraar.gmail.com>
+        id S1345387AbhIBXoE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Sep 2021 19:44:04 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52928 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244285AbhIBXoD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Sep 2021 19:44:03 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F950F01A1;
+        Thu,  2 Sep 2021 19:43:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+feCSMB0VpCN8qvrEedVKIHsoaF9ePodgAGLPp
+        6HaRQ=; b=uAVwxyPd3iSRYO9BAlY8l62qIMjTIik9xDCJfhuUu9DMAuR176aZbB
+        tV+NHOrqKZ5NxZJ0KuB8m+M0xwdqUuHWVYKWwHT6OZtxD+ZTqk2G/Dex0bnOtK1f
+        auyIcMEf+YH00YbMXjq+mMJGDGSdl7M3Iy7Gyt8U48YPXDUpxnr3E=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BEF5F01A0;
+        Thu,  2 Sep 2021 19:43:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BF5B4F019F;
+        Thu,  2 Sep 2021 19:43:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Miriam Rubio <mirucam@gmail.com>
+Cc:     git@vger.kernel.org, Tanushree Tumane <tanushreetumane@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v6 5/6] bisect--helper: reimplement `bisect_run` shell
+References: <20210902090421.93113-1-mirucam@gmail.com>
+        <20210902090421.93113-6-mirucam@gmail.com>
+Date:   Thu, 02 Sep 2021 16:43:02 -0700
+In-Reply-To: <20210902090421.93113-6-mirucam@gmail.com> (Miriam Rubio's
+        message of "Thu, 2 Sep 2021 11:04:20 +0200")
+Message-ID: <xmqqtuj2h7cp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 83613ACC-0C47-11EC-A8F5-D601C7D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Miriam Rubio <mirucam@gmail.com> writes:
 
-On Sat, Aug 28 2021, Jeff King wrote:
-
-> On Fri, Aug 27, 2021 at 06:29:30PM -0700, Junio C Hamano wrote:
+> From: Tanushree Tumane <tanushreetumane@gmail.com>
 >
->> Junio C Hamano <gitster@pobox.com> writes:
->>=20
->> >> +void strvec_pushvec(struct strvec *array, const struct strvec *items)
->> >> +{
->> >> +	int i;
->> >> +
->> >> +	for (i =3D 0; i < items->nr; i++)
->> >> +		strvec_push(array, items->v[i]);
->> >> +}
->> >
->> > This implementation is not wrong per-se, but is somewhat
->> > disappointing.  When items->nr is large, especially relative to the
->> > original array->alloc, it would incur unnecessary reallocations that
->> > we can easily avoid by pre-sizing the array before pushing the
->> > elements of items from it.
->> >
->> > In the original code that became the first user of this helper, it
->> > may not have made much difference, but now it is becoming a more
->> > generally reusable API function, we should care.
->>=20
->> And if we do not care, you can rewrite the code that became the
->> first user of this helper to instead call strvec_pushv() on the
->> items->v array that is guaranteed to be NULL terminated, without
->> inventing this new helper.
+> Reimplement the `bisect_run()` shell function
+> in C and also add `--bisect-run` subcommand to
+> `git bisect--helper` to call it from git-bisect.sh.
 >
-> I came here to say that. ;)
->
-> I do not mind using pushv() directly, or a pushvec() that is a
-> convenience wrapper for pushv(). Even better if that wrapper is smart
-> enough to pre-allocate based on items->nr, as you mentioned, but that
-> can also come later.
->
-> One thing that did surprise me: the use of "int" here for iterating,
-> rather than size_t. But it seems that strvec is already storing ints,
-> which is an accident!
-
-Is it really? If you temporarily try to say convert that to "size_t *nr"
-to have the compiler catch all the cases where we use "nr", and then
-s/size_t/int/g those all, you'll find that e.g. setup_revisions() and
-the like expect to take either "int argc" or the strvec equivalent.
-
-We can sensibly convert some of those to size_t, but not all, and the
-int v.s. size_t inconsistency as a result feels weird.
-
-Since the main point of this API is to be a wrapper for what a C main()
-would take, shouldn't its prototype mirror its prototype? I.e. we should
-stick to "int" here?
-
-> I think we'd want the patch below. It can be applied independently
-> (though if we do take the index-iterating version of =C3=86var's patch, I
-> think it should switch to size_t).
->
-> -- >8 --
-> Subject: [PATCH] strvec: use size_t to store nr and alloc
->
-> We converted argv_array (which later became strvec) to use size_t in
-> 819f0e76b1 (argv-array: use size_t for count and alloc, 2020-07-28) in
-> order to avoid the possibility of integer overflow. But later, commit
-> d70a9eb611 (strvec: rename struct fields, 2020-07-28) accidentally
-> converted these back to ints!
->
-> Those two commits were part of the same patch series. I'm pretty sure
-> what happened is that they were originally written in the opposite order
-> and then cleaned up and re-ordered during an interactive rebase. And
-> when resolving the inevitable conflict, I mistakenly took the "rename"
-> patch completely, accidentally dropping the type change.
->
-> We can correct it now; better late than never.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
+> Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 > ---
->  strvec.h | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  builtin/bisect--helper.c | 97 ++++++++++++++++++++++++++++++++++++++++
+>  git-bisect.sh            | 62 +------------------------
+>  2 files changed, 98 insertions(+), 61 deletions(-)
 >
-> diff --git a/strvec.h b/strvec.h
-> index fdcad75b45..6b3cbd6758 100644
-> --- a/strvec.h
-> +++ b/strvec.h
-> @@ -29,8 +29,8 @@ extern const char *empty_strvec[];
->   */
->  struct strvec {
->  	const char **v;
-> -	int nr;
-> -	int alloc;
-> +	size_t nr;
-> +	size_t alloc;
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index 1e118a966a..8e9ed9c318 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -18,6 +18,7 @@ static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
+>  static GIT_PATH_FUNC(git_path_head_name, "head-name")
+>  static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
+>  static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
+> +static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
+>  
+>  static const char * const git_bisect_helper_usage[] = {
+>  	N_("git bisect--helper --bisect-reset [<commit>]"),
+> @@ -31,6 +32,7 @@ static const char * const git_bisect_helper_usage[] = {
+>  	N_("git bisect--helper --bisect-replay <filename>"),
+>  	N_("git bisect--helper --bisect-skip [(<rev>|<range>)...]"),
+>  	N_("git bisect--helper --bisect-visualize"),
+> +	N_("git bisect--helper --bisect-run <cmd>..."),
+>  	NULL
 >  };
->=20=20
->  #define STRVEC_INIT { empty_strvec, 0, 0 }
+>  
+> @@ -144,6 +146,19 @@ static int append_to_file(const char *path, const char *format, ...)
+>  	return res;
+>  }
+>  
+> +static int print_file_to_stdout(const char *path)
+> +{
+> +	int fd = open(path, O_RDONLY);
+> +	int ret = 0;
+> +
+> +	if (fd < 0)
+> +		return error_errno(_("cannot open file '%s' for reading"), path);
+> +	if (copy_fd(fd, 1) < 0)
+> +		ret = error_errno(_("failed to read '%s'"), path);
+> +	close(fd);
+> +	return ret;
+> +}
+> +
+>  static int check_term_format(const char *term, const char *orig_term)
+>  {
+>  	int res;
+> @@ -1075,6 +1090,79 @@ static int bisect_visualize(struct bisect_terms *terms, const char **argv, int a
+>  	return res;
+>  }
+>  
+> +static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
+> +{
+> +	int res = BISECT_OK;
+> +	struct strbuf command = STRBUF_INIT;
+> +	struct strvec args = STRVEC_INIT;
+> +	struct strvec run_args = STRVEC_INIT;
+> +	const char *new_state;
+> +	int temporary_stdout_fd, saved_stdout;
+> +
+> +	if (bisect_next_check(terms, NULL))
+> +		return BISECT_FAILED;
+> +
+> +	if (argc)
+> +		sq_quote_argv(&command, argv);
+> +	else {
+> +		error(_("bisect run failed: no command provided."));
+> +		return BISECT_FAILED;
+> +	}
+> +	strvec_push(&run_args, command.buf);
+> +
+> +	while (1) {
+> +		strvec_clear(&args);
+> +
+> +		printf(_("running %s\n"), command.buf);
+> +		res = run_command_v_opt(run_args.v, RUN_USING_SHELL);
+> +
+> +		if (res < 0 || 128 <= res) {
+> +			error(_("bisect run failed: exit code %d from"
+> +				" '%s' is < 0 or >= 128"), res, command.buf);
+> +			strbuf_release(&command);
+> +			return res;
+> +		}
+> +
+> +		if (res == 125)
+> +			new_state = "skip";
+> +		else
+> +			new_state = res > 0 ? terms->term_bad : terms->term_good;
 
+It is easier to follow the code if you spelled out this part as
+
+		else if (!res)
+			new_state = terms->term_good;
+		else
+			new_state = terms->term_bad;
+
+because that would consistently handle the three cases.  Of course
+you _could_ do
+
+		new_state = (res == 125)
+			  ? "skip"
+			  : (res > 0)
+			  ? terms->term_bad
+			  : terms->term_good;
+
+instead, but that would be harder to read.
+
+
+> +		temporary_stdout_fd = open(git_path_bisect_run(), O_CREAT | O_WRONLY | O_TRUNC, 0666);
+
+Can this open fail, and if it fails, what do we want to do?
+
+> +		saved_stdout = dup(1);
+> +		dup2(temporary_stdout_fd, 1);
+> +
+> +		res = bisect_state(terms, &new_state, 1);
+> +
+> +		dup2(saved_stdout, 1);
+> +		close(saved_stdout);
+> +		close(temporary_stdout_fd);
+
+Hmph, now you lost me.  Whose output are we working around here with
+the redirection?  
+
+	... goes and looks ...
+
+Ahh, OK.  bisect_next_all() to bisect_checkout() all assume that
+they only need to write to the standard output, so we need to do
+this dance (unless we are willing to update the bisect.c functions
+to accept FILE * as parameter, that is).
+
+However, they use not just write(2) but stdio to do their output,
+no?  Don't we need to fflush(stdout) around the redirection dance,
+one to empty the output that was associated with the real standard
+output stream before asking bisect_state() to write to fd #1 via
+stdio, and one more time to flush out what bisect_state() wrote to
+the stdio after the call returns before closing the fd we opened to
+the BISECT_RUN file?
+
+> +		print_file_to_stdout(git_path_bisect_run());
+
+OK.  So this corresponds to the "write bisect-state to ./git/BISECT_RUN
+and then cat it" in the scripted version.
+
+> +		if (res == BISECT_ONLY_SKIPPED_LEFT)
+> +			error(_("bisect run cannot continue any more"));
+> +		else if (res == BISECT_INTERNAL_SUCCESS_MERGE_BASE) {
+> +			printf(_("bisect run success"));
+> +			res = BISECT_OK;
+> +		} else if (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND) {
+> +			printf(_("bisect found first bad commit"));
+> +			res = BISECT_OK;
+> +		} else if (res) {
+> +			error(_("bisect run failed:'git bisect--helper --bisect-state"
+> +			" %s' exited with error code %d"), args.v[0], res);
+> +		} else {
+> +			continue;
+> +		}
+> +
+> +		strbuf_release(&command);
+> +		strvec_clear(&args);
+> +		strvec_clear(&run_args);
+> +		return res;
+> +	}
+> +}
+
+OK, the "res to diag" and clearing the resources at the end of the
+function looks good to me.
+
+Thanks.
