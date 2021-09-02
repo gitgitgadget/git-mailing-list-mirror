@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17F00C4320E
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 16:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 005C7C433ED
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 16:01:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 01D69610A2
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 16:01:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC3C560FDA
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 16:01:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346082AbhIBQC1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Sep 2021 12:02:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41230 "EHLO
+        id S1346088AbhIBQCe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Sep 2021 12:02:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346072AbhIBQC0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Sep 2021 12:02:26 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60F4FC061575
-        for <git@vger.kernel.org>; Thu,  2 Sep 2021 09:01:27 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id b6so3751620wrh.10
-        for <git@vger.kernel.org>; Thu, 02 Sep 2021 09:01:27 -0700 (PDT)
+        with ESMTP id S1346094AbhIBQCd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Sep 2021 12:02:33 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3293CC061796
+        for <git@vger.kernel.org>; Thu,  2 Sep 2021 09:01:30 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id u26-20020a05600c441a00b002f66b2d8603so1832257wmn.4
+        for <git@vger.kernel.org>; Thu, 02 Sep 2021 09:01:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=u8a5Vuu6yPoZU9MjFcGZGGWQiy3kcWsPYU19eTRnzTI=;
-        b=nsc+5NwLRz0yTSDoCwXMvETTQi91uOCXL2TVma5Yw5ZUdCnEADqRj29RcHNkzeETUb
-         LqJXTHa/xmgV+F72hmvefW51LE5+ml3c+W8YLXNcMuK/KWvPg8v6UT2qF79xAGsb67fC
-         5RodgiB7tuxLzuoAn1qvIGL1wMSOQbqnpzi2paa0ICVdJsVz2GajND1d9PYv0DHQYsPm
-         OMvkWI0NBlsv6VHAmDjCnaawI5zkyFwlmhSM+XsnV4KI6MYEehyx9Q5N46Y8l/sNl9W1
-         3viT8OcFYSowCuhF9yRigqwYqdFGp35ULwwRZM6IA13SztV+53tK1cBqp93vCeme7QGc
-         Hy+g==
+        bh=SdmvmXia+y1op93cYXwKOTbgaIO/dzVub4roa1ellm4=;
+        b=ZXReraJO3ZRvY4mY3StrM99Twkc/lgbj++caSETetndG5CyHYq39dA2lkIGfRN52d2
+         W9Uq8oros4UI2Q//F97pZZWzpSLU8SaGUjfGPIQ5KZ4WZksBu4GVpdKxNVbqYw2eVqvb
+         4uoJPdxsalef4jbBWCcqIrR41YbMbjzmYLzI4R02+PZZYRA7s0B6zMgp/IMl8riExcHj
+         cWmoO7ppll2ViAPTV/h7JMzdQnrfp601Fme7vm5Oc5PMupi+tou4vLbUSxIvR3VQdSwQ
+         ADFSuq3A53BZY9D35gbEQIPRa7G/APY5Fz+l4Bw3Wa69VhOZAHEV5mp8oi7X6MrqgIhJ
+         MAgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=u8a5Vuu6yPoZU9MjFcGZGGWQiy3kcWsPYU19eTRnzTI=;
-        b=CpxX0uxCX1xZDBfB76GgBZB1G1NPUJ1/WPi0OMOWZPknLVe0zVTYIjjoW9itdT46Ia
-         zC4Lf0P9TRBPGItN/Es4GG0ks9OfskAP/T/vZFF7BSNHhMObn+00E4+ei4z2PmNgLM8f
-         4H9RAQQaya8aepcNBPZygp4w+NwXxF9BpiT9J8s7TbO9SFOpP2pvgVjn6H2rVxd+hwce
-         kq8C9hvFpZYKQICquRwLy5SrSaY9cFy+k7Zl5lqJFXIXSwfjbMK5suA65eZOKnrWTwCX
-         urCNPazAuK7N1ExIgc0CAJJenVbzOaAD/yfiS8Ygmily3Eh/Ipzdl9sDKKGo65aj4yH2
-         ca9g==
-X-Gm-Message-State: AOAM532DrX+KLliXgqNr/v9qoUqY9IAB+PVOtnwXsKuHLJj5b0liQOXh
-        OA9gE/O7aIG13g8as02J956t9NfCYvwjmg==
-X-Google-Smtp-Source: ABdhPJwEhNjpQhHiyYy2GlQxcNQxZ9Fh4K0aEyHqoQdCr+oa3WTN3yTc2nXW/FMPUODQTbOf2JCJig==
-X-Received: by 2002:adf:fb91:: with SMTP id a17mr4425282wrr.376.1630598485723;
-        Thu, 02 Sep 2021 09:01:25 -0700 (PDT)
+        bh=SdmvmXia+y1op93cYXwKOTbgaIO/dzVub4roa1ellm4=;
+        b=lhXsMfwGqfbubFcazBOsbz2dKCGmU6yMSR+g1Jn2kekhNuxQmnhgpzCgjs1oGI6qua
+         zE5uGEOzATq9A18b8d+kDaT+LesBkatWe/pYB0vli4ZqM24fog7SyD696911lrZYZQa3
+         vm+qZE/3/PZF5yKnoOSuQCpdHOFUPrTlJ9IgTe9btztCfddI/PBgZ6gbCdwk6yWZ0Zpy
+         tCx1JaqF0VDeztFU+t9wjVZrd8lXWXKXXXAAMtg0FYHkSar93lVHzqxIHlpDPccSE6IQ
+         HPpBQ2dCN57Vw4IpxAuq5baWIofe07+HehaJznjgh+0sHob0854zIlSDgYVhuieibwRv
+         7htA==
+X-Gm-Message-State: AOAM530nM53J8uiYDNVVFe2YfNa24xEklaVfRTmE6xjzfkFoicORD0Fp
+        2ECctV1K4iI0GLcGTTVAFNHQuqO6vI2ckQ==
+X-Google-Smtp-Source: ABdhPJxgTl29bFSotIXga6w+SEswlBehtJ5cFtCgydYklx1sLYuqFxfgsa6AMT+Q+E0hrSxzWr7WIw==
+X-Received: by 2002:a1c:2246:: with SMTP id i67mr3585054wmi.179.1630598486707;
+        Thu, 02 Sep 2021 09:01:26 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u26sm2403215wrd.32.2021.09.02.09.01.24
+        by smtp.gmail.com with ESMTPSA id u26sm2403215wrd.32.2021.09.02.09.01.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Sep 2021 09:01:25 -0700 (PDT)
+        Thu, 02 Sep 2021 09:01:26 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Wong <e@80x24.org>, Prathamesh Chavan <pc44800@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 4/9] git-sh-setup: remove unused sane_egrep() function
-Date:   Thu,  2 Sep 2021 18:01:11 +0200
-Message-Id: <patch-4.9-73f0676db7a-20210902T155758Z-avarab@gmail.com>
+Subject: [PATCH 5/9] git-sh-setup: remove unused require_work_tree_exists() function
+Date:   Thu,  2 Sep 2021 18:01:12 +0200
+Message-Id: <patch-5.9-dc4dd7d1399-20210902T155758Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.814.gb82868f05f3
 In-Reply-To: <cover-0.9-00000000000-20210902T155758Z-avarab@gmail.com>
 References: <cover-0.9-00000000000-20210902T155758Z-avarab@gmail.com>
@@ -77,48 +77,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The is_zero_oid() function in git-submodule.sh has not been used since
-e83e3333b57 (submodule: port submodule subcommand 'summary' from shell
-to C, 2020-08-13), so we can remove it, and the sane_egrep() function,
-dead is_zero_oid() was the only function which still referenced it.
+The last code that used the require_work_tree_exists() function went
+away in d03ebd411c6 (rebase: remove the rebase.useBuiltin setting,
+2019-03-18), let's remove it.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-sh-setup.sh  | 4 ----
- git-submodule.sh | 5 -----
- 2 files changed, 9 deletions(-)
+ Documentation/git-sh-setup.txt | 6 ------
+ git-sh-setup.sh                | 8 --------
+ 2 files changed, 14 deletions(-)
 
+diff --git a/Documentation/git-sh-setup.txt b/Documentation/git-sh-setup.txt
+index 2a28361cf66..1d8c87e9b2f 100644
+--- a/Documentation/git-sh-setup.txt
++++ b/Documentation/git-sh-setup.txt
+@@ -52,12 +52,6 @@ require_work_tree::
+ 	checks if the current directory is within the working tree
+ 	of the repository, and otherwise dies.
+ 
+-require_work_tree_exists::
+-	checks if the working tree associated with the repository
+-	exists, and otherwise dies.  Often done before calling
+-	cd_to_toplevel, which is impossible to do if there is no
+-	working tree.
+-
+ require_clean_work_tree <action> [<hint>]::
+ 	checks that the working tree and index associated with the
+ 	repository have no uncommitted changes to tracked files.
 diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index d4e8225affa..a2a28982b6d 100644
+index a2a28982b6d..363c0096842 100644
 --- a/git-sh-setup.sh
 +++ b/git-sh-setup.sh
-@@ -110,10 +110,6 @@ sane_grep () {
- 	GREP_OPTIONS= LC_ALL=C grep @@SANE_TEXT_GREP@@ "$@"
+@@ -122,14 +122,6 @@ cd_to_toplevel () {
+ 	}
  }
  
--sane_egrep () {
--	GREP_OPTIONS= LC_ALL=C egrep @@SANE_TEXT_GREP@@ "$@"
+-require_work_tree_exists () {
+-	if test "z$(git rev-parse --is-bare-repository)" != zfalse
+-	then
+-		program_name=$0
+-		die "$(eval_gettext "fatal: \$program_name cannot be used without a working tree.")"
+-	fi
 -}
 -
- is_bare_repository () {
- 	git rev-parse --is-bare-repository
- }
-diff --git a/git-submodule.sh b/git-submodule.sh
-index dbd2ec20503..aeb96c58243 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -63,11 +63,6 @@ isnumber()
- 	n=$(($1 + 0)) 2>/dev/null && test "$n" = "$1"
- }
- 
--# Given a full hex object ID, is this the zero OID?
--is_zero_oid () {
--	echo "$1" | sane_egrep '^0+$' >/dev/null 2>&1
--}
--
- # Sanitize the local git environment for use within a submodule. We
- # can't simply use clear_local_git_env since we want to preserve some
- # of the settings from GIT_CONFIG_PARAMETERS.
+ require_work_tree () {
+ 	test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = true || {
+ 		program_name=$0
 -- 
 2.33.0.814.gb82868f05f3
 
