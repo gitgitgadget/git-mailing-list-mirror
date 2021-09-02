@@ -2,74 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5391CC433F5
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 22:36:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B62EC433F5
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 22:40:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A74F61058
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 22:36:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F6D561058
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 22:40:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347716AbhIBWhT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Sep 2021 18:37:19 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53443 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347711AbhIBWhS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Sep 2021 18:37:18 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F09C3E2258;
-        Thu,  2 Sep 2021 18:36:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=4oY5prHIW4xH
-        Cj9EGQ5sBCU4iwJxjqdCO7oCH5A2T60=; b=mr59nfPdde4wRlvy5h5Czc8e9cNk
-        uEp7S6gEe6nc6FGTSV4ER8omfe06IdGcL+vZ+EUDGgU9SN8X6rDSjEWUmqpczDna
-        nOEmLlf/ZLeouppFjSgdLuntvhMEfrqRxKNuyc1HGTrdD+O9Q7litBU3yckuyxzT
-        NUmIce97BA0VoYU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E7AE6E2257;
-        Thu,  2 Sep 2021 18:36:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7728DE2256;
-        Thu,  2 Sep 2021 18:36:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Wong <e@80x24.org>, Prathamesh Chavan <pc44800@gmail.com>
-Subject: Re: [PATCH 0/9] remove dead shell code
-References: <cover-0.9-00000000000-20210902T155758Z-avarab@gmail.com>
-        <xmqq5yvik8bc.fsf@gitster.g> <874kb2a9tp.fsf@evledraar.gmail.com>
-Date:   Thu, 02 Sep 2021 15:36:17 -0700
-In-Reply-To: <874kb2a9tp.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Fri, 03 Sep 2021 00:17:08 +0200")
-Message-ID: <xmqqbl5aip0e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1347746AbhIBWl1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Sep 2021 18:41:27 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38388 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1347766AbhIBWl0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Sep 2021 18:41:26 -0400
+Received: (qmail 25230 invoked by uid 109); 2 Sep 2021 22:40:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 02 Sep 2021 22:40:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1436 invoked by uid 111); 2 Sep 2021 22:40:28 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 02 Sep 2021 18:40:28 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 2 Sep 2021 18:40:26 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        git@vger.kernel.org, hanwen@google.com
+Subject: Re: [PATCH 3/3] fixup! reftable: add a heap-based priority queue for
+ reftable records
+Message-ID: <YTFS2oQz9QEzBe0Q@coredump.intra.peff.net>
+References: <20210902053023.44006-1-carenas@gmail.com>
+ <20210902053023.44006-4-carenas@gmail.com>
+ <YTCU3F+0sKcrym6F@coredump.intra.peff.net>
+ <xmqqeea6kaed.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 30A2177E-0C3E-11EC-BE10-ECFD1DBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqeea6kaed.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Thu, Sep 02, 2021 at 01:08:58PM -0700, Junio C Hamano wrote:
 
-> You'll know better what you meant, but I interpreted the docs you added
-> for git-sh-setup in 850844e28f7 (Documentation/git-sh-setup.txt:
-> programmer's docs, 2007-01-17) as a guide for in-tree porcelain scripts=
-.
+> > This will trigger -Wunused-parameter warnings, since the function body
+> > is now empty when NDEBUG is undefined. Probably switching the assert()
+> > to die() would be better, since the whole point of the function is just
+> > to exit on error.
+> >
+> > If there's a problem using die() from the reftable code, it could also
+> > return an error and the caller in the test helper could propagate it.
+> 
+> I agree that the patch as posted does not help but if this is
+> originally an assertion, then it should never trigger in real life,
+> so BUG() would be more appropriate than an error return, no?
 
-No, it is not for "in-tree".  Especially back then, one of the Git's
-goal was to be and to stay scriptable, and git-sh-setup was for those
-who are scripting, either "in-tree" or custom Porcelain people wrote
-around Git as part of a larger Git ecosystem.
+My thinking was that it doesn't make much sense as an assertion in the
+first place. It is not a side effect of "let's make sure things are as
+we expect while we're doing some other operation". The whole point of
+the function is: is this data structure properly in order.
 
+But I guess you could argue that calling the function is itself a form
+of assertion. I don't really care that much either way, so whatever
+Han-Wen prefers is fine with me (but I do think it is worth addressing
+the warning Carlo found _somehow_).
+
+-Peff
