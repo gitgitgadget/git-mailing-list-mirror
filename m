@@ -2,103 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2C2FC432BE
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 10:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58C1BC432BE
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 11:09:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2F80610A2
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 10:42:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A5126054E
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 11:09:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244798AbhIBKn1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Sep 2021 06:43:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52520 "EHLO
+        id S244318AbhIBLKD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Sep 2021 07:10:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244817AbhIBKnW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Sep 2021 06:43:22 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83DC7C061760
-        for <git@vger.kernel.org>; Thu,  2 Sep 2021 03:42:24 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id u16so2157715wrn.5
-        for <git@vger.kernel.org>; Thu, 02 Sep 2021 03:42:24 -0700 (PDT)
+        with ESMTP id S230256AbhIBLKC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Sep 2021 07:10:02 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D88D2C061757
+        for <git@vger.kernel.org>; Thu,  2 Sep 2021 04:09:04 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id n4so934893plh.9
+        for <git@vger.kernel.org>; Thu, 02 Sep 2021 04:09:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=JXLauDeVfOK/RFSMD1oz37DsWRJDY71l20Iu5aSVC1I=;
-        b=Z2Y+lUaUKn7wNYkFiue2Pc7LUK+THfcm4/u11Zu19THZtq+5Pz0KEXPRRuewT2VgKd
-         jZnXBAvQhO5fvQGG6PJfteSyi5HM9fNZJtYk93WLradtwZA4Npf7dYUKS8+dS5+cuCrK
-         rYrwX046P1AEGaIt1703T8chKfoYYIBdU23+Gmg6VXO7I81nKX0GzO0N1Bby6Ql5iaoz
-         8NDRXvaRqCz2fPPkkxvQK7KX0jSjxI+NWO1FIserGczN74NpwYLDd+8xuRtoCvi2QCdy
-         TUO9lEHPhtx8Zk+WXf6KJfvfflRCgTHLfAT6vNhKx5WjX/15Qt+OapnnyCs/OhfSaMG8
-         sybw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=efYpSssCL1d454FRTlVfSkq9zNhOwyMrFdaiOBWhwjg=;
+        b=YFc15K+IefTpSlgBJRlVkTHsmwPaPqZqhrCJTI1S3O2Tc2uqZT6zFA3Ds6F5xf9h/9
+         gCY476kkwSlnWd5hrPNkPEdrRpukSoM+N4LonwW38q7W6/y5CF28IvP+w3auL4CyBz9B
+         sVpU9kBvO8zirh6Da81RNvyM1J/0/Zh8JXgxRXcr/Ve5rKJPWAd2Dqu+5GCqZP4Gu4TC
+         P/T02GaA1fYjWAGP+kL86tCkdf4/iyPpBby9ph0ShmtTMrvQ+d63wX4R88Xhn51Z8zyr
+         oHjRwP75c8QQ2jpBdLWCckkjkDvHkkM0kJbIybKjwTOUh9oyhGS1MIbVFogElmat2FxD
+         beNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=JXLauDeVfOK/RFSMD1oz37DsWRJDY71l20Iu5aSVC1I=;
-        b=K4w9R4PAC/bAVz0xK4DDuAIpTW+11Ayc59e2nG3ozZBGgoNAJlmoLry9MKrDRkO/dG
-         80Sjfz7e1bA2n7WrMfAvnBwHkZTMd20xJG+zW7zosaXdybJ6rbBszYErFdprooSTuYuD
-         VPyXw/FtQhtaLH8ufeMTEv5FzYYgbHBQCniTqWu6c2pg2YXFVUZOly5T6WWo6TYKAzhF
-         YVHCYxv4UlN+TsBBjTx92XpVJYgny/h2XJfPQdDr/25hguMMBz8stpNXKq7engBYSDoB
-         rf/5zv5WLDewQBys7WbHOVMnpIf/p9RTQJmdfNY1bB9e9BrKZqzTDtA5Jq9ujWWpqEpt
-         zlVQ==
-X-Gm-Message-State: AOAM533vBbAd2l5IAks0PmZp34B97NtKnu3RBD0UYzW7gEj30jDC8nrk
-        U3q54+8geZZnpQbkS9bb1tEFHZpt61SviA==
-X-Google-Smtp-Source: ABdhPJwHSvyJvpHfT1vVCvMfzKVNYBTvq3wOJTzN4uIyPgBO12Ltk4QNErDFgq6DlOZJ2YAZok7O0w==
-X-Received: by 2002:a5d:4ac2:: with SMTP id y2mr2917850wrs.296.1630579343100;
-        Thu, 02 Sep 2021 03:42:23 -0700 (PDT)
-Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id m3sm1808525wrg.45.2021.09.02.03.42.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Sep 2021 03:42:22 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH] makefile: teach git about NO_MSGFMT (as supported in
- GUI and gitk)
-Date:   Thu, 02 Sep 2021 12:38:52 +0200
-References: <20210902085438.54121-1-carenas@gmail.com>
- <87ilzjuv2t.fsf@evledraar.gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <87ilzjuv2t.fsf@evledraar.gmail.com>
-Message-ID: <87fsunuulu.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=efYpSssCL1d454FRTlVfSkq9zNhOwyMrFdaiOBWhwjg=;
+        b=b2/o01LQJtNlSbFfVBmJYnY5BSCMLXKkxA3ZR/xGKbn+0w5fqdJ7gjLt1J5vajRGuF
+         zKBQjRUIsWBzvqXbqVyAQNmndo4VwAfPi66QHfUk9KMgBGD/DnhuZFcpYoF8XOzuVeEp
+         QvdhodJI4aSI0RUgzm7ideyuNgrwVCtXCbqxqQ9hH2R/Q1LhOl68cgsPl/uVGhkslNG4
+         YXEpocO7FJn5nWSM3vGyBpTJ3y/cSwRv57Wvf+mKR80uvYTy7SLfFdtgy9vhIb+uUOo4
+         0mRzxyoNXoXOUrJbS06SY7E6amBXyGt9HnsHjoxzsK0RWmHqwE9sBXEu5JDrlBO7PnKq
+         ZerQ==
+X-Gm-Message-State: AOAM531kCbbXcKXTf3x1mao3Gi+pXpX+s7LTWtxjPZbaBLOchyoAc5NO
+        RGy/iXWoce41RAA1fi0zKMk=
+X-Google-Smtp-Source: ABdhPJwU48nqRvWTrkY9d4pqapV/uOb1ScY/gbNaCVGkhHGvm8CGQIZk81vPyDqbTG5J2a+XdK3t6g==
+X-Received: by 2002:a17:902:7145:b0:137:2e25:5bf0 with SMTP id u5-20020a170902714500b001372e255bf0mr2428408plm.10.1630580944260;
+        Thu, 02 Sep 2021 04:09:04 -0700 (PDT)
+Received: from localhost.localdomain ([47.246.98.145])
+        by smtp.gmail.com with ESMTPSA id g37sm2480676pgl.94.2021.09.02.04.09.02
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 02 Sep 2021 04:09:03 -0700 (PDT)
+From:   Teng Long <dyroneteng@gmail.com>
+To:     gitster@pobox.com
+Cc:     avarab@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
+        jonathantanmy@google.com
+Subject: Re: [PATCH v5 02/14] Add new parameter "carry_data" for "show_object" function
+Date:   Thu,  2 Sep 2021 19:08:55 +0800
+Message-Id: <20210902110855.75687-1-dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.31.1.456.g1a7c4c5894.dirty
+In-Reply-To: <xmqqlf4oc4u1.fsf@gitster.g>
+References: <xmqqlf4oc4u1.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> Since this lacks <area>: prefix, "git shortlog" readers will have a
+> hard time guessing which show_object() function this commit is
+> about.
 
-On Thu, Sep 02 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> On Thu, Sep 02 2021, Carlo Marcelo Arenas Bel=C3=B3n wrote:
->
->> NO_MSGFMT can be used to indicate there is no msgfmt available, so
->> make git recognize that and avoid failing to build while trying to
->> generate i18n files.
->
-> Why would we want to avoid failing the build if we don't have msgfmt?
->
-> I understand why you'd want NO_GETTEXT in that case, but what's the
-> point of building with NO_GETTEXT=3D NO_MSGFMT=3DY?
->
-> If we can't build the *.mo files we'll have a completely broken
-> installation that can't do anything useful with gettext, so why not just
-> build without gettext at that point?
->
-> When this patch is applied a lot of things related to gettext in our
-> tests fail if you build with NO_GETTEXT=3D NO_MSGFMT=3DY, because those
-> things are assuming that if NO_GETTEXT isn't defined we'll have the *.mo
-> files, po/build etc.
+Sorry for the late reply.
+Agree, it will be fixed in next patch.
 
-Some further digging reveals that we've got in-tree git-gui/po/po2msg.sh
-and gitk-git/po/po2msg.sh (copy/pasted, but slightly different) that
-supports some subset of "msgfmt --tcl".
+> But it does not quite explain why we need another parameter to do
+> so, which involves changing the function signature of many
+> functions, instead of making show_data to point at a new structure
+> type that holds the original data show_data used to carry plus
+> another single void * member (or the set of members you'd be
+> carrying into these functions using this new parameter).
+> 
+> I also find "carry_data" a meaningless name for the parameter.  All
+> in-parameters into functions are used to carry some data into it
+> after all.  The existing "show_data" at least makes a bit more
+> sense; it contains data necessary for showing the object in these
+> code paths.  If the purpose this new thing was introduced is to
+> cache ownership relationship data, perhaps ownership_cache would be
+> a more descriptive and understandable name (be it a new parameter to
+> added to many functions, or a member to the new structure that
+> replaces show_data).
 
-I.e. those programs with NO_MSGFMT still ends up with locae files they
-can use, whereas in this patch we don't end up with anything at all...
+Agree.
+
+I think "show_data to point at a new structure" is a better idea. I will
+follow the idea and optimize the related code. By the way, the naming
+about "ownership_cache" will be introduced in the next patch too, unless I
+can find a better one t(-_-t).
+
+Thanks.
