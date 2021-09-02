@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 022DEC432BE
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 13:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66164C432BE
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 13:13:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E1374610A0
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 13:13:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A4936108E
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 13:13:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345187AbhIBNN5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Sep 2021 09:13:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58926 "EHLO
+        id S1345293AbhIBNOC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Sep 2021 09:14:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234277AbhIBNNt (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1345207AbhIBNNt (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 2 Sep 2021 09:13:49 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58FE5C0611FB
-        for <git@vger.kernel.org>; Thu,  2 Sep 2021 06:12:13 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id c8-20020a7bc008000000b002e6e462e95fso1419599wmb.2
-        for <git@vger.kernel.org>; Thu, 02 Sep 2021 06:12:13 -0700 (PDT)
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75484C0619F6
+        for <git@vger.kernel.org>; Thu,  2 Sep 2021 06:12:15 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id z9-20020a7bc149000000b002e8861aff59so1432863wmi.0
+        for <git@vger.kernel.org>; Thu, 02 Sep 2021 06:12:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QQ0UavLqYGrpqz8s1YOftq10mN8wCzrE0MmrJsADMCo=;
-        b=nXnBPZmZu+f6BFWiOV0q7TNY0zl1bNUHDfXcn3byIcB+enVeftqV9yBtbU1zfunNs+
-         /Rw9ORgA8+rZruj9V3n3n4cvEjyQMlXcneLhd+yHPBQviEq/PSAMme8q8tItsfrVSsx+
-         NubFQp7YUj5qpRk3E+ZuYe8Qu4Wwzd1KNScsJGvMDIU25dhmYYq/Ld5tn2wLxqmJ5MSf
-         mJcntIM4X1nA6owDY8WRzc9JWpyUyL9tTz4iwaRAWWD/18rs28klreimSe5K0piyqtK5
-         bIl+EQsMBDPzoold3eqPypP2DnG2FQQy2NBagXNeNm7rfvfRz4AelKzcaXvetUU1P5Ja
-         V2Hw==
+        bh=HKcjdgoq9juBix53/qIEgCUDSBlrNwK94m/unX61Mbs=;
+        b=CjduTw+El4UboPE9TfGEl3E3+KcQ0k9p+B5W8ZjXtOfI4Uq5wi1IGoTvSAnNnnL6L/
+         gcBor9/c+V5Zd3nX8e4JpaBz39gieAj/VbLr9XDN73qcZkE7l6E9CB7jat3ZHCz4rB/7
+         T7cTfU2PRMPlTT6VX2SwmzOG0LjvubceEe9RnmHljucyLhy3eFsd5qe5Ikp7donyFcfd
+         Y1v5fek9EYx44nB0pLGq4xEyfrH1bmOVdOcPxYBgTYwXa2o7EhNerniC8LyYWK9PQ9OZ
+         oaqkqRXLsHNcxkk84e6AATT13ZSmyyPXGOCrUPkJWYts9wjlwRJUU6Wim91nBqbqfgrg
+         6rOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QQ0UavLqYGrpqz8s1YOftq10mN8wCzrE0MmrJsADMCo=;
-        b=Gt7Wb6bwHNuIyj8rfolBIz5kW34nE2Qf2TWATvGgsDGTnwp3BqsaIr6IOS2cH1SgUq
-         Y2bMtxhRoCuyW4BKxlu+VLDH2GJxJ0OdYeA/lWwaGHvCqTSVjOtFzE2kPJMHmC2wyFFA
-         q8whzP8JufUJV/C/KI+U3BqRtzcmbeO97mAjWJwwmy9AsPShQ/xRzgii1b4r5vO2K26S
-         9iyzyCxSmY4haM57wIMPBRAnVxpnY4lrkuGiX1qkZ/durKWtAvLy4nehDOG+aYNcHx+H
-         GPY5Zsw9MTlY2CcvDndfe5FNxmPttTbCHx10XaDzLBiAwtuQZAZNPoatPYu+7BsDrLv1
-         MxGQ==
-X-Gm-Message-State: AOAM5315vk2+gZzCoOqtgYHOM4HBBN+ETnYKffQCjvbdkXul57Q8YMs2
-        s/S30hCBLuXZdLFqObEiw1TmkEG3Tf4wdw==
-X-Google-Smtp-Source: ABdhPJw62rGJt65K5J3aowyDo7H9pK9wn4GKro4I9p8cEcyHLI5v6Kt2e+euS2v2GMsd57BMWOtxBw==
-X-Received: by 2002:a05:600c:5102:: with SMTP id o2mr3033827wms.104.1630588331664;
-        Thu, 02 Sep 2021 06:12:11 -0700 (PDT)
+        bh=HKcjdgoq9juBix53/qIEgCUDSBlrNwK94m/unX61Mbs=;
+        b=GxumHSZINsEYSemK8cX+wLsgznobjaADO5jP2f5nsipyXTgtXpqxHfZ32cVomtazpO
+         lJf4sL9PN7efHnA7RA0G++maN3mFTuZ5f+KInG2nMMYXhIybT9lLsi1KfbpHrXbQDumr
+         sZMbryQ+nxBIJ15jspyDAJP5nJCZ9NT5jRfmarriMVtwcpX50kknK3C+25pNtcvyy6nk
+         9j/eaSY8jBgHXcGGBErBNdD3zfq5jf7wQLx52FXJmKu3UHXa0NiphNwGBUo2WzvJqi5r
+         C1Zl0P2mSqqfgEpzrwmzRXvf8vS8LMrbPpeDVVNrh5RDLcWZ7fHdcxZT57f8IWXj+ejS
+         79ZQ==
+X-Gm-Message-State: AOAM531sppbPs0ZzO7+Ve4jOeQ/CqInd9hiE7/U/jM2/TkpU2Ov/Zndu
+        RK5kwDp4D3f1GUQD1p3f5yp0sxWcWPsSPA==
+X-Google-Smtp-Source: ABdhPJzkNQR0aJ032Z2YDTnXJX0rj0GO1V/0JiKOswTd/HAHb4tjFjZkX5fzvcs59yXCMEYmydHqGw==
+X-Received: by 2002:a05:600c:230a:: with SMTP id 10mr3063620wmo.79.1630588333842;
+        Thu, 02 Sep 2021 06:12:13 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o7sm1479635wmq.36.2021.09.02.06.12.10
+        by smtp.gmail.com with ESMTPSA id o7sm1479635wmq.36.2021.09.02.06.12.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Sep 2021 06:12:11 -0700 (PDT)
+        Thu, 02 Sep 2021 06:12:12 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -70,9 +70,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 26/36] hook: convert 'post-rewrite' hook in sequencer.c to hook.h
-Date:   Thu,  2 Sep 2021 15:11:26 +0200
-Message-Id: <patch-v5-26.36-48a380b3a91-20210902T125110Z-avarab@gmail.com>
+Subject: [PATCH v5 28/36] hook tests: test for exact "pre-push" hook input
+Date:   Thu,  2 Sep 2021 15:11:28 +0200
+Message-Id: <patch-v5-28.36-957691f0b6d-20210902T125111Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.816.g1ba32acadee
 In-Reply-To: <cover-v5-00.36-00000000000-20210902T125110Z-avarab@gmail.com>
 References: <cover-v4-00.36-00000000000-20210803T191505Z-avarab@gmail.com> <cover-v5-00.36-00000000000-20210902T125110Z-avarab@gmail.com>
@@ -83,129 +83,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Emily Shaffer <emilyshaffer@google.com>
+Extend the tests added in ec55559f937 (push: Add support for pre-push
+hooks, 2013-01-13) to exhaustively test for the exact input we're
+expecting. This ensures that we e.g. don't miss a trailing newline.
 
-By using 'hook.h' for 'post-rewrite', we simplify hook invocations by
-not needing to put together our own 'struct child_process'.
+Appending to a file called "actual" is the established convention in
+this test for hooks, see the rest of the tests added in
+ec55559f937 (push: Add support for pre-push hooks, 2013-01-13). Let's
+follow that convention here.
 
-The signal handling that's being removed by this commit now takes
-place in run-command.h:run_processes_parallel(), so it is OK to remove
-them here.
-
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- sequencer.c | 79 ++++++++++++++++++++++-------------------------------
- 1 file changed, 32 insertions(+), 47 deletions(-)
+ t/t5571-pre-push-hook.sh | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 8999edf8d7b..549b583b277 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -35,6 +35,7 @@
- #include "commit-reach.h"
- #include "rebase-interactive.h"
- #include "reset.h"
-+#include "string-list.h"
+diff --git a/t/t5571-pre-push-hook.sh b/t/t5571-pre-push-hook.sh
+index ad8d5804f7b..d2857a6fbc0 100755
+--- a/t/t5571-pre-push-hook.sh
++++ b/t/t5571-pre-push-hook.sh
+@@ -11,7 +11,7 @@ HOOKDIR="$(git rev-parse --git-dir)/hooks"
+ HOOK="$HOOKDIR/pre-push"
+ mkdir -p "$HOOKDIR"
+ write_script "$HOOK" <<EOF
+-cat >/dev/null
++cat >actual
+ exit 0
+ EOF
  
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
- 
-@@ -1147,33 +1148,27 @@ int update_head_with_reflog(const struct commit *old_head,
- static int run_rewrite_hook(const struct object_id *oldoid,
- 			    const struct object_id *newoid)
- {
--	struct child_process proc = CHILD_PROCESS_INIT;
--	const char *argv[3];
-+	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
-+	struct strbuf tmp = STRBUF_INIT;
-+	struct string_list to_stdin = STRING_LIST_INIT_DUP;
- 	int code;
--	struct strbuf sb = STRBUF_INIT;
- 
--	argv[0] = find_hook("post-rewrite");
--	if (!argv[0])
--		return 0;
-+	strvec_push(&opt.args, "amend");
- 
--	argv[1] = "amend";
--	argv[2] = NULL;
--
--	proc.argv = argv;
--	proc.in = -1;
--	proc.stdout_to_stderr = 1;
--	proc.trace2_hook_name = "post-rewrite";
--
--	code = start_command(&proc);
--	if (code)
--		return code;
--	strbuf_addf(&sb, "%s %s\n", oid_to_hex(oldoid), oid_to_hex(newoid));
--	sigchain_push(SIGPIPE, SIG_IGN);
--	write_in_full(proc.in, sb.buf, sb.len);
--	close(proc.in);
--	strbuf_release(&sb);
--	sigchain_pop(SIGPIPE);
--	return finish_command(&proc);
-+	strbuf_addf(&tmp,
-+		    "%s %s",
-+		    oid_to_hex(oldoid),
-+		    oid_to_hex(newoid));
-+	string_list_append(&to_stdin, tmp.buf);
+@@ -20,10 +20,16 @@ test_expect_success 'setup' '
+ 	git init --bare repo1 &&
+ 	git remote add parent1 repo1 &&
+ 	test_commit one &&
+-	git push parent1 HEAD:foreign
++	cat >expect <<-EOF &&
++	HEAD $(git rev-parse HEAD) refs/heads/foreign $(test_oid zero)
++	EOF
 +
-+	opt.feed_pipe = pipe_from_string_list;
-+	opt.feed_pipe_ctx = &to_stdin;
-+
-+	code = run_hooks_oneshot("post-rewrite", &opt);
-+
-+	strbuf_release(&tmp);
-+	string_list_clear(&to_stdin, 0);
-+	return code;
- }
++	test_when_finished "rm actual" &&
++	git push parent1 HEAD:foreign &&
++	test_cmp expect actual
+ '
+ write_script "$HOOK" <<EOF
+-cat >/dev/null
++cat >actual
+ exit 1
+ EOF
  
- void commit_post_rewrite(struct repository *r,
-@@ -4526,30 +4521,20 @@ static int pick_commits(struct repository *r,
- 		flush_rewritten_pending();
- 		if (!stat(rebase_path_rewritten_list(), &st) &&
- 				st.st_size > 0) {
--			struct child_process child = CHILD_PROCESS_INIT;
--			const char *post_rewrite_hook =
--				find_hook("post-rewrite");
--
--			child.in = open(rebase_path_rewritten_list(), O_RDONLY);
--			child.git_cmd = 1;
--			strvec_push(&child.args, "notes");
--			strvec_push(&child.args, "copy");
--			strvec_push(&child.args, "--for-rewrite=rebase");
-+			struct child_process notes_cp = CHILD_PROCESS_INIT;
-+			struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
-+
-+			notes_cp.in = open(rebase_path_rewritten_list(), O_RDONLY);
-+			notes_cp.git_cmd = 1;
-+			strvec_push(&notes_cp.args, "notes");
-+			strvec_push(&notes_cp.args, "copy");
-+			strvec_push(&notes_cp.args, "--for-rewrite=rebase");
- 			/* we don't care if this copying failed */
--			run_command(&child);
--
--			if (post_rewrite_hook) {
--				struct child_process hook = CHILD_PROCESS_INIT;
--
--				hook.in = open(rebase_path_rewritten_list(),
--					O_RDONLY);
--				hook.stdout_to_stderr = 1;
--				hook.trace2_hook_name = "post-rewrite";
--				strvec_push(&hook.args, post_rewrite_hook);
--				strvec_push(&hook.args, "rebase");
--				/* we don't care if this hook failed */
--				run_command(&hook);
--			}
-+			run_command(&notes_cp);
-+
-+			hook_opt.path_to_stdin = rebase_path_rewritten_list();
-+			strvec_push(&hook_opt.args, "rebase");
-+			run_hooks_oneshot("post-rewrite", &hook_opt);
- 		}
- 		apply_autostash(rebase_path_autostash());
+@@ -32,11 +38,18 @@ export COMMIT1
  
+ test_expect_success 'push with failing hook' '
+ 	test_commit two &&
+-	test_must_fail git push parent1 HEAD
++	cat >expect <<-EOF &&
++	HEAD $(git rev-parse HEAD) refs/heads/main $(test_oid zero)
++	EOF
++
++	test_when_finished "rm actual" &&
++	test_must_fail git push parent1 HEAD &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success '--no-verify bypasses hook' '
+-	git push --no-verify parent1 HEAD
++	git push --no-verify parent1 HEAD &&
++	test_path_is_missing actual
+ '
+ 
+ COMMIT2="$(git rev-parse HEAD)"
 -- 
 2.33.0.816.g1ba32acadee
 
