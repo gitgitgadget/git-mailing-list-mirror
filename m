@@ -7,30 +7,30 @@ X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 509D6C432BE
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 14:00:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03E4CC432BE
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 14:08:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 27DB960FD7
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 14:00:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DEF4E610F9
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 14:08:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345339AbhIBOBV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Sep 2021 10:01:21 -0400
-Received: from mout.gmx.net ([212.227.15.15]:42099 "EHLO mout.gmx.net"
+        id S1345470AbhIBOJN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Sep 2021 10:09:13 -0400
+Received: from mout.gmx.net ([212.227.17.21]:36907 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234331AbhIBOBT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Sep 2021 10:01:19 -0400
+        id S1345447AbhIBOJL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Sep 2021 10:09:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1630591217;
-        bh=7jgXEjUhsatUrAFBWOkYKsNaxj/icw9rfY0E5Sm5X8I=;
+        s=badeba3b8450; t=1630591688;
+        bh=sjVwAktkIfOasz9R3TZUoJYH1rxI6IXrEvytMhdK9O0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=cAW37mbbOHBrTt3cb3jxNmjwKXVV1eA6V3fGxKajy6/g4Z0E7mhpzAMB265UmpCPr
-         D6ZRJNqWbnpJTPis4N05w5/3zJTcg2of7UjTgw2Nr3OHTX3Lh/YcCIbxqqhrLtbN25
-         JSDEfmW2iGmjoXUa/R/beULpXyuY3Mx8WuZqYNZ8=
+        b=Lj1tpuIV8gGeJRHjeKpYHGubRf5meuixf9uXHXzgC+2MY/sq5NWWea5geOvp5r5I6
+         2jnTyMbGk3UaC1jTyc3Hy/1kgtK2sVSycLVy4Ag+FoWdOChkzfSt+nuMzaprFKSALC
+         4nIwR9vg0Gq8dhtbNh6PTe2RzxMmAwOq0vvxQINA=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.86.215] ([213.196.213.44]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MKbkM-1mgcRB07wa-00KvS4; Thu, 02
- Sep 2021 16:00:17 +0200
-Date:   Thu, 2 Sep 2021 16:00:25 +0200 (CEST)
+Received: from [172.30.86.215] ([213.196.213.44]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MDQeU-1mEgO61pl0-00AYid; Thu, 02
+ Sep 2021 16:08:08 +0200
+Date:   Thu, 2 Sep 2021 16:08:16 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
@@ -39,32 +39,32 @@ cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, Eric Wong <e@80x24.org>
 Subject: Re: [PATCH v2 6/7] git-svn: drop support for `--preserve-merges`
 In-Reply-To: <87zgswv34e.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2109021600070.55@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.2109021607110.55@tvgsbejvaqbjf.bet>
 References: <pull.195.git.1574542242.gitgitgadget@gmail.com> <pull.195.v2.git.1630497435.gitgitgadget@gmail.com> <a987e9439af6335e15a3d41b82832e9a8824317b.1630497435.git.gitgitgadget@gmail.com> <87zgswv34e.fsf@evledraar.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-254040796-1630591226=:55"
-X-Provags-ID: V03:K1:6zm+L6n1KXbiWN6cdGDsQx92Sp7zxpUj6hzp1rZIP4f4LUuVSIC
- WNhnOFP9cwyo3IOlmwPcs+PXhkaaa2IFLFVj4cYYW43Tc/6R5hsRB+ovfQEIi1bSoljAUge
- 2c9J6fuu0tJswT43XCpi9ilmR2xAn2wiKM7f95REZMiuqtzrsOQ8X6jnb3kymBQZloHjF0v
- 1PkyV4DxEQSmxOEX83dlg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ncOyfEVtlUE=:/O6hCopFVneCI6NpyU4tC0
- ZefU819rg4zwp88TEIVQ4MHLeuIY1c95rXmyMSiHVwsV9x3FWjdKAyJqkBCwZmsPI1NEOTAL5
- mMhITOTr3y/rl697Eygz4C9sLrbeGG1fb+gaCgXrEYhoJRdraZOJafmhCRC+5lBgOoEeWqw/9
- Sb4lVg3B9K+ychhcOv3398Km6QdSVabVYdeLIbeTv8mQ2xiCG7o+O2995gAa/hcay8Fr5sT4q
- qsbuGAfgsywcPYnMbh/JtHZYEYeahoO/4FYoaDZy5hX4p3llc3PfprSMjnSH9hASeij5GMMI8
- eJpGz1GqQTxqZH11sYt+u2r/SRQHcTYh3/yS9Ol+fgG9iMh1RsGyfSFVwkMMx4GKJj9E0nAwz
- nCPj7iE6tzw7mZujmzbm+UBMGPdH0l8uiDKLUbdAhnexrD4ajB3prjA29CuF9kvOGpYyDtQRM
- db9uG94Yj529LPHF9ey38/jB/YPxVB9DC4SIHUfRa+yXtg+fhJ1ZTAkgPSzQKv9OpwnmdzFmu
- g1achxnE2YSGaVk0pFFYa04T7H16RP+ScUApOhyI20oTq01y24xUFspfaoZcqoMKwK6UJPAtM
- qNdsEf0ZmY7XSqtmLkHOR/Qd0yZIVXd7n448RSCWl7H4XkAj+jBs7LnalSBViXIEmMaAYCqz+
- bo9GhbN2K8D74jTJcE8Srj+P2vNnWtXGwKZpNL5V+GiHWycgj0BsIW3hqrx5Q8rzJ9+lAcQZQ
- ko9Nd6cLFaa5JElA/xbO0/jj/WxcEzNMezopnqPKEppB32qYn2DtwoQXNfEq74dNy2LIXHU3p
- aTRNBpysBK0jCawZEPML3TV8Mtsw7x0f1nf2N3MlOprJ8qW2Xu7RLe8dSHPssdlwW+cQqL78k
- CQXYgsBpMtQLfMTPiojMO9lQMym0DGUQ6ZyVQNPkGWWHYKbhNAZr0hj4MPKexeIWLJWKDf+57
- j9fSZGzzB29+pf99SGpUI+M9HcacJi6DrorrSBqZnoZH7gv9Y08gACKwxyV7lyNJtAeBjOUy9
- zBAU/TXtzw7KC1cTCq0oxjojXY9Dk5i2i4NZCAFPfFYYBjSH+2BtUf7GK4tkO7tQ1Jr1i/XWn
- JFt8yubcFSeuKqUvCHLfsjsHJH+QcaJT3TmEk7nlGyTuQ89OJlce+QUlA==
+Content-Type: multipart/mixed; boundary="8323328-1240559053-1630591698=:55"
+X-Provags-ID: V03:K1:9yTapXQfBPzSj8i0zWNXkwejBTYAgDF6fH5UvxhKt/MVgpUMRhm
+ gOWBbN4/XNKfMKksmdBGCrRFFm4yUeyLeQLFI4z1BTpMxN2Se/H+2UNES3mbHmFO3iWjHCJ
+ 5E9ERa3/YN8ReOTVDXa8zuFaNaYl0vBpqc6Q65eME1E985gS6kNPdle3clKMOK7x67hVrzu
+ La4XW0Kk+QwMLvL0VB58w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:F48M3h7kahU=:gHMAM1S0St6QcWUGicHoO1
+ zqgLAC/7ZKcjtjWi+6X/YzZVeWkZEYGhqcanj29E80ywBBEDJ5Egq7CIAT88TL0uF3K+VIktd
+ Brk8QNC0xWMMCiqovWIEH0ob2CrBktW07MVDNvQbBuW/VZv3xB57BeuVf1Cw/MnrUtIFtUqEt
+ ZoIr6bz1QamMQSrNFo2YHi0iSjJjLOmbK5z0Fh8SfUfGChCnLimUERgvbACeFz/3svyO9hT8r
+ 5u7tzpzDLnCxxu3+EsLMHD7Uft8yuJwUJp1muhBmPmlYfh6kuPEBcNXPqFji1Nhwgc5ZFJHAj
+ +aK3B9mPuC7tGavnZ35osDn/JiCtAL3YbeVPZHe/8jfiZZay4Dmn6XOhRXQIFfrxovMEcsGuN
+ jVwcU7hYGJEdfv9+0YuWhx4z/xDrGAnF8tHJ58PBnPvwgBtRXuiRb6SGIhiGj9bOIxc+SUjhT
+ 4pTiPXNmlEehH5wRn4xlqJOK7Sv3FS9n9564NKIErlKTHVH0N4Q66mResEwOoVPfYjSw5GYrc
+ d/wz014sNV2nwq+5cPv0+N4/I4NfRo1mpUTCPcBDi+2EYBjFmED588LfjaIvWihYsIkY9/Bsg
+ 72HIHbkL9zT4bxGGs1n83+Y0zjxUW77RHJrbJx14Pu4sQza+IW9URApOMdkWDfJ55aRFZ8t4x
+ qqvNfv4nTK02qa9bZcN4fmBBXCWQ1EiroU2jzXDMcvNwiD8r/M3fyzjhmGgrkBH3fd09YRDfk
+ nBnL3clD+5dnHV6ko+dY+C2H8UyShszEfUyIh/b4smthK801SuZyjW4rkzC11oJw5UKWvMQ+c
+ iP5goYjA5vlfgu0J9RfNrk5V5DVZVYb4bYY5Gdi9EROAcw4cXL4baAgJ4qIiaJMAQbLQ+bBWR
+ tOtxLK5BVpRj0TdyTmKRdpy/N1Sr2GiBYjCPNNsKM+2eKNtxHmq2N+N2YXKQQnbsqlVfVcbL8
+ XDyFkuMsYiUZ1WWmTuZk4NROZbcvsll9jS5jwnzbSidKAp+rNUTRsPi0D6FaE4yyYONKNjoEc
+ oPXyXj1t79bJg9otpzRpUp06PxsjoCDF27DvvL6x1/zzFf79XnUhxUYK/SKb+RybfoTembP0U
+ 2AwuQ92OJ7zrTH0FXzoIwEXerzcJO6fcJmwLiRNcDPDZubT3f5FT6xhuQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -72,7 +72,7 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-254040796-1630591226=:55
+--8323328-1240559053-1630591698=:55
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
@@ -97,9 +97,9 @@ On Wed, 1 Sep 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 > I think it's fine to do this, but at least updating the commit message
 > to note the difference would be good.
 
-I will update the commit message.
+Thank you for being super rigorous.
 
 Ciao,
 Dscho
 
---8323328-254040796-1630591226=:55--
+--8323328-1240559053-1630591698=:55--
