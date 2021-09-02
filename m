@@ -2,81 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B47DC433F5
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 22:42:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0C3FC433EF
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 22:47:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E36A46023F
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 22:42:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B41B76054F
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 22:47:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347743AbhIBWnb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Sep 2021 18:43:31 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:65068 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347699AbhIBWna (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Sep 2021 18:43:30 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5FE2115979C;
-        Thu,  2 Sep 2021 18:42:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FbKxKsthO9xhmClDshaWlyK0+kOnB3PJyEWaA+
-        5cEdU=; b=SXU3loC1mSHqaTXbegqJEsj6NLcKXa1+yWIlAPY4Kqv7SA/e2hMmFP
-        0h1i5Hb2G2R8qFY3FT24JQWdgMeV6UDfQtJyWybPBi1ARgEX3dssyrIymkr56IMF
-        kth3c8KWuPmab3/K0qvPo6QdFmDaN/cQTyZsdi/guTVZvt1ze99DI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5869C15979B;
-        Thu,  2 Sep 2021 18:42:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9594815979A;
-        Thu,  2 Sep 2021 18:42:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Wong <e@80x24.org>, Prathamesh Chavan <pc44800@gmail.com>
-Subject: Re: [PATCH 0/9] remove dead shell code
-References: <cover-0.9-00000000000-20210902T155758Z-avarab@gmail.com>
-        <xmqq5yvik8bc.fsf@gitster.g>
-        <CAPUEspj9YPJHcKzjGNR05-FnkzRoZJ0yKC1McA5wM06HgUPVHw@mail.gmail.com>
-Date:   Thu, 02 Sep 2021 15:42:27 -0700
-In-Reply-To: <CAPUEspj9YPJHcKzjGNR05-FnkzRoZJ0yKC1McA5wM06HgUPVHw@mail.gmail.com>
-        (Carlo Arenas's message of "Thu, 2 Sep 2021 14:29:59 -0700")
-Message-ID: <xmqq7dfyioq4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1348519AbhIBWsu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Sep 2021 18:48:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52044 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1348515AbhIBWsu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Sep 2021 18:48:50 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 234BEC061575
+        for <git@vger.kernel.org>; Thu,  2 Sep 2021 15:47:51 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a25so7990106ejv.6
+        for <git@vger.kernel.org>; Thu, 02 Sep 2021 15:47:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Uc+ktKUcuG5PZEXcJjFx7jtqvwJlpnwmNb2Brk/TXYg=;
+        b=pdyW7+4ZSroN0/j0gdfVNaz0aTD00GzLQVHWqKSXE5dnL0V9SV2u3RDYKJ5hTdQXXZ
+         xNpcFBqAitcmDZKQi/ZsrYKanuT5Aptc8Fss1qynSMQUbLp0EVvJcWu0v46UPB563t3M
+         eP4SvvgTaX1TnALezT6qXBfNkdb/sKgDgSYLueDRsMpisXfrrLmgl5pq4wFnvG8LWupX
+         JPgIFnAEzIC4hNtVvyhFnXZ9zJfwDZ7noxxhlhzDrVVkHyfR0XLpSAug69LDlp07ff9B
+         2QjCgEJlM40Cbg6cSsKvL6sQOwYG4P7mAYlmgRLgVGJMiG8fA/2qI/2gd32zYxC4jQRe
+         h0jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=Uc+ktKUcuG5PZEXcJjFx7jtqvwJlpnwmNb2Brk/TXYg=;
+        b=VgbsiF2/nc9uVdrMCgPluOfr5XJhxoEhAivo5xzSdjaNBOJ64jJi3b4pikLpbwQBq9
+         dZb83CpE261fCQCyBXhbYKsN6z9HmBAFqF7iEwyhiq1n4AS0hydUUimv+eHcdidJhsx2
+         T/QWbkzSbO/mrFEDbTlXWcRpSIsRyF0KMf5aBkxM9jkkRYqgiD+MZWXBi4/as3ZF3lHE
+         51QJEfjdJaC5JvYwV5NWrnjH0mIuNNbzE1pQ48+LmgsTas+9h2Xm2qd4wgdNcoYnnZwh
+         PP9ZMQGooilmF5NOR1k9+SecbyonZjbpWPvA39YqB4ELkgbS2vtJe4HwI1SjnbpcktP6
+         7G2Q==
+X-Gm-Message-State: AOAM531t9IzJjpr0b2UuZ7xptWrsFLUMxWkZ+xomesq6o45zWnEVQYb3
+        hgJKqnHvgnEEY/wvS2NYH5NA1Nofrrg9WQ==
+X-Google-Smtp-Source: ABdhPJz8kaFoQjvd406wC5yEJkwOaV/aGMhquhKv0L0PukMTnvnnm2g0zcnXL7U8F3RguvNhC4xaAw==
+X-Received: by 2002:a17:906:165a:: with SMTP id n26mr589190ejd.236.1630622869722;
+        Thu, 02 Sep 2021 15:47:49 -0700 (PDT)
+Received: from evledraar (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id g9sm1821638ejo.60.2021.09.02.15.47.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Sep 2021 15:47:49 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3 5/5] bundle: show progress on "unbundle"
+Date:   Fri, 03 Sep 2021 00:47:05 +0200
+References: <cover-0.4-0000000000-20210727T004015Z-avarab@gmail.com>
+ <cover-v3-0.5-00000000000-20210826T140414Z-avarab@gmail.com>
+ <patch-v3-5.5-cd38b0f0fed-20210826T140414Z-avarab@gmail.com>
+ <xmqqmtp28hbv.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <xmqqmtp28hbv.fsf@gitster.g>
+Message-ID: <87zgsu8ui3.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0D3E11C4-0C3F-11EC-9788-9BA3EF469F85-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Arenas <carenas@gmail.com> writes:
 
-> Dropping it now would avoid having to change it to `grep -E` as egrep
-> gets obsoleted.
+On Fri, Aug 27 2021, Junio C Hamano wrote:
 
-Keeping it would isolate the callers from "grep -E" vs "egrep"
-because they do not need to know.  They can keep calling
-sane_egrep().
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>
+>> +	if (progress) {
+>> +		strvec_push(&extra_args, "-v");
+>> +		strvec_push(&extra_args, "--progress-title");
+>> +		strvec_push(&extra_args, _("Unbundling objects"));
+>
+> Nice.  I would have expected to see pushl() though.
 
-Having said that, I do not think anybody minds losing sane_egrep().
-Many helper functions in the shell library are about encapsulating
-the knowledge we have on and around Git and making it easier for
-third-party script writers to use the knowledge.  The functions like
-is_bare_repository(), cd_to_toplevel(), and git_pager() all fall
-into that category.  sane_egrep is not that kind of a helper (it
-encapusulates our knowledge about GNU grep's quirk we found when we
-tried to use it in our scripts---third-party script writers do not
-need help from Git experts on their use of egrep).
+Will fix. Thanks!
 
-Thanks.
+>> +	}
+>> +
+>> +	ret =3D !!unbundle(the_repository, &header, bundle_fd, progress ?
+>> +			 &extra_args : NULL) ||
+>
+> Again, I wouldn't make the &extra_args conditional to progress
+> here.  Future code change may decide to pass more args to underlying
+> index-pack and the criteria for doing so may be different from
+> progress.
+>
+> If this code cares about readability, it should uncondtionally pass
+> &extra_args.
+
+I agree, but I landed myself in a game of reviewer ping-pong. I had it
+that way originally, then Derrick Stolee suggested changing it in this
+way in <30620e13-4509-1905-7644-9962b6adf9c5@gmail.com>, I'll just
+change it back :)
