@@ -2,80 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2AD5C433F5
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 19:19:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE11EC433F5
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 20:06:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B367360FD7
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 19:19:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B769661053
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 20:06:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347347AbhIBTUY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Sep 2021 15:20:24 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57412 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231161AbhIBTUU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Sep 2021 15:20:20 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EFD04158609;
-        Thu,  2 Sep 2021 15:19:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=WBoTHE6mYHq3
-        ZfUXN3jBqDq/YIFOl8wglcbadXx2o2M=; b=X7ebX/2FKEPQryjJWtA4i9UtH4pL
-        +I9yPZkP2pYRz+71Ym6jJuU/hGeVs33vtxw3hoEICFB+k21ugtW54CsiK+H16LP0
-        7MdWM93IjvlU4eT3P7AkoCl4TYXfXjsWij33616vpCZcAWy0GpuLK5Lppf0/9UjD
-        BwZrKUwmZyNR4ns=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E8CFD158608;
-        Thu,  2 Sep 2021 15:19:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 972C3158605;
-        Thu,  2 Sep 2021 15:19:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Carlo Arenas <carenas@gmail.com>, phillip.wood@dunelm.org.uk,
-        mackyle@gmail.com, sunshine@sunshineco.com
-Subject: Re: [PATCH] gettext: remove optional non-standard parens in N_()
- definition
-References: <YS9RieTeJSFmd6M7@coredump.intra.peff.net>
-        <patch-1.1-d24f1df5d49-20210901T112248Z-avarab@gmail.com>
-Date:   Thu, 02 Sep 2021 12:19:16 -0700
-In-Reply-To: <patch-1.1-d24f1df5d49-20210901T112248Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 1 Sep
- 2021 13:25:52 +0200")
-Message-ID: <xmqqilzikcp7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1344942AbhIBUHI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Sep 2021 16:07:08 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:50652 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1344861AbhIBUHH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Sep 2021 16:07:07 -0400
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4H0sPV1cDnz5tlC;
+        Thu,  2 Sep 2021 22:06:05 +0200 (CEST)
+Subject: Re: [PATCH v2 0/7] Drop support for git rebase --preserve-merges
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Wong <e@80x24.org>
+References: <pull.195.git.1574542242.gitgitgadget@gmail.com>
+ <pull.195.v2.git.1630497435.gitgitgadget@gmail.com>
+ <xmqqk0k0ndbq.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2109021616300.55@tvgsbejvaqbjf.bet>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <4e998676-4975-8ac2-35a0-34416938b62e@kdbg.org>
+Date:   Thu, 2 Sep 2021 22:06:05 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
+In-Reply-To: <nycvar.QRO.7.76.6.2109021616300.55@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: AB707EDA-0C22-11EC-8B3B-9BA3EF469F85-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Am 02.09.21 um 16:18 schrieb Johannes Schindelin:
+> On Wed, 1 Sep 2021, Junio C Hamano wrote:
+>> A good goal.  There is no remaining use case where (a fictitious and
+>> properly working version of) "--preserve-merges" option cannot be
+>> replaced by "--rebase-merges", is it?  I somehow had a feeling that
+>> the other Johannes (sorry if it weren't you, j6t) had cases that the
+>> former worked better, but perhaps I am mis-remembering things.
+> 
+> I think that I managed to address whatever concerns there were about the
+> `--rebase-merges` backend in the meantime.
 
-> Remove the USE_PARENS_AROUND_GETTEXT_N compile-time option which was
-> meant to catch an inadvertent mistakes which is too obscure to
-> maintain this facility.
-> ...
-> I don't care how this lands exactly, but thin (eye of the beholder and
-> all that) that the commit message above is better. Carlo: Feel free to
-> steal it partially or entirely, I also made this a "PATCH" instead of
-> "RFC PATCH" in case Junio feels like queuing this, then you could
-> build your DEVOPTS=3Dpedantic by default here on top.
+That was either my suggestion/desire to make no-rebase-cousins the
+default. That has been settled.
 
-FWIW, I think this goes in the right direction, and I'd rather not
-to have to handle too many multi-patch topics in which one step
-takes hostage the other steps.
+Or my wish not to redo the merge, but to replay the first-parent
+difference. The idea never got traction, and I've long since abandoned
+my implementation of it.
 
-Thanks, all.
+> To be honest, I developed one (minor) concern in the meantime... Should we
+> maybe try to be nicer to our users and keep handling the
+> `--preserve-merges` option by explicitly erroring out with the suggestion
+> to use `--rebase-merges` instead? Not everybody reads release notes, after
+> all. In fact, it is my experience that preciously few users have the time
+> to even skim release notes...
+
+A valid concern, I would think.
+
+-- Hannes
