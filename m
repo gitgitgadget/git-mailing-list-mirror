@@ -7,116 +7,134 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 916F1C433F5
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 22:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E304C433F5
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 22:19:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 73FA460724
-	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 22:05:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2884561054
+	for <git@archiver.kernel.org>; Thu,  2 Sep 2021 22:19:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347656AbhIBWGs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Sep 2021 18:06:48 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64291 "EHLO
+        id S1347564AbhIBWUI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Sep 2021 18:20:08 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64257 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234573AbhIBWGr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Sep 2021 18:06:47 -0400
+        with ESMTP id S237981AbhIBWUH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Sep 2021 18:20:07 -0400
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 962C3EF95E;
-        Thu,  2 Sep 2021 18:05:47 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E0632EFB31;
+        Thu,  2 Sep 2021 18:19:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0Z2x8lNaJ2mze8Rhs8o4VW9SZT5h7tZF3SZQp3
-        1GgZc=; b=BpZv9IG03V2sXopVDngD/fR2tqeFL1bDxoMsG5RVoF0rGrsOKBbJbU
-        VlSXUfzxLrc1kRgW4Gv5z3mbkN5I8h6vzjRefol+Zqd1GGeGOK7qF0RiMyQ4BJ7m
-        RFTgdfSAqjDek+cSOsEKL+y4wSj2Hg61BYBA7pp/SxKWHqW1zInyY=
+        :content-type; s=sasl; bh=LCNxrKz9OCSPjFsBy6MMJNfhuNfL1zo7RJ87wC
+        3fLAs=; b=tSFpek2YyT0Pa5L9JxYSCUEZvrHZpCTQ+Oj/WdgX8CUiRTS5n4Nd7r
+        T0me+s+Zw9ZNKvYrEGXYRD/syuvFhwPx4tmVgUYFNzdmv1QbAS1DqFKA8Y6FbCxY
+        Pu2CkM/ZqCs9SdKxoOOP4ZUatu3+eH11MDZcOF4t4HouOK1glId4c=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8E608EF95D;
-        Thu,  2 Sep 2021 18:05:47 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D6747EFB30;
+        Thu,  2 Sep 2021 18:19:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.172.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1689CEF95C;
-        Thu,  2 Sep 2021 18:05:47 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 56E66EFB2F;
+        Thu,  2 Sep 2021 18:19:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Miriam Rubio <mirucam@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v6 2/6] t6030-bisect-porcelain: add test for bisect
- visualize
+Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Subject: Re: [PATCH v6 3/6] run-command: make `exists_in_PATH()` non-static
 References: <20210902090421.93113-1-mirucam@gmail.com>
-        <20210902090421.93113-3-mirucam@gmail.com>
-Date:   Thu, 02 Sep 2021 15:05:46 -0700
-In-Reply-To: <20210902090421.93113-3-mirucam@gmail.com> (Miriam Rubio's
-        message of "Thu, 2 Sep 2021 11:04:17 +0200")
-Message-ID: <xmqqpmtqiqf9.fsf@gitster.g>
+        <20210902090421.93113-4-mirucam@gmail.com>
+Date:   Thu, 02 Sep 2021 15:19:06 -0700
+In-Reply-To: <20210902090421.93113-4-mirucam@gmail.com> (Miriam Rubio's
+        message of "Thu, 2 Sep 2021 11:04:18 +0200")
+Message-ID: <xmqqk0jyipt1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: ED08FA86-0C39-11EC-B816-D601C7D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: CA077C7C-0C3B-11EC-880C-D601C7D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Miriam Rubio <mirucam@gmail.com> writes:
 
-> Add a test to control breakages in bisect visualize command.
+> From: Pranit Bauva <pranit.bauva@gmail.com>
 >
+> Removes the `static` keyword from `exists_in_PATH()` function
+> and declares the function in `run-command.h` file.
+
+"Remove" and "declare", as if we are giving an order to somebody
+else to make these changes.
+
+> The function will be used in bisect_visualize() in a later
+> commit.
+>
+> Mentored by: Christian Couder <chriscool@tuxfamily.org>
+> Mentored by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 > Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 > ---
->  t/t6030-bisect-porcelain.sh | 7 +++++++
->  1 file changed, 7 insertions(+)
+>  run-command.c |  2 +-
+>  run-command.h | 12 ++++++++++++
+>  2 files changed, 13 insertions(+), 1 deletion(-)
 >
-> diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-> index e61b8143fd..f13eeac9ce 100755
-> --- a/t/t6030-bisect-porcelain.sh
-> +++ b/t/t6030-bisect-porcelain.sh
-> @@ -973,4 +973,11 @@ test_expect_success 'bisect run fails with exit code equals or greater than 128'
->  	test_must_fail git bisect run ./test_script.sh >> my_bisect_log.txt
->  '
+> diff --git a/run-command.c b/run-command.c
+> index f72e72cce7..390f46819f 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -210,7 +210,7 @@ static char *locate_in_PATH(const char *file)
+>  	return NULL;
+>  }
 >  
-> +test_expect_success 'bisect visualize with a filename with dash and space' '
-> +	echo "My test line" >> -hello\ 2 &&
+> -static int exists_in_PATH(const char *file)
+> +int exists_in_PATH(const char *file)
+>  {
+>  	char *r = locate_in_PATH(file);
+>  	int found = r != NULL;
+> diff --git a/run-command.h b/run-command.h
+> index af1296769f..54d74b706f 100644
+> --- a/run-command.h
+> +++ b/run-command.h
+> @@ -182,6 +182,18 @@ void child_process_clear(struct child_process *);
+>  
+>  int is_executable(const char *name);
+>  
+> +/**
+> + * Search if a $PATH for a command exists.  This emulates the path search that
 
-The same style guide for redirection applies here.
+The first sentence does not make sense to me.  Isn't this for
+checking if a command exists in one of the directories on $PATH?
 
-Also, it makes sense to quote such an unusual filename for human
-readers, i.e.
+	Check if the command exists on $PATH.
 
-	echo "My test line" >"./-hello 2" &&
+may make more sense, especially since "search" may hint that the
+caller may be able to learn where it exists, which is not the case.
 
-> +	git add -- -hello\ 2 &&
-> +	git commit --quiet -m "Add test line" -- -hello\ 2 &&
+> + * execvp would perform, without actually executing the command so it
+> + * can be used before fork() to prepare to run a command using
+> + * execve() or after execvp() to diagnose why it failed.
+> + *
+> + * The caller should ensure that file contains no directory separators.
 
-Likewise.  
+Consistently use "command" instead of "file" and rename the
+parameter in the prototype below from "file" to "command".
 
-Especially since this is not a test for "git add" or "git commit",
-instead of writing "-hello 2", "./-hello 2" may help human readers
-better.
+Alternatively, you can rewrite the first paragraph above to make
+sure that it is clear to the readers that "command" it refers to is
+actually the "file" parameter the function takes.  A rewrite of the
+first sentence I just rewrote above may become
 
-> +	git bisect visualize -p -- -hello\ 2 > my_bisect_log.txt
+	Check if an executable "file" exists on $PATH.
 
-This one, if it is meant to test the pathspec parsing of the command
-being tested (i.e. "git bisect"), is probably better to be left
-without "./" prefix, i.e. "-hello 2".
+which does not look too bad, but "executing the file so it can ..."
+and "to run a file using..." smell a bit strange, and that is why I
+suggested to consistently use "command" instead.
 
-The same comment applies to the redirection into my_bisect_log.txt
-file.  It is better not to redirect this at all.
+> + *
+> + * Returns 1 if it is found in $PATH or 0 if the command could not be found.
+> + */
+> +int exists_in_PATH(const char *file);
 
-This is the first use of "git bisect visualize" in our tests.  How
-are we making sure that we won't open gitk and leave it hanging and
-doing silly things like that?
-
-    ... goes and looks ...
-
-Ah, OK.  "git bisect --help" makes it clear that giving an option
-like "-p" tells us to run "git log", so we are OK.
-
-THanks.
-
-
-
-
-> +'
-> +
->  test_done
+Thanks.
