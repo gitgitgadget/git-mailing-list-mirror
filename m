@@ -2,165 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AA3EC433F5
-	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 11:13:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2508AC433F5
+	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 11:59:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DDC4F60FC4
-	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 11:13:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 052E7610A1
+	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 11:59:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235190AbhICLOk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Sep 2021 07:14:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38622 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231497AbhICLOd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Sep 2021 07:14:33 -0400
-Received: (qmail 27090 invoked by uid 109); 3 Sep 2021 11:13:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 Sep 2021 11:13:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7508 invoked by uid 111); 3 Sep 2021 11:13:32 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 Sep 2021 07:13:32 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 3 Sep 2021 07:13:32 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Andrzej Hunt <andrzej@ahunt.org>,
-        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 0/8] add a test mode for SANITIZE=leak, run it in CI
-Message-ID: <YTIDXHx/IMtcaQR5@coredump.intra.peff.net>
-References: <cover-0.4-0000000000-20210714T172251Z-avarab@gmail.com>
- <cover-v3-0.8-00000000000-20210831T132546Z-avarab@gmail.com>
- <YS9OT/pn5rRK9cGB@coredump.intra.peff.net>
- <877dfzb0tw.fsf@evledraar.gmail.com>
+        id S1348653AbhICMAL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Sep 2021 08:00:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60778 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234910AbhICMAL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Sep 2021 08:00:11 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B035C061575
+        for <git@vger.kernel.org>; Fri,  3 Sep 2021 04:59:11 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id j16so3384568pfc.2
+        for <git@vger.kernel.org>; Fri, 03 Sep 2021 04:59:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=keX9OKHJRp9sFEHyvNaTZ4DrfGUgK2mF958rkX9iDfI=;
+        b=Nwv7kx+YphnOlHqff4lHrZGCwehQ8C5Ypa4Bd6ROf/A79scKqmtxUGipFvnkqesguA
+         h2movzKKD5cXXqxBN5CqX0NPzMwSshuzDaWRxcxGsPBUCeQr1FMarvhLfezk3E/CptOb
+         NMutF1B/qdfvZZS70s7mM6nV1S5Vh61ZJD8aNkJrX+2fnkKGH6aA9TnIPkFffYmJRYU4
+         t6M6g+mqGl4xJMf0SBg4xOEOobC8mDBYKwLqaneH8MbjC2QgM37H0SOlFviaA9qagLow
+         KXuNPOhY6CYLwF1nmSvGGvwwRTvAr+s/nC4Cn0ntQxCaT+nAKndaeE/yxRa65v7qySXD
+         IGYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=keX9OKHJRp9sFEHyvNaTZ4DrfGUgK2mF958rkX9iDfI=;
+        b=OywGzqZqrQm0LgOl5F56asY9DW8lzCdbXZcUd56ZPaaz9NWL7YahWYZmxBE9ZOoRNe
+         ZeLesuGqRZAdPUHkNV4Ku35rp5n6nlMED6m+f9onRdujZ8pa7Vydm6QMrfvpe6k377bf
+         Qi9tAqzCx3F1YtDN4bzTZyTxf66wYrKNhRSUPoZUxgRsNvR2+Pmd+aUA+dO2Ksye8DxW
+         A10lZ0mzJKJpoWOa2qDjR5HTyVTHoo03xNAcgOTfABpaRkVRnw+wLoJFTqhXf2bvwRaf
+         sJJUmITkNOiJ2HrWVQeyr2BJV7k9K5oWIpI8JIwgPTBQld9f6Nc0GokWfp3TbcaKvXG+
+         tLhw==
+X-Gm-Message-State: AOAM5334HCdVHiySW6chmsOKO30kJFAXOFCpttbGSgtzfKQQeARDHLuI
+        v5rFchL66ym3i2R2089GKjDB7ZF36xRgJATX
+X-Google-Smtp-Source: ABdhPJzAT6PV37ScshqFVHSrstBZKkrfXo77/DfRbBGhxnPyr5YkoCUw03ATuT2dwBKkGDxS4F2DOw==
+X-Received: by 2002:a63:1d23:: with SMTP id d35mr3248901pgd.357.1630670350399;
+        Fri, 03 Sep 2021 04:59:10 -0700 (PDT)
+Received: from ubuntu.mate (subs02-180-214-232-82.three.co.id. [180.214.232.82])
+        by smtp.gmail.com with ESMTPSA id g2sm5173916pfr.35.2021.09.03.04.59.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Sep 2021 04:59:10 -0700 (PDT)
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: [PATCH] bugreport: Add hint to answer questionnaire in English
+Date:   Fri,  3 Sep 2021 18:58:24 +0700
+Message-Id: <20210903115823.622715-1-bagasdotme@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <877dfzb0tw.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 02, 2021 at 02:25:33PM +0200, Ævar Arnfjörð Bjarmason wrote:
+Depending on system locale, git bugreport may launch the localized
+bug report questionnaire (and thus users respond it in their native
+language). However, many Git support forums (including
+git@vger.kernel.org) expects bug reports written in English.
 
-> > Hmm. This still seems more complicated than we need. If we just want a
-> > flag in each script, then test-lib.sh can use that flag to tweak
-> > LSAN_OPTIONS. See the patch below.
-> 
-> On the "pragma" include v.s. env var + export: I figured this would be
-> easier to read as I thought the export was required (I don't think it is
-> in most cases, but e.g. for t0000*.sh I think it is, but that's from
-> memory...).
+Add a hint that answering the questionnaire in English will increase
+chances for bug reports to be responded.
 
-I admit that half of my complaint with the pragma is the weird filename
-with an "=" in it. :) But I do think just assigning the variable is the
-most readable thing.  If t0000 needs to export for whatever reason, it
-can do so (preferably with a comment explaining why).
+Fixes: 238b439d69 (bugreport: add tool to generate debugging info,
+2020-04-16)
 
-> > That has two drawbacks:
-> >
-> >   - it doesn't have any way to switch the flag per-test. But IMHO it is
-> >     a mistake to go in that direction. This is all temporary scaffolding
-> >     while we have leaks, and the script-level of granularity is fine.
-> 
-> We have a lot of tests that do simple checking of the tool itself, and
-> later in the script might be stressing trace2, or common sources of
-> leaks like "git log" in combination with the tool (e.g. the commit-graph
-> tests).
-> 
-> So being able to tweak this inside the script is useful, but that can of
-> course also be done with this proposed TEST_LSAN_OK + prereq.
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+---
 
-Getting rid of the "let's tell the tests that we were built with LSAN"
-was part of the simplicity I was going for (and obviously does preclude
-a prerequisite). I had hoped we wouldn't need to do per-test stuff,
-because this was all a temporary state. But maybe that's naive.
+ In [1], Junio suggests to add hint for filling in bug report answers
+ in English. That stems from my responses to Krzysztof Żelechowski's bug
+ report [2], which advise him to re-submit the report in English.
 
-> >     If we do care about not running them, then I think it makes more
-> >     sense to extend the run/skip mechanisms and build on that.
-> 
-> The patch I have here is already nicely integrated with the skip
-> mechanism. I.e. we use skip_all which shows a summary in any TAP
-> consumer, and we can skip individual tests with prerequisites.
+ [1]: https://lore.kernel.org/git/xmqqeeaiodxc.fsf@gitster.g/
+ [2]:
+https://lore.kernel.org/git/22496693-cf63-a278-c85e-d9e4376e2a59@gmail.com/
 
-I meant here that we'd be driving the selection externally from the
-tests using the skip/run mechanisms (something along the lines of what I
-sketched out before).
+ builtin/bugreport.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-But I admit that there isn't really a big difference between the two
-approaches. Since you've coded this one up already, let's go in that
-direction (i.e., this series).
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index 9915a5841d..56ccd0fc41 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -96,6 +96,7 @@ static int get_bug_template(struct strbuf *template)
+ 	const char template_text[] = N_(
+ "Thank you for filling out a Git bug report!\n"
+ "Please answer the following questions to help us understand your issue.\n"
++"Answering in English will give a better chance for your issue to be responded.\n"
+ "\n"
+ "What did you do before the bug happened? (Steps to reproduce your issue)\n"
+ "\n"
 
-> I was interested in doing some summaries of existing leaks
-> eventually. It seems even with LSAN_OPTIONS=detect_leaks=0 compiling
-> with SANITIZE=leak make things a bit slower, but not by much (but actual
-> leak checking is much slower).
-> 
-> But I'd prefer to leave any "write out leak logs and summarize" step for
-> some later change.
+base-commit: 6c40894d2466d4e7fddc047a05116aa9d14712ee
+-- 
+2.25.1
 
-OK, I can live with that (especially given how apparently difficult it
-is to convince LSAN to do it).
-
-> > Sort of a meta-question, but what's the plan for folks who add a new
-> > test to say t0000, and it reveals a leak in code they didn't touch?
-> 
-> Then CI will fail on this job. We'd have those same failures now
-> (e.g. the mentioned current delta between master..seen), we just don't
-> see them. Having visibility on them seems like an improvement.
-> 
-> > They'll get a CI failure (as will Junio if he picks up the patch), so
-> > somebody is going to have to deal with it. Do they fix it? Do they unset
-> > the "this script is OK" flag? Do they mark the individual test as
-> > non-lsan-ok?
-> 
-> I'd think they'd fix it, or make marking the regression as OK part of
-> their re-roll, just like failures on master..seen now.
-> 
-> If you're getting at that we should start out this job as an FYI job
-> that doesn't impact the CI run's overall status if it fails I think that
-> would be OK as a start.
-
-I think that would be OK, but I'm not quite sure of the best way to do
-it. Why don't we start it as a regular required job, and then we can see
-how often it is causing a headache. If once every few months somebody
-fixes a leak, I'd be happy. If new developers are getting tangled up
-constantly in unrelated leaks, then that's something we'd need to
-revisit.
-
-> > I do like the idea of finding real regressions. But while the state of
-> > leak-checking is still so immature, I'm worried about this adding extra
-> > friction for developers. Especially if they get some spooky action at a
-> > distance caused by a leak in far-away code.
-> 
-> Yeah, ultimately this series is an implicit endorsement of us caring
-> more than we do now.
-> 
-> I think this friction point is going to be mitigated a lot by the
-> ability I've added to not just skip entire test scripts, but allow
-> prereq skipping of some tests, early bailing out etc.
-
-I half-agree with your final paragraph. The biggest friction point I
-think will be for new folks when CI starts failing, and they don't
-understand why (or where the problem is, or how to debug it, etc). But
-like I said, let's see what happens.
-
-> > Anyway, here's LSAN_OPTIONS thing I was thinking of.
-> 
-> Thanks, that & your follow-up is very interesting. Can I assume this has
-> your SOB? I'd like to add that redirect to fd 4 change to this series.
-
-Yes, go for it.
-
--Peff
