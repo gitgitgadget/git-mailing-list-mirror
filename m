@@ -3,231 +3,229 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D74CFC433EF
-	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 06:11:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20E74C433EF
+	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 09:06:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD7AC6102A
-	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 06:11:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F2A3F6069E
+	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 09:06:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343869AbhICGMa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Sep 2021 02:12:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37224 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242278AbhICGM3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Sep 2021 02:12:29 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CB5DC061575
-        for <git@vger.kernel.org>; Thu,  2 Sep 2021 23:11:30 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id m21so4758891qkm.13
-        for <git@vger.kernel.org>; Thu, 02 Sep 2021 23:11:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=AcdNZ24Uh7jn1uirKiwwq6pZHG3hHv2Hovo07UlLW+0=;
-        b=Cl5MsUgUTO0f0jxhvUXq0HQGYOpqzyzPt8mU/lJCEUmmTKZPd/X4As6Lkl8LaAYJGf
-         iLdhm+/1wtl9geUySmicBrGHlLrH6vNnDyi6d43mCAH2skZHwvXQOUlFbJgxFy3cKftO
-         yR5dXEw7sxzwM4gkRBff6yKCop5dY0/v7uJp4weHUGoPAqtVqN/3NkRryzYDUWk/+rKh
-         WiCn6v89oF3O0TuW58LG2i+ZYK1qwAq8OO6ZL68Y3mdteMFgxLJx8EZ13J9fzx0IyYZt
-         7xzG6MX+IJPDnkSIpZ9/ACifrjs5cFPaR5G4/C9UN+yIEnMXUNmN/Sk7xdTfQmxx9jHY
-         aGEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=AcdNZ24Uh7jn1uirKiwwq6pZHG3hHv2Hovo07UlLW+0=;
-        b=YCZuWTo1f9ryRXSnl7QPBHlVM2u65nWkaWG2R1QEhmwwAbbnhMBH9N8wKFMDTam4eZ
-         uLv97D9L9lpYKc4ak6cPp3CJISw5TKGNz0kgCBY3IQa8VALxn2fUhD069w7Jm/eCaNoO
-         ZVaQlovVQ0nIJvttVUZ5jGOtLXW8qfXEN7MTVKkty2+FVUZCUryRTYqs3/GbCmmCIdi8
-         463GkWvDcW/Na/hEt9meP31Bh/2okphtHaamB0Lm1bApuxHAi9tEX/2wf9hGtdMzSmFc
-         H2m7tTpAjjKyUPqf5p8TJB/KNoRkgdOjXnmp5r8u8xlp1XdHzUeMwMKZEekQ3141IGky
-         BFGw==
-X-Gm-Message-State: AOAM532ptDY9Y36tWGHDpnhjr4Eh10GgadJLn3ug8fQUNt4o/EctprNy
-        8ZB+i83kZdmqO7kkgZLUJwHFeTn6bRA=
-X-Google-Smtp-Source: ABdhPJzd2WUIcnQERK5DF2imnAi8J2JqIrMuC/L1nEZb4ZLOBCxvJeqw+1LBoArXEPjW1ul3sZupGg==
-X-Received: by 2002:a37:e43:: with SMTP id 64mr1890835qko.249.1630649489044;
-        Thu, 02 Sep 2021 23:11:29 -0700 (PDT)
-Received: from carlos-mbp.lan (104-1-92-200.lightspeed.sntcca.sbcglobal.net. [104.1.92.200])
-        by smtp.gmail.com with ESMTPSA id r140sm3250474qke.15.2021.09.02.23.11.27
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 02 Sep 2021 23:11:28 -0700 (PDT)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
+        id S1348636AbhICJHo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Sep 2021 05:07:44 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:58509 "EHLO
+        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234912AbhICJHn (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 3 Sep 2021 05:07:43 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id D5CEA5C00DD
+        for <git@vger.kernel.org>; Fri,  3 Sep 2021 05:06:43 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Fri, 03 Sep 2021 05:06:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:subject:message-id:mime-version:content-type; s=fm1;
+         bh=d10QwWDRzPPCGXOqb1X8HCe6+RLEw1RizmTheqoTHfA=; b=JK8efNKSR5X6
+        R5tGUM5WrY37rVwgVQvdpvwD9OFQS9rWcEBOi/qc26uO8fJCdGnMekGAHtNVSeYs
+        uZLg8uziZEm0SafKElgOS4B4AHLd2Vn9z0LJHB3DsqUl6fbeK04eAlB/oT+oqSpZ
+        A+taShDztv4XyuxRQboKPO3iQi6aKFjo0zBlZp870S8bONNvwK4qYyYZZWVwyTNN
+        B0SCdQYFx6E9Cbun3Sx9FKkuPBcA2M+Ck/EUkdrn4vJUFry06XGO+R3z7YTs8/EA
+        WkHRsWqxQr8QtQZnSHkfAfSMgsHPuhZVOAEifJcYSoyYoRt4C7a6vuQFL5Kzfy4T
+        8ge35f2MgA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:message-id
+        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm3; bh=d10QwWDRzPPCGXOqb1X8HCe6+RLEw
+        1RizmTheqoTHfA=; b=fyPUpFC7zr4EwslhNr3VyjscN6b1zhod8U4e33J40pTvM
+        1MXK3YhZpte/QMx1yFyoQ6V94pb9lIzFdiwJ382SkYIBxERIA4kSPD2JaULDNKvy
+        acT/f1m93uKs8DB/RK7cz44pGuJLCmXBoxLtpFMwPiNIrFdYOQiXp+uBULYOt0gw
+        szSQR7Pk6XwzMKVliqZ3Svr6Y22cBiIr65JVILIbbc0eGS1O29tmOxsL9jcEVrId
+        jIRLyqaNssX50lRZ0GkmhT0jvuJ6CVfh+VNdT0rgiyfpS9GWAeGnJq8CNN7/1RSd
+        GruGr/VApf+yyQ4l3mFurP1e2eNCno4cTvki1jmrw==
+X-ME-Sender: <xms:o-UxYdv7LSdBSNyva8WGJ3Ys4x0s-MDt5mZheLYsjlR4EjuuDzRMTA>
+    <xme:o-UxYWcatV5ljMM6GKQc_cjynZjpjKiMtx553XJvanAbTSOp59ZY18vHytBiry05I
+    mPkl2Pib6E3s2mPbg>
+X-ME-Received: <xmr:o-UxYQwgKanNJxNdM2_F5I2n8I9CwTu6itZPO-4kIwQ6eCo30G064NLT4a9bABpEnaxbrgdjQYRsDaPqWVpyShdbVzOl1618Xu8Il8R81kXJttRawscxhtU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddruddvjedgudduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
+    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:o-UxYUPZQDFhk39tcIYHWM5Xrt381z_vazPjWuIQAPRY-uTC9wHaxg>
+    <xmx:o-UxYd931tuHOoOpPGXTtQTHBCySNWzt7Y5rBopXhO7NeYWuScjJrw>
+    <xmx:o-UxYUUAfq6R4wRur3aVhrPyMde5lIm7ckwKMs2qwbTQXWRei_GAaw>
+    <xmx:o-UxYSKTZer4WInnHuLZkPpE6Rq2fFPzidZYNaCtxj2yYv0PPzBAsg>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Fri, 3 Sep 2021 05:06:42 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 6626fb2f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        for <git@vger.kernel.org>;
+        Fri, 3 Sep 2021 09:06:38 +0000 (UTC)
+Date:   Fri, 3 Sep 2021 11:06:37 +0200
+From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] builtin/checkout: track the command use (checkout/switch) for advice
-Date:   Thu,  2 Sep 2021 23:11:20 -0700
-Message-Id: <20210903061120.31897-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.33.0.481.g26d3bed244
+Subject: [PATCH] update-ref: fix streaming of status updates
+Message-ID: <1e9e62a2c5f74db91aaded83783076c28b757836.1630659922.git.ps@pks.im>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="N01QCmv1SxaJo9RA"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While using `git switch` to create a local branch to track a remote
-one, and more than one remote has it, a helpful message will be
-printed with instructions on how to resolve the ambiguity, but the
-command used in the example will be confusingly `git checkout`.
 
-Modify parse_remote_branch() so that a bit could be passed to it
-to identify the source and print the same command used in the
-advice.
+--N01QCmv1SxaJo9RA
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Add a test for this new behaviour and while at it, modify the
-old one to ensure backward compatibility and update it so no longer
-uses the deprecated test_i18ngrep calls.
+When executing git-update-ref(1) with the `--stdin` flag, then the user
+can queue updates and, since e48cf33b61 (update-ref: implement
+interactive transaction handling, 2020-04-02), interactively drive the
+transaction's state via a set of transactional verbs. This interactivity
+is somewhat broken though: while the caller can use these verbs to drive
+the transaction's state, the status messages which confirm that a verb
+has been processed is not flushed. The caller may thus be left hanging
+waiting for the acknowledgement.
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+Fix the bug by flushing stdout after writing the status update. Add a
+test which catches this bug.
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-The overloading of cb_option to track which command was invoked seems
-fragile, but it was convenient to make this the minimal change required
-for a bug fix.
+ builtin/update-ref.c  | 14 ++++++++++----
+ t/t1400-update-ref.sh | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 42 insertions(+), 4 deletions(-)
 
-I am hoping that part will be reverted (including moving it back to
-where it was and that seemed more obvious for its current use), once
-a better facility to differenciate is build (if there isn't one that
-I obviously missed).
-
-I originally though about sending it as an RFC because of that, but
-since it is working code and with tests, assumed it was better use
-of the scarse reviewer time this way; either way feedback welcomed.
-
- builtin/checkout.c       | 29 ++++++++++++++++++-----------
- t/t2024-checkout-dwim.sh | 20 ++++++++++++++++++--
- 2 files changed, 36 insertions(+), 13 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index b5d477919a..607ed21c36 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -29,6 +29,11 @@
- #include "entry.h"
- #include "parallel-checkout.h"
- 
-+enum {
-+	AMBIGUOS = (1<<0),
-+	SWITCH = (1<<1),
-+} checkout_resolution_flags;
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 6029a80544..a84e7b47a2 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -302,6 +302,12 @@ static void parse_cmd_verify(struct ref_transaction *t=
+ransaction,
+ 	strbuf_release(&err);
+ }
+=20
++static void report_ok(const char *command)
++{
++	fprintf(stdout, "%s: ok\n", command);
++	fflush(stdout);
++}
 +
- static const char * const checkout_usage[] = {
- 	N_("git checkout [<options>] <branch>"),
- 	N_("git checkout [<options>] [<branch>] -- <file>..."),
-@@ -1170,12 +1175,12 @@ static void setup_new_branch_info_and_source_tree(
- 
- static const char *parse_remote_branch(const char *arg,
- 				       struct object_id *rev,
--				       int could_be_checkout_paths)
-+				       unsigned flags)
+ static void parse_cmd_option(struct ref_transaction *transaction,
+ 			     const char *next, const char *end)
  {
- 	int num_matches = 0;
- 	const char *remote = unique_tracking_name(arg, rev, &num_matches);
- 
--	if (remote && could_be_checkout_paths) {
-+	if (remote && (flags & AMBIGUOS)) {
- 		die(_("'%s' could be both a local file and a tracking branch.\n"
- 			"Please use -- (and optionally --no-guess) to disambiguate"),
- 		    arg);
-@@ -1186,11 +1191,12 @@ static const char *parse_remote_branch(const char *arg,
- 		    advise(_("If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
- 			     "you can do so by fully qualifying the name with the --track option:\n"
- 			     "\n"
--			     "    git checkout --track origin/<name>\n"
-+			     "    git %s --track origin/<name>\n"
- 			     "\n"
- 			     "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
- 			     "one remote, e.g. the 'origin' remote, consider setting\n"
--			     "checkout.defaultRemote=origin in your config."));
-+			     "checkout.defaultRemote=origin in your config."),
-+				flags & SWITCH ? "switch" : "checkout");
- 	    }
- 
- 	    die(_("'%s' matched multiple (%d) remote tracking branches"),
-@@ -1200,6 +1206,9 @@ static const char *parse_remote_branch(const char *arg,
- 	return remote;
+@@ -317,7 +323,7 @@ static void parse_cmd_start(struct ref_transaction *tra=
+nsaction,
+ {
+ 	if (*next !=3D line_termination)
+ 		die("start: extra input: %s", next);
+-	puts("start: ok");
++	report_ok("start");
  }
- 
-+/* create-branch option (either b or c) */
-+static char cb_option = 'b';
-+
- static int parse_branchname_arg(int argc, const char **argv,
- 				int dwim_new_local_branch_ok,
- 				struct branch_info *new_branch_info,
-@@ -1293,8 +1302,10 @@ static int parse_branchname_arg(int argc, const char **argv,
- 		 */
- 		int recover_with_dwim = dwim_new_local_branch_ok;
- 
--		int could_be_checkout_paths = !has_dash_dash &&
--			check_filename(opts->prefix, arg);
-+		unsigned flags = (cb_option == 'c') ? SWITCH : 0;
-+
-+		if (!has_dash_dash && check_filename(opts->prefix, arg))
-+			flags |= AMBIGUOS;
- 
- 		if (!has_dash_dash && !no_wildcard(arg))
- 			recover_with_dwim = 0;
-@@ -1309,8 +1320,7 @@ static int parse_branchname_arg(int argc, const char **argv,
- 			recover_with_dwim = 0;
- 
- 		if (recover_with_dwim) {
--			const char *remote = parse_remote_branch(arg, rev,
--								 could_be_checkout_paths);
-+			const char *remote = parse_remote_branch(arg, rev, flags);
- 			if (remote) {
- 				*new_branch = arg;
- 				arg = remote;
-@@ -1571,9 +1581,6 @@ static struct option *add_checkout_path_options(struct checkout_opts *opts,
- 	return newopts;
+=20
+ static void parse_cmd_prepare(struct ref_transaction *transaction,
+@@ -328,7 +334,7 @@ static void parse_cmd_prepare(struct ref_transaction *t=
+ransaction,
+ 		die("prepare: extra input: %s", next);
+ 	if (ref_transaction_prepare(transaction, &error))
+ 		die("prepare: %s", error.buf);
+-	puts("prepare: ok");
++	report_ok("prepare");
  }
- 
--/* create-branch option (either b or c) */
--static char cb_option = 'b';
--
- static int checkout_main(int argc, const char **argv, const char *prefix,
- 			 struct checkout_opts *opts, struct option *options,
- 			 const char * const usagestr[])
-diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
-index 4a1c901456..71656d6545 100755
---- a/t/t2024-checkout-dwim.sh
-+++ b/t/t2024-checkout-dwim.sh
-@@ -105,12 +105,28 @@ test_expect_success 'checkout of branch from multiple remotes fails with advice'
- 	test_must_fail git checkout foo 2>stderr &&
- 	test_branch main &&
- 	status_uno_is_clean &&
--	test_i18ngrep "^hint: " stderr &&
-+	grep "^hint: " stderr &&
-+	grep "git checkout" stderr &&
- 	test_must_fail git -c advice.checkoutAmbiguousRemoteBranchName=false \
- 		checkout foo 2>stderr &&
- 	test_branch main &&
- 	status_uno_is_clean &&
--	test_i18ngrep ! "^hint: " stderr
-+	! grep "^hint: " stderr
+=20
+ static void parse_cmd_abort(struct ref_transaction *transaction,
+@@ -339,7 +345,7 @@ static void parse_cmd_abort(struct ref_transaction *tra=
+nsaction,
+ 		die("abort: extra input: %s", next);
+ 	if (ref_transaction_abort(transaction, &error))
+ 		die("abort: %s", error.buf);
+-	puts("abort: ok");
++	report_ok("abort");
+ }
+=20
+ static void parse_cmd_commit(struct ref_transaction *transaction,
+@@ -350,7 +356,7 @@ static void parse_cmd_commit(struct ref_transaction *tr=
+ansaction,
+ 		die("commit: extra input: %s", next);
+ 	if (ref_transaction_commit(transaction, &error))
+ 		die("commit: %s", error.buf);
+-	puts("commit: ok");
++	report_ok("commit");
+ 	ref_transaction_free(transaction);
+ }
+=20
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 4506cd435b..1e754e258f 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -1598,6 +1598,38 @@ test_expect_success 'transaction cannot restart ongo=
+ing transaction' '
+ 	test_must_fail git show-ref --verify refs/heads/restart
+ '
+=20
++test_expect_success PIPE 'transaction flushes status updates' '
++	mkfifo in out &&
++	(git update-ref --stdin <in >out &) &&
++
++	exec 9>in &&
++	test_when_finished "exec 9>&-" &&
++
++	echo "start" >&9 &&
++	echo "start: ok" >expected &&
++	read line <out &&
++	echo "$line" >actual &&
++	test_cmp expected actual &&
++
++	echo "create refs/heads/flush $A" >&9 &&
++
++	echo prepare >&9 &&
++	echo "prepare: ok" >expected &&
++	read line <out &&
++	echo "$line" >actual &&
++	test_cmp expected actual &&
++
++	# This must now fail given that we have locked the ref.
++	test_must_fail git update-ref refs/heads/flush $B 2>stderr &&
++	grep "fatal: update_ref failed for ref ${SQ}refs/heads/flush${SQ}: cannot=
+ lock ref" stderr &&
++
++	echo commit >&9 &&
++	echo "commit: ok" >expected &&
++	read line <out &&
++	echo "$line" >actual &&
++	test_cmp expected actual
 +'
 +
-+test_expect_success 'switch of branch from multiple remotes fails with advice' '
-+	git checkout -B main &&
-+	test_might_fail git branch -D foo &&
-+	test_must_fail git switch foo 2>stderr &&
-+	test_branch main &&
-+	status_uno_is_clean &&
-+	grep "^hint: " stderr &&
-+	grep "git switch" stderr &&
-+	test_must_fail git -c advice.checkoutAmbiguousRemoteBranchName=false \
-+		switch foo 2>stderr &&
-+	test_branch main &&
-+	status_uno_is_clean &&
-+	! grep "^hint: " stderr
- '
- 
- test_expect_success PERL 'checkout -p with multiple remotes does not print advice' '
--- 
-2.33.0.481.g26d3bed244
+ test_expect_success 'directory not created deleting packed ref' '
+ 	git branch d1/d2/r1 HEAD &&
+ 	git pack-refs --all &&
+--=20
+2.33.0
 
+
+--N01QCmv1SxaJo9RA
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmEx5ZwACgkQVbJhu7ck
+PpTbcxAAmu5wSzcspfXXnEEqdnrk7NwNuKAKxpVVfJ+UmSepwK6vk3MUZ4KpVKId
+X7qoMxarP91Iq0Pl7RHtApq9koElYsUp9UNagNm7uWE+T/MUN5jCB5J9a3uAp+H1
+g40JroKTWMULhQ55RKo8zKEO7FZagnuMbPWK5rbWY/YxfZKbpSOuGK7GR85PfQTG
+j99eq83kzY8JcuqMxxgeeKNTjSfvDWJQk+UgBl9PYkV8Vb+xhNmKBZKGnd99w5u3
+O8rV/Rl8G269khwZ/gkCfQG03k6B2Qd1NVD5emdZGTSn8zUj3TLCoBKSAqJ8Ajue
+68Var/PVl1L9XFTeS0PRmTRsG5NBCvQUsPcZ7Bk4dRYPaUhtQK/SKIU8aNx/lPu8
+aHNHmD+NT1ZpTST1getyuIxZu/878E0/HnVLQPwVXMzh3AJAedA4Gl14AWb6zKXd
+5QRaUcmVSrrK7rVDe5I5SQFTYfu9BBZGEwSntz0a79bR6JJT/D+rBfHXKsJ7sJnh
+mgHtOkBvVVBZIAe9Bo9q/1JKrZ4UuOy9GIJFNtXACbCKaXKrOeOl7HGPXbmq7UcL
+x0aMYabrylRaDxEJvGd9mUkfP+wGuHFgyW8Nu9IrE3CdweFiaWm6/mDApVMXkEha
+qNcLBYBC41KzDxU37E/58x62DEdprxVC1KXfw+hSWyHJBJ0IiRE=
+=dgXi
+-----END PGP SIGNATURE-----
+
+--N01QCmv1SxaJo9RA--
