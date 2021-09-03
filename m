@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF290C433FE
-	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 17:55:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92B49C433F5
+	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 17:55:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 972236069E
-	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 17:55:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 776756069E
+	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 17:55:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350314AbhICR4B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Sep 2021 13:56:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58048 "EHLO
+        id S1350324AbhICR4G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Sep 2021 13:56:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350219AbhICRzz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Sep 2021 13:55:55 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44CCBC061757
-        for <git@vger.kernel.org>; Fri,  3 Sep 2021 10:54:55 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id q14so9289830wrp.3
-        for <git@vger.kernel.org>; Fri, 03 Sep 2021 10:54:55 -0700 (PDT)
+        with ESMTP id S1350227AbhICRz4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Sep 2021 13:55:56 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4723BC0613C1
+        for <git@vger.kernel.org>; Fri,  3 Sep 2021 10:54:56 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id x6so9271042wrv.13
+        for <git@vger.kernel.org>; Fri, 03 Sep 2021 10:54:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=8FE3y0fGxiycG0w1Lwj4WjBo2HVuo6K0aDkta9kvYZ8=;
-        b=dVu5r/YETr5dP7yRhsspJ7MAFO2HuGPp3gC4PSi8aOIwcUHLjc/Rk/49y8aaoJ0qfi
-         VnZNKEmDbjpX+h/S9XEdhuWnd+o9PtgSxImcuRQIFSUErFbmNif/C/NocGU2wYmAEfmC
-         3v06A6gtq3ww6AXCvLK2uz286yLwzFn6xPyIpUIsKtUSSEkM0iMzUGYPX0CKtRfwkEwc
-         U0VE8SlrYv5GGQvPuAUPcx7N+K761U159XL46jme9Yjtw/Ylh2lmRETYP8eN1pE+JBPU
-         Y8I3isg+AbLK1+h3UjN+10rwVetT7LMUir9McqfL6npTjvnTNAuX+orbwdySTnqKuP/0
-         DSNg==
+        bh=ghDOfc+l5cb6zokCoPGjCg9YMZZQ5SOz8paZkCCKrlY=;
+        b=Qr5hKUVAQbd7rryo6nbcJq3ImM5udbERcfPt3dnXnbPD+uuHjLAItUNPk/+yGNBOo8
+         aprIZNPgcAWnH8qJfo9pCu9XmhsuwvUjcSqOM28gU/Jg6P2mVJAp+LILM8li+MDrxip9
+         4iGjqTDYZjINIb331YRIXgsL/tGrtN2F4GExYAvebMMhpJsXQzcIqNjyL+a/3P7MlXil
+         V2w4cOLTU+jq2ixUasUqYpZSJijHRcys9bKhvsGDhCmj2C4DvBPNpanfxYqrHVjut9Ti
+         eu+so6NpTw6OIvJr5W0RH+gVRhLFZCRKolbsen9+A2+GoAnJOXIx42QBXnNptl4zWfzH
+         gEOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8FE3y0fGxiycG0w1Lwj4WjBo2HVuo6K0aDkta9kvYZ8=;
-        b=iv6fWnzSg62j8NM7ddzb8HjQJdF30sB40vDQriCdnvfFCNZltTi9O6/JXWkjRkvYGM
-         shQNvc59V1QPlzqgTCnJ9YTY6qiGEdk/T3A2mydKfdoimligFcwatY1OE0ngfu349oXQ
-         BMt0n8BlAjNvG7gvvJ2a+/S5e7qPrE4+JBlv/Vevk9tHsMW6R1RDUW4nigrrwCZAWlum
-         y6WqyW9Y5awCBHQhSA3rEijgnicmhNQ3g/Mq4WZXz7dP/yVUGfQl3U3naGimCtAzLtUZ
-         32J1QTs5lZD76vkt+EB6soB19cV4ZLZa+givTtajzHADev46nh+srcaNWa+qjNfVEAJo
-         EvdQ==
-X-Gm-Message-State: AOAM532NYXf9SENGH2m4FVxiz9bMmwewDE78+jjBfZXE6I7ZQAGSjbWk
-        i2PLaaImpWuxnH4aVDcytA/c8HO8V/U=
-X-Google-Smtp-Source: ABdhPJyLdSwi1jJiuaPTSJAnQvljGxSo6oAmHeGxxQpY9AzU3Sj2LnhhwUUNsK73LCY0XAWcgZKuDg==
-X-Received: by 2002:a5d:4fc7:: with SMTP id h7mr283135wrw.333.1630691693928;
-        Fri, 03 Sep 2021 10:54:53 -0700 (PDT)
+        bh=ghDOfc+l5cb6zokCoPGjCg9YMZZQ5SOz8paZkCCKrlY=;
+        b=mVLNsHHtWWf6Hs3Es1VijrNU6CFyQUj2oxzdIkm36m4+vS/B3NybMU7GAJBD3Nxnsy
+         8vEOpUqwGP71NwNSW/Q+esVawfmg6g0QW1TvszYe3DveQs04uAOI2wIFPL4flYKtiN0b
+         ptpbkk12+dcvPFQdbXmwdnZt+mD/CB7TBT/+rgzZ+UopteYurCgzlcDZrEuIIOGvHYXH
+         czKNjNMSmQ4OPGZwlBSOh4BetyJ172T0M5tKdsXBlRdVbrv+5xS+WCnWMwRpjlbPnp94
+         Ftxc0/P5TMfzCkm5n74KQ8tY3MLwxtOmUwXrQ2KhdFHEeU8nKTMcn/WyyCbixTt3GzYI
+         ZQMw==
+X-Gm-Message-State: AOAM530ice6cAgiQ8qSclBA0WWTNMtNGNPUAvBRoo+mGI1xqwwRs3B4P
+        BIUs+I3o+mnfepyffmOJOxdFt9kFQag=
+X-Google-Smtp-Source: ABdhPJwHQ+d1objq8BKiQ+HziGwnQ4LaSGH99vARPnF45KgK3vhbQXg6V9qdUfmaFsh9ybis5leqEg==
+X-Received: by 2002:adf:d1c3:: with SMTP id b3mr313794wrd.286.1630691694924;
+        Fri, 03 Sep 2021 10:54:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l7sm55575wmj.9.2021.09.03.10.54.53
+        by smtp.gmail.com with ESMTPSA id f3sm44291wmj.28.2021.09.03.10.54.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Sep 2021 10:54:53 -0700 (PDT)
-Message-Id: <82dd253154fb8dabd6f344df2196d8e6261d09a5.1630691688.git.gitgitgadget@gmail.com>
+        Fri, 03 Sep 2021 10:54:54 -0700 (PDT)
+Message-Id: <fb7c931ddb3a248542bc6a03d09189e937315d0c.1630691688.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1005.v2.git.1630691688.gitgitgadget@gmail.com>
 References: <pull.1005.git.1630359290.gitgitgadget@gmail.com>
         <pull.1005.v2.git.1630691688.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 03 Sep 2021 17:54:38 +0000
-Subject: [PATCH v2 06/15] scalar: let 'unregister' handle a deleted enlistment
- directory gracefully
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 03 Sep 2021 17:54:39 +0000
+Subject: [PATCH v2 07/15] scalar: implement 'scalar list'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,110 +73,86 @@ Cc:     Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Derrick Stolee <dstolee@microsoft.com>
 
-When a user deleted an enlistment manually, let's be generous and
-_still_ unregister it.
+The produced list simply consists of those repositories registered under
+the multi-valued `scalar.repo` config setting in the user's Git config.
 
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/scalar/scalar.c          | 46 ++++++++++++++++++++++++++++++++
- contrib/scalar/t/t9099-scalar.sh | 15 +++++++++++
- 2 files changed, 61 insertions(+)
+ contrib/scalar/scalar.c   | 11 +++++++++++
+ contrib/scalar/scalar.txt | 12 +++++++++++-
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index 2b5c52a25f5..d114c038b64 100644
+index d114c038b64..7f5436399da 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -275,6 +275,24 @@ static int cmd_register(int argc, const char **argv)
- 	return register_dir();
+@@ -257,6 +257,16 @@ static int unregister_dir(void)
+ 	return res;
  }
  
-+static int remove_deleted_enlistment(struct strbuf *path)
++static int cmd_list(int argc, const char **argv)
 +{
-+	int res = 0;
-+	strbuf_realpath_forgiving(path, path->buf, 1);
++	if (argc != 1)
++		die(_("`scalar list` does not take arguments"));
 +
-+	if (run_git("config", "--global",
-+		    "--unset", "--fixed-value",
-+		    "scalar.repo", path->buf, NULL) < 0)
-+		res = -1;
-+
-+	if (run_git("config", "--global",
-+		    "--unset", "--fixed-value",
-+		    "maintenance.repo", path->buf, NULL) < 0)
-+		res = -1;
-+
-+	return res;
++	if (run_git("config", "--global", "--get-all", "scalar.repo", NULL) < 0)
++		return -1;
++	return 0;
 +}
 +
- static int cmd_unregister(int argc, const char **argv)
+ static int cmd_register(int argc, const char **argv)
  {
  	struct option options[] = {
-@@ -288,6 +306,34 @@ static int cmd_unregister(int argc, const char **argv)
- 	argc = parse_options(argc, argv, NULL, options,
- 			     usage, 0);
+@@ -343,6 +353,7 @@ static struct {
+ 	const char *name;
+ 	int (*fn)(int, const char **);
+ } builtins[] = {
++	{ "list", cmd_list },
+ 	{ "register", cmd_register },
+ 	{ "unregister", cmd_unregister },
+ 	{ NULL, NULL},
+diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
+index d9a79984492..f2528557a0c 100644
+--- a/contrib/scalar/scalar.txt
++++ b/contrib/scalar/scalar.txt
+@@ -8,6 +8,7 @@ scalar - an opinionated repository management tool
+ SYNOPSIS
+ --------
+ [verse]
++scalar list
+ scalar register [<enlistment>]
+ scalar unregister [<enlistment>]
  
-+	/*
-+	 * Be forgiving when the enlistment or worktree does not even exist any
-+	 * longer; This can be the case if a user deleted the worktree by
-+	 * mistake and _still_ wants to unregister the thing.
-+	 */
-+	if (argc == 1) {
-+		struct strbuf src_path = STRBUF_INIT, workdir_path = STRBUF_INIT;
-+
-+		strbuf_addf(&src_path, "%s/src/.git", argv[0]);
-+		strbuf_addf(&workdir_path, "%s/.git", argv[0]);
-+		if (!is_directory(src_path.buf) && !is_directory(workdir_path.buf)) {
-+			/* remove possible matching registrations */
-+			int res = -1;
-+
-+			strbuf_strip_suffix(&src_path, "/.git");
-+			res = remove_deleted_enlistment(&src_path) && res;
-+
-+			strbuf_strip_suffix(&workdir_path, "/.git");
-+			res = remove_deleted_enlistment(&workdir_path) && res;
-+
-+			strbuf_release(&src_path);
-+			strbuf_release(&workdir_path);
-+			return res;
-+		}
-+		strbuf_release(&src_path);
-+		strbuf_release(&workdir_path);
-+	}
-+
- 	setup_enlistment_directory(argc, argv, usage, options, NULL);
+@@ -28,11 +29,20 @@ an existing Git worktree with Scalar whose name is not `src`, the enlistment
+ will be identical to the worktree.
  
- 	return unregister_dir();
-diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
-index 16f2b72b126..ef0e8d680d5 100755
---- a/contrib/scalar/t/t9099-scalar.sh
-+++ b/contrib/scalar/t/t9099-scalar.sh
-@@ -14,4 +14,19 @@ test_expect_success 'scalar shows a usage' '
- 	test_expect_code 129 scalar -h
- '
+ The `scalar` command implements various subcommands, and different options
+-depending on the subcommand.
++depending on the subcommand. With the exception of `list`, all subcommands
++expect to be run in an enlistment.
  
-+test_expect_success 'scalar unregister' '
-+	git init vanish/src &&
-+	scalar register vanish/src &&
-+	git config --get --global --fixed-value \
-+		maintenance.repo "$(pwd)/vanish/src" &&
-+	scalar list >scalar.repos &&
-+	grep -F "$(pwd)/vanish/src" scalar.repos &&
-+	rm -rf vanish/src/.git &&
-+	scalar unregister vanish &&
-+	test_must_fail git config --get --global --fixed-value \
-+		maintenance.repo "$(pwd)/vanish/src" &&
-+	scalar list >scalar.repos &&
-+	! grep -F "$(pwd)/vanish/src" scalar.repos
-+'
+ COMMANDS
+ --------
+ 
++List
++~~~~
 +
- test_done
++list::
++	To see which repositories are currently registered by the service, run
++	`scalar list`. This subcommand does not need to be run inside a Scalar
++	enlistment.
++
+ Register
+ ~~~~~~~~
+ 
 -- 
 gitgitgadget
 
