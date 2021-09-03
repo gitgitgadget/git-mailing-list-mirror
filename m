@@ -2,95 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DB95C433F5
-	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 00:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B74F7C433F5
+	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 01:54:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19C0460FDA
-	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 00:59:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9971561074
+	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 01:54:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344228AbhICBAZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Sep 2021 21:00:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53390 "EHLO
+        id S1344503AbhICBzh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Sep 2021 21:55:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239561AbhICBAY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Sep 2021 21:00:24 -0400
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A232C061575
-        for <git@vger.kernel.org>; Thu,  2 Sep 2021 17:59:25 -0700 (PDT)
-Received: by mail-io1-xd31.google.com with SMTP id n24so4858322ion.10
-        for <git@vger.kernel.org>; Thu, 02 Sep 2021 17:59:25 -0700 (PDT)
+        with ESMTP id S234277AbhICBzg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Sep 2021 21:55:36 -0400
+Received: from mail-vs1-xe2b.google.com (mail-vs1-xe2b.google.com [IPv6:2607:f8b0:4864:20::e2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29E1CC061575
+        for <git@vger.kernel.org>; Thu,  2 Sep 2021 18:54:37 -0700 (PDT)
+Received: by mail-vs1-xe2b.google.com with SMTP id s25so3188041vsa.9
+        for <git@vger.kernel.org>; Thu, 02 Sep 2021 18:54:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=c+M1zogo4a76iodr2nZkEP/RCv1ECiBPNKjOTlccm7Y=;
-        b=hMfxiYE8QrP9CtpAcsKM4hOmHZ0/K/6+O9flgE7SpVzjKsq9qFQwJikRx8PopDxe5A
-         sV5wEzsvWwIzia4YAWbYYS1P9rvHRWsy0vlSnm26JKj+PI3mYvcVI2YrB/BvwmRRw4dH
-         4SasIz6hH6nc+n1asbiny2qaefOiVNvYbXvPKGMVjrsH7YKaNprihOYxCmVThJeyG034
-         n6oXcxhprUdfNYbelkcbmDPaaKYGiK+WtaGFAnpXYq37wBaqkWzVsWqoyCHus/jalCe9
-         WOhyZ2rX83fAPBP/mzwcGhIy3tsjvzu1Gk4nD/uXFWcNxXuJqVuW4hH1xPoHHjA5pbpz
-         e9KQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=DZrFEQpvlKWkfBckGGTB/O9xRqrQuEQ65OEC0WEijKk=;
+        b=f4BGKe8kQx8bi/rUseHU75pAoluRqCqR738rGeXz0oUQ1dWXXncaOfLyyHa1u22Nar
+         zlplEfT1tr1SAFuX+iYHvo/IpkubeXj7uczrU722Z//NuVTVCVOj1uz6nlGM/dk+7uP7
+         lchpAkbtjhTDaLbHJM2MFr4dBUCZ75kpC6hqLhGjJvJtCyDK8tRXHaLY3I+f3oZVA0BJ
+         msfNXMtWttEoptmYonAiSrQZY0zwPUVBPnt309qB0H/SZKh7kFQ8F4P0SHoG/RvYxvFo
+         3IiSSsZsEfx5rfCRZ3LzH8AvnuQfkCJ4Xs4hkpGVwlh6uZkRZFDRLh0CACyxCVyb9nwo
+         0CLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=c+M1zogo4a76iodr2nZkEP/RCv1ECiBPNKjOTlccm7Y=;
-        b=HtjFhYrsvNfiUiD2pfXZE5eOe2j0++eT+JwIG4f5vjxUK0KCnP5zA3OFIUkHVAiCFJ
-         UXxmrFgTuyyXqQsagXfHsCiPGienMwkVLQNiyMv51ZF6lAd2jQtipdWHQM0BAB15O+fi
-         NNgLLWSNIjpfdKShLJJNh30ogrv1bIlOh3YiWblLq0sfGyUQHjghwas3kMiQiBY5XYvQ
-         a5/2HqmA8gbNN71ZrH7ObSontNQiMy2MwvaLAIb9PSQMtdVImi6KbsmEIbHRAGbI15Fz
-         eyTE9GtO02AgNkzUNIePwDoL6IchG4050nF7qegBnVbDFxgACiOsgORniiNBfoMF6Xo+
-         /AdA==
-X-Gm-Message-State: AOAM533dvkW9qQqOy5N7UkdzvPTkcmkE1NPW0UYAceDTbercS0PaYQr0
-        9DeozcG42qGElmmJGPt86zN+As/qB9o=
-X-Google-Smtp-Source: ABdhPJxIS3GPKhVZfSP/n9E0GTdcTYDNQs3DdPFQvlT5RwJnZDr18JNzs/7xIL7P+rRGu3dPPTmt7g==
-X-Received: by 2002:a02:9695:: with SMTP id w21mr484179jai.64.1630630764712;
-        Thu, 02 Sep 2021 17:59:24 -0700 (PDT)
-Received: from [192.168.66.137] ([142.46.68.231])
-        by smtp.gmail.com with ESMTPSA id o2sm1809617ilg.47.2021.09.02.17.59.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Sep 2021 17:59:24 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Sep 2021, #01; Thu, 2)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq35qmiofp.fsf@gitster.g>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <4a8296e4-6650-67d9-4d42-20fd2e88b6e3@gmail.com>
-Date:   Thu, 2 Sep 2021 20:59:19 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.13.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=DZrFEQpvlKWkfBckGGTB/O9xRqrQuEQ65OEC0WEijKk=;
+        b=TY45ozDKlyGivCivOBIB6UrjgnsRtpDPK6NiK0NyhIzjoD5nmfTttkxxQDmMSw3O8f
+         IkFet4K3F1NrYuXbT+ZiG+4GOeiDxEvmwjfNoTDWOCe92IL4dtqrVcMz8YWdAc46DQX+
+         WaAoFPRgOxVNq+Fh+qDqlmdAhWogwQufypjCH7n3Ftd2dcWZWxp3mP+GWZQpkMDfBC+P
+         5UJKGjh0bLH5u8nkL8JTyQEMp7nWV/0z1/VcRvaig22mDifvNmH2SyHh85kdff52vObZ
+         EQCH3ZIv6y9i29jMUM8lhP+8anIr1iKA6mLCxRtNk8gxaGBqSeRACHxi5cQOL9ireszD
+         5w5w==
+X-Gm-Message-State: AOAM533VOdTYpyEjC2PTYVtZbVVQO5K+wFIlrUq86eMBzRpQuRmuLMEe
+        KvjApTBMhu/lOFqpiL+pk8IVnDhc4LLjuZkf4uLHzBmY
+X-Google-Smtp-Source: ABdhPJykyqBQUNoWSvcrj1PgqeAbxx1ex36VvNSJmEThKllwo8KqinvbAGWE4h+zGCA1mSLnC/LLFdCgRLw760M8gQM=
+X-Received: by 2002:a05:6102:10c7:: with SMTP id t7mr949548vsr.44.1630634076244;
+ Thu, 02 Sep 2021 18:54:36 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqq35qmiofp.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+References: <20210902085438.54121-1-carenas@gmail.com> <nycvar.QRO.7.76.6.2109021730040.55@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2109021730040.55@tvgsbejvaqbjf.bet>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Thu, 2 Sep 2021 18:54:25 -0700
+Message-ID: <CAPUEspj8gwpBNZRqJWgoUG8ouxnMd=SMtoH=z+8AR12+f+j5_g@mail.gmail.com>
+Subject: Re: [PATCH] makefile: teach git about NO_MSGFMT (as supported in GUI
+ and gitk)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Thu, Sep 2, 2021 at 8:32 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Thu, 2 Sep 2021, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+>
+> > NO_MSGFMT can be used to indicate there is no msgfmt available, so
+> > make git recognize that and avoid failing to build while trying to
+> > generate i18n files.
+> >
+> > while at it, refactor the change introduced in 4348824059
+> > (artifacts-tar: respect NO_GETTEXT, 2021-07-04) with something as
+> > functional but shorter.
+>
+> To me, this commit message is not really related to the diff, which
+> essentially only adds a code comment and then has the only functional
+> change that _prevents_ `POFILES` and `MOFILES` from being set to empty
+> values when `NO_MSGFMT` is set.
 
-Le 2021-09-02 à 18:48, Junio C Hamano a écrit :
-> 
-> * pb/test-use-user-env (2021-09-01) 3 commits
->   - test-lib-functions: optionally keep HOME and TERM in 'debug'
->   - test-lib-functions: optionally keep HOME, TERM and SHELL in 'test_pause'
->   - test-lib-functions: use 'TEST_SHELL_PATH' in 'test_pause'
-> 
->   Teach test_pause and test_debug to allow using the HOME and TERM
->   environment variables the user usually uses.
-> 
->   Will merge to 'next'?
+correct, except that they should be empty already since nothing has
+set them and therefore the end result is the same.
+I should have mentioned I tracked back the conversation for this and
+even the github issue about it (that I can't find anymore) to make
+sure it wouldn't introduce a regression.
 
-I'll send a v4 that clarifies/generalizes the warnings as you and Elijah
-suggested. I'll also tweak the 'debug' patch a bit. So I'd prefer this
-stays in seen until then.
+< I am therefore quite puzzled how that diff is supposed to achieve anythin=
+g
+> that is described in the commit message (how does this "make git recogniz=
+e
+> that"?).
 
-Thanks,
+It does not, which is on the (on an unrelated but touching the same
+lines issue), which I am starting to suspect I shouldn't use anymore;
+apologies for the noise.
 
-Philippe.
+Carlo
