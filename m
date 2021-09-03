@@ -2,119 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C970C433EF
-	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 11:06:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AA3EC433F5
+	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 11:13:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8520560F9C
-	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 11:06:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DDC4F60FC4
+	for <git@archiver.kernel.org>; Fri,  3 Sep 2021 11:13:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348628AbhICLHH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Sep 2021 07:07:07 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38616 "EHLO cloud.peff.net"
+        id S235190AbhICLOk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Sep 2021 07:14:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38622 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235007AbhICLHG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Sep 2021 07:07:06 -0400
-Received: (qmail 27065 invoked by uid 109); 3 Sep 2021 11:06:06 -0000
+        id S231497AbhICLOd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Sep 2021 07:14:33 -0400
+Received: (qmail 27090 invoked by uid 109); 3 Sep 2021 11:13:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 Sep 2021 11:06:06 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 Sep 2021 11:13:33 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7465 invoked by uid 111); 3 Sep 2021 11:06:05 -0000
+Received: (qmail 7508 invoked by uid 111); 3 Sep 2021 11:13:32 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 Sep 2021 07:06:05 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 Sep 2021 07:13:32 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 3 Sep 2021 07:06:05 -0400
+Date:   Fri, 3 Sep 2021 07:13:32 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 2/5] strvec: add a strvec_pushvec()
-Message-ID: <YTIBnT8Ue1HZXs82@coredump.intra.peff.net>
-References: <cover-0.4-0000000000-20210727T004015Z-avarab@gmail.com>
- <cover-v3-0.5-00000000000-20210826T140414Z-avarab@gmail.com>
- <patch-v3-2.5-321b8ba3f0e-20210826T140414Z-avarab@gmail.com>
- <xmqq8s0m9xbl.fsf@gitster.g>
- <xmqq4kba9x1h.fsf@gitster.g>
- <YSm3ofxlRB1ViBf5@coredump.intra.peff.net>
- <87v93i8svd.fsf@evledraar.gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Andrzej Hunt <andrzej@ahunt.org>,
+        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 0/8] add a test mode for SANITIZE=leak, run it in CI
+Message-ID: <YTIDXHx/IMtcaQR5@coredump.intra.peff.net>
+References: <cover-0.4-0000000000-20210714T172251Z-avarab@gmail.com>
+ <cover-v3-0.8-00000000000-20210831T132546Z-avarab@gmail.com>
+ <YS9OT/pn5rRK9cGB@coredump.intra.peff.net>
+ <877dfzb0tw.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87v93i8svd.fsf@evledraar.gmail.com>
+In-Reply-To: <877dfzb0tw.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 03, 2021 at 01:19:33AM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Thu, Sep 02, 2021 at 02:25:33PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> > One thing that did surprise me: the use of "int" here for iterating,
-> > rather than size_t. But it seems that strvec is already storing ints,
-> > which is an accident!
+> > Hmm. This still seems more complicated than we need. If we just want a
+> > flag in each script, then test-lib.sh can use that flag to tweak
+> > LSAN_OPTIONS. See the patch below.
 > 
-> Is it really? If you temporarily try to say convert that to "size_t *nr"
-> to have the compiler catch all the cases where we use "nr", and then
-> s/size_t/int/g those all, you'll find that e.g. setup_revisions() and
-> the like expect to take either "int argc" or the strvec equivalent.
+> On the "pragma" include v.s. env var + export: I figured this would be
+> easier to read as I thought the export was required (I don't think it is
+> in most cases, but e.g. for t0000*.sh I think it is, but that's from
+> memory...).
 
-It most definitely is an accident, in the sense that the commit which
-changed it did not mean to. :)
+I admit that half of my complaint with the pragma is the weird filename
+with an "=" in it. :) But I do think just assigning the variable is the
+most readable thing.  If t0000 needs to export for whatever reason, it
+can do so (preferably with a comment explaining why).
 
-> We can sensibly convert some of those to size_t, but not all, and the
-> int v.s. size_t inconsistency as a result feels weird.
+> > That has two drawbacks:
+> >
+> >   - it doesn't have any way to switch the flag per-test. But IMHO it is
+> >     a mistake to go in that direction. This is all temporary scaffolding
+> >     while we have leaks, and the script-level of granularity is fine.
 > 
-> Since the main point of this API is to be a wrapper for what a C main()
-> would take, shouldn't its prototype mirror its prototype? I.e. we should
-> stick to "int" here?
+> We have a lot of tests that do simple checking of the tool itself, and
+> later in the script might be stressing trace2, or common sources of
+> leaks like "git log" in combination with the tool (e.g. the commit-graph
+> tests).
+> 
+> So being able to tweak this inside the script is useful, but that can of
+> course also be done with this proposed TEST_LSAN_OK + prereq.
 
-That isn't the main point of this API. The reason the name changed away
-from argv_array was so that it would be more obviously a generally
-useful array of strings.
+Getting rid of the "let's tell the tests that we were built with LSAN"
+was part of the simplicity I was going for (and obviously does preclude
+a prerequisite). I had hoped we wouldn't need to do per-test stuff,
+because this was all a temporary state. But maybe that's naive.
 
-But even if that were the use, the point isn't that we expect to see 2B
-or even 4B strings in any reasonable use case. The point is that we
-don't want to accidentally overflow the integer counter, leading to
-reads and writes of random bits of memory. And all it takes to do that
-is some code like:
+> >     If we do care about not running them, then I think it makes more
+> >     sense to extend the run/skip mechanisms and build on that.
+> 
+> The patch I have here is already nicely integrated with the skip
+> mechanism. I.e. we use skip_all which shows a summary in any TAP
+> consumer, and we can skip individual tests with prerequisites.
 
-  while (strbuf_readline(stdin, &buf))
-	strvec_push(&foo, buf.buf);
+I meant here that we'd be driving the selection externally from the
+tests using the skip/run mechanisms (something along the lines of what I
+sketched out before).
 
-On a system with 32-bit size_t, you are not likely to actually allocate
-2B strings before you'd fail. But on most 64-bit systems, you have
-plenty of address space (and these days, often RAM) to do so, but you
-still only need 2B strings, because "int" is 32 bits.
+But I admit that there isn't really a big difference between the two
+approaches. Since you've coded this one up already, let's go in that
+direction (i.e., this series).
 
-So code like setup_revisions() which uses an int is fine. It is reading
-from a source with that much smaller "int" limit in the first place.
-Whether strvec can handle bigger arrays or not does not matter either
-way. And when it later uses ints to operate on such a strvec, it's OK in
-practice; even if the size_t gets truncated on the fly to an int, we
-know we did not put more than an int's worth of items into the array in
-the first place.
+> I was interested in doing some summaries of existing leaks
+> eventually. It seems even with LSAN_OPTIONS=detect_leaks=0 compiling
+> with SANITIZE=leak make things a bit slower, but not by much (but actual
+> leak checking is much slower).
+> 
+> But I'd prefer to leave any "write out leak logs and summarize" step for
+> some later change.
 
-But code which has potentially larger inputs (either because it reads
-iteratively into the strvec as above, or because it is itself using a
-larger data type) is now also OK, because it's using size_t.
+OK, I can live with that (especially given how apparently difficult it
+is to convince LSAN to do it).
 
-What's not OK is code which operates on a potentially-unbounded strvec
-using an int. E.g., following the code I showed above with something
-like:
+> > Sort of a meta-question, but what's the plan for folks who add a new
+> > test to say t0000, and it reveals a leak in code they didn't touch?
+> 
+> Then CI will fail on this job. We'd have those same failures now
+> (e.g. the mentioned current delta between master..seen), we just don't
+> see them. Having visibility on them seems like an improvement.
+> 
+> > They'll get a CI failure (as will Junio if he picks up the patch), so
+> > somebody is going to have to deal with it. Do they fix it? Do they unset
+> > the "this script is OK" flag? Do they mark the individual test as
+> > non-lsan-ok?
+> 
+> I'd think they'd fix it, or make marking the regression as OK part of
+> their re-roll, just like failures on master..seen now.
+> 
+> If you're getting at that we should start out this job as an FYI job
+> that doesn't impact the CI run's overall status if it fails I think that
+> would be OK as a start.
 
-  int nr = foo.nr;
-  foo.v[nr] = xstrdup("replacement string");
+I think that would be OK, but I'm not quite sure of the best way to do
+it. Why don't we start it as a regular required job, and then we can see
+how often it is causing a headache. If once every few months somebody
+fixes a leak, I'd be happy. If new developers are getting tangled up
+constantly in unrelated leaks, then that's something we'd need to
+revisit.
 
-which may write to memory outside of foo.v.
+> > I do like the idea of finding real regressions. But while the state of
+> > leak-checking is still so immature, I'm worried about this adding extra
+> > friction for developers. Especially if they get some spooky action at a
+> > distance caused by a leak in far-away code.
+> 
+> Yeah, ultimately this series is an implicit endorsement of us caring
+> more than we do now.
+> 
+> I think this friction point is going to be mitigated a lot by the
+> ability I've added to not just skip entire test scripts, but allow
+> prereq skipping of some tests, early bailing out etc.
 
-Obviously that's nonsense nobody would ever write directly. It is
-possible for some code to do this inadvertently (say, passing a ptr/int
-pair through a function interface), but I think it's fairly unlikely in
-practice. So while I do think more code ought to be using size_t in
-general, I don't think it's necessary to audit this carefully. The
-important thing to me is protecting strvec itself.
+I half-agree with your final paragraph. The biggest friction point I
+think will be for new folks when CI starts failing, and they don't
+understand why (or where the problem is, or how to debug it, etc). But
+like I said, let's see what happens.
+
+> > Anyway, here's LSAN_OPTIONS thing I was thinking of.
+> 
+> Thanks, that & your follow-up is very interesting. Can I assume this has
+> your SOB? I'd like to add that redirect to fd 4 change to this series.
+
+Yes, go for it.
 
 -Peff
