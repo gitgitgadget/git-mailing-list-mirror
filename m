@@ -2,102 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F864C433EF
-	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 19:59:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7666EC433F5
+	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 20:55:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74D93600D4
-	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 19:59:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4ED0760ED6
+	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 20:55:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232744AbhIDTmr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Sep 2021 15:42:47 -0400
-Received: from mout.gmx.net ([212.227.15.15]:56175 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229669AbhIDTmr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Sep 2021 15:42:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1630784501;
-        bh=lQohU6PlbLVWdLa7dW+THjFXbHud9CDk72JOLQycf+8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=fd+R0b6KLN+CkD0tQXy4LOp10EsfAXYuNJCd8P1hKV8ZBiC34Xdyzd9wXuE2tOS5/
-         48rZWB5dpbNEg2n3VMwrcscWALHgx3pvYrETYuX8Sn5KYaf7KhZ61O/cN3Cs1Mak6s
-         eejz7nazDmThlud6SUh8g19Dx9Rs6TwhOiIVnW6Y=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.86.215] ([213.196.213.44]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MjS9I-1moXR03RDm-00l18l; Sat, 04
- Sep 2021 21:41:40 +0200
-Date:   Sat, 4 Sep 2021 21:41:52 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Wong <e@80x24.org>
-Subject: Re: [PATCH v2 5/7] rebase: drop support for `--preserve-merges`
-In-Reply-To: <87lf4f9gre.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2109042138410.55@tvgsbejvaqbjf.bet>
-References: <pull.195.git.1574542242.gitgitgadget@gmail.com> <pull.195.v2.git.1630497435.gitgitgadget@gmail.com> <eb738b1bf05dceb1d119e3adcd732d968407c757.1630497435.git.gitgitgadget@gmail.com> <87lf4f9gre.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S234314AbhIDU4j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Sep 2021 16:56:39 -0400
+Received: from 82-64-198-250.subs.proxad.net ([82.64.198.250]:45736 "EHLO
+        mail.lhuard.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229888AbhIDU4i (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Sep 2021 16:56:38 -0400
+Received: from coruscant.lhuard.fr (unknown [IPv6:2a01:e0a:465:5440:3dbf:67a8:d86:1503])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mail.lhuard.fr (Postfix) with ESMTPSA id 76EBF4F5460;
+        Sat,  4 Sep 2021 22:55:29 +0200 (CEST)
+Authentication-Results: mail.lhuard.fr; dmarc=fail (p=quarantine dis=none) header.from=lhuard.fr
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lhuard.fr; s=rpi3;
+        t=1630788929; bh=on3yO+CujLtOdv16zzIqkmHOHAECJ/iwfru0NcsnUHc=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=UgYwiB0XX1q1R56KiouZunRVcrtUn1P3udipiFOav4ejBCocSpy0NDSxFoEyPiYlF
+         yHnr5z63oFlM2Ma2fHqS1ZC7HCwSguzoKUYp9Y6i9cb833DmcIxsYeD75ddSj1Xh9t
+         ev/L9tqtoekOxYVg8cHhqsFQ16EjdSFTgIP/GikQ=
+From:   =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>
+Subject: [PATCH v10 1/3] =?UTF-8?q?cache.h:=20Introduce=20a=20generic=20"x?= =?UTF-8?q?dg=5Fconfig=5Fhome=5Ffor(=E2=80=A6)"=20function?=
+Date:   Sat,  4 Sep 2021 22:54:58 +0200
+Message-Id: <20210904205500.13074-2-lenaic@lhuard.fr>
+X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20210904205500.13074-1-lenaic@lhuard.fr>
+References: <20210827210255.12565-1-lenaic@lhuard.fr>
+ <20210904205500.13074-1-lenaic@lhuard.fr>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1550222341-1630784513=:55"
-X-Provags-ID: V03:K1:qt/Zv/+R1M7lhqC6Hbi7SxyLChMmJRRbLD3v3tcYi648igHIlTd
- tOQmtVw+pT+pL+nl9HcHUHoW3g2ZzWa8xUt5f7jyfilcnlYr+fadPFcgsnBOcFi+renVOx2
- VufwxIvsPImjITcRpyUAsxEaX61Fs3+sh0LkxKLjq/n7LkHBhLC82sTaVfRN3ONEuTK4s3U
- X46eA+TmXatBmv+We466w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Xuil/qBRw8U=:96PdnOVYeKK5uRH00jOn+P
- 9IxT+N62yhLWCclay3UPEkNE3IHmJeNYOqZHIs/kIq69G6/PFD9hzosEpBc+ZXQ5dk6EKWEM/
- Rh/wMURt6fzGLeMIDpp5QrMZweo5kg4dLqLMIY7gH3hgsXx7fQF9zpJvueUJvzhwwMAtJKOjd
- i88kqM/tvLwdl4dMU857NkGC96JPc/sxTV0rqThWzp3UIJHQ2hS3kfMDjlyeN00B/wXqxFwyF
- 9v/Lw2ODzqnNsh11ZJGbRnvsJfx2ehYCSZT1gC17gVovr0gI8bueTjbtAJ7S5oRS/+ay/PQEK
- oThRtld+LqwCIqMlcFl98u5ZzJbMDt7fzrn5QlM/qWgC8QAiwBamTHe6SJsKXba/j64llPnE9
- qUrN4aMKJUj5gF8GDCBkxV25xkQ4i3ztUCPEIj5JCkid9/G4+XHH0KMGu4WGsyFOBh15ZoWrb
- Q9aJ+WYyKqg3759AHzZXYybNXUoaCga48eedJf2THvTkCtycQmwxsoYxl+6jPrbuJXNASCJay
- eS+pLcVn1Dd3gBnz4EYU37+Kn0TSV6Li63zLqzbkV3S6iMgpCZOtHLoEQq+aYwvl/iow6Vwky
- OxfF3n7azAOE6++55KMyMBlzZ6mHDA99CjsWMG99vB4bXm9kqqSnAT4CJYyrc3BgQqQpUOIss
- iEUuUiLEHat7kPM0nR4BOXqoId221/DtHrmYO9KkCWFWCfRvrXDdXA/n2cZppf8j4nMnyBpQ1
- SE3Em10ywG5dWfe8d90FD/NONHzWkDlC8z7lMg1Z6IoP4RM/uosKfSfX2W8Cb4Pnq4ZWcdqJN
- Cw9FMHeFOCjfIl+ZIsoa4cMDnI9U74HPiOSa7bbFHqYzGkpO0yIMJ4k2WkLSJt1iQdZ2nbFvm
- caJjkk8/M09znDKBFq73v0B+Y8pVTrkrhvVyt20AmstSG9ObNx5WLJmNqjpH1GRbjUi5G+H/L
- y/cyp7jW0Q7QdGXkjYToXU2Afs48TDSEUsGz08nXSzDFmtnx2ozm8hGn3xOiW6KhQNMLkguMU
- HGYjm0YWWS3UdcrK8ZN5U0uauBLnULaNfkKbxpbmfxHie64eDhICfK26TfYrCWYeyQkjB0uFy
- 33/xPgh3DbhPOJK1Ecl8hK/h7fB1nMNdU/shMgPnU2rLypA6oRCxQavZg==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Current implementation of `xdg_config_home(filename)` returns
+`$XDG_CONFIG_HOME/git/$filename`, with the `git` subdirectory inserted
+between the `XDG_CONFIG_HOME` environment variable and the parameter.
 
---8323328-1550222341-1630784513=:55
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+This patch introduces a `xdg_config_home_for(subdir, filename)` function
+which is more generic. It only concatenates "$XDG_CONFIG_HOME", or
+"$HOME/.config" if the former isn’t defined, with the parameters,
+without adding `git` in between.
 
-Hi =C3=86var,
+`xdg_config_home(filename)` is now implemented by calling
+`xdg_config_home_for("git", filename)` but this new generic function can
+be used to compute the configuration directory of other programs.
 
-On Thu, 2 Sep 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Signed-off-by: Lénaïc Huard <lenaic@lhuard.fr>
+---
+ cache.h |  7 +++++++
+ path.c  | 13 ++++++++++---
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
-> On Wed, Sep 01 2021, Johannes Schindelin via GitGitGadget wrote:
->
-> >  git-rebase--preserve-merges.sh | 1057 -------------------------------=
--
->
-> You could, but certainly don't have to, squash in the below. I.e. this
-> is the last user of eval_ngettext!
+diff --git a/cache.h b/cache.h
+index d23de69368..72410b85d7 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1297,6 +1297,13 @@ int is_ntfs_dotmailmap(const char *name);
+  */
+ int looks_like_command_line_option(const char *str);
+ 
++/**
++ * Return a newly allocated string with the evaluation of
++ * "$XDG_CONFIG_HOME/$subdir/$filename" if $XDG_CONFIG_HOME is non-empty, otherwise
++ * "$HOME/.config/$subdir/$filename". Return NULL upon error.
++ */
++char *xdg_config_home_for(const char *subdir, const char *filename);
++
+ /**
+  * Return a newly allocated string with the evaluation of
+  * "$XDG_CONFIG_HOME/git/$filename" if $XDG_CONFIG_HOME is non-empty, otherwise
+diff --git a/path.c b/path.c
+index 0bc788ea40..2c895471d9 100644
+--- a/path.c
++++ b/path.c
+@@ -1510,21 +1510,28 @@ int looks_like_command_line_option(const char *str)
+ 	return str && str[0] == '-';
+ }
+ 
+-char *xdg_config_home(const char *filename)
++char *xdg_config_home_for(const char *subdir, const char *filename)
+ {
+ 	const char *home, *config_home;
+ 
++	assert(subdir);
+ 	assert(filename);
+ 	config_home = getenv("XDG_CONFIG_HOME");
+ 	if (config_home && *config_home)
+-		return mkpathdup("%s/git/%s", config_home, filename);
++		return mkpathdup("%s/%s/%s", config_home, subdir, filename);
+ 
+ 	home = getenv("HOME");
+ 	if (home)
+-		return mkpathdup("%s/.config/git/%s", home, filename);
++		return mkpathdup("%s/.config/%s/%s", home, subdir, filename);
++
+ 	return NULL;
+ }
+ 
++char *xdg_config_home(const char *filename)
++{
++	return xdg_config_home_for("git", filename);
++}
++
+ char *xdg_cache_home(const char *filename)
+ {
+ 	const char *home, *cache_home;
+-- 
+2.33.0
 
-s/last user/last in-tree user/
-
-Since we install `git-sh-i18n` and semi-advertised it as something to use
-in user scripts (which makes removing it somewhat questionable a goal,
-certainly when you do not even offer a deprecation period), and since the
-removal of such things is completely orthogonal to the intention of this
-patch series, I will not include this patch, let alone squash it into a
-commit whose purpose has nothing to do with gettext whatsoever.
-
-Ciao,
-Johannes
-
---8323328-1550222341-1630784513=:55--
