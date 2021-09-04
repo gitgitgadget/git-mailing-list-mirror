@@ -2,133 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67810C433F5
-	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 09:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 077CAC433EF
+	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 09:48:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4FEF361056
-	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 09:37:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF84260231
+	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 09:48:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350973AbhIDJis (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Sep 2021 05:38:48 -0400
-Received: from mout.web.de ([212.227.15.3]:60803 "EHLO mout.web.de"
+        id S234969AbhIDJta (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Sep 2021 05:49:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39256 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234482AbhIDJis (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Sep 2021 05:38:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1630748249;
-        bh=GxeDGVfM6QlNvnyqeYQvCIFfgqg29sw1ntu0m71kzHw=;
-        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=QogdGqlCkZ5vIbCgIJzcsp71UhfW9EhrUMKSO0H2qRZJaYEEEYLHYKvZKbyeGws7O
-         CV6l/eIqq4Q5glPT9cgSAEMUJ/q+pzpLarasAzC0z/SPBhvOFMhZOK6VOEERCve5H9
-         ruuHPybMLXWshFqUUVm8CsJ07PRM3nFfsYUxvi6M=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
- (mrweb002 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0MMn8x-1mKUpq2Qql-008Yrd; Sat, 04 Sep 2021 11:37:29 +0200
-Subject: Re: [PATCH v3 2/3] win32: allow building with pedantic mode enabled
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com,
-        phillip.wood@dunelm.org.uk, sunshine@sunshineco.com
-References: <20210901091941.34886-1-carenas@gmail.com>
- <20210903170232.57646-1-carenas@gmail.com>
- <20210903170232.57646-3-carenas@gmail.com>
- <bc4789a0-ae80-c1dd-35b1-86949a807490@web.de>
- <YTKBzi3z5AotirNO@carlos-mbp.lan>
- <e20dc0b7-8925-1ccf-3adf-c52a892cc3f0@web.de>
-Message-ID: <5983c238-e926-3b08-ed10-1de1343a8d00@web.de>
-Date:   Sat, 4 Sep 2021 11:37:28 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.13.0
+        id S234482AbhIDJt3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Sep 2021 05:49:29 -0400
+Received: (qmail 32052 invoked by uid 109); 4 Sep 2021 09:48:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 04 Sep 2021 09:48:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9877 invoked by uid 111); 4 Sep 2021 09:48:28 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 04 Sep 2021 05:48:28 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 4 Sep 2021 05:48:25 -0400
+From:   Jeff King <peff@peff.net>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Fedor Biryukov <fedor.birjukov@gmail.com>, git@vger.kernel.org
+Subject: Re: Aborting 'rebase main feat' removes unversioned files
+Message-ID: <YTNA6Qo6Yj5o9NmQ@coredump.intra.peff.net>
+References: <CAG2t84Uaw-Kdp+EXU8CY1QYfykFQj-hGLJnTSH8MYO8Vi_yqgA@mail.gmail.com>
+ <C357A648-8B13-45C3-9388-C0C7F7D40DAE@gmail.com>
+ <dbe7d88d-4174-e080-03df-e35d0ac6004f@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <e20dc0b7-8925-1ccf-3adf-c52a892cc3f0@web.de>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:xfTa6ah+M8H6/e7m3+IiEg/o5fBw3u7CXYTU3o+GChiPopWV0px
- kce20r9ey2+0PjVvKafCSQjkjKzdlDjKnxxL8fXW4222FRjeFaA2/VxUemaFUjanrIGnqaC
- bhps6dlQbilZK/hLbHORYTSCfaQzvkqQQBHUXVTMXpPM5ODH1UEkVb7GBTSYIvKqoj3nVAE
- PgejJVylL32DVAneaKlyA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:oa+NQnQEveA=:SVs0KxHA8WinfDKK3nEE/t
- gPXpDmbN0VCGzto2gjaRgDH6e07FOJOIOlzbpQCfx4n0rYi2/9mrvpUjHFkL/G9+g48tS5cu+
- o9cR7jWmhusekzvKRASmc7Z1Mgh1IP0iC2K0ioDRpsByn9vqHcki9QvZsmXqFfn/lgAPLQPzT
- m2uI5hqmRSDxsnm3RZsPp7JYl5qQXZMhOFeLPuadQX+Hpby+maIyZXulSa8/2w4uNYTofrOkx
- TKqAKBYjhkSihAos8eUDpYrm9K76NKYA42LIjQmZNDbaFaMueNglr+E6kD7L9zs3x93NMXQR1
- LiGOT7mHdkYz2+QgFkJzQhCXo2Og3uum9pQa5kvffY7QaMUy+6T7Zw9xtk1DS27uTr7XWxY9K
- SGzryVmG8o3df05G5MguJUSyTQLn/1UrKM1e6uYECgpJvAsUNVoDPOZOisShmDxlBUiLbKXHK
- jS0Wp6OoeRN/oh7zWowkorUW6U9ADp7wFQBvUwHs5x0X4VKDROi7IjiHSmPQQ7V7XDEwjJ1In
- DsgYTg0TJ5Ja+PzbGQbnhBEkwhenD1oDo9SAwFVDL9M5tO3Bv9YB298j7WmPksXZnoo4Ii0Oe
- yFvCVexHYG/B3SHRBxx/X/WS2rei1itZ0F/1EtIORySEa3a1lFOAbVjLWFjMo3O2J9q54Wta3
- 8pyKOsJSKfNpPU6gKt9HCWV3Lma1xXLGugM6BnL2Pn6/n81DaF+7auTAh+tx0Xhby7hcNrASe
- /iHE47ZlEK25/HnXcO+rMghT+pAe6NSCmQxEUVfHn5foPXE5SbdvyOooaAjOpTuDf/mFsyaF3
- 1WbBK1MP9G4L5v0dWfW95MrBs6io7W5FJ95M51mihC6XyWM4/3cgU2XEYREQwnDXTeaBFH0aO
- YaLq1lX7Nu2YDYUycKWj7Z3mXelle0rpica94usgZWHCCnuOGfCrJuJse/93gmTqrnHm7HnRy
- BXdmcAVfpe9UGeJ8slwxfhJu3dNFd8RMEzekvn4J9JZIh7yNngfyX/O3PeZ1aSUWS2IGKHdDf
- F2y3W1aoQVsXxsZ/x9Uq6udCvdkvWRcIJFrTAOIV/IPOAuuBYYl69zhdvGvkHmey2Fy5Z+Vz3
- nv0kz5MztW42U4lhWNnglC1nHQYPTq1hPeo
+Content-Disposition: inline
+In-Reply-To: <dbe7d88d-4174-e080-03df-e35d0ac6004f@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 03.09.21 um 22:38 schrieb Ren=C3=A9 Scharfe:
-> Am 03.09.21 um 22:13 schrieb Carlo Marcelo Arenas Bel=C3=B3n:
->> On Fri, Sep 03, 2021 at 08:47:02PM +0200, Ren=C3=A9 Scharfe wrote:
->>> Am 03.09.21 um 19:02 schrieb Carlo Marcelo Arenas Bel=C3=B3n:
->>>> diff --git a/compat/nedmalloc/nedmalloc.c b/compat/nedmalloc/nedmallo=
-c.c
->>>> index 1cc31c3502..edb438a777 100644
->>>> --- a/compat/nedmalloc/nedmalloc.c
->>>> +++ b/compat/nedmalloc/nedmalloc.c
->>>> @@ -510,7 +510,7 @@ static void threadcache_free(nedpool *p, threadca=
-che *tc, int mymspace, void *me
->>>>  	assert(idx<=3DTHREADCACHEMAXBINS);
->>>>  	if(tck=3D=3D*binsptr)
->>>>  	{
->>>> -		fprintf(stderr, "Attempt to free already freed memory block %p - a=
-borting!\n", tck);
->>>> +		fprintf(stderr, "Attempt to free already freed memory block %p - a=
-borting!\n", (void *)tck);
->>>
->>> This change is not mentioned in the commit message.
->>
->> got me there, I was intentionally trying to ignore it since nedmalloc g=
-ives
->> me PTSD and is obsoleted AFAIK[1], so just adding a casting to void (wh=
-ile
->> ugly) was also less intrusive.
+On Sat, Sep 04, 2021 at 01:57:11PM +0700, Bagas Sanjaya wrote:
 
-Expected your [1] to stand for a footnote, and got confused when I found n=
-one.
-The last commit in https://github.com/ned14/nedmalloc is from seven years =
-ago
-and this repository is archived, with the author still being active on Git=
-Hub.
-Seems like nedmalloc reached its end of life.  Has there been an official
-announcement?
+> On 04/09/21 03.33, Fedor Biryukov wrote:
+> > Looks like a bug in git rebase main feat.
+> > 
+> > To reproduce:
+> > git init
+> > git commit -m 'init' --allow-empty
+> > git checkout -b feat
+> > echo 123 > readme.txt
+> > git add readme.txt
+> > git commit -m 'txt=123'
+> > git checkout main
+> > echo 012 > readme.txt
+> > git rebase main feat
+> > git rebase --abort
+> > 
+> 
+> Did you forget committing?
 
->> strange, gcc-11 prints the following in MacOS for me:
->>
->> compat/nedmalloc/nedmalloc.c: In function 'threadcache_free':
->> compat/nedmalloc/nedmalloc.c:522:78: warning: format '%p' expects argum=
-ent of type 'void *', but argument 3 has type 'threadcacheblk *' {aka 'str=
-uct threadcacheblk_t *'} [-Wformat=3D]
->>   522 |                 fprintf(stderr, "Attempt to free already freed =
-memory block %p - aborting!\n", tck);
->>       |                                                                =
-             ~^                 ~~~
->>       |                                                                =
-              |                 |
->>       |                                                                =
-              void *            threadcacheblk * {aka struct threadcachebl=
-k_t *}
+I don't think so.
 
-I don't have GCC installed, only checked with https://godbolt.org/z/jc356v=
-qb4
+The point is that "readme.txt" is not a tracked file on the main branch,
+and thus Git should consider it precious.
 
-Ren=C3=A9
+I don't think the "rebase --abort" is the problem here, though. It's the
+command before:
+
+  git rebase main feat
+
+The "feat" branch is already ahead of "main" (which has no new commits),
+and so it just says:
+
+  Current branch feat is up to date.
+
+and leaves us on the "feat" branch. But in doing so, it overwrites the
+precious untracked content in the working tree.
+
+The "git rebase --abort" command then does nothing, because there's no
+rebase in progress.
+
+-Peff
