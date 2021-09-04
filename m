@@ -7,32 +7,32 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F488C433F5
-	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 12:41:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29367C433EF
+	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 12:42:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 727CF61054
-	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 12:41:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0BBD360FD7
+	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 12:42:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236792AbhIDMmd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Sep 2021 08:42:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39316 "EHLO cloud.peff.net"
+        id S236406AbhIDMna (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Sep 2021 08:43:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39320 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236678AbhIDMma (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Sep 2021 08:42:30 -0400
-Received: (qmail 32475 invoked by uid 109); 4 Sep 2021 12:41:28 -0000
+        id S235794AbhIDMn3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Sep 2021 08:43:29 -0400
+Received: (qmail 32480 invoked by uid 109); 4 Sep 2021 12:42:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 04 Sep 2021 12:41:28 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 04 Sep 2021 12:42:27 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11368 invoked by uid 111); 4 Sep 2021 12:41:28 -0000
+Received: (qmail 11379 invoked by uid 111); 4 Sep 2021 12:42:27 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 04 Sep 2021 08:41:28 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 04 Sep 2021 08:42:27 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 4 Sep 2021 08:41:28 -0400
+Date:   Sat, 4 Sep 2021 08:42:27 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     ZheNing Hu <adlternative@gmail.com>
-Subject: [PATCH 1/2] ref-filter: hacky "streaming" mode
-Message-ID: <YTNpeH+jO0zQgAVT@coredump.intra.peff.net>
+Subject: [PATCH 2/2] ref-filter: implement "quick" formats
+Message-ID: <YTNps0YBOaRNvPzk@coredump.intra.peff.net>
 References: <YTNpQ7Od1U/5i0R7@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -43,157 +43,165 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The ref-filter code is very keen to collect all of the refs in an array
-before writing any output. This makes things slower than necessary when
-using the default sort order (which is already sorted by refname when we
-call for_each_ref()), and when no filtering options require it.
+Some commonly-used formats can be output _much_ faster than going
+through the usual atom-formatting code. E.g., "%(objectname) %(refname)"
+can just be a simple printf. This commit detects a few easy cases and
+uses a hard-coded output function instead.
 
-This commit adds a mildly-ugly interface to detect this case and stream
-directly from filter_refs(). The caller just needs to call the
-"maybe_stream" function. Either way, they can call the usual sort/print
-functions; they'll just be noops if we did stream instead of collecting.
+Note two things about the implementation:
 
-Here are some timings on a fully-packed 500k-ref repo:
+ - we could probably go further here. E.g., %(refname:lstrip) should be
+   easy-ish to optimize, too. Likewise, mixed-text like "delete
+   %(refname)" would be nice to have.
 
-  Benchmark #1: ./git.orig for-each-ref --format='%(objectname) %(refname)'
-    Time (mean ± σ):     340.2 ms ±   5.3 ms    [User: 300.5 ms, System: 39.6 ms]
-    Range (min … max):   332.9 ms … 347.0 ms    10 runs
+ - the code is repetitive and enumerates all the cases, and it feels
+   like we ought to be able to generalize it more. But that's exactly
+   what the current formatting tries to do!
 
-  Benchmark #2: ./git.stream for-each-ref --format='%(objectname) %(refname)'
-    Time (mean ± σ):     224.0 ms ±   3.4 ms    [User: 222.7 ms, System: 1.3 ms]
-    Range (min … max):   218.1 ms … 228.5 ms    13 runs
+So this whole thing is pretty horrible, and is a hack around the
+slowness of the whole used_atom system. It _should_ be possible to
+refactor that system to have roughly the same cost, but this will serve
+in the meantime.
+
+Here are some numbers ("stream" is Git with the streaming optimization
+from the previous commit, and "quick" is this commit):
+
+  Benchmark #1: ./git.stream for-each-ref --format='%(objectname) %(refname)'
+    Time (mean ± σ):     229.2 ms ±   6.6 ms    [User: 228.3 ms, System: 0.9 ms]
+    Range (min … max):   220.4 ms … 242.6 ms    13 runs
+
+  Benchmark #2: ./git.quick for-each-ref --format='%(objectname) %(refname)'
+    Time (mean ± σ):      94.8 ms ±   2.2 ms    [User: 93.5 ms, System: 1.4 ms]
+    Range (min … max):    90.8 ms …  98.2 ms    32 runs
 
   Summary
-    './git.stream for-each-ref --format='%(objectname) %(refname)'' ran
-      1.52 ± 0.03 times faster than './git.orig for-each-ref --format='%(objectname) %(refname)''
-
-So we definitely shave off some time, though we're still _much_ slower
-than a simple `wc -l <packed-refs` (which is around 10ms, though of
-course it isn't actually doing as much work).
-
-The point here is to reduce overall effort, though of course the time to
-first output is much improved in the streaming version, too (about 250ms
-versus 4ms).
+    './git.quick for-each-ref --format='%(objectname) %(refname)'' ran
+      2.42 ± 0.09 times faster than './git.stream for-each-ref --format='%(objectname) %(refname)''
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/for-each-ref.c |  7 ++++++
- ref-filter.c           | 50 ++++++++++++++++++++++++++++++++++--------
- ref-filter.h           |  8 +++++++
- 3 files changed, 56 insertions(+), 9 deletions(-)
+ ref-filter.c | 63 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ ref-filter.h | 13 +++++++++++
+ 2 files changed, 76 insertions(+)
 
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 89cb6307d4..fe0b92443f 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -70,6 +70,13 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	if (verify_ref_format(&format))
- 		usage_with_options(for_each_ref_usage, opts);
- 
-+	/*
-+	 * try streaming, but only without maxcount; in theory the ref-filter
-+	 * code could learn about maxcount, but for now it is our own thing
-+	 */
-+	if (!maxcount)
-+		ref_filter_maybe_stream(&filter, sorting, icase, &format);
-+
- 	if (!sorting)
- 		sorting = ref_default_sorting();
- 	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
 diff --git a/ref-filter.c b/ref-filter.c
-index 93ce2a6ef2..17b78b1d30 100644
+index 17b78b1d30..1efa3aadc8 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -2283,15 +2283,19 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
- 			return 0;
- 	}
- 
--	/*
--	 * We do not open the object yet; sort may only need refname
--	 * to do its job and the resulting list may yet to be pruned
--	 * by maxcount logic.
--	 */
--	ref = ref_array_push(ref_cbdata->array, refname, oid);
--	ref->commit = commit;
--	ref->flag = flag;
--	ref->kind = kind;
-+	if (ref_cbdata->filter->streaming_format) {
-+		pretty_print_ref(refname, oid, ref_cbdata->filter->streaming_format);
-+	} else {
-+		/*
-+		 * We do not open the object yet; sort may only need refname
-+		 * to do its job and the resulting list may yet to be pruned
-+		 * by maxcount logic.
-+		 */
-+		ref = ref_array_push(ref_cbdata->array, refname, oid);
-+		ref->commit = commit;
-+		ref->flag = flag;
-+		ref->kind = kind;
-+	}
- 
- 	return 0;
- }
-@@ -2563,6 +2567,34 @@ void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
- 	QSORT_S(array->items, array->nr, compare_refs, sorting);
+@@ -1009,6 +1009,37 @@ static int reject_atom(enum atom_type atom_type)
+ 	return atom_type == ATOM_REST;
  }
  
-+void ref_filter_maybe_stream(struct ref_filter *filter,
-+			     const struct ref_sorting *sort, int icase,
-+			     struct ref_format *format)
++static void set_up_quick_format(struct ref_format *format)
 +{
-+	/* streaming only works with default for_each_ref sort order */
-+	if (sort || icase)
-+		return;
-+
-+	/* these filters want to see all candidates up front */
-+	if (filter->reachable_from || filter->unreachable_from)
++	/* quick formats don't handle any special quoting */
++	if (format->quote_style)
 +		return;
 +
 +	/*
-+	 * the %(symref) placeholder is broken with pretty_print_ref(),
-+	 * which our streaming code uses. I suspect this is a sign of breakage
-+	 * in other callers like verify_tag(), which should be fixed. But for
-+	 * now just disable streaming.
-+	 *
-+	 * Note that this implies we've parsed the format already with
-+	 * verify_ref_format().
++	 * no atoms at all; this should be uncommon in real life, but it may be
++	 * interesting for benchmarking
 +	 */
-+	if (need_symref)
++	if (!used_atom_cnt) {
++		format->quick = REF_FORMAT_QUICK_VERBATIM;
 +		return;
++	}
 +
-+	/* OK to stream */
-+	filter->streaming_format = format;
++	/*
++	 * It's tempting to look at used_atom here, but it's wrong to do so: we
++	 * need not only to be sure of the needed atoms, but also their order
++	 * and any verbatim parts of the format. So instead, let's just
++	 * hard-code some specific formats.
++	 */
++	if (!strcmp(format->format, "%(refname)"))
++		format->quick = REF_FORMAT_QUICK_REFNAME;
++	else if (!strcmp(format->format, "%(objectname)"))
++		format->quick = REF_FORMAT_QUICK_OBJECTNAME;
++	else if (!strcmp(format->format, "%(refname) %(objectname)"))
++		format->quick = REF_FORMAT_QUICK_REFNAME_OBJECTNAME;
++	else if (!strcmp(format->format, "%(objectname) %(refname)"))
++		format->quick = REF_FORMAT_QUICK_OBJECTNAME_REFNAME;
 +}
 +
- static void append_literal(const char *cp, const char *ep, struct ref_formatting_state *state)
- {
- 	struct strbuf *s = &state->stack->output;
+ /*
+  * Make sure the format string is well formed, and parse out
+  * the used atoms.
+@@ -1047,6 +1078,9 @@ int verify_ref_format(struct ref_format *format)
+ 	}
+ 	if (format->need_color_reset_at_eol && !want_color(format->use_color))
+ 		format->need_color_reset_at_eol = 0;
++
++	set_up_quick_format(format);
++
+ 	return 0;
+ }
+ 
+@@ -2617,6 +2651,32 @@ static void append_literal(const char *cp, const char *ep, struct ref_formatting
+ 	}
+ }
+ 
++static int quick_ref_format(const struct ref_format *format,
++			    const char *refname,
++			    const struct object_id *oid)
++{
++	switch(format->quick) {
++	case REF_FORMAT_QUICK_NONE:
++		return -1;
++	case REF_FORMAT_QUICK_VERBATIM:
++		printf("%s\n", format->format);
++		return 0;
++	case REF_FORMAT_QUICK_REFNAME:
++		printf("%s\n", refname);
++		return 0;
++	case REF_FORMAT_QUICK_OBJECTNAME:
++		printf("%s\n", oid_to_hex(oid));
++		return 0;
++	case REF_FORMAT_QUICK_REFNAME_OBJECTNAME:
++		printf("%s %s\n", refname, oid_to_hex(oid));
++		return 0;
++	case REF_FORMAT_QUICK_OBJECTNAME_REFNAME:
++		printf("%s %s\n", oid_to_hex(oid), refname);
++		return 0;
++	}
++	BUG("unknown ref_format_quick value: %d", format->quick);
++}
++
+ int format_ref_array_item(struct ref_array_item *info,
+ 			  struct ref_format *format,
+ 			  struct strbuf *final_buf,
+@@ -2670,6 +2730,9 @@ void pretty_print_ref(const char *name, const struct object_id *oid,
+ 	struct strbuf output = STRBUF_INIT;
+ 	struct strbuf err = STRBUF_INIT;
+ 
++	if (!quick_ref_format(format, name, oid))
++		return;
++
+ 	ref_item = new_ref_array_item(name, oid);
+ 	ref_item->kind = ref_kind_from_refname(name);
+ 	if (format_ref_array_item(ref_item, format, &output, &err))
 diff --git a/ref-filter.h b/ref-filter.h
-index c15dee8d6b..ecea1837a2 100644
+index ecea1837a2..fde5c3a1cb 100644
 --- a/ref-filter.h
 +++ b/ref-filter.h
-@@ -69,6 +69,9 @@ struct ref_filter {
- 		lines;
- 	int abbrev,
- 		verbose;
+@@ -87,6 +87,19 @@ struct ref_format {
+ 
+ 	/* Internal state to ref-filter */
+ 	int need_color_reset_at_eol;
 +
-+	/* if non-NULL, streaming output during filter_refs() is enabled */
-+	struct ref_format *streaming_format;
++	/*
++	 * Set by verify_ref_format(); if not NONE, we can skip the usual
++	 * formatting and use an optimized routine.
++	 */
++	enum ref_format_quick {
++		REF_FORMAT_QUICK_NONE = 0,
++		REF_FORMAT_QUICK_VERBATIM,
++		REF_FORMAT_QUICK_REFNAME,
++		REF_FORMAT_QUICK_OBJECTNAME,
++		REF_FORMAT_QUICK_REFNAME_OBJECTNAME,
++		REF_FORMAT_QUICK_OBJECTNAME_REFNAME,
++	} quick;
  };
  
- struct ref_format {
-@@ -135,6 +138,11 @@ char *get_head_description(void);
- /*  Set up translated strings in the output. */
- void setup_ref_filter_porcelain_msg(void);
- 
-+/* enable streaming during filter_refs() if options allow it */
-+void ref_filter_maybe_stream(struct ref_filter *filter,
-+			     const struct ref_sorting *sort, int icase,
-+			     struct ref_format *format);
-+
- /*
-  * Print a single ref, outside of any ref-filter. Note that the
-  * name must be a fully qualified refname.
+ #define REF_FORMAT_INIT { .use_color = -1 }
 -- 
 2.33.0.618.g5b11852304
-
