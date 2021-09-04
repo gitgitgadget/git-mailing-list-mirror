@@ -2,89 +2,198 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28DB1C433EF
-	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 12:40:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F488C433F5
+	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 12:41:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE18A60F9C
-	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 12:40:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 727CF61054
+	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 12:41:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232342AbhIDMli (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Sep 2021 08:41:38 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39308 "EHLO cloud.peff.net"
+        id S236792AbhIDMmd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Sep 2021 08:42:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39316 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230426AbhIDMlh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Sep 2021 08:41:37 -0400
-Received: (qmail 32464 invoked by uid 109); 4 Sep 2021 12:40:36 -0000
+        id S236678AbhIDMma (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Sep 2021 08:42:30 -0400
+Received: (qmail 32475 invoked by uid 109); 4 Sep 2021 12:41:28 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 04 Sep 2021 12:40:36 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 04 Sep 2021 12:41:28 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11289 invoked by uid 111); 4 Sep 2021 12:40:35 -0000
+Received: (qmail 11368 invoked by uid 111); 4 Sep 2021 12:41:28 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 04 Sep 2021 08:40:35 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 04 Sep 2021 08:41:28 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 4 Sep 2021 08:40:35 -0400
+Date:   Sat, 4 Sep 2021 08:41:28 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     ZheNing Hu <adlternative@gmail.com>
-Subject: [hacky PATCH 0/2] speeding up trivial for-each-ref invocations
-Message-ID: <YTNpQ7Od1U/5i0R7@coredump.intra.peff.net>
+Subject: [PATCH 1/2] ref-filter: hacky "streaming" mode
+Message-ID: <YTNpeH+jO0zQgAVT@coredump.intra.peff.net>
+References: <YTNpQ7Od1U/5i0R7@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YTNpQ7Od1U/5i0R7@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Somebody complained to me off-list recently that for-each-ref was slow
-when doing a trivial listing (like refname + objectname) of a large
-number of refs, even though you could get mostly the same output by
-just dumping the packed-refs file.
+The ref-filter code is very keen to collect all of the refs in an array
+before writing any output. This makes things slower than necessary when
+using the default sort order (which is already sorted by refname when we
+call for_each_ref()), and when no filtering options require it.
 
-So I was nerd-sniped into making this horrible series, which does speed
-up some cases. It was a combination of "how fast can we easily get it",
-plus I was curious _which_ parts of for-each-ref were actually slow.
+This commit adds a mildly-ugly interface to detect this case and stream
+directly from filter_refs(). The caller just needs to call the
+"maybe_stream" function. Either way, they can call the usual sort/print
+functions; they'll just be noops if we did stream instead of collecting.
 
-In this version there are 2 patches, tested against 'git for-each-ref
---format="%(objectname) %(refname)"' on a fully packed repo with 500k
-refs:
+Here are some timings on a fully-packed 500k-ref repo:
 
-  - directly outputting items rather than building up a ref_array yields
-    about a 1.5x speedup
+  Benchmark #1: ./git.orig for-each-ref --format='%(objectname) %(refname)'
+    Time (mean ± σ):     340.2 ms ±   5.3 ms    [User: 300.5 ms, System: 39.6 ms]
+    Range (min … max):   332.9 ms … 347.0 ms    10 runs
 
-  - avoiding the whole atom-formatting system yields a 2.5x speedup on
-    top of that
+  Benchmark #2: ./git.stream for-each-ref --format='%(objectname) %(refname)'
+    Time (mean ± σ):     224.0 ms ±   3.4 ms    [User: 222.7 ms, System: 1.3 ms]
+    Range (min … max):   218.1 ms … 228.5 ms    13 runs
 
-I had originally written it against a slightly older version of Git,
-before show_ref_array_item() was inlined. In that version, there was a
-middle ground where we still created a ref_array_item for each ref, and
-then fed it to the "quick" formatter (so we could see the cost of
-having to malloc/free a bunch of ref_array_item structs). The numbers
-there wre:
+  Summary
+    './git.stream for-each-ref --format='%(objectname) %(refname)'' ran
+      1.52 ± 0.03 times faster than './git.orig for-each-ref --format='%(objectname) %(refname)''
 
-  - streaming out items gave a 1.5x speedup
+So we definitely shave off some time, though we're still _much_ slower
+than a simple `wc -l <packed-refs` (which is around 10ms, though of
+course it isn't actually doing as much work).
 
-  - using the "quick" formatter gave a 1.8x speedup
+The point here is to reduce overall effort, though of course the time to
+first output is much improved in the streaming version, too (about 250ms
+versus 4ms).
 
-  - avoiding the extra malloc/free for each item gave a 1.4x
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/for-each-ref.c |  7 ++++++
+ ref-filter.c           | 50 ++++++++++++++++++++++++++++++++++--------
+ ref-filter.h           |  8 +++++++
+ 3 files changed, 56 insertions(+), 9 deletions(-)
 
-which makes sense; 1.8 * 1.4 is ~2.5, so it's the same speedup just
-broken down further.
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 89cb6307d4..fe0b92443f 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -70,6 +70,13 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 	if (verify_ref_format(&format))
+ 		usage_with_options(for_each_ref_usage, opts);
+ 
++	/*
++	 * try streaming, but only without maxcount; in theory the ref-filter
++	 * code could learn about maxcount, but for now it is our own thing
++	 */
++	if (!maxcount)
++		ref_filter_maybe_stream(&filter, sorting, icase, &format);
++
+ 	if (!sorting)
+ 		sorting = ref_default_sorting();
+ 	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
+diff --git a/ref-filter.c b/ref-filter.c
+index 93ce2a6ef2..17b78b1d30 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2283,15 +2283,19 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 			return 0;
+ 	}
+ 
+-	/*
+-	 * We do not open the object yet; sort may only need refname
+-	 * to do its job and the resulting list may yet to be pruned
+-	 * by maxcount logic.
+-	 */
+-	ref = ref_array_push(ref_cbdata->array, refname, oid);
+-	ref->commit = commit;
+-	ref->flag = flag;
+-	ref->kind = kind;
++	if (ref_cbdata->filter->streaming_format) {
++		pretty_print_ref(refname, oid, ref_cbdata->filter->streaming_format);
++	} else {
++		/*
++		 * We do not open the object yet; sort may only need refname
++		 * to do its job and the resulting list may yet to be pruned
++		 * by maxcount logic.
++		 */
++		ref = ref_array_push(ref_cbdata->array, refname, oid);
++		ref->commit = commit;
++		ref->flag = flag;
++		ref->kind = kind;
++	}
+ 
+ 	return 0;
+ }
+@@ -2563,6 +2567,34 @@ void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
+ 	QSORT_S(array->items, array->nr, compare_refs, sorting);
+ }
+ 
++void ref_filter_maybe_stream(struct ref_filter *filter,
++			     const struct ref_sorting *sort, int icase,
++			     struct ref_format *format)
++{
++	/* streaming only works with default for_each_ref sort order */
++	if (sort || icase)
++		return;
++
++	/* these filters want to see all candidates up front */
++	if (filter->reachable_from || filter->unreachable_from)
++		return;
++
++	/*
++	 * the %(symref) placeholder is broken with pretty_print_ref(),
++	 * which our streaming code uses. I suspect this is a sign of breakage
++	 * in other callers like verify_tag(), which should be fixed. But for
++	 * now just disable streaming.
++	 *
++	 * Note that this implies we've parsed the format already with
++	 * verify_ref_format().
++	 */
++	if (need_symref)
++		return;
++
++	/* OK to stream */
++	filter->streaming_format = format;
++}
++
+ static void append_literal(const char *cp, const char *ep, struct ref_formatting_state *state)
+ {
+ 	struct strbuf *s = &state->stack->output;
+diff --git a/ref-filter.h b/ref-filter.h
+index c15dee8d6b..ecea1837a2 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -69,6 +69,9 @@ struct ref_filter {
+ 		lines;
+ 	int abbrev,
+ 		verbose;
++
++	/* if non-NULL, streaming output during filter_refs() is enabled */
++	struct ref_format *streaming_format;
+ };
+ 
+ struct ref_format {
+@@ -135,6 +138,11 @@ char *get_head_description(void);
+ /*  Set up translated strings in the output. */
+ void setup_ref_filter_porcelain_msg(void);
+ 
++/* enable streaming during filter_refs() if options allow it */
++void ref_filter_maybe_stream(struct ref_filter *filter,
++			     const struct ref_sorting *sort, int icase,
++			     struct ref_format *format);
++
+ /*
+  * Print a single ref, outside of any ref-filter. Note that the
+  * name must be a fully qualified refname.
+-- 
+2.33.0.618.g5b11852304
 
-I'm not sure I'm really advocating that we should do something like
-this, though it is tempting because it does make some common queries
-much faster. But I wanted to share it here to give some insight on where
-the time may be going in ref-filter / for-each-ref.
-
-  [1/2]: ref-filter: hacky "streaming" mode
-  [2/2]: ref-filter: implement "quick" formats
-
- builtin/for-each-ref.c |   7 +++
- ref-filter.c           | 113 +++++++++++++++++++++++++++++++++++++----
- ref-filter.h           |  21 ++++++++
- 3 files changed, 132 insertions(+), 9 deletions(-)
-
--Peff
