@@ -2,138 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9343FC433EF
-	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 07:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C93AC433F5
+	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 07:56:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 73B4260F91
-	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 07:40:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6121F6023F
+	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 07:56:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233330AbhIDHly (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Sep 2021 03:41:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44260 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233068AbhIDHly (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Sep 2021 03:41:54 -0400
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54272C061575
-        for <git@vger.kernel.org>; Sat,  4 Sep 2021 00:40:53 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id a15so1470250iot.2
-        for <git@vger.kernel.org>; Sat, 04 Sep 2021 00:40:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=42KEJk5Z7iI8vaE68sDcFRFSpenjubzONvZzQUClE0w=;
-        b=TDEOdm02aRLW5NIiE/lhsT7a/mgZyLPbaQu8nimkXHCfdTWA7mUO4VzISifoamaABh
-         yspVLCykC0lR7/JsHfIPFCRysj84VCjY3+UGgJVHXf/77VFznV1LO7Xop9eex7KDMMIQ
-         APVt82FSh5uTzsT/dpMebTfKmU4EaGFy88ddi7MVkA25y4sHVHuF6cJBjRH4gf4dHzQM
-         EZ7KMJonoAnzF6AO6JjXsI8P093rGoK0EoHt0WccLW3RlmGZnaWuG2ON0V04pXrDXcgj
-         msnfdX1vYU0beNiWDPfc+50b30Mvi5kDcpBRvUwMzcqugzKEfTNpBRxTZmAZNRcJ4igS
-         8CVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=42KEJk5Z7iI8vaE68sDcFRFSpenjubzONvZzQUClE0w=;
-        b=SFHQVmrGRnxZDcJVRoxHH8C9emPoI+dgf4sHwOyz3Qu7vUA1DhgSPzOM0B1PEXnuOO
-         Gtywf9bF2sVfVbLtFRV9uzPdGuYKawCTl2/fJiI/H6ySDzpubYvE3BjYlrKE1PU0nf3u
-         Og9JJx4O3x/qb5YFmdcJhlrPXbY6x+I19b1EMZVAbjdVnW80HX+9vhbiY3/kCI5ULQnG
-         k7WKl/RdeTOjbzionTJolin0oSu4NQyde4OjJRkfcuj8V3bsCYmTijvFZI4dgM1aQ1ck
-         5+61j67CdmK9So9/X9sNLz48oBmqu6UoXV3l0sjPAoVK56TlwbDkrrGTTbPNLEGeGHPL
-         540g==
-X-Gm-Message-State: AOAM531dRZ7QqLXbWU8vLKUUx9Ro6kG8NU1Ehk52mz/gqHSGWQIFUSu7
-        tZ2hrnMFukd9RgN3fkJ1Gz1rVLfDbyWcB4MXA0U=
-X-Google-Smtp-Source: ABdhPJwGvcPEdCG/X9npa6mQOZf22kEGZccCEb58aPv/JJDISc7HxhDckrV2da69B+5LAPGAQUfn5M/vb/2NNWwWGFA=
-X-Received: by 2002:a05:6638:d85:: with SMTP id l5mr2351958jaj.2.1630741252792;
- Sat, 04 Sep 2021 00:40:52 -0700 (PDT)
+        id S234086AbhIDH5N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Sep 2021 03:57:13 -0400
+Received: from mout.web.de ([212.227.15.3]:51963 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233340AbhIDH5M (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Sep 2021 03:57:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1630742168;
+        bh=KBkQQSUV1GvjtDUVg/Hs95apeR7h8w5IE6qisUpwcV8=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=FFSMw5lTtjSyo5RSH2xxViqrscaLuEWA2ycp6MObdVVSPgRhICdhh2hnH5q0dHQ/9
+         ccF2LrvXxeZqpvckNVVskAsGn5qWlPSJH7Vw8NJM10z3yJALobr8rq4mqlcfPfvFhq
+         /fi4XazyRt59z6W3A1FQDBVoeUjligZpUs2yL2AI=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([79.203.20.171]) by smtp.web.de
+ (mrweb001 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0MGzFy-1m8f4K32oc-00Dkbs; Sat, 04 Sep 2021 09:50:58 +0200
+Subject: Re: [BUG?] git range-diff -Ix @{1}... segfaults
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <xmqqbl59fq9i.fsf@gitster.g>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <7ac58fa9-f0f3-53bc-e51b-de9cd4efdb29@web.de>
+Date:   Sat, 4 Sep 2021 09:50:58 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.13.0
 MIME-Version: 1.0
-References: <YTGLLQCvlnT17jo8@nand.local> <CAP8UFD2SNyCj6Weo4EeHt0Z-CW9CEJbQbzmU7jhwfJdNW9CrYQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD2SNyCj6Weo4EeHt0Z-CW9CEJbQbzmU7jhwfJdNW9CrYQ@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sat, 4 Sep 2021 15:40:41 +0800
-Message-ID: <CAOLTT8QufEU5Q64JfQyEOs4FYCsrNX2jgj8PdmYziVtKnRyu4w@mail.gmail.com>
-Subject: Re: Git in Outreachy?
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Taylor Blau <ttaylorr@github.com>, git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff King <peff@peff.net>, Hariom verma <hariom18599@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqbl59fq9i.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:bOOxdfAR/v/9nfP07wdvjMhm4RQNXpqLwX/XjM6ierK5m8NHGRb
+ H16AVBH6LJ9Q0q8B1V+h/Wnt2Jj3DJKpvpLyvptU2fGXRXbtYmsGbzELlPEG3TWvx/t7TcM
+ qV5GzLtKXLoQxuF8h1ANTPKvlY/zxI/NfAHzy8oDQalCzaxzuRRdonrVISvsBSSEKvRqBh5
+ S/Di6WnylMhxV3LamXelA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:54TJKnbfDY8=:UYFDqnIidWiWoCML4k9q8s
+ UY8cMFUQNEBbCFYi+iE9JS5fayHYbvEleraX9qyjHC2jZ6tCDzkKax8SQBrpk7syWEXZK/Cjj
+ tu2Hefo8qwxQKU0ixmqrRxIGaveYhSPh7VDsI5e8fHNvgbMww1SQcLtF6gyrk/a780UvlhTqW
+ fkv79NtWCSYno19HOvHwXoVIXA/BJrWiOdWlcIpnxoOBcKbuEB5Lk0wiNYD13sf5D2JI51sf8
+ bS/1zEqkOU2qYniFRVaLcl+kbNLrwYC4sGpti0aUsn6WGSgvOq1MTQqjZfkhSjtIodJUF18BR
+ t+Frud8wpxqRW++LlqX0wytO5eBR2OUEZiuGNzFH6ChJqIgxX9OgG6+2dEe+9Zmse3Ax0JJS7
+ 4gqVR3fRjdrVGxxCSbpT8kMMeVBUl0nWheUbW4yOldgBjBiwgLExulYwfXhpJwqunnbcwnt84
+ Jmzn5aH4aRqX5KFYDIvEN/+3zFZkmf9I0p2Qn8hg3n//zc1InJbSHFX6Wx8Z/OKPtw//q/22U
+ UB1tMbj0F4wlR5CUuIhl1O7+g7KKcnKd4SFIOY/TXfk0dBE+w6dHQfWJIyRBOK/uRrwSrvWlW
+ ZppPV33UNojK0mn++8aYjKn5ogEhPZ4cp2WznaAWmMUP6rAsyQgudmw79RAtuF37nxOyF7t++
+ xKiA78WOuki5ABdFx4CfbD2tHWVSNlNu9GWHVVFBmSdlzluwrDyhgag05t0jns7Tossxw3Cng
+ r87zN1gDMAFl6byuOjG75lcrTkw5wrospDKhlbfQUNNnvLOZOxacHm4x0kXblp6C0c6cjnSzK
+ EjEelEYE3RgzidLV62KEcdoJMGkriQdcBfI5q5HzxNwzBizeAzQqHfsRkvpGqOoR62l+cbp8q
+ HwknXPY6gX1UoZnF3+apMxqP5nzJda/97T174ZlsnECy/cpeBR8ZsA+qIosaKfFICATX8QJoC
+ sb8fLKeuLRH0JLq6SXiISyfTc0RP7oX7KwWc8f3kFhWJqzl2D1x73YroPSSFBT4eEvc17Zj+T
+ 2kkzgkCu6ZuaxNSLxuDuwVk0EkVD9z44rykGJe+LMUOe1YYgaOrAtXdNuumbP6TLaQ4ANl8n0
+ DqJeywckDv3Lba/Y/Z+TFVwWa8GFcAwHrGO
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B49=E6=9C=
-=884=E6=97=A5=E5=91=A8=E5=85=AD =E4=B8=8B=E5=8D=8812:30=E5=86=99=E9=81=93=
-=EF=BC=9A
+Am 03.09.21 um 20:49 schrieb Junio C Hamano:
+> It does not seem to trigger with an empty range, e.g.
 >
-> On Fri, Sep 3, 2021 at 4:40 AM Taylor Blau <ttaylorr@github.com> wrote:
-> >
-> > Are we interested in participating in the December 2021 round of
-> > Outreachy? September 3rd (tomorrow at 4pm UTC) is the initial community
-> > application deadline.
-> >
-> > Christian, Peff, and I discussed off-list that we would each try to pul=
-l
-> > together funding for one intern from GitHub and GitLab respectively.
+>     $ git range-diff -Ix HEAD...
+>     $ git range-diff -Ix HEAD~...
+>     -:  ---------- > 1:  0a0bc7d03a scalar: accept -C and -c opt...
 >
-> Yeah, and we submitted an initial community application.
->
-> > If we're interested, the project submission deadline is September 23rd
-> > [1]. By then, we'd need:
-> >
-> >   - Volunteers to act as mentors
->
-> I am ok with co-mentoring 2 interns.
->
-> >   - Updates to our applicant materials on git.github.io (project ideas,
-> >     as well as potential microprojects).
->
-> About microprojects, I have been wondering if there are run_command*()
-> calls that could be replaced by direct calls to C functions like what
-> Junio did in ffcb4e94d3 (bisect: do not run show-branch just to show
-> the current commit, 2021-07-27), and if that could make a good
-> microproject.
->
-> About project ideas, maybe continuing Hariom Verma's GSoC 2020 "Unify
-> ref-filter formats with other \-\-pretty formats" project could be and
-> idea, though maybe it could interact too much with ZheNing Hu
-> continuing his GSoC 2021 "Use ref-filter formats in `git cat-file`"
-> project.
+> but when it needs real comparison, the -I seems to kill the command
+> quite easily.
 
-If the project idea is related to Hariom or my GSoC project, I think I can
-provide a lot of help. :)  I can help them as a mentor.
+Reverting c45dc9cf30 (diff: plug memory leak from regcomp() on
+{log,diff} -I, 2021-02-11) fixes the segfault.
 
-This may be a place to promote my patches: See [1][2][3].
-It can provide some extra atoms for git cat-file --batch | --batch-check,
-like %(tree), %(author), %(tagger) etc. Although some performance
-optimizations have been made, It still has small performance gap.
+diff.c::diff_free() frees the ignore_regex member of a struct
+diff_options, but doesn't reset the ignore_regex_nr nor clears the
+pointer.  It is called from diff.c::diff_flush().
 
-If the community still expects git cat-file --batch to reuse the logic
-of ref-filter,
-I expect it to get the attention of reviewers.
+range-diff.c::output() calls diff.c::diff_flush() in a loop with the
+same struct diff_options (via range-diff.c::patch_diff()).
 
-The solutions I can think of to further optimize performance are:
-1. Delay the evaluation of some ref-filter intermediate data.
-2. Let ref-filter code reentrant and can be called in multi-threaded  to ta=
-ke
-advantage of multi-core.
-These ideas may be very difficult to implement now.
+So the second iteration of that loop tries to use the already freed
+ignore regexes.  Here's a patch for that:
 
-[1]: https://lore.kernel.org/git/CAOLTT8SxHuH2EbiSwQX6pyJJs5KyVuKx6ZOPxpzWL=
-H+Tbz5F+A@mail.gmail.com/
-[2]: https://lore.kernel.org/git/pull.1025.git.1629882532.gitgitgadget@gmai=
-l.com/
-[3]: https://github.com/adlternative/git/commits/cat-file-reuse-ref-filter-=
-logic
+=2D-- >8 ---
+Subject: [PATCH] range-diff: avoid segfault with -I
 
-Thanks.
---
-ZheNing Hu
+output() reuses the same struct diff_options for multiple calls of
+diff_flush().  Set the option no_free to instruct it to keep the
+ignore regexes between calls and release them explicitly at the end.
+
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Test missing because I couldn't see any effect of -I on range-diff.
+
+ range-diff.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/range-diff.c b/range-diff.c
+index e731525e66..cac89a2f4f 100644
+=2D-- a/range-diff.c
++++ b/range-diff.c
+@@ -482,6 +482,7 @@ static void output(struct string_list *a, struct strin=
+g_list *b,
+ 	else
+ 		diff_setup(&opts);
+
++	opts.no_free =3D 1;
+ 	if (!opts.output_format)
+ 		opts.output_format =3D DIFF_FORMAT_PATCH;
+ 	opts.flags.suppress_diff_headers =3D 1;
+@@ -542,6 +543,8 @@ static void output(struct string_list *a, struct strin=
+g_list *b,
+ 	strbuf_release(&buf);
+ 	strbuf_release(&dashes);
+ 	strbuf_release(&indent);
++	opts.no_free =3D 0;
++	diff_free(&opts);
+ }
+
+ int show_range_diff(const char *range1, const char *range2,
+=2D-
+2.33.0
+
