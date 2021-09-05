@@ -2,150 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C02B3C433FE
-	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 07:34:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CF18C433F5
+	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 07:44:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9676261027
-	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 07:34:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0B35460F92
+	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 07:44:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234946AbhIEHf7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Sep 2021 03:35:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45290 "EHLO
+        id S232723AbhIEHnF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Sep 2021 03:43:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234195AbhIEHf5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Sep 2021 03:35:57 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7F51C061575
-        for <git@vger.kernel.org>; Sun,  5 Sep 2021 00:34:54 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id b6so4850011wrh.10
-        for <git@vger.kernel.org>; Sun, 05 Sep 2021 00:34:54 -0700 (PDT)
+        with ESMTP id S229599AbhIEHnD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Sep 2021 03:43:03 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56838C061575
+        for <git@vger.kernel.org>; Sun,  5 Sep 2021 00:42:00 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id q3so4970090edt.5
+        for <git@vger.kernel.org>; Sun, 05 Sep 2021 00:42:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=HN2K8JLweIlubl4ICGLFXo02UX9Fu9TELb9VsE2Y2x8=;
-        b=Cd+NC6hReyrOCjMOk6XRWqNsb1mru+lMFAntinbhzecknDXKArd/ARbArwITPAu+sf
-         9tcGYPfWORS+R/RchrpTC0YA9N0rP73KPfOcqJGS9DiHgwNkodB1BpB0k3mEpwoYQcBo
-         dtvluaoudmM6gH8Vk6UXc63xwL2g83r330waBftAyEkgN8rLDwFLwQzaK81eLNI4WM9G
-         PjNHAI32aIZIMdflQ1e0grXx6j/+u2Z9IMHWjYxhjJPOZj5ZmFqjhULmRxKmEn2bmPRm
-         xzf+JBbjlVfECBqU2RPZlfW9ErM+4+Jw79sSzNeJGK7K2+QjLILZ4wrQThFFCqE2087R
-         qkRA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=8x2HFJQLpMQH3RofIyBszIQdE7izGnF82uiyTGxI/Sw=;
+        b=eczyO4YX2WmBYioNBjcM31Sfh5gyBFLd5CvDDCbzGBPjtZtEeNMAfwMWe1MkoByaFT
+         MsQa0H+9pQeIePP95lT8TZkAzo+nVS7YGikT1EkpCg+1D3wB9itkuQJQV9fMHZMUAPnh
+         C3NnKsCiOUcuz5fWzs6j37BA/8GXzg3lCIivBpCENJNfn0vL2AqHaCiH/r2JLDxPbHAh
+         aavEJIH82FSNCd/DSUnbbWqHWuBTDgU/JnpqbrRP9TB1FAVpJDOtejC0raO6TIxXLeAV
+         YeBXUoKDj2aABd66YyLBOS6iwiWRfW/eKDjo8Hc7AwBbqxMQriTloiZtK1qFaIaCBLbt
+         ni3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=HN2K8JLweIlubl4ICGLFXo02UX9Fu9TELb9VsE2Y2x8=;
-        b=M4CF/wICORXNhcGq/h1WVzM0msUK4hSUMp2jfaWwTLxCXYU+6lPhzWQzHEJf9MKZY5
-         ySD80EQPaXYtM00FgKsvwgirkULHWZ3KHULQLn85mFiTp0rs1k/RcGSIPNcTs+frXDDJ
-         kZ6nO4sls3rX8odTI4ocg2fcjdDKzlPhsnqIS9PihAZVe8lsm+csMJorJGEharz8k7wU
-         3THfHUjRBIQLIG+Gnh/ZKo2vv6rTDh/hHmbI+o33afP6LBAXxJDXWXOeyy21Wv6DtVrZ
-         0kqaRDr+1rSpRqQWh3oJMeG/IfOR43c9bjQ3RvslIw3erSPifIyZ6ob2U6JjyMskEvLh
-         koRA==
-X-Gm-Message-State: AOAM531KANQQ7stmhnPkfPWviiODfQEcW1YSzIUsi8XNMwMsNKDtmb9+
-        4Z1v5oT7vSYdW1p3Y6M4g2dnhOFqXdH2cA==
-X-Google-Smtp-Source: ABdhPJz8+1lWYn8CwQCF7hQaO2XX0kNamJYFEUciEZL3y9acB/AOMPWzHSfLHKdzt18dOsZllVwutA==
-X-Received: by 2002:a5d:4d8c:: with SMTP id b12mr7093897wru.232.1630827292919;
-        Sun, 05 Sep 2021 00:34:52 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id q14sm4218734wrc.31.2021.09.05.00.34.51
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=8x2HFJQLpMQH3RofIyBszIQdE7izGnF82uiyTGxI/Sw=;
+        b=QezbfJuvfOORxgcadl+e40qoPqO39ZI+z4uG5dRrI+FCUVkAJZfIvDpm5C9AWDyOZP
+         /L3OaP3rM9K52WQy/4pe4aKun0bRpDZFHL3dF0o40VYxesQUBGgHC6ztgCt0xVyXu60Y
+         DSegwP4Jd5evqifWQF5iU83LXxpfWV1DzwX4app+WgH00vRSsqSnWe4Ix6QF6T1JF6zq
+         9Jtr6+gMxldRBO5Fx8PrdbiHdPz2GIEQdMOPq2ZTXdXr30DV/BJIEkLrFnT7iMsfIOeq
+         1ANwCD1yDIoiXCr+bB3rXxaNsDHFU13lYfiAPGYoWPN4kxcAO0KPLtPKu0sxHxNi/LZb
+         GQAQ==
+X-Gm-Message-State: AOAM530/5cgjF7A9kmTTvw5WQt8JajrcnewTIpaEo3W+GsWdyOkFDK0H
+        Gpb7dt9zL7BsSjXGcu1UBwg=
+X-Google-Smtp-Source: ABdhPJwRWZqunvrmOJgXFqS1kHqIp3JpmzCi4X64tmnKW1OfB85zy4GfudJ3H/Zdm0bD0SeuP1TG9w==
+X-Received: by 2002:a50:8e42:: with SMTP id 2mr7741822edx.338.1630827718733;
+        Sun, 05 Sep 2021 00:41:58 -0700 (PDT)
+Received: from evledraar (2a02-a45a-de66-1-2cbc-c868-da6a-49d1.fixed6.kpn.net. [2a02:a45a:de66:1:2cbc:c868:da6a:49d1])
+        by smtp.gmail.com with ESMTPSA id dc7sm2440126edb.46.2021.09.05.00.41.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Sep 2021 00:34:52 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 4/4] bundle: show progress on "unbundle"
-Date:   Sun,  5 Sep 2021 09:34:45 +0200
-Message-Id: <patch-v4-4.4-8f4c7f99799-20210905T072750Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.33.0.813.g41c39388776
-In-Reply-To: <cover-v4-0.4-00000000000-20210905T072750Z-avarab@gmail.com>
-References: <cover-v3-0.5-00000000000-20210826T140414Z-avarab@gmail.com> <cover-v4-0.4-00000000000-20210905T072750Z-avarab@gmail.com>
+        Sun, 05 Sep 2021 00:41:58 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v2 5/7] rebase: drop support for `--preserve-merges`
+Date:   Sun, 05 Sep 2021 09:32:28 +0200
+References: <pull.195.git.1574542242.gitgitgadget@gmail.com>
+ <pull.195.v2.git.1630497435.gitgitgadget@gmail.com>
+ <eb738b1bf05dceb1d119e3adcd732d968407c757.1630497435.git.gitgitgadget@gmail.com>
+ <87lf4f9gre.fsf@evledraar.gmail.com>
+ <nycvar.QRO.7.76.6.2109042138410.55@tvgsbejvaqbjf.bet>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.0
+In-reply-to: <nycvar.QRO.7.76.6.2109042138410.55@tvgsbejvaqbjf.bet>
+Message-ID: <87wnnvpiyj.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "unbundle" command added in 2e0afafebd8 (Add git-bundle: move
-objects and references by archive, 2007-02-22) did not show progress
-output, even though the underlying API learned how to show progress in
-be042aff24c (Teach progress eye-candy to fetch_refs_from_bundle(),
-2011-09-18).
 
-Now we'll show "Unbundling objects" using the new --progress-title
-option to "git index-pack", to go with its existing "Receiving
-objects" and "Indexing objects" (which it shows when invoked with
-"--stdin", and with a pack file, respectively).
+On Sat, Sep 04 2021, Johannes Schindelin wrote:
 
-Unlike "git bundle create" we don't handle "--quiet" here, nor
-"--all-progress" and "--all-progress-implied". Those are all specific
-to "create" (and "verify", in the case of "--quiet").
+> Hi =C3=86var,
+>
+> On Thu, 2 Sep 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> On Wed, Sep 01 2021, Johannes Schindelin via GitGitGadget wrote:
+>>
+>> >  git-rebase--preserve-merges.sh | 1057 --------------------------------
+>>
+>> You could, but certainly don't have to, squash in the below. I.e. this
+>> is the last user of eval_ngettext!
+>
+> s/last user/last in-tree user/
+>
+> Since we install `git-sh-i18n` and semi-advertised it as something to use
+> in user scripts (which makes removing it somewhat questionable a goal,
+> certainly when you do not even offer a deprecation period), and since the
+> removal of such things is completely orthogonal to the intention of this
+> patch series, I will not include this patch, let alone squash it into a
+> commit whose purpose has nothing to do with gettext whatsoever.
 
-The structure of the existing documentation is a bit unclear, e.g. the
-documentation for the "--quiet" option added in
-79862b6b77c (bundle-create: progress output control, 2019-11-10) only
-describes how it works for "create", and not for "verify". That and
-other issues in it should be fixed, but I'd like to avoid untangling
-that mess right now. Let's just support the standard "--no-progress"
-implicitly here, and leave cleaning up the general behavior of "git
-bundle" for a later change.
+Unlike whatever controversy we're having over git-sh-setup being removed
+(see <cover-0.9-00000000000-20210902T155758Z-avarab@gmail.com>[1]), the
+git-sh-i18n's gettext() and eval_gettext() can't be useful to anyone out
+of git.git's tree, since they accept strings that are expected to be
+found in git.git's generated *.mo files.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/git-bundle.txt | 2 +-
- builtin/bundle.c             | 7 +++++++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+So it's certainly possible that someone's used out out-of-tree, but that
+use of eval_gettext() won't have been doing anything useful in terms of
+translation, and if it did that would have been because someone copied a
+to-be-translated string as-is, and expected git.git to keep it
+byte-for-byte the same as their sources.
 
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index ac0d0038350..71b5ecabd1f 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 		    [--version=<version>] <file> <git-rev-list-args>
- 'git bundle' verify [-q | --quiet] <file>
- 'git bundle' list-heads <file> [<refname>...]
--'git bundle' unbundle <file> [<refname>...]
-+'git bundle' unbundle [--progress] <file> [<refname>...]
- 
- DESCRIPTION
- -----------
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index 9b86c8529c7..91975def2da 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -162,7 +162,11 @@ static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix)
- 	struct bundle_header header = BUNDLE_HEADER_INIT;
- 	int bundle_fd = -1;
- 	int ret;
-+	int progress = isatty(2);
-+
- 	struct option options[] = {
-+		OPT_BOOL(0, "progress", &progress,
-+			 N_("show progress meter")),
- 		OPT_END()
- 	};
- 	char *bundle_file;
-@@ -178,6 +182,9 @@ static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix)
- 	}
- 	if (!startup_info->have_repository)
- 		die(_("Need a repository to unbundle."));
-+	if (progress)
-+		strvec_pushl(&extra_index_pack_args, "-v", "--progress-title",
-+			     _("Unbundling objects"), NULL);
- 	ret = !!unbundle(the_repository, &header, bundle_fd,
- 			 &extra_index_pack_args) ||
- 		list_bundle_refs(&header, argc, argv);
--- 
-2.33.0.813.g41c39388776
+Anyway, if you don't want to squash this in I can submit it as some sort
+of follow-up, perhaps along with some of the suggestions in
+<62fbd389-28f5-76e5-d3f3-5510415a7bf5@gmail.com>[2] if you're generally
+aiming to keep the changes here to the depth of the first callstack,
+i.e. remove the --preserve-merges use of a foo(), but not a foo()
+function itself if that foo() then becomes orphaned as a result.
 
+1. https://lore.kernel.org/git/cover-0.9-00000000000-20210902T155758Z-avara=
+b@gmail.com/
+2. https://lore.kernel.org/git/62fbd389-28f5-76e5-d3f3-5510415a7bf5@gmail.c=
+om/
