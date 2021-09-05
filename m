@@ -2,156 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81C99C433F5
-	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 19:18:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C119C433EF
+	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 19:19:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5057760ED8
-	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 19:18:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED5B360F12
+	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 19:19:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234743AbhIETTF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Sep 2021 15:19:05 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50982 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232870AbhIETTE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Sep 2021 15:19:04 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 03B5D16BDD8;
-        Sun,  5 Sep 2021 15:18:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=n4EVEdsWvSniUZ6W0CUoBz3VvzVRoLJtKIj5fc
-        Il+XQ=; b=P5f2QbhZghC1L9hmOEnZD0GH2wkcPbzKtEnauX2kykHeyDvAtWBfuY
-        LkNr+dmNY9TVQ9QJNVSPByy0n1fkD7qIMwIFX+oY8kh+fU+0LEICL+sQIhzkCGj2
-        eiHfBM9cvrhJiR6IS1Fk8TCEQADlhTmAQVFgoikezUJ0xHUmNNqfo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id F035416BDD7;
-        Sun,  5 Sep 2021 15:18:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3A80916BDD5;
-        Sun,  5 Sep 2021 15:17:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org, Carlo Arenas <carenas@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, felipe.contreras@gmail.com,
-        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH RESEND v3] make: add INSTALL_STRIP option variable
-References: <20210905110417.35702-1-bagasdotme@gmail.com>
-Date:   Sun, 05 Sep 2021 12:17:56 -0700
-In-Reply-To: <20210905110417.35702-1-bagasdotme@gmail.com> (Bagas Sanjaya's
-        message of "Sun, 5 Sep 2021 18:04:18 +0700")
-Message-ID: <xmqqwnnuesrf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S234845AbhIETUi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Sep 2021 15:20:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57586 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229880AbhIETUi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Sep 2021 15:20:38 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7195FC061575
+        for <git@vger.kernel.org>; Sun,  5 Sep 2021 12:19:34 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id c8so9059037lfi.3
+        for <git@vger.kernel.org>; Sun, 05 Sep 2021 12:19:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=FSwMXtkBgmFRRkPW+W0gLkpEwK3jpnhk2LfX27QA0D4=;
+        b=P6rtH3IifYDgQiw5PNrE/1LZJgm1YIncsMeO/QhQ/TapAFXP0ajrRS6HempeTLWNEi
+         mZPhqz963LTdIk39JmXYiowAhbhjcOvxy4hP1SU36bdAHWmn8u2WvQhalmtQYGdgsb4Q
+         j4QKRSwiLMSfnckfcSn3T6vdhjeCZmWlCi3MalVeB8cXWfYLsF/FU2JG2mcn2lWCYAIA
+         fGbKr0JPrXvQBgkPa6mDsc6YRqVmIMb/mHLnP35OOmKag+CM4q9k5NBITviQq3uaLTFg
+         KGl/erYTrndLmti3u74DEHJ34Bk0wErvs3ExAvezN22rO9pnhgKw4mg8YaQJKJfcw6Gt
+         xX6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=FSwMXtkBgmFRRkPW+W0gLkpEwK3jpnhk2LfX27QA0D4=;
+        b=VgaXjNSD/1LIHp39GuCUO+St19KAKDiebRCK5mY0JIUbm7PskuAH1RvNhqs36zYTXa
+         nll5vgnSTx0qsz/+DJsdW8HEf0vrr1uuZ/QoL57hxVVvWOb6VDzeUIGUcbK+2dCIwl1j
+         tQsPitDictZqy1lG8rlqA17pjgNVdPpWg2yYcb7rncgPY7DKyhrbrLAOFQ2mGOP4MCOv
+         KH0pnGXPfavWqh6XTQ3nohsZ9Uosrc+drS+ggw8pFrD9l1uo/bD9hngPGgcHo3q93JhW
+         GU7ULtNrDwjXLC/WrxvQPE3gxwW3IQyAD+rrgAjKgOyXKraSxfwh9iPvGU+XOLTavjT1
+         kRRw==
+X-Gm-Message-State: AOAM531/+BAfdydXRjXQs3oVsNaVCAC/VdiMhIwCOUBTN+eAbad8x1+r
+        +/qVWB8hYfTZNVW30A7xokVqBrC7jZ2Chp4U3HR7VjJY
+X-Google-Smtp-Source: ABdhPJzBuNVVHDoA7AeYuYOCSBwlCL6zOS/lo+KwJaXHIhuv0kIPvx/zJcyRICuuYNziAX06+jkbg37kfnrbCSnAt1k=
+X-Received: by 2002:a19:ee14:: with SMTP id g20mr6835480lfb.299.1630869572816;
+ Sun, 05 Sep 2021 12:19:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FAC52280-0E7D-11EC-8BA1-9BA3EF469F85-77302942!pb-smtp21.pobox.com
+References: <0e1f7a47-89e3-5f49-663e-bdd3e8efb6e5@rawbw.com>
+ <CAPx1Gvc6noTDYPt9x3b4_TE0z8-KE5cB6KQHcn5UL9pi0cKoGg@mail.gmail.com> <5f09cba9-b7dc-d7b6-1d3f-e7fb8ca28c6c@rawbw.com>
+In-Reply-To: <5f09cba9-b7dc-d7b6-1d3f-e7fb8ca28c6c@rawbw.com>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Sun, 5 Sep 2021 12:19:21 -0700
+Message-ID: <CAPx1GvfEW4rVHjxmmNmAEOVYFgeehbmDQouCWWZx=aiiDy89Vg@mail.gmail.com>
+Subject: Re: stash push/pop unstages files?
+To:     Yuri <yuri@rawbw.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+On Sun, Sep 5, 2021 at 12:02 PM Yuri <yuri@rawbw.com> wrote:
+> Why 'stash push' and 'stash pop' are asymmetric in what they do by defaul=
+t?
+> Wouldn't it make more sense to make 'stash pop' precisely revert what
+> 'stash push' does, and have an option '--no-index' instead?
 
->  [QUESTION]: I squashed Junio's suggestion patch to produce this patch,
->  and I want to credit his work. In such situation, what should I do the
->  right way? For now I add From: line and S-o-b trailer with his
->  identity, in addition to my S-o-b.
+If you ask me, yes, it would=E2=80=94but it would make even *more* sense
+if `git stash` didn't bother saving the index at all without `--index`, and
+just errored out if the index and working tree didn't match.  But I didn't
+write `git stash`.
 
-As far as I'm concerned, everything we see in this resulting patch
-(like studying how we should sift $(ALL_PROGRAMS) into two classes,
-one that can be stripped and the other that shouldn't be) came from
-your brain.  I may have helped you in writing it down in a better
-form but I see it within the usual "Helped-by:".
+My personal recommendation is: never (or hardly ever) use it.  Just
+make a commit.
 
-Applying this to the same base as the previous iteration of the
-topic that I queued in 'seen', and running "git range-diff" between
-them, I see that there is no difference at all, so I'll keep the one
-I already have, but I probably should correct the authorship
-information for it (I failed to notice you had in-body From: header
-that shifts the blame for this change on me---you should be the
-author of this change).
-
-IOW, here is what I would expect in a situation like this.
-
--- >8 --
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH] make: add INSTALL_STRIP option variable
-
-Add $(INSTALL_STRIP), which allows passing stripping options to
-$(INSTALL).
-
-For this to work, installing executables must be split to installing
-compiled binaries and scripts portions, since $(INSTALL_STRIP) is only
-meaningful to the former.
-
-Users can set this variable depending on their system. For example,
-Linux users can use `-s --strip-program=strip`, while FreeBSD users can
-simply set to `-s` and choose strip program with $STRIPBIN.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Makefile | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index d1feab008f..ebef4da50c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -465,6 +465,9 @@ all::
- # the global variable _wpgmptr containing the absolute path of the current
- # executable (this is the case on Windows).
- #
-+# INSTALL_STRIP can be set to "-s" to strip binaries during installation,
-+# if your $(INSTALL) command supports the option.
-+#
- # Define GENERATE_COMPILATION_DATABASE to "yes" to generate JSON compilation
- # database entries during compilation if your compiler supports it, using the
- # `-MJ` flag. The JSON entries will be placed in the `compile_commands/`
-@@ -3004,7 +3007,8 @@ mergetools_instdir = $(prefix)/$(mergetoolsdir)
- endif
- mergetools_instdir_SQ = $(subst ','\'',$(mergetools_instdir))
- 
--install_bindir_programs := $(patsubst %,%$X,$(BINDIR_PROGRAMS_NEED_X)) $(BINDIR_PROGRAMS_NO_X)
-+install_bindir_xprograms := $(patsubst %,%$X,$(BINDIR_PROGRAMS_NEED_X))
-+install_bindir_programs := $(install_bindir_xprograms) $(BINDIR_PROGRAMS_NO_X)
- 
- .PHONY: profile-install profile-fast-install
- profile-install: profile
-@@ -3013,12 +3017,17 @@ profile-install: profile
- profile-fast-install: profile-fast
- 	$(MAKE) install
- 
-+INSTALL_STRIP =
-+
- install: all
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
--	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
-+	$(INSTALL) $(INSTALL_STRIP) $(PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
-+	$(INSTALL) $(SCRIPTS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
- 	$(INSTALL) -m 644 $(SCRIPT_LIB) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
--	$(INSTALL) $(install_bindir_programs) '$(DESTDIR_SQ)$(bindir_SQ)'
-+	$(INSTALL) $(INSTALL_STRIP) $(install_bindir_xprograms) '$(DESTDIR_SQ)$(bindir_SQ)'
-+	$(INSTALL) $(BINDIR_PROGRAMS_NO_X) '$(DESTDIR_SQ)$(bindir_SQ)'
-+
- ifdef MSVC
- 	# We DO NOT install the individual foo.o.pdb files because they
- 	# have already been rolled up into the exe's pdb file.
--- 
-2.33.0-408-g8e1aa136b3
-
+Chris
