@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE137C433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9B15C43217
 	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 23:52:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 76EC160F8F
+	by mail.kernel.org (Postfix) with ESMTP id BF4A260EBA
 	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 23:52:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234072AbhIEXwr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Sep 2021 19:52:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60826 "EHLO
+        id S236681AbhIEXwu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Sep 2021 19:52:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232565AbhIEXwq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Sep 2021 19:52:46 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB517C061757
-        for <git@vger.kernel.org>; Sun,  5 Sep 2021 16:51:42 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id z4so7118062wrr.6
-        for <git@vger.kernel.org>; Sun, 05 Sep 2021 16:51:42 -0700 (PDT)
+        with ESMTP id S235390AbhIEXws (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Sep 2021 19:52:48 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAE10C061575
+        for <git@vger.kernel.org>; Sun,  5 Sep 2021 16:51:44 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id z9-20020a7bc149000000b002e8861aff59so3742272wmi.0
+        for <git@vger.kernel.org>; Sun, 05 Sep 2021 16:51:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=yOrIfMGP2yLVzDzxj+jcvCmTtxUMKfqzq2ZBB86tTBY=;
-        b=d4JUNz7yQqsw5M5fBBmc8bqIEKVy2VIrGiIDAyd6/5lwW30rmGCQi0md6bKseaqZFz
-         UytzNsLqwLm4uL1VvS7QbQWCVt28AgKY0cfx9qMoBAVBfgeRX2mDFF2E/F7246nmONHr
-         J67pTWTDIUdHJ6V+47izLgbX9jOLHG1xthtA+znqTB3m1vWUeieYifQCgch6Vs2WFlIa
-         DZSiJKjdi60c1GaApGDzkNfkRYyF54jDIk+Ecz65QpPN8ZHl5glhDcdz0r2mPZKOXzrT
-         9Qh/EchV5DejDROEaciX9szjOejMbS/WiTG43LvB3GhWfDx7q4YUTKwGDO7qpEZDywr0
-         ZZPg==
+        bh=EKbwJxXY1lIIETVYLLHHtfH4gsX5lwzIvam74mdf87s=;
+        b=YINCKMq3QoOiyWSKWzswSprau4lDDgH6CvYZiKNLne3kfws92iChPqOesee7/JzEC0
+         DK66x1A4q7tfHLhNFWXZji8phOREqSRg9ISyxs98GaooOBcPtK1jmMYwohudn63VEMJw
+         xNdJHWoW2sesKTN8w2dpOk7l1U41of7PCZScWqldJbZhk5Oq2yW25/jWw+lfAMGGSFXU
+         R1gHkbMCed+EAzIArZL/eUm+Yj4PkKjG/yUSUSyXSwR61e0BQVQkwtHZwerfe0egXIkV
+         mYkX/exASMphcghZLXJhrUvCk7oDyyosySZ+zSnSZoT+YRb+pKgPSvFJ3kQpW/daWaC9
+         L75g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yOrIfMGP2yLVzDzxj+jcvCmTtxUMKfqzq2ZBB86tTBY=;
-        b=rR2FuahWCDfGbbRyj6KiBC3myqh/2Uxgqhi8LcJ4vU6UAXRWFRleihQM1w9gTBEO3w
-         5EPIXPM9SPmkvDcvP1c8eB7xXc6QjxLjHmx60wYXc7bbJjg+RdWfa5TkmoRNokZDHzhm
-         KpVp3H2BYQmoT5A9Z0SAwe5ITx3dLYsGPekxDkj3j3YPlc+QZIk4SLwbg3SDVLbkrghS
-         ybyCvKt0Pkxtwws0wxhBtUMobida+skMNEQTnonOZvzTaieakhXFniSTK728ixjHq+7o
-         SPt257Nt0nSCmWZCJ4eX1W+cieSXDlPTlJJ//dr/TfGW3y7VRLyJ5GXOO6gurI0eVovt
-         HeAQ==
-X-Gm-Message-State: AOAM532nU4dA1CivcixLmOATbtXlo1k86Fud9VrD9aYbKyYua5oJ45yK
-        tN4uq6QvWaPlI9hRR4sTzOgufVfLVXs=
-X-Google-Smtp-Source: ABdhPJzJyyJ82orwuDu/7fG7KR06ddGIRtGqSKi8zWxii4ph62Z6OPJU0CP7oYIzjcraDBVB7Mfjjw==
-X-Received: by 2002:adf:9e01:: with SMTP id u1mr10460318wre.420.1630885901293;
-        Sun, 05 Sep 2021 16:51:41 -0700 (PDT)
+        bh=EKbwJxXY1lIIETVYLLHHtfH4gsX5lwzIvam74mdf87s=;
+        b=rX7jXT0EwR0FeTCSl6zsoJ3Hiie4kIWwQRyaLE6VXErfM7cartDwmM932V2MwEe75G
+         BmdQmIqFIt4rsziNIpIGnHgdzmqQdxnolTm+M1w6DCFr/bJP1/ZYlrwhhYGLL9t/2KRu
+         1ZAIlH5fxEthlCKeNjTk4OtwGnSV8YHtmt6ExXHoRi+aBa7pHBOU7MCGZz1QX1q4ijBT
+         jmyEW8NIbLogpuvkiSMRu9qZw74uEk9GrzvCOdQncTR3guyszcLY1RbbW47Fvx7nJ+8Y
+         08vKdBF3Z1oBUGd8zf/a2elHN+we3pMWBsnARG+sO1Q5SJZQMbRRhpJH6+K1MvKMclSF
+         aJ2g==
+X-Gm-Message-State: AOAM531nmvOQrpuWzooy5xcMz35Ho5EV0S1WpTLXEgEjvvInHbQcohpe
+        xc0BENZJqmkE9axAUNPJYDovtXSk2HQ=
+X-Google-Smtp-Source: ABdhPJw0uWF18Dz2IlSuaN7Ylyt4rfdOXskLG1AbhdSkkmG6eWIuc9bBhyQeyEL9IjYGiW6aAPQOoA==
+X-Received: by 2002:a1c:1d84:: with SMTP id d126mr8540229wmd.160.1630885903221;
+        Sun, 05 Sep 2021 16:51:43 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w29sm6168136wra.88.2021.09.05.16.51.40
+        by smtp.gmail.com with ESMTPSA id l124sm5705264wml.8.2021.09.05.16.51.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Sep 2021 16:51:40 -0700 (PDT)
-Message-Id: <a5383a68cc024eca9bb95fc3c24dce499efaaa19.1630885899.git.gitgitgadget@gmail.com>
+        Sun, 05 Sep 2021 16:51:42 -0700 (PDT)
+Message-Id: <22475475cae2d32dfa664709f283e4c6e8f60e83.1630885899.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1031.git.1630885899.gitgitgadget@gmail.com>
 References: <pull.1031.git.1630885899.gitgitgadget@gmail.com>
 From:   "Andrew Olsen via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 05 Sep 2021 23:51:36 +0000
-Subject: [PATCH 1/4] Compile-time extensions for list-object-filter
+Date:   Sun, 05 Sep 2021 23:51:39 +0000
+Subject: [PATCH 4/4] Documentation for list-object-filter extensions
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,426 +75,209 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrew Olsen <andrew.olsen@koordinates.com>
 
-Adds an extension:<custom-filter> option to list-object-filters,
-these are implemented by static libraries that must be compiled into
-Git. C code changes only - Makefile changes follow.
+Explains how to develop a custom extension for list-objects-filter
+behavior, and how to compile it into a custom build of Git using the
+FILTER_EXTENSIONS Makefile argument.
 
 Signed-off-by: Andrew Olsen <andrew.olsen@koordinates.com>
 ---
- .gitignore                                 |   1 +
- generate-list-objects-filter-extensions.sh |  53 ++++++++++
- list-objects-filter-extensions.h           | 107 +++++++++++++++++++++
- list-objects-filter-options.c              |  47 +++++++++
- list-objects-filter-options.h              |   6 ++
- list-objects-filter.c                      |  84 ++++++++++++++++
- 6 files changed, 298 insertions(+)
- create mode 100755 generate-list-objects-filter-extensions.sh
- create mode 100644 list-objects-filter-extensions.h
+ Documentation/config/uploadpack.txt  |   7 +-
+ Documentation/rev-list-options.txt   |   4 +
+ contrib/filter-extensions/README.txt | 153 +++++++++++++++++++++++++++
+ 3 files changed, 161 insertions(+), 3 deletions(-)
+ create mode 100644 contrib/filter-extensions/README.txt
 
-diff --git a/.gitignore b/.gitignore
-index 311841f9bed..3564cb01ad7 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -190,6 +190,7 @@
- /gitweb/static/gitweb.min.*
- /config-list.h
- /command-list.h
-+/list-objects-filter-extensions.c
- *.tar.gz
- *.dsc
- *.deb
-diff --git a/generate-list-objects-filter-extensions.sh b/generate-list-objects-filter-extensions.sh
-new file mode 100755
-index 00000000000..422b1ce837f
---- /dev/null
-+++ b/generate-list-objects-filter-extensions.sh
-@@ -0,0 +1,53 @@
-+#!/bin/sh
-+
-+if [ $# -gt 0 ]; then
-+
-+	# ARGS has one argument per line
-+	ARGS=$(echo "$@" | xargs printf '%s\n')
-+
-+	# Every argument should be path to a filter extension library.
-+	INVALID_ARGS=$(echo "$ARGS" | grep -v '\.a$')
-+	if [ -n "$INVALID_ARGS" ] ; then
-+		printf "Error: all arguments must be paths to .a files: \n%s\n" \
-+			"${INVALID_ARGS}" >&2
-+		exit 1
-+	fi
-+
-+	# qux/foo.a -> foo
-+	NAMES=$(echo "$ARGS" | sed -e 's!.*/!!' -e 's!.a$!!')
-+
-+	# Filter extension names must be valid C symbols so they can be linked by name.
-+	INVALID_NAMES=$(echo "$NAMES" | grep -v '^[A-Za-z0-9_]\+$')
-+	if [ -n "$INVALID_NAMES" ] ; then
-+		printf "Error: all library names must also be valid C symbols: \n%s\n" \
-+			"${INVALID_NAMES}" >&2
-+		exit 1
-+	fi
-+
-+	# foo -> filter_extension_foo
-+	EXTS=$(echo "$NAMES" | sed -e 's!^!filter_extension_!')
-+
-+	# filter_extension_foo -> [\t]filter_extension_foo,
-+	DECLARATIONS=$(echo "$EXTS" | sed -e 's!^!\t!' -e 's!$!,!')
-+
-+	# filter_extension_foo -> [\t]&filter_extension_foo,
-+	ARRAY=$(echo "$EXTS" | sed -e 's!^!\t\&!' -e 's!$!,!')
-+fi
-+
-+echo '/* Automatically generated by generate-list-objects-filter-extensions.sh */'
-+echo
-+echo '#include "git-compat-util.h"'
-+echo '#include "list-objects-filter-extensions.h"'
-+echo
-+
-+if [ $# -gt 0 ]; then
-+	echo 'extern const struct filter_extension'
-+	echo "${DECLARATIONS%?}"
-+	echo ';'
-+	echo
-+fi
-+
-+echo 'const struct filter_extension *filter_extensions[] = {'
-+echo "${ARRAY}"
-+echo '	NULL,'
-+echo '};'
-\ No newline at end of file
-diff --git a/list-objects-filter-extensions.h b/list-objects-filter-extensions.h
+diff --git a/Documentation/config/uploadpack.txt b/Documentation/config/uploadpack.txt
+index 32fad5bbe81..b2ef2421a6d 100644
+--- a/Documentation/config/uploadpack.txt
++++ b/Documentation/config/uploadpack.txt
+@@ -66,9 +66,10 @@ uploadpackfilter.allow::
+ uploadpackfilter.<filter>.allow::
+ 	Explicitly allow or ban the object filter corresponding to
+ 	`<filter>`, where `<filter>` may be one of: `blob:none`,
+-	`blob:limit`, `object:type`, `tree`, `sparse:oid`, or `combine`.
+-	If using combined filters, both `combine` and all of the nested
+-	filter kinds must be allowed. Defaults to `uploadpackfilter.allow`.
++	`blob:limit`, `tree`, `sparse:oid`, `combine`, or a named filter extension
++	`extension:<name>`. If using combined filters, both `combine` and all of
++	the nested filter kinds must be allowed. Defaults to
++	`uploadpackfilter.allow`.
+ 
+ uploadpackfilter.tree.maxDepth::
+ 	Only allow `--filter=tree:<n>` when `<n>` is no more than the value of
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index b7bd27e1713..d7a317f0aa1 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -914,6 +914,10 @@ Note that the form '--filter=sparse:path=<path>' that wants to read
+ from an arbitrary path on the filesystem has been dropped for security
+ reasons.
+ +
++The form '--filter=extension:<name>[=<arg>]' uses a compile-time extension
++to implement a named filter. Filter extensions may take an argument string
++which is passed via `<arg>`.
+++
+ Multiple '--filter=' flags can be specified to combine filters. Only
+ objects which are accepted by every filter are included.
+ +
+diff --git a/contrib/filter-extensions/README.txt b/contrib/filter-extensions/README.txt
 new file mode 100644
-index 00000000000..35ebe1ead31
+index 00000000000..3d5921cda9b
 --- /dev/null
-+++ b/list-objects-filter-extensions.h
-@@ -0,0 +1,107 @@
-+#ifndef GIT_LIST_OBJECTS_FILTER_EXTENSIONS_H
-+#define GIT_LIST_OBJECTS_FILTER_EXTENSIONS_H
++++ b/contrib/filter-extensions/README.txt
+@@ -0,0 +1,153 @@
++= List-Objects-Filter Extensions API
++:pp: {plus}{plus}
 +
-+/**
-+ * The List-Objects-Filter Extensions API can be used to develop filter
-+ * extensions for git-upload-pack/git-rev-list/etc.
-+ *
-+ * See contrib/filter-extensions/README.md for more details and examples.
-+ *
-+ * The API defines three functions to implement a filter operation. Note that
-+ * each filter implementing this API must compiled into Git as a static library.
-+ * There is some plumbing in the Makefile to help with this via
-+ * FILTER_EXTENSIONS.
-+ *
-+ * 1. You write a filter and compile it into your custom build of git.
-+ *    See list_objects_filter_ext_filter_fn.
-+ * 2. A filter request is received that specifically names the filter extension
-+ *    that you have written, ie: "--filter=extension:<name>[=<arg>]"
-+ * 3. Your list_objects_filter_ext_init_fn() is called.
-+ * 4. Your list_objects_filter_ext_filter_fn() is called for each object
-+ *    at least once.
-+ * 5. Your list_objects_filter_ext_free_fn() is called.
-+ */
++This API can be used to develop filter extensions used for custom filtering
++behaviour with `git-upload-pack` and `git-rev-list`. The API is defined in
++link:../../list-objects-filter-extensions.h[list-objects-filter-extensions.h]
++and defines three functions to implement a filter operation.
 +
-+#include "list-objects-filter.h"
++NOTE: Each filter implementing this API must compiled into Git as a
++static library. There is some plumbing in the Makefile to help with this
++via `FILTER_EXTENSIONS`.
 +
++== Overview
 +
-+/* Whether to add or remove a specific object from any current omitset. */
-+enum list_objects_filter_omit {
-+       LOFO_KEEP = -1,
-+       LOFO_IGNORE = 0,
-+       LOFO_OMIT = 1,
-+};
++. You write a filter and compile it into your custom build of git.
++. A filter request is received that specifically names the filter extension
++that you have written, ie: `--filter=extension:<name>[=<arg>]`
++. The `init_fn` function of your filter is called.
++. The `filter_object_fn` function of your filter is called for each object
++at least once.
++. The `free_fn` function of your filter is called.
 +
-+/*
-+ * This is a corollary to `list_objects_filter__init()` and constructs the
-+ * filter, parsing and validating any user-provided `filter_arg` (via
-+ * `--filter=extension:<name>=<arg>`). Use `context` for any filter-allocated
-+ * context data.
-+ *
-+ * Return 0 on success and non-zero on error.
-+ */
-+typedef
-+int list_objects_filter_ext_init_fn(
-+    const struct repository *r,
-+    const char* filter_arg,
-+    void **context
-+);
++== Examples
 +
-+/*
-+ * This is a corollary to `list_objects_filter__free()`, destroying the filter
-+ * and any filter-allocated context data.
-+ */
-+typedef
-+void list_objects_filter_ext_free_fn(
-+    const struct repository *r,
-+    void *context
-+);
++*link:./rand/[`rand`]* is a filter that matches all trees and a random
++percentage of blobs, where the percentage is parsed from the filter arg. It
++imports and uses the `oid_to_hex()` and `trace_key_printf()` functions from the
++Git API.
 +
-+/*
-+ * This is a corollary to `list_objects_filter__filter_object()`, and
-+ * decides how to handle the object `obj`.
-+ *
-+ * omit provides a flag determining whether to explicitly add or remove
-+ * the object from any current omitset.
-+ */
-+typedef
-+enum list_objects_filter_result list_objects_filter_ext_filter_fn(
-+	const struct repository *r,
-+	const enum list_objects_filter_situation filter_situation,
-+	struct object *obj,
-+	const char *pathname,
-+	const char *filename,
-+	enum list_objects_filter_omit *omit,
-+	void *context
-+);
++Build via:
 +
-+/*
-+ * To implement a filter extension called "mine", you should define
-+ * a const struct filter_extension called filter_extension_mine,
-+ * in the following manner:
-+ *
-+ * const struct filter_extension filter_extension_mine = {
-+ *     "mine",
-+ *     &my_init_fn,
-+ *     &my_filter_object_fn,
-+ *     &my_free_fn
-+ * };
-+ *
-+ * See contrib/filter-extensions/README.md for more details and examples.
-+ */
++[,console]
++----
++$ make FILTER_EXTENSIONS=contrib/filter-extensions/rand/rand.a
++    ...
++    SUBDIR contrib/filter-extensions/rand
++    ...
++----
 +
-+struct filter_extension {
-+    const char *name;
-+    list_objects_filter_ext_init_fn* init_fn;
-+    list_objects_filter_ext_filter_fn* filter_object_fn;
-+    list_objects_filter_ext_free_fn* free_fn;
-+};
++We can run against git's own repo:
 +
-+/*
-+ * The filter_extensions array is defined in list_objects_filter_extensions.c
-+ * which is generated at compile time from the FILTER_EXTENSIONS variable.
-+ */
-+extern const struct filter_extension *filter_extensions[];
++[,console]
++----
++$ ./git rev-list refs/heads/master --objects --max-count 1 --filter=extension:rand=3 --filter-print-omitted | grep -c '^~'
++filter-rand: matching 3%
++filter-rand: done: count=4068 (blob=3866 tree=202) matched=117 elapsed=0.005017s rate=810843.1/s average=1.2us
++3749  # number of omitted blobs = 3866 - 117
++----
 +
++== Development
 +
-+#endif /* GIT_LIST_OBJECTS_FILTER_EXTENSIONS_H */
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index fd8d59f653a..e92499f29c2 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -15,6 +15,11 @@ static int parse_combine_filter(
- 	const char *arg,
- 	struct strbuf *errbuf);
- 
-+static int parse_extension_filter(
-+	struct list_objects_filter_options *filter_options,
-+	const char *arg,
-+	struct strbuf *errbuf);
++See the examples for a basic implementation. The comments in
++link:../../list-objects-filter.h[`list-objects-filter.h`] and the built-in
++filter implementations in
++link:../../list-objects-filter.c[`list-objects-filter.c`] are important to
++understand how filters are implemented - `filter_blobs_limit()` provides a
++simple example, and `filter_sparse()` is more complex.
 +
- const char *list_object_filter_config_name(enum list_objects_filter_choice c)
- {
- 	switch (c) {
-@@ -31,6 +36,8 @@ const char *list_object_filter_config_name(enum list_objects_filter_choice c)
- 		return "sparse:oid";
- 	case LOFC_OBJECT_TYPE:
- 		return "object:type";
-+	case LOFC_EXTENSION:
-+		return "extension";
- 	case LOFC_COMBINE:
- 		return "combine";
- 	case LOFC__COUNT:
-@@ -91,6 +98,9 @@ static int gently_parse_list_objects_filter(
- 		filter_options->choice = LOFC_SPARSE_OID;
- 		return 0;
- 
-+	} else if (skip_prefix(arg, "extension:", &v0)) {
-+		return parse_extension_filter(filter_options, v0, errbuf);
++The API differences between the built-in filters and the filter extensions:
 +
- 	} else if (skip_prefix(arg, "sparse:path=", &v0)) {
- 		if (errbuf) {
- 			strbuf_addstr(
-@@ -209,6 +219,41 @@ cleanup:
- 	return result;
- }
- 
-+static int parse_extension_filter(
-+	struct list_objects_filter_options *filter_options,
-+	const char *arg,
-+	struct strbuf *errbuf)
-+{
-+	int result = 0;
-+	struct strbuf **params = strbuf_split_str(arg, '=', 2);
++. Filter extensions don't handle ``omitset``s directly, instead setting `omit`.
++. Filter extensions receive a void pointer they can use for context.
 +
-+	if (!params[0]) {
-+		strbuf_addstr(errbuf, _("expected 'extension:<name>[=<parameter>]'"));
-+		result = 1;
-+		goto cleanup;
-+	}
++== Building
 +
-+	if (params[1]) {
-+		// This extension has a parameter. Remove trailing "=" from the name.
-+		size_t last = params[0]->len - 1;
-+		assert(params[0]->buf[last] == '=');
-+		strbuf_remove(params[0], last, 1);
++There is some plumbing in the Git Makefile to help with this via
++`FILTER_EXTENSIONS`, setting it to space-separated paths of the filter extension
++static libraries indicates that these filters should be compiled into git.
++For example:
 +
-+		filter_options->extension_value = xstrdup(params[1]->buf);
-+	}
++[,console]
++----
++make FILTER_EXTENSIONS=contrib/filter-extensions/rand/rand.a
++----
 +
-+	filter_options->extension_name = xstrdup(params[0]->buf);
-+	filter_options->choice = LOFC_EXTENSION;
++Filter extensions don't need to be within the Git source tree. A filter
++extension static library should either exist at the given path - ie, `rand.a`
++should exist - or there should be a Makefile in that directory which will create
++it when `make rand.a` is run. (Such a Makefile should also have a `clean` target
++which deletes all object files and brings the directory back to its initial
++state).
 +
-+cleanup:
-+	strbuf_list_free(params);
-+	if (result) {
-+		list_objects_filter_release(filter_options);
-+		memset(filter_options, 0, sizeof(*filter_options));
-+	}
-+	return result;
-+}
++The static library should define a struct of type `filter_extension` called
++`filter_extension_NAME` where `NAME` is the name of your extension (ie `rand`
++for `rand.a`). See
++link:../../list-objects-filter-extensions.h[list-objects-filter-extensions.h]
 +
- static int allow_unencoded(char ch)
- {
- 	if (ch <= ' ' || ch == '%' || ch == '+')
-@@ -349,6 +394,8 @@ void list_objects_filter_release(
- 		return;
- 	string_list_clear(&filter_options->filter_spec, /*free_util=*/0);
- 	free(filter_options->sparse_oid_name);
-+	free(filter_options->extension_name);
-+	free(filter_options->extension_value);
- 	for (sub = 0; sub < filter_options->sub_nr; sub++)
- 		list_objects_filter_release(&filter_options->sub[sub]);
- 	free(filter_options->sub);
-diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
-index da5b6737e27..df3e360324e 100644
---- a/list-objects-filter-options.h
-+++ b/list-objects-filter-options.h
-@@ -15,6 +15,7 @@ enum list_objects_filter_choice {
- 	LOFC_TREE_DEPTH,
- 	LOFC_SPARSE_OID,
- 	LOFC_OBJECT_TYPE,
-+	LOFC_EXTENSION,
- 	LOFC_COMBINE,
- 	LOFC__COUNT /* must be last */
- };
-@@ -58,6 +59,11 @@ struct list_objects_filter_options {
- 	unsigned long tree_exclude_depth;
- 	enum object_type object_type;
- 
-+	/* LOFC_EXTENSION values */
++This definition should follow the following pattern:
 +
-+	char *extension_name;
-+	char *extension_value;
-+
- 	/* LOFC_COMBINE values */
- 
- 	/* This array contains all the subfilters which this filter combines. */
-diff --git a/list-objects-filter.c b/list-objects-filter.c
-index 1c1ee3d1bb1..037c674b1c3 100644
---- a/list-objects-filter.c
-+++ b/list-objects-filter.c
-@@ -10,6 +10,7 @@
- #include "list-objects.h"
- #include "list-objects-filter.h"
- #include "list-objects-filter-options.h"
++[,C]
++----
 +#include "list-objects-filter-extensions.h"
- #include "oidmap.h"
- #include "oidset.h"
- #include "object-store.h"
-@@ -620,6 +621,88 @@ static void filter_object_type__init(
- 	filter->free_fn = free;
- }
- 
-+/*
-+ * A filter which passes the objects to a compile-time extension.
-+ * The extension needs to implement the filter_extension interface
-+ * defined in list-objects-filter-extension.h.
-+ * See contrib/filter-extensions/README.md
-+ */
 +
-+struct filter_extension_data {
-+	const struct filter_extension *extension;
-+	void *context;
++/* Definitions of rand_init, rand_filter_object, rand_free ... */
++
++const struct filter_extension filter_extension_rand = {
++    "rand",
++    &rand_init,
++    &rand_filter_object,
++    &rand_free,
 +};
++----
 +
-+static enum list_objects_filter_result filter_extension_filter_object(
-+	struct repository *r,
-+	enum list_objects_filter_situation filter_situation,
-+	struct object *obj,
-+	const char *pathname,
-+	const char *filename,
-+	struct oidset *omits,
-+	void *filter_data)
-+{
-+	struct filter_extension_data *d = filter_data;
++(The names of your `init_fn`, `filter_object_fn` and `free_fn` are not
++important, but the string literal should again be the the name of your extension
++- `"rand"` for the filter extension in `rand.a`.)
 +
-+	enum list_objects_filter_omit omit_it = LOFO_IGNORE;
++You may use library functions from Git if you include the relevant Git headers,
++since the filter extensions and Git itself will be linked together into a single
++binary.
 +
-+	enum list_objects_filter_result ret =
-+		d->extension->filter_object_fn(
-+			r,
-+			filter_situation,
-+			obj,
-+			pathname,
-+			filename,
-+			&omit_it,
-+			d->context);
++You may depend on other libraries if you indicate that they are to be linked
++into the Git binary using `LDFLAGS`. See the C{pp} example below.
 +
-+	if (omits) {
-+		if (omit_it == LOFO_KEEP)
-+			oidset_remove(omits, &obj->oid);
-+		else if (omit_it == LOFO_OMIT)
-+			oidset_insert(omits, &obj->oid);
-+	}
-+	return ret;
-+}
++== Developing in C{pp} (and other languages)
 +
-+static void filter_extension_free(void *filter_data)
-+{
-+	struct filter_extension_data *d = filter_data;
-+	d->extension->free_fn(the_repository, d->context);
-+	free(d);
-+}
++You can develop filter extensions with C{pp}, but many Git header files are not
++compatible with modern C{pp}, so you won't be able to directly use Git library
++functions. However, you can use them if you create wrapper functions in C that
++delegates to the Git library functions you need, but which are also C{pp}
++compatible. See link:./rand_cpp/[`rand_cpp`] for a simple example. A similar
++solution would be to implement the extension itself in C, and have the
++extension do any operations that require Git library functions, but have it
++delegate to a C wrapper API that you add to a C{pp} library that already
++contains the domain-specific operations that you need. In either case, remember
++to wrap any functions that must be C-compatible with `extern C` when declaring
++or defining them from within C{pp}.
 +
-+static void filter_extension__init(
-+	struct list_objects_filter_options *filter_options,
-+	struct filter *filter)
-+{
-+	struct filter_extension_data *d = xcalloc(1, sizeof(*d));
-+	int i, r;
++To build the C{pp} example:
 +
-+	for (i = 0; filter_extensions[i] != NULL; i++) {
-+		if (!strcmp(
-+			filter_options->extension_name,
-+			filter_extensions[i]->name))
-+			break;
-+	}
-+	if (filter_extensions[i] == NULL) {
-+		die(_("No filter extension found with name %s"),
-+			filter_options->extension_name);
-+	}
-+	d->extension = filter_extensions[i];
++[,console]
++----
++make FILTER_EXTENSIONS=contrib/filter-extensions/rand_cpp/rand_cpp.a \
++     LDFLAGS=-lstdc++
++----
 +
-+	r = d->extension->init_fn(
-+		the_repository, filter_options->extension_value, &d->context);
-+	if (r) {
-+		die(_("Error initialising filter extension %s: %d"),
-+			filter_options->extension_name, r);
-+	}
++For other languages you'll either need to port definitions of some internal Git
++structs (at a minimum, `object`, `object_id`, `repository`, and `hash_algo`) -
++or again, you could write the extension in C but have it delegate to a domain
++specific library in the language of your choice that has a C-compatible API.
++Extra libraries can be required using `LDFLAGS`.
 +
-+	filter->filter_data = d;
-+	filter->filter_object_fn = &filter_extension_filter_object;
-+	filter->free_fn = &filter_extension_free;
-+}
++== Linking more than one filter extension
 +
- /* A filter which only shows objects shown by all sub-filters. */
- struct combine_filter_data {
- 	struct subfilter *sub;
-@@ -767,6 +850,7 @@ static filter_init_fn s_filters[] = {
- 	filter_trees_depth__init,
- 	filter_sparse_oid__init,
- 	filter_object_type__init,
-+	filter_extension__init,
- 	filter_combine__init,
- };
- 
++To link in more than one extension, set `FILTER_EXTENSIONS` to the
++space-separated paths of all the extensions you want linked. For example, to
++link in both example filters at once:
++
++[,console]
++----
++make FILTER_EXTENSIONS="contrib/filter-extensions/rand/rand.a contrib/filter-extensions/rand_cpp/rand_cpp.a" \
++     LDFLAGS=-lstdc++
++----
 -- 
 gitgitgadget
-
