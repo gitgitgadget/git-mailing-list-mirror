@@ -2,124 +2,183 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41441C433F5
-	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 22:32:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF9E5C433EF
+	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 05:42:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E65D60249
-	for <git@archiver.kernel.org>; Sat,  4 Sep 2021 22:32:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 981C260F4A
+	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 05:42:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233612AbhIDWcI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Sep 2021 18:32:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40164 "EHLO
+        id S236387AbhIEFeU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Sep 2021 01:34:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231503AbhIDWcH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Sep 2021 18:32:07 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17FF0C061575
-        for <git@vger.kernel.org>; Sat,  4 Sep 2021 15:31:05 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id u16so3901720wrn.5
-        for <git@vger.kernel.org>; Sat, 04 Sep 2021 15:31:05 -0700 (PDT)
+        with ESMTP id S233055AbhIEFeM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Sep 2021 01:34:12 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E2EBC061575
+        for <git@vger.kernel.org>; Sat,  4 Sep 2021 22:33:10 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id g66-20020a9d12c8000000b0051aeba607f1so4411854otg.11
+        for <git@vger.kernel.org>; Sat, 04 Sep 2021 22:33:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=3biSuiPu1XhxIFc4kYYGpJ5r22RKL+To2/TJitdNtSs=;
-        b=SH0eXRpkaHib2C+fY/80GKC1Umdr3cicRxKg3IJqJo/R2HqBN1cpv2zhamz7x7mNe9
-         0d2gvA1ZfrLPT/RGyjex+FB0tiXbgUolt7FY1lI/qOnQqNGX89ebSuA0vjI/iCODVmJd
-         vXkCR+LpppccHb5Uer0LSWcvpLlPvrIlpOim6P+g+NKOoXwIGgHuLSlcDBMj2kS10Oaq
-         rWY6ooQpVKnMs0UXmiaNAOhOm1vM7uoYcS6VpfIKjVZcj8QcwK9pz6ffxmH0MGMs8O5P
-         Vc9j1sAnrP6B+Q0865lCiQd+Lsu4gvCNMEYRIPoQ+LTQTtAQjHHart+RvgbLSrwjTOhb
-         Onfw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xJcNfd+B2DgMpX2OvOoxdpK0ZAYdzHfm53tftXouzSY=;
+        b=KwtZqDMjM2l0B4O7dkQMyFBKM9mwWCrVGofJs/yyUKWf0gcJVmJE6Gf8xqYGYDIkKZ
+         jmXbgQWBPfwumjM7Cys/UJqwzbFbAkblz2WAw3R9Aygy+LPaiyrpcvlS2/BWx9D+maZ7
+         EPDWnrWy63pbTdHUef8qp7nWcHX3WDguAZtThiHQyK79J+xor66YWX5CWDmag5pz/YUU
+         eP01DpSnj+XVtwSpyiZLqnYkf8SWfYxIbtOkgE5i+b66OdR2GO4QFDenm8MYUGvceh4B
+         o0KZRIPG9x9Fx++sux0oUBMeAazyjsexWoRsbjR1emXpgxgnq1pYarNOLGxVxd5Q0NAs
+         Fdvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=3biSuiPu1XhxIFc4kYYGpJ5r22RKL+To2/TJitdNtSs=;
-        b=Snk4ExIWEejXNnX2gJSljJ3zYtN5ZRM6p5FyOz562qAFfgGiW7BTxKDzNglvOyVaeA
-         NM90EXTgb+efkGPI4bLY/6kGq8QHmMp+xgiiyR4VOCG5Y5zhDgMshGFqW7/CchUNdzYs
-         VIOTwYmbKwbeflbO/G7ANWPAmUCxTpSOOTKmvDPjHNPIPjO9HdTQ/Yia4GREqS2tYrZo
-         //xrCf+8vLqc/TjTOfNmznwDwJ9gF/n4HmfNPwmmerxqOOeP7qG5jabqFIbPZDFzANSr
-         l7fD+tsXybMzG4CNhyBZuajH9tyR+PMftP4Nf4YqEbrYdejIVHwPYSA4pcCXMerO2fEu
-         ioSw==
-X-Gm-Message-State: AOAM531EhKWCmDGnWs5fgesJy0/rU9upJSQDmVSDs1ceUulZxxC7vphw
-        xBYEGgQKVmJXp7FNyn1/Yu8=
-X-Google-Smtp-Source: ABdhPJx8sPrQ3WZ8WfCrgFKOE3XY+8gyHXVBJWtHVQBtlPa0x6EhX7Jhrq1UTCmcR+gm0K+4yirgPA==
-X-Received: by 2002:adf:9e08:: with SMTP id u8mr5540366wre.383.1630794663717;
-        Sat, 04 Sep 2021 15:31:03 -0700 (PDT)
-Received: from [192.168.0.104] (atoulouse-654-1-295-72.w86-199.abo.wanadoo.fr. [86.199.78.72])
-        by smtp.gmail.com with ESMTPSA id l11sm3428444wrb.15.2021.09.04.15.31.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 04 Sep 2021 15:31:03 -0700 (PDT)
-Subject: Re: [PATCH v2 0/7] Drop support for git rebase --preserve-merges
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Eric Wong <e@80x24.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.195.git.1574542242.gitgitgadget@gmail.com>
- <pull.195.v2.git.1630497435.gitgitgadget@gmail.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Message-ID: <62fbd389-28f5-76e5-d3f3-5510415a7bf5@gmail.com>
-Date:   Sun, 5 Sep 2021 00:30:53 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xJcNfd+B2DgMpX2OvOoxdpK0ZAYdzHfm53tftXouzSY=;
+        b=aquAfirukqXMEIn9OJv0pBMLmnjdY4asf07T6fEoJbga/0tix4/v+64hw/aj8hTqjL
+         RHjHgzn1w3pcn5ObsrqT4U+ec8gpCWBHAOkCwP5fAFolGr5nkxihfsx0veC4lnGIBvlO
+         RYFm4jQ7vE2Gm/VUfHv2wNO1IGYGitcFRKPyLZTLHo9H29L5/NHkfNvLkldwlbEKCopx
+         ps+A8+YtlVM6cXHfWtsi0TLPVEITlaw++L/hcMzdXioFWPA/wZK5x7nKx3vk/4CnGROj
+         ZRGyo5xEj6z/ieNFXq9EBQeLGCsI6UDj+aTu51IVQYvDGIEzJJ8zD3OKIPtVKQNGnpqU
+         9uUA==
+X-Gm-Message-State: AOAM533xzq7ra+gQuLv563o14UygvwYXK3vWkG+6S98oxPw0WJQtgGVV
+        o6rEyR6OlgzcC8mNYUILdmol2rB1deXZYib1s2Y=
+X-Google-Smtp-Source: ABdhPJxzTn8Cj+qeApETDLfA3oi+UVRQKyTA3YB9kJeRr0l8g7ARNFlmI5EFfVCQQ1gyuhr9S0uBAA80fs0Uprzc8sw=
+X-Received: by 2002:a9d:7204:: with SMTP id u4mr5969024otj.276.1630819988434;
+ Sat, 04 Sep 2021 22:33:08 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <pull.195.v2.git.1630497435.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+References: <CAG2t84Uaw-Kdp+EXU8CY1QYfykFQj-hGLJnTSH8MYO8Vi_yqgA@mail.gmail.com>
+ <C357A648-8B13-45C3-9388-C0C7F7D40DAE@gmail.com> <dbe7d88d-4174-e080-03df-e35d0ac6004f@gmail.com>
+ <YTNA6Qo6Yj5o9NmQ@coredump.intra.peff.net> <CAG2t84Xe2XwdwdAK42bRrwAeNaB3-A+WhgSsJGOoW9-rG1S9Xg@mail.gmail.com>
+ <YTNH2vMPuEW4SBMo@coredump.intra.peff.net>
+In-Reply-To: <YTNH2vMPuEW4SBMo@coredump.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 4 Sep 2021 22:32:57 -0700
+Message-ID: <CABPp-BFyR19ch71W10oJDFuRX1OHzQ3si971pMn6dPtHKxJDXQ@mail.gmail.com>
+Subject: Re: Aborting 'rebase main feat' removes unversioned files
+To:     Jeff King <peff@peff.net>
+Cc:     Fedor Biryukov <fedor.birjukov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+On Sat, Sep 4, 2021 at 3:19 AM Jeff King <peff@peff.net> wrote:
+>
+> On Sat, Sep 04, 2021 at 11:51:19AM +0200, Fedor Biryukov wrote:
+>
+> > There is no way this could be the intended behavior, but the good news
+> > is that I cannot reproduce it...
+> > Looks like it occurs only in one git version (2.31.0.windows.1, IIRC).
+> > And it does not occur in the latest git version: git version 2.33.0.windows.2.
+>
+> I think it is a bug, and it seems to reproduce easily for me (with both
+> the current tip of master, and with v2.33.0). Here's the recipe you
+> showed, with a little debugging at the end:
+>
+>   set -x
+>   git init repo
+>   cd repo
+>   git commit -m base --allow-empty
+>   git checkout -b feat
+>   echo feat >readme.txt
+>   git add readme.txt
+>   git commit -m txt=feat
+>   git checkout main
+>   echo precious >readme.txt
+>
+>   cat readme.txt
+>   git checkout feat
+>   cat readme.txt
+>   git rebase main feat
+>   cat readme.txt
+>
+> This produces:
+>
+>   + cat readme.txt
+>   precious
+>   + git checkout feat
+>   error: The following untracked working tree files would be overwritten by checkout:
+>         readme.txt
+>   Please move or remove them before you switch branches.
+>   Aborting
+>   + cat readme.txt
+>   precious
+>   + git rebase main feat
+>   Current branch feat is up to date.
+>   + cat readme.txt
+>   feat
+>
+> So git-checkout was not willing to overwrite the untracked content, but
+> rebase was happy to obliterate it.
+>
+> It does the right thing in very old versions. Bisecting, it looks like
+> the problem arrived in 5541bd5b8f (rebase: default to using the builtin
+> rebase, 2018-08-08). So the bug is in the conversion from the legacy
+> shell script to C (which makes sense; the shell version was just calling
+> "git checkout", which we know does the right thing).
+>
+> -Peff
 
-Le 01/09/2021 à 13:57, Johannes Schindelin via GitGitGadget a écrit :
-> In 427c3bd28ab (rebase: deprecate --preserve-merges, 2019-03-11) (which was
-> included in v2.22.0), we officially deprecated the --preserve-merges
-> backend. Over two years later, it is time to drop that backend, and here is
-> a patch series that does just that.
-> 
-> Changes since v1:
-> 
->  * Rebased onto v2.33.0
-> 
-> Johannes Schindelin (7):
->   t5520: do not use `pull.rebase=preserve`
->   remote: warn about unhandled branch.<name>.rebase values
->   tests: stop testing `git rebase --preserve-merges`
->   pull: remove support for `--rebase=preserve`
->   rebase: drop support for `--preserve-merges`
->   git-svn: drop support for `--preserve-merges`
->   rebase: drop the internal `rebase--interactive` command
-> 
+Turns out this is quite a mess.  It's also related to the "don't
+remove empty working directories" discussion we had earlier this
+week[1], because we assumed all relevant codepaths correctly avoided
+deleting untracked files and directories in the way.  But they don't.
+And rebase isn't the only offender, because this is buried in
+unpack_trees.  In fact, it traces back to (and before)
+    fcc387db9b ("read-tree -m -u: do not overwrite or remove untracked
+working tree files.", 2006-05-17)
+which has additional commentary over at
+https://lore.kernel.org/git/7v8xp1jc9h.fsf_-_@assigned-by-dhcp.cox.net/.
+It appears that before this time, git happily nuked untracked files
+and considered them expendable, in basically all cases.  However, this
+patch continued considering them as expendable whenever opts->reset
+was true.  There wasn't much comment about it at the time for the
+reasoning of how opts->reset was handled, though trying to read
+between the lines perhaps Junio was trying to limit the backward
+compatibility concerns of introducing new errors to fewer code paths?
+Anyway, Junio did mention `read-tree --reset` explicitly, but this
+opts->reset usage also occurs in am, checkout, reset -- and anything
+that calls the reset_head() function including: rebase, stash,
+sequencer.c, and add-patch.c.
 
-This is good.
+So, then...should we preserve untracked (and non-ignored) files in all
+these cases?  This rebase case seems clear, but others might be less
+clear.  For example, should "git reset --hard" nuke untracked files
+(what if it's a directory of untracked files getting nuked just to
+place a single file in the location of the directory)?  The
+documentation isn't explicit, but after reading it I would assume that
+untracked files should be preserved.  Since we've had bugs in "git
+reset --hard" before, such as requiring two invocations in order to
+clear out unmerged entries (see [2] and [3]), that also suggests that
+this is just another bug in the same area.  But the bug has been
+around so long that people might be expecting it; our testsuite has
+several cases that incidentally do.  Granted, it's better to throw an
+error and require explicit extra steps than to nuke potentially
+important work, but some folks might be unhappy with a change here.
+Similarly with "git checkout -f".
 
-preserve-merge is the only user of `rebase--interactive'.  In
-builtin/rebase.c, it is the only producer of the following actions:
+And stash.c, which operates in that edge case area has tests with
+files nuked from the cache without nuking it from the working tree
+(causing the working tree file to be considered untracked), and then
+attempts to have multiple tests operate on that kind of case.  Those
+cases look a bit buggy to me for other reasons (I'm still digging),
+but those bugs are kind of hidden by the untracked file nuking bugs,
+so fixing the latter requires fixing the former.  And stash.c is a
+mess of shelling out to subcommands.  Ick.
 
- - ACTION_SHORTEN_OIDS
- - ACTION_EXPAND_OIDS
- - ACTION_CHECK_TODO_LIST
- - ACTION_REARRANGE_SQUASH
- - ACTION_ADD_EXEC
+I have some partial patches, but don't know if I'll have anything to
+post until I figure out the stash mess...
 
-Which in turn, are the only reason for these functions to exist:
-
- - transform_todo_file()
- - check_todo_list_from_file() (from the sequencer)
- - rearrange_squash_in_todo_file()
- - add_exec_commands()
-
-This is from a cursory glance, it may go a bit deeper.
-
-Should we remove these as well?
-
-Alban
-
+[1] https://lore.kernel.org/git/YS8eEtwQvF7TaLCb@coredump.intra.peff.net/
+[2] 25c200a700 ("t1015: demonstrate directory/file conflict recovery
+failures", 2018-07-31)
+[3] ad3762042a ("read-cache: fix directory/file conflict handling in
+read_index_unmerged()", 2018-07-31)
