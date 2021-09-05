@@ -2,115 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 115B2C433EF
-	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 13:15:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6793C433EF
+	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 17:09:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E943060E93
-	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 13:15:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D03560F21
+	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 17:09:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233635AbhIENQJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Sep 2021 09:16:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39742 "EHLO cloud.peff.net"
+        id S233994AbhIERKY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Sep 2021 13:10:24 -0400
+Received: from shell1.rawbw.com ([198.144.192.42]:19357 "EHLO shell1.rawbw.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229759AbhIENQI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Sep 2021 09:16:08 -0400
-Received: (qmail 8733 invoked by uid 109); 5 Sep 2021 13:15:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 05 Sep 2021 13:15:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22845 invoked by uid 111); 5 Sep 2021 13:15:05 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 05 Sep 2021 09:15:05 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sun, 5 Sep 2021 09:15:04 -0400
-From:   Jeff King <peff@peff.net>
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/2] ref-filter: hacky "streaming" mode
-Message-ID: <YTTC2IUO1ZmTOEoR@coredump.intra.peff.net>
-References: <YTNpQ7Od1U/5i0R7@coredump.intra.peff.net>
- <YTNpeH+jO0zQgAVT@coredump.intra.peff.net>
- <CAOLTT8Tka0nxHb3G9yb-fs8ue7RaPCUVSKi5PM+GY+rMjFRnog@mail.gmail.com>
+        id S230471AbhIERKX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Sep 2021 13:10:23 -0400
+Received: from yv.noip.me (c-73-189-35-76.hsd1.ca.comcast.net [73.189.35.76])
+        (authenticated bits=0)
+        by shell1.rawbw.com (8.15.1/8.15.1) with ESMTPSA id 185H9KkO090221
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO)
+        for <git@vger.kernel.org>; Sun, 5 Sep 2021 10:09:20 -0700 (PDT)
+        (envelope-from yuri@rawbw.com)
+X-Authentication-Warning: shell1.rawbw.com: Host c-73-189-35-76.hsd1.ca.comcast.net [73.189.35.76] claimed to be yv.noip.me
+To:     Git Mailing List <git@vger.kernel.org>
+From:   Yuri <yuri@rawbw.com>
+Subject: stash push/pop unstages files?
+Message-ID: <0e1f7a47-89e3-5f49-663e-bdd3e8efb6e5@rawbw.com>
+Date:   Sun, 5 Sep 2021 10:09:19 -0700
+User-Agent: Mozilla/5.0 (X11; FreeBSD amd64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAOLTT8Tka0nxHb3G9yb-fs8ue7RaPCUVSKi5PM+GY+rMjFRnog@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 05, 2021 at 04:20:02PM +0800, ZheNing Hu wrote:
+In one sub-directory I altered some files, added a directory with files 
+and added the changes (git add .)
 
-> > +       if (ref_cbdata->filter->streaming_format) {
-> > +               pretty_print_ref(refname, oid, ref_cbdata->filter->streaming_format);
-> 
-> So we directly use pretty_print_ref() in streaming mode, OK.
-> 
-> > +       } else {
-> > +               /*
-> > +                * We do not open the object yet; sort may only need refname
-> > +                * to do its job and the resulting list may yet to be pruned
-> > +                * by maxcount logic.
-> > +                */
-> > +               ref = ref_array_push(ref_cbdata->array, refname, oid);
-> > +               ref->commit = commit;
-> > +               ref->flag = flag;
-> > +               ref->kind = kind;
-> > +       }
-> >
-> >         return 0;
-> >  }
-> 
-> Therefore, in streaming mode, there is no need to push ref to
-> ref_array, which can
-> reduce the overhead of malloc(), free(), which makes sense.
+Then I called 'git stash push && git stash pop'.
 
-By the way, one thing I wondered here: how much of the benefit is from
-avoiding the ref_array, and how much is from skipping the sort entirely.
+After this the newly added directory remained in the staged status, but 
+altered files became unstaged.
 
-It turns out that most of it is from the latter. If I do this:
+Is this an intended behavior?
 
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 89cb6307d4..037d5db814 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -78,7 +78,11 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	filter.name_patterns = argv;
- 	filter.match_as_path = 1;
- 	filter_refs(&array, &filter, FILTER_REFS_ALL | FILTER_REFS_INCLUDE_BROKEN);
--	ref_array_sort(sorting, &array);
-+	/*
-+	 * we should skip this only when we are using the default refname
-+	 * sorting, but as an experimental hack, we'll just comment it out.
-+	 */
-+	// ref_array_sort(sorting, &array);
- 
- 	if (!maxcount || array.nr < maxcount)
- 		maxcount = array.nr;
+Why stash push/pop unstages files? Shouldn't it preserve the directory 
+as-is?
 
-then the timings I get are:
 
-  Benchmark #1: ./git.old for-each-ref --format='%(objectname) %(refname)'
-    Time (mean ± σ):     341.4 ms ±   7.4 ms    [User: 299.8 ms, System: 41.6 ms]
-    Range (min … max):   333.5 ms … 355.1 ms    10 runs
-   
-  Benchmark #2: ./git.new for-each-ref --format='%(objectname) %(refname)'
-    Time (mean ± σ):     249.1 ms ±   5.7 ms    [User: 211.8 ms, System: 37.2 ms]
-    Range (min … max):   245.9 ms … 267.0 ms    12 runs
-   
-  Summary
-    './git.new for-each-ref --format='%(objectname) %(refname)'' ran
-      1.37 ± 0.04 times faster than './git.old for-each-ref --format='%(objectname) %(refname)''
+Thanks,
 
-So of the 1.5x improvement that the original patch showed, 1.37x is from
-skipping the sort of the already-sorted data. I suspect that has less to
-do with sorting at all, and more to do with the fact that even just
-formatting "%(refname)" for each entry takes a non-trivial amount of
-time.
+Yuri
 
--Peff
+
