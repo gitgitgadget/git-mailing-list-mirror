@@ -5,57 +5,57 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EE93C433EF
-	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 07:34:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 207C4C433F5
+	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 07:34:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6C1CB60F6D
-	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 07:34:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0718A61004
+	for <git@archiver.kernel.org>; Sun,  5 Sep 2021 07:34:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234062AbhIEHf5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Sep 2021 03:35:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45278 "EHLO
+        id S232978AbhIEHf7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Sep 2021 03:35:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232978AbhIEHfz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Sep 2021 03:35:55 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5901C061575
-        for <git@vger.kernel.org>; Sun,  5 Sep 2021 00:34:52 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id b10so4919647wru.0
-        for <git@vger.kernel.org>; Sun, 05 Sep 2021 00:34:52 -0700 (PDT)
+        with ESMTP id S233577AbhIEHf4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Sep 2021 03:35:56 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A04E4C061575
+        for <git@vger.kernel.org>; Sun,  5 Sep 2021 00:34:53 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id q11so4855952wrr.9
+        for <git@vger.kernel.org>; Sun, 05 Sep 2021 00:34:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TId0iXXuU5qfYjHWgloKVpq71kf1fx4mIYLE44B5AYE=;
-        b=BVDMHYtcADvyUEVL4sT/EeCpp+Wfzr6gsLJStB+P1h6rk92yyRqMlFc0NhkURUVsPK
-         tBEldHFCd87MBuyo1eXF33QmERp++YitGz/4I7csDFLOIjKNaaqFA6WC7NC2Jy+htIQz
-         C1IC2EafQb6iuWhm3q4cWUmjDFFoRA+98d1D9X2bt9HmybvL+SOpNzfYgQbVDuKrn0k3
-         iTIQeOLI5J2CpwdJ6a7kzZ9MeAwKCKq64fEbIR3p0q31n2aWHDehI3JxwvJeopgXUP9R
-         aM1MDrNdky8dv89sZMNDfDt1KTCikCiacyuPXBrZBu34jnrsXavlsSAihJicPAEQKNXt
-         3wpQ==
+        bh=6Zr1SfXdaFTETJ/mOF0cdlnXmFLsrAdyymKzjgXaE78=;
+        b=W/rOhf8jg9JwYTEiDPOccSQvB2dgfD4XzROL3BqpLvKr8crMSdENk+naSBIHRctV/l
+         v53SYaFkczZCuhdH4zrYKJlmFgeFFHQZrmEtEXTEyw7XVloejkHWcGIrxOeXHWzdvojU
+         9YLDET1tmmw8Mk+vnPj8zkkAbD8Mkv9dAZgQ9BDyI12GI3nuI8Y6lWDdpetHE+wEDhwv
+         AOKAzMBNkL0GcG7vG4HIYXkOJvPznRWkEI4XevbrMsUy8bOyYgiM+CpAPa4fR6pwFYTK
+         olNaXwU2FSVPxhbbEebgXUaVLj6ukac5oEBh9i60BRchwpouJgwAo25c5eQ5zZusYl03
+         qWMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TId0iXXuU5qfYjHWgloKVpq71kf1fx4mIYLE44B5AYE=;
-        b=lGcfnlaKR4J9teg5Np/GJXAU7FdMRUZLi72sdvPd7wr93GU5UC6dW0Xdzgp6+uuH+n
-         AFoNdfna01ql1s0SKD+ZWyo++8KZtxWzdRrd9O6lL1ocLJnWGssqRF+hz1WdmHQc45Of
-         M5E9o7r16IJ3ZYpbeYXzVsRi5l4wAips3lveMdpCWfZ8qSmDmEwv0inGNX5mByf2v/2u
-         sbdeWA7SxX/BK2Et/YRITt8setNRPXrcnoLA+r3kIshiaw/vWRw7LDLggL3J2zldaRXm
-         E/eEEH8plpUl/DAvwnIdzEU59EhFJmuhBqKPnVDT/7hFZ85ReTKYXm6OsVADqVfvXPHH
-         Ivfg==
-X-Gm-Message-State: AOAM530zVSp/af1m0Zr44IwfnFSPYTgJSOE+1oc7UkPNyNBQW9Ag/oSf
-        ll83MqRFofY/riFzKenT+yWYHt33Nk8UzA==
-X-Google-Smtp-Source: ABdhPJxJq/ZiPOpowAo4Tp9L3nr7I7dpWNhMQ0kf1Z5gWbFsxNsAZOleXlmD0GmEtD5ZeRXDp4h2aQ==
-X-Received: by 2002:a5d:620d:: with SMTP id y13mr7159789wru.45.1630827291105;
+        bh=6Zr1SfXdaFTETJ/mOF0cdlnXmFLsrAdyymKzjgXaE78=;
+        b=lKLNs5mhSwzICt7jrd2Z7nDieOEkZR3bRcK3rZqXUCHMW3PH+6udjo1XSx530tn3Ig
+         KNAIpOePmXE31MLTGYgY5vHIDer7yY2oj13QEWDbYHBI5qlYrKfZOaJsg+tRSGP958HB
+         oaXNtKh5eP0zd1/NDggO7pGcrUwwsIfhLw6Bb1OFvkXH0hSrLuSqwb8FqyEDDXuUqOFV
+         pAYiv9TKki8oZtsEQXvXggkESpJptO9ByeVjqR0B8koPGrCjBLfdgXzlWPaXqks7QwBH
+         hqPak8GSCfjesPSNlSEK2vCWAwLPxljKymg5T87Ls2OgNyRVw11qQFgsocMlqx+VmvT5
+         kDYQ==
+X-Gm-Message-State: AOAM531ZHPPpVykSOThOcAsMmKNdUl44Lxu2A3w/Lv0Ww/4D5Kky+fV0
+        Qju6EtsH+Q8QAXnR2lDVM6BpAeIUH8VywQ==
+X-Google-Smtp-Source: ABdhPJxK56QGLTwOavnTb3NYLf6Zlz67mWCLcupohK+mNfOJAptjE2yKbv24SDcggl3WuQoBuyEXpw==
+X-Received: by 2002:adf:d185:: with SMTP id v5mr7181245wrc.378.1630827291886;
         Sun, 05 Sep 2021 00:34:51 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id q14sm4218734wrc.31.2021.09.05.00.34.50
+        by smtp.gmail.com with ESMTPSA id q14sm4218734wrc.31.2021.09.05.00.34.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Sep 2021 00:34:50 -0700 (PDT)
+        Sun, 05 Sep 2021 00:34:51 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 2/4] bundle API: change "flags" to be "extra_index_pack_args"
-Date:   Sun,  5 Sep 2021 09:34:43 +0200
-Message-Id: <patch-v4-2.4-9255c766484-20210905T072750Z-avarab@gmail.com>
+Subject: [PATCH v4 3/4] index-pack: add --progress-title option
+Date:   Sun,  5 Sep 2021 09:34:44 +0200
+Message-Id: <patch-v4-3.4-338c0e1e518-20210905T072750Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.33.0.813.g41c39388776
 In-Reply-To: <cover-v4-0.4-00000000000-20210905T072750Z-avarab@gmail.com>
 References: <cover-v3-0.5-00000000000-20210826T140414Z-avarab@gmail.com> <cover-v4-0.4-00000000000-20210905T072750Z-avarab@gmail.com>
@@ -77,122 +77,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since the "flags" parameter was added in be042aff24c (Teach progress
-eye-candy to fetch_refs_from_bundle(), 2011-09-18) there's never been
-more than the one flag: BUNDLE_VERBOSE.
+Add a --progress-title option to index-pack, when data is piped into
+index-pack its progress is a proxy for whatever's feeding it data.
 
-Let's have the only caller who cares about that pass "-v" itself
-instead through new "extra_index_pack_args" parameter. The flexibility
-of being able to pass arbitrary arguments to "unbundle" will be used
-in a subsequent commit.
+This option will allow us to set a more relevant progress bar title in
+"git bundle unbundle", and is also used in my "bundle-uri" RFC
+patches[1] by a new caller in fetch-pack.c.
+
+The code change in cmd_index_pack() won't handle
+"--progress-title=xyz", only "--progress-title xyz", and the "(i+1)"
+style (as opposed to "i + 1") is a bit odd.
+
+Not using the "--long-option=value" style is inconsistent with
+existing long options handled by cmd_index_pack(), but makes the code
+that needs to call it better (two strvec_push(), instead of needing a
+strvec_pushf()). Since the option is internal-only the inconsistency
+shouldn't matter.
+
+I'm copying the pattern to handle it as-is from the handling of the
+existing "-o" option in the same function, see 9cf6d3357aa (Add
+git-index-pack utility, 2005-10-12) for its addition. That's a short
+option, but the code to implement the two is the same in functionality
+and style. Eventually we'd like to migrate all of this this to
+parse_options(), which would make these differences in behavior go
+away.
+
+1. https://lore.kernel.org/git/RFC-cover-00.13-0000000000-20210805T150534Z-avarab@gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/bundle.c |  4 +++-
- bundle.c         | 12 ++++++------
- bundle.h         |  7 +++++--
- transport.c      |  6 +++++-
- 4 files changed, 19 insertions(+), 10 deletions(-)
+ Documentation/git-index-pack.txt | 6 ++++++
+ builtin/index-pack.c             | 6 ++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index 053a51bea1b..9b86c8529c7 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -166,6 +166,7 @@ static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 	char *bundle_file;
-+	struct strvec extra_index_pack_args = STRVEC_INIT;
+diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
+index 7fa74b9e798..1f1e3592251 100644
+--- a/Documentation/git-index-pack.txt
++++ b/Documentation/git-index-pack.txt
+@@ -82,6 +82,12 @@ OPTIONS
+ --strict::
+ 	Die, if the pack contains broken objects or links.
  
- 	argc = parse_options_cmd_bundle(argc, argv, prefix,
- 			builtin_bundle_unbundle_usage, options, &bundle_file);
-@@ -177,7 +178,8 @@ static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix)
- 	}
- 	if (!startup_info->have_repository)
- 		die(_("Need a repository to unbundle."));
--	ret = !!unbundle(the_repository, &header, bundle_fd, 0) ||
-+	ret = !!unbundle(the_repository, &header, bundle_fd,
-+			 &extra_index_pack_args) ||
- 		list_bundle_refs(&header, argc, argv);
- 	bundle_header_release(&header);
- cleanup:
-diff --git a/bundle.c b/bundle.c
-index ab63f402261..a0bb687b0f4 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -569,18 +569,18 @@ int create_bundle(struct repository *r, const char *path,
- }
- 
- int unbundle(struct repository *r, struct bundle_header *header,
--	     int bundle_fd, int flags)
-+	     int bundle_fd, struct strvec *extra_index_pack_args)
- {
--	const char *argv_index_pack[] = {"index-pack",
--					 "--fix-thin", "--stdin", NULL, NULL};
- 	struct child_process ip = CHILD_PROCESS_INIT;
-+	strvec_pushl(&ip.args, "index-pack", "--fix-thin", "--stdin", NULL);
- 
--	if (flags & BUNDLE_VERBOSE)
--		argv_index_pack[3] = "-v";
-+	if (extra_index_pack_args) {
-+		strvec_pushv(&ip.args, extra_index_pack_args->v);
-+		strvec_clear(extra_index_pack_args);
-+	}
- 
- 	if (verify_bundle(r, header, 0))
- 		return -1;
--	ip.argv = argv_index_pack;
- 	ip.in = bundle_fd;
- 	ip.no_stdout = 1;
- 	ip.git_cmd = 1;
-diff --git a/bundle.h b/bundle.h
-index 84a6df1b65d..06009fe6b1f 100644
---- a/bundle.h
-+++ b/bundle.h
-@@ -26,16 +26,19 @@ int create_bundle(struct repository *r, const char *path,
- 		  int argc, const char **argv, struct strvec *pack_options,
- 		  int version);
- int verify_bundle(struct repository *r, struct bundle_header *header, int verbose);
--#define BUNDLE_VERBOSE 1
- 
- /**
-  * Unbundle after reading the header with read_bundle_header().
-  *
-  * We'll invoke "git index-pack --stdin --fix-thin" for you on the
-  * provided `bundle_fd` from read_bundle_header().
-+ *
-+ * Provide "extra_index_pack_args" to pass any extra arguments
-+ * (e.g. "-v" for verbose/progress), NULL otherwise. The provided
-+ * "extra_index_pack_args" (if any) will be strvec_clear()'d for you.
-  */
- int unbundle(struct repository *r, struct bundle_header *header,
--	     int bundle_fd, int flags);
-+	     int bundle_fd, struct strvec *extra_index_pack_args);
- int list_bundle_refs(struct bundle_header *header,
- 		int argc, const char **argv);
- 
-diff --git a/transport.c b/transport.c
-index 17e9629710a..ab9b03ae9ff 100644
---- a/transport.c
-+++ b/transport.c
-@@ -162,12 +162,16 @@ static int fetch_refs_from_bundle(struct transport *transport,
- 			       int nr_heads, struct ref **to_fetch)
- {
- 	struct bundle_transport_data *data = transport->data;
-+	struct strvec extra_index_pack_args = STRVEC_INIT;
- 	int ret;
- 
-+	if (transport->progress)
-+		strvec_push(&extra_index_pack_args, "-v");
++--progress-title::
++	For internal use only.
+++
++Set the title of the progress bar. The title is "Receiving objects" by
++default and "Indexing objects" when `--stdin` is specified.
 +
- 	if (!data->get_refs_from_bundle_called)
- 		get_refs_from_bundle(transport, 0, NULL);
- 	ret = unbundle(the_repository, &data->header, data->fd,
--			   transport->progress ? BUNDLE_VERBOSE : 0);
-+		       &extra_index_pack_args);
- 	transport->hash_algo = data->header.hash_algo;
- 	return ret;
- }
+ --check-self-contained-and-connected::
+ 	Die if the pack contains broken links. For internal use only.
+ 
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 8336466865c..0841c039ae2 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -122,6 +122,7 @@ static int strict;
+ static int do_fsck_object;
+ static struct fsck_options fsck_options = FSCK_OPTIONS_MISSING_GITMODULES;
+ static int verbose;
++static const char *progress_title;
+ static int show_resolving_progress;
+ static int show_stat;
+ static int check_self_contained_and_connected;
+@@ -1157,6 +1158,7 @@ static void parse_pack_objects(unsigned char *hash)
+ 
+ 	if (verbose)
+ 		progress = start_progress(
++				progress_title ? progress_title :
+ 				from_stdin ? _("Receiving objects") : _("Indexing objects"),
+ 				nr_objects);
+ 	for (i = 0; i < nr_objects; i++) {
+@@ -1806,6 +1808,10 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 				input_len = sizeof(*hdr);
+ 			} else if (!strcmp(arg, "-v")) {
+ 				verbose = 1;
++			} else if (!strcmp(arg, "--progress-title")) {
++				if (progress_title || (i+1) >= argc)
++					usage(index_pack_usage);
++				progress_title = argv[++i];
+ 			} else if (!strcmp(arg, "--show-resolving-progress")) {
+ 				show_resolving_progress = 1;
+ 			} else if (!strcmp(arg, "--report-end-of-input")) {
 -- 
 2.33.0.813.g41c39388776
 
